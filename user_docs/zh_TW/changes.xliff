@@ -31290,7 +31290,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>When focussing a grouping in browse mode, the description is now also read. (#10095)</source>
-        <target>在瀏覽模式下，當焦點移至群組中， NVDA 也會讀出其說明。(#10095)</target>
+        <target>在瀏覽模式下，當焦點移至群組中， Nvda 也會讀出其說明。(#10095)</target>
       </segment>
     </unit>
     <unit id="44ee4d0b-f2a7-405d-9891-375488ddea6e">
@@ -31748,9 +31748,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3102</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>win32api calls can be replaced with direct calls to win32 dll functions via ctypes.</source>
-        <target>win32api calls can be replaced with direct calls to win32 dll functions via ctypes.</target>
+        <target>`win32api` 呼叫可替換為透過 `ctypes` 直接呼叫 win32 dll 函式。</target>
       </segment>
     </unit>
     <unit id="f183d4eb-6371-4ca2-a86d-2430d2346aa7">
@@ -31758,9 +31758,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3103</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>win32con constants should be defined in your files.</source>
-        <target>win32con constants should be defined in your files.</target>
+        <target>應在您的檔案中自行定義 `win32con` 常數。</target>
       </segment>
     </unit>
     <unit id="2a1c917d-dae4-4ba7-b702-cea05ac1bde5">
@@ -31768,9 +31768,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3104</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The "async" argument in nvwave.playWaveFile has been renamed to "asynchronous". (#8607)</source>
-        <target>The "async" argument in nvwave.playWaveFile has been renamed to "asynchronous". (#8607)</target>
+        <target>`nvwave.playWaveFile` 中的 `async` 引數已重新命名為 `asynchronous`。(#8607)</target>
       </segment>
     </unit>
     <unit id="fc8fcbb3-4ff2-4628-9994-1fc386ed49e6">
@@ -31778,9 +31778,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3105</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>speakText and speakCharacter methods on synthDriver objects are no longer supported.</source>
-        <target>speakText and speakCharacter methods on synthDriver objects are no longer supported.</target>
+        <target>不再支援 `synthDriver` 物件上的 `speakText` 與 `speakCharacter` 方法。</target>
       </segment>
     </unit>
     <unit id="761dee62-cf8e-45ae-a664-ab991296e3c7">
@@ -31788,9 +31788,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3106</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>This functionality is handled by SynthDriver.speak.</source>
-        <target>This functionality is handled by SynthDriver.speak.</target>
+        <target>此功能現由 `SynthDriver.speak` 處理。</target>
       </segment>
     </unit>
     <unit id="171a3a2c-91f0-4ae3-bc96-74713888d021">
@@ -31798,9 +31798,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3107</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>SynthSetting classes in synthDriverHandler have been removed. Now use driverHandler.DriverSetting classes instead.</source>
-        <target>SynthSetting classes in synthDriverHandler have been removed. Now use driverHandler.DriverSetting classes instead.</target>
+        <target>`synthDriverHandler` 中的 `SynthSetting` 類別已被移除。請改用 `driverHandler.DriverSetting` 類別。</target>
       </segment>
     </unit>
     <unit id="2b1669b4-493b-4382-b8b9-ae70d4d1aa5f">
@@ -31808,9 +31808,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3108</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>SynthDriver classes should no longer expose index via the lastIndex property.</source>
-        <target>SynthDriver classes should no longer expose index via the lastIndex property.</target>
+        <target>`SynthDriver` 類別不應再透過 `lastIndex` 屬性公開索引。</target>
       </segment>
     </unit>
     <unit id="9fa0f529-88bb-4754-973f-dc0fa82df39e">
@@ -31818,9 +31818,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3109</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Instead, they should notify the synthDriverHandler.synthIndexReached action with the index, once all previous audio has finished playing before that index.</source>
-        <target>Instead, they should notify the synthDriverHandler.synthIndexReached action with the index, once all previous audio has finished playing before that index.</target>
+        <target>取而代之的是，一旦該索引之前的所有音訊播放完畢，它們應使用該索引通知 `synthDriverHandler.synthIndexReached` 動作。</target>
       </segment>
     </unit>
     <unit id="0315f7c3-c863-45e4-a3ac-73ed9bfe07b4">
@@ -31828,9 +31828,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3110</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>SynthDriver classes must now notify the synthDriverHandler.synthDoneSpeaking action, once all audio from a SynthDriver.speak call has completed playing.</source>
-        <target>SynthDriver classes must now notify the synthDriverHandler.synthDoneSpeaking action, once all audio from a SynthDriver.speak call has completed playing.</target>
+        <target>一旦 `SynthDriver.speak` 呼叫的所有音訊播放完成，`SynthDriver` 類別現在必須通知 `synthDriverHandler.synthDoneSpeaking` 動作。</target>
       </segment>
     </unit>
     <unit id="be486569-f453-4403-81c2-3dad26800878">
@@ -31838,9 +31838,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3111</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>SynthDriver classes must support the speech.PitchCommand in their speak method, as changes in pitch for speak spelling now depends on this functionality.</source>
-        <target>SynthDriver classes must support the speech.PitchCommand in their speak method, as changes in pitch for speak spelling now depends on this functionality.</target>
+        <target>`SynthDriver` 類別必須在其 `speak` 方法中支援 `speech.PitchCommand`，因為現在拼字朗讀的音調變化依賴於此功能。</target>
       </segment>
     </unit>
     <unit id="ba129d26-1cd9-4e7c-92a7-86656ff20f27">
@@ -31848,9 +31848,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3112</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The speech function getSpeechTextForProperties has been renamed to getPropertiesSpeech. (#10098)</source>
-        <target>The speech function getSpeechTextForProperties has been renamed to getPropertiesSpeech. (#10098)</target>
+        <target>語音函式 `getSpeechTextForProperties` 已重新命名為 `getPropertiesSpeech`。(#10098)</target>
       </segment>
     </unit>
     <unit id="ba063a8e-20d3-4c55-b69d-cb719258dd22">
@@ -31858,9 +31858,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3113</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The braille function getBrailleTextForProperties has been renamed to getPropertiesBraille. (#10469)</source>
-        <target>The braille function getBrailleTextForProperties has been renamed to getPropertiesBraille. (#10469)</target>
+        <target>點字函式 `getBrailleTextForProperties` 已重新命名為 `getPropertiesBraille`。(#10469)</target>
       </segment>
     </unit>
     <unit id="38212799-dd23-4eb1-ac19-4374ca9c42ad">
@@ -31868,9 +31868,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3114</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Several speech functions have been changed to return speech sequences. (#10098)</source>
-        <target>Several speech functions have been changed to return speech sequences. (#10098)</target>
+        <target>數個語音函式已變更為回傳語音序列。(#10098)</target>
       </segment>
     </unit>
     <unit id="125a7585-59da-4815-ac99-ac4342d4e2a5">
@@ -31878,7 +31878,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3115</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>getControlFieldSpeech</source>
         <target>getControlFieldSpeech</target>
       </segment>
@@ -31888,7 +31888,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3116</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>getFormatFieldSpeech</source>
         <target>getFormatFieldSpeech</target>
       </segment>
@@ -31898,9 +31898,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3117</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>getSpeechTextForProperties now called getPropertiesSpeech</source>
-        <target>getSpeechTextForProperties now called getPropertiesSpeech</target>
+        <target>getSpeechTextForProperties 現為 getPropertiesSpeech</target>
       </segment>
     </unit>
     <unit id="1e5a0ec4-2a29-4aa3-a2f5-aa2aed1772fc">
@@ -31908,7 +31908,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3118</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>getIndentationSpeech</source>
         <target>getIndentationSpeech</target>
       </segment>
@@ -31918,7 +31918,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3119</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>getTableInfoSpeech</source>
         <target>getTableInfoSpeech</target>
       </segment>
@@ -31928,9 +31928,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3120</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Added a textUtils module to simplify string differences between Python 3 strings and Windows unicode strings. (#9545)</source>
-        <target>Added a textUtils module to simplify string differences between Python 3 strings and Windows unicode strings. (#9545)</target>
+        <target>新增 `textUtils` 模組，以簡化 Python 3 字串與 Windows Unicode 字串之間的差異處理。(#9545)</target>
       </segment>
     </unit>
     <unit id="4e1d4d54-5f0f-4d84-81d6-d97aed496823">
@@ -31938,9 +31938,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3121</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>See the module documentation and textInfos.offsets module for example implementations.</source>
-        <target>See the module documentation and textInfos.offsets module for example implementations.</target>
+        <target>請參閱該模組文件與 `textInfos.offsets` 模組以取得實作範例。</target>
       </segment>
     </unit>
     <unit id="a384a7d0-4a72-4c4c-aceb-f65c3a119f64">
@@ -31948,9 +31948,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3122</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Deprecated functionality now removed. (#9548)</source>
-        <target>Deprecated functionality now removed. (#9548)</target>
+        <target>棄用功能現已移除。(#9548)</target>
       </segment>
     </unit>
     <unit id="2947c040-b342-4836-bdaa-2a0c686f3d34">
@@ -31958,9 +31958,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3123</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>AppModules removed:</source>
-        <target>AppModules removed:</target>
+        <target>應用程式模組已移除：</target>
       </segment>
     </unit>
     <unit id="95d4dfe1-5af3-4f44-a0db-89687d4dba7e">
@@ -31968,9 +31968,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3124</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Windows XP sound recorder.</source>
-        <target>Windows XP sound recorder.</target>
+        <target>Windows XP 語音錄音機。</target>
       </segment>
     </unit>
     <unit id="b6e04231-fc61-491e-9a8d-9da23009943b">
@@ -31978,9 +31978,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3125</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Klango Player, which is abandoned software.</source>
-        <target>Klango Player, which is abandoned software.</target>
+        <target>Klango Player，此為已廢棄軟體。</target>
       </segment>
     </unit>
     <unit id="d65a7908-4792-4675-8bc4-46c9de1d03c6">
@@ -31988,9 +31988,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3126</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>configobj.validate wrapper removed.</source>
-        <target>configobj.validate wrapper removed.</target>
+        <target>`configobj.validate` 包裝函式已移除。</target>
       </segment>
     </unit>
     <unit id="18016dd3-b089-4216-a9aa-3cec8f1cc3f6">
@@ -31998,9 +31998,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3127</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>New code should use from configobj import validate instead of import validate</source>
-        <target>New code should use from configobj import validate instead of import validate</target>
+        <target>新程式碼應使用 `from configobj import validate`，而非 `import validate`</target>
       </segment>
     </unit>
     <unit id="1b979466-16a8-4b71-85b1-6eb204db1364">
@@ -32008,9 +32008,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3128</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>textInfos.Point and textInfos.Rect replaced by locationHelper.Point and locationHelper.RectLTRB respectively.</source>
-        <target>textInfos.Point and textInfos.Rect replaced by locationHelper.Point and locationHelper.RectLTRB respectively.</target>
+        <target>`textInfos.Point` 與 `textInfos.Rect` 已分別被替換為 `locationHelper.Point` 與 `locationHelper.RectLTRB`。</target>
       </segment>
     </unit>
     <unit id="3a046018-430c-426b-bd7e-5a6745812285">
@@ -32018,9 +32018,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3129</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>braille.BrailleHandler._get_tether and braille.BrailleHandler.set_tether have been removed.</source>
-        <target>braille.BrailleHandler._get_tether and braille.BrailleHandler.set_tether have been removed.</target>
+        <target>braille.BrailleHandler._get_tether 及 braille.BrailleHandler.set_tether 已被移除。</target>
       </segment>
     </unit>
     <unit id="cd6a7e99-d0e1-496c-9b96-c26943019e69">
@@ -32028,9 +32028,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3130</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>config.getConfigDirs has been removed.</source>
-        <target>config.getConfigDirs has been removed.</target>
+        <target>config.getConfigDirs 已被移除。</target>
       </segment>
     </unit>
     <unit id="eecfafec-5f25-488d-9062-a043c532d8b6">
@@ -32038,9 +32038,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3131</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>config.ConfigManager.getConfigValidationParameter has been replaced by getConfigValidation</source>
-        <target>config.ConfigManager.getConfigValidationParameter has been replaced by getConfigValidation</target>
+        <target>`config.ConfigManager.getConfigValidationParameter` 已被替換為 `getConfigValidation`</target>
       </segment>
     </unit>
     <unit id="c0c75363-7aa4-4e00-bc1c-a2a27480d970">
@@ -32048,9 +32048,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3132</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>inputCore.InputGesture.logIdentifier property has been removed.</source>
-        <target>inputCore.InputGesture.logIdentifier property has been removed.</target>
+        <target>inputCore.InputGesture.logIdentifier 屬性已被移除。</target>
       </segment>
     </unit>
     <unit id="65273eab-5b83-420f-9175-e582cf93b09c">
@@ -32058,9 +32058,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3133</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Use _get_identifiers in inputCore.InputGesture instead.</source>
-        <target>Use _get_identifiers in inputCore.InputGesture instead.</target>
+        <target>請改用 _get_identifiers in inputCore.InputGesture。</target>
       </segment>
     </unit>
     <unit id="d7370569-dbc8-49c7-848d-4f426efb5a6f">
@@ -32068,9 +32068,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3134</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>synthDriverHandler.SynthDriver.speakText/speakCharacter have been removed.</source>
-        <target>synthDriverHandler.SynthDriver.speakText/speakCharacter have been removed.</target>
+        <target>synthDriverHandler.SynthDriver.speakText/speakCharacter 已被移除。</target>
       </segment>
     </unit>
     <unit id="50cee752-8db9-4ade-ae50-bfbe03f70309">
@@ -32078,9 +32078,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3135</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Removed several synthDriverHandler.SynthSetting classes.</source>
-        <target>Removed several synthDriverHandler.SynthSetting classes.</target>
+        <target>已移除數個 `synthDriverHandler.SynthSetting` 類別。</target>
       </segment>
     </unit>
     <unit id="5de3f153-0057-4dfe-88e7-decc4807f66d">
@@ -32088,9 +32088,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3136</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Previously kept for backwards compatibility (#8214), now considered obsolete.</source>
-        <target>Previously kept for backwards compatibility (#8214), now considered obsolete.</target>
+        <target>先前為維持向下相容性而保留(#8214)，現在視為已過時。</target>
       </segment>
     </unit>
     <unit id="d88ff69d-95c4-45ce-9a10-910fa263d688">
@@ -32098,9 +32098,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3137</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Drivers that used the SynthSetting classes should be updated to use the DriverSetting classes.</source>
-        <target>Drivers that used the SynthSetting classes should be updated to use the DriverSetting classes.</target>
+        <target>使用 `SynthSetting` 類別的驅動程式，應更新為使用 `DriverSetting` 類別。</target>
       </segment>
     </unit>
     <unit id="8ec491c8-4651-4867-b2fe-2574a19fe1a4">
@@ -32108,9 +32108,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3138</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Some legacy code has been removed, particularly:</source>
-        <target>Some legacy code has been removed, particularly:</target>
+        <target>已移除部分舊有程式碼，特別是：</target>
       </segment>
     </unit>
     <unit id="08491303-c338-4bc3-b144-0af74c26a962">
@@ -32626,9 +32626,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3199</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The hotkey for the filter field in the elements list in browse mode has changed to alt+y. (#8728)</source>
-        <target>The hotkey for the filter field in the elements list in browse mode has changed to alt+y. (#8728)</target>
+        <target>瀏覽模式元件清單中篩選欄位的快速鍵已變更為 Alt+Y。(#8728)</target>
       </segment>
     </unit>
     <unit id="e8af72bb-8b24-4105-9037-c6645a77576e">
@@ -32636,9 +32636,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3200</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>When an auto detected braille display is connected via Bluetooth, NVDA will keep searching for USB displays supported by the same driver and switch to a USB connection if it becomes available. (#8853)</source>
-        <target>When an auto detected braille display is connected via Bluetooth, NVDA will keep searching for USB displays supported by the same driver and switch to a USB connection if it becomes available. (#8853)</target>
+        <target>當自動偵測的點字顯示器透過藍牙連線時，NVDA 將會持續搜尋相同驅動程式支援的 USB 點顯器，並在 USB 連線可用時切換至 USB。(#8853)</target>
       </segment>
     </unit>
     <unit id="4ac545c3-833c-4309-bc26-848cf5066514">
@@ -32646,9 +32646,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3201</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Updated eSpeak-NG to commit 67324cc.</source>
-        <target>Updated eSpeak-NG to commit 67324cc.</target>
+        <target>已將 eSpeak-NG 更新至 commit 67324cc。</target>
       </segment>
     </unit>
     <unit id="a4871c15-e2c2-4550-809f-73902162c9da">
@@ -32656,9 +32656,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3202</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Updated liblouis braille translator to version 3.10.0. (#9439, #9678)</source>
-        <target>Updated liblouis braille translator to version 3.10.0. (#9439, #9678)</target>
+        <target>已將 liblouis 點字轉譯表更新至版本 3.10.0。(#9439, #9678)</target>
       </segment>
     </unit>
     <unit id="fdeb1c2d-3f49-4d00-908d-12ac1ffd6683">
@@ -32666,9 +32666,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3203</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA will now report the word 'selected' after reporting the text a user has just selected.(#9028, #9909)</source>
-        <target>NVDA will now report the word 'selected' after reporting the text a user has just selected.(#9028, #9909)</target>
+        <target>在報讀使用者剛選取的文字後，NVDA 現在會報讀「已選取」。(#9028, #9909)</target>
       </segment>
     </unit>
     <unit id="e8d876bd-571d-431c-aa17-696c61dfaf83">
@@ -32676,9 +32676,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3204</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Microsoft Visual Studio Code, NVDA is in focus mode by default. (#9828)</source>
-        <target>In Microsoft Visual Studio Code, NVDA is in focus mode by default. (#9828)</target>
+        <target>在 Microsoft Visual Studio Code 中，NVDA 預設處於焦點模式。(#9828)</target>
       </segment>
     </unit>
     <unit id="238d1ba3-51a0-45ea-9761-a490f70cb81f">
@@ -32686,9 +32686,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3206</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Bug Fixes</source>
-        <target>Bug Fixes</target>
+        <target>錯誤修正</target>
       </segment>
     </unit>
     <unit id="51684cbf-344d-4789-82ec-bddb2605bb09">
@@ -32696,9 +32696,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3208</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA no longer crashes when an add-on directory is empty. (#7686)</source>
-        <target>NVDA no longer crashes when an add-on directory is empty. (#7686)</target>
+        <target>當附加元件目錄為空時，NVDA 不再當機。(#7686)</target>
       </segment>
     </unit>
     <unit id="b5825c44-3f8b-4e80-965c-3e22b0c3dd3d">
@@ -32706,9 +32706,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3209</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>LTR and RTL marks are no longer reported in Braille or per-character speech when accessing the properties window. (#8361)</source>
-        <target>LTR and RTL marks are no longer reported in Braille or per-character speech when accessing the properties window. (#8361)</target>
+        <target>在存取內容視窗時，不再於點字或逐字元語音中報讀 LTR 與 RTL 標記。(#8361)</target>
       </segment>
     </unit>
     <unit id="a3e6bfdd-3aaa-4ea7-bb50-9b0807523f69">
@@ -32716,9 +32716,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3210</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>When jumping to form fields with Browse Mode quick navigation, the entire form field is now announced rather than just the first line. (#9388)</source>
-        <target>When jumping to form fields with Browse Mode quick navigation, the entire form field is now announced rather than just the first line. (#9388)</target>
+        <target>使用瀏覽模式快速導航跳至表單欄位時，現在會報讀整個表單欄位，而非僅報讀第一行。(#9388)</target>
       </segment>
     </unit>
     <unit id="ce062318-3b4f-4ec5-b9ff-4fbf47680049">
@@ -32726,9 +32726,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3211</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA will no longer become silent after exiting the Windows 10 Mail app. (#9341)</source>
-        <target>NVDA will no longer become silent after exiting the Windows 10 Mail app. (#9341)</target>
+        <target>離開 Windows 10 郵件應用程式後，NVDA 不再靜音。(#9341)</target>
       </segment>
     </unit>
     <unit id="ea89db02-cb56-44e9-b053-38fb9bf1eb83">
@@ -32736,9 +32736,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3212</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA no longer fails to start when the users regional settings are set to a locale unknown to NVDA, such as English (Netherlands). (#8726)</source>
-        <target>NVDA no longer fails to start when the users regional settings are set to a locale unknown to NVDA, such as English (Netherlands). (#8726)</target>
+        <target>當使用者的地區設定設為 NVDA 未知的地區設定（例如英文 (荷蘭)）時，NVDA 不再無法啟動。(#8726)</target>
       </segment>
     </unit>
     <unit id="94b1a020-da29-431f-a1ab-467a0af5888f">
@@ -32746,9 +32746,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3213</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>When browse mode is enabled in Microsoft Excel and you switch to a browser in focus mode or vice versa, browse mode state is now reported appropriately. (#8846)</source>
-        <target>When browse mode is enabled in Microsoft Excel and you switch to a browser in focus mode or vice versa, browse mode state is now reported appropriately. (#8846)</target>
+        <target>在 Microsoft Excel 中啟用瀏覽模式並切換至處於焦點模式的瀏覽器時（反之亦然），現在會適當地報讀瀏覽模式狀態。(#8846)</target>
       </segment>
     </unit>
     <unit id="2080256b-7644-47a8-ae37-f4d917464140">
@@ -32756,9 +32756,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3214</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA now properly reports the line at the mouse cursor in Notepad++ and other Scintilla based editors. (#5450)</source>
-        <target>NVDA now properly reports the line at the mouse cursor in Notepad++ and other Scintilla based editors. (#5450)</target>
+        <target>NVDA 可於 Notepad++ 與其他基於 Scintilla 的編輯器中，正確讀出滑鼠游標所在的行。(#5450)</target>
       </segment>
     </unit>
     <unit id="68ee5c0f-5cc3-4679-8c5e-045c22ea692e">
@@ -32766,9 +32766,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3215</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Google Docs (and other web-based editors), braille no longer sometimes incorrectly shows "lst end" before the cursor in the middle of a list item. (#9477)</source>
-        <target>In Google Docs (and other web-based editors), braille no longer sometimes incorrectly shows "lst end" before the cursor in the middle of a list item. (#9477)</target>
+        <target>在 Google 文件(與其他網頁編輯器)中，當游標位於清單項目中間時，點字不再有時錯誤顯示 "lst end"。(#9477)</target>
       </segment>
     </unit>
     <unit id="944fb469-7b95-48fe-86d2-56313574b9aa">
@@ -32776,9 +32776,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3216</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In the Windows 10 May 2019 Update, NVDA no longer speaks many volume notifications if changing the volume with hardware buttons when File Explorer has focus. (#9466)</source>
-        <target>In the Windows 10 May 2019 Update, NVDA no longer speaks many volume notifications if changing the volume with hardware buttons when File Explorer has focus. (#9466)</target>
+        <target>在 Windows 10 2019 年 5 月更新中，當檔案總管取得焦點時使用硬體按鈕變更音量，NVDA 不再讀出大量的音量通知。(#9466)</target>
       </segment>
     </unit>
     <unit id="eaf52d4f-95ff-411e-95e6-41447b0cbac6">
@@ -32786,9 +32786,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3217</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Loading the punctuation/symbol pronunciation dialog is now much faster when using symbol dictionaries containing over 1000 entries. (#8790)</source>
-        <target>Loading the punctuation/symbol pronunciation dialog is now much faster when using symbol dictionaries containing over 1000 entries. (#8790)</target>
+        <target>當使用包含超過 1000 筆項目的符號字典時，載入標點及符號讀音對話框的速度現已大幅加快。(#8790)</target>
       </segment>
     </unit>
     <unit id="44de39e4-cf0c-4915-94bb-12b1c1389baf">
@@ -32796,9 +32796,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3218</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Scintilla controls such as Notepad++, NVDA can read the correct line when wordwrap is enabled. (#9424)</source>
-        <target>In Scintilla controls such as Notepad++, NVDA can read the correct line when wordwrap is enabled. (#9424)</target>
+        <target>在 Notepad++ 等 Scintilla 控制項中，當啟用自動換行時，NVDA 能夠讀取正確的行。(#9424)</target>
       </segment>
     </unit>
     <unit id="60810153-3a96-4183-b563-0ab0ae6b7e70">
@@ -32806,9 +32806,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3219</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Microsoft Excel, the cell location is announced after it changes due to the shift+enter or shift+numpadEnter gestures. (#9499)</source>
-        <target>In Microsoft Excel, the cell location is announced after it changes due to the shift+enter or shift+numpadEnter gestures. (#9499)</target>
+        <target>在 Microsoft Excel 中，因 Shift+Enter 或 Shift+數字鍵盤Enter 手勢導致儲存格位置變更後，會讀出儲存格位置。(#9499)</target>
       </segment>
     </unit>
     <unit id="9db4958e-9fa7-45fc-99d5-c6bdad0dbc8e">
@@ -32816,9 +32816,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3220</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Visual Studio 2017 and up, in the Objects Explorer window, the selected item in objects tree or members tree with categories is now reported correctly. (#9311)</source>
-        <target>In Visual Studio 2017 and up, in the Objects Explorer window, the selected item in objects tree or members tree with categories is now reported correctly. (#9311)</target>
+        <target>在 Visual Studio 2017 與更高版本的物件檢視器視窗中，現在可正確報讀物件樹狀結構或具分類的成員樹狀結構中選取的項目。(#9311)</target>
       </segment>
     </unit>
     <unit id="9abd1e3f-1a30-4116-8c33-4f76c0168e89">
@@ -32826,9 +32826,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3221</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Add-ons with names that only differ in capitalization are no longer treated as separate add-ons. (#9334)</source>
-        <target>Add-ons with names that only differ in capitalization are no longer treated as separate add-ons. (#9334)</target>
+        <target>名稱僅有大小寫差異的附加元件，不再被視為不同的附加元件。(#9334)</target>
       </segment>
     </unit>
     <unit id="2e3ed518-92c7-4891-bc17-629d09b3f809">
@@ -32836,9 +32836,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3222</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>For Windows OneCore voices, the rate set in NVDA is no longer affected by the rate set in Windows 10 Speech Settings. (#7498)</source>
-        <target>For Windows OneCore voices, the rate set in NVDA is no longer affected by the rate set in Windows 10 Speech Settings. (#7498)</target>
+        <target>對於 Windows OneCore 語音，在 NVDA 中設定的速度不再受 Windows 10 語音設定中的速度影響。(#7498)</target>
       </segment>
     </unit>
     <unit id="fc89b4b8-6afe-4ace-928a-9de92a0b1676">
@@ -32846,9 +32846,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3223</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The log can now be opened with NVDA+F1 when there is no developer info for the current navigator object. (#8613)</source>
-        <target>The log can now be opened with NVDA+F1 when there is no developer info for the current navigator object. (#8613)</target>
+        <target>當目前導覽器物件沒有開發者資訊時，現在可以使用 NVDA+F1 開啟事件記錄檔。(#8613)</target>
       </segment>
     </unit>
     <unit id="2dddb68c-1d2e-4d13-a2b4-524ad6b5c4da">
@@ -32856,9 +32856,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3224</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>It is again possible to use NVDA's table navigation commands in Google Docs, in Firefox and Chrome. (#9494)</source>
-        <target>It is again possible to use NVDA's table navigation commands in Google Docs, in Firefox and Chrome. (#9494)</target>
+        <target>在 Firefox 與 Chrome 的 Google 文件中，已恢復使用 NVDA 表格導覽指令的功能。(#9494)</target>
       </segment>
     </unit>
     <unit id="90688c88-2a2a-4e49-b0bf-2f9cfe802ef0">
@@ -32866,9 +32866,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3225</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The bumper keys now work correctly on Freedom Scientific braille displays. (#8849)</source>
-        <target>The bumper keys now work correctly on Freedom Scientific braille displays. (#8849)</target>
+        <target>Freedom Scientific 點字顯示器上的 Bumper 鍵現在可正確運作。(#8849)</target>
       </segment>
     </unit>
     <unit id="2b1c569b-6752-4667-b1a4-60ef1f154000">
@@ -32876,9 +32876,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3226</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>When reading the first character of a document in Notepad++ 7.7 X64, NVDA no longer freezes for up to ten seconds. (#9609)</source>
-        <target>When reading the first character of a document in Notepad++ 7.7 X64, NVDA no longer freezes for up to ten seconds. (#9609)</target>
+        <target>在 Notepad++ 7.7 X64 中讀取文件第一個字元時，NVDA 不再凍結長達十秒。(#9609)</target>
       </segment>
     </unit>
     <unit id="b79d011e-4d4e-41c5-b5f0-577018fa1ca0">
@@ -32886,9 +32886,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3227</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>HTCom can now be used with a Handy Tech Braille display in combination with NVDA. (#9691)</source>
-        <target>HTCom can now be used with a Handy Tech Braille display in combination with NVDA. (#9691)</target>
+        <target>HTCom 現在可搭配 NVDA 與 Handy Tech 點字顯示器使用。(#9691)</target>
       </segment>
     </unit>
     <unit id="7d6b488b-8386-4381-93e7-34688db53115">
@@ -32896,9 +32896,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3228</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Mozilla Firefox, updates to a live region are no longer reported if the live region is in a background tab. (#1318)</source>
-        <target>In Mozilla Firefox, updates to a live region are no longer reported if the live region is in a background tab. (#1318)</target>
+        <target>在 Mozilla Firefox 中，若即時區域位於背景分頁，將不再報讀即時區域的更新。(#1318)</target>
       </segment>
     </unit>
     <unit id="7f44841e-e8dc-47cd-92d1-8d2728b48f78">
@@ -32906,9 +32906,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3229</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA's browse mode Find dialog no longer fails to function if NVDA's About dialog is currently open in the background. (#8566)</source>
-        <target>NVDA's browse mode Find dialog no longer fails to function if NVDA's About dialog is currently open in the background. (#8566)</target>
+        <target>若 NVDA 的關於對話框目前在背景開啟，NVDA 的瀏覽模式尋找對話框不再無法運作。(#8566)</target>
       </segment>
     </unit>
     <unit id="bba3be38-10a3-4b16-991c-10a313844b12">
@@ -32926,9 +32926,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3233</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>You can now set the "disableBrowseModeByDefault" property on app modules to leave browse mode off by default. (#8846)</source>
-        <target>You can now set the "disableBrowseModeByDefault" property on app modules to leave browse mode off by default. (#8846)</target>
+        <target>您現在可以在應用程式模組上設定 `disableBrowseModeByDefault` 屬性，讓瀏覽模式預設為關閉。(#8846)</target>
       </segment>
     </unit>
     <unit id="3b99e2b9-ee1d-4923-b0d4-74c77ea6be3d">
@@ -32936,9 +32936,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3234</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The extended window style of a window is now exposed using the `extendedWindowStyle` property on Window objects and their derivatives. (#9136)</source>
-        <target>The extended window style of a window is now exposed using the `extendedWindowStyle` property on Window objects and their derivatives. (#9136)</target>
+        <target>視窗的延伸視窗樣式現在透過 Window 物件及其衍生類別上的 `extendedWindowStyle` 屬性公開。(#9136)</target>
       </segment>
     </unit>
     <unit id="dfe6265e-0a45-4b6c-98e9-ad92a5311050">
@@ -32946,9 +32946,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3235</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Updated comtypes package to 1.1.7. (#9440, #8522)</source>
-        <target>Updated comtypes package to 1.1.7. (#9440, #8522)</target>
+        <target>已將 comtypes package 更新至 1.1.7。(#9440, #8522)</target>
       </segment>
     </unit>
     <unit id="84a2a9b1-b26c-4c93-982a-c6102f8ea4b6">
@@ -32956,9 +32956,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3236</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>When using the report module info command, the order of information has changed to present the module first. (#7338)</source>
-        <target>When using the report module info command, the order of information has changed to present the module first. (#7338)</target>
+        <target>使用「報讀模組資訊」指令時，資訊順序已變更為優先呈現模組。(#7338)</target>
       </segment>
     </unit>
     <unit id="cb7137b0-9429-4069-a203-6f0931c4b554">
@@ -32966,9 +32966,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3237</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Added an example to demonstrate using nvdaControllerClient.dll from C#. (#9600)</source>
-        <target>Added an example to demonstrate using nvdaControllerClient.dll from C#. (#9600)</target>
+        <target>新增了從 C# 使用 `nvdaControllerClient.dll` 的範例來進行示範。(#9600)</target>
       </segment>
     </unit>
     <unit id="0a7481c6-4c74-46ab-8795-bc93b7573ff8">
@@ -32976,9 +32976,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3238</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Added a new isWin10 function to the winVersion module which returns whether or not this copy of NVDA is running on (at least) the supplied release version of Windows 10 (such as 1903). (#9761)</source>
-        <target>Added a new isWin10 function to the winVersion module which returns whether or not this copy of NVDA is running on (at least) the supplied release version of Windows 10 (such as 1903). (#9761)</target>
+        <target>在 `winVersion` 模組中新增了 `isWin10` 函式，用於回傳此 NVDA 複本是否在(至少)提供的 Windows 10 發行版本(例如 1903)上執行。(#9761)</target>
       </segment>
     </unit>
     <unit id="f2b9f9ec-4f87-4fa6-9266-9ffac01fd487">
@@ -32986,9 +32986,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3239</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The NVDA Python console now  contains more useful modules in its namespace (such as appModules, globalPlugins, config and textInfos). (#9789)</source>
-        <target>The NVDA Python console now  contains more useful modules in its namespace (such as appModules, globalPlugins, config and textInfos). (#9789)</target>
+        <target>NVDA Python 主控台現在於其命名空間中包含更多實用的模組(例如 `appModules`、`globalPlugins`、`config` 與 `textInfos`)。(#9789)</target>
       </segment>
     </unit>
     <unit id="53229ccd-4a98-482c-bba8-26b3cf275b7c">
@@ -32996,9 +32996,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3240</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The result of the last executed command in the NVDA Python console is now accessible from the _ (line) variable. (#9782)</source>
-        <target>The result of the last executed command in the NVDA Python console is now accessible from the _ (line) variable. (#9782)</target>
+        <target>在 NVDA Python 主控台中，上一次執行指令的結果現在可透過 `_`(底線)變數存取。(#9782)</target>
       </segment>
     </unit>
     <unit id="c492d444-a873-44df-8710-5c749f494ce4">
@@ -33006,9 +33006,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3241</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Note that this shadows the gettext translation function also called "_". To access the translation function: del _</source>
-        <target>Note that this shadows the gettext translation function also called "_". To access the translation function: del _</target>
+        <target>請注意，這會遮蔽同樣名為 `_` 的 gettext 翻譯函式。若要存取翻譯函式，請執行：`del _`</target>
       </segment>
     </unit>
     <unit id="42f8845c-db12-4104-bbe9-eba95dc26b4b">
@@ -33016,7 +33016,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3243</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>2019.1.1</source>
         <target>2019.1.1</target>
       </segment>
@@ -33025,9 +33025,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       <notes>
         <note appliesTo="source">line: 3245</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>This point release fixes the following bugs:</source>
-        <target>This point release fixes the following bugs:</target>
+        <target>此小幅更新版本修正了下列錯誤：</target>
       </segment>
     </unit>
     <unit id="c5cabeab-6c6a-4db8-8e12-0d797acd63ed">
@@ -33035,9 +33035,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3247</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA no longer causes Excel 2007 to crash or refuses to report if a cell has a formula. (#9431)</source>
-        <target>NVDA no longer causes Excel 2007 to crash or refuses to report if a cell has a formula. (#9431)</target>
+        <target>NVDA 不再導致 Excel 2007 當機，或拒絕讀出儲存格是否含有公式。(#9431)</target>
       </segment>
     </unit>
     <unit id="e6e7404b-0e47-4ecb-89e9-29325ccc308b">
@@ -33045,9 +33045,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3248</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Google Chrome no longer crashes when interacting with certain listboxes. (#9364)</source>
-        <target>Google Chrome no longer crashes when interacting with certain listboxes. (#9364)</target>
+        <target>與特定清單方塊互動時，Google Chrome 不再當機。(#9364)</target>
       </segment>
     </unit>
     <unit id="1d90ac54-f013-4923-a7f1-9ba1324b61e3">
@@ -33055,9 +33055,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3249</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>An issue has been fixed which prevented copying a users configuration to the system configuration profile. (#9448)</source>
-        <target>An issue has been fixed which prevented copying a users configuration to the system configuration profile. (#9448)</target>
+        <target>已修正導致無法將使用者組態複製到系統組態設定檔的問題。(#9448)</target>
       </segment>
     </unit>
     <unit id="d2e64ee8-5083-443b-8bbb-5c79d645809a">
@@ -33065,9 +33065,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3250</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Microsoft Excel, NVDA again uses the localized message when reporting the location of merged cells. (#9471)</source>
-        <target>In Microsoft Excel, NVDA again uses the localized message when reporting the location of merged cells. (#9471)</target>
+        <target>在 Microsoft Excel 中讀出合併儲存格的位置時，NVDA 再次使用本地化的訊息。(#9471)</target>
       </segment>
     </unit>
     <unit id="1a33d4e1-ffd1-4f78-9da2-d9b007d564c7">
@@ -33075,7 +33075,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3252</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>2019.1</source>
         <target>2019.1</target>
       </segment>
@@ -33084,45 +33084,45 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       <notes>
         <note appliesTo="source">line: 3254</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Highlights of this release include performance improvements when accessing both Microsoft word and Excel, stability and security improvements such as support for add-ons with version compatibility information, and many other bug fixes.</source>
-        <target>Highlights of this release include performance improvements when accessing both Microsoft word and Excel, stability and security improvements such as support for add-ons with version compatibility information, and many other bug fixes.</target>
+        <target>此版本的更新主要包括改善搭配微軟 Word 及 Excel 時的效能，以及NVDA運作的穩定性與安全性，例如：針對附加元件相容版本的資訊以及一些錯誤的修正等。</target>
       </segment>
     </unit>
     <unit id="97b8fd0e-676c-4933-bea2-79f0c08e244d">
       <notes>
         <note appliesTo="source">line: 3256</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Please note that starting from this release of NVDA, custom appModules, globalPlugins, braille display drivers and synth drivers will no longer be automatically loaded from your NVDA user configuration directory.</source>
-        <target>Please note that starting from this release of NVDA, custom appModules, globalPlugins, braille display drivers and synth drivers will no longer be automatically loaded from your NVDA user configuration directory.</target>
+        <target>請注意，從此 NVDA 版本開始，將不再從您的 NVDA 使用者組態目錄中自動載入自訂的 `appModules`、`globalPlugins`、點字顯示器驅動程式與合成器驅動程式。</target>
       </segment>
     </unit>
     <unit id="601443e1-67c6-49b3-9675-7a460ea7a336">
       <notes>
         <note appliesTo="source">line: 3257</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Rather these  should be installed as part of an NVDA add-on. For those developing code for an add-on, code for testing can be placed in a new developer scratchpad directory in the NVDA user configuration directory,  if the Developer scratchpad option  is turned on in NVDA's new Advanced settings panel.</source>
-        <target>Rather these  should be installed as part of an NVDA add-on. For those developing code for an add-on, code for testing can be placed in a new developer scratchpad directory in the NVDA user configuration directory,  if the Developer scratchpad option  is turned on in NVDA's new Advanced settings panel.</target>
+        <target>這些項目應作為 NVDA 附加元件的一部分進行安裝。對於正在開發附加元件程式碼的人員，若在 NVDA 新的進階設定中開啟「開發者測試區」選項，則可將測試用的程式碼放置於 NVDA 使用者組態目錄中新增的 `scratchpad` 開發者測試區目錄。</target>
       </segment>
     </unit>
     <unit id="7f9e7a59-a99f-41ca-ae66-ef9f4e4fb506">
       <notes>
         <note appliesTo="source">line: 3258</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>These changes are necessary to better ensure compatibility of custom code, so that NVDA does not break when this code becomes incompatible with newer releases.</source>
-        <target>These changes are necessary to better ensure compatibility of custom code, so that NVDA does not break when this code becomes incompatible with newer releases.</target>
+        <target>這些變更是為了更妥善地確保自訂程式碼的相容性，以免當此類程式碼與新版本不相容時導致 NVDA 故障。</target>
       </segment>
     </unit>
     <unit id="bd747d9f-550d-423c-9a5e-2d4a377aa9b1">
       <notes>
         <note appliesTo="source">line: 3259</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Please refer to the list of changes further down for more details on this and how add-ons are now better versioned.</source>
-        <target>Please refer to the list of changes further down for more details on this and how add-ons are now better versioned.</target>
+        <target>請參閱下方的變更清單，以取得關於此變更及附加元件版本控制改善的更多詳細資訊。</target>
       </segment>
     </unit>
     <unit id="fe2c6f4f-5a64-4804-8c9f-c2ab1256d3e2">
@@ -33300,9 +33300,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3281</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Add-on authors can now specify the last version of NVDA the add-on has been tested against. If an add-on has been only tested against a  version of NVDA lower than the current version, then NVDA will refuse to install or load the add-on. (#6275)</source>
-        <target>Add-on authors can now specify the last version of NVDA the add-on has been tested against. If an add-on has been only tested against a  version of NVDA lower than the current version, then NVDA will refuse to install or load the add-on. (#6275)</target>
+        <target>附加元件開發者可以指定其附加元件需搭配的 NVDA 最低版本，當使用低於此要求的 NVDA 版本時，NVDA 會拒絕安裝或載入該附加元件。(#6275)</target>
       </segment>
     </unit>
     <unit id="629eced2-342d-4b24-9088-ffb95c8bcaf0">
@@ -33310,9 +33310,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3282</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>This version of NVDA will allow installing and loading of add-ons  that do not yet contain Minimum and Last Tested NVDA version information, but upgrading to future versions of NVDA (E.g. 2019.2) may automatically cause these older add-ons to be disabled.</source>
-        <target>This version of NVDA will allow installing and loading of add-ons  that do not yet contain Minimum and Last Tested NVDA version information, but upgrading to future versions of NVDA (E.g. 2019.2) may automatically cause these older add-ons to be disabled.</target>
+        <target>此版本的 NVDA 尚可支援較舊版本的附加元件，但到了之後的版本(如2019.2)，可能便無法安裝及載入這些沒有標示最低需求版本的附加元件。</target>
       </segment>
     </unit>
     <unit id="cff64de3-b9f8-440c-b2ba-5dc257831440">
@@ -33320,9 +33320,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3283</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The move mouse to navigator object command is now available in Microsoft Word as well as for UIA controls, particularly Microsoft Edge. (#7916, #8371)</source>
-        <target>The move mouse to navigator object command is now available in Microsoft Word as well as for UIA controls, particularly Microsoft Edge. (#7916, #8371)</target>
+        <target>「將滑鼠移至導覽器物件」指令現在可用於 Microsoft Word 以及 UIA 控制項（特別是 Microsoft Edge）。(#7916, #8371)</target>
       </segment>
     </unit>
     <unit id="d9b2d6f6-4c49-4224-8fbf-191e875cf331">
@@ -33330,9 +33330,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3284</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Reporting of text under the mouse has been improved within Microsoft Edge and other UIA applications. (#8370)</source>
-        <target>Reporting of text under the mouse has been improved within Microsoft Edge and other UIA applications. (#8370)</target>
+        <target>在 Microsoft Edge 與其他 UIA 應用程式中，已改善滑鼠下方文字的報讀。(#8370)</target>
       </segment>
     </unit>
     <unit id="63429c6d-51c5-45a1-b285-5f4ac57c5f87">
@@ -33340,9 +33340,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3285</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>When NVDA is started with the `--portable-path` command line parameter, the provided path is automatically filled in when trying to create a portable copy of NVDA using the NVDA menu. (#8623)</source>
-        <target>When NVDA is started with the `--portable-path` command line parameter, the provided path is automatically filled in when trying to create a portable copy of NVDA using the NVDA menu. (#8623)</target>
+        <target>當使用 `--portable-path` 命令列參數啟動 NVDA 時，嘗試使用 NVDA 功能表建立 NVDA 可攜式版時，將會自動填入提供的路徑。(#8623)</target>
       </segment>
     </unit>
     <unit id="b6c48a65-874b-4b96-98e8-408e90c0711d">
@@ -33350,9 +33350,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3286</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Updated the path to the Norwegian braille table to reflect the standard from the year 2015. (#9170)</source>
-        <target>Updated the path to the Norwegian braille table to reflect the standard from the year 2015. (#9170)</target>
+        <target>已更新挪威文點字表路徑，以反映 2015 年的標準。(#9170)</target>
       </segment>
     </unit>
     <unit id="dfe7203a-39c8-4087-81a1-6c0b07539ed6">
@@ -33360,9 +33360,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3287</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>When navigating by paragraph (control+up or down arrows) or navigating by table cell (control+alt+arrows), the existence of spelling errors will no longer be announced, even if NVDA is configured to announce these automatically. This is because paragraphs and table cells can be quite large, and detecting spelling errors in some applications can be very costly. (#9217)</source>
-        <target>When navigating by paragraph (control+up or down arrows) or navigating by table cell (control+alt+arrows), the existence of spelling errors will no longer be announced, even if NVDA is configured to announce these automatically. This is because paragraphs and table cells can be quite large, and detecting spelling errors in some applications can be very costly. (#9217)</target>
+        <target>以段落導覽(Control+向上鍵/向下鍵)或以表格儲存格導航(Control+Alt+方向鍵)時，即使 NVDA 設定為自動讀出拼字錯誤，也不再讀出拼字錯誤的存在。這是因為段落與表格儲存格可能相當大，而在某些應用程式中偵測拼字錯誤可能會耗費大量資源。(#9217)</target>
       </segment>
     </unit>
     <unit id="0587eedc-c2ee-423b-9997-724b3676cdc9">
@@ -33370,9 +33370,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3288</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA no longer automatically loads custom appModules, globalPlugins and braille and synth drivers from the NVDA user configuration directory. This code should be instead packaged as an add-on with correct version information, ensuring that incompatible code is not run with current versions of NVDA. (#9238)</source>
-        <target>NVDA no longer automatically loads custom appModules, globalPlugins and braille and synth drivers from the NVDA user configuration directory. This code should be instead packaged as an add-on with correct version information, ensuring that incompatible code is not run with current versions of NVDA. (#9238)</target>
+        <target>NVDA 不再從 NVDA 使用者組態目錄自動載入自訂的 `appModules`、`globalPlugins` 以及點字與合成器驅動程式。此類程式碼應改為封裝成具備正確版本資訊的附加元件，以確保不相容的程式碼不會在目前的 NVDA 版本中執行。(#9238)</target>
       </segment>
     </unit>
     <unit id="109f2442-6360-469f-85e3-7d4c33fd59eb">
@@ -33380,9 +33380,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3289</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>For developers who need to test code as it is being developed,  enable NVDA's developer scratchpad directory in the Advanced category of NVDA settings, and place your code in the 'scratchpad' directory found in the NVDA user configuration directory when this option is enabled.</source>
-        <target>For developers who need to test code as it is being developed,  enable NVDA's developer scratchpad directory in the Advanced category of NVDA settings, and place your code in the 'scratchpad' directory found in the NVDA user configuration directory when this option is enabled.</target>
+        <target>對於需要在開發過程中測試程式碼的開發人員，請在 NVDA 設定的「進階」類別中啟用 NVDA 開發者測試區目錄，並在啟用此選項後，將您的程式碼放置於 NVDA 使用者組態目錄中的 `scratchpad` 目錄。</target>
       </segment>
     </unit>
     <unit id="be5994b0-e951-4aae-a0ab-62ae42a3b274">
@@ -33390,9 +33390,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3291</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Bug Fixes</source>
-        <target>Bug Fixes</target>
+        <target>錯誤修正</target>
       </segment>
     </unit>
     <unit id="728a412f-3a9a-47f5-be02-20dbc2482498">
@@ -33400,9 +33400,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3293</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>When using OneCore speech synthesizer on Windows 10 April 2018 Update and later, large chunks of silence are no longer inserted between speech utterances. (#8985)</source>
-        <target>When using OneCore speech synthesizer on Windows 10 April 2018 Update and later, large chunks of silence are no longer inserted between speech utterances. (#8985)</target>
+        <target>在 Windows 10 2018 年 4 月更新與更新版本上使用 OneCore 語音合成器時，語句之間不再插入大段的靜音。(#8985)</target>
       </segment>
     </unit>
     <unit id="e3f34ba1-235c-435e-83ca-cfc964eb8689">
@@ -33410,9 +33410,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3294</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>When moving by character in plain text controls (such as Notepad) or browse mode, 32 bit emoji characters consisting of two UTF-16 code points (such as 🤦) will now read properly. (#8782)</source>
-        <target>When moving by character in plain text controls (such as Notepad) or browse mode, 32 bit emoji characters consisting of two UTF-16 code points (such as 🤦) will now read properly. (#8782)</target>
+        <target>在純文字控制項（如記事本）或瀏覽模式中逐字元移動時，由兩個 UTF-16 代碼點組成的 32 位元表情符號字元（例如 🤦），現在將能正確朗讀。(#8782)</target>
       </segment>
     </unit>
     <unit id="bc39ac8f-74d8-4351-bec2-0f252d1331cd">
@@ -33420,9 +33420,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3295</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Improved restart confirmation dialog after changing NVDA's interface language. The text and the button labels are now more concise and less confusing. (#6416)</source>
-        <target>Improved restart confirmation dialog after changing NVDA's interface language. The text and the button labels are now more concise and less confusing. (#6416)</target>
+        <target>改善了變更 NVDA 介面語言後的重新啟動確認對話框。文字及按鈕標籤現在更為簡潔，且較不易令人困惑。(#6416)</target>
       </segment>
     </unit>
     <unit id="abaab54f-73a5-4b13-b4a9-72b3ce3ec4e6">
@@ -33430,9 +33430,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3296</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>If a 3rd party speech synthesizer fails to load, NVDA will fall back to Windows OneCore speech synthesizer on Windows 10, rather than espeak. (#9025)</source>
-        <target>If a 3rd party speech synthesizer fails to load, NVDA will fall back to Windows OneCore speech synthesizer on Windows 10, rather than espeak. (#9025)</target>
+        <target>若第三方語音合成器載入失敗，NVDA 在 Windows 10 上將會退回使用 Windows OneCore 語音合成器，而非 eSpeak。(#9025)</target>
       </segment>
     </unit>
     <unit id="f9cba2ba-73b6-4599-a0cb-e5599a8fe018">
@@ -33440,9 +33440,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3297</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Removed the "Welcome Dialog" entry in the NVDA menu while on secure screens. (#8520)</source>
-        <target>Removed the "Welcome Dialog" entry in the NVDA menu while on secure screens. (#8520)</target>
+        <target>在安全畫面上時，已移除 NVDA 功能表中的「歡迎對話框」項目。(#8520)</target>
       </segment>
     </unit>
     <unit id="0ceba81a-935e-4f19-bce8-1ca19595cace">
@@ -33450,9 +33450,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3298</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>When tabbing or using quick navigation in browse mode, legends on tab panels are now reported more consistently. (#709)</source>
-        <target>When tabbing or using quick navigation in browse mode, legends on tab panels are now reported more consistently. (#709)</target>
+        <target>在瀏覽模式中使用 Tab 鍵或快速導航時，分頁面板上的圖例 (Legend) 現在會更一致地報讀。(#709)</target>
       </segment>
     </unit>
     <unit id="73ddf2aa-0148-4db5-94a7-8128d54a48cc">
@@ -33460,9 +33460,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3299</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA will now announce selection changes for certain time pickers such as in the Alarms and Clock app in Windows 10. (#5231)</source>
-        <target>NVDA will now announce selection changes for certain time pickers such as in the Alarms and Clock app in Windows 10. (#5231)</target>
+        <target>NVDA 現在會報讀特定時間選擇器(例如 Windows 10 的鬧鐘與時鐘應用程式)中的選取變更。(#5231)</target>
       </segment>
     </unit>
     <unit id="143c5083-f2d3-4b0a-a6cd-b6087490246d">
@@ -33470,9 +33470,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3300</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Windows 10's Action Center, NVDA will announce status messages when toggling quick actions such as brightness and focus assist. (#8954)</source>
-        <target>In Windows 10's Action Center, NVDA will announce status messages when toggling quick actions such as brightness and focus assist. (#8954)</target>
+        <target>在 Windows 10 的控制中心，當切換亮度與專注輔助等快速動作時，NVDA 將會報讀狀態訊息。(#8954)</target>
       </segment>
     </unit>
     <unit id="0530c956-5825-49ad-a475-66d710d05094">
@@ -33480,9 +33480,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3301</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In action Center in Windows 10 October 2018 Update and earlier, NVDA will recognize brightness quick action control as a button instead of a toggle button. (#8845)</source>
-        <target>In action Center in Windows 10 October 2018 Update and earlier, NVDA will recognize brightness quick action control as a button instead of a toggle button. (#8845)</target>
+        <target>在 Windows 10 2018 年 10 月更新與更早版本的控制中心，NVDA 會將亮度快速動作控制項識別為按鈕，而非切換按鈕。(#8845)</target>
       </segment>
     </unit>
     <unit id="2f7b2e85-a35b-48ef-afdd-340e6b31820e">
@@ -33490,9 +33490,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3302</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA will again track cursor and announce deleted characters in the Microsoft Excel  go to and find edit fields. (#9042)</source>
-        <target>NVDA will again track cursor and announce deleted characters in the Microsoft Excel  go to and find edit fields. (#9042)</target>
+        <target>NVDA 將會再次追蹤游標，並報讀 Microsoft Excel「到」與「尋找」編輯區中刪除的字元。(#9042)</target>
       </segment>
     </unit>
     <unit id="2310acb4-76cb-4a48-bf6e-e19cc6bc64f5">
@@ -33500,9 +33500,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3303</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fixed a rare browse mode crash in Firefox. (#9152)</source>
-        <target>Fixed a rare browse mode crash in Firefox. (#9152)</target>
+        <target>修正 Firefox 中罕見的瀏覽模式當機問題。(#9152)</target>
       </segment>
     </unit>
     <unit id="036f445b-abf1-4299-98f0-7a4856fe727e">
@@ -33510,9 +33510,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3304</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA no longer fails to report the focus for some controls in the Microsoft Office 2016 ribbon when collapsed.</source>
-        <target>NVDA no longer fails to report the focus for some controls in the Microsoft Office 2016 ribbon when collapsed.</target>
+        <target>在摺疊的 Microsoft Office 2016 功能區中，NVDA 不再無法報讀部分控制項的焦點。</target>
       </segment>
     </unit>
     <unit id="51d02bc2-e2d7-47e9-bdc4-51594e9d0c02">
@@ -33520,9 +33520,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3305</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA no longer fails to report the suggested contact when entering addresses in new messages in Outlook 2016. (#8502)</source>
-        <target>NVDA no longer fails to report the suggested contact when entering addresses in new messages in Outlook 2016. (#8502)</target>
+        <target>在 Outlook 2016 的新郵件中輸入地址時，NVDA 不再無法報讀建議的連絡人。(#8502)</target>
       </segment>
     </unit>
     <unit id="851eccd5-9ff3-4d39-86cc-5807e12fe295">
@@ -33530,9 +33530,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3306</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The last few cursor routing keys on 80 cell eurobraille displays no longer route the cursor to a position at or just after the start of the braille line. (#9160)</source>
-        <target>The last few cursor routing keys on 80 cell eurobraille displays no longer route the cursor to a position at or just after the start of the braille line. (#9160)</target>
+        <target>在 80 方的 Eurobraille 顯示器上，最後幾個游標定位鍵不再將游標定位至點字行的開頭或開頭剛過的位置。(#9160)</target>
       </segment>
     </unit>
     <unit id="8d4b2b3a-5a9a-490d-8725-dfdae58d18d2">
@@ -33540,9 +33540,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3307</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fixed table navigation in threaded view in Mozilla Thunderbird. (#8396)</source>
-        <target>Fixed table navigation in threaded view in Mozilla Thunderbird. (#8396)</target>
+        <target>修正 Mozilla Thunderbird 群組討論檢視中的表格導航問題。(#8396)</target>
       </segment>
     </unit>
     <unit id="983cabe0-91e7-4d6d-aa42-a2e4144a2e21">
@@ -33550,9 +33550,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3308</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Mozilla Firefox and Google Chrome, switching to focus mode now works correctly for certain list boxes and trees (where the list box/tree is not itself focusable but its items are) . (#3573, #9157)</source>
-        <target>In Mozilla Firefox and Google Chrome, switching to focus mode now works correctly for certain list boxes and trees (where the list box/tree is not itself focusable but its items are) . (#3573, #9157)</target>
+        <target>在 Mozilla Firefox 與 Google Chrome 中，對於特定清單方塊與樹狀檢視（清單方塊/樹狀檢視本身不可對焦但其項目可以），切換至焦點模式的功能現在可正確運作。(#3573, #9157)</target>
       </segment>
     </unit>
     <unit id="1318cf63-2ba8-4a29-88bb-1f8685dd6611">
@@ -33560,9 +33560,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3309</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Browse mode is now correctly turned on by default when reading messages in Outlook 2016/365 if using NVDA's experimental UI Automation support for Word Documents. (#9188)</source>
-        <target>Browse mode is now correctly turned on by default when reading messages in Outlook 2016/365 if using NVDA's experimental UI Automation support for Word Documents. (#9188)</target>
+        <target>若使用 NVDA 的 Word 文件實驗性 UI Automation 支援，在 Outlook 2016/365 中閱讀郵件時，預設會正確開啟瀏覽模式。(#9188)</target>
       </segment>
     </unit>
     <unit id="542efe85-1349-4ee4-b21f-50a426681ed1">
@@ -33570,9 +33570,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3310</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA is now less likely to freeze in such a way that the only way to escape is signing out from your current windows session. (#6291)</source>
-        <target>NVDA is now less likely to freeze in such a way that the only way to escape is signing out from your current windows session. (#6291)</target>
+        <target>NVDA 現在較不容易發生凍結至必須登出目前 Windows 工作階段才能脫困的情況。(#6291)</target>
       </segment>
     </unit>
     <unit id="60079f5f-8939-4547-a55c-3a564f48a9f5">
@@ -33580,9 +33580,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3311</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Windows 10 October 2018 Update and later, when opening cloud clipboard history with clipboard empty, NVDA will announce clipboard status. (#9103)</source>
-        <target>In Windows 10 October 2018 Update and later, when opening cloud clipboard history with clipboard empty, NVDA will announce clipboard status. (#9103)</target>
+        <target>在 Windows 10 2018 年 10 月更新與更新版本中，當剪貼簿為空時開啟雲端剪貼簿歷程記錄，NVDA 將會報讀剪貼簿狀態。(#9103)</target>
       </segment>
     </unit>
     <unit id="edd74015-0f1d-46f0-8481-b7d608c1803b">
@@ -33590,9 +33590,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3312</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Windows 10 October 2018 Update and later, when searching for emojis in emoji panel, NVDA will announce top search result. (#9105)</source>
-        <target>In Windows 10 October 2018 Update and later, when searching for emojis in emoji panel, NVDA will announce top search result. (#9105)</target>
+        <target>在 Windows 10 2018 年 10 月更新與更新版本中，於表情符號面板搜尋表情符號時，NVDA 將會報讀第一筆搜尋結果。(#9105)</target>
       </segment>
     </unit>
     <unit id="2188716b-7699-435a-81fe-ecdfc88084f3">
@@ -33600,9 +33600,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3313</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA no longer freezes in the main window of Oracle VirtualBox 5.2 and above. (#9202)</source>
-        <target>NVDA no longer freezes in the main window of Oracle VirtualBox 5.2 and above. (#9202)</target>
+        <target>在 Oracle VirtualBox 5.2 及更高版本的主視窗中，NVDA 不再凍結。(#9202)</target>
       </segment>
     </unit>
     <unit id="57e57077-771a-4900-a47b-35fb25e4a9d2">
@@ -33610,9 +33610,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3314</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Responsiveness in Microsoft Word when navigating by line, paragraph or table cell may be significantly improved in some documents. A reminder that for best performance, set Microsoft Word to Draft view with alt+w,e after opening a document. (#9217)</source>
-        <target>Responsiveness in Microsoft Word when navigating by line, paragraph or table cell may be significantly improved in some documents. A reminder that for best performance, set Microsoft Word to Draft view with alt+w,e after opening a document. (#9217)</target>
+        <target>在某些文件中，使用行、段落或表格儲存格在 Microsoft Word 進行導航時的反應速度可能會有顯著改善。提醒您，為獲得最佳效能，開啟文件後請按 Alt+W, E 將 Microsoft Word 設定為「草稿」模式。(#9217)</target>
       </segment>
     </unit>
     <unit id="43a60c52-4449-42eb-bb27-830da4211491">
@@ -33620,9 +33620,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3315</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Mozilla Firefox and Google Chrome, empty alerts are no longer reported. (#5657)</source>
-        <target>In Mozilla Firefox and Google Chrome, empty alerts are no longer reported. (#5657)</target>
+        <target>在 Mozilla Firefox 與 Google Chrome 中，不再報讀空的警示。(#5657)</target>
       </segment>
     </unit>
     <unit id="7865bc47-fdfa-46b4-aeb3-c5f2af5cc242">
@@ -33630,9 +33630,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3316</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Significant performance improvements when navigating cells in Microsoft Excel, particularly when the spreadsheet contains comments and or validation dropdown lists. (#7348)</source>
-        <target>Significant performance improvements when navigating cells in Microsoft Excel, particularly when the spreadsheet contains comments and or validation dropdown lists. (#7348)</target>
+        <target>在 Microsoft Excel 中導航儲存格時有顯著的效能改善，特別是當試算表包含註解及/或驗證下拉式清單時。(#7348)</target>
       </segment>
     </unit>
     <unit id="05a761cc-457d-4ec4-98cc-0774559eefdf">
@@ -33640,9 +33640,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3317</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>It should be no longer necessary to turn off in-cell editing in Microsoft Excel's options to access the cell edit control with NVDA in Excel 2016/365. (#8146).</source>
-        <target>It should be no longer necessary to turn off in-cell editing in Microsoft Excel's options to access the cell edit control with NVDA in Excel 2016/365. (#8146).</target>
+        <target>在 Excel 2016/365 中使用 NVDA 存取儲存格編輯控制項時，應不再需要關閉 Microsoft Excel 選項中的「允許直接在儲存格內編輯」。(#8146)</target>
       </segment>
     </unit>
     <unit id="b4da24a5-afc7-44fa-8f18-0bc12d2a0e74">
@@ -33650,9 +33650,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3318</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fixed a freeze in Firefox sometimes seen when quick navigating by landmarks, if the Enhanced Aria add-on is in use. (#8980)</source>
-        <target>Fixed a freeze in Firefox sometimes seen when quick navigating by landmarks, if the Enhanced Aria add-on is in use. (#8980)</target>
+        <target>修正若使用 Enhanced Aria 附加元件時，在 Firefox 中依地標快速導航偶爾發生的凍結問題。(#8980)</target>
       </segment>
     </unit>
     <unit id="7f4e1bd1-5173-46dd-a7ca-50b3593dc247">
@@ -33660,9 +33660,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3320</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Changes for Developers</source>
-        <target>Changes for Developers</target>
+        <target>針對開發人員的變更</target>
       </segment>
     </unit>
     <unit id="8ee59dc7-de46-4f94-a2dc-7e833ce2fc6d">
@@ -33670,9 +33670,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3322</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA can now  be built with all editions of Microsoft Visual Studio 2017 (not just the Community edition). (#8939)</source>
-        <target>NVDA can now  be built with all editions of Microsoft Visual Studio 2017 (not just the Community edition). (#8939)</target>
+        <target>NVDA 現在可使用 Microsoft Visual Studio 2017 的所有版本(不僅限於 Community 版本)進行建置。(#8939)</target>
       </segment>
     </unit>
     <unit id="36b83514-f378-47bd-bc09-5c38ce1ad279">
@@ -33680,9 +33680,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3323</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>You can now include log output from liblouis into the NVDA log by setting the louis boolean flag in the debugLogging section of the NVDA configuration. (#4554)</source>
-        <target>You can now include log output from liblouis into the NVDA log by setting the louis boolean flag in the debugLogging section of the NVDA configuration. (#4554)</target>
+        <target>現在可以透過設定 NVDA 組態中 `debugLogging` 區段的 `louis` 布林旗標，將 liblouis 的記錄輸出包含在 NVDA 記錄檔中。(#4554)</target>
       </segment>
     </unit>
     <unit id="177b8857-59b2-4f01-9e93-ea26ceaf0c04">
@@ -33690,9 +33690,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3324</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Add-on authors are now able to provide NVDA version compatibility information in add-on manifests. (#6275, #9055)</source>
-        <target>Add-on authors are now able to provide NVDA version compatibility information in add-on manifests. (#6275, #9055)</target>
+        <target>附加元件作者現在可在附加元件清單中提供 NVDA 版本相容性資訊。(#6275, #9055)</target>
       </segment>
     </unit>
     <unit id="905237cb-0250-4089-8f54-8c4ae31cdabb">
@@ -33700,9 +33700,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3325</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>minimumNVDAVersion: The minimum required version of NVDA for an add-on to work properly.</source>
-        <target>minimumNVDAVersion: The minimum required version of NVDA for an add-on to work properly.</target>
+        <target>最低 NVDA 版本：讓附加元件正常運作所需的 NVDA 最低版本。</target>
       </segment>
     </unit>
     <unit id="a9d2fd47-9244-48ff-999a-d5653b87a8c7">
@@ -33710,9 +33710,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3326</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>lastTestedNVDAVersion: The last version of NVDA an add-on has been tested with.</source>
-        <target>lastTestedNVDAVersion: The last version of NVDA an add-on has been tested with.</target>
+        <target>最新通過測試 NVDA 版本：附加元件已測試過的 NVDA 最後版本。</target>
       </segment>
     </unit>
     <unit id="8816ed83-6d5e-476b-839e-628241020ebb">
@@ -33720,9 +33720,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3327</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>OffsetsTextInfo objects can now implement the _getBoundingRectFromOffset method to allow retrieval of bounding rectangles per characters instead of points. (#8572)</source>
-        <target>OffsetsTextInfo objects can now implement the _getBoundingRectFromOffset method to allow retrieval of bounding rectangles per characters instead of points. (#8572)</target>
+        <target>`OffsetsTextInfo` 物件現在可實作 `_getBoundingRectFromOffset` 方法，以允許逐字元（而非依點）擷取邊界矩形。(#8572)</target>
       </segment>
     </unit>
     <unit id="1157e775-86ac-477f-837c-290b71ab0716">
@@ -33730,9 +33730,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3328</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Added a boundingRect property to TextInfo objects to retrieve the bounding rectangle of a range of text. (#8371)</source>
-        <target>Added a boundingRect property to TextInfo objects to retrieve the bounding rectangle of a range of text. (#8371)</target>
+        <target>已新增 `boundingRect` 屬性至 `TextInfo` 物件，以擷取文字範圍的邊界矩形。(#8371)</target>
       </segment>
     </unit>
     <unit id="edd9c1d6-144f-4a4d-94d3-a2d25eec9dc4">
@@ -33740,9 +33740,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3329</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Properties and methods within classes can now be marked as abstract in NVDA. These classes will raise an error if instantiated. (#8294, #8652, #8658)</source>
-        <target>Properties and methods within classes can now be marked as abstract in NVDA. These classes will raise an error if instantiated. (#8294, #8652, #8658)</target>
+        <target>NVDA 中的類別屬性與方法現在可標記為抽象。若實體化這些類別將會引發錯誤。(#8294, #8652, #8658)</target>
       </segment>
     </unit>
     <unit id="a1161716-b591-44fb-a5ac-1320325bc919">
@@ -33750,9 +33750,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3330</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA can log the time since input when text is spoken, which helps in measuring perceived responsiveness. This can be enabled by setting the timeSinceInput setting to True in the debugLog section of the NVDA configuration. (#9167)</source>
-        <target>NVDA can log the time since input when text is spoken, which helps in measuring perceived responsiveness. This can be enabled by setting the timeSinceInput setting to True in the debugLog section of the NVDA configuration. (#9167)</target>
+        <target>NVDA 可記錄文字朗讀時距離輸入經過的時間，這有助於測量感知的反應速度。此功能可透過將 NVDA 組態 `debugLog` 區段中的 `timeSinceInput` 設定設為 `True` 來啟用。(#9167)</target>
       </segment>
     </unit>
     <unit id="7538afda-1135-4121-9f10-c37db79cc63d">
@@ -33760,7 +33760,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3332</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>2018.4.1</source>
         <target>2018.4.1</target>
       </segment>
@@ -33769,9 +33769,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       <notes>
         <note appliesTo="source">line: 3334</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>This release fixes a crash at start up if NVDA's user interface language is set to Aragonese. (#9089)</source>
-        <target>This release fixes a crash at start up if NVDA's user interface language is set to Aragonese. (#9089)</target>
+        <target>這個版本修正了當 NVDA 使用者介面語言設為阿拉貢文時，啟動會當機的問題。(#9089)</target>
       </segment>
     </unit>
     <unit id="337a71b0-f948-459e-baa6-e55e56bedad4">
@@ -33779,7 +33779,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3336</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>2018.4</source>
         <target>2018.4</target>
       </segment>
@@ -33788,9 +33788,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       <notes>
         <note appliesTo="source">line: 3338</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Highlights of this release include performance improvements in recent Mozilla Firefox versions, announcement of emojis with all synthesizers, reporting of replied/forwarded status in Outlook, reporting the distance of the cursor to the edge of a Microsoft Word page, and many bug fixes.</source>
-        <target>Highlights of this release include performance improvements in recent Mozilla Firefox versions, announcement of emojis with all synthesizers, reporting of replied/forwarded status in Outlook, reporting the distance of the cursor to the edge of a Microsoft Word page, and many bug fixes.</target>
+        <target>此版本更新包含了支援所有語音合成器的表情符號報讀、對新版 Firefox 的效能改善、在 Outlook 中可以報讀已回覆/已轉寄等狀態訊息，在 Word 中可以描述當前游標與頁面邊緣的距離，以及一些錯誤修正。</target>
       </segment>
     </unit>
     <unit id="d015df8f-46b9-4702-b640-4b9c4c4f7a95">
@@ -33798,9 +33798,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3340</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>New Features</source>
-        <target>New Features</target>
+        <target>新功能</target>
       </segment>
     </unit>
     <unit id="24ef7414-fdf7-41f7-bef0-773c5db11a35">
@@ -33808,9 +33808,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3342</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>New braille tables: Chinese (China, Mandarin) grade 1 and grade 2. (#5553)</source>
-        <target>New braille tables: Chinese (China, Mandarin) grade 1 and grade 2. (#5553)</target>
+        <target>新點字表：中文中國漢語現行點字，中文中國漢語雙拼點字。(#5553)</target>
       </segment>
     </unit>
     <unit id="80cfde54-9ac8-4860-a93e-8af98e57d27b">
@@ -33818,9 +33818,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3343</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Replied / Forwarded status is now reported on mail items in the Microsoft Outlook message list. (#6911)</source>
-        <target>Replied / Forwarded status is now reported on mail items in the Microsoft Outlook message list. (#6911)</target>
+        <target>在 Microsoft Outlook 訊息清單的郵件項目上，會讀出已回覆/已轉寄狀態。(#6911)</target>
       </segment>
     </unit>
     <unit id="004d0bab-38e9-424f-8c23-ab5444236b4c">
@@ -33828,9 +33828,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3344</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA is now able to read descriptions for emoji as well as other characters that are part of the Unicode Common Locale Data Repository. (#6523)</source>
-        <target>NVDA is now able to read descriptions for emoji as well as other characters that are part of the Unicode Common Locale Data Repository. (#6523)</target>
+        <target>NVDA 已可描述表情符號，以及其他屬於 Unicode Common Locale Data Repository 一部分的字元。(#6523)</target>
       </segment>
     </unit>
     <unit id="8eb0b06b-67bb-46e3-966f-a07e962f01fd">
@@ -33838,9 +33838,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3345</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Microsoft Word, the cursor's distance from the top and left edges of the page can be reported by pressing NVDA+numpadDelete. (#1939)</source>
-        <target>In Microsoft Word, the cursor's distance from the top and left edges of the page can be reported by pressing NVDA+numpadDelete. (#1939)</target>
+        <target>在 Microsoft Word 中，按下 NVDA+數字鍵盤 Delete ，可以聽到 NVDA 報讀編輯游標與文件頁面上緣及左緣的距離。(#1939)</target>
       </segment>
     </unit>
     <unit id="7716db3e-82da-47ca-8b3c-2cfe16b8a571">
@@ -33848,9 +33848,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3346</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Google Sheets with braille mode enabled, NVDA no longer announces 'selected' on every cell when moving focus between cells. (#8879)</source>
-        <target>In Google Sheets with braille mode enabled, NVDA no longer announces 'selected' on every cell when moving focus between cells. (#8879)</target>
+        <target>在啟用點字模式的 Google 試算表中，於儲存格間移動焦點時，NVDA 不再於每個儲存格報讀「已選取」。(#8879)</target>
       </segment>
     </unit>
     <unit id="f64cc562-6416-4888-a0c9-b44ccb940e92">
@@ -33858,9 +33858,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3347</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Added support for Foxit Reader and Foxit Phantom PDF. (#8944)</source>
-        <target>Added support for Foxit Reader and Foxit Phantom PDF. (#8944)</target>
+        <target>新增對 Foxit Reader 及 Foxit Phantom PDF 的支援。(#8944)</target>
       </segment>
     </unit>
     <unit id="3f10b6f1-d70a-4182-8149-cf0800641701">
@@ -33868,9 +33868,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3348</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Added support for the DBeaver database tool. (#8905)</source>
-        <target>Added support for the DBeaver database tool. (#8905)</target>
+        <target>新增對 DBeaver 資料庫工具的支援。(#8905)</target>
       </segment>
     </unit>
     <unit id="552e8a39-5ab8-430f-9b38-2bfc6be75b0f">
@@ -33878,9 +33878,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3350</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Changes</source>
-        <target>Changes</target>
+        <target>變更</target>
       </segment>
     </unit>
     <unit id="7989776a-0e39-4757-8afa-312baeaa5a34">
@@ -33888,9 +33888,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3352</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>"Report help balloons" in the Object Presentations dialog has been renamed to "Report notifications" to include reporting of toast notifications in Windows 8 and later. (#5789)</source>
-        <target>"Report help balloons" in the Object Presentations dialog has been renamed to "Report notifications" to include reporting of toast notifications in Windows 8 and later. (#5789)</target>
+        <target>物件呈現對話框中的「讀出氣泡提示」，已重新命名為「讀出通知」，以涵蓋 Windows 8 與更新版本中的 Toast 通知報讀。(#5789)</target>
       </segment>
     </unit>
     <unit id="a31833f1-8fee-49bb-a6d6-c56008d289b2">
@@ -33898,9 +33898,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3353</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In NVDA's keyboard settings, the checkboxes to enable or disable NVDA modifier keys are now displayed in a list rather than as separate checkboxes.</source>
-        <target>In NVDA's keyboard settings, the checkboxes to enable or disable NVDA modifier keys are now displayed in a list rather than as separate checkboxes.</target>
+        <target>在 NVDA 鍵盤設定中，原本由數個核取方塊控制 NVDA 鍵，現以整合在一個下拉式方塊中。</target>
       </segment>
     </unit>
     <unit id="5fa95330-785e-4fea-9bac-680d917bf7a5">
@@ -33908,9 +33908,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3354</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA will no longer present redundant information when reading clock system tray on some versions of Windows. (#4364)</source>
-        <target>NVDA will no longer present redundant information when reading clock system tray on some versions of Windows. (#4364)</target>
+        <target>在某些版本的 Windows 上讀取系統匣時鐘時，NVDA 不再呈現多餘的資訊。(#4364)</target>
       </segment>
     </unit>
     <unit id="f881db3b-a52e-40eb-9eed-faa86bada77b">
@@ -33918,9 +33918,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3355</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Updated liblouis braille translator to version 3.7.0. (#8697)</source>
-        <target>Updated liblouis braille translator to version 3.7.0. (#8697)</target>
+        <target>已將 liblouis 點字轉譯表更新至版本 3.7.0。(#8697)</target>
       </segment>
     </unit>
     <unit id="8fcca426-09d9-4cac-b845-ce6110616151">
@@ -33928,9 +33928,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3356</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Updated eSpeak-NG to commit 919f3240cbb.</source>
-        <target>Updated eSpeak-NG to commit 919f3240cbb.</target>
+        <target>已將 eSpeak-NG 更新至 commit 919f3240cbb。</target>
       </segment>
     </unit>
     <unit id="7dfca3d7-fe7f-4560-8261-f7643224f2b4">
@@ -33938,9 +33938,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3358</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Bug Fixes</source>
-        <target>Bug Fixes</target>
+        <target>錯誤修正</target>
       </segment>
     </unit>
     <unit id="3aa5f58e-eca3-483d-b199-8f18ac52866c">
@@ -33948,9 +33948,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3360</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Outlook 2016/365, the category and flag status are reported for messages. (#8603)</source>
-        <target>In Outlook 2016/365, the category and flag status are reported for messages. (#8603)</target>
+        <target>在 Outlook 2016/365 中，會報讀訊息的類別與標幟狀態。(#8603)</target>
       </segment>
     </unit>
     <unit id="201d408e-246c-4c09-a332-d5f6f6d5be5f">
@@ -33958,9 +33958,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3361</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>When NVDA is set to languages such as Kirgyz, Mongolian or Macedonian, it no longer shows a dialog on start-up warning that the language is not supported by the Operating System. (#8064)</source>
-        <target>When NVDA is set to languages such as Kirgyz, Mongolian or Macedonian, it no longer shows a dialog on start-up warning that the language is not supported by the Operating System. (#8064)</target>
+        <target>當 NVDA 設為吉爾吉斯文、蒙古文或馬其頓文等語言時，啟動時不再顯示警告作業系統不支援該語言的對話框。(#8064)</target>
       </segment>
     </unit>
     <unit id="136d49b6-3eeb-4e86-8930-8d3fbb5d3657">
@@ -33968,9 +33968,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3362</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Moving the mouse to the navigator object will now much more accurately move the mouse to the browse mode position in Mozilla Firefox, Google Chrome and Acrobat Reader DC. (#6460)</source>
-        <target>Moving the mouse to the navigator object will now much more accurately move the mouse to the browse mode position in Mozilla Firefox, Google Chrome and Acrobat Reader DC. (#6460)</target>
+        <target>在 Mozilla Firefox、Google Chrome 及 Acrobat Reader DC 中，將滑鼠移至導覽器物件的功能，能更精確地將滑鼠移至瀏覽模式位置。(#6460)</target>
       </segment>
     </unit>
     <unit id="2225fa70-b115-4a8b-998d-467c2933b166">
@@ -33978,9 +33978,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3363</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Interacting with combo boxes on the web in Firefox, Chrome and Internet Explorer has been improved. (#8664)</source>
-        <target>Interacting with combo boxes on the web in Firefox, Chrome and Internet Explorer has been improved. (#8664)</target>
+        <target>在 Firefox、Chrome 及 Internet Explorer 中與網頁上的下拉式方塊互動已獲改善。(#8664)</target>
       </segment>
     </unit>
     <unit id="5428fd03-0c18-46e1-817e-220a079229f4">
@@ -33988,9 +33988,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3364</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>If running on the Japanese version of Windows XP or Vista, NVDA now displays OS version requirements message as expected. (#8771)</source>
-        <target>If running on the Japanese version of Windows XP or Vista, NVDA now displays OS version requirements message as expected. (#8771)</target>
+        <target>若在日文版的 Windows XP 或 Vista 上執行，NVDA 現在會如預期顯示作業系統版本需求訊息。(#8771)</target>
       </segment>
     </unit>
     <unit id="bdff4c89-fe5e-47d3-9275-377a0b41b4d0">
@@ -33998,9 +33998,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3365</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Performance improvements when navigating large pages with lots of dynamic changes in Mozilla Firefox. (#8678)</source>
-        <target>Performance improvements when navigating large pages with lots of dynamic changes in Mozilla Firefox. (#8678)</target>
+        <target>在 Mozilla Firefox 中導航具有大量動態變更的大型頁面時，效能已獲改善。(#8678)</target>
       </segment>
     </unit>
     <unit id="20b1d33f-351c-4877-9979-848fa168270a">
@@ -34008,9 +34008,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3366</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Braille no longer shows font attributes  if they have been disabled in  Document Formatting settings. (#7615)</source>
-        <target>Braille no longer shows font attributes  if they have been disabled in  Document Formatting settings. (#7615)</target>
+        <target>若已在文件格式設定中停用字型屬性，點字將不再顯示字型屬性。(#7615)</target>
       </segment>
     </unit>
     <unit id="8d695ddb-9cd3-4bed-8cd4-b48d8f0597df">
@@ -34018,9 +34018,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3367</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA no longer fails to track focus in File Explorer and other applications using UI Automation when another app is busy (such as batch processing audio). (#7345)</source>
-        <target>NVDA no longer fails to track focus in File Explorer and other applications using UI Automation when another app is busy (such as batch processing audio). (#7345)</target>
+        <target>當其他應用程式忙碌(例如批次處理音訊)時，NVDA 不再無法追蹤檔案總管與其他使用 UI Automation 應用程式中的焦點。(#7345)</target>
       </segment>
     </unit>
     <unit id="a6db86c4-22b1-4318-b7da-823013113b26">
@@ -34028,9 +34028,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3368</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In ARIA menus on the web, the Escape key will now be passed through to the menu and no longer turn off focus mode unconditionally. (#3215)</source>
-        <target>In ARIA menus on the web, the Escape key will now be passed through to the menu and no longer turn off focus mode unconditionally. (#3215)</target>
+        <target>在網頁上的 ARIA 功能表中，Escape 鍵現在將會傳遞至功能表，不再無條件關閉焦點模式。(#3215)</target>
       </segment>
     </unit>
     <unit id="b77b398f-4c3c-46d6-8e9c-616011224086">
@@ -34038,9 +34038,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3369</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In the new Gmail web interface, when using quick navigation inside messages while reading them, the entire body of the message is no longer reported after the element to which you just navigated. (#8887)</source>
-        <target>In the new Gmail web interface, when using quick navigation inside messages while reading them, the entire body of the message is no longer reported after the element to which you just navigated. (#8887)</target>
+        <target>在新的 Gmail 網頁介面中，閱讀訊息時若在訊息內部使用快速導航，將不再於您剛導航至的元素後報讀整封訊息內文。(#8887)</target>
       </segment>
     </unit>
     <unit id="0663635b-8c25-49af-a291-2a5019159d41">
@@ -34048,9 +34048,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3370</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>After updating NVDA, Browsers such as Firefox and google Chrome should no longer crash, and browse mode should continue to correctly reflect updates to any currently loaded documents. (#7641)</source>
-        <target>After updating NVDA, Browsers such as Firefox and google Chrome should no longer crash, and browse mode should continue to correctly reflect updates to any currently loaded documents. (#7641)</target>
+        <target>更新 NVDA 後，Firefox 與 Google Chrome 等瀏覽器應不再當機，且瀏覽模式應繼續正確反映目前載入文件的更新。(#7641)</target>
       </segment>
     </unit>
     <unit id="96184f00-d171-4f2a-9b48-12f6be0cc26e">
@@ -34058,9 +34058,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3371</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA no longer reports clickable multiple times in a row when navigating clickable content in Browse Mode. (#7430)</source>
-        <target>NVDA no longer reports clickable multiple times in a row when navigating clickable content in Browse Mode. (#7430)</target>
+        <target>在瀏覽模式中導航可點擊內容時，NVDA 不再連續多次報讀「可點擊」。(#7430)</target>
       </segment>
     </unit>
     <unit id="11014b8f-c960-4e71-aeda-2ccdd78b16d5">
@@ -34068,9 +34068,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3372</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Gestures performed on baum Vario 40 braille displays will no longer fail to execute. (#8894)</source>
-        <target>Gestures performed on baum Vario 40 braille displays will no longer fail to execute. (#8894)</target>
+        <target>在 Baum Vario 40 點字顯示器上執行的手勢，將不再執行失敗。(#8894)</target>
       </segment>
     </unit>
     <unit id="3fd82da5-6f58-4ed9-b6d7-ba03da79ee3e">
@@ -34078,9 +34078,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3373</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>In Google Slides with Mozilla Firefox, NVDA no longer reports selected text on every control with focus. (#8964)</source>
-        <target>In Google Slides with Mozilla Firefox, NVDA no longer reports selected text on every control with focus. (#8964)</target>
+        <target>在 Mozilla Firefox 的 Google 簡報中，NVDA 不再於每個取得焦點的控制項上報讀已選取的文字。(#8964)</target>
       </segment>
     </unit>
     <unit id="88355501-5c4b-4b3d-be95-674db83a2c1d">
@@ -34088,9 +34088,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3375</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Changes for Developers</source>
-        <target>Changes for Developers</target>
+        <target>針對開發人員的變更</target>
       </segment>
     </unit>
     <unit id="335838b1-c7b2-47f3-afc0-f71c608ba25e">
@@ -34098,9 +34098,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3377</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>gui.nvdaControls now contains two classes to create accessible lists with check boxes. (#7325)</source>
-        <target>gui.nvdaControls now contains two classes to create accessible lists with check boxes. (#7325)</target>
+        <target>`gui.nvdaControls` 現在包含兩個類別，用於建立具備核取方塊的無障礙清單。(#7325)</target>
       </segment>
     </unit>
     <unit id="90c66291-c5d6-4cd2-8173-62afd9f40224">
@@ -34108,9 +34108,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3378</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>CustomCheckListBox is an accessible subclass of wx.CheckListBox.</source>
-        <target>CustomCheckListBox is an accessible subclass of wx.CheckListBox.</target>
+        <target>`CustomCheckListBox` 是 `wx.CheckListBox` 的無障礙子類別。</target>
       </segment>
     </unit>
     <unit id="f30a6a4b-ddc8-4c6b-a8a9-8653d4cf8ddc">
@@ -34118,9 +34118,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3379</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>AutoWidthColumnCheckListCtrl adds accessible check boxes to an AutoWidthColumnListCtrl, which itself is based on wx.ListCtrl.</source>
-        <target>AutoWidthColumnCheckListCtrl adds accessible check boxes to an AutoWidthColumnListCtrl, which itself is based on wx.ListCtrl.</target>
+        <target>`AutoWidthColumnCheckListCtrl` 為 `AutoWidthColumnListCtrl`(其本身基於 `wx.ListCtrl`)新增了無障礙核取方塊。</target>
       </segment>
     </unit>
     <unit id="138ad8d3-6ffb-4f18-9d71-88fa05039e81">
@@ -34128,9 +34128,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3380</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>If you need to make a wx widget accessible which isn't already, it is possible to do so by using an instance of gui.accPropServer.IAccPropServer_impl. (#7491)</source>
-        <target>If you need to make a wx widget accessible which isn't already, it is possible to do so by using an instance of gui.accPropServer.IAccPropServer_impl. (#7491)</target>
+        <target>若您需要讓尚未具備無障礙功能的 wx widget 變得可供存取，可以使用 `gui.accPropServer.IAccPropServer_impl` 的實體來達成。(#7491)</target>
       </segment>
     </unit>
     <unit id="c35a6039-92de-4c85-9e86-af84e28a436d">
@@ -34138,9 +34138,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3381</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>See the implementation of gui.nvdaControls.ListCtrlAccPropServer for more info.</source>
-        <target>See the implementation of gui.nvdaControls.ListCtrlAccPropServer for more info.</target>
+        <target>請參閱 `gui.nvdaControls.ListCtrlAccPropServer` 的實作以取得更多資訊。</target>
       </segment>
     </unit>
     <unit id="10ed6554-ac83-4dc2-af12-706826ccc345">
@@ -34148,9 +34148,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3382</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Updated configobj to 5.1.0dev commit 5b5de48a. (#4470)</source>
-        <target>Updated configobj to 5.1.0dev commit 5b5de48a. (#4470)</target>
+        <target>已將 configobj 更新至 5.1.0dev commit 5b5de48a。(#4470)</target>
       </segment>
     </unit>
     <unit id="388b737f-ce1d-4920-bc7e-e2679c60fa1c">
@@ -34158,9 +34158,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3383</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The config.post_configProfileSwitch action now takes the optional prevConf keyword argument, allowing handlers to take action based on differences between configuration before and after the profile switch. (#8758)</source>
-        <target>The config.post_configProfileSwitch action now takes the optional prevConf keyword argument, allowing handlers to take action based on differences between configuration before and after the profile switch. (#8758)</target>
+        <target>`config.post_configProfileSwitch` 動作現在接受選擇性的 `prevConf` 關鍵字引數，允許處理常式根據設定檔切換前後的組態差異採取動作。(#8758)</target>
       </segment>
     </unit>
     <unit id="e5deece2-5271-4a13-80fb-8c1a1e98a971">
@@ -34168,7 +34168,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3385</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>2018.3.2</source>
         <target>2018.3.2</target>
       </segment>
@@ -34177,9 +34177,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       <notes>
         <note appliesTo="source">line: 3387</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>This is a minor release to work around a crash in Google Chrome when navigating tweetts on [www.twitter.com](http://www.twitter.com). (#8777)</source>
-        <target>This is a minor release to work around a crash in Google Chrome when navigating tweetts on [www.twitter.com](http://www.twitter.com). (#8777)</target>
+        <target>這是一個小幅更新版本，旨在解決在 [www.twitter.com](http://www.twitter.com) 上瀏覽推文時，Google Chrome 發生的當機問題。(#8777)</target>
       </segment>
     </unit>
     <unit id="953a9829-c2a2-4f74-a0dd-631607c751cd">
@@ -34187,7 +34187,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3389</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>2018.3.1</source>
         <target>2018.3.1</target>
       </segment>
@@ -34196,9 +34196,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       <notes>
         <note appliesTo="source">line: 3391</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>This is a minor release to fix a critical bug in NVDA which caused 32 bit versions of Mozilla Firefox to crash. (#8759)</source>
-        <target>This is a minor release to fix a critical bug in NVDA which caused 32 bit versions of Mozilla Firefox to crash. (#8759)</target>
+        <target>這是一個小幅更新版本，修正了 NVDA 中導致 32 位元版 Mozilla Firefox 當機的重大錯誤。(#8759)</target>
       </segment>
     </unit>
     <unit id="9faeb5ba-d4d6-449f-a51d-81c489813e26">
@@ -34206,7 +34206,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3393</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>2018.3</source>
         <target>2018.3</target>
       </segment>
@@ -34215,9 +34215,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       <notes>
         <note appliesTo="source">line: 3395</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Highlights of this release include automatic detection of many Braille displays, support for new Windows 10 features including the Windows 10 Emoji input panel, and many other bug fixes.</source>
-        <target>Highlights of this release include automatic detection of many Braille displays, support for new Windows 10 features including the Windows 10 Emoji input panel, and many other bug fixes.</target>
+        <target>此次更新主要新增了能夠在背景自動偵測部分點字顯示器的功能、以及支援Win 10的一些輸入法功能，如表情符號鍵盤等，並改善了 eSpeak 對中文的報讀問題。</target>
       </segment>
     </unit>
     <unit id="80d12156-619b-4920-9a59-450577b206fd">
@@ -34225,9 +34225,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3397</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>New Features</source>
-        <target>New Features</target>
+        <target>新功能</target>
       </segment>
     </unit>
     <unit id="dc35a869-0fce-4cb2-b1c9-dff22f8b1f07">
@@ -34235,9 +34235,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3399</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA will report grammar errors when appropriately exposed by web pages in Mozilla Firefox and Google Chrome. (#8280)</source>
-        <target>NVDA will report grammar errors when appropriately exposed by web pages in Mozilla Firefox and Google Chrome. (#8280)</target>
+        <target>當 Mozilla Firefox 及 Google Chrome 中的網頁適當地公開文法錯誤時，NVDA 將會報讀這些錯誤。(#8280)</target>
       </segment>
     </unit>
     <unit id="f6120482-6013-43a2-a628-7ec1362db752">
@@ -34245,9 +34245,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3400</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Content marked as being either inserted or deleted in web pages is now reported in Google Chrome. (#8558)</source>
-        <target>Content marked as being either inserted or deleted in web pages is now reported in Google Chrome. (#8558)</target>
+        <target>在 Google Chrome 中，現在會報讀網頁中標記為插入或刪除的內容。(#8558)</target>
       </segment>
     </unit>
     <unit id="66aa3269-aa23-431a-97c1-43458dc3a1f7">
@@ -34255,9 +34255,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3401</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Added support for BrailleNote QT and Apex BT's scroll wheel when BrailleNote is used as a braille display with NVDA. (#5992, #5993)</source>
-        <target>Added support for BrailleNote QT and Apex BT's scroll wheel when BrailleNote is used as a braille display with NVDA. (#5992, #5993)</target>
+        <target>當 BrailleNote 作為 NVDA 的點字顯示器使用時，新增對 BrailleNote QT 與 Apex BT 滾輪的支援。(#5992, #5993)</target>
       </segment>
     </unit>
     <unit id="2a265c7c-a5d8-4e78-a72f-ed70a5bd4d41">
@@ -34265,9 +34265,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3402</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Added scripts for reporting elapsed and total time of current track in Foobar2000. (#6596)</source>
-        <target>Added scripts for reporting elapsed and total time of current track in Foobar2000. (#6596)</target>
+        <target>新增了用於報讀 Foobar2000 目前軌道經過時間與總時間的腳本。(#6596)</target>
       </segment>
     </unit>
     <unit id="baefe00e-1485-444a-9fe9-5098daa07974">
@@ -34275,9 +34275,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3403</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The Mac command key symbol (⌘) is now announced when reading text with any synthesizer. (#8366)</source>
-        <target>The Mac command key symbol (⌘) is now announced when reading text with any synthesizer. (#8366)</target>
+        <target>表示 Mac 電腦上的 Command 鍵符號 (⌘) 已可被正確報讀。(#8366)</target>
       </segment>
     </unit>
     <unit id="ff3ac7c1-8d45-493b-9020-937ae0204b3d">
@@ -34285,9 +34285,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3404</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Custom roles via the aria-roledescription attribute are now supported in all web browsers. (#8448)</source>
-        <target>Custom roles via the aria-roledescription attribute are now supported in all web browsers. (#8448)</target>
+        <target>現在於所有網頁瀏覽器中，皆支援透過 `aria-roledescription` 屬性自訂角色。(#8448)</target>
       </segment>
     </unit>
     <unit id="df14cd41-8aa4-483f-b020-a730db43495f">
@@ -34295,9 +34295,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3405</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>New braille tables: Czech 8 dot, Central Kurdish, Esperanto, Hungarian, Swedish 8 dot computer braille. (#8226, #8437)</source>
-        <target>New braille tables: Czech 8 dot, Central Kurdish, Esperanto, Hungarian, Swedish 8 dot computer braille. (#8226, #8437)</target>
+        <target>新點字表：捷克文八點、中庫德文、世界文、匈牙利文、瑞典文八點電腦點字。(#8226, #8437)</target>
       </segment>
     </unit>
     <unit id="ad75c8b3-7c8c-4200-bcde-393d1c3a4194">
@@ -34305,9 +34305,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3406</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Support has been added to automatically detect braille displays in the background. (#1271)</source>
-        <target>Support has been added to automatically detect braille displays in the background. (#1271)</target>
+        <target>部分點顯器可支援背景自動偵測的功能。(#1271)</target>
       </segment>
     </unit>
     <unit id="edd43c32-61a1-4319-a80b-3e8e8db03391">
@@ -34315,9 +34315,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3407</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille and HumanWare BrailleNote and Brailliant BI/B displays are currently supported.</source>
-        <target>ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille and HumanWare BrailleNote and Brailliant BI/B displays are currently supported.</target>
+        <target>支援的點顯器包括 ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille and HumanWare BrailleNote 及 Brailliant BI/B 點顯器。</target>
       </segment>
     </unit>
     <unit id="061a82fb-85fb-4d57-a51b-ed6cb3bc4c42">
@@ -34325,9 +34325,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3408</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>You can enable this feature by selecting the automatic option from the list of braille displays in NVDA's braille display selection dialog.</source>
-        <target>You can enable this feature by selecting the automatic option from the list of braille displays in NVDA's braille display selection dialog.</target>
+        <target>您可以在點字設定中的點顯器下拉式方塊中選擇「自動偵測」，NVDA便會自動連上這些點顯器。</target>
       </segment>
     </unit>
     <unit id="85a345e0-3d62-4f5c-af90-10dd327f4af3">
@@ -34335,9 +34335,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3409</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Please consult the documentation for additional details.</source>
-        <target>Please consult the documentation for additional details.</target>
+        <target>詳細資訊可以參考使用者指南。</target>
       </segment>
     </unit>
     <unit id="3f00a1da-09b0-4a7c-9301-4937ef08b348">
@@ -34345,9 +34345,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3410</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Added support for various modern input features introduced in recent Windows 10 releases. These include emoji panel (Fall Creators Update), dictation (Fall Creators Update), hardware keyboard input suggestions (April 2018 Update), and cloud clipboard paste (October 2018 Update). (#7273)</source>
-        <target>Added support for various modern input features introduced in recent Windows 10 releases. These include emoji panel (Fall Creators Update), dictation (Fall Creators Update), hardware keyboard input suggestions (April 2018 Update), and cloud clipboard paste (October 2018 Update). (#7273)</target>
+        <target>加入支援許多 Win 10 近來推出的新輸入法功能。如表情符號鍵盤(Fall Creators Update)、聽寫輸入(Fall Creators Update)、鍵盤輸入建議(April 2018 Update)、雲端剪貼簿(April 2018 Update)等功能。(#7273)</target>
       </segment>
     </unit>
     <unit id="08b007a1-912f-44ac-8666-a3bfc13b28bc">
@@ -34355,9 +34355,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3411</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Content marked as a block quote using ARIA (role blockquote) is now supported in Mozilla Firefox 63. (#8577)</source>
-        <target>Content marked as a block quote using ARIA (role blockquote) is now supported in Mozilla Firefox 63. (#8577)</target>
+        <target>在 Mozilla Firefox 63 中，現在支援使用 ARIA (role blockquote) 標記為區塊引用的內容。(#8577)</target>
       </segment>
     </unit>
     <unit id="b4f4bd39-8ceb-4afe-869d-c0ac6e27162f">
@@ -34365,9 +34365,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3413</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Changes</source>
-        <target>Changes</target>
+        <target>變更</target>
       </segment>
     </unit>
     <unit id="5dc13674-052d-4a3c-9063-7d0e3c500e49">
@@ -34375,9 +34375,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3415</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The list of available languages in NVDA's General Settings is now sorted based on language names instead of ISO 639 codes. (#7284)</source>
-        <target>The list of available languages in NVDA's General Settings is now sorted based on language names instead of ISO 639 codes. (#7284)</target>
+        <target>NVDA 一般設定中可用語言清單的排序方式，現在依據語言名稱而非 ISO 639 代碼。(#7284)</target>
       </segment>
     </unit>
     <unit id="4d50decc-f961-4269-bc50-d9c926f92b7c">
@@ -34385,9 +34385,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3416</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Added default gestures for Alt+Shift+Tab and Windows+Tab with all supported Freedom Scientific braille displays. (#7387)</source>
-        <target>Added default gestures for Alt+Shift+Tab and Windows+Tab with all supported Freedom Scientific braille displays. (#7387)</target>
+        <target>針對所有支援的 Freedom Scientific 點字顯示器，新增了 Alt+Shift+Tab 及 Windows+Tab 的預設手勢。(#7387)</target>
       </segment>
     </unit>
     <unit id="994c2fff-597c-4fbd-aa39-a1484b9faddb">
@@ -34395,9 +34395,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3417</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>For ALVA BC680 and protocol converter displays, it is now possible to assign different functions to the left and right smart pad, thumb and etouch keys. (#8230)</source>
-        <target>For ALVA BC680 and protocol converter displays, it is now possible to assign different functions to the left and right smart pad, thumb and etouch keys. (#8230)</target>
+        <target>對於 ALVA BC680 與通訊協定轉換器顯示器，現在可以為左側與右側的 Smart Pad、Thumb 與 etouch 按鍵指派不同的功能。(#8230)</target>
       </segment>
     </unit>
     <unit id="4c078ba0-5a6e-43f6-bd3f-a451fbf99431">
@@ -34405,9 +34405,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3418</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>For ALVA BC6 displays, the key combination sp2+sp3 will now announce the current date and time, whereas sp1+sp2 emulates the Windows key. (#8230)</source>
-        <target>For ALVA BC6 displays, the key combination sp2+sp3 will now announce the current date and time, whereas sp1+sp2 emulates the Windows key. (#8230)</target>
+        <target>對於 ALVA BC6 顯示器，按鍵組合 sp2+sp3 現在會讀出目前日期與時間，而 sp1+sp2 則模擬 Windows 鍵。(#8230)</target>
       </segment>
     </unit>
     <unit id="0b79c3ce-87fd-4084-8309-ab10e53d502c">
@@ -34415,9 +34415,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3419</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The user is asked once when NVDA starts if they are happy sending usage statistics to NV Access when checking for NVDA updates. (#8217)</source>
-        <target>The user is asked once when NVDA starts if they are happy sending usage statistics to NV Access when checking for NVDA updates. (#8217)</target>
+        <target>NVDA 會在第一次啟動 NVDA 時詢問使用者檢查更新時是否傳送使用數據給官方，以利於改進NVDA。(#8217)</target>
       </segment>
     </unit>
     <unit id="d0f3c0f7-a09e-43c6-a769-247cc78fe586">
@@ -34425,9 +34425,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3420</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>When checking for updates, if the user has agreed to allow sending usage statistics to NV Access, NVDA will now send the name of the current synth driver and braille display in use, to aide in better prioritization for future work on these drivers. (#8217)</source>
-        <target>When checking for updates, if the user has agreed to allow sending usage statistics to NV Access, NVDA will now send the name of the current synth driver and braille display in use, to aide in better prioritization for future work on these drivers. (#8217)</target>
+        <target>若同意傳送使用者統計資料，NVDA會在檢查更新時，傳送該使用者目前所使用的語音合成器及點顯器名稱，以利之後可以改善這些驅動程式。(#8217)</target>
       </segment>
     </unit>
     <unit id="5b455de4-6ec5-46a9-a78b-2fa004e09295">
@@ -34435,9 +34435,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3421</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Updated liblouis braille translator to version 3.6.0. (#8365)</source>
-        <target>Updated liblouis braille translator to version 3.6.0. (#8365)</target>
+        <target>已將 liblouis 點字轉譯表更新至版本 3.6.0。(#8365)</target>
       </segment>
     </unit>
     <unit id="cdad466a-cd7a-4035-ba47-2947e068eb89">
@@ -34445,9 +34445,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3422</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Updated the path to the correct Russian eight-dots Braille table. (#8446)</source>
-        <target>Updated the path to the correct Russian eight-dots Braille table. (#8446)</target>
+        <target>已更新正確的俄文 8 點點字表路徑。(#8446)</target>
       </segment>
     </unit>
     <unit id="4fa2c49a-a791-4e53-a420-9f5bd66475f9">
@@ -34455,9 +34455,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3423</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Updated eSpeak-ng to 1.49.3dev commit 910f4c2. (#8561)</source>
-        <target>Updated eSpeak-ng to 1.49.3dev commit 910f4c2. (#8561)</target>
+        <target>已將 eSpeak-ng 更新至 1.49.3dev commit 910f4c2。(#8561)</target>
       </segment>
     </unit>
     <unit id="e28048b4-4b06-43b9-9f1a-f74eebf93509">
@@ -34465,9 +34465,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3425</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Bug Fixes</source>
-        <target>Bug Fixes</target>
+        <target>錯誤修正</target>
       </segment>
     </unit>
     <unit id="7dfbc839-e580-4c13-a2dd-c383adceb2a0">
@@ -34475,9 +34475,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3427</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Accessible labels for controls in Google Chrome are now more readily reported in browse mode when the label does not appear as content itself. (#4773)</source>
-        <target>Accessible labels for controls in Google Chrome are now more readily reported in browse mode when the label does not appear as content itself. (#4773)</target>
+        <target>在 Google Chrome 的瀏覽模式中，當控制項的無障礙標籤未作為內容本身顯示時，現在更容易被報讀出來。(#4773)</target>
       </segment>
     </unit>
     <unit id="1e5405d5-9be6-4b59-98bd-795175832f3f">
@@ -34485,9 +34485,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3428</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Notifications are now supported in Zoom. For example, this includes mute/unmute status, and incoming messages. (#7754)</source>
-        <target>Notifications are now supported in Zoom. For example, this includes mute/unmute status, and incoming messages. (#7754)</target>
+        <target>支援 Zoom 通知功能。例如，這包含靜音/解除靜音狀態，以及接收到的訊息。(#7754)</target>
       </segment>
     </unit>
     <unit id="b630b79f-933e-499f-808a-ae81a943ec57">
@@ -34495,9 +34495,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3429</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Switching braille context presentation when in browse mode no longer causes braille output to stop following browse mode cursor. (#7741)</source>
-        <target>Switching braille context presentation when in browse mode no longer causes braille output to stop following browse mode cursor. (#7741)</target>
+        <target>在瀏覽模式中切換點字焦點脈絡呈現方式時，不再導致點字輸出停止跟隨瀏覽模式游標。(#7741)</target>
       </segment>
     </unit>
     <unit id="c12e6a86-6312-419e-a9a4-15c963bbfbc6">
@@ -34505,9 +34505,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3430</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>ALVA BC680 braille displays no longer intermittently fail to initialize. (#8106)</source>
-        <target>ALVA BC680 braille displays no longer intermittently fail to initialize. (#8106)</target>
+        <target>ALVA BC680 點字顯示器不再間歇性地初始化失敗。(#8106)</target>
       </segment>
     </unit>
     <unit id="e116d771-8833-4972-82e5-c9ede6d15e9b">
@@ -34515,9 +34515,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3431</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>By default, ALVA BC6 displays will no longer execute emulated system keyboard keys when pressing key combinations involving sp2+sp3 to trigger internal functionality. (#8230)</source>
-        <target>By default, ALVA BC6 displays will no longer execute emulated system keyboard keys when pressing key combinations involving sp2+sp3 to trigger internal functionality. (#8230)</target>
+        <target>預設情況下，當按下包含 sp2+sp3 的按鍵組合以觸發內部功能時，ALVA BC6 點顯器將不再執行模擬的系統鍵盤按鍵。(#8230)</target>
       </segment>
     </unit>
     <unit id="1e1067a2-7e73-4219-aae2-3f4fb386b93a">
@@ -34525,9 +34525,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3432</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Pressing sp2 on an ALVA BC6 display to emulate the alt key now works as advertised. (#8360)</source>
-        <target>Pressing sp2 on an ALVA BC6 display to emulate the alt key now works as advertised. (#8360)</target>
+        <target>在 ALVA BC6 點顯器上按 sp2 以模擬 Alt 鍵的功能，可如預期般運作。(#8360)</target>
       </segment>
     </unit>
     <unit id="7cd015ac-fe53-4e94-af93-0e05283a6475">
@@ -34535,9 +34535,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3433</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA no longer announces redundant keyboard layout changes. (#7383, #8419)</source>
-        <target>NVDA no longer announces redundant keyboard layout changes. (#7383, #8419)</target>
+        <target>NVDA 不再報讀多餘的鍵盤配置變更。(#7383, #8419)</target>
       </segment>
     </unit>
     <unit id="5c2b330e-e0ce-44b1-90ae-f249d825f18f">
@@ -34545,9 +34545,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3434</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Mouse tracking is now much more accurate in Notepad and other plain text edit controls when in a document with more than 65535 characters. (#8397)</source>
-        <target>Mouse tracking is now much more accurate in Notepad and other plain text edit controls when in a document with more than 65535 characters. (#8397)</target>
+        <target>在超過 65535 個字元的文件中，於記事本與其他純文字編輯控制項進行滑鼠追蹤時，準確度現已大幅提升。(#8397)</target>
       </segment>
     </unit>
     <unit id="e47bc33f-8e82-4097-aa55-c72a7844417e">
@@ -34555,9 +34555,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3435</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA will recognize more dialogs in Windows 10 and other modern applications. (#8405)</source>
-        <target>NVDA will recognize more dialogs in Windows 10 and other modern applications. (#8405)</target>
+        <target>對於 Win 10或其他新的應用程式，NVDA 可支援更多的對話框操作。(#8405)</target>
       </segment>
     </unit>
     <unit id="83e275d0-0f6c-465e-97d8-efe171f3806d">
@@ -34565,9 +34565,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 3436</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>On Windows 10 October 2018 Update and Server 2019 and above, NVDA no longer fails to track the system focus when an application freezes or floods the system with events. (#7345, #8535)</source>
-        <target>On Windows 10 October 2018 Update and Server 2019 and above, NVDA no longer fails to track the system focus when an application freezes or floods the system with events. (#7345, #8535)</target>
+        <target>在 Windows 10 2018 年 10 月更新與 Server 2019 及更高版本中，當應用程式凍結或以事件淹沒系統時，NVDA 不再無法追蹤系統焦點。(#7345, #8535)</target>
       </segment>
     </unit>
     <unit id="92be7405-53be-47ba-83b4-4ac1f804d785">
