@@ -5433,7 +5433,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			"braille",
 			"autoScrollRate",
 		))
-		self.autoScrollRateSlider.SetPageSize(5)
+		self.autoScrollRateSlider.SetPageSize(10)
 		self.bindHelpEvent("BrailleAutoScrollRate", self.autoScrollRateSlider)
 
 		if gui._isDebug():
