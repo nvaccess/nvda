@@ -5436,10 +5436,11 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.autoScrollRateSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
 			autoScrollRateText,
 			nvdaControls.EnhancedInputSlider,
-			minValue=5,
+			minValue=0,
 			maxValue=100,
 		)
-		self.autoScrollRateSlider.SetValue(int(config.conf["braille"]["autoScrollRate"] * 5))
+		from globalCommands import calculatePercentageFromRange
+		self.autoScrollRateSlider.SetValue(calculatePercentageFromRange("braille", "autoScrollRate"))
 		self.autoScrollRateSlider.SetPageSize(2)
 		self.bindHelpEvent("BrailleAutoScrollRate", self.autoScrollRateSlider)
 

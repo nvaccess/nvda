@@ -210,7 +210,7 @@ def calculatePercentageFromRange(configSection: str, configKey: str, step: float
 		case _ if step < 0:
 			newValue = max(currentValue + step, minValue)
 		case _:
-			pass
+			newValue = currentValue
 	config.conf[configSection][configKey] = newValue
 	percentage = round((newValue - minValue) / (maxValue - minValue) * 100)
 	return percentage
