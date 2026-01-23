@@ -30,7 +30,9 @@ class DictionaryEntryDialog(
 	TYPE_LABELS_ORDERING: tuple[EntryType] = (
 		EntryType.ANYWHERE,
 		EntryType.WORD,
+		EntryType.PART_OF_WORD,
 		EntryType.REGEXP,
+		EntryType.UNIX,
 	)
 
 	# Translators: This is the label for the edit dictionary entry dialog.

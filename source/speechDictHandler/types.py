@@ -5,6 +5,7 @@
 
 """Types used for the speech dictionary system."""
 
+import fnmatch
 import os
 import re
 from dataclasses import dataclass, field
@@ -25,6 +26,10 @@ class EntryType(DisplayStringIntEnum):
 	"""Regular expression"""
 	WORD = 2
 	"""String must have word boundaries on both sides to match"""
+	PART_OF_WORD = 3
+	"""String must be preseeded or followed by an alphanumeric character to match."""
+	UNIX = 4
+	"""Unix shell-style wildcards."""
 
 	@cached_property
 	def _displayStringLabels(self) -> dict[Self, str]:
@@ -35,6 +40,10 @@ class EntryType(DisplayStringIntEnum):
 			EntryType.REGEXP: _("Regular &expression"),
 			# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 			EntryType.WORD: _("Whole &word"),
+			# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+			EntryType.PART_OF_WORD: _("&Part of word"),
+			# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+			EntryType.UNIX: _("&Unix shell-style wildcards"),
 		}
 
 
@@ -83,13 +92,19 @@ class SpeechDictEntry:
 		flags = re.U
 		if not self.caseSensitive:
 			flags |= re.IGNORECASE
-		if self.type == EntryType.REGEXP:
-			tempPattern = self.pattern
-		elif self.type == EntryType.WORD:
-			tempPattern = r"\b" + re.escape(self.pattern) + r"\b"
-		else:
-			tempPattern = re.escape(self.pattern)
-			self.type = EntryType.ANYWHERE  # Ensure sane values.
+		match self.type:
+			case EntryType.REGEXP:
+				tempPattern = self.pattern
+			case EntryType.WORD:
+				tempPattern = rf"\b{re.escape(self.pattern)}\b"
+			case EntryType.PART_OF_WORD:
+				escaped = re.escape(self.pattern)
+				tempPattern = rf"(?<=\w){escaped}|{escaped}(?=\w)"
+			case EntryType.UNIX:
+				tempPattern = fnmatch.translate(self.pattern)
+			case _:
+				tempPattern = re.escape(self.pattern)
+				self.type = EntryType.ANYWHERE  # Ensure sane values.
 		self.compiled = re.compile(tempPattern, flags)
 
 	def sub(self, text: str) -> str:
