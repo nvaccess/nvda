@@ -605,10 +605,6 @@ class UIATextInfo(textInfos.TextInfo):
 		field["_endOfNode"] = endOfNode
 		field["role"] = obj.role
 		states = obj.states
-		# The user doesn't care about certain states, as they are obvious.
-		states.discard(controlTypes.State.EDITABLE)
-		states.discard(controlTypes.State.MULTILINE)
-		states.discard(controlTypes.State.FOCUSED)
 		field["states"] = states
 		field["nameIsContent"] = nameIsContent = (
 			obj.UIAElement.cachedControlType in self.UIAControlTypesWhereNameIsContent
