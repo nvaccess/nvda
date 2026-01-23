@@ -726,7 +726,7 @@ synthDriverHost32Runtime = env.Command(
 	source="#runtime-builders/synthDriverHost32/setup-runtime.py",
 	chdir=Dir("#runtime-builders/synthDriverHost32"),
 	action=[
-		  "uv run --isolated python setup-runtime.py ",
+		  "uv run -v python setup-runtime.py ",
 		r"rmdir /s /q ..\..\source\lib\x86\synthDriverHost-runtime || exit 0",
 		r"xcopy /e /i /y dist ..\..\source\lib\x86\synthDriverHost-runtime",
 	],
