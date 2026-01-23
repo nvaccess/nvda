@@ -67,6 +67,7 @@ This can be enabled using the "Report when objects support multiple selection" s
 * In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
 * Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)
 * Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
+* A new unassigned global command has been added to toggle the "Play audio coordinates when mouse moves" option. (#19026, @rlawnsrl123)
 
 ### Changes
 
@@ -374,7 +375,6 @@ Localisation data for emojis has been added for Belarusian and Bosnian.
   * Installation date will now be also shown in the details area for external add-ons. (#18560, @CyrilleB79)
 * A new unassigned command has been added to send `control+alt+delete` when controlling another computer via NVDA Remote Access. (#18105)
 * A new setting has been added to automatically mute Remote Access when controlling the local computer. (#18630)
-* A new unassigned global command has been added to toggle the "Play audio coordinates when mouse moves" option. (#19026, @rlawnsrl123)
 
 ### Changes
 
