@@ -7,12 +7,15 @@
 # Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis,
 # Burman's Computer and Education Ltd, Cary-rowen.
 
+from calendar import c
 import itertools
 from typing import (
 	Optional,
 	Tuple,
 	Union,
 )
+
+from numpy import int16
 from annotation import (
 	_AnnotationNavigation,
 	_AnnotationNavigationNode,
@@ -180,6 +183,37 @@ def toggleIntegerValue(
 	state = enumClass(newValue)
 	msg = messageTemplate.format(mode=state.displayString)
 	ui.message(msg)
+
+
+def calculatePercentageFromRange(configSection: str, configKey: str, step: float = 0.0) -> int:
+	"""
+	Calculates the percentage of the current value within a specified range.
+	:param configSection: The configuration section containing the key.
+	:param configKey: The configuration key to evaluate.
+	:param step: The amount to change the value by (positive or negative).
+	:return: The percentage (0-100) of the current value within its defined range.
+	"""
+	currentValue = config.conf[configSection][configKey]
+	minValue = float(
+		config.conf.getConfigValidation(
+		(configSection, configKey),
+	).kwargs["min"]
+	)
+	maxValue = float(
+		config.conf.getConfigValidation(
+		(configSection, configKey),
+	).kwargs["max"]
+	)
+	match step:
+		case _ if step > 0:
+			newValue = min(currentValue + step, maxValue)
+		case _ if step < 0:
+			newValue = max(currentValue + step, minValue)
+		case _:
+			pass
+	config.conf[configSection][configKey] = newValue
+	percentage = round((newValue - minValue) / (maxValue - minValue) * 100)
+	return percentage
 
 
 class GlobalCommands(ScriptableObject):
@@ -869,13 +903,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_increaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
-		maxRate = (
-			config.conf.getConfigValidation(
-				("braille", "autoScrollRate"),
-			).kwargs["max"],
-		)
-		rateValue = config.conf["braille"]["autoScrollRate"] = min(config.conf["braille"]["autoScrollRate"] + 0.5, maxRate)
-		percentage = round((rateValue - minRate) / (maxRate - minRate) * 100)
+		percentage= calculatePercentageFromRange("braille", "autoScrollRate", 0.5)
 		# Translators: Message shown when increasing the braille auto scroll rate.
 		# {rate} will be replaced with the rate as a whole number from 0 to 100.
 		ui.message(_("Scroll rate {rate}").format(rate=percentage))
@@ -886,19 +914,10 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_decreaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
-		minRate = (
-			config.conf.getConfigValidation(
-				("braille", "autoScrollRate"),
-			).kwargs["min"],
-		)
-		if config.conf["braille"]["autoScrollRate"] - 0.5 >= minRate:
-			config.conf["braille"]["autoScrollRate"] -= 0.5
-		else:
-			config.conf["braille"]["autoScrollRate"] = minRate
-		rateValue = config.conf["braille"]["autoScrollRate"]
-		percentage = round((rateValue - 1.0) / 19.0 * 100)
-		rate = f"{percentage}"
-		ui.message(rate)
+		percentage= calculatePercentageFromRange("braille", "autoScrollRate", -0.5)
+		# Translators: Message shown when decreasing the braille auto scroll rate.
+		# {rate} will be replaced with the rate as a whole number from 0 to 100.
+		ui.message(_("Scroll rate {rate}").format(rate=percentage))
 
 	@script(
 		# Translators: Input help mode message for toggle report pages command.
