@@ -112,7 +112,14 @@ jobs:
         key: ${{ env.SCONS_CACHE_KEY }}
     - name: Prepare source code
       shell: cmd
-      run: scons source synthDriverHost32Runtime %sconsArgs% %sconsCores%
+      run: scons source %sconsArgs% %sconsCores%
+    - name: Run synthDriverHost32 runtime builder with its own Python
+      shell: pwsh
+      env:
+        UV_PYTHON: ""          # clear setup-uv override
+        VIRTUAL_ENV: ""        # avoid inheriting outer venv
+      run: |
+        uv run --no-active --directory runtime-builders/synthDriverHost32 python setup-runtime.py
     - name: Prepare for tests
       run: ci/scripts/tests/beforeTests.ps1
     - name: Cache scons build
