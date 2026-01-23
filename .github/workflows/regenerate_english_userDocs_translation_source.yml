@@ -50,6 +50,7 @@ jobs:
         # for any English markdown files changed within the commits of this push,
         # update the corresponding xliff file (if one exists) to reflect the current markdown file,
         # keeping existing translation IDs in tact.
+        $PSNativeCommandUseErrorActionPreference = $true
         $ErrorActionPreference = 'Stop'
         $changedFiles = git diff --name-only ${{github.event.before}}.. -- user_docs/en/*.md
         foreach ($file in $changedFiles) {
