@@ -7,16 +7,13 @@
 # Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis,
 # Burman's Computer and Education Ltd, Cary-rowen.
 
-from calendar import c
 import itertools
-from multiprocessing.reduction import steal_handle
 from typing import (
 	Optional,
 	Tuple,
 	Union,
 )
 
-from numpy import int16
 from annotation import (
 	_AnnotationNavigation,
 	_AnnotationNavigationNode,
@@ -945,7 +942,7 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_increaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
 		newValue = updateConfigFromNewValue("braille", "autoScrollRate", 0.5)
-		percentage= valueToPercentage("braille", "autoScrollRate")
+		percentage = valueToPercentage("braille", "autoScrollRate")
 		# Translators: Message shown when increasing the braille auto scroll rate.
 		# {rate} will be replaced with the rate as a whole number from 0 to 100.
 		ui.message(_("Scroll rate {rate}").format(rate=percentage))
@@ -957,7 +954,7 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_decreaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
 		newValue = updateConfigFromNewValue("braille", "autoScrollRate", -0.5)
-		percentage= valueToPercentage("braille", "autoScrollRate")
+		percentage = valueToPercentage("braille", "autoScrollRate")
 		# Translators: Message shown when decreasing the braille auto scroll rate.
 		# {rate} will be replaced with the rate as a whole number from 0 to 100.
 		ui.message(_("Scroll rate {rate}").format(rate=percentage))
