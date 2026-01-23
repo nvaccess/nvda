@@ -55,6 +55,7 @@ import winUser
 import wx
 from wx.lib import scrolledpanel
 from NVDAState import WritePaths
+from globalCommands import calculatePercentageFromRange
 
 import screenCurtain._screenCurtain
 from utils import mmdevice
@@ -5439,7 +5440,6 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			minValue=0,
 			maxValue=100,
 		)
-		from globalCommands import calculatePercentageFromRange
 		self.autoScrollRateSlider.SetValue(calculatePercentageFromRange("braille", "autoScrollRate"))
 		self.autoScrollRateSlider.SetPageSize(2)
 		self.bindHelpEvent("BrailleAutoScrollRate", self.autoScrollRateSlider)
