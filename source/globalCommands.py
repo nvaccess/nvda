@@ -239,13 +239,12 @@ def percentageToValue(configSection: str, configKey: str, percentage: int) -> fl
 	return value
 
 
-def updateConfigFromNewValue(configSection: str, configKey: str, step: float) -> float:
+def updateConfigFromNewValue(configSection: str, configKey: str, step: float) -> None:
 	"""
 	Updates a configuration value by applying a step, constrained within its valid range.
 	:param configSection: The configuration section containing the key.
 	:param configKey: The configuration key to update.
 	:param step: The step adjustment value (positive, negative, or 0).
-	:return: The new configuration value after applying the step.
 	"""
 	currentValue = config.conf[configSection][configKey]
 	minValue, maxValue = _getConfigValueRange(configSection, configKey)
@@ -941,7 +940,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_increaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
-		newValue = updateConfigFromNewValue("braille", "autoScrollRate", 0.5)
+		updateConfigFromNewValue("braille", "autoScrollRate", 0.5)
 		percentage = valueToPercentage("braille", "autoScrollRate")
 		# Translators: Message shown when increasing the braille auto scroll rate.
 		# {rate} will be replaced with the rate as a whole number from 0 to 100.
@@ -953,7 +952,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_decreaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
-		newValue = updateConfigFromNewValue("braille", "autoScrollRate", -0.5)
+		updateConfigFromNewValue("braille", "autoScrollRate", -0.5)
 		percentage = valueToPercentage("braille", "autoScrollRate")
 		# Translators: Message shown when decreasing the braille auto scroll rate.
 		# {rate} will be replaced with the rate as a whole number from 0 to 100.
