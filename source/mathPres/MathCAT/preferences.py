@@ -45,7 +45,7 @@ class DecimalSeparatorOption(DisplayStringStrEnum):
 	def _displayStringLabels(self) -> dict["DecimalSeparatorOption", str]:
 		return {
 			# Translators: options for decimal separator -- "Auto" = automatically pick the choice based on the language
-			self.AUTO: pgettext("math", "Auto"),
+			self.AUTO: pgettext("math", "Automatic"),
 			# options for decimal separator -- use "."  (and use ", " for block separators)
 			self.DOT: ".",
 			# options for decimal separator -- use ","  (and use ". " for block separators)
@@ -236,18 +236,28 @@ def getAutoBrailleCode(
 	if languageCode is None:
 		languageCode = languageHandler.getLanguage()
 
+	# de, nb, and nn should probably use Marburg when implemented upstream
 	languagesToBrailleCodes: dict[str, str] = {
+		"af": "UEB",
+		"an": "CMU",
+		"ca": "CMU",
+		"da": "LaTeX",
+		"de": "LaTeX",
 		"en": "UEB",
 		"es": "CMU",
-		"es_CO": "CMU",
-		"fi": "ASCIIMath-finnish",
-		"pt_BR": "CMU",
-		"pt_PT": "CMU",
+		"fi": "ASCIIMath-fi",
+		"ga": "UEB",
+		"gl": "CMU",
+		"mn": "UEB",
+		"nb": "LaTeX",
+		"nn": "LaTeX",
+		"pt": "CMU",
+		"ro": "UEB",
 		"sv": "Swedish",
 		"vi": "Vietnam",
 	}
 
-	res = languagesToBrailleCodes.get(languageCode)
+	res = languagesToBrailleCodes.get(languageCode.split("_")[0])
 	if res and res in availableCodes:
 		return res
 	return "ASCIIMath"
