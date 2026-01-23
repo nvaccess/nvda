@@ -7,6 +7,7 @@
 # Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis,
 # Burman's Computer and Education Ltd, Cary-rowen.
 
+from calendar import c
 import itertools
 from typing import (
 	Optional,
@@ -14,6 +15,7 @@ from typing import (
 	Union,
 )
 
+from numpy import int16
 from annotation import (
 	_AnnotationNavigation,
 	_AnnotationNavigationNode,
@@ -194,13 +196,13 @@ def calculatePercentageFromRange(configSection: str, configKey: str, step: float
 	currentValue = config.conf[configSection][configKey]
 	minValue = float(
 		config.conf.getConfigValidation(
-			(configSection, configKey),
-		).kwargs["min"],
+		(configSection, configKey),
+	).kwargs["min"]
 	)
 	maxValue = float(
 		config.conf.getConfigValidation(
-			(configSection, configKey),
-		).kwargs["max"],
+		(configSection, configKey),
+	).kwargs["max"]
 	)
 	match step:
 		case _ if step > 0:
@@ -212,6 +214,32 @@ def calculatePercentageFromRange(configSection: str, configKey: str, step: float
 	config.conf[configSection][configKey] = newValue
 	percentage = round((newValue - minValue) / (maxValue - minValue) * 100)
 	return percentage
+
+
+def calculateValueFromPercentage(configSection: str, configKey: str, percentage: int) -> float:
+	"""
+	Calculates the value corresponding to a given percentage within a specified range.
+	:param configSection: The configuration section containing the key.
+	:param configKey: The configuration key to evaluate.
+	:param percentage: The percentage (0-100) to convert to a value.
+	:return: The value corresponding to the given percentage within the defined range.
+	"""
+	minValue = float(
+		config.conf.getConfigValidation(
+		(configSection, configKey),
+	).kwargs["min"]
+	)
+	maxValue = float(
+		config.conf.getConfigValidation(
+		(configSection, configKey),
+	).kwargs["max"]
+	)
+	# Clamp percentage to 0-100 range
+	percentage = max(0, min(100, percentage))
+	# Calculate value from percentage
+	value = minValue + (maxValue - minValue) * (percentage / 100)
+	return value
+
 
 
 class GlobalCommands(ScriptableObject):
@@ -901,7 +929,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_increaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
-		percentage = calculatePercentageFromRange("braille", "autoScrollRate", 0.5)
+		percentage= calculatePercentageFromRange("braille", "autoScrollRate", 0.5)
 		# Translators: Message shown when increasing the braille auto scroll rate.
 		# {rate} will be replaced with the rate as a whole number from 0 to 100.
 		ui.message(_("Scroll rate {rate}").format(rate=percentage))
@@ -912,7 +940,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_decreaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
-		percentage = calculatePercentageFromRange("braille", "autoScrollRate", -0.5)
+		percentage= calculatePercentageFromRange("braille", "autoScrollRate", -0.5)
 		# Translators: Message shown when decreasing the braille auto scroll rate.
 		# {rate} will be replaced with the rate as a whole number from 0 to 100.
 		ui.message(_("Scroll rate {rate}").format(rate=percentage))
