@@ -5428,8 +5428,11 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			minValue=0,
 			maxValue=100,
 		)
-		from globalCommands import calculatePercentageFromRange
-		self.autoScrollRateSlider.SetValue(calculatePercentageFromRange("braille", "autoScrollRate"))
+		from globalCommands import valueToPercentage
+		self.autoScrollRateSlider.SetValue(valueToPercentage(
+			"braille",
+			"autoScrollRate",
+		))
 		self.autoScrollRateSlider.SetPageSize(5)
 		self.bindHelpEvent("BrailleAutoScrollRate", self.autoScrollRateSlider)
 
@@ -5463,8 +5466,12 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		config.conf["braille"]["showMessages"] = self.showMessagesList.GetSelection()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
-		from globalCommands import calculateValueFromPercentage
-		config.conf["braille"]["autoScrollRate"] = calculateValueFromPercentage("braille", "autoScrollRate", self.autoScrollRateSlider.GetValue())
+		from globalCommands import percentageToValue
+		config.conf["braille"]["autoScrollRate"] = percentageToValue(
+			"braille",
+			"autoScrollRate",
+			self.autoScrollRateSlider.GetValue(),
+		)
 		tetherChoice = [x.value for x in TetherTo][self.tetherList.GetSelection()]
 		if tetherChoice == TetherTo.AUTO.value:
 			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value
