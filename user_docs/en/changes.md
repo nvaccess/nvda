@@ -55,6 +55,7 @@ Windows 10 on ARM is also no longer supported.
   * VirusTotal scan results are now available in the details for an add-on.
   An action has been added to view the full scan results on the VirusTotal website. (#18974)
   * A new action has been added to see the latest changes for the current version of an add-on. (#14041, @josephsl, @nvdaes)
+* It is now possible to select which add-ons to copy for use during sign-in and on secure screens. (#6305)
 * Added built-in support for reading math content by integrating MathCAT. (#18323, #19368, @RyanMcCleary, @codeofdusk)
 * Added references (e.g. to footnotes and endnotes) to the elements list in Microsoft Word.
 Also added unassigned Quick Navigation commands to jump to the next/previous reference. (#19300, @LeonarddeR)
@@ -92,6 +93,9 @@ Such controls will now be accessible in browse mode where they weren't before. (
 * The state of the Screen Curtain is no longer dependent on the configuration profile in use. (#10476)
 * A new "Privacy and Security" category has been added to NVDA's settings dialog.
 It currently includes Screen Curtain's settings (previously in the "Vision" category), and the "Logging level" and "Allow NV Access to gather NVDA usage statistics" settings (previously in the "General" category). (#19177, #19296)
+* When copying settings for use during sign-in and on secure screens:
+  * NVDA no longer warns about or copies disabled add-ons. (#8274, #9020)
+  * By default, NVDA doesn't copy any add-ons; you must select any you wish to include. (#12879)
 * The NVDA interface is now translated to Cambodian. (#19450)
 
 ### Bug Fixes
@@ -236,6 +240,8 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
 * The following symbols have been removed from `gui.settingsDialogs.GeneralSettingsPanel` without replacement: `logLevelList`, `allowUsageStatsCheckBox`. (#19296)
 * `gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS` has been removed.
 Use `config.configFlags.LoggingLevel` instead. (#19296)
+* `config.setSystemConfigToCurrentConfig` now takes a `Collection` of add-on IDs (as strings) to copy to the system configuration.
+Only add-ons with the given IDs will be copied. (#19446)
 
 #### Deprecations
 
