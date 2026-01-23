@@ -8,11 +8,17 @@ import importlib
 import fnmatch
 from glob import glob
 import sys
+import argparse
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--dest-dir", default="dist")
+args = parser.parse_args()
 
 nvdaSourceDir = os.path.join("..", "..", "source")
 runtimeSourceDir = os.path.join(nvdaSourceDir, "_bridge", "runtimes", "synthDriverHost")
 runtimeName = "synthDriverHost"
-runtimeDestDir = "dist"
+runtimeDestDir = args.dest_dir
 
 
 sys.path.insert(0, nvdaSourceDir)

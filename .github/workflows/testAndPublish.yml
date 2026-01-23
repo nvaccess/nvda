@@ -119,7 +119,7 @@ jobs:
         UV_PYTHON: ""          # clear setup-uv override
         VIRTUAL_ENV: ""        # avoid inheriting outer venv
       run: |
-        uv run --no-active --directory runtime-builders/synthDriverHost32 python setup-runtime.py
+        uv run --no-active --directory runtime-builders/synthDriverHost32 python setup-runtime.py --dest-dir ../../source/lib/x86/synthDriverHost-runtime
     - name: Prepare for tests
       run: ci/scripts/tests/beforeTests.ps1
     - name: Cache scons build
