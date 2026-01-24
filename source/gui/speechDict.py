@@ -8,10 +8,10 @@ from abc import abstractmethod
 from re import error as RegexpError
 
 import globalVars
-import speechDictHandler
 import wx
 from logHandler import log
-from speechDictHandler.types import DictionaryType, EntryType, SpeechDict
+import speechDictHandler
+from speechDictHandler.types import DictionaryType, EntryType, SpeechDict, SpeechDictEntry
 
 import gui
 import gui.contextHelp
@@ -26,8 +26,8 @@ class DictionaryEntryDialog(
 ):
 	helpId = "SpeechDictionaries"
 
-	TYPE_LABELS = EntryType.ANYWHERE._displayStringLabels
-	TYPE_LABELS_ORDERING = (
+	TYPE_LABELS: dict[EntryType, str] = EntryType.ANYWHERE._displayStringLabels
+	TYPE_LABELS_ORDERING: tuple[EntryType] = (
 		EntryType.ANYWHERE,
 		EntryType.WORD,
 		EntryType.REGEXP,
@@ -68,14 +68,14 @@ class DictionaryEntryDialog(
 		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
-		self.setType(speechDictHandler.ENTRY_TYPE_ANYWHERE)
+		self.setType(EntryType.ANYWHERE)
 		self.patternTextCtrl.SetFocus()
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 
-	def getType(self):
+	def getType(self) -> EntryType:
 		typeRadioValue = self.typeRadioBox.GetSelection()
 		if typeRadioValue == wx.NOT_FOUND:
-			return speechDictHandler.ENTRY_TYPE_ANYWHERE
+			return (EntryType.ANYWHERE,)
 		return DictionaryEntryDialog.TYPE_LABELS_ORDERING[typeRadioValue]
 
 	def onOk(self, evt):
@@ -93,7 +93,7 @@ class DictionaryEntryDialog(
 			return
 		entryType = self.getType()
 		try:
-			dictEntry = self.dictEntry = speechDictHandler.SpeechDictEntry(
+			dictEntry = self.dictEntry = SpeechDictEntry(
 				self.patternTextCtrl.GetValue(),
 				self.replacementTextCtrl.GetValue(),
 				self.commentTextCtrl.GetValue(),
@@ -102,7 +102,7 @@ class DictionaryEntryDialog(
 			)
 		except RegexpError as e:
 			log.debugWarning(f"Could not add dictionary entry due to regex error in the pattern field : {e}")
-			if entryType != speechDictHandler.ENTRY_TYPE_REGEXP:
+			if entryType != EntryType.REGEXP:
 				raise e
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
@@ -120,7 +120,7 @@ class DictionaryEntryDialog(
 			log.debugWarning(
 				f"Could not add dictionary entry due to regex error in the replacement field : {e}",
 			)
-			if entryType != speechDictHandler.ENTRY_TYPE_REGEXP:
+			if entryType != EntryType.REGEXP:
 				raise e
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
