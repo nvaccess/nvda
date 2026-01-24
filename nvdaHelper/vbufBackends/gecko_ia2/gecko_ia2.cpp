@@ -792,8 +792,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		|| (role == ROLE_SYSTEM_TEXT && !isEditable)
 		|| role == IA2_ROLE_HEADING
 		|| role == ROLE_SYSTEM_PAGETAB
-		|| role == ROLE_SYSTEM_BUTTONMENU
-		|| ((role == ROLE_SYSTEM_CHECKBUTTON || role == ROLE_SYSTEM_RADIOBUTTON) && !isLabelVisibleCached());
+		|| role == ROLE_SYSTEM_BUTTONMENU;
 	// Whether this node has a visible label somewhere else in the tree
 	const bool labelVisible = nameIsExplicit && name && name[0] //this node must actually have an explicit name, and not be just an empty string
 		&&(!nameIsContent||role==ROLE_SYSTEM_TABLE) // We only need to know if the name won't be used as content or if it is a table (for table summary)
