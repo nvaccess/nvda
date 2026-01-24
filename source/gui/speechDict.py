@@ -31,6 +31,8 @@ class DictionaryEntryDialog(
 		EntryType.ANYWHERE,
 		EntryType.WORD,
 		EntryType.PART_OF_WORD,
+		EntryType.START_OF_WORD,
+		EntryType.END_OF_WORD,
 		EntryType.REGEXP,
 		EntryType.UNIX,
 	)

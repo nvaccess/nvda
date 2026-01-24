@@ -28,7 +28,11 @@ class EntryType(DisplayStringIntEnum):
 	"""String must have word boundaries on both sides to match"""
 	PART_OF_WORD = 3
 	"""String must be preseeded or followed by an alphanumeric character to match."""
-	UNIX = 4
+	START_OF_WORD = 4
+	"""String must have a word boundary at the start and an alphanumeric character at the end."""
+	END_OF_WORD = 5
+	"""String must have an alphanumeric character at the start and a word boundary at the end."""
+	UNIX = 6
 	"""Unix shell-style wildcards."""
 
 	@cached_property
@@ -42,6 +46,10 @@ class EntryType(DisplayStringIntEnum):
 			EntryType.WORD: _("Whole &word"),
 			# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 			EntryType.PART_OF_WORD: _("&Part of word"),
+			# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+			EntryType.START_OF_WORD: _("&Start of word"),
+			# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+			EntryType.END_OF_WORD: _("E&nd of word"),
 			# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 			EntryType.UNIX: _("&Unix shell-style wildcards"),
 		}
@@ -100,6 +108,10 @@ class SpeechDictEntry:
 			case EntryType.PART_OF_WORD:
 				escaped = re.escape(self.pattern)
 				tempPattern = rf"(?<=\w){escaped}|{escaped}(?=\w)"
+			case EntryType.START_OF_WORD:
+				tempPattern = rf"\b{re.escape(self.pattern)}(?=\w)"
+			case EntryType.END_OF_WORD:
+				tempPattern = rf"(?<=\w){re.escape(self.pattern)}\b"
 			case EntryType.UNIX:
 				tempPattern = fnmatch.translate(self.pattern)
 			case _:
