@@ -87,7 +87,7 @@ class SpeechDictEntry:
 	"""The pattern to match."""
 	replacement: str
 	"""The replacement string."""
-	comment: str
+	comment: str = ""
 	"""A comment associated with this entry."""
 	caseSensitive: bool = True
 	"""Whether the match is case sensitive."""
