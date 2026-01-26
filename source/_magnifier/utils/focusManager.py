@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -23,10 +23,11 @@ class FocusManager:
 	def __init__(self):
 		"""Initialize the focus manager."""
 		self._lastFocusedObject: FocusType | None = None
-		self._lastSystemFocusPosition = Coordinates(0, 0)
-		self._lastNavigatorPosition = Coordinates(0, 0)
 		self._lastMousePosition = Coordinates(0, 0)
-		self._lastValidPosition = Coordinates(0, 0)
+		self._lastSystemFocusPosition = Coordinates(0, 0)
+		self._lastNavigatorObjectPosition = Coordinates(0, 0)
+		self._lastValidSystemFocusPosition = Coordinates(0, 0)
+		self._lastValidNavigatorObjectPosition = Coordinates(0, 0)
 
 	def getCurrentFocusCoordinates(self) -> Coordinates:
 		"""
@@ -37,7 +38,7 @@ class FocusManager:
 		"""
 		# Get all three positions
 		systemFocusPosition = self._getSystemFocusPosition()
-		navigatorPosition = self._getNavigatorPosition()
+		navigatorObjectPosition = self._getNavigatorObjectPosition()
 		mousePosition = self._getMousePosition()
 
 		# Check if left mouse button is pressed
@@ -45,14 +46,14 @@ class FocusManager:
 
 		# Track which positions have changed
 		systemFocusChanged = self._lastSystemFocusPosition != systemFocusPosition
-		navigatorChanged = self._lastNavigatorPosition != navigatorPosition
+		navigatorObjectChanged = self._lastNavigatorObjectPosition != navigatorObjectPosition
 		mouseChanged = self._lastMousePosition != mousePosition
 
 		# Update last positions
 		if systemFocusChanged:
 			self._lastSystemFocusPosition = systemFocusPosition
-		if navigatorChanged:
-			self._lastNavigatorPosition = navigatorPosition
+		if navigatorObjectChanged:
+			self._lastNavigatorObjectPosition = navigatorObjectPosition
 		if mouseChanged:
 			self._lastMousePosition = mousePosition
 
@@ -72,20 +73,21 @@ class FocusManager:
 			return systemFocusPosition
 
 		# Priority 4: Navigator object (NumPad navigation)
-		if navigatorChanged:
+		if navigatorObjectChanged:
 			self._lastFocusedObject = FocusType.NAVIGATOR
-			return navigatorPosition
+			return navigatorObjectPosition
 
 		# No changes detected - return last focused position
-		if self._lastFocusedObject == FocusType.MOUSE:
-			return mousePosition
-		elif self._lastFocusedObject == FocusType.SYSTEM_FOCUS:
-			return systemFocusPosition
-		elif self._lastFocusedObject == FocusType.NAVIGATOR:
-			return navigatorPosition
-		else:
-			# Default to mouse if no previous focus
-			return mousePosition
+		match self._lastFocusedObject:
+			case FocusType.MOUSE:
+				return mousePosition
+			case FocusType.SYSTEM_FOCUS:
+				return systemFocusPosition
+			case FocusType.NAVIGATOR:
+				return navigatorObjectPosition
+			case _:
+				# Default to mouse if no previous focus
+				return mousePosition
 
 	def _getMousePosition(self) -> Coordinates:
 		"""
@@ -110,7 +112,7 @@ class FocusManager:
 			coords = Coordinates(point.x, point.y)
 			# Store as last valid position if not (0, 0)
 			if coords != Coordinates(0, 0):
-				self._lastValidPosition = coords
+				self._lastValidSystemFocusPosition = coords
 			return coords
 		except (NotImplementedError, LookupError, AttributeError, RuntimeError):
 			# Fallback: use focus object location
@@ -122,11 +124,14 @@ class FocusManager:
 					y = top + (height // 2)
 					coords = Coordinates(x, y)
 					if coords != Coordinates(0, 0):
-						self._lastValidPosition = coords
+						self._lastValidSystemFocusPosition = coords
 					return coords
 			except Exception:
+				# translators: Generic exception handler comment
+				# Focus object location may fail (e.g., object without location)
+				# Fall through to return last valid position
 				pass
-		return self._lastValidPosition
+		return self._lastValidSystemFocusPosition
 
 	def _getReviewPosition(self) -> Coordinates | None:
 		"""
@@ -140,6 +145,8 @@ class FocusManager:
 				point = reviewPosition.pointAtStart
 				return Coordinates(point.x, point.y)
 			except (NotImplementedError, LookupError, AttributeError):
+				# Translators: Generic exception handler comment
+				# Review position may not support pointAtStart
 				pass
 		return None
 
@@ -157,10 +164,12 @@ class FocusManager:
 				y = top + (height // 2)
 				return Coordinates(x, y)
 			except Exception:
+				# Translators: Generic exception handler comment
+				# Navigator object may not have a valid location
 				pass
 		return None
 
-	def _getNavigatorPosition(self) -> Coordinates:
+	def _getNavigatorObjectPosition(self) -> Coordinates:
 		"""
 		Get the navigator object position (NumPad navigation).
 		Tries review position first, then navigator object location.
@@ -170,17 +179,17 @@ class FocusManager:
 		# Try review position first
 		position = self._getReviewPosition()
 		if position and position != Coordinates(0, 0):
-			self._lastValidPosition = position
+			self._lastValidNavigatorObjectPosition = position
 			return position
 
 		# Fallback: use navigator object location
 		position = self._getNavigatorObjectLocation()
 		if position and position != Coordinates(0, 0):
-			self._lastValidPosition = position
+			self._lastValidNavigatorObjectPosition = position
 			return position
 
-		# Return last valid position instead of (0, 0)
-		return self._lastValidPosition
+		# Return last valid navigator object position instead of (0, 0)
+		return self._lastValidNavigatorObjectPosition
 
 	def getLastFocusType(self) -> FocusType | None:
 		"""
