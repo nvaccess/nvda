@@ -788,7 +788,7 @@ class _CopyAddonsDialog(
 				npgettext(
 					"addonStore",
 					# Translators: A message to warn the user when attempting to copy add-ons for use on secure screens
-					"You have selected to copy 1 add-on to NVDA's system-wide configuration. "
+					"You have selected to copy {num} add-on to NVDA's system-wide configuration. "
 					"Using this add-on during sign-in and on secure screens is a serious security risk.",
 					"You have selected to copy {num} add-ons to NVDA's system-wide configuration. "
 					"Using these add-ons during sign-in and on secure screens is a serious security risk.",
