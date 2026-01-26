@@ -119,7 +119,7 @@ def panLeft() -> None:
 				pgettext(
 					"magnifier",
 					# Translators: Message announced when arriving at the left edge.
-					"Reached left edge",
+					"At left edge",
 				),
 			)
 		else:
@@ -145,7 +145,7 @@ def panRight() -> None:
 				pgettext(
 					"magnifier",
 					# Translators: Message announced when arriving at the right edge.
-					"Reached right edge",
+					"At right edge",
 				),
 			)
 		else:
@@ -171,7 +171,7 @@ def panUp() -> None:
 				pgettext(
 					"magnifier",
 					# Translators: Message announced when arriving at the top edge.
-					"Reached top edge",
+					"At top edge",
 				),
 			)
 		else:
@@ -197,7 +197,7 @@ def panDown() -> None:
 				pgettext(
 					"magnifier",
 					# Translators: Message announced when arriving at the bottom edge.
-					"Reached bottom edge",
+					"At bottom edge",
 				),
 			)
 		else:

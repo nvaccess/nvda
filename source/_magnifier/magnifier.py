@@ -17,6 +17,7 @@ import speech
 import screenCurtain
 import winUser
 import mouseHandler
+import locationHelper
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (
@@ -47,7 +48,7 @@ class Magnifier:
 		self._isActive: bool = False
 		self._zoomLevel: float = getDefaultZoomLevel()
 		self._panValue: int = getDefaultPanValue()
-		self._panMargin: list[int] = [0, 0, 0, 0]  # left, top, right, bottom
+		self._panMargin: locationHelper.RectLTRB = locationHelper.RectLTRB(0, 0, 0, 0)
 		self._timer: None | wx.Timer = None
 		self._lastFocusedObject: FocusType | None = None
 		self._lastNVDAPosition = Coordinates(0, 0)
@@ -96,7 +97,7 @@ class Magnifier:
 		maxX = int(self._displayOrientation.width - (visibleWidth / 2))
 		maxY = int(self._displayOrientation.height - (visibleHeight / 2))
 
-		self._panMargin = [minX, minY, maxX, maxY]
+		self._panMargin = locationHelper.RectLTRB(left=minX, top=minY, right=maxX, bottom=maxY)
 		log.debug(
 			f"Pan margins updated: left={minX}, top={minY}, right={maxX}, bottom={maxY} "
 			f"(zoom={self.zoomLevel}, visible={visibleWidth}x{visibleHeight})",
@@ -227,38 +228,37 @@ class Magnifier:
 		:param action: The pan action (left, right, up, down)
 		:return: True if we reached the edge limit, False otherwise
 		"""
-		panMarginLeft, panMarginTop, panMarginRight, panMarginBottom = self._panMargin
 		x, y = self._currentCoordinates
 		reachedEdge = False
 
 		match action:
 			case MagnifierAction.PAN_LEFT:
 				newX = x - self._panValue
-				x = max(panMarginLeft, newX)
-				reachedEdge = x == panMarginLeft and newX < panMarginLeft
+				x = max(self._panMargin.left, newX)
+				reachedEdge = x == self._panMargin.left and newX < self._panMargin.left
 			case MagnifierAction.PAN_RIGHT:
 				newX = x + self._panValue
-				x = min(panMarginRight, newX)
-				reachedEdge = x == panMarginRight and newX > panMarginRight
+				x = min(self._panMargin.right, newX)
+				reachedEdge = x == self._panMargin.right and newX > self._panMargin.right
 			case MagnifierAction.PAN_UP:
 				newY = y - self._panValue
-				y = max(panMarginTop, newY)
-				reachedEdge = y == panMarginTop and newY < panMarginTop
+				y = max(self._panMargin.top, newY)
+				reachedEdge = y == self._panMargin.top and newY < self._panMargin.top
 			case MagnifierAction.PAN_DOWN:
 				newY = y + self._panValue
-				y = min(panMarginBottom, newY)
-				reachedEdge = y == panMarginBottom and newY > panMarginBottom
+				y = min(self._panMargin.bottom, newY)
+				reachedEdge = y == self._panMargin.bottom and newY > self._panMargin.bottom
 			case MagnifierAction.PAN_LEFT_EDGE:
-				x = panMarginLeft
+				x = self._panMargin.left
 				reachedEdge = True
 			case MagnifierAction.PAN_RIGHT_EDGE:
-				x = panMarginRight
+				x = self._panMargin.right
 				reachedEdge = True
 			case MagnifierAction.PAN_TOP_EDGE:
-				y = panMarginTop
+				y = self._panMargin.top
 				reachedEdge = True
 			case MagnifierAction.PAN_BOTTOM_EDGE:
-				y = panMarginBottom
+				y = self._panMargin.bottom
 				reachedEdge = True
 			case _:
 				log.error(f"Unknown pan action: {action}")

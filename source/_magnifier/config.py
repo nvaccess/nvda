@@ -45,32 +45,6 @@ class ZoomLevel:
 		]
 
 
-class PanValue:
-	"""
-	Constants and utilities for pan value management.
-	"""
-
-	@classmethod
-	def pan_range(cls) -> list[int]:
-		"""
-		Return the list of available pan values.
-		"""
-		return [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-
-	@classmethod
-	def pan_strings(cls) -> list[str]:
-		"""
-		Return localized pan value strings.
-		"""
-		return [
-			# Translators: Pan value string shown in settings and messages.
-			pgettext("magnifier", "{panValue} px").format(
-				panValue=f"{value}",
-			)
-			for value in cls.pan_range()
-		]
-
-
 def getDefaultZoomLevel() -> float:
 	"""
 	Get default zoom level from config.

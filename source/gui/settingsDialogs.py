@@ -5948,33 +5948,23 @@ class MagnifierPanel(SettingsPanel):
 		self.defaultZoomList.SetSelection(closestIndex)
 
 		# PAN SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the default pan value.
-		defaultPanLabelText = _("Default &pan value:")
+		# Translators: The label for a setting in magnifier settings to select the pan step size (in pixels).
+		panStepSizeLabelText = _("&Panning step size (pixels):")
 
-		panValues = magnifierConfig.PanValue.pan_range()
-		panChoices = magnifierConfig.PanValue.pan_strings()
-
-		self.defaultPanList = sHelper.addLabeledControl(
-			defaultPanLabelText,
-			wx.Choice,
-			choices=panChoices,
+		self.defaultPanSpinCtrl = sHelper.addLabeledControl(
+			panStepSizeLabelText,
+			wx.SpinCtrl,
+			min=1,
+			max=100,
 		)
 		self.bindHelpEvent(
 			"magnifierDefaultPan",
-			self.defaultPanList,
+			self.defaultPanSpinCtrl,
 		)
 
 		# Set default value from config
 		defaultPan = magnifierConfig.getDefaultPanValue()
-		panIndex = bisect.bisect_left(panValues, defaultPan)
-		# Find the closest value
-		if panIndex == 0:
-			closestPanIndex = 0
-		elif panIndex >= len(panValues):
-			closestPanIndex = len(panValues) - 1
-		else:
-			closestPanIndex = min(panIndex - 1, panIndex, key=lambda i: abs(panValues[i] - defaultPan))
-		self.defaultPanList.SetSelection(closestPanIndex)
+		self.defaultPanSpinCtrl.SetValue(defaultPan)
 
 		# FILTER SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the default filter
@@ -6024,8 +6014,7 @@ class MagnifierPanel(SettingsPanel):
 		selectedZoom = self.defaultZoomList.GetSelection()
 		magnifierConfig.setDefaultZoomLevel(magnifierConfig.ZoomLevel.zoom_range()[selectedZoom])
 
-		selectedPanIdx = self.defaultPanList.GetSelection()
-		magnifierConfig.setDefaultPanValue(magnifierConfig.PanValue.pan_range()[selectedPanIdx])
+		magnifierConfig.setDefaultPanValue(self.defaultPanSpinCtrl.GetValue())
 
 		selectedFilterIdx = self.defaultFilterList.GetSelection()
 		magnifierConfig.setDefaultFilter(list(Filter)[selectedFilterIdx])

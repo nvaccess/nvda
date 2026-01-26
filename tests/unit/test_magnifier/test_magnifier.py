@@ -515,3 +515,8 @@ class TestMagnifier(_TestMagnifier):
 
 		# Case 8: Only nvda moved but left pressed (very unlikely)
 		testValues((10, 10), (0, 0), True, (0, 0), FocusType.MOUSE)
+		x, y, width, height = self.magnifier._getMagnifierPosition((960, 540))
+		expected_width = int(self.screenWidth / self.magnifier.zoomLevel)
+		expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
+		self.assertEqual(width, expected_width)
+		self.assertEqual(height, expected_height)

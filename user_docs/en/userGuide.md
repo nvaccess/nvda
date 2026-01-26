@@ -2834,6 +2834,23 @@ The available options are:
 | Border | The magnified area only moves when the focus approaches the edge of the visible area. |
 | Relative | The magnified area maintains the relative position of the focus within the screen. |
 
+##### Default pan value {#MagnifierDefaultPanValue}
+
+This slider allows you to set the default pan value, which controls how far the magnified view moves when using manual pan commands.
+The pan value can range from 1 to 100 pixels per command.
+Higher values cause larger movements, making it faster to navigate across the screen, while lower values provide finer control for precise positioning.
+
+Note: Pan commands allow you to manually move the magnified view in any direction, independent of the focus tracking mode.
+To use pan commands, you must assign custom gestures using the [Input Gestures dialog](#InputGestures).
+Available pan actions include:
+
+* Pan left/right/up/down: Move the view by the specified pan value
+* Pan to left/right/top/bottom edge: Jump directly to the screen boundary
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |1 to 100|
+
 ##### Keep mouse centered {#MagnifierKeepMouseCentered}
 
 This checkbox controls whether the mouse pointer should be automatically moved to the center of the magnified area when certain focus events occur.

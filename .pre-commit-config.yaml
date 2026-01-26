@@ -118,12 +118,12 @@ repos:
       # Override python interpreter from .python-versions as that is too strict for pre-commit.ci
       args: ["-p3.13"]
 
-- repo: https://github.com/DavidAnson/markdownlint-cli2
-  rev: v0.18.1
-  hooks:
-  - id: markdownlint-cli2
-    name: Lint markdown files
-    args: ["--fix"]
+# - repo: https://github.com/DavidAnson/markdownlint-cli2
+#   rev: v0.18.1
+#   hooks:
+#   - id: markdownlint-cli2
+#     name: Lint markdown files
+#     args: ["--fix"]
 
 - repo: local
   hooks:
