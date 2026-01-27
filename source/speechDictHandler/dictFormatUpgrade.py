@@ -1,16 +1,16 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2023 NV Access Limited
-# This file may be used under the terms of the GNU General Public License, version 2 or later.
-# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+# Copyright (C) 2017-2026 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Upgrade speech dict files"""
 
-from typing import Any
-import globalVars
-import os
-import api
 import glob
+import os
+from typing import Any
+
+import api
+import globalVars
 from logHandler import log
 from NVDAState import WritePaths
 
@@ -95,7 +95,7 @@ def _doSynthVoiceDictBackupAndMove(synthName, oldFileNameToNewFileNameList=None)
 	newDictPath = os.path.join(WritePaths.voiceDictsDir, synthName)
 	needsUpgrade = not os.path.isdir(newDictPath)
 	if needsUpgrade:
-		log.info("Upgrading voice dictionaries for %s" % synthName)
+		log.info("Upgrading voice dictionaries for %s", synthName)
 
 		# always make the new directory, this prevents the upgrade from
 		# occuring more than once.
@@ -105,30 +105,24 @@ def _doSynthVoiceDictBackupAndMove(synthName, oldFileNameToNewFileNameList=None)
 		# dicts diectory
 		voiceDictGlob = os.path.join(
 			WritePaths.speechDictsDir,
-			"{synthName}*".format(synthName=synthName),
+			f"{synthName}*",
 		)
-		log.debug("voiceDictGlob: %s" % voiceDictGlob)
+		log.debug("voiceDictGlob: %s", voiceDictGlob)
 
 		for actualPath in glob.glob(voiceDictGlob):
-			log.debug("processing file: %s" % actualPath)
+			log.debug("processing file: %s", actualPath)
 			# files will be copied here before we modify them so as to avoid
 			# any data loss.
 			shutil.copy(actualPath, WritePaths.voiceDictsBackupDir)
 
 			actualBasename = os.path.basename(actualPath)
-			log.debug("basename: %s" % actualBasename)
+			log.debug("basename: %s", actualBasename)
 
 			renameTo = actualBasename
 			if oldFileNameToNewFileNameList:
 				for oldFname, newFname in oldFileNameToNewFileNameList:
 					if oldFname == actualBasename:
-						log.debug(
-							"renaming {} to {} and moving to {}".format(
-								actualPath,
-								newFname,
-								newDictPath,
-							),
-						)
+						log.debug("renaming %r to %r and moving to %r", actualPath, newFname, newDictPath)
 						renameTo = newFname
 						break
 			shutil.move(actualPath, os.path.join(newDictPath, renameTo))
