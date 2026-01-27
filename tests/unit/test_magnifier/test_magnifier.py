@@ -188,27 +188,35 @@ class TestMagnifier(_TestMagnifier):
 		with patch("_magnifier.magnifier.winUser.setCursorPos"):
 			# Setup initial position at center
 			self.magnifier._isActive = True
-			self.magnifier._panValue = 50
+			self.magnifier._panValue = 10  # 10% of screen width
 			self.magnifier.setPanMarginBorder()
 			centerX = self.screenWidth // 2
 			centerY = self.screenHeight // 2
 			self.magnifier._currentCoordinates = Coordinates(centerX, centerY)
 
+			# Calculate expected pan pixels: (screenWidth / zoomLevel) * panValue / 100
+			expectedPanPixels = int(
+				(self.screenWidth / self.magnifier.zoomLevel) * 10 / 100,
+			)
+
 			# Test normal pan
 			reachedEdge = self.magnifier._pan(MagnifierAction.PAN_LEFT)
 			self.assertFalse(reachedEdge)
-			self.assertEqual(self.magnifier._currentCoordinates.x, centerX - 50)
+			self.assertEqual(
+				self.magnifier._currentCoordinates.x,
+				centerX - expectedPanPixels,
+			)
 
 			# Test reaching left edge
 			self.magnifier._currentCoordinates = Coordinates(
-				self.magnifier._panMargin[0],
+				self.magnifier._panMargin.left,
 				centerY,
 			)
 			reachedEdge = self.magnifier._pan(MagnifierAction.PAN_LEFT)
 			self.assertTrue(reachedEdge)
 			self.assertEqual(
 				self.magnifier._currentCoordinates.x,
-				self.magnifier._panMargin[0],
+				self.magnifier._panMargin.left,
 			)
 
 	def testPanRight(self):
@@ -218,27 +226,35 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._doUpdate = MagicMock()
 		with patch("_magnifier.magnifier.winUser.setCursorPos"):
 			self.magnifier._isActive = True
-			self.magnifier._panValue = 50
+			self.magnifier._panValue = 10  # 10% of screen width
 			self.magnifier.setPanMarginBorder()
 			centerX = self.screenWidth // 2
 			centerY = self.screenHeight // 2
 			self.magnifier._currentCoordinates = Coordinates(centerX, centerY)
 
+			# Calculate expected pan pixels
+			expectedPanPixels = int(
+				(self.screenWidth / self.magnifier.zoomLevel) * 10 / 100,
+			)
+
 			# Test normal pan
 			reachedEdge = self.magnifier._pan(MagnifierAction.PAN_RIGHT)
 			self.assertFalse(reachedEdge)
-			self.assertEqual(self.magnifier._currentCoordinates.x, centerX + 50)
+			self.assertEqual(
+				self.magnifier._currentCoordinates.x,
+				centerX + expectedPanPixels,
+			)
 
 			# Test reaching right edge
 			self.magnifier._currentCoordinates = Coordinates(
-				self.magnifier._panMargin[2],
+				self.magnifier._panMargin.right,
 				centerY,
 			)
 			reachedEdge = self.magnifier._pan(MagnifierAction.PAN_RIGHT)
 			self.assertTrue(reachedEdge)
 			self.assertEqual(
 				self.magnifier._currentCoordinates.x,
-				self.magnifier._panMargin[2],
+				self.magnifier._panMargin.right,
 			)
 
 	def testPanUp(self):
@@ -248,27 +264,35 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._doUpdate = MagicMock()
 		with patch("_magnifier.magnifier.winUser.setCursorPos"):
 			self.magnifier._isActive = True
-			self.magnifier._panValue = 50
+			self.magnifier._panValue = 10  # 10% of screen width
 			self.magnifier.setPanMarginBorder()
 			centerX = self.screenWidth // 2
 			centerY = self.screenHeight // 2
 			self.magnifier._currentCoordinates = Coordinates(centerX, centerY)
 
+			# Calculate expected pan pixels (based on width for consistency)
+			expectedPanPixels = int(
+				(self.screenWidth / self.magnifier.zoomLevel) * 10 / 100,
+			)
+
 			# Test normal pan
 			reachedEdge = self.magnifier._pan(MagnifierAction.PAN_UP)
 			self.assertFalse(reachedEdge)
-			self.assertEqual(self.magnifier._currentCoordinates.y, centerY - 50)
+			self.assertEqual(
+				self.magnifier._currentCoordinates.y,
+				centerY - expectedPanPixels,
+			)
 
 			# Test reaching top edge
 			self.magnifier._currentCoordinates = Coordinates(
 				centerX,
-				self.magnifier._panMargin[1],
+				self.magnifier._panMargin.top,
 			)
 			reachedEdge = self.magnifier._pan(MagnifierAction.PAN_UP)
 			self.assertTrue(reachedEdge)
 			self.assertEqual(
 				self.magnifier._currentCoordinates.y,
-				self.magnifier._panMargin[1],
+				self.magnifier._panMargin.top,
 			)
 
 	def testPanDown(self):
@@ -278,27 +302,35 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._doUpdate = MagicMock()
 		with patch("_magnifier.magnifier.winUser.setCursorPos"):
 			self.magnifier._isActive = True
-			self.magnifier._panValue = 50
+			self.magnifier._panValue = 10  # 10% of screen width
 			self.magnifier.setPanMarginBorder()
 			centerX = self.screenWidth // 2
 			centerY = self.screenHeight // 2
 			self.magnifier._currentCoordinates = Coordinates(centerX, centerY)
 
+			# Calculate expected pan pixels (based on width for consistency)
+			expectedPanPixels = int(
+				(self.screenWidth / self.magnifier.zoomLevel) * 10 / 100,
+			)
+
 			# Test normal pan
 			reachedEdge = self.magnifier._pan(MagnifierAction.PAN_DOWN)
 			self.assertFalse(reachedEdge)
-			self.assertEqual(self.magnifier._currentCoordinates.y, centerY + 50)
+			self.assertEqual(
+				self.magnifier._currentCoordinates.y,
+				centerY + expectedPanPixels,
+			)
 
 			# Test reaching bottom edge
 			self.magnifier._currentCoordinates = Coordinates(
 				centerX,
-				self.magnifier._panMargin[3],
+				self.magnifier._panMargin.bottom,
 			)
 			reachedEdge = self.magnifier._pan(MagnifierAction.PAN_DOWN)
 			self.assertTrue(reachedEdge)
 			self.assertEqual(
 				self.magnifier._currentCoordinates.y,
-				self.magnifier._panMargin[3],
+				self.magnifier._panMargin.bottom,
 			)
 
 	def testPanToLeftEdge(self):
@@ -318,7 +350,7 @@ class TestMagnifier(_TestMagnifier):
 			self.assertTrue(reachedEdge)
 			self.assertEqual(
 				self.magnifier._currentCoordinates.x,
-				self.magnifier._panMargin[0],
+				self.magnifier._panMargin.left,
 			)
 
 	def testPanToRightEdge(self):
@@ -338,7 +370,7 @@ class TestMagnifier(_TestMagnifier):
 			self.assertTrue(reachedEdge)
 			self.assertEqual(
 				self.magnifier._currentCoordinates.x,
-				self.magnifier._panMargin[2],
+				self.magnifier._panMargin.right,
 			)
 
 	def testPanToTopEdge(self):
@@ -358,7 +390,7 @@ class TestMagnifier(_TestMagnifier):
 			self.assertTrue(reachedEdge)
 			self.assertEqual(
 				self.magnifier._currentCoordinates.y,
-				self.magnifier._panMargin[1],
+				self.magnifier._panMargin.top,
 			)
 
 	def testPanToBottomEdge(self):
@@ -378,7 +410,7 @@ class TestMagnifier(_TestMagnifier):
 			self.assertTrue(reachedEdge)
 			self.assertEqual(
 				self.magnifier._currentCoordinates.y,
-				self.magnifier._panMargin[3],
+				self.magnifier._panMargin.bottom,
 			)
 
 	def testStartTimer(self):

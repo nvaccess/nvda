@@ -5948,8 +5948,8 @@ class MagnifierPanel(SettingsPanel):
 		self.defaultZoomList.SetSelection(closestIndex)
 
 		# PAN SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the pan step size (in pixels).
-		panStepSizeLabelText = _("&Panning step size (pixels):")
+		# Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
+		panStepSizeLabelText = _("&Panning step size (%):")
 
 		self.defaultPanSpinCtrl = sHelper.addLabeledControl(
 			panStepSizeLabelText,

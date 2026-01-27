@@ -55,7 +55,9 @@ class Magnifier:
 		self._lastMousePosition = Coordinates(0, 0)
 		self._lastScreenPosition = Coordinates(0, 0)
 		self._currentCoordinates = Coordinates(0, 0)
+		self._lastFocusCoordinates = Coordinates(0, 0)
 		self._filterType: Filter = getDefaultFilter()
+		self._isManualPanning: bool = False
 		# Register for display changes
 		_displayTracking.displayChanged.register(self._onDisplayChanged)
 		self._screenCurtainIsActive: bool = False
@@ -148,7 +150,23 @@ class Magnifier:
 		"""
 		if not self._isActive:
 			return
-		self._currentCoordinates = self._getFocusCoordinates()
+
+		# Get current focus coordinates
+		focusCoordinates = self._getFocusCoordinates()
+
+		if not self._isManualPanning:
+			# Normal mode: follow focus
+			self._currentCoordinates = focusCoordinates
+			self._lastFocusCoordinates = focusCoordinates
+		else:
+			# Manual panning mode: check if focus has changed
+			if focusCoordinates != self._lastFocusCoordinates:
+				# Focus has changed, exit manual panning mode
+				self._isManualPanning = False
+				self._currentCoordinates = focusCoordinates
+				self._lastFocusCoordinates = focusCoordinates
+			# else: keep current panned coordinates
+
 		self._doUpdate()
 		self._startTimer(self._updateMagnifier)
 
@@ -231,21 +249,25 @@ class Magnifier:
 		x, y = self._currentCoordinates
 		reachedEdge = False
 
+		# Calculate panning value as percentage of screen width
+		# Use only width to ensure horizontal and vertical panning have the same step size
+		panPixels = int((self._displayOrientation.width / self.zoomLevel) * self._panValue / 100)
+
 		match action:
 			case MagnifierAction.PAN_LEFT:
-				newX = x - self._panValue
+				newX = x - panPixels
 				x = max(self._panMargin.left, newX)
 				reachedEdge = x == self._panMargin.left and newX < self._panMargin.left
 			case MagnifierAction.PAN_RIGHT:
-				newX = x + self._panValue
+				newX = x + panPixels
 				x = min(self._panMargin.right, newX)
 				reachedEdge = x == self._panMargin.right and newX > self._panMargin.right
 			case MagnifierAction.PAN_UP:
-				newY = y - self._panValue
+				newY = y - panPixels
 				y = max(self._panMargin.top, newY)
 				reachedEdge = y == self._panMargin.top and newY < self._panMargin.top
 			case MagnifierAction.PAN_DOWN:
-				newY = y + self._panValue
+				newY = y + panPixels
 				y = min(self._panMargin.bottom, newY)
 				reachedEdge = y == self._panMargin.bottom and newY > self._panMargin.bottom
 			case MagnifierAction.PAN_LEFT_EDGE:
@@ -263,7 +285,7 @@ class Magnifier:
 			case _:
 				log.error(f"Unknown pan action: {action}")
 
-		# Update coordinates and move mouse to maintain the pan position
+		self._isManualPanning = True
 		self._currentCoordinates = Coordinates(x, y)
 		winUser.setCursorPos(x, y)
 		self._lastMousePosition = Coordinates(x, y)
