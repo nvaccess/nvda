@@ -554,7 +554,8 @@ class SynthDriver(SynthDriver):
 	CUSTOMSTREAM_COM_CLASS = "SAPI.SpCustomStream"
 
 	name = "sapi5"
-	description = "Microsoft Speech API version 5"
+	# Translators: Description for a speech synthesizer.
+	description = "Microsoft Speech API version 5 (64 bit)"
 
 	@classmethod
 	def check(cls):

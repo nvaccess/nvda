@@ -5,8 +5,10 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
+import copy
 import multiprocessing
 import os
+import shutil
 import platform
 import sys
 from pathlib import Path
@@ -692,3 +694,26 @@ env.Tool("listModules")
 source = env.Dir(os.path.join(os.getcwd(), "dist"))
 target = env.File(os.path.join(outputDir.abspath, "library_modules.txt"))
 env.Alias("moduleList", env.GenerateModuleList(target, source))
+
+synthDriverHost32Runtime = env.Command(
+	target="#runtime-builders/synthDriverHost32/dist",
+	source="#runtime-builders/synthDriverHost32/setup-runtime.py",
+	chdir=Dir("#runtime-builders/synthDriverHost32"),
+	action=[
+		  "uv run -v python setup-runtime.py ",
+		r"rmdir /s /q ..\..\source\lib\x86\synthDriverHost-runtime || exit 0",
+		r"xcopy /e /i /y dist ..\..\source\lib\x86\synthDriverHost-runtime",
+	],
+	ENV=os.environ,
+)
+env.AlwaysBuild(synthDriverHost32Runtime)
+env.Alias("synthDriverHost32Runtime", synthDriverHost32Runtime)
+
+# Copy sapi5 and sonic Python files to the _synthDrivers32 directory
+# As they require no changes, but need to be in an isolated directory for 32 bit.
+env.Command(sourceDir.File('_synthDrivers32/_sonic.py'), sourceDir.File('synthDrivers/_sonic.py'), Copy("$TARGET", "$SOURCE"))
+env.Command(sourceDir.File('_synthDrivers32/_sapi5.py'), sourceDir.File('synthDrivers/sapi5.py'), Copy("$TARGET", "$SOURCE"))
+
+# Parts of the speech package are quired by the 32 bit synthDriver host tunrime
+env.Command(sourceDir.File('_bridge/runtimes/synthDriverHost/speech/commands.py'), sourceDir.File('speech/commands.py'), Copy("$TARGET", "$SOURCE"))
+env.Command(sourceDir.File('_bridge/runtimes/synthDriverHost/speech/types.py'), sourceDir.File('speech/types.py'), Copy("$TARGET", "$SOURCE"))

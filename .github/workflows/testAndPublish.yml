@@ -84,6 +84,13 @@ jobs:
       with:
         python-version: ${{ matrix.pythonVersion }}
         architecture: ${{ matrix.arch }}
+        update-environment: true
+    - name: Install Python (32 bit)
+      uses: actions/setup-python@v6
+      with:
+        python-version: ${{ matrix.pythonVersion }}
+        architecture: x86
+        update-environment: false
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
       with:
@@ -106,6 +113,13 @@ jobs:
     - name: Prepare source code
       shell: cmd
       run: scons source %sconsArgs% %sconsCores%
+    - name: Run synthDriverHost32 runtime builder with its own Python
+      shell: pwsh
+      env:
+        UV_PYTHON: ""          # clear setup-uv override
+        VIRTUAL_ENV: ""        # avoid inheriting outer venv
+      run: |
+        uv run --no-active --directory runtime-builders/synthDriverHost32 python setup-runtime.py --dest-dir ../../source/lib/x86/synthDriverHost-runtime
     - name: Prepare for tests
       run: ci/scripts/tests/beforeTests.ps1
     - name: Cache scons build
