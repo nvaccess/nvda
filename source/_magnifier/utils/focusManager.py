@@ -144,7 +144,6 @@ class FocusManager:
 				point = reviewPosition.pointAtStart
 				return Coordinates(point.x, point.y)
 			except (NotImplementedError, LookupError, AttributeError):
-				# Translators: Generic exception handler comment
 				# Review position may not support pointAtStart
 				pass
 		return None
@@ -163,7 +162,6 @@ class FocusManager:
 				y = top + (height // 2)
 				return Coordinates(x, y)
 			except Exception:
-				# Translators: Generic exception handler comment
 				# Navigator object may not have a valid location
 				pass
 		return None
