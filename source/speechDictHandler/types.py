@@ -27,7 +27,7 @@ class EntryType(DisplayStringIntEnum):
 	WORD = 2
 	"""String must have word boundaries on both sides to match"""
 	PART_OF_WORD = 3
-	"""String must be preseeded or followed by an alphanumeric character to match."""
+	"""String must be preceded or followed by an alphanumeric character to match."""
 	START_OF_WORD = 4
 	"""String must have a word boundary at the start and an alphanumeric character at the end."""
 	END_OF_WORD = 5

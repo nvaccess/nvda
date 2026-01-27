@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-"""Unit tests for the speechDicthandler module."""
+"""Unit tests for the speechDictHandler module."""
 
 import unittest
 
@@ -37,7 +37,7 @@ class TestSpeechDictEntry(unittest.TestCase):
 		self.assertEqual(expected, actual)
 
 	def test_entryTypeWord_partOfWord(self):
-		""" "Word should not match when part of another word."""
+		"""Word should not match when part of another word."""
 		entry = SpeechDictEntry("β", "b", type=EntryType.WORD)
 		expected = "βα"
 		actual = entry.sub("βα")
