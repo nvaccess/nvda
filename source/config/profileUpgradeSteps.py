@@ -635,3 +635,24 @@ def upgradeConfigFrom_19_to_20(profile: ConfigObj):
 		return
 	del profile["vision"]["screenCurtain"]
 	log.debug("Moved Screen Curtain settings from ['vision']['screenCurtain'] to ['screenCurtain'].")
+
+
+def upgradeConfigFrom_20_to_21(profile: ConfigObj):
+	"""Redirect old sapi4 and sapi5 config to 32 bit versions."""
+	synth = profile["speech"]["synth"]
+	if synth == "sapi4":
+		synth = "sapi4_32"
+		log.debug("Switching configured synthesizer from sapi4 to sapi4_32")
+	elif synth == "sapi5":
+		synth = "sapi5_32"
+		log.debug("Switching configured synthesizer from sapi5 to sapi5_32")
+	profile["speech"]["synth"] = synth
+	sapi4Conf = profile["speech"].get("sapi4")
+	if sapi4Conf:
+		profile["speech"]["sapi4_32"] = sapi4Conf
+		del profile["speech"]["sapi4"]
+	sapi5Conf = profile["speech"].get("sapi5")
+	if sapi5Conf:
+		profile["speech"]["sapi5_32"] = sapi5Conf
+		del profile["speech"]["sapi5"]
+		log.debug("Moved old sapi5 configuration values to sapi5_32")

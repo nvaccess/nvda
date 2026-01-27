@@ -35,6 +35,9 @@ dependencies = [
 	"fast-diff-match-patch==2.1.0",
 	# pycaw is a Core Audio Windows Library used for sound split
 	"pycaw==20251023",
+	# NVDA bridge for 32 bit shim
+	"rpyc==6.0.2",
+	"pywin32==311",
 	# Sanitize HTML for browsable messages and documentation output to prevent XSS from translators
 	"nh3==0.3.2",
 	# l10nUtil requires Crowdin
@@ -86,6 +89,7 @@ exclude = [
 	# When excluding concrete paths relative to a directory,
 	# not matching multiple folders by name e.g. `__pycache__`,
 	# paths are relative to the configuration file.
+	"./runtime-builders/synthDriverHost32/.venv",
 	"./include/*",
 	"./miscDeps",
 	"./source/louis",
@@ -153,6 +157,7 @@ exclude = [
 	# When excluding concrete paths relative to a directory,
 	# not matching multiple folders by name e.g. `__pycache__`,
 	# paths are relative to the configuration file.
+	"./runtime-builders/synthDriverHost32/.venv",
 	"./include/*",
 	"./miscDeps",
 	"./source/louis",
