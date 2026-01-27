@@ -253,6 +253,10 @@ freeze(
 			"bisect",
 			# robotremoteserver (for system tests) depends on xmlrpc.server
 			"xmlrpc.server",
+			# Required for RPYC over std pipes
+			"win32file",
+			"win32event",
+			"win32pipe",
 		],
 	},
 	data_files=[
@@ -274,6 +278,22 @@ freeze(
 	]
 	+ (
 		getLocaleDataFiles()
+		+ (
+			getRecursiveDataFiles(
+				f"lib/{version}/x86/synthDriverHost-runtime",
+				"lib/x86/synthDriverHost-runtime",
+			)
+			if os.path.isdir("lib/x86/synthDriverHost-runtime")
+			else []
+		)
+		+ (
+			getRecursiveDataFiles(
+				"_synthDrivers32",
+				"_synthDrivers32",
+			)
+			if os.path.isdir("lib/x86/synthDriverHost-runtime")
+			else []
+		)
 		+ getRecursiveDataFiles(
 			"include/nvda-mathcat/assets",
 			"../include/nvda-mathcat/assets",
