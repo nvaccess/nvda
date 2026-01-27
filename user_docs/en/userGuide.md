@@ -4059,14 +4059,21 @@ NVDA's speech dictionaries however are much more powerful than simple word repla
 The Add rule dialog also contains a checkbox to say whether or not you want the rule to be case sensitive (meaning that NVDA should care whether the characters are uppercase or lowercase.
 NVDA ignores case by default).
 
-Finally, a set of radio buttons allows you to tell NVDA whether your pattern should match anywhere, should only match if it is a complete word or should be treated as a "Regular expression".
-Setting the pattern to match as a whole word means that the replacement will only be made if the pattern does not occur as part of a larger word.
-This condition is met if the characters immediately before and after the word are anything other than a letter, a number, or an underscore, or if there are no characters at all.
-Thus, using the earlier example of replacing the word "bird" with "frog", if you were to make this a whole word replacement, it would not match "birds" or "bluebird".
+Finally, a set of radio buttons allows you to tell NVDA how your pattern should be matched.
+The available types are:
 
-A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
-Regular expressions are not covered in this user guide.
-For an introductory tutorial, please refer to [Python's Regular Expression Guide](https://docs.python.org/3.13/howto/regex.html).
+* Anywhere: The pattern can match anywhere in the text.
+* Whole word: The replacement will only be made if the pattern occurs as a complete word. This means the pattern does not occur as part of a larger word. The condition is met if the characters immediately before and after the word are anything other than a letter, a number, or an underscore, or if there are no characters at all. For example, if you replace "bird" with "frog" using whole word matching, it would not match "birds" or "bluebird".
+* Part of word: The pattern must be preceded or followed by an alphanumeric character to match. This is useful for matching parts of compound words. For example, if you replace "bird" with "frog" using part of word matching, it would match "birds", "bluebird", "bluebirds" and "birdsong", but not the standalone word "bird" (since it has no adjacent alphanumeric characters).
+* Start of word: The pattern must have a word boundary at the start and an alphanumeric character at the end. For example, if you replace "bird" with "frog" using start of word matching, it would match "birds" and "birdsong", but not "bluebird" or the standalone word "bird".
+* End of word: The pattern must have an alphanumeric character at the start and a word boundary at the end. For example, if you replace "bird" with "frog" using end of word matching, it would match "bluebird" and "songbird", but not "birds" or the standalone word "bird".
+* Regular expression: The pattern is treated as a regular expression, which is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples. Regular expressions are not covered in this user guide. For an introductory tutorial, please refer to [Python's Regular Expression Guide](https://docs.python.org/3.13/howto/regex.html).
+* Unix shell-style wildcards: The pattern uses Unix shell-style wildcards for matching. For example:
+  * `*` matches any sequence of characters.
+  * `?` matches a single character.
+  * `[az]` matches a or z.
+  * `[a-z]` matches all letters.
+  * `[!a-z]` matches anything but letters.
 
 #### Punctuation/symbol pronunciation {#SymbolPronunciation}
 
