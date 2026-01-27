@@ -21,7 +21,6 @@ from ctypes.wintypes import BOOL, BYTE, DWORD, FILETIME, LPCWSTR, WORD
 from enum import IntEnum
 from comtypes import GUID, IUnknown, STDMETHOD, COMMETHOD
 
-import winKernel
 
 S_OK = 0
 
@@ -173,7 +172,7 @@ ITTSCentralW._methods_ = [
 	STDMETHOD(HRESULT, "Phoneme", [VOICECHARSET, DWORD, SDATA, POINTER(SDATA)]),
 	STDMETHOD(HRESULT, "PosnGet", [POINTER(QWORD)]),
 	STDMETHOD(HRESULT, "TextData", [VOICECHARSET, DWORD, SDATA, c_void_p, GUID]),
-	STDMETHOD(HRESULT, "ToFileTime", [POINTER(QWORD), POINTER(winKernel.FILETIME)]),
+	STDMETHOD(HRESULT, "ToFileTime", [POINTER(QWORD), POINTER(FILETIME)]),
 	STDMETHOD(HRESULT, "AudioPause"),
 	STDMETHOD(HRESULT, "AudioResume"),
 	STDMETHOD(HRESULT, "AudioReset"),

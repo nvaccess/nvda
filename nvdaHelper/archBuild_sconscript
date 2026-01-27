@@ -227,12 +227,13 @@ Export("detoursLib")
 apiHookObj = env.Object("apiHook", "common/apiHook.cpp")
 Export("apiHookObj")
 
+localLib = env.SConscript("local/sconscript")
+Export("localLib")
+if signExec:
+	env.AddPostAction(localLib[0], [signExec])
+env.Install(libInstallDir, localLib)
+
 if isNVDAHelperLocalArch:
-	localLib = env.SConscript("local/sconscript")
-	Export("localLib")
-	if signExec:
-		env.AddPostAction(localLib[0], [signExec])
-	env.Install(libInstallDir, localLib)
 	win10localLib = env.SConscript(
 		"localWin10/sconscript",
 	)
@@ -263,7 +264,15 @@ if not isNVDAHelperLocalArch:
 	env.Install(libInstallDir, remoteLoaderProgram)
 
 if isNVDACoreArch:
+	sonicLib = thirdPartyEnv.SConscript("sonic/sconscript")
+	Export("sonicLib")
+	env.Install(sourceDir.Dir('synthDrivers'), sonicLib)
 	thirdPartyEnv.SConscript("espeak/sconscript")
 	thirdPartyEnv.SConscript("liblouis/sconscript")
 	thirdPartyEnv.SConscript("javaAccessBridge/sconscript")
 	thirdPartyEnv.SConscript("uwp/sconscript")
+
+if TARGET_ARCH == "x86":
+	sonicLib = thirdPartyEnv.SConscript("sonic/sconscript")
+	Export("sonicLib")
+	env.Install(sourceDir.Dir('_synthDrivers32'), sonicLib)
