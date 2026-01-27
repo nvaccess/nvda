@@ -4072,8 +4072,8 @@ The available types are:
   * `*` matches any sequence of characters.
   * `?` matches a single character.
   * `[az]` matches a or z.
-  * `[a-z]` matches all letters.
-  * `[!a-z]` matches anything but letters.
+  * `[a-z]` matches any lowercase letter from a through z.
+  * `[!a-z]` matches any character except lowercase letters a through z.
 
 #### Punctuation/symbol pronunciation {#SymbolPronunciation}
 
