@@ -127,7 +127,6 @@ class FocusManager:
 						self._lastValidSystemFocusPosition = coords
 					return coords
 			except Exception:
-				# translators: Generic exception handler comment
 				# Focus object location may fail (e.g., object without location)
 				# Fall through to return last valid position
 				pass
