@@ -1013,7 +1013,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		)
 		while True:
 			try:
-				systemUtils.ExecAndPump(config.setSystemConfigToCurrentConfig, _addonsToCopy=addonsToCopy)
+				systemUtils.ExecAndPump(config.setSystemConfigToCurrentConfig, addonsToCopy=addonsToCopy)
 				res = True
 				break
 			except installer.RetriableFailure:
