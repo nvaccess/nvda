@@ -113,7 +113,8 @@ class SpeechDictEntry:
 			case EntryType.END_OF_WORD:
 				tempPattern = rf"(?<=\w){re.escape(self.pattern)}\b"
 			case EntryType.UNIX:
-				tempPattern = fnmatch.translate(self.pattern)
+				# fnmatch.translate appends \z to the end of the pattern, discard that.
+				tempPattern = fnmatch.translate(self.pattern)[:-2]
 			case _:
 				tempPattern = re.escape(self.pattern)
 				self.type = EntryType.ANYWHERE  # Ensure sane values.
