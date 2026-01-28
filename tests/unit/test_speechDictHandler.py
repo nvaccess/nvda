@@ -174,3 +174,80 @@ class TestSpeechDictEntry(unittest.TestCase):
 		expected = "b"
 		actual = entry.sub("αβγ")
 		self.assertEqual(expected, actual)
+
+	def test_entryTypeUnix_characterSet(self):
+		"""Should match using character sets [abc]."""
+		entry = SpeechDictEntry("t[aeiou]st", "replaced", type=EntryType.UNIX)
+		expected = "replaced"
+		actual = entry.sub("test")
+		self.assertEqual(expected, actual)
+
+	def test_entryTypeUnix_characterSetNoMatch(self):
+		"""Should not match when character set doesn't match."""
+		entry = SpeechDictEntry("t[xyz]st", "replaced", type=EntryType.UNIX)
+		expected = "test"
+		actual = entry.sub("test")
+		self.assertEqual(expected, actual)
+
+	def test_entryTypeUnix_characterRange(self):
+		"""Should match using character ranges [a-z]."""
+		entry = SpeechDictEntry("t[a-z]st", "replaced", type=EntryType.UNIX)
+		expected = "replaced"
+		actual = entry.sub("test")
+		self.assertEqual(expected, actual)
+
+	def test_entryTypeUnix_negatedCharacterSet(self):
+		"""Should match using negated character sets [!abc]."""
+		entry = SpeechDictEntry("t[!xyz]st", "replaced", type=EntryType.UNIX)
+		expected = "replaced"
+		actual = entry.sub("test")
+		self.assertEqual(expected, actual)
+
+	def test_entryTypeUnix_wildcardsInMiddle(self):
+		"""Should handle wildcards in the middle of pattern."""
+		entry = SpeechDictEntry("test*123", "replaced", type=EntryType.UNIX)
+		expected = "replaced"
+		actual = entry.sub("test_abc_123")
+		self.assertEqual(expected, actual)
+
+	def test_entryTypeUnix_multipleQuestionMarks(self):
+		"""Should handle multiple ? wildcards."""
+		entry = SpeechDictEntry("t??t", "replaced", type=EntryType.UNIX)
+		expected = "replaced"
+		actual = entry.sub("test")
+		self.assertEqual(expected, actual)
+
+	def test_entryTypeUnix_emptyWildcard(self):
+		"""Should match empty string with *."""
+		entry = SpeechDictEntry("test*", "replaced", type=EntryType.UNIX)
+		expected = "replaced"
+		actual = entry.sub("test")
+		self.assertEqual(expected, actual)
+
+	def test_entryTypeUnix_partialMatch(self):
+		"""Should match partial strings."""
+		entry = SpeechDictEntry("*test", "replaced", type=EntryType.UNIX)
+		expected = "replaced abc"
+		actual = entry.sub("test abc")
+		self.assertEqual(expected, actual)
+
+	def test_entryTypeUnix_caseSensitive(self):
+		"""Should be case sensitive by default."""
+		entry = SpeechDictEntry("test*", "replaced", type=EntryType.UNIX, caseSensitive=True)
+		expected = "TEST123"
+		actual = entry.sub("TEST123")
+		self.assertEqual(expected, actual)
+
+	def test_entryTypeUnix_caseInsensitive(self):
+		"""Should support case insensitive matching."""
+		entry = SpeechDictEntry("test*", "replaced", type=EntryType.UNIX, caseSensitive=False)
+		expected = "replaced"
+		actual = entry.sub("TEST123")
+		self.assertEqual(expected, actual)
+
+	def test_entryTypeUnix_specialCharactersEscaped(self):
+		"""Should handle patterns with dots and other regex special chars."""
+		entry = SpeechDictEntry("test[.]txt", "replaced", type=EntryType.UNIX)
+		expected = "replaced"
+		actual = entry.sub("test.txt")
+		self.assertEqual(expected, actual)
