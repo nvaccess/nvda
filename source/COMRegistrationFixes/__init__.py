@@ -20,6 +20,10 @@ OLEACC_REG_FILE_PATH = os.path.join(globalVars.appDir, "COMRegistrationFixes", "
 # Particular  64 bit / 32 bit system paths
 SYSTEM_ROOT = os.path.expandvars("%SYSTEMROOT%")
 SYSTEM32 = os.path.join(SYSTEM_ROOT, "System32")
+SYSNATIVE = os.path.join(SYSTEM_ROOT, "Sysnative")  # Virtual folder for reaching 64-bit exes from 32-bit apps
+SYSTEM_DRIVE = os.path.expandvars("%SYSTEMDRIVE%\\")
+PROGRAM_FILES = os.path.join(SYSTEM_DRIVE, "Program Files")
+PROGRAM_FILES_X86 = os.path.join(SYSTEM_DRIVE, "Program Files (x86)")
 
 
 def register32bitServer(fileName: str) -> None:
