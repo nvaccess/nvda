@@ -101,7 +101,7 @@ repos:
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Matches Ruff version in pyproject.
-  rev: v0.14.10
+  rev: v0.14.14
   hooks:
     - id: ruff
       name: lint with ruff
@@ -110,7 +110,7 @@ repos:
       name: format with ruff
 
 - repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.9.21
+  rev: 0.9.27
   hooks:
     - id: uv-lock
       name: Verify uv lock file
