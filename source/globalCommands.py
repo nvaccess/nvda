@@ -5012,6 +5012,118 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
+			"Pan the magnifier view to the left",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+alt+leftArrow",
+	)
+	def script_panLeft(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.panLeft()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view to the right",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+alt+rightArrow",
+	)
+	def script_panRight(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.panRight()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view up",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+alt+upArrow",
+	)
+	def script_panUp(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.panUp()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view down",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+alt+downArrow",
+	)
+	def script_panDown(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.panDown()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view to left edge",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+alt+leftArrow",
+	)
+	def script_panToLeftEdge(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.panToLeftEdge()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view to right edge",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+alt+rightArrow",
+	)
+	def script_panToRightEdge(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.panToRightEdge()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view to top edge",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+alt+upArrow",
+	)
+	def script_panToTopEdge(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.panToTopEdge()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view to bottom edge",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+alt+downArrow",
+	)
+	def script_panToBottomEdge(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.panToBottomEdge()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
 			"Toggle filter of the magnifier",
 		),
 		category=SCRCAT_VISION,
