@@ -601,7 +601,7 @@ dev = [
     { name = "py2exe", specifier = "==0.14.0.0" },
     { name = "scons", specifier = "==4.10.1" },
     { name = "setuptools", specifier = "~=80.9" },
-    { name = "uv", specifier = "==0.9.11" },
+    { name = "uv", specifier = "==0.9.27" },
 ]
 dev-docs = [
     { name = "sphinx", specifier = "==8.1.3" },
@@ -611,7 +611,7 @@ license-check = [{ name = "licensecheck", specifier = "==2025.1" }]
 lint = [
     { name = "pre-commit", specifier = "==4.2.0" },
     { name = "pyright", extras = ["nodejs"], specifier = "==1.1.407" },
-    { name = "ruff", specifier = "==0.14.5" },
+    { name = "ruff", specifier = "==0.14.14" },
 ]
 system-tests = [
     { name = "robotframework", specifier = "==7.3.2" },
@@ -1005,13 +1005,13 @@ wheels = [
 
 [[package]]
 name = "ruff"
-version = "0.14.5"
+version = "0.14.14"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/82/fa/fbb67a5780ae0f704876cb8ac92d6d76da41da4dc72b7ed3565ab18f2f52/ruff-0.14.5.tar.gz", hash = "sha256:8d3b48d7d8aad423d3137af7ab6c8b1e38e4de104800f0d596990f6ada1a9fc1", size = 5615944, upload-time = "2025-11-13T19:58:51.155Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/2e/06/f71e3a86b2df0dfa2d2f72195941cd09b44f87711cb7fa5193732cb9a5fc/ruff-0.14.14.tar.gz", hash = "sha256:2d0f819c9a90205f3a867dbbd0be083bee9912e170fd7d9704cc8ae45824896b", size = 4515732, upload-time = "2026-01-22T22:30:17.527Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/cc/f1/7119e42aa1d3bf036ffc9478885c2e248812b7de9abea4eae89163d2929d/ruff-0.14.5-py3-none-win32.whl", hash = "sha256:c83642e6fccfb6dea8b785eb9f456800dcd6a63f362238af5fc0c83d027dd08b", size = 12925808, upload-time = "2025-11-13T19:58:42.779Z" },
-    { url = "https://files.pythonhosted.org/packages/3b/9d/7c0a255d21e0912114784e4a96bf62af0618e2190cae468cd82b13625ad2/ruff-0.14.5-py3-none-win_amd64.whl", hash = "sha256:9d55d7af7166f143c94eae1db3312f9ea8f95a4defef1979ed516dbb38c27621", size = 14331546, upload-time = "2025-11-13T19:58:45.691Z" },
-    { url = "https://files.pythonhosted.org/packages/e5/80/69756670caedcf3b9be597a6e12276a6cf6197076eb62aad0c608f8efce0/ruff-0.14.5-py3-none-win_arm64.whl", hash = "sha256:4b700459d4649e2594b31f20a9de33bc7c19976d4746d8d0798ad959621d64a4", size = 13433331, upload-time = "2025-11-13T19:58:48.434Z" },
+    { url = "https://files.pythonhosted.org/packages/2c/aa/9f89c719c467dfaf8ad799b9bae0df494513fb21d31a6059cb5870e57e74/ruff-0.14.14-py3-none-win32.whl", hash = "sha256:b530c191970b143375b6a68e6f743800b2b786bbcf03a7965b06c4bf04568167", size = 10502442, upload-time = "2026-01-22T22:30:38.93Z" },
+    { url = "https://files.pythonhosted.org/packages/87/44/90fa543014c45560cae1fffc63ea059fb3575ee6e1cb654562197e5d16fb/ruff-0.14.14-py3-none-win_amd64.whl", hash = "sha256:3dde1435e6b6fe5b66506c1dff67a421d0b7f6488d466f651c07f4cab3bf20fd", size = 11630486, upload-time = "2026-01-22T22:30:10.852Z" },
+    { url = "https://files.pythonhosted.org/packages/9e/6a/40fee331a52339926a92e17ae748827270b288a35ef4a15c9c8f2ec54715/ruff-0.14.14-py3-none-win_arm64.whl", hash = "sha256:56e6981a98b13a32236a72a8da421d7839221fa308b223b9283312312e5ac76c", size = 10920448, upload-time = "2026-01-22T22:30:15.417Z" },
 ]
 
 [[package]]
@@ -1213,13 +1213,13 @@ wheels = [
 
 [[package]]
 name = "uv"
-version = "0.9.11"
+version = "0.9.27"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/8a/08/3bf76403ea7c22feef634849137fab10b28ab5ba5bbf08a53390763d5448/uv-0.9.11.tar.gz", hash = "sha256:605a7a57f508aabd029fc0c5ef5c60a556f8c50d32e194f1a300a9f4e87f18d4", size = 3744387, upload-time = "2025-11-20T23:20:00.95Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/92/70/611bcee4385b7aa00cf7acf29bc51854c365ee09ddb2cdb14b07a36b4db8/uv-0.9.27.tar.gz", hash = "sha256:9147862902b5d40894f78339803225e39b0535c4c04537188de160eb7635e46b", size = 3830404, upload-time = "2026-01-26T23:27:43.442Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8f/4d/bfd41bf087522601c724d712c3727aeb62f51b1f67c4ab86a078c3947525/uv-0.9.11-py3-none-win32.whl", hash = "sha256:af5fd91eecaa04b4799f553c726307200f45da844d5c7c5880d64db4debdd5dc", size = 19639246, upload-time = "2025-11-20T23:19:50.254Z" },
-    { url = "https://files.pythonhosted.org/packages/2c/2f/d51c02627de68a7ca5b82f0a5d61d753beee3fe696366d1a1c5d5e40cd58/uv-0.9.11-py3-none-win_amd64.whl", hash = "sha256:c65a024ad98547e32168f3a52360fe73ff39cd609a8fb9dd2509aac91483cfc8", size = 21626822, upload-time = "2025-11-20T23:19:54.424Z" },
-    { url = "https://files.pythonhosted.org/packages/af/d8/e07e866ee328d3c9f27a6d57a018d8330f47be95ef4654a178779c968a66/uv-0.9.11-py3-none-win_arm64.whl", hash = "sha256:4907a696c745703542ed2559bdf5380b92c8b1d4bf290ebfed45bf9a2a2c6690", size = 20046856, upload-time = "2025-11-20T23:19:58.517Z" },
+    { url = "https://files.pythonhosted.org/packages/aa/c5/c3bb3a5885891ed8fe7dcc897db03366f3e19da8bf48ae8f5ea4da34545d/uv-0.9.27-py3-none-win32.whl", hash = "sha256:18aab0e19634997366907a9b8a1648e79b0fa34d1b86d8e8ee1e7ba5b9faa6ae", size = 20817398, upload-time = "2026-01-26T23:28:14.265Z" },
+    { url = "https://files.pythonhosted.org/packages/db/19/22d2671928f6d2fef1edfdbf758abbb5a0f218b69fd23bd5fd52bbe5b078/uv-0.9.27-py3-none-win_amd64.whl", hash = "sha256:f961c53f83ae6a01e3ffacc584c91044958bc6db003e803c490e106a79981222", size = 23412228, upload-time = "2026-01-26T23:28:01.547Z" },
+    { url = "https://files.pythonhosted.org/packages/17/eb/9a71112e2266b79da552a4b2ffb52331ca7171437b901705427f8e54e77c/uv-0.9.27-py3-none-win_arm64.whl", hash = "sha256:463327fb343c3085a3333389d6e5908cb48203b327707790c06bdc8f2ca57b95", size = 21836206, upload-time = "2026-01-26T23:28:04.411Z" },
 ]
 
 [[package]]
