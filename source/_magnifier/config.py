@@ -9,7 +9,7 @@ Handles module initialization, configuration and settings interaction.
 """
 
 import config
-from .utils.types import Filter, FullScreenMode
+from .utils.types import Filter, FullScreenMode, MagnifierType
 
 
 class ZoomLevel:
@@ -74,10 +74,25 @@ def setDefaultZoomLevel(zoomLevel: float) -> None:
 
 	:param zoomLevel: The zoom level to set.
 	"""
-
-	if "magnifier" not in config.conf:
-		config.conf["magnifier"] = {}
 	config.conf["magnifier"]["defaultZoomLevel"] = zoomLevel
+
+
+def getDefaultMagnifierType() -> MagnifierType:
+	"""
+	Get default magnifier type from config.
+
+	:return: The default magnifier type.
+	"""
+	return MagnifierType(config.conf["magnifier"]["defaultMagnifierType"])
+
+
+def setDefaultMagnifierType(magnifierType: MagnifierType) -> None:
+	"""
+	Set default magnifier type from settings.
+
+	:param magnifierType: The magnifier type to set.
+	"""
+	config.conf["magnifier"]["defaultMagnifierType"] = magnifierType.value
 
 
 def getDefaultFilter() -> Filter:

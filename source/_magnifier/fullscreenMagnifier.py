@@ -14,17 +14,17 @@ from winBindings import magnification
 from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
 from .utils.spotlightManager import SpotlightManager
-from .utils.types import Filter, Coordinates, FullScreenMode, FocusType
+from .utils.types import Filter, Coordinates, MagnifierType, FullScreenMode, FocusType
 from .config import getDefaultFullscreenMode, shouldKeepMouseCentered
 
 
 class FullScreenMagnifier(Magnifier):
 	def __init__(self):
 		super().__init__()
+		self._magnifierType = MagnifierType.FULLSCREEN
 		self._fullscreenMode = getDefaultFullscreenMode()
 		self._currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
-		self._startMagnifier()
 
 	@property
 	def filterType(self) -> Filter:
@@ -107,6 +107,9 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		Apply the current color filter to the full-screen magnifier
 		"""
+		if not self._isActive:
+			return
+
 		try:
 			match self.filterType:
 				case Filter.NORMAL:
@@ -127,6 +130,9 @@ class FullScreenMagnifier(Magnifier):
 
 		:coordinates: The (x, y) coordinates to center the magnifier on
 		"""
+		if not self._isActive:
+			return
+
 		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(coordinates)
 		try:
 			result = magnification.MagSetFullscreenTransform(
@@ -162,7 +168,9 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		keep mouse in screen
 		"""
-		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(self._currentCoordinates)
+		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(
+			self._currentCoordinates,
+		)
 		centerX = int(left + (visibleWidth / 2))
 		centerY = int(top + (visibleHeight / 2))
 		winUser.setCursorPos(centerX, centerY)
@@ -203,7 +211,10 @@ class FullScreenMagnifier(Magnifier):
 			dy = focusY - maxY
 
 		if dx != 0 or dy != 0:
-			return Coordinates(self._lastScreenPosition[0] + dx, self._lastScreenPosition[1] + dy)
+			return Coordinates(
+				self._lastScreenPosition[0] + dx,
+				self._lastScreenPosition[1] + dy,
+			)
 		else:
 			return self._lastScreenPosition
 
@@ -244,7 +255,9 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		Launch Spotlight from Full-screen class
 		"""
-		log.debug(f"Launching spotlight mode from full-screen magnifier with mode {self._fullscreenMode}")
+		log.debug(
+			f"Launching spotlight mode from full-screen magnifier with mode {self._fullscreenMode}",
+		)
 		self._stopTimer()
 		self._spotlightManager._startSpotlight()
 

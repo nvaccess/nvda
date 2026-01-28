@@ -9,7 +9,13 @@ Handles module initialization, configuration and settings interaction.
 """
 
 from typing import TYPE_CHECKING
+
+from .config import getDefaultMagnifierType
+from .utils.types import MagnifierType
 from .fullscreenMagnifier import FullScreenMagnifier
+from .fixedMagnifier import FixedMagnifier
+from .dockedMagnifier import DockedMagnifier
+from .lensMagnifier import LensMagnifier
 
 if TYPE_CHECKING:
 	from .magnifier import Magnifier
@@ -17,47 +23,94 @@ if TYPE_CHECKING:
 _magnifier: "Magnifier | None" = None
 
 
-def initialize():
+def createMagnifier(magnifierType: MagnifierType) -> "Magnifier":
 	"""
-	Initialize the magnifier module
-	For now, only the full-screen magnifier is supported
-	"""
+	Create a magnifier instance based on the specified type.
 
-	magnifier = FullScreenMagnifier()
-	setMagnifier(magnifier)
+	:param magnifierType: The type of magnifier to create
+	:return: The created magnifier instance
+	:raises ValueError: If the magnifier type is not supported
+	"""
+	match magnifierType:
+		case MagnifierType.FULLSCREEN:
+			return FullScreenMagnifier()
+		case MagnifierType.FIXED:
+			return FixedMagnifier()
+		case MagnifierType.DOCKED:
+			return DockedMagnifier()
+		case MagnifierType.LENS:
+			return LensMagnifier()
+		case _:
+			raise ValueError(f"Unsupported magnifier type: {magnifierType}")
+
+
+def _setMagnifierType(magnifierType: MagnifierType) -> None:
+	"""
+	Set the magnifier type, stopping the current one if active and creating a new instance.
+
+	:param magnifierType: The type of magnifier to set
+	"""
+	global _magnifier
+
+	# Stop current magnifier if active
+	if _magnifier and _magnifier._isActive:
+		_magnifier._stopMagnifier()
+
+	# Create and set new magnifier instance
+	_magnifier = createMagnifier(magnifierType)
+
+
+def initialize() -> None:
+	"""
+	Initialize the magnifier module with the default magnifier type from config.
+	"""
+	magnifierType = getDefaultMagnifierType()
+	_setMagnifierType(magnifierType)
+	_magnifier._startMagnifier()
 
 
 def isActive() -> bool:
 	"""
-	Check if magnifier is currently active for settings
+	Check if magnifier is currently active.
+
+	:return: True if magnifier is active, False otherwise
 	"""
 	global _magnifier
-	return _magnifier and _magnifier._isActive
+	return _magnifier is not None and _magnifier._isActive
+
+
+def changeMagnifierType(magnifierType: MagnifierType) -> None:
+	"""
+	Change the magnifier type at runtime.
+	Stops the current magnifier and starts a new one of the specified type.
+
+	:param magnifierType: The new magnifier type to use
+	:raises RuntimeError: If no magnifier is currently active
+	"""
+	global _magnifier
+	if not _magnifier or not _magnifier._isActive:
+		raise RuntimeError("Cannot change magnifier type: magnifier is not active")
+
+	_setMagnifierType(magnifierType)
+	_magnifier._startMagnifier()
 
 
 def getMagnifier() -> "Magnifier | None":
 	"""
-	Get current magnifier
+	Get current magnifier instance.
+
+	:return: The current magnifier instance or None if not initialized
 	"""
 	global _magnifier
 	return _magnifier
 
 
-def setMagnifier(magnifier: "Magnifier") -> None:
+def terminate() -> None:
 	"""
-	Set magnifier instance
-
-	:param magnifier: The magnifier instance to set
-	"""
-	global _magnifier
-	_magnifier = magnifier
-
-
-def terminate():
-	"""
-	Called when NVDA shuts down
+	Terminate the magnifier module.
+	Called when NVDA shuts down.
 	"""
 	global _magnifier
 	if _magnifier and _magnifier._isActive:
 		_magnifier._stopMagnifier()
-		_magnifier = None
+	_magnifier = None
