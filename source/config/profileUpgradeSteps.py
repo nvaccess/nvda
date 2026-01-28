@@ -641,7 +641,7 @@ def upgradeConfigFrom_20_to_21(profile: ConfigObj):
 	"""Redirect old sapi4 and sapi5 config to 32 bit versions."""
 	speechConf = profile.get("speech")
 	if not speechConf:
-		log.debug("Profile does not have a speech key")
+		log.debug("Profile's speech section is empty or does not exist. No action taken.")
 		return
 	synth = speechConf.get("synth")
 	if synth == "sapi4":
