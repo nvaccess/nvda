@@ -150,7 +150,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Python-Markdown to 3.10 (#19196)
   * lxml to 6.0.2 (#19196)
   * PyMdown Extensions to 10.17.1 (#19196)
-  * Setuptools to 80.9 (#19196)
+  * Setuptools to 80.10.2 (#19196)
   * Robot Framework to 7.3.2 (#19196)
   * IAccessible2 to commit `c9ae003` (#19196)
   * Sonic to commit `d2cdb40` (#19196)
