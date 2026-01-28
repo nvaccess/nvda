@@ -13,6 +13,7 @@ from typing import (
 	Tuple,
 	Union,
 )
+
 from annotation import (
 	_AnnotationNavigation,
 	_AnnotationNavigationNode,
@@ -180,6 +181,76 @@ def toggleIntegerValue(
 	state = enumClass(newValue)
 	msg = messageTemplate.format(mode=state.displayString)
 	ui.message(msg)
+
+
+def _getConfigValueRange(configSection: str, configKey: str) -> tuple[float, float]:
+	"""
+	Gets the minimum and maximum allowed values for a configuration key.
+	:param configSection: The configuration section containing the key.
+	:param configKey: The configuration key to evaluate.
+	:return: A tuple of (minValue, maxValue).
+	"""
+	validation = config.conf.getConfigValidation((configSection, configKey))
+	minValue = float(validation.kwargs["min"])
+	maxValue = float(validation.kwargs["max"])
+	return minValue, maxValue
+
+
+def _calculateNewValue(currentValue: float, minValue: float, maxValue: float, step: float) -> float:
+	"""
+	Calculates a new value by applying a step, constrained within min/max bounds.
+	:param currentValue: The current value.
+	:param minValue: The minimum allowed value.
+	:param maxValue: The maximum allowed value.
+	:param step: The amount to change the value by (positive or negative).
+	:return: The new value, clamped between min and max.
+	"""
+	if step > 0:
+		return min(currentValue + step, maxValue)
+	elif step < 0:
+		return max(currentValue + step, minValue)
+	else:
+		return currentValue
+
+
+def valueToPercentage(configSection: str, configKey: str) -> int:
+	"""
+	Calculates the percentage representation of a configuration value within its defined range.
+	:param configSection: The configuration section containing the key.
+	:param configKey: The configuration key to evaluate.
+	:return: The percentage (0-100) of the value within the range.
+	"""
+	minValue, maxValue = _getConfigValueRange(configSection, configKey)
+	currentValue = config.conf[configSection][configKey]
+	return round((currentValue - minValue) / (maxValue - minValue) * 100)
+
+
+def percentageToValue(configSection: str, configKey: str, percentage: int) -> float:
+	"""
+	Calculates the configuration value corresponding to a given percentage within its defined range.
+	:param configSection: The configuration section containing the key.
+	:param configKey: The configuration key to evaluate.
+	:param percentage: The percentage (0-100) to convert to a value.
+	:return: The value corresponding to the given percentage within the defined range.
+	"""
+	minValue, maxValue = _getConfigValueRange(configSection, configKey)
+	percentage = max(0, min(100, percentage))
+	value = minValue + (maxValue - minValue) * (percentage / 100)
+	return value
+
+
+def updateConfigFromNewValue(configSection: str, configKey: str, step: float) -> None:
+	"""
+	Updates a configuration value by applying a step, constrained within its valid range.
+	:param configSection: The configuration section containing the key.
+	:param configKey: The configuration key to update.
+	:param step: The step adjustment value (positive, negative, or 0).
+	"""
+	currentValue = config.conf[configSection][configKey]
+	minValue, maxValue = _getConfigValueRange(configSection, configKey)
+	newValue = _calculateNewValue(currentValue, minValue, maxValue, step)
+	config.conf[configSection][configKey] = newValue
+	return newValue
 
 
 class GlobalCommands(ScriptableObject):
@@ -841,6 +912,51 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: Message presented when turning off reporting spelling errors or grammar in braille.
 			ui.message(_("Report errors in braille off"))
+
+	@script(
+		# Translators: Input help mode message for command to toggle braille automatic scroll.
+		description=_("Toggles braille automatic scroll"),
+		category=SCRCAT_BRAILLE,
+	)
+	def script_toggleBrailleAutoScroll(self, gesture: inputCore.InputGesture):
+		shouldEnableAutoScroll = braille.handler._autoScrollCallLater is None
+		timeout = 0
+		if shouldEnableAutoScroll:
+			# Translators: Message reported when automatic scrolling has been enabled in braille.
+			ui.message(_("Automatic scrolling enabled"))
+			if not (
+				config.conf["braille"]["showMessages"] == ShowMessages.DISABLED
+				or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value
+			):
+				timeout = config.conf["braille"]["messageTimeout"] * 1000
+		else:
+			# Translators: Message reported when automatic scrolling has been disabled in braille.
+			ui.message(_("Automatic scrolling disabled"))
+		core.callLater(timeout, braille.handler.autoScroll, shouldEnableAutoScroll)
+
+	@script(
+		# Translators: Input help mode message for command to increase the rate for braille automatic scroll.
+		description=_("Increases the rate for braille automatic scroll"),
+		category=SCRCAT_BRAILLE,
+	)
+	def script_increaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
+		updateConfigFromNewValue("braille", "autoScrollRate", 0.5)
+		percentage = valueToPercentage("braille", "autoScrollRate")
+		# Translators: Message shown when increasing the braille auto scroll rate.
+		# {rate} will be replaced with the rate as a whole number from 0 to 100.
+		ui.message(_("Scroll rate {rate}").format(rate=percentage))
+
+	@script(
+		# Translators: Input help mode message for command to decrease the rate for braille automatic scroll.
+		description=_("Decreases the rate for braille automatic scroll"),
+		category=SCRCAT_BRAILLE,
+	)
+	def script_decreaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
+		updateConfigFromNewValue("braille", "autoScrollRate", -0.5)
+		percentage = valueToPercentage("braille", "autoScrollRate")
+		# Translators: Message shown when decreasing the braille auto scroll rate.
+		# {rate} will be replaced with the rate as a whole number from 0 to 100.
+		ui.message(_("Scroll rate {rate}").format(rate=percentage))
 
 	@script(
 		# Translators: Input help mode message for toggle report pages command.
