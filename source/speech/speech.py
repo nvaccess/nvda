@@ -1249,6 +1249,75 @@ def getPreselectedTextSpeech(
 	)
 
 
+def _getSingleCharSelectionSpeech(
+	char: str,
+	locale: str,
+	messageSuffix: str | None = None,
+) -> SpeechSequence:
+	"""Get speech sequence for a single selected/unselected character with capital indicators.
+
+	This function applies capital letter indicators (beep, pitch change, "cap" prefix)
+	when announcing a single character selection.
+
+	:param char: The single character that was selected/unselected.
+	:param locale: The locale for character processing.
+	:param messageSuffix: The message to append after the character (e.g., " selected", " unselected").
+		If None, defaults to " selected".
+	:return: Speech sequence with capital indicators and the message suffix.
+	"""
+	if messageSuffix is None:
+		# Translators: This is spoken to indicate what has just been selected.
+		# The text preceding 'selected' is intentional.
+		# For example 'A selected'
+		messageSuffix = _(" selected")
+
+	synth = getSynth()
+	if synth is None:
+		# No synthesizer available, fall back to simple message
+		speakCharAs = characterProcessing.processSpeechSymbol(locale, char)
+		return [speakCharAs, messageSuffix]
+
+	seq = list(getSpellingSpeech(char, locale))
+	seq.append(messageSuffix)
+
+	return seq
+
+
+
+def _speakSingleCharSelected(
+	char: str,
+	locale: str,
+	priority: Optional[Spri] = None,
+) -> None:
+	"""Speak a single selected character with capital indicators.
+
+	:param char: The single character that was selected.
+	:param locale: The locale for character processing.
+	:param priority: The speech priority.
+	"""
+	seq = _getSingleCharSelectionSpeech(char, locale)
+	if seq:
+		speak(seq, symbolLevel=None, priority=priority)
+
+
+def _speakSingleCharUnselected(
+	char: str,
+	locale: str,
+	priority: Optional[Spri] = None,
+) -> None:
+	"""Speak a single unselected character with capital indicators.
+
+	:param char: The single character that was unselected.
+	:param locale: The locale for character processing.
+	:param priority: The speech priority.
+	"""
+	# Translators: This is spoken to indicate what has been unselected.
+	# For example 'A unselected'
+	seq = _getSingleCharSelectionSpeech(char, locale, messageSuffix=_(" unselected"))
+	if seq:
+		speak(seq, symbolLevel=None, priority=priority)
+
+
 def speakTextSelected(
 	text: str,
 	priority: Optional[Spri] = None,
@@ -1349,27 +1418,31 @@ def speakSelectionChange(  # noqa: C901
 		if not generalize:
 			for text in selectedTextList:
 				if len(text) == 1:
-					text = characterProcessing.processSpeechSymbol(locale, text)
-				speakTextSelected(text, priority=priority)
+					_speakSingleCharSelected(text, locale, priority=priority)
+				else:
+					speakTextSelected(text, priority=priority)
 		elif len(selectedTextList) > 0:
 			text = newInfo.text
 			if len(text) == 1:
-				text = characterProcessing.processSpeechSymbol(locale, text)
-			speakTextSelected(text, priority=priority)
+				_speakSingleCharSelected(text, locale, priority=priority)
+			else:
+				speakTextSelected(text, priority=priority)
 	if speakUnselected:
 		if not generalize:
 			for text in unselectedTextList:
 				if len(text) == 1:
-					text = characterProcessing.processSpeechSymbol(locale, text)
-				# Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
-				speakSelectionMessage(_("%s unselected"), text, priority=priority)
+					_speakSingleCharUnselected(text, locale, priority=priority)
+				else:
+					# Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
+					speakSelectionMessage(_("%s unselected"), text, priority=priority)
 		elif len(unselectedTextList) > 0:
 			if not newInfo.isCollapsed:
 				text = newInfo.text
 				if len(text) == 1:
-					text = characterProcessing.processSpeechSymbol(locale, text)
-				# Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
-				speakSelectionMessage(_("%s selected instead"), text, priority=priority)
+					_speakSingleCharUnselected(text, locale, priority=priority)
+				else:
+					# Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+					speakSelectionMessage(_("%s selected instead"), text, priority=priority)
 			else:
 				# Translators: Reported when selection is removed.
 				speakMessage(_("selection removed"), priority=priority)
