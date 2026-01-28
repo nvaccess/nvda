@@ -639,20 +639,26 @@ def upgradeConfigFrom_19_to_20(profile: ConfigObj):
 
 def upgradeConfigFrom_20_to_21(profile: ConfigObj):
 	"""Redirect old sapi4 and sapi5 config to 32 bit versions."""
-	synth = profile["speech"]["synth"]
+	speechConf = profile.get("speech")
+	if not speechConf:
+		log.debug("Profile's speech section is empty or does not exist. No action taken.")
+		return
+	synth = speechConf.get("synth")
 	if synth == "sapi4":
 		synth = "sapi4_32"
 		log.debug("Switching configured synthesizer from sapi4 to sapi4_32")
+		speechConf["synth"] = synth
 	elif synth == "sapi5":
 		synth = "sapi5_32"
 		log.debug("Switching configured synthesizer from sapi5 to sapi5_32")
-	profile["speech"]["synth"] = synth
-	sapi4Conf = profile["speech"].get("sapi4")
+		speechConf["synth"] = synth
+	sapi4Conf = speechConf.get("sapi4")
 	if sapi4Conf:
-		profile["speech"]["sapi4_32"] = sapi4Conf
-		del profile["speech"]["sapi4"]
-	sapi5Conf = profile["speech"].get("sapi5")
+		speechConf["sapi4_32"] = sapi4Conf
+		del speechConf["sapi4"]
+		log.debug("Moved old sapi4 configuration values to sapi4_32")
+	sapi5Conf = speechConf.get("sapi5")
 	if sapi5Conf:
-		profile["speech"]["sapi5_32"] = sapi5Conf
-		del profile["speech"]["sapi5"]
+		speechConf["sapi5_32"] = sapi5Conf
+		del speechConf["sapi5"]
 		log.debug("Moved old sapi5 configuration values to sapi5_32")
