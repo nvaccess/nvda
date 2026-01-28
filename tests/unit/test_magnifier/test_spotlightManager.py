@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from unittest.mock import MagicMock, patch
-from _magnifier.utils.types import FullScreenMode
+from _magnifier.utils.types import FullScreenMode, Coordinates
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
 
@@ -31,8 +31,8 @@ class TestSpotlightManager(_TestMagnifier):
 		spotlightManager = magnifier._spotlightManager
 
 		# Mock required methods
-		magnifier._getFocusCoordinates = MagicMock(return_value=(500, 400))
-		magnifier._getCoordinatesForMode = MagicMock(return_value=(500, 400))
+		magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=Coordinates(500, 400))
+		magnifier._getCoordinatesForMode = MagicMock(return_value=Coordinates(500, 400))
 		spotlightManager._animateZoom = MagicMock()
 
 		# Start spotlight
@@ -176,8 +176,8 @@ class TestSpotlightManager(_TestMagnifier):
 		# Set original zoom level
 		spotlightManager._originalZoomLevel = 3.0
 
-		# Mock _getFocusCoordinates to return expected position
-		magnifier._getFocusCoordinates = MagicMock(return_value=(500, 400))
+		# Mock getCurrentFocusCoordinates to return expected position
+		magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=Coordinates(500, 400))
 		spotlightManager._animateZoom = MagicMock()
 
 		# Trigger zoom back
@@ -187,7 +187,7 @@ class TestSpotlightManager(_TestMagnifier):
 		spotlightManager._animateZoom.assert_called_once()
 		args = spotlightManager._animateZoom.call_args[0]
 		self.assertEqual(args[0].zoomLevel, 3.0)  # Original zoom level
-		self.assertEqual(args[0].coordinates, (500, 400))  # Mouse position for CENTER mode
+		self.assertEqual(args[0].coordinates, Coordinates(500, 400))  # Mouse position for CENTER mode
 
 		magnifier._stopMagnifier()
 
@@ -226,8 +226,8 @@ class TestSpotlightManager(_TestMagnifier):
 		self.assertEqual(spotlightManager._originalZoomLevel, 0.0)
 
 		# Mock methods for full test
-		magnifier._getFocusCoordinates = MagicMock(return_value=(500, 400))
-		magnifier._getCoordinatesForMode = MagicMock(return_value=(500, 400))
+		magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=Coordinates(500, 400))
+		magnifier._getCoordinatesForMode = MagicMock(return_value=Coordinates(500, 400))
 		magnifier._stopSpotlight = MagicMock()
 
 		# Start spotlight (mocking animation)
