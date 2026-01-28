@@ -122,6 +122,7 @@ It currently includes Screen Curtain's settings (previously in the "Vision" cate
 * In the Input Gestures dialog, gestures including an operator while Num Lock is on will now be correctly displayed. (#19214, @CyrilleB79)
 * In Chromium browsers, if a document contains links with a malformed URL, reading the document will be possible again. (#19125, @nvdaes)
 * NVDA no longer plays a sound for spelling errors while typing if speech mode is set to on-demand or off. (#19323, @CyrilleB79)
+* The COM Registration Fixing Tool now correctly fixes issues with the registry for ARM software. (#16200)
 
 ### Changes for Developers
 
@@ -223,7 +224,7 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
     * `get_device_info_list` to `getDeviceInfoList`; and
     * `open_ex` to `openEx`.
   * The following methods on the `FTD2XX` class have been renamed:
-    * `set_baud_rate` to`setBaudRate`;
+    * `set_baud_rate` to `setBaudRate`;
     * `set_timeouts` to `setTimeouts`;
     * `set_latency_timer` to `setLatencyTimer`;
     * `set_bit_mode` to `setBitMode`;
