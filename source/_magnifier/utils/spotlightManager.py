@@ -28,7 +28,7 @@ class SpotlightManager:
 		self._lastMousePosition = Coordinates(0, 0)
 		self._timer: wx.CallLater | None = None
 		self._animationSteps: int = 40
-		self._animationStepDelay: int = 12  # Delay in milliseconds between animation steps
+		self._animationStepDelay: int = 12
 		self._currentCoordinates: Coordinates = fullscreenMagnifier._getFocusCoordinates()
 		self._originalZoomLevel: float = 0.0
 		self._currentZoomLevel: float = 0.0
@@ -118,7 +118,7 @@ class SpotlightManager:
 
 		if stepIndex < len(self._animationStepsList):
 			zoomLevel, coords = self._animationStepsList[stepIndex]
-			self._fullscreenMagnifier.zoomLevel = zoomLevel
+			self._fullscreenMagnifier._setZoomRawValue(zoomLevel)
 			self._fullscreenMagnifier._fullscreenMagnifier(coords)
 			self._currentZoomLevel = zoomLevel
 			self._currentCoordinates = coords
