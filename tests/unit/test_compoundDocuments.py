@@ -14,7 +14,7 @@ from .objectProvider import PlaceholderNVDAObject
 from .textProvider import BasicTextInfo, BasicTextProvider
 
 
-class BasicCompoundTextLeafTextInfo(BasicTextInfo, compoundDocuments.CompoundTextLeafTextInfo): ...
+class BasicCompoundTextLeafTextInfo(compoundDocuments.CompoundTextLeafTextInfo, BasicTextInfo): ...
 
 
 class BasicCompoundTextLeaf(BasicTextProvider):

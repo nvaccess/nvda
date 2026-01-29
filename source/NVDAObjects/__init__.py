@@ -73,6 +73,10 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 			raise LookupError("Object is off screen, invisible or has no location")
 		return [self.obj.location]
 
+	def allowMoveToUnitOffsetPastEnd(self, unit: str) -> bool:
+		"""Default NVDA Object TextInfo has no insertion point, so no need to move past the end of text."""
+		return False
+
 
 class InvalidNVDAObject(RuntimeError):
 	"""Raised by NVDAObjects during construction to inform that this object is invalid.
