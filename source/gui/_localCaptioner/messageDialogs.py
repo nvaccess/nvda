@@ -110,7 +110,7 @@ class ImageDescDownloader:
 			message=pgettext(
 				"imageDesc",
 				# Translators: label of dialog when downloading image captioning
-				"Image captioning not installed. Would you like to install (235 MB)?",
+				"Image captioning not installed. Would you like to install (178 MB)?",
 			),
 			dialogType=DialogType.WARNING,
 			buttons=confirmationButtons,
