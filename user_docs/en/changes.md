@@ -39,6 +39,10 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 #### Deprecations
 
+* The `speechDictHandler.ENTRY_TYPE_*` constants are deprecated.
+Use the `speechDictHandler.types.EntryType` enumeration instead. (#19430, @LeonarddeR)
+* `speechDictHandler.SpeechDictEntry` and `speechDictHandler.SpeechDict` have been moved to `speechDictHandler.types`. (#19430, @LeonarddeR)
+
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
 
@@ -205,6 +209,7 @@ On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of
 * NVDA is now licensed under "GPL-2 or later".
 * In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
 * Added `api.fakeNVDAObjectClasses` set and `api.isFakeNVDAObject` function to identify fake NVDAObject instances. (#19168, @hwf1324)
+* NVDA no longer includes the Microsoft Universal C Runtime. (#19508)
 
 #### API Breaking Changes
 
@@ -283,6 +288,7 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
 * The following symbols have been removed from `gui.settingsDialogs.GeneralSettingsPanel` without replacement: `logLevelList`, `allowUsageStatsCheckBox`. (#19296)
 * `gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS` has been removed.
 Use `config.configFlags.LoggingLevel` instead. (#19296)
+* `NVDAHelper.localLib.wasapi*` functions have been moved to `wasapi.wassapi*`.
 * `config.setSystemConfigToCurrentConfig` now takes a `Collection` of add-on IDs (as strings) to copy to the system configuration.
 Only add-ons with the given IDs will be copied. (#19446)
 
