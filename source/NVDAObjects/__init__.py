@@ -73,7 +73,7 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return [self.obj.location]
 
 	def allowMoveToUnitOffsetPastEnd(self, unit: str) -> bool:
-		"""Default NVDA Object TextInfo has no insertion point, so no need to move past the end of text."""
+		# Default NVDA Object TextInfo has no insertion point, so no need to move past the end of text.
 		return False
 
 
