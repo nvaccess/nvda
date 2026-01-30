@@ -4575,7 +4575,7 @@ class AdvancedPanelControls(
 
 		# Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
 		label = _("Play a sound for logged e&rrors:")
-		playErrorSoundChoices =  [i.displayString for i in PlayErrorSound]
+		playErrorSoundChoices = [i.displayString for i in PlayErrorSound]
 		self.playErrorSoundCombo = debugLogGroup.addLabeledControl(
 			label,
 			wx.Choice,
