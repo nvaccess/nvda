@@ -660,7 +660,7 @@ class ModelDownloader:
 	def downloadModelsMultithreaded(
 		self,
 		modelsDir: str = WritePaths.modelsDir,
-		modelName: str = "Xenova/vit-gpt2-image-captioning",
+		modelName: str = "Mozilla/distilvit",
 		filesToDownload: list[str] | None = None,
 		resolvePath: str = "/resolve/main",
 		progressCallback: ProgressCallback | None = None,
