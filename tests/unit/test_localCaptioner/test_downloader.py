@@ -39,7 +39,7 @@ class TestModelDownloader(unittest.TestCase):
 		"""Ensure directory is created and correct path returned."""
 		mockMkdir.return_value = None
 		modelsDir = self.downloader.ensureModelsDirectory()
-		self.assertTrue(modelsDir.endswith("vit-gpt2-image-captioning"))
+		self.assertTrue(modelsDir.endswith("distilvit"))
 		mockMkdir.assert_called_once()
 
 	@patch("pathlib.Path.mkdir", side_effect=OSError("Permission denied"))
