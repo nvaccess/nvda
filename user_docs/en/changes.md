@@ -19,6 +19,7 @@
 ### Changes
 
 * It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)
+* The "Play a sound for logged errors" option in Advanced settings now allow to choose among three possible values instead of two: "Only in test versions" (default), "Always" or "Never". (#13021, @CyrilleB79)
 
 ### Bug Fixes
 

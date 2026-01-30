@@ -436,3 +436,28 @@ class LoggingLevel(DisplayStringIntEnum):
 			# Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
 			self.DEBUG: _("debug"),
 		}
+
+
+@unique
+class PlayErrorSound(DisplayStringIntEnum):
+	"""Enumeration containing the possible config values to play a sound when an error is logged, depending on
+	NVDA version type.
+
+	Use PlayErrorSound.MEMBER.value to compare with the config;
+	use PlayErrorSound.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+
+	ONLY_IN_TEST_VERSIONS = 0
+	ALWAYS = 1
+	NEVER = 2
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+			PlayErrorSound.ONLY_IN_TEST_VERSIONS: pgettext("advanced.playErrorSound", "Only in NVDA test versions"),
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+			PlayErrorSound.ALWAYS: pgettext("advanced.playErrorSound", "Always"),
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+			PlayErrorSound.NEVER: pgettext("advanced.playErrorSound", "Never"),
+		}

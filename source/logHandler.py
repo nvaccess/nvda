@@ -183,13 +183,18 @@ def getOnErrorSoundRequested() -> "extensionPoints.Action":
 def shouldPlayErrorSound() -> bool:
 	"""Indicates if an error sound should be played when an error is logged."""
 	import config
-
-	# Only play the error sound if this is a test version or if the config states it explicitly.
-	return (
-		buildVersion.isTestVersion
-		# Play error sound: 1 = Yes
-		or (config.conf is not None and config.conf["featureFlag"]["playErrorSound"] == 1)
+	from config.configFlags import PlayErrorSound
+	
+	playErrorSound = (
+		config.conf["featureFlag"]["playErrorSound"] if config.conf else PlayErrorSound.ONLY_IN_TEST_VERSIONS.value
 	)
+	
+	if playErrorSound == PlayErrorSound.ALWAYS.value:
+		return True
+	elif playErrorSound == PlayErrorSound.NEVER.value:
+		return False
+	else:
+		return buildVersion.isTestVersion
 
 
 # Function to strip the base path of our code from traceback text to improve readability.

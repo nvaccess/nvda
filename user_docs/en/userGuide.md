@@ -4020,7 +4020,8 @@ Only turn one of these on if specifically instructed to by an NVDA developer e.g
 
 This option allows you to specify if NVDA will play an error sound in case an error is logged.
 Choosing Only in test versions (default) makes NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
-Choosing Yes allows to enable error sounds whatever your current NVDA version is.
+Choosing Always allows to enable error sounds whatever your current NVDA version is.
+On the opposite, choosing Never disables error sounds whatever your current NVDA version is, i.e. even in test versions.
 
 ##### Regular expression for text paragraph quick navigation commands {#TextParagraphRegexEdit}
 
