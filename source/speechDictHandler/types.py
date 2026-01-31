@@ -27,11 +27,11 @@ class EntryType(DisplayStringIntEnum):
 	WORD = 2
 	"""String must have word boundaries on both sides to match"""
 	PART_OF_WORD = 3
-	"""String must be preceded or followed by an alphanumeric character to match."""
+	"""String must be preceded or followed by a word character (letter, digit, or underscore) to match."""
 	START_OF_WORD = 4
-	"""String must have a word boundary at the start and an alphanumeric character at the end."""
+	"""String must have a word boundary at the start and a word character (letter, digit, or underscore) at the end."""
 	END_OF_WORD = 5
-	"""String must have an alphanumeric character at the start and a word boundary at the end."""
+	"""String must have a word character (letter, digit, or underscore) at the start and a word boundary at the end."""
 	UNIX = 6
 	"""Unix shell-style wildcards."""
 
