@@ -1183,6 +1183,8 @@ class SynthDriver(SynthDriver):
 	def _get_rate(self) -> int:
 		val = DWORD()
 		self._ttsAttrs.SpeedGet(byref(val))
+		# Sometimes the raw value can drift outside the min and max value.
+		val.value = max(min(val.value, self._maxRate), self._minRate)
 		return self._paramToPercent(val.value, self._minRate, self._maxRate)
 
 	def _set_rate(self, val: int):
@@ -1193,6 +1195,8 @@ class SynthDriver(SynthDriver):
 	def _get_pitch(self) -> int:
 		val = WORD()
 		self._ttsAttrs.PitchGet(byref(val))
+		# Sometimes the raw value can drift outside the min and max value.
+		val.value = max(min(val.value, self._maxPitch), self._minPitch)
 		return self._paramToPercent(val.value, self._minPitch, self._maxPitch)
 
 	def _set_pitch(self, val: int):
@@ -1203,7 +1207,10 @@ class SynthDriver(SynthDriver):
 	def _get_volume(self) -> int:
 		val = DWORD()
 		self._ttsAttrs.VolumeGet(byref(val))
-		return self._paramToPercent(val.value & 0xFFFF, self._minVolume, self._maxVolume)
+		# Sometimes the raw value can drift outside the min and max value.
+		val.value &=  0xFFFF
+		val.value = max(min(val.value, self._maxVolume), self._minVolume)
+		return self._paramToPercent(val.value, self._minVolume, self._maxVolume)
 
 	def _set_volume(self, val: int):
 		self._volume = val
