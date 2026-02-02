@@ -51,7 +51,7 @@ class SynthDriverService(Service):
 		if self._synth.name not in speechConf:
 			synthConf = speechConf[self._synth.name] = {}
 		else:
-			synthConf = speechConf[self.name]
+			synthConf = speechConf[self._synth.name]
 		if "pitch" not in synthConf:
 			synthConf["pitch"] = self._synth.pitch
 		if "rate" not in synthConf:
