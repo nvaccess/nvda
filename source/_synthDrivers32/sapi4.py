@@ -1208,7 +1208,7 @@ class SynthDriver(SynthDriver):
 		val = DWORD()
 		self._ttsAttrs.VolumeGet(byref(val))
 		# Sometimes the raw value can drift outside the min and max value.
-		val.value &=  0xFFFF
+		val.value &= 0xFFFF
 		val.value = max(min(val.value, self._maxVolume), self._minVolume)
 		return self._paramToPercent(val.value, self._minVolume, self._maxVolume)
 

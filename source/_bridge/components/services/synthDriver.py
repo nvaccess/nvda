@@ -22,7 +22,6 @@ from speech.commands import (
 	CharacterModeCommand,
 	LangChangeCommand,
 	BreakCommand,
-	BaseProsodyCommand,
 	PitchCommand,
 	RateCommand,
 	VolumeCommand,
@@ -48,17 +47,17 @@ class SynthDriverService(Service):
 		self._synthIndexReachedCallback = None
 		self._synthDoneSpeakingCallback = None
 		# Ensure default pitch, rate, and volume settings exist in config
-		speechConf = config.conf['speech']
+		speechConf = config.conf["speech"]
 		if self._synth.name not in speechConf:
 			synthConf = speechConf[self._synth.name] = {}
 		else:
 			synthConf = speechConf[self.name]
-		if 'pitch' not in synthConf:
-			synthConf['pitch'] = self._synth.pitch
-		if 'rate' not in synthConf:
-			synthConf['rate'] = self._synth.rate
-		if 'volume' not in synthConf:
-			synthConf['volume'] = self._synth.volume
+		if "pitch" not in synthConf:
+			synthConf["pitch"] = self._synth.pitch
+		if "rate" not in synthConf:
+			synthConf["rate"] = self._synth.rate
+		if "volume" not in synthConf:
+			synthConf["volume"] = self._synth.volume
 
 	@Service.exposed
 	def registerSynthIndexReachedNotification(self, callback: Callable[[int], Any]):
@@ -98,14 +97,25 @@ class SynthDriverService(Service):
 	def getSupportedCommands(self) -> frozenset[str]:
 		commands: list[str] = []
 		for item in self._synth.supportedCommands:
-			if issubclass(item, (IndexCommand, CharacterModeCommand, LangChangeCommand, BreakCommand, PitchCommand, RateCommand, VolumeCommand, PhonemeCommand)):
+			if issubclass(
+				item,
+				(
+					IndexCommand,
+					CharacterModeCommand,
+					LangChangeCommand,
+					BreakCommand,
+					PitchCommand,
+					RateCommand,
+					VolumeCommand,
+					PhonemeCommand,
+				),
+			):
 				name = item.__name__
 			else:
 				log.debugWarning(f"Unknown command type in supportedCommands: {item}")
 				continue
 			commands.append(name)
 		return frozenset(commands)
-
 
 	@Service.exposed
 	def getSupportedNotifications(self) -> frozenset[str]:
@@ -137,19 +147,19 @@ class SynthDriverService(Service):
 				speechSequence.append(item["value"])
 			elif item["type"] == "IndexCommand":
 				speechSequence.append(
-					IndexCommand(index=item["index"])
+					IndexCommand(index=item["index"]),
 				)
 			elif item["type"] == "CharacterModeCommand":
 				speechSequence.append(
-					CharacterModeCommand(state=item["state"])
+					CharacterModeCommand(state=item["state"]),
 				)
 			elif item["type"] == "LangChangeCommand":
 				speechSequence.append(
-					LangChangeCommand(lang=item["lang"])
+					LangChangeCommand(lang=item["lang"]),
 				)
 			elif item["type"] == "BreakCommand":
 				speechSequence.append(
-					BreakCommand(time=item["time"])
+					BreakCommand(time=item["time"]),
 				)
 			elif item["type"] in (
 				"PitchCommand",
@@ -162,14 +172,14 @@ class SynthDriverService(Service):
 					cls(
 						offset=item["offset"],
 						multiplier=item["multiplier"],
-					)
+					),
 				)
 			elif item["type"] == "PhonemeCommand":
 				speechSequence.append(
 					PhonemeCommand(
 						ipa=item["ipa"],
 						text=item["text"],
-					)
+					),
 				)
 			else:
 				log.debugWarning(f"Unsupported speech sequence item type: {item['type']}")
@@ -197,7 +207,7 @@ class SynthDriverService(Service):
 		setattr(self._synth, param, val)
 		# Update local config
 		# So synthCommands can use current defaults.
-		synthConf = config.conf['speech'][self._synth.name]
+		synthConf = config.conf["speech"][self._synth.name]
 		synthConf[param] = val
 
 	def terminate(self):

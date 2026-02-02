@@ -149,35 +149,35 @@ class SynthDriverProxy(Proxy, SynthDriver):
 					{
 						"type": "str",
 						"value": item,
-					}
+					},
 				)
 			elif isinstance(item, IndexCommand):
 				data.append(
 					{
 						"type": "IndexCommand",
 						"index": item.index,
-					}
+					},
 				)
 			elif isinstance(item, CharacterModeCommand):
 				data.append(
 					{
 						"type": "CharacterModeCommand",
 						"state": item.state,
-					}
+					},
 				)
 			elif isinstance(item, LangChangeCommand):
 				data.append(
 					{
 						"type": "LangChangeCommand",
 						"lang": item.lang,
-					}
+					},
 				)
 			elif isinstance(item, BreakCommand):
 				data.append(
 					{
 						"type": "BreakCommand",
 						"time": item.time,
-					}
+					},
 				)
 			elif isinstance(item, PhonemeCommand):
 				data.append(
@@ -185,7 +185,7 @@ class SynthDriverProxy(Proxy, SynthDriver):
 						"type": "PhonemeCommand",
 						"ipa": item.ipa,
 						"text": item.text,
-					}
+					},
 				)
 			elif isinstance(item, (PitchCommand, RateCommand, VolumeCommand)):
 				data.append(
@@ -193,7 +193,7 @@ class SynthDriverProxy(Proxy, SynthDriver):
 						"type": item.__class__.__name__,
 						"offset": item._offset,
 						"multiplier": item._multiplier,
-					}
+					},
 				)
 			else:
 				log.debugWarning(f"Unsupported speech sequence item type: {type(item)}")
