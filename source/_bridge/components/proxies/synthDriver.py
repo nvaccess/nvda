@@ -4,10 +4,10 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from __future__ import annotations
+import json
 import weakref
 import typing
 from collections import OrderedDict
-import pickle
 from logHandler import log
 from _bridge.base import Proxy
 from autoSettingsUtils.driverSetting import DriverSetting, NumericDriverSetting, BooleanDriverSetting
@@ -16,6 +16,17 @@ from synthDriverHandler import (
 	synthIndexReached,
 	synthDoneSpeaking,
 	VoiceInfo,
+)
+from speech.commands import (
+	SynthCommand,
+	IndexCommand,
+	CharacterModeCommand,
+	LangChangeCommand,
+	BreakCommand,
+	PhonemeCommand,
+	PitchCommand,
+	RateCommand,
+	VolumeCommand,
 )
 
 if typing.TYPE_CHECKING:
@@ -73,6 +84,32 @@ class SynthDriverProxy(Proxy, SynthDriver):
 		self._supportedSettingsCache = settings
 		return settings
 
+	_supportedCommandsCache: list[type[SynthCommand]] | None = None
+
+	def _get_supportedCommands(self) -> list[type[SynthCommand]]:
+		if self._supportedCommandsCache is not None:
+			return self._supportedCommandsCache
+		data = self._remoteService.getSupportedCommands()
+		commands = []
+		for item in data:
+			if item in (
+				"IndexCommand",
+				"CharacterModeCommand",
+				"LangChangeCommand",
+				"BreakCommand",
+				"PhonemeCommand",
+				"PitchCommand",
+				"RateCommand",
+				"VolumeCommand",
+			):
+				cls = globals()[item]
+				commands.append(cls)
+			else:
+				log.debugWarning(f"Unsupported command class name: {item}")
+				continue
+		self._supportedCommandsCache = commands
+		return commands
+
 	_supportedNotificationsCache: set[extensionPoints.Action] | None = None
 
 	def _get_supportedNotifications(self) -> set[extensionPoints.Action]:
@@ -105,9 +142,64 @@ class SynthDriverProxy(Proxy, SynthDriver):
 		return variants
 
 	def speak(self, speechSequence):
-		# Pickle should be replaced with a much safer serialization method in future.
-		# But as only internal synth drivers are supported currently, this is acceptable for now.
-		data = pickle.dumps(speechSequence)
+		data = []
+		for item in speechSequence:
+			if isinstance(item, str):
+				data.append(
+					{
+						"type": "str",
+						"value": item,
+					}
+				)
+			elif isinstance(item, IndexCommand):
+				data.append(
+					{
+						"type": "IndexCommand",
+						"index": item.index,
+					}
+				)
+			elif isinstance(item, CharacterModeCommand):
+				data.append(
+					{
+						"type": "CharacterModeCommand",
+						"state": item.state,
+					}
+				)
+			elif isinstance(item, LangChangeCommand):
+				data.append(
+					{
+						"type": "LangChangeCommand",
+						"lang": item.lang,
+					}
+				)
+			elif isinstance(item, BreakCommand):
+				data.append(
+					{
+						"type": "BreakCommand",
+						"time": item.time,
+					}
+				)
+			elif isinstance(item, PhonemeCommand):
+				data.append(
+					{
+						"type": "PhonemeCommand",
+						"ipa": item.ipa,
+						"text": item.text,
+					}
+				)
+			elif isinstance(item, (PitchCommand, RateCommand, VolumeCommand)):
+				data.append(
+					{
+						"type": item.__class__.__name__,
+						"offset": item._offset,
+						"multiplier": item._multiplier,
+					}
+				)
+			else:
+				log.debugWarning(f"Unsupported speech sequence item type: {type(item)}")
+				continue
+		data = json.dumps(data).encode("utf-8")
+		log.debug(f"Sending speak request to remote synth driver with data: {data}")
 		return self._remoteService.speak(data)
 
 	def cancel(self):
@@ -123,6 +215,7 @@ class SynthDriverProxy(Proxy, SynthDriver):
 		self._remoteService.setParam("voice", value)
 		# changing the voice may change the supported settings
 		self._supportedSettingsCache = None
+		self._supportedCommandsCache = None
 
 	def _get_rate(self):
 		return self._remoteService.getParam("rate")

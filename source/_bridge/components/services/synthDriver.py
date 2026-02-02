@@ -8,13 +8,25 @@ from typing import (
 	Any,
 	TypeAlias,
 )
-import pickle
+import json
 import rpyc
 from logHandler import log
+import config
 from synthDriverHandler import (
 	SynthDriver,
 	synthIndexReached,
 	synthDoneSpeaking,
+)
+from speech.commands import (
+	IndexCommand,
+	CharacterModeCommand,
+	LangChangeCommand,
+	BreakCommand,
+	BaseProsodyCommand,
+	PitchCommand,
+	RateCommand,
+	VolumeCommand,
+	PhonemeCommand,
 )
 from _bridge.base import Service
 
@@ -35,6 +47,18 @@ class SynthDriverService(Service):
 		self._synth = synthDriver
 		self._synthIndexReachedCallback = None
 		self._synthDoneSpeakingCallback = None
+		# Ensure default pitch, rate, and volume settings exist in config
+		speechConf = config.conf['speech']
+		if self._synth.name not in speechConf:
+			synthConf = speechConf[self._synth.name] = {}
+		else:
+			synthConf = speechConf[self.name]
+		if 'pitch' not in synthConf:
+			synthConf['pitch'] = self._synth.pitch
+		if 'rate' not in synthConf:
+			synthConf['rate'] = self._synth.rate
+		if 'volume' not in synthConf:
+			synthConf['volume'] = self._synth.volume
 
 	@Service.exposed
 	def registerSynthIndexReachedNotification(self, callback: Callable[[int], Any]):
@@ -71,6 +95,19 @@ class SynthDriverService(Service):
 		)
 
 	@Service.exposed
+	def getSupportedCommands(self) -> frozenset[str]:
+		commands: list[str] = []
+		for item in self._synth.supportedCommands:
+			if issubclass(item, (IndexCommand, CharacterModeCommand, LangChangeCommand, BreakCommand, PitchCommand, RateCommand, VolumeCommand, PhonemeCommand)):
+				name = item.__name__
+			else:
+				log.debugWarning(f"Unknown command type in supportedCommands: {item}")
+				continue
+			commands.append(name)
+		return frozenset(commands)
+
+
+	@Service.exposed
 	def getSupportedNotifications(self) -> frozenset[str]:
 		notifications = []
 		for item in self._synth.supportedNotifications:
@@ -92,8 +129,51 @@ class SynthDriverService(Service):
 
 	@Service.exposed
 	def speak(self, data: str):
-		# fixme: replace Pickle with a safer serialization method
-		speechSequence = pickle.loads(data)
+		data = json.loads(data)
+		log.debug(f"Received speak request with data: {data}")
+		speechSequence = []
+		for item in data:
+			if item["type"] == "str":
+				speechSequence.append(item["value"])
+			elif item["type"] == "IndexCommand":
+				speechSequence.append(
+					IndexCommand(index=item["index"])
+				)
+			elif item["type"] == "CharacterModeCommand":
+				speechSequence.append(
+					CharacterModeCommand(state=item["state"])
+				)
+			elif item["type"] == "LangChangeCommand":
+				speechSequence.append(
+					LangChangeCommand(lang=item["lang"])
+				)
+			elif item["type"] == "BreakCommand":
+				speechSequence.append(
+					BreakCommand(time=item["time"])
+				)
+			elif item["type"] in (
+				"PitchCommand",
+				"RateCommand",
+				"VolumeCommand",
+			):
+				cls = globals()[item["type"]]
+				log.debug(f"Reconstructing {cls}, with data {item}")
+				speechSequence.append(
+					cls(
+						offset=item["offset"],
+						multiplier=item["multiplier"],
+					)
+				)
+			elif item["type"] == "PhonemeCommand":
+				speechSequence.append(
+					PhonemeCommand(
+						ipa=item["ipa"],
+						text=item["text"],
+					)
+				)
+			else:
+				log.debugWarning(f"Unsupported speech sequence item type: {item['type']}")
+				continue
 		return self._synth.speak(speechSequence)
 
 	@Service.exposed
@@ -115,6 +195,10 @@ class SynthDriverService(Service):
 		if not any(param == setting.id for setting in self._synth.supportedSettings):
 			raise AttributeError(f"{param} not a supported setting")
 		setattr(self._synth, param, val)
+		# Update local config
+		# So synthCommands can use current defaults.
+		synthConf = config.conf['speech'][self._synth.name]
+		synthConf[param] = val
 
 	def terminate(self):
 		if self._synthIndexReachedCallback:
