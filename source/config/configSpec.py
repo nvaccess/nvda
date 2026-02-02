@@ -114,7 +114,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 # Magnifier settings
 [magnifier]
 	defaultZoomLevel = float(min=1.0, max=10.0, default=2.0)
-	defaultPanValue = integer(min=1, max=100, default=10)
+	defaultPanStep = integer(min=1, max=100, default=10)
 	defaultFullscreenMode = string(default="center")
 	defaultFilter = string(default="normal")
 	keepMouseCentered = boolean(default=false)

@@ -5958,12 +5958,12 @@ class MagnifierPanel(SettingsPanel):
 			max=100,
 		)
 		self.bindHelpEvent(
-			"magnifierDefaultPan",
+			"magnifierPanStep",
 			self.defaultPanSpinCtrl,
 		)
 
 		# Set default value from config
-		defaultPan = magnifierConfig.getDefaultPanValue()
+		defaultPan = magnifierConfig.getDefaultPanStep()
 		self.defaultPanSpinCtrl.SetValue(defaultPan)
 
 		# FILTER SETTINGS
@@ -6014,7 +6014,7 @@ class MagnifierPanel(SettingsPanel):
 		selectedZoom = self.defaultZoomList.GetSelection()
 		magnifierConfig.setDefaultZoomLevel(magnifierConfig.ZoomLevel.zoom_range()[selectedZoom])
 
-		magnifierConfig.setDefaultPanValue(self.defaultPanSpinCtrl.GetValue())
+		magnifierConfig.setDefaultPanStep(self.defaultPanSpinCtrl.GetValue())
 
 		selectedFilterIdx = self.defaultFilterList.GetSelection()
 		magnifierConfig.setDefaultFilter(list(Filter)[selectedFilterIdx])

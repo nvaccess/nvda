@@ -188,13 +188,13 @@ class TestMagnifier(_TestMagnifier):
 		with patch("_magnifier.magnifier.winUser.setCursorPos"):
 			# Setup initial position at center
 			self.magnifier._isActive = True
-			self.magnifier._panValue = 10  # 10% of screen width
+			self.magnifier._panStep = 10  # 10% of screen width
 			self.magnifier.setPanMarginBorder()
 			centerX = self.screenWidth // 2
 			centerY = self.screenHeight // 2
 			self.magnifier._currentCoordinates = Coordinates(centerX, centerY)
 
-			# Calculate expected pan pixels: (screenWidth / zoomLevel) * panValue / 100
+			# Calculate expected pan pixels: (screenWidth / zoomLevel) * panStep / 100
 			expectedPanPixels = int(
 				(self.screenWidth / self.magnifier.zoomLevel) * 10 / 100,
 			)
@@ -226,7 +226,7 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._doUpdate = MagicMock()
 		with patch("_magnifier.magnifier.winUser.setCursorPos"):
 			self.magnifier._isActive = True
-			self.magnifier._panValue = 10  # 10% of screen width
+			self.magnifier._panStep = 10  # 10% of screen width
 			self.magnifier.setPanMarginBorder()
 			centerX = self.screenWidth // 2
 			centerY = self.screenHeight // 2
@@ -264,7 +264,7 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._doUpdate = MagicMock()
 		with patch("_magnifier.magnifier.winUser.setCursorPos"):
 			self.magnifier._isActive = True
-			self.magnifier._panValue = 10  # 10% of screen width
+			self.magnifier._panStep = 10  # 10% of screen width
 			self.magnifier.setPanMarginBorder()
 			centerX = self.screenWidth // 2
 			centerY = self.screenHeight // 2
@@ -302,7 +302,7 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._doUpdate = MagicMock()
 		with patch("_magnifier.magnifier.winUser.setCursorPos"):
 			self.magnifier._isActive = True
-			self.magnifier._panValue = 10  # 10% of screen width
+			self.magnifier._panStep = 10  # 10% of screen width
 			self.magnifier.setPanMarginBorder()
 			centerX = self.screenWidth // 2
 			centerY = self.screenHeight // 2

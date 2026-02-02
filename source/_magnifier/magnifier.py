@@ -32,7 +32,7 @@ from .utils.types import (
 
 from .config import (
 	getDefaultZoomLevel,
-	getDefaultPanValue,
+	getDefaultPanStep,
 	getDefaultFilter,
 	ZoomLevel,
 )
@@ -47,7 +47,7 @@ class Magnifier:
 		self._magnifierType: MagnifierType = MagnifierType.FULLSCREEN
 		self._isActive: bool = False
 		self._zoomLevel: float = getDefaultZoomLevel()
-		self._panValue: int = getDefaultPanValue()
+		self._panStep: int = getDefaultPanStep()
 		self._panMargin: locationHelper.RectLTRB = locationHelper.RectLTRB(0, 0, 0, 0)
 		self._timer: None | wx.Timer = None
 		self._lastFocusedObject: FocusType | None = None
@@ -251,7 +251,7 @@ class Magnifier:
 
 		# Calculate panning value as percentage of screen width
 		# Use only width to ensure horizontal and vertical panning have the same step size
-		panPixels = int((self._displayOrientation.width / self.zoomLevel) * self._panValue / 100)
+		panPixels = int((self._displayOrientation.width / self.zoomLevel) * self._panStep / 100)
 
 		match action:
 			case MagnifierAction.PAN_LEFT:

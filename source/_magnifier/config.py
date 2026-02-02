@@ -80,25 +80,25 @@ def setDefaultZoomLevel(zoomLevel: float) -> None:
 	config.conf["magnifier"]["defaultZoomLevel"] = zoomLevel
 
 
-def getDefaultPanValue() -> int:
+def getDefaultPanStep() -> int:
 	"""
 	Get default pan value from config.
 
 	:return: The default pan value.
 	"""
-	return config.conf["magnifier"]["defaultPanValue"]
+	return config.conf["magnifier"]["defaultPanStep"]
 
 
-def setDefaultPanValue(panValue: int) -> None:
+def setDefaultPanStep(panStep: int) -> None:
 	"""
 	Set default pan value from settings.
 
-	:param panValue: The pan value to set.
+	:param panStep: The pan value to set.
 	"""
 
 	if "magnifier" not in config.conf:
 		config.conf["magnifier"] = {}
-	config.conf["magnifier"]["defaultPanValue"] = panValue
+	config.conf["magnifier"]["defaultPanStep"] = panStep
 
 
 def getDefaultFilter() -> Filter:
