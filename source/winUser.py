@@ -257,8 +257,11 @@ EM_GETFIRSTVISIBLELINE = 0x0CE
 # Clipboard formats
 CF_TEXT = 1
 # mapVirtualKey constants
+MAPVK_VK_TO_VSC = 0
+MAPVK_VSC_TO_VK = 1
 MAPVK_VK_TO_CHAR = 2
 MAPVK_VSC_TO_VK_EX = 3
+MAPVK_VK_TO_VSC_EX = 4
 # Virtual key codes
 VK_LBUTTON = 1
 VK_RBUTTON = 2

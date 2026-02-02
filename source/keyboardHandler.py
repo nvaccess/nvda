@@ -566,12 +566,12 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			for key in self._keyNamesInDisplayOrder
 		)
 
-	def _get_character(self) -> str:
+	def _get_character(self) -> Optional[str]:
 		"""Get the character this key combination would produce.
 
 		Uses ToUnicodeEx with 0x4 flag to avoid modifying keyboard state.
 		For dead keys, returns the dead key character itself.
-		Returns empty string for unprintable characters or when Windows key is pressed.
+		Returns None for unprintable characters or when Windows key is pressed.
 		"""
 		# Key state value indicating key is pressed (high bit set)
 		KEY_PRESSED_STATE: int = -128
@@ -579,7 +579,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		try:
 			threadID = api.getFocusObject().windowThreadID
 		except AttributeError:
-			return ""
+			return None
 		keyboardLayout = ctypes.windll.user32.GetKeyboardLayout(threadID)
 		buffer = ctypes.create_unicode_buffer(5)
 		states = (ctypes.c_byte * 256)()
@@ -595,7 +595,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 		# Check for Windows key - characters with Windows key are invalid
 		if VK_WIN in [self.getVkName(m, e) for m, e in self.modifiers]:
-			return ""
+			return None
 
 		for i in range(256):
 			if i in modifierList:
@@ -627,10 +627,10 @@ class KeyboardInputGesture(inputCore.InputGesture):
 				0x04,
 				keyboardLayout,
 			)
-			return buffer.value[:1] if buffer.value else ""
+			return buffer.value[:1] if buffer.value else None
 
 		if res == 0:
-			return ""
+			return None
 
 		# Check alt key behavior - alt sometimes gives same character as without alt
 		if winUser.VK_MENU in modifierList:
@@ -652,35 +652,35 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			)
 			# If same character with and without alt, it's not valid
 			if buffer.value == newBuffer.value:
-				return ""
+				return None
 
 		return buffer.value[:res]
 
-	def _get__nameForInputHelp(self) -> str:
+	def _get__nameForInputHelp(self) -> List[str]:
 		"""Returns the name of this gesture for input help mode.
 
 		For keyboard gestures that produce printable characters,
-		the character will be prepended to the display name,
+		the character will be included in the list,
 		unless it contains NVDA modifier.
 		"""
 		displayName = self.displayName
 
 		# NVDA commands keep original behavior
 		if any(isNVDAModifierKey(mod, ext) for mod, ext in self.modifiers):
-			return displayName
+			return [displayName]
 
 		char = self.character
 		if not char:
-			return displayName
+			return [displayName]
 
 		if not char.isprintable():
-			return displayName
+			return [displayName]
 
 		# Avoid duplicating if displayName matches character (case insensitive)
 		if displayName.lower() == char.lower():
-			return displayName
+			return [displayName]
 
-		return f"{char} {displayName}"
+		return [char, displayName]
 
 	def _get_identifiers(self):
 		keyName = "+".join(self._keyNamesInDisplayOrder)
@@ -852,7 +852,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if not keys:
 			raise ValueError
 
-		return cls(keys[:-1], vk, 0, ext)
+		hkl = getInputHkl()
+		scanCode = user32.MapVirtualKeyEx(vk, winUser.MAPVK_VK_TO_VSC, hkl)
+		return cls(keys[:-1], vk, scanCode, ext)
 
 	RE_IDENTIFIER = re.compile(r"^kb(?:\((.+?)\))?:(.*)$")
 
