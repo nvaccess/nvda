@@ -240,3 +240,9 @@ class SynthDriverProxy(Proxy, SynthDriver):
 
 	def _set_variant(self, value):
 		self._remoteService.setParam("variant", value)
+
+	def _get_rateBoost(self):
+		return self._remoteService.getParam("rateBoost")
+
+	def _set_rateBoost(self, value):
+		self._remoteService.setParam("rateBoost", value)
