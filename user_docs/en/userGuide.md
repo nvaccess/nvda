@@ -24,7 +24,7 @@ Major highlights include:
 * Built-in speech synthesizer supporting over 80 languages
 * Reporting of textual formatting where available such as font name and size, style and spelling errors
 * Automatic announcement of text under the mouse and optional audible indication of the mouse position
-* Support for many refreshable braille displays, including the ability to detect many of them automatically as well as braille *nput on braille displays with a braille keyboard
+* Support for many refreshable braille displays, including the ability to detect many of them automatically as well as braille input on braille displays with a braille keyboard
 * Ability to [connect to and control another computer running NVDA](#RemoteAccess) for remote assistance or collaboration
 * Ability to run entirely from a USB flash drive or other portable media without the need for installation
 * Easy to use talking installer
@@ -482,7 +482,7 @@ This includes disabling usage of the [Add-on Store](#AddonsManager).
 
 Portable and temporary copies of NVDA have the following restrictions:
 
-* The inability to automatically start during and/or after log*on.
+* The inability to automatically start during and/or after log-on.
 * The inability to interact with applications running with administrative privileges, unless of course NVDA itself has been run also with these privileges (not recommended). Examples include:
   * Command Prompt and PowerShell running in admin mode
   * Task Manager
@@ -668,7 +668,7 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 |---|---|---|
 |Report date/time |NVDA+f12 |Pressing once reports the current time, pressing twice reports the date|
 |Report battery status |NVDA+shift+b |Reports the battery status i.e. whether AC power is in use or the current charge percentage.|
-|Report clipboard text |NVDA+c |Reports the Text on the clipboard if there is any.|                                  |
+|Report clipboard text |NVDA+c |Reports the Text on the clipboard if there is any.|
 
 <!-- KC:endInclude -->
 
@@ -1569,11 +1569,11 @@ The default color filter when the magnifier is first enabled can be configured i
 The magnifier offers three different modes for tracking focus and determining which part of the screen to magnify:
 
 * **Center**: The magnified area is always centered on the current focus position.
-  This mode keeps the focused element at the center of the screen at all times.
+This mode keeps the focused element at the center of the screen at all times.
 * **Border**: The magnified area only moves when the focus approaches the edge of the visible area.
-  This mode provides a more stable view, only adjusting when necessary.
+This mode provides a more stable view, only adjusting when necessary.
 * **Relative**: The magnified area maintains the relative position of the focus within the screen.
-  This mode mimics the behavior of the Windows Magnifier.
+This mode mimics the behavior of the Windows Magnifier.
 
 To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 NVDA will announce the name of the currently selected mode.
@@ -2808,14 +2808,14 @@ The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Normal, Grayscale, Inverted|
-|Default |Normal|
+|Options | Normal, Grayscale, Inverted |
+|Default |Normal |
 
-| Option |Description|
+| Option | Description |
 |---|---|
-|Normal |No color modification is applied.|
-|Grayscale |Converts all colors to shades of gray, which can help reduce eye strain and improve contrast.|
-|Inverted |Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia.|
+| Normal | No color modification is applied. |
+| Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
+| Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
 ##### Default focus mode {#MagnifierDefaultFocusMode}
 
@@ -2828,11 +2828,11 @@ The available options are:
 |Options |Center, Border, Relative|
 |Default |Center|
 
-|Option |Description|
+| Option | Description |
 |---|---|
-|Center |The magnified area is always centered on the current focus position.|
-|Border |The magnified area only moves when the focus approaches the edge of the visible area.|
-|Relative |The magnified area maintains the relative position of the focus within the screen.|
+| Center | The magnified area is always centered on the current focus position. |
+| Border | The magnified area only moves when the focus approaches the edge of the visible area. |
+| Relative | The magnified area maintains the relative position of the focus within the screen. |
 
 ##### Panning step size {#MagnifierPanningStepSize}
 
@@ -3414,10 +3414,10 @@ This category allows you to adjust how NVDA reads mathematical content.
 
 This controls whether certain notations are disambiguated or not in speech.
 
-| . {.hideHeaderRow} |.|
+| . {.hideHeaderRow} | . |
 |---|---|
-|Options |Blindness, Low Vision, Learning disabilities|
-|Default |Blindness|
+| Options | Blindness, Low Vision, Learning disabilities |
+| Default | Blindness |
 
 ###### Language {#MathSpeechLanguage}
 
@@ -3933,7 +3933,7 @@ The following options exist:
   Note:
   * There are many sources for `accDescription` several have mixed or unreliable semantics.
     Historically AT has not been able to differentiate sources of `accDescription` typically it wasn't spoken due to the mixed semantics.
-  * his option is in very early development, it relies on browser features not yet widely available.
+  * This option is in very early development, it relies on browser features not yet widely available.
   * Expected to work with Chromium 92.0.4479.0+
 
 ##### Report live regions {#BrailleLiveRegions}
@@ -4111,7 +4111,7 @@ There are three options:
   * never: Never send the actual symbol to the synthesizer.
   * always: Always send the actual symbol to the synthesizer.
   * only below symbols' level: Send the actual symbol only if the configured speech symbol level is lower than the level set for this symbol.
-For example, you might use this so that a symbol will have its replacement spoken at higher levels without pausing, while still being indicated with a pause at lower levels.
+  For example, you might use this so that a symbol will have its replacement spoken at higher levels without pausing, while still being indicated with a pause at lower levels.
 
 You can add new symbols by pressing the Add button.
 In the dialog that appears, enter the symbol and press the OK button.
@@ -4368,7 +4368,7 @@ Locating this is not covered in this documentation.
 1. For key: come up with a long, hard to guess key, or press the "Generate Key" button to have one automatically generated.
    You will need to provide this to the other person.
 
-   - Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
+   * Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.
 
 1. Press OK.
 1. Provide the connection details (such as host and key) to the other person so they can connect.
@@ -4387,7 +4387,6 @@ Once a Remote Access session is active, you can switch between controlling the r
 ### Remote Access Key Commands Summary {#RemoteAccessGestures}
 
 <!-- KC:beginInclude -->
-
 | Name |Key |Description|
 |---|---|---|
 | Toggle Remote connection | `NVDA+alt+r` | Starts a new Remote Access session or, if a session is already in progress, disconnects from it. |
@@ -4398,7 +4397,6 @@ Once a Remote Access session is active, you can switch between controlling the r
 | Mute remote | None | Mutes or unmutes the speech coming from the remote computer. |
 | Send clipboard | None | Sends the contents of the clipboard to the remote computer. |
 | Send `control+alt+delete` | None | Sends `control+alt+delete` to the controlled computer. |
-
 <!-- KC:endInclude -->
 
 ## Add-ons and the Add-on Store {#AddonsManager}
@@ -4690,7 +4688,7 @@ The COM Registration Fixing Tool attempts to fix these issues by repairing acces
 
 The types of problem this tool can fix include:
 
- *NVDA reporting "unknown" or "pane", when navigating in browsers such as Firefox or Edge, mail programs such as Thunderbird, Windows Explorer, the task bar, and other programs.
+* NVDA reporting "unknown" or "pane", when navigating in browsers such as Firefox or Edge, mail programs such as Thunderbird, Windows Explorer, the task bar, and other programs.
 * NVDA failing to switch between focus mode and browse mode when you expect it to.
 * Buttons which previously had their names spoken, suddenly being reported only as "button".
 * NVDA being very slow when navigating in browsers while using browse mode.
@@ -4970,7 +4968,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Toggle braille tethered to |b2|
 |Toggle the braille cursor |b1|
 |Toggle focus context presentation |b7|
-|Toggle braille input |space+b1+b3+b4 (space+capital B)|  
+|Toggle braille input |space+b1+b3+b4 (space+capital B)|
 
 <!-- KC:endInclude -->
 
@@ -5021,7 +5019,6 @@ USB HID should generally be used instead.
 
 Following are the key assignments for these displays with NVDA.
 Please see your display's documentation for descriptions of where these keys can be found.
-
 <!-- KC:beginInclude -->
 
 | Name |Key|
@@ -5259,7 +5256,7 @@ You can find more information about the displays on their [Demo and Driver Downl
 * These displays do not yet support NVDA's automatic background braille display detection functionality.
 * Select "Seika Braille Displays" to manually configure
 * A device drivers must be installed before using Seika v3/4/5/80.
-  The drivers are [provided by the manufacturer](https://en.seika-braille.com/down/index.html).
+The drivers are [provided by the manufacturer](https://en.seika-braille.com/down/index.html).
 
 The Seika Braille Display key assignments follow.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -5289,7 +5286,6 @@ Please see the display's documentation for descriptions of where these keys can 
 
 The Seika Notetaker key assignments follow.
 Please see the display's documentation for descriptions of where these keys can be found.
-
 <!-- KC:beginInclude -->
 
 | Name |Key|
@@ -6129,7 +6125,7 @@ As an example, you can exit the currently running copy of NVDA by entering the f
 Some of the command line options have a short and a long version, while some of them have only a long version.
 For those which have a short version, you can combine them like this:
 
-| . {.hideHeaderRow}                     | | . {.hideHeaderRow} |.|
+| . {.hideHeaderRow} |.|
 |---|---|
 |`nvda -mc CONFIGPATH` |This will start NVDA with startup sounds and message disabled, and the specified configuration|
 |`nvda -mc CONFIGPATH --disable-addons` |Same as above, but with add-ons disabled|
