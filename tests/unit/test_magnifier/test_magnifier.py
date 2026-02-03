@@ -4,13 +4,12 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from _magnifier.magnifier import Magnifier
-from _magnifier.utils.types import Coordinates, Filter, FocusType, Direction
+from _magnifier.utils.types import Coordinates, Filter, Direction
+
 import unittest
 from winAPI._displayTracking import getPrimaryDisplayOrientation
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import MagicMock, patch
 import wx
-import mouseHandler
-import winUser
 
 
 class _TestMagnifier(unittest.TestCase):
@@ -66,9 +65,7 @@ class TestMagnifier(_TestMagnifier):
 		self.assertEqual(self.magnifier.zoomLevel, 2.0)
 		self.assertEqual(self.magnifier._filterType, Filter.NORMAL)
 		self.assertFalse(self.magnifier._isActive)
-		self.assertIsNone(self.magnifier._lastFocusedObject)
-		self.assertEqual(self.magnifier._lastNVDAPosition, (0, 0))
-		self.assertEqual(self.magnifier._lastMousePosition, (0, 0))
+		self.assertIsNotNone(self.magnifier._focusManager)
 
 	def testZoomLevelProperty(self):
 		"""ZoomLevel property."""
@@ -95,32 +92,36 @@ class TestMagnifier(_TestMagnifier):
 
 	def testStartMagnifier(self):
 		"""Activating the magnifier."""
-		self.magnifier._getFocusCoordinates = MagicMock(return_value=(100, 200))
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
+			return_value=Coordinates(100, 200),
+		)
 
 		# Test starting from inactive state
 		self.assertFalse(self.magnifier._isActive)
 		self.magnifier._startMagnifier()
 
 		self.assertTrue(self.magnifier._isActive)
-		self.assertEqual(self.magnifier._currentCoordinates, (100, 200))
-		self.magnifier._getFocusCoordinates.assert_called_once()
+		self.assertEqual(self.magnifier._currentCoordinates, Coordinates(100, 200))
+		self.magnifier._focusManager.getCurrentFocusCoordinates.assert_called_once()
 
-		# Test starting when already active (should not call _getFocusCoordinates again)
-		self.magnifier._getFocusCoordinates.reset_mock()
+		# Test starting when already active (should not call getCurrentFocusCoordinates again)
+		self.magnifier._focusManager.getCurrentFocusCoordinates.reset_mock()
 		self.magnifier._startMagnifier()
 
 		self.assertTrue(self.magnifier._isActive)
-		self.magnifier._getFocusCoordinates.assert_not_called()
+		self.magnifier._focusManager.getCurrentFocusCoordinates.assert_not_called()
 
 	def testUpdateMagnifier(self):
 		"""Updating the magnifier's properties."""
-		self.magnifier._getFocusCoordinates = MagicMock(return_value=(100, 200))
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
+			return_value=Coordinates(100, 200),
+		)
 		self.magnifier._doUpdate = MagicMock()
 		self.magnifier._startTimer = MagicMock()
 
 		# Call the update function without activation
 		self.magnifier._updateMagnifier()
-		self.magnifier._getFocusCoordinates.assert_not_called()
+		self.magnifier._focusManager.getCurrentFocusCoordinates.assert_not_called()
 		self.magnifier._doUpdate.assert_not_called()
 		self.magnifier._startTimer.assert_not_called()
 
@@ -128,12 +129,12 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._isActive = True
 		self.magnifier._updateMagnifier()
 
-		self.magnifier._getFocusCoordinates.assert_called_once()
+		self.magnifier._focusManager.getCurrentFocusCoordinates.assert_called_once()
 		self.magnifier._doUpdate.assert_called_once()
 		self.magnifier._startTimer.assert_called_once_with(
 			self.magnifier._updateMagnifier,
 		)
-		self.assertEqual(self.magnifier._currentCoordinates, (100, 200))
+		self.assertEqual(self.magnifier._currentCoordinates, Coordinates(100, 200))
 
 	def testDoUpdate(self):
 		"""DoUpdate function raises NotImplementedError."""
@@ -236,79 +237,3 @@ class TestMagnifier(_TestMagnifier):
 		expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
 		self.assertEqual(params.visibleWidth, expected_width)
 		self.assertEqual(params.visibleHeight, expected_height)
-
-	def testGetNVDAPosition(self):
-		"""Getting NVDA position with different API responses."""
-		# Case 1: Review position successful
-		with patch("_magnifier.magnifier.api.getReviewPosition") as mock_review:
-			mock_point = Mock()
-			mock_point.x = 300
-			mock_point.y = 400
-			mock_review.return_value.pointAtStart = mock_point
-
-			x, y = self.magnifier._getCursorPosition()
-			self.assertEqual((x, y), (300, 400))
-
-		# Case 2: Review position fails, navigator works
-		with patch("_magnifier.magnifier.api.getReviewPosition", return_value=None):
-			with patch("_magnifier.magnifier.api.getNavigatorObject") as mock_navigator:
-				mock_navigator.return_value.location = (100, 150, 200, 300)
-
-				x, y = self.magnifier._getCursorPosition()
-				# Center: (100 + 200//2, 150 + 300//2) = (200, 300)
-				self.assertEqual((x, y), (200, 300))
-
-		# Case 3: Everything fails
-		with patch("_magnifier.magnifier.api.getReviewPosition", return_value=None):
-			with patch("_magnifier.magnifier.api.getNavigatorObject") as mock_navigator:
-				mock_navigator.return_value.location = Mock(side_effect=Exception())
-
-				x, y = self.magnifier._getCursorPosition()
-				self.assertEqual((x, y), (0, 0))
-
-	def testGetFocusCoordinates(self):
-		"""All priority scenarios for focus coordinates."""
-
-		def testValues(
-			getNvda: Coordinates,
-			mousePos: Coordinates,
-			leftPressed: bool,
-			expected_coords: Coordinates,
-			expected_focused: FocusType,
-		):
-			self.magnifier._getCursorPosition = MagicMock(return_value=getNvda)
-			self.magnifier._lastNVDAPosition = (0, 0)
-			self.magnifier._lastMousePosition = (0, 0)
-			mouseHandler.isLeftMouseButtonLocked = MagicMock(return_value=leftPressed)
-			winUser.getCursorPos = MagicMock(return_value=mousePos)
-
-			focusCoordinates = self.magnifier._getFocusCoordinates()
-
-			self.assertEqual(focusCoordinates, expected_coords)
-			self.assertEqual(self.magnifier._lastFocusedObject, expected_focused)
-
-		# Case 1: Left click is pressed should return mouse position
-		testValues((0, 0), (0, 0), True, (0, 0), FocusType.MOUSE)
-
-		# Case 2: Not left click mouse moving
-		testValues((0, 0), (10, 10), False, (10, 10), FocusType.MOUSE)
-
-		# Case 3: Last move is NVDA mouse not changed
-		testValues((10, 10), (0, 0), False, (10, 10), FocusType.NVDA)
-
-		# Case 4: Nothing changed last move Mouse
-		self.magnifier._lastFocusedObject = FocusType.MOUSE
-		testValues((0, 0), (0, 0), False, (0, 0), FocusType.MOUSE)
-
-		# Case 5: Nothing changed last move NVDA
-		self.magnifier._lastFocusedObject = FocusType.NVDA
-		testValues((0, 0), (0, 0), False, (0, 0), FocusType.NVDA)
-
-		# Case 6: Both have moved and no Left click
-		testValues((10, 10), (20, 20), False, (20, 20), FocusType.MOUSE)
-
-		# Case 7: Both have moved and Left click
-		testValues((10, 10), (20, 20), True, (20, 20), FocusType.MOUSE)
-
-		# Case 8: Only nvda moved but left pressed (very unlikely)
-		testValues((10, 10), (0, 0), True, (0, 0), FocusType.MOUSE)

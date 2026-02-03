@@ -78,7 +78,7 @@ class FullScreenMagnifier(Magnifier):
 		# Always save screen position for mode continuity
 		self._lastScreenPosition = coordinates
 
-		if self._lastFocusedObject == FocusType.NVDA:
+		if self._focusManager.getLastFocusType() == FocusType.NAVIGATOR:
 			if shouldKeepMouseCentered():
 				self.moveMouseToScreen()
 		self._fullscreenMagnifier(coordinates)
