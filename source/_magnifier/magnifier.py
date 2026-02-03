@@ -34,6 +34,7 @@ from .config import (
 )
 from .utils.focusManager import FocusManager
 
+
 class Magnifier:
 	_TIMER_INTERVAL_MS: int = 12
 	_MARGIN_BORDER: int = 50
