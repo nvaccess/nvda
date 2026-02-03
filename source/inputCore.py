@@ -150,6 +150,17 @@ class InputGesture(baseObject.AutoPropertyObject):
 		"""
 		return self.getDisplayTextForIdentifier(self.normalizedIdentifiers[0])[1]
 
+	def _get__nameForInputHelp(self) -> List[str]:
+		"""The name of this gesture as presented to the user in input help mode.
+
+		The base implementation returns a list containing self.displayName.
+		Subclasses can override this to provide more specific behavior,
+		such as including the character that would be typed.
+
+		:return: The list of names to be displayed in input help mode.
+		"""
+		return [self.displayName]
+
 	#: Whether this gesture should be reported when reporting of command gestures is enabled.
 	#: @type: bool
 	shouldReportAsCommand = True
@@ -646,7 +657,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		return bypass
 
 	def _handleInputHelp(self, gesture, onlyLog=False):
-		textList = [gesture.displayName]
+		helpItems = list(gesture._nameForInputHelp)
 		script = gesture.script
 		runScript = False
 		logMsg = "Input help: gesture %s" % gesture.identifiers[0]
@@ -661,7 +672,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			else:
 				desc = script.__doc__
 				if desc:
-					textList.append(desc)
+					helpItems.append(desc)
 
 		log.info(logMsg)
 		if onlyLog:
@@ -669,14 +680,17 @@ class InputManager(baseObject.AutoPropertyObject):
 
 		import braille
 
-		braille.handler.message("\t\t".join(textList))
-		# Punctuation must be spoken for the gesture name (the first chunk) so that punctuation keys are spoken.
-		speech.speakText(
-			textList[0],
-			reason=controlTypes.OutputReason.MESSAGE,
-			symbolLevel=characterProcessing.SymbolLevel.ALL,
-		)
-		for text in textList[1:]:
+		braille.handler.message("\t\t".join(helpItems))
+		# Punctuation must be spoken for the gesture names (the first chunk(s))
+		# so that punctuation keys are spoken.
+		nameCount = len(gesture._nameForInputHelp)
+		for i in range(nameCount):
+			speech.speakText(
+				helpItems[i],
+				reason=controlTypes.OutputReason.MESSAGE,
+				symbolLevel=characterProcessing.SymbolLevel.ALL,
+			)
+		for text in helpItems[nameCount:]:
 			speech.speakMessage(text)
 
 		if runScript:
