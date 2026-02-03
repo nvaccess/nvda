@@ -113,23 +113,7 @@ def panLeft() -> None:
 		magnifier,
 		MagnifierAction.PAN_LEFT,
 	):
-		reachedEdge = magnifier._pan(MagnifierAction.PAN_LEFT)
-		if reachedEdge:
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Message announced when arriving at the left edge.
-					"Left edge",
-				),
-			)
-		else:
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Message announced when panning left.
-					"Panning left",
-				),
-			)
+		magnifier._pan(MagnifierAction.PAN_LEFT)
 
 
 def panRight() -> None:
@@ -139,23 +123,7 @@ def panRight() -> None:
 		magnifier,
 		MagnifierAction.PAN_RIGHT,
 	):
-		reachedEdge = magnifier._pan(MagnifierAction.PAN_RIGHT)
-		if reachedEdge:
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Message announced when arriving at the right edge.
-					"Right edge",
-				),
-			)
-		else:
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Message announced when panning right.
-					"Panning right",
-				),
-			)
+		magnifier._pan(MagnifierAction.PAN_RIGHT)
 
 
 def panUp() -> None:
@@ -165,23 +133,7 @@ def panUp() -> None:
 		magnifier,
 		MagnifierAction.PAN_UP,
 	):
-		reachedEdge = magnifier._pan(MagnifierAction.PAN_UP)
-		if reachedEdge:
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Message announced when arriving at the top edge.
-					"Top edge",
-				),
-			)
-		else:
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Message announced when panning up.
-					"Panning up",
-				),
-			)
+		magnifier._pan(MagnifierAction.PAN_UP)
 
 
 def panDown() -> None:
@@ -191,23 +143,7 @@ def panDown() -> None:
 		magnifier,
 		MagnifierAction.PAN_DOWN,
 	):
-		reachedEdge = magnifier._pan(MagnifierAction.PAN_DOWN)
-		if reachedEdge:
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Message announced when arriving at the bottom edge.
-					"Bottom edge",
-				),
-			)
-		else:
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Message announced when panning down.
-					"Panning down",
-				),
-			)
+		magnifier._pan(MagnifierAction.PAN_DOWN)
 
 
 def panToLeftEdge() -> None:
@@ -218,13 +154,6 @@ def panToLeftEdge() -> None:
 		MagnifierAction.PAN_LEFT_EDGE,
 	):
 		magnifier._pan(MagnifierAction.PAN_LEFT_EDGE)
-		ui.message(
-			pgettext(
-				"magnifier",
-				# Translators: Message announced when panning to the left edge.
-				"Panning to left edge",
-			),
-		)
 
 
 def panToRightEdge() -> None:
@@ -235,13 +164,6 @@ def panToRightEdge() -> None:
 		MagnifierAction.PAN_RIGHT_EDGE,
 	):
 		magnifier._pan(MagnifierAction.PAN_RIGHT_EDGE)
-		ui.message(
-			pgettext(
-				"magnifier",
-				# Translators: Message announced when panning to the right edge.
-				"Panning to right edge",
-			),
-		)
 
 
 def panToTopEdge() -> None:
@@ -252,13 +174,6 @@ def panToTopEdge() -> None:
 		MagnifierAction.PAN_TOP_EDGE,
 	):
 		magnifier._pan(MagnifierAction.PAN_TOP_EDGE)
-		ui.message(
-			pgettext(
-				"magnifier",
-				# Translators: Message announced when panning to the top edge.
-				"Panning to top edge",
-			),
-		)
 
 
 def panToBottomEdge() -> None:
@@ -269,13 +184,6 @@ def panToBottomEdge() -> None:
 		MagnifierAction.PAN_BOTTOM_EDGE,
 	):
 		magnifier._pan(MagnifierAction.PAN_BOTTOM_EDGE)
-		ui.message(
-			pgettext(
-				"magnifier",
-				# Translators: Message announced when panning to the bottom edge.
-				"Panning to bottom edge",
-			),
-		)
 
 
 def toggleFilter() -> None:

@@ -2782,7 +2782,7 @@ For the supported settings per provider, please refer to the documentation for t
 
 ##### Open Magnifier settings {#OpenMagnifierSettings}
 
-Key: `NVDA+control+w`
+Key: `NVDA+control+f`
 
 The Magnifier category in the NVDA Settings dialog allows you to configure the default behavior of NVDA's built-in [Magnifier](#Magnifier) feature.
 This settings category contains the following options:
@@ -2845,11 +2845,18 @@ Higher percentages cause larger movements, making it faster to navigate across t
 The actual pixel distance will automatically adjust based on your current zoom level.
 
 Note: Pan commands allow you to manually move the magnified view in any direction, independent of the focus tracking mode.
-To use pan commands, you must assign custom gestures using the [Input Gestures dialog](#InputGestures).
 Available pan actions include:
 
-* Pan left/right/up/down: Move the view by the specified panning step size
-* Pan to left/right/top/bottom edge: Jump directly to the screen boundary
+| Name |Key |Description|
+|---|---|---|
+|Pan left |`NVDA+alt+leftArrow` |Pan the magnified view to the left by the specified panning step size.|
+|Pan right |`NVDA+alt+rightArrow` |Pan the magnified view to the right by the specified panning step size.|
+|Pan up |`NVDA+alt+upArrow` |Pan the magnified view upwards by the specified panning step size.|
+|Pan down |`NVDA+alt+downArrow` |Pan the magnified view downwards by the specified panning step size.|
+|Pan to left edge |`NVDA+shift+alt+leftArrow` |Pan the magnified view directly to the left edge of the screen.|
+|Pan to right edge |`NVDA+shift+alt+rightArrow` |Pan the magnified view directly to the right edge of the screen.|
+|Pan to top edge |`NVDA+shift+alt+upArrow` |Pan the magnified view directly to the top edge of the screen.|
+|Pan to bottom edge |`NVDA+shift+alt+downArrow` |Pan the magnified view directly to the bottom edge of the screen.|
 
 | . {.hideHeaderRow} |.|
 |---|---|

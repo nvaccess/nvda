@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from _magnifier.magnifier import Magnifier, MagnifierType
-from _magnifier.utils.types import Filter, Direction, Coordinates
+from _magnifier.utils.types import Filter, Direction, Coordinates, MagnifierAction
 import unittest
 from winAPI._displayTracking import getPrimaryDisplayOrientation
 from unittest.mock import MagicMock, patch
@@ -181,8 +181,6 @@ class TestMagnifier(_TestMagnifier):
 
 	def testPanLeft(self):
 		"""Pan left and detect edge limit."""
-		from _magnifier.utils.types import MagnifierAction
-
 		# Mock dependencies
 		self.magnifier._doUpdate = MagicMock()
 		with patch("_magnifier.magnifier.winUser.setCursorPos"):
