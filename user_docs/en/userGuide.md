@@ -2782,7 +2782,7 @@ For the supported settings per provider, please refer to the documentation for t
 
 ##### Open Magnifier settings {#OpenMagnifierSettings}
 
-Key: `NVDA+control+f`
+Key: `NVDA+control+w`
 
 The Magnifier category in the NVDA Settings dialog allows you to configure the default behavior of NVDA's built-in [Magnifier](#Magnifier) feature.
 This settings category contains the following options:
