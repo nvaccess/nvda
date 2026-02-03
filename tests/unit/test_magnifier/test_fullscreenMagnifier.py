@@ -108,20 +108,20 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 		magnifier = FullScreenMagnifier()
 
 		# Test position calculation
-		left, top, width, height = magnifier._getMagnifierPosition((500, 400))
+		params = magnifier._getMagnifierParameters((500, 400))
 
 		# Basic checks
-		self.assertIsInstance(left, int)
-		self.assertIsInstance(top, int)
-		self.assertIsInstance(width, int)
-		self.assertIsInstance(height, int)
+		self.assertIsInstance(params.coordinates.x, int)
+		self.assertIsInstance(params.coordinates.y, int)
+		self.assertIsInstance(params.visibleWidth, int)
+		self.assertIsInstance(params.visibleHeight, int)
 
 		# Width and height should be screen size divided by zoom
 		expectedWidth = int(magnifier._displayOrientation.width / 2.0)
 		expectedHeight = int(magnifier._displayOrientation.height / 2.0)
 
-		self.assertEqual(width, expectedWidth)
-		self.assertEqual(height, expectedHeight)
+		self.assertEqual(params.visibleWidth, expectedWidth)
+		self.assertEqual(params.visibleHeight, expectedHeight)
 
 		# Cleanup
 		magnifier._stopMagnifier()

@@ -20,7 +20,7 @@ import mouseHandler
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (
-	MagnifierPosition,
+	MagnifierParameters,
 	Coordinates,
 	MagnifierType,
 	Direction,
@@ -208,13 +208,13 @@ class Magnifier:
 		else:
 			log.debug("no timer to stop")
 
-	def _getMagnifierPosition(self, coordinates: Coordinates) -> MagnifierPosition:
+	def _getMagnifierParameters(self, coordinates: Coordinates) -> MagnifierParameters:
 		"""
 		Compute the top-left corner of the magnifier window centered on (x, y)
 
 		:param coordinates: The (x, y) coordinates to center the magnifier on
 
-		:return: The position and size of the magnifier window
+		:return: The size, position and styles (if any) of the magnifier window
 		"""
 		x, y = coordinates
 		# Calculate the size of the capture area at the current zoom level
@@ -229,7 +229,7 @@ class Magnifier:
 		left = max(0, min(left, int(self._displayOrientation.width - visibleWidth)))
 		top = max(0, min(top, int(self._displayOrientation.height - visibleHeight)))
 
-		return MagnifierPosition(left, top, int(visibleWidth), int(visibleHeight))
+		return MagnifierParameters(int(visibleWidth), int(visibleHeight), Coordinates(left, top), None)
 
 	def _getCursorPosition(self) -> Coordinates:
 		"""

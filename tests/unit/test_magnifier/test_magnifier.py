@@ -209,33 +209,33 @@ class TestMagnifier(_TestMagnifier):
 	def testMagnifierPosition(self):
 		"""Computing magnifier position and size."""
 		x, y = int(self.screenWidth / 2), int(self.screenHeight / 2)
-		left, top, width, height = self.magnifier._getMagnifierPosition((x, y))
+		params = self.magnifier._getMagnifierParameters((x, y))
 
 		expected_width = int(self.screenWidth / self.magnifier.zoomLevel)
 		expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
 		expected_left = int(x - (expected_width / 2))
 		expected_top = int(y - (expected_height / 2))
 
-		self.assertEqual(left, expected_left)
-		self.assertEqual(top, expected_top)
-		self.assertEqual(width, expected_width)
-		self.assertEqual(height, expected_height)
+		self.assertEqual(params.coordinates.x, expected_left)
+		self.assertEqual(params.coordinates.y, expected_top)
+		self.assertEqual(params.visibleWidth, expected_width)
+		self.assertEqual(params.visibleHeight, expected_height)
 
 		# Test left clamping
-		left, top, width, height = self.magnifier._getMagnifierPosition((100, 540))
-		self.assertGreaterEqual(left, 0)
+		params = self.magnifier._getMagnifierParameters((100, 540))
+		self.assertGreaterEqual(params.coordinates.x, 0)
 
 		# Test right clamping
-		left, top, width, height = self.magnifier._getMagnifierPosition((1800, 540))
-		self.assertLessEqual(left + width, self.screenWidth)
+		params = self.magnifier._getMagnifierParameters((1800, 540))
+		self.assertLessEqual(params.coordinates.x + params.visibleWidth, self.screenWidth)
 
 		# Test different zoom level
 		self.magnifier.zoomLevel = 4.0
-		left, top, width, height = self.magnifier._getMagnifierPosition((960, 540))
+		params = self.magnifier._getMagnifierParameters((960, 540))
 		expected_width = int(self.screenWidth / self.magnifier.zoomLevel)
 		expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
-		self.assertEqual(width, expected_width)
-		self.assertEqual(height, expected_height)
+		self.assertEqual(params.visibleWidth, expected_width)
+		self.assertEqual(params.visibleHeight, expected_height)
 
 	def testGetNVDAPosition(self):
 		"""Getting NVDA position with different API responses."""

@@ -133,12 +133,12 @@ class FullScreenMagnifier(Magnifier):
 		if not self._isActive:
 			return
 
-		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(coordinates)
+		params = self._getMagnifierParameters(coordinates)
 		try:
 			result = magnification.MagSetFullscreenTransform(
 				self.zoomLevel,
-				left,
-				top,
+				params.coordinates.x,
+				params.coordinates.y,
 			)
 			if not result:
 				log.debug("Failed to set full-screen transform")
@@ -168,11 +168,9 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		keep mouse in screen
 		"""
-		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(
-			self._currentCoordinates,
-		)
-		centerX = int(left + (visibleWidth / 2))
-		centerY = int(top + (visibleHeight / 2))
+		params = self._getMagnifierParameters(self._currentCoordinates)
+		centerX = int(params.coordinates.x + (params.visibleWidth / 2))
+		centerY = int(params.coordinates.y + (params.visibleHeight / 2))
 		winUser.setCursorPos(centerX, centerY)
 
 	def _borderPos(
@@ -188,9 +186,11 @@ class FullScreenMagnifier(Magnifier):
 		:return: The adjusted position (x, y) of the focus point
 		"""
 		focusX, focusY = coordinates
-		lastLeft, lastTop, visibleWidth, visibleHeight = self._getMagnifierPosition(
-			self._lastScreenPosition,
-		)
+		params = self._getMagnifierParameters(self._lastScreenPosition)
+		visibleWidth = params.visibleWidth
+		visibleHeight = params.visibleHeight
+		lastLeft = params.coordinates.x
+		lastTop = params.coordinates.y
 
 		minX = lastLeft + self._MARGIN_BORDER
 		maxX = lastLeft + visibleWidth - self._MARGIN_BORDER

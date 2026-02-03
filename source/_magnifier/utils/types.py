@@ -27,6 +27,13 @@ class Direction(Enum):
 	OUT = False
 
 
+class Coordinates(NamedTuple):
+	"""Named tuple representing x and y coordinates"""
+
+	x: int
+	y: int
+
+
 class MagnifierAction(DisplayStringEnum):
 	"""Actions that can be performed with the magnifier"""
 
@@ -84,20 +91,13 @@ class FocusType(Enum):
 	NVDA = "nvda"
 
 
-class MagnifierPosition(NamedTuple):
+class MagnifierParameters(NamedTuple):
 	"""Named tuple representing the position and size of the magnifier window"""
 
-	left: int
-	top: int
 	visibleWidth: int
 	visibleHeight: int
-
-
-class Coordinates(NamedTuple):
-	"""Named tuple representing x and y coordinates"""
-
-	x: int
-	y: int
+	coordinates: Coordinates
+	styles: None | int
 
 
 class ZoomHistory(NamedTuple):
