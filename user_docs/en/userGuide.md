@@ -4059,11 +4059,14 @@ NVDA's speech dictionaries however are much more powerful than simple word repla
 The Add rule dialog also contains a checkbox to say whether or not you want the rule to be case sensitive (meaning that NVDA should care whether the characters are uppercase or lowercase.
 NVDA ignores case by default).
 
-Finally, a set of radio buttons allows you to tell NVDA how your pattern should be matched.
+A set of radio buttons allows you to tell NVDA how your pattern should be matched.
 The available types are:
 
 * Anywhere: The pattern can match anywhere in the text.
-* Whole word: The replacement will only be made if the pattern occurs as a complete word. This means the pattern does not occur as part of a larger word. The condition is met if the characters immediately before and after the word are anything other than a letter, a number, or an underscore, or if there are no characters at all. For example, if you replace "bird" with "frog" using whole word matching, it would not match "birds" or "bluebird".
+* Whole word: The replacement will only be made if the pattern occurs as a complete word.
+This means the pattern does not occur as part of a larger word.
+The condition is met if the characters immediately before and after the word are anything other than a letter, a number, or an underscore, or if there are no characters at all.
+For example, if you replace "bird" with "frog" using whole word matching, it would not match "birds" or "bluebird".
 * Part of word: The pattern must be preceded or followed by an alphanumeric character or underscore to match. This is useful for matching parts of compound words. For example, if you replace "bird" with "frog" using part of word matching, it would match "birds", "bluebird", "bluebirds" and "birdsong", but not the standalone word "bird" (because it has neither a preceding nor a following alphanumeric character).
 * Start of word: The pattern must have a word boundary at the start and an alphanumeric character or underscore at the end. For example, if you replace "bird" with "frog" using start of word matching, it would match "birds" and "birdsong", but not "bluebird" or the standalone word "bird".
 * End of word: The pattern must have an alphanumeric character or underscore at the start and a word boundary at the end. For example, if you replace "bird" with "frog" using end of word matching, it would match "bluebird" and "songbird", but not "birds" or the standalone word "bird".
