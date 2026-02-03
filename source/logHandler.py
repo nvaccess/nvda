@@ -191,12 +191,13 @@ def shouldPlayErrorSound() -> bool:
 		else PlayErrorSound.ONLY_IN_TEST_VERSIONS.value
 	)
 
-	if playErrorSound == PlayErrorSound.ALWAYS.value:
-		return True
-	elif playErrorSound == PlayErrorSound.NEVER.value:
-		return False
-	else:
-		return buildVersion.isTestVersion
+	match playErrorSound:
+		case PlayErrorSound.ALWAYS.value:
+			return True
+		case PlayErrorSound.NEVER.value:
+			return False
+		case _:
+			return buildVersion.isTestVersion
 
 
 # Function to strip the base path of our code from traceback text to improve readability.
