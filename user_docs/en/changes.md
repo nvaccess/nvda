@@ -15,6 +15,8 @@
 * A new command, assigned to `NVDA+x`, has been introduced to repeat the last information spoken by NVDA; pressing it twice shows it in a browseable message. (#625, @CyrilleB79)
 * Added an unassigned command to toggle keyboard layout. (#19211, @CyrilleB79)
 * Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @hdzrvcc0X74)
+* New types have been added for Speech Dictionary entries, such as part of word and start of word.
+Consult the speech dictionaries section in the User Guide for more details. (#19506, @LeonarddeR)
 
 ### Changes
 
