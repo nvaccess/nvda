@@ -78,7 +78,7 @@ class FullScreenMagnifier(Magnifier):
 		# Always save screen position for mode continuity
 		self._lastScreenPosition = coordinates
 
-		if self._lastFocusedObject == FocusType.NVDA:
+		if self._focusManager.getLastFocusType() == FocusType.NAVIGATOR:
 			if shouldKeepMouseCentered():
 				self.moveMouseToScreen()
 		self._fullscreenMagnifier(coordinates)
@@ -162,7 +162,9 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		keep mouse in screen
 		"""
-		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(self._currentCoordinates)
+		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(
+			self._currentCoordinates,
+		)
 		centerX = int(left + (visibleWidth / 2))
 		centerY = int(top + (visibleHeight / 2))
 		winUser.setCursorPos(centerX, centerY)
@@ -203,7 +205,10 @@ class FullScreenMagnifier(Magnifier):
 			dy = focusY - maxY
 
 		if dx != 0 or dy != 0:
-			return Coordinates(self._lastScreenPosition[0] + dx, self._lastScreenPosition[1] + dy)
+			return Coordinates(
+				self._lastScreenPosition[0] + dx,
+				self._lastScreenPosition[1] + dy,
+			)
 		else:
 			return self._lastScreenPosition
 
@@ -244,7 +249,9 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		Launch Spotlight from Full-screen class
 		"""
-		log.debug(f"Launching spotlight mode from full-screen magnifier with mode {self._fullscreenMode}")
+		log.debug(
+			f"Launching spotlight mode from full-screen magnifier with mode {self._fullscreenMode}",
+		)
 		self._stopTimer()
 		self._spotlightManager._startSpotlight()
 

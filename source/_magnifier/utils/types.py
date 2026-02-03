@@ -98,8 +98,9 @@ class MagnifierType(DisplayStringStrEnum):
 class FocusType(Enum):
 	"""Type of focus being tracked by the magnifier"""
 
-	MOUSE = "mouse"
-	NVDA = "nvda"
+	MOUSE = auto()
+	SYSTEM_FOCUS = auto()
+	NAVIGATOR = auto()
 
 
 class MagnifierPosition(NamedTuple):
