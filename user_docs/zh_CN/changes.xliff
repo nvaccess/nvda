@@ -8942,7 +8942,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The Elements List and Find dialogs no longer cause application profiles to be deactivated.</source>
-        <target>元素列表和查找对话框不再导致应用程序配置被禁用。</target>
+        <target>修复了打开元素列表或查找对话框导致应用程序配置被意外禁用的问题。</target>
       </segment>
     </unit>
     <unit id="ef9e6f1f-c57b-46b0-85ee-1e5fae216d29">
@@ -8951,7 +8951,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Edge, notifications like "loading complete" no longer stop say all.</source>
-        <target>在 Microsoft Edge 中，"加载完成"等通知不再中断全文朗读。</target>
+        <target>解决了在 Microsoft Edge 中，"加载完成"等通知会打断全文朗读的问题。</target>
       </segment>
     </unit>
     <unit id="a4a20527-5e76-4cda-8a76-6982ce7f5254">
@@ -8969,7 +8969,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When UIA is enabled, redundant table end markers are no longer brailled when the cursor is in a table cell.</source>
-        <target>启用 UIA 后，当光标位于表格单元格内时，盲文将不再显示冗余的表格结束标记。</target>
+        <target>修复了启用 UIA 后，当光标位于表格单元格内时，会以盲文显示冗余表格结束标记的问题。</target>
       </segment>
     </unit>
     <unit id="d6db06f7-4b2e-4450-a815-858cacaeccf4">
@@ -8978,7 +8978,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>On Windows 11, NVDA will no longer announce emoji panel items twice while browsing them.</source>
-        <target>在 Windows 11 中，浏览表情符号面板时不再重复朗读。</target>
+        <target>修复了在 Windows 11 中，浏览表情符号面板中的项目会重复朗读的问题。</target>
       </segment>
     </unit>
     <unit id="b3dc7d8e-5d20-4b05-8f3e-9d71a7d8c113">
@@ -8987,7 +8987,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Performance and reliability in the Start Menu on Windows 11 24H2 has been improved.</source>
-        <target>Windows 11 24H2 开始菜单的性能和稳定性已得到改进。</target>
+        <target>改进了 Windows 11 24H2 开始菜单的性能和稳定性。</target>
       </segment>
     </unit>
     <unit id="26fdd219-5b92-436b-8206-a7621acb7004">
@@ -8996,7 +8996,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>On Windows 11 24H2 and newer, window state will be announced when resizing windows with `Windows+arrow` keys.</source>
-        <target>在 Windows 11 24H2 或更高版本中，使用 `Windows+光标`键调整窗口大小时会读出窗口状态。</target>
+        <target>支持在 Windows 11 24H2 或更高版本中，使用 `Windows+光标`键调整窗口大小过程中读出窗口状态。</target>
       </segment>
     </unit>
     <unit id="63a9b533-bc32-4110-9ed5-db29c23a7b6a">
@@ -9014,7 +9014,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Options have been added to report the language of the text being read, and report when the language is not supported by the current synthesizer.</source>
-        <target>新增了读出正在阅读文本语言的选项，以及当语言不被当前语音合成器支持时进行提示的功能。</target>
+        <target>新增了读出正在阅读文本语言的选项，可选择在当前语音合成器不支持所朗读的文本语言时给出提示。</target>
       </segment>
     </unit>
     <unit id="1aee3e3d-479d-4061-ab52-67a8a08ada75">
@@ -9109,7 +9109,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Report if the language of the text being read is not supported.</source>
-        <target>当文本语言不被支持时进行提示。</target>
+        <target>遇到合成器不支持的语言时给出提示。</target>
       </segment>
     </unit>
     <unit id="d88d463e-0b25-4f66-b41c-70deaba3abd0">
@@ -9289,7 +9289,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When the Elements List or Find dialog is opened, NVDA won't change the configuration profile, similar to the behavior in other NVDA dialogs. (#18160, @nvdaes)</source>
-        <target>打开元素列表或查找对话框时，NVDA 将不再切换配置，此行为与其他 NVDA 对话框保持一致。(#18160, @nvdaes)</target>
+        <target>修复了打开元素列表或查找对话框会导致配置切换的问题，现在与打开其他 NVDA 对话框的行为保持一致。(#18160, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="888ae1a3-d647-405d-878f-e8dc82d269cf">
@@ -9299,7 +9299,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Edge, NVDA will no longer cancel say all when notifications such as "loading complete" are announced. (#17986, @josephsl)</source>
-        <target>在 Microsoft Edge 中，当读出“加载完成”等通知时，将不再中断全文朗读。(#17986, @josephsl)</target>
+        <target>修复了在 Microsoft Edge 中，类似“加载完成”的通知会打断全文朗读的问题。(#17986, @josephsl)</target>
       </segment>
     </unit>
     <unit id="5dc94101-b1f3-4471-b976-f1ce7ab77789">
@@ -9309,7 +9309,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA will now warn before updating when connected as the controlled computer with NVDA Remote Access. (#18455)</source>
-        <target>当作为被控计算机连接 NVDA 远程访问时，NVDA 将在更新前发出警告。(#18455)</target>
+        <target>若作为被控计算机连接 NVDA 远程访问时，NVDA 将在更新前发出警告。(#18455)</target>
       </segment>
     </unit>
     <unit id="efaf3b3c-3bf1-4be4-96ab-9ed06e855cce">

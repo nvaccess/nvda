@@ -4,18 +4,20 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import os
-from typing import TypedDict, cast
+from typing import Final, TypedDict, cast
 
 import config
 import globalVars
 import nvwave
 import wx
+from core import postNvdaStartup
 from gui.guiHelper import BoxSizerHelper, ButtonHelper
+from gui.message import MessageDialog as ModernMessageDialog
 from gui.nvdaControls import MessageDialog
 from logHandler import log
-from winBindings import magnification
-
 from NVDAHelper.localLib import isScreenFullyBlack
+from NVDAState import _TrackNVDAInitialization
+from winBindings import magnification
 
 # homogeneous matrix for a 4-space transformation (red, green, blue, opacity).
 # https://docs.microsoft.com/en-gb/windows/win32/gdiplus/-gdiplus-using-a-color-matrix-to-transform-a-single-color-use
@@ -31,6 +33,18 @@ UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE = pgettext(
 	"screenCurtain",
 	# Translators: Warning message when trying to enable the screen curtain when OCR is active.
 	"Cannot enable screen curtain while performing content recognition",
+)
+
+# Translators: Reported when the screen curtain could not be enabled.
+ERROR_ENABLING_MESSAGE = _("Could not enable screen curtain")
+
+ERROR_ENABLING_AT_STARTUP_MESSAGE = pgettext(
+	"screenCurtain",
+	# Translators: Explanation shown when screen curtain is enabled in the user's configuration,
+	# but it failed to activate at NVDA startup
+	"There was a problem enabling Screen Curtain. "
+	"The contents of your screen are still visible. "
+	"You may attempt to enable Screen Curtain manually.",
 )
 
 
@@ -142,13 +156,27 @@ class ScreenCurtain:
 	There should only ever be a single object created from this class at a time.
 	"""
 
+	_MAX_ENABLE_RETRIES: Final[int] = 3
+	"""Maximum number of times to try enabling Screen Curtain."""
+
 	def __init__(self):
 		"""Initializer."""
 		super().__init__()
 		self._settings: ScreenCurtainSettings = cast(ScreenCurtainSettings, config.conf["screenCurtain"])
 		self._enabled: bool = False
 		if self.settings["enabled"]:
-			self.enable()
+			try:
+				self.enable()
+			except RuntimeError:
+				log.error("Failed to enable Screen Curtain", exc_info=True)
+				if _TrackNVDAInitialization.isInitializationComplete():
+					self._postInitialisationActivationFailureMessage()
+				else:
+					postNvdaStartup.register(self._postInitialisationActivationFailureMessage)
+
+	def _postInitialisationActivationFailureMessage(self) -> None:
+		wx.CallAfter(ModernMessageDialog.alert, ERROR_ENABLING_AT_STARTUP_MESSAGE, ERROR_ENABLING_MESSAGE)
+		postNvdaStartup.unregister(self._postInitialisationActivationFailureMessage)
 
 	@property
 	def settings(self) -> ScreenCurtainSettings:
@@ -171,16 +199,35 @@ class ScreenCurtain:
 		if self._enabled:
 			log.debug("ScreenCurtain is already enabled.")
 			return
+
+		# Notify magnifier that screen curtain is being enabled
+		import _magnifier
+
+		magnifierInstance = _magnifier.getMagnifier()
+		if magnifierInstance:
+			magnifierInstance.onScreenCurtainEnabled()
+
 		log.debug("Enabling ScreenCurtain")
-		magnification.MagInitialize()
-		try:
-			magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
-			magnification.MagShowSystemCursor(False)
-			if not isScreenFullyBlack():
-				raise RuntimeError("Screen is not black.")
-		except Exception as e:
-			magnification.MagUninitialize()
-			raise e
+		for attempt in range(self._MAX_ENABLE_RETRIES):
+			exception: Exception | None = None
+			try:
+				magnification.MagInitialize()
+				magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
+				magnification.MagShowSystemCursor(False)
+				if not isScreenFullyBlack():
+					raise RuntimeError("Screen is not black.")
+				break
+			except Exception as e:
+				# We must call MagUninitialize at least as many times as we call MagInitialize,
+				# as if we don't, we are liable to get permission errors
+				# when attempting to use the magnification API
+				magnification.MagUninitialize()
+				log.debugWarning(f"Failed to enable Screen Curtain on attempt {attempt + 1}.", exc_info=e)
+				exception = e
+		else:
+			log.debug(f"Failed to enable Screen Curtain after {self._MAX_ENABLE_RETRIES} attempts.")
+			raise RuntimeError("Failed to enable screen curtain") from exception
+		log.debug("Screen Curtain enabled")
 		self._enabled = True
 		if persist:
 			self.settings["enabled"] = True
@@ -211,6 +258,13 @@ class ScreenCurtain:
 				nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "screenCurtainOff.wav"))
 			except Exception:
 				log.exception()
+		# Notify magnifier that screen curtain is being disabled
+
+		import _magnifier
+
+		magnifierInstance = _magnifier.getMagnifier()
+		if magnifierInstance:
+			magnifierInstance.onScreenCurtainDisabled()
 
 	def __del__(self) -> None:
 		"""Custom deleter that disables the Screen Curtain if necessary when this object is garbage collected."""

@@ -28,22 +28,6 @@ class _WritePaths:
 		return configPath
 
 	@property
-	def mathCATDir(self) -> str:
-		"""
-		Base directory for MathCAT assets (rules etc.).
-		"""
-		if isRunningAsSource():
-			base = os.path.dirname(globalVars.appDir)
-		else:
-			base = globalVars.appDir
-		return os.path.join(
-			base,
-			"include",
-			"nvda-mathcat",
-			"assets",
-		)
-
-	@property
 	def addonsDir(self) -> str:
 		return os.path.join(self.configDir, "addons")
 
@@ -82,10 +66,6 @@ class _WritePaths:
 	@property
 	def updatesDir(self) -> str:
 		return os.path.join(self.configDir, "updates")
-
-	@property
-	def modelsDir(self) -> str:
-		return os.path.join(self.configDir, "models")
 
 	@property
 	def nvdaConfigFile(self) -> str:
@@ -268,6 +248,22 @@ class _ReadPaths:
 	@property
 	def nvdaHelperLocalWin10Dll(self) -> str:
 		return os.path.join(self.coreArchLibPath, "nvdaHelperLocalWin10.dll")
+
+	@property
+	def mathCATDir(self) -> str:
+		"""
+		Base directory for MathCAT assets (rules etc.).
+		"""
+		if isRunningAsSource():
+			base = os.path.dirname(globalVars.appDir)
+		else:
+			base = globalVars.appDir
+		return os.path.join(
+			base,
+			"include",
+			"nvda-mathcat",
+			"assets",
+		)
 
 	@property
 	def UIARemoteDll(self) -> str:

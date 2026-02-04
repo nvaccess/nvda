@@ -49,7 +49,7 @@ The following dependencies need to be installed on your system:
 
 #### Python
 
-[Python](https://www.python.org/), version 3.13.9, 64-bit.
+[Python](https://www.python.org/), version 3.13.11, 64-bit.
 Install the python version listed in [.python-versions](../../.python-versions)
 
 #### uv
@@ -88,7 +88,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit `b0b605c8a80f76c4c19e18033c6780c3cc4afc5b`
 * [Sonic](https://github.com/waywardgeek/sonic), commit `d2cdb40fbdc82b464be364a50b34e8dd82b6c80a`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `c9ae003d9c85eb707716928de97e055f5b77189c`
-* [liblouis](http://www.liblouis.io/), version 3.35.0
+* [liblouis](http://www.liblouis.io/), version 3.36.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 48.0
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [Microsoft Detours](https://github.com/microsoft/Detours), commit `9764cebcb1a75940e68fa83d6730ffaf0f669401`

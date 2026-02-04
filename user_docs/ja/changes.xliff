@@ -5973,9 +5973,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 17</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Wiris MathPlayer is no longer supported.</source>
-        <target>Wiris MathPlayer is no longer supported.</target>
+        <target>Wiris MathPlayer はサポートを終了しました。</target>
       </segment>
     </unit>
     <unit id="5cb1fee7-3fef-42b7-bff5-63e1e255f196">
@@ -6141,9 +6141,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 37</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)</source>
-        <target>Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)</target>
+        <target>Windows 文字認識の設定に、認識が成功した後に結果全体を自動的に読み取ることができる新しいオプションを追加しました。 (#19150, @Cary-rowen)</target>
       </segment>
     </unit>
     <unit id="b576abcf-1f18-4ee0-8e32-f82e53bebb40">
@@ -6151,9 +6151,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 38</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Added support for reading math content by integrating MathCAT. (@RyanMcCleary, #18323)</source>
-        <target>Added support for reading math content by integrating MathCAT. (@RyanMcCleary, #18323)</target>
+        <target>MathCATを統合し、数式コンテンツの読み取りに対応しました。(@RyanMcCleary, #18323)</target>
       </segment>
     </unit>
     <unit id="8b971a26-5ba8-4c03-a6e7-d6bf61ad2ee4">
@@ -6311,9 +6311,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 56</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The state of the Screen Curtain is no longer dependent on the configuration profile in use. (#10476)</source>
-        <target>The state of the Screen Curtain is no longer dependent on the configuration profile in use. (#10476)</target>
+        <target>使用中の設定プロファイルに依存してスクリーンカーテンの状態が変化することがなくなりました。(#10476)</target>
       </segment>
     </unit>
     <unit id="6b03148a-045c-43f5-b791-d5962dd70e61">
@@ -6321,9 +6321,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 57</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Screen Curtain settings have been moved to the new Privacy and Security category of NVDA's settings. (#19177)</source>
-        <target>Screen Curtain settings have been moved to the new Privacy and Security category of NVDA's settings. (#19177)</target>
+        <target>スクリーンカーテンの設定はNVDAの設定の新しいプライバシーとセキュリティのカテゴリに移動しました。(#19177)</target>
       </segment>
     </unit>
     <unit id="bb6f675a-edc9-4872-887e-8178a5c84795">
@@ -6331,9 +6331,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 58</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Support for the MathPlayer software from Wiris has been removed. (#19239)</source>
-        <target>Support for the MathPlayer software from Wiris has been removed. (#19239)</target>
+        <target>Wiris MathPlayer ソフトウェアのサポートを削除しました。 (#19239)</target>
       </segment>
     </unit>
     <unit id="f82141cb-a1e0-4fbd-89f1-bafcc96a3470">
@@ -6442,9 +6442,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 71</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When a synthesizer has a fallback language for the current dialect, the language of the text been read won't be reported as not supported. (#18876, @nvdaes)</source>
-        <target>When a synthesizer has a fallback language for the current dialect, the language of the text been read won't be reported as not supported. (#18876, @nvdaes)</target>
+        <target>音声エンジンに現在の方言の代替言語がある場合に、音声エンジンが対応していない言語の報告を行わなくなりました。(#18876, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="0a8a1e11-29bb-4751-9522-02af20917c3f">
@@ -6472,9 +6472,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 74</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA now detects and stops repeated crash loops to prevent system lockups when startup failures occur. (#19133, @derekriemer)</source>
-        <target>NVDA now detects and stops repeated crash loops to prevent system lockups when startup failures occur. (#19133, @derekriemer)</target>
+        <target>NVDA はクラッシュループを検出して停止し、起動時のシステムのロックアップを防ぎます。(#19133, @derekriemer)</target>
       </segment>
     </unit>
     <unit id="8072c301-67ee-4657-8779-10c09b8b9558">
@@ -6482,9 +6482,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 75</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When moving Braille to the next line in LibreOffice Writer when the caret is at the start of the last line, it will now consistently move to the end of the document. (#19152, @LeonarddeR, @nvdaes)</source>
-        <target>When moving Braille to the next line in LibreOffice Writer when the caret is at the start of the last line, it will now consistently move to the end of the document. (#19152, @LeonarddeR, @nvdaes)</target>
+        <target>LibreOffice Writer で、最後の行の先頭にテキストカーソルがある状態で、点字表示を次の行へ送る操作を行うと、常に文書の末尾へ移動するようになりました。(#19152, @LeonarddeR, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="d75949e9-fde2-447f-9a0a-10a8ca999c25">
@@ -6492,9 +6492,10 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 76</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The browse mode cursor highlighter now appears on content recognition results, such as when using Windows OCR. (#19168, @hwf1324)</source>
-        <target>The browse mode cursor highlighter now appears on content recognition results, such as when using Windows OCR. (#19168, @hwf1324)</target>
+        <target>Windows 文字認識などのコンテンツ認識を使用した場合に、ブラウズモードのカーソルのハイライトが認識結果上にも表示されるようになりました。
+(#19168, @hwf1324)</target>
       </segment>
     </unit>
     <unit id="ba5033be-398d-4cdf-b3a6-785e20ec549a">
@@ -6502,9 +6503,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 77</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>In the Input Gestures dialog, gestures including an operator while `numLock` is on will now be correctly displayed. (#19214, @CyrilleB79)</source>
-        <target>In the Input Gestures dialog, gestures including an operator while `numLock` is on will now be correctly displayed. (#19214, @CyrilleB79)</target>
+        <target>入力ジェスチャーダイアログで、numLock がオンのときに演算子を含むジェスチャーが正しく表示されるようになりました。(#19214, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="df5f5692-6290-413f-a194-3db3486e5682">
@@ -6620,9 +6621,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 92</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Updated pyright to 1.1.407 and enabled the Node.js-backed server (`pyright[nodejs]`) for faster and more reliable analysis. (#17749, #19162)</source>
-        <target>Updated pyright to 1.1.407 and enabled the Node.js-backed server (`pyright[nodejs]`) for faster and more reliable analysis. (#17749, #19162)</target>
+        <target>Pyright を 1.1.407 に更新し、Node.js ベースのサーバー（`pyright[nodejs]`）を有効にして、より高速で信頼性の高い解析を実現しました。 (#17749)</target>
       </segment>
     </unit>
     <unit id="9b08862d-82fc-40d5-ac44-236047e3f3b4">
@@ -6640,9 +6641,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 94</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Updated uv to 0.9.11 (#19162)</source>
-        <target>Updated uv to 0.9.11 (#19162)</target>
+        <target>Ruff を 0.9.11 に更新しました。(#19162)</target>
       </segment>
     </unit>
     <unit id="0a528cd4-e68e-48c7-8996-054d124e3f05">
@@ -6650,9 +6651,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 95</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Updated ruff to 0.14.5 (#19162)</source>
-        <target>Updated ruff to 0.14.5 (#19162)</target>
+        <target>Ruff を 0.14.5 に更新しました。(#19162)</target>
       </segment>
     </unit>
     <unit id="e6c18f78-7554-434f-8dd8-54d0009bec3c">
@@ -6699,9 +6700,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 100</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Added `api.fakeNVDAObjectClasses` set and `api.isFakeNVDAObject` function to identify fake NVDAObject instances. (#19168, @hwf1324)</source>
-        <target>Added `api.fakeNVDAObjectClasses` set and `api.isFakeNVDAObject` function to identify fake NVDAObject instances. (#19168, @hwf1324)</target>
+        <target>偽の NVDAObject インスタンスを識別するために `api.fakeNVDAObjectClasses` と `api.isFakeNVDAObject` 関数を追加しました。 (#19168, @hwf1324)</target>
       </segment>
     </unit>
     <unit id="f2dd3ab4-38da-4b0e-8f40-eb396461c7b3">
@@ -7204,9 +7205,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 155</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`create_device_info_list` to `createDeviceInfoList`;</source>
-        <target>`create_device_info_list` to `createDeviceInfoList`;</target>
+        <target>`create_device_info_list` を `createDeviceInfoList` に変更;</target>
       </segment>
     </unit>
     <unit id="efc67f50-4a59-488d-8c14-248afa38c454">
@@ -7214,9 +7215,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 156</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`get_device_info_detail` to `getDeviceInfoDetail`;</source>
-        <target>`get_device_info_detail` to `getDeviceInfoDetail`;</target>
+        <target>`get_device_info_detail` を `getDeviceInfoDetail` に変更;</target>
       </segment>
     </unit>
     <unit id="29124dfe-d3f5-4017-8f79-1c8b97f540bc">
@@ -7224,9 +7225,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 157</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`get_device_info_list` to `getDeviceInfoList`; and</source>
-        <target>`get_device_info_list` to `getDeviceInfoList`; and</target>
+        <target>`get_device_info_list` を `getDeviceInfoList` に変更;</target>
       </segment>
     </unit>
     <unit id="895d7398-e737-4765-8bb4-d49184d9674e">
@@ -7234,9 +7235,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 158</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`open_ex` to `openEx`.</source>
-        <target>`open_ex` to `openEx`.</target>
+        <target>`open_ex` を `openEx` に変更します。</target>
       </segment>
     </unit>
     <unit id="a3e4bde4-2674-431d-bc9c-897e2c6373a9">
@@ -7244,9 +7245,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 159</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The following methods on the `FTD2XX` class have been   renamed:</source>
-        <target>The following methods on the `FTD2XX` class have been   renamed:</target>
+        <target>`FTD2XX` クラスの次のメソッドの名前が変更されました。</target>
       </segment>
     </unit>
     <unit id="ecdcff7e-6fd2-4a30-ab89-283da90a420b">
@@ -7254,9 +7255,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 160</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`set_baud_rate to`setBaudRate`;</source>
-        <target>`set_baud_rate to`setBaudRate`;</target>
+        <target>`set_baud_rate` から `setBaudRate`;</target>
       </segment>
     </unit>
     <unit id="5669048f-6cef-4897-864c-0df15653b9e3">
@@ -7264,9 +7265,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 161</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`set_timeouts` to `setTimeouts`;</source>
-        <target>`set_timeouts` to `setTimeouts`;</target>
+        <target>`set_timeouts` から `setTimeouts` ;</target>
       </segment>
     </unit>
     <unit id="f572d549-c703-4e2a-a7e0-5a5f59ff9812">
@@ -7274,9 +7275,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 162</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`set_latency_timer` to `setLatencyTimer`;</source>
-        <target>`set_latency_timer` to `setLatencyTimer`;</target>
+        <target>`setLatency_timer` から `setLatencyTimer` ;</target>
       </segment>
     </unit>
     <unit id="452c58c6-cb3e-4bfb-bb5b-7f683fa21eb7">
@@ -7284,9 +7285,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 163</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`set_bit_mode` to `setBitMode`;</source>
-        <target>`set_bit_mode` to `setBitMode`;</target>
+        <target>`set_bit_mode` から `setBitMode` ;</target>
       </segment>
     </unit>
     <unit id="32fc50c1-dd20-4e76-8455-57cca37bf0c5">
@@ -7294,9 +7295,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 164</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`set_usb_parameters` to `setUsbParameters`;</source>
-        <target>`set_usb_parameters` to `setUsbParameters`;</target>
+        <target>`set_usb_parameters` から `setUsbParameters` ;</target>
       </segment>
     </unit>
     <unit id="643761d1-430f-4901-a4f0-bae0910766b1">
@@ -7304,9 +7305,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 165</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`get_queue_status` to `getQueueStatus`; and</source>
-        <target>`get_queue_status` to `getQueueStatus`; and</target>
+        <target>`get_queue_status` から `getQueueStatus`;</target>
       </segment>
     </unit>
     <unit id="418a6c2e-834a-4c69-86e5-d56c5ac55936">
@@ -7314,9 +7315,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 166</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`reset_device` to `resetDevice`.</source>
-        <target>`reset_device` to `resetDevice`.</target>
+        <target>`reset_device` から `resetDevice` に変更します。</target>
       </segment>
     </unit>
     <unit id="5d033da3-748a-4cb2-bb80-9166ccea6258">
@@ -7324,9 +7325,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 167</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The `FTD2XX.purge` method now raises `ValueError` If the `toPurge` argument is not one of "TX", "RX" or "TXRX".</source>
-        <target>The `FTD2XX.purge` method now raises `ValueError` If the `toPurge` argument is not one of "TX", "RX" or "TXRX".</target>
+        <target>`FTD2XX.purge` メソッドは、`toPurge` 引数が「TX」「RX」「TXRX」のいずれでもない場合に、`ValueError` を送出するようになりました。</target>
       </segment>
     </unit>
     <unit id="e2b70ec0-9500-43d7-9e59-6d2bc7ec2059">
@@ -7334,9 +7335,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 168</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The deprecated `winVersion.isFullScreenMagnificationAvailable` function has been removed. (#19177)</source>
-        <target>The deprecated `winVersion.isFullScreenMagnificationAvailable` function has been removed. (#19177)</target>
+        <target>非推奨の `winVersion.isFullScreenMagnificationAvailable` 関数が削除されました。(#19177)</target>
       </segment>
     </unit>
     <unit id="f2255a3e-d645-47aa-be74-1c3fce39c255">
@@ -7344,9 +7345,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 169</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The `visionEnhancementProviders.screenCurtain` module has been replaced with the `screenCurtain` subpackage. (#19177)</source>
-        <target>The `visionEnhancementProviders.screenCurtain` module has been replaced with the `screenCurtain` subpackage. (#19177)</target>
+        <target>`visionEnhancementProviders.screenCurtain`モジュールは`screenCurtain`サブパッケージに置き換えられました。(#19177)</target>
       </segment>
     </unit>
     <unit id="5edcbf63-d025-4317-b91b-73270fc03377">
@@ -7354,9 +7355,11 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 170</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The following symbols have no public replacement: `playToggleSoundsCheckBoxText`, `ScreenCurtainGuiPanel`, `ScreenCurtainProvider`, `ScreenCurtainSettings`, `screenCurtainTranslatedName`, `TRANSFORM_BLACK`, `VisionEnhancementProvider`, `WarnOnLoadDialog`, `warnOnLoadCheckBoxText`, `warnOnLoadText`.</source>
-        <target>The following symbols have no public replacement: `playToggleSoundsCheckBoxText`, `ScreenCurtainGuiPanel`, `ScreenCurtainProvider`, `ScreenCurtainSettings`, `screenCurtainTranslatedName`, `TRANSFORM_BLACK`, `VisionEnhancementProvider`, `WarnOnLoadDialog`, `warnOnLoadCheckBoxText`, `warnOnLoadText`.</target>
+        <target>## 日本語訳
+
+次のシンボルには、公開された代替手段がありません: `playToggleSoundsCheckBoxText`, `ScreenCurtainGuiPanel`, `ScreenCurtainProvider`, `ScreenCurtainSettings`, `screenCurtainTranslatedName`, `TRANSFORM_BLACK`, `VisionEnhancementProvider`, `WarnOnLoadDialog`, `warnOnLoadCheckBoxText`, `warnOnLoadText`</target>
       </segment>
     </unit>
     <unit id="8e3d8f5a-fa2e-4edf-98ea-4f0944667717">
@@ -7364,9 +7367,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 171</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>All public symbols defined on `Magnification` are now accessible from `winBindings.magnification`. (#18958)</source>
-        <target>All public symbols defined on `Magnification` are now accessible from `winBindings.magnification`. (#18958)</target>
+        <target>`Magnification`に定義されたすべての公開シンボルは、`winBindings. magnification`からアクセスできるようになりました。(#18958)</target>
       </segment>
     </unit>
     <unit id="640b487a-4117-4c54-a1d3-57bbc6f78a89">
@@ -7374,9 +7377,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 172</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`MAGCOLOREFFECT` has been moved to `winBindings.magnification`. (#18958)</source>
-        <target>`MAGCOLOREFFECT` has been moved to `winBindings.magnification`. (#18958)</target>
+        <target>`MAGCOLOREFFECT`は`winBindings.magnification`に移動しました。(#18958)</target>
       </segment>
     </unit>
     <unit id="47f24317-e089-4f60-962e-4ce40973db53">
@@ -7384,9 +7387,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 173</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`isScreenFullyBlack` has been moved to `NVDAHelper.localLib`. (#18958)</source>
-        <target>`isScreenFullyBlack` has been moved to `NVDAHelper.localLib`. (#18958)</target>
+        <target>`isScreenFullyBlack` が `NVDAHelper.localLib` に移動しました。 (#18958)</target>
       </segment>
     </unit>
     <unit id="fbb23762-1a7e-4241-aa57-71d7cc59c26f">
@@ -7394,9 +7397,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 174</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]. (#19177)</source>
-        <target>`config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]. (#19177)</target>
+        <target>`config.conf["vision"]["screenCurtain"]`が `config.conf["screenCurtain"]に移動しました。 (#19177)</target>
       </segment>
     </unit>
     <unit id="67e052fb-df7c-4580-99f7-0bcdbc05bd6e">
@@ -7404,9 +7407,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 175</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The `comInterfaces.MathPlayer` and `mathPres.mathPlayer` modules have been removed. (#19239)</source>
-        <target>The `comInterfaces.MathPlayer` and `mathPres.mathPlayer` modules have been removed. (#19239)</target>
+        <target>`comInterfaces.MathPlayer`と`mathPres.mathPlayer`モジュールが削除されました。(#19239)</target>
       </segment>
     </unit>
     <unit id="47a8aa97-b646-46fc-be50-73bddb269501">
@@ -8114,18 +8117,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 251</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`textInfos.OffsetsTextInfo.allowMoveToOffsetPastEnd` is deprecated.</source>
-        <target>`textInfos.OffsetsTextInfo.allowMoveToOffsetPastEnd` is deprecated.</target>
+        <target>`textInfo.OffsetsTextInfo.allowMoveToOffsetPastEnd` は非推奨です。</target>
       </segment>
     </unit>
     <unit id="0f7587a1-3f96-4399-ad36-0f203d352951">
       <notes>
         <note appliesTo="source">line: 252</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Use the `OffsetsTextInfo.allowMoveToUnitOffsetPastEnd` method instead. (#19152, @LeonarddeR)</source>
-        <target>Use the `OffsetsTextInfo.allowMoveToUnitOffsetPastEnd` method instead. (#19152, @LeonarddeR)</target>
+        <target>代わりに `OffsetsTextInfo.allowMoveToUnitOffsetPastEnd` メソッドを使用します。(#19152, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="95f97cbc-24c2-4812-8dfe-58c3e1e7b291">
@@ -8133,7 +8136,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 257</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>2025.3.2</source>
         <target>2025.3.2</target>
       </segment>
@@ -8142,9 +8145,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       <notes>
         <note appliesTo="source">line: 259</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This is a patch release to fix a security issue.</source>
-        <target>This is a patch release to fix a security issue.</target>
+        <target>これはセキュリティ上の問題を修正するためのパッチリリースです。</target>
       </segment>
     </unit>
     <unit id="c0b81011-3881-4516-9e1b-c4f785524036">
@@ -8152,18 +8155,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 261</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Security fixes</source>
-        <target>Security fixes</target>
+        <target>セキュリティ修正</target>
       </segment>
     </unit>
     <unit id="01289c60-c601-4620-842f-4f691a22316b">
       <notes>
         <note appliesTo="source">line: 263</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).</source>
-        <target>Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).</target>
+        <target>NVDAのセキュリティ問題の開示は、[セキュリティポリシー](https://github.com/nvaccess/nvda/blob/master/security.md)に従って責任を持って行ってください。</target>
       </segment>
     </unit>
     <unit id="eb66c384-4048-4211-a679-17fc642b4df1">
@@ -8171,9 +8174,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 265</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Fixed a vulnerability which could prevent access to secure screens via Remote Access. ([GHSA-42v6-wjv6-h3jj](https://github.com/nvaccess/nvda/security/advisories/ghsa-42v6-wjv6-h3jj))</source>
-        <target>Fixed a vulnerability which could prevent access to secure screens via Remote Access. ([GHSA-42v6-wjv6-h3jj](https://github.com/nvaccess/nvda/security/advisories/ghsa-42v6-wjv6-h3jj))</target>
+        <target>リモートアクセスによるセキュアな画面へのアクセスを妨げる脆弱性を修正しました。([GHSA-42v6-wjv6-h3jj](https://github.com/nvaccess/nvda/security/advisories/ghsa-42v6-wjv6-h3jj))</target>
       </segment>
     </unit>
     <unit id="c9e0aaa1-5f71-4ebf-9364-ab0109d04b8e">
@@ -8767,9 +8770,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 349</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Updated SCons to 4.10.1. (#19016, #19226, @LeonarddeR)</source>
-        <target>Updated SCons to 4.10.1. (#19016, #19226, @LeonarddeR)</target>
+        <target>SCons を 4.10.1 に更新しました。(#19016, #19226, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="8cc84088-202d-4802-b8e5-f0ec5069d76a">
@@ -8777,9 +8780,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 350</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This introduces support to build NVDA with Visual Studio 2026.</source>
-        <target>This introduces support to build NVDA with Visual Studio 2026.</target>
+        <target>これにより、Visual Studio 2026 による NVDA のビルドが可能になります。</target>
       </segment>
     </unit>
     <unit id="81bf02b2-48fc-4b1f-9c88-f5d28d15110d">
@@ -21452,7 +21455,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 1855</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`UIAHandler.customProps.CustomPropertiesCommon`</source>
         <target>`UIAHandler.customProps.CustomPropertiesCommon`</target>
       </segment>
@@ -21462,7 +21465,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 1856</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`NVDAObjects.UIA.excel.ExcelCustomProperties`</source>
         <target>`NVDAObjects.UIA.excel.ExcelCustomProperties`</target>
       </segment>
@@ -21472,7 +21475,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 1857</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`NVDAObjects.UIA.excel.ExcelCustomAnnotationTypes`</source>
         <target>`NVDAObjects.UIA.excel.ExcelCustomAnnotationTypes`</target>
       </segment>
@@ -22333,7 +22336,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       <notes>
         <note appliesTo="source">line: 1965</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>([GHSA-fpwc-2gxx-j9v7](https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7))</source>
         <target>([GHSA-fpwc-2gxx-j9v7](https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7))</target>
       </segment>
@@ -22433,7 +22436,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 1980</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`isWindowsLocked`</source>
         <target>`isWindowsLocked`</target>
       </segment>
@@ -24196,7 +24199,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>digitaleditionspreview |digitaleditions</source>
         <target>digitaleditionspreview |digitaleditions</target>
       </segment>
@@ -24207,7 +24210,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>esybraille |esysuite</source>
         <target>esybraille |esysuite</target>
       </segment>
@@ -24218,7 +24221,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>hxoutlook |hxmail</source>
         <target>hxoutlook |hxmail</target>
       </segment>
@@ -24229,7 +24232,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>miranda64 |miranda32</source>
         <target>miranda64 |miranda32</target>
       </segment>
@@ -24240,7 +24243,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>mpc-hc |mplayerc</source>
         <target>mpc-hc |mplayerc</target>
       </segment>
@@ -24251,7 +24254,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>mpc-hc64 |mplayerc</source>
         <target>mpc-hc64 |mplayerc</target>
       </segment>
@@ -24262,7 +24265,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>notepad++ |notepadPlusPlus</source>
         <target>notepad++ |notepadPlusPlus</target>
       </segment>
@@ -24273,7 +24276,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>searchapp |searchui</source>
         <target>searchapp |searchui</target>
       </segment>
@@ -24284,7 +24287,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>searchhost |searchui</source>
         <target>searchhost |searchui</target>
       </segment>
@@ -24295,7 +24298,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>springtoolsuite4 |eclipse</source>
         <target>springtoolsuite4 |eclipse</target>
       </segment>
@@ -24306,7 +24309,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>sts |eclipse</source>
         <target>sts |eclipse</target>
       </segment>
@@ -24317,7 +24320,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>teamtalk3 |teamtalk4classic</source>
         <target>teamtalk3 |teamtalk4classic</target>
       </segment>
@@ -24328,7 +24331,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>textinputhost |windowsinternal_composableshell_experiences_textinput_inputapp</source>
         <target>textinputhost |windowsinternal_composableshell_experiences_textinput_inputapp</target>
       </segment>
@@ -24339,7 +24342,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>totalcmd64 |totalcmd</source>
         <target>totalcmd64 |totalcmd</target>
       </segment>
@@ -24393,7 +24396,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 2241</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>2022.1</source>
         <target>2022.1</target>
       </segment>
@@ -25783,7 +25786,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 2395</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>2021.3.5</source>
         <target>2021.3.5</target>
       </segment>
@@ -25841,7 +25844,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 2405</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>2021.3.4</source>
         <target>2021.3.4</target>
       </segment>
@@ -25959,7 +25962,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 2421</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>2021.3.3</source>
         <target>2021.3.3</target>
       </segment>
@@ -25996,7 +25999,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 2427</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>2021.3.2</source>
         <target>2021.3.2</target>
       </segment>
@@ -26064,7 +26067,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 2438</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>2021.3.1</source>
         <target>2021.3.1</target>
       </segment>
@@ -26143,7 +26146,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 2452</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>2021.3</source>
         <target>2021.3</target>
       </segment>
@@ -26829,7 +26832,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 2534</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>2021.2</source>
         <target>2021.2</target>
       </segment>
@@ -27289,7 +27292,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 2593</note>
         <note appliesTo="source">prefix: ## </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>2021.1</source>
         <target>2021.1</target>
       </segment>
@@ -28574,7 +28577,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 2733</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>speechMode</source>
         <target>speechMode</target>
       </segment>
@@ -28584,7 +28587,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 2734</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>speechMode_beeps_ms</source>
         <target>speechMode_beeps_ms</target>
       </segment>
@@ -28594,7 +28597,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 2735</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>beenCanceled</source>
         <target>beenCanceled</target>
       </segment>
