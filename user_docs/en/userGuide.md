@@ -1537,7 +1537,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 |Increases the magnification level of the magnifier |`NVDA+shift+equals` |Increases the zoom level|
 |Decreases the magnification level of the magnifier |`NVDA+shift+minus` |Decreases the zoom level|
 |Toggle filter of the magnifier |`NVDA+shift+i` |Cycles through available color filters (normal, grayscale, inverted)|
-|Toggle focus mode for the full-screen magnifier |`NVDA+shift+u` |Cycles through focus tracking modes (center, border, relative)|
+|Toggle focus mode for the full-screen magnifier |None |Cycles through focus tracking modes (center, border, relative)|
 |Launch spotlight if magnifier is full-screen |`NVDA+shift+l` |Activates spotlight mode for focused reading or presentations|
 
 <!-- KC:endInclude -->
@@ -1575,7 +1575,7 @@ This mode provides a more stable view, only adjusting when necessary.
 * **Relative**: The magnified area maintains the relative position of the focus within the screen.
 This mode mimics the behavior of the Windows Magnifier.
 
-To cycle through the focus tracking modes press `NVDA+shift+u`.
+To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 NVDA will announce the name of the currently selected mode.
 
 The default focus mode when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
@@ -1602,7 +1602,7 @@ If you move the mouse before the zoom-back occurs, the timer resets, giving you 
 
 ### Magnifier Settings {#MagnifierSettings}
 
-The magnifier can be configured in the "Magnifier" category of the NVDA Settings dialog (`NVDA+control+p`).
+The magnifier can be configured in the "Magnifier" category of the NVDA Settings dialog (`NVDA+control+w`).
 See the [Magnifier settings](#MagnifierSettingsCategory) section for details on available options.
 
 ## Content Recognition {#ContentRecognition}
@@ -2821,14 +2821,14 @@ The available options are:
 ##### Default focus mode {#MagnifierDefaultFocusMode}
 
 This combo box allows you to select the default focus tracking mode when the magnifier is first enabled.
-You can cycle through the focus modes by pressing `NVDA+shift+u`.
+To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Center, Border, Relative|
 |Default |Center|
-|Toggle command |`NVDA+shift+u` |
+|Toggle command |None |
 
 | Option | Description |
 |---|---|
