@@ -8,6 +8,7 @@ import struct
 import functools
 import operator
 import enum
+import time
 from dataclasses import dataclass
 import serial
 import inputCore
@@ -29,7 +30,12 @@ from .defs import (
 	DP_PerkinsKey,
 	DP_BoardInformation,
 	DP_CHECKSUM_BASE,
+	DP_KeyGroup,
 )
+
+
+# Long press threshold in seconds
+LONG_PRESS_THRESHOLD: float = 1.5
 
 
 class DpTactileGraphicsBuffer(TactileGraphicsBuffer):
@@ -213,15 +219,67 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if cmd == DP_Command.NTF_KEYS_PERKINS:
 			log.debug(f"Perkins keys {data}")
 		if cmd in (DP_Command.NTF_KEYS_FUNCTION, DP_Command.NTF_KEYS_PERKINS):
-			try:
-				gesture = DPKeyGesture(self.model, cmd, data)
-			except ValueError:
-				return
-			if inputCore.manager is not None:
+			# Extract key group from second byte of command
+			self._handleKeyPress(cmd.secondByte, data)
+
+	def _handleKeyPress(self, groupNum: int, data: bytes):
+		"""Handle a key press notification from the display.
+
+		Tracks keys across multiple groups and fires gesture only when all keys released.
+		Supports multi-button combinations and long press detection.
+
+		The bit order is reversed (LSB to MSB) to match BRLTTY key numbering scheme.
+
+		:param groupNum: The key group ID (second byte of notification command)
+		:param data: The key press data as bytes
+		"""
+		try:
+			group = DP_KeyGroup(groupNum)
+		except ValueError:
+			log.debugWarning(f"Unknown key group: {groupNum}")
+			return
+
+		# Check if any key in this group is pressed
+		anyKeyPressed = any(byte != 0 for byte in data)
+
+		if anyKeyPressed:
+			# At least one key in this group is pressed
+			# Track first key press time if this is the start of a new gesture
+			if not self._keysPressed:
+				self._firstKeyPressTime = time.time()
+
+			# Extract which keys are pressed
+			for byteIndex, byte in enumerate(data):
+				for bitPos in range(8):
+					# Reverse bit order (check bit 7-bitPos) to match BRLTTY key numbering
+					if byte & (1 << (7 - bitPos)):
+						keyNumber = byteIndex * 8 + bitPos
+						self._keysPressed.add((group, keyNumber))
+
+			# Mark this group as having pressed keys
+			self._keyGroupsReleased[group] = False
+		else:
+			# All keys in this group have been released
+			self._keyGroupsReleased[group] = True
+
+			# Check if all groups are now released
+			if self._keysPressed and all(self._keyGroupsReleased.values()):
+				# All key groups released - fire the gesture
+				isLongPress = False
+				if self._firstKeyPressTime is not None:
+					elapsedTime = time.time() - self._firstKeyPressTime
+					isLongPress = elapsedTime >= LONG_PRESS_THRESHOLD
+
 				try:
-					inputCore.manager.executeGesture(gesture)
-				except inputCore.NoInputGestureAction:
+					gesture = DPInputGesture(self.model, self._keysPressed, isLongPress)
+					if inputCore.manager is not None:
+						inputCore.manager.executeGesture(gesture)
+				except (ValueError, inputCore.NoInputGestureAction):
 					pass
+
+				# Reset state for next gesture
+				self._keysPressed.clear()
+				self._firstKeyPressTime = None
 
 	def __init__(self, port: str = "auto"):
 		if port == "auto":
@@ -237,6 +295,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				raise RuntimeError(f"Could not connect to DotPad on port {port}")
 
 		super().__init__()
+
+		# Key press tracking for multi-button combinations and long press detection
+		self._keysPressed: set[tuple[int, int]] = set()
+		self._keyGroupsReleased: dict[int, bool] = {}
+		self._firstKeyPressTime: float | None = None
+
+		# Initialize all key groups as released
+		for group in DP_KeyGroup:
+			self._keyGroupsReleased[group] = True
 
 	def _tryConnect(self, port: str) -> bool:
 		"""Try to connect to a DotPad device on the given port.
@@ -399,33 +466,66 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	gestureMap = inputCore.GlobalGestureMap(
 		{
 			"globalCommands.GlobalCommands": {
-				"braille_scrollBack": ("br(dotPad):pan_left",),
-				"braille_scrollForward": ("br(dotPad):pan_right",),
+				"braille_scrollBack": ("br(dotPad):panLeft",),
+				"braille_scrollForward": ("br(dotPad):panRight",),
 			},
 		},
 	)
 
 
-class DPKeyGesture(braille.BrailleDisplayGesture):
+class DPInputGesture(braille.BrailleDisplayGesture):
+	"""Input gesture for DotPad display supporting multi-button combinations and long press."""
+
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, model: str, cmd: DP_Command, data: bytes):
+	def __init__(self, model: str, keys: set[tuple[int, int]], isLongPress: bool = False):
+		"""Initialize gesture from pressed keys.
+
+		:param model: The device model name (e.g., "DotPad320A") for model-specific gestures
+		:param keys: Set of (group, keyNumber) tuples representing pressed keys
+		:param isLongPress: Whether this gesture is a long press (held >= 1.5 seconds)
+		:raises ValueError: If no valid keys can be mapped to names
+		"""
+		super().__init__()
 		self.model = model
-		if cmd == DP_Command.NTF_KEYS_FUNCTION:
-			functionNum = 0
-			for dataByte in data:
-				for bit in range(7, -1, -1):
-					functionNum += 1
-					if dataByte & 1 << bit:
-						self.id = f"function{functionNum}"
-						return
-			else:
-				raise ValueError("No function key")
-		elif cmd == DP_Command.NTF_KEYS_PERKINS:
-			for key in DP_PerkinsKey:
-				dataIndex, bitIndex = divmod(key.value, 8)
-				bitIndex = 7 - bitIndex
-				if data[dataIndex] & 1 << bitIndex:
-					self.id = key.name.lower()
-					return
-		raise ValueError(f"Unsupported command {cmd.name}")
+		self.keys = keys
+		self.isLongPress = isLongPress
+		self.keyNames = []
+
+		# Build key names from all pressed keys
+		for group, keyNumber in sorted(keys):
+			if group == DP_KeyGroup.FUNCTION:
+				self.keyNames.append(f"f{keyNumber + 1}")
+			elif group == DP_KeyGroup.PERKINS:
+				try:
+					# Map to DP_PerkinsKey enum and convert to lowercase
+					perkinsKey = DP_PerkinsKey(keyNumber)
+					# Convert SCREAMING_SNAKE_CASE to camelCase for gesture IDs
+					keyName = self._formatPerkinsKeyName(perkinsKey.name)
+					self.keyNames.append(keyName)
+				except ValueError:
+					log.warning(f"Unknown Perkins key: {keyNumber}")
+			# TODO: Add support for ROUTING and SCROLL groups when needed
+
+		if not self.keyNames:
+			raise ValueError("No valid key names generated from pressed keys")
+
+		# Build gesture ID
+		baseId = "+".join(self.keyNames)
+		self.id = f"longPress({baseId})" if isLongPress else baseId
+
+	def _formatPerkinsKeyName(self, enumName: str) -> str:
+		"""Convert DP_PerkinsKey enum name to gesture-friendly format.
+
+		Converts SCREAMING_SNAKE_CASE like 'PAN_LEFT' to camelCase like 'panLeft'.
+		Single words like 'SPACE' become lowercase like 'space'.
+
+		:param enumName: The enum member name (e.g., 'PAN_LEFT', 'SPACE', 'DOT7')
+		:return: Formatted key name for gesture ID
+		"""
+		parts = enumName.split("_")
+		if len(parts) == 1:
+			# Single word: just lowercase (e.g., SPACE -> space, DOT7 -> dot7)
+			return parts[0].lower()
+		# Multiple words: camelCase (e.g., PAN_LEFT -> panLeft)
+		return parts[0].lower() + "".join(word.capitalize() for word in parts[1:])
