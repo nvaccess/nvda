@@ -11,12 +11,9 @@ Implements the magnifier global class and its basic functionalities.
 from typing import Callable
 from logHandler import log
 import wx
-import api
 import ui
 import speech
 import screenCurtain
-import winUser
-import mouseHandler
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (
@@ -24,15 +21,14 @@ from .utils.types import (
 	Coordinates,
 	MagnifierType,
 	Direction,
-	FocusType,
 	Filter,
 )
-
+from .utils.focusManager import FocusManager
 from .config import getDefaultZoomLevel, getDefaultFilter, ZoomLevel
 
 
 class Magnifier:
-	_TIMER_INTERVAL_MS: int = 20
+	_TIMER_INTERVAL_MS: int = 12
 	_MARGIN_BORDER: int = 50
 
 	def __init__(self):
@@ -41,9 +37,7 @@ class Magnifier:
 		self._isActive: bool = False
 		self._zoomLevel: float = getDefaultZoomLevel()
 		self._timer: None | wx.Timer = None
-		self._lastFocusedObject: FocusType | None = None
-		self._lastNVDAPosition = Coordinates(0, 0)
-		self._lastMousePosition = Coordinates(0, 0)
+		self._focusManager = FocusManager()
 		self._lastScreenPosition = Coordinates(0, 0)
 		self._currentCoordinates = Coordinates(0, 0)
 		self._filterType: Filter = getDefaultFilter()
@@ -69,6 +63,15 @@ class Magnifier:
 			closestZoom = min(validZoomValues, key=lambda x: abs(x - value))
 			log.warning(f"Invalid zoom level {value}, using closest valid value {closestZoom}")
 			value = closestZoom
+		self._zoomLevel = value
+
+	def _setZoomRawValue(self, value: float) -> None:
+		"""
+		Set zoom level directly without validation.
+		Used internally for smooth animations (e.g., spotlight).
+
+		:param value: The zoom level to set (can be any intermediate value)
+		"""
 		self._zoomLevel = value
 
 	# Functions
@@ -98,7 +101,7 @@ class Magnifier:
 			return
 
 		self._isActive = True
-		self._currentCoordinates = self._getFocusCoordinates()
+		self._currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
 
 	def _updateMagnifier(self) -> None:
 		"""
@@ -106,7 +109,7 @@ class Magnifier:
 		"""
 		if not self._isActive:
 			return
-		self._currentCoordinates = self._getFocusCoordinates()
+		self._currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
 		self._doUpdate()
 		self._startTimer(self._updateMagnifier)
 
@@ -221,80 +224,3 @@ class Magnifier:
 		top = max(0, min(top, int(self._displayOrientation.height - visibleHeight)))
 
 		return MagnifierPosition(left, top, int(visibleWidth), int(visibleHeight))
-
-	def _getCursorPosition(self) -> Coordinates:
-		"""
-		Get the current review position as (x, y), falling back to navigator object if needed
-		Tries to get the review position from NVDA's API, or the center of the navigator object
-		This part is taken from NVDA+shift+m gesture
-
-		:return: The (x, y) coordinates of the NVDA position
-		"""
-		# Try to get the current review position object from NVDA's API
-		reviewPosition = api.getReviewPosition()
-		if reviewPosition:
-			try:
-				# Try to get the point at the start of the review position
-				point = reviewPosition.pointAtStart
-				return Coordinates(point.x, point.y)
-			except (NotImplementedError, LookupError, AttributeError):
-				# If that fails, fall through to try navigator object
-				pass
-
-		# Fallback: try to use the navigator object location
-		navigatorObject = api.getNavigatorObject()
-		try:
-			# Try to get the bounding rectangle of the navigator object
-			left, top, width, height = navigatorObject.location
-			# Calculate the center point of the rectangle
-			x = left + (width // 2)
-			y = top + (height // 2)
-			return Coordinates(x, y)
-		except Exception:
-			# If no location is found, log this and return (0, 0)
-			return Coordinates(0, 0)
-
-	def _getFocusCoordinates(self) -> Coordinates:
-		"""
-		Return position (x,y) of current focus element
-
-		:return: The (x, y) coordinates of the focus element
-		"""
-		nvdaPosition = self._getCursorPosition()
-		mousePosition = winUser.getCursorPos()
-		# convert to Coordinates named tuple
-		mousePosition = Coordinates(mousePosition[0], mousePosition[1])
-		# Check if left mouse button is pressed
-		isClickPressed = mouseHandler.isLeftMouseButtonLocked()
-
-		# Always update positions in background (keep them synchronized)
-		nvdaChanged = self._lastNVDAPosition != nvdaPosition
-		mouseChanged = self._lastMousePosition != mousePosition
-
-		if nvdaChanged:
-			self._lastNVDAPosition = nvdaPosition
-		if mouseChanged:
-			self._lastMousePosition = mousePosition
-
-		# During drag & drop, force focus on mouse
-		if isClickPressed:
-			self._lastFocusedObject = FocusType.MOUSE
-			return mousePosition
-
-		# Check mouse first (mouse has priority) - when not dragging
-		if mouseChanged:
-			self._lastFocusedObject = FocusType.MOUSE
-			return mousePosition
-
-		# Then check NVDA (only change focus if mouse didn't move)
-		if nvdaChanged:
-			self._lastFocusedObject = FocusType.NVDA
-			return nvdaPosition
-
-		# Return current position of the focused object (no changes detected)
-		if self._lastFocusedObject == FocusType.NVDA:
-			return nvdaPosition
-		elif self._lastFocusedObject == FocusType.MOUSE:
-			return mousePosition
-		else:
-			return mousePosition

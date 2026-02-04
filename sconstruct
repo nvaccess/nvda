@@ -5,8 +5,10 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
+import copy
 import multiprocessing
 import os
+import shutil
 import platform
 import sys
 from pathlib import Path
@@ -413,32 +415,6 @@ def NVDADistGenerator(target, source, env, for_signature):
 
 	action.append(buildCmd)
 
-	# #10031: Apps written in Python 3 require Universal CRT to be installed. We cannot assume users have it on their systems.
-	# Therefore , copy required libraries from Windows 10 SDK.
-	try:
-		with winreg.OpenKey(
-			winreg.HKEY_LOCAL_MACHINE,
-			r"SOFTWARE\Microsoft\Microsoft SDKs\Windows\v10.0",
-			access=winreg.KEY_READ | winreg.KEY_WOW64_32KEY,
-		) as SDKKey:
-			sdk_installationFolder = winreg.QueryValueEx(SDKKey, "InstallationFolder")[0]
-			sdk_productVersion = winreg.QueryValueEx(SDKKey, "ProductVersion")[0]
-	except WindowsError:
-		raise RuntimeError("Windows 10 SDK not found")
-	# The Universal CRT should be in an SDK version-specific directory
-	# But usually has a '.0' appended after the productVersion found in the registry.
-	# E.g. 10.0.1941 might e actually 10.0.1941.0.
-	# Thus try both.
-	CRTDir = os.path.join(sdk_installationFolder, "Redist", sdk_productVersion + ".0", "ucrt", "DLLs", "x86")
-	if not os.path.isdir(CRTDir):
-		CRTDir = os.path.join(sdk_installationFolder, "Redist", sdk_productVersion, "ucrt", "DLLs", "x86")
-		if not os.path.isdir(CRTDir):
-			raise RuntimeError(f"Could not locate CRT dlls in SDK at {CRTDir}")
-	with os.scandir(CRTDir) as dir:
-		for file in dir:
-			if file.name.endswith(".dll") and file.is_file():
-				action.append(Copy(target[0], file.path))
-
 	if certFile or apiSigningToken:
 		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "l10nUtil.exe":
 			action.append(
@@ -718,3 +694,26 @@ env.Tool("listModules")
 source = env.Dir(os.path.join(os.getcwd(), "dist"))
 target = env.File(os.path.join(outputDir.abspath, "library_modules.txt"))
 env.Alias("moduleList", env.GenerateModuleList(target, source))
+
+synthDriverHost32Runtime = env.Command(
+	target="#runtime-builders/synthDriverHost32/dist",
+	source="#runtime-builders/synthDriverHost32/setup-runtime.py",
+	chdir=Dir("#runtime-builders/synthDriverHost32"),
+	action=[
+		  "uv run -v python setup-runtime.py ",
+		r"rmdir /s /q ..\..\source\lib\x86\synthDriverHost-runtime || exit 0",
+		r"xcopy /e /i /y dist ..\..\source\lib\x86\synthDriverHost-runtime",
+	],
+	ENV=os.environ,
+)
+env.AlwaysBuild(synthDriverHost32Runtime)
+env.Alias("synthDriverHost32Runtime", synthDriverHost32Runtime)
+
+# Copy sapi5 and sonic Python files to the _synthDrivers32 directory
+# As they require no changes, but need to be in an isolated directory for 32 bit.
+env.Command(sourceDir.File('_synthDrivers32/_sonic.py'), sourceDir.File('synthDrivers/_sonic.py'), Copy("$TARGET", "$SOURCE"))
+env.Command(sourceDir.File('_synthDrivers32/_sapi5.py'), sourceDir.File('synthDrivers/sapi5.py'), Copy("$TARGET", "$SOURCE"))
+
+# Parts of the speech package are quired by the 32 bit synthDriver host tunrime
+env.Command(sourceDir.File('_bridge/runtimes/synthDriverHost/speech/commands.py'), sourceDir.File('speech/commands.py'), Copy("$TARGET", "$SOURCE"))
+env.Command(sourceDir.File('_bridge/runtimes/synthDriverHost/speech/types.py'), sourceDir.File('speech/types.py'), Copy("$TARGET", "$SOURCE"))

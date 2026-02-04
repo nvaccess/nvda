@@ -2633,6 +2633,15 @@ class BrowseModeDocumentTreeInterceptor(
 		"kb:,": "movePastEndOfContainer",
 	}
 
+	def _toggleScreenLayout(self) -> None:
+		"""Toggles whether the document is presented as it appears visually, or with interactive controls on their own lines.
+
+		Subclasses that support toggling this option should implement this method.
+
+		:raises NotImplementedError: If toggling this option is not supported by this document.
+		"""
+		raise NotImplementedError
+
 	@script(
 		description=_(
 			# Translators: the description for the toggleScreenLayout script.
@@ -2640,9 +2649,12 @@ class BrowseModeDocumentTreeInterceptor(
 		),
 		gesture="kb:NVDA+v",
 	)
-	def script_toggleScreenLayout(self, gesture):
-		# Translators: The message reported for not supported toggling of screen layout
-		ui.message(_("Not supported in this document."))
+	def script_toggleScreenLayout(self, gesture: inputCore.InputGesture) -> None:
+		try:
+			self._toggleScreenLayout()
+		except NotImplementedError:
+			# Translators: The message reported for not supported toggling of screen layout
+			ui.message(_("Not supported in this document."))
 
 	def updateAppSelection(self):
 		"""Update the native selection in the application to match the browse mode selection in NVDA."""

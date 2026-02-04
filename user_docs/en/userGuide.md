@@ -3772,6 +3772,23 @@ Press this button to test the mirror URL you have entered.
 You must be connected to the internet for the test to succeed.
 It is recommended that you always test the URL before saving it.
 
+#### Copy Add-ons to System-wide Configuration Dialog {#CopyAddonsToSystemProfileDialog}
+
+This dialog allows you to choose which of your [add-ons](#AddonsManager) to [copy to NVDA's system-wide configuration](#GeneralSettingsCopySettings), which is used during sign-in and on [secure screens](#SecureScreens).
+By default, NVDA will not copy any of your add-ons to the system-wide configuration.
+
+Copying add-ons to the system-wide configuration is a serious security risk.
+NVDA uses this configuration when running on secure screens, including the sign-in and User Account Control (UAC) screens.
+When running on secure screens, NVDA runs as the system user, which has privileges even greater than administrators.
+This means that many of the usual security and privacy features of Windows, like User Account Control (UAC), do not apply.
+Allowing add-ons to run in this environment grants them unrestricted access to your entire system.
+
+To copy one or more add-ons to the system-wide configuration, check them in the list of add-ons.
+You are strongly recommended to leave all add-ons that you do not require to access secure screens unchecked.
+
+Please note that you may only copy currently enabled add-ons to the system-wide configuration.
+Add-ons that are "pending restart" cannot be copied.
+
 #### Advanced Settings {#AdvancedSettings}
 
 Warning! The settings in this category are for advanced users and may cause NVDA to not function correctly if configured in the wrong way.
@@ -4044,14 +4061,31 @@ NVDA's speech dictionaries however are much more powerful than simple word repla
 The Add rule dialog also contains a checkbox to say whether or not you want the rule to be case sensitive (meaning that NVDA should care whether the characters are uppercase or lowercase.
 NVDA ignores case by default).
 
-Finally, a set of radio buttons allows you to tell NVDA whether your pattern should match anywhere, should only match if it is a complete word or should be treated as a "Regular expression".
-Setting the pattern to match as a whole word means that the replacement will only be made if the pattern does not occur as part of a larger word.
-This condition is met if the characters immediately before and after the word are anything other than a letter, a number, or an underscore, or if there are no characters at all.
-Thus, using the earlier example of replacing the word "bird" with "frog", if you were to make this a whole word replacement, it would not match "birds" or "bluebird".
+A set of radio buttons allows you to tell NVDA how your pattern should be matched.
+The available types are:
 
-A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
+* Anywhere: The pattern can match anywhere in the text.
+* Whole word: The replacement will only be made if the pattern occurs as a complete word.
+This means the pattern does not occur as part of a larger word.
+The condition is met if the characters immediately before and after the word are anything other than a letter, a number, or an underscore, or if there are no characters at all.
+For example, if you replace "bird" with "frog" using whole word matching, it would not match "birds" or "bluebird".
+* Part of word: The pattern must be preceded or followed by an alphanumeric character or underscore to match.
+This is useful for matching parts of compound words.
+For example, if you replace "bird" with "frog" using part of word matching, it would match "birds", "bluebird", "bluebirds" and "birdsong", but not the standalone word "bird" (because it has neither a preceding nor a following alphanumeric character).
+* Start of word: The pattern must have a word boundary at the start and an alphanumeric character or underscore at the end.
+For example, if you replace "bird" with "frog" using start of word matching, it would match "birds" and "birdsong", but not "bluebird" or the standalone word "bird".
+* End of word: The pattern must have an alphanumeric character or underscore at the start and a word boundary at the end.
+For example, if you replace "bird" with "frog" using end of word matching, it would match "bluebird" and "songbird", but not "birds" or the standalone word "bird".
+* Regular expression: The pattern is treated as a regular expression, which is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
 Regular expressions are not covered in this user guide.
 For an introductory tutorial, please refer to [Python's Regular Expression Guide](https://docs.python.org/3.13/howto/regex.html).
+* Unix shell-style wildcards: The pattern uses Unix shell-style wildcards for matching.
+For example:
+  * `*` matches any sequence of characters.
+  * `?` matches a single character.
+  * `[az]` matches a or z.
+  * `[a-z]` matches any lowercase letter from a through z.
+  * `[!a-z]` matches any character except lowercase letters a through z.
 
 #### Punctuation/symbol pronunciation {#SymbolPronunciation}
 
@@ -6064,8 +6098,8 @@ Secure mode freezes changes to NVDA configuration, so please ensure that NVDA is
 
 NVDA runs in [secure mode](#SecureMode) when executed on secure screens unless the `serviceDebug` [system wide parameter](#SystemWideParameters) is enabled.
 
-When running from a secure screen, NVDA uses a system profile for preferences.
-NVDA user preferences can be copied [for use in secure screens](#GeneralSettingsCopySettings).
+When running on a secure screen, NVDA uses its system-wide configuration for preferences.
+NVDA user preferences can be copied [for use on secure screens](#GeneralSettingsCopySettings).
 
 Secure screens include:
 

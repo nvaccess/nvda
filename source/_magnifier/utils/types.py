@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -40,15 +40,15 @@ class MagnifierAction(DisplayStringEnum):
 	def _displayStringLabels(self) -> dict["MagnifierAction", str]:
 		return {
 			# Translators: Action description for zooming in.
-			self.ZOOM_IN: pgettext("magnifier action", "trying to zoom in"),
+			self.ZOOM_IN: pgettext("magnifier action", "zoom in"),
 			# Translators: Action description for zooming out.
-			self.ZOOM_OUT: pgettext("magnifier action", "trying to zoom out"),
+			self.ZOOM_OUT: pgettext("magnifier action", "zoom out"),
 			# Translators: Action description for toggling color filters.
-			self.TOGGLE_FILTER: pgettext("magnifier action", "trying to toggle filters"),
+			self.TOGGLE_FILTER: pgettext("magnifier action", "toggle filters"),
 			# Translators: Action description for changing full-screen mode.
-			self.CHANGE_FULLSCREEN_MODE: pgettext("magnifier action", "trying to change full-screen mode"),
+			self.CHANGE_FULLSCREEN_MODE: pgettext("magnifier action", "change full-screen mode"),
 			# Translators: Action description for starting spotlight mode.
-			self.START_SPOTLIGHT: pgettext("magnifier action", "trying to start spotlight mode"),
+			self.START_SPOTLIGHT: pgettext("magnifier action", "start spotlight mode"),
 		}
 
 
@@ -74,8 +74,9 @@ class MagnifierType(DisplayStringStrEnum):
 class FocusType(Enum):
 	"""Type of focus being tracked by the magnifier"""
 
-	MOUSE = "mouse"
-	NVDA = "nvda"
+	MOUSE = auto()
+	SYSTEM_FOCUS = auto()
+	NAVIGATOR = auto()
 
 
 class MagnifierPosition(NamedTuple):

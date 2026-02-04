@@ -1,20 +1,20 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2023 NV Access Limited, Peter Vágner, Mesar Hameed, Joseph Lee,
-# Aaron Cannon, Ethan Holliger, Julien Cochuyt, Thomas Stivers, Cyrille Bougot, Aleksey Sadovoy
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-
-from re import error as RegexpError
+# Copyright (C) 2007-2026 NV Access Limited, Peter Vágner, Mesar Hameed, Joseph Lee,
+# Aaron Cannon, Ethan Holliger, Julien Cochuyt, Thomas Stivers, Cyrille Bougot, Aleksey Sadovoy, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from abc import abstractmethod
-import wx
+from re import error as RegexpError
 
 import globalVars
-import gui
-import gui.contextHelp
+import wx
 from logHandler import log
 import speechDictHandler
+from speechDictHandler.types import DictionaryType, EntryType, SpeechDict, SpeechDictEntry
+
+import gui
+import gui.contextHelp
 
 from . import guiHelper
 from .settingsDialogs import SettingsDialog
@@ -26,23 +26,20 @@ class DictionaryEntryDialog(
 ):
 	helpId = "SpeechDictionaries"
 
-	TYPE_LABELS = {
-		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-		speechDictHandler.ENTRY_TYPE_ANYWHERE: _("&Anywhere"),
-		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-		speechDictHandler.ENTRY_TYPE_WORD: _("Whole &word"),
-		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-		speechDictHandler.ENTRY_TYPE_REGEXP: _("Regular &expression"),
-	}
-	TYPE_LABELS_ORDERING = (
-		speechDictHandler.ENTRY_TYPE_ANYWHERE,
-		speechDictHandler.ENTRY_TYPE_WORD,
-		speechDictHandler.ENTRY_TYPE_REGEXP,
+	TYPE_LABELS: dict[EntryType, str] = EntryType.ANYWHERE._displayStringLabels
+	TYPE_LABELS_ORDERING: tuple[EntryType] = (
+		EntryType.ANYWHERE,
+		EntryType.WORD,
+		EntryType.PART_OF_WORD,
+		EntryType.START_OF_WORD,
+		EntryType.END_OF_WORD,
+		EntryType.REGEXP,
+		EntryType.UNIX,
 	)
 
 	# Translators: This is the label for the edit dictionary entry dialog.
 	def __init__(self, parent, title=_("Edit Dictionary Entry")):
-		super(DictionaryEntryDialog, self).__init__(parent, title=title)
+		super().__init__(parent, title=title)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -75,14 +72,14 @@ class DictionaryEntryDialog(
 		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
-		self.setType(speechDictHandler.ENTRY_TYPE_ANYWHERE)
+		self.setType(EntryType.ANYWHERE)
 		self.patternTextCtrl.SetFocus()
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 
-	def getType(self):
+	def getType(self) -> EntryType:
 		typeRadioValue = self.typeRadioBox.GetSelection()
 		if typeRadioValue == wx.NOT_FOUND:
-			return speechDictHandler.ENTRY_TYPE_ANYWHERE
+			return (EntryType.ANYWHERE,)
 		return DictionaryEntryDialog.TYPE_LABELS_ORDERING[typeRadioValue]
 
 	def onOk(self, evt):
@@ -100,7 +97,7 @@ class DictionaryEntryDialog(
 			return
 		entryType = self.getType()
 		try:
-			dictEntry = self.dictEntry = speechDictHandler.SpeechDictEntry(
+			dictEntry = self.dictEntry = SpeechDictEntry(
 				self.patternTextCtrl.GetValue(),
 				self.replacementTextCtrl.GetValue(),
 				self.commentTextCtrl.GetValue(),
@@ -109,7 +106,7 @@ class DictionaryEntryDialog(
 			)
 		except RegexpError as e:
 			log.debugWarning(f"Could not add dictionary entry due to regex error in the pattern field : {e}")
-			if entryType != speechDictHandler.ENTRY_TYPE_REGEXP:
+			if entryType != EntryType.REGEXP:
 				raise e
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
@@ -127,7 +124,7 @@ class DictionaryEntryDialog(
 			log.debugWarning(
 				f"Could not add dictionary entry due to regex error in the replacement field : {e}",
 			)
-			if entryType != speechDictHandler.ENTRY_TYPE_REGEXP:
+			if entryType != EntryType.REGEXP:
 				raise e
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
@@ -159,10 +156,10 @@ class DictionaryDialog(
 	helpId = "SpeechDictionaries"
 
 	@abstractmethod
-	def __init__(self, parent, title, speechDict):
+	def __init__(self, parent: wx.Window | None, title: str, speechDict: SpeechDict):
 		self.title = title
 		self.speechDict = speechDict
-		self.tempSpeechDict = speechDictHandler.SpeechDict()
+		self.tempSpeechDict = SpeechDict()
 		self.tempSpeechDict.extend(self.speechDict)
 		globalVars.speechDictionaryProcessing = False
 		super().__init__(parent, resizeable=True)
@@ -242,7 +239,7 @@ class DictionaryDialog(
 
 	def onCancel(self, evt):
 		globalVars.speechDictionaryProcessing = True
-		super(DictionaryDialog, self).onCancel(evt)
+		super().onCancel(evt)
 
 	def onOk(self, evt):
 		globalVars.speechDictionaryProcessing = True
@@ -250,7 +247,7 @@ class DictionaryDialog(
 			del self.speechDict[:]
 			self.speechDict.extend(self.tempSpeechDict)
 			self.speechDict.save()
-		super(DictionaryDialog, self).onOk(evt)
+		super().onOk(evt)
 
 	def onAddClick(self, evt):
 		# Translators: This is the label for the add dictionary entry dialog.
@@ -332,7 +329,7 @@ class DefaultDictionaryDialog(DictionaryDialog):
 			parent,
 			# Translators: Title for default speech dictionary dialog.
 			title=_("Default dictionary"),
-			speechDict=speechDictHandler.dictionaries["default"],
+			speechDict=speechDictHandler.dictionaries[DictionaryType.DEFAULT],
 		)
 
 
@@ -341,8 +338,8 @@ class VoiceDictionaryDialog(DictionaryDialog):
 		super().__init__(
 			parent,
 			# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-			title=_("Voice dictionary (%s)") % speechDictHandler.dictionaries["voice"].fileName,
-			speechDict=speechDictHandler.dictionaries["voice"],
+			title=_("Voice dictionary (%s)") % speechDictHandler.dictionaries[DictionaryType.VOICE].fileName,
+			speechDict=speechDictHandler.dictionaries[DictionaryType.VOICE],
 		)
 
 
@@ -353,5 +350,5 @@ class TemporaryDictionaryDialog(DictionaryDialog):
 			# Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
 			# as NvDA is running).
 			title=_("Temporary dictionary"),
-			speechDict=speechDictHandler.dictionaries["temp"],
+			speechDict=speechDictHandler.dictionaries[DictionaryType.TEMP],
 		)
