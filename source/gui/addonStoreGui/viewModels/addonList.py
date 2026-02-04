@@ -246,7 +246,7 @@ class AddonListItemVM(Generic[_AddonModelT]):
 		matches = find_near_matches(searchTerm, self.searchableText, max_l_dist=1)
 		bestRatio = 0.0
 		for match in matches:
-			matchedText = self.searchableText[match.start:match.end]
+			matchedText = self.searchableText[match.start : match.end]
 			ratio = SequenceMatcher(None, searchTerm, matchedText).ratio()
 			if ratio > bestRatio:
 				bestRatio = ratio
