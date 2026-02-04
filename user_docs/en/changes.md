@@ -8,6 +8,7 @@ There have been several improvements to speech.
 Spelling errors can now be reported with a sound instead of speech when reading.
 You can now configure NVDA to automatically say all after successfully recognising content, such as with Windows OCR.
 NVDA no longer reports the language being read as unsupported when the synthesizer supports the language but not the specific dialect.
+NVDA now supports 64-bit SAPI 5 voices.
 
 Braille support has also been improved.
 It now continues to work when switching to a secure screen, like the sign-in screen or User Account Control dialog.
@@ -57,6 +58,7 @@ Windows 10 on ARM is also no longer supported.
   * A new action has been added to see the latest changes for the current version of an add-on. (#14041, @josephsl, @nvdaes)
 * It is now possible to select which add-ons to copy for use during sign-in and on secure screens. (#6305)
 * Added built-in support for reading math content by integrating MathCAT. (#18323, #19368, @RyanMcCleary, @codeofdusk)
+* NVDA now supports 64-bit Microsoft Speech API version 5 voices. (#19432)
 * Added references (e.g. to footnotes and endnotes) to the elements list in Microsoft Word.
 Also added unassigned Quick Navigation commands to jump to the next/previous reference. (#19300, @LeonarddeR)
 * In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
@@ -97,6 +99,7 @@ It currently includes Screen Curtain's settings (previously in the "Vision" cate
 * When copying settings for use during sign-in and on secure screens:
   * NVDA no longer warns about or copies disabled add-ons. (#8274, #9020)
   * By default, NVDA doesn't copy any add-ons; you must select any you wish to include. (#12879)
+* Audio ducking is no longer supported for Microsoft Speech API version 4 or 32-bit Microsoft Speech API version 5 voices. (#19432)
 * The NVDA interface is now translated to Cambodian. (#19450)
 
 ### Bug Fixes
