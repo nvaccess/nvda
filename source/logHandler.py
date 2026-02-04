@@ -186,17 +186,17 @@ def shouldPlayErrorSound() -> bool:
 	from config.configFlags import PlayErrorSound
 
 	playErrorSound = (
-		config.conf["featureFlag"]["playErrorSound"]
+		PlayErrorSound(config.conf["featureFlag"]["playErrorSound"])
 		if config.conf
-		else PlayErrorSound.ONLY_IN_TEST_VERSIONS.value
+		else PlayErrorSound.ONLY_IN_TEST_VERSIONS
 	)
 
 	match playErrorSound:
-		case PlayErrorSound.ALWAYS.value:
+		case PlayErrorSound.YES:
 			return True
-		case PlayErrorSound.NEVER.value:
+		case PlayErrorSound.NO:
 			return False
-		case _:
+		case PlayErrorSound.ONLY_IN_TEST_VERSIONS:
 			return buildVersion.isTestVersion
 
 

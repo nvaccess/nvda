@@ -448,8 +448,8 @@ class PlayErrorSound(DisplayStringIntEnum):
 	"""
 
 	ONLY_IN_TEST_VERSIONS = 0
-	ALWAYS = 1
-	NEVER = 2
+	YES = 1
+	NO = 2
 
 	@property
 	def _displayStringLabels(self):
@@ -460,7 +460,7 @@ class PlayErrorSound(DisplayStringIntEnum):
 				"Only in NVDA test versions",
 			),
 			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-			PlayErrorSound.ALWAYS: pgettext("advanced.playErrorSound", "Always"),
+			PlayErrorSound.YES: pgettext("advanced.playErrorSound", "Yes"),
 			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-			PlayErrorSound.NEVER: pgettext("advanced.playErrorSound", "Never"),
+			PlayErrorSound.NO: pgettext("advanced.playErrorSound", "No"),
 		}
