@@ -20,6 +20,9 @@ else:
 	c_short_p = POINTER(c_short)
 	c_ubyte_p = POINTER(c_ubyte)
 
+
+SONIC_DLL_PATH = os.path.join(globalVars.appDir, "synthDrivers", "sonic.dll")
+
 sonicLib: CDLL | None = None
 
 
@@ -35,7 +38,7 @@ def initialize():
 	if sonicLib:
 		return
 	log.debug("Initializing Sonic library")
-	sonicLib = cdll.LoadLibrary(os.path.join(globalVars.appDir, "synthDrivers", "sonic.dll"))
+	sonicLib = cdll.LoadLibrary(SONIC_DLL_PATH)
 	sonicLib.sonicCreateStream.restype = SonicStreamP
 	sonicLib.sonicCreateStream.argtypes = [c_int, c_int]
 	sonicLib.sonicDestroyStream.restype = None
