@@ -19,6 +19,7 @@ from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientati
 from .utils.types import (
 	MagnifierParameters,
 	Coordinates,
+	Size,
 	MagnifierType,
 	Direction,
 	Filter,
@@ -208,7 +209,7 @@ class Magnifier:
 
 		:param coordinates: The (x, y) coordinates to center the magnifier on
 
-		:return: The size, position and styles (if any) of the magnifier window
+		:return: The size and position of the magnifier window
 		"""
 		x, y = coordinates
 		# Calculate the size of the capture area at the current zoom level
@@ -223,4 +224,4 @@ class Magnifier:
 		left = max(0, min(left, int(self._displayOrientation.width - magnifierWidth)))
 		top = max(0, min(top, int(self._displayOrientation.height - magnifierHeight)))
 
-		return MagnifierParameters(int(magnifierWidth), int(magnifierHeight), Coordinates(left, top), None)
+		return MagnifierParameters(Size(int(magnifierWidth), int(magnifierHeight)), Coordinates(left, top))

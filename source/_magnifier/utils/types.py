@@ -7,17 +7,10 @@
 Types used in the magnifier module.
 """
 
+from curses import window
 from enum import Enum, auto
 from typing import NamedTuple
 from utils.displayString import DisplayStringStrEnum, DisplayStringEnum
-
-
-class MagnifierParams(NamedTuple):
-	"""Named tuple representing magnifier parameters for initialization"""
-
-	zoomLevel: float
-	filter: str
-	fullscreenMode: str
 
 
 class Direction(Enum):
@@ -33,6 +26,11 @@ class Coordinates(NamedTuple):
 	x: int
 	y: int
 
+class Size(NamedTuple):
+	"""Named tuple representing width and height"""
+
+	width: int
+	height: int
 
 class MagnifierAction(DisplayStringEnum):
 	"""Actions that can be performed with the magnifier"""
@@ -91,17 +89,19 @@ class FocusType(Enum):
 	SYSTEM_FOCUS = auto()
 	NAVIGATOR = auto()
 
-
 class MagnifierParameters(NamedTuple):
+	"""Named tuple representing the size and position of the magnifier"""
+	magnifierSize: Size
+	coordinates: Coordinates
+
+
+class WindowMagnifierParameters(NamedTuple):
 	"""
 	Named tuple representing the position and size of the magnifier window
 	"""
-
-	magnifierWidth: int
-	magnifierHeight: int
+	windowSize: Size
 	coordinates: Coordinates
 	styles: int
-
 
 class ZoomHistory(NamedTuple):
 	"""Named tuple representing zoom history entry with zoom level and coordinates"""

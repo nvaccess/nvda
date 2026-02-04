@@ -169,8 +169,8 @@ class FullScreenMagnifier(Magnifier):
 		keep mouse in screen
 		"""
 		params = self._getMagnifierParameters(self._currentCoordinates)
-		centerX = int(params.coordinates.x + (params.magnifierWidth / 2))
-		centerY = int(params.coordinates.y + (params.magnifierHeight / 2))
+		centerX = int(params.coordinates.x + (params.magnifierSize.width / 2))
+		centerY = int(params.coordinates.y + (params.magnifierSize.height / 2))
 		winUser.setCursorPos(centerX, centerY)
 
 	def _borderPos(
@@ -187,8 +187,8 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		focusX, focusY = coordinates
 		params = self._getMagnifierParameters(self._lastScreenPosition)
-		magnifierWidth = params.magnifierWidth
-		magnifierHeight = params.magnifierHeight
+		magnifierWidth = params.magnifierSize.width
+		magnifierHeight = params.magnifierSize.height
 		lastLeft = params.coordinates.x
 		lastTop = params.coordinates.y
 

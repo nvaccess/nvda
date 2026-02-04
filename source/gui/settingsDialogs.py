@@ -6014,7 +6014,6 @@ class MagnifierPanel(SettingsPanel):
 		# magnifier settings panel
 		fullscreenGroupText = _("Fullscreen")
 		self.fullscreenGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=fullscreenGroupText)
-		fullscreenGroupBox = self.fullscreenGroupSizer.GetStaticBox()
 		fullscreenGroup = guiHelper.BoxSizerHelper(self, sizer=self.fullscreenGroupSizer)
 		sHelper.addItem(fullscreenGroup)
 
