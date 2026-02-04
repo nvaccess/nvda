@@ -1,11 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2025 NV Access Limited, Leonard de Ruijter, Cyrille Bougot
+# Copyright (C) 2022-2026 NV Access Limited, Leonard de Ruijter, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 from typing import (
-	List,
-	Optional,
 	cast,
 )
 
@@ -74,7 +72,7 @@ class AddonVirtualList(
 			self.AppendColumn(col.displayString, width=self.scaleSize(col.width))
 		self.Layout()
 
-	def _getListSelectionPosition(self) -> Optional[wx.Position]:
+	def _getListSelectionPosition(self) -> wx.Position | None:
 		firstSelectedIndex: int = self.GetFirstSelected()
 		if firstSelectedIndex < 0:
 			return None
@@ -84,7 +82,7 @@ class AddonVirtualList(
 	def _updateBatchContextMenuSelection(self):
 		numSelected = self.GetSelectedItemCount()
 		prevSelectedIndex = self.GetFirstSelected()
-		selectedAddons: List[AddonListItemVM] = []
+		selectedAddons: list[AddonListItemVM] = []
 		for _ in range(numSelected):
 			addon = self._addonsListVM.getAddonAtIndex(prevSelectedIndex)
 			selectedAddons.append(addon)

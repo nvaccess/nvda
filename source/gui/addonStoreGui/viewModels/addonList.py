@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2026 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -12,8 +12,6 @@ from locale import strxfrm
 from typing import (
 	Any,
 	Generic,
-	List,
-	Optional,
 	TYPE_CHECKING,
 	Protocol,
 	TypeVar,
@@ -237,8 +235,6 @@ class AddonListItemVM(Generic[_AddonModelT]):
 	def searchRank(self, searchTerm: str) -> float:
 		"""Calculate a search rank for this addon based on the filter trigrams."""
 		searchTerm = searchTerm.strip()
-		if len(searchTerm) < AddonListVM.TRIGRAM_LENGTH:
-			return 1.0  # empty or too short search matches everything
 		addonSearchableText = self.searchableText
 		filterTrigrams = AddonListVM._generateTrigrams(searchTerm)
 		addonTrigrams = AddonListVM._generateTrigrams(addonSearchableText)
@@ -251,15 +247,15 @@ class AddonListItemVM(Generic[_AddonModelT]):
 class AddonDetailsVM:
 	def __init__(self, listVM: "AddonListVM"):
 		self._listVM = listVM
-		self._listItem: Optional[AddonListItemVM] = listVM.getSelection()
+		self._listItem: AddonListItemVM | None = listVM.getSelection()
 		self.updated = extensionPoints.Action()  # triggered by setting L{self._listItem}
 
 	@property
-	def listItem(self) -> Optional[AddonListItemVM]:
+	def listItem(self) -> AddonListItemVM | None:
 		return self._listItem
 
 	@listItem.setter
-	def listItem(self, newListItem: Optional[AddonListItemVM]):
+	def listItem(self, newListItem: AddonListItemVM | None):
 		self._listItem = newListItem
 		# ensure calling on the main thread.
 		core.callLater(delay=0, callable=self.updated.notify, addonDetailsVM=self)
@@ -315,7 +311,7 @@ class AddonListVM:
 			# ensure calling on the main thread.
 			core.callLater(delay=0, callable=self.itemUpdated.notify, index=index)
 
-	def resetListItems(self, listVMs: List[AddonListItemVM]):
+	def resetListItems(self, listVMs: list[AddonListItemVM]):
 		log.debug("resetting list items")
 
 		# Ensure that old listItemVMs can no longer notify of updates.
@@ -334,7 +330,7 @@ class AddonListVM:
 		# ensure calling on the main thread.
 		core.callLater(delay=0, callable=self.updated.notify)
 
-	def getAddonFieldText(self, index: int, field: AddonListField) -> Optional[str]:
+	def getAddonFieldText(self, index: int, field: AddonListField) -> str | None:
 		"""Get the text for an item's attribute.
 		@param index: The index of the item in _addonsFilteredOrdered
 		@param field: The field attribute for the addon. See L{AddonList.presentedFields}
@@ -376,7 +372,7 @@ class AddonListVM:
 	def getCount(self) -> int:
 		return len(self._addonsFilteredOrdered)
 
-	def getSelectedIndex(self) -> Optional[int]:
+	def getSelectedIndex(self) -> int | None:
 		if self._addonsFilteredOrdered and self.selectedAddonId in self._addonsFilteredOrdered:
 			return self._addonsFilteredOrdered.index(self.selectedAddonId)
 		return None
@@ -386,7 +382,7 @@ class AddonListVM:
 		selectedAddonId = self._addonsFilteredOrdered[index]
 		return self._addons[selectedAddonId]
 
-	def setSelection(self, index: Optional[int]) -> Optional[AddonListItemVM]:
+	def setSelection(self, index: int | None) -> AddonListItemVM | None:
 		self._validate(selectionIndex=index)
 		self.selectedAddonId = None
 		if index is not None:
@@ -395,22 +391,22 @@ class AddonListVM:
 			except IndexError:
 				# Failed to get addonId, index may have been lost in refresh.
 				pass
-		selectedItemVM: Optional[AddonListItemVM] = self.getSelection()
+		selectedItemVM: AddonListItemVM | None = self.getSelection()
 		log.debug(f"selected Item: {selectedItemVM}")
 		# ensure calling on the main thread.
 		core.callLater(delay=0, callable=self.selectionChanged.notify)
 		return selectedItemVM
 
-	def getSelection(self) -> Optional[AddonListItemVM]:
+	def getSelection(self) -> AddonListItemVM | None:
 		if self.selectedAddonId is None:
 			return None
 		return self._addons.get(self.selectedAddonId)
 
 	def _validate(
 		self,
-		sortField: Optional[AddonListField] = None,
-		selectionIndex: Optional[int] = None,
-		selectionId: Optional[str] = None,
+		sortField: AddonListField | None = None,
+		selectionIndex: int | None = None,
+		selectionId: str | None = None,
 	):
 		if sortField is not None:
 			assert sortField in AddonListField
@@ -457,8 +453,6 @@ class AddonListVM:
 
 	TRIGRAM_SEARCH_THRESHOLD = 0.3
 	"""Threshold for trigram search ranking to include an addon in the filtered list."""
-	TRIGRAM_LENGTH = 3
-	"""Length of trigrams used for searching."""
 
 	@staticmethod
 	@lru_cache(maxsize=256)
@@ -473,7 +467,7 @@ class AddonListVM:
 		trigrams = set()
 		normalized = f"  {normalized}  "  # padding to capture leading/trailing grams
 		for i in range(len(normalized) - 2):
-			trigrams.add(normalized[i : i + AddonListVM.TRIGRAM_LENGTH])
+			trigrams.add(normalized[i : i + 3])
 		return frozenset(trigrams)
 
 	@staticmethod
@@ -511,8 +505,8 @@ class AddonListVM:
 
 	def _tryPersistSelection(
 		self,
-		newOrder: List[str],
-	) -> Optional[str]:
+		newOrder: list[str],
+	) -> str | None:
 		"""Get the ID of the selection in new order, _addonsFilteredOrdered should not have changed yet."""
 		selectedIndex = self.getSelectedIndex()
 		selectedId = self.selectedAddonId
