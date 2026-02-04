@@ -8,7 +8,10 @@ Fixed magnifier module.
 """
 
 from .magnifier import Magnifier
-from .utils.types import Coordinates, MagnifierType
+from .utils.types import Coordinates, MagnifierType, MagnifierParameters
+from .utils.windowCreator import WindowCreator
+
+import wx
 
 
 class FixedMagnifier(Magnifier):
@@ -16,12 +19,27 @@ class FixedMagnifier(Magnifier):
 		super().__init__()
 		self._magnifierType = MagnifierType.FIXED
 		self._currentCoordinates = Coordinates(0, 0)
+		self._window: None | wx.Frame = None
+		self.params = MagnifierParameters(
+			magnifierWidth=300,
+			magnifierHeight=300,
+			coordinates=(0, 0),
+			styles=wx.STAY_ON_TOP | wx.FRAME_NO_TASKBAR,
+		)
 
 	def _startMagnifier(self) -> None:
 		super()._startMagnifier()
+		self._window = WindowCreator.createMagnifierWindow(
+			parent=None,
+			title="Fixed Magnifier",
+			frameType="fixedMagnifier",
+			screenSize=self._displayOrientation,
+			magnifierParameters=self.params,
+		)
 
 	def _stopMagnifier(self) -> None:
+		self._window.Destroy()
 		super()._stopMagnifier()
 
 	def _doUpdate(self):
-		return super()._doUpdate()
+		self._window.Refresh()

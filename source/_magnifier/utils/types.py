@@ -93,12 +93,14 @@ class FocusType(Enum):
 
 
 class MagnifierParameters(NamedTuple):
-	"""Named tuple representing the position and size of the magnifier window"""
+	"""
+	Named tuple representing the position and size of the magnifier window
+	"""
 
-	visibleWidth: int
-	visibleHeight: int
+	magnifierWidth: int
+	magnifierHeight: int
 	coordinates: Coordinates
-	styles: None | int
+	styles: int
 
 
 class ZoomHistory(NamedTuple):

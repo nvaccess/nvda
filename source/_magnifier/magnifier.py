@@ -212,15 +212,15 @@ class Magnifier:
 		"""
 		x, y = coordinates
 		# Calculate the size of the capture area at the current zoom level
-		visibleWidth = self._displayOrientation.width / self.zoomLevel
-		visibleHeight = self._displayOrientation.height / self.zoomLevel
+		magnifierWidth = self._displayOrientation.width / self.zoomLevel
+		magnifierHeight = self._displayOrientation.height / self.zoomLevel
 
 		# Compute the top-left corner so that (x, y) is at the center
-		left = int(x - (visibleWidth / 2))
-		top = int(y - (visibleHeight / 2))
+		left = int(x - (magnifierWidth / 2))
+		top = int(y - (magnifierHeight / 2))
 
 		# Clamp to screen boundaries
-		left = max(0, min(left, int(self._displayOrientation.width - visibleWidth)))
-		top = max(0, min(top, int(self._displayOrientation.height - visibleHeight)))
+		left = max(0, min(left, int(self._displayOrientation.width - magnifierWidth)))
+		top = max(0, min(top, int(self._displayOrientation.height - magnifierHeight)))
 
-		return MagnifierParameters(int(visibleWidth), int(visibleHeight), Coordinates(left, top), None)
+		return MagnifierParameters(int(magnifierWidth), int(magnifierHeight), Coordinates(left, top), None)

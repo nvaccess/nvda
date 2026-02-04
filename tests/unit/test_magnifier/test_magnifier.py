@@ -219,8 +219,8 @@ class TestMagnifier(_TestMagnifier):
 
 		self.assertEqual(params.coordinates.x, expected_left)
 		self.assertEqual(params.coordinates.y, expected_top)
-		self.assertEqual(params.visibleWidth, expected_width)
-		self.assertEqual(params.visibleHeight, expected_height)
+		self.assertEqual(params.magnifierWidth, expected_width)
+		self.assertEqual(params.magnifierHeight, expected_height)
 
 		# Test left clamping
 		params = self.magnifier._getMagnifierParameters((100, 540))
@@ -228,12 +228,12 @@ class TestMagnifier(_TestMagnifier):
 
 		# Test right clamping
 		params = self.magnifier._getMagnifierParameters((1800, 540))
-		self.assertLessEqual(params.coordinates.x + params.visibleWidth, self.screenWidth)
+		self.assertLessEqual(params.coordinates.x + params.magnifierWidth, self.screenWidth)
 
 		# Test different zoom level
 		self.magnifier.zoomLevel = 4.0
 		params = self.magnifier._getMagnifierParameters((960, 540))
 		expected_width = int(self.screenWidth / self.magnifier.zoomLevel)
 		expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
-		self.assertEqual(params.visibleWidth, expected_width)
-		self.assertEqual(params.visibleHeight, expected_height)
+		self.assertEqual(params.magnifierWidth, expected_width)
+		self.assertEqual(params.magnifierHeight, expected_height)
