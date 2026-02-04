@@ -18,6 +18,8 @@ from typing import (
 	cast,
 )
 
+from difflib import SequenceMatcher
+from fuzzysearch import find_near_matches
 from requests.structures import CaseInsensitiveDict
 
 from addonStore.models.addon import (
@@ -230,15 +232,26 @@ class AddonListItemVM(Generic[_AddonModelT]):
 				model.author if isinstance(model, _AddonManifestModel) else "",
 			],
 		)
-		return searchableText.strip()
+		return searchableText.strip().casefold()
 
 	def searchRank(self, searchTerm: str) -> float:
-		"""Calculate a search rank for this addon based on the filter trigrams."""
-		searchTerm = searchTerm.strip()
-		addonSearchableText = self.searchableText
-		filterTrigrams = AddonListVM._generateTrigrams(searchTerm)
-		addonTrigrams = AddonListVM._generateTrigrams(addonSearchableText)
-		return AddonListVM._calculateTrigramSimilarity(filterTrigrams, addonTrigrams)
+		"""Calculate a search rank for this addon."""
+		searchTerm = searchTerm.strip().casefold()
+		if not searchTerm:
+			return 1.0
+		if searchTerm in self.model.displayName.casefold():
+			return 1.0
+		if searchTerm in self.searchableText:
+			return 0.99
+		matches = find_near_matches(searchTerm, self.searchableText, max_l_dist=1)
+		bestRatio = 0.0
+		for match in matches:
+			matchedText = self.searchableText[match.start:match.end]
+			ratio = SequenceMatcher(None, searchTerm, matchedText).ratio()
+			if ratio > bestRatio:
+				bestRatio = ratio
+		# Cap at 0.99 to ensure exact matches of name are always ranked higher.
+		return min(bestRatio, 0.99)
 
 	def __repr__(self) -> str:
 		return f"{self.__class__.__name__}: {self.Id}, {self.status}"
@@ -451,32 +464,7 @@ class AddonListVM:
 			)
 		return columnChoices
 
-	TRIGRAM_SEARCH_THRESHOLD = 0.3
-	"""Threshold for trigram search ranking to include an addon in the filtered list."""
-
-	@staticmethod
-	@lru_cache(maxsize=256)
-	def _generateTrigrams(text: str) -> frozenset[str]:
-		"""Generate character trigrams from text.
-		Used for searching.
-
-		:param text: The text to generate trigrams from.
-		:return: A frozenset of trigrams.
-		"""
-		normalized = strxfrm(text.strip())
-		trigrams = set()
-		normalized = f"  {normalized}  "  # padding to capture leading/trailing grams
-		for i in range(len(normalized) - 2):
-			trigrams.add(normalized[i : i + 3])
-		return frozenset(trigrams)
-
-	@staticmethod
-	def _calculateTrigramSimilarity(searchTrigrams: frozenset[str], textTrigrams: frozenset[str]) -> float:
-		"""Calculate similarity score between two sets of trigrams. Used for searching."""
-		if not searchTrigrams:
-			return 1.0  # Empty search matches everything
-		matches = len(searchTrigrams & textTrigrams)
-		return matches / len(searchTrigrams)
+	MINIMUM_SEARCH_RANK_THRESHOLD = 0.7
 
 	def _getFilteredSortedIds(self) -> list[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM[_AddonGUIModel]) -> "_SupportsLessThan":
@@ -496,7 +484,7 @@ class AddonListVM:
 			vm
 			for vm in self._addons.values()
 			if self._filterString is None
-			or vm.searchRank(self._filterString) >= self.TRIGRAM_SEARCH_THRESHOLD
+			or vm.searchRank(self._filterString) >= self.MINIMUM_SEARCH_RANK_THRESHOLD
 		)
 		filteredSorted = list(
 			[vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=self._reverseSort)],

@@ -237,6 +237,15 @@ wheels = [
 ]
 
 [[package]]
+name = "fuzzysearch"
+version = "0.8.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "attrs", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e9/b4/d92b429ba4bfe5461faa358f84092eceb5ea8985cd2e448daf38bba17737/fuzzysearch-0.8.1.tar.gz", hash = "sha256:e5f50962c6b1c3dfc6c8cdfd5e2604838c95cb10118e4cab518e5292e9e0b1c6", size = 39510, upload-time = "2025-11-11T08:47:10.321Z" }
+
+[[package]]
 name = "identify"
 version = "2.6.16"
 source = { registry = "https://pypi.org/simple" }
@@ -518,6 +527,7 @@ dependencies = [
     { name = "crowdin-api-client", marker = "sys_platform == 'win32'" },
     { name = "cryptography", marker = "sys_platform == 'win32'" },
     { name = "fast-diff-match-patch", marker = "sys_platform == 'win32'" },
+    { name = "fuzzysearch", marker = "sys_platform == 'win32'" },
     { name = "l2m4m", marker = "sys_platform == 'win32'" },
     { name = "lxml", marker = "sys_platform == 'win32'" },
     { name = "markdown", marker = "sys_platform == 'win32'" },
@@ -575,6 +585,7 @@ requires-dist = [
     { name = "crowdin-api-client", specifier = "==1.24.1" },
     { name = "cryptography", specifier = "==46.0.3" },
     { name = "fast-diff-match-patch", specifier = "==2.1.0" },
+    { name = "fuzzysearch", specifier = "==0.8.1" },
     { name = "l2m4m", specifier = "==1.0.4" },
     { name = "lxml", specifier = "==6.0.2" },
     { name = "markdown", specifier = "==3.10" },
