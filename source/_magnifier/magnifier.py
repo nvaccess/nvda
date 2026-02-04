@@ -34,6 +34,7 @@ from .config import (
 )
 from .utils.focusManager import FocusManager
 
+
 class Magnifier:
 	_TIMER_INTERVAL_MS: int = 12
 	_MARGIN_BORDER: int = 50
@@ -222,10 +223,19 @@ class Magnifier:
 		Pan the magnifier in the specified direction
 
 		:param action: The pan action (left, right, up, down)
-		:return: True if we reached the edge limit, False otherwise
+		:return: True if an edge message should be announced, False otherwise.
+		         For normal pan actions: True when reaching the edge (first contact).
+		         For edge pan actions: True when already at the edge (bumping).
 		"""
 		x, y = self._currentCoordinates
-		reachedEdge = False
+		edgeMessage = False
+
+		clampedX = max(self._panMargin.left, min(x, self._panMargin.right))
+		clampedY = max(self._panMargin.top, min(y, self._panMargin.bottom))
+		if (x, y) != (clampedX, clampedY):
+			# If current position is out of bounds, clamp it first
+			# This allow pan to work instantly and keep mouse in sync
+			x, y = clampedX, clampedY
 
 		# Calculate panning value as percentage of screen width
 		# Use only width to ensure horizontal and vertical panning have the same step size
@@ -235,31 +245,31 @@ class Magnifier:
 			case MagnifierAction.PAN_LEFT:
 				newX = x - panPixels
 				x = max(self._panMargin.left, newX)
-				reachedEdge = x == self._panMargin.left and newX < self._panMargin.left
+				edgeMessage = x == self._panMargin.left
 			case MagnifierAction.PAN_RIGHT:
 				newX = x + panPixels
 				x = min(self._panMargin.right, newX)
-				reachedEdge = x == self._panMargin.right and newX > self._panMargin.right
+				edgeMessage = x == self._panMargin.right
 			case MagnifierAction.PAN_UP:
 				newY = y - panPixels
 				y = max(self._panMargin.top, newY)
-				reachedEdge = y == self._panMargin.top and newY < self._panMargin.top
+				edgeMessage = y == self._panMargin.top
 			case MagnifierAction.PAN_DOWN:
 				newY = y + panPixels
 				y = min(self._panMargin.bottom, newY)
-				reachedEdge = y == self._panMargin.bottom and newY > self._panMargin.bottom
+				edgeMessage = y == self._panMargin.bottom
 			case MagnifierAction.PAN_LEFT_EDGE:
+				edgeMessage = x == self._panMargin.left
 				x = self._panMargin.left
-				reachedEdge = True
 			case MagnifierAction.PAN_RIGHT_EDGE:
+				edgeMessage = x == self._panMargin.right
 				x = self._panMargin.right
-				reachedEdge = True
 			case MagnifierAction.PAN_TOP_EDGE:
+				edgeMessage = y == self._panMargin.top
 				y = self._panMargin.top
-				reachedEdge = True
 			case MagnifierAction.PAN_BOTTOM_EDGE:
+				edgeMessage = y == self._panMargin.bottom
 				y = self._panMargin.bottom
-				reachedEdge = True
 			case _:
 				log.error(f"Unknown pan action: {action}")
 
@@ -269,7 +279,7 @@ class Magnifier:
 		self._lastMousePosition = Coordinates(x, y)
 		self._doUpdate()
 
-		return reachedEdge
+		return edgeMessage
 
 	def _startTimer(self, callback: Callable[[], None] = None) -> None:
 		"""
