@@ -223,7 +223,7 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
     * `get_device_info_list` to `getDeviceInfoList`; and
     * `open_ex` to `openEx`.
   * The following methods on the `FTD2XX` class have been renamed:
-    * `set_baud_rate` to`setBaudRate`;
+    * `set_baud_rate` to `setBaudRate`;
     * `set_timeouts` to `setTimeouts`;
     * `set_latency_timer` to `setLatencyTimer`;
     * `set_bit_mode` to `setBitMode`;
