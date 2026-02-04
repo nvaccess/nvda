@@ -7,7 +7,6 @@
 Types used in the magnifier module.
 """
 
-from curses import window
 from enum import Enum, auto
 from typing import NamedTuple
 from utils.displayString import DisplayStringStrEnum, DisplayStringEnum
