@@ -1090,6 +1090,13 @@ docFileName = string(default=None)
 		displayName = string()
 		mandatory = boolean(default=false)
 
+# Speech Dictionaries
+[speechDictionaries]
+	# The key is the speech dictionary file name (not the full path)
+	[[__many__]]
+		displayName = string()
+		mandatory = boolean(default=false)
+
 # NOTE: apiVersion:
 # EG: 2019.1.0 or 0.0.0
 # Must have 3 integers separated by dots.
@@ -1133,6 +1140,10 @@ docFileName = string(default=None)
 				value = dictConfig.get("displayName")
 				if value:
 					self["symbolDictionaries"][fileName]["displayName"] = value
+			for fileName, dictConfig in self._translatedConfig.get("speechDictionaries", {}).items():
+				value = dictConfig.get("displayName")
+				if value:
+					self["speechDictionaries"][fileName]["displayName"] = value
 
 	@property
 	def errors(self):
