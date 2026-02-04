@@ -1201,6 +1201,69 @@ displayName = Dictionnaire douteux
 Unlike symbol dictionaries, speech dictionaries are currently locale-agnostic.
 Therefore, an active dictionary is always active, regardless of the current language.
 
+#### Creating speech dictionaries {#AddonCreatingSpeechDictionaries}
+
+A speech dictionary file contains dictionary rules, one per line.
+Each dictionary rule consists of four tab-separated fields on a single line:
+
+```
+<pattern>	<replacement>	<caseSensitive>	<type>
+```
+
+The fields are:
+
+1. `pattern`: The text pattern to match.
+  Hash characters (`#`) must be escaped as `\#`.
+2. `replacement`: The text to replace the matched pattern with.
+  Hash characters (`#`) must be escaped as `\#`.
+3. `caseSensitive`: A numeric flag indicating case sensitivity:
+	* `0`: Case insensitive matching
+	* `1`: Case sensitive matching
+4. `type`: A number indicating the type of pattern matching to use:
+	* `0`: Anywhere - Pattern can match anywhere in the text (literal string)
+	* `1`: Regular expression - Pattern is treated as a Python regular expression
+	* `2`: Whole word - Pattern must match a complete word with word boundaries on both sides
+	* `3`: Part of word - Pattern must be preceded or followed by a word character (letter, digit, underscore)
+	* `4`: Start of word - Pattern must have a word boundary at the start and a word character at the end
+	* `5`: End of word - Pattern must have a word character at the start and a word boundary at the end
+	* `6`: Unix shell-style wildcards - Pattern uses Unix shell wildcards (`*`, `?`, `[]`, etc.)
+
+Comments can be added before entries to provide descriptions.
+A comment is preceded by a `#` (hash sign) and applies to the next entry line that appears after it.
+
+##### Examples
+
+```
+# Expand NVDA acronym
+NVDA	NonVisual Desktop Access	1	2
+```
+
+This means that the word "NVDA" (case sensitive, whole word) should be spoken as "NonVisual Desktop Access".
+
+```
+# Convert percentages to spoken format
+(\d+)%	\1 percent	0	1
+```
+
+This uses a regular expression to match numbers followed by a percent sign and replaces them with the number followed by the word "percent".
+For example, "50%" becomes "50 percent".
+
+```
+# Change "LOL" to full phrase
+LOL	laughing out loud	0	2
+```
+
+This means that the word "LOL" (case insensitive, whole word) should be spoken as "laughing out loud".
+
+```
+# Match any .txt file using wildcards
+*.txt	text file	0	6
+```
+
+This uses Unix shell-style wildcards to match any string ending in ".txt" and replaces it with "text file".
+
+For more information on speech dictionaries, see the NVDA user guide section on speech.
+
 ### Add-on Documentation {#AddonDoc}
 
 Documentation for an add-on should be placed in the `doc` directory in the archive.
