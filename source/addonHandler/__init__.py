@@ -134,15 +134,18 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 
 	def fromJsonDict(
 		self,
-		pickledState: dict[str, Any],
+		jsonState: dict[str, Any],
 	) -> None:
-		pass
-		# Load from pickledState
-		# if "backCompatToAPIVersion" in pickledState:
-		# self.manualOverridesAPIVersion = MajorMinorPatch(*pickledState["backCompatToAPIVersion"])
-		# for category in AddonStateCategory:
-		# Make pickles case insensitive
-		# self[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState.get(category, set()))
+		if "backCompatToAPIVersion" in jsonState:
+			try:
+				self.manualOverridesAPIVersion = MajorMinorPatch(
+					int(num) for num in jsonState["backCompatToAPIVersion"]
+				)
+			except Exception:
+				log.error("Unable to deserialise backward compatibility version.", exc_info=True)
+		for category in AddonStateCategory:
+			# Make pickles case insensitive
+			self[AddonStateCategory(category)] = CaseInsensitiveSet(jsonState.get(category, []))
 
 	def toDict(self) -> dict[str, set[str] | addonAPIVersion.AddonApiVersionT]:
 		# We cannot pickle instance of `AddonsState` directly
