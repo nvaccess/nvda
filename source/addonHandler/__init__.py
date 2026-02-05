@@ -19,6 +19,7 @@ from io import StringIO
 import pickle
 from typing import (
 	IO,
+	Any,
 	Literal,
 	TYPE_CHECKING,
 )
@@ -130,6 +131,18 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		for category in AddonStateCategory:
 			# Make pickles case insensitive
 			self[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState.get(category, set()))
+
+	def fromJsonDict(
+		self,
+		pickledState: dict[str, Any],
+	) -> None:
+		pass
+		# Load from pickledState
+		# if "backCompatToAPIVersion" in pickledState:
+		# self.manualOverridesAPIVersion = MajorMinorPatch(*pickledState["backCompatToAPIVersion"])
+		# for category in AddonStateCategory:
+		# Make pickles case insensitive
+		# self[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState.get(category, set()))
 
 	def toDict(self) -> dict[str, set[str] | addonAPIVersion.AddonApiVersionT]:
 		# We cannot pickle instance of `AddonsState` directly
