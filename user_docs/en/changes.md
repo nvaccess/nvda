@@ -246,8 +246,10 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
 * `gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS` has been removed.
 Use `config.configFlags.LoggingLevel` instead. (#19296)
 * Changes to Microsoft Speech API version 4 and 5: (#19432)
-  * `synthDrivers.sapi4` (name: "sapi4") has been removed. Use `synthDrivers.sapi4_32` (name: "sapi4_32") instead.
-  * `synthDrivers.sapi5` (name: "sapi5") now refers to the 64-bit SAPI 5 synth driver. Use `synthDrivers.sapi5_32` (name: "sapi5_32") for the 32-bit SAPI 5 driver.
+  * `synthDrivers.sapi4` (name: "sapi4") has been removed.
+  Use `synthDrivers.sapi4_32` (name: "sapi4_32") instead.
+  * `synthDrivers.sapi5` (name: "sapi5") now refers to the 64-bit SAPI 5 synth driver.
+  Use `synthDrivers.sapi5_32` (name: "sapi5_32") for the 32-bit SAPI 5 driver.
 * `config.setSystemConfigToCurrentConfig` now takes a `Collection` of add-on IDs (as strings) to copy to the system configuration.
 Only add-ons with the given IDs will be copied. (#19446)
 
