@@ -9,6 +9,7 @@ import sys
 import importlib
 import rpyc
 from rpyc.core.stream import PipeStream
+import synthDriverHandler
 from _bridge.components.services.synthDriver import SynthDriverService
 
 
@@ -68,13 +69,11 @@ class HostService(Service):
 		import globalVars
 
 		globalVars.appDir = remoteService.getAppDir()
-		log.debug("Injecting languageHandler.getLanguage")
-		import languageHandler
-
-		languageHandler.getLanguage = remoteService.getLanguage
+		globalVars.appArgs.language = remoteService.getAppArg("language")
 
 		log.debug("Synchronizing configuration values")
 		configNeeded = [
+			("general", ["language"]),
 			("audio", ["outputDevice", "audioAwakeTime", "whiteNoiseVolume"]),
 			("speech", ["useWASAPIForSAPI4", "trimLeadingSilence"]),
 			("debugLog", ["synthDriver"]),
@@ -85,6 +84,15 @@ class HostService(Service):
 			config.conf[section] = {}
 			for key in keys:
 				config.conf[section][key] = remoteService.getConfigValue(section, key)
+
+		log.debug("Initializing languageHandler")
+		import languageHandler
+
+		if languageHandler.isLanguageForced():
+			lang = globalVars.appArgs.language
+		else:
+			lang = config.conf["general"]["language"]
+		languageHandler.setLanguage(lang)
 
 		log.debug("Initializing nvwave")
 		import nvwave
@@ -121,6 +129,7 @@ class HostService(Service):
 		log.debug(f"Loading synth driver '{name}'")
 		mod = importlib.import_module(f"synthDrivers.{name}")
 		synth = mod.SynthDriver()
+		synthDriverHandler._curSynth = synth  # Locally track as the active synth.
 		return SynthDriverService(synth)
 
 
