@@ -2519,7 +2519,7 @@ This option allows you to choose if NVDA should lower the volume of other applic
 This option is only available if NVDA has been installed.
 It is not possible to support audio ducking for portable and temporary copies of NVDA.
 
-Audio ducking is not available when using [Microsoft Speech API version 4 (SAPI 4)](#SAPI4) or [Microsoft Speech API version 5 (SAPI 5)](#SAPI5) voices.
+Audio ducking is not available when using [Microsoft Speech API version 4 (SAPI 4)](#SAPI4) or 32 bit [Microsoft Speech API version 5 (SAPI 5)](#SAPI5) voices.
 
 ##### Volume of NVDA sounds follows voice volume {#SoundVolumeFollowsVoice}
 
