@@ -293,13 +293,12 @@ class VoiceSpeechDictDefinition(SpeechDictDefinition):
 		"""
 		try:
 			dictFormatUpgrade.doAnyUpgrades(synth)
-		except:  # noqa: E722
-			log.error("error trying to upgrade dictionaries", exc_info=True)
-			pass
+		except Exception:
+			log.exception("error trying to upgrade dictionaries")
 		if synth.isSupported("voice"):
 			voice = synth.availableVoices[synth.voice].displayName
 			baseName = dictFormatUpgrade.createVoiceDictFileName(synth.name, voice)
 		else:
-			baseName = rf"{synth.name}.dic"
+			baseName = f"{synth.name}.dic"
 		object.__setattr__(self, "path", os.path.join(WritePaths.voiceDictsDir, synth.name, baseName))
 		self.__post_init__()

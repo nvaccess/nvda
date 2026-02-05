@@ -28,10 +28,9 @@ __getattr__ = handleDeprecations(
 	MovedSymbol("ENTRY_TYPE_REGEXP", "speechDictHandler.types", "EntryType", "REGEXP"),
 	MovedSymbol("SpeechDict", "speechDictHandler.types"),
 	MovedSymbol("SpeechDictEntry", "speechDictHandler.types"),
-	MovedSymbol("SpeechDict", "speechDictHandler.types"),
 	RemovedSymbol(
 		"dictionaries",
-		lambda: {d.source: d.dictionary for d in _speechDictDefinitions if d.source in DictionaryType},
+		lambda: {d.source: d._dictionary for d in _speechDictDefinitions if d.source in DictionaryType},
 		callValue=True,
 	),
 	RemovedSymbol("dictTypes", tuple(t.value for t in DictionaryType)),
@@ -64,7 +63,16 @@ def loadVoiceDict(synth: "synthDriverHandler.SynthDriver") -> None:
 	"""Loads appropriate dictionary for the given synthesizer.
 	It handles case when the synthesizer doesn't support voice setting.
 	"""
-	definition = next(d for d in _speechDictDefinitions if isinstance(d, VoiceSpeechDictDefinition))
+	definition = next(
+		(d for d in _speechDictDefinitions if isinstance(d, VoiceSpeechDictDefinition)),
+		None,
+	)
+	if definition is None:
+		log.error(
+			"No VoiceSpeechDictDefinition found in _speechDictDefinitions. "
+			"Speech dictionaries may not have been initialized."
+		)
+		raise RuntimeError("No voice speech dictionary definition is available to load.")
 	definition.load(synth)
 
 
@@ -123,7 +131,7 @@ def _addSpeechDictionaries():
 			VoiceSpeechDictDefinition(),
 		),
 	)
-	# Add add-on symbols
+	# Add add-on speech dictionaries
 	import addonHandler
 
 	for addon in addonHandler.getRunningAddons():

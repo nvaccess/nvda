@@ -1185,7 +1185,7 @@ displayName = Dodgy Dictionary
 mandatory = false
 ```
 
-In the above example, `pronunciation` is a dictionary that is optional and will be listed in the speech category of NVDA's settings dialog under the "SPeech Dictionaries" setting.
+In the above example, `pronunciation` is a dictionary that is optional and will be listed in the speech category of NVDA's settings dialog under the "Speech Dictionaries" setting.
 Its file will be stored as `speechDicts\pronunciation.dic`.
 When you mark the dictionary as mandatory, it will be always enabled as long as the add-on is active.
 
