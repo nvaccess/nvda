@@ -31,9 +31,12 @@ class NVDAService(Service):
 		return globalVars.appDir
 
 	@Service.exposed
-	def getLanguage(self) -> str:
-		"""Get the current NVDA language."""
-		return languageHandler.getLanguage()
+	def getAppArg(self, key):
+		""" Get an NVDA commandline argument value. """
+		if key.startswith('_'):
+			raise RuntimeError(f"Cannot fetch key {key}")
+		import globalVars
+		return getattr(globalVars.appArgs, key)
 
 	@Service.exposed
 	def isRunningAsSource(self) -> bool:

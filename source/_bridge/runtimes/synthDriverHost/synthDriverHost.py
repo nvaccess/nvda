@@ -69,13 +69,11 @@ class HostService(Service):
 		import globalVars
 
 		globalVars.appDir = remoteService.getAppDir()
-		log.debug("Injecting languageHandler.getLanguage")
-		import languageHandler
-
-		languageHandler.getLanguage = remoteService.getLanguage
+		globalVars.appArgs.language = remoteService.getAppArg('language')
 
 		log.debug("Synchronizing configuration values")
 		configNeeded = [
+			("general", ["language"]),
 			("audio", ["outputDevice", "audioAwakeTime", "whiteNoiseVolume"]),
 			("speech", ["useWASAPIForSAPI4", "trimLeadingSilence"]),
 			("debugLog", ["synthDriver"]),
@@ -86,6 +84,14 @@ class HostService(Service):
 			config.conf[section] = {}
 			for key in keys:
 				config.conf[section][key] = remoteService.getConfigValue(section, key)
+
+		log.debug("Initializing languageHandler")
+		import languageHandler
+		if languageHandler.isLanguageForced():
+			lang = globalVars.appArgs.language
+		else:
+			lang = config.conf['general']['language']
+		languageHandler.setLanguage(lang)
 
 		log.debug("Initializing nvwave")
 		import nvwave
