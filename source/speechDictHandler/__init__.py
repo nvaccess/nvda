@@ -70,7 +70,7 @@ def loadVoiceDict(synth: "synthDriverHandler.SynthDriver") -> None:
 	if definition is None:
 		log.error(
 			"No VoiceSpeechDictDefinition found in _speechDictDefinitions. "
-			"Speech dictionaries may not have been initialized."
+			"Speech dictionaries may not have been initialized.",
 		)
 		raise RuntimeError("No voice speech dictionary definition is available to load.")
 	definition.load(synth)
