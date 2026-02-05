@@ -4166,6 +4166,7 @@ To save the settings manually at any time, choose the Save configuration item in
 
 If you ever make a mistake with your settings and need to revert back to the saved settings, choose the "revert to saved configuration" item in the NVDA menu.
 You can also reset your settings to their original factory defaults by choosing Reset Configuration To Factory Defaults, which is also found in the NVDA menu.
+After resetting, a dialog will appear allowing you to undo the reset and restore your previous configuration.
 
 The following NVDA key commands are also useful:
 <!-- KC:beginInclude -->
@@ -4173,7 +4174,7 @@ The following NVDA key commands are also useful:
 | Name |Desktop key |Laptop key |Description|
 |---|---|---|---|
 |Save configuration |`NVDA+control+c` |`NVDA+control+c` |Saves your current configuration so that it is not lost when you exit NVDA|
-|Revert configuration |`NVDA+control+r` |`NVDA+control+r` |Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults.|
+|Revert configuration |`NVDA+control+r` |`NVDA+control+r` |Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults without showing the undo dialog.|
 
 <!-- KC:endInclude -->
 
