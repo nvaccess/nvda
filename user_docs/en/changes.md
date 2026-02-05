@@ -23,6 +23,7 @@ Consult the speech dictionaries section in the User Guide for more details. (#19
 * It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)
 * Improved search algorithm for filtering add-ons in the Add-on Store. (#19309)
 * NVDA can now be configured to not play error sounds, even in test versions. (#13021, @CyrilleB79)
+* The "COM Registration Fixing Tool" has been renamed to "System accessibility repair tool" for clarity. (#19622, @bramd)
 
 ### Bug Fixes
 
