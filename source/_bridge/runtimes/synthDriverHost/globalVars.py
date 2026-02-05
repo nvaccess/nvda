@@ -13,3 +13,4 @@ appArgs = types.SimpleNamespace()
 appArgs.launcher = False
 appArgs.secure = False
 appArgs.configPath = "."
+appArgs.language = None
