@@ -126,11 +126,12 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		pickledState: dict[str, set[str] | addonAPIVersion.AddonApiVersionT | MajorMinorPatch],
 	) -> None:
 		# Load from pickledState
-		if "backCompatToAPIVersion" in pickledState:
-			self.manualOverridesAPIVersion = MajorMinorPatch(*pickledState["backCompatToAPIVersion"])
-		for category in AddonStateCategory:
-			# Make pickles case insensitive
-			self[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState.get(category, set()))
+		# if "backCompatToAPIVersion" in pickledState:
+		# self.manualOverridesAPIVersion = MajorMinorPatch(*pickledState["backCompatToAPIVersion"])
+		# for category in AddonStateCategory:
+		# Make pickles case insensitive
+		# self[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState.get(category, set()))
+		return self.fromJsonDict(pickledState)
 
 	def fromJsonDict(
 		self,
@@ -139,7 +140,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		if "backCompatToAPIVersion" in jsonState:
 			try:
 				self.manualOverridesAPIVersion = MajorMinorPatch(
-					int(num) for num in jsonState["backCompatToAPIVersion"]
+					*(int(num) for num in jsonState["backCompatToAPIVersion"]),
 				)
 			except Exception:
 				log.error("Unable to deserialise backward compatibility version.", exc_info=True)
@@ -153,8 +154,10 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		# the state to be using inbuilt data types only.
 		picklableState: dict[str, set[str] | addonAPIVersion.AddonApiVersionT] = dict()
 		for category in self.data:
-			picklableState[category.value] = set(self.data[category])
-		picklableState["backCompatToAPIVersion"] = tuple(self.manualOverridesAPIVersion)
+			picklableState[category.value] = list(self.data[category])
+			# picklableState[category.value] = set(self.data[category])
+		# picklableState["backCompatToAPIVersion"] = tuple(self.manualOverridesAPIVersion)
+		picklableState["backCompatToAPIVersion"] = list(self.manualOverridesAPIVersion)
 		return picklableState
 
 	def load(self) -> None:
