@@ -5,6 +5,7 @@
 
 import os
 import subprocess
+from typing import Any
 import rpyc
 from rpyc.core.stream import PipeStream
 import NVDAState
@@ -30,7 +31,7 @@ class NVDAService(Service):
 		return globalVars.appDir
 
 	@Service.exposed
-	def getAppArg(self, key):
+	def getAppArg(self, key: str) -> Any:
 		"""Get an NVDA commandline argument value."""
 		if key.startswith("_"):
 			raise RuntimeError(f"Cannot fetch key {key}")
