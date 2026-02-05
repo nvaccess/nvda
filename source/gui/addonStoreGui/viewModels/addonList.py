@@ -59,7 +59,7 @@ class AddonListField(_AddonListFieldData, Enum):
 
 	searchRank = (
 		# Translators: The name of a sorting option for the add-on store to sort by search relevance
-		pgettext("addonStore", "Search relevance"),
+		pgettext("addonStore", "Relevance"),
 		0,
 		# hide for all statuses, as this is only used for sorting when a search filter is applied.
 		frozenset(_StatusFilterKey),

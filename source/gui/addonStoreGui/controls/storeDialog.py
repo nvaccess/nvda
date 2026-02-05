@@ -218,9 +218,10 @@ class AddonStoreDialog(SettingsDialog):
 			wx.CallAfter(addonGui.promptUserForRestart)
 
 	def _onSearchText(self, evt: wx.EVT_TEXT):
+		FILTER_DELAY_MS = 200
 		if self._filterTextChangeTimer:
 			self._filterTextChangeTimer.Stop()
-		self._filterTextChangeTimer = wx.CallLater(500, self.onFilterTextChange, None)
+		self._filterTextChangeTimer = wx.CallLater(FILTER_DELAY_MS, self.onFilterTextChange, None)
 
 	# Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
 	_installationPromptTitle = pgettext("addonStore", "Add-on installation")
