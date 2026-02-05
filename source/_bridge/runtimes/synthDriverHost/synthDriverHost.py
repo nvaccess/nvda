@@ -69,7 +69,7 @@ class HostService(Service):
 		import globalVars
 
 		globalVars.appDir = remoteService.getAppDir()
-		globalVars.appArgs.language = remoteService.getAppArg('language')
+		globalVars.appArgs.language = remoteService.getAppArg("language")
 
 		log.debug("Synchronizing configuration values")
 		configNeeded = [
@@ -87,10 +87,11 @@ class HostService(Service):
 
 		log.debug("Initializing languageHandler")
 		import languageHandler
+
 		if languageHandler.isLanguageForced():
 			lang = globalVars.appArgs.language
 		else:
-			lang = config.conf['general']['language']
+			lang = config.conf["general"]["language"]
 		languageHandler.setLanguage(lang)
 
 		log.debug("Initializing nvwave")

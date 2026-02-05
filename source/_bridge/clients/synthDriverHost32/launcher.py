@@ -9,7 +9,6 @@ import rpyc
 from rpyc.core.stream import PipeStream
 import NVDAState
 from logHandler import log
-import languageHandler
 from _bridge.base import Connection, Service
 from _bridge.components.services.synthDriver import SynthDriverService
 from winBindings.jobapi2 import JOB_OBJECT_LIMIT
@@ -32,10 +31,11 @@ class NVDAService(Service):
 
 	@Service.exposed
 	def getAppArg(self, key):
-		""" Get an NVDA commandline argument value. """
-		if key.startswith('_'):
+		"""Get an NVDA commandline argument value."""
+		if key.startswith("_"):
 			raise RuntimeError(f"Cannot fetch key {key}")
 		import globalVars
+
 		return getattr(globalVars.appArgs, key)
 
 	@Service.exposed
