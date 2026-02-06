@@ -22,6 +22,7 @@ Consult the speech dictionaries section in the User Guide for more details. (#19
 ### Changes
 
 * It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)
+* Improved search algorithm for filtering add-ons in the Add-on Store. (#19309)
 
 ### Bug Fixes
 
