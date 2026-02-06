@@ -224,7 +224,8 @@ def _calculateNewValue(currentValue: float, minValue: float, maxValue: float, st
 	:param step: The amount to change the value by (positive or negative).
 	:return: The new value, clamped between min and max.
 	"""
-	return min(max(currentValue+step, minValue), maxValue)
+	return min(max(currentValue + step, minValue), maxValue)
+
 
 
 def valueToPercentage(*keyPath: Tuple[str, ...]) -> int:
