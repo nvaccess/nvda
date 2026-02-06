@@ -227,7 +227,6 @@ def _calculateNewValue(currentValue: float, minValue: float, maxValue: float, st
 	return min(max(currentValue + step, minValue), maxValue)
 
 
-
 def valueToPercentage(*keyPath: Tuple[str, ...]) -> int:
 	"""
 	Calculates the percentage representation of a configuration value within its defined range.
