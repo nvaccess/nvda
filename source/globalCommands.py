@@ -13,7 +13,6 @@ from typing import (
 	Tuple,
 	Union,
 )
-
 from annotation import (
 	_AnnotationNavigation,
 	_AnnotationNavigationNode,
