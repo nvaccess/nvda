@@ -3106,8 +3106,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		Reset autoScroll.
 		"""
 
-		self.autoScroll(enable=False)
-		self.autoScroll(enable=True)
+		self._autoScrollCallLater.Restart()
 
 	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
 		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
