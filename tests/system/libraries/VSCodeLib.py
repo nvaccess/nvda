@@ -88,6 +88,8 @@ class VSCodeLib:
 							"workbench.tips.enabled": False,
 							"update.mode": "none",
 							"telemetry.telemetryLevel": "off",
+							# Hide the AI side bar by default to reduce noise for tests not interacting with it.
+							"workbench.secondarySideBar.defaultVisibility": "hidden",
 						},
 						cam,
 						ensure_ascii=False,
