@@ -83,6 +83,8 @@ jobs:
             Write-Host "Committing $file"
             git commit -m "Update $file"
           }
+          Write-Host "Pull the beta branch again to make sure there are no new changes"
+          git pull --rebase
           Write-Host "Pushing changes"
           git push origin HEAD
         } else {
