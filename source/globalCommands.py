@@ -8,6 +8,7 @@
 # Burman's Computer and Education Ltd, Cary-rowen.
 
 import itertools
+import functools
 from typing import (
 	Optional,
 	Tuple,
@@ -182,10 +183,29 @@ def toggleIntegerValue(
 	ui.message(msg)
 
 
+def getConfigValue(*keyPath: Tuple[str, ...]) -> bool | int | float | str:
+	"""
+	Retrieves the value of a configuration key.
+	:param keyPath: The path to the configuration key to retrieve.
+	:return: The value of the specified configuration key.
+	"""
+	return functools.reduce(lambda d, x: d.get(x), keyPath, config.conf)
+
+
+def setConfigValue(value: bool | int | float | str, *keyPath: Tuple[str, ...]) -> None:
+	"""
+	Sets the value of a configuration key.
+	:param value: The value to set for the configuration key.
+	:param keyPath: The path to the configuration key to set.
+	:return: None.
+	"""
+	dictToUpdate = functools.reduce(lambda d, x: d.get(x), keyPath[:-1], config.conf)
+	dictToUpdate[keyPath[-1]] = value
+
+
 def _getConfigValueRange(*keyPath: tuple[str, ...]) -> tuple[float, float]:
 	"""
 	Gets the minimum and maximum allowed values for a configuration key.
-
 	:param keyPath: The path to The configuration key to evaluate.
 	:return: A tuple of (minValue, maxValue).
 	"""
@@ -206,44 +226,41 @@ def _calculateNewValue(currentValue: float, minValue: float, maxValue: float, st
 	"""
 	return min(max(currentValue+step, minValue), maxValue)
 
-def valueToPercentage(configSection: str, configKey: str) -> int:
+
+def valueToPercentage(*keyPath: Tuple[str, ...]) -> int:
 	"""
 	Calculates the percentage representation of a configuration value within its defined range.
-	:param configSection: The configuration section containing the key.
-	:param configKey: The configuration key to evaluate.
+	:param keyPath: The path to the configuration key to evaluate.
 	:return: The percentage (0-100) of the value within the range.
 	"""
-	minValue, maxValue = _getConfigValueRange(configSection, configKey)
-	currentValue = config.conf[configSection][configKey]
+	minValue, maxValue = _getConfigValueRange(*keyPath)
+	currentValue = getConfigValue(*keyPath)
 	return round((currentValue - minValue) / (maxValue - minValue) * 100)
 
 
-def percentageToValue(configSection: str, configKey: str, percentage: int) -> float:
+def percentageToValue(*keyPath: Tuple[str, ...], percentage: int) -> float:
 	"""
 	Calculates the configuration value corresponding to a given percentage within its defined range.
-	:param configSection: The configuration section containing the key.
-	:param configKey: The configuration key to evaluate.
+	:param keyPath: The path to the configuration key to evaluate.
 	:param percentage: The percentage (0-100) to convert to a value.
 	:return: The value corresponding to the given percentage within the defined range.
 	"""
-	minValue, maxValue = _getConfigValueRange(configSection, configKey)
+	minValue, maxValue = _getConfigValueRange(*keyPath)
 	percentage = max(0, min(100, percentage))
 	value = minValue + (maxValue - minValue) * (percentage / 100)
 	return value
 
 
-def updateConfigFromNewValue(configSection: str, configKey: str, step: float) -> None:
+def updateConfigFromNewValue(*keyPath: Tuple[str, ...], step: float) -> None:
 	"""
 	Updates a configuration value by applying a step, constrained within its valid range.
-	:param configSection: The configuration section containing the key.
-	:param configKey: The configuration key to update.
+	:param keyPath: The path to the configuration key to update.
 	:param step: The step adjustment value (positive, negative, or 0).
 	"""
-	currentValue = config.conf[configSection][configKey]
-	minValue, maxValue = _getConfigValueRange(configSection, configKey)
+	currentValue = getConfigValue(*keyPath)
+	minValue, maxValue = _getConfigValueRange(*keyPath)
 	newValue = _calculateNewValue(currentValue, minValue, maxValue, step)
-	config.conf[configSection][configKey] = newValue
-	return newValue
+	setConfigValue(newValue, *keyPath)
 
 
 class GlobalCommands(ScriptableObject):
@@ -933,7 +950,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_increaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
-		updateConfigFromNewValue("braille", "autoScrollRate", 0.5)
+		updateConfigFromNewValue("braille", "autoScrollRate", step=0.5)
 		percentage = valueToPercentage("braille", "autoScrollRate")
 		# Translators: Message shown when increasing the braille auto scroll rate.
 		# {rate} will be replaced with the rate as a whole number from 0 to 100.
@@ -945,7 +962,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_decreaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
-		updateConfigFromNewValue("braille", "autoScrollRate", -0.5)
+		updateConfigFromNewValue("braille", "autoScrollRate", step=-0.5)
 		percentage = valueToPercentage("braille", "autoScrollRate")
 		# Translators: Message shown when decreasing the braille auto scroll rate.
 		# {rate} will be replaced with the rate as a whole number from 0 to 100.
