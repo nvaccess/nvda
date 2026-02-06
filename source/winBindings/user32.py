@@ -1611,3 +1611,16 @@ GetDpiForWindow.restype = UINT
 GetDpiForWindow.argtypes = (
 	HWND,  # hwnd: The window that you want to get information about
 )
+
+GetClientRect = WINFUNCTYPE(None)(("GetClientRect", dll))
+"""
+Retrieves the coordinates of a window's client area.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getclientrect
+"""
+GetClientRect.restype = BOOL
+GetClientRect.argtypes = (
+	HWND,  # hWnd: Handle to the window whose client rectangle is to be retrieved
+	LPRECT,  # lpRect: Pointer to a RECT structure that receives the client rectangle coordinates
+)
