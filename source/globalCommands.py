@@ -182,7 +182,7 @@ def toggleIntegerValue(
 	ui.message(msg)
 
 
-def _getConfigValueRange(*keyPath: *tuple[str, str, *tuple[str, ...]]) -> tuple[float, float]:
+def _getConfigValueRange(*keyPath: tuple[str, ...]) -> tuple[float, float]:
 	"""
 	Gets the minimum and maximum allowed values for a configuration key.
 
