@@ -1372,25 +1372,25 @@ def speakSelectionChange(  # noqa: C901
 		if not generalize:
 			for text in selectedTextList:
 				if len(text) == 1:
-					text = list(getSpellingSpeech(text, locale))
+					text = list(getSpellingSpeech(text, locale, endsUtterance=False))
 				speakTextSelected(text, priority=priority)
 		elif len(selectedTextList) > 0:
 			text = newInfo.text
 			if len(text) == 1:
-				text = list(getSpellingSpeech(text, locale))
+				text = list(getSpellingSpeech(text, locale, endsUtterance=False))
 			speakTextSelected(text, priority=priority)
 	if speakUnselected:
 		if not generalize:
 			for text in unselectedTextList:
 				if len(text) == 1:
-					text = list(getSpellingSpeech(text, locale))
+					text = list(getSpellingSpeech(text, locale, endsUtterance=False))
 				# Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 				speakSelectionMessage(_("%s unselected"), text, priority=priority)
 		elif len(unselectedTextList) > 0:
 			if not newInfo.isCollapsed:
 				text = newInfo.text
 				if len(text) == 1:
-					text = list(getSpellingSpeech(text, locale))
+					text = list(getSpellingSpeech(text, locale, endsUtterance=False))
 				# Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
 				speakSelectionMessage(_("%s selected instead"), text, priority=priority)
 			else:
