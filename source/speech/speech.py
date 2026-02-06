@@ -387,6 +387,8 @@ def _getSpellingSpeechAddCharMode(
 				yield CharacterModeCommand(False)
 				charMode = False
 		yield item
+	if charMode:
+		yield CharacterModeCommand(False)
 
 
 def _getSpellingCharAddCapNotification(
@@ -447,6 +449,7 @@ def _getSpellingSpeechWithoutCharMode(
 	fallbackToCharIfNoDescription: bool = True,
 	unicodeNormalization: bool = False,
 	reportNormalizedForCharacterNavigation: bool = False,
+	endsUtterance: bool = True,
 ) -> Generator[SequenceItemT, None, None]:
 	"""
 	Processes text when spelling by character.
@@ -543,7 +546,8 @@ def _getSpellingSpeechWithoutCharMode(
 				uppercase and beepForCapitals,
 				itemIsNormalized and reportNormalizedForCharacterNavigation,
 			)
-			yield EndUtteranceCommand()
+			if endsUtterance:
+				yield EndUtteranceCommand()
 
 
 def getSingleCharDescriptionDelayMS() -> int:
@@ -598,6 +602,7 @@ def getSpellingSpeech(
 	text: str,
 	locale: Optional[str] = None,
 	useCharacterDescriptions: bool = False,
+	endsUtterance: bool = True,
 ) -> Generator[SequenceItemT, None, None]:
 	synth = getSynth()
 	synthConfig = config.conf["speech"][synth.name]
@@ -620,6 +625,7 @@ def getSpellingSpeech(
 		reportNormalizedForCharacterNavigation=config.conf["speech"][
 			"reportNormalizedForCharacterNavigation"
 		],
+		endsUtterance=endsUtterance,
 	)
 	if synthConfig["useSpellingFunctionality"]:
 		seq = _getSpellingSpeechAddCharMode(seq)
