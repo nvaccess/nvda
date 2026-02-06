@@ -13,7 +13,6 @@ from typing import (
 	Tuple,
 	Union,
 )
-
 from annotation import (
 	_AnnotationNavigation,
 	_AnnotationNavigationNode,
@@ -183,14 +182,14 @@ def toggleIntegerValue(
 	ui.message(msg)
 
 
-def _getConfigValueRange(configSection: str, configKey: str) -> tuple[float, float]:
+def _getConfigValueRange(*keyPath: *tuple[str, str, *tuple[str, ...]]) -> tuple[float, float]:
 	"""
 	Gets the minimum and maximum allowed values for a configuration key.
-	:param configSection: The configuration section containing the key.
-	:param configKey: The configuration key to evaluate.
+
+	:param keyPath: The path to The configuration key to evaluate.
 	:return: A tuple of (minValue, maxValue).
 	"""
-	validation = config.conf.getConfigValidation((configSection, configKey))
+	validation = config.conf.getConfigValidation(keyPath)
 	minValue = float(validation.kwargs["min"])
 	maxValue = float(validation.kwargs["max"])
 	return minValue, maxValue
