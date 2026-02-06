@@ -5,6 +5,7 @@
 
 """Types used for the speech dictionary system."""
 
+import fnmatch
 import os
 import re
 from dataclasses import dataclass, field
@@ -25,6 +26,14 @@ class EntryType(DisplayStringIntEnum):
 	"""Regular expression"""
 	WORD = 2
 	"""String must have word boundaries on both sides to match"""
+	PART_OF_WORD = 3
+	"""String must be preceded or followed by a word character (letter, digit, or underscore) to match."""
+	START_OF_WORD = 4
+	"""String must have a word boundary at the start and a word character (letter, digit, or underscore) at the end."""
+	END_OF_WORD = 5
+	"""String must have a word character (letter, digit, or underscore) at the start and a word boundary at the end."""
+	UNIX = 6
+	"""Unix shell-style wildcards."""
 
 	@cached_property
 	def _displayStringLabels(self) -> dict[Self, str]:
@@ -35,6 +44,14 @@ class EntryType(DisplayStringIntEnum):
 			EntryType.REGEXP: _("Regular &expression"),
 			# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 			EntryType.WORD: _("Whole &word"),
+			# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+			EntryType.PART_OF_WORD: _("&Part of word"),
+			# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+			EntryType.START_OF_WORD: _("&Start of word"),
+			# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+			EntryType.END_OF_WORD: _("E&nd of word"),
+			# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+			EntryType.UNIX: _("&Unix shell-style wildcards"),
 		}
 
 
@@ -70,7 +87,7 @@ class SpeechDictEntry:
 	"""The pattern to match."""
 	replacement: str
 	"""The replacement string."""
-	comment: str
+	comment: str = ""
 	"""A comment associated with this entry."""
 	caseSensitive: bool = True
 	"""Whether the match is case sensitive."""
@@ -83,13 +100,29 @@ class SpeechDictEntry:
 		flags = re.U
 		if not self.caseSensitive:
 			flags |= re.IGNORECASE
-		if self.type == EntryType.REGEXP:
-			tempPattern = self.pattern
-		elif self.type == EntryType.WORD:
-			tempPattern = r"\b" + re.escape(self.pattern) + r"\b"
-		else:
-			tempPattern = re.escape(self.pattern)
-			self.type = EntryType.ANYWHERE  # Ensure sane values.
+		match self.type:
+			case EntryType.REGEXP:
+				tempPattern = self.pattern
+			case EntryType.WORD:
+				tempPattern = rf"\b{re.escape(self.pattern)}\b"
+			case EntryType.PART_OF_WORD:
+				escaped = re.escape(self.pattern)
+				tempPattern = rf"(?<=\w){escaped}|{escaped}(?=\w)"
+			case EntryType.START_OF_WORD:
+				tempPattern = rf"\b{re.escape(self.pattern)}(?=\w)"
+			case EntryType.END_OF_WORD:
+				tempPattern = rf"(?<=\w){re.escape(self.pattern)}\b"
+			case EntryType.UNIX:
+				# fnmatch.translate appends \Z to the end of the pattern; discard that anchor.
+				translated = fnmatch.translate(self.pattern)
+				suffix = r"\Z"
+				if translated.endswith(suffix):
+					tempPattern = translated.removesuffix(suffix)
+				else:
+					tempPattern = translated
+			case _:
+				tempPattern = re.escape(self.pattern)
+				self.type = EntryType.ANYWHERE  # Ensure sane values.
 		self.compiled = re.compile(tempPattern, flags)
 
 	def sub(self, text: str) -> str:

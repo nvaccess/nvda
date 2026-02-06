@@ -15,10 +15,13 @@
 * A new command, assigned to `NVDA+x`, has been introduced to repeat the last information spoken by NVDA; pressing it twice shows it in a browseable message. (#625, @CyrilleB79)
 * Added an unassigned command to toggle keyboard layout. (#19211, @CyrilleB79)
 * Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @hdzrvcc0X74)
+* New types have been added for Speech Dictionary entries, such as part of word and start of word.
+Consult the speech dictionaries section in the User Guide for more details. (#19506, @LeonarddeR)
 
 ### Changes
 
 * It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)
+* Improved search algorithm for filtering add-ons in the Add-on Store. (#19309)
 * NVDA can now be configured to not play error sounds, even in test versions. (#13021, @CyrilleB79)
 
 ### Bug Fixes
@@ -196,7 +199,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Python-Markdown to 3.10 (#19196)
   * lxml to 6.0.2 (#19196)
   * PyMdown Extensions to 10.17.1 (#19196)
-  * Setuptools to 80.9 (#19196)
+  * Setuptools to 80.10.2 (#19196, #19524)
   * Robot Framework to 7.3.2 (#19196)
   * IAccessible2 to commit `c9ae003` (#19196)
   * Sonic to commit `d2cdb40` (#19196)
@@ -269,7 +272,7 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
     * `get_device_info_list` to `getDeviceInfoList`; and
     * `open_ex` to `openEx`.
   * The following methods on the `FTD2XX` class have been renamed:
-    * `set_baud_rate` to`setBaudRate`;
+    * `set_baud_rate` to `setBaudRate`;
     * `set_timeouts` to `setTimeouts`;
     * `set_latency_timer` to `setLatencyTimer`;
     * `set_bit_mode` to `setBitMode`;
