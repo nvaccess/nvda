@@ -5429,6 +5429,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			maxValue=100,
 		)
 		from globalCommands import valueToPercentage
+
 		self.autoScrollRateSlider.SetValue(
 			valueToPercentage(
 				"braille",
@@ -5469,6 +5470,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["braille"]["showMessages"] = self.showMessagesList.GetSelection()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
 		from globalCommands import percentageToValue
+
 		config.conf["braille"]["autoScrollRate"] = percentageToValue(
 			"braille",
 			"autoScrollRate",
