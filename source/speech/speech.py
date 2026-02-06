@@ -1298,12 +1298,30 @@ def _getSelectionMessageSpeech(
 			log.warning("Selection message '%s' does not contain '%%s'", message)
 			return _getSpeakMessageSpeech(message) + text
 
-		seq = []
+		seq = list(text)
+		# To preserve spacing, merge prefix/suffix with adjacent string items.
+		# If prefix/suffix is added as a separate item, trailing/leading whitespace
+		# may be stripped during speech processing, causing "Tselected" instead of "T selected".
 		if prefix:
-			seq.append(prefix)
-		seq.extend(text)
+			# Prepend prefix to the first string item in the sequence
+			for i in range(len(seq)):
+				if isinstance(seq[i], str):
+					seq[i] = prefix + seq[i]
+					prefix = ""
+					break
+			if prefix:
+				# No string items found, insert prefix at the beginning
+				seq.insert(0, prefix)
 		if suffix:
-			seq.append(suffix)
+			# Append suffix to the last string item in the sequence
+			for i in range(len(seq) - 1, -1, -1):
+				if isinstance(seq[i], str):
+					seq[i] = seq[i] + suffix
+					suffix = ""
+					break
+			if suffix:
+				# No string items found, append suffix at the end
+				seq.append(suffix)
 		return seq
 
 	if len(text) < MAX_LENGTH_FOR_SELECTION_REPORTING:
