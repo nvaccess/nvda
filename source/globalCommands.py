@@ -205,13 +205,7 @@ def _calculateNewValue(currentValue: float, minValue: float, maxValue: float, st
 	:param step: The amount to change the value by (positive or negative).
 	:return: The new value, clamped between min and max.
 	"""
-	if step > 0:
-		return min(currentValue + step, maxValue)
-	elif step < 0:
-		return max(currentValue + step, minValue)
-	else:
-		return currentValue
-
+	return min(max(currentValue+step, minValue), maxValue)
 
 def valueToPercentage(configSection: str, configKey: str) -> int:
 	"""
