@@ -555,7 +555,7 @@ class SynthDriver(SynthDriver):
 
 	name = "sapi5"
 	# Translators: Description for a speech synthesizer.
-	description = "Microsoft Speech API version 5 (64 bit)"
+	description = _("Microsoft Speech API version 5 (64 bit)")
 
 	@classmethod
 	def check(cls):

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot, Cary-rowen
+# Copyright (C) 2022-2026 NV Access Limited, Cyrille Bougot, Cary-rowen
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -435,4 +435,32 @@ class LoggingLevel(DisplayStringIntEnum):
 			self.IO: _("input/output"),
 			# Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
 			self.DEBUG: _("debug"),
+		}
+
+
+@unique
+class PlayErrorSound(DisplayStringIntEnum):
+	"""Enumeration containing the possible config values to play a sound when an error is logged, depending on
+	NVDA version type.
+
+	Use PlayErrorSound.MEMBER.value to compare with the config;
+	use PlayErrorSound.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+
+	ONLY_IN_TEST_VERSIONS = 0
+	YES = 1
+	NO = 2
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			PlayErrorSound.ONLY_IN_TEST_VERSIONS: pgettext(
+				"advanced.playErrorSound",
+				# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+				"Only in NVDA test versions",
+			),
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+			PlayErrorSound.YES: pgettext("advanced.playErrorSound", "Yes"),
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+			PlayErrorSound.NO: pgettext("advanced.playErrorSound", "No"),
 		}
