@@ -1299,29 +1299,17 @@ def _getSelectionMessageSpeech(
 			return _getSpeakMessageSpeech(message) + text
 
 		seq = list(text)
-		# To preserve spacing, merge prefix/suffix with adjacent string items.
-		# If prefix/suffix is added as a separate item, trailing/leading whitespace
-		# may be stripped during speech processing, causing "Tselected" instead of "T selected".
+		# Merge prefix/suffix into adjacent string items to preserve spacing.
 		if prefix:
-			# Prepend prefix to the first string item in the sequence
-			for i in range(len(seq)):
-				if isinstance(seq[i], str):
-					seq[i] = prefix + seq[i]
-					prefix = ""
+			for i, item in enumerate(seq):
+				if isinstance(item, str):
+					seq[i] = prefix + item
 					break
-			if prefix:
-				# No string items found, insert prefix at the beginning
-				seq.insert(0, prefix)
 		if suffix:
-			# Append suffix to the last string item in the sequence
 			for i in range(len(seq) - 1, -1, -1):
 				if isinstance(seq[i], str):
-					seq[i] = seq[i] + suffix
-					suffix = ""
+					seq[i] += suffix
 					break
-			if suffix:
-				# No string items found, append suffix at the end
-				seq.append(suffix)
 		return seq
 
 	if len(text) < MAX_LENGTH_FOR_SELECTION_REPORTING:
