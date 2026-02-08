@@ -6033,7 +6033,17 @@ The A300 model has a tactile graphics area of 120 by 80 dots, which can fit 8 li
 
 You can configure whether NVDA displays braille on the dedicated braille display line or on the tactile graphics area via the Braille Destination option in NVDA's Braille settings for this driver.
 
-Panning keys are supported, but due to limited buttons on the device, other commands and routing capabilities are currently not available.
+Due to limited buttons on the device, only panning is mapped by default.
+However, the display supports multi-button combinations and long press gestures, allowing you to assign custom functions via NVDA's Input Gestures dialog.
+To create a multi-button combination, press multiple keys simultaneously (e.g., `f1+panLeft`).
+For long press gestures, hold buttons for 1.5 seconds to trigger an alternative action (e.g., `longPress(panLeft)`).
+
+Available keys on current hardware include:
+
+* Pan keys: `panLeft`, `panRight`
+* Function keys: `f1` through `f4`
+
+Note: The firmware feature that presents battery status when long pressing `panLeft+panRight` will not trigger NVDA commands assigned to the `panLeft+panRight` (short press) gesture combination.
 
 The Dot Pad driver supports automatic detection of USB-connected devices.
 However, automatic detection is disabled by default due to the device using generic USB identifiers that could conflict with other devices.
@@ -6048,8 +6058,8 @@ Make sure to lift your hand entirely off the device when navigating with NVDA, a
 
 | Name |Key|
 |---|---|
-|Scroll braille display back | `pan_left` |
-|Scroll braille display forward | `pan_right` |
+|Scroll braille display back | `panLeft` |
+|Scroll braille display forward | `panRight` |
 
 <!-- KC:endInclude -->
 
