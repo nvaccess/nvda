@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-23 06:44+0000\n"
-"PO-Revision-Date: 2026-01-26 00:19\n"
+"POT-Creation-Date: 2026-02-06 07:00+0000\n"
+"PO-Revision-Date: 2026-02-09 00:23\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -3983,7 +3983,7 @@ msgstr "Näyttää NVDA:n ääniasetukset."
 #. Translators: Input help mode message for go to privacy and security settings command.
 #: globalCommands.py:3404
 msgid "Shows NVDA's privacy and security settings"
-msgstr "Näyttää NVDA:n tietosuoja- ja suojausasetukset."
+msgstr "Näyttää NVDA:n yksityisyys- ja suojausasetukset."
 
 #. Translators: Input help mode message for go to vision settings command.
 #: globalCommands.py:3413
@@ -7008,7 +7008,7 @@ msgstr "Varmista, että internet-yhteys on käytettävissä ja että NVDA:n päi
 #: updateCheck.py:424
 msgctxt "updateCheck"
 msgid "Unable to establish a connection to the NV Access server."
-msgstr "NV Accessin palvelimeen ei saatu yhteyttä."
+msgstr "NV Accessin palvelimeen ei saada yhteyttä."
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 #. tip will be replaced with a context sensitive suggestion of next steps.
@@ -7212,7 +7212,7 @@ msgid "{longName} ({name})\n"
 "If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
 msgstr "{longName} ({name})\n"
 "Versio: {version} ({version_detailed})\n"
-"URL-osoite: {url}\n"
+"Kotisivun osoite: {url}\n"
 "{copyright}\n\n"
 "{name} on suojattu GNU GPL -lisenssin 2.0-versiolla tai uudemmalla.\n"
 "Voit vapaasti jakaa tai muuttaa tätä ohjelmistoa, kunhan toimitat lisenssin sen mukana ja pidät lähdekoodin kaikkien saatavilla.\n"
@@ -7257,13 +7257,13 @@ msgstr "Lisäosakaupan palvelimeen ei saatu yhteyttä."
 #: addonStore\dataManager.py:256
 msgctxt "addonStore"
 msgid "Unable to fetch latest add-on data for compatible add-ons."
-msgstr "Yhteensopivien lisäosien viimeisimpiä tietoja ei voitu hakea."
+msgstr "Yhteensopivien lisäosien uusimpia tietoja ei voitu hakea."
 
 #. Translators: A message shown when fetching add-on data from the store fails
 #: addonStore\dataManager.py:292
 msgctxt "addonStore"
 msgid "Unable to fetch latest add-on data for incompatible add-ons."
-msgstr "Yhteensopimattomien lisäosien viimeisimpiä tietoja ei voitu hakea."
+msgstr "Yhteensopimattomien lisäosien uusimpia tietoja ei voitu hakea."
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #. The %s will be replaced with the path to the add-on that could not be opened.
@@ -7726,7 +7726,7 @@ msgstr "%s korostettu"
 #. Translators: Reported when moving out of a popular highlight.
 #: appModules\kindle.py:342
 msgid "out of popular highlight"
-msgstr "suositun korostuksen loppu"
+msgstr "suosittu korostus päättyy"
 
 #. Translators: The name of a category of NVDA commands.
 #: appModules\miranda32.py:25
@@ -11654,7 +11654,7 @@ msgstr "Antamasi URL-osoitteen toimivuutta ei ole testattu. Haluatko varmasti ta
 #. Translators: A message shown to users when connecting to a URL to ensure it is valid.
 #: gui\_SetURLDialog.py:151
 msgid "Validating URL..."
-msgstr "Tarkistetaan URL-osoitetta..."
+msgstr "URL-osoitetta tarkistetaan..."
 
 #. Translators: Message shown to users when testing a given URL has succeeded.
 #: gui\_SetURLDialog.py:175
@@ -14219,7 +14219,7 @@ msgstr "Yleinen"
 #: gui\settingsDialogs.py:4199
 msgctxt "advanced.uiaWithMSWord"
 msgid "Use UI Automation to access Microsoft &Word document controls"
-msgstr "Käytä UI Automation -rajapintaa Microsoft &Wordin asiakirjasäätimissä"
+msgstr "Käytä UI automation -rajapintaa Microsoft &Word -asiakirjoissa"
 
 #. Translators: Label for the default value of the Use UIA with MS Word combobox,
 #. in the Advanced settings panel.
@@ -14250,7 +14250,7 @@ msgstr "Aina"
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:4219
 msgid "Use UI Automation to access Microsoft &Excel spreadsheet controls when available"
-msgstr "Käytä UI Automation -rajapintaa Microsoft &Excelin laskentataulukkosäätimissä, kun käytettävissä"
+msgstr "Käytä UI Automation -rajapintaa Microsoft &Excelin laskentataulukoissa"
 
 #. Translators: This is the label for a combo box for selecting the
 #. active console implementation in the advanced settings panel.
@@ -14490,13 +14490,13 @@ msgstr "Kyllä"
 #. advanced settings panel.
 #: gui\settingsDialogs.py:4591
 msgid "Regular expression for text paragraph navigation"
-msgstr "Tekstikappalenavigoinnin säännöllinen lauseke"
+msgstr "Tekstikappalenavigoinnin sääntölauseke"
 
 #. Translators: Message shown when invalid text paragraph regex entered
 #: gui\settingsDialogs.py:4613
 #, python-format
 msgid "Failed to compile text paragraph regular expression: %s"
-msgstr "Tekstikappalenavigoinnin säännöllisen lausekkeen kääntäminen epäonnistui: %s"
+msgstr "Tekstikappalenavigoinnin sääntölausekkeen kääntäminen epäonnistui: %s"
 
 #. Translators: This is the label for the Advanced settings panel.
 #: gui\settingsDialogs.py:4743
@@ -14737,7 +14737,7 @@ msgstr "Näönparannuksen tarjoajaa ei voida ottaa käyttöön, koska sen kkäyt
 #. Translators: The title of the privacy and security category in NVDA's settings.
 #: gui\settingsDialogs.py:5906
 msgid "Privacy and Security"
-msgstr "Tietosuoja ja suojaus"
+msgstr "Yksityisyys ja suojaus"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
@@ -14763,7 +14763,7 @@ msgstr "L&okitaso:"
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
 #: gui\settingsDialogs.py:5984
 msgid "Allow NV Access to gather NVDA usage statistics"
-msgstr "Salli NV Accessin kerätä NVDA:n käyttötilastoja"
+msgstr "Salli NVDA:n käyttötilastojen kerääminen"
 
 #. Translators: This is the label for the NVDA settings dialog.
 #: gui\settingsDialogs.py:6079
@@ -14873,7 +14873,7 @@ msgstr "Koko &sana"
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: gui\speechDict.py:35
 msgid "Regular &expression"
-msgstr "Säännöllinen &lauseke"
+msgstr "Sääntö&lauseke"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 #: gui\speechDict.py:44
@@ -14910,13 +14910,13 @@ msgstr "Virhe sanastomäärityksessä"
 #: gui\speechDict.py:116
 #, python-brace-format
 msgid "Regular Expression error in the pattern field: \"{error}\"."
-msgstr "Virhe Korvattava teksti -kentän säännöllisessä lausekkeessa: \"{error}\"."
+msgstr "Virhe Korvattava teksti -kentän sääntölausekkeessa: \"{error}\"."
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #: gui\speechDict.py:134
 #, python-brace-format
 msgid "Regular Expression error in the replacement field: \"{error}\"."
-msgstr "Virhe Korvaava teksti -kentän säännöllisessä lausekkeessa: \"{error}\"."
+msgstr "Virhe Korvaava teksti -kentän sääntölausekkeessa: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 #: gui\speechDict.py:178
@@ -14967,7 +14967,7 @@ msgstr "Lisää sanastomääritys"
 #. Translators: A prompt for confirmation on the Speech Dictionary dialog.
 #: gui\speechDict.py:313
 msgid "Are you sure you want to remove all the entries in this dictionary?"
-msgstr "Haluatko varmasti poistaa kaikki kohteet tästä sanastosta?"
+msgstr "Haluatko varmasti poistaa kaikki määritykset tästä sanastosta?"
 
 #. Translators: Title for default speech dictionary dialog.
 #: gui\speechDict.py:334
@@ -15163,7 +15163,7 @@ msgstr "T&oiminnot"
 #: gui\addonStoreGui\controls\details.py:146
 msgctxt "addonStore"
 msgid "&Other Details:"
-msgstr "&Muut tiedot:"
+msgstr "&Muita tietoja:"
 
 #. Translators: Header (usually the add-on name) when multiple add-ons are selected.
 #. In the add-on store dialog.
@@ -15292,14 +15292,14 @@ msgstr "VirusTotal-tarkistuksen tulokset:"
 msgctxt "addonStore"
 msgid "{malicious} malware scanner detected this add-on as potentially malicious (out of {total})."
 msgid_plural "{malicious} malware scanners detected this add-on as potentially malicious (out of {total})."
-msgstr[0] "{malicious} / {total} haittaohjelmaskanneria havaitsi tämän lisäosan mahdollisesti haitalliseksi."
+msgstr[0] "{malicious} / {total} haittaohjelmaskanneri havaitsi tämän lisäosan mahdollisesti haitalliseksi."
 msgstr[1] "{malicious} / {total} haittaohjelmaskanneria havaitsi tämän lisäosan mahdollisesti haitalliseksi."
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:388
 msgctxt "addonStore"
 msgid "VirusTotal scan URL:"
-msgstr "VirusTotal-tarkistuksen URL-osoite:"
+msgstr "VirusTotal-tarkistuksen osoite:"
 
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
@@ -15590,9 +15590,9 @@ msgstr "Peruuta"
 #: gui\addonStoreGui\controls\messageDialogs.py:791
 #, python-brace-format
 msgctxt "addonStore"
-msgid "You have selected to copy 1 add-on to NVDA's system-wide configuration. Using this add-on during sign-in and on secure screens is a serious security risk."
+msgid "You have selected to copy {num} add-on to NVDA's system-wide configuration. Using this add-on during sign-in and on secure screens is a serious security risk."
 msgid_plural "You have selected to copy {num} add-ons to NVDA's system-wide configuration. Using these add-ons during sign-in and on secure screens is a serious security risk."
-msgstr[0] "Olet valinnut kopioitavaksi yhden lisäosan NVDA:n järjestelmänlaajuisiin asetuksiin. Sen käyttäminen sisäänkirjauduttaessa ja suojatuissa ruuduissa on merkittävä tietoturvariski."
+msgstr[0] "Olet valinnut kopioitavaksi {num} lisäosan NVDA:n järjestelmänlaajuisiin asetuksiin. Sen käyttäminen sisäänkirjauduttaessa ja suojatuissa ruuduissa on merkittävä tietoturvariski."
 msgstr[1] "Olet valinnut kopioitavaksi {num} lisäosaa NVDA:n järjestelmänlaajuisiin asetuksiin. Niiden käyttäminen sisäänkirjauduttaessa ja suojatuissa ruuduissa on merkittävä tietoturvariski."
 
 #. Translators: A prompt asking the user to confirm whether to perform an action.
@@ -16226,7 +16226,7 @@ msgstr "tuntematon syöttömenetelmä"
 #. 10 per cent from top edge of screen,
 #. width is 40 per cent of screen,
 #. height is 50 per cent of screen.
-#: NVDAObjects\__init__.py:666
+#: NVDAObjects\__init__.py:669
 #, python-brace-format
 msgid "Object edges positioned {left:.1f} percent from left edge of screen, {top:.1f} percent from top edge of screen, width is {width:.1f} percent of screen, height is {height:.1f} percent of screen"
 msgstr "Objektin reunojen sijainnit ovat {left:.1f} prosenttia ruudun vasemmasta reunasta, {top:.1f} prosenttia ruudun yläreunasta, leveys on {width:.1f} prosenttia ruudun leveydestä, korkeus on {height:.1f} prosenttia ruudun korkeudesta"
@@ -16574,7 +16574,7 @@ msgstr "Tässä solussa ei ole kommenttiketjua"
 #. Translators: announced when moving outside of a table in an Excel spreadsheet.
 #: NVDAObjects\UIA\excel.py:603
 msgid "Out of table"
-msgstr "Taulukon loppu"
+msgstr "Taulukko päättyy"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -18707,7 +18707,7 @@ msgstr[1] ", jossa %s kohdetta"
 #: speech\speech.py:2519 speech\speech.py:2977
 #, python-format
 msgid "out of %s"
-msgstr "%s loppu"
+msgstr "%s päättyy"
 
 #. Translators: Indicates the page number in a document.
 #. %s will be replaced with the page number.
@@ -19008,7 +19008,7 @@ msgstr "sisältää ratkaistun kommentin"
 #. Translators: Reported when text no longer contains a comment.
 #: speech\speech.py:2996
 msgid "out of comment"
-msgstr "kommentin loppu"
+msgstr "kommentti päättyy"
 
 #. Translators: Reported when text contains a bookmark
 #: speech\speech.py:3004
@@ -19018,7 +19018,7 @@ msgstr "kirjanmerkki"
 #. Translators: Reported when text no longer contains a bookmark
 #: speech\speech.py:3008
 msgid "out of bookmark"
-msgstr "kirjanmerkin loppu"
+msgstr "kirjanmerkki päättyy"
 
 #. Translators: Reported when text contains a spelling error.
 #: speech\speech.py:3020
@@ -19028,7 +19028,7 @@ msgstr "kirjoitusvirhe"
 #. Translators: Reported when moving out of text containing a spelling error.
 #: speech\speech.py:3023
 msgid "out of spelling error"
-msgstr "kirjoitusvirheen loppu"
+msgstr "kirjoitusvirhe päättyy"
 
 #. Translators: Reported when text contains a grammar error.
 #: speech\speech.py:3034
@@ -19038,12 +19038,12 @@ msgstr "kielioppivirhe"
 #. Translators: Reported when moving out of text containing a grammar error.
 #: speech\speech.py:3037
 msgid "out of grammar error"
-msgstr "kielioppivirheen loppu"
+msgstr "kielioppivirhe päättyy"
 
 #. Translators: Indicates end of a table.
 #: speech\speech.py:3070
 msgid "out of table"
-msgstr "taulukon loppu"
+msgstr "taulukko päättyy"
 
 #. Translators: Main part of the compound string to report a table
 #. Example: If the reported compound string is "table with 2 columns and 3 rows", {colCountTranslation}
@@ -19063,6 +19063,21 @@ msgstr "ei mitään"
 #: synthDrivers\oneCore.py:182
 msgid "Windows OneCore voices"
 msgstr "Windows OneCore"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi4_32.py:18
+msgid "Microsoft Speech API version 4"
+msgstr "SAPI 4"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi5.py:558 _synthDrivers32\_sapi5.py:558
+msgid "Microsoft Speech API version 5 (64 bit)"
+msgstr "SAPI 5 (64-bittinen)"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi5_32.py:15
+msgid "Microsoft Speech API version 5 (32 bit)"
+msgstr "SAPI 5 (32-bittinen)"
 
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\silence.py:16
