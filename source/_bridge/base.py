@@ -58,7 +58,13 @@ class Service(rpyc.Service):
 		dupHandle = HANDLE()
 		hCurProcess = GetCurrentProcess()
 		if not DuplicateHandle(
-			hCurProcess, handle, self._childProcess._handle, byref(dupHandle), accessMask, False, 0
+			hCurProcess,
+			handle,
+			self._childProcess._handle,
+			byref(dupHandle),
+			accessMask,
+			False,
+			0,
 		):
 			raise RuntimeError(f"Failed to duplicate handle into child process, {WinError()}")
 		return dupHandle
