@@ -5,16 +5,28 @@
 
 from __future__ import annotations
 import functools
+from ctypes import WinError, byref
+from ctypes.wintypes import HANDLE
 import weakref
 import subprocess
 from typing import (
 	cast,
 )
+import os
+import msvcrt
+import io
 from collections.abc import Callable
 import threading
 import rpyc
 from rpyc.core.stream import PipeStream, Stream
 from logHandler import log
+from raiiUtils import makeAutoFree
+from winBindings.kernel32 import (
+	CloseHandle,
+	DuplicateHandle,
+	GetCurrentProcess,
+)
+import win32con
 
 
 """Base classes for NVDA Bridge components."""
@@ -34,6 +46,64 @@ class Service(rpyc.Service):
 		self._dependentConnections = []
 		self._dependantServices = []
 
+	def _duplicateHandleForProcess(self, handle: HANDLE, accessMask: int) -> HANDLE:
+		"""
+		Duplicate a handle into the child process.
+
+		:param handle: Handle to duplicate.
+		:param accessMask: Desired access mask for the duplicated handle.
+		:returns: Duplicated handle valid in the child process.
+		:raises RuntimeError: If duplicating the handle fails.
+		"""
+		dupHandle = HANDLE()
+		hCurProcess = GetCurrentProcess()
+		if not DuplicateHandle(hCurProcess, handle, self._childProcess._handle, byref(dupHandle), accessMask, False, 0):
+			raise RuntimeError(f"Failed to duplicate handle into child process, {WinError()}")
+		return dupHandle
+
+	def _createPipe(self, push: bool = True, duplicateIntoProcess: bool = False) -> tuple[io.FileIO, HANDLE]:
+		"""
+		Create an anonymous pipe and return the parent-side Python object and the
+		child-side HANDLE suitable for use as a standard stream for a dependent service connection.
+
+		When ``push`` is True this prepares a writable file object that the parent
+		can write to (typically connected to the child's standard input) and a
+		native HANDLE for the read end.
+
+		When ``push`` is False this prepares a readable file object that the
+		parent can read from (typically connected to the child's standard output
+		or error) and a native HANDLE for the write end.
+
+		If ``duplicateIntoProcess`` is True, the child-side HANDLE is duplicated
+		into the child process.
+
+		The returned file objects are opened in binary mode with no buffering, and
+		if duplicateIntoProcess is True, the native handles are wrapped with makeAutoFree so they will be closed
+		automatically when no longer needed.
+
+		:param push: If True create a writable parent-side file and a child-side
+			read HANDLE; otherwise create a readable parent-side file and a
+			child-side write HANDLE.
+		:returns: A tuple containing (parent_file_object, child_handle).
+		"""
+		r_fd, w_fd = os.pipe()
+		if push:
+			w_file = os.fdopen(w_fd, "wb", 0)
+			r_handle = makeAutoFree(HANDLE, CloseHandle)(msvcrt.get_osfhandle(r_fd))
+			if duplicateIntoProcess:
+				r_handle = self._duplicateHandleForProcess(r_handle, win32con.GENERIC_READ)
+			else:
+				os.set_inheritable(r_fd, True)
+			return w_file, r_handle
+		else:
+			r_file = os.fdopen(r_fd, "rb", 0)
+			w_handle = makeAutoFree(HANDLE, CloseHandle)(msvcrt.get_osfhandle(w_fd))
+			if duplicateIntoProcess:
+				w_handle = self._duplicateHandleForProcess(w_handle, win32con.GENERIC_WRITE)
+			else:
+				os.set_inheritable(w_fd, True)
+			return r_file, w_handle
+
 	def _createDependentConnection(self, localService: Service, name: str | None = None) -> tuple[int, int]:
 		if not name:
 			name = f"Dependent service '{localService.__class__.__name__}' of '{self.__class__.__name__}'"
@@ -43,8 +113,8 @@ class Service(rpyc.Service):
 		if not self._childProcess:
 			raise RuntimeError("This service is not associated with a child process.")
 		log.debug("Creating pipes for new RPYC stream")
-		w_file, r_handle = self._childProcess._createPipe(push=True, duplicateIntoProcess=True)
-		r_file, w_handle = self._childProcess._createPipe(push=False, duplicateIntoProcess=True)
+		w_file, r_handle = self._createPipe(push=True, duplicateIntoProcess=True)
+		r_file, w_handle = self._createPipe(push=False, duplicateIntoProcess=True)
 		log.debug("Creating PipeStream over new pipes")
 		stream = PipeStream(r_file, w_file)
 		log.debug("Connecting new RPYC service over PipeStream")
