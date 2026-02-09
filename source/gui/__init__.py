@@ -6,7 +6,6 @@
 
 from collections.abc import Callable
 import os
-import shutil
 import warnings
 import wx
 import wx.adv
@@ -28,9 +27,7 @@ from typing import Any
 import systemUtils
 from .message import (
 	Button,
-	DefaultButton,
 	Payload,
-	ReturnCode,
 	# messageBox is accessed through `gui.messageBox` as opposed to `gui.message.messageBox` throughout NVDA,
 	# be cautious when removing
 	messageBox,
@@ -215,91 +212,15 @@ class MainFrame(wx.Frame):
 		queueHandler.queueFunction(queueHandler.eventQueue, ui.message, _("Configuration applied"))
 
 	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
-	def onRevertToDefaultConfigurationCommand(self, evt):
+	def _confirmRevertToDefaultConfiguration(self, evt):
 		"""Reset config to factory defaults, then show a dialog allowing the user to undo the reset.
 		This is used when triggered from the NVDA menu.
 		"""
-		configPath = NVDAState.WritePaths.nvdaConfigFile
-		backupPath = configPath + ".beforeReset.bak"
-		# Back up the current config file before resetting.
-		try:
-			if os.path.isfile(configPath):
-				shutil.copy2(configPath, backupPath)
-		except Exception:
-			log.error("Failed to back up configuration file before factory reset", exc_info=True)
-		queueHandler.queueFunction(queueHandler.eventQueue, core.resetConfiguration, factoryDefaults=True)
-		queueHandler.queueFunction(
-			queueHandler.eventQueue,
-			self._showFactoryResetUndoDialog,
-			backupPath,
-			configPath,
-		)
+		from .configManagement import confirmRevertToDefaultConfiguration
 
-	def _showFactoryResetUndoDialog(self, backupPath: str, configPath: str) -> None:
-		"""Show a dialog after factory reset allowing the user to undo the reset or keep it."""
+		confirmRevertToDefaultConfiguration()
 
-		def _showDialog():
-			# Translators: The title of the dialog shown after resetting configuration to factory defaults.
-			title = _("Factory Defaults Restored")
-			message = _(
-				# Translators: The message shown in the dialog after the configuration has been reset to factory defaults.
-				# The user can choose to keep the factory defaults or undo the reset.
-				"Your configuration has been reset to factory defaults.\n"
-				"Choose OK to keep factory defaults, or Undo to restore your previous configuration.",
-			)
-			undoButton = Button(
-				id=ReturnCode.CUSTOM_1,
-				# Translators: The label of the undo button in the factory defaults reset dialog.
-				# Pressing this button restores the previous configuration.
-				label=_("&Undo"),
-				fallbackAction=True,
-			)
-			dialog = MessageDialog(
-				None,
-				message,
-				title,
-				buttons=(
-					DefaultButton.OK,
-					undoButton,
-				),
-			)
-			result = displayDialogAsModal(dialog)
-			if result == ReturnCode.CUSTOM_1:
-				# User chose to undo the reset.
-				try:
-					if os.path.isfile(backupPath):
-						shutil.copy2(backupPath, configPath)
-						queueHandler.queueFunction(
-							queueHandler.eventQueue,
-							core.resetConfiguration,
-						)
-						queueHandler.queueFunction(
-							queueHandler.eventQueue,
-							ui.message,
-							# Translators: Reported when a factory reset has been undone
-							# and the previous configuration has been restored.
-							_("Factory reset undone. Previous configuration restored."),
-						)
-					else:
-						log.error("Backup configuration file not found for undo")
-				except Exception:
-					log.error("Failed to restore configuration from backup", exc_info=True)
-			else:
-				# User chose OK: save the factory defaults to disk.
-				try:
-					config.conf.save()
-				except Exception:
-					log.error("Failed to save factory default configuration to disk", exc_info=True)
-			# Clean up the backup file.
-			try:
-				if os.path.isfile(backupPath):
-					os.remove(backupPath)
-			except Exception:
-				log.debugWarning("Failed to remove configuration backup file", exc_info=True)
-
-		wx.CallAfter(_showDialog)
-
-	def _revertToDefaultConfigurationNoConfirm(self) -> None:
+	def onRevertToDefaultConfigurationCommand(self, evt):
 		"""Reset config to factory defaults without showing an undo dialog.
 		This is used for the keyboard shortcut triple-press recovery scenario.
 		"""
@@ -908,7 +829,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Here, default settings means settings that were there when the user first used NVDA.
 			_("Reset all settings to default state"),
 		)
-		self.Bind(wx.EVT_MENU, frame.onRevertToDefaultConfigurationCommand, item)
+		self.Bind(wx.EVT_MENU, frame._confirmRevertToDefaultConfiguration, item)
 		if NVDAState.shouldWriteToDisk():
 			item = self.menu.Append(
 				wx.ID_SAVE,

@@ -3645,7 +3645,7 @@ class GlobalCommands(ScriptableObject):
 		if scriptCount == 0:
 			gui.mainFrame.onRevertToSavedConfigurationCommand(None)
 		elif scriptCount == 2:
-			gui.mainFrame._revertToDefaultConfigurationNoConfirm()
+			gui.mainFrame.onRevertToDefaultConfigurationCommand(None)
 
 	@script(
 		# Translators: Input help mode message for activate python console command.
