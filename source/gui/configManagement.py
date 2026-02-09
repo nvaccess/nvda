@@ -106,23 +106,36 @@ class FactoryResetUndoDialog(MessageDialog):
 def confirmRevertToDefaultConfiguration() -> None:
 	"""Reset config to factory defaults, then show a dialog allowing the user to undo the reset.
 
+	If the configuration cannot be backed up (e.g. read-only media), the reset proceeds
+	without showing the undo dialog, as undo would not be possible.
 	This is used when triggered from the NVDA menu.
 	"""
 	configPath = NVDAState.WritePaths.nvdaConfigFile
 	backupPath = configPath + ".beforeReset.bak"
+	backupSucceeded = False
 	# Back up the current config file before resetting.
 	try:
 		if os.path.isfile(configPath):
 			shutil.copy2(configPath, backupPath)
+			backupSucceeded = True
 	except OSError:
 		log.error("Failed to back up configuration file before factory reset", exc_info=True)
 	queueHandler.queueFunction(queueHandler.eventQueue, core.resetConfiguration, factoryDefaults=True)
-	queueHandler.queueFunction(
-		queueHandler.eventQueue,
-		_showFactoryResetUndoDialog,
-		backupPath,
-		configPath,
-	)
+	if backupSucceeded:
+		queueHandler.queueFunction(
+			queueHandler.eventQueue,
+			_showFactoryResetUndoDialog,
+			backupPath,
+			configPath,
+		)
+	else:
+		queueHandler.queueFunction(
+			queueHandler.eventQueue,
+			ui.message,
+			# Translators: Reported when configuration has been restored to defaults,
+			# by using restore configuration to factory defaults item in NVDA menu.
+			_("Configuration restored to factory defaults"),
+		)
 
 
 def _showFactoryResetUndoDialog(backupPath: str, configPath: str) -> None:
