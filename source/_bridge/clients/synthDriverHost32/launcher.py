@@ -16,6 +16,7 @@ from winBindings.jobapi2 import JOB_OBJECT_LIMIT
 import jobObject
 from _bridge.components.services.nvwave import WavePlayerService
 
+
 @rpyc.service
 class NVDAService(Service):
 	"""The main NVDA service exposed to remote synth driver hosts."""
