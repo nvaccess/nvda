@@ -90,14 +90,6 @@ class WavePlayerFeederService(Service):
 		size: typing.Optional[int] = None,
 		onDone: typing.Optional[typing.Callable] = None,
 	) -> None:
-		if onDone:
-
-			def localOnDone():
-				log.debug("WavePlayerFeeder feed onDone callback start")
-				onDone()
-				log.debug("WavePlayerFeeder feed onDone callback end")
-		else:
-			localOnDone = None
 		self._player.feed(data, size=size, onDone=onDone)
 
 	@Service.exposed
