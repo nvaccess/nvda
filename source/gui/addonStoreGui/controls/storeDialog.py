@@ -426,6 +426,7 @@ class AddonStoreDialog(SettingsDialog):
 		self.filter(filterText)
 		if self._storeVM.listVM.getCount() > 0:
 			self._storeVM.listVM.setSelection(0)
+			# Ensure that the first item is selected in the UI as well, to keep the UI selection in sync with the VM selection.
 			self.addonListView.Select(0, on=True)
 
 	def onEnabledFilterChange(self, evt: wx.EVT_CHOICE):
