@@ -46,7 +46,6 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM = storeVM
 		self._storeVM.onDisplayableError.register(self.handleDisplayableError)
 		self._actionsContextMenu = _MonoActionsContextMenu(self._storeVM)
-		self._filterTextChangeTimer: wx.CallLater | None = None
 		self.openToTab = openToTab
 		super().__init__(parent, resizeable=True, buttons={wx.CLOSE})
 		if addonDataManager.storeSettings.showWarning:
@@ -195,7 +194,7 @@ class AddonStoreDialog(SettingsDialog):
 		searchFilterLabel = wx.StaticText(self, label=pgettext("addonStore", "&Search:"))
 		# noinspection PyAttributeOutsideInit
 		self.searchFilterCtrl = wx.TextCtrl(self)
-		self.searchFilterCtrl.Bind(wx.EVT_TEXT, self._onSearchText, self.searchFilterCtrl)
+		self.searchFilterCtrl.Bind(wx.EVT_TEXT, self.onFilterTextChange, self.searchFilterCtrl)
 		self.bindHelpEvent("AddonStoreFilterSearch", self.searchFilterCtrl)
 
 		filterCtrlsLine1.addItem(searchFilterLabel)
@@ -216,12 +215,6 @@ class AddonStoreDialog(SettingsDialog):
 		super()._onWindowDestroy(evt)
 		if requiresRestart:
 			wx.CallAfter(addonGui.promptUserForRestart)
-
-	def _onSearchText(self, evt: wx.EVT_TEXT):
-		FILTER_DELAY_MS = 200
-		if self._filterTextChangeTimer:
-			self._filterTextChangeTimer.Stop()
-		self._filterTextChangeTimer = wx.CallLater(FILTER_DELAY_MS, self.onFilterTextChange, None)
 
 	# Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
 	_installationPromptTitle = pgettext("addonStore", "Add-on installation")
@@ -433,6 +426,7 @@ class AddonStoreDialog(SettingsDialog):
 		self.filter(filterText)
 		if self._storeVM.listVM.getCount() > 0:
 			self._storeVM.listVM.setSelection(0)
+			self.addonListView.Select(0, on=True)
 
 	def onEnabledFilterChange(self, evt: wx.EVT_CHOICE):
 		index = self.enabledFilterCtrl.GetCurrentSelection()
