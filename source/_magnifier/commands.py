@@ -101,9 +101,9 @@ def panLeft() -> None:
 		magnifier,
 		MagnifierAction.PAN_LEFT,
 	):
-		edgeMessage = magnifier._pan(MagnifierAction.PAN_LEFT)
-		if edgeMessage:
-			sayEdgeMessage("Left")
+		hasNotMoved = magnifier._pan(MagnifierAction.PAN_LEFT)
+		if hasNotMoved:
+			sayhasNotMoved("Left")
 
 
 def panRight() -> None:
@@ -113,9 +113,9 @@ def panRight() -> None:
 		magnifier,
 		MagnifierAction.PAN_RIGHT,
 	):
-		edgeMessage = magnifier._pan(MagnifierAction.PAN_RIGHT)
-		if edgeMessage:
-			sayEdgeMessage("Right")
+		hasNotMoved = magnifier._pan(MagnifierAction.PAN_RIGHT)
+		if hasNotMoved:
+			sayhasNotMoved("Right")
 
 
 def panUp() -> None:
@@ -125,9 +125,9 @@ def panUp() -> None:
 		magnifier,
 		MagnifierAction.PAN_UP,
 	):
-		edgeMessage = magnifier._pan(MagnifierAction.PAN_UP)
-		if edgeMessage:
-			sayEdgeMessage("Top")
+		hasNotMoved = magnifier._pan(MagnifierAction.PAN_UP)
+		if hasNotMoved:
+			sayhasNotMoved("Top")
 
 
 def panDown() -> None:
@@ -137,9 +137,9 @@ def panDown() -> None:
 		magnifier,
 		MagnifierAction.PAN_DOWN,
 	):
-		edgeMessage = magnifier._pan(MagnifierAction.PAN_DOWN)
-		if edgeMessage:
-			sayEdgeMessage("Bottom")
+		hasNotMoved = magnifier._pan(MagnifierAction.PAN_DOWN)
+		if hasNotMoved:
+			sayhasNotMoved("Bottom")
 
 
 def panToLeftEdge() -> None:
@@ -149,9 +149,9 @@ def panToLeftEdge() -> None:
 		magnifier,
 		MagnifierAction.PAN_LEFT_EDGE,
 	):
-		edgeMessage = magnifier._pan(MagnifierAction.PAN_LEFT_EDGE)
-		if edgeMessage:
-			sayEdgeMessage("Left")
+		hasNotMoved = magnifier._pan(MagnifierAction.PAN_LEFT_EDGE)
+		if hasNotMoved:
+			sayhasNotMoved("Left")
 
 
 def panToRightEdge() -> None:
@@ -161,9 +161,9 @@ def panToRightEdge() -> None:
 		magnifier,
 		MagnifierAction.PAN_RIGHT_EDGE,
 	):
-		edgeMessage = magnifier._pan(MagnifierAction.PAN_RIGHT_EDGE)
-		if edgeMessage:
-			sayEdgeMessage("Right")
+		hasNotMoved = magnifier._pan(MagnifierAction.PAN_RIGHT_EDGE)
+		if hasNotMoved:
+			sayhasNotMoved("Right")
 
 
 def panToTopEdge() -> None:
@@ -173,9 +173,9 @@ def panToTopEdge() -> None:
 		magnifier,
 		MagnifierAction.PAN_TOP_EDGE,
 	):
-		edgeMessage = magnifier._pan(MagnifierAction.PAN_TOP_EDGE)
-		if edgeMessage:
-			sayEdgeMessage("Top")
+		hasNotMoved = magnifier._pan(MagnifierAction.PAN_TOP_EDGE)
+		if hasNotMoved:
+			sayhasNotMoved("Top")
 
 
 def panToBottomEdge() -> None:
@@ -185,9 +185,9 @@ def panToBottomEdge() -> None:
 		magnifier,
 		MagnifierAction.PAN_BOTTOM_EDGE,
 	):
-		edgeMessage = magnifier._pan(MagnifierAction.PAN_BOTTOM_EDGE)
-		if edgeMessage:
-			sayEdgeMessage("Bottom")
+		hasNotMoved = magnifier._pan(MagnifierAction.PAN_BOTTOM_EDGE)
+		if hasNotMoved:
+			sayhasNotMoved("Bottom")
 
 
 def toggleFilter() -> None:
@@ -326,17 +326,17 @@ def sayZoomMessage(zoomLevel: float):
 		pgettext(
 			"magnifier",
 			# Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
-			"Zooming in with {zoomLevel} level",
+			"{zoomLevel}x",
 		).format(zoomLevel=zoomLevel),
 	)
 
 
-def sayEdgeMessage(edge: str):
+def sayhasNotMoved(edge: str):
 	"""Annonce wich edge reached."""
 	ui.message(
 		pgettext(
 			"magnifier",
-			# Translators: Message announced when arriving at the left edge.
-			f"{edge} edge",
-		),
+			# Translators: Message announced when arriving at the {edge} edge.
+			"{edge} edge",
+		).format(edge=edge),
 	)
