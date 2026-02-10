@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-23 06:44+0000\n"
-"PO-Revision-Date: 2026-01-26 00:20\n"
+"POT-Creation-Date: 2026-02-06 07:00+0000\n"
+"PO-Revision-Date: 2026-02-09 00:23\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -15647,12 +15647,12 @@ msgstr "Отмена"
 #: gui\addonStoreGui\controls\messageDialogs.py:791
 #, python-brace-format
 msgctxt "addonStore"
-msgid "You have selected to copy 1 add-on to NVDA's system-wide configuration. Using this add-on during sign-in and on secure screens is a serious security risk."
+msgid "You have selected to copy {num} add-on to NVDA's system-wide configuration. Using this add-on during sign-in and on secure screens is a serious security risk."
 msgid_plural "You have selected to copy {num} add-ons to NVDA's system-wide configuration. Using these add-ons during sign-in and on secure screens is a serious security risk."
-msgstr[0] "Вы выбрали копирование {num} дополнения в общесистемную конфигурацию NVDA. Использование этого дополнения во время входа в систему и на защищённых экранах представляет собой серьёзную угрозу безопасности."
-msgstr[1] "Вы выбрали копирование {num} дополнений в общесистемную конфигурацию NVDA. Использование этих дополнений во время входа в систему и на защищённых экранах представляет собой серьёзную угрозу безопасности."
-msgstr[2] "Вы выбрали копирование {num} дополнений в общесистемную конфигурацию NVDA. Использование этих дополнений во время входа в систему и на защищённых экранах представляет собой серьёзную угрозу безопасности."
-msgstr[3] "Вы выбрали копирование {num} дополнений в общесистемную конфигурацию NVDA. Использование этих дополнений во время входа в систему и на защищённых экранах представляет собой серьёзную угрозу безопасности."
+msgstr[0] "Вы решили скопировать {num} дополнение в общесистемную конфигурацию NVDA. Использование этого дополнения во время входа в систему и на защищённых экранах является серьёзной угрозой безопасности."
+msgstr[1] "Вы решили скопировать {num} дополнения в общесистемную конфигурацию NVDA. Использование этих дополнений во время входа в систему и на защищённых экранах является серьёзной угрозой безопасности."
+msgstr[2] "Вы решили скопировать {num} дополнений в общесистемную конфигурацию NVDA. Использование этих дополнений во время входа в систему и на защищённых экранах является серьёзной угрозой безопасности."
+msgstr[3] "Вы решили скопировать {num} дополнений в общесистемную конфигурацию NVDA. Использование этих дополнений во время входа в систему и на защищённых экранах является серьёзной угрозой безопасности."
 
 #. Translators: A prompt asking the user to confirm whether to perform an action.
 #: gui\addonStoreGui\controls\messageDialogs.py:801
@@ -16289,7 +16289,7 @@ msgstr "неизвестный метод ввода"
 #. 10 per cent from top edge of screen,
 #. width is 40 per cent of screen,
 #. height is 50 per cent of screen.
-#: NVDAObjects\__init__.py:666
+#: NVDAObjects\__init__.py:669
 #, python-brace-format
 msgid "Object edges positioned {left:.1f} percent from left edge of screen, {top:.1f} percent from top edge of screen, width is {width:.1f} percent of screen, height is {height:.1f} percent of screen"
 msgstr "Границы объекта расположены на расстоянии {left:.1f} процентов от левого края экрана и {top:.1f} процентов от верхнего края экрана; ширина составляет {width:.1f} процентов от ширины экрана, высота — {height:.1f} процентов от высоты экрана"
@@ -18600,7 +18600,7 @@ msgstr "Всегда показывать предупреждение при в
 #: screenCurtain\_screenCurtain.py:35
 msgctxt "screenCurtain"
 msgid "Cannot enable screen curtain while performing content recognition"
-msgstr "Не удаётся включить затемнение экрана при выполнении распознавания контента"
+msgstr "Не удаётся включить затемнение экрана при выполнении распознавания содержимого"
 
 #. Translators: Reported when the screen curtain could not be enabled.
 #: screenCurtain\_screenCurtain.py:39
@@ -19160,6 +19160,21 @@ msgstr "ничего"
 #: synthDrivers\oneCore.py:182
 msgid "Windows OneCore voices"
 msgstr "Голоса Windows OneCore"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi4_32.py:18
+msgid "Microsoft Speech API version 4"
+msgstr "Microsoft Speech API version 4"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi5.py:558 _synthDrivers32\_sapi5.py:558
+msgid "Microsoft Speech API version 5 (64 bit)"
+msgstr "Microsoft Speech API version 5 (64 bit)"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi5_32.py:15
+msgid "Microsoft Speech API version 5 (32 bit)"
+msgstr "Microsoft Speech API version 5 (32 bit)"
 
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\silence.py:16

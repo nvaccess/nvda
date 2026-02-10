@@ -3750,7 +3750,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for toggle braille mode command
 		description=_("Toggles braille mode"),
 		category=SCRCAT_BRAILLE,
-		gesture="kb:nvda+alt+t",
+		gesture="kb:NVDA+alt+t",
 	)
 	def script_toggleBrailleMode(self, gesture: inputCore.InputGesture):
 		curMode = BrailleMode(config.conf["braille"]["mode"])
@@ -4973,7 +4973,7 @@ class GlobalCommands(ScriptableObject):
 			"Toggles the magnifier on and off",
 		),
 		category=SCRCAT_VISION,
-		gesture="kb:nvda+shift+w",
+		gesture="kb:NVDA+shift+w",
 	)
 	def script_toggleMagnifier(
 		self,
@@ -4987,7 +4987,7 @@ class GlobalCommands(ScriptableObject):
 			"Increases the magnification level of the magnifier",
 		),
 		category=SCRCAT_VISION,
-		gesture="kb:nvda+shift+=",
+		gesture="kb:NVDA+shift+=",
 	)
 	def script_zoomIn(
 		self,
@@ -5001,7 +5001,7 @@ class GlobalCommands(ScriptableObject):
 			"Decreases the magnification level of the magnifier",
 		),
 		category=SCRCAT_VISION,
-		gesture="kb:nvda+shift+-",
+		gesture="kb:NVDA+shift+-",
 	)
 	def script_zoomOut(
 		self,
@@ -5029,6 +5029,7 @@ class GlobalCommands(ScriptableObject):
 			"Toggle filter of the magnifier",
 		),
 		category=SCRCAT_VISION,
+		gesture="kb:NVDA+shift+i",
 	)
 	def script_toggleFilter(
 		self,
@@ -5055,7 +5056,7 @@ class GlobalCommands(ScriptableObject):
 			"Launch spotlight if magnifier is full-screen",
 		),
 		category=SCRCAT_VISION,
-		gesture="kb:nvda+shift+l",
+		gesture="kb:NVDA+shift+l",
 	)
 	def script_startSpotlight(
 		self,
