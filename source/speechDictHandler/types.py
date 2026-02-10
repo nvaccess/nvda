@@ -11,7 +11,6 @@ import re
 import typing
 from dataclasses import dataclass, field
 from functools import cached_property
-from typing import Self
 
 import config
 from logHandler import log
@@ -43,7 +42,7 @@ class EntryType(DisplayStringIntEnum):
 	"""Unix shell-style wildcards."""
 
 	@cached_property
-	def _displayStringLabels(self) -> dict[Self, str]:
+	def _displayStringLabels(self) -> dict[typing.Self, str]:
 		return {
 			# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 			EntryType.ANYWHERE: _("&Anywhere"),
@@ -75,7 +74,7 @@ class DictionaryType(DisplayStringStrEnum):
 	"""Built-in speech dictionary."""
 
 	@cached_property
-	def _displayStringLabels(self) -> dict[Self, str]:
+	def _displayStringLabels(self) -> dict[typing.Self, str]:
 		return {
 			# Translators: A type of speech dictionary.
 			DictionaryType.TEMP: _("Temporary"),

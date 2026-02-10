@@ -87,6 +87,7 @@ With listAvailableSpeechDictDefinitions, there is a public interface to retrieve
 
 def listAvailableSpeechDictDefinitions(alphabetized: bool = False) -> list[SpeechDictDefinition]:
 	"""Get available speech dictionary definitions.
+	Note that this function returns both mandatory and optional speech dictionaries, and does not filter based on whether the dictionary is currently enabled.
 	:param alphabetized: If True, the returned list is sorted alphabetically by display name.
 	"""
 	defs = list(_speechDictDefinitions)

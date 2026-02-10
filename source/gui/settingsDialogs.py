@@ -1853,7 +1853,9 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 
 	def _appendSpeechDictionariesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		self._availableSpeechDictionaries = [
-			d for d in speechDictHandler.listAvailableSpeechDictDefinitions() if d.userVisible
+			d
+			for d in speechDictHandler.listAvailableSpeechDictDefinitions(alphabetized=True)
+			if d.userVisible
 		]
 		self.speechDictionariesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
 			# Translators: Label of the list where user can enable or disable speech dictionaries.
