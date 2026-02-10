@@ -5927,7 +5927,7 @@ class MagnifierPanel(SettingsPanel):
 			choices=zoomChoices,
 		)
 		self.bindHelpEvent(
-			"magnifierDefaultZoom",
+			"MagnifierDefaultZoom",
 			self.defaultZoomList,
 		)
 
@@ -5968,7 +5968,7 @@ class MagnifierPanel(SettingsPanel):
 			choices=fullscreenModeChoices,
 		)
 		self.bindHelpEvent(
-			"magnifierDefaultFullscreenMode",
+			"MagnifierDefaultFullscreenMode",
 			self.defaultFullscreenModeList,
 		)
 
@@ -5977,7 +5977,7 @@ class MagnifierPanel(SettingsPanel):
 		trueCenterText = _("Use &true center in fullscreen mode")
 		self.trueCenterCheckBox = sHelper.addItem(wx.CheckBox(self, label=trueCenterText))
 		self.bindHelpEvent(
-			"magnifierTrueCenter",
+			"MagnifierUseTrueCenter",
 			self.trueCenterCheckBox,
 		)
 		self.trueCenterCheckBox.SetValue(magnifierConfig.isTrueCentered())
@@ -5991,7 +5991,7 @@ class MagnifierPanel(SettingsPanel):
 		keepMouseCenteredText = _("Keep &mouse pointer centered in magnifier view")
 		self.keepMouseCenteredCheckBox = sHelper.addItem(wx.CheckBox(self, label=keepMouseCenteredText))
 		self.bindHelpEvent(
-			"magnifierKeepMouseCentered",
+			"MagnifierKeepMouseCentered",
 			self.keepMouseCenteredCheckBox,
 		)
 		self.keepMouseCenteredCheckBox.SetValue(magnifierConfig.shouldKeepMouseCentered())

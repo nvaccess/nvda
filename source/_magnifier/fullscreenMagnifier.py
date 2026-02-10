@@ -184,7 +184,6 @@ class FullScreenMagnifier(Magnifier):
 		focusX, focusY = coordinates
 		lastLeft, lastTop, visibleWidth, visibleHeight = self._getMagnifierPosition(
 			self._lastScreenPosition,
-			False,  # Never use true center for border mode
 		)
 
 		minX = lastLeft + self._MARGIN_BORDER

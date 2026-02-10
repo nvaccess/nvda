@@ -202,11 +202,17 @@ class Magnifier:
 		else:
 			log.debug("no timer to stop")
 
-	def _getMagnifierPosition(self, coordinates: Coordinates, isTrueCentered: bool) -> MagnifierPosition:
+	def _getMagnifierPosition(
+		self,
+		coordinates: Coordinates,
+		isTrueCentered: bool = False,
+	) -> MagnifierPosition:
 		"""
 		Compute the top-left corner of the magnifier window centered on (x, y)
 
 		:param coordinates: The (x, y) coordinates to center the magnifier on
+		:param isTrueCentered: For fullscreen magnifier, whether to keep the focus truly centered or allow it to move towards edges
+				(only applicable for fullscreen magnifier, set to False for other types or if true centering is not desired)
 
 		:return: The position and size of the magnifier window
 		"""
