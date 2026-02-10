@@ -65,7 +65,7 @@ def formatVersionForGUI(year, major, minor):
 name = "NVDA"
 version_year = 2025
 version_major = 3
-version_minor = 2
+version_minor = 3
 version_build = 0  # Should not be set manually. Set in 'sconscript'.
 version = _formatDevVersionString()
 publisher = "unknown"
