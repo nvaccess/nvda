@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-23 06:44+0000\n"
-"PO-Revision-Date: 2026-01-26 00:20\n"
+"POT-Creation-Date: 2026-02-06 07:00+0000\n"
+"PO-Revision-Date: 2026-02-09 00:23\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -15521,20 +15521,23 @@ msgstr "アドオンが更新されました。NVDAの再起動後に有効に�
 #: gui\addonStoreGui\controls\messageDialogs.py:668
 msgctxt "addonStore"
 msgid "Copy Add-ons to System-wide Configuration"
-msgstr ""
+msgstr "システム全体の設定にアドオンをコピー"
 
 #. Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:681
 msgctxt "addonStore"
 msgid "One or more add-ons are currently enabled in your NVDA configuration. If run on secure screens, they will have unrestricted, higher-than-administrator level access to your entire system. You are strongly encouraged to copy only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens.\n\n"
 "Check only the add-ons you wish to copy to the system-wide configuration."
-msgstr ""
+msgstr "現在の NVDA 設定では1つ以上のアドオンが有効になっています。\n"
+"これらのアドオンは、セキュア画面で実行された場合、システム全体に対して管理者権限を超える制限のない高いレベルのアクセス権を持ちます。\n"
+"サインイン時やセキュア画面で NVDA を使用するために本当に必要なアドオンのみをコピーすることを、強く推奨します。\n\n"
+"システム全体の設定にコピーしたいアドオンのみを選択してください。"
 
 #. Translators: The label of the list which allows users to select which add-ons to copy to the system profile
 #: gui\addonStoreGui\controls\messageDialogs.py:693
 msgctxt "addonStore"
 msgid "Add-ons"
-msgstr ""
+msgstr "アドオン"
 
 #. Translators: The label for a column in the copy add-ons dialog that displays the name of the add-on
 #. Translators: The name of the column that contains names of addons.
@@ -15556,40 +15559,40 @@ msgstr "開発者"
 #: gui\addonStoreGui\controls\messageDialogs.py:703
 msgctxt "addonStore"
 msgid "Version"
-msgstr ""
+msgstr "バージョン"
 
 #. Translators: The label for a button in the copy add-ons dialog which will initiate the copy process
 #: gui\addonStoreGui\controls\messageDialogs.py:718
 msgctxt "addonStore"
 msgid "&Continue"
-msgstr ""
+msgstr "継続(&C)"
 
 #. Translators: The label for a button in the copy add-ons dialog which will abandon the copy process
 #: gui\addonStoreGui\controls\messageDialogs.py:721
 msgctxt "addonStore"
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #. Translators: A message to warn the user when attempting to copy add-ons for use on secure screens
 #: gui\addonStoreGui\controls\messageDialogs.py:791
 #, python-brace-format
 msgctxt "addonStore"
-msgid "You have selected to copy 1 add-on to NVDA's system-wide configuration. Using this add-on during sign-in and on secure screens is a serious security risk."
+msgid "You have selected to copy {num} add-on to NVDA's system-wide configuration. Using this add-on during sign-in and on secure screens is a serious security risk."
 msgid_plural "You have selected to copy {num} add-ons to NVDA's system-wide configuration. Using these add-ons during sign-in and on secure screens is a serious security risk."
-msgstr[0] ""
+msgstr[0] "NVDAのシステム全体の設定に {num} 個のアドオンをコピーすることを選択しました。サインイン中およびセキュアな画面でこれらのアドオンを使用すると、深刻なセキュリティリスクがあります。"
 
 #. Translators: A prompt asking the user to confirm whether to perform an action.
 #: gui\addonStoreGui\controls\messageDialogs.py:801
 msgctxt "addonStore"
 msgid "Are you sure you want to continue?"
-msgstr ""
+msgstr "本当に続行しますか？"
 
 #. Translators: The title of the warning dialog displayed when trying to
 #. copy add-ons for use on secure screens.
 #: gui\addonStoreGui\controls\messageDialogs.py:805
 msgctxt "addonStore"
 msgid "Warning"
-msgstr ""
+msgstr "警告"
 
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 #: gui\addonStoreGui\controls\storeDialog.py:38
@@ -15987,7 +15990,7 @@ msgstr "学習障害"
 #: mathPres\MathCAT\preferences.py:32
 msgctxt "math"
 msgid "Blindness"
-msgstr "ブラインドネス"
+msgstr "視覚障害"
 
 #. Translators: category of impairment that MathCAT supports: people who have low vision
 #: mathPres\MathCAT\preferences.py:34
@@ -16207,7 +16210,7 @@ msgstr "不明な入力メソッド"
 #. 10 per cent from top edge of screen,
 #. width is 40 per cent of screen,
 #. height is 50 per cent of screen.
-#: NVDAObjects\__init__.py:666
+#: NVDAObjects\__init__.py:669
 #, python-brace-format
 msgid "Object edges positioned {left:.1f} percent from left edge of screen, {top:.1f} percent from top edge of screen, width is {width:.1f} percent of screen, height is {height:.1f} percent of screen"
 msgstr "オブジェクトの端は画面の左端から{left:.1f}パーセント、画面の上端から{top:.1f}パーセントの位置にあり、幅は画面の{width:.1f}パーセント、高さは{height:.1f}パーセントです"
@@ -19027,6 +19030,21 @@ msgstr "なし"
 #: synthDrivers\oneCore.py:182
 msgid "Windows OneCore voices"
 msgstr "Windows OneCore 音声"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi4_32.py:18
+msgid "Microsoft Speech API version 4"
+msgstr "Microsoft Speech API バージョン4"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi5.py:558 _synthDrivers32\_sapi5.py:558
+msgid "Microsoft Speech API version 5 (64 bit)"
+msgstr "Microsoft Speech API バージョン5 (64ビット)"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi5_32.py:15
+msgid "Microsoft Speech API version 5 (32 bit)"
+msgstr "Microsoft Speech API バージョン5 (32ビット)"
 
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\silence.py:16

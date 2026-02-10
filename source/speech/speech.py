@@ -1300,14 +1300,10 @@ def _getSelectionMessageSpeech(
 			return _getSpeakMessageSpeech(message) + text
 
 		seq = list(text)
-		# Merge prefix into the first string item to preserve spacing.
-		if prefix:
-			for i, item in enumerate(seq):
-				if isinstance(item, str):
-					seq[i] = prefix + item
-					break
-		# Append suffix as a separate item so it remains outside any
+		# Insert prefix/suffix as separate items so they remain outside any
 		# speech commands (e.g. PitchCommand for capitals).
+		if prefix:
+			seq.insert(0, prefix)
 		if suffix:
 			seq.append(suffix)
 		return seq
