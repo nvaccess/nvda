@@ -202,7 +202,7 @@ class Magnifier:
 		else:
 			log.debug("no timer to stop")
 
-	def _getMagnifierPosition(self, coordinates: Coordinates) -> MagnifierPosition:
+	def _getMagnifierPosition(self, coordinates: Coordinates, isTrueCentered: bool) -> MagnifierPosition:
 		"""
 		Compute the top-left corner of the magnifier window centered on (x, y)
 
@@ -219,8 +219,9 @@ class Magnifier:
 		left = int(x - (visibleWidth / 2))
 		top = int(y - (visibleHeight / 2))
 
-		# Clamp to screen boundaries
-		left = max(0, min(left, int(self._displayOrientation.width - visibleWidth)))
-		top = max(0, min(top, int(self._displayOrientation.height - visibleHeight)))
+		# Clamp to screen boundaries only if not in true center mode
+		if not isTrueCentered:
+			left = max(0, min(left, int(self._displayOrientation.width - visibleWidth)))
+			top = max(0, min(top, int(self._displayOrientation.height - visibleHeight)))
 
 		return MagnifierPosition(left, top, int(visibleWidth), int(visibleHeight))

@@ -116,6 +116,15 @@ def setDefaultFullscreenMode(mode: FullScreenMode) -> None:
 	config.conf["magnifier"]["defaultFullscreenMode"] = mode.value
 
 
+def isTrueCentered() -> bool:
+	"""
+	Check if true centered mode is enabled in config.
+
+	:return: True if true centered mode is enabled, False otherwise.
+	"""
+	return config.conf["magnifier"]["isTrueCentered"]
+
+
 def shouldKeepMouseCentered() -> bool:
 	"""
 	Check if mouse pointer should be kept centered in magnifier view.

@@ -210,7 +210,7 @@ class TestMagnifier(_TestMagnifier):
 	def testMagnifierPosition(self):
 		"""Computing magnifier position and size."""
 		x, y = int(self.screenWidth / 2), int(self.screenHeight / 2)
-		left, top, width, height = self.magnifier._getMagnifierPosition((x, y))
+		left, top, width, height = self.magnifier._getMagnifierPosition((x, y), isTrueCentered=False)
 
 		expected_width = int(self.screenWidth / self.magnifier.zoomLevel)
 		expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
@@ -223,17 +223,33 @@ class TestMagnifier(_TestMagnifier):
 		self.assertEqual(height, expected_height)
 
 		# Test left clamping
-		left, top, width, height = self.magnifier._getMagnifierPosition((100, 540))
+		left, top, width, height = self.magnifier._getMagnifierPosition((100, 540), isTrueCentered=False)
 		self.assertGreaterEqual(left, 0)
 
 		# Test right clamping
-		left, top, width, height = self.magnifier._getMagnifierPosition((1800, 540))
+		left, top, width, height = self.magnifier._getMagnifierPosition((1800, 540), isTrueCentered=False)
 		self.assertLessEqual(left + width, self.screenWidth)
 
 		# Test different zoom level
 		self.magnifier.zoomLevel = 4.0
-		left, top, width, height = self.magnifier._getMagnifierPosition((960, 540))
+		left, top, width, height = self.magnifier._getMagnifierPosition((960, 540), isTrueCentered=False)
 		expected_width = int(self.screenWidth / self.magnifier.zoomLevel)
 		expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
 		self.assertEqual(width, expected_width)
 		self.assertEqual(height, expected_height)
+
+
+def testMagnifierPositionTrueCentered(self):
+	"""Test magnifier position calculation with true centered mode."""
+	x, y = int(self.screenWidth / 2), int(self.screenHeight / 2)
+	left, top, width, height = self.magnifier._getMagnifierPosition((x, y), isTrueCentered=True)
+
+	expected_width = int(self.screenWidth / self.magnifier.zoomLevel)
+	expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
+	expected_left = int(x - (expected_width / 2))
+	expected_top = int(y - (expected_height / 2))
+
+	self.assertEqual(left, expected_left)
+	self.assertEqual(top, expected_top)
+	self.assertEqual(width, expected_width)
+	self.assertEqual(height, expected_height)
