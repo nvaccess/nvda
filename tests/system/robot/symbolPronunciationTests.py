@@ -542,7 +542,7 @@ def test_selByChar():
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=list(
 			(
-				i + (" " if i else "") + "selected"
+				i + ("  " if i else "") + "selected"
 				for i in [
 					"T",
 					"S",
@@ -570,7 +570,7 @@ def test_selByChar():
 		symbolLevel=SymLevel.ALL,
 		expectedSpeech=list(
 			(
-				i + (" " if i else "") + "selected"
+				i + ("  " if i else "") + "selected"
 				for i in [
 					"T",
 					"S",
