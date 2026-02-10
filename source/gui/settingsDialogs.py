@@ -4930,6 +4930,16 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		self.updateStateDependentControls()
 
 	def postInit(self):
+		# Start BLE scanner if not already running to populate device list
+		import hwIo.ble
+
+		if not hwIo.ble.scanner.isScanning:
+			try:
+				hwIo.ble.scanner.start()  # Starts in background mode
+				log.debug("Started BLE scanner for braille display selection")
+			except Exception:
+				log.error("Failed to start BLE scanner", exc_info=True)
+
 		# Finally, ensure that focus is on the list of displays.
 		self.displayList.SetFocus()
 
@@ -4993,10 +5003,20 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 				# Display name not in config or port not valid
 				selection = 0
 			self.portsList.SetSelection(selection)
-		# If no port selection is possible or only automatic selection is available, disable the port selection control
-		enable = len(self.possiblePorts) > 0 and not (
-			len(self.possiblePorts) == 1 and self.possiblePorts[0][0] == "auto"
-		)
+			enable = True
+		else:
+			# No ports available - show helpful message
+			# Translators: Message shown when no devices are available for a braille display
+			noDevicesMessage = _("(No devices found - switch to another display and back to refresh)")
+			self.portsList.SetItems([noDevicesMessage])
+			self.portsList.SetSelection(0)
+			enable = False
+
+		# Special case: If only "auto" port exists, disable manual selection
+		# (This means devices are detected but no manual selection is needed)
+		if len(self.possiblePorts) == 1 and self.possiblePorts[0][0] == "auto":
+			enable = False
+
 		self.portsList.Enable(enable)
 
 		self.autoDetectList.Enable(isAutoDisplaySelected)
@@ -5042,7 +5062,25 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			# Hack: we need to update the display in our parent window before closing.
 			# Otherwise, NVDA will report the old display even though the new display is reflected visually.
 			self.Parent.updateCurrentDisplay()
+		self._stopBleScanner()
 		super(BrailleDisplaySelectionDialog, self).onOk(evt)
+
+	def onCancel(self, evt):
+		"""Stop BLE scanner when dialog is cancelled if background detection is not active."""
+		self._stopBleScanner()
+		super().onCancel(evt)
+
+	def _stopBleScanner(self):
+		"""Stop BLE scanner if it's running and background detection is not active."""
+		import hwIo.ble
+
+		# Only stop if we're not in automatic detection mode
+		if hwIo.ble.scanner.isScanning and config.conf["braille"]["display"] != braille.AUTO_DISPLAY_NAME:
+			try:
+				hwIo.ble.scanner.stop()
+				log.debug("Stopped BLE scanner after braille display selection dialog closed")
+			except Exception:
+				log.error("Failed to stop BLE scanner", exc_info=True)
 
 
 class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):

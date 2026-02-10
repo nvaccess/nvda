@@ -758,6 +758,11 @@ def main():
 
 	log.debug("Initializing appModule Handler")
 	appModuleHandler.initialize()
+	import asyncioEventLoop
+
+	log.debug("Initializing asyncio event loop")
+	asyncioEventLoop.initialize()
+
 	log.debug("initializing background i/o")
 	import hwIo
 
@@ -1100,6 +1105,7 @@ def main():
 	_terminate(characterProcessing)
 	_terminate(bdDetect)
 	_terminate(hwIo)
+	_terminate(asyncioEventLoop, name="asyncio event loop")
 	_terminate(addonHandler)
 	_terminate(dataManager, name="addon dataManager")
 	_terminate(garbageHandler)
