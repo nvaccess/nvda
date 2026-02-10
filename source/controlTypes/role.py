@@ -404,6 +404,7 @@ _roleLabels: Dict[Role, str] = {
 	Role.TEXTFRAME: _("text frame"),
 	# Translators: Identifies a toggle button (a button used to toggle something).
 	Role.TOGGLEBUTTON: _("toggle button"),
+	# Translators: Identifies a border element, usually a visual boundary or outline.
 	Role.BORDER: _("border"),
 	# Translators: Identifies a caret object.
 	Role.CARET: _("caret"),
@@ -459,6 +460,7 @@ _roleLabels: Dict[Role, str] = {
 	Role.COLORCHOOSER: _("color chooser"),
 	# Translators: Identifies a file chooser (to select a file or groups of files from a list).
 	Role.FILECHOOSER: _("file chooser"),
+	# Translators: Identifies a filler element, used to take up empty space in a UI layout.
 	Role.FILLER: _("filler"),
 	# Translators: Identifies a menu such as file menu.
 	Role.MENU: _("menu"),
@@ -499,12 +501,17 @@ _roleLabels: Dict[Role, str] = {
 	Role.ALERT: _("alert"),
 	# Translators: Identifies a data grid control (a grid which displays data).
 	Role.DATAGRID: _("data grid"),
+	# Translators: Identifies a data item in a data grid or table.
 	Role.DATAITEM: _("data item"),
+	# Translators: Identifies a header item in a table or list.
 	Role.HEADERITEM: _("header item"),
 	# Translators: Identifies a thumb control (a button-like control for changing options).
 	Role.THUMB: _("thumb control"),
+	# Translators: Identifies a calendar control.
 	Role.CALENDAR: _("calendar"),
+	# Translators: Identifies a video element.
 	Role.VIDEO: _("video"),
+	# Translators: Identifies an audio element.
 	Role.AUDIO: _("audio"),
 	# Translators: Identifies a chart element.
 	Role.CHARTELEMENT: _("chart element"),
