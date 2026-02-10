@@ -603,6 +603,7 @@ def getSpellingSpeech(
 	locale: Optional[str] = None,
 	useCharacterDescriptions: bool = False,
 	endsUtterance: bool = True,
+	useCharMode: bool = True,
 ) -> Generator[SequenceItemT, None, None]:
 	synth = getSynth()
 	synthConfig = config.conf["speech"][synth.name]
@@ -627,7 +628,7 @@ def getSpellingSpeech(
 		],
 		endsUtterance=endsUtterance,
 	)
-	if synthConfig["useSpellingFunctionality"]:
+	if useCharMode and synthConfig["useSpellingFunctionality"]:
 		seq = _getSpellingSpeechAddCharMode(seq)
 	# This function applies Unicode normalization as appropriate.
 	# Therefore, suppress the global normalization that might still occur
@@ -1378,25 +1379,25 @@ def speakSelectionChange(  # noqa: C901
 		if not generalize:
 			for text in selectedTextList:
 				if len(text) == 1:
-					text = list(getSpellingSpeech(text, locale, endsUtterance=False))
+					text = list(getSpellingSpeech(text, locale, endsUtterance=False, useCharMode=False))
 				speakTextSelected(text, priority=priority)
 		elif len(selectedTextList) > 0:
 			text = newInfo.text
 			if len(text) == 1:
-				text = list(getSpellingSpeech(text, locale, endsUtterance=False))
+				text = list(getSpellingSpeech(text, locale, endsUtterance=False, useCharMode=False))
 			speakTextSelected(text, priority=priority)
 	if speakUnselected:
 		if not generalize:
 			for text in unselectedTextList:
 				if len(text) == 1:
-					text = list(getSpellingSpeech(text, locale, endsUtterance=False))
+					text = list(getSpellingSpeech(text, locale, endsUtterance=False, useCharMode=False))
 				# Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 				speakSelectionMessage(_("%s unselected"), text, priority=priority)
 		elif len(unselectedTextList) > 0:
 			if not newInfo.isCollapsed:
 				text = newInfo.text
 				if len(text) == 1:
-					text = list(getSpellingSpeech(text, locale, endsUtterance=False))
+					text = list(getSpellingSpeech(text, locale, endsUtterance=False, useCharMode=False))
 				# Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
 				speakSelectionMessage(_("%s selected instead"), text, priority=priority)
 			else:
