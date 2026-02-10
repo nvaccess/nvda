@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-23 06:44+0000\n"
-"PO-Revision-Date: 2026-01-26 00:19\n"
+"POT-Creation-Date: 2026-02-06 07:00+0000\n"
+"PO-Revision-Date: 2026-02-09 00:23\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -13736,7 +13736,7 @@ msgstr "وضع التصفُّح الافتراضي:"
 #: gui\settingsDialogs.py:2893
 msgctxt "math"
 msgid "Reset to the default navigation mode for each new equation"
-msgstr ""
+msgstr "استخدام وضع التصفُّح الافتراضي مع كل معادلة جديدة"
 
 #. Translators: label for checkbox that controls whether arrow keys move out of fractions, etc.,
 #. or whether you have to manually back out of the fraction, etc.
@@ -15656,7 +15656,7 @@ msgstr "اكتمل تحديث الإضافات، أعِدْ تشغيل NVDA لت
 #: gui\addonStoreGui\controls\messageDialogs.py:668
 msgctxt "addonStore"
 msgid "Copy Add-ons to System-wide Configuration"
-msgstr ""
+msgstr "نسخُ الإضافات البرمجية إلى إعدادات النظام العامة"
 
 #. Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:681
@@ -15697,19 +15697,19 @@ msgstr ""
 #: gui\addonStoreGui\controls\messageDialogs.py:718
 msgctxt "addonStore"
 msgid "&Continue"
-msgstr ""
+msgstr "&متابعة"
 
 #. Translators: The label for a button in the copy add-ons dialog which will abandon the copy process
 #: gui\addonStoreGui\controls\messageDialogs.py:721
 msgctxt "addonStore"
 msgid "Cancel"
-msgstr ""
+msgstr "إلغاء"
 
 #. Translators: A message to warn the user when attempting to copy add-ons for use on secure screens
 #: gui\addonStoreGui\controls\messageDialogs.py:791
 #, python-brace-format
 msgctxt "addonStore"
-msgid "You have selected to copy 1 add-on to NVDA's system-wide configuration. Using this add-on during sign-in and on secure screens is a serious security risk."
+msgid "You have selected to copy {num} add-on to NVDA's system-wide configuration. Using this add-on during sign-in and on secure screens is a serious security risk."
 msgid_plural "You have selected to copy {num} add-ons to NVDA's system-wide configuration. Using these add-ons during sign-in and on secure screens is a serious security risk."
 msgstr[0] ""
 msgstr[1] ""
@@ -15722,14 +15722,14 @@ msgstr[5] ""
 #: gui\addonStoreGui\controls\messageDialogs.py:801
 msgctxt "addonStore"
 msgid "Are you sure you want to continue?"
-msgstr ""
+msgstr "هل أنت من رغبتك في المتابعة؟"
 
 #. Translators: The title of the warning dialog displayed when trying to
 #. copy add-ons for use on secure screens.
 #: gui\addonStoreGui\controls\messageDialogs.py:805
 msgctxt "addonStore"
 msgid "Warning"
-msgstr ""
+msgstr "تحذير"
 
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 #: gui\addonStoreGui\controls\storeDialog.py:38
@@ -16357,7 +16357,7 @@ msgstr "طريقة كتابة غير معروفة"
 #. 10 per cent from top edge of screen,
 #. width is 40 per cent of screen,
 #. height is 50 per cent of screen.
-#: NVDAObjects\__init__.py:666
+#: NVDAObjects\__init__.py:669
 #, python-brace-format
 msgid "Object edges positioned {left:.1f} percent from left edge of screen, {top:.1f} percent from top edge of screen, width is {width:.1f} percent of screen, height is {height:.1f} percent of screen"
 msgstr "موضع الكائن {left:.1f} بالمائة من الحافة اليسرى للشاشة، {top:.1f} بالمائة من الحافة العلوية للشاشة، العرض يغطي {width:.1f} بالمائة من الشاشة، والارتفاع {height:.1f} بالمائة من الشاشة"
@@ -19262,6 +19262,21 @@ msgstr "لا يوجد"
 #: synthDrivers\oneCore.py:182
 msgid "Windows OneCore voices"
 msgstr "أصوات ويندوز OneCore"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi4_32.py:18
+msgid "Microsoft Speech API version 4"
+msgstr "Microsoft Speech API الإصدار 4"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi5.py:558 _synthDrivers32\_sapi5.py:558
+msgid "Microsoft Speech API version 5 (64 bit)"
+msgstr ""
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi5_32.py:15
+msgid "Microsoft Speech API version 5 (32 bit)"
+msgstr "Microsoft Speech API الإصدار 5 (32 بِت)"
 
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\silence.py:16
