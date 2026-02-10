@@ -380,7 +380,7 @@ def test_selByWord():
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=list(
 			(
-				i + ("  " if i else "") + "selected"
+				i + (" " if i.endswith(" ") else "  " if i else "") + "selected"
 				for i in [
 					"Test: ",
 					"Say ",
@@ -425,7 +425,7 @@ def test_selByWord():
 		symbolLevel=SymLevel.ALL,
 		expectedSpeech=list(
 			(
-				i + ("  " if i else "") + "selected"
+				i + (" " if i.endswith(" ") else "  " if i else "") + "selected"
 				for i in [
 					"Test colon: ",
 					"Say ",
