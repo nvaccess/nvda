@@ -12,10 +12,6 @@ from typing import TYPE_CHECKING
 
 from .config import getDefaultMagnifierType
 from .utils.types import MagnifierType
-from .fullscreenMagnifier import FullScreenMagnifier
-from .fixedMagnifier import FixedMagnifier
-from .dockedMagnifier import DockedMagnifier
-from .lensMagnifier import LensMagnifier
 
 if TYPE_CHECKING:
 	from .magnifier import Magnifier
@@ -33,12 +29,20 @@ def createMagnifier(magnifierType: MagnifierType) -> "Magnifier":
 	"""
 	match magnifierType:
 		case MagnifierType.FULLSCREEN:
+			from .fullscreenMagnifier import FullScreenMagnifier
+
 			return FullScreenMagnifier()
 		case MagnifierType.FIXED:
+			from .fixedMagnifier import FixedMagnifier
+
 			return FixedMagnifier()
 		case MagnifierType.DOCKED:
+			from .dockedMagnifier import DockedMagnifier
+
 			return DockedMagnifier()
 		case MagnifierType.LENS:
+			from .lensMagnifier import LensMagnifier
+
 			return LensMagnifier()
 		case _:
 			raise ValueError(f"Unsupported magnifier type: {magnifierType}")

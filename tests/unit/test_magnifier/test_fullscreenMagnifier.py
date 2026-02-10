@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from unittest.mock import MagicMock
-from _magnifier.utils.types import Filter, FullScreenMode, MagnifierType, Direction
+from _magnifier.utils.types import Filter, FullScreenMode, MagnifierType, Direction, Size
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
 from _magnifier.magnifier import Magnifier
@@ -108,7 +108,10 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 		magnifier = FullScreenMagnifier()
 
 		# Test position calculation
-		params = magnifier._getMagnifierParameters((500, 400))
+		params = magnifier._getMagnifierParameters(
+			(500, 400),
+			Size(magnifier._displayOrientation.width, magnifier._displayOrientation.height),
+		)
 
 		# Basic checks
 		self.assertIsInstance(params.coordinates.x, int)

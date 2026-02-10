@@ -5,9 +5,9 @@
 
 from logHandler import log
 import wx
+import array
 
-from .types import MagnifierParameters
-from winAPI._displayTracking import OrientationState
+from .types import MagnifierParameters, WindowMagnifierParameters, Size, Filter
 
 
 class MagnifierPanel(wx.Panel):
@@ -66,19 +66,19 @@ class MagnifierFrame(wx.Frame):
 		parent=None,
 		title: str = "Magnifier Window",
 		frameType: str = "magnifier",
-		screenSize: OrientationState = None,
-		magnifierParameters: MagnifierParameters = None,
+		screenSize: Size = None,
+		windowMagnifierParameters: WindowMagnifierParameters = None,
 	):
 		self.frameType = frameType
 		self.screenSize = screenSize
-		self.magnifierParameters = magnifierParameters
+		self.windowMagnifierParameters = windowMagnifierParameters
 		super().__init__(
 			parent,
 			title=title,
-			size=(magnifierParameters.magnifierWidth, magnifierParameters.magnifierHeight),
+			size=(windowMagnifierParameters.windowSize.width, windowMagnifierParameters.windowSize.height),
 		)
-		self.SetWindowStyle(self.magnifierParameters.styles)
-		self.SetPosition(self.magnifierParameters.coordinates)
+		self.SetWindowStyle(self.windowMagnifierParameters.styles)
+		self.SetPosition(self.windowMagnifierParameters.windowPosition)
 		self.panel = self.createPanel()
 		self.Show()
 
@@ -100,53 +100,133 @@ class MagnifierFrame(wx.Frame):
 			self.panel.setContent(content)
 
 
-class WindowCreator:
-	"""A factory class to create magnifier windows."""
+class WindowedMagnifier:
+	"""
+	Base class for magnifiers that use a separate window to display magnified content.
+	Provides common functionality for creating and managing the magnifier window and panel.
+	"""
 
-	@staticmethod
-	def createMagnifierWindow(
-		parent: wx.Frame,
-		title: str,
-		frameType: str,
-		screenSize: OrientationState,
-		magnifierParameters: MagnifierParameters,
-	) -> MagnifierFrame:
+	def __init__(self, windowMagnifierParameters: WindowMagnifierParameters):
+		self.windowMagnifierParameters = windowMagnifierParameters
+		self._frame: None | MagnifierFrame = None
+		self._panel: None | MagnifierPanel = None
+		self._setupWindow()
+
+	def _setupWindow(self):
 		"""
-		Create and return a magnifier window.
-
-		:param parent: The parent wx.Frame
-		:param title: The title of the window
-		:param frameType: The type of the frame (e.g., "magnifier", "spotlight")
-		:param screenSize: The size of the screen
-		:param magnifierParameters: The parameters for the magnifier
-
-		:return: An instance of MagnifierFrame
+		Create the magnifier window and panel based on the provided parameters.
 		"""
-		window = MagnifierFrame(
-			parent=parent,
-			title=title,
-			frameType=frameType,
-			screenSize=screenSize,
-			magnifierParameters=magnifierParameters,
+		self._frame = MagnifierFrame(
+			title=self.windowMagnifierParameters.title,
+			frameType="magnifier",
+			screenSize=self.windowMagnifierParameters.windowSize,
+			windowMagnifierParameters=self.windowMagnifierParameters,
 		)
-		window.setupLayout()
-		return window
+		self._panel = self._frame.panel
 
+	def _applyColorFilter(self, image: wx.Image, filterType: Filter) -> wx.Image:
+		"""
+		Apply color filter with array optimization for better performance.
 
-def getContent(magnifierParameters: MagnifierParameters) -> wx.Image:
-	"""
-	Placeholder function to get the content for the magnifier.
-	In a real implementation, this would capture the screen area defined by magnifierParameters.
+		:param image: The image to apply the filter to
+		:param filterType: The filter type to apply (NORMAL, GRAYSCALE, INVERTED)
+		:return: The filtered image
+		"""
+		if filterType == Filter.NORMAL or not image or not image.IsOk():
+			return image
 
-	:param magnifierParameters: The parameters defining the area to capture
+		try:
+			# Get raw image data as bytes
+			width, height = image.GetWidth(), image.GetHeight()
+			data = image.GetData()  # Returns RGB data as bytes
 
-	:return: A wx.Image representing the captured content
-	"""
-	# Placeholder implementation
-	width = magnifierParameters.magnifierWidth
-	height = magnifierParameters.magnifierHeight
-	x = magnifierParameters.coordinates.x
-	y = magnifierParameters.coordinates.y
-	image = wx.Image(width, height)
-	image.SetRGBRect(wx.Rect(x, y, width, height), 200, 200, 200)
-	return image
+			# Convert to array for faster manipulation
+			rgb_array = array.array("B", data)  # 'B' = unsigned char (0-255)
+
+			if filterType == Filter.GRAYSCALE:
+				# Process 3 bytes at a time (R, G, B)
+				for i in range(0, len(rgb_array), 3):
+					r, g, b = rgb_array[i], rgb_array[i + 1], rgb_array[i + 2]
+					# Standard grayscale formula
+					gray = int(0.299 * r + 0.587 * g + 0.114 * b)
+					rgb_array[i] = rgb_array[i + 1] = rgb_array[i + 2] = gray
+
+			elif filterType == Filter.INVERTED:
+				# Invert all values
+				for i in range(len(rgb_array)):
+					rgb_array[i] = 255 - rgb_array[i]
+
+			# Create new image with modified data
+			new_image = wx.Image(width, height)
+			new_image.SetData(rgb_array.tobytes())
+			return new_image
+
+		except Exception as e:
+			log.error(f"Error applying color filter: {e}")
+			return image
+
+	def _setContent(self, magnifierParameters: MagnifierParameters, zoomLevel: float):
+		content = self._getContent(magnifierParameters, zoomLevel)
+		if self._panel:
+			self._panel.setContent(content)
+		else:
+			log.debug("No panel available to set content")
+
+	def _destroyWindow(self):
+		if self._frame:
+			self._frame.Destroy()
+			self._frame = None
+			self._panel = None
+
+	def _getContent(self, magnifierParameters: MagnifierParameters, zoomLevel: float) -> wx.Bitmap | None:
+		"""
+		Capture the screen area defined by magnifierParameters and return it as a scaled bitmap.
+
+		:param magnifierParameters: The parameters defining the area to capture
+		:param zoomLevel: The zoom level to apply to the captured content
+		:return: A wx.Bitmap scaled to fill the panel, or None if capture fails
+		"""
+		if not self._panel:
+			log.warning("No panel available for capture")
+			return None
+
+		panelSize = self._panel.GetSize()
+		panelWidth, panelHeight = panelSize.width, panelSize.height
+
+		# Calculate the size of the area to capture based on zoom level
+		captureWidth = panelWidth / zoomLevel
+		captureHeight = panelHeight / zoomLevel
+		captureLeft = int(magnifierParameters.coordinates.x)
+		captureTop = int(magnifierParameters.coordinates.y)
+
+		# Capture screen
+		screen = wx.ScreenDC()
+		bitmap = wx.Bitmap(int(captureWidth), int(captureHeight))
+		memoryDc = wx.MemoryDC()
+		memoryDc.SelectObject(bitmap)
+		success = memoryDc.Blit(0, 0, int(captureWidth), int(captureHeight), screen, captureLeft, captureTop)
+		memoryDc.SelectObject(wx.NullBitmap)
+
+		log.info(
+			f"Capture at ({captureLeft}, {captureTop}) "
+			f"size {int(captureWidth)}x{int(captureHeight)} "
+			f"zoom {zoomLevel}x -> panel {panelWidth}x{panelHeight}",
+		)
+
+		if success and bitmap.IsOk():
+			# Convert to image
+			image = bitmap.ConvertToImage()
+
+			# Apply color filter if we have access to filterType
+			if hasattr(self, "_filterType"):
+				image = self._applyColorFilter(image, magnifierParameters.filter)
+
+			# Scale image to fill the entire panel (this applies the zoom magnification)
+			magnifiedImage = image.Scale(panelWidth, panelHeight, wx.IMAGE_QUALITY_BICUBIC)
+			magnifiedBitmap = wx.Bitmap(magnifiedImage)
+			return magnifiedBitmap
+		else:
+			log.error(
+				f"Screen capture failed at ({captureLeft}, {captureTop}) size {int(captureWidth)}x{int(captureHeight)}",
+			)
+			return None

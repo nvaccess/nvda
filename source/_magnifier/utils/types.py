@@ -83,6 +83,23 @@ class MagnifierType(DisplayStringStrEnum):
 		}
 
 
+class Filter(DisplayStringStrEnum):
+	NORMAL = "normal"
+	GRAYSCALE = "grayscale"
+	INVERTED = "inverted"
+
+	@property
+	def _displayStringLabels(self) -> dict["Filter", str]:
+		return {
+			# Translators: Magnifier color filter - no filter applied.
+			self.NORMAL: pgettext("magnifier", "Normal"),
+			# Translators: Magnifier color filter - grayscale/black and white.
+			self.GRAYSCALE: pgettext("magnifier", "Grayscale"),
+			# Translators: Magnifier color filter - inverted colors.
+			self.INVERTED: pgettext("magnifier", "Inverted"),
+		}
+
+
 class FocusType(Enum):
 	"""Type of focus being tracked by the magnifier"""
 
@@ -96,6 +113,7 @@ class MagnifierParameters(NamedTuple):
 
 	magnifierSize: Size
 	coordinates: Coordinates
+	filter: Filter
 
 
 class WindowMagnifierParameters(NamedTuple):
@@ -103,8 +121,9 @@ class WindowMagnifierParameters(NamedTuple):
 	Named tuple representing the position and size of the magnifier window
 	"""
 
+	title: str
 	windowSize: Size
-	coordinates: Coordinates
+	windowPosition: Coordinates
 	styles: int
 
 
@@ -129,21 +148,4 @@ class FullScreenMode(DisplayStringStrEnum):
 			self.BORDER: pgettext("magnifier", "Border"),
 			# Translators: Magnifier focus mode - maintain relative position.
 			self.RELATIVE: pgettext("magnifier", "Relative"),
-		}
-
-
-class Filter(DisplayStringStrEnum):
-	NORMAL = "normal"
-	GRAYSCALE = "grayscale"
-	INVERTED = "inverted"
-
-	@property
-	def _displayStringLabels(self) -> dict["Filter", str]:
-		return {
-			# Translators: Magnifier color filter - no filter applied.
-			self.NORMAL: pgettext("magnifier", "Normal"),
-			# Translators: Magnifier color filter - grayscale/black and white.
-			self.GRAYSCALE: pgettext("magnifier", "Grayscale"),
-			# Translators: Magnifier color filter - inverted colors.
-			self.INVERTED: pgettext("magnifier", "Inverted"),
 		}

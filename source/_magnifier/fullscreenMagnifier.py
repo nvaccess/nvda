@@ -14,7 +14,7 @@ from winBindings import magnification
 from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
 from .utils.spotlightManager import SpotlightManager
-from .utils.types import Filter, Coordinates, MagnifierType, FullScreenMode, FocusType
+from .utils.types import Filter, Coordinates, MagnifierType, FullScreenMode, FocusType, Size
 from .config import getDefaultFullscreenMode, shouldKeepMouseCentered
 
 
@@ -25,6 +25,7 @@ class FullScreenMagnifier(Magnifier):
 		self._fullscreenMode = getDefaultFullscreenMode()
 		self._currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
+		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
 
 	@property
 	def filterType(self) -> Filter:
@@ -133,7 +134,7 @@ class FullScreenMagnifier(Magnifier):
 		if not self._isActive:
 			return
 
-		params = self._getMagnifierParameters(coordinates)
+		params = self._getMagnifierParameters(coordinates, self._displaySize)
 		try:
 			result = magnification.MagSetFullscreenTransform(
 				self.zoomLevel,
@@ -168,7 +169,7 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		keep mouse in screen
 		"""
-		params = self._getMagnifierParameters(self._currentCoordinates)
+		params = self._getMagnifierParameters(self._currentCoordinates, self._displaySize)
 		centerX = int(params.coordinates.x + (params.magnifierSize.width / 2))
 		centerY = int(params.coordinates.y + (params.magnifierSize.height / 2))
 		winUser.setCursorPos(centerX, centerY)
@@ -186,7 +187,7 @@ class FullScreenMagnifier(Magnifier):
 		:return: The adjusted position (x, y) of the focus point
 		"""
 		focusX, focusY = coordinates
-		params = self._getMagnifierParameters(self._lastScreenPosition)
+		params = self._getMagnifierParameters(self._lastScreenPosition, self._displaySize)
 		magnifierWidth = params.magnifierSize.width
 		magnifierHeight = params.magnifierSize.height
 		lastLeft = params.coordinates.x

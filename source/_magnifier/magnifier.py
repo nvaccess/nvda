@@ -203,25 +203,30 @@ class Magnifier:
 		else:
 			log.debug("no timer to stop")
 
-	def _getMagnifierParameters(self, coordinates: Coordinates) -> MagnifierParameters:
+	def _getMagnifierParameters(self, coordinates: Coordinates, displaySize: Size) -> MagnifierParameters:
 		"""
 		Compute the top-left corner of the magnifier window centered on (x, y)
 
 		:param coordinates: The (x, y) coordinates to center the magnifier on
+		:param displaySize: The size of the display area (width, height) - used to calculate capture size
 
 		:return: The size and position of the magnifier window
 		"""
 		x, y = coordinates
 		# Calculate the size of the capture area at the current zoom level
-		magnifierWidth = self._displayOrientation.width / self.zoomLevel
-		magnifierHeight = self._displayOrientation.height / self.zoomLevel
+		magnifierWidth = displaySize.width / self.zoomLevel
+		magnifierHeight = displaySize.height / self.zoomLevel
 
 		# Compute the top-left corner so that (x, y) is at the center
 		left = int(x - (magnifierWidth / 2))
 		top = int(y - (magnifierHeight / 2))
 
-		# Clamp to screen boundaries
+		# Clamp to screen boundaries (always use actual screen size, not display area size)
 		left = max(0, min(left, int(self._displayOrientation.width - magnifierWidth)))
 		top = max(0, min(top, int(self._displayOrientation.height - magnifierHeight)))
 
-		return MagnifierParameters(Size(int(magnifierWidth), int(magnifierHeight)), Coordinates(left, top))
+		return MagnifierParameters(
+			Size(int(magnifierWidth), int(magnifierHeight)),
+			Coordinates(left, top),
+			self._filterType,
+		)

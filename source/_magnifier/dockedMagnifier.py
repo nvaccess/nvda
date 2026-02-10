@@ -24,4 +24,4 @@ class DockedMagnifier(Magnifier):
 		super()._stopMagnifier()
 
 	def _doUpdate(self):
-		return super()._doUpdate()
+		super()._doUpdate()
