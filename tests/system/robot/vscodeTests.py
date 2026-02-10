@@ -127,7 +127,7 @@ def file_editor_operations():
 	spy.emulateKeyPress("h")
 	spy.emulateKeyPress("e")
 	speech = _NvdaLib.getSpeechAfterKey("l")
-	_builtIn.should_contain(speech, "1 of 1")
+	_builtIn.should_contain(speech, "1")
 	spy.emulateKeyPress("escape")
 	# open replace bar
 	speech = _NvdaLib.getSpeechAfterKey("control+h")

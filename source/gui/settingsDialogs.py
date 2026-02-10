@@ -67,6 +67,7 @@ from config.configFlags import (
 	NVDAKey,
 	OutputMode,
 	ParagraphStartMarker,
+	PlayErrorSound,
 	RemoteConnectionMode,
 	RemoteServerType,
 	ReportCellBorders,
@@ -4598,12 +4599,7 @@ class AdvancedPanelControls(
 
 		# Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
 		label = _("Play a sound for logged e&rrors:")
-		playErrorSoundChoices = (
-			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-			pgettext("advanced.playErrorSound", "Only in NVDA test versions"),
-			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-			pgettext("advanced.playErrorSound", "Yes"),
-		)
+		playErrorSoundChoices = [i.displayString for i in PlayErrorSound]
 		self.playErrorSoundCombo = debugLogGroup.addLabeledControl(
 			label,
 			wx.Choice,

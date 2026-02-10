@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-23 06:44+0000\n"
-"PO-Revision-Date: 2026-01-26 00:19\n"
+"POT-Creation-Date: 2026-02-06 07:00+0000\n"
+"PO-Revision-Date: 2026-02-09 00:23\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -15574,7 +15574,7 @@ msgstr "取消"
 #: gui\addonStoreGui\controls\messageDialogs.py:791
 #, python-brace-format
 msgctxt "addonStore"
-msgid "You have selected to copy 1 add-on to NVDA's system-wide configuration. Using this add-on during sign-in and on secure screens is a serious security risk."
+msgid "You have selected to copy {num} add-on to NVDA's system-wide configuration. Using this add-on during sign-in and on secure screens is a serious security risk."
 msgid_plural "You have selected to copy {num} add-ons to NVDA's system-wide configuration. Using these add-ons during sign-in and on secure screens is a serious security risk."
 msgstr[0] "您要将 {num} 个插件拷贝到 NVDA 的系统配置。在登录期间和安全界面使用插件会带来严重的安全风险。"
 
@@ -16207,7 +16207,7 @@ msgstr "未知输入法"
 #. 10 per cent from top edge of screen,
 #. width is 40 per cent of screen,
 #. height is 50 per cent of screen.
-#: NVDAObjects\__init__.py:666
+#: NVDAObjects\__init__.py:669
 #, python-brace-format
 msgid "Object edges positioned {left:.1f} percent from left edge of screen, {top:.1f} percent from top edge of screen, width is {width:.1f} percent of screen, height is {height:.1f} percent of screen"
 msgstr "对象与屏幕左边界的距离为百分之 {left:.1f}，与屏幕上边界的距离为百分之 {top:.1f}，宽度为百分之 {width:.1f}，高度为百分之 {height:.1f}"
@@ -19027,6 +19027,21 @@ msgstr "无"
 #: synthDrivers\oneCore.py:182
 msgid "Windows OneCore voices"
 msgstr "Windows OneCore 语音"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi4_32.py:18
+msgid "Microsoft Speech API version 4"
+msgstr "Microsoft Speech API version 4"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi5.py:558 _synthDrivers32\_sapi5.py:558
+msgid "Microsoft Speech API version 5 (64 bit)"
+msgstr "Microsoft Speech API version 5 （ 64 位）"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi5_32.py:15
+msgid "Microsoft Speech API version 5 (32 bit)"
+msgstr "Microsoft Speech API version 5（32 位）"
 
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\silence.py:16

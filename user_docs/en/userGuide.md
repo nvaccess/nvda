@@ -1536,8 +1536,8 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 |Toggles the magnifier on and off |`NVDA+shift+w` |Enables or disables the magnifier|
 |Increases the magnification level of the magnifier |`NVDA+shift+equals` |Increases the zoom level|
 |Decreases the magnification level of the magnifier |`NVDA+shift+minus` |Decreases the zoom level|
-|Toggle filter of the magnifier | None |Cycles through available color filters (normal, grayscale, inverted)|
-|Toggle focus mode for the full-screen magnifier | None |Cycles through focus tracking modes (center, border, relative)|
+|Toggle filter of the magnifier |`NVDA+shift+i` |Cycles through available color filters (normal, grayscale, inverted)|
+|Toggle focus mode for the full-screen magnifier |None |Cycles through focus tracking modes (center, border, relative)|
 |Launch spotlight if magnifier is full-screen |`NVDA+shift+l` |Activates spotlight mode for focused reading or presentations|
 
 <!-- KC:endInclude -->
@@ -1559,7 +1559,7 @@ The magnifier provides three color filter options:
 * **Grayscale**: Converts all colors to shades of gray, which can help reduce eye strain and improve contrast for some users.
 * **Inverted**: Inverts all colors on the screen (black becomes white, white becomes black, etc.), which can be helpful for users who prefer light text on dark backgrounds or have photophobia.
 
-To cycle through the available filters, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+To cycle through the available filters press `NVDA+shift+i`.
 NVDA will announce the name of the currently selected filter.
 
 The default color filter when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
@@ -1602,7 +1602,7 @@ If you move the mouse before the zoom-back occurs, the timer resets, giving you 
 
 ### Magnifier Settings {#MagnifierSettings}
 
-The magnifier can be configured in the "Magnifier" category of the NVDA Settings dialog (`NVDA+control+p`).
+The magnifier can be configured in the "Magnifier" category of the NVDA Settings dialog (`NVDA+control+w`).
 See the [Magnifier settings](#MagnifierSettingsCategory) section for details on available options.
 
 ## Content Recognition {#ContentRecognition}
@@ -2619,6 +2619,8 @@ This option allows you to choose if NVDA should lower the volume of other applic
 This option is only available if NVDA has been installed.
 It is not possible to support audio ducking for portable and temporary copies of NVDA.
 
+Audio ducking is not available when using [Microsoft Speech API version 4 (SAPI 4)](#SAPI4) or 32 bit [Microsoft Speech API version 5 (SAPI 5)](#SAPI5) voices.
+
 ##### Volume of NVDA sounds follows voice volume {#SoundVolumeFollowsVoice}
 
 | . {.hideHeaderRow} |.|
@@ -2803,13 +2805,14 @@ You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+e
 ##### Default color filter {#MagnifierDefaultFilter}
 
 This combo box allows you to select the default color filter to apply when the magnifier is first enabled.
-You can cycle through the color filters on the fly by assigning a custom gesture using the [Input Gestures dialog](#InputGestures).
+You can cycle through the color filters by pressing `NVDA+shift+i`.
 The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options | Normal, Grayscale, Inverted |
 |Default |Normal |
+|Toggle command |`NVDA+shift+i` |
 
 | Option | Description |
 |---|---|
@@ -2820,13 +2823,14 @@ The available options are:
 ##### Default focus mode {#MagnifierDefaultFocusMode}
 
 This combo box allows you to select the default focus tracking mode when the magnifier is first enabled.
-You can cycle through the focus modes on the fly by assigning a custom gesture using the [Input Gestures dialog](#InputGestures).
+To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Center, Border, Relative|
 |Default |Center|
+|Toggle command |None |
 
 | Option | Description |
 |---|---|
@@ -3987,7 +3991,7 @@ If you find that some necessary silence periods are also missing (e.g. pause bet
 ##### Use WASAPI for SAPI 4 audio output {#UseWASAPIForSAPI4}
 
 This option enables Microsoft Speech API version 4 (SAPI 4) voices to output audio via the Windows Audio Session API (WASAPI).
-This can allow SAPI 4 voices to work with more features, such as audio ducking, leading silence trimming, and keeping audio device awake.
+This can allow SAPI 4 voices to work with more features, such as leading silence trimming and keeping audio device awake.
 However, some SAPI 4 voices might not work with the current WASAPI implementation.
 If you find that the SAPI 4 voice you are using stops working, you may disable this option.
 
@@ -4021,6 +4025,7 @@ Only turn one of these on if specifically instructed to by an NVDA developer e.g
 This option allows you to specify if NVDA will play an error sound in case an error is logged.
 Choosing Only in test versions (default) makes NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
 Choosing Yes allows to enable error sounds whatever your current NVDA version is.
+Choosing No disables error sounds no matter what your current NVDA version is, i.e. even in test versions.
 
 ##### Regular expression for text paragraph quick navigation commands {#TextParagraphRegexEdit}
 
@@ -4734,8 +4739,12 @@ When using this synthesizer with NVDA, the available voices (accessed from the [
 ### Microsoft Speech API version 5 (SAPI 5) {#SAPI5}
 
 SAPI 5 is a Microsoft standard for software speech synthesizers.
+NVDA supports both 32-bit and 64-bit SAPI5 voices.
+For the best performance and feature compatibility, 64-bit voices should be preferred.
 Many speech synthesizers that comply with this standard may be purchased or downloaded for free from various companies and websites, though your system will probably already come with at least one SAPI 5 voice preinstalled.
-When using this synthesizer with NVDA, the available voices (accessed from the [Speech category](#SpeechSettings) of the [NVDA Settings](#NVDASettings) dialog or by the [Synth Settings Ring](#SynthSettingsRing)) will contain all the voices from all the installed SAPI 5 engines found on your system.
+
+When using the 32-bit or 64-bit SAPI 5 synthesizer with NVDA, the available voices (accessed from the [Speech category](#SpeechSettings) of the [NVDA Settings](#NVDASettings) dialog or by the [Synth Settings Ring](#SynthSettingsRing)) will contain all the voices from all the installed 32-bit or 64-bit SAPI 5 engines found on your system, respectively.
+If you are unable to find a SAPI 5 voice that is installed on your system, try switching to the other SAPI 5 synthesizer using the [Select Synthesizer dialog](#SelectSynthesizer).
 
 ### Microsoft Speech Platform {#MicrosoftSpeechPlatform}
 
