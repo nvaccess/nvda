@@ -149,3 +149,25 @@ class FullScreenMode(DisplayStringStrEnum):
 			# Translators: Magnifier focus mode - maintain relative position.
 			self.RELATIVE: pgettext("magnifier", "Relative"),
 		}
+
+
+class FixedWindowPosition(DisplayStringStrEnum):
+	"""Position of the magnifier window"""
+
+	TOP_LEFT = "topLeft"
+	TOP_RIGHT = "topRight"
+	BOTTOM_LEFT = "bottomLeft"
+	BOTTOM_RIGHT = "bottomRight"
+
+	@property
+	def _displayStringLabels(self) -> dict["FixedWindowPosition", str]:
+		return {
+			# Translators: Position of the magnifier window - top left corner of the screen.
+			self.TOP_LEFT: pgettext("magnifier window position", "Top Left"),
+			# Translators: Position of the magnifier window - top right corner of the screen.
+			self.TOP_RIGHT: pgettext("magnifier window position", "Top Right"),
+			# Translators: Position of the magnifier window - bottom left corner of the screen.
+			self.BOTTOM_LEFT: pgettext("magnifier window position", "Bottom Left"),
+			# Translators: Position of the magnifier window - bottom right corner of the screen.
+			self.BOTTOM_RIGHT: pgettext("magnifier window position", "Bottom Right"),
+		}

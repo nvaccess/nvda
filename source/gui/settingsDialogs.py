@@ -43,7 +43,7 @@ import keyboardHandler
 import languageHandler
 import logHandler
 import _magnifier.config as magnifierConfig
-from _magnifier.utils.types import Filter, FullScreenMode, MagnifierType
+from _magnifier.utils.types import Filter, FullScreenMode, MagnifierType, FixedWindowPosition
 import queueHandler
 import requests
 import speech
@@ -6036,14 +6036,57 @@ class MagnifierPanel(SettingsPanel):
 		# magnifier settings panel
 		fixedGroupText = _("Fixed")
 		self.fixedGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=fixedGroupText)
-		fixedGroupBox = self.fixedGroupSizer.GetStaticBox()
 		fixedGroup = guiHelper.BoxSizerHelper(self, sizer=self.fixedGroupSizer)
 		sHelper.addItem(fixedGroup)
 
-		# TODO: Add fixed magnifier specific options here
-		# Translators: Placeholder text for fixed magnifier options
-		fixedPlaceholderText = _("Options for fixed magnifier will be added here.")
-		fixedGroup.addItem(wx.StaticText(fixedGroupBox, label=fixedPlaceholderText))
+		# Translators: The label for a setting in magnifier settings to select the default fixed magnifier window width in pixels.
+		# Window width settings
+		defaultFixedWindowWidthLabelText = _("Default fixed magnifier &window width (pixels):")
+		self.defaultFixedWindowWidthEdit = fixedGroup.addLabeledControl(
+			defaultFixedWindowWidthLabelText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			value=str(magnifierConfig.getDefaultFixedWindowWidth()),
+			min=50,
+			max=1000,
+		)
+		self.bindHelpEvent(
+			"magnifierDefaultFixedWindowWidth",
+			self.defaultFixedWindowWidthEdit,
+		)
+
+		# Translators: The label for a setting in magnifier settings to select the default fixed magnifier window height in pixels.
+		# Window height settings
+		defaultFixedWindowHeightLabelText = _("Default fixed magnifier &window height (pixels):")
+		self.defaultFixedWindowHeightEdit = fixedGroup.addLabeledControl(
+			defaultFixedWindowHeightLabelText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			value=str(magnifierConfig.getDefaultFixedWindowHeight()),
+			min=50,
+			max=1000,
+		)
+		self.bindHelpEvent(
+			"magnifierDefaultFixedWindowHeight",
+			self.defaultFixedWindowHeightEdit,
+		)
+
+		# Translators: The label for a setting in magnifier settings to select the default fixed magnifier window position.
+		# Window position settings
+		defaultFixedWindowPositionLabelText = _("Default fixed magnifier &window position:")
+		fixedWindowPositionChoices = [pos.displayString for pos in FixedWindowPosition]
+		self.defaultFixedWindowPositionList = fixedGroup.addLabeledControl(
+			defaultFixedWindowPositionLabelText,
+			wx.Choice,
+			choices=fixedWindowPositionChoices,
+		)
+		self.bindHelpEvent(
+			"magnifierDefaultFixedWindowPosition",
+			self.defaultFixedWindowPositionList,
+		)
+
+		defaultFixedWindowPosition = magnifierConfig.getDefaultFixedWindowPosition()
+		self.defaultFixedWindowPositionList.SetSelection(
+			list(FixedWindowPosition).index(defaultFixedWindowPosition),
+		)
 
 		# DOCKED MAGNIFIER GROUP
 		# Translators: This is the label for a group of docked magnifier options in the
@@ -6107,6 +6150,12 @@ class MagnifierPanel(SettingsPanel):
 
 		selectedModeIdx = self.defaultFullscreenModeList.GetSelection()
 		magnifierConfig.setDefaultFullscreenMode(list(FullScreenMode)[selectedModeIdx])
+
+		magnifierConfig.setDefaultFixedWindowWidth(self.defaultFixedWindowWidthEdit.GetValue())
+		magnifierConfig.setDefaultFixedWindowHeight(self.defaultFixedWindowHeightEdit.GetValue())
+
+		selectedPositionIdx = self.defaultFixedWindowPositionList.GetSelection()
+		magnifierConfig.setDefaultFixedWindowPosition(list(FixedWindowPosition)[selectedPositionIdx])
 
 		config.conf["magnifier"]["keepMouseCentered"] = self.keepMouseCenteredCheckBox.GetValue()
 

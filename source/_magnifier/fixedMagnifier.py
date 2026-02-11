@@ -15,21 +15,18 @@ from .utils.types import (
 	MagnifierType,
 	WindowMagnifierParameters,
 	Filter,
+	FixedWindowPosition,
 )
 from .utils.windowCreator import WindowedMagnifier
+from .config import getDefaultFixedWindowWidth, getDefaultFixedWindowHeight, getDefaultFixedWindowPosition
 
 import wx
 
 
 class FixedMagnifier(Magnifier, WindowedMagnifier):
 	def __init__(self):
-		windowParameters = WindowMagnifierParameters(
-			title="NVDA Fixed Magnifier",
-			windowSize=Size(300, 300),
-			windowPosition=Coordinates(0, 0),
-			styles=wx.FRAME_NO_TASKBAR | wx.STAY_ON_TOP,
-		)
 		Magnifier.__init__(self)
+		windowParameters = self._getWindowParameters()
 		WindowedMagnifier.__init__(self, windowParameters)
 		self._magnifierType = MagnifierType.FIXED
 		self._currentCoordinates = Coordinates(0, 0)
@@ -70,3 +67,36 @@ class FixedMagnifier(Magnifier, WindowedMagnifier):
 	def _stopMagnifier(self) -> None:
 		super()._destroyWindow()
 		super()._stopMagnifier()
+
+	def _getWindowParameters(self) -> WindowMagnifierParameters:
+		"""
+		Get the parameters for the magnifier window from configuration.
+
+		:return: The parameters for the magnifier window
+		"""
+		case = getDefaultFixedWindowPosition()
+		windowSize = Size(getDefaultFixedWindowWidth(), getDefaultFixedWindowHeight())
+		displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
+		log.info(
+			f"Getting window parameters for fixed magnifier with position {case}, window size {windowSize}",
+		)
+
+		match case:
+			case FixedWindowPosition.TOP_LEFT:
+				position = Coordinates(0, 0)
+			case FixedWindowPosition.TOP_RIGHT:
+				position = Coordinates(displaySize.width - windowSize.width, 0)
+			case FixedWindowPosition.BOTTOM_LEFT:
+				position = Coordinates(0, displaySize.height - windowSize.height)
+			case FixedWindowPosition.BOTTOM_RIGHT:
+				position = Coordinates(
+					displaySize.width - windowSize.width,
+					displaySize.height - windowSize.height,
+				)
+
+		return WindowMagnifierParameters(
+			title="NVDA Fixed Magnifier",
+			windowSize=windowSize,
+			windowPosition=position,
+			styles=wx.FRAME_NO_TASKBAR | wx.STAY_ON_TOP,
+		)

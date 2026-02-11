@@ -117,6 +117,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	defaultFilter = string(default="normal")
 	defaultMagnifierType = string(default="fullscreen")
 	defaultFullscreenMode = string(default="center")
+	defaultFixedWindowWidth = integer(default=200, min=50, max=1000)
+	defaultFixedWindowHeight = integer(default=200, min=50, max=1000)
+	defaultFixedWindowPosition = string(default="topLeft")
 	keepMouseCentered = boolean(default=false)
 
 
