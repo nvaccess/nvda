@@ -39,15 +39,13 @@ class FixedMagnifier(Magnifier, WindowedMagnifier):
 	@filterType.setter
 	def filterType(self, value: Filter) -> None:
 		self._filterType = value
-		if self._isActive:
-			self._applyFilter()
 
 	def event_gainFocus(
 		self,
 		obj,
 		nextHandler,
 	):
-		log.debug("Full-screen Magnifier gain focus event")
+		log.debug("Fixed Magnifier gain focus event")
 		nextHandler()
 
 	def _startMagnifier(self) -> None:
