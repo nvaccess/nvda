@@ -36,12 +36,16 @@ The API signature remains frozen, and changes are limited to behavioural refinem
 To provide clarity on what add-on developers can expect, we categorise changes into three tiers:
 
 ##### Signature breaking changes
+
+
 A change that would cause a valid call from a previous version to throw a `SyntaxError`, `ImportError`, `AttributeError` or `TypeError`.
 
 * **Examples:** Renaming a function, removing a module, changing a function’s return type or removing/reordering positional arguments.
 * **Policy:** These occur only in the .1 release (e.g. 2026.1).
 
+
 ##### Behavioural refinements & bug fixes
+
 A change where the code continues to run (the signature matches), but the logic or outcome changes to correct a defect or security flaw.
 
 * **Examples:** Fixing a math error or optimising an algorithm (e.g. changing a sort order).
@@ -51,9 +55,11 @@ However, preserving a bug to maintain backwards compatibility significantly hamp
 If a public function was documented to do X but was actually doing Y, changing it to correctly do X is considered a bug fix, not a breaking change.
 * Conversely, changing a function that was documented to do X, and was correctly doing X, to instead do Y is considered a breaking change.
 
+
 ##### Security improvements
-Where a public API exposes a security vulnerability, NV Access reserves the right to modify the behaviour of that function immediately, regardless of the release cycle. 
-Security takes precedence over backward compatibility. 
+
+Where a public API exposes a security vulnerability, NV Access reserves the right to modify the behaviour of that function immediately, regardless of the release cycle.
+Security takes precedence over backward compatibility.
 We will make every effort to document these changes clearly in the changelog.
 
 * **Examples:** Privilege escalation or insecure file handling.
@@ -61,11 +67,11 @@ We will make every effort to document these changes clearly in the changelog.
 
 #### API deprecation strategy
 
-We aim to avoid silent breaks of add-on code. 
-When removing or changing APIs in a breaking release (e.g. 2026.1):
+We im to avoid silent breaks of add-on code.
+Wh  removing or changing APIs in a breaking release (e.g. 2026.1):
 
-1.  We will mark functions as deprecated, where possible, in the releases leading up to the break (e.g. raising a `DeprecationWarning` in 2025.4).
-2.  All API breaking changes will be listed in the "Changes for Developers" section of the What's New document.
+1. We will mark functions as deprecated, where possible, in the releases leading up to the break (e.g. raising a `DeprecationWarning` in 2025.4).
+2. All API breaking changes will be listed in the "Changes for Developers" section of the What's New document.
 
 #### Stability of transitive imports in the API {#APIImports}
 
