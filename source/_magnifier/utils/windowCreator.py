@@ -126,14 +126,6 @@ class WindowedMagnifier:
 		:param windowMagnifierParameters: Parameters defining the magnifier window configuration
 		"""
 		self.windowMagnifierParameters = windowMagnifierParameters
-		self._frame: None | MagnifierFrame = None
-		self._panel: None | MagnifierPanel = None
-		self._setupWindow()
-
-	def _setupWindow(self):
-		"""
-		Create the magnifier window and panel based on the provided parameters.
-		"""
 		self._frame = MagnifierFrame(
 			title=self.windowMagnifierParameters.title,
 			frameType="magnifier",
