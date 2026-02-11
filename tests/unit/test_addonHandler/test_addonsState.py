@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-"""Unit tests veryfying loading and saving of addon state."""
+"""Unit tests verifying loading and saving of addon state."""
 
 import unittest
 
@@ -87,3 +87,98 @@ class TestStateConversionForJsonifying(unittest.TestCase):
 			self.assertIsInstance(value, list)
 		# Finally make sure that we handled all keys in the dictionary.
 		self.assertEqual(dataForJsonifying, {})
+
+
+class TestPickleToJsonConversion(unittest.TestCase):
+	def test_fullyPopulatedState(self):
+		self.assertDictEqual(
+			addonHandler._pickledStateDictToJsonStateDict(
+				{
+					"PENDING_OVERRIDE_COMPATIBILITY": {"addonPendingOverrideCompatibility"},
+					"backCompatToAPIVersion": (2025, 1, 0),
+					"blocked": {"blockedAddon"},
+					"disabledAddons": {"disabledAddon"},
+					"overrideCompatibility": {"addonWithOverriddenCompatibility"},
+					"pendingDisableSet": {"addonPendingDisable"},
+					"pendingEnableSet": {"addonPendingEnable"},
+					"pendingInstallsSet": {"addonPendingInstall"},
+					"pendingRemovesSet": {"addonPendingRemoval"},
+				},
+			),
+			{
+				"PENDING_OVERRIDE_COMPATIBILITY": ["addonPendingOverrideCompatibility"],
+				"backCompatToAPIVersion": (2025, 1, 0),
+				"blocked": ["blockedAddon"],
+				"disabledAddons": ["disabledAddon"],
+				"overrideCompatibility": ["addonWithOverriddenCompatibility"],
+				"pendingDisableSet": ["addonPendingDisable"],
+				"pendingEnableSet": ["addonPendingEnable"],
+				"pendingInstallsSet": ["addonPendingInstall"],
+				"pendingRemovesSet": ["addonPendingRemoval"],
+			},
+		)
+
+	def test_categoryWithMultipleIds(self):
+		converted = addonHandler._pickledStateDictToJsonStateDict(
+			{"disabledAddons": {"firstDisabledAddon", "2ndDisabledAddon", "disabledAddonIII"}},
+		)
+		addons = converted.pop("disabledAddons")
+		self.assertCountEqual(addons, ("firstDisabledAddon", "2ndDisabledAddon", "disabledAddonIII"))
+		self.assertEqual(len(converted), 0)
+
+	def test_invalidAddonIds(self):
+		self.assertDictEqual(
+			addonHandler._pickledStateDictToJsonStateDict({"blocked": {"disabledAddon1", True, None, 42}}),
+			{"blocked": ["disabledAddon1"]},
+		)
+
+	def test_invalidCategoryValue(self):
+		self.assertDictEqual(
+			addonHandler._pickledStateDictToJsonStateDict(
+				{"overrideCompatibility": 42, "PENDING_OVERRIDE_COMPATIBILITY": {"addon"}},
+			),
+			{"PENDING_OVERRIDE_COMPATIBILITY": ["addon"]},
+		)
+
+	def test_invalidCategoryKey(self):
+		self.assertDictEqual(
+			addonHandler._pickledStateDictToJsonStateDict(
+				{"pendingEnableSet": {"addonPendingEnable"}, "notAKey": ("shouldn't", "be", "here")},
+			),
+			{"pendingEnableSet": ["addonPendingEnable"]},
+		)
+
+	def test_insufficientVersionParts(self):
+		self.assertDictEqual(
+			addonHandler._pickledStateDictToJsonStateDict(
+				{"backCompatToAPIVersion": (1,), "pendingDisableSet": {"addonPendingDisable"}},
+			),
+			{"pendingDisableSet": ["addonPendingDisable"]},
+		)
+
+	def test_surplusVersionParts(self):
+		self.assertDictEqual(
+			addonHandler._pickledStateDictToJsonStateDict(
+				{"backCompatToAPIVersion": (1, 2, 3, 4), "pendingEnableSet": {"addonPendingEnable"}},
+			),
+			{"pendingEnableSet": ["addonPendingEnable"]},
+		)
+
+	def test_invalidVersionParts(self):
+		self.assertDictEqual(
+			addonHandler._pickledStateDictToJsonStateDict(
+				{
+					"backCompatToAPIVersion": ("not", "a", "version"),
+					"pendingInstallsSet": {"addonPendingInstall"},
+				},
+			),
+			{"pendingInstallsSet": ["addonPendingInstall"]},
+		)
+
+	def test_invalidVersionType(self):
+		self.assertDictEqual(
+			addonHandler._pickledStateDictToJsonStateDict(
+				{"backCompatToAPIVersion": 42, "pendingRemovesSet": {"addonPendingRemoval"}},
+			),
+			{"pendingRemovesSet": ["addonPendingRemoval"]},
+		)
