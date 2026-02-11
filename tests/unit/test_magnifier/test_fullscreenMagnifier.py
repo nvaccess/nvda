@@ -10,8 +10,8 @@ from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
 from _magnifier.magnifier import Magnifier
 
 
-class TestMagnifierEndToEnd(_TestMagnifier):
-	"""End-to-end test suite for Magnifier functionality."""
+class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
+	"""End-to-end test suite for fullscreen magnifier functionality."""
 
 	def testMagnifierCreation(self):
 		"""Test creating a magnifier."""
