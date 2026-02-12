@@ -490,13 +490,20 @@ def getSynthInstance(name, asDefault=False):
 defaultSynthPriorityList = ["oneCore", "espeak", "silence"]
 
 
-def setSynth(name: Optional[str], isFallback: bool = False, *, alreadyTried: list[str] | None = None):
-	print(f"setSynth({name=}, {isFallback=}, {alreadyTried=})")
-	# log.debug(f"setSynth({name=}, {isFallback=}, {alreadyTried=})")
+def setSynth(name: Optional[str], isFallback: bool = False, *, alreadyTried: list[str] | None = None) -> bool:
+	"""Set the currently active speech synth by name.
+
+	If the chosen synth cannot be used, this function will attempt to fall back to another synth.
+	Fallback synths are tried in the order given in :var:`defaultSynthPriorityList `.
+
+	:param name: The name of the synth driver to use.
+	:param isFallback: Whether this synth is a fallback, i.e. it isn't the synth that the user wants. Defaults to ``False``.
+	:param alreadyTried: List of synth names to exclude when falling back, if necessary. Defaults to ``None``.
+	:return: ``True`` if switching to the named synthesizer succeeds; ``False`` otherwise.
+	"""
 	from synthDrivers.silence import SynthDriver as SilenceSynthDriver
 
 	alreadyTried = [] if alreadyTried is None else alreadyTried
-
 	asDefault = False
 	global _curSynth, _audioOutputDevice
 	if name is None:
@@ -517,60 +524,45 @@ def setSynth(name: Optional[str], isFallback: bool = False, *, alreadyTried: lis
 	try:
 		_curSynth = getSynthInstance(name, asDefault)
 	except:  # noqa: E722 # Legacy bare except
-		# log.error(f"setSynth failed for {name}", exc_info=True)
-		print(f"setSynth failed for {name}")
+		log.error(f"setSynth failed for {name}", exc_info=True)
 
 	if _curSynth is not None:
 		_audioOutputDevice = config.conf["audio"]["outputDevice"]
 		if not isFallback:
 			config.conf["speech"]["synth"] = name
-		# log.info(f"Loaded synthDriver {_curSynth.name}")
-		print(f"Loaded synthDriver {_curSynth.name}")
+		log.info(f"Loaded synthDriver {_curSynth.name}")
 		synthChanged.notify(synth=_curSynth, audioOutputDevice=_audioOutputDevice, isFallback=isFallback)
 		return True
 	# As there was an error loading this synth:
 	elif prevSynthName and not prevSynthName == SilenceSynthDriver.name:
 		# Don't fall back to silence if speech is expected
-		# log.info(f"Falling back to previous synthDriver {prevSynthName}")
-		print(f"Falling back to previous synthDriver {prevSynthName}")
+		log.info(f"Falling back to previous synthDriver {prevSynthName}")
 		# There was a previous synthesizer, so switch back to that one.
 		setSynth(prevSynthName, isFallback=True)
 	else:
-		# There was no previous synth, so fallback to the next available default synthesizer
+		# There was no previous synth, so fall back to the first available default synthesizer
 		# that has not been tried yet.
-		# log.info("Searching for next synthDriver")
-		print("Searching for next synthDriver")
-		ret = findAndSetNextSynth(name, alreadyTried=alreadyTried)
-		# log.debug(f"calling findAndSetNextSynth({name}, {alreadyTried=}) returned {ret}")
-		print(f"calling findAndSetNextSynth({name}, {alreadyTried=}) returned {ret}")
+		log.info("Searching for next synthDriver")
+		findAndSetNextSynth(name, alreadyTried=alreadyTried)
 	return False
 
 
 def findAndSetNextSynth(currentSynthName: str, *, alreadyTried: list[str] | None = None) -> bool:
-	"""Returns True if the next synth could be found, False if currentSynthName is the last synth
-	in the defaultSynthPriorityList"""
-	# log.debug(f"findAndSetNextSynth({currentSynthName=}, {alreadyTried=})")
-	print(f"findAndSetNextSynth({currentSynthName=}, {alreadyTried=})")
+	"""Finds the first untried synth in ``defaultSynthPriorityList`` and switches to it.
+
+	:param currentSynthName: The name of the synth driver that was just tried.
+	:param alreadyTried: A list of synth drivers that have already been tried, so should not be tried again. Defaults to ``None``.
+	:return: ``True`` if an attempt was made to switch to a synth driver; ``False`` if there are no more drivers in ``defaultSynthPriorityList `` to try.
+	"""
 	alreadyTried = [] if alreadyTried is None else alreadyTried
 	alreadyTried.append(currentSynthName)
 	try:
 		newName = next(synth for synth in defaultSynthPriorityList if synth not in alreadyTried)
-		# log.info(f"Falling back to next synthDriver {newName}")
-		print(f"Falling back to next synthDriver {newName}")
+		log.info(f"Falling back to next synthDriver {newName}")
 		setSynth(newName, isFallback=True, alreadyTried=alreadyTried)
 		return True
 	except StopIteration:
 		return False
-	# if currentSynthName in defaultSynthPriorityList:
-	# nextIndex = defaultSynthPriorityList.index(currentSynthName) + 1
-	# else:
-	# nextIndex = 0
-	# if nextIndex < len(defaultSynthPriorityList):
-	# newName = defaultSynthPriorityList[nextIndex]
-	# log.info(f"Falling back to next synthDriver {newName}")
-	# setSynth(newName, isFallback=True)
-	# return True
-	# return False
 
 
 def handlePostConfigProfileSwitch(resetSpeechIfNeeded=True):
