@@ -4,16 +4,11 @@
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Joseph Lee, Arnold Loubriat, Leonard de Ruijter
 
+from collections import OrderedDict
 import pkgutil
 import importlib
 from typing import (
-	List,
-	Optional,
-	OrderedDict,
-	Set,
-	Tuple,
 	TYPE_CHECKING,
-	Type,
 )
 from locale import strxfrm
 
@@ -47,7 +42,7 @@ class LanguageInfo(StringParameterInfo):
 class VoiceInfo(StringParameterInfo):
 	"""Provides information about a single synthesizer voice."""
 
-	def __init__(self, id, displayName, language: Optional[str] = None):
+	def __init__(self, id, displayName, language: str | None = None):
 		"""
 		@param language: The ID of the language this voice speaks,
 			C{None} if not known or the synth implements language separate from voices.
@@ -100,7 +95,7 @@ class SynthDriver(driverHandler.Driver):
 	#: @type: str
 	description = ""
 	#: The speech commands supported by the synth.
-	supportedCommands: set[Type["SynthCommand"]] = frozenset()
+	supportedCommands: set[type["SynthCommand"]] = frozenset()
 	#: The notifications provided by the synth.
 	#: @type: set of L{extensionPoints.Action} instances
 	supportedNotifications = frozenset()
@@ -113,10 +108,10 @@ class SynthDriver(driverHandler.Driver):
 	availableVoices: OrderedDict[str, VoiceInfo]
 	# type information for auto property _get_language
 	# the current voice's language
-	language: Optional[str]
+	language: str | None
 	# type information for auto property _get_availableLanguages
 	# the set of languages available in the availableVoices
-	availableLanguages: Set[Optional[str]]
+	availableLanguages: set[str | None]
 
 	@classmethod
 	def LanguageSetting(cls):
@@ -244,13 +239,13 @@ class SynthDriver(driverHandler.Driver):
 	def cancel(self):
 		"""Silence speech immediately."""
 
-	def _get_language(self) -> Optional[str]:
+	def _get_language(self) -> str | None:
 		return self.availableVoices[self.voice].language
 
 	def _set_language(self, language):
 		raise NotImplementedError
 
-	def _get_availableLanguages(self) -> Set[Optional[str]]:
+	def _get_availableLanguages(self) -> set[str | None]:
 		return {self.availableVoices[v].language for v in self.availableVoices}
 
 	def _get_voice(self):
@@ -417,7 +412,7 @@ class SynthDriver(driverHandler.Driver):
 		return None
 
 
-_curSynth: Optional[SynthDriver] = None
+_curSynth: SynthDriver | None = None
 _audioOutputDevice = None
 
 
@@ -438,14 +433,14 @@ def changeVoice(synth, voice):
 	speechDictHandler.loadVoiceDict(synth)
 
 
-def _getSynthDriver(name) -> SynthDriver:
+def _getSynthDriver(name: str) -> type[SynthDriver]:
 	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
 
 
-def getSynthList() -> List[Tuple[str, str]]:
+def getSynthList() -> list[tuple[str, str]]:
 	from synthDrivers.silence import SynthDriver as SilenceSynthDriver
 
-	synthList: List[Tuple[str, str]] = []
+	synthList: list[tuple[str, str]] = []
 	# The synth that should be placed at the end of the list.
 	lastSynth = None
 	for loader, name, isPkg in pkgutil.iter_modules(synthDrivers.__path__):
@@ -472,12 +467,12 @@ def getSynthList() -> List[Tuple[str, str]]:
 	return synthList
 
 
-def getSynth() -> Optional[SynthDriver]:
+def getSynth() -> SynthDriver | None:
 	return _curSynth
 
 
-def getSynthInstance(name, asDefault=False):
-	newSynth: SynthDriver = _getSynthDriver(name)()
+def getSynthInstance(name: str, asDefault: bool = False):
+	newSynth = _getSynthDriver(name)()
 	if asDefault and newSynth.name == "oneCore":
 		# Will raise an exception if oneCore does not support the system language
 		newSynth._getDefaultVoice(pickAny=False)
@@ -490,7 +485,7 @@ def getSynthInstance(name, asDefault=False):
 defaultSynthPriorityList = ["oneCore", "espeak", "silence"]
 
 
-def setSynth(name: Optional[str], isFallback: bool = False, *, alreadyTried: list[str] | None = None) -> bool:
+def setSynth(name: str | None, isFallback: bool = False, *, alreadyTried: list[str] | None = None) -> bool:
 	"""Set the currently active speech synth by name.
 
 	If the chosen synth cannot be used, this function will attempt to fall back to another synth.
@@ -507,14 +502,15 @@ def setSynth(name: Optional[str], isFallback: bool = False, *, alreadyTried: lis
 	asDefault = False
 	global _curSynth, _audioOutputDevice
 	if name is None:
-		_curSynth.cancel()
-		_curSynth.terminate()
-		_curSynth = None
+		if _curSynth is not None:
+			_curSynth.cancel()
+			_curSynth.terminate()
+			_curSynth = None
 		return True
 	if name == "auto":
 		asDefault = True
 		name = defaultSynthPriorityList[0]
-	if _curSynth:
+	if _curSynth is not None:
 		_curSynth.cancel()
 		_curSynth.terminate()
 		prevSynthName = _curSynth.name
