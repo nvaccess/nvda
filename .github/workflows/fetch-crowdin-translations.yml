@@ -21,6 +21,7 @@ jobs:
       actions: write
     env:
       branchName: updateCrowdinTranslations${{ github.run_id }}
+      UV_PYTHON: "3.13"
 
     steps:
     - name: Early exit
@@ -45,7 +46,7 @@ jobs:
     - name: Set up python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.13'
+        python-version: ${{ env.UV_PYTHON}}
         architecture: 'x86'
 
     - name: setup uv
