@@ -490,8 +490,12 @@ def getSynthInstance(name, asDefault=False):
 defaultSynthPriorityList = ["oneCore", "espeak", "silence"]
 
 
-def setSynth(name: Optional[str], isFallback: bool = False):
+def setSynth(name: Optional[str], isFallback: bool = False, *, alreadyTried: list[str] | None = None):
+	print(f"setSynth({name=}, {isFallback=}, {alreadyTried=})")
+	# log.debug(f"setSynth({name=}, {isFallback=}, {alreadyTried=})")
 	from synthDrivers.silence import SynthDriver as SilenceSynthDriver
+
+	alreadyTried = [] if alreadyTried is None else alreadyTried
 
 	asDefault = False
 	global _curSynth, _audioOutputDevice
@@ -513,42 +517,60 @@ def setSynth(name: Optional[str], isFallback: bool = False):
 	try:
 		_curSynth = getSynthInstance(name, asDefault)
 	except:  # noqa: E722 # Legacy bare except
-		log.error(f"setSynth failed for {name}", exc_info=True)
+		# log.error(f"setSynth failed for {name}", exc_info=True)
+		print(f"setSynth failed for {name}")
 
 	if _curSynth is not None:
 		_audioOutputDevice = config.conf["audio"]["outputDevice"]
 		if not isFallback:
 			config.conf["speech"]["synth"] = name
-		log.info(f"Loaded synthDriver {_curSynth.name}")
+		# log.info(f"Loaded synthDriver {_curSynth.name}")
+		print(f"Loaded synthDriver {_curSynth.name}")
 		synthChanged.notify(synth=_curSynth, audioOutputDevice=_audioOutputDevice, isFallback=isFallback)
 		return True
 	# As there was an error loading this synth:
 	elif prevSynthName and not prevSynthName == SilenceSynthDriver.name:
 		# Don't fall back to silence if speech is expected
-		log.info(f"Falling back to previous synthDriver {prevSynthName}")
+		# log.info(f"Falling back to previous synthDriver {prevSynthName}")
+		print(f"Falling back to previous synthDriver {prevSynthName}")
 		# There was a previous synthesizer, so switch back to that one.
 		setSynth(prevSynthName, isFallback=True)
 	else:
 		# There was no previous synth, so fallback to the next available default synthesizer
 		# that has not been tried yet.
-		log.info("Searching for next synthDriver")
-		findAndSetNextSynth(name)
+		# log.info("Searching for next synthDriver")
+		print("Searching for next synthDriver")
+		ret = findAndSetNextSynth(name, alreadyTried=alreadyTried)
+		# log.debug(f"calling findAndSetNextSynth({name}, {alreadyTried=}) returned {ret}")
+		print(f"calling findAndSetNextSynth({name}, {alreadyTried=}) returned {ret}")
 	return False
 
 
-def findAndSetNextSynth(currentSynthName: str) -> bool:
+def findAndSetNextSynth(currentSynthName: str, *, alreadyTried: list[str] | None = None) -> bool:
 	"""Returns True if the next synth could be found, False if currentSynthName is the last synth
 	in the defaultSynthPriorityList"""
-	if currentSynthName in defaultSynthPriorityList:
-		nextIndex = defaultSynthPriorityList.index(currentSynthName) + 1
-	else:
-		nextIndex = 0
-	if nextIndex < len(defaultSynthPriorityList):
-		newName = defaultSynthPriorityList[nextIndex]
-		log.info(f"Falling back to next synthDriver {newName}")
-		setSynth(newName, isFallback=True)
+	# log.debug(f"findAndSetNextSynth({currentSynthName=}, {alreadyTried=})")
+	print(f"findAndSetNextSynth({currentSynthName=}, {alreadyTried=})")
+	alreadyTried = [] if alreadyTried is None else alreadyTried
+	alreadyTried.append(currentSynthName)
+	try:
+		newName = next(synth for synth in defaultSynthPriorityList if synth not in alreadyTried)
+		# log.info(f"Falling back to next synthDriver {newName}")
+		print(f"Falling back to next synthDriver {newName}")
+		setSynth(newName, isFallback=True, alreadyTried=alreadyTried)
 		return True
-	return False
+	except StopIteration:
+		return False
+	# if currentSynthName in defaultSynthPriorityList:
+	# nextIndex = defaultSynthPriorityList.index(currentSynthName) + 1
+	# else:
+	# nextIndex = 0
+	# if nextIndex < len(defaultSynthPriorityList):
+	# newName = defaultSynthPriorityList[nextIndex]
+	# log.info(f"Falling back to next synthDriver {newName}")
+	# setSynth(newName, isFallback=True)
+	# return True
+	# return False
 
 
 def handlePostConfigProfileSwitch(resetSpeechIfNeeded=True):
