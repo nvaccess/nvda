@@ -82,9 +82,7 @@ isNVDACoreArch = (
 	or (PYTHON_PLATFORM == "win-arm64" and TARGET_ARCH == "arm64")
 )
 isNVDAHelperLocalArch = isNVDACoreArch or (
-	PYTHON_PLATFORM == "win-amd64"
-	and TARGET_ARCH == "arm64"
-	and isArm64EC
+	PYTHON_PLATFORM == "win-amd64" and TARGET_ARCH == "arm64" and isArm64EC
 )
 debug = env["nvdaHelperDebugFlags"]
 release = env["release"]
@@ -266,7 +264,7 @@ if not isNVDAHelperLocalArch:
 if isNVDACoreArch:
 	sonicLib = thirdPartyEnv.SConscript("sonic/sconscript")
 	Export("sonicLib")
-	env.Install(sourceDir.Dir('synthDrivers'), sonicLib)
+	env.Install(sourceDir.Dir("synthDrivers"), sonicLib)
 	thirdPartyEnv.SConscript("espeak/sconscript")
 	thirdPartyEnv.SConscript("liblouis/sconscript")
 	thirdPartyEnv.SConscript("javaAccessBridge/sconscript")
@@ -275,4 +273,4 @@ if isNVDACoreArch:
 if TARGET_ARCH == "x86":
 	sonicLib = thirdPartyEnv.SConscript("sonic/sconscript")
 	Export("sonicLib")
-	env.Install(sourceDir.Dir('_synthDrivers32'), sonicLib)
+	env.Install(sourceDir.Dir("_synthDrivers32"), sonicLib)

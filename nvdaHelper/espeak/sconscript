@@ -29,13 +29,13 @@ freeLibrary.argtypes = (ctypes.wintypes.HANDLE,)
 DLL_DIRECTORY_COOKIE = ctypes.c_void_p
 AddDllDirectory = ctypes.windll.kernel32.AddDllDirectory
 AddDllDirectory.argtypes = (ctypes.wintypes.LPCWSTR,)
-AddDllDirectory.restype = DLL_DIRECTORY_COOKIE 
+AddDllDirectory.restype = DLL_DIRECTORY_COOKIE
 
 # Add the directory of the sonic dll to our DLL search path
 # So that eSpeak.dll cna find it when being loaded to compile dictionaries etc.
 sonicDllDir = sonicLib[0].get_dir().abspath
 AddDllDirectory(sonicDllDir)
- 
+
 
 class AutoFreeCDLL(ctypes.CDLL):
 	def __del__(self):
@@ -1053,6 +1053,7 @@ def espeak_compileDict_buildAction(
 		espeak.espeak_Terminate()
 	return ACTION_SUCCESS
 
+
 espeakLib = env.SharedLibrary(
 	target="espeak",
 	srcdir=espeakSrcDir.Dir("libespeak-ng").abspath,
@@ -1112,7 +1113,7 @@ espeakLib = env.SharedLibrary(
 		# com\ttsengine.cpp
 		# We do not use the ASYNC compile option in espeak.
 	],
-	LIBS=["advapi32", sonicLib[2]] ,
+	LIBS=["advapi32", sonicLib[2]],
 	LIBPATH=".",
 )
 
