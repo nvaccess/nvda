@@ -64,7 +64,8 @@ class SynthDriverService(Service):
 		def localCallback_synthIndexReached(synth: SynthDriver, index: int):
 			log.debug(f"synthIndexReached localCallback called with index {index}")
 			if synth is self._synth:
-				callback(index)
+				log.debug("Calling async callback")
+				rpyc.async_(callback)(index)
 
 		self._synthIndexReachedCallback = localCallback_synthIndexReached
 		synthIndexReached.register(localCallback_synthIndexReached)
@@ -74,7 +75,8 @@ class SynthDriverService(Service):
 		def localCallback_synthDoneSpeaking(synth: SynthDriver):
 			log.debug(f"synthDoneSpeaking localCallback called with synth {synth}")
 			if synth is self._synth:
-				callback()
+				log.debug("Calling async callback")
+				rpyc.async_(callback)()
 
 		self._synthDoneSpeakingCallback = localCallback_synthDoneSpeaking
 		synthDoneSpeaking.register(localCallback_synthDoneSpeaking)
