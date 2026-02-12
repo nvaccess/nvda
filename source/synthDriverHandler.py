@@ -485,7 +485,7 @@ def getSynthInstance(name: str, asDefault: bool = False):
 defaultSynthPriorityList = ["oneCore", "espeak", "silence"]
 
 
-def setSynth(name: str | None, isFallback: bool = False, *, alreadyTried: list[str] | None = None) -> bool:
+def setSynth(name: str | None, isFallback: bool = False, *, leftToTry: list[str] | None = None) -> bool:
 	"""Set the currently active speech synth by name.
 
 	If the chosen synth cannot be used, this function will attempt to fall back to another synth.
@@ -493,12 +493,12 @@ def setSynth(name: str | None, isFallback: bool = False, *, alreadyTried: list[s
 
 	:param name: The name of the synth driver to use.
 	:param isFallback: Whether this synth is a fallback, i.e. it isn't the synth that the user wants. Defaults to ``False``.
-	:param alreadyTried: List of synth names to exclude when falling back, if necessary. Defaults to ``None``.
+	:param leftToTry: List of synth names to try falling back to, in reverse order of priority. Defaults to ``None``.
+		If ``None``, the list will be calculated automatically.
 	:return: ``True`` if switching to the named synthesizer succeeds; ``False`` otherwise.
 	"""
 	from synthDrivers.silence import SynthDriver as SilenceSynthDriver
 
-	alreadyTried = [] if alreadyTried is None else alreadyTried
 	asDefault = False
 	global _curSynth, _audioOutputDevice
 	if name is None:
@@ -539,25 +539,27 @@ def setSynth(name: str | None, isFallback: bool = False, *, alreadyTried: list[s
 		# There was no previous synth, so fall back to the first available default synthesizer
 		# that has not been tried yet.
 		log.info("Searching for next synthDriver")
-		findAndSetNextSynth(name, alreadyTried=alreadyTried)
+		findAndSetNextSynth(name, leftToTry=leftToTry)
 	return False
 
 
-def findAndSetNextSynth(currentSynthName: str, *, alreadyTried: list[str] | None = None) -> bool:
+def findAndSetNextSynth(currentSynthName: str, *, leftToTry: list[str] | None = None) -> bool:
 	"""Finds the first untried synth in ``defaultSynthPriorityList`` and switches to it.
 
 	:param currentSynthName: The name of the synth driver that was just tried.
-	:param alreadyTried: A list of synth drivers that have already been tried, so should not be tried again. Defaults to ``None``.
+		Only used if ``leftToTry`` is ``None``.
+	:param leftToTry: A list of synth drivers that haven't been tried yet, in reverse order of priority. Defaults to ``None``.
+		If ``None``, the list of synths left to try will be calculated automatically.
 	:return: ``True`` if an attempt was made to switch to a synth driver; ``False`` if there are no more drivers in ``defaultSynthPriorityList `` to try.
 	"""
-	alreadyTried = [] if alreadyTried is None else alreadyTried
-	alreadyTried.append(currentSynthName)
-	try:
-		newName = next(synth for synth in defaultSynthPriorityList if synth not in alreadyTried)
+	if leftToTry is None:
+		leftToTry = [synth for synth in reversed(defaultSynthPriorityList) if synth != currentSynthName]
+	if len(leftToTry) > 0:
+		newName = leftToTry.pop()
 		log.info(f"Falling back to next synthDriver {newName}")
-		setSynth(newName, isFallback=True, alreadyTried=alreadyTried)
+		setSynth(newName, isFallback=True, leftToTry=leftToTry)
 		return True
-	except StopIteration:
+	else:
 		return False
 
 
