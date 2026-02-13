@@ -5,7 +5,7 @@ param(
 
 git checkout -b $branchName
 git config --local user.name "GitHub Actions"
-git config --local user.email ""
+git config --local user.email "github-actions@github.com"
 
 # Temporary file to store all collected reports.
 $tempfile = New-TemporaryFile
