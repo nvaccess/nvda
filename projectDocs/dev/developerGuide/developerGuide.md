@@ -8,26 +8,64 @@ This guide provides information concerning NVDA development, including translati
 
 ### Add-on API stability {#API}
 
-The NVDA Add-on API includes all NVDA internals, except:
+#### Definition of the public API
 
-* symbols that are prefixed with an underscore (`_`)
-* [transitive imports](#APIImports)
-* [included pip packages](#APIIncludedPipPackages)
+The NVDA Add-on API consists of all NVDA Python objects, classes and functions, excluding symbols prefixed with an underscore (`_`), transitive imports and Python packages.
 
-The NVDA Add-on API changes over time, for example because of the addition of new features, removal or replacement of outdated libraries, deprecation of unused or replaced code and methodologies, and changes to Python.
-Important changes to the API are announced on the [NVDA API mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-api/about).
-Changes relevant to developers are also announced via the [NVDA changes file](https://download.nvaccess.org/documentation/changes.html).
-Any changes to the API policy outlined in this section will be conveyed via these two channels.
+* **Public symbols (e.g. `gui.mainFrame`):** These form the supported contract.
+We strive to maintain backward compatibility for these symbols according to the schedule below.
+* **Private symbols (e.g. `_doInstall`):** These are internal implementation details.
+They may change or disappear in any release without notice.
+Add-ons relying on private symbols do so at their own risk.
+This also includes anything "below" the underscore.
+For example, `package.module._Class.*`, `package._module.*`, and `_package.*` are all internal.
+* **Pip packages:** These may be updated, downgraded or removed at any time.
+It is recommended to package any pip dependency you share with NVDA directly with your add-on, rather than using NVDA's version of the package.
 
-API breaking releases happen at most once per year, these are `.1` releases, e.g. `2022.1`.
-The API remains backwards compatible between breaking releases.
-API breaking changes should be considered relatively stable in the first beta: e.g. `2022.1.beta1`.
+#### The API release cycle
 
-API features may become deprecated over time.
-Deprecated API features may have a scheduled removal date, a future breaking release (e.g. `2022.1`).
-Deprecations may also have no scheduled removal date, and will remain supported until it is no longer reasonable.
-Note, the roadmap for removals is 'best effort' and may be subject to change.
-Please open a GitHub issue if the described add-on API changes result in the API no longer meeting the needs of an add-on you develop or maintain.
+To balance progress with ecosystem stability, NVDA follows a predictable schedule for API changes:
+
+* **Annual API-breaking release (major releases, e.g. 2026.1):** This is the only release window where signature breaking changes (defined below) are permitted.
+This allows us to remove technical debt and refactor core code.
+* **Standard releases (minor & patch releases, e.g. 2026.2, 2026.3.1):** These releases focus on features and stability.
+The API signature remains frozen, and changes are limited to behavioural refinements and bug fixes (defined below).
+
+#### Classification of API changes
+
+To provide clarity on what add-on developers can expect, we categorise changes into three tiers:
+
+##### Signature breaking changes
+
+
+* **Examples:** Renaming a function, removing a module, changing a function’s return type or removing/reordering positional arguments.
+* **Policy:** These occur only in the .1 release (e.g. 2026.1).
+
+##### Behavioural refinements & bug fixes
+A change where the code continues to run (the signature matches), but the logic or outcome changes to correct a defect or security flaw.
+
+* **Examples:** Fixing a math error or optimising an algorithm (e.g. changing a sort order).
+* **Policy:** These are permitted in any major or minor release (e.g. 2026.1, 2026.2).
+* We recognise that some add-ons may inadvertently rely on incorrect behaviour / bugs.
+However, preserving a bug to maintain backwards compatibility significantly hampers NVDA's development.
+If a public function was documented to do X but was actually doing Y, changing it to correctly do X is considered a bug fix, not a breaking change.
+* Conversely, changing a function that was documented to do X, and was correctly doing X, to instead do Y is considered a breaking change.
+
+##### Security improvements
+
+Security takes precedence over backward compatibility.
+We will make every effort to document these changes clearly in the changelog.
+
+* **Examples:** Privilege escalation or insecure file handling.
+* **Policy:** These are permitted in any release but are primarily deployed in patch releases (e.g. 2026.1.2).
+
+#### API deprecation strategy
+
+We im to avoid silent breaks of add-on code.
+Wh  removing or changing APIs in a breaking release (e.g. 2026.1):
+
+1. We will mark functions as deprecated, where possible, in the releases leading up to the break (e.g. raising a `DeprecationWarning` in 2025.4).
+2. All API breaking changes will be listed in the "Changes for Developers" section of the What's New document.
 
 #### Stability of transitive imports in the API {#APIImports}
 
