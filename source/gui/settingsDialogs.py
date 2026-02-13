@@ -3041,7 +3041,7 @@ class MathSettingsPanel(SettingsPanel):
 				* math.pow(
 					PauseFactor.LOG_BASE.value,
 					pauseFactorSliderValue,
-				)
+				),
 			)
 		)  # avoid log(0)
 		if pauseFactor > 1000:
