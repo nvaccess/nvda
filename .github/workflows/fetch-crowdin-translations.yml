@@ -24,13 +24,12 @@ jobs:
 
     steps:
     - name: Early exit
-      shell: bash
       run: |
-        if [ -z "${{ vars.CROWDIN_PROJECT_ID }}" ]; then
-          echo "CROWDIN_PROJECT_ID is not set. Exiting workflow."
+        if ("${{ vars.CROWDIN_PROJECT_ID }}".length -eq 0) {
+          Write-Output "CROWDIN_PROJECT_ID is not set. Exiting workflow."
           gh run cancel ${{ github.run_id }}
           gh run watch ${{ github.run_id }}
-        fi
+        }
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_REPO: ${{ github.repository }}
@@ -59,12 +58,10 @@ jobs:
 
     - name: Commit tracked files only
       id: commit
-      shell: bash
-      run: ci/scripts/checkAndCommitTranslations.sh
+      run: ci/scripts/checkAndCommitTranslations.ps1 -branchName ${{env.branchName }}
 
     - name: Create pull request
       if: steps.commit.outputs.has_changes == 'true'
-      shell: bash
       run: |
         git push --set-upstream origin ${{ env.branchName }}
         # Create a pull request for the changes
@@ -76,9 +73,8 @@ jobs:
 
     - name: Merge pull request
       if: steps.commit.outputs.has_changes == 'true'
-      shell: bash
-      # Sets PR to auto-merge when checks have passed
       run: |
+        # Sets PR to auto-merge when checks have passed
         gh pr merge ${{ env.branchName }} \
         --squash --delete-branch --auto \
         --body "Merged translations from Crowdin"
