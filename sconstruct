@@ -701,22 +701,6 @@ env.AlwaysBuild(checkPotTarget)
 env.Alias("checkPot", checkPotTarget)
 
 
-def removedTestsTargetAction(target, source, env):
-	raise UserError(
-		"The 'scons tests' target has been removed.\n"
-		"Use the individual test commands instead:\n"
-		"  scons checkPot - for translation string checks\n"
-		"  rununittests.bat - for unit tests\n"
-		"  runsystemtests.bat - for system tests\n"
-		"  runlint.bat - for linting"
-	)
-
-
-removedTestsTarget = env.Command("removedTestsTarget", [], removedTestsTargetAction)
-env.AlwaysBuild(removedTestsTarget)
-env.Alias("tests", removedTestsTarget)
-
-
 # Generate a list of Python modules from compiled '.pyc' files in library.zip
 env.Tool("listModules")
 source = env.Dir(os.path.join(os.getcwd(), "dist"))
