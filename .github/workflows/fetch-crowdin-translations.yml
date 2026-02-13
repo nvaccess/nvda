@@ -21,7 +21,6 @@ jobs:
       actions: write
     env:
       branchName: updateCrowdinTranslations${{ github.run_id }}
-      UV_PYTHON: "3.13"
 
     steps:
     - name: Early exit
@@ -44,10 +43,9 @@ jobs:
         submodules: true
 
     - name: Set up python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
-        python-version: ${{ env.UV_PYTHON}}
-        architecture: 'x86'
+        python-version-file: '.python-versions'
 
     - name: setup uv
       uses: astral-sh/setup-uv@v6
