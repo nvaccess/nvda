@@ -8,6 +8,7 @@ from __future__ import annotations  # Avoids quoting of forward references
 
 from abc import abstractmethod, ABC
 from collections.abc import Callable
+import json
 import sys
 import os.path
 import gettext
@@ -19,6 +20,7 @@ from io import StringIO
 import pickle
 from typing import (
 	IO,
+	Any,
 	Literal,
 	TYPE_CHECKING,
 )
@@ -125,11 +127,27 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		pickledState: dict[str, set[str] | addonAPIVersion.AddonApiVersionT | MajorMinorPatch],
 	) -> None:
 		# Load from pickledState
-		if "backCompatToAPIVersion" in pickledState:
-			self.manualOverridesAPIVersion = MajorMinorPatch(*pickledState["backCompatToAPIVersion"])
+		# if "backCompatToAPIVersion" in pickledState:
+		# self.manualOverridesAPIVersion = MajorMinorPatch(*pickledState["backCompatToAPIVersion"])
+		# for category in AddonStateCategory:
+		# Make pickles case insensitive
+		# self[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState.get(category, set()))
+		return self.fromJsonDict(pickledState)
+
+	def fromJsonDict(
+		self,
+		jsonState: dict[str, Any],
+	) -> None:
+		if "backCompatToAPIVersion" in jsonState:
+			try:
+				self.manualOverridesAPIVersion = MajorMinorPatch(
+					*(int(num) for num in jsonState["backCompatToAPIVersion"]),
+				)
+			except Exception:
+				log.error("Unable to deserialise backward compatibility version.", exc_info=True)
 		for category in AddonStateCategory:
 			# Make pickles case insensitive
-			self[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState.get(category, set()))
+			self[AddonStateCategory(category)] = CaseInsensitiveSet(jsonState.get(category, []))
 
 	def toDict(self) -> dict[str, set[str] | addonAPIVersion.AddonApiVersionT]:
 		# We cannot pickle instance of `AddonsState` directly
@@ -137,8 +155,10 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		# the state to be using inbuilt data types only.
 		picklableState: dict[str, set[str] | addonAPIVersion.AddonApiVersionT] = dict()
 		for category in self.data:
-			picklableState[category.value] = set(self.data[category])
-		picklableState["backCompatToAPIVersion"] = tuple(self.manualOverridesAPIVersion)
+			picklableState[category.value] = list(self.data[category])
+			# picklableState[category.value] = set(self.data[category])
+		# picklableState["backCompatToAPIVersion"] = tuple(self.manualOverridesAPIVersion)
+		picklableState["backCompatToAPIVersion"] = list(self.manualOverridesAPIVersion)
 		return picklableState
 
 	def load(self) -> None:
@@ -264,6 +284,10 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 				log.debug(f"Discarding {blockedAddon} from blocked add-ons as it has become compatible.")
 				self[AddonStateCategory.BLOCKED].discard(blockedAddon)
 				self[AddonStateCategory.OVERRIDE_COMPATIBILITY].discard(blockedAddon)
+
+	@staticmethod
+	def pickleToJson(picklePath: os.PathLike, jsonPath: os.PathLike):
+		pass
 
 
 state = AddonsState()
@@ -1158,3 +1182,65 @@ def validate_apiVersionString(value: str) -> tuple[int, int, int]:
 		return addonAPIVersion.getAPIVersionTupleFromString(value)
 	except ValueError as e:
 		raise ValidateError('"{}" is not a valid API Version string: {}'.format(value, e))
+
+
+def _convertAddonsStateFileFromPickleToJson(picklePath: os.PathLike, jsonPath: os.pathLike):
+	try:
+		os.makedirs(os.path.dirname(jsonPath), exist_ok=True)
+	except Exception:
+		log.error("Unable to create directory for addonsState.json, no action taken.")
+		return
+	if os.path.isdir(jsonPath):
+		try:
+			shutil.rmtree(jsonPath)
+		except Exception:
+			log.debug(f"Unable to remove {jsonPath}.", exc_info=True)
+			return
+	try:
+		with open(picklePath, "rb") as pickleFile, open(jsonPath, "wt") as jsonFile:
+			json.dump(_pickledStateDictToJsonStateDict(pickle.load(pickleFile)), jsonFile)
+	except FileNotFoundError:
+		log.debug("No pickled add-ons state. No action taken.")
+	except PermissionError:
+		log.error("Unable to access add-ons state file.")
+	except pickle.UnpicklingError:
+		log.error("Unable to load pickled add-ons state.")
+	except TypeError:
+		log.error("Unable to save JSON add-ons state.")
+	except Exception:
+		log.error("Unable to convert add-ons state.")
+	else:
+		try:
+			os.unlink(picklePath)
+		except Exception:
+			log.debug(f"Failed to remove {picklePath}.", exc_info=True)
+
+
+def _pickledStateDictToJsonStateDict(pickledState: Any) -> dict[str, list[str] | tuple[int, int, int]]:
+	if not isinstance(pickledState, dict):
+		log.debug("Invalid pickled state: {pickledState!r}")
+		return {}
+	jsonState: dict[str, list[str] | tuple[int, int, int]] = {}
+	for key, value in pickledState.items():
+		if key == "backCompatToAPIVersion":
+			if (
+				isinstance(value, tuple)
+				and 2 <= len(value) <= 3
+				and all(isinstance(part, int) for part in value)
+			):
+				jsonState[key] = value
+			else:
+				log.debug(f"Invalid backCompatToAPIVersion: {value!r}. Discarding.")
+		elif key in AddonStateCategory:
+			if not isinstance(value, set):
+				log.debug("Invalid category {key}: {value!r}. Discarding.")
+				continue
+			addons = jsonState[key] = []
+			for addon in value:
+				if isinstance(addon, str):
+					addons.append(addon)
+				else:
+					log.debug(f"Invalid add-on in category {key}: {addon!r}. Discarding")
+		else:
+			log.debug(f"Unrecognised key-value pair: {key!r}: {value!r}. Discarding")
+	return jsonState
