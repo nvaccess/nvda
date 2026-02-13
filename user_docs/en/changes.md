@@ -170,6 +170,7 @@ It currently includes Screen Curtain's settings (previously in the "Vision" cate
 * Fixed a case where braille output would fail with an error. (#19025, @LeonarddeR)
 * Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @hdzrvcc0X74)
 * When a synthesizer has a fallback language for the current dialect, the language of the text being read will no longer be reported as unsupported. (#18876, @nvdaes)
+* If the speech synthesizer is set to eSpeak NG and it fails to load when NVDA starts, NVDA will now attempt to fall back to OneCore before resorting to no speech. (#19603)
 * Certain settings will no longer erroneously be saved to disk when running NVDA from the launcher. (#18171)
 * Incorrect information is no longer displayed in braille when navigating the list of messages in Outlook Classic. (#18993, @nvdaes)
 * NVDA now detects and stops repeated crash loops to prevent system lockups when startup failures occur. (#19133, @derekriemer)
@@ -196,7 +197,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * uv to 0.9.11 (#19162)
   * Ruff to 0.14.5 (#19162)
   * comtypes to 1.4.13 (#19196)
-  * cryptography to 46.0.3 (#19196)
+  * cryptography to 46.0.5 (#19196, #19601)
   * Configobj to commit `9c8a0a80` (#19196)
   * Requests to 2.32.5 (#19196)
   * url-normalize to 2.2.1 (#19196)
@@ -220,6 +221,7 @@ On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of
 * In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
 * Added `api.fakeNVDAObjectClasses` set and `api.isFakeNVDAObject` function to identify fake NVDAObject instances. (#19168, @hwf1324)
 * NVDA no longer includes the Microsoft Universal C Runtime. (#19508)
+* `synthDriverHandler.setSynth` and `synthDriverHandler.findAndSetNextSynth` now attempt to find fallback synthesizers starting from the start of `defaultSynthPriorityList`, rather than starting immediately after `name` or `currentSynthName`, respectively. (#19603)
 
 #### API Breaking Changes
 
