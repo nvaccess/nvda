@@ -15,7 +15,7 @@ from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
 from .utils.spotlightManager import SpotlightManager
 from .utils.types import Filter, Coordinates, FullScreenMode, FocusType
-from .config import getDefaultFullscreenMode, shouldKeepMouseCentered
+from .config import getDefaultFullscreenMode, shouldKeepMouseCentered, isTrueCentered
 
 
 class FullScreenMagnifier(Magnifier):
@@ -127,7 +127,7 @@ class FullScreenMagnifier(Magnifier):
 
 		:coordinates: The (x, y) coordinates to center the magnifier on
 		"""
-		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(coordinates)
+		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(coordinates, isTrueCentered())
 		try:
 			result = magnification.MagSetFullscreenTransform(
 				self.zoomLevel,

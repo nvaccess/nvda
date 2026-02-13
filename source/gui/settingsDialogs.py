@@ -5927,7 +5927,7 @@ class MagnifierPanel(SettingsPanel):
 			choices=zoomChoices,
 		)
 		self.bindHelpEvent(
-			"magnifierDefaultZoom",
+			"MagnifierDefaultZoom",
 			self.defaultZoomList,
 		)
 
@@ -5968,9 +5968,19 @@ class MagnifierPanel(SettingsPanel):
 			choices=fullscreenModeChoices,
 		)
 		self.bindHelpEvent(
-			"magnifierDefaultFullscreenMode",
+			"MagnifierDefaultFullscreenMode",
 			self.defaultFullscreenModeList,
 		)
+
+		# TRUE CENTER
+		# Translators: The label for a setting in magnifier settings to select whether true center is used in full-screen mode
+		trueCenterText = _("Use &true center in fullscreen mode")
+		self.trueCenterCheckBox = sHelper.addItem(wx.CheckBox(self, label=trueCenterText))
+		self.bindHelpEvent(
+			"MagnifierUseTrueCenter",
+			self.trueCenterCheckBox,
+		)
+		self.trueCenterCheckBox.SetValue(magnifierConfig.isTrueCentered())
 
 		# Set default value from config
 		defaultFullscreenMode = magnifierConfig.getDefaultFullscreenMode()
@@ -5981,7 +5991,7 @@ class MagnifierPanel(SettingsPanel):
 		keepMouseCenteredText = _("Keep &mouse pointer centered in magnifier view")
 		self.keepMouseCenteredCheckBox = sHelper.addItem(wx.CheckBox(self, label=keepMouseCenteredText))
 		self.bindHelpEvent(
-			"magnifierKeepMouseCentered",
+			"MagnifierKeepMouseCentered",
 			self.keepMouseCenteredCheckBox,
 		)
 		self.keepMouseCenteredCheckBox.SetValue(magnifierConfig.shouldKeepMouseCentered())
@@ -5997,6 +6007,7 @@ class MagnifierPanel(SettingsPanel):
 		selectedModeIdx = self.defaultFullscreenModeList.GetSelection()
 		magnifierConfig.setDefaultFullscreenMode(list(FullScreenMode)[selectedModeIdx])
 
+		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterCheckBox.GetValue()
 		config.conf["magnifier"]["keepMouseCentered"] = self.keepMouseCenteredCheckBox.GetValue()
 
 

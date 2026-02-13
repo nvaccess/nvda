@@ -1564,12 +1564,12 @@ NVDA will announce the name of the currently selected filter.
 
 The default color filter when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
-### Focus Tracking Modes {#MagnifierFocusModes}
+### Focus Tracking Modes {#MagnifierFullscreenFocusModes}
 
 The magnifier offers three different modes for tracking focus and determining which part of the screen to magnify:
 
-* **Center**: The magnified area is always centered on the current focus position.
-This mode keeps the focused element at the center of the screen at all times.
+* **Center**: The magnified area is centered on the current focus position.
+This mode keeps the focused element at the center of the screen and clamps to the screen edge.
 * **Border**: The magnified area only moves when the focus approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
 * **Relative**: The magnified area maintains the relative position of the focus within the screen.
@@ -1579,6 +1579,9 @@ To cycle through the focus tracking modes, please assign a custom gesture using 
 NVDA will announce the name of the currently selected mode.
 
 The default focus mode when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
+
+**True Center Option**: Change the default behavior of the center mode to always keep the focus at the center of the screen, even if it means displaying off-screen content.
+When this option is disabled, the magnifier will clamp to the screen edge when the focus is near the edge of the screen, which can prevent showing off-screen content but may not keep the focus perfectly centered.
 
 ### Spotlight Mode {#MagnifierSpotlight}
 
@@ -2820,7 +2823,7 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### Default focus mode {#MagnifierDefaultFocusMode}
+##### Default focus mode {#MagnifierDefaultFullscreenFocusMode}
 
 This combo box allows you to select the default focus tracking mode when the magnifier is first enabled.
 To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
@@ -2837,6 +2840,18 @@ The available options are:
 | Center | The magnified area is always centered on the current focus position. |
 | Border | The magnified area only moves when the focus approaches the edge of the visible area. |
 | Relative | The magnified area maintains the relative position of the focus within the screen. |
+
+##### Use true center {#MagnifierUseTrueCenter}
+
+This checkbox controls whether the magnifier should always keep the focus centered on the screen, or if it should allow the focus to move towards the edges of the screen before moving the magnified area.
+When enabled, the magnifier will always keep the focus centered on the screen, which can be helpful for users who prefer a consistent position of the focus within the magnified view.
+
+This option is disabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Disabled|
 
 ##### Keep mouse centered {#MagnifierKeepMouseCentered}
 
