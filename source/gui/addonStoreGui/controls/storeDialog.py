@@ -41,6 +41,7 @@ class AddonStoreDialog(SettingsDialog):
 	# more adapted like "AddonStore" so that old external links pointing to the add-ons manager paragraph now
 	# point to the Add-on Store one.
 	helpId = "AddonsManager"
+	shouldSuspendConfigProfileTriggers = False
 
 	def __init__(self, parent: wx.Window, storeVM: AddonStoreVM, openToTab: _StatusFilterKey | None = None):
 		self._storeVM = storeVM
