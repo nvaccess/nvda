@@ -4,7 +4,6 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import typing
-
 import globalVars
 from logHandler import log
 from utils._deprecate import MovedSymbol, RemovedSymbol, handleDeprecations

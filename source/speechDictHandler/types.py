@@ -8,9 +8,14 @@
 import fnmatch
 import os
 import re
-import typing
 from dataclasses import dataclass, field
 from functools import cached_property
+from typing import (
+	TYPE_CHECKING as _TYPE_CHECKING,
+)
+from typing import (
+	Self,
+)
 
 import config
 from logHandler import log
@@ -19,7 +24,7 @@ from utils.displayString import DisplayStringIntEnum, DisplayStringStrEnum
 
 from . import dictFormatUpgrade
 
-if typing.TYPE_CHECKING:
+if _TYPE_CHECKING:
 	import synthDriverHandler
 
 
@@ -42,7 +47,7 @@ class EntryType(DisplayStringIntEnum):
 	"""Unix shell-style wildcards."""
 
 	@cached_property
-	def _displayStringLabels(self) -> dict[typing.Self, str]:
+	def _displayStringLabels(self) -> dict[Self, str]:
 		return {
 			# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 			EntryType.ANYWHERE: _("&Anywhere"),
@@ -74,7 +79,7 @@ class DictionaryType(DisplayStringStrEnum):
 	"""Built-in speech dictionary."""
 
 	@cached_property
-	def _displayStringLabels(self) -> dict[typing.Self, str]:
+	def _displayStringLabels(self) -> dict[Self, str]:
 		return {
 			# Translators: A type of speech dictionary.
 			DictionaryType.TEMP: _("Temporary"),
