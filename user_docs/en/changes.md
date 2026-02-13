@@ -39,6 +39,9 @@ Consult the speech dictionaries section in the User Guide for more details. (#19
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Subclasses of `browseMode.BrowseModeDocumentTreeInterceptor` that support screen layout being on and off should override the `_toggleScreenLayout` method, rather than implementing `script_toggleScreenLayout` directly. (#19487)
+* The `scons tests` build target has been removed, as it was misleadingly named.
+It only ran the translation string comment check, which is equivalent to `scons checkPot`.
+Use the individual test commands instead: `scons checkPot`, `rununittests.bat`, `runsystemtests.bat`, `runlint.bat`. (#19606, @bramd)
 
 #### Deprecations
 
