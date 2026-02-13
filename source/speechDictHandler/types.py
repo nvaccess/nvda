@@ -292,12 +292,10 @@ class VoiceSpeechDictDefinition(SpeechDictDefinition):
 	name: str = field(init=False, default=DictionaryType.VOICE.value)
 
 	@property
-	def displayName(self) -> str:  # noqa: F811
+	def displayName(self) -> str:
 		"""The display name for the voice dictionary."""
 		# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-		return _("Voice dictionary (%s)") % (
-			os.path.basename(self.dictionary.fileName) if self.dictionary.fileName else None,
-		)
+		return _("Voice dictionary (%s)") % (os.path.basename(self.path) if self.path else None)
 
 	@displayName.setter
 	def displayName(self, value: str) -> None:
