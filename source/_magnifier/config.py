@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -78,6 +78,27 @@ def setDefaultZoomLevel(zoomLevel: float) -> None:
 	if "magnifier" not in config.conf:
 		config.conf["magnifier"] = {}
 	config.conf["magnifier"]["defaultZoomLevel"] = zoomLevel
+
+
+def getDefaultPanStep() -> int:
+	"""
+	Get default pan value from config.
+
+	:return: The default pan value.
+	"""
+	return config.conf["magnifier"]["defaultPanStep"]
+
+
+def setDefaultPanStep(panStep: int) -> None:
+	"""
+	Set default pan value from settings.
+
+	:param panStep: The pan value to set.
+	"""
+
+	if "magnifier" not in config.conf:
+		config.conf["magnifier"] = {}
+	config.conf["magnifier"]["defaultPanStep"] = panStep
 
 
 def getDefaultFilter() -> Filter:

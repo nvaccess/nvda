@@ -5933,15 +5933,34 @@ class MagnifierPanel(SettingsPanel):
 
 		# Set default value from config
 		defaultZoom = magnifierConfig.getDefaultZoomLevel()
-		index = bisect.bisect_left(zoomValues, defaultZoom)
+		zoomIndex = bisect.bisect_left(zoomValues, defaultZoom)
 		# Find the closest value
-		if index == 0:
+		if zoomIndex == 0:
 			closestIndex = 0
-		elif index >= len(zoomValues):
+		elif zoomIndex >= len(zoomValues):
 			closestIndex = len(zoomValues) - 1
 		else:
-			closestIndex = min(index - 1, index, key=lambda i: abs(zoomValues[i] - defaultZoom))
+			closestIndex = min(zoomIndex - 1, zoomIndex, key=lambda i: abs(zoomValues[i] - defaultZoom))
 		self.defaultZoomList.SetSelection(closestIndex)
+
+		# PAN SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
+		panStepSizeLabelText = _("&Panning step size (%):")
+
+		self.defaultPanSpinCtrl = sHelper.addLabeledControl(
+			panStepSizeLabelText,
+			wx.SpinCtrl,
+			min=1,
+			max=100,
+		)
+		self.bindHelpEvent(
+			"magnifierPanStep",
+			self.defaultPanSpinCtrl,
+		)
+
+		# Set default value from config
+		defaultPan = magnifierConfig.getDefaultPanStep()
+		self.defaultPanSpinCtrl.SetValue(defaultPan)
 
 		# FILTER SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the default filter
@@ -5990,6 +6009,8 @@ class MagnifierPanel(SettingsPanel):
 		"""Save the current selections to config."""
 		selectedZoom = self.defaultZoomList.GetSelection()
 		magnifierConfig.setDefaultZoomLevel(magnifierConfig.ZoomLevel.zoom_range()[selectedZoom])
+
+		magnifierConfig.setDefaultPanStep(self.defaultPanSpinCtrl.GetValue())
 
 		selectedFilterIdx = self.defaultFilterList.GetSelection()
 		magnifierConfig.setDefaultFilter(list(Filter)[selectedFilterIdx])

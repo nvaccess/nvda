@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from _magnifier.magnifier import Magnifier, MagnifierType
-from _magnifier.utils.types import Filter, Direction, Coordinates
+from _magnifier.utils.types import Filter, Direction, Coordinates, MagnifierAction
 import unittest
 from winAPI._displayTracking import getPrimaryDisplayOrientation
 from unittest.mock import MagicMock, patch
@@ -178,6 +178,161 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier.zoomLevel = 1.0
 		self.magnifier._zoom(Direction.OUT)
 		self.assertEqual(self.magnifier.zoomLevel, 1.0)  # Should remain at min
+
+	def _setupPanTest(self):
+		"""Common setup for pan tests."""
+		self.magnifier._doUpdate = MagicMock()
+		self.magnifier._isActive = True
+		self.magnifier._panStep = 10  # 10% of screen width
+		self.magnifier.setPanMarginBorder()
+		centerX = self.screenWidth // 2
+		centerY = self.screenHeight // 2
+		self.magnifier._currentCoordinates = Coordinates(centerX, centerY)
+		expectedPanPixels = int(
+			(self.screenWidth / self.magnifier.zoomLevel) * 10 / 100,
+		)
+		return centerX, centerY, expectedPanPixels
+
+	def _testSimplePan(
+		self,
+		action: MagnifierAction,
+		axis: str,
+		direction: int,
+		edgeAttr: str,
+	):
+		"""
+		Test simple pan action (LEFT, RIGHT, UP, DOWN).
+
+		:param action: The pan action to test
+		:param axis: 'x' or 'y'
+		:param direction: -1 for left/up, +1 for right/down
+		:param edgeAttr: The panMargin attribute name ('left', 'right', 'top', 'bottom')
+		"""
+		centerX, centerY, expectedPanPixels = self._setupPanTest()
+		edgeValue = getattr(self.magnifier._panMargin, edgeAttr)
+		centerValue = centerX if axis == "x" else centerY
+
+		with patch("_magnifier.magnifier.winUser.setCursorPos"):
+			# Test normal pan - no bumping (position changes)
+			isBumping = self.magnifier._pan(action)
+			self.assertFalse(isBumping)
+			currentValue = getattr(self.magnifier._currentCoordinates, axis)
+			self.assertEqual(currentValue, centerValue + direction * expectedPanPixels)
+
+			# Test reaching edge - no bumping on first contact (position changes)
+			if axis == "x":
+				self.magnifier._currentCoordinates = Coordinates(
+					edgeValue - direction * expectedPanPixels,
+					centerY,
+				)
+			else:
+				self.magnifier._currentCoordinates = Coordinates(
+					centerX,
+					edgeValue - direction * expectedPanPixels,
+				)
+
+			isBumping = self.magnifier._pan(action)
+			self.assertFalse(isBumping)
+			currentValue = getattr(self.magnifier._currentCoordinates, axis)
+			self.assertEqual(currentValue, edgeValue)
+
+			# Test bumping against edge - should announce (already at edge, no movement)
+			isBumping = self.magnifier._pan(action)
+			self.assertTrue(isBumping)
+			currentValue = getattr(self.magnifier._currentCoordinates, axis)
+			self.assertEqual(currentValue, edgeValue)
+
+	def _testPanToEdge(self, action: MagnifierAction, axis: str, edgeAttr: str):
+		"""
+		Test pan to edge action (PAN_X_EDGE).
+
+		:param action: The pan to edge action to test
+		:param axis: 'x' or 'y'
+		:param edgeAttr: The panMargin attribute name ('left', 'right', 'top', 'bottom')
+		"""
+		_ = self._setupPanTest()
+		edgeValue = getattr(self.magnifier._panMargin, edgeAttr)
+
+		with patch("_magnifier.magnifier.winUser.setCursorPos"):
+			# Test jump to edge - no bumping (movement occurs)
+			isBumping = self.magnifier._pan(action)
+			self.assertFalse(isBumping)
+			currentValue = getattr(self.magnifier._currentCoordinates, axis)
+			self.assertEqual(currentValue, edgeValue)
+
+			# Test bumping at edge - should announce (already at edge, no movement)
+			isBumping = self.magnifier._pan(action)
+			self.assertTrue(isBumping)
+			currentValue = getattr(self.magnifier._currentCoordinates, axis)
+			self.assertEqual(currentValue, edgeValue)
+
+	def testPanLeft(self):
+		"""Pan left and detect edge limit."""
+		self._testSimplePan(
+			MagnifierAction.PAN_LEFT,
+			axis="x",
+			direction=-1,
+			edgeAttr="left",
+		)
+
+	def testPanRight(self):
+		"""Pan right and detect edge limit."""
+		self._testSimplePan(
+			MagnifierAction.PAN_RIGHT,
+			axis="x",
+			direction=1,
+			edgeAttr="right",
+		)
+
+	def testPanUp(self):
+		"""Pan up and detect edge limit."""
+		self._testSimplePan(
+			MagnifierAction.PAN_UP,
+			axis="y",
+			direction=-1,
+			edgeAttr="top",
+		)
+
+	def testPanDown(self):
+		"""Pan down and detect edge limit."""
+		self._testSimplePan(
+			MagnifierAction.PAN_DOWN,
+			axis="y",
+			direction=1,
+			edgeAttr="bottom",
+		)
+
+	def testPanToLeftEdge(self):
+		"""Pan directly to left edge."""
+		self._testPanToEdge(
+			MagnifierAction.PAN_LEFT_EDGE,
+			axis="x",
+			edgeAttr="left",
+		)
+
+	def testPanToRightEdge(self):
+		"""Pan directly to right edge."""
+		self._testPanToEdge(
+			MagnifierAction.PAN_RIGHT_EDGE,
+			axis="x",
+			edgeAttr="right",
+		)
+
+	def testPanToTopEdge(self):
+		"""Pan directly to top edge."""
+		self._testPanToEdge(
+			MagnifierAction.PAN_TOP_EDGE,
+			axis="y",
+			edgeAttr="top",
+		)
+
+	def testPanToBottomEdge(self):
+		"""Pan directly to bottom edge."""
+		self._testPanToEdge(
+			MagnifierAction.PAN_BOTTOM_EDGE,
+			axis="y",
+			edgeAttr="bottom",
+		)
 
 	def testStartTimer(self):
 		"""Starting the timer."""

@@ -2838,6 +2838,34 @@ The available options are:
 | Border | The magnified area only moves when the focus approaches the edge of the visible area. |
 | Relative | The magnified area maintains the relative position of the focus within the screen. |
 
+##### Panning step size {#MagnifierPanningStepSize}
+
+This slider allows you to set the panning step size as a percentage of the visible magnified window.
+The panning step size can range from 1% to 100%, with a default value of 10%.
+This means that when you use manual pan commands, the magnified view will move by the specified percentage of the current visible window size.
+
+For example, if your visible magnified window is 200 pixels wide and you have a panning step size of 10%, each pan command will move the view by 20 pixels.
+Higher percentages cause larger movements, making it faster to navigate across the screen, while lower percentages provide finer control for precise positioning.
+The actual pixel distance will automatically adjust based on your current zoom level.
+
+Note: Pan commands allow you to manually move the magnified view in any direction, independent of the focus tracking mode.
+Available pan actions include:
+
+| Name |Key |Description|
+|---|---|---|
+|Pan left |`NVDA+alt+leftArrow` |Pan the magnified view to the left by the specified panning step size.|
+|Pan right |`NVDA+alt+rightArrow` |Pan the magnified view to the right by the specified panning step size.|
+|Pan up |`NVDA+alt+upArrow` |Pan the magnified view upwards by the specified panning step size.|
+|Pan down |`NVDA+alt+downArrow` |Pan the magnified view downwards by the specified panning step size.|
+|Pan to left edge |`NVDA+shift+alt+leftArrow` |Pan the magnified view directly to the left edge of the screen.|
+|Pan to right edge |`NVDA+shift+alt+rightArrow` |Pan the magnified view directly to the right edge of the screen.|
+|Pan to top edge |`NVDA+shift+alt+upArrow` |Pan the magnified view directly to the top edge of the screen.|
+|Pan to bottom edge |`NVDA+shift+alt+downArrow` |Pan the magnified view directly to the bottom edge of the screen.|
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |1 to 100|
+
 ##### Keep mouse centered {#MagnifierKeepMouseCentered}
 
 This checkbox controls whether the mouse pointer should be automatically moved to the center of the magnified area when certain focus events occur.
