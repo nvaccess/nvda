@@ -8,7 +8,6 @@ from __future__ import annotations  # Avoids quoting of forward references
 
 from abc import abstractmethod, ABC
 from collections.abc import Callable
-import json
 import sys
 import os.path
 import gettext
@@ -1184,36 +1183,9 @@ def validate_apiVersionString(value: str) -> tuple[int, int, int]:
 		raise ValidateError('"{}" is not a valid API Version string: {}'.format(value, e))
 
 
-def _convertAddonsStateFileFromPickleToJson(picklePath: os.PathLike, jsonPath: os.pathLike):
-	try:
-		os.makedirs(os.path.dirname(jsonPath), exist_ok=True)
-	except Exception:
-		log.error("Unable to create directory for addonsState.json, no action taken.")
-		return
-	if os.path.isdir(jsonPath):
-		try:
-			shutil.rmtree(jsonPath)
-		except Exception:
-			log.debug(f"Unable to remove {jsonPath}.", exc_info=True)
-			return
-	try:
-		with open(picklePath, "rb") as pickleFile, open(jsonPath, "wt") as jsonFile:
-			json.dump(_pickledStateDictToJsonStateDict(pickle.load(pickleFile)), jsonFile)
-	except FileNotFoundError:
-		log.debug("No pickled add-ons state. No action taken.")
-	except PermissionError:
-		log.error("Unable to access add-ons state file.")
-	except pickle.UnpicklingError:
-		log.error("Unable to load pickled add-ons state.")
-	except TypeError:
-		log.error("Unable to save JSON add-ons state.")
-	except Exception:
-		log.error("Unable to convert add-ons state.")
-	else:
-		try:
-			os.unlink(picklePath)
-		except Exception:
-			log.debug(f"Failed to remove {picklePath}.", exc_info=True)
+def _getAddonsStateDictFromPickle(picklePath: os.PathLike) -> dict[str, list[str] | tuple[int, int, int]]:
+	with open(picklePath, "rb") as pickleFile:
+		return _pickledStateDictToJsonStateDict(pickle.load(pickleFile))
 
 
 def _pickledStateDictToJsonStateDict(pickledState: Any) -> dict[str, list[str] | tuple[int, int, int]]:
