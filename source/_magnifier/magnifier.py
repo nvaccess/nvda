@@ -17,8 +17,9 @@ import screenCurtain
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (
-	MagnifierPosition,
+	MagnifierParameters,
 	Coordinates,
+	Size,
 	MagnifierType,
 	Direction,
 	Filter,
@@ -33,7 +34,7 @@ class Magnifier:
 
 	def __init__(self):
 		self._displayOrientation = getPrimaryDisplayOrientation()
-		self._magnifierType: MagnifierType = MagnifierType.FULLSCREEN
+		self._magnifierType: MagnifierType
 		self._isActive: bool = False
 		self._zoomLevel: float = getDefaultZoomLevel()
 		self._timer: None | wx.Timer = None
@@ -202,25 +203,30 @@ class Magnifier:
 		else:
 			log.debug("no timer to stop")
 
-	def _getMagnifierPosition(self, coordinates: Coordinates) -> MagnifierPosition:
+	def _getMagnifierParameters(self, coordinates: Coordinates, displaySize: Size) -> MagnifierParameters:
 		"""
 		Compute the top-left corner of the magnifier window centered on (x, y)
 
 		:param coordinates: The (x, y) coordinates to center the magnifier on
+		:param displaySize: The size of the display area (width, height) - used to calculate capture size
 
-		:return: The position and size of the magnifier window
+		:return: The size and position of the magnifier window
 		"""
 		x, y = coordinates
 		# Calculate the size of the capture area at the current zoom level
-		visibleWidth = self._displayOrientation.width / self.zoomLevel
-		visibleHeight = self._displayOrientation.height / self.zoomLevel
+		magnifierWidth = displaySize.width / self.zoomLevel
+		magnifierHeight = displaySize.height / self.zoomLevel
 
 		# Compute the top-left corner so that (x, y) is at the center
-		left = int(x - (visibleWidth / 2))
-		top = int(y - (visibleHeight / 2))
+		left = int(x - (magnifierWidth / 2))
+		top = int(y - (magnifierHeight / 2))
 
-		# Clamp to screen boundaries
-		left = max(0, min(left, int(self._displayOrientation.width - visibleWidth)))
-		top = max(0, min(top, int(self._displayOrientation.height - visibleHeight)))
+		# Clamp to screen boundaries (always use actual screen size, not display area size)
+		left = max(0, min(left, int(self._displayOrientation.width - magnifierWidth)))
+		top = max(0, min(top, int(self._displayOrientation.height - magnifierHeight)))
 
-		return MagnifierPosition(left, top, int(visibleWidth), int(visibleHeight))
+		return MagnifierParameters(
+			Size(int(magnifierWidth), int(magnifierHeight)),
+			Coordinates(left, top),
+			self._filterType,
+		)

@@ -12,19 +12,25 @@ from typing import NamedTuple
 from utils.displayString import DisplayStringStrEnum, DisplayStringEnum
 
 
-class MagnifierParams(NamedTuple):
-	"""Named tuple representing magnifier parameters for initialization"""
-
-	zoomLevel: float
-	filter: str
-	fullscreenMode: str
-
-
 class Direction(Enum):
 	"""Direction for zoom operations"""
 
 	IN = True
 	OUT = False
+
+
+class Coordinates(NamedTuple):
+	"""Named tuple representing x and y coordinates"""
+
+	x: int
+	y: int
+
+
+class Size(NamedTuple):
+	"""Named tuple representing width and height"""
+
+	width: int
+	height: int
 
 
 class MagnifierAction(DisplayStringEnum):
@@ -33,6 +39,7 @@ class MagnifierAction(DisplayStringEnum):
 	ZOOM_IN = auto()
 	ZOOM_OUT = auto()
 	TOGGLE_FILTER = auto()
+	CHANGE_MAGNIFIER_TYPE = auto()
 	CHANGE_FULLSCREEN_MODE = auto()
 	START_SPOTLIGHT = auto()
 
@@ -44,7 +51,9 @@ class MagnifierAction(DisplayStringEnum):
 			# Translators: Action description for zooming out.
 			self.ZOOM_OUT: pgettext("magnifier action", "zoom out"),
 			# Translators: Action description for toggling color filters.
-			self.TOGGLE_FILTER: pgettext("magnifier action", "toggle filters"),
+			self.TOGGLE_FILTER: pgettext("magnifier action", "trying to toggle filters"),
+			# Translators: Action description for changing magnifier type.
+			self.CHANGE_MAGNIFIER_TYPE: pgettext("magnifier action", "trying to change magnifier type"),
 			# Translators: Action description for changing full-screen mode.
 			self.CHANGE_FULLSCREEN_MODE: pgettext("magnifier action", "change full-screen mode"),
 			# Translators: Action description for starting spotlight mode.
@@ -56,6 +65,7 @@ class MagnifierType(DisplayStringStrEnum):
 	"""Type of magnifier"""
 
 	FULLSCREEN = "fullscreen"
+	FIXED = "fixed"
 	DOCKED = "docked"
 	LENS = "lens"
 
@@ -64,10 +74,29 @@ class MagnifierType(DisplayStringStrEnum):
 		return {
 			# Translators: Magnifier type - full-screen mode.
 			self.FULLSCREEN: pgettext("magnifier", "Fullscreen"),
+			# Translators: Magnifier type - fixed mode.
+			self.FIXED: pgettext("magnifier", "Fixed"),
 			# Translators: Magnifier type - docked mode.
 			self.DOCKED: pgettext("magnifier", "Docked"),
 			# Translators: Magnifier type - lens mode.
 			self.LENS: pgettext("magnifier", "Lens"),
+		}
+
+
+class Filter(DisplayStringStrEnum):
+	NORMAL = "normal"
+	GRAYSCALE = "grayscale"
+	INVERTED = "inverted"
+
+	@property
+	def _displayStringLabels(self) -> dict["Filter", str]:
+		return {
+			# Translators: Magnifier color filter - no filter applied.
+			self.NORMAL: pgettext("magnifier", "Normal"),
+			# Translators: Magnifier color filter - grayscale/black and white.
+			self.GRAYSCALE: pgettext("magnifier", "Grayscale"),
+			# Translators: Magnifier color filter - inverted colors.
+			self.INVERTED: pgettext("magnifier", "Inverted"),
 		}
 
 
@@ -79,20 +108,23 @@ class FocusType(Enum):
 	NAVIGATOR = auto()
 
 
-class MagnifierPosition(NamedTuple):
-	"""Named tuple representing the position and size of the magnifier window"""
+class MagnifierParameters(NamedTuple):
+	"""Named tuple representing the size and position of the magnifier"""
 
-	left: int
-	top: int
-	visibleWidth: int
-	visibleHeight: int
+	magnifierSize: Size
+	coordinates: Coordinates
+	filter: Filter
 
 
-class Coordinates(NamedTuple):
-	"""Named tuple representing x and y coordinates"""
+class WindowMagnifierParameters(NamedTuple):
+	"""
+	Named tuple representing the position and size of the magnifier window
+	"""
 
-	x: int
-	y: int
+	title: str
+	windowSize: Size
+	windowPosition: Coordinates
+	styles: int
 
 
 class ZoomHistory(NamedTuple):
@@ -119,18 +151,23 @@ class FullScreenMode(DisplayStringStrEnum):
 		}
 
 
-class Filter(DisplayStringStrEnum):
-	NORMAL = "normal"
-	GRAYSCALE = "grayscale"
-	INVERTED = "inverted"
+class FixedWindowPosition(DisplayStringStrEnum):
+	"""Position of the magnifier window"""
+
+	TOP_LEFT = "topLeft"
+	TOP_RIGHT = "topRight"
+	BOTTOM_LEFT = "bottomLeft"
+	BOTTOM_RIGHT = "bottomRight"
 
 	@property
-	def _displayStringLabels(self) -> dict["Filter", str]:
+	def _displayStringLabels(self) -> dict["FixedWindowPosition", str]:
 		return {
-			# Translators: Magnifier color filter - no filter applied.
-			self.NORMAL: pgettext("magnifier", "Normal"),
-			# Translators: Magnifier color filter - grayscale/black and white.
-			self.GRAYSCALE: pgettext("magnifier", "Grayscale"),
-			# Translators: Magnifier color filter - inverted colors.
-			self.INVERTED: pgettext("magnifier", "Inverted"),
+			# Translators: Position of the magnifier window - top left corner of the screen.
+			self.TOP_LEFT: pgettext("magnifier window position", "Top Left"),
+			# Translators: Position of the magnifier window - top right corner of the screen.
+			self.TOP_RIGHT: pgettext("magnifier window position", "Top Right"),
+			# Translators: Position of the magnifier window - bottom left corner of the screen.
+			self.BOTTOM_LEFT: pgettext("magnifier window position", "Bottom Left"),
+			# Translators: Position of the magnifier window - bottom right corner of the screen.
+			self.BOTTOM_RIGHT: pgettext("magnifier window position", "Bottom Right"),
 		}

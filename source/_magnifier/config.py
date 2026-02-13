@@ -9,7 +9,7 @@ Handles module initialization, configuration and settings interaction.
 """
 
 import config
-from .utils.types import Filter, FullScreenMode
+from .utils.types import Filter, FullScreenMode, MagnifierType, FixedWindowPosition
 
 
 class ZoomLevel:
@@ -74,10 +74,25 @@ def setDefaultZoomLevel(zoomLevel: float) -> None:
 
 	:param zoomLevel: The zoom level to set.
 	"""
-
-	if "magnifier" not in config.conf:
-		config.conf["magnifier"] = {}
 	config.conf["magnifier"]["defaultZoomLevel"] = zoomLevel
+
+
+def getDefaultMagnifierType() -> MagnifierType:
+	"""
+	Get default magnifier type from config.
+
+	:return: The default magnifier type.
+	"""
+	return MagnifierType(config.conf["magnifier"]["defaultMagnifierType"])
+
+
+def setDefaultMagnifierType(magnifierType: MagnifierType) -> None:
+	"""
+	Set default magnifier type from settings.
+
+	:param magnifierType: The magnifier type to set.
+	"""
+	config.conf["magnifier"]["defaultMagnifierType"] = magnifierType.value
 
 
 def getDefaultFilter() -> Filter:
@@ -114,6 +129,60 @@ def setDefaultFullscreenMode(mode: FullScreenMode) -> None:
 	:param mode: The full-screen mode to set.
 	"""
 	config.conf["magnifier"]["defaultFullscreenMode"] = mode.value
+
+
+def getDefaultFixedWindowWidth() -> int:
+	"""
+	Get default fixed magnifier window width from config.
+
+	:return: The default fixed magnifier window width.
+	"""
+	return config.conf["magnifier"]["defaultFixedWindowWidth"]
+
+
+def setDefaultFixedWindowWidth(width: int) -> None:
+	"""
+	Set default fixed magnifier window width from settings.
+
+	:param width: The fixed magnifier window width to set.
+	"""
+	config.conf["magnifier"]["defaultFixedWindowWidth"] = width
+
+
+def getDefaultFixedWindowHeight() -> int:
+	"""
+	Get default fixed magnifier window height from config.
+
+	:return: The default fixed magnifier window height.
+	"""
+	return config.conf["magnifier"]["defaultFixedWindowHeight"]
+
+
+def setDefaultFixedWindowHeight(height: int) -> None:
+	"""
+	Set default fixed magnifier window height from settings.
+
+	:param height: The fixed magnifier window height to set.
+	"""
+	config.conf["magnifier"]["defaultFixedWindowHeight"] = height
+
+
+def getDefaultFixedWindowPosition() -> FixedWindowPosition:
+	"""
+	Get default magnifier window position from config.
+
+	:return: The default magnifier window position.
+	"""
+	return FixedWindowPosition(config.conf["magnifier"]["defaultFixedWindowPosition"])
+
+
+def setDefaultFixedWindowPosition(position: FixedWindowPosition) -> None:
+	"""
+	Set default magnifier window position from settings.
+
+	:param position: The magnifier window position to set.
+	"""
+	config.conf["magnifier"]["defaultFixedWindowPosition"] = position.value
 
 
 def shouldKeepMouseCentered() -> bool:

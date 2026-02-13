@@ -1564,9 +1564,17 @@ NVDA will announce the name of the currently selected filter.
 
 The default color filter when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
-### Focus Tracking Modes {#MagnifierFocusModes}
+### Magnifier Modes {#MagnifierModes}
 
-The magnifier offers three different modes for tracking focus and determining which part of the screen to magnify:
+The magnfier can be used in multiple modes, each designed to suit different user needs and preferences:
+
+* **Full-screen mode**: The entire screen is magnified, and the magnified view follows the system focus or mouse pointer. This mode provides multiple type of focus mode.
+
+* **Fixed window mode**: A separate window displays the magnified content, and the rest of the screen remains at normal size. This allows you to see both the magnified content and the surrounding context simultaneously.
+
+### Focus Fullscreen Focus Modes {#MagnifierFullscreenFocusModes}
+
+The Fullscreen magnifier offers three different modes for focus and determining which part of the screen to magnify:
 
 * **Center**: The magnified area is always centered on the current focus position.
 This mode keeps the focused element at the center of the screen at all times.
@@ -1575,14 +1583,14 @@ This mode provides a more stable view, only adjusting when necessary.
 * **Relative**: The magnified area maintains the relative position of the focus within the screen.
 This mode mimics the behavior of the Windows Magnifier.
 
-To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+To cycle through the focus modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 NVDA will announce the name of the currently selected mode.
 
 The default focus mode when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
 ### Spotlight Mode {#MagnifierSpotlight}
 
-Spotlight mode is a special feature designed for presentations or focused reading tasks.
+Spotlight mode is a special fullscreen magnifier feature designed for presentations or focused reading tasks.
 When activated, it temporarily zooms out the magnified view to show the full screen, then zooms back in to the current focus position after a brief period of mouse inactivity.
 
 This is useful when you want to:
@@ -2820,9 +2828,9 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### Default focus mode {#MagnifierDefaultFocusMode}
+##### Default fullscreen magnifier focus mode {#MagnifierDefaultFocusMode}
 
-This combo box allows you to select the default focus tracking mode when the magnifier is first enabled.
+This combo box allows you to select the default focus tracking mode when the magnifier mode is fullscreen.
 To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 The available options are:
 
@@ -2837,6 +2845,25 @@ The available options are:
 | Center | The magnified area is always centered on the current focus position. |
 | Border | The magnified area only moves when the focus approaches the edge of the visible area. |
 | Relative | The magnified area maintains the relative position of the focus within the screen. |
+
+##### Default fixed magnifier size {#MagnifierDefaultFixedSizeMode}
+
+These two entries allow to choose the default size of the magnifier window by width and height.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |100 to 1000 pixels|
+|Default |200 pixels|
+
+##### Default fixed magnifier position {#MagnifierDefaultFixedPosition}
+
+this combo box allows you to select the default position of the magnifier window when the magnifier mode is fixed.
+The available options are:
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |TopLeft, TopRight, BottomLeft, BottomRight|
+|Default |TopLeft|
 
 ##### Keep mouse centered {#MagnifierKeepMouseCentered}
 

@@ -5012,6 +5012,20 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
+			"Toggle Magnifier type",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+t",
+	)
+	def script_toggleMagnifierType(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleMagnifierType()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
 			"Toggle filter of the magnifier",
 		),
 		category=SCRCAT_VISION,

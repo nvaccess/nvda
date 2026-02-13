@@ -3,8 +3,9 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from _magnifier.magnifier import Magnifier, MagnifierType
-from _magnifier.utils.types import Filter, Direction, Coordinates
+from _magnifier.magnifier import Magnifier
+from _magnifier.utils.types import Coordinates, Filter, Direction, Size
+
 import unittest
 from winAPI._displayTracking import getPrimaryDisplayOrientation
 from unittest.mock import MagicMock, patch
@@ -63,7 +64,6 @@ class TestMagnifier(_TestMagnifier):
 		"""Can we create a magnifier with valid parameters?"""
 		self.assertEqual(self.magnifier.zoomLevel, 2.0)
 		self.assertEqual(self.magnifier._filterType, Filter.NORMAL)
-		self.assertEqual(self.magnifier._magnifierType, MagnifierType.FULLSCREEN)
 		self.assertFalse(self.magnifier._isActive)
 		self.assertIsNotNone(self.magnifier._focusManager)
 
@@ -210,30 +210,42 @@ class TestMagnifier(_TestMagnifier):
 	def testMagnifierPosition(self):
 		"""Computing magnifier position and size."""
 		x, y = int(self.screenWidth / 2), int(self.screenHeight / 2)
-		left, top, width, height = self.magnifier._getMagnifierPosition((x, y))
+		params = self.magnifier._getMagnifierParameters(
+			(x, y),
+			Size(self.magnifier._displayOrientation.width, self.magnifier._displayOrientation.height),
+		)
 
 		expected_width = int(self.screenWidth / self.magnifier.zoomLevel)
 		expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
 		expected_left = int(x - (expected_width / 2))
 		expected_top = int(y - (expected_height / 2))
 
-		self.assertEqual(left, expected_left)
-		self.assertEqual(top, expected_top)
-		self.assertEqual(width, expected_width)
-		self.assertEqual(height, expected_height)
+		self.assertEqual(params.coordinates.x, expected_left)
+		self.assertEqual(params.coordinates.y, expected_top)
+		self.assertEqual(params.magnifierSize.width, expected_width)
+		self.assertEqual(params.magnifierSize.height, expected_height)
 
 		# Test left clamping
-		left, top, width, height = self.magnifier._getMagnifierPosition((100, 540))
-		self.assertGreaterEqual(left, 0)
+		params = self.magnifier._getMagnifierParameters(
+			(100, 540),
+			Size(self.magnifier._displayOrientation.width, self.magnifier._displayOrientation.height),
+		)
+		self.assertGreaterEqual(params.coordinates.x, 0)
 
 		# Test right clamping
-		left, top, width, height = self.magnifier._getMagnifierPosition((1800, 540))
-		self.assertLessEqual(left + width, self.screenWidth)
+		params = self.magnifier._getMagnifierParameters(
+			(1800, 540),
+			Size(self.magnifier._displayOrientation.width, self.magnifier._displayOrientation.height),
+		)
+		self.assertLessEqual(params.coordinates.x + params.magnifierSize.width, self.screenWidth)
 
 		# Test different zoom level
 		self.magnifier.zoomLevel = 4.0
-		left, top, width, height = self.magnifier._getMagnifierPosition((960, 540))
+		params = self.magnifier._getMagnifierParameters(
+			(960, 540),
+			Size(self.magnifier._displayOrientation.width, self.magnifier._displayOrientation.height),
+		)
 		expected_width = int(self.screenWidth / self.magnifier.zoomLevel)
 		expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
-		self.assertEqual(width, expected_width)
-		self.assertEqual(height, expected_height)
+		self.assertEqual(params.magnifierSize.width, expected_width)
+		self.assertEqual(params.magnifierSize.height, expected_height)

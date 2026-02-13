@@ -4,18 +4,19 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from unittest.mock import MagicMock
-from _magnifier.utils.types import Filter, FullScreenMode, MagnifierType, Direction
+from _magnifier.utils.types import Filter, FullScreenMode, MagnifierType, Direction, Size
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
 from _magnifier.magnifier import Magnifier
 
 
-class TestMagnifierEndToEnd(_TestMagnifier):
-	"""End-to-end test suite for Magnifier functionality."""
+class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
+	"""End-to-end test suite for fullscreen magnifier functionality."""
 
 	def testMagnifierCreation(self):
 		"""Test creating a magnifier."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		self.assertEqual(magnifier.zoomLevel, 2.0)
 		self.assertEqual(magnifier.filterType, Filter.NORMAL)
@@ -28,6 +29,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierZoom(self):
 		"""Test zoom functionality."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Set initial zoom to 1.0 for predictable testing
 		magnifier.zoomLevel = 1.0
@@ -47,6 +49,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierCoordinates(self):
 		"""Test coordinate handling."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Test setting coordinates
 		magnifier._currentCoordinates = (100, 200)
@@ -62,6 +65,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierUpdate(self):
 		"""Test magnifier update cycle."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Mock the update methods
 		magnifier._getCoordinatesForMode = MagicMock(return_value=(150, 250))
@@ -84,6 +88,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierStop(self):
 		"""Test stopping the magnifier."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Mock the timer
 		magnifier._stopTimer = MagicMock()
@@ -103,20 +108,23 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 		magnifier = FullScreenMagnifier()
 
 		# Test position calculation
-		left, top, width, height = magnifier._getMagnifierPosition((500, 400))
+		params = magnifier._getMagnifierParameters(
+			(500, 400),
+			Size(magnifier._displayOrientation.width, magnifier._displayOrientation.height),
+		)
 
 		# Basic checks
-		self.assertIsInstance(left, int)
-		self.assertIsInstance(top, int)
-		self.assertIsInstance(width, int)
-		self.assertIsInstance(height, int)
+		self.assertIsInstance(params.coordinates.x, int)
+		self.assertIsInstance(params.coordinates.y, int)
+		self.assertIsInstance(params.magnifierSize.width, int)
+		self.assertIsInstance(params.magnifierSize.height, int)
 
 		# Width and height should be screen size divided by zoom
 		expectedWidth = int(magnifier._displayOrientation.width / 2.0)
 		expectedHeight = int(magnifier._displayOrientation.height / 2.0)
 
-		self.assertEqual(width, expectedWidth)
-		self.assertEqual(height, expectedHeight)
+		self.assertEqual(params.magnifierSize.width, expectedWidth)
+		self.assertEqual(params.magnifierSize.height, expectedHeight)
 
 		# Cleanup
 		magnifier._stopMagnifier()
@@ -189,6 +197,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 		"""Test simple magnifier lifecycle."""
 		# Create magnifier
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 		self.assertTrue(magnifier._isActive)
 		self.assertEqual(magnifier.zoomLevel, 2.0)
 
