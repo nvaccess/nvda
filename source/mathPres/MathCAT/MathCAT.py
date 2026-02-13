@@ -42,7 +42,7 @@ from textUtils import WCHAR_ENCODING
 
 import mathPres
 from .localization import getLanguageToUse
-from .preferences import setEffectiveBrailleCode
+from .preferences import applyUserPreferences
 from .speech import convertSSMLTextForNVDA
 
 
@@ -333,7 +333,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 			log.info(f"MathCAT {libmathcat.GetVersion()} installed. Using rules dir: {rulesDir}")
 			libmathcat.SetRulesDir(rulesDir)
 			libmathcat.SetPreference("TTS", "SSML")
-			setEffectiveBrailleCode()
+			applyUserPreferences()
 		except Exception:
 			log.exception()
 			# Translators: this message directs users to look in the log file
