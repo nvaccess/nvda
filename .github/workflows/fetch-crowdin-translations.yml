@@ -60,7 +60,7 @@ jobs:
     - name: Commit tracked files only
       id: commit
       shell: bash
-      run: ../../ci/scripts/checkAndCommitTranslations.sh
+      run: ci/scripts/checkAndCommitTranslations.sh
 
     - name: Create pull request
       if: steps.commit.outputs.has_changes == 'true'
