@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-23 06:44+0000\n"
-"PO-Revision-Date: 2026-01-26 00:19\n"
+"POT-Creation-Date: 2026-02-13 06:38+0000\n"
+"PO-Revision-Date: 2026-02-13 06:48\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -2146,8 +2146,8 @@ msgstr "對附加元件的某些操作失敗，有關詳細資料請見事件記
 #: gui\configProfiles.py:293 gui\configProfiles.py:337
 #: gui\configProfiles.py:515 gui\configProfiles.py:530
 #: gui\configProfiles.py:541 gui\inputGestures.py:808 gui\inputGestures.py:822
-#: gui\installerGui.py:120 gui\installerGui.py:567 gui\installerGui.py:582
-#: gui\installerGui.py:654 gui\logViewer.py:112 gui\logViewer.py:143
+#: gui\installerGui.py:121 gui\installerGui.py:578 gui\installerGui.py:593
+#: gui\installerGui.py:665 gui\logViewer.py:112 gui\logViewer.py:143
 #: gui\message.py:160 gui\settingsDialogs.py:1037 gui\settingsDialogs.py:5872
 #: gui\settingsDialogs.py:6401 gui\startupDialogs.py:127
 #: _remoteClient\dialogs.py:67 _remoteClient\dialogs.py:306
@@ -2192,7 +2192,7 @@ msgstr "手勢對應檔錯誤"
 #. Translators: This is spoken when NVDA is starting.
 #: core.py:797
 msgid "Loading NVDA. Please wait..."
-msgstr "載入 NVDA 中，請稍後..."
+msgstr "載入 NVDA 中，請稍候..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 #: core.py:945
@@ -2896,24 +2896,24 @@ msgstr "循環切換行縮排設定"
 #: globalCommands.py:871
 #, python-brace-format
 msgid "Report line indentation {mode}"
-msgstr "讀出行縮排 {mode}"
+msgstr "提示行縮排 {mode}"
 
 #. Translators: Input help mode message for toggle ignore blank lines for line indentation reporting command.
 #: globalCommands.py:875
 msgid "Toggles on and off the ignoring of blank lines for line indentation reporting"
-msgstr "切換讀出行縮排時忽略空白行的開或關"
+msgstr "切換提示行縮排時忽略空白行的開或關"
 
 #. Translators: The message announced when toggling off the ignore blank lines for line indentation
 #. reporting document formatting setting.
 #: globalCommands.py:884
 msgid "Ignore blank lines for line indentation reporting off"
-msgstr "讀出行縮排時忽略空白行 關"
+msgstr "提示行縮排時忽略空白行 關"
 
 #. Translators: The message announced when toggling on the ignore blank lines for line indentation
 #. reporting document formatting setting.
 #: globalCommands.py:888
 msgid "Ignore blank lines for line indentation reporting on"
-msgstr "讀出行縮排時忽略空白行 開"
+msgstr "提示行縮排時忽略空白行 開"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 #: globalCommands.py:892
@@ -3980,7 +3980,7 @@ msgstr "顯示 NVDA 音訊設定"
 #. Translators: Input help mode message for go to privacy and security settings command.
 #: globalCommands.py:3404
 msgid "Shows NVDA's privacy and security settings"
-msgstr "顯示 NVDA 隱私與安全設定"
+msgstr "顯示 NVDA 隱私權與安全性設定"
 
 #. Translators: Input help mode message for go to vision settings command.
 #: globalCommands.py:3413
@@ -5363,13 +5363,13 @@ msgstr "亞拉岡文"
 #: localesData.py:18
 msgctxt "languageName"
 msgid "Central Kurdish"
-msgstr "中庫德文"
+msgstr "中部庫德文"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:20
 msgctxt "languageName"
 msgid "Northern Kurdish"
-msgstr "北庫德文"
+msgstr "北部庫德文"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:22
@@ -5381,7 +5381,7 @@ msgstr "緬甸文"
 #: localesData.py:24
 msgctxt "languageName"
 msgid "Somali"
-msgstr "索馬利亞文"
+msgstr "索馬利文"
 
 #. Translators: Reported when mouse cursor shape changes (example output: edit cursor).
 #: mouseHandler.py:274
@@ -6691,97 +6691,97 @@ msgid "&Show Speech Viewer on Startup"
 msgstr "啟動時顯示語音檢視器(&S)"
 
 #. Translators: Label for a setting in voice settings dialog.
-#: synthDriverHandler.py:127
+#: synthDriverHandler.py:122
 msgid "&Language"
 msgstr "語言(&L)"
 
 #. Translators: Label for a setting in synth settings ring.
-#: synthDriverHandler.py:130
+#: synthDriverHandler.py:125
 msgctxt "synth setting"
 msgid "Language"
 msgstr "語言"
 
 #. Translators: Label for a setting in voice settings dialog.
-#: synthDriverHandler.py:139
+#: synthDriverHandler.py:134
 msgid "&Voice"
 msgstr "語音(&V)"
 
 #. Translators: Label for a setting in synth settings ring.
-#: synthDriverHandler.py:142
+#: synthDriverHandler.py:137
 msgctxt "synth setting"
 msgid "Voice"
 msgstr "語音"
 
 #. Translators: Label for a setting in voice settings dialog.
-#: synthDriverHandler.py:151
+#: synthDriverHandler.py:146
 msgid "V&ariant"
 msgstr "變聲(&A)"
 
 #. Translators: Label for a setting in synth settings ring.
-#: synthDriverHandler.py:154
+#: synthDriverHandler.py:149
 msgctxt "synth setting"
 msgid "Variant"
 msgstr "變聲"
 
 #. Translators: Label for a setting in voice settings dialog.
-#: synthDriverHandler.py:163
+#: synthDriverHandler.py:158
 msgid "&Rate"
 msgstr "速度(&R)"
 
 #. Translators: Label for a setting in synth settings ring.
-#: synthDriverHandler.py:167
+#: synthDriverHandler.py:162
 msgctxt "synth setting"
 msgid "Rate"
 msgstr "速度"
 
 #. Translators: This is the name of the rate boost voice toggle
 #. which further increases the speaking rate when enabled.
-#: synthDriverHandler.py:177
+#: synthDriverHandler.py:172
 msgid "Rate boos&t"
 msgstr "加快語速(&T)"
 
 #. Translators: Label for a setting in synth settings ring.
-#: synthDriverHandler.py:179
+#: synthDriverHandler.py:174
 msgctxt "synth setting"
 msgid "Rate boost"
 msgstr "加快語速"
 
 #. Translators: Label for a setting in voice settings dialog.
-#: synthDriverHandler.py:189
+#: synthDriverHandler.py:184
 msgid "V&olume"
 msgstr "音量(&O)"
 
 #. Translators: Label for a setting in synth settings ring.
-#: synthDriverHandler.py:194
+#: synthDriverHandler.py:189
 msgctxt "synth setting"
 msgid "Volume"
 msgstr "音量"
 
 #. Translators: Label for a setting in voice settings dialog.
-#: synthDriverHandler.py:203
+#: synthDriverHandler.py:198
 msgid "&Pitch"
 msgstr "音調(&P)"
 
 #. Translators: Label for a setting in synth settings ring.
-#: synthDriverHandler.py:207
+#: synthDriverHandler.py:202
 msgctxt "synth setting"
 msgid "Pitch"
 msgstr "音調"
 
 #. Translators: Label for a setting in voice settings dialog.
-#: synthDriverHandler.py:216
+#: synthDriverHandler.py:211
 msgid "&Inflection"
 msgstr "語調(&I)"
 
 #. Translators: Label for a setting in synth settings ring.
-#: synthDriverHandler.py:220
+#: synthDriverHandler.py:215
 msgctxt "synth setting"
 msgid "Inflection"
 msgstr "語調"
 
 #. Translators: Label for a setting in voice settings dialog.
 #. "WASAPI" is an acronym for an audio output framework, and should be translated as-is.
-#: synthDriverHandler.py:230
+#: synthDriverHandler.py:225
 msgid "Use modern audio output system (WASAPI)"
 msgstr "使用現代音訊輸出系統 (WASAPI)"
 
@@ -7034,7 +7034,7 @@ msgstr "NVDA 版本 {version} 的更新已下載並準備好可以套用。"
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
-#: updateCheck.py:547 updateCheck.py:669 gui\installerGui.py:286
+#: updateCheck.py:547 updateCheck.py:669 gui\installerGui.py:296
 msgid "&Review add-ons..."
 msgstr "檢視附加元件(&R)..."
 
@@ -7152,7 +7152,7 @@ msgstr "完成(&D)"
 
 #. Translators: Message shown to users when attempting to update NVDA
 #. on a computer which is being remotely controlled via NVDA Remote Access
-#: updateCheck.py:1015 gui\installerGui.py:452
+#: updateCheck.py:1015 gui\installerGui.py:462
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
 msgstr "不建議在透過 NVDA 遠端連線作為被控端電腦時更新 NVDA。 "
 
@@ -7171,7 +7171,7 @@ msgstr "目前的遠端連線在更新期間或更新後可能無法繼續，即
 #. Translators: The title of a dialog.
 #. Translators: Title of warning dialog
 #: updateCheck.py:1026 gui\_SetURLDialog.py:113 gui\configProfiles.py:500
-#: gui\installerGui.py:344 gui\installerGui.py:469 gui\settingsDialogs.py:1934
+#: gui\installerGui.py:354 gui\installerGui.py:479 gui\settingsDialogs.py:1934
 #: screenCurtain\_screenCurtain.py:70 _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "警告"
@@ -8834,7 +8834,7 @@ msgstr "卡達隆尼亞文一級"
 #. braille settings dialog.
 #: brailleTables\__tables.py:62
 msgid "Central Kurdish grade 1"
-msgstr "中庫德文一級"
+msgstr "中部庫德文一級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9068,7 +9068,7 @@ msgstr "英文 (美國) 二級"
 #. braille settings dialog.
 #: brailleTables\__tables.py:184
 msgid "Esperanto grade 1"
-msgstr "世界文一級"
+msgstr "世界語一級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9284,7 +9284,7 @@ msgstr "日文 (漢點字) 書寫"
 #. braille settings dialog.
 #: brailleTables\__tables.py:330
 msgid "Japanese (Rokuten Kanji) Braille"
-msgstr "日文 (六點漢字) 點字"
+msgstr "日文 (六點漢字)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9314,7 +9314,7 @@ msgstr "高棉文一級"
 #. braille settings dialog.
 #: brailleTables\__tables.py:346
 msgid "Northern Kurdish grade 0"
-msgstr "北庫德文零級"
+msgstr "北部庫德文"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9392,7 +9392,7 @@ msgstr "馬來亞拉姆文一級"
 #. braille settings dialog.
 #: brailleTables\__tables.py:385
 msgid "Manipuri grade 1"
-msgstr "曼尼普爾文一級"
+msgstr "曼尼普里文一級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9500,7 +9500,7 @@ msgstr "齊切瓦文 (馬拉威) 書寫"
 #. braille settings dialog.
 #: brailleTables\__tables.py:439
 msgid "Oriya grade 1"
-msgstr "歐利亞文一級"
+msgstr "歐迪亞文一級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9632,7 +9632,7 @@ msgstr "斯洛維尼亞文一級"
 #. braille settings dialog.
 #: brailleTables\__tables.py:510
 msgid "Sesotho grade 1"
-msgstr "賴索托文一級"
+msgstr "索托文一級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9680,25 +9680,25 @@ msgstr "史瓦西里文 (肯亞) 一級"
 #. braille settings dialog.
 #: brailleTables\__tables.py:536
 msgid "Swahili (Kenya) grade 1.2"
-msgstr "史瓦西里文 (肯亞) 1.2 級"
+msgstr "史瓦希里文 (肯亞) 1.2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:539
 msgid "Swahili (Kenya) grade 1.3"
-msgstr "史瓦西里文 (肯亞) 1.3 級"
+msgstr "史瓦希里文 (肯亞) 1.3 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:542
 msgid "Swahili (Kenya) grade 1.4"
-msgstr "史瓦西里文 (肯亞) 1.4 級"
+msgstr "史瓦希里文 (肯亞) 1.4 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:545
 msgid "Swahili (Kenya) grade 1.5"
-msgstr "史瓦西里文 (肯亞) 1.5 級"
+msgstr "史瓦希里文 (肯亞) 1.5 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9872,13 +9872,13 @@ msgstr "南越南文一級"
 #. braille settings dialog.
 #: brailleTables\__tables.py:633
 msgid "Xhosa grade 1"
-msgstr "廓薩文一級"
+msgstr "科薩文一級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:636
 msgid "Xhosa grade 2"
-msgstr "廓薩文二級"
+msgstr "科薩文二級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10836,7 +10836,7 @@ msgstr "繪圖畫布"
 #. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
 #: controlTypes\role.py:336
 msgid "caption"
-msgstr "文字描述"
+msgstr "圖表說明"
 
 #. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's
 #. name).
@@ -11638,7 +11638,7 @@ msgstr "已成功連線到指定的 URL。"
 #. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 #. Translators: The message title displayed when copying configuration to system settings was successful.
 #. Translators: Title of success dialog
-#: gui\_SetURLDialog.py:177 gui\installerGui.py:137 gui\installerGui.py:665
+#: gui\_SetURLDialog.py:177 gui\installerGui.py:147 gui\installerGui.py:676
 #: gui\settingsDialogs.py:1043 _remoteClient\dialogs.py:280
 msgid "Success"
 msgstr "成功"
@@ -11994,7 +11994,7 @@ msgstr "執行先前已下載的 NVDA 更新"
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 #: gui\__init__.py:974
 msgid "Please wait"
-msgstr "請稍後"
+msgstr "請稍候"
 
 #. Translators: A message asking the user if they wish to restart NVDA
 #. as addons have been added, enabled/disabled or removed.
@@ -12500,248 +12500,254 @@ msgid "Error saving user defined gestures - probably read only file system."
 msgstr "儲存使用者定義的手勢時發生錯誤 - 可能是唯讀的檔案系統所造成。"
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
-#: gui\installerGui.py:67
+#: gui\installerGui.py:68
 msgid "Updating NVDA"
 msgstr "正在更新 NVDA"
 
 #. Translators: The title of the dialog presented while NVDA is being installed.
-#: gui\installerGui.py:70
+#: gui\installerGui.py:71
 msgid "Installing NVDA"
 msgstr "正在安裝 NVDA"
 
 #. Translators: The message displayed while NVDA is being updated.
-#: gui\installerGui.py:72
+#: gui\installerGui.py:73
 msgid "Please wait while your previous installation of NVDA is being updated."
 msgstr "正在更新您之前安裝的 NVDA，請稍候。"
 
 #. Translators: The message displayed while NVDA is being installed.
-#: gui\installerGui.py:75
+#: gui\installerGui.py:76
 msgid "Please wait while NVDA is being installed"
 msgstr "正在安裝 NVDA，請稍候"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
-#: gui\installerGui.py:99
+#: gui\installerGui.py:100
 msgid "The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again."
 msgstr "安裝無法移除或覆寫檔案，另一個 NVDA 可能正在另一個登入的使用者帳戶中執行。請確認所有 NVDA 安裝的版本都已關閉，然後再試著安裝一次。"
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
-#: gui\installerGui.py:104 gui\installerGui.py:646
+#: gui\installerGui.py:105 gui\installerGui.py:657
 msgid "File in Use"
 msgstr "檔案正在使用中"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
-#: gui\installerGui.py:118
+#: gui\installerGui.py:119
 msgid "The installation of NVDA failed. Please check the Log Viewer for more information."
 msgstr "NVDA 安裝失敗，請檢查事件記錄檢視器以得到更多資訊。"
 
 #. Translators: The message displayed when NVDA has been successfully installed.
-#: gui\installerGui.py:127
+#: gui\installerGui.py:130
 msgid "Successfully installed NVDA. "
 msgstr "已順利安裝 NVDA。 "
 
 #. Translators: The message displayed when NVDA has been successfully updated.
-#: gui\installerGui.py:130
+#: gui\installerGui.py:133
 msgid "Successfully updated your installation of NVDA. "
 msgstr "已順利更新您所安裝的 NVDA。 "
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
-#: gui\installerGui.py:135
+#: gui\installerGui.py:140
 msgid "Please press OK to start the installed copy."
 msgstr "請按「確認」開始使用安裝的版本。"
 
+#. Translators: The message displayed to the user after NVDA is installed
+#. and the installer is about to close without starting the installed copy.
+#: gui\installerGui.py:144
+msgid "Please press OK to close the installer."
+msgstr "請按「確認」關閉安裝程式。"
+
 #. Translators: The title of the Install NVDA dialog.
-#: gui\installerGui.py:198
+#: gui\installerGui.py:208
 msgid "Install NVDA"
 msgstr "安裝 NVDA"
 
 #. Translators: An informational message in the Install NVDA dialog.
-#: gui\installerGui.py:216
+#: gui\installerGui.py:226
 msgid "To install NVDA to your hard drive, please press the Continue button."
 msgstr "要安裝 NVDA 到您的硬碟中，請按繼續按鈕。"
 
 #. Translators: An informational message in the Install NVDA dialog.
-#: gui\installerGui.py:220
+#: gui\installerGui.py:230
 msgid "A previous copy of NVDA has been found on your system. This copy will be updated."
 msgstr "在系統中找到上一個版本的 NVDA，此版本將會進行更新。"
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#: gui\installerGui.py:225
+#: gui\installerGui.py:235
 #, python-brace-format
 msgid "The installation path for NVDA has changed. it will now  be installed in {path}"
 msgstr "NVDA 安裝路徑已變更，現在將安裝在 {path}"
 
 #. Translators: The label for a group box containing the NVDA installation dialog options.
 #. Translators: The label for a group box containing the NVDA welcome dialog options.
-#: gui\installerGui.py:243 gui\startupDialogs.py:63
+#: gui\installerGui.py:253 gui\startupDialogs.py:63
 msgid "Options"
 msgstr "選項"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:249
+#: gui\installerGui.py:259
 msgid "Use NVDA during sign-in"
 msgstr "在登入畫面使用 NVDA"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:260
+#: gui\installerGui.py:270
 msgid "&Keep existing desktop shortcut"
 msgstr "保留現有桌面捷徑(&K)"
 
 #. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
 #. If the shortcut key has been changed for this locale,
 #. this change must also be reflected here.
-#: gui\installerGui.py:267
+#: gui\installerGui.py:277
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "建立桌面圖示及其快速鍵 (control+alt+n)(&D)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:274
+#: gui\installerGui.py:284
 msgid "Copy &portable configuration to current user account"
 msgstr "複製可攜式版組態到目前的使用者帳戶(&P)"
 
 #. Translators: The label of a button to continue with the operation.
 #. Translators: The label for the Continue button in an NVDA dialog.
-#: gui\installerGui.py:291 gui\installerGui.py:547 gui\nvdaControls.py:383
+#: gui\installerGui.py:301 gui\installerGui.py:558 gui\nvdaControls.py:383
 msgid "&Continue"
 msgstr "繼續(&C)"
 
 #. Translators: A warning presented when the user attempts to downgrade NVDA
 #. to an older version.
-#: gui\installerGui.py:353
+#: gui\installerGui.py:363
 msgid "You are attempting to install an earlier version of NVDA than the version currently installed. If you really wish to revert to an earlier version, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
 msgstr "您正嘗試安裝的 NVDA 版本早於目前已安裝的版本，如果您真的想要恢復到較早的版本，應先取消安裝並且完整移除 NVDA 後再安裝較早的版本。"
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
-#: gui\installerGui.py:369
+#: gui\installerGui.py:379
 msgid "&Proceed with installation (not recommended)"
 msgstr "繼續安裝 (不建議)(&P)"
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
-#: gui\installerGui.py:420
+#: gui\installerGui.py:430
 #, python-brace-format
 msgid "A portable copy already exists in the directory '{portableDirectory}'. Do you want to update it?"
 msgstr "目錄 '{portableDirectory}' 中已存在可攜式版，您想要更新嗎?"
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
-#: gui\installerGui.py:425
+#: gui\installerGui.py:435
 msgid "Portable Copy Exists"
 msgstr "可攜式版已存在"
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
-#: gui\installerGui.py:432
+#: gui\installerGui.py:442
 #, python-brace-format
 msgid "The specified directory '{portableDirectory}' is not empty. Proceeding will delete and replace existing files in the directory. Do you want to overwrite the contents of this folder? "
 msgstr "指定的目錄 '{portableDirectory}' 不是空的，繼續操作將刪除並取代目錄中的現有檔案。要覆寫此資料夾的內容嗎? "
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
-#: gui\installerGui.py:438
+#: gui\installerGui.py:448
 msgid "Directory Exists"
 msgstr "目錄已存在"
 
 #. Translators: Message shown to users when attempting to install NVDA
 #. on a computer which is being remotely controlled via NVDA Remote Access
-#: gui\installerGui.py:458
+#: gui\installerGui.py:468
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
 msgstr "不建議在透過 NVDA 遠端連線作為被控端電腦時安裝 NVDA。 "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
-#: gui\installerGui.py:464
+#: gui\installerGui.py:474
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
 msgstr "您將無法從主控端電腦回應使用者帳戶控制 (UAC) 提示。只有當您能實際操作被控端電腦時才繼續進行此操作。\n\n"
 "您確定要繼續嗎?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
-#: gui\installerGui.py:502
+#: gui\installerGui.py:512
 msgid "Create Portable NVDA"
 msgstr "建立可攜式版 NVDA"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
-#: gui\installerGui.py:508
+#: gui\installerGui.py:518
 msgid "To create a portable copy of NVDA, please select the path and other options and then press Continue"
 msgstr "要建立 NVDA 可攜式版，請選擇路徑及其他選項後按繼續按鈕"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:514
+#: gui\installerGui.py:524
 msgid "Portable directory:"
 msgstr "可攜式版目錄:"
 
 #. Translators: The label of a button to browse for a directory.
-#: gui\installerGui.py:519
+#: gui\installerGui.py:529
 msgid "Browse..."
 msgstr "瀏覽..."
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
-#: gui\installerGui.py:522
+#: gui\installerGui.py:532
 msgid "Select portable directory"
 msgstr "選擇可攜式版目錄"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:530
+#: gui\installerGui.py:540
 msgid "Create a &new folder for the portable copy"
 msgstr "為可攜式版建立新資料夾(&N)"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:535
+#: gui\installerGui.py:545
 msgid "Copy current &user configuration"
 msgstr "複製目前的使用者組態(&U)"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:541
+#: gui\installerGui.py:551
 msgid "&Start the new portable copy after creation"
 msgstr "建立完成後啟動新的可攜式版(&S)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:565
+#: gui\installerGui.py:576
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "請指定用來建立可攜式版的目錄。"
 
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:577
+#: gui\installerGui.py:588
 msgid "Please specify the absolute path where the portable copy should be created. It may include system variables (%temp%, %homepath%, etc.)."
 msgstr "請指定建立可攜式版的絕對路徑，它可能包括系統變數 (%temp%、%homepath% 等)。"
 
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
-#: gui\installerGui.py:628
+#: gui\installerGui.py:639
 msgid "Portable copy creation cancelled."
 msgstr "已取消建立可攜式版。"
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
-#: gui\installerGui.py:633
+#: gui\installerGui.py:644
 msgid "Creating Portable Copy"
 msgstr "正在建立可攜式版"
 
 #. Translators: The message displayed while a portable copy of NVDA is being created.
-#: gui\installerGui.py:635
+#: gui\installerGui.py:646
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "正在建立 NVDA 可攜式版，請稍候。"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
-#: gui\installerGui.py:644
+#: gui\installerGui.py:655
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA 無法移除或覆寫檔案。"
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. {error} will be replaced with the specific error message.
-#: gui\installerGui.py:652
+#: gui\installerGui.py:663
 #, python-brace-format
 msgid "Failed to create portable copy: {error}."
 msgstr "無法建立可攜式版: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. {dir} will be replaced with the destination directory.
-#: gui\installerGui.py:663
+#: gui\installerGui.py:674
 #, python-brace-format
 msgid "Successfully created a portable copy of NVDA at {dir}"
 msgstr "已順利在以下路徑建立 NVDA 可攜式版:\n"
@@ -13615,7 +13621,7 @@ msgstr "導覽詳細程度:"
 #: gui\settingsDialogs.py:2924
 msgctxt "math"
 msgid "Copy math as:"
-msgstr "將數學內容複製為:"
+msgstr "複製數學內容為:"
 
 #. Translators: Text for the braille group.
 #: gui\settingsDialogs.py:2936
@@ -13767,7 +13773,7 @@ msgstr "讀出行縮排(&I):"
 #. If this option is selected, NVDA will ignore blank lines for line indentation reporting
 #: gui\settingsDialogs.py:3222
 msgid "Ignore &blank lines for line indentation reporting"
-msgstr "讀出行縮排時忽略空白行(&B)"
+msgstr "提示行縮排時忽略空白行(&B)"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -14709,7 +14715,7 @@ msgstr "無法順利設定使用者介面以至於視覺加強器無法啟用."
 #. Translators: The title of the privacy and security category in NVDA's settings.
 #: gui\settingsDialogs.py:5906
 msgid "Privacy and Security"
-msgstr "隱私與安全"
+msgstr "隱私權與安全性"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
@@ -15554,7 +15560,7 @@ msgstr "取消"
 #: gui\addonStoreGui\controls\messageDialogs.py:791
 #, python-brace-format
 msgctxt "addonStore"
-msgid "You have selected to copy 1 add-on to NVDA's system-wide configuration. Using this add-on during sign-in and on secure screens is a serious security risk."
+msgid "You have selected to copy {num} add-on to NVDA's system-wide configuration. Using this add-on during sign-in and on secure screens is a serious security risk."
 msgid_plural "You have selected to copy {num} add-ons to NVDA's system-wide configuration. Using these add-ons during sign-in and on secure screens is a serious security risk."
 msgstr[0] "您已選取將 {num} 個附加元件複製到 NVDA 的系統組態。在登入期間與安全畫面上使用這些附加元件具有嚴重的安全性風險。"
 
@@ -16187,7 +16193,7 @@ msgstr "未知的輸入法"
 #. 10 per cent from top edge of screen,
 #. width is 40 per cent of screen,
 #. height is 50 per cent of screen.
-#: NVDAObjects\__init__.py:666
+#: NVDAObjects\__init__.py:669
 #, python-brace-format
 msgid "Object edges positioned {left:.1f} percent from left edge of screen, {top:.1f} percent from top edge of screen, width is {width:.1f} percent of screen, height is {height:.1f} percent of screen"
 msgstr "物件與螢幕左邊緣距離為百分之 {left:.1f}，與螢幕上邊緣距離為百分之 {top:.1f}，寬度為百分之 {width:.1f}，高度為百分之 {height:.1f}"
@@ -17107,7 +17113,7 @@ msgstr "樞紐分析圖欄位按鈕"
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:456
 msgid "Down Bars"
-msgstr "跌線"
+msgstr "下跌線"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:458
@@ -17122,7 +17128,7 @@ msgstr "高低點連線"
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:462
 msgid "Radar Axis Labels"
-msgstr "雷達軸標籤"
+msgstr "雷達圖座標軸標籤"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:464
@@ -17132,7 +17138,7 @@ msgstr "數列線"
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:466
 msgid "Up Bars"
-msgstr "漲線"
+msgstr "上漲線"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:468
@@ -17144,12 +17150,12 @@ msgstr "邊角"
 #: NVDAObjects\window\_msOfficeChart.py:470
 #: NVDAObjects\window\_msOfficeChart.py:1268
 msgid "Data Table"
-msgstr "資料表"
+msgstr "運算列表"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:472
 msgid "Floor"
-msgstr "圖表底板"
+msgstr "底板"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:474
@@ -17174,12 +17180,12 @@ msgstr "誤差線"
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:482
 msgid "X Error Bars"
-msgstr "X軸誤差線"
+msgstr "X 誤差線"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:484
 msgid "Y Error Bars"
-msgstr "Y軸誤差線"
+msgstr "Y 誤差線"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:486
@@ -17276,7 +17282,7 @@ msgstr "{valueAxisTitle} {valueAxisData}"
 #: NVDAObjects\window\_msOfficeChart.py:909
 #, python-brace-format
 msgid "value {valueAxisData}"
-msgstr "數值 {valueAxisData}"
+msgstr ""
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
@@ -17295,17 +17301,17 @@ msgstr " {segmentType} {pointCount} 之 {pointIndex}"
 #. Translators: Indicates Primary Category Axis
 #: NVDAObjects\window\_msOfficeChart.py:946
 msgid "Primary Category Axis"
-msgstr "主要分類軸"
+msgstr "主類別座標軸"
 
 #. Translators: Indicates Secondary Category Axis
 #: NVDAObjects\window\_msOfficeChart.py:948
 msgid "Secondary Category Axis"
-msgstr "次要分類軸"
+msgstr "副類別座標軸"
 
 #. Translators: Indicates Primary Value Axis
 #: NVDAObjects\window\_msOfficeChart.py:952
 msgid "Primary Value Axis"
-msgstr "主要數值軸"
+msgstr "主數值座標軸"
 
 #. Translators: Indicates Secondary Value Axis
 #: NVDAObjects\window\_msOfficeChart.py:954
@@ -17315,12 +17321,12 @@ msgstr "次要數值軸"
 #. Translators: Indicates Primary Series Axis
 #: NVDAObjects\window\_msOfficeChart.py:958
 msgid "Primary Series Axis"
-msgstr "主要數列軸"
+msgstr "主數列座標軸"
 
 #. Translators: Indicates Secondary Series Axis
 #: NVDAObjects\window\_msOfficeChart.py:960
 msgid "Secondary Series Axis"
-msgstr "次要數列軸"
+msgstr "副數列座標軸"
 
 #. Translators: the title of a chart axis
 #: NVDAObjects\window\_msOfficeChart.py:1024
@@ -17356,12 +17362,12 @@ msgstr "多項式"
 #. Translators: Indicates that trendline type is Power
 #: NVDAObjects\window\_msOfficeChart.py:1046
 msgid "Power"
-msgstr "次方"
+msgstr "乘冪"
 
 #. Translators: Substitute superscript two by square for R square value
 #: NVDAObjects\window\_msOfficeChart.py:1067
 msgid " square "
-msgstr " 平方 "
+msgstr " 平方值 "
 
 #. Translators: Substitute - by minus in trendline equations.
 #: NVDAObjects\window\_msOfficeChart.py:1072
@@ -19009,6 +19015,21 @@ msgid "Windows OneCore voices"
 msgstr "Windows OneCore 語音"
 
 #. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi4_32.py:18
+msgid "Microsoft Speech API version 4"
+msgstr "Microsoft Speech API version 4"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi5.py:558 _synthDrivers32\_sapi5.py:558
+msgid "Microsoft Speech API version 5 (64 bit)"
+msgstr "Microsoft Speech API version 5 (64 位元)"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi5_32.py:15
+msgid "Microsoft Speech API version 5 (32 bit)"
+msgstr "Microsoft Speech API version 5 (32 位元)"
+
+#. Translators: Description for a speech synthesizer.
 #: synthDrivers\silence.py:16
 msgid "No speech"
 msgstr "沒有語音"
@@ -19126,13 +19147,13 @@ msgstr "預設輸出裝置"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
-#: utils\security.py:363
+#: utils\security.py:368
 msgid "NVDA is unable to determine if Windows is locked. While this instance of NVDA is running, your desktop will not be secure when Windows is locked. Restarting Windows may address this. If this error is ongoing then disabling the Windows lock screen is recommended."
 msgstr "NVDA 無法確定 Windows 是否已鎖定。當此 NVDA 執行個體執行時，在 Windows 鎖定畫面您的桌面將不安全，重新啟動 Windows 可以解決這個問題。如果此錯誤持續存在則建議停用 Windows 鎖定畫面。"
 
 #. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
 #. Windows is locked.
-#: utils\security.py:378
+#: utils\security.py:383
 msgid "Lock screen not secure while using NVDA"
 msgstr "使用 NVDA 時鎖定畫面不安全"
 
