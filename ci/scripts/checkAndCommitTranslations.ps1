@@ -4,6 +4,7 @@ param(
 )
 
 $PSNativeCommandUseErrorActionPreference = $false
+$ErrorActionPreference= "Continue"
 
 git checkout -b $branchName
 git config --local user.name "GitHub Actions"
