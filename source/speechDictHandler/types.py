@@ -182,7 +182,7 @@ class SpeechDict(list[SpeechDictEntry]):
 							)
 							self.append(dictionaryEntry)
 						except Exception as e:
-							msg = f"Dictionary {file!r} entry invalid for {line!r}"
+							msg = f"Dictionary {fileName!r} entry invalid for {line!r}"
 							if raiseOnError:
 								raise ValueError(msg) from e
 							log.exception(msg)
@@ -233,17 +233,22 @@ class SpeechDictDefinition:
 
 	name: str
 	"""The name of the dictionary."""
+
 	path: str | None = None
 	"""The path to the dictionary."""
+
 	source: DictionaryType | str
 	"""The source of the dictionary."""
+
 	displayName: str | None = None
 	"""The translatable name of the dictionary.
 	When not provided, the dictionary can not be visible to the end user.
 	"""
+
 	mandatory: bool = False
 	"""Whether this dictionary is mandatory.
 	Mandatory dictionaries are always enabled."""
+
 	_dictionary: SpeechDict = field(init=False, repr=False, compare=False, default_factory=SpeechDict)
 
 	def __post_init__(self):
