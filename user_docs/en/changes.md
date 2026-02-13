@@ -17,6 +17,10 @@
 * Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @hdzrvcc0X74)
 * New types have been added for Speech Dictionary entries, such as part of word and start of word.
 Consult the speech dictionaries section in the User Guide for more details. (#19506, @LeonarddeR)
+* DotPad braille displays now support multi-button combinations and long press gestures. (#19565, @bramd)
+  * You can now press multiple buttons simultaneously and assign functions to them in NVDA's Input Gestures (e.g., `f1+panLeft`).
+  * Long press support allows holding buttons for 1.5 seconds to trigger alternative actions (e.g., `longPress(panLeft)`).
+  * Note: The firmware feature that presents battery status when long pressing `panLeft+panRight` will not trigger NVDA commands assigned to the `panLeft+panRight` (short press) gesture combination.
 
 ### Changes
 
