@@ -37,7 +37,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        ref: fixUpdateTranslations
+        ref: beta
         fetch-depth: 1
         submodules: true
 
@@ -90,7 +90,7 @@ jobs:
         username: ${{ secrets.EMAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
         subject: "[${{ steps.commit.outputs.invalid_pofile_locales }}]: Errors in interface translations"
-        to: sascha@nvaccess.org
+        to: nvda-l10n@nvaccess.org
         from: '"NVDA localisations" <nvda-l10n@nvaccess.org>'
         convert_markdown: true
         body: |
