@@ -53,6 +53,9 @@ Use the `speechDictHandler.types.EntryType` enumeration instead. (#19430, @Leona
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
 
+* Component updates:
+  * Updated Python 3.13.11 to 3.13.12 (#19572, @dpy013)
+
 ## 2026.1
 
 This release includes built-in support for reading math content with MathCAT.
