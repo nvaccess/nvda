@@ -84,14 +84,14 @@ jobs:
             # Append the language code to $failures
             # by stripping /LC_MESSAGES/nvda.po,
             # and getting the basename (the trailing path component)
-            failures+="$(basename ${path%/LC_MESSAGES/nvda.po}) "
+            failures+="$(basename ${path%/LC_MESSAGES/nvda.po}), "
           fi
         # Substitute getting modified files into stdin
         done 3< <(git ls-files --modified -z source/locale/**.po)
         if [[ $failures ]]; then
           # $failures is not empty
           echo "has_failures=true" >> "$GITHUB_OUTPUT"
-          echo "invalid_pofile_locales=$failures" >> "$GITHUB_OUTPUT"
+          echo "invalid_pofile_locales=${failures%, }" >> "$GITHUB_OUTPUT"
           echo "invalid_pofile_reports<<EOF"$'\n'"$(cat $tempfile)"$'\n'EOF >> $GITHUB_OUTPUT
         else
           echo "has_failures=false" >> "$GITHUB_OUTPUT"
@@ -146,18 +146,22 @@ jobs:
         convert_markdown: true
         body: |
           Errors have been found in the user interface translations for the following locales: ${{ steps.commit.outputs.invalid_pofile_locales }}.
+          Detailed reports are included below.
           Updated translations for these locales will not be included in NVDA untill these errors have been corrected.
 
           For more information, review the guide on translating NVDA's interface: <https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/crowdin.md#translating-nvdas-interface>.
 
+          ----------
           ${{ steps.commit.outputs.invalid_pofile_reports }}
 
         html_body: |
           Errors have been found in the user interface translations for the following locales: ${{ steps.commit.outputs.invalid_pofile_locales }}.
+          Detailed reports are included below.
           Updated translations for these locales will not be included in NVDA untill these errors have been corrected.
 
           For more information, [review the guide on translating NVDA's interface](https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/crowdin.md#translating-nvdas-interface).
 
           ```
+          ----------
           ${{ steps.commit.outputs.invalid_pofile_reports }}
           ```
