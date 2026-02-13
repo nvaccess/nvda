@@ -100,5 +100,20 @@ def _addSpeechDictionaries():
 			name=DictionaryType.TEMP.value,
 			source=DictionaryType.TEMP,
 			mandatory=True,
+			# Translators: Title for the temporary speech dictionary (the dictionary that is active as long
+			# as NvDA is running).
+			displayName=_("Temporary dictionary"),
 		),
 	)
+
+
+def _getDictionaryDefinition(source: DictionaryType | str) -> SpeechDictDefinition:
+	"""Get the speech dictionary definition for a given source.
+	:param source: The source of the speech dictionary, which can be a DictionaryType or a string (e.g., add-on name).
+	:return: The corresponding SpeechDictDefinition.
+	:raises KeyError: If no definition is found for the given source.
+	"""
+	for definition in _speechDictDefinitions:
+		if definition.source == source:
+			return definition
+	raise KeyError(f"No speech dictionary definition found for source {source!r}")

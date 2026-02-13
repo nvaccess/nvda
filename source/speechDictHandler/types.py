@@ -249,13 +249,13 @@ class SpeechDictDefinition:
 	"""Whether this dictionary is mandatory.
 	Mandatory dictionaries are always enabled."""
 
-	_dictionary: SpeechDict = field(init=False, repr=False, compare=False, default_factory=SpeechDict)
+	dictionary: SpeechDict = field(init=False, repr=False, compare=False, default_factory=SpeechDict)
 
 	def __post_init__(self):
 		if not self.displayName and not self.mandatory:
 			raise ValueError("A non-mandatory dictionary without a display name is unsupported")
 		if self.path:
-			self._dictionary.load(self.path, raiseOnError=self.source not in DictionaryType)
+			self.dictionary.load(self.path, raiseOnError=self.source not in DictionaryType)
 
 	@property
 	def readOnly(self) -> bool:
@@ -278,18 +278,26 @@ class SpeechDictDefinition:
 		:param text: The text to apply the dictionary to.
 		:return: The text after applying the dictionary.
 		"""
-		return self._dictionary.sub(text)
+		return self.dictionary.sub(text)
 
 
 @dataclass(frozen=True, kw_only=True)
 class VoiceSpeechDictDefinition(SpeechDictDefinition):
 	source: DictionaryType = field(init=False, default=DictionaryType.VOICE)
 	name: str = field(init=False, default=DictionaryType.VOICE.value)
-	displayName: str = field(
-		init=False,
-		# Translators: Name of the voice-specific speech dictionary.
-		default=_("Voice Dictionary"),
-	)
+
+	@property
+	def displayName(self) -> str:  # noqa: F811
+		"""The display name for the voice dictionary."""
+		# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+		return _("Voice dictionary (%s)") % (
+			os.path.basename(self.dictionary.fileName) if self.dictionary.fileName else None,
+		)
+
+	@displayName.setter
+	def displayName(self, value: str) -> None:
+		# Ignore any attempts to set displayName, as it is computed.
+		pass
 
 	def load(self, synth: "synthDriverHandler.SynthDriver"):
 		"""Loads appropriate dictionary for the given synthesizer.

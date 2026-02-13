@@ -325,30 +325,29 @@ class DictionaryDialog(
 
 class DefaultDictionaryDialog(DictionaryDialog):
 	def __init__(self, parent):
+		definition = speechDictHandler.definitions._getDictionaryDefinition(DictionaryType.DEFAULT)
 		super().__init__(
 			parent,
-			# Translators: Title for default speech dictionary dialog.
-			title=_("Default dictionary"),
-			speechDict=speechDictHandler.dictionaries[DictionaryType.DEFAULT],
+			title=definition.displayName,
+			speechDict=definition.dictionary,
 		)
 
 
 class VoiceDictionaryDialog(DictionaryDialog):
 	def __init__(self, parent):
+		definition = speechDictHandler.definitions._getDictionaryDefinition(DictionaryType.VOICE)
 		super().__init__(
 			parent,
-			# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-			title=_("Voice dictionary (%s)") % speechDictHandler.dictionaries[DictionaryType.VOICE].fileName,
-			speechDict=speechDictHandler.dictionaries[DictionaryType.VOICE],
+			title=definition.displayName,
+			speechDict=definition.dictionary,
 		)
 
 
 class TemporaryDictionaryDialog(DictionaryDialog):
 	def __init__(self, parent):
+		definition = speechDictHandler.definitions._getDictionaryDefinition(DictionaryType.TEMP)
 		super().__init__(
 			parent,
-			# Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
-			# as NvDA is running).
-			title=_("Temporary dictionary"),
-			speechDict=speechDictHandler.dictionaries[DictionaryType.TEMP],
+			title=definition.displayName,
+			speechDict=definition.dictionary,
 		)

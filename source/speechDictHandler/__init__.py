@@ -28,7 +28,7 @@ __getattr__ = handleDeprecations(
 	RemovedSymbol(
 		"dictionaries",
 		lambda: {
-			d.source: d._dictionary for d in definitions._speechDictDefinitions if d.source in DictionaryType
+			d.source: d.dictionary for d in definitions._speechDictDefinitions if d.source in DictionaryType
 		},
 		callValue=True,
 	),
