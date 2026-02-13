@@ -65,8 +65,8 @@ jobs:
       run: |
         git push --set-upstream origin ${{ env.branchName }}
         # Create a pull request for the changes
-        gh pr create --base beta --head ${{ env.branchName }} \
-        --title "Update tracked translations from Crowdin" \
+        gh pr create --base beta --head ${{ env.branchName }} `
+        --title "Update tracked translations from Crowdin" `
         --body "This pull request updates translations to languages being tracked from Crowdin."
       env:
         GITHUB_TOKEN: ${{ github.token }}
@@ -75,8 +75,8 @@ jobs:
       if: steps.commit.outputs.has_changes == 'true'
       run: |
         # Sets PR to auto-merge when checks have passed
-        gh pr merge ${{ env.branchName }} \
-        --squash --delete-branch --auto \
+        gh pr merge ${{ env.branchName }} `
+        --squash --delete-branch --auto `
         --body "Merged translations from Crowdin"
       env:
         GITHUB_TOKEN: ${{ github.token }}
