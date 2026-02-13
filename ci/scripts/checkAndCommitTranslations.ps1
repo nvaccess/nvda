@@ -3,6 +3,8 @@ param(
 	[string]$branchName
 )
 
+$PSNativeCommandUseErrorActionPreference = $false
+
 git checkout -b $branchName
 git config --local user.name "GitHub Actions"
 git config --local user.email "github-actions@github.com"
@@ -20,7 +22,6 @@ $failures = @(git ls-files --modified "source/locale/**.po" | ForEach-Object {
 		Write-Host "Ok"
 		git add "$_"
 	} else {
-		$LASTEXITCODE = 0  # Reset so GitHub actions doesn't fail the job
 		# This file produced errors.
 		Write-Host "Failed"
 		Add-Content -Path $tempfile -Value $output -PassThru | Out-String | Write-Error
@@ -53,7 +54,6 @@ if ($LASTEXITCODE -eq 0) {
 	Write-Host "No changes to commit"
 	Add-Content -Path $env:GITHUB_OUTPUT -Value "has_changes=false"
 } else {
-	$LASTEXITCODE = 0  # Reset so GitHub actions doesn't fail the job
 	git commit -m "Update tracked translations from Crowdin"
 	Add-Content -Path $env:GITHUB_OUTPUT -Value "has_changes=true"
 }
