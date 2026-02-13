@@ -141,7 +141,7 @@ jobs:
         username: ${{ secrets.EMAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
         subject: "[${{ steps.commit.outputs.invalid_pofile_locales }}]: Errors in interface translations"
-        to: nvda-l10n@nvaccess.org
+        to: sascha@nvaccess.org
         from: '"NVDA localisations" <nvda-l10n@nvaccess.org>'
         convert_markdown: true
         body: |
