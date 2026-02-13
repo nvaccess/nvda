@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-06 07:00+0000\n"
-"PO-Revision-Date: 2026-02-09 00:23\n"
+"POT-Creation-Date: 2026-02-10 03:14+0000\n"
+"PO-Revision-Date: 2026-02-13 00:34\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -2149,8 +2149,8 @@ msgstr "Algunes operacions en complements han fallat. Vegeu el fitxer de registr
 #: gui\configProfiles.py:293 gui\configProfiles.py:337
 #: gui\configProfiles.py:515 gui\configProfiles.py:530
 #: gui\configProfiles.py:541 gui\inputGestures.py:808 gui\inputGestures.py:822
-#: gui\installerGui.py:120 gui\installerGui.py:567 gui\installerGui.py:582
-#: gui\installerGui.py:654 gui\logViewer.py:112 gui\logViewer.py:143
+#: gui\installerGui.py:121 gui\installerGui.py:578 gui\installerGui.py:593
+#: gui\installerGui.py:665 gui\logViewer.py:112 gui\logViewer.py:143
 #: gui\message.py:160 gui\settingsDialogs.py:1037 gui\settingsDialogs.py:5872
 #: gui\settingsDialogs.py:6401 gui\startupDialogs.py:127
 #: _remoteClient\dialogs.py:67 _remoteClient\dialogs.py:306
@@ -7040,7 +7040,7 @@ msgstr "L'actualització a la versió {version} de NVDA s'ha descarregat i està
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
-#: updateCheck.py:547 updateCheck.py:669 gui\installerGui.py:286
+#: updateCheck.py:547 updateCheck.py:669 gui\installerGui.py:296
 msgid "&Review add-ons..."
 msgstr "Complements de &revisió..."
 
@@ -7159,7 +7159,7 @@ msgstr "&Fet"
 
 #. Translators: Message shown to users when attempting to update NVDA
 #. on a computer which is being remotely controlled via NVDA Remote Access
-#: updateCheck.py:1015 gui\installerGui.py:452
+#: updateCheck.py:1015 gui\installerGui.py:462
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
 msgstr "No es recomana actualitzar NVDA quan estiguis connectat a NVDA Remote Access com a ordinador controlat. "
 
@@ -7178,7 +7178,7 @@ msgstr "És possible que la connexió activa actualment no continuï durant o de
 #. Translators: The title of a dialog.
 #. Translators: Title of warning dialog
 #: updateCheck.py:1026 gui\_SetURLDialog.py:113 gui\configProfiles.py:500
-#: gui\installerGui.py:344 gui\installerGui.py:469 gui\settingsDialogs.py:1934
+#: gui\installerGui.py:354 gui\installerGui.py:479 gui\settingsDialogs.py:1934
 #: screenCurtain\_screenCurtain.py:70 _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "Avís"
@@ -11666,7 +11666,7 @@ msgstr "S'ha connectat correctament a l'URL indicat."
 #. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 #. Translators: The message title displayed when copying configuration to system settings was successful.
 #. Translators: Title of success dialog
-#: gui\_SetURLDialog.py:177 gui\installerGui.py:137 gui\installerGui.py:665
+#: gui\_SetURLDialog.py:177 gui\installerGui.py:147 gui\installerGui.py:676
 #: gui\settingsDialogs.py:1043 _remoteClient\dialogs.py:280
 msgid "Success"
 msgstr "Èxit"
@@ -12529,248 +12529,254 @@ msgid "Error saving user defined gestures - probably read only file system."
 msgstr "S'ha produït un error en desar els gestos definits - probablement el suport és només de lectura."
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
-#: gui\installerGui.py:67
+#: gui\installerGui.py:68
 msgid "Updating NVDA"
 msgstr "Actualitzant NVDA"
 
 #. Translators: The title of the dialog presented while NVDA is being installed.
-#: gui\installerGui.py:70
+#: gui\installerGui.py:71
 msgid "Installing NVDA"
 msgstr "Instal·lant NVDA"
 
 #. Translators: The message displayed while NVDA is being updated.
-#: gui\installerGui.py:72
+#: gui\installerGui.py:73
 msgid "Please wait while your previous installation of NVDA is being updated."
 msgstr "Espera mentre la instal·lació anterior de NVDA s'actualitza."
 
 #. Translators: The message displayed while NVDA is being installed.
-#: gui\installerGui.py:75
+#: gui\installerGui.py:76
 msgid "Please wait while NVDA is being installed"
 msgstr "Espera mentre NVDA s'instal·la"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
-#: gui\installerGui.py:99
+#: gui\installerGui.py:100
 msgid "The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again."
 msgstr "La instal·lació no pot eliminar o sobreescriure un fitxer. Potser hi ha una altra còpia de NVDA en execució en un altre compte d'usuari. Assegura't que totes les còpies instal•lades de NVDA s'han aturat i torna a executar la instal·lació."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
-#: gui\installerGui.py:104 gui\installerGui.py:646
+#: gui\installerGui.py:105 gui\installerGui.py:657
 msgid "File in Use"
 msgstr "Fitxer en ús"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
-#: gui\installerGui.py:118
+#: gui\installerGui.py:119
 msgid "The installation of NVDA failed. Please check the Log Viewer for more information."
 msgstr "La instal·lació de NVDA ha fallat. Consulta el visor de registre per obtenir més informació."
 
 #. Translators: The message displayed when NVDA has been successfully installed.
-#: gui\installerGui.py:127
+#: gui\installerGui.py:130
 msgid "Successfully installed NVDA. "
 msgstr "NVDA s'ha instal·lat correctament. "
 
 #. Translators: The message displayed when NVDA has been successfully updated.
-#: gui\installerGui.py:130
+#: gui\installerGui.py:133
 msgid "Successfully updated your installation of NVDA. "
 msgstr "NVDA s'ha actualitzat correctament. "
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
-#: gui\installerGui.py:135
+#: gui\installerGui.py:140
 msgid "Please press OK to start the installed copy."
 msgstr "Prem D'acord per iniciar la còpia instal·lada."
 
+#. Translators: The message displayed to the user after NVDA is installed
+#. and the installer is about to close without starting the installed copy.
+#: gui\installerGui.py:144
+msgid "Please press OK to close the installer."
+msgstr "Si us plau, prem D'acord per tancar l'instal·lador."
+
 #. Translators: The title of the Install NVDA dialog.
-#: gui\installerGui.py:198
+#: gui\installerGui.py:208
 msgid "Install NVDA"
 msgstr "Instal·la NVDA"
 
 #. Translators: An informational message in the Install NVDA dialog.
-#: gui\installerGui.py:216
+#: gui\installerGui.py:226
 msgid "To install NVDA to your hard drive, please press the Continue button."
 msgstr "Per instal·lar NVDA al disc dur, prem el botó Continua."
 
 #. Translators: An informational message in the Install NVDA dialog.
-#: gui\installerGui.py:220
+#: gui\installerGui.py:230
 msgid "A previous copy of NVDA has been found on your system. This copy will be updated."
 msgstr "S'ha trobat una còpia anterior de NVDA al teu sistema. S'actualitzarà."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#: gui\installerGui.py:225
+#: gui\installerGui.py:235
 #, python-brace-format
 msgid "The installation path for NVDA has changed. it will now  be installed in {path}"
 msgstr "El camí de la instal·lació de NVDA ha canviat. Ara s'instal·larà a {path}"
 
 #. Translators: The label for a group box containing the NVDA installation dialog options.
 #. Translators: The label for a group box containing the NVDA welcome dialog options.
-#: gui\installerGui.py:243 gui\startupDialogs.py:63
+#: gui\installerGui.py:253 gui\startupDialogs.py:63
 msgid "Options"
 msgstr "Opcions"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:249
+#: gui\installerGui.py:259
 msgid "Use NVDA during sign-in"
 msgstr "Utilitzar NVDA durant l'inici de sessió"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:260
+#: gui\installerGui.py:270
 msgid "&Keep existing desktop shortcut"
 msgstr "&Manté la drecera d'escriptori existent"
 
 #. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
 #. If the shortcut key has been changed for this locale,
 #. this change must also be reflected here.
-#: gui\installerGui.py:267
+#: gui\installerGui.py:277
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "Crea una icona a l'&Escriptori i una tecla de drecera (Ctrl+Alt+n)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:274
+#: gui\installerGui.py:284
 msgid "Copy &portable configuration to current user account"
 msgstr "Copia la configuració &portable al compte d'usuari actual"
 
 #. Translators: The label of a button to continue with the operation.
 #. Translators: The label for the Continue button in an NVDA dialog.
-#: gui\installerGui.py:291 gui\installerGui.py:547 gui\nvdaControls.py:383
+#: gui\installerGui.py:301 gui\installerGui.py:558 gui\nvdaControls.py:383
 msgid "&Continue"
 msgstr "&Continua"
 
 #. Translators: A warning presented when the user attempts to downgrade NVDA
 #. to an older version.
-#: gui\installerGui.py:353
+#: gui\installerGui.py:363
 msgid "You are attempting to install an earlier version of NVDA than the version currently installed. If you really wish to revert to an earlier version, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
 msgstr "Estàs a punt d'instal·lar una versió més antiga del NVDA que la que hi ha instal·lada. Si vols instal·lar aquesta versió anterior, primer cancel·la la instal·lació en curs i desinstal·la completament el NVDA."
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
-#: gui\installerGui.py:369
+#: gui\installerGui.py:379
 msgid "&Proceed with installation (not recommended)"
 msgstr "&Procedeix amb la instal·lació (no recomanat)"
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
-#: gui\installerGui.py:420
+#: gui\installerGui.py:430
 #, python-brace-format
 msgid "A portable copy already exists in the directory '{portableDirectory}'. Do you want to update it?"
 msgstr "Ja existeix una còpia portàtil al directori '{portableDirectory}'. Vols actualitzar-lo?"
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
-#: gui\installerGui.py:425
+#: gui\installerGui.py:435
 msgid "Portable Copy Exists"
 msgstr "Existeix una còpia portàtil"
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
-#: gui\installerGui.py:432
+#: gui\installerGui.py:442
 #, python-brace-format
 msgid "The specified directory '{portableDirectory}' is not empty. Proceeding will delete and replace existing files in the directory. Do you want to overwrite the contents of this folder? "
 msgstr "El directori especificat '{portableDirectory}' no està buit. En continuar, se suprimiran i substituiran els fitxers existents al directori. Voleu sobreescriure el contingut d'aquesta carpeta? "
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
-#: gui\installerGui.py:438
+#: gui\installerGui.py:448
 msgid "Directory Exists"
 msgstr "El directori existeix"
 
 #. Translators: Message shown to users when attempting to install NVDA
 #. on a computer which is being remotely controlled via NVDA Remote Access
-#: gui\installerGui.py:458
+#: gui\installerGui.py:468
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
 msgstr "No es recomana instal·lar NVDA quan estigui connectat a NVDA Remote Access com a ordinador controlat. "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
-#: gui\installerGui.py:464
+#: gui\installerGui.py:474
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
 msgstr "No podreu respondre a les sol·licituds de control de comptes d'usuari (UAC) des de l'ordinador de control. Només heu de continuar si teniu accés físic a l'ordinador controlat.\n\n"
 "Estàs segur que vols continuar?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
-#: gui\installerGui.py:502
+#: gui\installerGui.py:512
 msgid "Create Portable NVDA"
 msgstr "Crea una versió portable de NVDA"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
-#: gui\installerGui.py:508
+#: gui\installerGui.py:518
 msgid "To create a portable copy of NVDA, please select the path and other options and then press Continue"
 msgstr "Per crear una versió portable de NVDA, selecciona el camí i altres opcions i prem Continua"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:514
+#: gui\installerGui.py:524
 msgid "Portable directory:"
 msgstr "Directori portàtil:"
 
 #. Translators: The label of a button to browse for a directory.
-#: gui\installerGui.py:519
+#: gui\installerGui.py:529
 msgid "Browse..."
 msgstr "Navega..."
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
-#: gui\installerGui.py:522
+#: gui\installerGui.py:532
 msgid "Select portable directory"
 msgstr "Selecciona el directori portàtil"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:530
+#: gui\installerGui.py:540
 msgid "Create a &new folder for the portable copy"
 msgstr "Crea una carpeta &nova per a la còpia portàtil"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:535
+#: gui\installerGui.py:545
 msgid "Copy current &user configuration"
 msgstr "Copia la configuració actual de l'&usuari"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:541
+#: gui\installerGui.py:551
 msgid "&Start the new portable copy after creation"
 msgstr "&Inicia la nova còpia portable desprès de crear-la"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:565
+#: gui\installerGui.py:576
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "Especifica el directori on vols crear la versió portable."
 
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:577
+#: gui\installerGui.py:588
 msgid "Please specify the absolute path where the portable copy should be created. It may include system variables (%temp%, %homepath%, etc.)."
 msgstr "Especifiqueu el camí absolut on s'ha de crear la còpia portàtil. Pot incloure variables del sistema (%temp%, %homepath%, etc.)."
 
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
-#: gui\installerGui.py:628
+#: gui\installerGui.py:639
 msgid "Portable copy creation cancelled."
 msgstr "S'ha cancel·lat la creació de la còpia portàtil."
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
-#: gui\installerGui.py:633
+#: gui\installerGui.py:644
 msgid "Creating Portable Copy"
 msgstr "Creació d'una versió portable en curs"
 
 #. Translators: The message displayed while a portable copy of NVDA is being created.
-#: gui\installerGui.py:635
+#: gui\installerGui.py:646
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Espera mentre es crea una versió portable de NVDA."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
-#: gui\installerGui.py:644
+#: gui\installerGui.py:655
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA no pot eliminar o sobreescriure un fitxer."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. {error} will be replaced with the specific error message.
-#: gui\installerGui.py:652
+#: gui\installerGui.py:663
 #, python-brace-format
 msgid "Failed to create portable copy: {error}."
 msgstr "No s'ha pogut crear una còpia portàtil: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. {dir} will be replaced with the destination directory.
-#: gui\installerGui.py:663
+#: gui\installerGui.py:674
 #, python-brace-format
 msgid "Successfully created a portable copy of NVDA at {dir}"
 msgstr "S'ha creat correctament una còpia portàtil de NVDA a {dir}"
@@ -19197,13 +19203,13 @@ msgstr "Dispositiu de sortida predeterminat"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
-#: utils\security.py:363
+#: utils\security.py:368
 msgid "NVDA is unable to determine if Windows is locked. While this instance of NVDA is running, your desktop will not be secure when Windows is locked. Restarting Windows may address this. If this error is ongoing then disabling the Windows lock screen is recommended."
 msgstr "NVDA no pot determinar si el Windows està bloquejat. Mentre aquesta instància de NVDA s'està executant, el teu escriptori no estarà segur quan Windows estigui bloquejat. El reinici de Windows pot solucionar-ho. Si aquest error està en curs, es recomana desactivar la pantalla de bloqueig de Windows."
 
 #. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
 #. Windows is locked.
-#: utils\security.py:378
+#: utils\security.py:383
 msgid "Lock screen not secure while using NVDA"
 msgstr "La pantalla bloquejada no és segura durant l'ús de NVDA"
 
