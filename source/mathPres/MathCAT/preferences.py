@@ -309,9 +309,8 @@ def applyUserPreferences(prefs: PreferencesDict | None = None) -> None:
 					yaml_val = str(v)
 				libmathcat.SetPreference(k, yaml_val)
 			except Exception as e:
-				log.debugWarning(
-					f"MathCAT: failed to set {k} preference: {e}",
-					exc_info=True,
+				log.exception(
+					f"MathCAT: failed to set {k} preference: {e}"
 				)
 	setEffectiveBrailleCode()
 
