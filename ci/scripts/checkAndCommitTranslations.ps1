@@ -37,11 +37,11 @@ $failures = @(git ls-files --modified "source/locale/**.po" | ForEach-Object {
 
 if ($failures.Count -gt 0) {
 	# $At least one language failed validation.
-	Add-Content -Path $env:GITHUB_OUTPUT -Value "has_failures=true
-		invalid_pofile_locales=$($failures -join ", ")
-		invalid_pofile_reports<<EOF
-		$((Get-Content -Path $tempfile -Raw).TrimEnd())
-		EOF"
+	Add-Content -Path $env:GITHUB_OUTPUT -Value "has_failures=true"
+	Add-Content -Path $env:GITHUB_OUTPUT -Value "invalid_pofile_locales=$($failures -join ", ")"
+	Add-Content -Path $env:GITHUB_OUTPUT -Value "invalid_pofile_reports<<EOF"
+	Add-Content -Path $env:GITHUB_OUTPUT -Value (Get-Content -Path $tempfile -Raw).TrimEnd()
+	Add-Content -Path $env:GITHUB_OUTPUT -Value "EOF"
 } else {
 	Add-Content -Path $env:GITHUB_OUTPUT -Value "has_failures=false"
 }
