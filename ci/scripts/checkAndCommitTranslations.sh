@@ -4,7 +4,7 @@ git checkout -b $branchName
 
         # Check each modified tracked po file.
         failures=
-        tempfile=$(mktemp)
+        tempfile=$(mktemp --tmpdir="$RUNNER_TEMP")
         # Take each \0-separated path from stdin
         while IFS= read -r -d $'\0' path <&3; do
           echo -n "Checking $path... "
