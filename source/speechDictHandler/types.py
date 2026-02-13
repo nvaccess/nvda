@@ -182,7 +182,7 @@ class SpeechDict(list[SpeechDictEntry]):
 							)
 							self.append(dictionaryEntry)
 						except Exception as e:
-							msg = f"Dictionary {file!r} entry invalid for {line!r}"
+							msg = f"Dictionary {fileName!r} entry invalid for {line!r}"
 							if raiseOnError:
 								raise ValueError(msg) from e
 							log.exception(msg)
