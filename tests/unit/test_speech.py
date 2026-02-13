@@ -104,6 +104,7 @@ class Test_getSpellingSpeechAddCharMode(unittest.TestCase):
 				CharacterModeCommand(True),
 				"b",
 				EndUtteranceCommand(),
+				CharacterModeCommand(False),
 			],
 		)
 		output = _getSpellingSpeechAddCharMode(seq)
