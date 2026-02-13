@@ -43,7 +43,7 @@ def processText(text: str) -> str:
 	"""
 	if not globalVars.speechDictionaryProcessing:
 		return text
-	for definition in reversed(definitions._speechDictDefinitions):
+	for definition in definitions._speechDictDefinitions:
 		if not definition.enabled:
 			continue
 		text = definition.sub(text)

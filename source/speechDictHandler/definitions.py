@@ -53,11 +53,14 @@ def _addSpeechDictionaries():
 	_speechDictDefinitions.extend(
 		(
 			SpeechDictDefinition(
-				name=DictionaryType.BUILTIN.value,
-				source=DictionaryType.BUILTIN,
-				path=os.path.join(globalVars.appDir, "builtin.dic"),
+				name=DictionaryType.TEMP.value,
+				source=DictionaryType.TEMP,
 				mandatory=True,
+				# Translators: Title for the temporary speech dictionary (the dictionary that is active as long
+				# as NvDA is running).
+				displayName=_("Temporary dictionary"),
 			),
+			VoiceSpeechDictDefinition(),
 			SpeechDictDefinition(
 				name=DictionaryType.DEFAULT.value,
 				source=DictionaryType.DEFAULT,
@@ -65,7 +68,12 @@ def _addSpeechDictionaries():
 				# Translators: Name of the default speech dictionary.
 				displayName=_("Default Dictionary"),
 			),
-			VoiceSpeechDictDefinition(),
+			SpeechDictDefinition(
+				name=DictionaryType.BUILTIN.value,
+				source=DictionaryType.BUILTIN,
+				path=os.path.join(globalVars.appDir, "builtin.dic"),
+				mandatory=True,
+			),
 		),
 	)
 	# Add add-on speech dictionaries
@@ -95,16 +103,6 @@ def _addSpeechDictionaries():
 				continue
 			else:
 				_speechDictDefinitions.append(definition)
-	_speechDictDefinitions.append(
-		SpeechDictDefinition(
-			name=DictionaryType.TEMP.value,
-			source=DictionaryType.TEMP,
-			mandatory=True,
-			# Translators: Title for the temporary speech dictionary (the dictionary that is active as long
-			# as NvDA is running).
-			displayName=_("Temporary dictionary"),
-		),
-	)
 
 
 def _getDictionaryDefinition(source: DictionaryType | str) -> SpeechDictDefinition:
