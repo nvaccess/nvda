@@ -14,6 +14,7 @@ from _bridge.base import Connection, Service
 from _bridge.components.services.synthDriver import SynthDriverService
 from winBindings.jobapi2 import JOB_OBJECT_LIMIT
 import jobObject
+from _bridge.components.services.nvwave import WavePlayerService
 
 
 @rpyc.service
@@ -61,6 +62,25 @@ class NVDAService(Service):
 		log.debug(f"Retrieved config value: {conf}")
 		return conf
 
+	@Service.exposed
+	def WavePlayer(
+		self,
+		channels: int,
+		samplesPerSec: int,
+		bitsPerSample: int,
+		outputDevice: str,
+		wantDucking: bool = True,
+	):
+		"""return a WavePlayer service wrapping a new real WavePlayer instance."""
+		return WavePlayerService(
+			self._childProcess,
+			channels=channels,
+			samplesPerSec=samplesPerSec,
+			bitsPerSample=bitsPerSample,
+			outputDevice=outputDevice,
+			wantDucking=wantDucking,
+		)
+
 
 _hostExe = os.path.join(
 	NVDAState.ReadPaths.versionedLibX86Path,
@@ -96,7 +116,7 @@ def createSynthDriver(name: str, synthDriversPath: str) -> tuple[Connection, Syn
 	conn.bgEventLoop(daemon=True)
 	log.debug("Connection to synthDriverHost32 process RPYC service established")
 
-	conn.remoteService.installProxies(service)
+	conn.remoteService.installProxies(service, brokerAudio=True)
 	log.debug("Creating SynthDriverProxy over remote SynthDriverService")
 	conn.remoteService.registerSynthDriversPath(synthDriversPath)
 	synthDriverService = conn.remoteService.SynthDriver(name)
