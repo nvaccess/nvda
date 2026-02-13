@@ -147,7 +147,7 @@ jobs:
         body: |
           Errors have been found in the user interface translations for the following locales: ${{ steps.commit.outputs.invalid_pofile_locales }}.
           Detailed reports are included below.
-          Updated translations for these locales will not be included in NVDA untill these errors have been corrected.
+          Updated translations for these locales will not be included in NVDA until these errors have been corrected.
 
           For more information, review the guide on translating NVDA's interface: <https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/crowdin.md#translating-nvdas-interface>.
 
@@ -157,7 +157,7 @@ jobs:
         html_body: |
           Errors have been found in the user interface translations for the following locales: ${{ steps.commit.outputs.invalid_pofile_locales }}.
           Detailed reports are included below.
-          Updated translations for these locales will not be included in NVDA untill these errors have been corrected.
+          Updated translations for these locales will not be included in NVDA until these errors have been corrected.
 
           For more information, [review the guide on translating NVDA's interface](https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/crowdin.md#translating-nvdas-interface).
 
