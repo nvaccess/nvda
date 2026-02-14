@@ -58,7 +58,7 @@ def _addSpeechDictionaries():
 				source=DictionaryType.TEMP,
 				mandatory=True,
 				# Translators: Title for the temporary speech dictionary (the dictionary that is active as long
-				# as NvDA is running).
+				# as NVDA is running).
 				displayName=_("Temporary dictionary"),
 			),
 			VoiceSpeechDictDefinition(),

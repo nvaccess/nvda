@@ -1854,7 +1854,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 	def _appendSpeechDictionariesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		self._availableSpeechDictionaries = [
 			d
-			for d in speechDictHandler.listAvailableSpeechDictDefinitions(alphabetized=True)
+			for d in speechDictHandler.listAvailableSpeechDictDefinitions(forDisplay=True)
 			if d.userVisible
 		]
 		self.speechDictionariesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
