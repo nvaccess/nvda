@@ -47,6 +47,7 @@ from _magnifier.utils.types import Filter, FullScreenMode
 import queueHandler
 import requests
 import speech
+import speechDictHandler
 import systemUtils
 import vision
 import vision.providerBase
@@ -1768,6 +1769,8 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 
 		self._appendDelayedCharacterDescriptions(settingsSizerHelper)
 
+		self._appendSpeechDictionariesList(settingsSizerHelper)
+
 		minPitchChange = int(
 			config.conf.getConfigValidation(
 				("speech", self.driver.name, "capPitchChange"),
@@ -1837,7 +1840,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			d for d in characterProcessing.listAvailableSymbolDictionaryDefinitions() if d.userVisible
 		]
 		self.symbolDictionariesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
-			# Translators: Label of the list where user can enable or disable symbol dictionaires.
+			# Translators: Label of the list where user can enable or disable symbol dictionaries.
 			_("E&xtra dictionaries for character and symbol processing:"),
 			nvdaControls.CustomCheckListBox,
 			choices=[d.displayName for d in self._availableSymbolDictionaries],
@@ -1847,6 +1850,22 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			i for i, d in enumerate(self._availableSymbolDictionaries) if d.enabled
 		]
 		self.symbolDictionariesList.Select(0)
+
+	def _appendSpeechDictionariesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		self._availableSpeechDictionaries = [
+			d for d in speechDictHandler.listAvailableSpeechDictDefinitions(forDisplay=True) if d.userVisible
+		]
+		self.speechDictionariesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
+			# Translators: Label of the list where user can enable or disable speech dictionaries.
+			_("Sp&eech dictionaries:"),
+			nvdaControls.CustomCheckListBox,
+			choices=[d.displayName for d in self._availableSpeechDictionaries],
+		)
+		self.bindHelpEvent("SpeechDictionaries", self.speechDictionariesList)
+		self.speechDictionariesList.CheckedItems = [
+			i for i, d in enumerate(self._availableSpeechDictionaries) if d.enabled
+		]
+		self.speechDictionariesList.Select(0)
 
 	def _appendSpeechModesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		self._allSpeechModes = list(speech.SpeechMode)
@@ -1905,6 +1924,11 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		if set(currentSymbolDictionaries) != set(newSymbolDictionaries):
 			# Either included or excluded symbol dictionaries, so clear the cache.
 			characterProcessing.clearSpeechSymbols()
+		config.conf["speech"]["speechDictionaries"] = [
+			d.name
+			for i, d in enumerate(self._availableSpeechDictionaries)
+			if i in self.speechDictionariesList.CheckedItems
+		]
 		delayedDescriptions = self.delayedCharacterDescriptionsCheckBox.IsChecked()
 		config.conf["speech"]["delayedCharacterDescriptions"] = delayedDescriptions
 		config.conf["speech"][self.driver.name]["capPitchChange"] = self.capPitchChangeEdit.Value

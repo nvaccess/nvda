@@ -3,17 +3,16 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import os
 import typing
-
 import globalVars
 from logHandler import log
-from NVDAState import WritePaths
-from utils._deprecate import MovedSymbol, handleDeprecations
+from utils._deprecate import MovedSymbol, RemovedSymbol, handleDeprecations
 
-from . import dictFormatUpgrade
-from .types import DictionaryType
-from .types import SpeechDict as _SpeechDict
+from . import definitions
+from .types import (
+	DictionaryType,
+	VoiceSpeechDictDefinition,
+)
 
 if typing.TYPE_CHECKING:
 	import synthDriverHandler
@@ -25,46 +24,51 @@ __getattr__ = handleDeprecations(
 	MovedSymbol("ENTRY_TYPE_REGEXP", "speechDictHandler.types", "EntryType", "REGEXP"),
 	MovedSymbol("SpeechDict", "speechDictHandler.types"),
 	MovedSymbol("SpeechDictEntry", "speechDictHandler.types"),
+	RemovedSymbol(
+		"dictionaries",
+		lambda: {
+			d.source: d.dictionary for d in definitions._speechDictDefinitions if d.source in DictionaryType
+		},
+		callValue=True,
+	),
+	RemovedSymbol("dictTypes", tuple(t.value for t in DictionaryType)),
 )
-
-dictionaries: dict[DictionaryType | str, _SpeechDict] = {}
-dictTypes = (
-	DictionaryType.TEMP.value,
-	DictionaryType.VOICE.value,
-	DictionaryType.DEFAULT.value,
-	DictionaryType.BUILTIN.value,
-)
-"""Types ordered by their priority E.G. voice specific speech dictionary is processed before the default."""
 
 
 def processText(text: str) -> str:
-	"""Processes the given text through all speech dictionaries."""
+	"""Processes the given text through all speech dictionaries.
+	:param text: The text to process.
+	:returns: The processed text.
+	"""
 	if not globalVars.speechDictionaryProcessing:
 		return text
-	for type in dictTypes:
-		text = dictionaries[type].sub(text)
+	for definition in definitions._speechDictDefinitions:
+		if not definition.enabled:
+			continue
+		text = definition.sub(text)
 	return text
 
 
 def initialize() -> None:
-	for type in dictTypes:
-		dictionaries[type] = _SpeechDict()
-	dictionaries[DictionaryType.DEFAULT].load(WritePaths.speechDictDefaultFile)
-	dictionaries[DictionaryType.BUILTIN].load(os.path.join(globalVars.appDir, "builtin.dic"))
+	definitions._addSpeechDictionaries()
+
+
+def terminate() -> None:
+	definitions._speechDictDefinitions.clear()
 
 
 def loadVoiceDict(synth: "synthDriverHandler.SynthDriver") -> None:
 	"""Loads appropriate dictionary for the given synthesizer.
 	It handles case when the synthesizer doesn't support voice setting.
 	"""
-	try:
-		dictFormatUpgrade.doAnyUpgrades(synth)
-	except:  # noqa: E722
-		log.exception("error trying to upgrade dictionaries")
-	if synth.isSupported("voice"):
-		voice = synth.availableVoices[synth.voice].displayName
-		baseName = dictFormatUpgrade.createVoiceDictFileName(synth.name, voice)
-	else:
-		baseName = f"{synth.name}.dic"
-	fileName = os.path.join(WritePaths.voiceDictsDir, synth.name, baseName)
-	dictionaries[DictionaryType.VOICE].load(fileName)
+	definition = next(
+		(d for d in definitions._speechDictDefinitions if isinstance(d, VoiceSpeechDictDefinition)),
+		None,
+	)
+	if definition is None:
+		log.error(
+			"No VoiceSpeechDictDefinition found in _speechDictDefinitions. "
+			"Speech dictionaries may not have been initialized.",
+		)
+		raise RuntimeError("No voice speech dictionary definition is available to load.")
+	definition.load(synth)

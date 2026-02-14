@@ -10,11 +10,22 @@ import os
 import re
 from dataclasses import dataclass, field
 from functools import cached_property
-from typing import Self
+from typing import (
+	TYPE_CHECKING as _TYPE_CHECKING,
+)
+from typing import (
+	Self,
+)
 
+import config
 from logHandler import log
-from NVDAState import shouldWriteToDisk
+from NVDAState import WritePaths, shouldWriteToDisk
 from utils.displayString import DisplayStringIntEnum, DisplayStringStrEnum
+
+from . import dictFormatUpgrade
+
+if _TYPE_CHECKING:
+	import synthDriverHandler
 
 
 class EntryType(DisplayStringIntEnum):
@@ -140,13 +151,16 @@ class SpeechDict(list[SpeechDictEntry]):
 	def __repr__(self) -> str:
 		return f"{self.__class__.__name__} ({len(self)} entries, fileName={self.fileName})"
 
-	def load(self, fileName: str) -> None:
+	def load(self, fileName: str, raiseOnError: bool = False) -> None:
 		self.fileName = fileName
 		comment = ""
 		self.clear()
-		log.debug("Loading speech dictionary '%s'...", fileName)
+		log.debug("Loading speech dictionary %r...", fileName)
 		if not os.path.isfile(fileName):
-			log.debug("file '%s' not found.", fileName)
+			msg = f"file {fileName!r} not found."
+			if raiseOnError:
+				raise FileNotFoundError(msg)
+			log.debug(msg)
 			return
 		with open(fileName, encoding="utf_8_sig", errors="replace") as file:
 			for line in file:
@@ -172,11 +186,17 @@ class SpeechDict(list[SpeechDictEntry]):
 								type=EntryType(int(temp[3])),
 							)
 							self.append(dictionaryEntry)
-						except Exception:
-							log.exception('Dictionary ("%s") entry invalid for "%s"', fileName, line)
+						except Exception as e:
+							msg = f"Dictionary {fileName!r} entry invalid for {line!r}"
+							if raiseOnError:
+								raise ValueError(msg) from e
+							log.exception(msg)
 						comment = ""
 					else:
-						log.warning("can't parse line '%s'", line)
+						msg = f"can't parse line {line!r}"
+						if raiseOnError:
+							raise ValueError(msg)
+						log.warning(msg)
 			log.debug("%d loaded records.", len(self))
 
 	def save(self, fileName: str | None = None):
@@ -210,3 +230,90 @@ class SpeechDict(list[SpeechDictEntry]):
 		for index in reversed(invalidEntries):
 			del self[index]
 		return text
+
+
+@dataclass(frozen=True, kw_only=True)
+class SpeechDictDefinition:
+	"""An abstract class for a speech dictionary definition."""
+
+	name: str
+	"""The name of the dictionary."""
+
+	path: str | None = None
+	"""The path to the dictionary."""
+
+	source: DictionaryType | str
+	"""The source of the dictionary."""
+
+	displayName: str | None = None
+	"""The translatable name of the dictionary.
+	When not provided, the dictionary can not be visible to the end user.
+	"""
+
+	mandatory: bool = False
+	"""Whether this dictionary is mandatory.
+	Mandatory dictionaries are always enabled."""
+
+	dictionary: SpeechDict = field(init=False, repr=False, compare=False, default_factory=SpeechDict)
+
+	def __post_init__(self):
+		if not self.displayName and not self.mandatory:
+			raise ValueError("A non-mandatory dictionary without a display name is unsupported")
+		if self.path:
+			self.dictionary.load(self.path, raiseOnError=self.source not in DictionaryType)
+
+	@property
+	def readOnly(self) -> bool:
+		"""Whether this dictionary is read-only."""
+		return self.source not in DictionaryType
+
+	@property
+	def userVisible(self) -> bool:
+		"""Whether this dictionary is visible to end users (i.e. in the GUI).
+		Mandatory dictionaries are hidden.
+		"""
+		return not self.mandatory and bool(self.displayName)
+
+	@property
+	def enabled(self) -> bool:
+		return self.mandatory or self.name in config.conf["speech"]["speechDictionaries"]
+
+	def sub(self, text: str) -> str:
+		"""Applies the dictionary to the given text.
+		:param text: The text to apply the dictionary to.
+		:return: The text after applying the dictionary.
+		"""
+		return self.dictionary.sub(text)
+
+
+@dataclass(frozen=True, kw_only=True)
+class VoiceSpeechDictDefinition(SpeechDictDefinition):
+	source: DictionaryType = field(init=False, default=DictionaryType.VOICE)
+	name: str = field(init=False, default=DictionaryType.VOICE.value)
+
+	@property
+	def displayName(self) -> str:
+		"""The display name for the voice dictionary."""
+		# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+		return _("Voice dictionary (%s)") % (os.path.basename(self.path) if self.path else None)
+
+	@displayName.setter
+	def displayName(self, value: str) -> None:
+		# Ignore any attempts to set displayName, as it is computed.
+		pass
+
+	def load(self, synth: "synthDriverHandler.SynthDriver"):
+		"""Loads appropriate dictionary for the given synthesizer.
+		It handles the case when the synthesizer doesn't support the voice setting.
+		"""
+		try:
+			dictFormatUpgrade.doAnyUpgrades(synth)
+		except Exception:
+			log.exception("error trying to upgrade dictionaries")
+		if synth.isSupported("voice"):
+			voice = synth.availableVoices[synth.voice].displayName
+			baseName = dictFormatUpgrade.createVoiceDictFileName(synth.name, voice)
+		else:
+			baseName = f"{synth.name}.dic"
+		object.__setattr__(self, "path", os.path.join(WritePaths.voiceDictsDir, synth.name, baseName))
+		self.__post_init__()
