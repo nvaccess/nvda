@@ -220,6 +220,7 @@ class MainFrame(wx.Frame):
 
 		confirmRevertToDefaultConfiguration()
 
+	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
 	def onRevertToDefaultConfigurationCommand(self, evt):
 		"""Reset config to factory defaults without showing an undo dialog.
 		This is used for the keyboard shortcut triple-press recovery scenario.
