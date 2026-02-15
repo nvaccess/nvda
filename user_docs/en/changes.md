@@ -1,5 +1,58 @@
 # What's New in NVDA
 
+## 2026.2
+
+### Important notes
+
+### New Features
+
+* NVDA now includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen. (#19228, @Boumtchack)
+  * The magnifier supports various zoom levels, color filters (normal, grayscale, inverted), and different focus tracking modes.
+  * Color filters can help users with visual impairments or light sensitivity by inverting or desaturating screen colors.
+  * A spotlight mode is available for presentations or focused reading tasks.
+  * All magnifier settings can be configured in a new "Magnifier" panel in NVDA Settings.
+  * The magnifier cannot be used simultaneously with Screen Curtain for security reasons.
+* A new command, assigned to `NVDA+x`, has been introduced to repeat the last information spoken by NVDA; pressing it twice shows it in a browseable message. (#625, @CyrilleB79)
+* Added an unassigned command to toggle keyboard layout. (#19211, @CyrilleB79)
+* Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @tareh7z)
+* New types have been added for Speech Dictionary entries, such as part of word and start of word.
+Consult the speech dictionaries section in the User Guide for more details. (#19506, @LeonarddeR)
+
+### Changes
+
+* It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)
+* Improved search algorithm for filtering add-ons in the Add-on Store. (#19309)
+* NVDA can now be configured to not play error sounds, even in test versions. (#13021, @CyrilleB79)
+
+### Bug Fixes
+
+* In Firefox browse mode, the accessible name of form controls (such as checkboxes and radio buttons) is now correctly announced when the control has an `aria-label` and an associated `<label>` element that contains only `aria-hidden` content. (#19409, @bramd)
+* The "Toggles on and off if the screen layout is preserved while rendering the document content" item in the "Browse mode" category of the Input Gestures dialog now behaves correctly. (#18378)
+* In Microsoft Word with UIA enabled, page changes are now correctly announced when navigating table rows that span multiple pages. (#19386, @akj)
+* Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)
+* The `NVDA+k` command now correctly reports the destination of links containing formatted text, such as bold or italics. (#19428, @Cary-rowen)
+* Configuration profile triggers now activate when the Add-on Store is open. (#19583, @bramd)
+
+### Changes for Developers
+
+* NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* Subclasses of `browseMode.BrowseModeDocumentTreeInterceptor` that support screen layout being on and off should override the `_toggleScreenLayout` method, rather than implementing `script_toggleScreenLayout` directly. (#19487)
+* The `scons tests` build target has been removed, as it was misleadingly named.
+It only ran the translation string comment check, which is equivalent to `scons checkPot`.
+Use the individual test commands instead: `scons checkPot`, `rununittests.bat`, `runsystemtests.bat`, `runlint.bat`. (#19606, @bramd)
+
+#### Deprecations
+
+* The `speechDictHandler.ENTRY_TYPE_*` constants are deprecated.
+Use the `speechDictHandler.types.EntryType` enumeration instead. (#19430, @LeonarddeR)
+* `speechDictHandler.SpeechDictEntry` and `speechDictHandler.SpeechDict` have been moved to `speechDictHandler.types`. (#19430, @LeonarddeR)
+
+<!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
+<!-- markdownlint-disable -->
+
 ## 2026.1
 
 This release includes built-in support for reading math content with MathCAT.
@@ -105,7 +158,7 @@ It currently includes Screen Curtain's settings (previously in the "Vision" cate
 ### Bug Fixes
 
 * Remote Access:
-  * Improved user notifications when connecting as the controlled computer fails. (#19103, @hdzrvcc0X74)
+  * Improved user notifications when connecting as the controlled computer fails. (#19103, @tareh7z)
   * NVDA will no longer open multiple disconnection confirmation dialogs if the action is triggered repeatedly. (#19442, @Cary-rowen)
 * Fixed `<` not being escaped in MathML in PDF documents. (#18520, @NSoiffer)
 * When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
@@ -115,7 +168,7 @@ It currently includes Screen Curtain's settings (previously in the "Vision" cate
 * When NVDA is configured to update add-ons automatically in the background, add-ons can be properly updated. (#18965, @nvdaes)
 * Attempting to install an add-on that requires a newer version of NVDA from File Explorer no longer fails silently or shows the incompatible add-ons dialog. (#19260, #19261)
 * Fixed a case where braille output would fail with an error. (#19025, @LeonarddeR)
-* Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @hdzrvcc0X74)
+* Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @tareh7z)
 * When a synthesizer has a fallback language for the current dialect, the language of the text being read will no longer be reported as unsupported. (#18876, @nvdaes)
 * If the speech synthesizer is set to eSpeak NG and it fails to load when NVDA starts, NVDA will now attempt to fall back to OneCore before resorting to no speech. (#19603)
 * Certain settings will no longer erroneously be saved to disk when running NVDA from the launcher. (#18171)
