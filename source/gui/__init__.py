@@ -211,7 +211,20 @@ class MainFrame(wx.Frame):
 		# Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 		queueHandler.queueFunction(queueHandler.eventQueue, ui.message, _("Configuration applied"))
 
+	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
+	def _confirmRevertToDefaultConfiguration(self, evt):
+		"""Reset config to factory defaults, then show a dialog allowing the user to undo the reset.
+		This is used when triggered from the NVDA menu.
+		"""
+		from .configManagement import confirmRevertToDefaultConfiguration
+
+		confirmRevertToDefaultConfiguration()
+
+	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
 	def onRevertToDefaultConfigurationCommand(self, evt):
+		"""Reset config to factory defaults without showing an undo dialog.
+		This is used for the keyboard shortcut triple-press recovery scenario.
+		"""
 		queueHandler.queueFunction(queueHandler.eventQueue, core.resetConfiguration, factoryDefaults=True)
 		queueHandler.queueFunction(
 			queueHandler.eventQueue,
@@ -817,7 +830,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Here, default settings means settings that were there when the user first used NVDA.
 			_("Reset all settings to default state"),
 		)
-		self.Bind(wx.EVT_MENU, frame.onRevertToDefaultConfigurationCommand, item)
+		self.Bind(wx.EVT_MENU, frame._confirmRevertToDefaultConfiguration, item)
 		if NVDAState.shouldWriteToDisk():
 			item = self.menu.Append(
 				wx.ID_SAVE,
