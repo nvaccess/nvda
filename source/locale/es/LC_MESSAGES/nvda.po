@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-23 06:44+0000\n"
-"PO-Revision-Date: 2026-01-26 00:20\n"
+"POT-Creation-Date: 2026-02-06 07:00+0000\n"
+"PO-Revision-Date: 2026-02-09 00:23\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -15591,9 +15591,9 @@ msgstr "Cancelar"
 #: gui\addonStoreGui\controls\messageDialogs.py:791
 #, python-brace-format
 msgctxt "addonStore"
-msgid "You have selected to copy 1 add-on to NVDA's system-wide configuration. Using this add-on during sign-in and on secure screens is a serious security risk."
+msgid "You have selected to copy {num} add-on to NVDA's system-wide configuration. Using this add-on during sign-in and on secure screens is a serious security risk."
 msgid_plural "You have selected to copy {num} add-ons to NVDA's system-wide configuration. Using these add-ons during sign-in and on secure screens is a serious security risk."
-msgstr[0] "Has seleccionado copiar 1 complemento a la configuración de todo el sistema de NVDA. El uso de este complemento durante el inicio de sesión y en pantallas seguras supone un grave riesgo para la seguridad."
+msgstr[0] "Has seleccionado copiar {num} complemento a la configuración de todo el sistema de NVDA. El uso de este complemento durante el inicio de sesión y en pantallas seguras supone un grave riesgo para la seguridad."
 msgstr[1] "Has seleccionado copiar {num} complementos a la configuración de todo el sistema de NVDA. El uso de estos complementos durante el inicio de sesión y en pantallas seguras supone un grave riesgo para la seguridad."
 
 #. Translators: A prompt asking the user to confirm whether to perform an action.
@@ -16227,7 +16227,7 @@ msgstr "método de entrada desconocido"
 #. 10 per cent from top edge of screen,
 #. width is 40 per cent of screen,
 #. height is 50 per cent of screen.
-#: NVDAObjects\__init__.py:666
+#: NVDAObjects\__init__.py:669
 #, python-brace-format
 msgid "Object edges positioned {left:.1f} percent from left edge of screen, {top:.1f} percent from top edge of screen, width is {width:.1f} percent of screen, height is {height:.1f} percent of screen"
 msgstr "Bordes del objeto situados {left:.1f} porciento desde la izquierda de la pantalla, {top:.1f} porciento desde el borde superior de la pantalla, la anchura es {width:.1f} porciento de la pantalla, la altura es {height:.1f} porciento de la pantalla"
@@ -19064,6 +19064,21 @@ msgstr "ninguna"
 #: synthDrivers\oneCore.py:182
 msgid "Windows OneCore voices"
 msgstr "Voces Windows OneCore"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi4_32.py:18
+msgid "Microsoft Speech API version 4"
+msgstr "Microsoft Speech API versión 4"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi5.py:558 _synthDrivers32\_sapi5.py:558
+msgid "Microsoft Speech API version 5 (64 bit)"
+msgstr "Microsoft Speech API versión 5 (64 bit)"
+
+#. Translators: Description for a speech synthesizer.
+#: synthDrivers\sapi5_32.py:15
+msgid "Microsoft Speech API version 5 (32 bit)"
+msgstr "Microsoft Speech API versión 5 (32 bit)"
 
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\silence.py:16

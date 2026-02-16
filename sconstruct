@@ -13,6 +13,8 @@ import platform
 import sys
 from pathlib import Path
 
+from SCons.Errors import UserError
+
 # Ensure we are inside the Python virtual environment, and that it is started with uv
 virtualEnv = os.getenv("VIRTUAL_ENV")
 uv = os.getenv("uv")
@@ -686,7 +688,17 @@ env.Alias("appx", [installed_appx_storeSubmission, installed_appx_sideLoadable])
 
 env.Default(dist)
 
-env.SConscript("tests/sconscript", exports=["env", "sourceDir", "pot"])
+import tests.checkPot
+
+
+def checkPotAction(target, source, env):
+	return tests.checkPot.checkPot(source[0].abspath)
+
+
+checkPotTarget = env.Command("checkPot", pot, checkPotAction)
+env.Depends(checkPotTarget, pot)
+env.AlwaysBuild(checkPotTarget)
+env.Alias("checkPot", checkPotTarget)
 
 
 # Generate a list of Python modules from compiled '.pyc' files in library.zip
