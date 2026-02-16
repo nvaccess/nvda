@@ -13,7 +13,7 @@ from _bridge.base import Service
 @rpyc.service
 class WavePlayerService(Service):
 	"""Wraps a local WavePlayer, exposing its methods for remote access.
-	When accessed remotely, this service must be wrapped in a `_bridge.components.proxies.nvwave.WavePlayerProxy` which will handle any deserialization and provide the same interface as a local SynthDriver.
+	When accessed remotely, this service must be wrapped in a `_bridge.components.proxies.nvwave.WavePlayerProxy` which will handle any deserialization and provide the same interface as a local WavePlayer.
 	Arguments and return types on the methods here are an internal detail and not thoroughly documented, as they should not be used directly.
 	:ivar _player: The WavePlayer instance being wrapped.
 	"""
