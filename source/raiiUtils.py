@@ -79,4 +79,6 @@ def makeAutoFree[T](cls: type[T], deleter: Callable[[T], Any], cache: bool = Tru
 		(cls,),
 		attribs,
 	)
+	if cache:
+		_makeAutoFreeCache[key] = newCls
 	return cast(type[T], newCls)
