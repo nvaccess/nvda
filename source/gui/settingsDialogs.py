@@ -12,6 +12,7 @@
 
 import copy
 import logging
+import math
 import os
 import re
 import typing
@@ -2724,7 +2725,6 @@ class MathSettingsPanel(SettingsPanel):
 		"""Convert a pause factor value to the slider scale used in the UI."""
 		if pauseFactor <= 0:
 			return 0
-		import math
 		from mathPres.MathCAT.preferences import PauseFactor
 
 		sliderValue: int = round(
