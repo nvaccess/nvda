@@ -26,7 +26,7 @@ class WavePlayerService(Service):
 		channels: int,
 		samplesPerSec: int,
 		bitsPerSample: int,
-		outputDevice: str,
+		outputDevice: str | None,
 		wantDucking: bool = True,
 	):
 		super().__init__(childProcess)
