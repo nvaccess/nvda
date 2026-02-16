@@ -58,7 +58,7 @@ jobs:
 
     - name: Commit tracked files only
       id: commit
-      run: ci/scripts/checkAndCommitTranslations.ps1 -branchName ${{env.branchName }}
+      run: ci/scripts/checkAndCommitTranslations.ps1 -branchName ${{ env.branchName }}
 
     - name: Create pull request
       if: steps.commit.outputs.has_changes == 'true'
