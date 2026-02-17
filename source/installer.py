@@ -140,19 +140,15 @@ def comparePreviousInstall() -> ComparisonState:
 		newVersion = fileUtils.getFileVersionInfo("nvda_slave.exe", "FileVersion")
 	except (OSError, RuntimeError):
 		# This should never happen.
-		log.error("Unable to get file version of nvda_slave.exe in current process.")
+		log.exception("Unable to get file version of nvda_slave.exe in current process.")
 		return ComparisonState.UNKNOWN
-	else:
+
+	try:
+		oldVersion = oldVersion["FileVersion"].split(".")
 		newVersion = newVersion["FileVersion"].split(".")
-
-	if oldVersion is None:
-		log.debug("Previous installation does not have version information.")
+	except (KeyError, AttributeError):
+		log.exception("Error parsing version information.")
 		return ComparisonState.UNKNOWN
-	if newVersion is None:
-		log.error("Current version does not have version information.")
-		return ComparisonState.UNKNOWN
-
-	oldVersion = oldVersion["FileVersion"].split(".")
 
 	if oldVersion > newVersion:
 		return ComparisonState.OLDER
