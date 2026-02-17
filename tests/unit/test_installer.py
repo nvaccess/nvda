@@ -9,7 +9,7 @@ import pathlib
 import tempfile
 from typing import NamedTuple
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, PropertyMock
 
 from parameterized import parameterized
 
@@ -146,13 +146,17 @@ class testFollowerWarning(unittest.TestCase):
 class Test_comparePreviousInstall(unittest.TestCase):
 	def test_freshInstall_whenNoInstallDirsExist(self):
 		with (
-			patch(
-				"installer.WritePaths.installDir",
-				"C:\\Program Files\\NVDA",
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value="C:\\Program Files\\NVDA",
 			),
-			patch(
-				"installer.WritePaths._installDirX86",
-				"C:\\Program Files (x86)\\NVDA",
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value="C:\\Program Files (x86)\\NVDA",
 			),
 			patch("installer.os.path.isdir", return_value=False),
 			patch("installer.fileUtils.getFileVersionInfo") as getVersionMock,
@@ -174,10 +178,17 @@ class Test_comparePreviousInstall(unittest.TestCase):
 			self.fail("Current version lookup should not occur when old version lookup fails.")
 
 		with (
-			patch("installer.WritePaths.installDir", installDir),
-			patch(
-				"installer.WritePaths._installDirX86",
-				"C:\\Program Files (x86)\\NVDA",
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value="C:\\Program Files (x86)\\NVDA",
 			),
 			patch("installer.os.path.isdir", side_effect=_isdir),
 			patch(
@@ -201,10 +212,17 @@ class Test_comparePreviousInstall(unittest.TestCase):
 			self.fail("Current version lookup should not occur when old version lookup fails.")
 
 		with (
-			patch("installer.WritePaths.installDir", installDir),
-			patch(
-				"installer.WritePaths._installDirX86",
-				installDirX86,
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value=installDirX86,
 			),
 			patch("installer.os.path.isdir", side_effect=_isdir),
 			patch(
@@ -229,10 +247,17 @@ class Test_comparePreviousInstall(unittest.TestCase):
 			self.fail(f"Unexpected path: {path}")
 
 		with (
-			patch("installer.WritePaths.installDir", installDir),
-			patch(
-				"installer.WritePaths._installDirX86",
-				None,
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value=None,
 			),
 			patch("installer.os.path.isdir", side_effect=_isdir),
 			patch(
@@ -257,10 +282,17 @@ class Test_comparePreviousInstall(unittest.TestCase):
 			self.fail(f"Unexpected path: {path}")
 
 		with (
-			patch("installer.WritePaths.installDir", installDir),
-			patch(
-				"installer.WritePaths._installDirX86",
-				None,
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value=None,
 			),
 			patch("installer.os.path.isdir", side_effect=_isdir),
 			patch(
@@ -285,10 +317,17 @@ class Test_comparePreviousInstall(unittest.TestCase):
 			self.fail(f"Unexpected path: {path}")
 
 		with (
-			patch("installer.WritePaths.installDir", installDir),
-			patch(
-				"installer.WritePaths._installDirX86",
-				None,
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value=None,
 			),
 			patch("installer.os.path.isdir", side_effect=_isdir),
 			patch(
@@ -313,10 +352,17 @@ class Test_comparePreviousInstall(unittest.TestCase):
 			self.fail(f"Unexpected path: {path}")
 
 		with (
-			patch("installer.WritePaths.installDir", installDir),
-			patch(
-				"installer.WritePaths._installDirX86",
-				None,
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value=None,
 			),
 			patch("installer.os.path.isdir", side_effect=_isdir),
 			patch(
@@ -341,10 +387,17 @@ class Test_comparePreviousInstall(unittest.TestCase):
 			self.fail(f"Unexpected path: {path}")
 
 		with (
-			patch("installer.WritePaths.installDir", installDir),
-			patch(
-				"installer.WritePaths._installDirX86",
-				None,
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value=None,
 			),
 			patch("installer.os.path.isdir", side_effect=_isdir),
 			patch(
@@ -373,10 +426,17 @@ class Test_comparePreviousInstall(unittest.TestCase):
 			self.fail(f"Unexpected path: {path}")
 
 		with (
-			patch("installer.WritePaths.installDir", installDir),
-			patch(
-				"installer.WritePaths._installDirX86",
-				installDirX86,
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value=installDirX86,
 			),
 			patch("installer.os.path.isdir", side_effect=_isdir),
 			patch(
