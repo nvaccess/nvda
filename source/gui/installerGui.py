@@ -1,14 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
 # Copyright (C) 2011-2026 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions,
 # Bill Dengler, Joseph Lee, Takuya Nishimoto
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import os
 import subprocess
 import sys
 
-from utils.security import _isRunningElevated
+from utils.security import isRunningElevated
 import winUser
 import wx
 import config
@@ -124,7 +124,7 @@ def doInstall(
 		)
 		return
 
-	startAfterInstall = startAfterInstall and not _isRunningElevated()
+	startAfterInstall = startAfterInstall and not isRunningElevated()
 	if not silent:
 		msg = (
 			# Translators: The message displayed when NVDA has been successfully installed.
@@ -551,7 +551,7 @@ class PortableCreaterDialog(
 		startAfterCreateText = _("&Start the new portable copy after creation")
 		self.startAfterCreateCheckbox = sHelper.addItem(wx.CheckBox(self, label=startAfterCreateText))
 		self.startAfterCreateCheckbox.Value = False
-		self.startAfterCreateCheckbox.Enable(not _isRunningElevated())
+		self.startAfterCreateCheckbox.Enable(not isRunningElevated())
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL), separated=True)
 
@@ -675,7 +675,7 @@ def doCreatePortable(
 			# Translators: Title of a dialog shown when a portable copy of NVDA is created.
 			_("Success"),
 		)
-	startAfterCreate = startAfterCreate and not _isRunningElevated()
+	startAfterCreate = startAfterCreate and not isRunningElevated()
 	if silent or startAfterCreate:
 		newNVDA = None
 		if startAfterCreate:

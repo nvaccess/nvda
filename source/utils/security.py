@@ -1,13 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2026 NV Access Limited, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-from collections.abc import Generator
-from contextlib import contextmanager
-from ctypes import WINFUNCTYPE, FormatError, GetLastError, byref, c_int, sizeof, windll
-from ctypes.wintypes import BOOL, DWORD, HANDLE, LPVOID, PDWORD, PHANDLE
-from enum import IntEnum
+from ctypes import FormatError, GetLastError, byref, sizeof
+from ctypes.wintypes import DWORD
 import hashlib
 from typing import (
 	Any,
@@ -23,6 +20,12 @@ import extensionPoints
 from logHandler import log
 import systemUtils
 from winAPI.sessionTracking import isLockScreenModeActive
+from winBindings.advapi32 import (
+	TOKEN_ELEVATION_TYPE,
+	TOKEN_INFORMATION_CLASS,
+	GetTokenInformation,
+	TokenAccessRight,
+)
 import winUser
 
 if TYPE_CHECKING:
@@ -419,85 +422,7 @@ def isRunningOnSecureDesktop() -> bool:
 	return systemUtils._getDesktopName() == "Winlogon"
 
 
-class _TOKEN_INFORMATION_CLASS(IntEnum):
-	"""
-	Specifies the type of information being assigned to or retrieved from an access token.
-
-	.. seealso::
-		https://learn.microsoft.com/en-us/windows/win32/api/winnt/ne-winnt-token_information_class
-	"""
-
-	ELEVATION_TYPE = 18
-	"""The buffer receives a TOKEN_ELEVATION_TYPE value that specifies the elevation level of the token."""
-
-
-class _TOKEN_ELEVATION_TYPE(IntEnum):
-	"""
-	Indicates the elevation type of an access token.
-
-	.. seealso::
-		https://learn.microsoft.com/en-us/windows/win32/api/winnt/ne-winnt-token_elevation_type
-	"""
-
-	DEFAULT = 1
-	"""The token does not have a linked token."""
-
-	FULL = 2
-	"""The token is an elevated token."""
-
-	LIMITED = 3
-	"""The token is a limited token."""
-
-
-_GetTokenInformation = WINFUNCTYPE(
-	BOOL,
-	HANDLE,  # TokenHandle
-	c_int,  # TokenInformationClass
-	LPVOID,  # TokenInformation
-	DWORD,  # TokenInformationLength
-	PDWORD,  # ReturnLength
-)(("GetTokenInformation", windll.advapi32))
-"""Retrieves a specified type of information about an access token."""
-
-_OpenProcessToken = WINFUNCTYPE(
-	BOOL,
-	HANDLE,  # ProcessHandle
-	DWORD,  # DesiredAccess
-	PHANDLE,  # TokenHandle
-)(("OpenProcessToken", windll.advapi32))
-"""Opens the access token associated with a process."""
-
-_GetCurrentProcess = WINFUNCTYPE(HANDLE)(("GetCurrentProcess", windll.kernel32))
-"""Retrieves a pseudo handle for the current process."""
-
-_CloseHandle = WINFUNCTYPE(BOOL, HANDLE)(("CloseHandle", windll.kernel32))
-"""Closes an open object handle."""
-
-
-class _TokenAccessRight(IntEnum):
-	"""
-	The specific access rights for access tokens.
-
-	.. seealso::
-		https://learn.microsoft.com/en-us/windows/win32/secauthz/access-rights-for-access-token-objects
-	"""
-
-	QUERY = 8
-	"""TOKEN_QUERY: Required to query an access token."""
-
-
-@contextmanager
-def _getCurrentProcessToken() -> Generator[HANDLE, None, None]:
-	currentProcessToken = HANDLE()
-	if not _OpenProcessToken(_GetCurrentProcess(), _TokenAccessRight.QUERY, byref(currentProcessToken)):
-		raise OSError(None, FormatError(), None, GetLastError())
-	try:
-		yield currentProcessToken
-	finally:
-		_CloseHandle(currentProcessToken)
-
-
-def _isRunningElevated() -> bool:
+def isRunningElevated() -> bool:
 	"""
 	Determine whether NVDA is running as an elevated administrator.
 
@@ -513,14 +438,14 @@ def _isRunningElevated() -> bool:
 	"""
 	elevationType = DWORD()
 	actualSize = DWORD()
-	with _getCurrentProcessToken() as currentProcessToken:
-		if not _GetTokenInformation(
+	with systemUtils.getCurrentProcessToken(TokenAccessRight.QUERY) as currentProcessToken:
+		if not GetTokenInformation(
 			currentProcessToken,
-			_TOKEN_INFORMATION_CLASS.ELEVATION_TYPE,
+			TOKEN_INFORMATION_CLASS.ELEVATION_TYPE,
 			byref(elevationType),
 			sizeof(DWORD),
 			byref(actualSize),
 		):
 			raise OSError(None, FormatError(), None, GetLastError())
 
-	return elevationType.value == _TOKEN_ELEVATION_TYPE.FULL
+	return elevationType.value == TOKEN_ELEVATION_TYPE.FULL
