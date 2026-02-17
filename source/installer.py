@@ -108,11 +108,11 @@ class ComparisonState(Enum):
 			case ComparisonState.FRESH_INSTALL:
 				return None
 			case ComparisonState.DOWNGRADE:
-				return -1
+				return 1
 			case ComparisonState.REINSTALL:
 				return 0
 			case ComparisonState.UPGRADE:
-				return 1
+				return -1
 			case ComparisonState.UNKNOWN:
 				return None
 
