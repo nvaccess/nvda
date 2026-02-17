@@ -19,7 +19,7 @@ import globalVars
 import languageHandler
 import config
 from config.registry import NVDA_ADDON_PROG_ID, RegistryKey, _deleteKeyAndSubkeys
-from fileUtils
+import fileUtils
 import versionInfo
 import buildVersion
 from logHandler import log
