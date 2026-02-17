@@ -6,7 +6,7 @@
 from collections.abc import Iterable
 import comtypes.client
 import ctypes
-from enum import Enum
+from enum import auto, Enum
 import pathlib
 import winreg
 import time
@@ -96,11 +96,30 @@ def createShortcut(
 
 
 class ComparisonState(Enum):
-	FRESH_INSTALL = None
-	DOWNGRADE = -1
-	REINSTALL = 0
-	UPGRADE = 1
-	UNKNOWN = None
+	FRESH_INSTALL = auto()
+	DOWNGRADE = auto()
+	REINSTALL = auto()
+	UPGRADE = auto()
+	UNKNOWN = auto()
+
+	@property
+	def legacyValue(self):
+		match self:
+			case ComparisonState.FRESH_INSTALL:
+				return None
+			case ComparisonState.DOWNGRADE:
+				return -1
+			case ComparisonState.REINSTALL:
+				return 0
+			case ComparisonState.UPGRADE:
+				return 1
+			case ComparisonState.UNKNOWN:
+				return None
+
+
+def _legacyComparePreviousInstall() -> int | None:
+	"""Legacy wrapper"""
+	return comparePreviousInstall().legacyValue
 
 
 def comparePreviousInstall() -> ComparisonState:
