@@ -97,9 +97,9 @@ def createShortcut(
 
 class ComparisonState(Enum):
 	FRESH_INSTALL = None
-	OLDER = -1
-	SAME = 0
-	NEWER = 1
+	DOWNGRADE = -1
+	REINSTALL = 0
+	UPGRADE = 1
 	UNKNOWN = None
 
 
@@ -108,9 +108,9 @@ def comparePreviousInstall() -> ComparisonState:
 	Compares the version of the currently running NVDA with the version of a previous installation of NVDA on this system, if any.
 	:return:
 		- ComparisonState.FRESH_INSTALL if no previous installation is found
-		- ComparisonState.OLDER if the previous installation is newer than the current one
-		- ComparisonState.SAME if they are the same version
-		- ComparisonState.NEWER if the previous installation is older than the current one
+		- ComparisonState.DOWNGRADE if the previous installation is newer than the current one
+		- ComparisonState.REINSTALL if they are the same version
+		- ComparisonState.UPGRADE if the previous installation is older than the current one
 		- ComparisonState.UNKNOWN if there was an error determining the version of either the current or previous installation
 	"""
 	pathX86 = WritePaths._installDirX86
@@ -144,18 +144,18 @@ def comparePreviousInstall() -> ComparisonState:
 		return ComparisonState.UNKNOWN
 
 	try:
-		oldVersion = oldVersion["FileVersion"].split(".")
-		newVersion = newVersion["FileVersion"].split(".")
+		oldVersion = [int(x) for x in oldVersion["FileVersion"].split(".")]
+		newVersion = [int(x) for x in newVersion["FileVersion"].split(".")]
 	except (KeyError, AttributeError):
 		log.exception("Error parsing version information.")
 		return ComparisonState.UNKNOWN
 
 	if oldVersion > newVersion:
-		return ComparisonState.OLDER
+		return ComparisonState.DOWNGRADE
 	elif oldVersion < newVersion:
-		return ComparisonState.NEWER
+		return ComparisonState.UPGRADE
 	else:
-		return ComparisonState.SAME
+		return ComparisonState.REINSTALL
 
 
 def getDocFilePath(fileName: str, installDir: str):

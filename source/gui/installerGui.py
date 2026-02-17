@@ -396,8 +396,7 @@ class InstallingOverNewerVersionDialog(
 def showInstallGui():
 	gui.mainFrame.prePopup()
 	installState = installer.comparePreviousInstall()
-	if installState in (ComparisonState.SAME, ComparisonState.OLDER, ComparisonState.UNKNOWN):
-		# The existing installation is newer, which means this will be a downgrade.
+	if installState in (ComparisonState.REINSTALL, ComparisonState.DOWNGRADE, ComparisonState.UNKNOWN):
 		d = InstallingOverNewerVersionDialog()
 		with d:
 			if d.ShowModal() == wx.ID_CANCEL:
