@@ -70,7 +70,7 @@ def _suspendWow64RedirectionForFileInfoRetrieval(func):
 
 
 @_suspendWow64RedirectionForFileInfoRetrieval
-def getFileVersionInfo(name: str, *attributes: list[str]) -> dict[str, str | None]:
+def getFileVersionInfo(name: str, *attributes: str) -> dict[str, str | None]:
 	"""
 	Gets the specified file version info attributes from the provided file.
 	:param name: The path to the file to get version info from.
