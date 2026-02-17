@@ -1,8 +1,5 @@
 # What's New in NVDA
 
-<!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
-<!-- markdownlint-disable -->
-
 ## 2026.1
 
 This release includes built-in support for reading math content with MathCAT.
