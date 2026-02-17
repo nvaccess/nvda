@@ -1,11 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2011-2025 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka, Cyrille Bougot
+# Copyright (C) 2011-2026 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka, Cyrille Bougot
 
 from collections.abc import Iterable
 import comtypes.client
 import ctypes
+from enum import Enum
 import pathlib
 import winreg
 import time
@@ -93,37 +94,71 @@ def createShortcut(
 		short.Save()
 
 
-def comparePreviousInstall() -> int | None:
-	"""Returns 1 if the existing installation is newer than this running version,
-	0 if it is the same, -1 if it is older,
-	None if there is no existing installation.
+class ComparisonState(Enum):
+	FRESH_INSTALL = None
+	OLDER = -1
+	SAME = 0
+	NEWER = 1
+	UNKNOWN = None
+
+
+def comparePreviousInstall() -> ComparisonState:
+	"""
+	Compares the version of the currently running NVDA with the version of a previous installation of NVDA on this system, if any.
+	:return:
+		- ComparisonState.FRESH_INSTALL if no previous installation is found
+		- ComparisonState.OLDER if the previous installation is newer than the current one
+		- ComparisonState.SAME if they are the same version
+		- ComparisonState.NEWER if the previous installation is older than the current one
+		- ComparisonState.UNKNOWN if there was an error determining the version of either the current or previous installation
 	"""
 	pathX86 = WritePaths._installDirX86
 	pathX86Exists = pathX86 and os.path.isdir(pathX86)
 	path = WritePaths.installDir
 	pathExists = path and os.path.isdir(path)
-	oldTime = None
+
 	if not (pathExists or pathX86Exists):
-		return None
+		return ComparisonState.FRESH_INSTALL
+
 	if pathExists:
+		oldSlavePath = os.path.join(path, "nvda_slave.exe")
 		try:
-			oldTime = os.path.getmtime(os.path.join(path, "nvda_slave.exe"))
-		except OSError:
-			log.debug("Unable to get modification time of nvda_slave.exe in previous installation.")
-			return None
+			oldVersion = fileUtils.getFileVersionInfo(oldSlavePath, "FileVersion")
+		except (OSError, RuntimeError):
+			log.debug("Unable to get file version of nvda_slave.exe in previous installation.")
+			return ComparisonState.UNKNOWN
 	elif pathX86Exists:
+		oldSlavePath = os.path.join(pathX86, "nvda_slave.exe")
 		try:
-			oldTime = os.path.getmtime(os.path.join(pathX86, "nvda_slave.exe"))
-		except OSError:
-			log.debug("Unable to get modification time of nvda_slave.exe in previous installation (x86).")
-			return None
+			oldVersion = fileUtils.getFileVersionInfo(oldSlavePath, "FileVersion")
+		except (OSError, RuntimeError):
+			log.debug("Unable to get file version of nvda_slave.exe in previous installation (x86).")
+			return ComparisonState.UNKNOWN
+
 	try:
-		newTime = os.path.getmtime("nvda_slave.exe")
-	except OSError:
+		newVersion = fileUtils.getFileVersionInfo("nvda_slave.exe", "FileVersion")
+	except (OSError, RuntimeError):
 		# This should never happen.
-		log.error("Unable to get modification time of nvda_slave.exe in current process.")
-		return None
-	return (oldTime > newTime) - (oldTime < newTime)
+		log.error("Unable to get file version of nvda_slave.exe in current process.")
+		return ComparisonState.UNKNOWN
+	else:
+		newVersion = newVersion["FileVersion"].split(".")
+
+	if oldVersion is None:
+		log.debug("Previous installation does not have version information.")
+		return ComparisonState.UNKNOWN
+	if newVersion is None:
+		log.error("Current version does not have version information.")
+		return ComparisonState.UNKNOWN
+
+	oldVersion = oldVersion["FileVersion"].split(".")
+
+	if oldVersion > newVersion:
+		return ComparisonState.OLDER
+	elif oldVersion < newVersion:
+		return ComparisonState.NEWER
+	else:
+		return ComparisonState.SAME
 
 
 def getDocFilePath(fileName: str, installDir: str):

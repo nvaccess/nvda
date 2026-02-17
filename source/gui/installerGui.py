@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2011-2025 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions,
+# Copyright (C) 2011-2026 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions,
 # Bill Dengler, Joseph Lee, Takuya Nishimoto
 
 import os
@@ -16,6 +16,7 @@ import core
 from winBindings import shell32
 import globalVars
 import installer
+from installer import ComparisonState
 from logHandler import log
 import gui
 from gui import guiHelper
@@ -180,14 +181,14 @@ def doSilentInstall(
 	copyPortableConfig=False,
 	startAfterInstall=True,
 ):
-	prevInstall = installer.comparePreviousInstall() is not None
+	freshInstall = installer.comparePreviousInstall() is ComparisonState.FRESH_INSTALL
 	startOnLogon = globalVars.appArgs.enableStartOnLogon
 	if startOnLogon is None:
-		startOnLogon = config.getStartOnLogonScreen() if prevInstall else True
+		startOnLogon = config.getStartOnLogonScreen() if not freshInstall else False
 	doInstall(
-		createDesktopShortcut=installer.isDesktopShortcutInstalled() if prevInstall else True,
+		createDesktopShortcut=installer.isDesktopShortcutInstalled() if not freshInstall else True,
 		startOnLogon=startOnLogon,
-		isUpdate=prevInstall,
+		isUpdate=not freshInstall,
 		copyPortableConfig=copyPortableConfig,
 		silent=True,
 		startAfterInstall=startAfterInstall,
@@ -262,7 +263,7 @@ class InstallerDialog(
 		if globalVars.appArgs.enableStartOnLogon is not None:
 			self.startOnLogonCheckbox.Value = globalVars.appArgs.enableStartOnLogon
 		else:
-			self.startOnLogonCheckbox.Value = config.getStartOnLogonScreen() if self.isUpdate else True
+			self.startOnLogonCheckbox.Value = config.getStartOnLogonScreen() if self.isUpdate else False
 
 		shortcutIsPrevInstalled = installer.isDesktopShortcutInstalled()
 		if self.isUpdate and shortcutIsPrevInstalled:
@@ -394,15 +395,15 @@ class InstallingOverNewerVersionDialog(
 
 def showInstallGui():
 	gui.mainFrame.prePopup()
-	previous = installer.comparePreviousInstall()
-	if previous is not None and previous > 0:
+	installState = installer.comparePreviousInstall()
+	if installState in (ComparisonState.SAME, ComparisonState.OLDER, ComparisonState.UNKNOWN):
 		# The existing installation is newer, which means this will be a downgrade.
 		d = InstallingOverNewerVersionDialog()
 		with d:
 			if d.ShowModal() == wx.ID_CANCEL:
 				gui.mainFrame.postPopup()
 				return
-	InstallerDialog(gui.mainFrame, previous is not None).Show()
+	InstallerDialog(gui.mainFrame, installState is not ComparisonState.FRESH_INSTALL).Show()
 	gui.mainFrame.postPopup()
 
 
