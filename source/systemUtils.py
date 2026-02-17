@@ -5,13 +5,17 @@
 
 """System related functions."""
 
+from contextlib import contextmanager
 import ctypes
 import time
 import threading
 from collections.abc import (
 	Callable,
+	Generator,
 )
 from ctypes import (
+	FormatError,
+	GetLastError,
 	byref,
 	create_unicode_buffer,
 	sizeof,
@@ -272,3 +276,18 @@ def preventSystemIdle(preventDisplayTurningOff: bool | None = None, persistent: 
 def resetThreadExecutionState() -> None:
 	"""Reset the thread execution state to the default."""
 	winBindings.kernel32.SetThreadExecutionState(winKernel.ES_CONTINUOUS)
+
+
+@contextmanager
+def getCurrentProcessToken() -> Generator[ctypes.wintypes.HANDLE, None, None]:
+	currentProcessToken = ctypes.wintypes.HANDLE()
+	if not winBindings.advapi32.OpenProcessToken(
+		winBindings.kernel32.GetCurrentProcess(),
+		winBindings.advapi32.TokenAccessRight.QUERY,
+		byref(currentProcessToken),
+	):
+		raise OSError(None, FormatError(), None, GetLastError())
+	try:
+		yield currentProcessToken
+	finally:
+		winBindings.kernel32.CloseHandle(currentProcessToken)

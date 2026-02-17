@@ -8,7 +8,7 @@ import os
 import subprocess
 import sys
 
-from utils.security import _isRunningElevated
+from utils.security import isRunningElevated
 import winUser
 import wx
 import config
@@ -123,7 +123,7 @@ def doInstall(
 		)
 		return
 
-	startAfterInstall = startAfterInstall and not _isRunningElevated()
+	startAfterInstall = startAfterInstall and not isRunningElevated()
 	if not silent:
 		msg = (
 			# Translators: The message displayed when NVDA has been successfully installed.
@@ -551,7 +551,7 @@ class PortableCreaterDialog(
 		startAfterCreateText = _("&Start the new portable copy after creation")
 		self.startAfterCreateCheckbox = sHelper.addItem(wx.CheckBox(self, label=startAfterCreateText))
 		self.startAfterCreateCheckbox.Value = False
-		self.startAfterCreateCheckbox.Enable(not _isRunningElevated())
+		self.startAfterCreateCheckbox.Enable(not isRunningElevated())
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL), separated=True)
 
@@ -675,7 +675,7 @@ def doCreatePortable(
 			# Translators: Title of a dialog shown when a portable copy of NVDA is created.
 			_("Success"),
 		)
-	startAfterCreate = startAfterCreate and not _isRunningElevated()
+	startAfterCreate = startAfterCreate and not isRunningElevated()
 	if silent or startAfterCreate:
 		newNVDA = None
 		if startAfterCreate:
