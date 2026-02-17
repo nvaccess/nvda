@@ -56,12 +56,12 @@ def _canPortableConfigBeCopied() -> bool:
 
 
 def doInstall(
-	createDesktopShortcut=True,
-	startOnLogon=True,
-	isUpdate=False,
-	copyPortableConfig=False,
-	silent=False,
-	startAfterInstall=True,
+	createDesktopShortcut: bool = True,
+	startOnLogon: bool = False,
+	isUpdate: bool = False,
+	copyPortableConfig: bool = False,
+	silent: bool = False,
+	startAfterInstall: bool = True,
 ):
 	progressDialog = gui.IndeterminateProgressDialog(
 		gui.mainFrame,
