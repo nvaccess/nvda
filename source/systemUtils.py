@@ -279,11 +279,19 @@ def resetThreadExecutionState() -> None:
 
 
 @contextmanager
-def getCurrentProcessToken() -> Generator[ctypes.wintypes.HANDLE, None, None]:
+def getCurrentProcessToken(desiredAccess: int) -> Generator[ctypes.wintypes.HANDLE, None, None]:
+	"""Context manager which provides access to the access token associated with the current process.
+
+	Handles closing the handle to the access token when the context manager is exited.
+
+	:param desiredAccess: Access mask specifying the requested types of access to the access token.
+	:raises OSError: If calling OpenProcessToken fails.
+	:yield: A handle that identifies the newly opened access token.
+	"""
 	currentProcessToken = ctypes.wintypes.HANDLE()
 	if not winBindings.advapi32.OpenProcessToken(
 		winBindings.kernel32.GetCurrentProcess(),
-		winBindings.advapi32.TokenAccessRight.QUERY,
+		desiredAccess,
 		byref(currentProcessToken),
 	):
 		raise OSError(None, FormatError(), None, GetLastError())

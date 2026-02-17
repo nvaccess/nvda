@@ -20,7 +20,12 @@ import extensionPoints
 from logHandler import log
 import systemUtils
 from winAPI.sessionTracking import isLockScreenModeActive
-from winBindings.advapi32 import TOKEN_ELEVATION_TYPE, TOKEN_INFORMATION_CLASS, GetTokenInformation
+from winBindings.advapi32 import (
+	TOKEN_ELEVATION_TYPE,
+	TOKEN_INFORMATION_CLASS,
+	GetTokenInformation,
+	TokenAccessRight,
+)
 import winUser
 
 if TYPE_CHECKING:
@@ -433,7 +438,7 @@ def isRunningElevated() -> bool:
 	"""
 	elevationType = DWORD()
 	actualSize = DWORD()
-	with systemUtils.getCurrentProcessToken() as currentProcessToken:
+	with systemUtils.getCurrentProcessToken(TokenAccessRight.QUERY) as currentProcessToken:
 		if not GetTokenInformation(
 			currentProcessToken,
 			TOKEN_INFORMATION_CLASS.ELEVATION_TYPE,
