@@ -165,7 +165,7 @@ def comparePreviousInstall() -> ComparisonState:
 	try:
 		oldVersion = [int(x) for x in oldVersion["FileVersion"].split(".")]
 		newVersion = [int(x) for x in newVersion["FileVersion"].split(".")]
-	except (KeyError, AttributeError):
+	except (KeyError, AttributeError, ValueError, TypeError):
 		log.exception("Error parsing version information.")
 		return ComparisonState.UNKNOWN
 
