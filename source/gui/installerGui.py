@@ -350,6 +350,26 @@ class InstallingOverNewerVersionDialog(
 ):
 	helpId = "InstallingNVDA"
 
+	_DOWNGRADE_WARNING = _(
+		# Translators: A warning presented when the user attempts to downgrade NVDA
+		# to an older version.
+		"You are attempting to install an earlier version of NVDA "
+		"than the version currently installed. "
+		"If you really wish to revert to an earlier version, "
+		"you should first cancel this installation "
+		"and completely uninstall NVDA before installing the earlier version.",
+	)
+
+	_UNKNOWN_WARNING = _(
+		# Translators: A warning presented when the installer is unable to determine
+		# the state of the current NVDA installation.
+		"NVDA has detected that you have NVDA already installed, "
+		"but it is unable to determine the version. "
+		"If you are attempting to install an earlier version of NVDA "
+		"you should first cancel this installation "
+		"and completely uninstall NVDA before installing the earlier version.",
+	)
+
 	def __init__(self):
 		# Translators: The title of a warning dialog.
 		super().__init__(gui.mainFrame, title=_("Warning"))
@@ -358,15 +378,7 @@ class InstallingOverNewerVersionDialog(
 		contentSizer = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		text = wx.StaticText(
 			self,
-			label=_(
-				# Translators: A warning presented when the user attempts to downgrade NVDA
-				# to an older version.
-				"You are attempting to install an earlier version of NVDA "
-				"than the version currently installed. "
-				"If you really wish to revert to an earlier version, "
-				"you should first cancel this installation "
-				"and completely uninstall NVDA before installing the earlier version.",
-			),
+			label=self._warningText,
 		)
 		text.Wrap(self.scaleSize(600))
 		contentSizer.addItem(text)
@@ -391,6 +403,14 @@ class InstallingOverNewerVersionDialog(
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
+
+	@property
+	def _warningText(self) -> str:
+		if self._installState == ComparisonState.DOWNGRADE:
+			return self._DOWNGRADE_WARNING
+		if self._installState == ComparisonState.UNKNOWN:
+			return self._UNKNOWN_WARNING
+		raise ValueError("Invalid install state for warning dialog")
 
 
 def showInstallGui():
