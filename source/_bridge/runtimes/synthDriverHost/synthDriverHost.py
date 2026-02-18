@@ -100,11 +100,9 @@ class HostService(Service):
 
 		nvwave.initialize()
 
-		RemoteWavePlayerClass = remoteService.WavePlayer
-
 		class BoundWavePlayerProxy(WavePlayerProxy):
 			def __init__(self, *args, **kwargs):
-				super().__init__(RemoteWavePlayerClass, *args, **kwargs)
+				super().__init__(remoteService.WavePlayer, *args, **kwargs)
 
 		if brokerAudio:
 			nvwave.WavePlayer = BoundWavePlayerProxy
