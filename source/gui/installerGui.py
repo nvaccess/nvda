@@ -446,7 +446,7 @@ def _warnAndConfirmForNonEmptyDirectory(portableDirectory: str) -> bool:
 		# The directory is empty, so we can proceed.
 		return True
 	if _nvdaExistsInDir(portableDirectory):
-		return wx.YES == gui.messageBox(
+		if wx.NO == gui.messageBox(
 			_(
 				# Translators: The message displayed when the user has specified a destination directory
 				# that already has a portable copy in the Create Portable NVDA dialog.
@@ -457,7 +457,17 @@ def _warnAndConfirmForNonEmptyDirectory(portableDirectory: str) -> bool:
 			# that already has a portable copy in the Create Portable NVDA dialog.
 			_("Portable Copy Exists"),
 			wx.YES_NO | wx.ICON_QUESTION,
-		)
+		):
+			# The user does not want to update the existing portable copy, so we cancel.
+			return False
+		installState = installer._comparePreviousCopy(portableDirectory)
+		if installState in (ComparisonState.DOWNGRADE, ComparisonState.UNKNOWN):
+			d = InstallingOverNewerVersionDialog()
+			with d:
+				if d.ShowModal() == wx.ID_CANCEL:
+					gui.mainFrame.postPopup()
+					return False
+		return True
 	return wx.YES == gui.messageBox(
 		_(
 			# Translators: The message displayed when the user has specified a destination directory

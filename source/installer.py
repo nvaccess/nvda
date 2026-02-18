@@ -123,6 +123,21 @@ class ComparisonState(Enum):
 
 
 def _comparePreviousInstall() -> ComparisonState:
+	pathX86 = WritePaths._installDirX86
+	pathX86Exists = pathX86 and os.path.isdir(pathX86)
+	pathX64 = WritePaths.installDir
+	pathExists = pathX64 and os.path.isdir(pathX64)
+
+	installPath = None
+	if pathExists:
+		installPath = pathX64
+	elif pathX86Exists:
+		installPath = pathX86
+
+	return _comparePreviousCopy(installPath)
+
+
+def _comparePreviousCopy(previousCopyPath: str) -> ComparisonState:
 	"""
 	Compares the version of the currently running NVDA with the version of a previous installation of NVDA on this system, if any.
 	:return:
@@ -132,28 +147,16 @@ def _comparePreviousInstall() -> ComparisonState:
 		- ComparisonState.UPGRADE if the previous installation is older than the current one
 		- ComparisonState.UNKNOWN if there was an error determining the version of either the current or previous installation
 	"""
-	pathX86 = WritePaths._installDirX86
-	pathX86Exists = pathX86 and os.path.isdir(pathX86)
-	path = WritePaths.installDir
-	pathExists = path and os.path.isdir(path)
-
-	if not (pathExists or pathX86Exists):
+	previousCopyPath = previousCopyPath and os.path.isdir(previousCopyPath)
+	if not previousCopyPath:
 		return ComparisonState.FRESH_INSTALL
 
-	if pathExists:
-		oldSlavePath = os.path.join(path, "nvda_slave.exe")
-		try:
-			oldVersion = fileUtils.getFileVersionInfo(oldSlavePath, "FileVersion")
-		except (OSError, RuntimeError):
-			log.debug("Unable to get file version of nvda_slave.exe in previous installation.")
-			return ComparisonState.UNKNOWN
-	elif pathX86Exists:
-		oldSlavePath = os.path.join(pathX86, "nvda_slave.exe")
-		try:
-			oldVersion = fileUtils.getFileVersionInfo(oldSlavePath, "FileVersion")
-		except (OSError, RuntimeError):
-			log.debug("Unable to get file version of nvda_slave.exe in previous installation (x86).")
-			return ComparisonState.UNKNOWN
+	oldSlavePath = os.path.join(previousCopyPath, "nvda_slave.exe")
+	try:
+		oldVersion = fileUtils.getFileVersionInfo(oldSlavePath, "FileVersion")
+	except (OSError, RuntimeError):
+		log.debug("Unable to get file version of nvda_slave.exe in previous copy.")
+		return ComparisonState.UNKNOWN
 
 	try:
 		newVersion = fileUtils.getFileVersionInfo("nvda_slave.exe", "FileVersion")
