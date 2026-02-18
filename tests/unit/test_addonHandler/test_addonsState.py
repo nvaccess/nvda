@@ -33,17 +33,17 @@ class TestStatePopulationFromJsonData(unittest.TestCase):
 		self.state.setDefaultStateValues()
 
 	def test_addonNamesCaseInsensitive(self):
-		self.state.fromJsonDict({"pendingRemovesSet": ["foo", "FOO"]})
+		self.state.fromDict({"pendingRemovesSet": ["foo", "FOO"]})
 		self.assertEqual(self.state[addonStore.models.status.AddonStateCategory.PENDING_REMOVE], {"foo"})
 
 	def test_noBackCompatInStateBackCompatSetToDefault(self):
-		self.state.fromJsonDict({"pendingRemovesSet": ["foo", "FOO"]})
+		self.state.fromDict({"pendingRemovesSet": ["foo", "FOO"]})
 		self.assertEqual(self.state.manualOverridesAPIVersion.major, 2023)
 		self.assertEqual(self.state.manualOverridesAPIVersion.minor, 1)
 		self.assertEqual(self.state.manualOverridesAPIVersion.patch, 0)
 
 	def test_backCompatToProvidedAsATuple(self):
-		self.state.fromJsonDict({"backCompatToAPIVersion": (2024, 1, 1)})
+		self.state.fromDict({"backCompatToAPIVersion": (2024, 1, 1)})
 		self.assertEqual(self.state.manualOverridesAPIVersion.major, 2024)
 		self.assertEqual(self.state.manualOverridesAPIVersion.minor, 1)
 		self.assertEqual(self.state.manualOverridesAPIVersion.patch, 1)
@@ -63,7 +63,7 @@ class TestStateConversionForJsonifying(unittest.TestCase):
 	def test_stateConvertedToBuiltInTypes(self):
 		state = addonHandler.AddonsState()
 		state.setDefaultStateValues()
-		state.fromJsonDict({"backCompatToAPIVersion": [2024, 1, 1], "pendingRemovesSet": ["foo"]})
+		state.fromDict({"backCompatToAPIVersion": [2024, 1, 1], "pendingRemovesSet": ["foo"]})
 		dataForJsonifying = state.toDict()
 		backCompatInfo = dataForJsonifying.pop("backCompatToAPIVersion")
 		with self.assertRaises(AttributeError):

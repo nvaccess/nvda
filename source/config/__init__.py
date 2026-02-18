@@ -351,10 +351,10 @@ def _setSystemConfig(fromPath: str, *, prefix: str = sys.prefix, addonsToCopy: C
 			for subPath in removeSubs:
 				log.debug("Ignored folder that may contain unpackaged addons: %s", subPath)
 				subDirs.remove(subPath)
-			if addonHandler.stateFilename in files:
+			if addonHandler.STATE_FILENAME in files:
 				# Don't copy the addons state file,
 				# as we will generate a new one based on which add-ons are being copied.
-				files.remove(addonHandler.stateFilename)
+				files.remove(addonHandler.STATE_FILENAME)
 		else:
 			relativePath = os.path.relpath(curSourceDir, fromPath)
 			curDestDir = os.path.join(toPath, relativePath)
@@ -401,13 +401,13 @@ def _prepareToCopyAddons(fromPath: str, toPath: str, addonDirs: list[str], addon
 		# We are copying add-ons, so we need to generate a new addons state file.
 		# If no add-ons have their compatibility overridden, the file will not be saved, but this is fine.
 		userAddonsState = addonHandler.AddonsState()
-		userAddonsState._load(os.path.join(fromPath, addonHandler.stateFilename))
+		userAddonsState._load(os.path.join(fromPath, addonHandler.STATE_FILENAME))
 		systemAddonsState = addonHandler.AddonsState()
 		systemAddonsState.manualOverridesAPIVersion = userAddonsState.manualOverridesAPIVersion
 		systemAddonsState[AddonStateCategory.OVERRIDE_COMPATIBILITY] = (
 			userAddonsState[AddonStateCategory.OVERRIDE_COMPATIBILITY] & addonsToCopy
 		)
-		systemAddonsState._save(statePath=os.path.join(toPath, addonHandler.stateFilename))
+		systemAddonsState._save(statePath=os.path.join(toPath, addonHandler.STATE_FILENAME))
 	else:
 		log.debug("No add-ons to copy.")
 
