@@ -416,6 +416,25 @@ class InstallingOverNewerVersionDialog(
 				raise ValueError("Invalid install state for warning dialog")
 
 
+class PortableCopyOverNewerVersionDialog(InstallingOverNewerVersionDialog):
+	helpId = "CreatingAPortableCopy"
+
+	_DOWNGRADE_WARNING = _(
+		# Translators: A warning presented when the user attempts to downgrade NVDA
+		# to an older version.
+		"You are attempting to replace a portable copy with an earlier version of NVDA. "
+		"Downgrading NVDA is not recommended. "
+		"Instead you should cancel this and create a new portable copy. "
+	)
+
+	_UNKNOWN_WARNING = _(
+		# Translators: A warning presented when the installer is unable to determine
+		# the state of the current NVDA installation.
+		"NVDA is unable to determine the version of the portable copy. "
+		"If you are attempting to downgrade to an earlier version of NVDA "
+		"you should cancel this installation and create a new portable copy. "
+	)
+
 def showInstallGui():
 	gui.mainFrame.prePopup()
 	installState = installer._comparePreviousInstall()
@@ -462,7 +481,7 @@ def _warnAndConfirmForNonEmptyDirectory(portableDirectory: str) -> bool:
 			return False
 		installState = installer._comparePreviousCopy(portableDirectory)
 		if installState in (ComparisonState.DOWNGRADE, ComparisonState.UNKNOWN):
-			d = InstallingOverNewerVersionDialog()
+			d = PortableCopyOverNewerVersionDialog()
 			with d:
 				if d.ShowModal() == wx.ID_CANCEL:
 					gui.mainFrame.postPopup()
