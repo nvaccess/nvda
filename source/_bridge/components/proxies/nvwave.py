@@ -4,6 +4,8 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from __future__ import annotations
+from typing import cast
+import collections.abc
 from functools import cached_property
 import typing
 import ctypes
@@ -45,7 +47,7 @@ class WavePlayerProxy(Proxy):
 			w_handle,
 			name="WavePlayerFeeder for WavePlayer on Proxy",
 		)
-		return feederService
+		return cast(WavePlayerFeederService, feederService)
 
 	def setVolume(self, *, all: float | None = None, left: float | None = None, right: float | None = None):
 		# log.debug("setVolume start")
