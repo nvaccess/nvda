@@ -424,7 +424,7 @@ class PortableCopyOverNewerVersionDialog(InstallingOverNewerVersionDialog):
 		# to an older version.
 		"You are attempting to replace a portable copy with an earlier version of NVDA. "
 		"Downgrading NVDA is not recommended. "
-		"Instead you should cancel this and create a new portable copy. "
+		"Instead you should cancel this and create a new portable copy. ",
 	)
 
 	_UNKNOWN_WARNING = _(
@@ -432,8 +432,9 @@ class PortableCopyOverNewerVersionDialog(InstallingOverNewerVersionDialog):
 		# the state of the current NVDA installation.
 		"NVDA is unable to determine the version of the portable copy. "
 		"If you are attempting to downgrade to an earlier version of NVDA "
-		"you should cancel this installation and create a new portable copy. "
+		"you should cancel this installation and create a new portable copy. ",
 	)
+
 
 def showInstallGui():
 	gui.mainFrame.prePopup()
