@@ -49,7 +49,7 @@ __getattr__ = handleDeprecations(
 	),
 	RemovedSymbol(
 		"comparePreviousInstall",
-		"_legacyComparePreviousInstall",
+		_legacyComparePreviousInstall,
 	),
 )
 

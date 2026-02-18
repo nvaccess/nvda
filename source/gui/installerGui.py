@@ -406,11 +406,14 @@ class InstallingOverNewerVersionDialog(
 
 	@property
 	def _warningText(self) -> str:
-		if self._installState == ComparisonState.DOWNGRADE:
-			return self._DOWNGRADE_WARNING
-		if self._installState == ComparisonState.UNKNOWN:
-			return self._UNKNOWN_WARNING
-		raise ValueError("Invalid install state for warning dialog")
+		installState = installer._comparePreviousInstall()
+		match installState:
+			case ComparisonState.DOWNGRADE:
+				return self._DOWNGRADE_WARNING
+			case ComparisonState.UNKNOWN:
+				return self._UNKNOWN_WARNING
+			case _:
+				raise ValueError("Invalid install state for warning dialog")
 
 
 def showInstallGui():
