@@ -70,7 +70,7 @@ class NVDAService(Service):
 		bitsPerSample: int,
 		outputDevice: str,
 		wantDucking: bool = True,
-	):
+	) -> WavePlayerService:
 		"""return a WavePlayer service wrapping a new real WavePlayer instance."""
 		return WavePlayerService(
 			self._childProcess,

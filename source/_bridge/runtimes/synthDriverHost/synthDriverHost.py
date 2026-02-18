@@ -39,7 +39,7 @@ class HostService(Service):
 		super().__init__()
 
 	@Service.exposed
-	def installProxies(self, remoteService: NVDAService, brokerAudio=False):
+	def installProxies(self, remoteService: NVDAService, brokerAudio: bool = False):
 		"""Install and bind proxy objects from the parent NVDA process.
 
 		This exposed RPYC service method configures the local runtime to use

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited.
+# Copyright (C) 2025-2026 NV Access Limited.
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -22,7 +22,7 @@ class WavePlayerService(Service):
 
 	def __init__(
 		self,
-		childProcess,
+		childProcess: subprocess.Popen | None,
 		channels: int,
 		samplesPerSec: int,
 		bitsPerSample: int,
@@ -79,7 +79,7 @@ class WavePlayerFeederService(Service):
 
 	_player: nvwave.WavePlayer
 
-	def __init__(self, childProcess, player: nvwave.WavePlayer):
+	def __init__(self, childProcess: subprocess.Popen | None, player: nvwave.WavePlayer):
 		super().__init__(childProcess)
 		self._player = player
 
@@ -87,8 +87,8 @@ class WavePlayerFeederService(Service):
 	def feed(
 		self,
 		data: bytes,
-		size: typing.Optional[int] = None,
-		onDone: typing.Optional[typing.Callable] = None,
+		size: int | None = None,
+		onDone: collections.abc.Callable | None = None,
 	) -> None:
 		self._player.feed(data, size=size, onDone=onDone)
 

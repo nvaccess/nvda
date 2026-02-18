@@ -1,9 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited
+# Copyright (C) 2025-2026 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from typing import Callable, cast, Any
+from collections.abc import Callable
+from typing import cast, Any
 
 
 class OnDelete[T]:
@@ -33,7 +34,7 @@ class OnDelete[T]:
 		return self._value
 
 
-_makeAutoFreeCache = {}
+_makeAutoFreeCache: dict[tuple[type[Any], int], type[Any]] = {}
 
 
 def makeAutoFree[T](cls: type[T], deleter: Callable[[T], Any], cache: bool = True) -> type[T]:
@@ -56,11 +57,10 @@ def makeAutoFree[T](cls: type[T], deleter: Callable[[T], Any], cache: bool = Tru
 
 	:return: A subclass of ``cls`` whose destructor calls ``deleter``.
 
-	Notes
-	-----
-	The returned class implements ``__del__`` by calling ``deleter(self)``;
-	ensure the provided deleter accepts the instance type. Caching is best-effort
-	and keyed by the base class and the ``id`` of the deleter callable.
+	.. note::
+		The returned class implements ``__del__`` by calling ``deleter(self)``;
+		ensure the provided deleter accepts the instance type. Caching is best-effort
+		and keyed by the base class and the ``id`` of the deleter callable.
 	"""
 
 	key = (cls, id(deleter))
@@ -71,8 +71,7 @@ def makeAutoFree[T](cls: type[T], deleter: Callable[[T], Any], cache: bool = Tru
 	attribs = {
 		"__del__": lambda self: deleter(self) if self else None,
 	}
-	ctypes_type_ = getattr(cls, "_type_", None)
-	if ctypes_type_:
+	if (ctypes_type_ := getattr(cls, "_type_", None)) is not None:
 		attribs["_type_"] = ctypes_type_
 	newCls = type(
 		f"AutoFree{cls.__name__}",
