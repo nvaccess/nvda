@@ -161,7 +161,7 @@ class Test_comparePreviousInstall(unittest.TestCase):
 			patch("installer.os.path.isdir", return_value=False),
 			patch("installer.fileUtils.getFileVersionInfo") as getVersionMock,
 		):
-			result = installer.comparePreviousInstall()
+			result = installer._comparePreviousInstall()
 			self.assertEqual(result, installer.ComparisonState.FRESH_INSTALL)
 			getVersionMock.assert_not_called()
 
@@ -196,7 +196,7 @@ class Test_comparePreviousInstall(unittest.TestCase):
 				side_effect=_getVersion,
 			),
 		):
-			self.assertEqual(installer.comparePreviousInstall(), installer.ComparisonState.UNKNOWN)
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UNKNOWN)
 
 	def test_unknown_whenOldVersionLookupFails_inX86InstallDir(self):
 		installDir = "C:\\Program Files\\NVDA"
@@ -230,7 +230,7 @@ class Test_comparePreviousInstall(unittest.TestCase):
 				side_effect=_getVersion,
 			),
 		):
-			self.assertEqual(installer.comparePreviousInstall(), installer.ComparisonState.UNKNOWN)
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UNKNOWN)
 
 	def test_unknown_whenCurrentVersionLookupFails(self):
 		installDir = "C:\\Program Files\\NVDA"
@@ -265,7 +265,7 @@ class Test_comparePreviousInstall(unittest.TestCase):
 				side_effect=_getVersion,
 			),
 		):
-			self.assertEqual(installer.comparePreviousInstall(), installer.ComparisonState.UNKNOWN)
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UNKNOWN)
 
 	def test_unknown_whenVersionParsingFails(self):
 		installDir = "C:\\Program Files\\NVDA"
@@ -300,7 +300,42 @@ class Test_comparePreviousInstall(unittest.TestCase):
 				side_effect=_getVersion,
 			),
 		):
-			self.assertEqual(installer.comparePreviousInstall(), installer.ComparisonState.UNKNOWN)
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UNKNOWN)
+
+	def test_unknown_whenPreviousVersionContainsPrereleaseTag(self):
+		installDir = "C:\\Program Files\\NVDA"
+		oldSlavePath = str(pathlib.Path(installDir) / "nvda_slave.exe")
+
+		def _isdir(path: str) -> bool:
+			return path == installDir
+
+		def _getVersion(path: str, field: str):
+			if path == oldSlavePath:
+				return {"FileVersion": "2026.1.beta1"}
+			if path == "nvda_slave.exe":
+				return {"FileVersion": "2025.1.0"}
+			self.fail(f"Unexpected path: {path}")
+
+		with (
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value=None,
+			),
+			patch("installer.os.path.isdir", side_effect=_isdir),
+			patch(
+				"installer.fileUtils.getFileVersionInfo",
+				side_effect=_getVersion,
+			),
+		):
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UNKNOWN)
 
 	def test_downgrade_whenPreviousInstallIsNewer(self):
 		installDir = "C:\\Program Files\\NVDA"
@@ -335,7 +370,7 @@ class Test_comparePreviousInstall(unittest.TestCase):
 				side_effect=_getVersion,
 			),
 		):
-			self.assertEqual(installer.comparePreviousInstall(), installer.ComparisonState.DOWNGRADE)
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.DOWNGRADE)
 
 	def test_upgrade_whenPreviousInstallIsOlder(self):
 		installDir = "C:\\Program Files\\NVDA"
@@ -370,7 +405,7 @@ class Test_comparePreviousInstall(unittest.TestCase):
 				side_effect=_getVersion,
 			),
 		):
-			self.assertEqual(installer.comparePreviousInstall(), installer.ComparisonState.UPGRADE)
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UPGRADE)
 
 	def test_reinstall_whenVersionsAreEqual(self):
 		installDir = "C:\\Program Files\\NVDA"
@@ -405,7 +440,7 @@ class Test_comparePreviousInstall(unittest.TestCase):
 				side_effect=_getVersion,
 			),
 		):
-			self.assertEqual(installer.comparePreviousInstall(), installer.ComparisonState.REINSTALL)
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.REINSTALL)
 
 	def test_prefersPrimaryInstallDir_whenBothPrimaryAndX86Exist(self):
 		installDir = "C:\\Program Files\\NVDA"
@@ -444,4 +479,4 @@ class Test_comparePreviousInstall(unittest.TestCase):
 				side_effect=_getVersion,
 			),
 		):
-			self.assertEqual(installer.comparePreviousInstall(), installer.ComparisonState.UPGRADE)
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UPGRADE)

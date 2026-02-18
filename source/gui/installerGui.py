@@ -181,7 +181,7 @@ def doSilentInstall(
 	copyPortableConfig=False,
 	startAfterInstall=True,
 ):
-	freshInstall = installer.comparePreviousInstall() is ComparisonState.FRESH_INSTALL
+	freshInstall = installer._comparePreviousInstall() is ComparisonState.FRESH_INSTALL
 	startOnLogon = globalVars.appArgs.enableStartOnLogon
 	if startOnLogon is None:
 		startOnLogon = config.getStartOnLogonScreen() if not freshInstall else False
@@ -395,7 +395,7 @@ class InstallingOverNewerVersionDialog(
 
 def showInstallGui():
 	gui.mainFrame.prePopup()
-	installState = installer.comparePreviousInstall()
+	installState = installer._comparePreviousInstall()
 	if installState in (ComparisonState.DOWNGRADE, ComparisonState.UNKNOWN):
 		d = InstallingOverNewerVersionDialog()
 		with d:

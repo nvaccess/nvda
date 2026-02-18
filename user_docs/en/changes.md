@@ -101,12 +101,16 @@ It currently includes Screen Curtain's settings (previously in the "Vision" cate
   * By default, NVDA doesn't copy any add-ons; you must select any you wish to include. (#12879)
 * Audio ducking is no longer supported for Microsoft Speech API version 4 or 32-bit Microsoft Speech API version 5 voices. (#19432)
 * The NVDA interface is now translated to Cambodian. (#19450)
+* NVDA will no longer enable "Use NVDA during sign-in" by default when installing for the first time. (#19631)
 
 ### Bug Fixes
 
 * Remote Access:
   * Improved user notifications when connecting as the controlled computer fails. (#19103, @hdzrvcc0X74)
   * NVDA will no longer open multiple disconnection confirmation dialogs if the action is triggered repeatedly. (#19442, @Cary-rowen)
+* NVDA installer:
+  * NVDA should now correctly identify downgrades and show the downgrade warning dialog appropriately. (#19631)
+  * NVDA will now retain the "Use NVDA during sign-in" setting and desktop shortcut more consistently. (#19631)
 * Fixed `<` not being escaped in MathML in PDF documents. (#18520, @NSoiffer)
 * When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
 * Fixed cases where NVDA was unable to retrieve information for an application, such as product name, version and architecture. (#18826, @LeonarddeR)
@@ -169,6 +173,7 @@ On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of
 * Added `api.fakeNVDAObjectClasses` set and `api.isFakeNVDAObject` function to identify fake NVDAObject instances. (#19168, @hwf1324)
 * NVDA no longer includes the Microsoft Universal C Runtime. (#19508)
 * `synthDriverHandler.setSynth` and `synthDriverHandler.findAndSetNextSynth` now attempt to find fallback synthesizers starting from the start of `defaultSynthPriorityList`, rather than starting immediately after `name` or `currentSynthName`, respectively. (#19603)
+* `gui.installerGui.doInstall` parameter `startOnLogon` default value is now False not True. (#19631)
 
 #### API Breaking Changes
 
@@ -334,6 +339,7 @@ Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.
 Access to these symbols via `updateCheck` is deprecated. (#18956)
 * `textInfos.OffsetsTextInfo.allowMoveToOffsetPastEnd` is deprecated.
 Use the `OffsetsTextInfo.allowMoveToUnitOffsetPastEnd` method instead. (#19152, @LeonarddeR)
+* `installer.comparePreviousInstall` is deprecated with no planned replacement. (#19631)
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->

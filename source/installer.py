@@ -47,6 +47,10 @@ __getattr__ = handleDeprecations(
 		"WritePaths",
 		"defaultInstallDir",
 	),
+	RemovedSymbol(
+		"comparePreviousInstall",
+		"_legacyComparePreviousInstall",
+	),
 )
 
 
@@ -103,7 +107,9 @@ class ComparisonState(Enum):
 	UNKNOWN = auto()
 
 	@property
-	def legacyValue(self):
+	def _legacyValue(self) -> int | None:
+		"""Legacy value for comparison state.
+		"""
 		match self:
 			case ComparisonState.FRESH_INSTALL:
 				return None
@@ -118,11 +124,11 @@ class ComparisonState(Enum):
 
 
 def _legacyComparePreviousInstall() -> int | None:
-	"""Legacy wrapper"""
-	return comparePreviousInstall().legacyValue
+	"""Legacy wrapper for _comparePreviousInstall"""
+	return _comparePreviousInstall()._legacyValue
 
 
-def comparePreviousInstall() -> ComparisonState:
+def _comparePreviousInstall() -> ComparisonState:
 	"""
 	Compares the version of the currently running NVDA with the version of a previous installation of NVDA on this system, if any.
 	:return:
