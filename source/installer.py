@@ -49,7 +49,7 @@ __getattr__ = handleDeprecations(
 	),
 	RemovedSymbol(
 		"comparePreviousInstall",
-		_legacyComparePreviousInstall,
+		lambda: _comparePreviousInstall()._legacyValue,
 	),
 )
 
@@ -120,11 +120,6 @@ class ComparisonState(Enum):
 				return -1
 			case ComparisonState.UNKNOWN:
 				return None
-
-
-def _legacyComparePreviousInstall() -> int | None:
-	"""Legacy wrapper for _comparePreviousInstall"""
-	return _comparePreviousInstall()._legacyValue
 
 
 def _comparePreviousInstall() -> ComparisonState:
