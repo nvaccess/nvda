@@ -8,9 +8,8 @@ import os
 
 import config
 import languageHandler
-import yaml
 from logHandler import log
-from NVDAState import ReadPaths, WritePaths
+from NVDAState import ReadPaths
 from utils.displayString import DisplayStringStrEnum
 
 import libmathcat_py as libmathcat
@@ -186,11 +185,6 @@ class SpeechStyleOption(DisplayStringStrEnum):
 class PauseFactor(Enum):
 	SCALE: float = 9.5
 	LOG_BASE: float = 1.4
-
-
-def pathToUserPreferences() -> str:
-	"""Returns the full path to the user preferences file."""
-	return os.path.join(WritePaths.configDir, "mathcat.yaml")
 
 
 def pathToBrailleFolder() -> str:
@@ -416,12 +410,9 @@ class MathCATUserPreferences:
 					)
 		return MathCATUserPreferences(prefs)
 
-	def save(self) -> None:
-		"""Writes the current user preferences to a file and updates runtime settings."""
+	def apply(self) -> None:
+		"""Updates MathCAT's settings based on the current user preferences ."""
 		applyUserPreferences(self._prefs)
-		with open(pathToUserPreferences(), "w", encoding="utf-8") as f:
-			# write values to the user preferences file, NOT the default
-			yaml.dump(self._prefs, stream=f, allow_unicode=True)
 
 	def _validateAll(self):
 		"""Validates all user preferences, ensuring each is present and valid.

@@ -3078,8 +3078,8 @@ class MathSettingsPanel(SettingsPanel):
 		)
 		selectedBrailleIndex = self.brailleMathCodeList.GetSelection()
 		mathConf["braille"]["brailleCode"] = self._brailleCodeIds[selectedBrailleIndex]
-		mcPrefs: MathCATUserPreferences = MathCATUserPreferences.fromNVDAConfig()
-		mcPrefs.save()
+		mcPrefs = MathCATUserPreferences.fromNVDAConfig()
+		mcPrefs.apply()
 
 
 class DocumentFormattingPanel(SettingsPanel):
