@@ -39,6 +39,7 @@ Consult the speech dictionaries section in the User Guide for more details. (#19
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Subclasses of `browseMode.BrowseModeDocumentTreeInterceptor` that support screen layout being on and off should override the `_toggleScreenLayout` method, rather than implementing `script_toggleScreenLayout` directly. (#19487)
+* Clarified NV Access's policy on API breaking changes. (#19599)
 
 #### Deprecations
 
@@ -216,7 +217,6 @@ On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of
 * In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
 * Added `api.fakeNVDAObjectClasses` set and `api.isFakeNVDAObject` function to identify fake NVDAObject instances. (#19168, @hwf1324)
 * NVDA no longer includes the Microsoft Universal C Runtime. (#19508)
-* Clarified NV Access's policy on API breaking changes. (#19599)
 
 #### API Breaking Changes
 
