@@ -61,8 +61,8 @@ We will make every effort to document these changes clearly in the changelog.
 
 #### API deprecation strategy
 
-We im to avoid silent breaks of add-on code.
-Wh  removing or changing APIs in a breaking release (e.g. 2026.1):
+We aim to avoid silent breaks of add-on code.
+When removing or changing APIs in a breaking release (e.g. 2026.1):
 
 1. We will mark functions as deprecated, where possible, in the releases leading up to the break (e.g. raising a `DeprecationWarning` in 2025.4).
 2. All API breaking changes will be listed in the "Changes for Developers" section of the What's New document.
