@@ -108,8 +108,7 @@ class ComparisonState(Enum):
 
 	@property
 	def _legacyValue(self) -> int | None:
-		"""Legacy value for comparison state.
-		"""
+		"""Legacy value for comparison state."""
 		match self:
 			case ComparisonState.FRESH_INSTALL:
 				return None
