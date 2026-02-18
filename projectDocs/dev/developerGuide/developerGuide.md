@@ -37,7 +37,6 @@ To provide clarity on what add-on developers can expect, we categorise changes i
 
 ##### Signature breaking changes
 
-
 * **Examples:** Renaming a function, removing a module, changing a function’s return type or removing/reordering positional arguments.
 * **Policy:** These occur only in the .1 release (e.g. 2026.1).
 
