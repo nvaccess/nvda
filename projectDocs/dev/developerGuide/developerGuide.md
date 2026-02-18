@@ -20,7 +20,7 @@ Add-ons relying on private symbols do so at their own risk.
 This also includes anything "below" the underscore.
 For example, `package.module._Class.*`, `package._module.*`, and `_package.*` are all internal.
 * **Pip packages:** These may be updated, downgraded or removed at any time.
-It is recommended to package any pip dependency you share with NVDA directly with your add-on, rather than using NVDA's version of the package.
+With the exception of `wx` (which must be used from NVDA), it is recommended to package any pip dependency you share with NVDA directly with your add-on, rather than using NVDA's version of the package.
 
 #### The API release cycle
 
