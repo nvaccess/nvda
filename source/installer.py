@@ -30,7 +30,7 @@ import winKernel
 import NVDAState
 from NVDAState import WritePaths
 from utils.tempFile import _createEmptyTempFileForDeletingFile
-from utils._deprecate import handleDeprecations, MovedSymbol
+from utils._deprecate import handleDeprecations, MovedSymbol, RemovedSymbol
 
 _wsh = None
 
