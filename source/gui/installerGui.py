@@ -370,9 +370,10 @@ class InstallingOverNewerVersionDialog(
 		"and completely uninstall NVDA before installing the earlier version.",
 	)
 
-	def __init__(self):
+	def __init__(self, installState: ComparisonState = ComparisonState.DOWNGRADE):
 		# Translators: The title of a warning dialog.
 		super().__init__(gui.mainFrame, title=_("Warning"))
+		self.installState = installState
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentSizer = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
@@ -406,14 +407,13 @@ class InstallingOverNewerVersionDialog(
 
 	@property
 	def _warningText(self) -> str:
-		installState = installer._comparePreviousInstall()
-		match installState:
+		match self.installState:
 			case ComparisonState.DOWNGRADE:
 				return self._DOWNGRADE_WARNING
 			case ComparisonState.UNKNOWN:
 				return self._UNKNOWN_WARNING
 			case _:
-				raise ValueError("Invalid install state for warning dialog")
+				raise ValueError(f"Invalid install state for warning dialog {self.installState}")
 
 
 class PortableCopyOverNewerVersionDialog(InstallingOverNewerVersionDialog):
@@ -440,7 +440,7 @@ def showInstallGui():
 	gui.mainFrame.prePopup()
 	installState = installer._comparePreviousInstall()
 	if installState in (ComparisonState.DOWNGRADE, ComparisonState.UNKNOWN):
-		d = InstallingOverNewerVersionDialog()
+		d = InstallingOverNewerVersionDialog(installState)
 		with d:
 			if d.ShowModal() == wx.ID_CANCEL:
 				gui.mainFrame.postPopup()
@@ -482,7 +482,7 @@ def _warnAndConfirmForNonEmptyDirectory(portableDirectory: str) -> bool:
 			return False
 		installState = installer._comparePreviousCopy(portableDirectory)
 		if installState in (ComparisonState.DOWNGRADE, ComparisonState.UNKNOWN):
-			d = PortableCopyOverNewerVersionDialog()
+			d = PortableCopyOverNewerVersionDialog(installState)
 			with d:
 				if d.ShowModal() == wx.ID_CANCEL:
 					gui.mainFrame.postPopup()
