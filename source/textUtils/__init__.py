@@ -522,8 +522,8 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 def _buildSupplementaryNormalizationTable() -> dict[int, str]:
 	"""Build a translation table for decorative Unicode characters not handled by standard NFKC normalization.
 
-	This includes characters such as negative squared, negative circled,
-	and regional indicator symbol letters, which are decorative variants of Latin letters
+	This includes characters such as negative squared and negative circled letters,
+	which are decorative variants of Latin letters
 	that ``unicodedata.normalize("NFKC", ...)`` does not decompose.
 	"""
 	table: dict[int, str] = {}
@@ -531,11 +531,14 @@ def _buildSupplementaryNormalizationTable() -> dict[int, str]:
 	for offset in range(26):
 		table[0x1F150 + offset] = chr(ord("A") + offset)
 	# Negative Squared Latin Capital Letters: U+1F170 - U+1F189 -> A-Z
+	# Skip codepoints that have emoji semantics:
+	# U+1F170 (🅰 A button/blood type), U+1F171 (🅱 B button/blood type),
+	# U+1F17E (🅾 O button/blood type), U+1F17F (🅿 P button)
+	_squaredEmojiCodepoints = {0x1F170, 0x1F171, 0x1F17E, 0x1F17F}
 	for offset in range(26):
-		table[0x1F170 + offset] = chr(ord("A") + offset)
-	# Regional Indicator Symbol Letters: U+1F1E6 - U+1F1FF -> A-Z
-	for offset in range(26):
-		table[0x1F1E6 + offset] = chr(ord("A") + offset)
+		codepoint = 0x1F170 + offset
+		if codepoint not in _squaredEmojiCodepoints:
+			table[codepoint] = chr(ord("A") + offset)
 	return table
 
 
@@ -557,8 +560,8 @@ def unicodeNormalize(text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALI
 	"""Normalize the given text using the specified Unicode normalization form.
 
 	In addition to standard Unicode normalization (e.g. NFKC), this applies a supplementary
-	translation for decorative Unicode letter characters (such as negative squared, negative circled,
-	and regional indicator symbol letters) that are not decomposed by the standard algorithm.
+	translation for decorative Unicode letter characters (such as negative squared and negative circled
+	letters) that are not decomposed by the standard algorithm.
 	"""
 	text = text.translate(_supplementaryNormalizationTable)
 	return unicodedata.normalize(normalizationForm, text)
