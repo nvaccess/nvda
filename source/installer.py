@@ -147,8 +147,8 @@ def _comparePreviousCopy(previousCopyPath: str) -> ComparisonState:
 		- ComparisonState.UPGRADE if the previous installation is older than the current one
 		- ComparisonState.UNKNOWN if there was an error determining the version of either the current or previous installation
 	"""
-	previousCopyPath = previousCopyPath and os.path.isdir(previousCopyPath)
-	if not previousCopyPath:
+	previousCopyPathExists = previousCopyPath and os.path.isdir(previousCopyPath)
+	if not previousCopyPathExists:
 		return ComparisonState.FRESH_INSTALL
 
 	oldSlavePath = os.path.join(previousCopyPath, "nvda_slave.exe")
