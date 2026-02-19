@@ -2646,6 +2646,20 @@ class BrowseModePanel(SettingsPanel):
 		)
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
 
+		import browseMode
+		# Translators: Label for the web touch navigation sub-section in browse mode settings.
+		webTouchGroupText = _("Web touch navigation elements (touchscreens only)")
+		webTouchGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=webTouchGroupText)
+		webTouchGroupBox = webTouchGroupSizer.GetStaticBox()
+		webTouchGroup = guiHelper.BoxSizerHelper(self, sizer=webTouchGroupSizer)
+		sHelper.addItem(webTouchGroup)
+		self._webElementCheckboxes = {}
+		for itemType, label in browseMode.BrowseModeTreeInterceptor._webBrowseElements:
+			cb = webTouchGroup.addItem(wx.CheckBox(webTouchGroupBox, label=label))
+			configKey = browseMode._webElementConfigKey(itemType)
+			cb.SetValue(config.conf["virtualBuffers"].get(configKey, True))
+			self._webElementCheckboxes[itemType] = cb
+
 	def onSave(self):
 		config.conf["virtualBuffers"]["maxLineLength"] = self.maxLengthEdit.GetValue()
 		config.conf["virtualBuffers"]["linesPerPage"] = self.pageLinesEdit.GetValue()
@@ -2665,6 +2679,11 @@ class BrowseModePanel(SettingsPanel):
 		config.conf["virtualBuffers"]["trapNonCommandGestures"] = (
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
+		import browseMode
+		for itemType, _label in browseMode.BrowseModeTreeInterceptor._webBrowseElements:
+			configKey = browseMode._webElementConfigKey(itemType)
+			if configKey in config.conf["virtualBuffers"]:
+				config.conf["virtualBuffers"][configKey] = self._webElementCheckboxes[itemType].IsChecked()
 
 
 class MathSettingsPanel(SettingsPanel):

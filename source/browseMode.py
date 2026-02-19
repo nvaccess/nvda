@@ -588,6 +588,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		prevDoc: str,
 		prevError: str,
 		readUnit: Optional[str] = None,
+		includeInWebTouch: bool = True,
 	):
 		"""Adds a script for the given quick nav item.
 		@param itemType: The type of item, I.E. "heading" "Link" ...
@@ -601,6 +602,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		@param readUnit: The unit (one of the textInfos.UNIT_* constants) to announce when moving to this type of item.
 			For example, only the line is read when moving to tables to avoid reading a potentially massive table.
 			If None, the entire item will be announced.
+		@param includeInWebTouch: If True, register this element type for web touch navigation cycling.
+			Set to False for sub-types (e.g. heading levels) that are already covered by a parent type.
 		"""
 		scriptSuffix = itemType[0].upper() + itemType[1:]
 		scriptName = "next%s" % scriptSuffix
@@ -627,6 +630,20 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		setattr(cls, funcName, script)
 		if key is not None:
 			cls.__gestures["kb:shift+%s" % key] = scriptName
+		if includeInWebTouch:
+			# Derive a short human-readable label from the camelCase itemType (e.g. "formField" -> "form field").
+			# Some itemTypes produce inadequate labels via camelCase splitting alone; override them.
+			_webTouchLabelOverrides = {
+				"edit": "edit field",
+			}
+			touchLabel = re.sub(r"([A-Z])", r" \1", itemType).lower().strip()
+			touchLabel = _webTouchLabelOverrides.get(touchLabel, touchLabel)
+			# Pluralise: words ending in "x" (e.g. "combo box") take "es"; all others take "s".
+			if touchLabel.endswith("x"):
+				touchLabel += "es"
+			else:
+				touchLabel += "s"
+			cls._webTouchNavRegistry.append((itemType, touchLabel))
 
 	@classmethod
 	def _addQuickNavHeading(
@@ -654,6 +671,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 				# Translators: Message presented when the browse mode element is not found.
 				# {i} will be replaced with the level number.
 				prevError=_("No previous heading at level {i}").format(i=i),
+				# Heading levels are sub-types of "heading"; exclude from web touch navigation cycling.
+				includeInWebTouch=False,
 			)
 
 	def script_elementsList(self, gesture):
@@ -780,6 +799,96 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	def _get_disableAutoPassThrough(self):
 		return self._disableAutoPassThrough
+
+	#: Registry of (itemType, label) pairs populated dynamically by addQuickNav.
+	#: Do not modify directly; use addQuickNav with includeInWebTouch=True.
+	#: _webBrowseElements is built from this after all addQuickNav calls complete.
+	_webTouchNavRegistry: list = []
+
+	#: The itemType currently selected for web touch navigation. None means "default" (all content).
+	_webBrowseCurrentType = None
+
+	def _enabledWebElements(self):
+		"""Returns the subset of L{_webBrowseElements} that the user has enabled in settings."""
+		enabled = [
+			(itemType, label)
+			for itemType, label in self._webBrowseElements
+			if config.conf["virtualBuffers"].get(_webElementConfigKey(itemType), True)
+		]
+		# Always keep at least the first entry ("default") to prevent an empty list.
+		return enabled if enabled else [self._webBrowseElements[0]]
+
+	@script(
+		description=_(
+			# Translators: Input help message for a web touch navigation command in browse mode.
+			"Selects the next element type for web touch navigation",
+		),
+		category=inputCore.SCRCAT_BROWSEMODE,
+		gesture="ts(Web):flickDown",
+	)
+	def script_nextWebElement(self, gesture):
+		enabled = self._enabledWebElements()
+		types = [itemType for itemType, _label in enabled]
+		try:
+			idx = types.index(type(self)._webBrowseCurrentType)
+		except ValueError:
+			idx = -1
+		idx = (idx + 1) % len(enabled)
+		type(self)._webBrowseCurrentType = enabled[idx][0]
+		ui.message(enabled[idx][1])
+
+	@script(
+		description=_(
+			# Translators: Input help message for a web touch navigation command in browse mode.
+			"Selects the previous element type for web touch navigation",
+		),
+		category=inputCore.SCRCAT_BROWSEMODE,
+		gesture="ts(Web):flickUp",
+	)
+	def script_prevWebElement(self, gesture):
+		enabled = self._enabledWebElements()
+		types = [itemType for itemType, _label in enabled]
+		try:
+			idx = types.index(type(self)._webBrowseCurrentType)
+		except ValueError:
+			idx = 0
+		idx = (idx - 1) % len(enabled)
+		type(self)._webBrowseCurrentType = enabled[idx][0]
+		ui.message(enabled[idx][1])
+
+	@script(
+		description=_(
+			# Translators: Input help message for a web touch navigation command in browse mode.
+			"Moves to the next element of the selected type in web touch navigation",
+		),
+		category=inputCore.SCRCAT_BROWSEMODE,
+		gesture="ts(Web):flickRight",
+	)
+	def script_nextSelectedElement(self, gesture):
+		itemType = type(self)._webBrowseCurrentType
+		if itemType is None:
+			import globalCommands
+			globalCommands.commands.script_navigatorObject_nextInFlow(gesture)
+		else:
+			scriptSuffix = itemType[0].upper() + itemType[1:]
+			getattr(self, "script_next%s" % scriptSuffix)(gesture)
+
+	@script(
+		description=_(
+			# Translators: Input help message for a web touch navigation command in browse mode.
+			"Moves to the previous element of the selected type in web touch navigation",
+		),
+		category=inputCore.SCRCAT_BROWSEMODE,
+		gesture="ts(Web):flickLeft",
+	)
+	def script_prevSelectedElement(self, gesture):
+		itemType = type(self)._webBrowseCurrentType
+		if itemType is None:
+			import globalCommands
+			globalCommands.commands.script_navigatorObject_previousInFlow(gesture)
+		else:
+			scriptSuffix = itemType[0].upper() + itemType[1:]
+			getattr(self, "script_previous%s" % scriptSuffix)(gesture)
 
 	__gestures = {
 		"kb:NVDA+f7": "elementsList",
@@ -1247,6 +1356,22 @@ qn(
 	readUnit=textInfos.UNIT_WORD,
 )
 del qn
+
+
+def _webElementConfigKey(itemType: Optional[str]) -> str:
+	"""Returns the virtualBuffers config key for a web touch navigation element type.
+	@param itemType: The element type string (e.g. "link", "heading"), or None for the default mode.
+	"""
+	suffix = "Default" if itemType is None else itemType[0].upper() + itemType[1:]
+	return "webTouchNavigate%s" % suffix
+
+
+# Build _webBrowseElements dynamically from the registry populated by addQuickNav calls above.
+# The "default" entry (navigate all content) is always prepended.
+BrowseModeTreeInterceptor._webBrowseElements = (
+	# Translators: The default element type in browse mode web touch navigation (navigates all content).
+	(None, _("default")),
+) + tuple(BrowseModeTreeInterceptor._webTouchNavRegistry)
 
 
 class ElementsListDialog(

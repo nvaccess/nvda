@@ -60,6 +60,8 @@ availableTouchModes = ["text", "object"]
 touchModeLabels = {
 	"text": _("text mode"),
 	"object": _("object mode"),
+	# Translators: The name of a touch mode used when navigating web content in browse mode.
+	"web": _("web mode"),
 }
 
 HWND_MESSAGE = -3
