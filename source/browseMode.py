@@ -868,6 +868,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		itemType = type(self)._webBrowseCurrentType
 		if itemType is None:
 			import globalCommands
+
 			globalCommands.commands.script_navigatorObject_nextInFlow(gesture)
 		else:
 			scriptSuffix = itemType[0].upper() + itemType[1:]
@@ -885,6 +886,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		itemType = type(self)._webBrowseCurrentType
 		if itemType is None:
 			import globalCommands
+
 			globalCommands.commands.script_navigatorObject_previousInFlow(gesture)
 		else:
 			scriptSuffix = itemType[0].upper() + itemType[1:]

@@ -2641,6 +2641,7 @@ class BrowseModePanel(SettingsPanel):
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
 
 		import browseMode
+
 		# Translators: Label for the web touch navigation sub-section in browse mode settings.
 		webTouchGroupText = _("Web touch navigation elements (touchscreens only)")
 		webTouchGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=webTouchGroupText)
@@ -2674,6 +2675,7 @@ class BrowseModePanel(SettingsPanel):
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
 		import browseMode
+
 		for itemType, _label in browseMode.BrowseModeTreeInterceptor._webBrowseElements:
 			configKey = browseMode._webElementConfigKey(itemType)
 			if configKey in config.conf["virtualBuffers"]:
