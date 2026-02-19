@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
+# Copyright (C) 2006-2026 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
 # Cyrille Bougot, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -315,6 +315,16 @@ from .excelCellBorder import getCellBorderStyleDescription  # noqa: E402
 
 re_RC = re.compile(r"R(?:\[(\d+)\])?C(?:\[(\d+)\])?")
 re_absRC = re.compile(r"^R(\d+)C(\d+)(?::R(\d+)C(\d+))?$")
+
+
+def getPixelPerInch():
+		hDC = user32.GetDC(None)
+		# pixels per inch along screen width
+		px = winBindings.gdi32.GetDeviceCaps(hDC, LOGPIXELSX)
+		# pixels per inch along screen height
+		py = winBindings.gdi32.GetDeviceCaps(hDC, LOGPIXELSY)
+		user32.ReleaseDC(None, hDC)
+		return px, py
 
 
 class ExcelQuickNavItem(browseMode.QuickNavItem):
@@ -1986,6 +1996,73 @@ class ExcelCell(ExcelBase):
 			)
 			speech.speak(sequence)
 		super(ExcelCell, self).reportFocus()
+	
+	def _get_location(self):
+		from locationHelper import RectLTWH
+		obj = self.excelCellObject
+		PIXEL_PER_POINT = 72
+		ppiX, ppiY = getPixelPerInch()
+		pX = ppiX / PIXEL_PER_POINT
+		pY = ppiY / PIXEL_PER_POINT
+		# Coordinates of the grid with respect to the sheet
+		gridX = self.parent.excelApplicationObject.ActiveWindow.PointsToScreenPixelsX(0)
+		gridY = self.parent.excelApplicationObject.ActiveWindow.PointsToScreenPixelsY(0)
+		cell = RectLTWH.fromFloatCollection(
+			obj.left * pX + gridX,
+			obj.top * pY + gridY,
+			obj.width * pX,
+			obj.height * pY,
+		)
+		return cell
+		# dxPoints = cell.Left - topLeft.Left
+		# dyPoints = cell.Top  - topLeft.Top
+		dxPoints = cell.Left
+		dyPoints = cell.Top
+		dxPixels = win.PointsToScreenPixelsX(dxPoints)
+		dyPixels = win.PointsToScreenPixelsY(dyPoints)
+		widthPixels  = win.PointsToScreenPixelsX(cell.Width)
+		heightPixels = win.PointsToScreenPixelsY(cell.Height)
+		
+		
+
+	def zzz_get_location(self):
+		from locationHelper import RectLTWH
+		
+		obj = self.excelCellObject
+		win = obj.Application.ActiveWindow
+	
+		# Conversion points → pixels
+		leftPx   = win.PointsToScreenPixelsX(obj.Left)
+		topPx    = win.PointsToScreenPixelsY(obj.Top)
+		widthPx  = obj.Width
+		heightPx = obj.Height
+	
+		cell = RectLTWH(
+			int(round(leftPx + self.parent.location.left)),
+			int(round(topPx  + self.parent.location.top)),
+			int(round(widthPx)),
+			int(round(heightPx)),
+		)
+		return cell
+	
+
+		def zzz_get_location(self):
+			from locationHelper import RectLTWH
+		
+			obj = self.excelCellObject      # NVDA cell
+			parent = self.parent            # NVDA worksheet
+		
+			# Les coordonnées sont déjà en pixels écran
+			cell = RectLTWH(
+				obj.left,           # déjà pixels
+				obj.top,            # déjà pixels
+				obj.width,           # largeur en pixels
+				obj.height           # hauteur en pixels
+			)
+			return cell
+		
+						
+	#zzz
 
 
 class ExcelSelection(ExcelBase):
@@ -2244,13 +2321,8 @@ class ExcelFormControl(ExcelBase):
 		bottomRightCellWidth = bottomRightAddress.Width
 		# bottom right cell's height in points
 		bottomRightCellHeight = bottomRightAddress.Height
+		px, py = getPixelPerInch()
 		self.excelApplicationObject = self.parent.excelWorksheetObject.Application
-		hDC = user32.GetDC(None)
-		# pixels per inch along screen width
-		px = winBindings.gdi32.GetDeviceCaps(hDC, LOGPIXELSX)
-		# pixels per inch along screen height
-		py = winBindings.gdi32.GetDeviceCaps(hDC, LOGPIXELSY)
-		user32.ReleaseDC(None, hDC)
 		zoom = self.excelApplicationObject.ActiveWindow.Zoom
 		zoomRatio = zoom / 100
 		# Conversion from inches to Points, 1 inch=72points
