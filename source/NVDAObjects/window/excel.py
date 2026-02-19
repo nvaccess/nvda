@@ -10,6 +10,7 @@ import ctypes
 import enum
 from winBindings import user32
 import winBindings.gdi32
+from locationHelper import RectLTWH
 
 from typing import Any
 from collections.abc import Callable
@@ -1998,68 +1999,22 @@ class ExcelCell(ExcelBase):
 		super(ExcelCell, self).reportFocus()
 
 	def _get_location(self):
-		from locationHelper import RectLTWH
-
 		obj = self.excelCellObject
-		PIXEL_PER_POINT = 72
+		appObj = self.parent.excelApplicationObject
+		zoomRatio = appObj.ActiveWindow.Zoom / 100
+		pointsPerInch = appObj.InchesToPoints(1)
 		ppiX, ppiY = getPixelPerInch()
-		pX = ppiX / PIXEL_PER_POINT
-		pY = ppiY / PIXEL_PER_POINT
+		pX = ppiX / pointsPerInch
+		pY = ppiY / pointsPerInch
 		# Coordinates of the grid with respect to the sheet
 		gridX = self.parent.excelApplicationObject.ActiveWindow.PointsToScreenPixelsX(0)
 		gridY = self.parent.excelApplicationObject.ActiveWindow.PointsToScreenPixelsY(0)
-		cell = RectLTWH.fromFloatCollection(
-			obj.left * pX + gridX,
-			obj.top * pY + gridY,
-			obj.width * pX,
-			obj.height * pY,
+		return RectLTWH.fromFloatCollection(
+			obj.left * pX * zoomRatio + gridX,
+			obj.top * pY * zoomRatio + gridY,
+			obj.width * pX * zoomRatio,
+			obj.height * pY * zoomRatio,
 		)
-		return cell
-		# dxPoints = cell.Left - topLeft.Left
-		# dyPoints = cell.Top  - topLeft.Top
-		dxPoints = cell.Left
-		dyPoints = cell.Top
-		dxPixels = win.PointsToScreenPixelsX(dxPoints)
-		dyPixels = win.PointsToScreenPixelsY(dyPoints)
-		widthPixels = win.PointsToScreenPixelsX(cell.Width)
-		heightPixels = win.PointsToScreenPixelsY(cell.Height)
-
-	def zzz_get_location(self):
-		from locationHelper import RectLTWH
-
-		obj = self.excelCellObject
-		win = obj.Application.ActiveWindow
-
-		# Conversion points → pixels
-		leftPx = win.PointsToScreenPixelsX(obj.Left)
-		topPx = win.PointsToScreenPixelsY(obj.Top)
-		widthPx = obj.Width
-		heightPx = obj.Height
-
-		cell = RectLTWH(
-			int(round(leftPx + self.parent.location.left)),
-			int(round(topPx + self.parent.location.top)),
-			int(round(widthPx)),
-			int(round(heightPx)),
-		)
-		return cell
-
-		def zzz_get_location(self):
-			from locationHelper import RectLTWH
-
-			obj = self.excelCellObject  # NVDA cell
-			parent = self.parent  # NVDA worksheet
-
-			# Les coordonnées sont déjà en pixels écran
-			cell = RectLTWH(
-				obj.left,  # déjà pixels
-				obj.top,  # déjà pixels
-				obj.width,  # largeur en pixels
-				obj.height,  # hauteur en pixels
-			)
-			return cell
-
-	# zzz
 
 
 class ExcelSelection(ExcelBase):
