@@ -8,7 +8,6 @@ import os
 
 import config
 import languageHandler
-import yaml
 from logHandler import log
 from NVDAState import ReadPaths
 from utils.displayString import DisplayStringStrEnum
@@ -45,7 +44,7 @@ class DecimalSeparatorOption(DisplayStringStrEnum):
 	def _displayStringLabels(self) -> dict["DecimalSeparatorOption", str]:
 		return {
 			# Translators: options for decimal separator -- "Auto" = automatically pick the choice based on the language
-			self.AUTO: pgettext("math", "Auto"),
+			self.AUTO: pgettext("math", "Automatic"),
 			# options for decimal separator -- use "."  (and use ", " for block separators)
 			self.DOT: ".",
 			# options for decimal separator -- use ","  (and use ". " for block separators)
@@ -188,18 +187,6 @@ class PauseFactor(Enum):
 	LOG_BASE: float = 1.4
 
 
-def pathToUserPreferencesFolder() -> str:
-	"""Returns the path to the folder where user preferences are stored."""
-	# the user preferences file is stored at: C:\Users\<user-name>AppData\Roaming\MathCAT\prefs.yaml
-	return os.path.join(os.path.expandvars("%APPDATA%"), "MathCAT")
-
-
-def pathToUserPreferences() -> str:
-	"""Returns the full path to the user preferences file."""
-	# the user preferences file is stored at: C:\Users\<user-name>AppData\Roaming\MathCAT\prefs.yaml
-	return os.path.join(pathToUserPreferencesFolder(), "prefs.yaml")
-
-
 def pathToBrailleFolder() -> str:
 	r"""Returns the full path to the Braille rules folder.
 		The Braille rules are stored in:
@@ -299,6 +286,27 @@ def toNVDAConfigKey(key: str) -> str:
 
 
 type PreferencesDict = dict[str, dict[str, int | str | bool]]
+
+
+def applyUserPreferences(prefs: PreferencesDict | None = None) -> None:
+	"""Apply user preferences to MathCAT's runtime preferences."""
+	if prefs is None:
+		prefs = MathCATUserPreferences.fromNVDAConfig()._prefs
+	for categoryPrefs in prefs.values():
+		for k, v in categoryPrefs.items():
+			if k == "BrailleCode":
+				continue
+			try:
+				if isinstance(v, bool):
+					yaml_val = "true" if v else "false"
+				else:
+					yaml_val = str(v)
+				libmathcat.SetPreference(k, yaml_val)
+			except Exception as e:
+				log.exception(
+					f"MathCAT: failed to set {k} preference: {e}",
+				)
+	setEffectiveBrailleCode()
 
 
 def getSpeechStyleChoicesWithTranslations(languageCode: str) -> list[str]:
@@ -402,29 +410,9 @@ class MathCATUserPreferences:
 					)
 		return MathCATUserPreferences(prefs)
 
-	def save(self) -> None:
-		"""Writes the current user preferences to a file and updates special settings.
-
-		Sets the language preference through the native library, ensures the preferences
-		folder exists, and saves the preferences to disk.
-		"""
-		# Language is special because it is set elsewhere by SetPreference which overrides the user_prefs -- so set it here
-
-		try:
-			libmathcat.SetPreference("Language", self._prefs["Speech"]["Language"])
-		except Exception as e:
-			log.exception(
-				f'Error in trying to set MathCAT "Language" preference to "{self._prefs["Speech"]["Language"]}": {e}',
-			)
-
-		setEffectiveBrailleCode()
-
-		if not os.path.exists(pathToUserPreferencesFolder()):
-			# create a folder for the user preferences
-			os.mkdir(pathToUserPreferencesFolder())
-		with open(pathToUserPreferences(), "w", encoding="utf-8") as f:
-			# write values to the user preferences file, NOT the default
-			yaml.dump(self._prefs, stream=f, allow_unicode=True)
+	def apply(self) -> None:
+		"""Updates MathCAT's settings based on the current user preferences ."""
+		applyUserPreferences(self._prefs)
 
 	def _validateAll(self):
 		"""Validates all user preferences, ensuring each is present and valid.

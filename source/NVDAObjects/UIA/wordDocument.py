@@ -480,17 +480,36 @@ class WordDocumentTextInfo(UIATextInfo):
 				# Not a controlStart, formatChange or text string. Nothing to do.
 				break
 		# Fill in page number attributes where NVDA expects
-		try:
-			page = fields[0].field["page-number"]
-		except KeyError:
-			page = None
-		if page is not None and not UIARemote.isSupported():
+		# Get page number from control field (automation ID), which is reliable.
+		# Only use page numbers from control fields, not format fields,
+		# as format fields may have invalid values from Custom Attributes API.
+		page = None
+		if (
+			len(fields) > 0
+			and isinstance(fields[0], textInfos.FieldCommand)
+			and fields[0].command == "controlStart"
+			and isinstance(fields[0].field, textInfos.ControlField)
+		):
+			page = fields[0].field.get("page-number")
+			# Convert to int to match the type used by Custom Attributes API
+			# Control fields extract page numbers as strings from automation IDs
+			if page is not None:
+				try:
+					page = int(page)
+				except (ValueError, TypeError):
+					page = None
+		if page is not None:
+			# Propagate control field page number to format fields that don't already have one.
+			# This serves as a fallback when the Custom Attributes API returns invalid values,
+			# particularly when navigating backwards to the first line of a page.
 			for field in fields:
 				if isinstance(field, textInfos.FieldCommand) and isinstance(
 					field.field,
 					textInfos.FormatField,
 				):
-					field.field["page-number"] = page
+					# Only set if not already set by Custom Attributes API
+					if "page-number" not in field.field:
+						field.field["page-number"] = page
 		# MS Word can sometimes return a higher ancestor in its textRange's children.
 		# E.g. a table inside a table header.
 		# This does not cause a loop, but does cause information to be doubled
@@ -542,7 +561,10 @@ class WordDocumentTextInfo(UIATextInfo):
 					textRange,
 					UIACustomAttributeID.PAGE_NUMBER,
 				)
-				if isinstance(pageNumber, int):
+				# Only use valid page numbers (>= 1). Word returns -1 when the value is not available,
+				# particularly when navigating backwards to the first line of a page.
+				# In such cases, we fall back to the control field page number in getTextWithFields.
+				if isinstance(pageNumber, int) and pageNumber > 0:
 					formatField.field["page-number"] = pageNumber
 				sectionNumber = UIARemote.msWord_getCustomAttributeValue(
 					docElement,
@@ -723,28 +745,16 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 			return
 		super(WordDocument, self).event_UIA_notification(**kwargs)
 
-	# The following overide of the EditableText._caretMoveBySentenceHelper private method
-	# Falls back to the MS Word object model if available.
-	# This override should be removed as soon as UI Automation in MS Word has the ability to move by sentence.
-	def _caretMoveBySentenceHelper(self, gesture, direction):
-		if isScriptWaiting():
-			return
-		if not self.WinwordSelectionObject:
-			# Legacy object model not available.
-			# Translators: a message when navigating by sentence is unavailable in MS Word
-			ui.message(_("Navigating by sentence not supported in this document"))
-			gesture.send()
-			return
-		# Using the legacy object model,
-		# Move the caret to the next sentence in the requested direction.
+	def _moveBySentenceWithObjectModel(self, direction: int) -> LegacyWordDocumentTextInfo:
+		"""
+		Using the legacy object model,
+		Move the caret to the next sentence in the requested direction.
+		"""
 		legacyInfo = LegacyWordDocumentTextInfo(self, textInfos.POSITION_CARET)
 		legacyInfo.move(textInfos.UNIT_SENTENCE, direction)
 		# Save the start of the sentence for future use
 		legacyStart = legacyInfo.copy()
-		# With the legacy object model,
-		# Move the caret to the end of the new sentence.
 		legacyInfo.move(textInfos.UNIT_SENTENCE, 1)
-		legacyInfo.updateCaret()
 		# Fetch the caret position (end of the next sentence) with UI automation.
 		endInfo = self.makeTextInfo(textInfos.POSITION_CARET)
 		# Move the caret back to the start of the next sentence,
@@ -755,8 +765,52 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 		# Make a UI automation text range spanning the entire next sentence.
 		info = startInfo.copy()
 		info.end = endInfo.end
+		return info
+
+	# The following override of the EditableText._caretMoveBySentenceHelper private method
+	# First tries to use UI Automation remote operations to move by sentence when available,
+	# falling back to the MS Word object model otherwise.
+	def _caretMoveBySentenceHelper(self, gesture: inputCore.InputGesture, direction: int):
+		if isScriptWaiting():
+			return
+
+		info = None
+
+		# Prefer UIA remote sentence navigation when available.
+		if UIARemote.isSupported():
+			try:
+				caretInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+				sentenceRange = UIARemote.msWord_moveTextRangeBySentence(
+					self.UIAElement,
+					caretInfo._rangeObj,
+					direction,
+				)
+			except Exception:
+				log.debugWarning(
+					"Failed to fetch caret text range for remote sentence navigation",
+					exc_info=True,
+				)
+			else:
+				if sentenceRange is not None:
+					info = WordDocumentTextInfo(self, textInfos.POSITION_CARET, _rangeObj=sentenceRange)
+					info.updateCaret()
+
+		if info is None:
+			if not self.WinwordSelectionObject:
+				# Legacy object model not available.
+				# Translators: a message when navigating by sentence is unavailable in MS Word
+				ui.message(_("Navigating by sentence not supported in this document"))
+				gesture.send()
+				return
+			else:
+				info = self._moveBySentenceWithObjectModel(direction)
+
 		# Speak the sentence moved to
-		speech.speakTextInfo(info, unit=textInfos.UNIT_SENTENCE, reason=controlTypes.OutputReason.CARET)
+		speech.speakTextInfo(
+			info,
+			unit=textInfos.UNIT_SENTENCE,
+			reason=controlTypes.OutputReason.CARET,
+		)
 		# Forget the word currently being typed as the user has moved the caret somewhere else.
 		speech.clearTypedWordBuffer()
 		# Alert review and braille the caret has moved to its new position

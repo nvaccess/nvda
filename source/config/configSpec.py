@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
+# Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
 # Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen
 # This file is covered by the GNU General Public License.
@@ -13,7 +13,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 20
+latestSchemaVersion = 21
 
 #: The configuration specification string
 #: @type: String
@@ -47,6 +47,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	delayedCharacterDescriptions = boolean(default=false)
 	excludedSpeechModes = int_list(default=list())
 	trimLeadingSilence = boolean(default=true)
+	useWASAPIForSAPI4 = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
@@ -97,7 +98,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportLiveRegions = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	fontFormattingDisplay = featureFlag(optionsEnum="FontFormattingBrailleModeFlag", behaviorOfDefault="LIBLOUIS")
 	[[auto]]
-    	excludedDisplays = string_list(default=list("dotPad"))
+		excludedDisplays = string_list(default=list("dotPad"))
 
 	# Braille display driver settings
 	[[__many__]]
@@ -109,6 +110,15 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# Vision enhancement provider settings
 	[[__many__]]
 		enabled = boolean(default=false)
+
+# Magnifier settings
+[magnifier]
+	defaultZoomLevel = float(min=1.0, max=10.0, default=2.0)
+	defaultFullscreenMode = string(default="center")
+	isTrueCentered = boolean(default=False)
+	defaultFilter = string(default="normal")
+	keepMouseCentered = boolean(default=false)
+	saveShortcutChanges = boolean(default=false)
 
 # Presentation settings
 [presentation]
@@ -375,8 +385,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [featureFlag]
 	# 0:default, 1:yes, 2:no
 	cancelExpiredFocusSpeech = integer(0, 2, default=0)
-	# 0:Only in test versions, 1:yes
-	playErrorSound = integer(0, 1, default=0)
+	# 0: Only in test versions, 1: Yes, 2: No
+	playErrorSound = integer(0, 2, default=0)
 
 [addonStore]
 	automaticUpdates = option("notify", "update", "disabled", default="notify")
@@ -410,23 +420,23 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [math]
 	[[speech]]
 		# LearningDisability, Blindness, LowVision
-    	impairment = string(default="Blindness")
+		impairment = string(default="Blindness")
 		# any known language code and sub-code -- could be en-uk, etc
-    	language = string(default="Auto")
+		language = string(default="Auto")
 		# Any known speech style (falls back to ClearSpeak)
-    	speechStyle = string(default="ClearSpeak")
+		speechStyle = string(default="ClearSpeak")
 		# Terse, Medium, Verbose
-    	verbosity = string(default="Medium")
+		verbosity = string(default="Medium")
 		# Change from text speech rate (%)
-    	mathRate = integer(default=100)
+		mathRate = integer(default=100)
 		# Change from normal pause length (%)
-    	pauseFactor = integer(default=100)
+		pauseFactor = integer(default=100)
 		# make a sound when starting/ending math speech -- None, Beep
-    	speechSound = string(default="None")
+		speechSound = string(default="None")
 		# NOTE: not currently working in MathCAT
-    	subjectArea = string(default="General")
+		subjectArea = string(default="General")
 		# SpellOut (H 2 0), AsCompound (Water) -- not implemented, Off (H sub 2 O)
-    	chemistry = string(default="SpellOut")
+		chemistry = string(default="SpellOut")
 		# Verbose, Brief, SuperBrief
 		mathSpeak = string(default="Verbose")
 
@@ -565,10 +575,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		blockSeparators = string(default=", \u00a0\u202f")
 		# Auto, '.', ',', Custom
 		decimalSeparator = string(default="Auto")
-
-[automatedImageDescriptions]
-	enable = boolean(default=false)
-	defaultModel = string(default="Xenova/vit-gpt2-image-captioning")
 
 [screenCurtain]
 	enabled = boolean(default=false)

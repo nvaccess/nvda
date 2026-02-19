@@ -1,13 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2011-2025 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions,
+# Copyright (C) 2011-2026 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions,
 # Bill Dengler, Joseph Lee, Takuya Nishimoto
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import os
 import subprocess
 import sys
 
+from utils.security import isRunningElevated
 import winUser
 import wx
 import config
@@ -121,6 +122,8 @@ def doInstall(
 			wx.OK | wx.ICON_ERROR,
 		)
 		return
+
+	startAfterInstall = startAfterInstall and not isRunningElevated()
 	if not silent:
 		msg = (
 			# Translators: The message displayed when NVDA has been successfully installed.
@@ -130,9 +133,16 @@ def doInstall(
 			else _("Successfully updated your installation of NVDA. ")
 		)
 		gui.messageBox(
-			# Translators: The message displayed to the user after NVDA is installed
-			# and the installed copy is about to be started.
-			msg + _("Please press OK to start the installed copy."),
+			msg
+			+ (
+				# Translators: The message displayed to the user after NVDA is installed
+				# and the installed copy is about to be started.
+				_("Please press OK to start the installed copy.")
+				if startAfterInstall
+				# Translators: The message displayed to the user after NVDA is installed
+				# and the installer is about to close without starting the installed copy.
+				else _("Please press OK to close the installer.")
+			),
 			# Translators: The title of a dialog presented to indicate a successful operation.
 			_("Success"),
 		)
@@ -541,6 +551,7 @@ class PortableCreaterDialog(
 		startAfterCreateText = _("&Start the new portable copy after creation")
 		self.startAfterCreateCheckbox = sHelper.addItem(wx.CheckBox(self, label=startAfterCreateText))
 		self.startAfterCreateCheckbox.Value = False
+		self.startAfterCreateCheckbox.Enable(not isRunningElevated())
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL), separated=True)
 
@@ -620,7 +631,7 @@ def doCreatePortable(
 	:param portableDirectory: The directory in which to create the portable copy.
 	:param copyUserConfig: Whether to copy the current user configuration.
 	:param silent: Whether to suppress messages.
-	:param startAfterCreate: Whether to start the new portable copy after creation.
+	:param startAfterCreate: Whether to start the new portable copy after creation. Ignored if running elevated.
 	:param warnForNonEmptyDirectory: Whether to warn if the destination directory is not empty.
 	"""
 	if warnForNonEmptyDirectory and not _warnAndConfirmForNonEmptyDirectory(portableDirectory):
@@ -664,6 +675,7 @@ def doCreatePortable(
 			# Translators: Title of a dialog shown when a portable copy of NVDA is created.
 			_("Success"),
 		)
+	startAfterCreate = startAfterCreate and not isRunningElevated()
 	if silent or startAfterCreate:
 		newNVDA = None
 		if startAfterCreate:
