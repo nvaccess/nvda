@@ -109,7 +109,7 @@ It currently includes Screen Curtain's settings (previously in the "Vision" cate
   * Improved user notifications when connecting as the controlled computer fails. (#19103, @hdzrvcc0X74)
   * NVDA will no longer open multiple disconnection confirmation dialogs if the action is triggered repeatedly. (#19442, @Cary-rowen)
 * NVDA installer:
-  * NVDA should now correctly identify downgrades and show the downgrade warning dialog appropriately. (#19631)
+  * NVDA should now correctly identify downgrades and show the downgrade warning dialog appropriately, including for portable copies. (#19631, #18291)
   * NVDA will now retain the "Use NVDA during sign-in" setting and desktop shortcut more consistently. (#19631)
 * Fixed `<` not being escaped in MathML in PDF documents. (#18520, @NSoiffer)
 * When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
