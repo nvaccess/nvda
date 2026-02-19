@@ -318,13 +318,13 @@ re_absRC = re.compile(r"^R(\d+)C(\d+)(?::R(\d+)C(\d+))?$")
 
 
 def getPixelPerInch():
-		hDC = user32.GetDC(None)
-		# pixels per inch along screen width
-		px = winBindings.gdi32.GetDeviceCaps(hDC, LOGPIXELSX)
-		# pixels per inch along screen height
-		py = winBindings.gdi32.GetDeviceCaps(hDC, LOGPIXELSY)
-		user32.ReleaseDC(None, hDC)
-		return px, py
+	hDC = user32.GetDC(None)
+	# pixels per inch along screen width
+	px = winBindings.gdi32.GetDeviceCaps(hDC, LOGPIXELSX)
+	# pixels per inch along screen height
+	py = winBindings.gdi32.GetDeviceCaps(hDC, LOGPIXELSY)
+	user32.ReleaseDC(None, hDC)
+	return px, py
 
 
 class ExcelQuickNavItem(browseMode.QuickNavItem):
@@ -1996,9 +1996,10 @@ class ExcelCell(ExcelBase):
 			)
 			speech.speak(sequence)
 		super(ExcelCell, self).reportFocus()
-	
+
 	def _get_location(self):
 		from locationHelper import RectLTWH
+
 		obj = self.excelCellObject
 		PIXEL_PER_POINT = 72
 		ppiX, ppiY = getPixelPerInch()
@@ -2020,49 +2021,45 @@ class ExcelCell(ExcelBase):
 		dyPoints = cell.Top
 		dxPixels = win.PointsToScreenPixelsX(dxPoints)
 		dyPixels = win.PointsToScreenPixelsY(dyPoints)
-		widthPixels  = win.PointsToScreenPixelsX(cell.Width)
+		widthPixels = win.PointsToScreenPixelsX(cell.Width)
 		heightPixels = win.PointsToScreenPixelsY(cell.Height)
-		
-		
 
 	def zzz_get_location(self):
 		from locationHelper import RectLTWH
-		
+
 		obj = self.excelCellObject
 		win = obj.Application.ActiveWindow
-	
+
 		# Conversion points → pixels
-		leftPx   = win.PointsToScreenPixelsX(obj.Left)
-		topPx    = win.PointsToScreenPixelsY(obj.Top)
-		widthPx  = obj.Width
+		leftPx = win.PointsToScreenPixelsX(obj.Left)
+		topPx = win.PointsToScreenPixelsY(obj.Top)
+		widthPx = obj.Width
 		heightPx = obj.Height
-	
+
 		cell = RectLTWH(
 			int(round(leftPx + self.parent.location.left)),
-			int(round(topPx  + self.parent.location.top)),
+			int(round(topPx + self.parent.location.top)),
 			int(round(widthPx)),
 			int(round(heightPx)),
 		)
 		return cell
-	
 
 		def zzz_get_location(self):
 			from locationHelper import RectLTWH
-		
-			obj = self.excelCellObject      # NVDA cell
-			parent = self.parent            # NVDA worksheet
-		
+
+			obj = self.excelCellObject  # NVDA cell
+			parent = self.parent  # NVDA worksheet
+
 			# Les coordonnées sont déjà en pixels écran
 			cell = RectLTWH(
-				obj.left,           # déjà pixels
-				obj.top,            # déjà pixels
-				obj.width,           # largeur en pixels
-				obj.height           # hauteur en pixels
+				obj.left,  # déjà pixels
+				obj.top,  # déjà pixels
+				obj.width,  # largeur en pixels
+				obj.height,  # hauteur en pixels
 			)
 			return cell
-		
-						
-	#zzz
+
+	# zzz
 
 
 class ExcelSelection(ExcelBase):
