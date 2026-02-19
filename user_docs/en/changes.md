@@ -173,7 +173,7 @@ On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of
 * Added `api.fakeNVDAObjectClasses` set and `api.isFakeNVDAObject` function to identify fake NVDAObject instances. (#19168, @hwf1324)
 * NVDA no longer includes the Microsoft Universal C Runtime. (#19508)
 * `synthDriverHandler.setSynth` and `synthDriverHandler.findAndSetNextSynth` now attempt to find fallback synthesizers starting from the start of `defaultSynthPriorityList`, rather than starting immediately after `name` or `currentSynthName`, respectively. (#19603)
-* `gui.installerGui.doInstall` parameter `startOnLogon` default value is now False not True. (#19631)
+* `gui.installerGui.doInstall` parameter `startOnLogon` default value is now `False`. (#19631)
 
 #### API Breaking Changes
 

@@ -363,9 +363,9 @@ class InstallingOverNewerVersionDialog(
 	_UNKNOWN_WARNING = _(
 		# Translators: A warning presented when the installer is unable to determine
 		# the state of the current NVDA installation.
-		"NVDA has detected that you have NVDA already installed, "
-		"but it is unable to determine the version. "
-		"If you are attempting to install an earlier version of NVDA "
+		"An existing NVDA installation has been detected, "
+		"but its version cannot be determined. "
+		"If you are attempting to install an earlier version of NVDA, "
 		"you should first cancel this installation "
 		"and completely uninstall NVDA before installing the earlier version.",
 	)
@@ -422,17 +422,18 @@ class PortableCopyOverNewerVersionDialog(InstallingOverNewerVersionDialog):
 	_DOWNGRADE_WARNING = _(
 		# Translators: A warning presented when the user attempts to downgrade NVDA
 		# to an older version.
-		"You are attempting to replace a portable copy with an earlier version of NVDA. "
+		"You are attempting to replace an existing portable copy of NVDA with an earlier version. "
 		"Downgrading NVDA is not recommended. "
-		"Instead you should cancel this and create a new portable copy. ",
+		"You should cancel this operation and create a new portable copy instead. ",
 	)
 
 	_UNKNOWN_WARNING = _(
 		# Translators: A warning presented when the installer is unable to determine
 		# the state of the current NVDA installation.
-		"NVDA is unable to determine the version of the portable copy. "
-		"If you are attempting to downgrade to an earlier version of NVDA "
-		"you should cancel this installation and create a new portable copy. ",
+		"An existing copy of NVDA has been detected in the chosen directory, "
+		"but its version cannot be determined. "
+		"If you are attempting to downgrade to an earlier version of NVDA, "
+		"you should cancel this operation and create a new portable copy. ",
 	)
 
 

@@ -126,10 +126,10 @@ def _comparePreviousInstall() -> ComparisonState:
 	pathX86 = WritePaths._installDirX86
 	pathX86Exists = pathX86 and os.path.isdir(pathX86)
 	pathX64 = WritePaths.installDir
-	pathExists = pathX64 and os.path.isdir(pathX64)
+	pathX64Exists = pathX64 and os.path.isdir(pathX64)
 
 	installPath = None
-	if pathExists:
+	if pathX64Exists:
 		installPath = pathX64
 	elif pathX86Exists:
 		installPath = pathX86
@@ -137,7 +137,7 @@ def _comparePreviousInstall() -> ComparisonState:
 	return _comparePreviousCopy(installPath)
 
 
-def _comparePreviousCopy(previousCopyPath: str) -> ComparisonState:
+def _comparePreviousCopy(previousCopyPath: str | None) -> ComparisonState:
 	"""
 	Compares the version of the currently running NVDA with the version of a previous installation of NVDA on this system, if any.
 	:return:
