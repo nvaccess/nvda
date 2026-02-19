@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
 # Copyright (C) 2011-2026 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka, Cyrille Bougot
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from collections.abc import Iterable
 import comtypes.client
@@ -979,7 +979,7 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 	if shouldCleanX86:
 		oldSystemConfigPath = os.path.join(installDirX86, "systemConfig")
 		if os.path.isdir(oldSystemConfigPath):
-			config._setSystemConfig(oldSystemConfigPath, prefix=installDir)
+			config._setSystemConfig(oldSystemConfigPath, prefix=installDir, isMigration=True)
 		tryRemoveFile(installDirX86, rebootOK=True)
 	COMRegistrationFixes.fixCOMRegistrations()
 
