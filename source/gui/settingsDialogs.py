@@ -5952,9 +5952,8 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 				label=_("Make screen black (immediate effect)"),
 			),
 		)
-		self._screenCurtainEnabledCheckbox.SetValue(
-			screenCurtain.screenCurtain is not None and screenCurtain.screenCurtain.enabled,
-		)
+		self._wasScreenCurtainEnabledOnInit = screenCurtain.screenCurtain is not None and screenCurtain.screenCurtain.enabled
+		self._screenCurtainEnabledCheckbox.SetValue(self._wasScreenCurtainEnabledOnInit)
 		self._screenCurtainEnabledCheckbox.Bind(wx.EVT_CHECKBOX, self._ensureScreenCurtainEnableState)
 		self._screenCurtainEnabledCheckbox.Enable(screenCurtain.screenCurtain is not None)
 		self.bindHelpEvent("ScreenCurtainEnable", self._screenCurtainEnabledCheckbox)
@@ -6016,6 +6015,18 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		if not updateCheck:
 			self._allowUsageStatsCheckBox.Value = False
 			self._allowUsageStatsCheckBox.Disable()
+
+	def onCancel(self, evt: wx.CommandEvent):
+		# Restore the screen curtain enabled state to what it was when the dialog was opened, in case the user enabled or disabled it without saving.
+		if (
+			screenCurtain.screenCurtain is not None
+			and self._screenCurtainEnabledCheckbox.GetValue() != self._wasScreenCurtainEnabledOnInit
+		):
+			if screenCurtain.screenCurtain.enabled:
+				screenCurtain.screenCurtain.disable()
+			else:
+				screenCurtain.screenCurtain.enable()
+		super().onCancel(evt)
 
 	def onSave(self):
 		# We intentionally don't save whether the screen curtain is enabled here,
