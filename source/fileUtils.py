@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2025 NV Access Limited, Bram Duvigneau, Łukasz Golonka
+# Copyright (C) 2017-2026 NV Access Limited, Bram Duvigneau, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -70,10 +70,16 @@ def _suspendWow64RedirectionForFileInfoRetrieval(func):
 
 
 @_suspendWow64RedirectionForFileInfoRetrieval
-def getFileVersionInfo(name, *attributes):
-	"""Gets the specified file version info attributes from the provided file."""
-	if not isinstance(name, str):
-		raise TypeError("name must be an unicode string")
+def getFileVersionInfo(name: str, *attributes: str) -> dict[str, str | None]:
+	"""
+	Gets the specified file version info attributes from the provided file.
+	:param name: The path to the file to get version info from.
+	:param attributes: The list of attributes to get. E.g. "FileVersion", "ProductVersion"
+	:return: A dictionary mapping the provided attributes to their values.
+	If an attribute is not found or invalid, its value will be None.
+
+	:raises RuntimeError: If the file does not exist, has no version information, or has no codepage.
+	"""
 	if not os.path.exists(name):
 		raise RuntimeError("The file %s does not exist" % name)
 	fileVersionInfo = {}

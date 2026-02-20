@@ -115,6 +115,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [magnifier]
 	defaultZoomLevel = float(min=1.0, max=10.0, default=2.0)
 	defaultFullscreenMode = string(default="center")
+	isTrueCentered = boolean(default=False)
 	defaultFilter = string(default="normal")
 	keepMouseCentered = boolean(default=false)
 	saveShortcutChanges = boolean(default=false)
