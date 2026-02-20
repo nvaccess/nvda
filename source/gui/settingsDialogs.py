@@ -6022,7 +6022,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		# Restore the screen curtain enabled state to what it was when the dialog was opened, in case the user enabled or disabled it without saving.
 		if (
 			screenCurtain.screenCurtain is not None
-			and self._screenCurtainEnabledCheckbox.GetValue() != self._wasScreenCurtainEnabledOnInit
+			and screenCurtain.screenCurtain.enabled != self._wasScreenCurtainEnabledOnInit
 		):
 			if self._wasScreenCurtainEnabledOnInit:
 				screenCurtain.screenCurtain.enable()
