@@ -4,7 +4,6 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import os.path
-from locale import strxfrm
 
 import globalVars
 from logHandler import log
@@ -19,21 +18,6 @@ These definitions are used to load speech dictionaries.
 The list is filled with definitions from core and add-ons using _addSpeechDictionaries.
 With listAvailableSpeechDictDefinitions, there is a public interface to retrieve definitions.
 """
-
-
-def listAvailableSpeechDictDefinitions(forDisplay: bool = False) -> list[SpeechDictDefinition]:
-	"""Get available speech dictionary definitions.
-	Note that this function returns both mandatory and optional speech dictionaries, and does not filter based on whether the dictionary is currently enabled.
-	:param forDisplay: If True, the returned list is sorted for display order.
-		Such a list is sorted alphabetically by display name, with built-in dictionaries listed first.
-	"""
-	defs = list(_speechDictDefinitions)
-	if not forDisplay:
-		return defs
-	return sorted(
-		defs,
-		key=lambda dct: (dct.source not in DictionaryType, strxfrm(dct.displayName or dct.name)),
-	)
 
 
 def _addSpeechDictionaries():

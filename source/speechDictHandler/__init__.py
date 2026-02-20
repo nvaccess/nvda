@@ -4,6 +4,8 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import typing
+from locale import strxfrm as _strxfrm
+
 import globalVars
 from logHandler import log
 from utils._deprecate import MovedSymbol, RemovedSymbol, handleDeprecations
@@ -11,7 +13,12 @@ from utils._deprecate import MovedSymbol, RemovedSymbol, handleDeprecations
 from . import definitions
 from .types import (
 	DictionaryType,
-	VoiceSpeechDictDefinition,
+)
+from .types import (
+	SpeechDictDefinition as _SpeechDictDefinition,
+)
+from .types import (
+	VoiceSpeechDictDefinition as _VoiceSpeechDictDefinition,
 )
 
 if typing.TYPE_CHECKING:
@@ -62,7 +69,7 @@ def loadVoiceDict(synth: "synthDriverHandler.SynthDriver") -> None:
 	It handles case when the synthesizer doesn't support voice setting.
 	"""
 	definition = next(
-		(d for d in definitions._speechDictDefinitions if isinstance(d, VoiceSpeechDictDefinition)),
+		(d for d in definitions._speechDictDefinitions if isinstance(d, _VoiceSpeechDictDefinition)),
 		None,
 	)
 	if definition is None:
@@ -72,3 +79,18 @@ def loadVoiceDict(synth: "synthDriverHandler.SynthDriver") -> None:
 		)
 		raise RuntimeError("No voice speech dictionary definition is available to load.")
 	definition.load(synth)
+
+
+def listAvailableSpeechDictDefinitions(forDisplay: bool = False) -> list[_SpeechDictDefinition]:
+	"""Get available speech dictionary definitions.
+	Note that this function returns both mandatory and optional speech dictionaries, and does not filter based on whether the dictionary is currently enabled.
+	:param forDisplay: If True, the returned list is sorted for display order.
+		Such a list is sorted alphabetically by display name, with built-in dictionaries listed first.
+	"""
+	defs = list(definitions._speechDictDefinitions)
+	if not forDisplay:
+		return defs
+	return sorted(
+		defs,
+		key=lambda dct: (dct.source not in DictionaryType, _strxfrm(dct.displayName or dct.name)),
+	)
