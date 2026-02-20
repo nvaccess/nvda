@@ -20,7 +20,7 @@ import threading
 import rpyc
 from rpyc.core.stream import PipeStream, Stream
 from logHandler import log
-from raiiUtils import makeAutoFree
+from utils.raii import makeAutoFree
 from winBindings.kernel32 import (
 	CloseHandle,
 	DuplicateHandle,
