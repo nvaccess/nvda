@@ -5952,7 +5952,9 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 				label=_("Make screen black (immediate effect)"),
 			),
 		)
-		self._wasScreenCurtainEnabledOnInit = screenCurtain.screenCurtain is not None and screenCurtain.screenCurtain.enabled
+		self._wasScreenCurtainEnabledOnInit = (
+			screenCurtain.screenCurtain is not None and screenCurtain.screenCurtain.enabled
+		)
 		self._screenCurtainEnabledCheckbox.SetValue(self._wasScreenCurtainEnabledOnInit)
 		self._screenCurtainEnabledCheckbox.Bind(wx.EVT_CHECKBOX, self._ensureScreenCurtainEnableState)
 		self._screenCurtainEnabledCheckbox.Enable(screenCurtain.screenCurtain is not None)
