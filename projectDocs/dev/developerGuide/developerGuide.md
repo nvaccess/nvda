@@ -12,24 +12,32 @@ This guide provides information concerning NVDA development, including translati
 
 The NVDA Add-on API consists of all NVDA Python objects, classes and functions, excluding symbols prefixed with an underscore (`_`), transitive imports and Python packages.
 
-* **Public symbols (e.g. `gui.mainFrame`):** These form the supported contract.
+* **Public symbols (e.g. `gui.mainFrame`):**
+These form the supported contract.
 We strive to maintain backward compatibility for these symbols according to the schedule below.
-* **Private symbols (e.g. `_doInstall`):** These are internal implementation details.
+* **Private symbols (e.g. `_doInstall`):**
+These are internal implementation details.
+Code is considered private if it begins with a leading underscore.
+This also includes anything "below" the underscore.
+For example, `package.module._Class`, `package._module.Class`, and `_package.module.Class` are all internal.
 They may change or disappear in any release without notice.
 Add-ons relying on private symbols do so at their own risk.
-This also includes anything "below" the underscore.
-For example, `package.module._Class.*`, `package._module.*`, and `_package.*` are all internal.
-* **Pip packages:** These may be updated, downgraded or removed at any time.
-With the exception of `wx` (which must be used from NVDA), it is recommended to package any pip dependency you share with NVDA directly with your add-on, rather than using NVDA's version of the package.
+* **Pip packages:**
+These may be updated, downgraded or removed at any time.
+It is recommended to package any pip dependency directly with your add-on, rather than using NVDA's version of the package.
+The exception to this is `wx`, which must be used from NVDA.
 
 #### The API release cycle
 
 To balance progress with ecosystem stability, NVDA follows a predictable schedule for API changes:
 
-* **Annual API-breaking release (major releases, e.g. 2026.1):** This is the only release window where signature breaking changes (defined below) are permitted.
+* **Annual API-breaking release (major releases, e.g. 2026.1):**
+This is the only release window where signature breaking changes (defined below) are permitted.
 This allows us to remove technical debt and refactor core code.
-* **Standard releases (minor & patch releases, e.g. 2026.2, 2026.3.1):** These releases focus on features and stability.
-The API signature remains frozen, and changes are limited to behavioural refinements and bug fixes (defined below).
+* **Standard releases (minor & patch releases, e.g. 2026.2, 2026.3.1):**
+These releases focus on features and stability.
+Existing API signatures are preserved, but new API features may be added. 
+Behavioural refinements and bug fixes are also permitted (see below).
 
 #### Classification of API changes
 
@@ -48,7 +56,7 @@ A change where the code continues to run (the signature matches), but the logic 
 * We recognise that some add-ons may inadvertently rely on incorrect behaviour / bugs.
 However, preserving a bug to maintain backwards compatibility significantly hampers NVDA's development.
 If a public function was documented to do X but was actually doing Y, changing it to correctly do X is considered a bug fix, not a breaking change.
-* Conversely, changing a function that was documented to do X, and was correctly doing X, to instead do Y is considered a breaking change.
+* Conversely, if a function that was documented to do X, and was correctly doing X, is changed to instead do Y - this is considered a breaking change.
 
 ##### Security improvements
 
