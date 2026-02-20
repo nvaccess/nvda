@@ -4,6 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from collections.abc import Iterable
+import json
 import comtypes.client
 import ctypes
 from enum import auto, Enum
@@ -998,6 +999,31 @@ def removeOldLoggedFiles(installPath: str):
 		filePath = line.rstrip("\n")
 		if os.path.exists(filePath):
 			tryRemoveFile(filePath, rebootOK=True)
+
+
+def _migratePickledAddonsStateToJson(configPath: str) -> None:
+	pickledPath = os.path.join(configPath, addonHandler._OLD_STATE_FILENAME)
+	log.info(f"{pickledPath=}")
+	if not os.path.isfile(pickledPath):
+		log.info("Pickled add-ons state does not exist. No action taken.")
+		return
+	try:
+		jsonState = addonHandler._getAddonsStateDictFromPickle(pickledPath)
+	except Exception:
+		log.info("Failed to load pickled add-ons state.", exc_info=True)
+	else:
+		log.info(f"{jsonState=}")
+		jsonPath = os.path.join(configPath, addonHandler.STATE_FILENAME)
+		# fh, tempJsonPath = tempfile.mkstemp(prefix="addonsState.", suffix=".json", dir=configPath, text=True)
+		log.info(f"{jsonPath=}")
+		# log.info(f"{tempJsonPath=}")
+		try:
+			with open(jsonPath, "wt", encoding="utf-8") as file:
+				json.dump(jsonState, file)
+		except Exception:
+			log.info("Failed to dump JSON add-ons state.", exc_info=True)
+	finally:
+		os.replace(pickledPath, pickledPath + ".bak")
 
 
 def createPortableCopy(destPath: str, shouldCopyUserConfig: bool = True):
