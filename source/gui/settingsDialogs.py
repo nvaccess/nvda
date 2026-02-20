@@ -6018,17 +6018,17 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			self._allowUsageStatsCheckBox.Value = False
 			self._allowUsageStatsCheckBox.Disable()
 
-	def onCancel(self, evt: wx.CommandEvent):
+	def onDiscard(self):
 		# Restore the screen curtain enabled state to what it was when the dialog was opened, in case the user enabled or disabled it without saving.
 		if (
 			screenCurtain.screenCurtain is not None
 			and self._screenCurtainEnabledCheckbox.GetValue() != self._wasScreenCurtainEnabledOnInit
 		):
-			if screenCurtain.screenCurtain.enabled:
-				screenCurtain.screenCurtain.disable()
-			else:
+			if self._wasScreenCurtainEnabledOnInit:
 				screenCurtain.screenCurtain.enable()
-		super().onCancel(evt)
+			else:
+				screenCurtain.screenCurtain.disable()
+		super().onDiscard()
 
 	def onSave(self):
 		# We intentionally don't save whether the screen curtain is enabled here,
