@@ -1999,7 +1999,9 @@ class ExcelCell(ExcelBase):
 		super(ExcelCell, self).reportFocus()
 
 	def _get_location(self):
-		obj = self.excelCellObject
+		cellObj = self.excelCellObject
+		if cellObj.mergeCells:
+			cellObj = cellObj.mergeArea
 		appObj = self.parent.excelApplicationObject
 		zoomRatio = appObj.ActiveWindow.Zoom / 100
 		pointsPerInch = appObj.InchesToPoints(1)
@@ -2010,10 +2012,10 @@ class ExcelCell(ExcelBase):
 		gridX = self.parent.excelApplicationObject.ActiveWindow.PointsToScreenPixelsX(0)
 		gridY = self.parent.excelApplicationObject.ActiveWindow.PointsToScreenPixelsY(0)
 		return RectLTWH.fromFloatCollection(
-			obj.left * pX * zoomRatio + gridX,
-			obj.top * pY * zoomRatio + gridY,
-			obj.width * pX * zoomRatio,
-			obj.height * pY * zoomRatio,
+			cellObj.left * pX * zoomRatio + gridX,
+			cellObj.top * pY * zoomRatio + gridY,
+			cellObj.width * pX * zoomRatio,
+			cellObj.height * pY * zoomRatio,
 		)
 
 
