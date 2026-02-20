@@ -1,11 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2011-2025 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka, Cyrille Bougot
+# Copyright (C) 2011-2026 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka, Cyrille Bougot
 
 from collections.abc import Iterable
 import comtypes.client
 import ctypes
+from enum import auto, Enum
 import pathlib
 import winreg
 import time
@@ -18,6 +19,7 @@ import globalVars
 import languageHandler
 import config
 from config.registry import NVDA_ADDON_PROG_ID, RegistryKey, _deleteKeyAndSubkeys
+import fileUtils
 import versionInfo
 import buildVersion
 from logHandler import log
@@ -28,7 +30,7 @@ import winKernel
 import NVDAState
 from NVDAState import WritePaths
 from utils.tempFile import _createEmptyTempFileForDeletingFile
-from utils._deprecate import handleDeprecations, MovedSymbol
+from utils._deprecate import handleDeprecations, MovedSymbol, RemovedSymbol
 
 _wsh = None
 
@@ -44,6 +46,10 @@ __getattr__ = handleDeprecations(
 		"NVDAState",
 		"WritePaths",
 		"defaultInstallDir",
+	),
+	RemovedSymbol(
+		"comparePreviousInstall",
+		lambda: _comparePreviousInstall()._legacyValue,
 	),
 )
 
@@ -93,37 +99,85 @@ def createShortcut(
 		short.Save()
 
 
-def comparePreviousInstall() -> int | None:
-	"""Returns 1 if the existing installation is newer than this running version,
-	0 if it is the same, -1 if it is older,
-	None if there is no existing installation.
-	"""
+class ComparisonState(Enum):
+	FRESH_INSTALL = auto()
+	DOWNGRADE = auto()
+	REINSTALL = auto()
+	UPGRADE = auto()
+	UNKNOWN = auto()
+
+	@property
+	def _legacyValue(self) -> int | None:
+		"""Legacy value for comparison state."""
+		match self:
+			case ComparisonState.FRESH_INSTALL:
+				return None
+			case ComparisonState.DOWNGRADE:
+				return 1
+			case ComparisonState.REINSTALL:
+				return 0
+			case ComparisonState.UPGRADE:
+				return -1
+			case ComparisonState.UNKNOWN:
+				return None
+
+
+def _comparePreviousInstall() -> ComparisonState:
 	pathX86 = WritePaths._installDirX86
 	pathX86Exists = pathX86 and os.path.isdir(pathX86)
-	path = WritePaths.installDir
-	pathExists = path and os.path.isdir(path)
-	oldTime = None
-	if not (pathExists or pathX86Exists):
-		return None
-	if pathExists:
-		try:
-			oldTime = os.path.getmtime(os.path.join(path, "nvda_slave.exe"))
-		except OSError:
-			log.debug("Unable to get modification time of nvda_slave.exe in previous installation.")
-			return None
+	pathX64 = WritePaths.installDir
+	pathX64Exists = pathX64 and os.path.isdir(pathX64)
+
+	installPath = None
+	if pathX64Exists:
+		installPath = pathX64
 	elif pathX86Exists:
-		try:
-			oldTime = os.path.getmtime(os.path.join(pathX86, "nvda_slave.exe"))
-		except OSError:
-			log.debug("Unable to get modification time of nvda_slave.exe in previous installation (x86).")
-			return None
+		installPath = pathX86
+
+	return _comparePreviousCopy(installPath)
+
+
+def _comparePreviousCopy(previousCopyPath: str | None) -> ComparisonState:
+	"""
+	Compares the version of the currently running NVDA with the version of a previous installation of NVDA on this system, if any.
+	:return:
+		- ComparisonState.FRESH_INSTALL if no previous installation is found
+		- ComparisonState.DOWNGRADE if the previous installation is newer than the current one
+		- ComparisonState.REINSTALL if they are the same version
+		- ComparisonState.UPGRADE if the previous installation is older than the current one
+		- ComparisonState.UNKNOWN if there was an error determining the version of either the current or previous installation
+	"""
+	previousCopyPathExists = previousCopyPath and os.path.isdir(previousCopyPath)
+	if not previousCopyPathExists:
+		return ComparisonState.FRESH_INSTALL
+
+	oldSlavePath = os.path.join(previousCopyPath, "nvda_slave.exe")
 	try:
-		newTime = os.path.getmtime("nvda_slave.exe")
-	except OSError:
+		oldVersion = fileUtils.getFileVersionInfo(oldSlavePath, "FileVersion")
+	except (OSError, RuntimeError):
+		log.debug("Unable to get file version of nvda_slave.exe in previous copy.")
+		return ComparisonState.UNKNOWN
+
+	try:
+		newVersion = fileUtils.getFileVersionInfo("nvda_slave.exe", "FileVersion")
+	except (OSError, RuntimeError):
 		# This should never happen.
-		log.error("Unable to get modification time of nvda_slave.exe in current process.")
-		return None
-	return (oldTime > newTime) - (oldTime < newTime)
+		log.exception("Unable to get file version of nvda_slave.exe in current process.")
+		return ComparisonState.UNKNOWN
+
+	try:
+		oldVersion = [int(x) for x in oldVersion["FileVersion"].split(".")]
+		newVersion = [int(x) for x in newVersion["FileVersion"].split(".")]
+	except (KeyError, AttributeError, ValueError, TypeError):
+		log.exception("Error parsing version information.")
+		return ComparisonState.UNKNOWN
+
+	if oldVersion > newVersion:
+		return ComparisonState.DOWNGRADE
+	elif oldVersion < newVersion:
+		return ComparisonState.UPGRADE
+	else:
+		return ComparisonState.REINSTALL
 
 
 def getDocFilePath(fileName: str, installDir: str):

@@ -227,6 +227,22 @@ In Crowdin, this information appears at the end of the context section.
 
 Whenever you add or update your interface translations, repeat the steps above (copying the updated .mo file and restarting NVDA) to test your updated translation messages.
 
+### Corrupted translations
+
+As discussed, NVDA's interface messages may contain formatting strings.
+Incorrect formatting strings can cause NVDA to misbehave or crash.
+
+When translating with Poedit and NVDA's l10n utility, translations are automatically validated before they can be uploaded to Crowdin.
+When translating via Crowdin's web interface, some problems with formatting strings will be detected.
+However, Crowdin still allows you to save these translations, which will appear as QA issues.
+
+Before interface translations are merged for inclusion in NV Access's builds of NVDA, they are once again checked for issues.
+Updates to a locale will not be made unless no errors are detected in that locale's translations.
+
+To be notified about errors in NVDA's interface translations, please subscribe to the read-only [NVDA localisation mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-l10n).
+If errors are detected when merging translations, an email will be sent to this mailing list with details.
+The subject of these messages starts with the affected languages, so you can easily determine if a locale you work on is impacted (e.g. "[ab, cd_EF]: Errors in interface translations").
+
 ## Translating User Documentation
 
 Documentation available for translation includes:

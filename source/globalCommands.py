@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
 # Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis,
 # Burman's Computer and Education Ltd, Cary-rowen.
@@ -24,6 +24,8 @@ import keyboardHandler
 import mouseHandler
 import eventHandler
 import review
+import _magnifier
+import _magnifier.commands
 import controlTypes
 import api
 import textInfos
@@ -72,7 +74,6 @@ import audio
 import synthDriverHandler
 from utils.displayString import DisplayStringEnum
 import _remoteClient
-import _localCaptioner
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -125,9 +126,6 @@ SCRCAT_AUDIO = _("Audio")
 #: Script category for Remote Access commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_REMOTE = pgettext("remote", "Remote Access")
-#: Script category for image description commands.
-# Translators: The name of a category of NVDA commands.
-SCRCAT_IMAGE_DESC = pgettext("imageDesc", "Image Descriptions")
 
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
@@ -3522,15 +3520,6 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onRemoteAccessSettingsCommand, None)
 
 	@script(
-		# Translators: Input help mode message for go to local captioner settings command.
-		description=pgettext("imageDesc", "Shows the AI image descriptions settings"),
-		category=SCRCAT_CONFIG,
-	)
-	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
-	def script_activateLocalCaptionerSettings(self, gesture: "inputCore.InputGesture"):
-		wx.CallAfter(gui.mainFrame.onLocalCaptionerSettingsCommand, None)
-
-	@script(
 		# Translators: Input help mode message for go to Add-on Store settings command.
 		description=_("Shows NVDA's Add-on Store settings"),
 		category=SCRCAT_CONFIG,
@@ -3601,6 +3590,16 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateInputGesturesDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onInputGesturesCommand, None)
+
+	@script(
+		# Translators: Input help mode message for go to magnifier settings command.
+		description=_("Shows NVDA's magnifier settings"),
+		category=SCRCAT_CONFIG,
+		gesture="kb:NVDA+control+w",
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateMagnifierSettingsDialog(self, gesture: inputCore.InputGesture):
+		wx.CallAfter(gui.mainFrame.onMagnifierSettingsCommand, None)
 
 	@script(
 		# Translators: Input help mode message for the report current configuration profile command.
@@ -3751,7 +3750,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for toggle braille mode command
 		description=_("Toggles braille mode"),
 		category=SCRCAT_BRAILLE,
-		gesture="kb:nvda+alt+t",
+		gesture="kb:NVDA+alt+t",
 	)
 	def script_toggleBrailleMode(self, gesture: inputCore.InputGesture):
 		curMode = BrailleMode(config.conf["braille"]["mode"])
@@ -4844,7 +4843,6 @@ class GlobalCommands(ScriptableObject):
 			"Pressed once, screen curtain is enabled until you restart NVDA. "
 			"Pressed twice, screen curtain is enabled until you disable it",
 		),
-		category=SCRCAT_VISION,
 		gesture="kb:NVDA+control+escape",
 	)
 	def script_toggleScreenCurtain(self, gesture: inputCore.InputGesture) -> None:
@@ -4919,7 +4917,6 @@ class GlobalCommands(ScriptableObject):
 				self._waitingOnScreenCurtainWarningDialog = None
 				if not doEnable:
 					return  # exit early with no ui.message because the user has decided to abort.
-
 				tempEnable = GlobalCommands._tempEnableScreenCurtain
 				# Translators: Reported when the screen curtain is enabled.
 				enableMessage = _("Screen curtain enabled")
@@ -4969,6 +4966,89 @@ class GlobalCommands(ScriptableObject):
 					)
 					return
 				_enableScreenCurtain()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggles the magnifier on and off",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:NVDA+shift+w",
+	)
+	def script_toggleMagnifier(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleMagnifier()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Increases the magnification level of the magnifier",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:NVDA+shift+=",
+	)
+	def script_zoomIn(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.zoomIn()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Decreases the magnification level of the magnifier",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:NVDA+shift+-",
+	)
+	def script_zoomOut(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.zoomOut()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle filter of the magnifier",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:NVDA+shift+i",
+	)
+	def script_toggleFilter(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFilter()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle focus mode for the full-screen magnifier",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_toggleFullscreenMode(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFullscreenMode()
+
+	@script(
+		description=_(
+			# Translators: Describe a command.
+			"Launch spotlight if magnifier is full-screen",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:NVDA+shift+l",
+	)
+	def script_startSpotlight(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.startSpotlight()
 
 	@script(
 		description=_(
@@ -5131,30 +5211,6 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_sendSAS(self, gesture: "inputCore.InputGesture"):
 		_remoteClient._remoteClient.sendSAS()
-
-	@script(
-		description=pgettext(
-			"imageDesc",
-			# Translators: Description for the image caption script
-			"Get an AI-generated image description of the navigator object.",
-		),
-		category=SCRCAT_IMAGE_DESC,
-		gesture="kb:NVDA+g",
-	)
-	@gui.blockAction.when(gui.blockAction.Context.SCREEN_CURTAIN)
-	def script_runCaption(self, gesture: "inputCore.InputGesture"):
-		_localCaptioner._localCaptioner.runCaption(gesture)
-
-	@script(
-		description=pgettext(
-			"imageDesc",
-			# Translators: Description for the toggle image captioning script
-			"Load or unload the image captioner",
-		),
-		category=SCRCAT_IMAGE_DESC,
-	)
-	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):
-		_localCaptioner._localCaptioner.toggleImageCaptioning(gesture)
 
 	@script(
 		description=_(
