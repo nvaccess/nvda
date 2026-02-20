@@ -183,7 +183,7 @@ def toggleIntegerValue(
 	ui.message(msg)
 
 
-def getConfigValue(*keyPath: Tuple[str, ...]) -> any:
+def getConfigValue(*keyPath: *tuple[str, ...]) -> any:
 	"""
 	Retrieves the value of a configuration key.
 	:param keyPath: The path to the configuration key to retrieve.
@@ -192,7 +192,7 @@ def getConfigValue(*keyPath: Tuple[str, ...]) -> any:
 	return functools.reduce(lambda d, x: d.get(x), keyPath, config.conf)
 
 
-def setConfigValue(value: bool | int | float | str, *keyPath: Tuple[str, ...]) -> None:
+def setConfigValue(value: bool | int | float | str, *keyPath: *tuple[str, ...]) -> None:
 	"""
 	Sets the value of a configuration key.
 	:param value: The value to set for the configuration key.
@@ -203,7 +203,7 @@ def setConfigValue(value: bool | int | float | str, *keyPath: Tuple[str, ...]) -
 	dictToUpdate[keyPath[-1]] = value
 
 
-def _getConfigValueRange(*keyPath: tuple[str, ...]) -> tuple[float, float]:
+def _getConfigValueRange(*keyPath: *tuple[str, ...]) -> tuple[float, float]:
 	"""
 	Gets the minimum and maximum allowed values for a configuration key.
 	:param keyPath: The path to The configuration key to evaluate.
@@ -227,7 +227,7 @@ def _calculateNewValue(currentValue: float, minValue: float, maxValue: float, st
 	return min(max(currentValue + step, minValue), maxValue)
 
 
-def valueToPercentage(*keyPath: Tuple[str, ...]) -> int:
+def valueToPercentage(*keyPath: *tuple[str, ...]) -> int:
 	"""
 	Calculates the percentage representation of a configuration value within its defined range.
 	:param keyPath: The path to the configuration key to evaluate.
@@ -238,7 +238,7 @@ def valueToPercentage(*keyPath: Tuple[str, ...]) -> int:
 	return round((currentValue - minValue) / (maxValue - minValue) * 100)
 
 
-def percentageToValue(*keyPath: Tuple[str, ...], percentage: int) -> float:
+def percentageToValue(*keyPath: *tuple[str, ...], percentage: int) -> float:
 	"""
 	Calculates the configuration value corresponding to a given percentage within its defined range.
 	:param keyPath: The path to the configuration key to evaluate.
@@ -251,7 +251,7 @@ def percentageToValue(*keyPath: Tuple[str, ...], percentage: int) -> float:
 	return value
 
 
-def clampedIncrementAndUpdateConfig(*keyPath: Tuple[str, ...], step: float) -> None:
+def clampedIncrementAndUpdateConfig(*keyPath: *tuple[str, ...], step: float) -> None:
 	"""
 	Updates a configuration value by applying a step, constrained within its valid range.
 	:param keyPath: The path to the configuration key to update.
