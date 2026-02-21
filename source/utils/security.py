@@ -150,7 +150,8 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 		commands.script_touch_newExplore,  # tap gesture, reports content under the finger
 		commands.script_touch_explore,  # hover gesture, reports content changes under the finger
 		commands.script_touch_hoverUp,  # hover up gesture, fixes a situation with touch typing
-		# commands.script_touch_rightClick, TODO: consider adding, was this missed previously?
+		# commands.script_touch_rightClick, was this missed previously?
+		commands.script_touch_rightClick,
 	}
 
 
