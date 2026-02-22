@@ -388,7 +388,7 @@ class SynthDriver(SynthDriver):
 		_espeak.pause(switch)
 
 	_rateBoost = False
-	_rate: int = 0
+	_rate: int
 	RATE_BOOST_MULTIPLIER = 3
 
 	def _get_rateBoost(self):
