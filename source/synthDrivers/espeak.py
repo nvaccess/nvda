@@ -379,7 +379,11 @@ class SynthDriver(SynthDriver):
 			textList.append("</prosody>")
 		text = "".join(textList)
 		_espeak.speak(text)
-		self._set_rate(self._rate)
+		# If self.rate is not the same as self._rate, that means
+		# the rate has been changed without calling _set_rate
+		# (this can happen due to a bug in eSpeak's handling of SSML).
+		if self.rate != self._rate:
+			self.rate = self._rate
 
 	def cancel(self):
 		_espeak.stop()
