@@ -379,6 +379,7 @@ class SynthDriver(SynthDriver):
 			textList.append("</prosody>")
 		text = "".join(textList)
 		_espeak.speak(text)
+		self._set_rate(self._rate)
 
 	def cancel(self):
 		_espeak.stop()
@@ -387,6 +388,7 @@ class SynthDriver(SynthDriver):
 		_espeak.pause(switch)
 
 	_rateBoost = False
+	_rate: int = 0
 	RATE_BOOST_MULTIPLIER = 3
 
 	def _get_rateBoost(self):
@@ -406,6 +408,7 @@ class SynthDriver(SynthDriver):
 		return self._paramToPercent(val, _espeak.minRate, _espeak.maxRate)
 
 	def _set_rate(self, rate):
+		self._rate = rate
 		val = self._percentToParam(rate, _espeak.minRate, _espeak.maxRate)
 		if self._rateBoost:
 			val = int(val * self.RATE_BOOST_MULTIPLIER)
