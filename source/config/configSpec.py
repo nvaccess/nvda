@@ -529,6 +529,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		blockSeparators = string(default=", \u00a0\u202f")
 		# Auto, '.', ',', Custom
 		decimalSeparator = string(default="Auto")
+		# Use Word's native math speech instead of MathCAT when in Microsoft Word.
+		# This option was added in response to #19598.
+		useWordNativeMath = boolean(default=false)
 
 [screenCurtain]
 	enabled = boolean(default=false)
