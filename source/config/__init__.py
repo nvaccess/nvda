@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
+# Copyright (C) 2006-2026 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
 # Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -10,6 +10,7 @@ In addition, this module provides three actions: profile switch notifier, an act
 For the latter two actions, one can perform actions prior to and/or after they take place.
 """
 
+from collections.abc import Collection
 from enum import Enum
 import globalVars
 import winreg
@@ -25,6 +26,7 @@ from configobj.validate import Validator
 from logHandler import log
 import logging
 from logging import DEBUG
+from utils.caseInsensitiveCollections import CaseInsensitiveSet
 import winBindings.shell32
 from shlobj import FolderId, SHGetKnownFolderPath
 import baseObject
@@ -302,14 +304,29 @@ def _setStartOnLogonScreen(enable: bool) -> None:
 	easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN, enable)
 
 
-def setSystemConfigToCurrentConfig():
+def setSystemConfigToCurrentConfig(*, addonsToCopy: Collection[str] = ()):
+	"""
+	Replaces the system configuration with the current user configuration.
+
+	:param addonsToCopy: IDs of the add-ons to copy, defaults to ()
+		.. warning::
+			Only enabled add-ons should be copied.
+			Providing IDs of add-ons that are disabled may cause unexpected results,
+			especially for add-ons that are not compatible with the current API version.
+	:raises installer.RetriableFailure: If copying the user to the system config fails.
+	:raises RuntimeError: If calling ``nvda_slave`` fails for some other reason.
+	"""
 	fromPath = WritePaths.configDir
 	if winBindings.shell32.IsUserAnAdmin():
-		_setSystemConfig(fromPath)
+		_setSystemConfig(fromPath, addonsToCopy=addonsToCopy)
 	else:
 		import systemUtils
 
-		res = systemUtils.execElevated(SLAVE_FILENAME, ("setNvdaSystemConfig", fromPath), wait=True)
+		res = systemUtils.execElevated(
+			SLAVE_FILENAME,
+			("setNvdaSystemConfig", fromPath, *addonsToCopy),
+			wait=True,
+		)
 		if res == 2:
 			import installer
 
@@ -318,8 +335,9 @@ def setSystemConfigToCurrentConfig():
 			raise RuntimeError("Slave failure")
 
 
-def _setSystemConfig(fromPath, *, prefix=sys.prefix):
+def _setSystemConfig(fromPath: str, *, prefix: str = sys.prefix, addonsToCopy: Collection[str] = ()):
 	import installer
+	import addonHandler
 
 	toPath = os.path.join(prefix, "systemConfig")
 	log.debug("Copying config to systemconfig dir: %s", toPath)
@@ -333,9 +351,15 @@ def _setSystemConfig(fromPath, *, prefix=sys.prefix):
 			for subPath in removeSubs:
 				log.debug("Ignored folder that may contain unpackaged addons: %s", subPath)
 				subDirs.remove(subPath)
+			if addonHandler.stateFilename in files:
+				# Don't copy the addons state file,
+				# as we will generate a new one based on which add-ons are being copied.
+				files.remove(addonHandler.stateFilename)
 		else:
 			relativePath = os.path.relpath(curSourceDir, fromPath)
 			curDestDir = os.path.join(toPath, relativePath)
+			if relativePath == "addons":
+				_prepareToCopyAddons(fromPath, toPath, subDirs, addonsToCopy)
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
 		for f in files:
@@ -349,6 +373,43 @@ def _setSystemConfig(fromPath, *, prefix=sys.prefix):
 			sourceFilePath = os.path.join(curSourceDir, f)
 			destFilePath = os.path.join(curDestDir, f)
 			installer.tryCopyFile(sourceFilePath, destFilePath)
+
+
+def _prepareToCopyAddons(fromPath: str, toPath: str, addonDirs: list[str], addonsToCopy: Collection[str]):
+	"""Determine which add-on directories to copy to the system profile, and create the appropriate addonsState file.
+
+	.. Note::
+		While this function returns ``None``, it has two major side-effects:
+		1. The ``addonDirs`` list is mutated to contain only the add-ons that should be copied.
+		2. A new `addonsState.pickle` is created in ``toPath``.
+
+	:param fromPath: Root of the source configuration directory.
+	:param toPath: Root of the destination configuration directory
+	:param addonDirs: Subdirectories of ``addons/`` in ``fromPath``.
+		This will be mutated to only contain the add-ons that should be copied.
+	:param addonsToCopy: Add-on IDs of the add-ons that should be copied.
+	"""
+	from addonStore.models.status import AddonStateCategory
+	import addonHandler
+
+	addonsToCopy = CaseInsensitiveSet(addonsToCopy)
+	allAddons = addonDirs[:]
+	addonDirs.clear()
+	addonDirs.extend(addon for addon in allAddons if addon.casefold() in addonsToCopy)
+	if addonDirs:
+		log.debug(f"Copying add-ons: {', '.join(addonDirs)}")
+		# We are copying add-ons, so we need to generate a new addons state file.
+		# If no add-ons have their compatibility overridden, the file will not be saved, but this is fine.
+		userAddonsState = addonHandler.AddonsState()
+		userAddonsState._load(os.path.join(fromPath, addonHandler.stateFilename))
+		systemAddonsState = addonHandler.AddonsState()
+		systemAddonsState.manualOverridesAPIVersion = userAddonsState.manualOverridesAPIVersion
+		systemAddonsState[AddonStateCategory.OVERRIDE_COMPATIBILITY] = (
+			userAddonsState[AddonStateCategory.OVERRIDE_COMPATIBILITY] & addonsToCopy
+		)
+		systemAddonsState._save(statePath=os.path.join(toPath, addonHandler.stateFilename))
+	else:
+		log.debug("No add-ons to copy.")
 
 
 def setStartOnLogonScreen(enable: bool) -> None:
@@ -416,7 +477,6 @@ class ConfigManager(object):
 		"development",
 		"addonStore",
 		"remote",
-		"automatedImageDescriptions",
 		"math",
 		"screenCurtain",
 	}

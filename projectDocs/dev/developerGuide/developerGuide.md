@@ -1443,6 +1443,12 @@ For examples of how to define and use new extension points, please see the code 
 |---|---|---|
 |`Action` |`post_sessionLockStateChanged` |Notifies when a session lock or unlock event occurs.|
 
+### winAPI._displayTracking {#winAPI_displayTrackingExtPts}
+
+| Type |Extension Point |Description|
+|---|---|---|
+|`Action` |`displayChanged` |Notifies when display configuration changes (resolution, monitor setup, etc.). Handlers receive the `OrientationState` as an argument.|
+
 ### winAPI.messageWindow {#winAPI_messageWindowExtPts}
 
 | Type |Extension Point |Description|

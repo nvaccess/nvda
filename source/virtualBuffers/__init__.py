@@ -15,7 +15,6 @@ import wx
 import NVDAHelper
 import XMLFormatting
 import scriptHandler
-from scriptHandler import script
 import api
 import controlTypes
 import textInfos.offsets
@@ -688,18 +687,11 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	# Translators: the description for the refreshBuffer script on virtualBuffers.
 	script_refreshBuffer.__doc__ = _("Refreshes the document content")
 
-	@script(
-		description=_(
-			# Translators: the description for the toggleScreenLayout script on virtualBuffers.
-			"Toggles on and off if the screen layout is preserved while rendering the document content",
-		),
-		gesture="kb:NVDA+v",
-	)
-	def script_toggleScreenLayout(self, gesture):
-		config.conf["virtualBuffers"]["useScreenLayout"] = not config.conf["virtualBuffers"][
-			"useScreenLayout"
-		]
-		if config.conf["virtualBuffers"]["useScreenLayout"]:
+	def _toggleScreenLayout(self):
+		newUseScreenLayout = config.conf["virtualBuffers"]["useScreenLayout"] = not config.conf[
+			"virtualBuffers"
+		]["useScreenLayout"]
+		if newUseScreenLayout:
 			# Translators: Presented when use screen layout option is toggled.
 			ui.message(_("Use screen layout on"))
 		else:
