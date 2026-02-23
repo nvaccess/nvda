@@ -266,3 +266,38 @@ class AudioDucker(object):
 			_unensureDucked()
 			winBindings.kernel32.SetEvent(self._disabledEvent)
 			return True
+
+
+_audioDuckingSuspenderRefCount: int = 0
+_audioDuckingSuspenderlock = threading.Lock()
+
+
+class _AudioDuckingSuspender:
+	"""Create one of these objects to temporarily suspend audio ducking.
+	If this object is deleted and no other _AudioDuckingSuspender objects exist, audio ducking will be re-enabled.
+	"""
+
+	def __init__(self):
+		if not isAudioDuckingSupported():
+			raise RuntimeError("audio ducking not supported")
+		global _audioDuckingSuspenderRefCount
+		with _audioDuckingSuspenderlock:
+			if _audioDuckingSuspenderRefCount== 0:
+				setAudioDuckingMode(AudioDuckingMode.NONE)
+			_audioDuckingSuspenderRefCount += 1
+			if _isDebug():
+				log.debug(f"Audio ducking suspended, count={_audioDuckingSuspenderRefCount}")
+
+	def __del__(self):
+		global _audioDuckingSuspenderRefCount
+		with _audioDuckingSuspenderlock:
+			_audioDuckingSuspenderRefCount -= 1
+			if _isDebug():
+				log.debug(f"audio ducking suspender ref count decreased, count={_audioDuckingSuspenderRefCount}")
+			if _audioDuckingSuspenderRefCount == 0:
+				setAudioDuckingMode(config.conf["audio"]["audioDuckingMode"])
+
+
+def _isAudioDuckingSuspended() -> bool:
+	with _audioDuckingSuspenderlock:
+		return _audioDuckingSuspenderRefCount > 0

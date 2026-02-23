@@ -3530,7 +3530,10 @@ class AudioPanel(SettingsPanel):
 		self.bindHelpEvent("SelectSynthesizerDuckingMode", self.duckingList)
 		index = config.conf["audio"]["audioDuckingMode"]
 		self.duckingList.SetSelection(index)
-		if not audioDucking.isAudioDuckingSupported():
+		if (
+			not audioDucking.isAudioDuckingSupported()
+			or audioDucking._isAudioDuckingSuspended()
+		):
 			self.duckingList.Disable()
 
 		# Translators: This is the label for a checkbox control in the
