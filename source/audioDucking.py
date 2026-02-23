@@ -294,7 +294,7 @@ class _AudioDuckingSuspender:
 			_audioDuckingSuspenderRefCount -= 1
 			if _isDebug():
 				log.debug(
-					f"Audio ducking suspender ref count decreased, count={_audioDuckingSuspenderRefCount}"
+					f"Audio ducking suspender ref count decreased, count={_audioDuckingSuspenderRefCount}",
 				)
 			if _audioDuckingSuspenderRefCount == 0:
 				try:
@@ -303,8 +303,10 @@ class _AudioDuckingSuspender:
 					# Avoid raising from __del__; just log the error in debug builds.
 					if _isDebug():
 						log.exception(
-							"Failed to restore audio ducking mode during _AudioDuckingSuspender cleanup"
+							"Failed to restore audio ducking mode during _AudioDuckingSuspender cleanup",
 						)
+
+
 def _isAudioDuckingSuspended() -> bool:
 	with _audioDuckingSuspenderlock:
 		return _audioDuckingSuspenderRefCount > 0
