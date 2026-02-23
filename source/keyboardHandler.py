@@ -566,6 +566,122 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			for key in self._keyNamesInDisplayOrder
 		)
 
+	def _get_character(self) -> Optional[str]:
+		"""Get the character this key combination would produce.
+
+		Uses ToUnicodeEx with 0x4 flag to avoid modifying keyboard state.
+		For dead keys, returns the dead key character itself.
+		Returns None for unprintable characters or when Windows key is pressed.
+		"""
+		# Key state value indicating key is pressed (high bit set)
+		KEY_PRESSED_STATE: int = -128
+
+		try:
+			threadID = api.getFocusObject().windowThreadID
+		except AttributeError:
+			return None
+		keyboardLayout = ctypes.windll.user32.GetKeyboardLayout(threadID)
+		buffer = ctypes.create_unicode_buffer(5)
+		states = (ctypes.c_byte * 256)()
+
+		modifierList = []
+		for mod, _ in self.modifiers:
+			if mod not in self.NORMAL_MODIFIER_KEYS.values():
+				modifier = self.NORMAL_MODIFIER_KEYS.get(mod)
+			else:
+				modifier = mod
+			if modifier:
+				modifierList.append(modifier)
+
+		# Check for Windows key - characters with Windows key are invalid
+		if VK_WIN in [self.getVkName(m, e) for m, e in self.modifiers]:
+			return None
+
+		for i in range(256):
+			if i in modifierList:
+				states[i] = KEY_PRESSED_STATE
+			else:
+				states[i] = ctypes.windll.user32.GetKeyState(i)
+
+		# Call ToUnicodeEx with 0x04 flag (don't modify keyboard state)
+		res = ctypes.windll.user32.ToUnicodeEx(
+			self.vkCode,
+			self.scanCode,
+			states,
+			buffer,
+			ctypes.sizeof(buffer),
+			0x04,
+			keyboardLayout,
+		)
+
+		# res < 0 means dead key - return the dead key character
+		if res < 0:
+			# Dead key: buffer contains the dead key character
+			# Call ToUnicodeEx again to get and clear the dead key from buffer
+			ctypes.windll.user32.ToUnicodeEx(
+				self.vkCode,
+				self.scanCode,
+				states,
+				buffer,
+				ctypes.sizeof(buffer),
+				0x04,
+				keyboardLayout,
+			)
+			return buffer.value[:1] if buffer.value else None
+
+		if res == 0:
+			return None
+
+		# Check alt key behavior - alt sometimes gives same character as without alt
+		if winUser.VK_MENU in modifierList:
+			newBuffer = ctypes.create_unicode_buffer(5)
+			altStates = (ctypes.c_byte * 256)()
+			for i in range(256):
+				if i in modifierList and i != winUser.VK_MENU:
+					altStates[i] = KEY_PRESSED_STATE
+				else:
+					altStates[i] = ctypes.windll.user32.GetKeyState(i)
+			ctypes.windll.user32.ToUnicodeEx(
+				self.vkCode,
+				self.scanCode,
+				altStates,
+				newBuffer,
+				ctypes.sizeof(newBuffer),
+				0x04,
+				keyboardLayout,
+			)
+			# If same character with and without alt, it's not valid
+			if buffer.value == newBuffer.value:
+				return None
+
+		return buffer.value[:res]
+
+	def _get__nameForInputHelp(self) -> List[str]:
+		"""Returns the name of this gesture for input help mode.
+
+		For keyboard gestures that produce printable characters,
+		the character will be included in the list,
+		unless it contains NVDA modifier.
+		"""
+		displayName = self.displayName
+
+		# NVDA commands keep original behavior
+		if any(isNVDAModifierKey(mod, ext) for mod, ext in self.modifiers):
+			return [displayName]
+
+		char = self.character
+		if not char:
+			return [displayName]
+
+		if not char.isprintable():
+			return [displayName]
+
+		# Avoid duplicating if displayName matches character (case insensitive)
+		if displayName.lower() == char.lower():
+			return [displayName]
+
+		return [char, displayName]
+
 	def _get_identifiers(self):
 		keyName = "+".join(self._keyNamesInDisplayOrder)
 		return (
@@ -736,7 +852,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if not keys:
 			raise ValueError
 
-		return cls(keys[:-1], vk, 0, ext)
+		hkl = getInputHkl()
+		scanCode = user32.MapVirtualKeyEx(vk, winUser.MAPVK_VK_TO_VSC, hkl)
+		return cls(keys[:-1], vk, scanCode, ext)
 
 	RE_IDENTIFIER = re.compile(r"^kb(?:\((.+?)\))?:(.*)$")
 
