@@ -6031,10 +6031,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 					screenCurtain.screenCurtain.enable(persist=self._cachedScreenCurtainConfigEnabled)
 				else:
 					screenCurtain.screenCurtain.disable(persist=not self._cachedScreenCurtainConfigEnabled)
-			if (
-				screenCurtain.screenCurtain.settings["enabled"]
-				!= self._cachedScreenCurtainConfigEnabled
-			):
+			if screenCurtain.screenCurtain.settings["enabled"] != self._cachedScreenCurtainConfigEnabled:
 				screenCurtain.screenCurtain.settings["enabled"] = self._cachedScreenCurtainConfigEnabled
 		super().onDiscard()
 
