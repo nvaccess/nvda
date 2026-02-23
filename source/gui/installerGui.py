@@ -640,7 +640,7 @@ class PortableCreaterDialog(
 					# Translators: The message displayed when the user has not specified an absolute destination directory
 					# in the Create Portable NVDA dialog.
 					"Please specify the absolute path where the portable copy should be created. "
-					"It may include system variables (%temp%, %homepath%, etc.). ",
+					"It may include system variables (%temp%, %homepath%, etc.). "
 					"Current path: {path}. ",
 				).format(path=expandedPortableDirectory),
 				# Translators: The message title displayed when the user has not specified an absolute
