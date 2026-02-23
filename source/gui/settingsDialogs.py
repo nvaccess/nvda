@@ -5953,8 +5953,13 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			),
 		)
 		isScreenCurtainAvailable = screenCurtain.screenCurtain is not None
-		self._wasScreenCurtainEnabledOnInit = isScreenCurtainAvailable and screenCurtain.screenCurtain.enabled
-		self._screenCurtainEnabledCheckbox.SetValue(self._wasScreenCurtainEnabledOnInit)
+		if isScreenCurtainAvailable:
+			self._cachedScreenCurtainConfigEnabled = screenCurtain.screenCurtain.settings["enabled"]
+			self._cachedScreenCurtainEnabled = screenCurtain.screenCurtain.enabled
+		else:
+			self._cachedScreenCurtainConfigEnabled = self._screenCurtainConfig["enabled"]
+			self._cachedScreenCurtainEnabled = False
+		self._screenCurtainEnabledCheckbox.SetValue(self._cachedScreenCurtainEnabled)
 		self._screenCurtainEnabledCheckbox.Bind(wx.EVT_CHECKBOX, self._ensureScreenCurtainEnableState)
 		self._screenCurtainEnabledCheckbox.Enable(isScreenCurtainAvailable)
 		self.bindHelpEvent("ScreenCurtainEnable", self._screenCurtainEnabledCheckbox)
@@ -6018,15 +6023,19 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			self._allowUsageStatsCheckBox.Disable()
 
 	def onDiscard(self):
-		# Restore the screen curtain enabled state to what it was when the dialog was opened, in case the user enabled or disabled it without saving.
-		if (
-			screenCurtain.screenCurtain is not None
-			and screenCurtain.screenCurtain.enabled != self._wasScreenCurtainEnabledOnInit
-		):
-			if self._wasScreenCurtainEnabledOnInit:
-				screenCurtain.screenCurtain.enable()
-			else:
-				screenCurtain.screenCurtain.disable()
+		# Restore screen curtain state and setting to the most recently saved baseline,
+		# in case the user enabled or disabled it without saving.
+		if screenCurtain.screenCurtain is not None:
+			if screenCurtain.screenCurtain.enabled != self._cachedScreenCurtainEnabled:
+				if self._cachedScreenCurtainEnabled:
+					screenCurtain.screenCurtain.enable(persist=self._cachedScreenCurtainConfigEnabled)
+				else:
+					screenCurtain.screenCurtain.disable(persist=not self._cachedScreenCurtainConfigEnabled)
+			if (
+				screenCurtain.screenCurtain.settings["enabled"]
+				!= self._cachedScreenCurtainConfigEnabled
+			):
+				screenCurtain.screenCurtain.settings["enabled"] = self._cachedScreenCurtainConfigEnabled
 		super().onDiscard()
 
 	def onSave(self):
@@ -6046,6 +6055,10 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		if updateCheck:
 			config.conf["update"]["allowUsageStats"] = self._allowUsageStatsCheckBox.IsChecked()
 			# updateCheck queries this value whenever checking for updates, so there's no need to restart it
+
+		if screenCurtain.screenCurtain is not None:
+			self._cachedScreenCurtainConfigEnabled = screenCurtain.screenCurtain.settings["enabled"]
+			self._cachedScreenCurtainEnabled = screenCurtain.screenCurtain.enabled
 
 	def _ocrActive(self) -> bool:
 		"""
