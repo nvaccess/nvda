@@ -2643,6 +2643,7 @@ class BrowseModePanel(SettingsPanel):
 		# browseMode imports gui, which imports from settingsDialogs, so a top-level import
 		# would create a circular dependency. Keep this import lazy.
 		import browseMode
+
 		# Store element types for use in onSave (excludes the always-active "default" entry).
 		self._webTouchElements = list(browseMode.BrowseModeTreeInterceptor._webTouchNavRegistry)
 		# Translators: Label for the list of web touch navigation element types in browse mode settings.

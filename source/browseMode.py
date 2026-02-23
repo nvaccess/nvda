@@ -636,7 +636,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		if availableInWebTouch:
 			if touchLabel is None:
 				raise ValueError(
-					f"addQuickNav: touchLabel is required when availableInWebTouch=True (itemType={itemType!r})"
+					f"addQuickNav: touchLabel is required when availableInWebTouch=True (itemType={itemType!r})",
 				)
 			cls._webTouchNavRegistry.append((itemType, touchLabel))
 
