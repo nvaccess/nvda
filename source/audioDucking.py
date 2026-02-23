@@ -281,7 +281,7 @@ class _AudioDuckingSuspender:
 		if not isAudioDuckingSupported():
 			raise RuntimeError("audio ducking not supported")
 		global _audioDuckingSuspenderRefCount
-		with _audioDuckingSuspenderlock:
+		with _audioDuckingSuspenderLock:
 			if _audioDuckingSuspenderRefCount == 0:
 				setAudioDuckingMode(AudioDuckingMode.NONE)
 			_audioDuckingSuspenderRefCount += 1
@@ -290,7 +290,7 @@ class _AudioDuckingSuspender:
 
 	def __del__(self):
 		global _audioDuckingSuspenderRefCount
-		with _audioDuckingSuspenderlock:
+		with _audioDuckingSuspenderLock:
 			_audioDuckingSuspenderRefCount -= 1
 			if _isDebug():
 				log.debug(
@@ -308,5 +308,5 @@ class _AudioDuckingSuspender:
 
 
 def _isAudioDuckingSuspended() -> bool:
-	with _audioDuckingSuspenderlock:
+	with _audioDuckingSuspenderLock:
 		return _audioDuckingSuspenderRefCount > 0
