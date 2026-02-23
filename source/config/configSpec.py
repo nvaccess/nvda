@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
+# Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
-# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen
+# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen, Kefas Lungu
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -203,43 +203,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enableOnPageLoad = boolean(default=true)
 	loadChromiumVBufOnBusyState = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	textParagraphRegex = string(default="{configDefaults.DEFAULT_TEXT_PARAGRAPH_REGEX}")
-	webTouchNavigateDefault = boolean(default=true)
-	webTouchNavigateHeading = boolean(default=true)
-	webTouchNavigateTable = boolean(default=true)
-	webTouchNavigateLink = boolean(default=true)
-	webTouchNavigateVisitedLink = boolean(default=true)
-	webTouchNavigateUnvisitedLink = boolean(default=true)
-	webTouchNavigateFormField = boolean(default=true)
-	webTouchNavigateList = boolean(default=true)
-	webTouchNavigateListItem = boolean(default=true)
-	webTouchNavigateButton = boolean(default=true)
-	webTouchNavigateEdit = boolean(default=true)
-	webTouchNavigateFrame = boolean(default=true)
-	webTouchNavigateSeparator = boolean(default=true)
-	webTouchNavigateRadioButton = boolean(default=true)
-	webTouchNavigateComboBox = boolean(default=true)
-	webTouchNavigateCheckBox = boolean(default=true)
-	webTouchNavigateGraphic = boolean(default=true)
-	webTouchNavigateBlockQuote = boolean(default=true)
-	webTouchNavigateNotLinkBlock = boolean(default=true)
-	webTouchNavigateLandmark = boolean(default=true)
-	webTouchNavigateEmbeddedObject = boolean(default=true)
-	webTouchNavigateAnnotation = boolean(default=true)
-	webTouchNavigateError = boolean(default=true)
-	webTouchNavigateSlider = boolean(default=true)
-	webTouchNavigateArticle = boolean(default=true)
-	webTouchNavigateGrouping = boolean(default=true)
-	webTouchNavigateTab = boolean(default=true)
-	webTouchNavigateFigure = boolean(default=true)
-	webTouchNavigateMenuItem = boolean(default=true)
-	webTouchNavigateToggleButton = boolean(default=true)
-	webTouchNavigateProgressBar = boolean(default=true)
-	webTouchNavigateMath = boolean(default=true)
-	webTouchNavigateTextParagraph = boolean(default=true)
-	webTouchNavigateVerticalParagraph = boolean(default=true)
-	webTouchNavigateSameStyle = boolean(default=true)
-	webTouchNavigateDifferentStyle = boolean(default=true)
-	webTouchNavigateReference = boolean(default=true)
+	webTouchNavigationElements = string_list(default=list("heading", "link", "formField", "list", "table"))
 
 [touch]
 	enabled = boolean(default=true)

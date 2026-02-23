@@ -1,12 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler,
 # Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
-# Neil Soiffer, Ryan McCleary.
+# Neil Soiffer, Ryan McCleary, Kefas Lungu.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -2646,19 +2646,20 @@ class BrowseModePanel(SettingsPanel):
 		)
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
 
+		# browseMode imports gui, which imports from settingsDialogs, so a top-level import
+		# would create a circular dependency. Keep this import lazy.
 		import browseMode
-		# Translators: Label for the web touch navigation sub-section in browse mode settings.
-		webTouchGroupText = _("Web touch navigation elements (touchscreens only)")
-		webTouchGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=webTouchGroupText)
-		webTouchGroupBox = webTouchGroupSizer.GetStaticBox()
-		webTouchGroup = guiHelper.BoxSizerHelper(self, sizer=webTouchGroupSizer)
-		sHelper.addItem(webTouchGroup)
-		self._webElementCheckboxes = {}
-		for itemType, label in browseMode.BrowseModeTreeInterceptor._webBrowseElements:
-			cb = webTouchGroup.addItem(wx.CheckBox(webTouchGroupBox, label=label))
-			configKey = browseMode._webElementConfigKey(itemType)
-			cb.SetValue(config.conf["virtualBuffers"].get(configKey, True))
-			self._webElementCheckboxes[itemType] = cb
+		# Store element types for use in onSave (excludes the always-active "default" entry).
+		self._webTouchElements = list(browseMode.BrowseModeTreeInterceptor._webTouchNavRegistry)
+		# Translators: Label for the list of web touch navigation element types in browse mode settings.
+		self._webTouchCheckListBox: nvdaControls.CustomCheckListBox = sHelper.addLabeledControl(
+			_("&Web touch navigation elements (touchscreens only):"),
+			nvdaControls.CustomCheckListBox,
+			choices=[label for _itemType, label in self._webTouchElements],
+		)
+		enabledTypes = set(config.conf["virtualBuffers"]["webTouchNavigationElements"])
+		for i, (itemType, _label) in enumerate(self._webTouchElements):
+			self._webTouchCheckListBox.Check(i, itemType in enabledTypes)
 
 	def onSave(self):
 		config.conf["virtualBuffers"]["maxLineLength"] = self.maxLengthEdit.GetValue()
@@ -2679,11 +2680,11 @@ class BrowseModePanel(SettingsPanel):
 		config.conf["virtualBuffers"]["trapNonCommandGestures"] = (
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
-		import browseMode
-		for itemType, _label in browseMode.BrowseModeTreeInterceptor._webBrowseElements:
-			configKey = browseMode._webElementConfigKey(itemType)
-			if configKey in config.conf["virtualBuffers"]:
-				config.conf["virtualBuffers"][configKey] = self._webElementCheckboxes[itemType].IsChecked()
+		config.conf["virtualBuffers"]["webTouchNavigationElements"] = [
+			itemType
+			for i, (itemType, _label) in enumerate(self._webTouchElements)
+			if self._webTouchCheckListBox.IsChecked(i)
+		]
 
 
 class MathSettingsPanel(SettingsPanel):
