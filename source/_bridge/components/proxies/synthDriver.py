@@ -45,7 +45,10 @@ class SynthDriverProxy(Proxy, SynthDriver):
 		log.debug(f"Creating SynthDriverProxy instance for remote synth driver '{self.name}'")
 		super().__init__(service)
 		if audioDucking.isAudioDuckingSupported():
-			# Proxied synthDrivers cannot currently support audio ducking, so we create an _AudioDuckingSuspender to ensure that audio ducking is suspended while any proxied synth driver exists.
+			# Proxied synthDrivers cannot currently support audio ducking because they produce audio directly
+			# in their own process, and NVDA cannot correctly duck this external audio. Therefore, we create
+			# an _AudioDuckingSuspender to ensure that audio ducking is suspended while any proxied synth
+			# driver exists.
 			self._audioDuckingSuspender = audioDucking._AudioDuckingSuspender()
 		selfRef = weakref.ref(self)
 		for notification in self.supportedNotifications:
