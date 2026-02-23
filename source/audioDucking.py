@@ -272,7 +272,7 @@ _audioDuckingSuspenderRefCount: int = 0
 _audioDuckingSuspenderLock = threading.Lock()
 
 
-class _AudioDuckingSuspender:
+class _AudioDuckingSuspender: # pyright: ignore[reportUnusedClass]
 	"""Create one of these objects to temporarily suspend audio ducking.
 	If this object is deleted and no other _AudioDuckingSuspender objects exist, audio ducking will be re-enabled.
 	"""
