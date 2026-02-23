@@ -688,18 +688,6 @@ env.Alias("appx", [installed_appx_storeSubmission, installed_appx_sideLoadable])
 
 env.Default(dist)
 
-import tests.checkPot
-
-
-def checkPotAction(target, source, env):
-	return tests.checkPot.checkPot(source[0].abspath)
-
-
-checkPotTarget = env.Command("checkPot", pot, checkPotAction)
-env.Depends(checkPotTarget, pot)
-env.AlwaysBuild(checkPotTarget)
-env.Alias("checkPot", checkPotTarget)
-
 
 # Generate a list of Python modules from compiled '.pyc' files in library.zip
 env.Tool("listModules")

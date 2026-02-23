@@ -204,6 +204,5 @@ def getStringFromLine(line):
 
 
 if __name__ == "__main__":
-	# Support command line usage for quick testing.
 	fileName = sys.argv[1]
-	print(checkPot(fileName))
+	sys.exit(checkPot(fileName))
