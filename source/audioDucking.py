@@ -282,7 +282,7 @@ class _AudioDuckingSuspender:
 			raise RuntimeError("audio ducking not supported")
 		global _audioDuckingSuspenderRefCount
 		with _audioDuckingSuspenderlock:
-			if _audioDuckingSuspenderRefCount== 0:
+			if _audioDuckingSuspenderRefCount == 0:
 				setAudioDuckingMode(AudioDuckingMode.NONE)
 			_audioDuckingSuspenderRefCount += 1
 			if _isDebug():
@@ -293,7 +293,9 @@ class _AudioDuckingSuspender:
 		with _audioDuckingSuspenderlock:
 			_audioDuckingSuspenderRefCount -= 1
 			if _isDebug():
-				log.debug(f"audio ducking suspender ref count decreased, count={_audioDuckingSuspenderRefCount}")
+				log.debug(
+					f"audio ducking suspender ref count decreased, count={_audioDuckingSuspenderRefCount}"
+				)
 			if _audioDuckingSuspenderRefCount == 0:
 				setAudioDuckingMode(config.conf["audio"]["audioDuckingMode"])
 
