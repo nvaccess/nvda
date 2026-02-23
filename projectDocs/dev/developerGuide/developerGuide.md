@@ -37,7 +37,7 @@ This allows us to remove technical debt and refactor core code.
 * **Standard releases (minor & patch releases, e.g. 2026.2, 2026.3.1):**
 These releases focus on features and stability.
 Existing API signatures are preserved, but new API features may be added. 
-Behavioural refinements and bug fixes are also permitted (see below).
+This includes behavioural refinements and bug fixes (see below).
 
 #### Classification of API changes
 
@@ -53,10 +53,9 @@ A change where the code continues to run (the signature matches), but the logic 
 
 * **Examples:** Fixing a math error or optimising an algorithm (e.g. changing a sort order).
 * **Policy:** These are permitted in any major or minor release (e.g. 2026.1, 2026.2).
-* We recognise that some add-ons may inadvertently rely on incorrect behaviour / bugs.
+* We recognise that some add-ons may rely on incorrect behaviour or bugs.
 However, preserving a bug to maintain backwards compatibility significantly hampers NVDA's development.
 If a public function was documented to do X but was actually doing Y, changing it to correctly do X is considered a bug fix, not a breaking change.
-* Conversely, if a function that was documented to do X, and was correctly doing X, is changed to instead do Y - this is considered a breaking change.
 
 ##### Security improvements
 
