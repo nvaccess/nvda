@@ -288,7 +288,7 @@ freeze(
 		)
 		+ (
 			[
-				("_synthDrivers32", glob("_synthDrivers32\\*.py") + glob("_synthDrivers32\\*.dll")),
+				("_synthDrivers32", glob("_synthDrivers32/*.py") + glob("_synthDrivers32/*.dll")),
 			]
 			if os.path.isdir("lib/x86/synthDriverHost-runtime")
 			else []
