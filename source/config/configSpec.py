@@ -380,7 +380,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		speechStyle = string(default="ClearSpeak")
 		verbosity = option("Terse", "Medium", "Verbose", default="Medium")
 		# Change from text speech rate (%)
-		mathRate = integer(default=100, min=0, max=100)
+		mathRate = integer(default=100, min=10, max=100)
 		# Change from normal pause length (%)
 		pauseFactor = integer(default=100, min=0, max=1056)
 		# make a sound when starting/ending math speech
