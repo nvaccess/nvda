@@ -701,15 +701,12 @@ synthDriverHost32Runtime = env.Command(
 	target="#runtime-builders/synthDriverHost32/dist",
 	source="#runtime-builders/synthDriverHost32/setup-runtime.py",
 	chdir=Dir("#runtime-builders/synthDriverHost32"),
-	ENV=os.environ | {
-		"VIRTUAL_ENV": "",
-		"UV_PYTHON": "",
-	},
 	action=[
 		  f"uv run -v --no-active --directory .  python setup-runtime.py --dest-dir dist --version {version} --publisher {publisher}",
 		r"rmdir /s /q ..\..\source\lib\x86\synthDriverHost-runtime || exit 0",
 		r"xcopy /e /i /y dist ..\..\source\lib\x86\synthDriverHost-runtime",
 	],
+	ENV=os.environ,
 )
 env.AlwaysBuild(synthDriverHost32Runtime)
 env.Alias("synthDriverHost32Runtime", synthDriverHost32Runtime)
