@@ -109,6 +109,10 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 	Therefore add-on IDs should be treated as case insensitive.
 	"""
 
+	def __init__(self, *args, **kwargs) -> None:
+		super().__init__(*args, **kwargs)
+		self.setDefaultStateValues()
+
 	@staticmethod
 	def _generateDefaultStateContent() -> AddonStateDictT:
 		return {category: CaseInsensitiveSet() for category in AddonStateCategory}
@@ -180,7 +184,6 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 
 		:param statePath: Path from which to load the addons state file.
 		"""
-		self.setDefaultStateValues()
 		try:
 			with open(statePath, "rt", encoding="utf-8") as file:
 				stateDict = json.load(file)
@@ -199,7 +202,6 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		if os.path.isfile(self.statePath):
 			self._load(self.statePath)
 		else:
-			self.setDefaultStateValues()
 			if not isRunningOnSecureDesktop() and os.path.isfile(WritePaths._oldAddonStateFile):
 				log.warning("Loading add-ons state from pickle.")
 				try:
