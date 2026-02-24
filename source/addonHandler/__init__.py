@@ -295,10 +295,6 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 				self[AddonStateCategory.BLOCKED].discard(blockedAddon)
 				self[AddonStateCategory.OVERRIDE_COMPATIBILITY].discard(blockedAddon)
 
-	@staticmethod
-	def pickleToJson(picklePath: os.PathLike, jsonPath: os.PathLike):
-		pass
-
 
 state = AddonsState()
 
