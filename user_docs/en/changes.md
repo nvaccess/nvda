@@ -195,7 +195,7 @@ Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18
 Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @CyrilleB79)
 * `NVDAObjects.window.GhostWindowFromHungWindow` has been removed with no replacement. (#18883)
 * `winUser.Input_I` and `winUser.PUL` have been removed, with no replacement. (#18883)
-* The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than HIDP_VALUE_CAPS` structures. (#18902)
+* The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than `HIDP_VALUE_CAPS` structures. (#18902)
 * `speech.speech.IDT_TONE_DURATION` has been removed.
 Call `speech.speech.getIndentToneDuration` instead. (#18898)
 * the `rgpszUsageIdentifier` member of the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation.
@@ -247,7 +247,7 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
   * All public symbols defined on `Magnification` are now accessible from `winBindings.magnification`. (#18958)
   * `MAGCOLOREFFECT` has been moved to `winBindings.magnification`. (#18958)
   * `isScreenFullyBlack` has been moved to `NVDAHelper.localLib`. (#18958)
-* `config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]. (#19177)
+* `config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]`. (#19177)
 * The `comInterfaces.MathPlayer` and `mathPres.mathPlayer` modules have been removed. (#19239)
 * The following symbols have been removed from `gui.settingsDialogs.GeneralSettingsPanel` without replacement: `logLevelList`, `allowUsageStatsCheckBox`. (#19296)
 * `gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS` has been removed.
