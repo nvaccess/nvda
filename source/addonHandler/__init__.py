@@ -180,6 +180,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 
 		:param statePath: Path from which to load the addons state file.
 		"""
+		self.setDefaultStateValues()
 		try:
 			with open(statePath, "rt", encoding="utf-8") as file:
 				stateDict = json.load(file)
