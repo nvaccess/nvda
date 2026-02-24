@@ -3,26 +3,12 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import typing
-from locale import strxfrm as _strxfrm
-
 import globalVars
-from logHandler import log
+from .types import DictionaryType
 from utils._deprecate import MovedSymbol, RemovedSymbol, handleDeprecations
 
 from . import definitions
-from .types import (
-	DictionaryType,
-)
-from .types import (
-	SpeechDictDefinition as _SpeechDictDefinition,
-)
-from .types import (
-	VoiceSpeechDictDefinition as _VoiceSpeechDictDefinition,
-)
-
-if typing.TYPE_CHECKING:
-	import synthDriverHandler
+from .definitions import loadVoiceDict, listAvailableSpeechDictDefinitions
 
 __getattr__ = handleDeprecations(
 	MovedSymbol("speechDictsPath", "NVDAState", "WritePaths", "speechDictsDir"),
@@ -64,33 +50,10 @@ def terminate() -> None:
 	definitions._speechDictDefinitions.clear()
 
 
-def loadVoiceDict(synth: "synthDriverHandler.SynthDriver") -> None:
-	"""Loads appropriate dictionary for the given synthesizer.
-	It handles case when the synthesizer doesn't support voice setting.
-	"""
-	definition = next(
-		(d for d in definitions._speechDictDefinitions if isinstance(d, _VoiceSpeechDictDefinition)),
-		None,
-	)
-	if definition is None:
-		log.error(
-			"No VoiceSpeechDictDefinition found in _speechDictDefinitions. "
-			"Speech dictionaries may not have been initialized.",
-		)
-		raise RuntimeError("No voice speech dictionary definition is available to load.")
-	definition.load(synth)
-
-
-def listAvailableSpeechDictDefinitions(forDisplay: bool = False) -> list[_SpeechDictDefinition]:
-	"""Get available speech dictionary definitions.
-	Note that this function returns both mandatory and optional speech dictionaries, and does not filter based on whether the dictionary is currently enabled.
-	:param forDisplay: If True, the returned list is sorted for display order.
-		Such a list is sorted alphabetically by display name, with built-in dictionaries listed first.
-	"""
-	defs = list(definitions._speechDictDefinitions)
-	if not forDisplay:
-		return defs
-	return sorted(
-		defs,
-		key=lambda dct: (dct.source not in DictionaryType, _strxfrm(dct.displayName or dct.name)),
-	)
+__all__ = [
+	"processText",
+	"initialize",
+	"terminate",
+	"loadVoiceDict",
+	"listAvailableSpeechDictDefinitions",
+]

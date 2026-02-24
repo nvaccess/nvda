@@ -3,11 +3,13 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
+from locale import strxfrm
 import os.path
 
 import globalVars
 from logHandler import log
 from NVDAState import WritePaths
+import synthDriverHandler
 
 from .types import DictionaryType, SpeechDictDefinition, VoiceSpeechDictDefinition
 
@@ -100,3 +102,35 @@ def _getDictionaryDefinition(source: DictionaryType | str) -> SpeechDictDefiniti
 		if definition.source == source:
 			return definition
 	raise KeyError(f"No speech dictionary definition found for source {source!r}")
+
+
+def loadVoiceDict(synth: "synthDriverHandler.SynthDriver") -> None:
+	"""Loads appropriate dictionary for the given synthesizer.
+	It handles case when the synthesizer doesn't support voice setting.
+	"""
+	definition = next(
+		(d for d in _speechDictDefinitions if isinstance(d, VoiceSpeechDictDefinition)),
+		None,
+	)
+	if definition is None:
+		log.error(
+			"No VoiceSpeechDictDefinition found in _speechDictDefinitions. "
+			"Speech dictionaries may not have been initialized.",
+		)
+		raise RuntimeError("No voice speech dictionary definition is available to load.")
+	definition.load(synth)
+
+
+def listAvailableSpeechDictDefinitions(forDisplay: bool = False) -> list[SpeechDictDefinition]:
+	"""Get available speech dictionary definitions.
+	Note that this function returns both mandatory and optional speech dictionaries, and does not filter based on whether the dictionary is currently enabled.
+	:param forDisplay: If True, the returned list is sorted for display order.
+		Such a list is sorted alphabetically by display name, with built-in dictionaries listed first.
+	"""
+	defs = list(_speechDictDefinitions)
+	if not forDisplay:
+		return defs
+	return sorted(
+		defs,
+		key=lambda dct: (dct.source not in DictionaryType, strxfrm(dct.displayName or dct.name)),
+	)
