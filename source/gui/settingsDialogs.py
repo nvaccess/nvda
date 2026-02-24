@@ -3044,8 +3044,6 @@ class MathSettingsPanel(SettingsPanel):
 				),
 			)
 		)  # avoid log(0)
-		if pauseFactor > 1000:
-			pauseFactor = 1000
 		mathConf["speech"]["pauseFactor"] = pauseFactor
 		if self.speechSoundCheckBox.GetValue():
 			mathConf["speech"]["speechSound"] = "Beep"
