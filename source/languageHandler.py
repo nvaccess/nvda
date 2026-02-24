@@ -382,7 +382,7 @@ def localeStringFromLocaleCode(localeCode: str) -> str:
 	return f"{langName}_{countryName}.{codePage}"
 
 
-def _setPythonLocale(localeString: str) -> bool:
+def _isPythonLocaleSet(localeString: str) -> bool:
 	"""Sets Python locale to a specified one.
 	Returns `True` if succesfull `False` if locale cannot be set or retrieved."""
 	try:
@@ -415,7 +415,7 @@ def setLocale(localeName: str) -> None:
 		log.debug(f"Win32 locale string from locale code is {localeString}")
 	except ValueError:
 		log.debugWarning(f"Locale {localeName} not supported by Windows")
-	if localeString and _setPythonLocale(localeString):
+	if localeString and _isPythonLocaleSet(localeString):
 		return
 	# The full form langName_country either cannot be retrieved from Windows
 	# or Python cannot be set to that locale.
@@ -427,11 +427,11 @@ def setLocale(localeName: str) -> None:
 			log.debug(f"Win32 locale string from locale code is {localeString}")
 		except ValueError:
 			log.debugWarning(f"Locale {localeName} not supported by Windows")
-	if localeString and _setPythonLocale(localeString):
+	if localeString and _isPythonLocaleSet(localeString):
 		return
 	# As a final fallback try setting locale just to the English name of the given language.
 	localeFromLang = englishLanguageNameFromNVDALocale(localeName)
-	if localeFromLang and _setPythonLocale(localeFromLang):
+	if localeFromLang and _isPythonLocaleSet(localeFromLang):
 		return
 	# Either Windows does not know the locale, or Python is unable to handle it.
 	# reset to default locale
