@@ -6210,6 +6210,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 
 	def onCategoryChange(self, evt: wx.ListEvent):
 		if isRunningOnSecureDesktop():
+			# Secure desktop can cause issues with rapidly changing categories,
+			# so we debounce category changes to avoid this. (#19634)
 			self._pendingCategoryIndex = evt.GetIndex()
 			if self._categoryChangeTimer is not None:
 				self._categoryChangeTimer.Stop()
