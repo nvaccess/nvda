@@ -25,7 +25,7 @@ Add-ons relying on private symbols do so at their own risk.
 * **Pip packages:**
 These may be updated, downgraded or removed at any time.
 It is recommended to package any pip dependency directly with your add-on, rather than using NVDA's version of the package.
-The exception to this is `wx`, which must be used from NVDA.
+The exception to this is `wxPython`, which must be used from NVDA.
 
 #### The API release cycle
 
@@ -49,6 +49,7 @@ To provide clarity on what add-on developers can expect, we categorise changes i
 * **Policy:** These occur only in the .1 release (e.g. 2026.1).
 
 ##### Behavioural refinements & bug fixes
+
 A change where the code continues to run (the signature matches), but the logic or outcome changes to correct a defect or security flaw.
 
 * **Examples:** Fixing a math error or optimising an algorithm (e.g. changing a sort order).
@@ -71,7 +72,7 @@ We aim to avoid silent breaks of add-on code.
 When removing or changing APIs in a breaking release (e.g. 2026.1):
 
 1. We will mark functions as deprecated, where possible, in the releases leading up to the break (e.g. raising a `DeprecationWarning` in 2025.4).
-2. All API breaking changes will be listed in the "Changes for Developers" section of the What's New document.
+2. All API breaking changes will be listed in the "Changes for Developers" section of the What's New document, and the [NVDA Add-on API Announcements](https://groups.google.com/a/nvaccess.org/g/nvda-api) email group.
 
 #### Stability of transitive imports in the API {#APIImports}
 
