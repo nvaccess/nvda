@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022–2024 NV Access Limited, Bill Dengler
+# Copyright (C) 2022-2025 NV Access Limited, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -10,18 +10,16 @@ When the display resolution changes, the new height and width is sent to NVDA,
 and we notify the user of changes to the orientation.
 """
 
-from ctypes import windll
 from dataclasses import dataclass
 import enum
-from typing import (
-	Optional,
-)
 
+import extensionPoints
 from logHandler import log
 import ui
 import winUser
 
 from .winUser.constants import SystemMetrics
+from winBindings import user32
 
 
 class Orientation(enum.Enum):
@@ -36,7 +34,15 @@ class OrientationState:
 	style: Orientation
 
 
-_orientationState: Optional[OrientationState] = None
+_orientationState: OrientationState | None = None
+
+displayChanged = extensionPoints.Action()
+"""
+Notifies when display configuration changes (resolution, monitor setup, etc.).
+
+:param orientationState: The current display orientation state
+:type orientationState: OrientationState
+"""
 
 
 def initialize():
@@ -51,12 +57,12 @@ def initialize():
 
 
 def getPrimaryDisplayOrientation() -> OrientationState:
-	width = windll.user32.GetSystemMetrics(SystemMetrics.CX_SCREEN)
+	width = user32.GetSystemMetrics(SystemMetrics.CX_SCREEN)
 	if width == 0:
 		# If the function fails, the return value is 0.
 		# GetLastError does not provide extended error information.
 		log.error("Failed to get primary display width")
-	height = windll.user32.GetSystemMetrics(SystemMetrics.CY_SCREEN)
+	height = user32.GetSystemMetrics(SystemMetrics.CY_SCREEN)
 	if height == 0:
 		# If the function fails, the return value is 0.
 		# GetLastError does not provide extended error information.
@@ -76,9 +82,9 @@ def _getNewOrientationStyle(
 	previousState: OrientationState,
 	height: int,
 	width: int,
-) -> Optional[Orientation]:
+) -> Orientation | None:
 	"""
-	@returns: Orientation if there has been an orientation state change, otherwise None
+	:returns: Orientation if there has been an orientation state change, otherwise None
 	"""
 	heightAndWidthUnchanged = previousState.height == height and previousState.width == width
 	newOrientation = _getOrientationStyle(height, width)
@@ -114,3 +120,5 @@ def reportScreenOrientationChange(heightWidth: int) -> None:
 
 	_orientationState.height = height
 	_orientationState.width = width
+	# Notify registered handlers about display changes
+	displayChanged.notify(orientationState=_orientationState)

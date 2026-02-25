@@ -1,0 +1,28 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2019-2025 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
+Import(
+	[
+		"thirdPartyEnv",
+		"sourceDir",
+	]
+)
+
+env: Environment = thirdPartyEnv
+TARGET_ARCH = env["TARGET_ARCH"]
+# Copy in the Java Access Bridge dependency.
+match TARGET_ARCH:
+	case "x86":
+		jabDllName = "windowsaccessbridge-32.dll"
+	case "x86_64":
+		jabDllName = "windowsaccessbridge-64.dll"
+	case _:
+		print(f"No Java Access Bridge support for NVDA core architecture {TARGET_ARCH!r}")
+		jabDllName = None
+if jabDllName:
+	env.Command(
+		sourceDir.File("windowsaccessbridge.dll"), env.Dir("#include/javaAccessBridge32").File(jabDllName), Copy("$TARGET", "$SOURCE")
+	)
+

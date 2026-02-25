@@ -170,7 +170,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				dev = None
 
 		if not dev:
-			RuntimeError("No MINI-SEIKA display found")
+			raise RuntimeError("No MINI-SEIKA display found")
 		elif self.numCells == 0:
 			dev.close()
 			dev = None

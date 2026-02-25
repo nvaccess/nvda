@@ -21,7 +21,7 @@ def _generateModuleList(
 
 	This function lists all '.pyc' files contained in `library.zip`, converts their paths to Python module
 	format, performs a sanity check to ensure a specific module is present, and then writes the list of
-	modules to a specified output file for packaging as an AppVeyor artefact.
+	modules to a specified output file for packaging as a build artefact.
 
 	:param target: A single element list containing the target file node where the list of modules will be
 				written.

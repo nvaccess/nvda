@@ -1,0 +1,59 @@
+name: Developer facing changes
+description: Maintenance tasks, API changes, and code changes which are not user facing changes
+type: Task
+labels: ["audience/nvda-dev"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This template is intended for developers to document improvements or maintenance to NVDA's code base that do not have user facing changes.
+        This may include API changes, technical debt removal, refactoring and maintenance tasks.
+
+        If this involves a user facing change e.g. a feature or bug, please use one of our other templates.
+
+  - type: textarea
+    id: relatedIssues
+    attributes:
+      label: Related issues, PRs or discussions
+    validations:
+      required: false
+
+  - type: textarea
+    id: currentState
+    attributes:
+      label: What is the current state of the codebase?
+    validations:
+      required: true
+
+  - type: textarea
+    id: whyChanges
+    attributes:
+      label: Why are changes required?
+    validations:
+      required: true
+
+  - type: textarea
+    id: technicalChanges
+    attributes:
+      label: What technical changes are required?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: apiBreaking
+    attributes:
+      label: Are the proposed technical changes API breaking?
+      options:
+        - "No"
+        - "Yes"
+        - "Unknown"
+    validations:
+      required: true
+
+  - type: textarea
+    id: risksIssues
+    attributes:
+      label: Are there potential risks or issues with the proposed implementation?
+    validations:
+      required: true

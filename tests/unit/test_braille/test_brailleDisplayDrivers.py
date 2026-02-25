@@ -1,11 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2020 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2017-2025 NV Access Limited, Leonard de Ruijter
 
 """Unit tests for braille display drivers."""
 
-from typing import Set
 from brailleDisplayDrivers import seikantk
 import unittest
 import braille
@@ -102,8 +101,8 @@ class TestSeikantkDriver_HID(unittest.TestCase):
 	def _simulateKeyPress(
 		self,
 		sampleMessage: bytes,
-		expectedKeyNames: Set[str],
-		expectedRoutingIndexes: Set[int],
+		expectedKeyNames: set[str],
+		expectedRoutingIndexes: set[int],
 	):
 		seikaTestDriver = FakeSeikantkDriver(isHid=True)
 		seikaTestDriver.simulateMessageReceived(sampleMessage)
@@ -155,8 +154,8 @@ class TestSeikantkDriver_Serial(unittest.TestCase):
 	def _simulateKeyPress(
 		self,
 		sampleMessage: bytes,
-		expectedKeyNames: Set[str],
-		expectedRoutingIndexes: Set[int],
+		expectedKeyNames: set[str],
+		expectedRoutingIndexes: set[int],
 	):
 		seikaTestDriver = FakeSeikantkDriver(isHid=False)
 		seikaTestDriver.simulateMessageReceived(sampleMessage)
@@ -176,7 +175,7 @@ class TestGestureMap(unittest.TestCase):
 				continue
 			for cls, gesture, scriptName in gmap.getScriptsForAllGestures():
 				if gesture.startswith("br"):
-					self.assertRegexpMatches(gesture, braille.BrailleDisplayGesture.ID_PARTS_REGEX)
+					self.assertRegex(gesture, braille.BrailleDisplayGesture.ID_PARTS_REGEX)
 
 
 class TestBRLTTY(unittest.TestCase):

@@ -100,4 +100,5 @@ It is also different from the build approach within NVDA.
 
    ```sh
    $ cat /c/work/test-espeak-ssml.txt | ./espeak-ng.exe --stdin -m
+   # eSpeak-NG should output speech
    ```

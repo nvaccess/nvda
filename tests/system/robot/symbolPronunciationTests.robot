@@ -1,10 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2021-2022 NV Access Limited
+# Copyright (C) 2021-2025 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 *** Settings ***
 Documentation	Symbol pronunciation tests
-Force Tags	NVDA	smoke test	symbols	excluded_from_build
+Force Tags	NVDA	smoke test	symbols
 
 # for start & quit in Test Setup and Test Test Teardown
 Library	NvdaLib.py
@@ -65,7 +65,7 @@ selectionByCharacter
 
 tableHeaderSymbols
 	[Documentation]	Ensure symbols announced as expected in table headers.
-	[Tags]	table	excluded_from_build
+	[Tags]	table
 	test_tableHeaders
 
 ignoreBlankLinesForReportLineIndentation

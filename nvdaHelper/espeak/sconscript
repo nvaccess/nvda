@@ -3,6 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2011-2025 NV Access Limited
 
+import ctypes.wintypes
 import enum
 import typing
 import os
@@ -19,13 +20,26 @@ Import(
 	[
 		"thirdPartyEnv",
 		"sourceDir",
+		"sonicLib",
 	]
 )
 
+freeLibrary = ctypes.windll.kernel32.FreeLibrary
+freeLibrary.argtypes = (ctypes.wintypes.HANDLE,)
+DLL_DIRECTORY_COOKIE = ctypes.c_void_p
+AddDllDirectory = ctypes.windll.kernel32.AddDllDirectory
+AddDllDirectory.argtypes = (ctypes.wintypes.LPCWSTR,)
+AddDllDirectory.restype = DLL_DIRECTORY_COOKIE 
+
+# Add the directory of the sonic dll to our DLL search path
+# So that eSpeak.dll cna find it when being loaded to compile dictionaries etc.
+sonicDllDir = sonicLib[0].get_dir().abspath
+AddDllDirectory(sonicDllDir)
+ 
 
 class AutoFreeCDLL(ctypes.CDLL):
 	def __del__(self):
-		ctypes.windll.kernel32.FreeLibrary(self._handle)
+		freeLibrary(self._handle)
 
 
 synthDriversDir = sourceDir.Dir("synthDrivers")
@@ -1014,7 +1028,7 @@ def espeak_compileDict_buildAction(
 		# returns: espeak_ERROR
 		setVoiceResult = espeak.espeak_SetVoiceByProperties(ctypes.byref(voice))
 		if espeak_ERROR.EE_OK.value != setVoiceResult:
-			print(f"Failed to switch to language: '{lang}'" f"\n result: {espeak_ERROR(setVoiceResult)!s}")
+			print(f"Failed to switch to language: '{lang}'\n result: {espeak_ERROR(setVoiceResult)!s}")
 			return ACTION_FAILURE
 
 		rulesPathEncoded = os.fsencode(dirForRules.abspath + "/")
@@ -1038,16 +1052,6 @@ def espeak_compileDict_buildAction(
 	finally:
 		espeak.espeak_Terminate()
 	return ACTION_SUCCESS
-
-
-sonicLib = env.SharedLibrary(
-	target="sonic",
-	srcdir=sonicSrcDir.abspath,
-	source=[
-		"sonic.c",
-		Dir(".").File("sonic.def"),
-	],
-)
 
 espeakLib = env.SharedLibrary(
 	target="espeak",
@@ -1108,7 +1112,7 @@ espeakLib = env.SharedLibrary(
 		# com\ttsengine.cpp
 		# We do not use the ASYNC compile option in espeak.
 	],
-	LIBS=["advapi32", "sonic"],
+	LIBS=["advapi32", sonicLib[2]] ,
 	LIBPATH=".",
 )
 
@@ -1160,7 +1164,6 @@ for dictFileName, (langCode, inputFiles) in espeakDictionaryCompileList.items():
 	)
 
 env.Install(synthDriversDir, espeakLib)
-env.Install(synthDriversDir, sonicLib)
 
 # install espeak-ng-data
 targetEspeakDataDir = synthDriversDir.Dir("espeak-ng-data")

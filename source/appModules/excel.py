@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2018-2025 NV Access Limited, Łukasz Golonka
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,6 @@ import UIAHandler
 from NVDAObjects import NVDAObject
 from NVDAObjects.UIA import UIA
 import winUser
-import winVersion
 import controlTypes
 import appModuleHandler
 from scriptHandler import script
@@ -111,7 +110,7 @@ class AppModule(appModuleHandler.AppModule):
 			return True
 		windowClass = winUser.getClassName(hwnd)
 		versionMajor = int(self.productVersion.split(".")[0])
-		if versionMajor >= 16 and windowClass == "RICHEDIT60W" and winVersion.getWinVer() >= winVersion.WIN10:
+		if versionMajor >= 16 and windowClass == "RICHEDIT60W":
 			# RICHEDIT60W In Excel 2016+ on Windows 10+
 			# has a very good UI Automation implementation,
 			# Though oddly IsServerSideProvider returns false for these windows.

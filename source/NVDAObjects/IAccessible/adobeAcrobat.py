@@ -175,7 +175,7 @@ class AcrobatNode(IAccessible):
 		answer += ">"
 		val = node.GetValue()
 		if val:
-			answer += val
+			answer += html.escape(val)
 		else:
 			for childNum in range(node.GetChildCount()):
 				try:

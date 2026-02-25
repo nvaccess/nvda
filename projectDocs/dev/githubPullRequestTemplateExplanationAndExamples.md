@@ -7,7 +7,6 @@ This page is meant to serve as an explanation for how to fill out
 
 Please use a descriptive title of the changes.
 Avoid relying on references to issues or PRs, ensure the title is self-descriptive.
-To automatically generate a title, set the title to `@coderabbitai title`.
 
 ## The template
 
@@ -57,9 +56,9 @@ This should allow someone else to reproduce your testing.
 
 More broadly, try to answer the following questions:
 
-- How have you tested to ensure that your change works as intended?
-- Have you ensured testing coverage across all supported operating systems?
-- Have you considered possible regressions (related features or behaviours that may break)?
+* How have you tested to ensure that your change works as intended?
+* Have you ensured testing coverage across all supported operating systems?
+* Have you considered possible regressions (related features or behaviours that may break)?
 
 Please use this section as an opportunity to try to convince us (and yourself) that your proposed change should be merged.
 
@@ -71,9 +70,9 @@ Example:
 
 > In NVDA settings ensure that:
 >
-> - Keyboard category
->   - "speak typed characters" is unchecked
->   - "speak typed words" is checked
+> * Keyboard category
+>   * "speak typed characters" is unchecked
+>   * "speak typed words" is checked
 >
 > 1. Open notepad
 > 2. Type "hello"
@@ -81,8 +80,8 @@ Example:
 >
 > Expect "hello" to be announced.
 
-- If many NVDA settings are required, consider attaching a sample `nvda.ini` file to the PR.
-- If a complicated document is required to test with a 3rd party application, consider attaching it to the PR for others to test with.
+* If many NVDA settings are required, consider attaching a sample `nvda.ini` file to the PR.
+* If a complicated document is required to test with a 3rd party application, consider attaching it to the PR for others to test with.
 
 ### Known issues with pull request:
 
@@ -108,48 +107,48 @@ Doing so may pre-empt questions from the reviewer ensuring you are on the same p
 
 Discuss under "testing strategy" heading:
 
-- Unit tests
-  - Describe the coverage of automated unit tests?
-  - Is the changed code covered already, or can it be covered by automated unit tests?
-- System tests
-  - Describe the coverage of automated system tests?
-  - Is the changed code covered already, or can it be covered by automated system tests?
-- Manual tests
-  - Have you followed any relevant test plans in [the manual test documentation](../../tests/manual/README.md)?
-  - How did you manually test the change?
-    - Be clear on steps another user can take to replicate your testing.
-    - Clearly describing this helps alpha testers, and future developers.
-  - Is this a commonly tested part of NVDA?
+* Unit tests
+  * Describe the coverage of automated unit tests?
+  * Is the changed code covered already, or can it be covered by automated unit tests?
+* System tests
+  * Describe the coverage of automated system tests?
+  * Is the changed code covered already, or can it be covered by automated system tests?
+* Manual tests
+  * Have you followed any relevant test plans in [the manual test documentation](../../tests/manual/README.md)?
+  * How did you manually test the change?
+    * Be clear on steps another user can take to replicate your testing.
+    * Clearly describing this helps alpha testers, and future developers.
+  * Is this a commonly tested part of NVDA?
   If so, please add your manual test steps to [the manual test documentation](../../tests/manual/README.md).
-  - As a reviewer, please use this description to replicate the testing (if possible).
+  * As a reviewer, please use this description to replicate the testing (if possible).
 
 ### API is compatible with existing add-ons
 
-- If this is not a `.1` breaking release, ensure that all API changes are backwards compatible with existing add-ons.
-- Ensure proposed API changes are included in the change log under "Changes for Developers".
-- See [Deprecations](./deprecations.md) for more information.
+* If this is not a `.1` breaking release, ensure that all API changes are backwards compatible with existing add-ons.
+* Ensure proposed API changes are included in the change log under "Changes for Developers".
+* See [Deprecations](./deprecations.md) for more information.
 
 ### Documentation
 
-- Change log entries
+* Change log entries
   [Ensure there is a change log entry if required](./contributing.md#change-log-entry).
-- User Documentation
+* User Documentation
   Does the user documentation need updating?
-- Context sensitive help for GUI changes.
+* Context sensitive help for GUI changes.
   New GUI options require context sensitive help assignment.
-- Developer / Technical Documentation
+* Developer / Technical Documentation
   Does the developer or technical documentation need updating?
 
 ### UX of all users considered
 
-- Users of NVDA are diverse, and rely on different parts of NVDA.
+* Users of NVDA are diverse, and rely on different parts of NVDA.
   Ensure the change caters to users of the following:
-  - Speech
-  - Braille
-  - Low Vision
-  - Different web browsers (Firefox, Chrome, Edge)
-  - Localization in other languages / culture than English
-- When one of these can not be supported with this change, highlight it under the "Known issues" heading.
+  * Speech
+  * Braille
+  * Low Vision
+  * Different web browsers (Firefox, Chrome, Edge)
+  * Localization in other languages / culture than English
+* When one of these can not be supported with this change, highlight it under the "Known issues" heading.
 
 ### Security precautions taken
 

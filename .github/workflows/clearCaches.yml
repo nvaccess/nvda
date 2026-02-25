@@ -1,0 +1,48 @@
+name: Clear caches
+
+on:
+  schedule:
+    # every 3 hours
+    - cron: '0 */3 * * *'
+  workflow_dispatch:
+    inputs:
+      cache_expiration:
+        description: 'Delete all caches older than X hours (Default 6 hours)'
+        required: false
+
+env:
+  CACHE_EXPIRATION_HOUR: ${{ inputs.cache_expiration || 6 }}
+
+jobs:
+  cleanupCache:
+    name: Cleanup caches
+    permissions:
+      actions: write
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Cleanup cache
+        shell: bash
+        run: |
+          gh cache list --order asc --json id,lastAccessedAt \
+            | jq --raw-output '
+              map(
+                select(
+                  (
+                    .lastAccessedAt
+                    | sub("\\.[0-9]+Z$"; "Z")
+                    | fromdateiso8601
+                  ) < (
+                  now - ${{ env.CACHE_EXPIRATION_HOUR }} * 3600
+                  )
+                )
+              )
+              | .[].id
+            ' \
+            | while read -r cache; do
+            gh cache delete "$cache"
+          done
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}

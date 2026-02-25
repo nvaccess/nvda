@@ -1,4 +1,4 @@
-## Reporting issues or feature requests
+# Reporting issues or feature requests
 
 Issues can be [reported via GitHub](https://github.com/nvaccess/nvda/issues/new/choose).
 Please read the [issue template guide](./githubIssueTemplateExplanationAndExamples.md) for help filling out the appropriate template.
@@ -9,6 +9,6 @@ Do not report security issues via GitHub, instead follow our [security policy](.
 
 Issues with translations should be reported to the [NVDA Translators list](https://groups.io/g/nvda-translations).
 
-If you are reporting an issue with an application or website, please consider reporting the issue to the authors of the application/website first.
+If you are reporting an issue with an application or website, please consider reporting the issue to the [authors of the application/website](./thirdPartyReporting.md) first.
 
 If you are a developer reporting an issue with your application/website, please include a minimal reproducible sample and details of the specification not being handled correctly.

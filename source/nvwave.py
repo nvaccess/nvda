@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2024 NV Access Limited, Aleksey Sadovoy, Cyrille Bougot, Peter Vágner, Babbage B.V.,
+# Copyright (C) 2007-2025 NV Access Limited, Aleksey Sadovoy, Cyrille Bougot, Peter Vágner, Babbage B.V.,
 # Leonard de Ruijter, James Teh
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -13,16 +13,12 @@ from typing import (
 )
 from enum import Enum, auto
 from ctypes import (
-	Structure,
 	c_uint,
 	byref,
 	c_void_p,
 	CFUNCTYPE,
 	c_float,
-)
-from ctypes.wintypes import (
-	WORD,
-	DWORD,
+	string_at,
 )
 from comtypes import HRESULT
 from comtypes.hresult import E_INVALIDARG
@@ -35,13 +31,22 @@ import config
 from logHandler import log, getOnErrorSoundRequested
 import os.path
 import extensionPoints
-import NVDAHelper
+import wasapi
 import core
 import globalVars
 from speech import SpeechSequence
 from speech.commands import BreakCommand
 from synthDriverHandler import pre_synthSpeak
+from utils import _deprecate
+from winBindings.mmeapi import WAVEFORMATEX as _WAVEFORMATEX
 
+__getattr__ = _deprecate.handleDeprecations(
+	_deprecate.MovedSymbol(
+		"WAVEFORMATEX",
+		"winBindings.mmeapi",
+	),
+)
+"""Module __getattr__ to handle backward compatibility."""
 
 __all__ = (
 	"WavePlayer",
@@ -58,18 +63,6 @@ the remote system must be notified of sounds played on the local system.
 Also, registrars should be able to suppress playing sounds if desired.
 Handlers are called with the same arguments as L{playWaveFile} as keyword arguments.
 """
-
-
-class WAVEFORMATEX(Structure):
-	_fields_ = [
-		("wFormatTag", WORD),
-		("nChannels", WORD),
-		("nSamplesPerSec", DWORD),
-		("nAvgBytesPerSec", DWORD),
-		("nBlockAlign", WORD),
-		("wBitsPerSample", WORD),
-		("cbSize", WORD),
-	]
 
 
 WAVE_FORMAT_PCM = 1
@@ -92,10 +85,11 @@ def playWaveFile(
 	isSpeechWaveFileCommand: bool = False,
 ):
 	"""plays a specified wave file.
-	@param fileName: the path to the wave file, usually absolute.
-	@param asynchronous: whether the wave file should be played asynchronously
-		If C{False}, the calling thread is blocked until the wave has finished playing.
-	@param isSpeechWaveFileCommand: whether this wave is played as part of a speech sequence.
+
+	:param fileName: the path to the wave file, usually absolute.
+	:param asynchronous: whether the wave file should be played asynchronously
+		If ``False``, the calling thread is blocked until the wave has finished playing.
+	:param isSpeechWaveFileCommand: whether this wave is played as part of a speech sequence.
 	"""
 	global fileWavePlayer, fileWavePlayerThread
 	f = wave.open(fileName, "r")
@@ -136,14 +130,26 @@ def playWaveFile(
 		# player for the next file anyway - so just destroy it now.
 		fileWavePlayer = None
 
-	fileWavePlayer = WavePlayer(
-		channels=f.getnchannels(),
-		samplesPerSec=f.getframerate(),
-		bitsPerSample=f.getsampwidth() * 8,
-		outputDevice=config.conf["audio"]["outputDevice"],
-		wantDucking=False,
-		purpose=AudioPurpose.SOUNDS,
-	)
+	try:
+		fileWavePlayer = WavePlayer(
+			channels=f.getnchannels(),
+			samplesPerSec=f.getframerate(),
+			bitsPerSample=f.getsampwidth() * 8,
+			outputDevice=config.conf["audio"]["outputDevice"],
+			wantDucking=False,
+			purpose=AudioPurpose.SOUNDS,
+		)
+	except OSError as exception:
+		# If there are no enabled audio render endpoints connected to the system,
+		# attempting to initialise a WASAPI session will fail.
+		# Fail gracefully in this case.
+		if exception.winerror == -2147023728:  # 0x80070490: ERROR_NOT_FOUND
+			# We mustn't log at error level as it may try to play a sound,
+			# and that's what caused this exception.
+			log.debugWarning("Unable to play wave file as the render endpoint was not found.", exc_info=True)
+			return
+		# In other cases, we should still raise.
+		raise
 	if asynchronous:
 		fileWavePlayerThread = threading.Thread(
 			name=f"{__name__}.playWaveFile({os.path.basename(fileName)})",
@@ -219,7 +225,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 		self.channels = channels
 		self.samplesPerSec = samplesPerSec
 		self.bitsPerSample = bitsPerSample
-		format = self._format = WAVEFORMATEX()
+		format = self._format = _WAVEFORMATEX()
 		format.wFormatTag = WAVE_FORMAT_PCM
 		format.nChannels = channels
 		format.nSamplesPerSec = samplesPerSec
@@ -235,7 +241,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 		self._purpose = purpose
 		if outputDevice == self.DEFAULT_DEVICE_KEY:
 			outputDevice = ""
-		self._player = NVDAHelper.localLib.wasPlay_create(
+		self._player = wasapi.wasPlay_create(
 			outputDevice,
 			format,
 			WavePlayer._callback,
@@ -248,9 +254,9 @@ class WavePlayer(garbageHandler.TrackedObject):
 		if config.conf["audio"]["audioAwakeTime"] > 0 and WavePlayer._silenceDevice != outputDevice:
 			# The output device has changed. (Re)initialize silence.
 			if self._silenceDevice is not None:
-				NVDAHelper.localLib.wasSilence_terminate()
+				wasapi.wasSilence_terminate()
 			if config.conf["audio"]["audioAwakeTime"] > 0:
-				NVDAHelper.localLib.wasSilence_init(outputDevice)
+				wasapi.wasSilence_init(outputDevice)
 				WavePlayer._silenceDevice = outputDevice
 		# Enable trimming by default for speech only
 		self.enableTrimmingLeadingSilence(
@@ -272,12 +278,12 @@ class WavePlayer(garbageHandler.TrackedObject):
 		if not hasattr(self, "_player"):
 			# This instance failed to construct properly. Let it die gracefully.
 			return
-		if not NVDAHelper.localLib:
+		if not wasapi:
 			# This instance is dying after NVDAHelper was terminated. We can't
 			# destroy it in that case, but we're probably exiting anyway.
 			return
 		if self._player:
-			NVDAHelper.localLib.wasPlay_destroy(self._player)
+			wasapi.wasPlay_destroy(self._player)
 			# Because _instances is a WeakValueDictionary, it will remove the
 			# reference to this instance by itself. We don't need to do it explicitly
 			# here. Furthermore, doing it explicitly might cause an exception because
@@ -292,7 +298,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 		It is not an error if the output device is already open.
 		"""
 		try:
-			NVDAHelper.localLib.wasPlay_open(self._player)
+			wasapi.wasPlay_open(self._player)
 		except WindowsError:
 			log.warning(
 				"Couldn't open specified or default audio device. There may be no audio devices.",
@@ -333,8 +339,10 @@ class WavePlayer(garbageHandler.TrackedObject):
 		# turn off trimming temporarily.
 		if self._purpose is AudioPurpose.SPEECH and self._isLeadingSilenceInserted:
 			self.startTrimmingLeadingSilence(False)
+		if not isinstance(data, bytes):
+			data = string_at(data, size)
 		try:
-			NVDAHelper.localLib.wasPlay_feed(
+			wasapi.wasPlay_feed(
 				self._player,
 				data,
 				size if size is not None else len(data),
@@ -355,7 +363,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 		self._lastActiveTime = time.time()
 		self._scheduleIdleCheck()
 		if config.conf["audio"]["audioAwakeTime"] > 0:
-			NVDAHelper.localLib.wasSilence_playFor(
+			wasapi.wasSilence_playFor(
 				1000 * config.conf["audio"]["audioAwakeTime"],
 				c_float(config.conf["audio"]["whiteNoiseVolume"] / 100.0),
 			)
@@ -364,7 +372,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 		"""Synchronise with playback.
 		This method blocks until the previously fed chunk of audio has finished playing.
 		"""
-		NVDAHelper.localLib.wasPlay_sync(self._player)
+		wasapi.wasPlay_sync(self._player)
 
 	def idle(self):
 		"""Indicate that this player is now idle; i.e. the current continuous segment  of audio is complete."""
@@ -378,7 +386,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 		"""Stop playback."""
 		if self._audioDucker:
 			self._audioDucker.disable()
-		NVDAHelper.localLib.wasPlay_stop(self._player)
+		wasapi.wasPlay_stop(self._player)
 		if self._enableTrimmingLeadingSilence:
 			self.startTrimmingLeadingSilence()
 		self._lastActiveTime = None
@@ -396,9 +404,9 @@ class WavePlayer(garbageHandler.TrackedObject):
 			else:
 				self._audioDucker.enable()
 		if switch:
-			NVDAHelper.localLib.wasPlay_pause(self._player)
+			wasapi.wasPlay_pause(self._player)
 		else:
-			NVDAHelper.localLib.wasPlay_resume(self._player)
+			wasapi.wasPlay_resume(self._player)
 			# If self._lastActiveTime is None, either no audio has been fed yet or audio
 			# is currently being fed. Either way, we shouldn't touch it.
 			if self._lastActiveTime:
@@ -425,9 +433,9 @@ class WavePlayer(garbageHandler.TrackedObject):
 			if left is not None or right is not None:
 				raise ValueError("all specified, so left and right must not be specified")
 			left = right = all
-		NVDAHelper.localLib.wasPlay_setChannelVolume(self._player, 0, c_float(left))
+		wasapi.wasPlay_setChannelVolume(self._player, 0, c_float(left))
 		try:
-			NVDAHelper.localLib.wasPlay_setChannelVolume(self._player, 1, c_float(right))
+			wasapi.wasPlay_setChannelVolume(self._player, 1, c_float(right))
 		except WindowsError as e:
 			# E_INVALIDARG indicates that the audio device doesn't support this channel.
 			# If we're trying to set all channels, that's fine; we've already set the
@@ -444,7 +452,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 
 	def startTrimmingLeadingSilence(self, start: bool = True) -> None:
 		"""Start or stop trimming the leading silence from the next audio chunk."""
-		NVDAHelper.localLib.wasPlay_startTrimmingLeadingSilence(self._player, start)
+		wasapi.wasPlay_startTrimmingLeadingSilence(self._player, start)
 
 	def _setVolumeFromConfig(self):
 		if self._purpose is not AudioPurpose.SOUNDS:
@@ -498,7 +506,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 				continue
 			if player._lastActiveTime <= threshold:
 				try:
-					NVDAHelper.localLib.wasPlay_idle(player._player)
+					wasapi.wasPlay_idle(player._player)
 					if player._enableTrimmingLeadingSilence:
 						player.startTrimmingLeadingSilence()
 				except OSError:
@@ -533,27 +541,27 @@ fileWavePlayerThread: threading.Thread | None = None
 
 
 def initialize():
-	NVDAHelper.localLib.wasPlay_create.restype = c_void_p
+	wasapi.wasPlay_create.restype = c_void_p
 	for func in (
-		NVDAHelper.localLib.wasPlay_startup,
-		NVDAHelper.localLib.wasPlay_open,
-		NVDAHelper.localLib.wasPlay_feed,
-		NVDAHelper.localLib.wasPlay_stop,
-		NVDAHelper.localLib.wasPlay_sync,
-		NVDAHelper.localLib.wasPlay_idle,
-		NVDAHelper.localLib.wasPlay_pause,
-		NVDAHelper.localLib.wasPlay_resume,
-		NVDAHelper.localLib.wasPlay_setChannelVolume,
-		NVDAHelper.localLib.wasSilence_init,
+		wasapi.wasPlay_startup,
+		wasapi.wasPlay_open,
+		wasapi.wasPlay_feed,
+		wasapi.wasPlay_stop,
+		wasapi.wasPlay_sync,
+		wasapi.wasPlay_idle,
+		wasapi.wasPlay_pause,
+		wasapi.wasPlay_resume,
+		wasapi.wasPlay_setChannelVolume,
+		wasapi.wasSilence_init,
 	):
 		func.restype = HRESULT
-	NVDAHelper.localLib.wasPlay_startup()
+	wasapi.wasPlay_startup()
 	getOnErrorSoundRequested().register(playErrorSound)
 
 
 def terminate() -> None:
 	if WavePlayer._silenceDevice is not None:
-		NVDAHelper.localLib.wasSilence_terminate()
+		wasapi.wasSilence_terminate()
 	getOnErrorSoundRequested().unregister(playErrorSound)
 
 

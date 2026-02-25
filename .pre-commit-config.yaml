@@ -17,7 +17,7 @@ ci:
   submodules: true
 
 default_language_version:
-  python: python3.11
+  python: python3.13
 
 repos:
 - repo: https://github.com/pre-commit-ci/pre-commit-ci-config
@@ -33,7 +33,7 @@ repos:
     - id: check-hooks-apply
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v5.0.0
+  rev: v6.0.0
   hooks:
     # Prevents commits to certain branches
     - id: no-commit-to-branch
@@ -41,9 +41,10 @@ repos:
     # Checks that large files have not been added. Default cut-off for "large" files is 500kb.
     - id: check-added-large-files
       # POFiles and TTF fonts can't be made smaller
+      # XLIFF files can be moved here from exclude when pre-commit/identify#558 is released.
       exclude_types: ["pofile", "ttf"]
-      # Same applies for NVDA dictionary (.dic) files and Spline Font Database (.SFD) files, but these aren't recognised by the Identify library.
-      exclude: "\\.(dic|sfd)$"
+      # Same applies for XLIFF, NVDA dictionary (.dic) files and Spline Font Database (.SFD) files, but these aren't recognised by the Identify library.
+      exclude: "\\.(dic|sfd|xliff)$"
     # Checks python syntax
     - id: check-ast
     # Checks for filenames that will conflict on case insensitive filesystems (the majority of Windows filesystems, most of the time)
@@ -92,7 +93,7 @@ repos:
         )
 
 - repo: https://github.com/asottile/add-trailing-comma
-  rev: v3.2.0
+  rev: v4.0.0
   hooks:
   # Ruff preserves indent/new-line formatting of function arguments, list items, and similar iterables,
   # if a trailing comma is added.
@@ -101,7 +102,7 @@ repos:
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Matches Ruff version in pyproject.
-  rev: v0.12.5
+  rev: v0.14.5
   hooks:
     - id: ruff
       name: lint with ruff
@@ -109,19 +110,20 @@ repos:
     - id: ruff-format
       name: format with ruff
 
-- repo: https://github.com/RobertCraigie/pyright-python
-  rev: v1.1.403
-  hooks:
-  - id: pyright
-    name: Check types with pyright
-
 - repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.8.3
+  rev: 0.9.11
   hooks:
     - id: uv-lock
       name: Verify uv lock file
       # Override python interpreter from .python-versions as that is too strict for pre-commit.ci
-      args: ["-p3.11"]
+      args: ["-p3.13"]
+
+- repo: https://github.com/DavidAnson/markdownlint-cli2
+  rev: v0.18.1
+  hooks:
+  - id: markdownlint-cli2
+    name: Lint markdown files
+    args: ["--fix"]
 
 - repo: local
   hooks:
@@ -155,3 +157,8 @@ repos:
       entry: ./runlicensecheck.bat
       language: script
       pass_filenames: false
+    - id: pyright
+      name: type check with pyright
+      entry: uv run pyright
+      language: system
+      types: [python]

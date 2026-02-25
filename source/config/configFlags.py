@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot, Cary-rowen
+# Copyright (C) 2022-2026 NV Access Limited, Cyrille Bougot, Cary-rowen
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -13,6 +13,7 @@ the default value.
 
 from typing import TYPE_CHECKING
 from enum import unique, verify, CONTINUOUS
+from logHandler import Logger
 from utils.displayString import (
 	DisplayStringFlag,
 	DisplayStringIntEnum,
@@ -177,6 +178,42 @@ class ReportLineIndentation(DisplayStringIntEnum):
 				# Speech and tones.
 				"Both Speech and Tones",
 			),
+		}
+
+
+@unique
+class ReportSpellingErrors(DisplayStringIntFlag):
+	"""IntFlag enumeration containing the possible config values to report spelling errors while reading.
+
+	Use ReportSpellingErrors.MEMBER.value to compare with the config;
+	the config stores a bitwise combination of zero, one or more of these values.
+	Use ReportSpellingErrors.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+
+	OFF = 0b0
+	SPEECH = 0b1
+	SOUND = 0b10
+	SPEECH_AND_SOUND = SPEECH | SOUND
+	BRAILLE = 0b100
+
+	@property
+	def _displayStringLabels(self) -> dict["ReportSpellingErrors", str]:
+		return {
+			# Translators: A value reported by the cycle script defining how spelling errors are reported.
+			ReportSpellingErrors.OFF: pgettext("reportSpellingErrorsSetting", "Off"),
+			# Translators: A value reported by the cycle script defining how spelling errors are reported, also used
+			# as choice in a checklist box in the document formatting dialog to report spelling errors with speech.
+			ReportSpellingErrors.SPEECH: pgettext("reportSpellingErrorsSetting", "Speech"),
+			# Translators: A value reported by the cycle script defining how spelling errors are reported, also used
+			# as choice in a checklist box in the document formatting dialog to report spelling errors with a sound.
+			ReportSpellingErrors.SOUND: pgettext("reportSpellingErrorsSetting", "Sound"),
+			ReportSpellingErrors.SPEECH_AND_SOUND: pgettext(
+				"reportSpellingErrorsSetting",
+				# Translators: A value reported by the cycle script defining how spelling errors are reported.
+				"Speech and sound",
+			),
+			# Translators: A value used as choice in a checklist box in the document formatting dialog to report spelling errors in braille.
+			ReportSpellingErrors.BRAILLE: pgettext("reportSpellingErrorsSetting", "Braille"),
 		}
 
 
@@ -369,4 +406,61 @@ class RemoteServerType(DisplayStringFlag):
 			RemoteServerType.EXISTING: pgettext("remote", "Use existing"),
 			# Translators: Use NVDA as the Remote control server
 			RemoteServerType.LOCAL: pgettext("remote", "Host locally"),
+		}
+
+
+class LoggingLevel(DisplayStringIntEnum):
+	"""Enumeration containing the possible logging levels.
+
+	Use LoggingLevel.MEMBER.value to compare with the config;
+	use LoggingLevel.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+
+	OFF = Logger.OFF
+	INFO = Logger.INFO
+	DEBUGWARNING = Logger.DEBUGWARNING
+	IO = Logger.IO
+	DEBUG = Logger.DEBUG
+
+	@property
+	def _displayStringLabels(self) -> dict[int, str]:
+		return {
+			# Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
+			self.OFF: _("disabled"),
+			# Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
+			self.INFO: _("info"),
+			# Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
+			self.DEBUGWARNING: _("debug warning"),
+			# Translators: One of the log levels of NVDA (the input/output shows keyboard commands and/or braille commands as well as speech and/or braille output of NVDA).
+			self.IO: _("input/output"),
+			# Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
+			self.DEBUG: _("debug"),
+		}
+
+
+@unique
+class PlayErrorSound(DisplayStringIntEnum):
+	"""Enumeration containing the possible config values to play a sound when an error is logged, depending on
+	NVDA version type.
+
+	Use PlayErrorSound.MEMBER.value to compare with the config;
+	use PlayErrorSound.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+
+	ONLY_IN_TEST_VERSIONS = 0
+	YES = 1
+	NO = 2
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			PlayErrorSound.ONLY_IN_TEST_VERSIONS: pgettext(
+				"advanced.playErrorSound",
+				# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+				"Only in NVDA test versions",
+			),
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+			PlayErrorSound.YES: pgettext("advanced.playErrorSound", "Yes"),
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+			PlayErrorSound.NO: pgettext("advanced.playErrorSound", "No"),
 		}
