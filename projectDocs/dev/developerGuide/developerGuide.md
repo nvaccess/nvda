@@ -36,7 +36,7 @@ This is the only release window where signature breaking changes (defined below)
 This allows us to remove technical debt and refactor core code.
 * **Standard releases (minor & patch releases, e.g. 2026.2, 2026.3.1):**
 These releases focus on features and stability.
-Existing API signatures are preserved, but new API features may be added. 
+Existing API signatures are preserved, but new API features may be added.
 This includes behavioural refinements and bug fixes (see below).
 
 #### Classification of API changes
