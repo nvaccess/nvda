@@ -1915,26 +1915,46 @@ class UIA(Window):
 			hasKeyboardFocus = False
 		if hasKeyboardFocus:
 			states.add(controlTypes.State.FOCUSED)
-		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsKeyboardFocusablePropertyId):
+		try:
+			isFocusable = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsKeyboardFocusablePropertyId)
+		except COMError:
+			isFocusable = False
+		if isFocusable:
 			states.add(controlTypes.State.FOCUSABLE)
-		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsPasswordPropertyId):
+		try:
+			isPassword = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsPasswordPropertyId)
+		except COMError:
+			isPassword = False
+		if isPassword:
 			states.add(controlTypes.State.PROTECTED)
 		# Don't fetch the role unless we must, but never fetch it more than once.
 		role = None
-		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId):
+		try:
+			isSelectionItemPatternAvailable = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId)
+		except COMError:
+			isSelectionItemPatternAvailable = False
+		if isSelectionItemPatternAvailable:
 			role = self.role
 			states.add(
 				controlTypes.State.CHECKABLE
 				if role == controlTypes.Role.RADIOBUTTON
 				else controlTypes.State.SELECTABLE,
 			)
-			if self._getUIACacheablePropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId):
+			try:
+				isSelected = self._getUIACacheablePropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId)
+			except COMError:
+				isSelected = False
+			if isSelected:
 				states.add(
 					controlTypes.State.CHECKED
 					if role == controlTypes.Role.RADIOBUTTON
 					else controlTypes.State.SELECTED,
 				)
-		if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsEnabledPropertyId, True):
+		try:
+			disabled = not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsEnabledPropertyId, True)
+		except COMError:
+			disabled = False
+		if disabled:
 			states.add(controlTypes.State.UNAVAILABLE)
 		try:
 			isOffScreen = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsOffscreenPropertyId)
@@ -1951,7 +1971,11 @@ class UIA(Window):
 			isDataValid = UIAHandler.handler.reservedNotSupportedValue
 		if not isDataValid:
 			states.add(controlTypes.State.INVALID_ENTRY)
-		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId):
+		try:
+			required = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId)
+		except COMError:
+			required = False
+		if required:
 			states.add(controlTypes.State.REQUIRED)
 
 		if self._getReadOnlyState():
