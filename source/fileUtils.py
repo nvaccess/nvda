@@ -1,20 +1,19 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2021 NV Access Limited, Bram Duvigneau, Łukasz Golonka
+# Copyright (C) 2017-2026 NV Access Limited, Bram Duvigneau, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import os
 import ctypes
-import ctypes.wintypes
 import array
 from contextlib import contextmanager
 from tempfile import NamedTemporaryFile
 from logHandler import log
-from six import text_type
 import winKernel
 import shlobj
 from functools import wraps
 import systemUtils
+import winBindings.version
 
 
 @contextmanager
@@ -32,7 +31,7 @@ def FaultTolerantFile(name):
 	This creates a temporary file, and the writes actually happen on this temp file. At the end of the
 	`with` block, when `f` goes out of context the temporary file is closed and, this temporary file replaces "myFile.txt"
 	"""
-	if not isinstance(name, text_type):
+	if not isinstance(name, str):
 		raise TypeError("name must be an unicode string")
 	dirpath, filename = os.path.split(name)
 	with NamedTemporaryFile(dir=dirpath, prefix=filename, suffix=".tmp", delete=False) as f:
@@ -71,25 +70,31 @@ def _suspendWow64RedirectionForFileInfoRetrieval(func):
 
 
 @_suspendWow64RedirectionForFileInfoRetrieval
-def getFileVersionInfo(name, *attributes):
-	"""Gets the specified file version info attributes from the provided file."""
-	if not isinstance(name, text_type):
-		raise TypeError("name must be an unicode string")
+def getFileVersionInfo(name: str, *attributes: str) -> dict[str, str | None]:
+	"""
+	Gets the specified file version info attributes from the provided file.
+	:param name: The path to the file to get version info from.
+	:param attributes: The list of attributes to get. E.g. "FileVersion", "ProductVersion"
+	:return: A dictionary mapping the provided attributes to their values.
+	If an attribute is not found or invalid, its value will be None.
+
+	:raises RuntimeError: If the file does not exist, has no version information, or has no codepage.
+	"""
 	if not os.path.exists(name):
 		raise RuntimeError("The file %s does not exist" % name)
 	fileVersionInfo = {}
 	# Get size needed for buffer (0 if no info)
-	size = ctypes.windll.version.GetFileVersionInfoSizeW(name, None)
+	size = winBindings.version.GetFileVersionInfoSize(name, None)
 	if not size:
 		raise RuntimeError("No version information")
 	# Create buffer
 	res = ctypes.create_string_buffer(size)
 	# Load file informations into buffer res
-	ctypes.windll.version.GetFileVersionInfoW(name, None, size, res)
-	r = ctypes.c_uint()
+	winBindings.version.GetFileVersionInfo(name, 0, size, res)
+	r = ctypes.c_void_p()
 	l = ctypes.c_uint()  # noqa: E741
 	# Look for codepages
-	ctypes.windll.version.VerQueryValueW(
+	winBindings.version.VerQueryValue(
 		res,
 		"\\VarFileInfo\\Translation",
 		ctypes.byref(r),
@@ -101,7 +106,7 @@ def getFileVersionInfo(name, *attributes):
 	codepage = array.array("H", ctypes.string_at(r.value, 4))
 	codepage = "%04x%04x" % tuple(codepage)
 	for attr in attributes:
-		if not ctypes.windll.version.VerQueryValueW(
+		if not winBindings.version.VerQueryValue(
 			res,
 			"\\StringFileInfo\\%s\\%s" % (codepage, attr),
 			ctypes.byref(r),

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2023-2024 NV Access Limited
+# Copyright (C) 2023-2025 NV Access Limited
 
 from __future__ import annotations
 from ctypes import (
@@ -13,10 +13,9 @@ from ctypes import (
 	c_bool,
 )
 from comtypes.automation import VARIANT
-import os
 import enum
+import NVDAState
 from UIAHandler import UIA
-import NVDAHelper
 
 
 """
@@ -56,7 +55,7 @@ class RelativeOffset(c_long):
 		return f"RelativeOffset {self.value}"
 
 
-_dll = oledll[os.path.join(NVDAHelper.versionedLibPath, "UIARemote.dll")]
+_dll = oledll[NVDAState.ReadPaths.UIARemoteDll]
 
 
 class RemoteOperationResultSet:

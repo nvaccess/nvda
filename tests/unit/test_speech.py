@@ -527,6 +527,53 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 		)
 		self.assertEqual(repr(list(output)), expected)
 
+	def test_decomposedBindingToSpace(self):
+		# Note, with this test string, no normalization occurs at all.
+		# Yet we need to test this explicitly because splitAtCharacterBoundaries treats
+		# space plus acute as one character.
+		text = " ́"
+		expected = repr(
+			[
+				"space",
+				EndUtteranceCommand(),
+				"́",
+				EndUtteranceCommand(),
+			],
+		)
+		output1 = _getSpellingSpeechWithoutCharMode(
+			text=text,
+			locale=None,
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=False,
+			reportNormalizedForCharacterNavigation=False,
+		)
+		self.assertEqual(repr(list(output1)), expected)
+		output2 = _getSpellingSpeechWithoutCharMode(
+			text=text,
+			locale=None,
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=True,
+			reportNormalizedForCharacterNavigation=False,
+		)
+		self.assertEqual(repr(list(output2)), expected)
+		output3 = _getSpellingSpeechWithoutCharMode(
+			text=text,
+			locale=None,
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=True,
+			reportNormalizedForCharacterNavigation=True,
+		)
+		self.assertEqual(repr(list(output3)), expected)
+
 	def test_normalizedInSymbolDict_normalizeOff(self):
 		expected = repr(
 			[

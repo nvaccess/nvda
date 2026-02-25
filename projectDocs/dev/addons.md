@@ -1,4 +1,6 @@
-### Important links
+# NVDA Add-ons
+
+## Important links
 
 * [Changes in the latest release](https://download.nvaccess.org/documentation/changes.html)
 * [NVDA Add-on API Mailing List](https://groups.google.com/a/nvaccess.org/g/nvda-api)
@@ -10,7 +12,7 @@ This website is considered legacy software, using the NVDA Add-on Store instead 
 * [NVDA add-ons community template](https://github.com/nvdaaddons/AddonTemplate): A repository for generating add-ons using a template
 * The NVDA repository [Wiki](https://github.com/nvaccess/nvda/wiki) contains more guides and documentation.
 
-### Documentation
+## Documentation
 
 * [NVDA release process](../community/releaseProcess.md)
 * [NVDA Developer Guide](https://download.nvaccess.org/documentation/developerGuide.html)
@@ -18,14 +20,14 @@ This website is considered legacy software, using the NVDA Add-on Store instead 
 * [NVDA Add-on Development Community Guide](https://github.com/nvdaaddons/DevGuide/wiki/NVDA-Add-on-Development-Guide)
 * [NVDA ControllerClient manual (NVDA API for external applications to directly speak or braille messages, etc.)](../../extras/controllerClient)
 
-### Communication channels
+## Communication channels
 
-#### NV Access
+### NV Access
 
 * [GitHub discussions](https://github.com/nvaccess/nvda/discussions)
 * [NVDA Add-on API Mailing List](https://groups.google.com/a/nvaccess.org/g/nvda-api)
 
-#### NVDA Community
+### NVDA Community
 
 * [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
 * [NVDA Add-ons Mailing List](https://groups.io/g/nvda-addons)

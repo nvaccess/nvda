@@ -2,7 +2,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt, Leonard de Ruijter
+# Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
 
 from .speech import (
 	_extendSpeechSequence_addMathForTextInfo,
@@ -14,6 +14,7 @@ from .speech import (
 	_getSpeakMessageSpeech,
 	_manager,
 	_objectSpeech_calculateAllowedProps,
+	_setLastSpeechString,
 	_suppressSpeakTypedCharacters,
 	BLANK_CHUNK_CHARS,
 	cancelSpeech,
@@ -35,7 +36,7 @@ from .speech import (
 	getTextInfoSpeech,
 	IDT_BASE_FREQUENCY,
 	IDT_MAX_SPACES,
-	IDT_TONE_DURATION,
+	getIndentToneDuration,
 	isBlank,
 	LANGS_WITH_CONJUNCT_CHARS,
 	pauseSpeech,
@@ -63,7 +64,7 @@ from .speech import (
 	spellTextInfo,
 	splitTextIndentation,
 )
-from .extensions import speechCanceled, post_speechPaused, pre_speechQueued, filter_speechSequence
+from .extensions import speechCanceled, post_speechPaused, pre_speechQueued, filter_speechSequence, pre_speech
 from .languageHandling import getSpeechSequenceWithLangs
 from .priorities import Spri
 
@@ -115,7 +116,7 @@ __all__ = [
 	"getTextInfoSpeech",
 	"IDT_BASE_FREQUENCY",
 	"IDT_MAX_SPACES",
-	"IDT_TONE_DURATION",
+	"getIndentToneDuration",
 	"isBlank",
 	"LANGS_WITH_CONJUNCT_CHARS",
 	"pauseSpeech",
@@ -167,8 +168,10 @@ def initialize():
 		SpeakTextInfoState,
 	)
 	filter_speechSequence.register(getSpeechSequenceWithLangs)
+	pre_speech.register(_setLastSpeechString)
 
 
 def terminate():
 	synthDriverHandler.setSynth(None)
 	filter_speechSequence.unregister(getSpeechSequenceWithLangs)
+	pre_speech.unregister(_setLastSpeechString)

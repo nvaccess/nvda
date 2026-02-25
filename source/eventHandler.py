@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2007-2023 NV Access Limited, Babbage B.V., Joseph Lee
+# Copyright (C) 2007-2025 NV Access Limited, Babbage B.V., Joseph Lee
 
 import threading
 import typing
@@ -18,6 +18,7 @@ import controlTypes
 from logHandler import log
 import globalPluginHandler
 import config
+from winBindings import user32
 import winUser
 import extensionPoints
 import oleacc
@@ -550,8 +551,8 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		# This is for the foreground application.
 		return True
 	if (
-		winUser.user32.GetWindowLongW(windowHandle, winUser.GWL_EXSTYLE) & winUser.WS_EX_TOPMOST
-		or winUser.user32.GetWindowLongW(
+		user32.GetWindowLong(windowHandle, winUser.GWL_EXSTYLE) & winUser.WS_EX_TOPMOST
+		or user32.GetWindowLong(
 			winUser.getAncestor(windowHandle, winUser.GA_ROOT),
 			winUser.GWL_EXSTYLE,
 		)

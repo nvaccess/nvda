@@ -2,15 +2,17 @@
 
 [TOC]
 
-
-
 ## Introduction {#introduction}
 
 This guide provides information concerning NVDA development, including translation and the development of components for NVDA.
 
 ### Add-on API stability {#API}
 
-The NVDA Add-on API includes all NVDA internals, except symbols that are prefixed with an underscore.
+The NVDA Add-on API includes all NVDA internals, except:
+
+* symbols that are prefixed with an underscore (`_`)
+* [transitive imports](#APIImports)
+* [included pip packages](#APIIncludedPipPackages)
 
 The NVDA Add-on API changes over time, for example because of the addition of new features, removal or replacement of outdated libraries, deprecation of unused or replaced code and methodologies, and changes to Python.
 Important changes to the API are announced on the [NVDA API mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-api/about).
@@ -26,6 +28,30 @@ Deprecated API features may have a scheduled removal date, a future breaking rel
 Deprecations may also have no scheduled removal date, and will remain supported until it is no longer reasonable.
 Note, the roadmap for removals is 'best effort' and may be subject to change.
 Please open a GitHub issue if the described add-on API changes result in the API no longer meeting the needs of an add-on you develop or maintain.
+
+#### Stability of transitive imports in the API {#APIImports}
+
+Make sure to import your code from the original module by checking the NVDA source code.
+
+e.g. if a class is located at `foo.py`, you should import it as follows:
+
+```python
+from foo import Foo
+```
+
+If `bar.py` imports `Foo` you cannot rely on importing `Foo` from `bar`.
+i.e. you must import it directly from `foo`.
+
+The following is not supported in the API, as the import in `bar` could be removed at any time.
+
+```python
+from bar import Foo
+```
+
+#### Stability of pip packages {#APIIncludedPipPackages}
+
+Pip packages may be updated, downgraded, or removed at any time.
+It is recommended to package any pip dependency you share with NVDA directly with your add-on, rather than using NVDA's version of the package.
 
 ### A Note About Python {#aboutPython}
 
@@ -343,6 +369,7 @@ If the class your looking for does not exist, create this section.
    Unmapping the original shortcut is only required if this shortcut does not match any other remapped locale shortcut.
 
 ## Plugins {#plugins}
+
 ### Overview {#pluginsOverview}
 
 Plugins allow you to customize the way NVDA behaves overall or within a particular application.
@@ -472,7 +499,7 @@ As with other examples in this guide, remember to delete the created app module 
 ### App modules for hosted apps {#appModulesForHostedApps}
 
 Some executables host various apps inside or are employed by an app to display their interfaces.
-These include `javaw.exe` for running various Java programs, `wwahost.exe` for some apps in Windows 8 and later, and `msedgewebview2.exe` for displaying web-like interfaces on apps employing Edge WebView2 runtime.
+These include `javaw.exe` for running various Java programs, `wwahost.exe` for some web-based apps, and `msedgewebview2.exe` for displaying web-like interfaces on apps employing Edge WebView2 runtime.
 
 If an app runs inside a host executable or employs a different app to display the interface, the name of the app module must be the name as defined by the host or the interface executable, which can be found through the `AppModule.appName` property.
 For example, an app module for a Java app named "`test`" hosted inside `javaw.exe` must be named `test.py`.
@@ -550,20 +577,20 @@ From anywhere, you can now press `NVDA+shift+v` to have NVDA's version spoken an
 import globalPluginHandler
 from scriptHandler import script
 import ui
-import versionInfo
+import buildVersion
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	@script(gesture="kb:NVDA+shift+v")
 	def script_announceNVDAVersion(self, gesture):
-		ui.message(versionInfo.version)
+		ui.message(buildVersion.version)
 ```
 
 This Global Plugin file starts with two comment lines, which describe what the file is for.
 
 It then imports the globalPluginHandler module, so that the Global Plugin has access to the base GlobalPlugin class.
 
-It also imports a few other modules, namely ui, versionInfo and scriptHandler, which this specific plugin needs in order for it to perform the necessary actions to announce the version.
+It also imports a few other modules, namely ui, buildVersion and scriptHandler, which this specific plugin needs in order for it to perform the necessary actions to announce the version.
 
 Next, it defines a class called GlobalPlugin, which is inherited from globalPluginHandler.GlobalPlugin.
 
@@ -959,10 +986,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 ## Packaging Code as NVDA Add-ons {#Addons}
 
-Add-ons make it easy for users to share and install plugins, drivers, speech symbol dictionaries and braille translation tables.
+Add-ons make it easy for users to share and install plugins, drivers, speech pronunciation/symbol dictionaries and braille translation tables.
 They can be packaged in to a single NVDA add-on package, which the user can then install into a copy of NVDA via the Add-on Store found under Tools in the NVDA menu.
 An add-on package is simply a standard zip archive with the file extension of "`nvda-addon`".
-It can contain a manifest file, install/uninstall code and directories containing plugins, drivers, speech symbol dictionaries and braille translation tables.
+It can contain a manifest file, install/uninstall code and directories containing plugins, drivers, speech dictionaries, symbol dictionaries and braille translation tables.
 
 ### Non-ASCII File Names in Zip Archives {#nonASCIIFileNamesInZip}
 
@@ -996,8 +1023,14 @@ When uploading to the Add-on Store certain requirements apply:
   * Add-on versions are expected to be unique for the addon name and channel, meaning that a beta, stable and dev version of the same add-on cannot share a version number.
   This is so there can be a unique ordering of newest to oldest.
   * The suggested convention is to increment the patch version number for dev versions, increment the minor version number for beta versions, and increment the major version number for stable versions.
-* author (string, required): The author of this add-on, preferably in the form Full Name <email address>; e.g. Michael Curran <<mick@example.com>>.
+* author (string, required): The author of this add-on, preferably in the form `Full Name <email address>`; e.g. `Michael Curran <mick@example.com>`.
 * description (string): A sentence or two describing what the add-on does.
+* changelog (string): A list of changes between previous and latest add-on releases.
+  * This is used to inform users about changes included in the add-on release.
+  * Changes can include new features, changes, bug fixes, and localization updates if any.
+  * Markdown can be used to format the list of changes, as they will be converted to HTML to be shown in browse mode.
+  * When releasing add-on updates, changes should be edited if possible.
+  This means not all add-on releases will include notable changes.
 * url (string): A URL where this add-on, further info and upgrades can be found.
   * Starting the URL with `https://` is required for submitting to the Add-on Store.
 * docFileName (string): The name of the main documentation file for this add-on; e.g. readme.html. See the [Add-on Documentation](#AddonDoc) section for more details.
@@ -1024,8 +1057,8 @@ The lastTestedNVDAVersion field in particular is used to ensure that users can b
 It allows the add-on author to make an assurance that the add-on will not cause instability, or break the users system.
 When this is not provided, or is less than the current version of NVDA (ignoring minor point updates e.g. 2018.3.1) then the user will be warned not to install the add-on.
 
-The manifest can also specify information regarding any additional speech symbol dictionaries or braille translation tables provided by the add-on.
-Please refer to the [speech symbol dictionaries](#AddonSymbolDictionaries) and [braille translation tables](#BrailleTables) sections.
+The manifest can also specify information regarding any additional speech dictionaries, symbol or braille translation tables provided by the add-on.
+Please refer to the [speech dictionaries](#AddonSpeechDictionaries), [symbol dictionaries](#AddonSymbolDictionaries) and [braille translation tables](#BrailleTables) sections.
 
 #### An Example Manifest File {#manifestExample}
 
@@ -1049,7 +1082,8 @@ The following plugins and drivers can be included in an add-on:
 * Braille display drivers: Place them in a `brailleDisplayDrivers` directory in the archive.
 * Global plugins: Place them in a `globalPlugins` directory in the archive.
 * Synthesizer drivers: Place them in a `synthDrivers` directory in the archive.
-* [Speech symbol dictionaries](#AddonSymbolDictionaries): Place them in the directory for one or more [locales](#localizingAddons) with a file name of `symbols-<name>.dic`, e.g. `locale\en\symbols-greek.dic`.
+* [Speech dictionaries](#AddonSpeechDictionaries): Place them in the `speechDicts` directory with a file name with the `.dic` extension, e.g. `speechDicts\pronunciation.dic`.
+* [Symbol dictionaries](#AddonSymbolDictionaries): Place them in the directory for one or more [locales](#localizingAddons) with a file name of `symbols-<name>.dic`, e.g. `locale\en\symbols-greek.dic`.
 * [Braille translation tables](#BrailleTables): Place them in a `brailleTables` directory in the archive.
 
 ### Optional install / Uninstall code {#installUninstallCode}
@@ -1092,18 +1126,18 @@ To allow plugins in your add-on to access gettext message information via calls 
 This function cannot be called in modules that do not belong to an add-on, e.g. in a scratchpad subdirectory.
 For more information about gettext and NVDA translation in general, please read the [Translating NVDA page](https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/readme.md)
 
-#### Speech symbol dictionaries {#AddonSymbolDictionaries}
+#### Symbol dictionaries {#AddonSymbolDictionaries}
 
 You can provide custom speech symbol dictionaries in add-ons to improve symbol pronunciation.
 The process to create custom speech symbol dictionaries is very similar to that of the [translation process of existing symbols](#symbolPronunciation).
 Note that [complex symbols](#complexSymbols) are not supported.
 
-Custom dictionaries must be placed in a language directory and have a filename in the form `symbols-<name>.dic`, where `<name>` is the name that has to be provided in the add-ons manifest.
+Custom symbol dictionaries must be placed in a language directory and have a filename in the form `symbols-<name>.dic`, where `<name>` is the name that has to be provided in the add-ons manifest.
 All locales implicitly inherit the symbol information for English, though any of this information can be overridden for specific locales.
 
-When adding a dictionary not marked as mandatory, some information must be provided such as its display name, since it should be shown in the speech category of the settings dialog.
-A dictionary can also be marked mandatory, in which case it is always enabled with the add-on.
-When an add-on ships with dictionaries, this information is included in its manifest in the optional `symbolDictionaries` section.
+When adding a symbol dictionary not marked as mandatory, some information must be provided such as its display name, since it should be shown in the speech category of the settings dialog.
+A symbol dictionary can also be marked mandatory, in which case it is always enabled with the add-on.
+When an add-on ships with symbol dictionaries, this information is included in its manifest in the optional `symbolDictionaries` section.
 For example:
 
 ```ini
@@ -1117,14 +1151,14 @@ displayName = Biblical Hebrew
 mandatory = true
 ```
 
-In the above example, `greek` is a dictionary that is optional and will be listed in the speech category of NVDA's settings dialog under the "Extra dictionaries for character and symbol processing" setting.
+In the above example, `greek` is a symbol dictionary that is optional and will be listed in the speech category of NVDA's settings dialog under the "Extra dictionaries for character and symbol processing" setting.
 Its file will be stored as `locale\en\symbols-greek.dic`, whereas French translations of the symbols are stored in `locale\fr\symbols-greek.dic`.
 When using NVDA in French, symbols that aren't defined in the French dictionary inherit the symbol information for English.
 
 Also in the example, the `hebrew` dictionary is marked mandatory and will therefore always be enabled as long as the add-on is active.
 Its file will be stored as `locale\en\symbols-hebrew.dic`, whereas French translations of the symbols are stored in `locale\fr\symbols-hebrew.dic`.
 
-Note that for the display name of the dictionary to be translated, an entry should be added to a [locale manifest](#localeManifest).
+Note that for the display name of the symbol dictionary to be translated, an entry should be added to a [locale manifest](#localeManifest).
 For example, add the following to `locale\fr\manifest.ini`:
 
 ```ini
@@ -1132,6 +1166,103 @@ For example, add the following to `locale\fr\manifest.ini`:
 [[hebrew]]
 displayName = Hébreu Biblique
 ```
+
+### Speech dictionaries {#AddonSpeechDictionaries}
+
+You can provide custom speech dictionaries in add-ons to improve pronunciation of words that are usually pronounced incorrectly by speech synthesizers.
+Custom dictionaries must be placed in the `speechDicts` directory and have a filename with the `.dic` extension.
+For example, when your dictionary is named `<name>.dic`, `<name>` is the name that has to be provided in the add-ons manifest.
+
+When adding a speech dictionary not marked as mandatory, some information must be provided such as its display name, since it should be shown in the speech category of the settings dialog.
+A speech dictionary can also be marked mandatory, in which case it is always enabled with the add-on.
+When an add-on ships with speech dictionaries, this information is included in its manifest in the optional `speechDictionaries` section.
+For example:
+
+```ini
+[speechDictionaries]
+[[pronunciation]]
+displayName = Dodgy Dictionary
+mandatory = false
+```
+
+In the above example, `pronunciation` is a dictionary that is optional and will be listed in the speech category of NVDA's settings dialog under the "Speech Dictionaries" setting.
+Its file will be stored as `speechDicts\pronunciation.dic`.
+When you mark the dictionary as mandatory, it will be always enabled as long as the add-on is active.
+
+Note that for the display name of the dictionary to be translated, an entry should be added to a [locale manifest](#localeManifest).
+For example, add the following to `locale\fr\manifest.ini`:
+
+```ini
+[speechDictionaries]
+[[pronunciation]]
+displayName = Dictionnaire douteux
+```
+
+Unlike symbol dictionaries, speech dictionaries are currently locale-agnostic.
+Therefore, an active dictionary is always active, regardless of the current language.
+
+#### Creating speech dictionaries {#AddonCreatingSpeechDictionaries}
+
+A speech dictionary file contains dictionary rules, one per line.
+Each dictionary rule consists of four tab-separated fields on a single line:
+
+```
+<pattern>	<replacement>	<caseSensitive>	<type>
+```
+
+The fields are:
+
+1. `pattern`: The text pattern to match.
+  Hash characters (`#`) must be escaped as `\#`.
+2. `replacement`: The text to replace the matched pattern with.
+  Hash characters (`#`) must be escaped as `\#`.
+3. `caseSensitive`: A numeric flag indicating case sensitivity:
+	* `0`: Case insensitive matching
+	* `1`: Case sensitive matching
+4. `type`: A number indicating the type of pattern matching to use:
+	* `0`: Anywhere - Pattern can match anywhere in the text (literal string)
+	* `1`: Regular expression - Pattern is treated as a Python regular expression
+	* `2`: Whole word - Pattern must match a complete word with word boundaries on both sides
+	* `3`: Part of word - Pattern must be preceded or followed by a word character (letter, digit, underscore)
+	* `4`: Start of word - Pattern must have a word boundary at the start and a word character at the end
+	* `5`: End of word - Pattern must have a word character at the start and a word boundary at the end
+	* `6`: Unix shell-style wildcards - Pattern uses Unix shell wildcards (`*`, `?`, `[]`, etc.)
+
+Comments can be added before entries to provide descriptions.
+A comment is preceded by a `#` (hash sign) and applies to the next entry line that appears after it.
+
+##### Examples
+
+```
+# Expand NVDA acronym
+NVDA	NonVisual Desktop Access	1	2
+```
+
+This means that the word "NVDA" (case sensitive, whole word) should be spoken as "NonVisual Desktop Access".
+
+```
+# Convert percentages to spoken format
+(\d+)%	\1 percent	0	1
+```
+
+This uses a regular expression to match numbers followed by a percent sign and replaces them with the number followed by the word "percent".
+For example, "50%" becomes "50 percent".
+
+```
+# Change "LOL" to full phrase
+LOL	laughing out loud	0	2
+```
+
+This means that the word "LOL" (case insensitive, whole word) should be spoken as "laughing out loud".
+
+```
+# Match any .txt file using wildcards
+*.txt	text file	0	6
+```
+
+This uses Unix shell-style wildcards to match any string ending in ".txt" and replaces it with "text file".
+
+For more information on speech dictionaries, see the NVDA user guide section on speech.
 
 ### Add-on Documentation {#AddonDoc}
 
@@ -1220,12 +1351,13 @@ Pressing control+l clears the output.
 
 The result of the last executed command is stored in the "_" global variable.
 This shadows the gettext function which is stored as a built-in with the same name.
-It can be unshadowed by executing "del _" and avoided altogether by executing "_ = _".
+It can be unshadowed by executing `del _` and avoided altogether by executing `_ = _`.
 
 Closing the console window (with escape or alt+F4) simply hides it.
 This allows the user to return to the session as it was left when it was closed, including history and variables.
 
 ### Namespace {#PythonConsoleNamespace}
+
 #### Automatic Imports {#pythonConsoleAutoImports}
 
 For convenience, the following modules and variables are automatically imported in the console:
@@ -1408,6 +1540,12 @@ For examples of how to define and use new extension points, please see the code 
 | Type |Extension Point |Description|
 |---|---|---|
 |`Action` |`post_sessionLockStateChanged` |Notifies when a session lock or unlock event occurs.|
+
+### winAPI._displayTracking {#winAPI_displayTrackingExtPts}
+
+| Type |Extension Point |Description|
+|---|---|---|
+|`Action` |`displayChanged` |Notifies when display configuration changes (resolution, monitor setup, etc.). Handlers receive the `OrientationState` as an argument.|
 
 ### winAPI.messageWindow {#winAPI_messageWindowExtPts}
 
@@ -1616,20 +1754,16 @@ Its fields are as follows:
 | `returnCode` | `ReturnCode` or `None` | `None` | Value to return when a modal dialog is closed. If `None`, the button's ID will be used. |
 
 1. Setting `defaultFocus` only overrides the default focus:
-
-  * If no buttons have this property, the first button will be the default focus.
-  * If multiple buttons have this property, the last one will be the default focus.
+   * If no buttons have this property, the first button will be the default focus.
+   * If multiple buttons have this property, the last one will be the default focus.
 
 2. `fallbackAction` only sets whether to override the fallback action:
-
-  * This button will still be the fallback action if the dialog's fallback action is set to `EscapeCode.CANCEL_OR_AFFIRMATIVE` (the default) and its ID is `ReturnCode.CANCEL` (or whatever the value of `GetAffirmativeId()` is (`ReturnCode.OK`, by default), if there is no button with `id=ReturnCode.CANCEL`), even if it is added with `fallbackAction=False`.
-    To set a dialog to have no fallback action, use `setFallbackAction(EscapeCode.NO_FALLBACK)`.
-  * If multiple buttons have this property, the last one will be the fallback action.
-
+   * This button will still be the fallback action if the dialog's fallback action is set to `EscapeCode.CANCEL_OR_AFFIRMATIVE` (the default) and its ID is `ReturnCode.CANCEL` (or whatever the value of `GetAffirmativeId()` is (`ReturnCode.OK`, by default), if there is no button with `id=ReturnCode.CANCEL`), even if it is added with `fallbackAction=False`.
+     To set a dialog to have no fallback action, use `setFallbackAction(EscapeCode.NO_FALLBACK)`.
+   * If multiple buttons have this property, the last one will be the fallback action.
 3. Buttons with `fallbackAction=True` and `closesDialog=False` are not supported:
-
-  * When adding a button with `fallbackAction=True` and `closesDialog=False`, `closesDialog` will be set to `True`.
-  * If you attempt to call `setFallbackAction` with the ID of a button that does not close the dialog, `ValueError` will be raised.
+   * When adding a button with `fallbackAction=True` and `closesDialog=False`, `closesDialog` will be set to `True`.
+   * If you attempt to call `setFallbackAction` with the ID of a button that does not close the dialog, `ValueError` will be raised.
 
 A number of pre-configured buttons are available for you to use from the `DefaultButton` enumeration, complete with pre-translated labels.
 None of these buttons will explicitly set themselves as the fallback action.

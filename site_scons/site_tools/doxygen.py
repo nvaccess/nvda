@@ -32,8 +32,7 @@ def fetchDoxygenPath():
 		with winreg.OpenKey(
 			winreg.HKEY_LOCAL_MACHINE,
 			r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\doxygen_is1",
-			0,
-			winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
+			access=winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
 		) as doxygenKey:
 			doxygenPath = '"%s"' % os.path.join(
 				winreg.QueryValueEx(doxygenKey, "InstallLocation")[0],

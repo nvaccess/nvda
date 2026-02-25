@@ -1,3 +1,5 @@
+# Copyright Headers in NVDA Source Code
+
 In NVDA files, which are licensed under the terms of a modified GNU General Public License, use the following copyright header:
 
 ```py
@@ -8,9 +10,10 @@ In NVDA files, which are licensed under the terms of a modified GNU General Publ
 ```
 
 Replacing:
-- `<YOUR NAME>` with your name.
-- `<CREATED YEAR>` the year the file was created
-- `<LAST UPDATED YEAR>` when the file was last updated.
+
+* `<YOUR NAME>` with your name.
+* `<CREATED YEAR>` the year the file was created
+* `<LAST UPDATED YEAR>` when the file was last updated.
 For new files this can be missing.
 e.g. a file created in 2025 might have `# Copyright (C) 2025`
 

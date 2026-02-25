@@ -20,6 +20,7 @@ import keyboardHandler
 try:
 	import ftdi2
 except:  # noqa: E722
+	log.debug("Failed to import ftdi2.", exc_info=True)
 	ftdi2 = None
 # for bluetooth
 import hwPortUtils
@@ -166,18 +167,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 							)
 							log.info("connectBluetooth success")
 						except:  # noqa: E722
-							log.debugWarning("connectBluetooth failed")
+							log.debugWarning("connectBluetooth failed", exc_info=True)
 
 	def connectUSB(self, devlist: List[bytes]):
 		"""Try to connect to usb device, this is triggered when bluetooth
 		connection could not be established"""
 		try:
-			self._dev = ftdi2.open_ex(devlist[0])
+			self._dev = ftdi2.openEx(devlist[0])
 			self._dev.set_baud_rate(self._baud)
-			self._dev.inWaiting = self._dev.get_queue_status
+			self._dev.inWaiting = self._dev.getQueueStatus
 			log.info("connectUSB success")
 		except:  # noqa: E722
-			log.debugWarning("connectUSB failed")
+			log.debugWarning("connectUSB failed", exc_info=True)
 
 	def __init__(self):
 		"""initialize driver"""
@@ -194,7 +195,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		# try to connect to usb device,
 		# if no usb device is found there may be a bluetooth device
 		if ftdi2:
-			devlist = ftdi2.list_devices()
+			devlist = ftdi2.listDevices()
 		if len(devlist) == 0:
 			self.connectBluetooth()
 		elif ftdi2:
@@ -307,7 +308,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 						log.debugWarning("UNKNOWN BRAILLE")
 
 			except:  # noqa: E722
-				log.debugWarning("BROKEN PIPE - THIS SHOULD NEVER HAPPEN")
+				log.debugWarning("BROKEN PIPE - THIS SHOULD NEVER HAPPEN", exc_info=True)
 		if self.numCells == 0:
 			raise Exception("no device found")
 
@@ -400,6 +401,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				self._dev.close()
 			self._dev = None
 		except:  # noqa: E722
+			log.debug("Failed to terminate braille display.", exc_info=True)
 			self._dev = None
 
 	def display(self, cells: List[int]):
@@ -409,6 +411,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		try:
 			self._dev.write(brl_out(cells, self._nlk, self._nrk, self._voffset))
 		except:  # noqa: E722
+			log.debug("Failed to write to braille display.", exc_info=True)
 			self._dev.close()
 			self._dev = None
 
@@ -422,10 +425,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		try:
 			if self._dev is None and self._baud > 0:
 				try:
-					devlist: List[bytes] = ftdi2.list_devices()
+					devlist: List[bytes] = ftdi2.listDevices()
 					if len(devlist) > 0:
 						self.connectUSB(devlist)
 				except:  # noqa: E722
+					log.debug("Failed to connect to device.", exc_info=True)
 					return
 			s: bytes = brl_poll(self._dev)
 			if s:
@@ -437,6 +441,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					ig = InputGesture(None, self)
 					self.executeGesture(ig)
 		except:  # noqa: E722
+			log.debug("Failed to read keys.", exc_info=True)
 			if self._dev != None:  # noqa: E711
 				self._dev.close()
 			self._dev = None

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2009-2025 NV Access Limited, Cyrille Bougot, Christopher Toth
+# Copyright (C) 2009-2026 NV Access Limited, Cyrille Bougot, Christopher Toth
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -13,6 +13,7 @@ import globalVars
 import logHandler
 import monkeyPatches.comtypesMonkeyPatches
 import NVDAState
+import winBindings.kernel32
 
 
 # Ensure that slave uses generated comInterfaces by adding our comInterfaces to `comtypes.gen` search path.
@@ -33,20 +34,18 @@ globalVars.appPid = os.getpid()
 
 
 def getNvdaHelperRemote():
-	import buildVersion
 	import ctypes
 	import winKernel
 
-	# Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-	h = winKernel.kernel32.LoadLibraryExW(
-		os.path.join(globalVars.appDir, "lib", buildVersion.version, "nvdaHelperRemote.dll"),
+	h = winBindings.kernel32.LoadLibraryEx(
+		NVDAState.ReadPaths.nvdaHelperRemoteDll,
 		0,
 		# Using an altered search path is necessary here
 		# As NVDAHelperRemote needs to locate dependent dlls in the same directory
 		# such as IAccessible2proxy.dll.
 		winKernel.LOAD_WITH_ALTERED_SEARCH_PATH,
 	)
-	remoteLib = ctypes.WinDLL("nvdaHelperRemote", handle=h)
+	remoteLib = ctypes.CDLL("nvdaHelperRemote", handle=h)
 	return remoteLib
 
 
@@ -86,7 +85,7 @@ def main():
 		elif action == "setNvdaSystemConfig":
 			import config
 
-			config._setSystemConfig(args[0])
+			config._setSystemConfig(args[0], addonsToCopy=args[1:])
 		elif action == "config_setStartOnLogonScreen":
 			enable = bool(int(args[0]))
 			import config
