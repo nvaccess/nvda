@@ -732,19 +732,27 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# added.
 		self.container.Freeze()
 		try:
-			newCat = self._getCategoryPanel(newCatId)
-		except ValueError as e:
-			newCatTitle = self.catListCtrl.GetItemText(newCatId)
-			log.error("Unable to change to category: {}".format(newCatTitle), exc_info=e)
-			return
-		if oldCat:
-			oldCat.onPanelDeactivated()
-		self.currentCategory = newCat
-		newCat.onPanelActivated()
-		# call Layout and SetupScrolling on the container to make sure that the controls apear in their expected locations.
-		self.container.Layout()
-		self.container.SetupScrolling()
-		self.container.Thaw()
+			try:
+				newCat = self._getCategoryPanel(newCatId)
+			except ValueError as e:
+				newCatTitle = self.catListCtrl.GetItemText(newCatId)
+				log.error("Unable to change to category: {}".format(newCatTitle), exc_info=e)
+				return
+			if oldCat:
+				oldCat.onPanelDeactivated()
+			self.currentCategory = newCat
+			newCat.onPanelActivated()
+			# call Layout and SetupScrolling on the container to make sure that the controls apear in their expected locations.
+			self.container.Layout()
+			self.container.SetupScrolling()
+		except Exception:
+			log.error("Error while changing settings category", exc_info=True)
+		finally:
+			try:
+				if self and self.container and self.container.IsFrozen():
+					self.container.Thaw()
+			except Exception:
+				log.debugWarning("Error while thawing category container", exc_info=True)
 
 	def onCategoryChange(self, evt: wx.ListEvent):
 		currentCat = self.currentCategory
