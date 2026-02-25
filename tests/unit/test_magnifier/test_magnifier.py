@@ -237,3 +237,19 @@ class TestMagnifier(_TestMagnifier):
 		expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
 		self.assertEqual(width, expected_width)
 		self.assertEqual(height, expected_height)
+
+	def testMagnifierPositionTrueCentered(self):
+		"""Test magnifier position calculation with true centered mode."""
+		x, y = int(self.screenWidth / 2), int(self.screenHeight / 2)
+		with patch("source._magnifier.magnifier.isTrueCentered", return_value=True):
+			left, top, width, height = self.magnifier._getMagnifierPosition((x, y))
+
+			expected_width = int(self.screenWidth / self.magnifier.zoomLevel)
+			expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
+			expected_left = int(x - (expected_width / 2))
+			expected_top = int(y - (expected_height / 2))
+
+			self.assertEqual(left, expected_left)
+			self.assertEqual(top, expected_top)
+			self.assertEqual(width, expected_width)
+			self.assertEqual(height, expected_height)

@@ -1,13 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter
+# Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-
-from typing import (
-	Dict,
-	Optional,
-	Union,
-)
 
 import ctypes
 from comtypes import BSTR, COMError
@@ -17,7 +11,7 @@ import comInterfaces.tom
 from logHandler import log
 import languageHandler
 import config
-import winBindings.oleacc
+import oleacc
 import winKernel
 import api
 import winUser
@@ -373,7 +367,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _setFormatFieldColor(
 		self,
-		charFormat: Union[CharFormat2AStruct, CharFormat2WStruct],
+		charFormat: CharFormat2AStruct | CharFormat2WStruct,
 		formatField: textInfos.FormatField,
 	) -> None:
 		if charFormat.dwEffects & CFE_AUTOCOLOR:
@@ -654,7 +648,7 @@ ITextDocumentUnitsToNVDAUnits = {
 	comInterfaces.tom.tomStory: textInfos.UNIT_STORY,
 }
 
-NVDAUnitsToITextDocumentUnits: Dict[str, int] = {
+NVDAUnitsToITextDocumentUnits: dict[str, int] = {
 	textInfos.UNIT_CHARACTER: comInterfaces.tom.tomCharacter,
 	textInfos.UNIT_WORD: comInterfaces.tom.tomWord,
 	textInfos.UNIT_LINE: comInterfaces.tom.tomLine,
@@ -801,8 +795,6 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if not o:
 			return None
 		# Outlook >=2007 exposes MSAA on its embedded objects thus we can use accName as the label
-		import oleacc
-
 		try:
 			label = o.QueryInterface(oleacc.IAccessible).accName(0)
 		except COMError:
@@ -907,7 +899,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError("position: %s" % position)
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig = config.conf["documentFormatting"]
 		textRange = self._rangeObj.duplicate
@@ -1051,15 +1043,12 @@ class Edit(EditableTextWithAutoSelectDetection, EditBase):
 	def _get_ITextDocumentObject(self):
 		if not hasattr(self, "_ITextDocumentObject"):
 			try:
-				ptr = ctypes.POINTER(comInterfaces.tom.ITextDocument)()
-				winBindings.oleacc.AccessibleObjectFromWindow(
+				self._ITextDocumentObject = oleacc.AccessibleObjectFromWindow(
 					self.windowHandle,
-					-16,
-					ctypes.byref(ptr._iid_),
-					ctypes.byref(ptr),
+					winUser.OBJID_NATIVEOM,
+					interface=comInterfaces.tom.ITextDocument,
 				)
-				self._ITextDocumentObject = ptr
-			except:  # noqa: E722
+			except (COMError, WindowsError):
 				log.error("Error getting ITextDocument", exc_info=True)
 				self._ITextDocumentObject = None
 		return self._ITextDocumentObject

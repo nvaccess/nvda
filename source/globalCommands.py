@@ -194,7 +194,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+shift+d",
 	)
 	def script_cycleAudioDuckingMode(self, gesture):
-		if not audioDucking.isAudioDuckingSupported():
+		if not audioDucking.isAudioDuckingSupported() or audioDucking._isAudioDuckingSuspended():
 			# Translators: a message when audio ducking is not supported on this machine
 			ui.message(_("Audio ducking not supported"))
 			return
