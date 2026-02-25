@@ -171,7 +171,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 
 	def load(self) -> None:
 		"""Populates state with the default content and then loads values from the config."""
-		self._loadWithFallback(self.statePath)
+		self._loadWithFallback()
 		if self.manualOverridesAPIVersion != addonAPIVersion.BACK_COMPAT_TO:
 			log.debug(
 				"BACK_COMPAT_TO API version for manual compatibility overrides has changed. "
