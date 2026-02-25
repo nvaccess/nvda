@@ -6128,9 +6128,10 @@ NvdaSettingsDialogWindowHandle = None
 class NVDASettingsDialog(MultiCategorySettingsDialog):
 	# Translators: This is the label for the NVDA settings dialog.
 	title = _("NVDA Settings")
-	_categoryChangeDebounceMs = 50
-	_categoryChangeTimer: wx.CallLater | None = None
 	_pendingCategoryIndex: int | None = None
+	_categoryChangeInProgress = False
+	_categoryChangeProcessingQueued = False
+	_isClosing = False
 	categoryClasses = [
 		GeneralSettingsPanel,
 		SpeechSettingsPanel,
@@ -6201,22 +6202,39 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			return True
 		return False
 
-	def _onCategoryChangeTimer(self) -> None:
+	def _isSecureModeCategoryChange(self) -> bool:
+		return globalVars.appArgs.secure or isRunningOnSecureDesktop()
+
+	def _queueCategoryChangeProcessing(self) -> None:
+		if self._isClosing or self._categoryChangeInProgress or self._categoryChangeProcessingQueued:
+			return
+		self._categoryChangeProcessingQueued = True
+		wx.CallAfter(self._processPendingCategoryChanges)
+
+	def _processPendingCategoryChanges(self) -> None:
+		self._categoryChangeProcessingQueued = False
+		if self._isClosing or not self or self._categoryChangeInProgress:
+			return
+		self._categoryChangeInProgress = True
+		try:
+			while self._pendingCategoryIndex is not None and not self._isClosing and self:
+				newIndex = self._pendingCategoryIndex
+				self._pendingCategoryIndex = None
+				try:
+					if self._doCategoryChangeForIndex(newIndex):
+						self._doOnCategoryChange()
+				except Exception:
+					log.error("Error while changing settings category", exc_info=True)
+					break
+		finally:
+			self._categoryChangeInProgress = False
 		if self._pendingCategoryIndex is not None:
-			if self._doCategoryChangeForIndex(self._pendingCategoryIndex):
-				self._doOnCategoryChange()
-			self._pendingCategoryIndex = None
-		self._categoryChangeTimer = None
+			self._queueCategoryChangeProcessing()
 
 	def onCategoryChange(self, evt: wx.ListEvent):
-		if isRunningOnSecureDesktop():
+		if self._isSecureModeCategoryChange():
 			self._pendingCategoryIndex = evt.GetIndex()
-			if self._categoryChangeTimer is not None:
-				self._categoryChangeTimer.Stop()
-			self._categoryChangeTimer = wx.CallLater(
-				self._categoryChangeDebounceMs,
-				self._onCategoryChangeTimer,
-			)
+			self._queueCategoryChangeProcessing()
 			return
 		super().onCategoryChange(evt)
 		if evt.Skipped:
@@ -6224,10 +6242,9 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		self._doOnCategoryChange()
 
 	def Destroy(self):
-		if self._categoryChangeTimer is not None:
-			self._categoryChangeTimer.Stop()
-			self._categoryChangeTimer = None
+		self._isClosing = True
 		self._pendingCategoryIndex = None
+		self._categoryChangeProcessingQueued = False
 		global NvdaSettingsDialogActiveConfigProfile, NvdaSettingsDialogWindowHandle
 		NvdaSettingsDialogActiveConfigProfile = None
 		NvdaSettingsDialogWindowHandle = None
