@@ -550,8 +550,8 @@ class MainFrame(wx.Frame):
 		installerGui.showInstallGui()
 
 	_CRFT_INTRO_MESSAGE: str = _(
-		# Translators: Explain the COM Registration Fixing tool to users before running
-		"Welcome to the COM Registration Fixing tool.\n\n"
+		# Translators: Explain the System accessibility repair tool to users before running
+		"Welcome to the System accessibility repair tool.\n\n"
 		"Installing and uninstalling programs, as well as other events, can damage accessibility entries in the "
 		"Windows registry. This can cause previously accessible elements to be presented incorrectly, "
 		'or can cause "unknown" or "pane" to be spoken or brailled in some applications or Windows components, '
@@ -561,7 +561,7 @@ class MainFrame(wx.Frame):
 		"Press Continue to run the tool now.",
 	)
 	"""
-	Contains the intro dialog contents for the COM Registration Fixing Tool.
+	Contains the intro dialog contents for the System accessibility repair tool.
 	Used by `gui.MainFrame.onRunCOMRegistrationFixesCommand`.
 	"""
 
@@ -570,13 +570,13 @@ class MainFrame(wx.Frame):
 		blockAction.Context.MODAL_DIALOG_OPEN,
 	)
 	def onRunCOMRegistrationFixesCommand(self, evt: wx.CommandEvent) -> None:
-		"""Manages the interactive running of the COM Registration Fixing Tool.
+		"""Manages the interactive running of the System accessibility repair tool.
 		Shows a dialog to the user, giving an overview of what is going to happen.
 		If the user chooses to continue: runs the tool, and displays a completion dialog.
 		Cancels the run attempt if the user fails or declines the UAC prompt.
 		"""
-		# Translators: The title of various dialogs displayed when using the COM Registration Fixing tool
-		genericTitle: str = _("Fix COM Registrations")
+		# Translators: The title of various dialogs displayed when using the System accessibility repair tool
+		genericTitle: str = _("System Accessibility Repair")
 		introDialog = _ContinueCancelDialog(
 			self,
 			genericTitle,
@@ -585,13 +585,13 @@ class MainFrame(wx.Frame):
 		)
 		response: int = introDialog.ShowModal()
 		if response != wx.OK:
-			log.debug("Run of COM Registration Fixing Tool canceled before UAC.")
+			log.debug("Run of System accessibility repair tool canceled before UAC.")
 			return
 		progressDialog = IndeterminateProgressDialog(
 			mainFrame,
 			genericTitle,
-			# Translators: The message displayed while NVDA is running the COM Registration fixing tool
-			_("Please wait while NVDA attempts to fix your system's COM registrations..."),
+			# Translators: The message displayed while NVDA is running the System accessibility repair tool
+			_("Please wait while NVDA attempts to repair your system's accessibility registrations..."),
 		)
 		error: str | None = None
 		try:
@@ -600,7 +600,7 @@ class MainFrame(wx.Frame):
 			# 1223 is "The operation was canceled by the user."
 			if e.winerror == 1223:
 				# Same as if the user selected "no" in the initial dialog.
-				log.debug("Run of COM Registration Fixing Tool canceled during UAC.")
+				log.debug("Run of System accessibility repair tool canceled during UAC.")
 				return
 			else:
 				log.error("Could not execute fixCOMRegistrations command", exc_info=True)
@@ -617,19 +617,19 @@ class MainFrame(wx.Frame):
 			if error is not None:
 				messageBox(
 					_(
-						# Translators: message shown to the user on COM Registration Fix fail
-						"The COM Registration Fixing Tool was unsuccessful. This Windows "
+						# Translators: message shown to the user on System accessibility repair fail
+						"The System accessibility repair tool was unsuccessful. This Windows "
 						"error may provide more information.\n{error}",
 					).format(error=error),
-					# Translators: The title of a COM Registration Fixing Tool dialog, when the tool has failed
-					_("COM Registration Fixing Tool Failed"),
+					# Translators: The title of a System accessibility repair tool dialog, when the tool has failed
+					_("System Accessibility Repair Failed"),
 					wx.OK,
 				)
 		# Display success dialog if there were no errors
 		messageBox(
 			_(
-				# Translators: Message shown when the COM Registration Fixing tool completes.
-				"The COM Registration Fixing Tool has completed successfully.\n"
+				# Translators: Message shown when the System accessibility repair tool completes.
+				"The System accessibility repair tool has completed successfully.\n"
 				"It is highly recommended that you restart your computer now, to make sure the changes take full effect.",
 			),
 			genericTitle,
@@ -718,8 +718,8 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 				# Translators: The label for the menu item to install NVDA on the computer.
 				item = menu_tools.Append(wx.ID_ANY, _("&Install NVDA..."))
 				self.Bind(wx.EVT_MENU, frame.onInstallCommand, item)
-			# Translators: The label for the menu item to run the COM registration fix tool
-			item = menu_tools.Append(wx.ID_ANY, _("Run COM Registration Fixing tool..."))
+			# Translators: The label for the menu item to run the System accessibility repair tool
+			item = menu_tools.Append(wx.ID_ANY, _("Run System accessibility repair tool..."))
 			self.Bind(wx.EVT_MENU, frame.onRunCOMRegistrationFixesCommand, item)
 		if not config.isAppX:
 			# Translators: The label for the menu item to reload plugins.
