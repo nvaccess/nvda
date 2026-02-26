@@ -183,7 +183,7 @@ def toggleIntegerValue(
 	ui.message(msg)
 
 
-def getConfigValue(*keyPath: *tuple[str, ...]) -> any:
+def getConfigValue(*keyPath: *tuple[str, str, *tuple[str, ...]]) -> any:
 	"""
 	Retrieves the value of a configuration key.
 	:param keyPath: The path to the configuration key to retrieve.
