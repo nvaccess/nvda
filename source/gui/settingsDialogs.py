@@ -747,12 +747,15 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.container.Thaw()
 
 	def onCategoryChange(self, evt: wx.ListEvent):
-		currentCat = self.currentCategory
 		newIndex = evt.GetIndex()
-		if not currentCat or newIndex != self.categoryClasses.index(currentCat.__class__):
+		if self._shouldDoCategoryChange(newIndex):
 			self._doCategoryChange(newIndex)
 		else:
 			evt.Skip()
+
+	def _shouldDoCategoryChange(self, index: int) -> bool:
+		currentCat = self.currentCategory
+		return not currentCat or index != self.categoryClasses.index(currentCat.__class__)
 
 	def _validateAllPanels(self):
 		"""Check if all panels are valid, and can be saved
@@ -6195,8 +6198,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		)
 
 	def _doCategoryChangeForIndex(self, newIndex: int) -> bool:
-		currentCat = self.currentCategory
-		if not currentCat or newIndex != self.categoryClasses.index(currentCat.__class__):
+		if self._shouldDoCategoryChange(newIndex):
 			self._doCategoryChange(newIndex)
 			return True
 		return False
