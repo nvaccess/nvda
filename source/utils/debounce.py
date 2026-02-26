@@ -101,7 +101,7 @@ def _debounceThreadDecider(
 		case ThreadTarget.DAEMON:
 
 			def callJobOnThread(delayTimeMs: int, func: Callable[..., Any], *args, **kwargs):
-				log.debug(f"Executing delayed job on thread {threading.get_ident()}")
+				log.debug("Scheduling delayed job on daemon thread")
 				timer = threading.Timer(delayTimeMs / 1000, func, args=args, kwargs=kwargs)
 				timer.daemon = True
 				timer.name = f"DebounceTimer-{func.__name__}"
