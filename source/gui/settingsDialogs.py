@@ -2892,11 +2892,11 @@ class MathSettingsPanel(SettingsPanel):
 			self.navSpeechList.SetSelection(0)
 
 		# Translators: label for checkbox to use Word's native math speech instead of MathCAT in Microsoft Word
-		useWordNativeMathText = pgettext("math", "Use Word's native math speech in Word documents")
+		useWordNativeMathText = pgettext("math", "Use native math speech in Word and Outlook")
 		self.useWordNativeMathCheckBox = speechGroup.addItem(
 			wx.CheckBox(speechGroupBox, label=useWordNativeMathText),
 		)
-		self.bindHelpEvent("MathUseWordNativeMath", self.useWordNativeMathCheckBox)
+		self.bindHelpEvent("MathUseWordNative", self.useWordNativeMathCheckBox)
 		self.useWordNativeMathCheckBox.SetValue(config.conf["math"]["other"]["useWordNativeMath"])
 
 		# Translators: Text for the navigation group.
