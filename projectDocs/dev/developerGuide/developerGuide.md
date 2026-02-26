@@ -61,7 +61,7 @@ If a public function was documented to do X but was actually doing Y, changing i
 ##### Security improvements
 
 Security takes precedence over backward compatibility.
-We will make every effort to document these changes clearly in the changelog.
+We will make every effort to document these changes clearly (see below).
 
 * **Examples:** Privilege escalation or insecure file handling.
 * **Policy:** These are permitted in any release but are primarily deployed in patch releases (e.g. 2026.1.2).
@@ -69,7 +69,7 @@ We will make every effort to document these changes clearly in the changelog.
 #### API deprecation strategy
 
 We aim to avoid silent breaks of add-on code.
-When removing or changing APIs in a breaking release (e.g. 2026.1):
+When removing or changing APIs in a breaking release (e.g. 2026.1) or due to an urgent security improvement (e.g. 2026.1.2):
 
 1. We will mark functions as deprecated, where possible, in the releases leading up to the break (e.g. raising a `DeprecationWarning` in 2025.4).
 2. All API breaking changes will be listed in the "Changes for Developers" section of the What's New document, and the [NVDA Add-on API Announcements](https://groups.google.com/a/nvaccess.org/g/nvda-api) email group.
