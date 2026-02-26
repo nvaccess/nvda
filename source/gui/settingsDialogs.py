@@ -2896,7 +2896,7 @@ class MathSettingsPanel(SettingsPanel):
 		self.useWordNativeMathCheckBox = speechGroup.addItem(
 			wx.CheckBox(speechGroupBox, label=useWordNativeMathText),
 		)
-		self.bindHelpEvent("MathUseWordNativeMath", self.useWordNativeMathCheckBox)
+		self.bindHelpEvent("MathUseWordNative", self.useWordNativeMathCheckBox)
 		self.useWordNativeMathCheckBox.SetValue(config.conf["math"]["other"]["useWordNativeMath"])
 
 		# Translators: Text for the navigation group.
