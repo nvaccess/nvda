@@ -124,9 +124,9 @@ def debounceLimiter(
 	:param threadTarget: The thread to run the task on.
 	:returns: A decorator that debounces calls to the decorated function.
 
-	Create a decorator that executes the first call immediately, then debounces
-	subsequent calls received within `cooldownTimeMs` by delaying execution by
-	`delayTimeMs`.
+	Executes calls immediately when outside the cooldown period (when there is no
+	pending delayed call), and debounces calls received within `cooldownTimeMs`
+	by delaying their execution by `delayTimeMs`.
 	"""
 	if cooldownTimeMs < 0:
 		raise ValueError("cooldownTimeMs must be non-negative")
