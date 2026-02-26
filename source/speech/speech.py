@@ -608,7 +608,12 @@ def getSpellingSpeech(
 ) -> Generator[SequenceItemT, None, None]:
 	"""
 	Gets a speech sequence for spelling text.
+	:param text: The text to be spelled.
+	:param locale: The locale to use for character descriptions, if applicable.
+	:param useCharacterDescriptions: Whether or not to use character descriptions, e.g. speak "a" as "alpha".
 	:param endsUtterance: Whether an EndUtteranceCommand should be yielded at the end.
+	:param useCharMode: Whether to wrap the sequence in CharacterModeCommand.
+	:returns: A speech sequence generator.
 	"""
 	synth = getSynth()
 	synthConfig = config.conf["speech"][synth.name]
