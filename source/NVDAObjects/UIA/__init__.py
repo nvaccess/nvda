@@ -1928,7 +1928,9 @@ class UIA(Window):
 		# Don't fetch the role unless we must, but never fetch it more than once.
 		role = None
 		try:
-			isSelectionItemPatternAvailable = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId)
+			isSelectionItemPatternAvailable = self._getUIACacheablePropertyValue(
+				UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId
+			)
 		except COMError:
 			isSelectionItemPatternAvailable = False
 		if isSelectionItemPatternAvailable:
@@ -1939,7 +1941,9 @@ class UIA(Window):
 				else controlTypes.State.SELECTABLE,
 			)
 			try:
-				isSelected = self._getUIACacheablePropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId)
+				isSelected = self._getUIACacheablePropertyValue(
+					UIAHandler.UIA_SelectionItemIsSelectedPropertyId
+				)
 			except COMError:
 				isSelected = False
 			if isSelected:
@@ -1956,7 +1960,9 @@ class UIA(Window):
 		if disabled:
 			states.add(controlTypes.State.UNAVAILABLE)
 		try:
-			canSelectMultiple = self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_SelectionCanSelectMultiplePropertyId)
+			canSelectMultiple = self._getUIACacheablePropertyValue(
+				UIAHandler.UIA.UIA_SelectionCanSelectMultiplePropertyId
+			)
 		except COMError:
 			canSelectMultiple = False
 		if canSelectMultiple:
