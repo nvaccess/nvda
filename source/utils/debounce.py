@@ -38,7 +38,7 @@ class ThreadTarget(Enum):
 @dataclass
 class _DebounceState:
 	lastExecutionTimeMs: float | None = None
-	pendingHandle: wx.Timer | threading.Timer | None = None
+	pendingHandle: wx.CallLater | threading.Timer | None = None
 	pendingArgs: tuple[Any, ...] = ()
 	pendingKwargs: dict[str, Any] | None = None
 
@@ -78,7 +78,7 @@ def _scheduleDelayedCall(
 	if handle is not None:
 		match threadTarget:
 			case ThreadTarget.GUI:
-				assert isinstance(handle, wx.Timer)
+				assert isinstance(handle, wx.CallLater)
 				handle.Stop()
 			case ThreadTarget.DAEMON:
 				assert isinstance(handle, threading.Timer)
