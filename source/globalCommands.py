@@ -192,7 +192,7 @@ def getConfigValue(*keyPath: *tuple[str, str, *tuple[str, ...]]) -> any:
 	return functools.reduce(lambda d, x: d.get(x), keyPath, config.conf)
 
 
-def setConfigValue(value: bool | int | float | str, *keyPath: *tuple[str, ...]) -> None:
+def setConfigValue(value: bool | int | float | str, *keyPath: *tuple[str, str, *tuple[str, ...]]) -> None:
 	"""
 	Sets the value of a configuration key.
 	:param value: The value to set for the configuration key.
@@ -203,7 +203,7 @@ def setConfigValue(value: bool | int | float | str, *keyPath: *tuple[str, ...]) 
 	dictToUpdate[keyPath[-1]] = value
 
 
-def _getConfigValueRange(*keyPath: *tuple[str, ...]) -> tuple[float, float]:
+def _getConfigValueRange(*keyPath: *tuple[str, str, *tuple[str, ...]]) -> tuple[float, float]:
 	"""
 	Gets the minimum and maximum allowed values for a configuration key.
 	:param keyPath: The path to The configuration key to evaluate.
@@ -227,7 +227,7 @@ def _clampValue(currentValue: float, minValue: float, maxValue: float, step: flo
 	return min(max(currentValue + step, minValue), maxValue)
 
 
-def valueToPercentage(*keyPath: *tuple[str, ...]) -> int:
+def valueToPercentage(*keyPath: *tuple[str, str, *tuple[str, ...]]) -> int:
 	"""
 	Calculates the percentage representation of a configuration value within its defined range.
 	:param keyPath: The path to the configuration key to evaluate.
@@ -238,7 +238,7 @@ def valueToPercentage(*keyPath: *tuple[str, ...]) -> int:
 	return round((currentValue - minValue) / (maxValue - minValue) * 100)
 
 
-def percentageToValue(*keyPath: *tuple[str, ...], percentage: int) -> float:
+def percentageToValue(*keyPath: *tuple[str, str, *tuple[str, ...]], percentage: int) -> float:
 	"""
 	Calculates the configuration value corresponding to a given percentage within its defined range.
 	:param keyPath: The path to the configuration key to evaluate.
@@ -251,7 +251,7 @@ def percentageToValue(*keyPath: *tuple[str, ...], percentage: int) -> float:
 	return value
 
 
-def clampedIncrementAndUpdateConfig(*keyPath: *tuple[str, ...], step: float) -> None:
+def clampedIncrementAndUpdateConfig(*keyPath: *tuple[str, str, *tuple[str, ...]], step: float) -> None:
 	"""
 	Updates a configuration value by applying a step, constrained within its valid range.
 	:param keyPath: The path to the configuration key to update.
@@ -259,7 +259,7 @@ def clampedIncrementAndUpdateConfig(*keyPath: *tuple[str, ...], step: float) -> 
 	"""
 	currentValue = getConfigValue(*keyPath)
 	minValue, maxValue = _getConfigValueRange(*keyPath)
-	newValue = _calculateNewValue(currentValue, minValue, maxValue, step)
+newValue = _clampValue(currentValue, minValue, maxValue, step)
 	setConfigValue(newValue, *keyPath)
 
 
