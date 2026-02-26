@@ -40,7 +40,7 @@ We welcome participation from our user community. If you have a keen interest in
 
 * P1 (Exploitable high): Vulnerabilities of critical or high severity (CVSS v3/v4 score 7+) that demonstrate practical exploitability (e.g. active exploitation, public PoC or trivial execution) and pose an imminent threat to NVDA users.
 * P2 (Theoretical high): Vulnerabilities with significant potential impact (high CVSS) where the risk is deemed theoretical due to high attack complexity, specific non-default configurations or lack of a viable exploit path.
-* P3 (Standard): All other issues, which represent minor security weaknesses, best-practice hardening or library vulnerabilities confirmed to be unreachable or unused in NVDA.
+* P3 (Standard): All other issues, including minor security weaknesses, best-practice hardening or library vulnerabilities confirmed to be unreachable or unused in NVDA.
 
 ## Response Timelines (SLAs)
 
