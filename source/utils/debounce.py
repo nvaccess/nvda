@@ -18,6 +18,7 @@ import wx
 
 P = ParamSpec("P")
 
+
 class ThreadTarget(Enum):
 	"""
 	When debouncing a task, specify the thread to run the task on.
@@ -93,10 +94,12 @@ def _debounceThreadDecider(
 ) -> Callable[..., Any]:
 	match threadTarget:
 		case ThreadTarget.GUI:
+
 			def callJobOnThread(delayTimeMs: int, func: Callable[..., Any], *args, **kwargs):
 				log.debug(f"Scheduling delayed job on GUI thread in {delayTimeMs}ms")
 				return wx.CallLater(delayTimeMs, func, *args, **kwargs)
 		case ThreadTarget.DAEMON:
+
 			def callJobOnThread(delayTimeMs: int, func: Callable[..., Any], *args, **kwargs):
 				log.debug(f"Executing delayed job on thread {threading.get_ident()}")
 				timer = threading.Timer(delayTimeMs / 1000, func, args=args, kwargs=kwargs)
