@@ -62,4 +62,4 @@ As details of the vulnerability will be available in the code repository, immedi
 
 * P1 (Critical): Immediate attention from core developers and/or the Security Advisory Group. Other development tasks may be temporarily deprioritised.
 * P2 (High): Dedicated resources will be allocated, with prioritisation based on severity and available development bandwidth.
-* P3 (Moderate / low): Resources will be allocated on a best-effort basis. 
+* P3 (Moderate / low): Resources will be allocated on a best-effort basis.
