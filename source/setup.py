@@ -287,9 +287,10 @@ freeze(
 			else []
 		)
 		+ (
-			[
-				("_synthDrivers32", glob("_synthDrivers32/*.py") + glob("_synthDrivers32/*.dll")),
-			]
+			getRecursiveDataFiles(
+				"_synthDrivers32",
+				"_synthDrivers32",
+			)
 			if os.path.isdir("lib/x86/synthDriverHost-runtime")
 			else []
 		)
