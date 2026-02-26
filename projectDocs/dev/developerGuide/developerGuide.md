@@ -66,8 +66,8 @@ We will make every effort to document these changes clearly (see below).
 * **Examples:** Privilege escalation or insecure file handling.
 * **Policy:** These are permitted in any release but are primarily deployed in patch releases (e.g. 2026.1.2).
 * In the rare event that a security fix requires a signature breaking change outside of the annual API-breaking release:
-    * If the change is likely to cause instability in existing add-ons, we will treat the patch as an official API-breaking release (forcing a global add-on compatibility update) to ensure user safety.
-    * If our analysis indicates the affected API is not widely used, we reserve the right to deploy the fix without forcing a global compatibility update.
+* If the change is likely to cause instability in existing add-ons, we will treat the patch as an official API-breaking release (forcing a global add-on compatibility update) to ensure user safety.
+* If our analysis indicates the affected API is not widely used, we reserve the right to deploy the fix without forcing a global compatibility update.
 
 #### API deprecation strategy
 
