@@ -8,6 +8,7 @@ import json
 import weakref
 import typing
 from collections import OrderedDict
+import audioDucking
 from logHandler import log
 from _bridge.base import Proxy
 from autoSettingsUtils.driverSetting import DriverSetting, NumericDriverSetting, BooleanDriverSetting
@@ -38,9 +39,17 @@ if typing.TYPE_CHECKING:
 class SynthDriverProxy(Proxy, SynthDriver):
 	"""Wraps a remote SynthDriverService, providing the same interface as a local SynthDriver."""
 
+	_audioDuckingSuspender: audioDucking._AudioDuckingSuspender | None = None
+
 	def __init__(self, service: SynthDriverService):
 		log.debug(f"Creating SynthDriverProxy instance for remote synth driver '{self.name}'")
 		super().__init__(service)
+		if audioDucking.isAudioDuckingSupported():
+			# Proxied synthDrivers cannot currently support audio ducking because they produce audio directly
+			# in their own process, and NVDA cannot correctly duck this external audio. Therefore, we create
+			# an _AudioDuckingSuspender to ensure that audio ducking is suspended while any proxied synth
+			# driver exists.
+			self._audioDuckingSuspender = audioDucking._AudioDuckingSuspender()
 		selfRef = weakref.ref(self)
 		for notification in self.supportedNotifications:
 			if notification is synthIndexReached:

@@ -1,17 +1,367 @@
-# punctuation marks
-.	ነጥብ	most	always   
-፡	ሁለት ነጥብ	most	never   
-፣	ነጠላ ሠረዝ	some	always   
-፥	ነጠላ ሠረዝ	some	always   
--	ሠረዝ	most	always   
-“	ግራ ድርብ የጥቅሥ ምልክት	most	never   
-”	ቀኝ ድርብ የጥቅሥ ምልክት	most	never   
-‘	ግራ ነጠላ የጥቅሥ ምልክት	most	never   
-’	ቀኝ ነጠላ የጥቅሥ ምልክት	most	never   
-፦	ችረት	some	always   
-፤	ድርብ ሠረዝ	some	always   
-።	አራት ነጥብ	some	always   
-?	የጥያቄ ምልክት	some	always   
-!	የቃለ አጋኖ ምልክት	some	always   
-¡	የሥላቅ ምልክት	some	always   
-…	ነጠብጣብ	some	always   
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2011-2026 NV Access Limited
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+። sentence ending	(?<=[^\s።])\።(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+¡ sentence ending	(?<=[^\s¡])\¡(?=[\"'”’)\s]|$)
+# Phrase endings.
+፤ phrase ending	(?<=[^\s፤])፤(?=\s|$)
+፦ phrase ending	(?<=[^\s፦])፦(?=\s|$)
+# Series of dots used for visual presentation, e.g. in table of contents
+multiple .	\.{4,}
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+። sentence ending	አራት ነጥብ	all	always
+! sentence ending	የቃል አጋንኖ ምልክት	all	always
+? sentence ending	የጥያቄ ምልክት	all	always
+¡ sentence ending	የሥላቅ ምልክት	all	always
+፤ phrase ending	ድርብ ሠረዝ	most	always
+፦ phrase ending	ችረት	most	always
+multiple .	ቅጥልጥል ነጥቦች	all	always
+
+# Standard punctuation/symbols
+።	አራት ነጥብ	all	always
+፤	ድርብ ሠረዝ	most	always
+፦	ችረት	most	always
+፣	ነጠላ ሠረዝ	some	always   
+፥	ነጠላ ሠረዝ	some	always   
+፡	ሁለት ነጥብ	most	never   
+!	የቃል አጋንኖ ምልክት	all
+！	አርበ ሠፊ የቃል አጋንኖ ምልክት	all	# fullwidth exclamation mark
+"	quote	most
+\#	የቁጥር ምልክት	some	# number
+$	dollar	all	norep
+£	pound	all	norep
+€	euro	all	norep
+¢	cents	all	norep
+¥	yen	all	norep
+₹	rupee	some	norep	# የህንድ ሩፒ
+ƒ	florin	all	norep
+¤	የገንዘብ ምልክት	all	norep	# currency sign
+%	percent	some
+‰	በእያንዳንዱ ሺህ	some	# per mille
+&	እና	some	# and
+'	አፖስትሮፊ	all	# tick
+(	የግራ ፓረንተሲስ	most	always	# left paren
+)	የቀኝ ፓረንተሲስ	most	always	# right paren
+*	ኮከቢት	some	# star
+,	comma	all	always
+、	ideographic comma	all	always	# ምስላዊ ምልክት ነጠላ ሰረዝ
+،	arabic comma	all	always
+-	ሠረዝ	most	always	# dash
+.	ነጥብ	some
+．	አርበ ሠፊ ነጥብ	some	# fullwidth full stop
+/	ሕዝባር	some
+:	colon	most	norep
+：	fullwidth colon	most	norep
+;	semi	most
+؛	arabic semicolon	most
+；	fullwidth semicolon	most
+?	የጥያቄ ምልክት	all
+؟	arabic question mark	all
+？	አርበ ሠፊ የጥያቄ ምልክት	all	# fullwidth question mark
+@	at	some
+[	ክፍት የማዕዘን ቅንፍ	most	# left bracket ስኩዌር 
+]	ዝግ የማዕዘን ቅንፍ	most	# right bracket ስኩዌር 
+\\	የኋሊት ሕዝባር	most
+^	caret	most
+_	መስመር ከወለል	most	# line ዝቅተኛ
+`	ግሬቭ ዘዬ	most	# graav
+{	ክፍት የሃረግ ቅንፍ	most	# left brace ከርሊ 
+}	ዝግ የሃረግ ቅንፍ	most	# right brace ከርሊ 
+|	የቆመ ዘንግ	most	# ቀጥተኛ መስመር bar
+¦	ሰባራ የቆመ ዘንግ	most	# broken bar
+~	tilda	most
+¡	የሥላቅ ምልክት	some	# inverted exclamation point
+¿	የተገለበጠ ጥያቄ ምልክት	some	# inverted question mark
+·	ማእከላዊ ነጥብ	most	# middle dot
+‚	single low quote	most	# የቀኝ ታዝኛው አፖስትሮፍ
+„	double low quote	most	# የቀኝ ታዝኛው ኮቴሽን ማርክ
+′	ብቸኜ	some	# prime
+″	ሁለቴ ብቸኜ	some	# double prime ድርብ 
+‴	ሶስቴ ብቸኜ	some	# triple prime ስሉስ 
+‐	ቃል አቆራኝ	most	always	# hyphen
+
+# Other characters
+•	የመዘርዝር ነጥብ	some	# ነጥበ ምልክት bullet
+…	ነጠብጣብ	all	always
+...	ነጥብ ነጥብ ነጥብ	all	always
+“	ግራ ድርብ የጥቅሥ ምልክት	most	# left quote
+”	ቀኝ ድርብ የጥቅሥ ምልክት	most	# right quote
+‘	ግራ ነጠላ የጥቅሥ ምልክት	most	# left tick
+’	ቀኝ ነጠላ የጥቅሥ ምልክት	most	# right tick
+–	en dash	most	always	# ኢኤን ሰረዝ
+—	em dash	most	always	# ኢኤም ሰረዝ
+­	soft hyphen	most
+⁃	የመዘርዝር ሠረዝ	none	# hyphen bullet
+●	ድፍን ክብ	most	# የተሞላ circle
+○	ባዶ ክብ	most	# white circle
+¨	diaeresis	most	# ዲያረሲስ
+¯	macron	most
+´	አክዩት ዘዬ	most	# acute
+¸	cedilla	most
+‎	ከግራ ወደ ቀኝ ምልክት	char	#  left to right mark
+‏	ከቀኝ ወደ ግራ ምልክት	char	# right to left mark
+¶	አንቀፅ አመላካች	most	# paragraph marker
+■	ድፍን ካሬ ትልቁ	some	# black square
+▪	ድፍን ካሬ ትንሹ	some	# black square
+◾	ድፍን ካሬ መሃከለኛው	some	# black square
+□	ባዶ ካሬ	some	# white square
+◦	ባዶ የመዘርዝር ክብ	some	# ባዶ ወፍራም ነጥብ white bullet
+⇨	ወደ ቀኝ ውስጡ ባዶ ቀስት	some	# right white arrow
+➔	ቀኝ ጠቋሚ ቀስት	some	# right-pointing arrow
+➢	ወደ ቀኝ የቀስት ራስ	some	# right arrowhead
+❖	black diamond minus white X	some
+♣	አበባ የመጫወቻ ካርታ መለያ	some	# black club
+♦	ዳይመንድ የመጫወቻ ካርታ መለያ	some	# black diamond
+◆	ድፍን ዳይመንድ	some	# black diamond
+§	የክፍል ምልክት	all	# ጉርድ አካፋይ section
+°	ዲግሪ	some	# degrees
+«	የግራ ጠቋሚ ድርብ አንግል ቅንፍ	most	always	# double left pointing angle bracket
+»	የቀኝ ጠቋሚ ድርብ አንግል ቅንፍ	most	always	# double right pointing angle bracket
+µ	micro	some	# የማይክሮ ምልክት
+⁰	ከራስጌው ላይ ዜሮ	some	# superscript 0
+¹	ከራስጌው ላይ አንድ	some	# superscript 1
+²	ከራስጌው ላይ ሁለት	some	# superscript 2
+³	ከራስጌው ላይ ሶስት	some	# superscript 3
+⁴	ከራስጌው ላይ አራት	some	# superscript 4
+⁵	ከራስጌው ላይ አምስት	some	# superscript 5
+⁶	ከራስጌው ላይ ስድስት	some	# superscript 6
+⁷	ከራስጌው ላይ ሰባት	some	# superscript 7
+⁸	ከራስጌው ላይ ስምንት	some	# superscript 8
+⁹	ከራስጌው ላይ ዘጠኝ	some	# superscript 9
+ⁿ	ከራስጌው ላይ አሥር	some	# superscript ten
+⁺	ከራስጌው ላይ መደመር	some	# superscript plus
+⁼	ከራስጌው ላይ እኩል	some	# superscript equals
+⁽	ከራስጌው ላይ የግራ ፓረንተሲስ	some	# superscript left paren
+⁾	ከራስጌው ላይ የቀኝ ፓረንተሲስ	some	# superscript right paren
+₀	ከእግርጌው ሥር ዜሮ	some	# subscript 0
+₁	ከእግርጌው ሥር አንድ	some	# subscript 1
+₂	ከእግርጌው ሥር ሁለት	some	# subscript 2
+₃	ከእግርጌው ሥር ሶስት	some	# subscript 3
+₄	ከእግርጌው ሥር አራት	some	# subscript 4
+₅	ከእግርጌው ሥር አምስት	some	# subscript 5
+₆	ከእግርጌው ሥር ስድስት	some	# subscript 6
+₇	ከእግርጌው ሥር ሰባት	some	# subscript 7
+₈	ከእግርጌው ሥር ስምንት	some	# subscript 8
+₉	ከእግርጌው ሥር ዘጠኝ	some	# subscript 9
+₊	ከእግርጌው ሥር መደመር	some	# subscript plus
+₋	ከእግርጌው ሥር መቀነስ	some	# subscript minus
+₌	ከእግርጌው ሥር እኩል	some	# subscript equals
+₍	ከእግርጌው ሥር የግራ ፓረንተሲስ	some	# subscript left paren
+₎	ከእግርጌው ሥር የቀኝ ፓረንተሲስ	some	# subscript right paren
+®	የተመዘገበ ንግድ ምልክት	some	# registered
+™	የንግድ ምልክት	some	# trademark
+©	የቅጂ መብት	some	# copyright
+℠	የአገልግሎት ምልክት	some	# ServiceMark
+←	ወደ ግራ ቀስት	some	# left arrow
+↑	ወደ ላይ ቀስት	some	# up arrow
+→	ወደ ቀኝ ቀስት	some	# right arrow
+↓	ወደ ታች ቀስት	some	# down arrow
+✓	ምልክት ማድረጊያ	some	# check
+✔	ወፍራም ምልክት ማድረጊያ	some	# check
+🡺	ወደ ቀኝ ቀስት	some	# right arrow
+†	የመስቀል ምልክት	some	# dagger
+‡	የድርብ መስቀል ምልክት	some	# double dagger
+‣	ትራያንግል የመዘርዝር ምልክት	none	# triangular bullet
+✗	x ቅርፅ የመዘርዝር ምልክት	none	# x-shaped bullet
+⊕	መደመር በክብ ውስጥ	none	# circled plus
+⊖	መቀነስ በክብ ውስጥ	none	# circled minus
+⇄	ወደ ግራ ቀስት ከበላዩ የቀኝ ቀስት	none	# right arrow over left arrow
+⇒	ወደ ቀኝ ድርብ ቀስት	none	# double right arrow
+
+#Arithmetic operators
++	ሲደመር	some	# plus
+−	ሲቀነስ	some	# minus
+×	ሲባዛ	some	# times
+⋅	የዶት ኦፕሬተር	some	# times
+⨯	የቬክተር ብዜት	none	# ክሮስ times
+∕	የማካፈል ሰያፍ	some	# divided by
+⁄	የክፍልፋይ ሰያፍ	some	# divided by
+÷	ሲካፈል	some	# divide by
+∓	መቀነስ ወይም መደመር	some	# minus or plus
+±	መደመር ወይም መቀነስ	some	# plus or Minus
+
+#Set operations
+∖	set minus	none
+⊍	set union	none
+𝒫	power set of the set	none
+𝔓	power set of the set	none
+℘	power set of the set	none
+∁	complement of the set	none
+
+#Set relations and set constructions
+∅	ባዶ ስብስብ	none	# empty set
+⊂	ንዑስ ስብስብ ነው	none	# subset of
+⊄	ንዑስ ስብስብ አይደለም	none	# not a subset of
+⊃	ሱፐርሴት ነው	none	# superset of
+⊅	ሱፐርሴት አይደለም	none	# not a superset of
+⊆	ንዑስ ስብስብ ወይም እኩል ነው	none	# subset of or equal to
+⊈	ንዑስ ስብስብም እኩልም አይደለም	none	# neither a subset of nor equal to
+⊇	ሱፐርሴት ወይም እኩል ነው	none	# superset of or equal to
+⊉	ሱፐርሴትም እኩልም አይደለም	none	# neither a superset of nor equal to
+⊌	multiset	none
+
+#Equality signs
+=	እኩል	some	# equals
+≃	በይጠጌ አይነኬ እኩል የሚሆን	none	# asymptotically equal to ጥጉን የማካ 
+≄	በይጠጌ አይነኬ እኩል የማይሆን	none	# not asymptotically equal to
+≅	እኩል ሊባል የሚችል	none	# approximately equal to
+≆	እኩል ሊባል የሚችል በእርግጥ ያልሆነ	none	# approximately but not actually equal to
+≈	ወደ እኩል የሚጠጋ	none	# ለእኩል የቀረበ almost Equal to
+≌	ሁሉም እኩል	none	# all equal to
+≍	አቻ ነው	none	# equivalent to 
+≭	አቻ አይደለም	none	# not equivalent to
+≎	geometrically equivalent to	none	# በጂኦሜትሪ እኩያ ነው
+≑	geometrically equal to	none	# በጂኦሜትሪ እኩል ነው
+≚	ባለእኩል አንግል ነው	none	# equiangular to
+≬	መሃከል	none	# between
+≠	እኩል አይደለም	none	# not equal to
+≡	ተመሳሳይ ነው	none	# identical to
+≣	በጥብቅ ተመሳሳይ ነው	none	# strictly identical to
+≢	ተመሳሳይ አይደለም	none	# not identical to
+∼	በአንድነት የሚመደብ ነው	none	# similar to
+≙	ግምት	none	# estimates
+≟	ጥያቄ ያለበት እኩል	none	# questioned equal to
+
+#comparison signs
+<	የሚያንስ	some	# less
+>	የሚበልጥ	some	# greater
+≤	ያንሳል ወይም እኩል ይሆናል	none	# less- than or equal to
+≦	ያንሳል ወይም እኩል ይሆናል	none	# less- than or equal to የተጣበቁ
+≪	በጣም ያንሳል	none	# much smaller than
+≥	ይበልጣል ወይም እኩል ይሆናል	none	# greater-than or equal to
+≧	ይበልጣል ወይም እኩል ይሆናል	none	# greater-than or equal to የተጣበቁ
+≫	በጣም ይበልጣል	none	# much bigger than
+≶	ያንሳል ወይም ይበልጣል	none	# less than or greater than
+≷	ይበልጣል ወይም ያንሳል	none	# greater than or less than
+≮	አያንስም	none	# not less than
+≯	አይበልጥም	none	# not greater than
+
+#Functions
+⁻	መቀነስ በኀይለ ቁጥርነት	some	# ግልባች inverse
+∘	የቀለበት ኦፕሬተር	none	# ring Operator
+∂	partial derivative	none	# ከፊል ዲፈረንሺያል
+∇	gradient of	none	# ናብላ
+
+#Geometry and linear Algebra
+⃗	vector between	none
+△	triangle	none
+▭	rectangle	none
+∟	ዘጠና ዲግሪ አንግል	none	# right angle
+∠	አንግል	none	# angle
+∥	ትይዩ ነው	none	# ተጓዳኝ parallel to
+∦	ትይዩ አይደለም	none	# not parallel to
+⊥	perpendicular to	none	# ወደላይ ታክ
+⟂	ortogonal to	none
+‖	norm of vector	none
+̂	hat	none
+∿	sine wave	none
+∡	measured Angle	none
+∢	spherical Angle	none
+
+#Logical operators
+∀	ለሁሉም	none	# for all
+∃	ይገኛል	none	# there exists
+∄	አይገኝም	none	# there does not exist
+⇏	ወደሚለው አያመራም	none	# ወደ ቀኝ ድርብ ቀስት በሰያፍ  የተሰረዘ does not imply
+⇐	ለማለት ተጠቃሽ ምንጩ	none	# ወደ ግራ ድርብ ቀስት is implied by
+
+#Other mathematical Operators
+∈	አካል ነው	none	# element of
+∉	አካል አይደለም	none	# not an element of
+∊	small element of	none
+∋	በአባልነት ይይዛል	none	# contains as member
+∌	በአባልነት አይዝም	none	# does not contain as member
+∍	small contains as member	none
+∎	የመጨረሻ ማስረጃ	none	# end of proof
+∏	n-ary product	none	# n-ary ብዜት
+∐	n-ary coproduct	none
+∑	n-ary summation	none	# n-ary ድምር
+√	square root	none	# ራዲካል
+∛	cube root	none
+∜	fourth root	none
+∝	የተመጣጠነ	none	# proportional to
+∞	ማለቂያ የሌለው ምልክት	none	# infinity
+∧	ሎጂካል እና	none	# and
+∨	ሎጂካል ወይም	none	# or
+¬	አሉታነት	none	# not
+∩	መገናኛ	none	# intersection
+∪	ህብረት	none	# union
+∫	integral	none	# ኢንተግራል
+∬	double Integral	none	# ድርብ ኢንተግራል
+∭	triple Integral	none	# ስሉስ ኢንተግራል
+∮	contour Integral	none	# ኮንቹር ኢንተግራል
+∯	surface Integral	none
+∰	volume Integral	none
+∱	clockwise Integral	none
+∲	clockwise contour Integral	none
+∳	anticlockwise Contour Integral	none
+∴	ስለዚህ	none	# therefore
+∵	ምክንያቱም	none	# because
+∶	ጥምር	none	# ratio
+∷	ምጥጥን	none	# proportion
+∹	ከበቂ በላይ	none	# excess
+∺	geometric proportion	none
+≀	wreath product	none
+≏	በመሃል የሚገኝ ልዩነት	none	# difference between
+≐	approaches the limit	none
+∙	bullet Operator	none	# የነጥብ ኦፕሬተር
+∣	ይከፍላል	none	# divides
+∤	አይከፍልም	none	# does not divide
+≔	colon equals	none
+≕	equals colon	none
+≺	ይቀድማል	none	# precedes
+≻	ይከተላል	none	# succeeds
+⊀	አይቀድምም	none	# does not precede
+⊁	አይከተልም	none	# does not succeed
+
+# Vulgar Fractions U+2150 to U+215E
+¼	ሩብ	none	# one quarter
+½	ግማሽ	none	# one half
+¾	ሶስት አራተኛ	none	# three quarters
+⅐	አንድ ሰባተኛ	none	# one seventh
+⅑	አንድ ዘጠነኛ	none	# one ninth
+⅒	አንድ አሥረኛ	none	# one tenth
+⅓	ሲሶ	none	# one third
+⅔	ሁለት ሶስተኛ	none	# two thirds
+⅕	አንድ አምስተኛ	none	# one fifth
+⅖	ሁለት አምስተኛ	none	# two fifths
+⅗	ሶስት አምስተኛ	none	# three fifths
+⅘	አራት አምስተኛ	none	# four fifths
+⅙	አንድ ስድስተኛ	none	# one sixth
+⅚	አምስት ስድስተኛ	none	# five sixths
+⅛	አንድ ስምንተኛ	none	# one eighth
+⅜	ሶስት ስምንተኛ	none	# three eights
+⅝	አምስት ስምንተኛ	none	# five eighths
+⅞	ሰባት ስምንተኛ	none	# seven eighths
+
+#Number sets
+𝔸	algebraic numbers	none
+ℂ	complex numbers	none
+ℑ	imaginary part of complex number	none
+ℍ	quaternions	none
+ℕ	የመቁጠሪያ ቁጥሮች	none	# natural numbers
+𝕁	የሙሉ ቁጥሮች	none	# nonnegative (whole) numbers
+ℚ	የክፍልፋይ ቁጥሮች	none	# rational numbers
+ℝ	real numbers	none
+ℜ	real part of complex number	none
+ℤ	integers	none	# ኢንቲጀር 
+ℵ	aleph number	none
+ℶ	beth number	none
+
+# Miscellaneous Technical
+⌘	mac Command key	none
+⌥	mac Option key	none
+
+
+

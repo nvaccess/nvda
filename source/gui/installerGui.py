@@ -16,6 +16,7 @@ import core
 from winBindings import shell32
 import globalVars
 import installer
+from installer import ComparisonState
 from logHandler import log
 import gui
 from gui import guiHelper
@@ -55,12 +56,12 @@ def _canPortableConfigBeCopied() -> bool:
 
 
 def doInstall(
-	createDesktopShortcut=True,
-	startOnLogon=True,
-	isUpdate=False,
-	copyPortableConfig=False,
-	silent=False,
-	startAfterInstall=True,
+	createDesktopShortcut: bool = True,
+	startOnLogon: bool = False,
+	isUpdate: bool = False,
+	copyPortableConfig: bool = False,
+	silent: bool = False,
+	startAfterInstall: bool = True,
 ):
 	progressDialog = gui.IndeterminateProgressDialog(
 		gui.mainFrame,
@@ -180,14 +181,14 @@ def doSilentInstall(
 	copyPortableConfig=False,
 	startAfterInstall=True,
 ):
-	prevInstall = installer.comparePreviousInstall() is not None
+	freshInstall = installer._comparePreviousInstall() is ComparisonState.FRESH_INSTALL
 	startOnLogon = globalVars.appArgs.enableStartOnLogon
 	if startOnLogon is None:
-		startOnLogon = config.getStartOnLogonScreen() if prevInstall else True
+		startOnLogon = config.getStartOnLogonScreen() if not freshInstall else False
 	doInstall(
-		createDesktopShortcut=installer.isDesktopShortcutInstalled() if prevInstall else True,
+		createDesktopShortcut=installer.isDesktopShortcutInstalled() if not freshInstall else True,
 		startOnLogon=startOnLogon,
-		isUpdate=prevInstall,
+		isUpdate=not freshInstall,
 		copyPortableConfig=copyPortableConfig,
 		silent=True,
 		startAfterInstall=startAfterInstall,
@@ -262,7 +263,7 @@ class InstallerDialog(
 		if globalVars.appArgs.enableStartOnLogon is not None:
 			self.startOnLogonCheckbox.Value = globalVars.appArgs.enableStartOnLogon
 		else:
-			self.startOnLogonCheckbox.Value = config.getStartOnLogonScreen() if self.isUpdate else True
+			self.startOnLogonCheckbox.Value = config.getStartOnLogonScreen() if self.isUpdate else False
 
 		shortcutIsPrevInstalled = installer.isDesktopShortcutInstalled()
 		if self.isUpdate and shortcutIsPrevInstalled:
@@ -349,23 +350,36 @@ class InstallingOverNewerVersionDialog(
 ):
 	helpId = "InstallingNVDA"
 
-	def __init__(self):
+	_DOWNGRADE_WARNING = _(
+		# Translators: A warning presented when the user attempts to downgrade NVDA
+		# to an older version.
+		"You are attempting to install an earlier version of NVDA "
+		"than the version currently installed. "
+		"If you really wish to revert to an earlier version, "
+		"you should first cancel this installation "
+		"and completely uninstall NVDA before installing the earlier version.",
+	)
+
+	_UNKNOWN_WARNING = _(
+		# Translators: A warning presented when the installer is unable to determine
+		# the state of the current NVDA installation.
+		"An existing NVDA installation has been detected, "
+		"but its version cannot be determined. "
+		"If you are attempting to install an earlier version of NVDA, "
+		"you should first cancel this installation "
+		"and completely uninstall NVDA before installing the earlier version.",
+	)
+
+	def __init__(self, installState: ComparisonState = ComparisonState.DOWNGRADE):
 		# Translators: The title of a warning dialog.
 		super().__init__(gui.mainFrame, title=_("Warning"))
+		self.installState = installState
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentSizer = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		text = wx.StaticText(
 			self,
-			label=_(
-				# Translators: A warning presented when the user attempts to downgrade NVDA
-				# to an older version.
-				"You are attempting to install an earlier version of NVDA "
-				"than the version currently installed. "
-				"If you really wish to revert to an earlier version, "
-				"you should first cancel this installation "
-				"and completely uninstall NVDA before installing the earlier version.",
-			),
+			label=self._warningText,
 		)
 		text.Wrap(self.scaleSize(600))
 		contentSizer.addItem(text)
@@ -391,18 +405,48 @@ class InstallingOverNewerVersionDialog(
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
 
+	@property
+	def _warningText(self) -> str:
+		match self.installState:
+			case ComparisonState.DOWNGRADE:
+				return self._DOWNGRADE_WARNING
+			case ComparisonState.UNKNOWN:
+				return self._UNKNOWN_WARNING
+			case _:
+				raise ValueError(f"Invalid install state for warning dialog {self.installState}")
+
+
+class PortableCopyOverNewerVersionDialog(InstallingOverNewerVersionDialog):
+	helpId = "CreatingAPortableCopy"
+
+	_DOWNGRADE_WARNING = _(
+		# Translators: A warning presented when the user attempts to downgrade NVDA
+		# to an older version.
+		"You are attempting to replace an existing portable copy of NVDA with an earlier version. "
+		"Downgrading NVDA is not recommended. "
+		"You should cancel this operation and create a new portable copy instead. ",
+	)
+
+	_UNKNOWN_WARNING = _(
+		# Translators: A warning presented when the installer is unable to determine
+		# the state of the current NVDA installation.
+		"An existing copy of NVDA has been detected in the chosen directory, "
+		"but its version cannot be determined. "
+		"If you are attempting to downgrade to an earlier version of NVDA, "
+		"you should cancel this operation and create a new portable copy. ",
+	)
+
 
 def showInstallGui():
 	gui.mainFrame.prePopup()
-	previous = installer.comparePreviousInstall()
-	if previous is not None and previous > 0:
-		# The existing installation is newer, which means this will be a downgrade.
-		d = InstallingOverNewerVersionDialog()
+	installState = installer._comparePreviousInstall()
+	if installState in (ComparisonState.DOWNGRADE, ComparisonState.UNKNOWN):
+		d = InstallingOverNewerVersionDialog(installState)
 		with d:
 			if d.ShowModal() == wx.ID_CANCEL:
 				gui.mainFrame.postPopup()
 				return
-	InstallerDialog(gui.mainFrame, previous is not None).Show()
+	InstallerDialog(gui.mainFrame, installState is not ComparisonState.FRESH_INSTALL).Show()
 	gui.mainFrame.postPopup()
 
 
@@ -423,7 +467,7 @@ def _warnAndConfirmForNonEmptyDirectory(portableDirectory: str) -> bool:
 		# The directory is empty, so we can proceed.
 		return True
 	if _nvdaExistsInDir(portableDirectory):
-		return wx.YES == gui.messageBox(
+		if wx.NO == gui.messageBox(
 			_(
 				# Translators: The message displayed when the user has specified a destination directory
 				# that already has a portable copy in the Create Portable NVDA dialog.
@@ -434,7 +478,17 @@ def _warnAndConfirmForNonEmptyDirectory(portableDirectory: str) -> bool:
 			# that already has a portable copy in the Create Portable NVDA dialog.
 			_("Portable Copy Exists"),
 			wx.YES_NO | wx.ICON_QUESTION,
-		)
+		):
+			# The user does not want to update the existing portable copy, so we cancel.
+			return False
+		installState = installer._comparePreviousCopy(portableDirectory)
+		if installState in (ComparisonState.DOWNGRADE, ComparisonState.UNKNOWN):
+			d = PortableCopyOverNewerVersionDialog(installState)
+			with d:
+				if d.ShowModal() == wx.ID_CANCEL:
+					gui.mainFrame.postPopup()
+					return False
+		return True
 	return wx.YES == gui.messageBox(
 		_(
 			# Translators: The message displayed when the user has specified a destination directory
@@ -586,8 +640,9 @@ class PortableCreaterDialog(
 					# Translators: The message displayed when the user has not specified an absolute destination directory
 					# in the Create Portable NVDA dialog.
 					"Please specify the absolute path where the portable copy should be created. "
-					"It may include system variables (%temp%, %homepath%, etc.).",
-				),
+					"It may include system variables (e.g. %temp%, %homepath%) and must start with a drive letter (e.g. C:\\). "
+					"Current path: {path}. ",
+				).format(path=expandedPortableDirectory),
 				# Translators: The message title displayed when the user has not specified an absolute
 				# destination directory in the Create Portable NVDA dialog.
 				_("Error"),
