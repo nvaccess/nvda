@@ -39,10 +39,19 @@ class _FakeCallLaterHandle:
 class _FakeCallLater:
 	def __init__(self):
 		self.handles = []
+		self._lastHandleByStateId = {}
 
 	def __call__(self, delay: int, callback, *args, **kwargs):
+		if args:
+			state = args[-1]
+			stateId = id(state)
+			previousHandle = self._lastHandleByStateId.get(stateId)
+			if previousHandle is not None:
+				previousHandle.Stop()
 		handle = _FakeCallLaterHandle(delay, callback, args, kwargs)
 		self.handles.append(handle)
+		if args:
+			self._lastHandleByStateId[id(args[-1])] = handle
 		return handle
 
 	def runPending(self) -> None:
@@ -60,13 +69,13 @@ class TestDebounceLimiter(unittest.TestCase):
 		self.clock = _FakeClock()
 		self.callLater = _FakeCallLater()
 		self.monotonicPatch = patch("utils.debounce.monotonic", new=self.clock.monotonic)
-		self.deciderPatch = patch("utils.debounce._debounceThreadDecider", return_value=self.callLater)
+		self.callLaterPatch = patch("utils.debounce.wx.CallLater", new=self.callLater)
 		self.monotonicPatch.start()
-		self.deciderPatch.start()
+		self.callLaterPatch.start()
 
 	def tearDown(self) -> None:
 		self.monotonicPatch.stop()
-		self.deciderPatch.stop()
+		self.callLaterPatch.stop()
 
 	def test_firstCallImmediate_thenDelayedWithinCooldown(self):
 		calls = []

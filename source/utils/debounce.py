@@ -65,7 +65,6 @@ def debounceLimiter(
 	:param cooldownTimeMs: Time in milliseconds during which subsequent calls are considered to be within the cooldown period.
 	:param delayTimeMs: Time in milliseconds to delay the execution of a call received during the
 	cooldown period.
-	:param threadTarget: The thread to run the task on.
 	:returns: A decorator that debounces calls to the decorated function.
 
 	Executes calls immediately when outside the cooldown period (when there is no
