@@ -10,7 +10,6 @@ from time import monotonic
 from typing import Any, ParamSpec
 from weakref import WeakKeyDictionary
 
-from logHandler import log
 import wx
 
 
