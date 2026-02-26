@@ -471,6 +471,7 @@ def _getSpellingSpeechWithoutCharMode(
 	:param unicodeNormalization: Whether to use Unicode normalization for the given text.
 	:param reportNormalizedForCharacterNavigation: When unicodeNormalization is true, indicates if 'normalized'
 		should be reported along with the currently spelled character.
+	:param endsUtterance: Whether an EndUtteranceCommand should be yielded at the end.
 	:returns: A speech sequence generator.
 	"""
 	defaultLanguage = getCurrentLanguage()
@@ -600,11 +601,15 @@ def getSingleCharDescription(
 
 def getSpellingSpeech(
 	text: str,
-	locale: Optional[str] = None,
+	locale: str | None = None,
 	useCharacterDescriptions: bool = False,
 	endsUtterance: bool = True,
 	useCharMode: bool = True,
 ) -> Generator[SequenceItemT, None, None]:
+	"""
+	Gets a speech sequence for spelling text.
+	:param endsUtterance: Whether an EndUtteranceCommand should be yielded at the end.
+	"""
 	synth = getSynth()
 	synthConfig = config.conf["speech"][synth.name]
 
