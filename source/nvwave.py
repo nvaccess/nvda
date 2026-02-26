@@ -20,8 +20,6 @@ from ctypes import (
 	c_float,
 	string_at,
 )
-from logHandler import log
-
 from comtypes import HRESULT
 from comtypes.hresult import E_INVALIDARG
 import atexit
@@ -30,7 +28,7 @@ import time
 import garbageHandler
 import wave
 import config
-from logHandler import getOnErrorSoundRequested
+from logHandler import log, getOnErrorSoundRequested
 import os.path
 import extensionPoints
 import wasapi

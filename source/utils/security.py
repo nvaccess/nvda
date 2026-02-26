@@ -1,8 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2026 NV Access Limited, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
+from ctypes import FormatError, GetLastError, byref, sizeof
+from ctypes.wintypes import DWORD
 import hashlib
 from typing import (
 	Any,
@@ -18,6 +20,12 @@ import extensionPoints
 from logHandler import log
 import systemUtils
 from winAPI.sessionTracking import isLockScreenModeActive
+from winBindings.advapi32 import (
+	TOKEN_ELEVATION_TYPE,
+	TOKEN_INFORMATION_CLASS,
+	GetTokenInformation,
+	TokenAccessRight,
+)
 import winUser
 
 if TYPE_CHECKING:
@@ -412,3 +420,32 @@ def isRunningOnSecureDesktop() -> bool:
 	 - SecureMode and SecureScreens
 	"""
 	return systemUtils._getDesktopName() == "Winlogon"
+
+
+def isRunningElevated() -> bool:
+	"""
+	Determine whether NVDA is running as an elevated administrator.
+
+	When UAC is enabled and a user with administrator privileges signs in,
+	they get a "split token", in which the administrative powers in their token are disabled.
+	When the user elevates their token, those administrative powers are enabled.
+
+	:return: ``True`` if NVDA is being run by an elevated administrator; ``False`` otherwise.
+
+	.. note::
+		A return of ``False`` does not guarantee that NVDA is being run as a standard user;
+		we may be an administrator on a machine with UAC disabled.
+	"""
+	elevationType = DWORD()
+	actualSize = DWORD()
+	with systemUtils.getCurrentProcessToken(TokenAccessRight.QUERY) as currentProcessToken:
+		if not GetTokenInformation(
+			currentProcessToken,
+			TOKEN_INFORMATION_CLASS.ELEVATION_TYPE,
+			byref(elevationType),
+			sizeof(DWORD),
+			byref(actualSize),
+		):
+			raise OSError(None, FormatError(), None, GetLastError())
+
+	return elevationType.value == TOKEN_ELEVATION_TYPE.FULL

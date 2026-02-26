@@ -15,6 +15,7 @@ from .config import (
 	getDefaultZoomLevelString,
 	getDefaultFilter,
 	getDefaultFullscreenMode,
+	ZoomLevel,
 )
 from .magnifier import Magnifier
 from .fullscreenMagnifier import FullScreenMagnifier
@@ -26,6 +27,49 @@ from .utils.types import (
 	MagnifierAction,
 )
 from logHandler import log
+
+PAN_ACTION_TO_EDGE_NAME = {
+	MagnifierAction.PAN_LEFT: pgettext(
+		"magnifier",
+		# Translators: Short name for the left edge, used in messages.
+		"left",
+	),
+	MagnifierAction.PAN_RIGHT: pgettext(
+		"magnifier",
+		# Translators: Short name for the right edge, used in messages.
+		"right",
+	),
+	MagnifierAction.PAN_UP: pgettext(
+		"magnifier",
+		# Translators: Short name for the top edge, used in messages.
+		"top",
+	),
+	MagnifierAction.PAN_DOWN: pgettext(
+		"magnifier",
+		# Translators: Short name for the bottom edge, used in messages.
+		"bottom",
+	),
+	MagnifierAction.PAN_LEFT_EDGE: pgettext(
+		"magnifier",
+		# Translators: Short name for the left edge, used in messages.
+		"left",
+	),
+	MagnifierAction.PAN_RIGHT_EDGE: pgettext(
+		"magnifier",
+		# Translators: Short name for the right edge, used in messages.
+		"right",
+	),
+	MagnifierAction.PAN_TOP_EDGE: pgettext(
+		"magnifier",
+		# Translators: Short name for the top edge, used in messages.
+		"top",
+	),
+	MagnifierAction.PAN_BOTTOM_EDGE: pgettext(
+		"magnifier",
+		# Translators: Short name for the bottom edge, used in messages.
+		"bottom",
+	),
+}
 
 
 def toggleMagnifier() -> None:
@@ -72,38 +116,41 @@ def toggleMagnifier() -> None:
 		)
 
 
-def zoomIn() -> None:
-	"""Zoom in the magnifier"""
+def zoom(direction: Direction) -> None:
+	"""
+	Generic zoom function that handles zoom in and zoom out.
+
+	:param direction: The zoom direction (IN or OUT)
+	"""
+	action = MagnifierAction.ZOOM_IN if direction == Direction.IN else MagnifierAction.ZOOM_OUT
 	magnifier: Magnifier = getMagnifier()
-	if magnifierIsActiveVerify(
-		magnifier,
-		MagnifierAction.ZOOM_IN,
-	):
-		magnifier._zoom(Direction.IN)
+	if magnifierIsActiveVerify(magnifier, action):
+		magnifier._zoom(direction)
 		ui.message(
-			pgettext(
-				"magnifier",
-				# Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
-				"Zooming in with {zoomLevel} level",
-			).format(zoomLevel=magnifier.zoomLevel),
+			ZoomLevel.ZOOM_MESSAGE.format(
+				zoomLevel=f"{magnifier.zoomLevel:.1f}",
+			),
 		)
 
 
-def zoomOut() -> None:
-	"""Zoom out the magnifier"""
+def pan(action: MagnifierAction) -> None:
+	"""
+	Handles panning the magnifier up/down/left/right and going to each edge.
+
+	:param action: The pan action to perform
+	"""
 	magnifier: Magnifier = getMagnifier()
-	if magnifierIsActiveVerify(
-		magnifier,
-		MagnifierAction.ZOOM_OUT,
-	):
-		magnifier._zoom(Direction.OUT)
-		ui.message(
-			pgettext(
-				"magnifier",
-				# Translators: Message announced when zooming out with {zoomLevel} being the target zoom level.
-				"Zooming out with {zoomLevel} level",
-			).format(zoomLevel=magnifier.zoomLevel),
-		)
+	if magnifierIsActiveVerify(magnifier, action):
+		hasMoved = magnifier._pan(action)
+		if not hasMoved:
+			edgeName = PAN_ACTION_TO_EDGE_NAME.get(action)
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Message announced when arriving at the {edge} edge.
+					"{edge} edge",
+				).format(edge=edgeName),
+			)
 
 
 def toggleFilter() -> None:

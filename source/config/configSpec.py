@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
+# Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
 # Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen
 # This file is covered by the GNU General Public License.
@@ -39,6 +39,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	reportNormalizedForCharacterNavigation = boolean(default=true)
 	symbolDictionaries = string_list(default=list("cldr"))
+	speechDictionaries = string_list(default=list("default", "voice"))
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	autoLanguageSwitching = boolean(default=true)
 	autoDialectSwitching = boolean(default=false)
@@ -116,7 +117,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 # Magnifier settings
 [magnifier]
 	defaultZoomLevel = float(min=1.0, max=10.0, default=2.0)
+	defaultPanStep = integer(min=1, max=100, default=10)
 	defaultFullscreenMode = string(default="center")
+	isTrueCentered = boolean(default=False)
 	defaultFilter = string(default="normal")
 	keepMouseCentered = boolean(default=false)
 	saveShortcutChanges = boolean(default=false)
@@ -349,8 +352,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [featureFlag]
 	# 0:default, 1:yes, 2:no
 	cancelExpiredFocusSpeech = integer(0, 2, default=0)
-	# 0:Only in test versions, 1:yes
-	playErrorSound = integer(0, 1, default=0)
+	# 0: Only in test versions, 1: Yes, 2: No
+	playErrorSound = integer(0, 2, default=0)
 
 [addonStore]
 	automaticUpdates = option("notify", "update", "disabled", default="notify")
@@ -383,24 +386,22 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [math]
 	[[speech]]
-		# LearningDisability, Blindness, LowVision
-		impairment = string(default="Blindness")
+		impairment = option("LearningDisability", "Blindness", "LowVision", default="Blindness")
 		# any known language code and sub-code -- could be en-uk, etc
 		language = string(default="Auto")
 		# Any known speech style (falls back to ClearSpeak)
 		speechStyle = string(default="ClearSpeak")
-		# Terse, Medium, Verbose
-		verbosity = string(default="Medium")
+		verbosity = option("Terse", "Medium", "Verbose", default="Medium")
 		# Change from text speech rate (%)
-		mathRate = integer(default=100)
+		mathRate = integer(default=100, min=10, max=100)
 		# Change from normal pause length (%)
-		pauseFactor = integer(default=100)
-		# make a sound when starting/ending math speech -- None, Beep
-		speechSound = string(default="None")
+		pauseFactor = integer(default=100, min=0, max=1056)
+		# make a sound when starting/ending math speech
+		speechSound = option("None", "Beep", default="None")
 		# NOTE: not currently working in MathCAT
 		subjectArea = string(default="General")
-		# SpellOut (H 2 0), AsCompound (Water) -- not implemented, Off (H sub 2 O)
-		chemistry = string(default="SpellOut")
+		# SpellOut (H 2 O), AsCompound (Water), or Off (H sub 2 O)
+		chemistry = option("SpellOut", "AsCompound", "Off", default="SpellOut")
 		# Verbose, Brief, SuperBrief
 		mathSpeak = string(default="Verbose")
 
@@ -464,26 +465,24 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 			bar = string(default="Auto")
 
 	[[navigation]]
-		# Valid values: Enhanced, Simple, Character
-		navMode = string(default="Enhanced")
+		navMode = option("Enhanced", "Simple", "Character", default="Enhanced")
 		# remember previous value and use it
 		resetNavMode = boolean(default=false)
 		# speak the expression or give a description/overview
 		overview = boolean(default=false)
 		# remember previous value and use it
 		resetOverview = boolean(default=true)
-		# Terse, Medium, Full (words to say for nav command)
-		navVerbosity = string(default="Medium")
+		# words to say for nav command
+		navVerbosity = option("Terse", "Medium", "Verbose", default="Medium")
 		# Auto zoom out of 2D exprs (use shift-arrow to force zoom out if unchecked)
 		autoZoomOut = boolean(default=true)
-		# MathML, LaTeX, ASCIIMath
-		copyAs = string(default="MathML")
+		copyAs = option("MathML", "LaTeX", "ASCIIMath", "Speech", default="MathML")
 
 	[[braille]]
 		# Any supported Braille code (such as UEB) or "Auto"
 		brailleCode = string(default="Auto")
-		# Highlight with dots 7 & 8 the current nav node -- values are Off, FirstChar, EndPoints, All
-		brailleNavHighlight = string(default="EndPoints")
+		# Highlight with dots 7 & 8 the current nav node
+		brailleNavHighlight = option("Off", "FirstChar", "EndPoints", "All", default="EndPoints")
 		# true/false
 		useSpacesAroundAllOperators = boolean(default=false)
 

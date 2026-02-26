@@ -275,7 +275,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+shift+d",
 	)
 	def script_cycleAudioDuckingMode(self, gesture):
-		if not audioDucking.isAudioDuckingSupported():
+		if not audioDucking.isAudioDuckingSupported() or audioDucking._isAudioDuckingSuspended():
 			# Translators: a message when audio ducking is not supported on this machine
 			ui.message(_("Audio ducking not supported"))
 			return
@@ -3876,7 +3876,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for toggle braille mode command
 		description=_("Toggles braille mode"),
 		category=SCRCAT_BRAILLE,
-		gesture="kb:nvda+alt+t",
+		gesture="kb:NVDA+alt+t",
 	)
 	def script_toggleBrailleMode(self, gesture: inputCore.InputGesture):
 		curMode = BrailleMode(config.conf["braille"]["mode"])
@@ -5099,7 +5099,7 @@ class GlobalCommands(ScriptableObject):
 			"Toggles the magnifier on and off",
 		),
 		category=SCRCAT_VISION,
-		gesture="kb:nvda+shift+w",
+		gesture="kb:NVDA+shift+w",
 	)
 	def script_toggleMagnifier(
 		self,
@@ -5113,13 +5113,13 @@ class GlobalCommands(ScriptableObject):
 			"Increases the magnification level of the magnifier",
 		),
 		category=SCRCAT_VISION,
-		gesture="kb:nvda+shift+=",
+		gesture="kb:NVDA+shift+=",
 	)
 	def script_zoomIn(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.zoomIn()
+		_magnifier.commands.zoom(_magnifier.commands.Direction.IN)
 
 	@script(
 		description=_(
@@ -5127,13 +5127,125 @@ class GlobalCommands(ScriptableObject):
 			"Decreases the magnification level of the magnifier",
 		),
 		category=SCRCAT_VISION,
-		gesture="kb:nvda+shift+-",
+		gesture="kb:NVDA+shift+-",
 	)
 	def script_zoomOut(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.zoomOut()
+		_magnifier.commands.zoom(_magnifier.commands.Direction.OUT)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view to the left",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+alt+leftArrow",
+	)
+	def script_panLeft(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.pan(_magnifier.commands.MagnifierAction.PAN_LEFT)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view to the right",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+alt+rightArrow",
+	)
+	def script_panRight(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.pan(_magnifier.commands.MagnifierAction.PAN_RIGHT)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view up",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+alt+upArrow",
+	)
+	def script_panUp(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.pan(_magnifier.commands.MagnifierAction.PAN_UP)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view down",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+alt+downArrow",
+	)
+	def script_panDown(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.pan(_magnifier.commands.MagnifierAction.PAN_DOWN)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view to left edge",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+alt+leftArrow",
+	)
+	def script_panToLeftEdge(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.pan(_magnifier.commands.MagnifierAction.PAN_LEFT_EDGE)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view to right edge",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+alt+rightArrow",
+	)
+	def script_panToRightEdge(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.pan(_magnifier.commands.MagnifierAction.PAN_RIGHT_EDGE)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view to top edge",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+alt+upArrow",
+	)
+	def script_panToTopEdge(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.pan(_magnifier.commands.MagnifierAction.PAN_TOP_EDGE)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view to bottom edge",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+alt+downArrow",
+	)
+	def script_panToBottomEdge(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.pan(_magnifier.commands.MagnifierAction.PAN_BOTTOM_EDGE)
 
 	@script(
 		description=_(
@@ -5141,6 +5253,7 @@ class GlobalCommands(ScriptableObject):
 			"Toggle filter of the magnifier",
 		),
 		category=SCRCAT_VISION,
+		gesture="kb:NVDA+shift+i",
 	)
 	def script_toggleFilter(
 		self,
@@ -5167,7 +5280,7 @@ class GlobalCommands(ScriptableObject):
 			"Launch spotlight if magnifier is full-screen",
 		),
 		category=SCRCAT_VISION,
-		gesture="kb:nvda+shift+l",
+		gesture="kb:NVDA+shift+l",
 	)
 	def script_startSpotlight(
 		self,
