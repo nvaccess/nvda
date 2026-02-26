@@ -38,6 +38,7 @@ The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is int
 * In Microsoft Word with UIA enabled, page changes are now correctly announced when navigating table rows that span multiple pages. (#19386, @akj)
 * Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)
 * The `NVDA+k` command now correctly reports the destination of links containing formatted text, such as bold or italics. (#19428, @Cary-rowen)
+* Capital indicators are now correctly announced when selecting single characters. (#19505, @cary-rowen)
 * Configuration profile triggers now activate when the Add-on Store is open. (#19583, @bramd)
 
 ### Changes for Developers
@@ -51,6 +52,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 It only ran the translation string comment check, which is equivalent to `scons checkPot`.
 Use the individual test commands instead: `scons checkPot`, `rununittests.bat`, `runsystemtests.bat`, `runlint.bat`. (#19606, @bramd)
 * Updated Python 3.13.11 to 3.13.12 (#19572, @dpy013)
+* Updated security issue SLA policy (#19699)
 
 #### Deprecations
 
