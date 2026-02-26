@@ -566,7 +566,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			for key in self._keyNamesInDisplayOrder
 		)
 
-	def _get_character(self) -> Optional[str]:
+	def _get_character(self) -> str | None:
 		"""Get the character this key combination would produce.
 
 		Uses ToUnicodeEx with 0x4 flag to avoid modifying keyboard state.
@@ -656,7 +656,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 		return buffer.value[:res]
 
-	def _get__nameForInputHelp(self) -> List[str]:
+	def _get__nameForInputHelp(self) -> list[str]:
 		"""Returns the name of this gesture for input help mode.
 
 		For keyboard gestures that produce printable characters,

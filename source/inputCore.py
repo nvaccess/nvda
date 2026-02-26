@@ -150,7 +150,7 @@ class InputGesture(baseObject.AutoPropertyObject):
 		"""
 		return self.getDisplayTextForIdentifier(self.normalizedIdentifiers[0])[1]
 
-	def _get__nameForInputHelp(self) -> List[str]:
+	def _get__nameForInputHelp(self) -> list[str]:
 		"""The name of this gesture as presented to the user in input help mode.
 
 		The base implementation returns a list containing self.displayName.
