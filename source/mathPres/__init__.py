@@ -79,6 +79,44 @@ def registerProvider(
 		interactionProvider = provider
 
 
+# The main reason for saving and restoring providers is to support
+# disabling MathCAT while in Word and using Word's native math speech.
+_savedSpeechProvider: Optional[MathPresentationProvider] = None
+_savedBrailleProvider: Optional[MathPresentationProvider] = None
+_savedInteractionProvider: Optional[MathPresentationProvider] = None
+_providersDisabled: bool = False
+
+
+def disable() -> None:
+	"""Sets all three global providers to None and saves them to be restored later."""
+	global speechProvider, brailleProvider, interactionProvider
+	global _savedSpeechProvider, _savedBrailleProvider, _savedInteractionProvider, _providersDisabled
+	if _providersDisabled:
+		return
+	_savedSpeechProvider = speechProvider
+	_savedBrailleProvider = brailleProvider
+	_savedInteractionProvider = interactionProvider
+	speechProvider = None
+	brailleProvider = None
+	interactionProvider = None
+	_providersDisabled = True
+
+
+def enable() -> None:
+	"""Restore math presentation providers after they were disabled."""
+	global speechProvider, brailleProvider, interactionProvider
+	global _savedSpeechProvider, _savedBrailleProvider, _savedInteractionProvider, _providersDisabled
+	if not _providersDisabled:
+		return
+	speechProvider = _savedSpeechProvider
+	brailleProvider = _savedBrailleProvider
+	interactionProvider = _savedInteractionProvider
+	_savedSpeechProvider = None
+	_savedBrailleProvider = None
+	_savedInteractionProvider = None
+	_providersDisabled = False
+
+
 def initialize() -> None:
 	# Register builtin providers if a plugin hasn't registered others.
 	if not speechProvider or not brailleProvider or not interactionProvider:
