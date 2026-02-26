@@ -215,7 +215,7 @@ def _getConfigValueRange(*keyPath: *tuple[str, ...]) -> tuple[float, float]:
 	return minValue, maxValue
 
 
-def _calculateNewValue(currentValue: float, minValue: float, maxValue: float, step: float) -> float:
+def _clampValue(currentValue: float, minValue: float, maxValue: float, step: float) -> float:
 	"""
 	Calculates a new value by applying a step, constrained within min/max bounds.
 	:param currentValue: The current value.
