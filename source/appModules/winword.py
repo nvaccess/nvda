@@ -61,13 +61,13 @@ class AppModule(appModuleHandler.AppModule):
 
 	def event_appModule_gainFocus(self):
 		if config.conf["math"]["other"]["useWordNativeMath"]:
-			mathPres.disable()
+			mathPres.terminate()
 
 	def event_appModule_loseFocus(self):
-		mathPres.enable()
+		mathPres.initialize()
 
 	def terminate(self):
-		mathPres.enable()
+		mathPres.initialize()
 		super().terminate()
 
 
