@@ -1543,11 +1543,10 @@ class ElementsListDialog(
 			item = self.tree.GetNextSibling(item)
 
 	FILTER_TIMER_DELAY_MS = 300
-	FILTER_DELAY_MS = 300
 
 	@debounceLimiter(
 		cooldownTimeMs=FILTER_TIMER_DELAY_MS,
-		delayTimeMs=FILTER_DELAY_MS,
+		delayTimeMs=FILTER_TIMER_DELAY_MS,
 	)
 	def _scheduleFilter(self, filterText: str) -> None:
 		self.filter(filterText)

@@ -5,9 +5,7 @@
 
 from collections.abc import Callable
 from dataclasses import dataclass
-from enum import Enum, auto
 from functools import wraps
-import threading
 from time import monotonic
 from typing import Any, ParamSpec
 from weakref import WeakKeyDictionary
@@ -19,27 +17,10 @@ import wx
 P = ParamSpec("P")
 
 
-class ThreadTarget(Enum):
-	"""
-	When debouncing a task, specify the thread to run the task on.
-	"""
-
-	GUI = auto()
-	"""
-	Uses wx.CallLater to run the job on the GUI thread.
-	This is encouraged for tasks that interact with the GUI, such as dialogs.
-	"""
-
-	DAEMON = auto()
-	"""
-	Uses threading.Thread(daemon=True) to run the job in the background.
-	"""
-
-
 @dataclass
 class _DebounceState:
 	lastExecutionTimeMs: float | None = None
-	pendingHandle: wx.CallLater | threading.Timer | None = None
+	pendingHandle: wx.CallLater | None = None
 	pendingArgs: tuple[Any, ...] = ()
 	pendingKwargs: dict[str, Any] | None = None
 
@@ -70,52 +51,15 @@ def _executeDelayedCall(func: Callable[..., Any], state: _DebounceState) -> None
 
 def _scheduleDelayedCall(
 	state: _DebounceState,
-	callLater: Callable[..., Any],
-	threadTarget: ThreadTarget,
 	delayTimeMs: int,
 	func: Callable[..., Any],
 ) -> None:
-	handle = state.pendingHandle
-	if handle is not None:
-		match threadTarget:
-			case ThreadTarget.GUI:
-				assert isinstance(handle, wx.CallLater)
-				handle.Stop()
-			case ThreadTarget.DAEMON:
-				assert isinstance(handle, threading.Timer)
-				handle.cancel()
-			case _:
-				raise ValueError(f"Invalid threadTarget value: {threadTarget}")
-	state.pendingHandle = callLater(delayTimeMs, _executeDelayedCall, func, state)
-
-
-def _debounceThreadDecider(
-	threadTarget: ThreadTarget,
-) -> Callable[..., Any]:
-	match threadTarget:
-		case ThreadTarget.GUI:
-
-			def callJobOnThread(delayTimeMs: int, func: Callable[..., Any], *args, **kwargs):
-				log.debug(f"Scheduling delayed job on GUI thread in {delayTimeMs}ms")
-				return wx.CallLater(delayTimeMs, func, *args, **kwargs)
-		case ThreadTarget.DAEMON:
-
-			def callJobOnThread(delayTimeMs: int, func: Callable[..., Any], *args, **kwargs):
-				log.debug("Scheduling delayed job on daemon thread")
-				timer = threading.Timer(delayTimeMs / 1000, func, args=args, kwargs=kwargs)
-				timer.daemon = True
-				timer.name = f"DebounceTimer-{func.__name__}"
-				timer.start()
-				return timer
-		case _:
-			raise ValueError(f"Invalid threadTarget value: {threadTarget}")
-	return callJobOnThread
+	state.pendingHandle = wx.CallLater(delayTimeMs, _executeDelayedCall, func, state)
 
 
 def debounceLimiter(
 	cooldownTimeMs: int = 50,
 	delayTimeMs: int = 50,
-	threadTarget: ThreadTarget = ThreadTarget.GUI,
 ) -> Callable[[Callable[P, Any]], Callable[P, None]]:
 	"""
 	:param cooldownTimeMs: Time in milliseconds during which subsequent calls are considered to be within the cooldown period.
@@ -136,7 +80,6 @@ def debounceLimiter(
 	def decorator(func: Callable[P, Any]) -> Callable[P, None]:
 		instanceStates: WeakKeyDictionary[object, _DebounceState] = WeakKeyDictionary()
 		globalState = _DebounceState()
-		callLater = _debounceThreadDecider(threadTarget)
 
 		@wraps(func)
 		def wrapper(*args: P.args, **kwargs: P.kwargs) -> None:
@@ -152,7 +95,7 @@ def debounceLimiter(
 
 			state.pendingArgs = args
 			state.pendingKwargs = kwargs
-			_scheduleDelayedCall(state, callLater, threadTarget, delayTimeMs, func)
+			_scheduleDelayedCall(state, delayTimeMs, func)
 
 		return wrapper
 
