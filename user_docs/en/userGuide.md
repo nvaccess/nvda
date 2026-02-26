@@ -3329,7 +3329,7 @@ Whether to speak the expression after moving to it or give an overview.
 | Options | Speak, Describe overview |
 | Default | Speak |
 
-###### Use Word's native math speech in Word documents {#MathUseWordNativeMath}
+###### Use native math speech in Word and Outlook {#MathUseWordNative}
 
 When enabled, NVDA uses Microsoft Word's built-in math speech instead of MathCAT when reading equations in Word documents.
 
