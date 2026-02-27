@@ -28,13 +28,13 @@ This setting allows the feature of using functionality in a certain situation to
 If necessary, a description of a common use case that is supported by each option.
 
 | . {.hideHeaderRow} |.|
-|---|---|
+| --- | --- |
 |Options |Default (Enabled), Disabled, Enabled |
 |Default |Enabled |
 |Toggle command |`NVDA+shift+e` |
 
 |Option |Behaviour |
-|---|---|
+| --- | --- |
 |Enabled |behaviour of enabled |
 |Disabled |behaviour of disabled |
 ```
@@ -107,7 +107,7 @@ For example:
 #### Braille Tethered To
 
 | . {.hideHeaderRow} |.|
-|---|---|
+| --- | --- |
 | Desktop command | `NVDA+control+t` |
 | Laptop Command | `NVDA+control+t` |
 
