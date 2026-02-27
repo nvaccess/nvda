@@ -38,15 +38,7 @@ class TestDefaultStateContent(AddonsStateTestCase):
 	def test_expectedDefaultValsInState(self):
 		state = addonHandler.AddonsState()
 		state.setDefaultStateValues()
-		self.assertEqual(state.manualOverridesAPIVersion.major, 2023)
-		self.assertEqual(state.manualOverridesAPIVersion.minor, 1)
-		self.assertEqual(state.manualOverridesAPIVersion.patch, 0)
-		for stateKey in addonStore.models.status.AddonStateCategory:
-			stateVals = state.pop(stateKey)
-			self.assertEqual(stateVals, utils.caseInsensitiveCollections.CaseInsensitiveSet())
-		# Verify that only known categories are in the state.
-		# Since each known key was removed from the state above, we expect it to be empty at this point.
-		self.assertEqual(state, {})
+		self.assertStateIsDefault(state)
 
 	def test_constructorSetsDefaults(self):
 		state = addonHandler.AddonsState()
@@ -68,15 +60,11 @@ class TestDeserialization(AddonsStateTestCase):
 
 	def test_noBackCompatInStateBackCompatSetToDefault(self):
 		self.state.fromDict({"pendingRemovesSet": ["foo", "FOO"]})
-		self.assertEqual(self.state.manualOverridesAPIVersion.major, 2023)
-		self.assertEqual(self.state.manualOverridesAPIVersion.minor, 1)
-		self.assertEqual(self.state.manualOverridesAPIVersion.patch, 0)
+		self.assertMMPEqual(self.state.manualOverridesAPIVersion, DEFAULT_BACKCOMPAT_VERSION)
 
 	def test_backCompatToProvidedAsATuple(self):
 		self.state.fromDict({"backCompatToAPIVersion": (2024, 1, 1)})
-		self.assertEqual(self.state.manualOverridesAPIVersion.major, 2024)
-		self.assertEqual(self.state.manualOverridesAPIVersion.minor, 1)
-		self.assertEqual(self.state.manualOverridesAPIVersion.patch, 1)
+		self.assertMMPEqual(self.state.manualOverridesAPIVersion, (2024, 1, 1))
 
 	def test_invalidBackCompatToVersionKeepsDefault(self):
 		self.state.fromDict({"backCompatToAPIVersion": "not_iterable"})
@@ -127,23 +115,16 @@ class TestSerialization(unittest.TestCase):
 	def tearDown(self) -> None:
 		self.tempDir.cleanup()
 
-	def test_stateConvertedToBuiltInTypes(self):
+	def test_stateConvertedToSerializableTypes(self):
 		state = addonHandler.AddonsState()
 		state.setDefaultStateValues()
 		state.fromDict({"backCompatToAPIVersion": [2024, 1, 1], "pendingRemovesSet": ["foo"]})
 		dataForJsonifying = state.toDict()
 		backCompatInfo = dataForJsonifying.pop("backCompatToAPIVersion")
-		with self.assertRaises(AttributeError):
-			# Ensure this is serialized as a standard tuple, and not as `MajorMinorPatch`
-			# by checking that values of a tuple cannot be accessed as attributes.
-			# Note that we cannot check for types using `isinstance`, since named tuples are tuple subclasses,
-			# yet when trying to unpickle them in versions of NVDA where `MajorMinorPatch` is not defined,
-			#  they are not converted to a plain tuple automatically.
-			backCompatInfo.major, backCompatInfo.minor, backCompatInfo.patch  # type: ignore[reportUnusedExpression]
-		self.assertEqual(backCompatInfo[0], 2024)
-		self.assertEqual(backCompatInfo[1], 1)
-		self.assertEqual(backCompatInfo[2], 1)
-		# All keys in the state should be strings, all values should be plain sets.
+		# As long as this is a list or tuple, json.dump is happy
+		self.assertIsInstance(backCompatInfo, (list, tuple))
+		self.assertSequenceEqual(backCompatInfo, (2024, 1, 1))
+		# All keys in the state should be strings, all values should be lists.
 		for key in dataForJsonifying.keys():
 			# Compare by identity, to make sure keys are not enum members.
 			self.assertIs(key, addonStore.models.status.AddonStateCategory(key).value)
