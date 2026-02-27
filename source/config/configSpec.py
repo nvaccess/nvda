@@ -27,6 +27,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
 	loggingLevel = string(default="INFO")
 	showWelcomeDialogAtStartup = boolean(default=true)
+	showRestartPromptAfterInstall = boolean(default=true)
 	preventDisplayTurningOff = boolean(default=true)
 
 # Speech settings
