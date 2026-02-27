@@ -1004,31 +1004,31 @@ def removeOldLoggedFiles(installPath: str):
 
 def _migratePickledAddonsStateToJson(configPath: str) -> None:
 	pickledPath = os.path.join(configPath, addonHandler._OLD_STATE_FILENAME)
-	log.info(f"{pickledPath=}")
 	if not os.path.isfile(pickledPath):
-		log.info("Pickled add-ons state does not exist. No action taken.")
+		log.debug("Pickled add-ons state does not exist. No migration necessary.")
 		return
 	try:
 		jsonState = addonHandler._getAddonsStateDictFromPickle(pickledPath)
 	except Exception:
-		log.info("Failed to load pickled add-ons state.", exc_info=True)
+		log.error("Failed to load pickled add-ons state.", exc_info=True)
 	else:
-		log.info(f"{jsonState=}")
 		jsonPath = os.path.join(configPath, addonHandler.STATE_FILENAME)
-		log.info(f"{jsonPath=}")
 		try:
 			if os.path.exists(jsonPath):
 				tryRemoveFile(jsonPath)
 		except Exception:
-			log.info("Failed to remove existing {jsonPath}.", exc_info=True)
+			log.error("Failed to remove existing {jsonPath}.", exc_info=True)
 		else:
 			try:
 				with open(jsonPath, "wt", encoding="utf-8") as file:
 					json.dump(jsonState, file)
 			except Exception:
-				log.info("Failed to dump JSON add-ons state.", exc_info=True)
+				log.error("Failed to dump JSON add-ons state.", exc_info=True)
 	finally:
-		os.replace(pickledPath, pickledPath + ".bak")
+		try:
+			os.replace(pickledPath, pickledPath + ".bak")
+		except Exception:
+			log.error("Failed to back up pickled add-ons state.", exc_info=True)
 
 
 def createPortableCopy(destPath: str, shouldCopyUserConfig: bool = True):
