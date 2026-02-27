@@ -982,6 +982,7 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 		if os.path.isdir(oldSystemConfigPath):
 			config._setSystemConfig(oldSystemConfigPath, prefix=installDir, isMigration=True)
 		tryRemoveFile(installDirX86, rebootOK=True)
+	_migratePickledAddonsStateToJson(os.path.join(installDir, "systemConfig"))
 	COMRegistrationFixes.fixCOMRegistrations()
 
 

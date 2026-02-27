@@ -166,7 +166,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		serializeableState: dict[str, list[str] | addonAPIVersion.AddonApiVersionT] = dict()
 		for category, addonIds in self.data.items():
 			serializeableState[category.value] = list(addonIds)
-		serializeableState["backCompatToAPIVersion"] = list(self.manualOverridesAPIVersion)
+		serializeableState["backCompatToAPIVersion"] = tuple(self.manualOverridesAPIVersion)
 		return serializeableState
 
 	def load(self) -> None:
