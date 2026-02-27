@@ -1054,26 +1054,26 @@ To toggle single letter navigation on and off for the current document, press NV
 
 When using a touch enabled device, NVDA provides an additional touch navigation mode for browsing web content.
 
-When browse mode is active in supported documents such as web pages, NVDA can expose a Web touch mode. This mode allows users to navigate structural elements of a document using touch gestures, similar to browse mode navigation with the keyboard.
+When browse mode is active in supported documents such as web pages, NVDA can expose a web touch mode. This mode allows users to navigate structural elements of a document using touch gestures, similar to browse mode navigation with the keyboard.
 
-In Web touch mode, flick gestures are used to move between common web elements such as links, buttons, headings, form fields, landmarks, and other document structures.
+In web touch mode, flick gestures are used to move between common web elements such as links, buttons, headings, form fields, landmarks, and other document structures.
 
 This feature is intended to provide touch users with efficient, structured navigation that mirrors existing browse mode functionality.
 
-##### Touch gestures in Web mode
+##### Touch gestures in web mode
 
 <!-- KC:beginInclude -->
 
-| Gesture     | Description                                          |
-| ----------- | ---------------------------------------------------- |
-| Flick down  | Switches to the next web navigation element type     |
-| Flick up    | Switches to the previous web navigation element type |
-| Flick right | Moves to the next element of the selected type       |
-| Flick left  | Moves to the previous element of the selected type   |
+| Name |Key |Description|
+|---|---|---|
+|Select next element type |flick down (web mode) |Switches to the next web navigation element type|
+|Select previous element type |flick up (web mode) |Switches to the previous web navigation element type|
+|Move to next element |flick right (web mode) |Moves to the next element of the selected type|
+|Move to previous element |flick left (web mode) |Moves to the previous element of the selected type|
 
 <!-- KC:endInclude -->
 
-When any element type is selected, flicking left or right moves through the document in reading order, while flicking up and down selects different element.
+When any element type is selected, flicking left or right moves through the document in reading order, while flicking up and down selects different element types.
 
 Web touch mode is only available when browse mode is active and does not affect touch navigation outside of browse mode documents.
 
@@ -3292,6 +3292,13 @@ If this option is enabled, NVDA will play special sounds when it switches betwee
 Enabled by default, this option allows you to choose if gestures (such as key presses) that do not result in an NVDA command and are not considered to be a command key in general, should be trapped from going through to the document you are currently focused on.
 As an example, if enabled and the letter j was pressed, it would be trapped from reaching the document, even though it is not a quick navigation command nor is it likely to be a command in the application itself.
 In this case NVDA will tell Windows to play a default sound whenever a key which gets trapped is pressed.
+
+##### Web touch navigation elements {#BrowseModeSettingsWebTouchNavigationElements}
+
+This list allows you to choose which element types are available when cycling through web navigation elements in web touch mode.
+Use the checkboxes to enable or disable individual element types.
+Only the checked element types will appear when flicking up or down to cycle through web navigation elements.
+This setting only affects touch navigation and has no effect on keyboard browse mode navigation.
 
 #### Document Formatting {#DocumentFormattingSettings}
 

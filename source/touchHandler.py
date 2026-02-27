@@ -98,7 +98,7 @@ POINTER_MESSAGE_FLAG_CONFIDENCE = 0x200
 POINTER_MESSAGE_FLAG_CANCELED = 0x400
 
 
-def _browseModeStateChange(browseMode=False, interceptor=None, **kwargs):
+def _browseModeStateChange(browseMode: bool = False, interceptor=None, **kwargs) -> None:
 	if not handler:
 		return
 
