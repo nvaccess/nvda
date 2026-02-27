@@ -161,6 +161,15 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 			# Make the list of strings unique and case insensitive.
 			self[AddonStateCategory(category)] = CaseInsensitiveSet(stateDict.get(category, []))
 
+	def fromPickledDict(
+		self,
+		pickledState: dict[str, set[str] | addonAPIVersion.AddonApiVersionT | MajorMinorPatch],
+	) -> None:
+		log.warning(
+			"addonHandler.AddonsState.fromPickledDict is deprecated. Use addonHandler.AddonsState.fromDict instead.",
+		)
+		return self.fromDict(pickledState)
+
 	def toDict(self) -> dict[str, list[str] | addonAPIVersion.AddonApiVersionT]:
 		"""Convert state to a dict that can be dumped to JSON."""
 		serializeableState: dict[str, list[str] | addonAPIVersion.AddonApiVersionT] = dict()
