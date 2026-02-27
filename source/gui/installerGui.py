@@ -153,8 +153,7 @@ def _showPostInstallRestartDialog(isUpdate: bool, startAfterInstall: bool) -> No
 		helpId="RestartWindowsAfterInstall",
 	)
 	(
-		dialog
-		.addButton(ReturnCode.YES, label=_("&Restart now"))
+		dialog.addButton(ReturnCode.YES, label=_("&Restart now"))
 		# Translators: Button in the post-install dialog to defer the Windows restart.
 		.addButton(ReturnCode.NO, label=_("&Not now"), defaultFocus=True, fallbackAction=True)
 	)
