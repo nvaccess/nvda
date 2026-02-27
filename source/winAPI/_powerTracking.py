@@ -215,7 +215,7 @@ def _getBatteryInformation(systemPowerStatus: SystemPowerStatus) -> List[str]:
 	# Translators: This is presented to inform the user of the current battery percentage.
 	text.append(
 		ngettext("%d percent", "%d percent", systemPowerStatus.BatteryLifePercent)
-		% systemPowerStatus.BatteryLifePercent
+		% systemPowerStatus.BatteryLifePercent,
 	)
 	SECONDS_PER_HOUR = 3600
 	SECONDS_PER_MIN = 60
