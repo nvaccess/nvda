@@ -405,7 +405,7 @@ jobs:
     name: Run system tests
     runs-on: ${{ matrix.runner }}
     needs: [matrix, createLauncher]
-    timeout-minutes: 15
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
