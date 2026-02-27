@@ -150,6 +150,7 @@ def _showPostInstallRestartDialog(isUpdate: bool, startAfterInstall: bool) -> No
 		# Translators: The title of the post-install dialog.
 		title=_("Success"),
 		buttons=None,
+		helpId="RestartWindowsAfterInstall",
 	)
 	(
 		dialog
