@@ -421,8 +421,9 @@ If you have already closed this dialog or are wanting to install from a portable
 The installation dialog that appears will confirm whether you wish to install NVDA and will also tell you whether this installation will be updating a previous install.
 Pressing the Continue button will start installing NVDA.
 There are also a few options in this dialog which are explained below.
-Once the installation has completed, a message will appear telling you that it was successful.
-Pressing OK at this point will restart the newly installed copy of NVDA.
+Once the installation has completed, a dialog will appear.
+By default, this is the [Restart Windows After Installation](#RestartWindowsAfterInstall) dialog, which recommends restarting Windows before starting NVDA.
+If you have previously chosen not to show this prompt, a success message will appear instead with an OK button to start the installed copy of NVDA.
 
 #### Incompatible add-ons warning {#InstallWithIncompatibleAddons}
 
@@ -448,6 +449,20 @@ If created, this shortcut will also be assigned a shortcut key of `control+alt+n
 This option allows you to choose whether or not NVDA should copy the user configuration from the currently running NVDA into the configuration for the currently logged on user, for the installed copy of NVDA.
 This will not copy the configuration for any other users of this system nor to the system configuration for use during Windows sign-in and [other secure screens](#SecureScreens).
 This option is only available when installing from a portable copy, not when installing directly from the downloaded Launcher package.
+
+#### Restart Windows After Installation {#RestartWindowsAfterInstall}
+
+After NVDA has been successfully installed or updated, a dialog will appear recommending that you restart Windows.
+Restarting ensures that NVDA is fully registered with the system and works correctly in all applications.
+
+The dialog provides the following options:
+
+* Restart now: Immediately restart Windows.
+* Not now: Continue without restarting. Note that NVDA may not work correctly in some applications until Windows is restarted.
+
+The dialog also contains a "Don't ask me again" checkbox.
+If checked, this prompt will not appear after future installations or updates.
+This preference can be re-enabled at any time from the [General settings panel](#GeneralSettingsPromptRestartAfterInstall).
 
 ### Creating a Portable Copy {#CreatingAPortableCopy}
 
@@ -2016,6 +2031,13 @@ This check box, when enabled, ensures that the display stays on when reading wit
 This avoids the situation where the screen unexpectedly locks during a say all.
 This option is enabled by default.
 Consider disabling this option if you are suffering from a shorter battery life.
+
+##### Prompt to restart Windows after installing or updating NVDA {#GeneralSettingsPromptRestartAfterInstall}
+
+When enabled, NVDA will show a dialog after each installation or update recommending that you restart Windows to ensure NVDA works correctly in all applications.
+Refer to the [Restart Windows After Installation](#RestartWindowsAfterInstall) section for more details.
+This option is enabled by default.
+Note: This setting is only configurable when running an installed copy of NVDA.
 
 #### Speech Settings {#SpeechSettings}
 
