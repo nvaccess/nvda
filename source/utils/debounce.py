@@ -52,10 +52,10 @@ def _scheduleDelayedCall(
 	delayTimeMs: int,
 	func: Callable[..., Any],
 ) -> None:
-	# Cancel any previously scheduled delayed call to ensure only the latest one executes.
-	if state.pendingHandle is not None:
-		state.pendingHandle.Stop()
-	state.pendingHandle = wx.CallLater(delayTimeMs, _executeDelayedCall, func, state)
+	if state.pendingHandle is None:
+		state.pendingHandle = wx.CallLater(delayTimeMs, _executeDelayedCall, func, state)
+	else:
+		state.pendingHandle.Start(delayTimeMs)
 	state.lastCallTimeMs = monotonic() * 1000
 
 

@@ -29,6 +29,10 @@ class _FakeCallLaterHandle:
 	def Stop(self) -> None:
 		self._stopped = True
 
+	def Start(self, delay: int) -> None:
+		self.delay = delay
+		self._stopped = False
+
 	def run(self) -> None:
 		if self._stopped or self._ran:
 			return
@@ -39,19 +43,10 @@ class _FakeCallLaterHandle:
 class _FakeCallLater:
 	def __init__(self):
 		self.handles = []
-		self._lastHandleByStateId = {}
 
 	def __call__(self, delay: int, callback, *args, **kwargs):
-		if args:
-			state = args[-1]
-			stateId = id(state)
-			previousHandle = self._lastHandleByStateId.get(stateId)
-			if previousHandle is not None:
-				previousHandle.Stop()
 		handle = _FakeCallLaterHandle(delay, callback, args, kwargs)
 		self.handles.append(handle)
-		if args:
-			self._lastHandleByStateId[id(args[-1])] = handle
 		return handle
 
 	def runPending(self) -> None:
