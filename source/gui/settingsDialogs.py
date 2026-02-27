@@ -978,7 +978,8 @@ class GeneralSettingsPanel(SettingsPanel):
 			label=_("&Prompt to restart Windows after installing or updating NVDA"),
 		)
 		self.bindHelpEvent(
-			"GeneralSettingsPromptRestartAfterInstall", self.promptWindowsRestartAfterInstallCheckBox
+			"GeneralSettingsPromptRestartAfterInstall",
+			self.promptWindowsRestartAfterInstallCheckBox,
 		)
 		item.Value = config.conf["general"]["showRestartPromptAfterInstall"]
 		if not config.isInstalledCopy():
