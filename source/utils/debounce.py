@@ -62,11 +62,14 @@ def _scheduleDelayedCall(
 def debounceLimiter(
 	cooldownTimeMs: int = 50,
 	delayTimeMs: int = 50,
+	runImmediateFirstCall: bool = True,
 ) -> Callable[[Callable[P, Any]], Callable[P, None]]:
 	"""
 	:param cooldownTimeMs: Time in milliseconds during which subsequent calls are considered to be within the cooldown period.
 	:param delayTimeMs: Time in milliseconds to delay the execution of a call received during the
 	cooldown period.
+	:param runImmediateFirstCall: Whether the first call in a burst should execute immediately.
+	If False, all calls are trailing-debounced by `delayTimeMs`.
 	:returns: A decorator that debounces calls to the decorated function.
 
 	Executes calls immediately when outside the cooldown period (when there is no
@@ -80,16 +83,16 @@ def debounceLimiter(
 
 	def decorator(func: Callable[P, Any]) -> Callable[P, None]:
 		instanceStates: WeakKeyDictionary[object, _DebounceState] = WeakKeyDictionary()
-		globalState = _DebounceState()
+		stateForDecorated = _DebounceState()
 
 		@wraps(func)
 		def wrapper(*args: P.args, **kwargs: P.kwargs) -> None:
-			state = _getStateForCall(instanceStates, globalState, args)
+			state = _getStateForCall(instanceStates, stateForDecorated, args)
 			nowMs = monotonic() * 1000
 			withinCooldown = (
 				state.lastCallTimeMs is not None and (nowMs - state.lastCallTimeMs) < cooldownTimeMs
 			)
-			if not withinCooldown and state.pendingHandle is None:
+			if runImmediateFirstCall and not withinCooldown and state.pendingHandle is None:
 				state.lastCallTimeMs = nowMs
 				func(*args, **kwargs)
 				return

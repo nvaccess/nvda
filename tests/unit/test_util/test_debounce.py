@@ -139,3 +139,18 @@ class TestDebounceLimiter(unittest.TestCase):
 
 		self.assertEqual(["target1-first"], target1.calls)
 		self.assertEqual(["target2-first"], target2.calls)
+
+	def test_canDisableImmediateFirstCall(self):
+		calls = []
+
+		@debounceLimiter(cooldownTimeMs=300, delayTimeMs=200, runImmediateFirstCall=False)
+		def limited(value):
+			calls.append(value)
+
+		self.clock.now = 0.0
+		limited("first")
+		self.assertEqual([], calls)
+
+		self.clock.now = 0.2
+		self.callLater.runPending()
+		self.assertEqual(["first"], calls)

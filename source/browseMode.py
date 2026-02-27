@@ -1547,6 +1547,7 @@ class ElementsListDialog(
 	@debounceLimiter(
 		cooldownTimeMs=FILTER_TIMER_DELAY_MS,
 		delayTimeMs=FILTER_TIMER_DELAY_MS,
+		runImmediateFirstCall=False,
 	)
 	def _scheduleFilter(self, filterText: str) -> None:
 		self.filter(filterText)
