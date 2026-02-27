@@ -977,7 +977,9 @@ class GeneralSettingsPanel(SettingsPanel):
 			# to restart Windows after installing or updating NVDA.
 			label=_("&Prompt to restart Windows after installing or updating NVDA"),
 		)
-		self.bindHelpEvent("GeneralSettingsPromptRestartAfterInstall", self.promptWindowsRestartAfterInstallCheckBox)
+		self.bindHelpEvent(
+			"GeneralSettingsPromptRestartAfterInstall", self.promptWindowsRestartAfterInstallCheckBox
+		)
 		item.Value = config.conf["general"]["showRestartPromptAfterInstall"]
 		if not config.isInstalledCopy():
 			item.Disable()
@@ -1091,7 +1093,9 @@ class GeneralSettingsPanel(SettingsPanel):
 			updateCheck.initialize()
 
 		config.conf["general"]["preventDisplayTurningOff"] = self.preventDisplayTurningOffCheckBox.IsChecked()
-		config.conf["general"]["showRestartPromptAfterInstall"] = self.promptWindowsRestartAfterInstallCheckBox.IsChecked()
+		config.conf["general"]["showRestartPromptAfterInstall"] = (
+			self.promptWindowsRestartAfterInstallCheckBox.IsChecked()
+		)
 
 	def onPanelActivated(self):
 		if updateCheck:
