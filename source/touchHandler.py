@@ -9,6 +9,15 @@ In order to use touch features, NVDA must be installed on a touchscreen computer
 """
 
 import threading
+from functools import cached_property
+from typing import (
+	TYPE_CHECKING,
+	Self,
+)
+
+if TYPE_CHECKING:
+	import treeInterceptorHandler
+
 from ctypes import (
 	byref,
 	Structure,
@@ -43,6 +52,7 @@ import touchTracker
 import core
 import systemUtils
 from utils import _deprecate
+from utils.displayString import DisplayStringStrEnum
 from treeInterceptorHandler import post_browseModeStateChange
 
 __getattr__ = _deprecate.handleDeprecations(
@@ -53,6 +63,28 @@ __getattr__ = _deprecate.handleDeprecations(
 		"MAXIMUM_TOUCHES",
 	),
 )
+
+
+class TouchMode(DisplayStringStrEnum):
+	"""Available touch screen navigation modes."""
+
+	TEXT = "text"
+	OBJECT = "object"
+	WEB = "web"
+
+	def __str__(self) -> str:
+		return self.value
+
+	@cached_property
+	def _displayStringLabels(self) -> dict[Self, str]:
+		return {
+			# Translators: The name of a touch mode.
+			TouchMode.TEXT: _("text mode"),
+			# Translators: The name of a touch mode.
+			TouchMode.OBJECT: _("object mode"),
+			# Translators: The name of a touch mode used when navigating web content in browse mode.
+			TouchMode.WEB: _("web mode"),
+		}
 
 
 availableTouchModes = ["text", "object"]
@@ -98,26 +130,28 @@ POINTER_MESSAGE_FLAG_CONFIDENCE = 0x200
 POINTER_MESSAGE_FLAG_CANCELED = 0x400
 
 
-def _browseModeStateChange(browseMode: bool = False, interceptor=None, **kwargs) -> None:
+def _browseModeStateChange(
+	browseMode: bool = False,
+	interceptor: "treeInterceptorHandler.TreeInterceptor | None" = None,
+	**kwargs,
+) -> None:
 	if not handler:
 		return
 
-	webModeName = "web"
-
 	if browseMode:
 		# Entering browse mode
-		if webModeName not in availableTouchModes:
-			availableTouchModes.append(webModeName)
+		if TouchMode.WEB not in availableTouchModes:
+			availableTouchModes.append(TouchMode.WEB)
 
-		handler._curTouchMode = webModeName
+		handler._curTouchMode = TouchMode.WEB
 
 	else:
 		# Leaving browse mode
-		if webModeName in availableTouchModes:
-			availableTouchModes.remove(webModeName)
+		if TouchMode.WEB in availableTouchModes:
+			availableTouchModes.remove(TouchMode.WEB)
 
-		if handler._curTouchMode == webModeName:
-			handler._curTouchMode = "object"
+		if handler._curTouchMode == TouchMode.WEB:
+			handler._curTouchMode = TouchMode.OBJECT
 
 
 post_browseModeStateChange.register(_browseModeStateChange)

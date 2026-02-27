@@ -588,8 +588,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		prevDoc: str,
 		prevError: str,
 		readUnit: Optional[str] = None,
-		availableInWebTouch: bool = True,
-		touchLabel: Optional[str] = None,
+		touchLabel: str | None = None,
 	):
 		"""Adds a script for the given quick nav item.
 		@param itemType: The type of item, I.E. "heading" "Link" ...
@@ -603,10 +602,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		@param readUnit: The unit (one of the textInfos.UNIT_* constants) to announce when moving to this type of item.
 			For example, only the line is read when moving to tables to avoid reading a potentially massive table.
 			If None, the entire item will be announced.
-		@param availableInWebTouch: If True, register this element type for web touch navigation cycling.
-			Set to False to exclude an element type entirely from web touch navigation.
-		@param touchLabel: A short, translated, plural label for this element type used in web touch navigation
-			cycling (e.g. C{_("links")}). Required when C{availableInWebTouch} is True.
+		:param touchLabel: A short, translated, plural label for this element type used in web touch navigation
+			cycling (e.g. ``_("links")``). If ``None``, the element type is not registered for web touch navigation.
 		"""
 		scriptSuffix = itemType[0].upper() + itemType[1:]
 		scriptName = "next%s" % scriptSuffix
@@ -633,11 +630,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		setattr(cls, funcName, script)
 		if key is not None:
 			cls.__gestures["kb:shift+%s" % key] = scriptName
-		if availableInWebTouch:
-			if touchLabel is None:
-				raise ValueError(
-					f"addQuickNav: touchLabel is required when availableInWebTouch=True (itemType={itemType!r})",
-				)
+		if touchLabel is not None:
 			cls._webTouchNavRegistry.append((itemType, touchLabel))
 
 	@classmethod
@@ -797,13 +790,13 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		return self._disableAutoPassThrough
 
 	#: Registry of (itemType, label) pairs populated dynamically by addQuickNav.
-	#: Do not modify directly; use addQuickNav with availableInWebTouch=True.
+	#: Do not modify directly; pass a touchLabel to addQuickNav.
 	#: _webBrowseElements is built from this after all addQuickNav calls complete.
 	_webTouchNavRegistry: list[tuple[str, str]] = []
 
 	#: The itemType currently selected for web touch navigation. None means "default" (all content).
 	#: Stored as an instance attribute so each document remembers its own preference.
-	_webBrowseCurrentType: Optional[str] = None
+	_webBrowseCurrentType: str | None = None
 
 	def _enabledWebElements(self):
 		"""Returns the list of (itemType, label) pairs available for web touch navigation cycling.
@@ -824,9 +817,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			"Selects the next element type for web touch navigation",
 		),
 		category=inputCore.SCRCAT_BROWSEMODE,
-		gesture="ts(Web):flickDown",
+		gesture="ts(web):flickDown",
 	)
-	def script_nextWebElement(self, gesture):
+	def script_nextWebElement(self, gesture: inputCore.InputGesture) -> None:
 		enabled = self._enabledWebElements()
 		types = [itemType for itemType, _label in enabled]
 		try:
@@ -843,9 +836,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			"Selects the previous element type for web touch navigation",
 		),
 		category=inputCore.SCRCAT_BROWSEMODE,
-		gesture="ts(Web):flickUp",
+		gesture="ts(web):flickUp",
 	)
-	def script_prevWebElement(self, gesture):
+	def script_prevWebElement(self, gesture: inputCore.InputGesture) -> None:
 		enabled = self._enabledWebElements()
 		types = [itemType for itemType, _label in enabled]
 		try:
@@ -862,9 +855,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			"Moves to the next element of the selected type in web touch navigation",
 		),
 		category=inputCore.SCRCAT_BROWSEMODE,
-		gesture="ts(Web):flickRight",
+		gesture="ts(web):flickRight",
 	)
-	def script_nextSelectedElement(self, gesture):
+	def script_nextSelectedElement(self, gesture: inputCore.InputGesture) -> None:
 		itemType = self._webBrowseCurrentType
 		if itemType is None:
 			import globalCommands
@@ -879,9 +872,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			"Moves to the previous element of the selected type in web touch navigation",
 		),
 		category=inputCore.SCRCAT_BROWSEMODE,
-		gesture="ts(Web):flickLeft",
+		gesture="ts(web):flickLeft",
 	)
-	def script_prevSelectedElement(self, gesture):
+	def script_prevSelectedElement(self, gesture: inputCore.InputGesture) -> None:
 		itemType = self._webBrowseCurrentType
 		if itemType is None:
 			import globalCommands
