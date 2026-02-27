@@ -417,12 +417,11 @@ def NVDADistGenerator(target, source, env, for_signature):
 
 	if certFile or apiSigningToken:
 		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "l10nUtil.exe", os.path.join("lib", version, "x86", "synthDriverHost-runtime", "nvda_synthDriverHost.exe"):
-			if not os.path.isfile(os.path.join(target[0].path, prog)):
-				continue
+			path = os.path.join(target[0].abspath, prog)
 			action.append(
 				lambda target, source, env, progByVal=prog: env["signExec"](
 					[target[0].File(progByVal)], source, env
-				)
+				) if os.path.isfile(path) else None
 			)
 
 	action.extend((Delete(buildVersionFn), Delete(importlib.util.cache_from_source(buildVersionFn))))
