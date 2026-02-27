@@ -971,20 +971,6 @@ class GeneralSettingsPanel(SettingsPanel):
 		item.Value = config.conf["general"]["preventDisplayTurningOff"]
 		settingsSizerHelper.addItem(item)
 
-		item = self.promptWindowsRestartAfterInstallCheckBox = wx.CheckBox(
-			self,
-			# Translators: The label of a checkbox in general settings to prompt the user
-			# to restart Windows after installing or updating NVDA.
-			label=_("&Prompt to restart Windows after installing or updating NVDA"),
-		)
-		self.bindHelpEvent(
-			"GeneralSettingsPromptRestartAfterInstall", self.promptWindowsRestartAfterInstallCheckBox
-		)
-		item.Value = config.conf["general"]["showRestartPromptAfterInstall"]
-		if not config.isInstalledCopy():
-			item.Disable()
-		settingsSizerHelper.addItem(item)
-
 	def onChangeMirrorURL(self, evt: wx.CommandEvent | wx.KeyEvent):
 		"""Show the dialog to change the update mirror URL, and refresh the dialog in response to the URL being changed."""
 		# Import late to avoid circular dependency.
@@ -1093,9 +1079,6 @@ class GeneralSettingsPanel(SettingsPanel):
 			updateCheck.initialize()
 
 		config.conf["general"]["preventDisplayTurningOff"] = self.preventDisplayTurningOffCheckBox.IsChecked()
-		config.conf["general"]["showRestartPromptAfterInstall"] = (
-			self.promptWindowsRestartAfterInstallCheckBox.IsChecked()
-		)
 
 	def onPanelActivated(self):
 		if updateCheck:

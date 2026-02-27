@@ -6,9 +6,7 @@
 
 ### New Features
 
-* After installing or updating NVDA, a dialog now prompts you to restart Windows to ensure NVDA works correctly in all applications. (#19268, #19718, @kefaslungu)
-  * The dialog includes a "Don't ask me again" checkbox to suppress the prompt for future installations.
-  * This prompt can be re-enabled from the [General settings panel](#GeneralSettingsPromptRestartAfterInstall).
+* After installing or updating NVDA, a dialog now offers options to restart Windows, start the installed copy, or exit the installer. (#19268, #19718, @kefaslungu)
 * NVDA now includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen. (#19228, @Boumtchack)
   * The magnifier supports various zoom levels, color filters (normal, grayscale, inverted), and different focus tracking modes.
   * Color filters can help users with visual impairments or light sensitivity by inverting or desaturating screen colors.

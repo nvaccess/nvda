@@ -8,7 +8,6 @@ import os
 import subprocess
 import sys
 
-from configobj import ConfigObj
 from utils.security import isRunningElevated
 import winUser
 import wx
@@ -56,95 +55,29 @@ def _canPortableConfigBeCopied() -> bool:
 		return True
 
 
-class _PostInstallRestartDialog(MessageDialog):
-	"""Success message and Windows restart prompt shown after NVDA installation."""
-
-	def _addContents(self, contentsSizer: guiHelper.BoxSizerHelper) -> None:
-		# Translators: A checkbox in the post-install dialog to suppress future restart prompts.
-		self._dontAskAgainCheckbox = contentsSizer.addItem(
-			wx.CheckBox(self, label=_("&Don't ask me again")),
-		)
-
-	@property
-	def dontAskAgain(self) -> bool:
-		return self._dontAskAgainCheckbox.IsChecked()
-
-
-def _shouldShowRestartPrompt() -> bool:
-	"""Check whether the post-install Windows restart prompt should be shown.
-
-	When running as the installed copy (e.g. self-update), reads directly from config.conf.
-	When running as a launcher or portable copy, reads from the installed config file directly,
-	so that a previously saved 'don't ask again' preference is respected.
-	Returns True (show the prompt) if the preference cannot be determined.
-	"""
-	if config.isInstalledCopy():
-		return config.conf["general"]["showRestartPromptAfterInstall"]
-	installedConfigDir = config.getInstalledUserConfigPath()
-	if not installedConfigDir:
-		return True
-	configFile = os.path.join(installedConfigDir, os.path.basename(WritePaths.nvdaConfigFile))
-	if not os.path.exists(configFile):
-		return True
-	try:
-		conf = ConfigObj(configFile, encoding="UTF-8")
-		return conf.get("general", {}).get("showRestartPromptAfterInstall", "True").lower() != "false"
-	except Exception:
-		log.error("Could not read installed config for restart prompt preference", exc_info=True)
-		return True
-
-
-def _saveRestartPromptPreference() -> None:
-	"""Persist the user's choice to not show the Windows restart prompt after future installs.
-
-	When running as the installed copy, saves via the normal config mechanism.
-	When running as a launcher or portable copy, writes directly to the installed config file.
-	"""
-	if config.isInstalledCopy():
-		config.conf["general"]["showRestartPromptAfterInstall"] = False
-		config.conf.save()
-		return
-	installedConfigDir = config.getInstalledUserConfigPath()
-	if not installedConfigDir:
-		log.error("Could not determine installed config path to save restart prompt preference")
-		return
-	os.makedirs(installedConfigDir, exist_ok=True)
-	configFile = os.path.join(installedConfigDir, os.path.basename(WritePaths.nvdaConfigFile))
-	try:
-		conf = ConfigObj(configFile, encoding="UTF-8")
-		if "general" not in conf:
-			conf["general"] = {}
-		conf["general"]["showRestartPromptAfterInstall"] = "False"
-		conf.write()
-	except Exception:
-		log.error("Could not save restart prompt preference to installed config", exc_info=True)
-
-
 def _restartWindows() -> None:
 	"""Issue a Windows restart command."""
 	subprocess.run(["shutdown", "/r", "/t", "0"], creationflags=subprocess.CREATE_NO_WINDOW)
 
 
-def _showPostInstallRestartDialog(isUpdate: bool, startAfterInstall: bool) -> None:
-	"""Show a success message and Windows restart prompt after NVDA installation.
+def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
+	"""Show the post-install dialog after NVDA installation completes.
 
-	Handles all follow-up actions: restarting Windows or starting the installed NVDA,
-	and persisting the 'don't ask again' preference if the user requests it.
+	Presents the user with options to restart Windows, start the installed copy,
+	or exit the installer.
 	"""
 	successMsg = (
 		# Translators: The message displayed when NVDA has been successfully updated,
-		# shown in the post-install restart dialog.
+		# shown in the post-install dialog.
 		_("Successfully updated your installation of NVDA.")
 		if isUpdate
 		# Translators: The message displayed when NVDA has been successfully installed,
-		# shown in the post-install restart dialog.
+		# shown in the post-install dialog.
 		else _("Successfully installed NVDA.")
 	)
 	# Translators: A recommendation shown after NVDA installation to restart Windows.
-	restartMsg = _(
-		"It is recommended to restart Windows for proper cleanup.",
-	)
-	dialog = _PostInstallRestartDialog(
+	restartMsg = _("It is recommended to restart Windows for proper cleanup.")
+	dialog = MessageDialog(
 		parent=gui.mainFrame,
 		message=f"{successMsg}\n\n{restartMsg}",
 		# Translators: The title of the post-install dialog.
@@ -152,25 +85,26 @@ def _showPostInstallRestartDialog(isUpdate: bool, startAfterInstall: bool) -> No
 		buttons=None,
 		helpId="RestartWindowsAfterInstall",
 	)
-	(
-		dialog.addButton(ReturnCode.YES, label=_("&Restart now"))
-		# Translators: Button in the post-install dialog to defer the Windows restart.
-		.addButton(ReturnCode.NO, label=_("&Not now"), defaultFocus=True, fallbackAction=True)
-	)
+	# Translators: Button in the post-install dialog to restart Windows immediately.
+	dialog.addButton(ReturnCode.YES, label=_("Restart &Windows"), defaultFocus=True)
+	if startAfterInstall:
+		# Translators: Button in the post-install dialog to start the newly installed NVDA.
+		dialog.addButton(ReturnCode.OK, label=_("&Start NVDA"), fallbackAction=True)
+	# Translators: Button in the post-install dialog to exit the NVDA installer.
+	dialog.addButton(ReturnCode.CANCEL, label=_("E&xit the installer"))
 	result = dialog.ShowModal()
-	if dialog.dontAskAgain:
-		_saveRestartPromptPreference()
 	if result == ReturnCode.YES:
 		_restartWindows()
 		core.triggerNVDAExit(None)
-	else:
-		newNVDA = None
-		if startAfterInstall:
-			newNVDA = core.NewNVDAInstance(
-				filePath=os.path.join(WritePaths.defaultInstallDir, "nvda.exe"),
-				parameters=_generate_executionParameters(),
-			)
+	elif result == ReturnCode.OK:
+		newNVDA = core.NewNVDAInstance(
+			filePath=os.path.join(WritePaths.defaultInstallDir, "nvda.exe"),
+			parameters=_generate_executionParameters(),
+		)
 		if not core.triggerNVDAExit(newNVDA):
+			log.error("NVDA already in process of exiting, this indicates a logic error.")
+	else:
+		if not core.triggerNVDAExit(None):
 			log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 
@@ -244,32 +178,9 @@ def doInstall(
 		return
 
 	startAfterInstall = startAfterInstall and not isRunningElevated()
-	if not silent and _shouldShowRestartPrompt():
-		_showPostInstallRestartDialog(isUpdate=isUpdate, startAfterInstall=startAfterInstall)
-		return
-
 	if not silent:
-		msg = (
-			# Translators: The message displayed when NVDA has been successfully installed.
-			_("Successfully installed NVDA. ")
-			if not isUpdate
-			# Translators: The message displayed when NVDA has been successfully updated.
-			else _("Successfully updated your installation of NVDA. ")
-		)
-		gui.messageBox(
-			msg
-			+ (
-				# Translators: The message displayed to the user after NVDA is installed
-				# and the installed copy is about to be started.
-				_("Please press OK to start the installed copy.")
-				if startAfterInstall
-				# Translators: The message displayed to the user after NVDA is installed
-				# and the installer is about to close without starting the installed copy.
-				else _("Please press OK to close the installer.")
-			),
-			# Translators: The title of a dialog presented to indicate a successful operation.
-			_("Success"),
-		)
+		_showPostInstallDialog(isUpdate=isUpdate, startAfterInstall=startAfterInstall)
+		return
 
 	newNVDA = None
 	if startAfterInstall:
