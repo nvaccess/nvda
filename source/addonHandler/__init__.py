@@ -245,7 +245,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 					if NVDAState.shouldWriteToDisk():
 						log.debug("Backing up pickled add-ons state.")
 						try:
-							os.replace(WritePaths.addonStateFile, WritePaths.addonStateFile + ".bak")
+							os.replace(WritePaths._oldAddonStateFile, WritePaths._oldAddonStateFile + ".bak")
 						except Exception:
 							log.debug("Unable to backup old add-ons state pickle file.", exc_info=True)
 

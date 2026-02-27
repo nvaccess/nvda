@@ -367,10 +367,15 @@ def _setSystemConfig(
 			for subPath in removeSubs:
 				log.debug("Ignored folder that may contain unpackaged addons: %s", subPath)
 				subDirs.remove(subPath)
-			if not isMigration and addonHandler.STATE_FILENAME in files:
+			if not isMigration:
 				# Don't copy the addons state file,
 				# as we will generate a new one based on which add-ons are being copied.
-				files.remove(addonHandler.STATE_FILENAME)
+				# Just in case it still exists, also exclude the old one.
+				stateFilenames = (
+					addonHandler.STATE_FILENAME.casefold(),
+					addonHandler._OLD_STATE_FILENAME.casefold(),
+				)
+				files = [filename for filename in files if filename not in stateFilenames]
 		else:
 			relativePath = os.path.relpath(curSourceDir, fromPath)
 			curDestDir = os.path.join(toPath, relativePath)
@@ -381,7 +386,7 @@ def _setSystemConfig(
 		for f in files:
 			# Do not copy executables to the system configuration, as this may cause security risks.
 			# This will also exclude pending updates.
-			if f.endswith(".exe"):
+			if f.casefold().endswith(".exe"):
 				log.debug(
 					"Ignored file %s while copying current user configuration to system configuration" % f,
 				)
