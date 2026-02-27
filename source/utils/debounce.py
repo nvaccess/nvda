@@ -18,7 +18,7 @@ P = ParamSpec("P")
 
 @dataclass
 class _DebounceState:
-	lastExecutionTimeMs: float | None = None
+	lastCallTimeMs: float | None = None
 	pendingHandle: wx.CallLater | None = None
 	pendingArgs: tuple[Any, ...] = ()
 	pendingKwargs: dict[str, Any] | None = None
@@ -41,11 +41,10 @@ def _getStateForCall(
 def _executeDelayedCall(func: Callable[..., Any], state: _DebounceState) -> None:
 	args = state.pendingArgs
 	kwargs = state.pendingKwargs or {}
+	func(*args, **kwargs)
 	state.pendingArgs = ()
 	state.pendingKwargs = None
 	state.pendingHandle = None
-	state.lastExecutionTimeMs = monotonic() * 1000
-	func(*args, **kwargs)
 
 
 def _scheduleDelayedCall(
@@ -57,6 +56,7 @@ def _scheduleDelayedCall(
 	if state.pendingHandle is not None:
 		state.pendingHandle.Stop()
 	state.pendingHandle = wx.CallLater(delayTimeMs, _executeDelayedCall, func, state)
+	state.lastCallTimeMs = monotonic() * 1000
 
 
 def debounceLimiter(
@@ -87,10 +87,10 @@ def debounceLimiter(
 			state = _getStateForCall(instanceStates, globalState, args)
 			nowMs = monotonic() * 1000
 			withinCooldown = (
-				state.lastExecutionTimeMs is not None and (nowMs - state.lastExecutionTimeMs) < cooldownTimeMs
+				state.lastCallTimeMs is not None and (nowMs - state.lastCallTimeMs) < cooldownTimeMs
 			)
 			if not withinCooldown and state.pendingHandle is None:
-				state.lastExecutionTimeMs = nowMs
+				state.lastCallTimeMs = nowMs
 				func(*args, **kwargs)
 				return
 
