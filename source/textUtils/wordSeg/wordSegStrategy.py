@@ -305,10 +305,11 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 				continue
 
 			# Determine whether any punctuation forbids a separator
+			PUNCTUATION_CATEGORIES: str = "pP"  # Unicode categories for punctuation
 			noSep = (
-				unicodedata.category(self.text[curIndex - 1])[0] in "pP"
-				or unicodedata.category(self.text[curIndex])[0] in "pP"
-			)  # Punctuation categories
+				unicodedata.category(self.text[curIndex - 1])[0] in PUNCTUATION_CATEGORIES
+				or unicodedata.category(self.text[curIndex])[0] in PUNCTUATION_CATEGORIES
+			)
 
 			if not noSep:
 				# If neither side forbids the separator, add it
