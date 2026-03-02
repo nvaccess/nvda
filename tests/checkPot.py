@@ -205,4 +205,6 @@ def getStringFromLine(line):
 
 if __name__ == "__main__":
 	fileName = sys.argv[1]
-	sys.exit(checkPot(fileName))
+	results = checkPot(fileName)
+	print(results)
+	sys.exit(int(bool(results)))
