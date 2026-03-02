@@ -209,15 +209,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		)
 
 		driverRegistrar.addBluetoothDevices(
-			lambda m: (
-				any(
-					m.id.startswith(prefix)
-					for prefix in (
-						"F14",
-						"Focus 14 BT",
-						"Focus 40 BT",
-						"Focus 80 BT",
-					)
+			lambda m: any(
+				m.id.startswith(prefix)
+				for prefix in (
+					"F14",
+					"Focus 14 BT",
+					"Focus 40 BT",
+					"Focus 80 BT",
 				)
 			),
 		)
