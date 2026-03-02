@@ -90,8 +90,8 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 	if startAfterInstall:
 		# Translators: Button in the post-install dialog to start the newly installed NVDA.
 		dialog.addButton(ReturnCode.OK, label=_("&Start NVDA"), fallbackAction=True)
-	# Translators: Button in the post-install dialog to exit the NVDA installer.
-	dialog.addButton(ReturnCode.CANCEL, label=_("E&xit the installer"))
+	# Translators: Button in the post-install dialog to exit NVDA.
+	dialog.addButton(ReturnCode.CANCEL, label=_("E&xit NVDA"))
 	result = dialog.ShowModal()
 	if result == ReturnCode.YES:
 		_restartWindows()
