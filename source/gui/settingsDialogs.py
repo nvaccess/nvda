@@ -2919,6 +2919,14 @@ class MathSettingsPanel(SettingsPanel):
 		else:
 			self.navSpeechList.SetSelection(0)
 
+		# Translators: label for checkbox to use native math speech instead of MathCAT in Word and Outlook
+		useWordNativeMathText = pgettext("math", "Use native math speech in Word and Outlook")
+		self.useWordNativeMathCheckBox = speechGroup.addItem(
+			wx.CheckBox(speechGroupBox, label=useWordNativeMathText),
+		)
+		self.bindHelpEvent("MathUseWordNative", self.useWordNativeMathCheckBox)
+		self.useWordNativeMathCheckBox.SetValue(config.conf["math"]["other"]["useWordNativeMath"])
+
 		# Translators: Text for the navigation group.
 		navGroupText = pgettext("math", "Navigation")
 		navGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=navGroupText)
@@ -3108,6 +3116,7 @@ class MathSettingsPanel(SettingsPanel):
 		)
 		selectedBrailleIndex = self.brailleMathCodeList.GetSelection()
 		mathConf["braille"]["brailleCode"] = self._brailleCodeIds[selectedBrailleIndex]
+		mathConf["other"]["useWordNativeMath"] = self.useWordNativeMathCheckBox.GetValue()
 		mcPrefs = MathCATUserPreferences.fromNVDAConfig()
 		mcPrefs.apply()
 

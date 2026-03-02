@@ -418,9 +418,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 	action.append(buildCmd)
 
 	if certFile or apiSigningToken:
-		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "l10nUtil.exe", os.path.join("lib", version, "x86", "synthDriverHost-runtime", "nvda_synthDriverHost.exe"):
-			if not os.path.isfile(os.path.join(target[0].path, prog)):
-				continue
+		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "l10nUtil.exe":
 			action.append(
 				lambda target, source, env, progByVal=prog: env["signExec"](
 					[target[0].File(progByVal)], source, env
@@ -714,7 +712,7 @@ synthDriverHost32Runtime = env.Command(
 	source="#runtime-builders/synthDriverHost32/setup-runtime.py",
 	chdir=Dir("#runtime-builders/synthDriverHost32"),
 	action=[
-		  f"uv run -v --no-active --directory .  python setup-runtime.py --dest-dir dist --version {version} --publisher {publisher}",
+		  "uv run -v python setup-runtime.py ",
 		r"rmdir /s /q ..\..\source\lib\x86\synthDriverHost-runtime || exit 0",
 		r"xcopy /e /i /y dist ..\..\source\lib\x86\synthDriverHost-runtime",
 	],
