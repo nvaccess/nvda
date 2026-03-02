@@ -67,15 +67,20 @@ class FocusManager:
 			self._lastFocusedObject = FocusType.MOUSE
 			return mousePosition
 
-		# Priority 3: System focus (focus object + browse mode cursor)
-		if systemFocusChanged:
-			self._lastFocusedObject = FocusType.SYSTEM_FOCUS
-			return systemFocusPosition
-
-		# Priority 4: Navigator object (NumPad navigation)
+		# Priority 3: Navigator object.
+		# Takes precedence over system focus so that table cell navigation
+		# (ctrl+alt+arrows) follows the reported cell rather than the focused row.
+		# This also covers plain NumPad navigation where only the navigator moves.
 		if navigatorObjectChanged:
 			self._lastFocusedObject = FocusType.NAVIGATOR
 			return navigatorObjectPosition
+
+		# Priority 4: System focus (focus object + browse mode cursor).
+		# Reached only when the navigator did not change, e.g. plain Tab/focus
+		# movement or browse mode caret navigation.
+		if systemFocusChanged:
+			self._lastFocusedObject = FocusType.SYSTEM_FOCUS
+			return systemFocusPosition
 
 		# No changes detected - return last focused position
 		match self._lastFocusedObject:
