@@ -70,7 +70,7 @@ class TouchMode(DisplayStringStrEnum):
 
 	TEXT = "text"
 	OBJECT = "object"
-	WEB = "web"
+	BROWSE = "browseMode"
 
 	def __str__(self) -> str:
 		return self.value
@@ -82,8 +82,8 @@ class TouchMode(DisplayStringStrEnum):
 			TouchMode.TEXT: _("text mode"),
 			# Translators: The name of a touch mode.
 			TouchMode.OBJECT: _("object mode"),
-			# Translators: The name of a touch mode used when navigating web content in browse mode.
-			TouchMode.WEB: _("web mode"),
+			# Translators: The name of a touch mode used when in browse mode.
+			TouchMode.BROWSE: _("browse mode"),
 		}
 
 
@@ -92,8 +92,8 @@ availableTouchModes = ["text", "object"]
 touchModeLabels = {
 	"text": _("text mode"),
 	"object": _("object mode"),
-	# Translators: The name of a touch mode used when navigating web content in browse mode.
-	"web": _("web mode"),
+	# Translators: The name of a touch mode used when in browse mode.
+	"browseMode": _("browse mode"),
 }
 
 HWND_MESSAGE = -3
@@ -140,17 +140,17 @@ def _browseModeStateChange(
 
 	if browseMode:
 		# Entering browse mode
-		if TouchMode.WEB not in availableTouchModes:
-			availableTouchModes.append(TouchMode.WEB)
+		if TouchMode.BROWSE not in availableTouchModes:
+			availableTouchModes.append(TouchMode.BROWSE)
 
-		handler._curTouchMode = TouchMode.WEB
+		handler._curTouchMode = TouchMode.BROWSE
 
 	else:
 		# Leaving browse mode
-		if TouchMode.WEB in availableTouchModes:
-			availableTouchModes.remove(TouchMode.WEB)
+		if TouchMode.BROWSE in availableTouchModes:
+			availableTouchModes.remove(TouchMode.BROWSE)
 
-		if handler._curTouchMode == TouchMode.WEB:
+		if handler._curTouchMode == TouchMode.BROWSE:
 			handler._curTouchMode = TouchMode.OBJECT
 
 

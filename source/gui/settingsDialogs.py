@@ -2645,16 +2645,16 @@ class BrowseModePanel(SettingsPanel):
 		import browseMode
 
 		# Store element types for use in onSave (excludes the always-active "default" entry).
-		self._webTouchElements = list(browseMode.BrowseModeTreeInterceptor._webTouchNavRegistry)
-		# Translators: Label for the list of web touch navigation element types in browse mode settings.
-		self._webTouchCheckListBox: nvdaControls.CustomCheckListBox = sHelper.addLabeledControl(
-			_("&Web touch navigation elements (touchscreens only):"),
+		self._browseModeElements = list(browseMode.BrowseModeTreeInterceptor._browseTouchNavRegistry)
+		# Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
+		self._browseModeCheckListBox: nvdaControls.CustomCheckListBox = sHelper.addLabeledControl(
+			_("&Browse mode touch navigation elements (touchscreens only):"),
 			nvdaControls.CustomCheckListBox,
-			choices=[label for _itemType, label in self._webTouchElements],
+			choices=[label for _itemType, label in self._browseModeElements],
 		)
-		enabledTypes = set(config.conf["virtualBuffers"]["webTouchNavigationElements"])
-		for i, (itemType, _label) in enumerate(self._webTouchElements):
-			self._webTouchCheckListBox.Check(i, itemType in enabledTypes)
+		enabledTypes = set(config.conf["virtualBuffers"]["browseModeNavigationElements"])
+		for i, (itemType, _label) in enumerate(self._browseModeElements):
+			self._browseModeCheckListBox.Check(i, itemType in enabledTypes)
 
 	def onSave(self):
 		config.conf["virtualBuffers"]["maxLineLength"] = self.maxLengthEdit.GetValue()
@@ -2675,10 +2675,10 @@ class BrowseModePanel(SettingsPanel):
 		config.conf["virtualBuffers"]["trapNonCommandGestures"] = (
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
-		config.conf["virtualBuffers"]["webTouchNavigationElements"] = [
+		config.conf["virtualBuffers"]["browseModeNavigationElements"] = [
 			itemType
-			for i, (itemType, _label) in enumerate(self._webTouchElements)
-			if self._webTouchCheckListBox.IsChecked(i)
+			for i, (itemType, _label) in enumerate(self._browseModeElements)
+			if self._browseModeCheckListBox.IsChecked(i)
 		]
 
 

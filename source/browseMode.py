@@ -602,8 +602,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		@param readUnit: The unit (one of the textInfos.UNIT_* constants) to announce when moving to this type of item.
 			For example, only the line is read when moving to tables to avoid reading a potentially massive table.
 			If None, the entire item will be announced.
-		:param touchLabel: A short, translated, plural label for this element type used in web touch navigation
-			cycling (e.g. ``_("links")``). If ``None``, the element type is not registered for web touch navigation.
+		:param touchLabel: A short, translated, plural label for this element type used in browse mode touch navigation
+			cycling (e.g. ``_("links")``). If ``None``, the element type is not registered for browse mode touch navigation.
 		"""
 		scriptSuffix = itemType[0].upper() + itemType[1:]
 		scriptName = "next%s" % scriptSuffix
@@ -631,7 +631,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		if key is not None:
 			cls.__gestures["kb:shift+%s" % key] = scriptName
 		if touchLabel is not None:
-			cls._webTouchNavRegistry.append((itemType, touchLabel))
+			cls._browseTouchNavRegistry.append((itemType, touchLabel))
 
 	@classmethod
 	def _addQuickNavHeading(
@@ -659,7 +659,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 				# Translators: Message presented when the browse mode element is not found.
 				# {i} will be replaced with the level number.
 				prevError=_("No previous heading at level {i}").format(i=i),
-				# Translators: Label announced when cycling web touch navigation element types in browse mode.
+				# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 				# {i} will be replaced with the heading level number.
 				touchLabel=_("headings level {i}").format(i=i),
 			)
@@ -791,74 +791,74 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	#: Registry of (itemType, label) pairs populated dynamically by addQuickNav.
 	#: Do not modify directly; pass a touchLabel to addQuickNav.
-	#: _webBrowseElements is built from this after all addQuickNav calls complete.
-	_webTouchNavRegistry: list[tuple[str, str]] = []
+	#: _browseModeElements is built from this after all addQuickNav calls complete.
+	_browseTouchNavRegistry: list[tuple[str, str]] = []
 
-	#: The itemType currently selected for web touch navigation. None means "default" (all content).
+	#: The itemType currently selected for browse mode touch navigation. None means "default" (all content).
 	#: Stored as an instance attribute so each document remembers its own preference.
-	_webBrowseCurrentType: str | None = None
+	_browseModeCurrentType: str | None = None
 
-	def _enabledWebElements(self):
-		"""Returns the list of (itemType, label) pairs available for web touch navigation cycling.
+	def _enabledBrowseElements(self):
+		"""Returns the list of (itemType, label) pairs available for browse mode touch navigation cycling.
 		The 'default' entry (None) is always first. Remaining entries are those whose itemType
-		appears in the L{config.conf} virtualBuffers webTouchNavigationElements list.
+		appears in the L{config.conf} virtualBuffers browseModeNavigationElements list.
 		"""
-		enabledTypes = set(config.conf["virtualBuffers"]["webTouchNavigationElements"])
+		enabledTypes = set(config.conf["virtualBuffers"]["browseModeNavigationElements"])
 		# "default" (None) navigates all content and is always available.
-		result = [type(self)._webBrowseElements[0]]
-		for itemType, label in type(self)._webTouchNavRegistry:
+		result = [type(self)._browseModeElements[0]]
+		for itemType, label in type(self)._browseTouchNavRegistry:
 			if itemType in enabledTypes:
 				result.append((itemType, label))
 		return result
 
 	@script(
 		description=_(
-			# Translators: Input help message for a web touch navigation command in browse mode.
-			"Selects the next element type for web touch navigation",
+			# Translators: Input help message for a browse mode touch navigation command in browse mode.
+			"Selects the next element type for browse mode touch navigation",
 		),
 		category=inputCore.SCRCAT_BROWSEMODE,
-		gesture="ts(web):flickDown",
+		gesture="ts(browseMode):flickDown",
 	)
-	def script_nextWebElement(self, gesture: inputCore.InputGesture) -> None:
-		enabled = self._enabledWebElements()
+	def script_nextBrowseElement(self, gesture: inputCore.InputGesture) -> None:
+		enabled = self._enabledBrowseElements()
 		types = [itemType for itemType, _label in enabled]
 		try:
-			idx = types.index(self._webBrowseCurrentType)
+			idx = types.index(self._browseModeCurrentType)
 		except ValueError:
 			idx = -1
 		idx = (idx + 1) % len(enabled)
-		self._webBrowseCurrentType = enabled[idx][0]
+		self._browseModeCurrentType = enabled[idx][0]
 		ui.message(enabled[idx][1])
 
 	@script(
 		description=_(
-			# Translators: Input help message for a web touch navigation command in browse mode.
-			"Selects the previous element type for web touch navigation",
+			# Translators: Input help message for a browse mode touch navigation command in browse mode.
+			"Selects the previous element type for browse mode touch navigation",
 		),
 		category=inputCore.SCRCAT_BROWSEMODE,
-		gesture="ts(web):flickUp",
+		gesture="ts(browseMode):flickUp",
 	)
-	def script_prevWebElement(self, gesture: inputCore.InputGesture) -> None:
-		enabled = self._enabledWebElements()
+	def script_prevBrowseElement(self, gesture: inputCore.InputGesture) -> None:
+		enabled = self._enabledBrowseElements()
 		types = [itemType for itemType, _label in enabled]
 		try:
-			idx = types.index(self._webBrowseCurrentType)
+			idx = types.index(self._browseModeCurrentType)
 		except ValueError:
 			idx = 0
 		idx = (idx - 1) % len(enabled)
-		self._webBrowseCurrentType = enabled[idx][0]
+		self._browseModeCurrentType = enabled[idx][0]
 		ui.message(enabled[idx][1])
 
 	@script(
 		description=_(
-			# Translators: Input help message for a web touch navigation command in browse mode.
-			"Moves to the next element of the selected type in web touch navigation",
+			# Translators: Input help message for a browse mode touch navigation command in browse mode.
+			"Moves to the next element of the selected type in browse mode touch navigation",
 		),
 		category=inputCore.SCRCAT_BROWSEMODE,
-		gesture="ts(web):flickRight",
+		gesture="ts(browseMode):flickRight",
 	)
 	def script_nextSelectedElement(self, gesture: inputCore.InputGesture) -> None:
-		itemType = self._webBrowseCurrentType
+		itemType = self._browseModeCurrentType
 		if itemType is None:
 			import globalCommands
 
@@ -868,14 +868,14 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	@script(
 		description=_(
-			# Translators: Input help message for a web touch navigation command in browse mode.
-			"Moves to the previous element of the selected type in web touch navigation",
+			# Translators: Input help message for a browse mode touch navigation command in browse mode.
+			"Moves to the previous element of the selected type in browse mode touch navigation",
 		),
 		category=inputCore.SCRCAT_BROWSEMODE,
-		gesture="ts(web):flickLeft",
+		gesture="ts(browseMode):flickLeft",
 	)
 	def script_prevSelectedElement(self, gesture: inputCore.InputGesture) -> None:
-		itemType = self._webBrowseCurrentType
+		itemType = self._browseModeCurrentType
 		if itemType is None:
 			import globalCommands
 
@@ -917,7 +917,7 @@ qn(
 	prevDoc=_("moves to the previous heading"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous heading"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("headings"),
 )
 BrowseModeTreeInterceptor._addQuickNavHeading(range(1, 10))
@@ -933,7 +933,7 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous table"),
 	readUnit=textInfos.UNIT_LINE,
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("tables"),
 )
 qn(
@@ -947,7 +947,7 @@ qn(
 	prevDoc=_("moves to the previous link"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous link"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("links"),
 )
 qn(
@@ -961,7 +961,7 @@ qn(
 	prevDoc=_("moves to the previous visited link"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous visited link"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("visited links"),
 )
 qn(
@@ -975,7 +975,7 @@ qn(
 	prevDoc=_("moves to the previous unvisited link"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous unvisited link"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("unvisited links"),
 )
 qn(
@@ -989,7 +989,7 @@ qn(
 	prevDoc=_("moves to the previous form field"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous form field"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("form fields"),
 )
 qn(
@@ -1004,7 +1004,7 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous list"),
 	readUnit=textInfos.UNIT_LINE,
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("lists"),
 )
 qn(
@@ -1018,7 +1018,7 @@ qn(
 	prevDoc=_("moves to the previous list item"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous list item"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("list items"),
 )
 qn(
@@ -1032,7 +1032,7 @@ qn(
 	prevDoc=_("moves to the previous button"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous button"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("buttons"),
 )
 qn(
@@ -1047,7 +1047,7 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous edit field"),
 	readUnit=textInfos.UNIT_LINE,
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("edit fields"),
 )
 qn(
@@ -1062,7 +1062,7 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous frame"),
 	readUnit=textInfos.UNIT_LINE,
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("frames"),
 )
 qn(
@@ -1076,7 +1076,7 @@ qn(
 	prevDoc=_("moves to the previous separator"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous separator"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("separators"),
 )
 qn(
@@ -1090,7 +1090,7 @@ qn(
 	prevDoc=_("moves to the previous radio button"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous radio button"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("radio buttons"),
 )
 qn(
@@ -1104,7 +1104,7 @@ qn(
 	prevDoc=_("moves to the previous combo box"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous combo box"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("combo boxes"),
 )
 qn(
@@ -1118,7 +1118,7 @@ qn(
 	prevDoc=_("moves to the previous check box"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous check box"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("check boxes"),
 )
 qn(
@@ -1132,7 +1132,7 @@ qn(
 	prevDoc=_("moves to the previous graphic"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous graphic"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("graphics"),
 )
 qn(
@@ -1146,7 +1146,7 @@ qn(
 	prevDoc=_("moves to the previous block quote"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous block quote"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("block quotes"),
 )
 qn(
@@ -1161,7 +1161,7 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no more text before a block of links"),
 	readUnit=textInfos.UNIT_LINE,
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("non-link blocks"),
 )
 qn(
@@ -1176,7 +1176,7 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous landmark"),
 	readUnit=textInfos.UNIT_LINE,
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("landmarks"),
 )
 qn(
@@ -1190,7 +1190,7 @@ qn(
 	prevDoc=_("moves to the previous embedded object"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous embedded object"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("embedded objects"),
 )
 qn(
@@ -1204,7 +1204,7 @@ qn(
 	prevDoc=_("moves to the previous annotation"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous annotation"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("annotations"),
 )
 qn(
@@ -1218,7 +1218,7 @@ qn(
 	prevDoc=_("moves to the previous error"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous error"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("errors"),
 )
 qn(
@@ -1232,7 +1232,7 @@ qn(
 	prevDoc=_("moves to the previous slider"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous slider"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("sliders"),
 )
 qn(
@@ -1246,7 +1246,7 @@ qn(
 	prevDoc=_("moves to the previous article"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous article"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("articles"),
 )
 qn(
@@ -1260,7 +1260,7 @@ qn(
 	prevDoc=_("moves to the previous grouping"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous grouping"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("groupings"),
 )
 qn(
@@ -1274,7 +1274,7 @@ qn(
 	prevDoc=_("moves to the previous tab"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous tab"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("tabs"),
 )
 qn(
@@ -1288,7 +1288,7 @@ qn(
 	prevDoc=_("moves to the previous figure"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous figure"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("figures"),
 )
 qn(
@@ -1302,7 +1302,7 @@ qn(
 	prevDoc=_("moves to the previous menu item"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous menu item"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("menu items"),
 )
 qn(
@@ -1316,7 +1316,7 @@ qn(
 	prevDoc=_("moves to the previous toggle button"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous toggle button"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("toggle buttons"),
 )
 qn(
@@ -1330,7 +1330,7 @@ qn(
 	prevDoc=_("moves to the previous progress bar"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous progress bar"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("progress bars"),
 )
 qn(
@@ -1344,7 +1344,7 @@ qn(
 	prevDoc=_("moves to the previous math formula"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous math formula"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("math formulas"),
 )
 qn(
@@ -1359,7 +1359,7 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous text paragraph"),
 	readUnit=textInfos.UNIT_PARAGRAPH,
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("text paragraphs"),
 )
 qn(
@@ -1374,7 +1374,7 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous vertically aligned paragraph"),
 	readUnit=textInfos.UNIT_PARAGRAPH,
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("vertical paragraphs"),
 )
 qn(
@@ -1388,7 +1388,7 @@ qn(
 	prevDoc=_("moves to the previous same style text"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("No previous same style text"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("same style"),
 )
 qn(
@@ -1402,7 +1402,7 @@ qn(
 	prevDoc=_("moves to the previous different style text"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("No previous different style text"),
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("different style"),
 )
 qn(
@@ -1417,18 +1417,18 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous reference"),
 	readUnit=textInfos.UNIT_WORD,
-	# Translators: Label announced when cycling web touch navigation element types in browse mode.
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("references"),
 )
 del qn
 
 
-# Build _webBrowseElements dynamically from the registry populated by addQuickNav calls above.
+# Build _browseModeElements dynamically from the registry populated by addQuickNav calls above.
 # The "default" entry (navigate all content) is always prepended.
-BrowseModeTreeInterceptor._webBrowseElements = (
-	# Translators: The default element type in browse mode web touch navigation (navigates all content).
+BrowseModeTreeInterceptor._browseModeElements = (
+	# Translators: The default element type in browse mode browse mode touch navigation (navigates all content).
 	(None, _("default")),
-) + tuple(BrowseModeTreeInterceptor._webTouchNavRegistry)
+) + tuple(BrowseModeTreeInterceptor._browseTouchNavRegistry)
 
 
 class ElementsListDialog(
