@@ -304,8 +304,9 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 				# separator already present at either side -> skip adding
 				continue
 
+			# Unicode categories for punctuation
+			PUNCTUATION_CATEGORIES: str = "pP" 
 			# Determine whether any punctuation forbids a separator
-			PUNCTUATION_CATEGORIES: str = "pP"  # Unicode categories for punctuation
 			noSep = (
 				unicodedata.category(self.text[curIndex - 1])[0] in PUNCTUATION_CATEGORIES
 				or unicodedata.category(self.text[curIndex])[0] in PUNCTUATION_CATEGORIES
