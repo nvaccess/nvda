@@ -16,6 +16,7 @@ from typing import (
 )
 
 if TYPE_CHECKING:
+	import browseMode
 	import treeInterceptorHandler
 
 from ctypes import (
@@ -62,6 +63,15 @@ __getattr__ = _deprecate.handleDeprecations(
 		"SystemMetrics",
 		"MAXIMUM_TOUCHES",
 	),
+	_deprecate.RemovedSymbol(
+		"touchModeLabels",
+		{
+			"text": _("text mode"),
+			"object": _("object mode"),
+			"browseMode": _("browse mode"),
+		},
+		message="Use touchHandler.TouchMode enum instead.",
+	),
 )
 
 
@@ -71,9 +81,6 @@ class TouchMode(DisplayStringStrEnum):
 	TEXT = "text"
 	OBJECT = "object"
 	BROWSE = "browseMode"
-
-	def __str__(self) -> str:
-		return self.value
 
 	@cached_property
 	def _displayStringLabels(self) -> dict[Self, str]:
@@ -88,13 +95,6 @@ class TouchMode(DisplayStringStrEnum):
 
 
 availableTouchModes = ["text", "object"]
-
-touchModeLabels = {
-	"text": _("text mode"),
-	"object": _("object mode"),
-	# Translators: The name of a touch mode used when in browse mode.
-	"browseMode": _("browse mode"),
-}
 
 HWND_MESSAGE = -3
 
@@ -132,7 +132,7 @@ POINTER_MESSAGE_FLAG_CANCELED = 0x400
 
 def _browseModeStateChange(
 	browseMode: bool = False,
-	interceptor: "treeInterceptorHandler.TreeInterceptor | None" = None,
+	interceptor: "browseMode.BrowseModeTreeInterceptor | None" = None,
 	**kwargs,
 ) -> None:
 	if not handler:
@@ -140,18 +140,18 @@ def _browseModeStateChange(
 
 	if browseMode:
 		# Entering browse mode
-		if TouchMode.BROWSE not in availableTouchModes:
-			availableTouchModes.append(TouchMode.BROWSE)
+		if TouchMode.BROWSE.value not in availableTouchModes:
+			availableTouchModes.append(TouchMode.BROWSE.value)
 
-		handler._curTouchMode = TouchMode.BROWSE
+		handler._curTouchMode = TouchMode.BROWSE.value
 
 	else:
 		# Leaving browse mode
-		if TouchMode.BROWSE in availableTouchModes:
-			availableTouchModes.remove(TouchMode.BROWSE)
+		if TouchMode.BROWSE.value in availableTouchModes:
+			availableTouchModes.remove(TouchMode.BROWSE.value)
 
-		if handler._curTouchMode == TouchMode.BROWSE:
-			handler._curTouchMode = TouchMode.OBJECT
+		if handler._curTouchMode == TouchMode.BROWSE.value:
+			handler._curTouchMode = TouchMode.OBJECT.value
 
 
 post_browseModeStateChange.register(_browseModeStateChange)

@@ -789,9 +789,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def _get_disableAutoPassThrough(self):
 		return self._disableAutoPassThrough
 
-	#: Registry of (itemType, label) pairs populated dynamically by addQuickNav.
-	#: Do not modify directly; pass a touchLabel to addQuickNav.
-	#: _browseModeElements is built from this after all addQuickNav calls complete.
+	#: Registry of (itemType, label) pairs populated dynamically by :meth:`addQuickNav`.
+	#: Do not modify directly; pass a touchLabel to :meth:`addQuickNav`.
+	#: _browseModeElements is built from this after all :meth:`addQuickNav` calls complete.
 	_browseTouchNavRegistry: list[tuple[str, str]] = []
 
 	#: The itemType currently selected for browse mode touch navigation. None means "default" (all content).

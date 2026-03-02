@@ -3298,8 +3298,36 @@ In this case NVDA will tell Windows to play a default sound whenever a key which
 This list allows you to choose which element types are available when cycling through elements in browse touch mode.
 Use the checkboxes to enable or disable individual element types.
 Only the checked element types will appear when flicking up or down to cycle through browse mode navigation elements.
-Available element types include headings (at individual levels 1 to 9), links, visited links, unvisited links, form fields, edit fields, buttons, combo boxes, check boxes, radio buttons, lists, list items, tables, frames, landmarks, graphics, block quotes, articles, groupings, tabs, figures, menu items, toggle buttons, progress bars, math formulas, separators, and other structural elements.
 This setting only affects touch navigation and has no effect on keyboard browse mode navigation.
+
+Available element types include:
+
+* Headings (levels 1 to 9)
+* Links
+* Visited links
+* Unvisited links
+* Form fields
+* Edit fields
+* Buttons
+* Combo boxes
+* Check boxes
+* Radio buttons
+* Lists
+* List items
+* Tables
+* Frames
+* Landmarks
+* Graphics
+* Block quotes
+* Articles
+* Groupings
+* Tabs
+* Figures
+* Menu items
+* Toggle buttons
+* Progress bars
+* Math formulas
+* Separators
 
 #### Document Formatting {#DocumentFormattingSettings}
 
