@@ -32,12 +32,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
-#define APPLICATION_USER_MODEL_ID_MAX_LENGTH 131
-// Forward declare GetCurrentApplicationUserModelId for later lookup in kernel32.dll
-// Used in isSuspendableProcess.
-LONG WINAPI GetCurrentApplicationUserModelId(UINT32* pBufSize,PWSTR buf);
-
-
 UINT wm_uninstallIA2Support = 0;
 bool isIA2SupportDisabled=false;
 
@@ -129,27 +123,6 @@ LRESULT CALLBACK IA2Support_uninstallerHook(int code, WPARAM wParam, LPARAM lPar
 	return 0;
 }
 
-bool isSuspendableProcess() {
-	wil::unique_hmodule kernel32Handle {LoadLibrary(L"kernel32.dll")};
-	if(!kernel32Handle) {
-		LOG_ERROR(L"Can't load kernel32.dll");
-		return false;
-	}
-	// Macro from wil/win32_helpers.h
-	auto GetCurrentApplicationUserModelId_fp = GetProcAddressByFunctionDeclaration(kernel32Handle.get(), GetCurrentApplicationUserModelId);
-	if(!GetCurrentApplicationUserModelId_fp) {
-		LOG_DEBUGWARNING(L"getCurrentApplicationUserModelID function not available");
-		return false;
-	}
-	UINT32 bufSize=APPLICATION_USER_MODEL_ID_MAX_LENGTH+1;
-	std::wstring buf(bufSize, L'\0');
-	LONG res=GetCurrentApplicationUserModelId_fp(&bufSize,buf.data());
-	if(res != ERROR_SUCCESS) {
-		return false;
-	}
-	return true;
-}
-
 bool isAppContainerProcess() {
 	wil::unique_handle tokenHandle{nullptr};
 	if(!OpenProcessToken(GetCurrentProcess(), TOKEN_READ, &tokenHandle) || !tokenHandle) {
@@ -169,12 +142,6 @@ bool isAppContainerProcess() {
 
 void IA2Support_inProcess_initialize() {
 	if (IA2InstallMap.size() > 0 || isIA2SupportDisabled) {
-		return;
-	}
-	// #5417: disable IAccessible2 support for suspendable processes to work around a deadlock in NVDAHelperRemote (specifically seen in Win10 searchUI)
-	isIA2SupportDisabled = isSuspendableProcess();
-	if(isIA2SupportDisabled) {
-		LOG_DEBUGWARNING(L"Not installing IA2 support as  process is suspendable");
 		return;
 	}
 	// #12920: Registering COM interfaces in an appContainer can cause memory corruption,
