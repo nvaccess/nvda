@@ -22,18 +22,19 @@ class _TestMagnifier(unittest.TestCase):
 
 	def setUp(self):
 		"""Setup before each test - mock magnification API to prevent actual screen magnification."""
-		# Mock the Windows Magnification API to prevent affecting the user's screen
 		self.mag_patcher = patch("winBindings.magnification")
 		self.mock_mag = self.mag_patcher.start()
-
-		# Configure mocked API methods to return success
-		self.mock_mag.MagInitialize.return_value = True
-		self.mock_mag.MagUninitialize.return_value = True
-		self.mock_mag.MagSetFullscreenTransform.return_value = True
-		self.mock_mag.MagSetFullscreenColorEffect.return_value = True
+		self.mag_fs_patcher = patch("_magnifier.fullscreenMagnifier.magnification")
+		self.mock_mag_fs = self.mag_fs_patcher.start()
+		for mock in (self.mock_mag, self.mock_mag_fs):
+			mock.MagInitialize.return_value = True
+			mock.MagUninitialize.return_value = True
+			mock.MagSetFullscreenTransform.return_value = True
+			mock.MagSetFullscreenColorEffect.return_value = True
 
 	def tearDown(self):
 		"""Cleanup after each test."""
+		self.mag_fs_patcher.stop()
 		self.mag_patcher.stop()
 
 
