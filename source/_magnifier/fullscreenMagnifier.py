@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -175,11 +175,23 @@ class FullScreenMagnifier(Magnifier):
 
 	def moveMouseToScreen(self) -> None:
 		"""
-		keep mouse in screen
+		Move mouse to center of magnified view.
+		Skip if a mouse button is currently pressed to avoid interfering with clicks.
 		"""
-		params = self._getMagnifierParameters(self._currentCoordinates)
-		centerX = int(params.coordinates.x + (params.magnifierSize.width / 2))
-		centerY = int(params.coordinates.y + (params.magnifierSize.height / 2))
+		# Check if any mouse button is pressed (left, right, or middle)
+		if (
+			winUser.getKeyState(winUser.VK_LBUTTON) < 0
+			or winUser.getKeyState(winUser.VK_RBUTTON) < 0
+			or winUser.getKeyState(winUser.VK_MBUTTON) < 0
+		):
+			log.debug("Mouse button pressed, skipping cursor repositioning to avoid interfering with click")
+			return
+
+		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(
+			self._currentCoordinates,
+		)
+		centerX = int(left + (visibleWidth / 2))
+		centerY = int(top + (visibleHeight / 2))
 		winUser.setCursorPos(centerX, centerY)
 
 	def _borderPos(
