@@ -599,7 +599,7 @@ Therefore, gestures such as 2-finger flick up and 4-finger flick left are all po
 #### Touch Modes {#TouchModes}
 
 As there are many more NVDA commands than possible touch gestures, NVDA has several touch modes you can switch between which make certain subsets of commands available.
-The three modes are text mode, object mode and web mode.
+The three modes are text mode, object mode and browse mode.
 Certain NVDA commands listed in this document may have a touch mode listed in brackets after the touch gesture.
 For example, flick up (text mode) means that the command will be performed if you flick up, but only while in text mode.
 If the command does not have a mode listed, it will work in any mode.
@@ -1052,30 +1052,30 @@ To toggle single letter navigation on and off for the current document, press NV
 
 #### Touch Navigation in Browse Mode {#BrowseModeTouch}
 
-When using a touch enabled device, NVDA provides an additional touch navigation mode for browsing web content.
+When using a touch enabled device, NVDA provides an additional touch navigation mode for browsing content in browse mode.
 
-When browse mode is active in supported documents such as web pages, NVDA can expose a web touch mode. This mode allows users to navigate structural elements of a document using touch gestures, similar to browse mode navigation with the keyboard.
+When browse mode is active in supported documents such as web pages or Word documents, NVDA can expose a browse touch mode. This mode allows users to navigate structural elements of a document using touch gestures, similar to browse mode navigation with the keyboard.
 
-In web touch mode, flick gestures are used to move between common web elements such as links, buttons, headings, form fields, landmarks, and other document structures.
+In browse touch mode, flick gestures are used to move between common document elements such as links, buttons, headings, form fields, landmarks, and other document structures.
 
 This feature is intended to provide touch users with efficient, structured navigation that mirrors existing browse mode functionality.
 
-##### Touch gestures in web mode
+##### Touch gestures in browse mode
 
 <!-- KC:beginInclude -->
 
 | Name |Key |Description|
 |---|---|---|
-|Select next element type |flick down (web mode) |Switches to the next web navigation element type|
-|Select previous element type |flick up (web mode) |Switches to the previous web navigation element type|
-|Move to next element |flick right (web mode) |Moves to the next element of the selected type|
-|Move to previous element |flick left (web mode) |Moves to the previous element of the selected type|
+|Select next element type |flick down (browse mode) |Switches to the next browse mode navigation element type|
+|Select previous element type |flick up (browse mode) |Switches to the previous browse mode navigation element type|
+|Move to next element |flick right (browse mode) |Moves to the next element of the selected type|
+|Move to previous element |flick left (browse mode) |Moves to the previous element of the selected type|
 
 <!-- KC:endInclude -->
 
 When any element type is selected, flicking left or right moves through the document in reading order, while flicking up and down selects different element types.
 
-Web touch mode is only available when browse mode is active and does not affect touch navigation outside of browse mode documents.
+Browse touch mode is only available when browse mode is active and does not affect touch navigation outside of browse mode documents.
 
 #### Text paragraph navigation command {#TextNavigationCommand}
 
@@ -3293,11 +3293,11 @@ Enabled by default, this option allows you to choose if gestures (such as key pr
 As an example, if enabled and the letter j was pressed, it would be trapped from reaching the document, even though it is not a quick navigation command nor is it likely to be a command in the application itself.
 In this case NVDA will tell Windows to play a default sound whenever a key which gets trapped is pressed.
 
-##### Web touch navigation elements {#BrowseModeSettingsWebTouchNavigationElements}
+##### Browse mode touch navigation elements {#BrowseModeSettingsBrowseModeNavigationElements}
 
-This list allows you to choose which element types are available when cycling through web navigation elements in web touch mode.
+This list allows you to choose which element types are available when cycling through elements in browse touch mode.
 Use the checkboxes to enable or disable individual element types.
-Only the checked element types will appear when flicking up or down to cycle through web navigation elements.
+Only the checked element types will appear when flicking up or down to cycle through browse mode navigation elements.
 Available element types include headings (at individual levels 1 to 9), links, visited links, unvisited links, form fields, edit fields, buttons, combo boxes, check boxes, radio buttons, lists, list items, tables, frames, landmarks, graphics, block quotes, articles, groupings, tabs, figures, menu items, toggle buttons, progress bars, math formulas, separators, and other structural elements.
 This setting only affects touch navigation and has no effect on keyboard browse mode navigation.
 
