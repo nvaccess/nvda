@@ -52,6 +52,7 @@ class Magnifier:
 		self._lastFocusCoordinates = Coordinates(0, 0)
 		self._filterType: Filter = getDefaultFilter()
 		self._isManualPanning: bool = False
+		self._consecutiveErrors: int = 0
 		# Register for display changes
 		_displayTracking.displayChanged.register(self._onDisplayChanged)
 		self._screenCurtainIsActive: bool = False
@@ -132,14 +133,32 @@ class Magnifier:
 		self._isActive = True
 		self._currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
 
+	_MAX_CONSECUTIVE_ERRORS: int = 3
+
 	def _updateMagnifier(self) -> None:
 		"""
-		Update the magnifier position and content
+		Update the magnifier position and content.
+		This method is called repeatedly by the timer. It must always
+		reschedule the timer, even if an error occurs, to avoid freezing
+		the magnifier view.
 		"""
 		if not self._isActive:
 			return
-		self._currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
-		self._doUpdate()
+		try:
+			self._currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
+			self._doUpdate()
+			self._consecutiveErrors = 0
+		except Exception:
+			self._consecutiveErrors += 1
+			log.error(
+				f"Error updating magnifier ({self._consecutiveErrors}/{self._MAX_CONSECUTIVE_ERRORS})",
+				exc_info=True,
+			)
+			if self._consecutiveErrors >= self._MAX_CONSECUTIVE_ERRORS:
+				log.error("Too many consecutive magnifier errors, attempting recovery")
+				self._attemptRecovery()
+				return
+		# Always reschedule the timer to keep the magnifier alive
 		self._startTimer(self._updateMagnifier)
 
 	def _doUpdate(self) -> None:
@@ -147,6 +166,17 @@ class Magnifier:
 		Perform the actual update of the magnifier
 		"""
 		raise NotImplementedError("Subclasses must implement this method")
+
+	def _attemptRecovery(self) -> None:
+		"""
+		Attempt to recover from repeated errors in the update loop.
+		Subclasses should override this to perform API-specific recovery
+		(e.g., reinitializing the Magnification API).
+		The base implementation resets the error counter and restarts the timer.
+		"""
+		log.info("Attempting base magnifier recovery")
+		self._consecutiveErrors = 0
+		self._startTimer(self._updateMagnifier)
 
 	def _stopMagnifier(self) -> None:
 		"""

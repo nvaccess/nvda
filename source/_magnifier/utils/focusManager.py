@@ -8,6 +8,7 @@ Focus Manager for the magnifier module.
 Handles all focus tracking logic and coordinate calculations.
 """
 
+from logHandler import log
 import api
 import winUser
 import mouseHandler
@@ -114,8 +115,10 @@ class FocusManager:
 			if coords != Coordinates(0, 0):
 				self._lastValidSystemFocusPosition = coords
 			return coords
-		except (NotImplementedError, LookupError, AttributeError, RuntimeError):
-			# Fallback: use focus object location
+		except Exception:
+			# COM errors (_ctypes.COMError), UIA failures, and other unexpected errors
+			# can occur when querying caret position. Fall back to focus object location.
+			log.debug("Failed to get caret position, falling back to focus object location", exc_info=True)
 			try:
 				focusObj = api.getFocusObject()
 				if focusObj and focusObj.location:
@@ -143,9 +146,10 @@ class FocusManager:
 			try:
 				point = reviewPosition.pointAtStart
 				return Coordinates(point.x, point.y)
-			except (NotImplementedError, LookupError, AttributeError):
-				# Review position may not support pointAtStart
-				pass
+			except Exception:
+				# Review position may not support pointAtStart,
+				# or COM/UIA calls may fail unexpectedly.
+				log.debug("Failed to get review position", exc_info=True)
 		return None
 
 	def _getNavigatorObjectLocation(self) -> Coordinates | None:

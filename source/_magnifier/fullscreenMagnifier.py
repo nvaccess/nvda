@@ -9,6 +9,7 @@ Full-screen magnifier module.
 
 from logHandler import log
 import screenCurtain
+import ui
 import winUser
 from winBindings import magnification
 from .magnifier import Magnifier
@@ -80,7 +81,10 @@ class FullScreenMagnifier(Magnifier):
 
 		if self._focusManager.getLastFocusType() == FocusType.NAVIGATOR:
 			if shouldKeepMouseCentered():
-				self.moveMouseToScreen()
+				try:
+					self.moveMouseToScreen()
+				except Exception:
+					log.debug("Failed to move mouse to screen center", exc_info=True)
 		self._fullscreenMagnifier(coordinates)
 
 	def _stopMagnifier(self) -> None:
@@ -102,6 +106,34 @@ class FullScreenMagnifier(Magnifier):
 			log.debug("Magnification API uninitialized")
 		except Exception as e:
 			log.debug(f"MagUninitialize result: {e}")
+
+	def _attemptRecovery(self) -> None:
+		"""
+		Attempt to recover from repeated Magnification API errors by
+		reinitializing the API. If recovery fails, the magnifier is stopped.
+		"""
+		log.info("Attempting full-screen magnifier recovery via API reinitialization")
+		try:
+			magnification.MagUninitialize()
+		except Exception:
+			log.debug("MagUninitialize during recovery failed (may already be uninitialized)", exc_info=True)
+		try:
+			magnification.MagInitialize()
+			self._applyFilter()
+			self._consecutiveErrors = 0
+			log.info("Full-screen magnifier recovery succeeded")
+			self._startTimer(self._updateMagnifier)
+		except Exception:
+			log.error("Full-screen magnifier recovery failed, stopping magnifier", exc_info=True)
+			self._consecutiveErrors = 0
+			self._stopMagnifier()
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Message announced when the magnifier stops due to an unrecoverable error.
+					"Magnifier stopped due to an error. Please restart it.",
+				),
+			)
 
 	def _applyFilter(self) -> None:
 		"""
@@ -136,8 +168,8 @@ class FullScreenMagnifier(Magnifier):
 			)
 			if not result:
 				log.debug("Failed to set full-screen transform")
-		except AttributeError:
-			log.debug("Magnification API not available")
+		except Exception:
+			log.error("Failed to set full-screen magnification transform", exc_info=True)
 
 	def _getCoordinatesForMode(
 		self,
