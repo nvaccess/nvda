@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 from _magnifier.utils.types import Filter, FullScreenMode, MagnifierType, Direction
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
@@ -211,3 +211,81 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 		# Stop magnifier
 		magnifier._stopMagnifier()
 		self.assertFalse(magnifier._isActive)
+
+	def testFullscreenMagnifierDoesNotCrashOnTransformException(self):
+		"""_fullscreenMagnifier catches all exceptions from MagSetFullscreenTransform."""
+		magnifier = FullScreenMagnifier()
+
+		# Simulate a COM error (the exact type from the bug report)
+		from winBindings import magnification
+
+		magnification.MagSetFullscreenTransform = MagicMock(
+			side_effect=OSError("COM RPC_E_DISCONNECTED"),
+		)
+
+		# Should NOT raise — the exception must be caught internally
+		try:
+			magnifier._fullscreenMagnifier((500, 400))
+			exceptionRaised = False
+		except Exception:
+			exceptionRaised = True
+
+		self.assertFalse(exceptionRaised)
+
+		magnifier._stopMagnifier()
+
+	def testAttemptRecoverySuccess(self):
+		"""FullScreenMagnifier._attemptRecovery reinitialises API and restarts timer on success."""
+		magnifier = FullScreenMagnifier()
+		magnifier._consecutiveErrors = 3
+		magnifier._startTimer = MagicMock()
+		magnifier._applyFilter = MagicMock()
+
+		with patch("_magnifier.fullscreenMagnifier.magnification") as mock_mag:
+			magnifier._attemptRecovery()
+
+			mock_mag.MagUninitialize.assert_called_once()
+			mock_mag.MagInitialize.assert_called_once()
+			magnifier._applyFilter.assert_called_once()
+			self.assertEqual(magnifier._consecutiveErrors, 0)
+			magnifier._startTimer.assert_called_once_with(magnifier._updateMagnifier)
+
+		magnifier._stopMagnifier()
+
+	def testAttemptRecoveryFailureStopsMagnifier(self):
+		"""When recovery fails, magnifier is stopped and user is notified."""
+		magnifier = FullScreenMagnifier()
+		magnifier._consecutiveErrors = 3
+		magnifier._stopMagnifier = MagicMock()
+
+		with patch("_magnifier.fullscreenMagnifier.magnification") as mock_mag:
+			mock_mag.MagInitialize.side_effect = OSError("Init failed")
+			with patch("_magnifier.fullscreenMagnifier.ui.message"):
+				magnifier._attemptRecovery()
+
+		magnifier._stopMagnifier.assert_called_once()
+		self.assertEqual(magnifier._consecutiveErrors, 0)
+
+	def testUpdateLoopSurvivesSingleDoUpdateError(self):
+		"""A single _doUpdate error does not kill the update loop."""
+		magnifier = FullScreenMagnifier()
+		magnifier._startTimer = MagicMock()
+		magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
+			return_value=(100, 200),
+		)
+
+		# First call fails, second succeeds
+		magnifier._doUpdate = MagicMock(side_effect=[OSError("Transient"), None])
+
+		# First update — error
+		magnifier._updateMagnifier()
+		self.assertEqual(magnifier._consecutiveErrors, 1)
+		magnifier._startTimer.assert_called_with(magnifier._updateMagnifier)
+
+		# Second update — success
+		magnifier._startTimer.reset_mock()
+		magnifier._updateMagnifier()
+		self.assertEqual(magnifier._consecutiveErrors, 0)
+		magnifier._startTimer.assert_called_with(magnifier._updateMagnifier)
+
+		magnifier._stopMagnifier()
