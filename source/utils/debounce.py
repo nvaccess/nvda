@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from functools import wraps
 from time import monotonic
 from typing import Any, ParamSpec
@@ -40,10 +40,10 @@ def _getStateForCall(
 
 def _executeDelayedCall(func: Callable[..., Any], state: _DebounceState) -> None:
 	args = state.pendingArgs
-	kwargs = state.pendingKwargs or {}
+	kwargs = state.pendingKwargs
 	func(*args, **kwargs)
 	state.pendingArgs = ()
-	state.pendingKwargs = None
+	state.pendingKwargs = {}
 	state.pendingHandle = None
 
 
