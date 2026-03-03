@@ -60,7 +60,7 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	try:
 		mathCATLanguageSetting = libmathcat.GetPreference("Language")
 	except Exception as e:
-		log.exception(e)
+		log.exception("Couldn't get MathCAT language")
 	language: str = getLanguageToUse()
 	nvdaLanguage: str = getCurrentLanguage().replace("_", "-")
 
@@ -131,4 +131,5 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 			log.exception()
 	if language != nvdaLanguage:
 		out.append(LangChangeCommand(None))
+	log.debug(f"Converted SSML text to {out}")
 	return out

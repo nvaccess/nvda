@@ -182,9 +182,9 @@ class SpeechStyleOption(DisplayStringStrEnum):
 
 # two constants to scale "PauseFactor"
 # these work out so that a slider that goes [0,14] has value ~100 at 7 and ~1000 at 14
-class PauseFactor(Enum):
-	SCALE: float = 9.5
-	LOG_BASE: float = 1.4
+class PauseFactor(float, Enum):
+	SCALE = 9.5
+	LOG_BASE = 1.4
 
 
 def pathToBrailleFolder() -> str:
