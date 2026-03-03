@@ -3,239 +3,476 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
+"""
+Windowed magnifier overlay using Win32 native windows.
+
+Provides a magnifier overlay window with three key properties:
+1. Invisible to NVDA and accessibility APIs (WS_EX_TRANSPARENT + WS_EX_TOOLWINDOW)
+2. Excluded from screen capture to prevent feedback loops (SetWindowDisplayAffinity)
+3. Click-through so it doesn't interfere with user interaction (WS_EX_TRANSPARENT + WS_DISABLED)
+"""
+
+import ctypes
+import ctypes.wintypes
+
 from logHandler import log
-import wx
+import winUser
+import winGDI
+import winBindings.gdi32 as gdi32
+from winBindings import user32
+from windowUtils import CustomWindow
 
-from .types import MagnifierParameters, WindowMagnifierParameters, Size, Filter
+from .types import MagnifierParameters, WindowMagnifierParameters, Filter
+
+#: Window Display Affinity: exclude from screen capture (Windows 10 2004+)
+WDA_EXCLUDEFROMCAPTURE: int = 0x00000011
+#: WM_PAINT message
+WM_PAINT: int = 0x000F
+#: WM_DESTROY message
+WM_DESTROY: int = 0x0002
+#: WM_ERASEBKGND message
+WM_ERASEBKGND: int = 0x0014
+#: SetStretchBltMode: high-quality image stretching mode
+HALFTONE: int = 4
+#: BitBlt raster-op: copy inverted source to destination
+NOTSRCCOPY: int = 0x00330008
+
+_user32_dll = ctypes.windll.user32
+_gdi32_dll = ctypes.windll.gdi32
+
+_user32_dll.SetWindowDisplayAffinity.argtypes = [ctypes.wintypes.HWND, ctypes.wintypes.DWORD]
+_user32_dll.SetWindowDisplayAffinity.restype = ctypes.wintypes.BOOL
+
+_gdi32_dll.SetStretchBltMode.argtypes = [ctypes.wintypes.HDC, ctypes.c_int]
+_gdi32_dll.SetStretchBltMode.restype = ctypes.c_int
+
+_gdi32_dll.SetDIBits.argtypes = [
+	ctypes.wintypes.HDC,
+	ctypes.wintypes.HBITMAP,
+	ctypes.c_uint,
+	ctypes.c_uint,
+	ctypes.c_void_p,
+	ctypes.c_void_p,
+	ctypes.c_uint,
+]
+_gdi32_dll.SetDIBits.restype = ctypes.c_int
+
+#: DrawIconEx flag: draw cursor with its normal mask and colour
+DI_NORMAL: int = 0x0003
+#: CURSORINFO.flags value: the cursor is showing
+CURSOR_SHOWING: int = 0x00000001
+#: GetSystemMetrics index: default cursor width
+SM_CXCURSOR: int = 13
+#: GetSystemMetrics index: default cursor height
+SM_CYCURSOR: int = 14
 
 
-class MagnifierPanel(wx.Panel):
-	"""A simple panel for the magnifier."""
+class ICONINFO(ctypes.Structure):
+	_fields_ = [
+		("fIcon", ctypes.wintypes.BOOL),
+		("xHotspot", ctypes.wintypes.DWORD),
+		("yHotspot", ctypes.wintypes.DWORD),
+		("hbmMask", ctypes.wintypes.HBITMAP),
+		("hbmColor", ctypes.wintypes.HBITMAP),
+	]
 
-	def __init__(self, parent: wx.Frame, panelType: str):
+
+class CURSORINFO(ctypes.Structure):
+	_fields_ = [
+		("cbSize", ctypes.wintypes.DWORD),
+		("flags", ctypes.wintypes.DWORD),
+		("hCursor", ctypes.wintypes.HANDLE),
+		("ptScreenPos", ctypes.wintypes.POINT),
+	]
+
+
+_user32_dll.GetCursorInfo.argtypes = [ctypes.POINTER(CURSORINFO)]
+_user32_dll.GetCursorInfo.restype = ctypes.wintypes.BOOL
+
+_user32_dll.GetIconInfo.argtypes = [ctypes.wintypes.HANDLE, ctypes.POINTER(ICONINFO)]
+_user32_dll.GetIconInfo.restype = ctypes.wintypes.BOOL
+
+_user32_dll.DrawIconEx.argtypes = [
+	ctypes.wintypes.HDC,
+	ctypes.c_int,
+	ctypes.c_int,
+	ctypes.wintypes.HANDLE,
+	ctypes.c_int,
+	ctypes.c_int,
+	ctypes.c_uint,
+	ctypes.wintypes.HBRUSH,
+	ctypes.c_uint,
+]
+_user32_dll.DrawIconEx.restype = ctypes.wintypes.BOOL
+
+_user32_dll.GetSystemMetrics.argtypes = [ctypes.c_int]
+_user32_dll.GetSystemMetrics.restype = ctypes.c_int
+
+
+class MagnifierOverlayWindow(CustomWindow):
+	"""Win32 native overlay window for displaying magnified screen content.
+
+	This window is:
+	- **Invisible to NVDA**: ``WS_EX_TRANSPARENT`` and ``WS_EX_TOOLWINDOW``
+	  make the window ignored by accessibility APIs and absent from the taskbar.
+	- **Excluded from screen capture**: ``SetWindowDisplayAffinity(WDA_EXCLUDEFROMCAPTURE)``
+	  prevents screen-capture APIs (including the Windows Magnifier) from seeing
+	  this window, avoiding infinite feedback loops.
+	- **Click-through**: the combination of ``WS_DISABLED`` and ``WS_EX_TRANSPARENT``
+	  lets all mouse events fall through to the window beneath.
+	"""
+
+	className = "NVDAMagnifierOverlay"
+
+	@classmethod
+	def _get__wClass(cls):
+		wClass = super()._wClass
+		wClass.style = winUser.CS_HREDRAW | winUser.CS_VREDRAW
+		return wClass
+
+	def __init__(self, windowParams: WindowMagnifierParameters):
+		"""Create the overlay window and configure its special properties.
+
+		:param windowParams: Title, size and position for the overlay.
 		"""
-		Initialize the magnifier panel.
+		super().__init__(
+			windowName=windowParams.title,
+			windowStyle=winUser.WS_POPUP | winUser.WS_DISABLED,
+			extendedWindowStyle=(
+				winUser.WS_EX_TOPMOST
+				| winUser.WS_EX_LAYERED
+				| winUser.WS_EX_NOACTIVATE
+				| winUser.WS_EX_TRANSPARENT
+				| winUser.WS_EX_TOOLWINDOW
+			),
+		)
 
-		:param parent: The parent frame that will contain this panel
-		:param panelType: The type/name identifier for this panel
+		self._windowWidth: int = windowParams.windowSize.width
+		self._windowHeight: int = windowParams.windowSize.height
+
+		# GDI resources for the captured screen region
+		self._captureDC = None
+		self._captureBitmap = None
+		self._oldCaptureBitmap = None
+		self._captureWidth: int = 0
+		self._captureHeight: int = 0
+		self._currentFilter: Filter = Filter.NORMAL
+
+		# Cursor overlay state (updated at each capture frame)
+		self._cursorHandle = None
+		self._cursorWindowX: int = -1
+		self._cursorWindowY: int = -1
+		self._cursorHotspotX: int = 0
+		self._cursorHotspotY: int = 0
+
+		# Position and size the window
+		x, y = windowParams.windowPosition
+		user32.SetWindowPos(
+			self.handle,
+			winUser.HWND_TOPMOST,
+			x,
+			y,
+			self._windowWidth,
+			self._windowHeight,
+			winUser.SWP_NOACTIVATE,
+		)
+
+		# Make the window fully opaque via the layered-window mechanism
+		winUser.SetLayeredWindowAttributes(self.handle, 0, 255, winUser.LWA_ALPHA)
+
+		# Exclude from screen capture to prevent feedback loops
+		if not _user32_dll.SetWindowDisplayAffinity(self.handle, WDA_EXCLUDEFROMCAPTURE):
+			log.warning(
+				"SetWindowDisplayAffinity failed – overlay window may cause screen-capture feedback",
+			)
+
+		# Show the window without activating it
+		user32.ShowWindow(self.handle, winUser.SW_SHOWNA)
+		user32.UpdateWindow(self.handle)
+
+	def windowProc(self, hwnd: int, msg: int, wParam: int, lParam: int):
+		if msg == WM_PAINT:
+			self._paint()
+			return 0
+		elif msg == WM_ERASEBKGND:
+			# Prevent background erasure to avoid flicker
+			return 1
+		elif msg == WM_DESTROY:
+			self._cleanupGDI()
+			return 0
+		return None
+
+	def updateContent(
+		self,
+		captureX: int,
+		captureY: int,
+		captureW: int,
+		captureH: int,
+		filterType: Filter = Filter.NORMAL,
+	) -> None:
+		"""Capture a screen region, optionally apply a colour filter, then repaint.
+
+		The captured region is stored in an off-screen memory DC at its native
+		resolution.  Scaling to the window size happens during ``WM_PAINT`` via
+		``StretchBlt``, keeping the capture step lightweight.
+
+		:param captureX: Screen X of the region to capture.
+		:param captureY: Screen Y of the region to capture.
+		:param captureW: Width of the region to capture (pixels).
+		:param captureH: Height of the region to capture (pixels).
+		:param filterType: Colour filter to apply (NORMAL, GRAYSCALE, INVERTED).
 		"""
-		super().__init__(parent)
-
-		self.panelType = panelType
-		self.SetName(panelType)
-
-		self.contentBitmap = None
-
-		self.Bind(wx.EVT_PAINT, self.onPaint)
-
-	def setContent(self, content: wx.Bitmap | wx.Image | None) -> None:
-		"""
-		Set the content image to be displayed in the magnifier panel.
-
-		:param content: The content to display - can be a wx.Bitmap, wx.Image, or None to clear
-		"""
-		if not content:
-			self.contentBitmap = None
+		if captureW <= 0 or captureH <= 0:
 			return
 
-		if isinstance(content, wx.Bitmap):
-			if content.IsOk():
-				self.contentBitmap = content
-				log.debug(f"Bitmap content set: {content.GetWidth()}x{content.GetHeight()}")
-			else:
-				self.contentBitmap = None
-				log.debug("Invalid bitmap content")
-		elif isinstance(content, wx.Image):
-			if content.IsOk():
-				self.contentBitmap = wx.Bitmap(content)
-				log.debug(f"Image content set: {content.GetWidth()}x{content.GetHeight()}")
-			else:
-				self.contentBitmap = None
-				log.debug("Invalid image content")
+		screenDC = user32.GetDC(0)
+		try:
+			# (Re-)create the capture DC / bitmap when the capture size changes
+			if self._captureWidth != captureW or self._captureHeight != captureH:
+				self._cleanupGDI()
+				self._captureDC = gdi32.CreateCompatibleDC(screenDC)
+				self._captureBitmap = gdi32.CreateCompatibleBitmap(screenDC, captureW, captureH)
+				self._oldCaptureBitmap = gdi32.SelectObject(self._captureDC, self._captureBitmap)
+				self._captureWidth = captureW
+				self._captureHeight = captureH
 
-		self.Refresh()
-		log.debug(f"{self.panelType.capitalize()} panel refreshed")
+			# Copy the screen region into the off-screen bitmap
+			gdi32.StretchBlt(
+				self._captureDC,
+				0,
+				0,
+				captureW,
+				captureH,
+				screenDC,
+				captureX,
+				captureY,
+				captureW,
+				captureH,
+				winGDI.SRCCOPY,
+			)
+		finally:
+			user32.ReleaseDC(0, screenDC)
 
-	def onPaint(self, event: wx.PaintEvent) -> None:
-		"""Handle the paint event to draw the magnified content."""
-		dc = wx.PaintDC(self)
-		dc.Clear()
+		# Grayscale requires per-pixel DIB manipulation.
+		# Inverted is handled at zero cost in _paint() via the NOTSRCCOPY raster-op.
+		if filterType == Filter.GRAYSCALE:
+			self._applyGrayscaleFilter()
 
-		if self.contentBitmap and self.contentBitmap.IsOk():
-			dc.DrawBitmap(self.contentBitmap, 0, 0)
+		self._currentFilter = filterType
 
+		# Snapshot cursor position relative to this capture frame
+		self._snapshotCursor(captureX, captureY, captureW, captureH)
 
-class MagnifierFrame(wx.Frame):
-	"""A simple window frame for the magnifier."""
+		# Trigger a WM_PAINT
+		user32.InvalidateRect(self.handle, None, False)
 
-	def __init__(
-		self,
-		parent=None,
-		title: str = "Magnifier Window",
-		frameType: str = "magnifier",
-		screenSize: Size = None,
-		windowMagnifierParameters: WindowMagnifierParameters = None,
-	):
-		"""
-		Initialize the magnifier frame window.
+	def _paint(self) -> None:
+		"""StretchBlt the captured bitmap to the window's client area."""
+		with winUser.paint(self.handle) as hdc:
+			if self._captureDC and self._captureWidth > 0 and self._captureHeight > 0:
+				_gdi32_dll.SetStretchBltMode(hdc, HALFTONE)
+				# NOTSRCCOPY inverts all pixels during the blit – free colour inversion
+				rop = NOTSRCCOPY if self._currentFilter == Filter.INVERTED else winGDI.SRCCOPY
+				gdi32.StretchBlt(
+					hdc,
+					0,
+					0,
+					self._windowWidth,
+					self._windowHeight,
+					self._captureDC,
+					0,
+					0,
+					self._captureWidth,
+					self._captureHeight,
+					rop,
+				)
+				# Draw the cursor on top of the magnified content
+				self._paintCursor(hdc)
 
-		:param parent: Optional parent window
-		:param title: The window title
-		:param frameType: The type identifier for the frame
-		:param screenSize: The screen size (optional, for reference)
-		:param windowMagnifierParameters: Parameters defining window size, position, and styles
-		"""
-		self.frameType = frameType
-		self.screenSize = screenSize
-		self.windowMagnifierParameters = windowMagnifierParameters
-		super().__init__(
-			parent,
-			title=title,
-			size=(windowMagnifierParameters.windowSize.width, windowMagnifierParameters.windowSize.height),
+	def _applyGrayscaleFilter(self) -> None:
+		"""Convert the captured bitmap to grayscale via direct DIB byte manipulation."""
+		w, h = self._captureWidth, self._captureHeight
+		numPixels = w * h
+
+		bmInfo = gdi32.BITMAPINFO()
+		bmInfo.bmiHeader.biSize = ctypes.sizeof(gdi32.BITMAPINFO)
+		bmInfo.bmiHeader.biWidth = w
+		bmInfo.bmiHeader.biHeight = -h  # top-down
+		bmInfo.bmiHeader.biPlanes = 1
+		bmInfo.bmiHeader.biBitCount = 32
+		bmInfo.bmiHeader.biCompression = winGDI.BI_RGB
+
+		bufferSize = numPixels * 4
+		buffer = (ctypes.c_ubyte * bufferSize)()
+		gdi32.GetDIBits(
+			self._captureDC,
+			self._captureBitmap,
+			0,
+			h,
+			buffer,
+			ctypes.byref(bmInfo),
+			winGDI.DIB_RGB_COLORS,
 		)
-		self.SetWindowStyle(self.windowMagnifierParameters.styles)
-		self.SetPosition(self.windowMagnifierParameters.windowPosition)
-		self.panel = self.createPanel()
-		# Setup sizer for proper layout
-		sizer = wx.BoxSizer(wx.VERTICAL)
-		sizer.Add(self.panel, 1, wx.EXPAND)
-		self.SetSizer(sizer)
-		self.Layout()
-		self.Show()
 
-	def createPanel(self) -> MagnifierPanel:
-		"""Create and return a magnifier panel."""
-		return MagnifierPanel(self, self.frameType)
+		# Process BGRA pixels with fixed-point ITU-R BT.601 coefficients
+		data = bytearray(buffer)
+		for i in range(0, bufferSize, 4):
+			b, g, r = data[i], data[i + 1], data[i + 2]
+			gray = (77 * r + 150 * g + 29 * b) >> 8
+			data[i] = data[i + 1] = data[i + 2] = gray
 
-	def updateFrameContent(self, content: wx.Bitmap | wx.Image | None) -> None:
-		"""Update the content displayed in the magnifier frame."""
-		if self.panel:
-			self.panel.setContent(content)
+		ctypes.memmove(buffer, (ctypes.c_char * bufferSize).from_buffer(data), bufferSize)
+		_gdi32_dll.SetDIBits(
+			self._captureDC,
+			self._captureBitmap,
+			0,
+			h,
+			buffer,
+			ctypes.byref(bmInfo),
+			winGDI.DIB_RGB_COLORS,
+		)
+
+	def _snapshotCursor(
+		self,
+		captureX: int,
+		captureY: int,
+		captureW: int,
+		captureH: int,
+	) -> None:
+		"""Record the current cursor position in window coordinates.
+
+		Called once per frame inside :meth:`updateContent`.  If the cursor is
+		outside the capture area, or invisible, ``_cursorHandle`` is set to
+		``None`` so :meth:`_paintCursor` is a no-op.
+		"""
+		ci = CURSORINFO()
+		ci.cbSize = ctypes.sizeof(CURSORINFO)
+		if not _user32_dll.GetCursorInfo(ctypes.byref(ci)) or not (ci.flags & CURSOR_SHOWING):
+			self._cursorHandle = None
+			return
+
+		cx, cy = ci.ptScreenPos.x, ci.ptScreenPos.y
+		relX = cx - captureX
+		relY = cy - captureY
+
+		if relX < 0 or relY < 0 or relX >= captureW or relY >= captureH:
+			# Cursor is outside the captured area
+			self._cursorHandle = None
+			return
+
+		# Map cursor position to window (scaled) coordinates
+		scaleX = self._windowWidth / captureW
+		scaleY = self._windowHeight / captureH
+		self._cursorWindowX = int(relX * scaleX)
+		self._cursorWindowY = int(relY * scaleY)
+		self._cursorHandle = ci.hCursor
+
+		# Retrieve hotspot so we can draw cursor anchored at its click point
+		ii = ICONINFO()
+		if _user32_dll.GetIconInfo(ci.hCursor, ctypes.byref(ii)):
+			self._cursorHotspotX = int(ii.xHotspot * scaleX)
+			self._cursorHotspotY = int(ii.yHotspot * scaleY)
+			# GetIconInfo allocates bitmaps – always free them
+			if ii.hbmMask:
+				gdi32.DeleteObject(ii.hbmMask)
+			if ii.hbmColor:
+				gdi32.DeleteObject(ii.hbmColor)
+		else:
+			self._cursorHotspotX = 0
+			self._cursorHotspotY = 0
+
+	def _paintCursor(self, hdc) -> None:
+		"""Draw the cursor glyph on *hdc* using the state from :meth:`_snapshotCursor`."""
+		if not self._cursorHandle or self._cursorWindowX < 0:
+			return
+
+		if self._captureWidth <= 0:
+			return
+
+		scaleFactor = self._windowWidth / self._captureWidth
+		sysCursorW = _user32_dll.GetSystemMetrics(SM_CXCURSOR)
+		sysCursorH = _user32_dll.GetSystemMetrics(SM_CYCURSOR)
+		scaledW = max(1, int(sysCursorW * scaleFactor))
+		scaledH = max(1, int(sysCursorH * scaleFactor))
+
+		drawX = self._cursorWindowX - self._cursorHotspotX
+		drawY = self._cursorWindowY - self._cursorHotspotY
+
+		_user32_dll.DrawIconEx(
+			hdc,
+			drawX,
+			drawY,
+			self._cursorHandle,
+			scaledW,
+			scaledH,
+			0,
+			None,
+			DI_NORMAL,
+		)
+
+	# ── GDI resource management ──────────────────────────────────────────
+
+	def _cleanupGDI(self) -> None:
+		"""Release the off-screen capture DC, bitmap and associated objects."""
+		if self._oldCaptureBitmap and self._captureDC:
+			gdi32.SelectObject(self._captureDC, self._oldCaptureBitmap)
+			self._oldCaptureBitmap = None
+		if self._captureBitmap:
+			gdi32.DeleteObject(self._captureBitmap)
+			self._captureBitmap = None
+		if self._captureDC:
+			gdi32.DeleteDC(self._captureDC)
+			self._captureDC = None
+		self._captureWidth = 0
+		self._captureHeight = 0
+
+	def destroy(self) -> None:
+		"""Destroy the window and free all GDI resources."""
+		self._cleanupGDI()
+		CustomWindow.destroy(self)
 
 
 class WindowedMagnifier:
-	"""
-	Base class for magnifiers that use a separate window to display magnified content.
-	Provides common functionality for creating and managing the magnifier window and panel.
+	"""Mixin for magnifiers that display content in a separate overlay window.
+
+	Uses a native Win32 overlay window (:class:`MagnifierOverlayWindow`) to
+	ensure the magnified view is:
+
+	* invisible to NVDA and other accessibility tools,
+	* excluded from screen capture (no infinite feedback with the system magnifier),
+	* fully click-through.
 	"""
 
 	def __init__(self, windowMagnifierParameters: WindowMagnifierParameters):
-		"""
-		Initialize the windowed magnifier.
+		"""Create the overlay window.
 
-		:param windowMagnifierParameters: Parameters defining the magnifier window configuration
+		:param windowMagnifierParameters: Configuration for the overlay window.
 		"""
 		self.windowMagnifierParameters = windowMagnifierParameters
-		self._frame = MagnifierFrame(
-			title=self.windowMagnifierParameters.title,
-			frameType="magnifier",
-			screenSize=self.windowMagnifierParameters.windowSize,
-			windowMagnifierParameters=self.windowMagnifierParameters,
+		self._overlayWindow: MagnifierOverlayWindow | None = MagnifierOverlayWindow(
+			windowMagnifierParameters,
 		)
-		self._panel = self._frame.panel
-
-	def _applyColorFilter(self, image: wx.Image, filterType: Filter) -> wx.Image:
-		"""
-		Apply color filter directly on bytes for optimal performance.
-
-		:param image: The image to apply the filter to
-		:param filterType: The filter type to apply (NORMAL, GRAYSCALE, INVERTED)
-		:return: The filtered image
-		"""
-		if filterType == Filter.NORMAL or not image or not image.IsOk():
-			return image
-
-		width, height = image.GetWidth(), image.GetHeight()
-		data = image.GetData()  # Returns RGB data as bytes
-
-		# Use bytearray for direct manipulation (faster than array.array)
-		rgb_data = bytearray(data)
-
-		if filterType == Filter.GRAYSCALE:
-			# Process 3 bytes at a time (R, G, B)
-			for i in range(0, len(rgb_data), 3):
-				r, g, b = rgb_data[i], rgb_data[i + 1], rgb_data[i + 2]
-				# Standard grayscale formula (ITU-R BT.601)
-				gray = int(0.299 * r + 0.587 * g + 0.114 * b)
-				rgb_data[i] = rgb_data[i + 1] = rgb_data[i + 2] = gray
-
-		elif filterType == Filter.INVERTED:
-			# Invert all values in place
-			for i in range(len(rgb_data)):
-				rgb_data[i] = 255 - rgb_data[i]
-
-		# Create new image with modified data
-		new_image = wx.Image(width, height)
-		new_image.SetData(bytes(rgb_data))
-		return new_image
 
 	def _setContent(self, magnifierParameters: MagnifierParameters, zoomLevel: float) -> None:
+		"""Capture screen content and display it in the overlay window.
+
+		:param magnifierParameters: What area to capture and which filter to apply.
+		:param zoomLevel: Current zoom level (already factored into *magnifierParameters*).
 		"""
-		Update the magnifier panel with captured and processed content.
+		if not self._overlayWindow or not self._overlayWindow.handle:
+			log.debug("No overlay window available for content update")
+			return
 
-		:param magnifierParameters: Parameters defining what and how to capture
-		:param zoomLevel: The zoom magnification level to apply
-		"""
-		content = self._getContent(magnifierParameters, zoomLevel)
-		if self._panel:
-			self._panel.setContent(content)
-		else:
-			log.debug("No panel available to set content")
-
-	def _destroyWindow(self) -> None:
-		"""Destroy the magnifier window and clean up resources."""
-		if self._frame:
-			self._frame.Destroy()
-			self._frame = None
-			self._panel = None
-
-	def _getContent(self, magnifierParameters: MagnifierParameters, zoomLevel: float) -> wx.Bitmap | None:
-		"""
-		Capture the screen area defined by magnifierParameters and return it as a scaled bitmap.
-
-		:param magnifierParameters: The parameters defining the area to capture
-		:param zoomLevel: The zoom level to apply to the captured content
-		:return: A wx.Bitmap scaled to fill the panel, or None if capture fails
-		"""
-		if not self._panel:
-			log.warning("No panel available for capture")
-			return None
-
-		panelSize = self._panel.GetSize()
-		panelWidth, panelHeight = panelSize.width, panelSize.height
-
-		# Calculate the size of the area to capture based on zoom level
-		captureWidth = int(panelWidth / zoomLevel)
-		captureHeight = int(panelHeight / zoomLevel)
-		captureLeft = int(magnifierParameters.coordinates.x)
-		captureTop = int(magnifierParameters.coordinates.y)
-
-		# Capture screen
-		screen = wx.ScreenDC()
-		bitmap = wx.Bitmap(captureWidth, captureHeight)
-		memoryDc = wx.MemoryDC()
-		memoryDc.SelectObject(bitmap)
-		success = memoryDc.Blit(0, 0, captureWidth, captureHeight, screen, captureLeft, captureTop)
-		memoryDc.SelectObject(wx.NullBitmap)
-
-		log.debug(
-			f"Capture at ({captureLeft}, {captureTop}) "
-			f"size {captureWidth}x{captureHeight} "
-			f"zoom {zoomLevel}x -> panel {panelWidth}x{panelHeight}",
+		self._overlayWindow.updateContent(
+			captureX=magnifierParameters.coordinates.x,
+			captureY=magnifierParameters.coordinates.y,
+			captureW=magnifierParameters.magnifierSize.width,
+			captureH=magnifierParameters.magnifierSize.height,
+			filterType=magnifierParameters.filter,
 		)
 
-		if success and bitmap.IsOk():
-			# Convert to image
-			image = bitmap.ConvertToImage()
-
-			image = self._applyColorFilter(image, magnifierParameters.filter)
-
-			# Scale image to fill the entire panel (this applies the zoom magnification)
-			magnifiedImage = image.Scale(panelWidth, panelHeight, wx.IMAGE_QUALITY_BICUBIC)
-			magnifiedBitmap = wx.Bitmap(magnifiedImage)
-			return magnifiedBitmap
-		else:
-			log.error(
-				f"Screen capture failed at ({captureLeft}, {captureTop}) size {captureWidth}x{captureHeight}",
-			)
-			return None
+	def _destroyWindow(self) -> None:
+		"""Destroy the overlay window and release all resources."""
+		if self._overlayWindow:
+			self._overlayWindow.destroy()
+			self._overlayWindow = None

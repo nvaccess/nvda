@@ -10,18 +10,11 @@ from _magnifier.utils.types import (
 	FixedWindowPosition,
 )
 from _magnifier.fixedMagnifier import FixedMagnifier
-from _magnifier.utils.windowCreator import MagnifierFrame, WindowedMagnifier
-import wx
+from _magnifier.utils.windowCreator import WindowedMagnifier
 
 
 class TestFixedMagnifier(unittest.TestCase):
 	"""Tests for the FixedMagnifier class."""
-
-	@classmethod
-	def setUpClass(cls):
-		"""Setup that runs once for all tests."""
-		if not wx.GetApp():
-			cls.app = wx.App(False)
 
 	def setUp(self):
 		"""Setup before each test."""
@@ -32,19 +25,23 @@ class TestFixedMagnifier(unittest.TestCase):
 					"_magnifier.fixedMagnifier.getDefaultFixedWindowPosition",
 					return_value=FixedWindowPosition.TOP_LEFT,
 				):
-					# Mock Show to prevent window from being displayed during tests
-					with patch.object(MagnifierFrame, "Show"):
+					# Mock MagnifierOverlayWindow to prevent real Win32 window creation
+					with patch(
+						"_magnifier.utils.windowCreator.MagnifierOverlayWindow",
+					) as MockOverlay:
+						self.mockOverlayWindow = MagicMock()
+						self.mockOverlayWindow.handle = 12345
+						MockOverlay.return_value = self.mockOverlayWindow
 						self.magnifier = FixedMagnifier()
 
 	def tearDown(self):
 		"""Cleanup after each test."""
-		if hasattr(self, "magnifier") and self.magnifier._frame:
-			self.magnifier._frame.Destroy()
+		if hasattr(self, "magnifier") and self.magnifier._overlayWindow:
+			self.magnifier._overlayWindow = None
 
 	def test_init(self):
 		"""Test initialization of FixedMagnifier."""
-		self.assertIsNotNone(self.magnifier._frame)
-		self.assertIsNotNone(self.magnifier._panel)
+		self.assertIsNotNone(self.magnifier._overlayWindow)
 		self.assertIsNotNone(self.magnifier._windowParameters)
 		self.assertEqual(self.magnifier._currentCoordinates.x, 0)
 		self.assertEqual(self.magnifier._currentCoordinates.y, 0)

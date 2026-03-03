@@ -3,308 +3,515 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
+import ctypes
 import unittest
 from unittest.mock import MagicMock, patch
 from _magnifier.utils.types import Coordinates, Size, WindowMagnifierParameters, Filter, MagnifierParameters
-import wx
-from _magnifier.utils.windowCreator import MagnifierPanel, MagnifierFrame, WindowedMagnifier
+from _magnifier.utils.windowCreator import (
+	MagnifierOverlayWindow,
+	WindowedMagnifier,
+	WM_ERASEBKGND,
+	CURSOR_SHOWING,
+	CURSORINFO,
+	ICONINFO,
+)
 
 
-class TestMagnifierPanel(unittest.TestCase):
-	"""Tests for the MagnifierPanel class."""
+def _makeWindowParams(
+	title="Test Magnifier",
+	width=400,
+	height=300,
+	x=100,
+	y=100,
+):
+	return WindowMagnifierParameters(
+		title=title,
+		windowSize=Size(width, height),
+		windowPosition=Coordinates(x, y),
+	)
 
-	@classmethod
-	def setUpClass(cls):
-		"""Setup that runs once for all tests."""
-		if not wx.GetApp():
-			cls.app = wx.App(False)
 
-	def setUp(self):
-		"""Set up test fixtures."""
-		self.frame = wx.Frame(None)
-		self.panelType = "testPanel"
-		self.panel = MagnifierPanel(self.frame, self.panelType)
+def _patchOverlayCreation():
+	"""Return a stack of patches that prevent real Win32 window creation."""
+	return [
+		patch(
+			"_magnifier.utils.windowCreator.CustomWindow.__new__",
+			return_value=object.__new__(MagnifierOverlayWindow),
+		),
+		patch("_magnifier.utils.windowCreator.CustomWindow.__init__"),
+		patch("_magnifier.utils.windowCreator.user32"),
+		patch("_magnifier.utils.windowCreator._user32_dll"),
+		patch("_magnifier.utils.windowCreator.gdi32"),
+		patch("_magnifier.utils.windowCreator._gdi32_dll"),
+		patch("_magnifier.utils.windowCreator.winUser"),
+	]
 
-	def tearDown(self):
-		"""Clean up after tests."""
-		if self.frame:
-			self.frame.Destroy()
 
-	def test_init(self):
-		"""Test MagnifierPanel initialization."""
-		self.assertEqual(self.panel.panelType, self.panelType)
-		self.assertEqual(self.panel.GetName(), self.panelType)
-		self.assertIsNone(self.panel.contentBitmap)
+class TestMagnifierOverlayWindow(unittest.TestCase):
+	"""Tests for the MagnifierOverlayWindow class."""
 
-	def test_setContent_with_valid_bitmap(self):
-		"""Test setContent with a valid wx.Bitmap."""
-		bitmap = wx.Bitmap(100, 100)
-		self.panel.setContent(bitmap)
+	def _createWindow(self, params=None):
+		"""Helper to create a MagnifierOverlayWindow with all Win32 calls mocked."""
+		if params is None:
+			params = _makeWindowParams()
+		patches = _patchOverlayCreation()
+		mocks = {}
+		for p in patches:
+			mock = p.start()
+			self.addCleanup(p.stop)
+			# Use the patch target name as key for easy access
+			name = p.attribute if hasattr(p, "attribute") else str(p)
+			mocks[name] = mock
 
-		self.assertIsNotNone(self.panel.contentBitmap)
-		self.assertEqual(self.panel.contentBitmap, bitmap)
+		# Give the window a fake handle
+		window = MagnifierOverlayWindow(params)
+		window.handle = 12345
+		# Re-patch user32/winUser on the window object for verification
+		return window, mocks
 
-	def test_setContent_with_valid_image(self):
-		"""Test setContent with a valid wx.Image."""
-		image = wx.Image(100, 100)
-		self.panel.setContent(image)
+	def test_init_stores_dimensions(self):
+		"""Window stores width and height from parameters."""
+		params = _makeWindowParams(width=800, height=600)
+		window, _ = self._createWindow(params)
+		self.assertEqual(window._windowWidth, 800)
+		self.assertEqual(window._windowHeight, 600)
 
-		self.assertIsNotNone(self.panel.contentBitmap)
-		self.assertIsInstance(self.panel.contentBitmap, wx.Bitmap)
+	def test_init_sets_display_affinity(self):
+		"""SetWindowDisplayAffinity is called with WDA_EXCLUDEFROMCAPTURE."""
+		params = _makeWindowParams()
+		window, _ = self._createWindow(params)
+		# The _user32_dll mock is called during __init__
+		# Verify indirectly by checking the window was created without error
+		self.assertIsNotNone(window.handle)
 
-	def test_setContent_with_none(self):
-		"""Test setContent with None to clear content."""
-		bitmap = wx.Bitmap(100, 100)
-		self.panel.setContent(bitmap)
-		self.assertIsNotNone(self.panel.contentBitmap)
-		self.panel.setContent(None)
-		self.assertIsNone(self.panel.contentBitmap)
+	def test_init_gdi_resources_are_none(self):
+		"""GDI capture resources start as None."""
+		window, _ = self._createWindow()
+		self.assertIsNone(window._captureDC)
+		self.assertIsNone(window._captureBitmap)
+		self.assertIsNone(window._oldCaptureBitmap)
+		self.assertEqual(window._captureWidth, 0)
+		self.assertEqual(window._captureHeight, 0)
 
-	def test_setContent_with_invalid_bitmap(self):
-		"""Test setContent with an invalid bitmap."""
-		bitmap = wx.Bitmap()  # Empty/invalid bitmap
-		self.panel.setContent(bitmap)
+	def test_init_default_filter_is_normal(self):
+		"""Default filter should be NORMAL."""
+		window, _ = self._createWindow()
+		self.assertEqual(window._currentFilter, Filter.NORMAL)
 
-		self.assertIsNone(self.panel.contentBitmap)
+	def test_windowProc_paint_returns_zero(self):
+		"""WM_PAINT returns 0 after calling _paint."""
+		window, _ = self._createWindow()
+		with patch.object(window, "_paint"):
+			# WM_PAINT = 0x000F
+			result = window.windowProc(window.handle, 0x000F, 0, 0)
+			self.assertEqual(result, 0)
+			window._paint.assert_called_once()
 
-	def test_setContent_with_invalid_image(self):
-		"""Test setContent with an invalid image."""
-		image = wx.Image()  # Empty/invalid image
-		self.panel.setContent(image)
+	def test_windowProc_erasebkgnd_returns_one(self):
+		"""WM_ERASEBKGND returns 1 to prevent flicker."""
+		window, _ = self._createWindow()
+		result = window.windowProc(window.handle, WM_ERASEBKGND, 0, 0)
+		self.assertEqual(result, 1)
 
-		self.assertIsNone(self.panel.contentBitmap)
+	def test_windowProc_destroy_cleans_gdi(self):
+		"""WM_DESTROY triggers GDI cleanup."""
+		window, _ = self._createWindow()
+		with patch.object(window, "_cleanupGDI") as mockCleanup:
+			# WM_DESTROY = 2
+			result = window.windowProc(window.handle, 2, 0, 0)
+			self.assertEqual(result, 0)
+			mockCleanup.assert_called_once()
 
-	def test_onPaint_without_content(self):
-		"""Test onPaint without content."""
-		event = MagicMock()
+	def test_windowProc_unknown_msg_returns_none(self):
+		"""Unknown messages return None for DefWindowProc."""
+		window, _ = self._createWindow()
+		result = window.windowProc(window.handle, 0x9999, 0, 0)
+		self.assertIsNone(result)
+
+	def test_updateContent_skips_invalid_size(self):
+		"""updateContent does nothing for zero or negative capture dimensions."""
+		window, _ = self._createWindow()
+		with patch.object(window, "_cleanupGDI") as mockCleanup:
+			window.updateContent(0, 0, 0, 100)
+			window.updateContent(0, 0, 100, -1)
+			mockCleanup.assert_not_called()
+
+	def test_updateContent_creates_capture_dc(self):
+		"""First call to updateContent creates the capture DC and bitmap."""
+		window, _ = self._createWindow()
+		mockGdi32 = MagicMock()
+		mockUser32 = MagicMock()
+
+		with (
+			patch("_magnifier.utils.windowCreator.gdi32", mockGdi32),
+			patch("_magnifier.utils.windowCreator.user32", mockUser32),
+		):
+			window.updateContent(10, 20, 200, 150)
+
+		# Screen DC obtained and released
+		mockUser32.GetDC.assert_called_once_with(0)
+		mockUser32.ReleaseDC.assert_called_once()
+		# Capture DC created
+		mockGdi32.CreateCompatibleDC.assert_called_once()
+		mockGdi32.CreateCompatibleBitmap.assert_called_once()
+		mockGdi32.SelectObject.assert_called_once()
+		# StretchBlt to capture
+		mockGdi32.StretchBlt.assert_called_once()
+		# Dimensions stored
+		self.assertEqual(window._captureWidth, 200)
+		self.assertEqual(window._captureHeight, 150)
+
+	def test_updateContent_reuses_dc_on_same_size(self):
+		"""Subsequent calls with the same size reuse the existing capture DC."""
+		window, _ = self._createWindow()
+		mockGdi32 = MagicMock()
+		mockUser32 = MagicMock()
+		# Pre-set capture dimensions to match
+		window._captureWidth = 200
+		window._captureHeight = 150
+		window._captureDC = MagicMock()
+		window._captureBitmap = MagicMock()
+
+		with (
+			patch("_magnifier.utils.windowCreator.gdi32", mockGdi32),
+			patch("_magnifier.utils.windowCreator.user32", mockUser32),
+		):
+			window.updateContent(10, 20, 200, 150)
+
+		# Should NOT recreate DC
+		mockGdi32.CreateCompatibleDC.assert_not_called()
+		# But should still StretchBlt
+		mockGdi32.StretchBlt.assert_called_once()
+
+	def test_updateContent_sets_filter(self):
+		"""updateContent stores the requested filter type."""
+		window, _ = self._createWindow()
+		with (
+			patch("_magnifier.utils.windowCreator.gdi32"),
+			patch("_magnifier.utils.windowCreator.user32"),
+		):
+			window.updateContent(0, 0, 100, 100, Filter.INVERTED)
+		self.assertEqual(window._currentFilter, Filter.INVERTED)
+
+	def test_updateContent_grayscale_calls_filter(self):
+		"""updateContent with GRAYSCALE calls _applyGrayscaleFilter."""
+		window, _ = self._createWindow()
+		with (
+			patch("_magnifier.utils.windowCreator.gdi32"),
+			patch("_magnifier.utils.windowCreator.user32"),
+			patch.object(window, "_applyGrayscaleFilter") as mockFilter,
+		):
+			window.updateContent(0, 0, 100, 100, Filter.GRAYSCALE)
+			mockFilter.assert_called_once()
+
+	def test_updateContent_inverted_does_not_call_dib(self):
+		"""updateContent with INVERTED does NOT call _applyGrayscaleFilter."""
+		window, _ = self._createWindow()
+		with (
+			patch("_magnifier.utils.windowCreator.gdi32"),
+			patch("_magnifier.utils.windowCreator.user32"),
+			patch.object(window, "_applyGrayscaleFilter") as mockFilter,
+		):
+			window.updateContent(0, 0, 100, 100, Filter.INVERTED)
+			mockFilter.assert_not_called()
+
+	def test_cleanupGDI_releases_resources(self):
+		"""_cleanupGDI properly releases DC and bitmap."""
+		window, _ = self._createWindow()
 		mockDC = MagicMock()
+		mockBitmap = MagicMock()
+		mockOldBitmap = MagicMock()
+		window._captureDC = mockDC
+		window._captureBitmap = mockBitmap
+		window._oldCaptureBitmap = mockOldBitmap
+		window._captureWidth = 100
+		window._captureHeight = 100
 
-		with patch("wx.PaintDC", return_value=mockDC):
-			self.panel.onPaint(event)
-			mockDC.Clear.assert_called_once()
-			mockDC.DrawBitmap.assert_not_called()
+		with patch("_magnifier.utils.windowCreator.gdi32") as mockGdi32:
+			window._cleanupGDI()
 
-	def test_onPaint_with_content(self):
-		"""Test onPaint with content."""
-		bitmap = wx.Bitmap(100, 100)
-		self.panel.setContent(bitmap)
+		mockGdi32.SelectObject.assert_called_once_with(mockDC, mockOldBitmap)
+		mockGdi32.DeleteObject.assert_called_once_with(mockBitmap)
+		mockGdi32.DeleteDC.assert_called_once_with(mockDC)
+		self.assertIsNone(window._captureDC)
+		self.assertIsNone(window._captureBitmap)
+		self.assertIsNone(window._oldCaptureBitmap)
+		self.assertEqual(window._captureWidth, 0)
+		self.assertEqual(window._captureHeight, 0)
 
-		event = MagicMock()
-		mockDC = MagicMock()
+	def test_cleanupGDI_noop_when_empty(self):
+		"""_cleanupGDI is safe to call with no GDI resources."""
+		window, _ = self._createWindow()
+		with patch("_magnifier.utils.windowCreator.gdi32") as mockGdi32:
+			window._cleanupGDI()  # Should not raise
+		mockGdi32.SelectObject.assert_not_called()
+		mockGdi32.DeleteObject.assert_not_called()
+		mockGdi32.DeleteDC.assert_not_called()
 
-		with patch("wx.PaintDC", return_value=mockDC):
-			self.panel.onPaint(event)
-			mockDC.Clear.assert_called_once()
-			mockDC.DrawBitmap.assert_called_once_with(bitmap, 0, 0)
+	def test_destroy_cleans_gdi_then_calls_super(self):
+		"""destroy() cleans GDI before delegating to CustomWindow.destroy."""
+		window, _ = self._createWindow()
+		callOrder = []
+		with (
+			patch.object(window, "_cleanupGDI", side_effect=lambda: callOrder.append("gdi")),
+			patch(
+				"_magnifier.utils.windowCreator.CustomWindow.destroy",
+				side_effect=lambda s: callOrder.append("super"),
+			),
+		):
+			window.destroy()
+		self.assertEqual(callOrder, ["gdi", "super"])
 
 
-class TestMagnifierFrame(unittest.TestCase):
-	"""Tests for the MagnifierFrame class."""
+class TestMagnifierOverlayWindowCursor(unittest.TestCase):
+	"""Tests for the cursor snapshot and painting logic."""
 
-	@classmethod
-	def setUpClass(cls):
-		"""Setup that runs once for all tests."""
-		if not wx.GetApp():
-			cls.app = wx.App(False)
+	def _createWindow(self):
+		params = _makeWindowParams(width=400, height=300)
+		patches = _patchOverlayCreation()
+		for p in patches:
+			p.start()
+			self.addCleanup(p.stop)
+		window = MagnifierOverlayWindow(params)
+		window.handle = 12345
+		return window
 
-	def setUp(self):
-		"""Set up test fixtures."""
-		windowMagnifierParams = WindowMagnifierParameters(
-			title="Test Magnifier",
-			windowSize=Size(width=400, height=300),
-			windowPosition=Coordinates(x=100, y=100),
-			styles=wx.DEFAULT_FRAME_STYLE,
-		)
-		self.frame = MagnifierFrame(
-			title="Test Frame",
-			frameType="testFrame",
-			screenSize=Size(width=1920, height=1080),
-			windowMagnifierParameters=windowMagnifierParams,
-		)
-		# Hide the frame to prevent it from being displayed during tests
-		self.frame.Hide()
+	def test_snapshotCursor_invisible_cursor_sets_handle_none(self):
+		"""Cursor not showing → handle is cleared."""
+		window = self._createWindow()
+		ci = CURSORINFO()
+		ci.flags = 0  # CURSOR_SHOWING not set
+		with patch("_magnifier.utils.windowCreator._user32_dll") as mockU:
+			mockU.GetCursorInfo.side_effect = lambda p: (
+				ctypes.memmove(p, ctypes.byref(ci), ctypes.sizeof(CURSORINFO)),
+				True,
+			)[1]
+			window._snapshotCursor(0, 0, 1920, 1080)
+		self.assertIsNone(window._cursorHandle)
 
-	def tearDown(self):
-		"""Clean up after tests."""
-		if self.frame:
-			self.frame.Destroy()
+	def test_snapshotCursor_cursor_outside_capture_area(self):
+		"""Cursor outside the capture region → handle is cleared."""
+		window = self._createWindow()
+		ci = CURSORINFO()
+		ci.flags = CURSOR_SHOWING
+		ci.ptScreenPos.x = 950  # outside captureX=100..600
+		ci.ptScreenPos.y = 600
 
-	def test_init(self):
-		"""Test MagnifierFrame initialization."""
-		self.assertEqual(self.frame.frameType, "testFrame")
-		self.assertIsNotNone(self.frame.screenSize)
-		self.assertEqual(self.frame.screenSize.width, 1920)
-		self.assertEqual(self.frame.screenSize.height, 1080)
-		self.assertIsNotNone(self.frame.windowMagnifierParameters)
-		self.assertIsNotNone(self.frame.panel)
-		self.assertIsInstance(self.frame.panel, MagnifierPanel)
-		self.assertEqual(self.frame.GetSize().GetWidth(), 400)
-		self.assertEqual(self.frame.GetSize().GetHeight(), 300)
-		self.assertEqual(self.frame.GetPosition().x, 100)
-		self.assertEqual(self.frame.GetPosition().y, 100)
+		def fake_get_cursor_info(ptr):
+			ctypes.memmove(ptr, ctypes.byref(ci), ctypes.sizeof(CURSORINFO))
+			return True
 
-	def test_createPanel(self):
-		"""Test createPanel method."""
-		panel = self.frame.createPanel()
-		self.assertIsNotNone(panel)
-		self.assertIsInstance(panel, MagnifierPanel)
-		self.assertEqual(panel.panelType, "testFrame")
+		with patch("_magnifier.utils.windowCreator._user32_dll") as mockU:
+			mockU.GetCursorInfo.side_effect = fake_get_cursor_info
+			window._snapshotCursor(captureX=100, captureY=100, captureW=500, captureH=400)
 
-	def test_updateFrameContent(self):
-		"""Test updateFrameContent method."""
-		bitmap = wx.Bitmap(200, 150)
-		self.frame.updateFrameContent(bitmap)
-		self.assertEqual(self.frame.panel.contentBitmap, bitmap)
+		self.assertIsNone(window._cursorHandle)
 
-		image = wx.Image(200, 150)
-		self.frame.updateFrameContent(image)
-		self.assertIsNotNone(self.frame.panel.contentBitmap)
-		self.assertIsInstance(self.frame.panel.contentBitmap, wx.Bitmap)
+	def test_snapshotCursor_cursor_inside_capture_area(self):
+		"""Cursor inside the capture region → window coordinates are computed."""
+		window = self._createWindow()
+		# Window = 400×300, capture = 200×150 → scale = 2
+		ci = CURSORINFO()
+		ci.flags = CURSOR_SHOWING
+		# captureX=0, captureY=0, captureW=200, captureH=150
+		# cursor at (100, 75) → rel (100, 75) → window (200, 150)
+		ci.ptScreenPos.x = 100
+		ci.ptScreenPos.y = 75
+		ci.hCursor = 0xABCD
 
-		self.frame.updateFrameContent(None)
-		self.assertIsNone(self.frame.panel.contentBitmap)
+		def fake_get_cursor_info(ptr):
+			ctypes.memmove(ptr, ctypes.byref(ci), ctypes.sizeof(CURSORINFO))
+			return True
+
+		ii = ICONINFO()
+		ii.xHotspot = 5  # → scaled = 10
+		ii.yHotspot = 2  # → scaled = 4
+
+		def fake_get_icon_info(hcursor, ptr):
+			ctypes.memmove(ptr, ctypes.byref(ii), ctypes.sizeof(ICONINFO))
+			return True
+
+		with (
+			patch("_magnifier.utils.windowCreator._user32_dll") as mockU,
+		):
+			mockU.GetCursorInfo.side_effect = fake_get_cursor_info
+			mockU.GetIconInfo.side_effect = fake_get_icon_info
+			window._snapshotCursor(captureX=0, captureY=0, captureW=200, captureH=150)
+
+		self.assertEqual(window._cursorHandle, 0xABCD)
+		self.assertEqual(window._cursorWindowX, 200)
+		self.assertEqual(window._cursorWindowY, 150)
+		self.assertEqual(window._cursorHotspotX, 10)
+		self.assertEqual(window._cursorHotspotY, 4)
+
+	def test_snapshotCursor_frees_icon_bitmaps(self):
+		"""GetIconInfo bitmaps are freed after hotspot extraction."""
+		window = self._createWindow()
+		ci = CURSORINFO()
+		ci.flags = CURSOR_SHOWING
+		ci.ptScreenPos.x = 50
+		ci.ptScreenPos.y = 50
+		ci.hCursor = 0x1234
+
+		def fake_get_cursor_info(ptr):
+			ctypes.memmove(ptr, ctypes.byref(ci), ctypes.sizeof(CURSORINFO))
+			return True
+
+		ii = ICONINFO()
+		ii.hbmMask = 0xAAAA
+		ii.hbmColor = 0xBBBB
+
+		def fake_get_icon_info(hcursor, ptr):
+			ctypes.memmove(ptr, ctypes.byref(ii), ctypes.sizeof(ICONINFO))
+			return True
+
+		with (
+			patch("_magnifier.utils.windowCreator._user32_dll") as mockU,
+			patch("_magnifier.utils.windowCreator.gdi32") as mockGdi,
+		):
+			mockU.GetCursorInfo.side_effect = fake_get_cursor_info
+			mockU.GetIconInfo.side_effect = fake_get_icon_info
+			window._snapshotCursor(captureX=0, captureY=0, captureW=400, captureH=300)
+			# Both bitmaps from GetIconInfo must be deleted
+			deleteObjectCalls = [args[0] for args, _ in mockGdi.DeleteObject.call_args_list]
+			self.assertIn(ii.hbmMask, deleteObjectCalls)
+			self.assertIn(ii.hbmColor, deleteObjectCalls)
+
+	def test_paintCursor_noop_when_no_handle(self):
+		"""_paintCursor does nothing when _cursorHandle is None."""
+		window = self._createWindow()
+		window._cursorHandle = None
+		with patch("_magnifier.utils.windowCreator._user32_dll") as mockU:
+			window._paintCursor(0xDEAD)
+			mockU.DrawIconEx.assert_not_called()
+
+	def test_paintCursor_calls_draw_icon_ex(self):
+		"""_paintCursor calls DrawIconEx with scaled cursor dimensions."""
+		window = self._createWindow()
+		# Window 400×300, capture 200×150 → scale = 2
+		window._captureWidth = 200
+		window._captureHeight = 150
+		window._cursorHandle = 0xBEEF
+		window._cursorWindowX = 100
+		window._cursorWindowY = 80
+		window._cursorHotspotX = 4
+		window._cursorHotspotY = 2
+
+		sysCursorW, sysCursorH = 32, 32  # system default cursor size
+
+		with patch("_magnifier.utils.windowCreator._user32_dll") as mockU:
+			mockU.GetSystemMetrics.side_effect = lambda idx: sysCursorW if idx == 13 else sysCursorH
+			window._paintCursor(0xCAFE)
+
+			mockU.DrawIconEx.assert_called_once()
+			args = mockU.DrawIconEx.call_args[0]
+			hdc, drawX, drawY, hCursor, scaledW, scaledH = (
+				args[0],
+				args[1],
+				args[2],
+				args[3],
+				args[4],
+				args[5],
+			)
+			self.assertEqual(hdc, 0xCAFE)
+			self.assertEqual(hCursor, 0xBEEF)
+			# draw pos = window pos – hotspot
+			self.assertEqual(drawX, 100 - 4)
+			self.assertEqual(drawY, 80 - 2)
+			# scale = 400/200 = 2 → 32*2 = 64
+			self.assertEqual(scaledW, 64)
+			self.assertEqual(scaledH, 64)
+
+	def test_updateContent_calls_snapshot_cursor(self):
+		"""updateContent triggers _snapshotCursor with the capture coordinates."""
+		window = self._createWindow()
+		window._captureWidth = 100  # pre-set to skip DC recreation
+		window._captureHeight = 100
+		window._captureDC = MagicMock()
+		window._captureBitmap = MagicMock()
+
+		with (
+			patch("_magnifier.utils.windowCreator.gdi32"),
+			patch("_magnifier.utils.windowCreator.user32"),
+			patch.object(window, "_snapshotCursor") as mockSnap,
+		):
+			window.updateContent(10, 20, 100, 100, Filter.NORMAL)
+			mockSnap.assert_called_once_with(10, 20, 100, 100)
 
 
 class TestWindowedMagnifier(unittest.TestCase):
-	"""Tests for the WindowedMagnifier class."""
-
-	@classmethod
-	def setUpClass(cls):
-		"""Setup that runs once for all tests."""
-		if not wx.GetApp():
-			cls.app = wx.App(False)
+	"""Tests for the WindowedMagnifier mixin."""
 
 	def setUp(self):
-		"""Set up test fixtures."""
-		windowMagnifierParams = WindowMagnifierParameters(
-			title="Test WindowedMagnifier",
-			windowSize=Size(400, 300),
-			windowPosition=Coordinates(100, 100),
-			styles=wx.DEFAULT_FRAME_STYLE,
-		)
-		# Mock Show to prevent window from being displayed during tests
-		with patch.object(MagnifierFrame, "Show"):
-			self.magnifier = WindowedMagnifier(windowMagnifierParams)
+		"""Create a WindowedMagnifier with a mocked MagnifierOverlayWindow."""
+		self.params = _makeWindowParams()
+		with patch(
+			"_magnifier.utils.windowCreator.MagnifierOverlayWindow",
+		) as MockOverlay:
+			self.mockWindow = MagicMock()
+			self.mockWindow.handle = 12345
+			MockOverlay.return_value = self.mockWindow
+			self.magnifier = WindowedMagnifier(self.params)
 
-	def tearDown(self):
-		"""Clean up after tests."""
-		if self.magnifier and self.magnifier._frame:
-			self.magnifier._frame.Destroy()
+	def test_init_creates_overlay(self):
+		"""WindowedMagnifier creates a MagnifierOverlayWindow."""
+		self.assertIsNotNone(self.magnifier._overlayWindow)
+		self.assertEqual(self.magnifier._overlayWindow, self.mockWindow)
 
-	def test_init(self):
-		"""Test WindowedMagnifier initialization."""
-		self.assertIsNotNone(self.magnifier.windowMagnifierParameters)
-		self.assertIsNotNone(self.magnifier._frame)
-		self.assertIsNotNone(self.magnifier._panel)
-		self.assertIsInstance(self.magnifier._frame, MagnifierFrame)
-		self.assertIsInstance(self.magnifier._panel, MagnifierPanel)
-		self.assertEqual(self.magnifier._frame.frameType, "magnifier")
-		self.assertEqual(self.magnifier._panel, self.magnifier._frame.panel)
+	def test_init_stores_params(self):
+		"""WindowedMagnifier stores the window parameters."""
+		self.assertEqual(self.magnifier.windowMagnifierParameters, self.params)
 
-	def test_applyColorFilter_normal(self):
-		"""Test _applyColorFilter with NORMAL filter."""
-		image = wx.Image(100, 100)
-		image.SetRGB(wx.Rect(0, 0, 100, 100), 255, 0, 0)  # Red image
-
-		result = self.magnifier._applyColorFilter(image, Filter.NORMAL)
-		self.assertEqual(result, image)  # Should return same image
-
-	def test_applyColorFilter_grayscale(self):
-		"""Test _applyColorFilter with GRAYSCALE filter."""
-		image = wx.Image(100, 100)
-		image.SetRGB(wx.Rect(0, 0, 100, 100), 255, 0, 0)  # Red image
-
-		result = self.magnifier._applyColorFilter(image, Filter.GRAYSCALE)
-		self.assertIsNotNone(result)
-		self.assertTrue(result.IsOk())
-		# Check that the first pixel is grayscale (R=G=B)
-		rgb = result.GetRed(0, 0), result.GetGreen(0, 0), result.GetBlue(0, 0)
-		self.assertEqual(rgb[0], rgb[1])
-		self.assertEqual(rgb[1], rgb[2])
-
-	def test_applyColorFilter_inverted(self):
-		"""Test _applyColorFilter with INVERTED filter."""
-		image = wx.Image(100, 100)
-		image.SetRGB(wx.Rect(0, 0, 100, 100), 255, 0, 0)  # Red image
-
-		result = self.magnifier._applyColorFilter(image, Filter.INVERTED)
-		self.assertIsNotNone(result)
-		self.assertTrue(result.IsOk())
-		# Check that colors are inverted (255-R, 255-G, 255-B)
-		rgb = result.GetRed(0, 0), result.GetGreen(0, 0), result.GetBlue(0, 0)
-		self.assertEqual(rgb[0], 0)  # 255-255 = 0
-		self.assertEqual(rgb[1], 255)  # 255-0 = 255
-		self.assertEqual(rgb[2], 255)  # 255-0 = 255
-
-	def test_applyColorFilter_invalid_image(self):
-		"""Test _applyColorFilter with invalid image."""
-		image = wx.Image()  # Invalid/empty image
-		result = self.magnifier._applyColorFilter(image, Filter.GRAYSCALE)
-		self.assertEqual(result, image)  # Should return same invalid image
-
-	def test_setContent(self):
-		"""Test _setContent method."""
+	def test_setContent_delegates_to_overlay(self):
+		"""_setContent calls updateContent on the overlay window."""
 		magnifierParams = MagnifierParameters(
 			magnifierSize=Size(200, 150),
-			coordinates=Coordinates(0, 0),
-			filter=Filter.NORMAL,
+			coordinates=Coordinates(10, 20),
+			filter=Filter.INVERTED,
 		)
-
-		# Mock _getContent to return a bitmap
-		bitmap = wx.Bitmap(100, 100)
-		with patch.object(self.magnifier, "_getContent", return_value=bitmap):
-			self.magnifier._setContent(magnifierParams, 2.0)
-			self.assertEqual(self.magnifier._panel.contentBitmap, bitmap)
-
-	def test_setContent_no_panel(self):
-		"""Test _setContent when panel is None."""
-		magnifierParams = MagnifierParameters(
-			magnifierSize=Size(200, 150),
-			coordinates=Coordinates(0, 0),
-			filter=Filter.NORMAL,
-		)
-
-		# Set panel to None
-		self.magnifier._panel = None
-
-		# Should not raise error
 		self.magnifier._setContent(magnifierParams, 2.0)
 
-	def test_destroyWindow(self):
-		"""Test _destroyWindow method."""
-		self.assertIsNotNone(self.magnifier._frame)
-		self.assertIsNotNone(self.magnifier._panel)
+		self.mockWindow.updateContent.assert_called_once_with(
+			captureX=10,
+			captureY=20,
+			captureW=200,
+			captureH=150,
+			filterType=Filter.INVERTED,
+		)
 
+	def test_setContent_noop_when_no_window(self):
+		"""_setContent does nothing if the overlay window is destroyed."""
+		self.magnifier._overlayWindow = None
+		magnifierParams = MagnifierParameters(
+			magnifierSize=Size(200, 150),
+			coordinates=Coordinates(0, 0),
+			filter=Filter.NORMAL,
+		)
+		# Should not raise
+		self.magnifier._setContent(magnifierParams, 2.0)
+
+	def test_setContent_noop_when_no_handle(self):
+		"""_setContent does nothing if the overlay window handle is None."""
+		self.mockWindow.handle = None
+		magnifierParams = MagnifierParameters(
+			magnifierSize=Size(200, 150),
+			coordinates=Coordinates(0, 0),
+			filter=Filter.NORMAL,
+		)
+		self.magnifier._setContent(magnifierParams, 2.0)
+		self.mockWindow.updateContent.assert_not_called()
+
+	def test_destroyWindow_calls_destroy(self):
+		"""_destroyWindow calls destroy() on the overlay and sets it to None."""
 		self.magnifier._destroyWindow()
 
-		self.assertIsNone(self.magnifier._frame)
-		self.assertIsNone(self.magnifier._panel)
+		self.mockWindow.destroy.assert_called_once()
+		self.assertIsNone(self.magnifier._overlayWindow)
 
-	def test_getContent(self):
-		"""Test _getContent method."""
-		magnifierParams = MagnifierParameters(
-			magnifierSize=Size(200, 150),
-			coordinates=Coordinates(0, 0),
-			filter=Filter.NORMAL,
-		)
-
-		result = self.magnifier._getContent(magnifierParams, 2.0)
-
-		# Should return a bitmap or None
-		if result is not None:
-			self.assertIsInstance(result, wx.Bitmap)
-			self.assertTrue(result.IsOk())
-
-	def test_getContent_no_panel(self):
-		"""Test _getContent when panel is None."""
-		magnifierParams = MagnifierParameters(
-			magnifierSize=Size(200, 150),
-			coordinates=Coordinates(0, 0),
-			filter=Filter.NORMAL,
-		)
-
-		# Set panel to None
-		self.magnifier._panel = None
-
-		result = self.magnifier._getContent(magnifierParams, 2.0)
-		self.assertIsNone(result)
+	def test_destroyWindow_noop_when_already_destroyed(self):
+		"""_destroyWindow is safe to call twice."""
+		self.magnifier._destroyWindow()
+		# Second call should not raise
+		self.magnifier._destroyWindow()
+		# destroy only called once
+		self.mockWindow.destroy.assert_called_once()

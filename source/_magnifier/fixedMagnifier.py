@@ -26,8 +26,6 @@ from .config import (
 	isTrueCentered,
 )
 
-import wx
-
 
 class FixedMagnifier(Magnifier, WindowedMagnifier):
 	def __init__(self):
@@ -102,7 +100,6 @@ class FixedMagnifier(Magnifier, WindowedMagnifier):
 			title="NVDA Fixed Magnifier",
 			windowSize=windowSize,
 			windowPosition=position,
-			styles=wx.FRAME_NO_TASKBAR | wx.STAY_ON_TOP,
 		)
 
 	def _getMagnifierParameters(self, coordinates: Coordinates) -> MagnifierParameters:
