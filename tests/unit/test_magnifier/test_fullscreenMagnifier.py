@@ -212,28 +212,6 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 		magnifier._stopMagnifier()
 		self.assertFalse(magnifier._isActive)
 
-	def testFullscreenMagnifierDoesNotCrashOnTransformException(self):
-		"""_fullscreenMagnifier catches all exceptions from MagSetFullscreenTransform."""
-		magnifier = FullScreenMagnifier()
-
-		# Simulate a COM error (the exact type from the bug report)
-		from winBindings import magnification
-
-		magnification.MagSetFullscreenTransform = MagicMock(
-			side_effect=OSError("COM RPC_E_DISCONNECTED"),
-		)
-
-		# Should NOT raise — the exception must be caught internally
-		try:
-			magnifier._fullscreenMagnifier((500, 400))
-			exceptionRaised = False
-		except Exception:
-			exceptionRaised = True
-
-		self.assertFalse(exceptionRaised)
-
-		magnifier._stopMagnifier()
-
 	def testAttemptRecoverySuccess(self):
 		"""FullScreenMagnifier._attemptRecovery reinitialises API and restarts timer on success."""
 		magnifier = FullScreenMagnifier()

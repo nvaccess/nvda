@@ -155,21 +155,19 @@ class FullScreenMagnifier(Magnifier):
 
 	def _fullscreenMagnifier(self, coordinates: Coordinates) -> None:
 		"""
-		Apply full-screen magnification at given Coordinates
+		Apply full-screen magnification at given Coordinates.
+
+		Exceptions from MagSetFullscreenTransform are intentionally left to
+		propagate so that _updateMagnifier can count them and trigger recovery when needed.
 
 		:coordinates: The (x, y) coordinates to center the magnifier on
 		"""
 		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(coordinates)
-		try:
-			result = magnification.MagSetFullscreenTransform(
-				self.zoomLevel,
-				left,
-				top,
-			)
-			if not result:
-				log.debug("Failed to set full-screen transform")
-		except Exception:
-			log.error("Failed to set full-screen magnification transform", exc_info=True)
+		magnification.MagSetFullscreenTransform(
+			self.zoomLevel,
+			left,
+			top,
+		)
 
 	def _getCoordinatesForMode(
 		self,

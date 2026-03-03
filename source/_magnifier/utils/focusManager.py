@@ -146,10 +146,10 @@ class FocusManager:
 			try:
 				point = reviewPosition.pointAtStart
 				return Coordinates(point.x, point.y)
+			except (NotImplementedError, LookupError):
+				log.debug("Review position does not support pointAtStart")
 			except Exception:
-				# Review position may not support pointAtStart,
-				# or COM/UIA calls may fail unexpectedly.
-				log.debug("Failed to get review position", exc_info=True)
+				log.error("Unexpected error getting review position", exc_info=True)
 		return None
 
 	def _getNavigatorObjectLocation(self) -> Coordinates | None:
