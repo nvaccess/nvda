@@ -9,6 +9,7 @@ Contains the command functions and their logic for keyboard shortcuts.
 """
 
 from typing import Literal
+import config
 import ui
 from . import getMagnifier, initialize, terminate
 from .config import (
@@ -25,6 +26,7 @@ from .utils.types import (
 	MagnifierType,
 	FullScreenMode,
 	MagnifierAction,
+	MagnifierFollowFocusType,
 )
 from logHandler import log
 
@@ -172,6 +174,62 @@ def toggleFilter() -> None:
 				# Translators: Message announced when changing the color filter with {filter} being the new color filter.
 				"Color filter changed to {filter}",
 			).format(filter=magnifier.filterType.displayString),
+		)
+
+
+def toggleFollow(focusType: MagnifierFollowFocusType) -> None:
+	"""
+	Toggle the specified follow mode setting and update focus immediately.
+
+	:param focusType: The follow mode to toggle (mouse, system focus, review cursor, navigator object)
+	"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.TOGGLE_FOLLOW_SETTINGS,
+	):
+		if focusType == MagnifierFollowFocusType.MOUSE:
+			state = config.conf["magnifier"]["followMouse"] = not config.conf["magnifier"]["followMouse"]
+			settingsMessage = "Follow mouse"
+		elif focusType == MagnifierFollowFocusType.SYSTEM_FOCUS:
+			state = config.conf["magnifier"]["followSystemFocus"] = not config.conf["magnifier"][
+				"followSystemFocus"
+			]
+			settingsMessage = "Follow system focus"
+		elif focusType == MagnifierFollowFocusType.REVIEW:
+			state = config.conf["magnifier"]["followReview"] = not config.conf["magnifier"]["followReview"]
+			settingsMessage = "Follow review cursor"
+		elif focusType == MagnifierFollowFocusType.NAVIGATOR_OBJECT:
+			state = config.conf["magnifier"]["followNavigatorObject"] = not config.conf["magnifier"][
+				"followNavigatorObject"
+			]
+			settingsMessage = "Follow navigator object"
+
+		magnifier._focusManager.UpdateFollowedFocus()
+
+		ui.message(
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when toggling a follow setting with {setting} being the name of the setting and {state} being either "enabled" or "disabled".
+				"{setting} {state}",
+			).format(
+				setting=pgettext(
+					"magnifier",
+					# Translators: Name of the follow setting being toggled, e.g. "Follow mouse", "Follow system focus", etc.
+					settingsMessage,
+				),
+				state=pgettext(
+					"magnifier",
+					# Translators: State of the follow setting being toggled enabled.
+					"enabled",
+				)
+				if state
+				else pgettext(
+					"magnifier",
+					# Translators: State of the follow setting being toggled disabled.
+					"disabled",
+				),
+			),
 		)
 
 

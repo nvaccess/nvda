@@ -12,6 +12,7 @@ import api
 import winUser
 import mouseHandler
 from .types import Coordinates, FocusType
+from ..config import followMouse, followSystemFocus, followNavigatorObject, followReview
 
 
 class FocusManager:
@@ -25,66 +26,77 @@ class FocusManager:
 		self._lastFocusedObject: FocusType | None = None
 		self._lastMousePosition = Coordinates(0, 0)
 		self._lastSystemFocusPosition = Coordinates(0, 0)
+		self._lastReviewPosition: Coordinates | None = None
 		self._lastNavigatorObjectPosition = Coordinates(0, 0)
 		self._lastValidSystemFocusPosition = Coordinates(0, 0)
+		self._lastValidReviewPosition = Coordinates(0, 0)
 		self._lastValidNavigatorObjectPosition = Coordinates(0, 0)
 
 	def getCurrentFocusCoordinates(self) -> Coordinates:
 		"""
 		Get the current focus coordinates based on priority.
-		Priority: Mouse > System Focus > Navigator Object
+		Priority: Mouse (drag) > Mouse > System Focus > Review > Navigator Object
+
+		Each source is only considered when its corresponding setting is enabled.
 
 		:return: The (x, y) coordinates of the current focus
 		"""
-		# Get all three positions
-		systemFocusPosition = self._getSystemFocusPosition()
-		navigatorObjectPosition = self._getNavigatorObjectPosition()
 		mousePosition = self._getMousePosition()
-
-		# Check if left mouse button is pressed
+		systemFocusPosition = self._getSystemFocusPosition()
+		reviewPosition = self._getReviewPosition()
+		navigatorPosition = self._getNavigatorObjectPosition()
 		isClickPressed = mouseHandler.isLeftMouseButtonLocked()
 
-		# Track which positions have changed
-		systemFocusChanged = self._lastSystemFocusPosition != systemFocusPosition
-		navigatorObjectChanged = self._lastNavigatorObjectPosition != navigatorObjectPosition
 		mouseChanged = self._lastMousePosition != mousePosition
+		systemFocusChanged = self._lastSystemFocusPosition != systemFocusPosition
+		reviewChanged = reviewPosition is not None and self._lastReviewPosition != reviewPosition
+		navigatorChanged = self._lastNavigatorObjectPosition != navigatorPosition
 
-		# Update last positions
-		if systemFocusChanged:
-			self._lastSystemFocusPosition = systemFocusPosition
-		if navigatorObjectChanged:
-			self._lastNavigatorObjectPosition = navigatorObjectPosition
+		# Update tracked positions
 		if mouseChanged:
 			self._lastMousePosition = mousePosition
+		if systemFocusChanged:
+			self._lastSystemFocusPosition = systemFocusPosition
+		if reviewChanged:
+			self._lastReviewPosition = reviewPosition
+		if navigatorChanged:
+			self._lastNavigatorObjectPosition = navigatorPosition
 
 		# Priority 1: Mouse during drag & drop
-		if isClickPressed:
+		if isClickPressed and followMouse():
 			self._lastFocusedObject = FocusType.MOUSE
 			return mousePosition
 
-		# Priority 2: Mouse movement (when not dragging)
-		if mouseChanged:
+		# Priority 2: Mouse movement
+		if mouseChanged and followMouse():
 			self._lastFocusedObject = FocusType.MOUSE
 			return mousePosition
 
 		# Priority 3: System focus (focus object + browse mode cursor)
-		if systemFocusChanged:
+		if systemFocusChanged and followSystemFocus():
 			self._lastFocusedObject = FocusType.SYSTEM_FOCUS
 			return systemFocusPosition
 
-		# Priority 4: Navigator object (NumPad navigation)
-		if navigatorObjectChanged:
-			self._lastFocusedObject = FocusType.NAVIGATOR
-			return navigatorObjectPosition
+		# Priority 4: Review cursor
+		if reviewChanged and followReview() and reviewPosition is not None:
+			self._lastFocusedObject = FocusType.REVIEW
+			return reviewPosition
 
-		# No changes detected - return last focused position
+		# Priority 5: Navigator object (NumPad navigation)
+		if navigatorChanged and followNavigatorObject():
+			self._lastFocusedObject = FocusType.NAVIGATOR
+			return navigatorPosition
+
+		# No changes detected – return last focused position
 		match self._lastFocusedObject:
 			case FocusType.MOUSE:
 				return mousePosition
 			case FocusType.SYSTEM_FOCUS:
 				return systemFocusPosition
+			case FocusType.REVIEW:
+				return reviewPosition if reviewPosition is not None else self._lastValidReviewPosition
 			case FocusType.NAVIGATOR:
-				return navigatorObjectPosition
+				return navigatorPosition
 			case _:
 				# Default to mouse if no previous focus
 				return mousePosition
@@ -134,17 +146,19 @@ class FocusManager:
 
 	def _getReviewPosition(self) -> Coordinates | None:
 		"""
-		Get the current review position (review cursor).
+		Get the current review cursor position.
 
-		:return: The (x, y) coordinates of the review position, or None if not available
+		:return: The (x, y) coordinates of the review cursor, or ``None`` if not available.
 		"""
 		reviewPosition = api.getReviewPosition()
 		if reviewPosition:
 			try:
 				point = reviewPosition.pointAtStart
-				return Coordinates(point.x, point.y)
+				coords = Coordinates(point.x, point.y)
+				if coords != Coordinates(0, 0):
+					self._lastValidReviewPosition = coords
+				return coords
 			except (NotImplementedError, LookupError, AttributeError):
-				# Review position may not support pointAtStart
 				pass
 		return None
 
@@ -169,23 +183,16 @@ class FocusManager:
 	def _getNavigatorObjectPosition(self) -> Coordinates:
 		"""
 		Get the navigator object position (NumPad navigation).
-		Tries review position first, then navigator object location.
 
-		:return: The (x, y) coordinates of the navigator object
+		Updates :attr:`_lastValidNavigatorObjectPosition` when a valid position is obtained.
+
+		:return: The (x, y) coordinates of the navigator object center,
+			or the last valid position as fallback.
 		"""
-		# Try review position first
-		position = self._getReviewPosition()
-		if position and position != Coordinates(0, 0):
-			self._lastValidNavigatorObjectPosition = position
-			return position
-
-		# Fallback: use navigator object location
 		position = self._getNavigatorObjectLocation()
 		if position and position != Coordinates(0, 0):
 			self._lastValidNavigatorObjectPosition = position
 			return position
-
-		# Return last valid navigator object position instead of (0, 0)
 		return self._lastValidNavigatorObjectPosition
 
 	def getLastFocusType(self) -> FocusType | None:
@@ -195,3 +202,11 @@ class FocusManager:
 		:return: The type of the last focused object
 		"""
 		return self._lastFocusedObject
+
+	def UpdateFollowedFocus(self) -> None:
+		"""
+		Force an update of the magnifier focus based on current settings.
+		Called after toggling follow settings to immediately apply changes.
+		"""
+		self._lastFocusedObject = None  # Reset to force re-evaluation of focus
+		self.getCurrentFocusCoordinates()

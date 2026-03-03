@@ -123,6 +123,42 @@ def setDefaultFilter(filter: Filter) -> None:
 	config.conf["magnifier"]["defaultFilter"] = filter.value
 
 
+def followMouse() -> bool:
+	"""
+	Check if magnifier should follow mouse pointer.
+
+	:return: True if magnifier should follow mouse, False otherwise.
+	"""
+	return config.conf["magnifier"]["followMouse"]
+
+
+def followSystemFocus() -> bool:
+	"""
+	Check if magnifier should follow system focus.
+
+	:return: True if magnifier should follow system focus, False otherwise.
+	"""
+	return config.conf["magnifier"]["followSystemFocus"]
+
+
+def followReview() -> bool:
+	"""
+	Check if magnifier should follow review position.
+
+	:return: True if magnifier should follow review position, False otherwise.
+	"""
+	return config.conf["magnifier"]["followReview"]
+
+
+def followNavigatorObject() -> bool:
+	"""
+	Check if magnifier should follow navigator object.
+
+	:return: True if magnifier should follow navigator object, False otherwise.
+	"""
+	return config.conf["magnifier"]["followNavigatorObject"]
+
+
 def getDefaultFullscreenMode() -> FullScreenMode:
 	"""
 	Get default full-screen mode from config.
