@@ -29,7 +29,7 @@ However note that building across cores can cause errors, and output will be scr
 
 ```cmd
 scons source --all-cores
-scons checkPot -j 1
+scons source -j 1
 ```
 
 If you are experiencing errors building NVDA with threading enabled, please force a serial build with the `-j 1` parameter.
