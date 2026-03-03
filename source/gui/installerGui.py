@@ -92,20 +92,20 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 		dialog.addButton(ReturnCode.OK, label=_("&Start NVDA"), fallbackAction=True)
 	# Translators: Button in the post-install dialog to exit NVDA.
 	dialog.addButton(ReturnCode.CANCEL, label=_("E&xit NVDA"))
-	result = dialog.ShowModal()
-	if result == ReturnCode.YES:
-		_restartWindows()
-		core.triggerNVDAExit(None)
-	elif result == ReturnCode.OK:
-		newNVDA = core.NewNVDAInstance(
-			filePath=os.path.join(WritePaths.defaultInstallDir, "nvda.exe"),
-			parameters=_generate_executionParameters(),
-		)
-		if not core.triggerNVDAExit(newNVDA):
-			log.error("NVDA already in process of exiting, this indicates a logic error.")
-	else:
-		if not core.triggerNVDAExit(None):
-			log.error("NVDA already in process of exiting, this indicates a logic error.")
+	match dialog.ShowModal():
+		case ReturnCode.YES:
+			_restartWindows()
+			core.triggerNVDAExit(None)
+		case ReturnCode.OK:
+			newNVDA = core.NewNVDAInstance(
+				filePath=os.path.join(WritePaths.defaultInstallDir, "nvda.exe"),
+				parameters=_generate_executionParameters(),
+			)
+			if not core.triggerNVDAExit(newNVDA):
+				log.error("NVDA already in process of exiting, this indicates a logic error.")
+		case _:
+			if not core.triggerNVDAExit(None):
+				log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 
 def doInstall(
