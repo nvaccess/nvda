@@ -21,7 +21,7 @@ class _DebounceState:
 	lastCallTimeMs: float | None = None
 	pendingHandle: wx.CallLater | None = None
 	pendingArgs: tuple[Any, ...] = ()
-	pendingKwargs: dict[str, Any] | None = None
+	pendingKwargs: dict[str, Any] = field(default_factory=dict)
 
 
 def _getStateForCall(
