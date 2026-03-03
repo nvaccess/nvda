@@ -1017,7 +1017,7 @@ def _migratePickledAddonsStateToJson(configPath: str) -> None:
 			if os.path.exists(jsonPath):
 				tryRemoveFile(jsonPath)
 		except Exception:
-			log.error("Failed to remove existing {jsonPath}.", exc_info=True)
+			log.error(f"Failed to remove existing {jsonPath}.", exc_info=True)
 		else:
 			try:
 				with open(jsonPath, "wt", encoding="utf-8") as file:

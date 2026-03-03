@@ -1232,7 +1232,7 @@ def _getAddonsStateDictFromPickle(picklePath: os.PathLike) -> dict[str, list[str
 
 def _pickledStateDictToJsonStateDict(pickledState: Any) -> dict[str, list[str] | tuple[int, int, int]]:
 	if not isinstance(pickledState, dict):
-		log.debug("Invalid pickled state: {pickledState!r}")
+		log.debug(f"Invalid pickled state: {pickledState!r}")
 		return {}
 	jsonState: dict[str, list[str] | tuple[int, int, int]] = {}
 	for key, value in pickledState.items():
@@ -1247,7 +1247,7 @@ def _pickledStateDictToJsonStateDict(pickledState: Any) -> dict[str, list[str] |
 				log.debug(f"Invalid backCompatToAPIVersion: {value!r}. Discarding.")
 		elif key in AddonStateCategory:
 			if not isinstance(value, set):
-				log.debug("Invalid category {key}: {value!r}. Discarding.")
+				log.debug(f"Invalid category {key}: {value!r}. Discarding.")
 				continue
 			addons = jsonState[key] = []
 			for addon in value:
