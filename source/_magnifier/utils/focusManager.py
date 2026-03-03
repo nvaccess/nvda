@@ -32,7 +32,7 @@ class FocusManager:
 	def getCurrentFocusCoordinates(self) -> Coordinates:
 		"""
 		Get the current focus coordinates based on priority.
-		Priority: Mouse > System Focus > Navigator Object
+		Priority: Mouse > Navigator Object > System Focus
 
 		:return: The (x, y) coordinates of the current focus
 		"""
@@ -67,17 +67,22 @@ class FocusManager:
 			self._lastFocusedObject = FocusType.MOUSE
 			return mousePosition
 
-		# Priority 3: Navigator object.
-		# Takes precedence over system focus so that table cell navigation
-		# (ctrl+alt+arrows) follows the reported cell rather than the focused row.
-		# This also covers plain NumPad navigation where only the navigator moves.
+		# Priority 3: Navigator object – but only when it represents a genuinely independent movement.
 		if navigatorObjectChanged:
+			# If both navigator and system focus changed but ended up at the same
+			# coordinates, treat this as ordinary system-focus navigation.
+			# This avoids marking normal focus/caret movement as NAVIGATOR when
+			# the review cursor is merely following focus/caret.
+			if systemFocusChanged and navigatorObjectPosition == systemFocusPosition:
+				# Navigator followed focus/caret – behave as a system-focus event.
+				self._lastFocusedObject = FocusType.SYSTEM_FOCUS
+				return systemFocusPosition
 			self._lastFocusedObject = FocusType.NAVIGATOR
 			return navigatorObjectPosition
 
-		# Priority 4: System focus (focus object + browse mode cursor).
-		# Reached only when the navigator did not change, e.g. plain Tab/focus
-		# movement or browse mode caret navigation.
+		# Priority 4: System focus (Tab, plain focus changes, browse-mode caret).
+		# Reached when only the system-focus position changed without a corresponding
+		# navigator change
 		if systemFocusChanged:
 			self._lastFocusedObject = FocusType.SYSTEM_FOCUS
 			return systemFocusPosition
