@@ -242,7 +242,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 		caret = self.document.makeTextInfo(textInfos.POSITION_CARET)
 		return self.textInfo.compareEndPoints(caret, "startToStart") > 0
 
-	def _getLabelForProperties(self, labelPropertyGetter: Callable[[str], Any | None]):
+	def _getLabelForProperties(self, labelPropertyGetter: Callable[[str], Any]):
 		"""
 		Fetches required properties for this L{TextInfoQuickNavItem} and constructs a label to be shown in an elements list.
 		This can be used by subclasses to implement the L{label} property.
@@ -499,8 +499,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def _iterSimilarParagraph(
 		self,
 		kind: str,
-		paragraphFunction: Callable[[textInfos.TextInfo], Any | None],
-		desiredValue: Any | None,
+		paragraphFunction: Callable[[textInfos.TextInfo], Any],
+		desiredValue: Any,
 		direction: _Movement,
 		pos: textInfos.TextInfo,
 	) -> Generator[TextInfoQuickNavItem, None, None]:
@@ -2681,8 +2681,8 @@ class BrowseModeDocumentTreeInterceptor(
 	def _iterSimilarParagraph(
 		self,
 		kind: str,
-		paragraphFunction: Callable[[textInfos.TextInfo], Any | None],
-		desiredValue: Any | None,
+		paragraphFunction: Callable[[textInfos.TextInfo], Any],
+		desiredValue: Any,
 		direction: _Movement,
 		pos: textInfos.TextInfo,
 	) -> Generator[TextInfoQuickNavItem, None, None]:

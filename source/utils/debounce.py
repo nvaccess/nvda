@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2026 NV Access Limited.
+# Copyright (C) 2026 NV Access Limited
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from collections.abc import Callable
 from dataclasses import dataclass
@@ -26,16 +26,16 @@ class _DebounceState:
 
 def _getStateForCall(
 	instanceStates: WeakKeyDictionary[object, _DebounceState],
-	globalState: _DebounceState,
+	defaultState: _DebounceState,
 	args: tuple[Any, ...],
 ) -> _DebounceState:
 	if not args:
-		return globalState
+		return defaultState
 	instanceCandidate = args[0]
 	try:
 		return instanceStates.setdefault(instanceCandidate, _DebounceState())
 	except TypeError:
-		return globalState
+		return defaultState
 
 
 def _executeDelayedCall(func: Callable[..., Any], state: _DebounceState) -> None:
@@ -65,16 +65,18 @@ def debounceLimiter(
 	runImmediateFirstCall: bool = True,
 ) -> Callable[[Callable[P, Any]], Callable[P, None]]:
 	"""
-	:param cooldownTimeMs: Time in milliseconds during which subsequent calls are considered to be within the cooldown period.
-	:param delayTimeMs: Time in milliseconds to delay the execution of a call received during the
-	cooldown period.
-	:param runImmediateFirstCall: Whether the first call in a burst should execute immediately.
-	If False, all calls are trailing-debounced by `delayTimeMs`.
-	:returns: A decorator that debounces calls to the decorated function.
+	Limit the rate at which expensive functions are called.
 
 	Executes calls immediately when outside the cooldown period (when there is no
-	pending delayed call), and debounces calls received within `cooldownTimeMs`
-	by delaying their execution by `delayTimeMs`.
+	pending delayed call), and debounces calls received within ``cooldownTimeMs``
+	by delaying their execution by ``delayTimeMs``.
+
+	:param cooldownTimeMs: Time in milliseconds during which subsequent calls are considered to be within the cooldown period.
+	:param delayTimeMs: Time in milliseconds to delay the execution of a call received during the cooldown period.
+	:param runImmediateFirstCall: Whether the first call in a burst should execute immediately.
+		If False, all calls are trailing-debounced by `delayTimeMs`.
+	:returns: A decorator that debounces calls to the decorated function.
+	:raises ValueError: If ``cooldownTimeMs`` or ``delayTimeMs`` is negative.
 	"""
 	if cooldownTimeMs < 0:
 		raise ValueError("cooldownTimeMs must be non-negative")
