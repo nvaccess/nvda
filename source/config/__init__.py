@@ -350,7 +350,7 @@ def _setSystemConfig(
 			The system config will be in a ``systemConfig`` subdirectory of this directory.
 	:param addonsToCopy: List of add-on IDs to include in the system configuration, defaults to `()`.
 	:param isMigration: Whether this is a migration from one system config location to another, defaults to ``False``.
-		When this is ``True``, the ``addons/`` directory and ``addonsState.pickle`` in ``fromPath`` will be copied as-is, if they exist.
+		When this is ``True``, the ``addons/`` directory and ``addonsState.pickle``/``addonsState.json`` in ``fromPath`` will be copied as-is, if they exist.
 	"""
 	import installer
 	import addonHandler
@@ -375,7 +375,7 @@ def _setSystemConfig(
 					addonHandler.STATE_FILENAME.casefold(),
 					addonHandler._OLD_STATE_FILENAME.casefold(),
 				)
-				files = [filename for filename in files if filename not in stateFilenames]
+				files = [filename for filename in files if filename.casefold() not in stateFilenames]
 		else:
 			relativePath = os.path.relpath(curSourceDir, fromPath)
 			curDestDir = os.path.join(toPath, relativePath)
