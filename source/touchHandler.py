@@ -17,7 +17,6 @@ from typing import (
 
 if TYPE_CHECKING:
 	import browseMode
-	import treeInterceptorHandler
 
 from ctypes import (
 	byref,

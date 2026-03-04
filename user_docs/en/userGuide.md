@@ -1054,7 +1054,8 @@ To toggle single letter navigation on and off for the current document, press NV
 
 When using a touch enabled device, NVDA provides an additional touch navigation mode for browsing content in browse mode.
 
-When browse mode is active in supported documents such as web pages or Word documents, NVDA can expose a browse touch mode. This mode allows users to navigate structural elements of a document using touch gestures, similar to browse mode navigation with the keyboard.
+When browse mode is active in supported documents such as web pages or Word documents, NVDA can expose a browse touch mode.
+This mode allows users to navigate structural elements of a document using touch gestures, similar to browse mode navigation with the keyboard.
 
 In browse touch mode, flick gestures are used to move between common document elements such as links, buttons, headings, form fields, landmarks, and other document structures.
 
