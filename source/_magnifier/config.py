@@ -141,13 +141,13 @@ def followSystemFocus() -> bool:
 	return config.conf["magnifier"]["followSystemFocus"]
 
 
-def followReview() -> bool:
+def followReviewCursor() -> bool:
 	"""
-	Check if magnifier should follow review position.
+	Check if magnifier should follow review cursor.
 
-	:return: True if magnifier should follow review position, False otherwise.
+	:return: True if magnifier should follow review cursor, False otherwise.
 	"""
-	return config.conf["magnifier"]["followReview"]
+	return config.conf["magnifier"]["followReviewCursor"]
 
 
 def followNavigatorObject() -> bool:

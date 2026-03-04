@@ -285,7 +285,10 @@ class TestFocusManager(unittest.TestCase):
 						"_magnifier.utils.focusManager.followSystemFocus",
 						return_value=param.followSystemFocus,
 					),
-					patch("_magnifier.utils.focusManager.followReview", return_value=param.followReview),
+					patch(
+						"_magnifier.utils.focusManager.followReviewCursor",
+						return_value=param.followReview,
+					),
 					patch(
 						"_magnifier.utils.focusManager.followNavigatorObject",
 						return_value=param.followNavigatorObject,
@@ -328,7 +331,7 @@ class TestFollowSettings(unittest.TestCase):
 		with (
 			patch("_magnifier.utils.focusManager.followMouse", return_value=followMouse),
 			patch("_magnifier.utils.focusManager.followSystemFocus", return_value=followSystemFocus),
-			patch("_magnifier.utils.focusManager.followReview", return_value=followReview),
+			patch("_magnifier.utils.focusManager.followReviewCursor", return_value=followReview),
 			patch(
 				"_magnifier.utils.focusManager.followNavigatorObject",
 				return_value=followNavigatorObject,
@@ -391,7 +394,7 @@ class TestFollowSettings(unittest.TestCase):
 		with (
 			patch("_magnifier.utils.focusManager.followMouse", return_value=True),
 			patch("_magnifier.utils.focusManager.followSystemFocus", return_value=True),
-			patch("_magnifier.utils.focusManager.followReview", return_value=True),
+			patch("_magnifier.utils.focusManager.followReviewCursor", return_value=True),
 			patch("_magnifier.utils.focusManager.followNavigatorObject", return_value=True),
 		):
 			coords = self.focusManager.getCurrentFocusCoordinates()

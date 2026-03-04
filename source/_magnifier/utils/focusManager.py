@@ -12,7 +12,7 @@ import api
 import winUser
 import mouseHandler
 from .types import Coordinates, FocusType
-from ..config import followMouse, followSystemFocus, followNavigatorObject, followReview
+from ..config import followMouse, followReviewCursor, followSystemFocus, followNavigatorObject
 
 
 class FocusManager:
@@ -78,7 +78,7 @@ class FocusManager:
 			return systemFocusPosition
 
 		# Priority 4: Review cursor
-		if reviewChanged and followReview() and reviewPosition is not None:
+		if reviewChanged and followReviewCursor() and reviewPosition is not None:
 			self._lastFocusedObject = FocusType.REVIEW
 			return reviewPosition
 
@@ -203,7 +203,7 @@ class FocusManager:
 		"""
 		return self._lastFocusedObject
 
-	def UpdateFollowedFocus(self) -> None:
+	def updateFollowedFocus(self) -> None:
 		"""
 		Force an update of the magnifier focus based on current settings.
 		Called after toggling follow settings to immediately apply changes.

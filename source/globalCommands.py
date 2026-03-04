@@ -5139,12 +5139,11 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle follow mouse mode for the magnifier",
+			"Toggle follow mouse for the magnifier",
 		),
 		category=SCRCAT_VISION,
-		gesture="kb:NVDA+shift+alt+m",
 	)
-	def script_toggleFollowMouseMode(
+	def script_toggleFollowMouse(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
@@ -5153,11 +5152,11 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle follow system focus mode for the magnifier",
+			"Toggle follow system focus for the magnifier",
 		),
 		category=SCRCAT_VISION,
 	)
-	def script_toggleFollowSystemFocusMode(
+	def script_toggleFollowSystemFocus(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
