@@ -123,6 +123,7 @@ class MagnifierType(DisplayStringStrEnum):
 class FocusType(Enum):
 	"""Type of focus being tracked by the magnifier"""
 
+	NONE = auto()
 	MOUSE = auto()
 	SYSTEM_FOCUS = auto()
 	REVIEW = auto()

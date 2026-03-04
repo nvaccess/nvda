@@ -23,7 +23,7 @@ class FocusManager:
 
 	def __init__(self):
 		"""Initialize the focus manager."""
-		self._lastFocusedObject: FocusType | None = None
+		self._lastFocusedObject: FocusType = FocusType.NONE
 		self._lastMousePosition = Coordinates(0, 0)
 		self._lastSystemFocusPosition = Coordinates(0, 0)
 		self._lastReviewPosition: Coordinates | None = None
@@ -87,19 +87,35 @@ class FocusManager:
 			self._lastFocusedObject = FocusType.NAVIGATOR
 			return navigatorPosition
 
-		# No changes detected – return last focused position
-		match self._lastFocusedObject:
-			case FocusType.MOUSE:
-				return mousePosition
-			case FocusType.SYSTEM_FOCUS:
-				return systemFocusPosition
-			case FocusType.REVIEW:
-				return reviewPosition if reviewPosition is not None else self._lastValidReviewPosition
-			case FocusType.NAVIGATOR:
-				return navigatorPosition
-			case _:
-				# Default to mouse if no previous focus
-				return mousePosition
+		# Resolve the effective review position once (fallback to last valid when None)
+		reviewEffectivePosition = (
+			reviewPosition if reviewPosition is not None else self._lastValidReviewPosition
+		)
+
+		# All sources in priority order
+		_sources = (
+			(FocusType.MOUSE, followMouse(), mousePosition),
+			(FocusType.SYSTEM_FOCUS, followSystemFocus(), systemFocusPosition),
+			(FocusType.REVIEW, followReviewCursor(), reviewEffectivePosition),
+			(FocusType.NAVIGATOR, followNavigatorObject(), navigatorPosition),
+		)
+
+		# Keep current source if still enabled; otherwise mark it as NONE so we switch
+		for focusType, isEnabled, position in _sources:
+			if self._lastFocusedObject == focusType:
+				if isEnabled:
+					return position
+				self._lastFocusedObject = FocusType.NONE
+				break
+
+		# No active source – switch to the highest-priority enabled source
+		for focusType, isEnabled, position in _sources:
+			if isEnabled:
+				self._lastFocusedObject = focusType
+				return position
+
+		# All sources disabled – return mouse position without changing focus state
+		return mousePosition
 
 	def _getMousePosition(self) -> Coordinates:
 		"""
@@ -195,7 +211,7 @@ class FocusManager:
 			return position
 		return self._lastValidNavigatorObjectPosition
 
-	def getLastFocusType(self) -> FocusType | None:
+	def getLastFocusType(self) -> FocusType:
 		"""
 		Get the type of the last focused object.
 
@@ -208,5 +224,5 @@ class FocusManager:
 		Force an update of the magnifier focus based on current settings.
 		Called after toggling follow settings to immediately apply changes.
 		"""
-		self._lastFocusedObject = None  # Reset to force re-evaluation of focus
+		self._lastFocusedObject = FocusType.NONE  # Reset to force re-evaluation of focus
 		self.getCurrentFocusCoordinates()

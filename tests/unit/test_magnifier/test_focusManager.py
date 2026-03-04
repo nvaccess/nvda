@@ -23,7 +23,7 @@ class FocusTestParam:
 	expectedCoords: Coordinates
 	expectedFocus: FocusType
 	description: str = ""
-	lastFocusedObject: FocusType | None = None
+	lastFocusedObject: FocusType = FocusType.NONE
 	reviewPos: Coordinates | None = None
 	followMouse: bool = True
 	followSystemFocus: bool = True
@@ -40,7 +40,7 @@ class TestFocusManager(unittest.TestCase):
 
 	def testFocusManagerCreation(self):
 		"""Can we create a FocusManager with initialized values?"""
-		self.assertIsNone(self.focusManager._lastFocusedObject)
+		self.assertEqual(self.focusManager._lastFocusedObject, FocusType.NONE)
 		self.assertIsNone(self.focusManager._lastReviewPosition)
 		self.assertEqual(self.focusManager._lastMousePosition, Coordinates(0, 0))
 		self.assertEqual(self.focusManager._lastSystemFocusPosition, Coordinates(0, 0))
@@ -264,10 +264,7 @@ class TestFocusManager(unittest.TestCase):
 				self.focusManager._lastSystemFocusPosition = Coordinates(0, 0)
 				self.focusManager._lastMousePosition = Coordinates(0, 0)
 				self.focusManager._lastReviewPosition = None
-
-				# Set lastFocusedObject if specified
-				if param.lastFocusedObject is not None:
-					self.focusManager._lastFocusedObject = param.lastFocusedObject
+				self.focusManager._lastFocusedObject = param.lastFocusedObject
 
 				# Mock instance methods
 				self.focusManager._getNavigatorObjectPosition = MagicMock(
@@ -303,7 +300,7 @@ class TestFocusManager(unittest.TestCase):
 
 	def testGetLastFocusType(self):
 		"""Test getting the last focus type."""
-		self.assertIsNone(self.focusManager.getLastFocusType())
+		self.assertEqual(self.focusManager.getLastFocusType(), FocusType.NONE)
 
 		for focusType in FocusType:
 			self.focusManager._lastFocusedObject = focusType
@@ -401,3 +398,79 @@ class TestFollowSettings(unittest.TestCase):
 
 		self.assertEqual(coords, Coordinates(10, 10))
 		self.assertEqual(self.focusManager.getLastFocusType(), FocusType.MOUSE)
+
+	def testDisableFollowMouseFallsToSystemFocus(self):
+		"""When followMouse is disabled after mouse was the last focus, should fall back to system focus."""
+		# Simulate: mouse was previously the active focus source
+		self.focusManager._lastFocusedObject = FocusType.MOUSE
+		# Positions haven't changed from last recorded values (no "change" detected)
+		self.focusManager._lastMousePosition = Coordinates(10, 10)
+		self.focusManager._lastSystemFocusPosition = Coordinates(20, 20)
+		self.focusManager._lastNavigatorObjectPosition = Coordinates(40, 40)
+
+		self.focusManager._getMousePosition = MagicMock(return_value=Coordinates(10, 10))
+		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
+		self.focusManager._getReviewPosition = MagicMock(return_value=None)
+		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
+		mouseHandler.isLeftMouseButtonLocked = MagicMock(return_value=False)
+
+		with (
+			patch("_magnifier.utils.focusManager.followMouse", return_value=False),
+			patch("_magnifier.utils.focusManager.followSystemFocus", return_value=True),
+			patch("_magnifier.utils.focusManager.followReviewCursor", return_value=True),
+			patch("_magnifier.utils.focusManager.followNavigatorObject", return_value=True),
+		):
+			coords = self.focusManager.getCurrentFocusCoordinates()
+
+		self.assertEqual(coords, Coordinates(20, 20))
+		self.assertEqual(self.focusManager.getLastFocusType(), FocusType.SYSTEM_FOCUS)
+
+	def testDisableFollowMouseWhileMouseMovingFallsToSystemFocus(self):
+		"""When followMouse is disabled and mouse is still moving, should not follow mouse."""
+		self.focusManager._lastFocusedObject = FocusType.MOUSE
+		self.focusManager._lastMousePosition = Coordinates(10, 10)
+		self.focusManager._lastSystemFocusPosition = Coordinates(20, 20)
+		self.focusManager._lastNavigatorObjectPosition = Coordinates(40, 40)
+
+		# Mouse has moved but followMouse is False
+		self.focusManager._getMousePosition = MagicMock(return_value=Coordinates(15, 15))
+		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
+		self.focusManager._getReviewPosition = MagicMock(return_value=None)
+		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
+		mouseHandler.isLeftMouseButtonLocked = MagicMock(return_value=False)
+
+		with (
+			patch("_magnifier.utils.focusManager.followMouse", return_value=False),
+			patch("_magnifier.utils.focusManager.followSystemFocus", return_value=True),
+			patch("_magnifier.utils.focusManager.followReviewCursor", return_value=True),
+			patch("_magnifier.utils.focusManager.followNavigatorObject", return_value=True),
+		):
+			coords = self.focusManager.getCurrentFocusCoordinates()
+
+		self.assertEqual(coords, Coordinates(20, 20))
+		self.assertEqual(self.focusManager.getLastFocusType(), FocusType.SYSTEM_FOCUS)
+
+	def testDisableFollowSystemFocusFallsToReview(self):
+		"""When last focus was system focus and its setting is disabled, should fall to review."""
+		self.focusManager._lastFocusedObject = FocusType.SYSTEM_FOCUS
+		self.focusManager._lastMousePosition = Coordinates(10, 10)
+		self.focusManager._lastSystemFocusPosition = Coordinates(20, 20)
+		self.focusManager._lastReviewPosition = Coordinates(30, 30)
+		self.focusManager._lastNavigatorObjectPosition = Coordinates(40, 40)
+
+		self.focusManager._getMousePosition = MagicMock(return_value=Coordinates(10, 10))
+		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
+		self.focusManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
+		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
+		mouseHandler.isLeftMouseButtonLocked = MagicMock(return_value=False)
+
+		with (
+			patch("_magnifier.utils.focusManager.followMouse", return_value=False),
+			patch("_magnifier.utils.focusManager.followSystemFocus", return_value=False),
+			patch("_magnifier.utils.focusManager.followReviewCursor", return_value=True),
+			patch("_magnifier.utils.focusManager.followNavigatorObject", return_value=True),
+		):
+			coords = self.focusManager.getCurrentFocusCoordinates()
+
+		self.assertEqual(coords, Coordinates(30, 30))
+		self.assertEqual(self.focusManager.getLastFocusType(), FocusType.REVIEW)
