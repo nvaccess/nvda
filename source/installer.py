@@ -1008,7 +1008,10 @@ def _migratePickledAddonsStateToJson(configPath: str) -> None:
 		log.debug("Pickled add-ons state does not exist. No migration necessary.")
 		return
 	try:
-		jsonState = addonHandler._getAddonsStateDictFromPickle(pickledPath)
+		# Only import if absolutely necessary.
+		from addonHandler._pickleToJsonMigration import _getAddonsStateDictFromPickle
+
+		jsonState = _getAddonsStateDictFromPickle(pickledPath)
 	except Exception:
 		log.error("Failed to load pickled add-ons state.", exc_info=True)
 	else:

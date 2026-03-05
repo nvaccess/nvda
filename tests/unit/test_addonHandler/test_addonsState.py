@@ -12,6 +12,7 @@ from typing import Any
 import unittest
 from unittest.mock import patch
 
+from addonHandler._pickleToJsonMigration import _pickledStateDictToJsonStateDict
 import addonStore.models.status
 import addonHandler
 from addonStore.models.version import MajorMinorPatch
@@ -163,7 +164,7 @@ class TestSerialization(unittest.TestCase):
 class TestPickleToJsonConversion(unittest.TestCase):
 	def test_fullyPopulatedState(self):
 		self.assertDictEqual(
-			addonHandler._pickledStateDictToJsonStateDict(
+			_pickledStateDictToJsonStateDict(
 				{
 					"PENDING_OVERRIDE_COMPATIBILITY": {"addonPendingOverrideCompatibility"},
 					"backCompatToAPIVersion": (2025, 1, 0),
@@ -190,7 +191,7 @@ class TestPickleToJsonConversion(unittest.TestCase):
 		)
 
 	def test_categoryWithMultipleIds(self):
-		converted = addonHandler._pickledStateDictToJsonStateDict(
+		converted = _pickledStateDictToJsonStateDict(
 			{"disabledAddons": {"firstDisabledAddon", "2ndDisabledAddon", "disabledAddonIII"}},
 		)
 		addons = converted.pop("disabledAddons")
@@ -199,13 +200,13 @@ class TestPickleToJsonConversion(unittest.TestCase):
 
 	def test_invalidAddonIds(self):
 		self.assertDictEqual(
-			addonHandler._pickledStateDictToJsonStateDict({"blocked": {"disabledAddon1", True, None, 42}}),
+			_pickledStateDictToJsonStateDict({"blocked": {"disabledAddon1", True, None, 42}}),
 			{"blocked": ["disabledAddon1"]},
 		)
 
 	def test_invalidCategoryValue(self):
 		self.assertDictEqual(
-			addonHandler._pickledStateDictToJsonStateDict(
+			_pickledStateDictToJsonStateDict(
 				{"overrideCompatibility": 42, "PENDING_OVERRIDE_COMPATIBILITY": {"addon"}},
 			),
 			{"PENDING_OVERRIDE_COMPATIBILITY": ["addon"]},
@@ -213,7 +214,7 @@ class TestPickleToJsonConversion(unittest.TestCase):
 
 	def test_invalidCategoryKey(self):
 		self.assertDictEqual(
-			addonHandler._pickledStateDictToJsonStateDict(
+			_pickledStateDictToJsonStateDict(
 				{"pendingEnableSet": {"addonPendingEnable"}, "notAKey": ("shouldn't", "be", "here")},
 			),
 			{"pendingEnableSet": ["addonPendingEnable"]},
@@ -221,7 +222,7 @@ class TestPickleToJsonConversion(unittest.TestCase):
 
 	def test_insufficientVersionParts(self):
 		self.assertDictEqual(
-			addonHandler._pickledStateDictToJsonStateDict(
+			_pickledStateDictToJsonStateDict(
 				{"backCompatToAPIVersion": (1,), "pendingDisableSet": {"addonPendingDisable"}},
 			),
 			{"pendingDisableSet": ["addonPendingDisable"]},
@@ -229,7 +230,7 @@ class TestPickleToJsonConversion(unittest.TestCase):
 
 	def test_surplusVersionParts(self):
 		self.assertDictEqual(
-			addonHandler._pickledStateDictToJsonStateDict(
+			_pickledStateDictToJsonStateDict(
 				{"backCompatToAPIVersion": (1, 2, 3, 4), "pendingEnableSet": {"addonPendingEnable"}},
 			),
 			{"pendingEnableSet": ["addonPendingEnable"]},
@@ -237,7 +238,7 @@ class TestPickleToJsonConversion(unittest.TestCase):
 
 	def test_invalidVersionParts(self):
 		self.assertDictEqual(
-			addonHandler._pickledStateDictToJsonStateDict(
+			_pickledStateDictToJsonStateDict(
 				{
 					"backCompatToAPIVersion": ("not", "a", "version"),
 					"pendingInstallsSet": {"addonPendingInstall"},
@@ -248,7 +249,7 @@ class TestPickleToJsonConversion(unittest.TestCase):
 
 	def test_invalidVersionType(self):
 		self.assertDictEqual(
-			addonHandler._pickledStateDictToJsonStateDict(
+			_pickledStateDictToJsonStateDict(
 				{"backCompatToAPIVersion": 42, "pendingRemovesSet": {"addonPendingRemoval"}},
 			),
 			{"pendingRemovesSet": ["addonPendingRemoval"]},
@@ -258,7 +259,7 @@ class TestPickleToJsonConversion(unittest.TestCase):
 		for invalidInput in (["a", "list"], "a string", None, 42):
 			with self.subTest(invalidInput=invalidInput):
 				self.assertDictEqual(
-					addonHandler._pickledStateDictToJsonStateDict(invalidInput),
+					_pickledStateDictToJsonStateDict(invalidInput),
 					{},
 				)
 
