@@ -6,7 +6,7 @@
 * [NVDA Add-on API Mailing List](https://groups.google.com/a/nvaccess.org/g/nvda-api)
 * [The NVDA Add-on Store](https://download.nvaccess.org/documentation/userGuide.html#AddonsManager)
 * [Submitting to the NVDA Add-on Store](https://github.com/nvaccess/addon-datastore/blob/master/docs/submitters/submissionGuide.md)
-* [Add-on Store website](https://addonstore.nvaccess.org/).
+* [Add-on Store website](https://addonstore.nvaccess.org/)
 * [NVDA add-ons community coordination and support center](https://github.com/nvdaaddons): all about NVDA's add-ons environment
 * [NVDA add-on template](https://github.com/nvaccess/AddonTemplate): A repository for generating add-ons using a template
 * The NVDA repository [Wiki](https://github.com/nvaccess/nvda/wiki) contains more guides and documentation.
