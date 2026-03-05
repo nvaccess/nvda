@@ -458,6 +458,7 @@ The dialog provides the following options:
 
 * Restart Windows: Immediately restart Windows.
 * Start NVDA: Start the newly installed copy of NVDA without restarting.
+  * Note: this option is not available when the installer is run with elevated (administrator) privileges.
 * Exit NVDA: Close without starting NVDA or restarting Windows.
 
 ### Creating a Portable Copy {#CreatingAPortableCopy}
