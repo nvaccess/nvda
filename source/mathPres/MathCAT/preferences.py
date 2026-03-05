@@ -310,7 +310,7 @@ class MathCATUserPreferences:
 				"PauseFactor": defaultValue(("speech", "pauseFactor")),
 				"SpeechSound": defaultValue(("speech", "speechSound")),
 				"SpeechStyle": MathCATUserPreferences.getConfigForSpeechStyle(
-					defaultValue(("speech", "language"))
+					defaultValue(("speech", "language")),
 				),
 				"SubjectArea": defaultValue(("speech", "subjectArea")),
 				"Chemistry": defaultValue(("speech", "chemistry")),
@@ -370,7 +370,7 @@ class MathCATUserPreferences:
 				match (key1, key2):
 					case ("Speech", "SpeechStyle"):
 						nvdaConfigValue = MathCATUserPreferences.getConfigForSpeechStyle(
-							mathConf["speech"]["language"]
+							mathConf["speech"]["language"],
 						)
 					case _:
 						nvdaConfigValue = MathCATUserPreferences.tryToGetNVDAConfigValue(key1, key2)
