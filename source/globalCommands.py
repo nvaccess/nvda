@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
 # Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis,
 # Burman's Computer and Education Ltd, Cary-rowen.
@@ -24,6 +24,8 @@ import keyboardHandler
 import mouseHandler
 import eventHandler
 import review
+import _magnifier
+import _magnifier.commands
 import controlTypes
 import api
 import textInfos
@@ -34,7 +36,7 @@ from speech import (
 )
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
-from logHandler import log
+from logHandler import log, Logger
 import gui
 import systemUtils
 import wx
@@ -67,13 +69,11 @@ import core
 from winAPI._powerTracking import reportCurrentBatteryStatus
 import winVersion
 from base64 import b16encode
-import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
 import synthDriverHandler
 from utils.displayString import DisplayStringEnum
 import _remoteClient
-import _localCaptioner
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -126,9 +126,6 @@ SCRCAT_AUDIO = _("Audio")
 #: Script category for Remote Access commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_REMOTE = pgettext("remote", "Remote Access")
-#: Script category for image description commands.
-# Translators: The name of a category of NVDA commands.
-SCRCAT_IMAGE_DESC = pgettext("imageDesc", "Image Descriptions")
 
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
@@ -197,7 +194,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+shift+d",
 	)
 	def script_cycleAudioDuckingMode(self, gesture):
-		if not audioDucking.isAudioDuckingSupported():
+		if not audioDucking.isAudioDuckingSupported() or audioDucking._isAudioDuckingSuspended():
 			# Translators: a message when audio ducking is not supported on this machine
 			ui.message(_("Audio ducking not supported"))
 			return
@@ -571,6 +568,24 @@ class GlobalCommands(ScriptableObject):
 		ui.message("%s %s" % (previousSettingName, previousSettingValue))
 
 	@script(
+		# Translators: Input help mode message for toggling keyboard layout.
+		description=_("Toggles between desktop and laptop keyboard layout"),
+		category=SCRCAT_INPUT,
+	)
+	def script_toggleKeyboardLayout(self, gesture: "inputCore.InputGesture") -> None:
+		val = config.conf["keyboard"]["keyboardLayout"]
+		if val == "desktop":
+			newVal = "laptop"
+		else:
+			newVal = "desktop"
+		config.conf["keyboard"]["keyboardLayout"] = newVal
+		ui.message(
+			# Translators: Reported when the user toggles keyboard layout.
+			# {layout} will be replaced with the new keyboard layout, i.e. desktop or laptop
+			_("{layout} layout").format(layout=keyboardHandler.KeyboardInputGesture.LAYOUTS[newVal]),
+		)
+
+	@script(
 		# Translators: Input help mode message for cycling the reporting of typed characters.
 		description=_("Cycles through options for when to speak typed characters."),
 		category=SCRCAT_SPEECH,
@@ -793,7 +808,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle report spelling errors command.
-		description=_("Cycles through options for how to report spelling errors"),
+		description=_("Cycles through options for how to report spelling or grammar errors"),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportSpellingErrors(self, gesture: inputCore.InputGesture):
@@ -803,16 +818,16 @@ class GlobalCommands(ScriptableObject):
 		)
 		config.conf["documentFormatting"]["reportSpellingErrors2"] = newValue
 		ui.message(
-			# Translators: Reported when the user cycles through the choices to report spelling errors.
+			# Translators: Reported when the user cycles through the choices to report spelling or grammar errors.
 			# {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
-			_("Report spelling errors {mode}").format(
+			_("Report errors {mode}").format(
 				mode=ReportSpellingErrors(newValue & ~ReportSpellingErrors.BRAILLE).displayString,
 			),
 		)
 
 	@script(
-		# Translators: Input help mode message for command to toggle report spelling errors in braille.
-		description=_("Toggles reporting spelling errors in braille"),
+		# Translators: Input help mode message for command to toggle report spelling or grammar errors in braille.
+		description=_("Toggles reporting spelling or grammar errors in braille"),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportSpellingErrorsInBraille(self, gesture: inputCore.InputGesture):
@@ -821,11 +836,11 @@ class GlobalCommands(ScriptableObject):
 			formatConfig ^ ReportSpellingErrors.BRAILLE
 		)
 		if config.conf["documentFormatting"]["reportSpellingErrors2"] & ReportSpellingErrors.BRAILLE:
-			# Translators: Message presented when turning on reporting spelling errors in braille.
-			ui.message(_("Report spelling errors in braille on"))
+			# Translators: Message presented when turning on reporting spelling or grammar errors in braille.
+			ui.message(_("Report errors in braille on"))
 		else:
-			# Translators: Message presented when turning off reporting spelling errors in braille.
-			ui.message(_("Report spelling errors in braille off"))
+			# Translators: Message presented when turning off reporting spelling errors or grammar in braille.
+			ui.message(_("Report errors in braille off"))
 
 	@script(
 		# Translators: Input help mode message for toggle report pages command.
@@ -3044,6 +3059,23 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
+		# Translators: Input help mode message for toggle mouse audio coordinates command.
+		description=_("Toggles beeps that report mouse coordinates as the mouse moves"),
+		category=SCRCAT_MOUSE,
+	)
+	def script_toggleMouseAudioCoordinates(self, gesture: inputCore.InputGesture):
+		# Translators: Reported when mouse audio coordinates are toggled on.
+		enabledMsg = _("Mouse audio coordinates on")
+		# Translators: Reported when mouse audio coordinates are toggled off.
+		disabledMsg = _("Mouse audio coordinates off")
+		toggleBooleanValue(
+			configSection="mouse",
+			configKey="audioCoordinatesOnMouseMove",
+			enabledMsg=enabledMsg,
+			disabledMsg=disabledMsg,
+		)
+
+	@script(
 		# Translators: Input help mode message for toggle mouse text unit resolution command.
 		description=_("Toggles how much text will be spoken when the mouse moves"),
 		category=SCRCAT_MOUSE,
@@ -3144,6 +3176,11 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_navigatorObject_devInfo(self, gesture):
+		if log.getEffectiveLevel() == Logger.OFF:
+			from gui import logViewer
+
+			logViewer.activate()
+			return
 		obj = api.getNavigatorObject()
 		if hasattr(obj, "devInfo"):
 			log.info(
@@ -3388,6 +3425,15 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onAudioSettingsCommand, None)
 
 	@script(
+		# Translators: Input help mode message for go to privacy and security settings command.
+		description=_("Shows NVDA's privacy and security settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activatePrivacyAndSecuritySettings(self, gesture: inputCore.InputGesture) -> None:
+		wx.CallAfter(gui.mainFrame.onPrivacyAndSecuritySettingsCommand, None)
+
+	@script(
 		# Translators: Input help mode message for go to vision settings command.
 		description=_("Shows NVDA's vision settings"),
 		category=SCRCAT_CONFIG,
@@ -3474,15 +3520,6 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onRemoteAccessSettingsCommand, None)
 
 	@script(
-		# Translators: Input help mode message for go to local captioner settings command.
-		description=pgettext("imageDesc", "Shows the AI image descriptions settings"),
-		category=SCRCAT_CONFIG,
-	)
-	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
-	def script_activateLocalCaptionerSettings(self, gesture: "inputCore.InputGesture"):
-		wx.CallAfter(gui.mainFrame.onLocalCaptionerSettingsCommand, None)
-
-	@script(
 		# Translators: Input help mode message for go to Add-on Store settings command.
 		description=_("Shows NVDA's Add-on Store settings"),
 		category=SCRCAT_CONFIG,
@@ -3553,6 +3590,16 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateInputGesturesDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onInputGesturesCommand, None)
+
+	@script(
+		# Translators: Input help mode message for go to magnifier settings command.
+		description=_("Shows NVDA's magnifier settings"),
+		category=SCRCAT_CONFIG,
+		gesture="kb:NVDA+control+w",
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateMagnifierSettingsDialog(self, gesture: inputCore.InputGesture):
+		wx.CallAfter(gui.mainFrame.onMagnifierSettingsCommand, None)
 
 	@script(
 		# Translators: Input help mode message for the report current configuration profile command.
@@ -3703,7 +3750,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for toggle braille mode command
 		description=_("Toggles braille mode"),
 		category=SCRCAT_BRAILLE,
-		gesture="kb:nvda+alt+t",
+		gesture="kb:NVDA+alt+t",
 	)
 	def script_toggleBrailleMode(self, gesture: inputCore.InputGesture):
 		curMode = BrailleMode(config.conf["braille"]["mode"])
@@ -4679,11 +4726,9 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reported when Windows OCR is not available.
 			ui.message(_("Windows OCR not available"))
 			return
-		from visionEnhancementProviders.screenCurtain import ScreenCurtainProvider
+		from screenCurtain import screenCurtain
 
-		screenCurtainId = ScreenCurtainProvider.getSettings().getId()
-		screenCurtainProviderInfo = vision.handler.getProviderInfo(screenCurtainId)
-		isScreenCurtainRunning = bool(vision.handler.getProviderInstance(screenCurtainProviderInfo))
+		isScreenCurtainRunning = screenCurtain is not None and screenCurtain.enabled
 		if isScreenCurtainRunning:
 			# Translators: Reported when screen curtain is enabled.
 			ui.message(_("Please disable screen curtain before using Windows OCR."))
@@ -4787,8 +4832,8 @@ class GlobalCommands(ScriptableObject):
 		ui.message(msg)
 
 	_tempEnableScreenCurtain = True
-	_waitingOnScreenCurtainWarningDialog: Optional[wx.Dialog] = None
-	_toggleScreenCurtainMessage: Optional[str] = None
+	_waitingOnScreenCurtainWarningDialog: wx.Dialog | None = None
+	_toggleScreenCurtainMessage: str | None = None
 
 	@script(
 		description=_(
@@ -4798,22 +4843,22 @@ class GlobalCommands(ScriptableObject):
 			"Pressed once, screen curtain is enabled until you restart NVDA. "
 			"Pressed twice, screen curtain is enabled until you disable it",
 		),
-		category=SCRCAT_VISION,
 		gesture="kb:NVDA+control+escape",
 	)
-	def script_toggleScreenCurtain(self, gesture):
+	def script_toggleScreenCurtain(self, gesture: inputCore.InputGesture) -> None:
+		import screenCurtain
+
+		if screenCurtain.screenCurtain is None:
+			# Screen curtain has not been initialized.
+			# Translators: Reported when the screen curtain is not available.
+			ui.message(_("Screen curtain not available"), speechPriority=speech.priorities.Spri.NOW)
+			return
+
 		scriptCount = scriptHandler.getLastScriptRepeatCount()
 		if scriptCount == 0:  # first call should reset last message
 			self._toggleScreenCurtainMessage = None
-
-		from visionEnhancementProviders.screenCurtain import ScreenCurtainProvider
-
-		screenCurtainId = ScreenCurtainProvider.getSettings().getId()
-		screenCurtainProviderInfo = vision.handler.getProviderInfo(screenCurtainId)
-		alreadyRunning = bool(vision.handler.getProviderInstance(screenCurtainProviderInfo))
-
+		alreadyRunning = screenCurtain.screenCurtain.enabled
 		GlobalCommands._tempEnableScreenCurtain = scriptCount == 0
-
 		if self._waitingOnScreenCurtainWarningDialog:
 			# Already in the process of enabling the screen curtain, exit early.
 			# Ensure that the dialog is in the foreground, and read it again.
@@ -4854,7 +4899,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reported when the screen curtain is disabled.
 			message = _("Screen curtain disabled")
 			try:
-				vision.handler.terminateProvider(screenCurtainProviderInfo)
+				screenCurtain.screenCurtain.disable()
 			except Exception:
 				# If the screen curtain was enabled, we do not expect exceptions.
 				log.error("Screen curtain termination error", exc_info=True)
@@ -4867,19 +4912,11 @@ class GlobalCommands(ScriptableObject):
 		elif (  # enable it
 			scriptCount in (0, 1)  # 1 press (temp enable) or 2 presses (enable)
 		):
-			# Check if screen curtain is available, exit early if not.
-			if not screenCurtainProviderInfo.providerClass.canStart():
-				# Translators: Reported when the screen curtain is not available.
-				message = _("Screen curtain not available")
-				self._toggleScreenCurtainMessage = message
-				ui.message(message, speechPriority=speech.priorities.Spri.NOW)
-				return
 
 			def _enableScreenCurtain(doEnable: bool = True):
 				self._waitingOnScreenCurtainWarningDialog = None
 				if not doEnable:
 					return  # exit early with no ui.message because the user has decided to abort.
-
 				tempEnable = GlobalCommands._tempEnableScreenCurtain
 				# Translators: Reported when the screen curtain is enabled.
 				enableMessage = _("Screen curtain enabled")
@@ -4889,29 +4926,22 @@ class GlobalCommands(ScriptableObject):
 
 				try:
 					if alreadyRunning:
-						screenCurtainProviderInfo.providerClass.enableInConfig(True)
+						screenCurtain.screenCurtain.settings["enabled"] = True
 					else:
-						vision.handler.initializeProvider(
-							screenCurtainProviderInfo,
-							temporary=tempEnable,
-						)
+						screenCurtain.screenCurtain.enable(persist=not tempEnable)
 				except Exception:
 					log.error("Screen curtain initialization error", exc_info=True)
-					# Translators: Reported when the screen curtain could not be enabled.
-					enableMessage = _("Could not enable screen curtain")
+					enableMessage = screenCurtain._screenCurtain.ERROR_ENABLING_MESSAGE
 				finally:
 					self._toggleScreenCurtainMessage = enableMessage
 					ui.message(enableMessage, speechPriority=speech.priorities.Spri.NOW)
 
 			#  Show warning if necessary and do enable.
-			settingsStorage = ScreenCurtainProvider.getSettings()
-			if settingsStorage.warnOnLoad:
-				from visionEnhancementProviders.screenCurtain import WarnOnLoadDialog
-
-				parent = gui.mainFrame
-				dlg = WarnOnLoadDialog(
+			settingsStorage = screenCurtain.screenCurtain.settings
+			if settingsStorage["warnOnLoad"]:
+				dlg = screenCurtain._screenCurtain.WarnOnLoadDialog(
 					screenCurtainSettingsStorage=settingsStorage,
-					parent=parent,
+					parent=gui.mainFrame,
 				)
 				self._waitingOnScreenCurtainWarningDialog = dlg
 				gui.runScriptModalDialog(
@@ -4930,11 +4960,207 @@ class GlobalCommands(ScriptableObject):
 					isinstance(focusObj, RefreshableRecogResultNVDAObject)
 					and focusObj.recognizer.allowAutoRefresh
 				):
-					# Translators: Warning message when trying to enable the screen curtain when OCR is active.
-					warningMessage = _("Could not enable screen curtain when performing content recognition")
-					ui.message(warningMessage, speechPriority=speech.priorities.Spri.NOW)
+					ui.message(
+						screenCurtain._screenCurtain.UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE,
+						speechPriority=speech.priorities.Spri.NOW,
+					)
 					return
 				_enableScreenCurtain()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggles the magnifier on and off",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:NVDA+shift+w",
+	)
+	def script_toggleMagnifier(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleMagnifier()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Increases the magnification level of the magnifier",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:NVDA+shift+=",
+	)
+	def script_zoomIn(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.zoom(_magnifier.commands.Direction.IN)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Decreases the magnification level of the magnifier",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:NVDA+shift+-",
+	)
+	def script_zoomOut(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.zoom(_magnifier.commands.Direction.OUT)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view to the left",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+alt+leftArrow",
+	)
+	def script_panLeft(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.pan(_magnifier.commands.MagnifierAction.PAN_LEFT)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view to the right",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+alt+rightArrow",
+	)
+	def script_panRight(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.pan(_magnifier.commands.MagnifierAction.PAN_RIGHT)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view up",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+alt+upArrow",
+	)
+	def script_panUp(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.pan(_magnifier.commands.MagnifierAction.PAN_UP)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view down",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+alt+downArrow",
+	)
+	def script_panDown(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.pan(_magnifier.commands.MagnifierAction.PAN_DOWN)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view to left edge",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+alt+leftArrow",
+	)
+	def script_panToLeftEdge(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.pan(_magnifier.commands.MagnifierAction.PAN_LEFT_EDGE)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view to right edge",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+alt+rightArrow",
+	)
+	def script_panToRightEdge(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.pan(_magnifier.commands.MagnifierAction.PAN_RIGHT_EDGE)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view to top edge",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+alt+upArrow",
+	)
+	def script_panToTopEdge(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.pan(_magnifier.commands.MagnifierAction.PAN_TOP_EDGE)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Pan the magnifier view to bottom edge",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+alt+downArrow",
+	)
+	def script_panToBottomEdge(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.pan(_magnifier.commands.MagnifierAction.PAN_BOTTOM_EDGE)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle filter of the magnifier",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:NVDA+shift+i",
+	)
+	def script_toggleFilter(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFilter()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle focus mode for the full-screen magnifier",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_toggleFullscreenMode(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFullscreenMode()
+
+	@script(
+		description=_(
+			# Translators: Describe a command.
+			"Launch spotlight if magnifier is full-screen",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:NVDA+shift+l",
+	)
+	def script_startSpotlight(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.startSpotlight()
 
 	@script(
 		description=_(
@@ -5099,29 +5325,28 @@ class GlobalCommands(ScriptableObject):
 		_remoteClient._remoteClient.sendSAS()
 
 	@script(
-		description=pgettext(
-			"imageDesc",
-			# Translators: Description for the image caption script
-			"Get an AI-generated image description of the navigator object.",
+		description=_(
+			# Translators: Description for the repeat last speech script
+			"Repeat the last spoken information. Pressing twice shows it in a browsable message. ",
 		),
-		category=SCRCAT_IMAGE_DESC,
-		gesture="kb:NVDA+g",
+		gesture="kb:NVDA+x",
+		category=SCRCAT_SPEECH,
+		speakOnDemand=True,
 	)
-	@gui.blockAction.when(gui.blockAction.Context.SCREEN_CURTAIN)
-	def script_runCaption(self, gesture: "inputCore.InputGesture"):
-		_localCaptioner._localCaptioner.runCaption(gesture)
-
-	@script(
-		description=pgettext(
-			"imageDesc",
-			# Translators: Description for the toggle image captioning script
-			"Load or unload the image captioner",
-		),
-		category=SCRCAT_IMAGE_DESC,
-	)
-	@gui.blockAction.when(gui.blockAction.Context.SCREEN_CURTAIN)
-	def script_toggleImageCaptioning(self, gesture: "inputCore.InputGesture"):
-		_localCaptioner._localCaptioner.toggleImageCaptioning(gesture)
+	def script_repeatLastSpokenInformation(self, gesture: "inputCore.InputGesture") -> None:
+		lastSpeech = speech.speech._lastSpeech
+		if lastSpeech is None:
+			return
+		lastSpeechSeq, symbolLevel = lastSpeech
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		lastSpeechText = "  ".join(i for i in lastSpeechSeq if isinstance(i, str))
+		if repeats == 0:
+			speech.speak(lastSpeechSeq, symbolLevel=symbolLevel)
+			braille.handler.message(lastSpeechText)
+		elif repeats == 1:
+			# Translators: title for report last spoken information dialog.
+			title = _("Last spoken information")
+			ui.browseableMessage(lastSpeechText, title, copyButton=True, closeButton=True)
 
 
 #: The single global commands instance.

@@ -33,7 +33,7 @@ You can run pre-commit hooks manually with [`pre commit run`](https://pre-commit
 To run the translatable string checks (which check that all translatable strings have translator comments), run:
 
 ```cmd
-scons checkPot
+runcheckpot.bat
 ```
 
 ## Linting your changes

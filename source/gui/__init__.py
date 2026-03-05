@@ -56,11 +56,12 @@ from .settingsDialogs import (
 	GeneralSettingsPanel,
 	InputCompositionPanel,
 	KeyboardSettingsPanel,
-	LocalCaptionerSettingsPanel,
+	MagnifierPanel,
 	MouseSettingsPanel,
 	MultiCategorySettingsDialog,
 	NVDASettingsDialog,
 	ObjectPresentationPanel,
+	PrivacyAndSecuritySettingsPanel,
 	RemoteSettingsPanel,
 	ReviewCursorPanel,
 	SettingsDialog,
@@ -210,7 +211,20 @@ class MainFrame(wx.Frame):
 		# Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 		queueHandler.queueFunction(queueHandler.eventQueue, ui.message, _("Configuration applied"))
 
+	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
+	def _confirmRevertToDefaultConfiguration(self, evt):
+		"""Reset config to factory defaults, then show a dialog allowing the user to undo the reset.
+		This is used when triggered from the NVDA menu.
+		"""
+		from .configManagement import confirmRevertToDefaultConfiguration
+
+		confirmRevertToDefaultConfiguration()
+
+	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
 	def onRevertToDefaultConfigurationCommand(self, evt):
+		"""Reset config to factory defaults without showing an undo dialog.
+		This is used for the keyboard shortcut triple-press recovery scenario.
+		"""
 		queueHandler.queueFunction(queueHandler.eventQueue, core.resetConfiguration, factoryDefaults=True)
 		queueHandler.queueFunction(
 			queueHandler.eventQueue,
@@ -346,6 +360,9 @@ class MainFrame(wx.Frame):
 	def onAudioSettingsCommand(self, evt: wx.CommandEvent):
 		self.popupSettingsDialog(NVDASettingsDialog, AudioPanel)
 
+	def onPrivacyAndSecuritySettingsCommand(self, evt: wx.CommandEvent):
+		self.popupSettingsDialog(NVDASettingsDialog, PrivacyAndSecuritySettingsPanel)
+
 	def onVisionSettingsCommand(self, evt: wx.CommandEvent):
 		self.popupSettingsDialog(NVDASettingsDialog, VisionSettingsPanel)
 
@@ -385,10 +402,6 @@ class MainFrame(wx.Frame):
 		self.popupSettingsDialog(NVDASettingsDialog, RemoteSettingsPanel)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
-	def onLocalCaptionerSettingsCommand(self, evt):
-		self.popupSettingsDialog(NVDASettingsDialog, LocalCaptionerSettingsPanel)
-
-	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onAdvancedSettingsCommand(self, evt: wx.CommandEvent):
 		self.popupSettingsDialog(NVDASettingsDialog, AdvancedPanel)
 
@@ -399,6 +412,10 @@ class MainFrame(wx.Frame):
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onInputGesturesCommand(self, evt):
 		self.popupSettingsDialog(InputGesturesDialog)
+
+	@blockAction.when(blockAction.Context.SECURE_MODE)
+	def onMagnifierSettingsCommand(self, evt: wx.CommandEvent):
+		self.popupSettingsDialog(NVDASettingsDialog, MagnifierPanel)
 
 	@staticmethod
 	def _copyVersionToClipboard(p: Payload):
@@ -813,7 +830,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Here, default settings means settings that were there when the user first used NVDA.
 			_("Reset all settings to default state"),
 		)
-		self.Bind(wx.EVT_MENU, frame.onRevertToDefaultConfigurationCommand, item)
+		self.Bind(wx.EVT_MENU, frame._confirmRevertToDefaultConfiguration, item)
 		if NVDAState.shouldWriteToDisk():
 			item = self.menu.Append(
 				wx.ID_SAVE,

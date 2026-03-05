@@ -179,14 +179,14 @@ def getMouseRestrictedToScreens(x, y, displays):
 	return (int(floor(newXY.x)), int(floor(newXY.y)))
 
 
-def getMinMaxPoints(screenRect):
+def getMinMaxPoints(screenRect: wx.Rect) -> tuple[wx.Point, wx.Point]:
 	screenMin = screenRect.GetTopLeft()
 	screenDim = wx.Point(screenRect.GetWidth(), screenRect.GetHeight())
 	screenMax = screenMin + screenDim
 	return (screenMin, screenMax)
 
 
-def getTotalWidthAndHeightAndMinimumPosition(displays):
+def getTotalWidthAndHeightAndMinimumPosition(displays: list[wx.Rect]) -> tuple[int, int, wx.Point]:
 	"""Calculate the total screen width and height.
 
 	Depending on screen layouts the rectangles may overlap on the vertical or

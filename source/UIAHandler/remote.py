@@ -5,7 +5,6 @@
 
 
 from typing import (
-	Optional,
 	Any,
 	Generator,
 	cast,
@@ -16,6 +15,7 @@ import winVersion
 from logHandler import log
 from ._remoteOps import remoteAlgorithms
 from ._remoteOps.remoteTypes import (
+	RemoteElement,
 	RemoteExtensionTarget,
 	RemoteInt,
 )
@@ -56,12 +56,36 @@ def terminate():
 	_isSupported = False
 
 
+def _msWord_remote_getExtendedTextRangePattern(
+	ra: remoteAPI.RemoteAPI,
+	remoteDocElement: RemoteElement,
+) -> RemoteExtensionTarget:
+	guid_msWord_extendedTextRangePattern = GUID("{93514122-FF04-4B2C-A4AD-4AB04587C129}")
+	remoteResult = ra.newVariant()
+	extendedTextRangeIsSupported = remoteDocElement.isExtensionSupported(
+		guid_msWord_extendedTextRangePattern,
+	)
+	with ra.ifBlock(extendedTextRangeIsSupported.inverse()):
+		ra.logRuntimeMessage("docElement does not support extendedTextRangePattern")
+		ra.Return(None)
+	ra.logRuntimeMessage("docElement supports extendedTextRangePattern")
+	ra.logRuntimeMessage("doing callExtension for extendedTextRangePattern")
+	remoteDocElement.callExtension(
+		guid_msWord_extendedTextRangePattern,
+		remoteResult,
+	)
+	with ra.ifBlock(remoteResult.isNull()):
+		ra.logRuntimeMessage("extendedTextRangePattern is null")
+		ra.Return(None)
+	ra.logRuntimeMessage("got extendedTextRangePattern")
+	return remoteResult.asType(RemoteExtensionTarget)
+
+
 def msWord_getCustomAttributeValue(
 	docElement: UIA.IUIAutomationElement,
 	textRange: UIA.IUIAutomationTextRange,
 	customAttribID: int,
-) -> Optional[Any]:
-	guid_msWord_extendedTextRangePattern = GUID("{93514122-FF04-4B2C-A4AD-4AB04587C129}")
+) -> Any | None:
 	guid_msWord_getCustomAttributeValue = GUID("{081ACA91-32F2-46F0-9FB9-017038BC45F8}")
 	op = operation.Operation()
 
@@ -70,24 +94,10 @@ def msWord_getCustomAttributeValue(
 		remoteDocElement = ra.newElement(docElement)
 		remoteTextRange = ra.newTextRange(textRange)
 		remoteCustomAttribValue = ra.newVariant()
-		extendedTextRangeIsSupported = remoteDocElement.isExtensionSupported(
-			guid_msWord_extendedTextRangePattern,
+		remoteExtendedTextRangePattern = _msWord_remote_getExtendedTextRangePattern(
+			ra,
+			remoteDocElement,
 		)
-		with ra.ifBlock(extendedTextRangeIsSupported.inverse()):
-			ra.logRuntimeMessage("docElement does not support extendedTextRangePattern")
-			ra.Return(None)
-		ra.logRuntimeMessage("docElement supports extendedTextRangePattern")
-		remoteResult = ra.newVariant()
-		ra.logRuntimeMessage("doing callExtension for extendedTextRangePattern")
-		remoteDocElement.callExtension(
-			guid_msWord_extendedTextRangePattern,
-			remoteResult,
-		)
-		with ra.ifBlock(remoteResult.isNull()):
-			ra.logRuntimeMessage("extendedTextRangePattern is null")
-			ra.Return(None)
-		ra.logRuntimeMessage("got extendedTextRangePattern")
-		remoteExtendedTextRangePattern = remoteResult.asType(RemoteExtensionTarget)
 		customAttributeValueIsSupported = remoteExtendedTextRangePattern.isExtensionSupported(
 			guid_msWord_getCustomAttributeValue,
 		)
@@ -110,6 +120,68 @@ def msWord_getCustomAttributeValue(
 		log.debugWarning("Custom attribute value not available")
 		return None
 	return customAttribValue
+
+
+def msWord_moveTextRangeBySentence(
+	docElement: UIA.IUIAutomationElement,
+	textRange: UIA.IUIAutomationTextRange,
+	unitCount: int,
+) -> UIA.IUIAutomationTextRange | None:
+	"""
+	Move a UI Automation text range by sentence using the Word-specific UIA
+	extended text range pattern, if available.
+	Returns None if the operation fails or the extensions are not supported.
+	"""
+	if not isSupported():
+		return None
+
+	guid_msWord_moveBySentence = GUID("{F39655AC-133A-435B-A318-C197F0D3D203}")
+	guid_msWord_expandToEnclosingSentence = GUID("{98FE8B34-F317-459A-9627-21123EA95BEA}")
+	op = operation.Operation()
+
+	@op.buildFunction
+	def code(ra: remoteAPI.RemoteAPI):
+		remoteDocElement = ra.newElement(docElement)
+		remoteTextRange = ra.newTextRange(textRange)
+
+		remoteExtendedTextRangePattern = _msWord_remote_getExtendedTextRangePattern(
+			ra,
+			remoteDocElement,
+		)
+
+		moveBySentenceSupported = remoteExtendedTextRangePattern.isExtensionSupported(
+			guid_msWord_moveBySentence,
+		)
+		with ra.ifBlock(moveBySentenceSupported.inverse()):
+			ra.logRuntimeMessage("extendedTextRangePattern does not support MoveBySentence")
+			ra.Return(None)
+		expandSupported = remoteExtendedTextRangePattern.isExtensionSupported(
+			guid_msWord_expandToEnclosingSentence,
+		)
+		with ra.ifBlock(expandSupported.inverse()):
+			ra.logRuntimeMessage(
+				"extendedTextRangePattern does not support ExpandToEnclosingSentence",
+			)
+			ra.Return(None)
+
+		moveCount = ra.newInt(unitCount)
+		actualMoved = ra.newInt(0)
+		ra.logRuntimeMessage("doing callExtension for MoveBySentence")
+		remoteExtendedTextRangePattern.callExtension(
+			guid_msWord_moveBySentence,
+			remoteTextRange,
+			moveCount,
+			actualMoved,
+		)
+		ra.logRuntimeMessage("doing callExtension for ExpandToEnclosingSentence")
+		remoteExtendedTextRangePattern.callExtension(
+			guid_msWord_expandToEnclosingSentence,
+			remoteTextRange,
+		)
+
+		ra.Return(remoteTextRange)
+
+	return op.execute()
 
 
 def collectAllHeadingsInTextRange(

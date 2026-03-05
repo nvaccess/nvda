@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
+# Copyright (C) 2015-2026 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -75,6 +75,7 @@ class RemoteClient:
 		self.localControlServer = None
 		self.sendingKeys = False
 		self._wasSendingKeysBeforeLock: bool = False
+		self._disconnectConfirmationDialog: MessageDialog | None = None
 		try:
 			self.sdHandler = SecureDesktopHandler()
 		except RuntimeError:
@@ -222,6 +223,10 @@ class RemoteClient:
 	@alwaysCallAfter
 	def doDisconnect(self) -> None:
 		"""Seek confirmation from the user before disconnecting."""
+		if self._disconnectConfirmationDialog:
+			self._disconnectConfirmationDialog.Raise()
+			self._disconnectConfirmationDialog.SetFocus()
+			return
 		if (
 			self.followerSession is not None
 			and configuration.getRemoteConfig()["ui"]["confirmDisconnectAsFollower"]
@@ -247,9 +252,16 @@ class RemoteClient:
 					buttons=confirmation_buttons,
 				)
 
-				if dialog.ShowModal() != ReturnCode.YES:
-					log.info("Remote disconnection cancelled by user.")
+				self._disconnectConfirmationDialog = dialog
+				try:
+					if dialog.ShowModal() != ReturnCode.YES:
+						log.info("Remote disconnection cancelled by user.")
+						return
+				except Exception:
+					log.error("Error showing disconnect confirmation dialog", exc_info=True)
 					return
+				finally:
+					self._disconnectConfirmationDialog = None
 		self.disconnect()
 
 	def disconnect(self, *, _silent: bool = False):
@@ -283,6 +295,8 @@ class RemoteClient:
 
 	def disconnectAsFollower(self):
 		"""Close follower session and clean up related resources."""
+		if self.followerTransport:
+			self.followerTransport.transportConnectionFailed.unregister(self.onConnectAsFollowerFailed)
 		self.followerSession.close()
 		self.followerSession = None
 		self.followerTransport = None
@@ -304,6 +318,21 @@ class RemoteClient:
 				caption=_("Error Connecting"),
 				# Translators: Message shown when unable to connect to the remote computer.
 				message=_("Unable to connect to the remote computer"),
+				style=wx.OK | wx.ICON_WARNING,
+			)
+
+	@alwaysCallAfter
+	def onConnectAsFollowerFailed(self):
+		if self.followerTransport and self.followerTransport.successfulConnects == 0:
+			log.error(f"Failed to connect to {self.followerTransport.address}")
+			self.disconnectAsFollower()
+			# Translators: Title of the connection error dialog.
+			gui.messageBox(
+				parent=gui.mainFrame,
+				# Translators: Title of the connection error dialog.
+				caption=pgettext("remote", "Error Connecting"),
+				# Translators: Message shown when unable to connect to the remote computer.
+				message=pgettext("remote", "Unable to connect to the remote computer"),
 				style=wx.OK | wx.ICON_WARNING,
 			)
 
@@ -422,6 +451,7 @@ class RemoteClient:
 			self.onFollowerCertificateFailed,
 		)
 		transport.transportConnected.register(self.onConnectedAsFollower)
+		transport.transportConnectionFailed.register(self.onConnectAsFollowerFailed)
 		transport.transportDisconnected.register(self.onDisconnectedAsFollower)
 		transport.reconnectorThread.start()
 		if self.menu:

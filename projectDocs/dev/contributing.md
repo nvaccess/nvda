@@ -43,7 +43,7 @@ Then give people time to offer feedback.
 	* If possible for your PR, please consider creating a set of unit or system tests to test your changes.
 	* The lint check ensures your changes comply with our code style expectations.
 	Use `runlint.bat`.
-	* Run `scons checkPot` to ensure translatable strings have comments for the translators
+	* Run `runcheckpot.bat` to ensure translatable strings have comments for the translators
 	* Run `runlicensecheck.bat` to check that you don't introduce any new python dependencies with incompatible licenses.
 1. [Create a change log entry](#change-log-entry)
 1. Create a Pull Request (PR)

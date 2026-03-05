@@ -8,26 +8,74 @@ This guide provides information concerning NVDA development, including translati
 
 ### Add-on API stability {#API}
 
-The NVDA Add-on API includes all NVDA internals, except:
+#### Definition of the public API
 
-* symbols that are prefixed with an underscore (`_`)
-* [transitive imports](#APIImports)
-* [included pip packages](#APIIncludedPipPackages)
+The NVDA Add-on API consists of all NVDA Python objects, classes and functions, excluding symbols prefixed with an underscore (`_`), transitive imports and Python packages.
 
-The NVDA Add-on API changes over time, for example because of the addition of new features, removal or replacement of outdated libraries, deprecation of unused or replaced code and methodologies, and changes to Python.
-Important changes to the API are announced on the [NVDA API mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-api/about).
-Changes relevant to developers are also announced via the [NVDA changes file](https://download.nvaccess.org/documentation/changes.html).
-Any changes to the API policy outlined in this section will be conveyed via these two channels.
+* **Public symbols (e.g. `gui.mainFrame`):**
+These form the supported contract.
+We strive to maintain backward compatibility for these symbols according to the schedule below.
+* **Private symbols (e.g. `_doInstall`):**
+These are internal implementation details.
+Code is considered private if it begins with a leading underscore.
+This also includes anything "below" the underscore.
+For example, `package.module._Class`, `package._module.Class`, and `_package.module.Class` are all internal.
+They may change or disappear in any release without notice.
+Add-ons relying on private symbols do so at their own risk.
+* **Pip packages:**
+These may be updated, downgraded or removed at any time.
+It is recommended to package any pip dependency directly with your add-on, rather than using NVDA's version of the package.
+The exception to this is `wxPython`, which must be used from NVDA.
 
-API breaking releases happen at most once per year, these are `.1` releases, e.g. `2022.1`.
-The API remains backwards compatible between breaking releases.
-API breaking changes should be considered relatively stable in the first beta: e.g. `2022.1.beta1`.
+#### The API release cycle
 
-API features may become deprecated over time.
-Deprecated API features may have a scheduled removal date, a future breaking release (e.g. `2022.1`).
-Deprecations may also have no scheduled removal date, and will remain supported until it is no longer reasonable.
-Note, the roadmap for removals is 'best effort' and may be subject to change.
-Please open a GitHub issue if the described add-on API changes result in the API no longer meeting the needs of an add-on you develop or maintain.
+To balance progress with ecosystem stability, NVDA follows a predictable schedule for API changes:
+
+* **Annual API-breaking release (major releases, e.g. 2026.1):**
+This is the only release window where signature breaking changes (defined below) are permitted.
+This allows us to remove technical debt and refactor core code.
+* **Standard releases (minor & patch releases, e.g. 2026.2, 2026.3.1):**
+These releases focus on features and stability.
+Existing API signatures are preserved, but new API features may be added.
+This includes behavioural refinements and bug fixes (see below).
+
+#### Classification of API changes
+
+To provide clarity on what add-on developers can expect, we categorise changes into three tiers:
+
+##### Signature breaking changes
+
+* **Examples:** Renaming a function, removing a module, changing a function’s return type or removing/reordering positional arguments.
+* **Policy:** These occur only in the .1 release (e.g. 2026.1).
+
+##### Behavioural refinements & bug fixes
+
+A change where the code continues to run (the signature matches), but the logic or outcome changes to correct a defect or security flaw.
+
+* **Examples:** Fixing a math error or optimising an algorithm (e.g. changing a sort order).
+* **Policy:** These are permitted in any major or minor release (e.g. 2026.1, 2026.2).
+* We recognise that some add-ons may rely on incorrect behaviour or bugs.
+However, preserving a bug to maintain backwards compatibility significantly hampers NVDA's development.
+If a public function was documented to do X but was actually doing Y, changing it to correctly do X is considered a bug fix, not a breaking change.
+
+##### Security improvements
+
+Security takes precedence over backward compatibility.
+We will make every effort to document these changes clearly (see below).
+
+* **Examples:** Privilege escalation or insecure file handling.
+* **Policy:** These are permitted in any release but are primarily deployed in patch releases (e.g. 2026.1.2).
+* In the rare event that a security fix requires a signature breaking change outside of the annual API-breaking release:
+* If the change is likely to cause instability in existing add-ons, we will treat the patch as an official API-breaking release (forcing a global add-on compatibility update) to ensure user safety.
+* If our analysis indicates the affected API is not widely used, we reserve the right to deploy the fix without forcing a global compatibility update.
+
+#### API deprecation strategy
+
+We aim to avoid silent breaks of add-on code.
+When removing or changing APIs in a breaking release (e.g. 2026.1) or due to an urgent security improvement (e.g. 2026.1.2):
+
+1. We will mark functions as deprecated, where possible, in the releases leading up to the break (e.g. raising a `DeprecationWarning` in 2025.4).
+2. All API breaking changes will be listed in the "Changes for Developers" section of the What's New document, and the [NVDA Add-on API Announcements](https://groups.google.com/a/nvaccess.org/g/nvda-api) email group.
 
 #### Stability of transitive imports in the API {#APIImports}
 
@@ -986,10 +1034,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 ## Packaging Code as NVDA Add-ons {#Addons}
 
-Add-ons make it easy for users to share and install plugins, drivers, speech symbol dictionaries and braille translation tables.
+Add-ons make it easy for users to share and install plugins, drivers, speech pronunciation/symbol dictionaries and braille translation tables.
 They can be packaged in to a single NVDA add-on package, which the user can then install into a copy of NVDA via the Add-on Store found under Tools in the NVDA menu.
 An add-on package is simply a standard zip archive with the file extension of "`nvda-addon`".
-It can contain a manifest file, install/uninstall code and directories containing plugins, drivers, speech symbol dictionaries and braille translation tables.
+It can contain a manifest file, install/uninstall code and directories containing plugins, drivers, speech dictionaries, symbol dictionaries and braille translation tables.
 
 ### Non-ASCII File Names in Zip Archives {#nonASCIIFileNamesInZip}
 
@@ -1057,8 +1105,8 @@ The lastTestedNVDAVersion field in particular is used to ensure that users can b
 It allows the add-on author to make an assurance that the add-on will not cause instability, or break the users system.
 When this is not provided, or is less than the current version of NVDA (ignoring minor point updates e.g. 2018.3.1) then the user will be warned not to install the add-on.
 
-The manifest can also specify information regarding any additional speech symbol dictionaries or braille translation tables provided by the add-on.
-Please refer to the [speech symbol dictionaries](#AddonSymbolDictionaries) and [braille translation tables](#BrailleTables) sections.
+The manifest can also specify information regarding any additional speech dictionaries, symbol or braille translation tables provided by the add-on.
+Please refer to the [speech dictionaries](#AddonSpeechDictionaries), [symbol dictionaries](#AddonSymbolDictionaries) and [braille translation tables](#BrailleTables) sections.
 
 #### An Example Manifest File {#manifestExample}
 
@@ -1082,7 +1130,8 @@ The following plugins and drivers can be included in an add-on:
 * Braille display drivers: Place them in a `brailleDisplayDrivers` directory in the archive.
 * Global plugins: Place them in a `globalPlugins` directory in the archive.
 * Synthesizer drivers: Place them in a `synthDrivers` directory in the archive.
-* [Speech symbol dictionaries](#AddonSymbolDictionaries): Place them in the directory for one or more [locales](#localizingAddons) with a file name of `symbols-<name>.dic`, e.g. `locale\en\symbols-greek.dic`.
+* [Speech dictionaries](#AddonSpeechDictionaries): Place them in the `speechDicts` directory with a file name with the `.dic` extension, e.g. `speechDicts\pronunciation.dic`.
+* [Symbol dictionaries](#AddonSymbolDictionaries): Place them in the directory for one or more [locales](#localizingAddons) with a file name of `symbols-<name>.dic`, e.g. `locale\en\symbols-greek.dic`.
 * [Braille translation tables](#BrailleTables): Place them in a `brailleTables` directory in the archive.
 
 ### Optional install / Uninstall code {#installUninstallCode}
@@ -1125,18 +1174,18 @@ To allow plugins in your add-on to access gettext message information via calls 
 This function cannot be called in modules that do not belong to an add-on, e.g. in a scratchpad subdirectory.
 For more information about gettext and NVDA translation in general, please read the [Translating NVDA page](https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/readme.md)
 
-#### Speech symbol dictionaries {#AddonSymbolDictionaries}
+#### Symbol dictionaries {#AddonSymbolDictionaries}
 
 You can provide custom speech symbol dictionaries in add-ons to improve symbol pronunciation.
 The process to create custom speech symbol dictionaries is very similar to that of the [translation process of existing symbols](#symbolPronunciation).
 Note that [complex symbols](#complexSymbols) are not supported.
 
-Custom dictionaries must be placed in a language directory and have a filename in the form `symbols-<name>.dic`, where `<name>` is the name that has to be provided in the add-ons manifest.
+Custom symbol dictionaries must be placed in a language directory and have a filename in the form `symbols-<name>.dic`, where `<name>` is the name that has to be provided in the add-ons manifest.
 All locales implicitly inherit the symbol information for English, though any of this information can be overridden for specific locales.
 
-When adding a dictionary not marked as mandatory, some information must be provided such as its display name, since it should be shown in the speech category of the settings dialog.
-A dictionary can also be marked mandatory, in which case it is always enabled with the add-on.
-When an add-on ships with dictionaries, this information is included in its manifest in the optional `symbolDictionaries` section.
+When adding a symbol dictionary not marked as mandatory, some information must be provided such as its display name, since it should be shown in the speech category of the settings dialog.
+A symbol dictionary can also be marked mandatory, in which case it is always enabled with the add-on.
+When an add-on ships with symbol dictionaries, this information is included in its manifest in the optional `symbolDictionaries` section.
 For example:
 
 ```ini
@@ -1150,14 +1199,14 @@ displayName = Biblical Hebrew
 mandatory = true
 ```
 
-In the above example, `greek` is a dictionary that is optional and will be listed in the speech category of NVDA's settings dialog under the "Extra dictionaries for character and symbol processing" setting.
+In the above example, `greek` is a symbol dictionary that is optional and will be listed in the speech category of NVDA's settings dialog under the "Extra dictionaries for character and symbol processing" setting.
 Its file will be stored as `locale\en\symbols-greek.dic`, whereas French translations of the symbols are stored in `locale\fr\symbols-greek.dic`.
 When using NVDA in French, symbols that aren't defined in the French dictionary inherit the symbol information for English.
 
 Also in the example, the `hebrew` dictionary is marked mandatory and will therefore always be enabled as long as the add-on is active.
 Its file will be stored as `locale\en\symbols-hebrew.dic`, whereas French translations of the symbols are stored in `locale\fr\symbols-hebrew.dic`.
 
-Note that for the display name of the dictionary to be translated, an entry should be added to a [locale manifest](#localeManifest).
+Note that for the display name of the symbol dictionary to be translated, an entry should be added to a [locale manifest](#localeManifest).
 For example, add the following to `locale\fr\manifest.ini`:
 
 ```ini
@@ -1165,6 +1214,103 @@ For example, add the following to `locale\fr\manifest.ini`:
 [[hebrew]]
 displayName = Hébreu Biblique
 ```
+
+### Speech dictionaries {#AddonSpeechDictionaries}
+
+You can provide custom speech dictionaries in add-ons to improve pronunciation of words that are usually pronounced incorrectly by speech synthesizers.
+Custom dictionaries must be placed in the `speechDicts` directory and have a filename with the `.dic` extension.
+For example, when your dictionary is named `<name>.dic`, `<name>` is the name that has to be provided in the add-ons manifest.
+
+When adding a speech dictionary not marked as mandatory, some information must be provided such as its display name, since it should be shown in the speech category of the settings dialog.
+A speech dictionary can also be marked mandatory, in which case it is always enabled with the add-on.
+When an add-on ships with speech dictionaries, this information is included in its manifest in the optional `speechDictionaries` section.
+For example:
+
+```ini
+[speechDictionaries]
+[[pronunciation]]
+displayName = Dodgy Dictionary
+mandatory = false
+```
+
+In the above example, `pronunciation` is a dictionary that is optional and will be listed in the speech category of NVDA's settings dialog under the "Speech Dictionaries" setting.
+Its file will be stored as `speechDicts\pronunciation.dic`.
+When you mark the dictionary as mandatory, it will be always enabled as long as the add-on is active.
+
+Note that for the display name of the dictionary to be translated, an entry should be added to a [locale manifest](#localeManifest).
+For example, add the following to `locale\fr\manifest.ini`:
+
+```ini
+[speechDictionaries]
+[[pronunciation]]
+displayName = Dictionnaire douteux
+```
+
+Unlike symbol dictionaries, speech dictionaries are currently locale-agnostic.
+Therefore, an active dictionary is always active, regardless of the current language.
+
+#### Creating speech dictionaries {#AddonCreatingSpeechDictionaries}
+
+A speech dictionary file contains dictionary rules, one per line.
+Each dictionary rule consists of four tab-separated fields on a single line:
+
+```
+<pattern>	<replacement>	<caseSensitive>	<type>
+```
+
+The fields are:
+
+1. `pattern`: The text pattern to match.
+  Hash characters (`#`) must be escaped as `\#`.
+2. `replacement`: The text to replace the matched pattern with.
+  Hash characters (`#`) must be escaped as `\#`.
+3. `caseSensitive`: A numeric flag indicating case sensitivity:
+	* `0`: Case insensitive matching
+	* `1`: Case sensitive matching
+4. `type`: A number indicating the type of pattern matching to use:
+	* `0`: Anywhere - Pattern can match anywhere in the text (literal string)
+	* `1`: Regular expression - Pattern is treated as a Python regular expression
+	* `2`: Whole word - Pattern must match a complete word with word boundaries on both sides
+	* `3`: Part of word - Pattern must be preceded or followed by a word character (letter, digit, underscore)
+	* `4`: Start of word - Pattern must have a word boundary at the start and a word character at the end
+	* `5`: End of word - Pattern must have a word character at the start and a word boundary at the end
+	* `6`: Unix shell-style wildcards - Pattern uses Unix shell wildcards (`*`, `?`, `[]`, etc.)
+
+Comments can be added before entries to provide descriptions.
+A comment is preceded by a `#` (hash sign) and applies to the next entry line that appears after it.
+
+##### Examples
+
+```
+# Expand NVDA acronym
+NVDA	NonVisual Desktop Access	1	2
+```
+
+This means that the word "NVDA" (case sensitive, whole word) should be spoken as "NonVisual Desktop Access".
+
+```
+# Convert percentages to spoken format
+(\d+)%	\1 percent	0	1
+```
+
+This uses a regular expression to match numbers followed by a percent sign and replaces them with the number followed by the word "percent".
+For example, "50%" becomes "50 percent".
+
+```
+# Change "LOL" to full phrase
+LOL	laughing out loud	0	2
+```
+
+This means that the word "LOL" (case insensitive, whole word) should be spoken as "laughing out loud".
+
+```
+# Match any .txt file using wildcards
+*.txt	text file	0	6
+```
+
+This uses Unix shell-style wildcards to match any string ending in ".txt" and replaces it with "text file".
+
+For more information on speech dictionaries, see the NVDA user guide section on speech.
 
 ### Add-on Documentation {#AddonDoc}
 
@@ -1442,6 +1588,12 @@ For examples of how to define and use new extension points, please see the code 
 | Type |Extension Point |Description|
 |---|---|---|
 |`Action` |`post_sessionLockStateChanged` |Notifies when a session lock or unlock event occurs.|
+
+### winAPI._displayTracking {#winAPI_displayTrackingExtPts}
+
+| Type |Extension Point |Description|
+|---|---|---|
+|`Action` |`displayChanged` |Notifies when display configuration changes (resolution, monitor setup, etc.). Handlers receive the `OrientationState` as an argument.|
 
 ### winAPI.messageWindow {#winAPI_messageWindowExtPts}
 

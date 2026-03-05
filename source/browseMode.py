@@ -1,16 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2025 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
+# Copyright (C) 2007-2026 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
 # Thomas Stivers, Accessolutions, Julien Cochuyt, Cyrille Bougot
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from typing import (
-	Any,
-	Callable,
-	Generator,
-	Union,
-)
-from collections.abc import Generator  # noqa: F811
+from typing import Any
+from collections.abc import Callable, Generator
 import os
 import itertools
 import collections
@@ -54,8 +49,8 @@ from NVDAObjects import NVDAObject
 import gui.contextHelp
 from abc import ABCMeta, abstractmethod
 import globalVars
+from utils.debounce import debounceLimiter
 from utils import urlUtils
-from typing import Optional
 
 
 def reportPassThrough(treeInterceptor, onlyIfChanged=True):
@@ -247,7 +242,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 		caret = self.document.makeTextInfo(textInfos.POSITION_CARET)
 		return self.textInfo.compareEndPoints(caret, "startToStart") > 0
 
-	def _getLabelForProperties(self, labelPropertyGetter: Callable[[str], Optional[Any]]):
+	def _getLabelForProperties(self, labelPropertyGetter: Callable[[str], Any]):
 		"""
 		Fetches required properties for this L{TextInfoQuickNavItem} and constructs a label to be shown in an elements list.
 		This can be used by subclasses to implement the L{label} property.
@@ -269,7 +264,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 			# Example output: main menu; navigation
 			labelParts = (name, landmark)
 		else:
-			role: Union[controlTypes.Role, int] = labelPropertyGetter("role")
+			role: controlTypes.Role | int = labelPropertyGetter("role")
 			role = controlTypes.Role(role)
 			roleText = role.displayString
 			# Translators: Reported label in the elements list for an element which which has no name and value
@@ -368,7 +363,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		},
 	)
 
-	def shouldPassThrough(self, obj, reason: Optional[OutputReason] = None):
+	def shouldPassThrough(self, obj, reason: OutputReason | None = None):
 		"""Determine whether pass through mode should be enabled (focus mode) or disabled (browse mode) for a given object.
 		@param obj: The object in question.
 		@type obj: L{NVDAObjects.NVDAObject}
@@ -504,8 +499,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def _iterSimilarParagraph(
 		self,
 		kind: str,
-		paragraphFunction: Callable[[textInfos.TextInfo], Optional[Any]],
-		desiredValue: Optional[Any],
+		paragraphFunction: Callable[[textInfos.TextInfo], Any],
+		desiredValue: Any,
 		direction: _Movement,
 		pos: textInfos.TextInfo,
 	) -> Generator[TextInfoQuickNavItem, None, None]:
@@ -582,12 +577,12 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def addQuickNav(
 		cls,
 		itemType: str,
-		key: Optional[str],
+		key: str | None,
 		nextDoc: str,
 		nextError: str,
 		prevDoc: str,
 		prevError: str,
-		readUnit: Optional[str] = None,
+		readUnit: str | None = None,
 	):
 		"""Adds a script for the given quick nav item.
 		@param itemType: The type of item, I.E. "heading" "Link" ...
@@ -1076,6 +1071,18 @@ qn(
 	prevError=_("no previous error"),
 )
 qn(
+	"slider",
+	key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next slider"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next slider"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous slider"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous slider"),
+)
+qn(
 	"article",
 	key=None,
 	# Translators: Input help message for a quick navigation command in browse mode.
@@ -1221,6 +1228,19 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("No previous different style text"),
 )
+qn(
+	"reference",
+	key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next reference"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next reference"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous reference"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous reference"),
+	readUnit=textInfos.UNIT_WORD,
+)
 del qn
 
 
@@ -1301,7 +1321,6 @@ class ElementsListDialog(
 		filterText = _("Filter b&y:")
 		labeledCtrl = gui.guiHelper.LabeledControlHelper(self, filterText, wx.TextCtrl)
 		self.filterEdit = labeledCtrl.control
-		self.filterTimer: Optional[wx.CallLater] = None
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
 		contentsSizer.Add(labeledCtrl.sizer)
 		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
@@ -1537,12 +1556,16 @@ class ElementsListDialog(
 
 	FILTER_TIMER_DELAY_MS = 300
 
+	@debounceLimiter(
+		cooldownTimeMs=FILTER_TIMER_DELAY_MS,
+		delayTimeMs=FILTER_TIMER_DELAY_MS,
+		runImmediateFirstCall=False,
+	)
+	def _scheduleFilter(self, filterText: str) -> None:
+		self.filter(filterText)
+
 	def onFilterEditTextChange(self, evt: wx.CommandEvent) -> None:
-		filter = self.filterEdit.GetValue()
-		if self.filterTimer is None:
-			self.filterTimer = wx.CallLater(self.FILTER_TIMER_DELAY_MS, self.filter, filter)
-		else:
-			self.filterTimer.Start(self.FILTER_TIMER_DELAY_MS, filter)
+		self._scheduleFilter(self.filterEdit.GetValue())
 		evt.Skip()
 
 	def onAction(self, activate):
@@ -1600,7 +1623,7 @@ class BrowseModeDocumentTreeInterceptor(
 		self._lastProgrammaticScrollTime = None
 		# Cache the document constant identifier so it can be saved with the last caret position on termination.
 		# As the original property may not be available as the document will be already dead.
-		self._lastCachedDocumentConstantIdentifier: Optional[str] = self.documentConstantIdentifier
+		self._lastCachedDocumentConstantIdentifier: str | None = self.documentConstantIdentifier
 		self._lastFocusObj = None
 		self._objPendingFocusBeforeActivate = None
 		self._hadFirstGainFocus = False
@@ -2062,7 +2085,7 @@ class BrowseModeDocumentTreeInterceptor(
 
 	def _handleScrollTo(
 		self,
-		obj: Union[NVDAObject, textInfos.TextInfo],
+		obj: NVDAObject | textInfos.TextInfo,
 	) -> bool:
 		"""Handle scrolling the browseMode document to a given object in response to an event.
 		Subclasses should call this from an event which indicates that the document has scrolled.
@@ -2172,13 +2195,13 @@ class BrowseModeDocumentTreeInterceptor(
 			obj = container
 		return doResult(False)
 
-	documentConstantIdentifier: Optional[str]
+	documentConstantIdentifier: str | None
 	""" Typing information for auto-property: _get_documentConstantIdentifier"""
 
 	# Mark documentConstantIdentifier property for caching during the current core cycle
 	_cache_documentConstantIdentifier = True
 
-	def _get_documentConstantIdentifier(self) -> Optional[str]:
+	def _get_documentConstantIdentifier(self) -> str | None:
 		"""Get the constant identifier for this document.
 		This identifier should uniquely identify all instances (not just one instance) of a document for at least the current session of the hosting application.
 		Generally, the document URL should be used.
@@ -2608,6 +2631,15 @@ class BrowseModeDocumentTreeInterceptor(
 		"kb:,": "movePastEndOfContainer",
 	}
 
+	def _toggleScreenLayout(self) -> None:
+		"""Toggles whether the document is presented as it appears visually, or with interactive controls on their own lines.
+
+		Subclasses that support toggling this option should implement this method.
+
+		:raises NotImplementedError: If toggling this option is not supported by this document.
+		"""
+		raise NotImplementedError
+
 	@script(
 		description=_(
 			# Translators: the description for the toggleScreenLayout script.
@@ -2615,9 +2647,12 @@ class BrowseModeDocumentTreeInterceptor(
 		),
 		gesture="kb:NVDA+v",
 	)
-	def script_toggleScreenLayout(self, gesture):
-		# Translators: The message reported for not supported toggling of screen layout
-		ui.message(_("Not supported in this document."))
+	def script_toggleScreenLayout(self, gesture: inputCore.InputGesture) -> None:
+		try:
+			self._toggleScreenLayout()
+		except NotImplementedError:
+			# Translators: The message reported for not supported toggling of screen layout
+			ui.message(_("Not supported in this document."))
 
 	def updateAppSelection(self):
 		"""Update the native selection in the application to match the browse mode selection in NVDA."""
@@ -2670,8 +2705,8 @@ class BrowseModeDocumentTreeInterceptor(
 	def _iterSimilarParagraph(
 		self,
 		kind: str,
-		paragraphFunction: Callable[[textInfos.TextInfo], Optional[Any]],
-		desiredValue: Optional[Any],
+		paragraphFunction: Callable[[textInfos.TextInfo], Any],
+		desiredValue: Any,
 		direction: _Movement,
 		pos: textInfos.TextInfo,
 	) -> Generator[TextInfoQuickNavItem, None, None]:

@@ -39,18 +39,6 @@ def _isRemoteAccessDisabled() -> bool:
 	return not remoteRunning()
 
 
-def _isScreenCurtainEnabled() -> bool:
-	"""Whether screen curtain functionality is **enabled**."""
-	# Import late to avoid circular import
-	import vision
-	from visionEnhancementProviders.screenCurtain import ScreenCurtainProvider
-
-	screenCurtainId = ScreenCurtainProvider.getSettings().getId()
-	screenCurtainProviderInfo = vision.handler.getProviderInfo(screenCurtainId)
-	isScreenCurtainRunning = bool(vision.handler.getProviderInstance(screenCurtainProviderInfo))
-	return isScreenCurtainRunning
-
-
 @dataclass
 class _Context:
 	blockActionIf: Callable[[], bool]
@@ -97,11 +85,6 @@ class Context(_Context, Enum):
 		_isRemoteAccessDisabled,
 		# Translators: Reported when an action cannot be performed because Remote Access functionality is disabled.
 		pgettext("remote", "Action unavailable when Remote Access is disabled"),
-	)
-	SCREEN_CURTAIN = (
-		lambda: _isScreenCurtainEnabled(),
-		# Translators: Reported when an action cannot be performed because screen curtain is enabled.
-		_("Action unavailable while screen curtain is enabled"),
 	)
 
 

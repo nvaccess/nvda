@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2026 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -7,19 +7,19 @@ from abc import abstractmethod
 from dataclasses import dataclass
 from enum import Enum
 
+from functools import lru_cache
 from locale import strxfrm
 from typing import (
 	Any,
-	FrozenSet,
 	Generic,
-	List,
-	Optional,
 	TYPE_CHECKING,
 	Protocol,
 	TypeVar,
 	cast,
 )
 
+from difflib import SequenceMatcher
+from fuzzysearch import find_near_matches
 from requests.structures import CaseInsensitiveDict
 
 from addonStore.models.addon import (
@@ -50,13 +50,20 @@ if TYPE_CHECKING:
 class _AddonListFieldData:
 	displayString: str
 	width: int
-	hideStatuses: FrozenSet[_StatusFilterKey] = frozenset()
+	hideStatuses: frozenset[_StatusFilterKey] = frozenset()
 	"""Hide this field if the current tab filter is in hideStatuses."""
 
 
 class AddonListField(_AddonListFieldData, Enum):
 	"""An ordered enum of fields to use as columns in the add-on list."""
 
+	searchRank = (
+		# Translators: The name of a sorting option for the add-on store to sort by search relevance
+		pgettext("addonStore", "Relevance"),
+		0,
+		# hide for all statuses, as this is only used for sorting when a search filter is applied.
+		frozenset(_StatusFilterKey),
+	)
 	displayName = (
 		# Translators: The name of the column that contains names of addons.
 		pgettext("addonStore", "Name"),
@@ -211,6 +218,41 @@ class AddonListItemVM(Generic[_AddonModelT]):
 			)
 		)
 
+	@property
+	@lru_cache(maxsize=1)
+	def searchableText(self) -> str:
+		"""Extract searchable text from addon."""
+		model = self.model
+		searchableText = " ".join(
+			[
+				model.displayName,
+				model.description,
+				model.addonId,
+				model.publisher if isinstance(model, _AddonStoreModel) else "",
+				model.author if isinstance(model, _AddonManifestModel) else "",
+			],
+		)
+		return searchableText.strip().casefold()
+
+	def searchRank(self, searchTerm: str) -> float:
+		"""Calculate a search rank for this addon."""
+		searchTerm = searchTerm.strip().casefold()
+		if not searchTerm:
+			return 1.0
+		if searchTerm in self.model.displayName.casefold():
+			return 1.0
+		if searchTerm in self.searchableText:
+			return 0.99
+		matches = find_near_matches(searchTerm, self.searchableText, max_l_dist=1)
+		bestRatio = 0.0
+		for match in matches:
+			matchedText = self.searchableText[match.start : match.end]
+			ratio = SequenceMatcher(None, searchTerm, matchedText).ratio()
+			if ratio > bestRatio:
+				bestRatio = ratio
+		# Cap at 0.99 to ensure exact matches of name are always ranked higher.
+		return min(bestRatio, 0.99)
+
 	def __repr__(self) -> str:
 		return f"{self.__class__.__name__}: {self.Id}, {self.status}"
 
@@ -218,24 +260,26 @@ class AddonListItemVM(Generic[_AddonModelT]):
 class AddonDetailsVM:
 	def __init__(self, listVM: "AddonListVM"):
 		self._listVM = listVM
-		self._listItem: Optional[AddonListItemVM] = listVM.getSelection()
+		self._listItem: AddonListItemVM | None = listVM.getSelection()
 		self.updated = extensionPoints.Action()  # triggered by setting L{self._listItem}
 
 	@property
-	def listItem(self) -> Optional[AddonListItemVM]:
+	def listItem(self) -> AddonListItemVM | None:
 		return self._listItem
 
 	@listItem.setter
-	def listItem(self, newListItem: Optional[AddonListItemVM]):
+	def listItem(self, newListItem: AddonListItemVM | None):
 		self._listItem = newListItem
 		# ensure calling on the main thread.
 		core.callLater(delay=0, callable=self.updated.notify, addonDetailsVM=self)
 
 
 class AddonListVM:
+	DEFAULT_SORT_FIELD = AddonListField.displayName
+
 	def __init__(
 		self,
-		addons: List[AddonListItemVM],
+		addons: list[AddonListItemVM],
 		storeVM: "AddonStoreVM",
 	):
 		self._isLoading: bool = False
@@ -244,14 +288,16 @@ class AddonListVM:
 		self.itemUpdated = extensionPoints.Action()
 		self.updated = extensionPoints.Action()
 		self.selectionChanged = extensionPoints.Action()
-		self.selectedAddonId: Optional[str] = None
+		self.selectedAddonId: str | None = None
 		self.lastSelectedAddonId = self.selectedAddonId
-		self._sortByModelField: AddonListField = AddonListField.displayName
-		self._filterString: Optional[str] = None
+		self._sortByModelField: AddonListField = self.DEFAULT_SORT_FIELD
+		self._prevSortByModelField: AddonListField = self.DEFAULT_SORT_FIELD
+		self._filterString: str | None = None
 		self._reverseSort: bool = False
+		self._prevReverseSort: bool = self._reverseSort
 
 		self._setSelectionPending = False
-		self._addonsFilteredOrdered: List[str] = self._getFilteredSortedIds()
+		self._addonsFilteredOrdered: list[str] = self._getFilteredSortedIds()
 		self._validate(
 			sortField=self._sortByModelField,
 			selectionIndex=self.getSelectedIndex(),
@@ -261,8 +307,12 @@ class AddonListVM:
 		self.resetListItems(addons)
 
 	@property
-	def presentedFields(self) -> List[AddonListField]:
+	def presentedFields(self) -> list[AddonListField]:
 		return [c for c in AddonListField if self._storeVM._filteredStatusKey not in c.hideStatuses]
+
+	@property
+	def sortableFields(self) -> list[AddonListField]:
+		return [AddonListField.searchRank] + self.presentedFields
 
 	def _itemDataUpdated(self, addonListItemVM: AddonListItemVM):
 		addonId: str = addonListItemVM.Id
@@ -274,7 +324,7 @@ class AddonListVM:
 			# ensure calling on the main thread.
 			core.callLater(delay=0, callable=self.itemUpdated.notify, index=index)
 
-	def resetListItems(self, listVMs: List[AddonListItemVM]):
+	def resetListItems(self, listVMs: list[AddonListItemVM]):
 		log.debug("resetting list items")
 
 		# Ensure that old listItemVMs can no longer notify of updates.
@@ -293,7 +343,7 @@ class AddonListVM:
 		# ensure calling on the main thread.
 		core.callLater(delay=0, callable=self.updated.notify)
 
-	def getAddonFieldText(self, index: int, field: AddonListField) -> Optional[str]:
+	def getAddonFieldText(self, index: int, field: AddonListField) -> str | None:
 		"""Get the text for an item's attribute.
 		@param index: The index of the item in _addonsFilteredOrdered
 		@param field: The field attribute for the addon. See L{AddonList.presentedFields}
@@ -335,7 +385,7 @@ class AddonListVM:
 	def getCount(self) -> int:
 		return len(self._addonsFilteredOrdered)
 
-	def getSelectedIndex(self) -> Optional[int]:
+	def getSelectedIndex(self) -> int | None:
 		if self._addonsFilteredOrdered and self.selectedAddonId in self._addonsFilteredOrdered:
 			return self._addonsFilteredOrdered.index(self.selectedAddonId)
 		return None
@@ -345,7 +395,7 @@ class AddonListVM:
 		selectedAddonId = self._addonsFilteredOrdered[index]
 		return self._addons[selectedAddonId]
 
-	def setSelection(self, index: Optional[int]) -> Optional[AddonListItemVM]:
+	def setSelection(self, index: int | None) -> AddonListItemVM | None:
 		self._validate(selectionIndex=index)
 		self.selectedAddonId = None
 		if index is not None:
@@ -354,22 +404,22 @@ class AddonListVM:
 			except IndexError:
 				# Failed to get addonId, index may have been lost in refresh.
 				pass
-		selectedItemVM: Optional[AddonListItemVM] = self.getSelection()
+		selectedItemVM: AddonListItemVM | None = self.getSelection()
 		log.debug(f"selected Item: {selectedItemVM}")
 		# ensure calling on the main thread.
 		core.callLater(delay=0, callable=self.selectionChanged.notify)
 		return selectedItemVM
 
-	def getSelection(self) -> Optional[AddonListItemVM]:
+	def getSelection(self) -> AddonListItemVM | None:
 		if self.selectedAddonId is None:
 			return None
 		return self._addons.get(self.selectedAddonId)
 
 	def _validate(
 		self,
-		sortField: Optional[AddonListField] = None,
-		selectionIndex: Optional[int] = None,
-		selectionId: Optional[str] = None,
+		sortField: AddonListField | None = None,
+		selectionIndex: int | None = None,
+		selectionId: str | None = None,
 	):
 		if sortField is not None:
 			assert sortField in AddonListField
@@ -391,7 +441,7 @@ class AddonListVM:
 	@property
 	def _columnSortChoices(self) -> list[str]:
 		columnChoices = []
-		for c in self.presentedFields:
+		for c in self.sortableFields:
 			columnChoices.append(
 				pgettext(
 					"addonStore",
@@ -414,35 +464,27 @@ class AddonListVM:
 			)
 		return columnChoices
 
+	MINIMUM_SEARCH_RANK_THRESHOLD = 0.7
+
 	def _getFilteredSortedIds(self) -> list[str]:
-		def _getSortFieldData(listItemVM: AddonListItemVM) -> "_SupportsLessThan":
+		def _getSortFieldData(listItemVM: AddonListItemVM[_AddonGUIModel]) -> "_SupportsLessThan":
 			if self._sortByModelField == AddonListField.publicationDate:
 				if getattr(listItemVM.model, "submissionTime", None):
-					listItemVM = cast(AddonListItemVM[_AddonStoreModel], listItemVM)
-					return listItemVM.model.submissionTime
+					addonStoreListItemVM = cast(AddonListItemVM[_AddonStoreModel], listItemVM)
+					return addonStoreListItemVM.model.submissionTime
 				return 0
 			if self._sortByModelField == AddonListField.installDate:
-				listItemVM = cast(AddonListItemVM[_AddonManifestModel], listItemVM)
-				return listItemVM.model.installDate
+				addonManifestListItemVM = cast(AddonListItemVM[_AddonManifestModel], listItemVM)
+				return addonManifestListItemVM.model.installDate
+			if self._sortByModelField == AddonListField.searchRank:
+				return listItemVM.searchRank(self._filterString or "")
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
-
-		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:
-			term = term.casefold()
-			model = detailsVM.model
-			inPublisher = isinstance(model, _AddonStoreModel) and term in model.publisher.casefold()
-			inAuthor = isinstance(model, _AddonManifestModel) and term in model.author.casefold()
-			return (
-				term in model.displayName.casefold()
-				or term in model.description.casefold()
-				or term in model.addonId.casefold()
-				or inPublisher
-				or inAuthor
-			)
 
 		filtered = (
 			vm
 			for vm in self._addons.values()
-			if self._filterString is None or _containsTerm(vm, self._filterString)
+			if self._filterString is None
+			or vm.searchRank(self._filterString) >= self.MINIMUM_SEARCH_RANK_THRESHOLD
 		)
 		filteredSorted = list(
 			[vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=self._reverseSort)],
@@ -451,8 +493,8 @@ class AddonListVM:
 
 	def _tryPersistSelection(
 		self,
-		newOrder: List[str],
-	) -> Optional[str]:
+		newOrder: list[str],
+	) -> str | None:
 		"""Get the ID of the selection in new order, _addonsFilteredOrdered should not have changed yet."""
 		selectedIndex = self.getSelectedIndex()
 		selectedId = self.selectedAddonId
@@ -496,6 +538,11 @@ class AddonListVM:
 		if self.selectedAddonId:
 			self.lastSelectedAddonId = self.selectedAddonId
 		self._addonsFilteredOrdered = newOrder
+
+	def _cachePreviousSortField(self) -> None:
+		"""Cache the current sort field and order as previous sort field and order."""
+		self._prevSortByModelField = self._sortByModelField
+		self._prevReverseSort = self._reverseSort
 
 	def applyFilter(self, filterText: str) -> None:
 		oldOrder = self._addonsFilteredOrdered
