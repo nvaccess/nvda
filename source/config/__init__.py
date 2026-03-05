@@ -1035,7 +1035,9 @@ class ConfigManager(object):
 		return functools.reduce(lambda d, x: d.get(x), keyPath, self)
 
 	def setConfigValue(
-		self, value: bool | int | float | str, *keyPath: *tuple[str, str, *tuple[str, ...]]
+		self,
+		value: bool | int | float | str,
+		*keyPath: *tuple[str, str, *tuple[str, ...]],
 	) -> None:
 		"""
 		Sets the value of a configuration key.
@@ -1091,7 +1093,9 @@ class ConfigManager(object):
 		return value
 
 	def clampedIncrementAndUpdateConfig(
-		self, *keyPath: tuple[str, str, *tuple[str, ...]], step: float
+		self,
+		*keyPath: tuple[str, str, *tuple[str, ...]],
+		step: float,
 	) -> None:
 		"""
 		Updates a configuration value by applying a step, constrained within its valid range.
