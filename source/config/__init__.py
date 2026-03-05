@@ -1034,7 +1034,9 @@ class ConfigManager(object):
 		"""
 		return functools.reduce(lambda d, x: d.get(x), keyPath, self)
 
-	def setConfigValue(self, value: bool | int | float | str, *keyPath: *tuple[str, str, *tuple[str, ...]]) -> None:
+	def setConfigValue(
+		self, value: bool | int | float | str, *keyPath: *tuple[str, str, *tuple[str, ...]]
+	) -> None:
 		"""
 		Sets the value of a configuration key.
 		:param value: The value to set for the configuration key.
@@ -1088,7 +1090,9 @@ class ConfigManager(object):
 		value = minValue + (maxValue - minValue) * (percentage / 100)
 		return value
 
-	def clampedIncrementAndUpdateConfig(self, *keyPath: tuple[str, str, *tuple[str, ...]], step: float) -> None:
+	def clampedIncrementAndUpdateConfig(
+		self, *keyPath: tuple[str, str, *tuple[str, ...]], step: float
+	) -> None:
 		"""
 		Updates a configuration value by applying a step, constrained within its valid range.
 		:param keyPath: The path to the configuration key to update.
