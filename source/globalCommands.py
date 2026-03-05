@@ -8,7 +8,6 @@
 # Burman's Computer and Education Ltd, Cary-rowen.
 
 import itertools
-import functools
 from typing import (
 	Optional,
 	Tuple,
