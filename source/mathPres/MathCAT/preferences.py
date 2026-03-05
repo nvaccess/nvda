@@ -293,7 +293,6 @@ def applyUserPreferences(prefs: PreferencesDict | None = None) -> None:
 	setEffectiveBrailleCode()
 
 
-
 class MathCATUserPreferences:
 	_prefs: PreferencesDict
 
@@ -310,7 +309,9 @@ class MathCATUserPreferences:
 				"MathRate": defaultValue(("speech", "mathRate")),
 				"PauseFactor": defaultValue(("speech", "pauseFactor")),
 				"SpeechSound": defaultValue(("speech", "speechSound")),
-				"SpeechStyle": MathCATUserPreferences.getConfigForSpeechStyle(defaultValue(("speech", "language"))),
+				"SpeechStyle": MathCATUserPreferences.getConfigForSpeechStyle(
+					defaultValue(("speech", "language"))
+				),
 				"SubjectArea": defaultValue(("speech", "subjectArea")),
 				"Chemistry": defaultValue(("speech", "chemistry")),
 			},
@@ -366,7 +367,9 @@ class MathCATUserPreferences:
 			for key2 in prefs[key1]:
 				match (key1, key2):
 					case ("Speech", "SpeechStyle"):
-						nvdaConfigValue = MathCATUserPreferences.getConfigForSpeechStyle(mathConf["speech"]["language"])
+						nvdaConfigValue = MathCATUserPreferences.getConfigForSpeechStyle(
+							mathConf["speech"]["language"]
+						)
 					case _:
 						nvdaConfigValue = MathCATUserPreferences.tryToGetNVDAConfigValue(key1, key2)
 				prefs[key1][key2] = nvdaConfigValue
