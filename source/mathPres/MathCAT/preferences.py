@@ -358,6 +358,8 @@ class MathCATUserPreferences:
 			log.warning(
 				f"Could not access math.{convertedKey1}.{convertedKey2} configuration; using MathCAT default.",
 			)
+			# Fall back to the MathCAT default for this preference key.
+			return MathCATUserPreferences.defaults()[key1][key2]
 
 	@staticmethod
 	def fromNVDAConfig() -> "MathCATUserPreferences":
