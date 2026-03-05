@@ -50,7 +50,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 * Added several functions related to the braille auto-scroll feature. (#18573, @nvdaes):
   * Added an `autoScroll` method to `braille.handler`.
-  * Added several functions for handling configuration value conversions and updates in `globalCommands`:
+  * Added several functions for handling configuration value conversions and updates in `config.conf`:
     * Added a `getConfigValue` function to get the value for a provided configuration key path.
     * Added a `setConfigValue` function to set a value for a provided configuration key path.
     * Added a `valueToPercentage` function to calculate the percentage representation of a configuration value within its range.
