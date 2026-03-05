@@ -95,7 +95,8 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 	match dialog.ShowModal():
 		case ReturnCode.YES:
 			_restartWindows()
-			core.triggerNVDAExit(None)
+			if not core.triggerNVDAExit(None):
+				log.error("NVDA already in process of exiting, this indicates a logic error.")
 		case ReturnCode.OK:
 			newNVDA = core.NewNVDAInstance(
 				filePath=os.path.join(WritePaths.defaultInstallDir, "nvda.exe"),
