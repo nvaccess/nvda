@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2021 NV Access Limited
+# Copyright (C) 2017-2025 NV Access Limited, Cary-rowen
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -90,6 +90,10 @@ class UwpOcr(ContentRecognizer):
 	@classmethod
 	def _get_autoRefreshInterval(cls) -> int:
 		return config.conf["uwpOcr"]["autoRefreshInterval"]
+
+	@classmethod
+	def _get_autoSayAllOnResult(cls) -> bool:
+		return config.conf["uwpOcr"]["autoSayAllOnResult"]
 
 	def getResizeFactor(self, width, height):
 		# UWP OCR performs poorly with small images, so increase their size.

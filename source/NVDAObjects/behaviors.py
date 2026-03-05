@@ -80,7 +80,7 @@ class ProgressBar(NVDAObject):
 				queueHandler.eventQueue,
 				speech.speakMessage,
 				# Translators: This is presented to inform the user of a progress bar percentage.
-				_("%d percent") % percentage,
+				ngettext("%d percent", "%d percent", percentage) % percentage,
 			)
 			self.progressValueCache["speech,%d,%d" % (x, y)] = percentage
 
@@ -294,7 +294,8 @@ class EditableTextBase(editableText.EditableText, NVDAObject):
 			else:
 				# No error.
 				return
-			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "textError.wav"))
+			if speech.getState().speechMode not in [speech.SpeechMode.off, speech.SpeechMode.onDemand]:
+				nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "textError.wav"))
 
 		core.callLater(50, _delayedDetection)
 

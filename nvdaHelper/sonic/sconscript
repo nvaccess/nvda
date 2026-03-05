@@ -1,0 +1,32 @@
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2011-2025 NV Access Limited
+
+sourceLibDir: SCons.Node.FS.Dir
+thirdPartyEnv: SCons.Environment.Environment
+
+Import(
+	[
+		"thirdPartyEnv",
+	]
+)
+
+sonicSrcDir = Dir("#include/sonic")
+
+env: SCons.Environment.Environment = thirdPartyEnv.Clone()
+
+env.Append(CPPPATH=sonicSrcDir)
+
+sonicObj = env.Object("sonic.obj", sonicSrcDir.File('sonic.c'))
+
+sonicLib = env.SharedLibrary(
+	target="sonic",
+	source=[
+		sonicObj,
+		Dir(".").File("sonic.def"),
+	],
+)
+
+
+Return("sonicLib")

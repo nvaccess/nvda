@@ -12,10 +12,8 @@ and we notify the user of changes to the orientation.
 
 from dataclasses import dataclass
 import enum
-from typing import (
-	Optional,
-)
 
+import extensionPoints
 from logHandler import log
 import ui
 import winUser
@@ -36,7 +34,15 @@ class OrientationState:
 	style: Orientation
 
 
-_orientationState: Optional[OrientationState] = None
+_orientationState: OrientationState | None = None
+
+displayChanged = extensionPoints.Action()
+"""
+Notifies when display configuration changes (resolution, monitor setup, etc.).
+
+:param orientationState: The current display orientation state
+:type orientationState: OrientationState
+"""
 
 
 def initialize():
@@ -76,9 +82,9 @@ def _getNewOrientationStyle(
 	previousState: OrientationState,
 	height: int,
 	width: int,
-) -> Optional[Orientation]:
+) -> Orientation | None:
 	"""
-	@returns: Orientation if there has been an orientation state change, otherwise None
+	:returns: Orientation if there has been an orientation state change, otherwise None
 	"""
 	heightAndWidthUnchanged = previousState.height == height and previousState.width == width
 	newOrientation = _getOrientationStyle(height, width)
@@ -114,3 +120,5 @@ def reportScreenOrientationChange(heightWidth: int) -> None:
 
 	_orientationState.height = height
 	_orientationState.width = width
+	# Notify registered handlers about display changes
+	displayChanged.notify(orientationState=_orientationState)
