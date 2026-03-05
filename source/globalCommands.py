@@ -259,7 +259,7 @@ def clampedIncrementAndUpdateConfig(*keyPath: *tuple[str, str, *tuple[str, ...]]
 	"""
 	currentValue = getConfigValue(*keyPath)
 	minValue, maxValue = _getConfigValueRange(*keyPath)
-newValue = _clampValue(currentValue, minValue, maxValue, step)
+	newValue = _clampValue(currentValue, minValue, maxValue, step)
 	setConfigValue(newValue, *keyPath)
 
 
@@ -950,8 +950,8 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_increaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
-		clampedIncrementAndUpdateConfig("braille", "autoScrollRate", step=0.5)
-		percentage = valueToPercentage("braille", "autoScrollRate")
+		config.conf.clampedIncrementAndUpdateConfig("braille", "autoScrollRate", step=0.5)
+		percentage = config.conf.valueToPercentage("braille", "autoScrollRate")
 		# Translators: Message shown when increasing the braille auto scroll rate.
 		# {rate} will be replaced with the rate as a whole number from 0 to 100.
 		ui.message(_("Scroll rate {rate}").format(rate=percentage))
@@ -962,8 +962,8 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_decreaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
-		clampedIncrementAndUpdateConfig("braille", "autoScrollRate", step=-0.5)
-		percentage = valueToPercentage("braille", "autoScrollRate")
+		config.conf.clampedIncrementAndUpdateConfig("braille", "autoScrollRate", step=-0.5)
+		percentage = config.conf.valueToPercentage("braille", "autoScrollRate")
 		# Translators: Message shown when decreasing the braille auto scroll rate.
 		# {rate} will be replaced with the rate as a whole number from 0 to 100.
 		ui.message(_("Scroll rate {rate}").format(rate=percentage))
