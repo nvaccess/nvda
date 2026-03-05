@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited
+# Copyright (C) 2006-2026 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -167,6 +167,8 @@ if isArm64EC:
 	env.Append(CCFLAGS="/arm64EC")
 	env.Append(LINKFLAGS="/machine:arm64ec")
 	env.Append(ARFLAGS="/machine:arm64ec")
+elif TARGET_ARCH != "arm64":
+	env.Append(LINKFLAGS="/CETCOMPAT")
 
 if "debugCRT" in debug:
 	env.Append(CCFLAGS=["/MTd"])
@@ -219,10 +221,6 @@ env.Install(libInstallDir, iSimpleDomRPCStubs[0])  # proxy dll
 if isNVDACoreArch:
 	env.Install(sourceTypelibDir, iSimpleDomRPCStubs[1])  # typelib
 
-mathPlayerRPCStubs = env.SConscript("mathPlayer_sconscript")
-if isNVDACoreArch:
-	env.Install(sourceTypelibDir, mathPlayerRPCStubs[0])  # typelib
-
 detoursLib = env.SConscript("detours/sconscript")
 Export("detoursLib")
 
@@ -233,12 +231,13 @@ cppjiebaLib = env.SConscript("cppjieba/sconscript")
 Export("cppjiebaLib")
 env.Install(libInstallDir, cppjiebaLib)
 
+localLib = env.SConscript("local/sconscript")
+Export("localLib")
+if signExec:
+	env.AddPostAction(localLib[0], [signExec])
+env.Install(libInstallDir, localLib)
+
 if isNVDAHelperLocalArch:
-	localLib = env.SConscript("local/sconscript")
-	Export("localLib")
-	if signExec:
-		env.AddPostAction(localLib[0], [signExec])
-	env.Install(libInstallDir, localLib)
 	win10localLib = env.SConscript(
 		"localWin10/sconscript",
 	)
@@ -269,7 +268,15 @@ if not isNVDAHelperLocalArch:
 	env.Install(libInstallDir, remoteLoaderProgram)
 
 if isNVDACoreArch:
+	sonicLib = thirdPartyEnv.SConscript("sonic/sconscript")
+	Export("sonicLib")
+	env.Install(sourceDir.Dir('synthDrivers'), sonicLib)
 	thirdPartyEnv.SConscript("espeak/sconscript")
 	thirdPartyEnv.SConscript("liblouis/sconscript")
 	thirdPartyEnv.SConscript("javaAccessBridge/sconscript")
 	thirdPartyEnv.SConscript("uwp/sconscript")
+
+if TARGET_ARCH == "x86":
+	sonicLib = thirdPartyEnv.SConscript("sonic/sconscript")
+	Export("sonicLib")
+	env.Install(sourceDir.Dir('_synthDrivers32'), sonicLib)

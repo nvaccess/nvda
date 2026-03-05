@@ -287,6 +287,15 @@ OptionalLabelInfo GeckoVBufBackend_t::getLabelInfo(IAccessible2* pacc2) {
 	CComVariant state;
 	HRESULT res = firstAccTarget->get_accState(child, &state);
 	bool isVisible = res == S_OK && !(state.lVal & STATE_SYSTEM_INVISIBLE);
+	// If the label element is visible, also verify it has actual accessible text content.
+	// A label containing only aria-hidden elements would be visible but have no accessible text,
+	// meaning it cannot be the source of the accessible name (e.g. aria-label was used instead).
+	if (isVisible) {
+		wstring labelText;
+		if (!getTextFromIAccessible(labelText, firstAccTarget)) {
+			isVisible = false;
+		}
+	}
 	auto ID = getIAccessible2UniqueID(firstAccTarget);
 	return LabelInfo { isVisible, ID } ;
 }
@@ -729,11 +738,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		}
 	}
 
-	long left=0, top=0, width=0, height=0;
-	if(pacc->accLocation(&left,&top,&width,&height,varChild)!=S_OK) {
-		LOG_DEBUG(L"Error getting accLocation");
-	}
-
 	// Whether this node is editable text.
 	bool isEditable = (role == ROLE_SYSTEM_TEXT && (states & STATE_SYSTEM_FOCUSABLE || states & STATE_SYSTEM_UNAVAILABLE)) || IA2States & IA2_STATE_EDITABLE;
 	// Whether this node is a link or inside a link.
@@ -835,8 +839,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		// aria-hidden
 		isVisible = false;
 	} else {
-		// If a node has children, it's visible.
-		isVisible = width > 0 && height > 0 || childCount > 0;
 		// Only render the selected item for interactive lists.
 		if (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY)) {
 			renderSelectedItemOnly = true;

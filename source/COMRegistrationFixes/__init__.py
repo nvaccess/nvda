@@ -1,9 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018-2025 NV Access Limited, Luke Davis (Open Source Systems, Ltd.)
+# Copyright (C) 2018-2026 NV Access Limited, Luke Davis (Open Source Systems, Ltd.)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Utilities to re-register  particular system COM interfaces needed by NVDA.
+"""Utilities to re-register particular system COM interfaces needed by NVDA.
 Relevant discussions of DLLs, registry keys, and paths, can be found on these issues:
 https://github.com/nvaccess/nvda/issues/2807#issuecomment-320149243
 https://github.com/nvaccess/nvda/issues/9039
@@ -12,7 +12,6 @@ https://github.com/nvaccess/nvda/issues/12560
 
 import os
 import subprocess
-import sysconfig
 import winVersion
 import globalVars
 from logHandler import log
@@ -32,16 +31,9 @@ def register32bitServer(fileName: str) -> None:
 
 	:param fileName: The 32 bit path to the DLL
 	"""
-	if sysconfig.get_platform() == "win32":
-		# NVDA is 32 bit.
-		# On 32-bit systems, the 32-bit version of regsvr32.exe is in System32.
-		# On 64-bit systems, the 32-bit version of regsvr32.exe is in SysWOW64,
-		# but system32 is automatically redirected to SysWOW64 for 32-bit applications.
-		regsvr32 = os.path.join(SYSTEM_ROOT, "system32", "regsvr32.exe")
-	else:
-		# NVDA is 64 bit, and therefore the OS is also 64 bit.
-		# On 64-bit systems, the 32-bit version of regsvr32.exe is in SysWOW64.
-		regsvr32 = os.path.join(SYSTEM_ROOT, "SysWOW64", "regsvr32.exe")
+	# NVDA is 64 bit and runs on 64-bit Windows.
+	# The 32-bit version of regsvr32.exe is in SysWOW64.
+	regsvr32 = os.path.join(SYSTEM_ROOT, "SysWOW64", "regsvr32.exe")
 	# Make sure a console window doesn't show when running regsvr32.exe
 	startupInfo = subprocess.STARTUPINFO()
 	startupInfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
@@ -59,14 +51,8 @@ def register64bitServer(fileName: str) -> None:
 
 	:param fileName: The 64 bit path to the DLL
 	"""
-	if sysconfig.get_platform() == "win32":
-		# NVDA is 32 bit.
-		# On 64 bit systems, Sysnative provides a virtual directory to reach 64-bit executables from 32-bit applications.
-		regsvr32 = os.path.join(SYSTEM_ROOT, "Sysnative", "regsvr32.exe")
-	else:
-		# NVDA is 64 bit.
-		# On 64-bit systems, the 64-bit version of regsvr32.exe is in System32.
-		regsvr32 = os.path.join(SYSTEM_ROOT, "system32", "regsvr32.exe")
+	# NVDA is 64 bit. On 64-bit systems, the 64-bit version of regsvr32.exe is in System32.
+	regsvr32 = os.path.join(SYSTEM_ROOT, "system32", "regsvr32.exe")
 	# Make sure a console window doesn't show when running regsvr32.exe
 	startupInfo = subprocess.STARTUPINFO()
 	startupInfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
@@ -86,16 +72,9 @@ def apply32bitRegistryPatch(fileName: str) -> None:
 	"""
 	if not os.path.isfile(fileName):
 		raise FileNotFoundError(f"Cannot apply 32-bit registry patch: {fileName} not found.")
-	if sysconfig.get_platform() == "win32":
-		# NVDA is 32 bit.
-		# On 32-bit systems, the 32-bit version of reg.exe is in System32.
-		# On 64-bit systems, the 32-bit version of reg.exe is in SysWOW64,
-		# but system32 is automatically redirected to SysWOW64 for 32-bit applications.
-		regExe = os.path.join(SYSTEM_ROOT, "System32", "reg.exe")
-	else:
-		# NVDA is 64 bit, and therefore the OS is also 64 bit.
-		# On 64-bit systems, the 32-bit version of reg.exe is in SysWOW64.
-		regExe = os.path.join(SYSTEM_ROOT, "SysWOW64", "reg.exe")
+	# NVDA is 64 bit and runs on 64-bit Windows.
+	# The 32-bit version of reg.exe is in SysWOW64.
+	regExe = os.path.join(SYSTEM_ROOT, "SysWOW64", "reg.exe")
 	# Make sure a console window doesn't show when running reg.exe
 	startupInfo = subprocess.STARTUPINFO()
 	startupInfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
@@ -115,14 +94,8 @@ def apply64bitRegistryPatch(fileName: str) -> None:
 	"""
 	if not os.path.isfile(fileName):
 		raise FileNotFoundError(f"Cannot apply 64-bit registry patch: {fileName} not found.")
-	if sysconfig.get_platform() == "win32":
-		# NVDA is 32 bit.
-		# On 64-bit systems, Sysnative provides a virtual directory to reach 64-bit executables from 32-bit applications.
-		regExe = os.path.join(SYSTEM_ROOT, "Sysnative", "reg.exe")
-	else:
-		# NVDA is 64 bit.
-		# On 64-bit systems, the 64-bit version of reg.exe is in System32.
-		regExe = os.path.join(SYSTEM_ROOT, "system32", "reg.exe")
+	# NVDA is 64 bit. On 64-bit systems, the 64-bit version of reg.exe is in System32.
+	regExe = os.path.join(SYSTEM_ROOT, "system32", "reg.exe")
 	# Make sure a console window doesn't show when running reg.exe
 	startupInfo = subprocess.STARTUPINFO()
 	startupInfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
@@ -141,19 +114,12 @@ def fixCOMRegistrations() -> None:
 	"""
 	winVer = winVersion.getWinVer()
 	OSMajorMinor = (winVer.major, winVer.minor)
-	is64bit = winVer.processorArchitecture.endswith("64")
-	log.debug(
-		f"Fixing COM registrations for Windows {OSMajorMinor[0]}.{OSMajorMinor[1]}, {{}} bit.".format(
-			"64" if is64bit else "32",
-		),
-	)
+	log.debug(f"Fixing COM registrations for Windows {OSMajorMinor[0]}.{OSMajorMinor[1]}, 64 bit.")
 	# OLEACC (MSAA) proxies
 	apply32bitRegistryPatch(OLEACC_REG_FILE_PATH)
-	if is64bit:
-		apply64bitRegistryPatch(OLEACC_REG_FILE_PATH)
+	apply64bitRegistryPatch(OLEACC_REG_FILE_PATH)
 	# IDispatch and other common OLE interfaces
 	register32bitServer(os.path.join(SYSTEM32, "oleaut32.dll"))
 	register32bitServer(os.path.join(SYSTEM32, "actxprxy.dll"))
-	if is64bit:
-		register64bitServer(os.path.join(SYSTEM32, "oleaut32.dll"))
-		register64bitServer(os.path.join(SYSTEM32, "actxprxy.dll"))
+	register64bitServer(os.path.join(SYSTEM32, "oleaut32.dll"))
+	register64bitServer(os.path.join(SYSTEM32, "actxprxy.dll"))

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2021 NV Access Limited, Joseph Lee, Łukasz Golonka
+# Copyright (C) 2012-2026 NV Access Limited, Joseph Lee, Łukasz Golonka, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -9,12 +9,9 @@ As there are localizable strings at module level,
 this can only be imported once localization is set up via `languageHandler.initialize`.
 """
 
-from typing import Dict
-
-
 # Maps names of languages supported by NVDA to their translated names
 # for langs for which Windows does not contain a translated description.
-LANG_NAMES_TO_LOCALIZED_DESCS: Dict[str, str] = {
+LANG_NAMES_TO_LOCALIZED_DESCS: dict[str, str] = {
 	# Translators: The name of a language supported by NVDA.
 	"an": pgettext("languageName", "Aragonese"),
 	# Translators: The name of a language supported by NVDA.

@@ -1,0 +1,37 @@
+; A part of NonVisual Desktop Access (NVDA)
+; This file is covered by the GNU General Public License.
+; See the file COPYING for more details.
+; Copyright (C) 2025 NV Access Limited, gexgd0419
+
+LIBRARY sonic
+EXPORTS
+	sonicCreateStream
+	sonicDestroyStream
+	sonicSetUserData
+	sonicGetUserData
+	sonicWriteFloatToStream
+	sonicWriteShortToStream
+	sonicWriteUnsignedCharToStream
+	sonicReadFloatFromStream
+	sonicReadShortFromStream
+	sonicReadUnsignedCharFromStream
+	sonicFlushStream
+	sonicSamplesAvailable
+	sonicGetSpeed
+	sonicSetSpeed
+	sonicGetPitch
+	sonicSetPitch
+	sonicGetRate
+	sonicSetRate
+	sonicGetVolume
+	sonicSetVolume
+	sonicGetChordPitch
+	sonicSetChordPitch
+	sonicGetQuality
+	sonicSetQuality
+	sonicGetSampleRate
+	sonicSetSampleRate
+	sonicGetNumChannels
+	sonicSetNumChannels
+	sonicChangeFloatSpeed
+	sonicChangeShortSpeed

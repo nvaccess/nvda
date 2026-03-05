@@ -102,11 +102,9 @@ class VisionHandler(AutoPropertyObject):
 
 	def _getBuiltInProviderIds(self):
 		from visionEnhancementProviders.NVDAHighlighter import NVDAHighlighterSettings
-		from visionEnhancementProviders.screenCurtain import ScreenCurtainSettings
 
 		return [
 			NVDAHighlighterSettings.getId(),
-			ScreenCurtainSettings.getId(),
 		]
 
 	def _updateAllProvidersList(self):

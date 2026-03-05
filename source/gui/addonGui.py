@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2024 NV Access Limited, Beqa Gozalishvili, Joseph Lee,
+# Copyright (C) 2012-2026 NV Access Limited, Beqa Gozalishvili, Joseph Lee,
 # Babbage B.V., Ethan Holliger, Arnold Loubriat, Thomas Stivers
 
 import weakref
@@ -17,7 +17,6 @@ from logHandler import log
 import addonHandler
 from . import guiHelper
 from . import nvdaControls
-from .message import displayDialogAsModal
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 import gui.contextHelp
 import ui
@@ -112,12 +111,6 @@ class ErrorAddonInstallDialog(nvdaControls.MessageDialog):
 		)
 		okButton.SetDefault()
 		okButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
-		displayDialogAsModal(
-			IncompatibleAddonsDialog(
-				parent=self,
-				# the defaults from the addon GUI are fine. We are testing against the running version.
-			),
-		)
 
 
 def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901

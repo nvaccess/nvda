@@ -7,11 +7,26 @@ on:
     paths:
       - 'user_docs/en/*.md'
 
+permissions:
+  actions: write
+
 jobs:
   rebuild-translation-source:
     runs-on: windows-2025
 
     steps:
+    - name: Early exit
+      shell: bash
+      run: |
+        if [ -z "${{ vars.CROWDIN_PROJECT_ID }}" ]; then
+          echo "CROWDIN_PROJECT_ID is not set. Exiting workflow."
+          gh run cancel ${{ github.run_id }}
+          gh run watch ${{ github.run_id }}
+        fi
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_REPO: ${{ github.repository }}
+
     - name: Checkout repository
       uses: actions/checkout@v5
       with:
@@ -35,6 +50,7 @@ jobs:
         # for any English markdown files changed within the commits of this push,
         # update the corresponding xliff file (if one exists) to reflect the current markdown file,
         # keeping existing translation IDs in tact.
+        $PSNativeCommandUseErrorActionPreference = $true
         $ErrorActionPreference = 'Stop'
         $changedFiles = git diff --name-only ${{github.event.before}}.. -- user_docs/en/*.md
         foreach ($file in $changedFiles) {
