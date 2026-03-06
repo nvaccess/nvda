@@ -4,7 +4,7 @@ Use these instructions when reviewing pull requests in this repository.
 
 ## Review goals
 
-* Prioritize correctness, regressions, accessibility impact, API compatibility, and security.
+* Prioritize correctness, avoiding regressions, positive accessibility impact, API compatibility, and security.
 * Keep feedback specific and actionable; prefer concrete code suggestions over generic comments.
 * Classify issues by severity:
   * **Blocking**: likely bug, regression risk, security concern, API break, missing required tests/docs.
@@ -17,14 +17,14 @@ When reviewing Python changes, verify alignment with `projectDocs/dev/codingStan
 
 * Follow PEP 8 unless NVDA guidance differs.
 * **Indentation must use tabs**, not spaces.
-* New/changed code should include **PEP 484 type hints** (prefer `X | Y` and `T | None`).
+* New/changed code must include **PEP 484 type hints** (prefer `X | Y` and `T | None`).
 * Naming conventions:
   * functions/variables: `lowerCamelCase`
   * classes: `UpperCamelCase`
   * constants: `UPPER_SNAKE_CASE`
   * scripts: `script_*`
   * events: `event_*`
-* User-visible strings must be translatable via `_()` and include an appropriate translators comment.
+* User-visible strings must be translatable via gettext (`_()`, `pgettext()`, `ngettext()` or `npgettext()`) and include an appropriate translators comment.
 * All public functions, classes, and methods must have Sphinx-style docstrings (without type declarations in docstrings).
 Most internal functions, classes, and methods should also have docstrings, except where their purpose is clear from their name or code.
 * Flag unnecessary import-time side effects and new module-level globals where avoidable.
@@ -59,6 +59,6 @@ For code that can expose sensitive information or run in privileged contexts:
 ## Comment style for Copilot reviews
 
 * Focus comments on changed lines and clear user/developer impact.
-* Explain **why** something is a problem and **what** acceptable fix looks like.
+* Explain **why** something is a problem and **what** an acceptable fix looks like.
 * If uncertain, ask a precise question instead of making a weak assertion.
 * Acknowledge valid trade-offs; do not insist on preferences when standards are satisfied.
