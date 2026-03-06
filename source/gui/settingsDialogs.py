@@ -55,6 +55,7 @@ from wx.lib import scrolledpanel
 
 import screenCurtain._screenCurtain
 from utils import mmdevice
+from utils.debounce import debounceLimiter
 from utils.security import isRunningOnSecureDesktop
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
@@ -6142,8 +6143,6 @@ NvdaSettingsDialogWindowHandle = None
 class NVDASettingsDialog(MultiCategorySettingsDialog):
 	# Translators: This is the label for the NVDA settings dialog.
 	title = _("NVDA Settings")
-	_categoryChangeDebounceMs = 50
-	_categoryChangeTimer: wx.CallLater | None = None
 	_pendingCategoryIndex: int | None = None
 	categoryClasses = [
 		GeneralSettingsPanel,
@@ -6214,24 +6213,22 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			return True
 		return False
 
-	def _onCategoryChangeTimer(self) -> None:
+	@debounceLimiter(
+		cooldownTimeMs=100,
+		delayTimeMs=100,
+	)
+	def _onCategoryChangeDebounced(self) -> None:
 		if self._pendingCategoryIndex is not None:
 			if self._doCategoryChangeForIndex(self._pendingCategoryIndex):
 				self._doOnCategoryChange()
 			self._pendingCategoryIndex = None
-		self._categoryChangeTimer = None
 
 	def onCategoryChange(self, evt: wx.ListEvent):
 		if isRunningOnSecureDesktop():
 			# Secure desktop can cause issues with rapidly changing categories,
 			# so we debounce category changes to avoid this. (#19634)
 			self._pendingCategoryIndex = evt.GetIndex()
-			if self._categoryChangeTimer is not None:
-				self._categoryChangeTimer.Stop()
-			self._categoryChangeTimer = wx.CallLater(
-				self._categoryChangeDebounceMs,
-				self._onCategoryChangeTimer,
-			)
+			self._onCategoryChangeDebounced()
 			return
 		super().onCategoryChange(evt)
 		if evt.Skipped:
@@ -6239,9 +6236,6 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		self._doOnCategoryChange()
 
 	def Destroy(self):
-		if self._categoryChangeTimer is not None:
-			self._categoryChangeTimer.Stop()
-			self._categoryChangeTimer = None
 		self._pendingCategoryIndex = None
 		global NvdaSettingsDialogActiveConfigProfile, NvdaSettingsDialogWindowHandle
 		NvdaSettingsDialogActiveConfigProfile = None
