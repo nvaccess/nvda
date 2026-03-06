@@ -10,6 +10,7 @@ from typing import (
 	Iterable,
 	Optional,
 	TypeVar,
+	Union,
 	TYPE_CHECKING,
 )
 
@@ -29,23 +30,28 @@ ActionTargetT = TypeVar("ActionTargetT", Optional["AddonListItemVM"], Iterable["
 class _AddonAction(Generic[ActionTargetT], ABC):
 	def __init__(
 		self,
-		displayName: str,
+		displayName: Union[str, Callable[[], str]],
 		actionHandler: Callable[[ActionTargetT], None],
 		validCheck: Callable[[ActionTargetT], bool],
 		actionTarget: ActionTargetT,
 	):
 		"""
-		@param displayName: Translated string, to be displayed to the user. Should describe the action / behaviour.
+		@param displayName: Translated string, or callable returning one, to be displayed to the user.
+		Should describe the action / behaviour.
 		@param actionHandler: Call when the action is triggered.
 		@param validCheck: Is the action valid for the current target
 		@param actionTarget: The target this action will be applied to. L{updated} notifies of modification.
 		"""
-		self.displayName = displayName
+		self._displayName = displayName if callable(displayName) else lambda: displayName
 		self.actionHandler = actionHandler
 		self._validCheck = validCheck
 		self._actionTarget = actionTarget
 		self.updated = extensionPoints.Action()
 		"""Notify of changes to the action"""
+
+	@property
+	def displayName(self) -> str:
+		return self._displayName()
 
 	@abstractmethod
 	def _listItemChanged(self, addonListItemVM: "AddonListItemVM"): ...

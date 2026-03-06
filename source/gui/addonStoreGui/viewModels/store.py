@@ -129,8 +129,13 @@ class AddonStoreVM:
 				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
-				# Translators: Label for an action that updates the selected addon
-				displayName=pgettext("addonStore", "&Update"),
+				displayName=lambda: (
+					# Translators: Label for an action that enables and updates the selected disabled addon
+					pgettext("addonStore", "&Enable and update")
+					if selectedListItem is not None and selectedListItem.model.isDisabled
+					# Translators: Label for an action that updates the selected addon
+					else pgettext("addonStore", "&Update")
+				),
 				actionHandler=self.getAddon,
 				validCheck=lambda aVM: aVM.canUseUpdateAction(),
 				actionTarget=selectedListItem,
