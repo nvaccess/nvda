@@ -60,7 +60,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Clarified NV Access's policy on API breaking changes in the Developer Guide. (#19599)
 * The `scons tests` build target has been removed, as it was misleadingly named.
 It only ran the translation string comment check, which is equivalent to `scons checkPot`.
-Use the individual test commands instead: `scons checkPot`, `rununittests.bat`, `runsystemtests.bat`, `runlint.bat`. (#19606, @bramd)
+The `scons checkPot` target has also been replaced with `runcheckpot.bat`.
+Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`, `runsystemtests.bat`, `runlint.bat`. (#19606, #19676, @bramd)
 * Updated Python 3.13.11 to 3.13.12 (#19572, @dpy013)
 
 #### Deprecations
