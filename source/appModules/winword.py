@@ -9,9 +9,11 @@ Microsoft Word only.
 """
 
 import appModuleHandler
+import config
 from scriptHandler import script
 import ui
 from logHandler import log
+import mathPres
 from NVDAObjects.IAccessible.winword import WordDocument as IAccessibleWordDocument
 from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
 from NVDAObjects.window.winword import (
@@ -56,6 +58,17 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if UIAWordDocument in clsList or IAccessibleWordDocument in clsList:
 			clsList.insert(0, WinwordWordDocument)
+
+	def event_appModule_gainFocus(self):
+		if config.conf["math"]["other"]["useWordNativeMath"]:
+			mathPres.terminate()
+
+	def event_appModule_loseFocus(self):
+		mathPres.initialize()
+
+	def terminate(self):
+		mathPres.initialize()
+		super().terminate()
 
 
 class WinwordWordDocument(WordDocument):

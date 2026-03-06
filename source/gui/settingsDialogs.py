@@ -2832,17 +2832,21 @@ class MathSettingsPanel(SettingsPanel):
 
 		# Translators: MathCAT's relative speed setting
 		relativeSpeedText = pgettext("math", "Relative speech rate")
+		minMathRate = int(config.conf.getConfigValidation(("math", "speech", "mathRate")).kwargs["min"])
+		maxMathRate = int(config.conf.getConfigValidation(("math", "speech", "mathRate")).kwargs["max"])
 		self.relativeSpeedSlider: nvdaControls.EnhancedInputSlider = speechGroup.addLabeledControl(
 			relativeSpeedText,
 			nvdaControls.EnhancedInputSlider,
-			minValue=10,
-			maxValue=100,
+			minValue=minMathRate,
+			maxValue=maxMathRate,
 		)
 		self.bindHelpEvent("MathRelativeSpeed", self.relativeSpeedSlider)
 		self.relativeSpeedSlider.SetValue(config.conf["math"]["speech"]["mathRate"])
 
 		# Translators: label for slider that specifies relative factor to increase or decrease pauses in the math speech
 		pauseFactorText = pgettext("math", "Pause factor")
+		# Note: the UI uses a log scale for pause factors.
+		# The values 1 - 14 get mapped onto 0 - 1056, which are the actual config values.
 		self.pauseFactorSlider: nvdaControls.EnhancedInputSlider = speechGroup.addLabeledControl(
 			pauseFactorText,
 			nvdaControls.EnhancedInputSlider,
@@ -2890,6 +2894,14 @@ class MathSettingsPanel(SettingsPanel):
 			self.navSpeechList.SetSelection(1)
 		else:
 			self.navSpeechList.SetSelection(0)
+
+		# Translators: label for checkbox to use native math speech instead of MathCAT in Word and Outlook
+		useWordNativeMathText = pgettext("math", "Use native math speech in Word and Outlook")
+		self.useWordNativeMathCheckBox = speechGroup.addItem(
+			wx.CheckBox(speechGroupBox, label=useWordNativeMathText),
+		)
+		self.bindHelpEvent("MathUseWordNative", self.useWordNativeMathCheckBox)
+		self.useWordNativeMathCheckBox.SetValue(config.conf["math"]["other"]["useWordNativeMath"])
 
 		# Translators: Text for the navigation group.
 		navGroupText = pgettext("math", "Navigation")
@@ -3048,8 +3060,6 @@ class MathSettingsPanel(SettingsPanel):
 				),
 			)
 		)  # avoid log(0)
-		if pauseFactor > 1000:
-			pauseFactor = 1000
 		mathConf["speech"]["pauseFactor"] = pauseFactor
 		if self.speechSoundCheckBox.GetValue():
 			mathConf["speech"]["speechSound"] = "Beep"
@@ -3082,6 +3092,7 @@ class MathSettingsPanel(SettingsPanel):
 		)
 		selectedBrailleIndex = self.brailleMathCodeList.GetSelection()
 		mathConf["braille"]["brailleCode"] = self._brailleCodeIds[selectedBrailleIndex]
+		mathConf["other"]["useWordNativeMath"] = self.useWordNativeMathCheckBox.GetValue()
 		mcPrefs = MathCATUserPreferences.fromNVDAConfig()
 		mcPrefs.apply()
 

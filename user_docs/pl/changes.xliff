@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="pl">
-  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/bb1d7d834ef6f36f826e14be54c9aa665fff824c/user_docs/en/changes.md">
+  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/9f0973615a25a8818d8f1a5c7ff376516bdcc297/user_docs/en/changes.md">
     <skeleton>
 # $(ID:4bf3ec03-2d43-474a-aef0-92b334e594ed)
 
@@ -184,7 +184,7 @@ $(ID:904de121-1c69-4d07-aa3b-b073f557bb42)
 $(ID:7323a887-abec-495e-a2f3-c2f9e85028b1)
 $(ID:ee56e16b-1d34-4d91-bb7c-b0efe45e65db)
 
-* $(ID:4edda3aa-10a8-4de3-b78b-39c718a4cb65)
+* $(ID:44ba8376-4dae-4263-9bfe-4cf4b334e69c)
 * $(ID:b5739562-1de4-4085-ac7c-05e20074d59a)
 $(ID:d5385032-ee74-4f5c-868d-7270428b153b)
 * $(ID:cb2daea9-8f95-4d53-99c5-ff46f9433c2c)
@@ -199,7 +199,7 @@ $(ID:aa8fc036-8205-409c-aeeb-d6edd79409e2)
 $(ID:2eca8023-090a-47e5-82ee-62447ab18f45)
 * $(ID:df2b6aab-bcc9-4fca-9e48-059e4950791d)
 * $(ID:e2cb9128-301f-4d5b-a4fc-319056960def)
-* $(ID:571dff68-a1f0-4d38-8129-41acd2f292ca)
+* $(ID:83cf8d08-aacf-4148-b6b4-6e56b5f50f82)
 * $(ID:384cc255-1841-45de-a59d-0b44f445dd60)
 $(ID:e6a3c7ef-d87b-4d7a-894f-60778c066797)
 * $(ID:2da51787-e3e7-47bc-9d1e-af3f3524e8ee)
@@ -251,7 +251,7 @@ $(ID:d872ca82-ec10-4605-90b1-cd7125692f90)
   * $(ID:8e3d8f5a-fa2e-4edf-98ea-4f0944667717)
   * $(ID:640b487a-4117-4c54-a1d3-57bbc6f78a89)
   * $(ID:47f24317-e089-4f60-962e-4ce40973db53)
-* $(ID:fbb23762-1a7e-4241-aa57-71d7cc59c26f)
+* $(ID:60e27811-ce0e-42f1-a2f9-51c8d3adde28)
 * $(ID:67e052fb-df7c-4580-99f7-0bcdbc05bd6e)
 * $(ID:c416459a-d468-4a38-8f32-ff28597cc943)
 * $(ID:b72798af-9c26-4871-bafa-01ef0ba52427)
@@ -7505,14 +7505,14 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>Please open a GitHub issue if your add-on has an issue with updating to the new API.</target>
       </segment>
     </unit>
-    <unit id="4edda3aa-10a8-4de3-b78b-39c718a4cb65">
+    <unit id="44ba8376-4dae-4263-9bfe-4cf4b334e69c">
       <notes>
         <note appliesTo="source">line: 184</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
-        <source>NVDA is now built with Python 3.13, 64-bit. (#18591)</source>
-        <target>NVDA is now built with Python 3.13, 64-bit. (#18591)</target>
+        <source>NVDA is now built with Python 3.13.12, 64-bit. (#18591, #19111, #19351, #19572, @LeonarddeR, @dpy013)</source>
+        <target>NVDA is now built with Python 3.13.12, 64-bit. (#18591, #19111, #19351, #19572, @LeonarddeR, @dpy013)</target>
       </segment>
     </unit>
     <unit id="b5739562-1de4-4085-ac7c-05e20074d59a">
@@ -7651,14 +7651,14 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>`winUser.Input_I` and `winUser.PUL` have been removed, with no replacement. (#18883)</target>
       </segment>
     </unit>
-    <unit id="571dff68-a1f0-4d38-8129-41acd2f292ca">
+    <unit id="83cf8d08-aacf-4148-b6b4-6e56b5f50f82">
       <notes>
         <note appliesTo="source">line: 199</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
-        <source>The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than HIDP_VALUE_CAPS` structures. (#18902)</source>
-        <target>The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than HIDP_VALUE_CAPS` structures. (#18902)</target>
+        <source>The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than `HIDP_VALUE_CAPS` structures. (#18902)</source>
+        <target>The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than `HIDP_VALUE_CAPS` structures. (#18902)</target>
       </segment>
     </unit>
     <unit id="384cc255-1841-45de-a59d-0b44f445dd60">
@@ -8162,14 +8162,14 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>`isScreenFullyBlack` has been moved to `NVDAHelper.localLib`. (#18958)</target>
       </segment>
     </unit>
-    <unit id="fbb23762-1a7e-4241-aa57-71d7cc59c26f">
+    <unit id="60e27811-ce0e-42f1-a2f9-51c8d3adde28">
       <notes>
         <note appliesTo="source">line: 251</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
-        <source>`config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]. (#19177)</source>
-        <target>`config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]. (#19177)</target>
+        <source>`config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]`. (#19177)</source>
+        <target>`config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]`. (#19177)</target>
       </segment>
     </unit>
     <unit id="67e052fb-df7c-4580-99f7-0bcdbc05bd6e">

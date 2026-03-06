@@ -180,7 +180,7 @@ On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of
 These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
-* NVDA is now built with Python 3.13, 64-bit. (#18591)
+* NVDA is now built with Python 3.13.12, 64-bit. (#18591, #19111, #19351, #19572, @LeonarddeR, @dpy013)
 * typing_extensions have been removed.
 These should be supported natively in Python 3.13. (#18689)
 * `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
@@ -259,6 +259,7 @@ Use `config.configFlags.LoggingLevel` instead. (#19296)
   Use `synthDrivers.sapi5_32` (name: "sapi5_32") for the 32-bit SAPI 5 driver.
 * `config.setSystemConfigToCurrentConfig` now takes a `Collection` of add-on IDs (as strings) to copy to the system configuration.
 Only add-ons with the given IDs will be copied. (#19446)
+* `browseMode.ElementsListDialog.filterTimer` has been removed. (#19702)
 
 #### Deprecations
 

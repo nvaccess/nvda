@@ -266,7 +266,6 @@ def getLanguages() -> tuple[list[str], list[str]]:
 			# add to the list the text for this language variant together with the code
 			regionalCode: str = language + "-" + subDir.upper()
 			langDesc = getLanguageDescription(regionalCode)
-			log.info(f"regionalCode: {regionalCode}, langDesc: {langDesc}")
 			if langDesc is not None:
 				languageOptions.append(f"{langDesc} ({regionalCode})")
 			else:
