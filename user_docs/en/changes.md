@@ -6,6 +6,7 @@
 
 ### New Features
 
+* Windows OCR now works while Screen Curtain is active on Windows 10 version 1903 and later, using Windows Graphics Capture to read window content directly from the compositor without exposing screen content visually. (#19164, @pratikp1)
 * NVDA now includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen. (#19228, @Boumtchack)
   * The magnifier supports various zoom levels, color filters (normal, grayscale, inverted), and different focus tracking modes.
   * Color filters can help users with visual impairments or light sensitivity by inverting or desaturating screen colors.
@@ -43,6 +44,9 @@ The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is int
 
 ### Changes for Developers
 
+* Added `contentRecog.wgcCapture` module with `WgcOcr` recognizer using Windows Graphics Capture API (`CreateForWindow`). This captures window content from the DWM compositor, bypassing the Magnification API transform used by Screen Curtain. (#19164, @pratikp1)
+* Added WGC capture functions to `NVDAHelper.localWin10`: `wgcCapture_isSupported`, `wgcCapture_initialize`, `wgcCapture_recognizeWindow`, `wgcCapture_recognizeWindowRegion`, `wgcCapture_terminate`. (#19164, @pratikp1)
+* `recogUi.recognizeNavigatorObject` now auto-switches to WGC-based OCR when Screen Curtain is active and WGC is available. (#19164, @pratikp1)
 * NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
