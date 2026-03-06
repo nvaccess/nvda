@@ -6214,8 +6214,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		return False
 
 	@debounceLimiter(
-		cooldownTimeMs=100,
-		delayTimeMs=100,
+		cooldownTimeMs=500,
+		delayTimeMs=500,
 	)
 	def _onCategoryChangeDebounced(self) -> None:
 		if self._pendingCategoryIndex is not None:
