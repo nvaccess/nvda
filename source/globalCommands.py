@@ -4957,7 +4957,8 @@ class GlobalCommands(ScriptableObject):
 					from contentRecog import wgcCapture
 
 					isWgcRecognizer = wgcCapture.isSupported() and isinstance(
-						focusObj.recognizer, wgcCapture.WgcOcr
+						focusObj.recognizer,
+						wgcCapture.WgcOcr,
 					)
 					if not isWgcRecognizer:
 						ui.message(

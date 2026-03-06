@@ -275,7 +275,7 @@ def recognizeNavigatorObject(recognizer: ContentRecognizer):
 					"Screen curtain is active. "
 					"OCR requires Windows 10 version 1903 or later "
 					"to work with screen curtain enabled. "
-					"Please disable screen curtain or upgrade Windows."
+					"Please disable screen curtain or upgrade Windows.",
 				),
 			)
 			return
