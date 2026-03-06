@@ -5,7 +5,7 @@
 
 """Utilities for migrating add-on state from the legacy pickle format to JSON.
 
-Prior to NVDA 2026.1, add-on state (which add-ons are disabled, pending install/removal, etc.) was persisted  as a pickle file (``addonsState.pickle``).
+Prior to NVDA 2026.1, add-on state (which add-ons are disabled, pending install/removal, etc.) was persisted as a pickle file (``addonsState.pickle``).
 This module provides helpers that read such a pickle file, validate its contents, and return a JSON-serialisable dictionary so the state can be persisted as JSON instead (``addonsState.json``).
 
 .. warning:
