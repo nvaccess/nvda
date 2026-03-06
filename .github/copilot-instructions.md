@@ -57,19 +57,19 @@ Scrutinize code for privilege escalation and data leaks.
   * Ensure `globalVars.appArgs.secure` is respected and blocked actions fail gracefully.
   * Check `NVDAState.shouldWriteToDisk`; do not write to disk/config if running securely or from the launcher.
   * Ensure no system or personal information is unintentionally exposed in secure screens or the lock screen.
-* Subprocesses & file execution: 
+* Subprocesses & file execution:
   * Flag any use of `subprocess`, `os.system`, or `os.startfile`.
   Because NVDA has UIAccess, these must use strictly sanitied arguments and absolute paths to prevent path/binary hijacking.
-* Sensitive Data Logging: 
+* Sensitive Data Logging:
   * Ensure new logging statements that are INFO level or higher do not capture sensitive user data, particularly from `protected` or password text fields, API keys, or secure desktop states.
   DEBUG level logging may include sensitive information such as a speech passed to a synthesizer.
-* Untrusted input & web parsing: 
+* Untrusted input & web parsing:
   * Validate that parsing of external structures (HTML, ARIA attributes, UIA/IA2 properties) handles malformed, excessively long or deeply nested inputs safely without causing infinite loops or memory crashes.
   * Check for XSS e.g. from translators via translatable strings
 * IPC and injected C++ code (`NVDAHelper`):
   * Ensure data sent via RPC or IPC from injected processes to the main NVDA process is strictly validated for length and type.
-  * In C++ code, flag unsafe string handling, missing bounds checks or improper buffer allocations. 
-* Network / Updates: 
+  * In C++ code, flag unsafe string handling, missing bounds checks or improper buffer allocations.
+* Network / Updates:
   * Any new HTTP/network requests must enforce secure connections (HTTPS) and validate server certificates except when updating certificates.
 
 ## Comment style for Copilot reviews
