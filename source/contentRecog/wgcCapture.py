@@ -126,12 +126,6 @@ class WgcOcr(ContentRecognizer):
 		nav = api.getNavigatorObject()
 		if nav and hasattr(nav, "windowHandle") and nav.windowHandle:
 			return _getRootWindow(nav.windowHandle)
-		# Fallback: WindowFromPoint at center of region.
-		centerX = imageInfo.screenLeft + imageInfo.screenWidth // 2
-		centerY = imageInfo.screenTop + imageInfo.screenHeight // 2
-		hwnd = winUser.user32.WindowFromPoint(winUser.POINT(centerX, centerY))
-		if hwnd:
-			return _getRootWindow(hwnd)
 		return None
 
 	def _onCppResult(
@@ -140,38 +134,37 @@ class WgcOcr(ContentRecognizer):
 		imageInfo: RecogImageInfo,
 		hwnd: int,
 	) -> None:
-		"""Parse C++ OCR JSON results into L{LinesWordsResult}."""
-		if not self._onResult:
-			return
-		if not resultJson:
-			log.debugWarning("wgcCapture: OCR returned no results")
-			self._fireResult(RuntimeError("WGC OCR returned no results"))
-			return
-		try:
-			data = json.loads(resultJson)
-			self._fireResult(LinesWordsResult(data, imageInfo))
-		except (json.JSONDecodeError, KeyError, TypeError) as e:
-			log.error("wgcCapture: failed to parse OCR result: %s", e)
-			self._fireResult(RuntimeError(f"WGC OCR parse error: {e}"))
+		"""Parse C++ OCR JSON results into L{LinesWordsResult}.
 
-	def _fireResult(self, result) -> None:
-		"""Fire the result callback and clean up C++ resources."""
-		callback = self._onResult
-		self._onResult = None
-		self._cleanup()
-		if callback:
-			callback(result)
-
-	def _cleanup(self) -> None:
-		"""Terminate the C++ WGC instance and release references."""
-		if self._handle:
-			wgcCapture_terminate(self._handle)
-			self._handle = None
+		Called from the C++ completion callback. Handles cleanup of the
+		native instance (matching the uwpOcr pattern where terminate is
+		called inside the callback, never while async work is in-flight).
+		"""
+		# If _onResult is None, recognition was cancelled.
+		if self._onResult:
+			if resultJson:
+				try:
+					data = json.loads(resultJson)
+					self._onResult(LinesWordsResult(data, imageInfo))
+				except (json.JSONDecodeError, KeyError, TypeError) as e:
+					log.error("wgcCapture: failed to parse OCR result: %s", e)
+					self._onResult(RuntimeError(f"WGC OCR parse error: {e}"))
+			else:
+				log.debugWarning("wgcCapture: OCR returned no results")
+				self._onResult(RuntimeError("WGC OCR returned no results"))
+		# Clean up the native instance now that the coroutine has completed.
+		wgcCapture_terminate(self._handle)
 		self._cCallbackRef = None
+		self._handle = None
 
 	def cancel(self) -> None:
+		"""Cancel pending recognition.
+
+		Marks recognition as cancelled so results are ignored when the
+		C++ callback fires. Does not terminate the native instance
+		(the callback handles cleanup when C++ signals completion).
+		"""
 		self._onResult = None
-		self._cleanup()
 
 	def validateObject(self, nav) -> bool:
 		"""WGC requires a valid HWND on the navigator object."""

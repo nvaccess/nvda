@@ -5,6 +5,7 @@
 
 #pragma once
 #include <windows.h>
+#define export __declspec(dllexport)
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,26 +19,28 @@ typedef void (*wgcCapture_Callback)(const wchar_t*);
 typedef void* WgcCapture_H;
 
 // True if Windows.Graphics.Capture is available (Win10 1903+).
-bool __stdcall wgcCapture_isSupported();
+export bool __stdcall wgcCapture_isSupported();
 
 // Create a WGC capture + OCR instance.
 // language: BCP-47 tag (e.g. L"en-US"), or nullptr for user profile language.
 // Returns handle, or nullptr on failure.
-WgcCapture_H __stdcall wgcCapture_initialize(
+export WgcCapture_H __stdcall wgcCapture_initialize(
 	const wchar_t* language,
 	wgcCapture_Callback callback
 );
 
 // Capture entire window by HWND and run OCR asynchronously.
 // Works even when screen curtain is active (captures from compositor).
-void __stdcall wgcCapture_recognizeWindow(
+export void __stdcall wgcCapture_recognizeWindow(
 	WgcCapture_H handle,
 	HWND hwnd
 );
 
 // Capture a sub-region of a window and run OCR asynchronously.
-// Coordinates are relative to the window's client area.
-void __stdcall wgcCapture_recognizeWindowRegion(
+// Coordinates are relative to the top-left of the window (including
+// non-client area such as title bar and borders), matching the coordinate
+// system of CreateForWindow's captured surface.
+export void __stdcall wgcCapture_recognizeWindowRegion(
 	WgcCapture_H handle,
 	HWND hwnd,
 	unsigned int x,
@@ -47,7 +50,8 @@ void __stdcall wgcCapture_recognizeWindowRegion(
 );
 
 // Terminate and free a WGC capture + OCR instance.
-void __stdcall wgcCapture_terminate(WgcCapture_H handle);
+// Must only be called after the recognition callback has fired.
+export void __stdcall wgcCapture_terminate(WgcCapture_H handle);
 
 #ifdef __cplusplus
 }

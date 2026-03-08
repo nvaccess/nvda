@@ -20,6 +20,7 @@
 #include <windows.graphics.capture.h>
 #include <d3d11.h>
 #include <dxgi.h>
+#include <atomic>
 #include <common/log.h>
 #include "wgcCapture.h"
 
@@ -43,6 +44,7 @@ private:
 	wgcCapture_Callback m_callback;
 	IDirect3DDevice m_device{ nullptr };
 	com_ptr<ID3D11Device> m_d3dDevice;
+	std::atomic<bool> m_cancelled{ false };
 
 	void createDevice() {
 		check_hresult(D3D11CreateDevice(
@@ -175,8 +177,12 @@ public:
 	WgcCapture(
 		OcrEngine const& engine,
 		wgcCapture_Callback callback
-	) : m_ocrEngine(engine), m_callback(callback) {
+	) : m_ocrEngine(engine), m_callback(callback), m_cancelled(false) {
 		createDevice();
+	}
+
+	void markCancelled() {
+		m_cancelled.store(true, std::memory_order_release);
 	}
 
 	fire_and_forget recognizeWindow(
@@ -190,9 +196,15 @@ public:
 		try {
 			co_await resume_background();
 
+			if (m_cancelled.load(std::memory_order_acquire)) {
+				co_return;
+			}
+
 			if (!IsWindow(hwnd)) {
 				LOG_ERROR(L"wgcCapture: invalid HWND");
-				m_callback(nullptr);
+				if (!m_cancelled.load(std::memory_order_acquire)) {
+					m_callback(nullptr);
+				}
 				co_return;
 			}
 
@@ -229,7 +241,9 @@ public:
 
 			if (!frame) {
 				LOG_ERROR(L"wgcCapture: no frame received");
-				m_callback(nullptr);
+				if (!m_cancelled.load(std::memory_order_acquire)) {
+					m_callback(nullptr);
+				}
 				co_return;
 			}
 
@@ -250,7 +264,9 @@ public:
 				if (!ocrBitmap) {
 					LOG_ERROR(
 						L"wgcCapture: region out of bounds");
-					m_callback(nullptr);
+					if (!m_cancelled.load(std::memory_order_acquire)) {
+						m_callback(nullptr);
+					}
 					co_return;
 				}
 			} else {
@@ -270,6 +286,10 @@ public:
 			auto ocrResult =
 				co_await m_ocrEngine.RecognizeAsync(ocrBitmap);
 
+			if (m_cancelled.load(std::memory_order_acquire)) {
+				co_return;
+			}
+
 			auto json = serializeOcrResult(ocrResult);
 			m_callback(json.c_str());
 
@@ -279,10 +299,14 @@ public:
 				ex.code(),
 				ex.message().c_str()
 			);
-			m_callback(nullptr);
+			if (!m_cancelled.load(std::memory_order_acquire)) {
+				m_callback(nullptr);
+			}
 		} catch (...) {
 			LOG_ERROR(L"wgcCapture: unknown exception");
-			m_callback(nullptr);
+			if (!m_cancelled.load(std::memory_order_acquire)) {
+				m_callback(nullptr);
+			}
 		}
 	}
 };
@@ -368,5 +392,11 @@ void __stdcall wgcCapture_recognizeWindowRegion(
 
 void __stdcall wgcCapture_terminate(WgcCapture_H handle) {
 	if (!handle) return;
-	delete static_cast<WgcCapture*>(handle);
+	auto* instance = static_cast<WgcCapture*>(handle);
+	// Mark cancelled so the coroutine stops calling back into Python.
+	// The Python side is responsible for calling terminate only after the
+	// recognition callback has fired (matching the uwpOcr pattern),
+	// so by this point the coroutine has completed and delete is safe.
+	instance->markCancelled();
+	delete instance;
 }
