@@ -55,16 +55,17 @@ def _canPortableConfigBeCopied() -> bool:
 		return True
 
 
-def _restartWindows() -> None:
-	"""Issue a Windows restart command."""
-	subprocess.run(["shutdown", "/r", "/t", "0"], creationflags=subprocess.CREATE_NO_WINDOW)
+def _restartWindows() -> bool:
+	"""Issue a Windows restart command. Returns True if the command succeeded."""
+	result = subprocess.run(["shutdown", "/r", "/t", "0"], creationflags=subprocess.CREATE_NO_WINDOW)
+	return result.returncode == 0
 
 
 def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 	"""Show the post-install dialog after NVDA installation completes.
 
 	Presents the user with options to restart Windows, start the installed copy,
-	or exit the installer.
+	or exit NVDA.
 	"""
 	successMsg = (
 		# Translators: The message displayed when NVDA has been successfully updated,
@@ -76,7 +77,7 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 		else _("Successfully installed NVDA.")
 	)
 	# Translators: A recommendation shown after NVDA installation to restart Windows.
-	restartMsg = _("It is recommended to restart Windows for proper cleanup.")
+	restartMsg = _("It is recommended to restart Windows after installing NVDA. NVDA may malfunction without a restart.")
 	dialog = MessageDialog(
 		parent=gui.mainFrame,
 		message=f"{successMsg}\n\n{restartMsg}",
@@ -86,18 +87,26 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 		helpId="RestartWindowsAfterInstall",
 	)
 	# Translators: Button in the post-install dialog to restart Windows immediately.
-	dialog.addButton(ReturnCode.YES, label=_("Restart &Windows"), defaultFocus=True)
+	dialog.addButton(ReturnCode.CUSTOM_1, label=_("Restart &Windows"), defaultFocus=True)
 	if startAfterInstall:
 		# Translators: Button in the post-install dialog to start the newly installed NVDA.
-		dialog.addButton(ReturnCode.OK, label=_("&Start NVDA"), fallbackAction=True)
+		dialog.addButton(ReturnCode.CUSTOM_2, label=_("&Start NVDA"), fallbackAction=True)
 	# Translators: Button in the post-install dialog to exit NVDA.
-	dialog.addButton(ReturnCode.CANCEL, label=_("E&xit NVDA"))
+	dialog.addButton(ReturnCode.CANCEL, label=_("E&xit NVDA"), fallbackAction=not startAfterInstall)
 	match dialog.ShowModal():
-		case ReturnCode.YES:
-			_restartWindows()
+		case ReturnCode.CUSTOM_1:
+			if not _restartWindows():
+				gui.messageBox(
+					# Translators: Message shown when Windows restart fails after NVDA installation.
+					_("Failed to restart Windows. Please restart manually."),
+					# Translators: Title of the error dialog shown when Windows restart fails.
+					_("Error"),
+					wx.OK | wx.ICON_ERROR,
+				)
+				return
 			if not core.triggerNVDAExit(None):
 				log.error("NVDA already in process of exiting, this indicates a logic error.")
-		case ReturnCode.OK:
+		case ReturnCode.CUSTOM_2:
 			newNVDA = core.NewNVDAInstance(
 				filePath=os.path.join(WritePaths.defaultInstallDir, "nvda.exe"),
 				parameters=_generate_executionParameters(),
