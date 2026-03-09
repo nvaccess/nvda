@@ -1077,7 +1077,7 @@ This feature is intended to provide touch users with efficient, structured navig
 When any element type is selected, flicking left or right moves through the document in reading order, while flicking up and down selects different element types.
 
 Browse touch mode is only available when browse mode is active.
-It is not available in focus mode, even within a browse mode document, and does not affect touch navigation outside of browse mode documents.
+It is not available in focus mode, even within a browse mode document.
 
 #### Text paragraph navigation command {#TextNavigationCommand}
 
