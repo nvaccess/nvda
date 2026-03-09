@@ -9,7 +9,7 @@ import pathlib
 import tempfile
 from typing import NamedTuple
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, PropertyMock
 
 from parameterized import parameterized
 
@@ -141,3 +141,342 @@ class testFollowerWarning(unittest.TestCase):
 					_remoteClient=patchedRemoteClient if remoteEnabled else None,
 				):
 					self.assertEqual(installerGui._shouldWarnBeforeUpdate(), expectedReturn)
+
+
+class Test_comparePreviousInstall(unittest.TestCase):
+	def test_freshInstall_whenNoInstallDirsExist(self):
+		with (
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value="C:\\Program Files\\NVDA",
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value="C:\\Program Files (x86)\\NVDA",
+			),
+			patch("installer.os.path.isdir", return_value=False),
+			patch("installer.fileUtils.getFileVersionInfo") as getVersionMock,
+		):
+			result = installer._comparePreviousInstall()
+			self.assertEqual(result, installer.ComparisonState.FRESH_INSTALL)
+			getVersionMock.assert_not_called()
+
+	def test_unknown_whenOldVersionLookupFails_inInstallDir(self):
+		installDir = "C:\\Program Files\\NVDA"
+		oldSlavePath = str(pathlib.Path(installDir) / "nvda_slave.exe")
+
+		def _isdir(path: str) -> bool:
+			return path == installDir
+
+		def _getVersion(path: str, field: str):
+			if path == oldSlavePath:
+				raise OSError("locked")
+			self.fail("Current version lookup should not occur when old version lookup fails.")
+
+		with (
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value="C:\\Program Files (x86)\\NVDA",
+			),
+			patch("installer.os.path.isdir", side_effect=_isdir),
+			patch(
+				"installer.fileUtils.getFileVersionInfo",
+				side_effect=_getVersion,
+			),
+		):
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UNKNOWN)
+
+	def test_unknown_whenOldVersionLookupFails_inX86InstallDir(self):
+		installDir = "C:\\Program Files\\NVDA"
+		installDirX86 = "C:\\Program Files (x86)\\NVDA"
+		oldSlavePathX86 = str(pathlib.Path(installDirX86) / "nvda_slave.exe")
+
+		def _isdir(path: str) -> bool:
+			return path == installDirX86
+
+		def _getVersion(path: str, field: str):
+			if path == oldSlavePathX86:
+				raise RuntimeError("bad version metadata")
+			self.fail("Current version lookup should not occur when old version lookup fails.")
+
+		with (
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value=installDirX86,
+			),
+			patch("installer.os.path.isdir", side_effect=_isdir),
+			patch(
+				"installer.fileUtils.getFileVersionInfo",
+				side_effect=_getVersion,
+			),
+		):
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UNKNOWN)
+
+	def test_unknown_whenCurrentVersionLookupFails(self):
+		installDir = "C:\\Program Files\\NVDA"
+		oldSlavePath = str(pathlib.Path(installDir) / "nvda_slave.exe")
+
+		def _isdir(path: str) -> bool:
+			return path == installDir
+
+		def _getVersion(path: str, field: str):
+			if path == oldSlavePath:
+				return {"FileVersion": "2025.1.0"}
+			if path == "nvda_slave.exe":
+				raise OSError("missing current executable version")
+			self.fail(f"Unexpected path: {path}")
+
+		with (
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value=None,
+			),
+			patch("installer.os.path.isdir", side_effect=_isdir),
+			patch(
+				"installer.fileUtils.getFileVersionInfo",
+				side_effect=_getVersion,
+			),
+		):
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UNKNOWN)
+
+	def test_unknown_whenVersionParsingFails(self):
+		installDir = "C:\\Program Files\\NVDA"
+		oldSlavePath = str(pathlib.Path(installDir) / "nvda_slave.exe")
+
+		def _isdir(path: str) -> bool:
+			return path == installDir
+
+		def _getVersion(path: str, field: str):
+			if path == oldSlavePath:
+				return {"FileVersion": None}
+			if path == "nvda_slave.exe":
+				return {"FileVersion": "2025.1.0"}
+			self.fail(f"Unexpected path: {path}")
+
+		with (
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value=None,
+			),
+			patch("installer.os.path.isdir", side_effect=_isdir),
+			patch(
+				"installer.fileUtils.getFileVersionInfo",
+				side_effect=_getVersion,
+			),
+		):
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UNKNOWN)
+
+	def test_unknown_whenPreviousVersionContainsPrereleaseTag(self):
+		installDir = "C:\\Program Files\\NVDA"
+		oldSlavePath = str(pathlib.Path(installDir) / "nvda_slave.exe")
+
+		def _isdir(path: str) -> bool:
+			return path == installDir
+
+		def _getVersion(path: str, field: str):
+			if path == oldSlavePath:
+				return {"FileVersion": "2026.1.beta1"}
+			if path == "nvda_slave.exe":
+				return {"FileVersion": "2025.1.0"}
+			self.fail(f"Unexpected path: {path}")
+
+		with (
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value=None,
+			),
+			patch("installer.os.path.isdir", side_effect=_isdir),
+			patch(
+				"installer.fileUtils.getFileVersionInfo",
+				side_effect=_getVersion,
+			),
+		):
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UNKNOWN)
+
+	def test_downgrade_whenPreviousInstallIsNewer(self):
+		installDir = "C:\\Program Files\\NVDA"
+		oldSlavePath = str(pathlib.Path(installDir) / "nvda_slave.exe")
+
+		def _isdir(path: str) -> bool:
+			return path == installDir
+
+		def _getVersion(path: str, field: str):
+			if path == oldSlavePath:
+				return {"FileVersion": "2026.1.0"}
+			if path == "nvda_slave.exe":
+				return {"FileVersion": "2025.1.0"}
+			self.fail(f"Unexpected path: {path}")
+
+		with (
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value=None,
+			),
+			patch("installer.os.path.isdir", side_effect=_isdir),
+			patch(
+				"installer.fileUtils.getFileVersionInfo",
+				side_effect=_getVersion,
+			),
+		):
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.DOWNGRADE)
+
+	def test_upgrade_whenPreviousInstallIsOlder(self):
+		installDir = "C:\\Program Files\\NVDA"
+		oldSlavePath = str(pathlib.Path(installDir) / "nvda_slave.exe")
+
+		def _isdir(path: str) -> bool:
+			return path == installDir
+
+		def _getVersion(path: str, field: str):
+			if path == oldSlavePath:
+				return {"FileVersion": "2024.4.0"}
+			if path == "nvda_slave.exe":
+				return {"FileVersion": "2025.1.0"}
+			self.fail(f"Unexpected path: {path}")
+
+		with (
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value=None,
+			),
+			patch("installer.os.path.isdir", side_effect=_isdir),
+			patch(
+				"installer.fileUtils.getFileVersionInfo",
+				side_effect=_getVersion,
+			),
+		):
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UPGRADE)
+
+	def test_reinstall_whenVersionsAreEqual(self):
+		installDir = "C:\\Program Files\\NVDA"
+		oldSlavePath = str(pathlib.Path(installDir) / "nvda_slave.exe")
+
+		def _isdir(path: str) -> bool:
+			return path == installDir
+
+		def _getVersion(path: str, field: str):
+			if path == oldSlavePath:
+				return {"FileVersion": "2025.1.0"}
+			if path == "nvda_slave.exe":
+				return {"FileVersion": "2025.1.0"}
+			self.fail(f"Unexpected path: {path}")
+
+		with (
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value=None,
+			),
+			patch("installer.os.path.isdir", side_effect=_isdir),
+			patch(
+				"installer.fileUtils.getFileVersionInfo",
+				side_effect=_getVersion,
+			),
+		):
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.REINSTALL)
+
+	def test_prefersPrimaryInstallDir_whenBothPrimaryAndX86Exist(self):
+		installDir = "C:\\Program Files\\NVDA"
+		installDirX86 = "C:\\Program Files (x86)\\NVDA"
+		oldSlavePath = str(pathlib.Path(installDir) / "nvda_slave.exe")
+		oldSlavePathX86 = str(pathlib.Path(installDirX86) / "nvda_slave.exe")
+
+		def _isdir(path: str) -> bool:
+			return path in (installDir, installDirX86)
+
+		def _getVersion(path: str, field: str):
+			if path == oldSlavePath:
+				return {"FileVersion": "2024.4.0"}
+			if path == oldSlavePathX86:
+				self.fail("x86 install path should not be used when primary install dir exists.")
+			if path == "nvda_slave.exe":
+				return {"FileVersion": "2025.1.0"}
+			self.fail(f"Unexpected path: {path}")
+
+		with (
+			patch.object(
+				installer.WritePaths.__class__,
+				"installDir",
+				new_callable=PropertyMock,
+				return_value=installDir,
+			),
+			patch.object(
+				installer.WritePaths.__class__,
+				"_installDirX86",
+				new_callable=PropertyMock,
+				return_value=installDirX86,
+			),
+			patch("installer.os.path.isdir", side_effect=_isdir),
+			patch(
+				"installer.fileUtils.getFileVersionInfo",
+				side_effect=_getVersion,
+			),
+		):
+			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UPGRADE)

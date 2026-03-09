@@ -92,6 +92,12 @@ repos:
           )
         )
 
+- repo: https://github.com/rhysd/actionlint
+  rev: v1.7.11
+  hooks:
+    # Lint GitHub Actions workflow files.
+    - id: actionlint
+
 - repo: https://github.com/asottile/add-trailing-comma
   rev: v4.0.0
   hooks:
@@ -140,8 +146,8 @@ repos:
       types_or: [c, c++]
     - id: checkPot
       name: translation string check
-      entry: cmd.exe /c "scons checkPot --all-cores"
-      language: system
+      entry: ./runcheckpot.bat --all-cores
+      language: script
       pass_filenames: false
       types: [python]
       files: ^source/.*$

@@ -1,4 +1,4 @@
-# Edited by NVDA-Taiwan Volunteers Team on 2025/08/02
+# Edited by NVDA-Taiwan Volunteers Team on 2026/01/18
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (c) 2011-2025 NVDA Contributors
 # This file is covered by the GNU General Public License.
@@ -25,8 +25,8 @@ symbols:
 
 # Complex symbols
 . sentence ending	dot	all	always
-! sentence ending	半形驚歎號	all	always
-? sentence ending	半形問號	all	always
+! sentence ending	英文驚嘆號	all	always
+? sentence ending	question	all	always
 ; phrase ending	semi	most	always
 : phrase ending	colon	most	always
 multiple .	多個點	all	always
@@ -44,7 +44,7 @@ negative number	負	none	norep
  	space	char	# no-break space
 
 # Standard punctuation/symbols
-!	半形驚歎號	all
+!	英文驚嘆號	all
 "	quote	most
 \#	number	some
 $	錢號	all	norep
@@ -59,8 +59,8 @@ $	錢號	all	norep
 &	and	some
 ‰	per mille	some
 '	tick	all
-(	半形左括號	most	always
-)	半形右括號	most	always
+(	左括號	most	always
+)	右括號	most	always
 *	star	some
 ,	comma	all	always
 ،	阿拉伯逗號	all	always
@@ -73,14 +73,15 @@ $	錢號	all	norep
 ?	question	all
 ؟	阿拉伯問號	all
 @	小老鼠	some
-[	半形左中括號	most	always
-]	半形右中括號	most	always
+[	左中括號	most	always
+]	右中括號	most	always
 \\	backslash	most
 ^	caret	most
-_	半形底線	most
+_	底線	most
+‐	連字號	most	always
 `	graav	most
-{	半形左大括號	most	always
-}	半形右大括號	most	always
+{	左大括號	most	always
+}	右大括號	most	always
 |	bar	most
 ¦	broken bar	most
 ~	tilda	most
@@ -180,7 +181,7 @@ _	半形底線	most
 ⇄	向右箭頭在上，向左箭頭在下	none
 ⇒	向右雙箭頭	none
 
-#Arithmetic operators
+# Arithmetic operators
 +	plus	some
 −	minus	some
 ×	乘以	some
@@ -192,7 +193,7 @@ _	半形底線	most
 ∓	減加	some
 ±	加減	some
 
-#Set operations
+# Set operations
 ∖	差集	none
 ⊍	多重集乘積	none
 𝒫	積集合	none
@@ -200,7 +201,7 @@ _	半形底線	most
 ℘	積集合	none
 ∁	補集	none
 
-#Set relations and set constructions
+# Set relations and set constructions
 ∅	空集合	none
 ⊂	包含於	none
 ⊄	不包含於	none
@@ -212,7 +213,7 @@ _	半形底線	most
 ⊉	不包含也不等於	none
 ⊌	多重集合	none
 
-#Equality signs
+# Equality signs
 =	equals	some
 ≃	漸近於	none
 ≄	非漸近於	none
@@ -234,7 +235,7 @@ _	半形底線	most
 ≙	估計為	none
 ≟	問號等於	none
 
-#comparison signs
+# comparison signs
 <	less	some
 >	greater	some
 ≤	小於等於	none
@@ -248,13 +249,13 @@ _	半形底線	most
 ≮	不小於	none
 ≯	不大於	none
 
-#Functions
+# Functions
 ⁻	上標減號	some
 ∘	圓圈算符	none
 ∂	偏微分	none
 ∇	梯度	none
 
-#Geometry and linear Algebra
+# Geometry and linear Algebra
 ⃗	向量	none
 △	三角形	none
 ▭	矩形	none
@@ -270,14 +271,14 @@ _	半形底線	most
 ∡	測量角	none
 ∢	球面角	none
 
-#Logical operators
+# Logical operators
 ∀	對於所有	none
 ∃	存在	none
 ∄	不存在	none
 ⇏	被斜線撇過的向右雙箭頭	none
 ⇐	向左雙箭頭	none
 
-#Other mathematical Operators
+# Other mathematical Operators
 ∈	屬於	none
 ∉	不屬於	none
 ∊	小型元素	none
@@ -292,7 +293,7 @@ _	半形底線	most
 ∛	立方根	none
 ∜	四次方根	none
 ∝	正比於	none
-∞	無限	none
+∞	無限大	none
 ∧	且	none
 ∨	或	none
 ¬	非	none
@@ -326,7 +327,7 @@ _	半形底線	most
 ⊀	does not precede	none
 ⊁	does not succeed	none
 
-#Number sets
+# Number sets
 𝔸	代數數	none
 ℂ	複數	none
 ℑ	複數中的虛數部分	none
@@ -365,7 +366,6 @@ _	半形底線	most
 ⌥	mac Option 鍵	none
 
 # 中文標點與全形符號
-　	全形空格	all
 ，	逗號	all	always
 、	頓號	all	always
 。	句號	all	always
@@ -374,102 +374,132 @@ _	半形底線	most
 ？	問號	all	always
 ！	驚嘆號	all	always
 ：	冒號	all	always
-‥	左右兩點項目符號	most
-︱	直破折號	most
+—	連接號	most	always
+～	連接號	some
+︱	直連接號	most
 ─	破折號	most
-︳	直底線	most
-╴	左邊直線框	most
-＿	底線	most
-︴	直波浪號	some
+│	直破折號	most
 （	左夾注號	most	always
 ）	右夾注號	most	always
-︵	上括號	most	always
-︶	下括號	most	always
-｛	左大括號	most	always
-｝	右大括號	most	always
-︷	上大括號	most	always
-︸	下大括號	most	always
-〔	左中括號	most	always
-〕	右中括號	most	always
-︹	上中括號	most	always
-︺	下中括號	most	always
-【	左粗中括號	most	always
-】	右粗中括號	most	always
-︻	上粗中括號	most	always
-︼	下粗中括號	most	always
+︵	上夾注號	most	always
+︶	下夾注號	most	always
+［	全形左中括號	most	always
+］	全形右中括號	most	always
+﹇	全形上中括號	most	always
+﹈	全形下中括號	most	always
+｛	全形左大括號	most	always
+｝	全形右大括號	most	always
+︷	全形上大括號	most	always
+︸	全形下大括號	most	always
+〔	左六角括號	most	always
+〕	右六角括號	most	always
+︹	上六角括號	most	always
+︺	下六角括號	most	always
+【	左方頭括號	most	always
+】	右方頭括號	most	always
+︻	上方頭括號	most	always
+︼	下方頭括號	most	always
 《	左書名號	most	always
 》	右書名號	most	always
 ︽	上書名號	most	always
 ︾	下書名號	most	always
 〈	左單書名號	most	always
 〉	右單書名號	most	always
-︿	上角括號	most	always
-﹀	下角括號	most	always
+︿	上單書名號	most	always
+﹀	下單書名號	most	always
 「	左上單引號	most	always
 」	右下單引號	most	always
 『	左上雙引號	most
 』	右下雙引號	most
+﹁	右上單引號	most	always
+﹂	左下單引號	most	always
 ﹃	右上雙引號	most
 ﹄	左下雙引號	most
-﹛	左大括號	most	always
-﹜	右大括號	most	always
-﹝	左中括號	most	always
-﹞	右中括號	most	always
-〖	空心左粗中括號	most	always
-〗	空心右粗中括號	most	always
-＃	井字號	most
-—	連接號	most	always
-＆	全形 and 符號	most
+〖	左空心方頭括號	most	always
+〗	右空心方頭括號	most	always
+︙	點點點	all	always
+╴	靠左短橫線	most
+︳	靠左直線	most
+︴	靠左直波浪線	most
+﹋	靠上波浪線	most
+﹌	靠上雙波浪線	most
+﹉	靠上虛線	most
+﹏	靠下波浪線	most
+｀	全形 graav	most
+＠	全形小老鼠	some
+＃	全形 number	some
+＄	全形錢號	all	norep
+％	百分比	some
+＾	全形 caret	most
+＆	全形 and 符號	some
 ＊	星號	most
-※	重點符號	most
+－	減號	some
+＿	全形底線	most
+＝	等於	some
+＋	加號	some
+＼	反斜線	some
+｜	全形 bar	most
+＇	全形 tick	all
+＂	全形 quote	most
+＜	小於	some
+＞	大於	some
+／	斜線	some
+﹗	小型英文驚嘆號	all
+﹫	小型小老鼠	some
+﹟	小型 number	some
+﹩	小型錢號	all	norep
+﹪	小型 percent	some
+﹠	小型 and 符號	some
+﹡	小型 star	some
+﹣	小型 dash	most
+﹘	小型 em dash	most
+﹦	小型 equals	some
+﹢	小型 plus	some
+﹨	小型 backslash	most
+﹙	小型左括號	most	always
+﹚	小型右括號	most	always
+﹝	小型左六角括號	most	always
+﹞	小型右六角括號	most	always
+﹛	小型左大括號	most	always
+﹜	小型右大括號	most	always
+﹔	小型 semi	most
+﹕	小型 colon	most	norep
+﹑	小型頓號	all	always
+﹤	小型 less	some
+﹥	小型 greater	some
+﹐	小型 comma	all	always
+﹒	小型 dot	some
+﹖	小型 question	all
+　	全形空格	all
+‥	左右兩點引導符號	most
+︰	上下兩點引導符號	most
+※	米字符號	most
 〃	同上符號	most
-▲	上實心三角形	some
 ◎	雙圓圈	most
 ☆	空心星號	most
 ★	實心星號	most
 ◇	空心菱形	most
-▽	下三角形	most
-▼	下實心三角形	some
 ㊣	正字標記	none
-＋	加號	some
-－	減號	some
-＜	小於	some
-＞	大於	some
-＝	等於	some
-﹢	正號	some
-﹣	負號	some
-～	連接號	some
-⊿	直角三角形	some
 ㏒	常用對數	some
 ㏑	自然對數	some
 ♀	女性符號	some
 ♂	男性符號	some
 ⊙	中心點圓	most
-↖	左上箭頭	some
-↗	右上箭頭	some
-↙	左下箭頭	some
-↘	右下箭頭	some
-／	斜線	some
-＼	反斜線	some
 ￥	人民幣	none
 ￡	英鎊	none
-％	百分比	some
-＠	全形小老鼠	some
 ℃	度C	none
 ℉	度F	none
-㏕	百分之一英吋	none
+㏕	密耳	none
 ㎜	毫米	none
 ㎝	公分	none
 ㎞	公里	none
 ㎡	平方公尺	none
 ㎎	毫克	none
 ㎏	公斤	none
-兙	十克	none
-兛	千克	none
-兡	百克	none
-嗧	加侖	none
-瓩	千瓦	none
-糎	公分	none
+〜	日文波浪破哲號	most
+╳	斜十字交叉線	most
+￠	全形分	all	norep
+￣	全形 macron	most
 
 # 選擇題選項
 ①	圓圈數字1	none
@@ -791,6 +821,12 @@ _	半形底線	most
 乚	乙	none
 亪	噎	none
 亻	人	none
+兙	十克	none
+兛	千克	none
+兝	分克	none
+兞	毛克	none
+兡	百克	none
+兣	厘克	none
 冂	扃	none
 冖	密	none
 冫	冰	none
@@ -810,6 +846,7 @@ _	半形底線	most
 啿	堪	none
 営	營	none
 嗏	茶	none
+嗧	加侖	none
 嘌	飄	none
 噻	賽	none
 垻	貝	none
@@ -841,15 +878,20 @@ _	半形底線	most
 濏	瑟	none
 爿	牆	none
 犭	犬	none
+瓩	千瓦	none
 甾	玆	none
 疒	床	none
 癪	積	none
 砈	厄	none
+竔	公升	none
 笹	世	none
 籖	籤	none
+籵	公丈	none
 粀	丈	none
 粁	千	none
 粌	銀	none
+粎	公尺	none
+糎	公分	none
 糹	密	none
 絵	惠	none
 繍	秀	none
@@ -899,6 +941,7 @@ _	半形底線	most
 黽	敏	none
 龵	手	none
 龺	濁	none
+鿌	良	none
 鿍	槓	none
 鿎	妲	none
 鿏	邁	none
@@ -947,6 +990,7 @@ _	半形底線	most
 㙦	協	none
 㚇	宗	none
 㚬	軍	none
+㚸	司	none
 㛃	節	none
 㛄	依	none
 㛚	統	none
@@ -967,6 +1011,7 @@ _	半形底線	most
 㤘	皺	none
 㥄	靈	none
 㥮	炒	none
+㦊	驊	none
 㧁	覷	none
 㧌	帽	none
 㧎	牙	none
@@ -1001,6 +1046,7 @@ _	半形底線	most
 㭕	驅	none
 㮝	河	none
 㮾	朗	none
+㯴	蓉	none
 㰀	黎	none
 㰵	族	none
 㳇	物	none
@@ -1017,6 +1063,7 @@ _	半形底線	most
 㷫	廎	none
 㷮	遭	none
 㷻	無	none
+㸂	燧	none
 㸆	靠	none
 㸌	霍	none
 㸐	然	none
@@ -1024,6 +1071,7 @@ _	半形底線	most
 㹭	億	none
 㹴	庚	none
 㺄	宇	none
+㺭	紫	none
 㻅	璯	none
 㻬	禿	none
 㼈	羅	none
@@ -1042,14 +1090,17 @@ _	半形底線	most
 䀹	睫	none
 䁖	瞜	none
 䁯	西	none
+䂥	民	none
 䂮	略	none
 䃅	磾	none
 䃎	榨	none
 䃗	撥	none
 䃮	妲	none
 䅟	慘	none
+䅿	驊	none
 䆀	每	none
 䇶	握	none
+䈁	侖	none
 䈄	函	none
 䉂	蕾	none
 䌈	踏	none
@@ -1088,6 +1139,7 @@ _	半形底線	most
 䘆	遣	none
 䘥	頰	none
 䘼	宛	none
+䜢	顯	none
 䜣	新	none
 䝉	蒙	none
 䝙	貙	none
@@ -1101,6 +1153,7 @@ _	半形底線	most
 䢢	賶	none
 䢺	出	none
 䢼	公	none
+䢿	安	none
 䣘	堂	none
 䥑	麥	none
 䥕	鐅	none
@@ -1109,6 +1162,7 @@ _	半形底線	most
 䧟	陷	none
 䩄	靦	none
 䪞	雜	none
+䪸	民	none
 䫌	痞	none
 䭲	以	none
 䮄	懸	none
@@ -1174,6 +1228,7 @@ _	半形底線	most
 𠳭	克	none
 𠷬	練	none
 𡈼	挺	none
+𡊋	封	none
 𡍼	塗	none
 𡎚	覑	none
 𡐓	康	none
@@ -1182,9 +1237,12 @@ _	半形底線	most
 𡟚	盈	none
 𡢃	嫌	none
 𡩋	寧	none
+𡩣	桀	none
 𡳞	吝	none
 𡻕	嵗	none
 𢎙	嫌	none
+𢎨	弔	none
+𢙺	志	none
 𢡄	慘	none
 𢡊	愆	none
 𢪱	勿	none
@@ -1230,8 +1288,11 @@ _	半形底線	most
 𤘅	牙	none
 𤞚	消	none
 𤣩	玉	none
+𤣹	髮	none
 𤧛	帝	none
+𤧞	美	none
 𤧟	亭	none
+𤨁	晉	none
 𤩽	環	none
 𤫉	燮	none
 𤰇	備	none
@@ -1256,12 +1317,15 @@ _	半形底線	most
 𥖨	噪	none
 𥗽	恰	none
 𥠖	黎	none
+𥡪	翌	none
+𥪕	秉	none
 𥫗	竹	none
 𥯟	派	none
 𥯥	撤	none
 𥰔	品	none
 𥳐	遣	none
 𥴊	敢	none
+𥴰	靖	none
 𥺆	呈	none
 𥻗	茶	none
 𦈡	須	none
@@ -1319,6 +1383,7 @@ _	半形底線	most
 𨓻	逮	none
 𨙸	旗	none
 𨚕	變	none
+𨜏	盈	none
 𨟠	悛	none
 𨠳	富	none
 𨠴	西	none
@@ -1340,6 +1405,7 @@ _	半形底線	most
 𨺙	逆	none
 𨿅	名	none
 𩑾	低	none
+𩓙	以	none
 𩓩	兜	none
 𩚨	題	none
 𩛩	餄	none
@@ -1387,7 +1453,6 @@ _	半形底線	most
 𫐐	霓	none
 𫐓	輮	none
 𫑡	蒙	none
-𫒖	西	none
 𫓧	伕	none
 𫓯	銈	none
 𫓶	鋗	none
@@ -1557,364 +1622,14 @@ _	半形底線	most
 𲆰	錫	none
 𲆱	朋	none
 𲆳	品	none
+𲇊	西	none
+𲇙	嗅	none
 
 # 以下區段為「中日韓統一表意文字擴充 I (0x2ebf0~0x2ee5f)」
 
 # 以下區段為「中日韓相容表意文字 (0xf900~0xfaff)」
-豈	豈	none
-更	更	none
-車	車	none
-賈	賈	none
-滑	滑	none
-串	串	none
-句	句	none
-龜	龜	none
-龜	龜	none
-契	契	none
-金	金	none
-喇	喇	none
-奈	奈	none
-懶	懶	none
-癩	癩	none
-羅	羅	none
-蘿	蘿	none
-螺	螺	none
-裸	裸	none
-邏	邏	none
-樂	樂	none
-洛	洛	none
-烙	烙	none
-珞	珞	none
-落	落	none
-酪	酪	none
-駱	駱	none
-亂	亂	none
-卵	卵	none
-欄	欄	none
-爛	爛	none
-蘭	蘭	none
-鸞	鸞	none
-嵐	嵐	none
-濫	濫	none
-藍	藍	none
-襤	襤	none
-拉	拉	none
-臘	臘	none
-蠟	蠟	none
-廊	廊	none
-朗	朗	none
-浪	浪	none
-狼	狼	none
-郎	郎	none
-來	來	none
-冷	冷	none
-勞	勞	none
-擄	擄	none
-櫓	櫓	none
-爐	爐	none
-盧	盧	none
-老	老	none
-蘆	蘆	none
-虜	虜	none
-路	路	none
-露	露	none
-魯	魯	none
-鷺	鷺	none
-碌	碌	none
-祿	祿	none
-綠	綠	none
-菉	菉	none
-錄	錄	none
-鹿	鹿	none
-論	論	none
-壟	壟	none
-弄	弄	none
-籠	籠	none
-聾	聾	none
-牢	牢	none
-磊	磊	none
-賂	賂	none
-雷	雷	none
-壘	壘	none
-屢	屢	none
-樓	樓	none
-淚	淚	none
-漏	漏	none
-累	累	none
-縷	縷	none
-陋	陋	none
-勒	勒	none
-肋	肋	none
-凜	凜	none
-凌	凌	none
-稜	稜	none
-綾	綾	none
-菱	菱	none
-陵	陵	none
-讀	讀	none
-拏	拏	none
-樂	樂	none
-諾	諾	none
-丹	丹	none
-寧	寧	none
-怒	怒	none
-率	率	none
-異	異	none
-北	北	none
-磻	磻	none
-便	便	none
-復	復	none
-不	不	none
-泌	泌	none
-數	數	none
-索	索	none
-參	參	none
-塞	塞	none
-省	省	none
-葉	葉	none
-說	說	none
-殺	殺	none
-辰	辰	none
-沈	沈	none
-拾	拾	none
-若	若	none
-掠	掠	none
-略	略	none
-亮	亮	none
-兩	兩	none
-凉	凉	none
-梁	梁	none
-糧	糧	none
-良	良	none
-諒	諒	none
-量	量	none
-勵	勵	none
-呂	呂	none
-女	女	none
-廬	廬	none
-旅	旅	none
-濾	濾	none
-礪	礪	none
-閭	閭	none
-驪	驪	none
-麗	麗	none
-黎	黎	none
-力	力	none
-曆	曆	none
-歷	歷	none
-轢	轢	none
-年	年	none
-憐	憐	none
-戀	戀	none
-撚	撚	none
-漣	漣	none
-煉	煉	none
-璉	璉	none
-秊	秊	none
-練	練	none
-聯	聯	none
-輦	輦	none
-蓮	蓮	none
-連	連	none
-鍊	鍊	none
-列	列	none
-劣	劣	none
-咽	咽	none
-烈	烈	none
-裂	裂	none
-說	說	none
-廉	廉	none
-念	念	none
-捻	捻	none
-殮	殮	none
-簾	簾	none
-獵	獵	none
-令	令	none
-囹	囹	none
-寧	寧	none
-嶺	嶺	none
-怜	怜	none
-玲	玲	none
-瑩	瑩	none
-羚	羚	none
-聆	聆	none
-鈴	鈴	none
-零	零	none
-靈	靈	none
-領	領	none
-例	例	none
-禮	禮	none
-醴	醴	none
-隸	隸	none
-惡	惡	none
-了	了	none
-僚	僚	none
-寮	寮	none
-尿	尿	none
-料	料	none
-樂	樂	none
-燎	燎	none
-療	療	none
-蓼	蓼	none
-遼	遼	none
-龍	龍	none
-暈	暈	none
-阮	阮	none
-劉	劉	none
-杻	杻	none
-柳	柳	none
-流	流	none
-溜	溜	none
-琉	琉	none
-留	留	none
-硫	硫	none
-紐	紐	none
-類	類	none
-六	六	none
-戮	戮	none
-陸	陸	none
-倫	倫	none
-崙	崙	none
-淪	淪	none
-輪	輪	none
-律	律	none
-慄	慄	none
-栗	栗	none
-率	率	none
-隆	隆	none
-利	利	none
-吏	吏	none
-履	履	none
-易	易	none
-李	李	none
-梨	梨	none
-泥	泥	none
-理	理	none
-痢	痢	none
-罹	罹	none
-裏	裏	none
-裡	裡	none
-里	里	none
-離	離	none
-匿	匿	none
-溺	溺	none
-吝	吝	none
-燐	燐	none
-璘	璘	none
-藺	藺	none
-隣	隣	none
-鱗	鱗	none
-麟	麟	none
-林	林	none
-淋	淋	none
-臨	臨	none
-立	立	none
-笠	笠	none
-粒	粒	none
-狀	狀	none
-炙	炙	none
-識	識	none
-什	什	none
-茶	茶	none
-刺	刺	none
-切	切	none
-度	度	none
-拓	拓	none
-糖	糖	none
-宅	宅	none
-洞	洞	none
-暴	暴	none
-輻	輻	none
-行	行	none
-降	降	none
-見	見	none
-廓	廓	none
-兀	兀	none
-嗀	嗀	none
-塚	塚	none
-晴	晴	none
-凞	凞	none
-猪	猪	none
-益	益	none
-礼	礼	none
-神	神	none
-祥	祥	none
-福	福	none
-靖	靖	none
-精	精	none
-羽	羽	none
-蘒	蘒	none
-諸	諸	none
-逸	逸	none
-都	都	none
-飯	飯	none
-飼	飼	none
-館	館	none
-鶴	鶴	none
-郞	郞	none
-隷	隷	none
-侮	侮	none
-僧	僧	none
-免	免	none
-勉	勉	none
-勤	勤	none
-卑	卑	none
-喝	喝	none
-嘆	嘆	none
-器	器	none
 塀	評	none
-墨	墨	none
-層	層	none
-屮	屮	none
-悔	悔	none
-慨	慨	none
-憎	憎	none
-懲	懲	none
-敏	敏	none
-既	既	none
-暑	暑	none
-梅	梅	none
-海	海	none
-渚	渚	none
-漢	漢	none
-煮	煮	none
-爫	爫	none
-琢	琢	none
-碑	碑	none
-社	社	none
-祉	祉	none
-祈	祈	none
-祐	祐	none
-祖	祖	none
-祝	祝	none
-禍	禍	none
-禎	禎	none
-穀	穀	none
-突	突	none
-節	節	none
-練	練	none
-縉	縉	none
-繁	繁	none
-署	署	none
-者	者	none
-臭	臭	none
-艹	艹	none
-艹	艹	none
-著	著	none
-褐	褐	none
-視	視	none
-謁	謁	none
-謹	謹	none
-賓	賓	none
-贈	贈	none
-辶	辶	none
-逸	逸	none
-難	難	none
-響	響	none
-頻	頻	none
-恵	恵	none
 𤋮	熙	none
-舘	舘	none
 𢡊	愆	none
 𢡄	慘	none
 𣏕	癈	none
@@ -1926,16 +1641,7 @@ _	半形底線	most
 𧻓	蹦	none
 
 # 以下區段為「中日韓相容表意文字補充 (0x2f800~0x2fa1f)」
-冗	冗	none
-包	包	none
-夢	夢	none
-敬	敬	none
-杞	杞	none
-殺	殺	none
 𥄳	踏	none
-紀	紀	none
-者	者	none
-起	起	none
 
 # 以下區段為「康熙部首 (0x2f00~0x2fdf)」
 ⼀	一	none
@@ -2152,5 +1858,16 @@ _	半形底線	most
 ⿓	龍	none
 ⿔	龜	none
 ⿕	龠	none
+
+# 其他符號
+π	pi	none
+Ω	omega	none
+μ	mu	none
+˙	輕聲	none
+｢	半形左上單引號	most	always
+｣	半形右下單引號	most	always
+‵	reversed prime	some
+Ω	歐姆	none
+Å	埃	none
 
 # End of file
