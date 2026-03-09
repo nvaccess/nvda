@@ -77,7 +77,9 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 		else _("Successfully installed NVDA.")
 	)
 	# Translators: A recommendation shown after NVDA installation to restart Windows.
-	restartMsg = _("It is recommended to restart Windows after installing NVDA. NVDA may malfunction without a restart.")
+	restartMsg = _(
+		"It is recommended to restart Windows after installing NVDA. NVDA may malfunction without a restart."
+	)
 	dialog = MessageDialog(
 		parent=gui.mainFrame,
 		message=f"{successMsg}\n\n{restartMsg}",
