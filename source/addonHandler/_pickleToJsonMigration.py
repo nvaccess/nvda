@@ -26,11 +26,11 @@ if TYPE_CHECKING:
 
 
 # This module and its callers should be removed in 2027.1.
-# To ensure this isn't missed, warn about using the module on 2027.1 if deprecated APIs are allowed, and fail if they're not.
+# To ensure this isn't missed, log an error about using the module on 2027.1 if deprecated APIs are allowed, and fail if they're not.
 if BACK_COMPAT_TO >= (2027, 1, 0):
 	DEPRECATION_STRING = "addonHandler._pickleToJsonMigration is deprecated. All internal use of pickle should be removed in NVDA 2027.1."
 	if NVDAState._allowDeprecatedAPI():
-		log.warning(DEPRECATION_STRING, stack_info=True)
+		log.error(DEPRECATION_STRING, stack_info=True)
 	else:
 		raise RuntimeError(DEPRECATION_STRING)
 
