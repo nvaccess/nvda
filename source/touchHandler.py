@@ -93,7 +93,7 @@ class TouchMode(DisplayStringStrEnum):
 		}
 
 
-availableTouchModes = ["text", "object"]
+availableTouchModes: list[TouchMode] = [TouchMode.TEXT, TouchMode.OBJECT]
 
 HWND_MESSAGE = -3
 
@@ -139,21 +139,18 @@ def _browseModeStateChange(
 
 	if browseMode:
 		# Entering browse mode
-		if TouchMode.BROWSE.value not in availableTouchModes:
-			availableTouchModes.append(TouchMode.BROWSE.value)
+		if TouchMode.BROWSE not in availableTouchModes:
+			availableTouchModes.append(TouchMode.BROWSE)
 
 		handler._curTouchMode = TouchMode.BROWSE.value
 
 	else:
 		# Leaving browse mode
-		if TouchMode.BROWSE.value in availableTouchModes:
-			availableTouchModes.remove(TouchMode.BROWSE.value)
+		if TouchMode.BROWSE in availableTouchModes:
+			availableTouchModes.remove(TouchMode.BROWSE)
 
 		if handler._curTouchMode == TouchMode.BROWSE.value:
 			handler._curTouchMode = TouchMode.OBJECT.value
-
-
-post_browseModeStateChange.register(_browseModeStateChange)
 
 
 class POINTER_INFO(Structure):
@@ -293,7 +290,7 @@ class TouchInputGesture(inputCore.InputGesture):
 		# Translators: a touch screen gesture
 		source = _("Touch screen")
 		if mode:
-			source = "{source}, {mode}".format(source=source, mode=touchModeLabels[mode])
+			source = "{source}, {mode}".format(source=source, mode=TouchMode(mode).displayString)
 		return source, " + ".join(actions)
 
 	def _get__immediate(self):
@@ -469,12 +466,14 @@ def initialize():
 		% user32.GetSystemMetrics(SystemMetrics.MAXIMUM_TOUCHES),
 	)
 	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
+	post_browseModeStateChange.register(_browseModeStateChange)
 	setTouchSupport(config.conf["touch"]["enabled"])
 
 
 def terminate():
 	global handler
 	config.post_configProfileSwitch.unregister(handlePostConfigProfileSwitch)
+	post_browseModeStateChange.unregister(_browseModeStateChange)
 	if handler:
 		handler.terminate()
 		handler = None

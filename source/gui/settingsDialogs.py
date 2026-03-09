@@ -2646,13 +2646,14 @@ class BrowseModePanel(SettingsPanel):
 
 		# Store element types for use in onSave (excludes the always-active "default" entry).
 		self._browseModeElements = list(browseMode.BrowseModeTreeInterceptor._browseTouchNavRegistry)
-		# Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
 		self._browseModeCheckListBox: nvdaControls.CustomCheckListBox = sHelper.addLabeledControl(
-			_("&Browse mode touch navigation elements (touchscreens only):"),
+			# Translators: Label for the list of touch navigation element types in browse mode settings.
+			_("T&ouch navigation elements:"),
 			nvdaControls.CustomCheckListBox,
 			choices=[label for _itemType, label in self._browseModeElements],
 		)
-		enabledTypes = set(config.conf["virtualBuffers"]["browseModeNavigationElements"])
+		self._browseModeCheckListBox.Enable(touchHandler.touchSupported())
+		enabledTypes = set(config.conf["virtualBuffers"]["browseModeTouchNavigationElements"])
 		for i, (itemType, _label) in enumerate(self._browseModeElements):
 			self._browseModeCheckListBox.Check(i, itemType in enabledTypes)
 
@@ -2675,7 +2676,7 @@ class BrowseModePanel(SettingsPanel):
 		config.conf["virtualBuffers"]["trapNonCommandGestures"] = (
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
-		config.conf["virtualBuffers"]["browseModeNavigationElements"] = [
+		config.conf["virtualBuffers"]["browseModeTouchNavigationElements"] = [
 			itemType
 			for i, (itemType, _label) in enumerate(self._browseModeElements)
 			if self._browseModeCheckListBox.IsChecked(i)

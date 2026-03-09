@@ -798,12 +798,16 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	#: Stored as an instance attribute so each document remembers its own preference.
 	_browseModeCurrentType: str | None = None
 
-	def _enabledBrowseElements(self):
+	def _enabledBrowseElements(self) -> list[tuple[str | None, str]]:
 		"""Returns the list of (itemType, label) pairs available for browse mode touch navigation cycling.
-		The 'default' entry (None) is always first. Remaining entries are those whose itemType
-		appears in the L{config.conf} virtualBuffers browseModeNavigationElements list.
+
+		The ``None`` entry (navigate all content) is always first.
+		Remaining entries are those whose itemType appears in the
+		:confval:`virtualBuffers.browseModeTouchNavigationElements` config list.
+
+		:return: List of (itemType, label) pairs, with ``None`` meaning "all content".
 		"""
-		enabledTypes = set(config.conf["virtualBuffers"]["browseModeNavigationElements"])
+		enabledTypes = set(config.conf["virtualBuffers"]["browseModeTouchNavigationElements"])
 		# "default" (None) navigates all content and is always available.
 		result = [type(self)._browseModeElements[0]]
 		for itemType, label in type(self)._browseTouchNavRegistry:
@@ -1426,9 +1430,10 @@ del qn
 # Build _browseModeElements dynamically from the registry populated by addQuickNav calls above.
 # The "default" entry (navigate all content) is always prepended.
 BrowseModeTreeInterceptor._browseModeElements = (
-	# Translators: The default element type in browse mode browse mode touch navigation (navigates all content).
+	# Translators: The default element type in browse mode touch navigation (navigates all content).
 	(None, _("default")),
-) + tuple(BrowseModeTreeInterceptor._browseTouchNavRegistry)
+	*BrowseModeTreeInterceptor._browseTouchNavRegistry,
+)
 
 
 class ElementsListDialog(
