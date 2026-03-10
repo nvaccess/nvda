@@ -3006,7 +3006,9 @@ class MathSettingsPanel(SettingsPanel):
 			ImpairmentOption,
 			self.impairmentList.GetSelection(),
 		)
-		mathLang = mathConf["speech"]["language"] = self.languageOptions[self.languageList.GetSelection()].code
+		mathLang = mathConf["speech"]["language"] = self.languageOptions[
+			self.languageList.GetSelection()
+		].code
 		mathConf["other"]["decimalSeparator"] = self._getEnumValueFromSelection(
 			DecimalSeparatorOption,
 			self.decimalSeparatorList.GetSelection(),
