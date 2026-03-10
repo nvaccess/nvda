@@ -1,8 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2025 NV Access Limited, Neil Soiffer, Ryan McCleary
+# Copyright (C) 2022-2026 NV Access Limited, Neil Soiffer, Ryan McCleary
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
+from dataclasses import dataclass
 import glob
 import os
 import re
@@ -242,7 +243,39 @@ def pathToLanguagesFolder() -> str:
 	)
 
 
-def getLanguages() -> tuple[list[str], list[str]]:
+@dataclass
+class LanguageInfo:
+	"""Data class to hold information about a language, including its code and description."""
+
+	code: str
+	description: str
+
+
+def addRegionalLanguages(languages: list[LanguageInfo], subDir: str, language: str) -> list[str]:
+	"""Add regional language variants to the list of languages.
+
+	:param languages: The list of LanguageInfo objects to append to.
+	This list is modified in place.
+	:param subDir: The subdirectory representing the regional variant.
+	:param language: The base language code.
+	:return: A list of rule files for the regional variant.
+	"""
+	# the language variants are in folders named using ISO 3166-1 alpha-2
+	# codes https://en.wikipedia.org/wiki/ISO_3166-2
+	# check if there are language variants in the language folder
+	if subDir != "SharedRules":
+		# add to the list the text for this language variant together with the code
+		regionalCode: str = language + "-" + subDir.upper()
+		langDesc = getLanguageDescription(regionalCode)
+		if langDesc is not None:
+			languages.append(LanguageInfo(code=regionalCode, description=f"{langDesc} ({regionalCode})"))
+		else:
+			languages.append(LanguageInfo(code=regionalCode, description=f"{language} ({regionalCode})"))
+		return [os.path.basename(file) for file in glob.glob(os.path.join(subDir, "*_Rules.yaml"))]
+	return []
+
+
+def getLanguages() -> list[LanguageInfo]:
 	"""Populate the language choice dropdown with available languages and their regional variants.
 
 	This method scans the language folders and adds entries for each language and its
@@ -250,37 +283,23 @@ def getLanguages() -> tuple[list[str], list[str]]:
 
 	It also adds a special "Automatic (Use Voice's Language)" option at the beginning.
 
-	:return: A pair of lists with the first list containing the contents of the
-	language selection combo box, and the second list containing the corresponding
-	language code for each menu item.
+	:return: A list of LanguageInfo objects representing the available languages.
 	"""
 
-	languageOptions: list[str] = []
-	languageCodes: list[str] = []
+	languages: list[LanguageInfo] = []
 
-	def addRegionalLanguages(subDir: str, language: str) -> list[str]:
-		# the language variants are in folders named using ISO 3166-1 alpha-2
-		# codes https://en.wikipedia.org/wiki/ISO_3166-2
-		# check if there are language variants in the language folder
-		if subDir != "SharedRules":
-			# add to the list the text for this language variant together with the code
-			regionalCode: str = language + "-" + subDir.upper()
-			langDesc = getLanguageDescription(regionalCode)
-			if langDesc is not None:
-				languageOptions.append(f"{langDesc} ({regionalCode})")
-			else:
-				languageOptions.append(f"{language} ({regionalCode})")
-			languageCodes.append(regionalCode)
-			return [os.path.basename(file) for file in glob.glob(os.path.join(subDir, "*_Rules.yaml"))]
-		return []
+	languages.append(
+		LanguageInfo(
+			code="Auto",
+			# Translators: Math language settings menu item: use the language of the voice chosen for reading math.
+			# Automatic uses the voice's language.
+			description=pgettext("math", "Automatic ({language})").format(language=getLanguageDescription(getCurrentLanguage())),
+		)
+	)
 
-	# Translators: menu item -- use the language of the voice chosen in the NVDA speech settings dialog
-	# "Auto" == "Automatic" -- other items in menu are "English (en)", etc., so this matches that style
-	languageOptions.append(pgettext("math", "Automatic (Use Voice's Language)"))
-	languageCodes.append("Auto")
 	# populate the available language names in the dialog
 	# the implemented languages are in folders named using the relevant ISO 639-1
-	#   code https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+	# code https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 	languageDir: str = pathToLanguagesFolder()
 	for language in os.listdir(languageDir):
 		pathToLanguageDir: str = os.path.join(pathToLanguagesFolder(), language)
@@ -289,11 +308,10 @@ def getLanguages() -> tuple[list[str], list[str]]:
 			if len(rulesUtils.getRulesFiles(pathToLanguageDir, addRegionalLanguages)) > 0:
 				# add to the listbox the text for this language together with the code
 				if language in supportedLanguages:
-					languageOptions.append(getLanguageDescription(language) + " (" + language + ")")
+					languages.append(LanguageInfo(code=language, description=getLanguageDescription(language)))
 				else:
-					languageOptions.append(language + " (" + language + ")")
-				languageCodes.append(language)
-	return languageOptions, languageCodes
+					languages.append(LanguageInfo(code=language, description=language))
+	return languages
 
 
 def getLanguageCode(langChoice: wx.Choice) -> str:
