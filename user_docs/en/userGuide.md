@@ -1563,9 +1563,9 @@ The default zoom level when the magnifier is first enabled can be configured in 
 Color filters can help users with certain visual impairments or light sensitivity by modifying the colors displayed on the screen.
 The magnifier provides three color filter options:
 
-* **Normal**: No color modification is applied. This is the default setting.
-* **Grayscale**: Converts all colors to shades of gray, which can help reduce eye strain and improve contrast for some users.
-* **Inverted**: Inverts all colors on the screen (black becomes white, white becomes black, etc.), which can be helpful for users who prefer light text on dark backgrounds or have photophobia.
+* Normal: No color modification is applied. This is the default setting.
+* Grayscale: Converts all colors to shades of gray, which can help reduce eye strain and improve contrast for some users.
+* Inverted: Inverts all colors on the screen (black becomes white, white becomes black, etc.), which can be helpful for users who prefer light text on dark backgrounds or have photophobia.
 
 To cycle through the available filters press `NVDA+shift+i`.
 NVDA will announce the name of the currently selected filter.
@@ -1576,13 +1576,12 @@ The default color filter when the magnifier is first enabled can be configured i
 
 The magnifier offers three different modes for tracking focus and determining which part of the screen to magnify:
 
-* **Center**: The magnified area is centered on the current focus position.
+* Center: The magnified area is centered on the current focus position.
 This mode keeps the focused element at the center of the screen and clamps to the screen edge.
 To disable clamping, activate [true center mode in the Magnifier settings](#MagnifierUseTrueCenter).
-
-* **Border**: The magnified area only moves when the focus approaches the edge of the visible area.
+* Border: The magnified area only moves when the focus approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
-* **Relative**: The magnified area maintains the relative position of the focus within the screen.
+* Relative: The magnified area maintains the relative position of the focus within the screen.
 This mode mimics the behavior of the Windows Magnifier.
 
 To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
