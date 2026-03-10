@@ -816,7 +816,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			"Selects the next element type for browse mode touch navigation",
 		),
 		category=inputCore.SCRCAT_BROWSEMODE,
-		gesture="ts(browseMode):flickDown",
+		gesture="ts(browse):flickDown",
 	)
 	def script_nextBrowseElement(self, gesture: inputCore.InputGesture) -> None:
 		enabled = self._enabledBrowseElements()
@@ -835,7 +835,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			"Selects the previous element type for browse mode touch navigation",
 		),
 		category=inputCore.SCRCAT_BROWSEMODE,
-		gesture="ts(browseMode):flickUp",
+		gesture="ts(browse):flickUp",
 	)
 	def script_prevBrowseElement(self, gesture: inputCore.InputGesture) -> None:
 		enabled = self._enabledBrowseElements()
@@ -854,7 +854,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			"Moves to the next element of the selected type in browse mode touch navigation",
 		),
 		category=inputCore.SCRCAT_BROWSEMODE,
-		gesture="ts(browseMode):flickRight",
+		gesture="ts(browse):flickRight",
 	)
 	def script_nextSelectedElement(self, gesture: inputCore.InputGesture) -> None:
 		itemType = self._browseModeCurrentType
@@ -871,7 +871,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			"Moves to the previous element of the selected type in browse mode touch navigation",
 		),
 		category=inputCore.SCRCAT_BROWSEMODE,
-		gesture="ts(browseMode):flickLeft",
+		gesture="ts(browse):flickLeft",
 	)
 	def script_prevSelectedElement(self, gesture: inputCore.InputGesture) -> None:
 		itemType = self._browseModeCurrentType

@@ -4578,10 +4578,10 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_touch_changeMode(self, gesture):
 		mode = touchHandler.handler._curTouchMode
-		index = touchHandler.availableTouchModes.index(mode)
-		index = (index + 1) % len(touchHandler.availableTouchModes)
-		newMode = touchHandler.availableTouchModes[index]
-		touchHandler.handler._curTouchMode = newMode.value
+		index = touchHandler.AVAILABLE_TOUCH_MODES.index(mode)
+		index = (index + 1) % len(touchHandler.AVAILABLE_TOUCH_MODES)
+		newMode = touchHandler.AVAILABLE_TOUCH_MODES[index]
+		touchHandler.handler._curTouchMode = newMode
 		ui.message(newMode.displayString)
 
 	@script(

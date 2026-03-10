@@ -67,7 +67,7 @@ __getattr__ = _deprecate.handleDeprecations(
 		{
 			"text": _("text mode"),
 			"object": _("object mode"),
-			"browseMode": _("browse mode"),
+			"browse": _("browse mode"),
 		},
 		message="Use touchHandler.TouchMode enum instead.",
 	),
@@ -79,7 +79,10 @@ class TouchMode(DisplayStringStrEnum):
 
 	TEXT = "text"
 	OBJECT = "object"
-	BROWSE = "browseMode"
+	BROWSE = "browse"
+
+	def __str__(self) -> str:
+		return self.value
 
 	@cached_property
 	def _displayStringLabels(self) -> dict[Self, str]:
@@ -93,7 +96,7 @@ class TouchMode(DisplayStringStrEnum):
 		}
 
 
-availableTouchModes: list[TouchMode] = [TouchMode.TEXT, TouchMode.OBJECT]
+AVAILABLE_TOUCH_MODES: list[TouchMode] = [TouchMode.TEXT, TouchMode.OBJECT]
 
 HWND_MESSAGE = -3
 
@@ -139,18 +142,18 @@ def _browseModeStateChange(
 
 	if browseMode:
 		# Entering browse mode
-		if TouchMode.BROWSE not in availableTouchModes:
-			availableTouchModes.append(TouchMode.BROWSE)
+		if TouchMode.BROWSE not in AVAILABLE_TOUCH_MODES:
+			AVAILABLE_TOUCH_MODES.append(TouchMode.BROWSE)
 
-		handler._curTouchMode = TouchMode.BROWSE.value
+		handler._curTouchMode = TouchMode.BROWSE
 
 	else:
 		# Leaving browse mode
-		if TouchMode.BROWSE in availableTouchModes:
-			availableTouchModes.remove(TouchMode.BROWSE)
+		if TouchMode.BROWSE in AVAILABLE_TOUCH_MODES:
+			AVAILABLE_TOUCH_MODES.remove(TouchMode.BROWSE)
 
-		if handler._curTouchMode == TouchMode.BROWSE.value:
-			handler._curTouchMode = TouchMode.OBJECT.value
+		if handler._curTouchMode == TouchMode.BROWSE:
+			handler._curTouchMode = TouchMode.OBJECT
 
 
 class POINTER_INFO(Structure):
@@ -307,7 +310,7 @@ class TouchHandler(threading.Thread):
 	def __init__(self):
 		self.pendingEmitsTimer = gui.NonReEntrantTimer(core.requestPump)
 		super().__init__(name=f"{self.__class__.__module__}.{self.__class__.__qualname__}")
-		self._curTouchMode = "object"
+		self._curTouchMode = TouchMode.OBJECT
 		self.initializedEvent = threading.Event()
 		self.threadExc = None
 		self.start()
@@ -385,7 +388,7 @@ class TouchHandler(threading.Thread):
 		return user32.DefWindowProc(hwnd, msg, wParam, lParam)
 
 	def setMode(self, mode):
-		if mode not in availableTouchModes:
+		if mode not in AVAILABLE_TOUCH_MODES:
 			raise ValueError("Unknown mode %s" % mode)
 		self._curTouchMode = mode
 
