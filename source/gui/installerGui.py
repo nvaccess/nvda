@@ -73,7 +73,7 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 		_(
 			"Successfully updated your installation of NVDA."
 			" It is recommended to restart Windows after updating."
-			" NVDA may malfunction without a restart."
+			" NVDA may malfunction without a restart.",
 		)
 		if isUpdate
 		# Translators: The message displayed when NVDA has been successfully installed,
@@ -81,7 +81,7 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 		else _(
 			"Successfully installed NVDA."
 			" It is recommended to restart Windows after installing."
-			" NVDA may malfunction without a restart."
+			" NVDA may malfunction without a restart.",
 		)
 	)
 	dialog = MessageDialog(
@@ -131,6 +131,8 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 		case ReturnCode.CANCEL:
 			if not core.triggerNVDAExit(None):
 				log.error("NVDA already in process of exiting, this indicates a logic error.")
+		case _:
+			pass
 
 
 def doInstall(
