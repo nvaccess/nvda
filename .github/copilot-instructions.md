@@ -24,7 +24,7 @@ When reviewing Python changes, verify alignment with `projectDocs/dev/codingStan
   * constants: `UPPER_SNAKE_CASE`
   * scripts: `script_*`
   * events: `event_*`
-* User-visible strings must be translatable via gettext (`_()`, `pgettext()`, `ngettext()` or `npgettext()`) and include an appropriate translators comment.
+* User-facing strings must be translatable via gettext (`_()`, `pgettext()`, `ngettext()` or `npgettext()`) and include an appropriate translators comment.
 * All public functions, classes, and methods must have Sphinx-style docstrings (without type declarations in docstrings).
 Most internal functions, classes, and methods should also have docstrings, except where their purpose is clear from their name or code.
 * Flag unnecessary import-time side effects and new module-level globals where avoidable.
