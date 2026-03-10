@@ -377,7 +377,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		# any known language code and sub-code -- could be en-uk, etc
 		language = string(default="Auto")
 		# Set a different speechStyle depending on the language
-		[__many__]]
+		[[__many__]]
 			# Any known speech style for the language (falls back to ClearSpeak)
 			speechStyle = string(default="")
 		verbosity = option("Terse", "Medium", "Verbose", default="Medium")
