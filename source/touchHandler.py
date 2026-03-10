@@ -81,9 +81,6 @@ class TouchMode(DisplayStringStrEnum):
 	OBJECT = "object"
 	BROWSE = "browse"
 
-	def __str__(self) -> str:
-		return self.value
-
 	@cached_property
 	def _displayStringLabels(self) -> dict[Self, str]:
 		return {
@@ -394,7 +391,7 @@ class TouchHandler(threading.Thread):
 
 	def pump(self):
 		for preheldTracker, tracker in self.trackerManager.emitTrackers():
-			gesture = TouchInputGesture(preheldTracker, tracker, self._curTouchMode)
+			gesture = TouchInputGesture(preheldTracker, tracker, self._curTouchMode.value)
 			try:
 				inputCore.manager.executeGesture(gesture)
 			except inputCore.NoInputGestureAction:
