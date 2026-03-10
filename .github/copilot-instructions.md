@@ -82,6 +82,7 @@ Watch for excessive COM calls (e.g. fetching properties individually inside a la
 * For `ctypes` and COM interactions, ensure memory buffers, handles, and variants are safely freed to prevent memory leaks (e.g. using `ole32.CoTaskMemFree` or `kernel32.CloseHandle`).
 * If an API change breaks compatibility, ensure it follows NVDA’s deprecation cycle (using `utils._deprecate`) and is noted in the API changelog as per `projectDocs/dev/deprecations.md`.
 * For C++ changes, prioritise RAII, smart pointers for COM objects and lightweight execution inside injected hooks to prevent crashing target apps.
+
 ## Comment style for Copilot reviews
 
 * Focus comments on changed lines and clear user/developer impact.
