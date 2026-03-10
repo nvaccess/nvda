@@ -75,9 +75,9 @@ class MagnifierAction(DisplayStringEnum):
 			# Translators: Action description for panning to bottom edge.
 			self.PAN_BOTTOM_EDGE: pgettext("magnifier action", "pan to bottom edge"),
 			# Translators: Action description for toggling color filters.
-			self.TOGGLE_FILTER: pgettext("magnifier action", "trying to toggle filters"),
+			self.TOGGLE_FILTER: pgettext("magnifier action", "toggle filters"),
 			# Translators: Action description for changing magnifier type.
-			self.CHANGE_MAGNIFIER_TYPE: pgettext("magnifier action", "trying to change magnifier type"),
+			self.CHANGE_MAGNIFIER_TYPE: pgettext("magnifier action", "change magnifier type"),
 			# Translators: Action description for changing full-screen mode.
 			self.CHANGE_FULLSCREEN_MODE: pgettext("magnifier action", "change full-screen mode"),
 			# Translators: Action description for starting spotlight mode.

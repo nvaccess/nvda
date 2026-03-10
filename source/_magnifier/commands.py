@@ -169,7 +169,7 @@ def pan(action: MagnifierAction) -> None:
 
 
 def toggleMagnifierType() -> None:
-	"""Cycle through magnifier types (full-screen, docked, lens)"""
+	"""Cycle through magnifier types (full-screen, fixed, docked (to do), lens (to do))"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
 		magnifier,

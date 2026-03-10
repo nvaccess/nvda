@@ -6121,7 +6121,7 @@ class MagnifierPanel(SettingsPanel):
 			wx.CheckBox(fullscreenGroupBox, label=keepMouseCenteredText),
 		)
 		self.bindHelpEvent(
-			"magnifierKeepMouseCentered",
+			"MagnifierKeepMouseCentered",
 			self.keepMouseCenteredCheckBox,
 		)
 		self.keepMouseCenteredCheckBox.SetValue(magnifierConfig.shouldKeepMouseCentered())

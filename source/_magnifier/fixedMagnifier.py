@@ -57,6 +57,8 @@ class FixedMagnifier(Magnifier, WindowedMagnifier):
 		Start the Fixed magnifier by creating a window and starting the update timer.
 		"""
 		super()._startMagnifier()
+		if not self._overlayWindow:
+			self._createWindow()
 		self._startTimer(self._updateMagnifier)
 		log.debug(
 			f"Starting fixed magnifier position:{self._windowParameters.windowPosition} size:{self._windowParameters.windowSize}\n with zoom level {self.zoomLevel} and filter {self.filterType}",

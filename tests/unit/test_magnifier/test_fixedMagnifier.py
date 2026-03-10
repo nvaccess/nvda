@@ -82,6 +82,30 @@ class TestFixedMagnifier(unittest.TestCase):
 			mock_destroy.assert_called_once()
 			self.assertFalse(self.magnifier._isActive)
 
+	def test_startMagnifier_recreates_window_after_stop(self):
+		"""Stopping then starting the magnifier must recreate the destroyed overlay window."""
+		with patch.object(self.magnifier, "_startTimer"):
+			self.magnifier._startMagnifier()
+
+		# Simulate _destroyWindow (as called by _stopMagnifier)
+		self.magnifier._overlayWindow.destroy = MagicMock()
+		self.magnifier._stopMagnifier()
+		self.assertIsNone(self.magnifier._overlayWindow)
+
+		# Restart: _startMagnifier must recreate the window
+		with patch(
+			"_magnifier.utils.windowCreator.MagnifierOverlayWindow",
+		) as MockOverlay:
+			new_mock = MagicMock()
+			new_mock.handle = 99999
+			MockOverlay.return_value = new_mock
+
+			with patch.object(self.magnifier, "_startTimer"):
+				self.magnifier._startMagnifier()
+
+		self.assertIsNotNone(self.magnifier._overlayWindow)
+		self.assertEqual(self.magnifier._overlayWindow.handle, 99999)
+
 	def test_getWindowParameters(self):
 		"""Test retrieving window parameters."""
 		with patch("_magnifier.fixedMagnifier.getDefaultFixedWindowWidth", return_value=400):

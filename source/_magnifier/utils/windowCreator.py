@@ -372,7 +372,8 @@ class MagnifierOverlayWindow(CustomWindow):
 	def destroy(self) -> None:
 		"""Destroy the window and free all GDI resources."""
 		self._cleanupGDI()
-		if hasattr(self, "_classAtom"):
+		# Only destroy the underlying window once; _classAtom may exist but be None
+		if getattr(self, "_classAtom", None) and getattr(self, "handle", None):
 			CustomWindow.destroy(self)
 
 
@@ -414,6 +415,10 @@ class WindowedMagnifier:
 			captureH=magnifierParameters.magnifierSize.height,
 			filterType=magnifierParameters.filter,
 		)
+
+	def _createWindow(self) -> None:
+		"""Create the overlay window from the stored parameters."""
+		self._overlayWindow = MagnifierOverlayWindow(self.windowMagnifierParameters)
 
 	def _destroyWindow(self) -> None:
 		"""Destroy the overlay window and release all resources."""
