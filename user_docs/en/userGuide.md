@@ -2510,7 +2510,7 @@ To toggle this option from anywhere, please assign a custom gesture to "speakOnN
 ##### Automatic Scroll Rate {#BrailleAutoScrollRate}
 
 This slider controls the rate of automatic braille display scrolling, measured in cells per second.
-The minimum value (0 %) will be 1 cell per second, and the maximum value (100 %), 20 cells per second.
+The minimum value (0%) will be 1 cell per second, and the maximum value (100%), 20 cells per second.
 For example, with the default value of 10 cells/sec, if a braille display with 40 cells is used, the number of seconds between automatic scrolls will be 4.
 If the display had 20 cells, each line of braille would be shown for 2 seconds.
 
