@@ -3,12 +3,14 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
+from collections.abc import Callable
 from dataclasses import dataclass
 import glob
 import os
 import re
 from zipfile import ZipFile
 
+from cv2 import add
 import wx
 from languageHandler import getLanguageDescription
 from logHandler import log
@@ -251,28 +253,30 @@ class LanguageInfo:
 	description: str
 
 
-def addRegionalLanguages(languages: list[LanguageInfo], subDir: str, language: str) -> list[str]:
-	"""Add regional language variants to the list of languages.
+def _createAddRegionalLanguagesFunction(languages: list[LanguageInfo]) -> Callable[[str, str], list[str]]:
+	def addRegionalLanguages(subDir: str, language: str) -> list[str]:
+		"""Add regional language variants to the list of languages.
 
-	:param languages: The list of LanguageInfo objects to append to.
-	This list is modified in place.
-	:param subDir: The subdirectory representing the regional variant.
-	:param language: The base language code.
-	:return: A list of rule files for the regional variant.
-	"""
-	# the language variants are in folders named using ISO 3166-1 alpha-2
-	# codes https://en.wikipedia.org/wiki/ISO_3166-2
-	# check if there are language variants in the language folder
-	if subDir != "SharedRules":
-		# add to the list the text for this language variant together with the code
-		regionalCode: str = language + "-" + subDir.upper()
-		langDesc = getLanguageDescription(regionalCode)
-		if langDesc is not None:
-			languages.append(LanguageInfo(code=regionalCode, description=f"{langDesc} ({regionalCode})"))
-		else:
-			languages.append(LanguageInfo(code=regionalCode, description=f"{language} ({regionalCode})"))
-		return [os.path.basename(file) for file in glob.glob(os.path.join(subDir, "*_Rules.yaml"))]
-	return []
+		:param languages: The list of LanguageInfo objects to append to.
+		This list is modified in place.
+		:param subDir: The subdirectory representing the regional variant.
+		:param language: The base language code.
+		:return: A list of rule files for the regional variant.
+		"""
+		# the language variants are in folders named using ISO 3166-1 alpha-2
+		# codes https://en.wikipedia.org/wiki/ISO_3166-2
+		# check if there are language variants in the language folder
+		if subDir != "SharedRules":
+			# add to the list the text for this language variant together with the code
+			regionalCode: str = language + "-" + subDir.upper()
+			langDesc = getLanguageDescription(regionalCode)
+			if langDesc is not None:
+				languages.append(LanguageInfo(code=regionalCode, description=f"{langDesc} ({regionalCode})"))
+			else:
+				languages.append(LanguageInfo(code=regionalCode, description=f"{language} ({regionalCode})"))
+			return [os.path.basename(file) for file in glob.glob(os.path.join(subDir, "*_Rules.yaml"))]
+		return []
+	return addRegionalLanguages
 
 
 def getLanguages() -> list[LanguageInfo]:
@@ -287,6 +291,7 @@ def getLanguages() -> list[LanguageInfo]:
 	"""
 
 	languages: list[LanguageInfo] = []
+	addRegionalLanguages = _createAddRegionalLanguagesFunction(languages)
 
 	languages.append(
 		LanguageInfo(
