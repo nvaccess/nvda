@@ -294,7 +294,7 @@ def getLanguages() -> list[LanguageInfo]:
 			# Translators: Math language settings menu item: use the language of the voice chosen for reading math.
 			# Automatic uses the voice's language.
 			description=pgettext("math", "Automatic ({language})").format(
-				language=getLanguageDescription(getCurrentLanguage())
+				language=getLanguageDescription(getCurrentLanguage()),
 			),
 		),
 	)
@@ -311,7 +311,7 @@ def getLanguages() -> list[LanguageInfo]:
 				# add to the listbox the text for this language together with the code
 				if language in supportedLanguages:
 					languages.append(
-						LanguageInfo(code=language, description=getLanguageDescription(language))
+						LanguageInfo(code=language, description=getLanguageDescription(language)),
 					)
 				else:
 					languages.append(LanguageInfo(code=language, description=language))
