@@ -10,7 +10,6 @@ import os
 import re
 from zipfile import ZipFile
 
-from cv2 import add
 import wx
 from languageHandler import getLanguageDescription
 from logHandler import log
@@ -276,6 +275,7 @@ def _createAddRegionalLanguagesFunction(languages: list[LanguageInfo]) -> Callab
 				languages.append(LanguageInfo(code=regionalCode, description=f"{language} ({regionalCode})"))
 			return [os.path.basename(file) for file in glob.glob(os.path.join(subDir, "*_Rules.yaml"))]
 		return []
+
 	return addRegionalLanguages
 
 
