@@ -142,13 +142,16 @@ class MagnifierParameters(NamedTuple):
 
 class WindowMagnifierParameters(NamedTuple):
 	"""
-	Named tuple representing the position and size of the magnifier window
+	Named tuple representing the position and size of the magnifier window.
+	The styles field is no longer used since window styles are now determined
+	by the MagnifierOverlayWindow class for proper NVDA invisibility,
+	anti-capture and click-through behaviour.
 	"""
 
 	title: str
 	windowSize: Size
 	windowPosition: Coordinates
-	styles: int
+	styles: int = 0
 
 
 class ZoomHistory(NamedTuple):
