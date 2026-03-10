@@ -121,6 +121,9 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 					)
 					if not core.triggerNVDAExit(newNVDA):
 						log.error("NVDA already in process of exiting, this indicates a logic error.")
+				else:
+					if not core.triggerNVDAExit(None):
+						log.error("NVDA already in process of exiting, this indicates a logic error.")
 		case ReturnCode.CUSTOM_2:
 			newNVDA = core.NewNVDAInstance(
 				filePath=os.path.join(WritePaths.defaultInstallDir, "nvda.exe"),
@@ -131,8 +134,8 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 		case ReturnCode.CANCEL:
 			if not core.triggerNVDAExit(None):
 				log.error("NVDA already in process of exiting, this indicates a logic error.")
-		case _:
-			pass
+		case _ as returnCode:
+			log.error(f"Unexpected return code from post-install dialog: {returnCode}")
 
 
 def doInstall(
