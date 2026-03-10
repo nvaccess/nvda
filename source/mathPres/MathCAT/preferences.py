@@ -339,6 +339,8 @@ class MathCATUserPreferences:
 	@staticmethod
 	def getConfigForSpeechStyle(mathLang: str) -> str:
 		mathConf = config.conf["math"]
+		if mathLang not in mathConf["speech"]:
+			mathConf["speech"][mathLang] = {"speechStyle": ""}
 		if not mathConf["speech"][mathLang]["speechStyle"]:
 			speechStyleOptions = localization.getSpeechStyles(mathLang)
 			if "ClearSpeak" in speechStyleOptions:

@@ -2718,14 +2718,15 @@ class MathSettingsPanel(SettingsPanel):
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		from mathPres.MathCAT import localization, preferences
 		from mathPres.MathCAT.preferences import (
-			ImpairmentOption,
-			DecimalSeparatorOption,
-			VerbosityOption,
+			BrailleNavHighlightOption,
 			ChemistryOption,
+			CopyAsOption,
+			DecimalSeparatorOption,
+			ImpairmentOption,
 			NavModeOption,
 			NavVerbosityOption,
-			CopyAsOption,
-			BrailleNavHighlightOption,
+			MathCATUserPreferences,
+			VerbosityOption,
 		)
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -2786,7 +2787,7 @@ class MathSettingsPanel(SettingsPanel):
 			choices=localization.getSpeechStyles(mathLanguage),
 		)
 		self.bindHelpEvent("MathSpeechStyle", self.speechStyleList)
-		speechStyle = config.conf["math"]["speech"][mathLanguage]["speechStyle"]
+		speechStyle = MathCATUserPreferences.getConfigForSpeechStyle(mathLanguage)
 		if speechStyle:
 			self.speechStyleList.SetStringSelection(speechStyle)
 		else:
