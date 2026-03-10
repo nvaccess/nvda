@@ -67,22 +67,26 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 	Presents the user with options to restart Windows, start the installed copy,
 	or exit NVDA.
 	"""
-	successMsg = (
+	message = (
 		# Translators: The message displayed when NVDA has been successfully updated,
 		# shown in the post-install dialog.
-		_("Successfully updated your installation of NVDA.")
+		_(
+			"Successfully updated your installation of NVDA."
+			" It is recommended to restart Windows after updating."
+			" NVDA may malfunction without a restart."
+		)
 		if isUpdate
 		# Translators: The message displayed when NVDA has been successfully installed,
 		# shown in the post-install dialog.
-		else _("Successfully installed NVDA.")
-	)
-	# Translators: A recommendation shown after NVDA installation to restart Windows.
-	restartMsg = _(
-		"It is recommended to restart Windows after installing NVDA. NVDA may malfunction without a restart."
+		else _(
+			"Successfully installed NVDA."
+			" It is recommended to restart Windows after installing."
+			" NVDA may malfunction without a restart."
+		)
 	)
 	dialog = MessageDialog(
 		parent=gui.mainFrame,
-		message=f"{successMsg}\n\n{restartMsg}",
+		message=message,
 		# Translators: The title of the post-install dialog.
 		title=_("Success"),
 		buttons=None,
@@ -97,17 +101,26 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 	dialog.addButton(ReturnCode.CANCEL, label=_("E&xit NVDA"), fallbackAction=not startAfterInstall)
 	match dialog.ShowModal():
 		case ReturnCode.CUSTOM_1:
-			if not _restartWindows():
+			if _restartWindows():
+				if not core.triggerNVDAExit(None):
+					log.error("NVDA already in process of exiting, this indicates a logic error.")
+			else:
+				# Restart failed — inform the user.
+				# Only exit if a new copy can be started so the user keeps a screen reader.
 				gui.messageBox(
 					# Translators: Message shown when Windows restart fails after NVDA installation.
-					_("Failed to restart Windows. Please restart manually."),
+					_("Failed to restart Windows. Please restart Windows manually."),
 					# Translators: Title of the error dialog shown when Windows restart fails.
 					_("Error"),
 					wx.OK | wx.ICON_ERROR,
 				)
-				return
-			if not core.triggerNVDAExit(None):
-				log.error("NVDA already in process of exiting, this indicates a logic error.")
+				if startAfterInstall:
+					newNVDA = core.NewNVDAInstance(
+						filePath=os.path.join(WritePaths.defaultInstallDir, "nvda.exe"),
+						parameters=_generate_executionParameters(),
+					)
+					if not core.triggerNVDAExit(newNVDA):
+						log.error("NVDA already in process of exiting, this indicates a logic error.")
 		case ReturnCode.CUSTOM_2:
 			newNVDA = core.NewNVDAInstance(
 				filePath=os.path.join(WritePaths.defaultInstallDir, "nvda.exe"),
@@ -115,7 +128,7 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 			)
 			if not core.triggerNVDAExit(newNVDA):
 				log.error("NVDA already in process of exiting, this indicates a logic error.")
-		case _:
+		case ReturnCode.CANCEL:
 			if not core.triggerNVDAExit(None):
 				log.error("NVDA already in process of exiting, this indicates a logic error.")
 
