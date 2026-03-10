@@ -23,19 +23,18 @@ from winBindings import user32
 from windowUtils import CustomWindow
 
 from .types import MagnifierParameters, WindowMagnifierParameters, Filter
+from .filterHandler import applyBitmapFilter, getBlitRasterOp
 
 #: Window Display Affinity: exclude from screen capture (Windows 10 2004+)
 WDA_EXCLUDEFROMCAPTURE: int = 0x00000011
 #: WM_PAINT message
-WM_PAINT: int = 0x000F
+WM_PAINT: int = winUser.WM_PAINT
 #: WM_DESTROY message
-WM_DESTROY: int = 0x0002
+WM_DESTROY: int = winUser.WM_DESTROY
 #: WM_ERASEBKGND message
 WM_ERASEBKGND: int = 0x0014
 #: SetStretchBltMode: high-quality image stretching mode
 HALFTONE: int = 4
-#: BitBlt raster-op: copy inverted source to destination
-NOTSRCCOPY: int = 0x00330008
 
 _user32_dll = ctypes.windll.user32
 _gdi32_dll = ctypes.windll.gdi32
@@ -45,17 +44,6 @@ _user32_dll.SetWindowDisplayAffinity.restype = ctypes.wintypes.BOOL
 
 _gdi32_dll.SetStretchBltMode.argtypes = [ctypes.wintypes.HDC, ctypes.c_int]
 _gdi32_dll.SetStretchBltMode.restype = ctypes.c_int
-
-_gdi32_dll.SetDIBits.argtypes = [
-	ctypes.wintypes.HDC,
-	ctypes.wintypes.HBITMAP,
-	ctypes.c_uint,
-	ctypes.c_uint,
-	ctypes.c_void_p,
-	ctypes.c_void_p,
-	ctypes.c_uint,
-]
-_gdi32_dll.SetDIBits.restype = ctypes.c_int
 
 #: DrawIconEx flag: draw cursor with its normal mask and colour
 DI_NORMAL: int = 0x0003
@@ -253,10 +241,7 @@ class MagnifierOverlayWindow(CustomWindow):
 		finally:
 			user32.ReleaseDC(0, screenDC)
 
-		# Grayscale requires per-pixel DIB manipulation.
-		# Inverted is handled at zero cost in _paint() via the NOTSRCCOPY raster-op.
-		if filterType == Filter.GRAYSCALE:
-			self._applyGrayscaleFilter()
+		applyBitmapFilter(filterType, self._captureDC, self._captureBitmap, captureW, captureH)
 
 		self._currentFilter = filterType
 
@@ -271,8 +256,7 @@ class MagnifierOverlayWindow(CustomWindow):
 		with winUser.paint(self.handle) as hdc:
 			if self._captureDC and self._captureWidth > 0 and self._captureHeight > 0:
 				_gdi32_dll.SetStretchBltMode(hdc, HALFTONE)
-				# NOTSRCCOPY inverts all pixels during the blit – free colour inversion
-				rop = NOTSRCCOPY if self._currentFilter == Filter.INVERTED else winGDI.SRCCOPY
+				rop = getBlitRasterOp(self._currentFilter)
 				gdi32.StretchBlt(
 					hdc,
 					0,
@@ -288,49 +272,6 @@ class MagnifierOverlayWindow(CustomWindow):
 				)
 				# Draw the cursor on top of the magnified content
 				self._paintCursor(hdc)
-
-	def _applyGrayscaleFilter(self) -> None:
-		"""Convert the captured bitmap to grayscale via direct DIB byte manipulation."""
-		w, h = self._captureWidth, self._captureHeight
-		numPixels = w * h
-
-		bmInfo = gdi32.BITMAPINFO()
-		bmInfo.bmiHeader.biSize = ctypes.sizeof(gdi32.BITMAPINFO)
-		bmInfo.bmiHeader.biWidth = w
-		bmInfo.bmiHeader.biHeight = -h  # top-down
-		bmInfo.bmiHeader.biPlanes = 1
-		bmInfo.bmiHeader.biBitCount = 32
-		bmInfo.bmiHeader.biCompression = winGDI.BI_RGB
-
-		bufferSize = numPixels * 4
-		buffer = (ctypes.c_ubyte * bufferSize)()
-		gdi32.GetDIBits(
-			self._captureDC,
-			self._captureBitmap,
-			0,
-			h,
-			buffer,
-			ctypes.byref(bmInfo),
-			winGDI.DIB_RGB_COLORS,
-		)
-
-		# Process BGRA pixels with fixed-point ITU-R BT.601 coefficients
-		data = bytearray(buffer)
-		for i in range(0, bufferSize, 4):
-			b, g, r = data[i], data[i + 1], data[i + 2]
-			gray = (77 * r + 150 * g + 29 * b) >> 8
-			data[i] = data[i + 1] = data[i + 2] = gray
-
-		ctypes.memmove(buffer, (ctypes.c_char * bufferSize).from_buffer(data), bufferSize)
-		_gdi32_dll.SetDIBits(
-			self._captureDC,
-			self._captureBitmap,
-			0,
-			h,
-			buffer,
-			ctypes.byref(bmInfo),
-			winGDI.DIB_RGB_COLORS,
-		)
 
 	def _snapshotCursor(
 		self,
@@ -410,26 +351,29 @@ class MagnifierOverlayWindow(CustomWindow):
 			DI_NORMAL,
 		)
 
-	# ── GDI resource management ──────────────────────────────────────────
-
 	def _cleanupGDI(self) -> None:
 		"""Release the off-screen capture DC, bitmap and associated objects."""
-		if self._oldCaptureBitmap and self._captureDC:
-			gdi32.SelectObject(self._captureDC, self._oldCaptureBitmap)
-			self._oldCaptureBitmap = None
-		if self._captureBitmap:
-			gdi32.DeleteObject(self._captureBitmap)
-			self._captureBitmap = None
-		if self._captureDC:
-			gdi32.DeleteDC(self._captureDC)
-			self._captureDC = None
+		try:
+			if self._oldCaptureBitmap and self._captureDC:
+				gdi32.SelectObject(self._captureDC, self._oldCaptureBitmap)
+				self._oldCaptureBitmap = None
+			if self._captureBitmap:
+				gdi32.DeleteObject(self._captureBitmap)
+				self._captureBitmap = None
+			if self._captureDC:
+				gdi32.DeleteDC(self._captureDC)
+				self._captureDC = None
+		except (ctypes.ArgumentError, OSError):
+			# Guard against invalid handles (e.g. mock objects during tests)
+			pass
 		self._captureWidth = 0
 		self._captureHeight = 0
 
 	def destroy(self) -> None:
 		"""Destroy the window and free all GDI resources."""
 		self._cleanupGDI()
-		CustomWindow.destroy(self)
+		if hasattr(self, "_classAtom"):
+			CustomWindow.destroy(self)
 
 
 class WindowedMagnifier:

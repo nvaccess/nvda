@@ -189,31 +189,32 @@ class TestMagnifierOverlayWindow(unittest.TestCase):
 		with (
 			patch("_magnifier.utils.windowCreator.gdi32"),
 			patch("_magnifier.utils.windowCreator.user32"),
+			patch("_magnifier.utils.windowCreator.applyBitmapFilter"),
 		):
 			window.updateContent(0, 0, 100, 100, Filter.INVERTED)
 		self.assertEqual(window._currentFilter, Filter.INVERTED)
 
 	def test_updateContent_grayscale_calls_filter(self):
-		"""updateContent with GRAYSCALE calls _applyGrayscaleFilter."""
+		"""updateContent with GRAYSCALE calls applyBitmapFilter."""
 		window, _ = self._createWindow()
 		with (
 			patch("_magnifier.utils.windowCreator.gdi32"),
 			patch("_magnifier.utils.windowCreator.user32"),
-			patch.object(window, "_applyGrayscaleFilter") as mockFilter,
+			patch("_magnifier.utils.windowCreator.applyBitmapFilter") as mockFilter,
 		):
 			window.updateContent(0, 0, 100, 100, Filter.GRAYSCALE)
 			mockFilter.assert_called_once()
 
-	def test_updateContent_inverted_does_not_call_dib(self):
-		"""updateContent with INVERTED does NOT call _applyGrayscaleFilter."""
+	def test_updateContent_inverted_calls_filter(self):
+		"""updateContent with INVERTED calls applyBitmapFilter for pixel inversion."""
 		window, _ = self._createWindow()
 		with (
 			patch("_magnifier.utils.windowCreator.gdi32"),
 			patch("_magnifier.utils.windowCreator.user32"),
-			patch.object(window, "_applyGrayscaleFilter") as mockFilter,
+			patch("_magnifier.utils.windowCreator.applyBitmapFilter") as mockFilter,
 		):
 			window.updateContent(0, 0, 100, 100, Filter.INVERTED)
-			mockFilter.assert_not_called()
+			mockFilter.assert_called_once()
 
 	def test_cleanupGDI_releases_resources(self):
 		"""_cleanupGDI properly releases DC and bitmap."""
@@ -251,6 +252,7 @@ class TestMagnifierOverlayWindow(unittest.TestCase):
 	def test_destroy_cleans_gdi_then_calls_super(self):
 		"""destroy() cleans GDI before delegating to CustomWindow.destroy."""
 		window, _ = self._createWindow()
+		window._classAtom = 1  # Simulate a fully initialised CustomWindow
 		callOrder = []
 		with (
 			patch.object(window, "_cleanupGDI", side_effect=lambda: callOrder.append("gdi")),
