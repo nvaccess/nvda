@@ -10,7 +10,7 @@ from collections.abc import Callable
 
 def getRulesFiles(
 	pathToDir: str,
-	processSubDirs: Callable[[list[str], str, str], list[str]] | None,
+	processSubDirs: Callable[[str, str], list[str]] | None,
 ) -> list[str]:
 	"""Get the rule files from a directory, optionally processing subdirectories.
 	Searches for files ending with '_Rules.yaml' in the specified directory.
