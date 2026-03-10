@@ -77,7 +77,7 @@ Scrutinize code for privilege escalation and data leaks.
 * Verify thread safety.
 GUI changes, core state mutations and most COM/UI interactions must happen on the main thread.
 Ensure `wx.CallLater`, `wx.CallAfter`, `utils.schedule`, `core.callLater` or `queueHandler` are used when passing execution from background threads.
-* Flag expensive operations (such as heavy computations, blocking I/O, complex loops) inside performance-critical hot paths like focus changes, key presses, or text iteration. 
+* Flag expensive operations (such as heavy computations, blocking I/O, complex loops) inside performance-critical hot paths like focus changes, key presses, or text iteration.
 Watch for excessive COM calls (e.g. fetching properties individually inside a large loop instead of caching) and deep UIA tree walks on the main thread.
 * For `ctypes` and COM interactions, ensure memory buffers, handles, and variants are safely freed to prevent memory leaks (e.g. using `ole32.CoTaskMemFree` or `kernel32.CloseHandle`).
 * If an API change breaks compatibility, ensure it follows NVDA’s deprecation cycle (using `utils._deprecate`) and is noted in the API changelog as per `projectDocs/dev/deprecations.md`.
