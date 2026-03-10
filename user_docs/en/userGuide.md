@@ -1502,6 +1502,8 @@ You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAnd
 
 <!-- KC:endInclude -->
 
+You can also assign a gesture for reporting the current status of the Screen curtain from [Input Gestures dialog](#InputGestures) in NVDA's Preferences menu, When this gesture is performed NVDA will tell you the current status of the Screen Curtain if it is activated or disabled.
+
 When Screen Curtain is enabled, features that rely on what is literally on screen will not function.
 For example, you cannot [use OCR](#Win10Ocr).
 Some screenshot utilities also may not work.
