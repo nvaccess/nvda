@@ -1,7 +1,7 @@
 if ($env:RUNNER_DEBUG) {
-	cmd.exe /c "scons checkPot -j1 2> testOutput\translationCheckResults.log"
+	cmd.exe /c "runcheckpot.bat -j1 2> testOutput\translationCheckResults.log"
 } else {
-	cmd.exe /c "scons checkPot --all-cores 2> testOutput\translationCheckResults.log"
+	cmd.exe /c "runcheckpot.bat --all-cores 2> testOutput\translationCheckResults.log"
 }
 Write-Output "Translation check output:"
 Get-Content testOutput\translationCheckResults.log
