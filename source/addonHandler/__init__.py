@@ -7,7 +7,7 @@
 from __future__ import annotations  # Avoids quoting of forward references
 
 from abc import abstractmethod, ABC
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Generator, Mapping
 import json
 import sys
 import os.path
@@ -1224,3 +1224,36 @@ def validate_apiVersionString(value: str) -> tuple[int, int, int]:
 		return addonAPIVersion.getAPIVersionTupleFromString(value)
 	except ValueError as e:
 		raise ValidateError('"{}" is not a valid API Version string: {}'.format(value, e))
+
+
+def _loadManifest(path: os.PathLike) -> AddonManifest:
+	translationPaths = _translatedManifestPaths()
+	untranslatedPath = os.path.join(path, MANIFEST_FILENAME)
+	with open(untranslatedPath, "rb") as untranslatedFile:
+		for translationPath in translationPaths:
+			translationPath = os.path.join(path, translationPath)
+			if not os.path.isfile(translationPath):
+				continue
+			try:
+				with open(translationPath, "rb") as translatedFile:
+					return AddonManifest(untranslatedFile, translatedFile)
+			except OSError:
+				continue
+		return AddonManifest(untranslatedFile)
+
+
+def _getAddonsFromPath(path: os.PathLike) -> Generator[AddonManifest, None, None]:
+	with os.scandir(path) as scanner:
+		for entry in scanner:
+			if (
+				not entry.is_dir(follow_symlinks=False)
+				or entry.name.endswith(DELETEDIR_SUFFIX)
+				or entry.name.endswith(ADDON_PENDINGINSTALL_SUFFIX)
+				or not any(os.scandir(entry.path))
+			):
+				log.debug(f"Skipping {entry.path}")
+				continue
+			try:
+				yield _loadManifest(entry.path)
+			except Exception:
+				log.debug("Failed to load add-on manifest.")
