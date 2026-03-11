@@ -7,7 +7,7 @@
 from __future__ import annotations  # Avoids quoting of forward references
 
 from abc import abstractmethod, ABC
-from collections.abc import Callable, Generator, Mapping
+from collections.abc import Callable, Generator, Mapping, Sequence
 import json
 import sys
 import os.path
@@ -1226,12 +1226,10 @@ def validate_apiVersionString(value: str) -> tuple[int, int, int]:
 		raise ValidateError('"{}" is not a valid API Version string: {}'.format(value, e))
 
 
-def _loadManifest(path: os.PathLike) -> AddonManifest:
-	translationPaths = _translatedManifestPaths()
-	untranslatedPath = os.path.join(path, MANIFEST_FILENAME)
-	with open(untranslatedPath, "rb") as untranslatedFile:
-		for translationPath in translationPaths:
-			translationPath = os.path.join(path, translationPath)
+def _loadManifest(path: os.PathLike, translationRelpaths: Sequence[str]) -> AddonManifest:
+	with open(os.path.join(path, MANIFEST_FILENAME), "rb") as untranslatedFile:
+		for translationRelpath in translationRelpaths:
+			translationPath = os.path.join(path, translationRelpath)
 			if not os.path.isfile(translationPath):
 				continue
 			try:
@@ -1242,7 +1240,8 @@ def _loadManifest(path: os.PathLike) -> AddonManifest:
 		return AddonManifest(untranslatedFile)
 
 
-def _getAddonsFromPath(path: os.PathLike) -> Generator[AddonManifest, None, None]:
+def _getAddonManifestsFromPath(path: os.PathLike) -> Generator[AddonManifest, None, None]:
+	translationPaths = None
 	with os.scandir(path) as scanner:
 		for entry in scanner:
 			if (
@@ -1253,7 +1252,9 @@ def _getAddonsFromPath(path: os.PathLike) -> Generator[AddonManifest, None, None
 			):
 				log.debug(f"Skipping {entry.path}")
 				continue
+			if translationPaths is None:
+				translationPaths = _translatedManifestPaths()
 			try:
-				yield _loadManifest(entry.path)
+				yield _loadManifest(entry.path, translationPaths)
 			except Exception:
-				log.debug("Failed to load add-on manifest.")
+				log.debug(f"Failed to load add-on manifest from {entry.path}.", exc_info=True)
