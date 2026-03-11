@@ -546,8 +546,17 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _get_pointAtStart(self):
 		try:
 			return self._getBoundingRectFromOffset(self._startOffset).topLeft
-		except NotImplementedError:
-			return self._getPointFromOffset(self._startOffset)
+		except (NotImplementedError, LookupError):
+			try:
+				return self._getPointFromOffset(self._startOffset)
+			except (NotImplementedError, LookupError):
+				pass
+		if self.isCollapsed and self._startOffset > 0:
+			prevOffset = self._startOffset - 1
+			try:
+				return self._getBoundingRectFromOffset(prevOffset).topLeft
+			except (NotImplementedError, LookupError):
+				return self._getPointFromOffset(prevOffset)
 
 	def _get_isCollapsed(self):
 		if self._startOffset == self._endOffset:
