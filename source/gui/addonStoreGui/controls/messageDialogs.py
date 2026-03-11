@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from collections.abc import Collection
+import os.path
 import threading
 from time import sleep
 from typing import (
@@ -17,7 +17,7 @@ import wx
 
 import addonAPIVersion
 
-from addonHandler import Addon, getAvailableAddons
+from addonHandler import Addon, AddonManifest, _getAddonManifestsFromPath, getAvailableAddons
 from addonStore.models.addon import (
 	_AddonGUIModel,
 	_AddonStoreModel,
@@ -646,7 +646,13 @@ class _CopyAddonsDialog(
 			return super().__new__(cls, *args, **kwargs)
 		return instance
 
-	def __init__(self, parent: wx.Window, availableAddons: Collection[Addon], returnList: list[str]):
+	def __init__(
+		self,
+		parent: wx.Window,
+		availableAddons: dict[str, Addon],
+		systemManifests: dict[str, AddonManifest],
+		returnList: list[str],
+	):
 		"""Initializer.
 
 		:param parent: The dialog's parent window.
@@ -667,7 +673,10 @@ class _CopyAddonsDialog(
 			# Translators: The title of the dialog which allows users to select which add-ons to copy to the system profile.
 			pgettext("addonStore", "Copy Add-ons to System-wide Configuration"),
 		)
+		log.debug(f"{availableAddons=}; {systemManifests=}")
 		self._availableAddons = availableAddons
+		self._indexableAvailableAddons: tuple[Addon] | None = None
+		self._systemManifests = systemManifests
 		self._returnList = returnList
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -699,8 +708,10 @@ class _CopyAddonsDialog(
 		listCtrl.AppendColumn(pgettext("addonStore", "Name"), width=self.scaleSize(150))
 		# Translators: The label for a column in the copy add-ons dialog that displays the add-on's author
 		listCtrl.AppendColumn(pgettext("addonStore", "Author"), width=self.scaleSize(180))
-		# Translators: The label for a column in the copy add-ons dialog that displays the version of the add-on
-		listCtrl.AppendColumn(pgettext("addonStore", "Version"), width=self.scaleSize(150))
+		# Translators: The label for a column in the copy add-ons dialog that displays the version of the add-on present in the current user's configuration
+		listCtrl.AppendColumn(pgettext("addonStore", "User version"), width=self.scaleSize(150))
+		# Translators: The label for a column in the copy add-ons dialog that displays the version of the add-on present in the system-wide configuration
+		listCtrl.AppendColumn(pgettext("addonStore", "System-wide version"), width=self.scaleSize(150))
 		listCtrl.EnableCheckBoxes(True)
 		listCtrl.Bind(wx.EVT_LIST_ITEM_SELECTED, self._onSelectionChange)
 		listCtrl.Bind(wx.EVT_LIST_ITEM_DESELECTED, self._onSelectionChange)
@@ -735,14 +746,26 @@ class _CopyAddonsDialog(
 		self.SetSizer(mainSizer)
 		self.CentreOnParent()
 
+	@property
+	def indexableAvailableAddons(self) -> tuple[Addon]:
+		if self._indexableAvailableAddons is None:
+			self._indexableAvailableAddons = tuple(self._availableAddons.values())
+		return self._indexableAvailableAddons
+
 	def _populateAddonsList(self):
 		self._addonsList.DeleteAllItems()
-		for idx, addon in enumerate(self._availableAddons):
+		for addon in self._availableAddons.values():
 			self._addonsList.Append(
 				(
 					addon.manifest["summary"],
 					addon.manifest["author"],
 					addon.version,
+					(
+						self._systemManifests[addon.name]["version"]
+						if addon.name in self._systemManifests
+						# Translators: Shown when the add-on is not installed.
+						else pgettext("addonStore", "Not installed")
+					),
 				),
 			)
 		activeIndex = 0
@@ -765,7 +788,7 @@ class _CopyAddonsDialog(
 		index: int = self._addonsList.GetFirstSelected()
 		if index < 0:
 			return
-		_showAddonInfo(self._availableAddons[index]._addonGuiModel)
+		_showAddonInfo(self.indexableAvailableAddons[index]._addonGuiModel)
 
 	def onClose(self, evt: wx.CloseEvent):
 		if not self.GetReturnCode():
@@ -779,9 +802,7 @@ class _CopyAddonsDialog(
 	def onContinue(self, evt: wx.CommandEvent):
 		returnCode = evt.GetId()
 		toCopy = tuple(
-			addon.name
-			for idx, addon in enumerate(self._availableAddons)
-			if self._addonsList.IsItemChecked(idx)
+			addon for idx, addon in enumerate(self._availableAddons) if self._addonsList.IsItemChecked(idx)
 		)
 		if toCopy:
 			match gui.messageBox(
@@ -831,19 +852,28 @@ def _getAddonsToCopy(parent: wx.Window) -> list[str] | None:
 		Note that this list may be empty, in which case there are either no enabled add-ons in the user config, or the user has chosen to copy no add-ons.
 	"""
 	addonsToCopy: list[str] = []
-	enabledAddons: tuple[Addon] = tuple(
-		getAvailableAddons(
+	enabledAddons = {
+		addon.name: addon
+		for addon in getAvailableAddons(
 			filterFunc=lambda addon: getStatus(addon._addonGuiModel, _StatusFilterKey.INSTALLED)
 			in (
 				AvailableAddonStatus.ENABLED,
 				AvailableAddonStatus.RUNNING,
 				AvailableAddonStatus.INCOMPATIBLE_ENABLED,
 			),
-		),
-	)
-	if (
-		len(enabledAddons) > 0
-		and _CopyAddonsDialog(parent, enabledAddons, addonsToCopy).ShowModal() != wx.ID_OK
-	):
+		)
+	}
+	if len(enabledAddons) == 0:
+		return addonsToCopy
+	systemAddonsDir = os.path.join("c:", "Program Files", "nvda", "systemConfig", "addons")
+	# systemAddonsDir = os.path.join(sys.prefix, "systemConfig", "addons")
+	try:
+		systemManifests = {
+			manifest["name"]: manifest for manifest in _getAddonManifestsFromPath(systemAddonsDir)
+		}
+	except Exception:
+		log.debug("Failed to retrieve system add-ons.", exc_info=True)
+		systemManifests = {}
+	if _CopyAddonsDialog(parent, enabledAddons, systemManifests, addonsToCopy).ShowModal() != wx.ID_OK:
 		return None
 	return addonsToCopy
