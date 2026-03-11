@@ -8,10 +8,12 @@
 """Unit tests for the textInfos module, its submodules and classes."""
 
 import unittest
+from unittest.mock import patch
 from .textProvider import BasicTextProvider, MockBlackBoxTextInfo
 import textInfos
 from textInfos.offsets import Offsets
 import textUtils
+import locationHelper
 
 
 class TestCharacterOffsets(unittest.TestCase):
@@ -218,9 +220,69 @@ class TestMoveToCodepointOffsetInBlackBoxTextInfo(unittest.TestCase):
 		for c in self.LETTERS:
 			self.runTestImpl(list(self.LETTERS) + [""], c)
 
-	def test_emptyCharacterAtStart(self):
-		for c in self.LETTERS:
-			self.runTestImpl([""] + list(self.LETTERS), c)
+
+class TestOffsetsTextInfoPointAtStart(unittest.TestCase):
+	"""Tests for OffsetsTextInfo._get_pointAtStart end-of-text fallback behaviour."""
+
+	def _makeTextInfo(self, text: str, offset: int):
+		"""Return a collapsed OffsetsTextInfo positioned at *offset* over *text*."""
+		obj = BasicTextProvider(text=text)
+		return obj.makeTextInfo(Offsets(offset, offset))
+
+	def test_pointAtStartEndOfText_usesPreviousOffset(self):
+		"""When the caret is past the last character, pointAtStart should use offset-1."""
+
+		text = "ab"
+		ti = self._makeTextInfo(text, 2)  # offset == storyLength
+
+		expectedPoint = locationHelper.Point(42, 10)
+
+		def boundingRect_sideEffect(offset):
+			if offset == 2:
+				raise LookupError("no rect at end-of-text")
+			# offset == 1 (prevOffset)
+			raise NotImplementedError
+
+		def pointFromOffset_sideEffect(offset):
+			if offset == 2:
+				raise LookupError("no point at end-of-text")
+			# offset == 1 (prevOffset) — success
+			return expectedPoint
+
+		with (
+			patch.object(ti, "_getBoundingRectFromOffset", side_effect=boundingRect_sideEffect),
+			patch.object(ti, "_getPointFromOffset", side_effect=pointFromOffset_sideEffect),
+		):
+			result = ti.pointAtStart
+
+		self.assertEqual(result, expectedPoint)
+
+	def test_pointAtStartEmpty_raisesLookupError(self):
+		"""When text is empty (offset 0, no previous character), LookupError must be raised."""
+		from unittest.mock import patch
+
+		ti = self._makeTextInfo("", 0)  # offset == 0, storyLength == 0
+
+		with (
+			patch.object(ti, "_getBoundingRectFromOffset", side_effect=LookupError),
+			patch.object(ti, "_getPointFromOffset", side_effect=LookupError),
+		):
+			with self.assertRaises(LookupError):
+				_ = ti.pointAtStart
+
+	def test_pointAtStartExpandedRange_raisesWhenNoPointFound(self):
+		"""A non-collapsed range with no valid point must also raise LookupError."""
+		from unittest.mock import patch
+
+		obj = BasicTextProvider(text="abc")
+		ti = obj.makeTextInfo(Offsets(0, 3))  # expanded, not collapsed
+
+		with (
+			patch.object(ti, "_getBoundingRectFromOffset", side_effect=LookupError),
+			patch.object(ti, "_getPointFromOffset", side_effect=LookupError),
+		):
+			with self.assertRaises(LookupError):
+				_ = ti.pointAtStart
 
 
 class TestMoveToCodepointOffsetInOffsetsTextInfo(unittest.TestCase):

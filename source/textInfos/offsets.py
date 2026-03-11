@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter, Antoine Haffreingue
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -556,7 +556,13 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			try:
 				return self._getBoundingRectFromOffset(prevOffset).topLeft
 			except (NotImplementedError, LookupError):
-				return self._getPointFromOffset(prevOffset)
+				try:
+					return self._getPointFromOffset(prevOffset)
+				except (NotImplementedError, LookupError):
+					pass
+		raise LookupError(
+			f"pointAtStart: could not determine screen coordinates for offset {self._startOffset}",
+		)
 
 	def _get_isCollapsed(self):
 		if self._startOffset == self._endOffset:
