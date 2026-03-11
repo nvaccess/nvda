@@ -75,7 +75,7 @@ The 32-bit synth driver host (`synthDriverHost32`) is **not** built by scons.
 It has its own build script and Python environment managed by [uv](https://github.com/astral-sh/uv).
 
 Prerequisites:
-- [uv](https://github.com/astral-sh/uv) must be installed and available on your `PATH`.
+* [uv](https://github.com/astral-sh/uv) must be installed and available on your `PATH`.
 
 To build the runtime, run the following from the root of the repository:
 
