@@ -421,8 +421,8 @@ If you have already closed this dialog or are wanting to install from a portable
 The installation dialog that appears will confirm whether you wish to install NVDA and will also tell you whether this installation will be updating a previous install.
 Pressing the Continue button will start installing NVDA.
 There are also a few options in this dialog which are explained below.
-Once the installation has completed, a message will appear telling you that it was successful.
-Pressing OK at this point will restart the newly installed copy of NVDA.
+Once the installation has completed, a dialog will appear with options for what to do next.
+See [Restart Windows After Installation](#RestartWindowsAfterInstall) for more information.
 
 #### Incompatible add-ons warning {#InstallWithIncompatibleAddons}
 
@@ -448,6 +448,18 @@ If created, this shortcut will also be assigned a shortcut key of `control+alt+n
 This option allows you to choose whether or not NVDA should copy the user configuration from the currently running NVDA into the configuration for the currently logged on user, for the installed copy of NVDA.
 This will not copy the configuration for any other users of this system nor to the system configuration for use during Windows sign-in and [other secure screens](#SecureScreens).
 This option is only available when installing from a portable copy, not when installing directly from the downloaded Launcher package.
+
+#### Restart Windows After Installation {#RestartWindowsAfterInstall}
+
+After NVDA has been successfully installed or updated, a dialog will appear recommending that you restart Windows.
+Restarting ensures that NVDA is fully registered with the system and works correctly in all applications.
+
+The dialog provides the following options:
+
+* Restart Windows: Immediately restart Windows.
+* Start NVDA: Start the newly installed copy of NVDA without restarting.
+  * Note: this option is not available when the installer is run with elevated (administrator) privileges.
+* Exit NVDA: Close without starting NVDA or restarting Windows.
 
 ### Creating a Portable Copy {#CreatingAPortableCopy}
 
