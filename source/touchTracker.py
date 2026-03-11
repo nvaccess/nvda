@@ -355,6 +355,7 @@ class TrackerManager(object):
 		elif (
 			self.numUnknownTrackers == 0
 			and newTracker.pluralTimeout is not None
+			and oldTracker.pluralTimeout is not None
 			and newTracker.startTime >= oldTracker.endTime
 			and newTracker.startTime < oldTracker.pluralTimeout
 			and newTracker.action == oldTracker.action
