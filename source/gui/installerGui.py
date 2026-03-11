@@ -67,23 +67,22 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 	Presents the user with options to restart Windows, start the installed copy,
 	or exit NVDA.
 	"""
-	message = (
-		# Translators: The message displayed when NVDA has been successfully updated,
-		# shown in the post-install dialog.
-		_(
+	if isUpdate:
+		message = _(
+			# Translators: The message displayed when NVDA has been successfully updated,
+			# shown in the post-install dialog.
 			"Successfully updated your installation of NVDA."
 			" It is recommended to restart Windows after updating."
 			" NVDA may malfunction without a restart.",
 		)
-		if isUpdate
-		# Translators: The message displayed when NVDA has been successfully installed,
-		# shown in the post-install dialog.
-		else _(
+	else:
+		message = _(
+			# Translators: The message displayed when NVDA has been successfully installed,
+			# shown in the post-install dialog.
 			"Successfully installed NVDA."
 			" It is recommended to restart Windows after installing."
 			" NVDA may malfunction without a restart.",
 		)
-	)
 	dialog = MessageDialog(
 		parent=gui.mainFrame,
 		message=message,
