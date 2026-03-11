@@ -15,7 +15,7 @@ Use these instructions when reviewing pull requests in this repository.
 
 When reviewing Python changes, verify alignment with `projectDocs/dev/codingStandards.md`:
 
-* Follow PEP 8 unless NVDA guidance differs.
+* Follow PEP 8 unless guidance from the `codingStandards.md` file differs.
 * **Indentation must use tabs**, not spaces.
 * New/changed code must include **PEP 484 type hints** (prefer `X | Y` and `T | None`).
 * Naming conventions:
