@@ -3243,7 +3243,10 @@ If speech rules for the main language cannot be found, English ("en") is used.
 
 ###### Speech Style {MathSpeechStyle}
 
-Different styles can be used to speak mathematical content:
+Different styles can be used to speak mathematical content.
+Each [math speech language](#MathSpeechLanguage) has different speech styles available.
+
+For English and most languages, the following styles are available:
 
 * ClearSpeak was developed by the Educational Testing Service for use on university-admission and other high-stakes tests in the United States.
 Refer to the [ClearSpeak specification details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
@@ -3251,7 +3254,6 @@ Refer to the [ClearSpeak specification details in this Word document](https://ns
 These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
 * LiteralSpeak tells MathCAT to speak math expressions almost exactly as written, without interpreting the symbols or meaning.
 It prioritizes literal reading (character-by-character or symbol-by-symbol), rather than mathematical meaning.
-* Other speech styles may exist designed for individual languages.
 
 Examples of each type of speech:
 
@@ -3262,8 +3264,8 @@ Examples of each type of speech:
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | ClearSpeak, SimpleSpeak, LiteralSpeak, and more options depending on your language |
-| Default | ClearSpeak |
+| Options | ClearSpeak, SimpleSpeak, LiteralSpeak, and other options depending on your language |
+| Default | ClearSpeak where available |
 
 ###### Speech verbosity {#MathSpeechVerbosity}
 

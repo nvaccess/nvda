@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2025 NV Access Limited, Neil Soiffer, Ryan McCleary
+# Copyright (C) 2022-2026 NV Access Limited, Neil Soiffer, Ryan McCleary
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -10,6 +10,8 @@ import config
 import languageHandler
 from logHandler import log
 from NVDAState import ReadPaths
+from mathPres.MathCAT import localization
+from speech.speech import getCurrentLanguage
 from utils.displayString import DisplayStringStrEnum
 
 import libmathcat_py as libmathcat
@@ -163,23 +165,6 @@ class BrailleNavHighlightOption(DisplayStringStrEnum):
 		}
 
 
-class SpeechStyleOption(DisplayStringStrEnum):
-	CLEAR_SPEAK = "ClearSpeak"
-	SIMPLE_SPEAK = "SimpleSpeak"
-	LITERAL_SPEAK = "LiteralSpeak"
-
-	@property
-	def _displayStringLabels(self) -> dict["SpeechStyleOption", str]:
-		return {
-			# Translators: ClearSpeak is a speech style developed by ETS for use on high-stakes tests such as the SAT
-			self.CLEAR_SPEAK: pgettext("math", "ClearSpeak"),
-			# Translators: SimpleSpeak is a speech style that tries to minimize speech by speaking simple expressions without bracketing words
-			self.SIMPLE_SPEAK: pgettext("math", "SimpleSpeak"),
-			# Translators: LiteralSpeak is a speech style with no language-specific rules that reads math character by character
-			self.LITERAL_SPEAK: pgettext("math", "LiteralSpeak"),
-		}
-
-
 # two constants to scale "PauseFactor"
 # these work out so that a slider that goes [0,14] has value ~100 at 7 and ~1000 at 14
 class PauseFactor(Enum):
@@ -309,49 +294,6 @@ def applyUserPreferences(prefs: PreferencesDict | None = None) -> None:
 	setEffectiveBrailleCode()
 
 
-def getSpeechStyleChoicesWithTranslations(languageCode: str) -> list[str]:
-	"""Get speech style choices with translations for known styles.
-
-	This function gets the available speech styles from MathCAT's localization system
-	and provides translations for the core speech styles (ClearSpeak, SimpleSpeak, LiteralSpeak)
-	while keeping language-specific styles untranslated.
-
-	:param languageCode: The language code to get speech styles for
-	:return: List of speech style display strings (some translated, some original)
-	"""
-	from . import localization
-
-	rawStyles = localization.getSpeechStyles(languageCode)
-	displayChoices = []
-
-	knownStyleValues = [style.value for style in SpeechStyleOption]
-
-	for style in rawStyles:
-		if style in knownStyleValues:
-			# Get translated version for known styles
-			enumOption = SpeechStyleOption(style)
-			displayChoices.append(enumOption.displayString)
-		else:
-			# Unknown style, use original name as fallback
-			displayChoices.append(style)
-
-	return displayChoices
-
-
-def getSpeechStyleConfigValue(displayString: str) -> str:
-	"""
-	Convert a display string back to its config value.
-
-	:param displayString: The display string from the UI selection
-	:return: The config value to save for this speech style
-	"""
-	# Try to find matching enum first
-	for style in SpeechStyleOption:
-		if style.displayString == displayString:
-			return style.value
-	return displayString
-
-
 class MathCATUserPreferences:
 	_prefs: PreferencesDict
 
@@ -368,7 +310,9 @@ class MathCATUserPreferences:
 				"MathRate": defaultValue(("speech", "mathRate")),
 				"PauseFactor": defaultValue(("speech", "pauseFactor")),
 				"SpeechSound": defaultValue(("speech", "speechSound")),
-				"SpeechStyle": defaultValue(("speech", "speechStyle")),
+				"SpeechStyle": MathCATUserPreferences.getConfigForSpeechStyle(
+					defaultValue(("speech", "language")),
+				),
 				"SubjectArea": defaultValue(("speech", "subjectArea")),
 				"Chemistry": defaultValue(("speech", "chemistry")),
 			},
@@ -394,19 +338,48 @@ class MathCATUserPreferences:
 		self._prefs = prefs
 
 	@staticmethod
+	def getConfigForSpeechStyle(mathLang: str) -> str:
+		mathConf = config.conf["math"]
+		if mathLang == "Auto":
+			mathLang = getCurrentLanguage()
+		if mathLang not in mathConf["speech"]:
+			mathConf["speech"][mathLang] = {"speechStyle": ""}
+		if not mathConf["speech"][mathLang]["speechStyle"]:
+			speechStyleOptions = localization.getSpeechStyles(mathLang)
+			if "ClearSpeak" in speechStyleOptions:
+				mathConf["speech"][mathLang]["speechStyle"] = "ClearSpeak"
+			else:
+				mathConf["speech"][mathLang]["speechStyle"] = speechStyleOptions[0]
+		return mathConf["speech"][mathLang]["speechStyle"]
+
+	@staticmethod
+	def tryToGetNVDAConfigValue(key1: str, key2: str) -> str:
+		mathConf = config.conf["math"]
+		convertedKey1 = toNVDAConfigKey(key1)
+		convertedKey2 = toNVDAConfigKey(key2)
+		try:
+			return mathConf[convertedKey1][convertedKey2]
+		except Exception:
+			log.warning(
+				f"Could not access math.{convertedKey1}.{convertedKey2} configuration; using MathCAT default.",
+			)
+			# Fall back to the MathCAT default for this preference key.
+			return MathCATUserPreferences.defaults()[key1][key2]
+
+	@staticmethod
 	def fromNVDAConfig() -> "MathCATUserPreferences":
 		prefs: PreferencesDict = MathCATUserPreferences.defaults()
 		mathConf = config.conf["math"]
 		for key1 in prefs:
 			for key2 in prefs[key1]:
-				convertedKey1 = toNVDAConfigKey(key1)
-				convertedKey2 = toNVDAConfigKey(key2)
-				try:
-					prefs[key1][key2] = mathConf[convertedKey1][convertedKey2]
-				except Exception:
-					log.warning(
-						f"Could not access math.{convertedKey1}.{convertedKey2} configuration; using MathCAT default.",
-					)
+				match (key1, key2):
+					case ("Speech", "SpeechStyle"):
+						nvdaConfigValue = MathCATUserPreferences.getConfigForSpeechStyle(
+							mathConf["speech"]["language"],
+						)
+					case _:
+						nvdaConfigValue = MathCATUserPreferences.tryToGetNVDAConfigValue(key1, key2)
+				prefs[key1][key2] = nvdaConfigValue
 		return MathCATUserPreferences(prefs)
 
 	def apply(self) -> None:
