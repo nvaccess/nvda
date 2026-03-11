@@ -70,6 +70,18 @@ class TestFocusManager(unittest.TestCase):
 				# Should return last valid position (200, 300)
 				self.assertEqual(coords, Coordinates(200, 300))
 
+	def testGetReviewPositionSurvivesCOMError(self):
+		"""_getReviewPosition catches COMError from pointAtStart."""
+		import _ctypes
+
+		comError = _ctypes.COMError(-2147418113, "Défaillance irrémédiable", None)
+		mockReviewPos = Mock()
+		type(mockReviewPos).pointAtStart = property(lambda self: (_ for _ in ()).throw(comError))
+
+		with patch("_magnifier.utils.focusManager.api.getReviewPosition", return_value=mockReviewPos):
+			result = self.focusManager._getReviewPosition()
+			self.assertIsNone(result)
+
 	def testGetSystemFocusPosition(self):
 		"""Getting system focus position with different API responses."""
 		# Case 1: Caret position successful (browse mode)
@@ -97,6 +109,18 @@ class TestFocusManager(unittest.TestCase):
 				coords = self.focusManager._getSystemFocusPosition()
 				# Should return last valid position (250, 340)
 				self.assertEqual(coords, Coordinates(250, 340))
+
+	def testGetSystemFocusPositionSurvivesOSError(self):
+		"""OSError from magnification API calls must be caught."""
+		with patch(
+			"_magnifier.utils.focusManager.api.getCaretPosition",
+			side_effect=OSError("WinError"),
+		):
+			with patch("_magnifier.utils.focusManager.api.getFocusObject") as mock_focus:
+				mock_focus.return_value.location = (10, 20, 30, 40)
+
+				coords = self.focusManager._getSystemFocusPosition()
+				self.assertEqual(coords, Coordinates(25, 40))
 
 	def testGetMousePosition(self):
 		"""Getting mouse position."""
