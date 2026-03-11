@@ -9,7 +9,7 @@ Handles module initialization, configuration and settings interaction.
 """
 
 import config
-from .utils.types import Filter, FullScreenMode
+from .utils.types import Filter, FullScreenMode, MagnifierType, FixedWindowPosition
 
 
 class ZoomLevel:
@@ -78,10 +78,25 @@ def setDefaultZoomLevel(zoomLevel: float) -> None:
 
 	:param zoomLevel: The zoom level to set.
 	"""
-
-	if "magnifier" not in config.conf:
-		config.conf["magnifier"] = {}
 	config.conf["magnifier"]["defaultZoomLevel"] = zoomLevel
+
+
+def getDefaultMagnifierType() -> MagnifierType:
+	"""
+	Get default magnifier type from config.
+
+	:return: The default magnifier type.
+	"""
+	return MagnifierType(config.conf["magnifier"]["defaultMagnifierType"])
+
+
+def setDefaultMagnifierType(magnifierType: MagnifierType) -> None:
+	"""
+	Set default magnifier type from settings.
+
+	:param magnifierType: The magnifier type to set.
+	"""
+	config.conf["magnifier"]["defaultMagnifierType"] = magnifierType.value
 
 
 def getDefaultPanStep() -> int:
@@ -123,6 +138,24 @@ def setDefaultFilter(filter: Filter) -> None:
 	config.conf["magnifier"]["defaultFilter"] = filter.value
 
 
+def isTrueCentered() -> bool:
+	"""
+	Check if true centered mode is enabled in config.
+
+	:return: True if true centered mode is enabled, False otherwise.
+	"""
+	return config.conf["magnifier"]["isTrueCentered"]
+
+
+def shouldKeepMouseCentered() -> bool:
+	"""
+	Check if mouse pointer should be kept centered in magnifier view.
+
+	:return: True if mouse should be kept centered, False otherwise.
+	"""
+	return config.conf["magnifier"]["keepMouseCentered"]
+
+
 def getDefaultFullscreenMode() -> FullScreenMode:
 	"""
 	Get default full-screen mode from config.
@@ -141,19 +174,55 @@ def setDefaultFullscreenMode(mode: FullScreenMode) -> None:
 	config.conf["magnifier"]["defaultFullscreenMode"] = mode.value
 
 
-def isTrueCentered() -> bool:
+def getDefaultFixedWindowWidth() -> int:
 	"""
-	Check if true centered mode is enabled in config.
+	Get default fixed magnifier window width from config.
 
-	:return: True if true centered mode is enabled, False otherwise.
+	:return: The default fixed magnifier window width.
 	"""
-	return config.conf["magnifier"]["isTrueCentered"]
+	return config.conf["magnifier"]["defaultFixedWindowWidth"]
 
 
-def shouldKeepMouseCentered() -> bool:
+def setDefaultFixedWindowWidth(width: int) -> None:
 	"""
-	Check if mouse pointer should be kept centered in magnifier view.
+	Set default fixed magnifier window width from settings.
 
-	:return: True if mouse should be kept centered, False otherwise.
+	:param width: The fixed magnifier window width to set.
 	"""
-	return config.conf["magnifier"]["keepMouseCentered"]
+	config.conf["magnifier"]["defaultFixedWindowWidth"] = width
+
+
+def getDefaultFixedWindowHeight() -> int:
+	"""
+	Get default fixed magnifier window height from config.
+
+	:return: The default fixed magnifier window height.
+	"""
+	return config.conf["magnifier"]["defaultFixedWindowHeight"]
+
+
+def setDefaultFixedWindowHeight(height: int) -> None:
+	"""
+	Set default fixed magnifier window height from settings.
+
+	:param height: The fixed magnifier window height to set.
+	"""
+	config.conf["magnifier"]["defaultFixedWindowHeight"] = height
+
+
+def getDefaultFixedWindowPosition() -> FixedWindowPosition:
+	"""
+	Get default magnifier window position from config.
+
+	:return: The default magnifier window position.
+	"""
+	return FixedWindowPosition(config.conf["magnifier"]["defaultFixedWindowPosition"])
+
+
+def setDefaultFixedWindowPosition(position: FixedWindowPosition) -> None:
+	"""
+	Set default magnifier window position from settings.
+
+	:param position: The magnifier window position to set.
+	"""
+	config.conf["magnifier"]["defaultFixedWindowPosition"] = position.value
