@@ -97,10 +97,20 @@ def _createAddRegionalLanguagesFunction(languages: list[LanguageInfo]) -> Callab
 			# e.g. "en-uk" for English (United Kingdom).
 			optionString = pgettext("math", "{lang} ({code})")
 			if langDesc is not None:
-				languages.append(LanguageInfo(code=regionalCode, description=optionString.format(lang=langDesc, code=regionalCode)))
+				languages.append(
+					LanguageInfo(
+						code=regionalCode, description=optionString.format(lang=langDesc, code=regionalCode)
+					)
+				)
 			else:
-				log.error(f"MathCAT: couldn't find description for language code {regionalCode}, using {language} as description")
-				languages.append(LanguageInfo(code=regionalCode, description=optionString.format(lang=language, code=regionalCode)))
+				log.error(
+					f"MathCAT: couldn't find description for language code {regionalCode}, using {language} as description"
+				)
+				languages.append(
+					LanguageInfo(
+						code=regionalCode, description=optionString.format(lang=language, code=regionalCode)
+					)
+				)
 			return [os.path.basename(file) for file in glob.glob(os.path.join(subDir, "*_Rules.yaml"))]
 		return []
 
