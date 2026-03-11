@@ -62,7 +62,7 @@ Scrutinize code for privilege escalation and data leaks.
   Because NVDA has UIAccess, these must use strictly sanitized arguments and absolute paths to prevent path/binary hijacking.
 * Sensitive Data Logging:
   * Ensure new logging statements that are INFO level or higher do not capture sensitive user data, particularly from `protected` or password text fields, API keys, or secure desktop states.
-  DEBUG level logging may include sensitive information such as a speech passed to a synthesizer.
+  DEBUG level logging may include sensitive information such as the speech passed to a synthesizer.
 * Untrusted input & web parsing:
   * Validate that parsing of external structures (HTML, ARIA attributes, UIA/IA2 properties) handles malformed, excessively long or deeply nested inputs safely without causing infinite loops or memory crashes.
   * Check for XSS e.g. from translators via translatable strings
