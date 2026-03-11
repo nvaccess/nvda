@@ -11,6 +11,7 @@ import languageHandler
 from logHandler import log
 from NVDAState import ReadPaths
 from mathPres.MathCAT import localization
+from speech.speech import getCurrentLanguage
 from utils.displayString import DisplayStringStrEnum
 
 import libmathcat_py as libmathcat
@@ -339,6 +340,8 @@ class MathCATUserPreferences:
 	@staticmethod
 	def getConfigForSpeechStyle(mathLang: str) -> str:
 		mathConf = config.conf["math"]
+		if mathLang == "Auto":
+			mathLang = getCurrentLanguage()
 		if mathLang not in mathConf["speech"]:
 			mathConf["speech"][mathLang] = {"speechStyle": ""}
 		if not mathConf["speech"][mathLang]["speechStyle"]:

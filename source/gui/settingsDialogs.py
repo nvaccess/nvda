@@ -3001,6 +3001,7 @@ class MathSettingsPanel(SettingsPanel):
 			BrailleNavHighlightOption,
 			PauseFactor,
 		)
+		from speech.speech import getCurrentLanguage
 
 		mathConf = config.conf["math"]
 		mathConf["speech"]["impairment"] = self._getEnumValueFromSelection(
@@ -3014,6 +3015,10 @@ class MathSettingsPanel(SettingsPanel):
 			DecimalSeparatorOption,
 			self.decimalSeparatorList.GetSelection(),
 		)
+		if mathLang == "Auto":
+			# If language is set to Auto, we want to save the speech style as the default for the current language,
+			# so we need to get the actual language code that Auto resolves to.
+			mathLang = getCurrentLanguage()
 		mathConf["speech"][mathLang]["speechStyle"] = self.speechStyleList.GetStringSelection()
 		mathConf["speech"]["verbosity"] = self._getEnumValueFromSelection(
 			VerbosityOption,
