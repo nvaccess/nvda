@@ -93,7 +93,7 @@ class TouchMode(DisplayStringStrEnum):
 		}
 
 
-AVAILABLE_TOUCH_MODES: list[TouchMode] = [TouchMode.TEXT, TouchMode.OBJECT]
+availableTouchModes: list[TouchMode] = [TouchMode.TEXT, TouchMode.OBJECT]
 
 HWND_MESSAGE = -3
 
@@ -139,15 +139,15 @@ def _browseModeStateChange(
 
 	if browseMode:
 		# Entering browse mode
-		if TouchMode.BROWSE not in AVAILABLE_TOUCH_MODES:
-			AVAILABLE_TOUCH_MODES.append(TouchMode.BROWSE)
+		if TouchMode.BROWSE not in availableTouchModes:
+			availableTouchModes.append(TouchMode.BROWSE)
 
 		handler._curTouchMode = TouchMode.BROWSE
 
 	else:
 		# Leaving browse mode
-		if TouchMode.BROWSE in AVAILABLE_TOUCH_MODES:
-			AVAILABLE_TOUCH_MODES.remove(TouchMode.BROWSE)
+		if TouchMode.BROWSE in availableTouchModes:
+			availableTouchModes.remove(TouchMode.BROWSE)
 
 		if handler._curTouchMode == TouchMode.BROWSE:
 			handler._curTouchMode = TouchMode.OBJECT
@@ -385,7 +385,7 @@ class TouchHandler(threading.Thread):
 		return user32.DefWindowProc(hwnd, msg, wParam, lParam)
 
 	def setMode(self, mode):
-		if mode not in AVAILABLE_TOUCH_MODES:
+		if mode not in availableTouchModes:
 			raise ValueError("Unknown mode %s" % mode)
 		self._curTouchMode = mode
 
