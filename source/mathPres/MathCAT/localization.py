@@ -152,9 +152,16 @@ def getLanguages() -> list[LanguageInfo]:
 			# only add this language if there is a xxx_Rules.yaml file
 			if len(rulesUtils.getRulesFiles(pathToLanguageDir, addRegionalLanguages)) > 0:
 				# add to the listbox the text for this language
-				languages.append(
-					LanguageInfo(code=language, description=getLanguageDescription(language)),
-				)
+				languageDesc = getLanguageDescription(language)
+				if languageDesc:
+					languages.append(
+						LanguageInfo(code=language, description=languageDesc),
+					)
+				else:
+					log.error(f"MathCAT: couldn't find description for language code {language}, using code as description")
+					languages.append(
+						LanguageInfo(code=language, description=language),
+					)
 	return languages
 
 
