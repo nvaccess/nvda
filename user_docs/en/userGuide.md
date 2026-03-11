@@ -421,8 +421,8 @@ If you have already closed this dialog or are wanting to install from a portable
 The installation dialog that appears will confirm whether you wish to install NVDA and will also tell you whether this installation will be updating a previous install.
 Pressing the Continue button will start installing NVDA.
 There are also a few options in this dialog which are explained below.
-Once the installation has completed, a message will appear telling you that it was successful.
-Pressing OK at this point will restart the newly installed copy of NVDA.
+Once the installation has completed, a dialog will appear with options for what to do next.
+See [Restart Windows After Installation](#RestartWindowsAfterInstall) for more information.
 
 #### Incompatible add-ons warning {#InstallWithIncompatibleAddons}
 
@@ -448,6 +448,18 @@ If created, this shortcut will also be assigned a shortcut key of `control+alt+n
 This option allows you to choose whether or not NVDA should copy the user configuration from the currently running NVDA into the configuration for the currently logged on user, for the installed copy of NVDA.
 This will not copy the configuration for any other users of this system nor to the system configuration for use during Windows sign-in and [other secure screens](#SecureScreens).
 This option is only available when installing from a portable copy, not when installing directly from the downloaded Launcher package.
+
+#### Restart Windows After Installation {#RestartWindowsAfterInstall}
+
+After NVDA has been successfully installed or updated, a dialog will appear recommending that you restart Windows.
+Restarting ensures that NVDA is fully registered with the system and works correctly in all applications.
+
+The dialog provides the following options:
+
+* Restart Windows: Immediately restart Windows.
+* Start NVDA: Start the newly installed copy of NVDA without restarting.
+  * Note: this option is not available when the installer is run with elevated (administrator) privileges.
+* Exit NVDA: Close without starting NVDA or restarting Windows.
 
 ### Creating a Portable Copy {#CreatingAPortableCopy}
 
@@ -1577,12 +1589,17 @@ NVDA will announce the name of the currently selected filter.
 
 The default color filter when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
-### Magnifier Modes {#MagnifierModes}
+### Magnifier Modes {#MagnifierDefaultMagnifierType}
 
 The magnifier can be used in multiple modes, each designed to suit different user needs and preferences:
 
 * Full-screen mode: The entire screen is magnified, and the magnified view follows the system focus or mouse pointer. This mode supports multiple focus modes.
 * Fixed window mode: A separate window displays the magnified content, and the rest of the screen remains at normal size. This allows you to see both the magnified content and the surrounding context simultaneously.
+
+### Fullscreen Magnifier {#MagnifierFullscreen}
+
+The fullscreen magnifier is the default mode of the NVDA Magnifier and provides a seamless magnification experience by enlarging the entire screen.
+In this mode, the magnified view follows the system focus or mouse pointer, allowing you to easily navigate and interact with content while maintaining a clear view of the magnified area.
 
 ### Fullscreen Focus Modes {#MagnifierFullscreenFocusModes}
 
@@ -1620,6 +1637,11 @@ Once activated, the magnifier will:
 
 Spotlight mode automatically deactivates after zooming back in.
 If you move the mouse before the zoom-back occurs, the timer resets, giving you more time to view the full screen.
+
+### Fixed Magnifier {#MagnifierFixed}
+
+The fixed magnifier mode provides a separate window that displays the magnified content, while the rest of the screen remains at normal size. This allows you to see both the magnified content and the surrounding context simultaneously. The fixed magnifier window can be moved to corners of your screen and resized independently of the main screen, giving you flexibility in how you view magnified content.
+The modifications can be configured in the [Magnifier settings](#MagnifierSettings).
 
 ## Content Recognition {#ContentRecognition}
 
@@ -2848,24 +2870,6 @@ This option is disabled by default.
 |Options |Disabled, Enabled|
 |Default |Disabled|
 
-##### Default fullscreen magnifier focus mode {#MagnifierDefaultFullscreenFocusMode}
-
-This combo box allows you to select the default focus tracking mode when the magnifier mode is fullscreen.
-To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-The available options are:
-
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Center, Border, Relative|
-|Default |Center|
-|Toggle command |None |
-
-| Option | Description |
-|---|---|
-| Center | The magnified area is always centered on the current focus position. |
-| Border | The magnified area only moves when the focus approaches the edge of the visible area. |
-| Relative | The magnified area maintains the relative position of the focus within the screen. |
-
 ##### Panning step size {#MagnifierPanningStepSize}
 
 This slider allows you to set the panning step size as a percentage of the visible magnified window.
@@ -2884,9 +2888,48 @@ Available pan actions include:
 |Options |1 to 100|
 |Default |10|
 
-##### Default fixed magnifier size {#MagnifierDefaultFixedSizeMode}
+##### Keep mouse centered {#MagnifierKeepMouseCentered}
 
-These two entries allow to choose the default size of the magnifier window by width and height.
+This checkbox controls whether the mouse pointer should be automatically moved to the center of the magnified area when certain focus events occur.
+When enabled, NVDA will reposition the mouse pointer to keep it centered in the magnified view, which can be helpful for users who navigate primarily using the magnifier's focus tracking rather than the mouse.
+
+This option is disabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Disabled|
+
+##### Default fullscreen magnifier focus mode {#MagnifierDefaultFullscreenFocusMode}
+
+This combo box allows you to select the default focus tracking mode when the magnifier mode is fullscreen.
+To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+The available options are:
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Center, Border, Relative|
+|Default |Center|
+|Toggle command |None |
+
+| Option | Description |
+|---|---|
+| Center | The magnified area is always centered on the current focus position. |
+| Border | The magnified area only moves when the focus approaches the edge of the visible area. |
+| Relative | The magnified area maintains the relative position of the focus within the screen. |
+
+##### Fixed magnifier width {#MagnifierDefaultFixedWindowWidth}
+
+This entry allows you to choose the default width of the magnifier window when the magnifier mode is fixed.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |50 to 1000 pixels|
+|Default |200 pixels|
+
+##### Fixed magnifier height {#MagnifierDefaultFixedWindowHeight}
+
+This entry allows you to choose the default height of the magnifier window when the magnifier mode is fixed.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2902,18 +2945,6 @@ The available options are:
 |---|---|
 |Options |Top Left, Top Right, Bottom Left, Bottom Right|
 |Default |Top Left|
-
-##### Keep mouse centered {#MagnifierKeepMouseCentered}
-
-This checkbox controls whether the mouse pointer should be automatically moved to the center of the magnified area when certain focus events occur.
-When enabled, NVDA will reposition the mouse pointer to keep it centered in the magnified view, which can be helpful for users who navigate primarily using the magnifier's focus tracking rather than the mouse.
-
-This option is disabled by default.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Disabled, Enabled|
-|Default |Disabled|
 
 #### Keyboard {#KeyboardSettings}
 
