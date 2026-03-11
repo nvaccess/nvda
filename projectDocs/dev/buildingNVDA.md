@@ -69,6 +69,25 @@ scons launcher
 
 The archive will be placed in the output directory.
 
+### Building the synthDriverHost32 runtime
+
+The 32-bit synth driver host (`synthDriverHost32`) is **not** built by scons.
+It has its own build script and Python environment managed by [uv](https://github.com/astral-sh/uv).
+
+Prerequisites:
+- [uv](https://github.com/astral-sh/uv) must be installed and available on your `PATH`.
+
+To build the runtime, run the following from the root of the repository:
+
+```cmd
+uv run --no-active --directory runtime-builders/synthDriverHost32 python setup-runtime.py --dest-dir source/lib/x86/synthDriverHost-runtime
+```
+
+The built runtime will be placed in `source/lib/x86/synthDriverHost-runtime/`.
+
+You only need to rebuild this when the `runtime-builders/synthDriverHost32` directory changes.
+For release builds, CI passes additional `--version` and `--publisher` arguments automatically.
+
 ### Building developer documentation
 
 Refer to [building developer documentation](./buildingDevDocumentation.md).
