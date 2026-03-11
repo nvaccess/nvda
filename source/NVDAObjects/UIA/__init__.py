@@ -1986,7 +1986,7 @@ class UIA(Window):
 				states.add(controlTypes.State.COLLAPSED)
 			elif s == UIAHandler.ExpandCollapseState_Expanded:
 				states.add(controlTypes.State.EXPANDED)
-		s = self._getUIACacheablePropertyValue_HandlesCOMErrors(
+		s = self._getUIACacheablePropertyValue_handlesCOMErrors(
 			UIAHandler.UIA_ToggleToggleStatePropertyId,
 			True,
 			onError = UIAHandler.handler.reservedNotSupportedValue
