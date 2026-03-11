@@ -119,7 +119,7 @@ class AddonFileDownloader:
 			except Exception:
 				log.exception(
 					f"Failed to initialise add-on store download directory {WritePaths.addonStoreDownloadDir!r}."
-					" The add-on store may not function correctly."
+					" The add-on store may not function correctly.",
 				)
 
 	def download(
