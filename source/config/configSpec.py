@@ -376,7 +376,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		impairment = option("LearningDisability", "Blindness", "LowVision", default="Blindness")
 		# any known language code and sub-code -- could be en-uk, etc
 		language = string(default="Auto")
-		# Set a different speechStyle depending on the language
 		verbosity = option("Terse", "Medium", "Verbose", default="Medium")
 		# Change from text speech rate (%)
 		mathRate = integer(default=100, min=10, max=100)
@@ -450,6 +449,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 			# Valid values: Bar, Conjugate, Mean, Auto
 			bar = string(default="Auto")
 
+		# Set a different speechStyle depending on the language
 		[[__many__]]
 			# Any known speech style for the language (falls back to ClearSpeak)
 			speechStyle = string(default="")
