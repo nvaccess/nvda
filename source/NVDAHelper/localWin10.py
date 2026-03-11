@@ -5,7 +5,8 @@
 
 """Functions exported by nvdaHelperLocalWin10.dll, and supporting definitions."""
 
-from ctypes import CFUNCTYPE, POINTER, c_uint, c_void_p, c_wchar_p, windll
+from ctypes import CFUNCTYPE, POINTER, c_bool, c_uint, c_void_p, c_wchar_p, windll
+from ctypes.wintypes import HWND
 from comtypes import BSTR
 
 import NVDAState
@@ -68,3 +69,76 @@ uwpOcr_recognize.argtypes = (
 	c_uint,  # height
 )
 uwpOcr_recognize.restype = None
+
+# --- Windows Graphics Capture functions ---
+
+WgcCapture_H = c_void_p
+"""Opaque handle to a WgcCapture instance."""
+
+wgcCapture_Callback = CFUNCTYPE(None, c_wchar_p)
+"""Function called when WGC recognition is complete."""
+
+wgcCapture_isSupported = dll.wgcCapture_isSupported
+"""
+Check whether Windows.Graphics.Capture is available (Win10 1903+).
+
+.. seealso::
+	``nvdaHelper/localWin10/wgcCapture.h``
+"""
+wgcCapture_isSupported.argtypes = ()
+wgcCapture_isSupported.restype = c_bool
+
+wgcCapture_initialize = dll.wgcCapture_initialize
+"""
+Initialise a WGC capture and OCR instance.
+
+.. seealso::
+	``nvdaHelper/localWin10/wgcCapture.h``
+"""
+wgcCapture_initialize.argtypes = (
+	c_wchar_p,  # language
+	wgcCapture_Callback,  # callback
+)
+wgcCapture_initialize.restype = WgcCapture_H
+
+wgcCapture_recognizeWindow = dll.wgcCapture_recognizeWindow
+"""
+Capture an entire window by HWND and run OCR asynchronously.
+
+.. seealso::
+	``nvdaHelper/localWin10/wgcCapture.h``
+"""
+wgcCapture_recognizeWindow.argtypes = (
+	WgcCapture_H,  # handle
+	HWND,  # hwnd
+)
+wgcCapture_recognizeWindow.restype = None
+
+wgcCapture_recognizeWindowRegion = dll.wgcCapture_recognizeWindowRegion
+"""
+Capture a sub-region of a window and run OCR asynchronously.
+
+.. seealso::
+	``nvdaHelper/localWin10/wgcCapture.h``
+"""
+wgcCapture_recognizeWindowRegion.argtypes = (
+	WgcCapture_H,  # handle
+	HWND,  # hwnd
+	c_uint,  # x
+	c_uint,  # y
+	c_uint,  # width
+	c_uint,  # height
+)
+wgcCapture_recognizeWindowRegion.restype = None
+
+wgcCapture_terminate = dll.wgcCapture_terminate
+"""
+Terminate and free a WGC capture and OCR instance.
+
+.. seealso::
+	``nvdaHelper/localWin10/wgcCapture.h``
+"""
+wgcCapture_terminate.argtypes = (
+	WgcCapture_H,  # handle
+)
+wgcCapture_terminate.restype = None

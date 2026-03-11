@@ -1503,8 +1503,12 @@ You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAnd
 <!-- KC:endInclude -->
 
 When Screen Curtain is enabled, features that rely on what is literally on screen will not function.
-For example, you cannot [use OCR](#Win10Ocr).
 Some screenshot utilities also may not work.
+
+On Windows 10 version 1903 and later, [Windows OCR](#Win10Ocr) will continue to work while Screen Curtain is active.
+NVDA automatically uses Windows Graphics Capture to read window content directly from the compositor, bypassing the screen blackout.
+The physical display remains black, preserving your privacy.
+On older versions of Windows, you will need to disable Screen Curtain before using OCR.
 
 Please note that while Windows Magnifier is running and inverted screen colors are being used, Screen Curtain cannot be enabled.
 
@@ -1641,7 +1645,10 @@ Additional languages can be installed by opening the Start menu, choosing Settin
 When you want to monitor constantly changing content, such as when watching a video with subtitles, you can optionally enable automatic refresh of the recognized content.
 This can also be done in the [Windows OCR category](#Win10OcrSettings) of the [NVDA Settings](#NVDASettings) dialog.
 
-Windows OCR may be partially or fully incompatible with [NVDA vision enhancements](#Vision) or other external visual aids. You will need to disable these aids before proceeding to a recognition.
+Windows OCR may be partially or fully incompatible with some [NVDA vision enhancements](#Vision) or other external visual aids.
+However, on Windows 10 version 1903 and later, OCR works while [Screen Curtain](#VisionScreenCurtain) is active.
+When Screen Curtain is enabled, NVDA automatically uses Windows Graphics Capture to read window content directly from the desktop compositor, preserving your visual privacy while still performing recognition.
+For other vision enhancements, you may need to disable them before proceeding to a recognition.
 
 <!-- KC:beginInclude -->
 To recognize the text in the current navigator object using Windows OCR, press NVDA+r.

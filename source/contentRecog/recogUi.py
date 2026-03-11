@@ -136,14 +136,20 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 			# shouldn't recognize again.
 			return
 		imgInfo = self.imageInfo
-		sb = screenBitmap.ScreenBitmap(imgInfo.recogWidth, imgInfo.recogHeight)
-		pixels = sb.captureImage(
-			imgInfo.screenLeft,
-			imgInfo.screenTop,
-			imgInfo.screenWidth,
-			imgInfo.screenHeight,
-		)
-		self.recognizer.recognize(pixels, self.imageInfo, onResult)
+		from contentRecog.wgcCapture import WgcOcr
+
+		if isinstance(self.recognizer, WgcOcr):
+			# WGC captures its own frames via HWND; skip GDI screen capture.
+			self.recognizer.recognize(None, self.imageInfo, onResult)
+		else:
+			sb = screenBitmap.ScreenBitmap(imgInfo.recogWidth, imgInfo.recogHeight)
+			pixels = sb.captureImage(
+				imgInfo.screenLeft,
+				imgInfo.screenTop,
+				imgInfo.screenWidth,
+				imgInfo.screenHeight,
+			)
+			self.recognizer.recognize(pixels, self.imageInfo, onResult)
 
 	def _onFirstResult(self, result: Union[RecognitionResult, Exception]):
 		global _activeRecog
@@ -233,6 +239,11 @@ api.fakeNVDAObjectClasses.add(RecogResultNVDAObject)
 def recognizeNavigatorObject(recognizer: ContentRecognizer):
 	"""User interface function to recognize content in the navigator object.
 	This should be called from a script or in response to a GUI action.
+
+	When Screen Curtain is active and Windows Graphics Capture is supported,
+	the recognizer is automatically switched to L{wgcCapture.WgcOcr} so OCR
+	works without disabling the curtain.
+
 	@param recognizer: The content recognizer to use.
 	"""
 	global _activeRecog
@@ -241,6 +252,33 @@ def recognizeNavigatorObject(recognizer: ContentRecognizer):
 		# but the user is already reading a content recognition result.
 		ui.message(_("Already in a content recognition result"))
 		return
+	# When Screen Curtain is active, switch to WGC-based OCR if available.
+	import screenCurtain
+
+	isScreenCurtainActive = screenCurtain.screenCurtain is not None and screenCurtain.screenCurtain.enabled
+	if isScreenCurtainActive:
+		from contentRecog import wgcCapture
+
+		if wgcCapture.isSupported():
+			language = None
+			from contentRecog.uwpOcr import UwpOcr
+
+			if isinstance(recognizer, UwpOcr):
+				language = recognizer.language
+			recognizer = wgcCapture.WgcOcr(language=language)
+			log.debug("recogUi: Screen Curtain active, using WGC capture")
+		else:
+			ui.message(
+				# Translators: Message when OCR cannot work with Screen Curtain
+				# on older Windows versions.
+				_(
+					"Screen curtain is active. "
+					"OCR requires Windows 10 version 1903 or later "
+					"to work with screen curtain enabled. "
+					"Please disable screen curtain or upgrade Windows.",
+				),
+			)
+			return
 	nav = api.getNavigatorObject()
 	if not recognizer.validateObject(nav):
 		return

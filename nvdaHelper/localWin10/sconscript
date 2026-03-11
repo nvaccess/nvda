@@ -28,9 +28,12 @@ localWin10Lib = env.SharedLibrary(
 		env["projectResFile"],
 		"oneCoreSpeech.cpp",
 		"uwpOcr.cpp",
+		"wgcCapture.cpp",
 	],
 	LIBS=[
 		"WindowsApp",
+		"d3d11",
+		"dxgi",
 		# Ignoring Flake8 F821: 'undefined name' due to nonstandard SCons import
 		localLib[2],
 	],  # noqa: F821

@@ -543,6 +543,12 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enabled = boolean(default=false)
 	warnOnLoad = boolean(default=true)
 	playToggleSounds = boolean(default=true)
+
+[wgcCapture]
+	# auto: use WGC only when Screen Curtain is active (recommended)
+	# always: always use WGC (requires Win10 1903+)
+	# never: disable WGC, use legacy GDI capture
+	captureMode = option("auto", "always", "never", default="auto")
 """
 
 #: The configuration specification

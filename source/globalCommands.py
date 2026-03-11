@@ -4726,13 +4726,6 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reported when Windows OCR is not available.
 			ui.message(_("Windows OCR not available"))
 			return
-		from screenCurtain import screenCurtain
-
-		isScreenCurtainRunning = screenCurtain is not None and screenCurtain.enabled
-		if isScreenCurtainRunning:
-			# Translators: Reported when screen curtain is enabled.
-			ui.message(_("Please disable screen curtain before using Windows OCR."))
-			return
 		from contentRecog import uwpOcr, recogUi
 
 		recog = uwpOcr.UwpOcr()
@@ -4960,11 +4953,19 @@ class GlobalCommands(ScriptableObject):
 					isinstance(focusObj, RefreshableRecogResultNVDAObject)
 					and focusObj.recognizer.allowAutoRefresh
 				):
-					ui.message(
-						screenCurtain._screenCurtain.UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE,
-						speechPriority=speech.priorities.Spri.NOW,
+					# WGC-based OCR works with Screen Curtain; only block for legacy GDI OCR.
+					from contentRecog import wgcCapture
+
+					isWgcRecognizer = wgcCapture.isSupported() and isinstance(
+						focusObj.recognizer,
+						wgcCapture.WgcOcr,
 					)
-					return
+					if not isWgcRecognizer:
+						ui.message(
+							screenCurtain._screenCurtain.UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE,
+							speechPriority=speech.priorities.Spri.NOW,
+						)
+						return
 				_enableScreenCurtain()
 
 	@script(
