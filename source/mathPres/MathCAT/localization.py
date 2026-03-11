@@ -99,17 +99,19 @@ def _createAddRegionalLanguagesFunction(languages: list[LanguageInfo]) -> Callab
 			if langDesc is not None:
 				languages.append(
 					LanguageInfo(
-						code=regionalCode, description=optionString.format(lang=langDesc, code=regionalCode)
-					)
+						code=regionalCode,
+						description=optionString.format(lang=langDesc, code=regionalCode),
+					),
 				)
 			else:
 				log.error(
-					f"MathCAT: couldn't find description for language code {regionalCode}, using {language} as description"
+					f"MathCAT: couldn't find description for language code {regionalCode}, using {language} as description",
 				)
 				languages.append(
 					LanguageInfo(
-						code=regionalCode, description=optionString.format(lang=language, code=regionalCode)
-					)
+						code=regionalCode,
+						description=optionString.format(lang=language, code=regionalCode),
+					),
 				)
 			return [os.path.basename(file) for file in glob.glob(os.path.join(subDir, "*_Rules.yaml"))]
 		return []
@@ -158,7 +160,9 @@ def getLanguages() -> list[LanguageInfo]:
 						LanguageInfo(code=language, description=languageDesc),
 					)
 				else:
-					log.error(f"MathCAT: couldn't find description for language code {language}, using code as description")
+					log.error(
+						f"MathCAT: couldn't find description for language code {language}, using code as description"
+					)
 					languages.append(
 						LanguageInfo(code=language, description=language),
 					)
