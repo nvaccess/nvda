@@ -111,10 +111,16 @@ class AddonFileDownloader:
 
 		if NVDAState.shouldWriteToDisk():
 			# empty temporary downloads
-			if os.path.exists(WritePaths.addonStoreDownloadDir):
-				shutil.rmtree(WritePaths.addonStoreDownloadDir)
-			# ensure downloads dir exist
-			pathlib.Path(WritePaths.addonStoreDownloadDir).mkdir(parents=True, exist_ok=True)
+			try:
+				if os.path.exists(WritePaths.addonStoreDownloadDir):
+					shutil.rmtree(WritePaths.addonStoreDownloadDir)
+				# ensure downloads dir exist
+				pathlib.Path(WritePaths.addonStoreDownloadDir).mkdir(parents=True, exist_ok=True)
+			except Exception:
+				log.exception(
+					f"Failed to initialise add-on store download directory {WritePaths.addonStoreDownloadDir!r}."
+					" The add-on store may not function correctly."
+				)
 
 	def download(
 		self,
