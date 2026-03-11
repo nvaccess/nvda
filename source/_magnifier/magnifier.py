@@ -31,6 +31,7 @@ from .config import (
 	getDefaultFilter,
 	ZoomLevel,
 	isTrueCentered,
+	shouldKeepMouseCentered,
 )
 from .utils.focusManager import FocusManager
 
@@ -52,6 +53,7 @@ class Magnifier:
 		self._lastFocusCoordinates = Coordinates(0, 0)
 		self._filterType: Filter = getDefaultFilter()
 		self._isManualPanning: bool = False
+		self._shouldKeepMouseCentered: bool = shouldKeepMouseCentered()
 		# Register for display changes
 		_displayTracking.displayChanged.register(self._onDisplayChanged)
 		self._screenCurtainIsActive: bool = False
@@ -138,7 +140,11 @@ class Magnifier:
 		"""
 		if not self._isActive:
 			return
-		self._currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
+		self._managePanning()
+		if not self._isManualPanning:
+			self._currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
+		if self._shouldKeepMouseCentered:
+			self._centerMouse()
 		self._doUpdate()
 		self._startTimer(self._updateMagnifier)
 
@@ -249,11 +255,26 @@ class Magnifier:
 
 		self._isManualPanning = True
 		self._currentCoordinates = Coordinates(x, y)
-		winUser.setCursorPos(x, y)
-		self._lastMousePosition = Coordinates(x, y)
 		self._doUpdate()
 
 		return (x, y) != (originalX, originalY)
+
+	def _managePanning(self) -> None:
+		"""
+		Ensure that self._ismanual panning is set to false after using something else
+		"""
+		if self._isManualPanning:
+			focusCoordinates = self._focusManager.getCurrentFocusCoordinates()
+			if focusCoordinates != self._lastFocusCoordinates:
+				self._isManualPanning = False
+				self._lastFocusCoordinates = focusCoordinates
+
+	def _centerMouse(self) -> None:
+		"""
+		Move the mouse to the center of the magnifier view
+		"""
+		centerX, centerY = self._currentCoordinates
+		winUser.setCursorPos(centerX, centerY)
 
 	def _startTimer(self, callback: Callable[[], None] = None) -> None:
 		"""
