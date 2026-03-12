@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="ar">
-  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/bb1d7d834ef6f36f826e14be54c9aa665fff824c/user_docs/en/changes.md">
+  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/9f0973615a25a8818d8f1a5c7ff376516bdcc297/user_docs/en/changes.md">
     <skeleton>
 # $(ID:4bf3ec03-2d43-474a-aef0-92b334e594ed)
 
@@ -184,7 +184,7 @@ $(ID:904de121-1c69-4d07-aa3b-b073f557bb42)
 $(ID:7323a887-abec-495e-a2f3-c2f9e85028b1)
 $(ID:ee56e16b-1d34-4d91-bb7c-b0efe45e65db)
 
-* $(ID:4edda3aa-10a8-4de3-b78b-39c718a4cb65)
+* $(ID:44ba8376-4dae-4263-9bfe-4cf4b334e69c)
 * $(ID:b5739562-1de4-4085-ac7c-05e20074d59a)
 $(ID:d5385032-ee74-4f5c-868d-7270428b153b)
 * $(ID:cb2daea9-8f95-4d53-99c5-ff46f9433c2c)
@@ -199,7 +199,7 @@ $(ID:aa8fc036-8205-409c-aeeb-d6edd79409e2)
 $(ID:2eca8023-090a-47e5-82ee-62447ab18f45)
 * $(ID:df2b6aab-bcc9-4fca-9e48-059e4950791d)
 * $(ID:e2cb9128-301f-4d5b-a4fc-319056960def)
-* $(ID:571dff68-a1f0-4d38-8129-41acd2f292ca)
+* $(ID:83cf8d08-aacf-4148-b6b4-6e56b5f50f82)
 * $(ID:384cc255-1841-45de-a59d-0b44f445dd60)
 $(ID:e6a3c7ef-d87b-4d7a-894f-60778c066797)
 * $(ID:2da51787-e3e7-47bc-9d1e-af3f3524e8ee)
@@ -251,7 +251,7 @@ $(ID:d872ca82-ec10-4605-90b1-cd7125692f90)
   * $(ID:8e3d8f5a-fa2e-4edf-98ea-4f0944667717)
   * $(ID:640b487a-4117-4c54-a1d3-57bbc6f78a89)
   * $(ID:47f24317-e089-4f60-962e-4ce40973db53)
-* $(ID:fbb23762-1a7e-4241-aa57-71d7cc59c26f)
+* $(ID:60e27811-ce0e-42f1-a2f9-51c8d3adde28)
 * $(ID:67e052fb-df7c-4580-99f7-0bcdbc05bd6e)
 * $(ID:c416459a-d468-4a38-8f32-ff28597cc943)
 * $(ID:b72798af-9c26-4871-bafa-01ef0ba52427)
@@ -6805,9 +6805,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 105</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA will no longer enable "Use NVDA during sign-in" by default when installing for the first time. (#19631)</source>
-        <target>NVDA will no longer enable "Use NVDA during sign-in" by default when installing for the first time. (#19631)</target>
+        <target>لن يفعّل NVDA افتراضيا خيار "بدء NVDA ضمن شاشة تسجيل الدخول" عند تثبيته لأول مرة. (#19631)</target>
       </segment>
     </unit>
     <unit id="f82141cb-a1e0-4fbd-89f1-bafcc96a3470">
@@ -6835,9 +6835,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 110</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Improved user notifications when connecting as the controlled computer fails. (#19103, @tareh7z)</source>
-        <target>Improved user notifications when connecting as the controlled computer fails. (#19103, @tareh7z)</target>
+        <target>تحسين التنبيهات التي تظهر للمستخدم عند فشل اتصال الجهاز كحاسوب مُتحكَّم فيه. (#19103, @tareh7z)</target>
       </segment>
     </unit>
     <unit id="ccd07160-b0d2-4b55-b53d-8dff177b82b3">
@@ -6855,9 +6855,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 112</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA installer:</source>
-        <target>NVDA installer:</target>
+        <target>مُثبِّت NVDA:</target>
       </segment>
     </unit>
     <unit id="129061cf-3f6e-42d1-a67d-f2325384aa12">
@@ -6865,9 +6865,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 113</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA should now correctly identify downgrades and show the downgrade warning dialog appropriately, including for portable copies. (#19631, #18291)</source>
-        <target>NVDA should now correctly identify downgrades and show the downgrade warning dialog appropriately, including for portable copies. (#19631, #18291)</target>
+        <target>سيتعرّف NVDA على الإصدارات الأقدم بشكل صحيح، وسيُظهرُ تنبيها عند محاولة العودة لنسخة أقدم حتى في الإصدارات المحمولة. (#19631, #18291)</target>
       </segment>
     </unit>
     <unit id="0475575d-11a6-4169-98be-40f20e265b45">
@@ -6875,9 +6875,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 114</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA will now retain the "Use NVDA during sign-in" setting and desktop shortcut more consistently. (#19631)</source>
-        <target>NVDA will now retain the "Use NVDA during sign-in" setting and desktop shortcut more consistently. (#19631)</target>
+        <target>&lt;target/&gt;</target>
       </segment>
     </unit>
     <unit id="4b44a032-6b74-431b-9881-f30627ffe230">
@@ -6965,9 +6965,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 123</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @tareh7z)</source>
-        <target>Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @tareh7z)</target>
+        <target>&lt;target/&gt;</target>
       </segment>
     </unit>
     <unit id="f9f223fb-984d-4773-9047-25bbe133496c">
@@ -6985,9 +6985,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 125</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>If the speech synthesizer is set to eSpeak NG and it fails to load when NVDA starts, NVDA will now attempt to fall back to OneCore before resorting to no speech. (#19603)</source>
-        <target>If the speech synthesizer is set to eSpeak NG and it fails to load when NVDA starts, NVDA will now attempt to fall back to OneCore before resorting to no speech. (#19603)</target>
+        <target>إذا كانت آلةُ النُطق المختارة هي eSpeak NG وتعذّر عملُها مع بدء عمل NVDA؛ سيحاول NVDA استخدام أصوات OneCore  أولا قبل اعتماد خيار عدم وجود آلة نُطق. (#19603)</target>
       </segment>
     </unit>
     <unit id="f39627b7-6521-49c9-9ccb-934da48686ae">
@@ -7223,9 +7223,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 152</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>cryptography to 46.0.5 (#19196, #19601)</source>
-        <target>cryptography to 46.0.5 (#19196, #19601)</target>
+        <target>&lt;target/&gt;</target>
       </segment>
     </unit>
     <unit id="526f0619-b2a1-40e2-9d06-1eb5be925f37">
@@ -7462,9 +7462,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 176</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>`synthDriverHandler.setSynth` and `synthDriverHandler.findAndSetNextSynth` now attempt to find fallback synthesizers starting from the start of `defaultSynthPriorityList`, rather than starting immediately after `name` or `currentSynthName`, respectively. (#19603)</source>
-        <target>`synthDriverHandler.setSynth` and `synthDriverHandler.findAndSetNextSynth` now attempt to find fallback synthesizers starting from the start of `defaultSynthPriorityList`, rather than starting immediately after `name` or `currentSynthName`, respectively. (#19603)</target>
+        <target>&lt;target/&gt;</target>
       </segment>
     </unit>
     <unit id="19b2e894-8a17-4654-9593-e09e32c41559">
@@ -7472,9 +7472,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 177</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>`gui.installerGui.doInstall` parameter `startOnLogon` default value is now `False`. (#19631)</source>
-        <target>`gui.installerGui.doInstall` parameter `startOnLogon` default value is now `False`. (#19631)</target>
+        <target>&lt;target/&gt;</target>
       </segment>
     </unit>
     <unit id="f2dd3ab4-38da-4b0e-8f40-eb396461c7b3">
@@ -7505,14 +7505,14 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>&lt;target/&gt;</target>
       </segment>
     </unit>
-    <unit id="4edda3aa-10a8-4de3-b78b-39c718a4cb65">
+    <unit id="44ba8376-4dae-4263-9bfe-4cf4b334e69c">
       <notes>
         <note appliesTo="source">line: 184</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="translated">
-        <source>NVDA is now built with Python 3.13, 64-bit. (#18591)</source>
-        <target>&lt;target/&gt;</target>
+      <segment state="initial">
+        <source>NVDA is now built with Python 3.13.12, 64-bit. (#18591, #19111, #19351, #19572, @LeonarddeR, @dpy013)</source>
+        <target>NVDA is now built with Python 3.13.12, 64-bit. (#18591, #19111, #19351, #19572, @LeonarddeR, @dpy013)</target>
       </segment>
     </unit>
     <unit id="b5739562-1de4-4085-ac7c-05e20074d59a">
@@ -7651,14 +7651,14 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>&lt;target/&gt;</target>
       </segment>
     </unit>
-    <unit id="571dff68-a1f0-4d38-8129-41acd2f292ca">
+    <unit id="83cf8d08-aacf-4148-b6b4-6e56b5f50f82">
       <notes>
         <note appliesTo="source">line: 199</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="translated">
-        <source>The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than HIDP_VALUE_CAPS` structures. (#18902)</source>
-        <target>&lt;target/&gt;</target>
+      <segment state="initial">
+        <source>The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than `HIDP_VALUE_CAPS` structures. (#18902)</source>
+        <target>The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than `HIDP_VALUE_CAPS` structures. (#18902)</target>
       </segment>
     </unit>
     <unit id="384cc255-1841-45de-a59d-0b44f445dd60">
@@ -7949,7 +7949,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>  These bindings have type declarations, so are potentially incompatible with existing code.</source>
-        <target>  &lt;target/&gt;</target>
+        <target>&lt;target/&gt;</target>
       </segment>
     </unit>
     <unit id="47b1e19f-7f8b-4686-82a2-0fd4c2c82103">
@@ -8162,14 +8162,14 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>&lt;target/&gt;</target>
       </segment>
     </unit>
-    <unit id="fbb23762-1a7e-4241-aa57-71d7cc59c26f">
+    <unit id="60e27811-ce0e-42f1-a2f9-51c8d3adde28">
       <notes>
         <note appliesTo="source">line: 251</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="translated">
-        <source>`config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]. (#19177)</source>
-        <target>&lt;target/&gt;</target>
+      <segment state="initial">
+        <source>`config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]`. (#19177)</source>
+        <target>`config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]`. (#19177)</target>
       </segment>
     </unit>
     <unit id="67e052fb-df7c-4580-99f7-0bcdbc05bd6e">
@@ -8237,7 +8237,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>  Use `synthDrivers.sapi4_32` (name: "sapi4_32") instead.</source>
-        <target>  &lt;target/&gt;</target>
+        <target>&lt;target/&gt;</target>
       </segment>
     </unit>
     <unit id="4ca1a11f-9bb5-476d-a4a5-4eb3e7def507">
@@ -8256,7 +8256,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>  Use `synthDrivers.sapi5_32` (name: "sapi5_32") for the 32-bit SAPI 5 driver.</source>
-        <target>  &lt;target/&gt;</target>
+        <target>&lt;target/&gt;</target>
       </segment>
     </unit>
     <unit id="a3933854-aa52-4946-acc7-2be5510e27fe">
@@ -9028,9 +9028,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 343</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>`installer.comparePreviousInstall` is deprecated with no planned replacement. (#19631)</source>
-        <target>`installer.comparePreviousInstall` is deprecated with no planned replacement. (#19631)</target>
+        <target>&lt;target/&gt;</target>
       </segment>
     </unit>
     <unit id="f8e64de8-daf5-4df8-974f-b5b682040f5a">

@@ -13,6 +13,8 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--dest-dir", default="dist")
+parser.add_argument("--version")
+parser.add_argument("--publisher")
 args = parser.parse_args()
 
 nvdaSourceDir = os.path.join("..", "..", "source")
@@ -30,6 +32,12 @@ from buildVersion import (  # noqa: E402
 	publisher,
 	version,
 )
+
+if args.version is not None:
+	version = args.version
+if args.publisher is not None:
+	publisher = args.publisher
+
 
 gettext.install("nvda")
 

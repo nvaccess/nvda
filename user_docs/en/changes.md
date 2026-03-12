@@ -6,6 +6,7 @@
 
 ### New Features
 
+* After installing or updating NVDA, a dialog now offers options to restart Windows, start the installed copy, or exit the installer. (#19268, #19718, @kefaslungu)
 * NVDA now includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen. (#19228, @Boumtchack)
   * The magnifier supports various zoom levels, color filters (normal, grayscale, inverted), and different focus tracking modes.
   * Color filters can help users with visual impairments or light sensitivity by inverting or desaturating screen colors.
@@ -26,6 +27,8 @@ The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is int
 
 ### Changes
 
+* Updated Liblouis Braille translator to [3.37.0](https://github.com/liblouis/liblouis/releases/tag/v3.37.0). (#19758, @codeofdusk)
+  * Added new Italian and Estonian 6 dot tables.
 * It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)
 * Improved search algorithm for filtering add-ons in the Add-on Store. (#19309)
 * NVDA can now be configured to not play error sounds, even in test versions. (#13021, @CyrilleB79)
@@ -39,6 +42,7 @@ The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is int
 * Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)
 * Braille should no longer stop following focus when moving around in the copilot application. (#19646, @Emil-18)
 * The `NVDA+k` command now correctly reports the destination of links containing formatted text, such as bold or italics. (#19428, @Cary-rowen)
+* Capital indicators are now correctly announced when selecting single characters. (#19505, @cary-rowen)
 * Configuration profile triggers now activate when the Add-on Store is open. (#19583, @bramd)
 
 ### Changes for Developers
@@ -50,9 +54,11 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Subclasses of `browseMode.BrowseModeDocumentTreeInterceptor` that support screen layout being on and off should override the `_toggleScreenLayout` method, rather than implementing `script_toggleScreenLayout` directly. (#19487)
 * A new method has been added to the UIA.UIA class, called _getUIACacheablePropertyValue_handleCOMErrors. (#19646, @Emil-18)
   * This method calls _getUIACacheablePropertyValue, and takes an extra argument (onError), that specify the value that should be returned if a COMError is raised
+* Clarified NV Access's policy on API breaking changes in the Developer Guide. (#19599)
 * The `scons tests` build target has been removed, as it was misleadingly named.
 It only ran the translation string comment check, which is equivalent to `scons checkPot`.
-Use the individual test commands instead: `scons checkPot`, `rununittests.bat`, `runsystemtests.bat`, `runlint.bat`. (#19606, @bramd)
+The `scons checkPot` target has also been replaced with `runcheckpot.bat`.
+Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`, `runsystemtests.bat`, `runlint.bat`. (#19606, #19676, @bramd)
 * Updated Python 3.13.11 to 3.13.12 (#19572, @dpy013)
 
 #### Deprecations
@@ -244,7 +250,7 @@ On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of
 These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
-* NVDA is now built with Python 3.13, 64-bit. (#18591)
+* NVDA is now built with Python 3.13.12, 64-bit. (#18591, #19111, #19351, #19572, @LeonarddeR, @dpy013)
 * typing_extensions have been removed.
 These should be supported natively in Python 3.13. (#18689)
 * `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
@@ -323,6 +329,7 @@ Use `config.configFlags.LoggingLevel` instead. (#19296)
   Use `synthDrivers.sapi5_32` (name: "sapi5_32") for the 32-bit SAPI 5 driver.
 * `config.setSystemConfigToCurrentConfig` now takes a `Collection` of add-on IDs (as strings) to copy to the system configuration.
 Only add-ons with the given IDs will be copied. (#19446)
+* `browseMode.ElementsListDialog.filterTimer` has been removed. (#19702)
 
 #### Deprecations
 
@@ -404,6 +411,11 @@ Access to these symbols via `updateCheck` is deprecated. (#18956)
 * `textInfos.OffsetsTextInfo.allowMoveToOffsetPastEnd` is deprecated.
 Use the `OffsetsTextInfo.allowMoveToUnitOffsetPastEnd` method instead. (#19152, @LeonarddeR)
 * `installer.comparePreviousInstall` is deprecated with no planned replacement. (#19631)
+* Deprecations in `addonHandler`: (#19564)
+  * `stateFilename` is deprecated.
+  Use `STATE_FILENAME` instead.
+  * `AddonsState.fromPickledDict` is deprecated.
+  Use `AddonsState.fromDict` instead.
 
 ## 2025.3.3
 
