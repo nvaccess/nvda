@@ -59,6 +59,8 @@ from wx.lib import scrolledpanel
 
 import screenCurtain._screenCurtain
 from utils import mmdevice
+from utils.debounce import debounceLimiter
+from utils.security import isRunningOnSecureDesktop
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
@@ -750,13 +752,16 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.container.SetupScrolling()
 		self.container.Thaw()
 
-	def onCategoryChange(self, evt):
-		currentCat = self.currentCategory
+	def onCategoryChange(self, evt: wx.ListEvent):
 		newIndex = evt.GetIndex()
-		if not currentCat or newIndex != self.categoryClasses.index(currentCat.__class__):
+		if self._shouldDoCategoryChange(newIndex):
 			self._doCategoryChange(newIndex)
 		else:
 			evt.Skip()
+
+	def _shouldDoCategoryChange(self, index: int) -> bool:
+		currentCat = self.currentCategory
+		return not currentCat or index != self.categoryClasses.index(currentCat.__class__)
 
 	def _validateAllPanels(self):
 		"""Check if all panels are valid, and can be saved
@@ -2919,6 +2924,14 @@ class MathSettingsPanel(SettingsPanel):
 		else:
 			self.navSpeechList.SetSelection(0)
 
+		# Translators: label for checkbox to use native math speech instead of MathCAT in Word and Outlook
+		useWordNativeMathText = pgettext("math", "Use native math speech in Word and Outlook")
+		self.useWordNativeMathCheckBox = speechGroup.addItem(
+			wx.CheckBox(speechGroupBox, label=useWordNativeMathText),
+		)
+		self.bindHelpEvent("MathUseWordNative", self.useWordNativeMathCheckBox)
+		self.useWordNativeMathCheckBox.SetValue(config.conf["math"]["other"]["useWordNativeMath"])
+
 		# Translators: Text for the navigation group.
 		navGroupText = pgettext("math", "Navigation")
 		navGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=navGroupText)
@@ -3108,6 +3121,7 @@ class MathSettingsPanel(SettingsPanel):
 		)
 		selectedBrailleIndex = self.brailleMathCodeList.GetSelection()
 		mathConf["braille"]["brailleCode"] = self._brailleCodeIds[selectedBrailleIndex]
+		mathConf["other"]["useWordNativeMath"] = self.useWordNativeMathCheckBox.GetValue()
 		mcPrefs = MathCATUserPreferences.fromNVDAConfig()
 		mcPrefs.apply()
 
@@ -5987,15 +6001,34 @@ class MagnifierPanel(SettingsPanel):
 
 		# Set default value from config
 		defaultZoom = magnifierConfig.getDefaultZoomLevel()
-		index = bisect.bisect_left(zoomValues, defaultZoom)
+		zoomIndex = bisect.bisect_left(zoomValues, defaultZoom)
 		# Find the closest value
-		if index == 0:
+		if zoomIndex == 0:
 			closestIndex = 0
-		elif index >= len(zoomValues):
+		elif zoomIndex >= len(zoomValues):
 			closestIndex = len(zoomValues) - 1
 		else:
-			closestIndex = min(index - 1, index, key=lambda i: abs(zoomValues[i] - defaultZoom))
+			closestIndex = min(zoomIndex - 1, zoomIndex, key=lambda i: abs(zoomValues[i] - defaultZoom))
 		self.defaultZoomList.SetSelection(closestIndex)
+
+		# PAN SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
+		panStepSizeLabelText = _("&Panning step size (%):")
+
+		self.defaultPanSpinCtrl = sHelper.addLabeledControl(
+			panStepSizeLabelText,
+			wx.SpinCtrl,
+			min=1,
+			max=100,
+		)
+		self.bindHelpEvent(
+			"magnifierPanStep",
+			self.defaultPanSpinCtrl,
+		)
+
+		# Set default value from config
+		defaultPan = magnifierConfig.getDefaultPanStep()
+		self.defaultPanSpinCtrl.SetValue(defaultPan)
 
 		# FILTER SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the default filter
@@ -6054,6 +6087,8 @@ class MagnifierPanel(SettingsPanel):
 		"""Save the current selections to config."""
 		selectedZoom = self.defaultZoomList.GetSelection()
 		magnifierConfig.setDefaultZoomLevel(magnifierConfig.ZoomLevel.zoom_range()[selectedZoom])
+
+		magnifierConfig.setDefaultPanStep(self.defaultPanSpinCtrl.GetValue())
 
 		selectedFilterIdx = self.defaultFilterList.GetSelection()
 		magnifierConfig.setDefaultFilter(list(Filter)[selectedFilterIdx])
@@ -6263,6 +6298,7 @@ NvdaSettingsDialogWindowHandle = None
 class NVDASettingsDialog(MultiCategorySettingsDialog):
 	# Translators: This is the label for the NVDA settings dialog.
 	title = _("NVDA Settings")
+	_pendingCategoryIndex: int | None = None
 	categoryClasses = [
 		GeneralSettingsPanel,
 		SpeechSettingsPanel,
@@ -6327,17 +6363,40 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			configProfile=NvdaSettingsDialogActiveConfigProfile,
 		)
 
-	def onCategoryChange(self, evt):
-		super(NVDASettingsDialog, self).onCategoryChange(evt)
+	def _doCategoryChangeForIndex(self, newIndex: int) -> bool:
+		if self._shouldDoCategoryChange(newIndex):
+			self._doCategoryChange(newIndex)
+			return True
+		return False
+
+	@debounceLimiter(
+		cooldownTimeMs=500,
+		delayTimeMs=500,
+	)
+	def _onCategoryChangeDebounced(self) -> None:
+		if self._pendingCategoryIndex is not None:
+			if self._doCategoryChangeForIndex(self._pendingCategoryIndex):
+				self._doOnCategoryChange()
+			self._pendingCategoryIndex = None
+
+	def onCategoryChange(self, evt: wx.ListEvent):
+		if isRunningOnSecureDesktop():
+			# Secure desktop can cause issues with rapidly changing categories,
+			# so we debounce category changes to avoid this. (#19634)
+			self._pendingCategoryIndex = evt.GetIndex()
+			self._onCategoryChangeDebounced()
+			return
+		super().onCategoryChange(evt)
 		if evt.Skipped:
 			return
 		self._doOnCategoryChange()
 
 	def Destroy(self):
+		self._pendingCategoryIndex = None
 		global NvdaSettingsDialogActiveConfigProfile, NvdaSettingsDialogWindowHandle
 		NvdaSettingsDialogActiveConfigProfile = None
 		NvdaSettingsDialogWindowHandle = None
-		super(NVDASettingsDialog, self).Destroy()
+		super().Destroy()
 
 
 class AddSymbolDialog(

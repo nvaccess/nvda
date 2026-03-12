@@ -55,6 +55,88 @@ def _canPortableConfigBeCopied() -> bool:
 		return True
 
 
+def _restartWindows() -> bool:
+	"""Issue a Windows restart command. Returns True if the command succeeded."""
+	result = subprocess.run(["shutdown", "/r", "/t", "0"], creationflags=subprocess.CREATE_NO_WINDOW)
+	return result.returncode == 0
+
+
+def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
+	"""Show the post-install dialog after NVDA installation completes.
+
+	Presents the user with options to restart Windows, start the installed copy,
+	or exit NVDA.
+	"""
+	if isUpdate:
+		message = _(
+			# Translators: The message displayed when NVDA has been successfully updated,
+			# shown in the post-install dialog.
+			"Successfully updated your installation of NVDA."
+			" It is recommended to restart Windows after updating."
+			" NVDA may malfunction without a restart.",
+		)
+	else:
+		message = _(
+			# Translators: The message displayed when NVDA has been successfully installed,
+			# shown in the post-install dialog.
+			"Successfully installed NVDA."
+			" It is recommended to restart Windows after installing."
+			" NVDA may malfunction without a restart.",
+		)
+	dialog = MessageDialog(
+		parent=gui.mainFrame,
+		message=message,
+		# Translators: The title of the post-install dialog.
+		title=_("Success"),
+		buttons=None,
+		helpId="RestartWindowsAfterInstall",
+	)
+	# Translators: Button in the post-install dialog to restart Windows immediately.
+	dialog.addButton(ReturnCode.CUSTOM_1, label=_("Restart &Windows"), defaultFocus=True)
+	if startAfterInstall:
+		# Translators: Button in the post-install dialog to start the newly installed NVDA.
+		dialog.addButton(ReturnCode.CUSTOM_2, label=_("&Start NVDA"), fallbackAction=True)
+	# Translators: Button in the post-install dialog to exit NVDA.
+	dialog.addButton(ReturnCode.CANCEL, label=_("E&xit NVDA"), fallbackAction=not startAfterInstall)
+	match dialog.ShowModal():
+		case ReturnCode.CUSTOM_1:
+			if _restartWindows():
+				if not core.triggerNVDAExit(None):
+					log.error("NVDA already in process of exiting, this indicates a logic error.")
+			else:
+				# Restart failed — inform the user.
+				# Only exit if a new copy can be started so the user keeps a screen reader.
+				gui.messageBox(
+					# Translators: Message shown when Windows restart fails after NVDA installation.
+					_("Failed to restart Windows. Please restart Windows manually."),
+					# Translators: Title of the error dialog shown when Windows restart fails.
+					_("Error"),
+					wx.OK | wx.ICON_ERROR,
+				)
+				if startAfterInstall:
+					newNVDA = core.NewNVDAInstance(
+						filePath=os.path.join(WritePaths.defaultInstallDir, "nvda.exe"),
+						parameters=_generate_executionParameters(),
+					)
+					if not core.triggerNVDAExit(newNVDA):
+						log.error("NVDA already in process of exiting, this indicates a logic error.")
+				else:
+					if not core.triggerNVDAExit(None):
+						log.error("NVDA already in process of exiting, this indicates a logic error.")
+		case ReturnCode.CUSTOM_2:
+			newNVDA = core.NewNVDAInstance(
+				filePath=os.path.join(WritePaths.defaultInstallDir, "nvda.exe"),
+				parameters=_generate_executionParameters(),
+			)
+			if not core.triggerNVDAExit(newNVDA):
+				log.error("NVDA already in process of exiting, this indicates a logic error.")
+		case ReturnCode.CANCEL:
+			if not core.triggerNVDAExit(None):
+				log.error("NVDA already in process of exiting, this indicates a logic error.")
+		case _ as returnCode:
+			log.error(f"Unexpected return code from post-install dialog: {returnCode}")
+
+
 def doInstall(
 	createDesktopShortcut: bool = True,
 	startOnLogon: bool = False,
@@ -126,27 +208,8 @@ def doInstall(
 
 	startAfterInstall = startAfterInstall and not isRunningElevated()
 	if not silent:
-		msg = (
-			# Translators: The message displayed when NVDA has been successfully installed.
-			_("Successfully installed NVDA. ")
-			if not isUpdate
-			# Translators: The message displayed when NVDA has been successfully updated.
-			else _("Successfully updated your installation of NVDA. ")
-		)
-		gui.messageBox(
-			msg
-			+ (
-				# Translators: The message displayed to the user after NVDA is installed
-				# and the installed copy is about to be started.
-				_("Please press OK to start the installed copy.")
-				if startAfterInstall
-				# Translators: The message displayed to the user after NVDA is installed
-				# and the installer is about to close without starting the installed copy.
-				else _("Please press OK to close the installer.")
-			),
-			# Translators: The title of a dialog presented to indicate a successful operation.
-			_("Success"),
-		)
+		_showPostInstallDialog(isUpdate=isUpdate, startAfterInstall=startAfterInstall)
+		return
 
 	newNVDA = None
 	if startAfterInstall:
@@ -640,7 +703,8 @@ class PortableCreaterDialog(
 					# Translators: The message displayed when the user has not specified an absolute destination directory
 					# in the Create Portable NVDA dialog.
 					"Please specify the absolute path where the portable copy should be created. "
-					"It may include system variables (e.g. %temp%, %homepath%) and must start with a drive letter (e.g. C:\\). "
+					"It must start with a drive letter (e.g. C:). "
+					"It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
 					"Current path: {path}. ",
 				).format(path=expandedPortableDirectory),
 				# Translators: The message title displayed when the user has not specified an absolute
