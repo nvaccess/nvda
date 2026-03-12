@@ -34,7 +34,7 @@ def dummyCallback2(*a):
 
 
 def getDialogState(dialog: MessageDialog):
-	"""Capture internal state of a :class:`gui.messageDialog.MessageDialog` for later analysis.
+	"""Capture internal state of a :class:`gui.message.MessageDialog` for later analysis.
 
 	Currently this only captures state relevant to adding buttons.
 	Further tests wishing to use this dialog should be sure to add any state potentially modified by the functions under test.

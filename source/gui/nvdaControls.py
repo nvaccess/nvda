@@ -288,7 +288,7 @@ class MessageDialog(gui.message.MessageDialog):
 	"""Provides a more flexible message dialog.
 
 	.. warning:: This class is deprecated.
-		Use :class:`gui.messageDialog.MessageDialog` instead.
+		Use :class:`gui.message.MessageDialog` instead.
 		This class is an adapter around that class, and will be removed in 2026.1.
 
 	Consider overriding _addButtons, to set your own buttons and behaviour.
@@ -315,7 +315,7 @@ class MessageDialog(gui.message.MessageDialog):
 
 	def __new__(cls, *args, **kwargs):
 		warnings.warn(
-			"gui.nvdaControls.MessageDialog is deprecated. Use gui.messageDialog.MessageDialog instead.",
+			"gui.nvdaControls.MessageDialog is deprecated. Use gui.message.MessageDialog instead.",
 			DeprecationWarning,
 		)
 		return super().__new__(cls, *args, **kwargs)
