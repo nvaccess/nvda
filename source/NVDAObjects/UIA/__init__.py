@@ -1920,12 +1920,12 @@ class UIA(Window):
 		states = set()
 		self._prefetchUIACacheForPropertyIDs(self._UIAStatesPropertyIDs)
 		hasKeyboardFocus = self._getUIACacheablePropertyValue_handlesCOMErrors(
-			UIAHandler.UIA_HasKeyboardFocusPropertyId
+			UIAHandler.UIA_HasKeyboardFocusPropertyId,
 		)
 		if hasKeyboardFocus:
 			states.add(controlTypes.State.FOCUSED)
 		isFocusable = self._getUIACacheablePropertyValue_handlesCOMErrors(
-			UIAHandler.UIA_IsKeyboardFocusablePropertyId
+			UIAHandler.UIA_IsKeyboardFocusablePropertyId,
 		)
 		if isFocusable:
 			states.add(controlTypes.State.FOCUSABLE)
@@ -1935,7 +1935,7 @@ class UIA(Window):
 		# Don't fetch the role unless we must, but never fetch it more than once.
 		role = None
 		isSelectionItemPatternAvailable = self._getUIACacheablePropertyValue_handlesCOMErrors(
-			UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId
+			UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId,
 		)
 		if isSelectionItemPatternAvailable:
 			role = self.role
@@ -1968,7 +1968,7 @@ class UIA(Window):
 			states.add(controlTypes.State.MULTISELECTABLE)
 
 		isOffScreen = self._getUIACacheablePropertyValue_handlesCOMErrors(
-			UIAHandler.UIA_IsOffscreenPropertyId
+			UIAHandler.UIA_IsOffscreenPropertyId,
 		)
 		if isOffScreen:
 			states.add(controlTypes.State.OFFSCREEN)
@@ -1979,7 +1979,7 @@ class UIA(Window):
 		if not isDataValid:
 			states.add(controlTypes.State.INVALID_ENTRY)
 		required = self._getUIACacheablePropertyValue_handlesCOMErrors(
-			UIAHandler.UIA_IsRequiredForFormPropertyId
+			UIAHandler.UIA_IsRequiredForFormPropertyId,
 		)
 		if required:
 			states.add(controlTypes.State.REQUIRED)
@@ -2028,7 +2028,7 @@ class UIA(Window):
 				states.add(controlTypes.State.HASCOMMENT)
 		# Drag "is grabbed" property was added in Windows 8.
 		isGrabbed = self._getUIACacheablePropertyValue_handlesCOMErrors(
-			UIAHandler.UIA_DragIsGrabbedPropertyId
+			UIAHandler.UIA_DragIsGrabbedPropertyId,
 		)
 		if isGrabbed:
 			states.add(controlTypes.State.DRAGGING)
