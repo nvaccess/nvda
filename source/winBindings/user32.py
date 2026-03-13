@@ -11,6 +11,7 @@ from ctypes import (
 	Union,
 	c_int,
 	c_size_t,
+	c_ssize_t,
 	c_uint,
 	c_long,
 	c_longlong,
@@ -32,6 +33,7 @@ from ctypes.wintypes import (
 	LPDWORD,
 	LPPOINT,
 	LPRECT,
+	LPVOID,
 	PBYTE,
 	PHANDLE,
 	PMSG,
@@ -61,6 +63,7 @@ from enum import IntEnum, IntFlag
 
 UINT_PTR = c_size_t
 ULONG_PTR = c_size_t
+LONG_PTR = c_ssize_t
 DWORD_PTR = c_size_t
 PDWORD_PTR = POINTER(DWORD_PTR)
 
@@ -162,6 +165,17 @@ DefWindowProc.argtypes = (
 	LPARAM,
 )
 DefWindowProc.restype = LRESULT
+
+CallWindowProc = WINFUNCTYPE(None)(("CallWindowProcW", dll))
+"""https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-callwindowprocw"""
+CallWindowProc.restype = LRESULT
+CallWindowProc.argtypes = (
+	WNDPROC,  # lpPrevWndFunc
+	HWND,  # hWnd
+	UINT,  # Msg
+	WPARAM,  # wParam
+	LPARAM,  # lParam
+)
 
 HWINEVENTHOOK = HANDLE
 """
@@ -1024,6 +1038,20 @@ SetWindowLong.argtypes = (
 	HWND,  # hWnd: Handle to the window and, indirectly, the class to which the window belongs.
 	c_int,  # nIndex: Zero-based offset to the value to be set
 	LONG,  # dwNewLong: The replacement value
+)
+
+
+class GWLP(IntEnum):
+	WNDPROC = -4
+
+
+SetWindowLongPtr = WINFUNCTYPE(None)(("SetWindowLongPtrW", dll))
+"""https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowlongptrw"""
+SetWindowLongPtr.restype = LONG_PTR
+SetWindowLongPtr.argtypes = (
+	HWND,  # hWnd
+	c_int,  # nIndex
+	LPVOID,  # dwNewLong
 )
 
 
