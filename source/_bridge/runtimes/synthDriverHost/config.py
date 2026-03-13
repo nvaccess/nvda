@@ -10,9 +10,11 @@ import types
 # This should be converted to a proper proxy.
 class FakeConfDict(dict):
 	getConfigValidation = staticmethod(
-		lambda path: types.SimpleNamespace(default="default")
-		if path[0] == "audio" and path[1] == "outputDevice"
-		else None,
+		lambda path: (
+			types.SimpleNamespace(default="default")
+			if path[0] == "audio" and path[1] == "outputDevice"
+			else None
+		),
 	)
 
 
