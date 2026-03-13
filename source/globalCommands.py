@@ -4740,6 +4740,77 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Describes a command.
+		description=_("Recognizes the content of the current navigator object with on-device OCR"),
+		gesture="kb:NVDA+shift+r",
+	)
+	def script_recognizeWithOnDeviceOcr(self, gesture):
+		from screenCurtain import screenCurtain
+
+		isScreenCurtainRunning = screenCurtain is not None and screenCurtain.enabled
+		if isScreenCurtainRunning:
+			# Translators: Reported when screen curtain is enabled.
+			ui.message(_("Please disable screen curtain before using on-device OCR."))
+			return
+		try:
+			from contentRecog.onDeviceOcr import OnDeviceOcr
+			from contentRecog import recogUi
+
+			recog = OnDeviceOcr()
+			recogUi.recognizeNavigatorObject(recog)
+		except ImportError:
+			# Translators: Reported when on-device OCR dependencies are not installed.
+			ui.message(_("On-device OCR is not available. Required packages may not be installed."))
+		except Exception as e:
+			log.error(f"Failed to start on-device OCR: {e}", exc_info=True)
+			# Translators: Reported when on-device OCR fails to start.
+			ui.message(_("On-device OCR failed to start"))
+
+	@script(
+		# Translators: Describes a command.
+		description=_("Cycles through the available languages for on-device OCR"),
+	)
+	def script_cycleOnDeviceOcrLanguage(self, gesture: inputCore.InputGesture) -> None:
+		try:
+			from contentRecog.onDeviceOcr.engine import OcrEngineManager
+
+			engine = OcrEngineManager.get_engine()
+			languageCodes = engine.get_available_languages()
+			try:
+				index = languageCodes.index(config.conf["onDeviceOcr"]["language"])
+				newIndex = (index + 1) % len(languageCodes)
+			except ValueError:
+				newIndex = 0
+			lang = languageCodes[newIndex]
+			config.conf["onDeviceOcr"]["language"] = lang
+			# Force re-initialization with new language on next recognition
+			if engine.is_initialized:
+				engine.shutdown()
+			ui.message(lang)
+		except ImportError:
+			# Translators: Reported when on-device OCR dependencies are not installed.
+			ui.message(_("On-device OCR is not available"))
+
+	@script(
+		# Translators: Describes a command.
+		description=_("Toggle periodical refresh of an on-device OCR result"),
+	)
+	def script_toggleOnDeviceOcrAutoRefresh(self, gesture: inputCore.InputGesture) -> None:
+		toggleBooleanValue(
+			configSection="onDeviceOcr",
+			configKey="autoRefresh",
+			# Translators: The message announced when toggling automatic refresh
+			enabledMsg=_("Automatic refresh enabled"),
+			# Translators: The message announced when toggling automatic refresh
+			disabledMsg=_("Automatic refresh disabled"),
+		)
+		from contentRecog.recogUi import RecogResultNVDAObject
+
+		focus = api.getFocusObject()
+		if isinstance(focus, RecogResultNVDAObject):
+			focus._scheduleRecognize()
+
+	@script(
+		# Translators: Describes a command.
 		description=_("Cycles through the available languages for Windows OCR"),
 	)
 	def script_cycleOcrLanguage(self, gesture: inputCore.InputGesture) -> None:

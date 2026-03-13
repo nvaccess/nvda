@@ -4166,6 +4166,77 @@ class UwpOcrPanel(SettingsPanel):
 		config.conf["uwpOcr"]["autoSayAllOnResult"] = self.autoSayAllOnResultCheckbox.IsChecked()
 
 
+class OnDeviceOcrPanel(SettingsPanel):
+	# Translators: The title of the on-device OCR settings panel.
+	title = _("On-device OCR")
+	helpId = "OnDeviceOcrSettings"
+
+	_LANGUAGE_DESCRIPTIONS = {
+		"auto": _("Automatic (Chinese + English)"),
+		"ch": _("Chinese"),
+		"en": _("English"),
+		"japan": _("Japanese"),
+		"korean": _("Korean"),
+		"french": _("French"),
+		"german": _("German"),
+		"arabic": _("Arabic"),
+		"latin": _("Latin script"),
+		"cyrillic": _("Cyrillic script"),
+		"devanagari": _("Devanagari script"),
+	}
+
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		# Language selection
+		try:
+			from contentRecog.onDeviceOcr.engine import OcrEngineManager
+
+			engine = OcrEngineManager.get_engine()
+			self.languageCodes = engine.get_available_languages()
+		except Exception:
+			self.languageCodes = ["auto"]
+
+		languageChoices = [
+			self._LANGUAGE_DESCRIPTIONS.get(lang, lang) for lang in self.languageCodes
+		]
+
+		# Translators: Label for language selection in on-device OCR settings.
+		languageLabel = _("Recognition &language:")
+		self.languageChoice = sHelper.addLabeledControl(
+			languageLabel, wx.Choice, choices=languageChoices
+		)
+		try:
+			langIndex = self.languageCodes.index(config.conf["onDeviceOcr"]["language"])
+			self.languageChoice.Selection = langIndex
+		except ValueError:
+			self.languageChoice.Selection = 0
+
+		# Translators: Label for auto-refresh option in on-device OCR settings.
+		autoRefreshText = _("Periodically &refresh recognized content")
+		self.autoRefreshCheckbox = sHelper.addItem(
+			wx.CheckBox(self, label=autoRefreshText),
+		)
+		self.autoRefreshCheckbox.SetValue(config.conf["onDeviceOcr"]["autoRefresh"])
+
+		# Translators: Label for auto say all option in on-device OCR settings.
+		autoSayAllText = _("Automatically say all on result")
+		self.autoSayAllOnResultCheckbox = sHelper.addItem(
+			wx.CheckBox(self, label=autoSayAllText),
+		)
+		self.autoSayAllOnResultCheckbox.SetValue(
+			config.conf["onDeviceOcr"]["autoSayAllOnResult"]
+		)
+
+	def onSave(self):
+		lang = self.languageCodes[self.languageChoice.Selection]
+		config.conf["onDeviceOcr"]["language"] = lang
+		config.conf["onDeviceOcr"]["autoRefresh"] = self.autoRefreshCheckbox.IsChecked()
+		config.conf["onDeviceOcr"]["autoSayAllOnResult"] = (
+			self.autoSayAllOnResultCheckbox.IsChecked()
+		)
+
+
 class AdvancedPanelControls(
 	gui.contextHelp.ContextHelpMixin,
 	wx.Panel,  # wxPython does not seem to call base class initializer, put last in MRO
@@ -6326,6 +6397,9 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		categoryClasses.append(TouchInteractionPanel)
 	if winVersion.isUwpOcrAvailable():
 		categoryClasses.append(UwpOcrPanel)
+	# On-device OCR is always available (no OS version dependency).
+	# Import check handles missing rapidocr gracefully in the panel itself.
+	categoryClasses.append(OnDeviceOcrPanel)
 	# And finally the Advanced panel which should always be last.
 	if not globalVars.appArgs.secure:
 		categoryClasses.append(AdvancedPanel)

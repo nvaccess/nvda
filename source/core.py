@@ -566,6 +566,14 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 
 	# The core is expected to terminate, so we should not treat this as a crash
 	_terminate(watchdog)
+	# Shut down on-device OCR engine before plugin cleanup
+	try:
+		from contentRecog.onDeviceOcr.engine import OcrEngineManager
+		OcrEngineManager.shutdown()
+	except ImportError:
+		pass  # On-device OCR not available
+	except Exception:
+		log.error("Error shutting down on-device OCR engine", exc_info=True)
 	# plugins must be allowed to close safely before we terminate the GUI as dialogs may be unsaved
 	_terminate(globalPluginHandler)
 	# the brailleViewer should be destroyed safely before closing the window
