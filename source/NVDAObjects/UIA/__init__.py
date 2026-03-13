@@ -1153,10 +1153,10 @@ class UIA(Window):
 		"""
 		res = None
 		try:
-			value = self._getUIACacheablePropertyValue(id, ignoreDefault=ignoreDefault)
+			res = self._getUIACacheablePropertyValue(id, ignoreDefault=ignoreDefault)
 		except COMError:
-			value = onError
-		return value
+			res = onError
+		return res
 
 	def _getUIACacheablePropertyValue(self, ID, ignoreDefault=False):
 		"""
