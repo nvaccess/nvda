@@ -3,6 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from itertools import chain, filterfalse
 import os.path
 import threading
 from time import sleep
@@ -39,7 +40,7 @@ from gui.guiHelper import (
 	SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS,
 )
 from gui.message import DisplayableError, displayDialogAsModal, messageBox, _countAsMessageBox
-from gui.nvdaControls import AutoWidthColumnListCtrl
+from gui.nvdaControls import CheckListCtrl
 from logHandler import log
 import NVDAState
 from speech.priorities import SpeechPriority
@@ -677,6 +678,16 @@ class _CopyAddonsDialog(
 		self._availableAddons = availableAddons
 		self._indexableAvailableAddons: tuple[Addon] | None = None
 		self._systemManifests = systemManifests
+		allAddons = self._allAddons = dict()
+		for name in filterfalse(allAddons.__contains__, chain(availableAddons, systemManifests)):
+			allAddons[name] = (
+				addon.manifest if (addon := availableAddons.get(name)) is not None else None,
+				systemManifests.get(name),
+			)
+		self._systemOnlyManifests = tuple(
+			systemManifests[name] for name in (systemManifests.keys() - availableAddons.keys())
+		)
+		log.debug(f"{availableAddons=}\n{systemManifests=}\n{allAddons=}\n{self._systemOnlyManifests=}")
 		self._returnList = returnList
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -700,10 +711,11 @@ class _CopyAddonsDialog(
 		listCtrl = self._addonsList = sHelper.addLabeledControl(
 			# Translators: The label of the list which allows users to select which add-ons to copy to the system profile
 			pgettext("addonStore", "Add-ons"),
-			AutoWidthColumnListCtrl,
+			CheckListCtrl,
+			# AutoWidthColumnListCtrl,
 			style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
 		)
-		listCtrl.setResizeColumn(0)
+		# listCtrl.setResizeColumn(0)
 		# Translators: The label for a column in the copy add-ons dialog that displays the name of the add-on
 		listCtrl.AppendColumn(pgettext("addonStore", "Name"), width=self.scaleSize(150))
 		# Translators: The label for a column in the copy add-ons dialog that displays the add-on's author
@@ -753,21 +765,23 @@ class _CopyAddonsDialog(
 		return self._indexableAvailableAddons
 
 	def _populateAddonsList(self):
+		# Translators: Shown when the add-on is not installed.
+		NOT_INSTALLED_MESSAGE = pgettext("addonStore", "Not installed")
 		self._addonsList.DeleteAllItems()
-		for addon in self._availableAddons.values():
-			self._addonsList.Append(
+		for userManifest, systemManifest in self._allAddons.values():
+			manifest = userManifest or systemManifest
+			index = self._addonsList.Append(
 				(
-					addon.manifest["summary"],
-					addon.manifest["author"],
-					addon.version,
-					(
-						self._systemManifests[addon.name]["version"]
-						if addon.name in self._systemManifests
-						# Translators: Shown when the add-on is not installed.
-						else pgettext("addonStore", "Not installed")
-					),
+					manifest["summary"],
+					manifest["author"],
+					userManifest["version"] if userManifest is not None else NOT_INSTALLED_MESSAGE,
+					systemManifest["version"] if systemManifest is not None else NOT_INSTALLED_MESSAGE,
 				),
 			)
+			log.info(f"Inserted {manifest['name']} at {index}.\n{userManifest=}\n{systemManifest=}")
+			if userManifest is None:
+				log.info(f"Disabling checkbox {index}")
+				self._addonsList.removeCheckbox(index)
 		activeIndex = 0
 		self._addonsList.SetItemState(
 			activeIndex,

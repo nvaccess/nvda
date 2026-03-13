@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 
 import collections
+from ctypes import addressof
 import enum
 import typing
 from typing import (
@@ -23,11 +24,15 @@ from config.featureFlag import (
 )
 import gui.message
 from winBindings import user32
+from winBindings.CommCtrl import INDEXTOSTATEIMAGEMASK, LVIF, LVIS, LVITEM, LVM, NMLISTVIEW
+from winBindings.user32 import GWLP, NMHDR, WNDPROC, CallWindowProc, SendMessage, SetWindowLongPtr
+from winUser import WM_NOTIFY
 from .dpiScalingHelper import DpiScalingHelperMixin
 from . import (
 	guiHelper,
 )
 import winUser
+from logHandler import log
 
 from collections.abc import Callable
 
@@ -573,3 +578,71 @@ class FeatureFlagCombo(wx.Choice):
 				**translatedOptions,
 			},
 		)
+
+
+class CheckListCtrl(wx.ListCtrl):
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self._newWndProc: WNDPROC | None = None
+		self._oldWndProc: WNDPROC | None = None
+		self._checkboxlessIndices: set[int] = set()
+		self._hookWndProc()
+		self.Bind(wx.EVT_WINDOW_DESTROY, self._close, self)
+
+	def _hookWndProc(self):
+		if self._newWndProc is not None or self._oldWndProc is not None:
+			raise RuntimeError("Window proc already hooked!")
+		self._newWndProc = WNDPROC(self._WndProc)
+		self._oldWndProc = WNDPROC(
+			SetWindowLongPtr(self.GetParent().GetHandle(), GWLP.WNDPROC, self._newWndProc),
+		)
+
+	def _unhookWndProc(self):
+		if self._oldWndProc is not None:
+			SetWindowLongPtr(self.GetParent().GetHandle(), GWLP.WNDPROC, self._oldWndProc)
+			self._oldWndProc = self._newWndProc = None
+
+	def _close(self, evt):
+		self._unhookWndProc()
+
+	def _WndProc(self, hWnd, msg, wParam, lParam):
+		if msg == WM_NOTIFY:
+			hdr = NMHDR.from_address(lParam)
+			if hdr.hwndFrom == self.GetHandle():
+				hdr = NMLISTVIEW.from_address(lParam)
+				if (
+					hdr.iItem in self._checkboxlessIndices
+					and hdr.uChanged & LVIF.STATE
+					and hdr.uNewState >> 12 != hdr.uOldState >> 12
+				):
+					return True
+		return CallWindowProc(self._oldWndProc, hWnd, msg, wParam, lParam)
+
+	def IsItemChecked(self, item: int) -> bool:
+		# TODO: Add to enum and document
+		# LVM_GETITEMSTATE
+		if item < self.GetItemCount() and not (
+			SendMessage(self.GetHandle(), 4140, item, LVIS.STATEIMAGEMASK) & LVIS.STATEIMAGEMASK
+		):
+			return False
+		return super().IsItemChecked(item)
+
+	def removeCheckbox(self, itemIndex: int):
+		log.info(f"removeCheckbox({itemIndex=})", stack_info=True)
+		if itemIndex not in range(self.GetItemCount()):
+			raise IndexError("Item index out of range")
+		if itemIndex in self._checkboxlessIndices:
+			return
+		lvi = LVITEM(
+			mask=LVIF.STATE,
+			iItem=itemIndex,
+			stateMask=LVIS.STATEIMAGEMASK,
+			state=INDEXTOSTATEIMAGEMASK(0),
+		)
+		SendMessage(
+			self.GetHandle(),
+			LVM.SETITEM,
+			itemIndex,
+			addressof(lvi),
+		)
+		self._checkboxlessIndices.add(itemIndex)
