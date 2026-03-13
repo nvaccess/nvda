@@ -119,7 +119,7 @@ class OnDeviceOcr(ContentRecognizer):
 						LinesWordsResult(
 							[[{"x": 0, "y": 0, "width": 1, "height": 1, "text": ""}]],
 							imageInfo,
-						)
+						),
 					)
 
 			except Exception as e:

@@ -4197,14 +4197,14 @@ class OnDeviceOcrPanel(SettingsPanel):
 		except Exception:
 			self.languageCodes = ["auto"]
 
-		languageChoices = [
-			self._LANGUAGE_DESCRIPTIONS.get(lang, lang) for lang in self.languageCodes
-		]
+		languageChoices = [self._LANGUAGE_DESCRIPTIONS.get(lang, lang) for lang in self.languageCodes]
 
 		# Translators: Label for language selection in on-device OCR settings.
 		languageLabel = _("Recognition &language:")
 		self.languageChoice = sHelper.addLabeledControl(
-			languageLabel, wx.Choice, choices=languageChoices
+			languageLabel,
+			wx.Choice,
+			choices=languageChoices,
 		)
 		try:
 			langIndex = self.languageCodes.index(config.conf["onDeviceOcr"]["language"])
@@ -4225,16 +4225,14 @@ class OnDeviceOcrPanel(SettingsPanel):
 			wx.CheckBox(self, label=autoSayAllText),
 		)
 		self.autoSayAllOnResultCheckbox.SetValue(
-			config.conf["onDeviceOcr"]["autoSayAllOnResult"]
+			config.conf["onDeviceOcr"]["autoSayAllOnResult"],
 		)
 
 	def onSave(self):
 		lang = self.languageCodes[self.languageChoice.Selection]
 		config.conf["onDeviceOcr"]["language"] = lang
 		config.conf["onDeviceOcr"]["autoRefresh"] = self.autoRefreshCheckbox.IsChecked()
-		config.conf["onDeviceOcr"]["autoSayAllOnResult"] = (
-			self.autoSayAllOnResultCheckbox.IsChecked()
-		)
+		config.conf["onDeviceOcr"]["autoSayAllOnResult"] = self.autoSayAllOnResultCheckbox.IsChecked()
 
 
 class AdvancedPanelControls(

@@ -569,6 +569,7 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	# Shut down on-device OCR engine before plugin cleanup
 	try:
 		from contentRecog.onDeviceOcr.engine import OcrEngineManager
+
 		OcrEngineManager.shutdown()
 	except ImportError:
 		pass  # On-device OCR not available

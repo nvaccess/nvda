@@ -5,7 +5,7 @@
 """RapidOCR engine implementation using ONNX Runtime for on-device OCR."""
 
 import threading
-from typing import List, Optional
+from typing import List
 
 from logHandler import log
 from .engine import OcrEngine
@@ -57,8 +57,7 @@ class RapidOcrEngine(OcrEngine):
 				log.info(f"RapidOCR engine initialized (language={language})")
 			except ImportError:
 				log.error(
-					"RapidOCR is not installed. "
-					"Install with: pip install rapidocr onnxruntime",
+					"RapidOCR is not installed. Install with: pip install rapidocr onnxruntime",
 					exc_info=True,
 				)
 				raise RuntimeError("RapidOCR package not available")
