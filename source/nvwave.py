@@ -340,10 +340,13 @@ class WavePlayer(garbageHandler.TrackedObject):
 		# turn off trimming temporarily.
 		if self._purpose is AudioPurpose.SPEECH and self._isLeadingSilenceInserted:
 			self.startTrimmingLeadingSilence(False)
+		# wasPlay_feed requires c_char_p, so cast data to c_char_p before calling.
+		# Casting bytes to c_char_p is also fine, as long as the original data is not released.
+		dataptr = cast(data, c_char_p)
 		try:
 			NVDAHelper.localLib.wasPlay_feed(
 				self._player,
-				cast(data, c_char_p),
+				dataptr,
 				size if size is not None else len(data),
 				byref(feedId) if onDone else None,
 			)
