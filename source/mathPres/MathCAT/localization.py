@@ -103,7 +103,7 @@ def _createAddRegionalLanguagesFunction(languages: list[LanguageInfo]) -> Callab
 			if langDesc is not None:
 				languages.append(
 					LanguageInfo(
-						code=regionalCode.lower(),
+						code=regionalCode,
 						description=optionString.format(lang=langDesc, code=regionalCode),
 					),
 				)
@@ -113,7 +113,7 @@ def _createAddRegionalLanguagesFunction(languages: list[LanguageInfo]) -> Callab
 				)
 				languages.append(
 					LanguageInfo(
-						code=regionalCode.lower(),
+						code=regionalCode,
 						description=optionString.format(lang=language, code=regionalCode),
 					),
 				)
