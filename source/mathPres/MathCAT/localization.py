@@ -74,7 +74,7 @@ class LanguageInfo:
 	"""Data class to hold information about a language, including its code and description."""
 
 	code: str
-	""""Language code in the form 'en-uk' or 'en'"""
+	"""Language code in the form 'en-uk' or 'en'"""
 
 	description: str
 	"""Translated description. Falls back to the first part of the language code"""
