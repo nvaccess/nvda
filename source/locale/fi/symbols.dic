@@ -34,7 +34,7 @@ symbols:
 ... sentence ending	piste piste piste	all	always
 … sentence ending	piste piste piste	all	always
 ; phrase ending	puolipiste	most	always
-: phrase ending	kaksoispiste	most	always
+: phrase ending	kaksoispiste	all	always
 multiple .	useita pisteitä	all	always
 decimal comma		none	always
 in-word '	heitto	all	norep
@@ -83,7 +83,7 @@ $	dollari	all	norep
 .	piste	some
 ．	piste	some
 /	kautta	some
-:	kaksoispiste	most	norep
+:	kaksoispiste	all	always
 ：	kaksoispiste	most	norep
 ;	puolipiste	most
 ؛	arabialainen puolipiste	most
@@ -96,7 +96,7 @@ $	dollari	all	norep
 ]	loppuhaka	most
 \\	keno	some
 ^	hattu	most
-_	alaviiva	most
+_	alaviiva	most	norep
 `	gravis	all
 {	alkuaalto	most
 }	loppuaalto	most
