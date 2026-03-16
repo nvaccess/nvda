@@ -3019,7 +3019,7 @@ class MathSettingsPanel(SettingsPanel):
 		if mathLang == "Auto":
 			# If language is set to Auto, we want to save the speech style as the default for the current language,
 			# so we need to get the actual language code that Auto resolves to.
-			mathLang = toXmlLang(languageHandler.normalizeLanguage(getCurrentLanguage())
+			mathLang = toXmlLang(languageHandler.normalizeLanguage(getCurrentLanguage()))
 		# Ensure the per-language speech configuration exists before setting the speech style.
 		MathCATUserPreferences.createConfigForSpeechStyle(mathLang)
 		mathConf["speech"][mathLang]["speechStyle"] = self.speechStyleList.GetStringSelection()
