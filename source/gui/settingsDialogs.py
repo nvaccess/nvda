@@ -2760,6 +2760,7 @@ class MathSettingsPanel(SettingsPanel):
 			choices=[lang.description for lang in self.languageOptions],
 		)
 		self.bindHelpEvent("MathSpeechLanguage", self.languageList)
+		self.languageList.Bind(wx.EVT_CHOICE, self.onLanguageChange)
 		mathLang = config.conf["math"]["speech"]["language"]
 		languageIndex = [lang.code for lang in self.languageOptions].index(mathLang)
 		self.languageList.SetSelection(languageIndex)
@@ -3075,6 +3076,22 @@ class MathSettingsPanel(SettingsPanel):
 		mathConf["other"]["useWordNativeMath"] = self.useWordNativeMathCheckBox.GetValue()
 		mcPrefs = MathCATUserPreferences.fromNVDAConfig()
 		mcPrefs.apply()
+
+	def onLanguageChange(self, event: wx.CommandEvent) -> None:
+		from mathPres.MathCAT import localization
+
+		selectedLanguage = self.languageOptions[self.languageList.GetSelection()]
+		speechStyles = localization.getSpeechStyles(selectedLanguage.code)
+		self.speechStyleList.SetItems(speechStyles)
+		mathLang = config.conf["math"]["speech"]["language"]
+		if selectedLanguage.code == mathLang:
+			currentSpeechStyle = config.conf["math"]["speech"].get(mathLang, {}).get("speechStyle", "")
+			if currentSpeechStyle in speechStyles:
+				self.speechStyleList.SetStringSelection(currentSpeechStyle)
+			else:
+				self.speechStyleList.SetSelection(0)
+		else:
+			self.speechStyleList.SetSelection(0)
 
 
 class DocumentFormattingPanel(SettingsPanel):
