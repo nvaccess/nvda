@@ -354,14 +354,17 @@ class MathCATUserPreferences:
 		return mathConf["speech"][mathLang]["speechStyle"]
 
 	@staticmethod
-	def tryToGetNVDAConfigValue(key1: str, key2: str) -> str:
+	def tryToGetNVDAConfigValue(key1: str, key2: str) -> int | str | bool:
 		mathConf = config.conf["math"]
 		convertedKey1 = toNVDAConfigKey(key1)
 		convertedKey2 = toNVDAConfigKey(key2)
 		try:
 			return mathConf[convertedKey1][convertedKey2]
 		except Exception:
-			log.warning(
+			# This should never happen now that we are using the config validation system to ensure all keys exist and have defaults,
+			# but just in case, we catch any exceptions and log an error,
+			# then fall back to the MathCAT default for this preference key.
+			log.error(
 				f"Could not access math.{convertedKey1}.{convertedKey2} configuration; using MathCAT default.",
 			)
 			# Fall back to the MathCAT default for this preference key.
