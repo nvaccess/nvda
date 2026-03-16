@@ -201,6 +201,10 @@ class OneCoreSynthDriver(SynthDriver):
 		self.supportsProsodyOptions = self._dll.ocSpeech_supportsProsodyOptions()
 		return self.supportsProsodyOptions
 
+	def _get_supportsPunctuationSilence(self):
+		self.supportsPunctuationSilence = self._dll.ocSpeech_supportsPunctuationSilence()
+		return self.supportsPunctuationSilence
+
 	def _get_supportedSettings(self):
 		self.supportedSettings = settings = [
 			SynthDriver.VoiceSetting(),
@@ -214,6 +218,8 @@ class OneCoreSynthDriver(SynthDriver):
 				SynthDriver.VolumeSetting(),
 			],
 		)
+		if self.supportsPunctuationSilence:
+			settings.append(SynthDriver.PunctuationSilenceSetting())
 		return settings
 
 	def __init__(self):
@@ -234,6 +240,11 @@ class OneCoreSynthDriver(SynthDriver):
 			self._dll.ocSpeech_getRate.restype = ctypes.c_double
 		else:
 			log.debugWarning("Prosody options not supported")
+
+		if self.supportsPunctuationSilence:
+			self._dll.ocSpeech_getPunctuationSilence.restype = ctypes.c_bool
+		else:
+			log.debugWarning("Punctuation silence not supported")
 
 		self._earlyExitCB = False
 		self._callbackInst = ocSpeech_Callback(self._callback)
@@ -381,6 +392,16 @@ class OneCoreSynthDriver(SynthDriver):
 		rate = self._rate
 		self._rateBoost = enable
 		self.rate = rate
+
+	def _get_punctuationSilence(self):
+		if not self.supportsPunctuationSilence:
+			return True
+		return self._dll.ocSpeech_getPunctuationSilence(self._ocSpeechToken)
+
+	def _set_punctuationSilence(self, enable):
+		if not self.supportsPunctuationSilence:
+			return
+		self._dll.ocSpeech_setPunctuationSilence(self._ocSpeechToken, ctypes.c_bool(enable))
 
 	def _processQueue(self):
 		if not self._queuedSpeech and self._player is None:
