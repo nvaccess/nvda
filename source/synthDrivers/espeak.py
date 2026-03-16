@@ -5,7 +5,6 @@
 
 import os
 from collections import OrderedDict
-)
 
 from . import _espeak
 from languageHandler import (
