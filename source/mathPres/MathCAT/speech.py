@@ -67,8 +67,8 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 		mathCATLanguageSetting = libmathcat.GetPreference("Language")
 	except Exception as e:
 		log.exception(e)
-	language: str = getLanguageToUse()
-	nvdaLanguage: str = toXmlLang(getCurrentLanguage())
+	language: str = getLanguageToUse().lower()
+	nvdaLanguage: str = toXmlLang(getCurrentLanguage()).lower()
 
 	synth: SynthDriver = getSynth()
 	# I tried the engines on a 180 word excerpt. The speeds do not change linearly and differ a it between engines
