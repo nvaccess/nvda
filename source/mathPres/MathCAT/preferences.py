@@ -12,6 +12,7 @@ from logHandler import log
 from NVDAState import ReadPaths
 from mathPres.MathCAT import localization
 from speech.speech import getCurrentLanguage
+from speechXml import toXmlLang
 from utils.displayString import DisplayStringStrEnum
 
 import libmathcat_py as libmathcat
@@ -310,7 +311,7 @@ class MathCATUserPreferences:
 				"MathRate": defaultValue(("speech", "mathRate")),
 				"PauseFactor": defaultValue(("speech", "pauseFactor")),
 				"SpeechSound": defaultValue(("speech", "speechSound")),
-				"SpeechStyle": MathCATUserPreferences.getConfigForSpeechStyle(
+				"SpeechStyle": MathCATUserPreferences.createConfigForSpeechStyle(
 					defaultValue(("speech", "language")),
 				),
 				"SubjectArea": defaultValue(("speech", "subjectArea")),
@@ -338,10 +339,10 @@ class MathCATUserPreferences:
 		self._prefs = prefs
 
 	@staticmethod
-	def getConfigForSpeechStyle(mathLang: str) -> str:
+	def createConfigForSpeechStyle(mathLang: str) -> str:
 		mathConf = config.conf["math"]
 		if mathLang == "Auto":
-			mathLang = getCurrentLanguage()
+			mathLang = toXmlLang(getCurrentLanguage().lower())
 		if mathLang not in mathConf["speech"]:
 			mathConf["speech"][mathLang] = {"speechStyle": ""}
 		if not mathConf["speech"][mathLang]["speechStyle"]:
@@ -374,7 +375,7 @@ class MathCATUserPreferences:
 			for key2 in prefs[key1]:
 				match (key1, key2):
 					case ("Speech", "SpeechStyle"):
-						nvdaConfigValue = MathCATUserPreferences.getConfigForSpeechStyle(
+						nvdaConfigValue = MathCATUserPreferences.createConfigForSpeechStyle(
 							mathConf["speech"]["language"],
 						)
 					case _:

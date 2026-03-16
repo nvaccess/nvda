@@ -74,7 +74,10 @@ class LanguageInfo:
 	"""Data class to hold information about a language, including its code and description."""
 
 	code: str
+	""""Language code in the form 'en-uk' or 'en'"""
+
 	description: str
+	"""Translated description. Falls back to the first part of the language code"""
 
 
 def _createAddRegionalLanguagesFunction(languages: list[LanguageInfo]) -> Callable[[str, str], list[str]]:
@@ -96,12 +99,12 @@ def _createAddRegionalLanguagesFunction(languages: list[LanguageInfo]) -> Callab
 			langDesc = getLanguageDescription(regionalCode)
 			# Translators: {lang} is the name of the language in that language,
 			# and {code} is the code for that language variant,
-			# e.g. "en-uk" for English (United Kingdom).
+			# e.g. "en-UK" for English (United Kingdom).
 			optionString = pgettext("math", "{lang} ({code})")
 			if langDesc is not None:
 				languages.append(
 					LanguageInfo(
-						code=regionalCode,
+						code=regionalCode.lower(),
 						description=optionString.format(lang=langDesc, code=regionalCode),
 					),
 				)
@@ -111,7 +114,7 @@ def _createAddRegionalLanguagesFunction(languages: list[LanguageInfo]) -> Callab
 				)
 				languages.append(
 					LanguageInfo(
-						code=regionalCode,
+						code=regionalCode.lower(),
 						description=optionString.format(lang=language, code=regionalCode),
 					),
 				)
@@ -186,6 +189,40 @@ def getLanguageCode(langChoice: wx.Choice) -> str:
 	return langCode
 
 
+def getSpeechStyleFromDirectory(dir: str, lang: str) -> list[str]:
+	r"""Get the speech styles from any regional dialog, from the main language, dir and if there isn't from the zip file.
+	The 'lang', if it has a region dialect, is of the form 'en\uk'
+	The returned list is sorted alphabetically
+
+	:param dir: The directory path to search for speech styles.
+	:param lang: Language code which may include a regional dialect (e.g., 'en\uk').
+	:return: A list of speech styles sorted alphabetically.
+	"""
+	# start with the regional dialect, then add on any (unique) styles in the main dir
+	mainLang: str = lang.split("\\")[0]  # does the right thing even if there is no regional directory
+	allStyleFiles: list[str] = []
+	if lang.find("\\") >= 0:
+		allStyleFiles: list[str] = [
+			os.path.basename(name) for name in glob.glob(dir + lang + "\\*_Rules.yaml")
+		]
+	allStyleFiles.extend(
+		[os.path.basename(name) for name in glob.glob(dir + mainLang + "\\*_Rules.yaml")],
+	)
+	allStyleFiles = list(set(allStyleFiles))  # make them unique
+	if len(allStyleFiles) == 0:
+		# look in the .zip file for the style files -- this will have regional variants, but also have that dir
+		zipFilePath: str = os.path.join(dir, mainLang, f"{mainLang}.zip")
+		try:
+			with ZipFile(zipFilePath, "r") as zipFile:
+				allStyleFiles = [
+					name.split("/")[-1] for name in zipFile.namelist() if name.endswith("_Rules.yaml")
+				]
+		except Exception as e:
+			log.debugWarning(f"MathCAT: didn't find zip file {zipFilePath}. Error: {e}")
+	allStyleFiles.sort()
+	return allStyleFiles
+
+
 def getSpeechStyles(languageCode: str) -> list[str]:
 	"""Get all the speech styles for the current language.
 	This sets the SpeechStyles dialog entry.
@@ -195,39 +232,6 @@ def getSpeechStyles(languageCode: str) -> list[str]:
 	:return: A list of speech styles for the given language.
 	"""
 	from speech import getCurrentLanguage
-
-	def getSpeechStyleFromDirectory(dir: str, lang: str) -> list[str]:
-		r"""Get the speech styles from any regional dialog, from the main language, dir and if there isn't from the zip file.
-		The 'lang', if it has a region dialect, is of the form 'en\uk'
-		The returned list is sorted alphabetically
-
-		:param dir: The directory path to search for speech styles.
-		:param lang: Language code which may include a regional dialect (e.g., 'en\uk').
-		:return: A list of speech styles sorted alphabetically.
-		"""
-		# start with the regional dialect, then add on any (unique) styles in the main dir
-		mainLang: str = lang.split("\\")[0]  # does the right thing even if there is no regional directory
-		allStyleFiles: list[str] = []
-		if lang.find("\\") >= 0:
-			allStyleFiles: list[str] = [
-				os.path.basename(name) for name in glob.glob(dir + lang + "\\*_Rules.yaml")
-			]
-		allStyleFiles.extend(
-			[os.path.basename(name) for name in glob.glob(dir + mainLang + "\\*_Rules.yaml")],
-		)
-		allStyleFiles = list(set(allStyleFiles))  # make them unique
-		if len(allStyleFiles) == 0:
-			# look in the .zip file for the style files -- this will have regional variants, but also have that dir
-			zipFilePath: str = os.path.join(dir, mainLang, f"{mainLang}.zip")
-			try:
-				with ZipFile(zipFilePath, "r") as zipFile:
-					allStyleFiles = [
-						name.split("/")[-1] for name in zipFile.namelist() if name.endswith("_Rules.yaml")
-					]
-			except Exception as e:
-				log.debugWarning(f"MathCAT: didn't find zip file {zipFilePath}. Error: {e}")
-		allStyleFiles.sort()
-		return allStyleFiles
 
 	resultSpeechStyles = []
 	if languageCode == "Auto":

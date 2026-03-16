@@ -2760,8 +2760,8 @@ class MathSettingsPanel(SettingsPanel):
 			choices=[lang.description for lang in self.languageOptions],
 		)
 		self.bindHelpEvent("MathSpeechLanguage", self.languageList)
-		mathLanguage = config.conf["math"]["speech"]["language"]
-		languageIndex = [lang.code for lang in self.languageOptions].index(mathLanguage)
+		mathLang = config.conf["math"]["speech"]["language"]
+		languageIndex = [lang.code for lang in self.languageOptions].index(mathLang)
 		self.languageList.SetSelection(languageIndex)
 
 		# Translators: MathCAT decimal separator option.
@@ -2784,10 +2784,10 @@ class MathSettingsPanel(SettingsPanel):
 		self.speechStyleList = speechGroup.addLabeledControl(
 			speechStyleText,
 			wx.Choice,
-			choices=localization.getSpeechStyles(mathLanguage),
+			choices=localization.getSpeechStyles(mathLang),
 		)
 		self.bindHelpEvent("MathSpeechStyle", self.speechStyleList)
-		speechStyle = MathCATUserPreferences.getConfigForSpeechStyle(mathLanguage)
+		speechStyle = MathCATUserPreferences.createConfigForSpeechStyle(mathLang)
 		if speechStyle:
 			self.speechStyleList.SetStringSelection(speechStyle)
 		else:
@@ -3002,6 +3002,7 @@ class MathSettingsPanel(SettingsPanel):
 			PauseFactor,
 		)
 		from speech.speech import getCurrentLanguage
+		from speechXml import toXmlLang
 
 		mathConf = config.conf["math"]
 		mathConf["speech"]["impairment"] = self._getEnumValueFromSelection(
@@ -3018,7 +3019,9 @@ class MathSettingsPanel(SettingsPanel):
 		if mathLang == "Auto":
 			# If language is set to Auto, we want to save the speech style as the default for the current language,
 			# so we need to get the actual language code that Auto resolves to.
-			mathLang = getCurrentLanguage()
+			mathLang = toXmlLang(getCurrentLanguage().lower())
+		# Ensure the per-language speech configuration exists before setting the speech style.
+		MathCATUserPreferences.createConfigForSpeechStyle(mathLang)
 		mathConf["speech"][mathLang]["speechStyle"] = self.speechStyleList.GetStringSelection()
 		mathConf["speech"]["verbosity"] = self._getEnumValueFromSelection(
 			VerbosityOption,
