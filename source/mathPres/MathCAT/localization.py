@@ -74,7 +74,7 @@ class LanguageInfo:
 	"""Data class to hold information about a language, including its code and description."""
 
 	code: str
-	""""Language code in the form 'en-uk' or 'en'"""
+	"""Language code in the form 'en-uk' or 'en'"""
 
 	description: str
 	"""Translated description. Falls back to the first part of the language code"""
@@ -82,10 +82,9 @@ class LanguageInfo:
 
 def _createAddRegionalLanguagesFunction(languages: list[LanguageInfo]) -> Callable[[str, str], list[str]]:
 	def addRegionalLanguages(subDir: str, language: str) -> list[str]:
-		"""Add regional language variants to the list of languages.
+		"""Add regional language variants and append them to the captured languages list.
 
-		:param languages: The list of LanguageInfo objects to append to.
-		This list is modified in place.
+		The closed-over ``languages`` list is modified in place.
 		:param subDir: The subdirectory representing the regional variant.
 		:param language: The base language code.
 		:return: A list of rule files for the regional variant.
