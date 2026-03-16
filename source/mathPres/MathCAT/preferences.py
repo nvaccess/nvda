@@ -342,7 +342,7 @@ class MathCATUserPreferences:
 	def createConfigForSpeechStyle(mathLang: str) -> str:
 		mathConf = config.conf["math"]
 		if mathLang == "Auto":
-			mathLang = toXmlLang(getCurrentLanguage().lower())
+			mathLang = toXmlLang(languageHandler.normalizeLanguage(getCurrentLanguage()))
 		if mathLang not in mathConf["speech"]:
 			mathConf["speech"][mathLang] = {"speechStyle": ""}
 		if not mathConf["speech"][mathLang]["speechStyle"]:
