@@ -15,18 +15,15 @@ import logging
 import math
 import os
 import re
-import typing
 from abc import ABCMeta, abstractmethod
-from collections.abc import Container
+from collections.abc import Callable, Container
 from enum import IntEnum
 from locale import strxfrm
 from typing import (
 	Any,
-	Callable,
 	List,
 	Optional,
 	Set,
-	Type,
 )
 
 import audio
@@ -184,7 +181,7 @@ class SettingsDialog(
 	def _setInstanceDestroyedState(self):
 		# prevent race condition with object deletion
 		# prevent deletion of the object while we work on it.
-		nonWeak: typing.Dict[SettingsDialog, SettingsDialog.DialogState] = dict(SettingsDialog._instances)
+		nonWeak: dict[SettingsDialog, SettingsDialog.DialogState] = dict(SettingsDialog._instances)
 
 		if (
 			self in SettingsDialog._instances
@@ -518,7 +515,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	"""
 
 	title = ""
-	categoryClasses: typing.List[typing.Type[SettingsPanel]] = []
+	categoryClasses: list[type[SettingsPanel]] = []
 
 	class CategoryUnavailableError(RuntimeError):
 		pass
@@ -545,7 +542,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.setPostInitFocus = None
 		# dictionary key is index of category in self.catList, value is the instance.
 		# Partially filled, check for KeyError
-		self.catIdToInstanceMap: typing.Dict[int, SettingsPanel] = {}
+		self.catIdToInstanceMap: dict[int, SettingsPanel] = {}
 
 		super(MultiCategorySettingsDialog, self).__init__(
 			parent,
@@ -2691,7 +2688,7 @@ class MathSettingsPanel(SettingsPanel):
 
 	def _getEnumIndexFromConfigValue(
 		self,
-		enumClass: Type[DisplayStringEnum],
+		enumClass: type[DisplayStringEnum],
 		configValue: Any,
 	) -> int:
 		"""Helper function to get the index of an enum option based on its config value.
@@ -2708,7 +2705,7 @@ class MathSettingsPanel(SettingsPanel):
 
 	def _getEnumValueFromSelection(
 		self,
-		enumClass: Type[DisplayStringEnum],
+		enumClass: type[DisplayStringEnum],
 		selectionIndex: int,
 	) -> Any:
 		"""Helper function to get the config value from a selection index.
@@ -2743,14 +2740,14 @@ class MathSettingsPanel(SettingsPanel):
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		from mathPres.MathCAT import localization, preferences
 		from mathPres.MathCAT.preferences import (
-			ImpairmentOption,
-			DecimalSeparatorOption,
-			VerbosityOption,
+			BrailleNavHighlightOption,
 			ChemistryOption,
+			CopyAsOption,
+			DecimalSeparatorOption,
+			ImpairmentOption,
 			NavModeOption,
 			NavVerbosityOption,
-			CopyAsOption,
-			BrailleNavHighlightOption,
+			VerbosityOption,
 			getSpeechStyleChoicesWithTranslations,
 		)
 
@@ -3015,19 +3012,17 @@ class MathSettingsPanel(SettingsPanel):
 		)
 
 	def onSave(self):
-		import math
-
 		from mathPres.MathCAT.preferences import MathCATUserPreferences
 		from mathPres.MathCAT.preferences import (
-			ImpairmentOption,
-			VerbosityOption,
-			DecimalSeparatorOption,
+			BrailleNavHighlightOption,
 			ChemistryOption,
+			CopyAsOption,
+			DecimalSeparatorOption,
+			ImpairmentOption,
 			NavModeOption,
 			NavVerbosityOption,
-			CopyAsOption,
-			BrailleNavHighlightOption,
 			PauseFactor,
+			VerbosityOption,
 			getSpeechStyleConfigValue,
 		)
 
