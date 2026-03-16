@@ -7,9 +7,9 @@ from enum import Enum
 import os
 
 import config
-import yaml
+import languageHandler
 from logHandler import log
-from NVDAState import WritePaths
+from NVDAState import ReadPaths
 from utils.displayString import DisplayStringStrEnum
 
 import libmathcat_py as libmathcat
@@ -44,7 +44,7 @@ class DecimalSeparatorOption(DisplayStringStrEnum):
 	def _displayStringLabels(self) -> dict["DecimalSeparatorOption", str]:
 		return {
 			# Translators: options for decimal separator -- "Auto" = automatically pick the choice based on the language
-			self.AUTO: pgettext("math", "Auto"),
+			self.AUTO: pgettext("math", "Automatic"),
 			# options for decimal separator -- use "."  (and use ", " for block separators)
 			self.DOT: ".",
 			# options for decimal separator -- use ","  (and use ". " for block separators)
@@ -187,18 +187,6 @@ class PauseFactor(Enum):
 	LOG_BASE: float = 1.4
 
 
-def pathToUserPreferencesFolder() -> str:
-	"""Returns the path to the folder where user preferences are stored."""
-	# the user preferences file is stored at: C:\Users\<user-name>AppData\Roaming\MathCAT\prefs.yaml
-	return os.path.join(os.path.expandvars("%APPDATA%"), "MathCAT")
-
-
-def pathToUserPreferences() -> str:
-	"""Returns the full path to the user preferences file."""
-	# the user preferences file is stored at: C:\Users\<user-name>AppData\Roaming\MathCAT\prefs.yaml
-	return os.path.join(pathToUserPreferencesFolder(), "prefs.yaml")
-
-
 def pathToBrailleFolder() -> str:
 	r"""Returns the full path to the Braille rules folder.
 		The Braille rules are stored in:
@@ -207,7 +195,7 @@ def pathToBrailleFolder() -> str:
 	:return: Absolute path to the Braille folder as a string.
 	"""
 	return os.path.join(
-		WritePaths.mathCATDir,
+		ReadPaths.mathCATDir,
 		"Rules",
 		"Braille",
 	)
@@ -229,6 +217,62 @@ def getBrailleCodes() -> list[str]:
 	return resultBrailleCodes
 
 
+def getAutoBrailleCode(
+	availableCodes: list[str] | None = None,
+	languageCode: str | None = None,
+) -> str:
+	"""
+	Determine the automatic MathCAT Braille code to use based on the current
+	or provided NVDA language.
+	"""
+	if not availableCodes:
+		availableCodes = getBrailleCodes()
+	if languageCode is None:
+		languageCode = languageHandler.getLanguage()
+
+	# de, nb, and nn should probably use Marburg when implemented upstream
+	languagesToBrailleCodes: dict[str, str] = {
+		"af": "UEB",
+		"an": "CMU",
+		"ca": "CMU",
+		"da": "LaTeX",
+		"de": "LaTeX",
+		"en": "UEB",
+		"es": "CMU",
+		"fi": "ASCIIMath-fi",
+		"ga": "UEB",
+		"gl": "CMU",
+		"mn": "UEB",
+		"nb": "LaTeX",
+		"nn": "LaTeX",
+		"pt": "CMU",
+		"ro": "UEB",
+		"sv": "Swedish",
+		"vi": "Vietnam",
+	}
+
+	res = languagesToBrailleCodes.get(languageCode.split("_")[0])
+	if res and res in availableCodes:
+		return res
+	return "ASCIIMath"
+
+
+def setEffectiveBrailleCode() -> None:
+	"""
+	Apply the effective Braille code to MathCAT at runtime, resolving auto
+	if needed.
+	"""
+	try:
+		brailleCodePref = config.conf["math"]["braille"]["brailleCode"]
+		effectiveCode = getAutoBrailleCode() if brailleCodePref == "Auto" else brailleCodePref
+		libmathcat.SetPreference("BrailleCode", effectiveCode)
+	except Exception as e:
+		log.debugWarning(
+			f"MathCAT: failed to set BrailleCode preference: {e}",
+			exc_info=True,
+		)
+
+
 def toNVDAConfigKey(key: str) -> str:
 	"""Converts a key for MathCAT's preferences (UpperCamelCase) to a
 	key for NVDA's configobj-based configuration (lowerCamelCase).
@@ -242,6 +286,27 @@ def toNVDAConfigKey(key: str) -> str:
 
 
 type PreferencesDict = dict[str, dict[str, int | str | bool]]
+
+
+def applyUserPreferences(prefs: PreferencesDict | None = None) -> None:
+	"""Apply user preferences to MathCAT's runtime preferences."""
+	if prefs is None:
+		prefs = MathCATUserPreferences.fromNVDAConfig()._prefs
+	for categoryPrefs in prefs.values():
+		for k, v in categoryPrefs.items():
+			if k == "BrailleCode":
+				continue
+			try:
+				if isinstance(v, bool):
+					yaml_val = "true" if v else "false"
+				else:
+					yaml_val = str(v)
+				libmathcat.SetPreference(k, yaml_val)
+			except Exception as e:
+				log.exception(
+					f"MathCAT: failed to set {k} preference: {e}",
+				)
+	setEffectiveBrailleCode()
 
 
 def getSpeechStyleChoicesWithTranslations(languageCode: str) -> list[str]:
@@ -327,7 +392,6 @@ class MathCATUserPreferences:
 		prefs: PreferencesDict,
 	) -> None:
 		self._prefs = prefs
-		self._validateAll()
 
 	@staticmethod
 	def fromNVDAConfig() -> "MathCATUserPreferences":
@@ -345,208 +409,6 @@ class MathCATUserPreferences:
 					)
 		return MathCATUserPreferences(prefs)
 
-	def save(self) -> None:
-		"""Writes the current user preferences to a file and updates special settings.
-
-		Sets the language preference through the native library, ensures the preferences
-		folder exists, and saves the preferences to disk.
-		"""
-		# Language is special because it is set elsewhere by SetPreference which overrides the user_prefs -- so set it here
-
-		try:
-			libmathcat.SetPreference("Language", self._prefs["Speech"]["Language"])
-		except Exception as e:
-			log.exception(
-				f'Error in trying to set MathCAT "Language" preference to "{self._prefs["Speech"]["Language"]}": {e}',
-			)
-		if not os.path.exists(pathToUserPreferencesFolder()):
-			# create a folder for the user preferences
-			os.mkdir(pathToUserPreferencesFolder())
-		with open(pathToUserPreferences(), "w", encoding="utf-8") as f:
-			# write values to the user preferences file, NOT the default
-			yaml.dump(self._prefs, stream=f, allow_unicode=True)
-
-	def _validateAll(self):
-		"""Validates all user preferences, ensuring each is present and valid.
-
-		If a preference is missing or invalid, it is reset to its default value.
-		Validation covers speech, navigation, and braille settings.
-		"""
-		#  Speech.Impairment
-		# Default value: Blindness
-		# Valid values: LearningDisability, LowVision, Blindness
-		self._validate(
-			"Speech",
-			"Impairment",
-			[option.value for option in ImpairmentOption],
-			ImpairmentOption.BLINDNESS.value,
-		)
-		# Speech.Language
-		# Default value: en
-		# Valid values: any known language code and sub-code -- could be en-uk, etc
-		self._validate("Speech", "Language", [], "en")
-		# Speech.Verbosity
-		# Default value: Medium
-		# Valid values: Terse, Medium, Verbose
-		self._validate(
-			"Speech",
-			"Verbosity",
-			[option.value for option in VerbosityOption],
-			VerbosityOption.MEDIUM.value,
-		)
-		# Speech.MathRate
-		# Default value: 100
-		# Valid values: integers in the interval [0, 200]; change from text speech rate (%)
-		self._validateInt("Speech", "MathRate", [0, 200], 100)
-		# Speech.PauseFactor: 100
-		# Default value: 100
-		# Valid values: integers in the interval [0, 1000]
-		self._validateInt("Speech", "PauseFactor", [0, 1000], 100)
-		# Speech.SpeechSound
-		# Default value: None
-		# Valid values: None, Beep -- make a sound when starting / ending math speech
-		self._validate("Speech", "SpeechSound", ["None", "Beep"], "None")
-		# Speech.SpeechStyle
-		# Default value: ClearSpeak
-		# Valid values: Any known speech style (falls back to ClearSpeak)
-		self._validate("Speech", "SpeechStyle", [], "ClearSpeak")
-		# Speech.SubjectArea
-		# Default value: General
-		# Not yet implemented in MathCAT
-		self._validate("Speech", "SubjectArea", [], "General")
-		# Speech.Chemistry
-		# Default value: SpellOut
-		# Valid values: SpellOut (H 2 O), AsCompound (Water), Off (H sub 2 O)
-		self._validate(
-			"Speech",
-			"Chemistry",
-			[option.value for option in ChemistryOption],
-			ChemistryOption.SPELL_OUT.value,
-		)
-
-		# Navigation:
-
-		# Navigation.NavMode
-		# Default value: Enhanced
-		# Valid values: Enhanced, Simple, Character
-		self._validate(
-			"Navigation",
-			"NavMode",
-			[option.value for option in NavModeOption],
-			NavModeOption.ENHANCED.value,
-		)
-		# Navigation.ResetNavMode
-		# Default value: false
-		# Valid values: true, false; remember previous value and use it
-		self._validate("Navigation", "ResetNavMode", [False, True], False)
-		# Navigation.Overview
-		# Default value: false
-		# Valid values: true, false; speak the expression or give a description/overview
-		self._validate("Navigation", "Overview", [False, True], False)
-		# Navigation.ResetOverview
-		# Default value: true
-		# Valid values: true, false; remember previous value and use it
-		self._validate("Navigation", "ResetOverview", [False, True], True)
-		# Navigation.NavVerbosity
-		# Default value: Medium
-		# Valid values: Terse, Medium, Verbose (words to say for nav command)
-		self._validate(
-			"Navigation",
-			"NavVerbosity",
-			[option.value for option in NavVerbosityOption],
-			NavVerbosityOption.MEDIUM.value,
-		)
-		# Navigation.AutoZoomOut
-		# Default value: true
-		# Valid values: true, false; Auto zoom out of 2D exprs (use shift-arrow to force zoom out if unchecked)
-		self._validate("Navigation", "AutoZoomOut", [False, True], True)
-		# Navigation.CopyAs
-		# Default value: MathML
-		# Valid values: MathML, LaTeX, ASCIIMath, Speech
-		self._validate(
-			"Navigation",
-			"CopyAs",
-			[option.value for option in CopyAsOption],
-			CopyAsOption.MATHML.value,
-		)
-
-		# Braille
-
-		# Braille.BrailleNavHighlight
-		# Default value: EndPoints
-		# Valid values: Highlight with dots 7 & 8 the current nav node -- values are Off, FirstChar, EndPoints, All
-		self._validate(
-			"Braille",
-			"BrailleNavHighlight",
-			[option.value for option in BrailleNavHighlightOption],
-			BrailleNavHighlightOption.ENDPOINTS.value,
-		)
-		# Braille.BrailleCode
-		# Default value: "Nemeth"
-		# Valid values: Any supported braille code (currently Nemeth, UEB, CMU, Vietnam)
-		self._validate("Braille", "BrailleCode", [], "Nemeth")
-
-	def _validate(
-		self,
-		key1: str,
-		key2: str,
-		validValues: list[str | bool],
-		defaultValue: str | bool,
-	) -> None:
-		"""Validates that a preference value is in a list of valid options or non-empty if no list is given.
-
-		If the value is missing or invalid, sets it to the default.
-
-		:param key1: The first-level key in the preferences dictionary.
-		:param key2: The second-level key in the preferences dictionary.
-		:param validValues: A list of valid values; if empty, any non-empty value is valid.
-		:param defaultValue: The default value to set if validation fails.
-		"""
-		try:
-			if validValues == []:
-				# any value is valid
-				if self._prefs[key1][key2] != "":
-					return
-
-			else:
-				# any value in the list is valid
-				if self._prefs[key1][key2] in validValues:
-					return
-		except Exception as e:
-			log.exception(f"MathCAT: An exception occurred in validate: {e}")
-			# the preferences entry does not exist
-		if key1 not in self._prefs:
-			self._prefs[key1] = {key2: defaultValue}
-		else:
-			self._prefs[key1][key2] = defaultValue
-
-	def _validateInt(
-		self,
-		key1: str,
-		key2: str,
-		validValues: list[int],
-		defaultValue: int,
-	) -> None:
-		"""Validates that an integer preference is within a specified range.
-
-		If the value is missing or out of bounds, sets it to the default.
-
-		:param key1: The first-level key in the preferences dictionary.
-		:param key2: The second-level key in the preferences dictionary.
-		:param validValues: A list with two integers [min, max] representing valid bounds.
-		:param defaultValue: The default value to set if validation fails.
-		"""
-		try:
-			# any value between lower and upper bounds is valid
-			if (
-				int(self._prefs[key1][key2]) >= validValues[0]
-				and int(self._prefs[key1][key2]) <= validValues[1]
-			):
-				return
-		except Exception as e:
-			log.exception(f"MathCAT: An exception occurred in validateInt: {e}")
-		# the preferences entry does not exist
-		if key1 not in self._prefs:
-			self._prefs[key1] = {key2: defaultValue}
-		else:
-			self._prefs[key1][key2] = defaultValue
+	def apply(self) -> None:
+		"""Updates MathCAT's settings based on the current user preferences ."""
+		applyUserPreferences(self._prefs)

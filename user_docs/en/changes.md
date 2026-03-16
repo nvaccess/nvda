@@ -3,13 +3,12 @@
 ## 2026.1
 
 This release includes built-in support for reading math content with MathCAT.
-It also introduces experimental, on-device AI image descriptions.
-You can now use `NVDA+g` to get a short, approximate description of images you encounter, without any data leaving your device.
 
 There have been several improvements to speech.
 Spelling errors can now be reported with a sound instead of speech when reading.
 You can now configure NVDA to automatically say all after successfully recognising content, such as with Windows OCR.
 NVDA no longer reports the language being read as unsupported when the synthesizer supports the language but not the specific dialect.
+NVDA now supports 64-bit SAPI 5 voices.
 
 Braille support has also been improved.
 It now continues to work when switching to a secure screen, like the sign-in screen or User Account Control dialog.
@@ -33,6 +32,7 @@ The "Logging level" and "Allow NV Access to gather NVDA usage statistics" settin
 The settings for Screen Curtain have also been moved here from the "Vision" category.
 Additionally, Screen Curtain's settings are now configuration profile independent.
 
+The NVDA interface is now translated to Cambodian.
 Liblouis, Unicode CLDR and eSpeak NG have been updated.
 Added tables for English Grade 3, Japanese (Rokuten Kanji), and Macedonian uncontracted braille.
 Improved the Biblical Hebrew, Unified English Braille, Greek International, Hungarian, Norwegian, Portuguese 8-dot and Slovakian braille tables.
@@ -49,7 +49,6 @@ We recommend updating to Windows 11, or when that's not possible, to the latest 
 * 32-bit Windows is no longer supported.
 Windows 10 on ARM is also no longer supported.
 * Wiris MathPlayer is no longer supported.
-* Microsoft Speech API version 4 (SAPI 4) synthesizers are no longer supported.
 
 ### New Features
 
@@ -57,15 +56,11 @@ Windows 10 on ARM is also no longer supported.
   * VirusTotal scan results are now available in the details for an add-on.
   An action has been added to view the full scan results on the VirusTotal website. (#18974)
   * A new action has been added to see the latest changes for the current version of an add-on. (#14041, @josephsl, @nvdaes)
-* Added built-in support for reading math content by integrating MathCAT. (#18323, @RyanMcCleary)
-* NVDA can now use on-device AI to generate image descriptions. (#18475, @tianzeshi-study)
-  * This feature is experimental, and should not be used in situations where inaccurate descriptions could cause harm.
-  * To use this feature, NVDA will need to download image description data.
-  Thereafter, it operates entirely offline.
-  * Press `NVDA+g` to get an AI generated image description.
-  * Unassigned commands are available to quickly open the settings dialog to the "AI Image Descriptions" category, and toggle image captioning.
+* It is now possible to select which add-ons to copy for use during sign-in and on secure screens. (#6305)
+* Added built-in support for reading math content by integrating MathCAT. (#18323, #19368, @RyanMcCleary, @codeofdusk)
+* NVDA now supports 64-bit Microsoft Speech API version 5 voices. (#19432)
 * Added references (e.g. to footnotes and endnotes) to the elements list in Microsoft Word.
-Also added unassigned Quick Navigation commands to jump to the next/previous reference. (#19300, @LeonarddeR)
+Also added unassigned Quick Navigation commands to jump to the next/previous reference. (#19300, @LeonarddeR)
 * In browse mode, the number of items in a list is now reported in braille. (#7455, @nvdaes)
 * While reading text, spelling and grammar errors can now be reported with a sound instead of speech. (#4233, #19257, @jcsteh, @CyrilleB79, @nvdaes)
 * Spelling and grammar errors can now be reported in braille. (#7608, #19257, @nvdaes)
@@ -74,6 +69,7 @@ This can be enabled using the "Report when objects support multiple selection" s
 * In Visual Studio Code, the status bar is now reported when using the standard `NVDA+end` (desktop) / `NVDA+shift+end` (laptop) gesture. (#11064, @codeofdusk)
 * Automatically reading the entire result after a successful recognition is now possible via a new option in the Windows OCR settings. (#19150, @Cary-rowen)
 * Performance improvements on ARM64 systems, such as with Qualcomm processors. (#18570, @leonarddeR)
+* A new unassigned global command has been added to toggle the "Play audio coordinates when mouse moves" option. (#19026, @rlawnsrl123)
 
 ### Changes
 
@@ -82,7 +78,6 @@ Windows 10 (Version 1507) is the minimum Windows version supported.
 We recommend using Windows 11, or if that is not possible, the latest Windows 10 release (Version 22H2). (#18684, @josephsl)
 * NVDA no longer supports 32bit Windows or Windows 10 on ARM.
 * Support for the MathPlayer software from Wiris has been removed. (#19239)
-* Support for Microsoft Speech API version 4 (SAPI 4) speech synthesizers has been removed. (#19290)
 * Component updates:
   * Updated Liblouis braille translator to [3.36.0](https://github.com/liblouis/liblouis/releases/tag/v3.36.0). (#18848, #19315, @LeonarddeR)
     * Added Japanese (Rokuten Kanji) Braille, Macedonian uncontracted braille and English Grade 3.
@@ -101,18 +96,32 @@ Such controls will now be accessible in browse mode where they weren't before. (
 * The state of the Screen Curtain is no longer dependent on the configuration profile in use. (#10476)
 * A new "Privacy and Security" category has been added to NVDA's settings dialog.
 It currently includes Screen Curtain's settings (previously in the "Vision" category), and the "Logging level" and "Allow NV Access to gather NVDA usage statistics" settings (previously in the "General" category). (#19177, #19296)
+* When copying settings for use during sign-in and on secure screens:
+  * NVDA no longer warns about or copies disabled add-ons. (#8274, #9020)
+  * By default, NVDA doesn't copy any add-ons; you must select any you wish to include. (#12879)
+* Audio ducking is no longer supported for Microsoft Speech API version 4 or 32-bit Microsoft Speech API version 5 voices. (#19432)
+* The NVDA interface is now translated to Cambodian. (#19450)
+* NVDA will no longer enable "Use NVDA during sign-in" by default when installing for the first time. (#19631)
 
 ### Bug Fixes
 
+* Remote Access:
+  * Improved user notifications when connecting as the controlled computer fails. (#19103, @tareh7z)
+  * NVDA will no longer open multiple disconnection confirmation dialogs if the action is triggered repeatedly. (#19442, @Cary-rowen)
+* NVDA installer:
+  * NVDA should now correctly identify downgrades and show the downgrade warning dialog appropriately, including for portable copies. (#19631, #18291)
+  * NVDA will now retain the "Use NVDA during sign-in" setting and desktop shortcut more consistently. (#19631)
 * Fixed `<` not being escaped in MathML in PDF documents. (#18520, @NSoiffer)
 * When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
 * Fixed cases where NVDA was unable to retrieve information for an application, such as product name, version and architecture. (#18826, @LeonarddeR)
 * When reporting the location of the caret in classic versions of Notepad and other Win32 edit controls, text position is now more accurate. (#18767, @LeonarddeR)
 * NVDA no longer fails to read the contents of wx Web View controls. (#17273, @LeonarddeR)
 * When NVDA is configured to update add-ons automatically in the background, add-ons can be properly updated. (#18965, @nvdaes)
+* Attempting to install an add-on that requires a newer version of NVDA from File Explorer no longer fails silently or shows the incompatible add-ons dialog. (#19260, #19261)
 * Fixed a case where braille output would fail with an error. (#19025, @LeonarddeR)
-* Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @hdzrvcc0X74)
+* Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @tareh7z)
 * When a synthesizer has a fallback language for the current dialect, the language of the text being read will no longer be reported as unsupported. (#18876, @nvdaes)
+* If the speech synthesizer is set to eSpeak NG and it fails to load when NVDA starts, NVDA will now attempt to fall back to OneCore before resorting to no speech. (#19603)
 * Certain settings will no longer erroneously be saved to disk when running NVDA from the launcher. (#18171)
 * Incorrect information is no longer displayed in braille when navigating the list of messages in Outlook Classic. (#18993, @nvdaes)
 * NVDA now detects and stops repeated crash loops to prevent system lockups when startup failures occur. (#19133, @derekriemer)
@@ -120,6 +129,7 @@ It currently includes Screen Curtain's settings (previously in the "Vision" cate
 * The browse mode cursor highlighter now appears on content recognition results, such as when using Windows OCR. (#19168, @hwf1324)
 * In the Input Gestures dialog, gestures including an operator while Num Lock is on will now be correctly displayed. (#19214, @CyrilleB79)
 * In Chromium browsers, if a document contains links with a malformed URL, reading the document will be possible again. (#19125, @nvdaes)
+* NVDA no longer plays a sound for spelling errors while typing if speech mode is set to on-demand or off. (#19323, @CyrilleB79)
 
 ### Changes for Developers
 
@@ -138,7 +148,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * uv to 0.9.11 (#19162)
   * Ruff to 0.14.5 (#19162)
   * comtypes to 1.4.13 (#19196)
-  * cryptography to 46.0.3 (#19196)
+  * cryptography to 46.0.5 (#19196, #19601)
   * Configobj to commit `9c8a0a80` (#19196)
   * Requests to 2.32.5 (#19196)
   * url-normalize to 2.2.1 (#19196)
@@ -148,7 +158,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Python-Markdown to 3.10 (#19196)
   * lxml to 6.0.2 (#19196)
   * PyMdown Extensions to 10.17.1 (#19196)
-  * Setuptools to 80.9 (#19196)
+  * Setuptools to 80.10.2 (#19196, #19524)
   * Robot Framework to 7.3.2 (#19196)
   * IAccessible2 to commit `c9ae003` (#19196)
   * Sonic to commit `d2cdb40` (#19196)
@@ -161,13 +171,16 @@ On ARM64 machines with Windows 11, these ARM64EC libraries are loaded instead of
 * NVDA is now licensed under "GPL-2 or later".
 * In `braille.py`, the `FormattingMarker` class has a new `shouldBeUsed` method, to determine if the formatting marker key should be reported (#7608, @nvdaes)
 * Added `api.fakeNVDAObjectClasses` set and `api.isFakeNVDAObject` function to identify fake NVDAObject instances. (#19168, @hwf1324)
+* NVDA no longer includes the Microsoft Universal C Runtime. (#19508)
+* `synthDriverHandler.setSynth` and `synthDriverHandler.findAndSetNextSynth` now attempt to find fallback synthesizers starting from the start of `defaultSynthPriorityList`, rather than starting immediately after `name` or `currentSynthName`, respectively. (#19603)
+* `gui.installerGui.doInstall` parameter `startOnLogon` default value is now `False`. (#19631)
 
 #### API Breaking Changes
 
 These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
-* NVDA is now built with Python 3.13. (#18591)
+* NVDA is now built with Python 3.13.12, 64-bit. (#18591, #19111, #19351, #19572, @LeonarddeR, @dpy013)
 * typing_extensions have been removed.
 These should be supported natively in Python 3.13. (#18689)
 * `copyrightYears` and `url` have been moved from `versionInfo` to `buildVersion`. (#18682)
@@ -182,7 +195,7 @@ Use `NVDAHelper.localLib.dll` for access to the `ctypes.CDLL` if necessary. (#18
 Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @CyrilleB79)
 * `NVDAObjects.window.GhostWindowFromHungWindow` has been removed with no replacement. (#18883)
 * `winUser.Input_I` and `winUser.PUL` have been removed, with no replacement. (#18883)
-* The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than HIDP_VALUE_CAPS` structures. (#18902)
+* The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than `HIDP_VALUE_CAPS` structures. (#18902)
 * `speech.speech.IDT_TONE_DURATION` has been removed.
 Call `speech.speech.getIndentToneDuration` instead. (#18898)
 * the `rgpszUsageIdentifier` member of the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation.
@@ -220,7 +233,7 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
     * `get_device_info_list` to `getDeviceInfoList`; and
     * `open_ex` to `openEx`.
   * The following methods on the `FTD2XX` class have been renamed:
-    * `set_baud_rate` to`setBaudRate`;
+    * `set_baud_rate` to `setBaudRate`;
     * `set_timeouts` to `setTimeouts`;
     * `set_latency_timer` to `setLatencyTimer`;
     * `set_bit_mode` to `setBitMode`;
@@ -234,15 +247,19 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
   * All public symbols defined on `Magnification` are now accessible from `winBindings.magnification`. (#18958)
   * `MAGCOLOREFFECT` has been moved to `winBindings.magnification`. (#18958)
   * `isScreenFullyBlack` has been moved to `NVDAHelper.localLib`. (#18958)
-* `config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]. (#19177)
+* `config.conf["vision"]["screenCurtain"]` has been moved to `config.conf["screenCurtain"]`. (#19177)
 * The `comInterfaces.MathPlayer` and `mathPres.mathPlayer` modules have been removed. (#19239)
-* SAPI 4 support has been removed: (#19290)
-  * The `synthDrivers.sapi4` module has been removed.
-  * `gui.settingsDialogs.AdvancedPanelControls.useWASAPIForSAPI4Combo` has been removed.
-  * `config.conf["speech"]["useWASAPIForSAPI4"]` is no longer part of NVDA's configuration schema.
 * The following symbols have been removed from `gui.settingsDialogs.GeneralSettingsPanel` without replacement: `logLevelList`, `allowUsageStatsCheckBox`. (#19296)
 * `gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS` has been removed.
 Use `config.configFlags.LoggingLevel` instead. (#19296)
+* Changes to Microsoft Speech API version 4 and 5: (#19432)
+  * `synthDrivers.sapi4` (name: "sapi4") has been removed.
+  Use `synthDrivers.sapi4_32` (name: "sapi4_32") instead.
+  * `synthDrivers.sapi5` (name: "sapi5") now refers to the 64-bit SAPI 5 synth driver.
+  Use `synthDrivers.sapi5_32` (name: "sapi5_32") for the 32-bit SAPI 5 driver.
+* `config.setSystemConfigToCurrentConfig` now takes a `Collection` of add-on IDs (as strings) to copy to the system configuration.
+Only add-ons with the given IDs will be copied. (#19446)
+* `browseMode.ElementsListDialog.filterTimer` has been removed. (#19702)
 
 #### Deprecations
 
@@ -323,9 +340,25 @@ Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.
 Access to these symbols via `updateCheck` is deprecated. (#18956)
 * `textInfos.OffsetsTextInfo.allowMoveToOffsetPastEnd` is deprecated.
 Use the `OffsetsTextInfo.allowMoveToUnitOffsetPastEnd` method instead. (#19152, @LeonarddeR)
+* `installer.comparePreviousInstall` is deprecated with no planned replacement. (#19631)
+* Deprecations in `addonHandler`: (#19564)
+  * `stateFilename` is deprecated.
+  Use `STATE_FILENAME` instead.
+  * `AddonsState.fromPickledDict` is deprecated.
+  Use `AddonsState.fromDict` instead.
 
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
+
+## 2025.3.3
+
+This is a patch release to fix a security issue.
+
+### Security fixes
+
+Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
+
+* Prevents a situation where NVDA may unexpectedly run as an administrator. [GHSA-cq78-fjp7-3rp5](https://github.com/nvaccess/nvda/security/advisories/ghsa-cq78-fjp7-3rp5)
 
 ## 2025.3.2
 
@@ -375,7 +408,6 @@ Localisation data for emojis has been added for Belarusian and Bosnian.
   * Installation date will now be also shown in the details area for external add-ons. (#18560, @CyrilleB79)
 * A new unassigned command has been added to send `control+alt+delete` when controlling another computer via NVDA Remote Access. (#18105)
 * A new setting has been added to automatically mute Remote Access when controlling the local computer. (#18630)
-* A new unassigned global command has been added to toggle the "Play audio coordinates when mouse moves" option. (#19026, @rlawnsrl123)
 
 ### Changes
 

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2025 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V.,
+# Copyright (C) 2012-2026 NV Access Limited, Rui Batista, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V.,
 # Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -7,6 +7,8 @@
 from __future__ import annotations  # Avoids quoting of forward references
 
 from abc import abstractmethod, ABC
+from collections.abc import Callable, Mapping
+import json
 import sys
 import os.path
 import gettext
@@ -15,17 +17,12 @@ import itertools
 import collections
 import shutil
 from io import StringIO
-import pickle
 from typing import (
-	Callable,
-	Dict,
 	IO,
+	Any,
+	Final,
 	Literal,
-	Optional,
-	Set,
 	TYPE_CHECKING,
-	Tuple,
-	Union,
 )
 import zipfile
 from configobj import ConfigObj
@@ -34,6 +31,7 @@ import config
 from config.registry import ADDON_BUNDLE_EXTENSION
 import languageHandler
 from logHandler import log
+from utils.security import isRunningOnSecureDesktop
 import winBindings.kernel32
 import addonAPIVersion
 import importlib
@@ -74,13 +72,32 @@ __getattr__ = handleDeprecations(
 		"NVDA_ADDON_PROG_ID",
 		"config.registry",
 	),
+	MovedSymbol(
+		"stateFilename",
+		"addonHandler",
+		"STATE_FILENAME",
+	),
 )
 
-MANIFEST_FILENAME = "manifest.ini"
-stateFilename = "addonsState.pickle"
-BUNDLE_MIMETYPE = "application/x-nvda-addon"
-ADDON_PENDINGINSTALL_SUFFIX = ".pendingInstall"
-DELETEDIR_SUFFIX = ".delete"
+MANIFEST_FILENAME: Final[str] = "manifest.ini"
+STATE_FILENAME: Final[str] = "addonsState.json"
+_OLD_STATE_FILENAME: Final[str] = "addonsState.pickle"
+# Decoding JSON can potentially consume a large amount of memory.
+# To avoid issues caused by this when reading add-on state,
+# limit the maximum size of the file.
+# The 2026.1 state JSON with no add-ons is 244 bytes.
+# As of 2026-02-24, there are 364 add-ons in the Add-on Store,
+# and the longest ID is 40 UTF-8 bytes (mean ~= median ~= 13 bytes).
+# Even if we take the empty state to be 300 bytes,
+# and assume that all add-on IDs are 100 characters long,
+# And those 100 characters are all 4 bytes wide,
+# and factor in the 4 extra bytes required for the enclosing quotes and ", " separator between IDs,
+# 1MiB is still enough space for a state file containing
+# (1024 * 1024) / (4 + 4 * 100) ~= 2594 add-ons.
+_MAX_STATE_FILESIZE_BYTES = 1024 * 1024  # 1MiB
+BUNDLE_MIMETYPE: Final[str] = "application/x-nvda-addon"
+ADDON_PENDINGINSTALL_SUFFIX: Final[str] = ".pendingInstall"
+DELETEDIR_SUFFIX: Final[str] = ".delete"
 
 
 # Allows add-ons to process additional command line arguments when NVDA starts.
@@ -93,7 +110,7 @@ _failedPendingRemovals: CaseInsensitiveSet[str] = CaseInsensitiveSet()
 _failedPendingInstalls: CaseInsensitiveSet[str] = CaseInsensitiveSet()
 
 
-AddonStateDictT = Dict[AddonStateCategory, CaseInsensitiveSet[str]]
+AddonStateDictT = dict[AddonStateCategory, CaseInsensitiveSet[str]]
 
 
 class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[str]]):
@@ -104,6 +121,10 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 	as add-on IDs are installed to a case insensitive path.
 	Therefore add-on IDs should be treated as case insensitive.
 	"""
+
+	def __init__(self, *args, **kwargs) -> None:
+		super().__init__(*args, **kwargs)
+		self.setDefaultStateValues()
 
 	@staticmethod
 	def _generateDefaultStateContent() -> AddonStateDictT:
@@ -125,44 +146,41 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		# where the BACK_COMPAT_TO API version was 2023.1.0.
 		self.manualOverridesAPIVersion = MajorMinorPatch(2023, 1, 0)
 
+	def fromDict(
+		self,
+		stateDict: dict[str, Any],
+	) -> None:
+		if "backCompatToAPIVersion" in stateDict:
+			try:
+				self.manualOverridesAPIVersion = MajorMinorPatch(
+					*(int(num) for num in stateDict["backCompatToAPIVersion"]),
+				)
+			except Exception:
+				log.error("Unable to deserialise backward compatibility version.", exc_info=True)
+		for category in AddonStateCategory:
+			# Make the list of strings unique and case insensitive.
+			self[AddonStateCategory(category)] = CaseInsensitiveSet(stateDict.get(category, []))
+
 	def fromPickledDict(
 		self,
-		pickledState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT, MajorMinorPatch]],
+		pickledState: dict[str, set[str] | addonAPIVersion.AddonApiVersionT | MajorMinorPatch],
 	) -> None:
-		# Load from pickledState
-		if "backCompatToAPIVersion" in pickledState:
-			self.manualOverridesAPIVersion = MajorMinorPatch(*pickledState["backCompatToAPIVersion"])
-		for category in AddonStateCategory:
-			# Make pickles case insensitive
-			self[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState.get(category, set()))
+		log.warning(
+			"addonHandler.AddonsState.fromPickledDict is deprecated. Use addonHandler.AddonsState.fromDict instead.",
+		)
+		return self.fromDict(pickledState)
 
-	def toDict(self) -> Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT]]:
-		# We cannot pickle instance of `AddonsState` directly
-		# since older versions of NVDA aren't aware about this class and they're expecting
-		# the state to be using inbuilt data types only.
-		picklableState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT]] = dict()
-		for category in self.data:
-			picklableState[category.value] = set(self.data[category])
-		picklableState["backCompatToAPIVersion"] = tuple(self.manualOverridesAPIVersion)
-		return picklableState
+	def toDict(self) -> dict[str, list[str] | addonAPIVersion.AddonApiVersionT]:
+		"""Convert state to a dict that can be dumped to JSON."""
+		serializeableState: dict[str, list[str] | addonAPIVersion.AddonApiVersionT] = dict()
+		for category, addonIds in self.data.items():
+			serializeableState[category.value] = list(addonIds)
+		serializeableState["backCompatToAPIVersion"] = tuple(self.manualOverridesAPIVersion)
+		return serializeableState
 
 	def load(self) -> None:
 		"""Populates state with the default content and then loads values from the config."""
-		self.setDefaultStateValues()
-		try:
-			# #9038: Python 3 requires binary format when working with pickles.
-			with open(self.statePath, "rb") as f:
-				pickledState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT]] = pickle.load(f)
-		except FileNotFoundError:
-			pass  # Clean config - no point logging in this case
-		except IOError:
-			log.debug("Error when reading state file", exc_info=True)
-		except pickle.UnpicklingError:
-			log.debugWarning("Failed to unpickle state", exc_info=True)
-		except Exception:
-			log.exception()
-		else:
-			self.fromPickledDict(pickledState)
+		self._loadWithFallback()
 		if self.manualOverridesAPIVersion != addonAPIVersion.BACK_COMPAT_TO:
 			log.debug(
 				"BACK_COMPAT_TO API version for manual compatibility overrides has changed. "
@@ -178,6 +196,61 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 			self[AddonStateCategory.OVERRIDE_COMPATIBILITY].clear()
 			self[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].clear()
 		self.manualOverridesAPIVersion = MajorMinorPatch(*addonAPIVersion.BACK_COMPAT_TO)
+
+	def _load(self, statePath: os.PathLike) -> None:
+		"""
+		Loads the addons state file.
+
+		..note::
+			Unlike :meth:`load`, this method does not perform any consistency checking.
+
+		:param statePath: Path from which to load the addons state file.
+		"""
+		try:
+			with open(statePath, "rt", encoding="utf-8") as file:
+				if (size := os.stat(file.fileno()).st_size) > _MAX_STATE_FILESIZE_BYTES:
+					log.error(f"Add-ons state file too large. {size=}B; {_MAX_STATE_FILESIZE_BYTES=}B")
+					return
+				stateDict = json.load(file)
+		except FileNotFoundError:
+			pass  # Clean config - no point logging in this case
+		except OSError:
+			log.error("Error when reading state file", exc_info=True)
+		except json.JSONDecodeError:
+			log.error("Failed to deserialize add-ons state", exc_info=True)
+		except Exception:
+			log.exception()
+		else:
+			if not isinstance(stateDict, Mapping):
+				log.error(
+					f"Expected parsed state dictionary to be a mapping type; got {type(stateDict)} instead.",
+				)
+				return
+			self.fromDict(stateDict)
+
+	def _loadWithFallback(self) -> None:
+		if os.path.isfile(self.statePath):
+			self._load(self.statePath)
+		else:
+			if not isRunningOnSecureDesktop() and os.path.isfile(WritePaths._oldAddonStateFile):
+				# Only import if absolutely necessary.
+				from ._pickleToJsonMigration import _getAddonsStateDictFromPickle
+
+				log.warning("Loading add-ons state from pickle.")
+				try:
+					self.fromDict(_getAddonsStateDictFromPickle(WritePaths._oldAddonStateFile))
+				except Exception:
+					log.error("Failed to load pickled add-ons state.", exc_info=True)
+				else:
+					if NVDAState.shouldWriteToDisk():
+						self.save()
+				finally:
+					if NVDAState.shouldWriteToDisk():
+						log.debug("Backing up pickled add-ons state.")
+						try:
+							os.replace(WritePaths._oldAddonStateFile, WritePaths._oldAddonStateFile + ".bak")
+						except Exception:
+							log.debug("Unable to backup old add-ons state pickle file.", exc_info=True)
 
 	def removeStateFile(self) -> None:
 		if not NVDAState.shouldWriteToDisk():
@@ -196,16 +269,33 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 			log.error("NVDA should not write to disk from secure mode or launcher", stack_info=True)
 			return
 
-		if any(self.values()):
-			try:
-				# #9038: Python 3 requires binary format when working with pickles.
-				with open(self.statePath, "wb") as f:
-					pickle.dump(self.toDict(), f, protocol=0)
-			except (IOError, pickle.PicklingError):
-				log.debugWarning("Error saving state", exc_info=True)
-		else:
+		if not self._save(self.statePath):
 			# Empty state - just delete state file and don't save anything.
 			self.removeStateFile()
+
+	def _save(self, statePath: os.PathLike) -> bool:
+		"""
+		Writes the state file to disk.
+
+		If the state filewould be empty (i.e. contain no add-ons), no file will be written.
+
+		.. note::
+			Unlike :meth:`write`, this method does not delete the existing state file if it would not be overwritten.
+
+		:param statePath: Location at which to write the state file.
+		:return: ``True`` if an attempt was made to save the state file (regardless of whether it succeded or not); ``False`` otherwise.
+		:raises RuntimeError: If NVDA should not write to disk.
+		"""
+		if not NVDAState.shouldWriteToDisk():
+			raise RuntimeError("Should not write to disk.")
+		if any(self.values()):
+			try:
+				with open(statePath, "wt", encoding="utf-8") as file:
+					json.dump(self.toDict(), file)
+			except (IOError, TypeError):
+				log.debugWarning("Error saving state", exc_info=True)
+			return True
+		return False
 
 	def cleanupRemovedDisabledAddons(self) -> None:
 		"""Versions of NVDA before #12792 failed to remove add-on from list of disabled add-ons
@@ -422,7 +512,7 @@ _availableAddons = collections.OrderedDict()
 
 def getAvailableAddons(
 	refresh: bool = False,
-	filterFunc: Optional[Callable[["Addon"], bool]] = None,
+	filterFunc: Callable[["Addon"], bool] | None = None,
 	isFirstLoad: bool = False,
 ) -> "AddonHandlerModelGeneratorT":
 	"""Gets all available addons on the system.
@@ -519,7 +609,7 @@ class AddonBase(SupportsAddonState, SupportsVersionCheck, ABC):
 	def manifest(self) -> "AddonManifest": ...
 
 	@property
-	def _addonStoreData(self) -> Optional["InstalledAddonStoreModel"]:
+	def _addonStoreData(self) -> "InstalledAddonStoreModel" | None:
 		from addonStore.dataManager import addonDataManager
 
 		assert addonDataManager
@@ -561,7 +651,7 @@ class Addon(AddonBase):
 				_report_manifest_errors(self.manifest)
 				raise AddonError("Manifest file has errors.")
 
-	def completeInstall(self) -> Optional[str]:
+	def completeInstall(self) -> str | None:
 		if not os.path.exists(self.pendingInstallPath):
 			log.error(f"Pending install path {self.pendingInstallPath} does not exist")
 			return None
@@ -804,7 +894,7 @@ class Addon(AddonBase):
 				log.debug(f"Removing module {module} from cache of imported modules")
 				del sys.modules[modName]
 
-	def getDocFilePath(self, fileName: Optional[str] = None) -> Optional[str]:
+	def getDocFilePath(self, fileName: str | None = None) -> str | None:
 		r"""Get the path to a documentation file for this add-on.
 		The file should be located in C{doc\lang\file} inside the add-on,
 		where C{lang} is the language code and C{file} is the requested file name.
@@ -948,7 +1038,7 @@ class AddonBundle(AddonBase):
 				_report_manifest_errors(self.manifest)
 				raise AddonError("Manifest file has errors.")
 
-	def extract(self, addonPath: Optional[str] = None):
+	def extract(self, addonPath: str | None = None):
 		"""Extracts the bundle content to the specified path.
 		The addon will be extracted to L{addonPath}
 		@param addonPath: Path where to extract contents.
@@ -1120,7 +1210,7 @@ docFileName = string(default=None)
 		return minRequiredVersion <= lastTested
 
 
-def validate_apiVersionString(value: str) -> Tuple[int, int, int]:
+def validate_apiVersionString(value: str) -> tuple[int, int, int]:
 	"""
 	@raises: configobj.validate.ValidateError on validation error
 	"""

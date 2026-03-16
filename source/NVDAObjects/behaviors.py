@@ -294,7 +294,8 @@ class EditableTextBase(editableText.EditableText, NVDAObject):
 			else:
 				# No error.
 				return
-			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "textError.wav"))
+			if speech.getState().speechMode not in [speech.SpeechMode.off, speech.SpeechMode.onDemand]:
+				nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "textError.wav"))
 
 		core.callLater(50, _delayedDetection)
 

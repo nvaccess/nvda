@@ -12,7 +12,7 @@ import wx
 from languageHandler import getLanguageDescription
 from logHandler import log
 from speech import getCurrentLanguage
-from NVDAState import WritePaths
+from NVDAState import ReadPaths
 
 import libmathcat_py as libmathcat
 from . import rulesUtils
@@ -236,7 +236,7 @@ def pathToLanguagesFolder() -> str:
 	:return: Absolute path to the Languages folder as a string.
 	"""
 	return os.path.join(
-		WritePaths.mathCATDir,
+		ReadPaths.mathCATDir,
 		"Rules",
 		"Languages",
 	)
@@ -248,7 +248,7 @@ def getLanguages() -> tuple[list[str], list[str]]:
 	This method scans the language folders and adds entries for each language and its
 	regional dialects. Language folders use ISO 639-1 codes and regional variants use ISO 3166-1 alpha-2 codes.
 
-	It also adds a special "Use Voice's Language (Auto)" option at the beginning.
+	It also adds a special "Automatic (Use Voice's Language)" option at the beginning.
 
 	:return: A pair of lists with the first list containing the contents of the
 	language selection combo box, and the second list containing the corresponding
@@ -266,7 +266,6 @@ def getLanguages() -> tuple[list[str], list[str]]:
 			# add to the list the text for this language variant together with the code
 			regionalCode: str = language + "-" + subDir.upper()
 			langDesc = getLanguageDescription(regionalCode)
-			log.info(f"regionalCode: {regionalCode}, langDesc: {langDesc}")
 			if langDesc is not None:
 				languageOptions.append(f"{langDesc} ({regionalCode})")
 			else:
@@ -277,7 +276,7 @@ def getLanguages() -> tuple[list[str], list[str]]:
 
 	# Translators: menu item -- use the language of the voice chosen in the NVDA speech settings dialog
 	# "Auto" == "Automatic" -- other items in menu are "English (en)", etc., so this matches that style
-	languageOptions.append(pgettext("math", "Use Voice's Language (Auto)"))
+	languageOptions.append(pgettext("math", "Automatic (Use Voice's Language)"))
 	languageCodes.append("Auto")
 	# populate the available language names in the dialog
 	# the implemented languages are in folders named using the relevant ISO 639-1

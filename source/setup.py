@@ -213,6 +213,8 @@ freeze(
 			# winxptheme is optionally used by wx.lib.agw.aui.
 			# We don't need this.
 			"winxptheme",
+			# numpy is an optional dependency of comtypes but we don't require it.
+			"numpy",
 			# multiprocessing isn't going to work in a frozen environment
 			"multiprocessing",
 			"concurrent.futures.process",
@@ -244,8 +246,6 @@ freeze(
 			"mdx_truly_sane_lists",
 			"mdx_gh_links",
 			"pymdownx",
-			# Required for local image captioning
-			"numpy",
 		],
 		"includes": [
 			"nvdaBuiltin",
@@ -253,9 +253,10 @@ freeze(
 			"bisect",
 			# robotremoteserver (for system tests) depends on xmlrpc.server
 			"xmlrpc.server",
-			# required for import numpy without error
-			"numpy._core._exceptions",
-			"numpy._core._multiarray_umath",
+			# Required for RPYC over std pipes
+			"win32file",
+			"win32event",
+			"win32pipe",
 		],
 	},
 	data_files=[
@@ -277,6 +278,25 @@ freeze(
 	]
 	+ (
 		getLocaleDataFiles()
+		+ (
+			getRecursiveDataFiles(
+				f"lib/{version}/x86/synthDriverHost-runtime",
+				"lib/x86/synthDriverHost-runtime",
+			)
+			if os.path.isdir("lib/x86/synthDriverHost-runtime")
+			else []
+		)
+		+ (
+			[
+				(
+					"_synthDrivers32",
+					glob("_synthDrivers32/**/*.py", recursive=True)
+					+ glob("_synthDrivers32/**/*.dll", recursive=True),
+				),
+			]
+			if os.path.isdir("lib/x86/synthDriverHost-runtime")
+			else []
+		)
 		+ getRecursiveDataFiles(
 			"include/nvda-mathcat/assets",
 			"../include/nvda-mathcat/assets",
