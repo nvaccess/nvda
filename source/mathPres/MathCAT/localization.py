@@ -166,7 +166,7 @@ def getLanguages() -> list[LanguageInfo]:
 					)
 				else:
 					log.error(
-						f"MathCAT: couldn't find description for language code {language}, using code as description"
+						f"MathCAT: couldn't find description for language code {language}, using code as description",
 					)
 					languages.append(
 						LanguageInfo(code=language, description=language),
