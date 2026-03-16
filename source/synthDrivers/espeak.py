@@ -1,6 +1,5 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Leonard de Ruijter
+# Copyright (C) 2007-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -9,8 +8,6 @@ from collections import OrderedDict
 from typing import (
 	Dict,
 	List,
-	Optional,
-	Set,
 )
 
 from . import _espeak
@@ -32,6 +29,7 @@ from speech.commands import (
 	VolumeCommand,
 	PhonemeCommand,
 )
+from speechXml import toXmlLang
 
 
 class SynthDriver(SynthDriver):
@@ -73,7 +71,7 @@ class SynthDriver(SynthDriver):
 		"fr": "fr-fr",
 	}
 
-	availableLanguages: Set[Optional[str]]
+	availableLanguages: set[str | None]
 	"""
 	For eSpeak commit 7e5457f91e10, this is equivalent to:
 	{
@@ -259,9 +257,9 @@ class SynthDriver(SynthDriver):
 		lowerCaseAvailableLangs = set(lang.lower() for lang in self.availableLanguages)
 		# Use default language if no command.lang is supplied
 		langWithLocale = command.lang if command.lang else self._language
-		langWithLocale = langWithLocale.lower().replace("_", "-")
+		langWithLocale = toXmlLang(langWithLocale.lower())
 
-		langWithoutLocale: Optional[str] = stripLocaleFromLangCode(langWithLocale)
+		langWithoutLocale: str | None = stripLocaleFromLangCode(langWithLocale)
 
 		# Check for any language where the language code matches, regardless of dialect: e.g. ru-ru to ru
 		matchingLangs = filter(

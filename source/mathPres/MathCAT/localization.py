@@ -10,13 +10,15 @@ import os
 import re
 from zipfile import ZipFile
 
+import libmathcat_py as libmathcat
 import wx
+
 from languageHandler import getLanguageDescription
 from logHandler import log
-from speech import getCurrentLanguage
 from NVDAState import ReadPaths
+from speech import getCurrentLanguage
+from speechXml import toXmlLang
 
-import libmathcat_py as libmathcat
 from . import rulesUtils
 
 
@@ -43,7 +45,7 @@ def getLanguageToUse(mathMl: str = "") -> str:
 	language: str = (
 		languageMatch.group(2) if languageMatch else getCurrentLanguage()
 	)  # seems to be current voice's language
-	language = language.lower().replace("_", "-")
+	language = toXmlLang(language.lower())
 	if language == "cmn":
 		language = "zh-cmn"
 	elif language == "yue":
@@ -230,7 +232,7 @@ def getSpeechStyles(languageCode: str) -> list[str]:
 	resultSpeechStyles = []
 	if languageCode == "Auto":
 		# list the speech styles for the current voice rather than have none listed
-		languageCode = getCurrentLanguage().lower().replace("_", "-")
+		languageCode = toXmlLang(getCurrentLanguage().lower())
 	languageCode = languageCode.replace("-", "\\")
 
 	languagePath = pathToLanguagesFolder() + "\\"

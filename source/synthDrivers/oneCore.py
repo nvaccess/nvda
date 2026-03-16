@@ -109,7 +109,7 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 			log.debugWarning(f"Invalid language: {command.lang}")
 			return None
 
-		normalizedLanguage = command.lang.lower().replace("-", "_")
+		normalizedLanguage = speechXml.toNvdaLang(command.lang.lower())
 		normalizedLanguageWithoutLocale = normalizedLanguage.split("_")[0]
 		if (
 			normalizedLanguage not in self.lowerCaseAvailableLanguages
@@ -497,7 +497,7 @@ class OneCoreSynthDriver(SynthDriver):
 		"""
 		# The voice string is made up of the ID, the language, and the display name.
 		ID, language, name = voiceStr.split(":")
-		language = language.replace("-", "_")
+		language = speechXml.toNvdaLang(language)
 		return VoiceInfo(ID, name, language=language)
 
 	def _getAvailableVoices(self):
