@@ -232,7 +232,6 @@ def getSpeechStyles(languageCode: str) -> list[str]:
 
 	:return: A list of speech styles for the given language.
 	"""
-	from speech import getCurrentLanguage
 
 	resultSpeechStyles = []
 	if languageCode == "Auto":
