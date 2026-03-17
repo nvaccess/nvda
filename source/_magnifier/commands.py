@@ -12,11 +12,15 @@ from typing import Literal
 import ui
 from . import getMagnifier, initialize, changeMagnifierType, terminate
 from .config import (
-	getZoomLevelString,
-	getFilter,
-	getMagnifierType,
-	getFullscreenMode,
 	ZoomLevel,
+	getZoomLevelString,
+	setZoomLevel,
+	getFilter,
+	setFilter,
+	getMagnifierType,
+	setMagnifierType,
+	getFullscreenMode,
+	setFullscreenMode,
 )
 from .magnifier import Magnifier
 from .fullscreenMagnifier import FullScreenMagnifier
@@ -141,6 +145,7 @@ def zoom(direction: Direction) -> None:
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(magnifier, action):
 		magnifier._zoom(direction)
+		setZoomLevel(magnifier.zoomLevel)
 		ui.message(
 			ZoomLevel.ZOOM_MESSAGE.format(
 				zoomLevel=f"{magnifier.zoomLevel:.1f}",
@@ -181,6 +186,7 @@ def cycleMagnifierType() -> None:
 		newType = types[(idx + 1) % len(types)]
 		log.debug(f"Changing magnifier type from {currentType} to {newType}")
 		changeMagnifierType(newType)
+		setMagnifierType(newType)
 		magnifier = getMagnifier()
 		ui.message(
 			pgettext(
@@ -204,6 +210,7 @@ def cycleFilter() -> None:
 		magnifier.filterType = filters[(idx + 1) % len(filters)]
 		if magnifier._magnifierType == MagnifierType.FULLSCREEN:
 			magnifier._applyFilter()
+		setFilter(magnifier.filterType)
 		ui.message(
 			pgettext(
 				"magnifier",
@@ -230,6 +237,7 @@ def cycleFullscreenMode() -> None:
 			newMode = modes[(idx + 1) % len(modes)]
 			log.debug(f"Changing full-screen mode from {currentMode} to {newMode}")
 			magnifier._fullscreenMode = newMode
+			setFullscreenMode(newMode)
 			ui.message(
 				pgettext(
 					"magnifier",
