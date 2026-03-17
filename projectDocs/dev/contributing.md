@@ -56,7 +56,7 @@ These can be merged as stacked PRs if they depend on each other (e.g. `branchX` 
 
 Large refactors should instead target specific symbols/files/modules per PR to minimize mass changes.
 
-On-going feature development that cannot be merged straight to `master` can occur on `try-` branches, done in pieces.
+Ongoing feature development that cannot be merged straight to `master` can occur on `try-` branches, done in pieces.
 Ask NV Access on the [ADR](./proposingMajorChanges.md) to create a `try-` breach.
 
 ## Overview of contribution process:
