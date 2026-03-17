@@ -1562,7 +1562,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 
 <!-- KC:endInclude -->
 
-### Zoom Levels {#MagnifierZoomLevels}
+### Zoom Levels {#MagnifierZoom}
 
 The magnifier supports zoom levels from 1.0 (no magnification) to 10.0 (maximum magnification).
 You can adjust the zoom level using the zoom in (`NVDA+shift+equals`) and zoom out (`NVDA+shift+minus`) commands.
@@ -1570,7 +1570,7 @@ Each press increases or decreases the zoom by a fixed increment.
 
 The default zoom level when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
-### Color Filters {#MagnifierColorFilters}
+### Filters {#MagnifierFilter}
 
 Color filters can help users with certain visual impairments or light sensitivity by modifying the colors displayed on the screen.
 The magnifier provides three color filter options:
@@ -1584,9 +1584,18 @@ NVDA will announce the name of the currently selected filter.
 
 The default color filter when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
-### Focus Tracking Modes {#MagnifierFullscreenFocusModes}
+### Magnifier Types {#MagnifierType}
 
-The magnifier offers three different modes for tracking focus and determining which part of the screen to magnify:
+The magnifier can be used in multiple modes, each designed to suit different user needs and preferences:
+
+* Full-screen: The entire screen is magnified, and the magnified view follows the system focus or mouse pointer.
+* Fixed window: A separate window displays the magnified content, and the rest of the screen remains at normal size. This allows you to see both the magnified content and the surrounding context simultaneously.
+* Docked: The magnified view is docked to one edge of the screen, providing a larger view of the area around the system focus or mouse pointer while still showing most of the screen at normal size.
+* Lens: A rectangular area around the system focus or mouse pointer is magnified, while the rest of the screen remains at normal size. This allows you to focus on a specific area without losing sight of the overall screen layout.
+
+### Fullscreen Magnifier {#MagnifierFullscreen}
+
+The fullscreen magnifier offers three different focus modes that determine which part of the screen is magnified:
 
 * Center: The magnified area is centered on the current focus position.
 This mode keeps the focused element at the center of the screen and clamps to the screen edge.
@@ -1596,14 +1605,14 @@ This mode provides a more stable view, only adjusting when necessary.
 * Relative: The magnified area maintains the relative position of the focus within the screen.
 This mode mimics the behavior of the Windows Magnifier.
 
-To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+To cycle through the modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 NVDA will announce the name of the currently selected mode.
 
 The default focus mode when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
 ### Spotlight Mode {#MagnifierSpotlight}
 
-Spotlight mode is a special feature designed for presentations or focused reading tasks.
+Spotlight mode is a special fullscreen magnifier feature designed for presentations or focused reading tasks.
 When activated, it temporarily zooms out the magnified view to show the full screen, then zooms back in to the current focus position after a brief period of mouse inactivity.
 
 This is useful when you want to:
@@ -1620,6 +1629,18 @@ Once activated, the magnifier will:
 
 Spotlight mode automatically deactivates after zooming back in.
 If you move the mouse before the zoom-back occurs, the timer resets, giving you more time to view the full screen.
+
+### Fixed Magnifier {#MagnifierFixed}
+
+Placeholder
+
+### Docked Magnifier {#MagnifierDocked}
+
+Placeholder
+
+### Lens Magnifier {#MagnifierLens}
+
+Placeholder
 
 ### Magnifier Settings {#MagnifierSettings}
 
@@ -2810,9 +2831,9 @@ Key: `NVDA+control+w`
 The Magnifier category in the NVDA Settings dialog allows you to configure the default behavior of NVDA's built-in [Magnifier](#Magnifier) feature.
 This settings category contains the following options:
 
-##### Default zoom level {#MagnifierDefaultZoom}
+##### Zoom Level {#ZoomLevel}
 
-This slider allows you to set the default zoom level when the magnifier is first enabled.
+This slider allows you to set the zoom level when the magnifier is first enabled.
 The zoom level can range from 1.0 (no magnification) to 10.0 (maximum magnification).
 The default value is 2.0 (200% zoom).
 
@@ -2823,10 +2844,10 @@ You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+e
 |Options |1.0 to 10.0|
 |Default |2.0|
 
-##### Default color filter {#MagnifierDefaultFilter}
+##### Filter {#MagnifierFilter}
 
-This combo box allows you to select the default color filter to apply when the magnifier is first enabled.
-You can cycle through the color filters by pressing `NVDA+shift+i`.
+This combo box allows you to select the filter to apply when the magnifier is first enabled.
+You can cycle through the filters by pressing `NVDA+shift+i`.
 The available options are:
 
 | . {.hideHeaderRow} |.|
@@ -2841,25 +2862,7 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### Default focus mode {#MagnifierDefaultFullscreenFocusMode}
-
-This combo box allows you to select the default focus tracking mode when the magnifier is first enabled.
-To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-The available options are:
-
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Center, Border, Relative|
-|Default |Center|
-|Toggle command |None |
-
-| Option | Description |
-|---|---|
-| Center | The magnified area is always centered on the current focus position. |
-| Border | The magnified area only moves when the focus approaches the edge of the visible area. |
-| Relative | The magnified area maintains the relative position of the focus within the screen. |
-
-##### Panning step size {#MagnifierPanningStepSize}
+##### Panning step size {#MagnifierPanStep}
 
 This slider allows you to set the panning step size as a percentage of the visible magnified window.
 The panning step size can range from 1% to 100%, with a default value of 10%.
@@ -2900,6 +2903,24 @@ This option is disabled by default.
 |---|---|
 |Options |Disabled, Enabled|
 |Default |Disabled|
+
+##### Fullscreen mode {#MagnifierFullscreenMode}
+
+This combo box allows you to select the mode when the fullscreen magnifier is first enabled.
+To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+The available options are:
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Center, Border, Relative|
+|Default |Center|
+|Toggle command |None |
+
+| Option | Description |
+|---|---|
+| Center | The magnified area is always centered on the current focus position. |
+| Border | The magnified area only moves when the focus approaches the edge of the visible area. |
+| Relative | The magnified area maintains the relative position of the focus within the screen. |
 
 #### Keyboard {#KeyboardSettings}
 
