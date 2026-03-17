@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 
 import sys
+from SCons.Script import Move
 
 Import("env", "outputDir", "sourceDir", "userDocsDir")
 
@@ -30,8 +31,6 @@ devGuide = env.Command(
 	target=userDocsDir.File("developerGuide.html"), source=htmlFile, action=Move("$TARGET", "$SOURCE")
 )
 env.Alias("developerGuide", devGuide)
-# Return the developer docs targets so they can be used as dependencies
-Return(["devGuide"])
 
 devDocs_nvdaHelper_temp = env.Doxygen(source="../../../nvdaHelper/doxyfile")
 devDocs_nvdaHelper = env.Command(
@@ -94,3 +93,6 @@ sphinxHtml = env.Command(
 devDocs_nvda = env.Command(devDocsOutputDir.Dir("NVDA"), sphinxHtml, Move("$TARGET", "$SOURCE"))
 env.Alias("devDocs", [devGuide, devDocs_nvda])
 env.Clean("devDocs", [devGuide, devDocs_nvda])
+
+# Return the developer docs targets so they can be used as dependencies
+Return(["devGuide"])
