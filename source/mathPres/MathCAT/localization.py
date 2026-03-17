@@ -136,6 +136,8 @@ def getLanguages() -> list[LanguageInfo]:
 
 	languages: list[LanguageInfo] = []
 	addRegionalLanguages = _createAddRegionalLanguagesFunction(languages)
+	curLang = getCurrentLanguage()
+	curLangDesc = getLanguageDescription(curLang)
 
 	languages.append(
 		LanguageInfo(
@@ -143,7 +145,7 @@ def getLanguages() -> list[LanguageInfo]:
 			# Translators: Math language settings menu item: use the language of the voice chosen for reading math.
 			# Automatic uses the voice's language.
 			description=pgettext("math", "Automatic ({language})").format(
-				language=getLanguageDescription(getCurrentLanguage()),
+				language=curLangDesc or curLang,
 			),
 		),
 	)
@@ -159,7 +161,7 @@ def getLanguages() -> list[LanguageInfo]:
 			if len(rulesUtils.getRulesFiles(pathToLanguageDir, addRegionalLanguages)) > 0:
 				# add to the listbox the text for this language
 				languageDesc = getLanguageDescription(language)
-				if languageDesc:
+				if languageDesc is not None:
 					languages.append(
 						LanguageInfo(code=language, description=languageDesc),
 					)

@@ -311,7 +311,7 @@ class MathCATUserPreferences:
 				"MathRate": defaultValue(("speech", "mathRate")),
 				"PauseFactor": defaultValue(("speech", "pauseFactor")),
 				"SpeechSound": defaultValue(("speech", "speechSound")),
-				"SpeechStyle": MathCATUserPreferences.createConfigForSpeechStyle(
+				"SpeechStyle": MathCATUserPreferences.getConfigForSpeechStyle(
 					defaultValue(("speech", "language")),
 				),
 				"SubjectArea": defaultValue(("speech", "subjectArea")),
@@ -339,12 +339,25 @@ class MathCATUserPreferences:
 		self._prefs = prefs
 
 	@staticmethod
-	def createConfigForSpeechStyle(mathLang: str) -> str:
+	def _createConfigForSpeechStyle(mathLang: str) -> None:
 		mathConf = config.conf["math"]
 		if mathLang == "Auto":
-			mathLang = toXmlLang(languageHandler.normalizeLanguage(getCurrentLanguage()))
+			normalizedLang = languageHandler.normalizeLanguage(getCurrentLanguage())
+			if normalizedLang is not None:
+				mathLang = toXmlLang(normalizedLang)
+			else:
+				log.error(
+					f"Could not determine current language for Auto setting from language code '{normalizedLang}', "
+					"defaulting to en-US for speech style"
+				)
+				mathLang = "en"
 		if mathLang not in mathConf["speech"]:
 			mathConf["speech"][mathLang] = {"speechStyle": ""}
+
+	@staticmethod
+	def getConfigForSpeechStyle(mathLang: str) -> str:
+		mathConf = config.conf["math"]
+		MathCATUserPreferences._createConfigForSpeechStyle(mathLang)
 		if not mathConf["speech"][mathLang]["speechStyle"]:
 			speechStyleOptions = localization.getSpeechStyles(mathLang)
 			if "ClearSpeak" in speechStyleOptions:
@@ -352,6 +365,11 @@ class MathCATUserPreferences:
 			else:
 				mathConf["speech"][mathLang]["speechStyle"] = speechStyleOptions[0]
 		return mathConf["speech"][mathLang]["speechStyle"]
+
+	@staticmethod
+	def updateConfigForSpeechStyle(mathLang: str, speechStyle: str) -> None:
+		MathCATUserPreferences._createConfigForSpeechStyle(mathLang)
+		config.conf["math"]["speech"][mathLang]["speechStyle"] = speechStyle
 
 	@staticmethod
 	def tryToGetNVDAConfigValue(key1: str, key2: str) -> int | str | bool:
@@ -378,7 +396,7 @@ class MathCATUserPreferences:
 			for key2 in prefs[key1]:
 				match (key1, key2):
 					case ("Speech", "SpeechStyle"):
-						nvdaConfigValue = MathCATUserPreferences.createConfigForSpeechStyle(
+						nvdaConfigValue = MathCATUserPreferences.getConfigForSpeechStyle(
 							mathConf["speech"]["language"],
 						)
 					case _:
