@@ -15,8 +15,6 @@ LANG_NAMES_TO_LOCALIZED_DESCS: dict[str, str] = {
 	# Translators: The name of a language supported by NVDA.
 	"an": pgettext("languageName", "Aragonese"),
 	# Translators: The name of a language supported by NVDA.
-	"nb": pgettext("languageName", "Norwegian Bokmål"),
-	# Translators: The name of a language supported by NVDA.
 	"ckb": pgettext("languageName", "Central Kurdish"),
 	# Translators: The name of a language supported by NVDA.
 	"kmr": pgettext("languageName", "Northern Kurdish"),
