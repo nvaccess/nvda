@@ -129,7 +129,7 @@ def getLanguages() -> list[LanguageInfo]:
 	This method scans the language folders and adds entries for each language and its
 	regional dialects. Language folders use ISO 639-1 codes and regional variants use ISO 3166-1 alpha-2 codes.
 
-	It also adds a special "Automatic (Use Voice's Language)" option at the beginning.
+	It also adds a special "Automatic ({language})" option at the beginning, using the current voice's language.
 
 	:return: A list of LanguageInfo objects representing the available languages.
 	"""
