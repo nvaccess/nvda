@@ -1,3 +1,5 @@
+<!-- markdownlint-disable-file MD060 -->
+
 # NVDA NVDA_VERSION User Guide
 
 [TOC]
