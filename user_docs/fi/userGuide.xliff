@@ -19754,7 +19754,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>You can add, edit or remove symbol descriptions in NVDA's [punctuation/symbol pronunciation dialog](#SymbolPronunciation).</source>
-        <target>Symbolien kuvauksia on mahdollista lisätä, muokata ja poistaa NVDA:n [Välimerkkien ja symbolien puhuminen -valintaikkunassa.](#SymbolPronunciation)</target>
+        <target>Symbolien kuvauksia on mahdollista lisätä, muokata ja poistaa NVDA:n [Välimerkkien ja symbolien puhuminen -valintaikkunassa](#SymbolPronunciation).</target>
       </segment>
     </unit>
     <unit id="d65525bd-2c1d-4f59-b7ff-9c512d89e307">
@@ -30701,7 +30701,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The Replacement field allows you to change the text that should be spoken in place of this symbol.</source>
-        <target>Korvaava teksti -muokkauskentässä voidaan muuttaa tekstiä, joka puhutaan kyseisen symbolin asemesta.</target>
+        <target>Korvaava-muokkauskentässä voidaan muuttaa tekstiä, joka puhutaan kyseisen symbolin asemesta.</target>
       </segment>
     </unit>
     <unit id="9bed6cd9-e7c1-44c2-bf60-49a1e57aed6e">
@@ -30740,7 +30740,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>When NVDA is spelling any text containing that symbol.</source>
-        <target>Kun NVDA tavaa tekstiä, joka sisältää kyseisen symbolin.</target>
+        <target>Kun NVDA tavaa kyseisen symbolin sisältävää tekstiä.</target>
       </segment>
     </unit>
     <unit id="1d2e5d3d-5b06-4e06-bd1b-a9278b8522cd">
@@ -30750,7 +30750,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The Send actual symbol to synthesizer field specifies when the symbol itself (in contrast to its replacement) should be sent to the synthesizer.</source>
-        <target>Lähetä merkki syntetisaattorille -yhdistelmäruudusta voit määrittää, milloin varsinainen symboli (vastakohtana sen korvaavalle tekstille) lähetetään syntetisaattorille.</target>
+        <target>Välitä merkki syntetisaattorille -yhdistelmäruudusta valitaan, milloin symboli välitetään syntetisaattorille sellaisenaan.</target>
       </segment>
     </unit>
     <unit id="ded76475-0fdc-454f-a804-95e6b0741a21">
@@ -30807,7 +30807,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>only below symbols' level: Send the actual symbol only if the configured speech symbol level is lower than the level set for this symbol.</source>
-        <target>vain jos symbolitaso on alempi: Merkki välitetään syntetisaattorille vain, jos määritetty puheen symbolitaso on alempi kuin kyseiselle symbolille määritetty.</target>
+        <target>vain, jos symbolitaso on alempi: Merkki välitetään syntetisaattorille vain, jos määritetty puheen symbolitaso on alempi kuin kyseiselle merkille määritetty.</target>
       </segment>
     </unit>
     <unit id="85aa6e3d-43be-41af-8012-b320b97b857b">
@@ -30816,7 +30816,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>  For example, you might use this so that a symbol will have its replacement spoken at higher levels without pausing, while still being indicated with a pause at lower levels.</source>
-        <target>  Tätä voidaan käyttää esim. siten, että symbolin korvaava teksti puhutaan korkeammilla tasoilla ilman taukoja, mutta alemmilla tasoilla tauot kuitenkin kuuluvat.</target>
+        <target>  Tätä voidaan käyttää esim. siten, että symbolin korvaava teksti puhutaan korkeammilla tasoilla ilman taukoja, mutta alemmilla tasoilla tauot kuuluvat.</target>
       </segment>
     </unit>
     <unit id="4ce64815-3ca7-412d-b6b9-2ea3afacbe22">
@@ -30870,7 +30870,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>In the case of complex symbols, the Replacement field may have to include some group references of the matched text. For instance, for a pattern matching a whole date, \1, \2, and \3 would need to appear in the field, to be replaced by the corresponding parts of the date.</source>
-        <target>Monimutkaisten symbolien tapauksessa Korvaava teksti -kentässä on ehkä oltava joitakin ryhmäviittauksia täsmättävään tekstiin. Esim. koko päivämäärää vastaavan korvattavan tekstin \1, \2 ja \3 tulisi näkyä kentässä, jotta ne korvataan päivämäärän vastaavilla osilla.</target>
+        <target>Monimutkaisten symbolien tapauksessa Korvaava-kentässä on ehkä oltava joitakin ryhmäviittauksia täsmättävään tekstiin. Esim. koko päivämäärää vastaavan korvattavan tekstin \1, \2 ja \3 tulisi näkyä kentässä, jotta ne korvataan päivämäärän vastaavilla osilla.</target>
       </segment>
     </unit>
     <unit id="6b4e0811-e210-4e4e-afba-8b2a2ff8086b">
@@ -30879,7 +30879,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Normal backslashes in the Replacement field should thus be doubled, e.g. "a\\\\b" should be typed in order to get the "a\\b" replacement.</source>
-        <target>Korvaava teksti -kentässä olevat normaalit kenoviivat tulisi siis kahdentaa (esim. kirjoita "a\\\\b" saadaksesi aikaan korvauksen "a\\b".</target>
+        <target>Korvaava-kentässä olevat normaalit kenoviivat tulisi siis kahdentaa (esim. kirjoita "a\\\\b" saadaksesi aikaan korvauksen "a\\b".</target>
       </segment>
     </unit>
     <unit id="f049f307-8c00-4fc7-91ce-8b2d0a9e87d1">
