@@ -59,6 +59,8 @@ from wx.lib import scrolledpanel
 
 import screenCurtain._screenCurtain
 from utils import mmdevice
+from utils.debounce import debounceLimiter
+from utils.security import isRunningOnSecureDesktop
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
@@ -750,13 +752,16 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.container.SetupScrolling()
 		self.container.Thaw()
 
-	def onCategoryChange(self, evt):
-		currentCat = self.currentCategory
+	def onCategoryChange(self, evt: wx.ListEvent):
 		newIndex = evt.GetIndex()
-		if not currentCat or newIndex != self.categoryClasses.index(currentCat.__class__):
+		if self._shouldDoCategoryChange(newIndex):
 			self._doCategoryChange(newIndex)
 		else:
 			evt.Skip()
+
+	def _shouldDoCategoryChange(self, index: int) -> bool:
+		currentCat = self.currentCategory
+		return not currentCat or index != self.categoryClasses.index(currentCat.__class__)
 
 	def _validateAllPanels(self):
 		"""Check if all panels are valid, and can be saved
@@ -6293,6 +6298,7 @@ NvdaSettingsDialogWindowHandle = None
 class NVDASettingsDialog(MultiCategorySettingsDialog):
 	# Translators: This is the label for the NVDA settings dialog.
 	title = _("NVDA Settings")
+	_pendingCategoryIndex: int | None = None
 	categoryClasses = [
 		GeneralSettingsPanel,
 		SpeechSettingsPanel,
@@ -6357,17 +6363,40 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			configProfile=NvdaSettingsDialogActiveConfigProfile,
 		)
 
-	def onCategoryChange(self, evt):
-		super(NVDASettingsDialog, self).onCategoryChange(evt)
+	def _doCategoryChangeForIndex(self, newIndex: int) -> bool:
+		if self._shouldDoCategoryChange(newIndex):
+			self._doCategoryChange(newIndex)
+			return True
+		return False
+
+	@debounceLimiter(
+		cooldownTimeMs=500,
+		delayTimeMs=500,
+	)
+	def _onCategoryChangeDebounced(self) -> None:
+		if self._pendingCategoryIndex is not None:
+			if self._doCategoryChangeForIndex(self._pendingCategoryIndex):
+				self._doOnCategoryChange()
+			self._pendingCategoryIndex = None
+
+	def onCategoryChange(self, evt: wx.ListEvent):
+		if isRunningOnSecureDesktop():
+			# Secure desktop can cause issues with rapidly changing categories,
+			# so we debounce category changes to avoid this. (#19634)
+			self._pendingCategoryIndex = evt.GetIndex()
+			self._onCategoryChangeDebounced()
+			return
+		super().onCategoryChange(evt)
 		if evt.Skipped:
 			return
 		self._doOnCategoryChange()
 
 	def Destroy(self):
+		self._pendingCategoryIndex = None
 		global NvdaSettingsDialogActiveConfigProfile, NvdaSettingsDialogWindowHandle
 		NvdaSettingsDialogActiveConfigProfile = None
 		NvdaSettingsDialogWindowHandle = None
-		super(NVDASettingsDialog, self).Destroy()
+		super().Destroy()
 
 
 class AddSymbolDialog(

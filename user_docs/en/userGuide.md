@@ -421,8 +421,8 @@ If you have already closed this dialog or are wanting to install from a portable
 The installation dialog that appears will confirm whether you wish to install NVDA and will also tell you whether this installation will be updating a previous install.
 Pressing the Continue button will start installing NVDA.
 There are also a few options in this dialog which are explained below.
-Once the installation has completed, a message will appear telling you that it was successful.
-Pressing OK at this point will restart the newly installed copy of NVDA.
+Once the installation has completed, a dialog will appear with options for what to do next.
+See [Restart Windows After Installation](#RestartWindowsAfterInstall) for more information.
 
 #### Incompatible add-ons warning {#InstallWithIncompatibleAddons}
 
@@ -448,6 +448,18 @@ If created, this shortcut will also be assigned a shortcut key of `control+alt+n
 This option allows you to choose whether or not NVDA should copy the user configuration from the currently running NVDA into the configuration for the currently logged on user, for the installed copy of NVDA.
 This will not copy the configuration for any other users of this system nor to the system configuration for use during Windows sign-in and [other secure screens](#SecureScreens).
 This option is only available when installing from a portable copy, not when installing directly from the downloaded Launcher package.
+
+#### Restart Windows After Installation {#RestartWindowsAfterInstall}
+
+After NVDA has been successfully installed or updated, a dialog will appear recommending that you restart Windows.
+Restarting ensures that NVDA is fully registered with the system and works correctly in all applications.
+
+The dialog provides the following options:
+
+* Restart Windows: Immediately restart Windows.
+* Start NVDA: Start the newly installed copy of NVDA without restarting.
+  * Note: this option is not available when the installer is run with elevated (administrator) privileges.
+* Exit NVDA: Close without starting NVDA or restarting Windows.
 
 ### Creating a Portable Copy {#CreatingAPortableCopy}
 
@@ -1563,9 +1575,9 @@ The default zoom level when the magnifier is first enabled can be configured in 
 Color filters can help users with certain visual impairments or light sensitivity by modifying the colors displayed on the screen.
 The magnifier provides three color filter options:
 
-* **Normal**: No color modification is applied. This is the default setting.
-* **Grayscale**: Converts all colors to shades of gray, which can help reduce eye strain and improve contrast for some users.
-* **Inverted**: Inverts all colors on the screen (black becomes white, white becomes black, etc.), which can be helpful for users who prefer light text on dark backgrounds or have photophobia.
+* Normal: No color modification is applied. This is the default setting.
+* Grayscale: Converts all colors to shades of gray, which can help reduce eye strain and improve contrast for some users.
+* Inverted: Inverts all colors on the screen (black becomes white, white becomes black, etc.), which can be helpful for users who prefer light text on dark backgrounds or have photophobia.
 
 To cycle through the available filters press `NVDA+shift+i`.
 NVDA will announce the name of the currently selected filter.
@@ -1576,13 +1588,12 @@ The default color filter when the magnifier is first enabled can be configured i
 
 The magnifier offers three different modes for tracking focus and determining which part of the screen to magnify:
 
-* **Center**: The magnified area is centered on the current focus position.
+* Center: The magnified area is centered on the current focus position.
 This mode keeps the focused element at the center of the screen and clamps to the screen edge.
 To disable clamping, activate [true center mode in the Magnifier settings](#MagnifierUseTrueCenter).
-
-* **Border**: The magnified area only moves when the focus approaches the edge of the visible area.
+* Border: The magnified area only moves when the focus approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
-* **Relative**: The magnified area maintains the relative position of the focus within the screen.
+* Relative: The magnified area maintains the relative position of the focus within the screen.
 This mode mimics the behavior of the Windows Magnifier.
 
 To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).

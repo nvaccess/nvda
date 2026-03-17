@@ -6,6 +6,7 @@
 
 ### New Features
 
+* After installing or updating NVDA, a dialog now offers options to restart Windows, start the installed copy, or exit the installer. (#19268, #19718, @kefaslungu)
 * NVDA now includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen. (#19228, @Boumtchack)
   * The magnifier supports various zoom levels, color filters (normal, grayscale, inverted), and different focus tracking modes.
   * Color filters can help users with visual impairments or light sensitivity by inverting or desaturating screen colors.
@@ -26,6 +27,8 @@ The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is int
 
 ### Changes
 
+* Updated Liblouis Braille translator to [3.37.0](https://github.com/liblouis/liblouis/releases/tag/v3.37.0). (#19758, @codeofdusk)
+  * Added new Italian and Estonian 6 dot tables.
 * It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)
 * Improved search algorithm for filtering add-ons in the Add-on Store. (#19309)
 * NVDA can now be configured to not play error sounds, even in test versions. (#13021, @CyrilleB79)
@@ -326,6 +329,7 @@ Use `config.configFlags.LoggingLevel` instead. (#19296)
   Use `synthDrivers.sapi5_32` (name: "sapi5_32") for the 32-bit SAPI 5 driver.
 * `config.setSystemConfigToCurrentConfig` now takes a `Collection` of add-on IDs (as strings) to copy to the system configuration.
 Only add-ons with the given IDs will be copied. (#19446)
+* `browseMode.ElementsListDialog.filterTimer` has been removed. (#19702)
 
 #### Deprecations
 
@@ -407,6 +411,11 @@ Access to these symbols via `updateCheck` is deprecated. (#18956)
 * `textInfos.OffsetsTextInfo.allowMoveToOffsetPastEnd` is deprecated.
 Use the `OffsetsTextInfo.allowMoveToUnitOffsetPastEnd` method instead. (#19152, @LeonarddeR)
 * `installer.comparePreviousInstall` is deprecated with no planned replacement. (#19631)
+* Deprecations in `addonHandler`: (#19564)
+  * `stateFilename` is deprecated.
+  Use `STATE_FILENAME` instead.
+  * `AddonsState.fromPickledDict` is deprecated.
+  Use `AddonsState.fromDict` instead.
 
 ## 2025.3.3
 
