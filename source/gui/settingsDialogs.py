@@ -3002,8 +3002,6 @@ class MathSettingsPanel(SettingsPanel):
 			BrailleNavHighlightOption,
 			PauseFactor,
 		)
-		from speech.speech import getCurrentLanguage
-		from speechXml import toXmlLang
 
 		mathConf = config.conf["math"]
 		mathConf["speech"]["impairment"] = self._getEnumValueFromSelection(
