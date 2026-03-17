@@ -64,7 +64,7 @@ Ask NV Access on the corresponding ADR to create a `try-` branch.
 1. [Setup your development environment](./createDevEnvironment.md).
    * Alternatively, you can use GitHub Actions to build NVDA for you, without setting up a local development environment, by following [our CI/CD README](../../ci/README.md).
 1. Ensure the issue you plan to fix is [triaged](../issues/triage.md)
-1. If the issue has a `ADR-required` label, this is a complex change.
+1. If the issue has an `ADR-required` label, this is a complex change.
 Refer to ["Proposing Major Changes"](./proposingMajorChanges.md) before opening a PR.
 1. Create a branch for the contribution, to be used for a pull request.
 	* Pull requests should be based on the latest commit in the official master branch.
