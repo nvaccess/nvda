@@ -24,7 +24,7 @@
 Consult the speech dictionaries section in the User Guide for more details. (#19506, @LeonarddeR)
 * When resetting the configuration to factory defaults from the NVDA menu, a dialog is now shown afterwards with an Undo button to restore the previous configuration.
 The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is intended for recovery scenarios. (#19575, @bramd)
-* A new voice setting "Pause slightly when reading punctuation" was added for OneCore voices, allowing users to turn off punctuation pauses. (#11876, @gexgd0419)
+* A new voice setting "Suppress pausing when reading punctuation" was added for OneCore voices, allowing users to turn off punctuation pauses. (#11876, @gexgd0419)
 
 ### Changes
 
