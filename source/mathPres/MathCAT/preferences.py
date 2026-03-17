@@ -348,7 +348,7 @@ class MathCATUserPreferences:
 			else:
 				log.error(
 					f"Could not determine current language for Auto setting from language code '{normalizedLang}', "
-					"defaulting to en-US for speech style",
+					"defaulting to en for speech style",
 				)
 				mathLang = "en"
 		if mathLang not in mathConf["speech"]:
