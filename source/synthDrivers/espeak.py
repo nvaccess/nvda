@@ -5,10 +5,6 @@
 
 import os
 from collections import OrderedDict
-from typing import (
-	Dict,
-	List,
-)
 
 from . import _espeak
 from languageHandler import (
@@ -319,9 +315,9 @@ class SynthDriver(SynthDriver):
 	# Note: when working on speak, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
 	def speak(self, speechSequence: SpeechSequence):  # noqa: C901
-		textList: List[str] = []
+		textList: list[str] = []
 		langChanged = False
-		prosody: Dict[str, int] = {}
+		prosody: dict[str, int] = {}
 		# We output malformed XML, as we might close an outer tag after opening an inner one; e.g.
 		# <voice><prosody></voice></prosody>.
 		# However, eSpeak doesn't seem to mind.

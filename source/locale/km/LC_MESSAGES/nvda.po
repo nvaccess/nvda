@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-27 04:27+0000\n"
-"PO-Revision-Date: 2026-03-02 00:33\n"
+"POT-Creation-Date: 2026-03-11 01:53+0000\n"
+"PO-Revision-Date: 2026-03-16 00:25\n"
 "Last-Translator: \n"
 "Language-Team: Khmer\n"
 "Language: km_KH\n"
@@ -860,40 +860,40 @@ msgid "any dots"
 msgstr "ចំណុចណាមួយ"
 
 #. Translators: The mode to interact with controls in documents
-#: browseMode.py:75
+#: browseMode.py:70
 msgid "Focus mode"
 msgstr "ម៉ូដផ្ដោត"
 
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
-#: browseMode.py:79 inputCore.py:66
+#: browseMode.py:74 inputCore.py:66
 msgid "Browse mode"
 msgstr "ម៉ូដរុករក"
 
 #. Translators: Reported label in the elements list for an element which which has no name and value
-#: browseMode.py:276
+#: browseMode.py:271
 msgid "Unlabeled"
 msgstr "ដែលមិនបានដាក់ស្លាក"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
-#: browseMode.py:464
+#: browseMode.py:459
 msgid "Single letter navigation off"
 msgstr "ការរុករកតាមអក្សរនីមួយៗបិទ"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
-#: browseMode.py:468
+#: browseMode.py:463
 msgid "Single letter navigation on"
 msgstr "ការរុករកតាមអក្សរនីមួយៗបើក"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
-#: browseMode.py:472
+#: browseMode.py:467
 msgid "Toggles single letter navigation on and off. When on, single letter keys in browse mode jump to various kinds of elements on the page. When off, these keys are passed to the application"
 msgstr "បិទ/បើកការរុករកតាមអក្សរនីមួយៗ។ នៅពេលបើក គ្រាប់អក្សរនីមួយៗក្នុងម៉ូដរុករកនឹងផ្លាស់ទៅធាតុផ្សេងៗលើទំព័រ។ នៅពេលបិទ គ្រាប់អក្សរទាំងនេះនឹងបញ្ជូនទៅកម្មវិធី។"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
-#: browseMode.py:569 appModules\kindle.py:261 appModules\kindle.py:265
+#: browseMode.py:564 appModules\kindle.py:261 appModules\kindle.py:265
 #: appModules\kindle.py:269 contentRecog\recogUi.py:99
 #: contentRecog\recogUi.py:103 contentRecog\recogUi.py:107
 msgid "Not supported in this document"
@@ -901,739 +901,739 @@ msgstr "មិនត្រូវបានគាំទ្រនៅក្នុង
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
-#: browseMode.py:647
+#: browseMode.py:642
 #, python-brace-format
 msgid "Moves to the next heading at level {i}"
 msgstr "ផ្លាស់ទៅចំណងជើងបន្ទាប់ត្រឹមកម្រិត {i}"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
-#: browseMode.py:650
+#: browseMode.py:645
 #, python-brace-format
 msgid "No next heading at level {i}"
 msgstr "គ្មានចំណងជើងបន្ទាប់ត្រឹមកម្រិត {i}"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
-#: browseMode.py:653
+#: browseMode.py:648
 #, python-brace-format
 msgid "Moves to the previous heading at level {i}"
 msgstr "ផ្លាស់ទៅចំណងជើងមុនត្រឹមកម្រិត {i}"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
-#: browseMode.py:656
+#: browseMode.py:651
 #, python-brace-format
 msgid "No previous heading at level {i}"
 msgstr "គ្មានជំណងជើងបន្ទាប់ត្រឹមកម្រិត {i}"
 
 #. Translators: the description for the Elements List command in browse mode.
-#: browseMode.py:671
+#: browseMode.py:666
 msgid "Lists various types of elements in this document"
 msgstr "រាយបញ្ចូលប្រភេទធាតុផ្សេងៗក្នុងឯកសារនេះ"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-#: browseMode.py:729
+#: browseMode.py:724
 msgid "Activates the current object in the document"
 msgstr "ធ្វើឱ្យអ្វីមួយក្នុងបច្ចុប្បន្នសកម្មឡើងក្នុងឯកសារ"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:811
+#: browseMode.py:806
 msgid "moves to the next heading"
 msgstr "ផ្លាស់ទៅជំណងជើងបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:813
+#: browseMode.py:808
 msgid "no next heading"
 msgstr "គ្មានជំណងជើងបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:815
+#: browseMode.py:810
 msgid "moves to the previous heading"
 msgstr "ផ្លាស់ទៅជំណងជើងមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:817
+#: browseMode.py:812
 msgid "no previous heading"
 msgstr "គ្មានជំណងជើងមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:824
+#: browseMode.py:819
 msgid "moves to the next table"
 msgstr "ផ្លាស់ទៅតារាងបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:826
+#: browseMode.py:821
 msgid "no next table"
 msgstr "គ្មានតារាងបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:828
+#: browseMode.py:823
 msgid "moves to the previous table"
 msgstr "ផ្លាស់ទៅតារាងមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:830
+#: browseMode.py:825
 msgid "no previous table"
 msgstr "គ្មានតារាងមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:837
+#: browseMode.py:832
 msgid "moves to the next link"
 msgstr "ផ្លាស់ទៅតំណភ្ជាប់បន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:839
+#: browseMode.py:834
 msgid "no next link"
 msgstr "គ្មានតំណភ្ជាប់បន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:841
+#: browseMode.py:836
 msgid "moves to the previous link"
 msgstr "ផ្លាស់ទៅតំណភ្ជាប់មុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:843
+#: browseMode.py:838
 msgid "no previous link"
 msgstr "គ្មានតំណភ្ជាប់មុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:849
+#: browseMode.py:844
 msgid "moves to the next visited link"
 msgstr "ផ្លាស់ទៅតំណភ្ជាប់ដែលធ្លាប់ចូលបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:851
+#: browseMode.py:846
 msgid "no next visited link"
 msgstr "គ្មានតំណភ្ជាប់ដែលធ្លាប់ចូលបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:853
+#: browseMode.py:848
 msgid "moves to the previous visited link"
 msgstr "ផ្លាស់ទៅតំណភ្ជាប់ដែលធ្លាប់ចូលមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:855
+#: browseMode.py:850
 msgid "no previous visited link"
 msgstr "គ្មានតំណភ្ជាប់ដែលធ្លាប់ចូលមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:861
+#: browseMode.py:856
 msgid "moves to the next unvisited link"
 msgstr "ផ្លាស់ទៅតំណភ្ជាប់ដែលមិនធ្លាប់ចូលបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:863
+#: browseMode.py:858
 msgid "no next unvisited link"
 msgstr "គ្មានតំណភ្ជាប់ដែលមិនធ្លាប់ចូលបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:865
+#: browseMode.py:860
 msgid "moves to the previous unvisited link"
 msgstr "ផ្លាស់ទៅតំណភ្ជាប់ដែលមិនធ្លាប់ចូលមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:867
+#: browseMode.py:862
 msgid "no previous unvisited link"
 msgstr "គ្មានតំណភ្ជាប់ដែលមិនធ្លាប់ចូលមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:873
+#: browseMode.py:868
 msgid "moves to the next form field"
 msgstr "ផ្លាស់ទៅប្រអប់បំពេញបែបបទបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:875
+#: browseMode.py:870
 msgid "no next form field"
 msgstr "គ្មានប្រអប់បំពេញបែបបទបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:877
+#: browseMode.py:872
 msgid "moves to the previous form field"
 msgstr "ផ្លាស់ទៅប្រអប់បំពេញបែបបទមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:879
+#: browseMode.py:874
 msgid "no previous form field"
 msgstr "គ្មានប្រអប់បំពេញបែបបទមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:885
+#: browseMode.py:880
 msgid "moves to the next list"
 msgstr "ផ្លាស់ទៅបញ្ជីបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:887
+#: browseMode.py:882
 msgid "no next list"
 msgstr "គ្មានបញ្ជីបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:889
+#: browseMode.py:884
 msgid "moves to the previous list"
 msgstr "ផ្លាស់ទៅបញ្ជីមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:891
+#: browseMode.py:886
 msgid "no previous list"
 msgstr "គ្មានបញ្ជីមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:898
+#: browseMode.py:893
 msgid "moves to the next list item"
 msgstr "ផ្លាស់ទៅធាតុបញ្ជីបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:900
+#: browseMode.py:895
 msgid "no next list item"
 msgstr "គ្មានធាតុបញ្ជីបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:902
+#: browseMode.py:897
 msgid "moves to the previous list item"
 msgstr "ផ្លាស់ទៅធាតុបញ្ជីមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:904
+#: browseMode.py:899
 msgid "no previous list item"
 msgstr "គ្មានធាតុបញ្ជីមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:910
+#: browseMode.py:905
 msgid "moves to the next button"
 msgstr "ផ្លាស់ទៅប៊ូតុងបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:912
+#: browseMode.py:907
 msgid "no next button"
 msgstr "គ្មានប៊ូតុងបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:914
+#: browseMode.py:909
 msgid "moves to the previous button"
 msgstr "ផ្លាស់ទៅប៊ូតុងមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:916
+#: browseMode.py:911
 msgid "no previous button"
 msgstr "គ្មានប៊ូតុងមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:922
+#: browseMode.py:917
 msgid "moves to the next edit field"
 msgstr "ផ្លាស់ទៅប្រអប់កែសម្រួលបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:924
+#: browseMode.py:919
 msgid "no next edit field"
 msgstr "គ្មានប្រអប់កែសម្រួលបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:926
+#: browseMode.py:921
 msgid "moves to the previous edit field"
 msgstr "ផ្លាស់ទៅប្រអប់កែសម្រួលមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:928
+#: browseMode.py:923
 msgid "no previous edit field"
 msgstr "គ្មានប្រអប់កែសម្រួលមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:935
+#: browseMode.py:930
 msgid "moves to the next frame"
 msgstr "ផ្លាស់ទៅស៊ុមបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:937
+#: browseMode.py:932
 msgid "no next frame"
 msgstr "គ្មានស៊ុមបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:939
+#: browseMode.py:934
 msgid "moves to the previous frame"
 msgstr "ផ្លាស់ទៅស៊ុមមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:941
+#: browseMode.py:936
 msgid "no previous frame"
 msgstr "គ្មានស៊ុមមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:948
+#: browseMode.py:943
 msgid "moves to the next separator"
 msgstr "ផ្លាស់ទៅផ្ទាំងបំបែកបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:950
+#: browseMode.py:945
 msgid "no next separator"
 msgstr "គ្មានផ្ទាំងបំបែកបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:952
+#: browseMode.py:947
 msgid "moves to the previous separator"
 msgstr "ផ្លាស់ទៅផ្ទាំងបំបែកមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:954
+#: browseMode.py:949
 msgid "no previous separator"
 msgstr "គ្មានផ្ទាំងបំបែកមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:960
+#: browseMode.py:955
 msgid "moves to the next radio button"
 msgstr "ផ្លាស់ទៅប៊ូតុងជម្រើសបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:962
+#: browseMode.py:957
 msgid "no next radio button"
 msgstr "គ្មានប៊ូតុងជម្រើសបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:964
+#: browseMode.py:959
 msgid "moves to the previous radio button"
 msgstr "ផ្លាស់ទៅប៊ូតុងជម្រើសមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:966
+#: browseMode.py:961
 msgid "no previous radio button"
 msgstr "គ្មានប៊ូតុងជម្រើសមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:972
+#: browseMode.py:967
 msgid "moves to the next combo box"
 msgstr "ផ្លាស់ទៅប្រអប់ជម្រើសបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:974
+#: browseMode.py:969
 msgid "no next combo box"
 msgstr "គ្មានប្រអប់ជម្រើសបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:976
+#: browseMode.py:971
 msgid "moves to the previous combo box"
 msgstr "ផ្លាស់ទៅប្រអប់ជម្រើសមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:978
+#: browseMode.py:973
 msgid "no previous combo box"
 msgstr "គ្មានប្រអប់ជម្រើសមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:984
+#: browseMode.py:979
 msgid "moves to the next check box"
 msgstr "ផ្លាស់ទៅប្រអប់ធីកបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:986
+#: browseMode.py:981
 msgid "no next check box"
 msgstr "គ្មានប្រអប់ធីកបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:988
+#: browseMode.py:983
 msgid "moves to the previous check box"
 msgstr "ផ្លាស់ទៅប្រអប់ធីកមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:990
+#: browseMode.py:985
 msgid "no previous check box"
 msgstr "គ្មានប្រអប់ធីកមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:996
+#: browseMode.py:991
 msgid "moves to the next graphic"
 msgstr "ផ្លាស់ទៅក្រាហ្វិកបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:998
+#: browseMode.py:993
 msgid "no next graphic"
 msgstr "គ្មានក្រាហ្វិកបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1000
+#: browseMode.py:995
 msgid "moves to the previous graphic"
 msgstr "ផ្លាស់ទៅក្រាហ្វិកមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1002
+#: browseMode.py:997
 msgid "no previous graphic"
 msgstr "គ្មានក្រាហ្វិកមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1008
+#: browseMode.py:1003
 msgid "moves to the next block quote"
 msgstr "ផ្លាស់ទៅអត្ថបទដកស្រង់បន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1010
+#: browseMode.py:1005
 msgid "no next block quote"
 msgstr "គ្មានអត្ថបទដកស្រង់បន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1012
+#: browseMode.py:1007
 msgid "moves to the previous block quote"
 msgstr "ផ្លាស់ទៅអត្ថបទដកស្រង់មុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1014
+#: browseMode.py:1009
 msgid "no previous block quote"
 msgstr "គ្មានអត្ថបទដកស្រង់មុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1020
+#: browseMode.py:1015
 msgid "skips forward past a block of links"
 msgstr "រំលងទៅមុខឆ្លងកាត់ប្លុកតំណភ្ជាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1022
+#: browseMode.py:1017
 msgid "no more text after a block of links"
 msgstr "គ្មានអត្ថបទបន្ថែមខាងក្រោយតំណភ្ជាប់ទៀតទេ"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1024
+#: browseMode.py:1019
 msgid "skips backward past a block of links"
 msgstr "រំលងទៅក្រោយឆ្លងកាត់ប្លុកតំណភ្ជាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1026
+#: browseMode.py:1021
 msgid "no more text before a block of links"
 msgstr "គ្មានអត្ថបទបន្ថែមខាងមុខប្លុកតំណភ្ជាប់ទៀតទេ"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1033
+#: browseMode.py:1028
 msgid "moves to the next landmark"
 msgstr "ផ្លាស់ទៅទីសម្គាល់បន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1035
+#: browseMode.py:1030
 msgid "no next landmark"
 msgstr "គ្មានទីសម្គាល់បន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1037
+#: browseMode.py:1032
 msgid "moves to the previous landmark"
 msgstr "ផ្លាស់ទៅទីសម្គាល់មុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1039
+#: browseMode.py:1034
 msgid "no previous landmark"
 msgstr "គ្មានទីសម្គាល់មុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1046
+#: browseMode.py:1041
 msgid "moves to the next embedded object"
 msgstr "ផ្លាស់ទៅវត្ថុបញ្ចូលបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1048
+#: browseMode.py:1043
 msgid "no next embedded object"
 msgstr "គ្មានវត្ថុបញ្ចូលបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1050
+#: browseMode.py:1045
 msgid "moves to the previous embedded object"
 msgstr "ផ្លាស់ទៅវត្ថុបញ្ចូលមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1052
+#: browseMode.py:1047
 msgid "no previous embedded object"
 msgstr "គ្មានវត្ថុបញ្ចូលមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1058
+#: browseMode.py:1053
 msgid "moves to the next annotation"
 msgstr "ផ្លាស់ទៅសម្គាល់បន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1060
+#: browseMode.py:1055
 msgid "no next annotation"
 msgstr "គ្មានសម្គាល់បន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1062
+#: browseMode.py:1057
 msgid "moves to the previous annotation"
 msgstr "ផ្លាស់ទៅសម្គាល់មុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1064
+#: browseMode.py:1059
 msgid "no previous annotation"
 msgstr "គ្មានសម្គាល់មុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1070
+#: browseMode.py:1065
 msgid "moves to the next error"
 msgstr "ផ្លាស់ទៅកំហុសបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1072
+#: browseMode.py:1067
 msgid "no next error"
 msgstr "គ្មានកំហុសបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1074
+#: browseMode.py:1069
 msgid "moves to the previous error"
 msgstr "ផ្លាស់ទៅកំហុសមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1076
+#: browseMode.py:1071
 msgid "no previous error"
 msgstr "គ្មានកំហុសមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1082
+#: browseMode.py:1077
 msgid "moves to the next article"
 msgstr "ផ្លាស់ទៅអត្ថបទបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1084
+#: browseMode.py:1079
 msgid "no next article"
 msgstr "គ្មានអត្ថបទបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1086
+#: browseMode.py:1081
 msgid "moves to the previous article"
 msgstr "ផ្លាស់ទៅអត្ថបទមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1088
+#: browseMode.py:1083
 msgid "no previous article"
 msgstr "គ្មានអត្ថបទមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1094
+#: browseMode.py:1089
 msgid "moves to the next grouping"
 msgstr "ផ្លាស់ទៅក្រុមបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1096
+#: browseMode.py:1091
 msgid "no next grouping"
 msgstr "គ្មានក្រុមបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1098
+#: browseMode.py:1093
 msgid "moves to the previous grouping"
 msgstr "ផ្លាស់ទៅក្រុមមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1100
+#: browseMode.py:1095
 msgid "no previous grouping"
 msgstr "គ្មានក្រុមមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1106
+#: browseMode.py:1101
 msgid "moves to the next tab"
 msgstr "ផ្លាស់ទៅថេបបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1108
+#: browseMode.py:1103
 msgid "no next tab"
 msgstr "គ្មានថេបបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1110
+#: browseMode.py:1105
 msgid "moves to the previous tab"
 msgstr "ផ្លាស់ទៅថេបមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1112
+#: browseMode.py:1107
 msgid "no previous tab"
 msgstr "គ្មានថេបមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1118
+#: browseMode.py:1113
 msgid "moves to the next figure"
 msgstr "ផ្លាស់ទៅរូបបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1120
+#: browseMode.py:1115
 msgid "no next figure"
 msgstr "គ្មានរូបបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1122
+#: browseMode.py:1117
 msgid "moves to the previous figure"
 msgstr "ផ្លាស់ទៅរូបមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1124
+#: browseMode.py:1119
 msgid "no previous figure"
 msgstr "គ្មានរូបមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1130
+#: browseMode.py:1125
 msgid "moves to the next menu item"
 msgstr "ផ្លាស់ទៅធាតុម៉ឺនុយបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1132
+#: browseMode.py:1127
 msgid "no next menu item"
 msgstr "គ្មានធាតុម៉ឺនុយបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1134
+#: browseMode.py:1129
 msgid "moves to the previous menu item"
 msgstr "ផ្លាស់ទៅធាតុម៉ឺនុយមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1136
+#: browseMode.py:1131
 msgid "no previous menu item"
 msgstr "គ្មានធាតុម៉ឺនុយមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1142
+#: browseMode.py:1137
 msgid "moves to the next toggle button"
 msgstr "ផ្លាស់ទៅប៊ូតុងប្ដូរបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1144
+#: browseMode.py:1139
 msgid "no next toggle button"
 msgstr "គ្មានប៊ូតុងប្ដូរបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1146
+#: browseMode.py:1141
 msgid "moves to the previous toggle button"
 msgstr "ផ្លាស់ទៅប៊ូតុងប្ដូរមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1148
+#: browseMode.py:1143
 msgid "no previous toggle button"
 msgstr "គ្មានប៊ូតុងប្ដូរមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1154
+#: browseMode.py:1149
 msgid "moves to the next progress bar"
 msgstr "ផ្លាស់ទៅរបារភាគរយបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1156
+#: browseMode.py:1151
 msgid "no next progress bar"
 msgstr "គ្មានរបារភាគរយបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1158
+#: browseMode.py:1153
 msgid "moves to the previous progress bar"
 msgstr "ផ្លាស់ទៅរបារភាគរយមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1160
+#: browseMode.py:1155
 msgid "no previous progress bar"
 msgstr "គ្មានរបារភាគរយមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1166
+#: browseMode.py:1161
 msgid "moves to the next math formula"
 msgstr "ផ្លាស់ទៅរូបមន្តគណិតវិទ្យាបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1168
+#: browseMode.py:1163
 msgid "no next math formula"
 msgstr "គ្មានរូបមន្តគណិតវិទ្យាបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1170
+#: browseMode.py:1165
 msgid "moves to the previous math formula"
 msgstr "ផ្លាស់ទៅរូបមន្តគណិតវិទ្យាមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1172
+#: browseMode.py:1167
 msgid "no previous math formula"
 msgstr "គ្មានរូបមន្តគណិតវិទ្យាមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1178
+#: browseMode.py:1173
 msgid "moves to the next text paragraph"
 msgstr "ផ្លាស់ទៅកថាខណ្ឌនៃអត្ថបទបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1180
+#: browseMode.py:1175
 msgid "no next text paragraph"
 msgstr "គ្មានកថាខណ្ឌនៃអត្ថបទបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1182
+#: browseMode.py:1177
 msgid "moves to the previous text paragraph"
 msgstr "ផ្លាស់ទៅកថាខណ្ឌនៃអត្ថបទមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1184
+#: browseMode.py:1179
 msgid "no previous text paragraph"
 msgstr "គ្មានកថាខណ្ឌនៃអត្ថបទមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1191
+#: browseMode.py:1186
 msgid "moves to the next vertically aligned paragraph"
 msgstr "ផ្លាស់ទៅកថាខណ្ឌនៅលើបន្ទាត់ឈរបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1193
+#: browseMode.py:1188
 msgid "no next vertically aligned paragraph"
 msgstr "គ្មានកថាខណ្ឌនៅលើបន្ទាត់ឈរបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1195
+#: browseMode.py:1190
 msgid "moves to the previous vertically aligned paragraph"
 msgstr "ផ្លាស់ទៅកថាខណ្ឌនៅលើបន្ទាត់ឈរមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1197
+#: browseMode.py:1192
 msgid "no previous vertically aligned paragraph"
 msgstr "គ្មានកថាខណ្ឌនៅលើបន្ទាត់ឈរមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1204
+#: browseMode.py:1199
 msgid "moves to the next same style text"
 msgstr "ផ្លាស់ទៅរចនាប័ទ្មដដែលនៃអត្ថបទបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1206
+#: browseMode.py:1201
 msgid "No next same style text"
 msgstr "គ្មានរចនាប័ទ្មដដែលនៃអត្ថបទបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1208
+#: browseMode.py:1203
 msgid "moves to the previous same style text"
 msgstr "ផ្លាស់ទៅរចនាប័ទ្មដដែលនៃអត្ថបទមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1210
+#: browseMode.py:1205
 msgid "No previous same style text"
 msgstr "គ្មានរចនាប័ទ្មដដែលនៃអត្ថបទមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1216
+#: browseMode.py:1211
 msgid "moves to the next different style text"
 msgstr "ផ្លាស់ទៅរចនាប័ទ្មផ្សេងនៃអត្ថបទបន្ទាប់"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1218
+#: browseMode.py:1213
 msgid "No next different style text"
 msgstr "គ្មានរចនាប័ទ្មផ្សេងនៃអត្ថបទបន្ទាប់"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1220
+#: browseMode.py:1215
 msgid "moves to the previous different style text"
 msgstr "ផ្លាស់ទៅរចនាប័ទ្មផ្សេងនៃអត្ថបទមុន"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1222
+#: browseMode.py:1217
 msgid "No previous different style text"
 msgstr "គ្មានរចនាប័ទ្មផ្សេងនៃអត្ថបទមុន"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1228
+#: browseMode.py:1223
 msgid "moves to the next reference"
 msgstr ""
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1230
+#: browseMode.py:1225
 msgid "no next reference"
 msgstr ""
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1232
+#: browseMode.py:1227
 msgid "moves to the previous reference"
 msgstr ""
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1234
+#: browseMode.py:1229
 msgid "no previous reference"
 msgstr ""
 
@@ -1641,7 +1641,7 @@ msgstr ""
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1249 gui\settingsDialogs.py:3347
+#: browseMode.py:1244 gui\settingsDialogs.py:3352
 msgid "Lin&ks"
 msgstr "តំណភ្ជាប់ (&k)"
 
@@ -1649,42 +1649,42 @@ msgstr "តំណភ្ជាប់ (&k)"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1252 gui\settingsDialogs.py:3342
+#: browseMode.py:1247 gui\settingsDialogs.py:3347
 msgid "&Headings"
 msgstr "ចំណងជើង (&H)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1255 NVDAObjects\window\excel.py:762
+#: browseMode.py:1250 NVDAObjects\window\excel.py:762
 msgid "&Form fields"
 msgstr "ប្រអប់បែបបទ (&F)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1258
+#: browseMode.py:1253
 msgid "&Buttons"
 msgstr "ប៊ូតុង (&B)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1261
+#: browseMode.py:1256
 msgid "Lan&dmarks"
 msgstr "ទីសម្គាល់ (&d)"
 
 #. Translators: The title of the browse mode Elements List dialog.
-#: browseMode.py:1274
+#: browseMode.py:1269
 msgid "Elements List"
 msgstr "បញ្ជីធាតុផ្សេងៗ"
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1285
+#: browseMode.py:1280
 msgid "Type:"
 msgstr "ប្រភេទ:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1314
+#: browseMode.py:1309
 msgid "Filter b&y:"
 msgstr "តម្រៀបតាម (&y):"
 
@@ -1692,34 +1692,34 @@ msgstr "តម្រៀបតាម (&y):"
 #. Beware not to set an accelerator that would collide with other controls in this dialog, such as an
 #. element type radio label.
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-#: browseMode.py:1326 globalCommands.py:1743
+#: browseMode.py:1320 globalCommands.py:1743
 msgid "Activate"
 msgstr "ដំណើរការ"
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1331
+#: browseMode.py:1325
 msgid "&Move to"
 msgstr "ផ្លាស់ទៅ (&M)"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-#: browseMode.py:1793
+#: browseMode.py:1791
 msgid "No long description"
 msgstr "គ្មានការពិពណ៌នាវែង"
 
 #. Translators: the description for the activateLongDescription script on browseMode documents.
-#: browseMode.py:1796
+#: browseMode.py:1794
 msgid "Shows the long description at this position if one is found."
 msgstr "បង្ហាញការពិពណ៌នាវែងនៅទីនេះ ប្រសិនបើមាន។"
 
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
-#: browseMode.py:2259 browseMode.py:2280
+#: browseMode.py:2257 browseMode.py:2278
 msgid "Not in a container"
 msgstr "មិនមាននៅក្នុងឯកតា"
 
 #. Translators: Description for the Move to start of container command in browse mode.
-#: browseMode.py:2270
+#: browseMode.py:2268
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr "ផ្លាស់ទៅទីផ្ដើមនៃធាតុឯកតា ដូចជាបញ្ជី ឬតារាង"
 
@@ -1729,54 +1729,54 @@ msgstr "ផ្លាស់ទៅទីផ្ដើមនៃធាតុឯកត
 #. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 #. Translators: Reported when attempting to move to the next result in the Python Console
 #. output pane while there is no next result.
-#: browseMode.py:2289 globalCommands.py:1893 globalCommands.py:1971
+#: browseMode.py:2287 globalCommands.py:1893 globalCommands.py:1971
 #: globalCommands.py:2091 appModules\nvda.py:146
 msgid "Bottom"
 msgstr "បាត"
 
 #. Translators: Description for the Move past end of container command in browse mode.
-#: browseMode.py:2298
+#: browseMode.py:2296
 msgid "Moves past the end of the container element, such as a list or table"
 msgstr "រំលងឆ្លងកាត់ផ្នែកចុងក្រោយនៃធាតុឯកតា ដូចជាបញ្ជី ឬតារាង"
 
 #. Translators: the description for the toggleScreenLayout script.
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
-#: browseMode.py:2627 virtualBuffers\__init__.py:694
+#: browseMode.py:2625 virtualBuffers\__init__.py:694
 msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
 msgstr "បិទ/បើក បើផ្ទាំងអេក្រង់ត្រូវបានរក្សាទុកនៅពេលបង្ហាញមាតិកាឯកសារ"
 
 #. Translators: The message reported for not supported toggling of screen layout
-#: browseMode.py:2633
+#: browseMode.py:2631
 msgid "Not supported in this document."
 msgstr "មិនគាំទ្រនៅក្នុងឯកសារនេះទេ"
 
 #. Translators: input help message for toggle native selection command
-#: browseMode.py:2646
+#: browseMode.py:2644
 msgid "Toggles native selection mode on and off"
 msgstr "បិទ/បើកម៉ូដជ្រើសរើសដើម"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
-#: browseMode.py:2652
+#: browseMode.py:2650
 msgid "Native selection mode unsupported in this browse mode document"
 msgstr "ម៉ូដជ្រើសរើសដើមមិនគាំទ្រនៅក្នុងឯកសារម៉ូដរុករកនេះទេ"
 
 #. Translators: the message when native selection mode cannot be turned off in this browse mode document.
-#: browseMode.py:2655
+#: browseMode.py:2653
 msgid "Native selection mode cannot be turned off in this browse mode document"
 msgstr "មិនអាចបិទម៉ូដជ្រើសរើសដើមនៅក្នុងឯកសារម៉ូដរុករកនេះបានទេ"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
-#: browseMode.py:2667
+#: browseMode.py:2665
 msgid "Native selection mode unsupported in this document"
 msgstr "ម៉ូដជ្រើសរើសដើមមិនគាំទ្រនៅក្នុងឯកសារនេះទេ"
 
 #. Translators: reported when native selection mode is toggled on.
-#: browseMode.py:2671
+#: browseMode.py:2669
 msgid "Native app selection mode enabled"
 msgstr "ម៉ូដជ្រើសរើសកម្មវិធីដើមបានបើក"
 
 #. Translators: reported when native selection mode is toggled off.
-#: browseMode.py:2679
+#: browseMode.py:2677
 msgid "Native app selection mode disabled"
 msgstr "ម៉ូដជ្រើសរើសកម្មវិធីដើមបានបិទ"
 
@@ -2148,8 +2148,8 @@ msgstr "ប្រតិបត្តិការណ៍ខ្លះលើកម្
 #: gui\configProfiles.py:541 gui\inputGestures.py:808 gui\inputGestures.py:822
 #: gui\installerGui.py:122 gui\installerGui.py:632 gui\installerGui.py:648
 #: gui\installerGui.py:720 gui\logViewer.py:112 gui\logViewer.py:143
-#: gui\message.py:160 gui\settingsDialogs.py:1038 gui\settingsDialogs.py:5911
-#: gui\settingsDialogs.py:6462 gui\startupDialogs.py:127
+#: gui\message.py:160 gui\settingsDialogs.py:1043 gui\settingsDialogs.py:5916
+#: gui\settingsDialogs.py:6491 gui\startupDialogs.py:127
 #: _remoteClient\dialogs.py:67 _remoteClient\dialogs.py:306
 #: _remoteClient\dialogs.py:430
 msgid "Error"
@@ -2382,7 +2382,7 @@ msgstr "ទ្រនិចប្រព័ន្ធ"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the mouse settings panel.
-#: globalCommands.py:87 gui\settingsDialogs.py:2142
+#: globalCommands.py:87 gui\settingsDialogs.py:2147
 msgid "Mouse"
 msgstr "ម៉ៅ"
 
@@ -2391,8 +2391,8 @@ msgstr "ម៉ៅ"
 #. Translators: This is the label for the speech panel
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: globalCommands.py:90 config\configFlags.py:314 gui\settingsDialogs.py:1140
-#: gui\settingsDialogs.py:4450
+#: globalCommands.py:90 config\configFlags.py:314 gui\settingsDialogs.py:1145
+#: gui\settingsDialogs.py:4455
 msgid "Speech"
 msgstr "សំដី"
 
@@ -2411,14 +2411,14 @@ msgstr "ប្រវត្តិរចនាសម្ព័ន្ធ"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 #. Translators: This is the label for the braille panel
-#: globalCommands.py:99 config\configFlags.py:316 gui\settingsDialogs.py:4356
-#: gui\settingsDialogs.py:4866
+#: globalCommands.py:99 config\configFlags.py:316 gui\settingsDialogs.py:4361
+#: gui\settingsDialogs.py:4871
 msgid "Braille"
 msgstr "អក្សរប្រៃយ៍"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the vision panel
-#: globalCommands.py:102 gui\settingsDialogs.py:5679
+#: globalCommands.py:102 gui\settingsDialogs.py:5684
 msgid "Vision"
 msgstr "គំហើញ"
 
@@ -2456,13 +2456,13 @@ msgstr "ទ្រង់ទ្រាយឯកសារ"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the audio settings panel.
-#: globalCommands.py:123 gui\settingsDialogs.py:3512
+#: globalCommands.py:123 gui\settingsDialogs.py:3517
 msgid "Audio"
 msgstr "អូឌីយ៉ូ"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the Remote Access settings category in NVDA's Settings screen.
-#: globalCommands.py:126 gui\settingsDialogs.py:3790
+#: globalCommands.py:126 gui\settingsDialogs.py:3795
 msgctxt "remote"
 msgid "Remote Access"
 msgstr "ចូលប្រើពីចម្ងាយ"
@@ -4864,47 +4864,47 @@ msgstr "ផ្សេងៗ"
 #. if the default key causes problems for the normal locale keyboard layout.
 #. The key must be formatted as described in this article:
 #. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
-#: installer.py:498
+#: installer.py:499
 msgid "CTRL+ALT+N"
 msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
-#: installer.py:521
+#: installer.py:522
 msgid "NVDA web site"
 msgstr "គេហទំព័រ NVDA"
 
 #. Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
-#: installer.py:530
+#: installer.py:531
 msgid "Uninstall NVDA"
 msgstr "លែងដំឡើង NVDA"
 
 #. Translators: A label for a shortcut item in start menu to open current user's NVDA configuration directory.
-#: installer.py:540
+#: installer.py:541
 msgid "Explore NVDA user configuration directory"
 msgstr "ស្វែងរកឯកសារកំណត់រចនាសម្ព័ន្ធអ្នកប្រើ NVDA"
 
 #. Translators: The label of the NVDA Documentation menu in the Start Menu.
-#: installer.py:551
+#: installer.py:552
 msgid "Documentation"
 msgstr "ឯកសារគាំទ្រ"
 
 #. Translators: The label of the Start Menu item to open the Commands Quick Reference document.
-#: installer.py:554
+#: installer.py:555
 msgid "Commands Quick Reference"
 msgstr "ឯកសារយោងរហ័សសម្រាប់ពាក្យបញ្ជា"
 
 #. Translators: A label for a shortcut in start menu to open NVDA user guide.
-#: installer.py:563
+#: installer.py:564
 msgid "User Guide"
 msgstr "លំណែនាំសម្រាប់អ្នកប្រើប្រាស់"
 
 #. Translators: A label for a shortcut in start menu to open NVDA what's new.
-#: installer.py:572
+#: installer.py:573
 msgid "What's new"
 msgstr "ថ្មីៗ"
 
 #. Translators: A file extension label for NVDA add-on package.
-#: installer.py:714
+#: installer.py:715
 msgid "NVDA add-on package"
 msgstr "កញ្ចប់កម្មវិធីជំនួយរបស់ NVDA"
 
@@ -5323,7 +5323,7 @@ msgstr "បើក"
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 #: keyboardHandler.py:633 synthSettingsRing.py:117 controlTypes\state.py:231
-#: gui\settingsDialogs.py:2377 gui\speechDict.py:198
+#: gui\settingsDialogs.py:2382 gui\speechDict.py:198
 msgid "off"
 msgstr "បិទ"
 
@@ -7173,7 +7173,7 @@ msgstr "ការតភ្ជាប់ដែលកំពុងសកម្មប
 #. Translators: The title of a dialog.
 #. Translators: Title of warning dialog
 #: updateCheck.py:1026 gui\_SetURLDialog.py:113 gui\configProfiles.py:500
-#: gui\installerGui.py:375 gui\installerGui.py:533 gui\settingsDialogs.py:1935
+#: gui\installerGui.py:375 gui\installerGui.py:533 gui\settingsDialogs.py:1940
 #: screenCurtain\_screenCurtain.py:70 _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "ព្រមាន"
@@ -11633,7 +11633,7 @@ msgstr "បានតភ្ជាប់ដោយជោគជ័យទៅ URL ដ�
 #. Translators: The message title displayed when copying configuration to system settings was successful.
 #. Translators: Title of success dialog
 #: gui\_SetURLDialog.py:177 gui\installerGui.py:148 gui\installerGui.py:731
-#: gui\settingsDialogs.py:1044 _remoteClient\dialogs.py:280
+#: gui\settingsDialogs.py:1049 _remoteClient\dialogs.py:280
 msgid "Success"
 msgstr "ជោគជ័យ"
 
@@ -12459,7 +12459,7 @@ msgstr "&តម្រៀបតាម៖:"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:6350 gui\speechDict.py:215
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:6379 gui\speechDict.py:215
 msgid "&Add"
 msgstr "បន្ថែម (&A)"
 
@@ -12838,7 +12838,7 @@ msgid "Default ({default})"
 msgstr "លំនាំដើម ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
-#: gui\settingsDialogs.py:457
+#: gui\settingsDialogs.py:459
 #, python-brace-format
 msgid "{message}\n\n"
 "Category: \"{category}\"\n"
@@ -12848,25 +12848,25 @@ msgstr "{message}\n\n"
 "ជម្រើស: \"{option}\""
 
 #. Translators: The title of the message box when a setting's configuration is not valid.
-#: gui\settingsDialogs.py:464
+#: gui\settingsDialogs.py:466
 msgid "Invalid configuration"
 msgstr "ការកំណត់មិនត្រឹមត្រូវ"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
-#: gui\settingsDialogs.py:573
+#: gui\settingsDialogs.py:575
 msgid "&Categories:"
 msgstr "ប្រភេទ: (&C)"
 
 #. Translators: This is the label for the general settings panel.
 #. Translators: name of a grouping in Privacy and Security settings
 #. which contains miscellaneous settings.
-#: gui\settingsDialogs.py:803 gui\settingsDialogs.py:5999
+#: gui\settingsDialogs.py:808 gui\settingsDialogs.py:6004
 msgid "General"
 msgstr "ទូទៅ"
 
 #. Translators: Shown for a language which has been provided from the command line
 #. 'langDesc' would be replaced with description of the given locale.
-#: gui\settingsDialogs.py:817
+#: gui\settingsDialogs.py:822
 #, python-brace-format
 msgid "Command line option: {langDesc}"
 msgstr "ជម្រើសបន្ទាត់ពាក្យបញ្ជា: {langDesc}"
@@ -12874,23 +12874,23 @@ msgstr "ជម្រើសបន្ទាត់ពាក្យបញ្ជា: {
 #. Translators: The label for a setting in general settings to select NVDA's interface language
 #. (once selected, NVDA must be restarted; the option user default means the user's Windows language
 #. will be used).
-#: gui\settingsDialogs.py:823
+#: gui\settingsDialogs.py:828
 msgid "NVDA &Language (requires restart):"
 msgstr "ភាសា NVDA (ទាមទារការចាប់ផ្ដើមឡើងវិញ): (&L)"
 
 #. Translators: The label for a setting in general settings to save current configuration when NVDA
 #. exits (if it is not checked, user needs to save configuration before quitting NVDA).
-#: gui\settingsDialogs.py:841
+#: gui\settingsDialogs.py:846
 msgid "&Save configuration when exiting NVDA"
 msgstr "រក្សាទុកការកំណត់ពេលចេញពី NVDA (&S)"
 
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
-#: gui\settingsDialogs.py:849
+#: gui\settingsDialogs.py:854
 msgid "Sho&w exit options when exiting NVDA"
 msgstr "បង្ហាញជម្រើសចេញ ពេលចេញពី NVDA (&w)"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
-#: gui\settingsDialogs.py:857
+#: gui\settingsDialogs.py:862
 msgid "&Play sounds when starting or exiting NVDA"
 msgstr "បន្លឺសំឡេងពេលចាប់ផ្តើម ឬចេញពី NVDA (&P)"
 
@@ -12898,7 +12898,7 @@ msgstr "បន្លឺសំឡេងពេលចាប់ផ្តើម ឬ�
 #. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
 #. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 #. Translators: The label of a checkbox in the Welcome dialog.
-#: gui\settingsDialogs.py:866 gui\startupDialogs.py:87
+#: gui\settingsDialogs.py:871 gui\startupDialogs.py:87
 msgid "St&art NVDA after I sign in"
 msgstr "&ចាប់ផ្តើម NVDA បន្ទាប់ពីខ្ញុំចូលគណនី (&a)"
 
@@ -12906,7 +12906,7 @@ msgstr "&ចាប់ផ្តើម NVDA បន្ទាប់ពីខ្ញ�
 #. allow NVDA to come up in Windows login screen (useful if user
 #. needs to enter passwords or if multiple user accounts are present
 #. to allow user to choose the correct account).
-#: gui\settingsDialogs.py:878
+#: gui\settingsDialogs.py:883
 msgid "Use NVDA during sign-in (requires administrator privileges)"
 msgstr "ប្រើ NVDA នៅពេលចូលគណនី (ទាមទារសិទ្ធិអ្នកគ្រប់គ្រង)"
 
@@ -12914,24 +12914,24 @@ msgstr "ប្រើ NVDA នៅពេលចូលគណនី (ទាមទា�
 #. current user settings to system settings (to allow current
 #. settings to be used in secure screens such as User Account
 #. Control (UAC) dialog).
-#: gui\settingsDialogs.py:893
+#: gui\settingsDialogs.py:898
 msgid "Use currently saved settings during sign-in and on secure screens (requires administrator privileges)"
 msgstr "ប្រើការកំណត់ដែលបានសន្សំពេលចូលគណនី និងនៅលើអេក្រង់សុវត្ថិភាព (ទាមទារសិទ្ធិអ្នកគ្រប់គ្រង)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA.
 #. If not checked, user must check for updates manually.
-#: gui\settingsDialogs.py:907
+#: gui\settingsDialogs.py:912
 msgid "Automatically check for &updates to NVDA"
 msgstr "ពិនិត្យរក ការធ្វើបច្ចុប្បន្នភាព NVDA ដោយស្វ័យប្រវត្តិ (&u)"
 
 #. Translators: The label of a checkbox in general settings to toggle startup notifications
 #. for a pending NVDA update.
-#: gui\settingsDialogs.py:920
+#: gui\settingsDialogs.py:925
 msgid "Notify for &pending update on startup"
 msgstr "ផ្ញើការជូនដំណឹងសម្រាប់ ការធ្វើបច្ចុប្បន្នភាពដែលកំពុងរងចាំពេលចាប់ផ្តើម (&p)"
 
 #. Translators: The label for the update mirror on the General Settings panel.
-#: gui\settingsDialogs.py:930
+#: gui\settingsDialogs.py:935
 msgid "Update mirror"
 msgstr "ប្រព័ន្ធធ្វើបច្ចុប្បន្នភាព"
 
@@ -12939,86 +12939,86 @@ msgstr "ប្រព័ន្ធធ្វើបច្ចុប្បន្នភ
 #. it appears in the context of the update mirror group on the General page of NVDA's settings.
 #. Translators: This is the label for the button used to change the Add-on Store mirror URL,
 #. it appears in the context of the mirror server group on the Add-on Store page of NVDA's settings.
-#: gui\settingsDialogs.py:948 gui\settingsDialogs.py:3727
+#: gui\settingsDialogs.py:953 gui\settingsDialogs.py:3732
 msgid "Change..."
 msgstr "ផ្លាស់ប្ដូរ។.."
 
 #. Translators: The label of a checkbox in general settings.
-#: gui\settingsDialogs.py:964
+#: gui\settingsDialogs.py:969
 msgid "Prevent &display from turning off during say all or reading with braille"
 msgstr "ទប់ស្កាត់ការបង្ហាញ (&display) មិនឱ្យបិទ ពេលប្រើ Say All ឬអានជាមួយ Braille"
 
 #. Translators: Title of the dialog used to change NVDA's update server mirror URL.
-#: gui\settingsDialogs.py:978
+#: gui\settingsDialogs.py:983
 msgid "Set NVDA Update Mirror"
 msgstr "កំណត់ប្រព័ន្ធធ្វើបច្ចុប្បន្នភាព"
 
 #. Translators: The title of the dialog presented while settings are being copied
-#: gui\settingsDialogs.py:1007
+#: gui\settingsDialogs.py:1012
 msgid "Copying Settings"
 msgstr "កំពុងចម្លងការកំណត់"
 
 #. Translators: The message displayed while settings are being copied
 #. to the system configuration (for use on Windows logon etc)
-#: gui\settingsDialogs.py:1010
+#: gui\settingsDialogs.py:1015
 msgid "Please wait while settings are copied to the system configuration."
 msgstr "សូមរង់ចាំ ខណៈដែលកំពុងចម្លងការកំណត់ទៅប្រព័ន្ធកំណត់។"
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
-#: gui\settingsDialogs.py:1021
+#: gui\settingsDialogs.py:1026
 msgid "Unable to copy a file. Perhaps it is currently being used by another process or you have run out of disc space on the drive you are copying to."
 msgstr "មិនអាចចម្លងឯកសារបានទេ។ ប្រហែលជាវាកំពុងត្រូវបានប្រើដោយដំណើរការផ្សេង ឬអ្នកបានអស់ទំហំថាសនៅលើ drive ដែលអ្នកកំពុងចម្លងទៅ។"
 
 #. Translators: the title of a retry cancel dialog when copying settings  fails
-#: gui\settingsDialogs.py:1025
+#: gui\settingsDialogs.py:1030
 msgid "Error Copying"
 msgstr "មានកំហុសក្នុងការចម្លង"
 
 #. Translators: The message displayed when errors were found while trying to copy current configuration to system settings.
-#: gui\settingsDialogs.py:1038
+#: gui\settingsDialogs.py:1043
 msgid "Error copying NVDA user settings"
 msgstr "មានកំហុសក្នុងការចម្លងការកំណត់របស់អ្នកប្រើ NVDA"
 
 #. Translators: The message displayed when copying configuration to system settings was successful.
-#: gui\settingsDialogs.py:1042
+#: gui\settingsDialogs.py:1047
 msgid "Successfully copied NVDA user settings"
 msgstr "បានចម្លងការកំណត់របស់អ្នកប្រើ NVDA ដោយជោគជ័យ"
 
-#: gui\settingsDialogs.py:1066
+#: gui\settingsDialogs.py:1071
 msgid "This change requires administrator privileges."
 msgstr "ការផ្លាស់ប្តូរនេះទាមទារសិទ្ធិអ្នកគ្រប់គ្រង។"
 
-#: gui\settingsDialogs.py:1067
+#: gui\settingsDialogs.py:1072
 msgid "Insufficient Privileges"
 msgstr "សិទ្ធិមិនគ្រប់គ្រាន់"
 
 #. Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
-#: gui\settingsDialogs.py:1090 gui\settingsDialogs.py:3773
+#: gui\settingsDialogs.py:1095 gui\settingsDialogs.py:3778
 msgid "No mirror"
 msgstr "គ្មានប្រភពជំនួយសម្រាប់ធ្វើបច្ចុប្បន្នភាពទេ"
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
-#: gui\settingsDialogs.py:1107
+#: gui\settingsDialogs.py:1112
 msgid "Language Configuration Change"
 msgstr "ការផ្លាស់ប្តូរការកំណត់ភាសា"
 
 #. Translators: The message displayed after NVDA interface language has been changed.
-#: gui\settingsDialogs.py:1112
+#: gui\settingsDialogs.py:1117
 msgid "NVDA must be restarted for the new language to take effect."
 msgstr "អ្នកត្រូវចាប់ផ្ដើម NVDA ឡើងវិញដើម្បីឱ្យភាសាថ្មីមានប្រសិទ្ធភាព។"
 
 #. Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
-#: gui\settingsDialogs.py:1117
+#: gui\settingsDialogs.py:1122
 msgid "Restart &now"
 msgstr "ចាប់ផ្ដើមឡើងវិញឥឡូវនេះ (&n)"
 
 #. Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
-#: gui\settingsDialogs.py:1122
+#: gui\settingsDialogs.py:1127
 msgid "Restart &later"
 msgstr "ចាប់ផ្ដើមឡើងវិញនៅពេលក្រោយ (&l)"
 
 #. Translators: A label for the synthesizer on the speech panel.
-#: gui\settingsDialogs.py:1146
+#: gui\settingsDialogs.py:1151
 msgid "Synthesizer"
 msgstr "កម្មវិធីសំឡេងសំយោគ (Synthesizer)"
 
@@ -13026,589 +13026,589 @@ msgstr "កម្មវិធីសំឡេងសំយោគ (Synthesizer)"
 #. it appears in the context of a synthesizer group on the speech settings panel.
 #. Translators: This is the label for the button used to change braille display,
 #. it appears in the context of a braille display group on the braille settings panel.
-#: gui\settingsDialogs.py:1168 gui\settingsDialogs.py:4887
+#: gui\settingsDialogs.py:1173 gui\settingsDialogs.py:4892
 msgid "C&hange..."
 msgstr "ផ្លាស់ប្តូរ… (&h)"
 
 #. Translators: This is the label for the synthesizer selection dialog
-#: gui\settingsDialogs.py:1223
+#: gui\settingsDialogs.py:1228
 msgid "Select Synthesizer"
 msgstr "ជ្រើសរើសកម្មវិធីសំលេងសំយោគ (Synthesizer)"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
-#: gui\settingsDialogs.py:1231
+#: gui\settingsDialogs.py:1236
 msgid "&Synthesizer:"
 msgstr "កម្មវិធីសំឡេងសំយោគ (Synthesizer): (&S)"
 
 #. Translators: This is the label for the voice settings panel.
-#: gui\settingsDialogs.py:1615
+#: gui\settingsDialogs.py:1620
 msgid "Voice"
 msgstr "សំឡេងភាសា"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
-#: gui\settingsDialogs.py:1650
+#: gui\settingsDialogs.py:1655
 msgid "Automatic language switching (when supported)"
 msgstr "ប្ដូរភាសាដោយស្វ័យប្រវត្តិ (ពេលដែលអាចគាំទ្របាន)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, different voices for dialects will be used to
 #. read text in that dialect).
-#: gui\settingsDialogs.py:1666
+#: gui\settingsDialogs.py:1671
 msgid "Automatic dialect switching (when supported)"
 msgstr "ប្ដូរប្រភេទក្រៀមភាសាដោយស្វ័យប្រវត្តិ (ពេលដែលអាចគាំទ្របាន)"
 
 #. Translators: This is the label for a checkbox in the voice settings panel. If checked, the language of the text been read will be reported.
-#: gui\settingsDialogs.py:1675
+#: gui\settingsDialogs.py:1680
 msgctxt "reportLanguage"
 msgid "Report lan&guage changes while reading"
 msgstr "ប្រាប់ការផ្លាស់ប្តូរភាសា ពេលកំពុងអាន (&g)"
 
 #. Translators: This is a label for a combobox in the Voice settings panel to select
 #. reporting when the language of the text being read is not supported by the current synthesizer.
-#: gui\settingsDialogs.py:1691
+#: gui\settingsDialogs.py:1696
 msgctxt "reportLanguage"
 msgid "Report when switching to language is not s&upported by synthesizer"
 msgstr "រាយការណ៍ពេលប្ដូរទៅភាសាដែលមិនគាំទ្រដោយកម្មវិធីសំលេងសំយោគ (synthesizer) (&u)"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings panel (possible choices are none, some, most and all).
-#: gui\settingsDialogs.py:1710
+#: gui\settingsDialogs.py:1715
 msgid "Punctuation/symbol &level:"
 msgstr "កម្រិតសញ្ញាវណ្ណយុត្ត/និមិត្តសញ្ញា (&l):"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
-#: gui\settingsDialogs.py:1728
+#: gui\settingsDialogs.py:1733
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "ជឿជាក់សំឡេងភាសា ពេលដំណើរការតួអក្សរនិងនិមិត្តសញ្ញា"
 
 #. Translators: This is a label for a combo-box in the Speech settings panel.
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:1738 gui\settingsDialogs.py:5440
+#: gui\settingsDialogs.py:1743 gui\settingsDialogs.py:5445
 msgid "Unicode normali&zation"
 msgstr "ធ្វើឱ្យស្របតាមយូនីកូដ (&z)"
 
 #. Translators: This is the label for a checkbox in the
 #. speech settings panel.
-#: gui\settingsDialogs.py:1749
+#: gui\settingsDialogs.py:1754
 msgid "Report '&Normalized' when navigating by character"
 msgstr "រាយការណ៍ ‘&Normalized’ ពេលរុករកតាមតួអក្សរ"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change
 #. voice pitch for capital letters; the higher the value, the pitch will be higher).
-#: gui\settingsDialogs.py:1782
+#: gui\settingsDialogs.py:1787
 msgid "Capital pitch change percentage"
 msgstr "ភាគរយនៃការផ្លាស់ប្ដូរសំឡេងធូរ ឬតឹង"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
-#: gui\settingsDialogs.py:1797
+#: gui\settingsDialogs.py:1802
 msgid "Say &cap before capitals"
 msgstr "និយាយ Cap មុនអក្សរធំ (&c)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
-#: gui\settingsDialogs.py:1808
+#: gui\settingsDialogs.py:1813
 msgid "&Beep for capitals"
 msgstr "សំឡេងប៊ីបពេលអក្សរធំ (&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
-#: gui\settingsDialogs.py:1822
+#: gui\settingsDialogs.py:1827
 msgid "Use &spelling functionality if supported"
 msgstr "ប្រើមុខងារ ប្រកបអក្សរ បើសិនជាឧបករណ៍សំឡេងគាំទ្រ (&s)"
 
 #. Translators: Label of the list where user can enable or disable symbol dictionaires.
-#: gui\settingsDialogs.py:1838
+#: gui\settingsDialogs.py:1843
 msgid "E&xtra dictionaries for character and symbol processing:"
 msgstr "វចនានុក្រមបន្ថែមសម្រាប់ដំណើរការតួអក្សរ និងនិមិត្រ៖សញ្ញា (&x):"
 
 #. Translators: Label of the list where user can select speech modes that will be available.
-#: gui\settingsDialogs.py:1852
+#: gui\settingsDialogs.py:1857
 msgid "&Modes available in the Cycle speech mode command:"
 msgstr "ម៉ូដដែលអាចប្រើបាននៅក្នុងពាក្យបញ្ជា ប្តូររបៀបនិយាយជាជំរើស៖ (&M):"
 
 #. Translators: This is the label for a checkbox in the voice settings panel.
-#: gui\settingsDialogs.py:1866
+#: gui\settingsDialogs.py:1871
 msgid "&Delayed descriptions for characters on cursor movement"
 msgstr "ពន្យារពេលសម្រាប់ចាំការពិពណ៌នាអំពីតួអក្សរតាមចលនាទ្រនិច (&D)"
 
 #. Translators: Warning shown when 'talk' speech mode is disabled in settings.
-#: gui\settingsDialogs.py:1930
+#: gui\settingsDialogs.py:1935
 msgid "You did not choose Talk as one of your speech mode options. Please note that this may result in no speech output at all. Are you sure you want to continue?"
 msgstr "អ្នកមិនបានជ្រើសរើសម៉ូដ “និយាយ” ជាជម្រើសនៃម៉ូដនិយាយទេ។ សូមចំណាំថា វាអាចធ្វើឲ្យមិនមានសំឡេងនិយាយបង្ហាញឡើយ។ តើអ្នកប្រាកដថាចង់បន្តទេ?"
 
 #. Translators: Message shown when not enough speech modes are enabled.
-#: gui\settingsDialogs.py:1958
+#: gui\settingsDialogs.py:1963
 msgid "At least two speech modes have to be checked."
 msgstr "យ៉ាងហោចណាស់ត្រូវតែជ្រើសរើសម៉ូដនិយាយពីរ។"
 
 #. Translators: Same as the label for the list of checkboxes where user can select speech modes that will
 #. be available in Speech Settings, but without keyboard accelerator (& character) nor final colon.
-#: gui\settingsDialogs.py:1961
+#: gui\settingsDialogs.py:1966
 msgid "Modes available in the Cycle speech mode command"
 msgstr "ម៉ូដដែលអាចប្រើបាននៅក្នុងពាក្យបញ្ជា “ប្តូរម៉ូដនិយាយតាមជំពូក”"
 
 #. Translators: This is the label for the keyboard settings panel.
-#: gui\settingsDialogs.py:1970
+#: gui\settingsDialogs.py:1975
 msgid "Keyboard"
 msgstr "ក្តារចុច"
 
 #. Translators: This is the label for a combobox in the
 #. keyboard settings panel.
 #. Translators: The label of a combobox in the Welcome dialog.
-#: gui\settingsDialogs.py:1977 gui\startupDialogs.py:68
+#: gui\settingsDialogs.py:1982 gui\startupDialogs.py:68
 msgid "&Keyboard layout:"
 msgstr "ប្លង់ក្ដារចុច (&K):"
 
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
-#: gui\settingsDialogs.py:1991
+#: gui\settingsDialogs.py:1996
 msgid "&Select NVDA Modifier Keys"
 msgstr "ជ្រើសគ្រាប់ចុចផ្សំរបស់ NVDA៖ (&S)"
 
 #. Translators: This is the label for a combobox in the keyboard settings panel.
-#: gui\settingsDialogs.py:2007
+#: gui\settingsDialogs.py:2012
 msgid "Speak typed &characters:"
 msgstr "អានតួអក្សរដែលបានវាយ (&c):"
 
 #. Translators: This is the label for a combobox in the keyboard settings panel.
-#: gui\settingsDialogs.py:2018
+#: gui\settingsDialogs.py:2023
 msgid "Speak typed &words:"
 msgstr "អានពាក្យដែលបានវាយ (&w):"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2030
+#: gui\settingsDialogs.py:2035
 msgid "Speech &interrupt for typed characters"
 msgstr "បញ្ឈប់សំឡេងសម្រាប់តួអក្សរដែលបានវាយ (&i)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2042
+#: gui\settingsDialogs.py:2047
 msgid "Speech i&nterrupt for Enter key"
 msgstr "បញ្ឈប់សំឡេងសម្រាប់ការចុចគ្រាប់ចុចចូល (Enter)៖ (&n)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2051
+#: gui\settingsDialogs.py:2056
 msgid "Allow skim &reading in Say All"
 msgstr "អនុញ្ញាតការអានលើកទីមួយ (Skim reading) នៅពេលប្រើមុខងារអានទាំងអស់ (&r)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2061
+#: gui\settingsDialogs.py:2066
 msgid "&Beep if typing lowercase letters when caps lock is on"
 msgstr "ធ្វើឲ្យមានសំឡេងប៊ីប ប្រសិនបើវាយអក្សរតូច ខណៈពេល Caps Lock បានបើក៖ (&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2070
+#: gui\settingsDialogs.py:2075
 msgid "Speak c&ommand keys"
 msgstr "អានគ្រាប់ចុចបញ្ជា៖ (&o)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2077
+#: gui\settingsDialogs.py:2082
 msgid "Play sound for &spelling errors while typing"
 msgstr "បន្លឺសំឡេងសម្រាប់កំហុសការប្រកប ខណៈពេលវាយអក្សរ៖ (&s)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2088
+#: gui\settingsDialogs.py:2093
 msgid "Handle keys from other &applications"
 msgstr "ដំណើរការគ្រាប់ចុចពីកម្មវិធីផ្សេងៗ៖ (&a)"
 
 #. Translators: The label for a control in keyboard settings to modify the timeout for a multiple keypress.
-#: gui\settingsDialogs.py:2096
+#: gui\settingsDialogs.py:2101
 msgid "&Multiple key press timeout (ms):"
 msgstr "ពេលរង់ចាំសម្រាប់ចុចគ្រាប់ច្រើន (មិលីវិនាទី)៖ (&M):"
 
 #. Translators: Message to report wrong configuration of the NVDA key
-#: gui\settingsDialogs.py:2112
+#: gui\settingsDialogs.py:2117
 msgid "At least one key must be used as the NVDA key."
 msgstr "យ៉ាងហោចណាស់មានគ្រាប់ចុចមួយត្រូវតែប្រើជាគ្រាប់ចុចរបស់ NVDA។"
 
 #. Translators: Same as the label for the list of checkboxes controlling which keys are NVDA modifier
 #. keys in Keyboard Settings, but without keyboard accelerator (& character).
-#: gui\settingsDialogs.py:2115
+#: gui\settingsDialogs.py:2120
 msgid "Select NVDA Modifier Keys"
 msgstr "ជ្រើសរើសគ្រាប់ចុចផ្សំរបស់ NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2150
+#: gui\settingsDialogs.py:2155
 msgid "Report mouse &shape changes"
 msgstr "រាយការណ៍ការប្រែប្រួលរាងរបស់ម៉ៅ (&s)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2157
+#: gui\settingsDialogs.py:2162
 msgid "Enable mouse &tracking"
 msgstr "បើកការតាមដានរបស់ម៉ៅ (&t)"
 
 #. Translators: This is the label for a combobox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2164
+#: gui\settingsDialogs.py:2169
 msgid "Text &unit resolution:"
 msgstr "កម្រិតបត់បែនរបស់ខ្ទង់អត្ថបទ៖ (&u)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2183
+#: gui\settingsDialogs.py:2188
 msgid "Report &object when mouse enters it"
 msgstr "រាយការណ៍វត្ថុនៅពេលម៉ៅចូលទៅកាន់វា៖ (&o)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2192
+#: gui\settingsDialogs.py:2197
 msgid "&Play audio coordinates when mouse moves"
 msgstr "បន្លឺសំឡេងបញ្ជាក់ទីតាំង នៅពេលម៉ៅផ្លាស់ទី៖ (&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2199
+#: gui\settingsDialogs.py:2204
 msgid "&Brightness controls audio coordinates volume"
 msgstr "កម្រិតពន្លឺរបស់អេក្រង់គ្រប់គ្រងកម្រិតសម្លេងនៃសំឡេងបញ្ជាក់ទីតាំង៖ (&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2208
+#: gui\settingsDialogs.py:2213
 msgid "Ignore mouse input from other &applications"
 msgstr "មិនអើពើការបញ្ចូលម៉ៅពីកម្មវិធីផ្សេងៗ៖ (&a)"
 
 #. Translators: This is the label for the review cursor settings panel.
-#: gui\settingsDialogs.py:2229
+#: gui\settingsDialogs.py:2234
 msgid "Review Cursor"
 msgstr "ទ្រនិចត្រួតពិនិត្យ"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#: gui\settingsDialogs.py:2235
+#: gui\settingsDialogs.py:2240
 msgid "Follow system &focus"
 msgstr "ទៅតាមចំណុចផ្ដោតប្រព័ន្ធ (system &focus)"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#: gui\settingsDialogs.py:2241
+#: gui\settingsDialogs.py:2246
 msgid "Follow System &Caret"
 msgstr "ទៅតាមទ្រនិចប្រព័ន្ធ (System &Caret)"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#: gui\settingsDialogs.py:2247
+#: gui\settingsDialogs.py:2252
 msgid "Follow &mouse cursor"
 msgstr "ទៅតាមទ្រនិចម៉ៅ (&m)"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#: gui\settingsDialogs.py:2253
+#: gui\settingsDialogs.py:2258
 msgid "&Simple review mode"
 msgstr "ម៉ូដត្រួតពិនិត្យសាមញ្ញ (&S)"
 
 #. Translators: This is the label for the Input Composition settings panel.
-#: gui\settingsDialogs.py:2267
+#: gui\settingsDialogs.py:2272
 msgid "Input Composition"
 msgstr "ការបង្កើតអត្ថបទបញ្ចូល"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2276
+#: gui\settingsDialogs.py:2281
 msgid "Automatically report all available &candidates"
 msgstr "រាយការណ៍ជម្រើសពាក្យទាំងអស់ដោយស្វ័យប្រវត្តិ (&c)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2288
+#: gui\settingsDialogs.py:2293
 msgid "Announce &selected candidate"
 msgstr "ប្រកាសជម្រើសពាក្យដែលបានជ្រើស (&s)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2303
+#: gui\settingsDialogs.py:2308
 msgid "Always include short character &description when announcing candidates"
 msgstr "តែងតែបញ្ចូលការពិពណ៌នាខ្លីរបស់អក្សរ នៅពេលប្រកាសជម្រើសពាក្យ (&d)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2318
+#: gui\settingsDialogs.py:2323
 msgid "Report changes to the &reading string"
 msgstr "រាយការណ៍ការផ្លាស់ប្តូរនៃខ្សែអាន (&reading string)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2333
+#: gui\settingsDialogs.py:2338
 msgid "Report changes to the &composition string"
 msgstr "រាយការណ៍ការផ្លាស់ប្ដូរទៅលើខ្សែអត្ថបទកំពុងត្រូវបានបង្កើត (&composition string)"
 
 #. Translators: This is a label appearing on the Object Presentation settings panel.
-#: gui\settingsDialogs.py:2365
+#: gui\settingsDialogs.py:2370
 msgid "Configure how much information NVDA will present about controls. These options apply to focus reporting and NVDA object navigation, but not when reading text content e.g. web content with browse mode."
 msgstr "កំណត់ចំនួនព័ត៌មានដែល NVDA នឹងបង្ហាញអំពីធាតុគ្រប់គ្រង។ ជម្រើសទាំងនេះអនុវត្តចំពោះការរាយការណ៍ចំណុចផ្ដោត និងការរុករកវត្ថុរបស់ NVDA ប៉ុន្តែមិនអនុវត្តពេលអានអត្ថបទទេ ឧទាហរណ៍មាតិកាគេហទំព័រក្នុងម៉ូដរកមើល"
 
 #. Translators: This is the label for the object presentation panel.
-#: gui\settingsDialogs.py:2371
+#: gui\settingsDialogs.py:2376
 msgid "Object Presentation"
 msgstr "ការបង្ហាញវត្ថុ"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by speaking.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:2381
+#: gui\settingsDialogs.py:2386
 msgid "Speak"
 msgstr "សំឡេងនិយាយ"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:2385
+#: gui\settingsDialogs.py:2390
 msgid "Beep"
 msgstr "សំឡេងប៊ីប"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by both speaking and beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:2389
+#: gui\settingsDialogs.py:2394
 msgid "Speak and beep"
 msgstr "សំឡេងនិយាយ និងសំឡេងប៊ីប"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2402
+#: gui\settingsDialogs.py:2407
 msgid "Report &tooltips"
 msgstr "រាយការណ៍អំពីជំនួយ (&t)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2409
+#: gui\settingsDialogs.py:2414
 msgid "Report &notifications"
 msgstr "រាយការណ៍អំពីការជូនដំណឹង (&n)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2416
+#: gui\settingsDialogs.py:2421
 msgid "Report object shortcut &keys"
 msgstr "រាយការណ៍អំពីគ្រាប់ចុចរហ័សនៃវត្ថុ (&k)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2423
+#: gui\settingsDialogs.py:2428
 msgid "Report object &position information"
 msgstr "រាយការណ៍អំពីព័ត៌មានទីតាំងរបស់វត្ថុ (&p)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2430
+#: gui\settingsDialogs.py:2435
 msgid "&Guess object position information when unavailable"
 msgstr "សន្មត់ព័ត៌មានអំពីទីតាំងវត្ថុ នៅពេលមិនមានទិន្នន័យ (&G)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2439
+#: gui\settingsDialogs.py:2444
 msgid "Report when objects support &multiple selection"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2448
+#: gui\settingsDialogs.py:2453
 msgid "Report object &descriptions"
 msgstr "រាយការណ៍អំពីការពិពណ៌នារបស់វត្ថុ (&d)"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2455
+#: gui\settingsDialogs.py:2460
 msgid "Progress &bar output:"
 msgstr "លទ្ធផលនៃរបារភាគរយ (&b):"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2468
+#: gui\settingsDialogs.py:2473
 msgid "Report backg&round progress bars"
 msgstr "រាយការណ៍របារភាគរយនៅផ្ទៃខាងក្រោយ (&r)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2482
+#: gui\settingsDialogs.py:2487
 msgid "Report dynamic &content changes"
 msgstr "រាយការណ៍ការផ្លាស់ប្តូរមាតិកាដែលកើតឡើងដោយស្វ័យប្រវត្តិ (&c)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2492
+#: gui\settingsDialogs.py:2497
 msgid "Play a sound when &auto-suggestions appear"
 msgstr "បន្លឺសំឡេងនៅពេលបង្ហាញការស្នើជម្រើសស្វ័យប្រវត្តិ (&a)"
 
 #. Translators: This is the label for the browse mode settings panel.
-#: gui\settingsDialogs.py:2526
+#: gui\settingsDialogs.py:2531
 msgid "Browse Mode"
 msgstr "ម៉ូដរកមើល"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2533
+#: gui\settingsDialogs.py:2538
 msgid "&Maximum number of characters on one line"
 msgstr "កំណត់ចំនួនអក្សរអតិបរមាសម្រាប់មួយបន្ទាត់ (&M)"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2546
+#: gui\settingsDialogs.py:2551
 msgid "&Number of lines per page"
 msgstr "ចំនួនបន្ទាត់ក្នុងមួយទំព័រ (&N)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2559
+#: gui\settingsDialogs.py:2564
 msgid "Use &screen layout (when supported)"
 msgstr "ប្រើប្លង់អេក្រង់ (ប្រសិនបើត្រូវបានគាំទ្រ) (&s)"
 
 #. Translators: The label for a checkbox in browse mode settings to
 #. enable browse mode on page load.
-#: gui\settingsDialogs.py:2566
+#: gui\settingsDialogs.py:2571
 msgid "&Enable browse mode on page load"
 msgstr "បើកម៉ូដរកមើលដោយស្វ័យប្រវត្តិនៅពេលទំព័រផ្ទុករួច (&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2573
+#: gui\settingsDialogs.py:2578
 msgid "Automatic &Say All on page load"
 msgstr "អានមាតិកាទាំងអស់ដោយស្វ័យប្រវត្តិនៅពេលទំព័រផ្ទុករួច (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2580
+#: gui\settingsDialogs.py:2585
 msgid "Include l&ayout tables"
 msgstr "រួមបញ្ចូលតារាងប្លង់ (&a)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2587
+#: gui\settingsDialogs.py:2592
 msgid "Automatic focus mode for focus changes"
 msgstr "ម៉ូដផ្ដោតដោយស្វ័យប្រវត្តិសម្រាប់ការផ្លាស់ប្ដូរចំណុចផ្ដោត"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2601
+#: gui\settingsDialogs.py:2606
 msgid "Automatic focus mode for caret movement"
 msgstr "ម៉ូដផ្ដោតដោយស្វ័យប្រវត្តិសម្រាប់ចលនាទ្រនិច"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2615
+#: gui\settingsDialogs.py:2620
 msgid "Audio indication of focus and browse modes"
 msgstr "សំឡេងជូនដំណឹងអំពីម៉ូដផ្ដោត និងម៉ូដមកមើល"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2629
+#: gui\settingsDialogs.py:2634
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr "ការការពារមិនឲ្យឥរិយាបថដែលមិនមែនជាពាក្យបញ្ជា ទៅដល់ឯកសារ (&T)"
 
 #. Translators: Title of the math settings panel.
-#: gui\settingsDialogs.py:2662
+#: gui\settingsDialogs.py:2667
 msgctxt "math"
 msgid "Math"
 msgstr ""
 
 #. Translators: The description of the math settings panel.
-#: gui\settingsDialogs.py:2667
+#: gui\settingsDialogs.py:2672
 msgctxt "math"
 msgid "The following options control the presentation of mathematical content."
 msgstr ""
 
 #. Translators: options for Copy math to clipboard as -- speech text
-#: gui\settingsDialogs.py:2756 mathPres\MathCAT\preferences.py:139
+#: gui\settingsDialogs.py:2761 mathPres\MathCAT\preferences.py:139
 msgctxt "math"
 msgid "Speech"
 msgstr ""
 
 #. Translators: Select an impairment for MathCAT
-#: gui\settingsDialogs.py:2763
+#: gui\settingsDialogs.py:2768
 msgctxt "math"
 msgid "Impairment:"
 msgstr ""
 
 #. Translators: MathCAT language option
-#: gui\settingsDialogs.py:2775
+#: gui\settingsDialogs.py:2780
 msgctxt "math"
 msgid "Language:"
 msgstr ""
 
 #. Translators: MathCAT decimal separator option.
-#: gui\settingsDialogs.py:2787
+#: gui\settingsDialogs.py:2792
 msgctxt "math"
 msgid "Decimal separator for numbers:"
 msgstr ""
 
 #. Translators: Select a speech style.
-#: gui\settingsDialogs.py:2802
+#: gui\settingsDialogs.py:2807
 msgctxt "math"
 msgid "Speech style:"
 msgstr ""
 
 #. Translators: MathCAT's verbosity setting
-#: gui\settingsDialogs.py:2818
+#: gui\settingsDialogs.py:2823
 msgctxt "math"
 msgid "Speech verbosity:"
 msgstr ""
 
 #. Translators: MathCAT's relative speed setting
-#: gui\settingsDialogs.py:2830
+#: gui\settingsDialogs.py:2835
 msgctxt "math"
 msgid "Relative speech rate"
 msgstr ""
 
 #. Translators: label for slider that specifies relative factor to increase or decrease pauses in the math speech
-#: gui\settingsDialogs.py:2843
+#: gui\settingsDialogs.py:2848
 msgctxt "math"
 msgid "Pause factor"
 msgstr ""
 
 #. Translators: label for check box controlling a beep sound when math speech starts/ends
-#: gui\settingsDialogs.py:2858
+#: gui\settingsDialogs.py:2863
 msgctxt "math"
 msgid "Beep at the beginning and end of math"
 msgstr ""
 
 #. Translators: label for combobox to specify how verbose/terse the speech should be
-#: gui\settingsDialogs.py:2864
+#: gui\settingsDialogs.py:2869
 msgctxt "math"
 msgid "Chemical formulae:"
 msgstr ""
 
 #. Translators: label for combobox to specify whether the expression is spoken or described (an overview)
-#: gui\settingsDialogs.py:2876
+#: gui\settingsDialogs.py:2881
 msgctxt "math"
 msgid "When entering an equation:"
 msgstr ""
 
 #. Translators: "Speak" the expression after moving to it
-#: gui\settingsDialogs.py:2879
+#: gui\settingsDialogs.py:2884
 msgctxt "math"
 msgid "Speak"
 msgstr ""
 
 #. Translators: "Describe" the expression after moving to it
-#: gui\settingsDialogs.py:2881
+#: gui\settingsDialogs.py:2886
 msgctxt "math"
 msgid "Describe overview"
 msgstr ""
 
 #. Translators: label for checkbox to use native math speech instead of MathCAT in Word and Outlook
-#: gui\settingsDialogs.py:2895
+#: gui\settingsDialogs.py:2900
 msgctxt "math"
 msgid "Use native math speech in Word and Outlook"
 msgstr ""
 
 #. Translators: Text for the navigation group.
-#: gui\settingsDialogs.py:2903
+#: gui\settingsDialogs.py:2908
 msgctxt "math"
 msgid "Navigation"
 msgstr ""
 
 #. Translators: label for combobox to specify one of three modes use to navigate math expressions
-#: gui\settingsDialogs.py:2910
+#: gui\settingsDialogs.py:2915
 msgctxt "math"
 msgid "Default navigation mode:"
 msgstr ""
@@ -13617,52 +13617,52 @@ msgstr ""
 #. reverts to the user-selected "default navigation mode" when
 #. navigating into a new equation, even if they selected a different
 #. one this session.
-#: gui\settingsDialogs.py:2925
+#: gui\settingsDialogs.py:2930
 msgctxt "math"
 msgid "Reset to the default navigation mode for each new equation"
 msgstr ""
 
 #. Translators: label for checkbox that controls whether arrow keys move out of fractions, etc.,
 #. or whether you have to manually back out of the fraction, etc.
-#: gui\settingsDialogs.py:2932
+#: gui\settingsDialogs.py:2937
 msgctxt "math"
 msgid "Automatically zoom out of two-dimensional notation"
 msgstr ""
 
 #. Translators: label for combobox down to specify whether you want a terse or verbose reading of navigation commands
-#: gui\settingsDialogs.py:2938
+#: gui\settingsDialogs.py:2943
 msgctxt "math"
 msgid "Navigation verbosity:"
 msgstr ""
 
 #. Translators: label for combobox to specify how math will be copied to the clipboard
-#: gui\settingsDialogs.py:2956
+#: gui\settingsDialogs.py:2961
 msgctxt "math"
 msgid "Copy math as:"
 msgstr ""
 
 #. Translators: Text for the braille group.
-#: gui\settingsDialogs.py:2968
+#: gui\settingsDialogs.py:2973
 msgctxt "math"
 msgid "Braille"
 msgstr ""
 
 #. Translators: label for combobox to specify which braille code to use
-#: gui\settingsDialogs.py:2974
+#: gui\settingsDialogs.py:2979
 msgctxt "math"
 msgid "Output code:"
 msgstr ""
 
 #. Translators: An option in Math settings to select a braille code automatically,
 #. according to NVDA's language.
-#: gui\settingsDialogs.py:2979
+#: gui\settingsDialogs.py:2984
 #, python-brace-format
 msgctxt "math"
 msgid "Automatic ({name})"
 msgstr ""
 
 #. Translators: label for combobox to specify how braille dots should be modified when navigating/selecting subexprs
-#: gui\settingsDialogs.py:2998
+#: gui\settingsDialogs.py:3003
 msgctxt "math"
 msgid "Highlight navigation focus with dots 7 and 8"
 msgstr ""
@@ -13670,379 +13670,379 @@ msgstr ""
 #. Translators: This is the label for the document formatting panel.
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:3098 gui\settingsDialogs.py:4543
+#: gui\settingsDialogs.py:3103 gui\settingsDialogs.py:4548
 msgid "Document Formatting"
 msgstr "ទ្រង់ទ្រាយឯកសារ"
 
 #. Translators: This is a label appearing on the document formatting settings panel.
-#: gui\settingsDialogs.py:3102
+#: gui\settingsDialogs.py:3107
 msgid "The following options control the types of document formatting reported by NVDA."
 msgstr "ជម្រើសខាងក្រោមនេះគ្រប់គ្រងប្រភេទទ្រង់ទ្រាយឯកសារ ដែល NVDA រាយការណ៍។"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3111
+#: gui\settingsDialogs.py:3116
 msgid "Font"
 msgstr "ពុម្ពអក្សរ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3119
+#: gui\settingsDialogs.py:3124
 msgid "&Font name"
 msgstr "ឈ្មោះពុម្ពអក្សរ (&F)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3125
+#: gui\settingsDialogs.py:3130
 msgid "Font &size"
 msgstr "ទំហំពុម្ពអក្សរ (&s)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3131
+#: gui\settingsDialogs.py:3136
 msgid "Font attrib&utes"
 msgstr "គុណលក្ខណៈរបស់ពុម្ពអក្សរ (&u)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3143
+#: gui\settingsDialogs.py:3148
 msgid "Su&perscripts and subscripts"
 msgstr "Su&perscripts and subscripts"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3153
+#: gui\settingsDialogs.py:3158
 msgid "E&mphasis"
 msgstr "ការរំលេច (&m)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3159
+#: gui\settingsDialogs.py:3164
 msgid "Highlighted (mar&ked) text"
 msgstr "បានរំលេច (បានសម្គាល់) អត្ថបទ (&k)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3169
+#: gui\settingsDialogs.py:3174
 msgid "St&yle"
 msgstr "រចនាប័ទ្ម (&y)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3175
+#: gui\settingsDialogs.py:3180
 msgid "&Colors"
 msgstr "ពណ៌ (&C)"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3181
+#: gui\settingsDialogs.py:3186
 msgid "Document information"
 msgstr "ព័ត៌មានឯកសារ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3189
+#: gui\settingsDialogs.py:3194
 msgid "Commen&ts"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3195
+#: gui\settingsDialogs.py:3200
 msgid "&Bookmarks"
 msgstr "សញ្ញាសម្គាល់ទីតាំង (&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3201
+#: gui\settingsDialogs.py:3206
 msgid "&Editor revisions"
 msgstr "ការកែប្រែរបស់អ្នកនិពន្ធ (&E)"
 
 #. Translators: This is the label for a checklist in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3208
+#: gui\settingsDialogs.py:3213
 msgid "Spelling or grammar e&rrors"
 msgstr ""
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3225
+#: gui\settingsDialogs.py:3230
 msgid "Pages and spacing"
 msgstr "ទំព័រ និងចន្លោះ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3233
+#: gui\settingsDialogs.py:3238
 msgid "&Pages"
 msgstr "ទំព័រ (&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3239
+#: gui\settingsDialogs.py:3244
 msgid "Line &numbers"
 msgstr "លេខបន្ទាត់ (&n)"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-#: gui\settingsDialogs.py:3247
+#: gui\settingsDialogs.py:3252
 msgid "Line &indentation reporting:"
 msgstr "ការរាយការណ៍ចំនួនចូលជួរបន្ទាត់ (&i):"
 
 #. Translators: This is the label of a checkbox in the document formatting settings panel
 #. If this option is selected, NVDA will ignore blank lines for line indentation reporting
-#: gui\settingsDialogs.py:3261
+#: gui\settingsDialogs.py:3266
 msgid "Ignore &blank lines for line indentation reporting"
 msgstr "មិនខ្វល់បន្ទាត់ទទេ នៅពេលរាយការណ៍ការចូលជួរបន្ទាត់ (&b)"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
-#: gui\settingsDialogs.py:3273
+#: gui\settingsDialogs.py:3278
 msgid "&Paragraph indentation"
 msgstr "ការចូលបន្ទាត់កថាខណ្ឌ (&P)"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report line spacing if available.
-#: gui\settingsDialogs.py:3282
+#: gui\settingsDialogs.py:3287
 msgid "&Line spacing"
 msgstr "គម្លាតបន្ទាត់ (&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3289
+#: gui\settingsDialogs.py:3294
 msgid "&Alignment"
 msgstr "តម្រឹម (&A)"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3295
+#: gui\settingsDialogs.py:3300
 msgid "Table information"
 msgstr "ព័ត៌មានតារាង"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3303
+#: gui\settingsDialogs.py:3308
 msgid "&Tables"
 msgstr "តារាង (&T)"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3310
+#: gui\settingsDialogs.py:3315
 msgid "H&eaders"
 msgstr "ផ្នែកខាងលើ (&e)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3318
+#: gui\settingsDialogs.py:3323
 msgid "Cell c&oordinates"
 msgstr "កូអរដោណេក្រឡា (&o)"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3326
+#: gui\settingsDialogs.py:3331
 msgid "Cell &borders:"
 msgstr "គែមក្រឡា (&b):"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3334
+#: gui\settingsDialogs.py:3339
 msgid "Elements"
 msgstr "ធាតុ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3353
+#: gui\settingsDialogs.py:3358
 msgid "Link type"
 msgstr "ប្រភេទតំណភ្ជាប់"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3359
+#: gui\settingsDialogs.py:3364
 msgid "&Graphics"
 msgstr "ក្រាហ្វិក (&G)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3364
+#: gui\settingsDialogs.py:3369
 msgid "&Lists"
 msgstr "បញ្ជី (&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3369
+#: gui\settingsDialogs.py:3374
 msgid "Block &quotes"
 msgstr "ប្លុកសម្រង់ (&q)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3375
+#: gui\settingsDialogs.py:3380
 msgid "&Groupings"
 msgstr "ក្រុម (&G)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3381
+#: gui\settingsDialogs.py:3386
 msgid "Lan&dmarks and regions"
 msgstr "ទីតាំងសំគាល់ និងតំបន់ (&d)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3387
+#: gui\settingsDialogs.py:3392
 msgid "Arti&cles"
 msgstr "អត្ថបទ (&c)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3392
+#: gui\settingsDialogs.py:3397
 msgid "Fra&mes"
 msgstr "ស៊ុម (&m)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3398
+#: gui\settingsDialogs.py:3403
 msgid "&Figures and captions"
 msgstr "រូបភាព និងអត្ថបទពិពណ៌នា (&F)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3404
+#: gui\settingsDialogs.py:3409
 msgid "&Clickable"
 msgstr "អាចចុចបាន (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3409
+#: gui\settingsDialogs.py:3414
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr "រាយការណ៍ការផ្លាស់ប្តូរទ្រង់ទ្រាយខាងក្រោយទ្រនិច (អាចធ្វើឲ្យមានភាពយឺតយ៉ាវ) (&g)"
 
 #. Translators: This is the label for the document navigation settings panel.
-#: gui\settingsDialogs.py:3479
+#: gui\settingsDialogs.py:3484
 msgid "Document Navigation"
 msgstr "ការរុករកឯកសារ"
 
 #. Translators: This is a label for the paragraph navigation style in the document navigation dialog
-#: gui\settingsDialogs.py:3485
+#: gui\settingsDialogs.py:3490
 msgid "&Paragraph style:"
 msgstr "រចនាប័ទ្មកថាខណ្ឌ (&P):"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected synthesizer.
-#: gui\settingsDialogs.py:3502
+#: gui\settingsDialogs.py:3507
 #, python-format
 msgid "Could not load the %s synthesizer."
 msgstr "មិនអាចផ្ទុកកម្មវិធីសំឡេងសំយោគ %s បានទេ។"
 
 #. Translators: Dialog title presented when
 #. NVDA is unable to load the selected synthesizer.
-#: gui\settingsDialogs.py:3505
+#: gui\settingsDialogs.py:3510
 msgid "Synthesizer Error"
 msgstr "កំហុសកម្មវិធីសំឡេងសំយោគ"
 
 #. Translators: This is the label for the select output device combo in NVDA audio settings.
 #. Examples of an output device are default soundcard, usb headphones, etc.
-#: gui\settingsDialogs.py:3520
+#: gui\settingsDialogs.py:3525
 msgid "Audio output &device:"
 msgstr "ឧបករណ៍បញ្ចេញសំឡេង (&d):"
 
 #. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
-#: gui\settingsDialogs.py:3535
+#: gui\settingsDialogs.py:3540
 msgid "Audio d&ucking mode:"
 msgstr "ម៉ូដបន្ថយសំឡេងផ្សេង (&u):"
 
 #. Translators: This is the label for a checkbox control in the
 #. Audio settings panel.
-#: gui\settingsDialogs.py:3549
+#: gui\settingsDialogs.py:3554
 msgid "Volume of NVDA sounds follows voice volume"
 msgstr "កម្រិតសំឡេង NVDA ស្របតាមកម្រិតសំឡេងអាន"
 
 #. Translators: This is the label for a slider control in the
 #. Audio settings panel.
-#: gui\settingsDialogs.py:3557
+#: gui\settingsDialogs.py:3562
 msgid "Volume of NVDA sounds"
 msgstr "កម្រិតសំឡេង NVDA"
 
 #. Translators: This is a label for the sound split combo box in the Audio Settings dialog.
-#: gui\settingsDialogs.py:3568
+#: gui\settingsDialogs.py:3573
 msgid "&Sound split mode:"
 msgstr "ម៉ូដបែងចែកសំឡេង (&S):"
 
 #. Translators: The label for a setting in Audio settings panel
 #. to change how long the audio device is kept awake after speech
-#: gui\settingsDialogs.py:3585
+#: gui\settingsDialogs.py:3590
 msgid "Time to &keep audio device awake after speech (seconds)"
 msgstr "រយៈពេលរក្សាឧបករណ៍សំឡេងឲ្យដំណើរការតាមសំឡេងនិយាយ (វិនាទី) (&k)"
 
 #. Translators: Label of the list where user can select sound split modes that will be available.
-#: gui\settingsDialogs.py:3602
+#: gui\settingsDialogs.py:3607
 msgid "&Modes available in the 'Cycle sound split mode' command:"
 msgstr "ម៉ូដដែលអាចប្រើបានក្នុងបញ្ជា 'ប្តូរម៉ូដបែងចែកសំឡេង' (&M)"
 
 #. Translators: Message shown when no sound split modes are enabled.
-#: gui\settingsDialogs.py:3660
+#: gui\settingsDialogs.py:3665
 msgid "At least one sound split mode has to be checked."
 msgstr "យ៉ាងតិចម៉ូដបែងចែកសំឡេងមួយត្រូវតែត្រូវបានធីក។"
 
 #. Translators: Same as the label for the list of checkboxes controlling which sound split modes will be
 #. available. in Audio Settings, but without keyboard accelerator (& character) nor final colon.
-#: gui\settingsDialogs.py:3663
+#: gui\settingsDialogs.py:3668
 msgid "Modes available in the 'Cycle sound split mode' command"
 msgstr "ម៉ូដដែលអាចប្រើបានក្នុងបញ្ជា 'ប្តូរម៉ូដបែងចែកសំឡេង'"
 
 #. Translators: This is the label for the addon navigation settings panel.
-#: gui\settingsDialogs.py:3671
+#: gui\settingsDialogs.py:3676
 msgid "Add-on Store"
 msgstr "ហាងកម្មវិធីជំនួយ"
 
 #. Translators: This is a label for the automatic updates combo box in the Add-on Store Settings dialog.
-#: gui\settingsDialogs.py:3677
+#: gui\settingsDialogs.py:3682
 msgid "Automatic &updates:"
 msgstr "ធ្វើបច្ចុប្បន្នភាពដោយស្វ័យប្រវត្តិ (&u):"
 
 #. Translators: This is the label for the default update channel combo box in the Add-on Store Settings dialog.
-#: gui\settingsDialogs.py:3689
+#: gui\settingsDialogs.py:3694
 msgid "Default update &channel:"
 msgstr "ឆានែលធ្វើបច្ចុប្បន្នភាពលំនាំដើម (&c):"
 
 #. Translators: Mute other apps checkbox in settings
-#: gui\settingsDialogs.py:3703
+#: gui\settingsDialogs.py:3708
 msgid "Allow automatic updates to install incompatible add-ons"
 msgstr "អនុញ្ញាតឱ្យការធ្វើបច្ចុប្បន្នភាពដោយស្វ័យប្រវត្តិតម្លើងកម្មវិធីជំនួយដែលមិនអាចប្រើបានជាមួយកំណែបច្ចុប្បន្ន"
 
 #. Translators: The label for the mirror server on the Add-on Store Settings panel.
-#: gui\settingsDialogs.py:3709
+#: gui\settingsDialogs.py:3714
 msgid "Mirror server"
 msgstr "ម៉ាស៊ីនប្រភពជំនួយសម្រាប់ធ្វើបច្ចុប្បន្នភាព"
 
 #. Translators: Title of the dialog used to change the Add-on Store mirror URL.
-#: gui\settingsDialogs.py:3746
+#: gui\settingsDialogs.py:3751
 msgid "Set Add-on Store Mirror Server"
 msgstr "កំណត់ហាងកម្មវិធីជំនួយនៃម៉ាស៊ីនប្រភពជំនួយសម្រាប់ធ្វើបច្ចុប្បន្នភាព"
 
 #. Translators: Label of a checkbox in Remote Access settings
-#: gui\settingsDialogs.py:3800
+#: gui\settingsDialogs.py:3805
 msgctxt "remote"
 msgid "Enable Remote Access"
 msgstr "បើកការចូលប្រើពីចម្ងាយ"
 
 #. Translators: A checkbox in Remote Access settings to set whether to confirm when disconnecting as a follower.
-#: gui\settingsDialogs.py:3817
+#: gui\settingsDialogs.py:3822
 msgctxt "remote"
 msgid "Confirm before disconnecting when controlled"
 msgstr "បញ្ជាក់មុនផ្តាច់ការតភ្ជាប់ ពេល NVDA កំពុងត្រូវបានគ្រប់គ្រង"
 
 #. Translators: A checkbox in Remote Access settings to mute speech and sounds from the remote computer
 #. when controlling the local computer.
-#: gui\settingsDialogs.py:3828
+#: gui\settingsDialogs.py:3833
 msgctxt "remote"
 msgid "&Mute when controlling the local computer"
 msgstr "បិទសំឡេងពេលគ្រប់គ្រងកុំព្យូទ័រនៅកន្លែង (&M)"
 
 #. Translators: A checkbox in Remote Access settings to set whether NVDA should automatically connect to a control server on startup.
-#: gui\settingsDialogs.py:3838
+#: gui\settingsDialogs.py:3843
 msgctxt "remote"
 msgid "Automatically &connect after NVDA starts"
 msgstr "ភ្ជាប់ដោយស្វ័យប្រវត្តិ បន្ទាប់ពី NVDA ចាប់ផ្ដើម (&c)"
 
 #. Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote Access connection at startup.
-#: gui\settingsDialogs.py:3848
+#: gui\settingsDialogs.py:3853
 msgctxt "remote"
 msgid "Automatic connection"
 msgstr "ការតភ្ជាប់ដោយស្វ័យប្រវត្តិ"
@@ -14050,7 +14050,7 @@ msgstr "ការតភ្ជាប់ដោយស្វ័យប្រវត្
 #. Translators: Label for a control in Remote Access settings,
 #. allowing the user to select whether their computer is controlling or controlled.
 #. Translators: Label of the control allowing users to set whether they are the controlling or controlled computer in the Remote Access connection dialog.
-#: gui\settingsDialogs.py:3857 _remoteClient\dialogs.py:325
+#: gui\settingsDialogs.py:3862 _remoteClient\dialogs.py:325
 msgctxt "remote"
 msgid "&Mode:"
 msgstr "ម៉ូដ (&M):"
@@ -14058,7 +14058,7 @@ msgstr "ម៉ូដ (&M):"
 #. Translators: Label for a control in Remote Access settings,
 #. allowing users to choose whether they want to use an existing server, or host their own.
 #. Translators: Label of the control allowing users to select whether to use a pre-existing Remote Access server, or to run their own.
-#: gui\settingsDialogs.py:3866 _remoteClient\dialogs.py:335
+#: gui\settingsDialogs.py:3871 _remoteClient\dialogs.py:335
 msgctxt "remote"
 msgid "&Server:"
 msgstr "ម៉ាស៊ីនបម្រើ (&S):"
@@ -14066,7 +14066,7 @@ msgstr "ម៉ាស៊ីនបម្រើ (&S):"
 #. Translators: Label for the host field in Remote Access settings.
 #. This is where users should enter the URL of the Remote Access server they want to use if they are not hosting their own.
 #. Translators: The label of an edit field in connect dialog to enter name or address of the remote computer.
-#: gui\settingsDialogs.py:3876 _remoteClient\dialogs.py:46
+#: gui\settingsDialogs.py:3881 _remoteClient\dialogs.py:46
 msgid "&Host:"
 msgstr "ម៉ាស៊ីនមេ (&H):"
 
@@ -14074,7 +14074,7 @@ msgstr "ម៉ាស៊ីនមេ (&H):"
 #. This is the port on which the local control server will be accessible,
 #. if the user has chosen to host their own.
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
-#: gui\settingsDialogs.py:3885 gui\settingsDialogs.py:4965
+#: gui\settingsDialogs.py:3890 gui\settingsDialogs.py:4970
 #: _remoteClient\dialogs.py:207
 msgid "&Port:"
 msgstr "ច្រកតភ្ជាប់ (&P):"
@@ -14082,17 +14082,17 @@ msgstr "ច្រកតភ្ជាប់ (&P):"
 #. Translators: Label for a control in Remote Access settings,
 #. Where users set the key for their connection.
 #. Translators: Label of the edit field to enter key (password) to secure the Remote Access connection.
-#: gui\settingsDialogs.py:3906 _remoteClient\dialogs.py:51
+#: gui\settingsDialogs.py:3911 _remoteClient\dialogs.py:51
 msgid "&Key:"
 msgstr "ពាក្យសម្ងាត់ (&K):"
 
 #. Translators: A button in Remote Access settings to delete all fingerprints of unauthorized certificates.
-#: gui\settingsDialogs.py:3913
+#: gui\settingsDialogs.py:3918
 msgid "Delete all trusted fingerprints"
 msgstr "លុបស្នាមមេដៃដែលបានទុកចិត្តទាំងអស់"
 
 #. Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
-#: gui\settingsDialogs.py:3992
+#: gui\settingsDialogs.py:3997
 msgctxt "remote"
 msgid "This will cause NVDA to forget all previously trusted Remote Access servers. When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
 "Are you sure you want to continue?"
@@ -14101,184 +14101,184 @@ msgstr "នេះនឹងបណ្ដាលឲ្យ NVDAភ្លេចម៉�
 "តើអ្នកពិតជាចង់បន្តដែរឬទេ?"
 
 #. Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
-#: gui\settingsDialogs.py:3997
+#: gui\settingsDialogs.py:4002
 msgctxt "remote"
 msgid "Delete All Trusted Fingerprints"
 msgstr "លុបស្នាមមេដៃដែលបានទុកចិត្តទាំងអស់"
 
 #. Translators: This message is presented when the user tries to save the settings with the host or key field empty.
-#: gui\settingsDialogs.py:4014
+#: gui\settingsDialogs.py:4019
 msgctxt "remote"
 msgid "Both host and key must be set in the Remote Access section in order to automatically connect using an existing server after NVDA starts."
 msgstr "ទាំងម៉ាស៊ីនមេ និង ពាក្យសម្ងាត់ត្រូវតែបានកំណត់នៅក្នុងផ្នែកចូលប្រើពីចម្ងាយ ដើម្បីអាចតភ្ជាប់ស្វ័យប្រវត្តិតាមម៉ាស៊ីនបម្រើដែលមានស្រាប់ បន្ទាប់ពី NVDA ចាប់ផ្ដើម។"
 
 #. Translators: This message is presented when the user tries to save the settings with the port or key field empty.
-#: gui\settingsDialogs.py:4020
+#: gui\settingsDialogs.py:4025
 msgctxt "remote"
 msgid "Both port and key must be set in the Remote Access category in order to automatically connect using a locally hosted server after NVDA starts."
 msgstr "ទាំងច្រកតភ្ជាប់ និង ពាក្យសម្ងាត់ត្រូវតែបានកំណត់នៅក្នុងផ្នែកចូលប្រើពីចម្ងាយ ដើម្បីអាចតភ្ជាប់ស្វ័យប្រវត្តិ តាមម៉ាស៊ីនមេមូលដ្ឋាន បន្ទាប់ពី NVDA ចាប់ផ្ដើម។"
 
 #. Translators: Title of a dialog.
-#: gui\settingsDialogs.py:4026
+#: gui\settingsDialogs.py:4031
 msgctxt "remote"
 msgid "Remote Access Error"
 msgstr "កំហុសការចូលប្រើពីចម្ងាយ"
 
 #. Translators: This is the label for the touch interaction settings panel.
-#: gui\settingsDialogs.py:4060
+#: gui\settingsDialogs.py:4065
 msgid "Touch Interaction"
 msgstr "អន្តរកម្មតាមការប៉ះ"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
-#: gui\settingsDialogs.py:4067
+#: gui\settingsDialogs.py:4072
 msgid "Enable touch interaction support"
 msgstr "បើកការគាំទ្រអន្តរកម្មតាមការប៉ះ"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
-#: gui\settingsDialogs.py:4073
+#: gui\settingsDialogs.py:4078
 msgid "&Touch typing mode"
 msgstr "ម៉ូដវាយអត្ថបទតាមការប៉ះ (&T)"
 
 #. Translators: The title of the Windows OCR panel.
-#: gui\settingsDialogs.py:4085
+#: gui\settingsDialogs.py:4090
 msgid "Windows OCR"
 msgstr "Windows OCR"
 
 #. Translators: Label for an option in the Windows OCR dialog.
-#: gui\settingsDialogs.py:4104
+#: gui\settingsDialogs.py:4109
 msgid "Recognition &language:"
 msgstr "ភាសាសម្រាប់ការស្គាល់ (&l):"
 
 #. Translators: Label for an option in the Windows OCR settings panel.
-#: gui\settingsDialogs.py:4114
+#: gui\settingsDialogs.py:4119
 msgid "Periodically &refresh recognized content"
 msgstr "ធ្វើឲ្យមាតិកាដែលបានស្គាល់មានបន្តបន្ទាប់ជារៀងរាល់ពេល (&r)"
 
 #. Translators: The label for a setting in OCR settings to automatically say all on result.
-#: gui\settingsDialogs.py:4122
+#: gui\settingsDialogs.py:4127
 msgid "Automatically say all on result"
 msgstr ""
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4154
+#: gui\settingsDialogs.py:4159
 msgid "NVDA Development"
 msgstr "ការអភិវឌ្ឍ NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4162
+#: gui\settingsDialogs.py:4167
 msgid "Enable loading custom code from Developer Scratchpad directory"
 msgstr "បើកការផ្ទុកកូដប្ដូរតាមចំណូលចិត្តពីថត Developer Scratchpad"
 
 #. Translators: the label for a button in the Advanced settings category
-#: gui\settingsDialogs.py:4175
+#: gui\settingsDialogs.py:4180
 msgid "Open developer scratchpad directory"
 msgstr "បើកថត Developer Scratchpad"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4185
+#: gui\settingsDialogs.py:4190
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UI Automation"
 
 #. Translators: This is the label for a combo box for selecting the
 #. means of registering for UI Automation events in the advanced settings panel.
 #. Choices are automatic, selective, and global.
-#: gui\settingsDialogs.py:4195
+#: gui\settingsDialogs.py:4200
 msgid "Regi&stration for UI Automation events and property changes:"
 msgstr "ការចុះបញ្ជីសម្រាប់ព្រឹត្តិការណ៍ UI Automation និងការផ្លាស់ប្តូរលក្ខណៈ (&s):"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA decide whether to register
 #. selectively or globally for UI Automation events.
-#: gui\settingsDialogs.py:4201
+#: gui\settingsDialogs.py:4206
 msgid "Automatic (prefer selective)"
 msgstr "ស្វ័យប្រវត្តិ (ចង់បានជ្រើសរើសជាមុន)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register selectively for UI Automation events
 #. (i.e. not to request events for objects outside immediate focus).
-#: gui\settingsDialogs.py:4205
+#: gui\settingsDialogs.py:4210
 msgid "Selective"
 msgstr "ជ្រើសរើស"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register for all UI Automation events
 #. in all cases.
-#: gui\settingsDialogs.py:4209
+#: gui\settingsDialogs.py:4214
 msgid "Global"
 msgstr "សកល"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4238
+#: gui\settingsDialogs.py:4243
 msgctxt "advanced.uiaWithMSWord"
 msgid "Use UI Automation to access Microsoft &Word document controls"
 msgstr "ប្រើ UI Automation ដើម្បីចូលប្រើធាតុគ្រប់គ្រងឯកសារ Microsoft Word (&W)"
 
 #. Translators: Label for the default value of the Use UIA with MS Word combobox,
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4243
+#: gui\settingsDialogs.py:4248
 msgctxt "advanced.uiaWithMSWord"
 msgid "Default (Where suitable)"
 msgstr "លំនាំដើម (នៅពេលសមស្រប)"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4245
+#: gui\settingsDialogs.py:4250
 msgctxt "advanced.uiaWithMSWord"
 msgid "Only when necessary"
 msgstr "សម្រាប់តែនៅពេលចាំបាច់"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4247
+#: gui\settingsDialogs.py:4252
 msgctxt "advanced.uiaWithMSWord"
 msgid "Where suitable"
 msgstr "នៅពេលសមស្រប"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4249
+#: gui\settingsDialogs.py:4254
 msgctxt "advanced.uiaWithMSWord"
 msgid "Always"
 msgstr "គ្រប់ពេល"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4258
+#: gui\settingsDialogs.py:4263
 msgid "Use UI Automation to access Microsoft &Excel spreadsheet controls when available"
 msgstr "ប្រើ UI Automation ដើម្បីចូលប្រើធាតុគ្រប់គ្រងសៀវភៅតារាង Microsoft Excel ប្រសិនបើមាន (&E)"
 
 #. Translators: This is the label for a combo box for selecting the
 #. active console implementation in the advanced settings panel.
 #. Choices are automatic, UIA when available, and legacy.
-#: gui\settingsDialogs.py:4266
+#: gui\settingsDialogs.py:4271
 msgid "Windows C&onsole support:"
 msgstr "ការគាំទ្រ Windows Console (&o):"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine its Windows Console implementation
 #. automatically.
-#: gui\settingsDialogs.py:4271
+#: gui\settingsDialogs.py:4276
 msgid "Automatic (prefer UIA)"
 msgstr "ស្វ័យប្រវត្តិ (ចង់បាន UIA ជាមុន)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use UIA in the Windows Console when available.
-#: gui\settingsDialogs.py:4274
+#: gui\settingsDialogs.py:4279
 msgid "UIA when available"
 msgstr "UIA នៅពេលមាន"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use its legacy Windows Console support
 #. in all cases.
-#: gui\settingsDialogs.py:4278
+#: gui\settingsDialogs.py:4283
 msgid "Legacy"
 msgstr "ម៉ូដចាស់"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
-#: gui\settingsDialogs.py:4301
+#: gui\settingsDialogs.py:4306
 msgctxt "advanced.uiaWithChromium"
 msgid "Use UIA with Microsoft Edge and other \n"
 "&Chromium based browsers when available:"
@@ -14286,72 +14286,72 @@ msgstr "➡️ ប្រើ UIA ជាមួយ Microsoft Edge និងកម�
 
 #. Translators: Label for the default value of the Use UIA with Chromium combobox,
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4306
+#: gui\settingsDialogs.py:4311
 msgctxt "advanced.uiaWithChromium"
 msgid "Default (Only when necessary)"
 msgstr "លំនាំដើម (សម្រាប់តែនៅពេលចាំបាច់)"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4308
+#: gui\settingsDialogs.py:4313
 msgctxt "advanced.uiaWithChromium"
 msgid "Only when necessary"
 msgstr "សម្រាប់តែនៅពេលចាំបាច់"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4310
+#: gui\settingsDialogs.py:4315
 msgctxt "advanced.uiaWithChromium"
 msgid "Yes"
 msgstr "បាទ/ចាស"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4312
+#: gui\settingsDialogs.py:4317
 msgctxt "advanced.uiaWithChromium"
 msgid "No"
 msgstr "ទេ"
 
 #. Translators: This is the label for a COMBOBOX in the Advanced settings panel.
-#: gui\settingsDialogs.py:4320
+#: gui\settingsDialogs.py:4325
 msgid "Use en&hanced event processing (requires restart)"
 msgstr "ប្រើការប្រតិបត្តិព្រឹត្តិការណ៍កែលម្អ (ត្រូវការចាប់ផ្ដើមឡើងវិញ) (&h)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4331
+#: gui\settingsDialogs.py:4336
 msgid "Annotations"
 msgstr "សម្គាល់"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4340
+#: gui\settingsDialogs.py:4345
 msgid "Report 'has details' for structured annotations"
 msgstr "របាយការណ៍ \"មានព័ត៌មានលម្អិត\" សម្រាប់រចនាសម្ព័ន្ធសម្គាល់"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4347
+#: gui\settingsDialogs.py:4352
 msgid "Report aria-description always"
 msgstr "រាយការណ៍ aria-description រៀងរាល់ពេល"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4363
+#: gui\settingsDialogs.py:4368
 msgid "Report live regions:"
 msgstr "រាយការណ៍តំបន់ប្រើប្រាស់ផ្ទាល់:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4372
+#: gui\settingsDialogs.py:4377
 msgid "Terminal programs"
 msgstr "កម្មវិធីផ្ទាំងបញ្ជា"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4379
+#: gui\settingsDialogs.py:4384
 msgid "Speak &passwords in all enhanced terminals (may improve performance)"
 msgstr "អានពាក្យសម្ងាត់ នៅក្នុងផ្ទាំងបញ្ជាកែលម្អទាំងអស់ (អាចបង្កើនប្រសិទ្ធភាព) (&p)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4388
+#: gui\settingsDialogs.py:4393
 msgid "Use enhanced t&yped character support in legacy Windows Console when available"
 msgstr "ប្រើការគាំទ្រអក្សរវាយកែលម្អក្នុង Windows Console ចាស់ នៅពេលមាន (&y)"
 
@@ -14359,330 +14359,330 @@ msgstr "ប្រើការគាំទ្រអក្សរវាយកែល
 #. method of detecting changed content in terminals in the advanced
 #. settings panel.
 #. Choices are automatic, Diff Match Patch, and Difflib.
-#: gui\settingsDialogs.py:4401
+#: gui\settingsDialogs.py:4406
 msgid "&Diff algorithm:"
 msgstr "អាល់កុរីថមភាពខុសគ្នា (&D)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#: gui\settingsDialogs.py:4406
+#: gui\settingsDialogs.py:4411
 msgid "Automatic (prefer Diff Match Patch)"
 msgstr "ស្វ័យប្រវត្តិ  (ផ្តល់អាទិភាពឲ្យ Diff Match Patch)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by character, using the diff match patch algorithm.
-#: gui\settingsDialogs.py:4410
+#: gui\settingsDialogs.py:4415
 msgid "Diff Match Patch"
 msgstr "Diff Match Patch"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
-#: gui\settingsDialogs.py:4414
+#: gui\settingsDialogs.py:4419
 msgid "Difflib"
 msgstr "Difflib"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4440
+#: gui\settingsDialogs.py:4445
 msgid "Speak new text in Windows Terminal via:"
 msgstr "និយាយអត្ថបទថ្មីនៅក្នុងផ្ទាំងបញ្ជារបស់វីនដូ តាមរយៈ៖:"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4459
+#: gui\settingsDialogs.py:4464
 msgid "Default (Yes)"
 msgstr "លំនាំដើម (បាទ/ចាស)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4462
+#: gui\settingsDialogs.py:4467
 msgid "Yes"
 msgstr "បាទ/ចាស"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4465
+#: gui\settingsDialogs.py:4470
 msgid "No"
 msgstr "ទេ"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4469
+#: gui\settingsDialogs.py:4474
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "ព្យាយាមបញ្ឈប់សម្លេងសម្រាប់ព្រឹត្តិការណ៍ផ្ដោតដែលផុតកំណត់៖:"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4485
+#: gui\settingsDialogs.py:4490
 msgid "Trim leading silence in speech audio"
 msgstr "បំបាត់ភាពស្ងាត់នៅផ្នែកដើមនៃសម្លេងនិយាយ"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4493
+#: gui\settingsDialogs.py:4498
 msgid "Use WASAPI for SAPI 4 audio output:"
 msgstr "ប្រើ WASAPI សម្រាប់លទ្ធផលសម្លេង SAPI 4៖"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4504
+#: gui\settingsDialogs.py:4509
 msgid "Virtual Buffers"
 msgstr "ប៊័ហ្វឺរនិម្មិត"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4512
+#: gui\settingsDialogs.py:4517
 msgid "Load Chromium virtual buffer when document busy."
 msgstr "ផ្ទុកប៊័ហ្វឺរនិម្មិតរបស់ Chromium នៅពេលឯកសារកំពុងដំណើរការ"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4521
+#: gui\settingsDialogs.py:4526
 msgid "Editable Text"
 msgstr "អត្ថបទដែលអាចកែសម្រួលបាន"
 
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4528
+#: gui\settingsDialogs.py:4533
 msgid "Caret movement timeout (in ms)"
 msgstr "ពេលរង់ចាំចលនាទ្រនិច (គិតជាមីលីវិនាទី)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4551
+#: gui\settingsDialogs.py:4556
 msgid "Report transparent color values"
 msgstr "រាយការណ៍តម្លៃពណ៌ថ្លា"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4565
+#: gui\settingsDialogs.py:4570
 msgid "Debug logging"
 msgstr "កំណត់ហេតុឌីបភាក់ (Debug logging)"
 
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4592
+#: gui\settingsDialogs.py:4597
 msgid "Enabled logging categories"
 msgstr "ប្រភេទកំណត់ហេតុដែលបានបើកប្រើ"
 
 #. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4612
+#: gui\settingsDialogs.py:4617
 msgid "Play a sound for logged e&rrors:"
 msgstr "បន្លឺសម្លេងសម្រាប់កំហុសកំណត់ត្រា (&r):"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#: gui\settingsDialogs.py:4615
+#: gui\settingsDialogs.py:4620
 msgctxt "advanced.playErrorSound"
 msgid "Only in NVDA test versions"
 msgstr "សម្រាប់តែនៅក្នុងកំណែសាកល្បងរបស់ NVDA"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#: gui\settingsDialogs.py:4617
+#: gui\settingsDialogs.py:4622
 msgctxt "advanced.playErrorSound"
 msgid "Yes"
 msgstr "បាទ/ចាស"
 
 #. Translators: This is the label for a textfield in the
 #. advanced settings panel.
-#: gui\settingsDialogs.py:4630
+#: gui\settingsDialogs.py:4635
 msgid "Regular expression for text paragraph navigation"
 msgstr "ប៉ាតតង់បញ្ចូលទម្រង់ធម្មតាសម្រាប់ការរុករកកថាខណ្ឌ"
 
 #. Translators: Message shown when invalid text paragraph regex entered
-#: gui\settingsDialogs.py:4652
+#: gui\settingsDialogs.py:4657
 #, python-format
 msgid "Failed to compile text paragraph regular expression: %s"
 msgstr "បរាជ័យក្នុងការបំលែងប៉ាតតង់បញ្ចូលទម្រង់ធម្មតារបស់កថាខណ្ឌអត្ថបទ: %s"
 
 #. Translators: This is the label for the Advanced settings panel.
-#: gui\settingsDialogs.py:4782
+#: gui\settingsDialogs.py:4787
 msgid "Advanced"
 msgstr "កម្រិតខ្ពស់"
 
 #. Translators: This is the label to warn users about the Advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4787
+#: gui\settingsDialogs.py:4792
 msgid "Warning!"
 msgstr "ព្រមាន!"
 
 #. Translators: This is a label appearing on the Advanced settings panel.
-#: gui\settingsDialogs.py:4791
+#: gui\settingsDialogs.py:4796
 msgid "The following settings are for advanced users. Changing them may cause NVDA to function incorrectly. Please only change these if you know what you are doing or have been specifically instructed by NVDA developers."
 msgstr "ការកំណត់ខាងក្រោមនេះសម្រាប់អ្នកប្រើកម្រិតខ្ពស់។\n\n"
 "ការផ្លាស់ប្តូរពួកវាអាចធ្វើឲ្យ NVDA ធ្វើការមិនត្រឹមត្រូវ។\n"
 "សូមផ្លាស់ប្តូរត្រឹមត្តែអ្វីដែលអ្នកដឹង និងអ្វីដែលអ្នកកំពុងធ្វើ ឬបានទទួលការណែនាំជាក់លាក់ពីអ្នកអភិវឌ្ឍ NVDA។"
 
 #. Translators: This is the label for a checkbox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4818
+#: gui\settingsDialogs.py:4823
 msgid "I understand that changing these settings may cause NVDA to function incorrectly."
 msgstr "ខ្ញុំយល់ហើយថាការផ្លាស់ប្តូរការកំណត់ទាំងនេះអាចធ្វើឲ្យ NVDA ធ្វើការមិនត្រឹមត្រូវ។"
 
 #. Translators: This is the label for a button in the Advanced settings panel
-#: gui\settingsDialogs.py:4829
+#: gui\settingsDialogs.py:4834
 msgid "Restore defaults"
 msgstr "ស្ដារឡើងវិញទៅលំនាំដើម"
 
 #. Translators: A label for the braille display on the braille panel.
-#: gui\settingsDialogs.py:4872
+#: gui\settingsDialogs.py:4877
 msgid "Braille display"
 msgstr "ឧបករណ៍បង្ហាញអក្សរប្រៃយ៍"
 
 #. Translators: This is the label for the braille display selection dialog.
-#: gui\settingsDialogs.py:4941
+#: gui\settingsDialogs.py:4946
 msgid "Select Braille Display"
 msgstr "ជ្រើសរើសឧបករណ៍បង្ហាញអក្សរប្រៃយ៍"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
-#: gui\settingsDialogs.py:4950
+#: gui\settingsDialogs.py:4955
 msgid "Braille &display:"
 msgstr "ឧបករណ៍បង្ហាញអក្សរប្រៃយ៍ (&d):"
 
 #. Translators: The label for a setting in braille settings to enable displays for automatic detection.
-#: gui\settingsDialogs.py:4956
+#: gui\settingsDialogs.py:4961
 msgid "&Displays to detect automatically:"
 msgstr "ឧបករណ៍បង្ហាញសម្រាប់ស្គាល់អក្សរដោយស្វ័យប្រវត្តិ (&D):"
 
 #. Translators: The message in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:5072
+#: gui\settingsDialogs.py:5077
 #, python-brace-format
 msgid "Could not load the {display} display."
 msgstr "មិនអាចបើក {display} ឧបករណ៍បង្ហាញបានទេ។"
 
 #. Translators: The title in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:5075
+#: gui\settingsDialogs.py:5080
 msgid "Braille Display Error"
 msgstr "កំហុសឧបករណ៍បង្ហាញ"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
-#: gui\settingsDialogs.py:5108
+#: gui\settingsDialogs.py:5113
 msgid "&Output table:"
 msgstr "តារាងបញ្ចេញសំឡេងក្រៅឧបករណ៍ (&O):"
 
 #. Translators: An option in Braille settings to select a braille table automatically, according to the current language.
-#: gui\settingsDialogs.py:5116 gui\settingsDialogs.py:5143
+#: gui\settingsDialogs.py:5121 gui\settingsDialogs.py:5148
 #, python-brace-format
 msgid "Automatic ({name})"
 msgstr "ស្វ័យប្រវត្តិ ({name})"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
-#: gui\settingsDialogs.py:5135
+#: gui\settingsDialogs.py:5140
 msgid "&Input table:"
 msgstr "តារាងបញ្ចេញសំឡេងក្នុងឧបករណ៍ (&I):"
 
 #. Translators: The label for a setting in braille settings to select which braille mode to use
-#: gui\settingsDialogs.py:5161
+#: gui\settingsDialogs.py:5166
 msgid "Braille mode:"
 msgstr "ម៉ូដអក្សរប្រៃយ៍:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
-#: gui\settingsDialogs.py:5176
+#: gui\settingsDialogs.py:5181
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "ពង្រីកទៅកុំព្យូទ័រអក្សរប្រៃយ៍សម្រាប់ពាក្យនៅត្រង់ទ្រនិច (&x)"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
-#: gui\settingsDialogs.py:5184
+#: gui\settingsDialogs.py:5189
 msgid "&Show cursor"
 msgstr "បង្ហាញទ្រនិច (&S)"
 
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
-#: gui\settingsDialogs.py:5193
+#: gui\settingsDialogs.py:5198
 msgid "Blink cursor"
 msgstr "ទ្រនិចភ្លឹបភ្លែត"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
-#: gui\settingsDialogs.py:5204
+#: gui\settingsDialogs.py:5209
 msgid "Cursor blink rate (ms)"
 msgstr "ល្បឿនភ្លឹបភ្លែតរបស់ទ្រនិច (មីលីវិនាទី)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
-#: gui\settingsDialogs.py:5226
+#: gui\settingsDialogs.py:5231
 msgid "Cursor shape for &focus:"
 msgstr "រៀបរចនាទ្រង់ទ្រាយទ្រនិចសម្រាប់ចំណុចផ្ដោត (&f):"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
-#: gui\settingsDialogs.py:5242
+#: gui\settingsDialogs.py:5247
 msgid "Cursor shape for &review:"
 msgstr "រៀបរចនាទ្រង់ទ្រាយទ្រនិចសម្រាប់ត្រួតពិនិត្យ (&r):"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
-#: gui\settingsDialogs.py:5264
+#: gui\settingsDialogs.py:5269
 msgid "Show messages"
 msgstr "បង្ហាញសារ"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-#: gui\settingsDialogs.py:5286
+#: gui\settingsDialogs.py:5291
 msgid "Message &timeout (sec)"
 msgstr "ពេលវេលាពន្យារសារ (វិនាទី): (&t)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-#: gui\settingsDialogs.py:5305
+#: gui\settingsDialogs.py:5310
 msgid "Tether B&raille:"
 msgstr "ភ្ជាប់អក្សរប្រៃយ៍ (&r):"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5329
+#: gui\settingsDialogs.py:5334
 msgid "Move system caret when ro&uting review cursor"
 msgstr "ផ្លាស់ទីទ្រនិចប្រព័ន្ធ ពេលបញ្ជូនទ្រនិចត្រួតពិនិត្យ (&u)"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
-#: gui\settingsDialogs.py:5345
+#: gui\settingsDialogs.py:5350
 msgid "Read by &paragraph"
 msgstr "អានតាមកថាខណ្ឌ (&p)"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel to select paragraph start markers.
-#: gui\settingsDialogs.py:5354
+#: gui\settingsDialogs.py:5359
 msgid "Paragraph start marker:"
 msgstr "សញ្ញាសម្គាល់ចាប់ផ្តើមកថាខណ្ឌ:"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
-#: gui\settingsDialogs.py:5369
+#: gui\settingsDialogs.py:5374
 msgid "Focus context presentation:"
 msgstr "ការបង្ហាញបរិបទចំណុចផ្តោត:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5390
+#: gui\settingsDialogs.py:5395
 msgid "Show se&lection"
 msgstr "បង្ហាញការជ្រើសរើស (&l)"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5402
+#: gui\settingsDialogs.py:5407
 msgid "Formatting &display"
 msgstr "ការបង្ហាញទ្រង់ទ្រាយ (&d)"
 
 #. Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
-#: gui\settingsDialogs.py:5411
+#: gui\settingsDialogs.py:5416
 msgid "Spea&k character when routing cursor in text"
 msgstr "អានអក្សរ នៅពេលបញ្ជូនទ្រនិចនៅក្នុងអត្ថបទ (&k)"
 
 #. Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
-#: gui\settingsDialogs.py:5419
+#: gui\settingsDialogs.py:5424
 msgid "Speak when navigating by &line or paragraph"
 msgstr "និយាយពេលរុករកតាមជួរ ឬកថាខណ្ឌ (&l)"
 
 #. Translators: The label for a setting in braille settings to enable word wrap
 #. (try to avoid splitting words at the end of the braille display).
-#: gui\settingsDialogs.py:5432
+#: gui\settingsDialogs.py:5437
 msgid "Avoid splitting &words when possible"
 msgstr "ជៀសវាងការបំបែកពាក្យ ប្រសិនបើអាចធ្វើបាន (&w)"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5451
+#: gui\settingsDialogs.py:5456
 msgid "I&nterrupt speech while scrolling"
 msgstr "បញ្ឈប់ការនិយាយពេលកំពុងអូស (&n)"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
-#: gui\settingsDialogs.py:5545
+#: gui\settingsDialogs.py:5550
 #, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
 msgstr "មិនអាចផ្ទុក {providerName} កម្មវិធីបង្កើនគំហើញបានទេ"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5552
+#: gui\settingsDialogs.py:5557
 #, python-brace-format
 msgid "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
@@ -14690,20 +14690,20 @@ msgstr "មិនអាចផ្ទុកកម្មវិធីបង្កើ
 "{providerNames}"
 
 #. Translators: The title of the vision enhancement provider error message box.
-#: gui\settingsDialogs.py:5558 gui\settingsDialogs.py:5588
+#: gui\settingsDialogs.py:5563 gui\settingsDialogs.py:5593
 msgid "Vision Enhancement Provider Error"
 msgstr "កំហុសកម្មវិធីបង្កើនគំហើញ"
 
 #. Translators: This message is presented when
 #. NVDA is unable to gracefully terminate a single vision enhancement provider.
-#: gui\settingsDialogs.py:5575
+#: gui\settingsDialogs.py:5580
 #, python-brace-format
 msgid "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr "មិនអាចបញ្ចប់ {providerName} កម្មវិធីបង្កើនគំហើញបានយ៉ាងរលូនទេ"
 
 #. Translators: This message is presented when
 #. NVDA is unable to terminate multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5583
+#: gui\settingsDialogs.py:5588
 #, python-brace-format
 msgid "Could not gracefully terminate the following vision enhancement providers:\n"
 "{providerNames}"
@@ -14711,149 +14711,149 @@ msgstr "មិនអាចបញ្ចប់ដំណើរការរបស់
 "{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
-#: gui\settingsDialogs.py:5683
+#: gui\settingsDialogs.py:5688
 msgid "Configure visual aids."
 msgstr "កំណត់រចនាសម្ព័ន្ធឧបករណ៍ជំនួយគំហើញ។"
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
-#: gui\settingsDialogs.py:5855
+#: gui\settingsDialogs.py:5860
 msgid "Enable"
 msgstr "បើកដំណើរការ"
 
 #. Translators: Options label on a vision enhancement provider on the vision settings category panel
 #. Translators: The label for a group box containing the NVDA highlighter options.
-#: gui\settingsDialogs.py:5862
+#: gui\settingsDialogs.py:5867
 #: visionEnhancementProviders\NVDAHighlighter.py:309
 msgid "Options:"
 msgstr "ជម្រើស:"
 
 #. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
-#: gui\settingsDialogs.py:5908
+#: gui\settingsDialogs.py:5913
 msgid "Unable to configure user interface for Vision Enhancement Provider, it can not be enabled."
 msgstr "មិនអាចកំណត់រចនាសម្ព័ន្ធចំណុចប្រទាក់អ្នកប្រើសម្រាប់កម្មវិធីបង្កើនគំហើញបានទេ ដូច្នេះវាមិនអាចបើកដំណើរការបានទេ។"
 
 #. Translators: The title of the privacy and security category in NVDA's settings.
-#: gui\settingsDialogs.py:5945
+#: gui\settingsDialogs.py:5950
 msgid "Privacy and Security"
 msgstr ""
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
-#: gui\settingsDialogs.py:5954
+#: gui\settingsDialogs.py:5959
 msgid "Screen Curtain"
 msgstr "ផ្ទាំងបាំងអេក្រង់"
 
 #. Translators: option to enable screen curtain in the privacy and security settings panel
-#: gui\settingsDialogs.py:5963
+#: gui\settingsDialogs.py:5968
 msgid "Make screen black (immediate effect)"
 msgstr "ធ្វើឲ្យអេក្រង់ងងឹត (មានប្រសិទ្ធិភាពភ្លាមៗ)"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#: gui\settingsDialogs.py:5991
+#: gui\settingsDialogs.py:5996
 msgid "&Play sound when toggling Screen Curtain"
 msgstr "បន្លឺសំឡេងពេលបិទបើកផ្ទាំងបាំងអេក្រង់ (&P)"
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
-#: gui\settingsDialogs.py:6006
+#: gui\settingsDialogs.py:6011
 msgid "L&ogging level:"
 msgstr "កម្រិតកំណត់ហេតុ (&o):"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-#: gui\settingsDialogs.py:6028
+#: gui\settingsDialogs.py:6033
 msgid "Allow NV Access to gather NVDA usage statistics"
 msgstr "អនុញ្ញាតឱ្យ NV Access ប្រមូលស្ថិតិការប្រើប្រាស់ NVDA"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:6140
+#: gui\settingsDialogs.py:6145
 msgid "NVDA Settings"
 msgstr "ការកំណត់របស់ NVDA"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:6190
+#: gui\settingsDialogs.py:6196
 msgid "normal configuration"
 msgstr "ប្រវត្តិការកំណត់ធម្មតា"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:6225
+#: gui\settingsDialogs.py:6254
 msgid "Add Symbol"
 msgstr "បន្ថែមនិមិត្តសញ្ញា"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:6230
+#: gui\settingsDialogs.py:6259
 msgid "&Symbol:"
 msgstr "និមិត្តសញ្ញា (&S):"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:6260
+#: gui\settingsDialogs.py:6289
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "និមិត្តសញ្ញាការបញ្ចេញសំឡេង (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:6274
+#: gui\settingsDialogs.py:6303
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "តម្រៀបតាម (&F):"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6283
+#: gui\settingsDialogs.py:6312
 msgid "&Symbols"
 msgstr "និមិត្តសញ្ញា (&S)"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:6293
+#: gui\settingsDialogs.py:6322
 msgid "Symbol"
 msgstr "និមិត្តសញ្ញា"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6295 gui\speechDict.py:191
+#: gui\settingsDialogs.py:6324 gui\speechDict.py:191
 msgid "Replacement"
 msgstr "ការជំនួស"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:6297
+#: gui\settingsDialogs.py:6326
 msgid "Level"
 msgstr "កម្រិត"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:6300
+#: gui\settingsDialogs.py:6329
 msgid "Preserve"
 msgstr "រក្សាទុក"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:6304
+#: gui\settingsDialogs.py:6333
 msgid "Change selected symbol"
 msgstr "ផ្លាស់ប្ដូរនិមិត្តសញ្ញាដែលបានជ្រើសរើស"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6322 gui\speechDict.py:55
+#: gui\settingsDialogs.py:6351 gui\speechDict.py:55
 msgid "&Replacement"
 msgstr "ការជំនួស (&R)"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:6331
+#: gui\settingsDialogs.py:6360
 msgid "&Level"
 msgstr "កម្រិត (&L)"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:6338
+#: gui\settingsDialogs.py:6367
 msgid "&Send actual symbol to synthesizer"
 msgstr "បញ្ជូននិមិត្តសញ្ញាពិតប្រាកដទៅកម្មវិធីសំឡេងសំយោគ (&S)"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:6353
+#: gui\settingsDialogs.py:6382
 msgid "Re&move"
 msgstr "យកចេញ (&m)"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:6460
+#: gui\settingsDialogs.py:6489
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "និមិត្តសញ្ញា \"%s\" នេះមានរួចហើយ."

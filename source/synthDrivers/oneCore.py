@@ -491,7 +491,7 @@ class OneCoreSynthDriver(SynthDriver):
 				log.debug("Done pushing audio")
 		self._processQueue()
 
-	def _getVoiceInfoFromOnecoreVoiceString(self, voiceStr):
+	def _getVoiceInfoFromOnecoreVoiceString(self, voiceStr: str):
 		"""
 		Produces an NVDA VoiceInfo object representing the given voice string from Onecore speech.
 		"""
