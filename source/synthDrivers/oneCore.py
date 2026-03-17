@@ -397,7 +397,7 @@ class OneCoreSynthDriver(SynthDriver):
 
 	def _get_suppressPunctuationPause(self) -> bool:
 		if not self.supportsSuppressPunctuationPause:
-			return True
+			return False
 		return self._dll.ocSpeech_getSuppressPunctuationPause(self._ocSpeechToken)
 
 	def _set_suppressPunctuationPause(self, enable: bool):
