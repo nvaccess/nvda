@@ -294,7 +294,7 @@ bool __stdcall ocSpeech_supportsProsodyOptions() {
 	return isUniversalApiContractVersion_(5, 0);
 }
 
-bool __stdcall ocSpeech_supportsPunctuationSilence() {
+bool __stdcall ocSpeech_supportsSuppressPunctuationPause() {
 	return isUniversalApiContractVersion_(6, 0);
 }
 
@@ -533,20 +533,20 @@ void __stdcall ocSpeech_setRate(void* token, double rate) {
 	synth->Options().SpeakingRate(rate);
 }
 
-bool __stdcall ocSpeech_getPunctuationSilence(void* token) {
+bool __stdcall ocSpeech_getSuppressPunctuationPause(void* token) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		LOG_ERROR(L"ocSpeech_getPunctuationSilence error");
-		return 0.0;
+		LOG_ERROR(L"ocSpeech_getSuppressPunctuationPause error");
+		return false;
 	}
-	return synth->Options().PunctuationSilence() == SpeechPunctuationSilence::Default;
+	return synth->Options().PunctuationSilence() == SpeechPunctuationSilence::Min;
 }
 
-void __stdcall ocSpeech_setPunctuationSilence(void* token, bool silence) {
+void __stdcall ocSpeech_setSuppressPunctuationPause(void* token, bool enable) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		LOG_ERROR(L"ocSpeech_setPunctuationSilence error");
+		LOG_ERROR(L"ocSpeech_setSuppressPunctuationPause error");
 		return;
 	}
-	synth->Options().PunctuationSilence(silence ? SpeechPunctuationSilence::Default : SpeechPunctuationSilence::Min);
+	synth->Options().PunctuationSilence(enable ? SpeechPunctuationSilence::Min : SpeechPunctuationSilence::Default);
 }
