@@ -339,7 +339,7 @@ class MathCATUserPreferences:
 		self._prefs = prefs
 
 	@staticmethod
-	def _createConfigForSpeechStyle(mathLang: str) -> None:
+	def _createConfigForSpeechStyle(mathLang: str) -> str:
 		mathConf = config.conf["math"]
 		if mathLang == "Auto":
 			normalizedLang = languageHandler.normalizeLanguage(getCurrentLanguage())
@@ -353,11 +353,12 @@ class MathCATUserPreferences:
 				mathLang = "en"
 		if mathLang not in mathConf["speech"]:
 			mathConf["speech"][mathLang] = {"speechStyle": ""}
+		return mathLang
 
 	@staticmethod
 	def getConfigForSpeechStyle(mathLang: str) -> str:
 		mathConf = config.conf["math"]
-		MathCATUserPreferences._createConfigForSpeechStyle(mathLang)
+		mathLang = MathCATUserPreferences._createConfigForSpeechStyle(mathLang)
 		if not mathConf["speech"][mathLang]["speechStyle"]:
 			speechStyleOptions = localization.getSpeechStyles(mathLang)
 			if "ClearSpeak" in speechStyleOptions:
@@ -368,7 +369,7 @@ class MathCATUserPreferences:
 
 	@staticmethod
 	def updateConfigForSpeechStyle(mathLang: str, speechStyle: str) -> None:
-		MathCATUserPreferences._createConfigForSpeechStyle(mathLang)
+		mathLang = MathCATUserPreferences._createConfigForSpeechStyle(mathLang)
 		config.conf["math"]["speech"][mathLang]["speechStyle"] = speechStyle
 
 	@staticmethod
