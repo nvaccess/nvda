@@ -23,14 +23,14 @@ from .utils.types import (
 	Size,
 	MagnifierParameters,
 )
-from .config import getDefaultFullscreenMode, shouldKeepMouseCentered, isTrueCentered
+from .config import getFullscreenMode, shouldKeepMouseCentered, isTrueCentered
 
 
 class FullScreenMagnifier(Magnifier):
 	def __init__(self):
 		super().__init__()
 		self._magnifierType = MagnifierType.FULLSCREEN
-		self._fullscreenMode = getDefaultFullscreenMode()
+		self._fullscreenMode = getFullscreenMode()
 		self._currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
 		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
@@ -187,7 +187,7 @@ class FullScreenMagnifier(Magnifier):
 			log.debug("Mouse button pressed, skipping cursor repositioning to avoid interfering with click")
 			return
 
-		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(
+		left, top, visibleWidth, visibleHeight, _ = self._getMagnifierParameters(
 			self._currentCoordinates,
 		)
 		centerX = int(left + (visibleWidth / 2))

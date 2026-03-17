@@ -26,9 +26,9 @@ from .utils.types import (
 	Filter,
 )
 from .config import (
-	getDefaultZoomLevel,
-	getDefaultPanStep,
-	getDefaultFilter,
+	getZoomLevel,
+	getPanStep,
+	getFilter,
 	ZoomLevel,
 	isTrueCentered,
 )
@@ -43,14 +43,14 @@ class Magnifier:
 		self._displayOrientation = getPrimaryDisplayOrientation()
 		self._magnifierType: MagnifierType
 		self._isActive: bool = False
-		self._zoomLevel: float = getDefaultZoomLevel()
-		self._panStep: int = getDefaultPanStep()
+		self._zoomLevel: float = getZoomLevel()
+		self._panStep: int = getPanStep()
 		self._timer: None | wx.Timer = None
 		self._focusManager = FocusManager()
 		self._lastScreenPosition = Coordinates(0, 0)
 		self._currentCoordinates = Coordinates(0, 0)
 		self._lastFocusCoordinates = Coordinates(0, 0)
-		self._filterType: Filter = getDefaultFilter()
+		self._filterType: Filter = getFilter()
 		self._isManualPanning: bool = False
 		# Register for display changes
 		_displayTracking.displayChanged.register(self._onDisplayChanged)

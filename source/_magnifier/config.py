@@ -49,93 +49,93 @@ class ZoomLevel:
 		]
 
 
-def getDefaultZoomLevel() -> float:
+def getZoomLevel() -> float:
 	"""
-	Get default zoom level from config.
+	Get zoom level from config.
 
-	:return: The default zoom level.
+	:return: The zoom level.
 	"""
-	zoomLevel = config.conf["magnifier"]["defaultZoomLevel"]
+	zoomLevel = config.conf["magnifier"]["zoomLevel"]
 	return zoomLevel
 
 
-def getDefaultZoomLevelString() -> str:
+def getZoomLevelString() -> str:
 	"""
-	Get default zoom level as a formatted string.
+	Get zoom level as a formatted string.
 
 	:return: Formatted zoom level string.
 	"""
-	zoomLevel = getDefaultZoomLevel()
+	zoomLevel = getZoomLevel()
 	zoomValues = ZoomLevel.zoom_range()
 	zoomStrings = ZoomLevel.zoom_strings()
 	zoomIndex = zoomValues.index(zoomLevel)
 	return zoomStrings[zoomIndex]
 
 
-def setDefaultZoomLevel(zoomLevel: float) -> None:
+def setZoomLevel(zoomLevel: float) -> None:
 	"""
-	Set default zoom level from settings.
+	Set zoom level from settings.
 
 	:param zoomLevel: The zoom level to set.
 	"""
-	config.conf["magnifier"]["defaultZoomLevel"] = zoomLevel
+	config.conf["magnifier"]["zoomLevel"] = zoomLevel
 
 
-def getDefaultMagnifierType() -> MagnifierType:
+def getMagnifierType() -> MagnifierType:
 	"""
-	Get default magnifier type from config.
+	Get magnifier type from config.
 
-	:return: The default magnifier type.
+	:return: The magnifier type.
 	"""
-	return MagnifierType(config.conf["magnifier"]["defaultMagnifierType"])
+	return MagnifierType(config.conf["magnifier"]["magnifierType"])
 
 
-def setDefaultMagnifierType(magnifierType: MagnifierType) -> None:
+def setMagnifierType(magnifierType: MagnifierType) -> None:
 	"""
-	Set default magnifier type from settings.
+	Set magnifier type from settings.
 
 	:param magnifierType: The magnifier type to set.
 	"""
-	config.conf["magnifier"]["defaultMagnifierType"] = magnifierType.value
+	config.conf["magnifier"]["magnifierType"] = magnifierType.value
 
 
-def getDefaultPanStep() -> int:
+def getPanStep() -> int:
 	"""
-	Get default pan value from config.
+	Get pan value from config.
 
-	:return: The default pan value.
+	:return: The  pan value.
 	"""
-	return config.conf["magnifier"]["defaultPanStep"]
+	return config.conf["magnifier"]["panStep"]
 
 
-def setDefaultPanStep(panStep: int) -> None:
+def setPanStep(panStep: int) -> None:
 	"""
-	Set default pan value from settings.
+	Set pan value from settings.
 
 	:param panStep: The pan value to set.
 	"""
 
 	if "magnifier" not in config.conf:
 		config.conf["magnifier"] = {}
-	config.conf["magnifier"]["defaultPanStep"] = panStep
+	config.conf["magnifier"]["panStep"] = panStep
 
 
-def getDefaultFilter() -> Filter:
+def getFilter() -> Filter:
 	"""
-	Get default filter from config.
+	Get filter from config.
 
-	:return: The default filter.
+	:return: The filter.
 	"""
-	return Filter(config.conf["magnifier"]["defaultFilter"])
+	return Filter(config.conf["magnifier"]["filter"])
 
 
-def setDefaultFilter(filter: Filter) -> None:
+def setFilter(filter: Filter) -> None:
 	"""
-	Set default filter from settings.
+	Set filter from settings.
 
 	:param filter: The filter to set.
 	"""
-	config.conf["magnifier"]["defaultFilter"] = filter.value
+	config.conf["magnifier"]["filter"] = filter.value
 
 
 def isTrueCentered() -> bool:
@@ -156,73 +156,73 @@ def shouldKeepMouseCentered() -> bool:
 	return config.conf["magnifier"]["keepMouseCentered"]
 
 
-def getDefaultFullscreenMode() -> FullScreenMode:
+def getFullscreenMode() -> FullScreenMode:
 	"""
-	Get default full-screen mode from config.
+	Get full-screen mode from config.
 
-	:return: The default full-screen mode.
+	:return: The full-screen mode.
 	"""
-	return FullScreenMode(config.conf["magnifier"]["defaultFullscreenMode"])
+	return FullScreenMode(config.conf["magnifier"]["fullscreenMode"])
 
 
-def setDefaultFullscreenMode(mode: FullScreenMode) -> None:
+def setFullscreenMode(mode: FullScreenMode) -> None:
 	"""
-	Set default full-screen mode from settings.
+	Set full-screen mode from settings.
 
 	:param mode: The full-screen mode to set.
 	"""
-	config.conf["magnifier"]["defaultFullscreenMode"] = mode.value
+	config.conf["magnifier"]["fullscreenMode"] = mode.value
 
 
-def getDefaultFixedWindowWidth() -> int:
+def getFixedWindowWidth() -> int:
 	"""
-	Get default fixed magnifier window width from config.
+	Get fixed magnifier window width from config.
 
-	:return: The default fixed magnifier window width.
+	:return: The fixed magnifier window width.
 	"""
-	return config.conf["magnifier"]["defaultFixedWindowWidth"]
+	return config.conf["magnifier"]["fixedWindowWidth"]
 
 
-def setDefaultFixedWindowWidth(width: int) -> None:
+def setFixedWindowWidth(width: int) -> None:
 	"""
-	Set default fixed magnifier window width from settings.
+	Set fixed magnifier window width from settings.
 
 	:param width: The fixed magnifier window width to set.
 	"""
-	config.conf["magnifier"]["defaultFixedWindowWidth"] = width
+	config.conf["magnifier"]["fixedWindowWidth"] = width
 
 
-def getDefaultFixedWindowHeight() -> int:
+def getFixedWindowHeight() -> int:
 	"""
-	Get default fixed magnifier window height from config.
+	Get fixed magnifier window height from config.
 
-	:return: The default fixed magnifier window height.
+	:return: The fixed magnifier window height.
 	"""
-	return config.conf["magnifier"]["defaultFixedWindowHeight"]
+	return config.conf["magnifier"]["fixedWindowHeight"]
 
 
-def setDefaultFixedWindowHeight(height: int) -> None:
+def setFixedWindowHeight(height: int) -> None:
 	"""
-	Set default fixed magnifier window height from settings.
+	Set fixed magnifier window height from settings.
 
 	:param height: The fixed magnifier window height to set.
 	"""
-	config.conf["magnifier"]["defaultFixedWindowHeight"] = height
+	config.conf["magnifier"]["fixedWindowHeight"] = height
 
 
-def getDefaultFixedWindowPosition() -> FixedWindowPosition:
+def getFixedWindowPosition() -> FixedWindowPosition:
 	"""
-	Get default magnifier window position from config.
+	Get magnifier window position from config.
 
-	:return: The default magnifier window position.
+	:return: The magnifier window position.
 	"""
-	return FixedWindowPosition(config.conf["magnifier"]["defaultFixedWindowPosition"])
+	return FixedWindowPosition(config.conf["magnifier"]["fixedWindowPosition"])
 
 
-def setDefaultFixedWindowPosition(position: FixedWindowPosition) -> None:
+def setFixedWindowPosition(position: FixedWindowPosition) -> None:
 	"""
-	Set default magnifier window position from settings.
+	Set magnifier window position from settings.
 
 	:param position: The magnifier window position to set.
 	"""
-	config.conf["magnifier"]["defaultFixedWindowPosition"] = position.value
+	config.conf["magnifier"]["fixedWindowPosition"] = position.value

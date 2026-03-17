@@ -1598,8 +1598,7 @@ The magnifier can be used in multiple modes, each designed to suit different use
 
 ### Fullscreen Magnifier {#MagnifierFullscreen}
 
-The fullscreen magnifier is the default mode of the NVDA Magnifier and provides a seamless magnification experience by enlarging the entire screen.
-In this mode, the magnified view follows the system focus or mouse pointer, allowing you to easily navigate and interact with content while maintaining a clear view of the magnified area.
+The fullscreen magnifier provides a seamless magnification experience with a magnified view covering the entire screen.
 
 ### Fullscreen Focus Modes {#MagnifierFullscreenFocusModes}
 
@@ -1640,7 +1639,9 @@ If you move the mouse before the zoom-back occurs, the timer resets, giving you 
 
 ### Fixed Magnifier {#MagnifierFixed}
 
-The fixed magnifier mode provides a separate window that displays the magnified content, while the rest of the screen remains at normal size. This allows you to see both the magnified content and the surrounding context simultaneously. The fixed magnifier window can be moved to corners of your screen and resized independently of the main screen, giving you flexibility in how you view magnified content.
+The fixed magnifier mode provides a separate window that displays the magnified content, while the rest of the screen remains at normal size.
+This allows you to see both the magnified content and the surrounding context simultaneously.
+The fixed magnifier window can be moved to corners of your screen and resized independently of the main screen, giving you flexibility in how you view magnified content.
 The modifications can be configured in the [Magnifier settings](#MagnifierSettings).
 
 ## Content Recognition {#ContentRecognition}

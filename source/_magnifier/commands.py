@@ -12,10 +12,10 @@ from typing import Literal
 import ui
 from . import getMagnifier, initialize, changeMagnifierType, terminate
 from .config import (
-	getDefaultZoomLevelString,
-	getDefaultFilter,
-	getDefaultMagnifierType,
-	getDefaultFullscreenMode,
+	getZoomLevelString,
+	getFilter,
+	getMagnifierType,
+	getFullscreenMode,
 	ZoomLevel,
 )
 from .magnifier import Magnifier
@@ -101,10 +101,10 @@ def toggleMagnifier() -> None:
 	else:
 		initialize()
 
-		filter = getDefaultFilter()
-		magnifierType = getDefaultMagnifierType()
+		filter = getFilter()
+		magnifierType = getMagnifierType()
 		if magnifierType == MagnifierType.FULLSCREEN:
-			fullscreenMode = getDefaultFullscreenMode()
+			fullscreenMode = getFullscreenMode()
 			ui.message(
 				pgettext(
 					"magnifier",
@@ -112,7 +112,7 @@ def toggleMagnifier() -> None:
 					"Starting fullscreen magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
 				).format(
 					magnifierType=magnifierType.displayString,
-					zoomLevel=getDefaultZoomLevelString(),
+					zoomLevel=getZoomLevelString(),
 					filter=filter.displayString,
 					fullscreenMode=fullscreenMode.displayString,
 				),
@@ -125,7 +125,7 @@ def toggleMagnifier() -> None:
 					"Starting {magnifierType} magnifier with {zoomLevel} zoom level and {filter} filter",
 				).format(
 					magnifierType=magnifierType.displayString,
-					zoomLevel=getDefaultZoomLevelString(),
+					zoomLevel=getZoomLevelString(),
 					filter=filter.displayString,
 				),
 			)
@@ -168,7 +168,7 @@ def pan(action: MagnifierAction) -> None:
 			)
 
 
-def toggleMagnifierType() -> None:
+def cycleMagnifierType() -> None:
 	"""Cycle through magnifier types (full-screen, fixed, docked (to do), lens (to do))"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
@@ -191,7 +191,7 @@ def toggleMagnifierType() -> None:
 		)
 
 
-def toggleFilter() -> None:
+def cycleFilter() -> None:
 	"""Cycle through color filters"""
 	magnifier: Magnifier = getMagnifier()
 	log.debug(f"Toggling filter for magnifier: {magnifier}")
@@ -213,7 +213,7 @@ def toggleFilter() -> None:
 		)
 
 
-def toggleFullscreenMode() -> None:
+def cycleFullscreenMode() -> None:
 	"""Cycle through full-screen focus modes (center, border, relative)"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(

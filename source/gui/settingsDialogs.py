@@ -5973,9 +5973,6 @@ class MagnifierPanel(SettingsPanel):
 	title = _("Magnifier")
 	helpId = "MagnifierSettings"
 
-	# Translators: This is a label appearing on the magnifier settings panel.
-	panelDescription = _("The following options control the NVDA magnifier behavior.")
-
 	def makeSettings(
 		self,
 		settingsSizer: wx.BoxSizer,
@@ -5997,48 +5994,48 @@ class MagnifierPanel(SettingsPanel):
 		sHelper.addItem(generalGroup)
 
 		# ZOOM SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the default zoom level.
-		defaultZoomLabelText = _("Default &zoom level:")
+		# Translators: The label for a setting in magnifier settings to select the  zoom level.
+		zoomLabelText = _(" &zoom level:")
 
 		zoomValues = magnifierConfig.ZoomLevel.zoom_range()
 		zoomChoices = magnifierConfig.ZoomLevel.zoom_strings()
 
-		self.defaultZoomList = generalGroup.addLabeledControl(
-			defaultZoomLabelText,
+		self.zoomList = generalGroup.addLabeledControl(
+			zoomLabelText,
 			wx.Choice,
 			choices=zoomChoices,
 		)
 		self.bindHelpEvent(
-			"MagnifierDefaultZoom",
-			self.defaultZoomList,
+			"MagnifierZoom",
+			self.zoomList,
 		)
 
-		# Set default value from config
-		defaultZoom = magnifierConfig.getDefaultZoomLevel()
-		zoomIndex = bisect.bisect_left(zoomValues, defaultZoom)
+		# Set  value from config
+		zoomLevel = magnifierConfig.getZoomLevel()
+		zoomIndex = bisect.bisect_left(zoomValues, zoomLevel)
 		# Find the closest value
 		if zoomIndex == 0:
 			closestIndex = 0
 		elif zoomIndex >= len(zoomValues):
 			closestIndex = len(zoomValues) - 1
 		else:
-			closestIndex = min(zoomIndex - 1, zoomIndex, key=lambda i: abs(zoomValues[i] - defaultZoom))
-		self.defaultZoomList.SetSelection(closestIndex)
+			closestIndex = min(zoomIndex - 1, zoomIndex, key=lambda i: abs(zoomValues[i] - zoomLevel))
+		self.zoomList.SetSelection(closestIndex)
 
 		# FILTER SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the default filter
-		defaultFilterLabelText = _("Default &filter:")
+		# Translators: The label for a setting in magnifier settings to select the  filter
+		filterLabelText = _(" &filter:")
 		filterChoices = [f.displayString for f in Filter]
-		self.defaultFilterList = generalGroup.addLabeledControl(
-			defaultFilterLabelText,
+		self.filterList = generalGroup.addLabeledControl(
+			filterLabelText,
 			wx.Choice,
 			choices=filterChoices,
 		)
-		self.bindHelpEvent("MagnifierDefaultFilter", self.defaultFilterList)
+		self.bindHelpEvent("MagnifierFilter", self.filterList)
 
-		# Set default value from config
-		defaultFilter = magnifierConfig.getDefaultFilter()
-		self.defaultFilterList.SetSelection(list(Filter).index(defaultFilter))
+		# Set  value from config
+		filterValue = magnifierConfig.getFilter()
+		self.filterList.SetSelection(list(Filter).index(filterValue))
 
 		# TRUE CENTER
 		# Translators: The label for a setting in magnifier settings to select whether true center is used in full-screen mode
@@ -6053,8 +6050,8 @@ class MagnifierPanel(SettingsPanel):
 		self.trueCenterCheckBox.SetValue(magnifierConfig.isTrueCentered())
 
 		# MAGNIFIER TYPE SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the default magnifier type
-		magnifierTypeLabelText = _("Default &magnifier type:")
+		# Translators: The label for a setting in magnifier settings to select the  magnifier type
+		magnifierTypeLabelText = _("&Magnifier type:")
 		magnifierTypeChoices = [mt.displayString for mt in MagnifierType]
 		self.magnifierTypeList = generalGroup.addLabeledControl(
 			magnifierTypeLabelText,
@@ -6062,13 +6059,13 @@ class MagnifierPanel(SettingsPanel):
 			choices=magnifierTypeChoices,
 		)
 		self.bindHelpEvent(
-			"MagnifierDefaultMagnifierType",
+			"MagnifierMagnifierType",
 			self.magnifierTypeList,
 		)
 
-		# Set default value from config
-		defaultMagnifierType = magnifierConfig.getDefaultMagnifierType()
-		self.magnifierTypeList.SetSelection(list(MagnifierType).index(defaultMagnifierType))
+		# Set  value from config
+		magnifierTypeValue = magnifierConfig.getMagnifierType()
+		self.magnifierTypeList.SetSelection(list(MagnifierType).index(magnifierTypeValue))
 
 		# Bind event to update visibility when magnifier type changes
 		self.magnifierTypeList.Bind(wx.EVT_CHOICE, self._onMagnifierTypeChange)
@@ -6077,7 +6074,7 @@ class MagnifierPanel(SettingsPanel):
 		# Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
 		panStepSizeLabelText = _("&Panning step size (%):")
 
-		self.defaultPanSpinCtrl = generalGroup.addLabeledControl(
+		self.panSpinCtrl = generalGroup.addLabeledControl(
 			panStepSizeLabelText,
 			wx.SpinCtrl,
 			min=1,
@@ -6085,12 +6082,12 @@ class MagnifierPanel(SettingsPanel):
 		)
 		self.bindHelpEvent(
 			"magnifierPanStep",
-			self.defaultPanSpinCtrl,
+			self.panSpinCtrl,
 		)
 
-		# Set default value from config
-		defaultPan = magnifierConfig.getDefaultPanStep()
-		self.defaultPanSpinCtrl.SetValue(defaultPan)
+		# Set  value from config
+		panStep = magnifierConfig.getPanStep()
+		self.panSpinCtrl.SetValue(panStep)
 
 		# FULLSCREEN GROUP
 		# Translators: This is the label for a group of fullscreen magnifier options in the
@@ -6102,22 +6099,22 @@ class MagnifierPanel(SettingsPanel):
 		sHelper.addItem(fullscreenGroup)
 
 		# FULLSCREEN MODE SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the default full-screen mode
-		defaultFullscreenModeLabelText = _("Default fullscreen &mode:")
+		# Translators: The label for a setting in magnifier settings to select the  full-screen mode
+		fullscreenModeLabelText = _(" fullscreen &mode:")
 		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
-		self.defaultFullscreenModeList = fullscreenGroup.addLabeledControl(
-			defaultFullscreenModeLabelText,
+		self.fullscreenModeList = fullscreenGroup.addLabeledControl(
+			fullscreenModeLabelText,
 			wx.Choice,
 			choices=fullscreenModeChoices,
 		)
 		self.bindHelpEvent(
-			"MagnifierDefaultFullscreenFocusMode",
-			self.defaultFullscreenModeList,
+			"MagnifierFullscreenFocusMode",
+			self.fullscreenModeList,
 		)
 
-		# Set default value from config
-		defaultFullscreenMode = magnifierConfig.getDefaultFullscreenMode()
-		self.defaultFullscreenModeList.SetSelection(list(FullScreenMode).index(defaultFullscreenMode))
+		# Set  value from config
+		fullscreenModeValue = magnifierConfig.getFullscreenMode()
+		self.fullscreenModeList.SetSelection(list(FullScreenMode).index(fullscreenModeValue))
 
 		# KEEP MOUSE CENTERED
 		# Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
@@ -6139,53 +6136,53 @@ class MagnifierPanel(SettingsPanel):
 		fixedGroup = guiHelper.BoxSizerHelper(self, sizer=self.fixedGroupSizer)
 		sHelper.addItem(fixedGroup)
 
-		# Translators: The label for a setting in magnifier settings to select the default fixed magnifier window width in pixels.
+		# Translators: The label for a setting in magnifier settings to select the  fixed magnifier window width in pixels.
 		# Window width settings
-		defaultFixedWindowWidthLabelText = _("Default fixed magnifier &window width (pixels):")
-		self.defaultFixedWindowWidthEdit = fixedGroup.addLabeledControl(
-			defaultFixedWindowWidthLabelText,
+		fixedWindowWidthLabelText = _(" fixed magnifier &window width (pixels):")
+		self.fixedWindowWidthEdit = fixedGroup.addLabeledControl(
+			fixedWindowWidthLabelText,
 			nvdaControls.SelectOnFocusSpinCtrl,
-			value=str(magnifierConfig.getDefaultFixedWindowWidth()),
+			value=str(magnifierConfig.getFixedWindowWidth()),
 			min=50,
 			max=1000,
 		)
 		self.bindHelpEvent(
-			"MagnifierDefaultFixedWindowWidth",
-			self.defaultFixedWindowWidthEdit,
+			"MagnifierFixedWindowWidth",
+			self.fixedWindowWidthEdit,
 		)
 
-		# Translators: The label for a setting in magnifier settings to select the default fixed magnifier window height in pixels.
+		# Translators: The label for a setting in magnifier settings to select the  fixed magnifier window height in pixels.
 		# Window height settings
-		defaultFixedWindowHeightLabelText = _("Default fixed magnifier &window height (pixels):")
-		self.defaultFixedWindowHeightEdit = fixedGroup.addLabeledControl(
-			defaultFixedWindowHeightLabelText,
+		fixedWindowHeightLabelText = _(" fixed magnifier &window height (pixels):")
+		self.fixedWindowHeightEdit = fixedGroup.addLabeledControl(
+			fixedWindowHeightLabelText,
 			nvdaControls.SelectOnFocusSpinCtrl,
-			value=str(magnifierConfig.getDefaultFixedWindowHeight()),
+			value=str(magnifierConfig.getFixedWindowHeight()),
 			min=50,
 			max=1000,
 		)
 		self.bindHelpEvent(
-			"MagnifierDefaultFixedWindowHeight",
-			self.defaultFixedWindowHeightEdit,
+			"MagnifierFixedWindowHeight",
+			self.fixedWindowHeightEdit,
 		)
 
-		# Translators: The label for a setting in magnifier settings to select the default fixed magnifier window position.
+		# Translators: The label for a setting in magnifier settings to select the  fixed magnifier window position.
 		# Window position settings
-		defaultFixedWindowPositionLabelText = _("Default fixed magnifier &window position:")
+		fixedWindowPositionLabelText = _(" fixed magnifier &window position:")
 		fixedWindowPositionChoices = [pos.displayString for pos in FixedWindowPosition]
-		self.defaultFixedWindowPositionList = fixedGroup.addLabeledControl(
-			defaultFixedWindowPositionLabelText,
+		self.fixedWindowPositionList = fixedGroup.addLabeledControl(
+			fixedWindowPositionLabelText,
 			wx.Choice,
 			choices=fixedWindowPositionChoices,
 		)
 		self.bindHelpEvent(
-			"MagnifierDefaultFixedWindowPosition",
-			self.defaultFixedWindowPositionList,
+			"MagnifierFixedWindowPosition",
+			self.fixedWindowPositionList,
 		)
 
-		defaultFixedWindowPosition = magnifierConfig.getDefaultFixedWindowPosition()
-		self.defaultFixedWindowPositionList.SetSelection(
-			list(FixedWindowPosition).index(defaultFixedWindowPosition),
+		fixedWindowPosition = magnifierConfig.getFixedWindowPosition()
+		self.fixedWindowPositionList.SetSelection(
+			list(FixedWindowPosition).index(fixedWindowPosition),
 		)
 
 		# DOCKED MAGNIFIER GROUP
@@ -6239,25 +6236,25 @@ class MagnifierPanel(SettingsPanel):
 
 	def onSave(self):
 		"""Save the current selections to config."""
-		selectedZoom = self.defaultZoomList.GetSelection()
-		magnifierConfig.setDefaultZoomLevel(magnifierConfig.ZoomLevel.zoom_range()[selectedZoom])
+		selectedZoom = self.zoomList.GetSelection()
+		magnifierConfig.setZoomLevel(magnifierConfig.ZoomLevel.zoom_range()[selectedZoom])
 
-		magnifierConfig.setDefaultPanStep(self.defaultPanSpinCtrl.GetValue())
+		magnifierConfig.setPanStep(self.panSpinCtrl.GetValue())
 
-		selectedFilterIdx = self.defaultFilterList.GetSelection()
-		magnifierConfig.setDefaultFilter(list(Filter)[selectedFilterIdx])
+		selectedFilterIdx = self.filterList.GetSelection()
+		magnifierConfig.setFilter(list(Filter)[selectedFilterIdx])
 
 		selectedMagnifierTypeIdx = self.magnifierTypeList.GetSelection()
-		magnifierConfig.setDefaultMagnifierType(list(MagnifierType)[selectedMagnifierTypeIdx])
+		magnifierConfig.setMagnifierType(list(MagnifierType)[selectedMagnifierTypeIdx])
 
-		selectedModeIdx = self.defaultFullscreenModeList.GetSelection()
-		magnifierConfig.setDefaultFullscreenMode(list(FullScreenMode)[selectedModeIdx])
+		selectedModeIdx = self.fullscreenModeList.GetSelection()
+		magnifierConfig.setFullscreenMode(list(FullScreenMode)[selectedModeIdx])
 
-		magnifierConfig.setDefaultFixedWindowWidth(self.defaultFixedWindowWidthEdit.GetValue())
-		magnifierConfig.setDefaultFixedWindowHeight(self.defaultFixedWindowHeightEdit.GetValue())
+		magnifierConfig.setFixedWindowWidth(self.fixedWindowWidthEdit.GetValue())
+		magnifierConfig.setFixedWindowHeight(self.fixedWindowHeightEdit.GetValue())
 
-		selectedPositionIdx = self.defaultFixedWindowPositionList.GetSelection()
-		magnifierConfig.setDefaultFixedWindowPosition(list(FixedWindowPosition)[selectedPositionIdx])
+		selectedPositionIdx = self.fixedWindowPositionList.GetSelection()
+		magnifierConfig.setFixedWindowPosition(list(FixedWindowPosition)[selectedPositionIdx])
 
 		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterCheckBox.GetValue()
 		config.conf["magnifier"]["keepMouseCentered"] = self.keepMouseCenteredCheckBox.GetValue()

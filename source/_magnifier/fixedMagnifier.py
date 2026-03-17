@@ -20,9 +20,9 @@ from .utils.types import (
 )
 from .utils.windowCreator import WindowedMagnifier
 from .config import (
-	getDefaultFixedWindowWidth,
-	getDefaultFixedWindowHeight,
-	getDefaultFixedWindowPosition,
+	getFixedWindowWidth,
+	getFixedWindowHeight,
+	getFixedWindowPosition,
 	isTrueCentered,
 )
 
@@ -78,8 +78,8 @@ class FixedMagnifier(Magnifier, WindowedMagnifier):
 
 		:return: The parameters for the magnifier window
 		"""
-		case = getDefaultFixedWindowPosition()
-		windowSize = Size(getDefaultFixedWindowWidth(), getDefaultFixedWindowHeight())
+		case = getFixedWindowPosition()
+		windowSize = Size(getFixedWindowWidth(), getFixedWindowHeight())
 		displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
 		log.info(
 			f"Getting window parameters for fixed magnifier with position {case}, window size {windowSize}",

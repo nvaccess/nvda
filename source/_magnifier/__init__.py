@@ -10,7 +10,7 @@ Handles module initialization, configuration and settings interaction.
 
 from typing import TYPE_CHECKING
 
-from .config import getDefaultMagnifierType
+from .config import getMagnifierType
 from .utils.types import MagnifierType
 
 if TYPE_CHECKING:
@@ -68,7 +68,7 @@ def initialize() -> None:
 	"""
 	Initialize the magnifier module with the default magnifier type from config.
 	"""
-	magnifierType = getDefaultMagnifierType()
+	magnifierType = getMagnifierType()
 	_setMagnifierType(magnifierType)
 	_magnifier._startMagnifier()
 

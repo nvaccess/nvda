@@ -19,10 +19,10 @@ class TestFixedMagnifier(unittest.TestCase):
 	def setUp(self):
 		"""Setup before each test."""
 		# Mock config functions to avoid dependencies
-		with patch("_magnifier.fixedMagnifier.getDefaultFixedWindowWidth", return_value=400):
-			with patch("_magnifier.fixedMagnifier.getDefaultFixedWindowHeight", return_value=300):
+		with patch("_magnifier.fixedMagnifier.getFixedWindowWidth", return_value=400):
+			with patch("_magnifier.fixedMagnifier.getFixedWindowHeight", return_value=300):
 				with patch(
-					"_magnifier.fixedMagnifier.getDefaultFixedWindowPosition",
+					"_magnifier.fixedMagnifier.getFixedWindowPosition",
 					return_value=FixedWindowPosition.TOP_LEFT,
 				):
 					# Mock MagnifierOverlayWindow to prevent real Win32 window creation
@@ -108,10 +108,10 @@ class TestFixedMagnifier(unittest.TestCase):
 
 	def test_getWindowParameters(self):
 		"""Test retrieving window parameters."""
-		with patch("_magnifier.fixedMagnifier.getDefaultFixedWindowWidth", return_value=400):
-			with patch("_magnifier.fixedMagnifier.getDefaultFixedWindowHeight", return_value=300):
+		with patch("_magnifier.fixedMagnifier.getFixedWindowWidth", return_value=400):
+			with patch("_magnifier.fixedMagnifier.getFixedWindowHeight", return_value=300):
 				with patch(
-					"_magnifier.fixedMagnifier.getDefaultFixedWindowPosition",
+					"_magnifier.fixedMagnifier.getFixedWindowPosition",
 					return_value=FixedWindowPosition.TOP_LEFT,
 				):
 					params = self.magnifier._getWindowParameters()
