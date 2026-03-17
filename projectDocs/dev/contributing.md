@@ -4,7 +4,7 @@
 
 ### First time contributors
 
-When making your first PR, we encourage starting with on the following issues.
+When making your first PR, we encourage starting with one of the following issues.
 This will help introduce you to the project.
 To get used to the contribution process, please wait for feedback on your first PR before opening any other PRs.
 
@@ -30,7 +30,7 @@ A `triaged` label is an indicator that an issue is ready for a fix.
 A triaged issue should have a priority, as a developer, consider focusing on higher priority issues (p1-p3) instead of lower priority issues (p4-p5).
 Consider starting a [GitHub discussion](https://github.com/nvaccess/nvda/discussions) to see if there is interest.
 
-If the issue has a `ADR-required` label, this is a complex change.
+If the issue has an `ADR-required` label, this is a complex change.
 Refer to ["Proposing Major Changes"](./proposingMajorChanges.md) before opening a PR.
 
 Once triaged and ready please comment on the issue or ADR to confirm you plan to work on it.
@@ -49,7 +49,7 @@ PRs which have not been reviewed and tested by the author will be closed.
 Unrelated changes should be addressed in separate issues and PRs.
 
 Avoid PRs over 500 lines of code (LOC).
-PRs over 500 LOC may be rejected at the reviewers discretion.
+PRs over 500 LOC may be rejected at the reviewers' discretion.
 
 500-1000 line PRs can typically be broken into smaller changes such as automated tests, refactors, data-structures and core changes.
 These can be merged as stacked PRs if they depend on each other (e.g. `branchX` targets `master`, `branchY` targets `branchX`).
