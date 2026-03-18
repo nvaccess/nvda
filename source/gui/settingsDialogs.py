@@ -2728,9 +2728,9 @@ class MathSettingsPanel(SettingsPanel):
 			CopyAsOption,
 			DecimalSeparatorOption,
 			ImpairmentOption,
+      MathCATUserPreferences,
 			NavModeOption,
 			NavVerbosityOption,
-			MathCATUserPreferences,
 			VerbosityOption,
 		)
 
@@ -2997,15 +2997,15 @@ class MathSettingsPanel(SettingsPanel):
 	def onSave(self):
 		from mathPres.MathCAT.preferences import MathCATUserPreferences
 		from mathPres.MathCAT.preferences import (
-			ImpairmentOption,
-			VerbosityOption,
-			DecimalSeparatorOption,
+			BrailleNavHighlightOption,
 			ChemistryOption,
+			CopyAsOption,
+			DecimalSeparatorOption,
+			ImpairmentOption,
 			NavModeOption,
 			NavVerbosityOption,
-			CopyAsOption,
-			BrailleNavHighlightOption,
 			PauseFactor,
+			VerbosityOption,
 		)
 
 		mathConf = config.conf["math"]
