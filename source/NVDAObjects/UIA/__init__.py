@@ -1148,7 +1148,7 @@ class UIA(Window):
 		return {}
 
 	def _getUIACacheablePropertyValue_handlesCOMErrors(
-		self, 
+		self,
 		id : int, ignoreDefault: bool = False,
 		onError: Any) -> Any:
 		"""
