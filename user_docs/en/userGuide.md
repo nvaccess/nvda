@@ -1511,6 +1511,7 @@ You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAnd
 | Name |Key |Description|
 |---|---|---|
 |Toggles the state of the screen curtain |`NVDA+control+escape` |Enable to make the screen black or disable to show the contents of the screen. Pressed once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it.|
+| Reports the state of the screen curtain | `None` | Announces the current status of the screen curtain, whether it is disabled or enabled or in temporary mode. |
 
 <!-- KC:endInclude -->
 

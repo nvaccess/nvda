@@ -24,6 +24,7 @@
 Consult the speech dictionaries section in the User Guide for more details. (#19506, @LeonarddeR)
 * When resetting the configuration to factory defaults from the NVDA menu, a dialog is now shown afterwards with an Undo button to restore the previous configuration.
 The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is intended for recovery scenarios. (#19575, @bramd)
+* Added an unassigned command to report the current status of the Screen Curtain. (#19759)
 
 ### Changes
 
