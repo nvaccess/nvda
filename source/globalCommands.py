@@ -4972,7 +4972,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Describes a command.
 			"Reports the state of the screen curtain.",
 		),
-		category=SCRCAT_VISION,
+		speakOnDemand=True,
 	)
 	def script_reportScreenCurtainState(self, gesture: inputCore.InputGesture) -> None:
 		import screenCurtain
