@@ -18,7 +18,7 @@ import wx
 
 import addonAPIVersion
 
-from addonHandler import Addon, AddonManifest, _getAddonManifestsFromPath, getAvailableAddons
+from addonHandler import Addon, AddonBase, AddonManifest, _getAddonManifestsFromPath, getAvailableAddons
 from addonStore.models.addon import (
 	_AddonGUIModel,
 	_AddonStoreModel,
@@ -674,20 +674,15 @@ class _CopyAddonsDialog(
 			# Translators: The title of the dialog which allows users to select which add-ons to copy to the system profile.
 			pgettext("addonStore", "Copy Add-ons to System-wide Configuration"),
 		)
-		log.debug(f"{availableAddons=}; {systemManifests=}")
-		self._availableAddons = availableAddons
-		self._indexableAvailableAddons: tuple[Addon] | None = None
+		self._availableAddons = tuple(availableAddons.values())
 		self._systemManifests = systemManifests
-		allAddons = self._allAddons = dict()
-		for name in filterfalse(allAddons.__contains__, chain(availableAddons, systemManifests)):
-			allAddons[name] = (
+		self._allManifests = tuple(
+			(
 				addon.manifest if (addon := availableAddons.get(name)) is not None else None,
 				systemManifests.get(name),
 			)
-		self._systemOnlyManifests = tuple(
-			systemManifests[name] for name in (systemManifests.keys() - availableAddons.keys())
+			for name in chain(availableAddons, filterfalse(availableAddons.__contains__, systemManifests))
 		)
-		log.debug(f"{availableAddons=}\n{systemManifests=}\n{allAddons=}\n{self._systemOnlyManifests=}")
 		self._returnList = returnList
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -758,17 +753,11 @@ class _CopyAddonsDialog(
 		self.SetSizer(mainSizer)
 		self.CentreOnParent()
 
-	@property
-	def indexableAvailableAddons(self) -> tuple[Addon]:
-		if self._indexableAvailableAddons is None:
-			self._indexableAvailableAddons = tuple(self._availableAddons.values())
-		return self._indexableAvailableAddons
-
 	def _populateAddonsList(self):
 		# Translators: Shown when the add-on is not installed.
 		NOT_INSTALLED_MESSAGE = pgettext("addonStore", "Not installed")
 		self._addonsList.DeleteAllItems()
-		for userManifest, systemManifest in self._allAddons.values():
+		for userManifest, systemManifest in self._allManifests:
 			manifest = userManifest or systemManifest
 			index = self._addonsList.Append(
 				(
@@ -802,7 +791,13 @@ class _CopyAddonsDialog(
 		index: int = self._addonsList.GetFirstSelected()
 		if index < 0:
 			return
-		_showAddonInfo(self.indexableAvailableAddons[index]._addonGuiModel)
+		manifestPair = self._allManifests[index]
+		manifest = manifestPair[0] or manifestPair[1]
+		# _showAddonInfo takes an _AddonGUIModel, but all we have is an AddonTemplate.
+		# The most direct way to create an _AddonGUIModel from an AddonTemplate is to use _createGUIModelFromManifest, but it takes an AddonBase.
+		# Since we want to avoide the side effects of Addon, and this isn't an AddonBundle, dynamically create an AddonBase subclass that wraps this manifest.
+		addon = type("TempAddon", (AddonBase,), dict(manifest=manifest))()
+		_showAddonInfo(addon._addonGuiModel)
 
 	def onClose(self, evt: wx.CloseEvent):
 		if not self.GetReturnCode():
@@ -816,7 +811,9 @@ class _CopyAddonsDialog(
 	def onContinue(self, evt: wx.CommandEvent):
 		returnCode = evt.GetId()
 		toCopy = tuple(
-			addon for idx, addon in enumerate(self._availableAddons) if self._addonsList.IsItemChecked(idx)
+			addon.name
+			for idx, addon in enumerate(self._availableAddons)
+			if self._addonsList.IsItemChecked(idx)
 		)
 		if toCopy:
 			match gui.messageBox(
