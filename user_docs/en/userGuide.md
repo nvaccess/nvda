@@ -3239,7 +3239,7 @@ If speech rules for the main language cannot be found, English ("en") is used.
 | . {.hideHeaderRow} | . |
 |---|---|
 | Options | Any known language code and sub-code, e.g. "en-uk". |
-| Default | en |
+| Default | Automatic (the language of the current voice, or fallback to English) |
 
 ###### Speech Style {MathSpeechStyle}
 
