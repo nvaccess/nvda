@@ -12,6 +12,7 @@ from typing import (
 	Generator,
 	List,
 	Optional,
+	Any
 	Dict,
 	Tuple,
 	Callable,
@@ -1146,7 +1147,10 @@ class UIA(Window):
 		"""
 		return {}
 
-	def _getUIACacheablePropertyValue_handlesCOMErrors(self, id, ignoreDefault=False, onError=False):
+	def _getUIACacheablePropertyValue_handlesCOMErrors(
+		self, 
+		id : int, ignoreDefault: bool = False,
+		onError: Any) -> Any:
 		"""
 		Identical to _getUIACacheablePropertyValue, except that it will return onError if a COM error accurs
 		:onError: (default = False)
