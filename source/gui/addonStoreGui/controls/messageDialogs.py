@@ -722,7 +722,8 @@ class _CopyAddonsDialog(
 			self,
 			label="\n\n".join(labelStrings),
 		)
-		label.Wrap(self.scaleSize(self.GetSize().Width))
+		# 600 was fairly arbitrarily chosen by a visual user to look acceptable on their machine.
+		label.Wrap(self.scaleSize(600))
 		sHelper.addItem(label)
 
 		listCtrl = self._addonsList = sHelper.addLabeledControl(
