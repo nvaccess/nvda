@@ -1499,10 +1499,9 @@ You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAnd
 | Name |Key |Description|
 |---|---|---|
 |Toggles the state of the screen curtain |`NVDA+control+escape` |Enable to make the screen black or disable to show the contents of the screen. Pressed once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it.|
+|Reports the state of the screen curtain |`None` |allows you to here the current status of the screen curtain weather if it is disabled or enabled.|
 
 <!-- KC:endInclude -->
-
-You can also assign a gesture for reporting the current status of the Screen curtain from [Input Gestures dialog](#InputGestures) in NVDA's Preferences menu, When this gesture is performed NVDA will tell you the current status of the Screen Curtain if it is activated or disabled.
 
 When Screen Curtain is enabled, features that rely on what is literally on screen will not function.
 For example, you cannot [use OCR](#Win10Ocr).
