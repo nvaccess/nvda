@@ -666,8 +666,10 @@ class _CopyAddonsDialog(
 		"""
 		if type(self)._instance() is not None:
 			raise RuntimeError("Attempting to open multiple _CopyAddonsDialog instances")
-		if len(availableAddons) < 1:
-			raise ValueError("Unable to show copy add-ons dialog when there are no add-ons to copy.")
+		if len(availableAddons) == len(systemManifests) == 0:
+			raise ValueError(
+				"Unable to show copy add-ons dialog when there are no add-ons in the user and system config.",
+			)
 		type(self)._instance = weakref.ref(self)
 		super().__init__(
 			parent,
@@ -689,15 +691,16 @@ class _CopyAddonsDialog(
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = BoxSizerHelper(self, wx.VERTICAL)
 		labelStrings = []
-		labelStrings.append(
-			pgettext(
-				"addonStore",
-				# Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
-				"One or more add-ons are currently enabled in your NVDA configuration. "
-				"If run on secure screens, they will have unrestricted, higher-than-administrator level access to your entire system. "
-				"You are strongly encouraged to copy only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens.",
-			),
-		)
+		if availableAddons:
+			labelStrings.append(
+				pgettext(
+					"addonStore",
+					# Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
+					"One or more add-ons are currently enabled in your NVDA configuration. "
+					"If run on secure screens, they will have unrestricted, higher-than-administrator level access to your entire system. "
+					"You are strongly encouraged to copy only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens.",
+				),
+			)
 		if systemManifests.keys() - availableAddons.keys():
 			labelStrings.append(
 				pgettext(
@@ -707,13 +710,14 @@ class _CopyAddonsDialog(
 					"If you continue, these add-ons will be removed from the system-wide configuration.",
 				),
 			)
-		labelStrings.append(
-			pgettext(
-				"addonStore",
-				# Translators: Instructional text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
-				"Check only the add-ons you wish to copy to the system-wide configuration.",
-			),
-		)
+		if availableAddons:
+			labelStrings.append(
+				pgettext(
+					"addonStore",
+					# Translators: Instructional text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
+					"Check only the add-ons you wish to copy to the system-wide configuration.",
+				),
+			)
 		label = wx.StaticText(
 			self,
 			label="\n\n".join(labelStrings),
@@ -899,7 +903,7 @@ def _getAddonsToCopy(parent: wx.Window) -> list[str] | None:
 	"""
 	addonsToCopy: list[str] = []
 	enabledAddons = {
-		addon.name: addon
+		addon.name.casefold(): addon
 		for addon in getAvailableAddons(
 			filterFunc=lambda addon: getStatus(addon._addonGuiModel, _StatusFilterKey.INSTALLED)
 			in (
@@ -909,17 +913,13 @@ def _getAddonsToCopy(parent: wx.Window) -> list[str] | None:
 			),
 		)
 	}
-	if len(enabledAddons) == 0:
-		return addonsToCopy
 	systemAddonsDir = os.path.join("c:", "Program Files", "nvda", "systemConfig", "addons")
 	# systemAddonsDir = os.path.join(sys.prefix, "systemConfig", "addons")
-	try:
-		systemManifests = {
-			manifest["name"]: manifest for manifest in _getAddonManifestsFromPath(systemAddonsDir)
-		}
-	except Exception:
-		log.debug("Failed to retrieve system add-ons.", exc_info=True)
-		systemManifests = {}
+	systemManifests = {
+		manifest["name"].casefold(): manifest for manifest in _getAddonManifestsFromPath(systemAddonsDir)
+	}
+	if len(enabledAddons) == len(systemManifests) == 0:
+		return addonsToCopy
 	if _CopyAddonsDialog(parent, enabledAddons, systemManifests, addonsToCopy).ShowModal() != wx.ID_OK:
 		return None
 	return addonsToCopy
