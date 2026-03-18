@@ -45,6 +45,7 @@ from logHandler import log
 import NVDAState
 from speech.priorities import SpeechPriority
 import ui
+from utils.caseInsensitiveCollections import CaseInsensitiveSet
 import windowUtils
 
 if TYPE_CHECKING:
@@ -687,18 +688,35 @@ class _CopyAddonsDialog(
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = BoxSizerHelper(self, wx.VERTICAL)
-
-		label = wx.StaticText(
-			self,
-			label=pgettext(
+		labelStrings = []
+		labelStrings.append(
+			pgettext(
 				"addonStore",
 				# Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 				"One or more add-ons are currently enabled in your NVDA configuration. "
 				"If run on secure screens, they will have unrestricted, higher-than-administrator level access to your entire system. "
-				"You are strongly encouraged to copy only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens."
-				"\n\n"
+				"You are strongly encouraged to copy only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens.",
+			),
+		)
+		if systemManifests.keys() - availableAddons.keys():
+			labelStrings.append(
+				pgettext(
+					"addonStore",
+					# Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
+					"The system-wide NVDA configuration contains add-ons that are not present in your configuration. "
+					"If you continue, these add-ons will be removed from the system-wide configuration.",
+				),
+			)
+		labelStrings.append(
+			pgettext(
+				"addonStore",
+				# Translators: Instructional text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 				"Check only the add-ons you wish to copy to the system-wide configuration.",
 			),
+		)
+		label = wx.StaticText(
+			self,
+			label="\n\n".join(labelStrings),
 		)
 		label.Wrap(self.scaleSize(self.GetSize().Width))
 		sHelper.addItem(label)
@@ -815,23 +833,40 @@ class _CopyAddonsDialog(
 			for idx, addon in enumerate(self._availableAddons)
 			if self._addonsList.IsItemChecked(idx)
 		)
-		if toCopy:
-			match gui.messageBox(
-				npgettext(
-					"addonStore",
-					# Translators: A message to warn the user when attempting to copy add-ons for use on secure screens
-					"You have selected to copy {num} add-on to NVDA's system-wide configuration. "
-					"Using this add-on during sign-in and on secure screens is a serious security risk.",
-					"You have selected to copy {num} add-ons to NVDA's system-wide configuration. "
-					"Using these add-ons during sign-in and on secure screens is a serious security risk.",
-					len(toCopy),
-				).format(num=len(toCopy))
-				+ "\n\n"
-				+ pgettext(
+		countRemoved = len(CaseInsensitiveSet(self._systemManifests.keys()) - CaseInsensitiveSet(toCopy))
+		if toCopy or countRemoved:
+			messageStrings = []
+			if toCopy:
+				messageStrings.append(
+					npgettext(
+						"addonStore",
+						# Translators: A message to warn the user when attempting to copy add-ons for use on secure screens
+						"You have selected to copy {num} add-on to NVDA's system-wide configuration. "
+						"Using this add-on during sign-in and on secure screens is a serious security risk.",
+						"You have selected to copy {num} add-ons to NVDA's system-wide configuration. "
+						"Using these add-ons during sign-in and on secure screens is a serious security risk.",
+						len(toCopy),
+					).format(num=len(toCopy)),
+				)
+			if countRemoved:
+				messageStrings.append(
+					npgettext(
+						"addonStore",
+						# Translators: A message to warn the user when copying their configuration will remove add-ons
+						"This action will remove {num} add-on from NVDA's system-wide configuration. ",
+						"This action will remove {num} add-ons from NVDA's system-wide configuration. ",
+						countRemoved,
+					).format(num=countRemoved),
+				)
+			messageStrings.append(
+				pgettext(
 					"addonStore",
 					# Translators: A prompt asking the user to confirm whether to perform an action.
 					"Are you sure you want to continue?",
 				),
+			)
+			match gui.messageBox(
+				"\n\n".join(messageStrings),
 				# Translators: The title of the warning dialog displayed when trying to
 				# copy add-ons for use on secure screens.
 				pgettext("addonStore", "Warning"),
