@@ -2728,7 +2728,7 @@ class MathSettingsPanel(SettingsPanel):
 			CopyAsOption,
 			DecimalSeparatorOption,
 			ImpairmentOption,
-      MathCATUserPreferences,
+			MathCATUserPreferences,
 			NavModeOption,
 			NavVerbosityOption,
 			VerbosityOption,
