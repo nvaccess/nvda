@@ -5069,9 +5069,6 @@ If connecting via USB to displays which do not use HID, you must first install t
 The VarioUltra and Pronto! use HID.
 The Refreshabraille, Orbit Reader 20, and Orbit Reader 40 can use HID if configured appropriately.
 
-The USB serial mode of the Orbit Reader 20 and 40 is currently only supported in Windows 10 and later.
-USB HID should generally be used instead.
-
 Following are the key assignments for these displays with NVDA.
 Please see your display's documentation for descriptions of where these keys can be found.
 <!-- KC:beginInclude -->
