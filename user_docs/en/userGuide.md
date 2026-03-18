@@ -1173,7 +1173,7 @@ However, for scenarios where you wish to copy an entire table or paragraph of ri
 ## Reading Mathematical Content {#ReadingMath}
 
 NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille.
-NVDA uses [MathCAT](https://nsoiffer.github.io/MathCAT/) for reading mathematical content.
+NVDA uses [MathCAT](https://daisy.github.io/MathCAT/) for reading mathematical content.
 
 ### Supported math content {#SupportedMathContent}
 
@@ -3246,7 +3246,7 @@ If speech rules for the main language cannot be found, English ("en") is used.
 Different styles can be used to speak mathematical content:
 
 * ClearSpeak was developed by the Educational Testing Service for use on university-admission and other high-stakes tests in the United States.
-Refer to the [ClearSpeak specification details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
+Refer to the [ClearSpeak specification details in this Word document](https://daisy.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
 * SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").
 These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
 * LiteralSpeak tells MathCAT to speak math expressions almost exactly as written, without interpreting the symbols or meaning.
