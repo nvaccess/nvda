@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
+# Copyright (C) 2006-2026 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
 # Cyrille Bougot, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -10,6 +10,7 @@ import ctypes
 import enum
 from winBindings import user32
 import winBindings.gdi32
+from locationHelper import RectLTWH
 
 from typing import Any
 from collections.abc import Callable
@@ -315,6 +316,16 @@ from .excelCellBorder import getCellBorderStyleDescription  # noqa: E402
 
 re_RC = re.compile(r"R(?:\[(\d+)\])?C(?:\[(\d+)\])?")
 re_absRC = re.compile(r"^R(\d+)C(\d+)(?::R(\d+)C(\d+))?$")
+
+
+def getPixelPerInch():
+	hDC = user32.GetDC(None)
+	# pixels per inch along screen width
+	px = winBindings.gdi32.GetDeviceCaps(hDC, LOGPIXELSX)
+	# pixels per inch along screen height
+	py = winBindings.gdi32.GetDeviceCaps(hDC, LOGPIXELSY)
+	user32.ReleaseDC(None, hDC)
+	return px, py
 
 
 class ExcelQuickNavItem(browseMode.QuickNavItem):
@@ -1987,6 +1998,26 @@ class ExcelCell(ExcelBase):
 			speech.speak(sequence)
 		super(ExcelCell, self).reportFocus()
 
+	def _get_location(self):
+		cellObj = self.excelCellObject
+		if cellObj.mergeCells:
+			cellObj = cellObj.mergeArea
+		appObj = self.parent.excelApplicationObject
+		zoomRatio = appObj.ActiveWindow.Zoom / 100
+		pointsPerInch = appObj.InchesToPoints(1)
+		ppiX, ppiY = getPixelPerInch()
+		pX = ppiX / pointsPerInch
+		pY = ppiY / pointsPerInch
+		# Coordinates of the grid with respect to the sheet
+		gridX = self.parent.excelApplicationObject.ActiveWindow.PointsToScreenPixelsX(0)
+		gridY = self.parent.excelApplicationObject.ActiveWindow.PointsToScreenPixelsY(0)
+		return RectLTWH.fromFloatCollection(
+			cellObj.left * pX * zoomRatio + gridX,
+			cellObj.top * pY * zoomRatio + gridY,
+			cellObj.width * pX * zoomRatio,
+			cellObj.height * pY * zoomRatio,
+		)
+
 
 class ExcelSelection(ExcelBase):
 	role = controlTypes.Role.TABLECELL
@@ -2244,13 +2275,8 @@ class ExcelFormControl(ExcelBase):
 		bottomRightCellWidth = bottomRightAddress.Width
 		# bottom right cell's height in points
 		bottomRightCellHeight = bottomRightAddress.Height
+		px, py = getPixelPerInch()
 		self.excelApplicationObject = self.parent.excelWorksheetObject.Application
-		hDC = user32.GetDC(None)
-		# pixels per inch along screen width
-		px = winBindings.gdi32.GetDeviceCaps(hDC, LOGPIXELSX)
-		# pixels per inch along screen height
-		py = winBindings.gdi32.GetDeviceCaps(hDC, LOGPIXELSY)
-		user32.ReleaseDC(None, hDC)
 		zoom = self.excelApplicationObject.ActiveWindow.Zoom
 		zoomRatio = zoom / 100
 		# Conversion from inches to Points, 1 inch=72points
