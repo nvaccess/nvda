@@ -294,6 +294,10 @@ bool __stdcall ocSpeech_supportsProsodyOptions() {
 	return isUniversalApiContractVersion_(5, 0);
 }
 
+bool __stdcall ocSpeech_supportsSuppressPunctuationPause() {
+	return isUniversalApiContractVersion_(6, 0);
+}
+
 std::wstring createMarkersString_(IVectorView<IMediaMarker> markers) {
 	std::wstring markersStr;  // for large strings, preallocating / reserving may speed this up.
 	bool firstComplete = false;
@@ -527,4 +531,22 @@ void __stdcall ocSpeech_setRate(void* token, double rate) {
 		return;
 	}
 	synth->Options().SpeakingRate(rate);
+}
+
+bool __stdcall ocSpeech_getSuppressPunctuationPause(void* token) {
+	auto synth = g_state.getSynth(token);
+	if (!synth) {
+		LOG_ERROR(L"ocSpeech_getSuppressPunctuationPause error");
+		return false;
+	}
+	return synth->Options().PunctuationSilence() == SpeechPunctuationSilence::Min;
+}
+
+void __stdcall ocSpeech_setSuppressPunctuationPause(void* token, bool enable) {
+	auto synth = g_state.getSynth(token);
+	if (!synth) {
+		LOG_ERROR(L"ocSpeech_setSuppressPunctuationPause error");
+		return;
+	}
+	synth->Options().PunctuationSilence(enable ? SpeechPunctuationSilence::Min : SpeechPunctuationSilence::Default);
 }
