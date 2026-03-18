@@ -32,11 +32,13 @@ from ctypes.wintypes import (
 	LPDWORD,
 	LPPOINT,
 	LPRECT,
+	LPVOID,
 	PBYTE,
 	PHANDLE,
 	PMSG,
 	POINT,
 	PRECT,
+	PUINT,
 	RECT,
 	HANDLE,
 	HHOOK,
@@ -52,6 +54,8 @@ from ctypes.wintypes import (
 	LPMSG,
 	SHORT,
 	UINT,
+	ULONG,
+	USHORT,
 	WCHAR,
 	WORD,
 	WPARAM,
@@ -1624,3 +1628,268 @@ GetClientRect.argtypes = (
 	HWND,  # hWnd: Handle to the window whose client rectangle is to be retrieved
 	LPRECT,  # lpRect: Pointer to a RECT structure that receives the client rectangle coordinates
 )
+
+
+class RAWINPUTDEVICE(Structure):
+	"""
+	Defines information for the raw input devices.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-rawinputdevice
+	"""
+
+	_fields_ = (
+		("usUsagePage", USHORT),  # Top level collection Usage page for the raw input device.
+		("usUsage", USHORT),  # Top level collection Usage ID for the raw input device.
+		("dwFlags", DWORD),  # RIDEV_xxx constants
+		("hwndTarget", HWND),  # Window for receiving raw inputs
+	)
+
+
+PRAWINPUTDEVICE = POINTER(RAWINPUTDEVICE)
+
+
+class RAWINPUTHEADER(Structure):
+	"""
+	Contains the header information that is part of the raw input data.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-rawinputheader
+	"""
+
+	_fields_ = (
+		("dwType", DWORD),  # RIM_TYPEMOUSE or RIM_TYPEKEYBOARD or RIM_TYPEHID
+		("dwSize", DWORD),  # The size, in bytes, of the entire input packet of data.
+		("hDevice", HANDLE),  # A handle to the device generating the raw input data.
+		("wParam", WPARAM),  # The value passed in the wParam parameter of the WM_INPUT message.
+	)
+
+
+class RAWMOUSE(Structure):
+	"""
+	Contains information about the state of the mouse.
+
+	.. seealso:
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-rawmouse
+	"""
+
+	_fields_ = (
+		("usFlags", USHORT),
+		("usButtonFlags", USHORT),
+		("usButtonData", USHORT),
+		("ulRawButtons", ULONG),
+		("lLastX", LONG),
+		("lLastY", LONG),
+		("ulExtraInformation", ULONG),
+	)
+
+
+class RAWKEYBOARD(Structure):
+	"""
+	Contains information about the state of the keyboard.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-rawkeyboard
+	"""
+
+	_fields_ = (
+		("MakeCode", USHORT),
+		("Flags", USHORT),
+		("Reserved", USHORT),
+		("VKey", USHORT),
+		("Message", UINT),
+		("ExtraInformation", ULONG),
+	)
+
+
+class RAWHID(Structure):
+	"""
+	Describes the format of the raw input from a Human Interface Device (HID).
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-rawhid
+	"""
+
+	_fields_ = (
+		("dwSizeHid", DWORD),  # The size, in bytes, of each HID input in bRawData.
+		("dwCount", DWORD),  # The number of HID inputs in bRawData.
+		("bRawData", BYTE * 1)  # The raw input data, as an array of bytes.
+	)
+
+
+class _RAWINPUT_DATA(Union):
+	"""Unnamed union in RAWINPUT."""
+
+	_fields_ = (
+		("mouse", RAWMOUSE),
+		("keyboard", RAWKEYBOARD),
+		("hid", RAWHID),
+	)
+
+
+class RAWINPUT(Structure):
+	"""
+	Contains the raw input from a device.
+
+	.. seealso:
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-rawinput
+	"""
+
+	_fields_ = (
+		("header", RAWINPUTHEADER),
+		("data", _RAWINPUT_DATA),
+	)
+
+
+RegisterRawInputDevices = WINFUNCTYPE(None)(("RegisterRawInputDevices", dll))
+"""
+Registers the devices that supply the raw input data.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-registerrawinputdevices
+"""
+RegisterRawInputDevices.restype = BOOL
+RegisterRawInputDevices.argtypes = (
+	PRAWINPUTDEVICE,  # pRawInputDevices: An array of RAWINPUTDEVICE structures that represent the devices that supply the raw input.
+	UINT,  # uiNumDevices: The number of RAWINPUTDEVICE structures pointed to by pRawInputDevices.
+	UINT,  # cbSize: The size, in bytes, of a RAWINPUTDEVICE structure.
+)
+
+HRAWINPUT = HANDLE
+
+GetRawInputData = WINFUNCTYPE(None)(("GetRawInputData", dll))
+"""
+Retrieves the raw input from the specified device.
+
+.. seealso:
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getrawinputdata
+"""
+GetRawInputData.restype = UINT  # success: number of bytes copied; failure: -1
+GetRawInputData.argtypes = (
+	HRAWINPUT,  # hRawInput: A handle to the RAWINPUT structure. This comes from the lParam in WM_INPUT.
+	UINT,  # uiCommand: The command flag. (RID_HEADER or RID_INPUT)
+	LPVOID,  # pData: A pointer to the data that comes from the RAWINPUT structure.
+	PUINT,  # pcbSize: The size, in bytes, of the data in pData.
+	UINT,  # cbSizeHeader: The size, in bytes, of the RAWINPUTHEADER structure.
+)
+
+GetRawInputDeviceInfo = WINFUNCTYPE(None)(("GetRawInputDeviceInfoW", dll))
+"""
+Retrieves information about the raw input device.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getrawinputdeviceinfow
+"""
+GetRawInputDeviceInfo.restype = UINT  # success: number of bytes copied; failure: -1
+GetRawInputDeviceInfo.argtypes = (
+	HANDLE,  # hDevice, usually from RAWINPUTHEADER
+	UINT,  # uiCommand: Specifies what data will be returned in pData. (RIDI_xxx constant)
+	LPVOID,  # pData: A pointer to a buffer that contains the information specified by uiCommand.
+	PUINT,  # pcbSize: The size, in bytes, of the data in pData.
+)
+
+
+class RAWINPUTDEVICELIST(Structure):
+	"""
+	Contains information about a raw input device.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-rawinputdevicelist
+	"""
+
+	_fields_ = (
+		("hDevice", HANDLE),
+		("dwType", DWORD),  # RIM_TYPExxx constant
+	)
+
+
+PRAWINPUTDEVICELIST = POINTER(RAWINPUTDEVICELIST)
+
+GetRawInputDeviceList = WINFUNCTYPE(None)(("GetRawInputDeviceList", dll))
+"""
+Enumerates the raw input devices attached to the system.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getrawinputdevicelist
+"""
+GetRawInputDeviceList.restype = UINT  # success: number of devices stored in buffer; failure: -1
+GetRawInputDeviceList.argtypes = (
+	PRAWINPUTDEVICELIST,  # pRawInputDeviceList
+	PUINT,  # puiNumDevices
+	UINT,  # cbSize: The size of a RAWINPUTDEVICELIST structure, in bytes.
+)
+
+
+class RID_DEVICE_INFO_MOUSE(Structure):
+	"""
+	Defines the raw input data coming from the specified mouse.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-rid_device_info_mouse
+	"""
+
+	_fields_ = (
+		("dwId", DWORD),
+		("dwNumberOfButtons", DWORD),
+		("dwSampleRate", DWORD),
+		("fHasHorizontalWheel", BOOL),
+	)
+
+
+class RID_DEVICE_INFO_KEYBOARD(Structure):
+	"""
+	Defines the raw input data coming from the specified keyboard.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-rid_device_info_keyboard
+	"""
+
+	_fields_ = (
+		("dwType", DWORD),
+		("dwSubType", DWORD),
+		("dwKeyboardMode", DWORD),
+		("dwNumberOfFunctionKeys", DWORD),
+		("dwNumberOfIndicators", DWORD),
+		("dwNumberOfKeysTotal", DWORD),
+	)
+
+
+class RID_DEVICE_INFO_HID(Structure):
+	"""
+	Defines the raw input data coming from the specified Human Interface Device (HID).
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-rid_device_info_hid
+	"""
+
+	_fields_ = (
+		("dwVendorId", DWORD),
+		("dwProductId", DWORD),
+		("dwVersionNumber", DWORD),
+		("usUsagePage", USHORT),
+		("usUsage", USHORT),
+	)
+
+
+class _RID_INFO(Union):
+	"""Type of RID_DEVICE_INFO.DUMMYUNIONNAME."""
+	_fields_ = (
+		("mouse", RID_DEVICE_INFO_MOUSE),
+		("keyboard", RID_DEVICE_INFO_KEYBOARD),
+		("hid", RID_DEVICE_INFO_HID),
+	)
+
+
+class RID_DEVICE_INFO(Structure):
+	"""
+	Defines the raw input data coming from any device.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-rid_device_info
+	"""
+
+	_fields_ = (
+		("cbSize", DWORD),
+		("dwType", DWORD),
+		("info", _RID_INFO),
+	)
