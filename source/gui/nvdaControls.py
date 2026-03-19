@@ -24,7 +24,7 @@ from config.featureFlag import (
 )
 import gui.message
 from winBindings import user32
-from winBindings.CommCtrl import INDEXTOSTATEIMAGEMASK, LVIF, LVIS, LVITEM, LVM, LVN, NMLISTVIEW
+from winBindings.CommCtrl import LVIF, LVIS, LVITEM, LVM, LVN, NMLISTVIEW
 from winBindings.user32 import GWLP, NMHDR, WNDPROC, CallWindowProc, SendMessage, SetWindowLongPtr
 from winUser import WM_NOTIFY
 from .dpiScalingHelper import DpiScalingHelperMixin
@@ -581,6 +581,14 @@ class FeatureFlagCombo(wx.Choice):
 
 
 class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedClass]
+	"""A list control with checkboxes that supports removing checkboxes from individual items.
+
+	This subclasses :class:`AutoWidthColumnListCtrl` and enables checkboxes by default.
+	Individual checkboxes can be removed via :meth:`removeCheckbox`, which also prevents
+	the user from toggling the state image for that item by subclassing the parent window's
+	window procedure to intercept ``LVN_ITEMCHANGING`` notifications.
+	"""
+
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.EnableCheckBoxes(True)
@@ -591,6 +599,10 @@ class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedCl
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._close, self)
 
 	def _hookWndProc(self):
+		"""Subclass the parent window's window procedure to intercept list-view notifications.
+
+		:raises RuntimeError: If the window procedure has already been hooked.
+		"""
 		if self._newWndProc is not None or self._oldWndProc is not None:
 			raise RuntimeError("Window proc already hooked!")
 		self._newWndProc = WNDPROC(self._WndProc)
@@ -599,6 +611,7 @@ class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedCl
 		)
 
 	def _unhookWndProc(self):
+		"""Restore the parent window's original window procedure."""
 		if self._oldWndProc is not None:
 			SetWindowLongPtr(self.GetParent().GetHandle(), GWLP.WNDPROC, self._oldWndProc)
 			self._oldWndProc = self._newWndProc = None
@@ -607,6 +620,17 @@ class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedCl
 		self._unhookWndProc()
 
 	def _WndProc(self, hWnd: int, msg: int, wParam: int, lParam: int) -> bool:
+		"""Window procedure that blocks state image changes for checkboxless items.
+
+		Intercepts ``LVN_ITEMCHANGING`` notifications and prevents state image transitions
+		for items whose checkboxes have been removed.
+
+		:param hWnd: Handle to the window.
+		:param msg: The message identifier.
+		:param wParam: Additional message information.
+		:param lParam: Additional message information.
+		:return: ``True`` to block the change, otherwise the result of the original window procedure.
+		"""
 		if msg == WM_NOTIFY:
 			hdr = NMHDR.from_address(lParam)
 			if hdr.hwndFrom == self.GetHandle() and hdr.code == LVN.ITEMCHANGING:
@@ -620,11 +644,26 @@ class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedCl
 		return CallWindowProc(self._oldWndProc, hWnd, msg, wParam, lParam)
 
 	def IsItemChecked(self, item: int) -> bool:
+		"""Check whether the item at the given index is checked.
+
+		Always returns ``False`` for items whose checkbox has been removed.
+
+		:param item: The zero-based index of the item to query.
+		:return: Whether the item is checked.
+		"""
 		if item in self._checkboxlessIndices:
 			return False
 		return super().IsItemChecked(item)
 
 	def removeCheckbox(self, itemIndex: int):
+		"""Remove the checkbox from the item at the given index.
+
+		The item's state image is cleared and future check-state changes are blocked.
+		If the checkbox has already been removed, this is a no-op.
+
+		:param itemIndex: The zero-based index of the item.
+		:raises IndexError: If ``itemIndex`` is out of range.
+		"""
 		log.info(f"removeCheckbox({itemIndex=})", stack_info=True)
 		if itemIndex not in range(self.GetItemCount()):
 			raise IndexError("Item index out of range")
@@ -632,7 +671,7 @@ class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedCl
 			return
 		lvi = LVITEM(
 			stateMask=LVIS.STATEIMAGEMASK,
-			state=INDEXTOSTATEIMAGEMASK(0),
+			state=0,
 		)
 		SendMessage(
 			self.GetHandle(),

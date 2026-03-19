@@ -631,7 +631,12 @@ class _CopyAddonsDialog(
 	ContextHelpMixin,
 	wx.Dialog,
 ):
-	"""A dialog which asks the user which add-ons they would like to copy to the system profile."""
+	"""A dialog which asks the user which add-ons to copy to or remove from the system profile.
+
+	The dialog displays add-ons from both the user configuration and the system-wide
+	configuration. Add-ons only in the system config are shown as pending removal and
+	have their checkboxes disabled.
+	"""
 
 	helpId = "CopyAddonsToSystemProfileDialog"
 
@@ -778,6 +783,11 @@ class _CopyAddonsDialog(
 		self.CentreOnParent()
 
 	def _populateAddonsList(self):
+		"""Populate the add-ons list control from :attr:`_allManifests`.
+
+		Each row shows the add-on name, user version, and system-wide version.
+		Items that exist only in the system configuration have their checkboxes removed.
+		"""
 		# Translators: Shown when the add-on is not installed.
 		NOT_INSTALLED_MESSAGE = pgettext("addonStore", "Not installed")
 		# Translators: Prepended to the name of an add-on to indicate that it will be removed from the system-wide configuration.
@@ -895,8 +905,10 @@ class _CopyAddonsDialog(
 def _getAddonsToCopy(parent: wx.Window) -> list[str] | None:
 	"""Get a list of add-on IDs to copy to the system profile.
 
-	This function asks the user which add-ons they want to copy to the system profile, and returns the add-on IDs of those they select.
-	If no add-ons are enabled, the user is not asked, and no add-on IDs are returned.
+	This function asks the user which add-ons they want to copy to the system profile,
+	and returns the add-on IDs of those they select.
+	If no add-ons are enabled in the user config and no add-ons exist in the system config,
+	the user is not asked, and no add-on IDs are returned.
 
 	.. warning::
 		This function is blocking.
@@ -904,7 +916,8 @@ def _getAddonsToCopy(parent: wx.Window) -> list[str] | None:
 	:param parent: The window to use as the dialog's parent.
 	:return: If the user cancels the process, ``None``.
 		Otherwise, a list of add-on IDs to copy.
-		Note that this list may be empty, in which case there are either no enabled add-ons in the user config, or the user has chosen to copy no add-ons.
+		Note that this list may be empty, in which case there are either no
+		enabled add-ons in the user config, or the user has chosen to copy no add-ons.
 	"""
 	addonsToCopy: list[str] = []
 	enabledAddons = {

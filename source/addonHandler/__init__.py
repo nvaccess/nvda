@@ -1227,6 +1227,12 @@ def validate_apiVersionString(value: str) -> tuple[int, int, int]:
 
 
 def _loadManifest(path: os.PathLike, translationRelpaths: Sequence[str]) -> AddonManifest:
+	"""Load an add-on manifest from the given directory, applying the first available translation.
+
+	:param path: Path to the add-on directory containing the manifest file.
+	:param translationRelpaths: Relative paths to translated manifest files, in priority order.
+	:return: The loaded manifest, translated if a translation file was found.
+	"""
 	with open(os.path.join(path, MANIFEST_FILENAME), "rb") as untranslatedFile:
 		for translationRelpath in translationRelpaths:
 			translationPath = os.path.join(path, translationRelpath)
@@ -1241,6 +1247,14 @@ def _loadManifest(path: os.PathLike, translationRelpaths: Sequence[str]) -> Addo
 
 
 def _getAddonManifestsFromPath(path: os.PathLike) -> Generator[AddonManifest, None, None]:
+	"""Yield add-on manifests from subdirectories of the given path.
+
+	Subdirectories that are empty, pending deletion, or pending install are skipped.
+	Manifests that fail to load are logged and skipped.
+
+	:param path: Path to the directory containing add-on subdirectories.
+	:return: An iterator of successfully loaded add-on manifests.
+	"""
 	translationPaths = None
 	with os.scandir(path) as scanner:
 		for entry in scanner:

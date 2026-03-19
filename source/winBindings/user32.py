@@ -167,10 +167,14 @@ DefWindowProc.argtypes = (
 DefWindowProc.restype = LRESULT
 
 CallWindowProc = WINFUNCTYPE(None)(("CallWindowProcW", dll))
-"""https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-callwindowprocw"""
+"""Passes message information to the specified window procedure.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-callwindowprocw
+"""
 CallWindowProc.restype = LRESULT
 CallWindowProc.argtypes = (
-	WNDPROC,  # lpPrevWndFunc
+	WNDPROC,  # lpPrevWndFunc: The previous window procedure.
 	HWND,  # hWnd
 	UINT,  # Msg
 	WPARAM,  # wParam
@@ -1042,16 +1046,27 @@ SetWindowLong.argtypes = (
 
 
 class GWLP(IntEnum):
+	"""Possible special values of the ``nIndex`` parameter to the ``SetWindowLongPtr`` function.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowlongptrw
+	"""
+
 	WNDPROC = -4
+	"""Sets a new address for the window procedure."""
 
 
 SetWindowLongPtr = WINFUNCTYPE(None)(("SetWindowLongPtrW", dll))
-"""https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowlongptrw"""
+"""Changes an attribute of the specified window.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowlongptrw
+"""
 SetWindowLongPtr.restype = LONG_PTR
 SetWindowLongPtr.argtypes = (
-	HWND,  # hWnd
-	c_int,  # nIndex
-	LPVOID,  # dwNewLong
+	HWND,  # hWnd: handle to the window and, indirectly, the class to which it belongs.
+	c_int,  # nIndex: The zero-based, non-negative  offset to the value to be set, or a recognised special value.
+	LPVOID,  # dwNewLong: The replacement value.
 )
 
 
@@ -1655,7 +1670,11 @@ GetClientRect.argtypes = (
 
 
 class NMHDR(Structure):
-	"""https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-nmhdr"""
+	"""Contains information about a notification message.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-nmhdr
+	"""
 
 	_fields_ = (
 		("hwndFrom", HWND),
