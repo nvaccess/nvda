@@ -1,6 +1,5 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2024 NV Access Limited, Peter Vágner
+# Copyright (C) 2007-2026 NV Access Limited, Peter Vágner
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -13,6 +12,8 @@ import config
 import globalVars
 from logHandler import log
 import os
+
+from speechXml import toXmlLang
 
 isSpeaking = False
 onIndexReached = None
@@ -330,7 +331,7 @@ def setVoiceAndVariant(voice=None, variant=None):
 
 def _setVoiceByLanguage(lang):
 	v = espeak_VOICE()
-	lang = lang.replace("_", "-")
+	lang = toXmlLang(lang)
 	v.languages = encodeEspeakString(lang)
 	try:
 		espeakDLL.espeak_SetVoiceByProperties(byref(v))  # noqa: F405

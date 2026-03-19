@@ -4970,6 +4970,36 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
+			"Reports the state of the screen curtain.",
+		),
+		speakOnDemand=True,
+	)
+	def script_reportScreenCurtainState(self, gesture: inputCore.InputGesture) -> None:
+		import screenCurtain
+
+		if screenCurtain.screenCurtain is None:
+			# Screen curtain has not been initialized.
+			# Translators: Reported when the screen curtain is not available.
+			ui.message(_("Screen curtain not available"), speechPriority=speech.priorities.Spri.NOW)
+			return
+
+		if screenCurtain.screenCurtain.enabled:
+			if not screenCurtain.screenCurtain.settings["enabled"]:
+				# Translators: Reported when the screen curtain is temporarily enabled.
+				ui.message(
+					_("Temporary Screen curtain, enabled until next restart"),
+					speechPriority=speech.priorities.Spri.NOW,
+				)
+			else:
+				# Translators: Reported when the screen curtain is enabled.
+				ui.message(_("Screen curtain enabled"), speechPriority=speech.priorities.Spri.NOW)
+		else:
+			# Translators: Reported when the screen curtain is disabled.
+			ui.message(_("Screen curtain disabled"), speechPriority=speech.priorities.Spri.NOW)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
 			"Toggles the magnifier on and off",
 		),
 		category=SCRCAT_VISION,

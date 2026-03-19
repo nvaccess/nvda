@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2024 NV Access Limited
+# Copyright (C) 2024-2026 NV Access Limited
 
 """Unit tests for the message dialog API."""
 
@@ -34,7 +34,7 @@ def dummyCallback2(*a):
 
 
 def getDialogState(dialog: MessageDialog):
-	"""Capture internal state of a :class:`gui.messageDialog.MessageDialog` for later analysis.
+	"""Capture internal state of a :class:`gui.message.MessageDialog` for later analysis.
 
 	Currently this only captures state relevant to adding buttons.
 	Further tests wishing to use this dialog should be sure to add any state potentially modified by the functions under test.

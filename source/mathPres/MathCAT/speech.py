@@ -1,3 +1,8 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2022-2026 NV Access Limited, Neil Soiffer, Ryan McCleary
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
 import re
 from speech.commands import (
 	BaseProsodyCommand,
@@ -17,6 +22,7 @@ from synthDriverHandler import getSynth, SynthDriver
 import libmathcat_py as libmathcat
 from .localization import getLanguageToUse
 from speech import getCurrentLanguage
+from speechXml import toXmlLang
 
 
 PROSODY_COMMANDS: dict[str, BaseProsodyCommand] = {
@@ -62,7 +68,7 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	except Exception as e:
 		log.exception(e)
 	language: str = getLanguageToUse()
-	nvdaLanguage: str = getCurrentLanguage().replace("_", "-")
+	nvdaLanguage: str = toXmlLang(getCurrentLanguage())
 
 	synth: SynthDriver = getSynth()
 	# I tried the engines on a 180 word excerpt. The speeds do not change linearly and differ a it between engines

@@ -146,8 +146,8 @@ repos:
       types_or: [c, c++]
     - id: checkPot
       name: translation string check
-      entry: cmd.exe /c "scons checkPot --all-cores"
-      language: system
+      entry: ./runcheckpot.bat --all-cores
+      language: script
       pass_filenames: false
       types: [python]
       files: ^source/.*$
