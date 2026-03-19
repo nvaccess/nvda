@@ -100,7 +100,7 @@ class NMLISTVIEW(Structure):
 	_fields_ = (
 		("hdr", NMHDR),
 		("iItem", c_int),
-		("iSubItem;", c_int),
+		("iSubItem", c_int),
 		("uNewState", UINT),
 		("uOldState", UINT),
 		("uChanged", UINT),
