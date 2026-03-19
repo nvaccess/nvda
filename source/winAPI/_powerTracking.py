@@ -25,6 +25,7 @@ from typing import (
 	Optional,
 )
 
+from gettext import ngettext
 from logHandler import log
 import ui
 import winBindings.kernel32

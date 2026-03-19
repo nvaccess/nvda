@@ -29,6 +29,7 @@ import braille
 import core
 import nvwave
 import globalVars
+from gettext import ngettext
 from typing import List, Union
 import diffHandler
 from config.configFlags import (
