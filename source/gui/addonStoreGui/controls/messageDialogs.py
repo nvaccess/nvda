@@ -40,7 +40,7 @@ from gui.guiHelper import (
 	SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS,
 )
 from gui.message import DisplayableError, displayDialogAsModal, messageBox, _countAsMessageBox
-from gui.nvdaControls import CheckListCtrl
+from gui.nvdaControls import _CheckListCtrl
 from logHandler import log
 import NVDAState
 from speech.priorities import SpeechPriority
@@ -658,11 +658,16 @@ class _CopyAddonsDialog(
 		"""Initializer.
 
 		:param parent: The dialog's parent window.
-		:param availableAddons: The add-ons that are available to be copied to the system profile.
-			This must not be empty.
+		:param availableAddons: Dict mapping (case-folded) add-on name
+			to :class:`Addon` for the add-ons that are available to be copied to the system profile.
+		:param systemManifests: Dict mapping (case-folded) add-on name
+			to :class:`AddonManifest` for the add-ons in the system profile.
 		:param returnList: A list that will be modified in place with the add-on IDs that the user wishes to copy.
 		:raises RuntimeError: If an instance of this class already exists.
-		:raises ValueError: If ``availableAddons`` is empty.
+		:raises ValueError: If ``availableAddons`` and ``systemManifests`` are both empty.
+
+		.. note::
+			``availableAddons`` and ``systemManifests`` must contain at least one add-on between them.
 		"""
 		if type(self)._instance() is not None:
 			raise RuntimeError("Attempting to open multiple _CopyAddonsDialog instances")
@@ -675,7 +680,7 @@ class _CopyAddonsDialog(
 			parent,
 			wx.ID_ANY,
 			# Translators: The title of the dialog which allows users to select which add-ons to copy to the system profile.
-			pgettext("addonStore", "Copy Add-ons to System-wide Configuration"),
+			pgettext("addonStore", "Copy Settings to System-wide Configuration"),
 		)
 		self._availableAddons = tuple(availableAddons.values())
 		self._systemManifests = systemManifests
@@ -729,18 +734,16 @@ class _CopyAddonsDialog(
 		listCtrl = self._addonsList = sHelper.addLabeledControl(
 			# Translators: The label of the list which allows users to select which add-ons to copy to the system profile
 			pgettext("addonStore", "Add-ons"),
-			CheckListCtrl,
-			# AutoWidthColumnListCtrl,
+			_CheckListCtrl,
 			style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
 		)
-		# listCtrl.setResizeColumn(0)
 		# Translators: The label for a column in the copy add-ons dialog that displays the name of the add-on
 		listCtrl.AppendColumn(pgettext("addonStore", "Name"), width=self.scaleSize(150))
 		# Translators: The label for a column in the copy add-ons dialog that displays the version of the add-on present in the current user's configuration
 		listCtrl.AppendColumn(pgettext("addonStore", "User version"), width=self.scaleSize(150))
 		# Translators: The label for a column in the copy add-ons dialog that displays the version of the add-on present in the system-wide configuration
 		listCtrl.AppendColumn(pgettext("addonStore", "System-wide version"), width=self.scaleSize(150))
-		listCtrl.EnableCheckBoxes(True)
+		listCtrl.setResizeColumn(0)
 		listCtrl.Bind(wx.EVT_LIST_ITEM_SELECTED, self._onSelectionChange)
 		listCtrl.Bind(wx.EVT_LIST_ITEM_DESELECTED, self._onSelectionChange)
 		listCtrl.Bind(wx.EVT_CHAR_HOOK, self._enterActivatesContinue)

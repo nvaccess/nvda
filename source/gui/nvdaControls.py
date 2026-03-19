@@ -24,7 +24,7 @@ from config.featureFlag import (
 )
 import gui.message
 from winBindings import user32
-from winBindings.CommCtrl import INDEXTOSTATEIMAGEMASK, LVIF, LVIS, LVITEM, LVM, NMLISTVIEW
+from winBindings.CommCtrl import INDEXTOSTATEIMAGEMASK, LVIF, LVIS, LVITEM, LVM, LVN, NMLISTVIEW
 from winBindings.user32 import GWLP, NMHDR, WNDPROC, CallWindowProc, SendMessage, SetWindowLongPtr
 from winUser import WM_NOTIFY
 from .dpiScalingHelper import DpiScalingHelperMixin
@@ -580,9 +580,10 @@ class FeatureFlagCombo(wx.Choice):
 		)
 
 
-class CheckListCtrl(wx.ListCtrl):
+class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedClass]
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
+		self.EnableCheckBoxes(True)
 		self._newWndProc: WNDPROC | None = None
 		self._oldWndProc: WNDPROC | None = None
 		self._checkboxlessIndices: set[int] = set()
@@ -605,10 +606,10 @@ class CheckListCtrl(wx.ListCtrl):
 	def _close(self, evt):
 		self._unhookWndProc()
 
-	def _WndProc(self, hWnd, msg, wParam, lParam):
+	def _WndProc(self, hWnd: int, msg: int, wParam: int, lParam: int) -> bool:
 		if msg == WM_NOTIFY:
 			hdr = NMHDR.from_address(lParam)
-			if hdr.hwndFrom == self.GetHandle():
+			if hdr.hwndFrom == self.GetHandle() and hdr.code == LVN.ITEMCHANGING:
 				hdr = NMLISTVIEW.from_address(lParam)
 				if (
 					hdr.iItem in self._checkboxlessIndices
@@ -619,11 +620,7 @@ class CheckListCtrl(wx.ListCtrl):
 		return CallWindowProc(self._oldWndProc, hWnd, msg, wParam, lParam)
 
 	def IsItemChecked(self, item: int) -> bool:
-		# TODO: Add to enum and document
-		# LVM_GETITEMSTATE
-		if item < self.GetItemCount() and not (
-			SendMessage(self.GetHandle(), 4140, item, LVIS.STATEIMAGEMASK) & LVIS.STATEIMAGEMASK
-		):
+		if item in self._checkboxlessIndices:
 			return False
 		return super().IsItemChecked(item)
 
@@ -634,14 +631,12 @@ class CheckListCtrl(wx.ListCtrl):
 		if itemIndex in self._checkboxlessIndices:
 			return
 		lvi = LVITEM(
-			mask=LVIF.STATE,
-			iItem=itemIndex,
 			stateMask=LVIS.STATEIMAGEMASK,
 			state=INDEXTOSTATEIMAGEMASK(0),
 		)
 		SendMessage(
 			self.GetHandle(),
-			LVM.SETITEM,
+			LVM.SETITEMSTATE,
 			itemIndex,
 			addressof(lvi),
 		)

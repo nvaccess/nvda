@@ -17,7 +17,12 @@ class LVM(IntEnum):
 
 	SETITEMSTATE = 0x102B
 	"""https://learn.microsoft.com/en-us/windows/win32/controls/lvm-setitemstate"""
-	SETITEM = 0x104C
+
+
+class LVN(IntEnum):
+	"""List-view control notification messages."""
+
+	ITEMCHANGING = 0xFFFFFF9C
 
 
 class LVIS(IntEnum):
