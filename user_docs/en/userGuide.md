@@ -3265,7 +3265,7 @@ Examples of each type of speech:
 | . {.hideHeaderRow} | . |
 |---|---|
 | Options | ClearSpeak, SimpleSpeak, LiteralSpeak, or other options depending on your language |
-| Default | ClearSpeak where available |
+| Default | Depends on the language |
 
 ###### Speech verbosity {#MathSpeechVerbosity}
 
