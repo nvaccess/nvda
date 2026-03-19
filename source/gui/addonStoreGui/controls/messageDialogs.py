@@ -806,6 +806,8 @@ class _CopyAddonsDialog(
 			)
 			if userManifest is None:
 				self._addonsList.removeCheckbox(index)
+			elif systemManifest is not None:
+				self._addonsList.CheckItem(index)
 		activeIndex = 0
 		self._addonsList.SetItemState(
 			activeIndex,
