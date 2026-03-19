@@ -5,6 +5,7 @@
 
 from itertools import chain, filterfalse
 import os.path
+import sys
 import threading
 from time import sleep
 from typing import (
@@ -794,7 +795,6 @@ class _CopyAddonsDialog(
 		WILL_DELETE_PREFIX = pgettext("addonStore", "[remove]")
 		self._addonsList.DeleteAllItems()
 		for userManifest, systemManifest in self._allManifests:
-			manifest = userManifest or systemManifest
 			index = self._addonsList.Append(
 				(
 					userManifest["summary"]
@@ -804,9 +804,7 @@ class _CopyAddonsDialog(
 					systemManifest["version"] if systemManifest is not None else NOT_INSTALLED_MESSAGE,
 				),
 			)
-			log.info(f"Inserted {manifest['name']} at {index}.\n{userManifest=}\n{systemManifest=}")
 			if userManifest is None:
-				log.info(f"Disabling checkbox {index}")
 				self._addonsList.removeCheckbox(index)
 		activeIndex = 0
 		self._addonsList.SetItemState(
@@ -931,8 +929,7 @@ def _getAddonsToCopy(parent: wx.Window) -> list[str] | None:
 			),
 		)
 	}
-	systemAddonsDir = os.path.join("c:", "Program Files", "nvda", "systemConfig", "addons")
-	# systemAddonsDir = os.path.join(sys.prefix, "systemConfig", "addons")
+	systemAddonsDir = os.path.join(sys.prefix, "systemConfig", "addons")
 	systemManifests = {
 		manifest["name"].casefold(): manifest for manifest in _getAddonManifestsFromPath(systemAddonsDir)
 	}

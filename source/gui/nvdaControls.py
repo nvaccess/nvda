@@ -32,7 +32,6 @@ from . import (
 	guiHelper,
 )
 import winUser
-from logHandler import log
 
 from collections.abc import Callable
 
@@ -596,7 +595,7 @@ class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedCl
 		self._oldWndProc: WNDPROC | None = None
 		self._checkboxlessIndices: set[int] = set()
 		self._hookWndProc()
-		self.Bind(wx.EVT_WINDOW_DESTROY, self._close, self)
+		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy, self)
 
 	def _hookWndProc(self):
 		"""Subclass the parent window's window procedure to intercept list-view notifications.
@@ -616,7 +615,7 @@ class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedCl
 			SetWindowLongPtr(self.GetParent().GetHandle(), GWLP.WNDPROC, self._oldWndProc)
 			self._oldWndProc = self._newWndProc = None
 
-	def _close(self, evt):
+	def _onDestroy(self, evt: wx.WindowDestroyEvent) -> None:
 		self._unhookWndProc()
 
 	def _WndProc(self, hWnd: int, msg: int, wParam: int, lParam: int) -> bool:
@@ -664,7 +663,6 @@ class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedCl
 		:param itemIndex: The zero-based index of the item.
 		:raises IndexError: If ``itemIndex`` is out of range.
 		"""
-		log.info(f"removeCheckbox({itemIndex=})", stack_info=True)
 		if itemIndex not in range(self.GetItemCount()):
 			raise IndexError("Item index out of range")
 		if itemIndex in self._checkboxlessIndices:
