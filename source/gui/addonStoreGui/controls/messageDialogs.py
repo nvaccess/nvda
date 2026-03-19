@@ -736,8 +736,6 @@ class _CopyAddonsDialog(
 		# listCtrl.setResizeColumn(0)
 		# Translators: The label for a column in the copy add-ons dialog that displays the name of the add-on
 		listCtrl.AppendColumn(pgettext("addonStore", "Name"), width=self.scaleSize(150))
-		# Translators: The label for a column in the copy add-ons dialog that displays the add-on's author
-		listCtrl.AppendColumn(pgettext("addonStore", "Author"), width=self.scaleSize(180))
 		# Translators: The label for a column in the copy add-ons dialog that displays the version of the add-on present in the current user's configuration
 		listCtrl.AppendColumn(pgettext("addonStore", "User version"), width=self.scaleSize(150))
 		# Translators: The label for a column in the copy add-ons dialog that displays the version of the add-on present in the system-wide configuration
@@ -779,13 +777,16 @@ class _CopyAddonsDialog(
 	def _populateAddonsList(self):
 		# Translators: Shown when the add-on is not installed.
 		NOT_INSTALLED_MESSAGE = pgettext("addonStore", "Not installed")
+		# Translators: Prepended to the name of an add-on to indicate that it will be removed from the system-wide configuration.
+		WILL_DELETE_PREFIX = pgettext("addonStore", "[remove]")
 		self._addonsList.DeleteAllItems()
 		for userManifest, systemManifest in self._allManifests:
 			manifest = userManifest or systemManifest
 			index = self._addonsList.Append(
 				(
-					manifest["summary"],
-					manifest["author"],
+					userManifest["summary"]
+					if userManifest is not None
+					else f"{WILL_DELETE_PREFIX} {systemManifest['name']}",
 					userManifest["version"] if userManifest is not None else NOT_INSTALLED_MESSAGE,
 					systemManifest["version"] if systemManifest is not None else NOT_INSTALLED_MESSAGE,
 				),
