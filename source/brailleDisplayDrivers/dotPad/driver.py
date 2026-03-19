@@ -280,8 +280,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		super().__init__()
 
 		# Key press tracking for multi-button combinations
-		self._keysPressed: set[tuple[int, int]] = set()
-		self._keyGroupsReleased: dict[int, bool] = {}
+		self._keysPressed: set[tuple[DP_KeyGroup, int]] = set()
+		self._keyGroupsReleased: dict[DP_KeyGroup, bool] = {}
 
 		# Initialize all key groups as released
 		for group in DP_KeyGroup:
@@ -460,7 +460,7 @@ class DPInputGesture(braille.BrailleDisplayGesture):
 
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, model: str, keys: set[tuple[int, int]]):
+	def __init__(self, model: str, keys: set[tuple[DP_KeyGroup, int]]):
 		"""Initialize gesture from pressed keys.
 
 		:param model: The device model name (e.g., "DotPad320A") for model-specific gestures
