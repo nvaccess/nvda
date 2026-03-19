@@ -255,7 +255,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Check if all groups are now released
 			if self._keysPressed and all(self._keyGroupsReleased.values()):
 				try:
-					gesture = DPInputGesture(self.model, self._keysPressed)
+					gesture = DPInputGesture(self.model, self._keysPressed.copy())
 					if inputCore.manager is not None:
 						inputCore.manager.executeGesture(gesture)
 				except (ValueError, inputCore.NoInputGestureAction):
@@ -478,13 +478,13 @@ class DPInputGesture(braille.BrailleDisplayGesture):
 				self.keyNames.append(f"f{keyNumber + 1}")
 			elif group == DP_KeyGroup.PERKINS:
 				try:
-					# Map to DP_PerkinsKey enum and convert to lowercase
 					perkinsKey = DP_PerkinsKey(keyNumber)
-					# Convert SCREAMING_SNAKE_CASE to camelCase for gesture IDs
-					keyName = self._formatPerkinsKeyName(perkinsKey.name)
-					self.keyNames.append(keyName)
 				except ValueError:
 					log.warning(f"Unknown Perkins key: {keyNumber}")
+					continue
+				# Convert SCREAMING_SNAKE_CASE to camelCase for gesture IDs
+				keyName = self._formatPerkinsKeyName(perkinsKey.name)
+				self.keyNames.append(keyName)
 			# TODO: Add support for ROUTING and SCROLL groups when needed
 
 		if not self.keyNames:
