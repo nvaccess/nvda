@@ -451,7 +451,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 		# Set a different speechStyle depending on the language
 		[[__many__]]
-			# Any known speech style for the language (falls back to ClearSpeak)
+			# Any known speech style for the language
 			speechStyle = string(default="")
 
 	[[navigation]]
