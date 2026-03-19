@@ -3238,8 +3238,8 @@ If speech rules for the main language cannot be found, English ("en") is used.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | Any known language code and sub-code, e.g. "en-uk". |
-| Default | Automatic (the language of the current voice, or fallback to English) |
+| Options | Automatic, English, English (en-GB), Chinese (Traditional) (zh-TW), Finnish, German, Indonesian, Norwegian Bokmål, Spanish, Swedish, Vietnamese |
+| Default | Automatic (the language of the current voice if supported, or fallback to English) |
 
 ###### Speech Style {MathSpeechStyle}
 
