@@ -119,7 +119,7 @@ __getattr__ = _deprecate.handleDeprecations(
 	_deprecate.MovedSymbol("INPUT_KEYBOARD", "winBindings.user32", "INPUT_TYPE", "KEYBOARD"),
 	_deprecate.MovedSymbol("KEYEVENTF_KEYUP", "winBindings.user32", "KEYEVENTF", "KEYUP"),
 	_deprecate.MovedSymbol("KEYEVENTF_UNICODE", "winBindings.user32", "KEYEVENTF", "UNICODE"),
-	_deprecate.MovedSymbol("NMHdrStruct", "winBindings", "user32", "NMHDR"),
+	_deprecate.MovedSymbol("NMHdrStruct", "winBindings.user32", "NMHDR"),
 )
 """Module __getattr__ to handle backward compatibility."""
 
