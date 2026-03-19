@@ -3611,10 +3611,12 @@ Press this button to test the mirror URL you have entered.
 You must be connected to the internet for the test to succeed.
 It is recommended that you always test the URL before saving it.
 
-#### Copy Add-ons to System-wide Configuration Dialog {#CopyAddonsToSystemProfileDialog}
+#### Copy Settings to System-wide Configuration Dialog {#CopyAddonsToSystemProfileDialog}
 
-This dialog allows you to choose which of your [add-ons](#AddonsManager) to [copy to NVDA's system-wide configuration](#GeneralSettingsCopySettings), which is used during sign-in and on [secure screens](#SecureScreens).
-By default, NVDA will not copy any of your add-ons to the system-wide configuration.
+This dialog appears if you choose to [copy your settings to NVDA's system-wide configuration](#GeneralSettingsCopySettings) and your NVDA configuration or the system-wide NVDA configuration contains [add-ons](#AddonsManager).
+It allows you to choose which of your add-ons to copy to the system-wide configuration, which is used during sign-in and on [secure screens](#SecureScreens).
+It also shows which add-ons are already present in the system-wide configuration.
+By default, only add-ons that are already present in the system-wide configuration will be included.
 
 Copying add-ons to the system-wide configuration is a serious security risk.
 NVDA uses this configuration when running on secure screens, including the sign-in and User Account Control (UAC) screens.
@@ -3622,11 +3624,23 @@ When running on secure screens, NVDA runs as the system user, which has privileg
 This means that many of the usual security and privacy features of Windows, like User Account Control (UAC), do not apply.
 Allowing add-ons to run in this environment grants them unrestricted access to your entire system.
 
+The list of add-ons shows the name of all add-ons currently present in the currently running NVDA configuration and/or the system-wide NVDA configuration.
+The version of the add-on installed in the currently running  configuration is shown in the "User version" column.
+The version installed in the system-wide configuration is shown in the "System-wide version" column.
+If the add-on is not present in the currently running or system-wide configuration, "Not installed" is shown in the appropriate column.
+
 To copy one or more add-ons to the system-wide configuration, check them in the list of add-ons.
 You are strongly recommended to leave all add-ons that you do not require to access secure screens unchecked.
 
+To get more information about an add-on, select the add-on in the list of add-ons and press the "About add-on..." button.
+The details shown will be for the version in the currently running configuration, unless the add-on is not installed in the currently running configuration, in which case the details of the version installed in the system-wide configuration will be shown.
+
 Please note that you may only copy currently enabled add-ons to the system-wide configuration.
 Add-ons that are "pending restart" cannot be copied.
+
+Add-ons that are currently installed in the system-wide configuration, but are not present in the running NVDA configuration will be removed.
+These items cannot be checked.
+They also begin with "[remove]" for easy identification.
 
 #### Advanced Settings {#AdvancedSettings}
 
