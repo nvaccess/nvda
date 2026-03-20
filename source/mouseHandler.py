@@ -8,6 +8,7 @@ import time
 import wx
 import gui
 import tones
+import touchpadHandler
 import winUser
 import queueHandler
 import api
@@ -109,6 +110,9 @@ def playAudioCoordinates(x, y, screenWidth, screenHeight, screenMinPos, detectBr
 def internal_mouseEvent(msg, x, y, injected):
 	"""Event called by winInputHook when it receives a mouse event."""
 	global mouseMoved, curMousePos, lastMouseEventTime
+	# FIXME: this causes exception on exit: touchpadHandler.handler is None
+	if touchpadHandler.handler.touchpadTouching:
+		return False
 	lastMouseEventTime = time.time()
 	if injected and (ignoreInjected or config.conf["mouse"]["ignoreInjectedMouseInput"]):
 		return True
