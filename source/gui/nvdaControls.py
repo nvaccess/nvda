@@ -618,7 +618,7 @@ class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedCl
 	def _onDestroy(self, evt: wx.WindowDestroyEvent) -> None:
 		self._unhookWndProc()
 
-	def _WndProc(self, hWnd: int, msg: int, wParam: int, lParam: int) -> bool:
+	def _WndProc(self, hWnd: int, msg: int, wParam: int, lParam: int) -> int:
 		"""Window procedure that blocks state image changes for checkboxless items.
 
 		Intercepts ``LVN_ITEMCHANGING`` notifications and prevents state image transitions
@@ -628,7 +628,7 @@ class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedCl
 		:param msg: The message identifier.
 		:param wParam: Additional message information.
 		:param lParam: Additional message information.
-		:return: ``True`` to block the change, otherwise the result of the original window procedure.
+		:return: A non-zero ``LRESULT`` to block the change, otherwise the result of calling the original window procedure.
 		"""
 		if msg == WM_NOTIFY:
 			hdr = NMHDR.from_address(lParam)
@@ -639,7 +639,7 @@ class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedCl
 					and hdr.uChanged & LVIF.STATE
 					and hdr.uNewState >> 12 != hdr.uOldState >> 12
 				):
-					return True
+					return 1
 		return CallWindowProc(self._oldWndProc, hWnd, msg, wParam, lParam)
 
 	def IsItemChecked(self, item: int) -> bool:
