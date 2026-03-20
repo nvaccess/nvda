@@ -28,7 +28,6 @@ Please understand that we very likely will not accept non-trivial changes that a
 
 A `triaged` label is an indicator that an issue is ready for a fix.
 A triaged issue should have a priority, as a developer, consider focusing on higher priority issues (p1-p3) instead of lower priority issues (p4-p5).
-Consider starting a [GitHub discussion](https://github.com/nvaccess/nvda/discussions) to see if there is interest.
 
 If the issue has an `ADR-required` label, this is a complex change.
 Refer to ["Proposing Major Changes"](./proposingMajorChanges.md) before opening a PR.
