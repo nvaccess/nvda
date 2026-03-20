@@ -907,6 +907,11 @@ def main():
 		touchHandler.initialize()
 	except NotImplementedError:
 		pass
+	import touchpadHandler
+
+	log.debug("Initializing touchpadHandler")
+	touchpadHandler.initialize()
+
 	import globalPluginHandler
 
 	log.debug("Initializing global plugin handler")
@@ -998,6 +1003,7 @@ def main():
 			try:
 				if touchHandler.handler:
 					touchHandler.handler.pump()
+				touchpadHandler.handler.pump()
 				JABHandler.pumpAll()
 				IAccessibleHandler.pumpAll()
 				queueHandler.pumpAll()
@@ -1088,6 +1094,7 @@ def main():
 	_terminate(appModuleHandler, name="app module handler")
 	_terminate(tones)
 	_terminate(touchHandler)
+	_terminate(touchpadHandler)
 	_terminate(keyboardHandler, name="keyboard handler")
 	_terminate(mouseHandler)
 	_terminate(inputCore)
