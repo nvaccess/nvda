@@ -35,6 +35,7 @@ from gui.addonStoreGui.viewModels.addonList import AddonListItemVM
 from gui.contextHelp import ContextHelpMixin
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from gui.guiHelper import (
+	COMPLEX_DIALOG_WIDTH,
 	BoxSizerHelper,
 	BORDER_FOR_DIALOGS,
 	ButtonHelper,
@@ -733,8 +734,7 @@ class _CopyAddonsDialog(
 			self,
 			label="\n\n".join(labelStrings),
 		)
-		# 600 was fairly arbitrarily chosen by a visual user to look acceptable on their machine.
-		label.Wrap(self.scaleSize(600))
+		label.Wrap(self.scaleSize(COMPLEX_DIALOG_WIDTH))
 		sHelper.addItem(label)
 
 		listCtrl = self._addonsList = sHelper.addLabeledControl(
