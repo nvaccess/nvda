@@ -405,9 +405,9 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 			return False
 		_cell = table.cell
 		getCell = (  # noqa: E731
-			lambda thisIndex, otherIndex: _cell(thisIndex, otherIndex)
-			if row
-			else _cell(otherIndex, thisIndex)
+			lambda thisIndex, otherIndex: (
+				_cell(thisIndex, otherIndex) if row else _cell(otherIndex, thisIndex)
+			)
 		)  # noqa: E731
 		thisIndex = rowNumber if row else columnNumber
 		otherIndex = columnNumber if row else rowNumber

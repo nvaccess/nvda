@@ -833,11 +833,13 @@ def _getAddonsToCopy(parent: wx.Window) -> list[str] | None:
 	addonsToCopy: list[str] = []
 	enabledAddons: tuple[Addon] = tuple(
 		getAvailableAddons(
-			filterFunc=lambda addon: getStatus(addon._addonGuiModel, _StatusFilterKey.INSTALLED)
-			in (
-				AvailableAddonStatus.ENABLED,
-				AvailableAddonStatus.RUNNING,
-				AvailableAddonStatus.INCOMPATIBLE_ENABLED,
+			filterFunc=lambda addon: (
+				getStatus(addon._addonGuiModel, _StatusFilterKey.INSTALLED)
+				in (
+					AvailableAddonStatus.ENABLED,
+					AvailableAddonStatus.RUNNING,
+					AvailableAddonStatus.INCOMPATIBLE_ENABLED,
+				)
 			),
 		),
 	)
