@@ -37,7 +37,7 @@ Once triaged and ready please comment on the issue or ADR to confirm you plan to
 
 ### PR submission rules
 
-Avoid having multiple concurrent PRs (e.g. 3+ ongoing).
+Avoid having too many concurrent PRs (e.g. more than 3 ongoing).
 NV Access is a small team and will try to respond to PRs within a couple of days.
 Having multiple ongoing PRs increases the time to merge for each of them.
 
