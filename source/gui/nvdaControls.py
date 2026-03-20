@@ -24,7 +24,7 @@ from config.featureFlag import (
 )
 import gui.message
 from winBindings import user32
-from winBindings.CommCtrl import LVIF, LVIS, LVITEM, LVM, LVN, NMLISTVIEW
+from winBindings.commCtrl import LVIF, LVIS, LVITEM, LVM, LVN, NMLISTVIEW
 from winBindings.user32 import GWLP, NMHDR, WNDPROC, CallWindowProc, SendMessage, SetWindowLongPtr
 from winUser import WM_NOTIFY
 from .dpiScalingHelper import DpiScalingHelperMixin
