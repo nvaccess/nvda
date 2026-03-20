@@ -2697,23 +2697,6 @@ class MathSettingsPanel(SettingsPanel):
 		"The following options control the presentation of mathematical content.",
 	)
 
-	def _getSpeechStyleDisplayString(self, configValue: str) -> str:
-		"""Helper function to get the display string for a speech style config value.
-
-		:param configValue: The config value to find the display string for
-		:return: The display string to show in the UI
-		"""
-		from mathPres.MathCAT.preferences import SpeechStyleOption
-
-		# Check if it's a known enum value by comparing directly
-		knownStyleValues = [style.value for style in SpeechStyleOption]
-		if configValue in knownStyleValues:
-			enumOption = SpeechStyleOption(configValue)
-			return enumOption.displayString
-		else:
-			# Not a known enum, so the config value IS the display string
-			return configValue
-
 	def _getEnumIndexFromConfigValue(
 		self,
 		enumClass: type[DisplayStringEnum],
@@ -2773,10 +2756,10 @@ class MathSettingsPanel(SettingsPanel):
 			CopyAsOption,
 			DecimalSeparatorOption,
 			ImpairmentOption,
+			MathCATUserPreferences,
 			NavModeOption,
 			NavVerbosityOption,
 			VerbosityOption,
-			getSpeechStyleChoicesWithTranslations,
 		)
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -2803,14 +2786,19 @@ class MathSettingsPanel(SettingsPanel):
 
 		# Translators: MathCAT language option
 		languageText = pgettext("math", "Language:")
-		self.languageOptions, self.languageCodes = localization.getLanguages()
+		self.languageOptions = localization.getLanguages()
 		self.languageList = speechGroup.addLabeledControl(
 			languageText,
 			wx.Choice,
-			choices=self.languageOptions,
+			choices=[lang.description for lang in self.languageOptions],
 		)
 		self.bindHelpEvent("MathSpeechLanguage", self.languageList)
-		languageIndex = self.languageCodes.index(config.conf["math"]["speech"]["language"])
+		self.languageList.Bind(wx.EVT_CHOICE, self.onLanguageChange)
+		mathLang = config.conf["math"]["speech"]["language"]
+		try:
+			languageIndex = next(filter(lambda idxLang: idxLang[1].code == mathLang, self.languageOptions))[0]
+		except StopIteration:
+			languageIndex = 0  # auto
 		self.languageList.SetSelection(languageIndex)
 
 		# Translators: MathCAT decimal separator option.
@@ -2830,19 +2818,17 @@ class MathSettingsPanel(SettingsPanel):
 
 		# Translators: Select a speech style.
 		speechStyleText = pgettext("math", "Speech style:")
-		self.speechStyleOptions = getSpeechStyleChoicesWithTranslations(
-			config.conf["math"]["speech"]["language"],
-		)
 		self.speechStyleList = speechGroup.addLabeledControl(
 			speechStyleText,
 			wx.Choice,
-			choices=self.speechStyleOptions,
+			choices=localization.getSpeechStyles(mathLang),
 		)
 		self.bindHelpEvent("MathSpeechStyle", self.speechStyleList)
-		speechStyleDisplayString = self._getSpeechStyleDisplayString(
-			config.conf["math"]["speech"]["speechStyle"],
-		)
-		self.speechStyleList.SetStringSelection(speechStyleDisplayString)
+		speechStyle = MathCATUserPreferences.getConfigForSpeechStyle(mathLang)
+		if speechStyle:
+			self.speechStyleList.SetStringSelection(speechStyle)
+		else:
+			self.speechStyleList.SetSelection(0)
 
 		# Translators: MathCAT's verbosity setting
 		speechAmountText = pgettext("math", "Speech verbosity:")
@@ -3051,7 +3037,6 @@ class MathSettingsPanel(SettingsPanel):
 			NavVerbosityOption,
 			PauseFactor,
 			VerbosityOption,
-			getSpeechStyleConfigValue,
 		)
 
 		mathConf = config.conf["math"]
@@ -3059,14 +3044,15 @@ class MathSettingsPanel(SettingsPanel):
 			ImpairmentOption,
 			self.impairmentList.GetSelection(),
 		)
-		mathConf["speech"]["language"] = self.languageCodes[self.languageList.GetSelection()]
+		mathLang = mathConf["speech"]["language"] = self.languageOptions[
+			self.languageList.GetSelection()
+		].code
 		mathConf["other"]["decimalSeparator"] = self._getEnumValueFromSelection(
 			DecimalSeparatorOption,
 			self.decimalSeparatorList.GetSelection(),
 		)
-		mathConf["speech"]["speechStyle"] = getSpeechStyleConfigValue(
-			self.speechStyleList.GetStringSelection(),
-		)
+		# Ensure the per-language speech configuration exists before setting the speech style.
+		MathCATUserPreferences.updateConfigForSpeechStyle(mathLang, self.speechStyleList.GetStringSelection())
 		mathConf["speech"]["verbosity"] = self._getEnumValueFromSelection(
 			VerbosityOption,
 			self.speechAmountList.GetSelection(),
@@ -3119,6 +3105,22 @@ class MathSettingsPanel(SettingsPanel):
 		mathConf["other"]["useWordNativeMath"] = self.useWordNativeMathCheckBox.GetValue()
 		mcPrefs = MathCATUserPreferences.fromNVDAConfig()
 		mcPrefs.apply()
+
+	def onLanguageChange(self, event: wx.CommandEvent) -> None:
+		from mathPres.MathCAT import localization
+
+		selectedLanguage = self.languageOptions[self.languageList.GetSelection()]
+		speechStyles = localization.getSpeechStyles(selectedLanguage.code)
+		self.speechStyleList.SetItems(speechStyles)
+		mathLang = config.conf["math"]["speech"]["language"]
+		if selectedLanguage.code == mathLang:
+			currentSpeechStyle = config.conf["math"]["speech"].get(mathLang, {}).get("speechStyle", "")
+			if currentSpeechStyle in speechStyles:
+				self.speechStyleList.SetStringSelection(currentSpeechStyle)
+			else:
+				self.speechStyleList.SetSelection(0)
+		else:
+			self.speechStyleList.SetSelection(0)
 
 
 class DocumentFormattingPanel(SettingsPanel):

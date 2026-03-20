@@ -1188,7 +1188,7 @@ However, for scenarios where you wish to copy an entire table or paragraph of ri
 ## Reading Mathematical Content {#ReadingMath}
 
 NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille.
-NVDA uses [MathCAT](https://nsoiffer.github.io/MathCAT/) for reading mathematical content.
+NVDA uses [MathCAT](https://daisy.github.io/MathCAT/) for reading mathematical content.
 
 ### Supported math content {#SupportedMathContent}
 
@@ -3462,20 +3462,22 @@ If speech rules for the main language cannot be found, English ("en") is used.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | Any known language code and sub-code, e.g. "en-uk". |
-| Default | en |
+| Options | Automatic, English, English (en-GB), Chinese (Traditional) (zh-TW), Finnish, German, Indonesian, Norwegian Bokmål, Spanish, Swedish, Vietnamese |
+| Default | Automatic (the language of the current voice if supported, or fallback to English) |
 
 ###### Speech Style {MathSpeechStyle}
 
-Different styles can be used to speak mathematical content:
+Different styles can be used to speak mathematical content.
+Each [math speech language](#MathSpeechLanguage) has different speech styles available.
+
+For English and most languages, the following styles are available:
 
 * ClearSpeak was developed by the Educational Testing Service for use on university-admission and other high-stakes tests in the United States.
-Refer to the [ClearSpeak specification details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
+Refer to the [ClearSpeak specification details in this Word document](https://daisy.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
 * SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").
 These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
 * LiteralSpeak tells MathCAT to speak math expressions almost exactly as written, without interpreting the symbols or meaning.
 It prioritizes literal reading (character-by-character or symbol-by-symbol), rather than mathematical meaning.
-* Other speech styles may exist designed for individual languages.
 
 Examples of each type of speech:
 
@@ -3486,8 +3488,8 @@ Examples of each type of speech:
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | ClearSpeak, SimpleSpeak, LiteralSpeak, and more options depending on your language |
-| Default | ClearSpeak |
+| Options | ClearSpeak, SimpleSpeak, LiteralSpeak, or other options depending on your language |
+| Default | Depends on the language |
 
 ###### Speech verbosity {#MathSpeechVerbosity}
 

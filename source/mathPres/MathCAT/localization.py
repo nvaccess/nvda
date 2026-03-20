@@ -1,199 +1,26 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2025 NV Access Limited, Neil Soiffer, Ryan McCleary
+# Copyright (C) 2022-2026 NV Access Limited, Neil Soiffer, Ryan McCleary
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
+from collections.abc import Callable
+from dataclasses import dataclass
 import glob
 import os
 import re
 from zipfile import ZipFile
 
+import libmathcat_py as libmathcat
 import wx
+
 from languageHandler import getLanguageDescription
 from logHandler import log
-from speech import getCurrentLanguage
 from NVDAState import ReadPaths
+from speech import getCurrentLanguage
+from speechXml import toXmlLang
 
-import libmathcat_py as libmathcat
 from . import rulesUtils
 
-
-supportedLanguages = frozenset(
-	[
-		"aa",
-		"ab",
-		"af",
-		"ak",
-		"an",
-		"ar",
-		"as",
-		"av",
-		"ay",
-		"az",
-		"ba",
-		"be",
-		"bg",
-		"bh",
-		"bi",
-		"bm",
-		"bn",
-		"bo",
-		"bs",
-		"ca",
-		"ce",
-		"ch",
-		"co",
-		"cr",
-		"cs",
-		"cu",
-		"cv",
-		"cy",
-		"da",
-		"de",
-		"dv",
-		"dz",
-		"ee",
-		"el",
-		"en",
-		"en-GB",
-		"en-US",
-		"eo",
-		"es",
-		"fa",
-		"fi",
-		"fj",
-		"fo",
-		"fr",
-		"fy",
-		"ga",
-		"gd",
-		"gl",
-		"gn",
-		"gu",
-		"gv",
-		"ha",
-		"he",
-		"hi",
-		"ho",
-		"hr",
-		"ht",
-		"hu",
-		"hy",
-		"hz",
-		"ia",
-		"id",
-		"ig",
-		"ii",
-		"ik",
-		"io",
-		"is",
-		"it",
-		"iu",
-		"ja",
-		"jv",
-		"ka",
-		"kg",
-		"ki",
-		"kj",
-		"kk",
-		"km",
-		"kn",
-		"ko",
-		"ks",
-		"ku",
-		"kv",
-		"kw",
-		"ky",
-		"la",
-		"lb",
-		"lg",
-		"li",
-		"ln",
-		"lo",
-		"lt",
-		"lv",
-		"mg",
-		"mh",
-		"mk",
-		"ml",
-		"mn",
-		"mo",
-		"ms",
-		"mt",
-		"my",
-		"na",
-		"ne",
-		"ng",
-		"nl",
-		"nn",
-		"nr",
-		"nv",
-		"ny",
-		"oc",
-		"oj",
-		"om",
-		"os",
-		"pa",
-		"pi",
-		"pl",
-		"ps",
-		"pt",
-		"qu",
-		"rm",
-		"ro",
-		"ru",
-		"rw",
-		"sa",
-		"sc",
-		"sd",
-		"se",
-		"sg",
-		"sh",
-		"si",
-		"sk",
-		"sl",
-		"sm",
-		"sn",
-		"so",
-		"sq",
-		"sr",
-		"ss",
-		"st",
-		"su",
-		"sv",
-		"sw",
-		"ta",
-		"tg",
-		"th",
-		"ti",
-		"tk",
-		"tl",
-		"to",
-		"tr",
-		"ts",
-		"tt",
-		"tw",
-		"ty",
-		"ug",
-		"uk",
-		"ur",
-		"uz",
-		"ve",
-		"vi",
-		"vo",
-		"wa",
-		"wo",
-		"xh",
-		"yi",
-		"yo",
-		"za",
-		"zh",
-		"zh-HANS",
-		"zh-HANT",
-		"zh-TW",
-		"zu",
-	],
-)
 
 RE_MATH_LANG: re.Pattern = re.compile(r"""<math .*(xml:)?lang=["']([^'"]+)["'].*>""")
 
@@ -218,7 +45,7 @@ def getLanguageToUse(mathMl: str = "") -> str:
 	language: str = (
 		languageMatch.group(2) if languageMatch else getCurrentLanguage()
 	)  # seems to be current voice's language
-	language = language.lower().replace("_", "-")
+	language = toXmlLang(language.lower())
 	if language == "cmn":
 		language = "zh-cmn"
 	elif language == "yue":
@@ -242,23 +69,26 @@ def pathToLanguagesFolder() -> str:
 	)
 
 
-def getLanguages() -> tuple[list[str], list[str]]:
-	"""Populate the language choice dropdown with available languages and their regional variants.
+@dataclass
+class LanguageInfo:
+	"""Data class to hold information about a language, including its code and description."""
 
-	This method scans the language folders and adds entries for each language and its
-	regional dialects. Language folders use ISO 639-1 codes and regional variants use ISO 3166-1 alpha-2 codes.
+	code: str
+	"""Language code in the form 'en-uk' or 'en'"""
 
-	It also adds a special "Automatic (Use Voice's Language)" option at the beginning.
+	description: str
+	"""Translated description. Falls back to the first part of the language code"""
 
-	:return: A pair of lists with the first list containing the contents of the
-	language selection combo box, and the second list containing the corresponding
-	language code for each menu item.
-	"""
 
-	languageOptions: list[str] = []
-	languageCodes: list[str] = []
-
+def _createAddRegionalLanguagesFunction(languages: list[LanguageInfo]) -> Callable[[str, str], list[str]]:
 	def addRegionalLanguages(subDir: str, language: str) -> list[str]:
+		"""Add regional language variants and append them to the captured languages list.
+
+		The closed-over ``languages`` list is modified in place.
+		:param subDir: The subdirectory representing the regional variant.
+		:param language: The base language code.
+		:return: A list of rule files for the regional variant.
+		"""
 		# the language variants are in folders named using ISO 3166-1 alpha-2
 		# codes https://en.wikipedia.org/wiki/ISO_3166-2
 		# check if there are language variants in the language folder
@@ -266,34 +96,78 @@ def getLanguages() -> tuple[list[str], list[str]]:
 			# add to the list the text for this language variant together with the code
 			regionalCode: str = language + "-" + subDir.upper()
 			langDesc = getLanguageDescription(regionalCode)
+			# Translators: {lang} is the name of the language in that language,
+			# and {code} is the code for that language variant,
+			# e.g. "en-UK" for English (United Kingdom).
+			optionString = pgettext("math", "{lang} ({code})")
 			if langDesc is not None:
-				languageOptions.append(f"{langDesc} ({regionalCode})")
+				languages.append(
+					LanguageInfo(
+						code=regionalCode,
+						description=optionString.format(lang=langDesc, code=regionalCode),
+					),
+				)
 			else:
-				languageOptions.append(f"{language} ({regionalCode})")
-			languageCodes.append(regionalCode)
+				log.error(
+					f"MathCAT: couldn't find description for language code {regionalCode}, using {language} as description",
+				)
+				languages.append(
+					LanguageInfo(
+						code=regionalCode,
+						description=optionString.format(lang=language, code=regionalCode),
+					),
+				)
 			return [os.path.basename(file) for file in glob.glob(os.path.join(subDir, "*_Rules.yaml"))]
 		return []
 
-	# Translators: menu item -- use the language of the voice chosen in the NVDA speech settings dialog
-	# "Auto" == "Automatic" -- other items in menu are "English (en)", etc., so this matches that style
-	languageOptions.append(pgettext("math", "Automatic (Use Voice's Language)"))
-	languageCodes.append("Auto")
+	return addRegionalLanguages
+
+
+def getLanguages() -> list[LanguageInfo]:
+	"""Populate the language choice dropdown with available languages and their regional variants.
+
+	This method scans the language folders and adds entries for each language and its
+	regional dialects. Language folders use ISO 639-1 codes and regional variants use ISO 3166-1 alpha-2 codes.
+
+	It also adds a special "Automatic ({language})" option at the beginning, using the current voice's language.
+
+	:return: A list of LanguageInfo objects representing the available languages.
+	"""
+
+	languages: list[LanguageInfo] = []
+	addRegionalLanguages = _createAddRegionalLanguagesFunction(languages)
+
+	languages.append(
+		LanguageInfo(
+			code="Auto",
+			# Translators: Math language settings menu item: Automatic uses the voice's language.
+			description=pgettext("math", "Automatic"),
+		),
+	)
+
 	# populate the available language names in the dialog
 	# the implemented languages are in folders named using the relevant ISO 639-1
-	#   code https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+	# code https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 	languageDir: str = pathToLanguagesFolder()
 	for language in os.listdir(languageDir):
 		pathToLanguageDir: str = os.path.join(pathToLanguagesFolder(), language)
 		if os.path.isdir(pathToLanguageDir):
 			# only add this language if there is a xxx_Rules.yaml file
 			if len(rulesUtils.getRulesFiles(pathToLanguageDir, addRegionalLanguages)) > 0:
-				# add to the listbox the text for this language together with the code
-				if language in supportedLanguages:
-					languageOptions.append(getLanguageDescription(language) + " (" + language + ")")
+				# add to the listbox the text for this language
+				languageDesc = getLanguageDescription(language)
+				if languageDesc is not None:
+					languages.append(
+						LanguageInfo(code=language, description=languageDesc),
+					)
 				else:
-					languageOptions.append(language + " (" + language + ")")
-				languageCodes.append(language)
-	return languageOptions, languageCodes
+					log.error(
+						f"MathCAT: couldn't find description for language code {language}, using code as description",
+					)
+					languages.append(
+						LanguageInfo(code=language, description=language),
+					)
+	return languages
 
 
 def getLanguageCode(langChoice: wx.Choice) -> str:
@@ -311,6 +185,40 @@ def getLanguageCode(langChoice: wx.Choice) -> str:
 	return langCode
 
 
+def getSpeechStyleFromDirectory(dir: str, lang: str) -> list[str]:
+	r"""Get the speech styles from any regional dialog, from the main language, dir and if there isn't from the zip file.
+	The 'lang', if it has a region dialect, is of the form 'en\uk'
+	The returned list is sorted alphabetically
+
+	:param dir: The directory path to search for speech styles.
+	:param lang: Language code which may include a regional dialect (e.g., 'en\uk').
+	:return: A list of speech styles sorted alphabetically.
+	"""
+	# start with the regional dialect, then add on any (unique) styles in the main dir
+	mainLang: str = lang.split("\\")[0]  # does the right thing even if there is no regional directory
+	allStyleFiles: list[str] = []
+	if lang.find("\\") >= 0:
+		allStyleFiles: list[str] = [
+			os.path.basename(name) for name in glob.glob(dir + lang + "\\*_Rules.yaml")
+		]
+	allStyleFiles.extend(
+		[os.path.basename(name) for name in glob.glob(dir + mainLang + "\\*_Rules.yaml")],
+	)
+	allStyleFiles = list(set(allStyleFiles))  # make them unique
+	if len(allStyleFiles) == 0:
+		# look in the .zip file for the style files -- this will have regional variants, but also have that dir
+		zipFilePath: str = os.path.join(dir, mainLang, f"{mainLang}.zip")
+		try:
+			with ZipFile(zipFilePath, "r") as zipFile:
+				allStyleFiles = [
+					name.split("/")[-1] for name in zipFile.namelist() if name.endswith("_Rules.yaml")
+				]
+		except Exception as e:
+			log.debugWarning(f"MathCAT: didn't find zip file {zipFilePath}. Error: {e}")
+	allStyleFiles.sort()
+	return allStyleFiles
+
+
 def getSpeechStyles(languageCode: str) -> list[str]:
 	"""Get all the speech styles for the current language.
 	This sets the SpeechStyles dialog entry.
@@ -319,45 +227,11 @@ def getSpeechStyles(languageCode: str) -> list[str]:
 
 	:return: A list of speech styles for the given language.
 	"""
-	from speech import getCurrentLanguage
-
-	def getSpeechStyleFromDirectory(dir: str, lang: str) -> list[str]:
-		r"""Get the speech styles from any regional dialog, from the main language, dir and if there isn't from the zip file.
-		The 'lang', if it has a region dialect, is of the form 'en\uk'
-		The returned list is sorted alphabetically
-
-		:param dir: The directory path to search for speech styles.
-		:param lang: Language code which may include a regional dialect (e.g., 'en\uk').
-		:return: A list of speech styles sorted alphabetically.
-		"""
-		# start with the regional dialect, then add on any (unique) styles in the main dir
-		mainLang: str = lang.split("\\")[0]  # does the right thing even if there is no regional directory
-		allStyleFiles: list[str] = []
-		if lang.find("\\") >= 0:
-			allStyleFiles: list[str] = [
-				os.path.basename(name) for name in glob.glob(dir + lang + "\\*_Rules.yaml")
-			]
-		allStyleFiles.extend(
-			[os.path.basename(name) for name in glob.glob(dir + mainLang + "\\*_Rules.yaml")],
-		)
-		allStyleFiles = list(set(allStyleFiles))  # make them unique
-		if len(allStyleFiles) == 0:
-			# look in the .zip file for the style files -- this will have regional variants, but also have that dir
-			zipFilePath: str = os.path.join(dir, mainLang, f"{mainLang}.zip")
-			try:
-				with ZipFile(zipFilePath, "r") as zipFile:
-					allStyleFiles = [
-						name.split("/")[-1] for name in zipFile.namelist() if name.endswith("_Rules.yaml")
-					]
-			except Exception as e:
-				log.debugWarning(f"MathCAT: didn't find zip file {zipFilePath}. Error: {e}")
-		allStyleFiles.sort()
-		return allStyleFiles
 
 	resultSpeechStyles = []
 	if languageCode == "Auto":
 		# list the speech styles for the current voice rather than have none listed
-		languageCode = getCurrentLanguage().lower().replace("_", "-")
+		languageCode = toXmlLang(getCurrentLanguage().lower())
 	languageCode = languageCode.replace("-", "\\")
 
 	languagePath = pathToLanguagesFolder() + "\\"
