@@ -5,7 +5,6 @@
 
 from itertools import chain, filterfalse
 import os.path
-import sys
 import threading
 from time import sleep
 from typing import (
@@ -805,7 +804,9 @@ class _CopyAddonsDialog(
 				),
 			)
 			if userManifest is None:
-				self._addonsList.removeCheckbox(index)
+				log.debug(index)
+				log.debug(self._addonsList.removeCheckbox(index))
+				log.debug(self._addonsList.removeCheckbox(index))
 			elif systemManifest is not None:
 				self._addonsList.CheckItem(index)
 		activeIndex = 0
@@ -931,7 +932,8 @@ def _getAddonsToCopy(parent: wx.Window) -> list[str] | None:
 			),
 		)
 	}
-	systemAddonsDir = os.path.join(sys.prefix, "systemConfig", "addons")
+	systemAddonsDir = os.path.join("c:\\", "program files", "nvda", "systemConfig", "addons")
+	# systemAddonsDir = os.path.join(sys.prefix, "systemConfig", "addons")
 	try:
 		systemManifests = {
 			manifest["name"].casefold(): manifest for manifest in _getAddonManifestsFromPath(systemAddonsDir)

@@ -654,27 +654,30 @@ class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedCl
 			return False
 		return super().IsItemChecked(item)
 
-	def removeCheckbox(self, itemIndex: int):
+	def removeCheckbox(self, itemIndex: int) -> bool:
 		"""Remove the checkbox from the item at the given index.
 
 		The item's state image is cleared and future check-state changes are blocked.
 		If the checkbox has already been removed, this is a no-op.
 
 		:param itemIndex: The zero-based index of the item.
+		:returns: ``True`` if the checkbox was removed, ``False`` otherwise.
 		:raises IndexError: If ``itemIndex`` is out of range.
 		"""
 		if itemIndex not in range(self.GetItemCount()):
 			raise IndexError("Item index out of range")
 		if itemIndex in self._checkboxlessIndices:
-			return
+			return False
 		lvi = LVITEM(
 			stateMask=LVIS.STATEIMAGEMASK,
 			state=0,
 		)
-		SendMessage(
+		res = SendMessage(
 			self.GetHandle(),
 			LVM.SETITEMSTATE,
 			itemIndex,
 			addressof(lvi),
 		)
-		self._checkboxlessIndices.add(itemIndex)
+		if res:
+			self._checkboxlessIndices.add(itemIndex)
+		return bool(res)

@@ -29,6 +29,7 @@ from configobj import ConfigObj
 from configobj.validate import Validator
 import config
 from config.registry import ADDON_BUNDLE_EXTENSION
+from fileUtils import isDirEmpty
 import languageHandler
 from logHandler import log
 from utils.security import isRunningOnSecureDesktop
@@ -1262,7 +1263,7 @@ def _getAddonManifestsFromPath(path: os.PathLike) -> Generator[AddonManifest, No
 				not entry.is_dir(follow_symlinks=False)
 				or entry.name.endswith(DELETEDIR_SUFFIX)
 				or entry.name.endswith(ADDON_PENDINGINSTALL_SUFFIX)
-				or not any(os.scandir(entry.path))
+				or isDirEmpty(entry.path)
 			):
 				log.debug(f"Skipping {entry.path}")
 				continue
