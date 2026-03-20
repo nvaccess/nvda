@@ -932,9 +932,13 @@ def _getAddonsToCopy(parent: wx.Window) -> list[str] | None:
 		)
 	}
 	systemAddonsDir = os.path.join(sys.prefix, "systemConfig", "addons")
-	systemManifests = {
-		manifest["name"].casefold(): manifest for manifest in _getAddonManifestsFromPath(systemAddonsDir)
-	}
+	try:
+		systemManifests = {
+			manifest["name"].casefold(): manifest for manifest in _getAddonManifestsFromPath(systemAddonsDir)
+		}
+	except OSError:
+		log.debug("Unable to get system add-ons.", exc_info=True)
+		systemManifests = {}
 	if len(enabledAddons) == len(systemManifests) == 0:
 		return addonsToCopy
 	if _CopyAddonsDialog(parent, enabledAddons, systemManifests, addonsToCopy).ShowModal() != wx.ID_OK:
