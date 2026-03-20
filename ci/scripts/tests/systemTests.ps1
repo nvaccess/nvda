@@ -51,14 +51,14 @@ $testFailed = $true
 
 while ($attempt -le $maxAttempts -and $testFailed) {
 	Write-Output "System test attempt $attempt of $maxAttempts"
-	
+
 	.\runsystemtests.bat `
 	--variable whichNVDA:installed `
 	--variable installDir:"${nvdaLauncherFile}" `
 	--variable verboseDebugLogging:"${verboseDebugLogging}" `
 	@includeTags `
 	# last line intentionally blank, allowing all lines to have line continuations.
-	
+
 	if ($LastExitCode -eq 0) {
 		Write-Output "System tests passed on attempt $attempt"
 		$testFailed = $false
