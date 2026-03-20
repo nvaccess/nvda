@@ -3625,7 +3625,7 @@ This means that many of the usual security and privacy features of Windows, like
 Allowing add-ons to run in this environment grants them unrestricted access to your entire system.
 
 The list of add-ons shows all add-ons enabled in the currently running NVDA configuration and/or present in the system-wide NVDA configuration.
-The version of the add-on installed in the currently running  configuration is shown in the "User version" column.
+The version of the add-on installed in the currently running configuration is shown in the "User version" column.
 The version installed in the system-wide configuration is shown in the "System-wide version" column.
 If the add-on is not present in the currently running or system-wide configuration, "Not installed" is shown in the appropriate column.
 
