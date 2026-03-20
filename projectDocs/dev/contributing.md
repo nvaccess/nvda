@@ -48,7 +48,7 @@ PRs which have not been reviewed and tested by the author will be closed.
 
 Unrelated changes should be addressed in separate issues and PRs.
 
-Avoid PRs over 500 lines of code (LOC).
+Avoid PRs where over 500 lines of code (LOC) is added.
 PRs over 500 LOC may be rejected at the reviewers' discretion.
 
 500-1000 line PRs can typically be broken into smaller changes such as automated tests, refactors, data-structures and core changes.
