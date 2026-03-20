@@ -6164,6 +6164,23 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=[level.displayString for level in LoggingLevel],
 		)
+		# Translators: Warning shown when selecting logging levels that may expose sensitive information.
+		self._logLevelWarningText = generalGroup.addItem(
+			wx.StaticText(
+				generalBox,
+				label=_(
+					"Warning: Selecting \"Debug warning\", \"Input/output\", or \"Debug\" logging levels "
+					"may record sensitive information such as typed text, system information, or application data. "
+					"Only enable these levels if you understand the risks."
+				),
+			),
+		)
+
+		# Hide by default
+		self._logLevelWarningText.Hide()
+
+		# Bind change event
+		self._logLevelCombo.Bind(wx.EVT_CHOICE, self._onLogLevelChanged)
 		self.bindHelpEvent("GeneralSettingsLogLevel", self._logLevelCombo)
 		if logHandler.isLogLevelForced():
 			self._logLevelCombo.Disable()
@@ -6189,7 +6206,19 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		if not updateCheck:
 			self._allowUsageStatsCheckBox.Value = False
 			self._allowUsageStatsCheckBox.Disable()
+	def _onLogLevelChanged(self, evt):
+		selectedLevel = list(LoggingLevel)[self._logLevelCombo.GetSelection()]
 
+		if selectedLevel in (
+			LoggingLevel.DEBUGWARNING,
+			LoggingLevel.IO,
+			LoggingLevel.DEBUG,
+		):
+			self._logLevelWarningText.Show()
+		else:
+			self._logLevelWarningText.Hide()
+
+		self.Layout()
 	def onDiscard(self):
 		# Restore screen curtain state and setting to the most recently saved baseline,
 		# in case the user enabled or disabled it without saving.
@@ -6331,6 +6360,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		# Ensure that after the settings dialog is created the name is set correctly
 		super(NVDASettingsDialog, self).makeSettings(settingsSizer)
 		self._doOnCategoryChange()
+		self._onLogLevelChanged(None)
 		global NvdaSettingsDialogWindowHandle
 		NvdaSettingsDialogWindowHandle = self.GetHandle()
 
