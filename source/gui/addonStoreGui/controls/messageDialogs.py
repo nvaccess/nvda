@@ -832,7 +832,7 @@ class _CopyAddonsDialog(
 		manifest = manifestPair[0] or manifestPair[1]
 		# _showAddonInfo takes an _AddonGUIModel, but all we have is an AddonTemplate.
 		# The most direct way to create an _AddonGUIModel from an AddonTemplate is to use _createGUIModelFromManifest, but it takes an AddonBase.
-		# Since we want to avoide the side effects of Addon, and this isn't an AddonBundle, dynamically create an AddonBase subclass that wraps this manifest.
+		# Since we want to avoid the side effects of Addon, and this isn't an AddonBundle, dynamically create an AddonBase subclass that wraps this manifest.
 		addon = type("TempAddon", (AddonBase,), dict(manifest=manifest))()
 		_showAddonInfo(addon._addonGuiModel)
 
