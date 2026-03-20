@@ -7,7 +7,8 @@
 from __future__ import annotations  # Avoids quoting of forward references
 
 from abc import abstractmethod, ABC
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
+import json
 import sys
 import os.path
 import gettext
@@ -16,9 +17,10 @@ import itertools
 import collections
 import shutil
 from io import StringIO
-import pickle
 from typing import (
 	IO,
+	Any,
+	Final,
 	Literal,
 	TYPE_CHECKING,
 )
@@ -29,6 +31,7 @@ import config
 from config.registry import ADDON_BUNDLE_EXTENSION
 import languageHandler
 from logHandler import log
+from utils.security import isRunningOnSecureDesktop
 import winBindings.kernel32
 import addonAPIVersion
 import importlib
@@ -69,13 +72,32 @@ __getattr__ = handleDeprecations(
 		"NVDA_ADDON_PROG_ID",
 		"config.registry",
 	),
+	MovedSymbol(
+		"stateFilename",
+		"addonHandler",
+		"STATE_FILENAME",
+	),
 )
 
-MANIFEST_FILENAME = "manifest.ini"
-stateFilename = "addonsState.pickle"
-BUNDLE_MIMETYPE = "application/x-nvda-addon"
-ADDON_PENDINGINSTALL_SUFFIX = ".pendingInstall"
-DELETEDIR_SUFFIX = ".delete"
+MANIFEST_FILENAME: Final[str] = "manifest.ini"
+STATE_FILENAME: Final[str] = "addonsState.json"
+_OLD_STATE_FILENAME: Final[str] = "addonsState.pickle"
+# Decoding JSON can potentially consume a large amount of memory.
+# To avoid issues caused by this when reading add-on state,
+# limit the maximum size of the file.
+# The 2026.1 state JSON with no add-ons is 244 bytes.
+# As of 2026-02-24, there are 364 add-ons in the Add-on Store,
+# and the longest ID is 40 UTF-8 bytes (mean ~= median ~= 13 bytes).
+# Even if we take the empty state to be 300 bytes,
+# and assume that all add-on IDs are 100 characters long,
+# And those 100 characters are all 4 bytes wide,
+# and factor in the 4 extra bytes required for the enclosing quotes and ", " separator between IDs,
+# 1MiB is still enough space for a state file containing
+# (1024 * 1024) / (4 + 4 * 100) ~= 2594 add-ons.
+_MAX_STATE_FILESIZE_BYTES = 1024 * 1024  # 1MiB
+BUNDLE_MIMETYPE: Final[str] = "application/x-nvda-addon"
+ADDON_PENDINGINSTALL_SUFFIX: Final[str] = ".pendingInstall"
+DELETEDIR_SUFFIX: Final[str] = ".delete"
 
 
 # Allows add-ons to process additional command line arguments when NVDA starts.
@@ -100,6 +122,10 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 	Therefore add-on IDs should be treated as case insensitive.
 	"""
 
+	def __init__(self, *args, **kwargs) -> None:
+		super().__init__(*args, **kwargs)
+		self.setDefaultStateValues()
+
 	@staticmethod
 	def _generateDefaultStateContent() -> AddonStateDictT:
 		return {category: CaseInsensitiveSet() for category in AddonStateCategory}
@@ -120,30 +146,41 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		# where the BACK_COMPAT_TO API version was 2023.1.0.
 		self.manualOverridesAPIVersion = MajorMinorPatch(2023, 1, 0)
 
+	def fromDict(
+		self,
+		stateDict: dict[str, Any],
+	) -> None:
+		if "backCompatToAPIVersion" in stateDict:
+			try:
+				self.manualOverridesAPIVersion = MajorMinorPatch(
+					*(int(num) for num in stateDict["backCompatToAPIVersion"]),
+				)
+			except Exception:
+				log.error("Unable to deserialise backward compatibility version.", exc_info=True)
+		for category in AddonStateCategory:
+			# Make the list of strings unique and case insensitive.
+			self[AddonStateCategory(category)] = CaseInsensitiveSet(stateDict.get(category, []))
+
 	def fromPickledDict(
 		self,
 		pickledState: dict[str, set[str] | addonAPIVersion.AddonApiVersionT | MajorMinorPatch],
 	) -> None:
-		# Load from pickledState
-		if "backCompatToAPIVersion" in pickledState:
-			self.manualOverridesAPIVersion = MajorMinorPatch(*pickledState["backCompatToAPIVersion"])
-		for category in AddonStateCategory:
-			# Make pickles case insensitive
-			self[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState.get(category, set()))
+		log.warning(
+			"addonHandler.AddonsState.fromPickledDict is deprecated. Use addonHandler.AddonsState.fromDict instead.",
+		)
+		return self.fromDict(pickledState)
 
-	def toDict(self) -> dict[str, set[str] | addonAPIVersion.AddonApiVersionT]:
-		# We cannot pickle instance of `AddonsState` directly
-		# since older versions of NVDA aren't aware about this class and they're expecting
-		# the state to be using inbuilt data types only.
-		picklableState: dict[str, set[str] | addonAPIVersion.AddonApiVersionT] = dict()
-		for category in self.data:
-			picklableState[category.value] = set(self.data[category])
-		picklableState["backCompatToAPIVersion"] = tuple(self.manualOverridesAPIVersion)
-		return picklableState
+	def toDict(self) -> dict[str, list[str] | addonAPIVersion.AddonApiVersionT]:
+		"""Convert state to a dict that can be dumped to JSON."""
+		serializeableState: dict[str, list[str] | addonAPIVersion.AddonApiVersionT] = dict()
+		for category, addonIds in self.data.items():
+			serializeableState[category.value] = list(addonIds)
+		serializeableState["backCompatToAPIVersion"] = tuple(self.manualOverridesAPIVersion)
+		return serializeableState
 
 	def load(self) -> None:
 		"""Populates state with the default content and then loads values from the config."""
-		self._load(self.statePath)
+		self._loadWithFallback()
 		if self.manualOverridesAPIVersion != addonAPIVersion.BACK_COMPAT_TO:
 			log.debug(
 				"BACK_COMPAT_TO API version for manual compatibility overrides has changed. "
@@ -169,21 +206,51 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 
 		:param statePath: Path from which to load the addons state file.
 		"""
-		self.setDefaultStateValues()
 		try:
-			# #9038: Python 3 requires binary format when working with pickles.
-			with open(statePath, "rb") as f:
-				pickledState: dict[str, set[str] | addonAPIVersion.AddonApiVersionT] = pickle.load(f)
+			with open(statePath, "rt", encoding="utf-8") as file:
+				if (size := os.stat(file.fileno()).st_size) > _MAX_STATE_FILESIZE_BYTES:
+					log.error(f"Add-ons state file too large. {size=}B; {_MAX_STATE_FILESIZE_BYTES=}B")
+					return
+				stateDict = json.load(file)
 		except FileNotFoundError:
 			pass  # Clean config - no point logging in this case
-		except IOError:
-			log.debug("Error when reading state file", exc_info=True)
-		except pickle.UnpicklingError:
-			log.debugWarning("Failed to unpickle state", exc_info=True)
+		except OSError:
+			log.error("Error when reading state file", exc_info=True)
+		except json.JSONDecodeError:
+			log.error("Failed to deserialize add-ons state", exc_info=True)
 		except Exception:
 			log.exception()
 		else:
-			self.fromPickledDict(pickledState)
+			if not isinstance(stateDict, Mapping):
+				log.error(
+					f"Expected parsed state dictionary to be a mapping type; got {type(stateDict)} instead.",
+				)
+				return
+			self.fromDict(stateDict)
+
+	def _loadWithFallback(self) -> None:
+		if os.path.isfile(self.statePath):
+			self._load(self.statePath)
+		else:
+			if not isRunningOnSecureDesktop() and os.path.isfile(WritePaths._oldAddonStateFile):
+				# Only import if absolutely necessary.
+				from ._pickleToJsonMigration import _getAddonsStateDictFromPickle
+
+				log.warning("Loading add-ons state from pickle.")
+				try:
+					self.fromDict(_getAddonsStateDictFromPickle(WritePaths._oldAddonStateFile))
+				except Exception:
+					log.error("Failed to load pickled add-ons state.", exc_info=True)
+				else:
+					if NVDAState.shouldWriteToDisk():
+						self.save()
+				finally:
+					if NVDAState.shouldWriteToDisk():
+						log.debug("Backing up pickled add-ons state.")
+						try:
+							os.replace(WritePaths._oldAddonStateFile, WritePaths._oldAddonStateFile + ".bak")
+						except Exception:
+							log.debug("Unable to backup old add-ons state pickle file.", exc_info=True)
 
 	def removeStateFile(self) -> None:
 		if not NVDAState.shouldWriteToDisk():
@@ -223,10 +290,9 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 			raise RuntimeError("Should not write to disk.")
 		if any(self.values()):
 			try:
-				# #9038: Python 3 requires binary format when working with pickles.
-				with open(statePath, "wb") as f:
-					pickle.dump(self.toDict(), f, protocol=0)
-			except (IOError, pickle.PicklingError):
+				with open(statePath, "wt", encoding="utf-8") as file:
+					json.dump(self.toDict(), file)
+			except (IOError, TypeError):
 				log.debugWarning("Error saving state", exc_info=True)
 			return True
 		return False

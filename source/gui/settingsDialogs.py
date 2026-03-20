@@ -16,18 +16,15 @@ import logging
 import math
 import os
 import re
-import typing
 from abc import ABCMeta, abstractmethod
-from collections.abc import Container
+from collections.abc import Callable, Container
 from enum import IntEnum
 from locale import strxfrm
 from typing import (
 	Any,
-	Callable,
 	List,
 	Optional,
 	Set,
-	Type,
 )
 
 import audio
@@ -59,6 +56,8 @@ from wx.lib import scrolledpanel
 
 import screenCurtain._screenCurtain
 from utils import mmdevice
+from utils.debounce import debounceLimiter
+from utils.security import isRunningOnSecureDesktop
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
@@ -187,7 +186,7 @@ class SettingsDialog(
 	def _setInstanceDestroyedState(self):
 		# prevent race condition with object deletion
 		# prevent deletion of the object while we work on it.
-		nonWeak: typing.Dict[SettingsDialog, SettingsDialog.DialogState] = dict(SettingsDialog._instances)
+		nonWeak: dict[SettingsDialog, SettingsDialog.DialogState] = dict(SettingsDialog._instances)
 
 		if (
 			self in SettingsDialog._instances
@@ -521,7 +520,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	"""
 
 	title = ""
-	categoryClasses: typing.List[typing.Type[SettingsPanel]] = []
+	categoryClasses: list[type[SettingsPanel]] = []
 
 	class CategoryUnavailableError(RuntimeError):
 		pass
@@ -548,7 +547,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.setPostInitFocus = None
 		# dictionary key is index of category in self.catList, value is the instance.
 		# Partially filled, check for KeyError
-		self.catIdToInstanceMap: typing.Dict[int, SettingsPanel] = {}
+		self.catIdToInstanceMap: dict[int, SettingsPanel] = {}
 
 		super(MultiCategorySettingsDialog, self).__init__(
 			parent,
@@ -750,13 +749,16 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.container.SetupScrolling()
 		self.container.Thaw()
 
-	def onCategoryChange(self, evt):
-		currentCat = self.currentCategory
+	def onCategoryChange(self, evt: wx.ListEvent):
 		newIndex = evt.GetIndex()
-		if not currentCat or newIndex != self.categoryClasses.index(currentCat.__class__):
+		if self._shouldDoCategoryChange(newIndex):
 			self._doCategoryChange(newIndex)
 		else:
 			evt.Skip()
+
+	def _shouldDoCategoryChange(self, index: int) -> bool:
+		currentCat = self.currentCategory
+		return not currentCat or index != self.categoryClasses.index(currentCat.__class__)
 
 	def _validateAllPanels(self):
 		"""Check if all panels are valid, and can be saved
@@ -2695,26 +2697,9 @@ class MathSettingsPanel(SettingsPanel):
 		"The following options control the presentation of mathematical content.",
 	)
 
-	def _getSpeechStyleDisplayString(self, configValue: str) -> str:
-		"""Helper function to get the display string for a speech style config value.
-
-		:param configValue: The config value to find the display string for
-		:return: The display string to show in the UI
-		"""
-		from mathPres.MathCAT.preferences import SpeechStyleOption
-
-		# Check if it's a known enum value by comparing directly
-		knownStyleValues = [style.value for style in SpeechStyleOption]
-		if configValue in knownStyleValues:
-			enumOption = SpeechStyleOption(configValue)
-			return enumOption.displayString
-		else:
-			# Not a known enum, so the config value IS the display string
-			return configValue
-
 	def _getEnumIndexFromConfigValue(
 		self,
-		enumClass: Type[DisplayStringEnum],
+		enumClass: type[DisplayStringEnum],
 		configValue: Any,
 	) -> int:
 		"""Helper function to get the index of an enum option based on its config value.
@@ -2731,7 +2716,7 @@ class MathSettingsPanel(SettingsPanel):
 
 	def _getEnumValueFromSelection(
 		self,
-		enumClass: Type[DisplayStringEnum],
+		enumClass: type[DisplayStringEnum],
 		selectionIndex: int,
 	) -> Any:
 		"""Helper function to get the config value from a selection index.
@@ -2766,15 +2751,15 @@ class MathSettingsPanel(SettingsPanel):
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		from mathPres.MathCAT import localization, preferences
 		from mathPres.MathCAT.preferences import (
-			ImpairmentOption,
-			DecimalSeparatorOption,
-			VerbosityOption,
+			BrailleNavHighlightOption,
 			ChemistryOption,
+			CopyAsOption,
+			DecimalSeparatorOption,
+			ImpairmentOption,
+			MathCATUserPreferences,
 			NavModeOption,
 			NavVerbosityOption,
-			CopyAsOption,
-			BrailleNavHighlightOption,
-			getSpeechStyleChoicesWithTranslations,
+			VerbosityOption,
 		)
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -2801,14 +2786,19 @@ class MathSettingsPanel(SettingsPanel):
 
 		# Translators: MathCAT language option
 		languageText = pgettext("math", "Language:")
-		self.languageOptions, self.languageCodes = localization.getLanguages()
+		self.languageOptions = localization.getLanguages()
 		self.languageList = speechGroup.addLabeledControl(
 			languageText,
 			wx.Choice,
-			choices=self.languageOptions,
+			choices=[lang.description for lang in self.languageOptions],
 		)
 		self.bindHelpEvent("MathSpeechLanguage", self.languageList)
-		languageIndex = self.languageCodes.index(config.conf["math"]["speech"]["language"])
+		self.languageList.Bind(wx.EVT_CHOICE, self.onLanguageChange)
+		mathLang = config.conf["math"]["speech"]["language"]
+		try:
+			languageIndex = next(filter(lambda idxLang: idxLang[1].code == mathLang, self.languageOptions))[0]
+		except StopIteration:
+			languageIndex = 0  # auto
 		self.languageList.SetSelection(languageIndex)
 
 		# Translators: MathCAT decimal separator option.
@@ -2828,19 +2818,17 @@ class MathSettingsPanel(SettingsPanel):
 
 		# Translators: Select a speech style.
 		speechStyleText = pgettext("math", "Speech style:")
-		self.speechStyleOptions = getSpeechStyleChoicesWithTranslations(
-			config.conf["math"]["speech"]["language"],
-		)
 		self.speechStyleList = speechGroup.addLabeledControl(
 			speechStyleText,
 			wx.Choice,
-			choices=self.speechStyleOptions,
+			choices=localization.getSpeechStyles(mathLang),
 		)
 		self.bindHelpEvent("MathSpeechStyle", self.speechStyleList)
-		speechStyleDisplayString = self._getSpeechStyleDisplayString(
-			config.conf["math"]["speech"]["speechStyle"],
-		)
-		self.speechStyleList.SetStringSelection(speechStyleDisplayString)
+		speechStyle = MathCATUserPreferences.getConfigForSpeechStyle(mathLang)
+		if speechStyle:
+			self.speechStyleList.SetStringSelection(speechStyle)
+		else:
+			self.speechStyleList.SetSelection(0)
 
 		# Translators: MathCAT's verbosity setting
 		speechAmountText = pgettext("math", "Speech verbosity:")
@@ -3038,20 +3026,17 @@ class MathSettingsPanel(SettingsPanel):
 		)
 
 	def onSave(self):
-		import math
-
 		from mathPres.MathCAT.preferences import MathCATUserPreferences
 		from mathPres.MathCAT.preferences import (
-			ImpairmentOption,
-			VerbosityOption,
-			DecimalSeparatorOption,
+			BrailleNavHighlightOption,
 			ChemistryOption,
+			CopyAsOption,
+			DecimalSeparatorOption,
+			ImpairmentOption,
 			NavModeOption,
 			NavVerbosityOption,
-			CopyAsOption,
-			BrailleNavHighlightOption,
 			PauseFactor,
-			getSpeechStyleConfigValue,
+			VerbosityOption,
 		)
 
 		mathConf = config.conf["math"]
@@ -3059,14 +3044,15 @@ class MathSettingsPanel(SettingsPanel):
 			ImpairmentOption,
 			self.impairmentList.GetSelection(),
 		)
-		mathConf["speech"]["language"] = self.languageCodes[self.languageList.GetSelection()]
+		mathLang = mathConf["speech"]["language"] = self.languageOptions[
+			self.languageList.GetSelection()
+		].code
 		mathConf["other"]["decimalSeparator"] = self._getEnumValueFromSelection(
 			DecimalSeparatorOption,
 			self.decimalSeparatorList.GetSelection(),
 		)
-		mathConf["speech"]["speechStyle"] = getSpeechStyleConfigValue(
-			self.speechStyleList.GetStringSelection(),
-		)
+		# Ensure the per-language speech configuration exists before setting the speech style.
+		MathCATUserPreferences.updateConfigForSpeechStyle(mathLang, self.speechStyleList.GetStringSelection())
 		mathConf["speech"]["verbosity"] = self._getEnumValueFromSelection(
 			VerbosityOption,
 			self.speechAmountList.GetSelection(),
@@ -3119,6 +3105,22 @@ class MathSettingsPanel(SettingsPanel):
 		mathConf["other"]["useWordNativeMath"] = self.useWordNativeMathCheckBox.GetValue()
 		mcPrefs = MathCATUserPreferences.fromNVDAConfig()
 		mcPrefs.apply()
+
+	def onLanguageChange(self, event: wx.CommandEvent) -> None:
+		from mathPres.MathCAT import localization
+
+		selectedLanguage = self.languageOptions[self.languageList.GetSelection()]
+		speechStyles = localization.getSpeechStyles(selectedLanguage.code)
+		self.speechStyleList.SetItems(speechStyles)
+		mathLang = config.conf["math"]["speech"]["language"]
+		if selectedLanguage.code == mathLang:
+			currentSpeechStyle = config.conf["math"]["speech"].get(mathLang, {}).get("speechStyle", "")
+			if currentSpeechStyle in speechStyles:
+				self.speechStyleList.SetStringSelection(currentSpeechStyle)
+			else:
+				self.speechStyleList.SetSelection(0)
+		else:
+			self.speechStyleList.SetSelection(0)
 
 
 class DocumentFormattingPanel(SettingsPanel):
@@ -6319,6 +6321,7 @@ NvdaSettingsDialogWindowHandle = None
 class NVDASettingsDialog(MultiCategorySettingsDialog):
 	# Translators: This is the label for the NVDA settings dialog.
 	title = _("NVDA Settings")
+	_pendingCategoryIndex: int | None = None
 	categoryClasses = [
 		GeneralSettingsPanel,
 		SpeechSettingsPanel,
@@ -6383,17 +6386,40 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			configProfile=NvdaSettingsDialogActiveConfigProfile,
 		)
 
-	def onCategoryChange(self, evt):
-		super(NVDASettingsDialog, self).onCategoryChange(evt)
+	def _doCategoryChangeForIndex(self, newIndex: int) -> bool:
+		if self._shouldDoCategoryChange(newIndex):
+			self._doCategoryChange(newIndex)
+			return True
+		return False
+
+	@debounceLimiter(
+		cooldownTimeMs=500,
+		delayTimeMs=500,
+	)
+	def _onCategoryChangeDebounced(self) -> None:
+		if self._pendingCategoryIndex is not None:
+			if self._doCategoryChangeForIndex(self._pendingCategoryIndex):
+				self._doOnCategoryChange()
+			self._pendingCategoryIndex = None
+
+	def onCategoryChange(self, evt: wx.ListEvent):
+		if isRunningOnSecureDesktop():
+			# Secure desktop can cause issues with rapidly changing categories,
+			# so we debounce category changes to avoid this. (#19634)
+			self._pendingCategoryIndex = evt.GetIndex()
+			self._onCategoryChangeDebounced()
+			return
+		super().onCategoryChange(evt)
 		if evt.Skipped:
 			return
 		self._doOnCategoryChange()
 
 	def Destroy(self):
+		self._pendingCategoryIndex = None
 		global NvdaSettingsDialogActiveConfigProfile, NvdaSettingsDialogWindowHandle
 		NvdaSettingsDialogActiveConfigProfile = None
 		NvdaSettingsDialogWindowHandle = None
-		super(NVDASettingsDialog, self).Destroy()
+		super().Destroy()
 
 
 class AddSymbolDialog(

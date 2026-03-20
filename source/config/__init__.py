@@ -336,7 +336,23 @@ def setSystemConfigToCurrentConfig(*, addonsToCopy: Collection[str] = ()):
 			raise RuntimeError("Slave failure")
 
 
-def _setSystemConfig(fromPath: str, *, prefix: str = sys.prefix, addonsToCopy: Collection[str] = ()):
+def _setSystemConfig(
+	fromPath: str,
+	*,
+	prefix: str = sys.prefix,
+	addonsToCopy: Collection[str] = (),
+	isMigration: bool = False,
+):
+	"""
+	Sets the system config to that in ``fromPath``.
+
+	:param fromPath: Path to config directory to copy.
+	:param prefix: Directory in which to set the system config, defaults to :attr:`sys.prefix`.
+			The system config will be in a ``systemConfig`` subdirectory of this directory.
+	:param addonsToCopy: List of add-on IDs to include in the system configuration, defaults to `()`.
+	:param isMigration: Whether this is a migration from one system config location to another, defaults to ``False``.
+		When this is ``True``, the ``addons/`` directory and ``addonsState.pickle``/``addonsState.json`` in ``fromPath`` will be copied as-is, if they exist.
+	"""
 	import installer
 	import addonHandler
 
@@ -352,21 +368,26 @@ def _setSystemConfig(fromPath: str, *, prefix: str = sys.prefix, addonsToCopy: C
 			for subPath in removeSubs:
 				log.debug("Ignored folder that may contain unpackaged addons: %s", subPath)
 				subDirs.remove(subPath)
-			if addonHandler.stateFilename in files:
+			if not isMigration:
 				# Don't copy the addons state file,
 				# as we will generate a new one based on which add-ons are being copied.
-				files.remove(addonHandler.stateFilename)
+				# Just in case it still exists, also exclude the old one.
+				stateFilenames = (
+					addonHandler.STATE_FILENAME.casefold(),
+					addonHandler._OLD_STATE_FILENAME.casefold(),
+				)
+				files = [filename for filename in files if filename.casefold() not in stateFilenames]
 		else:
 			relativePath = os.path.relpath(curSourceDir, fromPath)
 			curDestDir = os.path.join(toPath, relativePath)
-			if relativePath == "addons":
+			if not isMigration and relativePath == "addons":
 				_prepareToCopyAddons(fromPath, toPath, subDirs, addonsToCopy)
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
 		for f in files:
 			# Do not copy executables to the system configuration, as this may cause security risks.
 			# This will also exclude pending updates.
-			if f.endswith(".exe"):
+			if f.casefold().endswith(".exe"):
 				log.debug(
 					"Ignored file %s while copying current user configuration to system configuration" % f,
 				)
@@ -402,13 +423,13 @@ def _prepareToCopyAddons(fromPath: str, toPath: str, addonDirs: list[str], addon
 		# We are copying add-ons, so we need to generate a new addons state file.
 		# If no add-ons have their compatibility overridden, the file will not be saved, but this is fine.
 		userAddonsState = addonHandler.AddonsState()
-		userAddonsState._load(os.path.join(fromPath, addonHandler.stateFilename))
+		userAddonsState._load(os.path.join(fromPath, addonHandler.STATE_FILENAME))
 		systemAddonsState = addonHandler.AddonsState()
 		systemAddonsState.manualOverridesAPIVersion = userAddonsState.manualOverridesAPIVersion
 		systemAddonsState[AddonStateCategory.OVERRIDE_COMPATIBILITY] = (
 			userAddonsState[AddonStateCategory.OVERRIDE_COMPATIBILITY] & addonsToCopy
 		)
-		systemAddonsState._save(statePath=os.path.join(toPath, addonHandler.stateFilename))
+		systemAddonsState._save(statePath=os.path.join(toPath, addonHandler.STATE_FILENAME))
 	else:
 		log.debug("No add-ons to copy.")
 

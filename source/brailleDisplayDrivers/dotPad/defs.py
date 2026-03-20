@@ -27,6 +27,18 @@ class DP_Command(enum.IntEnum):
 	NTF_KEYS_FUNCTION = 0x0332
 	NTF_ERROR = 0x9902
 
+	@property
+	def secondByte(self) -> int:
+		"""Get the second byte (LSB) of the command.
+
+		DotPad protocol uses big-endian encoding for 2-byte commands.
+		For most commands: second byte indicates message type (REQ=x0, RSP=x1, NTF=x2).
+		For key commands (0x03xx): second byte indicates key group (0x02/0x12/0x22/0x32).
+
+		Example: NTF_KEYS_FUNCTION (0x0332) -> 0x32
+		"""
+		return self.value & 0xFF
+
 
 class DP_ErrorCode(enum.IntEnum):
 	LENGTH = 1
@@ -103,6 +115,18 @@ class DP_PerkinsKey(enum.IntEnum):
 	NAV_RIGHT = 18
 	NAV_DOWN = 19
 	NAV_LEFT = 20
+
+
+class DP_KeyGroup(enum.IntEnum):
+	"""Key groups for DotPad notifications.
+
+	Values correspond to the second byte of NTF_KEYS_* commands.
+	"""
+
+	SCROLL = 0x02  # From NTF_KEYS_SCROLL (0x0302)
+	PERKINS = 0x12  # From NTF_KEYS_PERKINS (0x0312)
+	ROUTING = 0x22  # From NTF_KEYS_ROUTING (0x0322)
+	FUNCTION = 0x32  # From NTF_KEYS_FUNCTION (0x0332)
 
 
 DP_CHECKSUM_BASE = 0xA5
