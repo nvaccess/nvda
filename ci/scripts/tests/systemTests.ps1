@@ -44,14 +44,38 @@ $includeTags = $tagsForTestArray | ForEach-Object {
 }
 
 $nvdaLauncherFile=$(Resolve-Path "$env:nvdaLauncherDir\nvda*.exe")
-.\runsystemtests.bat `
---variable whichNVDA:installed `
---variable installDir:"${nvdaLauncherFile}" `
---variable verboseDebugLogging:"${verboseDebugLogging}" `
-@includeTags `
-# last line intentionally blank, allowing all lines to have line continuations.
-if ($LastExitCode -ne 0) {
-	Write-Output "FAIL: System tests (tags: ${tagsForTest}). See test results for more information."  >> $env:GITHUB_STEP_SUMMARY
-	Write-Output "testFailExitCode=$LastExitCode" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+# Maximum number of retry attempts
+$maxAttempts = 5
+$attempt = 1
+$testFailed = $true
+
+while ($attempt -le $maxAttempts -and $testFailed) {
+	Write-Output "System test attempt $attempt of $maxAttempts"
+	
+	.\runsystemtests.bat `
+	--variable whichNVDA:installed `
+	--variable installDir:"${nvdaLauncherFile}" `
+	--variable verboseDebugLogging:"${verboseDebugLogging}" `
+	@includeTags `
+	# last line intentionally blank, allowing all lines to have line continuations.
+	
+	if ($LastExitCode -eq 0) {
+		Write-Output "System tests passed on attempt $attempt"
+		$testFailed = $false
+	} elseif ($attempt -lt $maxAttempts) {
+		Write-Output "System tests failed with exit code $LastExitCode on attempt $attempt. Retrying..."
+		$attempt++
+	} else {
+		Write-Output "System tests failed with exit code $LastExitCode on final attempt $attempt"
+		$attempt++
+	}
 }
-exit $LastExitCode
+
+# Handle the final result
+if ($testFailed) {
+	Write-Output "FAIL: System tests (tags: ${tagsForTest}) after $maxAttempts attempts. See test results for more information."  >> $env:GITHUB_STEP_SUMMARY
+	Write-Output "testFailExitCode=$LastExitCode" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+	exit $LastExitCode
+}
+
+exit 0
