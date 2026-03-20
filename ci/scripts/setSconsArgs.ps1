@@ -2,7 +2,11 @@ $ErrorActionPreference = "Stop";
 $sconsDocsOutTargets = "developerGuide changes userGuide keyCommands user_docs"
 $sconsLauncherOutTargets = "launcher client moduleList"
 $sconsArgs = "version=$env:version"
-$sconsCores = "-j1"
+if ($env:RUNNER_DEBUG -ne "1" -and $env:GITHUB_EVENT_NAME -eq "pull_request") {
+	$sconsCores = "--all-cores"
+} else {
+	$sconsCores = "-j1"
+}
 if ($env:release) {
 	$sconsArgs += " release=1"
 }
