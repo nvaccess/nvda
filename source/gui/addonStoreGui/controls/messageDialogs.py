@@ -799,7 +799,7 @@ class _CopyAddonsDialog(
 				(
 					userManifest["summary"]
 					if userManifest is not None
-					else f"{WILL_DELETE_PREFIX} {systemManifest['name']}",
+					else f"{WILL_DELETE_PREFIX} {systemManifest['summary']}",
 					userManifest["version"] if userManifest is not None else NOT_INSTALLED_MESSAGE,
 					systemManifest["version"] if systemManifest is not None else NOT_INSTALLED_MESSAGE,
 				),
