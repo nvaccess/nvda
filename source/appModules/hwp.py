@@ -295,13 +295,137 @@ class HwpDocumentEdit(editableText.EditableText, UIA):
 	"""
 
 	TextInfo = HwpTextInfo
-	role = controlTypes.Role.DOCUMENT
+	role = controlTypes.Role.EDITABLETEXT
 
 	def _get_name(self) -> str:
 		return ""
 
 	def makeTextInfo(self, position) -> HwpTextInfo:
 		return self.TextInfo(self, position)
+
+	def _collectVisibleText(self, rootObj: NVDAObject, maxNodes: int = 80) -> str:
+		"""Best-effort UIA fallback when COM is unavailable.
+
+		HWP often exposes current visible text on descendant edit nodes.
+		"""
+		parts: list[str] = []
+
+		def scoreText(text: str) -> int:
+			t = (text or "").strip()
+			if not t:
+				return -1
+			low = t.lower()
+			if low == "paragraph":
+				return -1
+			# Exclude common window title / file-name announcements.
+			if low.endswith(" - 한글") or low.endswith(" - hwp"):
+				return -1
+			if low.endswith(".hwp") or low.endswith(".hwpx"):
+				return -1
+			score = len(t)
+			if "\n" in t:
+				score += 40
+			if " " in t:
+				score += 10
+			# Single-token short strings are often labels, not content.
+			if (" " not in t) and ("\n" not in t) and len(t) < 20:
+				score -= 20
+			return score
+		visited: set[int] = set()
+		stack: list[NVDAObject] = [rootObj]
+		while stack and len(visited) < maxNodes:
+			obj = stack.pop()
+			if not obj:
+				continue
+			objId = id(obj)
+			if objId in visited:
+				continue
+			visited.add(objId)
+			candidates: list[str] = []
+			try:
+				candidates.append((obj.name or "").strip())
+			except Exception:
+				pass
+			try:
+				candidates.append((obj.value or "").strip())
+			except Exception:
+				pass
+			for text in candidates:
+				if text and text.lower() != "paragraph" and text not in parts:
+					parts.append(text)
+			try:
+				child = obj.firstChild
+			except Exception:
+				child = None
+			while child:
+				stack.append(child)
+				try:
+					child = child.next
+				except Exception:
+					child = None
+		bestText = ""
+		bestScore = -1
+		for text in parts:
+			s = scoreText(text)
+			if s > bestScore:
+				bestText = text
+				bestScore = s
+		return bestText.strip()
+
+	def _reportByUiaFallback(self) -> bool:
+		"""Report text from focus tree when COM bridge is unavailable."""
+		try:
+			focus = api.getFocusObject()
+		except Exception:
+			focus = None
+		try:
+			foreground = api.getForegroundObject()
+		except Exception:
+			foreground = None
+		candidates = [self, focus, getattr(focus, "parent", None), foreground]
+		for root in candidates:
+			text = self._collectVisibleText(root)
+			if text:
+				ui.message(text[:300])
+				return True
+		return False
+
+	def _reportCaretByUnit(self, unit: str) -> None:
+		"""Fallback speech path for caret navigation keys."""
+		_comBridge.invalidateCache()
+		try:
+			if not _comBridge._connect():
+				if self._reportByUiaFallback():
+					return
+			info = self.makeTextInfo(textInfos.POSITION_CARET)
+			info.expand(unit)
+			text = info.text.strip("\r\n")
+			if text:
+				ui.message(text)
+			elif unit == textInfos.UNIT_LINE:
+				ui.message("빈 줄")
+		except Exception:
+			self._reportByUiaFallback()
+
+	@scriptHandler.script(gesture="kb:upArrow")
+	def script_caretMoveUp(self, gesture) -> None:
+		gesture.send()
+		self._reportCaretByUnit(textInfos.UNIT_LINE)
+
+	@scriptHandler.script(gesture="kb:downArrow")
+	def script_caretMoveDown(self, gesture) -> None:
+		gesture.send()
+		self._reportCaretByUnit(textInfos.UNIT_LINE)
+
+	@scriptHandler.script(gesture="kb:leftArrow")
+	def script_caretMoveLeft(self, gesture) -> None:
+		gesture.send()
+		self._reportCaretByUnit(textInfos.UNIT_CHARACTER)
+
+	@scriptHandler.script(gesture="kb:rightArrow")
+	def script_caretMoveRight(self, gesture) -> None:
+		gesture.send()
+		self._reportCaretByUnit(textInfos.UNIT_CHARACTER)
 
 
 class HwpParagraph(UIA):
@@ -322,17 +446,103 @@ class AppModule(appModuleHandler.AppModule):
 	def terminate(self):
 		_comBridge.disconnect()
 
+	def _reportFocusFallback(self) -> bool:
+		"""Fallback for script calls when COM is unavailable."""
+		def collectVisibleText(rootObj: NVDAObject, maxNodes: int = 100) -> str:
+			parts: list[str] = []
+
+			def scoreText(text: str) -> int:
+				t = (text or "").strip()
+				if not t:
+					return -1
+				low = t.lower()
+				if low == "paragraph":
+					return -1
+				if low.endswith(" - 한글") or low.endswith(" - hwp"):
+					return -1
+				if low.endswith(".hwp") or low.endswith(".hwpx"):
+					return -1
+				score = len(t)
+				if "\n" in t:
+					score += 40
+				if " " in t:
+					score += 10
+				if (" " not in t) and ("\n" not in t) and len(t) < 20:
+					score -= 20
+				return score
+			visited: set[int] = set()
+			stack: list[NVDAObject] = [rootObj]
+			while stack and len(visited) < maxNodes:
+				obj = stack.pop()
+				if not obj:
+					continue
+				objId = id(obj)
+				if objId in visited:
+					continue
+				visited.add(objId)
+				candidates: list[str] = []
+				try:
+					candidates.append((obj.name or "").strip())
+				except Exception:
+					pass
+				try:
+					candidates.append((obj.value or "").strip())
+				except Exception:
+					pass
+				for text in candidates:
+					if text and text.lower() != "paragraph" and text not in parts:
+						parts.append(text)
+				try:
+					child = obj.firstChild
+				except Exception:
+					child = None
+				while child:
+					stack.append(child)
+					try:
+						child = child.next
+					except Exception:
+						child = None
+			bestText = ""
+			bestScore = -1
+			for text in parts:
+				s = scoreText(text)
+				if s > bestScore:
+					bestText = text
+					bestScore = s
+			return bestText.strip()
+
+		try:
+			focus = api.getFocusObject()
+			foreground = api.getForegroundObject()
+			candidates = [focus, getattr(focus, "parent", None), foreground]
+			for root in candidates:
+				text = collectVisibleText(root)
+				if text:
+					ui.message(text[:300])
+					return True
+		except Exception:
+			pass
+		return False
+
 	@scriptHandler.script(
 		description="한글 문서의 전체 텍스트를 표 내용 포함하여 읽습니다",
 		gesture="kb:NVDA+shift+t",
 	)
 	def script_readFullDocumentText(self, gesture) -> None:
-		text = _comBridge.getFullText()
-		if text.strip():
-			lineCount = text.count("\n") + 1
-			ui.message(f"문서 텍스트 {lineCount}줄. {text[:500]}")
-		else:
-			ui.message("문서 텍스트를 읽을 수 없습니다")
+		try:
+			hwp = _comBridge._connect()
+			if not hwp:
+				if not self._reportFocusFallback():
+					ui.message("텍스트를 찾을 수 없습니다")
+				return
+			text = _comBridge.getFullText()
+			if text.strip():
+				lineCount = text.count("\n") + 1
+				ui.message(f"문서 텍스트 {lineCount}줄. {text[:500]}")
+			else:
+				ui.message("COM 연결됨, 하지만 텍스트가 비어 있습니다")
+		except Exception as e:
+			ui.message(f"오류 발생: {e}")
 
 	@scriptHandler.script(
 		description="현재 위치 정보를 읽습니다 (표 셀 주소 포함)",
@@ -383,13 +593,23 @@ class AppModule(appModuleHandler.AppModule):
 		className = obj.UIAElement.cachedClassName or ""
 		if className == "HwpMainEditWnd":
 			clsList.insert(0, HwpDocumentEdit)
+			return
+		elif (
+			obj.windowClassName == "HwpMainEditWnd"
+			and obj.UIAElement.cachedControlType == UIAHandler.UIA.UIA_EditControlTypeId
+		):
+			# Descendant edit nodes inside the main editor should share
+			# the same TextInfo path for reliable keyboard reading.
+			clsList.insert(0, HwpDocumentEdit)
+			return
 		elif obj.UIAElement.cachedControlType == UIAHandler.UIA.UIA_EditControlTypeId:
 			try:
 				name = obj.UIAElement.cachedName or ""
 			except Exception:
 				name = ""
 			if name == "paragraph":
-				clsList.insert(0, HwpParagraph)
+				# Many caret interactions land on the paragraph edit node.
+				clsList.insert(0, HwpDocumentEdit)
 
 	def _get_statusBar(self) -> NVDAObject:
 		"""Retrieve the HWP status bar via UIA class name lookup."""
