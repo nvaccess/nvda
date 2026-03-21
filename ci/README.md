@@ -52,6 +52,13 @@ Select "I understand my workflows, go ahead and enable them".
 You should check which workflows are enabled, and which are disabled; they may not all be enabled by default when you perform the above step.
 At least initially, the only workflows a fork is likely to want enabled for standard building of NVDA, are: `codeql.yml`, `clearCaches.yml`, and `testAndPublish.yml`.
 
+If you are using the GitHub CLI, and you plan to use PRs to trigger NVDA to build instead of pushing to master/beta/rc, you may want those PRs to target your fork instead of nvaccess/nvda.
+To do this by default, run the following:
+
+```sh
+gh repo set-default YOUR_USER_NAME/YOUR_FORK_REPO_NAME
+```
+
 ## Advanced setup (optional for forks)
 
 The following configuration is required only for more advanced development such as:
