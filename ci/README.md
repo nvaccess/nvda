@@ -42,11 +42,17 @@ Some of these steps run concurrently.
 Builds will fail if any command has a non-zero exit code.
 PowerShell scripts continue on non-terminating errors unless the file is prefixed with `$ErrorActionPreference = "Stop";`.
 
-## Setup requirements
+## Fork setup requirements
 
 Builds from PRs and pushes to master/beta/rc should work out of the box for forks.
-You just need to enable GitHub Actions on your fork.
-You may want to disable all workflows other than `codeql.yml`, `clearCaches.yml`, `testAndPublish.yml`.
+However, you will need to enable GitHub Actions on your fork.
+To do this, go to `https://github.com/YOUR_USER_NAME/YOUR_FORK_REPO/actions`.
+Select "I understand my workflows, go ahead and enable them".
+
+You should check which workflows are enabled, and which are disabled; they may not all be enabled by default when you perform the above step.
+At least initially, the only workflows a fork is likely to want enabled for standard building of NVDA, are: `codeql.yml`, `clearCaches.yml`, `testAndPublish.yml`.
+
+## Advanced configuration (optional for forks)
 
 The following configuration is required only for more advanced development such as:
 
