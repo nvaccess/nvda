@@ -1,5 +1,7 @@
 # Continuous Integration with GitHub Actions
 
+Information in this file pertains both to NV Access, and to forks of NVDA that wish to enable automated builds.
+
 ## Background
 
 GitHub Actions builds the following types of NVDA installers through a CI/CD pipeline:
