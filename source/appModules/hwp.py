@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2026 NV Access Limited, Hyun W. Ka (KAIST Rehabilitation AI Lab)
+# Copyright (C) 2026 NV Access Limited, Hyun W. Ka (KAIST Assistive AI Lab)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
