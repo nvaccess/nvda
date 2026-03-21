@@ -4,8 +4,8 @@
 
 GitHub Actions builds the following types of NVDA installers through a CI/CD pipeline:
 
-* Pull Request builds: Generated from the pull requests.
-Pull requests initiated from `nvaccess/nvda` rather than a fork have extra permissions than standard PRs.
+* Pull Request builds: Generated from pull requests.
+Pull requests initiated from `nvaccess/nvda` rather than a fork have greater permissions than standard PRs.
 * Snapshot builds: Generated from pushes to master/beta/rc or branch names prefixed with `try-`.
 These are signed and deployed to the NV Access server.
 * Tagged builds: Generated from pushes to tags prefixed with `release-`.
