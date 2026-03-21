@@ -36,7 +36,6 @@ import appModuleHandler
 import api
 import controlTypes
 import scriptHandler
-import speech
 import ui
 import UIAHandler
 from NVDAObjects.UIA import UIA
@@ -227,7 +226,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	@scriptHandler.script(
 		description="현재 커서가 표 안에 있는지 확인합니다",
-		gesture="kb:NVDA+shift+b",
+		gesture="kb:NVDA+shift+h",
 	)
 	def script_reportTableInfo(self, gesture) -> None:
 		if self._comBridge.isInTable():
