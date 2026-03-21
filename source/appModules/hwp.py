@@ -183,6 +183,62 @@ class HwpComBridge:
 		except Exception:
 			return 0
 
+	def getCurrentLineText(self) -> str:
+		"""Read the text of the current line at the caret position.
+
+		Uses InitScan with range=0x0022 (line start to line end).
+		"""
+		hwp = self._connect()
+		if not hwp:
+			return ""
+		try:
+			hwp.InitScan(4, 0x0022, 0, 0, 0, 0)
+			parts: list[str] = []
+			for _ in range(50):
+				result = hwp.GetText()
+				state = result[0]
+				text = result[1] if len(result) > 1 else ""
+				if state in (0, 1):
+					break
+				if text:
+					parts.append(text)
+			hwp.ReleaseScan()
+			return "".join(parts).rstrip("\r\n")
+		except Exception:
+			try:
+				hwp.ReleaseScan()
+			except Exception:
+				pass
+			return ""
+
+	def getTextFromCaretToLineEnd(self) -> str:
+		"""Read text from current caret position to end of line.
+
+		Uses InitScan with range=0x0032 (caret to line end).
+		"""
+		hwp = self._connect()
+		if not hwp:
+			return ""
+		try:
+			hwp.InitScan(4, 0x0032, 0, 0, 0, 0)
+			parts: list[str] = []
+			for _ in range(50):
+				result = hwp.GetText()
+				state = result[0]
+				text = result[1] if len(result) > 1 else ""
+				if state in (0, 1):
+					break
+				if text:
+					parts.append(text)
+			hwp.ReleaseScan()
+			return "".join(parts).rstrip("\r\n")
+		except Exception:
+			try:
+				hwp.ReleaseScan()
+			except Exception:
+				pass
+			return ""
+
 
 class AppModule(appModuleHandler.AppModule):
 	"""NVDA app module for Hancom Hangul (Hwp.exe)."""
@@ -239,6 +295,22 @@ class AppModule(appModuleHandler.AppModule):
 			ui.message(msg)
 		else:
 			ui.message("표 안에 있지 않습니다")
+
+	def event_caret(self, obj: NVDAObject, nextHandler) -> None:
+		"""Handle caret movement in HWP document.
+
+		Since HWP does not support UIA TextPattern, NVDA cannot read text
+		on cursor movement by default. This handler uses the COM bridge
+		to read the current line text whenever the caret moves.
+		"""
+		if isinstance(obj, UIA):
+			className = obj.UIAElement.cachedClassName or ""
+			if className == "HwpMainEditWnd" or obj.UIAElement.cachedControlType == UIAHandler.UIA.UIA_EditControlTypeId:
+				lineText = self._comBridge.getCurrentLineText()
+				if lineText:
+					ui.message(lineText)
+					return
+		nextHandler()
 
 	def chooseNVDAObjectOverlayClasses(
 		self,
