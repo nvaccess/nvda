@@ -331,6 +331,7 @@ class HwpDocumentEdit(editableText.EditableText, UIA):
 			if (" " not in t) and ("\n" not in t) and len(t) < 20:
 				score -= 20
 			return score
+
 		visited: set[int] = set()
 		stack: list[NVDAObject] = [rootObj]
 		while stack and len(visited) < maxNodes:
@@ -448,6 +449,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def _reportFocusFallback(self) -> bool:
 		"""Fallback for script calls when COM is unavailable."""
+
 		def collectVisibleText(rootObj: NVDAObject, maxNodes: int = 100) -> str:
 			parts: list[str] = []
 
@@ -470,6 +472,7 @@ class AppModule(appModuleHandler.AppModule):
 				if (" " not in t) and ("\n" not in t) and len(t) < 20:
 					score -= 20
 				return score
+
 			visited: set[int] = set()
 			stack: list[NVDAObject] = [rootObj]
 			while stack and len(visited) < maxNodes:
