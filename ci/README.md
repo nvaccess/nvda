@@ -50,9 +50,9 @@ To do this, go to `https://github.com/YOUR_USER_NAME/YOUR_FORK_REPO/actions`.
 Select "I understand my workflows, go ahead and enable them".
 
 You should check which workflows are enabled, and which are disabled; they may not all be enabled by default when you perform the above step.
-At least initially, the only workflows a fork is likely to want enabled for standard building of NVDA, are: `codeql.yml`, `clearCaches.yml`, `testAndPublish.yml`.
+At least initially, the only workflows a fork is likely to want enabled for standard building of NVDA, are: `codeql.yml`, `clearCaches.yml`, and `testAndPublish.yml`.
 
-## Advanced configuration (optional for forks)
+## Advanced setup (optional for forks)
 
 The following configuration is required only for more advanced development such as:
 
