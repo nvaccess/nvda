@@ -9,8 +9,7 @@ Pull requests initiated from `nvaccess/nvda` rather than a fork have greater per
 * Snapshot builds: Generated from pushes to master/beta/rc or branch names prefixed with `try-`.
 These are signed and deployed to the NV Access server.
 * Tagged builds: Generated from pushes to tags prefixed with `release-`.
-Official beta, rc and stable releases.
-These are signed and deployed to the NV Access server.
+Official beta, rc and stable releases, which are signed and deployed to the NV Access server.
 
 ## Builds
 
