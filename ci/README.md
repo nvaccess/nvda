@@ -171,7 +171,7 @@ Ensure a secret is set and SSL is enabled.
 
 NV Access scans tagged builds with VirusTotal.
 
-To ensure this step of tagged builds succeed, set:
+To ensure this step of tagged builds succeeds, set:
 
 * `VT_API_KEY` as a secret.
 
