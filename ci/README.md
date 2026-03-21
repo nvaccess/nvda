@@ -75,7 +75,7 @@ It currently defaults to the repository owner (e.g. `nvaccess`).
 To offset from our previous build system, we start the sequential build count at a higher number than 0.
 This means our first build will be numbered something like 100,001 not 1.
 
-To offset build numbers, set;
+To offset build numbers, set:
 
 * `BUILD_NUMBER_OFFSET` as a variable.
 It currently defaults to 0.
