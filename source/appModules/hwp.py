@@ -11,68 +11,38 @@ support using two complementary strategies:
 
 1. UIA overlay classes for document role mapping, paragraph handling,
    status bar access, and menu/toolbar interaction.
-2. HWP COM Automation API bridge for reading full document text including
-   table cell contents, which the UIA tree does not expose.
-
-Key UIA structure:
-- Main window: FrameWindowImpl (Window)
-- Edit area: HwpMainEditWnd (Edit) with child paragraph nodes
-- Status bar: StatusBarImpl (StatusBar) with page/line/column info
-- Menus and toolbars: fully labeled in Korean
+2. HWP COM Automation API bridge with a custom OffsetsTextInfo, enabling
+   full NVDA text navigation (character, word, line, paragraph) including
+   table cell contents that the UIA tree does not expose.
 
 HWP COM API (HWPFrame.HwpObject):
 - Connect via Running Object Table moniker "!HwpObject"
 - InitScan(4, 0x0077, 0, 0, 0, 0) + GetText() reads all text including tables
-- KeyIndicator() returns current position including table cell address
-- HeadCtrl iteration enumerates document controls (tables, sections, etc.)
+- InitScan(4, 0x0022, 0, 0, 0, 0) reads current line at caret
+- KeyIndicator() returns position including table cell address
+- GetPos()/SetPos() for caret offset tracking
+- HAction.Run("MoveRight"/"MoveLeft"/etc.) for cursor movement
 """
 
 from __future__ import annotations
 
 import logging
+import time
 from typing import Optional
 
 import appModuleHandler
 import api
 import controlTypes
+import editableText
 import scriptHandler
+import textInfos
+import textInfos.offsets
 import ui
 import UIAHandler
 from NVDAObjects.UIA import UIA
 from NVDAObjects import NVDAObject
 
 log = logging.getLogger(__name__)
-
-
-class HwpDocumentEdit(UIA):
-	"""Overlay class for the main HWP document editing area (HwpMainEditWnd).
-
-	Adjusts the role to DOCUMENT so NVDA treats it as a document rather than
-	a plain edit field, consistent with how other word processors are handled.
-	"""
-
-	role = controlTypes.Role.DOCUMENT
-
-	def _get_name(self) -> str:
-		# Suppress the empty name on the main edit container;
-		# actual content is in child paragraph elements.
-		return ""
-
-
-class HwpParagraph(UIA):
-	"""Overlay class for paragraph elements inside the HWP document.
-
-	Each paragraph in HWP is exposed as a UIA Edit control with
-	name="paragraph". The actual text of each paragraph line is in
-	grandchild Edit elements whose Name property holds the text content.
-	"""
-
-	role = controlTypes.Role.PARAGRAPH
-
-	def _get_name(self) -> str:
-		# The default name "paragraph" is not useful for the user.
-		# Return empty so NVDA reads the actual text content instead.
-		return ""
 
 
 class HwpComBridge:
@@ -85,6 +55,9 @@ class HwpComBridge:
 
 	def __init__(self) -> None:
 		self._hwp: Optional[object] = None
+		self._textCache: Optional[str] = None
+		self._textCacheTime: float = 0
+		self._TEXT_CACHE_TTL = 2.0
 
 	def _connect(self) -> Optional[object]:
 		if self._hwp is not None:
@@ -114,20 +87,26 @@ class HwpComBridge:
 
 	def disconnect(self) -> None:
 		self._hwp = None
+		self.invalidateCache()
 
-	def getFullText(self, includeTableContents: bool = True) -> str:
-		"""Read all text from the document via InitScan/GetText.
+	def invalidateCache(self) -> None:
+		self._textCache = None
+		self._textCacheTime = 0
 
-		:param includeTableContents: If True, use option=4 to include
-			text inside table cells and sub-documents.
-		:return: The concatenated document text.
+	def getFullText(self) -> str:
+		"""Read all text from the document including table cells.
+
+		Results are cached for a short period to avoid repeated COM calls
+		during rapid NVDA text info queries.
 		"""
+		now = time.time()
+		if self._textCache is not None and (now - self._textCacheTime) < self._TEXT_CACHE_TTL:
+			return self._textCache
 		hwp = self._connect()
 		if not hwp:
 			return ""
-		option = 4 if includeTableContents else 0
 		try:
-			hwp.InitScan(option, 0x0077, 0, 0, 0, 0)
+			hwp.InitScan(4, 0x0077, 0, 0, 0, 0)
 			parts: list[str] = []
 			for _ in range(10000):
 				result = hwp.GetText()
@@ -138,7 +117,9 @@ class HwpComBridge:
 				if text:
 					parts.append(text)
 			hwp.ReleaseScan()
-			return "".join(parts)
+			self._textCache = "".join(parts)
+			self._textCacheTime = now
+			return self._textCache
 		except Exception:
 			log.debugWarning("HWP GetText failed", exc_info=True)
 			try:
@@ -147,8 +128,32 @@ class HwpComBridge:
 				pass
 			return ""
 
+	def getCurrentLineText(self) -> str:
+		"""Read the current line at the caret position."""
+		hwp = self._connect()
+		if not hwp:
+			return ""
+		try:
+			hwp.InitScan(4, 0x0022, 0, 0, 0, 0)
+			parts: list[str] = []
+			for _ in range(50):
+				result = hwp.GetText()
+				if result[0] in (0, 1):
+					break
+				text = result[1] if len(result) > 1 else ""
+				if text:
+					parts.append(text)
+			hwp.ReleaseScan()
+			return "".join(parts).rstrip("\r\n")
+		except Exception:
+			try:
+				hwp.ReleaseScan()
+			except Exception:
+				pass
+			return ""
+
 	def getPositionInfo(self) -> Optional[tuple]:
-		"""Return KeyIndicator tuple: (visible, page, secPage, section,
+		"""Return KeyIndicator: (visible, page, secPage, section,
 		para, line, column, insert, cellAddr).
 		"""
 		hwp = self._connect()
@@ -158,6 +163,16 @@ class HwpComBridge:
 			return hwp.KeyIndicator()
 		except Exception:
 			return None
+
+	def getCaretLine(self) -> int:
+		"""Return 1-based line number of the caret."""
+		info = self.getPositionInfo()
+		return info[5] if info else 1
+
+	def getCaretColumn(self) -> int:
+		"""Return 1-based column number of the caret."""
+		info = self.getPositionInfo()
+		return info[6] if info else 1
 
 	def isInTable(self) -> bool:
 		hwp = self._connect()
@@ -183,61 +198,99 @@ class HwpComBridge:
 		except Exception:
 			return 0
 
-	def getCurrentLineText(self) -> str:
-		"""Read the text of the current line at the caret position.
 
-		Uses InitScan with range=0x0022 (line start to line end).
+_comBridge = HwpComBridge()
+
+
+class HwpTextInfo(textInfos.offsets.OffsetsTextInfo):
+	"""TextInfo for HWP documents backed by the COM Automation API.
+
+	Uses the full document text (from InitScan) as the story text,
+	and the current line text (from InitScan range=0x0022) for
+	efficient line-level operations. Integrates with NVDA's standard
+	text navigation for character, word, line, and paragraph units.
+	"""
+
+	def _getStoryText(self) -> str:
+		return _comBridge.getFullText()
+
+	def _getStoryLength(self) -> int:
+		return len(self._getStoryText())
+
+	def _getCaretOffset(self) -> int:
+		"""Map the HWP caret position to a character offset in the story text.
+
+		Uses the current line text to find its position in the full text,
+		then adds the column offset within that line.
 		"""
-		hwp = self._connect()
-		if not hwp:
-			return ""
-		try:
-			hwp.InitScan(4, 0x0022, 0, 0, 0, 0)
-			parts: list[str] = []
-			for _ in range(50):
-				result = hwp.GetText()
-				state = result[0]
-				text = result[1] if len(result) > 1 else ""
-				if state in (0, 1):
-					break
-				if text:
-					parts.append(text)
-			hwp.ReleaseScan()
-			return "".join(parts).rstrip("\r\n")
-		except Exception:
-			try:
-				hwp.ReleaseScan()
-			except Exception:
-				pass
-			return ""
+		lineText = _comBridge.getCurrentLineText()
+		fullText = self._getStoryText()
+		if not lineText or not fullText:
+			return 0
+		lineOffset = fullText.find(lineText)
+		if lineOffset < 0:
+			return 0
+		col = _comBridge.getCaretColumn()
+		charOffset = 0
+		colCount = 1
+		for i, ch in enumerate(lineText):
+			if colCount >= col:
+				charOffset = i
+				break
+			colCount += 2 if ord(ch) > 0x7F else 1
+		else:
+			charOffset = len(lineText)
+		return lineOffset + charOffset
 
-	def getTextFromCaretToLineEnd(self) -> str:
-		"""Read text from current caret position to end of line.
+	def _setCaretOffset(self, offset: int) -> None:
+		pass
 
-		Uses InitScan with range=0x0032 (caret to line end).
-		"""
-		hwp = self._connect()
-		if not hwp:
-			return ""
-		try:
-			hwp.InitScan(4, 0x0032, 0, 0, 0, 0)
-			parts: list[str] = []
-			for _ in range(50):
-				result = hwp.GetText()
-				state = result[0]
-				text = result[1] if len(result) > 1 else ""
-				if state in (0, 1):
-					break
-				if text:
-					parts.append(text)
-			hwp.ReleaseScan()
-			return "".join(parts).rstrip("\r\n")
-		except Exception:
-			try:
-				hwp.ReleaseScan()
-			except Exception:
-				pass
-			return ""
+	def _getSelectionOffsets(self) -> tuple[int, int]:
+		caretOffset = self._getCaretOffset()
+		return (caretOffset, caretOffset)
+
+	def _setSelectionOffsets(self, start: int, end: int) -> None:
+		pass
+
+	def _getLineOffsets(self, offset: int) -> tuple[int, int]:
+		"""Get the start and end offsets of the line containing offset."""
+		text = self._getStoryText()
+		if not text:
+			return (offset, offset + 1)
+		lineStart = text.rfind("\n", 0, offset)
+		lineStart = lineStart + 1 if lineStart >= 0 else 0
+		lineEnd = text.find("\n", offset)
+		if lineEnd < 0:
+			lineEnd = len(text)
+		else:
+			lineEnd += 1
+		return (lineStart, lineEnd)
+
+
+class HwpDocumentEdit(editableText.EditableText, UIA):
+	"""Overlay class for the main HWP document editing area (HwpMainEditWnd).
+
+	Provides full NVDA text navigation by combining EditableText mixin
+	with the HwpTextInfo backed by the COM Automation API bridge.
+	"""
+
+	TextInfo = HwpTextInfo
+	role = controlTypes.Role.DOCUMENT
+
+	def _get_name(self) -> str:
+		return ""
+
+	def makeTextInfo(self, position) -> HwpTextInfo:
+		return self.TextInfo(self, position)
+
+
+class HwpParagraph(UIA):
+	"""Overlay class for paragraph elements inside the HWP document."""
+
+	role = controlTypes.Role.PARAGRAPH
+
+	def _get_name(self) -> str:
+		return ""
 
 
 class AppModule(appModuleHandler.AppModule):
@@ -245,17 +298,16 @@ class AppModule(appModuleHandler.AppModule):
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		self._comBridge = HwpComBridge()
 
 	def terminate(self):
-		self._comBridge.disconnect()
+		_comBridge.disconnect()
 
 	@scriptHandler.script(
 		description="한글 문서의 전체 텍스트를 표 내용 포함하여 읽습니다",
 		gesture="kb:NVDA+shift+t",
 	)
 	def script_readFullDocumentText(self, gesture) -> None:
-		text = self._comBridge.getFullText(includeTableContents=True)
+		text = _comBridge.getFullText()
 		if text.strip():
 			lineCount = text.count("\n") + 1
 			ui.message(f"문서 텍스트 {lineCount}줄. {text[:500]}")
@@ -267,7 +319,7 @@ class AppModule(appModuleHandler.AppModule):
 		gesture="kb:NVDA+shift+p",
 	)
 	def script_readPositionInfo(self, gesture) -> None:
-		info = self._comBridge.getPositionInfo()
+		info = _comBridge.getPositionInfo()
 		if info:
 			page = info[1]
 			line = info[5]
@@ -285,10 +337,10 @@ class AppModule(appModuleHandler.AppModule):
 		gesture="kb:NVDA+shift+h",
 	)
 	def script_reportTableInfo(self, gesture) -> None:
-		if self._comBridge.isInTable():
-			info = self._comBridge.getPositionInfo()
+		if _comBridge.isInTable():
+			info = _comBridge.getPositionInfo()
 			cellAddr = info[8] if info and len(info) > 8 else ""
-			tableCount = self._comBridge.getTableCount()
+			tableCount = _comBridge.getTableCount()
 			msg = f"표 안에 있습니다. 문서 내 표 {tableCount}개."
 			if cellAddr:
 				msg += f" 현재 셀: {cellAddr}"
@@ -297,19 +349,8 @@ class AppModule(appModuleHandler.AppModule):
 			ui.message("표 안에 있지 않습니다")
 
 	def event_caret(self, obj: NVDAObject, nextHandler) -> None:
-		"""Handle caret movement in HWP document.
-
-		Since HWP does not support UIA TextPattern, NVDA cannot read text
-		on cursor movement by default. This handler uses the COM bridge
-		to read the current line text whenever the caret moves.
-		"""
-		if isinstance(obj, UIA):
-			className = obj.UIAElement.cachedClassName or ""
-			if className == "HwpMainEditWnd" or obj.UIAElement.cachedControlType == UIAHandler.UIA.UIA_EditControlTypeId:
-				lineText = self._comBridge.getCurrentLineText()
-				if lineText:
-					ui.message(lineText)
-					return
+		"""Invalidate text cache on caret movement for fresh reads."""
+		_comBridge.invalidateCache()
 		nextHandler()
 
 	def chooseNVDAObjectOverlayClasses(
@@ -331,11 +372,7 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, HwpParagraph)
 
 	def _get_statusBar(self) -> NVDAObject:
-		"""Retrieve the HWP status bar via UIA class name lookup.
-
-		The status bar (StatusBarImpl) contains children with position info:
-		page, section, line, column, character count, input mode, etc.
-		"""
+		"""Retrieve the HWP status bar via UIA class name lookup."""
 		clientObject = UIAHandler.handler.clientObject
 		condition = clientObject.createPropertyCondition(
 			UIAHandler.UIA_ClassNamePropertyId,
@@ -360,8 +397,6 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(obj, UIA):
 			return
 		className = obj.UIAElement.cachedClassName or ""
-		# The title bar class exposes a truncated window title;
-		# use the full title from the top-level window instead.
 		if className == "TitleBarImpl":
 			try:
 				obj.name = api.getForegroundObject().name
