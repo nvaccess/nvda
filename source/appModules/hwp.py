@@ -66,19 +66,39 @@ class HwpComBridge:
 			import pythoncom
 			import win32com.client
 
-			context = pythoncom.CreateBindCtx(0)
-			rot = pythoncom.GetRunningObjectTable()
-			for moniker in rot.EnumRunning():
+			# Strategy 1: GetActiveObject (works across security contexts)
+			for progId in ("HWPFrame.HwpObject", "Hwp.HwpObject"):
 				try:
-					name = moniker.GetDisplayName(context, None)
-					if "HwpObject" in name:
-						obj = rot.GetObject(moniker)
-						self._hwp = win32com.client.Dispatch(
-							obj.QueryInterface(pythoncom.IID_IDispatch),
-						)
-						return self._hwp
+					self._hwp = win32com.client.GetActiveObject(progId)
+					return self._hwp
 				except Exception:
 					continue
+
+			# Strategy 2: Running Object Table enumeration
+			try:
+				context = pythoncom.CreateBindCtx(0)
+				rot = pythoncom.GetRunningObjectTable()
+				for moniker in rot.EnumRunning():
+					try:
+						name = moniker.GetDisplayName(context, None)
+						if "HwpObject" in name:
+							obj = rot.GetObject(moniker)
+							self._hwp = win32com.client.Dispatch(
+								obj.QueryInterface(pythoncom.IID_IDispatch),
+							)
+							return self._hwp
+					except Exception:
+						continue
+			except Exception:
+				pass
+
+			# Strategy 3: Direct Dispatch (creates new if needed)
+			try:
+				self._hwp = win32com.client.Dispatch("HWPFrame.HwpObject")
+				return self._hwp
+			except Exception:
+				pass
+
 		except ImportError:
 			log.debugWarning("pywin32 not available for HWP COM bridge")
 		except Exception:
