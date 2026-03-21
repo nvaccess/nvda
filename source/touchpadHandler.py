@@ -72,7 +72,7 @@ RIM_TYPEHID = 2
 # uiCommand for GetRawInputDeviceInfo
 RIDI_PREPARSEDDATA = 0x20000005
 RIDI_DEVICENAME = 0x20000007  # the return valus is the character length, not the byte size
-RIDI_DEVICEINFO = 0x2000000b
+RIDI_DEVICEINFO = 0x2000000B
 
 # HID usages
 
@@ -98,7 +98,7 @@ HID_USAGE_DIGITIZER_SCAN_TIME = 0x56  # Mandatory
 UINT_MAX = UINT(-1).value  # Returned by some APIs on error
 
 
-HIDP_STATUS_BUFFER_TOO_SMALL =	0xC0110007
+HIDP_STATUS_BUFFER_TOO_SMALL = 0xC0110007
 
 # Human readable names for HIDP NTSTATUS codes, for debugging purposes
 _HIDP_STATUS_MAP = {
@@ -126,33 +126,45 @@ _HIDP_STATUS_MAP = {
 
 # Human readable names for usage pages and usages, for debugging purposes
 _HID_USAGE_MAP: dict[int, tuple[str, dict[int, str]]] = {
-	0x01: ("Generic", {
-		0x30: "X",
-		0x31: "Y",
-	}),
-	0x09: ("Button", {
-		0x01: "Touchpad button",
-		0x02: "External primary button",
-		0x03: "External secondary button",
-	}),
-	0x0D: ("Digitizer", {
-		0x05: "Touchpad",
-		0x0E: "Device configuration",
-		0x22: "Finger",
-		0x30: "Tip pressure",
-		0x3F: "Azimuth",
-		0x42: "Tip switch",
-		0x47: "Touch valid",
-		0x48: "Width",
-		0x49: "Height",
-		0x51: "Contact ID",
-		0x54: "Contact count",
-		0x55: "Contact count maximum",
-		0x56: "Scan time",
-	}),
-	0x20: ("Sensor", {
-		0x494: "Data field Force",
-	}),
+	0x01: (
+		"Generic",
+		{
+			0x30: "X",
+			0x31: "Y",
+		},
+	),
+	0x09: (
+		"Button",
+		{
+			0x01: "Touchpad button",
+			0x02: "External primary button",
+			0x03: "External secondary button",
+		},
+	),
+	0x0D: (
+		"Digitizer",
+		{
+			0x05: "Touchpad",
+			0x0E: "Device configuration",
+			0x22: "Finger",
+			0x30: "Tip pressure",
+			0x3F: "Azimuth",
+			0x42: "Tip switch",
+			0x47: "Touch valid",
+			0x48: "Width",
+			0x49: "Height",
+			0x51: "Contact ID",
+			0x54: "Contact count",
+			0x55: "Contact count maximum",
+			0x56: "Scan time",
+		},
+	),
+	0x20: (
+		"Sensor",
+		{
+			0x494: "Data field Force",
+		},
+	),
 }
 
 
@@ -397,7 +409,7 @@ def _HIDCapsToString(
 				if unitsStr:
 					valstr += f" ({unitsStr})"
 			elif field.startswith("Physical") and unitsStr:
-				valstr = f"{val} ({val * (10 ** unitsExp)} {unitsStr})"
+				valstr = f"{val} ({val * (10**unitsExp)} {unitsStr})"
 			else:
 				# for other data, still use decimal
 				valstr = str(val)
@@ -461,7 +473,7 @@ def _HIDDataDictToString(dataDict: dict[tuple[int, int, int], int]) -> str:
 			f"Link collection: {linkCollection}, "
 			f"Usage page: {usagePageStr}, "
 			f"Usage: {usageStr}, "
-			f"Value: {value}"
+			f"Value: {value}",
 		)
 	return "\n".join(strings)
 
@@ -469,6 +481,7 @@ def _HIDDataDictToString(dataDict: dict[tuple[int, int, int], int]) -> str:
 @dataclasses.dataclass
 class _TouchpadContact:
 	"""Represents a single contact point."""
+
 	id: int = 0
 	x: int = 0
 	y: int = 0
@@ -479,10 +492,12 @@ class _TouchpadContact:
 @dataclasses.dataclass
 class _TouchpadFrame:
 	"""Represents a touchpad frame, consisting of multiple contact points."""
+
 	scanTime: int = 0
 	isButtonDown: bool = False
 	contactCount: int = 0
 	contacts: list[_TouchpadContact] = dataclasses.field(default_factory=list)
+
 	def clear(self):
 		self.scanTime = 0
 		self.isButtonDown = False
@@ -528,13 +543,25 @@ class _TouchpadDevice:
 		# Get button caps
 		num = USHORT(caps.NumberInputButtonCaps)
 		buttonCaps = (hid.HIDP_BUTTON_CAPS * caps.NumberInputButtonCaps)()
-		_checkHidStatus(hid.HidP_GetButtonCaps(
-			hid.HIDP_REPORT_TYPE.INPUT, buttonCaps, byref(num), self._prepData))
+		_checkHidStatus(
+			hid.HidP_GetButtonCaps(
+				hid.HIDP_REPORT_TYPE.INPUT,
+				buttonCaps,
+				byref(num),
+				self._prepData,
+			),
+		)
 		# Get value caps
 		num = USHORT(caps.NumberInputValueCaps)
 		valueCaps = (hid.HIDP_VALUE_CAPS * caps.NumberInputValueCaps)()
-		_checkHidStatus(hid.HidP_GetValueCaps(
-			hid.HIDP_REPORT_TYPE.INPUT, valueCaps, byref(num), self._prepData))
+		_checkHidStatus(
+			hid.HidP_GetValueCaps(
+				hid.HIDP_REPORT_TYPE.INPUT,
+				valueCaps,
+				byref(num),
+				self._prepData,
+			),
+		)
 		# Get value ranges and possible link collections from value caps
 		self._linkCollections: list[int] = []
 		for valueCap in valueCaps:
@@ -551,12 +578,14 @@ class _TouchpadDevice:
 					self._linkCollections.append(valueCap.LinkCollection)
 		self._linkCollections.sort()
 		self._HIDCapsIndexToUsageMap = _getHIDCapsIndexToUsageMap(buttonCaps, valueCaps)
-		log.debug(f"Initializing touchpad device: {self.getName()}\n"
+		log.debug(
+			f"Initializing touchpad device: {self.getName()}\n"
 			f"Vendor ID: {self.vendorId}, "
 			f"Product ID: {self.productId}, "
 			f"Version = {self.versionNumber}\n"
 			f"Button caps: {caps.NumberInputButtonCaps} items\n{_HIDCapsToString(buttonCaps)}\n"
-			f"Value caps: {caps.NumberInputValueCaps} items\n{_HIDCapsToString(valueCaps)}")
+			f"Value caps: {caps.NumberInputValueCaps} items\n{_HIDCapsToString(valueCaps)}"
+		)
 
 	def parseHIDReport(self, report: PCHAR, reportLength: int, frame: _TouchpadFrame) -> bool:
 		"""
@@ -589,19 +618,20 @@ class _TouchpadDevice:
 		if ntstat != HIDP_STATUS_BUFFER_TOO_SMALL:
 			_checkHidStatus(ntstat)
 		dataList = (hid.HIDP_DATA * dataCount.value)()
-		_checkHidStatus(hid.HidP_GetData(
-			hid.HIDP_REPORT_TYPE.INPUT,
-			dataList,
-			byref(dataCount),
-			self._prepData,
-			report,
-			reportLength,
-		))
+		_checkHidStatus(
+			hid.HidP_GetData(
+				hid.HIDP_REPORT_TYPE.INPUT,
+				dataList,
+				byref(dataCount),
+				self._prepData,
+				report,
+				reportLength,
+			),
+		)
 		# Convert data list to a usage to value map, since we care more about usages
 		# Tuple members, in order, are: link collection, usage page, usage
 		dataDict: dict[tuple[int, int, int], int] = {
-			self._HIDCapsIndexToUsageMap[item.DataIndex]: item.u1.RawValue
-			for item in dataList
+			self._HIDCapsIndexToUsageMap[item.DataIndex]: item.u1.RawValue for item in dataList
 		}
 		# Sub reports of the same frame should have the same scan time of the first report.
 		scanTime = dataDict[0, HID_USAGE_PAGE_DIGITIZER, HID_USAGE_DIGITIZER_SCAN_TIME]
@@ -617,11 +647,21 @@ class _TouchpadDevice:
 		frame.isButtonDown = (0, HID_USAGE_PAGE_BUTTON, 0x01) in dataDict
 		for linkCollection in self._linkCollections:
 			contact = _TouchpadContact()
-			contact.id = dataDict[linkCollection, HID_USAGE_PAGE_DIGITIZER, HID_USAGE_DIGITIZER_CONTACT_IDENTIFIER]
+			contact.id = dataDict[
+				linkCollection, HID_USAGE_PAGE_DIGITIZER, HID_USAGE_DIGITIZER_CONTACT_IDENTIFIER
+			]
 			contact.x = dataDict[linkCollection, HID_USAGE_PAGE_GENERIC, HID_USAGE_GENERIC_X]
 			contact.y = dataDict[linkCollection, HID_USAGE_PAGE_GENERIC, HID_USAGE_GENERIC_Y]
-			contact.isInContact = (linkCollection, HID_USAGE_PAGE_DIGITIZER, HID_USAGE_DIGITIZER_TIP_SWITCH) in dataDict
-			contact.isValid = (linkCollection, HID_USAGE_PAGE_DIGITIZER, HID_USAGE_DIGITIZER_TOUCH_VALID) in dataDict
+			contact.isInContact = (
+				linkCollection,
+				HID_USAGE_PAGE_DIGITIZER,
+				HID_USAGE_DIGITIZER_TIP_SWITCH,
+			) in dataDict
+			contact.isValid = (
+				linkCollection,
+				HID_USAGE_PAGE_DIGITIZER,
+				HID_USAGE_DIGITIZER_TOUCH_VALID,
+			) in dataDict
 			frame.contacts.append(contact)
 			if len(frame.contacts) >= frame.contactCount:
 				return True  # This frame is complete.
@@ -635,15 +675,20 @@ class _TouchpadDevice:
 			self._handle,
 			RIDI_DEVICENAME,
 			None,
-			byref(cchName))
+			byref(cchName),
+		)
 		if cchName.value == 0:
 			raise WinError()
 		devName = create_unicode_buffer(cchName.value)
-		if user32.GetRawInputDeviceInfo(
-			self._handle,
-			RIDI_DEVICENAME,
-			devName,
-			byref(cchName)) == UINT_MAX:
+		if (
+			user32.GetRawInputDeviceInfo(
+				self._handle,
+				RIDI_DEVICENAME,
+				devName,
+				byref(cchName),
+			)
+			== UINT_MAX
+		):
 			raise WinError()
 		return devName.value
 
@@ -668,15 +713,21 @@ def _getTouchpadDevices() -> dict[int, _TouchpadDevice]:
 		devInfo = user32.RID_DEVICE_INFO()
 		devInfo.cbSize = sizeof(devInfo)
 		cbSize = UINT(sizeof(devInfo))
-		if user32.GetRawInputDeviceInfo(
-			dev.hDevice,
-			RIDI_DEVICEINFO,
-			byref(devInfo),
-			byref(cbSize)) == UINT_MAX:
+		if (
+			user32.GetRawInputDeviceInfo(
+				dev.hDevice,
+				RIDI_DEVICEINFO,
+				byref(devInfo),
+				byref(cbSize),
+			)
+			== UINT_MAX
+		):
 			continue
 		hidInfo = devInfo.info.hid
-		if not (hidInfo.usUsagePage == HID_USAGE_PAGE_DIGITIZER
-			and hidInfo.usUsage == HID_USAGE_DIGITIZER_TOUCH_PAD):
+		if not (
+			hidInfo.usUsagePage == HID_USAGE_PAGE_DIGITIZER
+			and hidInfo.usUsage == HID_USAGE_DIGITIZER_TOUCH_PAD
+		):
 			continue
 		result[dev.hDevice] = _TouchpadDevice(dev.hDevice, hidInfo)
 	return result
@@ -779,7 +830,9 @@ class TouchpadHandler(threading.Thread):
 			pData = cast(hidData.bRawData, c_void_p)
 			# Handle each reports
 			for i in range(hidData.dwCount):
-				frameCompleted = touchpad.parseHIDReport(cast(pData, PCHAR), hidData.dwSizeHid, self._touchpadFrame)
+				frameCompleted = touchpad.parseHIDReport(
+					cast(pData, PCHAR), hidData.dwSizeHid, self._touchpadFrame
+				)
 				pData.value += hidData.dwSizeHid
 				if frameCompleted:
 					self._processFrame()
@@ -796,14 +849,18 @@ class TouchpadHandler(threading.Thread):
 				else:
 					self._currentContactIDs.remove(contact.id)
 				self.trackerManager.update(
-					contact.id, contact.x, contact.y,
+					contact.id,
+					contact.x,
+					contact.y,
 					complete=not contact.isInContact,
 				)
 			else:
 				if contact.id in self._currentContactIDs:
 					self._currentContactIDs.remove(contact.id)
 					self.trackerManager.update(
-						contact.id, contact.x, contact.y,
+						contact.id,
+						contact.x,
+						contact.y,
 						complete=True,
 					)
 		self.touchpadTouching = self.enabled and self._currentContactIDs
@@ -832,7 +889,6 @@ class TouchpadHandler(threading.Thread):
 
 
 handler = None
-
 
 
 def handlePostConfigProfileSwitch():

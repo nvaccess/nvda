@@ -1713,7 +1713,7 @@ class RAWHID(Structure):
 	_fields_ = (
 		("dwSizeHid", DWORD),  # The size, in bytes, of each HID input in bRawData.
 		("dwCount", DWORD),  # The number of HID inputs in bRawData.
-		("bRawData", BYTE * 1)  # The raw input data, as an array of bytes.
+		("bRawData", BYTE * 1),  # The raw input data, as an array of bytes.
 	)
 
 
@@ -1873,6 +1873,7 @@ class RID_DEVICE_INFO_HID(Structure):
 
 class _RID_INFO(Union):
 	"""Type of RID_DEVICE_INFO.DUMMYUNIONNAME."""
+
 	_fields_ = (
 		("mouse", RID_DEVICE_INFO_MOUSE),
 		("keyboard", RID_DEVICE_INFO_KEYBOARD),
