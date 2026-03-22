@@ -188,7 +188,9 @@ If an issue has been checked by NV Access, and needs further triage, the `needs-
 Please notify NV Access when you believe the issue is ready for the `triaged` label.
 You can do this by tagging [relevant NV Access employees](../community/expertsList.md#nv-access) or emailing <info@nvaccess.org>.
 
-A `triaged` issue that requires a complex fix may require advice from NV Access, such as a project plan, before implementation is started.
+A `triaged` issue that requires a complex fix may require advice from NV Access before implementation is started.
+In this case, the `ADR-required` label will be applied, and NV Access will require an ADR to be submitted for review before work is started.
+See [Proposing Major Changes](../dev/proposingMajorChanges.md) for more information.
 
 An issue with a simple solution should get labelled `good first issue`.
 If it is a complex issue, technical investigation may be required.

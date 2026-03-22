@@ -1,0 +1,172 @@
+name: ADR for major project
+description: Propose an Architecture Decision Record for a major NVDA project
+type: Task
+labels: ["ADR", "audience/nvda-dev"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This template is intended for major technical changes where an Architecture Decision Record (ADR) is needed before implementation.
+
+        Use this issue to document context, options, decision rationale, technical design, and expected impact.
+        For smaller changes, use other issue templates.
+
+        Strong ADRs include:
+        - user stories that clarify UX impact,
+        - architecture plans that map to concrete code changes,
+        - explicit impact and risk analysis.
+
+  - type: dropdown
+    id: decisionStatus
+    attributes:
+      label: ADR status
+      options:
+        - Proposed
+        - Accepted
+        - Rejected
+        - Superseded
+    validations:
+      required: true
+
+  - type: dropdown
+    id: impactArea
+    attributes:
+      label: Impact area
+      description: Choose the area most impacted by this decision.
+      multiple: true
+      options:
+        - Core architecture
+        - Add-on API / infrastructure
+        - Build / CI / tooling
+        - Performance
+        - Security / privacy
+        - Accessibility behavior
+        - Testing strategy
+        - Documentation / process
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: related
+    attributes:
+      label: Related issues, PRs, discussions, or mailing list threads (optional)
+      description: Add issues/PR/discussion/thread links if relevant.
+      placeholder: |
+        #12345
+        https://github.com/nvaccess/nvda/discussions/12345
+    validations:
+      required: false
+
+  - type: textarea
+    id: contextProblem
+    attributes:
+      label: Context and problem statement
+      description: Describe the current state, pain points, constraints, and why this decision is needed now.
+    validations:
+      required: true
+
+  - type: textarea
+    id: uxUserStories
+    attributes:
+      label: UX impact via user stories
+      description: Provide user stories that make the UX impact concrete. Include expected behavior changes for end users and/or add-on developers where relevant.
+      placeholder: |
+        As a ..., I want ..., so that ...
+        As a ..., I want ..., so that ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: decisionDrivers
+    attributes:
+      label: Decision drivers
+      description: List key criteria influencing this decision, such as maintainability, compatibility, performance, accessibility impact, or team capacity.
+    validations:
+      required: true
+
+  - type: textarea
+    id: optionsConsidered
+    attributes:
+      label: Options considered
+      description: Describe realistic options, including at least one non-adoption / status quo option.
+      placeholder: |
+        Option A - ...
+        Option B - ...
+        Option C (status quo) - ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: technicalDesign
+    attributes:
+      label: Proposed technical design
+    validations:
+      required: true
+
+  - type: textarea
+    id: decisionOutcome
+    attributes:
+      label: Proposed decision and rationale
+      description: State the proposed option and explain why it is preferred over alternatives.
+    validations:
+      required: true
+
+  - type: textarea
+    id: consequences
+    attributes:
+      label: Impact analysis
+      description: Outline expected positive, neutral, and negative impacts across UX, code maintainability, performance, reliability, security/privacy, and API/add-on compatibility.
+    validations:
+      required: true
+
+  - type: textarea
+    id: implementationPlan
+    attributes:
+      label: Architecture and code change plan
+      description: |
+        Provide a concrete implementation plan.
+        Identify modules/files likely to change, new abstractions, migration steps, sequencing, rollout strategy, and fallback/rollback plans.
+      placeholder: |
+        Planned architecture changes:
+        Target modules/files:
+        API compatibility strategy:
+    validations:
+      required: true
+
+  - type: textarea
+    id: integrationPlan
+    attributes:
+      label: Integration plan
+      description: |
+        Provide a concrete integration plan.
+      placeholder: |
+        Planned integration steps:
+        Rollback strategy:
+    validations:
+      required: true
+
+  - type: textarea
+    id: riskMitigations
+    attributes:
+      label: Risks and mitigations
+      description: Identify technical, product, or process risks and how they will be mitigated.
+    validations:
+      required: true
+
+  - type: textarea
+    id: validationPlan
+    attributes:
+      label: Validation and success criteria
+      description: Describe how UX outcomes and technical outcomes will be validated (tests, manual scenarios, telemetry if any, and measurable success criteria).
+    validations:
+      required: true
+
+  - type: textarea
+    id: openQuestions
+    attributes:
+      label: Open questions
+      description: List unresolved points requiring feedback.
+    validations:
+      required: false
