@@ -2172,6 +2172,11 @@ This aspect of normalization also aids in reading equations in the Microsoft Wor
 
 1. Stable ordering of modifiers in composite characters, for example in ancient Hebrew.
 
+1. Normalization of decorative letter variants that the standard NFKC algorithm does not decompose.
+Certain Unicode characters, such as negative circled Latin capital letters (🅐–🅩) and negative squared Latin capital letters (🅲–🅩), are treated as autonomous symbols by the Unicode standard and have no compatibility decomposition.
+NVDA extends NFKC by mapping these characters to their plain Latin letter equivalents (A–Z).
+Note that a small number of negative squared letters that have emoji semantics (🅰, 🅱, 🅾, 🅿) are excluded from this mapping to preserve their distinct meaning.
+
 To toggle Unicode normalization from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 | . {.hideHeaderRow} |.|
