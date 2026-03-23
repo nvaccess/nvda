@@ -2,7 +2,7 @@ import time
 from threading import Event
 from typing import Callable
 
-from asyncioEventLoop import runCoroutine
+from _asyncioEventLoop.utils import runCoroutine
 import extensionPoints
 from logHandler import log
 

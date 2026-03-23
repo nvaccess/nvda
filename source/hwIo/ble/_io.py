@@ -9,7 +9,7 @@ from threading import Event, Thread
 from typing import Callable, Iterator
 import weakref
 
-from asyncioEventLoop import runCoroutine
+from _asyncioEventLoop.utils import runCoroutine
 from ..base import _isDebug, IoBase
 from ..ioThread import IoThread
 from logHandler import log
