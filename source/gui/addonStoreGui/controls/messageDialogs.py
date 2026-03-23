@@ -19,13 +19,14 @@ import wx
 
 import addonAPIVersion
 
-from addonHandler import Addon, AddonBase, AddonManifest, _getAddonManifestsFromPath, getAvailableAddons
+from addonHandler import Addon, AddonBase, AddonManifest, getAvailableAddons
 from addonStore.models.addon import (
 	_AddonGUIModel,
 	_AddonStoreModel,
 	_AddonManifestModel,
 )
 from addonStore.dataManager import addonDataManager
+from addonStore.models.manifest import _getAddonManifestsFromPath
 from addonStore.models.status import _StatusFilterKey, AvailableAddonStatus, getStatus
 import config
 from config.configFlags import AddonsAutomaticUpdate
