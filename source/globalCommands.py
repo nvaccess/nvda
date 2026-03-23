@@ -20,6 +20,7 @@ from annotation import (
 
 import audioDucking
 import touchHandler
+import touchpadHandler
 import keyboardHandler
 import mouseHandler
 import eventHandler
@@ -107,6 +108,9 @@ SCRCAT_TOOLS = pgettext("script category", "Tools")
 #: Script category for touch commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_TOUCH = _("Touch screen")
+#: Script category for touchpad commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_TOUCHPAD = _("Touchpad")
 #: Script category for focus commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_FOCUS = _("System focus")
@@ -1348,7 +1352,12 @@ class GlobalCommands(ScriptableObject):
 			"and positions the review position at the point of the navigator object",
 		),
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:NVDA+numpad7", "kb(laptop):NVDA+pageUp", "ts(object):2finger_flickUp"),
+		gestures=(
+			"kb:NVDA+numpad7",
+			"kb(laptop):NVDA+pageUp",
+			"ts(object):2finger_flickUp",
+			"tp(object):2finger_flickUp",
+		),
 	)
 	def script_reviewMode_next(self, gesture):
 		label = review.nextMode()
@@ -1369,7 +1378,12 @@ class GlobalCommands(ScriptableObject):
 			"and positions the review position at the point of the navigator object",
 		),
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:NVDA+numpad1", "kb(laptop):NVDA+pageDown", "ts(object):2finger_flickDown"),
+		gestures=(
+			"kb:NVDA+numpad1",
+			"kb(laptop):NVDA+pageDown",
+			"ts(object):2finger_flickDown",
+			"tp(object):2finger_flickDown",
+		),
 	)
 	def script_reviewMode_previous(self, gesture):
 		label = review.nextMode(prev=True)
@@ -1631,7 +1645,12 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for move to parent object command.
 		description=_("Moves the navigator object to the object containing it"),
 		category=SCRCAT_OBJECTNAVIGATION,
-		gestures=("kb:NVDA+numpad8", "kb(laptop):NVDA+shift+upArrow", "ts(object):flickup"),
+		gestures=(
+			"kb:NVDA+numpad8",
+			"kb(laptop):NVDA+shift+upArrow",
+			"ts(object):flickup",
+			"tp(object):flickup",
+		),
 	)
 	def script_navigatorObject_parent(self, gesture: inputCore.InputGesture):
 		curObject = api.getNavigatorObject()
@@ -1662,7 +1681,12 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for move to next object command.
 		description=_("Moves the navigator object to the next object"),
 		category=SCRCAT_OBJECTNAVIGATION,
-		gestures=("kb:NVDA+numpad6", "kb(laptop):NVDA+shift+rightArrow", "ts(object):2finger_flickright"),
+		gestures=(
+			"kb:NVDA+numpad6",
+			"kb(laptop):NVDA+shift+rightArrow",
+			"ts(object):2finger_flickright",
+			"tp(object):2finger_flickright",
+		),
 	)
 	def script_navigatorObject_next(self, gesture: inputCore.InputGesture):
 		curObject = api.getNavigatorObject()
@@ -1692,7 +1716,12 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for move to previous object command.
 		description=_("Moves the navigator object to the previous object"),
 		category=SCRCAT_OBJECTNAVIGATION,
-		gestures=("kb:NVDA+numpad4", "kb(laptop):NVDA+shift+leftArrow", "ts(object):2finger_flickleft"),
+		gestures=(
+			"kb:NVDA+numpad4",
+			"kb(laptop):NVDA+shift+leftArrow",
+			"ts(object):2finger_flickleft",
+			"tp(object):2finger_flickleft",
+		),
 	)
 	def script_navigatorObject_previous(self, gesture: inputCore.InputGesture):
 		curObject = api.getNavigatorObject()
@@ -1721,7 +1750,12 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for move to first child object command.
 		description=_("Moves the navigator object to the first object inside it"),
 		category=SCRCAT_OBJECTNAVIGATION,
-		gestures=("kb:NVDA+numpad2", "kb(laptop):NVDA+shift+downArrow", "ts(object):flickdown"),
+		gestures=(
+			"kb:NVDA+numpad2",
+			"kb(laptop):NVDA+shift+downArrow",
+			"ts(object):flickdown",
+			"tp(object):flickdown",
+		),
 	)
 	def script_navigatorObject_firstChild(self, gesture: inputCore.InputGesture):
 		curObject = api.getNavigatorObject()
@@ -1755,7 +1789,7 @@ class GlobalCommands(ScriptableObject):
 			"(example: presses it if it is a button).",
 		),
 		category=SCRCAT_OBJECTNAVIGATION,
-		gestures=("kb:NVDA+numpadEnter", "kb(laptop):NVDA+enter", "ts:double_tap"),
+		gestures=("kb:NVDA+numpadEnter", "kb(laptop):NVDA+enter", "ts:double_tap", "tp:double_tap"),
 	)
 	def script_review_activate(self, gesture: inputCore.InputGesture):
 		# Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
@@ -1832,7 +1866,12 @@ class GlobalCommands(ScriptableObject):
 		),
 		resumeSayAllMode=sayAll.CURSOR.REVIEW,
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:numpad7", "kb(laptop):NVDA+upArrow", "ts(text):flickUp"),
+		gestures=(
+			"kb:numpad7",
+			"kb(laptop):NVDA+upArrow",
+			"ts(text):flickUp",
+			"tp(text):flickUp",
+		),
 	)
 	def script_review_previousLine(self, gesture: inputCore.InputGesture):
 		info = api.getReviewPosition().copy()
@@ -1894,7 +1933,12 @@ class GlobalCommands(ScriptableObject):
 		),
 		resumeSayAllMode=sayAll.CURSOR.REVIEW,
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:numpad9", "kb(laptop):NVDA+downArrow", "ts(text):flickDown"),
+		gestures=(
+			"kb:numpad9",
+			"kb(laptop):NVDA+downArrow",
+			"ts(text):flickDown",
+			"tp(text):flickDown",
+		),
 	)
 	def script_review_nextLine(self, gesture: inputCore.InputGesture):
 		origInfo = api.getReviewPosition().copy()
@@ -2030,7 +2074,12 @@ class GlobalCommands(ScriptableObject):
 			"Moves the review cursor to the previous word of the current navigator object and speaks it",
 		),
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:numpad4", "kb(laptop):NVDA+control+leftArrow", "ts(text):2finger_flickLeft"),
+		gestures=(
+			"kb:numpad4",
+			"kb(laptop):NVDA+control+leftArrow",
+			"ts(text):2finger_flickLeft",
+			"tp(text):2finger_flickLeft",
+		),
 	)
 	def script_review_previousWord(self, gesture: inputCore.InputGesture):
 		info = api.getReviewPosition().copy()
@@ -2065,7 +2114,12 @@ class GlobalCommands(ScriptableObject):
 			"Pressing three times spells the word using character descriptions",
 		),
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:numpad5", "kb(laptop):NVDA+control+.", "ts(text):hoverUp"),
+		gestures=(
+			"kb:numpad5",
+			"kb(laptop):NVDA+control+.",
+			"ts(text):hoverUp",
+			"tp(text):hoverUp",
+		),
 		speakOnDemand=True,
 	)
 	def script_review_currentWord(self, gesture: inputCore.InputGesture):
@@ -2092,7 +2146,12 @@ class GlobalCommands(ScriptableObject):
 			"Moves the review cursor to the next word of the current navigator object and speaks it",
 		),
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:numpad6", "kb(laptop):NVDA+control+rightArrow", "ts(text):2finger_flickRight"),
+		gestures=(
+			"kb:numpad6",
+			"kb(laptop):NVDA+control+rightArrow",
+			"ts(text):2finger_flickRight",
+			"tp(text):2finger_flickRight",
+		),
 	)
 	def script_review_nextWord(self, gesture: inputCore.InputGesture):
 		origInfo = api.getReviewPosition().copy()
@@ -2159,7 +2218,12 @@ class GlobalCommands(ScriptableObject):
 			"Moves the review cursor to the previous character of the current navigator object and speaks it",
 		),
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:numpad1", "kb(laptop):NVDA+leftArrow", "ts(text):flickLeft"),
+		gestures=(
+			"kb:numpad1",
+			"kb(laptop):NVDA+leftArrow",
+			"ts(text):flickLeft",
+			"tp(text):flickLeft",
+		),
 	)
 	def script_review_previousCharacter(self, gesture: inputCore.InputGesture):
 		lineInfo = api.getReviewPosition().copy()
@@ -2244,7 +2308,12 @@ class GlobalCommands(ScriptableObject):
 			"Moves the review cursor to the next character of the current navigator object and speaks it",
 		),
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:numpad3", "kb(laptop):NVDA+rightArrow", "ts(text):flickRight"),
+		gestures=(
+			"kb:numpad3",
+			"kb(laptop):NVDA+rightArrow",
+			"ts(text):flickRight",
+			"tp(text):flickRight",
+		),
 	)
 	def script_review_nextCharacter(self, gesture: inputCore.InputGesture):
 		lineInfo = api.getReviewPosition().copy()
@@ -2528,7 +2597,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for show NVDA menu command.
 		description=_("Shows the NVDA menu"),
-		gestures=("kb:NVDA+n", "ts:2finger_double_tap"),
+		gestures=("kb:NVDA+n", "ts:2finger_double_tap", "tp:2finger_double_tap"),
 	)
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_showGui(self, gesture):
@@ -2541,7 +2610,12 @@ class GlobalCommands(ScriptableObject):
 			" moving the review cursor as it goes",
 		),
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:numpadPlus", "kb(laptop):NVDA+shift+a", "ts(text):3finger_flickDown"),
+		gestures=(
+			"kb:numpadPlus",
+			"kb(laptop):NVDA+shift+a",
+			"ts(text):3finger_flickDown",
+			"tp(text):3finger_flickDown",
+		),
 		speakOnDemand=True,
 	)
 	def script_review_sayAll(self, gesture: inputCore.InputGesture):
@@ -4481,6 +4555,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_OBJECTNAVIGATION,
 		gestures=(
 			"ts(object):flickright",
+			"tp(object):flickright",
 			"kb:NVDA+numpad3",
 			"kb(laptop):shift+NVDA+]",
 		),
@@ -4519,6 +4594,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_OBJECTNAVIGATION,
 		gestures=(
 			"ts(object):flickleft",
+			"tp(object):flickleft",
 			"kb:NVDA+numpad9",
 			"kb(laptop):shift+NVDA+[",
 		),
@@ -4633,6 +4709,100 @@ class GlobalCommands(ScriptableObject):
 		gesture="ts:tapAndHold",
 	)
 	def script_touch_rightClick(self, gesture):
+		obj = api.getNavigatorObject()
+		# Ignore invisible or offscreen objects as they cannot even be navigated with touch gestures.
+		if controlTypes.State.INVISIBLE in obj.states or controlTypes.State.OFFSCREEN in obj.states:
+			return
+		try:
+			p = api.getReviewPosition().pointAtStart
+		except (NotImplementedError, LookupError):
+			p = None
+		if p:
+			x = p.x
+			y = p.y
+		else:
+			try:
+				(left, top, width, height) = obj.location
+			# Flake8/E722: stems from object location script.
+			except:  # noqa
+				# Translators: Reported when the object has no location for the mouse to move to it.
+				ui.message(_("object has no location"))
+				return
+			# Don't bother clicking when parts or the entire object is offscreen.
+			if min(left, top, width, height) < 0:
+				return
+			x = left + (width // 2)
+			y = top + (height // 2)
+		winUser.setCursorPos(x, y)
+		self.script_rightMouseClick(gesture)
+
+	@script(
+		# Translators: Describes a command.
+		description=_("Toggles the support of touchpad interaction"),
+		category=SCRCAT_TOUCHPAD,
+		gesture="kb:NVDA+control+alt+p",
+	)
+	def script_toggleTouchpadSupport(self, gesture):
+		enabled = not bool(config.conf["touchpad"]["enabled"])
+		touchpadHandler.handler.enabled = enabled
+		# Set configuration upon success
+		config.conf["touchpad"]["enabled"] = enabled
+		if enabled:
+			# Translators: Presented when support of touch interaction has been enabled
+			ui.message(_("Touchpad interaction enabled"))
+		else:
+			# Translators: Presented when support of touch interaction has been disabled
+			ui.message(_("Touchpad interaction disabled"))
+
+	@script(
+		# Translators: Input help mode message for a touchpad gesture.
+		description=_("Cycles between available touchpad modes"),
+		category=SCRCAT_TOUCHPAD,
+		gesture="tp:3finger_tap",
+	)
+	def script_touchpad_changeMode(self, gesture):
+		mode = touchpadHandler.handler._curTouchMode
+		index = touchpadHandler.availableTouchModes.index(mode)
+		index = (index + 1) % len(touchpadHandler.availableTouchModes)
+		newMode = touchpadHandler.availableTouchModes[index]
+		touchpadHandler.handler._curTouchMode = newMode
+		try:
+			newModeLabel = touchpadHandler.touchModeLabels[newMode]
+		except KeyError:
+			# Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
+			newModeLabel = _("%s mode") % newMode
+		ui.message(newModeLabel)
+
+	@script(
+		# Translators: Input help mode message for a touchpad gesture.
+		description=_("Reports the object and content directly under your finger"),
+		category=SCRCAT_TOUCHPAD,
+		gestures=("tp:tap", "tp:hoverDown"),
+	)
+	def script_touchpad_newExplore(self, gesture):
+		touchpadHandler.handler.screenExplorer.moveTo(gesture.x, gesture.y, new=True)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for a touchpad gesture.
+			"Reports the new object or content under your finger if different to where your finger was last",
+		),
+		category=SCRCAT_TOUCHPAD,
+		gesture="tp:hover",
+	)
+	def script_touchpad_explore(self, gesture):
+		touchpadHandler.handler.screenExplorer.moveTo(gesture.x, gesture.y)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for touchpad right click command.
+			"Clicks the right mouse button at the current touch position. "
+			"This is generally used to activate a context menu.",
+		),
+		category=SCRCAT_TOUCHPAD,
+		gesture="tp:tapAndHold",
+	)
+	def script_touchpad_rightClick(self, gesture):
 		obj = api.getNavigatorObject()
 		# Ignore invisible or offscreen objects as they cannot even be navigated with touch gestures.
 		if controlTypes.State.INVISIBLE in obj.states or controlTypes.State.OFFSCREEN in obj.states:

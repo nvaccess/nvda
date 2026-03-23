@@ -220,6 +220,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enabled = boolean(default=true)
 	touchTyping = boolean(default=False)
 
+[touchpad]
+	enabled = boolean(default=false)
+
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
 	# These settings affect what information is reported when you navigate

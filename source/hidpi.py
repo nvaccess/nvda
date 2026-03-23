@@ -140,7 +140,7 @@ class HIDP_VALUE_CAPS(Structure):
 		("Reserved2", USHORT * 5),
 		("UnitsExp", ULONG),
 		("Units", ULONG),
-		("LogiclMin", LONG),
+		("LogicalMin", LONG),
 		("LogicalMax", LONG),
 		("PhysicalMin", LONG),
 		("PhysicalMax", LONG),
