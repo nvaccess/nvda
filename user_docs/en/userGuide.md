@@ -421,8 +421,8 @@ If you have already closed this dialog or are wanting to install from a portable
 The installation dialog that appears will confirm whether you wish to install NVDA and will also tell you whether this installation will be updating a previous install.
 Pressing the Continue button will start installing NVDA.
 There are also a few options in this dialog which are explained below.
-Once the installation has completed, a message will appear telling you that it was successful.
-Pressing OK at this point will restart the newly installed copy of NVDA.
+Once the installation has completed, a dialog will appear with options for what to do next.
+See [Restart Windows After Installation](#RestartWindowsAfterInstall) for more information.
 
 #### Incompatible add-ons warning {#InstallWithIncompatibleAddons}
 
@@ -448,6 +448,18 @@ If created, this shortcut will also be assigned a shortcut key of `control+alt+n
 This option allows you to choose whether or not NVDA should copy the user configuration from the currently running NVDA into the configuration for the currently logged on user, for the installed copy of NVDA.
 This will not copy the configuration for any other users of this system nor to the system configuration for use during Windows sign-in and [other secure screens](#SecureScreens).
 This option is only available when installing from a portable copy, not when installing directly from the downloaded Launcher package.
+
+#### Restart Windows After Installation {#RestartWindowsAfterInstall}
+
+After NVDA has been successfully installed or updated, a dialog will appear recommending that you restart Windows.
+Restarting ensures that NVDA is fully registered with the system and works correctly in all applications.
+
+The dialog provides the following options:
+
+* Restart Windows: Immediately restart Windows.
+* Start NVDA: Start the newly installed copy of NVDA without restarting.
+  * Note: this option is not available when the installer is run with elevated (administrator) privileges.
+* Exit NVDA: Close without starting NVDA or restarting Windows.
 
 ### Creating a Portable Copy {#CreatingAPortableCopy}
 
@@ -1176,7 +1188,7 @@ However, for scenarios where you wish to copy an entire table or paragraph of ri
 ## Reading Mathematical Content {#ReadingMath}
 
 NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille.
-NVDA uses [MathCAT](https://nsoiffer.github.io/MathCAT/) for reading mathematical content.
+NVDA uses [MathCAT](https://daisy.github.io/MathCAT/) for reading mathematical content.
 
 ### Supported math content {#SupportedMathContent}
 
@@ -1499,6 +1511,7 @@ You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAnd
 | Name |Key |Description|
 |---|---|---|
 |Toggles the state of the screen curtain |`NVDA+control+escape` |Enable to make the screen black or disable to show the contents of the screen. Pressed once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it.|
+| Reports the state of the screen curtain | `None` | Announces the current status of the screen curtain, whether it is disabled or enabled or in temporary mode. |
 
 <!-- KC:endInclude -->
 
@@ -1539,6 +1552,14 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 |Toggle filter of the magnifier |`NVDA+shift+i` |Cycles through available color filters (normal, grayscale, inverted)|
 |Toggle focus mode for the full-screen magnifier |None |Cycles through focus tracking modes (center, border, relative)|
 |Launch spotlight if magnifier is full-screen |`NVDA+shift+l` |Activates spotlight mode for focused reading or presentations|
+|Pan left |`NVDA+alt+leftArrow` |Pan the magnified view to the left by the specified panning step size|
+|Pan right |`NVDA+alt+rightArrow` |Pan the magnified view to the right by the specified panning step size|
+|Pan up |`NVDA+alt+upArrow` |Pan the magnified view upwards by the specified panning step size|
+|Pan down |`NVDA+alt+downArrow` |Pan the magnified view downwards by the specified panning step size|
+|Pan to left edge |`NVDA+shift+alt+leftArrow` |Pan the magnified view directly to the left edge of the screen|
+|Pan to right edge |`NVDA+shift+alt+rightArrow` |Pan the magnified view directly to the right edge of the screen|
+|Pan to top edge |`NVDA+shift+alt+upArrow` |Pan the magnified view directly to the top edge of the screen|
+|Pan to bottom edge |`NVDA+shift+alt+downArrow` |Pan the magnified view directly to the bottom edge of the screen|
 
 <!-- KC:endInclude -->
 
@@ -1555,24 +1576,25 @@ The default zoom level when the magnifier is first enabled can be configured in 
 Color filters can help users with certain visual impairments or light sensitivity by modifying the colors displayed on the screen.
 The magnifier provides three color filter options:
 
-* **Normal**: No color modification is applied. This is the default setting.
-* **Grayscale**: Converts all colors to shades of gray, which can help reduce eye strain and improve contrast for some users.
-* **Inverted**: Inverts all colors on the screen (black becomes white, white becomes black, etc.), which can be helpful for users who prefer light text on dark backgrounds or have photophobia.
+* Normal: No color modification is applied. This is the default setting.
+* Grayscale: Converts all colors to shades of gray, which can help reduce eye strain and improve contrast for some users.
+* Inverted: Inverts all colors on the screen (black becomes white, white becomes black, etc.), which can be helpful for users who prefer light text on dark backgrounds or have photophobia.
 
 To cycle through the available filters press `NVDA+shift+i`.
 NVDA will announce the name of the currently selected filter.
 
 The default color filter when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
-### Focus Tracking Modes {#MagnifierFocusModes}
+### Focus Tracking Modes {#MagnifierFullscreenFocusModes}
 
 The magnifier offers three different modes for tracking focus and determining which part of the screen to magnify:
 
-* **Center**: The magnified area is always centered on the current focus position.
-This mode keeps the focused element at the center of the screen at all times.
-* **Border**: The magnified area only moves when the focus approaches the edge of the visible area.
+* Center: The magnified area is centered on the current focus position.
+This mode keeps the focused element at the center of the screen and clamps to the screen edge.
+To disable clamping, activate [true center mode in the Magnifier settings](#MagnifierUseTrueCenter).
+* Border: The magnified area only moves when the focus approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
-* **Relative**: The magnified area maintains the relative position of the focus within the screen.
+* Relative: The magnified area maintains the relative position of the focus within the screen.
 This mode mimics the behavior of the Windows Magnifier.
 
 To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
@@ -2825,7 +2847,7 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### Default focus mode {#MagnifierDefaultFocusMode}
+##### Default focus mode {#MagnifierDefaultFullscreenFocusMode}
 
 This combo box allows you to select the default focus tracking mode when the magnifier is first enabled.
 To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
@@ -2842,6 +2864,36 @@ The available options are:
 | Center | The magnified area is always centered on the current focus position. |
 | Border | The magnified area only moves when the focus approaches the edge of the visible area. |
 | Relative | The magnified area maintains the relative position of the focus within the screen. |
+
+##### Panning step size {#MagnifierPanningStepSize}
+
+This slider allows you to set the panning step size as a percentage of the visible magnified window.
+The panning step size can range from 1% to 100%, with a default value of 10%.
+This means that when you use manual pan commands, the magnified view will move by the specified percentage of the current visible window size.
+
+For example, if your visible magnified window is 200 pixels wide and you have a panning step size of 10%, each pan command will move the view by 20 pixels.
+Higher percentages cause larger movements, making it faster to navigate across the screen, while lower percentages provide finer control for precise positioning.
+The actual pixel distance will automatically adjust based on your current zoom level.
+
+Note: Pan commands allow you to manually move the magnified view in any direction, independent of the focus tracking mode.
+Available pan actions include:
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |1 to 100|
+|Default |10|
+
+##### Use true center {#MagnifierUseTrueCenter}
+
+This checkbox controls whether the magnifier should always keep the focus centered on the screen, or if it should allow the focus to move towards the edges of the screen before moving the magnified area.
+When enabled, the magnifier will always keep the focus centered on the screen, which can be helpful for users who prefer a consistent position of the focus within the magnified view.
+
+This option is disabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Disabled|
 
 ##### Keep mouse centered {#MagnifierKeepMouseCentered}
 
@@ -3415,20 +3467,22 @@ If speech rules for the main language cannot be found, English ("en") is used.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | Any known language code and sub-code, e.g. "en-uk". |
-| Default | en |
+| Options | Automatic, English, English (en-GB), Chinese (Traditional) (zh-TW), Finnish, German, Indonesian, Norwegian Bokmål, Spanish, Swedish, Vietnamese |
+| Default | Automatic (the language of the current voice if supported, or fallback to English) |
 
 ###### Speech Style {MathSpeechStyle}
 
-Different styles can be used to speak mathematical content:
+Different styles can be used to speak mathematical content.
+Each [math speech language](#MathSpeechLanguage) has different speech styles available.
+
+For English and most languages, the following styles are available:
 
 * ClearSpeak was developed by the Educational Testing Service for use on university-admission and other high-stakes tests in the United States.
-Refer to the [ClearSpeak specification details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
+Refer to the [ClearSpeak specification details in this Word document](https://daisy.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
 * SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").
 These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
 * LiteralSpeak tells MathCAT to speak math expressions almost exactly as written, without interpreting the symbols or meaning.
 It prioritizes literal reading (character-by-character or symbol-by-symbol), rather than mathematical meaning.
-* Other speech styles may exist designed for individual languages.
 
 Examples of each type of speech:
 
@@ -3439,8 +3493,8 @@ Examples of each type of speech:
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | ClearSpeak, SimpleSpeak, LiteralSpeak, and more options depending on your language |
-| Default | ClearSpeak |
+| Options | ClearSpeak, SimpleSpeak, LiteralSpeak, or other options depending on your language |
+| Default | Depends on the language |
 
 ###### Speech verbosity {#MathSpeechVerbosity}
 
@@ -3505,6 +3559,15 @@ Whether to speak the expression after moving to it or give an overview.
 |---|---|
 | Options | Speak, Describe overview |
 | Default | Speak |
+
+###### Use native math speech in Word and Outlook {#MathUseWordNative}
+
+When enabled, NVDA uses Microsoft Word's built-in math presentation (speech, braille, and interaction) instead of MathCAT when reading and interacting with equations in Word documents.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Checked, Unchecked |
+| Default | Unchecked |
 
 ##### Navigation Options {#MathNavigation}
 
@@ -3779,10 +3842,12 @@ Press this button to test the mirror URL you have entered.
 You must be connected to the internet for the test to succeed.
 It is recommended that you always test the URL before saving it.
 
-#### Copy Add-ons to System-wide Configuration Dialog {#CopyAddonsToSystemProfileDialog}
+#### Copy Settings to System-wide Configuration Dialog {#CopyAddonsToSystemProfileDialog}
 
-This dialog allows you to choose which of your [add-ons](#AddonsManager) to [copy to NVDA's system-wide configuration](#GeneralSettingsCopySettings), which is used during sign-in and on [secure screens](#SecureScreens).
-By default, NVDA will not copy any of your add-ons to the system-wide configuration.
+This dialog appears if you choose to [copy your settings to NVDA's system-wide configuration](#GeneralSettingsCopySettings) and your NVDA configuration or the system-wide NVDA configuration contains [add-ons](#AddonsManager).
+It allows you to choose which of your add-ons to copy to the system-wide configuration, which is used during sign-in and on [secure screens](#SecureScreens).
+It also shows which add-ons are already present in the system-wide configuration.
+By default, only add-ons that are already present in the system-wide configuration will be included.
 
 Copying add-ons to the system-wide configuration is a serious security risk.
 NVDA uses this configuration when running on secure screens, including the sign-in and User Account Control (UAC) screens.
@@ -3790,11 +3855,23 @@ When running on secure screens, NVDA runs as the system user, which has privileg
 This means that many of the usual security and privacy features of Windows, like User Account Control (UAC), do not apply.
 Allowing add-ons to run in this environment grants them unrestricted access to your entire system.
 
+The list of add-ons shows all add-ons enabled in the currently running NVDA configuration and/or present in the system-wide NVDA configuration.
+The version of the add-on installed in the currently running configuration is shown in the "User version" column.
+The version installed in the system-wide configuration is shown in the "System-wide version" column.
+If the add-on is not present in the currently running or system-wide configuration, "Not installed" is shown in the appropriate column.
+
 To copy one or more add-ons to the system-wide configuration, check them in the list of add-ons.
 You are strongly recommended to leave all add-ons that you do not require to access secure screens unchecked.
 
+To get more information about an add-on, select the add-on in the list of add-ons and press the "About add-on..." button.
+The details shown will be for the version in the currently running configuration, unless the add-on is not installed in the currently running configuration, in which case the details of the version installed in the system-wide configuration will be shown.
+
 Please note that you may only copy currently enabled add-ons to the system-wide configuration.
 Add-ons that are "pending restart" cannot be copied.
+
+Add-ons that are currently installed in the system-wide configuration, but are not present in the running NVDA configuration will be removed.
+These items cannot be checked.
+They also begin with "[remove]" for easy identification.
 
 #### Advanced Settings {#AdvancedSettings}
 
@@ -4171,6 +4248,7 @@ To save the settings manually at any time, choose the Save configuration item in
 
 If you ever make a mistake with your settings and need to revert back to the saved settings, choose the "revert to saved configuration" item in the NVDA menu.
 You can also reset your settings to their original factory defaults by choosing Reset Configuration To Factory Defaults, which is also found in the NVDA menu.
+After resetting, a dialog will appear allowing you to undo the reset and restore your previous configuration.
 
 The following NVDA key commands are also useful:
 <!-- KC:beginInclude -->
@@ -4178,7 +4256,7 @@ The following NVDA key commands are also useful:
 | Name |Desktop key |Laptop key |Description|
 |---|---|---|---|
 |Save configuration |`NVDA+control+c` |`NVDA+control+c` |Saves your current configuration so that it is not lost when you exit NVDA|
-|Revert configuration |`NVDA+control+r` |`NVDA+control+r` |Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults.|
+|Revert configuration |`NVDA+control+r` |`NVDA+control+r` |Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults without showing the undo dialog.|
 
 <!-- KC:endInclude -->
 
@@ -5016,16 +5094,13 @@ These include:
 * Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
 * HumanWare: Brailliant, BrailleConnect, Brailliant2
 * APH: Refreshabraille
-* Orbit: Orbit Reader 20
+* Orbit: Orbit Reader 20, Orbit Reader 40
 
 Some other displays manufactured by Baum may also work, though this has not been tested.
 
 If connecting via USB to displays which do not use HID, you must first install the USB drivers provided by the manufacturer.
 The VarioUltra and Pronto! use HID.
-The Refreshabraille and Orbit Reader 20 can use HID if configured appropriately.
-
-The USB serial mode of the Orbit Reader 20 is currently only supported in Windows 10 and later.
-USB HID should generally be used instead.
+The Refreshabraille, Orbit Reader 20, and Orbit Reader 40 can use HID if configured appropriately.
 
 Following are the key assignments for these displays with NVDA.
 Please see your display's documentation for descriptions of where these keys can be found.
@@ -6047,7 +6122,9 @@ The A300 model has a tactile graphics area of 120 by 80 dots, which can fit 8 li
 
 You can configure whether NVDA displays braille on the dedicated braille display line or on the tactile graphics area via the Braille Destination option in NVDA's Braille settings for this driver.
 
-Panning keys are supported, but due to limited buttons on the device, other commands and routing capabilities are currently not available.
+The Dot Pad has left and right panning keys and four function keys (f1 through f4).
+Multiple buttons can be pressed simultaneously to create combination gestures (e.g., `f1+panLeft`), which can be assigned via the Input Gestures dialog.
+Apart from panning, no other commands are assigned by default.
 
 The Dot Pad driver supports automatic detection of USB-connected devices.
 However, automatic detection is disabled by default due to the device using generic USB identifiers that could conflict with other devices.
@@ -6062,8 +6139,8 @@ Make sure to lift your hand entirely off the device when navigating with NVDA, a
 
 | Name |Key|
 |---|---|
-|Scroll braille display back | `pan_left` |
-|Scroll braille display forward | `pan_right` |
+|Scroll braille display back | `panLeft` |
+|Scroll braille display forward | `panRight` |
 
 <!-- KC:endInclude -->
 

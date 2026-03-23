@@ -1,17 +1,10 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Leonard de Ruijter
+# Copyright (C) 2007-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import os
 from collections import OrderedDict
-from typing import (
-	Dict,
-	List,
-	Optional,
-	Set,
-)
 
 from . import _espeak
 from languageHandler import (
@@ -32,6 +25,7 @@ from speech.commands import (
 	VolumeCommand,
 	PhonemeCommand,
 )
+from speechXml import toXmlLang
 
 
 class SynthDriver(SynthDriver):
@@ -73,7 +67,7 @@ class SynthDriver(SynthDriver):
 		"fr": "fr-fr",
 	}
 
-	availableLanguages: Set[Optional[str]]
+	availableLanguages: set[str | None]
 	"""
 	For eSpeak commit 7e5457f91e10, this is equivalent to:
 	{
@@ -259,9 +253,9 @@ class SynthDriver(SynthDriver):
 		lowerCaseAvailableLangs = set(lang.lower() for lang in self.availableLanguages)
 		# Use default language if no command.lang is supplied
 		langWithLocale = command.lang if command.lang else self._language
-		langWithLocale = langWithLocale.lower().replace("_", "-")
+		langWithLocale = toXmlLang(langWithLocale.lower())
 
-		langWithoutLocale: Optional[str] = stripLocaleFromLangCode(langWithLocale)
+		langWithoutLocale: str | None = stripLocaleFromLangCode(langWithLocale)
 
 		# Check for any language where the language code matches, regardless of dialect: e.g. ru-ru to ru
 		matchingLangs = filter(
@@ -321,9 +315,9 @@ class SynthDriver(SynthDriver):
 	# Note: when working on speak, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
 	def speak(self, speechSequence: SpeechSequence):  # noqa: C901
-		textList: List[str] = []
+		textList: list[str] = []
 		langChanged = False
-		prosody: Dict[str, int] = {}
+		prosody: dict[str, int] = {}
 		# We output malformed XML, as we might close an outer tag after opening an inner one; e.g.
 		# <voice><prosody></voice></prosody>.
 		# However, eSpeak doesn't seem to mind.
@@ -379,6 +373,11 @@ class SynthDriver(SynthDriver):
 			textList.append("</prosody>")
 		text = "".join(textList)
 		_espeak.speak(text)
+		# If self.rate is not the same as self._rate, that means
+		# the rate has been changed without calling _set_rate
+		# (this can happen due to a bug in eSpeak's handling of SSML).
+		if self.rate != self._rate:
+			self.rate = self._rate
 
 	def cancel(self):
 		_espeak.stop()
@@ -387,6 +386,7 @@ class SynthDriver(SynthDriver):
 		_espeak.pause(switch)
 
 	_rateBoost = False
+	_rate: int
 	RATE_BOOST_MULTIPLIER = 3
 
 	def _get_rateBoost(self):
@@ -406,6 +406,7 @@ class SynthDriver(SynthDriver):
 		return self._paramToPercent(val, _espeak.minRate, _espeak.maxRate)
 
 	def _set_rate(self, rate):
+		self._rate = rate
 		val = self._percentToParam(rate, _espeak.minRate, _espeak.maxRate)
 		if self._rateBoost:
 			val = int(val * self.RATE_BOOST_MULTIPLIER)
