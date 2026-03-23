@@ -10,12 +10,17 @@ Contains the command functions and their logic for keyboard shortcuts.
 
 from typing import Literal
 import ui
-from . import getMagnifier, initialize, terminate
+from . import getMagnifier, initialize, changeMagnifierType, terminate
 from .config import (
-	getDefaultZoomLevelString,
-	getDefaultFilter,
-	getDefaultFullscreenMode,
 	ZoomLevel,
+	getZoomLevelString,
+	setZoomLevel,
+	getFilter,
+	setFilter,
+	getMagnifierType,
+	setMagnifierType,
+	getFullscreenMode,
+	setFullscreenMode,
 )
 from .magnifier import Magnifier
 from .fullscreenMagnifier import FullScreenMagnifier
@@ -100,20 +105,34 @@ def toggleMagnifier() -> None:
 	else:
 		initialize()
 
-		filter = getDefaultFilter()
-		fullscreenMode = getDefaultFullscreenMode()
-
-		ui.message(
-			pgettext(
-				"magnifier",
-				# Translators: Message announced when starting the NVDA magnifier.
-				"Starting magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
-			).format(
-				zoomLevel=getDefaultZoomLevelString(),
-				filter=filter.displayString,
-				fullscreenMode=fullscreenMode.displayString,
-			),
-		)
+		filter = getFilter()
+		magnifierType = getMagnifierType()
+		if magnifierType == MagnifierType.FULLSCREEN:
+			fullscreenMode = getFullscreenMode()
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Message announced when starting the NVDA magnifier.
+					"Starting fullscreen magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
+				).format(
+					magnifierType=magnifierType.displayString,
+					zoomLevel=getZoomLevelString(),
+					filter=filter.displayString,
+					fullscreenMode=fullscreenMode.displayString,
+				),
+			)
+		else:
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Message announced when starting the NVDA magnifier.
+					"Starting {magnifierType} magnifier with {zoomLevel} zoom level and {filter} filter",
+				).format(
+					magnifierType=magnifierType.displayString,
+					zoomLevel=getZoomLevelString(),
+					filter=filter.displayString,
+				),
+			)
 
 
 def zoom(direction: Direction) -> None:
@@ -126,6 +145,7 @@ def zoom(direction: Direction) -> None:
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(magnifier, action):
 		magnifier._zoom(direction)
+		setZoomLevel(magnifier.zoomLevel)
 		ui.message(
 			ZoomLevel.ZOOM_MESSAGE.format(
 				zoomLevel=f"{magnifier.zoomLevel:.1f}",
@@ -153,7 +173,31 @@ def pan(action: MagnifierAction) -> None:
 			)
 
 
-def toggleFilter() -> None:
+def cycleMagnifierType() -> None:
+	"""Cycle through magnifier types (full-screen, fixed, docked (to do), lens (to do))"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.CHANGE_MAGNIFIER_TYPE,
+	):
+		types = list(MagnifierType)
+		currentType = magnifier._magnifierType
+		idx = types.index(currentType)
+		newType = types[(idx + 1) % len(types)]
+		log.debug(f"Changing magnifier type from {currentType} to {newType}")
+		changeMagnifierType(newType)
+		setMagnifierType(newType)
+		magnifier = getMagnifier()
+		ui.message(
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when changing the magnifier type with {type} being the new magnifier type.
+				"Magnifier type changed to {type}",
+			).format(type=magnifier._magnifierType.displayString),
+		)
+
+
+def cycleFilter() -> None:
 	"""Cycle through color filters"""
 	magnifier: Magnifier = getMagnifier()
 	log.debug(f"Toggling filter for magnifier: {magnifier}")
@@ -166,6 +210,7 @@ def toggleFilter() -> None:
 		magnifier.filterType = filters[(idx + 1) % len(filters)]
 		if magnifier._magnifierType == MagnifierType.FULLSCREEN:
 			magnifier._applyFilter()
+		setFilter(magnifier.filterType)
 		ui.message(
 			pgettext(
 				"magnifier",
@@ -175,7 +220,7 @@ def toggleFilter() -> None:
 		)
 
 
-def toggleFullscreenMode() -> None:
+def cycleFullscreenMode() -> None:
 	"""Cycle through full-screen focus modes (center, border, relative)"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
@@ -192,6 +237,7 @@ def toggleFullscreenMode() -> None:
 			newMode = modes[(idx + 1) % len(modes)]
 			log.debug(f"Changing full-screen mode from {currentMode} to {newMode}")
 			magnifier._fullscreenMode = newMode
+			setFullscreenMode(newMode)
 			ui.message(
 				pgettext(
 					"magnifier",
