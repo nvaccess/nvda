@@ -99,3 +99,47 @@ class TestDriverRegistration(unittest.TestCase):
 
 		registrar.addBluetoothDevices(matchFunc)
 		self.assertEqual(registrar._getDriverDict().get(bdDetect.CommunicationType.BLUETOOTH), matchFunc)
+
+	@unittest.skip("Requires BLE support in bdDetect from #19122")
+	def test_addBleDevices(self):
+		"""Test adding a BLE match function."""
+		from brailleDisplayDrivers import dotPad
+
+		registrar = bdDetect.DriverRegistrar(dotPad.BrailleDisplayDriver.name)
+
+		def matchFunc(match: bdDetect.DeviceMatch) -> bool:
+			return match.id.startswith("DotPad")
+
+		registrar.addBleDevices(matchFunc)
+
+		stored_match_func = registrar._getDriverDict().get(bdDetect.CommunicationType.BLE)
+		self.assertEqual(stored_match_func, matchFunc)
+		self.assertTrue(callable(stored_match_func))
+
+	@unittest.skip("Requires BLE support in bdDetect from #19122")
+	def test_bleDeviceMatching(self):
+		"""Test that BLE device matching works correctly."""
+		from brailleDisplayDrivers import dotPad
+
+		registrar = bdDetect.DriverRegistrar(dotPad.BrailleDisplayDriver.name)
+
+		registrar.addBleDevices(dotPad.BrailleDisplayDriver._isBleDotPad)
+
+		matching_device = bdDetect.DeviceMatch(
+			type=bdDetect.ProtocolType.BLE,
+			id="DotPad320",
+			port="AA:BB:CC:DD:EE:FF",
+			deviceInfo={"name": "DotPad320", "address": "AA:BB:CC:DD:EE:FF"},
+		)
+
+		non_matching_device = bdDetect.DeviceMatch(
+			type=bdDetect.ProtocolType.BLE,
+			id="SomeOtherDevice",
+			port="11:22:33:44:55:66",
+			deviceInfo={"name": "SomeOtherDevice", "address": "11:22:33:44:55:66"},
+		)
+
+		match_func = registrar._getDriverDict().get(bdDetect.CommunicationType.BLE)
+
+		self.assertTrue(match_func(matching_device))
+		self.assertFalse(match_func(non_matching_device))
