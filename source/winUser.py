@@ -17,7 +17,6 @@ from ctypes import (
 	Structure,
 	c_long,
 	c_short,
-	c_uint,
 	c_wchar,
 	create_unicode_buffer,
 	sizeof,
@@ -120,6 +119,7 @@ __getattr__ = _deprecate.handleDeprecations(
 	_deprecate.MovedSymbol("INPUT_KEYBOARD", "winBindings.user32", "INPUT_TYPE", "KEYBOARD"),
 	_deprecate.MovedSymbol("KEYEVENTF_KEYUP", "winBindings.user32", "KEYEVENTF", "KEYUP"),
 	_deprecate.MovedSymbol("KEYEVENTF_UNICODE", "winBindings.user32", "KEYEVENTF", "UNICODE"),
+	_deprecate.MovedSymbol("NMHdrStruct", "winBindings.user32", "NMHDR"),
 )
 """Module __getattr__ to handle backward compatibility."""
 
@@ -135,14 +135,6 @@ HCURSOR = c_long
 CS_HREDRAW = 0x0002
 #: Redraws the entire window if a movement or size adjustment changes the height of the client area.
 CS_VREDRAW = 0x0001
-
-
-class NMHdrStruct(Structure):
-	_fields_ = [
-		("hwndFrom", HWND),
-		("idFrom", c_uint),
-		("code", c_uint),
-	]
 
 
 # constants
