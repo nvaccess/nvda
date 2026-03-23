@@ -6104,7 +6104,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 				self._screenCurtainEnabledCheckbox.SetValue(False)
 			else:
 				try:
-					screenCurtain.screenCurtain.enable()
+					screenCurtain.screenCurtain.enable(persist=True)
 				except Exception:
 					log.error("Error enabling Screen Curtain.", exc_info=True)
 					ui.message(
