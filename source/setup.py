@@ -26,6 +26,7 @@ from versionInfo import (  # noqa: E402
 )
 from py2exe import freeze  # noqa: E402
 from py2exe.dllfinder import DllFinder  # noqa: E402
+import py2exe  # noqa: E402
 import wx  # noqa: E402
 import importlib.machinery  # noqa: E402
 
@@ -46,6 +47,18 @@ def determine_dll_type(self, imagename):
 
 
 DllFinder.determine_dll_type = determine_dll_type
+
+
+def hook_latex2mathml(finder, module):
+	import latex2mathml
+	import winsound
+
+	dir = os.path.dirname(latex2mathml.__file__)
+	finder.add_datafile_to_zip(r"latex2mathml\unimathsymbols.txt", os.path.join(dir, "unimathsymbols.txt"))
+	winsound.Beep(500, 100)
+
+
+py2exe.hooks.hook_latex2mathml = hook_latex2mathml
 
 
 def _parsePartialArguments() -> argparse.Namespace:
@@ -246,6 +259,7 @@ freeze(
 			"mdx_truly_sane_lists",
 			"mdx_gh_links",
 			"pymdownx",
+			"l2m4m",
 		],
 		"includes": [
 			"nvdaBuiltin",
