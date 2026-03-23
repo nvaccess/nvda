@@ -94,8 +94,10 @@ class TestAddonFileDownloaderCancelAll(unittest.TestCase):
 
 	@patch("addonStore.network.log.debugWarning")
 	@patch("addonStore.network.shutil.rmtree", side_effect=OSError("access denied"))
+	@patch("addonStore.network.NVDAState.shouldWriteToDisk", return_value=True)
 	def test_cancelAll_rmtreeOSError_doesNotCrashAndLogsWarning(
 		self,
+		mockShouldWrite: MagicMock,
 		mockRmtree: MagicMock,
 		mockLogWarning: MagicMock,
 	) -> None:
@@ -109,8 +111,10 @@ class TestAddonFileDownloaderCancelAll(unittest.TestCase):
 
 	@patch("addonStore.network.log.debugWarning")
 	@patch("addonStore.network.shutil.rmtree", side_effect=FileNotFoundError("no such directory"))
+	@patch("addonStore.network.NVDAState.shouldWriteToDisk", return_value=True)
 	def test_cancelAll_rmtreeFileNotFound_doesNotCrashAndLogsWarning(
 		self,
+		mockShouldWrite: MagicMock,
 		mockRmtree: MagicMock,
 		mockLogWarning: MagicMock,
 	) -> None:
@@ -123,11 +127,25 @@ class TestAddonFileDownloaderCancelAll(unittest.TestCase):
 		mockLogWarning.assert_called_once()
 
 	@patch("addonStore.network.shutil.rmtree")
+	@patch("addonStore.network.NVDAState.shouldWriteToDisk", return_value=True)
 	def test_cancelAll_rmtreeSucceeds_directoryRemoved(
 		self,
+		mockShouldWrite: MagicMock,
 		mockRmtree: MagicMock,
 	) -> None:
 		"""cancelAll should call rmtree when completing normally."""
 		downloader = self._createDownloader()
 		downloader.cancelAll()
 		mockRmtree.assert_called_once_with(WritePaths.addonStoreDownloadDir)
+
+	@patch("addonStore.network.shutil.rmtree")
+	@patch("addonStore.network.NVDAState.shouldWriteToDisk", return_value=False)
+	def test_cancelAll_shouldNotWriteToDisk_rmtreeNotCalled(
+		self,
+		mockShouldWrite: MagicMock,
+		mockRmtree: MagicMock,
+	) -> None:
+		"""cancelAll should not call rmtree when shouldWriteToDisk is False."""
+		downloader = self._createDownloader()
+		downloader.cancelAll()
+		mockRmtree.assert_not_called()

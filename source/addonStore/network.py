@@ -204,13 +204,14 @@ class AddonFileDownloader:
 		with self.DOWNLOAD_LOCK:
 			self.progress.clear()
 			self._pending.clear()
-		try:
-			shutil.rmtree(WritePaths.addonStoreDownloadDir)
-		except OSError:
-			log.debugWarning(
-				f"Failed to remove addon store download directory: {WritePaths.addonStoreDownloadDir}",
-				exc_info=True,
-			)
+		if NVDAState.shouldWriteToDisk():
+			try:
+				shutil.rmtree(WritePaths.addonStoreDownloadDir)
+			except OSError:
+				log.debugWarning(
+					f"Failed to remove addon store download directory: {WritePaths.addonStoreDownloadDir}",
+					exc_info=True,
+				)
 
 	def _downloadAddonToPath(
 		self,
