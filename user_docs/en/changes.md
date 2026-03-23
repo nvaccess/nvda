@@ -37,6 +37,7 @@ The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is int
 * NVDA can now be configured to not play error sounds, even in test versions. (#13021, @CyrilleB79)
 * NVDA now supports the Orbit Reader 40 in its proprietary HID mode. (#19756, @trypsynth)
 * NVDA will start in focus mode by default when using WhatsApp 2.2584.3.0 or newer. (#19655, @josephsl)
+* The "COM Registration Fixing Tool" has been renamed to "Accessibility registration repair tool" for clarity. (#19622, @bramd)
 
 ### Bug Fixes
 
