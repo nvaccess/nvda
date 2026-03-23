@@ -53,7 +53,7 @@ wheels = [
 
 [[package]]
 name = "bleak"
-version = "1.1.0"
+version = "3.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "winrt-runtime", marker = "sys_platform == 'win32'" },
@@ -61,13 +61,14 @@ dependencies = [
     { name = "winrt-windows-devices-bluetooth-advertisement", marker = "sys_platform == 'win32'" },
     { name = "winrt-windows-devices-bluetooth-genericattributeprofile", marker = "sys_platform == 'win32'" },
     { name = "winrt-windows-devices-enumeration", marker = "sys_platform == 'win32'" },
+    { name = "winrt-windows-devices-radios", marker = "sys_platform == 'win32'" },
     { name = "winrt-windows-foundation", marker = "sys_platform == 'win32'" },
     { name = "winrt-windows-foundation-collections", marker = "sys_platform == 'win32'" },
     { name = "winrt-windows-storage-streams", marker = "sys_platform == 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c1/84/a7d5056e148b02b7a3398fe122eea5b1585f0439d95958f019867a2ec4b6/bleak-1.1.0.tar.gz", hash = "sha256:0ace59c8cf5a2d8aa66a2493419b59ac6a119c2f72f6e57be8dbdd3f2c0270e0", size = 116100, upload-time = "2025-08-10T22:50:23.129Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a6/a1/dc0201219279721a9630d04b0176d3f99d4734c460509b514bc02800e492/bleak-3.0.0.tar.gz", hash = "sha256:125f7e25577b0be475d27f2e2ad36515409de6cc15b8bfc0441500cf78d94a60", size = 124152, upload-time = "2026-03-22T16:54:24.179Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/fe/7a/fbfffec2f7839fa779a11a3d1d46edcd6cf790c135ff3a2eaa3777906fea/bleak-1.1.0-py3-none-any.whl", hash = "sha256:174e7836e1ab0879860cd24ddd0ac604bd192bcc1acb978892e27359f3f18304", size = 136236, upload-time = "2025-08-10T22:50:21.74Z" },
+    { url = "https://files.pythonhosted.org/packages/2b/d4/c047f565c483e21710269998b5eacbe5cd21805996758818f2388ce11028/bleak-3.0.0-py3-none-any.whl", hash = "sha256:adca43fd4efe36994b6662114e0ae464298d11d694e96747c78cf079397a4048", size = 144703, upload-time = "2026-03-22T16:54:22.674Z" },
 ]
 
 [[package]]
@@ -597,7 +598,7 @@ unit-tests = [
 
 [package.metadata]
 requires-dist = [
-    { name = "bleak", specifier = "==1.1.0" },
+    { name = "bleak", specifier = "==3.0.0" },
     { name = "comtypes", specifier = "==1.4.13" },
     { name = "configobj", git = "https://github.com/DiffSK/configobj?rev=9c8a0a80c767bf8a3d6493ed01df6c351bddca42" },
     { name = "crowdin-api-client", specifier = "==1.24.1" },
@@ -1341,6 +1342,20 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/ff/7d/ebd712ab8ccd599c593796fbcd606abe22b5a8e20db134aa87987d67ac0e/winrt_windows_devices_enumeration-3.2.1-cp313-cp313-win32.whl", hash = "sha256:14a71cdcc84f624c209cbb846ed6bd9767a9a9437b2bf26b48ac9a91599da6e9", size = 130276, upload-time = "2025-06-06T07:02:05.178Z" },
     { url = "https://files.pythonhosted.org/packages/70/de/f30daaaa0e6f4edb6bd7ddb3e058bd453c9ad90c032a4545c4d4639338aa/winrt_windows_devices_enumeration-3.2.1-cp313-cp313-win_amd64.whl", hash = "sha256:6ca40d334734829e178ad46375275c4f7b5d6d2d4fc2e8879690452cbfb36015", size = 141536, upload-time = "2025-06-06T07:02:06.067Z" },
     { url = "https://files.pythonhosted.org/packages/75/4b/9a6aafdc74a085c550641a325be463bf4b811f6f605766c9cd4f4b5c19d2/winrt_windows_devices_enumeration-3.2.1-cp313-cp313-win_arm64.whl", hash = "sha256:2d14d187f43e4409c7814b7d1693c03a270e77489b710d92fcbbaeca5de260d4", size = 135362, upload-time = "2025-06-06T07:02:06.997Z" },
+]
+
+[[package]]
+name = "winrt-windows-devices-radios"
+version = "3.2.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "winrt-runtime", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5e/02/9704ea359ad8b0d6faa1011f98fb477e8fb6eac5201f39d19e73c2407e7b/winrt_windows_devices_radios-3.2.1.tar.gz", hash = "sha256:4dc9b9d1501846049eb79428d64ec698d6476c27a357999b78a8331072e18a0b", size = 5908, upload-time = "2025-06-06T14:41:44.868Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d1/94/c22a14fd424632f3f3c0b25672218db9e8f4ae9e1355e0b148f2fe6015b5/winrt_windows_devices_radios-3.2.1-cp313-cp313-win32.whl", hash = "sha256:ae4a0065927fcd2d10215223f8a46be6fb89bad71cb4edd25dae3d01c137b3a8", size = 38613, upload-time = "2025-06-06T07:08:04.077Z" },
+    { url = "https://files.pythonhosted.org/packages/39/c1/24cec0cc228642554b48d436a7617d7162fb952919c55fc26e2d99c310bd/winrt_windows_devices_radios-3.2.1-cp313-cp313-win_amd64.whl", hash = "sha256:bf1a975f46a2aa271ffea1340be0c7e64985050d07433e701343dddc22a72290", size = 40180, upload-time = "2025-06-06T07:08:04.849Z" },
+    { url = "https://files.pythonhosted.org/packages/ca/d3/776453af26e78c0d0c0e1bfa89f86fd81322872f31a3e5dafb344dd47bf2/winrt_windows_devices_radios-3.2.1-cp313-cp313-win_arm64.whl", hash = "sha256:10b298ed154c5824cea2de174afce1694ed2aabfb58826de814074027ffef96f", size = 36989, upload-time = "2025-06-06T07:08:05.576Z" },
 ]
 
 [[package]]
