@@ -1,16 +1,17 @@
 # Continuous Integration with GitHub Actions
 
+Information in this file pertains both to NV Access, and to forks of NVDA that wish to enable automated builds.
+
 ## Background
 
 GitHub Actions builds the following types of NVDA installers through a CI/CD pipeline:
 
-* Pull Request builds: Generated from the pull requests.
-Pull requests initiated from `nvaccess/nvda` rather than a fork have extra permissions than standard PRs.
+* Pull Request builds: Generated from pull requests.
+Pull requests initiated from `nvaccess/nvda` rather than a fork have greater permissions than standard PRs.
 * Snapshot builds: Generated from pushes to master/beta/rc or branch names prefixed with `try-`.
 These are signed and deployed to the NV Access server.
 * Tagged builds: Generated from pushes to tags prefixed with `release-`.
-Official beta, rc and stable releases.
-These are signed and deployed to the NV Access server.
+Official beta, rc and stable releases, which are signed and deployed to the NV Access server.
 
 ## Builds
 
@@ -28,11 +29,11 @@ Some of these steps run concurrently.
   * Run static tests
   * Build launcher
   * Install NVDA
-  * Run systems tests
+  * Run system tests
 * Deploy:
   * On tagged/snapshot builds, upload symbols to Mozilla
-  * On beta branch builds, upload translation to Crowdin.
   * On snapshot builds, deploy to the server.
+  * On beta branch builds, upload translation to Crowdin.
   * On release builds, publish the release on GitHub and deploy to the server.
 * Clean up build cache.
 
@@ -41,11 +42,24 @@ Some of these steps run concurrently.
 Builds will fail if any command has a non-zero exit code.
 PowerShell scripts continue on non-terminating errors unless the file is prefixed with `$ErrorActionPreference = "Stop";`.
 
-## Setup requirements
+## Fork setup requirements
 
 Builds from PRs and pushes to master/beta/rc should work out of the box for forks.
-You just need to enable GitHub Actions on your fork.
-You may want to disable all workflows other than `codeql.yml`, `clearCaches.yml`, `testAndPublish.yml`.
+However, you will need to enable GitHub Actions on your fork.
+To do this, go to `https://github.com/YOUR_USER_NAME/YOUR_FORK_REPO/actions`.
+Select "I understand my workflows, go ahead and enable them".
+
+You should check which workflows are enabled, and which are disabled; they may not all be enabled by default when you perform the above step.
+At least initially, the only workflows a fork is likely to want enabled for standard building of NVDA, are: `codeql.yml`, `clearCaches.yml`, and `testAndPublish.yml`.
+
+If you are using the GitHub CLI, and you plan to use PRs to trigger NVDA to build instead of pushing to master/beta/rc, you may want those PRs to target your fork instead of nvaccess/nvda.
+To do this by default, run the following:
+
+```sh
+gh repo set-default YOUR_USER_NAME/YOUR_FORK_REPO_NAME
+```
+
+## Advanced setup (optional for forks)
 
 The following configuration is required only for more advanced development such as:
 
@@ -68,7 +82,7 @@ It currently defaults to the repository owner (e.g. `nvaccess`).
 To offset from our previous build system, we start the sequential build count at a higher number than 0.
 This means our first build will be numbered something like 100,001 not 1.
 
-To offset build numbers, set;
+To offset build numbers, set:
 
 * `BUILD_NUMBER_OFFSET` as a variable.
 It currently defaults to 0.
@@ -104,7 +118,7 @@ Generating this requires direct co-ordination with Mozilla.
 ### Email notifications
 
 You can send out email notifications to various email lists when certain changes are made.
-Currently, only notifications are sent to a translators list, when localisation file changes occur.
+Currently, notifications are only sent to a translators list, when localisation file changes occur or have syntax errors.
 
 To enable, set:
 
@@ -164,7 +178,7 @@ Ensure a secret is set and SSL is enabled.
 
 NV Access scans tagged builds with VirusTotal.
 
-To ensure this step of tagged builds succeed, set:
+To ensure this step of tagged builds succeeds, set:
 
 * `VT_API_KEY` as a secret.
 
