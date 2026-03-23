@@ -2768,9 +2768,12 @@ class MathSettingsPanel(SettingsPanel):
 		self.languageList.Bind(wx.EVT_CHOICE, self.onLanguageChange)
 		mathLang = config.conf["math"]["speech"]["language"]
 		try:
-			languageIndex = next(filter(lambda idxLang: idxLang[1].code == mathLang, self.languageOptions))[0]
+			languageIndex = next(
+				idxLang for idxLang, langInfo in enumerate(self.languageOptions) if langInfo.code == mathLang
+			)
 		except StopIteration:
-			languageIndex = 0  # auto
+			log.debugWarning(f'Language "{mathLang}" not supported; restoring to "Auto".')
+			languageIndex = 0
 		self.languageList.SetSelection(languageIndex)
 
 		# Translators: MathCAT decimal separator option.
