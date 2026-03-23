@@ -14,17 +14,26 @@ from winBindings import magnification
 from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
 from .utils.spotlightManager import SpotlightManager
-from .utils.types import Filter, Coordinates, FullScreenMode, FocusType
-from .config import getDefaultFullscreenMode, shouldKeepMouseCentered
+from .utils.types import (
+	Filter,
+	Coordinates,
+	MagnifierType,
+	FullScreenMode,
+	FocusType,
+	Size,
+	MagnifierParameters,
+)
+from .config import getFullscreenMode, shouldKeepMouseCentered, isTrueCentered
 
 
 class FullScreenMagnifier(Magnifier):
 	def __init__(self):
 		super().__init__()
-		self._fullscreenMode = getDefaultFullscreenMode()
+		self._magnifierType = MagnifierType.FULLSCREEN
+		self._fullscreenMode = getFullscreenMode()
 		self._currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
-		self._startMagnifier()
+		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
 
 	@property
 	def filterType(self) -> Filter:
@@ -107,6 +116,9 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		Apply the current color filter to the full-screen magnifier
 		"""
+		if not self._isActive:
+			return
+
 		try:
 			match self.filterType:
 				case Filter.NORMAL:
@@ -127,12 +139,15 @@ class FullScreenMagnifier(Magnifier):
 
 		:coordinates: The (x, y) coordinates to center the magnifier on
 		"""
-		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(coordinates)
+		if not self._isActive:
+			return
+
+		params = self._getMagnifierParameters(coordinates)
 		try:
 			result = magnification.MagSetFullscreenTransform(
 				self.zoomLevel,
-				left,
-				top,
+				params.coordinates.x,
+				params.coordinates.y,
 			)
 			if not result:
 				log.debug("Failed to set full-screen transform")
@@ -172,7 +187,7 @@ class FullScreenMagnifier(Magnifier):
 			log.debug("Mouse button pressed, skipping cursor repositioning to avoid interfering with click")
 			return
 
-		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(
+		left, top, visibleWidth, visibleHeight, _ = self._getMagnifierParameters(
 			self._currentCoordinates,
 		)
 		centerX = int(left + (visibleWidth / 2))
@@ -192,14 +207,16 @@ class FullScreenMagnifier(Magnifier):
 		:return: The adjusted position (x, y) of the focus point
 		"""
 		focusX, focusY = coordinates
-		lastLeft, lastTop, visibleWidth, visibleHeight = self._getMagnifierPosition(
-			self._lastScreenPosition,
-		)
+		params = self._getMagnifierParameters(self._lastScreenPosition)
+		magnifierWidth = params.magnifierSize.width
+		magnifierHeight = params.magnifierSize.height
+		lastLeft = params.coordinates.x
+		lastTop = params.coordinates.y
 
 		minX = lastLeft + self._MARGIN_BORDER
-		maxX = lastLeft + visibleWidth - self._MARGIN_BORDER
+		maxX = lastLeft + magnifierWidth - self._MARGIN_BORDER
 		minY = lastTop + self._MARGIN_BORDER
-		maxY = lastTop + visibleHeight - self._MARGIN_BORDER
+		maxY = lastTop + magnifierHeight - self._MARGIN_BORDER
 
 		dx = 0
 		dy = 0
@@ -237,21 +254,21 @@ class FullScreenMagnifier(Magnifier):
 
 		zoom = self.zoomLevel
 		mouseX, mouseY = coordinates
-		visibleWidth = self._displayOrientation.width / zoom
-		visibleHeight = self._displayOrientation.height / zoom
+		magnifierWidth = self._displayOrientation.width / zoom
+		magnifierHeight = self._displayOrientation.height / zoom
 		margin = int(zoom * 10)
 
 		# Calculate left/top maintaining mouse relative position
-		left = mouseX - (mouseX / self._displayOrientation.width) * (visibleWidth - margin)
-		top = mouseY - (mouseY / self._displayOrientation.height) * (visibleHeight - margin)
+		left = mouseX - (mouseX / self._displayOrientation.width) * (magnifierWidth - margin)
+		top = mouseY - (mouseY / self._displayOrientation.height) * (magnifierHeight - margin)
 
 		# Clamp to screen boundaries
-		left = max(0, min(left, self._displayOrientation.width - visibleWidth))
-		top = max(0, min(top, self._displayOrientation.height - visibleHeight))
+		left = max(0, min(left, self._displayOrientation.width - magnifierWidth))
+		top = max(0, min(top, self._displayOrientation.height - magnifierHeight))
 
 		# Return center of zoom window
-		centerX = int(left + visibleWidth / 2)
-		centerY = int(top + visibleHeight / 2)
+		centerX = int(left + magnifierWidth / 2)
+		centerY = int(top + magnifierHeight / 2)
 		self._lastScreenPosition = Coordinates(centerX, centerY)
 		return self._lastScreenPosition
 
@@ -271,3 +288,32 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		self._spotlightManager._spotlightIsActive = False
 		self._startTimer(self._updateMagnifier)
+
+	def _getMagnifierParameters(self, coordinates: Coordinates) -> MagnifierParameters:
+		"""
+		Compute the top-left corner of the magnifier window centered on (x, y)
+
+		:param coordinates: The (x, y) coordinates to center the magnifier on
+		:param displaySize: The size of the display area (width, height) - used to calculate capture size
+
+		:return: The size, position and filter of the magnifier window
+		"""
+		x, y = coordinates
+		# Calculate the size of the capture area at the current zoom level
+		magnifierWidth = self._displayOrientation.width / self.zoomLevel
+		magnifierHeight = self._displayOrientation.height / self.zoomLevel
+
+		# Compute the top-left corner so that (x, y) is at the center
+		left = int(x - (magnifierWidth / 2))
+		top = int(y - (magnifierHeight / 2))
+
+		# Clamp to screen boundaries only if not in true center mode
+		if not isTrueCentered():
+			left = max(0, min(left, int(self._displayOrientation.width - magnifierWidth)))
+			top = max(0, min(top, int(self._displayOrientation.height - magnifierHeight)))
+
+		return MagnifierParameters(
+			Size(int(magnifierWidth), int(magnifierHeight)),
+			Coordinates(left, top),
+			self._filterType,
+		)

@@ -1529,6 +1529,11 @@ This feature is particularly useful for users with low vision who need to enlarg
 The NVDA Magnifier operates as a full-screen magnifier, meaning it enlarges the entire screen while following the system focus or mouse pointer.
 It provides several configuration options to customize the magnification experience according to your needs.
 
+### Magnifier Settings {#MagnifierSettings}
+
+The magnifier can be configured in the "Magnifier" category of the NVDA Settings dialog (`NVDA+control+w`).
+See the [Magnifier settings](#MagnifierSettingsCategory) section for details on available options.
+
 ### Enabling and Disabling the Magnifier {#MagnifierToggle}
 
 To enable or disable the magnifier, press `NVDA+shift+w`.
@@ -1585,9 +1590,20 @@ NVDA will announce the name of the currently selected filter.
 
 The default color filter when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
-### Focus Tracking Modes {#MagnifierFullscreenFocusModes}
+### Magnifier Modes {#MagnifierDefaultMagnifierType}
 
-The magnifier offers three different modes for tracking focus and determining which part of the screen to magnify:
+The magnifier can be used in multiple modes, each designed to suit different user needs and preferences:
+
+* Full-screen mode: The entire screen is magnified, and the magnified view follows the system focus or mouse pointer. This mode supports multiple focus modes.
+* Fixed window mode: A separate window displays the magnified content, and the rest of the screen remains at normal size. This allows you to see both the magnified content and the surrounding context simultaneously.
+
+### Fullscreen Magnifier {#MagnifierFullscreen}
+
+The fullscreen magnifier provides a seamless magnification experience with a magnified view covering the entire screen.
+
+### Fullscreen Focus Modes {#MagnifierFullscreenFocusModes}
+
+The fullscreen magnifier offers three different focus modes that determine which part of the screen is magnified:
 
 * Center: The magnified area is centered on the current focus position.
 This mode keeps the focused element at the center of the screen and clamps to the screen edge.
@@ -1597,14 +1613,14 @@ This mode provides a more stable view, only adjusting when necessary.
 * Relative: The magnified area maintains the relative position of the focus within the screen.
 This mode mimics the behavior of the Windows Magnifier.
 
-To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+To cycle through the focus modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 NVDA will announce the name of the currently selected mode.
 
 The default focus mode when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
 ### Spotlight Mode {#MagnifierSpotlight}
 
-Spotlight mode is a special feature designed for presentations or focused reading tasks.
+Spotlight mode is a special fullscreen magnifier feature designed for presentations or focused reading tasks.
 When activated, it temporarily zooms out the magnified view to show the full screen, then zooms back in to the current focus position after a brief period of mouse inactivity.
 
 This is useful when you want to:
@@ -1622,10 +1638,12 @@ Once activated, the magnifier will:
 Spotlight mode automatically deactivates after zooming back in.
 If you move the mouse before the zoom-back occurs, the timer resets, giving you more time to view the full screen.
 
-### Magnifier Settings {#MagnifierSettings}
+### Fixed Magnifier {#MagnifierFixed}
 
-The magnifier can be configured in the "Magnifier" category of the NVDA Settings dialog (`NVDA+control+w`).
-See the [Magnifier settings](#MagnifierSettingsCategory) section for details on available options.
+The fixed magnifier mode provides a separate window that displays the magnified content, while the rest of the screen remains at normal size.
+This allows you to see both the magnified content and the surrounding context simultaneously.
+The fixed magnifier window can be moved to corners of your screen and resized independently of the main screen, giving you flexibility in how you view magnified content.
+The modifications can be configured in the [Magnifier settings](#MagnifierSettings).
 
 ## Content Recognition {#ContentRecognition}
 
@@ -2842,23 +2860,17 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### Default focus mode {#MagnifierDefaultFullscreenFocusMode}
+##### Use true center {#MagnifierUseTrueCenter}
 
-This combo box allows you to select the default focus tracking mode when the magnifier is first enabled.
-To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-The available options are:
+This checkbox controls whether the magnifier should always keep the focus centered on the screen, or if it should allow the focus to move towards the edges of the screen before moving the magnified area.
+When enabled, the magnifier will always keep the focus centered on the screen, which can be helpful for users who prefer a consistent position of the focus within the magnified view.
+
+This option is disabled by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Center, Border, Relative|
-|Default |Center|
-|Toggle command |None |
-
-| Option | Description |
-|---|---|
-| Center | The magnified area is always centered on the current focus position. |
-| Border | The magnified area only moves when the focus approaches the edge of the visible area. |
-| Relative | The magnified area maintains the relative position of the focus within the screen. |
+|Options |Disabled, Enabled|
+|Default |Disabled|
 
 ##### Panning step size {#MagnifierPanningStepSize}
 
@@ -2878,18 +2890,6 @@ Available pan actions include:
 |Options |1 to 100|
 |Default |10|
 
-##### Use true center {#MagnifierUseTrueCenter}
-
-This checkbox controls whether the magnifier should always keep the focus centered on the screen, or if it should allow the focus to move towards the edges of the screen before moving the magnified area.
-When enabled, the magnifier will always keep the focus centered on the screen, which can be helpful for users who prefer a consistent position of the focus within the magnified view.
-
-This option is disabled by default.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Disabled, Enabled|
-|Default |Disabled|
-
 ##### Keep mouse centered {#MagnifierKeepMouseCentered}
 
 This checkbox controls whether the mouse pointer should be automatically moved to the center of the magnified area when certain focus events occur.
@@ -2901,6 +2901,52 @@ This option is disabled by default.
 |---|---|
 |Options |Disabled, Enabled|
 |Default |Disabled|
+
+##### Default fullscreen magnifier focus mode {#MagnifierDefaultFullscreenFocusMode}
+
+This combo box allows you to select the default focus tracking mode when the magnifier mode is fullscreen.
+To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+The available options are:
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Center, Border, Relative|
+|Default |Center|
+|Toggle command |None |
+
+| Option | Description |
+|---|---|
+| Center | The magnified area is always centered on the current focus position. |
+| Border | The magnified area only moves when the focus approaches the edge of the visible area. |
+| Relative | The magnified area maintains the relative position of the focus within the screen. |
+
+##### Fixed magnifier width {#MagnifierDefaultFixedWindowWidth}
+
+This entry allows you to choose the default width of the magnifier window when the magnifier mode is fixed.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |50 to 1000 pixels|
+|Default |200 pixels|
+
+##### Fixed magnifier height {#MagnifierDefaultFixedWindowHeight}
+
+This entry allows you to choose the default height of the magnifier window when the magnifier mode is fixed.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |50 to 1000 pixels|
+|Default |200 pixels|
+
+##### Default fixed magnifier position {#MagnifierDefaultFixedPosition}
+
+This combo box allows you to select the default position of the magnifier window when the magnifier mode is fixed.
+The available options are:
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Top Left, Top Right, Bottom Left, Bottom Right|
+|Default |Top Left|
 
 #### Keyboard {#KeyboardSettings}
 

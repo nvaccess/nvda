@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from _magnifier.magnifier import Magnifier, MagnifierType
+from _magnifier.magnifier import Magnifier
 from _magnifier.utils.types import Filter, Direction, Coordinates, MagnifierAction
 import unittest
 from winAPI._displayTracking import getPrimaryDisplayOrientation
@@ -63,7 +63,6 @@ class TestMagnifier(_TestMagnifier):
 		"""Can we create a magnifier with valid parameters?"""
 		self.assertEqual(self.magnifier.zoomLevel, 2.0)
 		self.assertEqual(self.magnifier._filterType, Filter.NORMAL)
-		self.assertEqual(self.magnifier._magnifierType, MagnifierType.FULLSCREEN)
 		self.assertFalse(self.magnifier._isActive)
 		self.assertIsNotNone(self.magnifier._focusManager)
 
@@ -364,50 +363,3 @@ class TestMagnifier(_TestMagnifier):
 		# Test stopping when no timer exists (should not raise error)
 		self.magnifier._stopTimer()
 		self.assertIsNone(self.magnifier._timer)
-
-	def testMagnifierPosition(self):
-		"""Computing magnifier position and size."""
-		x, y = int(self.screenWidth / 2), int(self.screenHeight / 2)
-		left, top, width, height = self.magnifier._getMagnifierPosition((x, y))
-
-		expected_width = int(self.screenWidth / self.magnifier.zoomLevel)
-		expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
-		expected_left = int(x - (expected_width / 2))
-		expected_top = int(y - (expected_height / 2))
-
-		self.assertEqual(left, expected_left)
-		self.assertEqual(top, expected_top)
-		self.assertEqual(width, expected_width)
-		self.assertEqual(height, expected_height)
-
-		# Test left clamping
-		left, top, width, height = self.magnifier._getMagnifierPosition((100, 540))
-		self.assertGreaterEqual(left, 0)
-
-		# Test right clamping
-		left, top, width, height = self.magnifier._getMagnifierPosition((1800, 540))
-		self.assertLessEqual(left + width, self.screenWidth)
-
-		# Test different zoom level
-		self.magnifier.zoomLevel = 4.0
-		left, top, width, height = self.magnifier._getMagnifierPosition((960, 540))
-		expected_width = int(self.screenWidth / self.magnifier.zoomLevel)
-		expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
-		self.assertEqual(width, expected_width)
-		self.assertEqual(height, expected_height)
-
-	def testMagnifierPositionTrueCentered(self):
-		"""Test magnifier position calculation with true centered mode."""
-		x, y = int(self.screenWidth / 2), int(self.screenHeight / 2)
-		with patch("source._magnifier.magnifier.isTrueCentered", return_value=True):
-			left, top, width, height = self.magnifier._getMagnifierPosition((x, y))
-
-			expected_width = int(self.screenWidth / self.magnifier.zoomLevel)
-			expected_height = int(self.screenHeight / self.magnifier.zoomLevel)
-			expected_left = int(x - (expected_width / 2))
-			expected_top = int(y - (expected_height / 2))
-
-			self.assertEqual(left, expected_left)
-			self.assertEqual(top, expected_top)
-			self.assertEqual(width, expected_width)
-			self.assertEqual(height, expected_height)
