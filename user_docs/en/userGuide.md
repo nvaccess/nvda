@@ -611,13 +611,13 @@ Therefore, gestures such as 2-finger flick up and 4-finger flick left are all po
 #### Touch Modes {#TouchModes}
 
 As there are many more NVDA commands than possible touch gestures, NVDA has several touch modes you can switch between which make certain subsets of commands available.
-The two modes are text mode and object mode.
+The three modes are text mode, object mode and browse mode.
 Certain NVDA commands listed in this document may have a touch mode listed in brackets after the touch gesture.
 For example, flick up (text mode) means that the command will be performed if you flick up, but only while in text mode.
 If the command does not have a mode listed, it will work in any mode.
 
 <!-- KC:beginInclude -->
-To toggle touch modes, perform a 3-finger tap.
+To switch between touch modes, perform a 3-finger tap.
 <!-- KC:endInclude -->
 
 #### Touch keyboard {#TouchKeyboard}
@@ -1061,6 +1061,35 @@ If you want to use these while still being able to use your cursor keys to read 
 <!-- KC:beginInclude -->
 To toggle single letter navigation on and off for the current document, press NVDA+shift+space.
 <!-- KC:endInclude -->
+
+#### Touch Navigation in Browse Mode {#BrowseModeTouch}
+
+When using a touch enabled device, NVDA provides an additional touch navigation mode for browsing content in browse mode.
+
+When browse mode is active in supported documents such as web pages or Word documents, NVDA can expose a browse touch mode.
+This mode allows users to navigate structural elements of a document using touch gestures, similar to browse mode navigation with the keyboard.
+
+In browse touch mode, flick gestures are used to move between common document elements such as links, buttons, headings, form fields, landmarks, and other document structures.
+
+This feature is intended to provide touch users with efficient, structured navigation that mirrors existing browse mode functionality.
+
+##### Touch gestures in browse mode
+
+<!-- KC:beginInclude -->
+
+| Name |Key |Description|
+|---|---|---|
+|Select next element type |flick down (browse mode) |Switches to the next browse mode navigation element type|
+|Select previous element type |flick up (browse mode) |Switches to the previous browse mode navigation element type|
+|Move to next element |flick right (browse mode) |Moves to the next element of the selected type|
+|Move to previous element |flick left (browse mode) |Moves to the previous element of the selected type|
+
+<!-- KC:endInclude -->
+
+When any element type is selected, flicking left or right moves through the document in reading order, while flicking up and down selects different element types.
+
+Browse touch mode is only available when browse mode is active.
+It is not available in focus mode, even within a browse mode document.
 
 #### Text paragraph navigation command {#TextNavigationCommand}
 
@@ -3303,6 +3332,42 @@ If this option is enabled, NVDA will play special sounds when it switches betwee
 Enabled by default, this option allows you to choose if gestures (such as key presses) that do not result in an NVDA command and are not considered to be a command key in general, should be trapped from going through to the document you are currently focused on.
 As an example, if enabled and the letter j was pressed, it would be trapped from reaching the document, even though it is not a quick navigation command nor is it likely to be a command in the application itself.
 In this case NVDA will tell Windows to play a default sound whenever a key which gets trapped is pressed.
+
+##### Browse mode touch navigation elements {#BrowseModeSettingsBrowseModeNavigationElements}
+
+This list allows you to choose which element types are available when cycling through elements in browse touch mode.
+Use the checkboxes to enable or disable individual element types.
+Only the checked element types will appear when flicking up or down to cycle through browse mode navigation elements.
+This setting only affects touch navigation and has no effect on keyboard browse mode navigation.
+
+Available element types include:
+
+* Headings (levels 1 to 9)
+* Links
+* Visited links
+* Unvisited links
+* Form fields
+* Edit fields
+* Buttons
+* Combo boxes
+* Check boxes
+* Radio buttons
+* Lists
+* List items
+* Tables
+* Frames
+* Landmarks
+* Graphics
+* Block quotes
+* Articles
+* Groupings
+* Tabs
+* Figures
+* Menu items
+* Toggle buttons
+* Progress bars
+* Math formulas
+* Separators
 
 #### Document Formatting {#DocumentFormattingSettings}
 

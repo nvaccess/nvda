@@ -4581,12 +4581,7 @@ class GlobalCommands(ScriptableObject):
 		index = (index + 1) % len(touchHandler.availableTouchModes)
 		newMode = touchHandler.availableTouchModes[index]
 		touchHandler.handler._curTouchMode = newMode
-		try:
-			newModeLabel = touchHandler.touchModeLabels[newMode]
-		except KeyError:
-			# Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
-			newModeLabel = _("%s mode") % newMode
-		ui.message(newModeLabel)
+		ui.message(newMode.displayString)
 
 	@script(
 		# Translators: Input help mode message for a touchscreen gesture.

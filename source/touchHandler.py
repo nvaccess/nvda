@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2025 NV Access Limited, Joseph Lee, Babbage B.V.
+# Copyright (C) 2012-2026 NV Access Limited, Joseph Lee, Babbage B.V., Kefas Lungu
 
 """handles touchscreen interaction.
 Used to provide input gestures for touchscreens, touch modes and other support facilities.
@@ -9,6 +9,15 @@ In order to use touch features, NVDA must be installed on a touchscreen computer
 """
 
 import threading
+from functools import cached_property
+from typing import (
+	TYPE_CHECKING,
+	Self,
+)
+
+if TYPE_CHECKING:
+	import browseMode
+
 from ctypes import (
 	byref,
 	Structure,
@@ -43,6 +52,8 @@ import touchTracker
 import core
 import systemUtils
 from utils import _deprecate
+from utils.displayString import DisplayStringStrEnum
+from treeInterceptorHandler import post_browseModeStateChange
 
 __getattr__ = _deprecate.handleDeprecations(
 	_deprecate.MovedSymbol(
@@ -51,15 +62,38 @@ __getattr__ = _deprecate.handleDeprecations(
 		"SystemMetrics",
 		"MAXIMUM_TOUCHES",
 	),
+	_deprecate.RemovedSymbol(
+		"touchModeLabels",
+		{
+			"text": _("text mode"),
+			"object": _("object mode"),
+			"browse": _("browse mode"),
+		},
+		message="Use touchHandler.TouchMode enum instead.",
+	),
 )
 
 
-availableTouchModes = ["text", "object"]
+class TouchMode(DisplayStringStrEnum):
+	"""Available touch screen navigation modes."""
 
-touchModeLabels = {
-	"text": _("text mode"),
-	"object": _("object mode"),
-}
+	TEXT = "text"
+	OBJECT = "object"
+	BROWSE = "browse"
+
+	@cached_property
+	def _displayStringLabels(self) -> dict[Self, str]:
+		return {
+			# Translators: The name of a touch mode.
+			TouchMode.TEXT: _("text mode"),
+			# Translators: The name of a touch mode.
+			TouchMode.OBJECT: _("object mode"),
+			# Translators: The name of a touch mode used when in browse mode.
+			TouchMode.BROWSE: _("browse mode"),
+		}
+
+
+availableTouchModes: list[TouchMode] = [TouchMode.TEXT, TouchMode.OBJECT]
 
 HWND_MESSAGE = -3
 
@@ -93,6 +127,30 @@ POINTER_MESSAGE_FLAG_FIRSTBUTTON = 0x10
 POINTER_MESSAGE_FLAG_PRIMARY = 0x100
 POINTER_MESSAGE_FLAG_CONFIDENCE = 0x200
 POINTER_MESSAGE_FLAG_CANCELED = 0x400
+
+
+def _browseModeStateChange(
+	browseMode: bool = False,
+	interceptor: "browseMode.BrowseModeTreeInterceptor | None" = None,
+	**kwargs,
+) -> None:
+	if not handler:
+		return
+
+	if browseMode:
+		# Entering browse mode
+		if TouchMode.BROWSE not in availableTouchModes:
+			availableTouchModes.append(TouchMode.BROWSE)
+
+		handler._curTouchMode = TouchMode.BROWSE
+
+	else:
+		# Leaving browse mode
+		if TouchMode.BROWSE in availableTouchModes:
+			availableTouchModes.remove(TouchMode.BROWSE)
+
+		if handler._curTouchMode == TouchMode.BROWSE:
+			handler._curTouchMode = TouchMode.OBJECT
 
 
 class POINTER_INFO(Structure):
@@ -232,7 +290,7 @@ class TouchInputGesture(inputCore.InputGesture):
 		# Translators: a touch screen gesture
 		source = _("Touch screen")
 		if mode:
-			source = "{source}, {mode}".format(source=source, mode=touchModeLabels[mode])
+			source = "{source}, {mode}".format(source=source, mode=TouchMode(mode).displayString)
 		return source, " + ".join(actions)
 
 	def _get__immediate(self):
@@ -249,7 +307,7 @@ class TouchHandler(threading.Thread):
 	def __init__(self):
 		self.pendingEmitsTimer = gui.NonReEntrantTimer(core.requestPump)
 		super().__init__(name=f"{self.__class__.__module__}.{self.__class__.__qualname__}")
-		self._curTouchMode = "object"
+		self._curTouchMode = TouchMode.OBJECT
 		self.initializedEvent = threading.Event()
 		self.threadExc = None
 		self.start()
@@ -333,7 +391,7 @@ class TouchHandler(threading.Thread):
 
 	def pump(self):
 		for preheldTracker, tracker in self.trackerManager.emitTrackers():
-			gesture = TouchInputGesture(preheldTracker, tracker, self._curTouchMode)
+			gesture = TouchInputGesture(preheldTracker, tracker, self._curTouchMode.value)
 			try:
 				inputCore.manager.executeGesture(gesture)
 			except inputCore.NoInputGestureAction:
@@ -408,12 +466,14 @@ def initialize():
 		% user32.GetSystemMetrics(SystemMetrics.MAXIMUM_TOUCHES),
 	)
 	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
+	post_browseModeStateChange.register(_browseModeStateChange)
 	setTouchSupport(config.conf["touch"]["enabled"])
 
 
 def terminate():
 	global handler
 	config.post_configProfileSwitch.unregister(handlePostConfigProfileSwitch)
+	post_browseModeStateChange.unregister(_browseModeStateChange)
 	if handler:
 		handler.terminate()
 		handler = None
