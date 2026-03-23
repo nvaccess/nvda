@@ -57,8 +57,7 @@ import winKernel
 import treeInterceptorHandler
 import browseMode
 import languageHandler
-import scriptHandler
-from scriptHandler import script
+from scriptHandler import script, getLastScriptRepeatCount
 import ui
 import braille
 import brailleInput
@@ -272,7 +271,7 @@ class GlobalCommands(ScriptableObject):
 		except (NotImplementedError, RuntimeError):
 			info = obj.makeTextInfo(textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_LINE)
-		scriptCount = scriptHandler.getLastScriptRepeatCount()
+		scriptCount = getLastScriptRepeatCount()
 		if scriptCount == 0:
 			speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 		else:
@@ -394,7 +393,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: The message reported when there is no selection
 			ui.message(_("No selection"))
 		else:
-			scriptCount = scriptHandler.getLastScriptRepeatCount()
+			scriptCount = getLastScriptRepeatCount()
 			# Translators: The message reported after selected text
 			selectMessage = speech.speech._getSelectionMessageSpeech(_("%s selected"), info.text)[0]
 			if scriptCount == 0:
@@ -438,7 +437,7 @@ class GlobalCommands(ScriptableObject):
 		speakOnDemand=True,
 	)
 	def script_dateTime(self, gesture):
-		if scriptHandler.getLastScriptRepeatCount() == 0:
+		if getLastScriptRepeatCount() == 0:
 			if systemUtils._isSystemClockSecondsVisible():
 				text = winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, None, None, None)
 			else:
@@ -1426,7 +1425,7 @@ class GlobalCommands(ScriptableObject):
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
 			return
 
-		if scriptHandler.getLastScriptRepeatCount() >= 1:
+		if getLastScriptRepeatCount() >= 1:
 			if curObject.TextInfo != NVDAObjectTextInfo:
 				textList = []
 				name = curObject.name
@@ -1450,7 +1449,7 @@ class GlobalCommands(ScriptableObject):
 						textList.append(prop)
 			text = " ".join(textList)
 			if len(text) > 0 and not text.isspace():
-				if scriptHandler.getLastScriptRepeatCount() == 1:
+				if getLastScriptRepeatCount() == 1:
 					speech.speakSpelling(text)
 				else:
 					api.copyToClip(text, notify=True)
@@ -1532,7 +1531,7 @@ class GlobalCommands(ScriptableObject):
 		speakOnDemand=True,
 	)
 	def script_navigatorObject_currentDimensions(self, gesture):
-		if scriptHandler.getLastScriptRepeatCount() == 0:
+		if getLastScriptRepeatCount() == 0:
 			self.script_reportReviewCursorLocation(gesture)
 		else:
 			self.script_reportCurrentNavigatorObjectLocation(gesture)
@@ -1550,7 +1549,7 @@ class GlobalCommands(ScriptableObject):
 		speakOnDemand=True,
 	)
 	def script_caretPos_currentDimensions(self, gesture):
-		if scriptHandler.getLastScriptRepeatCount() == 0:
+		if getLastScriptRepeatCount() == 0:
 			self.script_reportCaretLocation(gesture)
 		else:
 			self.script_reportFocusObjectLocation(gesture)
@@ -1598,7 +1597,7 @@ class GlobalCommands(ScriptableObject):
 			# 2. Trying to move focus to navigator object but there is no focus.
 			ui.message(_("No focus"))
 
-		if scriptHandler.getLastScriptRepeatCount() == 0:
+		if getLastScriptRepeatCount() == 0:
 			# Translators: Reported when attempting to move focus to navigator object.
 			ui.message(_("Move focus"))
 			# This script is available on the lock screen via getSafeScripts, as such
@@ -1882,7 +1881,7 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_LINE)
 		# Explicitly tether here
 		braille.handler.handleReviewMove(shouldAutoTether=True)
-		scriptCount = scriptHandler.getLastScriptRepeatCount()
+		scriptCount = getLastScriptRepeatCount()
 		if scriptCount == 0:
 			speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 		else:
@@ -2081,7 +2080,7 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_WORD)
 		# Explicitly tether here
 		braille.handler.handleReviewMove(shouldAutoTether=True)
-		scriptCount = scriptHandler.getLastScriptRepeatCount()
+		scriptCount = getLastScriptRepeatCount()
 		if scriptCount == 0:
 			speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET, unit=textInfos.UNIT_WORD)
 		else:
@@ -2214,7 +2213,7 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_CHARACTER)
 		# Explicitly tether here
 		braille.handler.handleReviewMove(shouldAutoTether=True)
-		scriptCount = scriptHandler.getLastScriptRepeatCount()
+		scriptCount = getLastScriptRepeatCount()
 		if scriptCount == 0:
 			speech.speakTextInfo(info, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
 		elif scriptCount == 1:
@@ -2390,7 +2389,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
 			ui.message(_("No symbol replacement"))
 			return
-		repeats = scriptHandler.getLastScriptRepeatCount()
+		repeats = getLastScriptRepeatCount()
 		if repeats == 0:
 			ui.message(expandedSymbol)
 		else:
@@ -2691,7 +2690,7 @@ class GlobalCommands(ScriptableObject):
 		speakOnDemand=True,
 	)
 	def script_reportFormatting(self, gesture):
-		repeats = scriptHandler.getLastScriptRepeatCount()
+		repeats = getLastScriptRepeatCount()
 		if repeats == 0:
 			self.script_reportFormattingAtReview(gesture)
 		elif repeats == 1:
@@ -2725,7 +2724,7 @@ class GlobalCommands(ScriptableObject):
 		speakOnDemand=True,
 	)
 	def script_reportOrShowFormattingAtCaret(self, gesture):
-		repeats = scriptHandler.getLastScriptRepeatCount()
+		repeats = getLastScriptRepeatCount()
 		if repeats == 0:
 			self.script_reportFormattingAtCaret(gesture)
 		elif repeats == 1:
@@ -2869,7 +2868,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
 			return
 
-		repeatCount = scriptHandler.getLastScriptRepeatCount()
+		repeatCount = getLastScriptRepeatCount()
 		if repeatCount == 0:
 			speechList = speech.getObjectSpeech(focusObject, reason=controlTypes.OutputReason.QUERY)
 			speech.speech.speak(speechList)
@@ -3012,7 +3011,7 @@ class GlobalCommands(ScriptableObject):
 		text = self._getStatusBarText()
 		if text is None:
 			return
-		repeats = scriptHandler.getLastScriptRepeatCount()
+		repeats = getLastScriptRepeatCount()
 		if repeats == 0:
 			self.script_readStatusLine(gesture)
 		elif repeats == 1:
@@ -3121,7 +3120,7 @@ class GlobalCommands(ScriptableObject):
 			if not isinstance(title, str) or not title or title.isspace():
 				# Translators: Reported when there is no title text for current program or window.
 				title = _("No title")
-		repeatCount = scriptHandler.getLastScriptRepeatCount()
+		repeatCount = getLastScriptRepeatCount()
 		if repeatCount == 0:
 			ui.message(title)
 		elif repeatCount == 1:
@@ -3641,7 +3640,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+control+r",
 	)
 	def script_revertConfiguration(self, gesture):
-		scriptCount = scriptHandler.getLastScriptRepeatCount()
+		scriptCount = getLastScriptRepeatCount()
 		if scriptCount == 0:
 			gui.mainFrame.onRevertToSavedConfigurationCommand(None)
 		elif scriptCount == 2:
@@ -4010,7 +4009,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		textLength = len(text)
 		if textLength < 1024:
-			repeatCount = scriptHandler.getLastScriptRepeatCount()
+			repeatCount = getLastScriptRepeatCount()
 			if repeatCount == 0:
 				ui.message(text)
 			else:
@@ -4097,7 +4096,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		startMarker = api.getReviewPosition().obj._copyStartMarker
 		# first call, try to set the selection.
-		if scriptHandler.getLastScriptRepeatCount() == 0:
+		if getLastScriptRepeatCount() == 0:
 			if getattr(pos.obj, "_selectThenCopyRange", None):
 				# we have already tried selecting the text, dont try again. For now selections can not be ammended.
 				# Translators: Presented when text has already been marked for selection, but not yet copied.
@@ -4145,7 +4144,7 @@ class GlobalCommands(ScriptableObject):
 				ui.message(_("Can't select text, press twice to copy"))
 				log.debug("Error trying to update selection: %s" % e)
 				return
-		elif scriptHandler.getLastScriptRepeatCount() == 1:  # the second call, try to copy the text
+		elif getLastScriptRepeatCount() == 1:  # the second call, try to copy the text
 			copyMarker = pos.obj._selectThenCopyRange
 			copyMarker.copyToClipboard(notify=True)
 			# on the second call always clean up the start marker
@@ -4429,7 +4428,7 @@ class GlobalCommands(ScriptableObject):
 				link = None
 		else:
 			link = ti._getLinkDataAtCaretPosition()
-		presses = scriptHandler.getLastScriptRepeatCount()
+		presses = getLastScriptRepeatCount()
 		if link:
 			if not link.destination:  # May be None or ""
 				# Translators: Reported when using the command to report the destination of a link.
@@ -4854,7 +4853,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("Screen curtain not available"), speechPriority=speech.priorities.Spri.NOW)
 			return
 
-		scriptCount = scriptHandler.getLastScriptRepeatCount()
+		scriptCount = getLastScriptRepeatCount()
 		if scriptCount == 0:  # first call should reset last message
 			self._toggleScreenCurtainMessage = None
 		alreadyRunning = screenCurtain.screenCurtain.enabled
@@ -5251,7 +5250,7 @@ class GlobalCommands(ScriptableObject):
 			).format(
 				languageDescription=languageDescription,
 			)
-		repeats = scriptHandler.getLastScriptRepeatCount()
+		repeats = getLastScriptRepeatCount()
 		if repeats == 0:
 			ui.message(message)
 		elif repeats == 1:
@@ -5368,7 +5367,7 @@ class GlobalCommands(ScriptableObject):
 		if lastSpeech is None:
 			return
 		lastSpeechSeq, symbolLevel = lastSpeech
-		repeats = scriptHandler.getLastScriptRepeatCount()
+		repeats = getLastScriptRepeatCount()
 		lastSpeechText = "  ".join(i for i in lastSpeechSeq if isinstance(i, str))
 		if repeats == 0:
 			speech.speak(lastSpeechSeq, symbolLevel=symbolLevel)
