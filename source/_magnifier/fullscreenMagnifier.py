@@ -9,6 +9,7 @@ Full-screen magnifier module.
 
 from logHandler import log
 import screenCurtain
+import ui
 import winUser
 from winBindings import magnification
 from .magnifier import Magnifier
@@ -80,7 +81,10 @@ class FullScreenMagnifier(Magnifier):
 
 		if self._focusManager.getLastFocusType() == FocusType.NAVIGATOR:
 			if shouldKeepMouseCentered():
-				self.moveMouseToScreen()
+				try:
+					self.moveMouseToScreen()
+				except Exception:
+					log.debug("Failed to move mouse to screen center", exc_info=True)
 		self._fullscreenMagnifier(coordinates)
 
 	def _stopMagnifier(self) -> None:
@@ -103,6 +107,34 @@ class FullScreenMagnifier(Magnifier):
 		except Exception as e:
 			log.debug(f"MagUninitialize result: {e}")
 
+	def _attemptRecovery(self) -> None:
+		"""
+		Attempt to recover from repeated Magnification API errors by
+		reinitializing the API. If recovery fails, the magnifier is stopped.
+		"""
+		log.info("Attempting full-screen magnifier recovery via API reinitialization")
+		try:
+			magnification.MagUninitialize()
+		except Exception:
+			log.debug("MagUninitialize during recovery failed (may already be uninitialized)", exc_info=True)
+		try:
+			magnification.MagInitialize()
+			self._applyFilter()
+			self._consecutiveErrors = 0
+			log.info("Full-screen magnifier recovery succeeded")
+			self._startTimer(self._updateMagnifier)
+		except Exception:
+			log.error("Full-screen magnifier recovery failed, stopping magnifier", exc_info=True)
+			self._consecutiveErrors = 0
+			self._stopMagnifier()
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Message announced when the magnifier stops due to an unrecoverable error.
+					"Magnifier stopped due to an error. Please restart it.",
+				),
+			)
+
 	def _applyFilter(self) -> None:
 		"""
 		Apply the current color filter to the full-screen magnifier
@@ -123,21 +155,19 @@ class FullScreenMagnifier(Magnifier):
 
 	def _fullscreenMagnifier(self, coordinates: Coordinates) -> None:
 		"""
-		Apply full-screen magnification at given Coordinates
+		Apply full-screen magnification at given Coordinates.
+
+		Exceptions from MagSetFullscreenTransform are intentionally left to
+		propagate so that _updateMagnifier can count them and trigger recovery when needed.
 
 		:coordinates: The (x, y) coordinates to center the magnifier on
 		"""
 		left, top, visibleWidth, visibleHeight = self._getMagnifierPosition(coordinates)
-		try:
-			result = magnification.MagSetFullscreenTransform(
-				self.zoomLevel,
-				left,
-				top,
-			)
-			if not result:
-				log.debug("Failed to set full-screen transform")
-		except AttributeError:
-			log.debug("Magnification API not available")
+		magnification.MagSetFullscreenTransform(
+			self.zoomLevel,
+			left,
+			top,
+		)
 
 	def _getCoordinatesForMode(
 		self,
