@@ -117,8 +117,8 @@ Generating this requires direct co-ordination with Mozilla.
 
 ### Email notifications
 
-You can send out email notifications to various email recipients when certain changes are made.
-Currently, notifications are only sent to a translators list, when localisation file changes occur.
+You can send out email notifications to various email lists when certain changes are made.
+Currently, notifications are only sent to a translators list, when localisation file changes occur or have syntax errors.
 
 To enable, set:
 
