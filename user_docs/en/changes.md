@@ -24,6 +24,9 @@
 Consult the speech dictionaries section in the User Guide for more details. (#19506, @LeonarddeR)
 * When resetting the configuration to factory defaults from the NVDA menu, a dialog is now shown afterwards with an Undo button to restore the previous configuration.
 The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is intended for recovery scenarios. (#19575, @bramd)
+* Added an unassigned command to report the current status of the Screen Curtain. (#19759)
+* DotPad braille displays now support multi-button combination gestures. (#19565, @bramd)
+  * You can now press multiple buttons simultaneously to create custom gestures (e.g., `f1+panLeft`).
 
 ### Changes
 
@@ -32,6 +35,7 @@ The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is int
 * It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)
 * Improved search algorithm for filtering add-ons in the Add-on Store. (#19309)
 * NVDA can now be configured to not play error sounds, even in test versions. (#13021, @CyrilleB79)
+* NVDA now supports the Orbit Reader 40 in its proprietary HID mode. (#19756, @trypsynth)
 * NVDA will start in focus mode by default when using WhatsApp 2.2584.3.0 or newer. (#19655, @josephsl)
 
 ### Bug Fixes
@@ -57,6 +61,7 @@ It only ran the translation string comment check, which is equivalent to `scons 
 The `scons checkPot` target has also been replaced with `runcheckpot.bat`.
 Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`, `runsystemtests.bat`, `runlint.bat`. (#19606, #19676, @bramd)
 * Updated Python 3.13.11 to 3.13.12 (#19572, @dpy013)
+* Added a private `_asyncioEventLoop` module that provides an asyncio event loop running on a background thread for use by NVDA components. (#19816, @bramd)
 
 #### Deprecations
 
@@ -390,8 +395,8 @@ Use `NVDAHelper.localWin10.uwpOcr_Callback` instead. (#18858)
 Use `winAPI.winUser.constants.SystemMetrics.MAXIMUM_TOUCHES` instead. (#18883)
 * `screenBitmap.user32`, `winAPI.winUser.functions.user32`, `winGDI.user32`, and `winUser.user32` are deprecated.
 Use `winBindings.user32.dll` instead. (#18883)
-* The `HardwareInput`, `Input`, `KeyBdInput` and `MouseInput` structures from `winUser` are deprecated.
-Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT` and `MOUSEINPUT` from `winBindings.user32` instead. (#18883)
+* The `HardwareInput`, `Input`, `KeyBdInput`, `MouseInput` and `NMHdrStruct` structures from `winUser` are deprecated.
+Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT`, `MOUSEINPUT` and `NMHDR` from `winBindings.user32` instead. (#18883, #19808)
 * The following symbols have been moved from `winKernel` to `winBindings.kernel32`: `FILETIME`, `SYSTEMTIME` and `TIME_ZONE_INFORMATION`.
 Access to these symbols via `winKernel` is deprecated. (#18896)
 * The following symbols have been moved from `wincon` to `winBindings.kernel32`: `COORD`, `CONSOLE_SCREEN_BUFFER_INFO`, `CONSOLE_SELECTION_INFO`, `CHAR_INFO` and `PHANDLER_ROUTINE`.

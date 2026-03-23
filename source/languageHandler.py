@@ -150,12 +150,12 @@ def windowsLCIDToLocaleName(lcid: int) -> str | None:
 		return normalizeLanguage(localeName)
 
 
-def getLanguageDescription(language: str) -> weakref.ReferenceType | None:
+def getLanguageDescription(language: str) -> str | None:
 	"""Finds out the description (localized full name) of a given local name"""
 	if language == "Windows":
 		# Translators: the label for the Windows default NVDA interface language.
 		return _("User default")
-	desc = None
+	desc: str | None = None
 	LCID = localeNameToWindowsLCID(language)
 	if LCID is not LCID_NONE:
 		buf = ctypes.create_unicode_buffer(1024)
@@ -166,7 +166,7 @@ def getLanguageDescription(language: str) -> weakref.ReferenceType | None:
 			res = 0
 		if res == 0:
 			res = winBindings.kernel32.GetLocaleInfo(LCID, LOCALE.SLANGUAGE, buf, 1024)
-		desc = buf.value
+		desc = str(buf.value)
 	if not desc:
 		# Some hard-coded descriptions where we know the language fails on various configurations.
 		# Imported lazily since langs description are translatable
