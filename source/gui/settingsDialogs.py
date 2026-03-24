@@ -2671,7 +2671,7 @@ class BrowseModePanel(SettingsPanel):
 		# Store element types for use in onSave (excludes the always-active "default" entry).
 		self._browseModeElements = list(browseMode.BrowseModeTreeInterceptor._browseTouchNavRegistry)
 		self._browseModeCheckListBox: nvdaControls.CustomCheckListBox = sHelper.addLabeledControl(
-			# Translators: Label for the list of touch navigation element types in browse mode settings.
+			# Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
 			_("T&ouch navigation elements:"),
 			nvdaControls.CustomCheckListBox,
 			choices=[label for _itemType, label in self._browseModeElements],
