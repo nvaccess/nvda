@@ -11,6 +11,7 @@ from ctypes import (
 	Union,
 	c_int,
 	c_size_t,
+	c_ssize_t,
 	c_uint,
 	c_long,
 	c_longlong,
@@ -32,6 +33,7 @@ from ctypes.wintypes import (
 	LPDWORD,
 	LPPOINT,
 	LPRECT,
+	LPVOID,
 	PBYTE,
 	PHANDLE,
 	PMSG,
@@ -61,6 +63,7 @@ from enum import IntEnum, IntFlag
 
 UINT_PTR = c_size_t
 ULONG_PTR = c_size_t
+LONG_PTR = c_ssize_t
 DWORD_PTR = c_size_t
 PDWORD_PTR = POINTER(DWORD_PTR)
 
@@ -162,6 +165,21 @@ DefWindowProc.argtypes = (
 	LPARAM,
 )
 DefWindowProc.restype = LRESULT
+
+CallWindowProc = WINFUNCTYPE(None)(("CallWindowProcW", dll))
+"""Passes message information to the specified window procedure.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-callwindowprocw
+"""
+CallWindowProc.restype = LRESULT
+CallWindowProc.argtypes = (
+	WNDPROC,  # lpPrevWndFunc: The previous window procedure.
+	HWND,  # hWnd
+	UINT,  # Msg
+	WPARAM,  # wParam
+	LPARAM,  # lParam
+)
 
 HWINEVENTHOOK = HANDLE
 """
@@ -1027,6 +1045,31 @@ SetWindowLong.argtypes = (
 )
 
 
+class GWLP(IntEnum):
+	"""Possible special values of the ``nIndex`` parameter to the ``SetWindowLongPtr`` function.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowlongptrw
+	"""
+
+	WNDPROC = -4
+	"""Sets a new address for the window procedure."""
+
+
+SetWindowLongPtr = WINFUNCTYPE(None)(("SetWindowLongPtrW", dll))
+"""Changes an attribute of the specified window.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowlongptrw
+"""
+SetWindowLongPtr.restype = LONG_PTR
+SetWindowLongPtr.argtypes = (
+	HWND,  # hWnd: handle to the window and, indirectly, the class to which it belongs.
+	c_int,  # nIndex: The zero-based, non-negative  offset to the value to be set, or a recognised special value.
+	LPVOID,  # dwNewLong: The replacement value.
+)
+
+
 SetLayeredWindowAttributes = WINFUNCTYPE(None)(("SetLayeredWindowAttributes", dll))
 """
 Sets the opacity and transparency color key of a layered window.
@@ -1624,3 +1667,17 @@ GetClientRect.argtypes = (
 	HWND,  # hWnd: Handle to the window whose client rectangle is to be retrieved
 	LPRECT,  # lpRect: Pointer to a RECT structure that receives the client rectangle coordinates
 )
+
+
+class NMHDR(Structure):
+	"""Contains information about a notification message.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-nmhdr
+	"""
+
+	_fields_ = (
+		("hwndFrom", HWND),
+		("idFrom", UINT_PTR),
+		("code", UINT),
+	)

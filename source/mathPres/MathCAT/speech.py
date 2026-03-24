@@ -1,3 +1,8 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2022-2026 NV Access Limited, Neil Soiffer, Ryan McCleary
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
 import re
 from speech.commands import (
 	BaseProsodyCommand,
@@ -17,6 +22,7 @@ from synthDriverHandler import getSynth, SynthDriver
 import libmathcat_py as libmathcat
 from .localization import getLanguageToUse
 from speech import getCurrentLanguage
+from speechXml import toXmlLang
 
 
 PROSODY_COMMANDS: dict[str, BaseProsodyCommand] = {
@@ -62,8 +68,7 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	except Exception as e:
 		log.exception(e)
 	language: str = getLanguageToUse()
-	nvdaLanguage: str = getCurrentLanguage().replace("_", "-")
-
+	nvdaLanguage: str = toXmlLang(getCurrentLanguage())
 	synth: SynthDriver = getSynth()
 	# I tried the engines on a 180 word excerpt. The speeds do not change linearly and differ a it between engines
 	# At "50" espeak finished in 46 sec, sapi in 75 sec, and one core in 70; at '100' one core was much slower than the others
@@ -76,7 +81,7 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	# as of 7/23, oneCore voices do not implement the CharacterModeCommand despite it being in supported_commands
 	useCharacter: bool = CharacterModeCommand in supportedCommands and synth.name != "oneCore"
 	out: list[str | SpeechCommand] = []
-	if mathCATLanguageSetting != language:
+	if mathCATLanguageSetting.casefold() != language.casefold():
 		try:
 			libmathcat.SetPreference("Language", language)
 		except Exception as e:
@@ -123,12 +128,12 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	# there is a bug in MS Word that concats the math and the next character outside of math, so we add a space
 	out.append(" ")
 
-	if mathCATLanguageSetting != language:
+	if mathCATLanguageSetting.casefold() != language.casefold():
 		# restore the old value (probably "Auto")
 		try:
 			libmathcat.SetPreference("Language", mathCATLanguageSetting)
 		except Exception:
 			log.exception()
-	if language != nvdaLanguage:
+	if language.casefold() != nvdaLanguage.casefold():
 		out.append(LangChangeCommand(None))
 	return out
