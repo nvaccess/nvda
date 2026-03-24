@@ -1074,10 +1074,12 @@ This feature is intended to provide touch users with efficient, structured navig
 
 <!-- KC:endInclude -->
 
-When any element type is selected, flicking left or right moves through the document in reading order, while flicking up and down selects different element types.
+When the default element type is selected, flicking left or right moves through the document in reading order.
+When any other element type is selected, flicking left or right moves to the previous or next element of that type, while flicking up and down cycles through the available element types.
 
-Browse touch mode is only available when browse mode is active.
-It is not available in focus mode, even within a browse mode document.
+The selected element type is remembered separately for each document while it remains open.
+Note that browse touch mode gestures only take effect when browse mode is active in the document.
+If focus moves outside the document (for example, to the browser address bar or the taskbar), browse touch mode gestures will not navigate the document until focus returns to it in browse mode.
 
 #### Text paragraph navigation command {#TextNavigationCommand}
 
