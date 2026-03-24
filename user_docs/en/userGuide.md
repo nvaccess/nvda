@@ -2091,9 +2091,10 @@ This option is a slider which goes from 0 to 100 - 0 being the lowest volume and
 
 This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with.
 
-##### Suppress pausing when reading punctuation {#SpeechSettingSuppressPunctuationPause}
+##### Natural pause after punctuation {#SpeechSettingPunctuationSilence}
 
-Enabling this option will remove the pauses after punctuation marks.
+Disabling this option will remove the pauses after punctuation marks.
+This option is enabled by default.
 This option only exists for Windows OneCore voices, and is supported on Windows 10 version 1803 or later.
 
 ##### Use modern audio output system (WASAPI) {#SpeechSettingsUseWasapi}

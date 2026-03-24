@@ -233,7 +233,7 @@ class SynthDriver(driverHandler.Driver):
 		return BooleanDriverSetting(
 			"punctuationSilence",
 			# Translators: Label for a setting toggle in voice settings dialog.
-			_("Pause slightly when reading punctuation"),
+			_("Natural pause after punctuation"),
 			availableInSettingsRing=False,
 			defaultVal=True,
 		)
