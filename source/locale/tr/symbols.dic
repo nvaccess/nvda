@@ -6,9 +6,9 @@
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
-. sentence ending	(?<=[^\s.])\.(?=[\"'"')\s]|$)
-! sentence ending	(?<=[^\s!])\!(?=[\"'"')\s]|$)
-? sentence ending	(?<=[^\s?])\?(?=[\"'"')\s]|$)
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
@@ -16,7 +16,7 @@ complexSymbols:
 multiple .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
-in-word '	(?<=[^\W_])['']
+in-word '	(?<=[^\W_])['’]
 negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
@@ -40,8 +40,7 @@ negative number	eksi	none	norep
 \f	sayfa geçişi	none
 \r	satır sonu	char
  	aralık	char
- 	aralık	char	# no-break space
- 	aralık	char
+ 	aralık	char	# no-break space (U+00A0)
 
 # Standard punctuation/symbols
 !	ünlem	all
@@ -60,9 +59,9 @@ $	dolar	all	norep
 %	yüzde	some
 ‰	binde	some
 &	ve	some
-′	apostrof	all
-″	ikili apostrof	some
-‴	üçlü apostrof	some
+′	prime	some
+″	çift prime	some
+‴	üçlü prime	some
 '	kesme işareti	all
 (	açparantez	most	always
 )	kapaparantez	most	always
@@ -92,7 +91,7 @@ $	dolar	all	norep
 ^	düzeltme imi	most
 _	alt çizgi	most
 `	üst tırnak	most
-´	alt tırnak	most
+´	akut	most
 {	aç küme parantezi	most
 }	kapa küme parantezi	most
 |	dikçizgi	most
@@ -100,19 +99,16 @@ _	alt çizgi	most
 ~	tilda	most
 ¡	ters ünlem	some
 ¿	ters soru	some
-·	orta nokta	most
-‚	tek alt tırnak	most
-„	çift alt tırnak	most
 ‐	kısa tire	most	always
 
 # Other characters
 •	madde imi	some
 …	üçnokta	all	always
 ...	üçnokta	all	always
-"	tırnakaç	most
-"	tırnakkapa	most
-'	tektırnakaç	most
-'	tektırnakkapa	most
+“	tırnakaç	most
+”	tırnakkapa	most
+‘	tektırnakaç	most
+’	tektırnakkapa	most
 –	orta tire	most	always
 —	uzun tire	most	always
 ­	ince tire	most
@@ -199,8 +195,8 @@ _	alt çizgi	most
 +	artı	some
 −	eksi	some
 ×	çarpı	some
-⋅	çarpı	some
-⨯	çarpı	none
+⋅	nokta çarpım	some
+⨯	vektörel çarpım	none
 ∕	bölü	some
 ⁄	bölü	some
 ÷	bölü	some
@@ -289,7 +285,6 @@ _	alt çizgi	most
 ∀	her biri için	none
 ∃	vardır	none
 ∄	yoktur	none
-⇏	gerektirmez	none
 ⇐	gerektirir	none
 
 #Other mathematical Operators
@@ -377,7 +372,7 @@ _	alt çizgi	most
 
 # Miscellaneous Technical
 ⌘	Mac komut tuşu	none
-⌥	Mac seçenek tuşu	none
+⌥	Mac option tuşu	none
 
 ## 6-dot cell
 ### note: the character on the next line is U+2800 (braille space), not U+0020 (ASCII space)
@@ -437,7 +432,7 @@ _	alt çizgi	most
 ⠵	braille 1 3 5 6
 ⠶	braille 2 3 5 6
 ⠷	braille 1 2 3 5 6
-⠸	braille 1 2 3
+⠸	braille 4 5 6
 ⠹	braille 1 4 5 6
 ⠺	braille 2 4 5 6
 ⠻	braille 1 2 4 5 6
@@ -566,7 +561,7 @@ _	alt çizgi	most
 ⢵	braille 1 3 5 6 8
 ⢶	braille 2 3 5 6 8
 ⢷	braille 1 2 3 5 6 8
-⢸	braille 1 2 3 8
+⢸	braille 4 5 6 8
 ⢹	braille 1 4 5 6 8
 ⢺	braille 2 4 5 6 8
 ⢻	braille 1 2 4 5 6 8
@@ -795,7 +790,7 @@ _	alt çizgi	most
 ژ	j	some
 ە	hemze	some
 پ	pe	some
-چ	çim	some
+ç	çim	some
 ً	İki Üstün	some
 ؤ	Vav Hemze	some
 ئ	ya hemze	some
@@ -804,7 +799,6 @@ _	alt çizgi	most
 ى	ye	some
 َ	Üstün	some
 ّ	Şed	some
-ى	ye	some
 ِ	esre	some
 ْ	Cezim sükun	some
 ة	ta-yı merbut	some
