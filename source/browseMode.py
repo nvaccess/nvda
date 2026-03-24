@@ -586,17 +586,18 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		touchLabel: str | None = None,
 	):
 		"""Adds a script for the given quick nav item.
-		@param itemType: The type of item, I.E. "heading" "Link" ...
-		@param key: The quick navigation key to bind to the script.
-			Shift is automatically added for the previous item gesture. E.G. h for heading.
-			If C{None} is provided, the script is unbound by default.
-		@param nextDoc: The command description to bind to the script that yields the next quick nav item.
-		@param nextError: The error message if there are no more quick nav items of type itemType in this direction.
-		@param prevDoc: The command description to bind to the script that yields the previous quick nav item.
-		@param prevError: The error message if there are no more quick nav items of type itemType in this direction.
-		@param readUnit: The unit (one of the textInfos.UNIT_* constants) to announce when moving to this type of item.
+
+		:param itemType: The type of item, e.g. ``"heading"``, ``"link"``.
+		:param key: The quick navigation key to bind to the script.
+			Shift is automatically added for the previous item gesture, e.g. ``h`` for heading.
+			If ``None``, the script is unbound by default.
+		:param nextDoc: The command description for the script that moves to the next quick nav item.
+		:param nextError: The error message if there are no more quick nav items of this type in the forward direction.
+		:param prevDoc: The command description for the script that moves to the previous quick nav item.
+		:param prevError: The error message if there are no more quick nav items of this type in the backward direction.
+		:param readUnit: The unit (one of the ``textInfos.UNIT_*`` constants) to announce when moving to this type of item.
 			For example, only the line is read when moving to tables to avoid reading a potentially massive table.
-			If None, the entire item will be announced.
+			If ``None``, the entire item will be announced.
 		:param touchLabel: A short, translated, plural label for this element type used in browse mode touch navigation
 			cycling (e.g. ``_("links")``). If ``None``, the element type is not registered for browse mode touch navigation.
 		"""
