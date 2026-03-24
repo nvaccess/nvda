@@ -49,16 +49,54 @@ def determine_dll_type(self, imagename):
 DllFinder.determine_dll_type = determine_dll_type
 
 
-def hook_latex2mathml(finder, module):
-	import latex2mathml
+def hook_latex2mathml_symbols_parser(finder, module):
+	import latex2mathml.symbols_parser
 	import winsound
+	import ast
 
-	dir = os.path.dirname(latex2mathml.__file__)
-	finder.add_datafile_to_zip(r"latex2mathml\unimathsymbols.txt", os.path.join(dir, "unimathsymbols.txt"))
 	winsound.Beep(500, 100)
+	print("finder=", finder)
+	print("module=", module)
+
+	dir = os.path.dirname(latex2mathml.symbols_parser.__file__)
+	finder.add_datafile(r"latex2mathml\unimathsymbols.txt", os.path.join(dir, "unimathsymbols.txt"))
+
+	class NT(ast.NodeTransformer):
+		def visit_AnnAssign(self, node: ast.AnnAssign) -> ast.AnnAssign:
+			print(ast.dump(node))
+			if node.simple == 1 and node.target.id == "SYMBOLS_FILE":
+				print("Found target: ", node)
+				node.value = (
+					ast.parse(
+						"os.path.join(os.path.dirname(sys.executable), 'latex2mathml', 'unimathsymbols.txt')",
+					)
+					.body[0]
+					.value
+				)
+			return node
+
+	transformer = NT()
+	with open("1-module.__source__.txt", "wt") as file:
+		file.write(module.__source__)
+	tree = ast.parse(module.__source__)
+	with open("2-dump.txt", "wt") as file:
+		file.write(ast.dump(tree, indent="\t"))
+	print("tree=", tree)
+	tree.body.insert(0, ast.parse("import sys").body[0])
+	fixed = transformer.visit(tree)
+	print("fixed=", fixed)
+	ast.fix_missing_locations(fixed)
+	# print("res=",res)
+	print("fixed=", fixed)
+	with open("3-dump.txt", "wt") as file:
+		file.write(ast.dump(fixed, indent="\t"))
+	module.__code_object__ = compile(fixed, module.__file__, "exec", optimize=module.__optimize__)
+	print("Replaced code")
+	winsound.Beep(1000, 100)
+	# raise RuntimeError
 
 
-py2exe.hooks.hook_latex2mathml = hook_latex2mathml
+py2exe.hooks.hook_latex2mathml_symbols_parser = hook_latex2mathml_symbols_parser
 
 
 def _parsePartialArguments() -> argparse.Namespace:
