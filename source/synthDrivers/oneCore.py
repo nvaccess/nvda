@@ -201,7 +201,7 @@ class OneCoreSynthDriver(SynthDriver):
 		self.supportsProsodyOptions = self._dll.ocSpeech_supportsProsodyOptions()
 		return self.supportsProsodyOptions
 
-	def _get_supportsPunctuationSilence(self):
+	def _get_supportsPunctuationSilence(self) -> bool:
 		self.supportsPunctuationSilence = self._dll.ocSpeech_supportsPunctuationSilence()
 		return self.supportsPunctuationSilence
 
@@ -228,7 +228,7 @@ class OneCoreSynthDriver(SynthDriver):
 		self._dll.ocSpeech_initialize.restype = HANDLE
 		self._dll.ocSpeech_getCurrentVoiceLanguage.restype = ctypes.c_wchar_p
 		self._dll.ocSpeech_supportsProsodyOptions.restype = ctypes.c_bool
-		self._dll.ocSpeech_supportsSuppressPunctuationPause.restype = ctypes.c_bool
+		self._dll.ocSpeech_supportsPunctuationSilence.restype = ctypes.c_bool
 		# Set initial values for parameters that can't be queried when prosody is not supported.
 		# This initialises our cache for the value.
 		# When prosody is supported, the values are used for cachign reasons.
@@ -395,12 +395,12 @@ class OneCoreSynthDriver(SynthDriver):
 		self._rateBoost = enable
 		self.rate = rate
 
-	def _get_punctuationSilence(self):
+	def _get_punctuationSilence(self) -> bool:
 		if not self.supportsPunctuationSilence:
 			return True
 		return self._dll.ocSpeech_getPunctuationSilence(self._ocSpeechToken)
 
-	def _set_punctuationSilence(self, enable):
+	def _set_punctuationSilence(self, enable: bool):
 		if not self.supportsPunctuationSilence:
 			return
 		self._dll.ocSpeech_setPunctuationSilence(self._ocSpeechToken, ctypes.c_bool(enable))
