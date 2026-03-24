@@ -201,9 +201,9 @@ class OneCoreSynthDriver(SynthDriver):
 		self.supportsProsodyOptions = self._dll.ocSpeech_supportsProsodyOptions()
 		return self.supportsProsodyOptions
 
-	def _get_supportsSuppressPunctuationPause(self) -> bool:
-		self.supportsSuppressPunctuationPause = self._dll.ocSpeech_supportsSuppressPunctuationPause()
-		return self.supportsSuppressPunctuationPause
+	def _get_supportsPunctuationSilence(self):
+		self.supportsPunctuationSilence = self._dll.ocSpeech_supportsPunctuationSilence()
+		return self.supportsPunctuationSilence
 
 	def _get_supportedSettings(self):
 		self.supportedSettings = settings = [
@@ -218,8 +218,8 @@ class OneCoreSynthDriver(SynthDriver):
 				SynthDriver.VolumeSetting(),
 			],
 		)
-		if self.supportsSuppressPunctuationPause:
-			settings.append(SynthDriver.SuppressPunctuationPauseSetting())
+		if self.supportsPunctuationSilence:
+			settings.append(SynthDriver.PunctuationSilenceSetting())
 		return settings
 
 	def __init__(self):
@@ -243,10 +243,10 @@ class OneCoreSynthDriver(SynthDriver):
 		else:
 			log.debugWarning("Prosody options not supported")
 
-		if self.supportsSuppressPunctuationPause:
-			self._dll.ocSpeech_getSuppressPunctuationPause.restype = ctypes.c_bool
+		if self.supportsPunctuationSilence:
+			self._dll.ocSpeech_getPunctuationSilence.restype = ctypes.c_bool
 		else:
-			log.debugWarning("Suppress punctuation pause not supported")
+			log.debugWarning("Punctuation silence not supported")
 
 		self._earlyExitCB = False
 		self._callbackInst = ocSpeech_Callback(self._callback)
@@ -395,15 +395,15 @@ class OneCoreSynthDriver(SynthDriver):
 		self._rateBoost = enable
 		self.rate = rate
 
-	def _get_suppressPunctuationPause(self) -> bool:
-		if not self.supportsSuppressPunctuationPause:
-			return False
-		return self._dll.ocSpeech_getSuppressPunctuationPause(self._ocSpeechToken)
+	def _get_punctuationSilence(self):
+		if not self.supportsPunctuationSilence:
+			return True
+		return self._dll.ocSpeech_getPunctuationSilence(self._ocSpeechToken)
 
-	def _set_suppressPunctuationPause(self, enable: bool):
-		if not self.supportsSuppressPunctuationPause:
+	def _set_punctuationSilence(self, enable):
+		if not self.supportsPunctuationSilence:
 			return
-		self._dll.ocSpeech_setSuppressPunctuationPause(self._ocSpeechToken, ctypes.c_bool(enable))
+		self._dll.ocSpeech_setPunctuationSilence(self._ocSpeechToken, ctypes.c_bool(enable))
 
 	def _processQueue(self):
 		if not self._queuedSpeech and self._player is None:

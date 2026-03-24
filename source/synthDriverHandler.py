@@ -228,14 +228,14 @@ class SynthDriver(driverHandler.Driver):
 		)
 
 	@classmethod
-	def SuppressPunctuationPauseSetting(cls) -> BooleanDriverSetting:
-		"""Factory function for creating 'Suppress punctuation pause' setting."""
+	def PunctuationSilenceSetting(cls) -> BooleanDriverSetting:
+		"""Factory function for creating punctuation silence setting."""
 		return BooleanDriverSetting(
-			"suppressPunctuationPause",
+			"punctuationSilence",
 			# Translators: Label for a setting toggle in voice settings dialog.
-			_("Suppress pausing when reading punctuation"),
+			_("Pause slightly when reading punctuation"),
 			availableInSettingsRing=False,
-			defaultVal=False,
+			defaultVal=True,
 		)
 
 	@abstractmethod
