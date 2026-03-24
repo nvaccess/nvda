@@ -215,6 +215,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enableOnPageLoad = boolean(default=true)
 	loadChromiumVBufOnBusyState = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	textParagraphRegex = string(default="{configDefaults.DEFAULT_TEXT_PARAGRAPH_REGEX}")
+	# Element types available for cycling in browse touch mode.
 	browseModeTouchNavigationElements = string_list(default=list("heading", "link", "formField", "list", "table"))
 
 [touch]
