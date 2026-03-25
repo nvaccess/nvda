@@ -83,6 +83,10 @@ def hook_latex2mathml_symbols_parser(finder: Scanner, module: Module) -> None:
 	class Transformer(NodeTransformer):
 		"""Rewrite the ``SYMBOLS_FILE`` path to resolve relative to the frozen executable."""
 
+		def __init__(self):
+			super().__init__()
+			self.rewritten: bool = False
+
 		def visit_AnnAssign(self, node: AnnAssign) -> AnnAssign:
 			# 1 indicates a "simple" target.
 			# That is, a target that consists solely of a Name node that does not appear between parentheses.
@@ -94,12 +98,18 @@ def hook_latex2mathml_symbols_parser(finder: Scanner, module: Module) -> None:
 					# We only want the value of that expression.
 					parse(f"os.path.join(os.path.dirname(sys.executable), {RELPATH!r})").body[0].value
 				)
+				self.rewritten = True
 			return node
 
 	tree = parse(module.__source__)
 	# Inject ``import sys`` so the rewritten path expression can reference it.
 	tree.body.insert(0, parse("import sys").body[0])
-	newTree = fix_missing_locations(Transformer().visit(tree))
+	transformer = Transformer()
+	newTree = fix_missing_locations(transformer.visit(tree))
+	if not transformer.rewritten:
+		raise RuntimeError(
+			"py2exe hook failed to rewrite SYMBOLS_FILE in latex2mathml.symbols_parser. The upstream module may have changed its variable declaration.",
+		)
 	module.__code_object__ = compile(newTree, module.__file__, "exec", optimize=module.__optimize__)
 
 
@@ -308,8 +318,6 @@ freeze(
 			"mdx_truly_sane_lists",
 			"mdx_gh_links",
 			"pymdownx",
-			# LaTeX-to-MathML Markdown extension, used by md2html to render math notation.
-			"l2m4m",
 		],
 		"includes": [
 			"nvdaBuiltin",
