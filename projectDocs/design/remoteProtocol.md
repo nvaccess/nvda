@@ -297,6 +297,8 @@ For each data-plane message, the sender encrypts separately for each peer:
 **Nonce construction** (24 bytes for XSalsa20):
 
 [4-byte sender prefix][12 bytes zero padding][8-byte big-endian counter]
+
+
 ```
 
 The counter increments per message per peer, ensuring nonce uniqueness.
@@ -321,7 +323,9 @@ when relaying.
   "_from": 1,
   "vk_code": 65,
   "pressed": true
+
 }
+
 ```
 
 The `_from` field contains the sender's `user_id` for origin authenticity
@@ -343,9 +347,13 @@ and the message is rejected.
 
 To detect MITM attacks (malicious server substituting public keys):
 
+
 ```
+
+
 sorted_keys = sort([own_public_key, peer_public_key])
 fingerprint = BLAKE2b(sorted_keys[0] || sorted_keys[1], digest_size=8)
+
 ```
 
 Both sides compute the same fingerprint (keys are sorted before hashing).
@@ -410,29 +418,40 @@ E2E is never initiated on direct connections.
 ## 8. Wire Format Examples
 
 
+
 **Client A connects and joins:**
 
 ```
+
+
 -> {"type":"protocol_version","version":3}
 -> {"type":"join","channel":"123456789","connection_type":"master"}
 <- {"type":"channel_joined","channel":"123456789","user_id":1,"user_ids":[],"clients":[],"e2e_available":true}
 
 <- {"type":"motd","motd":"Welcome","force_display":false}
+
+
 ```
 
 **Client B connects and joins:**
 
+
 ```
+
 -> {"type":"protocol_version","version":3}
+
 
 -> {"type":"join","channel":"123456789","connection_type":"slave"}
 <- {"type":"channel_joined","channel":"123456789","user_id":2,"user_ids":[1],"clients":[{"id":1,"connection_type":"master","e2e_supported":true}],"e2e_available":true}
+
 ```
 
 **Client A receives notification:**
 
 ```
+
 ```
+
 
 **Key exchange:**
 
@@ -442,6 +461,7 @@ A -> {"type":"e2e_pubkey","pubkey":"<b64>","nonce_prefix":"<b64>"}
      (server relays to B with origin=1)
 B -> {"type":"e2e_pubkey","pubkey":"<b64>","nonce_prefix":"<b64>"}
      (server relays to A with origin=2)
+
 ```
 
 **Encrypted key press (A -> B):**
