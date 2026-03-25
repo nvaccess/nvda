@@ -206,6 +206,19 @@ class WorkerW(IAccessible):
 
 
 class AppModule(appModuleHandler.AppModule):
+	def _setProductInfo(self) -> None:
+		# #19802: customized for File Explorer as product version is wrong (looks at explorer.exe.mui).
+		if not self.processHandle:
+			raise RuntimeError("processHandle is 0")
+		# Even though product version is wrong, use product name supplied by File Explorer.
+		productInfo = self._getExecutableFileInfo()
+		self.productName = productInfo[0]
+		# NVDA claims executable name is "explorer.exe" when in fact it is "explorer.exe.mui".
+		# This means file information would not be accurate, returning the base Windows build.revision.
+		# Therefore, set product version to Windows major.minor.build.revision.
+		winVer = winVersion.getWinVer()
+		self.productVersion = f"{winVer.major}.{winVer.minor}.{winVer.build}.{winVer.revision}"
+
 	# C901 'chooseNVDAObjectOverlayClasses' is too complex
 	# Note: when working on chooseNVDAObjectOverlayClasses, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
