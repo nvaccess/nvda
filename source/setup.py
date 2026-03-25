@@ -2,11 +2,14 @@
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+from __future__ import annotations
 
 import argparse
+from ast import NodeTransformer, fix_missing_locations, parse
 import os
 import sys
 import gettext
+from typing import TYPE_CHECKING, Final
 from buildVersion import (
 	formatBuildVersionString,
 	name,
@@ -26,9 +29,14 @@ from versionInfo import (  # noqa: E402
 )
 from py2exe import freeze  # noqa: E402
 from py2exe.dllfinder import DllFinder  # noqa: E402
-import py2exe  # noqa: E402
+import py2exe.hooks  # noqa: E402
 import wx  # noqa: E402
 import importlib.machinery  # noqa: E402
+
+if TYPE_CHECKING:
+	from ast import AnnAssign
+	from py2exe.dllfinder import Scanner
+	from py2exe.mf310 import Module
 
 RT_MANIFEST = 24
 manifestTemplateFilePath = "manifest.template.xml"
@@ -49,54 +57,32 @@ def determine_dll_type(self, imagename):
 DllFinder.determine_dll_type = determine_dll_type
 
 
-def hook_latex2mathml_symbols_parser(finder, module):
+def hook_latex2mathml_symbols_parser(finder: Scanner, module: Module) -> None:
 	import latex2mathml.symbols_parser
-	import winsound
-	import ast
 
-	winsound.Beep(500, 100)
-	print("finder=", finder)
-	print("module=", module)
+	FILENAME: Final[str] = "unimathsymbols.txt"
+	RELPATH: Final[str] = os.path.join("latex2mathml", FILENAME)
+	finder.add_datafile(
+		RELPATH,
+		os.path.join(os.path.dirname(latex2mathml.symbols_parser.__file__), FILENAME),
+	)
 
-	dir = os.path.dirname(latex2mathml.symbols_parser.__file__)
-	finder.add_datafile(r"latex2mathml\unimathsymbols.txt", os.path.join(dir, "unimathsymbols.txt"))
-
-	class NT(ast.NodeTransformer):
-		def visit_AnnAssign(self, node: ast.AnnAssign) -> ast.AnnAssign:
-			print(ast.dump(node))
+	class Transformer(NodeTransformer):
+		def visit_AnnAssign(self, node: AnnAssign) -> AnnAssign:
 			if node.simple == 1 and node.target.id == "SYMBOLS_FILE":
-				print("Found target: ", node)
 				node.value = (
-					ast.parse(
-						"os.path.join(os.path.dirname(sys.executable), 'latex2mathml', 'unimathsymbols.txt')",
-					)
-					.body[0]
-					.value
+					parse(f"os.path.join(os.path.dirname(sys.executable), {RELPATH!r})").body[0].value
 				)
 			return node
 
-	transformer = NT()
-	with open("1-module.__source__.txt", "wt") as file:
-		file.write(module.__source__)
-	tree = ast.parse(module.__source__)
-	with open("2-dump.txt", "wt") as file:
-		file.write(ast.dump(tree, indent="\t"))
-	print("tree=", tree)
-	tree.body.insert(0, ast.parse("import sys").body[0])
-	fixed = transformer.visit(tree)
-	print("fixed=", fixed)
-	ast.fix_missing_locations(fixed)
-	# print("res=",res)
-	print("fixed=", fixed)
-	with open("3-dump.txt", "wt") as file:
-		file.write(ast.dump(fixed, indent="\t"))
+	tree = parse(module.__source__)
+	tree.body.insert(0, parse("import sys").body[0])
+	fixed = fix_missing_locations(Transformer().visit(tree))
 	module.__code_object__ = compile(fixed, module.__file__, "exec", optimize=module.__optimize__)
-	print("Replaced code")
-	winsound.Beep(1000, 100)
-	# raise RuntimeError
 
 
 py2exe.hooks.hook_latex2mathml_symbols_parser = hook_latex2mathml_symbols_parser
+del hook_latex2mathml_symbols_parser
 
 
 def _parsePartialArguments() -> argparse.Namespace:
