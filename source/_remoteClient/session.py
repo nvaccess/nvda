@@ -175,6 +175,10 @@ class RemoteSession:
 		does not support it, most likely due to running an older NVDA version.
 		This cannot be suppressed as the peer set may change with each connection.
 		"""
+		self.e2eEstablished: Action = Action()
+		"""Notifies when E2E encryption is successfully established with at least one peer."""
+		self.e2eTornDown: Action = Action()
+		"""Notifies when an active E2E session is destroyed."""
 		# E2E encryption state
 		self.e2e: E2ESession | None = None
 		self._e2eAvailable: bool = False
@@ -284,6 +288,7 @@ class RemoteSession:
 				# Non-E2E peer joined - tear down E2E
 				log.info("E2E: Session torn down, peer %d does not support encryption", client["id"])
 				self.e2e = None
+				self.e2eTornDown.notify()
 				self._warnE2EPeerUnsupported(client["id"])
 			elif client.get("e2e_supported", False) and self.e2e is not None:
 				# E2E peer joined - send them our pubkey
@@ -347,7 +352,10 @@ class RemoteSession:
 	def _handleE2EPubkey(self, pubkey: str, nonce_prefix: str, origin: int, **kwargs: Any) -> None:
 		"""Process a peer's public key and derive shared secret."""
 		if self.e2e is not None:
+			hadPeers = bool(self.e2e.peer_ids)
 			self.e2e.add_peer(origin, pubkey, nonce_prefix)
+			if not hadPeers:
+				self.e2eEstablished.notify()
 
 	def _handleE2EData(self, ciphertext: str, nonce: str, origin: int, to: int, **kwargs: Any) -> None:
 		"""Decrypt an E2E message and dispatch the inner message."""

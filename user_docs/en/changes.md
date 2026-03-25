@@ -74,7 +74,7 @@ Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`,
 * The Remote Access protocol has been upgraded to version 3 with end-to-end encryption and extensibility support. (#17784)
   * New `_remoteClient.e2e` module provides `E2ESession` for X25519/XSalsa20-Poly1305 cryptography via PyNaCl (`nacl.public.Box`).
   * `RemoteSession.send()` transparently encrypts data-plane messages when E2E is active. A control-plane blacklist (`_E2E_CONTROL_PLANE_TYPES`) ensures new core message types added to `RemoteMessageType` are encrypted by default.
-  * New extension points `RemoteSession.e2eUnavailable` and `RemoteSession.e2ePeerUnsupported` fire when E2E cannot be established.
+  * New extension points on `RemoteSession`: `e2eEstablished` and `e2eTornDown` notify when E2E encryption becomes active or is destroyed; `e2eUnavailable` and `e2ePeerUnsupported` fire when E2E cannot be established.
   * The relay server forwards any unrecognised message types at the wire level, allowing compatible clients to exchange custom messages without server-side changes. See `projectDocs/design/remoteProtocol.md` §5.5 for details.
   * Relay server operators: v3 support requires minimal changes — include `user_id` and `e2e_available` in `channel_joined` responses, and include `e2e_supported` in client join/leave notifications. The server does not need to handle any cryptography; it only forwards `e2e_pubkey` and `e2e_data` messages like any other data-plane message.
   * See `projectDocs/design/remoteProtocol.md` for the full protocol specification.
