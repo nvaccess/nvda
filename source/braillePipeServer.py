@@ -27,7 +27,6 @@ from typing import Optional
 import wx
 
 import braille
-import inputCore
 from logHandler import log
 from utils.security import isRunningOnSecureDesktop
 
@@ -105,10 +104,13 @@ def _writeAll(handle: ctypes.wintypes.HANDLE, data: bytes) -> bool:
 	return True
 
 
-def _sendMessage(handle: ctypes.wintypes.HANDLE, obj: dict) -> bool:
+def _frameMessage(obj: dict) -> bytes:
 	body = json.dumps(obj).encode("utf-8")
-	frame = struct.pack("<I", len(body)) + body
-	return _writeAll(handle, frame)
+	return struct.pack("<I", len(body)) + body
+
+
+def _sendMessage(handle: ctypes.wintypes.HANDLE, obj: dict) -> bool:
+	return _writeAll(handle, _frameMessage(obj))
 
 
 def _recvMessage(handle: ctypes.wintypes.HANDLE) -> Optional[dict]:
@@ -148,24 +150,56 @@ class _PipeBrailleGesture(braille.BrailleDisplayGesture):
 		return self._id
 
 
+class _AsyncWriter:
+	"""Background writer thread that drains a queue to a pipe handle.
+
+	All sends from NVDA's main-thread callbacks (display updates, gesture
+	notifications) go through here so pipe I/O never blocks the core loop.
+	Sending ``None`` to the queue is the stop sentinel.
+	"""
+
+	def __init__(self, handle: ctypes.wintypes.HANDLE) -> None:
+		self._handle = handle
+		self._queue: queue.SimpleQueue = queue.SimpleQueue()
+		self._thread = threading.Thread(target=self._loop, daemon=True, name="braillePipeWriter")
+		self._thread.start()
+
+	def send(self, obj: dict) -> None:
+		"""Enqueue *obj* for asynchronous delivery to the pipe client."""
+		self._queue.put(_frameMessage(obj))
+
+	def stop(self) -> None:
+		"""Signal the writer thread to stop after draining remaining items."""
+		self._queue.put(None)
+
+	def _loop(self) -> None:
+		while True:
+			frame = self._queue.get()
+			if frame is None:
+				break
+			if not _writeAll(self._handle, frame):
+				break
+
+
 class _MirrorSession(braille.BrailleMirror):
 	"""BrailleMirror that forwards display updates over the pipe."""
 
 	def __init__(self, handle: ctypes.wintypes.HANDLE, numCells: int) -> None:
-		self._handle = handle
 		self._numCells = numCells
+		self._writer = _AsyncWriter(handle)
 		braille.registerMirror(self)
+		braille.displaySizeChanged.register(self._handleDisplaySizeChanged)
 		if braille.handler:
-			self._notifyDisplaySize(braille.handler.displayDimensions.numCols)
+			self._writer.send({"type": "display_size", "numCols": braille.handler.displayDimensions.numCols})
 
 	def numCells(self) -> int:
 		return self._numCells
 
 	def display(self, cells: list) -> None:
-		_sendMessage(self._handle, {"type": "display", "cells": cells})
+		self._writer.send({"type": "display", "cells": cells})
 
-	def _notifyDisplaySize(self, numCols: int) -> None:
-		_sendMessage(self._handle, {"type": "display_size", "numCols": numCols})
+	def _handleDisplaySizeChanged(self, displaySize: int, numRows: int, numCols: int) -> None:
+		self._writer.send({"type": "display_size", "numCols": numCols})
 
 	def handleMessage(self, msg: dict) -> None:
 		mtype = msg.get("type")
@@ -183,7 +217,9 @@ class _MirrorSession(braille.BrailleMirror):
 			log.debug(f"braillePipeServer: unexpected mirror message type {mtype!r}")
 
 	def close(self) -> None:
+		braille.displaySizeChanged.unregister(self._handleDisplaySizeChanged)
 		braille.unregisterMirror(self)
+		self._writer.stop()
 
 
 class _DirectSession(braille.DirectBrailleWindow):
@@ -191,20 +227,21 @@ class _DirectSession(braille.DirectBrailleWindow):
 
 	def __init__(self, handle: ctypes.wintypes.HANDLE, hwnd: int, numCells: int) -> None:
 		super().__init__(hwnd=hwnd, numCells=numCells)
-		self._handle = handle
+		self._writer = _AsyncWriter(handle)
 		self.activate()
 
 	def onGesture(self, gesture: braille.BrailleDisplayGesture) -> None:
-		msg: dict = {
-			"type": "gesture",
-			"source": getattr(gesture, "source", ""),
-			"model": getattr(gesture, "model", "") or "",
-			"id": getattr(gesture, "id", ""),
-			"routingIndex": getattr(gesture, "routingIndex", None),
-			"dots": getattr(gesture, "dots", 0),
-			"space": getattr(gesture, "space", False),
-		}
-		_sendMessage(self._handle, msg)
+		self._writer.send(
+			{
+				"type": "gesture",
+				"source": getattr(gesture, "source", ""),
+				"model": getattr(gesture, "model", "") or "",
+				"id": getattr(gesture, "id", ""),
+				"routingIndex": getattr(gesture, "routingIndex", None),
+				"dots": getattr(gesture, "dots", 0),
+				"space": getattr(gesture, "space", False),
+			}
+		)
 
 	def handleMessage(self, msg: dict) -> None:
 		mtype = msg.get("type")
@@ -216,6 +253,7 @@ class _DirectSession(braille.DirectBrailleWindow):
 
 	def close(self) -> None:
 		self.deactivate()
+		self._writer.stop()
 
 
 def _handleConnection(handle: ctypes.wintypes.HANDLE, pending_q: "queue.Queue") -> None:
