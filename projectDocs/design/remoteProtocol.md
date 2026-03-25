@@ -22,7 +22,7 @@ sending speech, tones, and display output back.
 ## 2. Version History
 
 | Version | Additions |
-|---------|-----------|
+| --- | --- |
 | v1 | Base protocol: connect, join channel, relay messages |
 | v2 | Server injects `origin` (client ID) into relayed messages; adds `client`/`clients` fields to join/leave notifications; backwards-compatible stripping for v1 peers |
 | v3 | End-to-end encryption support: `e2e_pubkey` and `e2e_data` message types; `e2e_available` and `e2e_supported` fields; `user_id` in `channel_joined`. Wire-level extensibility for custom message types (see §5.5). |
@@ -95,7 +95,7 @@ Sent after a successful `join`:
 ```
 
 | Field | Version | Description |
-|-------|---------|-------------|
+| --- | --- | --- |
 | `channel` | v1+ | The joined channel key |
 | `user_ids` | v1+ | IDs of existing channel members |
 | `user_id` | v3+ | The client's own assigned ID |
@@ -154,7 +154,7 @@ The server adds an `origin` field (v2+) containing the sender's `user_id`.
 ### Input Messages (leader -> follower)
 
 | Type | Fields | Description |
-|------|--------|-------------|
+| --- | --- | --- |
 | `key` | `vk_code`, `extended`, `pressed`, `scan_code` | Keyboard input |
 | `braille_input` | Gesture-specific fields, optional `scriptPath` | Braille display input |
 | `send_SAS` | *(none)* | Secure Attention Sequence (Ctrl+Alt+Del) |
@@ -164,7 +164,7 @@ The server adds an `origin` field (v2+) containing the sender's `user_id`.
 ### Output Messages (follower -> leader)
 
 | Type | Fields | Description |
-|------|--------|-------------|
+| --- | --- | --- |
 | `speak` | `sequence`, `priority` | Speech output (sequence contains speech command objects) |
 | `cancel` | *(none)* | Cancel speech |
 | `pause_speech` | `switch` | Pause/resume speech |
@@ -176,13 +176,13 @@ The server adds an `origin` field (v2+) containing the sender's `user_id`.
 ### Bidirectional Messages
 
 | Type | Fields | Description |
-|------|--------|-------------|
+| --- | --- | --- |
 | `set_clipboard_text` | `text` | Clipboard content transfer |
 
 ### System Messages
 
 | Type | Fields | Description |
-|------|--------|-------------|
+| --- | --- | --- |
 | `version_mismatch` | *(none)* | Protocol version incompatibility |
 | `nvda_not_connected` | *(none)* | Remote NVDA instance not available |
 
@@ -254,7 +254,7 @@ security benefit. The direct-connection server sets `e2e_available: false`.
 ### 6.3 Cryptographic Primitives
 
 | Purpose | Algorithm | Library |
-|---------|-----------|---------|
+| --- | --- | --- |
 | Key exchange | X25519 (Curve25519 DH) | PyNaCl |
 | Authenticated encryption | XSalsa20-Poly1305 (NaCl crypto_box) | PyNaCl |
 | Fingerprint | BLAKE2b (64-bit digest) | hashlib |
@@ -269,26 +269,25 @@ the server would see plaintext from/to the non-E2E peer, defeating the purpose.
 
 1. Each client generates an ephemeral X25519 keypair and a random 4-byte nonce
    prefix on session start.
-
 2. After receiving `channel_joined` with `e2e_available: true` and all peers
    having `e2e_supported: true`, the client broadcasts its public key:
 
-```json
-{
-  "type": "e2e_pubkey",
-  "pubkey": "<base64 32-byte X25519 public key>",
-  "nonce_prefix": "<base64 4-byte random prefix>"
-}
-```
+   ```json
+   {
+     "type": "e2e_pubkey",
+     "pubkey": "<base64 32-byte X25519 public key>",
+     "nonce_prefix": "<base64 4-byte random prefix>"
+   }
+   ```
 
-1. The server relays this with `origin` added. Each receiving client derives a
+3. The server relays this with `origin` added. Each receiving client derives a
    pairwise shared secret using X25519 DH:
 
-```
-shared_secret = X25519(own_private_key, peer_public_key)
-```
+   ```
+   shared_secret = X25519(own_private_key, peer_public_key)
+   ```
 
-1. PyNaCl's `Box` class handles the DH derivation and encryption in one step.
+4. PyNaCl's `Box` class handles the DH derivation and encryption in one step.
 
 ### 6.6 Message Encryption
 
@@ -296,14 +295,14 @@ For each data-plane message, the sender encrypts separately for each peer:
 
 **Nonce construction** (24 bytes for XSalsa20):
 
+```
 [4-byte sender prefix][12 bytes zero padding][8-byte big-endian counter]
-
-
 ```
 
 The counter increments per message per peer, ensuring nonce uniqueness.
 
 **Encrypted message format**:
+
 ```json
 {
   "type": "e2e_data",
@@ -318,14 +317,13 @@ when relaying.
 
 **Encrypted payload** (plaintext before encryption):
 
+```json
 {
   "type": "key",
   "_from": 1,
   "vk_code": 65,
   "pressed": true
-
 }
-
 ```
 
 The `_from` field contains the sender's `user_id` for origin authenticity
@@ -338,7 +336,7 @@ and the message is rejected.
 1. Receiver gets `e2e_data` with `origin` (from server) and `to` (from sender)
 2. Checks `to == own_user_id` (ignore messages for other peers)
 3. Looks up pairwise key using `origin` as peer ID
-4. Decrypts with XChaCha20-Poly1305 (AEAD rejects tampered ciphertexts)
+4. Decrypts with XSalsa20-Poly1305 (AEAD rejects tampered ciphertexts)
 5. Parses plaintext JSON
 6. Verifies `_from == origin` (defense-in-depth)
 7. Dispatches inner message to normal handlers
@@ -347,13 +345,9 @@ and the message is rejected.
 
 To detect MITM attacks (malicious server substituting public keys):
 
-
 ```
-
-
 sorted_keys = sort([own_public_key, peer_public_key])
 fingerprint = BLAKE2b(sorted_keys[0] || sorted_keys[1], digest_size=8)
-
 ```
 
 Both sides compute the same fingerprint (keys are sorted before hashing).
@@ -380,13 +374,11 @@ The fingerprint is displayed as a hex string: `"a3f2 91d0 e8c4 7b5a"`.
 
 * Data-plane content (keystrokes, speech, braille, clipboard) encrypted end-to-end
 * Forward secrecy: ephemeral keys per session
-
 * Sender authenticity: pairwise AEAD + `_from` verification
 
 **Not protected**:
 
 * Metadata: server sees who's in which channel, timing, message sizes
-
 * Control plane: `protocol_version`, `join`, `generate_key` are plaintext
 * MITM: a malicious server can swap public keys during exchange (detectable
   only by fingerprint verification)
@@ -394,7 +386,7 @@ The fingerprint is displayed as a hex string: `"a3f2 91d0 e8c4 7b5a"`.
 ### 6.11 Design Compromises vs Signal Protocol
 
 | Feature | Signal | NVDA Remote | Rationale |
-|---------|--------|-------------|-----------|
+| --- | --- | --- | --- |
 | Key exchange | X3DH | Single X25519 DH | No offline messages; both peers online |
 | Ratcheting | Double Ratchet | Per-session keys | Per-message forward secrecy unnecessary; session-level is sufficient |
 | Identity keys | Persistent | Ephemeral only | No long-term identity needed; users verify per session |
@@ -408,7 +400,6 @@ When one NVDA instance connects directly to another via the built-in server
 
 The direct-connection server:
 
-
 * Sets `e2e_available: false` in `channel_joined`
 * Does not include `e2e_supported` in client info (defaults to `false`)
 * Uses the same message format and types as the relay protocol
@@ -417,71 +408,57 @@ E2E is never initiated on direct connections.
 
 ## 8. Wire Format Examples
 
-
+### Complete E2E Session (Two Clients)
 
 **Client A connects and joins:**
 
 ```
-
-
 -> {"type":"protocol_version","version":3}
 -> {"type":"join","channel":"123456789","connection_type":"master"}
 <- {"type":"channel_joined","channel":"123456789","user_id":1,"user_ids":[],"clients":[],"e2e_available":true}
-
 <- {"type":"motd","motd":"Welcome","force_display":false}
-
-
 ```
 
 **Client B connects and joins:**
 
-
 ```
-
 -> {"type":"protocol_version","version":3}
-
-
 -> {"type":"join","channel":"123456789","connection_type":"slave"}
 <- {"type":"channel_joined","channel":"123456789","user_id":2,"user_ids":[1],"clients":[{"id":1,"connection_type":"master","e2e_supported":true}],"e2e_available":true}
-
 ```
 
 **Client A receives notification:**
 
 ```
-
+<- {"type":"client_joined","user_id":2,"client":{"id":2,"connection_type":"slave","e2e_supported":true}}
 ```
-
 
 **Key exchange:**
 
 ```
-
-A -> {"type":"e2e_pubkey","pubkey":"<b64>","nonce_prefix":"<b64>"}
+A -> {"type":"e2e_pubkey","pubkey":"...base64...","nonce_prefix":"...base64..."}
      (server relays to B with origin=1)
-B -> {"type":"e2e_pubkey","pubkey":"<b64>","nonce_prefix":"<b64>"}
+B -> {"type":"e2e_pubkey","pubkey":"...base64...","nonce_prefix":"...base64..."}
      (server relays to A with origin=2)
-
 ```
 
 **Encrypted key press (A -> B):**
 
-A -> {"type":"e2e_data","to":2,"ciphertext":"<b64>","nonce":"<b64>"}
+```
+A -> {"type":"e2e_data","to":2,"ciphertext":"...base64...","nonce":"...base64..."}
      (server relays to B with origin=1)
-
 ```
 
 Decrypted payload inside ciphertext:
 
 ```json
 {"type":"key","_from":1,"vk_code":65,"extended":false,"pressed":true,"scan_code":30}
-
 ```
 
 **Encrypted speech (B -> A):**
 
 ```
-B -> {"type":"e2e_data","to":1,"ciphertext":"<b64>","nonce":"<b64>"}
+B -> {"type":"e2e_data","to":1,"ciphertext":"...base64...","nonce":"...base64..."}
      (server relays to A with origin=2)
 ```
 
