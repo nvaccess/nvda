@@ -742,7 +742,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.container.SetupScrolling()
 		self.container.Thaw()
 
-	def onCategoryChange(self, evt):
+	def onCategoryChange(self, evt: wx.ListEvent):
 		currentCat = self.currentCategory
 		newIndex = evt.GetIndex()
 		if not currentCat or newIndex != self.categoryClasses.index(currentCat.__class__):
@@ -6201,8 +6201,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			configProfile=NvdaSettingsDialogActiveConfigProfile,
 		)
 
-	def onCategoryChange(self, evt):
-		super(NVDASettingsDialog, self).onCategoryChange(evt)
+	def onCategoryChange(self, evt: wx.ListEvent):
+		super().onCategoryChange(evt)
 		if evt.Skipped:
 			return
 		self._doOnCategoryChange()
@@ -6211,7 +6211,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		global NvdaSettingsDialogActiveConfigProfile, NvdaSettingsDialogWindowHandle
 		NvdaSettingsDialogActiveConfigProfile = None
 		NvdaSettingsDialogWindowHandle = None
-		super(NVDASettingsDialog, self).Destroy()
+		super().Destroy()
 
 
 class AddSymbolDialog(
