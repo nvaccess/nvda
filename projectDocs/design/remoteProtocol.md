@@ -296,16 +296,12 @@ For each data-plane message, the sender encrypts separately for each peer:
 
 **Nonce construction** (24 bytes for XSalsa20):
 
-
-```
 [4-byte sender prefix][12 bytes zero padding][8-byte big-endian counter]
 ```
 
 The counter increments per message per peer, ensuring nonce uniqueness.
 
-
 **Encrypted message format**:
-
 ```json
 {
   "type": "e2e_data",
@@ -318,10 +314,8 @@ The counter increments per message per peer, ensuring nonce uniqueness.
 The `to` field is the intended recipient's `user_id`. The server adds `origin`
 when relaying.
 
-
 **Encrypted payload** (plaintext before encryption):
 
-```json
 {
   "type": "key",
   "_from": 1,
@@ -375,12 +369,16 @@ The fingerprint is displayed as a hex string: `"a3f2 91d0 e8c4 7b5a"`.
 ### 6.10 Threat Model
 
 **Protected**:
+
 * Data-plane content (keystrokes, speech, braille, clipboard) encrypted end-to-end
 * Forward secrecy: ephemeral keys per session
+
 * Sender authenticity: pairwise AEAD + `_from` verification
 
 **Not protected**:
+
 * Metadata: server sees who's in which channel, timing, message sizes
+
 * Control plane: `protocol_version`, `join`, `generate_key` are plaintext
 * MITM: a malicious server can swap public keys during exchange (detectable
   only by fingerprint verification)
@@ -401,6 +399,8 @@ When one NVDA instance connects directly to another via the built-in server
 (`server.py`), no relay intermediary exists. The TLS tunnel runs point-to-point.
 
 The direct-connection server:
+
+
 * Sets `e2e_available: false` in `channel_joined`
 * Does not include `e2e_supported` in client info (defaults to `false`)
 * Uses the same message format and types as the relay protocol
@@ -409,8 +409,6 @@ E2E is never initiated on direct connections.
 
 ## 8. Wire Format Examples
 
-
-### Complete E2E Session (Two Clients)
 
 **Client A connects and joins:**
 
@@ -433,9 +431,7 @@ E2E is never initiated on direct connections.
 
 **Client A receives notification:**
 
-
 ```
-<- {"type":"client_joined","user_id":2,"client":{"id":2,"connection_type":"slave","e2e_supported":true}}
 ```
 
 **Key exchange:**
@@ -448,10 +444,8 @@ B -> {"type":"e2e_pubkey","pubkey":"<b64>","nonce_prefix":"<b64>"}
      (server relays to A with origin=2)
 ```
 
-
 **Encrypted key press (A -> B):**
 
-```
 A -> {"type":"e2e_data","to":2,"ciphertext":"<b64>","nonce":"<b64>"}
      (server relays to B with origin=1)
 

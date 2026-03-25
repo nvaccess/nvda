@@ -401,7 +401,9 @@ class RemoteSession:
 			# Speech commands need the custom encoder
 			serialized = json.dumps(kwargs, cls=SpeechCommandJSONEncoder).encode("utf-8")
 			encrypted_msgs = self.e2e.encrypt_preserialized(
-				type.value, from_id=self._myUserId, serialized_kwargs=serialized
+				type.value,
+				from_id=self._myUserId,
+				serialized_kwargs=serialized,
 			)
 		else:
 			encrypted_msgs = self.e2e.encrypt(type.value, from_id=self._myUserId, **kwargs)
