@@ -4476,6 +4476,24 @@ Once a Remote Access session is active, you can switch between controlling the r
   In order for this to work, the controlled computer must be running an installed copy of NVDA.
   Additionally, depending on the settings of the controlled computer, this function may not always work.
 
+### Security {#RemoteAccessSecurity}
+
+When you connect through a server, NVDA automatically protects the connection so that only you and the other computer can see what is being sent.
+This includes speech, braille, keyboard input, and clipboard contents.
+For this protection to work, both computers must be running a version of NVDA that supports it.
+This happens in the background and requires no action from you.
+
+You will only be notified if NVDA is unable to protect the connection.
+In that case, you can choose whether to continue or disconnect.
+This can happen when:
+
+* The server you are connecting through does not support this feature.
+You should only continue if you trust whoever runs the server.
+* The other computer is running an older version of NVDA.
+Ask the other person to update NVDA if possible.
+
+When connecting directly to another computer (using the "Host locally" option), the connection is already private and does not go through a server, so no additional protection is needed.
+
 ### Remote Access Key Commands Summary {#RemoteAccessGestures}
 
 <!-- KC:beginInclude -->

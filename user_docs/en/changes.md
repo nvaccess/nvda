@@ -6,6 +6,10 @@
 
 ### New Features
 
+* Remote Access connections through a server are now automatically protected so that only you and the other computer can see what is being sent. (#17784)
+  * This works automatically when both computers are running this version of NVDA or later.
+  * NVDA will warn you if the connection cannot be protected, and let you choose whether to continue or disconnect.
+  * Direct connections (using "Host locally") are already private and are not affected by this change.
 * After installing or updating NVDA, a dialog now offers options to restart Windows, start the installed copy, or exit the installer. (#19268, #19718, @kefaslungu)
 * NVDA now includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen. (#19228, @Boumtchack)
   * The magnifier supports various zoom levels, color filters (normal, grayscale, inverted), and different focus tracking modes.
@@ -67,6 +71,12 @@ The `scons checkPot` target has also been replaced with `runcheckpot.bat`.
 Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`, `runsystemtests.bat`, `runlint.bat`. (#19606, #19676, @bramd)
 * Updated Python 3.13.11 to 3.13.12 (#19572, @dpy013)
 * Added a private `_asyncioEventLoop` module that provides an asyncio event loop running on a background thread for use by NVDA components. (#19816, @bramd)
+* The Remote Access protocol has been upgraded to version 3 with end-to-end encryption and extensibility support. (#17784)
+  * New `_remoteClient.e2e` module provides `E2ESession` for X25519/XChaCha20-Poly1305 cryptography via PyNaCl.
+  * `RemoteSession.send()` transparently encrypts data-plane messages when E2E is active. A control-plane blacklist (`_E2E_CONTROL_PLANE_TYPES`) ensures new message types added by extensions are encrypted by default.
+  * New extension points `RemoteSession.e2eUnavailable` and `RemoteSession.e2ePeerUnsupported` fire when E2E cannot be established.
+  * The relay server forwards any unrecognised message types, so add-ons can define custom message types without server-side changes. See `projectDocs/design/remoteProtocol.md` §5.5 for details.
+  * See `projectDocs/design/remoteProtocol.md` for the full protocol specification.
 
 #### Deprecations
 
