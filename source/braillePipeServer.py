@@ -31,6 +31,7 @@ from logHandler import log
 from utils.security import isRunningOnSecureDesktop
 
 _kernel32 = ctypes.windll.kernel32  # type: ignore[attr-defined]
+_advapi32 = ctypes.windll.advapi32  # type: ignore[attr-defined]
 
 INVALID_HANDLE_VALUE = ctypes.wintypes.HANDLE(-1).value
 ERROR_PIPE_CONNECTED = 535
@@ -44,8 +45,46 @@ PIPE_UNLIMITED_INSTANCES = 255
 NMPWAIT_USE_DEFAULT_WAIT = 0
 FILE_FLAG_OVERLAPPED = 0x40000000
 
+SDDL_REVISION_1 = 1
 
-def _createPipeInstance(name: str) -> ctypes.wintypes.HANDLE:
+# SDDL for the normal-desktop pipe.
+# The normal-desktop NVDA instance runs as the logged-in user.  Its default token DACL grants that user and local Administrators access, but does NOT reliably include NT AUTHORITY\SYSTEM, which is the identity used by RIM's elevated service component.
+_NORMAL_PIPE_SDDL = "D:(A;;GA;;;OW)(A;;GRGW;;;SY)"
+
+
+class _SECURITY_ATTRIBUTES(ctypes.Structure):
+	_fields_ = [
+		("nLength", ctypes.wintypes.DWORD),
+		("lpSecurityDescriptor", ctypes.c_void_p),
+		("bInheritHandle", ctypes.wintypes.BOOL),
+	]
+
+	def __init__(self, **kwargs):
+		super().__init__(nLength=ctypes.sizeof(self), **kwargs)
+
+
+def _buildSystemAccessSA() -> tuple["_SECURITY_ATTRIBUTES", ctypes.c_void_p]:
+	"""Build a SECURITY_ATTRIBUTES granting SYSTEM read/write on the normal-desktop pipe.
+
+	Returns ``(sa, sd)`` where *sd* is the LocalAlloc'd security descriptor that must be freed with ``_kernel32.LocalFree(sd)`` when the pipe server stops.
+	"""
+	sd = ctypes.c_void_p()
+	ok = _advapi32.ConvertStringSecurityDescriptorToSecurityDescriptorW(
+		_NORMAL_PIPE_SDDL,
+		SDDL_REVISION_1,
+		ctypes.byref(sd),
+		None,
+	)
+	if not ok:
+		raise ctypes.WinError()
+	sa = _SECURITY_ATTRIBUTES(lpSecurityDescriptor=sd)
+	return sa, sd
+
+
+def _createPipeInstance(
+	name: str,
+	sa: Optional["_SECURITY_ATTRIBUTES"] = None,
+) -> ctypes.wintypes.HANDLE:
 	"""Create a single named-pipe instance and return its handle."""
 	handle = _kernel32.CreateNamedPipeW(
 		name,
@@ -55,7 +94,7 @@ def _createPipeInstance(name: str) -> ctypes.wintypes.HANDLE:
 		65536,
 		65536,
 		NMPWAIT_USE_DEFAULT_WAIT,
-		None,
+		ctypes.byref(sa) if sa is not None else None,
 	)
 	if handle == INVALID_HANDLE_VALUE:
 		raise ctypes.WinError()
@@ -298,14 +337,25 @@ def _handleConnection(handle: ctypes.wintypes.HANDLE, pending_q: "queue.Queue") 
 class _PipeServer:
 	"""Listens on a named pipe and spawns per-connection threads."""
 
-	def __init__(self, pipeName: str) -> None:
+	def __init__(self, pipeName: str, useSystemDacl: bool = False) -> None:
 		self._pipeName = pipeName
+		self._useSystemDacl = useSystemDacl
 		self._stop = threading.Event()
 		self._thread: Optional[threading.Thread] = None
+		self._sa: Optional[_SECURITY_ATTRIBUTES] = None
+		self._sd: Optional[ctypes.c_void_p] = None
 		# Queue for registrations that arrive before braille.handler is ready.
 		self._pending: queue.Queue = queue.Queue()
 
 	def start(self) -> None:
+		if self._useSystemDacl:
+			try:
+				self._sa, self._sd = _buildSystemAccessSA()
+			except OSError:
+				log.exception(
+					"braillePipeServer: failed to build SYSTEM-access security descriptor;"
+					" falling back to default DACL (SYSTEM clients may be unable to connect)",
+				)
 		self._thread = threading.Thread(target=self._loop, name="braillePipeServer", daemon=True)
 		self._thread.start()
 
@@ -328,6 +378,10 @@ class _PipeServer:
 			pass
 		if self._thread:
 			self._thread.join(timeout=2.0)
+		if self._sd is not None:
+			_kernel32.LocalFree(self._sd)
+			self._sd = None
+			self._sa = None
 
 	def processPending(self) -> None:
 		"""Process any registrations that arrived before braille was ready."""
@@ -365,7 +419,7 @@ class _PipeServer:
 	def _loop(self) -> None:
 		while not self._stop.is_set():
 			try:
-				handle = _createPipeInstance(self._pipeName)
+				handle = _createPipeInstance(self._pipeName, self._sa)
 			except OSError:
 				log.exception("braillePipeServer: failed to create pipe instance")
 				break
@@ -406,8 +460,10 @@ def initialize() -> None:
 	global _server
 	if _server is not None:
 		return
-	pipeName = r"\\.\pipe\nvda_braille_secure" if isRunningOnSecureDesktop() else r"\\.\pipe\nvda_braille"
-	_server = _PipeServer(pipeName)
+	isSecure = isRunningOnSecureDesktop()
+	pipeName = r"\\.\pipe\nvda_braille_secure" if isSecure else r"\\.\pipe\nvda_braille"
+	# The secure-desktop instance runs as SYSTEM, so its default DACL already permits SYSTEM connections.  Only the normal-desktop instance needs the explicit SYSTEM ACE.
+	_server = _PipeServer(pipeName, useSystemDacl=not isSecure)
 	_server.start()
 	log.info(f"braillePipeServer: listening on {pipeName}")
 	# Resolve any registrations that beat us to it (shouldn't normally happen since we start early, but be defensive).
