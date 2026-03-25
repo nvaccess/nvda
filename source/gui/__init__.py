@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
 # Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot, Luke Davis
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -418,6 +418,9 @@ class MainFrame(wx.Frame):
 		# Translators: The title of the dialog to show about info for NVDA.
 		aboutDialog = MessageDialog(None, versionInfo.aboutMessage, _("About NVDA"))
 		aboutDialog.addButton(copyButton)
+		if globalVars.appArgs.secure:
+			button = next(c for c in aboutDialog.GetChildren() if c.GetId() == copyButton.id)
+			button.Disable()
 		aboutDialog.Show()
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
