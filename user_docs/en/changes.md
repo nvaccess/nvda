@@ -76,6 +76,7 @@ Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`,
   * `RemoteSession.send()` transparently encrypts data-plane messages when E2E is active. A control-plane blacklist (`_E2E_CONTROL_PLANE_TYPES`) ensures new message types added by extensions are encrypted by default.
   * New extension points `RemoteSession.e2eUnavailable` and `RemoteSession.e2ePeerUnsupported` fire when E2E cannot be established.
   * The relay server forwards any unrecognised message types, so add-ons can define custom message types without server-side changes. See `projectDocs/design/remoteProtocol.md` §5.5 for details.
+  * Relay server operators: v3 support requires minimal changes — include `user_id` and `e2e_available` in `channel_joined` responses, and include `e2e_supported` in client join/leave notifications. The server does not need to handle any cryptography; it only forwards `e2e_pubkey` and `e2e_data` messages like any other data-plane message.
   * See `projectDocs/design/remoteProtocol.md` for the full protocol specification.
 
 #### Deprecations
