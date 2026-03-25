@@ -126,7 +126,6 @@ class TestE2EFingerprint(unittest.TestCase):
 	def test_fingerprintFormat(self):
 		alice = E2ESession()
 		bob = E2ESession()
-		aliceMsg = alice.get_pubkey_message()
 		bobMsg = bob.get_pubkey_message()
 		alice.add_peer(2, bobMsg["pubkey"], bobMsg["nonce_prefix"])
 		fingerprint = alice.get_fingerprint(2)

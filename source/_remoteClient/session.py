@@ -97,21 +97,23 @@ EXCLUDED_SPEECH_COMMANDS = (
 
 #: Control-plane message types that must NOT be encrypted — the server needs to parse these.
 #: All other message types (including any added by extensions) are encrypted when E2E is active.
-_E2E_CONTROL_PLANE_TYPES: frozenset[RemoteMessageType] = frozenset({
-	RemoteMessageType.PROTOCOL_VERSION,
-	RemoteMessageType.JOIN,
-	RemoteMessageType.CHANNEL_JOINED,
-	RemoteMessageType.CLIENT_JOINED,
-	RemoteMessageType.CLIENT_LEFT,
-	RemoteMessageType.GENERATE_KEY,
-	RemoteMessageType.MOTD,
-	RemoteMessageType.VERSION_MISMATCH,
-	RemoteMessageType.PING,
-	RemoteMessageType.ERROR,
-	RemoteMessageType.NVDA_NOT_CONNECTED,
-	RemoteMessageType.E2E_PUBKEY,
-	RemoteMessageType.E2E_DATA,
-})
+_E2E_CONTROL_PLANE_TYPES: frozenset[RemoteMessageType] = frozenset(
+	{
+		RemoteMessageType.PROTOCOL_VERSION,
+		RemoteMessageType.JOIN,
+		RemoteMessageType.CHANNEL_JOINED,
+		RemoteMessageType.CLIENT_JOINED,
+		RemoteMessageType.CLIENT_LEFT,
+		RemoteMessageType.GENERATE_KEY,
+		RemoteMessageType.MOTD,
+		RemoteMessageType.VERSION_MISMATCH,
+		RemoteMessageType.PING,
+		RemoteMessageType.ERROR,
+		RemoteMessageType.NVDA_NOT_CONNECTED,
+		RemoteMessageType.E2E_PUBKEY,
+		RemoteMessageType.E2E_DATA,
+	}
+)
 
 
 class RemoteSession:
