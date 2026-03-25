@@ -57,7 +57,30 @@ def determine_dll_type(self, imagename):
 DllFinder.determine_dll_type = determine_dll_type
 
 
-def hook_latex2mathml_symbols_parser(finder: Scanner, module: Module) -> None:
+class _Latex2mathmlSymbolsParserTransformer(NodeTransformer):
+	"""Rewrite the ``SYMBOLS_FILE`` path to resolve relative to the frozen executable."""
+
+	def __init__(self, relpath: str):
+		super().__init__()
+		self.rewritten: bool = False
+		self.relpath = relpath
+
+	def visit_AnnAssign(self, node: AnnAssign) -> AnnAssign:
+		# 1 indicates a "simple" target.
+		# That is, a target that consists solely of a Name node that does not appear between parentheses.
+		if node.simple == 1 and node.target.id == "SYMBOLS_FILE":
+			# Replace the original path expression with one based on sys.executable,
+			# so the frozen build finds the bundled unimathsymbols.txt.
+			node.value = (
+				# the result of parse is a ``ast.Module`` whose body contains one ``ast.Expr`` node.
+				# We only want the value of that expression.
+				parse(f"os.path.join(os.path.dirname(sys.executable), {self.relpath!r})").body[0].value
+			)
+			self.rewritten = True
+		return node
+
+
+def _hook_latex2mathml_symbols_parser(finder: Scanner, module: Module) -> None:
 	"""py2exe hook for the latex2mathml.symbols_parser module.
 
 	latex2mathml locates its ``unimathsymbols.txt`` data file at runtime
@@ -79,32 +102,10 @@ def hook_latex2mathml_symbols_parser(finder: Scanner, module: Module) -> None:
 		RELPATH,
 		os.path.join(os.path.dirname(latex2mathml.symbols_parser.__file__), FILENAME),
 	)
-
-	class Transformer(NodeTransformer):
-		"""Rewrite the ``SYMBOLS_FILE`` path to resolve relative to the frozen executable."""
-
-		def __init__(self):
-			super().__init__()
-			self.rewritten: bool = False
-
-		def visit_AnnAssign(self, node: AnnAssign) -> AnnAssign:
-			# 1 indicates a "simple" target.
-			# That is, a target that consists solely of a Name node that does not appear between parentheses.
-			if node.simple == 1 and node.target.id == "SYMBOLS_FILE":
-				# Replace the original path expression with one based on sys.executable,
-				# so the frozen build finds the bundled unimathsymbols.txt.
-				node.value = (
-					# the result of parse is a ``ast.Module`` whose body contains one ``ast.Expr`` node.
-					# We only want the value of that expression.
-					parse(f"os.path.join(os.path.dirname(sys.executable), {RELPATH!r})").body[0].value
-				)
-				self.rewritten = True
-			return node
-
 	tree = parse(module.__source__)
 	# Inject ``import sys`` so the rewritten path expression can reference it.
 	tree.body.insert(0, parse("import sys").body[0])
-	transformer = Transformer()
+	transformer = _Latex2mathmlSymbolsParserTransformer(RELPATH)
 	newTree = fix_missing_locations(transformer.visit(tree))
 	if not transformer.rewritten:
 		raise RuntimeError(
@@ -116,8 +117,7 @@ def hook_latex2mathml_symbols_parser(finder: Scanner, module: Module) -> None:
 # Register the hook with py2exe.
 # py2exe discovers hooks by name:
 # ``hook_<dotted_module_name_with_underscores>`` on the ``py2exe.hooks`` module.
-py2exe.hooks.hook_latex2mathml_symbols_parser = hook_latex2mathml_symbols_parser
-del hook_latex2mathml_symbols_parser
+py2exe.hooks.hook_latex2mathml_symbols_parser = _hook_latex2mathml_symbols_parser
 
 
 def _parsePartialArguments() -> argparse.Namespace:
