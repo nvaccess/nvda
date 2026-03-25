@@ -5,8 +5,8 @@
 
 """End-to-end encryption for NVDA Remote.
 
-Uses X25519 key exchange and XChaCha20-Poly1305 authenticated encryption
-to protect data-plane messages from the relay server.
+Uses X25519 key exchange and XSalsa20-Poly1305 authenticated encryption
+(NaCl crypto_box) to protect data-plane messages from the relay server.
 
 Requires PyNaCl (libsodium Python binding).
 """

@@ -25,7 +25,7 @@ sending speech, tones, and display output back.
 |---------|-----------|
 | v1 | Base protocol: connect, join channel, relay messages |
 | v2 | Server injects `origin` (client ID) into relayed messages; adds `client`/`clients` fields to join/leave notifications; backwards-compatible stripping for v1 peers |
-| v3 | End-to-end encryption support: `e2e_pubkey` and `e2e_data` message types; `e2e_available` and `e2e_supported` fields; `user_id` in `channel_joined`. Extension-friendly: new message types are automatically encrypted (see §5.5). |
+| v3 | End-to-end encryption support: `e2e_pubkey` and `e2e_data` message types; `e2e_available` and `e2e_supported` fields; `user_id` in `channel_joined`. Wire-level extensibility for custom message types (see §5.5). |
 
 ## 3. Connection Handshake
 
@@ -215,19 +215,26 @@ Messages are only relayed within a channel. Different channels are fully isolate
 
 ### 5.5 Extensibility
 
-The protocol is designed to be extensible. The relay server forwards any message
-type it does not recognize as a control message (see §5.1), so NVDA add-ons and
-extensions can define custom message types without any server-side changes.
+The protocol is extensible at the wire level. The relay server forwards any
+message type it does not recognize as a control message (see §5.1), so custom
+message types can be introduced without any server-side changes, provided all
+participating clients understand them.
+
+The current NVDA client only accepts message types defined in the
+`RemoteMessageType` enum. Unknown types received from the server are ignored.
+To add a new message type, the enum and corresponding handlers must be updated
+in the client. Third-party relay implementations are free to support additional
+types as long as they respect the rules in this specification.
 
 When E2E encryption is active, the client uses a **control-plane blacklist**
 rather than a data-plane whitelist to decide what to encrypt. Only a fixed set
 of control-plane message types (`protocol_version`, `join`, `channel_joined`,
 `client_joined`, `client_left`, `generate_key`, `motd`, `version_mismatch`,
 `ping`, `error`, `nvda_not_connected`, `e2e_pubkey`, `e2e_data`) are sent in
-plaintext — the server must be able to parse these. All other message types,
-including any added by extensions, are automatically encrypted when E2E is
-active. This ensures extensions get encryption by default without needing to
-opt in.
+plaintext — the server must be able to parse these. All other message types
+are encrypted when E2E is active. New message types added to
+`RemoteMessageType` are encrypted by default as long as they are not added to
+the control-plane blacklist.
 
 ## 6. End-to-End Encryption (Protocol v3)
 
@@ -249,7 +256,7 @@ security benefit. The direct-connection server sets `e2e_available: false`.
 | Purpose | Algorithm | Library |
 |---------|-----------|---------|
 | Key exchange | X25519 (Curve25519 DH) | PyNaCl |
-| Authenticated encryption | XChaCha20-Poly1305 (AEAD) | PyNaCl |
+| Authenticated encryption | XSalsa20-Poly1305 (NaCl crypto_box) | PyNaCl |
 | Fingerprint | BLAKE2b (64-bit digest) | hashlib |
 
 ### 6.4 All-or-Nothing Rule
@@ -287,7 +294,7 @@ shared_secret = X25519(own_private_key, peer_public_key)
 
 For each data-plane message, the sender encrypts separately for each peer:
 
-**Nonce construction** (24 bytes for XChaCha20):
+**Nonce construction** (24 bytes for XSalsa20):
 
 
 ```
@@ -303,7 +310,7 @@ The counter increments per message per peer, ensuring nonce uniqueness.
 {
   "type": "e2e_data",
   "to": 3,
-  "ciphertext": "<base64 XChaCha20-Poly1305 ciphertext>",
+  "ciphertext": "<base64 XSalsa20-Poly1305 ciphertext>",
   "nonce": "<base64 24-byte nonce>"
 }
 ```
@@ -365,13 +372,13 @@ The fingerprint is displayed as a hex string: `"a3f2 91d0 e8c4 7b5a"`.
 5. **Peer leave**: Remove peer's key state
 6. **Disconnect**: E2E session destroyed, ephemeral keys discarded
 
-*## 6.10 Threat Model
-*
+### 6.10 Threat Model
+
 **Protected**:
 * Data-plane content (keystrokes, speech, braille, clipboard) encrypted end-to-end
 * Forward secrecy: ephemeral keys per session
 * Sender authenticity: pairwise AEAD + `_from` verification
-*
+
 **Not protected**:
 * Metadata: server sees who's in which channel, timing, message sizes
 * Control plane: `protocol_version`, `join`, `generate_key` are plaintext
@@ -391,9 +398,9 @@ The fingerprint is displayed as a hex string: `"a3f2 91d0 e8c4 7b5a"`.
 ## 7. Direct Connection Mode
 
 When one NVDA instance connects directly to another via the built-in server
-*`server.py`), no relay intermediary exists. The TLS tunnel runs point-to-point.
-*
-*he direct-connection server:
+(`server.py`), no relay intermediary exists. The TLS tunnel runs point-to-point.
+
+The direct-connection server:
 * Sets `e2e_available: false` in `channel_joined`
 * Does not include `e2e_supported` in client info (defaults to `false`)
 * Uses the same message format and types as the relay protocol

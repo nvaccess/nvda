@@ -96,7 +96,7 @@ EXCLUDED_SPEECH_COMMANDS = (
 )
 
 #: Control-plane message types that must NOT be encrypted — the server needs to parse these.
-#: All other message types (including any added by extensions) are encrypted when E2E is active.
+#: All other message types are encrypted when E2E is active.
 _E2E_CONTROL_PLANE_TYPES: frozenset[RemoteMessageType] = frozenset(
 	{
 		RemoteMessageType.PROTOCOL_VERSION,
@@ -383,26 +383,30 @@ class RemoteSession:
 		with :class:`SpeechCommandJSONEncoder` before encryption, since the default
 		``json.dumps`` cannot handle them.
 		"""
-		if (
-			self.e2e is not None
-			and self.e2e.peer_ids
-			and self._myUserId is not None
-			and type not in _E2E_CONTROL_PLANE_TYPES
-		):
-			if type is RemoteMessageType.SPEAK:
-				# Speech commands need the custom encoder
-				serialized = json.dumps(kwargs, cls=SpeechCommandJSONEncoder).encode("utf-8")
-				encrypted_msgs = self.e2e.encrypt_preserialized(
-					type.value,
-					from_id=self._myUserId,
-					serialized_kwargs=serialized,
-				)
-			else:
-				encrypted_msgs = self.e2e.encrypt(type.value, from_id=self._myUserId, **kwargs)
-			for msg in encrypted_msgs:
-				self.transport.send(RemoteMessageType.E2E_DATA, **msg)
-		else:
+		# Control-plane messages and non-E2E sessions are always sent in plaintext.
+		if self.e2e is None or type in _E2E_CONTROL_PLANE_TYPES or self._myUserId is None:
 			self.transport.send(type, **kwargs)
+			return
+
+		# E2E is active and this is a data-plane message.
+		# If peer keys are not yet established, drop rather than leak plaintext.
+		if not self.e2e.peer_ids:
+			log.warning(
+				"E2E: Dropping data-plane message %s because peer keys are not yet established",
+				type.name,
+			)
+			return
+
+		if type is RemoteMessageType.SPEAK:
+			# Speech commands need the custom encoder
+			serialized = json.dumps(kwargs, cls=SpeechCommandJSONEncoder).encode("utf-8")
+			encrypted_msgs = self.e2e.encrypt_preserialized(
+				type.value, from_id=self._myUserId, serialized_kwargs=serialized
+			)
+		else:
+			encrypted_msgs = self.e2e.encrypt(type.value, from_id=self._myUserId, **kwargs)
+		for msg in encrypted_msgs:
+			self.transport.send(RemoteMessageType.E2E_DATA, **msg)
 
 	def getConnectionInfo(self) -> connectionInfo.ConnectionInfo:
 		"""Get information about the current connection.
