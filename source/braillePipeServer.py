@@ -279,7 +279,7 @@ class _DirectSession(braille.DirectBrailleWindow):
 				"routingIndex": getattr(gesture, "routingIndex", None),
 				"dots": getattr(gesture, "dots", 0),
 				"space": getattr(gesture, "space", False),
-			}
+			},
 		)
 
 	def handleMessage(self, msg: dict) -> None:
