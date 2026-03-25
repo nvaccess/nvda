@@ -12,10 +12,10 @@ through a relay server. One instance acts as the **leader** (controller) sending
 keyboard and braille input, while the other acts as the **follower** (controlled)
 sending speech, tones, and display output back.
 
-- **Wire format**: UTF-8 JSON, one message per line (`\n`-delimited)
-- **Transport**: TCP wrapped in TLS (self-signed certificates)
-- **Default port**: 6837
-- **Architecture**: Star topology — all clients connect to a relay server that
+* **Wire format**: UTF-8 JSON, one message per line (`\n`-delimited)
+* **Transport**: TCP wrapped in TLS (self-signed certificates)
+* **Default port**: 6837
+* **Architecture**: Star topology — all clients connect to a relay server that
   forwards messages. Direct peer-to-peer connections are also supported (via the
   built-in NVDA server) but use the same message format.
 
@@ -72,8 +72,8 @@ and reconnects using this key in a `join` message.
 {"type": "join", "channel": "123456789", "connection_type": "master"}
 ```
 
-- `channel`: The channel key (string). Acts as a shared secret for room joining.
-- `connection_type`: `"master"` (leader/controller) or `"slave"` (follower/controlled).
+* `channel`: The channel key (string). Acts as a shared secret for room joining.
+* `connection_type`: `"master"` (leader/controller) or `"slave"` (follower/controlled).
   This is metadata only; the server treats both identically for relay purposes.
 
 ### 3.4 `channel_joined` (server -> client)
@@ -233,10 +233,10 @@ opt in.
 
 ### 6.1 Design Goals
 
-- Protect data-plane content (keystrokes, speech, clipboard) from the relay server
-- Per-session forward secrecy via ephemeral keys
-- Pairwise authenticated encryption preventing sender spoofing
-- Fingerprint-based MITM detection
+* Protect data-plane content (keystrokes, speech, clipboard) from the relay server
+* Per-session forward secrecy via ephemeral keys
+* Pairwise authenticated encryption preventing sender spoofing
+* Fingerprint-based MITM detection
 
 ### 6.2 Scope
 
@@ -274,27 +274,31 @@ the server would see plaintext from/to the non-E2E peer, defeating the purpose.
 }
 ```
 
-3. The server relays this with `origin` added. Each receiving client derives a
+1. The server relays this with `origin` added. Each receiving client derives a
    pairwise shared secret using X25519 DH:
 
 ```
 shared_secret = X25519(own_private_key, peer_public_key)
 ```
 
-4. PyNaCl's `Box` class handles the DH derivation and encryption in one step.
+1. PyNaCl's `Box` class handles the DH derivation and encryption in one step.
 
 ### 6.6 Message Encryption
 
 For each data-plane message, the sender encrypts separately for each peer:
 
 **Nonce construction** (24 bytes for XChaCha20):
+
+
 ```
 [4-byte sender prefix][12 bytes zero padding][8-byte big-endian counter]
 ```
 
 The counter increments per message per peer, ensuring nonce uniqueness.
 
+
 **Encrypted message format**:
+
 ```json
 {
   "type": "e2e_data",
@@ -307,7 +311,9 @@ The counter increments per message per peer, ensuring nonce uniqueness.
 The `to` field is the intended recipient's `user_id`. The server adds `origin`
 when relaying.
 
+
 **Encrypted payload** (plaintext before encryption):
+
 ```json
 {
   "type": "key",
@@ -359,17 +365,17 @@ The fingerprint is displayed as a hex string: `"a3f2 91d0 e8c4 7b5a"`.
 5. **Peer leave**: Remove peer's key state
 6. **Disconnect**: E2E session destroyed, ephemeral keys discarded
 
-### 6.10 Threat Model
-
+*## 6.10 Threat Model
+*
 **Protected**:
-- Data-plane content (keystrokes, speech, braille, clipboard) encrypted end-to-end
-- Forward secrecy: ephemeral keys per session
-- Sender authenticity: pairwise AEAD + `_from` verification
-
+* Data-plane content (keystrokes, speech, braille, clipboard) encrypted end-to-end
+* Forward secrecy: ephemeral keys per session
+* Sender authenticity: pairwise AEAD + `_from` verification
+*
 **Not protected**:
-- Metadata: server sees who's in which channel, timing, message sizes
-- Control plane: `protocol_version`, `join`, `generate_key` are plaintext
-- MITM: a malicious server can swap public keys during exchange (detectable
+* Metadata: server sees who's in which channel, timing, message sizes
+* Control plane: `protocol_version`, `join`, `generate_key` are plaintext
+* MITM: a malicious server can swap public keys during exchange (detectable
   only by fingerprint verification)
 
 ### 6.11 Design Compromises vs Signal Protocol
@@ -385,65 +391,81 @@ The fingerprint is displayed as a hex string: `"a3f2 91d0 e8c4 7b5a"`.
 ## 7. Direct Connection Mode
 
 When one NVDA instance connects directly to another via the built-in server
-(`server.py`), no relay intermediary exists. The TLS tunnel runs point-to-point.
-
-The direct-connection server:
-- Sets `e2e_available: false` in `channel_joined`
-- Does not include `e2e_supported` in client info (defaults to `false`)
-- Uses the same message format and types as the relay protocol
+*`server.py`), no relay intermediary exists. The TLS tunnel runs point-to-point.
+*
+*he direct-connection server:
+* Sets `e2e_available: false` in `channel_joined`
+* Does not include `e2e_supported` in client info (defaults to `false`)
+* Uses the same message format and types as the relay protocol
 
 E2E is never initiated on direct connections.
 
 ## 8. Wire Format Examples
 
+
 ### Complete E2E Session (Two Clients)
 
 **Client A connects and joins:**
+
 ```
 -> {"type":"protocol_version","version":3}
 -> {"type":"join","channel":"123456789","connection_type":"master"}
 <- {"type":"channel_joined","channel":"123456789","user_id":1,"user_ids":[],"clients":[],"e2e_available":true}
+
 <- {"type":"motd","motd":"Welcome","force_display":false}
 ```
 
 **Client B connects and joins:**
+
 ```
 -> {"type":"protocol_version","version":3}
+
 -> {"type":"join","channel":"123456789","connection_type":"slave"}
 <- {"type":"channel_joined","channel":"123456789","user_id":2,"user_ids":[1],"clients":[{"id":1,"connection_type":"master","e2e_supported":true}],"e2e_available":true}
 ```
 
 **Client A receives notification:**
+
+
 ```
 <- {"type":"client_joined","user_id":2,"client":{"id":2,"connection_type":"slave","e2e_supported":true}}
 ```
 
 **Key exchange:**
+
 ```
+
 A -> {"type":"e2e_pubkey","pubkey":"<b64>","nonce_prefix":"<b64>"}
      (server relays to B with origin=1)
 B -> {"type":"e2e_pubkey","pubkey":"<b64>","nonce_prefix":"<b64>"}
      (server relays to A with origin=2)
 ```
 
+
 **Encrypted key press (A -> B):**
+
 ```
 A -> {"type":"e2e_data","to":2,"ciphertext":"<b64>","nonce":"<b64>"}
      (server relays to B with origin=1)
+
 ```
 
 Decrypted payload inside ciphertext:
+
 ```json
 {"type":"key","_from":1,"vk_code":65,"extended":false,"pressed":true,"scan_code":30}
+
 ```
 
 **Encrypted speech (B -> A):**
+
 ```
 B -> {"type":"e2e_data","to":1,"ciphertext":"<b64>","nonce":"<b64>"}
      (server relays to A with origin=2)
 ```
 
 Decrypted payload:
+
 ```json
 {"type":"speak","_from":2,"sequence":["hello world"],"priority":null}
 ```

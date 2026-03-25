@@ -120,12 +120,15 @@ class E2ESession:
 					"to": peer.peer_id,
 					"ciphertext": base64.b64encode(ciphertext).decode("ascii"),
 					"nonce": base64.b64encode(nonce).decode("ascii"),
-				}
+				},
 			)
 		return messages
 
 	def encrypt_preserialized(
-		self, type: str, from_id: int, serialized_kwargs: bytes
+		self,
+		type: str,
+		from_id: int,
+		serialized_kwargs: bytes,
 	) -> list[dict[str, Any]]:
 		"""Encrypt a pre-serialized data-plane message for all peers.
 
@@ -157,7 +160,7 @@ class E2ESession:
 					"to": peer.peer_id,
 					"ciphertext": base64.b64encode(ciphertext).decode("ascii"),
 					"nonce": base64.b64encode(nonce).decode("ascii"),
-				}
+				},
 			)
 		return messages
 
@@ -187,7 +190,7 @@ class E2ESession:
 			if inner_from is not None and inner_from != origin_id:
 				log.warning(
 					f"E2E: Origin mismatch — outer origin={origin_id}, inner _from={inner_from}. "
-					"Possible tampering, rejecting message."
+					"Possible tampering, rejecting message.",
 				)
 				return None
 			log.debug(f"E2E: Decrypted message type '{msg_type}' from peer {origin_id}")
