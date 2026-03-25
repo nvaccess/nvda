@@ -2194,20 +2194,148 @@ Please see the [BRLTTY key tables documentation](https://mielke.cc/brltty/doc/dr
 
 <!-- KC:endInclude -->
 
-## Advanced Topics {#toc188}
-### Advanced Customization of Symbol Pronunciation {#toc189}
+## Windows OneCore-röster {#OneCore}
 
-It is possible to customize the pronunciation of punctuation and other symbols beyond what can be done using the [Punctuation/symbol pronunciation](#SymbolPronunciation) dialog.
-For example, you can specify whether the raw symbol should be sent to the synthesizer (e.g. to cause a pause or change in inflection) and you can add custom symbols.
+Windows OneCore-röster är röster som medföljer Windows 10 och senare versioner.
+Dessa röster är förbättrade versioner av de traditionella Microsoft Speech API-rösterna och erbjuder bättre kvalitet och mer naturligt tal.
 
-To do this, you must edit the symbol pronunciation information file in your NVDA user configuration directory.
-The file is called symbols-xx.dic, where xx is the language code.
-The format of this file is documented in the Symbol Pronunciation section of the NVDA Developer Guide, which is available from [the Development section of the NVDA web site](https://community.nvda-project.org/wiki/Development).
-However, it is not possible for users to define complex symbols.
+Dessa röster stöder SSML (Speech Synthesis Markup Language) vilket gör att NVDA kan använda funktioner som pauser, hastighetsändringar och tonhöjdsjusteringar.
 
-## Further Information {#toc190}
+Från och med Windows 10 version 1903 kan NVDA automatiskt växla till dessa röster när de är tillgängliga.
 
-If you require further information or assistance regarding NVDA, please visit the NVDA web site at NVDA_URL.
-Here, you can find additional documentation, as well as technical support and community resources.
-This site also provides information and resources concerning NVDA development.
+## Säkerhet {#SecureMode}
+
+### Säkert läge {#SecureMode}
+
+Säkert läge syftar till att förhindra skadlig kod från att komma åt NVDA Python-API:et och potentiellt kompromettera systemet.
+
+Säkert läge är aktiverat som standard i följande situationer:
+
+* När NVDA körs på säkra skärmar som inloggningsskärmen eller UAC-prompter
+* När "Kör NVDA på säkra skärmar" är aktiverat i inställningarna
+* När NVDA startas med kommandoradsparametern `--secure`
+
+I säkert läge:
+
+* Tillägg kan inte läsas
+* NVDA:s Python-konsol är inaktiverad
+* Loggnivån begränsas
+* Vissa konfigurationsändringar är inte tillgängliga
+
+### Säkra skärmar {#SecureScreens}
+
+NVDA kan konfigureras för att köras på säkra skärmar som Windows inloggningsskärm, UAC-dialoger och andra säkra sammanhang.
+
+För att aktivera detta, markera "Använd NVDA under inloggning (kräver administratörsbehörighet)" i Allmänna inställningar.
+
+## Kommandoradsalternativ {#CommandLineOptions}
+
+NVDA accepterar flera kommandoradsparametrar som ändrar dess beteende. Du kan ange så många parametrar som behövs.
+
+Följande alternativ är tillgängliga:
+
+| Kort |Lång |Beskrivning|
+|---|---|---|
+|-h |--help |visa hjälp och avsluta|
+|-q |--quit |Avsluta redan körande NVDA-instans|
+|-k |--check-running |Rapportera om NVDA körs via avslutningskoden; 0 om körande, 1 om inte körande|
+|-f LOGFILENAME |--log-file=LOGFILENAME |Filen där loggmeddelanden ska skrivas|
+|-l LOGLEVEL |--log-level=LOGLEVEL |Lägsta nivå för loggar (debug 10, info 20, warning 30, error 40, critical 50)|
+|-c CONFIGPATH |--config-path=CONFIGPATH |Sökvägen där NVDA:s konfiguration lagras|
+|-m |--minimal |Inga ljud, inget gränssnitt, inga startmeddelanden etc|
+|-s |--secure |Starta NVDA i säkert läge|
+|Ingen |--disable-addons |Tillägg kommer att ha ingen effekt|
+|Ingen |--debug-logging |Aktivera endast debug-loggnivå för denna körning. Denna inställning åsidosätter alla andra loggnivåargument|
+|Ingen |--no-sr-flag |Ändra inte den globala systemflaggan för skärmläsare|
+
+## Tilläggsbutik {#AddonStore}
+
+Tilläggsbutiken låter dig bläddra och installera tillägg som utvecklats av NVDA-gemenskapen.
+
+Alla tillägg som laddas upp till tilläggsbutiken granskas av NV Access-teamet för att säkerställa att de uppfyller kvalitets- och säkerhetsstandarder.
+
+För att öppna tilläggsbutiken, gå till NVDA-menyn och välj Verktyg > Tilläggsbutik.
+
+### Bläddra bland tillägg {#AddonStoreBrowsing}
+
+Tilläggsbutiken visar tillgängliga tillägg i en lista med följande information:
+
+* Tilläggets namn
+* Tilläggets författare  
+* Tilläggets version
+* Tilläggets status (tillgänglig, installerad, uppdateringar tillgänglig)
+
+Du kan filtrera listan genom att:
+
+* Söka efter tilläggets namn eller författare
+* Filtrera efter kategori (till exempel punktskriftsdisplayer, talsynteser, applikationsstöd)
+* Filtrera efter kompatibilitet med din NVDA-version
+
+### Installera tillägg {#AddonStoreInstalling}
+
+För att installera ett tillägg:
+
+1. Välj tillägget från listan
+2. Tryck på "Installera"-knappen eller tryck Enter
+3. NVDA laddar ner och installerar tillägget
+4. Du kan behöva starta om NVDA för att tillägget ska aktiveras
+
+### Ta bort tillägg {#AddonStoreRemoving}
+
+För att ta bort ett installerat tillägg:
+
+1. Välj tillägget från listan över installerade tillägg
+2. Tryck på "Ta bort"-knappen
+3. Bekräfta att du vill ta bort tillägget
+4. Starta om NVDA för att tillägget ska tas bort helt
+
+### Inaktivera och aktivera tillägg {#AddonStoreDisablingEnabling}
+
+Du kan tillfälligt inaktivera installerade tillägg utan att ta bort dem:
+
+1. Välj tillägget från listan
+2. Tryck på "Inaktivera"-knappen för att inaktivera eller "Aktivera"-knappen för att aktivera
+3. Starta om NVDA för att ändringen ska träda i kraft
+
+## Vision {#Vision}
+
+Medan NVDA primärt riktar sig till blinda och synskadade personer som främst förlitar sig på tal och/eller punktskrift för att använda en dator, tillhandahåller den också inbyggda funktioner för att ändra innehållet på skärmen.
+
+### Visuell markering {#VisionFocusHighlight}
+
+NVDA kan markera den aktuella [systemfokus](#SystemFocus), [navigatorobjekt](#ObjectNavigation) och [bläddringsläge](#BrowseMode) position med en färgad rektangel.
+
+* Fast blå markerar en kombinerad navigator objekt och systemfokus position (dvs. eftersom [navigator objektet följer systemfokus](#ReviewCursorFollowFocus)).
+* Streckad blå markerar bara systemfokusobjektet.
+* Fast rosa markerar bara navigatorobjektet.
+* Fast gul markerar den virtuella markören som används i bläddringsläge (där det inte finns någon fysisk markör som i webbläsare).
+
+När visuell markering är aktiverad i [Vision-inställningar](#VisionSettings), kan du [ändra om du vill aktivera eller inaktivera varje typ av markering](#VisionSettingsFocusHighlight).
+
+### Skärmridå {#VisionScreenCurtain}
+
+Som blind eller synskadad användare är det ofta inte möjligt eller nödvändigt att se innehållet på skärmen.
+Dessutom kan det vara svårt att säkerställa att det inte finns någon som tittar över axeln på dig.
+För denna situation innehåller NVDA en funktion som kallas "skärmridå" som kan aktiveras för att göra skärmen svart.
+
+Du kan aktivera skärmridån i [Vision-inställningarna](#VisionSettings).
+
+Varning: Genom att aktivera skärmridån blir din skärm svart. Se till att du kan använda din dator utan att se skärmen innan du aktiverar den. Se också till att du vet hur man inaktiverar den igen innan du aktiverar den (tryck NVDA+control+escape för att inaktivera skärmridån).
+
+## Avancerade ämnen {#AdvancedTopics}
+### Avancerad anpassning av symbol- och interpunktionsuttal {#AdvancedSymbolPronunciation}
+
+Det är möjligt att anpassa uttalet av interpunktion och andra symboler utöver vad som kan göras med [Interpunktions/symboluttals](#SymbolPronunciation)-dialogen.
+Till exempel kan du specificera om den råa symbolen ska skickas till synthesizern (t.ex. för att orsaka en paus eller ändring i intonation) och du kan lägga till anpassade symboler.
+
+För att göra detta måste du redigera symboluttalsinfo-filen i din NVDA-användarkonfigurationskatalog.
+Filen heter symbols-xx.dic, där xx är språkkoden.
+Formatet för denna fil dokumenteras i avsnittet Symbol Pronunciation i NVDA Developer Guide, som är tillgänglig från [Development-sektionen på NVDA:s webbplats](https://community.nvda-project.org/wiki/Development).
+Det är dock inte möjligt för användare att definiera komplexa symboler.
+
+## Mer information {#FurtherInformation}
+
+Om du behöver mer information eller hjälp angående NVDA, besök NVDA:s webbplats på NVDA_URL.
+Här kan du hitta ytterligare dokumentation, samt teknisk support och gemenskapsresurser.
+Denna webbplats tillhandahåller också information och resurser som rör NVDA-utveckling.
 
