@@ -1,10 +1,10 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
+# Copyright (C) 2006-2026 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""App module for Windows Explorer (aka Windows shell and renamed to File Explorer in Windows 8).
+"""App module for File Explorer (aka Windows shell, formerly Windows Explorer).
 Provides workarounds for controls such as identifying Start button, notification area and others.
 """
 
