@@ -523,6 +523,8 @@ class Client:
 			channel=self.server.password,
 			user_ids=clientIds,
 			clients=clients,
+			user_id=self.id,
+			e2e_available=False,  # Direct connections use TLS, no E2E needed
 		)
 		self.sendToOthers(
 			type=RemoteMessageType.CLIENT_JOINED,

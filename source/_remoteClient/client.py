@@ -158,6 +158,7 @@ class RemoteClient:
 		:raises TypeError: If clipboard content cannot be serialized
 		"""
 		connector = self.followerTransport or self.leaderTransport
+		session = self.followerSession or self.leaderSession
 		if not getattr(connector, "connected", False):
 			# Translators: Message shown when trying to send the clipboard to the remote computer while not connected.
 			ui.delayedMessage(pgettext("remote", "Not connected"))
@@ -167,7 +168,7 @@ class RemoteClient:
 			ui.delayedMessage(pgettext("remote", "No one else is connected"))
 			return
 		try:
-			connector.send(RemoteMessageType.SET_CLIPBOARD_TEXT, text=api.getClipData())
+			session.send(RemoteMessageType.SET_CLIPBOARD_TEXT, text=api.getClipData())
 			cues.clipboardPushed()
 		except (TypeError, OSError):
 			log.debug("Unable to push clipboard", exc_info=True)
@@ -203,7 +204,7 @@ class RemoteClient:
 				# Translators: Presented when attempting to send control+alt+delete when connected as the controlled computer.
 				ui.message(pgettext("remote", "Not the controlling computer"))
 			return
-		self.leaderTransport.send(RemoteMessageType.SEND_SAS)
+		self.leaderSession.send(RemoteMessageType.SEND_SAS)
 
 	def connect(self, connectionInfo: ConnectionInfo):
 		"""Establish connection based on connection info.
@@ -215,10 +216,11 @@ class RemoteClient:
 			f"Initiating connection as {connectionInfo.mode} to {connectionInfo.hostname}:{connectionInfo.port}",
 		)
 		self._connecting = True
+		isDirectConnection = self.localControlServer is not None
 		if connectionInfo.mode == ConnectionMode.LEADER:
-			self.connectAsLeader(connectionInfo)
+			self.connectAsLeader(connectionInfo, isDirectConnection=isDirectConnection)
 		elif connectionInfo.mode == ConnectionMode.FOLLOWER:
-			self.connectAsFollower(connectionInfo)
+			self.connectAsFollower(connectionInfo, isDirectConnection=isDirectConnection)
 
 	@alwaysCallAfter
 	def doDisconnect(self) -> None:
@@ -383,7 +385,7 @@ class RemoteClient:
 
 		gui.runScriptModalDialog(dlg, callback=handleDialogCompletion)
 
-	def connectAsLeader(self, connectionInfo: ConnectionInfo):
+	def connectAsLeader(self, connectionInfo: ConnectionInfo, isDirectConnection: bool = False):
 		transport = RelayTransport.create(
 			connectionInfo=connectionInfo,
 			serializer=serializer.JSONSerializer(),
@@ -391,7 +393,10 @@ class RemoteClient:
 		self.leaderSession = LeaderSession(
 			transport=transport,
 			localMachine=self.localMachine,
+			isDirectConnection=isDirectConnection,
 		)
+		self.leaderSession.e2eUnavailable.register(self.onE2EUnavailable)
+		self.leaderSession.e2ePeerUnsupported.register(self.onE2EPeerUnsupported)
 		transport.transportCertificateAuthenticationFailed.register(
 			self.onLeaderCertificateFailed,
 		)
@@ -435,7 +440,7 @@ class RemoteClient:
 	def onDisconnectedAsLeader(self):
 		log.info("Leader session disconnected")
 
-	def connectAsFollower(self, connectionInfo: ConnectionInfo):
+	def connectAsFollower(self, connectionInfo: ConnectionInfo, isDirectConnection: bool = False):
 		transport = RelayTransport.create(
 			connectionInfo=connectionInfo,
 			serializer=serializer.JSONSerializer(),
@@ -443,7 +448,9 @@ class RemoteClient:
 		self.followerSession = FollowerSession(
 			transport=transport,
 			localMachine=self.localMachine,
+			isDirectConnection=isDirectConnection,
 		)
+		self.followerSession.e2eUnavailable.register(self.onE2EUnavailable)
 		if self.sdHandler is not None:
 			self.sdHandler.followerSession = self.followerSession
 		self.followerTransport = transport
@@ -517,6 +524,37 @@ class RemoteClient:
 			)
 			self.connectAsFollower(connectionInfo=connectionInfo)
 
+	@alwaysCallAfter
+	def onE2EUnavailable(self, address: tuple[str, int]) -> None:
+		"""Handle E2E encryption being unavailable on a relay connection.
+
+		Presents a dialog allowing the user to continue unencrypted, continue
+		and remember the choice for this server, or disconnect.
+		"""
+		serverKey = hostPortToAddress(address)
+		config = configuration.getRemoteConfig()
+		if config["trustedUnencryptedServers"].get(serverKey):
+			return
+		wnd = dialogs.E2EUnavailableDialog(gui.mainFrame)
+		result = wnd.ShowModal()
+		if result == wx.ID_YES:
+			config["trustedUnencryptedServers"][serverKey] = True
+		elif result == wx.ID_NO:
+			pass  # Continue this time, but ask again next time
+		else:
+			self.disconnect()
+
+	@alwaysCallAfter
+	def onE2EPeerUnsupported(self) -> None:
+		"""Handle E2E encryption torn down because a peer does not support it.
+
+		Always prompts — cannot be suppressed per-server since the peer set
+		may change with each connection.
+		"""
+		wnd = dialogs.E2EPeerUnsupportedDialog(gui.mainFrame)
+		if wnd.ShowModal() != wx.ID_YES:
+			self.disconnect()
+
 	def startControlServer(self, serverPort, channel):
 		"""Start local relay server for handling connections.
 
@@ -576,7 +614,7 @@ class RemoteClient:
 				wx.CallAfter(script, gesture)
 				return False
 		self.localMachine._dismissLocalBrailleMessage()
-		self.leaderTransport.send(
+		self.leaderSession.send(
 			RemoteMessageType.KEY,
 			vk_code=vkCode,
 			extended=extended,
@@ -654,13 +692,13 @@ class RemoteClient:
 			# to notify the remote computer's key state that something happened.
 			# This allows gestures which would cause an action if `NVDA` and the non-modifier key were removed
 			# to be used to toggle between controling the local and remote computers.
-			self.leaderTransport.send(
+			self.leaderSession.send(
 				RemoteMessageType.KEY,
 				vk_code=winUser.VK_NONE,
 				extended=False,
 				pressed=True,
 			)
-			self.leaderTransport.send(
+			self.leaderSession.send(
 				RemoteMessageType.KEY,
 				vk_code=winUser.VK_NONE,
 				extended=False,
@@ -668,7 +706,7 @@ class RemoteClient:
 			)
 		# release all pressed keys in the guest.
 		for k in self.keyModifiers:
-			self.leaderTransport.send(
+			self.leaderSession.send(
 				RemoteMessageType.KEY,
 				vk_code=k[0],
 				extended=k[1],

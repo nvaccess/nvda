@@ -6,7 +6,7 @@
 import urllib.parse
 from enum import StrEnum
 
-PROTOCOL_VERSION: int = 2
+PROTOCOL_VERSION: int = 3
 
 
 class RemoteMessageType(StrEnum):
@@ -45,6 +45,10 @@ class RemoteMessageType(StrEnum):
 	NVDA_NOT_CONNECTED = (
 		"nvda_not_connected"  # This was added in version 2 but never implemented on the server
 	)
+
+	# E2E Encryption Messages (protocol v3)
+	E2E_PUBKEY = "e2e_pubkey"
+	E2E_DATA = "e2e_data"
 
 
 SERVER_PORT = 6837

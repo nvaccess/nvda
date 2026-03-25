@@ -44,6 +44,8 @@ dependencies = [
 	"crowdin-api-client==1.24.1",
 	# fuzzy search
 	"fuzzysearch==0.8.1",
+	# E2E encryption for NVDA Remote (libsodium Python binding)
+	"PyNaCl>=1.5.0",
 	# Building user documentation and the l10nUtil
 	"Markdown==3.10",
 	"lxml==6.0.2",

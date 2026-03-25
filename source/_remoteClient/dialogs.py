@@ -501,3 +501,64 @@ class CertificateUnauthorizedDialog(wx.MessageDialog):
 			# Translators: A button to connect and ask again for the server with unauthorized certificate.
 			_("Connect"),
 		)
+
+
+class E2EUnavailableDialog(wx.MessageDialog):
+	def __init__(self, parent: wx.Window | None):
+		# Translators: Title of the dialog presented when end-to-end encryption is not available for a Remote Access connection.
+		title = pgettext("remote", "Security Warning")
+		message = pgettext(
+			"remote",
+			# Translators: Message presented when end-to-end encryption cannot be established
+			# because the relay server does not support or has disabled this feature.
+			"This server does not support end-to-end encryption, or has it disabled.\n"
+			"\n"
+			"Without end-to-end encryption, the server operator could access your Remote Access session data, "
+			"including speech, braille output, and keyboard input.\n"
+			"Only continue if you trust the operator of this server.\n"
+			"\n"
+			"Continue connecting anyway?",
+		)
+		super().__init__(
+			parent,
+			caption=title,
+			message=message,
+			style=wx.YES_NO | wx.CANCEL | wx.CANCEL_DEFAULT | wx.CENTRE,
+		)
+		self.SetYesNoLabels(
+			# Translators: A button to continue unencrypted and not warn again for this server.
+			_("Connect and do not ask again for this server"),
+			# Translators: A button to continue unencrypted but warn again next time.
+			_("Connect"),
+		)
+
+
+class E2EPeerUnsupportedDialog(wx.MessageDialog):
+	def __init__(self, parent: wx.Window | None):
+		# Translators: Title of the dialog presented when the remote computer does not support end-to-end encryption.
+		title = pgettext("remote", "Security Warning")
+		message = pgettext(
+			"remote",
+			# Translators: Message presented when E2E encryption is disabled because the other
+			# computer in the Remote Access session does not support it.
+			# This most likely means the other computer is running an older version of NVDA.
+			"The remote computer you are connected to does not support end-to-end encryption. "
+			"This usually means it is running an older version of NVDA.\n"
+			"\n"
+			"Without end-to-end encryption, your Remote Access session data is not protected "
+			"between your computer and the remote computer.\n"
+			"\n"
+			"Continue connecting anyway?",
+		)
+		super().__init__(
+			parent,
+			caption=title,
+			message=message,
+			style=wx.YES_NO | wx.NO_DEFAULT | wx.CENTRE,
+		)
+		self.SetYesNoLabels(
+			# Translators: A button to continue the Remote Access connection without end-to-end encryption.
+			_("Connect"),
+			# Translators: A button to disconnect the Remote Access connection because the remote computer does not support encryption.
+			_("Disconnect"),
+		)

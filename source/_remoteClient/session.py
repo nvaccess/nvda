@@ -64,7 +64,9 @@ See Also:
 
 from collections.abc import Collection
 import hashlib
+import json
 from collections import defaultdict
+from extensionPoints import Action
 from typing import Any, Final
 
 import braille
@@ -81,8 +83,10 @@ from nvwave import decide_playWaveFile
 from speech.extensions import post_speechPaused, pre_speechQueued, speechCanceled
 
 from . import configuration, connectionInfo, cues
+from .e2e import E2ESession
 from .localMachine import LocalMachine
 from .protocol import RemoteMessageType
+from .serializer import SpeechCommandJSONEncoder, asSequence
 from .transport import RelayTransport
 
 EXCLUDED_SPEECH_COMMANDS = (
@@ -90,6 +94,24 @@ EXCLUDED_SPEECH_COMMANDS = (
 	# _CancellableSpeechCommands are not designed to be reported and are used internally by NVDA. (#230)
 	speech.commands._CancellableSpeechCommand,
 )
+
+#: Control-plane message types that must NOT be encrypted — the server needs to parse these.
+#: All other message types (including any added by extensions) are encrypted when E2E is active.
+_E2E_CONTROL_PLANE_TYPES: frozenset[RemoteMessageType] = frozenset({
+	RemoteMessageType.PROTOCOL_VERSION,
+	RemoteMessageType.JOIN,
+	RemoteMessageType.CHANNEL_JOINED,
+	RemoteMessageType.CLIENT_JOINED,
+	RemoteMessageType.CLIENT_LEFT,
+	RemoteMessageType.GENERATE_KEY,
+	RemoteMessageType.MOTD,
+	RemoteMessageType.VERSION_MISMATCH,
+	RemoteMessageType.PING,
+	RemoteMessageType.ERROR,
+	RemoteMessageType.NVDA_NOT_CONNECTED,
+	RemoteMessageType.E2E_PUBKEY,
+	RemoteMessageType.E2E_DATA,
+})
 
 
 class RemoteSession:
@@ -124,16 +146,38 @@ class RemoteSession:
 		self,
 		localMachine: LocalMachine,
 		transport: RelayTransport,
+		isDirectConnection: bool = False,
 	) -> None:
 		"""Initialise the remote session.
 
 		:param localMachine: Interface to control local NVDA instance
 		:param transport: Network transport layer instance
+		:param isDirectConnection: True when connected directly to another NVDA
+			instance running a local relay server, rather than through an
+			external relay. E2E warnings are suppressed for direct connections
+			as they are already secured by TLS.
 		"""
 		log.info("Initializing Remote Session")
 		self.localMachine = localMachine
 		self.callbacksAdded = False
 		self.transport = transport
+		self._isDirectConnection: bool = isDirectConnection
+		self.e2eUnavailable: Action = Action()
+		"""Fired when E2E encryption cannot be established because the server
+		does not support it. Handlers receive keyword argument
+		``address`` (tuple[str, int]) identifying the server.
+		This can be suppressed per-server.
+		"""
+		self.e2ePeerUnsupported: Action = Action()
+		"""Fired when E2E encryption is torn down because a connected peer
+		does not support it, most likely due to running an older NVDA version.
+		This cannot be suppressed as the peer set may change with each connection.
+		"""
+		# E2E encryption state
+		self.e2e: E2ESession | None = None
+		self._e2eAvailable: bool = False
+		self._myUserId: int | None = None
+		self._peerE2ESupport: dict[int, bool] = {}
 		self.transport.registerInbound(
 			RemoteMessageType.VERSION_MISMATCH,
 			self.handleVersionMismatch,
@@ -150,6 +194,15 @@ class RemoteSession:
 		self.transport.registerInbound(
 			RemoteMessageType.CLIENT_LEFT,
 			self.handleClientDisconnected,
+		)
+		# E2E message handlers
+		self.transport.registerInbound(
+			RemoteMessageType.E2E_PUBKEY,
+			self._handleE2EPubkey,
+		)
+		self.transport.registerInbound(
+			RemoteMessageType.E2E_DATA,
+			self._handleE2EData,
 		)
 
 	def handleVersionMismatch(self) -> None:
@@ -218,18 +271,134 @@ class RemoteSession:
 		"""Handle new client connection.
 
 		:param client: Dictionary containing client connection details
-		:note: Logs connection info and plays connection sound
+		:note: Logs connection info and plays connection sound.
+			Also tracks E2E support and manages E2E session state.
 		"""
 		log.info(f"Client connected: {client!r}")
 		cues.clientConnected()
+		if client is not None:
+			self._peerE2ESupport[client["id"]] = client.get("e2e_supported", False)
+			if not client.get("e2e_supported", False) and self.e2e is not None:
+				# Non-E2E peer joined - tear down E2E
+				log.info("E2E: Session torn down, peer %d does not support encryption", client["id"])
+				self.e2e = None
+				self._warnE2EPeerUnsupported(client["id"])
+			elif client.get("e2e_supported", False) and self.e2e is not None:
+				# E2E peer joined - send them our pubkey
+				self.transport.send(RemoteMessageType.E2E_PUBKEY, **self.e2e.get_pubkey_message())
 
 	def handleClientDisconnected(self, client: dict[str, Any] | None = None) -> None:
 		"""Handle client disconnection.
 
 		:param client: Optional client info dictionary
-		:note: Plays disconnection sound when remote client disconnects
+		:note: Plays disconnection sound when remote client disconnects.
+			Cleans up E2E peer state.
 		"""
 		cues.clientDisconnected()
+		if client is not None:
+			self._peerE2ESupport.pop(client.get("id"), None)
+			if self.e2e is not None:
+				self.e2e.remove_peer(client.get("id", 0))
+
+	def _warnE2EUnavailable(self) -> None:
+		"""Warn the user that E2E encryption is not available on a relay connection.
+
+		Skips the warning for direct connections where E2E is not expected.
+		Notifies :attr:`e2eUnavailable` so the client layer can prompt the user.
+		"""
+		if self._isDirectConnection:
+			return
+		log.warning("E2E encryption unavailable: server does not support E2E")
+		self.e2eUnavailable.notify(address=self.transport.address)
+
+	def _warnE2EPeerUnsupported(self, peerId: int | None = None) -> None:
+		"""Warn that E2E was torn down because a peer does not support it.
+
+		Skips the warning for direct connections where E2E is not expected.
+		Notifies :attr:`e2ePeerUnsupported` so the client layer can prompt the user.
+		Unlike :meth:`_warnE2EUnavailable`, this cannot be suppressed per-server
+		as the peer set may change with each connection.
+		"""
+		if self._isDirectConnection:
+			return
+		if peerId is not None:
+			log.warning("E2E disabled: peer %d does not support encryption", peerId)
+		else:
+			log.warning("E2E disabled: not all peers support encryption")
+		self.e2ePeerUnsupported.notify()
+
+	def _tryInitE2E(self) -> None:
+		"""Init E2E if conditions are met: server allows it and all peers support it."""
+		if not self._e2eAvailable:
+			self.e2e = None
+			self._warnE2EUnavailable()
+			return
+		all_peers_e2e = all(self._peerE2ESupport.values()) if self._peerE2ESupport else True
+		if all_peers_e2e:
+			self.e2e = E2ESession()
+			self.transport.send(RemoteMessageType.E2E_PUBKEY, **self.e2e.get_pubkey_message())
+			log.info("E2E: Session initialized, public key broadcast")
+		else:
+			self.e2e = None
+			self._warnE2EPeerUnsupported()
+
+	def _handleE2EPubkey(self, pubkey: str, nonce_prefix: str, origin: int, **kwargs: Any) -> None:
+		"""Process a peer's public key and derive shared secret."""
+		if self.e2e is not None:
+			self.e2e.add_peer(origin, pubkey, nonce_prefix)
+
+	def _handleE2EData(self, ciphertext: str, nonce: str, origin: int, to: int, **kwargs: Any) -> None:
+		"""Decrypt an E2E message and dispatch the inner message."""
+		if self.e2e is None:
+			return
+		if self._myUserId is not None and to != self._myUserId:
+			return  # Not addressed to us
+		result = self.e2e.decrypt(origin, ciphertext, nonce)
+		if result is None:
+			return
+		msg_type, msg_kwargs = result
+		# Reconstruct speech commands if this is a SPEAK message
+		if msg_type == RemoteMessageType.SPEAK.value:
+			msg_kwargs = asSequence({"type": msg_type, **msg_kwargs})
+			msg_kwargs.pop("type", None)
+		try:
+			messageType = RemoteMessageType(msg_type)
+		except ValueError:
+			log.warning(f"E2E: Unknown decrypted message type: {msg_type}")
+			return
+		extensionPoint = self.transport.inboundHandlers.get(messageType)
+		if extensionPoint:
+			extensionPoint.notify(**msg_kwargs)
+
+	def send(self, type: RemoteMessageType, **kwargs: Any) -> None:
+		"""Send a message, transparently encrypting data-plane messages when E2E is active.
+
+		Control-plane messages (JOIN, PROTOCOL_VERSION, E2E_PUBKEY, etc.) are always
+		sent in plaintext. Data-plane messages (KEY, SPEAK, TONE, etc.) are encrypted
+		per-peer when an E2E session is established.
+
+		SPEAK messages receive special handling: speech command objects are serialized
+		with :class:`SpeechCommandJSONEncoder` before encryption, since the default
+		``json.dumps`` cannot handle them.
+		"""
+		if (
+			self.e2e is not None
+			and self.e2e.peer_ids
+			and self._myUserId is not None
+			and type not in _E2E_CONTROL_PLANE_TYPES
+		):
+			if type is RemoteMessageType.SPEAK:
+				# Speech commands need the custom encoder
+				serialized = json.dumps(kwargs, cls=SpeechCommandJSONEncoder).encode("utf-8")
+				encrypted_msgs = self.e2e.encrypt_preserialized(
+					type.value, from_id=self._myUserId, serialized_kwargs=serialized
+				)
+			else:
+				encrypted_msgs = self.e2e.encrypt(type.value, from_id=self._myUserId, **kwargs)
+			for msg in encrypted_msgs:
+				self.transport.send(RemoteMessageType.E2E_DATA, **msg)
+		else:
+			self.transport.send(type, **kwargs)
 
 	def getConnectionInfo(self) -> connectionInfo.ConnectionInfo:
 		"""Get information about the current connection.
@@ -293,8 +462,9 @@ class FollowerSession(RemoteSession):
 		self,
 		localMachine: LocalMachine,
 		transport: RelayTransport,
+		isDirectConnection: bool = False,
 	) -> None:
-		super().__init__(localMachine, transport)
+		super().__init__(localMachine, transport, isDirectConnection=isDirectConnection)
 		self.transport.registerInbound(
 			RemoteMessageType.KEY,
 			self.localMachine.sendKey,
@@ -330,16 +500,10 @@ class FollowerSession(RemoteSession):
 	def registerCallbacks(self) -> None:
 		if self.callbacksAdded:
 			return
-		self.transport.registerOutbound(
-			tones.decide_beep,
-			RemoteMessageType.TONE,
-		)
-		self.transport.registerOutbound(
-			speechCanceled,
-			RemoteMessageType.CANCEL,
-		)
-		self.transport.registerOutbound(decide_playWaveFile, RemoteMessageType.WAVE)
-		self.transport.registerOutbound(post_speechPaused, RemoteMessageType.PAUSE_SPEECH)
+		tones.decide_beep.register(self._handleToneOutbound)
+		speechCanceled.register(self._handleCancelOutbound)
+		decide_playWaveFile.register(self._handleWaveOutbound)
+		post_speechPaused.register(self._handlePauseSpeechOutbound)
 		braille.pre_writeCells.register(self.display)
 		pre_speechQueued.register(self.sendSpeech)
 		self.callbacksAdded = True
@@ -347,13 +511,29 @@ class FollowerSession(RemoteSession):
 	def unregisterCallbacks(self) -> None:
 		if not self.callbacksAdded:
 			return
-		self.transport.unregisterOutbound(RemoteMessageType.TONE)
-		self.transport.unregisterOutbound(RemoteMessageType.CANCEL)
-		self.transport.unregisterOutbound(RemoteMessageType.WAVE)
-		self.transport.unregisterOutbound(RemoteMessageType.PAUSE_SPEECH)
+		tones.decide_beep.unregister(self._handleToneOutbound)
+		speechCanceled.unregister(self._handleCancelOutbound)
+		decide_playWaveFile.unregister(self._handleWaveOutbound)
+		post_speechPaused.unregister(self._handlePauseSpeechOutbound)
 		braille.pre_writeCells.unregister(self.display)
 		pre_speechQueued.unregister(self.sendSpeech)
 		self.callbacksAdded = False
+
+	def _handleToneOutbound(self, *args: Any, **kwargs: Any) -> bool:
+		self.send(RemoteMessageType.TONE, **kwargs)
+		return True
+
+	def _handleCancelOutbound(self, *args: Any, **kwargs: Any) -> bool:
+		self.send(RemoteMessageType.CANCEL, **kwargs)
+		return True
+
+	def _handleWaveOutbound(self, *args: Any, **kwargs: Any) -> bool:
+		self.send(RemoteMessageType.WAVE, **kwargs)
+		return True
+
+	def _handlePauseSpeechOutbound(self, *args: Any, **kwargs: Any) -> bool:
+		self.send(RemoteMessageType.PAUSE_SPEECH, **kwargs)
+		return True
 
 	def handleClientConnected(self, client: dict[str, Any]) -> None:
 		super().handleClientConnected(client)
@@ -369,11 +549,18 @@ class FollowerSession(RemoteSession):
 		channel: str,
 		clients: list[dict[str, Any]] | None = None,
 		origin: int | None = None,
+		user_id: int | None = None,
+		e2e_available: bool = False,
+		**kwargs: Any,
 	) -> None:
 		if clients is None:
 			clients = []
+		self._myUserId = user_id
+		self._e2eAvailable = e2e_available
 		for client in clients:
+			self._peerE2ESupport[client["id"]] = client.get("e2e_supported", False)
 			self.handleClientConnected(client)
+		self._tryInitE2E()
 
 	def handleTransportClosing(self) -> None:
 		"""Handle cleanup when transport connection is closing.
@@ -437,9 +624,10 @@ class FollowerSession(RemoteSession):
 		"""Forward speech output to connected leader instances.
 
 		Filters the speech sequence for supported commands and sends it
-		to leader instances for speaking.
+		to leader instances for speaking. E2E encryption with proper
+		speech command serialization is handled transparently by send().
 		"""
-		self.transport.send(
+		self.send(
 			RemoteMessageType.SPEAK,
 			sequence=self._filterUnsupportedSpeechCommands(
 				speechSequence,
@@ -449,7 +637,7 @@ class FollowerSession(RemoteSession):
 
 	def pauseSpeech(self, switch: bool) -> None:
 		"""Toggle speech pause state on leader instances."""
-		self.transport.send(type=RemoteMessageType.PAUSE_SPEECH, switch=switch)
+		self.send(RemoteMessageType.PAUSE_SPEECH, switch=switch)
 
 	def display(self, cells: list[int]) -> None:
 		"""Forward braille display content to leader instances.
@@ -458,7 +646,7 @@ class FollowerSession(RemoteSession):
 		"""
 		# Only send braille data when there are controlling machines with a braille display
 		if self.hasBrailleLeaders():
-			self.transport.send(type=RemoteMessageType.DISPLAY, cells=cells)
+			self.send(RemoteMessageType.DISPLAY, cells=cells)
 
 	def hasBrailleLeaders(self) -> bool:
 		"""Check if any connected leaders have braille displays.
@@ -490,8 +678,9 @@ class LeaderSession(RemoteSession):
 		self,
 		localMachine: LocalMachine,
 		transport: RelayTransport,
+		isDirectConnection: bool = False,
 	) -> None:
-		super().__init__(localMachine, transport)
+		super().__init__(localMachine, transport, isDirectConnection=isDirectConnection)
 		self.followers = defaultdict(dict)
 		self.leaders = set()
 		self.transport.registerInbound(
@@ -558,11 +747,18 @@ class LeaderSession(RemoteSession):
 		channel: str,
 		clients: list[dict[str, Any]] | None = None,
 		origin: int | None = None,
+		user_id: int | None = None,
+		e2e_available: bool = False,
+		**kwargs: Any,
 	) -> None:
 		if clients is None:
 			clients = []
+		self._myUserId = user_id
+		self._e2eAvailable = e2e_available
 		for client in clients:
+			self._peerE2ESupport[client["id"]] = client.get("e2e_supported", False)
 			self.handleClientConnected(client)
+		self._tryInitE2E()
 
 	def handleClientConnected(self, client: dict[str, Any] | None = None):
 		hasFollowers = bool(self.followers)
@@ -598,8 +794,8 @@ class LeaderSession(RemoteSession):
 			displayDimensions = braille.handler.displayDimensions
 		displaySize = displayDimensions.numCols
 		log.debug(f"Sending braille info to follower - display: {display.name}, width: {displaySize}")
-		self.transport.send(
-			type=RemoteMessageType.SET_BRAILLE_INFO,
+		self.send(
+			RemoteMessageType.SET_BRAILLE_INFO,
 			name=display.name,
 			numCells=displaySize,
 		)
@@ -665,7 +861,7 @@ class LeaderSession(RemoteSession):
 			if hasattr(gesture, "routingIndex") and "routingIndex" not in dict:
 				dict["routingIndex"] = gesture.routingIndex
 			self.localMachine._dismissLocalBrailleMessage()
-			self.transport.send(type=RemoteMessageType.BRAILLE_INPUT, **dict)
+			self.send(RemoteMessageType.BRAILLE_INPUT, **dict)
 			return False
 		else:
 			return True
