@@ -5968,6 +5968,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 				label=_("Make screen black (immediate effect)"),
 			),
 		)
+		self._screenCurtainCheckboxChanged: bool = False
 		isScreenCurtainAvailable = screenCurtain.screenCurtain is not None
 		if isScreenCurtainAvailable:
 			self._cachedScreenCurtainConfigEnabled = screenCurtain.screenCurtain.settings["enabled"]
@@ -6052,8 +6053,11 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		super().onDiscard()
 
 	def onSave(self):
-		# We intentionally don't save whether the screen curtain is enabled here,
+		# We only save whether the screen curtain is enabled here if the user has toggled the checkbox,
 		# so we don't unintentionally persist a temporary screen curtain to config.
+		if self._screenCurtainCheckboxChanged:
+			# We don't need to change the state of the screen curtain, as that is done when the checkbox is checked/unchecked.
+			self._screenCurtainConfig["enabled"] = self._screenCurtainEnabledCheckbox.IsChecked()
 		self._screenCurtainConfig["warnOnLoad"] = self._screenCurtainWarnOnLoadCheckbox.IsChecked()
 		self._screenCurtainConfig["playToggleSounds"] = (
 			self._screenCurtainPlayToggleSoundsCheckbox.IsChecked()
@@ -6104,7 +6108,8 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 				self._screenCurtainEnabledCheckbox.SetValue(False)
 			else:
 				try:
-					screenCurtain.screenCurtain.enable(persist=True)
+					screenCurtain.screenCurtain.enable(persist=False)
+					self._screenCurtainCheckboxChanged = True
 				except Exception:
 					log.error("Error enabling Screen Curtain.", exc_info=True)
 					ui.message(
@@ -6113,7 +6118,8 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 					)
 					self._screenCurtainEnabledCheckbox.SetValue(False)
 		elif not shouldBeEnabled and currentlyEnabled:
-			screenCurtain.screenCurtain.disable()
+			screenCurtain.screenCurtain.disable(persist=False)
+			self._screenCurtainCheckboxChanged = True
 
 	def _confirmEnableScreenCurtainWithUser(self) -> bool:
 		"""Confirm with the user before enabling Screen Curtain, if configured to do so.
