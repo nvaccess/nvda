@@ -247,10 +247,10 @@ class WavePlayer(garbageHandler.TrackedObject):
 			WavePlayer._callback,
 		)
 		self._doneCallbacks = {}
-		self._instances[self._player] = self
-		self.open()
 		self._lastActiveTime: typing.Optional[float] = None
 		self._isPaused: bool = False
+		self._instances[self._player] = self
+		self.open()
 		if config.conf["audio"]["audioAwakeTime"] > 0 and WavePlayer._silenceDevice != outputDevice:
 			# The output device has changed. (Re)initialize silence.
 			if self._silenceDevice is not None:
