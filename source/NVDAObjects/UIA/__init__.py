@@ -1151,7 +1151,7 @@ class UIA(Window):
 		id: int,
 		ignoreDefault: bool = False,
 		onError: Any = False,
-	) -> typing.Any:
+	) -> Any:
 		"""
 		Identical to _getUIACacheablePropertyValue, except that it will return onError if a COM error accurs
 		:onError: (default = False)
