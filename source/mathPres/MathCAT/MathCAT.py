@@ -139,12 +139,17 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 				"9",
 			}
 		):
-			return self.script_navigate
+			return self._do_navigate
 		else:
 			return super().getScript(gesture)
 
-	def script_navigate(self, gesture: KeyboardInputGesture) -> None:
+	def _do_navigate(self, gesture: KeyboardInputGesture) -> None:
 		"""Performs the specified navigation command.
+
+		.. note::
+			This is not a ``script_`` method, as there is custom logic for determining whether it should be used.
+			Furthermore, if it were it would appear in the input gestures dialog as it has a docstring,
+			and applying the usual gesture handling logic to this script could lead to unexpected results.
 
 		:param gesture: The keyboard command which specified the navigation command to perform.
 		"""
@@ -183,6 +188,12 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			log.exception()
 			# Translators: this message alerts users to an error brailling math.
 			ui.message(pgettext("math", "Error in brailling math"))
+
+	# We do not want to use the developer-facing docstring as the input help description of math navigation commands.
+	# Static analysis tools only consider the string literal immediately following the function header as the docstring,
+	# so we can overwrite it at run-time to use a user-friendly description.
+	# Translators: Description of a MathCAT navigation gesture.
+	_do_navigate.__doc__ = _("Navigates within math")
 
 	_startsWithMath: re.Pattern = re.compile("\\s*?<math")
 
@@ -429,4 +440,4 @@ class MathCAT(mathPres.MathPresentationProvider):
 		"""
 		interaction = MathCATInteraction(provider=self, mathMl=mathml)
 		interaction.setFocus()
-		interaction.script_navigate(None)
+		interaction._do_navigate(None)
