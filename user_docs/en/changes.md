@@ -38,7 +38,8 @@ The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is int
 * NVDA can now be configured to not play error sounds, even in test versions. (#13021, @CyrilleB79)
 * NVDA now supports the Orbit Reader 40 in its proprietary HID mode. (#19756, @trypsynth)
 * NVDA will start in focus mode by default when using WhatsApp 2.2584.3.0 or newer. (#19655, @josephsl)
-* Product version for File Explorer will reflect actual Windows version including correct build and revision numbers. This is more noticeable for Windows releases which are enablement packages on top of an earlier release such as Windows 11 2025 Update based on Windows 11 2024 Update. (#19802, @josephsl)
+* Product version for File Explorer will reflect actual Windows version including correct build and revision numbers.
+This is more noticeable for Windows releases which are enablement packages on top of an earlier release such as Windows 11 2025 Update based on Windows 11 2024 Update. (#19802, @josephsl)
 
 ### Bug Fixes
 
