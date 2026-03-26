@@ -1150,7 +1150,7 @@ class UIA(Window):
 		self,
 		id: int,
 		ignoreDefault: bool = False,
-		onError: typing.Any = False,
+		onError: Any = False,
 	) -> typing.Any:
 		"""
 		Identical to _getUIACacheablePropertyValue, except that it will return onError if a COM error accurs
