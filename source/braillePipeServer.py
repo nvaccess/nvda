@@ -7,8 +7,8 @@
 
 Two pipe names are used:
 
-* ``\\\\.\\pipe\\nvda_braille``        – normal desktop instance
-* ``\\\\.\\pipe\\nvda_braille_secure`` – secure desktop instance
+* ``\\\\.\\pipe\\screen_reader_braille``        – normal desktop instance
+* ``\\\\.\\pipe\\screen_reader_braille_secure`` – secure desktop instance
 
 Wire protocol:
 Every message is length-prefixed: 4 bytes little-endian uint32 body length, followed by a UTF-8 JSON object.
@@ -461,7 +461,7 @@ def initialize() -> None:
 	if _server is not None:
 		return
 	isSecure = isRunningOnSecureDesktop()
-	pipeName = r"\\.\pipe\nvda_braille_secure" if isSecure else r"\\.\pipe\nvda_braille"
+	pipeName = r"\\.\pipe\screen_reader_braille_secure" if isSecure else r"\\.\pipe\screen_reader_braille"
 	# The secure-desktop instance runs as SYSTEM, so its default DACL already permits SYSTEM connections.  Only the normal-desktop instance needs the explicit SYSTEM ACE.
 	_server = _PipeServer(pipeName, useSystemDacl=not isSecure)
 	_server.start()
