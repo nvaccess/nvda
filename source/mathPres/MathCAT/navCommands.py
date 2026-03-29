@@ -234,7 +234,7 @@ def _buildNavCommands() -> list[NavCommand]:
 					pgettext("math", "Describe placemarker {n} in math").format(n=placemarker),
 					speakOnDemand=True,
 				),
-			]
+			],
 		)
 
 	return commands
