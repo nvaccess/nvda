@@ -109,32 +109,27 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 
 		yield region
 
-	def _doNavigate(self, gesture: KeyboardInputGesture | None) -> None:
-		"""Perform the MathCAT navigation command indicated by the given gesture.
+	def _doNavigateCommand(self, commandName: str) -> None:
+		"""Perform the named MathCAT navigation command.
 
-		:param gesture: The keyboard gesture, or None for initial focus.
+		:param commandName: The MathCAT command name (e.g. "MovePrevious").
 		"""
 		try:
-			if gesture is not None:  # == None when initial focus -- handled in reportFocus()
-				modNames: list[str] = gesture.modifierNames
-				text = libmathcat.DoNavigateKeyPress(
-					gesture.vkCode,
-					"shift" in modNames,
-					"control" in modNames,
-					"alt" in modNames,
-					False,
-				)
-				speech.speak(convertSSMLTextForNVDA(text))
+			text = libmathcat.DoNavigateCommand(commandName)
+			speech.speak(convertSSMLTextForNVDA(text))
 		except Exception:
 			log.exception()
 			# Translators: this message alerts users to an error in navigating math.
 			ui.message(pgettext("math", "Error in navigating math"))
 
+		self._updateBraille()
+
+	def _updateBraille(self) -> None:
+		"""Update the braille display to reflect the current navigation position."""
 		if not braille.handler.enabled:
 			return
 
 		try:
-			# update the braille to reflect the nav position (might be excess code, but it works)
 			navNode: tuple[str, int] = libmathcat.GetNavigationMathMLId()
 			brailleChars = libmathcat.GetBraille(navNode[0])
 			region: braille.Region = braille.Region()
@@ -154,15 +149,16 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 	def _createNavScripts(cls) -> None:
 		"""Dynamically create individual scripts for each MathCAT navigation command."""
 		for cmd in NAV_COMMANDS:
-			funcName = f"script_{cmd.scriptSuffix}"
-			script = lambda self, gesture: self._doNavigate(gesture)  # noqa: E731
+			scriptSuffix = cmd.commandName[0].lower() + cmd.commandName[1:]
+			funcName = f"script_{scriptSuffix}"
+			script = lambda self, gesture, _cmd=cmd.commandName: self._doNavigateCommand(_cmd)  # noqa: E731
 			script.__doc__ = cmd.description
 			script.__name__ = funcName
 			script.category = SCRCAT_MATH_NAV
 			script.speakOnDemand = cmd.speakOnDemand
 			setattr(cls, funcName, script)
 			for gesture in cmd.gestures:
-				cls.__gestures[gesture] = cmd.scriptSuffix
+				cls.__gestures[gesture] = scriptSuffix
 
 	_startsWithMath: re.Pattern = re.compile("\\s*?<math")
 
@@ -412,4 +408,4 @@ class MathCAT(mathPres.MathPresentationProvider):
 		"""
 		interaction = MathCATInteraction(provider=self, mathMl=mathml)
 		interaction.setFocus()
-		interaction._doNavigate(None)
+		interaction._updateBraille()
