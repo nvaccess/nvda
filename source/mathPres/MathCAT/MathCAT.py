@@ -1,10 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2025 NV Access Limited, Neil Soiffer, Ryan McCleary
+# Copyright (C) 2022-2026 NV Access Limited, Neil Soiffer, Ryan McCleary
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import re
-from collections.abc import Callable, Generator
+from collections.abc import Generator
 from ctypes import (
 	Array,
 	WinError,
@@ -42,12 +42,18 @@ from textUtils import WCHAR_ENCODING
 
 import mathPres
 from .localization import getLanguageToUse
+from .navCommands import NAV_COMMANDS
 from .preferences import applyUserPreferences
 from .speech import convertSSMLTextForNVDA
+
+# Translators: The name of a category of commands in the Input Gestures dialog.
+SCRCAT_MATH_NAV = _("Math navigation")
 
 
 class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 	"""An NVDA object used to interact with MathML."""
+
+	__gestures = {}
 
 	# Put MathML or other formats on the clipboard.
 	# MathML is put on the clipboard using the two formats below (defined by MathML spec)
@@ -103,50 +109,10 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 
 		yield region
 
-	def getScript(
-		self,
-		gesture: KeyboardInputGesture,
-	) -> Callable[[KeyboardInputGesture], None] | None:
-		"""
-		Returns the script function bound to the given gesture.
+	def _doNavigate(self, gesture: KeyboardInputGesture | None) -> None:
+		"""Perform the MathCAT navigation command indicated by the given gesture.
 
-		:param gesture: A KeyboardInputGesture sent to this object.
-		:returns: The script bound to that gesture.
-		"""
-		if (
-			isinstance(gesture, KeyboardInputGesture)
-			and "NVDA" not in gesture.modifierNames
-			and gesture.mainKeyName
-			in {
-				"leftArrow",
-				"rightArrow",
-				"upArrow",
-				"downArrow",
-				"home",
-				"end",
-				"space",
-				"backspace",
-				"enter",
-				"0",
-				"1",
-				"2",
-				"3",
-				"4",
-				"5",
-				"6",
-				"7",
-				"8",
-				"9",
-			}
-		):
-			return self.script_navigate
-		else:
-			return super().getScript(gesture)
-
-	def script_navigate(self, gesture: KeyboardInputGesture) -> None:
-		"""Performs the specified navigation command.
-
-		:param gesture: The keyboard command which specified the navigation command to perform.
+		:param gesture: The keyboard gesture, or None for initial focus.
 		"""
 		try:
 			if gesture is not None:  # == None when initial focus -- handled in reportFocus()
@@ -183,6 +149,20 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			log.exception()
 			# Translators: this message alerts users to an error brailling math.
 			ui.message(pgettext("math", "Error in brailling math"))
+
+	@classmethod
+	def _createNavScripts(cls) -> None:
+		"""Dynamically create individual scripts for each MathCAT navigation command."""
+		for cmd in NAV_COMMANDS:
+			funcName = f"script_{cmd.scriptSuffix}"
+			script = lambda self, gesture: self._doNavigate(gesture)  # noqa: E731
+			script.__doc__ = cmd.description
+			script.__name__ = funcName
+			script.category = SCRCAT_MATH_NAV
+			script.speakOnDemand = cmd.speakOnDemand
+			setattr(cls, funcName, script)
+			for gesture in cmd.gestures:
+				cls.__gestures[gesture] = cmd.scriptSuffix
 
 	_startsWithMath: re.Pattern = re.compile("\\s*?<math")
 
@@ -320,6 +300,9 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		h.forget()
 
 
+MathCATInteraction._createNavScripts()
+
+
 class MathCAT(mathPres.MathPresentationProvider):
 	def __init__(self):
 		"""Initializes MathCAT, loading the rules specified in the rules directory."""
@@ -429,4 +412,4 @@ class MathCAT(mathPres.MathPresentationProvider):
 		"""
 		interaction = MathCATInteraction(provider=self, mathMl=mathml)
 		interaction.setFocus()
-		interaction.script_navigate(None)
+		interaction._doNavigate(None)
