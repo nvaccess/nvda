@@ -23,12 +23,12 @@ license = {file = "copying.txt"}
 dependencies = [
 	# NVDA's runtime dependencies
 	"comtypes==1.4.13",
-	"cryptography==46.0.5",
+	"cryptography==46.0.6",
 	"pyserial==3.5",
 	"wxPython==4.2.4",
 	# pinned to a commit in tool.uv.sources
 	"configobj",
-	"requests==2.32.5",
+	"requests==2.33.0",
 	"url-normalize==2.2.1",
 	"schedule==1.2.2",
 	# NVDA_DMP requires diff-match-patch
