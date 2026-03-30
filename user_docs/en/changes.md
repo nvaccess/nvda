@@ -61,6 +61,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * Python from 3.13.11 to 3.13.12. (#19572, @dpy013)
   * Ruff to 0.15.4. (#19548)
   * uv to 0.10.6. (#19548)
+  * Requests to 2.33.0 (#)
+  * cryptography to 46.0.6 (#)
 * NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)
 * Subclasses of `browseMode.BrowseModeDocumentTreeInterceptor` that support screen layout being on and off should override the `_toggleScreenLayout` method, rather than implementing `script_toggleScreenLayout` directly. (#19487)
 * Clarified NV Access's policy on API breaking changes in the Developer Guide. (#19599)
