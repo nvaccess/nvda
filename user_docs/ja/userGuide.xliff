@@ -26649,9 +26649,10 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Automatic, English, English (en-GB), Chinese (Traditional) (zh-TW), Finnish, German, Indonesian, Norwegian Bokmål, Spanish, Swedish, Vietnamese </source>
-        <target> Options | Automatic, English, English (en-GB), Chinese (Traditional) (zh-TW), Finnish, German, Indonesian, Norwegian Bokmål, Spanish, Swedish, Vietnamese </target>
+        <target> 選択肢 | 自動、英語、英語（イギリス）（en-GB）、中国語（繁体字）（zh-TW）、フィンランド語、ドイツ語、インドネシア語、ノルウェー語（ブークモール）、スペイン語、スウェーデン語、ベトナム語
+ </target>
       </segment>
     </unit>
     <unit id="aa88b007-3eb9-4803-8e97-7065a86c8685">
@@ -26660,9 +26661,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Automatic (the language of the current voice if supported, or fallback to English) </source>
-        <target> Default | Automatic (the language of the current voice if supported, or fallback to English) </target>
+        <target> 既定の値 | 自動 (サポートされている場合は現在の音声言語、利用できない場合は英語) </target>
       </segment>
     </unit>
     <unit id="38b667be-4bd0-4dac-9d27-7d615f561d8e">
@@ -26679,27 +26680,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 3247</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Different styles can be used to speak mathematical content.</source>
-        <target>Different styles can be used to speak mathematical content.</target>
+        <target>さまざまなスタイルを使用して数式を読み上げることができます。</target>
       </segment>
     </unit>
     <unit id="9e8911d7-d9be-4531-9e08-07b3db61f0bf">
       <notes>
         <note appliesTo="source">line: 3248</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Each [math speech language](#MathSpeechLanguage) has different speech styles available.</source>
-        <target>Each [math speech language](#MathSpeechLanguage) has different speech styles available.</target>
+        <target>それぞれの[数式読み上げ言語](#MathSpeechLanguage)には、それぞれ異なる読み上げスタイルが用意されています。</target>
       </segment>
     </unit>
     <unit id="fba95dc8-b306-46cb-83bd-b7e6288fdf5a">
       <notes>
         <note appliesTo="source">line: 3250</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For English and most languages, the following styles are available:</source>
-        <target>For English and most languages, the following styles are available:</target>
+        <target>英語およびほとんどの言語では、次のスタイルが使用できます。</target>
       </segment>
     </unit>
     <unit id="33c784bb-4b9d-49b1-ac00-3f2762f68210">
@@ -26807,9 +26808,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | ClearSpeak, SimpleSpeak, LiteralSpeak, or other options depending on your language </source>
-        <target> Options | ClearSpeak, SimpleSpeak, LiteralSpeak, or other options depending on your language </target>
+        <target> 選択肢 | ClearSpeak, SimpleSpeak, LiteralSpeak, その他言語に応じた選択肢 </target>
       </segment>
     </unit>
     <unit id="8cad6d60-b711-4316-90db-c276a75dc254">
@@ -26818,9 +26819,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Depends on the language </source>
-        <target> Default | Depends on the language </target>
+        <target> 既定の値 | 言語に依存します </target>
       </segment>
     </unit>
     <unit id="b636dc14-f4ca-4740-923f-8684ea9800de">
@@ -28762,45 +28763,45 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: #### </note>
         <note appliesTo="source">suffix:  {#CopyAddonsToSystemProfileDialog}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Copy Settings to System-wide Configuration Dialog</source>
-        <target>Copy Settings to System-wide Configuration Dialog</target>
+        <target>システム全体の設定にアドオンをコピー</target>
       </segment>
     </unit>
     <unit id="645ba606-ae0d-4137-b31e-38eb0b43fa04">
       <notes>
         <note appliesTo="source">line: 3619</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This dialog appears if you choose to [copy your settings to NVDA's system-wide configuration](#GeneralSettingsCopySettings) and your NVDA configuration or the system-wide NVDA configuration contains [add-ons](#AddonsManager).</source>
-        <target>This dialog appears if you choose to [copy your settings to NVDA's system-wide configuration](#GeneralSettingsCopySettings) and your NVDA configuration or the system-wide NVDA configuration contains [add-ons](#AddonsManager).</target>
+        <target>このダイアログは、[設定をシステム全体の設定にコピー](#GeneralSettingsCopySettings)を選択したときに、現在のNVDA設定またはシステム全体のNVDA設定に[アドオン](#AddonsManager)が含まれている場合に表示されます。</target>
       </segment>
     </unit>
     <unit id="fa8201e7-3b62-46f1-ae26-a80f77323c05">
       <notes>
         <note appliesTo="source">line: 3620</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>It allows you to choose which of your add-ons to copy to the system-wide configuration, which is used during sign-in and on [secure screens](#SecureScreens).</source>
-        <target>It allows you to choose which of your add-ons to copy to the system-wide configuration, which is used during sign-in and on [secure screens](#SecureScreens).</target>
+        <target>このダイアログでは、サインインや[セキュア画面](#SecureScreens)で使用されるシステム全体の設定に、どのアドオンをコピーするかを選択できます。</target>
       </segment>
     </unit>
     <unit id="12034a15-6a66-44bc-9550-4561cc9abb33">
       <notes>
         <note appliesTo="source">line: 3621</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>It also shows which add-ons are already present in the system-wide configuration.</source>
-        <target>It also shows which add-ons are already present in the system-wide configuration.</target>
+        <target>また、システム全体の構成にすでにアドオンが存在することを示します。</target>
       </segment>
     </unit>
     <unit id="9259fc6e-4b3a-40e9-be99-dd0a914a6924">
       <notes>
         <note appliesTo="source">line: 3622</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>By default, only add-ons that are already present in the system-wide configuration will be included.</source>
-        <target>By default, only add-ons that are already present in the system-wide configuration will be included.</target>
+        <target>既定では、システム全体の設定にすでに存在するアドオンのみが含まれます。</target>
       </segment>
     </unit>
     <unit id="e21544ee-caba-4d34-a9b2-e423ef89e065">
@@ -28852,36 +28853,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 3630</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The list of add-ons shows all add-ons enabled in the currently running NVDA configuration and/or present in the system-wide NVDA configuration.</source>
-        <target>The list of add-ons shows all add-ons enabled in the currently running NVDA configuration and/or present in the system-wide NVDA configuration.</target>
+        <target>アドオンのリストには、現在NVDA設定で有効になっているすべてのアドオンおよび/またはシステム全体のNVDA設定で有効になっているものが表示されます。</target>
       </segment>
     </unit>
     <unit id="a29b8b70-1531-4c40-a1d2-356d12ddd8b2">
       <notes>
         <note appliesTo="source">line: 3631</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The version of the add-on installed in the currently running configuration is shown in the "User version" column.</source>
-        <target>The version of the add-on installed in the currently running configuration is shown in the "User version" column.</target>
+        <target>現在実行中の設定にインストールされているアドオンのバージョンが「ユーザーのバージョン」列に表示されます。</target>
       </segment>
     </unit>
     <unit id="1919cf88-2cb8-461b-b597-d607fc474155">
       <notes>
         <note appliesTo="source">line: 3632</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The version installed in the system-wide configuration is shown in the "System-wide version" column.</source>
-        <target>The version installed in the system-wide configuration is shown in the "System-wide version" column.</target>
+        <target>システム全体の設定にインストールされているバージョンは、「システム全体のバージョン」列に表示されます。</target>
       </segment>
     </unit>
     <unit id="683ef2d0-6124-4511-a59d-f6702379933f">
       <notes>
         <note appliesTo="source">line: 3633</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If the add-on is not present in the currently running or system-wide configuration, "Not installed" is shown in the appropriate column.</source>
-        <target>If the add-on is not present in the currently running or system-wide configuration, "Not installed" is shown in the appropriate column.</target>
+        <target>アドオンが現在実行中の設定またはシステム全体の構成に存在しない場合は、該当する列に「未インストール」が表示されます。</target>
       </segment>
     </unit>
     <unit id="2edf4d02-9c8e-4259-986f-e4bb58d65794">
@@ -28906,18 +28907,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 3638</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>To get more information about an add-on, select the add-on in the list of add-ons and press the "About add-on..." button.</source>
-        <target>To get more information about an add-on, select the add-on in the list of add-ons and press the "About add-on..." button.</target>
+        <target>アドオンの詳細情報を取得するには、アドオンのリストでアドオンを選択し、「アドオンについて」ボタンを押します。</target>
       </segment>
     </unit>
     <unit id="051078ff-ddb1-4da7-b3dc-8d30b9f857a0">
       <notes>
         <note appliesTo="source">line: 3639</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The details shown will be for the version in the currently running configuration, unless the add-on is not installed in the currently running configuration, in which case the details of the version installed in the system-wide configuration will be shown.</source>
-        <target>The details shown will be for the version in the currently running configuration, unless the add-on is not installed in the currently running configuration, in which case the details of the version installed in the system-wide configuration will be shown.</target>
+        <target>表示される詳細は、現在実行中の設定にインストールされているバージョンのものです。ただし、そのアドオンが現在実行中の設定にインストールされていない場合は、システム全体の設定にインストールされているバージョンの詳細が表示されます。</target>
       </segment>
     </unit>
     <unit id="eec22e97-5216-4082-88a6-792a2c55c00b">
@@ -28942,27 +28943,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 3644</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Add-ons that are currently installed in the system-wide configuration, but are not present in the running NVDA configuration will be removed.</source>
-        <target>Add-ons that are currently installed in the system-wide configuration, but are not present in the running NVDA configuration will be removed.</target>
+        <target>現在システム全体の設定にインストールされているが、実行中のNVDA設定には存在しないアドオンは削除されます。</target>
       </segment>
     </unit>
     <unit id="80041c1e-a509-4ab5-8547-f588a2c7dd0e">
       <notes>
         <note appliesTo="source">line: 3645</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>These items cannot be checked.</source>
-        <target>These items cannot be checked.</target>
+        <target>これらの項目はチェックできません。</target>
       </segment>
     </unit>
     <unit id="550f0137-e562-4aa3-83c0-4b4b944b7a7e">
       <notes>
         <note appliesTo="source">line: 3646</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>They also begin with "[remove]" for easy identification.</source>
-        <target>They also begin with "[remove]" for easy identification.</target>
+        <target>また、識別しやすいように、先頭に「[削除]」と表示されます。</target>
       </segment>
     </unit>
     <unit id="e3d0c2c5-1a59-4caf-9b4f-67e824c90639">

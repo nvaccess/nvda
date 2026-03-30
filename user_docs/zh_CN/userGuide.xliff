@@ -13980,9 +13980,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 1177</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA uses [MathCAT](https://daisy.github.io/MathCAT/) for reading mathematical content.</source>
-        <target>NVDA uses [MathCAT](https://daisy.github.io/MathCAT/) for reading mathematical content.</target>
+        <target>NVDA 使用[ MathCAT](https://daisy.github.io/MathCAT/) 阅读数学内容。</target>
       </segment>
     </unit>
     <unit id="ba5c585b-11ec-46fb-bf6e-c1e178998d33">
@@ -28751,45 +28751,45 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: #### </note>
         <note appliesTo="source">suffix:  {#CopyAddonsToSystemProfileDialog}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Copy Settings to System-wide Configuration Dialog</source>
-        <target>Copy Settings to System-wide Configuration Dialog</target>
+        <target>拷贝设置到系统配置对话框</target>
       </segment>
     </unit>
     <unit id="645ba606-ae0d-4137-b31e-38eb0b43fa04">
       <notes>
         <note appliesTo="source">line: 3619</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This dialog appears if you choose to [copy your settings to NVDA's system-wide configuration](#GeneralSettingsCopySettings) and your NVDA configuration or the system-wide NVDA configuration contains [add-ons](#AddonsManager).</source>
-        <target>This dialog appears if you choose to [copy your settings to NVDA's system-wide configuration](#GeneralSettingsCopySettings) and your NVDA configuration or the system-wide NVDA configuration contains [add-ons](#AddonsManager).</target>
+        <target>当您选择[应用已保存的配置到欢迎界面和其他安全界面](#GeneralSettingsCopySettings)，且 NVDA 的当前配置或系统配置中包含[插件](#AddonsManager)时，将显示此对话框。</target>
       </segment>
     </unit>
     <unit id="fa8201e7-3b62-46f1-ae26-a80f77323c05">
       <notes>
         <note appliesTo="source">line: 3620</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>It allows you to choose which of your add-ons to copy to the system-wide configuration, which is used during sign-in and on [secure screens](#SecureScreens).</source>
-        <target>It allows you to choose which of your add-ons to copy to the system-wide configuration, which is used during sign-in and on [secure screens](#SecureScreens).</target>
+        <target>通过此对话框，您可选择要将哪些插件拷贝到系统配置。该配置将在登录及[安全界面](#SecureScreens)使用。</target>
       </segment>
     </unit>
     <unit id="12034a15-6a66-44bc-9550-4561cc9abb33">
       <notes>
         <note appliesTo="source">line: 3621</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>It also shows which add-ons are already present in the system-wide configuration.</source>
-        <target>It also shows which add-ons are already present in the system-wide configuration.</target>
+        <target>对话框还会显示系统配置中已存在哪些插件。</target>
       </segment>
     </unit>
     <unit id="9259fc6e-4b3a-40e9-be99-dd0a914a6924">
       <notes>
         <note appliesTo="source">line: 3622</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>By default, only add-ons that are already present in the system-wide configuration will be included.</source>
-        <target>By default, only add-ons that are already present in the system-wide configuration will be included.</target>
+        <target>默认情况下，仅会选中系统配置中已存在的插件。</target>
       </segment>
     </unit>
     <unit id="e21544ee-caba-4d34-a9b2-e423ef89e065">
@@ -28807,7 +28807,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>NVDA uses this configuration when running on secure screens, including the sign-in and User Account Control (UAC) screens.</source>
-        <target>NVDA 在安全界面运行时（包括登录界面和用户账户控制（UAC）界面）会使用此配置。</target>
+        <target>在安全界面（包括登录界面和用户账户控制（UAC）界面）运行的 NVDA 将使用此配置。</target>
       </segment>
     </unit>
     <unit id="41ab7772-62ff-407f-9c99-0d1b10924724">
@@ -28816,7 +28816,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>When running on secure screens, NVDA runs as the system user, which has privileges even greater than administrators.</source>
-        <target>在安全界面运行时，NVDA 以系统用户的身份运行，其权限甚至高于管理员。</target>
+        <target>NVDA 在安全界面会以系统用户的身份运行，其权限甚至高于管理员。</target>
       </segment>
     </unit>
     <unit id="9718e22f-2b97-467d-9dc1-df2ed07564fa">
@@ -28841,36 +28841,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 3630</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The list of add-ons shows all add-ons enabled in the currently running NVDA configuration and/or present in the system-wide NVDA configuration.</source>
-        <target>The list of add-ons shows all add-ons enabled in the currently running NVDA configuration and/or present in the system-wide NVDA configuration.</target>
+        <target>插件列表显示了当前运行的 NVDA 配置中已启用的所有插件，以及 NVDA 系统配置中存在的所有插件。</target>
       </segment>
     </unit>
     <unit id="a29b8b70-1531-4c40-a1d2-356d12ddd8b2">
       <notes>
         <note appliesTo="source">line: 3631</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The version of the add-on installed in the currently running configuration is shown in the "User version" column.</source>
-        <target>The version of the add-on installed in the currently running configuration is shown in the "User version" column.</target>
+        <target>当前运行配置中安装的插件版本会显示在“用户版本”列中。</target>
       </segment>
     </unit>
     <unit id="1919cf88-2cb8-461b-b597-d607fc474155">
       <notes>
         <note appliesTo="source">line: 3632</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The version installed in the system-wide configuration is shown in the "System-wide version" column.</source>
-        <target>The version installed in the system-wide configuration is shown in the "System-wide version" column.</target>
+        <target>系统配置中安装的版本会显示在“系统版本”列中。</target>
       </segment>
     </unit>
     <unit id="683ef2d0-6124-4511-a59d-f6702379933f">
       <notes>
         <note appliesTo="source">line: 3633</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If the add-on is not present in the currently running or system-wide configuration, "Not installed" is shown in the appropriate column.</source>
-        <target>If the add-on is not present in the currently running or system-wide configuration, "Not installed" is shown in the appropriate column.</target>
+        <target>如插件未在某一配置中安装，相应列会显示“未安装”。</target>
       </segment>
     </unit>
     <unit id="2edf4d02-9c8e-4259-986f-e4bb58d65794">
@@ -28879,7 +28879,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>To copy one or more add-ons to the system-wide configuration, check them in the list of add-ons.</source>
-        <target>可在插件列表选择要拷贝到系统配置的插件。</target>
+        <target>可在此列表选择要拷贝到系统配置的插件。</target>
       </segment>
     </unit>
     <unit id="f75a744e-8950-4dfa-9d1f-8a6546d5c048">
@@ -28895,18 +28895,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 3638</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>To get more information about an add-on, select the add-on in the list of add-ons and press the "About add-on..." button.</source>
-        <target>To get more information about an add-on, select the add-on in the list of add-ons and press the "About add-on..." button.</target>
+        <target>要获取有关插件的更多信息，请在插件列表中选择该插件，然后按“关于插件”按钮。</target>
       </segment>
     </unit>
     <unit id="051078ff-ddb1-4da7-b3dc-8d30b9f857a0">
       <notes>
         <note appliesTo="source">line: 3639</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The details shown will be for the version in the currently running configuration, unless the add-on is not installed in the currently running configuration, in which case the details of the version installed in the system-wide configuration will be shown.</source>
-        <target>The details shown will be for the version in the currently running configuration, unless the add-on is not installed in the currently running configuration, in which case the details of the version installed in the system-wide configuration will be shown.</target>
+        <target>将显示当前运行配置版本的详细信息。若该插件未安装在当前运行配置中，则会显示系统配置中已安装版本的详细信息。</target>
       </segment>
     </unit>
     <unit id="eec22e97-5216-4082-88a6-792a2c55c00b">
@@ -28931,27 +28931,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 3644</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Add-ons that are currently installed in the system-wide configuration, but are not present in the running NVDA configuration will be removed.</source>
-        <target>Add-ons that are currently installed in the system-wide configuration, but are not present in the running NVDA configuration will be removed.</target>
+        <target>已安装在系统配置但不存在于当前运行 NVDA 配置的插件将被移除。</target>
       </segment>
     </unit>
     <unit id="80041c1e-a509-4ab5-8547-f588a2c7dd0e">
       <notes>
         <note appliesTo="source">line: 3645</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>These items cannot be checked.</source>
-        <target>These items cannot be checked.</target>
+        <target>这些项目无法选中。</target>
       </segment>
     </unit>
     <unit id="550f0137-e562-4aa3-83c0-4b4b944b7a7e">
       <notes>
         <note appliesTo="source">line: 3646</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>They also begin with "[remove]" for easy identification.</source>
-        <target>They also begin with "[remove]" for easy identification.</target>
+        <target>为便于识别，其还会以“[移除]”作为前缀。</target>
       </segment>
     </unit>
     <unit id="e3d0c2c5-1a59-4caf-9b4f-67e824c90639">
