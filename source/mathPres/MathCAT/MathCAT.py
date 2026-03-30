@@ -46,8 +46,8 @@ from .navCommands import NAV_COMMANDS
 from .preferences import applyUserPreferences
 from .speech import convertSSMLTextForNVDA
 
-# Translators: The name of a category of commands in the Input Gestures dialog.
-SCRCAT_MATH_NAV = _("Math navigation")
+# Translators: The name of the category of MathCAT navigation commands in the Input Gestures dialog.
+SCRCAT_MATHCAT_NAV = _("MathCat navigation")
 
 
 class MathCATInteraction(mathPres.MathInteractionNVDAObject):
@@ -154,7 +154,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			script = lambda self, gesture, _cmd=cmd.commandName: self._doNavigateCommand(_cmd)  # noqa: E731
 			script.__doc__ = cmd.description
 			script.__name__ = funcName
-			script.category = SCRCAT_MATH_NAV
+			script.category = SCRCAT_MATHCAT_NAV
 			script.speakOnDemand = cmd.speakOnDemand
 			setattr(cls, funcName, script)
 			for gesture in cmd.gestures:
