@@ -1074,8 +1074,9 @@ This feature is intended to provide touch users with efficient, structured navig
 
 <!-- KC:endInclude -->
 
-When the default element type is selected, flicking left or right moves through the document in reading order.
-When any other element type is selected, flicking left or right moves to the previous or next element of that type, while flicking up and down cycles through the available element types.
+When the "default" element type is selected, flicking left or right moves through all elements in the document.
+When any other element type is selected, flicking left or right moves to the previous or next element of that type.
+Flicking up or down cycles through the available element types.
 
 The selected element type is remembered separately for each document while it remains open.
 Note that browse touch mode gestures only take effect when browse mode is active in the document.
