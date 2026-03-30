@@ -296,9 +296,6 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		h.forget()
 
 
-MathCATInteraction._createNavScripts()
-
-
 class MathCAT(mathPres.MathPresentationProvider):
 	def __init__(self):
 		"""Initializes MathCAT, loading the rules specified in the rules directory."""
