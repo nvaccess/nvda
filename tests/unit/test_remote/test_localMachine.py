@@ -105,11 +105,13 @@ class TestCanSendSAS(unittest.TestCase):
 			lambda acc, val: acc if val in acc else [*acc, val],
 			map(
 				# Keep return values
-				lambda params: params
-				#  if OpenKeyEx and QueryValueEx don't raise
-				if params.openKeyRaises is params.queryValueRaises is None
-				# Otherwise, discard the return values as they don't matter
-				else params._replace(valueData=None, valueType=None),
+				lambda params: (
+					params
+					#  if OpenKeyEx and QueryValueEx don't raise
+					if params.openKeyRaises is params.queryValueRaises is None
+					# Otherwise, discard the return values as they don't matter
+					else params._replace(valueData=None, valueType=None)
+				),
 				# Make Params instances out of the product of all of the possible parameter values
 				map(CanSendSASFactors._make, product(*FACTOR_VALUES.values())),
 			),

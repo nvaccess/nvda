@@ -73,9 +73,15 @@ class _WritePaths:
 
 	@property
 	def addonStateFile(self) -> str:
-		from addonHandler import stateFilename
+		from addonHandler import STATE_FILENAME
 
-		return os.path.join(self.configDir, stateFilename)
+		return os.path.join(self.configDir, STATE_FILENAME)
+
+	@property
+	def _oldAddonStateFile(self) -> str:
+		from addonHandler import _OLD_STATE_FILENAME
+
+		return os.path.join(self.configDir, _OLD_STATE_FILENAME)
 
 	@property
 	def profileTriggersFile(self) -> str:

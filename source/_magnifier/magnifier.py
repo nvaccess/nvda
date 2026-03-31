@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -14,17 +14,25 @@ import wx
 import ui
 import speech
 import screenCurtain
+import winUser
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (
 	MagnifierPosition,
+	MagnifierAction,
 	Coordinates,
 	MagnifierType,
 	Direction,
 	Filter,
 )
+from .config import (
+	getDefaultZoomLevel,
+	getDefaultPanStep,
+	getDefaultFilter,
+	ZoomLevel,
+	isTrueCentered,
+)
 from .utils.focusManager import FocusManager
-from .config import getDefaultZoomLevel, getDefaultFilter, ZoomLevel, isTrueCentered
 
 
 class Magnifier:
@@ -36,11 +44,14 @@ class Magnifier:
 		self._magnifierType: MagnifierType = MagnifierType.FULLSCREEN
 		self._isActive: bool = False
 		self._zoomLevel: float = getDefaultZoomLevel()
+		self._panStep: int = getDefaultPanStep()
 		self._timer: None | wx.Timer = None
 		self._focusManager = FocusManager()
 		self._lastScreenPosition = Coordinates(0, 0)
 		self._currentCoordinates = Coordinates(0, 0)
+		self._lastFocusCoordinates = Coordinates(0, 0)
 		self._filterType: Filter = getDefaultFilter()
+		self._isManualPanning: bool = False
 		# Register for display changes
 		_displayTracking.displayChanged.register(self._onDisplayChanged)
 		self._screenCurtainIsActive: bool = False
@@ -65,6 +76,25 @@ class Magnifier:
 			value = closestZoom
 		self._zoomLevel = value
 
+	def _getScreenLimits(self) -> tuple[int, int, int, int]:
+		"""
+		Get screen coordinate limits based on current mode.
+
+		:return: Tuple of (minX, minY, maxX, maxY)
+		"""
+		if isTrueCentered():
+			# In true center mode: can pan until mouse reaches screen edge
+			return (0, 0, self._displayOrientation.width, self._displayOrientation.height)
+		else:
+			# In normal mode: calculate limits to keep view within screen
+			visibleWidth = self._displayOrientation.width / self.zoomLevel
+			visibleHeight = self._displayOrientation.height / self.zoomLevel
+			minX = int(visibleWidth / 2)
+			minY = int(visibleHeight / 2)
+			maxX = int(self._displayOrientation.width - (visibleWidth / 2))
+			maxY = int(self._displayOrientation.height - (visibleHeight / 2))
+			return (minX, minY, maxX, maxY)
+
 	def _setZoomRawValue(self, value: float) -> None:
 		"""
 		Set zoom level directly without validation.
@@ -74,7 +104,6 @@ class Magnifier:
 		"""
 		self._zoomLevel = value
 
-	# Functions
 	def _onDisplayChanged(self, orientationState: OrientationState) -> None:
 		"""
 		Called when display configuration changes
@@ -179,6 +208,52 @@ class Magnifier:
 			newZoom = self.zoomLevel - ZoomLevel.STEP_FACTOR
 			if newZoom >= ZoomLevel.MIN_ZOOM:
 				self.zoomLevel = newZoom
+
+	def _pan(self, action: MagnifierAction) -> bool:
+		"""
+		Pan the magnifier in the specified direction
+
+		:param action: The pan action (left, right, up, down)
+		:return: True if the actions results in the pan successfully moving, False otherwise.
+		"""
+		x, y = self._currentCoordinates
+		originalX, originalY = x, y
+
+		minX, minY, maxX, maxY = self._getScreenLimits()
+
+		# Clamp current position if out of bounds
+		x = max(minX, min(x, maxX))
+		y = max(minY, min(y, maxY))
+
+		panPixels = int((self._displayOrientation.width / self.zoomLevel) * self._panStep / 100)
+
+		match action:
+			case MagnifierAction.PAN_LEFT:
+				x = max(minX, x - panPixels)
+			case MagnifierAction.PAN_RIGHT:
+				x = min(maxX, x + panPixels)
+			case MagnifierAction.PAN_UP:
+				y = max(minY, y - panPixels)
+			case MagnifierAction.PAN_DOWN:
+				y = min(maxY, y + panPixels)
+			case MagnifierAction.PAN_LEFT_EDGE:
+				x = minX
+			case MagnifierAction.PAN_RIGHT_EDGE:
+				x = maxX
+			case MagnifierAction.PAN_TOP_EDGE:
+				y = minY
+			case MagnifierAction.PAN_BOTTOM_EDGE:
+				y = maxY
+			case _:
+				log.error(f"Unknown pan action: {action}")
+
+		self._isManualPanning = True
+		self._currentCoordinates = Coordinates(x, y)
+		winUser.setCursorPos(x, y)
+		self._lastMousePosition = Coordinates(x, y)
+		self._doUpdate()
+
+		return (x, y) != (originalX, originalY)
 
 	def _startTimer(self, callback: Callable[[], None] = None) -> None:
 		"""

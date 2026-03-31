@@ -47,8 +47,6 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	"column break",
 	"background pattern {pattern}",
 	"NVDA Speech Viewer",
-	"text mode",
-	"object mode",
 	"NonVisual Desktop Access",
 	"A free and open source screen reader for Microsoft Windows",
 	"Copyright (C) {years} NVDA Contributors",
@@ -204,6 +202,6 @@ def getStringFromLine(line):
 
 
 if __name__ == "__main__":
-	# Support command line usage for quick testing.
 	fileName = sys.argv[1]
-	print(checkPot(fileName))
+	results = checkPot(fileName)
+	sys.exit(results)

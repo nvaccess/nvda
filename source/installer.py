@@ -1,9 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
 # Copyright (C) 2011-2026 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka, Cyrille Bougot
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from collections.abc import Iterable
+import json
 import comtypes.client
 import ctypes
 from enum import auto, Enum
@@ -979,8 +980,9 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 	if shouldCleanX86:
 		oldSystemConfigPath = os.path.join(installDirX86, "systemConfig")
 		if os.path.isdir(oldSystemConfigPath):
-			config._setSystemConfig(oldSystemConfigPath, prefix=installDir)
+			config._setSystemConfig(oldSystemConfigPath, prefix=installDir, isMigration=True)
 		tryRemoveFile(installDirX86, rebootOK=True)
+	_migratePickledAddonsStateToJson(os.path.join(installDir, "systemConfig"))
 	COMRegistrationFixes.fixCOMRegistrations()
 
 
@@ -998,6 +1000,38 @@ def removeOldLoggedFiles(installPath: str):
 		filePath = line.rstrip("\n")
 		if os.path.exists(filePath):
 			tryRemoveFile(filePath, rebootOK=True)
+
+
+def _migratePickledAddonsStateToJson(configPath: str) -> None:
+	pickledPath = os.path.join(configPath, addonHandler._OLD_STATE_FILENAME)
+	if not os.path.isfile(pickledPath):
+		log.debug("Pickled add-ons state does not exist. No migration necessary.")
+		return
+	try:
+		# Only import if absolutely necessary.
+		from addonHandler._pickleToJsonMigration import _getAddonsStateDictFromPickle
+
+		jsonState = _getAddonsStateDictFromPickle(pickledPath)
+	except Exception:
+		log.error("Failed to load pickled add-ons state.", exc_info=True)
+	else:
+		jsonPath = os.path.join(configPath, addonHandler.STATE_FILENAME)
+		try:
+			if os.path.exists(jsonPath):
+				tryRemoveFile(jsonPath)
+		except Exception:
+			log.error(f"Failed to remove existing {jsonPath}.", exc_info=True)
+		else:
+			try:
+				with open(jsonPath, "wt", encoding="utf-8") as file:
+					json.dump(jsonState, file)
+			except Exception:
+				log.error("Failed to dump JSON add-ons state.", exc_info=True)
+	finally:
+		try:
+			os.replace(pickledPath, pickledPath + ".bak")
+		except Exception:
+			log.error("Failed to back up pickled add-ons state.", exc_info=True)
 
 
 def createPortableCopy(destPath: str, shouldCopyUserConfig: bool = True):

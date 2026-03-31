@@ -20,6 +20,11 @@ class ZoomLevel:
 	MAX_ZOOM: float = 10.0
 	MIN_ZOOM: float = 1.0
 	STEP_FACTOR: float = 0.5
+	ZOOM_MESSAGE = pgettext(
+		"magnifier",
+		# Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
+		"{zoomLevel}x",
+	)
 
 	@classmethod
 	def zoom_range(cls) -> list[float]:
@@ -37,8 +42,7 @@ class ZoomLevel:
 		Return localized zoom level strings.
 		"""
 		return [
-			# Translators: Zoom level string shown in settings and messages.
-			pgettext("magnifier", "{zoomLevel}x").format(
+			cls.ZOOM_MESSAGE.format(
 				zoomLevel=f"{value:.1f}",
 			)
 			for value in cls.zoom_range()
@@ -78,6 +82,27 @@ def setDefaultZoomLevel(zoomLevel: float) -> None:
 	if "magnifier" not in config.conf:
 		config.conf["magnifier"] = {}
 	config.conf["magnifier"]["defaultZoomLevel"] = zoomLevel
+
+
+def getDefaultPanStep() -> int:
+	"""
+	Get default pan value from config.
+
+	:return: The default pan value.
+	"""
+	return config.conf["magnifier"]["defaultPanStep"]
+
+
+def setDefaultPanStep(panStep: int) -> None:
+	"""
+	Set default pan value from settings.
+
+	:param panStep: The pan value to set.
+	"""
+
+	if "magnifier" not in config.conf:
+		config.conf["magnifier"] = {}
+	config.conf["magnifier"]["defaultPanStep"] = panStep
 
 
 def getDefaultFilter() -> Filter:

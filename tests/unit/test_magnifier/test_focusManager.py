@@ -132,7 +132,7 @@ class TestFocusManager(unittest.TestCase):
 				leftPressed=False,
 				expectedCoords=Coordinates(15, 15),
 				expectedFocus=FocusType.SYSTEM_FOCUS,
-				description="System focus changed",
+				description="System focus changed alone (navigator did not move)",
 			),
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(20, 20),
@@ -142,6 +142,15 @@ class TestFocusManager(unittest.TestCase):
 				expectedCoords=Coordinates(20, 20),
 				expectedFocus=FocusType.NAVIGATOR,
 				description="Navigator object changed (NumPad navigation)",
+			),
+			FocusTestParam(
+				navigatorObjectPos=Coordinates(30, 30),
+				systemFocusPos=Coordinates(15, 15),
+				mousePos=(0, 0),
+				leftPressed=False,
+				expectedCoords=Coordinates(30, 30),
+				expectedFocus=FocusType.NAVIGATOR,
+				description="Both system focus and navigator changed (table cell navigation): navigator wins",
 			),
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(0, 0),

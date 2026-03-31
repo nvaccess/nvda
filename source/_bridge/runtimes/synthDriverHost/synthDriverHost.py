@@ -39,7 +39,7 @@ class HostService(Service):
 		super().__init__()
 
 	@Service.exposed
-	def installProxies(self, remoteService: NVDAService):
+	def installProxies(self, remoteService: NVDAService, brokerAudio: bool = False):
 		"""Install and bind proxy objects from the parent NVDA process.
 
 		This exposed RPYC service method configures the local runtime to use
@@ -94,10 +94,18 @@ class HostService(Service):
 			lang = config.conf["general"]["language"]
 		languageHandler.setLanguage(lang)
 
-		log.debug("Initializing nvwave")
+		log.debug("Initializing nvwave...")
+		from _bridge.components.proxies.nvwave import WavePlayerProxy
 		import nvwave
 
 		nvwave.initialize()
+
+		class BoundWavePlayerProxy(WavePlayerProxy):
+			def __init__(self, *args, **kwargs):
+				super().__init__(remoteService.WavePlayer, *args, **kwargs)
+
+		if brokerAudio:
+			nvwave.WavePlayer = BoundWavePlayerProxy
 
 	@Service.exposed
 	def registerSynthDriversPath(self, path: str):
