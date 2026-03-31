@@ -1056,7 +1056,9 @@ class GWLP(IntEnum):
 	"""Sets a new address for the window procedure."""
 
 
-SetWindowLongPtr = WINFUNCTYPE(None)(("SetWindowLongPtrW", dll))
+# On 32-bit Windows, SetWindowLongPtr is a macro alias for SetWindowLong and is not exported separately.
+_setWindowLongPtrName = "SetWindowLongW" if sizeof(c_void_p) == sizeof(LONG) else "SetWindowLongPtrW"
+SetWindowLongPtr = WINFUNCTYPE(None)((_setWindowLongPtrName, dll))
 """Changes an attribute of the specified window.
 
 .. seealso::
