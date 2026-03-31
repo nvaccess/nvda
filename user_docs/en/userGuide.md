@@ -1065,12 +1065,12 @@ This feature is intended to provide touch users with efficient, structured navig
 
 <!-- KC:beginInclude -->
 
-| Name |Touch |Description|
+| Name | Touch | Description |
 |---|---|---|
-|Select next element type |flick down |Switches to the next browse mode navigation element type|
-|Select previous element type |flick up |Switches to the previous browse mode navigation element type|
-|Move to next element |flick right |Moves to the next browse mode element of the selected type|
-|Move to previous element |flick left |Moves to the previous browse mode element of the selected type|
+| Select next element type | flick down | Switches to the next browse mode navigation element type |
+| Select previous element type | flick up | Switches to the previous browse mode navigation element type |
+| Move to next element | flick right | Moves to the next browse mode element of the selected type |
+| Move to previous element | flick left | Moves to the previous browse mode element of the selected type |
 
 <!-- KC:endInclude -->
 
