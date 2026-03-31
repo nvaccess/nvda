@@ -1065,17 +1065,18 @@ This feature is intended to provide touch users with efficient, structured navig
 
 <!-- KC:beginInclude -->
 
-| Name |Key |Description|
+| Name |Touch |Description|
 |---|---|---|
-|Select next element type |flick down (browse mode) |Switches to the next browse mode navigation element type|
-|Select previous element type |flick up (browse mode) |Switches to the previous browse mode navigation element type|
-|Move to next element |flick right (browse mode) |Moves to the next element of the selected type|
-|Move to previous element |flick left (browse mode) |Moves to the previous element of the selected type|
+|Select next element type |flick down |Switches to the next browse mode navigation element type|
+|Select previous element type |flick up |Switches to the previous browse mode navigation element type|
+|Move to next element |flick right |Moves to the next browse mode element of the selected type|
+|Move to previous element |flick left |Moves to the previous browse mode element of the selected type|
 
 <!-- KC:endInclude -->
 
-When the default element type is selected, flicking left or right moves through the document in reading order.
-When any other element type is selected, flicking left or right moves to the previous or next element of that type, while flicking up and down cycles through the available element types.
+When the "default" element type is selected, flicking left or right moves through all elements in the document.
+When any other element type is selected, flicking left or right moves to the previous or next element of that type.
+Flicking up or down cycles through the available element types.
 
 The selected element type is remembered separately for each document while it remains open.
 Note that browse touch mode gestures only take effect when browse mode is active in the document.
@@ -3330,34 +3331,7 @@ Use the checkboxes to enable or disable individual element types.
 Only the checked element types will appear when flicking up or down to cycle through browse mode navigation elements.
 This setting only affects touch navigation and has no effect on keyboard browse mode navigation.
 
-Available element types include:
-
-* Headings (levels 1 to 9)
-* Links
-* Visited links
-* Unvisited links
-* Form fields
-* Edit fields
-* Buttons
-* Combo boxes
-* Check boxes
-* Radio buttons
-* Lists
-* List items
-* Tables
-* Frames
-* Landmarks
-* Graphics
-* Block quotes
-* Articles
-* Groupings
-* Tabs
-* Figures
-* Menu items
-* Toggle buttons
-* Progress bars
-* Math formulas
-* Separators
+Available element types are those available from [single letter navigation](#SingleLetterNavigation).
 
 #### Document Formatting {#DocumentFormattingSettings}
 

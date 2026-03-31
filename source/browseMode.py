@@ -801,7 +801,6 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		:confval:`virtualBuffers.browseModeTouchNavigationElements` config list.
 
 		:return: List of (itemType, label) pairs, with ``None`` meaning "all content".
-		:rtype: list[tuple[str | None, str]]
 		"""
 		enabledTypes = set(config.conf["virtualBuffers"]["browseModeTouchNavigationElements"])
 		# Translators: The default element type in browse mode touch navigation (navigates all content).
