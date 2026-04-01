@@ -323,11 +323,14 @@ def resetConfiguration(factoryDefaults=False):
 	import tones
 	import audio
 	import screenCurtain
+	import mathPres
 
 	log.debug("Terminating vision")
 	vision.terminate()
 	log.debug("Terminating Screen Curtain")
 	screenCurtain.terminate()
+	log.debug("Terminating math presentation")
+	mathPres.terminate()
 	log.debug("Terminating braille")
 	braille.terminate()
 	log.debug("Terminating brailleInput")
@@ -388,6 +391,9 @@ def resetConfiguration(factoryDefaults=False):
 	brailleInput.initialize()
 	log.debug("Initializing braille")
 	braille.initialize()
+	# Math
+	log.debug("Initializing math presentation")
+	mathPres.initialize()
 	# Vision
 	log.debug("initializing vision")
 	vision.initialize()
