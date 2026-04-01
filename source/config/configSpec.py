@@ -375,7 +375,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	[[speech]]
 		impairment = option("LearningDisability", "Blindness", "LowVision", default="Blindness")
 		# any known language code and sub-code -- could be en-uk, etc
-		language = string(default="Auto")
+		language = string(default="en")
 		verbosity = option("Terse", "Medium", "Verbose", default="Medium")
 		# Change from text speech rate (%)
 		mathRate = integer(default=100, min=10, max=100)

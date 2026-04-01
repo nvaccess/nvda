@@ -137,14 +137,6 @@ def getLanguages() -> list[LanguageInfo]:
 	languages: list[LanguageInfo] = []
 	addRegionalLanguages = _createAddRegionalLanguagesFunction(languages)
 
-	languages.append(
-		LanguageInfo(
-			code="Auto",
-			# Translators: Math language settings menu item: Automatic uses the voice's language.
-			description=pgettext("math", "Automatic"),
-		),
-	)
-
 	# populate the available language names in the dialog
 	# the implemented languages are in folders named using the relevant ISO 639-1
 	# code https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
