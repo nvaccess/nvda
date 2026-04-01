@@ -16,8 +16,6 @@ import wx
 from languageHandler import getLanguageDescription
 from logHandler import log
 from NVDAState import ReadPaths
-from speech import getCurrentLanguage
-from speechXml import toXmlLang
 
 from . import rulesUtils
 
@@ -25,32 +23,23 @@ from . import rulesUtils
 RE_MATH_LANG: re.Pattern = re.compile(r"""<math .*(xml:)?lang=["']([^'"]+)["'].*>""")
 
 
-def getLanguageToUse(mathMl: str = "") -> str:
-	"""Get the language specified in a math tag if the language pref is Auto, else the language preference.
+def getLanguageToUse(_mathMl: str = "") -> str:
+	"""Get the language preference, falling back to English if it is Auto.
 
-	:param mathMl: The MathML string to examine for language. Defaults to an empty string.
+	:param _mathMl: The MathML string to examine for language. Not used. Defaults to the empty string.
 	:returns: The language string to use.
 	"""
-	mathCATLanguageSetting: str = "Auto"
+	mathCATLanguageSetting: str = "en"
 	try:
 		# ignore regional differences if the MathCAT language setting doesn't have it.
 		mathCATLanguageSetting = libmathcat.GetPreference("Language")
 	except Exception:
 		log.exception()
 
-	if mathCATLanguageSetting != "Auto":
-		return mathCATLanguageSetting
-
-	languageMatch: re.Match | None = RE_MATH_LANG.search(mathMl)
-	language: str = (
-		languageMatch.group(2) if languageMatch else getCurrentLanguage()
-	)  # seems to be current voice's language
-	language = toXmlLang(language.lower())
-	if language == "cmn":
-		language = "zh-cmn"
-	elif language == "yue":
-		language = "zh-yue"
-	return language
+	if mathCATLanguageSetting == "Auto":
+		log.debugWarning("Math language 'Auto' is unsupported. Falling back to 'en'.")
+		mathCATLanguageSetting = "en"
+	return mathCATLanguageSetting
 
 
 def pathToLanguagesFolder() -> str:
@@ -128,8 +117,6 @@ def getLanguages() -> list[LanguageInfo]:
 
 	This method scans the language folders and adds entries for each language and its
 	regional dialects. Language folders use ISO 639-1 codes and regional variants use ISO 3166-1 alpha-2 codes.
-
-	It also adds a special "Automatic ({language})" option at the beginning, using the current voice's language.
 
 	:return: A list of LanguageInfo objects representing the available languages.
 	"""
@@ -222,8 +209,9 @@ def getSpeechStyles(languageCode: str) -> list[str]:
 
 	resultSpeechStyles = []
 	if languageCode == "Auto":
-		# list the speech styles for the current voice rather than have none listed
-		languageCode = toXmlLang(getCurrentLanguage().lower())
+		# Fall back to English
+		log.debugWarning("Math language 'Auto' is not supported. Using 'en'.")
+		languageCode = "en"
 	languageCode = languageCode.replace("-", "\\")
 
 	languagePath = pathToLanguagesFolder() + "\\"
