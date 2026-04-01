@@ -1233,7 +1233,7 @@ To activate the button or the element containing the formula, press ctrl+enter.
 Below is a summary of the most useful commands for those wanting to quickly get started with navigating mathematical content.
 
 * Use the arrow keys to move left/right or up/down a mathematical structure (e.g. into/out of a fraction).
-* If inside a table, `control+arrow` will move by cell.
+* If inside a table, `control+arrow` keys will move by cell.
 * `home` / `end` moves to the start/end of the expression.
 * `space` reads your current position.
 * `shift+upArrow` / `shift+downArrow` will change the mode of navigation, which will be discussed in more detail in the following section.
@@ -3313,7 +3313,7 @@ This option is disabled by default.
 This option controls how chemical formulae are read.
 Examples for $\mathrm{H}_2\mathrm{O}$:
 
-* Spell it out: "H 2 O" (verbosity controls whether "sub"/"super" is spoken)
+* Spell it out: "H 2 O" ([verbosity](#MathSpeechVerbosity) controls whether "sub"/"super" is spoken)
 * Off: "H sub 2 O"
 
 | . {.hideHeaderRow} | . |
