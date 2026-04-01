@@ -1,5 +1,3 @@
-<!-- markdownlint-disable-file MD060 -->
-
 # NVDA NVDA_VERSION User Guide
 
 [TOC]
@@ -6336,3 +6334,5 @@ The following values can be set under this registry key:
 If you require further information or assistance regarding NVDA, please visit the [NVDA web site](NVDA_URL).
 Here, you can find additional documentation, as well as technical support and community resources.
 This site also provides information and resources concerning NVDA development.
+
+<!-- markdownlint-disable-file MD060 -->
