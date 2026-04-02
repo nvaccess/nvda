@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="it">
-  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/b241df75ccaff28461c4686c38feec86b69531ce/user_docs/en/changes.md">
+  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/e2605387cf8a0c55a13c6d8c2492791c2573cf20/user_docs/en/changes.md">
     <skeleton>
 # $(ID:4bf3ec03-2d43-474a-aef0-92b334e594ed)
 
@@ -327,8 +327,8 @@ $(ID:bf6f3e8e-b7e6-47de-832d-00fb9d2257d5)
 $(ID:1e8de2b6-74fc-4543-a0f6-606392a7400b)
 * $(ID:f36534af-91b5-4c57-8686-995d45569057)
 $(ID:f820cfb9-d67d-41ff-8cf3-4a4b9823f8ff)
-* $(ID:b6334f69-e1bc-4231-b439-768458367eef)
-$(ID:04a05f1b-4261-45b7-bf17-77dd839b5d41)
+* $(ID:8d3d20ee-3544-4e04-b1bd-eafe049993a3)
+$(ID:3436f6a1-8be4-44af-ab0d-83d1a868c286)
 * $(ID:f9346b23-f4d3-436d-b044-3d7d73b4e406)
 $(ID:b4cb00dd-a85c-451f-94d3-5b08e5e2b07f)
 * $(ID:6beb4ead-2bf1-491f-a70b-b8295492ee09)
@@ -8877,23 +8877,23 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>Use `winBindings.user32.dll` instead. (#18883)</target>
       </segment>
     </unit>
-    <unit id="b6334f69-e1bc-4231-b439-768458367eef">
+    <unit id="8d3d20ee-3544-4e04-b1bd-eafe049993a3">
       <notes>
         <note appliesTo="source">line: 327</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="initial">
-        <source>The `HardwareInput`, `Input`, `KeyBdInput` and `MouseInput` structures from `winUser` are deprecated.</source>
-        <target>The `HardwareInput`, `Input`, `KeyBdInput` and `MouseInput` structures from `winUser` are deprecated.</target>
+        <source>The `HardwareInput`, `Input`, `KeyBdInput`, `MouseInput` and `NMHdrStruct` structures from `winUser` are deprecated.</source>
+        <target>The `HardwareInput`, `Input`, `KeyBdInput`, `MouseInput` and `NMHdrStruct` structures from `winUser` are deprecated.</target>
       </segment>
     </unit>
-    <unit id="04a05f1b-4261-45b7-bf17-77dd839b5d41">
+    <unit id="3436f6a1-8be4-44af-ab0d-83d1a868c286">
       <notes>
         <note appliesTo="source">line: 328</note>
       </notes>
       <segment state="initial">
-        <source>Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT` and `MOUSEINPUT` from `winBindings.user32` instead. (#18883)</source>
-        <target>Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT` and `MOUSEINPUT` from `winBindings.user32` instead. (#18883)</target>
+        <source>Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT`, `MOUSEINPUT` and `NMHDR` from `winBindings.user32` instead. (#18883, #19808)</source>
+        <target>Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT`, `MOUSEINPUT` and `NMHDR` from `winBindings.user32` instead. (#18883, #19808)</target>
       </segment>
     </unit>
     <unit id="f9346b23-f4d3-436d-b044-3d7d73b4e406">

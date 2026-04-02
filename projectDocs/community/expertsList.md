@@ -9,7 +9,7 @@ For optimal responses, please avoid tagging NV Access employees on unrelated tic
 General enquiries should be directed to <info@nvaccess.org>.
 
 | GitHub | email | topics |
-|---|---|---|
+| --- | --- | --- |
 | @gerald-hartig | <gerald@nvaccess.org> | Controversial product decisions |
 | @seanbudd | <sean@nvaccess.org> | Issue triage, technical decisions |
 | @SaschaCowley | <sascha@nvaccess.org> | Issue triage, technical decisions |
@@ -19,7 +19,7 @@ General enquiries should be directed to <info@nvaccess.org>.
 ## Community
 
 | GitHub | email | topics |
-|---|---|---|
+| --- | --- | --- |
 | @codeofdusk | <codeofdusk@gmail.com> | Windows Terminal and console, Microsoft UI Automation |
 | @nvdaes | <nrm1977@gmail.com> | Add-on store, braille |
 | @michaelweghorn | <m.weghorn@posteo.de> | LibreOffice |

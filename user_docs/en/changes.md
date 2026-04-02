@@ -16,6 +16,9 @@
 * A new command, assigned to `NVDA+x`, has been introduced to repeat the last information spoken by NVDA; pressing it twice shows it in a browseable message. (#625, @CyrilleB79)
 * Added an unassigned command to toggle keyboard layout. (#19211, @CyrilleB79)
 * Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @hdzrvcc0X74)
+* Added touch based navigation of browse mode elements, allowing touch screen users to move between links, headings, form fields, lists, tables and other quick navigation elements. (#3424, @kefaslungu)
+  * Flick down or up to cycle through element types; flick right or left to navigate between elements of the selected type.
+  * The element types shown when cycling can be configured in the Browse Mode settings panel.
 * Added support for custom speech dictionaries. (#19558, #17468, @LeonarddeR)
   * Dictionaries can be provided in the `speechDicts` folder in an add-on package.
   * Dictionary metadata can be added to an optional `speechDictionaries` section in the add-on manifest.
@@ -25,6 +28,9 @@ Consult the speech dictionaries section in the User Guide for more details. (#19
 * When resetting the configuration to factory defaults from the NVDA menu, a dialog is now shown afterwards with an Undo button to restore the previous configuration.
 The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is intended for recovery scenarios. (#19575, @bramd)
 * Added an unassigned command to report the current status of the Screen Curtain. (#19759)
+* DotPad braille displays now support multi-button combination gestures. (#19565, @bramd)
+  * You can now press multiple buttons simultaneously to create custom gestures (e.g., `f1+panLeft`).
+* A new voice setting "Natural pause after punctuation" was added for OneCore voices, allowing users to turn punctuation pauses on or off. (#11876, @gexgd0419)
 
 ### Changes
 
@@ -35,6 +41,9 @@ The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is int
 * NVDA can now be configured to not play error sounds, even in test versions. (#13021, @CyrilleB79)
 * NVDA now supports the Orbit Reader 40 in its proprietary HID mode. (#19756, @trypsynth)
 * NVDA will start in focus mode by default when using WhatsApp 2.2584.3.0 or newer. (#19655, @josephsl)
+* Product version for File Explorer will reflect actual Windows version including correct build and revision numbers.
+This is more noticeable for Windows releases which are enablement packages on top of an earlier release such as Windows 11 2025 Update based on Windows 11 2024 Update. (#19802, @josephsl)
+* Math navigation commands now support input help, on-demand speech mode, and can be remapped. (#19871, @RyanMcCleary)
 
 ### Bug Fixes
 
@@ -42,23 +51,34 @@ The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is int
 * The "Toggles on and off if the screen layout is preserved while rendering the document content" item in the "Browse mode" category of the Input Gestures dialog now behaves correctly. (#18378)
 * In Microsoft Word with UIA enabled, page changes are now correctly announced when navigating table rows that span multiple pages. (#19386, @akj)
 * Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)
+* Braille should no longer stop following focus when moving around in the Microsoft Copilot application. (#19646, @Emil-18)
 * The `NVDA+k` command now correctly reports the destination of links containing formatted text, such as bold or italics. (#19428, @Cary-rowen)
 * Capital indicators are now correctly announced when selecting single characters. (#19505, @cary-rowen)
 * Configuration profile triggers now activate when the Add-on Store is open. (#19583, @bramd)
+* Decorative Unicode letters such as negative squared, negative circled, and regional indicator symbol characters are now normalized to their base Latin letters when Unicode normalization is enabled. (#19608, @bramd)
+* NVDA no longer crashes when the Add-on Store download directory cannot be cleaned up due to file permission errors. (#19202, @christopherpross)
 
 ### Changes for Developers
 
-* NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)
-
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* Updated components:
+  * Python from 3.13.11 to 3.13.12. (#19572, @dpy013)
+  * Ruff to 0.15.4. (#19548)
+  * uv to 0.10.6. (#19548)
+  * Requests to 2.33.0. (#19877)
+  * cryptography to 46.0.6. (#19877)
+* NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)
 * Subclasses of `browseMode.BrowseModeDocumentTreeInterceptor` that support screen layout being on and off should override the `_toggleScreenLayout` method, rather than implementing `script_toggleScreenLayout` directly. (#19487)
+* A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handleCOMErrors`. (#19646, @Emil-18)
+  * This method calls `_getUIACacheablePropertyValue`, and takes an extra argument (`onError`), that specify the value that should be returned if a `COMError` is raised.
 * Clarified NV Access's policy on API breaking changes in the Developer Guide. (#19599)
 * The `scons tests` build target has been removed, as it was misleadingly named.
 It only ran the translation string comment check, which is equivalent to `scons checkPot`.
 The `scons checkPot` target has also been replaced with `runcheckpot.bat`.
 Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`, `runsystemtests.bat`, `runlint.bat`. (#19606, #19676, @bramd)
 * Updated Python 3.13.11 to 3.13.12 (#19572, @dpy013)
+* Added a private `_asyncioEventLoop` module that provides an asyncio event loop running on a background thread for use by NVDA components. (#19816, @bramd)
 
 #### Deprecations
 
@@ -392,8 +412,8 @@ Use `NVDAHelper.localWin10.uwpOcr_Callback` instead. (#18858)
 Use `winAPI.winUser.constants.SystemMetrics.MAXIMUM_TOUCHES` instead. (#18883)
 * `screenBitmap.user32`, `winAPI.winUser.functions.user32`, `winGDI.user32`, and `winUser.user32` are deprecated.
 Use `winBindings.user32.dll` instead. (#18883)
-* The `HardwareInput`, `Input`, `KeyBdInput` and `MouseInput` structures from `winUser` are deprecated.
-Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT` and `MOUSEINPUT` from `winBindings.user32` instead. (#18883)
+* The `HardwareInput`, `Input`, `KeyBdInput`, `MouseInput` and `NMHdrStruct` structures from `winUser` are deprecated.
+Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT`, `MOUSEINPUT` and `NMHDR` from `winBindings.user32` instead. (#18883, #19808)
 * The following symbols have been moved from `winKernel` to `winBindings.kernel32`: `FILETIME`, `SYSTEMTIME` and `TIME_ZONE_INFORMATION`.
 Access to these symbols via `winKernel` is deprecated. (#18896)
 * The following symbols have been moved from `wincon` to `winBindings.kernel32`: `COORD`, `CONSOLE_SCREEN_BUFFER_INFO`, `CONSOLE_SELECTION_INFO`, `CHAR_INFO` and `PHANDLER_ROUTINE`.

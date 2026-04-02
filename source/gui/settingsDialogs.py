@@ -6,7 +6,7 @@
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
-# Neil Soiffer, Ryan McCleary.
+# Neil Soiffer, Ryan McCleary, Kefas Lungu.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -47,6 +47,7 @@ import requests
 import speech
 import speechDictHandler
 import systemUtils
+from utils.security import isRunningOnSecureDesktop
 import vision
 import vision.providerBase
 import vision.providerInfo
@@ -56,8 +57,6 @@ from wx.lib import scrolledpanel
 
 import screenCurtain._screenCurtain
 from utils import mmdevice
-from utils.debounce import debounceLimiter
-from utils.security import isRunningOnSecureDesktop
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
@@ -750,15 +749,12 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.container.Thaw()
 
 	def onCategoryChange(self, evt: wx.ListEvent):
+		currentCat = self.currentCategory
 		newIndex = evt.GetIndex()
-		if self._shouldDoCategoryChange(newIndex):
+		if not currentCat or newIndex != self.categoryClasses.index(currentCat.__class__):
 			self._doCategoryChange(newIndex)
 		else:
 			evt.Skip()
-
-	def _shouldDoCategoryChange(self, index: int) -> bool:
-		currentCat = self.currentCategory
-		return not currentCat or index != self.categoryClasses.index(currentCat.__class__)
 
 	def _validateAllPanels(self):
 		"""Check if all panels are valid, and can be saved
@@ -2666,6 +2662,23 @@ class BrowseModePanel(SettingsPanel):
 		)
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
 
+		# browseMode imports gui, which imports from settingsDialogs, so a top-level import
+		# would create a circular dependency. Keep this import lazy.
+		import browseMode
+
+		# Store element types for use in onSave (excludes the always-active "default" entry).
+		self._browseModeElements = list(browseMode.BrowseModeTreeInterceptor._browseTouchNavRegistry)
+		self._browseModeCheckListBox: nvdaControls.CustomCheckListBox = sHelper.addLabeledControl(
+			# Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
+			_("T&ouch navigation elements:"),
+			nvdaControls.CustomCheckListBox,
+			choices=[label for _itemType, label in self._browseModeElements],
+		)
+		self._browseModeCheckListBox.Enable(touchHandler.touchSupported())
+		enabledTypes = set(config.conf["virtualBuffers"]["browseModeTouchNavigationElements"])
+		for i, (itemType, _label) in enumerate(self._browseModeElements):
+			self._browseModeCheckListBox.Check(i, itemType in enabledTypes)
+
 	def onSave(self):
 		config.conf["virtualBuffers"]["maxLineLength"] = self.maxLengthEdit.GetValue()
 		config.conf["virtualBuffers"]["linesPerPage"] = self.pageLinesEdit.GetValue()
@@ -2685,6 +2698,11 @@ class BrowseModePanel(SettingsPanel):
 		config.conf["virtualBuffers"]["trapNonCommandGestures"] = (
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
+		config.conf["virtualBuffers"]["browseModeTouchNavigationElements"] = [
+			itemType
+			for i, (itemType, _label) in enumerate(self._browseModeElements)
+			if self._browseModeCheckListBox.IsChecked(i)
+		]
 
 
 class MathSettingsPanel(SettingsPanel):
@@ -2696,23 +2714,6 @@ class MathSettingsPanel(SettingsPanel):
 		# Translators: The description of the math settings panel.
 		"The following options control the presentation of mathematical content.",
 	)
-
-	def _getSpeechStyleDisplayString(self, configValue: str) -> str:
-		"""Helper function to get the display string for a speech style config value.
-
-		:param configValue: The config value to find the display string for
-		:return: The display string to show in the UI
-		"""
-		from mathPres.MathCAT.preferences import SpeechStyleOption
-
-		# Check if it's a known enum value by comparing directly
-		knownStyleValues = [style.value for style in SpeechStyleOption]
-		if configValue in knownStyleValues:
-			enumOption = SpeechStyleOption(configValue)
-			return enumOption.displayString
-		else:
-			# Not a known enum, so the config value IS the display string
-			return configValue
 
 	def _getEnumIndexFromConfigValue(
 		self,
@@ -2773,10 +2774,10 @@ class MathSettingsPanel(SettingsPanel):
 			CopyAsOption,
 			DecimalSeparatorOption,
 			ImpairmentOption,
+			MathCATUserPreferences,
 			NavModeOption,
 			NavVerbosityOption,
 			VerbosityOption,
-			getSpeechStyleChoicesWithTranslations,
 		)
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -2803,14 +2804,22 @@ class MathSettingsPanel(SettingsPanel):
 
 		# Translators: MathCAT language option
 		languageText = pgettext("math", "Language:")
-		self.languageOptions, self.languageCodes = localization.getLanguages()
+		self.languageOptions = localization.getLanguages()
 		self.languageList = speechGroup.addLabeledControl(
 			languageText,
 			wx.Choice,
-			choices=self.languageOptions,
+			choices=[lang.description for lang in self.languageOptions],
 		)
 		self.bindHelpEvent("MathSpeechLanguage", self.languageList)
-		languageIndex = self.languageCodes.index(config.conf["math"]["speech"]["language"])
+		self.languageList.Bind(wx.EVT_CHOICE, self.onLanguageChange)
+		mathLang = config.conf["math"]["speech"]["language"]
+		try:
+			languageIndex = next(
+				idxLang for idxLang, langInfo in enumerate(self.languageOptions) if langInfo.code == mathLang
+			)
+		except StopIteration:
+			log.debugWarning(f'Language "{mathLang}" not supported; restoring to "Auto".')
+			languageIndex = 0
 		self.languageList.SetSelection(languageIndex)
 
 		# Translators: MathCAT decimal separator option.
@@ -2830,19 +2839,17 @@ class MathSettingsPanel(SettingsPanel):
 
 		# Translators: Select a speech style.
 		speechStyleText = pgettext("math", "Speech style:")
-		self.speechStyleOptions = getSpeechStyleChoicesWithTranslations(
-			config.conf["math"]["speech"]["language"],
-		)
 		self.speechStyleList = speechGroup.addLabeledControl(
 			speechStyleText,
 			wx.Choice,
-			choices=self.speechStyleOptions,
+			choices=localization.getSpeechStyles(mathLang),
 		)
 		self.bindHelpEvent("MathSpeechStyle", self.speechStyleList)
-		speechStyleDisplayString = self._getSpeechStyleDisplayString(
-			config.conf["math"]["speech"]["speechStyle"],
-		)
-		self.speechStyleList.SetStringSelection(speechStyleDisplayString)
+		speechStyle = MathCATUserPreferences.getConfigForSpeechStyle(mathLang)
+		if speechStyle:
+			self.speechStyleList.SetStringSelection(speechStyle)
+		else:
+			self.speechStyleList.SetSelection(0)
 
 		# Translators: MathCAT's verbosity setting
 		speechAmountText = pgettext("math", "Speech verbosity:")
@@ -3051,7 +3058,6 @@ class MathSettingsPanel(SettingsPanel):
 			NavVerbosityOption,
 			PauseFactor,
 			VerbosityOption,
-			getSpeechStyleConfigValue,
 		)
 
 		mathConf = config.conf["math"]
@@ -3059,14 +3065,15 @@ class MathSettingsPanel(SettingsPanel):
 			ImpairmentOption,
 			self.impairmentList.GetSelection(),
 		)
-		mathConf["speech"]["language"] = self.languageCodes[self.languageList.GetSelection()]
+		mathLang = mathConf["speech"]["language"] = self.languageOptions[
+			self.languageList.GetSelection()
+		].code
 		mathConf["other"]["decimalSeparator"] = self._getEnumValueFromSelection(
 			DecimalSeparatorOption,
 			self.decimalSeparatorList.GetSelection(),
 		)
-		mathConf["speech"]["speechStyle"] = getSpeechStyleConfigValue(
-			self.speechStyleList.GetStringSelection(),
-		)
+		# Ensure the per-language speech configuration exists before setting the speech style.
+		MathCATUserPreferences.updateConfigForSpeechStyle(mathLang, self.speechStyleList.GetStringSelection())
 		mathConf["speech"]["verbosity"] = self._getEnumValueFromSelection(
 			VerbosityOption,
 			self.speechAmountList.GetSelection(),
@@ -3119,6 +3126,22 @@ class MathSettingsPanel(SettingsPanel):
 		mathConf["other"]["useWordNativeMath"] = self.useWordNativeMathCheckBox.GetValue()
 		mcPrefs = MathCATUserPreferences.fromNVDAConfig()
 		mcPrefs.apply()
+
+	def onLanguageChange(self, event: wx.CommandEvent) -> None:
+		from mathPres.MathCAT import localization
+
+		selectedLanguage = self.languageOptions[self.languageList.GetSelection()]
+		speechStyles = localization.getSpeechStyles(selectedLanguage.code)
+		self.speechStyleList.SetItems(speechStyles)
+		mathLang = config.conf["math"]["speech"]["language"]
+		if selectedLanguage.code == mathLang:
+			currentSpeechStyle = config.conf["math"]["speech"].get(mathLang, {}).get("speechStyle", "")
+			if currentSpeechStyle in speechStyles:
+				self.speechStyleList.SetStringSelection(currentSpeechStyle)
+			else:
+				self.speechStyleList.SetSelection(0)
+		else:
+			self.speechStyleList.SetSelection(0)
 
 
 class DocumentFormattingPanel(SettingsPanel):
@@ -6118,6 +6141,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 				label=_("Make screen black (immediate effect)"),
 			),
 		)
+		self._screenCurtainCheckboxChanged: bool = False
 		isScreenCurtainAvailable = screenCurtain.screenCurtain is not None
 		if isScreenCurtainAvailable:
 			self._cachedScreenCurtainConfigEnabled = screenCurtain.screenCurtain.settings["enabled"]
@@ -6202,8 +6226,11 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		super().onDiscard()
 
 	def onSave(self):
-		# We intentionally don't save whether the screen curtain is enabled here,
+		# We only save whether the screen curtain is enabled here if the user has toggled the checkbox,
 		# so we don't unintentionally persist a temporary screen curtain to config.
+		if self._screenCurtainCheckboxChanged:
+			# We don't need to change the state of the screen curtain, as that is done when the checkbox is checked/unchecked.
+			self._screenCurtainConfig["enabled"] = self._screenCurtainEnabledCheckbox.IsChecked()
 		self._screenCurtainConfig["warnOnLoad"] = self._screenCurtainWarnOnLoadCheckbox.IsChecked()
 		self._screenCurtainConfig["playToggleSounds"] = (
 			self._screenCurtainPlayToggleSoundsCheckbox.IsChecked()
@@ -6254,7 +6281,8 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 				self._screenCurtainEnabledCheckbox.SetValue(False)
 			else:
 				try:
-					screenCurtain.screenCurtain.enable()
+					screenCurtain.screenCurtain.enable(persist=False)
+					self._screenCurtainCheckboxChanged = True
 				except Exception:
 					log.error("Error enabling Screen Curtain.", exc_info=True)
 					ui.message(
@@ -6263,7 +6291,8 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 					)
 					self._screenCurtainEnabledCheckbox.SetValue(False)
 		elif not shouldBeEnabled and currentlyEnabled:
-			screenCurtain.screenCurtain.disable()
+			screenCurtain.screenCurtain.disable(persist=False)
+			self._screenCurtainCheckboxChanged = True
 
 	def _confirmEnableScreenCurtainWithUser(self) -> bool:
 		"""Confirm with the user before enabling Screen Curtain, if configured to do so.
@@ -6293,7 +6322,6 @@ NvdaSettingsDialogWindowHandle = None
 class NVDASettingsDialog(MultiCategorySettingsDialog):
 	# Translators: This is the label for the NVDA settings dialog.
 	title = _("NVDA Settings")
-	_pendingCategoryIndex: int | None = None
 	categoryClasses = [
 		GeneralSettingsPanel,
 		SpeechSettingsPanel,
@@ -6310,9 +6338,14 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
 		MagnifierPanel,
-		MathSettingsPanel,
 		RemoteSettingsPanel,
 	]
+	# #19634: the desktop heap on the secure desktop is quite restrictive.
+	# The math settings panel contains many controls,
+	# none of which are particularly relevant when running on the secure desktop.
+	# Exclude this panel to try and avoid exhausting the desktop heap.
+	if not isRunningOnSecureDesktop():
+		categoryClasses.append(MathSettingsPanel)
 	# In secure mode, add-on update is disabled, so AddonStorePanel should not appear since it only contains
 	# add-on update related controls.
 	if not globalVars.appArgs.secure:
@@ -6358,36 +6391,13 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			configProfile=NvdaSettingsDialogActiveConfigProfile,
 		)
 
-	def _doCategoryChangeForIndex(self, newIndex: int) -> bool:
-		if self._shouldDoCategoryChange(newIndex):
-			self._doCategoryChange(newIndex)
-			return True
-		return False
-
-	@debounceLimiter(
-		cooldownTimeMs=500,
-		delayTimeMs=500,
-	)
-	def _onCategoryChangeDebounced(self) -> None:
-		if self._pendingCategoryIndex is not None:
-			if self._doCategoryChangeForIndex(self._pendingCategoryIndex):
-				self._doOnCategoryChange()
-			self._pendingCategoryIndex = None
-
 	def onCategoryChange(self, evt: wx.ListEvent):
-		if isRunningOnSecureDesktop():
-			# Secure desktop can cause issues with rapidly changing categories,
-			# so we debounce category changes to avoid this. (#19634)
-			self._pendingCategoryIndex = evt.GetIndex()
-			self._onCategoryChangeDebounced()
-			return
 		super().onCategoryChange(evt)
 		if evt.Skipped:
 			return
 		self._doOnCategoryChange()
 
 	def Destroy(self):
-		self._pendingCategoryIndex = None
 		global NvdaSettingsDialogActiveConfigProfile, NvdaSettingsDialogWindowHandle
 		NvdaSettingsDialogActiveConfigProfile = None
 		NvdaSettingsDialogWindowHandle = None

@@ -611,13 +611,13 @@ Therefore, gestures such as 2-finger flick up and 4-finger flick left are all po
 #### Touch Modes {#TouchModes}
 
 As there are many more NVDA commands than possible touch gestures, NVDA has several touch modes you can switch between which make certain subsets of commands available.
-The two modes are text mode and object mode.
+The three modes are text mode, object mode and browse mode.
 Certain NVDA commands listed in this document may have a touch mode listed in brackets after the touch gesture.
 For example, flick up (text mode) means that the command will be performed if you flick up, but only while in text mode.
 If the command does not have a mode listed, it will work in any mode.
 
 <!-- KC:beginInclude -->
-To toggle touch modes, perform a 3-finger tap.
+To switch between touch modes, perform a 3-finger tap.
 <!-- KC:endInclude -->
 
 #### Touch keyboard {#TouchKeyboard}
@@ -1062,6 +1062,38 @@ If you want to use these while still being able to use your cursor keys to read 
 To toggle single letter navigation on and off for the current document, press NVDA+shift+space.
 <!-- KC:endInclude -->
 
+#### Touch Navigation in Browse Mode {#BrowseModeTouch}
+
+When using a touch enabled device, NVDA provides an additional touch navigation mode for browsing content in browse mode.
+
+When browse mode is active in supported documents such as web pages or Word documents, NVDA can expose a browse touch mode.
+This mode allows users to navigate structural elements of a document using touch gestures, similar to browse mode navigation with the keyboard.
+
+In browse touch mode, flick gestures are used to move between common document elements such as links, buttons, headings, form fields, landmarks, and other document structures.
+
+This feature is intended to provide touch users with efficient, structured navigation that mirrors existing browse mode functionality.
+
+##### Touch gestures in browse mode
+
+<!-- KC:beginInclude -->
+
+| Name | Touch | Description |
+|---|---|---|
+| Select next element type | flick down | Switches to the next browse mode navigation element type |
+| Select previous element type | flick up | Switches to the previous browse mode navigation element type |
+| Move to next element | flick right | Moves to the next browse mode element of the selected type |
+| Move to previous element | flick left | Moves to the previous browse mode element of the selected type |
+
+<!-- KC:endInclude -->
+
+When the "default" element type is selected, flicking left or right moves through all elements in the document.
+When any other element type is selected, flicking left or right moves to the previous or next element of that type.
+Flicking up or down cycles through the available element types.
+
+The selected element type is remembered separately for each document while it remains open.
+Note that browse touch mode gestures only take effect when browse mode is active in the document.
+If focus moves outside the document (for example, to the browser address bar or the taskbar), browse touch mode gestures will not navigate the document until focus returns to it in browse mode.
+
 #### Text paragraph navigation command {#TextNavigationCommand}
 
 You can jump to the next or previous text paragraph by pressing `p` or `shift+p`.
@@ -1188,7 +1220,7 @@ However, for scenarios where you wish to copy an entire table or paragraph of ri
 ## Reading Mathematical Content {#ReadingMath}
 
 NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille.
-NVDA uses [MathCAT](https://nsoiffer.github.io/MathCAT/) for reading mathematical content.
+NVDA uses [MathCAT](https://daisy.github.io/MathCAT/) for reading mathematical content.
 
 ### Supported math content {#SupportedMathContent}
 
@@ -2092,6 +2124,12 @@ This option is a slider which goes from 0 to 100 - 0 being the lowest volume and
 
 This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with.
 
+##### Natural pause after punctuation {#SpeechSettingPunctuationSilence}
+
+Disabling this option will remove the pauses after punctuation marks.
+This option is enabled by default.
+This option only exists for Windows OneCore voices, and is supported on Windows 10 version 1803 or later.
+
 ##### Use modern audio output system (WASAPI) {#SpeechSettingsUseWasapi}
 
 This option enables audio output via the Windows Audio Session API (WASAPI).
@@ -2171,6 +2209,11 @@ This aspect of normalization also aids in reading equations in the Microsoft Wor
 1. Decomposition of some ligatures, Including "ĳ" (ligature ij) to their two letter form ("ij").
 
 1. Stable ordering of modifiers in composite characters, for example in ancient Hebrew.
+
+1. Normalization of decorative letter variants that the standard NFKC algorithm does not decompose.
+Certain Unicode characters, such as negative circled Latin capital letters (🅐–🅩) and negative squared Latin capital letters (🅲–🅩), are treated as autonomous symbols by the Unicode standard and have no compatibility decomposition.
+NVDA extends NFKC by mapping these characters to their plain Latin letter equivalents (A–Z).
+Note that a small number of negative squared letters that have emoji semantics (🅰, 🅱, 🅾, 🅿) are excluded from this mapping to preserve their distinct meaning.
 
 To toggle Unicode normalization from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
@@ -3304,6 +3347,15 @@ Enabled by default, this option allows you to choose if gestures (such as key pr
 As an example, if enabled and the letter j was pressed, it would be trapped from reaching the document, even though it is not a quick navigation command nor is it likely to be a command in the application itself.
 In this case NVDA will tell Windows to play a default sound whenever a key which gets trapped is pressed.
 
+##### Browse mode touch navigation elements {#BrowseModeSettingsBrowseModeNavigationElements}
+
+This list allows you to choose which element types are available when cycling through elements in browse touch mode.
+Use the checkboxes to enable or disable individual element types.
+Only the checked element types will appear when flicking up or down to cycle through browse mode navigation elements.
+This setting only affects touch navigation and has no effect on keyboard browse mode navigation.
+
+Available element types are those available from [single letter navigation](#SingleLetterNavigation).
+
 #### Document Formatting {#DocumentFormattingSettings}
 
 <!-- KC:setting -->
@@ -3462,20 +3514,22 @@ If speech rules for the main language cannot be found, English ("en") is used.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | Any known language code and sub-code, e.g. "en-uk". |
-| Default | en |
+| Options | Automatic, English, English (en-GB), Chinese (Traditional) (zh-TW), Finnish, German, Indonesian, Norwegian Bokmål, Spanish, Swedish, Vietnamese |
+| Default | Automatic (the language of the current voice if supported, or fallback to English) |
 
 ###### Speech Style {MathSpeechStyle}
 
-Different styles can be used to speak mathematical content:
+Different styles can be used to speak mathematical content.
+Each [math speech language](#MathSpeechLanguage) has different speech styles available.
+
+For English and most languages, the following styles are available:
 
 * ClearSpeak was developed by the Educational Testing Service for use on university-admission and other high-stakes tests in the United States.
-Refer to the [ClearSpeak specification details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
+Refer to the [ClearSpeak specification details in this Word document](https://daisy.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
 * SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").
 These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
 * LiteralSpeak tells MathCAT to speak math expressions almost exactly as written, without interpreting the symbols or meaning.
 It prioritizes literal reading (character-by-character or symbol-by-symbol), rather than mathematical meaning.
-* Other speech styles may exist designed for individual languages.
 
 Examples of each type of speech:
 
@@ -3486,8 +3540,8 @@ Examples of each type of speech:
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | ClearSpeak, SimpleSpeak, LiteralSpeak, and more options depending on your language |
-| Default | ClearSpeak |
+| Options | ClearSpeak, SimpleSpeak, LiteralSpeak, or other options depending on your language |
+| Default | Depends on the language |
 
 ###### Speech verbosity {#MathSpeechVerbosity}
 
@@ -3835,10 +3889,12 @@ Press this button to test the mirror URL you have entered.
 You must be connected to the internet for the test to succeed.
 It is recommended that you always test the URL before saving it.
 
-#### Copy Add-ons to System-wide Configuration Dialog {#CopyAddonsToSystemProfileDialog}
+#### Copy Settings to System-wide Configuration Dialog {#CopyAddonsToSystemProfileDialog}
 
-This dialog allows you to choose which of your [add-ons](#AddonsManager) to [copy to NVDA's system-wide configuration](#GeneralSettingsCopySettings), which is used during sign-in and on [secure screens](#SecureScreens).
-By default, NVDA will not copy any of your add-ons to the system-wide configuration.
+This dialog appears if you choose to [copy your settings to NVDA's system-wide configuration](#GeneralSettingsCopySettings) and your NVDA configuration or the system-wide NVDA configuration contains [add-ons](#AddonsManager).
+It allows you to choose which of your add-ons to copy to the system-wide configuration, which is used during sign-in and on [secure screens](#SecureScreens).
+It also shows which add-ons are already present in the system-wide configuration.
+By default, only add-ons that are already present in the system-wide configuration will be included.
 
 Copying add-ons to the system-wide configuration is a serious security risk.
 NVDA uses this configuration when running on secure screens, including the sign-in and User Account Control (UAC) screens.
@@ -3846,11 +3902,23 @@ When running on secure screens, NVDA runs as the system user, which has privileg
 This means that many of the usual security and privacy features of Windows, like User Account Control (UAC), do not apply.
 Allowing add-ons to run in this environment grants them unrestricted access to your entire system.
 
+The list of add-ons shows all add-ons enabled in the currently running NVDA configuration and/or present in the system-wide NVDA configuration.
+The version of the add-on installed in the currently running configuration is shown in the "User version" column.
+The version installed in the system-wide configuration is shown in the "System-wide version" column.
+If the add-on is not present in the currently running or system-wide configuration, "Not installed" is shown in the appropriate column.
+
 To copy one or more add-ons to the system-wide configuration, check them in the list of add-ons.
 You are strongly recommended to leave all add-ons that you do not require to access secure screens unchecked.
 
+To get more information about an add-on, select the add-on in the list of add-ons and press the "About add-on..." button.
+The details shown will be for the version in the currently running configuration, unless the add-on is not installed in the currently running configuration, in which case the details of the version installed in the system-wide configuration will be shown.
+
 Please note that you may only copy currently enabled add-ons to the system-wide configuration.
 Add-ons that are "pending restart" cannot be copied.
+
+Add-ons that are currently installed in the system-wide configuration, but are not present in the running NVDA configuration will be removed.
+These items cannot be checked.
+They also begin with "[remove]" for easy identification.
 
 #### Advanced Settings {#AdvancedSettings}
 
@@ -6101,7 +6169,9 @@ The A300 model has a tactile graphics area of 120 by 80 dots, which can fit 8 li
 
 You can configure whether NVDA displays braille on the dedicated braille display line or on the tactile graphics area via the Braille Destination option in NVDA's Braille settings for this driver.
 
-Panning keys are supported, but due to limited buttons on the device, other commands and routing capabilities are currently not available.
+The Dot Pad has left and right panning keys and four function keys (f1 through f4).
+Multiple buttons can be pressed simultaneously to create combination gestures (e.g., `f1+panLeft`), which can be assigned via the Input Gestures dialog.
+Apart from panning, no other commands are assigned by default.
 
 The Dot Pad driver supports automatic detection of USB-connected devices.
 However, automatic detection is disabled by default due to the device using generic USB identifiers that could conflict with other devices.
@@ -6116,8 +6186,8 @@ Make sure to lift your hand entirely off the device when navigating with NVDA, a
 
 | Name |Key|
 |---|---|
-|Scroll braille display back | `pan_left` |
-|Scroll braille display forward | `pan_right` |
+|Scroll braille display back | `panLeft` |
+|Scroll braille display forward | `panRight` |
 
 <!-- KC:endInclude -->
 
@@ -6264,3 +6334,5 @@ The following values can be set under this registry key:
 If you require further information or assistance regarding NVDA, please visit the [NVDA web site](NVDA_URL).
 Here, you can find additional documentation, as well as technical support and community resources.
 This site also provides information and resources concerning NVDA development.
+
+<!-- markdownlint-disable-file MD060 -->

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
-# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen
+# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen, Kefas Lungu
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -215,6 +215,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enableOnPageLoad = boolean(default=true)
 	loadChromiumVBufOnBusyState = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	textParagraphRegex = string(default="{configDefaults.DEFAULT_TEXT_PARAGRAPH_REGEX}")
+	# Element types available for cycling in browse touch mode.
+	browseModeTouchNavigationElements = string_list(default=list("heading", "link", "formField", "list", "table"))
 
 [touch]
 	enabled = boolean(default=true)
@@ -387,8 +389,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		impairment = option("LearningDisability", "Blindness", "LowVision", default="Blindness")
 		# any known language code and sub-code -- could be en-uk, etc
 		language = string(default="Auto")
-		# Any known speech style (falls back to ClearSpeak)
-		speechStyle = string(default="ClearSpeak")
 		verbosity = option("Terse", "Medium", "Verbose", default="Medium")
 		# Change from text speech rate (%)
 		mathRate = integer(default=100, min=10, max=100)
@@ -461,6 +461,11 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 			combinationPermutation = string(default="Auto")
 			# Valid values: Bar, Conjugate, Mean, Auto
 			bar = string(default="Auto")
+
+		# Set a different speechStyle depending on the language
+		[[__many__]]
+			# Any known speech style for the language
+			speechStyle = string(default="")
 
 	[[navigation]]
 		navMode = option("Enhanced", "Simple", "Character", default="Enhanced")

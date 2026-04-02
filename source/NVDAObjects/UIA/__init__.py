@@ -15,6 +15,7 @@ from typing import (
 	Dict,
 	Tuple,
 	Callable,
+	Any,
 )
 import array
 from ctypes.wintypes import POINT
@@ -1146,6 +1147,23 @@ class UIA(Window):
 		"""
 		return {}
 
+	def _getUIACacheablePropertyValue_handlesCOMErrors(
+		self,
+		id: int,
+		ignoreDefault: bool = False,
+		onError: Any = False,
+	) -> Any:
+		"""
+		Identical to _getUIACacheablePropertyValue, except that it will return onError if a COM error accurs
+		:onError: (default = False)
+		"""
+		res = None
+		try:
+			res = self._getUIACacheablePropertyValue(id, ignoreDefault=ignoreDefault)
+		except COMError:
+			res = onError
+		return res
+
 	def _getUIACacheablePropertyValue(self, ID, ignoreDefault=False):
 		"""
 		Fetches the value for a UI Automation property from an element cache available in this core cycle. If not cached then a new value will be fetched.
@@ -1907,72 +1925,89 @@ class UIA(Window):
 	def _get_states(self):
 		states = set()
 		self._prefetchUIACacheForPropertyIDs(self._UIAStatesPropertyIDs)
-		try:
-			hasKeyboardFocus = self._getUIACacheablePropertyValue(UIAHandler.UIA_HasKeyboardFocusPropertyId)
-		except COMError:
-			hasKeyboardFocus = False
+		hasKeyboardFocus = self._getUIACacheablePropertyValue_handlesCOMErrors(
+			UIAHandler.UIA_HasKeyboardFocusPropertyId,
+		)
 		if hasKeyboardFocus:
 			states.add(controlTypes.State.FOCUSED)
-		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsKeyboardFocusablePropertyId):
+		isFocusable = self._getUIACacheablePropertyValue_handlesCOMErrors(
+			UIAHandler.UIA_IsKeyboardFocusablePropertyId,
+		)
+		if isFocusable:
 			states.add(controlTypes.State.FOCUSABLE)
-		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsPasswordPropertyId):
+		isPassword = self._getUIACacheablePropertyValue_handlesCOMErrors(UIAHandler.UIA_IsPasswordPropertyId)
+		if isPassword:
 			states.add(controlTypes.State.PROTECTED)
 		# Don't fetch the role unless we must, but never fetch it more than once.
 		role = None
-		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId):
+		isSelectionItemPatternAvailable = self._getUIACacheablePropertyValue_handlesCOMErrors(
+			UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId,
+		)
+		if isSelectionItemPatternAvailable:
 			role = self.role
 			states.add(
 				controlTypes.State.CHECKABLE
 				if role == controlTypes.Role.RADIOBUTTON
 				else controlTypes.State.SELECTABLE,
 			)
-			if self._getUIACacheablePropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId):
+			isSelected = self._getUIACacheablePropertyValue_handlesCOMErrors(
+				UIAHandler.UIA_SelectionItemIsSelectedPropertyId,
+			)
+			if isSelected:
 				states.add(
 					controlTypes.State.CHECKED
 					if role == controlTypes.Role.RADIOBUTTON
 					else controlTypes.State.SELECTED,
 				)
-		if self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_SelectionCanSelectMultiplePropertyId):
-			states.add(controlTypes.State.MULTISELECTABLE)
-		if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsEnabledPropertyId, True):
+
+		disabled = not self._getUIACacheablePropertyValue_handlesCOMErrors(
+			UIAHandler.UIA_IsEnabledPropertyId,
+			True,
+		)
+		if disabled:
 			states.add(controlTypes.State.UNAVAILABLE)
-		try:
-			isOffScreen = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsOffscreenPropertyId)
-		except COMError:
-			isOffScreen = False
+
+		canSelectMultiple = self._getUIACacheablePropertyValue_handlesCOMErrors(
+			UIAHandler.UIA.UIA_SelectionCanSelectMultiplePropertyId,
+		)
+		if canSelectMultiple:
+			states.add(controlTypes.State.MULTISELECTABLE)
+
+		isOffScreen = self._getUIACacheablePropertyValue_handlesCOMErrors(
+			UIAHandler.UIA_IsOffscreenPropertyId,
+		)
 		if isOffScreen:
 			states.add(controlTypes.State.OFFSCREEN)
-		try:
-			isDataValid = self._getUIACacheablePropertyValue(
-				UIAHandler.UIA_IsDataValidForFormPropertyId,
-				True,
-			)
-		except COMError:
-			isDataValid = UIAHandler.handler.reservedNotSupportedValue
+		isDataValid = self._getUIACacheablePropertyValue_handlesCOMErrors(
+			UIAHandler.UIA_IsDataValidForFormPropertyId,
+			True,
+		)
 		if not isDataValid:
 			states.add(controlTypes.State.INVALID_ENTRY)
-		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId):
+		required = self._getUIACacheablePropertyValue_handlesCOMErrors(
+			UIAHandler.UIA_IsRequiredForFormPropertyId,
+		)
+		if required:
 			states.add(controlTypes.State.REQUIRED)
 
 		if self._getReadOnlyState():
 			states.add(controlTypes.State.READONLY)
 
-		try:
-			s = self._getUIACacheablePropertyValue(
-				UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,
-				True,
-			)
-		except COMError:
-			s = UIAHandler.handler.reservedNotSupportedValue
+		s = self._getUIACacheablePropertyValue_handlesCOMErrors(
+			UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,
+			True,
+			onError=UIAHandler.handler.reservedNotSupportedValue,
+		)
 		if s != UIAHandler.handler.reservedNotSupportedValue:
 			if s == UIAHandler.ExpandCollapseState_Collapsed:
 				states.add(controlTypes.State.COLLAPSED)
 			elif s == UIAHandler.ExpandCollapseState_Expanded:
 				states.add(controlTypes.State.EXPANDED)
-		try:
-			s = self._getUIACacheablePropertyValue(UIAHandler.UIA_ToggleToggleStatePropertyId, True)
-		except COMError:
-			s = UIAHandler.handler.reservedNotSupportedValue
+		s = self._getUIACacheablePropertyValue_handlesCOMErrors(
+			UIAHandler.UIA_ToggleToggleStatePropertyId,
+			True,
+			onError=UIAHandler.handler.reservedNotSupportedValue,
+		)
 		if s != UIAHandler.handler.reservedNotSupportedValue:
 			if not role:
 				role = self.role
@@ -1988,19 +2023,19 @@ class UIA(Window):
 				states.add(controlTypes.State.CHECKABLE)
 				if s == UIAHandler.ToggleState_On:
 					states.add(controlTypes.State.CHECKED)
-		try:
-			annotationTypes = self._getUIACacheablePropertyValue(UIAHandler.UIA_AnnotationTypesPropertyId)
-		except COMError:
-			# annotationTypes cannot be fetched on older Operating Systems such as Windows 7.
-			annotationTypes = None
+		# annotationTypes cannot be fetched on older Operating Systems such as Windows 7.
+		annotationTypes = self._getUIACacheablePropertyValue_handlesCOMErrors(
+			UIAHandler.UIA_AnnotationTypesPropertyId,
+			onError=None,
+		)
+
 		if annotationTypes:
 			if UIAHandler.AnnotationType_Comment in annotationTypes:
 				states.add(controlTypes.State.HASCOMMENT)
 		# Drag "is grabbed" property was added in Windows 8.
-		try:
-			isGrabbed = self._getUIACacheablePropertyValue(UIAHandler.UIA_DragIsGrabbedPropertyId)
-		except COMError:
-			isGrabbed = False
+		isGrabbed = self._getUIACacheablePropertyValue_handlesCOMErrors(
+			UIAHandler.UIA_DragIsGrabbedPropertyId,
+		)
 		if isGrabbed:
 			states.add(controlTypes.State.DRAGGING)
 		return states
