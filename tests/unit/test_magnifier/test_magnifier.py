@@ -129,7 +129,11 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._isActive = True
 		self.magnifier._updateMagnifier()
 
-		self.magnifier._focusManager.getCurrentFocusCoordinates.assert_called_once()
+		# getCurrentFocusCoordinates is called twice: once in _managePanning and once to update _currentCoordinates
+		self.assertEqual(
+			self.magnifier._focusManager.getCurrentFocusCoordinates.call_count,
+			2,
+		)
 		self.magnifier._doUpdate.assert_called_once()
 		self.magnifier._startTimer.assert_called_once_with(
 			self.magnifier._updateMagnifier,
@@ -336,6 +340,38 @@ class TestMagnifier(_TestMagnifier):
 			axis="y",
 			edgeAttr="bottom",
 		)
+
+	def testManagePanning(self):
+		"""Manual panning ends when focus coordinates change, and _lastFocusCoordinates is always kept up to date."""
+		focusA = Coordinates(100, 200)
+		focusB = Coordinates(300, 400)
+
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=focusA)
+
+		# When not panning, _lastFocusCoordinates is updated every cycle
+		self.magnifier._isManualPanning = False
+		self.magnifier._managePanning()
+		self.assertFalse(self.magnifier._isManualPanning)
+		self.assertEqual(self.magnifier._lastFocusCoordinates, focusA)
+
+		# When panning starts and focus hasn't changed, panning continues
+		self.magnifier._isManualPanning = True
+		self.magnifier._managePanning()
+		self.assertTrue(self.magnifier._isManualPanning)
+		self.assertEqual(self.magnifier._lastFocusCoordinates, focusA)
+
+		# When focus changes while panning, manual panning ends
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=focusB)
+		self.magnifier._managePanning()
+		self.assertFalse(self.magnifier._isManualPanning)
+		self.assertEqual(self.magnifier._lastFocusCoordinates, focusB)
+
+	def testKeepMouseCentered(self):
+		"""Base _keepMouseCentered moves cursor to _currentCoordinates."""
+		self.magnifier._currentCoordinates = Coordinates(640, 360)
+		with patch("_magnifier.magnifier.winUser.setCursorPos") as mockSetCursor:
+			self.magnifier._keepMouseCentered()
+			mockSetCursor.assert_called_once_with(640, 360)
 
 	def testStartTimer(self):
 		"""Starting the timer."""
