@@ -232,7 +232,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 		format.wBitsPerSample = bitsPerSample
 		format.nBlockAlign: int = bitsPerSample // 8 * channels
 		format.nAvgBytesPerSec = samplesPerSec * format.nBlockAlign
-		self._lastActiveTime: typing.Optional[float] = None
+		self._lastActiveTime: float | None = None
 		self._audioDucker = None
 		if wantDucking:
 			import audioDucking
