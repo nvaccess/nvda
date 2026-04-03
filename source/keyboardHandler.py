@@ -660,7 +660,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		"""Returns the name of this gesture for input help mode.
 
 		For keyboard gestures that produce printable characters,
-		the character will be included in the list,
+		the key name will be included first, followed by the character,
 		unless it contains NVDA modifier.
 		"""
 		displayName = self.displayName
@@ -680,7 +680,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if displayName.lower() == char.lower():
 			return [displayName]
 
-		return [char, displayName]
+		return [displayName, char]
 
 	def _get_identifiers(self):
 		keyName = "+".join(self._keyNamesInDisplayOrder)

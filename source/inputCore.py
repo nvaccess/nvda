@@ -684,9 +684,14 @@ class InputManager(baseObject.AutoPropertyObject):
 		# Punctuation must be spoken for the gesture names (the first chunk(s))
 		# so that punctuation keys are spoken.
 		nameCount = len(gesture._nameForInputHelp)
+		producedCharacter = getattr(gesture, "character", None)
 		for i in range(nameCount):
+			text = helpItems[i]
+			if i > 0 and text == producedCharacter:
+				speech.speakSpelling(text)
+				continue
 			speech.speakText(
-				helpItems[i],
+				text,
 				reason=controlTypes.OutputReason.MESSAGE,
 				symbolLevel=characterProcessing.SymbolLevel.ALL,
 			)

@@ -17,7 +17,7 @@
 * Added an unassigned command to toggle keyboard layout. (#19211, @CyrilleB79)
 * Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @hdzrvcc0X74)
 * Input help mode has been improved: (#17629, @Cary-rowen, @Emil-18)
-  * When a key combination would produce a character in normal input mode, the character is reported first, followed by the key combination.
+  * When a key combination would produce a character in normal input mode, the key combination is reported first, followed by the character.
   * If the key combination corresponds to an NVDA command, the behavior remains the same as before, i.e. the description of the command is reported.
 * Added touch based navigation of browse mode elements, allowing touch screen users to move between links, headings, form fields, lists, tables and other quick navigation elements. (#3424, @kefaslungu)
   * Flick down or up to cycle through element types; flick right or left to navigate between elements of the selected type.
