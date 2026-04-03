@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2026 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from enum import Enum
 
 from locale import strxfrm
+from datetime import datetime
 from typing import (
 	Any,
 	FrozenSet,
@@ -325,7 +326,10 @@ class AddonListVM:
 		if field is AddonListField.channel:
 			return listItemVM.model.channel.displayString
 		if field is AddonListField.installDate:
-			return listItemVM.model.installDate.strftime("%x")
+			if listItemVM.model.installDate is None:
+				return ""
+			else:
+				return listItemVM.model.installDate.strftime("%x")
 		if field is AddonListField.minimumNVDAVersion:
 			return formatVersionForGUI(*listItemVM.model.minimumNVDAVersion)
 		if field is AddonListField.lastTestedVersion:
@@ -422,8 +426,10 @@ class AddonListVM:
 					return listItemVM.model.submissionTime
 				return 0
 			if self._sortByModelField == AddonListField.installDate:
-				listItemVM = cast(AddonListItemVM[_AddonManifestModel], listItemVM)
-				return listItemVM.model.installDate
+				if getattr(listItemVM.model, "installDate", None):
+					listItemVM = cast(AddonListItemVM[_AddonManifestModel], listItemVM)
+					return listItemVM.model.installDate
+				return datetime.max
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
 		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:
