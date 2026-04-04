@@ -1,12 +1,16 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Joseph Lee
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from __future__ import annotations
+
 import argparse
+from ast import NodeTransformer, fix_missing_locations, parse
 import os
 import sys
 import gettext
+from typing import TYPE_CHECKING, Final
 from buildVersion import (
 	formatBuildVersionString,
 	name,
@@ -26,8 +30,14 @@ from versionInfo import (  # noqa: E402
 )
 from py2exe import freeze  # noqa: E402
 from py2exe.dllfinder import DllFinder  # noqa: E402
+import py2exe.hooks  # noqa: E402
 import wx  # noqa: E402
 import importlib.machinery  # noqa: E402
+
+if TYPE_CHECKING:
+	from ast import AnnAssign
+	from py2exe.dllfinder import Scanner
+	from py2exe.mf310 import Module
 
 RT_MANIFEST = 24
 manifestTemplateFilePath = "manifest.template.xml"
@@ -46,6 +56,69 @@ def determine_dll_type(self, imagename):
 
 
 DllFinder.determine_dll_type = determine_dll_type
+
+
+class _Latex2mathmlSymbolsParserTransformer(NodeTransformer):
+	"""Rewrite the ``SYMBOLS_FILE`` path to resolve relative to the frozen executable."""
+
+	def __init__(self, relpath: str):
+		super().__init__()
+		self.rewritten: bool = False
+		self.relpath = relpath
+
+	def visit_AnnAssign(self, node: AnnAssign) -> AnnAssign:
+		# 1 indicates a "simple" target.
+		# That is, a target that consists solely of a Name node that does not appear between parentheses.
+		if node.simple == 1 and node.target.id == "SYMBOLS_FILE":
+			# Replace the original path expression with one based on sys.executable,
+			# so the frozen build finds the bundled unimathsymbols.txt.
+			node.value = (
+				# the result of parse is a ``ast.Module`` whose body contains one ``ast.Expr`` node.
+				# We only want the value of that expression.
+				parse(f"os.path.join(os.path.dirname(sys.executable), {self.relpath!r})").body[0].value
+			)
+			self.rewritten = True
+		return node
+
+
+def _hook_latex2mathml_symbols_parser(finder: Scanner, module: Module) -> None:
+	"""py2exe hook for the latex2mathml.symbols_parser module.
+
+	latex2mathml locates its ``unimathsymbols.txt`` data file at runtime
+	relative to its own package directory (via ``__file__``).
+	After the application is frozen, that path no longer exists, so this hook:
+
+	1. Copies the data file into the frozen distribution
+		so it ships alongside the executable.
+	2. Rewrites the module's ``SYMBOLS_FILE`` assignment via an AST transformation
+		so it resolves relative to ``sys.executable`` (the frozen exe)
+		instead of the original package location.
+	"""
+	import latex2mathml.symbols_parser
+
+	FILENAME: Final[str] = "unimathsymbols.txt"
+	RELPATH: Final[str] = os.path.join("latex2mathml", FILENAME)
+	# Include the data file in the frozen build output.
+	finder.add_datafile(
+		RELPATH,
+		os.path.join(os.path.dirname(latex2mathml.symbols_parser.__file__), FILENAME),
+	)
+	tree = parse(module.__source__)
+	# Inject ``import sys`` so the rewritten path expression can reference it.
+	tree.body.insert(0, parse("import sys").body[0])
+	transformer = _Latex2mathmlSymbolsParserTransformer(RELPATH)
+	newTree = fix_missing_locations(transformer.visit(tree))
+	if not transformer.rewritten:
+		raise RuntimeError(
+			"py2exe hook failed to rewrite SYMBOLS_FILE in latex2mathml.symbols_parser. The upstream module may have changed its variable declaration.",
+		)
+	module.__code_object__ = compile(newTree, module.__file__, "exec", optimize=module.__optimize__)
+
+
+# Register the hook with py2exe.
+# py2exe discovers hooks by name:
+# ``hook_<dotted_module_name_with_underscores>`` on the ``py2exe.hooks`` module.
+py2exe.hooks.hook_latex2mathml_symbols_parser = _hook_latex2mathml_symbols_parser
 
 
 def _parsePartialArguments() -> argparse.Namespace:

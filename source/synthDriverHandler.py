@@ -227,6 +227,17 @@ class SynthDriver(driverHandler.Driver):
 			defaultVal=True,
 		)
 
+	@classmethod
+	def PunctuationSilenceSetting(cls) -> BooleanDriverSetting:
+		"""Factory function for creating punctuation silence setting."""
+		return BooleanDriverSetting(
+			"punctuationSilence",
+			# Translators: Label for a setting toggle in voice settings dialog.
+			_("Natural pause after punctuation"),
+			availableInSettingsRing=False,
+			defaultVal=True,
+		)
+
 	@abstractmethod
 	def speak(self, speechSequence):
 		"""

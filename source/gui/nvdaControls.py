@@ -1,9 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2025 NV Access Limited, Derek Riemer, Cyrille Bougot, Luke Davis, Leonard de Ruijter
+# Copyright (C) 2016-2026 NV Access Limited, Derek Riemer, Cyrille Bougot, Luke Davis, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import collections
+from ctypes import addressof
 import enum
 import typing
 from typing import (
@@ -23,6 +24,9 @@ from config.featureFlag import (
 )
 import gui.message
 from winBindings import user32
+from winBindings.commCtrl import LVIF, LVIS, LVITEM, LVM, LVN, NMLISTVIEW
+from winBindings.user32 import GWLP, NMHDR, WNDPROC, CallWindowProc, SendMessage, SetWindowLongPtr
+from winUser import WM_NOTIFY
 from .dpiScalingHelper import DpiScalingHelperMixin
 from . import (
 	guiHelper,
@@ -288,7 +292,7 @@ class MessageDialog(gui.message.MessageDialog):
 	"""Provides a more flexible message dialog.
 
 	.. warning:: This class is deprecated.
-		Use :class:`gui.messageDialog.MessageDialog` instead.
+		Use :class:`gui.message.MessageDialog` instead.
 		This class is an adapter around that class, and will be removed in 2026.1.
 
 	Consider overriding _addButtons, to set your own buttons and behaviour.
@@ -315,7 +319,7 @@ class MessageDialog(gui.message.MessageDialog):
 
 	def __new__(cls, *args, **kwargs):
 		warnings.warn(
-			"gui.nvdaControls.MessageDialog is deprecated. Use gui.messageDialog.MessageDialog instead.",
+			"gui.nvdaControls.MessageDialog is deprecated. Use gui.message.MessageDialog instead.",
 			DeprecationWarning,
 		)
 		return super().__new__(cls, *args, **kwargs)
@@ -573,3 +577,107 @@ class FeatureFlagCombo(wx.Choice):
 				**translatedOptions,
 			},
 		)
+
+
+class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedClass]
+	"""A list control with checkboxes that supports removing checkboxes from individual items.
+
+	This subclasses :class:`AutoWidthColumnListCtrl` and enables checkboxes by default.
+	Individual checkboxes can be removed via :meth:`removeCheckbox`, which also prevents
+	the user from toggling the state image for that item by subclassing the parent window's
+	window procedure to intercept ``LVN_ITEMCHANGING`` notifications.
+	"""
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.EnableCheckBoxes(True)
+		self._newWndProc: WNDPROC | None = None
+		self._oldWndProc: WNDPROC | None = None
+		self._checkboxlessIndices: set[int] = set()
+		self._hookWndProc()
+		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy, self)
+
+	def _hookWndProc(self):
+		"""Subclass the parent window's window procedure to intercept list-view notifications.
+
+		:raises RuntimeError: If the window procedure has already been hooked.
+		"""
+		if self._newWndProc is not None or self._oldWndProc is not None:
+			raise RuntimeError("Window proc already hooked!")
+		self._newWndProc = WNDPROC(self._WndProc)
+		self._oldWndProc = WNDPROC(
+			SetWindowLongPtr(self.GetParent().GetHandle(), GWLP.WNDPROC, self._newWndProc),
+		)
+
+	def _unhookWndProc(self):
+		"""Restore the parent window's original window procedure."""
+		if self._oldWndProc is not None:
+			SetWindowLongPtr(self.GetParent().GetHandle(), GWLP.WNDPROC, self._oldWndProc)
+			self._oldWndProc = self._newWndProc = None
+
+	def _onDestroy(self, evt: wx.WindowDestroyEvent) -> None:
+		self._unhookWndProc()
+
+	def _WndProc(self, hWnd: int, msg: int, wParam: int, lParam: int) -> int:
+		"""Window procedure that blocks state image changes for checkboxless items.
+
+		Intercepts ``LVN_ITEMCHANGING`` notifications and prevents state image transitions
+		for items whose checkboxes have been removed.
+
+		:param hWnd: Handle to the window.
+		:param msg: The message identifier.
+		:param wParam: Additional message information.
+		:param lParam: Additional message information.
+		:return: A non-zero ``LRESULT`` to block the change, otherwise the result of calling the original window procedure.
+		"""
+		if msg == WM_NOTIFY:
+			hdr = NMHDR.from_address(lParam)
+			if hdr.hwndFrom == self.GetHandle() and hdr.code == LVN.ITEMCHANGING:
+				hdr = NMLISTVIEW.from_address(lParam)
+				if (
+					hdr.iItem in self._checkboxlessIndices
+					and hdr.uChanged & LVIF.STATE
+					and hdr.uNewState >> 12 != hdr.uOldState >> 12
+				):
+					return 1
+		return CallWindowProc(self._oldWndProc, hWnd, msg, wParam, lParam)
+
+	def IsItemChecked(self, item: int) -> bool:
+		"""Check whether the item at the given index is checked.
+
+		Always returns ``False`` for items whose checkbox has been removed.
+
+		:param item: The zero-based index of the item to query.
+		:return: Whether the item is checked.
+		"""
+		if item in self._checkboxlessIndices:
+			return False
+		return super().IsItemChecked(item)
+
+	def removeCheckbox(self, itemIndex: int) -> bool:
+		"""Remove the checkbox from the item at the given index.
+
+		The item's state image is cleared and future check-state changes are blocked.
+		If the checkbox has already been removed, this is a no-op.
+
+		:param itemIndex: The zero-based index of the item.
+		:returns: ``True`` if the checkbox was removed, ``False`` otherwise.
+		:raises IndexError: If ``itemIndex`` is out of range.
+		"""
+		if itemIndex not in range(self.GetItemCount()):
+			raise IndexError("Item index out of range")
+		if itemIndex in self._checkboxlessIndices:
+			return False
+		lvi = LVITEM(
+			stateMask=LVIS.STATEIMAGEMASK,
+			state=0,
+		)
+		res = SendMessage(
+			self.GetHandle(),
+			LVM.SETITEMSTATE,
+			itemIndex,
+			addressof(lvi),
+		)
+		if res:
+			self._checkboxlessIndices.add(itemIndex)
+		return bool(res)
