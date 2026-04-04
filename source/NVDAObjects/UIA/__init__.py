@@ -1963,7 +1963,7 @@ class UIA(Window):
 		disabled = not self._getUIACacheablePropertyValue_handlesCOMErrors(
 			UIAHandler.UIA_IsEnabledPropertyId,
 			True,
-			True
+			True,
 		)
 		if disabled:
 			states.add(controlTypes.State.UNAVAILABLE)
@@ -1982,7 +1982,7 @@ class UIA(Window):
 		isDataValid = self._getUIACacheablePropertyValue_handlesCOMErrors(
 			UIAHandler.UIA_IsDataValidForFormPropertyId,
 			True,
-			UIAHandler.handler.reservedNotSupportedValue
+			UIAHandler.handler.reservedNotSupportedValue,
 		)
 		if not isDataValid:
 			states.add(controlTypes.State.INVALID_ENTRY)
