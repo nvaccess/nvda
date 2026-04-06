@@ -661,12 +661,12 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 		For keyboard gestures that produce printable characters,
 		the key name will be included first, followed by the character,
-		unless it contains NVDA modifier.
+		unless it contains NVDA modifier or is bound to a script.
 		"""
 		displayName = self.displayName
 
-		# NVDA commands keep original behavior
-		if any(isNVDAModifierKey(mod, ext) for mod, ext in self.modifiers):
+		# Commands keep original behavior, even if they also produce a printable character.
+		if any(isNVDAModifierKey(mod, ext) for mod, ext in self.modifiers) or self.script:
 			return [displayName]
 
 		char = self.character
