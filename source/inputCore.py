@@ -685,9 +685,24 @@ class InputManager(baseObject.AutoPropertyObject):
 		# so that punctuation keys are spoken.
 		nameCount = len(gesture._nameForInputHelp)
 		producedCharacter = getattr(gesture, "character", None)
+		locale = speech.getCurrentLanguage()
+
+		def _getSpokenInputHelpText(text: str) -> str:
+			return characterProcessing.processSpeechSymbols(
+				locale,
+				text,
+				characterProcessing.SymbolLevel.ALL,
+			).casefold()
+
 		for i in range(nameCount):
 			text = helpItems[i]
 			if i > 0 and text == producedCharacter:
+				spokenCharacter = _getSpokenInputHelpText(text)
+				if any(
+					_getSpokenInputHelpText(previousText) == spokenCharacter
+					for previousText in helpItems[:i]
+				):
+					continue
 				speech.speakSpelling(text)
 				continue
 			speech.speakText(
