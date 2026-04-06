@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-27 02:24+0000\n"
-"PO-Revision-Date: 2026-03-29 23:24\n"
+"POT-Creation-Date: 2026-04-01 05:05+0000\n"
+"PO-Revision-Date: 2026-04-05 23:26\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2193,12 +2193,12 @@ msgid "gesture map File Error"
 msgstr "Erreur dans le fichier de définition de gestes"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:797
+#: core.py:803
 msgid "Loading NVDA. Please wait..."
 msgstr "Chargement de NVDA. Veuillez patienter..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:945
+#: core.py:951
 msgid "NVDA started"
 msgstr "NVDA démarré"
 
@@ -4049,7 +4049,7 @@ msgstr "Affiche les paramètres avancés de NVDA"
 #. Translators: Input help mode message for opening default dictionary dialog.
 #: globalCommands.py:3526
 msgid "Shows the NVDA default dictionary dialog"
-msgstr "Afficher le dialogue  Dictionnaire par défaut de NVDA"
+msgstr "Afficher le dialogue Dictionnaire par défaut de NVDA"
 
 #. Translators: Input help mode message for opening voice-specific dictionary dialog.
 #: globalCommands.py:3535
@@ -8267,7 +8267,7 @@ msgstr[1] "couvert par le bas de {otherShape} sur {distance:.3g} points"
 #: appModules\powerpnt.py:743
 #, python-brace-format
 msgid "covers  {otherShape}"
-msgstr "couvre  {otherShape}"
+msgstr "couvre {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:746
@@ -13593,7 +13593,7 @@ msgstr "Verbosité de la parole :"
 #: gui\settingsDialogs.py:2817
 msgctxt "math"
 msgid "Relative speech rate"
-msgstr "Débit relatif de la parole"
+msgstr "Débit de parole relatif"
 
 #. Translators: label for slider that specifies relative factor to increase or decrease pauses in the math speech
 #: gui\settingsDialogs.py:2830
@@ -13605,7 +13605,7 @@ msgstr "Facteur de pause"
 #: gui\settingsDialogs.py:2845
 msgctxt "math"
 msgid "Beep at the beginning and end of math"
-msgstr "Bip au début et à la fin de l'annonce du contenu mathématique"
+msgstr "Bip au début et à la fin du contenu mathématique"
 
 #. Translators: label for combobox to specify how verbose/terse the speech should be
 #: gui\settingsDialogs.py:2851
@@ -13623,7 +13623,7 @@ msgstr "À l'entrée dans une équation :"
 #: gui\settingsDialogs.py:2866
 msgctxt "math"
 msgid "Speak"
-msgstr "Parole"
+msgstr "Lire"
 
 #. Translators: "Describe" the expression after moving to it
 #: gui\settingsDialogs.py:2868
@@ -13656,7 +13656,7 @@ msgstr "Mode de navigation par défaut :"
 #: gui\settingsDialogs.py:2912
 msgctxt "math"
 msgid "Reset to the default navigation mode for each new equation"
-msgstr "Réinitialisation au mode de navigation par défaut pour chaque nouvelle équation"
+msgstr "Retourner au mode de navigation par défaut pour chaque nouvelle équation"
 
 #. Translators: label for checkbox that controls whether arrow keys move out of fractions, etc.,
 #. or whether you have to manually back out of the fraction, etc.
@@ -13675,7 +13675,7 @@ msgstr "Verbosité lors de la navigation :"
 #: gui\settingsDialogs.py:2943
 msgctxt "math"
 msgid "Copy math as:"
-msgstr "Copiez le contenu mathématique comme :"
+msgstr "Copiez le contenu mathématique en tant que :"
 
 #. Translators: Text for the braille group.
 #: gui\settingsDialogs.py:2955
@@ -15091,7 +15091,7 @@ msgstr "J'ai lu et &accepté l'accord de licence"
 #. Translators: The title of the dialog asking if usage data can be collected
 #: gui\startupDialogs.py:275
 msgid "NVDA  Usage Data Collection"
-msgstr "NVDA  Recueil de Données d'Utilisation"
+msgstr "Recueil de Données d'Utilisation de NVDA"
 
 #. Translators: A message asking the user if they want to allow usage stats gathering
 #: gui\startupDialogs.py:281
@@ -15568,25 +15568,25 @@ msgstr "Des extensions ont été mises à jour, redémarrez NVDA pour activer le
 #: gui\addonStoreGui\controls\messageDialogs.py:691
 msgctxt "addonStore"
 msgid "Copy Settings to System-wide Configuration"
-msgstr ""
+msgstr "Copie des paramètres dans la configuration système"
 
 #. Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:712
 msgctxt "addonStore"
 msgid "One or more add-ons are currently enabled in your NVDA configuration. If run on secure screens, they will have unrestricted, higher-than-administrator level access to your entire system. You are strongly encouraged to copy only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens."
-msgstr ""
+msgstr "Une ou plusieurs extensions sont actuellement activées dans votre configuration NVDA. Si elles sont exécutées sur des écrans sécurisés, elles auront un accès illimité, de niveau supérieur à celui de l'administrateur, à l'ensemble de votre système. Vous êtes fortement encouragé à ne copier que les extensions dont vous avez absolument besoin pour utiliser NVDA lors de la connexion et sur les écrans sécurisés."
 
 #. Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:722
 msgctxt "addonStore"
 msgid "The system-wide NVDA configuration contains add-ons that are not present in your configuration. If you continue, these add-ons will be removed from the system-wide configuration."
-msgstr ""
+msgstr "La configuration système de NVDA contient des extensions qui ne sont pas présents dans votre configuration. Si vous continuez, ces extensions seront supprimées de la configuration système."
 
 #. Translators: Instructional text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:731
 msgctxt "addonStore"
 msgid "Check only the add-ons you wish to copy to the system-wide configuration."
-msgstr ""
+msgstr "Cochez uniquement les extensions que vous souhaitez copier dans la configuration système."
 
 #. Translators: The label of the list which allows users to select which add-ons to copy to the system profile
 #: gui\addonStoreGui\controls\messageDialogs.py:743
@@ -15606,13 +15606,13 @@ msgstr "Nom"
 #: gui\addonStoreGui\controls\messageDialogs.py:750
 msgctxt "addonStore"
 msgid "User version"
-msgstr ""
+msgstr "Version utilisateur"
 
 #. Translators: The label for a column in the copy add-ons dialog that displays the version of the add-on present in the system-wide configuration
 #: gui\addonStoreGui\controls\messageDialogs.py:752
 msgctxt "addonStore"
 msgid "System-wide version"
-msgstr ""
+msgstr "Version système"
 
 #. Translators: The label for a button in the copy add-ons dialog which will initiate the copy process
 #: gui\addonStoreGui\controls\messageDialogs.py:767
@@ -15630,13 +15630,13 @@ msgstr "Annuler"
 #: gui\addonStoreGui\controls\messageDialogs.py:794
 msgctxt "addonStore"
 msgid "Not installed"
-msgstr ""
+msgstr "Non installé"
 
 #. Translators: Prepended to the name of an add-on to indicate that it will be removed from the system-wide configuration.
 #: gui\addonStoreGui\controls\messageDialogs.py:796
 msgctxt "addonStore"
 msgid "[remove]"
-msgstr ""
+msgstr "[supprimer]"
 
 #. Translators: A message to warn the user when attempting to copy add-ons for use on secure screens
 #: gui\addonStoreGui\controls\messageDialogs.py:864
@@ -15653,8 +15653,8 @@ msgstr[1] "Vous avez choisi de copier {num} extensions dans la configuration sys
 msgctxt "addonStore"
 msgid "This action will remove {num} add-on from NVDA's system-wide configuration. "
 msgid_plural "This action will remove {num} add-ons from NVDA's system-wide configuration. "
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Cette action supprimera {num} extension de la configuration système de NVDA. "
+msgstr[1] "Cette action supprimera {num} extensions de la configuration système de NVDA. "
 
 #. Translators: A prompt asking the user to confirm whether to perform an action.
 #: gui\addonStoreGui\controls\messageDialogs.py:885
@@ -15998,59 +15998,64 @@ msgid "Error in brailling math: see NVDA error log for details"
 msgstr "Erreur lors de l'affichage en braille du contenu mathématique : voir le journal des erreurs NVDA pour plus de détails"
 
 #. Translators: this message alerts users to an error in navigating math.
-#: mathPres\MathCAT\MathCAT.py:165
+#: mathPres\MathCAT\MathCAT.py:170
 msgctxt "math"
 msgid "Error in navigating math"
 msgstr "Erreur lors de la navigation dans le contenu mathématique"
 
 #. Translators: this message alerts users to an error brailling math.
-#: mathPres\MathCAT\MathCAT.py:185
+#: mathPres\MathCAT\MathCAT.py:190
 msgctxt "math"
 msgid "Error in brailling math"
 msgstr "Erreur lors de l'affichage en braille du contenu mathématique"
 
+#. Translators: Description of a MathCAT navigation gesture.
+#: mathPres\MathCAT\MathCAT.py:196
+msgid "Navigates within math"
+msgstr "Navigue dans le contenu mathématique"
+
 #. Translators: Message to be announced during Keyboard Help
-#: mathPres\MathCAT\MathCAT.py:191
+#: mathPres\MathCAT\MathCAT.py:202
 msgid "Copy navigation focus to clipboard"
 msgstr "Copier le focus de navigation dans le presse-papiers"
 
 #. Translators: Name of the section in "Input gestures" dialog.
-#: mathPres\MathCAT\MathCAT.py:193
+#: mathPres\MathCAT\MathCAT.py:204
 msgid "Clipboard"
 msgstr "Presse-papiers"
 
 #. Translators: copy to clipboard
-#: mathPres\MathCAT\MathCAT.py:239
+#: mathPres\MathCAT\MathCAT.py:250
 msgctxt "math"
 msgid "copy as "
 msgstr "copier comme"
 
 #. Translators: this message directs users to look in the log file
-#: mathPres\MathCAT\MathCAT.py:340
+#: mathPres\MathCAT\MathCAT.py:351
 msgctxt "math"
 msgid "Error navigating math"
 msgstr "Erreur lors de la navigation dans le contenu mathématique"
 
 #. Translators: this message reports when invalid math is found.
-#: mathPres\MathCAT\MathCAT.py:363
+#: mathPres\MathCAT\MathCAT.py:374
 msgctxt "math"
 msgid "Invalid math formatting found"
 msgstr "Mise en forme mathématique invalide trouvée"
 
 #. Translators: this message reports an error in speaking math.
-#: mathPres\MathCAT\MathCAT.py:390
+#: mathPres\MathCAT\MathCAT.py:401
 msgctxt "math"
 msgid "Error in speaking math."
 msgstr "Erreur lors de l'annonce du contenu mathématique."
 
 #. Translators: this message reports illegal MathML.
-#: mathPres\MathCAT\MathCAT.py:415
+#: mathPres\MathCAT\MathCAT.py:426
 msgctxt "math"
 msgid "Illegal MathML found."
 msgstr "MathML illégal trouvé."
 
 #. Translators: this message reports an error in brailling math.
-#: mathPres\MathCAT\MathCAT.py:422
+#: mathPres\MathCAT\MathCAT.py:433
 msgctxt "math"
 msgid "Error in brailling math."
 msgstr "Erreur lors de l'affichage en braille du contenu mathématique."
@@ -16062,7 +16067,7 @@ msgstr "Erreur lors de l'affichage en braille du contenu mathématique."
 #, python-brace-format
 msgctxt "math"
 msgid "{lang} ({code})"
-msgstr ""
+msgstr "{lang} ({code})"
 
 #. Translators: Math language settings menu item: Automatic uses the voice's language.
 #. Translators: options for decimal separator -- "Auto" = automatically pick the choice based on the language
@@ -16102,7 +16107,7 @@ msgstr "Personnalisé"
 #: mathPres\MathCAT\preferences.py:70 mathPres\MathCAT\preferences.py:118
 msgctxt "math"
 msgid "Terse"
-msgstr "Laconique"
+msgstr "Concis"
 
 #. Translators: options for speech verbosity -- "medium" = try to be neither too terse nor too verbose
 #. Translators: options for navigation verbosity -- "medium" = try to be nether too terse nor too verbose words
@@ -16116,7 +16121,7 @@ msgstr "Moyen"
 #: mathPres\MathCAT\preferences.py:74 mathPres\MathCAT\preferences.py:122
 msgctxt "math"
 msgid "Verbose"
-msgstr "Verbeux"
+msgstr "Détaillé"
 
 #. Translators: values for chemistry options with example speech in parenthesis
 #: mathPres\MathCAT\preferences.py:86
@@ -17810,7 +17815,7 @@ msgstr "{address} déjà définie comme début des titres de lignes"
 #: NVDAObjects\window\excel.py:1718
 #, python-brace-format
 msgid "Removed {address}    from row headers"
-msgstr "{address}    supprimée des titres de lignes"
+msgstr "{address} supprimée des titres de lignes"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #: NVDAObjects\window\excel.py:1721
@@ -19085,12 +19090,12 @@ msgstr "hors de la faute d'orthographe"
 #. Translators: Reported when text contains a grammar error.
 #: speech\speech.py:3034
 msgid "grammar error"
-msgstr "erreur grammaticale"
+msgstr "erreur de grammaire"
 
 #. Translators: Reported when moving out of text containing a grammar error.
 #: speech\speech.py:3037
 msgid "out of grammar error"
-msgstr "hors de l'erreur grammaticale"
+msgstr "hors de l'erreur de grammaire"
 
 #. Translators: Indicates end of a table.
 #: speech\speech.py:3070
@@ -19103,7 +19108,7 @@ msgstr "hors du tableau"
 #: speech\speech.py:3085
 #, python-brace-format
 msgid "table with {columnCountText} and {rowCountText}"
-msgstr "tableau de  {columnCountText} et {rowCountText}"
+msgstr "tableau de {columnCountText} et {rowCountText}"
 
 #. Translators: name of the default espeak varient.
 #: synthDrivers\_espeak.py:417

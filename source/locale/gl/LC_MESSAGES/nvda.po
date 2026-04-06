@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-27 02:24+0000\n"
-"PO-Revision-Date: 2026-03-30 00:26\n"
+"POT-Creation-Date: 2026-04-01 05:05+0000\n"
+"PO-Revision-Date: 2026-04-06 00:26\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -2193,12 +2193,12 @@ msgid "gesture map File Error"
 msgstr "erro no ficheiro de mapa de xestos"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:797
+#: core.py:803
 msgid "Loading NVDA. Please wait..."
 msgstr "Cargando NVDA. Agarda por favor..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:945
+#: core.py:951
 msgid "NVDA started"
 msgstr "NVDA activado"
 
@@ -15652,8 +15652,8 @@ msgstr[1] "Seleccionaches copiar os complementos {num} á configuración de todo
 msgctxt "addonStore"
 msgid "This action will remove {num} add-on from NVDA's system-wide configuration. "
 msgid_plural "This action will remove {num} add-ons from NVDA's system-wide configuration. "
-msgstr[0] "Esta acción eliminará o complemento {num} da configuración de todo o sistema do NVDA."
-msgstr[1] "This action will remove {num} add-ons from NVDA's system-wide configuration. "
+msgstr[0] "Esta acción eliminará o complemento {num} da configuración de todo o sistema do NVDA. "
+msgstr[1] "Estas accións eliminarán o complemento {num} da configuración de todo o sistema do NVDA. "
 
 #. Translators: A prompt asking the user to confirm whether to perform an action.
 #: gui\addonStoreGui\controls\messageDialogs.py:885
@@ -15997,59 +15997,64 @@ msgid "Error in brailling math: see NVDA error log for details"
 msgstr "Erro nas matemáticas en braille: consulta o rexistro de erros de NVDA para obter máis detalles"
 
 #. Translators: this message alerts users to an error in navigating math.
-#: mathPres\MathCAT\MathCAT.py:165
+#: mathPres\MathCAT\MathCAT.py:170
 msgctxt "math"
 msgid "Error in navigating math"
 msgstr "Erro na navegación matemática"
 
 #. Translators: this message alerts users to an error brailling math.
-#: mathPres\MathCAT\MathCAT.py:185
+#: mathPres\MathCAT\MathCAT.py:190
 msgctxt "math"
 msgid "Error in brailling math"
 msgstr "Erro nas matemáticas en braille"
 
+#. Translators: Description of a MathCAT navigation gesture.
+#: mathPres\MathCAT\MathCAT.py:196
+msgid "Navigates within math"
+msgstr "Navega por dentro das matemáticas"
+
 #. Translators: Message to be announced during Keyboard Help
-#: mathPres\MathCAT\MathCAT.py:191
+#: mathPres\MathCAT\MathCAT.py:202
 msgid "Copy navigation focus to clipboard"
 msgstr "Copiar o foco de navegación no portapapeis"
 
 #. Translators: Name of the section in "Input gestures" dialog.
-#: mathPres\MathCAT\MathCAT.py:193
+#: mathPres\MathCAT\MathCAT.py:204
 msgid "Clipboard"
 msgstr "Portapapeis"
 
 #. Translators: copy to clipboard
-#: mathPres\MathCAT\MathCAT.py:239
+#: mathPres\MathCAT\MathCAT.py:250
 msgctxt "math"
 msgid "copy as "
 msgstr "copiar como "
 
 #. Translators: this message directs users to look in the log file
-#: mathPres\MathCAT\MathCAT.py:340
+#: mathPres\MathCAT\MathCAT.py:351
 msgctxt "math"
 msgid "Error navigating math"
 msgstr "Produciuse un erro ao navegar polas matemáticas"
 
 #. Translators: this message reports when invalid math is found.
-#: mathPres\MathCAT\MathCAT.py:363
+#: mathPres\MathCAT\MathCAT.py:374
 msgctxt "math"
 msgid "Invalid math formatting found"
 msgstr "Atopouse un formato matemático non válido"
 
 #. Translators: this message reports an error in speaking math.
-#: mathPres\MathCAT\MathCAT.py:390
+#: mathPres\MathCAT\MathCAT.py:401
 msgctxt "math"
 msgid "Error in speaking math."
 msgstr "Erro ao falar matemáticas."
 
 #. Translators: this message reports illegal MathML.
-#: mathPres\MathCAT\MathCAT.py:415
+#: mathPres\MathCAT\MathCAT.py:426
 msgctxt "math"
 msgid "Illegal MathML found."
 msgstr "Atopouse MathML ilegal."
 
 #. Translators: this message reports an error in brailling math.
-#: mathPres\MathCAT\MathCAT.py:422
+#: mathPres\MathCAT\MathCAT.py:433
 msgctxt "math"
 msgid "Error in brailling math."
 msgstr "Erro nas matemáticas en braille."
