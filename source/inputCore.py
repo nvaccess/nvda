@@ -694,10 +694,22 @@ class InputManager(baseObject.AutoPropertyObject):
 				characterProcessing.SymbolLevel.ALL,
 			).casefold()
 
+		def _getSpelledInputHelpText(text: str) -> str:
+			return "".join(
+				item
+				for item in speech.getSpellingSpeech(
+					text,
+					locale=locale,
+					endsUtterance=False,
+					useCharMode=False,
+				)
+				if isinstance(item, str)
+			).casefold()
+
 		for i in range(nameCount):
 			text = helpItems[i]
 			if i > 0 and text == producedCharacter:
-				spokenCharacter = _getSpokenInputHelpText(text)
+				spokenCharacter = _getSpelledInputHelpText(text)
 				if any(
 					_getSpokenInputHelpText(previousText) == spokenCharacter
 					for previousText in helpItems[:i]
