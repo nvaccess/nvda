@@ -64,6 +64,31 @@ SCRCAT_MISC = _("Miscellaneous")
 #: Script category for Browse Mode  commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_BROWSEMODE = _("Browse mode")
+_INPUT_HELP_SPEECH_SYMBOL_LEVEL = characterProcessing.SymbolLevel.ALL
+
+
+def _shouldSpellInputHelpCharacter(text: str) -> bool:
+	"""Return whether input help should report a character via spelling."""
+	return text.isspace() or (len(text) == 1 and text.isalpha() and text.isupper())
+
+
+def _getNormalizedInputHelpTextSpeech(text: str, locale: str) -> str:
+	"""Return normalized speech for the input-help speakText path."""
+	return speech.processText(locale, text, _INPUT_HELP_SPEECH_SYMBOL_LEVEL).casefold()
+
+
+def _getNormalizedInputHelpSpellingSpeech(text: str, locale: str) -> str:
+	"""Return normalized speech for the input-help speakSpelling path."""
+	return "".join(
+		item
+		for item in speech.getSpellingSpeech(
+			text,
+			locale=locale,
+			endsUtterance=False,
+			useCharMode=False,
+		)
+		if isinstance(item, str)
+	).casefold()
 
 
 class NoInputGestureAction(LookupError):
@@ -150,16 +175,16 @@ class InputGesture(baseObject.AutoPropertyObject):
 		"""
 		return self.getDisplayTextForIdentifier(self.normalizedIdentifiers[0])[1]
 
-	def _get__nameForInputHelp(self) -> list[str]:
-		"""The name of this gesture as presented to the user in input help mode.
+	# type information for auto property _get_inputHelpCharacter
+	inputHelpCharacter: str | None
 
-		The base implementation returns a list containing self.displayName.
-		Subclasses can override this to provide more specific behavior,
-		such as including the character that would be typed.
+	def _get_inputHelpCharacter(self) -> str | None:
+		"""The character this gesture should additionally report in input help mode.
 
-		:return: The list of names to be displayed in input help mode.
+		The base implementation reports no extra character.
+		Subclasses can override this to report a typed character when appropriate.
 		"""
-		return [self.displayName]
+		return None
 
 	#: Whether this gesture should be reported when reporting of command gestures is enabled.
 	#: @type: bool
@@ -657,8 +682,12 @@ class InputManager(baseObject.AutoPropertyObject):
 		return bypass
 
 	def _handleInputHelp(self, gesture, onlyLog=False):
-		helpItems = list(gesture._nameForInputHelp)
+		displayName = gesture.displayName
+		inputHelpCharacter = gesture.inputHelpCharacter
+		reportInputHelpCharacter = False
+		spellInputHelpCharacter = False
 		script = gesture.script
+		scriptDescription = None
 		runScript = False
 		logMsg = "Input help: gesture %s" % gesture.identifiers[0]
 		if script:
@@ -672,58 +701,49 @@ class InputManager(baseObject.AutoPropertyObject):
 			else:
 				desc = script.__doc__
 				if desc:
-					helpItems.append(desc)
+					scriptDescription = desc
 
 		log.info(logMsg)
 		if onlyLog:
 			return
 
+		locale = speech.getCurrentLanguage()
+		if inputHelpCharacter is not None:
+			spellInputHelpCharacter = _shouldSpellInputHelpCharacter(inputHelpCharacter)
+			displayNameSpeech = _getNormalizedInputHelpTextSpeech(displayName, locale)
+			inputHelpCharacterSpeech = (
+				_getNormalizedInputHelpSpellingSpeech(inputHelpCharacter, locale)
+				if spellInputHelpCharacter
+				else _getNormalizedInputHelpTextSpeech(inputHelpCharacter, locale)
+			)
+			reportInputHelpCharacter = displayNameSpeech != inputHelpCharacterSpeech
+
+		brailleItems = [displayName]
+		if reportInputHelpCharacter:
+			brailleItems.append(inputHelpCharacter)
+		if scriptDescription:
+			brailleItems.append(scriptDescription)
+
 		import braille
 
-		braille.handler.message("\t\t".join(helpItems))
-		# Punctuation must be spoken for the gesture names (the first chunk(s))
-		# so that punctuation keys are spoken.
-		nameCount = len(gesture._nameForInputHelp)
-		producedCharacter = getattr(gesture, "character", None)
-		locale = speech.getCurrentLanguage()
-
-		def _getSpokenInputHelpText(text: str) -> str:
-			return characterProcessing.processSpeechSymbols(
-				locale,
-				text,
-				characterProcessing.SymbolLevel.ALL,
-			).casefold()
-
-		def _getSpelledInputHelpText(text: str) -> str:
-			return "".join(
-				item
-				for item in speech.getSpellingSpeech(
-					text,
-					locale=locale,
-					endsUtterance=False,
-					useCharMode=False,
+		braille.handler.message("\t\t".join(brailleItems))
+		# Punctuation must be spoken for the gesture name so that punctuation keys are spoken.
+		speech.speakText(
+			displayName,
+			reason=controlTypes.OutputReason.MESSAGE,
+			symbolLevel=_INPUT_HELP_SPEECH_SYMBOL_LEVEL,
+		)
+		if reportInputHelpCharacter:
+			if spellInputHelpCharacter:
+				speech.speakSpelling(inputHelpCharacter)
+			else:
+				speech.speakText(
+					inputHelpCharacter,
+					reason=controlTypes.OutputReason.MESSAGE,
+					symbolLevel=_INPUT_HELP_SPEECH_SYMBOL_LEVEL,
 				)
-				if isinstance(item, str)
-			).casefold()
-
-		for i in range(nameCount):
-			text = helpItems[i]
-			if i > 0 and text == producedCharacter:
-				spokenCharacter = _getSpelledInputHelpText(text)
-				if any(
-					_getSpokenInputHelpText(previousText) == spokenCharacter
-					for previousText in helpItems[:i]
-				):
-					continue
-				speech.speakSpelling(text)
-				continue
-			speech.speakText(
-				text,
-				reason=controlTypes.OutputReason.MESSAGE,
-				symbolLevel=characterProcessing.SymbolLevel.ALL,
-			)
-		for text in helpItems[nameCount:]:
-			speech.speakMessage(text)
+		if scriptDescription:
+			speech.speakMessage(scriptDescription)
 
 		if runScript:
 			script(gesture)
