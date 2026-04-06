@@ -593,8 +593,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			if modifier:
 				modifierList.append(modifier)
 
-		# Check for Windows key - characters with Windows key are invalid
-		if VK_WIN in [self.getVkName(m, e) for m, e in self.modifiers]:
+		# Characters with the Windows key are invalid.
+		if VK_WIN in modifierList:
 			return None
 
 		for i in range(256):
