@@ -20,9 +20,9 @@ from .utils.types import (
 	FullScreenMode,
 	Size,
 	MagnifierParameters,
+	Coordinates,
 )
 from .config import getFullscreenMode, isTrueCentered
-import locationHelper
 
 
 class FullScreenMagnifier(Magnifier):
@@ -30,7 +30,7 @@ class FullScreenMagnifier(Magnifier):
 		super().__init__()
 		self._magnifierType = MagnifierType.FULLSCREEN
 		self._fullscreenMode = getFullscreenMode()
-		self._currentCoordinates = locationHelper.Point(0, 0)
+		self._currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
 		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
 		self._startMagnifier()
@@ -130,7 +130,7 @@ class FullScreenMagnifier(Magnifier):
 		except Exception as e:
 			log.error(f"Failed to apply filter: {e}")
 
-	def _fullscreenMagnifier(self, coordinates: locationHelper.Point) -> None:
+	def _fullscreenMagnifier(self, coordinates: Coordinates) -> None:
 		"""
 		Apply full-screen magnification at given Coordinates
 
@@ -153,8 +153,8 @@ class FullScreenMagnifier(Magnifier):
 
 	def _getCoordinatesForMode(
 		self,
-		coordinates: locationHelper.Point,
-	) -> locationHelper.Point:
+		coordinates: Coordinates,
+	) -> Coordinates:
 		"""
 		Get Coordinates adjusted for the current full-screen mode
 
@@ -190,8 +190,8 @@ class FullScreenMagnifier(Magnifier):
 
 	def _borderPos(
 		self,
-		coordinates: locationHelper.Point,
-	) -> locationHelper.Point:
+		coordinates: Coordinates,
+	) -> Coordinates:
 		"""
 		Check if focus is near magnifier border and adjust position accordingly
 		Returns adjusted position to keep focus within margin limits
@@ -226,7 +226,7 @@ class FullScreenMagnifier(Magnifier):
 			dy = focusY - maxY
 
 		if dx != 0 or dy != 0:
-			return locationHelper.Point(
+			return Coordinates(
 				self._lastScreenPosition.x + dx,
 				self._lastScreenPosition.y + dy,
 			)
@@ -235,8 +235,8 @@ class FullScreenMagnifier(Magnifier):
 
 	def _relativePos(
 		self,
-		coordinates: locationHelper.Point,
-	) -> locationHelper.Point:
+		coordinates: Coordinates,
+	) -> Coordinates:
 		"""
 		Calculate magnifier center maintaining mouse relative position
 		Handles screen edges to prevent going off-screen
@@ -263,7 +263,7 @@ class FullScreenMagnifier(Magnifier):
 		# Return center of zoom window
 		centerX = int(left + magnifierWidth / 2)
 		centerY = int(top + magnifierHeight / 2)
-		self._lastScreenPosition = locationHelper.Point(centerX, centerY)
+		self._lastScreenPosition = Coordinates(centerX, centerY)
 		return self._lastScreenPosition
 
 	def _startSpotlight(self) -> None:
@@ -283,7 +283,7 @@ class FullScreenMagnifier(Magnifier):
 		self._spotlightManager._spotlightIsActive = False
 		self._startTimer(self._updateMagnifier)
 
-	def _getMagnifierParameters(self, coordinates: locationHelper.Point) -> MagnifierParameters:
+	def _getMagnifierParameters(self, coordinates: Coordinates) -> MagnifierParameters:
 		"""
 		Compute the top-left corner of the magnifier window centered on (x, y)
 
@@ -307,6 +307,6 @@ class FullScreenMagnifier(Magnifier):
 
 		return MagnifierParameters(
 			Size(int(magnifierWidth), int(magnifierHeight)),
-			locationHelper.Point(left, top),
+			Coordinates(left, top),
 			self._filterType,
 		)

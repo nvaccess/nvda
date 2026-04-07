@@ -9,8 +9,14 @@ Types used in the magnifier module.
 
 from enum import Enum, auto
 from typing import NamedTuple
-import locationHelper
 from utils.displayString import DisplayStringStrEnum, DisplayStringEnum
+
+
+class Coordinates(NamedTuple):
+	"""Named tuple representing x and y coordinates"""
+
+	x: int
+	y: int
 
 
 class Direction(Enum):
@@ -127,7 +133,7 @@ class MagnifierParameters(NamedTuple):
 	"""Named tuple representing the size and position of the magnifier"""
 
 	magnifierSize: Size
-	coordinates: locationHelper.Point
+	coordinates: Coordinates
 	filter: Filter
 
 
