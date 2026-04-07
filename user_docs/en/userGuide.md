@@ -3379,7 +3379,7 @@ This option selects the format of math content copied to the clipboard.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | MathML, LaTeX, ASCIIMath |
+| Options | MathML, LaTeX, ASCIIMath, Speech |
 | Default | MathML |
 
 ##### Braille Options {#MathBrailleOptions}
