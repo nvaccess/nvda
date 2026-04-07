@@ -42,7 +42,7 @@ class Magnifier:
 
 	def __init__(self):
 		self._displayOrientation = getPrimaryDisplayOrientation()
-		self._magnifierType: MagnifierType = MagnifierType.FULLSCREEN
+		self._magnifierType: MagnifierType
 		self._isActive: bool = False
 		self._zoomLevel: float = getDefaultZoomLevel()
 		self._panStep: int = getDefaultPanStep()

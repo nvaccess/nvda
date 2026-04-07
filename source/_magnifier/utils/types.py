@@ -41,6 +41,7 @@ class MagnifierAction(DisplayStringEnum):
 	PAN_TOP_EDGE = auto()
 	PAN_BOTTOM_EDGE = auto()
 	TOGGLE_FILTER = auto()
+	CHANGE_MAGNIFIER_TYPE = auto()
 	CHANGE_FULLSCREEN_MODE = auto()
 	START_SPOTLIGHT = auto()
 
@@ -69,6 +70,8 @@ class MagnifierAction(DisplayStringEnum):
 			self.PAN_BOTTOM_EDGE: pgettext("magnifier action", "pan to bottom edge"),
 			# Translators: Action description for toggling color filters.
 			self.TOGGLE_FILTER: pgettext("magnifier action", "toggle filters"),
+			# Translators: Action description for changing magnifier type.
+			self.CHANGE_MAGNIFIER_TYPE: pgettext("magnifier action", "change magnifier type"),
 			# Translators: Action description for changing full-screen mode.
 			self.CHANGE_FULLSCREEN_MODE: pgettext("magnifier action", "change full-screen mode"),
 			# Translators: Action description for starting spotlight mode.
@@ -80,18 +83,24 @@ class MagnifierType(DisplayStringStrEnum):
 	"""Type of magnifier"""
 
 	FULLSCREEN = "fullscreen"
+	FIXED = "fixed"
 	DOCKED = "docked"
 	LENS = "lens"
+	PLACEHOLDER = "placeholder"
 
 	@property
 	def _displayStringLabels(self) -> dict["MagnifierType", str]:
 		return {
 			# Translators: Magnifier type - full-screen mode.
 			self.FULLSCREEN: pgettext("magnifier", "Fullscreen"),
+			# Translators: Magnifier type - fixed mode.
+			self.FIXED: pgettext("magnifier", "Fixed"),
 			# Translators: Magnifier type - docked mode.
 			self.DOCKED: pgettext("magnifier", "Docked"),
 			# Translators: Magnifier type - lens mode.
 			self.LENS: pgettext("magnifier", "Lens"),
+			# Translators: Magnifier type - placeholder for unsupported types.
+			self.PLACEHOLDER: pgettext("magnifier", "Placeholder"),
 		}
 
 

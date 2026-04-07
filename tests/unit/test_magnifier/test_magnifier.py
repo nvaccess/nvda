@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from _magnifier.magnifier import Magnifier, MagnifierType
+from _magnifier.magnifier import Magnifier
 from _magnifier.utils.types import Filter, Direction, Coordinates, MagnifierAction
 import unittest
 from winAPI._displayTracking import getPrimaryDisplayOrientation
@@ -63,7 +63,6 @@ class TestMagnifier(_TestMagnifier):
 		"""Can we create a magnifier with valid parameters?"""
 		self.assertEqual(self.magnifier.zoomLevel, 2.0)
 		self.assertEqual(self.magnifier._filterType, Filter.NORMAL)
-		self.assertEqual(self.magnifier._magnifierType, MagnifierType.FULLSCREEN)
 		self.assertFalse(self.magnifier._isActive)
 		self.assertIsNotNone(self.magnifier._focusManager)
 

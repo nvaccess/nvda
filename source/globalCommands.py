@@ -5162,6 +5162,20 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
+			"Cycle through Magnifier type",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:nvda+shift+t",
+	)
+	def script_cycleMagnifierType(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.cycleMagnifierType()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
 			"Toggle focus mode for the full-screen magnifier",
 		),
 		category=SCRCAT_VISION,

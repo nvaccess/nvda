@@ -1617,9 +1617,19 @@ NVDA will announce the name of the currently selected filter.
 
 The default color filter when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
-### Focus Tracking Modes {#MagnifierFullscreenFocusModes}
+### Magnifier Types {#MagnifierType}
 
 The magnifier offers three different modes for tracking focus and determining which part of the screen to magnify:
+The magnifier can be used in multiple modes, each designed to suit different user needs and preferences:
+
+* Full-screen: The entire screen is magnified, and the magnified view follows the system focus or mouse pointer.
+* Fixed window: A separate window displays the magnified content, and the rest of the screen remains at normal size. This allows you to see both the magnified content and the surrounding context simultaneously.
+* Docked: The magnified view is docked to one edge of the screen, providing a larger view of the area around the system focus or mouse pointer while still showing most of the screen at normal size.
+* Lens: A rectangular area around the system focus or mouse pointer is magnified, while the rest of the screen remains at normal size. This allows you to focus on a specific area without losing sight of the overall screen layout.
+
+### Fullscreen Focus Modes {#MagnifierFullscreenFocusModes}
+
+The fullscreen magnifier offers three different modes for tracking focus and determining which part of the screen to magnify:
 
 * Center: The magnified area is centered on the current focus position.
 This mode keeps the focused element at the center of the screen and clamps to the screen edge.
@@ -1634,9 +1644,9 @@ NVDA will announce the name of the currently selected mode.
 
 The default focus mode when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
-### Spotlight Mode {#MagnifierSpotlight}
+#### Spotlight Mode {#MagnifierSpotlight}
 
-Spotlight mode is a special feature designed for presentations or focused reading tasks.
+Spotlight mode is a special fullscreen feature designed for presentations or focused reading tasks.
 When activated, it temporarily zooms out the magnified view to show the full screen, then zooms back in to the current focus position after a brief period of mouse inactivity.
 
 This is useful when you want to:
@@ -1653,6 +1663,18 @@ Once activated, the magnifier will:
 
 Spotlight mode automatically deactivates after zooming back in.
 If you move the mouse before the zoom-back occurs, the timer resets, giving you more time to view the full screen.
+
+### Fixed Magnifier {#MagnifierFixed}
+
+Placeholder
+
+### Docked Magnifier {#MagnifierDocked}
+
+Placeholder
+
+### Lens Magnifier {#MagnifierLens}
+
+Placeholder
 
 ### Magnifier Settings {#MagnifierSettings}
 

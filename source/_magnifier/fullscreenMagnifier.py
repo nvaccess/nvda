@@ -14,17 +14,17 @@ from winBindings import magnification
 from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
 from .utils.spotlightManager import SpotlightManager
-from .utils.types import Filter, Coordinates, FullScreenMode
+from .utils.types import Filter, Coordinates, FullScreenMode, MagnifierType
 from .config import getDefaultFullscreenMode
 
 
 class FullScreenMagnifier(Magnifier):
 	def __init__(self):
 		super().__init__()
+		self._magnifierType = MagnifierType.FULLSCREEN
 		self._fullscreenMode = getDefaultFullscreenMode()
 		self._currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
-		self._startMagnifier()
 
 	@property
 	def filterType(self) -> Filter:

@@ -11,12 +11,13 @@ from _magnifier.magnifier import Magnifier
 from winAPI._displayTracking import getPrimaryDisplayOrientation
 
 
-class TestMagnifierEndToEnd(_TestMagnifier):
-	"""End-to-end test suite for Magnifier functionality."""
+class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
+	"""End-to-end test suite for fullscreen magnifier functionality."""
 
 	def testMagnifierCreation(self):
 		"""Test creating a magnifier."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		self.assertEqual(magnifier.zoomLevel, 2.0)
 		self.assertEqual(magnifier.filterType, Filter.NORMAL)
@@ -29,6 +30,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierZoom(self):
 		"""Test zoom functionality."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Set initial zoom to 1.0 for predictable testing
 		magnifier.zoomLevel = 1.0
@@ -48,6 +50,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierCoordinates(self):
 		"""Test coordinate handling."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Test setting coordinates
 		magnifier._currentCoordinates = (100, 200)
@@ -63,6 +66,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierUpdate(self):
 		"""Test magnifier update cycle."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Mock the update methods
 		magnifier._getCoordinatesForMode = MagicMock(return_value=(150, 250))
@@ -85,6 +89,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierStop(self):
 		"""Test stopping the magnifier."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Mock the timer
 		magnifier._stopTimer = MagicMock()
@@ -102,6 +107,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierPositionCalculation(self):
 		"""Test position calculation."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Test position calculation
 		left, top, width, height = magnifier._getMagnifierPosition((500, 400))
@@ -125,6 +131,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierZoomBoundaries(self):
 		"""Test zoom boundaries."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 		magnifier.zoomLevel = 1.0
 
 		# Test minimum boundary
@@ -142,6 +149,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierTypeProperty(self):
 		"""Test magnifierType property for FullScreenMagnifier."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Should default to FULLSCREEN
 		self.assertEqual(magnifier._magnifierType, MagnifierType.FULLSCREEN)
@@ -155,6 +163,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierInheritance(self):
 		"""Test inheritance structure."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		self.assertIsInstance(magnifier, Magnifier)
 
@@ -172,6 +181,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierApiHandling(self):
 		"""Test API error handling."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Mock magnification API to fail
 		magnifier._stopTimer = MagicMock()
@@ -190,6 +200,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 		"""Test simple magnifier lifecycle."""
 		# Create magnifier
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 		self.assertTrue(magnifier._isActive)
 		self.assertEqual(magnifier.zoomLevel, 2.0)
 
@@ -220,6 +231,7 @@ class TestFullScreenMagnifierKeepMouseCentered(_TestMagnifier):
 	def setUp(self):
 		super().setUp()
 		self.magnifier = FullScreenMagnifier()
+		self.magnifier._startMagnifier()
 		self.screen = getPrimaryDisplayOrientation()
 
 	def tearDown(self):
