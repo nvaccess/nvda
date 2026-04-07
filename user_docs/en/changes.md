@@ -47,6 +47,7 @@ This is more noticeable for Windows releases which are enablement packages on to
 
 ### Bug Fixes
 
+* Fixed a freeze in the synthDriverHost process when rapidly adjusting voice or rate settings with the SAPI4 speech synthesizer. (#19819)
 * In Firefox browse mode, the accessible name of form controls (such as checkboxes and radio buttons) is now correctly announced when the control has an `aria-label` and an associated `<label>` element that contains only `aria-hidden` content. (#19409, @bramd)
 * The "Toggles on and off if the screen layout is preserved while rendering the document content" item in the "Browse mode" category of the Input Gestures dialog now behaves correctly. (#18378)
 * In Microsoft Word with UIA enabled, page changes are now correctly announced when navigating table rows that span multiple pages. (#19386, @akj)

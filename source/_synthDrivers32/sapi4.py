@@ -526,6 +526,11 @@ class SynthDriverAudio(COMObject):
 			self._player.pause(False)
 		except OSError:
 			log.debugWarning("Error starting audio", exc_info=True)
+			# Do not transition to STARTED state when the audio device
+			# fails to resume, as this would leave the state machine
+			# in an inconsistent state where the audio thread tries
+			# to feed audio to a non-playing device, causing a freeze.
+			raise ReturnHRESULT(AudioError.WAVE_DEVICE_BUSY, None)
 		with self._audioCond:
 			self._deviceState = _AudioState.STARTED
 			self._audioCond.notify()
@@ -545,6 +550,12 @@ class SynthDriverAudio(COMObject):
 			self._player.pause(True)
 		except OSError:
 			log.debugWarning("Error stopping audio", exc_info=True)
+			# If pausing fails, stop the player entirely to prevent
+			# the audio device from remaining in an inconsistent state.
+			try:
+				self._player.stop()
+			except OSError:
+				log.debugWarning("Error force-stopping audio after pause failure", exc_info=True)
 		with self._audioCond:
 			self._audioCond.notify()
 
