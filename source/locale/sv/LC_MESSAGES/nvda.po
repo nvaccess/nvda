@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-27 02:24+0000\n"
-"PO-Revision-Date: 2026-03-30 00:26\n"
+"POT-Creation-Date: 2026-04-01 05:05+0000\n"
+"PO-Revision-Date: 2026-04-06 00:26\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -2195,12 +2195,12 @@ msgid "gesture map File Error"
 msgstr "fel på fil för inmatningsgester"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:797
+#: core.py:803
 msgid "Loading NVDA. Please wait..."
 msgstr "Laddar NVDA. Var god vänta..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:945
+#: core.py:951
 msgid "NVDA started"
 msgstr "NVDA har startat"
 
@@ -2241,12 +2241,12 @@ msgstr "sök från nuvarande position"
 #. Translators: Input help message for find next command.
 #: cursorManager.py:235
 msgid "find the next occurrence of the previously entered text string from the current cursor's position"
-msgstr "sök nästa"
+msgstr "hitta nästa förekomst av den inmatade texten från markörens nuvarande position"
 
 #. Translators: Input help message for find previous command.
 #: cursorManager.py:253
 msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
-msgstr "sök föregående"
+msgstr "hitta föregående förekomst av den inmatade texten från markörens nuvarande position"
 
 #. Translators: Reported when there is no text selected (for copying).
 #. Translators: Reported when there is no selection
@@ -15571,25 +15571,25 @@ msgstr "Tillägg har uppdaterats, starta om NVDA för att aktivera ändringarna"
 #: gui\addonStoreGui\controls\messageDialogs.py:691
 msgctxt "addonStore"
 msgid "Copy Settings to System-wide Configuration"
-msgstr ""
+msgstr "Kopiera inställningar till systemomfattande konfiguration"
 
 #. Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:712
 msgctxt "addonStore"
 msgid "One or more add-ons are currently enabled in your NVDA configuration. If run on secure screens, they will have unrestricted, higher-than-administrator level access to your entire system. You are strongly encouraged to copy only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens."
-msgstr ""
+msgstr "Ett eller flera tillägg är för närvarande aktiverade i din NVDA-konfiguration. Om de körs på säkra skärmar har de obegränsad åtkomst på högre nivå än administratörsnivå till hela ditt system. Du uppmanas starkt att endast kopiera tillägg som du absolut behöver för att använda NVDA under inloggning och på säkra skärmar."
 
 #. Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:722
 msgctxt "addonStore"
 msgid "The system-wide NVDA configuration contains add-ons that are not present in your configuration. If you continue, these add-ons will be removed from the system-wide configuration."
-msgstr ""
+msgstr "Den systemomfattande NVDA-konfigurationen innehåller tillägg som inte finns i din konfiguration. Om du fortsätter kommer dessa tillägg att tas bort från den systemomfattande konfigurationen."
 
 #. Translators: Instructional text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:731
 msgctxt "addonStore"
 msgid "Check only the add-ons you wish to copy to the system-wide configuration."
-msgstr ""
+msgstr "Kryssa bara för de tillägg du vill kopiera till den systemomfattande konfigurationen."
 
 #. Translators: The label of the list which allows users to select which add-ons to copy to the system profile
 #: gui\addonStoreGui\controls\messageDialogs.py:743
@@ -15609,13 +15609,13 @@ msgstr "Namn"
 #: gui\addonStoreGui\controls\messageDialogs.py:750
 msgctxt "addonStore"
 msgid "User version"
-msgstr ""
+msgstr "Användarens version"
 
 #. Translators: The label for a column in the copy add-ons dialog that displays the version of the add-on present in the system-wide configuration
 #: gui\addonStoreGui\controls\messageDialogs.py:752
 msgctxt "addonStore"
 msgid "System-wide version"
-msgstr ""
+msgstr "Systemomfattande version"
 
 #. Translators: The label for a button in the copy add-ons dialog which will initiate the copy process
 #: gui\addonStoreGui\controls\messageDialogs.py:767
@@ -15633,13 +15633,13 @@ msgstr "Avbryt"
 #: gui\addonStoreGui\controls\messageDialogs.py:794
 msgctxt "addonStore"
 msgid "Not installed"
-msgstr ""
+msgstr "Inte installerad"
 
 #. Translators: Prepended to the name of an add-on to indicate that it will be removed from the system-wide configuration.
 #: gui\addonStoreGui\controls\messageDialogs.py:796
 msgctxt "addonStore"
 msgid "[remove]"
-msgstr ""
+msgstr "[Ta bort]"
 
 #. Translators: A message to warn the user when attempting to copy add-ons for use on secure screens
 #: gui\addonStoreGui\controls\messageDialogs.py:864
@@ -15656,8 +15656,8 @@ msgstr[1] "Du har valt att kopiera {num} tillägg till NVDA's systemomfattande k
 msgctxt "addonStore"
 msgid "This action will remove {num} add-on from NVDA's system-wide configuration. "
 msgid_plural "This action will remove {num} add-ons from NVDA's system-wide configuration. "
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Den här åtgärden kommer ta bort {num} tillägg från den systemomfattande konfigurationen. "
+msgstr[1] "Den här åtgärden kommer ta bort {num} tillägg från den systemomfattande konfigurationen. "
 
 #. Translators: A prompt asking the user to confirm whether to perform an action.
 #: gui\addonStoreGui\controls\messageDialogs.py:885
@@ -16001,59 +16001,64 @@ msgid "Error in brailling math: see NVDA error log for details"
 msgstr "Fel vid punktskriftsvisning av matematik: se NVDA-felloggen för mer information"
 
 #. Translators: this message alerts users to an error in navigating math.
-#: mathPres\MathCAT\MathCAT.py:165
+#: mathPres\MathCAT\MathCAT.py:170
 msgctxt "math"
 msgid "Error in navigating math"
 msgstr "Fel vid narigering av matematik"
 
 #. Translators: this message alerts users to an error brailling math.
-#: mathPres\MathCAT\MathCAT.py:185
+#: mathPres\MathCAT\MathCAT.py:190
 msgctxt "math"
 msgid "Error in brailling math"
 msgstr "“Fel vid punktskriftsvisning av matematik.”"
 
+#. Translators: Description of a MathCAT navigation gesture.
+#: mathPres\MathCAT\MathCAT.py:196
+msgid "Navigates within math"
+msgstr "Navigerar inom matematik"
+
 #. Translators: Message to be announced during Keyboard Help
-#: mathPres\MathCAT\MathCAT.py:191
+#: mathPres\MathCAT\MathCAT.py:202
 msgid "Copy navigation focus to clipboard"
 msgstr "Kopiera navigationsfokus till klippbordet"
 
 #. Translators: Name of the section in "Input gestures" dialog.
-#: mathPres\MathCAT\MathCAT.py:193
+#: mathPres\MathCAT\MathCAT.py:204
 msgid "Clipboard"
 msgstr "Klippbordet"
 
 #. Translators: copy to clipboard
-#: mathPres\MathCAT\MathCAT.py:239
+#: mathPres\MathCAT\MathCAT.py:250
 msgctxt "math"
 msgid "copy as "
 msgstr "kopiera som "
 
 #. Translators: this message directs users to look in the log file
-#: mathPres\MathCAT\MathCAT.py:340
+#: mathPres\MathCAT\MathCAT.py:351
 msgctxt "math"
 msgid "Error navigating math"
 msgstr "Fel vid navigering av matematik"
 
 #. Translators: this message reports when invalid math is found.
-#: mathPres\MathCAT\MathCAT.py:363
+#: mathPres\MathCAT\MathCAT.py:374
 msgctxt "math"
 msgid "Invalid math formatting found"
 msgstr "Felaktig formatering av matematik har hittats"
 
 #. Translators: this message reports an error in speaking math.
-#: mathPres\MathCAT\MathCAT.py:390
+#: mathPres\MathCAT\MathCAT.py:401
 msgctxt "math"
 msgid "Error in speaking math."
 msgstr "Fel när matematik talades."
 
 #. Translators: this message reports illegal MathML.
-#: mathPres\MathCAT\MathCAT.py:415
+#: mathPres\MathCAT\MathCAT.py:426
 msgctxt "math"
 msgid "Illegal MathML found."
 msgstr "Ogiltig MathML hittades."
 
 #. Translators: this message reports an error in brailling math.
-#: mathPres\MathCAT\MathCAT.py:422
+#: mathPres\MathCAT\MathCAT.py:433
 msgctxt "math"
 msgid "Error in brailling math."
 msgstr "Fel vid punktskriftsvisning av matematik."
@@ -16065,7 +16070,7 @@ msgstr "Fel vid punktskriftsvisning av matematik."
 #, python-brace-format
 msgctxt "math"
 msgid "{lang} ({code})"
-msgstr ""
+msgstr "{lang} ({code})"
 
 #. Translators: Math language settings menu item: Automatic uses the voice's language.
 #. Translators: options for decimal separator -- "Auto" = automatically pick the choice based on the language

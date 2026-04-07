@@ -183,9 +183,10 @@ class FullScreenMagnifier(Magnifier):
 			log.debug("Mouse button pressed, skipping cursor repositioning to avoid interfering with click")
 			return
 
-		params = self._getMagnifierParameters(self._currentCoordinates)
-		centerX = int(params.coordinates.x + (params.magnifierSize.width / 2))
-		centerY = int(params.coordinates.y + (params.magnifierSize.height / 2))
+		coordinates = self._getCoordinatesForMode(self._currentCoordinates)
+		params = self._getMagnifierParameters(coordinates)
+		centerX = params.coordinates.x + params.magnifierSize.width // 2
+		centerY = params.coordinates.y + params.magnifierSize.height // 2
 		winUser.setCursorPos(centerX, centerY)
 
 	def _borderPos(
