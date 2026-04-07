@@ -202,7 +202,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getLineCount(self):
 		return watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_GETLINECOUNT, 0, 0)
 
-	def _getTextRange(self, start, end):
+	def _getTextRange(self, start: int, end: int) -> str:
 		if end < start:
 			log.error(
 				f"End offset must be greater than or equal to start offset. Got {start=}, {end=}.",
