@@ -363,7 +363,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 		synthConfig = config.conf["speech"][synth.name]
 		try:
 			# need to set Language before the MathML for DecimalSeparator canonicalization
-			language: str = getLanguageToUse(mathml)
+			language: str = getLanguageToUse()
 			# MathCAT should probably be extended to accept "extlang" tagging, but it uses lang-region tagging at the moment
 			libmathcat.SetPreference("Language", language)
 			libmathcat.SetMathML(mathml)

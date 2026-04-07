@@ -7,7 +7,6 @@ from collections.abc import Callable
 from dataclasses import dataclass
 import glob
 import os
-import re
 from zipfile import ZipFile
 
 import libmathcat_py as libmathcat
@@ -20,13 +19,9 @@ from NVDAState import ReadPaths
 from . import rulesUtils
 
 
-RE_MATH_LANG: re.Pattern = re.compile(r"""<math .*(xml:)?lang=["']([^'"]+)["'].*>""")
-
-
-def getLanguageToUse(_mathMl: str = "") -> str:
+def getLanguageToUse() -> str:
 	"""Get the language preference, falling back to English if it is Auto.
 
-	:param _mathMl: The MathML string to examine for language. Not used. Defaults to the empty string.
 	:returns: The language string to use.
 	"""
 	mathCATLanguageSetting: str = "en"

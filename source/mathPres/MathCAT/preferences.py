@@ -339,11 +339,6 @@ class MathCATUserPreferences:
 	@staticmethod
 	def _createConfigForSpeechStyle(mathLang: str) -> str:
 		mathConf = config.conf["math"]
-		if mathLang == "Auto":
-			log.debugWarning(
-				"Math language 'Auto' is not supported. defaulting to en for speech style",
-			)
-			mathLang = "en"
 		if mathLang not in mathConf["speech"]:
 			mathConf["speech"][mathLang] = {"speechStyle": ""}
 		return mathLang
