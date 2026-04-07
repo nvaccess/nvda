@@ -3356,7 +3356,7 @@ This option is enabled by default.
 
 ###### Automatically zoom out of two-dimensional notation {#MathNavAutoZoom}
 
-Auto zoom out of 2D expressions like fractions (use `shift+arrow` to force zoom out if this is unchecked).
+Auto zoom out of 2D expressions like fractions (use `upArrow` to manually zoom out if this is unchecked).
 This option is enabled by default.
 
 | . {.hideHeaderRow} | . |
