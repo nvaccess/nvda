@@ -3107,7 +3107,7 @@ You can configure reporting of:
   * Comments
   * Bookmarks
   * Editor revisions
-  * Spelling errors [(Speech, Sound, Braille)](#ReportSpellingErrors)
+  * Spelling or grammar errors [(Speech, Sound, Braille)](#ReportSpellingErrors)
 * Pages and spacing
   * Page numbers
   * Line numbers
