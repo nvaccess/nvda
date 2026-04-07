@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-27 02:24+0000\n"
-"PO-Revision-Date: 2026-03-30 00:26\n"
+"POT-Creation-Date: 2026-04-01 05:05+0000\n"
+"PO-Revision-Date: 2026-04-06 00:26\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -2193,12 +2193,12 @@ msgid "gesture map File Error"
 msgstr "Fehler in der Zuweisungsdatei für Tastenzuordnungen"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:797
+#: core.py:803
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA wird gestartet. Bitte warten..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:945
+#: core.py:951
 msgid "NVDA started"
 msgstr "NVDA ist bereit"
 
@@ -15566,25 +15566,25 @@ msgstr "Erweiterungen aktualisiert. Starten Sie NVDA neu, damit die Änderungen 
 #: gui\addonStoreGui\controls\messageDialogs.py:691
 msgctxt "addonStore"
 msgid "Copy Settings to System-wide Configuration"
-msgstr ""
+msgstr "Einstellungen in die systemweite Konfiguration kopieren"
 
 #. Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:712
 msgctxt "addonStore"
 msgid "One or more add-ons are currently enabled in your NVDA configuration. If run on secure screens, they will have unrestricted, higher-than-administrator level access to your entire system. You are strongly encouraged to copy only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens."
-msgstr ""
+msgstr "In Ihrer NVDA-Konfiguration sind derzeit ein oder mehrere NVDA-Erweiterungen aktiviert. Wenn diese auf gesicherten Bildschirmen ausgeführt werden, verfügen sie über uneingeschränkten Zugriff auf Ihr gesamtes System, der über die Administratorrechte hinausgeht. Es wird dringend empfohlen, nur diejenigen zu kopieren, die Sie wirklich unbedingt benötigen, um NVDA während der Anmeldung und auf gesicherten Bildschirmen nutzen zu können."
 
 #. Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:722
 msgctxt "addonStore"
 msgid "The system-wide NVDA configuration contains add-ons that are not present in your configuration. If you continue, these add-ons will be removed from the system-wide configuration."
-msgstr ""
+msgstr "Die systemweite NVDA-Konfiguration enthält NVDA-Erweiterungen, die in Ihrer Konfiguration nicht vorhanden sind. Wenn Sie fortfahren, werden diese aus der systemweiten Konfiguration entfernt."
 
 #. Translators: Instructional text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:731
 msgctxt "addonStore"
 msgid "Check only the add-ons you wish to copy to the system-wide configuration."
-msgstr ""
+msgstr "Wählen Sie nur die NVDA-Erweiterungen aus, die Sie in die systemweite Konfiguration kopieren möchten."
 
 #. Translators: The label of the list which allows users to select which add-ons to copy to the system profile
 #: gui\addonStoreGui\controls\messageDialogs.py:743
@@ -15604,13 +15604,13 @@ msgstr "Name"
 #: gui\addonStoreGui\controls\messageDialogs.py:750
 msgctxt "addonStore"
 msgid "User version"
-msgstr ""
+msgstr "Version (Benutzer)"
 
 #. Translators: The label for a column in the copy add-ons dialog that displays the version of the add-on present in the system-wide configuration
 #: gui\addonStoreGui\controls\messageDialogs.py:752
 msgctxt "addonStore"
 msgid "System-wide version"
-msgstr ""
+msgstr "Version (System)"
 
 #. Translators: The label for a button in the copy add-ons dialog which will initiate the copy process
 #: gui\addonStoreGui\controls\messageDialogs.py:767
@@ -15628,13 +15628,13 @@ msgstr "Abbrechen"
 #: gui\addonStoreGui\controls\messageDialogs.py:794
 msgctxt "addonStore"
 msgid "Not installed"
-msgstr ""
+msgstr "Nicht installiert"
 
 #. Translators: Prepended to the name of an add-on to indicate that it will be removed from the system-wide configuration.
 #: gui\addonStoreGui\controls\messageDialogs.py:796
 msgctxt "addonStore"
 msgid "[remove]"
-msgstr ""
+msgstr "[remove]"
 
 #. Translators: A message to warn the user when attempting to copy add-ons for use on secure screens
 #: gui\addonStoreGui\controls\messageDialogs.py:864
@@ -15651,8 +15651,8 @@ msgstr[1] "Sie haben {num} NVDA-Erweiterungen ausgewählt, die in die systemweit
 msgctxt "addonStore"
 msgid "This action will remove {num} add-on from NVDA's system-wide configuration. "
 msgid_plural "This action will remove {num} add-ons from NVDA's system-wide configuration. "
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Durch diesen Vorgang werden {num} NVDA-Erweiterung aus der systemweiten Konfiguration von NVDA entfernt. "
+msgstr[1] "Durch diesen Vorgang werden {num} NVDA-Erweiterungen aus der systemweiten Konfiguration von NVDA entfernt. "
 
 #. Translators: A prompt asking the user to confirm whether to perform an action.
 #: gui\addonStoreGui\controls\messageDialogs.py:885
@@ -15996,59 +15996,64 @@ msgid "Error in brailling math: see NVDA error log for details"
 msgstr "Fehler bei der Braille-Umsetzung von mathematischen Inhalten: Einzelheiten finden Sie im NVDA-Fehlerprotokoll"
 
 #. Translators: this message alerts users to an error in navigating math.
-#: mathPres\MathCAT\MathCAT.py:165
+#: mathPres\MathCAT\MathCAT.py:170
 msgctxt "math"
 msgid "Error in navigating math"
 msgstr "Fehler beim Navigieren in mathematischen Inhalten"
 
 #. Translators: this message alerts users to an error brailling math.
-#: mathPres\MathCAT\MathCAT.py:185
+#: mathPres\MathCAT\MathCAT.py:190
 msgctxt "math"
 msgid "Error in brailling math"
 msgstr "Fehler bei der Braille-Umsetzung von mathematischen Inhalten."
 
+#. Translators: Description of a MathCAT navigation gesture.
+#: mathPres\MathCAT\MathCAT.py:196
+msgid "Navigates within math"
+msgstr "Navigiert durch die Mathematische Formel"
+
 #. Translators: Message to be announced during Keyboard Help
-#: mathPres\MathCAT\MathCAT.py:191
+#: mathPres\MathCAT\MathCAT.py:202
 msgid "Copy navigation focus to clipboard"
 msgstr "Navigationsfokus in die Zwischenablage kopieren"
 
 #. Translators: Name of the section in "Input gestures" dialog.
-#: mathPres\MathCAT\MathCAT.py:193
+#: mathPres\MathCAT\MathCAT.py:204
 msgid "Clipboard"
 msgstr "Zwischenablage"
 
 #. Translators: copy to clipboard
-#: mathPres\MathCAT\MathCAT.py:239
+#: mathPres\MathCAT\MathCAT.py:250
 msgctxt "math"
 msgid "copy as "
 msgstr "kopieren als "
 
 #. Translators: this message directs users to look in the log file
-#: mathPres\MathCAT\MathCAT.py:340
+#: mathPres\MathCAT\MathCAT.py:351
 msgctxt "math"
 msgid "Error navigating math"
 msgstr "Fehler beim Navigieren in mathematischen Inhalten"
 
 #. Translators: this message reports when invalid math is found.
-#: mathPres\MathCAT\MathCAT.py:363
+#: mathPres\MathCAT\MathCAT.py:374
 msgctxt "math"
 msgid "Invalid math formatting found"
 msgstr "Ungültige mathematische Formatierung gefunden"
 
 #. Translators: this message reports an error in speaking math.
-#: mathPres\MathCAT\MathCAT.py:390
+#: mathPres\MathCAT\MathCAT.py:401
 msgctxt "math"
 msgid "Error in speaking math."
 msgstr "Fehler beim Sprechen von mathematischen Inhalten."
 
 #. Translators: this message reports illegal MathML.
-#: mathPres\MathCAT\MathCAT.py:415
+#: mathPres\MathCAT\MathCAT.py:426
 msgctxt "math"
 msgid "Illegal MathML found."
 msgstr "Ungültiges MathML gefunden."
 
 #. Translators: this message reports an error in brailling math.
-#: mathPres\MathCAT\MathCAT.py:422
+#: mathPres\MathCAT\MathCAT.py:433
 msgctxt "math"
 msgid "Error in brailling math."
 msgstr "Fehler bei der Braille-Umsetzung von mathematischen Inhalten."

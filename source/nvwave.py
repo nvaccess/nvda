@@ -232,6 +232,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 		format.wBitsPerSample = bitsPerSample
 		format.nBlockAlign: int = bitsPerSample // 8 * channels
 		format.nAvgBytesPerSec = samplesPerSec * format.nBlockAlign
+		self._lastActiveTime: float | None = None
 		self._audioDucker = None
 		if wantDucking:
 			import audioDucking
@@ -249,7 +250,6 @@ class WavePlayer(garbageHandler.TrackedObject):
 		self._doneCallbacks = {}
 		self._instances[self._player] = self
 		self.open()
-		self._lastActiveTime: typing.Optional[float] = None
 		self._isPaused: bool = False
 		if config.conf["audio"]["audioAwakeTime"] > 0 and WavePlayer._silenceDevice != outputDevice:
 			# The output device has changed. (Re)initialize silence.

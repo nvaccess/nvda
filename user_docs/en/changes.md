@@ -71,7 +71,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)
 * Subclasses of `browseMode.BrowseModeDocumentTreeInterceptor` that support screen layout being on and off should override the `_toggleScreenLayout` method, rather than implementing `script_toggleScreenLayout` directly. (#19487)
 * A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handleCOMErrors`. (#19646, @Emil-18)
-  * This method calls `_getUIACacheablePropertyValue`, and takes an extra argument (`onError`), that specify the value that should be returned if a `COMError` is raised.
+  * This method calls `_getUIACacheablePropertyValue`, and takes an extra argument (`onError`) that specifies the value that should be returned if a `COMError` is raised.
 * Clarified NV Access's policy on API breaking changes in the Developer Guide. (#19599)
 * The `scons tests` build target has been removed, as it was misleadingly named.
 It only ran the translation string comment check, which is equivalent to `scons checkPot`.
