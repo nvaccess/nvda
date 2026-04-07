@@ -1,3 +1,5 @@
+<!-- markdownlint-disable-file MD060 -->
+
 # NVDA NVDA_VERSION User Guide
 
 [TOC]
@@ -2190,10 +2192,9 @@ If you find that NVDA is reading punctuation in the wrong language for a particu
 
 ##### Unicode normalization {#SpeechUnicodeNormalization}
 
-When this option is enabled, Unicode normalization is performed on the text that is spoken by NVDA.
+When this option is enabled, unicode normalization is performed on the text that is spoken by NVDA.
 This is beneficial when speaking characters that can be represented in several forms.
-NVDA uses the NFKC (Normalization Form Compatibility Composition) algorithm, with additional normalization applied.
-NFKC provides the following benefits, among others:
+NVDA uses the NFKC (Normalization Form Compatibility Composition) algorithm, which provides the following benefits, among others:
 
 1. The bold and italic versions of characters that are part of the Unicode standard and are commonly used on social media are normalized to their most common compatible equivalent.
 For example, the Latin letter "h" can also be presented as "𝐡" (bold), "ℎ" (italic), etc. but will always be spoken as "h" when normalization is enabled.
@@ -2207,11 +2208,11 @@ This aspect of normalization also aids in reading equations in the Microsoft Wor
 
    Unicode normalization ensures that only one form will be used throughout all speech output, which is the single-character variant.
 
-1. Decomposition of some ligatures, including "ĳ" (ligature ij) to their two letter form ("ij").
+1. Decomposition of some ligatures, Including "ĳ" (ligature ij) to their two letter form ("ij").
 
 1. Stable ordering of modifiers in composite characters, for example in ancient Hebrew.
 
-The additional normalization in NVDA handles decorative letter variants that the standard NFKC algorithm does not decompose.
+1. Normalization of decorative letter variants that the standard NFKC algorithm does not decompose.
 Certain Unicode characters, such as negative circled Latin capital letters (🅐–🅩) and negative squared Latin capital letters (🅲–🅩), are treated as autonomous symbols by the Unicode standard and have no compatibility decomposition.
 NVDA extends NFKC by mapping these characters to their plain Latin letter equivalents (A–Z).
 Note that a small number of negative squared letters that have emoji semantics (🅰, 🅱, 🅾, 🅿) are excluded from this mapping to preserve their distinct meaning.
@@ -2933,6 +2934,54 @@ This option is disabled by default.
 |---|---|
 |Options |Disabled, Enabled|
 |Default |Disabled|
+
+#### Follow mouse {#MagnifierFollowMouse}
+
+This checkbox controls whether the magnifier should follow the mouse pointer.
+When enabled, the magnified area will automatically move to follow the mouse pointer, which can be helpful for users who navigate primarily using the mouse rather than the keyboard.
+
+This option is enabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Enabled|
+
+#### Follow system focus {#MagnifierFollowSystemFocus}
+
+This checkbox controls whether the magnifier should follow the system focus.
+When enabled, the magnified area will automatically move to follow the system focus, which can be helpful for users who navigate primarily using the keyboard and want the magnifier to track their navigation.
+
+This option is enabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Enabled|
+
+#### Follow review cursor {#MagnifierFollowReviewCursor}
+
+This checkbox controls whether the magnifier should follow the review cursor.
+When enabled, the magnified area will automatically move to follow the review cursor, which can be helpful for users who use the review cursor to navigate through content and want the magnifier to track their navigation.
+
+This option is enabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Enabled|
+
+#### Follow navigator object {#MagnifierFollowNavigatorObject}
+
+This checkbox controls whether the magnifier should follow the navigator object.
+When enabled, the magnified area will automatically move to follow the navigator object, which can be helpful for users who use object navigation to navigate through content and want the magnifier to track their navigation.
+
+This option is enabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Enabled|
 
 ##### Keep mouse centered {#MagnifierKeepMouseCentered}
 
@@ -6335,5 +6384,3 @@ The following values can be set under this registry key:
 If you require further information or assistance regarding NVDA, please visit the [NVDA web site](NVDA_URL).
 Here, you can find additional documentation, as well as technical support and community resources.
 This site also provides information and resources concerning NVDA development.
-
-<!-- markdownlint-disable-file MD060 -->

@@ -6000,8 +6000,6 @@ class MagnifierPanel(SettingsPanel):
 			sizer=settingsSizer,
 		)
 
-		sHelper.addItem(wx.StaticText(self, label=self.panelDescription))
-
 		# GENERAL GROUP
 		# Translators: This is the label for a group of general magnifier options in the
 		# magnifier settings panel
@@ -6013,7 +6011,7 @@ class MagnifierPanel(SettingsPanel):
 
 		# ZOOM SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the  zoom level.
-		zoomLabelText = _(" &zoom level:")
+		zoomLabelText = _("Default &zoom level:")
 
 		zoomValues = magnifierConfig.ZoomLevel.zoom_range()
 		zoomChoices = magnifierConfig.ZoomLevel.zoom_strings()
@@ -6024,7 +6022,7 @@ class MagnifierPanel(SettingsPanel):
 			choices=zoomChoices,
 		)
 		self.bindHelpEvent(
-			"ZoomLevel",
+			"MagnifierDefaultZoom",
 			self.zoomList,
 		)
 
@@ -6042,14 +6040,14 @@ class MagnifierPanel(SettingsPanel):
 
 		# FILTER SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the  filter
-		filterLabelText = _(" &filter:")
+		filterLabelText = _("Default &filter:")
 		filterChoices = [f.displayString for f in Filter]
 		self.filterList = generalGroup.addLabeledControl(
 			filterLabelText,
 			wx.Choice,
 			choices=filterChoices,
 		)
-		self.bindHelpEvent("MagnifierFilter", self.filterList)
+		self.bindHelpEvent("MagnifierDefaultFilter", self.filterList)
 
 		# Set  value from config
 		filterValue = magnifierConfig.getDefaultFilter()
@@ -6078,7 +6076,7 @@ class MagnifierPanel(SettingsPanel):
 			max=100,
 		)
 		self.bindHelpEvent(
-			"MagnifierPanStep",
+			"MagnifierPanningStepSize",
 			self.panSpinCtrl,
 		)
 
@@ -6089,25 +6087,25 @@ class MagnifierPanel(SettingsPanel):
 		# FOCUS GROUP
 		# Translators: This is the label for a group of focus magnifier options in the
 		# magnifier settings panel
-		focusGroupText = _("Focus")
-		focusGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=focusGroupText)
-		focusGroupBox = focusGroupSizer.GetStaticBox()
-		focusGroup = guiHelper.BoxSizerHelper(self, sizer=focusGroupSizer)
-		sHelper.addItem(focusGroup)
+		# focusGroupText = _("Focus")
+		# focusGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=focusGroupText)
+		# focusGroupBox = focusGroupSizer.GetStaticBox()
+		# focusGroup = guiHelper.BoxSizerHelper(self, sizer=focusGroupSizer)
+		# sHelper.addItem(focusGroup)
 
 		# placeholder for options Mouse, System focus, Review, and Navigator object.
 		# Translators: placeholder for Mouse
-		mouseLabelText = _("Mouse (placeholder)")
-		focusGroup.addItem(wx.StaticText(focusGroupBox, label=mouseLabelText))
+		# mouseLabelText = _("Mouse")
+		# focusGroup.addItem(wx.StaticText(focusGroupBox, label=mouseLabelText))
 		# Translators: placeholder for System focus
-		systemFocusLabelText = _("System focus (placeholder)")
-		focusGroup.addItem(wx.StaticText(focusGroupBox, label=systemFocusLabelText))
+		# systemFocusLabelText = _("System focus")
+		# focusGroup.addItem(wx.StaticText(focusGroupBox, label=systemFocusLabelText))
 		# Translators: placeholder for  Review
-		reviewLabelText = _("Review (placeholder)")
-		focusGroup.addItem(wx.StaticText(focusGroupBox, label=reviewLabelText))
+		# reviewLabelText = _("Review")
+		# focusGroup.addItem(wx.StaticText(focusGroupBox, label=reviewLabelText))
 		# Translators: placeholder for  Navigator object
-		navigatorObjectLabelText = _("Navigator object (placeholder)")
-		focusGroup.addItem(wx.StaticText(focusGroupBox, label=navigatorObjectLabelText))
+		# navigatorObjectLabelText = _("Navigator object")
+		# focusGroup.addItem(wx.StaticText(focusGroupBox, label=navigatorObjectLabelText))
 
 		# FULLSCREEN GROUP
 		# Translators: This is the label for a group of fullscreen magnifier options in the
@@ -6120,7 +6118,7 @@ class MagnifierPanel(SettingsPanel):
 
 		# FULLSCREEN MODE SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the  full-screen mode
-		fullscreenModeLabelText = _(" fullscreen &mode:")
+		fullscreenModeLabelText = _("Default focus &mode:")
 		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
 		self.fullscreenModeList = fullscreenGroup.addLabeledControl(
 			fullscreenModeLabelText,
@@ -6128,7 +6126,7 @@ class MagnifierPanel(SettingsPanel):
 			choices=fullscreenModeChoices,
 		)
 		self.bindHelpEvent(
-			"MagnifierFullscreenMode",
+			"MagnifierDefaultFullscreenFocusMode",
 			self.fullscreenModeList,
 		)
 
