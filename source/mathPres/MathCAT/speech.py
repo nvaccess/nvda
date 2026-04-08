@@ -17,7 +17,6 @@ from speech.commands import (
 	SpeechCommand,
 	SynthCommand,
 )
-from logHandler import log
 from synthDriverHandler import getSynth, SynthDriver
 from .localization import getLanguageToUse
 from speech import getCurrentLanguage

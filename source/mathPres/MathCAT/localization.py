@@ -31,7 +31,7 @@ def getLanguageToUse() -> str:
 	except Exception:
 		log.exception()
 
-	if mathCATLanguageSetting == "Auto":
+	if mathCATLanguageSetting.casefold() == "auto":
 		log.debugWarning("Math language 'Auto' is unsupported. Falling back to 'en'.")
 		mathCATLanguageSetting = "en"
 	return mathCATLanguageSetting
