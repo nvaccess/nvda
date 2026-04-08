@@ -678,6 +678,12 @@ def upgradeConfigFrom_21_to_22(profile: ConfigObj):
 	if language is None:
 		log.debug("math.speech.language not set in profile. No action taken.")
 		return
+	if not isinstance(language, str):
+		log.error(
+			f"Invalid math.speech.language value during profile upgrade: "
+			f"expected str, got {type(language).__name__}. Skipping upgrade step.",
+		)
+		return
 	if language.casefold() == "auto":
 		speechConf["language"] = "en"
 		log.debug("Changed math.speech.language from 'Auto' to 'en'.")
