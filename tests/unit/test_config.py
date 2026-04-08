@@ -1230,7 +1230,10 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_21_to_22(unittest.TestCase):
 
 	def test_noSpeechSection_unchanged(self):
 		"""Profile with [math] but no [[speech]] sub-section is not modified."""
-		configString = "[math]"
+		configString = """
+[math]
+	impairment = Blindness
+"""
 		profile = _loadProfile(configString)
 		upgradeConfigFrom_21_to_22(profile)
 		with self.assertRaises(KeyError):
@@ -1240,7 +1243,9 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_21_to_22(unittest.TestCase):
 		"""Profile with [math] / [[speech]] but no language key is not modified."""
 		configString = """
 [math]
+	impairment = Blindness
 	[[speech]]
+		verbosity = Medium
 """
 		profile = _loadProfile(configString)
 		upgradeConfigFrom_21_to_22(profile)
