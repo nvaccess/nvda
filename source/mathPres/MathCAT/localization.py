@@ -203,7 +203,7 @@ def getSpeechStyles(languageCode: str) -> list[str]:
 	"""
 
 	resultSpeechStyles = []
-	if languageCode == "Auto":
+	if languageCode.casefold() == "auto":
 		# Fall back to English
 		log.debugWarning("Math language 'Auto' is not supported. Using 'en'.")
 		languageCode = "en"
