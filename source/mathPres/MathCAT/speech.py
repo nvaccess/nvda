@@ -113,9 +113,10 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 				out.append(command(multiplier=int(m.group(m.lastgroup)) / 100.0))
 				resetProsody.append(command)
 		elif m.lastgroup == "prosodyReset":
-			# for command in resetProsody:    # only supported commands were added, so no need to check
-			command: type["BaseProsodyCommand"] = resetProsody.pop()
-			out.append(command(multiplier=1))
+			while len(resetProsody) > 0:
+				# only supported commands were added, so no need to check
+				command: type["BaseProsodyCommand"] = resetProsody.pop()
+				out.append(command(multiplier=1))
 		elif m.lastgroup == "phonemeText":
 			if usePhoneme:
 				out.append(PhonemeCommand(m.group("ipa"), text=m.group("phonemeText")))
