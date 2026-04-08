@@ -64,8 +64,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 * Updated components:
   * Python from 3.13.11 to 3.13.12. (#19572, @dpy013)
-  * Ruff to 0.15.4. (#19548)
-  * uv to 0.10.6. (#19548)
+  * Ruff to 0.15.9. (#19548, #19908)
+  * uv to 0.11.4. (#19548, #19908)
   * Requests to 2.33.0. (#19877)
   * cryptography to 46.0.6. (#19877)
 * NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)
