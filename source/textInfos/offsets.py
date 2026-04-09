@@ -583,13 +583,13 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			self._startOffset = self._endOffset
 
 	def expand(self, unit):
-		if (
-			unit == textInfos.UNIT_WORD
-			and self.isCollapsed
-			and not self.obj.flowsTo
-			and self._startOffset == self._getStoryLength()
-		):
-			return
+		if unit == textInfos.UNIT_WORD and self.isCollapsed and self._startOffset == self._getStoryLength():
+			try:
+				flowsTo = self.obj.flowsTo
+			except (AttributeError, NotImplementedError):
+				flowsTo = None
+			if not flowsTo:
+				return
 		self._startOffset, self._endOffset = self._getUnitOffsets(unit, self._startOffset)
 
 	def copy(self):
