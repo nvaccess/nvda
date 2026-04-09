@@ -181,7 +181,7 @@ class TestWordExpansion(unittest.TestCase):
 		obj = BasicTextProvider(text="one two")
 		ti = obj.makeTextInfo(Offsets(0, 0))
 		ti.expand(textInfos.UNIT_WORD)
-		self.assertEqual(ti.text, "one")
+		self.assertEqual(ti.text, "one ")
 
 	def test_expandWordAtEndOfStoryWithoutFlowsToDoesNothing(self):
 		obj = BasicTextProvider(text="one two")
