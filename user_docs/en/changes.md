@@ -2,7 +2,7 @@
 
 ## 2026.1
 
-This release includes built-in support for reading math content with MathCAT.
+This release includes support for reading math content with MathCAT, which is now built-in to NVDA.
 
 There have been several improvements to speech.
 Spelling and grammar errors can now be reported with a sound instead of speech when reading.
@@ -13,7 +13,7 @@ NVDA now supports 64-bit SAPI 5 voices.
 Braille support has also been improved.
 It now continues to work when switching to a secure screen, like the sign-in screen or User Account Control dialog.
 NVDA messages from the local computer are now shown in braille when controlling a computer via Remote Access.
-Spelling and grammar errors and the number of items in a list in browse mode can now be shown in braille.
+Spelling and grammar errors, as well as the number of items in a list in browse mode, can now be shown in braille.
 Other braille bug fixes, including in Microsoft Outlook and LibreOffice Writer, have also been added.
 
 In browse mode in web browsers, NVDA no longer treats controls with 0 width or height as invisible.
