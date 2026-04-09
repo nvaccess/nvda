@@ -64,7 +64,7 @@ This is more noticeable for Windows releases which are enablement packages on to
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Updated components:
-  * Python from 3.13.11 to 3.13.12. (#19572, @dpy013)
+  * Python from 3.13.12 to 3.13.13. (#19921, @dpy013)
   * Ruff to 0.15.9. (#19548, #19908)
   * uv to 0.11.4. (#19548, #19908)
   * Requests to 2.33.0. (#19877)
