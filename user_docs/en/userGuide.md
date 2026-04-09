@@ -42,7 +42,7 @@ Major highlights include:
 
 * Operating Systems: 64-bit editions of Windows 10 and Windows 11.
 Windows Server 2016, 2019, 2022 and 2025.
-  * both AMD64 and ARM64 variants of Windows 11 are supported, including Copilot+ PCs.
+  * Both AMD64 and ARM64 variants of Windows 11 are supported, including Copilot+ PCs.
   * Note that ARM64 Windows 10 is not supported.
   * Note that Windows 10 versions older than 22H2 and Windows Server versions older than 2022 are no longer under active support by NV Access.
 * at least 500 MB of storage space.
@@ -50,7 +50,7 @@ Windows Server 2016, 2019, 2022 and 2025.
 #### Recommended System Requirements {#RecommendedSystemRequirements}
 
 * Operating Systems: Windows 11 or Windows 10 (Version 22H2), and Windows Server 2025 or 2022.
-  * both AMD64 and ARM64 variants of Windows 11 are supported, including Copilot+ PCs.
+  * Both AMD64 and ARM64 variants of Windows 11 are supported, including Copilot+ PCs.
   * Note that ARM64 Windows 10 is not supported.
 * at least 500 MB of storage space.
 * at least 4 GB of RAM.
@@ -1240,9 +1240,9 @@ MathType needs to be installed in order for this to work.
 The trial version is sufficient.
 It can be downloaded from the [MathType presentation page](https://www.wiris.com/en/mathtype/).
 * Adobe Acrobat Reader:
-Tagged PDF with MathML Structure elements.
+Tagged PDF with MathML structure elements.
 * Foxit PDF Reader:
-Tagged PDF with MathML embedded as Associated files or MathML Structure Elements.
+Tagged PDF with MathML embedded as associated files or MathML structure elements.
 * Kindle Reader for PC:
 NVDA can read and navigate Math in Kindle for PC for books with accessible math.
 
@@ -1280,7 +1280,7 @@ To activate the button or the element containing the formula, press ctrl+enter.
 Below is a summary of the most useful commands for those wanting to quickly get started with navigating mathematical content.
 
 * Use the arrow keys to move left/right or up/down a mathematical structure (e.g. into/out of a fraction).
-* If inside of a table, `control+arrow` will move by cell.
+* If inside a table, `control+arrow` keys will move by cell.
 * `home` / `end` moves to the start/end of the expression.
 * `space` reads your current position.
 * `shift+upArrow` / `shift+downArrow` will change the mode of navigation, which will be discussed in more detail in the following section.
@@ -1296,11 +1296,11 @@ The format of the math copied to the clipboard can be adjusted through the [math
 
 MathCAT supports the following navigation modes:
 
-* Enhanced Mode: navigation is by mathematically meaningful pieces (operators, delimiters, and operands).
-* Simple mode: moves by words except when you get to a 2D notation (fractions, roots, ...), then it speaks the entire notation.
+* Enhanced mode: navigation is by mathematically meaningful pieces (operators, delimiters, and operands).
+* Simple mode: moves by words except when you get to a 2D notation (fractions, roots, etc), then it speaks the entire notation.
 Zooming in lets you explore the 2D notation in the same mode.
 Zooming out or moving out of the 2D notation brings you back to the outer/higher level of navigation.
-* Character Mode: this is actually two modes - word mode and character mode (zoom in to get "real" character mode).
+* Character mode: this is actually two modes - word mode and character mode (zoom in to get "real" character mode).
 Moves by words/characters.
 This differs for numbers of more than one digit and function names such as "sin" that are multiple characters.
 Otherwise, word and character navigation is the same.
@@ -1319,7 +1319,7 @@ The following are key commands used to navigate math:
 | Read next | `shift+rightArrow` |
 | Describe next | `control+shift+rightArrow` |
 | Zoom out | `upArrow` |
-| Move to cell above in a table, or digit above in columnar math. | `control+upArrow` or `control+alt+upArrow` |
+| Move to cell above in a table, or digit above in columnar math | `control+upArrow` or `control+alt+upArrow` |
 | Change Navigation Mode (Enhanced/Simple/Character) to larger | `shift+upArrow` |
 | Zoom out all the way | `control+shift+upArrow` |
 | Zoom in | `downArrow` |
@@ -1331,7 +1331,7 @@ The following are key commands used to navigate math:
 | Jump to placemarker | `1` through `0` (`0` is 10) |
 | Set placemarker | `control+1` through `control+0` |
 | Read placemarker | `shift+1` through `shift+0` |
-| Describe placemarker | `control+shift+1` through `shift+0` |
+| Describe placemarker | `control+shift+1` through `control+shift+0` |
 | Read current | `space` |
 | Read current cell | `control+space` |
 | Toggle "speech mode" to Read or Describe | `shift+space` |
@@ -1345,19 +1345,19 @@ The following are key commands used to navigate math:
 | Move back to last position | `backspace` |
 <!-- KC:endInclude -->
 
-#### Typical Use
+#### Typical Use {#MathTypicalUse}
 
 Typically, you will start at the first term of an expression and move right as needed.
 You might move up and down levels if needed.
 This is done with the arrow keys.
-`control+alt+arrow` is used to move around tabular entries.
+You can also move around tabular entries with `control+alt+arrow` keys.
 
-Backspace will take you back to where you were, which is not always the same as moving to the left.
-For example, if right arrow moved you out of a fraction, backspace will take you back to where you were in the denominator and left arrow will land on the entire fraction.
+Pressing `backspace` will take you back to where you were, which is not always the same as moving to the left.
+For example, if `rightArrow` moved you out of a fraction, `backspace` will take you back to where you were in the denominator and `leftArrow` will land on the entire fraction.
 
 You will likely find one mode of navigation the most natural for you most of the time.
-The default mode can be set in the math settings panel.
-However, at any time during navigation, you can switch navigation modes using `shift+up/down arrow` to take advantage of the differing strengths of each navigation mode.
+The default mode can be set in [the math settings panel](#MathSettings).
+However, at any time during navigation, you can switch navigation modes using `shift+upArrow/downArrow` to take advantage of the differing strengths of each navigation mode.
 
 ## Braille {#Braille}
 
@@ -2698,7 +2698,7 @@ This option allows you to choose if NVDA should lower the volume of other applic
 This option is only available if NVDA has been installed.
 It is not possible to support audio ducking for portable and temporary copies of NVDA.
 
-Audio ducking is not available when using [Microsoft Speech API version 4 (SAPI 4)](#SAPI4) or 32 bit [Microsoft Speech API version 5 (SAPI 5)](#SAPI5) voices.
+Audio ducking is not available when using [Microsoft Speech API version 4 (SAPI 4)](#SAPI4) or 32-bit [Microsoft Speech API version 5 (SAPI 5)](#SAPI5) voices.
 
 ##### Volume of NVDA sounds follows voice volume {#SoundVolumeFollowsVoice}
 
@@ -2822,14 +2822,14 @@ If this is enabled, NV Access will use the information from update checks, inclu
 Note that although your IP address will be used to calculate your country during the update check, the IP address is never kept.
 Apart from the [mandatory information required to check for updates](#GeneralSettingsCheckForUpdates), the following extra information is also currently sent:
 
-* A unique ID for the current NVDA user, this changes once a month
+* A unique ID for the current NVDA user, which changes once a month
 * NVDA interface language
 * Whether this copy of NVDA is portable or installed
 * Name of the current speech synthesizer in use (including the name of the add-on the driver comes from)
 * Name of the current Braille display in use (including the name of the add-on the driver comes from)
 * The current output Braille table (if Braille is in use)
 
-This information greatly aides NV Access to prioritize future development of NVDA.
+This information greatly aids NV Access to prioritize future development of NVDA.
 
 #### Vision {#VisionSettings}
 
@@ -3039,7 +3039,7 @@ When enabled, NVDA will announce all non-character keys you type on the keyboard
 ##### Play sound for spelling errors while typing {#KeyboardSettingsAlertForSpellingErrors}
 
 When enabled, a short buzzer sound will be played when a word you type contains a spelling error.
-This option is only available if [reporting of spelling errors](#reportSpellingErrors) is enabled in NVDA's Document Formatting Settings.
+This option is only available if [reporting of spelling errors](#ReportSpellingErrors) is enabled in NVDA's Document Formatting Settings.
 
 ##### Handle keys from other applications {#KeyboardSettingsHandleKeys}
 
@@ -3397,7 +3397,7 @@ You can configure reporting of:
   * Comments
   * Bookmarks
   * Editor revisions
-  * Spelling errors [(Off, Speech, Sound, braille)](#reportSpellingErrors)
+  * Spelling or grammar errors [(Speech, Sound, Braille)](#ReportSpellingErrors)
 * Pages and spacing
   * Page numbers
   * Line numbers
@@ -3448,17 +3448,17 @@ Enable this option while proof reading documents in applications such as WordPad
 
 ##### Spelling and grammar error reporting {#ReportSpellingErrors}
 
-This option allows you to configure how spelling and grammar errors are reported while reading text.
-This checklist box has three options:
+The checkboxes in this list allow you to configure how spelling and grammar errors are reported while reading text.
+You can choose any combination of the following three options:
 
-* Speech: NVDA will say "spelling error" or "grammar error" when an error is encountered while reading text
-* Sound: NVDA will play a short buzzer sound when a spelling or grammar error is encountered while reading text
+* Speech: NVDA will say "spelling error" or "grammar error" when an error is encountered while reading text.
+* Sound: NVDA will play a short buzzer sound when a spelling or grammar error is encountered while reading text.
 When navigating word by word or character by character, "out of spelling error" or "out of grammar error" is also reported if the "Speech" or "Sound" option is selected.
 * Braille: NVDA will indicate spelling or grammar errors in braille.
 To have spelling or grammar errors reported in braille, [formatting display with tags](#BrailleFormattingDisplayTags) must be enabled.
 
-Due to performance limitations, errors are not reported with speech or sounds when navigating by paragraph or by cell in tables, no matter the choice selected in this checklist box.
-In these cases, errors can be reported just in braille.
+Due to performance limitations, errors are not reported with speech or sounds when navigating by paragraph or by cell in tables, no matter the options selected.
+In these cases, errors can only be reported in braille.
 
 By default, errors will be reported with speech.
 
@@ -3531,7 +3531,7 @@ If speech rules for the main language cannot be found, English ("en") is used.
 | Options | Automatic, English, English (en-GB), Chinese (Traditional) (zh-TW), Finnish, German, Indonesian, Norwegian Bokmål, Spanish, Swedish, Vietnamese |
 | Default | Automatic (the language of the current voice if supported, or fallback to English) |
 
-###### Speech Style {MathSpeechStyle}
+###### Speech Style {#MathSpeechStyle}
 
 Different styles can be used to speak mathematical content.
 Each [math speech language](#MathSpeechLanguage) has different speech styles available.
@@ -3603,14 +3603,13 @@ This option is disabled by default.
 This option controls how chemical formulae are read.
 Examples for $\mathrm{H}_2\mathrm{O}$:
 
-* SpellOut: "H 2 O" (verbosity controls whether "sub"/"super" is spoken)
-* AsCompound: "Water"
+* Spell it out: "H 2 O" ([verbosity](#MathSpeechVerbosity) controls whether "sub"/"super" is spoken)
 * Off: "H sub 2 O"
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | Spell Out, As Compound, Off |
-| Default | SpellOut |
+| Options | Spell it out, Off |
+| Default | Spell it out |
 
 ###### When entering an equation {#MathNavSpeech}
 
@@ -3620,15 +3619,6 @@ Whether to speak the expression after moving to it or give an overview.
 |---|---|
 | Options | Speak, Describe overview |
 | Default | Speak |
-
-###### Use native math speech in Word and Outlook {#MathUseWordNative}
-
-When enabled, NVDA uses Microsoft Word's built-in math presentation (speech, braille, and interaction) instead of MathCAT when reading and interacting with equations in Word documents.
-
-| . {.hideHeaderRow} | . |
-|---|---|
-| Options | Checked, Unchecked |
-| Default | Unchecked |
 
 ##### Navigation Options {#MathNavigation}
 
@@ -3656,7 +3646,7 @@ This option is enabled by default.
 
 ###### Automatically zoom out of two-dimensional notation {#MathNavAutoZoom}
 
-Auto zoom out of 2D expressions like fractions (use `shift+arrow` to force zoom out if this is unchecked).
+Auto zoom out of 2D expressions like fractions (use `upArrow` to manually zoom out if this is unchecked).
 This option is enabled by default.
 
 | . {.hideHeaderRow} | . |
@@ -3679,7 +3669,7 @@ This option selects the format of math content copied to the clipboard.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | MathML, LaTeX, ASCIIMath |
+| Options | MathML, LaTeX, ASCIIMath, Speech |
 | Default | MathML |
 
 ##### Braille Options {#MathBrailleOptions}
@@ -3703,6 +3693,21 @@ The options allow for either no highlighting, only highlighting of the first cha
 |---|---|
 | Options | Off, First Character, Endpoints, All |
 | Default | Endpoints |
+
+##### Application support {#MathApplicationSupport}
+
+###### Use native math support in Word and Outlook {#MathUseWordNative}
+
+This option disables MathCAT when reading and interacting with equations in Microsoft Word or Outlook.
+This allows you to use the math presentation (speech, braille, and interaction) that is built-in to these programs.
+
+You cannot use MathCAT in Microsoft Word or Outlook when this option is enabled.
+This option does not affect MathCAT support in other programs.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Checked, Unchecked |
+| Default | Unchecked |
 
 #### Add-on Store Settings {#AddonStoreSettings}
 
@@ -3925,7 +3930,8 @@ To copy one or more add-ons to the system-wide configuration, check them in the 
 You are strongly recommended to leave all add-ons that you do not require to access secure screens unchecked.
 
 To get more information about an add-on, select the add-on in the list of add-ons and press the "About add-on..." button.
-The details shown will be for the version in the currently running configuration, unless the add-on is not installed in the currently running configuration, in which case the details of the version installed in the system-wide configuration will be shown.
+The details shown are for the version in the currently running configuration.
+If the add-on is not installed in the currently running configuration, the details of the version in the system-wide configuration are shown instead.
 
 Please note that you may only copy currently enabled add-ons to the system-wide configuration.
 Add-ons that are "pending restart" cannot be copied.
@@ -4725,7 +4731,8 @@ From an add-on's actions menu, using the submenu "Update channel", you can modif
 #### What's new in the current version {#AddonStoreChangelog}
 
 If an add-on lists what's new for the current version, an action will be available to show these changes in browse mode.
-The title of that message will indicate the add-on version, and it will be possible to copy the presented info, and close the message window, via dedicated buttons.
+The add-on version is included in the title of the message.
+Buttons are provided to copy the presented information or close the message window.
 
 ### Incompatible Add-ons {#incompatibleAddonsManager}
 
@@ -4883,7 +4890,7 @@ When using this synthesizer with NVDA, the available voices (accessed from the [
 ### Microsoft Speech API version 5 (SAPI 5) {#SAPI5}
 
 SAPI 5 is a Microsoft standard for software speech synthesizers.
-NVDA supports both 32-bit and 64-bit SAPI5 voices.
+NVDA supports both 32-bit and 64-bit SAPI 5 voices.
 For the best performance and feature compatibility, 64-bit voices should be preferred.
 Many speech synthesizers that comply with this standard may be purchased or downloaded for free from various companies and websites, though your system will probably already come with at least one SAPI 5 voice preinstalled.
 
