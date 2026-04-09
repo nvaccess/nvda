@@ -3331,15 +3331,6 @@ Whether to speak the expression after moving to it or give an overview.
 | Options | Speak, Describe overview |
 | Default | Speak |
 
-###### Use native math speech in Word and Outlook {#MathUseWordNative}
-
-When enabled, NVDA uses Microsoft Word's built-in math presentation (speech, braille, and interaction) instead of MathCAT when reading and interacting with equations in Word documents.
-
-| . {.hideHeaderRow} | . |
-|---|---|
-| Options | Checked, Unchecked |
-| Default | Unchecked |
-
 ##### Navigation Options {#MathNavigation}
 
 ###### Default navigation mode {#MathNavMode}
@@ -3413,6 +3404,21 @@ The options allow for either no highlighting, only highlighting of the first cha
 |---|---|
 | Options | Off, First Character, Endpoints, All |
 | Default | Endpoints |
+
+##### General Options {#MathGeneralOptions}
+
+###### Use native math support in Word and Outlook {#MathUseWordNative}
+
+This option disables MathCAT when reading and interacting with equations in Microsoft Word or Outlook.
+This allows you to use the math presentation (speech, braille, and interaction) that is built-in to these programs.
+
+You cannot use MathCAT in Microsoft Word or Outlook when this option is enabled.
+This option does not affect MathCAT support in other programs.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Checked, Unchecked |
+| Default | Unchecked |
 
 #### Add-on Store Settings {#AddonStoreSettings}
 
