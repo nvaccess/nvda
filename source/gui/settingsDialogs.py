@@ -2988,16 +2988,20 @@ class MathSettingsPanel(SettingsPanel):
 			),
 		)
 
-		# Translators: Text for the general group.
-		generalGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=pgettext("math", "General"))
-		generalGroupBox = generalGroupSizer.GetStaticBox()
-		generalGroup = guiHelper.BoxSizerHelper(self, sizer=generalGroupSizer)
-		sHelper.addItem(generalGroup)
+		appSupportGroupSizer = wx.StaticBoxSizer(
+			wx.VERTICAL,
+			self,
+			# Translators: Text for the application support group in MathCAT options.
+			label=pgettext("math", "Application support"),
+		)
+		appSupportGroupBox = appSupportGroupSizer.GetStaticBox()
+		appSupportGroup = guiHelper.BoxSizerHelper(self, sizer=appSupportGroupSizer)
+		sHelper.addItem(appSupportGroup)
 
 		# Translators: label for checkbox to use native math presentation support instead of MathCAT in Word and Outlook
 		useWordNativeMathText = pgettext("math", "Use native math support in Word and Outlook")
-		self.useWordNativeMathCheckBox = generalGroup.addItem(
-			wx.CheckBox(generalGroupBox, label=useWordNativeMathText),
+		self.useWordNativeMathCheckBox = appSupportGroup.addItem(
+			wx.CheckBox(appSupportGroupBox, label=useWordNativeMathText),
 		)
 		self.bindHelpEvent("MathUseWordNative", self.useWordNativeMathCheckBox)
 		self.useWordNativeMathCheckBox.SetValue(config.conf["math"]["other"]["useWordNativeMath"])

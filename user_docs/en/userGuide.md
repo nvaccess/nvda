@@ -3405,7 +3405,7 @@ The options allow for either no highlighting, only highlighting of the first cha
 | Options | Off, First Character, Endpoints, All |
 | Default | Endpoints |
 
-##### General Options {#MathGeneralOptions}
+##### Application support {#MathApplicationSupport}
 
 ###### Use native math support in Word and Outlook {#MathUseWordNative}
 
