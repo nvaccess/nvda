@@ -579,7 +579,7 @@ class MainFrame(wx.Frame):
 		Cancels the run attempt if the user fails or declines the UAC prompt.
 		"""
 		# Translators: The title of various dialogs displayed when using the System Accessibility Repair Tool
-		genericTitle: str = _("System Accessibility Repair")
+		genericTitle: str = _("System Accessibility Repair Tool")
 		introDialog = _ContinueCancelDialog(
 			self,
 			genericTitle,
@@ -620,7 +620,7 @@ class MainFrame(wx.Frame):
 			if error is not None:
 				messageBox(
 					_(
-						# Translators: message shown to the user on System accessibility repair fail
+						# Translators: message shown to the user on System Accessibility Repair fail
 						"The System Accessibility Repair Tool was unsuccessful. This Windows "
 						"error may provide more information.\n{error}",
 					).format(error=error),
