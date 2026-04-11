@@ -248,12 +248,43 @@ class JAB(Window):
 			clsList.append(ComboBox)
 		elif role == "table":
 			clsList.append(Table)
-		elif self.parent and isinstance(self.parent, Table) and self.parent._jabTableInfo:
+		elif self._hasTableParent():
 			clsList.append(TableCell)
 		elif role == "progress bar":
 			clsList.append(ProgressBar)
 
 		clsList.append(JAB)
+
+	def _hasTableParent(self) -> bool:
+		"""Lightweight check if the immediate parent is a Table.
+
+		On the fast path (parent already cached), returns immediately
+		without any bridge calls.  On the first call, checks the parent's
+		role via a lightweight bridge call and only creates a full NVDAObject
+		when the role is "table" (which involves additional bridge calls).
+		"""
+		if hasattr(self, "_parent"):
+			parent = self._parent
+			return parent is not None and isinstance(parent, Table) and parent._jabTableInfo
+		parentContext = self.jabContext.getAccessibleParentFromContext()
+		if not parentContext:
+			return False
+		try:
+			parentInfo = parentContext.getAccessibleContextInfo()
+		except RuntimeError:
+			log.debugWarning("Could not get accessible context info for parent", exc_info=True)
+			return False
+		if parentInfo.role_en_US != "table":
+			return False
+		if self.indexInParent is None:
+			# Without indexInParent we cannot construct a valid JAB parent;
+			# _get_parent would also fall back to the Window ancestor here.
+			return False
+		# Parent is a table — create the full parent object reusing the context
+		# we already hold, so _get_parent doesn't make a redundant bridge call.
+		self._parent = JAB(jabContext=parentContext)
+		parent = self._parent
+		return parent is not None and isinstance(parent, Table) and parent._jabTableInfo
 
 	@classmethod
 	def kwargsFromSuper(cls, kwargs, relation: str | None = None) -> bool:
