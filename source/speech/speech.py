@@ -3018,7 +3018,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				if formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.SPEECH.value:
 					# Translators: Reported when text contains a spelling error.
 					texts.append(_("spelling error"))
-			elif extraDetail:
+			elif extraDetail and ReportSpellingErrors.SPEECH.value:
 				# Translators: Reported when moving out of text containing a spelling error.
 				texts.append(_("out of spelling error"))
 			textList.extend(texts)
@@ -3032,7 +3032,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				if formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.SPEECH.value:
 					# Translators: Reported when text contains a grammar error.
 					texts.append(_("grammar error"))
-			elif extraDetail:
+			elif extraDetail and ReportSpellingErrors.SPEECH.value:
 				# Translators: Reported when moving out of text containing a grammar error.
 				texts.append(_("out of grammar error"))
 			textList.extend(texts)
