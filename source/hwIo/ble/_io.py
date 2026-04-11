@@ -232,7 +232,7 @@ class Ble(IoBase):
 		self._readEvent.set()
 		self._queuedData.put(data)
 
-	def read(self, num_bytes: int = 1) -> bytes:
+	def read(self, size: int = 1) -> bytes:
 		"""Not implemented for BLE.
 
 		BLE communication uses a push model with notifications rather than polling reads.
