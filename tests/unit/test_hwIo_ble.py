@@ -6,24 +6,15 @@
 """Unit tests for the hwIo.ble module.
 
 These tests cover the BLE scanner, BLE I/O, and device discovery functionality.
-The implementation is part of #19122.
-All tests are skipped until the BLE implementation lands.
 """
 
-# pyright: reportMissingImports=false
-
 import unittest
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import MagicMock, patch
 
-try:
-	from bleak.backends.device import BLEDevice
-	from bleak.backends.scanner import AdvertisementData
-except ModuleNotFoundError:
-	BLEDevice = None
-	AdvertisementData = None
+from bleak.backends.device import BLEDevice
+from bleak.backends.scanner import AdvertisementData
 
 
-@unittest.skip("Requires hwIo.ble implementation from #19122")
 class TestScanner(unittest.TestCase):
 	"""Tests for hwIo.ble.Scanner"""
 
@@ -32,16 +23,25 @@ class TestScanner(unittest.TestCase):
 		self.bleakScannerPatcher = patch("hwIo.ble._scanner.bleak.BleakScanner")
 		self.mockBleakScannerClass = self.bleakScannerPatcher.start()
 
-		self.runCoroutinePatcher = patch("hwIo.ble._scanner.runCoroutine")
-		self.mockRunCoroutine = self.runCoroutinePatcher.start()
 		mockFuture = MagicMock()
 		mockFuture.result.return_value = None
 		mockFuture.exception.return_value = None
-		self.mockRunCoroutine.return_value = mockFuture
 
+		def fakeRunCoroutine(coro: object) -> MagicMock:
+			if hasattr(coro, "close"):
+				coro.close()
+			return mockFuture
+
+		self.runCoroutinePatcher = patch(
+			"hwIo.ble._scanner.runCoroutine",
+			side_effect=fakeRunCoroutine,
+		)
+		self.mockRunCoroutine = self.runCoroutinePatcher.start()
+
+		# Use regular MagicMock for start/stop: the coroutines they
+		# return are immediately closed by fakeRunCoroutine without
+		# being awaited, so they don't need to be awaitable.
 		self.mockScannerInstance = MagicMock()
-		self.mockScannerInstance.start = AsyncMock()
-		self.mockScannerInstance.stop = AsyncMock()
 		self.mockBleakScannerClass.return_value = self.mockScannerInstance
 
 		from hwIo.ble._scanner import Scanner
@@ -163,7 +163,6 @@ class TestScanner(unittest.TestCase):
 		self.assertNotIn(device2, filteredResults)
 
 
-@unittest.skip("Requires hwIo.ble implementation from #19122")
 class TestBle(unittest.TestCase):
 	"""Tests for hwIo.ble.Ble"""
 
@@ -172,11 +171,14 @@ class TestBle(unittest.TestCase):
 		self.bleakClientPatcher = patch("hwIo.ble._io.bleak.BleakClient")
 		self.mockBleakClientClass = self.bleakClientPatcher.start()
 
+		# Use regular MagicMock for client methods (not AsyncMock):
+		# the Ble class wraps every async call in runCoroutine(), which
+		# is itself mocked, so the coroutines returned by _initAndConnect
+		# / disconnect / write_gatt_char are immediately closed by
+		# fakeRunCoroutine without ever being awaited. The inner
+		# self._client.connect() etc. are therefore never called, so
+		# they don't need to be awaitable.
 		self.mockClient = MagicMock()
-		self.mockClient.connect = AsyncMock()
-		self.mockClient.disconnect = AsyncMock()
-		self.mockClient.start_notify = AsyncMock()
-		self.mockClient.write_gatt_char = AsyncMock()
 		self.mockClient.is_connected = True
 		self.mockBleakClientClass.return_value = self.mockClient
 
@@ -188,23 +190,60 @@ class TestBle(unittest.TestCase):
 		self.mockServices = MagicMock()
 		self.mockServices.get_service.return_value = self.mockService
 		mockServicesDict = MagicMock()
-		mockServicesDict.__len__ = lambda self: 1
+		# Configure the MagicMock's __len__ via return_value because Python
+		# looks up dunder methods on the type, not the instance.
+		mockServicesDict.__len__.return_value = 1
 		mockServicesDict.values.return_value = [self.mockService]
 		self.mockServices.services = mockServicesDict
 		self.mockClient.services = self.mockServices
 
-		self.runCoroutineSyncPatcher = patch("hwIo.ble._io.runCoroutineSync")
-		self.mockRunCoroutineSync = self.runCoroutineSyncPatcher.start()
-		self.mockRunCoroutineSync.return_value = None
+		# Ble uses runCoroutine() which returns a Future; the code calls
+		# .result() and .exception() on the returned future. Close the
+		# passed coroutine immediately so Python does not warn about
+		# "coroutine was never awaited" — the mocked runCoroutine will
+		# never actually await it.
+		mockFuture = MagicMock()
+		mockFuture.result.return_value = None
+		mockFuture.exception.return_value = None
+
+		def fakeRunCoroutine(coro: object) -> MagicMock:
+			if hasattr(coro, "close"):
+				coro.close()
+			return mockFuture
+
+		self.runCoroutinePatcher = patch(
+			"hwIo.ble._io.runCoroutine",
+			side_effect=fakeRunCoroutine,
+		)
+		self.mockRunCoroutine = self.runCoroutinePatcher.start()
 
 		from hwIo.ble._io import Ble
 
 		self.Ble = Ble
+		# Track Ble instances so tearDown can close them while patches
+		# are still active (avoiding __del__ errors at GC time when the
+		# real runCoroutine would be called against a dead event loop).
+		self._bleInstances: list[Ble] = []
 
 	def tearDown(self):
-		"""Clean up patches."""
-		self.runCoroutineSyncPatcher.stop()
+		"""Clean up Ble instances and patches."""
+		# Mark the mock client disconnected so the close() called from
+		# Ble.__del__ at GC time becomes a no-op (it would otherwise hit
+		# the real, unmocked runCoroutine and raise).
+		self.mockClient.is_connected = False
+		for ble in self._bleInstances:
+			try:
+				ble.close()
+			except Exception:
+				pass
+		self.runCoroutinePatcher.stop()
 		self.bleakClientPatcher.stop()
+
+	def _makeBle(self, **kwargs) -> "object":
+		"""Construct a Ble instance and track it for cleanup."""
+		ble = self.Ble(**kwargs)
+		self._bleInstances.append(ble)
+		return ble
 
 	def test_connectionSuccess(self):
 		"""Test that Ble connects successfully and starts notifications."""
@@ -219,7 +258,7 @@ class TestBle(unittest.TestCase):
 		def onReceive(data):
 			receivedData.append(data)
 
-		ble = self.Ble(
+		ble = self._makeBle(
 			device=mockDevice,
 			writeServiceUuid="service-uuid",
 			writeCharacteristicUuid="write-char-uuid",
@@ -233,7 +272,7 @@ class TestBle(unittest.TestCase):
 		callArgs = self.mockBleakClientClass.call_args
 		self.assertEqual(callArgs[0][0], mockDevice)
 
-		self.mockRunCoroutineSync.assert_called()
+		self.mockRunCoroutine.assert_called()
 		self.assertTrue(ble.isConnected())
 
 	def test_writeData(self):
@@ -243,7 +282,7 @@ class TestBle(unittest.TestCase):
 		mockDevice.name = "TestDevice"
 		mockIoThread = MagicMock()
 
-		ble = self.Ble(
+		ble = self._makeBle(
 			device=mockDevice,
 			writeServiceUuid="service-uuid",
 			writeCharacteristicUuid="write-char-uuid",
@@ -259,7 +298,7 @@ class TestBle(unittest.TestCase):
 		self.mockServices.get_service.assert_called_with("service-uuid")
 		self.mockService.get_characteristic.assert_called_with("write-char-uuid")
 
-		self.assertGreater(self.mockRunCoroutineSync.call_count, 1)
+		self.assertGreater(self.mockRunCoroutine.call_count, 1)
 
 	def test_writeDataChunking(self):
 		"""Test that large data is split into MTU-sized chunks."""
@@ -270,7 +309,7 @@ class TestBle(unittest.TestCase):
 
 		self.mockCharacteristic.max_write_without_response_size = 10
 
-		ble = self.Ble(
+		ble = self._makeBle(
 			device=mockDevice,
 			writeServiceUuid="service-uuid",
 			writeCharacteristicUuid="write-char-uuid",
@@ -280,12 +319,12 @@ class TestBle(unittest.TestCase):
 			ioThread=mockIoThread,
 		)
 
-		initialCallCount = self.mockRunCoroutineSync.call_count
+		initialCallCount = self.mockRunCoroutine.call_count
 
 		testData = b"A" * 25
 		ble.write(testData)
 
-		writeCalls = self.mockRunCoroutineSync.call_count - initialCallCount
+		writeCalls = self.mockRunCoroutine.call_count - initialCallCount
 		self.assertEqual(writeCalls, 3)
 
 	def test_receiveNotification(self):
@@ -295,12 +334,12 @@ class TestBle(unittest.TestCase):
 		mockDevice.name = "TestDevice"
 		mockIoThread = MagicMock()
 
-		receivedData = []
+		receivedData: list[bytes] = []
 
-		def onReceive(data):
+		def onReceive(data: bytes) -> None:
 			receivedData.append(data)
 
-		ble = self.Ble(
+		ble = self._makeBle(
 			device=mockDevice,
 			writeServiceUuid="service-uuid",
 			writeCharacteristicUuid="write-char-uuid",
@@ -310,7 +349,7 @@ class TestBle(unittest.TestCase):
 			ioThread=mockIoThread,
 		)
 
-		self.mockRunCoroutineSync.assert_called()
+		self.mockRunCoroutine.assert_called()
 
 		testData = bytearray(b"notification data")
 		mockChar = MagicMock()
@@ -325,7 +364,7 @@ class TestBle(unittest.TestCase):
 		mockDevice.name = "TestDevice"
 		mockIoThread = MagicMock()
 
-		ble = self.Ble(
+		ble = self._makeBle(
 			device=mockDevice,
 			writeServiceUuid="service-uuid",
 			writeCharacteristicUuid="write-char-uuid",
@@ -337,11 +376,10 @@ class TestBle(unittest.TestCase):
 
 		ble.close()
 
-		self.assertGreater(self.mockRunCoroutineSync.call_count, 1)
+		self.assertGreater(self.mockRunCoroutine.call_count, 1)
 		self.assertIsNone(ble._onReceive)
 
 
-@unittest.skip("Requires hwIo.ble implementation from #19122")
 class TestFindDeviceByAddress(unittest.TestCase):
 	"""Tests for hwIo.ble.findDeviceByAddress"""
 
@@ -390,7 +428,7 @@ class TestFindDeviceByAddress(unittest.TestCase):
 
 		callCount = 0
 
-		def mockResults():
+		def mockResults() -> list[BLEDevice]:
 			nonlocal callCount
 			callCount += 1
 			if callCount <= 1:
