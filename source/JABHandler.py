@@ -548,7 +548,34 @@ internalFunctionQueue.__name__ = "JABHandler.internalFunctionQueue"
 
 
 def internalQueueFunction(func, *args, **kwargs):
-	internalFunctionQueue.put_nowait((func, args, kwargs))
+	"""Queue a function for execution on the main thread.
+
+	When the queue is full, the oldest event is evicted to make room.
+	JOBJECT64 handles owned by evicted events are released to avoid leaks.
+
+	.. note::
+		All queued handler functions except :func:`enterJavaWindow_helper`
+		follow the convention ``(vmID, accContext, ...)``, where ``args[1]``
+		is a JOBJECT64 handle.  If a new handler with a different signature
+		is added, the eviction cleanup below must be updated.
+	"""
+	try:
+		internalFunctionQueue.put_nowait((func, args, kwargs))
+	except queue.Full:
+		try:
+			evictedFunc, evictedArgs, _evictedKwargs = internalFunctionQueue.get_nowait()
+			# Release the JOBJECT64 accContext handle from the evicted event.
+			# All handlers except enterJavaWindow_helper have args[1] as accContext.
+			if evictedFunc is not enterJavaWindow_helper and len(evictedArgs) >= 2:
+				bridgeDll.releaseJavaObject(evictedArgs[0], evictedArgs[1])
+		except queue.Empty:
+			pass
+		try:
+			internalFunctionQueue.put_nowait((func, args, kwargs))
+		except queue.Full:
+			log.debugWarning("JAB internal function queue full, failed to re-queue after eviction")
+			return
+		log.debugWarning("JAB internal function queue full, evicted oldest event")
 	core.requestPump()
 
 
@@ -972,8 +999,13 @@ def internal_hasFocus(sourceContext):
 
 
 @AccessBridge_PropertyNameChangeFP
-def event_nameChange(vmID, event, source, oldVal, newVal):
-	jabContext = JABContext(vmID=vmID, accContext=source)
+def internal_event_nameChange(vmID, event, source, oldVal, newVal):
+	internalQueueFunction(event_nameChange, vmID, source)
+	bridgeDll.releaseJavaObject(vmID, event)
+
+
+def event_nameChange(vmID, accContext):
+	jabContext = JABContext(vmID=vmID, accContext=accContext)
 	if jabContext.hwnd:
 		focus = api.getFocusObject()
 		obj = (
@@ -985,12 +1017,16 @@ def event_nameChange(vmID, event, source, oldVal, newVal):
 			eventHandler.queueEvent("nameChange", obj)
 	else:
 		log.debugWarning("Unable to obtain window handle for accessible context")
-	bridgeDll.releaseJavaObject(vmID, event)
 
 
 @AccessBridge_PropertyDescriptionChangeFP
-def event_descriptionChange(vmID, event, source, oldVal, newVal):
-	jabContext = JABContext(vmID=vmID, accContext=source)
+def internal_event_descriptionChange(vmID, event, source, oldVal, newVal):
+	internalQueueFunction(event_descriptionChange, vmID, source)
+	bridgeDll.releaseJavaObject(vmID, event)
+
+
+def event_descriptionChange(vmID, accContext):
+	jabContext = JABContext(vmID=vmID, accContext=accContext)
 	if jabContext.hwnd:
 		focus = api.getFocusObject()
 		obj = (
@@ -1002,12 +1038,16 @@ def event_descriptionChange(vmID, event, source, oldVal, newVal):
 			eventHandler.queueEvent("descriptionChange", obj)
 	else:
 		log.debugWarning("Unable to obtain window handle for accessible context")
-	bridgeDll.releaseJavaObject(vmID, event)
 
 
 @AccessBridge_PropertyValueChangeFP
-def event_valueChange(vmID, event, source, oldVal, newVal):
-	jabContext = JABContext(vmID=vmID, accContext=source)
+def internal_event_valueChange(vmID, event, source, oldVal, newVal):
+	internalQueueFunction(event_valueChange, vmID, source)
+	bridgeDll.releaseJavaObject(vmID, event)
+
+
+def event_valueChange(vmID, accContext):
+	jabContext = JABContext(vmID=vmID, accContext=accContext)
 	if jabContext.hwnd:
 		focus = api.getFocusObject()
 		obj = (
@@ -1019,7 +1059,6 @@ def event_valueChange(vmID, event, source, oldVal, newVal):
 			eventHandler.queueEvent("valueChange", obj)
 	else:
 		log.debugWarning("Unable to obtain window handle for accessible context")
-	bridgeDll.releaseJavaObject(vmID, event)
 
 
 @AccessBridge_PropertyStateChangeFP
@@ -1155,9 +1194,9 @@ def initialize():
 	# Register java events
 	bridgeDll.setFocusGainedFP(internal_event_focusGained)
 	bridgeDll.setPropertyActiveDescendentChangeFP(internal_event_activeDescendantChange)
-	bridgeDll.setPropertyNameChangeFP(event_nameChange)
-	bridgeDll.setPropertyDescriptionChangeFP(event_descriptionChange)
-	bridgeDll.setPropertyValueChangeFP(event_valueChange)
+	bridgeDll.setPropertyNameChangeFP(internal_event_nameChange)
+	bridgeDll.setPropertyDescriptionChangeFP(internal_event_descriptionChange)
+	bridgeDll.setPropertyValueChangeFP(internal_event_valueChange)
 	bridgeDll.setPropertyStateChangeFP(internal_event_stateChange)
 	bridgeDll.setPropertyCaretChangeFP(internal_event_caretChange)
 	isRunning = True
