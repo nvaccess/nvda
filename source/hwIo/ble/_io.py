@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Dot Incorporated, Bram Duvigneau
+# Copyright (C) 2025-2026 NV Access Limited, Dot Incorporated, Bram Duvigneau
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import time
@@ -9,7 +9,7 @@ from threading import Event, Thread
 from typing import Callable, Iterator
 import weakref
 
-from _asyncioEventLoop.utils import runCoroutine
+from _asyncioEventLoop.utils import runCoroutineSync
 from ..base import _isDebug, IoBase
 from ..ioThread import IoThread
 from logHandler import log
@@ -29,23 +29,39 @@ def queueReader(
 	stopEvent: Event,
 	ioThread: IoThread,
 ) -> None:
+	"""Background thread loop that dispatches queued BLE notification data.
+
+	Runs in its own daemon thread for each `Ble` instance. Pulls chunks of
+	received data off `queue` as they arrive from the Bleak notification
+	callback, and hands each chunk off to `onReceive` via
+	`ioThread.queueAsApc` so the callback runs on the shared NVDA I/O
+	thread (matching the behaviour of other `hwIo` transports). Exits
+	cleanly when `stopEvent` is set. `OSError` from the I/O thread path
+	is logged and the loop continues so one transient failure does not
+	kill the reader.
+
+	:param queue: Queue that `Ble._notifyReceive` pushes received bytes to.
+	:param onReceive: Callback to invoke on the I/O thread with each chunk.
+	:param stopEvent: Set by `Ble.close()` to make the loop exit.
+	:param ioThread: Shared NVDA I/O thread used to run `onReceive`.
+	"""
 	while True:
+		if stopEvent.is_set():
+			log.debug("Reader thread got stop event")
+			break
 		try:
-			if stopEvent.is_set():
-				log.debug("Reader thread got stop event")
-				break
-			try:
-				data: bytes = queue.get(timeout=0.2)
-			except Empty:
-				continue
+			data: bytes = queue.get(timeout=0.2)
+		except Empty:
+			continue
 
-			def apc(_x: int = 0):
-				return onReceive(data)
+		def apc(_x: int = 0):
+			return onReceive(data)
 
+		try:
 			ioThread.queueAsApc(apc)
-			queue.task_done()
-		except Exception:
-			log.error("Reader thread got exception", exc_info=True)
+		except OSError:
+			log.error("Reader thread failed to queue APC", exc_info=True)
+		queue.task_done()
 
 
 def sliced(data: bytes, n: int) -> Iterator[bytes]:
@@ -120,10 +136,7 @@ class Ble(IoBase):
 			daemon=True,
 		)
 		self._readerThread.start()
-		f = runCoroutine(self._initAndConnect())
-		f.result()
-		if f.exception():
-			raise f.exception()
+		runCoroutineSync(self._initAndConnect())
 		self.waitForConnection(CONNECT_TIMEOUT_SECONDS)
 
 	async def _initAndConnect(self) -> None:
@@ -157,19 +170,16 @@ class Ble(IoBase):
 
 		# Split the data into chunks that fit within the MTU
 		for s in sliced(data, characteristic.max_write_without_response_size):
-			f = runCoroutine(
+			runCoroutineSync(
 				self._client.write_gatt_char(characteristic, s, response=False),
 			)
-			f.result()
-			if f.exception():
-				raise f.exception()
 
 	def close(self) -> None:
 		"""Disconnect the BLE peripheral and release resources."""
 		if _isDebug():
 			log.debug("Closing BLE connection")
 		if self._client.is_connected:
-			runCoroutine(self._client.disconnect()).result()
+			runCoroutineSync(self._client.disconnect())
 		self._queuedData.join()
 		self._stopReaderEvent.set()
 		self._readerThread.join()

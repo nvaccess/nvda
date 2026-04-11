@@ -172,12 +172,12 @@ class TestBle(unittest.TestCase):
 		self.mockBleakClientClass = self.bleakClientPatcher.start()
 
 		# Use regular MagicMock for client methods (not AsyncMock):
-		# the Ble class wraps every async call in runCoroutine(), which
-		# is itself mocked, so the coroutines returned by _initAndConnect
-		# / disconnect / write_gatt_char are immediately closed by
-		# fakeRunCoroutine without ever being awaited. The inner
-		# self._client.connect() etc. are therefore never called, so
-		# they don't need to be awaitable.
+		# the Ble class wraps every async call in runCoroutineSync(),
+		# which is itself mocked, so the coroutines returned by
+		# _initAndConnect / disconnect / write_gatt_char are immediately
+		# closed by fakeRunCoroutineSync without ever being awaited. The
+		# inner self._client.connect() etc. are therefore never called,
+		# so they don't need to be awaitable.
 		self.mockClient = MagicMock()
 		self.mockClient.is_connected = True
 		self.mockBleakClientClass.return_value = self.mockClient
@@ -197,46 +197,42 @@ class TestBle(unittest.TestCase):
 		self.mockServices.services = mockServicesDict
 		self.mockClient.services = self.mockServices
 
-		# Ble uses runCoroutine() which returns a Future; the code calls
-		# .result() and .exception() on the returned future. Close the
-		# passed coroutine immediately so Python does not warn about
-		# "coroutine was never awaited" — the mocked runCoroutine will
-		# never actually await it.
-		mockFuture = MagicMock()
-		mockFuture.result.return_value = None
-		mockFuture.exception.return_value = None
-
-		def fakeRunCoroutine(coro: object) -> MagicMock:
+		# Ble uses runCoroutineSync() which blocks until the coroutine
+		# completes and returns the result directly. Close the passed
+		# coroutine immediately so Python does not warn about "coroutine
+		# was never awaited" — the mock will never actually run it.
+		def fakeRunCoroutineSync(coro: object, timeout: float | None = None) -> None:
 			if hasattr(coro, "close"):
 				coro.close()
-			return mockFuture
+			return None
 
-		self.runCoroutinePatcher = patch(
-			"hwIo.ble._io.runCoroutine",
-			side_effect=fakeRunCoroutine,
+		self.runCoroutineSyncPatcher = patch(
+			"hwIo.ble._io.runCoroutineSync",
+			side_effect=fakeRunCoroutineSync,
 		)
-		self.mockRunCoroutine = self.runCoroutinePatcher.start()
+		self.mockRunCoroutineSync = self.runCoroutineSyncPatcher.start()
 
 		from hwIo.ble._io import Ble
 
 		self.Ble = Ble
 		# Track Ble instances so tearDown can close them while patches
 		# are still active (avoiding __del__ errors at GC time when the
-		# real runCoroutine would be called against a dead event loop).
+		# real runCoroutineSync would be called against a dead event
+		# loop).
 		self._bleInstances: list[Ble] = []
 
 	def tearDown(self):
 		"""Clean up Ble instances and patches."""
 		# Mark the mock client disconnected so the close() called from
 		# Ble.__del__ at GC time becomes a no-op (it would otherwise hit
-		# the real, unmocked runCoroutine and raise).
+		# the real, unmocked runCoroutineSync and raise).
 		self.mockClient.is_connected = False
 		for ble in self._bleInstances:
 			try:
 				ble.close()
 			except Exception:
 				pass
-		self.runCoroutinePatcher.stop()
+		self.runCoroutineSyncPatcher.stop()
 		self.bleakClientPatcher.stop()
 
 	def _makeBle(self, **kwargs) -> "object":
@@ -272,7 +268,7 @@ class TestBle(unittest.TestCase):
 		callArgs = self.mockBleakClientClass.call_args
 		self.assertEqual(callArgs[0][0], mockDevice)
 
-		self.mockRunCoroutine.assert_called()
+		self.mockRunCoroutineSync.assert_called()
 		self.assertTrue(ble.isConnected())
 
 	def test_writeData(self):
@@ -298,7 +294,7 @@ class TestBle(unittest.TestCase):
 		self.mockServices.get_service.assert_called_with("service-uuid")
 		self.mockService.get_characteristic.assert_called_with("write-char-uuid")
 
-		self.assertGreater(self.mockRunCoroutine.call_count, 1)
+		self.assertGreater(self.mockRunCoroutineSync.call_count, 1)
 
 	def test_writeDataChunking(self):
 		"""Test that large data is split into MTU-sized chunks."""
@@ -319,12 +315,12 @@ class TestBle(unittest.TestCase):
 			ioThread=mockIoThread,
 		)
 
-		initialCallCount = self.mockRunCoroutine.call_count
+		initialCallCount = self.mockRunCoroutineSync.call_count
 
 		testData = b"A" * 25
 		ble.write(testData)
 
-		writeCalls = self.mockRunCoroutine.call_count - initialCallCount
+		writeCalls = self.mockRunCoroutineSync.call_count - initialCallCount
 		self.assertEqual(writeCalls, 3)
 
 	def test_receiveNotification(self):
@@ -349,7 +345,7 @@ class TestBle(unittest.TestCase):
 			ioThread=mockIoThread,
 		)
 
-		self.mockRunCoroutine.assert_called()
+		self.mockRunCoroutineSync.assert_called()
 
 		testData = bytearray(b"notification data")
 		mockChar = MagicMock()
@@ -376,7 +372,7 @@ class TestBle(unittest.TestCase):
 
 		ble.close()
 
-		self.assertGreater(self.mockRunCoroutine.call_count, 1)
+		self.assertGreater(self.mockRunCoroutineSync.call_count, 1)
 		self.assertIsNone(ble._onReceive)
 
 

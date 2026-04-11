@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Dot Incorporated, Bram Duvigneau
+# Copyright (C) 2025-2026 NV Access Limited, Dot Incorporated, Bram Duvigneau
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -13,13 +13,16 @@ Bluetooth Classic devices should be paired through Windows' Bluetooth settings a
 """
 
 import time
+from bleak.exc import BleakError
 from bleak.backends.device import BLEDevice
 from logHandler import log
 
 from ._scanner import Scanner  # noqa: F401
 from ._io import Ble  # noqa: F401
 
-# Module-level singleton scanner for all BLE operations
+#: Module-level singleton scanner shared by all BLE consumers.
+#: Using a single scanner avoids contention over the Windows BLE stack and
+#: lets multiple callers share the set of already-discovered devices.
 scanner = Scanner()
 
 
@@ -45,25 +48,21 @@ def findDeviceByAddress(address: str, timeout: float = 5.0, pollInterval: float 
 	if not scanner.isScanning:
 		try:
 			scanner.start()  # Start in background mode
-		except Exception:
+		except (BleakError, OSError):
 			log.error(f"Failed to start BLE scanner while searching for device {address}", exc_info=True)
 			return None
 
-	try:
-		startTime = time.time()
-		while time.time() - startTime < timeout:
-			time.sleep(pollInterval)
+	startTime = time.time()
+	while time.time() - startTime < timeout:
+		time.sleep(pollInterval)
 
-			# Check if device appeared
-			for device in scanner.results():
-				if device.address == address:
-					elapsed = time.time() - startTime
-					log.debug(f"Found BLE device {address} after {elapsed:.2f}s")
-					return device
+		# Check if device appeared
+		for device in scanner.results():
+			if device.address == address:
+				elapsed = time.time() - startTime
+				log.debug(f"Found BLE device {address} after {elapsed:.2f}s")
+				return device
 
-		# Timeout - device not found
-		log.debug(f"BLE device {address} not found after {timeout}s timeout")
-		return None
-	except Exception:
-		log.error(f"Error while scanning for BLE device {address}", exc_info=True)
-		return None
+	# Timeout - device not found
+	log.debug(f"BLE device {address} not found after {timeout}s timeout")
+	return None
