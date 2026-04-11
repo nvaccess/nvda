@@ -1213,6 +1213,9 @@ def terminate():
 		return
 	bridgeDll.setFocusGainedFP(None)
 	bridgeDll.setPropertyActiveDescendentChangeFP(None)
+	bridgeDll.setPropertyNameChangeFP(None)
+	bridgeDll.setPropertyDescriptionChangeFP(None)
+	bridgeDll.setPropertyValueChangeFP(None)
 	bridgeDll.setPropertyStateChangeFP(None)
 	bridgeDll.setPropertyCaretChangeFP(None)
 	h = bridgeDll._handle
