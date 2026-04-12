@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2024 NV Access Limited
+# Copyright (C) 2024-2026 NV Access Limited, Dot Incorporated, Bram Duvigneau
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -130,3 +130,4 @@ class DP_KeyGroup(enum.IntEnum):
 
 
 DP_CHECKSUM_BASE = 0xA5
+DP_MAX_PACKET_SIZE = 512
