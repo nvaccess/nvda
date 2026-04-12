@@ -18,6 +18,11 @@ We currently have the following templates:
 * For [integrating functionality from a community add-on into NVDA](https://github.com/nvaccess/nvda/issues/new?template=5-addon_integration_request.yaml):
   * This template is intended for proposing a specific feature from an existing community add-on to be integrated into NVDA.
   * The goal is to identify functionality that is essential for the core NVDA user experience.
+* For [Architecture Design Records to plan for major changes](https://github.com/nvaccess/nvda/issues/new?template=6-adr_major_project.yaml):
+  * This template is intended for proposing major changes to NVDA.
+  It may be requested by NV Access before starting work which require significant design decisions.
+  e.g a new feature or refactor.
+  * Review [Proposing Major Changes](../dev/proposingMajorChanges.md) for more information.
 * For [security vulnerabilities](https://github.com/nvaccess/nvda/security/advisories/new)
   * Please note that these are reported differently, for more information refer to our [disclosure policy/procedure](https://github.com/nvaccess/nvda/blob/master/security.md)
 

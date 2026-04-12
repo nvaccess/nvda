@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="ca">
-  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/b241df75ccaff28461c4686c38feec86b69531ce/user_docs/en/changes.md">
+  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/e2605387cf8a0c55a13c6d8c2492791c2573cf20/user_docs/en/changes.md">
     <skeleton>
 # $(ID:4bf3ec03-2d43-474a-aef0-92b334e594ed)
 
@@ -327,8 +327,8 @@ $(ID:bf6f3e8e-b7e6-47de-832d-00fb9d2257d5)
 $(ID:1e8de2b6-74fc-4543-a0f6-606392a7400b)
 * $(ID:f36534af-91b5-4c57-8686-995d45569057)
 $(ID:f820cfb9-d67d-41ff-8cf3-4a4b9823f8ff)
-* $(ID:b6334f69-e1bc-4231-b439-768458367eef)
-$(ID:04a05f1b-4261-45b7-bf17-77dd839b5d41)
+* $(ID:8d3d20ee-3544-4e04-b1bd-eafe049993a3)
+$(ID:3436f6a1-8be4-44af-ab0d-83d1a868c286)
 * $(ID:f9346b23-f4d3-436d-b044-3d7d73b4e406)
 $(ID:b4cb00dd-a85c-451f-94d3-5b08e5e2b07f)
 * $(ID:6beb4ead-2bf1-491f-a70b-b8295492ee09)
@@ -6012,7 +6012,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Spelling errors can now be reported with a sound instead of speech when reading.</source>
-        <target>Els errors ortogràfics ara es poden reportar amb un so en lloc de la veu quan es llegeix.</target>
+        <target>Els errors ortogràfics ara es poden anunciar amb un so en lloc de la veu quan es llegeix.</target>
       </segment>
     </unit>
     <unit id="dba7c1fc-ef43-417b-9aa1-b140e19c2704">
@@ -8877,23 +8877,23 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>Fes servir 'winBindings.user32.dll' en comptes d'això. (#18883)</target>
       </segment>
     </unit>
-    <unit id="b6334f69-e1bc-4231-b439-768458367eef">
+    <unit id="8d3d20ee-3544-4e04-b1bd-eafe049993a3">
       <notes>
         <note appliesTo="source">line: 327</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
-        <source>The `HardwareInput`, `Input`, `KeyBdInput` and `MouseInput` structures from `winUser` are deprecated.</source>
-        <target>Les estructures 'HardwareInput', 'Input', 'KeyBdInput' i 'MouseInput' de 'winUser' estan obsoletes.</target>
+        <source>The `HardwareInput`, `Input`, `KeyBdInput`, `MouseInput` and `NMHdrStruct` structures from `winUser` are deprecated.</source>
+        <target>Les estructures 'HardwareInput', 'Input', 'KeyBdInput', 'MouseInput' i 'NMHdrStruct' de 'winUser' estan obsoletes.</target>
       </segment>
     </unit>
-    <unit id="04a05f1b-4261-45b7-bf17-77dd839b5d41">
+    <unit id="3436f6a1-8be4-44af-ab0d-83d1a868c286">
       <notes>
         <note appliesTo="source">line: 328</note>
       </notes>
       <segment state="final">
-        <source>Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT` and `MOUSEINPUT` from `winBindings.user32` instead. (#18883)</source>
-        <target>Utilitza 'HARDWAREINPUT', 'INPUT', 'KEYBDINPUT' i 'MOUSEINPUT' de 'winBindings.user32' en comptes d'això. (#18883)</target>
+        <source>Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT`, `MOUSEINPUT` and `NMHDR` from `winBindings.user32` instead. (#18883, #19808)</source>
+        <target>Utilitza 'HARDWAREINPUT', 'INPUT', 'KEYBDINPUT', 'MOUSEINPUT' i 'NMHDR' de 'winBindings.user32' en canvi. (#18883, #19808)</target>
       </segment>
     </unit>
     <unit id="f9346b23-f4d3-436d-b044-3d7d73b4e406">
@@ -38986,7 +38986,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Typed characters are now spoken in Universal Windows Platform (UWP) apps (including Microsoft Edge) in the Windows 10 Creators Update. (#6017)</source>
-        <target>Els caràcters escrits ara es verbalitcen a les aplicacions de la Plataforma Universal Windows (UWP) (incloent-hi Microsoft Edge) a l'actualització de creadors de Windows 10. (#6017)</target>
+        <target>Els caràcters escrits ara es verbalitcen a les aplicacions de la Plataforma Universal Windows (UWP) (incloent-hi Microsoft Edge) a l'actualització de Windows 10 Creators. (#6017)</target>
       </segment>
     </unit>
     <unit id="de4e938b-cb20-484f-ad77-af8785ebd263">
@@ -39036,7 +39036,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>2016.4</source>
-        <target>&lt;target/&gt;</target>
+        <target>2016.4</target>
       </segment>
     </unit>
     <unit id="d57e17a9-9324-4f51-a7e6-b117ebae9df1">
@@ -39075,7 +39075,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for the Orbit Reader 20 braille display. (#6007)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Suport per a la línia braille Orbit Reader 20. (#6007)</target>
       </segment>
     </unit>
     <unit id="a648c137-6a37-403d-b040-b147fa3f4403">
@@ -39085,7 +39085,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>An option to open the speech viewer window on startup has been added. This can be enabled via a check box in the speech viewer window. (#5050)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'ha afegit una opció per obrir la finestra del visor de veu en l'inici. Això es pot activar mitjançant una casella de selecció a la finestra del visualitzador de veu. (#5050)</target>
       </segment>
     </unit>
     <unit id="5c960a60-0998-49ca-80b9-90ba0d9b8207">
@@ -39095,7 +39095,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When re-opening the speech viewer window, the location and dimensions will now be restored. (#5050)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En tornar a obrir la finestra del visor de veu, ara es restauraran la ubicació i les dimensions. (#5050)</target>
       </segment>
     </unit>
     <unit id="753a597a-b082-403d-9e40-eff17103c8ff">
@@ -39105,7 +39105,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Cross-reference fields in Microsoft Word are now treated like hyperlinks. They are reported as links and can be activated. (#6102)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Els camps de referència creuada a Microsoft Word ara es tracten com a enllaços. Es reporten com a enllaços i es poden activar. (#6102)</target>
       </segment>
     </unit>
     <unit id="0632e356-4fae-4c93-9583-8bf13f885d3c">
@@ -39115,7 +39115,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for the Baum SuperVario2, Baum Vario 340 and HumanWare Brailliant2 braille displays. (#6116)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Suport per a les línies braille Baum SuperVario2, Baum Vario 340 i HumanWare Brailliant2. (#6116)</target>
       </segment>
     </unit>
     <unit id="92cad529-1fa7-4e0a-9e4c-1eb2913dc3b1">
@@ -39125,7 +39125,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Initial support for the Anniversary update of Microsoft Edge. (#6271)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Suport inicial per a l'actualització Anniversary de Microsoft Edge. (#6271)</target>
       </segment>
     </unit>
     <unit id="cee50737-929b-4c17-8c11-b835a9587d4c">
@@ -39135,7 +39135,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Browse mode is now used when reading emails in the Windows 10 mail app. (#6271)</source>
-        <target>&lt;target/&gt;</target>
+        <target>El mode de navegació ara s'utilitza quan es llegeixen correus electrònics a l'aplicació de correu de Windows 10. (#6271)</target>
       </segment>
     </unit>
     <unit id="6c7d6432-f96f-47e1-a298-6bfbd2dd2a78">
@@ -39165,7 +39165,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Updated liblouis braille translator to 3.0.0. This includes significant enhancements to Unified English Braille. (#6109, #4194, #6220, #6140)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'ha actualitzat el transcriptor braille de Liblouis a la versió 3.0.0. Això inclou millores significatives al Braille Anglès Unificat. (#6109, #4194, #6220, #6140)</target>
       </segment>
     </unit>
     <unit id="0cea8df4-1a1b-4874-9d4a-92b24280514c">
@@ -39175,7 +39175,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In the Add-ons Manager, the Disable add-on and Enable add-on buttons now have keyboard shortcuts (alt+d and alt+e, respectively). (#6388)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Al Gestor de complements, els botons de Desactivar complements i Activar complements ara tenen dreceres de teclat (alt+d i alt+e, respectivament). (#6388)</target>
       </segment>
     </unit>
     <unit id="d630df94-ff7c-4331-9bea-2fa78ccb0346">
@@ -39185,7 +39185,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Various padding and alignment issues in NVDA's dialogs have been resolved. (#6317, #5548, #6342, #6343, #6349)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'han resolt diversos problemes de farciment i alineació en els diàlegs de NVDA. (#6317, #5548, #6342, #6343, #6349)</target>
       </segment>
     </unit>
     <unit id="c5f17860-9fc4-403e-802c-6686b45528b2">
@@ -39195,7 +39195,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The document formatting dialog has been adjusted so that the contents scrolls. (#6348)</source>
-        <target>&lt;target/&gt;</target>
+        <target>El diàleg de format del document s'ha ajustat perquè el contingut es desplaci. (#6348)</target>
       </segment>
     </unit>
     <unit id="61914f69-7975-4479-bfb2-8bd253de1187">
@@ -39205,7 +39205,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Adjusted the layout of the Symbol Pronunciation dialog so the full width of the dialog is used for the symbols list. (#6101)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'ha ajustat la disposició del diàleg de Pronunciació de Símbols perquè s'utilitzi tota l'amplada del diàleg per a la llista de símbols. (#6101)</target>
       </segment>
     </unit>
     <unit id="eaad45c1-acc1-4454-ac65-ae1615b73a80">
@@ -39215,7 +39215,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode in web browsers, the edit field (e and shift+e) and form field (f and shift+f) single letter navigation commands can now be used to move to read-only edit fields. (#4164)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En el mode de navegació dels navegadors web, ara es poden utilitzar els camps d'edició (e i shift+e) i de formulari (f i shift+f) per passar a camps d'edició d'una sola lletra. (#4164)</target>
       </segment>
     </unit>
     <unit id="8ce1caf5-3e66-41ff-954a-3245ef3e9f46">
@@ -39225,7 +39225,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In NVDA's Document Formatting settings, "Announce formatting changes after the cursor" has been renamed to "Report formatting changes after the cursor", as it affects braille as well as speech. (#6336)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A la configuració de Format de Documents de NVDA, "Anunciar canvis de format després del cursor" s'ha rebatejat com a "Reportar canvis de format després del cursor", ja que afecta tant el braille com la parla. (#6336)</target>
       </segment>
     </unit>
     <unit id="5756e842-3a06-4104-ba90-68b83cac4b46">
@@ -39235,7 +39235,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Adjusted the appearance of the NVDA "Welcome dialog". (#6350)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'ha ajustat l'aparença del diàleg de benvinguda de NVDA. (#6350)</target>
       </segment>
     </unit>
     <unit id="22bd1e80-fb00-4224-920f-16fd0e303333">
@@ -39245,7 +39245,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA dialog boxes now have their "ok" and "cancel" buttons aligned to the right of the dialog. (#6333)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Els quadres de diàleg de NVDA ara tenen els botons "ok" i "cancel·lar" alineats a la seva dreta. (#6333)</target>
       </segment>
     </unit>
     <unit id="89de0ab6-fbbf-46e5-a951-4f1dc7018142">
@@ -39255,7 +39255,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Spin Controls are now used for numeric input fields such as the "Capital pitch change percentage" setting  in the Voice Settings dialog. You can enter the desired value or use the up and down arrow keys to adjust the value. (#6099)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Els controls de gir ara s'utilitzen per a camps d'entrada numèrics com l'opció "Percentatge de canvi de to capital" al diàleg de Configuració de Veu. Pots introduir el valor desitjat o utilitzar les fletxes amunt i avall per ajustar el valor. (#6099)</target>
       </segment>
     </unit>
     <unit id="11893420-1562-43ae-ae49-2c18d7c3dd69">
@@ -39265,7 +39265,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The way IFrames (documents embedded within documents) are reported has been made more consistent across web browsers. IFrames are now reported as "frame" in Firefox. (#6047)</source>
-        <target>&lt;target/&gt;</target>
+        <target>La manera com es reporten els IFrames (documents incrustats dins dels documents) s'ha fet més consistent entre navegadors web. Els IFrames ara es reporten com a "frame" a Firefox. (#6047)</target>
       </segment>
     </unit>
     <unit id="78d1d381-bbe8-4fc6-aaa4-0e5d2b31f77a">
@@ -39285,7 +39285,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed a rare error when exiting NVDA while the speech viewer is open. (#5050)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'ha corregit un error poc habitual en sortir de NVDA mentre el visor de veu està obert. (#5050)</target>
       </segment>
     </unit>
     <unit id="130f80f9-d5a0-4e7a-bb69-298db08ffeeb">
@@ -39295,7 +39295,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Image maps now render as expected in browse mode in Mozilla Firefox. (#6051)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Els mapes d'imatge ara es renderitzen tal com s'espera en el mode de navegació a Mozilla Firefox. (#6051)</target>
       </segment>
     </unit>
     <unit id="43c4b819-cb85-4523-9359-d00dcc64150c">
@@ -39305,7 +39305,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>While in the dictionary dialog, pressing the enter key now saves any changes you have made and closes the dialog. Previously, pressing enter did nothing. (#6206)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Mentre estiguis al diàleg del diccionari, prémer la tecla enter ara desa qualsevol canvi que hagis fet i tanca el diàleg. Abans, prémer enter no feia res. (#6206)</target>
       </segment>
     </unit>
     <unit id="5459e046-3feb-4b26-aae9-cffb7298541a">
@@ -39315,7 +39315,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Messages are now displayed in braille when changing input modes for an input method (native input/alphanumeric, full shaped/half shaped, etc.). (#5892, #5893)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Els missatges ara es mostren en braille quan es canvia el mode d'entrada d'un mètode d'entrada (entrada nativa/alfanumèrica, de forma completa/mitja forma, etc.). (#5892, #5893)</target>
       </segment>
     </unit>
     <unit id="c3a6693f-af17-4f18-8d3e-54fa25895a1c">
@@ -39325,7 +39325,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When disabling and then immediately re-enabling an add-on or vice versa, the add-on status now correctly reverts to what it was previously. (#6299)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan desactives i després reactives immediatament un complement o viceversa, l'estat del complement ara torna correctament al que era abans. (#6299)</target>
       </segment>
     </unit>
     <unit id="d7a3d1b3-9b46-4d53-aa6f-853ea25efc28">
@@ -39335,7 +39335,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When using Microsoft Word, page number fields in headers can now be read. (#6004)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan s'utilitza Microsoft Word, ara es poden llegir els camps de número de pàgina a les capçaleres. (#6004)</target>
       </segment>
     </unit>
     <unit id="d4ff9f2d-e5f1-483b-9fdd-6a41b3547398">
@@ -39345,7 +39345,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The mouse can now be used to move focus between the symbol list and the edit fields in the symbol pronunciation dialog. (#6312)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Ara el ratolí es pot utilitzar per moure el focus entre la llista de símbols i els camps d'edició al diàleg de pronunciació de símbols. (#6312)</target>
       </segment>
     </unit>
     <unit id="95c3f509-48d0-4276-ad8f-1efcae57c3f3">
@@ -39355,7 +39355,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode in Microsoft Word, Fixed an issue that stops the elements list from appearing when a document contains an invalid hyperlink. (#5886)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En mode navegació a Microsoft Word, s'ha solucionat un problema que impedeix que la llista d'elements aparegui quan un document conté un hipervincle invàlid. (#5886)</target>
       </segment>
     </unit>
     <unit id="3b3d8dbb-fb17-48de-897b-4787e31c4391">
@@ -39365,7 +39365,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>After being closed via the task bar or the alt+F4 shortcut, the speech viewer check box in the NVDA menu will now reflect the actual visibility of the window. (#6340)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Després de tancar-se a través de la barra de tasques o l'accés d'alt+F4, la casella de visualització de veu al menú NVDA ara reflectirà la visibilitat real de la finestra. (#6340)</target>
       </segment>
     </unit>
     <unit id="159ebe05-89df-449b-9d24-0920d6afc99d">
@@ -39375,7 +39375,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The reload plugins command no longer causes problems for triggered configuration profiles, new documents in web browsers and screen review. (#2892, #5380)</source>
-        <target>&lt;target/&gt;</target>
+        <target>La comanda de recarregar plugins ja no causa problemes als perfils de configuració activats, als nous documents als navegadors web ni a la revisió de pantalla. (#2892, #5380)</target>
       </segment>
     </unit>
     <unit id="8b37b33a-0758-45e7-8df0-e7d1683989d9">
@@ -39385,7 +39385,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In the list of languages in NVDA's General Settings dialog, languages such as Aragonese are now displayed correctly on Windows 10. (#6259)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A la llista d'idiomes al diàleg de Configuració General de NVDA, llenguatges com l'aragonès ara es mostren correctament a Windows 10. (#6259)</target>
       </segment>
     </unit>
     <unit id="7ae5d442-5235-4612-bd02-edb9704c4f7c">
@@ -39395,7 +39395,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Emulated system keyboard keys (e.g. a button on a braille display which emulates pressing the tab key) are now presented in the configured NVDA language in input help and the Input Gestures dialog. Previously, they were always presented in English. (#6212)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Les tecles de teclat del sistema emulades (per exemple, un botó en una línia braille que emula prémer la tecla tabulador) ara es presenten en l'idioma de NVDA configurat a l'ajuda d'entrada i al diàleg de gestos d'entrada. Abans, sempre es presentaven en anglès. (#6212)</target>
       </segment>
     </unit>
     <unit id="1573e085-3b8b-4e10-bb3d-5043ed379d79">
@@ -39405,7 +39405,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Changing the NVDA language (from the General Settings dialog) now has no effect until NVDA is restarted. (#4561)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Canviar l'idioma de NVDA (des del diàleg de Configuració General) ara no té cap efecte fins que es reinicia NVDA. (#4561)</target>
       </segment>
     </unit>
     <unit id="6061c564-6b23-4e2f-bf41-4c7742682979">
@@ -39415,7 +39415,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>It is no longer possible to leave the Pattern field blank for a new speech dictionary entry. (#6412)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Ja no és possible deixar en blanc el camp Patró per a una nova entrada del diccionari de veu. (#6412)</target>
       </segment>
     </unit>
     <unit id="91dbea4e-8433-4c56-82bc-98b380831740">
@@ -39425,7 +39425,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed a rare issue when scanning for serial ports on some systems which made some braille display drivers unusable. (#6462)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'ha solucionat un problema poc habitual en escanejar ports sèrie en alguns sistemes que feia que alguns controladors de línia braille fossin inutilitzables. (#6462)</target>
       </segment>
     </unit>
     <unit id="fb78fcee-a00a-4bc5-8e05-881f3d534f79">
@@ -39435,7 +39435,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Word, Numbered bullets in table cells are now read  when moving by cell. (#6446)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Word, ara es llegeixen les binyetes numerades a les cel·les de la taula quan et mous per cel·la. (#6446)</target>
       </segment>
     </unit>
     <unit id="628cc1d4-08e7-4504-89fd-fc9b3fc4a46f">
@@ -39445,7 +39445,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>It is now possible to assign gestures to commands for the Handy Tech braille display driver in the NVDA Input Gestures dialog. (#6461)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Ara és possible assignar gestos a ordres per al controlador de les línies braille de Handy Tech al diàleg de gestos d'entrada NVDA. (#6461)</target>
       </segment>
     </unit>
     <unit id="dd3c5528-9cc8-4871-8571-7b7983bd78d0">
@@ -39455,7 +39455,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Excel, pressing enter or numpadEnter when navigating a spreadsheet now correctly reports navigation to the next row. (#6500)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Excel, prémer enter o Enter del teclat numèric quan navegues per un full de càlcul ara anuncia correctament la navegació a la següent fila. (#6500)</target>
       </segment>
     </unit>
     <unit id="959666ae-83c6-462d-9fc2-b515c2e8f928">
@@ -39465,7 +39465,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>iTunes no longer intermittently freezes forever when using browse mode for the iTunes Store, Apple Music, etc. (#6502)</source>
-        <target>&lt;target/&gt;</target>
+        <target>iTunes ja no es congela intermitentment per sempre quan s'utilitza el mode de navegació de l'iTunes Store, Apple Music, etc. (#6502)</target>
       </segment>
     </unit>
     <unit id="3f4b0b24-a22d-405f-94ba-47ebde1a8f4f">
@@ -39475,7 +39475,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed crashes in 64 bit Mozilla and Chrome-based applications. (#6497)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'han corregit bloquejos en aplicacions de Mozilla de 64 bits i Chrome. (#6497)</target>
       </segment>
     </unit>
     <unit id="8be9deb2-ed37-466b-bc2a-df029ffef392">
@@ -39485,7 +39485,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Firefox with multi-process enabled, browse mode and editable text fields now function correctly. (#6380)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Firefox, amb multiprocés activat, el mode de navegació i els camps de text editables ara funcionen correctament. (#6380)</target>
       </segment>
     </unit>
     <unit id="3db99a12-0b06-47e2-b8d5-7e29f34f33c8">
@@ -39495,7 +39495,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Changes for Developers</source>
-        <target>Canvis</target>
+        <target>Canvis per als desenvolupadors</target>
       </segment>
     </unit>
     <unit id="5f1ab4be-762d-4c27-8db7-e473ecf9c494">
@@ -39505,7 +39505,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>It is now possible to provide app modules for executables containing a dot (.) in their names. Dots are replaced with underscores (_). (#5323)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Ara és possible proporcionar mòduls d'aplicació per a executables que continguin un punt (.) en els seus noms. Els punts es substitueixen per guions baixos (_). (#5323)</target>
       </segment>
     </unit>
     <unit id="669a0dfa-e593-4013-bb25-3cea17f11c06">
@@ -39515,7 +39515,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The new gui.guiHelper module includes utilities to simplify the creation of wxPython GUIs, including automatic management of spacing. This facilitates better visual appearance and consistency, as well as easing creation of new GUIs for blind developers. (#6287)</source>
-        <target>&lt;target/&gt;</target>
+        <target>El nou mòdul gui.guiHelper inclou utilitats per simplificar la creació d'interfícies gràfices wxPython, incloent-hi la gestió automàtica de l'espaiat. Això facilita una millor aparença visual i coherència, així com facilita la creació de noves interfícies gràfices per a desenvolupadors cecs. (#6287)</target>
       </segment>
     </unit>
     <unit id="85cfee8e-430d-46bb-9831-92c000fdc8b5">
@@ -39525,7 +39525,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>2016.3</source>
-        <target>&lt;target/&gt;</target>
+        <target>2016.3</target>
       </segment>
     </unit>
     <unit id="23cc0d75-f6d3-4207-b456-98edbf4c1c73">
@@ -39554,7 +39554,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Browse mode can now be used to read PDF documents in Microsoft Edge in the Windows 10 Anniversary Update. (#5740)</source>
-        <target>&lt;target/&gt;</target>
+        <target>El mode de navegació ara es pot utilitzar per llegir documents PDF a Microsoft Edge a l'Actualització Windows 10 Anniversary. (#5740)</target>
       </segment>
     </unit>
     <unit id="445307d1-cff9-4abc-925e-1c181bae27bd">
@@ -39564,7 +39564,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Strikethrough and double-strikethrough are now reported if appropriate in Microsoft Word. (#5800)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Actualment, si és apropiat, s'anuncien a Microsoft Word, tant la ratlla com la doble ratlla. (#5800)</target>
       </segment>
     </unit>
     <unit id="5c52eabb-984c-40b3-9fe1-e3b297dba992">
@@ -39574,7 +39574,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Word, the title of a table is now reported if one has been provided. If there is a description, it can be accessed using the open long description command (NVDA+d) in browse mode. (#5943)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Word, ara s'anuncia el títol d'una taula si s'ha proporcionat una. Si hi ha una descripció, es pot accedir utilitzant la comanda d'obertura de descripció llarga (NVDA+d) en mode de navegació. (#5943)</target>
       </segment>
     </unit>
     <unit id="f6d1ee1c-d374-4708-a734-4f8ac1d74f71">
@@ -39584,7 +39584,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Word, NVDA now reports position information when moving paragraphs (alt+shift+downArrow and alt+shift+upArrow). (#5945)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Word, NVDA ara informa de la posició quan et mous per paràgrafs (alt+shift+Fletxa avall i alt+shift+fletxaAmunt). (#5945)</target>
       </segment>
     </unit>
     <unit id="5d35822e-727f-4902-94b2-01a94f77e377">
@@ -39594,7 +39594,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Word, line spacing is now reported via NVDA's report formatting command, when changing it with various Microsoft word shortcut keys, and when moving to text with different line spacing if Report Line Spacing is turned on in NVDA's Document Formatting Settings. (#2961)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Word, l'espaiat entre línies ara s'informa mitjançant l'ordre d'informació de format de NVDA, quan es canvia amb diverses tecles d'accés directe de Microsoft Word, i quan es passa a text amb un espaiat de línia diferent si l'informació de l'espaiat entre línies està activat a la configuració de format de documents de NVDA. (#2961)</target>
       </segment>
     </unit>
     <unit id="dd7b543b-955d-431f-aee8-0a5101304701">
@@ -39604,7 +39604,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer, HTML5 structural elements are now recognised. (#5591)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Internet Explorer, ara es reconeixen elements estructurals HTML5. (#5591)</target>
       </segment>
     </unit>
     <unit id="e84b44c7-789c-402f-a238-e2ae0a12a8a9">
@@ -39614,7 +39614,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Reporting of comments (such as in Microsoft Word) can now be disabled via a Report Comments checkbox in NVDA's Document Formatting settings dialog. (#5108)</source>
-        <target>&lt;target/&gt;</target>
+        <target>La notificació de comentaris (com a Microsoft Word) ara es pot desactivar mitjançant una casella de verificació de informar de Comentaris al diàleg de configuració de Format de Documents de NVDA. (#5108)</target>
       </segment>
     </unit>
     <unit id="907308c2-b341-4e91-837b-a0bbe571154e">
@@ -39624,7 +39624,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>It is now possible to disable individual add-ons in the Add-ons Manager. (#3090)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Ara és possible desactivar complements individuals al gestor de complements. (#3090)</target>
       </segment>
     </unit>
     <unit id="74e3ed6b-c51d-410b-88f4-368a3d381055">
@@ -39634,7 +39634,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Additional key assignments have been added for ALVA BC640/680 series braille displays. (#5206)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'han afegit assignacions addicionals de tecles per a les línies braille de la sèrie ALVA BC640/680. (#5206)</target>
       </segment>
     </unit>
     <unit id="75df4795-12a5-468f-916f-481f1cf5a76e">
@@ -39644,7 +39644,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>There is now a command to move the braille display to the current focus. Currently, only the ALVA BC640/680 series has a key assigned to this command, but it can be assigned manually for other displays in the Input Gestures dialog if desired. (#5250)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Ara hi ha una ordre per moure la línia braille al focus actual. Actualment, només la sèrie ALVA BC640/680 té una tecla assignada a aquesta comanda, però es pot assignar manualment per a altres línies al diàleg de gestos d'entrada si es desitja. (#5250)</target>
       </segment>
     </unit>
     <unit id="51a851c7-867b-434d-80f0-01514f40b694">
@@ -39654,7 +39654,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Excel, you can now interact with form fields. You move to form fields using the Elements List or single letter navigation in browse mode. (#4953)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Excel, ara pots interactuar amb camps de formulari. Et mous als camps de formulari utilitzant la Llista d'Elements o navegant d'una sola lletra en mode navegació. (#4953)</target>
       </segment>
     </unit>
     <unit id="9fb350ee-60d2-4fd8-b2d2-582e28ee262c">
@@ -39664,7 +39664,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>You can now assign an input gesture to toggle simple review mode using the Input Gestures dialog. (#6173)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Ara pots assignar un gest d'entrada per activar o desactivar el mode de revisió simple utilitzant el diàleg de Gestos d'Entrada. (#6173)</target>
       </segment>
     </unit>
     <unit id="e00f445c-e473-416d-be5b-fce72e5747a4">
@@ -39684,7 +39684,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA now reports colors using a basic well-understood set of 9 color hues and 3 shades, with brightness and paleness variations. This is rather than using more subjective and less understood color names. (#6029)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA ara informa dels colors utilitzant un conjunt bàsic ben entès de 9 tons i 3 tonalitats, amb variacions de brillantor i pal·lidesa. Això és més aviat que utilitzar noms de colors més subjectius i poc entesos. (#6029)</target>
       </segment>
     </unit>
     <unit id="e4e094a2-ec57-41ed-8f26-a91adeb2acba">
@@ -39694,7 +39694,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The existing NVDA+F9 then NVDA+F10 behavior has been modified to select text on the first press of F10. When F10 is pressed twice (in quick succession) the text is copied to the clipboard. (#4636)</source>
-        <target>&lt;target/&gt;</target>
+        <target>El comportament existent de NVDA+F9 i després NVDA+F10 s'ha modificat per seleccionar text a la primera pulsació de F10. Quan es prem F10 dues vegades (en ràpida successió), el text es copia al porta-retalls. (#4636)</target>
       </segment>
     </unit>
     <unit id="ebdae3cd-a9ae-4644-98ca-04a99d35f3bb">
@@ -39704,7 +39704,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Updated eSpeak NG to version Master 11b1a7b (22 June 2016). (#6037)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Actualitzat eSpeak NG a la versió Master 11b1a7b (22 de juny de 2016). (#6037)</target>
       </segment>
     </unit>
     <unit id="d2503216-78fc-47e4-88ba-52782a1bfc26">
@@ -39724,7 +39724,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode in Microsoft Word, copying to the clipboard now preserves formatting. (#5956)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En el mode de navegació de Microsoft Word, copiar al porta-retalls ara preserva el format. (#5956)</target>
       </segment>
     </unit>
     <unit id="e008c448-de98-4612-9ce2-9221b87f3146">
@@ -39734,7 +39734,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Word, NVDA now reports appropriately when using Word's own table navigation commands (alt+home, alt+end, alt+pageUp and alt+pageDown) and table selection commands (shift added to the navigation commands). (#5961)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Word, NVDA ara informa adequadament quan s'utilitzen les ordres de navegació de taules pròpies de Word (alt+inici, alt+fi, alt+pàginaAmunt i alt+pàginaAvall) i les ordres de selecció de taula (shift afegida a les ordres de navegació). (#5961)</target>
       </segment>
     </unit>
     <unit id="75a6d69c-470d-44d4-a7f5-291f4451015a">
@@ -39744,7 +39744,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Word dialog boxes, NVDA's object navigation has been greatly improved. (#6036)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En els quadres de diàleg de Microsoft Word, la navegació d'objectes de NVDA s'ha millorat molt. (#6036)</target>
       </segment>
     </unit>
     <unit id="4611364e-1b59-4123-8630-7f3d26c1d1ef">
@@ -39754,7 +39754,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In some applications such as Visual Studio 2015, shortcut keys (e.g. control+c for Copy) are now reported as expected. (#6021)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En algunes aplicacions com Visual Studio 2015, les tecles d'accés ràpid (per exemple, control+c per a Copiar) ara s'anuncien com s'esperava. (#6021)</target>
       </segment>
     </unit>
     <unit id="c54be849-42db-4aad-b56a-2b6da5bc27ed">
@@ -39764,7 +39764,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed a rare issue when scanning for serial ports on some systems which made some braille display drivers unusable. (#6015)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'ha solucionat un problema poc habitual en escanejar ports sèrie en alguns sistemes que feia que alguns controladors de línies braille fossin inutilitzables. (#6015)</target>
       </segment>
     </unit>
     <unit id="a7ee8556-6a11-4c88-af25-4e8d64a5c89e">
@@ -39774,7 +39774,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Reporting colors in Microsoft Word is now more accurate as changes in Microsoft Office Themes are now taken into account. (#5997)</source>
-        <target>&lt;target/&gt;</target>
+        <target>L'informació dels colors a Microsoft Word ara és més precisa a mesura que es tenen en compte els canvis en els Temes de Microsoft Office. (#5997)</target>
       </segment>
     </unit>
     <unit id="5c37185c-b06a-4e2f-826d-4d840dc9e942">
@@ -39784,7 +39784,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Browse mode for Microsoft Edge and support for Start Menu search suggestions is again available on Windows 10 builds after April 2016. (#5955)</source>
-        <target>&lt;target/&gt;</target>
+        <target>El mode de navegació per a Microsoft Edge i el suport per a suggeriments de cerca al menú d'inici torna a estar disponible en versions de Windows 10 posteriors a abril de 2016. (#5955)</target>
       </segment>
     </unit>
     <unit id="723afd23-5e5b-4ac6-a014-9b38c8b2a3c2">
@@ -39794,7 +39794,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Word, automatic table header reading works better when dealing with merged cells. (#5926)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Word, la lectura automàtica d'encapçalaments funciona millor quan es tracta de cèl·les fusionades. (#5926)</target>
       </segment>
     </unit>
     <unit id="2a19da3d-ca57-44cb-82a4-6e74e0fea34f">
@@ -39804,7 +39804,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In the Windows 10 Mail app, NVDA no longer fails to read the content of messages. (#5635)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A l'aplicació Windows 10 Mail, NVDA ja no deixa de llegir el contingut dels missatges. (#5635)</target>
       </segment>
     </unit>
     <unit id="2bd96e62-99bc-496b-bc6e-e65b1a959fbe">
@@ -39814,7 +39814,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When speak command keys is on, lock keys such as caps lock are no longer announced twice. (#5490)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan l'opció d'anuciar les tecles de comandament està activada, les tecles de bloqueig com el bloqueig de majúscula ja no s'anuncia dues vegades. (#5490)</target>
       </segment>
     </unit>
     <unit id="7338efd4-7e51-4270-a2e2-de5462bd8b74">
@@ -39824,7 +39824,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Windows User Account Control dialogs are again read correctly in the Windows 10 Anniversary update. (#5942)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Els diàlegs de control de comptes d'usuari de Windows es llegeixen correctament a l'actualització Anniversary de Windows 10. (#5942)</target>
       </segment>
     </unit>
     <unit id="b9f98570-c181-435e-b0ea-a956ad080583">
@@ -39834,7 +39834,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In the Web Conference Plugin (such as used on out-of-sight.net) NVDA no longer beeps and speaks progress bar updates related to microphone input. (#5888)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En el Web Conference Plugin (com el que s'utilitza a out-of-sight.net), NVDA ja no emet bip ni parla actualitzacions de la barra de progrés relacionades amb l'entrada del micròfon. (#5888)</target>
       </segment>
     </unit>
     <unit id="d6112c74-579e-4988-a978-b595f202281f">
@@ -39844,7 +39844,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Performing a Find Next or Find Previous command in Browse Mode will now correctly do a  case sensitive search if the original Find was case sensitive. (#5522)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Realitzar una comanda Cerca Següent o Cerca Anterior en Mode Navegació ara farà correctament una cerca sensible a majúscules o minúscules si la Cerca original era sensible a la majúscula i minúscula. (#5522)</target>
       </segment>
     </unit>
     <unit id="441d3a91-3113-4b64-889c-b4f2bb5efb77">
@@ -39854,7 +39854,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When editing dictionary entries, feedback is now given for invalid regular expressions. NVDA no longer crashes if a dictionary file contains an invalid regular expression. (#4834)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan s'editen entrades de diccionari, ara es dona retroalimentació per a expressions regulars invàlides. NVDA ja no es bloqueja si un fitxer de diccionari conté una expressió regular invàlida. (#4834)</target>
       </segment>
     </unit>
     <unit id="a01c0471-ad82-48a2-8f73-01378dec2a2a">
@@ -39864,7 +39864,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>If NVDA is unable to communicate with a braille display (e.g. because it has been disconnected), it will automatically disable use of the display. (#1555)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Si NVDA no pot comunicar-se amb una línia braille (per exemple, perquè s'ha desconnectat), desactivarà automàticament l'ús de la línia. (#1555)</target>
       </segment>
     </unit>
     <unit id="9f6a5d1d-5e92-4634-856e-75f21feef1f7">
@@ -39874,7 +39874,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Slightly improved performance of filtering in the Browse Mode Elements List in some cases. (#6126)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'ha millorat lleugerament el rendiment del filtratge a la Llista d'Elements del Mode de Navegació en alguns casos. (#6126)</target>
       </segment>
     </unit>
     <unit id="47b4bd9e-9061-4c98-b51f-5b403b9d6c4a">
@@ -39884,7 +39884,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Excel, the background pattern names reported by NVDA now match those used by Excel. (#6092)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Excel, els noms de patrons en segon pla reportats per NVDA ara coincideixen amb els utilitzats per Excel. (#6092)</target>
       </segment>
     </unit>
     <unit id="a659bf82-8b39-46c3-bb61-fce12d402096">
@@ -39894,7 +39894,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Improved support for the Windows 10 logon screen, including announcement of alerts and activating of the password field with touch. (#6010)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Millor suport per a la pantalla d'inici de sessió de Windows 10, incloent l'anunci d'alertes i l'activació del camp de contrasenya amb el teclat tàctil. (#6010)</target>
       </segment>
     </unit>
     <unit id="983c4207-8ef4-43c7-93ad-c4f2ea397099">
@@ -39904,7 +39904,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA now correctly detects the secondary routing buttons on ALVA BC640/680 series braille displays. (#5206)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA ara detecta correctament els botons secundaris d'enrutament a les línies braille de les sèries ALVA BC640/680. (#5206)</target>
       </segment>
     </unit>
     <unit id="16b6d881-b31b-4d3c-964d-3b83c86da505">
@@ -39914,7 +39914,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA can again report Windows Toast notifications in recent builds of Windows 10. (#6096)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA pot tornar a informar de notificacions de Windows Toast en versions recents de Windows 10. (#6096)</target>
       </segment>
     </unit>
     <unit id="e102795b-14cf-4ee7-a089-29b97993feba">
@@ -39924,7 +39924,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer occasionally stops recognising key presses on Baum compatible and HumanWare Brailliant B braille displays. (#6035)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA ja no deixa de reconèixer ocasionalment les pulsacions de tecles en línies Brailliant B compatibles amb Baum i HumanWare. (#6035)</target>
       </segment>
     </unit>
     <unit id="369b72a0-163a-4c1d-9877-f9675277b3d6">
@@ -39934,7 +39934,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>If reporting of line numbers is enabled in NVDA's Document Formatting preferences, line numbers are now shown on a braille display. (#5941)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Si l'informació dels números de línia està activat a les preferències de Format de Documents de NVDA, els números de línia ara es mostren en una línia braille. (#5941)</target>
       </segment>
     </unit>
     <unit id="3aa842a8-6b1f-46ac-a32a-4e1d82ed4fd0">
@@ -39944,7 +39944,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When speech mode is off, reporting objects (such as pressing NVDA+tab to report the focus) now appears in the Speech Viewer as expected. (#6049)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan el mode de veu està desactivat, l'informació dels objectes (com prémer NVDA+tab per informar del focus) apareixen ara al Visor de Veu com s'esperava. (#6049)</target>
       </segment>
     </unit>
     <unit id="6c0960de-36ed-4105-8dad-0db6408c53ad">
@@ -39954,7 +39954,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In the Outlook 2016 message list,  associated draft information is no longer reported. (#6219)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A la llista de missatges d'Outlook 2016, la informació d'esborrany associada ja no s'anuncia. (#6219)</target>
       </segment>
     </unit>
     <unit id="a0e366cb-d323-4727-b06c-df4fd391eff0">
@@ -39964,7 +39964,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Google Chrome and Chrome-based browsers in a language other than English, browse mode no longer fails to work in many documents. (#6249)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En Google Chrome i navegadors basats en Chrome en un idioma diferent de l'anglès, el mode de navegació ja no deixa de funcionar en molts documents. (#6249)</target>
       </segment>
     </unit>
     <unit id="4ce37278-f099-4e4d-98ad-fb7a53f076be">
@@ -39974,7 +39974,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Changes for Developers</source>
-        <target>Canvis</target>
+        <target>Canvis per als desenvolupadors</target>
       </segment>
     </unit>
     <unit id="b64f0c94-763d-4364-a089-bb09c10c5d9d">
@@ -39984,7 +39984,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Logging information directly from a property no longer results in the property  being called recursively over and over again. (#6122)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Registrar informació directament des d'una propietat ja no fa que la propietat es cridi recursivament una vegada i una altra. (#6122)</target>
       </segment>
     </unit>
     <unit id="759efb50-a673-4986-bf39-c646e83370b9">
@@ -39994,7 +39994,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>2016.2.1</source>
-        <target>&lt;target/&gt;</target>
+        <target>2016.2.1</target>
       </segment>
     </unit>
     <unit id="5a81bcde-bd6b-4550-9bb1-31d65a5089af">
@@ -40013,7 +40013,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer causes Microsoft Word to crash immediately after it starts in Windows XP. (#6033)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA ja no fa que Microsoft Word es bloquegi immediatament després d'iniciar-se a Windows XP. (#6033)</target>
       </segment>
     </unit>
     <unit id="509c534a-4b6e-4c93-b99d-bc56ef3eee76">
@@ -40023,7 +40023,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Removed reporting of grammar errors, as this causes crashes in Microsoft Word. (#5954, #5877)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'ha eliminat l'informació d'errors gramaticals, ja que això provoca bloquejos a Microsoft Word. (#5954, #5877)</target>
       </segment>
     </unit>
     <unit id="fd4efbbd-b426-444b-ba77-ecf3b2e75215">
@@ -40033,7 +40033,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>2016.2</source>
-        <target>&lt;target/&gt;</target>
+        <target>2016.2</target>
       </segment>
     </unit>
     <unit id="cdec0898-0ad1-4353-ad99-334265b3e0af">
@@ -40042,7 +40042,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Highlights of this release include the ability to indicate spelling errors while typing; support for reporting grammar errors in Microsoft Word; and improvements and fixes to Microsoft Office support.</source>
-        <target>Els punts destacats d'aquesta versió inclouen la possibilitat d'indicar errors ortogràfics mentre escriu; suport per reportar errors gramaticals a Microsoft Word; i millores i correccions al suport de Microsoft Office.</target>
+        <target>Els punts destacats d'aquesta versió inclouen la possibilitat d'indicar errors ortogràfics mentre escrius; suport per informar d'errors gramaticals a Microsoft Word; i millores i correccions al suport de Microsoft Office.</target>
       </segment>
     </unit>
     <unit id="95372b34-37eb-45cb-a9c4-15d3c407bdb0">
@@ -40062,7 +40062,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode in Internet Explorer and other MSHTML controls, using first letter navigation to move by annotation (a and shift+a) now moves to inserted and deleted text. (#5691)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En el mode de navegació a Internet Explorer i altres controls de MSHTML, utilitzar la navegació de la primera lletra per moure's per anotació (a i shift+a) ara es mou al text inserit i eliminat. (#5691)</target>
       </segment>
     </unit>
     <unit id="7d087f58-ebbb-494f-83ac-8f20fdd0bc33">
@@ -40072,7 +40072,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Excel, NVDA now reports the level of a group of cells, as well as whether it is collapsed or expanded. (#5690)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Excel, NVDA ara informa del nivell d'un grup de cel·les, així com si està col·lapsat o expandit. (#5690)</target>
       </segment>
     </unit>
     <unit id="089cdd83-36e8-4775-a783-1738800cc3e5">
@@ -40082,7 +40082,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Pressing the Report text formatting command (NVDA+f) twice presents the information in browse mode so it can be reviewed. (#4908)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Prémer dues vegades la comanda d'informació de format de text (NVDA+f) presenta la informació en mode de navegació perquè es pugui revisar. (#4908)</target>
       </segment>
     </unit>
     <unit id="21dee6a6-2441-45c3-b7c6-01bfb0df7d2b">
@@ -40092,7 +40092,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Excel 2010 and later, cell shading and gradient fill is now reported. Automatic reporting is controlled by the Report colors option in NVDA's Document Formatting preferences. (#3683)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Excel 2010 i posteriors, ara s'informa de l'ombrejat de cel·les i el reompliment de gradient. L'informe automàtic es controla mitjançant l'opció d'informació de colors a les preferències de Format de Document de NVDA. (#3683)</target>
       </segment>
     </unit>
     <unit id="69b8ca69-e95e-441b-a705-9fa70e0e784e">
@@ -40102,7 +40102,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>New braille translation table: Koine Greek. (#5393)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Nova taula de traducció en braille: grec koinè. (#5393)</target>
       </segment>
     </unit>
     <unit id="9846f011-f000-432e-b232-c3c21bd84309">
@@ -40112,7 +40112,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In the Log Viewer, you can now save the log using the shortcut key control+s. (#4532)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Al visor de registres, ara pots desar el registre utilitzant la tecla d'accés ràpid control+s. (#4532)</target>
       </segment>
     </unit>
     <unit id="c639b272-bc55-4857-b321-bc8ad7c887f1">
@@ -40122,7 +40122,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>If reporting of spelling errors is enabled and supported in the focused control, NVDA will play a sound to alert you of a spelling error made while typing. This can be disabled using the new "Play sound for spelling errors while typing" option in NVDA's Keyboard Settings dialog. (#2024)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Si la notificació d'errors ortogràfics està activada i suportada al control focalitzat, NVDA reproduirà un so per avisar-te d'un error ortogràfic comès mentre escrius. Això es pot desactivar utilitzant la nova opció "Reprodueix so per errors ortogràfics mentre escrius" al diàleg de Configuració del teclat de NVDA. (#2024)</target>
       </segment>
     </unit>
     <unit id="67a20a66-e19e-4ace-99e8-9cee52e4b3b2">
@@ -40132,7 +40132,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Grammar errors are now reported in Microsoft Word. This can be disabled using the new "Report grammar errors" option in NVDA's Document Formatting preferences dialog. (#5877)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Els errors gramaticals ara s'anuncien a Microsoft Word. Això es pot desactivar utilitzant la nova opció "Informar d'errors gramaticals" al diàleg de preferències de format de documents de NVDA. (#5877)</target>
       </segment>
     </unit>
     <unit id="46097994-1081-4c9e-896f-69986bef4d3d">
@@ -40152,7 +40152,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode and editable text fields, NVDA now treats numpadEnter the same as the main enter key. (#5385)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En mode navegació i camps de text editables, NVDA ara tracta l'Enter del teclat numèric igual que la tecla Enter principal. (#5385)</target>
       </segment>
     </unit>
     <unit id="c8bcb599-d80e-4448-939d-a5608420ea28">
@@ -40162,7 +40162,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA has switched to the eSpeak NG speech synthesizer. (#5651)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA ha canviat al sintetitzador de veu eSpeak NG. (#5651)</target>
       </segment>
     </unit>
     <unit id="ad99ce21-60ce-41d4-a409-0bc35046e1e1">
@@ -40172,7 +40172,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Excel, NVDA no longer ignores a column header for a cell when there is a blank row between the cell and the header. (#5396)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Excel, NVDA ja no ignora una capçalera de columna per a una cel·la quan hi ha una fila en blanc entre la cel·la i la capçalera. (#5396)</target>
       </segment>
     </unit>
     <unit id="af3b7311-1557-4c6f-9ef8-22c645f667f0">
@@ -40182,7 +40182,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Excel, coordinates are now announced before headers to eliminate ambiguity between headers and content. (#5396)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Excel, ara s'anuncien les coordenades abans de les capçaleres per eliminar l'ambigüitat entre les capçaleres i el contingut. (#5396)</target>
       </segment>
     </unit>
     <unit id="273db734-b8b2-4fa5-a53b-ea8c29c33aec">
@@ -40202,7 +40202,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode, when attempting to use single letter navigation to move to an element which isn't supported for the document, NVDA reports that this isn't supported rather than reporting that there is no element in that direction. (#5691)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En mode navegació, quan intentes utilitzar la navegació d'una sola lletra per passar a un element que no és compatible amb el document, NVDA informa que això no està suportat en lloc d'informar que no hi ha cap element en aquesta direcció. (#5691)</target>
       </segment>
     </unit>
     <unit id="0da764a7-cbd2-4fcb-9196-d672cea829b2">
@@ -40212,7 +40212,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When listing sheets in the Elements List in Microsoft Excel, sheets containing only charts are now included. (#5698)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan es llisten fulls a la Llista d'Elements de Microsoft Excel, ara s'inclouen també fulls que només contenen gràfics. (#5698)</target>
       </segment>
     </unit>
     <unit id="206856f2-32e9-4b23-9d73-fd9d8d9e7f29">
@@ -40222,7 +40222,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer reports extraneous information when switching windows in a Java application with multiple windows such as IntelliJ or Android Studio. (#5732)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA ja no informa d'informació innecessària quan es canvia de finestra en una aplicació Java amb múltiples finestres com IntelliJ o Android Studio. (#5732)</target>
       </segment>
     </unit>
     <unit id="ca3f7c89-61f2-4178-a38e-dcd39eaba5d9">
@@ -40232,7 +40232,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Scintilla based editors such as Notepad++, braille is now updated correctly when moving the cursor using a braille display. (#5678)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En editors basats en Scintilla com Notepad++, el braille ara s'actualitza correctament quan es mou el cursor amb una línia braille. (#5678)</target>
       </segment>
     </unit>
     <unit id="a7fd749e-c4ab-40f9-bdec-13525b06b7b0">
@@ -40242,7 +40242,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer sometimes crashes when enabling braille output. (#4457)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA ja no es bloqueja de tant en tant quan s'activa la sortida en braille. (#4457)</target>
       </segment>
     </unit>
     <unit id="c453318f-8dc9-44c1-aff8-f3d46eb728d8">
@@ -40252,7 +40252,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Word, paragraph indentation is now always reported in the measurement unit chosen by the user (e.g. centimeters or inches). (#5804)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Word, la indentació del paràgraf ara sempre s'anuncia a la unitat de mesura escollida per l'usuari (per exemple, centímetres o polzades). (#5804)</target>
       </segment>
     </unit>
     <unit id="99a6e96e-cc45-4fb9-9936-7754c8eee3e5">
@@ -40262,7 +40262,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When using a braille display, many NVDA messages that were previously only spoken are now brailled as well. (#5557)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan s'utilitza una línia braille, molts missatges de NVDA que abans només es parlaven ara també estan en braille. (#5557)</target>
       </segment>
     </unit>
     <unit id="16f6ee69-edd9-4fed-98cb-0869f7593df0">
@@ -40272,7 +40272,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In accessible Java applications, the level of tree view items is now reported. (#5766)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En aplicacions Java accessibles, ara es reporta el nivell dels elements de la vista d'arbre. (#5766)</target>
       </segment>
     </unit>
     <unit id="d4615ebe-6b94-434f-a01b-7f50e62a877e">
@@ -40282,7 +40282,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed crashes in Adobe Flash in Mozilla Firefox in some cases. (#5367)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'han corregit els bloquejos a Adobe Flash a Mozilla Firefox en alguns casos. (#5367)</target>
       </segment>
     </unit>
     <unit id="2a72c8d6-17fe-4a6c-a14a-a44279013065">
@@ -40292,7 +40292,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Google Chrome and Chrome-based browsers, documents within dialogs or applications can now be read in browse mode. (#5818)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En Google Chrome i navegadors basats en Chrome, els documents dins dels diàlegs o aplicacions ara es poden llegir en mode navegació. (#5818)</target>
       </segment>
     </unit>
     <unit id="b26e8f7c-c2a2-424f-b5b2-e6e35cbfdbed">
@@ -40302,7 +40302,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Google Chrome and Chrome-based browsers, you can now force NVDA to switch to browse mode in web dialogs or applications. (#5818)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Google Chrome i als navegadors basats en Chrome, ara pots forçar NVDA a canviar al mode de navegació en diàlegs web o aplicacions. (#5818)</target>
       </segment>
     </unit>
     <unit id="b6f007d1-5d1c-4f31-8beb-1196a1d32418">
@@ -40312,7 +40312,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, moving focus to certain controls (specifically, where aria-activedescendant is used) no longer incorrectly switches to browse mode. This occurred, for example, when moving to suggestions in address fields when composing a message in Gmail. (#5676)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En Internet Explorer i altres controls de MSHTML, moure el focus a certs controls (específicament, on s'utilitza aria-activedescendant) ja no canvia incorrectament al mode de navegació. Això passava, per exemple, quan es movia a suggeriments en camps d'adreça quan es redactava un missatge a Gmail. (#5676)</target>
       </segment>
     </unit>
     <unit id="dc2062fa-5543-406d-80bb-f91d702ecc0c">
@@ -40322,7 +40322,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Word, NVDA no longer freezes in large tables when reporting of table row/column headers is enabled. (#5878)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Word, NVDA ja no es congela en taules grans quan s'activa la notificació de capçaleres de files o columnes de taula. (#5878)</target>
       </segment>
     </unit>
     <unit id="a9f11fd6-8727-4ec2-9a39-c16d8f92c5f0">
@@ -40332,7 +40332,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft word, NVDA no longer incorrectly reports text with an outline level (but not a built-in heading style) as a heading. (#5186)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Word, NVDA ja no informa incorrectament del text amb un nivell d'esquema (però no amb un estil d'encapçalament integrat) com a encapçalament. (#5186)</target>
       </segment>
     </unit>
     <unit id="edd50caa-46fa-46d4-8b01-69a0c45073b4">
@@ -40342,7 +40342,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode in Microsoft Word, the Move past end/to start of container commands (comma and shift+comma) now work for tables. (#5883)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En mode navegació a Microsoft Word, les ordres Moure més enllà del final/a l'inici del contenidor (coma i shift+coma) ara funcionen per a les taules. (#5883)</target>
       </segment>
     </unit>
     <unit id="3b3d3516-a346-48e9-9720-3b09e272b350">
@@ -40352,7 +40352,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Changes for Developers</source>
-        <target>Canvis</target>
+        <target>Canvis per als desenvolupadors</target>
       </segment>
     </unit>
     <unit id="d5b5bfbf-5a1d-4231-b4eb-6ca05572dafc">
@@ -40362,7 +40362,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA's C++ components are now built with Microsoft Visual Studio 2015. (#5592)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Els components C++ de NVDA ara es compilen amb Microsoft Visual Studio 2015. (#5592)</target>
       </segment>
     </unit>
     <unit id="78bf74de-1f3e-47a1-946c-79b6c7b94c33">
@@ -40372,7 +40372,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>You can now present a text or HTML message to the user in browse mode using ui.browseableMessage. (#4908)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Ara pots presentar un missatge de text o HTML a l'usuari en mode navegació utilitzant ui.browseableMessage. (#4908)</target>
       </segment>
     </unit>
     <unit id="c87bd370-2471-4152-8712-a3fec975c0c8">
@@ -40382,7 +40382,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In the User Guide, when a &lt;!-- KC:setting command is used for a setting which has a common key for all layouts, the key may now be placed after a full-width colon (：) as well as the regular colon (:). (#5739) --&gt;</source>
-        <target>&lt;target/&gt;</target>
+        <target>A la Guia d'Usuari, quan s'utilitza una ordre &lt;!-- KC:setting per a una configuració que té una tecla comuna per a totes les distribucions, la tecla ara es pot col·locar després d'un dos punts d'amplada completa (:) així com del dos punts regular (:). (#5739) --&gt;</target>
       </segment>
     </unit>
     <unit id="d90bb759-dd1f-4fb2-ac17-1399c150c0dd">
@@ -40392,7 +40392,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>2016.1</source>
-        <target>&lt;target/&gt;</target>
+        <target>2016.1</target>
       </segment>
     </unit>
     <unit id="7d4af9a0-33a6-4826-98ea-5bf474664079">
@@ -40401,7 +40401,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Highlights of this release include the ability to optionally lower the volume of other sounds; improvements to braille output and braille display support; several significant fixes to Microsoft Office support; and fixes to browse mode in iTunes.</source>
-        <target>Els punts destacats d'aquesta versió inclouen la possibilitat de baixar opcionalment el volum d'altres sons; millores en la sortida en braille i en el suport de visualització en braille; diverses correccions importants al suport de Microsoft Office; i arregla el mode de navegació a iTunes.</target>
+        <target>Els punts destacats d'aquesta versió inclouen la possibilitat de baixar opcionalment el volum d'altres sons; millores en la sortida en braille i en el suport de línies braille; diverses correccions importants al suport de Microsoft Office; i arregla el mode de navegació a iTunes.</target>
       </segment>
     </unit>
     <unit id="b530c166-11d2-408c-86fd-14a1104ea14c">
@@ -40421,7 +40421,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>New braille translation tables: Polish 8 dot computer braille, Mongolian. (#5537, #5574)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Noves taules de traducció en braille: polonès de 8 punts en braille per ordinador, mongol. (#5537, #5574)</target>
       </segment>
     </unit>
     <unit id="e5ebd895-30de-4cb6-abbe-a7fef412222a">
@@ -40431,7 +40431,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>You can turn off the braille cursor and change its shape using the new Show cursor and Cursor shape options in the Braille Settings dialog. (#5198)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Pots desactivar el cursor en braille i canviar-ne la forma utilitzant les noves opcions Mostrar el cursor i la forma del cursor al diàleg de Configuració Braille. (#5198)</target>
       </segment>
     </unit>
     <unit id="ce60b30f-8378-4b97-88fb-07f5fcba4b35">
@@ -40441,7 +40441,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA can now connect to a HIMS Smart Beetle braille display via Bluetooth. (#5607)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA ara es pot connectar a una línia braille Smart Beetle de HIMS via Bluetooth. (#5607)</target>
       </segment>
     </unit>
     <unit id="fdae46b1-962e-4906-88c8-271b3245424c">
@@ -40451,7 +40451,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA can optionally lower the volume of other sounds when installed on Windows 8 and later. This can be configured using the Audio ducking mode option in the NVDA Synthesizer dialog or by pressing NVDA+shift+d. (#3830, #5575)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA pot opcionalment reduir el volum d'altres sons quan s'instal·la a Windows 8 i posteriors. Això es pot configurar utilitzant l'opció d'atenuació d'àudio al diàleg de Sintetitzador de NVDA o prement NVDA+shift+d. (#3830, #5575)</target>
       </segment>
     </unit>
     <unit id="c178e7a5-74d8-438c-88af-6eee1e21a56a">
@@ -40461,7 +40461,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for the APH Refreshabraille in HID mode and the Baum VarioUltra and Pronto! when connected via USB. (#5609)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Suport per a l'APH Refreshabraille en mode HID i per a la VarioUltra i Pronto! de BAUM quan es connecten per USB. (#5609)</target>
       </segment>
     </unit>
     <unit id="b5a3f085-c690-43de-ae9e-a3a91c323f91">
@@ -40471,7 +40471,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for HumanWare Brailliant BI/B braille displays when the protocol is set to OpenBraille. (#5612)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Suport per a les línies braille HumanWare Brailliant BI/B quan el protocol està configurat a OpenBraille. (#5612)</target>
       </segment>
     </unit>
     <unit id="5e117038-ca30-4828-ab0d-a77251fd7918">
@@ -40491,7 +40491,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Reporting of emphasis is now disabled by default. (#4920)</source>
-        <target>&lt;target/&gt;</target>
+        <target>La notificació d'èmfasi ara està desactivada per defecte. (#4920)</target>
       </segment>
     </unit>
     <unit id="771be5d3-64ea-4747-a342-7945cde5b2fb">
@@ -40501,7 +40501,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In the Elements List dialog in Microsoft Excel, the shortcut for Formulas has been changed to alt+r so that it is different to the shortcut for the Filter field. (#5527)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Al diàleg Llista d'Elements a Microsoft Excel, l'accés ràpid per a Fórmules s'ha canviat a alt+r perquè sigui diferent de l'accés directe al camp Filtre. (#5527)</target>
       </segment>
     </unit>
     <unit id="e9c87e75-98f9-4b7d-ad22-81929433ba14">
@@ -40511,7 +40511,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Updated liblouis braille translator to 2.6.5. (#5574)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'ha actualitzat el transcriptor braille de Liblouis a la versió 2.6.5. (#5574)</target>
       </segment>
     </unit>
     <unit id="1ddd475c-1f27-4d1c-960b-3322a18eae39">
@@ -40521,7 +40521,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The word "text" is no longer reported when moving the focus or review cursor to text objects. (#5452)</source>
-        <target>&lt;target/&gt;</target>
+        <target>La paraula "text" ja no s'indica quan es mou el cursor del focus o de revisió a objectes de text. (#5452)</target>
       </segment>
     </unit>
     <unit id="24354842-f17a-4325-b26f-b6a5422f7e4a">
@@ -40541,7 +40541,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In iTunes 12, browse mode now updates correctly when a new page loads in the iTunes Store. (#5191)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A iTunes 12, el mode de navegació ara s'actualitza correctament quan es carrega una nova pàgina a l'iTunes Store. (#5191)</target>
       </segment>
     </unit>
     <unit id="b6f0e8fe-baeb-41ee-8a5e-c64a806a586f">
@@ -40551,7 +40551,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, moving to specific heading levels with single letter navigation now behaves as expected when the level of a heading is overridden for accessibility purposes (specifically, when aria-level overrides the level of an h tag). (#5434)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En Internet Explorer i altres controls de MSHTML, passar a nivells específics d'encapçalaments amb navegació d'una sola lletra ara es comporta com s'espera quan el nivell d'un encapçalament s'ignora per motius d'accessibilitat (concretament, quan el nivell d'ària sobreescriu el nivell d'una etiqueta h). (#5434)</target>
       </segment>
     </unit>
     <unit id="e34bd491-d12e-4fbd-82a0-21ff912729d2">
@@ -40561,7 +40561,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Spotify, focus no longer frequently lands on "unknown" objects. (#5439)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Spotify, el focus ja no es fixa sovint en objectes "desconeguts". (#5439)</target>
       </segment>
     </unit>
     <unit id="16075048-ad7e-4a4f-849e-3c07dd2ccbc5">
@@ -40571,7 +40571,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Focus is now restored correctly when returning to Spotify from another application. (#5439)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Ara el focus es restaura correctament quan tornes a Spotify des d'una altra aplicació. (#5439)</target>
       </segment>
     </unit>
     <unit id="f971c0ac-ad4c-4c2d-a088-1678d75d2507">
@@ -40581,7 +40581,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When toggling between browse mode and focus mode, the mode is reported in braille as well as speech. (#5239)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan alternes entre el mode de navegació i el mode d'enfocament, el mode s'informa tant en braille com en veu. (#5239)</target>
       </segment>
     </unit>
     <unit id="945c0894-0189-43f4-b4ce-1211c7ed794b">
@@ -40591,7 +40591,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The Start buttn on the Taskbar is no longer reported as a list and/or as selected in some versions of Windows. (#5178)</source>
-        <target>&lt;target/&gt;</target>
+        <target>El botó d'inici a la barra de tasques ja no s'anuncia com a llista i/o seleccionada en algunes versions de Windows. (#5178)</target>
       </segment>
     </unit>
     <unit id="f71d2452-b02e-4e43-9c50-2c2a39ec962f">
@@ -40601,7 +40601,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Messages such as "inserted" are no longer reported when composing messages in Microsoft Outlook. (#5486)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Missatges com "inserit" ja no s'anuncien quan es composen missatges a Microsoft Outlook. (#5486)</target>
       </segment>
     </unit>
     <unit id="2bdb4ff3-ab54-4bed-b440-552602b104cb">
@@ -40611,7 +40611,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When using a braille display and text is selected on the current line (e.g. when searching in a text editor for text which occurs on the same line), the braille display will be scrolled if appropriate. (#5410)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan s'utilitza una línia braille i el text es selecciona a la línia actual (per exemple, quan es cerca en un editor de text text que aparegui a la mateixa línia), la línia braille es desplaçarà si és aplicable. (#5410)</target>
       </segment>
     </unit>
     <unit id="a8541293-6f08-47fb-a52a-7552da8f06aa">
@@ -40621,7 +40621,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer silently exits when closing a Windows command console with alt+f4 in Windows 10. (#5343)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA ja no surt silenciosament quan es tanca una consola de comandes de Windows amb alt+f4 a Windows 10. (#5343)</target>
       </segment>
     </unit>
     <unit id="d3053ca2-c4c5-446e-9b07-c0a6ba11626a">
@@ -40631,7 +40631,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In the Elements List in browse mode, when you change the type of element, the Filter by field is now cleared. (#5511)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A la Llista d'Elements en mode navegació, quan canvies el tipus d'element, el camp Filtrar per camp queda esborrat. (#5511)</target>
       </segment>
     </unit>
     <unit id="3e25d38c-5237-4162-bd14-99676abe9e4a">
@@ -40641,7 +40641,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In editable text in Mozilla applications, moving the mouse again reads the appropriate line, word, etc. as expected instead of the entire content. (#5535)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En el text editable d'aplicacions Mozilla, moure el ratolí torna a llegir la línia, paraula, etc. corresponent en lloc de tot el contingut. (#5535)</target>
       </segment>
     </unit>
     <unit id="c6510f6b-2694-46ac-828e-f2ecc3f015ae">
@@ -40651,7 +40651,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When moving the mouse in editable text in Mozilla applications, reading no longer stops at elements such as links within the word or line being read. (#2160, #5535)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan es mou el ratolí en text editable en aplicacions Mozilla, la lectura ja no s'atura en elements com enllaços dins de la paraula o línia que s'està llegint. (#2160, #5535)</target>
       </segment>
     </unit>
     <unit id="af353f0e-757a-4486-a162-939414750952">
@@ -40661,7 +40661,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer, the shoprite.com website can now be read in browse mode instead of reporting as blank. (Specifically, malformed lang attributes are now handled gracefully.) (#5569)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Internet Explorer, el lloc web shoprite.com ara es pot llegir en mode navegació en lloc de reportar-se com a en blanc. (Concretament, els atributs de llengua malformats ara es tracten amb precisió.) (#5569)</target>
       </segment>
     </unit>
     <unit id="9401f590-ecee-40dc-b2c7-4b4e0c20310b">
@@ -40671,7 +40671,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Word, tracked changes such as "inserted" are no longer reported when track changes markup is not displayed. (#5566)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Word, els canvis seguits com ara "inserit" ja no s'anuncien quan no es mostra el marcatge dels canvis de seguiment. (#5566)</target>
       </segment>
     </unit>
     <unit id="bf5cb8c1-ed75-4a7e-9558-00f8029ee741">
@@ -40681,7 +40681,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When a toggle button is focused, NVDA now reports when it is changed from pressed to not pressed. (#5441)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan un botó de commutació està enfocat, NVDA ara informa quan canvia de premut a no premut. (#5441)</target>
       </segment>
     </unit>
     <unit id="e0ed59f4-2342-4448-ba54-e9ce683c4c87">
@@ -40691,7 +40691,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Reporting of mouse shape changes again works as expected. (#5595)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Informar dels canvis de forma del ratolí torna a funcionar com s'esperava. (#5595)</target>
       </segment>
     </unit>
     <unit id="b51ee962-1ab2-41aa-bc74-d1519db277d8">
@@ -40701,7 +40701,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When speaking line indentation, non-breaking spaces are now treated as normal spaces. Previously, this could cause announcements such as "space space space" instead  of "3 space". (#5610)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan s'anuncia la indentació de línia, els espais de no separació ara es consideren espais normals. Abans, això podia provocar anuncis com ara "espai espai" en lloc de "3 espais". (#5610)</target>
       </segment>
     </unit>
     <unit id="309538a4-ac00-41d6-a70c-b9e205d66230">
@@ -40711,7 +40711,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When closing a modern Microsoft input method candidate list, focus is correctly restored to either the input composition or the underlying document. (#4145)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan es tanca una llista de candidats a mètodes d'entrada de Microsoft modern, el focus es restaura correctament tant a la composició d'entrada com al document subjacent. (#4145)</target>
       </segment>
     </unit>
     <unit id="d7ca1ad9-39c5-4a49-b4ad-90515f4e7f5b">
@@ -40721,7 +40721,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Office 2013 and later, when the ribbon is set to show only tabs, items in the ribbon are again reported as expected when a tab is activated. (#5504)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Office 2013 i posteriors, quan la cinta està configurada per mostrar només pestanyes, els elements de la cinta es tornen a anunciar com s'espera quan s'activa una pestanya. (#5504)</target>
       </segment>
     </unit>
     <unit id="25ec3383-399b-4668-a5b0-7ceb134d8375">
@@ -40731,7 +40731,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixes and improvements to touch screen gesture detection and binding. (#5652)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Correccions i millores en la detecció i assignació de gestos a la pantalla tàctil. (#5652)</target>
       </segment>
     </unit>
     <unit id="3ce60766-9fcd-4094-a0eb-752a4f992a61">
@@ -40741,7 +40741,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Touch screen hovers are no longer reported in input help. (#5652)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Els Touch screen hovers ja no apareixen a l'ajuda d'entrada. (#5652)</target>
       </segment>
     </unit>
     <unit id="67e14ead-a692-4630-98d7-72b9ce46d683">
@@ -40751,7 +40751,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer fails to list comments in the Elements List for Microsoft Excel if a comment is  on a merged cell. (#5704)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA ja no deixa de llistar els comentaris a la Llista d'Elements per a Microsoft Excel si un comentari es troba en una cel·la fusionada. (#5704)</target>
       </segment>
     </unit>
     <unit id="60890a1b-36c7-4aee-9119-ef51443f7ae7">
@@ -40761,7 +40761,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In a very rare case, NVDA no longer fails to read sheet content in Microsoft Excel with reporting of row and column headers enabled. (#5705)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En un cas molt rar, NVDA ja no deixa de llegir el contingut dels fulls a Microsoft Excel amb els anuncis de les capçaleres de fila i columna activats. (#5705)</target>
       </segment>
     </unit>
     <unit id="ccd5b9a1-8856-45b6-be66-508940f1fdfb">
@@ -40771,7 +40771,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Google Chrome, navigating within an Input composition when entering east Asian characters now works as expected. (#4080)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Google Chrome, navegar dins d'una composició d'entrada quan introdueixes caràcters de l'Àsia oriental ara funciona com s'espera. (#4080)</target>
       </segment>
     </unit>
     <unit id="ca5d8ce0-f47a-4cef-8182-ddd21ca70e9c">
@@ -40781,7 +40781,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When searching Apple Music in iTunes, browse mode for the search results document is now updated as expected. (#5659)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan cerqueu Apple Music a iTunes, el mode de navegació del document de resultats de cerca s'actualitza tal com s'esperava. (#5659)</target>
       </segment>
     </unit>
     <unit id="3a7f4b7b-a41b-4378-9964-068666b285fd">
@@ -40791,7 +40791,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Excel, pressing shift+f11 to create a new sheet now reports your new position instead of reporting nothing. (#5689)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Excel, prémer shift+f11 per crear una nova fulla ara anuncia la teva nova posició en comptes de no informar de res. (#5689)</target>
       </segment>
     </unit>
     <unit id="04e441fd-f1bd-4cc1-9700-fa8ca382db0d">
@@ -40801,7 +40801,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed problems with braille display output when entering Korean characters. (#5640)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'han solucionat problemes amb la sortida en la línia braille en introduir caràcters coreans. (#5640)</target>
       </segment>
     </unit>
     <unit id="2989fcb2-75ca-4825-a4eb-152f4bfffa2d">
@@ -40811,7 +40811,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Changes for Developers</source>
-        <target>Canvis</target>
+        <target>Canvis per als desenvolupadors</target>
       </segment>
     </unit>
     <unit id="d5b05574-11de-4b80-bbad-206a89f4c70d">
@@ -40821,7 +40821,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The new audioDucking.AudioDucker class allows code which outputs audio to indicate when background audio should be ducked. (#3830)</source>
-        <target>&lt;target/&gt;</target>
+        <target>La nova classe audioDucking.AudioDucker permet codi que envia àudio per indicar quan s'ha d'atenuar l'àudio de fons. (#3830)</target>
       </segment>
     </unit>
     <unit id="03402896-9116-4b00-8d01-4a8b4dcf2bec">
@@ -40831,7 +40831,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>nvwave.WavePlayer's constructor now has a wantDucking keyword argument which specifies whether background audio should be ducked while audio is playing. (#3830)</source>
-        <target>&lt;target/&gt;</target>
+        <target>el constructor nvwave.WavePlayer ara té la paraula clau wantDucking com a argument que especifica si l'àudio de fons s'ha d'atenuar mentre s'està reproduint àudio. (#3830)</target>
       </segment>
     </unit>
     <unit id="5f9a828f-0f92-4c4a-ad5c-5f6e701b2e8e">
@@ -40841,7 +40841,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When this is enabled (which is the default), it is essential that WavePlayer.idle be called when appropriate.</source>
-        <target>Quan això està activat (que és el per defecte), és essencial que es cridi WavePlayer.idle quan sigui apropiat.</target>
+        <target>Quan això està activat (que és per defecte), és essencial que es cridi WavePlayer.idle quan sigui apropiat.</target>
       </segment>
     </unit>
     <unit id="ad157124-637c-41bd-95cf-c79cc59e0c73">
@@ -40851,7 +40851,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Enhanced I/O for braille displays: (#5609)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Millorada l'entrada/sortida per a línies braille: (#5609)</target>
       </segment>
     </unit>
     <unit id="ff11a8ed-26a1-447d-b77c-a81c420df693">
@@ -40861,7 +40861,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Thread-safe braille display drivers can declare themselves as such using the BrailleDisplayDriver.isThreadSafe attribute. A driver must be thread-safe to benefit from the following features.</source>
-        <target>Els controladors de visualització braille Thread-Safe poden declarar-se com a tals utilitzant l'atribut BrailleDisplayDriver.isThreadSafe. Un controlador ha de ser segur de fil per beneficiar-se de les següents funcions.</target>
+        <target>Els controladors de línia braille Thread-Safe poden declarar-se com a tals utilitzant l'atribut BrailleDisplayDriver.isThreadSafe. Un controlador ha de ser thread-safe per beneficiar-se de les següents funcions.</target>
       </segment>
     </unit>
     <unit id="65b1ebac-c7c3-4798-ac57-e59fcd75f03d">
@@ -40871,7 +40871,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Data is written to thread-safe braille display drivers in the background, thus improving performance.</source>
-        <target>Les dades s'escriuen en controladors de visualització braille segurs per a fils en segon pla, millorant així el rendiment.</target>
+        <target>Les dades s'escriuen en segon pla en controladors de línia braille a prova de fils, millorant així el rendiment.</target>
       </segment>
     </unit>
     <unit id="e18d5d63-6e0a-4efa-8861-c73b18257563">
@@ -40881,7 +40881,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>hwIo.Serial extends pyserial to call a callable when data is received instead of drivers having to poll.</source>
-        <target>hwIo.Serial amplia pyserial per cridar un dispositiu de crida quan es reben dades en lloc que els conductors hagin de consultar.</target>
+        <target>hwIo.Serial amplia pyserial per cridar un callable quan es reben dades en lloc que els controladors hagin de fer un poll.</target>
       </segment>
     </unit>
     <unit id="8394c96e-b81f-4028-886d-21d66a7cdd87">
@@ -40911,7 +40911,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>There are several new properties accessible from touch screen gestures: (#5652)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Hi ha diverses propietats noves accessibles mitjançant gestos de pantalla tàctil: (#5652)</target>
       </segment>
     </unit>
     <unit id="426ac7fe-62b2-418b-9694-5c9c254e9c5a">
@@ -40921,7 +40921,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>MultitouchTracker objects now contain a childTrackers property which contains the MultiTouchTrackers the tracker was composed of. For example, 2 finger double tap has child trackers for two 2-finger taps. The 2-finger taps themselves have child trackers for two taps.</source>
-        <target>Els objectes MultitouchTracker ara contenen una propietat childTrackers que conté els MultiTouchTrackers dels quals estava compost el tracker. Per exemple, el doble toc de 2 dits té rastrejadors infantils per a dos tocs de 2 dits. Els tocs de dos dits tenen rastrejadors infantils per a dos tocs.</target>
+        <target>Els objectes MultitouchTracker ara contenen una propietat childTrackers que conté els MultiTouchTrackers dels quals estava compost el tracker. Per exemple, el doble toc de 2 dits té fills seguidors per a dos tocs de 2 dits. Els tocs de dos dits tenen fills seguidors per a dos tocs.</target>
       </segment>
     </unit>
     <unit id="67c44efd-96f1-4535-a814-7f2265330db3">
@@ -40931,7 +40931,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>MultiTouchTracker objects now also contain a rawSingleTouchTracker property if the tracker was the result of one single finger doing a tap, flick or hover. The SingleTouchTracker allows access to the underlying ID assigned to the finger by the operating system and whether or not the finger is still in contact at the current time.</source>
-        <target>Els objectes MultiTouchTracker ara també contenen una propietat rawSingleTouchTracker si el rastrejador era el resultat d'un sol dit fent un toc, un moviment ràpid o una flotació. El SingleTouchTracker permet accedir a l'ID subjacent assignat al dit pel sistema operatiu i si el dit encara està en contacte en aquell moment.</target>
+        <target>Els objectes MultiTouchTracker ara també contenen una propietat rawSingleTouchTracker si el rastrejador era el resultat d'un sol dit fent un toc, un moviment ràpid o un hover. El SingleTouchTracker permet accedir a l'ID subjacent assignat al dit pel sistema operatiu i si el dit encara està en contacte en aquell moment.</target>
       </segment>
     </unit>
     <unit id="97bf1060-4869-4282-a85c-267a49eda057">
@@ -40951,7 +40951,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>TouchInputGesturs now contain a preheldTracker property, which is a MultitouchTracker object representing the other fingers held while this action was being performed.</source>
-        <target>Els TouchInputGesturs ara contenen una propietat preheldTracker, que és un objecte MultitouchTracker que representa els altres dits que es mantenen mentre es realitzava aquesta acció.</target>
+        <target>Els TouchInputGesturs ara contenen una propietat preheldTracker, que és un objecte MultitouchTracker que representa els altres dits que es mantenen mentre es realitza aquesta acció.</target>
       </segment>
     </unit>
     <unit id="cf1da4e6-9d29-4d50-a98b-8cc038f1e031">
@@ -40961,7 +40961,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Two new touch screen gestures can be emitted: (#5652)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Es poden donar dos nous gestos a la pantalla tàctil: (#5652)</target>
       </segment>
     </unit>
     <unit id="3ccc1be8-a904-49b4-a0c8-1f2a99306a15">
@@ -40971,7 +40971,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Plural tap and holds (e.g. double tap and hold)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Polsar i mantener en plural, (per exemple, doble toc i mantenir premut)</target>
       </segment>
     </unit>
     <unit id="c2766ba0-d5de-4e12-87c2-81a1970a50ae">
@@ -40981,7 +40981,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>A generalized identifier with finger count removed for holds (e.g. hold+hover for 1finger_hold+hover).</source>
-        <target>Un identificador generalitzat amb el recompte de dits eliminat per mantenir (per exemple, mantenir + passar el cursor per a 1finger_hold+hover).</target>
+        <target>Un identificador generalitzat amb el recompte de dits eliminat per mantenir (per exemple, mantenir + passar el cursor per a 1dit_retenció+passar el dit).</target>
       </segment>
     </unit>
     <unit id="61de1e29-f310-4102-9ec0-302fe54ab03b">
@@ -41000,7 +41000,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Highlights of this release include performance improvements in Windows 10; inclusion in the Ease of Access Center in Windows 8 and later; enhancements for Microsoft Excel, including listing and renaming of sheets and access to locked cells in protected sheets; and support for editing of rich text in Mozilla Firefox, Google Chrome and Mozilla Thunderbird.</source>
-        <target>Els punts destacats d'aquesta versió inclouen millores de rendiment a Windows 10; inclusió al Centre de Facilitat d'Accés a Windows 8 i posteriors; millores per a Microsoft Excel, incloent-hi la llistat i el canvi de nom de fulls i l'accés a cel·les bloquejades en fulls protegits; i suport per a l'edició de text enriquit a Mozilla Firefox, Google Chrome i Mozilla Thunderbird.</target>
+        <target>Els punts destacats d'aquesta versió inclouen millores de rendiment a Windows 10; inclusió al Centre de Facilitat d'Accés a Windows 8 i posteriors; millores per a Microsoft Excel, incloent-hi el llistat i el canvi de nom de fulls i l'accés a cel·les bloquejades en fulls protegits; i suport per a l'edició de text enriquit a Mozilla Firefox, Google Chrome i Mozilla Thunderbird.</target>
       </segment>
     </unit>
     <unit id="7a64b97a-c7ac-4931-882c-a3823f5368f8">
@@ -41020,7 +41020,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA now appears in the Ease of Access Center in Windows 8 and later. (#308)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA ara apareix al Centre de Facilitat d'Accés a Windows 8 i posteriors. (#308)</target>
       </segment>
     </unit>
     <unit id="9fadeb0d-606f-4d0c-b953-6f62004830dd">
@@ -41030,7 +41030,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When moving around cells in Excel, formatting changes are now automatically reported if the appropriate options are turned on in NVDA's Document Formatting Settings dialog. (#4878)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan es mou per les cel·les d'Excel, els canvis de format ara es reporten automàticament si les opcions corresponents estan activades al diàleg de Configuració de Format de Document de NVDA. (#4878)</target>
       </segment>
     </unit>
     <unit id="eb654758-ff35-4479-9c45-eea900f5b787">
@@ -41040,7 +41040,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>A Report Emphasis option has been added to NVDA's Document formatting settings dialog. On by default, this option allows NVDA to automatically report the existence of emphasised text in documents. So far, this is only supported for em and strong tags in Browse Mode for Internet Explorer and other MSHTML controls. (#4920)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'ha afegit una opció d'Èmfasi d'Informe al diàleg de configuració de format de documents de NVDA. Per defecte, aquesta opció permet a NVDA informar automàticament de l'existència de text emfatitzat als documents. Fins ara, això només és compatible amb etiquetes em i strong en el Mode de Navegació per a Internet Explorer i altres controls de MSHTML. (#4920)</target>
       </segment>
     </unit>
     <unit id="28199ba7-a909-42cd-a035-fc19d240e84e">
@@ -41050,7 +41050,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The existence of inserted and deleted text is now reported in Browse Mode for Internet Explorer and other MSHTML controls if NVDA's Report Editor Revisions option is enabled. (#4920)</source>
-        <target>&lt;target/&gt;</target>
+        <target>L'existència de text inserit i eliminat ara es reporta en el Mode de Navegació per a Internet Explorer i altres controls de MSHTML si l'opció de Revisions de l'Editor d'Informes de NVDA està activada. (#4920)</target>
       </segment>
     </unit>
     <unit id="94dac0b3-9ccf-4ff3-b6a5-842888600b47">
@@ -41060,7 +41060,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When viewing track changes in NVDA's Elements List for Microsoft Word, more information such as what formatting properties were changed is now displayed. (#4920)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan es veuen els canvis de seguiment a la Llista d'Elements de NVDA per a Microsoft Word, ara es mostra més informació com quines propietats de format s'han canviat. (#4920)</target>
       </segment>
     </unit>
     <unit id="f16e422a-9668-4448-bbba-c78a469bd819">
@@ -41070,7 +41070,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Microsoft Excel: listing and renaming of sheets is now possible from NVDA's Elements List (NVDA+f7). (#4630, #4414)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Microsoft Excel: ara és possible llistar i renombrar fulls a partir de la Llista d'Elements de NVDA (NVDA+f7). (#4630, #4414)</target>
       </segment>
     </unit>
     <unit id="c5abd18e-8fe9-4732-b89a-121ab7dcaaa7">
@@ -41080,7 +41080,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>It is now possible to configure whether actual symbols are sent to speech synthesizers (e.g. to cause a pause or change in inflection) in the Symbol Pronunciation dialog. (#5234)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Ara és possible configurar si s'envien símbols reals als sintetitzadors de veu (per exemple, per provocar una pausa o un canvi en la inflexió) al diàleg de Pronúncia de Símbols. (#5234)</target>
       </segment>
     </unit>
     <unit id="42031d7c-98aa-4ea2-ab7a-899cc296fe0f">
@@ -41090,7 +41090,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Excel, NVDA now reports any input messages set by the sheet author on cells. (#5051)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Excel, NVDA ara informa de qualsevol missatge d'entrada creat per l'autor de la fulla a les cel·les. (#5051)</target>
       </segment>
     </unit>
     <unit id="ffee516f-fe83-4a58-b49d-713831f6ba88">
@@ -41100,7 +41100,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for the Baum Pronto! V4 and VarioUltra braille displays when connected via Bluetooth. (#3717)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Suport per a les línies braille Baum Pronto! V4 i VarioUltra quan estan connectades via Bluetooth. (#3717)</target>
       </segment>
     </unit>
     <unit id="8acdd943-e562-480e-bd2f-6ccd390cb933">
@@ -41110,7 +41110,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for editing of rich text in Mozilla applications such as Google Docs with braille support enabled in Mozilla Firefox and HTML composition in Mozilla Thunderbird. (#1668)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Suport per a l'edició de text enriquit en aplicacions de Mozilla com Google Docs amb suport braille activat a Mozilla Firefox i composició HTML a Mozilla Thunderbird. (#1668)</target>
       </segment>
     </unit>
     <unit id="ae1489c8-4569-40e1-948d-7b644b1b43a3">
@@ -41120,7 +41120,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for editing of rich text in Google Chrome and Chrome-based browsers such as Google Docs with braille support enabled. (#2634)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Suport per a l'edició de text enriquit a Google Chrome i navegadors basats en Chrome com Google Docs amb suport braille activat. (#2634)</target>
       </segment>
     </unit>
     <unit id="18bc4f39-bdd4-4314-9f6e-cc3df04b0ddf">
@@ -41140,7 +41140,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode in Microsoft Excel, you can navigate to locked cells in protected sheets. (#4952)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En el mode de navegació a Microsoft Excel, pots navegar per les cel·les bloquejades en fulls protegits. (#4952)</target>
       </segment>
     </unit>
     <unit id="481892e6-9f58-4ab2-8747-2ccb4485242c">
@@ -41160,7 +41160,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The Report Editor Revisions option in NVDA's Document formatting settings dialog is now turned on by default. (#4920)</source>
-        <target>&lt;target/&gt;</target>
+        <target>L'opció d'anunciar Revisions de l'Editor al diàleg de configuració de format de Document de NVDA ara està activada per defecte. (#4920)</target>
       </segment>
     </unit>
     <unit id="de977139-9035-444b-99dc-e0397c51ce95">
@@ -41170,7 +41170,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When moving by character in Microsoft Word with NVDA's Report Editor Revisions option enabled, less information is now reported for track changes, which makes navigation more efficient. To view the extra information, use the Elements List. (#4920)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan et mous per caràcter a Microsoft Word amb l'opció d'anunciar revisions de l'editor de NVDA activada, ara s'anuncia menys informació per als canvis de seguiment, cosa que fa la navegació més eficient. Per veure la informació addicional, utilitzeu la Llista d'Elements. (#4920)</target>
       </segment>
     </unit>
     <unit id="d5a17687-03ae-48c9-864d-fa0f8b4dc014">
@@ -41180,7 +41180,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Updated liblouis braille translator to 2.6.4. (#5341)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'ha actualitzat el transcriptor braille de Liblouis a la 2.6.4. (#5341)</target>
       </segment>
     </unit>
     <unit id="5b6e51f4-568d-4b8c-b0a4-51e4a717fe63">
@@ -41190,7 +41190,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Several symbols (including basic mathematical symbols) have been moved to level some so that they are spoken by default. (#3799)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Diversos símbols (incloent-hi símbols matemàtics bàsics) s'han mogut per nivellar alguns perquè es pronunciin per defecte. (#3799)</target>
       </segment>
     </unit>
     <unit id="bf2c32f0-5b9a-4fec-9dde-3f701133a5db">
@@ -41200,7 +41200,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>If the synthesizer supports it, speech should now pause for parentheses and the en dash (–). (#3799)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Si el sintetitzador ho admet, ara la veu hauria de pausar per als parèntesis i el guió en (–). (#3799)</target>
       </segment>
     </unit>
     <unit id="c8b5ff88-5223-4646-a136-5fef25910406">
@@ -41210,7 +41210,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When selecting text, the text is reported before the indication of selection instead of after. (#1707)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan selecciones text, el text s'anuncia abans de la indicació de selecció en lloc de després. (#1707)</target>
       </segment>
     </unit>
     <unit id="7e1ffe0a-439e-47ee-8a9b-aa1eeb6f2894">
@@ -41230,7 +41230,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Major performance improvements when navigating the Outlook 2010/2013 message list. (#5268)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Millores importants de rendiment en navegar per la llista de missatges d'Outlook 2010/2013. (#5268)</target>
       </segment>
     </unit>
     <unit id="d2262fdc-464a-499b-a45d-1b5dab0bbc77">
@@ -41240,7 +41240,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In a chart in Microsoft Excel, navigating with certain keys (such as changing sheets with control+pageUp and control+pageDown) now works correctly. (#5336)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En un gràfic de Microsoft Excel, navegar amb certes tecles (com canviar fulls amb control+paginaCap amunt i control+paginaAvall) ara funciona correctament. (#5336)</target>
       </segment>
     </unit>
     <unit id="da910039-7ac2-42d6-bbb6-7941c809f897">
@@ -41250,7 +41250,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed the visual appearance of the buttons in the warning dialog which is displayed when you attempt to downgrade NVDA. (#5325)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'ha corregit l'aspecte visual dels botons al diàleg d'advertència que es mostra quan intentes fer downgrade de NVDA. (#5325)</target>
       </segment>
     </unit>
     <unit id="252bdc8f-2b46-4532-9a07-ee5896427b7a">
@@ -41260,7 +41260,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Windows 8 and later, NVDA now starts a lot earlier when configured to start after logging on to Windows. (#308)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Windows 8 i posteriors, NVDA ara s'inicia molt abans quan està configurat per arrancar després d'iniciar sessió a Windows. (#308)</target>
       </segment>
     </unit>
     <unit id="02549ca3-00ea-4b43-adf9-d99449cf92e1">
@@ -41300,7 +41300,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Press the OK button.</source>
-        <target>Premeu 'alt+s' per acceptar la sol·licitud de l'UAC.</target>
+        <target>Prem el botó OK.</target>
       </segment>
     </unit>
     <unit id="febdd8d5-7217-4614-99e4-6e342cae1fa6">
@@ -41330,7 +41330,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Press the OK button.</source>
-        <target>Premeu 'alt+s' per acceptar la sol·licitud de l'UAC.</target>
+        <target>Prem el botó OK.</target>
       </segment>
     </unit>
     <unit id="16a9203a-b67c-43ce-9874-eb8e2b8d6a41">
@@ -41340,7 +41340,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Performance enhancements for UI Automation including  File Explorer and Task Viewer. (#5293)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Millores de rendiment per a l'automatització d'interfície d'usuari, incloent-hi l'Explorador de fitxers i el visor de tasques. (#5293)</target>
       </segment>
     </unit>
     <unit id="d9092eaf-5ccc-4722-aa89-b2af64ae9ad7">
@@ -41350,7 +41350,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA now correctly switches to focus mode when tabbing to read-only ARIA grid controls in Browse Mode for Mozilla Firefox and other Gecko-based controls. (#5118)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA ara canvia correctament al mode focus quan es fa tabulació als controls de només lectura de graella ARIA en el Mode de Navegació per a Mozilla Firefox i altres controls basats en Gecko. (#5118)</target>
       </segment>
     </unit>
     <unit id="651fe106-dccf-4860-b5ad-88cf7535e50a">
@@ -41360,7 +41360,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA now correctly reports "no previous" instead of "no next" when there are no more objects when flicking left on a touch screen.</source>
-        <target>NVDA ara informa correctament de "no anterior" en lloc de "no següent" quan no hi ha més objectes quan es fa un moviment cap a l'esquerra en una pantalla tàctil.</target>
+        <target>NVDA ara anuncia correctament "no anterior" en lloc de "no següent" quan no hi ha més objectes quan es fa un moviment cap a l'esquerra en una pantalla tàctil.</target>
       </segment>
     </unit>
     <unit id="60819203-4560-4b90-bb04-f08bbd30116e">
@@ -41370,7 +41370,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed problems when typing multiple words into the filter field in the Input Gestures dialog. (#5426)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Problemes solucionats en escriure diverses paraules al camp de filtre del diàleg de gestos d'entrada. (#5426)</target>
       </segment>
     </unit>
     <unit id="64201c2b-3aa8-4fb3-bb38-c9242fa9dcd2">
@@ -41380,7 +41380,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer freezes in some cases when reconnecting to a HumanWare Brailliant BI/B series display via USB. (#5406)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA ja no es congela en alguns casos quan es torna a connectar una línia HumanWare Brailliant BI/B per USB. (#5406)</target>
       </segment>
     </unit>
     <unit id="275e56c9-8daf-4343-8510-83c5bf70a504">
@@ -41390,7 +41390,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In languages with conjunct characters, character descriptions now work as expected for upper case English characters. (#5375)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En idiomas amb caràcters conjunts, les descripcions de caràcters ara funcionen com s'esperava per als caràcters en majúscula anglesa. (#5375)</target>
       </segment>
     </unit>
     <unit id="8a70d851-4833-48c2-811c-3f56d3e9d040">
@@ -41400,7 +41400,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA should no longer occasionally freeze when bringing up the Start Menu in Windows 10. (#5417)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA ja no hauria de congelar-se ocasionalment quan s'obre el Menú d'Inici a Windows 10. (#5417)</target>
       </segment>
     </unit>
     <unit id="07597e7f-7c81-482b-914b-3c2c07c5eadb">
@@ -41410,7 +41410,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Skype for Desktop, notifications which are displayed before a previous notification disappears are now reported. (#4841)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Skype per a Escriptori, les notificacions que es mostren abans que desaparegui una notificació anterior ara s'anuncien. (#4841)</target>
       </segment>
     </unit>
     <unit id="89844206-41e7-48e9-8472-ac4d9419f332">
@@ -41420,7 +41420,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Notifications are now reported correctly in Skype for Desktop 7.12 and later. (#5405)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Les notificacions ara s'anuncien correctament a Skype per a escriptori 7.12 i posteriors. (#5405)</target>
       </segment>
     </unit>
     <unit id="47ae0377-2037-4820-9bfd-13af0068329a">
@@ -41430,7 +41430,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA now correctly reports the focus when dismissing a context menu in some applications such as Jart. (#5302)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA ara anuncia correctament el focus quan es descarta un menú contextual en algunes aplicacions com Jart. (#5302)</target>
       </segment>
     </unit>
     <unit id="6fca52fb-9d24-45f8-8040-f21b5325d8fe">
@@ -41440,7 +41440,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Windows 7 and later, Color is again reported in certain applications such as Wordpad. (#5352)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Windows 7 i posteriors, el color torna a aparèixer en certes aplicacions com Wordpad. (#5352)</target>
       </segment>
     </unit>
     <unit id="1d7e187a-abeb-4ab5-b368-db495fcc751e">
@@ -41450,7 +41450,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When editing in Microsoft PowerPoint, pressing enter now reports automatically entered text such as a bullet or number. (#5360)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan edites a Microsoft PowerPoint, prémer enter ara informa automàticament del text introduït, com ara un punt o un número. (#5360)</target>
       </segment>
     </unit>
     <unit id="797849a2-dc64-494e-b81d-b07e92bcae77">
@@ -41460,7 +41460,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>2015.3</source>
-        <target>&lt;target/&gt;</target>
+        <target>2015.3</target>
       </segment>
     </unit>
     <unit id="cc81badc-caa5-4cc6-866e-85738870b87a">
@@ -41469,7 +41469,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Highlights of this release include initial support for Windows 10; the ability to disable single letter navigation in browse mode (useful for some web apps); improvements in Internet Explorer; and fixes for garbled text when typing in certain applications with braille enabled.</source>
-        <target>Els punts destacats d'aquesta versió inclouen el suport inicial per a Windows 10; la capacitat de desactivar la navegació d'una sola lletra en mode navegació (útil per a algunes aplicacions web); millores a Internet Explorer; i solucions per a text distorsionat quan es tecleu en certes aplicacions amb Braille activat.</target>
+        <target>Els punts destacats d'aquesta versió inclouen el suport inicial per a Windows 10; la capacitat de desactivar la navegació d'una sola lletra en mode navegació (útil per a algunes aplicacions web); millores a Internet Explorer; i solucions per a text distorsionat quan es tecletxa en certes aplicacions amb Braille activat.</target>
       </segment>
     </unit>
     <unit id="6ed2c515-bc3a-41c2-86e3-aa9a57f7ae1b">
@@ -41489,7 +41489,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The existence of spelling errors is announced in editable fields for Internet Explorer and other MSHTML controls. (#4174)</source>
-        <target>&lt;target/&gt;</target>
+        <target>L'existència d'errors ortogràfics s'anuncia en camps editables per a Internet Explorer i altres controls de MSHTML. (#4174)</target>
       </segment>
     </unit>
     <unit id="bd017e49-8f9c-4ebc-977e-d610d88c502d">
@@ -41499,7 +41499,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Many more Unicode math symbols are now spoken when they appear in text. (#3805)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Ara s'anuncien molts més símbols matemàtics Unicode quan apareixen en el text. (#3805)</target>
       </segment>
     </unit>
     <unit id="2dfebd73-b240-4cc7-a07f-f5b1f98ed3f3">
@@ -41509,7 +41509,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Search suggestions in the Windows 10 start screen are automatically reported. (#5049)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Les suggerències de cerca a la pantalla d'inici de Windows 10 es reporten automàticament. (#5049)</target>
       </segment>
     </unit>
     <unit id="fad54c96-3a1d-4cc4-a23f-e3466b6550e0">
@@ -41519,7 +41519,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for the EcoBraille 20, EcoBraille 40, EcoBraille 80 and EcoBraille Plus braille displays. (#4078)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Suport per a les línies braille EcoBraille 20, EcoBraille 40, EcoBraille 80 i EcoBraille Plus. (#4078)</target>
       </segment>
     </unit>
     <unit id="830da7a3-fb5a-4f18-b08b-a3acdb9b8194">
@@ -41529,7 +41529,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode, you can now toggle single letter navigation on and off by pressing NVDA+shift+space. When off, single letter keys are passed to the application, which is useful for some web applications such as Gmail, Twitter and Facebook. (#3203)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En mode navegació, ara pots activar o desactivar la navegació d'una sola lletra prement NVDA+shift+espai. Quan està desactivat, es passen ordres d'una sola lletra a l'aplicació, cosa que és útil per a algunes aplicacions web com Gmail, Twitter i Facebook. (#3203)</target>
       </segment>
     </unit>
     <unit id="f5cb7942-f63f-41b2-aaad-b30d4a7f0a47">
@@ -41539,7 +41539,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>New braille translation tables: Finnish 6 dot, Irish grade 1, Irish grade 2, Korean grade 1 (2006), Korean grade 2 (2006). (#5137, #5074, #5097)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Noves taules de traducció en braille: finlandès 6 punts, irlandès grau 1, irlandès grau 2, coreà grau 1 (2006), coreà grau 2 (2006). (#5137, #5074, #5097)</target>
       </segment>
     </unit>
     <unit id="d6acbf5b-aeda-4948-8e74-83235c8ed2a9">
@@ -41549,7 +41549,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The QWERTY keyboard on the Papenmeier BRAILLEX Live Plus braille display is now supported. (#5181)</source>
-        <target>&lt;target/&gt;</target>
+        <target>El teclat QWERTY de la línia braille Papenmeier BRAILLEX Live Plus ara està suportat. (#5181)</target>
       </segment>
     </unit>
     <unit id="2fe50ef8-7776-4aac-8dc7-6f89a85d6061">
@@ -41559,7 +41559,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Experimental support for the Microsoft Edge web browser and browsing engine in Windows 10. (#5212)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Suport experimental per al navegador web i el motor de navegació Microsoft Edge a Windows 10. (#5212)</target>
       </segment>
     </unit>
     <unit id="30323be9-e18e-4069-b872-7fdb7d12eeb7">
@@ -41589,7 +41589,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Updated liblouis braille translator to 2.6.3. (#5137)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'ha actualitzat el transcriptor braille de liblouis a la versió 2.6.3. (#5137)</target>
       </segment>
     </unit>
     <unit id="d70c636b-3ebd-48ba-9aed-cc67491cc293">
@@ -41599,7 +41599,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When attempting to install an earlier version of NVDA than is currently installed, you will now be warned that this is not recommended and that NVDA should be completely uninstalled before proceeding. (#5037)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan intenteu instal·lar una versió anterior de NVDA que està actualment instal·lada, ara us avisaran que no es recomana i que NVDA s'hauria de desinstal·lar completament abans de continuar. (#5037)</target>
       </segment>
     </unit>
     <unit id="493c5669-35eb-4c24-b5cd-58480e826e4f">
@@ -41619,7 +41619,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode for Internet Explorer and other MSHTML controls, quick navigation by form field no longer incorrectly includes presentational list items. (#4204)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En el mode de navegació per a Internet Explorer i altres controls de MSHTML, la navegació ràpida per camp de formulari ja no inclou incorrectament elements de la llista de presentació. (#4204)</target>
       </segment>
     </unit>
     <unit id="4f52c889-e649-4cca-948d-1589211a59a3">
@@ -41629,7 +41629,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Firefox, NVDA no longer inappropriately reports the content of an ARIA tab panel when focus moves inside it. (#4638)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Firefox, NVDA ja no informa de manera inapropiada el contingut d'un panell de pestanyes ARIA quan el focus es mou dins d'aquest. (#4638)</target>
       </segment>
     </unit>
     <unit id="6812a141-c605-4a28-b542-7e9566f908ae">
@@ -41639,7 +41639,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, tabbing into sections, articles or dialogs  no longer inappropriately reports all content in the container. (#5021, #5025)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Internet Explorer i altres controls de MSHTML, tabular a seccions, articles o diàlegs ja no informa de manera inapropiada tot el contingut del contenidor. (#5021, #5025)</target>
       </segment>
     </unit>
     <unit id="8f7849df-e4b8-4065-917f-9a2e0f49ca5b">
@@ -41649,7 +41649,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When using Baum/HumanWare/APH braille displays with a braille keyboard, braille input no longer stops functioning after pressing another type of key on the display. (#3541)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan s'utilitzen línies braille Baum/HumanWare/APH amb un teclat braille, l'entrada braille ja no deixa de funcionar després de prémer un altre tipus de tecla a la pantalla. (#3541)</target>
       </segment>
     </unit>
     <unit id="f99f6119-e5cf-47a5-9e93-cdab999d93d9">
@@ -41659,7 +41659,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Windows 10, extraneous information is no longer reported when pressing alt+tab or alt+shift+tab to switch between applications. (#5116)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Windows 10, la informació innecessària ja no s'anuncia quan es prem alt+tab o alt+shift+tab per canviar entre aplicacions. (#5116)</target>
       </segment>
     </unit>
     <unit id="45de14aa-ab85-4dbd-9ca8-23929a732f25">
@@ -41669,7 +41669,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Typed text is no longer garbled when using certain applications such as Microsoft Outlook with a braille display. (#2953)</source>
-        <target>&lt;target/&gt;</target>
+        <target>El text escrit ja no es distorsiona quan s'utilitzen certes aplicacions com Microsoft Outlook amb línies braille. (#2953)</target>
       </segment>
     </unit>
     <unit id="97fae8ff-e0fe-4183-a672-014fcdd03127">
@@ -41679,7 +41679,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode in Internet Explorer and other MSHTML controls, the correct content is now reported when an element appears or changes and is immediately focused. (#5040)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En el mode de navegació a Internet Explorer i altres controls de MSHTML, el contingut correcte ara s'anuncia quan apareix o canvia un element i es focalitza immediatament. (#5040)</target>
       </segment>
     </unit>
     <unit id="a43bc85b-1726-4684-8c4b-e9452dd9953f">
@@ -41689,7 +41689,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode in Microsoft Word, single letter navigation now updates the braille display and the review cursor as expected. (#4968)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En mode navegació a Microsoft Word, la navegació d'una sola lletra ara actualitza la línia braille i el cursor de revisió, tal com s'esperava. (#4968)</target>
       </segment>
     </unit>
     <unit id="3bb0b22e-3500-437f-8549-f08dc1daec6d">
@@ -41699,7 +41699,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In braille, extraneous spaces are no longer displayed between or after indicators for controls and formatting. (#5043)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En braille, els espais innecessaris ja no es mostren entre o després dels indicadors de controls i format. (#5043)</target>
       </segment>
     </unit>
     <unit id="fc4ed586-c77f-4aaa-9f70-3170156d9013">
@@ -41709,7 +41709,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When an application is responding slowly and you switch away from that application, NVDA is now much more responsive in other applications in most cases. (#3831)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan una aplicació respon lentament i canvies d'aquesta aplicació, NVDA ara respon molt millor en altres aplicacions en la majoria de casos. (#3831)</target>
       </segment>
     </unit>
     <unit id="3b3a0bb7-5c4b-4698-ba80-f0ee0dad8094">
@@ -41719,7 +41719,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Windows 10 Toast notifications are now reported as expected. (#5136)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Les notificacions de Toast de Windows 10 ara es reporten com s'esperava. (#5136)</target>
       </segment>
     </unit>
     <unit id="39edb69e-2d05-4df9-8ccf-95b87ebbd6e5">
@@ -41729,7 +41729,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The value is now reported as it changes in certain (UI Automation) combo boxes where this was not working previously.</source>
-        <target>El valor ara es reporta a mesura que canvia en certes caixes combinades (automatització d'interfície d'usuari) on això no funcionava abans.</target>
+        <target>El valor ara s'anuncia a mesura que canvia en certes caixes combinades (automatització d'interfície d'usuari) on això no funcionava abans.</target>
       </segment>
     </unit>
     <unit id="03d31057-6984-4c40-8df8-03b690c10fe4">
@@ -41739,7 +41739,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode in web browsers, tabbing now behaves as expected after tabbing to a frame document. (#5227)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En el mode de navegació dels navegadors web, ara la tabulació es comporta com s'espera després de fer tabuladors a un Marc de document. (#5227)</target>
       </segment>
     </unit>
     <unit id="8e16e564-b33f-4617-8943-2f71c95af87e">
@@ -41749,7 +41749,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The Windows 10 lock screen can now be dismissed using a touch screen. (#5220)</source>
-        <target>&lt;target/&gt;</target>
+        <target>La pantalla de bloqueig de Windows 10 ara es pot tancar mitjançant una pantalla tàctil. (#5220)</target>
       </segment>
     </unit>
     <unit id="234bd52f-73c8-4006-aff4-279c7396eecb">
@@ -41759,7 +41759,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Windows 7 and later, text is no longer garbled when typing in certain applications such as Wordpad and Skype with a braille display. (#4291)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Windows 7 i posteriors, el text ja no es distorsiona quan s'escriu en certes aplicacions com Wordpad i Skype amb una línia braille. (#4291)</target>
       </segment>
     </unit>
     <unit id="c7a4effd-a674-4fec-bc76-271005bcd981">
@@ -41769,7 +41769,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>On the Windows 10 lock screen, it is no longer possible to read the clipboard, access running applications with the review cursor, change NVDA configuration, etc. (#5269)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A la pantalla de bloqueig de Windows 10, ja no és possible llegir el portapapers, accedir a aplicacions en execució amb el cursor de revisió, canviar la configuració de NVDA, etc. (#5269)</target>
       </segment>
     </unit>
     <unit id="57549ea0-e083-4e7f-aa40-258885befc8c">
@@ -41789,7 +41789,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>You can now inject raw input from a system keyboard that is not handled natively by Windows (e.g. a QWERTY keyboard on a braille display) using the new keyboardHandler.injectRawKeyboardInput function. (#4576)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Ara pots injectar entrada en brut d'un teclat de sistema que Windows no gestiona nativament (per exemple, un teclat QWERTY en una línia braille) utilitzant la nova funció keyboardHandler.injectRawKeyboardInput. (#4576)</target>
       </segment>
     </unit>
     <unit id="1f1a6292-4890-4884-aaa0-c190ff3e6f28">
@@ -41799,7 +41799,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>eventHandler.requestEvents has been added to request particular events that are blocked by default; e.g. show events from a specific control or certain events even when in the background. (#3831)</source>
-        <target>&lt;target/&gt;</target>
+        <target>s'ha afegit eventHandler.requestEvents per sol·licitar esdeveniments particulars que estan bloquejats per defecte; per exemple, mostrar esdeveniments des d'un control específic o certs esdeveniments fins i tot quan estan en segon pla. (#3831)</target>
       </segment>
     </unit>
     <unit id="2413a29d-b8df-4450-8367-8de3c88ab6b8">
@@ -41819,7 +41819,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>For backwards compatibility, in the constructor, displayName is optional and will be derived from displayNameWithAccelerator if not provided. However, if you intend to have an accelerator for a setting, both should be provided.</source>
-        <target>Per compatibilitat enrere, al constructor, displayName és opcional i es derivarà de displayNameWithAccelerator si no es proporciona. Tanmateix, si tens la intenció de tenir un accelerador per a una configuració, s'haurien de proporcionar ambdós.</target>
+        <target>Per raons de compatibilitat amb versions anteriors, al constructor, displayName és opcional i es derivarà de displayNameWithAccelerator si no es proporciona. Tanmateix, si tens la intenció de tenir un accelerador per a una configuració, s'haurien de proporcionar ambdós.</target>
       </segment>
     </unit>
     <unit id="14a96188-85f2-463b-84be-eeae0cf57d56">
@@ -41839,7 +41839,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>2015.2</source>
-        <target>&lt;target/&gt;</target>
+        <target>2015.2</target>
       </segment>
     </unit>
     <unit id="369b849d-6707-4218-bf4e-297d6d262f8b">
@@ -41868,7 +41868,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Moving forward and backward by sentence in Microsoft Word and Outlook is now possible with alt+downArrow and alt+upArrow respectively. (#3288)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Avançar i retrocedir per frase a Microsoft Word i Outlook ara és possible amb alt+fletxa avall i alt+fletxaAmunt, respectivament. (#3288)</target>
       </segment>
     </unit>
     <unit id="df868546-4517-4664-b99e-da218e9901a3">
@@ -41878,7 +41878,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>New braille translation tables for several Indian languages. (#4778)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Noves taules de traducció en braille per a diverses llengües índies. (#4778)</target>
       </segment>
     </unit>
     <unit id="6dcebb1e-bcd6-4b4a-bbb8-c9f82b589ec4">
@@ -41888,7 +41888,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Excel, NVDA now reports when a cell has overflowing or cropped content. (#3040)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Excel, NVDA ara informa quan una cel·la té contingut desbordat o retallat. (#3040)</target>
       </segment>
     </unit>
     <unit id="2f06d43b-1ed7-43a3-95c4-c0c663900069">
@@ -41898,7 +41898,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Excel, you can now use the Elements List (NVDA+f7) to allow listing of charts, comments and formulas. (#1987)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Microsoft Excel, ara pots utilitzar la Llista d'Elements (NVDA+f7) per permetre llistar gràfics, comentaris i fórmules. (#1987)</target>
       </segment>
     </unit>
     <unit id="ef548651-80d4-447e-84d3-861b2f47fd0f">
@@ -41908,7 +41908,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for reading charts in Microsoft Excel. To use this, select the chart using the Elements List (NVDA+f7) and then use the arrow keys to move between the data points. (#1987)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Suport per a la lectura de gràfics a Microsoft Excel. Per utilitzar-ho, selecciona el gràfic utilitzant la Llista d'Elements (NVDA+f7) i després utilitza les fletxes per moure't entre els punts de dades. (#1987)</target>
       </segment>
     </unit>
     <unit id="c0cdfe74-2fe8-4eb0-b625-0964807d1862">
@@ -41918,7 +41918,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Using MathPlayer 4 from Design Science, NVDA can now read and interactively navigate mathematical content in web browsers and in Microsoft Word and PowerPoint. See the "Reading Mathematical Content" section in the User Guide for details. (#4673)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Utilitzant MathPlayer 4 de Design Science, NVDA ara pot llegir i navegar interactivament pel contingut matemàtic en navegadors web i en Microsoft Word i PowerPoint. Consulteu la secció "Llegint contingut matemàtic" a la Guia d'Usuari per a més detalls. (#4673)</target>
       </segment>
     </unit>
     <unit id="77bbde17-082e-4a21-b82c-c79c2b4ba95d">
@@ -41928,7 +41928,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>It is now possible to assign input gestures (keyboard commands, touch gestures, etc.) for all NVDA preferences dialogs and document formatting options using the Input Gestures dialog. (#4898)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Ara és possible assignar gestos d'entrada (ordres de teclat, gestos tàctils, etc.) per a tots els diàlegs de preferències NVDA i opcions de format de documents utilitzant el diàleg de gestos d'entrada. (#4898)</target>
       </segment>
     </unit>
     <unit id="d283f306-98ac-4f55-975b-d11c01c5eb00">
@@ -41948,7 +41948,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In NVDA's Document Formatting dialog, the keyboard shortcuts for Report lists, Report links, Report line numbers and Report font name have been changed. (#4650)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Al diàleg de Format de Documents de NVDA, s'han canviat les dreceres de teclat per a anunciar llistes, anunciar enllaços, anunciar números de línia i anunciar nom de la font. (#4650)</target>
       </segment>
     </unit>
     <unit id="5a7ecce0-019f-41f5-b1ce-dd4d4f465e04">
@@ -41958,7 +41958,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In NVDA's Mouse Settings dialog, keyboard shortcuts have been added for play audio coordinates when mouse moves and brightness controls audio coordinates volume. (#4916)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Al diàleg de Configuració del ratolí de NVDA, s'han afegit dreceres de teclat per reproduir coordenades d'àudio quan el ratolí es mou i la brillantor controla les coordenades d'àudio i el volum. (#4916)</target>
       </segment>
     </unit>
     <unit id="a2c53ec9-bed2-4ec2-bb0c-0a7202d1e83b">
@@ -41968,7 +41968,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Significantly improved reporting of color names. (#4984)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Millora significativa en la notificació dels noms de colors. (#4984)</target>
       </segment>
     </unit>
     <unit id="dc323512-33f7-43a5-b7b5-66a68259681b">
@@ -41978,7 +41978,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Updated liblouis braille translator to 2.6.2. (#4777)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'ha actualitzat el transcriptor braille de Liblouis a la versió 2.6.2. (#4777)</target>
       </segment>
     </unit>
     <unit id="8ff30418-5ec2-48c7-867c-6efb4f9f5a38">
@@ -41998,7 +41998,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Character descriptions are now handled correctly for conjunct characters in certain Indian languages. (#4582)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Les descripcions de caràcters ara es gestionen correctament per a caràcters conjunts en certes llengües índies. (#4582)</target>
       </segment>
     </unit>
     <unit id="daf18a03-34b9-4aa6-a99c-5bb8b80ae065">
@@ -42008,7 +42008,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>If the "Trust voice's language when processing characters and symbols" option is enabled, the Punctuation/Symbol pronunciation dialog now correctly uses the voice language. Also, the language for which pronunciation is being edited is shown in the dialog's title. (#4930)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Si l'opció "Confia en l'idioma de la veu quan processes caràcters i símbols" està activada, el diàleg de Puntuació/Pronúncia de Símbols ara utilitza correctament l'idioma de veu. A més, l'idioma per a la qual s'està editant la pronunciació es mostra al títol del diàleg. (#4930)</target>
       </segment>
     </unit>
     <unit id="c44e2756-ea6a-46a3-a223-65fc76f1e96d">
@@ -42018,7 +42018,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, typed characters are no longer inappropriately announced in editable combo boxes such as the Google search field on the Google home page. (#4976)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Internet Explorer i altres controls de MSHTML, els caràcters escrits ja no s'anuncien de manera inapropiada en caixes combinades editables com el camp de cerca de Google a la pàgina principal de Google. (#4976)</target>
       </segment>
     </unit>
     <unit id="7b156d3c-c47f-455f-a8e3-5b310ddd765f">
@@ -42028,7 +42028,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When selecting colors in Microsoft Office applications, color names are now reported. (#3045)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan es seleccionen colors en aplicacions de Microsoft Office, ara s'informa dels noms dels colors. (#3045)</target>
       </segment>
     </unit>
     <unit id="a543413f-0db5-4dd7-ae5c-a2e495b29c58">
@@ -42038,7 +42038,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Danish braille output now works again. (#4986)</source>
-        <target>&lt;target/&gt;</target>
+        <target>La sortida en braille danès ara torna a funcionar. (#4986)</target>
       </segment>
     </unit>
     <unit id="77cbece1-0a0f-41c3-aec5-e9fb0e62c8c4">
@@ -42048,7 +42048,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>PageUp/pageDown can again be used to change slides within a PowerPoint slide show. (#4850)</source>
-        <target>&lt;target/&gt;</target>
+        <target>PàginaAmunt/pàginaAvall es pot tornar a utilitzar per canviar diapositives dins d'una presentació de diapositives de PowerPoint. (#4850)</target>
       </segment>
     </unit>
     <unit id="7a20a049-d652-4803-ad14-97b7b12a4d77">
@@ -42058,7 +42058,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Skype for Desktop 7.2 and later, typing notifications are now reported and problems immediately after moving focus out of a conversation have been fixed. (#4972)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Skype per a escriptori 7.2 i posteriors, ara s'anuncien notificacions d'escriptura i s'han solucionat els problemes immediatament després de moure el focus fora d'una conversa. (#4972)</target>
       </segment>
     </unit>
     <unit id="2122e0f5-ce8d-4955-9777-2a7f8759f39b">
@@ -42068,7 +42068,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed problems when typing certain punctuation/symbols such as brackets into the filter field in the Input Gestures dialog. (#5060)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Problemes solucionats en escriure certs signes de puntuació/símbols com els paréntesis al camp de filtre del diàleg de gestos d'entrada. (#5060)</target>
       </segment>
     </unit>
     <unit id="eaf8ba81-8269-4e93-a4b1-120a2a5a73bd">
@@ -42078,7 +42078,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, pressing g or shift+g to navigate to graphics now includes elements marked as images for accessibility purposes (i.e. ARIA role img). (#5062)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En Internet Explorer i altres controls de MSHTML, prémer g o shift+g per navegar als gràfics ara inclou elements marcats com a imatges per motius d'accessibilitat (per exemple, ARIA role img). (#5062)</target>
       </segment>
     </unit>
     <unit id="017203db-1a49-4bcb-aa3d-5ff15b968c81">
@@ -42088,7 +42088,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Changes for Developers</source>
-        <target>Canvis</target>
+        <target>Canvis per als desenvolupadors</target>
       </segment>
     </unit>
     <unit id="1587f28d-c9f0-48a6-9118-a67d0ce7b7de">
@@ -42098,7 +42098,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>brailleInput.handler.sendChars(mychar) will no longer filter out a character if it is equal to the previous character by ensuring that the key sent is correctly released. (#4139)</source>
-        <target>&lt;target/&gt;</target>
+        <target>brailleInput.handler.sendChars(mychar) ja no filtrarà un caràcter si és igual al caràcter anterior assegurant que la tecla enviada s'alliberi correctament. (#4139)</target>
       </segment>
     </unit>
     <unit id="bf455739-2223-4585-9d0d-49be69e3156f">
@@ -42108,7 +42108,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Scripts for changing touch modes will now honor new labeles added to touchHandler.touchModeLabels. (#4699)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Els scripts per canviar els modes tàctils ara compleixen amb les noves etiquetes afegides a touchHandler.touchModeLabels. (#4699)</target>
       </segment>
     </unit>
     <unit id="29d3e340-21f6-4d44-839f-6b3b5a3d99b8">
@@ -42118,7 +42118,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Add-ons can provide their own math presentation implementations. See the mathPres package for details. (#4509)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Els complements poden proporcionar les seves pròpies implementacions de presentacions matemàtiques. Consulta el paquet mathPres per a més detalls. (#4509)</target>
       </segment>
     </unit>
     <unit id="859a4844-5bb4-4f19-b503-05150bbb1d1d">
@@ -42128,7 +42128,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Speech commands have been implemented to insert a break between words and to change the pitch, volume and rate. See BreakCommand, PitchCommand, VolumeCommand and RateCommand in the speech module. (#4674)</source>
-        <target>&lt;target/&gt;</target>
+        <target>S'han implementat ordres de veu per inserir una pausa entre paraules i per canviar el to, el volum i la freqüència. Vegeu BreakCommand, PitchCommand, VolumeCommand i RateCommand al mòdul de veu. (#4674)</target>
       </segment>
     </unit>
     <unit id="0800b989-032f-4016-ae48-e5a172a1bb86">
@@ -42138,7 +42138,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>There is also speech.PhonemeCommand to insert specific pronunciation, but the current implementations only support a very limited number of phonemes.</source>
-        <target>També hi ha el discurs. PhonemeCommand per inserir una pronunciació específica, però les implementacions actuals només admeten un nombre molt limitat de fonemes.</target>
+        <target>També hi ha speech.PhonemeCommand per inserir una pronunciació específica, però les implementacions actuals només admeten un nombre molt limitat de fonemes.</target>
       </segment>
     </unit>
     <unit id="59586c69-2485-437a-b716-e342a23cd1ab">
@@ -42148,7 +42148,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>2015.1</source>
-        <target>&lt;target/&gt;</target>
+        <target>2015.1</target>
       </segment>
     </unit>
     <unit id="e2d92d1a-f46c-446b-b757-274d9e9c628d">
@@ -42237,7 +42237,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Table column headers in Microsoft word are automatically reported for tables where a header row has been explicitly specified by the author via Microsoft word's table properties. (#4510)</source>
-        <target>Les capçaleres de les columnes de taula a Microsoft Word es reporten automàticament per a les taules on l'autor ha especificat explícitament una fila de capçalera mitjançant les propietats de la taula de Microsoft Word. (#4510)</target>
+        <target>Les capçaleres de les columnes de taula a Microsoft Word s'anuncien automàticament per a les taules on l'autor ha especificat explícitament una fila de capçalera mitjançant les propietats de la taula de Microsoft Word. (#4510)</target>
       </segment>
     </unit>
     <unit id="6f333deb-7130-412f-b244-760102614d31">
@@ -42257,7 +42257,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Skype for Desktop, notifications are now reported. (#4741)</source>
-        <target>A Skype per a Escriptori, ara es reporten notificacions. (#4741)</target>
+        <target>A Skype per a Escriptori, ara s'anuncien les notificacions. (#4741)</target>
       </segment>
     </unit>
     <unit id="76265e54-954d-4df0-911b-639af68a53b5">
@@ -42267,7 +42267,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Skype for Desktop, you can now report and review recent messages using NVDA+control+1 through NVDA+control+0; e.g. NVDA+control+1 for the most recent message and NVDA+control+0 for the tenth most recent. (#3210)</source>
-        <target>A Skype per a Escriptori, ara pots informar i revisar missatges recents utilitzant NVDA+control+1 fins a NVDA+control+0; per exemple, NVDA+control+1 per al missatge més recent i NVDA+control+0 per al desè més recent. (#3210)</target>
+        <target>A Skype per a Escriptori, ara pots anunciar i revisar missatges recents utilitzant NVDA+control+1 fins a NVDA+control+0; per exemple, NVDA+control+1 per al missatge més recent i NVDA+control+0 per al desè més recent. (#3210)</target>
       </segment>
     </unit>
     <unit id="0b9cb5c5-c2e4-48c0-8676-a77db46e2a28">
@@ -42317,7 +42317,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In NVDA's Document Formatting settings dialog, the option to report spelling errors now has a shortcut key (alt+r). (#793)</source>
-        <target>Al diàleg de configuració de format de documents de NVDA, l'opció per informar d'errors ortogràfics ara té una tecla d'accés ràpid (alt+r). (#793)</target>
+        <target>Al diàleg de configuració de format de documents de NVDA, l'opció per anunciar errors ortogràfics ara té una tecla d'accés ràpid (alt+r). (#793)</target>
       </segment>
     </unit>
     <unit id="cdb04a6e-a332-4617-aa88-fe658502806b">
@@ -42327,7 +42327,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA will now use the synthesizer/voice's language for character and symbol processing (including punctuation/symbol names), regardless of whether automatic language switching is turned on. To turn off this feature so that NVDA again uses its interface language, uncheck the new option in Voice settings called Trust Voice's language when processing characters and symbols. (#4210)</source>
-        <target>NVDA ara utilitzarà el llenguatge del sintetitzador/veu per al processament de caràcters i símbols (incloent-hi la puntuació/noms de símbols), independentment de si el canvi automàtic d'idioma està activat o no. Per desactivar aquesta funció perquè NVDA torni a utilitzar el seu llenguatge d'interfície, desmarca l'opció nova a la configuració de Veu anomenada idioma de Confiar en la Veu quan processis caràcters i símbols. (#4210)</target>
+        <target>NVDA ara utilitzarà l'idioma del sintetitzador/veu per al processament de caràcters i símbols (incloent-hi la puntuació/noms de símbols), independentment de si el canvi automàtic d'idioma està activat o no. Per desactivar aquesta funció perquè NVDA torni a utilitzar el seu idioma d'interfície, desmarca l'opció nova a la configuració de Veu anomenada confiar en l'idioma de la Veu quan processis caràcters i símbols. (#4210)</target>
       </segment>
     </unit>
     <unit id="480bcc19-d859-446d-8562-78c06ff77a7e">
@@ -42397,7 +42397,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When editing the content of a text box in Microsoft PowerPoint 2003, NVDA will correctly report the content of each line. Previously, in each paragraph, lines would increasingly be off by one character. (#4619)</source>
-        <target>Quan s'edita el contingut d'una caixa de text a Microsoft PowerPoint 2003, NVDA informa correctament del contingut de cada línia. Abans, en cada paràgraf, les línies anaven cada cop més desajustades en un personatge. (#4619)</target>
+        <target>Quan s'edita el contingut d'una caixa de text a Microsoft PowerPoint 2003, NVDA anuncia correctament el contingut de cada línia. Abans, en cada paràgraf, les línies anaven cada cop més desajustades en un caràcter. (#4619)</target>
       </segment>
     </unit>
     <unit id="6bda451e-7a30-48b6-9cc2-a15c80290fda">
@@ -42437,7 +42437,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In the Microsoft Word spell check dialog, the next error will be automatically reported when the last one has been changed or ignored using respective shortcut keys. (#1938)</source>
-        <target>Al diàleg de correcció ortogràfica de Microsoft Word, el següent error es reportarà automàticament quan l'anterior hagi estat modificat o ignorat mitjançant les tecles d'accés ràpid corresponents. (#1938)</target>
+        <target>Al diàleg de correcció ortogràfica de Microsoft Word, el següent error s'anunciarà automàticament quan l'anterior hagi estat modificat o ignorat mitjançant les tecles d'accés ràpid corresponents. (#1938)</target>
       </segment>
     </unit>
     <unit id="b3f1088e-2fdd-474a-9c6c-75486e77e3c4">
@@ -42507,7 +42507,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Skype for Desktop, NVDA should no longer occasionally spuriously read a large flood of messages (perhaps even an entire conversation). (#4644)</source>
-        <target>A Skype per a Escriptori, NVDA ja no hauria de llegir ocasionalment de manera espuria una gran allau de missatges (potser fins i tot tota una conversa). (#4644)</target>
+        <target>A Skype per a Escriptori, NVDA ja no hauria de llegir ocasionalment una gran allau de missatges en falç (potser fins i tot tota una conversa). (#4644)</target>
       </segment>
     </unit>
     <unit id="a00f6279-bb4e-4ead-a11b-bf1e8a30275b">
@@ -42547,7 +42547,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The aria-atomic attribute on live regions in Mozilla Firefox is now honored even when the atomic element itself changes. Previously, it only affected descendant elements. (#4794)</source>
-        <target>L'atribut aria-atòmic a les regions vives de Mozilla Firefox ara es respecta fins i tot quan l'element atòmic mateix canvia. Abans, només afectava elements descendents. (#4794)</target>
+        <target>L'atribut aria-atòmic a les regions actives de Mozilla Firefox ara es respecta fins i tot quan l'element atòmic mateix canvia. Abans, només afectava elements descendents. (#4794)</target>
       </segment>
     </unit>
     <unit id="0fda3910-b2ad-4ac5-afef-16f214377747">
@@ -42557,7 +42557,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Browse mode will reflect updates, and live regions will be announced, for   browse mode documents within ARIA applications embedded in a document in Internet Explorer or other MSHTML controls. (#4798)</source>
-        <target>El mode de navegació reflectirà actualitzacions, i s'anunciaran regions en viu per als documents en mode navegació dins d'aplicacions ARIA incrustades en un document a Internet Explorer o altres controls de MSHTML. (#4798)</target>
+        <target>El mode de navegació reflectirà actualitzacions, i s'anunciaran regions actives per als documents en mode navegació dins d'aplicacions ARIA incrustades en un document a Internet Explorer o altres controls de MSHTML. (#4798)</target>
       </segment>
     </unit>
     <unit id="6af861ed-a6f7-4e0c-80e1-2619ea1c4d4f">
@@ -42567,7 +42567,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When text is changed or added in live regions in Internet Explorer and other MSHTML controls where the author has specified that text is relevant, only the changed or added text is announced, rather than all of the text in the containing element. (#4800)</source>
-        <target>Quan el text es canvia o s'afegeix en regions vives a Internet Explorer i altres controls MSHTML on l'autor ha especificat que el text és rellevant, només s'anuncia el text canviat o afegit, en lloc de tot el text de l'element que conté. (#4800)</target>
+        <target>Quan el text es canvia o s'afegeix en regions actives a Internet Explorer i altres controls MSHTML on l'autor ha especificat que el text és rellevant, només s'anuncia el text canviat o afegit, en lloc de tot el text de l'element que conté. (#4800)</target>
       </segment>
     </unit>
     <unit id="2b1f3fe1-5ea4-44c3-8d01-028d72768d10">
@@ -42667,7 +42667,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>2014.4</source>
-        <target>&lt;target/&gt;</target>
+        <target>2014.4</target>
       </segment>
     </unit>
     <unit id="20db68de-fb47-4e57-b632-2f2cbd00f238">
