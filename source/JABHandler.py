@@ -986,6 +986,8 @@ def internal_event_activeDescendantChange(vmID, event, source, oldDescendant, ne
 	sourceContext = JABContext(hwnd=hwnd, vmID=vmID, accContext=source)
 	if internal_hasFocus(sourceContext):
 		internalQueueFunction(event_gainFocus, vmID, newDescendant, hwnd)
+	else:
+		bridgeDll.releaseJavaObject(vmID, newDescendant)
 	for accContext in [event, oldDescendant]:
 		bridgeDll.releaseJavaObject(vmID, accContext)
 
