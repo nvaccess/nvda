@@ -9,6 +9,7 @@ Handles module initialization, configuration and settings interaction.
 """
 
 import config
+from dataclasses import dataclass, field
 from .utils.types import Filter, FullScreenMode, MagnifierFollowFocusType
 
 
@@ -124,17 +125,22 @@ _FOLLOW_CONFIG_KEYS: dict[MagnifierFollowFocusType, str] = {
 	MagnifierFollowFocusType.NAVIGATOR_OBJECT: "followNavigatorObject",
 }
 
-_savedFollowStates: dict[MagnifierFollowFocusType, bool] = {}
 
-_allFollowStatesForcedActive = False
+@dataclass
+class _FollowStateOverride:
+	savedStates: dict[MagnifierFollowFocusType, bool] = field(default_factory=dict)
+	isActive: bool = False
+
+
+_followStateOverride = _FollowStateOverride()
 
 
 def _ensureSavedStatesInitialized() -> None:
 	"""
-	Populate _savedFollowStates from current config if not yet done.
+	Populate _followStateOverride.savedStates from current config if not yet done.
 	Called lazily to avoid reading config.conf at module import time.
 	"""
-	if not _savedFollowStates:
+	if not _followStateOverride.savedStates:
 		saveFollowStates()
 
 
@@ -161,27 +167,26 @@ def setFollowState(focusType: MagnifierFollowFocusType, state: bool) -> None:
 def saveFollowStates() -> None:
 	"""Save current follow states so they can be restored later."""
 	for focusType in _FOLLOW_CONFIG_KEYS:
-		_savedFollowStates[focusType] = getFollowState(focusType)
+		_followStateOverride.savedStates[focusType] = getFollowState(focusType)
 
 
 def toggleAllFollowStates() -> bool:
 	"""
-		Toggle all follow states between forced-active and previously saved states.
+	Toggle all follow states between forced-active and previously saved states.
 
 	:return: True when all follow states are forced active after the call, False when restored.
 	"""
-	global _allFollowStatesForcedActive
 	_ensureSavedStatesInitialized()
-	if _allFollowStatesForcedActive:
-		for focusType, state in _savedFollowStates.items():
+	if _followStateOverride.isActive:
+		for focusType, state in _followStateOverride.savedStates.items():
 			setFollowState(focusType, state)
-		_allFollowStatesForcedActive = False
+		_followStateOverride.isActive = False
 	else:
 		saveFollowStates()
 		for focusType in _FOLLOW_CONFIG_KEYS:
 			setFollowState(focusType, True)
-		_allFollowStatesForcedActive = True
-	return _allFollowStatesForcedActive
+		_followStateOverride.isActive = True
+	return _followStateOverride.isActive
 
 
 def getDefaultFullscreenMode() -> FullScreenMode:
