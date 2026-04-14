@@ -11,8 +11,6 @@ import languageHandler
 from logHandler import log
 from NVDAState import ReadPaths
 from mathPres.MathCAT import localization
-from speech.speech import getCurrentLanguage
-from speechXml import toXmlLang
 from utils.displayString import DisplayStringStrEnum
 
 import libmathcat_py as libmathcat
@@ -341,16 +339,8 @@ class MathCATUserPreferences:
 	@staticmethod
 	def _createConfigForSpeechStyle(mathLang: str) -> str:
 		mathConf = config.conf["math"]
-		if mathLang == "Auto":
-			normalizedLang = languageHandler.normalizeLanguage(getCurrentLanguage())
-			if normalizedLang is not None:
-				mathLang = toXmlLang(normalizedLang)
-			else:
-				log.error(
-					f"Could not determine current language for Auto setting from language code '{normalizedLang}', "
-					"defaulting to en for speech style",
-				)
-				mathLang = "en"
+		if mathLang.casefold() == "auto":
+			mathLang = "en"
 		if mathLang not in mathConf["speech"]:
 			mathConf["speech"][mathLang] = {"speechStyle": ""}
 		return mathLang

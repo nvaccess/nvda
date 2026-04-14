@@ -6,7 +6,7 @@
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
-# Neil Soiffer, Ryan McCleary.
+# Neil Soiffer, Ryan McCleary, Kefas Lungu.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -2662,6 +2662,23 @@ class BrowseModePanel(SettingsPanel):
 		)
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
 
+		# browseMode imports gui, which imports from settingsDialogs, so a top-level import
+		# would create a circular dependency. Keep this import lazy.
+		import browseMode
+
+		# Store element types for use in onSave (excludes the always-active "default" entry).
+		self._browseModeElements = list(browseMode.BrowseModeTreeInterceptor._browseTouchNavRegistry)
+		self._browseModeCheckListBox: nvdaControls.CustomCheckListBox = sHelper.addLabeledControl(
+			# Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
+			_("T&ouch navigation elements:"),
+			nvdaControls.CustomCheckListBox,
+			choices=[label for _itemType, label in self._browseModeElements],
+		)
+		self._browseModeCheckListBox.Enable(touchHandler.touchSupported())
+		enabledTypes = set(config.conf["virtualBuffers"]["browseModeTouchNavigationElements"])
+		for i, (itemType, _label) in enumerate(self._browseModeElements):
+			self._browseModeCheckListBox.Check(i, itemType in enabledTypes)
+
 	def onSave(self):
 		config.conf["virtualBuffers"]["maxLineLength"] = self.maxLengthEdit.GetValue()
 		config.conf["virtualBuffers"]["linesPerPage"] = self.pageLinesEdit.GetValue()
@@ -2681,6 +2698,11 @@ class BrowseModePanel(SettingsPanel):
 		config.conf["virtualBuffers"]["trapNonCommandGestures"] = (
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
+		config.conf["virtualBuffers"]["browseModeTouchNavigationElements"] = [
+			itemType
+			for i, (itemType, _label) in enumerate(self._browseModeElements)
+			if self._browseModeCheckListBox.IsChecked(i)
+		]
 
 
 class MathSettingsPanel(SettingsPanel):
@@ -2906,14 +2928,6 @@ class MathSettingsPanel(SettingsPanel):
 		else:
 			self.navSpeechList.SetSelection(0)
 
-		# Translators: label for checkbox to use native math speech instead of MathCAT in Word and Outlook
-		useWordNativeMathText = pgettext("math", "Use native math speech in Word and Outlook")
-		self.useWordNativeMathCheckBox = speechGroup.addItem(
-			wx.CheckBox(speechGroupBox, label=useWordNativeMathText),
-		)
-		self.bindHelpEvent("MathUseWordNative", self.useWordNativeMathCheckBox)
-		self.useWordNativeMathCheckBox.SetValue(config.conf["math"]["other"]["useWordNativeMath"])
-
 		# Translators: Text for the navigation group.
 		navGroupText = pgettext("math", "Navigation")
 		navGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=navGroupText)
@@ -3023,6 +3037,24 @@ class MathSettingsPanel(SettingsPanel):
 				config.conf["math"]["braille"]["brailleNavHighlight"],
 			),
 		)
+
+		appSupportGroupSizer = wx.StaticBoxSizer(
+			wx.VERTICAL,
+			self,
+			# Translators: Text for the application support group in MathCAT options.
+			label=pgettext("math", "Application support"),
+		)
+		appSupportGroupBox = appSupportGroupSizer.GetStaticBox()
+		appSupportGroup = guiHelper.BoxSizerHelper(self, sizer=appSupportGroupSizer)
+		sHelper.addItem(appSupportGroup)
+
+		# Translators: label for checkbox to use native math presentation support instead of MathCAT in Word and Outlook
+		useWordNativeMathText = pgettext("math", "Use native math support in Word and Outlook")
+		self.useWordNativeMathCheckBox = appSupportGroup.addItem(
+			wx.CheckBox(appSupportGroupBox, label=useWordNativeMathText),
+		)
+		self.bindHelpEvent("MathUseWordNative", self.useWordNativeMathCheckBox)
+		self.useWordNativeMathCheckBox.SetValue(config.conf["math"]["other"]["useWordNativeMath"])
 
 	def onSave(self):
 		from mathPres.MathCAT.preferences import MathCATUserPreferences
@@ -5480,6 +5512,24 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
 
+		# Translators: The label for a setting in braille settings to change the rate for autoscroll.
+		autoScrollRateText = _("Auto&matic scroll rate")
+		self.autoScrollRateSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
+			autoScrollRateText,
+			nvdaControls.EnhancedInputSlider,
+			minValue=0,
+			maxValue=100,
+		)
+
+		self.autoScrollRateSlider.SetValue(
+			config.conf.valueToPercentage(
+				"braille",
+				"autoScrollRate",
+			),
+		)
+		self.autoScrollRateSlider.SetPageSize(10)
+		self.bindHelpEvent("BrailleAutoScrollRate", self.autoScrollRateSlider)
+
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start" % (time.time() - startTime))
 
@@ -5510,6 +5560,12 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		config.conf["braille"]["showMessages"] = self.showMessagesList.GetSelection()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
+
+		config.conf["braille"]["autoScrollRate"] = config.conf.percentageToValue(
+			"braille",
+			"autoScrollRate",
+			percentage=self.autoScrollRateSlider.GetValue(),
+		)
 		tetherChoice = [x.value for x in TetherTo][self.tetherList.GetSelection()]
 		if tetherChoice == TetherTo.AUTO.value:
 			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value

@@ -3,11 +3,12 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from unittest.mock import MagicMock
-from _magnifier.utils.types import Filter, FullScreenMode, MagnifierType, Direction
+from unittest.mock import MagicMock, patch
+from _magnifier.utils.types import Filter, FullScreenMode, MagnifierType, Direction, Coordinates
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
 from _magnifier.magnifier import Magnifier
+from winAPI._displayTracking import getPrimaryDisplayOrientation
 
 
 class TestMagnifierEndToEnd(_TestMagnifier):
@@ -211,3 +212,117 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 		# Stop magnifier
 		magnifier._stopMagnifier()
 		self.assertFalse(magnifier._isActive)
+
+
+class TestFullScreenMagnifierKeepMouseCentered(_TestMagnifier):
+	"""Tests for _keepMouseCentered in FullScreenMagnifier."""
+
+	def setUp(self):
+		super().setUp()
+		self.magnifier = FullScreenMagnifier()
+		self.screen = getPrimaryDisplayOrientation()
+
+	def tearDown(self):
+		self.magnifier._stopMagnifier()
+		super().tearDown()
+
+	def _expectedCenter(self, rawCoords: Coordinates) -> tuple[int, int]:
+		"""Compute the expected cursor position using the same pipeline as _keepMouseCentered."""
+		coords = self.magnifier._getCoordinatesForMode(rawCoords)
+		left, top, w, h = self.magnifier._getMagnifierPosition(coords)
+		return left + w // 2, top + h // 2
+
+	def testSkipsWhenLeftButtonPressed(self):
+		"""Cursor is not moved when the left mouse button is held."""
+		self.magnifier._currentCoordinates = Coordinates(500, 400)
+		with (
+			patch(
+				"_magnifier.fullscreenMagnifier.winUser.getKeyState",
+				side_effect=lambda key: -1 if key == 1 else 0,
+			),
+			patch("_magnifier.fullscreenMagnifier.winUser.setCursorPos") as mockSet,
+		):
+			self.magnifier._keepMouseCentered()
+			mockSet.assert_not_called()
+
+	def testSkipsWhenRightButtonPressed(self):
+		"""Cursor is not moved when the right mouse button is held."""
+		self.magnifier._currentCoordinates = Coordinates(500, 400)
+		with (
+			patch(
+				"_magnifier.fullscreenMagnifier.winUser.getKeyState",
+				side_effect=lambda key: -1 if key == 2 else 0,
+			),
+			patch("_magnifier.fullscreenMagnifier.winUser.setCursorPos") as mockSet,
+		):
+			self.magnifier._keepMouseCentered()
+			mockSet.assert_not_called()
+
+	def testSkipsWhenMiddleButtonPressed(self):
+		"""Cursor is not moved when the middle mouse button is held."""
+		self.magnifier._currentCoordinates = Coordinates(500, 400)
+		with (
+			patch(
+				"_magnifier.fullscreenMagnifier.winUser.getKeyState",
+				side_effect=lambda key: -1 if key == 4 else 0,
+			),
+			patch("_magnifier.fullscreenMagnifier.winUser.setCursorPos") as mockSet,
+		):
+			self.magnifier._keepMouseCentered()
+			mockSet.assert_not_called()
+
+	def testCenterModeMiddleOfScreen(self):
+		"""CENTER mode at screen center: cursor placed at the mode-adjusted, clamped center."""
+		self.magnifier._fullscreenMode = FullScreenMode.CENTER
+		raw = Coordinates(self.screen.width // 2, self.screen.height // 2)
+		self.magnifier._currentCoordinates = raw
+		expectedX, expectedY = self._expectedCenter(raw)
+		with (
+			patch("_magnifier.fullscreenMagnifier.winUser.getKeyState", return_value=0),
+			patch("_magnifier.fullscreenMagnifier.winUser.setCursorPos") as mockSet,
+		):
+			self.magnifier._keepMouseCentered()
+			mockSet.assert_called_once_with(expectedX, expectedY)
+
+	def testCenterModeAtEdge(self):
+		"""CENTER mode near top-left corner: cursor lands at clamped view center, not raw coordinates."""
+		self.magnifier._fullscreenMode = FullScreenMode.CENTER
+		raw = Coordinates(10, 10)
+		self.magnifier._currentCoordinates = raw
+		expectedX, expectedY = self._expectedCenter(raw)
+		# Clamping should shift the center away from (10, 10)
+		self.assertNotEqual((expectedX, expectedY), (raw.x, raw.y))
+		with (
+			patch("_magnifier.fullscreenMagnifier.winUser.getKeyState", return_value=0),
+			patch("_magnifier.fullscreenMagnifier.winUser.setCursorPos") as mockSet,
+		):
+			self.magnifier._keepMouseCentered()
+			mockSet.assert_called_once_with(expectedX, expectedY)
+
+	def testRelativeMode(self):
+		"""RELATIVE mode: cursor placed at the computed relative center, not raw coordinates."""
+		self.magnifier._fullscreenMode = FullScreenMode.RELATIVE
+		raw = Coordinates(self.screen.width // 4, self.screen.height // 4)
+		self.magnifier._currentCoordinates = raw
+		expectedX, expectedY = self._expectedCenter(raw)
+		with (
+			patch("_magnifier.fullscreenMagnifier.winUser.getKeyState", return_value=0),
+			patch("_magnifier.fullscreenMagnifier.winUser.setCursorPos") as mockSet,
+		):
+			self.magnifier._keepMouseCentered()
+			mockSet.assert_called_once_with(expectedX, expectedY)
+
+	def testBorderModeNoMovement(self):
+		"""BORDER mode with focus inside margins: cursor placed at center of current screen position."""
+		self.magnifier._fullscreenMode = FullScreenMode.BORDER
+		screenCenter = Coordinates(self.screen.width // 2, self.screen.height // 2)
+		self.magnifier._lastScreenPosition = screenCenter
+		# Focus is inside the visible area margins — no scroll needed
+		self.magnifier._currentCoordinates = screenCenter
+		expectedX, expectedY = self._expectedCenter(screenCenter)
+		with (
+			patch("_magnifier.fullscreenMagnifier.winUser.getKeyState", return_value=0),
+			patch("_magnifier.fullscreenMagnifier.winUser.setCursorPos") as mockSet,
+		):
+			self.magnifier._keepMouseCentered()
+			mockSet.assert_called_once_with(expectedX, expectedY)
