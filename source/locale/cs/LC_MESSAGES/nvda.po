@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 05:05+0000\n"
-"PO-Revision-Date: 2026-04-06 00:26\n"
+"POT-Creation-Date: 2026-04-09 08:28+0000\n"
+"PO-Revision-Date: 2026-04-13 00:28\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -1641,7 +1641,7 @@ msgstr "žádná předchozí reference"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1244 gui\settingsDialogs.py:3348
+#: browseMode.py:1244 gui\settingsDialogs.py:3358
 msgid "Lin&ks"
 msgstr "&Odkazy"
 
@@ -1649,7 +1649,7 @@ msgstr "&Odkazy"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1247 gui\settingsDialogs.py:3343
+#: browseMode.py:1247 gui\settingsDialogs.py:3353
 msgid "&Headings"
 msgstr "&Nadpisy"
 
@@ -2157,8 +2157,8 @@ msgstr "Některé operace s doplňky se nezdařily. Další podrobnosti najdete 
 #: gui\configProfiles.py:541 gui\inputGestures.py:808 gui\inputGestures.py:822
 #: gui\installerGui.py:122 gui\installerGui.py:632 gui\installerGui.py:648
 #: gui\installerGui.py:720 gui\logViewer.py:112 gui\logViewer.py:143
-#: gui\message.py:160 gui\settingsDialogs.py:1036 gui\settingsDialogs.py:5912
-#: gui\settingsDialogs.py:6474 gui\startupDialogs.py:127
+#: gui\message.py:160 gui\settingsDialogs.py:1036 gui\settingsDialogs.py:5922
+#: gui\settingsDialogs.py:6484 gui\startupDialogs.py:127
 #: _remoteClient\dialogs.py:67 _remoteClient\dialogs.py:306
 #: _remoteClient\dialogs.py:430
 msgid "Error"
@@ -2401,7 +2401,7 @@ msgstr "Myš"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 #: globalCommands.py:90 config\configFlags.py:314 gui\settingsDialogs.py:1138
-#: gui\settingsDialogs.py:4451
+#: gui\settingsDialogs.py:4461
 msgid "Speech"
 msgstr "Řeč"
 
@@ -2420,14 +2420,14 @@ msgstr "Konfigurační profily"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 #. Translators: This is the label for the braille panel
-#: globalCommands.py:99 config\configFlags.py:316 gui\settingsDialogs.py:4357
-#: gui\settingsDialogs.py:4867
+#: globalCommands.py:99 config\configFlags.py:316 gui\settingsDialogs.py:4367
+#: gui\settingsDialogs.py:4877
 msgid "Braille"
 msgstr "Braill"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the vision panel
-#: globalCommands.py:102 gui\settingsDialogs.py:5680
+#: globalCommands.py:102 gui\settingsDialogs.py:5690
 msgid "Vision"
 msgstr "Vizuální"
 
@@ -2465,13 +2465,13 @@ msgstr "Ohlašování formátování dokumentů"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the audio settings panel.
-#: globalCommands.py:123 gui\settingsDialogs.py:3513
+#: globalCommands.py:123 gui\settingsDialogs.py:3523
 msgid "Audio"
 msgstr "Zvuk"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the Remote Access settings category in NVDA's Settings screen.
-#: globalCommands.py:126 gui\settingsDialogs.py:3791
+#: globalCommands.py:126 gui\settingsDialogs.py:3801
 msgctxt "remote"
 msgid "Remote Access"
 msgstr "Vzdálené ovládání"
@@ -7222,7 +7222,17 @@ msgid "{longName} ({name})\n"
 "It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html and https://www.gnu.org/licenses/gpl-3.0.en.html\n\n"
 "{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.\n"
 "If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
-msgstr ""
+msgstr "{longName} ({name})\n"
+"Verze: {version} ({version_detailed})\n"
+"URL: {url}\n"
+"{copyright}\n\n"
+"Distribuce {name} je chráněna licencí GNU General Public License (Verze 2 nebo novější).\n"
+"Program můžete libovolně šířit a upravovat za předpokladu, že k němu přiložíte tuto licenci a zpřístupníte jeho zdrojový kód všem zájemcům.\n"
+"Toto se vztahuje jak na původní, tak upravené kopie tohoto programu a také na software užívající kód převzatý z tohoto programu.\n"
+"Více podrobností najdete v licenci v nabídce nápověda.\n"
+"Licence je dostupná i na stránkách: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html a https://www.gnu.org/licenses/gpl-3.0.en.html\n\n"
+"Vývoj {name} zastřešuje organizace NV Access, nezisková organizace, jejímž cílem je pomáhat při vývoji a propagaci otevřených a volně šiřitelných řešení užitečných pro nevidomé a zrakově postižené.\n"
+"Jestliže je program NVDA užitečný i pro vás a chcete, aby vývoj stále pokračoval, zvažte prosím možnost příspěvku společnosti NV Access. Přispět můžete z hlavní nabídky NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on
 #. from windows explorer and NVDA is not running.
@@ -8806,13 +8816,13 @@ msgstr "Přepnout simulaci HID klávesnice"
 #. braille settings dialog.
 #: brailleTables\__tables.py:14
 msgid "Afrikaans grade 1"
-msgstr "Afrikánský plnopis"
+msgstr "Afrikánština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:17
 msgid "Afrikaans grade 2"
-msgstr "Afrikánský zkratkopis"
+msgstr "Afrikánština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -8836,31 +8846,31 @@ msgstr "Arabské 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:29
 msgid "Arabic grade 1"
-msgstr "Arabský plnopis"
+msgstr "Arabština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:32
 msgid "Arabic grade 2"
-msgstr "Arabský zkratkopis"
+msgstr "Arabština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:35
 msgid "Assamese grade 1"
-msgstr "Ásámský plnopis"
+msgstr "Ásámština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:38
 msgid "Bashkir grade 1"
-msgstr "Baškirský plnopis"
+msgstr "Baškirština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:41
 msgid "Bengali grade 1"
-msgstr "Bengálský plnopis"
+msgstr "Bengálština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -8872,13 +8882,13 @@ msgstr "Běloruské počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:47
 msgid "Belarusian literary braille"
-msgstr "Běloruský plnopis"
+msgstr "Běloruština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:50
 msgid "Belarusian literary braille (detailed)"
-msgstr "Běloruský plnopis (podrobný)"
+msgstr "Běloruština plnopis (podrobný)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -8890,13 +8900,13 @@ msgstr "Bulharské 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:56
 msgid "Bulgarian grade 1"
-msgstr "Bulharský plnopis"
+msgstr "Bulharština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:59
 msgid "Catalan grade 1"
-msgstr "Katalánský plnopis"
+msgstr "Katalánština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -8914,7 +8924,7 @@ msgstr "Koptské 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:68
 msgid "Coptic grade 1"
-msgstr "Koptský plnopis"
+msgstr "Koptština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -8932,13 +8942,13 @@ msgstr "Klínové písmo (přepsané, kompaktní diakritika) plnopis"
 #. braille settings dialog.
 #: brailleTables\__tables.py:77
 msgid "Welsh grade 1"
-msgstr "Velšský plnopis"
+msgstr "Velština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:80
 msgid "Welsh grade 2"
-msgstr "Velšský zkratkopis"
+msgstr "Velština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -8950,7 +8960,7 @@ msgstr "České 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:86
 msgid "Czech grade 1"
-msgstr "Český plnopis"
+msgstr "Čeština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -8968,49 +8978,49 @@ msgstr "Dánské 8-bodové počítačové písmo (1993)"
 #. braille settings dialog.
 #: brailleTables\__tables.py:96
 msgid "Danish 6 dot grade 1"
-msgstr "Dánský 6-bodový plnopis"
+msgstr "Dánština 6-bodový plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:99
 msgid "Danish 6 dot grade 1 (1993)"
-msgstr "Dánský 6-bodový plnopis (1993)"
+msgstr "Dánština 6-bodový plnopis (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:102
 msgid "Danish 8 dot grade 1"
-msgstr "Dánský 8-bodový plnopis"
+msgstr "Dánština 8-bodový plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:105
 msgid "Danish 8 dot grade 1 (1993)"
-msgstr "Dánský 8-bodový plnopis (1993)"
+msgstr "Dánština 8-bodový plnopis (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:108
 msgid "Danish 6 dot grade 2"
-msgstr "Dánský 6-bodový zkratkopis"
+msgstr "Dánština 6-bodový zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:111
 msgid "Danish 6 dot grade 2 (1993)"
-msgstr "Dánský 6-bodový zkratkopis (1993)"
+msgstr "Dánština 6-bodový zkratkopis (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:114
 msgid "Danish 8 dot grade 2"
-msgstr "Dánský 8-bodový zkratkopis"
+msgstr "Dánština 8-bodový zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:117
 msgid "Danish 8 dot grade 2 (1993)"
-msgstr "Dánský 8-bodový zkratkopis (1993)"
+msgstr "Dánština 8-bodový zkratkopis (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9028,37 +9038,37 @@ msgstr "Německé 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:127
 msgid "German grade 0"
-msgstr "Německý stupeň 0"
+msgstr "Němčina základní přepis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:131
 msgid "German grade 0 (detailed)"
-msgstr "Německý stupeň 0 (podrobný)"
+msgstr "Němčina základní přepis (podrobný)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:134
 msgid "German grade 1"
-msgstr "Německý plnopis"
+msgstr "Němčina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:138
 msgid "German grade 1 (detailed)"
-msgstr "Německý plnopis (podrobný)"
+msgstr "Němčina plnopis (podrobný)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:141
 msgid "German grade 2"
-msgstr "Německý zkratkopis"
+msgstr "Němčina zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:144
 msgid "German grade 2 (detailed)"
-msgstr "Německý zkratkopis (podrobný)"
+msgstr "Němčina zkratkopis (podrobný)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9070,31 +9080,31 @@ msgstr "Řečtina (Řecko)"
 #. braille settings dialog.
 #: brailleTables\__tables.py:151
 msgid "English (U.K.) 8 dot computer braille"
-msgstr "Britská angličtina - 8-bodové počítačové písmo"
+msgstr "Britská angličtina 8-bodové počítačové písmo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:154
 msgid "English (U.K.) grade 1"
-msgstr "Britská angličtina - plnopis"
+msgstr "Britská angličtina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:157
 msgid "English (U.K.) grade 2"
-msgstr "Britská angličtina - zkratkopis"
+msgstr "Britská angličtina zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:160
 msgid "English grade 3"
-msgstr ""
+msgstr "Angličtina těsnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:163
 msgid "English North American Braille Computer Code"
-msgstr "Severo Americká angličtina - počítačové bodové písmo"
+msgstr "Severo Americká angličtina počítačové bodové písmo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9112,31 +9122,31 @@ msgstr "Jednotný anglický skratkopis"
 #. braille settings dialog.
 #: brailleTables\__tables.py:172
 msgid "English (U.S.) 6 dot computer braille"
-msgstr "Americká angličtina - 6-bodové počítačové písmo"
+msgstr "Americká angličtina 6-bodové počítačové písmo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:175
 msgid "English (U.S.) 8 dot computer braille"
-msgstr "Americká angličtina - 8-bodové počítačové písmo"
+msgstr "Americká angličtina 8-bodové počítačové písmo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:178
 msgid "English (U.S.) grade 1"
-msgstr "Americká angličtina - plnopis"
+msgstr "Americká angličtina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:181
 msgid "English (U.S.) grade 2"
-msgstr "Americká angličtina - zkratkopis"
+msgstr "Americká angličtina zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:184
 msgid "Esperanto grade 1"
-msgstr "Esperantský plnopis"
+msgstr "Esperanto plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9148,25 +9158,25 @@ msgstr "Španělské 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:195
 msgid "Spanish grade 1"
-msgstr "Španělský plnopis"
+msgstr "Španělština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:198
 msgid "Spanish grade 2"
-msgstr "Španělský zkratkopis"
+msgstr "Španělština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:201
 msgid "Estonian grade 0"
-msgstr "Estonský stupeň 0"
+msgstr "Estonština základní přepis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:204
 msgid "Ethiopic grade 1"
-msgstr "Etiopský plnopis"
+msgstr "Amharština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9178,13 +9188,13 @@ msgstr "Perské 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:210
 msgid "Persian grade 1"
-msgstr "Perský plnopis"
+msgstr "Perština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:213
 msgid "Finnish 6 dot"
-msgstr "Finské 6-bodové písmo"
+msgstr "Finština 6-bodový plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9196,7 +9206,7 @@ msgstr "Finské 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:224
 msgid "Filipino grade 2"
-msgstr "Filipínský zkratkopis"
+msgstr "Filipínština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9220,19 +9230,19 @@ msgstr "Francouzský (jednotný) zkratkopis"
 #. braille settings dialog.
 #: brailleTables\__tables.py:241
 msgid "Irish grade 1"
-msgstr "Irský plnopis"
+msgstr "Irština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:244
 msgid "Irish grade 2"
-msgstr "Irský zkratkopis"
+msgstr "Irština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:247
 msgid "Gujarati grade 1"
-msgstr "Gudžarátský plnopis"
+msgstr "Gudžarátština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9274,7 +9284,7 @@ msgstr "Hebrejština (biblická) zkrácená"
 #. braille settings dialog.
 #: brailleTables\__tables.py:268
 msgid "Israeli grade 1"
-msgstr "Izraelský plnopis"
+msgstr "Hebrejština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9286,7 +9296,7 @@ msgstr "Hebrejské počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:279
 msgid "Hindi grade 1"
-msgstr "Hindský plnopis"
+msgstr "Hindština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9298,7 +9308,7 @@ msgstr "Chorvatské 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:290
 msgid "Croatian grade 1"
-msgstr "Chorvatský plnopis"
+msgstr "Chorvatština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9310,13 +9320,13 @@ msgstr "Maďarské 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:296
 msgid "Hungarian grade 1"
-msgstr "Maďarský plnopis"
+msgstr "Maďarština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:299
 msgid "Hungarian grade 2"
-msgstr "Maďarský zkratkopis"
+msgstr "Maďarština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9346,169 +9356,169 @@ msgstr "Italské 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:322
 msgid "Japanese (Kantenji) literary braille"
-msgstr "Japonský (Kantenji) plnopis"
+msgstr "Japonština (Kantenji) plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:330
 msgid "Japanese (Rokuten Kanji) Braille"
-msgstr ""
+msgstr "Japonština (Rokuten Kanji)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:334
 msgid "Kannada grade 1"
-msgstr "Kannadský plnopis"
+msgstr "Kannadština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:337
 msgid "Georgian literary braille"
-msgstr "Gruzínský plnopis"
+msgstr "Gruzínština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:340
 msgid "Kazakh grade 1"
-msgstr "Kazašský plnopis"
+msgstr "Kazaština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:343
 msgid "Khmer grade 1"
-msgstr "Khmerský plnopis"
+msgstr "Khmerština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:346
 msgid "Northern Kurdish grade 0"
-msgstr "Severní kurdština stupeň 0"
+msgstr "Severní kurdština základní přepis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:349
 msgid "Korean grade 1 (2006)"
-msgstr "Korejský plnopis (2006)"
+msgstr "Korejština plnopis (2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:352
 msgid "Korean grade 2 (2006)"
-msgstr "Korejský zkratkopis (2006)"
+msgstr "Korejština zkratkopis (2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:355
 msgid "Korean grade 1"
-msgstr "Korejský plnopis"
+msgstr "Korejština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:358
 msgid "Korean grade 2"
-msgstr "Korejský zkratkopis"
+msgstr "Korejština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:361
 msgid "Kashmiri grade 1"
-msgstr "Kašmírský plnopis"
+msgstr "Kašmírština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:364
 msgid "Lao Grade 1"
-msgstr "Laoský plnopis"
+msgstr "Laoština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:367
 msgid "Luganda literary braille"
-msgstr "Gandský plnopis"
+msgstr "Gandština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:370
 msgid "Lithuanian 8 dot"
-msgstr "Litevské 8-bodové písmo"
+msgstr "Litevština 8-bodový plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:373
 msgid "Lithuanian 6 dot"
-msgstr "Litevské 6-bodové písmo"
+msgstr "Litevština 6-bodový plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:376
 msgid "Latvian grade 1"
-msgstr "Lotyšský plnopis"
+msgstr "Lotyština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:379
 msgid "Macedonian grade 1"
-msgstr ""
+msgstr "Makedonština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:382
 msgid "Malayalam grade 1"
-msgstr "Malajálamský plnopis"
+msgstr "Malajálamština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:385
 msgid "Manipuri grade 1"
-msgstr "Manipurský plnopis"
+msgstr "Manipurština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:388
 msgid "Malay grade 2"
-msgstr "Malajský zkratkopis"
+msgstr "Malajština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:391
 msgid "Mongolian grade 1"
-msgstr "Mongolský plnopis"
+msgstr "Mongolština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:394
 msgid "Mongolian grade 2"
-msgstr "Mongolský zkratkopis"
+msgstr "Mongolština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:397
 msgid "Marathi grade 1"
-msgstr "Maráthský plnopis"
+msgstr "Maráthština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:400
 msgid "Burmese grade 1"
-msgstr "Barmský plnopis"
+msgstr "Barmština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:403
 msgid "Burmese grade 2"
-msgstr "Barmský zkratkopis"
+msgstr "Barmština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:406
 msgid "Dutch 6 dot"
-msgstr "Holandské 6-bodové písmo"
+msgstr "Holandština 6-bodový plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:409
 msgid "Dutch 8 dot"
-msgstr "Holandské 8-bodové písmo"
+msgstr "Holandština 8-bodový plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9520,43 +9530,43 @@ msgstr "Norské 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:415
 msgid "Norwegian grade 0"
-msgstr "Norský stupeň 0"
+msgstr "Norština základní přepis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:418
 msgid "Norwegian grade 1"
-msgstr "Norský plnopis"
+msgstr "Norština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:421
 msgid "Norwegian grade 2"
-msgstr "Norský zkratkopis"
+msgstr "Norština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:424
 msgid "Norwegian grade 3"
-msgstr "Norský stupeň 3"
+msgstr "Norština těsnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:427
 msgid "Nepali grade 1"
-msgstr "Nepálský plnopis"
+msgstr "Nepálština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:430
 msgid "Sepedi grade 1"
-msgstr "Sepedský plnopis"
+msgstr "Sepedština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:433
 msgid "Sepedi grade 2"
-msgstr "Sepedský zkratkopis"
+msgstr "Sepedština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9568,7 +9578,7 @@ msgstr "Čičevština (Malawi) plnopis"
 #. braille settings dialog.
 #: brailleTables\__tables.py:439
 msgid "Oriya grade 1"
-msgstr "Urijský plnopis"
+msgstr "Urijština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9580,7 +9590,7 @@ msgstr "Polské 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:450
 msgid "Polish literary braille"
-msgstr "Polský plnopis"
+msgstr "Polština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9598,25 +9608,25 @@ msgstr "Portugalské 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:459
 msgid "Portuguese grade 1"
-msgstr "Portugalský plnopis"
+msgstr "Portugalština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:462
 msgid "Portuguese grade 2"
-msgstr "Portugalský zkratkopis"
+msgstr "Portugalština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:465
 msgid "Punjabi grade 1"
-msgstr "Pandžábský plnopis"
+msgstr "Pandžábština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:468
 msgid "Romanian 6 dot"
-msgstr "Rumunské 6-bodové písmo"
+msgstr "Rumunština 6-bodový plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9640,37 +9650,37 @@ msgstr "Ruské 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:480
 msgid "Russian literary braille"
-msgstr "Ruský plnopis"
+msgstr "Ruština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:483
 msgid "Russian literary braille (detailed)"
-msgstr "Ruský plnopis (podrobný)"
+msgstr "Ruština plnopis (podrobný)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:486
 msgid "Russian contracted braille"
-msgstr "Ruský zkratkopis"
+msgstr "Ruština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:489
 msgid "Kinyarwanda literary braille"
-msgstr "Rwandský plnopis"
+msgstr "Rwandština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:492
 msgid "Sanskrit grade 1"
-msgstr "Sanskrtský plnopis"
+msgstr "Sanskrt plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:495
 msgid "Yakut grade 1"
-msgstr "Jakutský plnopis"
+msgstr "Jakutština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9682,7 +9692,7 @@ msgstr "Švédské 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:501
 msgid "Slovak grade 1"
-msgstr "Slovenský plnopis"
+msgstr "Slovenština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9694,25 +9704,25 @@ msgstr "Slovinské 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:507
 msgid "Slovenian grade 1"
-msgstr "Slovinský plnopis"
+msgstr "Slovinština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:510
 msgid "Sesotho grade 1"
-msgstr "Sesothský plnopis"
+msgstr "Sesothština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:513
 msgid "Sesotho grade 2"
-msgstr "Sesothský zkratkopis"
+msgstr "Sesothština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:516
 msgid "Serbian grade 1"
-msgstr "Srbský plnopis"
+msgstr "Srbština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9724,19 +9734,19 @@ msgstr "Srbština cyrilice plnopis"
 #. braille settings dialog.
 #: brailleTables\__tables.py:523
 msgid "Swedish uncontracted braille"
-msgstr "Švédský plnopis"
+msgstr "Švédština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:526
 msgid "Swedish partially contracted braille"
-msgstr "Švédský částečný zkratkopis"
+msgstr "Švédština zkratkopis částečný"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:529
 msgid "Swedish contracted braille"
-msgstr "Švédský zkratkopis"
+msgstr "Švédština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9778,25 +9788,25 @@ msgstr "Svahilština (Keňa) zkratkopis"
 #. braille settings dialog.
 #: brailleTables\__tables.py:551
 msgid "Syriac grade 1"
-msgstr "Syrský plnopis"
+msgstr "Syrština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:555
 msgid "Tamil grade 1"
-msgstr "Tamilský plnopis"
+msgstr "Tamilština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:558
 msgid "Tatar grade 1"
-msgstr "Tatarský plnopis"
+msgstr "Tatarština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:561
 msgid "Telugu grade 1"
-msgstr "Telugský plnopis"
+msgstr "Telugština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9808,19 +9818,19 @@ msgstr "Thajské 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:567
 msgid "Thai grade 0"
-msgstr "Thajský stupeň 0"
+msgstr "Thajština základní přepis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:570
 msgid "Thai grade 1"
-msgstr "Thajský plnopis"
+msgstr "Thajština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:573
 msgid "Thai grade 2"
-msgstr "Thajský zkratkopis"
+msgstr "Thajština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9832,43 +9842,43 @@ msgstr "Turecké 8-bodové počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:579
 msgid "Turkish grade 1"
-msgstr "Turecký plnopis"
+msgstr "Turečtina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:582
 msgid "Turkish grade 2"
-msgstr "Turecký zkratkopis"
+msgstr "Turečtina zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:585
 msgid "Setswana grade 1"
-msgstr "Setswanský plnopis"
+msgstr "Setswanština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:588
 msgid "Setswana grade 2"
-msgstr "Setswanský zkratkopis"
+msgstr "Setswanština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:591
 msgid "Ugaritic grade 1"
-msgstr "Ugaritský plnopis"
+msgstr "Ugaritština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:594
 msgid "Ukrainian grade 1"
-msgstr "Ukrajinský plnopis"
+msgstr "Ukrajinština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:597
 msgid "Ukrainian literary braille (detailed)"
-msgstr "Ukrajinský plnopis (podrobný)"
+msgstr "Ukrajinština plnopis (podrobný)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9880,19 +9890,19 @@ msgstr "Ukrajinské počítačové písmo"
 #. braille settings dialog.
 #: brailleTables\__tables.py:603
 msgid "Urdu grade 1"
-msgstr "Urdský plnopis"
+msgstr "Urdština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:606
 msgid "Urdu grade 2"
-msgstr "Urdský  zkratkopis"
+msgstr "Urdština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:609
 msgid "Uzbek grade 1"
-msgstr "Uzbecký plnopis"
+msgstr "Uzbečtina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9904,31 +9914,31 @@ msgstr "Unicode braille"
 #. braille settings dialog.
 #: brailleTables\__tables.py:615
 msgid "Vietnamese grade 0"
-msgstr "Vietnamský stupeň 0"
+msgstr "Vietnamština základní přepis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:618
 msgid "Tshivenda grade 1"
-msgstr "Vendský plnopis"
+msgstr "Vendština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:621
 msgid "Tshivenda grade 2"
-msgstr "Vendský zkratkopis"
+msgstr "Vendština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:624
 msgid "Vietnamese grade 1"
-msgstr "Vietnamský plnopis"
+msgstr "Vietnamština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:627
 msgid "Vietnamese grade 2"
-msgstr "Vietnamský zkratkopis"
+msgstr "Vietnamština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9940,13 +9950,13 @@ msgstr "Jižní vietnamština plnopis"
 #. braille settings dialog.
 #: brailleTables\__tables.py:633
 msgid "Xhosa grade 1"
-msgstr "Xhoský plnopis"
+msgstr "Xhoština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:636
 msgid "Xhosa grade 2"
-msgstr "Xhoský zkratkopis"
+msgstr "Xhoština zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9998,13 +10008,13 @@ msgstr "Čínština (taiwanská, mandarínská)"
 #. braille settings dialog.
 #: brailleTables\__tables.py:676
 msgid "Zulu grade 1"
-msgstr "Zulský plnopis"
+msgstr "Zuluština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:679
 msgid "Zulu grade 2"
-msgstr "Zulský zkratkopis"
+msgstr "Zuluština zkratkopis"
 
 #. Translators: The title of the NVDA Braille Viewer tool window.
 #: brailleViewer\brailleViewerGui.py:257
@@ -10122,33 +10132,33 @@ msgstr "Řeč i zvuky"
 #: config\configFlags.py:203
 msgctxt "reportSpellingErrorsSetting"
 msgid "Off"
-msgstr ""
+msgstr "Vypnuto"
 
 #. Translators: A value reported by the cycle script defining how spelling errors are reported, also used
 #. as choice in a checklist box in the document formatting dialog to report spelling errors with speech.
 #: config\configFlags.py:206
 msgctxt "reportSpellingErrorsSetting"
 msgid "Speech"
-msgstr ""
+msgstr "Hlasem"
 
 #. Translators: A value reported by the cycle script defining how spelling errors are reported, also used
 #. as choice in a checklist box in the document formatting dialog to report spelling errors with a sound.
 #: config\configFlags.py:209
 msgctxt "reportSpellingErrorsSetting"
 msgid "Sound"
-msgstr ""
+msgstr "Zvukem"
 
 #. Translators: A value reported by the cycle script defining how spelling errors are reported.
 #: config\configFlags.py:213
 msgctxt "reportSpellingErrorsSetting"
 msgid "Speech and sound"
-msgstr ""
+msgstr "Hlasem i zvukem"
 
 #. Translators: A value used as choice in a checklist box in the document formatting dialog to report spelling errors in braille.
 #: config\configFlags.py:216
 msgctxt "reportSpellingErrorsSetting"
 msgid "Braille"
-msgstr ""
+msgstr "Na braillském řádku"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -11628,7 +11638,7 @@ msgstr "stejný"
 #. For example, a list box that allows selecting multiple items.
 #: controlTypes\state.py:216
 msgid "multi-select"
-msgstr ""
+msgstr "vícenásobný výběr"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 #: controlTypes\state.py:222
@@ -11780,12 +11790,12 @@ msgstr "Panel nastavení není ve vaší verzi operačního systému dostupný."
 #. from the about dialog
 #: gui\__init__.py:408
 msgid "Copied to clipboard"
-msgstr ""
+msgstr "Zkopírováno"
 
 #. Translators: The label for a button to copy the NVDA version number from the about dialog.
 #: gui\__init__.py:414
 msgid "&Copy version number"
-msgstr ""
+msgstr "Zkopírovat číslo verze"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 #: gui\__init__.py:419 gui\__init__.py:871
@@ -12536,7 +12546,7 @@ msgstr "&Filtrovat podle:"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:6362 gui\speechDict.py:215
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:6372 gui\speechDict.py:215
 msgid "&Add"
 msgstr "&Přidat"
 
@@ -12626,7 +12636,7 @@ msgstr "Stiskněte tlačítko OK pro spuštění nainstalované kopie."
 #. and the installer is about to close without starting the installed copy.
 #: gui\installerGui.py:145
 msgid "Please press OK to close the installer."
-msgstr ""
+msgstr "Stiskněte tlačítko OK pro ukončení instalace."
 
 #. Translators: The title of the Install NVDA dialog.
 #: gui\installerGui.py:209
@@ -12693,7 +12703,7 @@ msgstr "Pokoušíte se nainstalovat starší verzi NVDA než máte nyní nainsta
 #. the state of the current NVDA installation.
 #: gui\installerGui.py:366
 msgid "An existing NVDA installation has been detected, but its version cannot be determined. If you are attempting to install an earlier version of NVDA, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
-msgstr ""
+msgstr "Byla nalezena existující instalace NVDA, ale její verzi nelze určit. Pokud se pokoušíte nainstalovat starší verzi, měli byste před touto instalací nejprve zcela odinstalovat NVDA."
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
@@ -12705,13 +12715,13 @@ msgstr "&Přesto pokračovat (nedoporučeno)"
 #. to an older version.
 #: gui\installerGui.py:425
 msgid "You are attempting to replace an existing portable copy of NVDA with an earlier version. Downgrading NVDA is not recommended. You should cancel this operation and create a new portable copy instead. "
-msgstr ""
+msgstr "Pokoušíte se nahradit aktuální přenosnou kopii NVDA starší verzí. Tento postup se nedoporučuje. Měli byste zrušit tuto operaci a vytvořit novou přenosnou kopii."
 
 #. Translators: A warning presented when the installer is unable to determine
 #. the state of the current NVDA installation.
 #: gui\installerGui.py:433
 msgid "An existing copy of NVDA has been detected in the chosen directory, but its version cannot be determined. If you are attempting to downgrade to an earlier version of NVDA, you should cancel this operation and create a new portable copy. "
-msgstr ""
+msgstr "Ve vybrané složce se našla existující kopie NVDA, ale její verzi nelze určit. Pokud se pokoušíte vrátit ke starší verzi NVDA, měli byste tuto operaci zrušit a vytvořit novou přenosnou kopii."
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
@@ -12806,7 +12816,7 @@ msgstr "Prosím vyberte složku pro vytvoření přenosné kopie."
 #: gui\installerGui.py:642
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. It may include system variables (e.g. %temp%, %homepath%) and must start with a drive letter (e.g. C:\\). Current path: {path}. "
-msgstr ""
+msgstr "Zadejte prosím přesnou cestu pro vytvoření přenosné kopie. Cesta může obsahovat systémové proměnné (např. %temp%, %homepath%) a musí začít písmenem jednotky (např. C:\\). Aktuální cesta: {path}."
 
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
 #: gui\installerGui.py:694
@@ -12937,7 +12947,7 @@ msgstr "&Kategorie:"
 #. Translators: This is the label for the general settings panel.
 #. Translators: name of a grouping in Privacy and Security settings
 #. which contains miscellaneous settings.
-#: gui\settingsDialogs.py:801 gui\settingsDialogs.py:6001
+#: gui\settingsDialogs.py:801 gui\settingsDialogs.py:6011
 msgid "General"
 msgstr "Obecné"
 
@@ -13016,7 +13026,7 @@ msgstr "Alternativní zdroj pro aktualizaci"
 #. it appears in the context of the update mirror group on the General page of NVDA's settings.
 #. Translators: This is the label for the button used to change the Add-on Store mirror URL,
 #. it appears in the context of the mirror server group on the Add-on Store page of NVDA's settings.
-#: gui\settingsDialogs.py:946 gui\settingsDialogs.py:3728
+#: gui\settingsDialogs.py:946 gui\settingsDialogs.py:3738
 msgid "Change..."
 msgstr "Změnit..."
 
@@ -13070,7 +13080,7 @@ msgid "Insufficient Privileges"
 msgstr "Nedostatečná oprávnění"
 
 #. Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
-#: gui\settingsDialogs.py:1088 gui\settingsDialogs.py:3774
+#: gui\settingsDialogs.py:1088 gui\settingsDialogs.py:3784
 msgid "No mirror"
 msgstr "Žádný alternativní zdroj"
 
@@ -13103,7 +13113,7 @@ msgstr "Hlasové výstupy"
 #. it appears in the context of a synthesizer group on the speech settings panel.
 #. Translators: This is the label for the button used to change braille display,
 #. it appears in the context of a braille display group on the braille settings panel.
-#: gui\settingsDialogs.py:1166 gui\settingsDialogs.py:4888
+#: gui\settingsDialogs.py:1166 gui\settingsDialogs.py:4898
 msgid "C&hange..."
 msgstr "&Změnit..."
 
@@ -13163,7 +13173,7 @@ msgstr "Při &zpracování znaků a symbolů se řídit jazykem aktuálního hla
 
 #. Translators: This is a label for a combo-box in the Speech settings panel.
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:1736 gui\settingsDialogs.py:5441
+#: gui\settingsDialogs.py:1736 gui\settingsDialogs.py:5451
 msgid "Unicode normali&zation"
 msgstr "Normali&zace Unicode"
 
@@ -13485,7 +13495,7 @@ msgstr "&Odhadnout pozici objektu, pokud není dostupná"
 #. object presentation settings panel.
 #: gui\settingsDialogs.py:2437
 msgid "Report when objects support &multiple selection"
-msgstr ""
+msgstr "Hlásit dostupnost vícenásobného výběru"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -13586,540 +13596,546 @@ msgstr "&Zabránit příkazům, které nejsou zkratkovými klávesami NVDA, v p�
 #: gui\settingsDialogs.py:2660
 msgctxt "math"
 msgid "Math"
-msgstr ""
+msgstr "Matematika"
 
 #. Translators: The description of the math settings panel.
 #: gui\settingsDialogs.py:2665
 msgctxt "math"
 msgid "The following options control the presentation of mathematical content."
-msgstr ""
+msgstr "Následující možnosti určují zobrazení matematického obsahu."
 
 #. Translators: options for Copy math to clipboard as -- speech text
-#: gui\settingsDialogs.py:2737 mathPres\MathCAT\preferences.py:142
+#: gui\settingsDialogs.py:2737 mathPres\MathCAT\preferences.py:140
 msgctxt "math"
 msgid "Speech"
-msgstr ""
+msgstr "Řeč"
 
 #. Translators: Select an impairment for MathCAT
 #: gui\settingsDialogs.py:2744
 msgctxt "math"
 msgid "Impairment:"
-msgstr ""
+msgstr "Znevýhodnění:"
 
 #. Translators: MathCAT language option
 #: gui\settingsDialogs.py:2756
 msgctxt "math"
 msgid "Language:"
-msgstr ""
+msgstr "Jazyk:"
 
 #. Translators: MathCAT decimal separator option.
 #: gui\settingsDialogs.py:2776
 msgctxt "math"
 msgid "Decimal separator for numbers:"
-msgstr ""
+msgstr "Oddělovač desetinných čísel:"
 
 #. Translators: Select a speech style.
 #: gui\settingsDialogs.py:2791
 msgctxt "math"
 msgid "Speech style:"
-msgstr ""
+msgstr "Styl řeči:"
 
 #. Translators: MathCAT's verbosity setting
 #: gui\settingsDialogs.py:2805
 msgctxt "math"
 msgid "Speech verbosity:"
-msgstr ""
+msgstr "Výřečnost:"
 
 #. Translators: MathCAT's relative speed setting
 #: gui\settingsDialogs.py:2817
 msgctxt "math"
 msgid "Relative speech rate"
-msgstr ""
+msgstr "Relativní rychlost řeči"
 
 #. Translators: label for slider that specifies relative factor to increase or decrease pauses in the math speech
 #: gui\settingsDialogs.py:2830
 msgctxt "math"
 msgid "Pause factor"
-msgstr ""
+msgstr "Délka pauzy"
 
 #. Translators: label for check box controlling a beep sound when math speech starts/ends
 #: gui\settingsDialogs.py:2845
 msgctxt "math"
 msgid "Beep at the beginning and end of math"
-msgstr ""
+msgstr "Pípat na začátku a konci matematického obsahu"
 
 #. Translators: label for combobox to specify how verbose/terse the speech should be
 #: gui\settingsDialogs.py:2851
 msgctxt "math"
 msgid "Chemical formulae:"
-msgstr ""
+msgstr "Chemické vzorce:"
 
 #. Translators: label for combobox to specify whether the expression is spoken or described (an overview)
 #: gui\settingsDialogs.py:2863
 msgctxt "math"
 msgid "When entering an equation:"
-msgstr ""
+msgstr "Při vstupu do rovnice:"
 
 #. Translators: "Speak" the expression after moving to it
 #: gui\settingsDialogs.py:2866
 msgctxt "math"
 msgid "Speak"
-msgstr ""
+msgstr "Vyslovit"
 
 #. Translators: "Describe" the expression after moving to it
 #: gui\settingsDialogs.py:2868
 msgctxt "math"
 msgid "Describe overview"
-msgstr ""
-
-#. Translators: label for checkbox to use native math speech instead of MathCAT in Word and Outlook
-#: gui\settingsDialogs.py:2882
-msgctxt "math"
-msgid "Use native math speech in Word and Outlook"
-msgstr ""
+msgstr "Popsat"
 
 #. Translators: Text for the navigation group.
-#: gui\settingsDialogs.py:2890
+#: gui\settingsDialogs.py:2882
 msgctxt "math"
 msgid "Navigation"
-msgstr ""
+msgstr "Navigace"
 
 #. Translators: label for combobox to specify one of three modes use to navigate math expressions
-#: gui\settingsDialogs.py:2897
+#: gui\settingsDialogs.py:2889
 msgctxt "math"
 msgid "Default navigation mode:"
-msgstr ""
+msgstr "Výchozí režim navigace:"
 
 #. Translators: label for check box that determines whether MathCAT
 #. reverts to the user-selected "default navigation mode" when
 #. navigating into a new equation, even if they selected a different
 #. one this session.
-#: gui\settingsDialogs.py:2912
+#: gui\settingsDialogs.py:2904
 msgctxt "math"
 msgid "Reset to the default navigation mode for each new equation"
-msgstr ""
+msgstr "Obnovit výchozí režim navigace pro každou novou rovnici"
 
 #. Translators: label for checkbox that controls whether arrow keys move out of fractions, etc.,
 #. or whether you have to manually back out of the fraction, etc.
-#: gui\settingsDialogs.py:2919
+#: gui\settingsDialogs.py:2911
 msgctxt "math"
 msgid "Automatically zoom out of two-dimensional notation"
-msgstr ""
+msgstr "Automaticky oddálit dvojrozměrný zápis"
 
 #. Translators: label for combobox down to specify whether you want a terse or verbose reading of navigation commands
-#: gui\settingsDialogs.py:2925
+#: gui\settingsDialogs.py:2917
 msgctxt "math"
 msgid "Navigation verbosity:"
-msgstr ""
+msgstr "Výřečnost navigace:"
 
 #. Translators: label for combobox to specify how math will be copied to the clipboard
-#: gui\settingsDialogs.py:2943
+#: gui\settingsDialogs.py:2935
 msgctxt "math"
 msgid "Copy math as:"
-msgstr ""
+msgstr "Zkopírovat jako:"
 
 #. Translators: Text for the braille group.
-#: gui\settingsDialogs.py:2955
+#: gui\settingsDialogs.py:2947
 msgctxt "math"
 msgid "Braille"
-msgstr ""
+msgstr "Braillský řádek"
 
 #. Translators: label for combobox to specify which braille code to use
-#: gui\settingsDialogs.py:2961
+#: gui\settingsDialogs.py:2953
 msgctxt "math"
 msgid "Output code:"
-msgstr ""
+msgstr "Výstup:"
 
 #. Translators: An option in Math settings to select a braille code automatically,
 #. according to NVDA's language.
-#: gui\settingsDialogs.py:2966
+#: gui\settingsDialogs.py:2958
 #, python-brace-format
 msgctxt "math"
 msgid "Automatic ({name})"
-msgstr ""
+msgstr "Automaticky ({name})"
 
 #. Translators: label for combobox to specify how braille dots should be modified when navigating/selecting subexprs
-#: gui\settingsDialogs.py:2985
+#: gui\settingsDialogs.py:2977
 msgctxt "math"
 msgid "Highlight navigation focus with dots 7 and 8"
-msgstr ""
+msgstr "Zvýraznit zaměřené prvky pomocí bodů 7 a 8"
+
+#. Translators: Text for the application support group in MathCAT options.
+#: gui\settingsDialogs.py:2995
+msgctxt "math"
+msgid "Application support"
+msgstr "Podpora aplikací"
+
+#. Translators: label for checkbox to use native math presentation support instead of MathCAT in Word and Outlook
+#: gui\settingsDialogs.py:3002
+msgctxt "math"
+msgid "Use native math support in Word and Outlook"
+msgstr "Používat místní podporu pro matematický obsah v aplikacích Word a Outlook"
 
 #. Translators: This is the label for the document formatting panel.
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:3099 gui\settingsDialogs.py:4544
+#: gui\settingsDialogs.py:3109 gui\settingsDialogs.py:4554
 msgid "Document Formatting"
 msgstr "Ohlašování formátování dokumentů"
 
 #. Translators: This is a label appearing on the document formatting settings panel.
-#: gui\settingsDialogs.py:3103
+#: gui\settingsDialogs.py:3113
 msgid "The following options control the types of document formatting reported by NVDA."
 msgstr "Následující možnosti určují typy ohlašování formátování dokumentů."
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3112
+#: gui\settingsDialogs.py:3122
 msgid "Font"
 msgstr "Písmo"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3120
+#: gui\settingsDialogs.py:3130
 msgid "&Font name"
 msgstr "&Jméno písma"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3126
+#: gui\settingsDialogs.py:3136
 msgid "Font &size"
 msgstr "&Velikost písma"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3132
+#: gui\settingsDialogs.py:3142
 msgid "Font attrib&utes"
 msgstr "Vl&astnosti písma"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3144
+#: gui\settingsDialogs.py:3154
 msgid "Su&perscripts and subscripts"
 msgstr "Inde&xy"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3154
+#: gui\settingsDialogs.py:3164
 msgid "E&mphasis"
 msgstr "Zvýrazněn&í"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3160
+#: gui\settingsDialogs.py:3170
 msgid "Highlighted (mar&ked) text"
 msgstr "Zv&ýrazněný (označený) text"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3170
+#: gui\settingsDialogs.py:3180
 msgid "St&yle"
 msgstr "Sty&l"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3176
+#: gui\settingsDialogs.py:3186
 msgid "&Colors"
 msgstr "&Barvy"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3182
+#: gui\settingsDialogs.py:3192
 msgid "Document information"
 msgstr "Informace o dokumentu"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3190
+#: gui\settingsDialogs.py:3200
 msgid "Commen&ts"
-msgstr ""
+msgstr "Komen&táře"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3196
+#: gui\settingsDialogs.py:3206
 msgid "&Bookmarks"
 msgstr "&Záložky"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3202
+#: gui\settingsDialogs.py:3212
 msgid "&Editor revisions"
 msgstr "Z&měny"
 
 #. Translators: This is the label for a checklist in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3209
+#: gui\settingsDialogs.py:3219
 msgid "Spelling or grammar e&rrors"
-msgstr ""
+msgstr "P&ravopisné nebo gramatické chyby"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3226
+#: gui\settingsDialogs.py:3236
 msgid "Pages and spacing"
 msgstr "Strany a řádkování"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3234
+#: gui\settingsDialogs.py:3244
 msgid "&Pages"
 msgstr "Stran&y"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3240
+#: gui\settingsDialogs.py:3250
 msgid "Line &numbers"
 msgstr "&Čísla řádků"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-#: gui\settingsDialogs.py:3248
+#: gui\settingsDialogs.py:3258
 msgid "Line &indentation reporting:"
 msgstr "Hlá&šení odsazení:"
 
 #. Translators: This is the label of a checkbox in the document formatting settings panel
 #. If this option is selected, NVDA will ignore blank lines for line indentation reporting
-#: gui\settingsDialogs.py:3262
+#: gui\settingsDialogs.py:3272
 msgid "Ignore &blank lines for line indentation reporting"
 msgstr "Vynechávat &prázdné řádky pro hlášení odsazení"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
-#: gui\settingsDialogs.py:3274
+#: gui\settingsDialogs.py:3284
 msgid "&Paragraph indentation"
 msgstr "Odsazení odstavc&ů"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report line spacing if available.
-#: gui\settingsDialogs.py:3283
+#: gui\settingsDialogs.py:3293
 msgid "&Line spacing"
 msgstr "&Řádkování"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3290
+#: gui\settingsDialogs.py:3300
 msgid "&Alignment"
 msgstr "&Zarovnání"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3296
+#: gui\settingsDialogs.py:3306
 msgid "Table information"
 msgstr "Informace o tabulce"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3304
+#: gui\settingsDialogs.py:3314
 msgid "&Tables"
 msgstr "&Tabulky"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3311
+#: gui\settingsDialogs.py:3321
 msgid "H&eaders"
 msgstr "Zá&hlaví"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3319
+#: gui\settingsDialogs.py:3329
 msgid "Cell c&oordinates"
 msgstr "So&uřadnice buněk"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3327
+#: gui\settingsDialogs.py:3337
 msgid "Cell &borders:"
 msgstr "Okraje bun&ěk:"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3335
+#: gui\settingsDialogs.py:3345
 msgid "Elements"
 msgstr "Prvky"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3354
+#: gui\settingsDialogs.py:3364
 msgid "Link type"
 msgstr "Typ odkazu"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3360
+#: gui\settingsDialogs.py:3370
 msgid "&Graphics"
 msgstr "&Grafika"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3365
+#: gui\settingsDialogs.py:3375
 msgid "&Lists"
 msgstr "&Seznamy"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3370
+#: gui\settingsDialogs.py:3380
 msgid "Block &quotes"
 msgstr "&Citace"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3376
+#: gui\settingsDialogs.py:3386
 msgid "&Groupings"
 msgstr "Seskup&ení"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3382
+#: gui\settingsDialogs.py:3392
 msgid "Lan&dmarks and regions"
 msgstr "Oblast&i"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3388
+#: gui\settingsDialogs.py:3398
 msgid "Arti&cles"
 msgstr "Čl&ánky"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3393
+#: gui\settingsDialogs.py:3403
 msgid "Fra&mes"
 msgstr "&Rámce"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3399
+#: gui\settingsDialogs.py:3409
 msgid "&Figures and captions"
 msgstr "&Ilustrace a titulky"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3405
+#: gui\settingsDialogs.py:3415
 msgid "&Clickable"
 msgstr "&Kliknutelné"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3410
+#: gui\settingsDialogs.py:3420
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr "Při pohybu kurzoru oznamovat změny &formátování"
 
 #. Translators: This is the label for the document navigation settings panel.
-#: gui\settingsDialogs.py:3480
+#: gui\settingsDialogs.py:3490
 msgid "Document Navigation"
 msgstr "Dokumentová navigace"
 
 #. Translators: This is a label for the paragraph navigation style in the document navigation dialog
-#: gui\settingsDialogs.py:3486
+#: gui\settingsDialogs.py:3496
 msgid "&Paragraph style:"
 msgstr "Styl &odstavců:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected synthesizer.
-#: gui\settingsDialogs.py:3503
+#: gui\settingsDialogs.py:3513
 #, python-format
 msgid "Could not load the %s synthesizer."
 msgstr "Hlasový výstup %s nelze načíst."
 
 #. Translators: Dialog title presented when
 #. NVDA is unable to load the selected synthesizer.
-#: gui\settingsDialogs.py:3506
+#: gui\settingsDialogs.py:3516
 msgid "Synthesizer Error"
 msgstr "Chyba hlasového výstupu"
 
 #. Translators: This is the label for the select output device combo in NVDA audio settings.
 #. Examples of an output device are default soundcard, usb headphones, etc.
-#: gui\settingsDialogs.py:3521
+#: gui\settingsDialogs.py:3531
 msgid "Audio output &device:"
 msgstr "&Výstupní zařízení:"
 
 #. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
-#: gui\settingsDialogs.py:3536
+#: gui\settingsDialogs.py:3546
 msgid "Audio d&ucking mode:"
 msgstr "Režim &tlumení zvuku:"
 
 #. Translators: This is the label for a checkbox control in the
 #. Audio settings panel.
-#: gui\settingsDialogs.py:3550
+#: gui\settingsDialogs.py:3560
 msgid "Volume of NVDA sounds follows voice volume"
 msgstr "Hlasitost zvuků NVDA se řídí podle hlasitosti hlasu"
 
 #. Translators: This is the label for a slider control in the
 #. Audio settings panel.
-#: gui\settingsDialogs.py:3558
+#: gui\settingsDialogs.py:3568
 msgid "Volume of NVDA sounds"
 msgstr "Hlasitost zvuků NVDA"
 
 #. Translators: This is a label for the sound split combo box in the Audio Settings dialog.
-#: gui\settingsDialogs.py:3569
+#: gui\settingsDialogs.py:3579
 msgid "&Sound split mode:"
 msgstr "Režim dělení &zvuku:"
 
 #. Translators: The label for a setting in Audio settings panel
 #. to change how long the audio device is kept awake after speech
-#: gui\settingsDialogs.py:3586
+#: gui\settingsDialogs.py:3596
 msgid "Time to &keep audio device awake after speech (seconds)"
 msgstr "&Zachovat zvukové zařízení aktivní po mluvení po dobu (v sekundách)"
 
 #. Translators: Label of the list where user can select sound split modes that will be available.
-#: gui\settingsDialogs.py:3603
+#: gui\settingsDialogs.py:3613
 msgid "&Modes available in the 'Cycle sound split mode' command:"
 msgstr "Dostupné &režimy dělení zvuku:"
 
 #. Translators: Message shown when no sound split modes are enabled.
-#: gui\settingsDialogs.py:3661
+#: gui\settingsDialogs.py:3671
 msgid "At least one sound split mode has to be checked."
 msgstr "Alespoň jeden režim dělení zvuku musí být zaškrtnut."
 
 #. Translators: Same as the label for the list of checkboxes controlling which sound split modes will be
 #. available. in Audio Settings, but without keyboard accelerator (& character) nor final colon.
-#: gui\settingsDialogs.py:3664
+#: gui\settingsDialogs.py:3674
 msgid "Modes available in the 'Cycle sound split mode' command"
 msgstr "Dostupné režimy dělení zvuku"
 
 #. Translators: This is the label for the addon navigation settings panel.
-#: gui\settingsDialogs.py:3672
+#: gui\settingsDialogs.py:3682
 msgid "Add-on Store"
 msgstr "Katalog doplňků"
 
 #. Translators: This is a label for the automatic updates combo box in the Add-on Store Settings dialog.
-#: gui\settingsDialogs.py:3678
+#: gui\settingsDialogs.py:3688
 msgid "Automatic &updates:"
 msgstr "Automatické &aktualizace:"
 
 #. Translators: This is the label for the default update channel combo box in the Add-on Store Settings dialog.
-#: gui\settingsDialogs.py:3690
+#: gui\settingsDialogs.py:3700
 msgid "Default update &channel:"
 msgstr "Výchozí &kanál pro aktualizaci:"
 
 #. Translators: Mute other apps checkbox in settings
-#: gui\settingsDialogs.py:3704
+#: gui\settingsDialogs.py:3714
 msgid "Allow automatic updates to install incompatible add-ons"
 msgstr "Povolit instalovat nekompatibilní doplňky při automatické aktualizaci"
 
 #. Translators: The label for the mirror server on the Add-on Store Settings panel.
-#: gui\settingsDialogs.py:3710
+#: gui\settingsDialogs.py:3720
 msgid "Mirror server"
 msgstr "Server alternativního zdroje"
 
 #. Translators: Title of the dialog used to change the Add-on Store mirror URL.
-#: gui\settingsDialogs.py:3747
+#: gui\settingsDialogs.py:3757
 msgid "Set Add-on Store Mirror Server"
 msgstr "Nastavení serveru alternativního zdroje pro katalog doplňků"
 
 #. Translators: Label of a checkbox in Remote Access settings
-#: gui\settingsDialogs.py:3801
+#: gui\settingsDialogs.py:3811
 msgctxt "remote"
 msgid "Enable Remote Access"
 msgstr "Povolit vzdálené ovládání"
 
 #. Translators: A checkbox in Remote Access settings to set whether to confirm when disconnecting as a follower.
-#: gui\settingsDialogs.py:3818
+#: gui\settingsDialogs.py:3828
 msgctxt "remote"
 msgid "Confirm before disconnecting when controlled"
 msgstr "Potvrdit před odpojením při ovládání"
 
 #. Translators: A checkbox in Remote Access settings to mute speech and sounds from the remote computer
 #. when controlling the local computer.
-#: gui\settingsDialogs.py:3829
+#: gui\settingsDialogs.py:3839
 msgctxt "remote"
 msgid "&Mute when controlling the local computer"
 msgstr "Ztlu&mit při ovládání místního počítače"
 
 #. Translators: A checkbox in Remote Access settings to set whether NVDA should automatically connect to a control server on startup.
-#: gui\settingsDialogs.py:3839
+#: gui\settingsDialogs.py:3849
 msgctxt "remote"
 msgid "Automatically &connect after NVDA starts"
 msgstr "&Připojit se automaticky po spuštění NVDA"
 
 #. Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote Access connection at startup.
-#: gui\settingsDialogs.py:3849
+#: gui\settingsDialogs.py:3859
 msgctxt "remote"
 msgid "Automatic connection"
 msgstr "Automatické připojení"
@@ -14127,7 +14143,7 @@ msgstr "Automatické připojení"
 #. Translators: Label for a control in Remote Access settings,
 #. allowing the user to select whether their computer is controlling or controlled.
 #. Translators: Label of the control allowing users to set whether they are the controlling or controlled computer in the Remote Access connection dialog.
-#: gui\settingsDialogs.py:3858 _remoteClient\dialogs.py:325
+#: gui\settingsDialogs.py:3868 _remoteClient\dialogs.py:325
 msgctxt "remote"
 msgid "&Mode:"
 msgstr "&Režim:"
@@ -14135,7 +14151,7 @@ msgstr "&Režim:"
 #. Translators: Label for a control in Remote Access settings,
 #. allowing users to choose whether they want to use an existing server, or host their own.
 #. Translators: Label of the control allowing users to select whether to use a pre-existing Remote Access server, or to run their own.
-#: gui\settingsDialogs.py:3867 _remoteClient\dialogs.py:335
+#: gui\settingsDialogs.py:3877 _remoteClient\dialogs.py:335
 msgctxt "remote"
 msgid "&Server:"
 msgstr "&Server:"
@@ -14143,7 +14159,7 @@ msgstr "&Server:"
 #. Translators: Label for the host field in Remote Access settings.
 #. This is where users should enter the URL of the Remote Access server they want to use if they are not hosting their own.
 #. Translators: The label of an edit field in connect dialog to enter name or address of the remote computer.
-#: gui\settingsDialogs.py:3877 _remoteClient\dialogs.py:46
+#: gui\settingsDialogs.py:3887 _remoteClient\dialogs.py:46
 msgid "&Host:"
 msgstr "&Vzdálený server:"
 
@@ -14151,7 +14167,7 @@ msgstr "&Vzdálený server:"
 #. This is the port on which the local control server will be accessible,
 #. if the user has chosen to host their own.
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
-#: gui\settingsDialogs.py:3886 gui\settingsDialogs.py:4966
+#: gui\settingsDialogs.py:3896 gui\settingsDialogs.py:4976
 #: _remoteClient\dialogs.py:207
 msgid "&Port:"
 msgstr "&Port:"
@@ -14159,17 +14175,17 @@ msgstr "&Port:"
 #. Translators: Label for a control in Remote Access settings,
 #. Where users set the key for their connection.
 #. Translators: Label of the edit field to enter key (password) to secure the Remote Access connection.
-#: gui\settingsDialogs.py:3907 _remoteClient\dialogs.py:51
+#: gui\settingsDialogs.py:3917 _remoteClient\dialogs.py:51
 msgid "&Key:"
 msgstr "&Klíč:"
 
 #. Translators: A button in Remote Access settings to delete all fingerprints of unauthorized certificates.
-#: gui\settingsDialogs.py:3914
+#: gui\settingsDialogs.py:3924
 msgid "Delete all trusted fingerprints"
 msgstr "Smazat všechny důvěryhodné otisky"
 
 #. Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
-#: gui\settingsDialogs.py:3993
+#: gui\settingsDialogs.py:4003
 msgctxt "remote"
 msgid "This will cause NVDA to forget all previously trusted Remote Access servers. When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
 "Are you sure you want to continue?"
@@ -14177,184 +14193,184 @@ msgstr "Tímto budou odstraněny z paměti NVDA všechny dříve důvěryhodné 
 "Opravdu chcete pokračovat?"
 
 #. Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
-#: gui\settingsDialogs.py:3998
+#: gui\settingsDialogs.py:4008
 msgctxt "remote"
 msgid "Delete All Trusted Fingerprints"
 msgstr "Smazat všechny důvěryhodné otisky"
 
 #. Translators: This message is presented when the user tries to save the settings with the host or key field empty.
-#: gui\settingsDialogs.py:4015
+#: gui\settingsDialogs.py:4025
 msgctxt "remote"
 msgid "Both host and key must be set in the Remote Access section in order to automatically connect using an existing server after NVDA starts."
 msgstr "Vzdálený server i klíč musí být nastaveny v sekci vzdálené ovládání, aby se dalo automaticky připojit prostřednictvím existujícího serveru po spuštění NVDA."
 
 #. Translators: This message is presented when the user tries to save the settings with the port or key field empty.
-#: gui\settingsDialogs.py:4021
+#: gui\settingsDialogs.py:4031
 msgctxt "remote"
 msgid "Both port and key must be set in the Remote Access category in order to automatically connect using a locally hosted server after NVDA starts."
 msgstr "Port i klíč musí být nastaveny v kategorii vzdálené ovládání, aby se dalo automaticky připojit prostřednictvím místního serveru po spuštění NVDA."
 
 #. Translators: Title of a dialog.
-#: gui\settingsDialogs.py:4027
+#: gui\settingsDialogs.py:4037
 msgctxt "remote"
 msgid "Remote Access Error"
 msgstr "Chyba vzdáleného ovládání"
 
 #. Translators: This is the label for the touch interaction settings panel.
-#: gui\settingsDialogs.py:4061
+#: gui\settingsDialogs.py:4071
 msgid "Touch Interaction"
 msgstr "Dotyková gesta"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
-#: gui\settingsDialogs.py:4068
+#: gui\settingsDialogs.py:4078
 msgid "Enable touch interaction support"
 msgstr "Zapnout podporu pro dotyková &gesta"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
-#: gui\settingsDialogs.py:4074
+#: gui\settingsDialogs.py:4084
 msgid "&Touch typing mode"
 msgstr "Režim &dotykového psaní"
 
 #. Translators: The title of the Windows OCR panel.
-#: gui\settingsDialogs.py:4086
+#: gui\settingsDialogs.py:4096
 msgid "Windows OCR"
 msgstr "Rozpoznávání textu Windows"
 
 #. Translators: Label for an option in the Windows OCR dialog.
-#: gui\settingsDialogs.py:4105
+#: gui\settingsDialogs.py:4115
 msgid "Recognition &language:"
 msgstr "&Jazyk pro rozpoznávání:"
 
 #. Translators: Label for an option in the Windows OCR settings panel.
-#: gui\settingsDialogs.py:4115
+#: gui\settingsDialogs.py:4125
 msgid "Periodically &refresh recognized content"
 msgstr "Pravidelně &aktualizovat rozpoznaný obsah"
 
 #. Translators: The label for a setting in OCR settings to automatically say all on result.
-#: gui\settingsDialogs.py:4123
+#: gui\settingsDialogs.py:4133
 msgid "Automatically say all on result"
-msgstr ""
+msgstr "Automaticky přečíst celý rozpoznaný text"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4155
+#: gui\settingsDialogs.py:4165
 msgid "NVDA Development"
 msgstr "Vývoj NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4163
+#: gui\settingsDialogs.py:4173
 msgid "Enable loading custom code from Developer Scratchpad directory"
 msgstr "Povolit &načítání vlastních modulů ze složky developer scratchpad"
 
 #. Translators: the label for a button in the Advanced settings category
-#: gui\settingsDialogs.py:4176
+#: gui\settingsDialogs.py:4186
 msgid "Open developer scratchpad directory"
 msgstr "&Otevřít složku developer scratchpad"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4186
+#: gui\settingsDialogs.py:4196
 msgid "Microsoft UI Automation"
 msgstr "&Microsoft UI Automation"
 
 #. Translators: This is the label for a combo box for selecting the
 #. means of registering for UI Automation events in the advanced settings panel.
 #. Choices are automatic, selective, and global.
-#: gui\settingsDialogs.py:4196
+#: gui\settingsDialogs.py:4206
 msgid "Regi&stration for UI Automation events and property changes:"
 msgstr "&Sledování změn a událostí UI Automation:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA decide whether to register
 #. selectively or globally for UI Automation events.
-#: gui\settingsDialogs.py:4202
+#: gui\settingsDialogs.py:4212
 msgid "Automatic (prefer selective)"
 msgstr "Automaticky (upřednostnit selektivní)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register selectively for UI Automation events
 #. (i.e. not to request events for objects outside immediate focus).
-#: gui\settingsDialogs.py:4206
+#: gui\settingsDialogs.py:4216
 msgid "Selective"
 msgstr "Selektivní"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register for all UI Automation events
 #. in all cases.
-#: gui\settingsDialogs.py:4210
+#: gui\settingsDialogs.py:4220
 msgid "Global"
 msgstr "Globální"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4239
+#: gui\settingsDialogs.py:4249
 msgctxt "advanced.uiaWithMSWord"
 msgid "Use UI Automation to access Microsoft &Word document controls"
 msgstr "Použít UI Automation pro přístup k ovládacím prvkům dokumentů aplikace Microsoft &Word"
 
 #. Translators: Label for the default value of the Use UIA with MS Word combobox,
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4244
+#: gui\settingsDialogs.py:4254
 msgctxt "advanced.uiaWithMSWord"
 msgid "Default (Where suitable)"
 msgstr "Výchozí (kde je vhodné)"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4246
+#: gui\settingsDialogs.py:4256
 msgctxt "advanced.uiaWithMSWord"
 msgid "Only when necessary"
 msgstr "Pouze v případě potřeby"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4248
+#: gui\settingsDialogs.py:4258
 msgctxt "advanced.uiaWithMSWord"
 msgid "Where suitable"
 msgstr "Kde je vhodné"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4250
+#: gui\settingsDialogs.py:4260
 msgctxt "advanced.uiaWithMSWord"
 msgid "Always"
 msgstr "Vždy"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4259
+#: gui\settingsDialogs.py:4269
 msgid "Use UI Automation to access Microsoft &Excel spreadsheet controls when available"
 msgstr "Použít UI Automation pro přístup k ovládacím prvkům tabulky aplikace Microsoft &Excel, jsou-li dostupné"
 
 #. Translators: This is the label for a combo box for selecting the
 #. active console implementation in the advanced settings panel.
 #. Choices are automatic, UIA when available, and legacy.
-#: gui\settingsDialogs.py:4267
+#: gui\settingsDialogs.py:4277
 msgid "Windows C&onsole support:"
 msgstr "Podpora Windows K&onzole:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine its Windows Console implementation
 #. automatically.
-#: gui\settingsDialogs.py:4272
+#: gui\settingsDialogs.py:4282
 msgid "Automatic (prefer UIA)"
 msgstr "Automaticky (upřednostnit UIA)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use UIA in the Windows Console when available.
-#: gui\settingsDialogs.py:4275
+#: gui\settingsDialogs.py:4285
 msgid "UIA when available"
 msgstr "UIA je-li dostupné"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use its legacy Windows Console support
 #. in all cases.
-#: gui\settingsDialogs.py:4279
+#: gui\settingsDialogs.py:4289
 msgid "Legacy"
 msgstr "Starší"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
-#: gui\settingsDialogs.py:4302
+#: gui\settingsDialogs.py:4312
 msgctxt "advanced.uiaWithChromium"
 msgid "Use UIA with Microsoft Edge and other \n"
 "&Chromium based browsers when available:"
@@ -14363,72 +14379,72 @@ msgstr "Použít UIA s Microsoft Edge a dalšími \n"
 
 #. Translators: Label for the default value of the Use UIA with Chromium combobox,
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4307
+#: gui\settingsDialogs.py:4317
 msgctxt "advanced.uiaWithChromium"
 msgid "Default (Only when necessary)"
 msgstr "Výchozí (pouze v případě potřeby)"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4309
+#: gui\settingsDialogs.py:4319
 msgctxt "advanced.uiaWithChromium"
 msgid "Only when necessary"
 msgstr "Pouze v případě potřeby"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4311
+#: gui\settingsDialogs.py:4321
 msgctxt "advanced.uiaWithChromium"
 msgid "Yes"
 msgstr "Ano"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4313
+#: gui\settingsDialogs.py:4323
 msgctxt "advanced.uiaWithChromium"
 msgid "No"
 msgstr "Ne"
 
 #. Translators: This is the label for a COMBOBOX in the Advanced settings panel.
-#: gui\settingsDialogs.py:4321
+#: gui\settingsDialogs.py:4331
 msgid "Use en&hanced event processing (requires restart)"
 msgstr "Použít vy&lepšené zpracování událostí (vyžaduje restart)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4332
+#: gui\settingsDialogs.py:4342
 msgid "Annotations"
 msgstr "Anotace"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4341
+#: gui\settingsDialogs.py:4351
 msgid "Report 'has details' for structured annotations"
 msgstr "Hlásit podrobnosti pro strukturované anotace"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4348
+#: gui\settingsDialogs.py:4358
 msgid "Report aria-description always"
 msgstr "Hlásit aria-popis vždy"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4364
+#: gui\settingsDialogs.py:4374
 msgid "Report live regions:"
 msgstr "Hlásit aktivní oblasti:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4373
+#: gui\settingsDialogs.py:4383
 msgid "Terminal programs"
 msgstr "Terminálové programy"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4380
+#: gui\settingsDialogs.py:4390
 msgid "Speak &passwords in all enhanced terminals (may improve performance)"
 msgstr "Ohlašovat &hesla ve všech rozšířených terminálech (může zlepšit odezvu)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4389
+#: gui\settingsDialogs.py:4399
 msgid "Use enhanced t&yped character support in legacy Windows Console when available"
 msgstr "Použít rozšířenou podporu &psaných znaků ve Windows konzoli, je-li dostupná"
 
@@ -14436,328 +14452,328 @@ msgstr "Použít rozšířenou podporu &psaných znaků ve Windows konzoli, je-l
 #. method of detecting changed content in terminals in the advanced
 #. settings panel.
 #. Choices are automatic, Diff Match Patch, and Difflib.
-#: gui\settingsDialogs.py:4402
+#: gui\settingsDialogs.py:4412
 msgid "&Diff algorithm:"
 msgstr "Algoritmus &Diff:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#: gui\settingsDialogs.py:4407
+#: gui\settingsDialogs.py:4417
 msgid "Automatic (prefer Diff Match Patch)"
 msgstr "Automaticky (upřednostnit Diff Match Patch)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by character, using the diff match patch algorithm.
-#: gui\settingsDialogs.py:4411
+#: gui\settingsDialogs.py:4421
 msgid "Diff Match Patch"
 msgstr "Diff Match Patch"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
-#: gui\settingsDialogs.py:4415
+#: gui\settingsDialogs.py:4425
 msgid "Difflib"
 msgstr "Difflib"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4441
+#: gui\settingsDialogs.py:4451
 msgid "Speak new text in Windows Terminal via:"
 msgstr "Hlásit nový text v terminálu Windows pomocí:"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4460
+#: gui\settingsDialogs.py:4470
 msgid "Default (Yes)"
 msgstr "Výchozí (Ano)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4463
+#: gui\settingsDialogs.py:4473
 msgid "Yes"
 msgstr "Ano"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4466
+#: gui\settingsDialogs.py:4476
 msgid "No"
 msgstr "Ne"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4470
+#: gui\settingsDialogs.py:4480
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Přerušit řeč po ukončení zaměřené události:"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4486
+#: gui\settingsDialogs.py:4496
 msgid "Trim leading silence in speech audio"
 msgstr "Odstranit počáteční mezery v řeči"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4494
+#: gui\settingsDialogs.py:4504
 msgid "Use WASAPI for SAPI 4 audio output:"
-msgstr ""
+msgstr "Používat WASAPI pro zvukový výstup SAPI 4:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4505
+#: gui\settingsDialogs.py:4515
 msgid "Virtual Buffers"
 msgstr "Virtuální výstupy"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4513
+#: gui\settingsDialogs.py:4523
 msgid "Load Chromium virtual buffer when document busy."
 msgstr "Při zaneprázdněném dokumentu načíst virtuální výstup Chromium."
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4522
+#: gui\settingsDialogs.py:4532
 msgid "Editable Text"
 msgstr "Upravitelný text"
 
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4529
+#: gui\settingsDialogs.py:4539
 msgid "Caret movement timeout (in ms)"
 msgstr "Vyčkat před pohybem systémového kurzoru (časový limit v milisekundách)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4552
+#: gui\settingsDialogs.py:4562
 msgid "Report transparent color values"
 msgstr "Hlásit hodnoty transparentních barev"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4566
+#: gui\settingsDialogs.py:4576
 msgid "Debug logging"
 msgstr "Úroveň protokolování"
 
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4593
+#: gui\settingsDialogs.py:4603
 msgid "Enabled logging categories"
 msgstr "Povolené kategorie protokolování"
 
 #. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4613
+#: gui\settingsDialogs.py:4623
 msgid "Play a sound for logged e&rrors:"
 msgstr "Přehrát zvuk pro zaznamenané &chyby:"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#: gui\settingsDialogs.py:4616
+#: gui\settingsDialogs.py:4626
 msgctxt "advanced.playErrorSound"
 msgid "Only in NVDA test versions"
 msgstr "Jen v testovacích verzích NVDA"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#: gui\settingsDialogs.py:4618
+#: gui\settingsDialogs.py:4628
 msgctxt "advanced.playErrorSound"
 msgid "Yes"
 msgstr "Ano"
 
 #. Translators: This is the label for a textfield in the
 #. advanced settings panel.
-#: gui\settingsDialogs.py:4631
+#: gui\settingsDialogs.py:4641
 msgid "Regular expression for text paragraph navigation"
 msgstr "Regulární výraz pro navigaci v textovém odstavci"
 
 #. Translators: Message shown when invalid text paragraph regex entered
-#: gui\settingsDialogs.py:4653
+#: gui\settingsDialogs.py:4663
 #, python-format
 msgid "Failed to compile text paragraph regular expression: %s"
 msgstr "Nepodařilo se zkompilovat regulární výraz odstavce: %s"
 
 #. Translators: This is the label for the Advanced settings panel.
-#: gui\settingsDialogs.py:4783
+#: gui\settingsDialogs.py:4793
 msgid "Advanced"
 msgstr "Pokročilé"
 
 #. Translators: This is the label to warn users about the Advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4788
+#: gui\settingsDialogs.py:4798
 msgid "Warning!"
 msgstr "Upozornění!"
 
 #. Translators: This is a label appearing on the Advanced settings panel.
-#: gui\settingsDialogs.py:4792
+#: gui\settingsDialogs.py:4802
 msgid "The following settings are for advanced users. Changing them may cause NVDA to function incorrectly. Please only change these if you know what you are doing or have been specifically instructed by NVDA developers."
 msgstr "Následující nastavení jsou určena výhradně pro pokročilé uživatele. Při změnách může dojít k nesprávné funkčnosti NVDA. Prosím, provádějte změny jen pokud opravdu víte, co děláte, nebo jste obeznámeni s postupem od vývojářů."
 
 #. Translators: This is the label for a checkbox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4819
+#: gui\settingsDialogs.py:4829
 msgid "I understand that changing these settings may cause NVDA to function incorrectly."
 msgstr "Chápu, že tyto změny mohou způsobit nesprávnou funkčnost NVDA."
 
 #. Translators: This is the label for a button in the Advanced settings panel
-#: gui\settingsDialogs.py:4830
+#: gui\settingsDialogs.py:4840
 msgid "Restore defaults"
 msgstr "Obnovit &výchozí nastavení"
 
 #. Translators: A label for the braille display on the braille panel.
-#: gui\settingsDialogs.py:4873
+#: gui\settingsDialogs.py:4883
 msgid "Braille display"
 msgstr "Braillský řádek"
 
 #. Translators: This is the label for the braille display selection dialog.
-#: gui\settingsDialogs.py:4942
+#: gui\settingsDialogs.py:4952
 msgid "Select Braille Display"
 msgstr "Vyberte Braillský řádek"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
-#: gui\settingsDialogs.py:4951
+#: gui\settingsDialogs.py:4961
 msgid "Braille &display:"
 msgstr "Braillský &řádek:"
 
 #. Translators: The label for a setting in braille settings to enable displays for automatic detection.
-#: gui\settingsDialogs.py:4957
+#: gui\settingsDialogs.py:4967
 msgid "&Displays to detect automatically:"
 msgstr "&Automaticky zobrazit řádky:"
 
 #. Translators: The message in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:5073
+#: gui\settingsDialogs.py:5083
 #, python-brace-format
 msgid "Could not load the {display} display."
 msgstr "Řádek {display} nelze načíst."
 
 #. Translators: The title in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:5076
+#: gui\settingsDialogs.py:5086
 msgid "Braille Display Error"
 msgstr "Chyba braillského řádku"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
-#: gui\settingsDialogs.py:5109
+#: gui\settingsDialogs.py:5119
 msgid "&Output table:"
 msgstr "&Výstupní tabulka:"
 
 #. Translators: An option in Braille settings to select a braille table automatically, according to the current language.
-#: gui\settingsDialogs.py:5117 gui\settingsDialogs.py:5144
+#: gui\settingsDialogs.py:5127 gui\settingsDialogs.py:5154
 #, python-brace-format
 msgid "Automatic ({name})"
 msgstr "Automaticky ({name})"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
-#: gui\settingsDialogs.py:5136
+#: gui\settingsDialogs.py:5146
 msgid "&Input table:"
 msgstr "V&stupní tabulka:"
 
 #. Translators: The label for a setting in braille settings to select which braille mode to use
-#: gui\settingsDialogs.py:5162
+#: gui\settingsDialogs.py:5172
 msgid "Braille mode:"
 msgstr "Braillský režim:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
-#: gui\settingsDialogs.py:5177
+#: gui\settingsDialogs.py:5187
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Slovo, na kterém je kurzor, zobrazit počítačovým braillovým písmem"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
-#: gui\settingsDialogs.py:5185
+#: gui\settingsDialogs.py:5195
 msgid "&Show cursor"
 msgstr "&Zobrazit kurzor"
 
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
-#: gui\settingsDialogs.py:5194
+#: gui\settingsDialogs.py:5204
 msgid "Blink cursor"
 msgstr "Blikání kurzoru"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
-#: gui\settingsDialogs.py:5205
+#: gui\settingsDialogs.py:5215
 msgid "Cursor blink rate (ms)"
 msgstr "&Rychlost blikání kurzoru v milisekundách"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
-#: gui\settingsDialogs.py:5227
+#: gui\settingsDialogs.py:5237
 msgid "Cursor shape for &focus:"
 msgstr "Tvar kurzoru pro &fokus:"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
-#: gui\settingsDialogs.py:5243
+#: gui\settingsDialogs.py:5253
 msgid "Cursor shape for &review:"
 msgstr "Tvar čtecího kurzoru:"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
-#: gui\settingsDialogs.py:5265
+#: gui\settingsDialogs.py:5275
 msgid "Show messages"
 msgstr "Zobrazovat zprávy"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-#: gui\settingsDialogs.py:5287
+#: gui\settingsDialogs.py:5297
 msgid "Message &timeout (sec)"
 msgstr "&Čas pro zobrazení systémových zpráv (v sekundách)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-#: gui\settingsDialogs.py:5306
+#: gui\settingsDialogs.py:5316
 msgid "Tether B&raille:"
 msgstr "Propojit b&raillský řádek:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5330
+#: gui\settingsDialogs.py:5340
 msgid "Move system caret when ro&uting review cursor"
 msgstr "Přesunout systémový i čtecí k&urzor na braillském řádku"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
-#: gui\settingsDialogs.py:5346
+#: gui\settingsDialogs.py:5356
 msgid "Read by &paragraph"
 msgstr "Číst po &odstavcích"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel to select paragraph start markers.
-#: gui\settingsDialogs.py:5355
+#: gui\settingsDialogs.py:5365
 msgid "Paragraph start marker:"
 msgstr "Počáteční značka odstavce:"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
-#: gui\settingsDialogs.py:5370
+#: gui\settingsDialogs.py:5380
 msgid "Focus context presentation:"
 msgstr "Zobrazení kontextových informací:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5391
+#: gui\settingsDialogs.py:5401
 msgid "Show se&lection"
 msgstr "Zobrazit &výběr"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5403
+#: gui\settingsDialogs.py:5413
 msgid "Formatting &display"
 msgstr "&Zobrazení formátování"
 
 #. Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
-#: gui\settingsDialogs.py:5412
+#: gui\settingsDialogs.py:5422
 msgid "Spea&k character when routing cursor in text"
 msgstr "Ohlásit &znak při směrování kurzoru v textu"
 
 #. Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
-#: gui\settingsDialogs.py:5420
+#: gui\settingsDialogs.py:5430
 msgid "Speak when navigating by &line or paragraph"
 msgstr "Mluvit při pohybu po řádcích nebo odstavcích"
 
 #. Translators: The label for a setting in braille settings to enable word wrap
 #. (try to avoid splitting words at the end of the braille display).
-#: gui\settingsDialogs.py:5433
+#: gui\settingsDialogs.py:5443
 msgid "Avoid splitting &words when possible"
 msgstr "&Nedělit slova, pokud je to možné"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5452
+#: gui\settingsDialogs.py:5462
 msgid "I&nterrupt speech while scrolling"
 msgstr "Přerušit řeč při přesouvá&ní"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
-#: gui\settingsDialogs.py:5546
+#: gui\settingsDialogs.py:5556
 #, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
 msgstr "Nelze načíst vizuální rozšíření {providerName}"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5553
+#: gui\settingsDialogs.py:5563
 #, python-brace-format
 msgid "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
@@ -14765,20 +14781,20 @@ msgstr "Nelze načíst následující vizuální rozšíření:\n"
 "{providerNames}"
 
 #. Translators: The title of the vision enhancement provider error message box.
-#: gui\settingsDialogs.py:5559 gui\settingsDialogs.py:5589
+#: gui\settingsDialogs.py:5569 gui\settingsDialogs.py:5599
 msgid "Vision Enhancement Provider Error"
 msgstr "Chyba vizuálního rozšíření"
 
 #. Translators: This message is presented when
 #. NVDA is unable to gracefully terminate a single vision enhancement provider.
-#: gui\settingsDialogs.py:5576
+#: gui\settingsDialogs.py:5586
 #, python-brace-format
 msgid "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr "Nelze korektně ukončit {providerName}"
 
 #. Translators: This message is presented when
 #. NVDA is unable to terminate multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5584
+#: gui\settingsDialogs.py:5594
 #, python-brace-format
 msgid "Could not gracefully terminate the following vision enhancement providers:\n"
 "{providerNames}"
@@ -14786,149 +14802,149 @@ msgstr "Nelze korektně ukončit následující vizuální rozšíření:\n"
 "{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
-#: gui\settingsDialogs.py:5684
+#: gui\settingsDialogs.py:5694
 msgid "Configure visual aids."
 msgstr "Nastavení vizuálních pomůcek."
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
-#: gui\settingsDialogs.py:5856
+#: gui\settingsDialogs.py:5866
 msgid "Enable"
 msgstr "Povolit"
 
 #. Translators: Options label on a vision enhancement provider on the vision settings category panel
 #. Translators: The label for a group box containing the NVDA highlighter options.
-#: gui\settingsDialogs.py:5863
+#: gui\settingsDialogs.py:5873
 #: visionEnhancementProviders\NVDAHighlighter.py:309
 msgid "Options:"
 msgstr "Možnosti:"
 
 #. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
-#: gui\settingsDialogs.py:5909
+#: gui\settingsDialogs.py:5919
 msgid "Unable to configure user interface for Vision Enhancement Provider, it can not be enabled."
 msgstr "Nelze nastavit uživatelské rozhraní pro vizuální rozšíření, nelze jej povolit."
 
 #. Translators: The title of the privacy and security category in NVDA's settings.
-#: gui\settingsDialogs.py:5946
+#: gui\settingsDialogs.py:5956
 msgid "Privacy and Security"
-msgstr ""
+msgstr "Soukromí a Zabezpečení"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
-#: gui\settingsDialogs.py:5955
+#: gui\settingsDialogs.py:5965
 msgid "Screen Curtain"
 msgstr "Clona obrazovky"
 
 #. Translators: option to enable screen curtain in the privacy and security settings panel
-#: gui\settingsDialogs.py:5964
+#: gui\settingsDialogs.py:5974
 msgid "Make screen black (immediate effect)"
 msgstr "Aktivovat clonu obrazovky (okamžitý efekt)"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#: gui\settingsDialogs.py:5993
+#: gui\settingsDialogs.py:6003
 msgid "&Play sound when toggling Screen Curtain"
 msgstr "Přehrát&zvuk při přepínání clony obrazovky"
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
-#: gui\settingsDialogs.py:6008
+#: gui\settingsDialogs.py:6018
 msgid "L&ogging level:"
 msgstr "&Úroveň protokolu:"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-#: gui\settingsDialogs.py:6030
+#: gui\settingsDialogs.py:6040
 msgid "Allow NV Access to gather NVDA usage statistics"
 msgstr "Umožnit shromažďování statistiky &využití NVDA"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:6147
+#: gui\settingsDialogs.py:6157
 msgid "NVDA Settings"
 msgstr "Nastavení NVDA"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:6202
+#: gui\settingsDialogs.py:6212
 msgid "normal configuration"
 msgstr "výchozí nastavení"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:6237
+#: gui\settingsDialogs.py:6247
 msgid "Add Symbol"
 msgstr "Přidat znak"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:6242
+#: gui\settingsDialogs.py:6252
 msgid "&Symbol:"
 msgstr "&Znak:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:6272
+#: gui\settingsDialogs.py:6282
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "Výslovnost znaků (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:6286
+#: gui\settingsDialogs.py:6296
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "&Filtrovat podle:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6295
+#: gui\settingsDialogs.py:6305
 msgid "&Symbols"
 msgstr "&Znaky"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:6305
+#: gui\settingsDialogs.py:6315
 msgid "Symbol"
 msgstr "Znak"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6307 gui\speechDict.py:191
+#: gui\settingsDialogs.py:6317 gui\speechDict.py:191
 msgid "Replacement"
 msgstr "Nahradit"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:6309
+#: gui\settingsDialogs.py:6319
 msgid "Level"
 msgstr "Úroveň"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:6312
+#: gui\settingsDialogs.py:6322
 msgid "Preserve"
 msgstr "Zachovat"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:6316
+#: gui\settingsDialogs.py:6326
 msgid "Change selected symbol"
 msgstr "Výslovnost vybraného znaku"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6334 gui\speechDict.py:55
+#: gui\settingsDialogs.py:6344 gui\speechDict.py:55
 msgid "&Replacement"
 msgstr "&Nahradit"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:6343
+#: gui\settingsDialogs.py:6353
 msgid "&Level"
 msgstr "&Úroveň"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:6350
+#: gui\settingsDialogs.py:6360
 msgid "&Send actual symbol to synthesizer"
 msgstr "&Aktuální znak se řídí hlasovým výstupem"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:6365
+#: gui\settingsDialogs.py:6375
 msgid "Re&move"
 msgstr "&Odstranit"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:6472
+#: gui\settingsDialogs.py:6482
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "Znak \"%s\" již existuje."
@@ -15341,42 +15357,42 @@ msgid "Reviews URL:"
 msgstr "Odkaz na hodnocení:"
 
 #. Translators: Label for an extra detail field for the selected add-on in the add-on store dialog.
-#: gui\addonStoreGui\controls\details.py:354
+#: gui\addonStoreGui\controls\details.py:355
 msgctxt "addonStore"
 msgid "Install date:"
 msgstr "Datum instalace:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-#: gui\addonStoreGui\controls\details.py:362
+#: gui\addonStoreGui\controls\details.py:363
 msgctxt "addonStore"
 msgid "Publication date:"
 msgstr "Datum vydání:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-#: gui\addonStoreGui\controls\details.py:371
+#: gui\addonStoreGui\controls\details.py:372
 msgctxt "addonStore"
 msgid "VirusTotal scan results:"
-msgstr ""
+msgstr "Výsledky skenování VirusTotal:"
 
 #. Translators: Summary of VirusTotal scan results for the selected add-on.
 #. {malicious} is the number of vendors that detected the add-on as malicious,
 #. {total} is the total number of vendors that scanned the add-on.
 #. In the add-on store dialog.
-#: gui\addonStoreGui\controls\details.py:378
+#: gui\addonStoreGui\controls\details.py:379
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{malicious} malware scanner detected this add-on as potentially malicious (out of {total})."
 msgid_plural "{malicious} malware scanners detected this add-on as potentially malicious (out of {total})."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{malicious} z celkem {total} skenovacích nástrojů detekoval tento doplněk jako potenciálně nebezpečný."
+msgstr[1] "{malicious} z celkem {total} skenovacích nástrojů detekovalo tento doplněk jako potenciálně nebezpečný."
+msgstr[2] "{malicious} z celkem {total} skenovacích nástrojů detekovaly tento doplněk jako potenciálně nebezpečný."
+msgstr[3] "{malicious} z celkem {total} skenovacích nástrojů detekovalo tento doplněk jako potenciálně nebezpečný."
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-#: gui\addonStoreGui\controls\details.py:388
+#: gui\addonStoreGui\controls\details.py:389
 msgctxt "addonStore"
 msgid "VirusTotal scan URL:"
-msgstr ""
+msgstr "URL adresa s výsledky VirusTotal:"
 
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
@@ -15613,36 +15629,36 @@ msgstr "Doplňky aktualizovány, restartujte NVDA pro provedení změn"
 #: gui\addonStoreGui\controls\messageDialogs.py:691
 msgctxt "addonStore"
 msgid "Copy Settings to System-wide Configuration"
-msgstr ""
+msgstr "Kopírování nastavení do konfigurace systému"
 
 #. Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:712
 msgctxt "addonStore"
 msgid "One or more add-ons are currently enabled in your NVDA configuration. If run on secure screens, they will have unrestricted, higher-than-administrator level access to your entire system. You are strongly encouraged to copy only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens."
-msgstr ""
+msgstr "V současné době používáte jeden nebo více doplňků. Pokud budou povoleny na zabezpečených obrazovkách, budou mít neomezený přístup k celému systému, vyšší než administrátor. Důrazně doporučujeme kopírovat jen ty doplňky, které opravdu potřebujete při přihlášení a na zabezpečených obrazovkách."
 
 #. Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:722
 msgctxt "addonStore"
 msgid "The system-wide NVDA configuration contains add-ons that are not present in your configuration. If you continue, these add-ons will be removed from the system-wide configuration."
-msgstr ""
+msgstr "V konfiguraci systému jsou doplňky, které nejsou ve vašem nastavení. Pokud budete pokračovat, tyto doplňky budou odstraněny z konfigurace systému."
 
 #. Translators: Instructional text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:731
 msgctxt "addonStore"
 msgid "Check only the add-ons you wish to copy to the system-wide configuration."
-msgstr ""
+msgstr "Zaškrtněte pouze doplňky, které si přejete zkopírovat do konfigurace systému."
 
 #. Translators: The label of the list which allows users to select which add-ons to copy to the system profile
 #: gui\addonStoreGui\controls\messageDialogs.py:743
 msgctxt "addonStore"
 msgid "Add-ons"
-msgstr ""
+msgstr "Doplňky"
 
 #. Translators: The label for a column in the copy add-ons dialog that displays the name of the add-on
 #. Translators: The name of the column that contains names of addons.
 #: gui\addonStoreGui\controls\messageDialogs.py:748
-#: gui\addonStoreGui\viewModels\addonList.py:62
+#: gui\addonStoreGui\viewModels\addonList.py:63
 msgctxt "addonStore"
 msgid "Name"
 msgstr "Název"
@@ -15651,37 +15667,37 @@ msgstr "Název"
 #: gui\addonStoreGui\controls\messageDialogs.py:750
 msgctxt "addonStore"
 msgid "User version"
-msgstr ""
+msgstr "Verze v uživatelském nastavení"
 
 #. Translators: The label for a column in the copy add-ons dialog that displays the version of the add-on present in the system-wide configuration
 #: gui\addonStoreGui\controls\messageDialogs.py:752
 msgctxt "addonStore"
 msgid "System-wide version"
-msgstr ""
+msgstr "Verze v konfiguraci systému"
 
 #. Translators: The label for a button in the copy add-ons dialog which will initiate the copy process
 #: gui\addonStoreGui\controls\messageDialogs.py:767
 msgctxt "addonStore"
 msgid "&Continue"
-msgstr ""
+msgstr "&Pokračovat"
 
 #. Translators: The label for a button in the copy add-ons dialog which will abandon the copy process
 #: gui\addonStoreGui\controls\messageDialogs.py:770
 msgctxt "addonStore"
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušit"
 
 #. Translators: Shown when the add-on is not installed.
 #: gui\addonStoreGui\controls\messageDialogs.py:794
 msgctxt "addonStore"
 msgid "Not installed"
-msgstr ""
+msgstr "Nenainstalováno"
 
 #. Translators: Prepended to the name of an add-on to indicate that it will be removed from the system-wide configuration.
 #: gui\addonStoreGui\controls\messageDialogs.py:796
 msgctxt "addonStore"
 msgid "[remove]"
-msgstr ""
+msgstr "[remove]"
 
 #. Translators: A message to warn the user when attempting to copy add-ons for use on secure screens
 #: gui\addonStoreGui\controls\messageDialogs.py:864
@@ -15689,10 +15705,10 @@ msgstr ""
 msgctxt "addonStore"
 msgid "You have selected to copy {num} add-on to NVDA's system-wide configuration. Using this add-on during sign-in and on secure screens is a serious security risk."
 msgid_plural "You have selected to copy {num} add-ons to NVDA's system-wide configuration. Using these add-ons during sign-in and on secure screens is a serious security risk."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Vybrali jste {num} doplněk pro zkopírování do konfigurace systému. Používáním tohoto doplňku při přihlašování a na zabezpečených obrazovkách se můžete vystavit bezpečnostnímu riziku."
+msgstr[1] "Vybrali jste {num} doplňku pro zkopírování do konfigurace systému. Používáním tohoto doplňku při přihlašování a na zabezpečených obrazovkách se můžete vystavit bezpečnostnímu riziku."
+msgstr[2] "Vybrali jste {num} doplňky pro zkopírování do konfigurace systému. Používáním těchto doplňků při přihlašování a na zabezpečených obrazovkách se můžete vystavit bezpečnostnímu riziku."
+msgstr[3] "Vybrali jste {num} doplňků pro zkopírování do konfigurace systému. Používáním těchto doplňků při přihlašování a na zabezpečených obrazovkách se můžete vystavit bezpečnostnímu riziku."
 
 #. Translators: A message to warn the user when copying their configuration will remove add-ons
 #: gui\addonStoreGui\controls\messageDialogs.py:876
@@ -15700,23 +15716,23 @@ msgstr[3] ""
 msgctxt "addonStore"
 msgid "This action will remove {num} add-on from NVDA's system-wide configuration. "
 msgid_plural "This action will remove {num} add-ons from NVDA's system-wide configuration. "
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Tímto se odstraní {num} doplněk z konfigurace systému."
+msgstr[1] "Tímto se odstraní {num} doplňku z konfigurace systému."
+msgstr[2] "Tímto se odstraní {num} doplňky z konfigurace systému."
+msgstr[3] "Tímto se odstraní {num} doplňků z konfigurace systému."
 
 #. Translators: A prompt asking the user to confirm whether to perform an action.
 #: gui\addonStoreGui\controls\messageDialogs.py:885
 msgctxt "addonStore"
 msgid "Are you sure you want to continue?"
-msgstr ""
+msgstr "Opradu si přejete pokračovat?"
 
 #. Translators: The title of the warning dialog displayed when trying to
 #. copy add-ons for use on secure screens.
 #: gui\addonStoreGui\controls\messageDialogs.py:892
 msgctxt "addonStore"
 msgid "Warning"
-msgstr ""
+msgstr "Upozornění"
 
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 #: gui\addonStoreGui\controls\storeDialog.py:38
@@ -15820,68 +15836,68 @@ msgstr "Vyberte balíček doplňku pro NVDA"
 
 #. Translators: The name of the column that contains the status of the addon.
 #. e.g. available, downloading installing
-#: gui\addonStoreGui\viewModels\addonList.py:68
+#: gui\addonStoreGui\viewModels\addonList.py:69
 msgctxt "addonStore"
 msgid "Status"
 msgstr "Stav"
 
 #. Translators: The name of the column that contains the installed addon's version string.
-#: gui\addonStoreGui\viewModels\addonList.py:73
+#: gui\addonStoreGui\viewModels\addonList.py:74
 msgctxt "addonStore"
 msgid "Installed version"
 msgstr "Nainstalovaná verze"
 
 #. Translators: The name of the column that contains the available addon's version string.
-#: gui\addonStoreGui\viewModels\addonList.py:79
+#: gui\addonStoreGui\viewModels\addonList.py:80
 msgctxt "addonStore"
 msgid "Available version"
 msgstr "Dostupná verze"
 
 #. Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
-#: gui\addonStoreGui\viewModels\addonList.py:85
+#: gui\addonStoreGui\viewModels\addonList.py:86
 msgctxt "addonStore"
 msgid "Channel"
 msgstr "Kanál"
 
 #. Translators: The name of the column that contains the addon's publisher.
-#: gui\addonStoreGui\viewModels\addonList.py:90
+#: gui\addonStoreGui\viewModels\addonList.py:91
 msgctxt "addonStore"
 msgid "Publisher"
 msgstr "Autor"
 
 #. Translators: The name of the column that contains the addon's author.
-#: gui\addonStoreGui\viewModels\addonList.py:96
+#: gui\addonStoreGui\viewModels\addonList.py:97
 msgctxt "addonStore"
 msgid "Author"
 msgstr "Autor"
 
 #. Translators: The name of the column that contains the publication date of the add-on.
-#: gui\addonStoreGui\viewModels\addonList.py:102
+#: gui\addonStoreGui\viewModels\addonList.py:103
 msgctxt "addonStore"
 msgid "Publication date"
 msgstr "Datum vydání"
 
 #. Translators: The name of the column that contains the installation date of the add-on.
-#: gui\addonStoreGui\viewModels\addonList.py:107
+#: gui\addonStoreGui\viewModels\addonList.py:108
 msgctxt "addonStore"
 msgid "Install date"
 msgstr "Datum instalace"
 
 #. Translators: The name of the column that contains the minimum version of NVDA required for this add-on.
-#: gui\addonStoreGui\viewModels\addonList.py:113
+#: gui\addonStoreGui\viewModels\addonList.py:114
 msgctxt "addonStore"
 msgid "Minimum NVDA version"
 msgstr "Minimální verze NVDA"
 
 #. Translators: The name of the column that contains the last version of NVDA tested with this add-on.
-#: gui\addonStoreGui\viewModels\addonList.py:118
+#: gui\addonStoreGui\viewModels\addonList.py:119
 msgctxt "addonStore"
 msgid "Last tested NVDA version"
 msgstr "Poslední testovaná verze NVDA"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
 #. {column} will be replaced with the column display string.
-#: gui\addonStoreGui\viewModels\addonList.py:400
+#: gui\addonStoreGui\viewModels\addonList.py:404
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{column} (ascending)"
@@ -15889,7 +15905,7 @@ msgstr "{column} (vzestupně)"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in descending order.
 #. {column} will be replaced with the column display string.
-#: gui\addonStoreGui\viewModels\addonList.py:410
+#: gui\addonStoreGui\viewModels\addonList.py:414
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{column} (descending)"
@@ -15996,20 +16012,20 @@ msgstr "&hodnocení"
 #: gui\addonStoreGui\viewModels\store.py:266
 msgctxt "addonStore"
 msgid "VirusTotal scan results"
-msgstr ""
+msgstr "Výsledky skenování VirusTotal"
 
 #. Translators: Label for an action that shows changelog for the selected addon
 #: gui\addonStoreGui\viewModels\store.py:274
 msgctxt "addonStore"
 msgid "&What's new"
-msgstr ""
+msgstr "&Novinky"
 
 #. Translators: Title for a message showing changes for the current add-on version.
 #: gui\addonStoreGui\viewModels\store.py:282
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Changes for {curVersion}"
-msgstr ""
+msgstr "Změny ve verzi {curVersion}"
 
 #. Translators: The message displayed when the add-on cannot be enabled.
 #. {addon} is replaced with the add-on name.
@@ -16042,211 +16058,210 @@ msgstr "Práce s matematickým obsahem není podporována."
 #: mathPres\MathCAT\MathCAT.py:86
 msgctxt "math"
 msgid "Error in starting navigation of math."
-msgstr ""
+msgstr "Chyba při zahájení navigace v matematickém obsahu."
 
 #. Translators: this message alerts users to an error in brailling math.
 #: mathPres\MathCAT\MathCAT.py:101
 msgctxt "math"
 msgid "Error in brailling math: see NVDA error log for details"
-msgstr ""
+msgstr "Při braillském zobrazení matematického obsahu došlo k chybě. Podrobnosti najdete v protokolu"
 
 #. Translators: this message alerts users to an error in navigating math.
 #: mathPres\MathCAT\MathCAT.py:170
 msgctxt "math"
 msgid "Error in navigating math"
-msgstr ""
+msgstr "Chyba při navigaci v matematickém obsahu"
 
 #. Translators: this message alerts users to an error brailling math.
 #: mathPres\MathCAT\MathCAT.py:190
 msgctxt "math"
 msgid "Error in brailling math"
-msgstr ""
+msgstr "Chyba při braillském zobrazení matematického obsahu"
 
 #. Translators: Description of a MathCAT navigation gesture.
 #: mathPres\MathCAT\MathCAT.py:196
 msgid "Navigates within math"
-msgstr ""
+msgstr "Prochází matematickým obsahem"
 
 #. Translators: Message to be announced during Keyboard Help
 #: mathPres\MathCAT\MathCAT.py:202
 msgid "Copy navigation focus to clipboard"
-msgstr ""
+msgstr "Zkopíruje zaměřený obsah do schránky"
 
 #. Translators: Name of the section in "Input gestures" dialog.
 #: mathPres\MathCAT\MathCAT.py:204
 msgid "Clipboard"
-msgstr ""
+msgstr "Schránka"
 
 #. Translators: copy to clipboard
 #: mathPres\MathCAT\MathCAT.py:250
 msgctxt "math"
 msgid "copy as "
-msgstr ""
+msgstr "Zkopírovat jako"
 
 #. Translators: this message directs users to look in the log file
 #: mathPres\MathCAT\MathCAT.py:351
 msgctxt "math"
 msgid "Error navigating math"
-msgstr ""
+msgstr "Chyba při navigaci v matematickém obsahu"
 
 #. Translators: this message reports when invalid math is found.
 #: mathPres\MathCAT\MathCAT.py:374
 msgctxt "math"
 msgid "Invalid math formatting found"
-msgstr ""
+msgstr "Nesprávný formát matematického obsahu"
 
 #. Translators: this message reports an error in speaking math.
 #: mathPres\MathCAT\MathCAT.py:401
 msgctxt "math"
 msgid "Error in speaking math."
-msgstr ""
+msgstr "Chyba při čtení matematického obsahu."
 
 #. Translators: this message reports illegal MathML.
 #: mathPres\MathCAT\MathCAT.py:426
 msgctxt "math"
 msgid "Illegal MathML found."
-msgstr ""
+msgstr "Nesprávný formát MathML."
 
 #. Translators: this message reports an error in brailling math.
 #: mathPres\MathCAT\MathCAT.py:433
 msgctxt "math"
 msgid "Error in brailling math."
-msgstr ""
+msgstr "Chyba při braillském zobrazení matematického obsahu."
 
 #. Translators: {lang} is the name of the language in that language,
 #. and {code} is the code for that language variant,
 #. e.g. "en-UK" for English (United Kingdom).
-#: mathPres\MathCAT\localization.py:102
+#: mathPres\MathCAT\localization.py:86
 #, python-brace-format
 msgctxt "math"
 msgid "{lang} ({code})"
-msgstr ""
-
-#. Translators: Math language settings menu item: Automatic uses the voice's language.
-#. Translators: options for decimal separator -- "Auto" = automatically pick the choice based on the language
-#: mathPres\MathCAT\localization.py:144 mathPres\MathCAT\preferences.py:50
-msgctxt "math"
-msgid "Automatic"
-msgstr ""
+msgstr "{lang} ({code})"
 
 #. Translators: Learning disabilities includes dyslexia and ADHD
 #. category of impairment that MathCAT supports: people with learning disabilities
-#: mathPres\MathCAT\preferences.py:32
+#: mathPres\MathCAT\preferences.py:30
 msgctxt "math"
 msgid "Learning disabilities"
-msgstr ""
+msgstr "Poruchy učení"
 
 #. Translators: category of impairment that MathCAT supports: people who are blind
-#: mathPres\MathCAT\preferences.py:34
+#: mathPres\MathCAT\preferences.py:32
 msgctxt "math"
 msgid "Blindness"
-msgstr ""
+msgstr "Nevidomý"
 
 #. Translators: category of impairment that MathCAT supports: people who have low vision
-#: mathPres\MathCAT\preferences.py:36
+#: mathPres\MathCAT\preferences.py:34
 msgctxt "math"
 msgid "Low vision"
-msgstr ""
+msgstr "Slabozraký"
+
+#. Translators: options for decimal separator -- "Auto" = automatically pick the choice based on the language
+#: mathPres\MathCAT\preferences.py:48
+msgctxt "math"
+msgid "Automatic"
+msgstr "Automaticky"
 
 #. Translators: options for decimal separator -- "Custom" = user sets it
 #. Currently there is no UI for how it is done yet, but eventually there will be a dialog that pops up to set it
-#: mathPres\MathCAT\preferences.py:57
+#: mathPres\MathCAT\preferences.py:55
 msgctxt "math"
 msgid "Custom"
-msgstr ""
+msgstr "Vlastní"
 
 #. Translators: options for speech verbosity -- "terse" = use less words
 #. Translators: options for navigation verbosity -- "terse" = use less words
-#: mathPres\MathCAT\preferences.py:70 mathPres\MathCAT\preferences.py:118
+#: mathPres\MathCAT\preferences.py:68 mathPres\MathCAT\preferences.py:116
 msgctxt "math"
 msgid "Terse"
-msgstr ""
+msgstr "Stručná"
 
 #. Translators: options for speech verbosity -- "medium" = try to be neither too terse nor too verbose
 #. Translators: options for navigation verbosity -- "medium" = try to be nether too terse nor too verbose words
-#: mathPres\MathCAT\preferences.py:72 mathPres\MathCAT\preferences.py:120
+#: mathPres\MathCAT\preferences.py:70 mathPres\MathCAT\preferences.py:118
 msgctxt "math"
 msgid "Medium"
-msgstr ""
+msgstr "Střední"
 
 #. Translators: options for speech verbosity -- "verbose" = use more words
 #. Translators: options for navigation verbosity -- "verbose" = use more words
-#: mathPres\MathCAT\preferences.py:74 mathPres\MathCAT\preferences.py:122
+#: mathPres\MathCAT\preferences.py:72 mathPres\MathCAT\preferences.py:120
 msgctxt "math"
 msgid "Verbose"
-msgstr ""
+msgstr "Podrobná"
 
 #. Translators: values for chemistry options with example speech in parenthesis
-#: mathPres\MathCAT\preferences.py:86
+#: mathPres\MathCAT\preferences.py:84
 msgctxt "math"
 msgid "Spell it out (H 2 O)"
-msgstr ""
+msgstr "Hláskovat (H 2 O)"
 
 #. Translators: values for chemistry options with example speech in parenthesis (never interpret as chemistry)
-#: mathPres\MathCAT\preferences.py:88
+#: mathPres\MathCAT\preferences.py:86
 msgctxt "math"
 msgid "Off (H sub 2 O)"
 msgstr ""
 
 #. Translators: names of different modes of navigation. "Enhanced" mode understands math structure
-#: mathPres\MathCAT\preferences.py:101
+#: mathPres\MathCAT\preferences.py:99
 msgctxt "math"
 msgid "Enhanced"
 msgstr ""
 
 #. Translators: "Simple" walks by character expect for things like fractions, roots, and scripts
-#: mathPres\MathCAT\preferences.py:103
+#: mathPres\MathCAT\preferences.py:101
 msgctxt "math"
 msgid "Simple"
 msgstr ""
 
 #. Translators: "Character" moves around by character, automatically moving into fractions, etc
-#: mathPres\MathCAT\preferences.py:105
+#: mathPres\MathCAT\preferences.py:103
 msgctxt "math"
 msgid "Character"
 msgstr ""
 
 #. Translators: options for Copy expression to clipboard as -- "MathML"
-#: mathPres\MathCAT\preferences.py:136
+#: mathPres\MathCAT\preferences.py:134
 msgctxt "math"
 msgid "MathML"
 msgstr ""
 
 #. Translators: options for Copy math to clipboard as -- "LaTeX"
-#: mathPres\MathCAT\preferences.py:138
+#: mathPres\MathCAT\preferences.py:136
 msgctxt "math"
 msgid "LaTeX"
 msgstr ""
 
 #. Translators: options for Copy math to clipboard as -- "ASCIIMath"
-#: mathPres\MathCAT\preferences.py:140
+#: mathPres\MathCAT\preferences.py:138
 msgctxt "math"
 msgid "ASCIIMath"
 msgstr ""
 
 #. Translators: Math option for using dots 7 and 8: don't highlight
-#: mathPres\MathCAT\preferences.py:156
+#: mathPres\MathCAT\preferences.py:154
 msgctxt "math"
 msgid "Off"
 msgstr ""
 
 #. Translators: Math option for using dots 7 and 8:
 #. only the first character of the current navigation node uses dots 7 & 8
-#: mathPres\MathCAT\preferences.py:159
+#: mathPres\MathCAT\preferences.py:157
 msgctxt "math"
 msgid "First character"
 msgstr ""
 
 #. Translators: Math option for using dots 7 and 8:
 #. only the first and last character of the current navigation node uses dots 7 & 8
-#: mathPres\MathCAT\preferences.py:162
+#: mathPres\MathCAT\preferences.py:160
 msgctxt "math"
 msgid "Endpoints"
 msgstr ""
 
 #. Translators: Math option for using dots 7 and 8:
 #. all the characters for the current navigation node use dots 7 & 8
-#: mathPres\MathCAT\preferences.py:165
+#: mathPres\MathCAT\preferences.py:163
 msgctxt "math"
 msgid "All"
 msgstr ""
