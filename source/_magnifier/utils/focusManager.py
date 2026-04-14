@@ -8,6 +8,7 @@ Focus Manager for the magnifier module.
 Handles all focus tracking logic and coordinate calculations.
 """
 
+from logHandler import log
 import api
 import winUser
 import mouseHandler
@@ -187,6 +188,7 @@ class FocusManager:
 		try:
 			return textInfo.pointAtStart
 		except (NotImplementedError, LookupError, AttributeError) as e:
+			log.debug(f"pointAtStart failed for {textInfo!r}: {e}", exc_info=True)
 			originalExc = e
 
 		# Only apply the fallback for TextInfos exposing the offset-based internals
@@ -197,11 +199,12 @@ class FocusManager:
 		prevOffset = textInfo._startOffset - 1
 		try:
 			return textInfo._getBoundingRectFromOffset(prevOffset).topRight
-		except (NotImplementedError, LookupError, AttributeError):
+		except (NotImplementedError, LookupError, AttributeError) as e:
+			log.debug(f"_getBoundingRectFromOffset failed: {e}", exc_info=True)
 			try:
 				return textInfo._getPointFromOffset(prevOffset)
-			except (NotImplementedError, LookupError, AttributeError):
-				pass
+			except (NotImplementedError, LookupError, AttributeError) as e:
+				log.debug(f"_getPointFromOffset failed: {e}", exc_info=True)
 		raise originalExc
 
 	def _getNavigatorObjectLocation(self) -> Coordinates | None:
