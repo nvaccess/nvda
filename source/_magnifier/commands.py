@@ -124,13 +124,19 @@ def zoom(direction: Direction) -> None:
 	"""
 	action = MagnifierAction.ZOOM_IN if direction == Direction.IN else MagnifierAction.ZOOM_OUT
 	magnifier: Magnifier = getMagnifier()
-	if magnifierIsActiveVerify(magnifier, action):
-		magnifier._zoom(direction)
-		ui.message(
-			ZoomLevel.ZOOM_MESSAGE.format(
-				zoomLevel=f"{magnifier.zoomLevel:.1f}",
-			),
-		)
+	if not (magnifier and magnifier._isActive):
+		# Start magnifier with zoom key if not already running
+		if direction == Direction.IN:
+			toggleMagnifier()
+		else:
+			magnifierIsActiveVerify(magnifier, action)
+		return
+	magnifier._zoom(direction)
+	ui.message(
+		ZoomLevel.ZOOM_MESSAGE.format(
+			zoomLevel=f"{magnifier.zoomLevel:.1f}",
+		),
+	)
 
 
 def pan(action: MagnifierAction) -> None:
