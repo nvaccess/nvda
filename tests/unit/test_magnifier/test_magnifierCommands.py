@@ -5,92 +5,51 @@
 
 import unittest
 from unittest.mock import MagicMock, patch
+from _magnifier.commands import zoom
+from _magnifier.utils.types import Direction
+
 
 class TestZoomCommand(unittest.TestCase):
-    """Tests zoom command behavior when magnifier is active or inactive."""
+	"""Tests for the zoom command's handling of magnifier state."""
 
-    def _makeMockMagnifier(self, isActive: bool) -> MagicMock:
-        magnifier = MagicMock()
-        magnifier.configure_mock(**{"_isActive": isActive})
-        magnifier.zoomLevel = 2.0
-        return magnifier
+	def setUp(self):
+		self.mockMessage = patch("_magnifier.commands.ui.message").start()
+		self.mockGetMagnifier = patch("_magnifier.commands.getMagnifier").start()
+		self.mockToggle = patch("_magnifier.commands.toggleMagnifier").start()
 
-    @patch("_magnifier.commands.ui.message")
-    @patch("_magnifier.commands.getMagnifier")
-    @patch("_magnifier.commands.toggleMagnifier")
-    def testInactiveZoomIn(
-        self,
-        mockToggle: MagicMock,
-        mockGetMagnifier: MagicMock,
-        mockMessage: MagicMock, 
-    ) -> None:
-        """Attempting to zoom in with an inactive magnifier should start the magnifier."""
-        from _magnifier.commands import zoom
-        from _magnifier.utils.types import Direction
+	def tearDown(self):
+		patch.stopall()
 
-        mockGetMagnifier.return_value = self._makeMockMagnifier(isActive=False)
-        zoom(Direction.IN)
-        mockToggle.assert_called_once()
-        mockGetMagnifier.return_value._zoom.assert_not_called()
+	def _makeMockMagnifier(self, isActive: bool):
+		magnifier = MagicMock()
+		magnifier.configure_mock(**{"_isActive": isActive})
+		magnifier.zoomLevel = 2.0
+		return magnifier
 
-    @patch("_magnifier.commands.ui.message")
-    @patch("_magnifier.commands.getMagnifier")
-    @patch("_magnifier.commands.toggleMagnifier")
-    @patch("_magnifier.commands.magnifierIsActiveVerify")
-    def testInactiveZoomOut(
-        self,
-        mockVerify: MagicMock,
-        mockToggle: MagicMock,
-        mockGetMagnifier: MagicMock,
-        mockMessage: MagicMock, 
-    ) -> None:
-        """Attempting to zoom out with an inactive magnifier should result in a warning."""
-        from _magnifier.commands import zoom
-        from _magnifier.utils.types import Direction
+	def testInactiveZoomIn(self):
+		mag = self._makeMockMagnifier(isActive=False)
+		self.mockGetMagnifier.return_value = mag
+		zoom(Direction.IN)
+		self.mockToggle.assert_called_once()
+		mag._zoom.assert_not_called()
 
-        mockGetMagnifier.return_value = self._makeMockMagnifier(isActive=False)
-        zoom(Direction.OUT)
-        mockToggle.assert_not_called()
-        mockVerify.assert_called_once()
+	@patch("_magnifier.commands.magnifierIsActiveVerify")
+	def testInactiveZoomOut(self, mockVerify):
+		self.mockGetMagnifier.return_value = self._makeMockMagnifier(isActive=False)
+		zoom(Direction.OUT)
+		self.mockToggle.assert_not_called()
+		mockVerify.assert_called_once()
 
-    @patch("_magnifier.commands.ui.message")
-    @patch("_magnifier.commands.getMagnifier")
-    @patch("_magnifier.commands.toggleMagnifier")
-    def testActiveZoomIn(
-        self,
-        mockToggle: MagicMock,
-        mockGetMagnifier: MagicMock,
-        mockMessage: MagicMock, 
-    ) -> None:
-        """Attempting to zoom in with an active magnifier should zoom in."""
-        from _magnifier.commands import zoom
-        from _magnifier.utils.types import Direction
+	def testActiveZoomIn(self):
+		mag = self._makeMockMagnifier(isActive=True)
+		self.mockGetMagnifier.return_value = mag
+		zoom(Direction.IN)
+		self.mockToggle.assert_not_called()
+		mag._zoom.assert_called_once_with(Direction.IN)
 
-        magnifier = self._makeMockMagnifier(isActive=True)
-        mockGetMagnifier.return_value = magnifier
-        zoom(Direction.IN)
-        mockToggle.assert_not_called()
-        magnifier._zoom.assert_called_once_with(Direction.IN)
-
-    @patch("_magnifier.commands.ui.message")
-    @patch("_magnifier.commands.getMagnifier")
-    @patch("_magnifier.commands.toggleMagnifier")
-    def testActiveZoomOut(
-        self,
-        mockToggle: MagicMock,
-        mockGetMagnifier: MagicMock,
-        mockMessage: MagicMock, 
-    ) -> None:
-        """Attempting to zoom out with an active magnifier should zoom out."""
-        from _magnifier.commands import zoom
-        from _magnifier.utils.types import Direction
-
-        magnifier = self._makeMockMagnifier(isActive=True)
-        mockGetMagnifier.return_value = magnifier
-        zoom(Direction.OUT)
-        mockToggle.assert_not_called()
-        magnifier._zoom.assert_called_once_with(Direction.OUT)
-
-if __name__ == "__main__":
-    unittest.main()
-    
+	def testActiveZoomOut(self):
+		mag = self._makeMockMagnifier(isActive=True)
+		self.mockGetMagnifier.return_value = mag
+		zoom(Direction.OUT)
+		self.mockToggle.assert_not_called()
+		mag._zoom.assert_called_once_with(Direction.OUT)

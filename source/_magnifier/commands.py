@@ -125,7 +125,7 @@ def zoom(direction: Direction) -> None:
 	action = MagnifierAction.ZOOM_IN if direction == Direction.IN else MagnifierAction.ZOOM_OUT
 	magnifier: Magnifier = getMagnifier()
 	if not (magnifier and magnifier._isActive):
-		# Start magnifier with zoom key if not already running
+		# Start magnifier if not already running
 		if direction == Direction.IN:
 			toggleMagnifier()
 		else:
