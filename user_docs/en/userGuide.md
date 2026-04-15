@@ -608,6 +608,12 @@ There are 4 possible flick gestures depending on the direction: flick left, flic
 Just like taps, more than one finger can be used to perform the gesture.
 Therefore, gestures such as 2-finger flick up and 4-finger flick left are all possible.
 
+##### Pinch Gestures {#PinchGestures}
+
+Place two fingers on the screen and move them toward each other to perform a pinch in gesture.
+Move them away from each other to perform a pinch out gesture.
+The fingers must move at least 50 pixels closer together or further apart to be recognised as a pinch.
+
 #### Touch Modes {#TouchModes}
 
 As there are many more NVDA commands than possible touch gestures, NVDA has several touch modes you can switch between which make certain subsets of commands available.
