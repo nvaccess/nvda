@@ -8,9 +8,14 @@ Focus Manager for the magnifier module.
 Handles all focus tracking logic and coordinate calculations.
 """
 
+from logHandler import log
 import api
 import winUser
 import mouseHandler
+import time
+import locationHelper
+import textInfos
+from textInfos.offsets import OffsetsTextInfo
 from .types import Coordinates, FocusType
 
 
@@ -20,6 +25,8 @@ class FocusManager:
 	Tracks mouse, system focus, and navigator object positions.
 	"""
 
+	_SYSTEM_FOCUS_STICKINESS_SECONDS: float = 0.12
+
 	def __init__(self):
 		"""Initialize the focus manager."""
 		self._lastFocusedObject: FocusType | None = None
@@ -28,6 +35,7 @@ class FocusManager:
 		self._lastNavigatorObjectPosition = Coordinates(0, 0)
 		self._lastValidSystemFocusPosition = Coordinates(0, 0)
 		self._lastValidNavigatorObjectPosition = Coordinates(0, 0)
+		self._lastSystemFocusChangeTime: float = 0.0
 
 	def getCurrentFocusCoordinates(self) -> Coordinates:
 		"""
@@ -36,6 +44,8 @@ class FocusManager:
 
 		:return: The (x, y) coordinates of the current focus
 		"""
+		now = time.monotonic()
+
 		# Get all three positions
 		systemFocusPosition = self._getSystemFocusPosition()
 		navigatorObjectPosition = self._getNavigatorObjectPosition()
@@ -52,6 +62,7 @@ class FocusManager:
 		# Update last positions
 		if systemFocusChanged:
 			self._lastSystemFocusPosition = systemFocusPosition
+			self._lastSystemFocusChangeTime = now
 		if navigatorObjectChanged:
 			self._lastNavigatorObjectPosition = navigatorObjectPosition
 		if mouseChanged:
@@ -69,6 +80,14 @@ class FocusManager:
 
 		# Priority 3: Navigator object – but only when it represents a genuinely independent movement.
 		if navigatorObjectChanged:
+			# If system focus just changed and we were already tracking it, keep system focus
+			# briefly to avoid visible oscillation while editing text.
+			if (
+				self._lastFocusedObject == FocusType.SYSTEM_FOCUS
+				and now - self._lastSystemFocusChangeTime <= self._SYSTEM_FOCUS_STICKINESS_SECONDS
+			):
+				return systemFocusPosition
+
 			# If both navigator and system focus changed but ended up at the same
 			# coordinates, treat this as ordinary system-focus navigation.
 			# This avoids marking normal focus/caret movement as NAVIGATOR when
@@ -118,7 +137,7 @@ class FocusManager:
 		try:
 			# Get caret position (works for both browse mode and regular focus)
 			caretPosition = api.getCaretPosition()
-			point = caretPosition.pointAtStart
+			point = self._getPointAtStart(caretPosition)
 			coords = Coordinates(point.x, point.y)
 			# Store as last valid position if not (0, 0)
 			if coords != Coordinates(0, 0):
@@ -151,12 +170,42 @@ class FocusManager:
 		reviewPosition = api.getReviewPosition()
 		if reviewPosition:
 			try:
-				point = reviewPosition.pointAtStart
+				point = self._getPointAtStart(reviewPosition)
 				return Coordinates(point.x, point.y)
 			except (NotImplementedError, LookupError, AttributeError):
 				# Review position may not support pointAtStart
 				pass
 		return None
+
+	def _getPointAtStart(self, textInfo: textInfos.TextInfo) -> locationHelper.Point:
+		"""
+		Get a point for the start of a text range with a local end-of-text fallback.
+
+		When a collapsed TextInfo is positioned at an exclusive end offset, use the
+		right edge of the previous character if available. This keeps the workaround
+		local to the magnifier instead of changing TextInfo behavior globally.
+		"""
+		try:
+			return textInfo.pointAtStart
+		except (NotImplementedError, LookupError, AttributeError) as e:
+			log.debug(f"pointAtStart failed for {textInfo!r}: {e}", exc_info=True)
+			originalExc = e
+
+		# Only apply the fallback for TextInfos exposing the offset-based internals
+		# we need. Otherwise, preserve the original failure.
+		if not (isinstance(textInfo, OffsetsTextInfo) and textInfo.isCollapsed and textInfo._startOffset > 0):
+			raise originalExc
+
+		prevOffset = textInfo._startOffset - 1
+		try:
+			return textInfo._getBoundingRectFromOffset(prevOffset).topRight
+		except (NotImplementedError, LookupError, AttributeError) as e:
+			log.debug(f"_getBoundingRectFromOffset failed: {e}", exc_info=True)
+			try:
+				return textInfo._getPointFromOffset(prevOffset)
+			except (NotImplementedError, LookupError, AttributeError) as e:
+				log.debug(f"_getPointFromOffset failed: {e}", exc_info=True)
+		raise originalExc
 
 	def _getNavigatorObjectLocation(self) -> Coordinates | None:
 		"""

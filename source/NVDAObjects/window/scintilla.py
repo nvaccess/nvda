@@ -1,6 +1,5 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2022 NV Access Limited, Arnold Loubriat, Babbage B.V., Łukasz Golonka, Joseph Lee,
+# Copyright (C) 2007-2026 NV Access Limited, Arnold Loubriat, Babbage B.V., Łukasz Golonka, Joseph Lee,
 # Peter Vágner
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -16,6 +15,7 @@ import watchdog
 import eventHandler
 import locationHelper
 import textUtils
+from logHandler import log
 
 # Window messages
 SCI_POSITIONFROMPOINT = 2022
@@ -202,7 +202,13 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getLineCount(self):
 		return watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_GETLINECOUNT, 0, 0)
 
-	def _getTextRange(self, start, end):
+	def _getTextRange(self, start: int, end: int) -> str:
+		if end < start:
+			log.error(
+				f"End offset must be greater than or equal to start offset. Got {start=}, {end=}.",
+				stack_info=True,
+			)
+			return ""
 		bufLen = (end - start) + 1
 		textRange = self.TextRangeStruct()
 		textRange.chrg.cpMin = start
