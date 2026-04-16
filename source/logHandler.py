@@ -657,9 +657,8 @@ def setLogLevelFromConfig():
 		return
 	import config
 
-	levelName = config.conf["general"]["loggingLevel"]
-	# logging.getLevelName can give you a level number if given a name.
-	level = logging.getLevelName(levelName)
+	levelName: str = config.conf["general"]["loggingLevel"]
+	level = logging.getLevelNamesMapping().get(levelName, log.INFO)
 	# The lone exception to level higher than INFO is "OFF" (100).
 	# Setting a log level to something other than options found in the GUI is unsupported.
 	if level not in (log.DEBUG, log.IO, log.DEBUGWARNING, log.INFO, log.OFF):
