@@ -620,8 +620,8 @@ class ConfigManager(object):
 		if log.isEnabledFor(log.DEBUG) or (
 			logLevelName and logging.getLevelNamesMapping().get(logLevelName, log.INFO) <= logging.DEBUG
 		):
-			# Log at level debug to ensure that the profile isn't logged by default.
-			log.debug(
+			# We must log at info level here as the logHandler hasn't been set to log at debug level yet.
+			log.info(
 				"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{0}".format(
 					profile,
 				),
