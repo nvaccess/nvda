@@ -614,12 +614,11 @@ class ConfigManager(object):
 		# since profile settings are not yet imported we have to "peek" to see
 		# if debug level logging is enabled.
 		try:
-			logLevelName: str  = profile["general"]["loggingLevel"]
+			logLevelName: str = profile["general"]["loggingLevel"]
 		except KeyError:
 			logLevelName = None
 		if log.isEnabledFor(log.DEBUG) or (
-			logLevelName
-			and logging.getLevelNamesMapping().get(logLevelName, log.INFO) <= logging.DEBUG
+			logLevelName and logging.getLevelNamesMapping().get(logLevelName, log.INFO) <= logging.DEBUG
 		):
 			# Log at level debug to ensure that the profile isn't logged by default.
 			log.debug(
