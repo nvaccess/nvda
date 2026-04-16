@@ -25,7 +25,6 @@ from configobj import ConfigObj
 from configobj.validate import Validator
 from logHandler import log
 import logging
-from logging import DEBUG
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
 import winBindings.shell32
 from shlobj import FolderId, SHGetKnownFolderPath
@@ -589,31 +588,41 @@ class ConfigManager(object):
 		self.profiles.append(profile)
 		self._handleProfileSwitch()
 
-	def _loadConfig(self, fn, fileError=False):
+	def _loadConfig(self, fn: str | None, fileError: bool = False) -> ConfigObj:
+		"""Load a configuration from a file.
+
+		:param fn: The filename of the configuration file to load.
+		:param fileError: Whether to raise an error if the file cannot be read, defaults to False
+		:raises e: Re-raises any exception that occurs during the profile upgrade process.
+		:return: The loaded configuration object.
+		"""
 		log.info("Loading config: {0}".format(fn))
 		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=fileError)
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 		profile.newlines = "\r\n"
 		profileCopy = deepcopy(profile)
+		if NVDAState.shouldWriteToDisk() and profile.filename is not None:
+			writeProfileFunc = self._writeProfileToFile
+		else:
+			writeProfileFunc = None
 		try:
-			if NVDAState.shouldWriteToDisk() and profile.filename is not None:
-				writeProfileFunc = self._writeProfileToFile
-			else:
-				writeProfileFunc = None
 			profileUpgrader.upgrade(profile, self.validator, writeProfileFunc)
 		except Exception as e:
-			# Log at level info to ensure that the profile is logged.
-			log.info("Config before schema update:\n%s" % profileCopy, exc_info=False)
+			# Log at level debug to ensure that the profile isn't logged by default.
+			log.debug("Config before schema update:\n%s" % profileCopy, exc_info=False)
 			raise e
 		# since profile settings are not yet imported we have to "peek" to see
 		# if debug level logging is enabled.
 		try:
-			logLevelName = profile["general"]["loggingLevel"]
+			logLevelName: str  = profile["general"]["loggingLevel"]
 		except KeyError:
 			logLevelName = None
-		if log.isEnabledFor(log.DEBUG) or (logLevelName and DEBUG >= logging.getLevelName(logLevelName)):
-			# Log at level info to ensure that the profile is logged.
-			log.info(
+		if log.isEnabledFor(log.DEBUG) or (
+			logLevelName
+			and logging.getLevelNamesMapping().get(logLevelName, log.INFO) <= logging.DEBUG
+		):
+			# Log at level debug to ensure that the profile isn't logged by default.
+			log.debug(
 				"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{0}".format(
 					profile,
 				),
