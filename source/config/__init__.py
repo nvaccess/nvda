@@ -33,6 +33,7 @@ import baseObject
 import easeOfAccess
 from fileUtils import FaultTolerantFile
 import extensionPoints
+import functools
 
 from . import profileUpgrader
 from . import aggregatedSection
@@ -1045,6 +1046,87 @@ class ConfigManager(object):
 		data.kwargs = parsedSpec[2]
 		data.default = conf.validator.get_default_value(spec)
 		return data
+
+	def getConfigValue(self, *keyPath: *tuple[str, str, *tuple[str, ...]]) -> any:
+		"""
+		Retrieves the value of a configuration key.
+		:param keyPath: The path to the configuration key to retrieve.
+		:return: The value of the specified configuration key.
+		"""
+		return functools.reduce(lambda d, x: d.get(x), keyPath, self)
+
+	def setConfigValue(
+		self,
+		value: bool | int | float | str,
+		*keyPath: *tuple[str, str, *tuple[str, ...]],
+	) -> None:
+		"""
+		Sets the value of a configuration key.
+		:param value: The value to set for the configuration key.
+		:param keyPath: The path to the configuration key to set.
+		:return: None.
+		"""
+		dictToUpdate = functools.reduce(lambda d, x: d.get(x), keyPath[:-1], self)
+		dictToUpdate[keyPath[-1]] = value
+
+	def _getConfigValueRange(self, *keyPath: tuple[str, str, *tuple[str, ...]]) -> tuple[float, float]:
+		"""
+		Gets the minimum and maximum allowed values for a configuration key.
+		:param keyPath: The path to The configuration key to evaluate.
+		:return: A tuple of (minValue, maxValue).
+		"""
+		validation = self.getConfigValidation(keyPath)
+		minValue = float(validation.kwargs["min"])
+		maxValue = float(validation.kwargs["max"])
+		return minValue, maxValue
+
+	def _clampValue(self, currentValue: float, minValue: float, maxValue: float, step: float) -> float:
+		"""
+		Calculates a new value by applying a step, constrained within min/max bounds.
+		:param currentValue: The current value.
+		:param minValue: The minimum allowed value.
+		:param maxValue: The maximum allowed value.
+		:param step: The amount to change the value by (positive or negative).
+		:return: The new value, clamped between min and max.
+		"""
+		return min(max(currentValue + step, minValue), maxValue)
+
+	def valueToPercentage(self, *keyPath: tuple[str, str, *tuple[str, ...]]) -> int:
+		"""
+		Calculates the percentage representation of a configuration value within its defined range.
+		:param keyPath: The path to the configuration key to evaluate.
+		:return: The percentage (0-100) of the value within the range.
+		"""
+		minValue, maxValue = self._getConfigValueRange(*keyPath)
+		currentValue = self.getConfigValue(*keyPath)
+		return round((currentValue - minValue) / (maxValue - minValue) * 100)
+
+	def percentageToValue(self, *keyPath: tuple[str, str, *tuple[str, ...]], percentage: int) -> float:
+		"""
+		Calculates the configuration value corresponding to a given percentage within its defined range.
+		:param keyPath: The path to the configuration key to evaluate.
+		:param percentage: The percentage (0-100) to convert to a value.
+		:return: The value corresponding to the given percentage within the defined range.
+		"""
+		minValue, maxValue = self._getConfigValueRange(*keyPath)
+		percentage = max(0, min(100, percentage))
+		value = minValue + (maxValue - minValue) * (percentage / 100)
+		return value
+
+	def clampedIncrementAndUpdateConfig(
+		self,
+		*keyPath: tuple[str, str, *tuple[str, ...]],
+		step: float,
+	) -> None:
+		"""
+		Updates a configuration value by applying a step, constrained within its valid range.
+		:param keyPath: The path to the configuration key to update.
+		:param step: The step adjustment value (positive, negative, or 0).
+		"""
+		currentValue = self.getConfigValue(*keyPath)
+		minValue, maxValue = self._getConfigValueRange(*keyPath)
+		newValue = self._clampValue(currentValue, minValue, maxValue, step)
+		self.setConfigValue(newValue, *keyPath)
 
 
 class ConfigValidationData(object):

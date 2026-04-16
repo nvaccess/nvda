@@ -231,8 +231,12 @@ class _AddonManifestModel(_AddonGUIModel):
 		return changelog
 
 	@property
-	def installDate(self) -> datetime:
-		return datetime.fromtimestamp(os.path.getctime(self.installPath))
+	def installDate(self) -> datetime | None:
+		try:
+			return datetime.fromtimestamp(os.path.getctime(self.installPath))
+		except FileNotFoundError:
+			# When add-ons are "pending install", they are not yet at their final path.
+			return None
 
 	@property
 	def author(self) -> str:

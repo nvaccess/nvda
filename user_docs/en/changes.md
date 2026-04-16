@@ -6,6 +6,7 @@
 
 ### New Features
 
+* Added the ability to automatically scroll the braille display. (#18573, @nvdaes)
 * After installing or updating NVDA, a dialog now offers options to restart Windows, start the installed copy, or exit the installer. (#19268, #19718, @kefaslungu)
 * NVDA now includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen. (#19228, @Boumtchack)
   * The magnifier supports various zoom levels, color filters (normal, grayscale, inverted), and different focus tracking modes.
@@ -44,6 +45,7 @@ The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is int
 * Product version for File Explorer will reflect actual Windows version including correct build and revision numbers.
 This is more noticeable for Windows releases which are enablement packages on top of an earlier release such as Windows 11 2025 Update based on Windows 11 2024 Update. (#19802, @josephsl)
 * Math navigation commands now support input help, on-demand speech mode, and can be remapped. (#19871, @RyanMcCleary)
+* The "COM Registration Fixing Tool" has been renamed to "System Accessibility Repair Tool" for clarity. (#19622, @bramd)
 
 ### Bug Fixes
 
@@ -64,14 +66,14 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 * Updated components:
   * Python from 3.13.11 to 3.13.12. (#19572, @dpy013)
-  * Ruff to 0.15.4. (#19548)
-  * uv to 0.10.6. (#19548)
+  * Ruff to 0.15.9. (#19548, #19908)
+  * uv to 0.11.4. (#19548, #19908)
   * Requests to 2.33.0. (#19877)
   * cryptography to 46.0.6. (#19877)
 * NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)
 * Subclasses of `browseMode.BrowseModeDocumentTreeInterceptor` that support screen layout being on and off should override the `_toggleScreenLayout` method, rather than implementing `script_toggleScreenLayout` directly. (#19487)
 * A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handleCOMErrors`. (#19646, @Emil-18)
-  * This method calls `_getUIACacheablePropertyValue`, and takes an extra argument (`onError`), that specify the value that should be returned if a `COMError` is raised.
+  * This method calls `_getUIACacheablePropertyValue`, and takes an extra argument (`onError`) that specifies the value that should be returned if a `COMError` is raised.
 * Clarified NV Access's policy on API breaking changes in the Developer Guide. (#19599)
 * The `scons tests` build target has been removed, as it was misleadingly named.
 It only ran the translation string comment check, which is equivalent to `scons checkPot`.
@@ -79,6 +81,14 @@ The `scons checkPot` target has also been replaced with `runcheckpot.bat`.
 Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`, `runsystemtests.bat`, `runlint.bat`. (#19606, #19676, @bramd)
 * Updated Python 3.13.11 to 3.13.12 (#19572, @dpy013)
 * Added a private `_asyncioEventLoop` module that provides an asyncio event loop running on a background thread for use by NVDA components. (#19816, @bramd)
+* Added several functions related to the braille auto-scroll feature. (#18573, @nvdaes):
+  * Added an `autoScroll` method to `braille.handler`.
+  * Added several functions for handling configuration value conversions and updates in `config.conf`:
+    * Added a `getConfigValue` function to get the value for a provided configuration key path.
+    * Added a `setConfigValue` function to set a value for a provided configuration key path.
+    * Added a `valueToPercentage` function to calculate the percentage representation of a configuration value within its range.
+    * Added a `percentageToValue` function to convert a percentage to the corresponding configuration value.
+    * Added a `clampedIncrementAndUpdateConfig` function to update a configuration value by applying a step, constrained within its valid range.
 
 #### Deprecations
 
@@ -91,18 +101,18 @@ Use the `speechDictHandler.types.EntryType` enumeration instead. (#19430, @Leona
 
 ## 2026.1
 
-This release includes built-in support for reading math content with MathCAT.
+This release includes support for reading math content with MathCAT, which is now built-in to NVDA.
 
 There have been several improvements to speech.
-Spelling errors can now be reported with a sound instead of speech when reading.
-You can now configure NVDA to automatically say all after successfully recognising content, such as with Windows OCR.
+Spelling and grammar errors can now be reported with a sound instead of speech when reading.
+You can now configure NVDA to automatically say all after successfully recognizing content, such as with Windows OCR.
 NVDA no longer reports the language being read as unsupported when the synthesizer supports the language but not the specific dialect.
 NVDA now supports 64-bit SAPI 5 voices.
 
 Braille support has also been improved.
 It now continues to work when switching to a secure screen, like the sign-in screen or User Account Control dialog.
 NVDA messages from the local computer are now shown in braille when controlling a computer via Remote Access.
-Spelling errors and the number of items in a list in browse mode can now be shown in braille.
+Spelling and grammar errors, as well as the number of items in a list in browse mode, can now be shown in braille.
 Other braille bug fixes, including in Microsoft Outlook and LibreOffice Writer, have also been added.
 
 In browse mode in web browsers, NVDA no longer treats controls with 0 width or height as invisible.
@@ -165,7 +175,7 @@ This can be enabled using the "Report when objects support multiple selection" s
 * NVDA no longer supports Windows 8.1.
 Windows 10 (Version 1507) is the minimum Windows version supported.
 We recommend using Windows 11, or if that is not possible, the latest Windows 10 release (Version 22H2). (#18684, @josephsl)
-* NVDA no longer supports 32bit Windows or Windows 10 on ARM.
+* NVDA no longer supports 32-bit Windows or Windows 10 on ARM.
 * Support for the MathPlayer software from Wiris has been removed. (#19239)
 * Component updates:
   * Updated Liblouis braille translator to [3.36.0](https://github.com/liblouis/liblouis/releases/tag/v3.36.0). (#18848, #19315, @LeonarddeR)
@@ -201,12 +211,13 @@ It currently includes Screen Curtain's settings (previously in the "Vision" cate
   * NVDA should now correctly identify downgrades and show the downgrade warning dialog appropriately, including for portable copies. (#19631, #18291)
   * NVDA will now retain the "Use NVDA during sign-in" setting and desktop shortcut more consistently. (#19631)
 * Fixed `<` not being escaped in MathML in PDF documents. (#18520, @NSoiffer)
-* When unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
+* When Unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &#x0301; ). (#18722, @LeonarddeR)
 * Fixed cases where NVDA was unable to retrieve information for an application, such as product name, version and architecture. (#18826, @LeonarddeR)
 * When reporting the location of the caret in classic versions of Notepad and other Win32 edit controls, text position is now more accurate. (#18767, @LeonarddeR)
 * NVDA no longer fails to read the contents of wx Web View controls. (#17273, @LeonarddeR)
 * When NVDA is configured to update add-ons automatically in the background, add-ons can be properly updated. (#18965, @nvdaes)
 * Attempting to install an add-on that requires a newer version of NVDA from File Explorer no longer fails silently or shows the incompatible add-ons dialog. (#19260, #19261)
+* The Add-on Store no longer fails to reopen after an add-on has been installed. (#19900, @CyrilleB79)
 * Fixed a case where braille output would fail with an error. (#19025, @LeonarddeR)
 * Battery time announcements now skip redundant "0 hours" and "0 minutes" and use proper singular/plural forms. (#9003, @tareh7z)
 * When a synthesizer has a fallback language for the current dialect, the language of the text being read will no longer be reported as unsupported. (#18876, @nvdaes)
@@ -287,7 +298,7 @@ Use the `int` configuration key `[reportSpellingErrors2]` instead. (#17997, @Cyr
 * The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than `HIDP_VALUE_CAPS` structures. (#18902)
 * `speech.speech.IDT_TONE_DURATION` has been removed.
 Call `speech.speech.getIndentToneDuration` instead. (#18898)
-* the `rgpszUsageIdentifier` member of the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation.
+* The `rgpszUsageIdentifier` member of the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation. (#18956)
 * The `UpdatableAddonsDialog.addonsList` is an instance of `gui.addonStoreGui.controls.addonList.AddonVirtualList`. (#18816, @nvdaes)
 * `gui.nvdaControls.TabbableScrolledPanel` has been removed.
 Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
@@ -311,7 +322,7 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
   * `DeviceListInfoNode` has been moved to `ftd2xx.FT_DEVICE_LIST_INFO_NODE`.
   Additionally, in accordance with the D2XX Programmer's Guide:
     * The `LocID` field has been renamed to `LocId`.
-    * The`none` field has been renamed to `ftHandle`.
+    * The `none` field has been renamed to `ftHandle`.
   * The `ftExceptionDecorator` function has been removed, with no public replacement.
   * The `_PY_*` functions have been replaced with `ftd2xx.FT_*` direct FFI bindings.
   These bindings have type declarations, so are potentially incompatible with existing code.
@@ -329,7 +340,7 @@ Use `wx.lib.scrolledpanel.ScrolledPanel` directly instead. (#17751)
     * `set_usb_parameters` to `setUsbParameters`;
     * `get_queue_status` to `getQueueStatus`; and
     * `reset_device` to `resetDevice`.
-  * The `FTD2XX.purge` method now raises `ValueError` If the `toPurge` argument is not one of "TX", "RX" or "TXRX".
+  * The `FTD2XX.purge` method now raises `ValueError` if the `toPurge` argument is not one of "TX", "RX" or "TXRX".
 * The deprecated `winVersion.isFullScreenMagnificationAvailable` function has been removed. (#19177)
 * The `visionEnhancementProviders.screenCurtain` module has been replaced with the `screenCurtain` subpackage. (#19177)
   * The following symbols have no public replacement: `playToggleSoundsCheckBoxText`, `ScreenCurtainGuiPanel`, `ScreenCurtainProvider`, `ScreenCurtainSettings`, `screenCurtainTranslatedName`, `TRANSFORM_BLACK`, `VisionEnhancementProvider`, `WarnOnLoadDialog`, `warnOnLoadCheckBoxText`, `warnOnLoadText`.
@@ -349,6 +360,7 @@ Use `config.configFlags.LoggingLevel` instead. (#19296)
 * `config.setSystemConfigToCurrentConfig` now takes a `Collection` of add-on IDs (as strings) to copy to the system configuration.
 Only add-ons with the given IDs will be copied. (#19446)
 * `browseMode.ElementsListDialog.filterTimer` has been removed. (#19702)
+* The type of the `installDate` property of `addonStore.models.addon.AddonManifestModel` and `addonStore.models.addon.InstalledAddonStoreModel` is now `datetime | None`. (#19901, @CyrilleB79)
 
 #### Deprecations
 
@@ -422,7 +434,7 @@ Access to these symbols via `wincon` is deprecated. (#18896)
 * `winKernel.kernel32` is deprecated.
 Use `winBindings.kernel32.dll` instead. (#18896)
 * The `LVS_*` constants from `NVDAObjects.IAccessible.sysListView32` are deprecated.
-Use the `ListViewWindowStyle` enumeration instead. (#18926 , @LeonarddeR)
+Use the `ListViewWindowStyle` enumeration instead. (#18926, @LeonarddeR)
 * The `INPUT_MOUSE`, `INPUT_KEYBOARD`, `KEYEVENTF_KEYUP` and `KEYEVENTF_UNICODE` constants from `winUser` are deprecated.
 Use `INPUT_TYPE.MOUSE`, `INPUT_TYPE.KEYBOARD`, `KEYEVENTF.KEYUP` and `KEYEVENTF.UNICODE` from `winBindings.user32` instead. (#18947)
 * The following symbols have been moved from `updateCheck` to `winBindings.crypt32`: `CERT_USAGE_MATCH`, `CERT_CHAIN_PARA`.
