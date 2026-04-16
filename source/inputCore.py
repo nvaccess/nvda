@@ -681,7 +681,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		)
 		return bypass
 
-	def _handleInputHelp(self, gesture, onlyLog=False):
+	def _handleInputHelp(self, gesture: InputGesture, onlyLog: bool = False) -> None:
 		displayName = gesture.displayName
 		inputHelpCharacter = gesture.inputHelpCharacter
 		reportInputHelpCharacter = False

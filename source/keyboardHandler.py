@@ -51,6 +51,40 @@ _TO_UNICODE_EX_FLAG_NO_STATE_CHANGE = 0x04
 _TO_UNICODE_EX_BUFFER_LENGTH = 5
 _KEY_PRESSED_STATE = 0x80
 
+
+def _getKeyStates(
+	modifierList: list[int | str],
+	ignoredModifier: int | None = None,
+) -> ctypes.Array:
+	"""Return keyboard state for ToUnicodeEx while forcing selected modifiers pressed."""
+	states: ctypes.Array = (ctypes.c_ubyte * 256)()
+	for i in range(256):
+		if i in modifierList and i != ignoredModifier:
+			states[i] = _KEY_PRESSED_STATE
+		else:
+			states[i] = user32.GetKeyState(i)
+	return states
+
+
+def _toUnicodeEx(
+	vkCode: int,
+	scanCode: int,
+	states: ctypes.Array,
+	buffer: ctypes.Array,
+	keyboardLayout: int,
+) -> int:
+	"""Call ToUnicodeEx without modifying keyboard state."""
+	return user32.ToUnicodeEx(
+		vkCode,
+		scanCode,
+		states,
+		buffer,
+		len(buffer),
+		_TO_UNICODE_EX_FLAG_NO_STATE_CHANGE,
+		keyboardLayout,
+	)
+
+
 # Fake vk codes.
 # These constants should be assigned to the name that NVDA will use for the key.
 VK_WIN = "windows"
@@ -583,7 +617,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		keyboardLayout = user32.GetKeyboardLayout(threadID)
 		buffer = ctypes.create_unicode_buffer(_TO_UNICODE_EX_BUFFER_LENGTH)
 
-		modifierList: list[int] = []
+		modifierList: list[int | str] = []
 		for mod, _ in self.modifiers:
 			modifier = self.NORMAL_MODIFIER_KEYS.get(mod)
 			if modifier is None and mod in self.NORMAL_MODIFIER_KEYS.values():
@@ -595,35 +629,15 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if VK_WIN in modifierList:
 			return None
 
-		def _getKeyStates(ignoredModifier: int | None = None):
-			states = (ctypes.c_ubyte * 256)()
-			for i in range(256):
-				if i in modifierList and i != ignoredModifier:
-					states[i] = _KEY_PRESSED_STATE
-				else:
-					states[i] = user32.GetKeyState(i)
-			return states
+		states = _getKeyStates(modifierList)
 
-		def _toUnicodeEx(states) -> int:
-			return user32.ToUnicodeEx(
-				self.vkCode,
-				self.scanCode,
-				states,
-				buffer,
-				len(buffer),
-				_TO_UNICODE_EX_FLAG_NO_STATE_CHANGE,
-				keyboardLayout,
-			)
-
-		states = _getKeyStates()
-
-		res = _toUnicodeEx(states)
+		res = _toUnicodeEx(self.vkCode, self.scanCode, states, buffer, keyboardLayout)
 
 		# res < 0 means dead key - return the dead key character
 		if res < 0:
 			# Dead key: buffer contains the dead key character
 			# Call ToUnicodeEx again to get and clear the dead key from buffer
-			_toUnicodeEx(states)
+			_toUnicodeEx(self.vkCode, self.scanCode, states, buffer, keyboardLayout)
 			return buffer.value[:1] if buffer.value else None
 
 		if res == 0:
@@ -631,15 +645,13 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 		# Check alt key behavior - alt sometimes gives same character as without alt
 		if winUser.VK_MENU in modifierList:
-			altStates = _getKeyStates(ignoredModifier=winUser.VK_MENU)
+			altStates = _getKeyStates(modifierList, ignoredModifier=winUser.VK_MENU)
 			newBuffer = ctypes.create_unicode_buffer(_TO_UNICODE_EX_BUFFER_LENGTH)
-			user32.ToUnicodeEx(
+			_toUnicodeEx(
 				self.vkCode,
 				self.scanCode,
 				altStates,
 				newBuffer,
-				len(newBuffer),
-				_TO_UNICODE_EX_FLAG_NO_STATE_CHANGE,
 				keyboardLayout,
 			)
 			# If same character with and without alt, it's not valid
