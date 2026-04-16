@@ -12,6 +12,8 @@ For the latter two actions, one can perform actions prior to and/or after they t
 
 from collections.abc import Collection
 from enum import Enum
+from typing import Any
+
 import globalVars
 import winreg
 import os
@@ -43,14 +45,6 @@ from .featureFlag import (
 	_validateConfig_featureFlag,
 )
 from .registry import RegistryKey as _RegistryKey
-from typing import (
-	Any,
-	Dict,
-	List,
-	Optional,
-	Set,
-	Tuple,
-)
 import NVDAState
 from NVDAState import WritePaths
 
@@ -169,7 +163,7 @@ def isInstalledCopy() -> bool:
 		return False
 
 
-def getInstalledUserConfigPath() -> Optional[str]:
+def getInstalledUserConfigPath() -> str | None:
 	try:
 		winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, _RegistryKey.NVDA.value)
 	except FileNotFoundError:
@@ -237,10 +231,10 @@ def getScratchpadDir(ensureExists: bool = False) -> str:
 	return path
 
 
-def initConfigPath(configPath: Optional[str] = None) -> None:
+def initConfigPath(configPath: str | None = None) -> None:
 	"""
 	Creates the current configuration path if it doesn't exist. Also makes sure that various sub directories also exist.
-	@param configPath: an optional path which should be used instead (only useful when being called from outside of NVDA)
+	:param configPath: an optional path which should be used instead (only useful when being called from outside of NVDA)
 	"""
 	if not configPath:
 		configPath = WritePaths.configDir
@@ -483,7 +477,7 @@ def _transformSpec(spec: ConfigObj):
 	)
 
 
-class ConfigManager(object):
+class ConfigManager:
 	"""Manages and provides access to configuration.
 	In addition to the base configuration, there can be multiple active configuration profiles.
 	Settings in more recently activated profiles take precedence,
@@ -512,9 +506,9 @@ class ConfigManager(object):
 		self.spec = confspec
 		_transformSpec(self.spec)
 		#: All loaded profiles by name.
-		self._profileCache: Optional[Dict[Optional[str], ConfigObj]] = {}
+		self._profileCache: dict[str | None, ConfigObj] | None = {}
 		#: The active profiles.
-		self.profiles: List[ConfigObj] = []
+		self.profiles: list[ConfigObj] = []
 		#: Whether profile triggers are enabled (read-only).
 		self.profileTriggersEnabled: bool = True
 		self.validator: Validator = Validator(
@@ -522,16 +516,16 @@ class ConfigManager(object):
 				"_featureFlag": _validateConfig_featureFlag,
 			},
 		)
-		self.rootSection: Optional[AggregatedSection] = None
+		self.rootSection: AggregatedSection | None = None
 		self._shouldHandleProfileSwitch: bool = True
 		self._pendingHandleProfileSwitch: bool = False
-		self._suspendedTriggers: Optional[List[ProfileTrigger]] = None
+		self._suspendedTriggers: list[ProfileTrigger] | None = None
 		self._initBaseConf()
 		#: Maps triggers to profiles.
-		self.triggersToProfiles: Optional[Dict[ProfileTrigger, ConfigObj]] = None
+		self.triggersToProfiles: dict[ProfileTrigger, ConfigObj] | None = None
 		self._loadProfileTriggers()
 		#: The names of all profiles that have been modified since they were last saved.
-		self._dirtyProfiles: Set[str] = set()
+		self._dirtyProfiles: set[str] = set()
 
 	def _handleProfileSwitch(self, shouldNotify=True):
 		if not self._shouldHandleProfileSwitch:
@@ -704,7 +698,7 @@ class ConfigManager(object):
 			return
 		self._dirtyProfiles.add(self.profiles[-1].name)
 
-	def _writeProfileToFile(self, filename, profile):
+	def _writeProfileToFile(self, filename: str, profile: ConfigObj):
 		with FaultTolerantFile(filename) as f:
 			profile.write(f)
 
@@ -1129,12 +1123,12 @@ class ConfigManager(object):
 		self.setConfigValue(newValue, *keyPath)
 
 
-class ConfigValidationData(object):
+class ConfigValidationData:
 	validationFuncName: str | None = None
 
 	def __init__(self, validationFuncName):
 		self.validationFuncName = validationFuncName
-		super(ConfigValidationData, self).__init__()
+		super().__init__()
 
 	# args passed to the convert function
 	args: list[Any] = []
@@ -1153,9 +1147,9 @@ class AggregatedSection:
 	def __init__(
 		self,
 		manager: ConfigManager,
-		path: Tuple[str],
+		path: tuple[str],
 		spec: ConfigObj,
-		profiles: List[ConfigObj],
+		profiles: list[ConfigObj],
 	):
 		self.manager = manager
 		self.path = path
@@ -1437,7 +1431,7 @@ class AggregatedSection:
 		self._spec.update(val)
 
 
-class ProfileTrigger(object):
+class ProfileTrigger:
 	"""A trigger for automatic activation/deactivation of a configuration profile.
 	The user can associate a profile with a trigger.
 	When the trigger applies, the associated profile is activated.
