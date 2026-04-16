@@ -506,7 +506,7 @@ class ConfigManager:
 		self.spec = confspec
 		_transformSpec(self.spec)
 		#: All loaded profiles by name.
-		self._profileCache: dict[str | None, ConfigObj] | None = {}
+		self._profileCache: dict[str | None, ConfigObj] = {}
 		#: The active profiles.
 		self.profiles: list[ConfigObj] = []
 		#: Whether profile triggers are enabled (read-only).
@@ -1147,7 +1147,7 @@ class AggregatedSection:
 	def __init__(
 		self,
 		manager: ConfigManager,
-		path: tuple[str],
+		path: tuple[str, ...],
 		spec: ConfigObj,
 		profiles: list[ConfigObj],
 	):
