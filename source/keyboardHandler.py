@@ -673,8 +673,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if not char.isprintable():
 			return None
 
-		# Avoid duplicating simple character keys such as letters.
-		if self.displayName.casefold() == char.casefold():
+		# Avoid duplicating only when the display name already matches the produced character.
+		if self.displayName == char:
 			return None
 
 		return char
