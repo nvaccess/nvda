@@ -291,8 +291,8 @@ class Logger(logging.Logger):
 		if redactSecrets:
 			from detect_secrets.core.scan import scan_line
 
-			for secret in scan_line(msg: str):
-				msg.replace(secret.secret_value, "****")
+			for secret in scan_line(msg):
+				msg = msg.replace(secret.secret_value, "****")
 
 		res = super()._log(level, msg, args, exc_info, extra)
 
