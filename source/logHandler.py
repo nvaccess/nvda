@@ -300,7 +300,7 @@ class Logger(logging.Logger):
 			except Exception:
 				formattedMsg = msg
 				self.exception(
-					"Failed to format log message for secret redaction, logging unredacted exception."
+					"Failed to format log message for secret redaction, logging unredacted exception.",
 				)
 
 			with self.secretDetectionSettings:

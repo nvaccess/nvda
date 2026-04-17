@@ -20,7 +20,10 @@ class TestLoggerSecretRedaction(unittest.TestCase):
 		self.logger.secretDetectionSettings = contextlib.nullcontext()
 
 	def test_logWithoutRedactionPassesMessageAndArgsThrough(self):
-		with mock.patch.object(logging.Logger, "_log") as superLog, mock.patch.object(logHandler, "scan_line") as scanLine:
+		with (
+			mock.patch.object(logging.Logger, "_log") as superLog,
+			mock.patch.object(logHandler, "scan_line") as scanLine,
+		):
 			self.logger._log(
 				logging.INFO,
 				"api key %s",
@@ -40,11 +43,14 @@ class TestLoggerSecretRedaction(unittest.TestCase):
 	def test_logWithRedactionMasksDetectedSecrets(self):
 		secret = types.SimpleNamespace(secret_value="secret-value")
 
-		with mock.patch.object(logging.Logger, "_log") as superLog, mock.patch.object(
-			logHandler,
-			"scan_line",
-			return_value=[secret],
-		) as scanLine:
+		with (
+			mock.patch.object(logging.Logger, "_log") as superLog,
+			mock.patch.object(
+				logHandler,
+				"scan_line",
+				return_value=[secret],
+			) as scanLine,
+		):
 			self.logger._log(
 				logging.INFO,
 				"api key %s and again %s",
@@ -63,11 +69,15 @@ class TestLoggerSecretRedaction(unittest.TestCase):
 		)
 
 	def test_logWithRedactionFallsBackWhenFormattingFails(self):
-		with mock.patch.object(logging.Logger, "_log") as superLog, mock.patch.object(
-			logHandler,
-			"scan_line",
-			return_value=[],
-			) as scanLine, mock.patch.object(self.logger, "exception") as logException:
+		with (
+			mock.patch.object(logging.Logger, "_log") as superLog,
+			mock.patch.object(
+				logHandler,
+				"scan_line",
+				return_value=[],
+			) as scanLine,
+			mock.patch.object(self.logger, "exception") as logException,
+		):
 			self.logger._log(
 				logging.INFO,
 				"expected int %d",
