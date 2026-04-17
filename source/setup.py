@@ -319,8 +319,6 @@ freeze(
 			"mdx_truly_sane_lists",
 			"mdx_gh_links",
 			"pymdownx",
-			# Force as only import is scoped in a function.
-			"detect_secrets",
 		],
 		"includes": [
 			"nvdaBuiltin",

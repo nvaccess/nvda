@@ -21,6 +21,7 @@ import winBindings.kernel32
 import winKernel
 import buildVersion
 from typing import (
+	Any,
 	Literal,
 	NamedTuple,
 	Protocol,
@@ -30,6 +31,9 @@ import exceptions
 import RPCConstants
 import NVDAState
 from NVDAState import WritePaths
+
+from detect_secrets.core.scan import scan_line
+from detect_secrets.settings import default_settings
 
 if TYPE_CHECKING:
 	import extensionPoints
@@ -231,12 +235,14 @@ class Logger(logging.Logger):
 	#: @type: C{long}
 	fragmentStart = None
 
+	secretDetectionSettings = default_settings()
+
 	def _log(
 		self,
 		level: int,
 		msg: str,
-		args,
-		exc_info: _excInfo_t | Literal[True] | BaseException = None,
+		args: tuple[Any, ...],
+		exc_info: _excInfo_t | bool | BaseException = None,
 		extra: dict | None = None,
 		codepath: str | None = None,
 		activateLogViewer: bool = False,
@@ -289,12 +295,13 @@ class Logger(logging.Logger):
 			)
 
 		if redactSecrets:
-			from detect_secrets.core.scan import scan_line
-			from detect_secrets.settings import default_settings
+			try:
+				formattedMsg = msg % args if args else msg
+			except Exception:
+				formattedMsg = msg
+				self.exception("Failed to format log message for secret redaction, logging unredacted exception.")
 
-			formattedMsg = msg % args if args else msg
-
-			with default_settings():
+			with self.secretDetectionSettings:
 				for secret in list(scan_line(formattedMsg)):
 					formattedMsg = formattedMsg.replace(secret.secret_value, "****")
 
