@@ -31,7 +31,7 @@ These include:
   * Contents of the User Guide and Changes documents that are incorrectly translated from English
   * Locale-specific gestures, symbols and character descriptions
 
-These are a fillable form that guides you through the process of providing the necessary information for your issue.
+These templates are fillable forms that guide you through the process of providing the necessary information for your issue.
 The "Advanced" versions of these templates listed when [choosing templates for new issues](https://github.com/nvaccess/nvda/issues/new/choose) ask for the same information, but in a more free-form manner that doesn't use separate fields to guide and structure the process.
 
 ## Help

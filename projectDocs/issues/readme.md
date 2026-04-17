@@ -5,7 +5,7 @@ Please read the [issue template guide](./githubIssueTemplateExplanationAndExampl
 For advanced reporters, consider reading our [issue triage guide](./triage.md) to ensure the issue can easily be worked on.
 If you don't have a clear idea of the issue, and you are unable to fill out the template, open a [GitHub discussion](https://github.com/nvaccess/nvda/discussions/new/choose) instead.
 
-Do not report security issues via GitHub issues, instead follow our [security policy](../../security.md).
+Do not report security concerns via GitHub issues, instead follow our [security policy](../../security.md).
 
 Issues with materials handled by translators should be reported to the [NVDA Translators list](https://groups.io/g/nvda-translations).
 These include:
