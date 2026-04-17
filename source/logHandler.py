@@ -290,11 +290,17 @@ class Logger(logging.Logger):
 
 		if redactSecrets:
 			from detect_secrets.core.scan import scan_line
+			from detect_secrets.settings import default_settings
+			formattedMsg = msg % args if args else msg
 
-			for secret in scan_line(msg):
-				msg = msg.replace(secret.secret_value, "****")
+			with default_settings():
+				for secret in list(scan_line(formattedMsg)):
+					formattedMsg = formattedMsg.replace(secret.secret_value, "****")
 
-		res = super()._log(level, msg, args, exc_info, extra)
+			res = super()._log(level, formattedMsg, (), exc_info, extra)
+
+		else:
+			res = super()._log(level, msg, args, exc_info, extra)
 
 		if activateLogViewer:
 			# Make the log text we just wrote appear in the log viewer.
