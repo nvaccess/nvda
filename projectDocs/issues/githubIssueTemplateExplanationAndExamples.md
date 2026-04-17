@@ -28,8 +28,8 @@ We currently have the following templates:
 * Issues with materials handled by translators should be reported to the [NVDA Translators list](https://groups.io/g/nvda-translations).
 This includes:
   * NVDA interface text that is incorrectly translated from English
-  * User Guide and Changes contents that are incorrectly translated from English
-  * Locale specific gestures, symbols and character descriptions
+  * Contents of the User Guide and Changes documents that are incorrectly translated from English
+  * Locale-specific gestures, symbols and character descriptions
 
 These are a fillable form that guides you through the process of providing the necessary information for your issue.
 The "Advanced" version of these templates listed when [choosing templates for new issues](https://github.com/nvaccess/nvda/issues/new/choose) asks for the same information, but in a more free-form manner, with less supporting information.
