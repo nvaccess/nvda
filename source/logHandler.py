@@ -299,7 +299,9 @@ class Logger(logging.Logger):
 				formattedMsg = msg % args if args else msg
 			except Exception:
 				formattedMsg = msg
-				self.exception("Failed to format log message for secret redaction, logging unredacted exception.")
+				self.exception(
+					"Failed to format log message for secret redaction, logging unredacted exception."
+				)
 
 			with self.secretDetectionSettings:
 				for secret in list(scan_line(formattedMsg)):
