@@ -291,6 +291,7 @@ class Logger(logging.Logger):
 		if redactSecrets:
 			from detect_secrets.core.scan import scan_line
 			from detect_secrets.settings import default_settings
+
 			formattedMsg = msg % args if args else msg
 
 			with default_settings():
