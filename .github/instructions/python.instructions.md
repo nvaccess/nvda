@@ -74,15 +74,15 @@ For example:
 
 ```py
 self.copySettingsButton = wx.Button(
-  self,
-  label=_(
-    # Translators: The label for a button in general settings to copy
-    # current user settings to system settings (to allow current
-    # settings to be used in secure screens such as User Account
-    # Control (UAC) dialog).
-    "Use currently saved settings during sign-in and on secure screens"
-    " (requires administrator privileges)"
-  )
+	self,
+	label=_(
+		# Translators: The label for a button in general settings to copy
+		# current user settings to system settings (to allow current
+		# settings to be used in secure screens such as User Account
+		# Control (UAC) dialog).
+		"Use currently saved settings during sign-in and on secure screens"
+		" (requires administrator privileges)"
+	)
 )
 ```
 
