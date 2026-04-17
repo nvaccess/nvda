@@ -23,7 +23,7 @@ license = {file = "copying.txt"}
 dependencies = [
 	# NVDA's runtime dependencies
 	"comtypes==1.4.13",
-	"cryptography==46.0.6",
+	"cryptography==46.0.7",
 	"pyserial==3.5",
 	"wxPython==4.2.4",
 	# pinned to a commit in tool.uv.sources
@@ -322,7 +322,7 @@ dev = [
 	"py2exe==0.14.0.0",
 	"setuptools~=80.10.2",
 	"nvda-mathcat",
-	"uv==0.11.4",
+	"uv==0.11.7",
 ]
 lint = [
 	"ruff==0.15.9",
