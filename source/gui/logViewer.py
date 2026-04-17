@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2008-2024 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2008-2026 NV Access Limited, Cyrille Bougot
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Provides functionality to view the NVDA log."""
 
@@ -10,6 +10,7 @@ import globalVars
 import gui
 import gui.contextHelp
 from gui import blockAction
+from utils.debounce import debounceLimiter
 
 
 #: The singleton instance of the log viewer UI.
@@ -66,21 +67,29 @@ class LogViewer(
 		self.refresh()
 		self.outputCtrl.SetFocus()
 
-	def refresh(self, evt=None):
+	@debounceLimiter(delayTimeMs=100)
+	def refresh(self, evt: wx.MenuEvent | None = None):
 		# Ignore if log is not initialized
 		if globalVars.appArgs.logFileName is None:
 			return
+
 		pos = self.outputCtrl.GetInsertionPoint()
-		# Append new text to the output control which has been written to the log file since the last refresh.
+
 		try:
 			f = open(globalVars.appArgs.logFileName, "r", encoding="UTF-8")
+		except IOError:
+			return
+
+		# Append new text to the output control which has been written to the log file since the last refresh.
+		try:
 			f.seek(self._lastFilePos)
 			self.outputCtrl.AppendText(f.read())
 			self._lastFilePos = f.tell()
-			self.outputCtrl.SetInsertionPoint(pos)
-			f.close()
 		except IOError:
 			pass
+		finally:
+			self.outputCtrl.SetInsertionPoint(pos)
+			f.close()
 
 	def onActivate(self, evt):
 		if evt.GetActive():
