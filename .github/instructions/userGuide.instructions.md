@@ -73,7 +73,7 @@ For example:
 
 ```md
 <!-- KC:beginInclude -->
-| Name | Desktop command | Laptop command | Description |
+| Name | Desktop key | Laptop key | Description |
 ...
 <!-- KC:endInclude -->
 ```
@@ -109,8 +109,8 @@ For example:
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Desktop command | `NVDA+control+t` |
-| Laptop Command | `NVDA+control+t` |
+| Desktop key | `NVDA+control+t` |
+| Laptop key | `NVDA+control+t` |
 
 This option allows you to choose whether the braille display will follow the system focus, or whether it follows the navigator object / review cursor.
 ```

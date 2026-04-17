@@ -72,7 +72,7 @@ For example:
 
 ```md
 <!-- KC:beginInclude -->
-| Name | Desktop command | Laptop command | Description |
+| Name | Desktop key | Laptop key | Description |
 ...
 <!-- KC:endInclude -->
 ```
