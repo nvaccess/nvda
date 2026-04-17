@@ -1,4 +1,10 @@
-# Copilot instructions for GitHub code reviews (NVDA)
+---
+description: 'Code review instructions'
+applyTo: '**'
+excludeAgent: coding-agent
+---
+
+# Copilot instructions for GitHub code reviews
 
 Use these instructions when reviewing pull requests in this repository.
 
