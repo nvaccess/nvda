@@ -604,7 +604,7 @@ class ConfigManager(object):
 			profileUpgrader.upgrade(profile, self.validator, writeProfileFunc)
 		except Exception as e:
 			# Log at level info to ensure that the profile is logged.
-			log.info("Config before schema update:\n%s" % profileCopy, exc_info=False)
+			log.info("Config before schema update:\n%s" % profileCopy, exc_info=False, redactSecrets=True)
 			raise e
 		# since profile settings are not yet imported we have to "peek" to see
 		# if debug level logging is enabled.
@@ -618,6 +618,7 @@ class ConfigManager(object):
 				"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{0}".format(
 					profile,
 				),
+				redactSecrets=True,
 			)
 		return profile
 

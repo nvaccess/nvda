@@ -233,15 +233,30 @@ class Logger(logging.Logger):
 
 	def _log(
 		self,
-		level,
-		msg,
+		level: int,
+		msg: str,
 		args,
-		exc_info=None,
-		extra=None,
-		codepath=None,
-		activateLogViewer=False,
-		stack_info=None,
+		exc_info: _excInfo_t | Literal[True] | BaseException = None,
+		extra: dict | None = None,
+		codepath: str | None = None,
+		activateLogViewer: bool = False,
+		stack_info: list[traceback.FrameSummary] | bool | None = None,
+		redactSecrets: bool = False,
 	):
+		"""Logs a message with the given severity level.
+
+		:param level: The severity level of the log message.
+		:param msg: The log message, which may contain format specifiers that will be replaced by the values in `args`.
+		:param args: The arguments to be merged into `msg` using the `%` operator for string formatting.
+		:param exc_info: Exception information to be logged, defaults to None
+		:param extra: Additional information to be logged, defaults to None
+		:param codepath: The code path where the log was generated, defaults to None
+		:param activateLogViewer: Whether to activate the log viewer, defaults to False
+		:param stack_info: Stack information to be logged, defaults to None
+		:param redactSecrets: Whether to check for and redact secrets in the log message, defaults to False
+		:return: The result of the logging operation
+		"""
+
 		if not extra:
 			extra = {}
 
@@ -272,6 +287,12 @@ class Logger(logging.Logger):
 			msg += "\nStack trace:\n" + stripBasePathFromTracebackText(
 				"".join(traceback.format_list(stack_info)).rstrip(),
 			)
+
+		if redactSecrets:
+			from detect_secrets.core.scan import scan_line
+
+			for secret in scan_line(msg: str):
+				msg.replace(secret.secret_value, "****")
 
 		res = super()._log(level, msg, args, exc_info, extra)
 
