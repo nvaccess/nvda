@@ -11,8 +11,8 @@ Issues with materials handled by translators should be reported to the [NVDA Tra
 This includes:
 
 * NVDA interface text that is incorrectly translated from English
-* User Guide and Changes contents that are incorrectly translated from English
-* Locale specific gestures, symbols and character descriptions
+* User Guide and Changes documents/content that are incorrectly translated from English
+* Locale-specific gestures, symbols and character descriptions
 
 If you are reporting an issue with an application or website, please consider reporting the issue to the [authors of the application/website](./thirdPartyReporting.md) first.
 
