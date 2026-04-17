@@ -70,6 +70,10 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * uv to 0.11.4. (#19548, #19908)
   * Requests to 2.33.0. (#19877)
   * cryptography to 46.0.6. (#19877)
+* A new parameter `redactSecrets` has been added to logging functions e.g. `log.debug`. (#19966)
+  * When set to `True`, logging output will be sanitized to replace detected secrets with asterisks.
+  * This is set to `False` by default for performance purposes.
+  * It is encouraged to enable this when logging anything particularly sensitive e.g. clipboard content.
 * NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)
 * Subclasses of `browseMode.BrowseModeDocumentTreeInterceptor` that support screen layout being on and off should override the `_toggleScreenLayout` method, rather than implementing `script_toggleScreenLayout` directly. (#19487)
 * A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handleCOMErrors`. (#19646, @Emil-18)
