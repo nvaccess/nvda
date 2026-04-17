@@ -67,9 +67,9 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Updated components:
   * Python from 3.13.11 to 3.13.12. (#19572, @dpy013)
   * Ruff to 0.15.9. (#19548, #19908)
-  * uv to 0.11.4. (#19548, #19908)
+  * uv to 0.11.7. (#19548, #19908, #19968)
   * Requests to 2.33.0. (#19877)
-  * cryptography to 46.0.6. (#19877)
+  * cryptography to 46.0.7. (#19877, #19968)
 * NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)
 * Subclasses of `browseMode.BrowseModeDocumentTreeInterceptor` that support screen layout being on and off should override the `_toggleScreenLayout` method, rather than implementing `script_toggleScreenLayout` directly. (#19487)
 * A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handleCOMErrors`. (#19646, @Emil-18)
