@@ -53,13 +53,13 @@ _KEY_PRESSED_STATE = 0x80
 
 
 def _getKeyStates(
-	modifierList: list[int | str],
+	modifierVkCodes: list[int],
 	ignoredModifier: int | None = None,
 ) -> ctypes.Array:
 	"""Return keyboard state for ToUnicodeEx while forcing selected modifiers pressed."""
 	states: ctypes.Array = (ctypes.c_ubyte * 256)()
 	for i in range(256):
-		if i in modifierList and i != ignoredModifier:
+		if i in modifierVkCodes and i != ignoredModifier:
 			states[i] = _KEY_PRESSED_STATE
 		else:
 			states[i] = user32.GetKeyState(i)
@@ -617,19 +617,22 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		keyboardLayout = user32.GetKeyboardLayout(threadID)
 		buffer = ctypes.create_unicode_buffer(_TO_UNICODE_EX_BUFFER_LENGTH)
 
-		modifierList: list[int | str] = []
+		modifierVkCodes: list[int] = []
+		hasWindowsModifier = False
 		for mod, _ in self.modifiers:
 			modifier = self.NORMAL_MODIFIER_KEYS.get(mod)
 			if modifier is None and mod in self.NORMAL_MODIFIER_KEYS.values():
 				modifier = mod
-			if modifier is not None:
-				modifierList.append(modifier)
+			if modifier == VK_WIN:
+				hasWindowsModifier = True
+			elif modifier is not None:
+				modifierVkCodes.append(modifier)
 
 		# Characters with the Windows key are invalid.
-		if VK_WIN in modifierList:
+		if hasWindowsModifier:
 			return None
 
-		states = _getKeyStates(modifierList)
+		states = _getKeyStates(modifierVkCodes)
 
 		res = _toUnicodeEx(self.vkCode, self.scanCode, states, buffer, keyboardLayout)
 
@@ -644,8 +647,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			return None
 
 		# Check alt key behavior - alt sometimes gives same character as without alt
-		if winUser.VK_MENU in modifierList:
-			altStates = _getKeyStates(modifierList, ignoredModifier=winUser.VK_MENU)
+		if winUser.VK_MENU in modifierVkCodes:
+			altStates = _getKeyStates(modifierVkCodes, ignoredModifier=winUser.VK_MENU)
 			newBuffer = ctypes.create_unicode_buffer(_TO_UNICODE_EX_BUFFER_LENGTH)
 			_toUnicodeEx(
 				self.vkCode,
