@@ -3,6 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from collections.abc import Callable
 from enum import IntEnum, IntFlag
 import os
 import queue
@@ -547,32 +548,44 @@ internalFunctionQueue = queue.Queue(1000)
 internalFunctionQueue.__name__ = "JABHandler.internalFunctionQueue"
 
 
-def internalQueueFunction(func, *args, **kwargs):
+def _releaseQueuedAccContext(func: Callable, args: tuple) -> None:
+	"""Release the JOBJECT64 accContext held by a queued JAB callback.
+
+	All handlers queued via :func:`internalQueueFunction` except
+	:func:`enterJavaWindow_helper` follow the ``(vmID, accContext, ...)``
+	convention where ``args[1]`` is a JOBJECT64 handle. This helper
+	releases that handle to prevent JOBJECT64 reference leaks when an
+	event is evicted from the queue or cannot be enqueued at all.
+	"""
+	if func is not enterJavaWindow_helper and len(args) >= 2:
+		bridgeDll.releaseJavaObject(args[0], args[1])
+
+
+def internalQueueFunction(func: Callable, *args, **kwargs) -> None:
 	"""Queue a function for execution on the main thread.
 
 	When the queue is full, the oldest event is evicted to make room.
-	JOBJECT64 handles owned by evicted events are released to avoid leaks.
+	JOBJECT64 handles owned by evicted or dropped events are released
+	via :func:`_releaseQueuedAccContext` to avoid leaks.
 
 	.. note::
 		All queued handler functions except :func:`enterJavaWindow_helper`
 		follow the convention ``(vmID, accContext, ...)``, where ``args[1]``
 		is a JOBJECT64 handle.  If a new handler with a different signature
-		is added, the eviction cleanup below must be updated.
+		is added, :func:`_releaseQueuedAccContext` must be updated.
 	"""
 	try:
 		internalFunctionQueue.put_nowait((func, args, kwargs))
 	except queue.Full:
 		try:
 			evictedFunc, evictedArgs, _evictedKwargs = internalFunctionQueue.get_nowait()
-			# Release the JOBJECT64 accContext handle from the evicted event.
-			# All handlers except enterJavaWindow_helper have args[1] as accContext.
-			if evictedFunc is not enterJavaWindow_helper and len(evictedArgs) >= 2:
-				bridgeDll.releaseJavaObject(evictedArgs[0], evictedArgs[1])
+			_releaseQueuedAccContext(evictedFunc, evictedArgs)
 		except queue.Empty:
 			pass
 		try:
 			internalFunctionQueue.put_nowait((func, args, kwargs))
 		except queue.Full:
+			_releaseQueuedAccContext(func, args)
 			log.debugWarning("JAB internal function queue full, failed to re-queue after eviction")
 			return
 		log.debugWarning("JAB internal function queue full, evicted oldest event")
@@ -981,7 +994,13 @@ def event_gainFocus(vmID, accContext, hwnd):
 
 
 @AccessBridge_PropertyActiveDescendentChangeFP
-def internal_event_activeDescendantChange(vmID, event, source, oldDescendant, newDescendant):
+def internal_event_activeDescendantChange(
+	vmID: int,
+	event: int,
+	source: int,
+	oldDescendant: int,
+	newDescendant: int,
+) -> None:
 	hwnd = getWindowHandleFromAccContext(vmID, source)
 	sourceContext = JABContext(hwnd=hwnd, vmID=vmID, accContext=source)
 	if internal_hasFocus(sourceContext):
@@ -1001,12 +1020,18 @@ def internal_hasFocus(sourceContext):
 
 
 @AccessBridge_PropertyNameChangeFP
-def internal_event_nameChange(vmID, event, source, oldVal, newVal):
+def internal_event_nameChange(
+	vmID: int,
+	event: int,
+	source: int,
+	oldVal: str | None,
+	newVal: str | None,
+) -> None:
 	internalQueueFunction(event_nameChange, vmID, source)
 	bridgeDll.releaseJavaObject(vmID, event)
 
 
-def event_nameChange(vmID, accContext):
+def event_nameChange(vmID: int, accContext: int) -> None:
 	jabContext = JABContext(vmID=vmID, accContext=accContext)
 	if jabContext.hwnd:
 		focus = api.getFocusObject()
@@ -1022,12 +1047,18 @@ def event_nameChange(vmID, accContext):
 
 
 @AccessBridge_PropertyDescriptionChangeFP
-def internal_event_descriptionChange(vmID, event, source, oldVal, newVal):
+def internal_event_descriptionChange(
+	vmID: int,
+	event: int,
+	source: int,
+	oldVal: str | None,
+	newVal: str | None,
+) -> None:
 	internalQueueFunction(event_descriptionChange, vmID, source)
 	bridgeDll.releaseJavaObject(vmID, event)
 
 
-def event_descriptionChange(vmID, accContext):
+def event_descriptionChange(vmID: int, accContext: int) -> None:
 	jabContext = JABContext(vmID=vmID, accContext=accContext)
 	if jabContext.hwnd:
 		focus = api.getFocusObject()
@@ -1043,12 +1074,18 @@ def event_descriptionChange(vmID, accContext):
 
 
 @AccessBridge_PropertyValueChangeFP
-def internal_event_valueChange(vmID, event, source, oldVal, newVal):
+def internal_event_valueChange(
+	vmID: int,
+	event: int,
+	source: int,
+	oldVal: str | None,
+	newVal: str | None,
+) -> None:
 	internalQueueFunction(event_valueChange, vmID, source)
 	bridgeDll.releaseJavaObject(vmID, event)
 
 
-def event_valueChange(vmID, accContext):
+def event_valueChange(vmID: int, accContext: int) -> None:
 	jabContext = JABContext(vmID=vmID, accContext=accContext)
 	if jabContext.hwnd:
 		focus = api.getFocusObject()

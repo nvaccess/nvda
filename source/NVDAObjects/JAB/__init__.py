@@ -258,10 +258,18 @@ class JAB(Window):
 	def _hasTableParent(self) -> bool:
 		"""Lightweight check if the immediate parent is a Table.
 
-		On the fast path (parent already cached), returns immediately
-		without any bridge calls.  On the first call, checks the parent's
-		role via a lightweight bridge call and only creates a full NVDAObject
-		when the role is "table" (which involves additional bridge calls).
+		Avoids the expensive recursive parent-NVDAObject construction that
+		``isinstance(self.parent, Table)`` would otherwise perform via
+		``findOverlayClasses``.
+
+		On the fast path (parent already cached via ``self._parent``),
+		reuses the cached object; this may still trigger a
+		``getAccessibleTableInfo`` bridge call through ``parent._jabTableInfo``.
+		On the first call, queries the parent's role via a lightweight
+		``getAccessibleContextInfo`` bridge call and only materialises the
+		full NVDAObject when the role is ``"table"``; in that case it also
+		caches the NVDAObject in ``self._parent`` as a side effect, so a
+		subsequent ``_get_parent`` call does not repeat the bridge work.
 		"""
 		if hasattr(self, "_parent"):
 			parent = self._parent
