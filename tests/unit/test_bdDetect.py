@@ -16,7 +16,7 @@ class TestBdDetectExtensionPoints(unittest.TestCase):
 	"""A test for the extension points on the bdDetect module."""
 
 	def test_scanForDevices(self):
-		kwargs = dict(usb=False, bluetooth=False, limitToDevices=["noBraille"])
+		kwargs = dict(usb=False, bluetooth=False, ble=False, limitToDevices=["noBraille"])
 		with chainTester(
 			self,
 			bdDetect.scanForDevices,
@@ -99,3 +99,55 @@ class TestDriverRegistration(unittest.TestCase):
 
 		registrar.addBluetoothDevices(matchFunc)
 		self.assertEqual(registrar._getDriverDict().get(bdDetect.CommunicationType.BLUETOOTH), matchFunc)
+
+	def test_addBleDevices(self):
+		"""Test adding a BLE match function."""
+		from brailleDisplayDrivers import dotPad
+
+		registrar = bdDetect.DriverRegistrar(dotPad.BrailleDisplayDriver.name)
+
+		def matchFunc(match: bdDetect.DeviceMatch) -> bool:
+			return match.id.startswith("DotPad")
+
+		registrar.addBleDevices(matchFunc)
+
+		# Verify the match function was stored
+		stored_match_func = registrar._getDriverDict().get(bdDetect.CommunicationType.BLE)
+		self.assertEqual(stored_match_func, matchFunc)
+
+		# Verify it's callable
+		self.assertTrue(callable(stored_match_func))
+
+	def test_bleDeviceMatching(self):
+		"""Test that BLE device matching works correctly."""
+		from brailleDisplayDrivers import dotPad
+
+		registrar = bdDetect.DriverRegistrar(dotPad.BrailleDisplayDriver.name)
+
+		# Register the dotPad BLE match function
+		registrar.addBleDevices(dotPad.BrailleDisplayDriver._isBleDotPad)
+
+		# Create a matching DeviceMatch (DotPad device)
+		matching_device = bdDetect.DeviceMatch(
+			type=bdDetect.ProtocolType.BLE,
+			id="DotPad320",
+			port="AA:BB:CC:DD:EE:FF",
+			deviceInfo={"name": "DotPad320", "address": "AA:BB:CC:DD:EE:FF"},
+		)
+
+		# Create a non-matching DeviceMatch
+		non_matching_device = bdDetect.DeviceMatch(
+			type=bdDetect.ProtocolType.BLE,
+			id="SomeOtherDevice",
+			port="11:22:33:44:55:66",
+			deviceInfo={"name": "SomeOtherDevice", "address": "11:22:33:44:55:66"},
+		)
+
+		# Get the match function
+		match_func = registrar._getDriverDict().get(bdDetect.CommunicationType.BLE)
+
+		# Test matching device
+		self.assertTrue(match_func(matching_device))
+
+		# Test non-matching device
+		self.assertFalse(match_func(non_matching_device))
