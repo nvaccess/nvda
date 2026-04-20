@@ -235,8 +235,6 @@ class Logger(logging.Logger):
 	#: @type: C{long}
 	fragmentStart = None
 
-	secretDetectionSettings = default_settings()
-
 	def _log(
 		self,
 		level: int,
@@ -303,7 +301,7 @@ class Logger(logging.Logger):
 					"Failed to format log message for secret redaction, logging unredacted exception.",
 				)
 
-			with self.secretDetectionSettings:
+			with default_settings():
 				for secret in list(scan_line(formattedMsg)):
 					formattedMsg = formattedMsg.replace(secret.secret_value, "****")
 

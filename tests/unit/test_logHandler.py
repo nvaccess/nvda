@@ -5,7 +5,6 @@
 
 """Unit tests for secret redaction in the logHandler module."""
 
-import contextlib
 import logging
 import types
 import unittest
@@ -17,7 +16,6 @@ import logHandler
 class TestLoggerSecretRedaction(unittest.TestCase):
 	def setUp(self):
 		self.logger = logHandler.Logger("testLogHandler")
-		self.logger.secretDetectionSettings = contextlib.nullcontext()
 
 	def test_logWithoutRedactionPassesMessageAndArgsThrough(self):
 		with (
@@ -97,3 +95,40 @@ class TestLoggerSecretRedaction(unittest.TestCase):
 			None,
 			{"codepath": "tests.unit.test_logHandler"},
 		)
+
+	def test_logWithRealDetectSecretsMasksHash(self):
+		with mock.patch.object(logging.Logger, "_log") as superLog:
+			self.logger._log(
+				logging.INFO,
+				"Config loaded: %s",
+				("{'key': '86851a5bab3f33abc2858eca0922c34c34c38f0a'}",),
+				codepath="tests.unit.test_logHandler",
+				redactSecrets=True,
+			)
+
+		loggedMsg = superLog.call_args.args[1]
+		self.assertIn("****", loggedMsg)
+		self.assertNotIn("86851a5bab3f33abc2858eca0922c34c34c38f0a", loggedMsg)
+
+	def test_logWithRealDetectSecretsCanRedactMultipleMessages(self):
+		with mock.patch.object(logging.Logger, "_log") as superLog:
+			self.logger._log(
+				logging.INFO,
+				"first %s",
+				("f7dc081e446d6975e462c6aacc4e84cced45e6e5",),
+				codepath="tests.unit.test_logHandler",
+				redactSecrets=True,
+			)
+			self.logger._log(
+				logging.INFO,
+				"second %s",
+				("86851a5bab3f33abc2858eca0922c34c34c38f0a",),
+				codepath="tests.unit.test_logHandler",
+				redactSecrets=True,
+			)
+
+		loggedMessages = [call.args[1] for call in superLog.call_args_list]
+		self.assertEqual(len(loggedMessages), 2)
+		for loggedMsg in loggedMessages:
+			self.assertIn("****", loggedMsg)
+			self.assertNotIn("86851a5bab3f33abc2858eca0922c34c34c38f0a", loggedMsg)
