@@ -32,8 +32,6 @@ import RPCConstants
 import NVDAState
 from NVDAState import WritePaths
 
-from detect_secrets.core.scan import scan_line
-from detect_secrets.settings import default_settings
 
 if TYPE_CHECKING:
 	import extensionPoints
@@ -246,7 +244,7 @@ class Logger(logging.Logger):
 		activateLogViewer: bool = False,
 		stack_info: list[traceback.FrameSummary] | bool | None = None,
 		redactSecrets: bool = False,
-	):
+	) -> Any:
 		"""Logs a message with the given severity level.
 
 		:param level: The severity level of the log message.
@@ -258,7 +256,7 @@ class Logger(logging.Logger):
 		:param activateLogViewer: Whether to activate the log viewer, defaults to False
 		:param stack_info: Stack information to be logged, defaults to None
 		:param redactSecrets: Whether to check for and redact secrets in the log message, defaults to False
-		:return: The result of the logging operation
+		:return: The result of the logging operation (None for builtin handlers).
 		"""
 
 		if not extra:
@@ -293,6 +291,9 @@ class Logger(logging.Logger):
 			)
 
 		if redactSecrets:
+			from detect_secrets.core.scan import scan_line
+			from detect_secrets.settings import default_settings
+
 			try:
 				formattedMsg = msg % args if args else msg
 			except Exception:
