@@ -5,7 +5,7 @@
 
 """Functions exported by magnification.dll, and supporting data structures and enumerations."""
 
-from ctypes import POINTER, WINFUNCTYPE, Structure, WinError, c_float, windll
+from ctypes import POINTER, WINFUNCTYPE, Structure, WinError, c_float, c_int, windll
 from ctypes.wintypes import BOOL
 from _ctypes import CFuncPtr
 from typing import Any
@@ -86,3 +86,15 @@ Destroys the magnifier run-time objects.
 	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-maguninitialize
 """
 MagUninitialize.errcheck = _errCheck
+
+MagSetFullscreenTransform = WINFUNCTYPE(BOOL, c_float, c_int, c_int)(
+	("MagSetFullscreenTransform", dll),
+	((1, "magLevel"), (1, "xOffset"), (1, "yOffset")),
+)
+"""
+Sets the magnification settings for the full-screen magnifier.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-magsetfullscreentransform
+"""
+MagSetFullscreenTransform.errcheck = _errCheck

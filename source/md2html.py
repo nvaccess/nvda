@@ -9,6 +9,7 @@ import io
 import re
 import shutil
 from typing import Any
+from l2m4m import LaTeX2MathMLExtension
 
 _DEFAULT_EXTENSIONS_ORDERED = (
 	# Supports tables, HTML mixed with markdown, code blocks, custom attributes and more
@@ -23,6 +24,8 @@ _DEFAULT_EXTENSIONS_ORDERED = (
 	"markdown_link_attr_modifier",
 	# Adds links to GitHub authors, issues and PRs
 	"mdx_gh_links",
+	# Converts LaTeX to MathML
+	LaTeX2MathMLExtension(),
 )
 """
 Default extensions to use for markdown conversion.
@@ -122,10 +125,28 @@ def _createAttributeFilter() -> dict[str, set[str]]:
 	# link rel and target is set by markdown_link_attr_modifier
 	allowedAttributes["a"].update({"rel", "target"})
 
+	if "math" not in allowedAttributes:
+		allowedAttributes["math"] = set()
+	allowedAttributes["math"].add("display")
+
 	return allowedAttributes
 
 
+def _attributeFilter(tag: str, attr: str, value: str) -> str | None:
+	# Specifying display=inline is redundant
+	if tag == "math" and attr == "display":
+		return value if value == "block" else None
+	return value
+
+
+def _createTagFilter() -> set[str]:
+	import nh3
+
+	return nh3.ALLOWED_TAGS | {"math", "mrow", "mfrac", "mi", "mn", "mo", "msub"}
+
+
 ALLOWED_ATTRIBUTES = _createAttributeFilter()
+ALLOWED_TAGS = _createTagFilter()
 
 
 def _generateSanitizedHTML(md: str, isKeyCommands: bool = False) -> str:
@@ -147,7 +168,9 @@ def _generateSanitizedHTML(md: str, isKeyCommands: bool = False) -> str:
 	# Sanitize html output from markdown to prevent XSS from translators
 	htmlOutput = nh3.clean(
 		htmlOutput,
+		tags=ALLOWED_TAGS,
 		attributes=ALLOWED_ATTRIBUTES,
+		attribute_filter=_attributeFilter,
 		# link rel is handled by markdown_link_attr_modifier
 		link_rel=None,
 		# Keep key command comments and similar

@@ -9,6 +9,8 @@ import ctypes
 import unicodedata
 import NVDAHelper
 import config.featureFlagEnums
+import NVDAState
+import config
 import textInfos
 import locationHelper
 from treeInterceptorHandler import TreeInterceptor
@@ -581,6 +583,13 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			self._startOffset = self._endOffset
 
 	def expand(self, unit):
+		if unit == textInfos.UNIT_WORD and self.isCollapsed and self._startOffset == self._getStoryLength():
+			try:
+				flowsTo = self.obj.flowsTo
+			except (AttributeError, NotImplementedError):
+				flowsTo = None
+			if not flowsTo:
+				return
 		self._startOffset, self._endOffset = self._getUnitOffsets(unit, self._startOffset)
 
 	def copy(self):
@@ -662,11 +671,27 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError
 
-	allowMoveToOffsetPastEnd = True
-	"""
-	We can move 1 past story length to allow braille routing to end insertion point. (#2096)
-	Furthermore, review cursor is able to reach the last, empty line in some controls, like Scintilla. (#18348)
-	"""
+	def allowMoveToUnitOffsetPastEnd(self, unit: str) -> bool:
+		"""
+		This method indicates whether the `move` method is allowed to move one unit past the end of the text info.
+		For example, normally we should be able to move 1 past story length
+		to allow braille routing to move to an insertion point at the end. (#2096)
+		Furthermore, review cursor should be able to reach the last, empty line in some controls,
+		like Scintilla. (#18348)
+		:param unit: the TextInfo unit (e.g. character or word)
+		:return: Whether or not to allow movement past end for the specific unit.
+		"""
+		return True
+
+	if NVDAState._allowDeprecatedAPI():
+
+		def _get_allowMoveToOffsetPastEnd(self) -> bool:
+			log.warning(
+				"OffsetsTextInfo.allowMoveToOffsetPastEnd is deprecated. "
+				"Use the OffsetsTextInfo.allowMoveToUnitOffsetPastEnd method instead.",
+				stack_info=True,
+			)
+			return self.allowMoveToUnitOffsetPastEnd(textInfos.UNIT_CHARACTER)
 
 	def move(self, unit, direction, endPoint=None):
 		if direction == 0:
@@ -682,9 +707,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		count = 0
 		lowLimit = 0
 		highLimit = self._getStoryLength()
-		if self.allowMoveToOffsetPastEnd:
-			# #2096: There is often an uncounted character at the end of the text
-			# where the caret is placed to append text.
+		if self.allowMoveToUnitOffsetPastEnd(unit):
 			highLimit += 1
 		while (
 			count != direction

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2025 NV Access Limited, Zahari Yurukov,
+# Copyright (C) 2012-2026 NV Access Limited, Zahari Yurukov,
 # Babbage B.V., Joseph Lee, Christopher Proß
 
 """Update checking functionality.
@@ -1101,7 +1101,7 @@ def _updateWindowsRootCertificates():
 	# Convert to a form usable by Windows.
 	certCont = crypt32.CertCreateCertificateContext(
 		0x00000001,  # X509_ASN_ENCODING
-		cert,
+		ctypes.cast(cert, ctypes.POINTER(ctypes.c_byte)),
 		len(cert),
 	)
 	# Ask Windows to build a certificate chain, thus triggering a root certificate update.

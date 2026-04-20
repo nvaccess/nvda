@@ -396,6 +396,11 @@ class MSHTML(VirtualBuffer):
 				"IAccessible::role": [oleacc.ROLE_SYSTEM_CHECKBUTTON],
 				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1],
 			}
+		elif nodeType == "slider":
+			attrs = [
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_SLIDER]},
+				{"HTMLAttrib::role": ["slider"]},
+			]
 		elif nodeType == "table":
 			attrs = {"IHTMLDOMNode::nodeName": ["TABLE"]}
 			if not config.conf["documentFormatting"]["includeLayoutTables"]:

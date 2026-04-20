@@ -43,7 +43,7 @@ import globalVars
 import languageHandler
 import controlTypes
 import extensionPoints
-from NVDAState import WritePaths
+from NVDAState import WritePaths, shouldWriteToDisk
 
 
 InputGestureBindingClassT = TypeVar("InputGestureBindingClassT")
@@ -438,6 +438,9 @@ class GlobalGestureMap:
 		"""Save this gesture map to disk.
 		@precondition: L{load} must have been called.
 		"""
+		if not shouldWriteToDisk():
+			log.debug("Not saving user gesture map, as shouldWriteToDisk returned false.")
+			return
 		if not self.fileName:
 			raise ValueError("No file name")
 		out = configobj.ConfigObj(self.export(), encoding="UTF-8")

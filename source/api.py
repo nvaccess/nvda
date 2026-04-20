@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, James Teh, Michael Curran, Peter Vagner, Derek Riemer,
-# Davy Kager, Babbage B.V., Leonard de Ruijter, Joseph Lee, Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2025 NV Access Limited, James Teh, Michael Curran, Peter Vagner, Derek Riemer,
+# Davy Kager, Babbage B.V., Leonard de Ruijter, Joseph Lee, Accessolutions, Julien Cochuyt, hwf1324
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -498,6 +498,20 @@ def filterFileName(name):
 def isNVDAObject(obj: Any) -> bool:
 	"""Returns whether the supplied object is a L{NVDAObjects.NVDAObject}"""
 	return isinstance(obj, NVDAObjects.NVDAObject)
+
+
+fakeNVDAObjectClasses: set[type[NVDAObjects.NVDAObject]] = set()
+"""
+A collection used to register fake NVDAObject classes.
+
+These classes are treated as virtual NVDAObjects, and may not correspond to actual controls.
+For instance, content recognition results.
+"""
+
+
+def isFakeNVDAObject(obj: Any) -> bool:
+	"""Returns whether the supplied object is a fake :class:`NVDAObjects.NVDAObject`."""
+	return isinstance(obj, tuple(fakeNVDAObjectClasses))
 
 
 def isCursorManager(obj: Any) -> bool:

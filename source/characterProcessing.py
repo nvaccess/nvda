@@ -22,6 +22,7 @@ from typing import (
 	TypeVar,
 )
 
+import NVDAState
 from logHandler import log
 import globalVars
 import config
@@ -356,6 +357,9 @@ class SpeechSymbols:
 		@raise ValueError: If C{fileName} is C{None}
 			and L{load} or L{save} has not been called.
 		"""
+		if not NVDAState.shouldWriteToDisk():
+			log.debugWarning("Not saving speech symbols, as shouldWriteToDisk returned False.")
+			return
 		if fileName:
 			self.fileName = fileName
 		elif self.fileName:

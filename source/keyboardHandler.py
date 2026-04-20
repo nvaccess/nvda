@@ -759,6 +759,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		keys = set(keys.split("+"))
 		names = []
 		main = None
+		numlock = None
 		try:
 			# If present, the NVDA key should appear first.
 			keys.remove("nvda")
@@ -775,9 +776,15 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			label = localizedKeyLabels.get(key, key)
 			if vk in cls.NORMAL_MODIFIER_KEYS:
 				names.append(label)
+			elif vk == winUser.VK_NUMLOCK:
+				# Numlock can be both modifier or main key so handle it separately and add it at the end after modifiers
+				# but before main key
+				numlock = label
 			else:
 				# The main key must be last, so handle that outside the loop.
 				main = label
+		if numlock is not None:
+			names.append(numlock)
 		if main is not None:
 			# If there is no main key, this gesture identifier only contains modifiers.
 			names.append(main)

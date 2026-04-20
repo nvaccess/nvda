@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited
+# Copyright (C) 2025-2026 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -25,6 +25,7 @@ from ctypes.wintypes import (
 	LPWSTR,
 	LPVOID,
 )
+from enum import IntEnum
 
 __all__ = (
 	"OpenProcessToken",
@@ -38,6 +39,18 @@ __all__ = (
 
 
 dll = windll.advapi32
+
+
+class TokenAccessRight(IntEnum):
+	"""
+	The specific access rights for access tokens.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/secauthz/access-rights-for-access-token-objects
+	"""
+
+	QUERY = 8
+	"""TOKEN_QUERY: Required to query an access token."""
 
 
 OpenProcessToken = WINFUNCTYPE(None)(("OpenProcessToken", dll))
@@ -200,6 +213,37 @@ CreateProcessAsUser.argtypes = (
 	POINTER(PROCESS_INFORMATION),  # lpProcessInformation
 )
 CreateProcessAsUser.restype = BOOL
+
+
+class TOKEN_INFORMATION_CLASS(IntEnum):
+	"""
+	Specifies the type of information being assigned to or retrieved from an access token.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winnt/ne-winnt-token_information_class
+	"""
+
+	ELEVATION_TYPE = 18
+	"""The buffer receives a TOKEN_ELEVATION_TYPE value that specifies the elevation level of the token."""
+
+
+class TOKEN_ELEVATION_TYPE(IntEnum):
+	"""
+	Indicates the elevation type of an access token.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winnt/ne-winnt-token_elevation_type
+	"""
+
+	DEFAULT = 1
+	"""The token does not have a linked token."""
+
+	FULL = 2
+	"""The token is an elevated token."""
+
+	LIMITED = 3
+	"""The token is a limited token."""
+
 
 GetTokenInformation = WINFUNCTYPE(None)(("GetTokenInformation", dll))
 """

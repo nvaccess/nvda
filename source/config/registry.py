@@ -35,7 +35,7 @@ class RegistryKey(str, Enum):
 	# TODO: remove winreg.KEY_WOW64_64KEY from usages when NVDA is 64-bit only.
 	EASE_OF_ACCESS_APP = rf"{EASE_OF_ACCESS}\ATs\{EASE_OF_ACCESS_APP_KEY_NAME}"
 	ADDON_PROG = rf"{_SOFTWARE}\Classes\{NVDA_ADDON_PROG_ID}"
-	ADDON_EXT = rf"{_SOFTWARE}\Classes\{ADDON_BUNDLE_EXTENSION}"
+	ADDON_EXT = rf"{_SOFTWARE}\Classes\.{ADDON_BUNDLE_EXTENSION}"
 	REMOTE_URL_HANDLER = rf"{_SOFTWARE}\Classes\nvdaremote"
 
 	# Sub keys

@@ -176,6 +176,22 @@ class TestEndpoints(unittest.TestCase):
 		self.assertEqual((ti1._startOffset, ti1._endOffset), (5, 5))
 
 
+class TestWordExpansion(unittest.TestCase):
+	def test_expandWordDoesNotRequireFlowsToBeforeEndOfStory(self):
+		obj = BasicTextProvider(text="one two")
+		ti = obj.makeTextInfo(Offsets(0, 0))
+		ti.expand(textInfos.UNIT_WORD)
+		self.assertEqual(ti.text, "one ")
+
+	def test_expandWordAtEndOfStoryWithoutFlowsToDoesNothing(self):
+		obj = BasicTextProvider(text="one two")
+		ti = obj.makeTextInfo(textInfos.POSITION_ALL)
+		ti.collapse(end=True)
+		ti.expand(textInfos.UNIT_WORD)
+		self.assertEqual(ti.text, "")
+		self.assertEqual(ti.offsets, (7, 7))
+
+
 class TestMoveToCodepointOffsetInBlackBoxTextInfo(unittest.TestCase):
 	THREE_CHARS = "012"
 	TEN_CHARS = "0123456789"
