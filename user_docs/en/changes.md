@@ -59,6 +59,7 @@ This is more noticeable for Windows releases which are enablement packages on to
 * Configuration profile triggers now activate when the Add-on Store is open. (#19583, @bramd)
 * Decorative Unicode letters such as negative squared, negative circled, and regional indicator symbol characters are now normalized to their base Latin letters when Unicode normalization is enabled. (#19608, @bramd)
 * NVDA no longer crashes when the Add-on Store download directory cannot be cleaned up due to file permission errors. (#19202, @christopherpross)
+* Fixed NVDA freezing when navigating in JetBrains IDEs. (#16741, @christopherpross)
 
 ### Changes for Developers
 
