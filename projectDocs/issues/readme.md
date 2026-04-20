@@ -12,7 +12,7 @@ These include:
 
 * NVDA interface text that is incorrectly translated from English
 * Contents of the User Guide and Changes documents that are incorrectly translated from English
-* Locale-specific gestures, symbols and character descriptions
+* Input gestures, punctuation/symbol pronunciations, and character descriptions in languages other than English
 
 If you are reporting an issue with an application or website, please consider reporting the issue to the [authors of the application/website](./thirdPartyReporting.md) first.
 
