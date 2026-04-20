@@ -198,6 +198,8 @@ class TestFocusManager(unittest.TestCase):
 				self.focusManager._lastNavigatorObjectPosition = Coordinates(0, 0)
 				self.focusManager._lastSystemFocusPosition = Coordinates(0, 0)
 				self.focusManager._lastMousePosition = Coordinates(0, 0)
+				self.focusManager._lastFocusedObject = None
+				self.focusManager._lastSystemFocusChangeTime = 0.0
 
 				# Set lastFocusedObject if specified
 				if param.lastFocusedObject is not None:

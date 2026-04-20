@@ -117,3 +117,13 @@ def getFileVersionInfo(name: str, *attributes: str) -> dict[str, str | None]:
 		else:
 			fileVersionInfo[attr] = ctypes.wstring_at(r.value, l.value - 1)
 	return fileVersionInfo
+
+
+def isDirEmpty(dir: str) -> bool:
+	"""Check whether a directory is empty.
+
+	:param dir: The path to the directory to check.
+	:return: True if the directory contains no entries, False otherwise.
+	"""
+	with os.scandir(dir) as scanner:
+		return not any(scanner)
