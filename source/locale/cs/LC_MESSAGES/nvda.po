@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-09 08:28+0000\n"
-"PO-Revision-Date: 2026-04-13 00:28\n"
+"POT-Creation-Date: 2026-04-16 06:42+0000\n"
+"PO-Revision-Date: 2026-04-20 00:29\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -16201,70 +16201,70 @@ msgstr "Hláskovat (H 2 O)"
 #: mathPres\MathCAT\preferences.py:86
 msgctxt "math"
 msgid "Off (H sub 2 O)"
-msgstr ""
+msgstr "Vypnuto (H dolní index 2 O)"
 
 #. Translators: names of different modes of navigation. "Enhanced" mode understands math structure
 #: mathPres\MathCAT\preferences.py:99
 msgctxt "math"
 msgid "Enhanced"
-msgstr ""
+msgstr "Rozšířený"
 
 #. Translators: "Simple" walks by character expect for things like fractions, roots, and scripts
 #: mathPres\MathCAT\preferences.py:101
 msgctxt "math"
 msgid "Simple"
-msgstr ""
+msgstr "Jednoduchý"
 
 #. Translators: "Character" moves around by character, automatically moving into fractions, etc
 #: mathPres\MathCAT\preferences.py:103
 msgctxt "math"
 msgid "Character"
-msgstr ""
+msgstr "Po znacích"
 
 #. Translators: options for Copy expression to clipboard as -- "MathML"
 #: mathPres\MathCAT\preferences.py:134
 msgctxt "math"
 msgid "MathML"
-msgstr ""
+msgstr "MathML"
 
 #. Translators: options for Copy math to clipboard as -- "LaTeX"
 #: mathPres\MathCAT\preferences.py:136
 msgctxt "math"
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #. Translators: options for Copy math to clipboard as -- "ASCIIMath"
 #: mathPres\MathCAT\preferences.py:138
 msgctxt "math"
 msgid "ASCIIMath"
-msgstr ""
+msgstr "ASCIIMath"
 
 #. Translators: Math option for using dots 7 and 8: don't highlight
 #: mathPres\MathCAT\preferences.py:154
 msgctxt "math"
 msgid "Off"
-msgstr ""
+msgstr "Vypnuto"
 
 #. Translators: Math option for using dots 7 and 8:
 #. only the first character of the current navigation node uses dots 7 & 8
 #: mathPres\MathCAT\preferences.py:157
 msgctxt "math"
 msgid "First character"
-msgstr ""
+msgstr "První znak"
 
 #. Translators: Math option for using dots 7 and 8:
 #. only the first and last character of the current navigation node uses dots 7 & 8
 #: mathPres\MathCAT\preferences.py:160
 msgctxt "math"
 msgid "Endpoints"
-msgstr ""
+msgstr "Koncové body"
 
 #. Translators: Math option for using dots 7 and 8:
 #. all the characters for the current navigation node use dots 7 & 8
 #: mathPres\MathCAT\preferences.py:163
 msgctxt "math"
 msgid "All"
-msgstr ""
+msgstr "Všechny"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 #: NVDAHelper\__init__.py:497
@@ -16725,7 +16725,7 @@ msgstr "&Chyby"
 #. in the browse mode Elements List dialog.
 #: NVDAObjects\UIA\wordDocument.py:79 NVDAObjects\window\winword.py:2228
 msgid "&References"
-msgstr ""
+msgstr "&Reference"
 
 #. Translators: The label shown for an insertion change
 #: NVDAObjects\UIA\wordDocument.py:96
@@ -16750,21 +16750,21 @@ msgstr "změna stopy: {text}"
 #: NVDAObjects\UIA\wordDocument.py:141
 #, python-brace-format
 msgid "footnote reference: {text}"
-msgstr ""
+msgstr "poznámka pod čarou: {text}"
 
 #. Translators: The label shown for an endnote in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the endnote.
 #: NVDAObjects\UIA\wordDocument.py:145
 #, python-brace-format
 msgid "endnote reference: {text}"
-msgstr ""
+msgstr "koncová poznámka: {text}"
 
 #. Translators: The label shown for a reference in the NVDA Elements List dialog in Microsoft Word.
 #. {name} will be replaced with the name of the reference.
 #: NVDAObjects\UIA\wordDocument.py:151
 #, python-brace-format
 msgid "reference: {name}"
-msgstr ""
+msgstr "reference: {name}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #: NVDAObjects\UIA\wordDocument.py:203
@@ -18398,7 +18398,7 @@ msgstr "pravopisná chyba: {text}"
 #: NVDAObjects\window\winword.py:653
 #, python-brace-format
 msgid "footnote reference {number}: {text}"
-msgstr ""
+msgstr "poznámka pod čarou {number}: {text}"
 
 #. Translators: The label shown for a endnote reference in the NVDA Elements List dialog in Microsoft Word.
 #. {number} will be replaced with the endnote number.
@@ -18406,7 +18406,7 @@ msgstr ""
 #: NVDAObjects\window\winword.py:664
 #, python-brace-format
 msgid "endnote reference {number}: {text}"
-msgstr ""
+msgstr "koncová poznámka {number}: {text}"
 
 #. Translators: a distance from the left edge of the page in Microsoft Word
 #: NVDAObjects\window\winword.py:874
@@ -18656,13 +18656,13 @@ msgstr "{val:g} bodů mezera před odstavcem"
 #: screenCurtain\_screenCurtain.py:30
 msgctxt "screenCurtain"
 msgid "Always &show a warning when enabling Screen Curtain"
-msgstr ""
+msgstr "&Upozornit vždy před zapnutím clony obrazovky"
 
 #. Translators: Warning message when trying to enable the screen curtain when OCR is active.
 #: screenCurtain\_screenCurtain.py:35
 msgctxt "screenCurtain"
 msgid "Cannot enable screen curtain while performing content recognition"
-msgstr ""
+msgstr "Nelze zapnout clonu obrazovky během rozpoznávání textu"
 
 #. Translators: Reported when the screen curtain could not be enabled.
 #: screenCurtain\_screenCurtain.py:39
@@ -18674,7 +18674,7 @@ msgstr "Nelze zapnout clonu obrazovky"
 #: screenCurtain\_screenCurtain.py:45
 msgctxt "screenCurtain"
 msgid "There was a problem enabling Screen Curtain. The contents of your screen are still visible. You may attempt to enable Screen Curtain manually."
-msgstr ""
+msgstr "Při zapnutí clony obrazovky došlo k chybě. Pokuste se ji zapnout ručně. Obsah obrazovky je pořád vidět."
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -18759,7 +18759,7 @@ msgid "selection removed"
 msgstr "výběr odstraněn"
 
 #. Translators: Speaks current row number (example output: row 3).
-#: speech\speech.py:2046 speech\speech.py:3097
+#: speech\speech.py:2046 speech\speech.py:3108
 #, python-format
 msgid "row %s"
 msgstr "řádek %s"
@@ -18771,7 +18771,7 @@ msgid "through {endRow}"
 msgstr "do {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
-#: speech\speech.py:2066 speech\speech.py:3093
+#: speech\speech.py:2066 speech\speech.py:3104
 #, python-format
 msgid "column %s"
 msgstr "sloupec %s"
@@ -19200,14 +19200,14 @@ msgid "out of grammar error"
 msgstr "mimo gramatickou chybu"
 
 #. Translators: Indicates end of a table.
-#: speech\speech.py:3070
+#: speech\speech.py:3081
 msgid "out of table"
 msgstr "mimo tabulku"
 
 #. Translators: Main part of the compound string to report a table
 #. Example: If the reported compound string is "table with 2 columns and 3 rows", {colCountTranslation}
 #. will be replaced by "2 columns" and {rowCountTranslation} by "3 rows"
-#: speech\speech.py:3085
+#: speech\speech.py:3096
 #, python-brace-format
 msgid "table with {columnCountText} and {rowCountText}"
 msgstr "tabulka má {columnCountText} a {rowCountText}"
@@ -19226,17 +19226,17 @@ msgstr "Hlasy Windows OneCore"
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\sapi4_32.py:18
 msgid "Microsoft Speech API version 4"
-msgstr ""
+msgstr "Microsoft Speech API verze 4"
 
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\sapi5.py:558 _synthDrivers32\_sapi5.py:558
 msgid "Microsoft Speech API version 5 (64 bit)"
-msgstr ""
+msgstr "Microsoft Speech API verze 5 (64 bit)"
 
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\sapi5_32.py:15
 msgid "Microsoft Speech API version 5 (32 bit)"
-msgstr ""
+msgstr "Microsoft Speech API verze 5 (32 bit)"
 
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\silence.py:16
@@ -19454,7 +19454,7 @@ msgstr "Nenabíjí se"
 #. Translators: Reported when battery time is less than 1 minute.
 #: winAPI\_powerTracking.py:228
 msgid "Less than 1 minute remaining"
-msgstr ""
+msgstr "Zbývá míň než 1 minuta"
 
 #. Translators: This is the hour string part of the estimated remaining runtime of the laptop battery.
 #. E.g. if the full string is "1 hour and 34 minutes remaining", this string is "1 hour".
@@ -19490,14 +19490,14 @@ msgstr "Zbývá {hourText} a {minuteText}"
 #: winAPI\_powerTracking.py:265
 #, python-brace-format
 msgid "{hourText} remaining"
-msgstr ""
+msgstr "Zbývá {hourText}"
 
 #. Translators: Reported when only minutes remaining for battery life.
 #. E.g. "30 minutes remaining"
 #: winAPI\_powerTracking.py:271
 #, python-brace-format
 msgid "{minuteText} remaining"
-msgstr ""
+msgstr "Zbývá {minuteText}"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 #: winAPI\secureDesktop.py:53
@@ -19566,13 +19566,13 @@ msgstr "Nelze se připojit ke vzdálenému počítači"
 #: _remoteClient\client.py:333
 msgctxt "remote"
 msgid "Error Connecting"
-msgstr ""
+msgstr "Chyba připojení"
 
 #. Translators: Message shown when unable to connect to the remote computer.
 #: _remoteClient\client.py:335
 msgctxt "remote"
 msgid "Unable to connect to the remote computer"
-msgstr ""
+msgstr "Nepodařilo se připojit ke vzdálenému počítači"
 
 #. Translators: Message shown when trying to connect while already connected.
 #: _remoteClient\client.py:358 _remoteClient\client.py:705
