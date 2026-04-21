@@ -609,7 +609,7 @@ class ConfigManager(object):
 		# since profile settings are not yet imported we have to "peek" to see
 		# if debug level logging is enabled.
 		try:
-			logLevelName: str  = profile["general"]["loggingLevel"]
+			logLevelName: str = profile["general"]["loggingLevel"]
 			if not logLevelName:
 				level = None
 			else:
