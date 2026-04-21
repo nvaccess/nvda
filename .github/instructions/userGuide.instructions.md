@@ -22,7 +22,7 @@ Feature flags, comboboxes and checkboxes should be included using the following 
 Once the anchor is set it cannot be updated, while settings may move categories.
 
 ```md
-==== The name of a feature ====[FeatureDescriptionAnchor]
+##### The name of a feature {#FeatureDescriptionAnchor}
 
 Brief summary of the feature.
 This setting allows the feature of using functionality in a certain situation to be controlled in some way.
