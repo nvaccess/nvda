@@ -10,6 +10,7 @@ import unittest
 from unittest.mock import MagicMock, Mock, patch
 import mouseHandler
 import winUser
+import _ctypes
 
 
 @dataclass(frozen=True)
@@ -72,7 +73,6 @@ class TestFocusManager(unittest.TestCase):
 
 	def testGetReviewPositionSurvivesCOMError(self):
 		"""_getReviewPosition catches COMError from pointAtStart."""
-		import _ctypes
 
 		comError = _ctypes.COMError(-2147418113, "Défaillance irrémédiable", None)
 		mockReviewPos = Mock()
