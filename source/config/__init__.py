@@ -590,7 +590,7 @@ class ConfigManager(object):
 		self.profiles.append(profile)
 		self._handleProfileSwitch()
 
-	def _loadConfig(self, fn, fileError=False):
+	def _loadConfig(self, fn: str, fileError: bool = False) -> ConfigObj:
 		log.info("Loading config: {0}".format(fn))
 		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=fileError)
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
@@ -609,10 +609,15 @@ class ConfigManager(object):
 		# since profile settings are not yet imported we have to "peek" to see
 		# if debug level logging is enabled.
 		try:
-			logLevelName = profile["general"]["loggingLevel"]
+			logLevelName: str  = profile["general"]["loggingLevel"]
+			if not logLevelName:
+				level = None
+			else:
+				level = logging.getLevelNamesMapping().get(logLevelName)
 		except KeyError:
-			logLevelName = None
-		if log.isEnabledFor(log.DEBUG) or (logLevelName and DEBUG >= logging.getLevelName(logLevelName)):
+			level = None
+
+		if log.isEnabledFor(log.DEBUG) or (level and DEBUG >= level):
 			# Log at level info to ensure that the profile is logged.
 			log.info(
 				"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{0}".format(
