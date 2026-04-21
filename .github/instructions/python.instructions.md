@@ -1,22 +1,17 @@
-# Code Style
+---
+applyTo: **/*.py, **/*.pyw
+description: This file describes the Python code style for the project.
+---
 
-In general, Python contributions to NVDA should follow the [PEP 8 style guide](https://peps.python.org/pep-0008/), except where it contradicts the specific guidance below.
+# Python code guidelines for NVDA
 
-Python code style is enforced with the Ruff linter, see [linting](../testing/automated.md#linting-your-changes) for more information.
+## Code Style
 
-Authors should do their best to adhere to these standards in order to have the best chance of their contribution being accepted into NVDA.
-In limited circumstances, NV Access may accept contributions that do not follow these coding standards.
-If there is a reason you are unable to follow these standards in a contribution to NVDA, please make note of this when opening your PR.
-
-## Encoding
-
-* Python files should be encoded in UTF-8.
-* Text files should be committed with `LF` line endings.
-Files can be checked out locally using CRLF if needed for Windows development using [git](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#_core_autocrlf).
+In general, Python contributions to NVDA should follow the PEP 8 style guide, except where it contradicts the specific guidance below.
 
 ## Indentation
 
-* Indentation must be done with tabs (one per level), not spaces.
+Indentation must be done with tabs (one per level), not spaces.
 
 ## Identifier Names
 
@@ -95,7 +90,7 @@ self.copySettingsButton = wx.Button(
 
 * Unused imports should be removed where possible.
   * Anything imported into a (sub)module can also be imported from that submodule.
-  * As a result, removing unused imports may break compatibility, and should be done in compatibility breaking releases (see `deprecations.md`).
+  * As a result, removing unused imports may break compatibility, and should be done in compatibility breaking releases.
 * Unused imports will give a lint warning.
   These can be handled the following ways:
   * If these imports are intended to be imported from other modules, they can be included in a definition for `__all__`.
@@ -105,7 +100,6 @@ self.copySettingsButton = wx.Button(
 ## Considering future backwards compatibility
 
 When writing new code, consider how the code can be moved in future while retaining backwards compatibility.
-Refer to the [limitations to retaining backwards compatibility](./deprecations.md#limitations-to-retaining-backwards-compatibility).
 
 In summary:
 
@@ -114,31 +108,73 @@ Any module level variables should be prefixed with an underscore and be encapsul
 * Avoid code which executes at import time.
 Instead use initializer functions.
 
+### Deprecating module attributes
+
+Where possible, ensure the NVDA API maintains backwards compatibility.
+To assist with a uniform approach, the `utils._deprecate` module provides a factory function, `handleDeprecations`, which returns a function suitable for use as a module's `__getattr__`.
+Call `handleDeprecations` with any number of concrete `DeprecatedSymbol` objects to handle the logic for emitting a deprecation warning and returning the deprecated symbol.
+The following `DeprecatedSymbol` subclasses are currently available:
+
+* `MovedSymbol(name: str, newModule: str, *newPath: str)`: A symbol that has been moved to a different module, possibly under a different name or as part of a nested data structure.
+If no `newPath` is given, it is assumed to be the same as the old path (i.e. the symbol was moved, but not renamed).
+* `RemovedSymbol(name: str, value: Any, *, message: str)`: A symbol that has been removed (altogether or just from the public API).
+Can optionally be provided with a message to direct API users to its (incompatible) replacement.
+
+Consider the following example: module `foo` defines symbols `egg`, `sausage` and `spam`, but the following changes are to be made to its API:
+
+* `foo.eggs` is to be moved to module `bar`, but keep its name.
+* `foo.sausage` is to be moved to module `bar`, but as part of the `breakfastMeats` data structure.
+* `foo.spam` is to be removed altogether.
+
+The following code in `foo.py` would be used:
+
+```python
+from utils._deprecate import handleDeprecations, MovedSymbol, RemovedSymbol
+
+__getattr__ = handleDeprecations(
+	# `newPath` is not needed as it's the same
+	MovedSymbol("eggs", "bar"),
+	# `newPath` is needed, as it's `breakfastMeats.sausage`, not just `sausage`.
+	MovedSymbol("sausage", "bar", "breakfastMeats", "sausage"),
+	# Symbol marked internal (renamed to `foo._spam`) pending removal at end of deprecation grace period
+	RemovedSymbol("spam", _spam),
+)
+"""Module level `__getattr__` used to preserve backward compatibility."""
+```
+
+### Deprecating extension points
+
+Support for deprecations is included in the various extensionPoint classes.
+
+For example:
+
+```python
+filter_something = extensionPoints.Filter[int](
+	_deprecationMessage="filter_something is deprecated. Use filter_somethingElse instead.",
+)
+```
+
+The deprecation message is logged at the warning level when calling `register` on a `HandlerRegistrar`.
+When `NVDAState._allowDeprecatedAPI()` returns `False`, a `RuntimeError` is raised instead.
+
 ## Docstrings
 
-Docstrings should use [Sphinx format without types](https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html), and follow [PEP 257 conventions](https://peps.python.org/pep-0257/).
+Docstrings should use Sphinx format without types, and follow PEP 257 conventions.
 
 * All public functions, classes, and methods should have docstrings.
   Most internal functions, classes and methods should have docstrings, except where their purpose is clear from their name or code.
   * A function of more than a few lines of code is most likely not self-explanatory.
-* Providing type information in docstrings is discouraged, instead use python's [type annotations](#type-hints).
+* Providing type information in docstrings is discouraged, instead use python's type annotations.
 * Class-level and module-level docstrings should contain a high-level overview of the class/module, optionally with usage examples and references to commonly used methods/functions and attributes.
 * Document class constructors in `__init__`, not at the top of the class.
 * Document class attributes and non-obvious public variables in a docstring immediately below the attribute being described.
 
-NVDA formerly used [epytext](https://epydoc.sourceforge.net/manual-epytext.html) syntax for docstrings, which means there is inconsistent syntax used in the NVDA code base.
-[#12971](https://github.com/nvaccess/nvda/issues/12971) exists to track converting epytext docstrings to Sphinx.
-
-To learn more about reStructuredText, Sphinx and Python, check out the following links:
-
-* [reStructuredText Primer from the Sphinx docs](https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html)
-* [reStructuredText markup from the Python Developer's Guide](https://devguide.python.org/documentation/markup/)
-* [Sphinx' custom reStructuredText Directives](https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html)
-* [Sphinx' Python Domain](https://www.sphinx-doc.org/en/master/usage/domains/python.html)
+NVDA formerly used epytext syntax for docstrings, which means there is inconsistent syntax used in the NVDA code base.
+When updating docstrings, ensure the changed docstring uses Sphinx.
 
 ## Type hints
 
-All new code contributions to NVDA should use [PEP 484-style type hints](https://peps.python.org/pep-0484/).
+All new code contributions to NVDA should use PEP 484-style type hints.
 Type hints make reasoning about code much easier, and allow static analysis tools to catch common errors.
 
 * All variables, attributes, properties, and function/method arguments and returns should have type hints.
@@ -148,7 +184,7 @@ Type hints make reasoning about code much easier, and allow static analysis tool
 
 ## Calling non-python code
 
-When using parts of the Windows API, or parts of NVDA implemented in C++, it is necessary to use the [ctypes](https://docs.python.org/3/library/ctypes.html) library.
+When using parts of the Windows API, or parts of NVDA implemented in C++, it is necessary to use the ctypes library.
 
 * When providing ctypes type information for foreign functions, structures and data types, prefer to use the same name as used in the external library.
   * E.g. `GetModuleFileName` not `getModuleFileName`, even though the latter is a more Pythonic function name.
@@ -160,7 +196,7 @@ When using parts of the Windows API, or parts of NVDA implemented in C++, it is 
 ## Language choices
 
 The NVDA community is large and diverse, and we have a responsibility to make everyone feel welcome in it.
-As our [contributor code of conduct](../../CODE_OF_CONDUCT.md) says:
+As our contributor code of conduct says:
 
 > Communities mirror the societies in which they exist and positive action is essential to counteract the many forms of inequality and abuses of power that exist in society.
 
@@ -173,3 +209,34 @@ For example:
 * Instead of sanity check, prefer confidence check.
 * Instead of dummy (value), prefer placeholder.
 * When referring to a person of unknown gender (such as in docstrings), use they/them/theirs pronouns.
+
+## Security-specific review checks
+
+NVDA operates with `UIAccess` privileges, injects code into other processes and handles untrusted data.
+Scrutinize code for privilege escalation and data leaks.
+
+* Secure mode, lock screens & installer limitations:
+  * Check lock-screen object handling safeguards (e.g., secure object filtering).
+  * Ensure `globalVars.appArgs.secure` is respected and blocked actions fail gracefully.
+  * Check `NVDAState.shouldWriteToDisk`; do not write to disk/config if running securely or from the launcher.
+  * Ensure no system or personal information is unintentionally exposed in secure screens or the lock screen.
+* Subprocesses & file execution:
+  * Flag any use of `subprocess`, `os.system`, or `os.startfile`.
+  Because NVDA has UIAccess, these must use strictly sanitized arguments and absolute paths to prevent path/binary hijacking.
+* Sensitive Data Logging:
+  * Ensure new logging statements that are INFO level or higher do not capture sensitive user data, particularly from `protected` or password text fields, API keys, or secure desktop states.
+  DEBUG level logging may include sensitive information such as the speech passed to a synthesizer.
+* Untrusted input & web parsing:
+  * Validate that parsing of external structures (HTML, ARIA attributes, UIA/IA2 properties) handles malformed, excessively long or deeply nested inputs safely without causing infinite loops or memory crashes.
+  * Check for XSS e.g. from translators via translatable strings
+* Network / Updates:
+  * Any new HTTP/network requests must enforce secure connections (HTTPS) and validate server certificates except when updating certificates.
+
+## Architecture / performance checks
+
+* Verify thread safety.
+GUI changes, core state mutations and most COM/UI interactions must happen on the main thread.
+Ensure `wx.CallLater`, `wx.CallAfter`, `utils.schedule`, `core.callLater` or `queueHandler` are used when passing execution from background threads.
+* Flag expensive operations (such as heavy computations, blocking I/O, complex loops) inside performance-critical hot paths like focus changes, key presses, or text iteration.
+Watch for excessive COM calls (e.g. fetching properties individually inside a large loop instead of caching) and deep UIA tree walks on the main thread.
+* For `ctypes` and COM interactions, ensure memory buffers, handles, and variants are safely freed to prevent memory leaks (e.g. using `ole32.CoTaskMemFree` or `kernel32.CloseHandle`).

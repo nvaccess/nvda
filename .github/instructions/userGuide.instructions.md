@@ -1,8 +1,9 @@
-# User Guide Standards
+---
+applyTo: user_docs/en/userGuide.md
+description: This file describes the standards for writing documentation in the User Guide
+---
 
-This document aims to create a standard style guide for writing documentation in the User Guide.
-
-The principles outlined in ["The Documentation System" guide for reference materials](https://documentation.divio.com/reference.html) are encouraged when working on the User Guide and this document.
+# User Guide standards for NVDA
 
 ## General standards
 
@@ -10,7 +11,7 @@ The principles outlined in ["The Documentation System" guide for reference mater
   * should be written in lowerCamelCase
   * encapsulated in monospace code-block formatting
   * NVDA should be capitalized
-* When referring to Windows terminology, follow the [Windows style guide](https://docs.microsoft.com/en-us/style-guide/welcome/).
+* When referring to Windows terminology, follow the Windows style guide.
   * For instance, instead of "system tray" refer to "notification area"
 
 ## Feature settings
@@ -28,13 +29,13 @@ This setting allows the feature of using functionality in a certain situation to
 If necessary, a description of a common use case that is supported by each option.
 
 | . {.hideHeaderRow} |.|
-| --- | --- |
+|---|---|
 |Options |Default (Enabled), Disabled, Enabled |
 |Default |Enabled |
 |Toggle command |`NVDA+shift+e` |
 
 |Option |Behaviour |
-| --- | --- |
+|---|---|
 |Enabled |behaviour of enabled |
 |Disabled |behaviour of disabled |
 ```
@@ -107,7 +108,7 @@ For example:
 #### Braille Tethered To
 
 | . {.hideHeaderRow} |.|
-| --- | --- |
+|---|---|
 | Desktop key | `NVDA+control+t` |
 | Laptop key | `NVDA+control+t` |
 
