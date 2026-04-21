@@ -588,6 +588,25 @@ class ConfigManager(object):
 		self.profiles.append(profile)
 		self._handleProfileSwitch()
 
+	@staticmethod
+	def _shouldLogConfigAtStartup(profile: ConfigObj) -> bool:
+		"""since profile settings are not yet imported we have to "peek" to see
+		if debug level logging is enabled.
+
+		:param profile: The profile to check for logging settings.
+		:return: True if debug level logging is enabled, False otherwise.
+		"""
+		#
+		try:
+			logLevelName: str = profile["general"]["loggingLevel"]
+			if not logLevelName:
+				level = None
+			else:
+				level = logging.getLevelNamesMapping().get(logLevelName)
+		except KeyError:
+			level = None
+		return log.isEnabledFor(log.DEBUG) or (level and logging.DEBUG >= level)
+
 	def _loadConfig(self, fn: str | None, fileError: bool = False) -> ConfigObj:
 		"""Load a configuration from a file.
 
@@ -608,23 +627,15 @@ class ConfigManager(object):
 		try:
 			profileUpgrader.upgrade(profile, self.validator, writeProfileFunc)
 		except Exception as e:
-			# Log at level debug to ensure that the profile isn't logged by default.
-			log.debug("Config before schema update:\n%s" % profileCopy, exc_info=False)
+			if self._shouldLogConfigAtStartup(profileCopy):
+				# We must log at info level here as the logHandler hasn't been set to log at debug level yet.
+				log.info(f"Config before schema update:\n{profileCopy}")
 			raise e
-		# since profile settings are not yet imported we have to "peek" to see
-		# if debug level logging is enabled.
-		try:
-			logLevelName: str = profile["general"]["loggingLevel"]
-		except KeyError:
-			logLevelName = None
-		if log.isEnabledFor(log.DEBUG) or (
-			logLevelName and logging.getLevelNamesMapping().get(logLevelName, log.INFO) <= logging.DEBUG
-		):
+
+		if self._shouldLogConfigAtStartup(profile):
 			# We must log at info level here as the logHandler hasn't been set to log at debug level yet.
 			log.info(
-				"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{0}".format(
-					profile,
-				),
+				f"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{profile}"
 			)
 		return profile
 
