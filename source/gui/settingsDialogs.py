@@ -6318,15 +6318,9 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			self._allowUsageStatsCheckBox.Value = False
 			self._allowUsageStatsCheckBox.Disable()
 
-	def isValid(self) -> bool:
-		if not super().isValid():
-			return False
-		if logHandler.isLogLevelForced():
-			return True
-		selectedLogLevel = self._getSelectedLogLevel()
-		if selectedLogLevel == self._savedLogLevel or selectedLogLevel <= LoggingLevel.INFO:
-			return True
-		return self._confirmLogLevelChange(selectedLogLevel)
+	def onApply(self, evt):
+
+		super().onApply(evt)
 
 	def onDiscard(self):
 		# Restore screen curtain state and setting to the most recently saved baseline,
@@ -6354,9 +6348,20 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 
 		if not logHandler.isLogLevelForced():
 			selectedLogLevel = self._getSelectedLogLevel()
-			config.conf["general"]["loggingLevel"] = logging.getLevelName(selectedLogLevel)
-			logHandler.setLogLevelFromConfig()
-			self._savedLogLevel = selectedLogLevel
+			updateLogLevel = (
+				selectedLogLevel != self._savedLogLevel
+				and (
+					selectedLogLevel >= LoggingLevel.INFO
+					or self._confirmLogLevelChange(selectedLogLevel)
+				)
+			)
+			if not updateLogLevel:
+				log.debug("User cancelled log level change, keeping original control value.")
+				selectedLogLevel = self._savedLogLevel
+			else:
+				config.conf["general"]["loggingLevel"] = logging.getLevelName(selectedLogLevel)
+				logHandler.setLogLevelFromConfig()
+				self._savedLogLevel = selectedLogLevel
 
 		if updateCheck:
 			config.conf["update"]["allowUsageStats"] = self._allowUsageStatsCheckBox.IsChecked()
