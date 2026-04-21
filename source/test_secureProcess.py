@@ -1,7 +1,5 @@
 import inspect
-import sys
 import threading
-import os
 import subprocess
 import argparse
 import secureProcess
@@ -11,17 +9,19 @@ import logging
 
 old_factory = logging.getLogRecordFactory()
 
+
 def record_factory(*args, **kwargs):
 	record = old_factory(*args, **kwargs)
 	frame = inspect.currentframe().f_back.f_back.f_back.f_back
-	record.qualname = frame.f_code.co_qualname.removesuffix('.__init__')
+	record.qualname = frame.f_code.co_qualname.removesuffix(".__init__")
 	return record
+
 
 logging.setLogRecordFactory(record_factory)
 
 logging.basicConfig(
 	level=logging.DEBUG,
-	format="%(levelname)s %(name)s.%(qualname)s: %(message)s"
+	format="%(levelname)s %(name)s.%(qualname)s: %(message)s",
 )
 
 
@@ -33,18 +33,65 @@ def readToStdout(stream):
 		data = data.decode("utf-8", errors="replace")
 		print(data, end="")
 
+
 def main():
 	parser = argparse.ArgumentParser(description="Launch a process with a restricted token")
-	parser.add_argument("-il", "--integrity-level", choices=integrityLevels.keys(), help="Integrity level for the restricted token", default=None)
+	parser.add_argument(
+		"-il",
+		"--integrity-level",
+		choices=integrityLevels.keys(),
+		help="Integrity level for the restricted token",
+		default=None,
+	)
 	parser.add_argument("-r", "--restrict-sids", help="Restricted SIDs", action="store_true")
-	parser.add_argument("-ru", "--retain-user-in-restricted-token", help="Retain user SID in restricted token", action="store_true")
-	parser.add_argument("-p", "--remove-privileges", help="Remove privileges from the token", action="store_true")
-	parser.add_argument("-re", "--remove-elevation", help="If the current token is elevated, obtain an unelevated interactive user token from the shell instead", action="store_true")
-	parser.add_argument("-s", "--service-logon", help="Use the LocalService account to create the token", action="store_true")
-	parser.add_argument("-td", "--temp-desktop", help="Create a temporary desktop for the process", action="store_true")
-	parser.add_argument("-tw", "--temp-window-station", help="Create a temporary window station for the process", action="store_true")
-	parser.add_argument("-he", "--hide-critical-error-dialogs", help="Hide critical error dialogs in the launched process", action="store_true")
-	parser.add_argument("-ui", "--ui-restrictions", help="Apply UI restrictions to the launched process", action="store_true")
+	parser.add_argument(
+		"-ru",
+		"--retain-user-in-restricted-token",
+		help="Retain user SID in restricted token",
+		action="store_true",
+	)
+	parser.add_argument(
+		"-p",
+		"--remove-privileges",
+		help="Remove privileges from the token",
+		action="store_true",
+	)
+	parser.add_argument(
+		"-re",
+		"--remove-elevation",
+		help="If the current token is elevated, obtain an unelevated interactive user token from the shell instead",
+		action="store_true",
+	)
+	parser.add_argument(
+		"-s",
+		"--service-logon",
+		help="Use the LocalService account to create the token",
+		action="store_true",
+	)
+	parser.add_argument(
+		"-td",
+		"--temp-desktop",
+		help="Create a temporary desktop for the process",
+		action="store_true",
+	)
+	parser.add_argument(
+		"-tw",
+		"--temp-window-station",
+		help="Create a temporary window station for the process",
+		action="store_true",
+	)
+	parser.add_argument(
+		"-he",
+		"--hide-critical-error-dialogs",
+		help="Hide critical error dialogs in the launched process",
+		action="store_true",
+	)
+	parser.add_argument(
+		"-ui",
+		"--ui-restrictions",
+		help="Apply UI restrictions to the launched process",
+		action="store_true",
+	)
 	parser.add_argument("-b", "--block", help="Wait for the launched process to exit", action="store_true")
 	parser.add_argument("command", nargs=argparse.REMAINDER, help="Command to execute with restricted token")
 	args = parser.parse_args()
@@ -80,6 +127,7 @@ def main():
 		rt.join()
 		p.wait()
 	print(f"\nProcess exited with code: {p.returncode}")
+
 
 if __name__ == "__main__":
 	main()

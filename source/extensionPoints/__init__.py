@@ -37,15 +37,15 @@ def _getExtensionPointName(obj) -> Optional[str]:
 			frame = frame.f_back
 			if frame is None:
 				break
-			
+
 			# Look for the frame that's not in extensionPoints module
-			module_name = frame.f_globals.get('__name__', '')
-			if not module_name.startswith('extensionPoints'):
+			module_name = frame.f_globals.get("__name__", "")
+			if not module_name.startswith("extensionPoints"):
 				# Found the calling module, now find the variable name
 				for var_name, var_value in frame.f_locals.items():
 					if var_value is obj:
 						return f"{module_name}.{var_name}"
-				
+
 				# If not found in locals, check globals
 				for var_name, var_value in frame.f_globals.items():
 					if var_value is obj:
@@ -53,20 +53,21 @@ def _getExtensionPointName(obj) -> Optional[str]:
 				break
 	except Exception:
 		log.debugWarning("Failed to auto-detect extension point name", exc_info=True)
-	
+
 	return None
 
 
 def _invokeART(
-	extensionPointName: str, 
-	epType: str, 
-	*args: Any, 
-	**kwargs: Any
+	extensionPointName: str,
+	epType: str,
+	*args: Any,
+	**kwargs: Any,
 ) -> Any:
 	"""Invoke ART handlers for an extension point."""
 	try:
 		# Import here to avoid circular imports
 		from art.manager import getARTManager
+
 		artManager = getARTManager()
 		if artManager:
 			extProxy = artManager.getExtensionPointProxy()
@@ -75,11 +76,11 @@ def _invokeART(
 					extensionPointName,
 					epType,
 					*args,
-					**kwargs
+					**kwargs,
 				)
 	except Exception:
 		log.debugWarning("Error invoking ART handlers", exc_info=True)
-	
+
 	# Return appropriate default for the extension point type
 	if epType == "action":
 		return None
@@ -94,16 +95,16 @@ def _invokeART(
 
 class _ExtensionPointBase:
 	"""Base class for extension points that handles automatic naming."""
-	
+
 	def __init__(self):
 		self._extensionPointName: Optional[str] = None
 		# Try to auto-detect the name
 		self._extensionPointName = _getExtensionPointName(self)
-	
+
 	def setName(self, name: str) -> None:
 		"""Manually set the extension point name."""
 		self._extensionPointName = name
-	
+
 	def getName(self) -> Optional[str]:
 		"""Get the extension point name."""
 		return self._extensionPointName
@@ -146,7 +147,7 @@ class Action(_ExtensionPointBase, HandlerRegistrar[Callable[..., None]]):
 				callWithSupportedKwargs(handler, **kwargs)
 			except:  # noqa: E722
 				log.exception("Error running handler %r for %r" % (handler, self))
-		
+
 		# Notify ART handlers
 		if self._extensionPointName:
 			_invokeART(self._extensionPointName, "action", **kwargs)
@@ -163,7 +164,7 @@ class Action(_ExtensionPointBase, HandlerRegistrar[Callable[..., None]]):
 				self.unregister(handler)
 			except Exception as e:
 				log.exception(f"Error running handler {handler} for {self}. Exception {e}")
-		
+
 		# Notify ART handlers (don't unregister ART handlers - they're managed separately)
 		if self._extensionPointName:
 			_invokeART(self._extensionPointName, "action", **kwargs)
@@ -221,13 +222,13 @@ class Filter(
 				value = callWithSupportedKwargs(handler, value, **kwargs)
 			except:  # noqa: E722
 				log.exception("Error running handler %r for %r" % (handler, self))
-		
+
 		# Apply ART filters
 		if self._extensionPointName:
 			artResult = _invokeART(self._extensionPointName, "filter", value, **kwargs)
 			if artResult is not None:
 				value = artResult
-		
+
 		return value
 
 
@@ -284,13 +285,13 @@ class Decider(_ExtensionPointBase, HandlerRegistrar[Callable[..., bool]]):
 				continue
 			if not decision:
 				return False
-		
+
 		# Check ART handlers
 		if self._extensionPointName:
 			artDecision = _invokeART(self._extensionPointName, "decider", **kwargs)
 			if not artDecision:
 				return False
-		
+
 		return True
 
 
@@ -340,7 +341,7 @@ class AccumulatingDecider(_ExtensionPointBase, HandlerRegistrar[Callable[..., bo
 		@return: The decision.
 		"""
 		decisions: Set[bool] = set()
-		
+
 		# Collect decisions from NVDA core handlers
 		for handler in self.handlers:
 			try:
@@ -348,13 +349,13 @@ class AccumulatingDecider(_ExtensionPointBase, HandlerRegistrar[Callable[..., bo
 			except Exception:
 				log.exception("Error running handler %r for %r" % (handler, self))
 				continue
-		
+
 		# Collect decision from ART handlers
 		if self._extensionPointName:
 			artDecision = _invokeART(self._extensionPointName, "accumulating_decider", **kwargs)
 			if isinstance(artDecision, bool):
 				decisions.add(artDecision)
-		
+
 		if (not self.defaultDecision) in decisions:
 			return not self.defaultDecision
 		return self.defaultDecision
@@ -363,7 +364,11 @@ class AccumulatingDecider(_ExtensionPointBase, HandlerRegistrar[Callable[..., bo
 ChainValueTypeT = TypeVar("ChainValueTypeT")
 
 
-class Chain(_ExtensionPointBase, HandlerRegistrar[Callable[..., Iterable[ChainValueTypeT]]], Generic[ChainValueTypeT]):
+class Chain(
+	_ExtensionPointBase,
+	HandlerRegistrar[Callable[..., Iterable[ChainValueTypeT]]],
+	Generic[ChainValueTypeT],
+):
 	"""Allows creating a chain of registered handlers.
 	The handlers should return an iterable, e.g. they are usually generator functions,
 	but returning a list is also supported.
@@ -414,7 +419,7 @@ class Chain(_ExtensionPointBase, HandlerRegistrar[Callable[..., Iterable[ChainVa
 					yield value
 			except Exception:
 				log.exception(f"Error yielding value from handler {handler!r} for {self!r}")
-		
+
 		# Yield from ART handlers
 		if self._extensionPointName:
 			try:
@@ -433,7 +438,7 @@ def registerExtensionPointsInModule(module_name: str) -> None:
 	try:
 		if module_name not in sys.modules:
 			return
-		
+
 		module = sys.modules[module_name]
 		for attr_name in dir(module):
 			attr_value = getattr(module, attr_name)
@@ -451,27 +456,29 @@ def registerAllExtensionPoints() -> None:
 	"""
 	# Common modules that have extension points
 	modules_to_scan = [
-		'speech.speech',
-		'braille',
-		'inputCore',
-		'config',
-		'synthDriverHandler',
-		'brailleDisplayDrivers',
-		'eventHandler',
-		'treeInterceptorHandler',
-		'scriptHandler',
-		'globalCommands',
-		'gui.settingsDialogs',
-		'addonHandler',
+		"speech.speech",
+		"braille",
+		"inputCore",
+		"config",
+		"synthDriverHandler",
+		"brailleDisplayDrivers",
+		"eventHandler",
+		"treeInterceptorHandler",
+		"scriptHandler",
+		"globalCommands",
+		"gui.settingsDialogs",
+		"addonHandler",
 	]
-	
+
 	for module_name in modules_to_scan:
 		registerExtensionPointsInModule(module_name)
-	
+
 	# Also scan any modules that start with common prefixes
 	for module_name in list(sys.modules.keys()):
-		if (module_name.startswith('appModules.') or 
-		    module_name.startswith('globalPlugins.') or
-		    module_name.startswith('synthDrivers.') or
-		    module_name.startswith('brailleDisplayDrivers.')):
+		if (
+			module_name.startswith("appModules.")
+			or module_name.startswith("globalPlugins.")
+			or module_name.startswith("synthDrivers.")
+			or module_name.startswith("brailleDisplayDrivers.")
+		):
 			registerExtensionPointsInModule(module_name)

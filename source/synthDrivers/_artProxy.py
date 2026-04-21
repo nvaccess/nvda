@@ -5,7 +5,6 @@
 
 """Base proxy synthesizer driver for synthesizers running in ART."""
 
-import json
 from typing import Dict, List, Any, Optional
 from collections import OrderedDict
 import Pyro5.api
@@ -120,7 +119,7 @@ class ARTProxySynthDriver(SynthDriver):
 	def cancel(self):
 		"""Cancel speech in ART."""
 		log.info(f"ARTProxySynthDriver.cancel() called for {self.name}")
-		
+
 		# First, immediately cancel speech playback in core
 		if self._speechService:
 			try:
@@ -128,21 +127,25 @@ class ARTProxySynthDriver(SynthDriver):
 				self._speechService.cancelSpeech(self._artSynthName)
 			except Exception as e:
 				log.exception(f"Error calling Speech Service cancelSpeech: {e}")
-		
+
 		if not self._connected:
 			log.warning(f"Cannot cancel - ART synth {self.name} is disconnected")
 			return
-		
+
 		# Then cancel the synthesizer in ART
 		try:
 			log.debug(f"About to call _synthService.cancel() for {self.name}")
 			self._synthService.cancel()
 			log.debug(f"_synthService.cancel() completed successfully for {self.name}")
 		except Pyro5.errors.CommunicationError as e:
-			log.error(f"CRITICAL: ART synth {self.name} disconnected during cancel - this is the connection loss! Error: {e}")
+			log.error(
+				f"CRITICAL: ART synth {self.name} disconnected during cancel - this is the connection loss! Error: {e}",
+			)
 			self._connected = False
 		except Exception as e:
-			log.exception(f"CRITICAL: Error cancelling ART synth {self.name} - this might cause disconnection: {e}")
+			log.exception(
+				f"CRITICAL: Error cancelling ART synth {self.name} - this might cause disconnection: {e}",
+			)
 
 	def pause(self, switch: bool):
 		"""Pause/resume speech in ART."""

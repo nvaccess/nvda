@@ -21,7 +21,8 @@ from art.runtime.services.addons import AddOnLifecycleService
 
 # Set up crash log file for faulthandler
 crashLogFile = os.path.join(
-	tempfile.gettempdir(), f"nvda_art_crash_{os.getpid()}_{datetime.datetime.now():%Y%m%d-%H%M%S}.log"
+	tempfile.gettempdir(),
+	f"nvda_art_crash_{os.getpid()}_{datetime.datetime.now():%Y%m%d-%H%M%S}.log",
 )
 
 
@@ -44,7 +45,8 @@ class StreamToLogger(object):
 
 # Set up file-based logging FIRST so we can use it for crash logging
 log_file = os.path.join(
-	tempfile.gettempdir(), f"nvda_art_{os.getpid()}_{datetime.datetime.now():%Y%m%d-%H%M%S}.log"
+	tempfile.gettempdir(),
+	f"nvda_art_{os.getpid()}_{datetime.datetime.now():%Y%m%d-%H%M%S}.log",
 )
 
 # Create rotating file handler
@@ -155,7 +157,11 @@ class ExtensionPointHandlerService:
 		return handlerID
 
 	def executeHandlers(
-		self, extPointName: str, epType: ExtensionPointType, *args: Any, **kwargs: Any
+		self,
+		extPointName: str,
+		epType: ExtensionPointType,
+		*args: Any,
+		**kwargs: Any,
 	) -> Any:
 		"""Execute all handlers for an extension point."""
 		if extPointName not in self._handlers:
@@ -222,7 +228,11 @@ class ExtensionPointService:
 		self._addonHandlers: Dict[str, set] = {}
 
 	def registerHandler(
-		self, addonID: str, extPointName: str, handlerId: str, extPointType: ExtensionPointType
+		self,
+		addonID: str,
+		extPointName: str,
+		handlerId: str,
+		extPointType: ExtensionPointType,
 	) -> bool:
 		if addonID not in self._addonHandlers:
 			self._addonHandlers[addonID] = set()
@@ -324,13 +334,13 @@ class ARTRuntime:
 
 			# Start the request loop (this blocks until shutdown)
 			self.logger.info(
-				"About to enter daemon.requestLoop() - this is where ART might terminate unexpectedly"
+				"About to enter daemon.requestLoop() - this is where ART might terminate unexpectedly",
 			)
 			self.daemon.requestLoop(lambda: not self._shutdownEvent.is_set())
 			self.logger.info("daemon.requestLoop() exited normally")
 		except Exception as e:
 			self.logger.exception(
-				f"CRITICAL: Exception in daemon request loop - this will terminate ART: {e}"
+				f"CRITICAL: Exception in daemon request loop - this will terminate ART: {e}",
 			)
 			# Try to log some extra info before we die
 			import traceback
@@ -426,6 +436,7 @@ def _setup_encryption(addon_crypto: dict) -> None:
 
 		# Import and create addon's encrypted serializer
 		from art.crypto.serializers import EncryptedSerializer
+
 		addon_ser = EncryptedSerializer("msgpack", key_bytes)
 		addon_ser.serializer_id = serializer_id
 
@@ -440,7 +451,9 @@ def _setup_encryption(addon_crypto: dict) -> None:
 		Pyro5.config.SERIALIZER = serializer_name
 
 		artLogger.info(f"Addon encryption configured: serializer_id={serializer_id}, name={serializer_name}")
-		artLogger.info(f"Registered EncryptedSerializer in ART: by_id[{serializer_id}] and by_name['{serializer_name}']")
+		artLogger.info(
+			f"Registered EncryptedSerializer in ART: by_id[{serializer_id}] and by_name['{serializer_name}']",
+		)
 		artLogger.info(f"Pyro5 default serializer set to: {Pyro5.config.SERIALIZER}")
 	except Exception:
 		artLogger.exception("Failed to set up addon encryption")
@@ -492,7 +505,7 @@ def getStartupInfo() -> Tuple[Optional[dict], bool]:
 
 			startup_line = sys.stdin.readline().strip()
 			artLogger.debug(
-				f"Raw startup line received (length={len(startup_line)}): {startup_line[:200]}..."
+				f"Raw startup line received (length={len(startup_line)}): {startup_line[:200]}...",
 			)
 
 			if not startup_line:
@@ -503,7 +516,7 @@ def getStartupInfo() -> Tuple[Optional[dict], bool]:
 			artLogger.debug("About to parse JSON from startup line")
 			startup_data = json.loads(startup_line)
 			artLogger.info(
-				f"Successfully parsed startup data: addon={startup_data.get('addon', {}).get('name', 'unknown')}"
+				f"Successfully parsed startup data: addon={startup_data.get('addon', {}).get('name', 'unknown')}",
 			)
 			artLogger.debug(f"Full startup data keys: {list(startup_data.keys())}")
 
@@ -552,7 +565,7 @@ def getStartupInfo() -> Tuple[Optional[dict], bool]:
 				raise ValueError("No addon specified")
 
 			artLogger.info(
-				f"Successfully processed handshake for addon: {addon_spec.get('name', 'unknown')}"
+				f"Successfully processed handshake for addon: {addon_spec.get('name', 'unknown')}",
 			)
 			artLogger.debug(f"Addon spec keys: {list(addon_spec.keys())}")
 
@@ -579,7 +592,7 @@ def performStartup(addon_spec: dict, is_cli_mode: bool) -> Optional[Dict[str, st
 	"""Perform startup with the given addon spec."""
 	try:
 		artLogger.info(
-			f"=== PERFORMING STARTUP: mode={'CLI' if is_cli_mode else 'HANDSHAKE'}, addon={addon_spec.get('name', 'unknown')} ==="
+			f"=== PERFORMING STARTUP: mode={'CLI' if is_cli_mode else 'HANDSHAKE'}, addon={addon_spec.get('name', 'unknown')} ===",
 		)
 
 		# Start services
@@ -597,7 +610,7 @@ def performStartup(addon_spec: dict, is_cli_mode: bool) -> Optional[Dict[str, st
 			}
 			response_json = json.dumps(response_data) + "\n"
 			artLogger.debug(
-				f"Handshake response prepared (length={len(response_json)}): {response_json[:200]}..."
+				f"Handshake response prepared (length={len(response_json)}): {response_json[:200]}...",
 			)
 
 			artLogger.debug("Writing handshake response to stdout")
@@ -750,7 +763,7 @@ def main():
 	artLogger.debug("About to call getStartupInfo()")
 	addon_spec, is_cli_mode = getStartupInfo()
 	artLogger.info(
-		f"getStartupInfo() returned: is_cli_mode={is_cli_mode}, addon_spec={'present' if addon_spec else 'None'}"
+		f"getStartupInfo() returned: is_cli_mode={is_cli_mode}, addon_spec={'present' if addon_spec else 'None'}",
 	)
 
 	if not addon_spec:

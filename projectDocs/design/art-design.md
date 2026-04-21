@@ -6,9 +6,9 @@ The NVDA Add-on Runtime (ART) moves NVDA add-ons from the core NVDA process to a
 
 ## Goals
 
-- Move add-ons to a separate process to improve NVDA stability
-- Maintain compatibility with existing add-ons
-- Support basic functionality (extension points, event handling) for the first version
+* Move add-ons to a separate process to improve NVDA stability
+* Maintain compatibility with existing add-ons
+* Support basic functionality (extension points, event handling) for the first version
 
 ## Architecture
 
@@ -17,79 +17,79 @@ The NVDA Add-on Runtime (ART) moves NVDA add-ons from the core NVDA process to a
 ART uses a one-addon-per-process model where each enabled addon runs in its own isolated ART process:
 
 1. NVDA Core Process: The main NVDA screen reader application
-   - Manages the lifecycle of multiple add-on runtime processes (one per addon)
-   - Maintains communication channels with each runtime process
-   - Restarts individual runtime processes if they crash
-   - Provides core screen reader functionality
-   - Implements security validation for runtime communication
+   * Manages the lifecycle of multiple add-on runtime processes (one per addon)
+   * Maintains communication channels with each runtime process
+   * Restarts individual runtime processes if they crash
+   * Provides core screen reader functionality
+   * Implements security validation for runtime communication
 
 2. Regular Add-on Runtime Process (ART): Each addon gets its own ART process
-   - Hosts exactly one addon with standard permissions in normal desktop sessions
-   - Runs with limited but practical permissions
-   - Has network access allowed to support add-ons that require online functionality
-   - Has restricted file system access (can read the user's files / data but cannot write).
-      - Runs at low integrity level (IL_LOW)
-   - Communicates with NVDA Core via secure, validated RPC channels
-   - Provides a Python environment where the single addon executes
+   * Hosts exactly one addon with standard permissions in normal desktop sessions
+   * Runs with limited but practical permissions
+   * Has network access allowed to support add-ons that require online functionality
+   * Has restricted file system access (can read the user's files / data but cannot write).
+      * Runs at low integrity level (IL_LOW)
+   * Communicates with NVDA Core via secure, validated RPC channels
+   * Provides a Python environment where the single addon executes
 
 3. Secure Desktop Add-on Runtime Process (SD-ART): Each addon gets its own SD-ART process in secure desktop
-   - Hosts exactly one addon with highly restricted permissions in secure desktop sessions
-   - Runs with minimal permissions (no clipboard, strictly limited file system access)
-   - Runs at low integrity level (IL_LOW)
-   - Cannot create UI outside of NVDA
-   - Restricted permissions for secure desktop sessions
+   * Hosts exactly one addon with highly restricted permissions in secure desktop sessions
+   * Runs with minimal permissions (no clipboard, strictly limited file system access)
+   * Runs at low integrity level (IL_LOW)
+   * Cannot create UI outside of NVDA
+   * Restricted permissions for secure desktop sessions
 
 ### Process Communication
 
 Inter-process communication uses Pyro5 RPC. Security measures include:
 
-- Authenticated Encryption: XSalsa20-Poly1305 encryption with unique per-addon keys
-- Binding Restriction: All RPC endpoints bind exclusively to loopback interface (127.0.0.1)
-- Process Validation: Process identity validated through controlled launch and PID tracking
-- Serialization: msgpack serialization is used instead of Pickle to prevent code execution exploits
-- Input Validation: RPC data is validated before processing
+* Authenticated Encryption: XSalsa20-Poly1305 encryption with unique per-addon keys
+* Binding Restriction: All RPC endpoints bind exclusively to loopback interface (127.0.0.1)
+* Process Validation: Process identity validated through controlled launch and PID tracking
+* Serialization: msgpack serialization is used instead of Pickle to prevent code execution exploits
+* Input Validation: RPC data is validated before processing
 
 ### Data Flow Architecture
 
 1. Event Flow:
-   - System events originate in NVDA Core (via accessibility APIs)
-   - Events are filtered and forwarded to relevant add-on runtimes
-   - Add-ons process events and respond if necessary
-   - Responses are validated before being processed by NVDA Core
+   * System events originate in NVDA Core (via accessibility APIs)
+   * Events are filtered and forwarded to relevant add-on runtimes
+   * Add-ons process events and respond if necessary
+   * Responses are validated before being processed by NVDA Core
 
 2. Extension Point Flow:
-   - Extension points in NVDA Core trigger calls to registered add-ons
-   - NVDA Core tracks which add-ons have registered for which extension points
-   - Add-on responses are validated and integrated into NVDA behavior
+   * Extension points in NVDA Core trigger calls to registered add-ons
+   * NVDA Core tracks which add-ons have registered for which extension points
+   * Add-on responses are validated and integrated into NVDA behavior
 
 3. Audio Data Flow:
-   - Add-ons generate audio data (e.g., synthesized speech)
-   - PCM audio data is streamed to NVDA Core
-   - NVDA Core handles playback through the audio subsystem
+   * Add-ons generate audio data (e.g., synthesized speech)
+   * PCM audio data is streamed to NVDA Core
+   * NVDA Core handles playback through the audio subsystem
 
 ### Process Lifecycle
 
 1. Startup Sequence:
-   - NVDA Core initializes
-   - NVDA Core discovers enabled addons
-   - For each enabled addon, NVDA Core launches a separate ART process (or SD-ART in secure desktop)
-   - Each runtime process establishes a connection back to NVDA Core
-   - NVDA Core validates each connection
-   - Each ART process loads its assigned addon
+   * NVDA Core initializes
+   * NVDA Core discovers enabled addons
+   * For each enabled addon, NVDA Core launches a separate ART process (or SD-ART in secure desktop)
+   * Each runtime process establishes a connection back to NVDA Core
+   * NVDA Core validates each connection
+   * Each ART process loads its assigned addon
 
 2. Normal Operation:
-   - Each addon runs in its own isolated runtime process
-   - Communication follows the data flow patterns described above
-   - NVDA monitors each runtime process health independently
+   * Each addon runs in its own isolated runtime process
+   * Communication follows the data flow patterns described above
+   * NVDA monitors each runtime process health independently
 
 3. Error Handling:
-   - If an addon crashes, only its runtime process is affected
-   - Other addons continue running unaffected
+   * If an addon crashes, only its runtime process is affected
+   * Other addons continue running unaffected
 
 4. Secure Desktop Transitions:
-   - When transitioning to a secure desktop, NVDA Core launches ART processes for each addon
-   - Each addon gets its own ART process with more restrictive permissions
-   - Addons are isolated from each other even in secure desktop
+   * When transitioning to a secure desktop, NVDA Core launches ART processes for each addon
+   * Each addon gets its own ART process with more restrictive permissions
+   * Addons are isolated from each other even in secure desktop
 
 ### Security Boundaries
 
@@ -97,8 +97,8 @@ The architecture establishes multiple security boundaries:
 
 1. Process Boundary: Add-ons run in a separate process from NVDA Core
 2. Integrity Level Boundary: Add-on runtimes operate at a lower integrity level than NVDA Core
-4. File System Boundary: Add-ons cannot write to system locations. Add-ons cannot read or write to any users' files / data, though read access to the user's own files / data can be turned on if wanted.
-5. Network Boundary: SD-ART has no network access, ART has network access
+3. File System Boundary: Add-ons cannot write to system locations. Add-ons cannot read or write to any users' files / data, though read access to the user's own files / data can be turned on if wanted.
+4. Network Boundary: SD-ART has no network access, ART has network access
 
 These boundaries protect NVDA Core from potentially malicious or unstable add-ons.
 
@@ -167,41 +167,45 @@ source/art/
 The ART Manager handles process management with the following architecture:
 
 ARTManager Class:
-- Core Service Management: Starts Pyro5 daemon and registers all core services
-- Multi-Process Coordination: Manages multiple `ARTAddonProcess` instances (one per addon)
-- Service Discovery: Maintains URIs for all core services and distributes them to ART processes
-- Global Access: Provides `getARTManager()` for system-wide access to ART services
+
+* Core Service Management: Starts Pyro5 daemon and registers all core services
+* Multi-Process Coordination: Manages multiple `ARTAddonProcess` instances (one per addon)
+* Service Discovery: Maintains URIs for all core services and distributes them to ART processes
+* Global Access: Provides `getARTManager()` for system-wide access to ART services
 
 ARTAddonProcess Class:
-- Subprocess Management: Uses `secureProcess.SecureProcess` for configuring / creating child processes
-- JSON Handshake Protocol: Implements bi-directional communication during startup
-- Service Connection: Establishes Pyro5 proxy connections to ART services
-- Secure Desktop Integration: Detects and configures SD-ART mode automatically
+
+* Subprocess Management: Uses `secureProcess.SecureProcess` for configuring / creating child processes
+* JSON Handshake Protocol: Implements bi-directional communication during startup
+* Service Connection: Establishes Pyro5 proxy connections to ART services
+* Secure Desktop Integration: Detects and configures SD-ART mode automatically
 
 Process Configuration:
-- Executable: `nvda_art.exe` (built from `nvda_art.pyw`)
-- Creation Flags: `CREATE_NO_WINDOW` for hidden console
-- Communication: Bidirectional pipes for JSON handshake
-- Timeout Handling: 10-second handshake timeout with graceful failure
+
+* Executable: `nvda_art.exe` (built from `nvda_art.pyw`)
+* Creation Flags: `CREATE_NO_WINDOW` for hidden console
+* Communication: Bidirectional pipes for JSON handshake
+* Timeout Handling: 10-second handshake timeout with graceful failure
 
 Key Features:
-- One-Addon-Per-Process: Each addon runs in complete isolation
-- Automatic Restart: Failed processes can be restarted without affecting others
-- Service Proxy Management: Automatic connection to ART services with retry logic
-- Detailed Logging: Process lifecycle and communication logging
+
+* One-Addon-Per-Process: Each addon runs in complete isolation
+* Automatic Restart: Failed processes can be restarted without affecting others
+* Service Proxy Management: Automatic connection to ART services with retry logic
+* Detailed Logging: Process lifecycle and communication logging
 
 #### Core Services (`art.core.services.*`)
 
 Services that run in NVDA Core and are exposed to ART via RPC:
 
-- BrailleService: Handles braille display operations
-- ConfigService: Exposes `config.conf` read/write access
-- GlobalVarsService: Provides access to global variables
-- LanguageHandlerService: Handles language and localization functions
-- LoggingService: Receives log messages from ART
-- NVWaveService: Provides audio/wave functionality
-- SpeechService: Handles synthesizer registration and audio streaming
-- UIService: Provides user interface operations
+* BrailleService: Handles braille display operations
+* ConfigService: Exposes `config.conf` read/write access
+* GlobalVarsService: Provides access to global variables
+* LanguageHandlerService: Handles language and localization functions
+* LoggingService: Receives log messages from ART
+* NVWaveService: Provides audio/wave functionality
+* SpeechService: Handles synthesizer registration and audio streaming
+* UIService: Provides user interface operations
 
 ### Add-on Runtime Components
 
@@ -209,19 +213,19 @@ Services that run in NVDA Core and are exposed to ART via RPC:
 
 Services that run in the ART process:
 
-- AddOnLifecycleService: Loads and manages the assigned add-on
-- BrailleDisplayService: Manages braille display driver instances
-- SynthService: Manages synthesizer driver instances, handles speech requests, voice management, and audio streaming
-- ExtensionPointHandlerService: Executes extension point handlers (integrated in nvda_art.pyw)
-- ExtensionPointService: Tracks extension point registrations (integrated in nvda_art.pyw)
+* AddOnLifecycleService: Loads and manages the assigned add-on
+* BrailleDisplayService: Manages braille display driver instances
+* SynthService: Manages synthesizer driver instances, handles speech requests, voice management, and audio streaming
+* ExtensionPointHandlerService: Executes extension point handlers (integrated in nvda_art.pyw)
+* ExtensionPointService: Tracks extension point registrations (integrated in nvda_art.pyw)
 
 #### NVDA Module Proxies (`art.runtime.proxies.*`)
 
 Proxy modules that make NVDA APIs available to add-ons:
 
-- Added to Python path so `import config` finds `art.runtime.proxies.config`
-- Each proxy forwards calls to appropriate `art.core.services.*` via RPC
-- Maintains API compatibility with existing NVDA modules
+* Added to Python path so `import config` finds `art.runtime.proxies.config`
+* Each proxy forwards calls to appropriate `art.core.services.*` via RPC
+* Maintains API compatibility with existing NVDA modules
 
 #### Import Redirection
 
@@ -247,42 +251,42 @@ The core services listed in the Components section are exposed to add-ons via RP
 
 #### AddOnLifecycleService
 
-- `loadAddon(addonPath)`: Loads the single addon assigned to this ART process
-- `getLoadedAddon()`: Returns info about the loaded addon
-- `getAddonInfo()`: Gets information about the loaded addon
+* `loadAddon(addonPath)`: Loads the single addon assigned to this ART process
+* `getLoadedAddon()`: Returns info about the loaded addon
+* `getAddonInfo()`: Gets information about the loaded addon
 
 #### ExtensionPointService
 
-- `registerHandler(addonId, extPointName, handlerId)`: Registers handler (calls `extensionPoints.HandlerRegistrar.register` via proxy)
-- `invokeExtensionPoint(extPointName, *args, **kwargs)`: Calls handlers (invoked by NVDA core when an extension point is triggered)
+* `registerHandler(addonId, extPointName, handlerId)`: Registers handler (calls `extensionPoints.HandlerRegistrar.register` via proxy)
+* `invokeExtensionPoint(extPointName, *args, **kwargs)`: Calls handlers (invoked by NVDA core when an extension point is triggered)
 
 ## Process Communication
 
 ### Pyro5 Configuration
 
-- Serializer: encrypted (EncryptedSerializer wrapping msgpack for authenticated encryption)
-- Timeout: 10 seconds with 3 retries
-- Threading: Thread server type with 16 thread pool size
-- Host: 127.0.0.1 (loopback only)
-- Port: 0 (auto-assigned)
+* Serializer: encrypted (EncryptedSerializer wrapping msgpack for authenticated encryption)
+* Timeout: 10 seconds with 3 retries
+* Threading: Thread server type with 16 thread pool size
+* Host: 127.0.0.1 (loopback only)
+* Port: 0 (auto-assigned)
 
 ### Message Flow
 
 ```
 Add-on (ART process)
     ↓ import config
-art.runtime.proxies.config 
+art.runtime.proxies.config
     ↓ RPC call
 art.core.services.config (NVDA Core)
-    ↓ direct access  
+    ↓ direct access
 config.conf
 ```
 
-- Method calls are serialized and sent via RPC
-- Objects are serialized when possible
-- Events flow from NVDA to add-ons via the ExtensionPointHandlerService
-- Extension point calls flow from NVDA to add-ons via the ExtensionPointService
-- NVDA module access flows through proxy modules to core services
+* Method calls are serialized and sent via RPC
+* Objects are serialized when possible
+* Events flow from NVDA to add-ons via the ExtensionPointHandlerService
+* Extension point calls flow from NVDA to add-ons via the ExtensionPointService
+* NVDA module access flows through proxy modules to core services
 
 ### RPC Input Validation
 
@@ -328,11 +332,11 @@ Since ART runs in a separate process, GUI elements created by add-ons will appea
 
 ART supports all NVDA extension point types (defined in `extensionPoints`):
 
-- Action: Notification of NVDA actions (`extensionPoints.Action`)
-- Filter: Modifies data (`extensionPoints.Filter`)
-- Decider: Influences NVDA decisions (`extensionPoints.Decider`)
-- AccumulatingDecider: All handlers run (`extensionPoints.AccumulatingDecider`)
-- Chain: Routes iterables (`extensionPoints.Chain`)
+* Action: Notification of NVDA actions (`extensionPoints.Action`)
+* Filter: Modifies data (`extensionPoints.Filter`)
+* Decider: Influences NVDA decisions (`extensionPoints.Decider`)
+* AccumulatingDecider: All handlers run (`extensionPoints.AccumulatingDecider`)
+* Chain: Routes iterables (`extensionPoints.Chain`)
 
 ### Extension Point Registration
 
@@ -439,7 +443,7 @@ The build system produces `nvda_art.exe` with this py2exe configuration:
 ```python
 {
     "script": "nvda_art.pyw",
-    "dest_base": "nvda_art", 
+    "dest_base": "nvda_art",
     "icon_resources": [(1, "images/nvda.ico")],
     "other_resources": [_genManifestTemplate(shouldHaveUIAccess=False)],
     "version_info": {...}
@@ -500,50 +504,52 @@ Addons can use `import config` to get the proxy implementation.
 
 ### Completed
 
-- Core infrastructure with `art.core` and `art.runtime` packages
-- Essential services: ConfigService, LoggingService, SpeechService, etc.
-- Basic proxy modules for major NVDA modules
-- Synthesizer system with SynthService and proxy support
-- Extension point system with handler registration and invocation
-- Encrypted RPC communication with per-addon keys
-- Process management with ARTManager and ARTAddonProcess
+* Core infrastructure with `art.core` and `art.runtime` packages
+* Essential services: ConfigService, LoggingService, SpeechService, etc.
+* Basic proxy modules for major NVDA modules
+* Synthesizer system with SynthService and proxy support
+* Extension point system with handler registration and invocation
+* Encrypted RPC communication with per-addon keys
+* Process management with ARTManager and ARTAddonProcess
 
 ### In Progress
 
-- Event forwarding from NVDA to add-ons
-- File system access controls for security boundaries
-
+* Event forwarding from NVDA to add-ons
+* File system access controls for security boundaries
 
 ### Future Work
 
-- Performance optimization for RPC calls
-- Enhanced error handling and recovery
-- Additional proxy modules as needed
-- Comprehensive testing with complex add-on interactions
+* Performance optimization for RPC calls
+* Enhanced error handling and recovery
+* Additional proxy modules as needed
+* Comprehensive testing with complex add-on interactions
 
 ## Error Handling
 
-- ART process crashes: NVDA Core detects and restarts it
-- Add-on crashes: Contained within ART process, logged
-- RPC errors: Timeouts, retries for services
+* ART process crashes: NVDA Core detects and restarts it
+* Add-on crashes: Contained within ART process, logged
+* RPC errors: Timeouts, retries for services
 
 ## Startup Sequence
 
 ### NVDA Core Initialization
+
 1. NVDA Core initializes (see `core.main`)
 2. ARTManager creation and registration as global instance
 3. Core Services Setup:
-   - Creates Pyro5 daemon on loopback interface (127.0.0.1:0)
-   - Registers all core services: `ConfigService`, `LoggingService`, `SpeechService`, `GlobalVarsService`, `NVWaveService`, `LanguageHandlerService`, `UIService`
-   - Starts core daemon thread for RPC request handling
-   - Stores service URIs for distribution to ART processes
+   * Creates Pyro5 daemon on loopback interface (127.0.0.1:0)
+   * Registers all core services: `ConfigService`, `LoggingService`, `SpeechService`, `GlobalVarsService`, `NVWaveService`, `LanguageHandlerService`, `UIService`
+   * Starts core daemon thread for RPC request handling
+   * Stores service URIs for distribution to ART processes
 
 ### ART Process Startup (Per Addon)
 
 #### Process Creation
+
 1. ARTAddonProcess instantiation with addon spec and core service URIs
 2. Subprocess launch via `secureProcess` using `nvda_art.exe`
 3. JSON handshake initiation:
+
    ```json
    // NVDA Core → ART Process
    {
@@ -554,6 +560,7 @@ Addons can use `import config` to get the proxy implementation.
    ```
 
 #### ART Process Initialization
+
 1. Entry point: `nvda_art.pyw` main function
 2. Mode detection: CLI vs handshake mode based on command line arguments
 3. Startup data parsing: JSON deserialization and configuration extraction
@@ -562,9 +569,11 @@ Addons can use `import config` to get the proxy implementation.
 6. ARTRuntime creation: Service registration and Pyro5 daemon startup
 
 #### Service Registration
+
 1. ART Services: `AddOnLifecycleService`, `ExtensionPointHandlerService`, `ExtensionPointService`, `SynthService`
 2. Pyro5 daemon startup with msgpack serialization and thread-based server
 3. Response generation:
+
    ```json
    // ART Process → NVDA Core
    {
@@ -575,9 +584,11 @@ Addons can use `import config` to get the proxy implementation.
    ```
 
 #### Addon Loading
+
 The ART process connects to NVDA Core services, loads the addon via `AddOnLifecycleService.loadAddon()`, and activates proxy modules. The addon registers extension point handlers and becomes available for RPC calls.
 
 ### System Ready State
+
 Each addon runs in its own ART process with bidirectional RPC communication to NVDA Core. Core services are accessible from all ART processes, and existing addon APIs work through proxies.
 
 ## Security Model
@@ -592,19 +603,23 @@ All Pyro5 RPC communication binds exclusively to the loopback interface (127.0.0
 
 The system uses authenticated encryption for all RPC messages via XSalsa20-Poly1305, with unique per-addon keys providing message confidentiality and integrity. Underlying serialization uses msgpack instead of Pickle to prevent code execution exploits. Each addon runs in a separate process with isolated memory space, providing crash isolation so addon failures don't affect NVDA Core or other addons.
 
-#### Process Lifecycle Security  
-- Parent-Child Relationship: ART processes are launched directly by NVDA Core
-- Process Tracking: NVDA Core tracks Process IDs (PIDs) of launched ART processes
-- Handshake Protocol: Bidirectional JSON handshake for initialization
-- Timeout Protection: 10-second handshake timeout prevents hung processes
+#### Process Lifecycle Security
+
+* Parent-Child Relationship: ART processes are launched directly by NVDA Core
+* Process Tracking: NVDA Core tracks Process IDs (PIDs) of launched ART processes
+* Handshake Protocol: Bidirectional JSON handshake for initialization
+* Timeout Protection: 10-second handshake timeout prevents hung processes
 
 #### Serialization Security
-- msgpack Serialization: Uses msgpack instead of Pickle to prevent code execution exploits
-- Structured Data: All RPC calls use defined data structures
-- No Code Injection: Serialization format prevents arbitrary code execution
+
+* msgpack Serialization: Uses msgpack instead of Pickle to prevent code execution exploits
+* Structured Data: All RPC calls use defined data structures
+* No Code Injection: Serialization format prevents arbitrary code execution
 
 #### Security Philosophy
+
 The current security model relies on:
+
 1. Process Isolation: Operating system process boundaries provide primary security
 2. Authenticated Encryption: XSalsa20-Poly1305 provides message confidentiality and integrity
 3. Serialization Safety: Safe serialization prevents code injection
@@ -614,12 +629,12 @@ This provides practical security while maintaining simplicity and performance.
 
 ### Audio Handling
 
-- NVDA core will handle all audio processing
-- Add-ons will send PCM audio data streams to NVDA for playback
-- Audio generation capabilities remain in add-ons, but playback is controlled by NVDA
+* NVDA core will handle all audio processing
+* Add-ons will send PCM audio data streams to NVDA for playback
+* Audio generation capabilities remain in add-ons, but playback is controlled by NVDA
 
 ### Add-on Isolation
 
-- Each addon runs in its own isolated ART process (one-addon-per-process model)
-- Add-ons cannot directly interact with each other due to process boundaries
-- All inter-addon communication must go through NVDA Core
+* Each addon runs in its own isolated ART process (one-addon-per-process model)
+* Add-ons cannot directly interact with each other due to process boundaries
+* All inter-addon communication must go through NVDA Core

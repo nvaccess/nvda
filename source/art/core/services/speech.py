@@ -71,7 +71,10 @@ class SpeechService(BaseService):
 			from art.synthProxyGenerator import ARTSynthProxyGenerator
 
 			proxy_class = ARTSynthProxyGenerator.generateProxy(
-				addon_name, name, description, supportedSettings or {}
+				addon_name,
+				name,
+				description,
+				supportedSettings or {},
 			)
 			log.debug(f"Generated proxy class: {proxy_class}")
 
@@ -173,7 +176,7 @@ class SpeechService(BaseService):
 		except Exception as e:
 			log.error(f"Failed to process audio data from {synthName}: {e}")
 			return False
-		
+
 		try:
 			if synthName not in self._registeredSynths:
 				log.warning(f"Received audio from unregistered synth: {synthName}")
@@ -236,14 +239,14 @@ class SpeechService(BaseService):
 				try:
 					# Get audio data with timeout - handle both old and new queue formats
 					queue_item = audioQueue.get(timeout=0.1)
-					
+
 					if len(queue_item) == 3:
 						# New format: (audioData, isLastChunk, callback_id)
 						audioData, isLastChunk, callback_id = queue_item
 					else:
 						# Old format: (audioData, isLastChunk)
 						audioData, isLastChunk = queue_item
-						callback_id = None
+						callback_id = None  # noqa: F841
 
 					# TODO: Implement callback via existing synth service proxy
 					# For now, just feed without callback to restore functionality
@@ -312,10 +315,10 @@ class SpeechService(BaseService):
 
 	def waitForAudioCompletion(self, synthName: str, timeout: float = 5.0) -> bool:
 		"""Wait for audio playback completion with timeout.
-		
+
 		This method allows ART synthesizers to wait for real audio completion
 		by calling idle() on the actual WavePlayer in NVDA Core.
-		
+
 		@param synthName: The synthesizer name to wait for
 		@param timeout: Maximum time to wait in seconds (default 5.0)
 		@return: True if audio completed normally, False if no player or timeout
@@ -324,17 +327,17 @@ class SpeechService(BaseService):
 			if synthName in self._audioPlayers:
 				log.debug(f"Waiting for audio completion for {synthName}")
 				player = self._audioPlayers[synthName]
-				
+
 				# Call idle() on the real WavePlayer to wait for completion
 				# Note: This blocks the RPC thread but with timeout protection
 				player.idle()
-				
+
 				log.debug(f"Audio completion confirmed for {synthName}")
 				return True
 			else:
 				log.debug(f"No audio player found for {synthName}")
 				return False
-				
+
 		except Exception:
 			self._log_error("waitForAudioCompletion", f"{synthName}, timeout={timeout}")
 			return False

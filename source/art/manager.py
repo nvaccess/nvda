@@ -11,7 +11,6 @@ import queue
 import subprocess
 import sys
 import threading
-from pathlib import Path
 from typing import TYPE_CHECKING, Dict, List, Optional, Tuple
 
 import NVDAState
@@ -81,9 +80,8 @@ class ARTAddonProcess:
 
 	def _getRuntimeArgv(self, runtimeName: str):
 		if NVDAState.isRunningAsSource():
-			if (
-				(runtimeName =='amd64' and sysconfig.get_platform() == 'win-amd64')
-				or (runtimeName == 'x86' and sysconfig.get_platform() == 'win32')
+			if (runtimeName == "amd64" and sysconfig.get_platform() == "win-amd64") or (
+				runtimeName == "x86" and sysconfig.get_platform() == "win32"
 			):
 				# Running from source, use the current Python interpreter
 				return [sys.executable, "nvda_art.pyw"]
@@ -96,7 +94,7 @@ class ARTAddonProcess:
 		self.addon_spec = addon_spec
 		self.addon_name = addon_spec["name"]
 		self.core_service_uris = core_service_uris
-		runtime = addon_spec['manifest']['runtime']
+		runtime = addon_spec["manifest"]["runtime"]
 		self._runtimeArgv = self._getRuntimeArgv(runtime)
 		if not self._runtimeArgv:
 			raise RuntimeError(f"Runtime {runtime} not registered")
@@ -131,11 +129,19 @@ class ARTAddonProcess:
 		log.debug(f"Starting ART subprocess for {self.addon_name}")
 		isSecure = self._isRunningOnSecureDesktop()
 		self.sp = SecurePopen(
-			self._runtimeArgv, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, killOnDelete=True,
+			self._runtimeArgv,
+			stdin=subprocess.PIPE,
+			stdout=subprocess.PIPE,
+			stderr=subprocess.PIPE,
+			killOnDelete=True,
 			applyUIRestrictions=True,
-			integrityLevel="low", removePrivileges=True, restrictToken=True,
+			integrityLevel="low",
+			removePrivileges=True,
+			restrictToken=True,
 			retainUserInRestrictedToken=not isSecure,
-			runAsLocalService=isSecure, isolateWindowStation=isSecure, hideCriticalErrorDialogs=isSecure,
+			runAsLocalService=isSecure,
+			isolateWindowStation=isSecure,
+			hideCriticalErrorDialogs=isSecure,
 		)
 		# Log subprocess details
 		log.info(f"ART subprocess started for {self.addon_name}: PID={self.sp.pid}")
@@ -181,7 +187,7 @@ class ARTAddonProcess:
 				log.error(f"ART process {self.addon_name} exited with code {poll_result} before handshake")
 			else:
 				log.error(
-					f"ART process handshake timed out for {self.addon_name}. Process still running but not responding."
+					f"ART process handshake timed out for {self.addon_name}. Process still running but not responding.",
 				)
 			self.sp.terminate()
 			raise RuntimeError(f"ART handshake timeout for {self.addon_name}")
@@ -196,7 +202,10 @@ class ARTAddonProcess:
 			raise RuntimeError(f"Invalid ART handshake response: {e}")
 
 		if response_data.get("status") == "ready":
-			self._connectToARTServices(response_data.get("art_services", {}), f"addon_{addon_crypto['serializer_id']}")
+			self._connectToARTServices(
+				response_data.get("art_services", {}),
+				f"addon_{addon_crypto['serializer_id']}",
+			)
 			log.info(f"ART process started successfully for {self.addon_name}")
 		else:
 			raise RuntimeError(f"ART startup failed for {self.addon_name}")
@@ -210,7 +219,9 @@ class ARTAddonProcess:
 				proxy._pyroTimeout = 10.0  # Increase timeout to match ART config
 				proxy._pyroMaxRetries = 3  # Allow retries on temporary failures
 				self.artServices[service_name] = proxy
-				log.info(f"Connected to ART service for {self.addon_name}: {service_name}, {serializer_name=}")
+				log.info(
+					f"Connected to ART service for {self.addon_name}: {service_name}, {serializer_name=}",
+				)
 			except Exception:
 				log.exception(f"Failed to connect to ART service for {self.addon_name}: {service_name}")
 
@@ -288,12 +299,14 @@ class ARTManager:
 			Pyro5.serializers.serializers[f"addon_{serializer_id}"] = encrypted_ser
 
 			log.info(f"Generated encryption for addon {addon_name}: serializer_id={serializer_id}")
-			log.info(f"Registered EncryptedSerializer in core: by_id[{serializer_id}] and by_name['addon_{serializer_id}']")
+			log.info(
+				f"Registered EncryptedSerializer in core: by_id[{serializer_id}] and by_name['addon_{serializer_id}']",
+			)
 			self._next_serializer_id += 1
 
 			return {
 				"serializer_id": serializer_id,
-				"encryption_key": base64.b64encode(addon_key).decode('ascii')
+				"encryption_key": base64.b64encode(addon_key).decode("ascii"),
 			}
 		except ImportError:
 			log.error("Failed to import PyNaCl - encrypted serializer not available")
@@ -465,7 +478,8 @@ class ARTManager:
 		log.debug(f"Returning {len(synth_list)} available ART synths: {synth_list}")
 		return synth_list
 
+
 _runtimeRegistry = {
-	'amd64': 'nvda_art.exe',
-	'x86': os.path.join(NVDAState.ReadPaths.versionedLibX86Path, "art-runtime", "nvda_art.exe"),
+	"amd64": "nvda_art.exe",
+	"x86": os.path.join(NVDAState.ReadPaths.versionedLibX86Path, "art-runtime", "nvda_art.exe"),
 }

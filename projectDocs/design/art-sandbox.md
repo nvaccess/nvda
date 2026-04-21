@@ -8,7 +8,7 @@ This document explains the design and implementation of this isolation layer.
 
 ---
 
-# 1. Goals
+## 1. Goals
 
 The secureProcess sandbox aims to:
 
@@ -20,7 +20,7 @@ The chosen model mirrors the security posture of modern browsers: a low-integrit
 
 ---
 
-# 2. Overview of secureProcess
+## 2. Overview of secureProcess
 
 The main entry point is **`SecurePopen`** . It builds a constrained Windows process by:
 
@@ -37,9 +37,9 @@ The ART manager (`ARTAddonProcess`, `ARTManager`) uses `SecurePopen` to start ea
 
 ---
 
-# 3. Windows Security Mechanisms Used
+## 3. Windows Security Mechanisms Used
 
-## 3.1 Restricted Tokens
+### 3.1 Restricted Tokens
 
 A restricted token limits the process’s identity and privileges. secureProcess can create:
 
@@ -52,13 +52,13 @@ A restricted token limits the process’s identity and privileges. secureProcess
   Built by `createRestrictedToken`, which constructs a *restricted SID list* containing:
 
   * The mandatory `Restricted` SID (`S-1-5-12`). Allows for some very basic registry / file access for a Windows process to function.
-  * Any interactive group SIDs present on the original token (`Everyone`, `Users`, `INTERACTIVE`, etc.). Enabling read / execute access to system32, program files etc,  and very basic interaction with the window station and desktop. 
+  * Any interactive group SIDs present on the original token (`Everyone`, `Users`, `INTERACTIVE`, etc.). Enabling read / execute access to system32, program files etc,  and very basic interaction with the window station and desktop.
   * The Logon SID, allowing further access to the window station/desktop.
-  * Optionally the user SID (when *retainUserInRestrictedToken=True*). Allows read/write access to the user's own files / data. However if the integrity level on the token is subsequently set to low, then this access becomes read-only. 
+  * Optionally the user SID (when *retainUserInRestrictedToken=True*). Allows read/write access to the user's own files / data. However if the integrity level on the token is subsequently set to low, then this access becomes read-only.
 
 ---
 
-## 3.2 Integrity Levels
+### 3.2 Integrity Levels
 
 Mandatory Integrity Control prohibits writes from a lower-integrity process to higher-integrity objects.
 
@@ -69,7 +69,7 @@ Low integrity requires redirecting `TEMP` and `TMP` into `%USERPROFILE%\AppData\
 
 ---
 
-## 3.3 Default DACL and Isolated Directories
+### 3.3 Default DACL and Isolated Directories
 
 When running with a restricted token *without* the user SID, the process cannot access the user’s profile. secureProcess therefore:
 
@@ -83,7 +83,7 @@ This ensures the process has a writable location even when the user profile is i
 
 ---
 
-## 3.4 Isolated Desktops and Window Stations
+### 3.4 Isolated Desktops and Window Stations
 
 secureProcess optionally creates:
 
@@ -96,7 +96,7 @@ ART uses this mode when running at the Windows Secure Desktop (Winlogon), as the
 
 ---
 
-## 3.5 Job Objects (Memory/UI Restrictions)
+### 3.5 Job Objects (Memory/UI Restrictions)
 
 Each secure process is assigned to a **Job Object** via `Job.assignProcess`.
 Job objects enforce:
@@ -108,7 +108,7 @@ Job objects enforce:
   * No reading/writing the clipboard
   * No global atoms
   * No system parameter changes
-  * No access to UI handles from other processes (including no hooking processes outside the job) 
+  * No access to UI handles from other processes (including no hooking processes outside the job)
 
 These correspond to flags in `JOB_OBJECT_UILIMIT`.
 
@@ -116,7 +116,7 @@ Although not currently used to enforce a hard memory cap, the architecture could
 
 ---
 
-# 4. secureProcess Execution Workflow
+## 4. secureProcess Execution Workflow
 
 The `SecurePopen` constructor sequence (simplified):
 
@@ -162,7 +162,7 @@ ART then performs a JSON handshake with the new process to initialize encrypted 
 
 ---
 
-# 5. ART Integration
+## 5. ART Integration
 
 ART starts each add-on process with:
 
@@ -191,6 +191,7 @@ Key policy decisions:
   * *User SID retained*
 
 This means:
+
 * Add-ons can read (but not write) the user's configuration and profile directories. Writing to temp is possible.
 * Add-ons cannot debug or hook into NVDA or other processes.
 * Add-ons do not have UIAccess (cannot send messages to higher-integrity processes, cannot interact with elevated processes).
@@ -203,20 +204,19 @@ This means:
   * User SID not retained
   * Add-ons cannot read user data
   * Used for NVDA at logon / UAC / ctrl+alt+del screens.
-  
+
   This means:
-* Add-ons cannot read or write to any  user's configuration or profile directories. 
+* Add-ons cannot read or write to any  user's configuration or profile directories.
 * Add-ons cannot write to any system locations.
 * A temporary sandbox directory is used for temp.
 * Add-ons cannot debug or hook into NVDA or other processes on the system.
 * Add-ons do not have UIAccess (cannot send messages to higher-integrity processes, cannot interact with elevated processes).
-  
 
 ---
 
-# 6. Security Impact Summary
+## 6. Security Impact Summary
 
-## Add-ons Cannot:
+### Add-ons Cannot:
 
 * Read high-integrity system files
 * Inject into or debug other processes
@@ -226,7 +226,7 @@ This means:
 * Write to most of the user profile (unless the user SID is retained)
 * Access the real window station / Logon desktop when on Secure Desktops
 
-## Add-ons Can:
+### Add-ons Can:
 
 * Read/write files the user normally could (only when user SID is retained)
 * Use their own isolated TEMP directory

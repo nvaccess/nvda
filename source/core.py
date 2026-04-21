@@ -731,6 +731,7 @@ def main():
 	# Initialize ART Manager (Add-on Runtime)
 	try:
 		from art.manager import ARTManager
+
 		log.debug("Initializing ART Manager")
 		artManager = ARTManager()
 		artManager.start()
@@ -1123,6 +1124,7 @@ def main():
 	# Terminate ART Manager before addon handler
 	try:
 		from art.manager import getARTManager
+
 		artManager = getARTManager()
 		if artManager:
 			log.debug("Terminating ART Manager")

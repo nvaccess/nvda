@@ -39,10 +39,10 @@ class BrailleDisplayService:
 		with self._lock:
 			self._driverInstance = driver
 			self._extractDriverInfo()
-			
-			driver_name = getattr(driver, 'name', 'unknown')
+
+			driver_name = getattr(driver, "name", "unknown")
 			self.logger.info(f"Braille driver instance set: {driver_name}")
-			
+
 			# Attempt to register with NVDA Core
 			self._registerWithCore()
 
@@ -53,19 +53,23 @@ class BrailleDisplayService:
 
 		try:
 			self._driverInfo = {
-				"name": getattr(self._driverInstance, 'name', 'unknown'),
-				"description": getattr(self._driverInstance, 'description', 'Unknown Braille Display'),
-				"numCells": getattr(self._driverInstance, 'numCells', 0),
-				"numRows": getattr(self._driverInstance, 'numRows', 0),
-				"numCols": getattr(self._driverInstance, 'numCols', 0),
-				"isThreadSafe": getattr(self._driverInstance, 'isThreadSafe', False),
-				"supportsAutomaticDetection": getattr(self._driverInstance, 'supportsAutomaticDetection', False),
-				"receivesAckPackets": getattr(self._driverInstance, 'receivesAckPackets', False),
-				"timeout": getattr(self._driverInstance, 'timeout', 0.2),
+				"name": getattr(self._driverInstance, "name", "unknown"),
+				"description": getattr(self._driverInstance, "description", "Unknown Braille Display"),
+				"numCells": getattr(self._driverInstance, "numCells", 0),
+				"numRows": getattr(self._driverInstance, "numRows", 0),
+				"numCols": getattr(self._driverInstance, "numCols", 0),
+				"isThreadSafe": getattr(self._driverInstance, "isThreadSafe", False),
+				"supportsAutomaticDetection": getattr(
+					self._driverInstance,
+					"supportsAutomaticDetection",
+					False,
+				),
+				"receivesAckPackets": getattr(self._driverInstance, "receivesAckPackets", False),
+				"timeout": getattr(self._driverInstance, "timeout", 0.2),
 			}
 
 			# Extract supported gestures from gestureMap if available
-			gesture_map = getattr(self._driverInstance, 'gestureMap', {})
+			gesture_map = getattr(self._driverInstance, "gestureMap", {})
 			supported_gestures = []
 			if gesture_map:
 				# Extract all gesture identifiers from the gesture map
@@ -121,7 +125,7 @@ class BrailleDisplayService:
 		with self._lock:
 			self._coreService = core_service
 			self.logger.info("Core service connection established")
-			
+
 			# If we already have a driver, try to register it
 			if self._driverInstance and not self._isRegistered:
 				self._registerWithCore()
@@ -140,7 +144,7 @@ class BrailleDisplayService:
 			self.logger.debug(f"Displaying {len(cells)} cells")
 
 			# Ensure we have the display method
-			if not hasattr(self._driverInstance, 'display'):
+			if not hasattr(self._driverInstance, "display"):
 				self.logger.error("Driver instance has no display method")
 				return False
 
@@ -179,7 +183,7 @@ class BrailleDisplayService:
 		try:
 			with self._lock:
 				if self._driverInstance:
-					driver_name = getattr(self._driverInstance, 'name', 'unknown')
+					driver_name = getattr(self._driverInstance, "name", "unknown")
 					self.logger.info(f"Terminating driver: {driver_name}")
 
 					# Unregister from Core if registered
@@ -191,7 +195,7 @@ class BrailleDisplayService:
 							self.logger.exception("Error unregistering from Core")
 
 					# Call driver's terminate method if it exists
-					if hasattr(self._driverInstance, 'terminate'):
+					if hasattr(self._driverInstance, "terminate"):
 						self._driverInstance.terminate()
 
 					self._driverInstance = None
@@ -227,7 +231,7 @@ class BrailleDisplayService:
 
 			# Forward gesture to NVDA Core
 			success = self._coreService.forwardInputGesture(driver_name, gesture_id, **kwargs)
-			
+
 			if success:
 				self.logger.debug(f"Successfully forwarded gesture {gesture_id}")
 			else:
@@ -250,7 +254,7 @@ class BrailleDisplayService:
 					return False
 
 				# Basic health check - ensure driver is still responsive
-				driver_name = getattr(self._driverInstance, 'name', None)
+				driver_name = getattr(self._driverInstance, "name", None)
 				return driver_name is not None
 
 		except Exception:
@@ -268,16 +272,20 @@ class BrailleDisplayService:
 					"hasDriver": self._driverInstance is not None,
 					"isRegistered": self._isRegistered,
 					"hasCoreConnection": self._coreService is not None,
-					"driverName": getattr(self._driverInstance, 'name', None) if self._driverInstance else None,
+					"driverName": getattr(self._driverInstance, "name", None)
+					if self._driverInstance
+					else None,
 				}
 
 				if self._driverInfo:
-					status.update({
-						"numCells": self._driverInfo.get("numCells", 0),
-						"numRows": self._driverInfo.get("numRows", 0),
-						"numCols": self._driverInfo.get("numCols", 0),
-						"isThreadSafe": self._driverInfo.get("isThreadSafe", False),
-					})
+					status.update(
+						{
+							"numCells": self._driverInfo.get("numCells", 0),
+							"numRows": self._driverInfo.get("numRows", 0),
+							"numCols": self._driverInfo.get("numCols", 0),
+							"isThreadSafe": self._driverInfo.get("isThreadSafe", False),
+						},
+					)
 
 				return status
 
@@ -296,19 +304,21 @@ class BrailleDisplayService:
 					self.logger.error("No driver instance to reconnect")
 					return False
 
-				driver_name = getattr(self._driverInstance, 'name', 'unknown')
+				driver_name = getattr(self._driverInstance, "name", "unknown")
 				self.logger.info(f"Attempting to reconnect driver: {driver_name}")
 
 				# If the driver has a reconnect method, call it
-				if hasattr(self._driverInstance, 'reconnect'):
+				if hasattr(self._driverInstance, "reconnect"):
 					self._driverInstance.reconnect()
 					self.logger.info(f"Driver {driver_name} reconnected successfully")
 					return True
 				else:
 					# Some drivers might need to be reinitialized completely
-					if hasattr(self._driverInstance, '__init__'):
+					if hasattr(self._driverInstance, "__init__"):
 						# This is risky but might work for some drivers
-						self.logger.warning(f"No reconnect method, attempting re-initialization for {driver_name}")
+						self.logger.warning(
+							f"No reconnect method, attempting re-initialization for {driver_name}",
+						)
 						# We would need the original port/connection info here
 						return False
 					else:

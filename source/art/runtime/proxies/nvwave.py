@@ -8,7 +8,6 @@
 import ctypes
 import queue
 import threading
-import uuid
 
 import Pyro5.api
 
@@ -30,7 +29,9 @@ def playWaveFile(
 	if service:
 		try:
 			service.playWaveFile(
-				fileName=fileName, asynchronous=asynchronous, isSpeechWaveFileCommand=isSpeechWaveFileCommand
+				fileName=fileName,
+				asynchronous=asynchronous,
+				isSpeechWaveFileCommand=isSpeechWaveFileCommand,
 			)
 		except Exception:
 			# Silently fail like the original nvwave.playWaveFile
@@ -88,7 +89,9 @@ class WavePlayer:
 		# Create queue and worker thread to avoid blocking eSpeak callbacks
 		self._audioQueue = queue.Queue()
 		self._workerThread = threading.Thread(
-			target=self._audioWorker, name=f"WavePlayer-{id(self)}", daemon=True
+			target=self._audioWorker,
+			name=f"WavePlayer-{id(self)}",
+			daemon=True,
 		)
 		self._workerThread.start()
 
@@ -141,7 +144,9 @@ class WavePlayer:
 			# This ensures the eSpeak callback returns immediately
 			if not self._closed:
 				self._audioQueue.put((byte_data, callback_id))
-				logger.debug(f"Queued {len(byte_data)} bytes for worker thread with callback_id: {callback_id}")
+				logger.debug(
+					f"Queued {len(byte_data)} bytes for worker thread with callback_id: {callback_id}",
+				)
 
 		except Exception as e:
 			logger.exception(f"Error in feed(): {e}")
@@ -187,7 +192,7 @@ class WavePlayer:
 				return
 
 			logger.debug(
-				f"Calling waitForAudioCompletion via thread-specific RPC proxy for {self._synthInstance.name}"
+				f"Calling waitForAudioCompletion via thread-specific RPC proxy for {self._synthInstance.name}",
 			)
 			# Call the RPC method with timeout to wait for real audio completion
 			success = speech_service.waitForAudioCompletion(self._synthInstance.name, timeout=5.0)
@@ -227,13 +232,13 @@ class WavePlayer:
 					now = time.time()
 					if now - last_heartbeat >= heartbeat_interval:
 						logger.debug(
-							f"Worker thread heartbeat - alive and processing (queue size: {self._audioQueue.qsize()})"
+							f"Worker thread heartbeat - alive and processing (queue size: {self._audioQueue.qsize()})",
 						)
 						last_heartbeat = now
 
 					# Get audio data and callback ID from queue with timeout
 					queue_item = self._audioQueue.get(timeout=0.1)
-					
+
 					# Handle both old format (just bytes) and new format (bytes, callback_id) tuple
 					if isinstance(queue_item, tuple):
 						byte_data, callback_id = queue_item
@@ -257,16 +262,23 @@ class WavePlayer:
 
 					# Send audio data using thread-specific sendAudioData method
 					if hasattr(self._synthInstance, "_sendAudioData"):
-						logger.debug(f"Sending {len(byte_data)} bytes via thread-specific method (callback_id: {callback_id})")
+						logger.debug(
+							f"Sending {len(byte_data)} bytes via thread-specific method (callback_id: {callback_id})",
+						)
 
 						try:
 							# Call thread-specific version that creates its own proxy
 							self._sendAudioDataThreadSafe(
-								byte_data, self.samplesPerSec, self.channels, self.bitsPerSample, logger, callback_id
+								byte_data,
+								self.samplesPerSec,
+								self.channels,
+								self.bitsPerSample,
+								logger,
+								callback_id,
 							)
 						except Exception as audio_error:
 							logger.exception(
-								f"CRITICAL: _sendAudioDataThreadSafe failed - this might terminate ART process: {audio_error}"
+								f"CRITICAL: _sendAudioDataThreadSafe failed - this might terminate ART process: {audio_error}",
 							)
 							# Don't re-raise - let the worker continue
 							continue
@@ -278,12 +290,12 @@ class WavePlayer:
 					continue
 				except Exception as e:
 					logger.exception(
-						f"CRITICAL: Unexpected error in audio worker - this might terminate ART process: {e}"
+						f"CRITICAL: Unexpected error in audio worker - this might terminate ART process: {e}",
 					)
 					# Continue processing despite errors
 		except Exception as fatal_error:
 			logger.exception(
-				f"FATAL: Audio worker thread crashed - ART process will likely terminate: {fatal_error}"
+				f"FATAL: Audio worker thread crashed - ART process will likely terminate: {fatal_error}",
 			)
 			# Try to force-flush the log before we die
 			try:
@@ -291,7 +303,7 @@ class WavePlayer:
 					handler.flush()
 				for handler in logging.getLogger().handlers:
 					handler.flush()
-			except:
+			except:  # noqa: E722
 				pass
 			raise  # Re-raise to potentially trigger faulthandler
 		finally:
@@ -334,8 +346,6 @@ class WavePlayer:
 		import os
 		import threading
 
-		import Pyro5.api
-
 		thread_id = threading.get_ident()
 
 		# Return existing proxy for this thread if available
@@ -367,7 +377,7 @@ class WavePlayer:
 		"""Send audio data using thread-specific RPC proxy.
 
 		This creates a separate proxy for each thread to avoid Pyro5 ownership conflicts.
-		
+
 		@param callback_id: Optional callback ID to pass to NVDA Core for onDone notification
 		"""
 		try:
@@ -389,7 +399,7 @@ class WavePlayer:
 				# Prepare callback information for NVDA Core
 				# Only pass callback info for the last chunk to avoid multiple callbacks
 				chunk_callback_id = callback_id if i + MAX_CHUNK_SIZE >= len(data) else None
-				
+
 				speech_service.receiveAudioData(
 					synthName=self._synthInstance.name,
 					audioData=chunk,
@@ -408,23 +418,23 @@ class WavePlayer:
 
 	def _onWavePlayerDone(self, callback_id):
 		"""Trigger a pending onDone callback.
-		
+
 		This method is called by the synth service when audio playback completes.
-		
+
 		@param callback_id: The unique ID of the callback to execute
 		"""
 		import logging
-		
+
 		logger = logging.getLogger("ART.WavePlayer.Callback")
-		
+
 		if not callback_id:
 			logger.warning("_onWavePlayerDone called with empty callback_id")
 			return
-		
+
 		# Retrieve and remove the callback from pending callbacks
 		with self._callback_lock:
 			callback = self._pending_callbacks.pop(callback_id, None)
-		
+
 		if callback:
 			logger.debug(f"Triggering onDone callback for ID {callback_id}")
 			try:
@@ -444,7 +454,7 @@ class WavePlayer:
 		# Signal worker thread to stop
 		try:
 			self._audioQueue.put((None, None))  # Shutdown sentinel (updated for tuple format)
-		except:
+		except:  # noqa: E722
 			pass  # Queue might be full or closed
 
 		# Wait for worker thread to finish
@@ -455,6 +465,7 @@ class WavePlayer:
 		with self._callback_lock:
 			if self._pending_callbacks:
 				import logging
+
 				logger = logging.getLogger("ART.WavePlayer")
 				logger.debug(f"Cleaning up {len(self._pending_callbacks)} pending callbacks")
 			self._pending_callbacks.clear()

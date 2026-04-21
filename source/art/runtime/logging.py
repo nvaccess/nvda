@@ -96,7 +96,8 @@ def configureLogging(addon_name: str, debug: bool = False) -> logging.Logger:
 
 		# Format: timestamp - level - logger - message
 		formatter = logging.Formatter(
-			"%(asctime)s - %(levelname)s - %(name)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
+			"%(asctime)s - %(levelname)s - %(name)s - %(message)s",
+			datefmt="%Y-%m-%d %H:%M:%S",
 		)
 		file_handler.setFormatter(formatter)
 		logger.addHandler(file_handler)

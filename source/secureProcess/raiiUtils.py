@@ -3,7 +3,8 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from typing import Callable, TypeVar, cast, Any
+from typing import Callable, cast, Any
+
 
 class OnDelete[T]:
 	"""RAII helper: call a deleter with the stored value when this object is destroyed.
@@ -33,6 +34,8 @@ class OnDelete[T]:
 
 
 _makeAutoFreeCache = {}
+
+
 def makeAutoFree[T](cls: type[T], deleter: Callable[[T], Any], cache: bool = True) -> type[T]:
 	"""Create a lightweight RAII-style subclass that auto-frees instances.
 
@@ -69,7 +72,7 @@ def makeAutoFree[T](cls: type[T], deleter: Callable[[T], Any], cache: bool = Tru
 		f"AutoFree{cls.__name__}",
 		(cls,),
 		{
-			"__del__": lambda self: deleter(self) if self else None
-		}
+			"__del__": lambda self: deleter(self) if self else None,
+		},
 	)
 	return cast(type[T], newCls)

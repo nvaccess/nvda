@@ -4,7 +4,6 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
-from typing import ParamSpec
 import io
 import contextlib
 import sys
@@ -29,9 +28,7 @@ from winBindings.advapi32 import (
 	CreateProcessAsUser,
 )
 from winBindings.winnt import (
-	STARTUPINFO,
 	STARTUPINFOEX,
-	PROC_THREAD_ATTRIBUTE_HANDLE_LIST,
 	PROCESS_INFORMATION,
 	STARTF_USESTDHANDLES,
 	CREATIONFLAGS_CREATE_NO_WINDOW,
@@ -60,12 +57,23 @@ from .raiiUtils import (
 )
 
 import logging
+
 log = logging.getLogger(__name__)
 
 
 class BasicPopen:
-
-	def __init__(self, args: list[str], env: dict[str, str] | None=None, cwd: str | None=None, desktop: str | None=None, stdin: int | None=None, stdout: int | None =None, stderr: int | None=None, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False):
+	def __init__(
+		self,
+		args: list[str],
+		env: dict[str, str] | None = None,
+		cwd: str | None = None,
+		desktop: str | None = None,
+		stdin: int | None = None,
+		stdout: int | None = None,
+		stderr: int | None = None,
+		startSuspended: bool = False,
+		hideCriticalErrorDialogs: bool = False,
+	):
 		"""
 		Initialize and create a child process.
 
@@ -145,13 +153,26 @@ class BasicPopen:
 			if attribsBufSize.value == 0:
 				raise RuntimeError(f"Failed to get attribute list size, {ctypes.WinError()}")
 			attribsBuf = OnDelete(ctypes.c_buffer(attribsBufSize.value), DeleteProcThreadAttributeList)
-			if not InitializeProcThreadAttributeList(attribsBuf.value, len(procThreadAttributes), 0, byref(attribsBufSize)):
+			if not InitializeProcThreadAttributeList(
+				attribsBuf.value,
+				len(procThreadAttributes),
+				0,
+				byref(attribsBufSize),
+			):
 				raise RuntimeError(f"Failed to initialize attribute list, {ctypes.WinError()}")
 			log.debug(f"Initialized proc thread attributes, size ={attribsBufSize.value}")
 			for attribName, val in procThreadAttributes.items():
 				log.debug(f"Updating proc thread attribute: {attribName}")
 				attrib = globals().get(f"PROC_THREAD_ATTRIBUTE_{attribName.upper().replace(' ', '_')}")
-				if not UpdateProcThreadAttribute(attribsBuf.value, 0, attrib, byref(val), sizeof(val), None, None):
+				if not UpdateProcThreadAttribute(
+					attribsBuf.value,
+					0,
+					attrib,
+					byref(val),
+					sizeof(val),
+					None,
+					None,
+				):
 					raise RuntimeError(f"Failed to update attribute list, {ctypes.WinError()}")
 			siEx.lpAttributeList = cast(attribsBuf.value, LPVOID)
 			siEx._attribsBufRef = attribsBuf  # Keep a reference to avoid GC
@@ -167,7 +188,7 @@ class BasicPopen:
 		log.debug(f"Created process with PID: {self.pid}")
 
 	def _getProcThreadAttributes(self):
-		if not hasattr(self, '_procThreadAttributes'):
+		if not hasattr(self, "_procThreadAttributes"):
 			self._procThreadAttributes = {}
 		return self._procThreadAttributes
 
@@ -203,10 +224,21 @@ class BasicPopen:
 		::raise RuntimeError: If process creation fails.
 		"""
 		log.debug("Calling CreateProcess...")
-		if not CreateProcess(None, self._cmdline, None, None, True, self._creationFlags, self._envBlock, self.cwd, byref(self._siEx.startupInfo), byref(self._pi)):
+		if not CreateProcess(
+			None,
+			self._cmdline,
+			None,
+			None,
+			True,
+			self._creationFlags,
+			self._envBlock,
+			self.cwd,
+			byref(self._siEx.startupInfo),
+			byref(self._pi),
+		):
 			raise RuntimeError(f"Failed to create process, {ctypes.WinError()}")
 
-	def _createPipe(self, push: bool=True) -> tuple[io.FileIO, HANDLE]:
+	def _createPipe(self, push: bool = True) -> tuple[io.FileIO, HANDLE]:
 		"""
 		Create an anonymous pipe and return the parent-side Python object and the
 		child-side HANDLE suitable for use as a standard stream.
@@ -231,15 +263,15 @@ class BasicPopen:
 		"""
 		r_fd, w_fd = os.pipe()
 		if push:
-				w_file = os.fdopen(w_fd, 'wb', 0)
-				os.set_inheritable(r_fd, True)
-				r_handle = makeAutoFree(HANDLE, CloseHandle)(msvcrt.get_osfhandle(r_fd))
-				return w_file, r_handle
+			w_file = os.fdopen(w_fd, "wb", 0)
+			os.set_inheritable(r_fd, True)
+			r_handle = makeAutoFree(HANDLE, CloseHandle)(msvcrt.get_osfhandle(r_fd))
+			return w_file, r_handle
 		else:
-				r_file = os.fdopen(r_fd, 'rb', 0)
-				os.set_inheritable(w_fd, True)
-				w_handle = makeAutoFree(HANDLE, CloseHandle)(msvcrt.get_osfhandle(w_fd))
-				return r_file, w_handle
+			r_file = os.fdopen(r_fd, "rb", 0)
+			os.set_inheritable(w_fd, True)
+			w_handle = makeAutoFree(HANDLE, CloseHandle)(msvcrt.get_osfhandle(w_fd))
+			return r_file, w_handle
 
 	def resume(self):
 		"""
@@ -283,12 +315,12 @@ class BasicPopen:
 		exitCode = DWORD()
 		if not GetExitCodeProcess(self._handle, byref(exitCode)):
 			raise RuntimeError(f"Failed to get process exit code, {ctypes.WinError()}")
-		if exitCode.value == 259: # STILL_ACTIVE
+		if exitCode.value == 259:  # STILL_ACTIVE
 			return None
 		self.returncode = exitCode.value
 		return self.returncode
 
-	def wait(self, timeoutMS: int | None=None):
+	def wait(self, timeoutMS: int | None = None):
 		"""
 		Wait for the child process to terminate.
 
@@ -300,7 +332,7 @@ class BasicPopen:
 		:raises RuntimeError: If querying the process exit code fails.
 		"""
 		if timeoutMS is None:
-			dur = 0xFFFFFFFF # INFINITE
+			dur = 0xFFFFFFFF  # INFINITE
 		else:
 			dur = timeoutMS
 		log.debug("Waiting for process to terminate...")
@@ -308,13 +340,13 @@ class BasicPopen:
 		return self.poll()
 
 	def terminate(self):
-		""" Terminates the process"""
+		"""Terminates the process"""
 		if self.poll() is None:
 			log.debug("Terminating process...")
 			TerminateProcess(self._handle, 1)
 
 	def isRunning(self) -> bool:
-		""" Check if the process is still running."""
+		"""Check if the process is still running."""
 		return self.poll() is None
 
 	def interact(self):
@@ -380,7 +412,7 @@ class PopenWithToken(BasicPopen):
 	or CreateProcessAsUser depending on the ``useSecLogon`` flag.
 	"""
 
-	def __init__(self, token: HANDLE, *args, useSecLogon: bool=False, logonFlags: int=0, **kwargs):
+	def __init__(self, token: HANDLE, *args, useSecLogon: bool = False, logonFlags: int = 0, **kwargs):
 		"""
 		Initialize the PopenWithToken instance.
 

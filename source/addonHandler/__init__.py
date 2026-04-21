@@ -425,6 +425,7 @@ def initialize():
 def _startARTProcessesForAddons():
 	"""Start ART processes for all enabled addons."""
 	from art.manager import getARTManager
+
 	artManager = getARTManager()
 	for addon in getAvailableAddons():
 		if addon.isDisabled or addon.isBlocked or addon.isPendingInstall:
@@ -433,7 +434,7 @@ def _startARTProcessesForAddons():
 		if addon.manifest.get("runtime", "internal") == "internal":
 			continue
 		runtime = addon.manifest.get("runtime")
-		if runtime not in ('amd64', 'x86'):
+		if runtime not in ("amd64", "x86"):
 			raise ValueError(f"Unsupported add-on runtime value: {runtime}")
 		# Convert manifest to a simple dict for serialization
 		manifest_dict = {
@@ -451,7 +452,7 @@ def _startARTProcessesForAddons():
 		addon_spec = {
 			"name": addon.name,
 			"path": os.path.join(addon.path, runtime),
-			"manifest": manifest_dict
+			"manifest": manifest_dict,
 		}
 		try:
 			artManager.startAddonProcess(addon_spec)

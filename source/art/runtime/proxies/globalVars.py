@@ -13,33 +13,33 @@ from .base import ServiceProxyMixin
 
 class AppArgsProxy(ServiceProxyMixin):
 	"""Proxy for globalVars.appArgs."""
-	
+
 	_service_env_var = "NVDA_ART_GLOBALVARS_SERVICE_URI"
-	
+
 	def __init__(self):
 		self._cached_args = None
-	
+
 	def _get_args(self):
 		"""Get appArgs, using cache if available."""
 		if self._cached_args is None:
 			self._cached_args = self._call_service("getAppArgs") or {}
 		return self._cached_args
-	
+
 	@property
 	def secure(self) -> bool:
-		return self._get_args().get('secure', False)
-	
+		return self._get_args().get("secure", False)
+
 	@property
 	def configPath(self) -> str:
-		return self._get_args().get('configPath', "")
-	
+		return self._get_args().get("configPath", "")
+
 	@property
 	def launcher(self) -> bool:
-		return self._get_args().get('launcher', False)
-	
+		return self._get_args().get("launcher", False)
+
 	@property
 	def debugLogging(self) -> bool:
-		return self._get_args().get('debugLogging', False)
+		return self._get_args().get("debugLogging", False)
 
 
 # Create the appArgs proxy object

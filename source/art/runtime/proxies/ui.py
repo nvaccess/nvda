@@ -12,6 +12,7 @@ from .base import ServiceProxyMixin
 
 class _UIProxy(ServiceProxyMixin):
 	"""Internal proxy class for UI service."""
+
 	_service_env_var = "NVDA_ART_UI_SERVICE_URI"
 
 
@@ -32,7 +33,7 @@ def message(
 		"message",
 		text=text,
 		speechPriority=speechPriority,
-		brailleText=brailleText
+		brailleText=brailleText,
 	)
 
 
@@ -54,7 +55,7 @@ def browseableMessage(
 		message=message,
 		title=title,
 		isHtml=isHtml,
-		closeButton=closeButton
+		closeButton=closeButton,
 	)
 
 
@@ -67,9 +68,8 @@ def reviewMessage(text: str, speechPriority: Optional[int] = None) -> None:
 	_UIProxy._call_service(
 		"reviewMessage",
 		text=text,
-		speechPriority=speechPriority
+		speechPriority=speechPriority,
 	)
-
 
 
 # For compatibility with code that might import these

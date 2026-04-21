@@ -14,10 +14,10 @@ from .base import BaseService
 @Pyro5.api.expose
 class ConfigService(BaseService):
 	"""Provides access to NVDA configuration for add-ons running in ART."""
-	
+
 	def __init__(self):
 		super().__init__("ConfigService")
-	
+
 	def getConfigValue(self, section: str, key: str, default=None):
 		"""Get a configuration value."""
 		try:
@@ -27,7 +27,7 @@ class ConfigService(BaseService):
 		except Exception:
 			self._log_error("getConfigValue", f"{section}.{key}")
 			return default
-	
+
 	def setConfigValue(self, section: str, key: str, value):
 		"""Set a configuration value."""
 		try:
@@ -37,7 +37,7 @@ class ConfigService(BaseService):
 		except Exception:
 			self._log_error("setConfigValue", f"{section}.{key}")
 			raise
-	
+
 	def getConfigSection(self, section: str) -> dict:
 		"""Get an entire configuration section."""
 		try:
@@ -47,7 +47,7 @@ class ConfigService(BaseService):
 		except Exception:
 			self._log_error("getConfigSection", section)
 			return {}
-	
+
 	def saveConfig(self):
 		"""Save the configuration to disk."""
 		try:

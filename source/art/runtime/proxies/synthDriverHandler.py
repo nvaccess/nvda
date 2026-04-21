@@ -5,7 +5,7 @@
 
 """SynthDriverHandler module proxy for add-ons running in ART."""
 
-from typing import Any, Dict, List, Optional
+from typing import List, Optional
 
 from .base import ServiceProxyMixin
 
@@ -52,7 +52,7 @@ synthIndexReached = _SynthNotification("synthIndexReached", "index")
 synthDoneSpeaking = _SynthNotification("synthDoneSpeaking", "done")
 
 
-class _SynthDriverHandlerProxy(ServiceProxyMixin):
+class _SynthDriverHandlerProxy(ServiceProxyMixin):  # pyright: ignore[reportUnusedClass]
 	"""Internal proxy class for synthDriverHandler service."""
 
 	_service_env_var = "NVDA_ART_SPEECH_SERVICE_URI"

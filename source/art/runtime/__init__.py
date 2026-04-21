@@ -11,9 +11,10 @@ import threading
 _runtime_instance = None
 _runtime_lock = threading.Lock()
 
+
 def setRuntime(runtimeInstance):
 	"""Set the global ART runtime instance. Can only be called once.
-	
+
 	@param runtimeInstance: The ARTRuntime instance to register
 	@raises RuntimeError: If runtime has already been set
 	@raises ValueError: If runtimeInstance is None
@@ -26,9 +27,10 @@ def setRuntime(runtimeInstance):
 			raise ValueError("runtimeInstance cannot be None.")
 		_runtime_instance = runtimeInstance
 
+
 def getRuntime():
 	"""Get the global ART runtime instance.
-	
+
 	@return: The registered ARTRuntime instance
 	@raises RuntimeError: If runtime has not been initialized yet
 	"""

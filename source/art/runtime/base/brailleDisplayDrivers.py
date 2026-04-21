@@ -8,36 +8,36 @@
 import os
 import logging
 from abc import abstractmethod, ABC
-from typing import List, Dict, Any, Optional, OrderedDict, Union, Iterator, Tuple
+from typing import Any, OrderedDict, Union, Iterator, Tuple
 import Pyro5.api
 
 
 class BrailleDisplayDriver(ABC):
 	"""Base class for braille display drivers running in ART.
-	
+
 	This mirrors the NVDA BrailleDisplayDriver API but runs in the ART process.
-	
+
 	Required implementations for subclasses:
 	- check(): Class method to verify display availability
 	- display(): Send braille cells to the hardware
-	
+
 	Optional implementations:
 	- terminate(): Cleanup when driver is being unloaded
 	- registerAutomaticDetection(): For auto-detection support
 	- getManualPorts(): For manual port configuration
-	
+
 	The driver will be automatically registered with NVDA Core when instantiated.
 	"""
-	
+
 	#: The name of the driver; must be the original module file name.
 	name: str = ""
-	
+
 	#: A description of the driver.
 	description: str = ""
-	
+
 	#: The configuration section where driver specific subsections should be saved.
 	_configSection = "braille"
-	
+
 	#: Whether this driver is thread-safe.
 	#: If it is, NVDA may initialize, terminate or call this driver on any thread.
 	#: This allows NVDA to read from and write to the display in the background,
@@ -45,31 +45,31 @@ class BrailleDisplayDriver(ABC):
 	#: thus resulting in better performance.
 	#: This is also required to use the hwIo module.
 	isThreadSafe: bool = False
-	
+
 	#: Whether this driver is supported for automatic detection of braille displays.
 	supportsAutomaticDetection: bool = False
-	
+
 	#: Whether displays for this driver return acknowledgements for sent packets.
 	#: _handleAck should be called when an ACK is received.
 	#: Note that thread safety is required for the generic implementation to function properly.
 	#: If a display is not thread safe, a driver should manually implement ACK processing.
 	receivesAckPackets: bool = False
-	
+
 	#: Whether this driver is awaiting an Ack for a connected display.
 	#: This is set to True after displaying cells when receivesAckPackets is True,
 	#: and set to False by _handleAck or when timeout has elapsed.
 	#: This is for internal use by NVDA core code only and shouldn't be touched by a driver itself.
 	_awaitingAck: bool = False
-	
+
 	#: Maximum timeout to use for communication with a device (in seconds).
 	#: This can be used for serial connections.
 	#: Furthermore, it is used to stop waiting for missed acknowledgement packets.
 	timeout: float = 0.2
-	
+
 	#: Number of rows of the braille display, this will be 1 for most displays
 	#: Note: Setting this to 0 will cause numCells to be 0 and hence will disable braille.
 	numRows: int = 1
-	
+
 	#: Number of columns (cells per row) of the braille display
 	#: 0 indicates that braille should be disabled.
 	numCols: int = 0
@@ -85,13 +85,13 @@ class BrailleDisplayDriver(ABC):
 		self.logger = logging.getLogger(f"ART.BrailleDisplayDriver.{self.name}")
 		self._port = port
 		self._brailleService = None
-		
+
 		# Register this braille driver with NVDA Core
 		self._registerWithCore()
-		
+
 		# Register this instance with the ART braille service
 		self._registerWithARTService()
-		
+
 		self.logger.info(f"Braille display driver {self.name} initialized in ART")
 
 	@classmethod
@@ -181,15 +181,16 @@ class BrailleDisplayDriver(ABC):
 		"""Register this braille instance with the ART braille service."""
 		try:
 			self.logger.debug("Attempting to register with ART braille service")
-			
+
 			# Get the braille service from the ART runtime using clean API
 			import art.runtime
+
 			runtime = art.runtime.getRuntime()
 			self.logger.debug(f"Got runtime: {runtime}")
-			
-			brailleService = runtime.services.get('braille')
+
+			brailleService = runtime.services.get("braille")
 			self.logger.debug(f"Got brailleService: {brailleService}")
-			
+
 			if brailleService:
 				brailleService.setBrailleInstance(self)
 				self.logger.debug("Successfully registered with ART braille service")
@@ -208,27 +209,27 @@ class BrailleDisplayDriver(ABC):
 			if not braille_uri:
 				self.logger.error("No NVDA_ART_BRAILLE_SERVICE_URI found")
 				return
-			
+
 			# Connect to NVDA Core's braille service
 			self.logger.debug(f"Connecting to braille service at {braille_uri}")
 			self._brailleService = Pyro5.api.Proxy(braille_uri)
 			self._brailleService._pyroTimeout = 2.0
-			
+
 			# Get addon name from environment
 			addon_name = os.environ.get("NVDA_ART_ADDON_NAME", "unknown")
 			self.logger.debug(f"Addon name from environment: {addon_name}")
-			
+
 			# Get supported gestures
 			supported_gestures = []
-			if hasattr(self, 'gestureMap') and self.gestureMap:
+			if hasattr(self, "gestureMap") and self.gestureMap:
 				supported_gestures = list(self.gestureMap.keys())
-			
+
 			# Get device information
 			device_info = {}
-			for attr in ['isThreadSafe', 'supportsAutomaticDetection']:
+			for attr in ["isThreadSafe", "supportsAutomaticDetection"]:
 				if hasattr(self, attr):
 					device_info[attr] = getattr(self, attr)
-			
+
 			# Register this braille driver
 			self.logger.debug(f"Calling registerBrailleDriver for {self.name}")
 			result = self._brailleService.registerBrailleDriver(
@@ -240,15 +241,17 @@ class BrailleDisplayDriver(ABC):
 				numCols=self.numCols,
 				supportedGestures=supported_gestures,
 				deviceInfo=device_info,
-				art_service_proxy=None  # This will be set by the BrailleService
+				art_service_proxy=None,  # This will be set by the BrailleService
 			)
 			self.logger.debug(f"registerBrailleDriver returned: {result}")
-			
+
 			if result:
 				self.logger.info(f"Successfully registered {self.name} with NVDA Core")
 			else:
-				self.logger.error(f"Failed to register {self.name} with NVDA Core - registerBrailleDriver returned False")
-				
+				self.logger.error(
+					f"Failed to register {self.name} with NVDA Core - registerBrailleDriver returned False",
+				)
+
 		except Exception:
 			self.logger.exception("Error registering with NVDA Core")
 
@@ -279,7 +282,7 @@ class BrailleDisplayDriver(ABC):
 				self._brailleService.sendInputGesture(
 					driver_name=self.name,
 					gesture_id=gesture_id,
-					gesture_data=kwargs
+					gesture_data=kwargs,
 				)
 			except Exception:
 				self.logger.exception(f"Error sending input gesture: {gesture_id}")

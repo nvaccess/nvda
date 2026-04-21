@@ -503,6 +503,7 @@ def getSynthList() -> list[tuple[str, str]]:
 	# Add ART synthesizers to the list
 	try:
 		from art.manager import getARTManager
+
 		artManager = getARTManager()
 		if artManager:
 			# Get ART synths and avoid duplicates

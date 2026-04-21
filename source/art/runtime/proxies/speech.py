@@ -12,7 +12,7 @@ from dataclasses import dataclass
 @dataclass
 class IndexCommand:
 	index: int
-	
+
 	def __repr__(self):
 		return f"IndexCommand({self.index})"
 
@@ -20,7 +20,7 @@ class IndexCommand:
 @dataclass
 class CharacterModeCommand:
 	state: bool
-	
+
 	def __repr__(self):
 		return f"CharacterModeCommand({self.state})"
 
@@ -28,7 +28,7 @@ class CharacterModeCommand:
 @dataclass
 class BreakCommand:
 	time: Optional[int] = None
-	
+
 	def __repr__(self):
 		return f"BreakCommand({self.time})"
 
@@ -36,7 +36,7 @@ class BreakCommand:
 @dataclass
 class LangChangeCommand:
 	lang: Optional[str]
-	
+
 	def __repr__(self):
 		return f"LangChangeCommand({self.lang!r})"
 
@@ -44,7 +44,7 @@ class LangChangeCommand:
 @dataclass
 class PitchCommand:
 	offset: int = 0
-	
+
 	def __repr__(self):
 		return f"PitchCommand({self.offset})"
 
@@ -52,7 +52,7 @@ class PitchCommand:
 @dataclass
 class RateCommand:
 	offset: int = 0
-	
+
 	def __repr__(self):
 		return f"RateCommand({self.offset})"
 
@@ -60,7 +60,7 @@ class RateCommand:
 @dataclass
 class VolumeCommand:
 	offset: int = 0
-	
+
 	def __repr__(self):
 		return f"VolumeCommand({self.offset})"
 
@@ -68,7 +68,7 @@ class VolumeCommand:
 @dataclass
 class PhonemeCommand:
 	phoneme: str
-	
+
 	def __repr__(self):
 		return f"PhonemeCommand({self.phoneme!r})"
 

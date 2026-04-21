@@ -18,6 +18,7 @@ from ctypes.wintypes import (
 
 ULONG_PTR = c_size_t
 
+
 class JOBOBJECTINFOCLASS(enum.IntEnum):
 	"""Enumeration of Job Object Information Classes.
 
@@ -58,6 +59,7 @@ class JOBOBJECT_BASIC_LIMIT_INFORMATION(Structure):
 		("PriorityClass", DWORD),
 		("SchedulingClass", DWORD),
 	)
+
 
 class IO_COUNTERS(Structure):
 	"""
@@ -116,6 +118,7 @@ JOB_OBJECT_UILIMIT_READCLIPBOARD = 0x00000002
 JOB_OBJECT_UILIMIT_SYSTEMPARAMETERS = 0x00000008
 JOB_OBJECT_UILIMIT_WRITECLIPBOARD = 0x00000004
 
+
 class JOBOBJECT_BASIC_UI_RESTRICTIONS(Structure):
 	"""
 	Contains UI restrictions for a job object.
@@ -124,6 +127,4 @@ class JOBOBJECT_BASIC_UI_RESTRICTIONS(Structure):
 		https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/ns-jobapi2-jobobject_basic_ui_restrictions
 	"""
 
-	_fields_ = (
-		("UIRestrictionsClass", DWORD),
-	)
+	_fields_ = (("UIRestrictionsClass", DWORD),)

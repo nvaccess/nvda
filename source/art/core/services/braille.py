@@ -10,7 +10,6 @@ from typing import Dict, List, Any, Optional
 
 import Pyro5.api
 from logHandler import log
-import inputCore
 
 from .base import BaseService
 
@@ -120,7 +119,7 @@ class BrailleService(BaseService):
 				return [
 					{
 						"name": name,
-						**driver_info
+						**driver_info,
 					}
 					for name, driver_info in self._registeredDrivers.items()
 				]
@@ -233,7 +232,7 @@ class BrailleService(BaseService):
 				if name in self._registeredDrivers:
 					return {
 						"name": name,
-						**self._registeredDrivers[name]
+						**self._registeredDrivers[name],
 					}
 				return None
 		except Exception:
@@ -275,7 +274,7 @@ class BrailleService(BaseService):
 			with self._lock:
 				if name not in self._registeredDrivers:
 					return False
-				
+
 				# Check if ART process connection is still valid
 				if name not in self._artProcessConnections:
 					self._registeredDrivers[name]["isAvailable"] = False
@@ -292,7 +291,7 @@ class BrailleService(BaseService):
 		try:
 			with self._lock:
 				log.info("Terminating BrailleService")
-				
+
 				# Deactivate active driver
 				if self._activeDriver:
 					self._activeDriver = None

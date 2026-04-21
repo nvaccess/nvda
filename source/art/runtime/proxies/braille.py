@@ -6,7 +6,7 @@
 """Braille module proxy for add-ons running in ART."""
 
 import typing
-from typing import List, Tuple, OrderedDict, Optional, Union, Any
+from typing import List, Tuple, Any
 
 from .base import ServiceProxyMixin
 import driverHandler
@@ -15,15 +15,15 @@ import driverHandler
 class BrailleDisplayDriver(driverHandler.Driver):
 	"""
 	Proxy base class for braille display drivers in ART.
-	
+
 	This class provides the same interface as the core BrailleDisplayDriver
 	but runs in the ART process. Drivers inherit from this class and their
 	instances are registered with NVDA Core via the BrailleService.
 	"""
-	
+
 	_configSection = "braille"
 	supportedSettings = ()
-	
+
 	#: Whether this driver is thread-safe.
 	isThreadSafe: bool = False
 	#: Whether this driver is supported for automatic detection of braille displays.
@@ -34,7 +34,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	_awaitingAck: bool = False
 	#: Maximum timeout to use for communication with a device (in seconds).
 	timeout: float = 0.2
-	
+
 	#: Number of braille cells on the display.
 	numCells: int = 0
 	#: Number of rows of braille cells (for multi-line displays).
@@ -77,7 +77,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 
 class BrailleProxy(ServiceProxyMixin):
 	"""Proxy for core braille module functionality."""
-	
+
 	_service_env_var = "NVDA_ART_BRAILLE_SERVICE_URI"
 
 	def getDisplayList(self, excludeNegativeChecks: bool = True) -> List[Tuple[str, str]]:

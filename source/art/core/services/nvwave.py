@@ -18,7 +18,12 @@ class NVWaveService(BaseService):
 	def __init__(self):
 		super().__init__("NVWaveService")
 
-	def playWaveFile(self, fileName: str, asynchronous: bool = True, isSpeechWaveFileCommand: bool = False) -> bool:
+	def playWaveFile(
+		self,
+		fileName: str,
+		asynchronous: bool = True,
+		isSpeechWaveFileCommand: bool = False,
+	) -> bool:
 		"""Play a wave file.
 
 		@param fileName: Path to the wave file to play
@@ -36,7 +41,7 @@ class NVWaveService(BaseService):
 			nvwave.playWaveFile(
 				fileName=fileName,
 				asynchronous=asynchronous,
-				isSpeechWaveFileCommand=isSpeechWaveFileCommand
+				isSpeechWaveFileCommand=isSpeechWaveFileCommand,
 			)
 
 			log.debug(f"Playing wave file: {fileName}")

@@ -33,7 +33,6 @@ from ctypes.wintypes import (
 	LPDWORD,
 	LPPOINT,
 	LPRECT,
-	LPVOID,
 	PBYTE,
 	PHANDLE,
 	PMSG,
@@ -62,7 +61,7 @@ from ctypes.wintypes import (
 )
 from enum import IntEnum, IntFlag
 from .winnt import (
-	LPSECURITY_ATTRIBUTES
+	LPSECURITY_ATTRIBUTES,
 )
 
 UINT_PTR = c_size_t
@@ -1687,6 +1686,8 @@ class NMHDR(Structure):
 		("idFrom", UINT_PTR),
 		("code", UINT),
 	)
+
+
 LPDEVMODEW = LPVOID
 
 CreateDesktopEx = WINFUNCTYPE(None)(("CreateDesktopExW", dll))
@@ -1705,7 +1706,7 @@ CreateDesktopEx.argtypes = (
 	ACCESS_MASK,  # dwDesiredAccess: Access rights for the new desktop
 	LPSECURITY_ATTRIBUTES,  # lpsa: Pointer to a SECURITY_ATTRIBUTES structure that specifies a security descriptor for the new desktop
 	DWORD,  # ulHeapSize: The initial size, in bytes, of the desktop heap for the new desktop
-	LPVOID, # pvoid: Reserved; must be NULL
+	LPVOID,  # pvoid: Reserved; must be NULL
 )
 
 CloseDesktop = WINFUNCTYPE(None)(("CloseDesktop", dll))

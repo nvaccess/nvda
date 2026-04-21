@@ -131,8 +131,10 @@ def createRestrictedToken(token, removePrivilages: bool = True, retainUser: bool
 	return restrictedToken
 
 
-def setTokenIntegrityLevel(token: PyHandle, level: str):
+# def setTokenIntegrityLevel(token: PyHandle, level: str):
+def setTokenIntegrityLevel(token, level: str):
 	"""
+	# Set the integrity level on a token.
 	Set the integrity level on a token.
 
 	This updates the token's mandatory integrity level (SACL) to the given named level. Typical values for
@@ -378,6 +380,7 @@ def createRestrictedSecurityDescriptor(
 		sd.SetSecurityDescriptorSacl(1, sacl, 0)
 	return sd
 
+
 @contextlib.contextmanager
 def impersonateToken(token):
 	"""Context manager to impersonate a given token within a context.
@@ -394,6 +397,7 @@ def impersonateToken(token):
 	finally:
 		win32security.RevertToSelf()
 
+
 def isTokenElevated(token) -> bool:
 	"""
 	Check if a given token is elevated.
@@ -403,6 +407,7 @@ def isTokenElevated(token) -> bool:
 	"""
 	elevation = win32security.GetTokenInformation(token, win32security.TokenElevation)
 	return elevation != 0
+
 
 def getUnelevatedCurrentInteractiveUserTokenFromShell():
 	"""Return an unelevated primary token for the current interactive user.
@@ -419,6 +424,7 @@ def getUnelevatedCurrentInteractiveUserTokenFromShell():
 	"""
 
 	import ctypes
+
 	shellWindow = ctypes.windll.user32.GetShellWindow()
 	if not shellWindow:
 		raise RuntimeError("Could not find shell window; no interactive user session?")
@@ -426,5 +432,11 @@ def getUnelevatedCurrentInteractiveUserTokenFromShell():
 	log.debug(f"Found shell process with PID {pid}...")
 	shellProcess = win32api.OpenProcess(win32con.PROCESS_QUERY_INFORMATION, False, pid)
 	token = win32security.OpenProcessToken(shellProcess, win32con.MAXIMUM_ALLOWED)
-	token = win32security.DuplicateTokenEx(token, win32security.SecurityImpersonation, win32security.TOKEN_ALL_ACCESS, win32security.TokenPrimary, None)
+	token = win32security.DuplicateTokenEx(
+		token,
+		win32security.SecurityImpersonation,
+		win32security.TOKEN_ALL_ACCESS,
+		win32security.TokenPrimary,
+		None,
+	)
 	return token

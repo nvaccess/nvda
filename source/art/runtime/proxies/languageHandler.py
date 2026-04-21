@@ -11,12 +11,13 @@ from .base import ServiceProxyMixin
 
 class _LanguageHandlerProxy(ServiceProxyMixin):
 	"""Internal proxy class for languageHandler service."""
+
 	_service_env_var = "NVDA_ART_LANGUAGE_SERVICE_URI"
 
 
 def getLanguage() -> str:
 	"""Get the current NVDA language.
-	
+
 	@return: The current language code (e.g., "en", "es", "fr_FR")
 	"""
 	result = _LanguageHandlerProxy._call_service("getLanguage")
@@ -25,7 +26,7 @@ def getLanguage() -> str:
 
 def getLanguageDescription(language: str) -> Optional[str]:
 	"""Get a human-readable description of a language code.
-	
+
 	@param language: Language code (e.g., "en", "es", "fr_FR")
 	@return: Localized language description or None if not found
 	"""
@@ -34,10 +35,10 @@ def getLanguageDescription(language: str) -> Optional[str]:
 
 def normalizeLanguage(lang: str) -> Optional[str]:
 	"""Normalize a language-dialect string to standard form.
-	
-	Converts any dash to underline, and makes sure that language is lowercase 
+
+	Converts any dash to underline, and makes sure that language is lowercase
 	and dialect is uppercase.
-	
+
 	@param lang: Language code to normalize
 	@return: Normalized language code or None if invalid
 	"""
@@ -46,7 +47,7 @@ def normalizeLanguage(lang: str) -> Optional[str]:
 
 def getAvailableLanguages(presentational: bool = False) -> List[Tuple[str, str]]:
 	"""Get list of available languages.
-	
+
 	@param presentational: Whether this is meant to be shown alphabetically by language description
 	@return: List of (language_code, description) tuples
 	"""
@@ -56,7 +57,7 @@ def getAvailableLanguages(presentational: bool = False) -> List[Tuple[str, str]]
 
 def getWindowsLanguage() -> str:
 	"""Get the locale name of the user's configured language in Windows.
-	
+
 	@return: Windows language code
 	"""
 	result = _LanguageHandlerProxy._call_service("getWindowsLanguage")
@@ -65,7 +66,7 @@ def getWindowsLanguage() -> str:
 
 def localeNameToWindowsLCID(localeName: str) -> int:
 	"""Retrieves the Windows locale identifier (LCID) for the given locale name.
-	
+
 	@param localeName: a string of 2letterLanguage_2letterCountry or just language
 	@return: a Windows LCID or 0 if it could not be retrieved
 	"""
@@ -75,7 +76,7 @@ def localeNameToWindowsLCID(localeName: str) -> int:
 
 def windowsLCIDToLocaleName(lcid: int) -> Optional[str]:
 	"""Gets a normalized locale from a Windows LCID.
-	
+
 	@param lcid: Windows locale identifier
 	@return: Locale name or None if not found
 	"""
@@ -84,7 +85,7 @@ def windowsLCIDToLocaleName(lcid: int) -> Optional[str]:
 
 def stripLocaleFromLangCode(langWithOptionalLocale: str) -> str:
 	"""Get the lang code eg "en" for "en-au" or "chr" for "chr-US-Qaaa-x-west".
-	
+
 	@param langWithOptionalLocale: may already be language only, or include locale specifier
 	(e.g. "en" or "en-au").
 	@return: The language only part, before the first dash.
@@ -99,16 +100,16 @@ LCID_NONE = 0
 
 def setGlobalTranslation(translations) -> None:
 	"""Install translation functions globally.
-	
+
 	This function installs the gettext translation functions into the builtins
 	namespace, making them available globally throughout the process.
 	This matches the behavior of NVDA core's languageHandler.setLanguage().
-	
-	@param translations: A gettext translation object with gettext, ngettext, 
+
+	@param translations: A gettext translation object with gettext, ngettext,
 		pgettext, and npgettext methods
 	"""
 	import builtins
-	
+
 	# Install translation functions into builtins
 	# This matches what trans.install(names=["pgettext", "npgettext", "ngettext"]) does
 	builtins._ = translations.gettext

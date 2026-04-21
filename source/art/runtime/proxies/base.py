@@ -26,7 +26,7 @@ class ServiceProxyMixin:
 			raise NotImplementedError("_service_env_var must be set")
 
 		# Get thread-local cache
-		if not hasattr(cls._thread_local, 'service_cache'):
+		if not hasattr(cls._thread_local, "service_cache"):
 			cls._thread_local.service_cache = {}
 		service_cache = cls._thread_local.service_cache
 
@@ -50,8 +50,9 @@ class ServiceProxyMixin:
 		if service:
 			try:
 				return getattr(service, method)(*args, **kwargs)
-			except Exception as e:
+			except Exception:
 				from logHandler import log
+
 				log.exception(f"Service call failed: {cls._service_env_var}.{method}")
 				return None
 		return None
