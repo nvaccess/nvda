@@ -85,6 +85,7 @@ from utils.displayString import DisplayStringEnum
 
 import gui
 import gui.contextHelp
+import gui.message
 import screenCurtain
 import api
 import ui
@@ -6218,15 +6219,15 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 				# Translators: Title of the warning dialog shown when enabling a risky logging level.
 				"Warning",
 			)
-		return (
-			gui.messageBox(
-				message,
-				caption,
-				wx.YES | wx.NO | wx.NO_DEFAULT | wx.ICON_WARNING,
-				self,
-			)
-			== wx.YES
+		dialog = gui.message.MessageDialog(
+			parent=self,
+			message=message,
+			title=caption,
+			dialogType=gui.message.DialogType.WARNING,
+			buttons=gui.message.DefaultButtonSet.YES_NO,
+			helpId="GeneralSettingsLogLevel",
 		)
+		return dialog.ShowModal() == gui.message.ReturnCode.YES
 
 	def makeSettings(self, sizer: wx.BoxSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
