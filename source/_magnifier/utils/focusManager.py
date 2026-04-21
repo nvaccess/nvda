@@ -31,6 +31,7 @@ class FocusManager:
 	def __init__(self):
 		"""Initialize the focus manager."""
 		self._lastFocusedObject: MagnifierFollowFocusType | None = None
+		self._lastReportedCoordinates = Coordinates(0, 0)
 		self._lastMousePosition = Coordinates(0, 0)
 		self._lastSystemFocusPosition = Coordinates(0, 0)
 		self._lastReviewPosition: Coordinates | None = None
@@ -85,7 +86,7 @@ class FocusManager:
 		# Priority 1: Mouse — drag (fires even when stationary) or movement
 		if (isClickPressed or mouseChanged) and isFollowMouse:
 			self._lastFocusedObject = MagnifierFollowFocusType.MOUSE
-			return mousePosition
+			return self._rememberAndReturnCoordinates(mousePosition)
 
 		# Special case: table cell navigation (numpad).
 		# When both the system focus and the navigator object change simultaneously but the
@@ -93,22 +94,22 @@ class FocusManager:
 		# intent and therefore takes priority over the system focus.
 		if navigatorChanged and systemFocusChanged and not reviewChanged and isFollowNavigatorObject:
 			self._lastFocusedObject = MagnifierFollowFocusType.NAVIGATOR_OBJECT
-			return navigatorPosition
+			return self._rememberAndReturnCoordinates(navigatorPosition)
 
 		# Priority 2: System focus (focus object + browse mode cursor)
 		if systemFocusChanged and isFollowSystemFocus:
 			self._lastFocusedObject = MagnifierFollowFocusType.SYSTEM_FOCUS
-			return systemFocusPosition
+			return self._rememberAndReturnCoordinates(systemFocusPosition)
 
 		# Priority 3: Review cursor
 		if reviewChanged and isFollowReviewCursor and reviewPosition is not None:
 			self._lastFocusedObject = MagnifierFollowFocusType.REVIEW
-			return reviewPosition
+			return self._rememberAndReturnCoordinates(reviewPosition)
 
 		# Priority 4: Navigator object (NumPad navigation)
 		if navigatorChanged and isFollowNavigatorObject:
 			self._lastFocusedObject = MagnifierFollowFocusType.NAVIGATOR_OBJECT
-			return navigatorPosition
+			return self._rememberAndReturnCoordinates(navigatorPosition)
 
 		# Resolve the effective review position once (fallback to last valid when None)
 		reviewEffectivePosition = (
@@ -127,18 +128,18 @@ class FocusManager:
 		for focusType, isEnabled, position in _sources:
 			if self._lastFocusedObject == focusType:
 				if isEnabled:
-					return position
+					return self._rememberAndReturnCoordinates(position)
 				self._lastFocusedObject = None
 				break
 
-		# No active source – switch to the highest-priority enabled source
-		for focusType, isEnabled, position in _sources:
-			if isEnabled:
-				self._lastFocusedObject = focusType
-				return position
+		# No eligible update event from an enabled source.
+		# Keep current magnifier location frozen until a followed source changes.
+		return self._lastReportedCoordinates
 
-		# All sources disabled – return mouse position without changing focus state
-		return mousePosition
+	def _rememberAndReturnCoordinates(self, coordinates: Coordinates) -> Coordinates:
+		"""Store coordinates as the current tracked position and return them."""
+		self._lastReportedCoordinates = coordinates
+		return coordinates
 
 	def _getMousePosition(self) -> Coordinates:
 		"""

@@ -172,9 +172,9 @@ def saveFollowStates() -> None:
 
 def toggleAllFollowStates() -> bool:
 	"""
-	Toggle all follow states between forced-active and previously saved states.
+	Toggle all follow states between forced-disabled and previously saved states.
 
-	:return: True when all follow states are forced active after the call, False when restored.
+	:return: True when all follow states are forced disabled after the call, False when restored.
 	"""
 	_ensureSavedStatesInitialized()
 	if _followStateOverride.isActive:
@@ -184,7 +184,7 @@ def toggleAllFollowStates() -> bool:
 	else:
 		saveFollowStates()
 		for focusType in _FOLLOW_CONFIG_KEYS:
-			setFollowState(focusType, True)
+			setFollowState(focusType, False)
 		_followStateOverride.isActive = True
 	return _followStateOverride.isActive
 

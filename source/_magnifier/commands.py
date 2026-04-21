@@ -181,7 +181,7 @@ def toggleFilter() -> None:
 
 def toggleFollow(focusType: MagnifierFollowFocusType) -> None:
 	"""
-	Toggle the specified follow mode setting and update focus immediately.
+	Toggle the specified follow mode setting.
 
 	:param focusType: The follow mode to toggle (mouse, system focus, review cursor, navigator object)
 	"""
@@ -192,8 +192,6 @@ def toggleFollow(focusType: MagnifierFollowFocusType) -> None:
 	):
 		state = not getFollowState(focusType)
 		setFollowState(focusType, state)
-
-		magnifier._focusManager.updateFollowedFocus()
 
 		ui.message(
 			pgettext(
@@ -218,15 +216,14 @@ def toggleFollow(focusType: MagnifierFollowFocusType) -> None:
 
 
 def toggleAllFollow() -> None:
-	"""Toggle all follow settings at once and update focus immediately"""
+	"""Toggle all follow settings at once."""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
 		magnifier,
 		MagnifierAction.TOGGLE_FOLLOW_SETTINGS,
 	):
-		isActiveNow = toggleAllFollowStates()
-		magnifier._focusManager.updateFollowedFocus()
-		if not isActiveNow:
+		isDisabledNow = toggleAllFollowStates()
+		if isDisabledNow:
 			stateMessage = pgettext(
 				"magnifier",
 				# Translators: State of all follow settings being toggled disabled.
@@ -235,8 +232,8 @@ def toggleAllFollow() -> None:
 		else:
 			stateMessage = pgettext(
 				"magnifier",
-				# Translators: State of all follow settings being toggled enabled.
-				"All follow settings enabled",
+				# Translators: State of all follow settings being restored.
+				"All follow settings restored",
 			)
 		ui.message(stateMessage)
 
