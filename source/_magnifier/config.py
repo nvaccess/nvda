@@ -9,7 +9,8 @@ Handles module initialization, configuration and settings interaction.
 """
 
 import config
-from .utils.types import Filter, FullScreenMode
+from dataclasses import dataclass, field
+from .utils.types import Filter, FullScreenMode, MagnifierFollowFocusType
 
 
 class ZoomLevel:
@@ -78,9 +79,6 @@ def setDefaultZoomLevel(zoomLevel: float) -> None:
 
 	:param zoomLevel: The zoom level to set.
 	"""
-
-	if "magnifier" not in config.conf:
-		config.conf["magnifier"] = {}
 	config.conf["magnifier"]["defaultZoomLevel"] = zoomLevel
 
 
@@ -99,9 +97,6 @@ def setDefaultPanStep(panStep: int) -> None:
 
 	:param panStep: The pan value to set.
 	"""
-
-	if "magnifier" not in config.conf:
-		config.conf["magnifier"] = {}
 	config.conf["magnifier"]["defaultPanStep"] = panStep
 
 
@@ -121,6 +116,77 @@ def setDefaultFilter(filter: Filter) -> None:
 	:param filter: The filter to set.
 	"""
 	config.conf["magnifier"]["defaultFilter"] = filter.value
+
+
+_FOLLOW_CONFIG_KEYS: dict[MagnifierFollowFocusType, str] = {
+	MagnifierFollowFocusType.MOUSE: "followMouse",
+	MagnifierFollowFocusType.SYSTEM_FOCUS: "followSystemFocus",
+	MagnifierFollowFocusType.REVIEW: "followReviewCursor",
+	MagnifierFollowFocusType.NAVIGATOR_OBJECT: "followNavigatorObject",
+}
+
+
+@dataclass
+class _FollowStateOverride:
+	savedStates: dict[MagnifierFollowFocusType, bool] = field(default_factory=dict)
+	isActive: bool = False
+
+
+_followStateOverride = _FollowStateOverride()
+
+
+def _ensureSavedStatesInitialized() -> None:
+	"""
+	Populate _followStateOverride.savedStates from current config if not yet done.
+	Called lazily to avoid reading config.conf at module import time.
+	"""
+	if not _followStateOverride.savedStates:
+		saveFollowStates()
+
+
+def getFollowState(focusType: MagnifierFollowFocusType) -> bool:
+	"""
+	Get the current follow state for a given focus type.
+
+	:param focusType: The focus type to query.
+	:return: True if the magnifier follows the given focus type, False otherwise.
+	"""
+	return config.conf["magnifier"][_FOLLOW_CONFIG_KEYS[focusType]]
+
+
+def setFollowState(focusType: MagnifierFollowFocusType, state: bool) -> None:
+	"""
+	Set the follow state for a given focus type.
+
+	:param focusType: The focus type to update.
+	:param state: True to enable following, False to disable.
+	"""
+	config.conf["magnifier"][_FOLLOW_CONFIG_KEYS[focusType]] = state
+
+
+def saveFollowStates() -> None:
+	"""Save current follow states so they can be restored later."""
+	for focusType in _FOLLOW_CONFIG_KEYS:
+		_followStateOverride.savedStates[focusType] = getFollowState(focusType)
+
+
+def toggleAllFollowStates() -> bool:
+	"""
+	Toggle all follow states between forced-active and previously saved states.
+
+	:return: True when all follow states are forced active after the call, False when restored.
+	"""
+	_ensureSavedStatesInitialized()
+	if _followStateOverride.isActive:
+		for focusType, state in _followStateOverride.savedStates.items():
+			setFollowState(focusType, state)
+		_followStateOverride.isActive = False
+	else:
+		saveFollowStates()
+		for focusType in _FOLLOW_CONFIG_KEYS:
+			setFollowState(focusType, True)
+		_followStateOverride.isActive = True
+	return _followStateOverride.isActive
 
 
 def getDefaultFullscreenMode() -> FullScreenMode:
