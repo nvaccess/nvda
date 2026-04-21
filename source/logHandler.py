@@ -251,12 +251,12 @@ class Logger(logging.Logger):
 		:param level: The severity level of the log message.
 		:param msg: The log message, which may contain format specifiers that will be replaced by the values in `args`.
 		:param args: The arguments to be merged into `msg` using the `%` operator for string formatting.
-		:param exc_info: Exception information to be logged, defaults to None
-		:param extra: Additional information to be logged, defaults to None
-		:param codepath: The code path where the log was generated, defaults to None
-		:param activateLogViewer: Whether to activate the log viewer, defaults to False
-		:param stack_info: Stack information to be logged, defaults to None
-		:param redactSecrets: Whether to check for and redact secrets in the log message, defaults to False
+		:param exc_info: Exception information to be logged
+		:param extra: Additional information to be logged
+		:param codepath: The code path where the log was generated
+		:param activateLogViewer: Whether to activate the log viewer
+		:param stack_info: Stack information to be logged
+		:param redactSecrets: Whether to check for and redact secrets in the log message
 		:return: The result of the logging operation (None for builtin handlers).
 		"""
 
