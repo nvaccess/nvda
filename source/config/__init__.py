@@ -590,7 +590,7 @@ class ConfigManager(object):
 		self.profiles.append(profile)
 		self._handleProfileSwitch()
 
-	def _loadConfig(self, fn: str, fileError: bool = False) -> ConfigObj:
+	def _loadConfig(self, fn: str | None, fileError: bool = False) -> ConfigObj:
 		log.info("Loading config: {0}".format(fn))
 		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=fileError)
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
