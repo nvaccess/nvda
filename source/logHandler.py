@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2007-2026 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
 # Accessolutions, Julien Cochuyt, Cyrille Bougot, Łukasz Golonka
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Utilities and classes to manage logging in NVDA"""
 
@@ -224,6 +224,7 @@ class Logger(logging.Logger):
 	from logging import DEBUG, INFO, WARNING, WARN, ERROR, CRITICAL
 
 	# Our custom levels.
+	SECRETS = 5
 	IO = 12
 	DEBUGWARNING = 15
 	OFF = 100
@@ -290,7 +291,7 @@ class Logger(logging.Logger):
 				"".join(traceback.format_list(stack_info)).rstrip(),
 			)
 
-		if redactSecrets:
+		if redactSecrets and self.getEffectiveLevel() != self.SECRETS:
 			from detect_secrets.core.scan import scan_line
 			from detect_secrets.settings import default_settings
 
@@ -619,6 +620,7 @@ def initialize(shouldDoRemoteLogging=False):
 	@type shouldDoRemoteLogging: bool
 	"""
 	global log, logHandler
+	logging.addLevelName(Logger.SECRETS, "SECRETS")
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
 	logging.addLevelName(Logger.OFF, "OFF")
@@ -698,7 +700,7 @@ def setLogLevelFromConfig():
 	level = logging.getLevelName(levelName)
 	# The lone exception to level higher than INFO is "OFF" (100).
 	# Setting a log level to something other than options found in the GUI is unsupported.
-	if level not in (log.DEBUG, log.IO, log.DEBUGWARNING, log.INFO, log.OFF):
+	if level not in (log.SECRETS, log.DEBUG, log.IO, log.DEBUGWARNING, log.INFO, log.OFF):
 		log.warning("invalid setting for logging level: %s" % levelName)
 		level = log.INFO
 		config.conf["general"]["loggingLevel"] = logging.getLevelName(log.INFO)

@@ -7,8 +7,8 @@
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
 # Neil Soiffer, Ryan McCleary, Kefas Lungu.
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import bisect
 import copy
@@ -6187,6 +6187,47 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 	title = _("Privacy and Security")
 	helpId = "PrivacyAndSecuritySettings"
 
+	def _getSelectedLogLevel(self) -> LoggingLevel:
+		selection = self._logLevelCombo.GetSelection()
+		if selection == wx.NOT_FOUND:
+			return LoggingLevel[config.conf["general"]["loggingLevel"]]
+		return list(LoggingLevel)[selection]
+
+	def _confirmLogLevelChange(self, selectedLogLevel: LoggingLevel) -> bool:
+		if selectedLogLevel == LoggingLevel.SECRETS:
+			message = _(
+				# Translators: Warning shown when enabling the secrets log level from NVDA settings.
+				"Setting the logging level to secrets will write sensitive information to the log without redaction, "
+				"including passwords, API keys, or other private data. "
+				"Only enable this temporarily if you explicitly need unredacted diagnostic logs. "
+				"Do you want to continue?",
+			)
+			caption = _(
+				# Translators: Title of the warning dialog shown when enabling the secrets log level.
+				"High risk logging level",
+			)
+		else:
+			message = _(
+				# Translators: Warning shown when enabling a logging level above info from NVDA settings.
+				"Setting the logging level above info may record sensitive information such as typed input, "
+				"speech output, or other private data in the log. "
+				"Only enable higher logging levels temporarily while troubleshooting. "
+				"Do you want to continue?",
+			)
+			caption = _(
+				# Translators: Title of the warning dialog shown when enabling a risky logging level.
+				"Warning",
+			)
+		return (
+			gui.messageBox(
+				message,
+				caption,
+				wx.YES | wx.NO | wx.NO_DEFAULT | wx.ICON_WARNING,
+				self,
+			)
+			== wx.YES
+		)
+
 	def makeSettings(self, sizer: wx.BoxSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
 
@@ -6265,6 +6306,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			)
 		except StopIteration:
 			log.debugWarning("Could not set log level list to current log level")
+		self._savedLogLevel = self._getSelectedLogLevel()
 
 		self._allowUsageStatsCheckBox: wx.CheckBox = generalGroup.addItem(
 			# Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
@@ -6275,6 +6317,16 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		if not updateCheck:
 			self._allowUsageStatsCheckBox.Value = False
 			self._allowUsageStatsCheckBox.Disable()
+
+	def isValid(self) -> bool:
+		if not super().isValid():
+			return False
+		if logHandler.isLogLevelForced():
+			return True
+		selectedLogLevel = self._getSelectedLogLevel()
+		if selectedLogLevel == self._savedLogLevel or selectedLogLevel <= LoggingLevel.INFO:
+			return True
+		return self._confirmLogLevelChange(selectedLogLevel)
 
 	def onDiscard(self):
 		# Restore screen curtain state and setting to the most recently saved baseline,
@@ -6301,10 +6353,10 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		)
 
 		if not logHandler.isLogLevelForced():
-			config.conf["general"]["loggingLevel"] = logging.getLevelName(
-				list(LoggingLevel)[self._logLevelCombo.GetSelection()],
-			)
+			selectedLogLevel = self._getSelectedLogLevel()
+			config.conf["general"]["loggingLevel"] = logging.getLevelName(selectedLogLevel)
 			logHandler.setLogLevelFromConfig()
+			self._savedLogLevel = selectedLogLevel
 
 		if updateCheck:
 			config.conf["update"]["allowUsageStats"] = self._allowUsageStatsCheckBox.IsChecked()

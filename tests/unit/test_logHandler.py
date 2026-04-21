@@ -16,11 +16,13 @@ import logHandler
 class TestLoggerSecretRedaction(unittest.TestCase):
 	def setUp(self):
 		self.logger = logHandler.Logger("testLogHandler")
+		self.logger.setLevel(logging.NOTSET)
+		self.logger.parent = None
 
 	def test_logWithoutRedactionPassesMessageAndArgsThrough(self):
 		with (
 			mock.patch.object(logging.Logger, "_log") as superLog,
-			mock.patch.object(logHandler, "scan_line") as scanLine,
+			mock.patch("detect_secrets.core.scan.scan_line") as scanLine,
 		):
 			self.logger._log(
 				logging.INFO,
@@ -43,9 +45,8 @@ class TestLoggerSecretRedaction(unittest.TestCase):
 
 		with (
 			mock.patch.object(logging.Logger, "_log") as superLog,
-			mock.patch.object(
-				logHandler,
-				"scan_line",
+			mock.patch(
+				"detect_secrets.core.scan.scan_line",
 				return_value=[secret],
 			) as scanLine,
 		):
@@ -69,9 +70,8 @@ class TestLoggerSecretRedaction(unittest.TestCase):
 	def test_logWithRedactionFallsBackWhenFormattingFails(self):
 		with (
 			mock.patch.object(logging.Logger, "_log") as superLog,
-			mock.patch.object(
-				logHandler,
-				"scan_line",
+			mock.patch(
+				"detect_secrets.core.scan.scan_line",
 				return_value=[],
 			) as scanLine,
 			mock.patch.object(self.logger, "exception") as logException,
@@ -132,3 +132,28 @@ class TestLoggerSecretRedaction(unittest.TestCase):
 		for loggedMsg in loggedMessages:
 			self.assertIn("****", loggedMsg)
 			self.assertNotIn("86851a5bab3f33abc2858eca0922c34c34c38f0a", loggedMsg)
+
+	def test_logWithRedactionBypassesMaskingAtSecretsLevel(self):
+		secret = types.SimpleNamespace(secret_value="secret-value")
+		self.logger.setLevel(logHandler.Logger.SECRETS)
+
+		with (
+			mock.patch.object(logging.Logger, "_log") as superLog,
+			mock.patch("detect_secrets.core.scan.scan_line", return_value=[secret]) as scanLine,
+		):
+			self.logger._log(
+				logging.INFO,
+				"api key %s",
+				("secret-value",),
+				codepath="tests.unit.test_logHandler",
+				redactSecrets=True,
+			)
+
+		scanLine.assert_not_called()
+		superLog.assert_called_once_with(
+			logging.INFO,
+			"api key %s",
+			("secret-value",),
+			None,
+			{"codepath": "tests.unit.test_logHandler"},
+		)

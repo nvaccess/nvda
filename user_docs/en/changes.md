@@ -75,6 +75,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * When set to `True`, logging output will be sanitized to replace detected secrets with asterisks.
   * This is set to `False` by default for performance purposes.
   * It is encouraged to enable this when logging anything particularly sensitive e.g. clipboard content.
+  * Added a `SECRETS` logging level for cases where developers explicitly need debug logging without `redactSecrets` masking. (#19966)
 * NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)
 * Subclasses of `browseMode.BrowseModeDocumentTreeInterceptor` that support screen layout being on and off should override the `_toggleScreenLayout` method, rather than implementing `script_toggleScreenLayout` directly. (#19487)
 * A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handleCOMErrors`. (#19646, @Emil-18)
