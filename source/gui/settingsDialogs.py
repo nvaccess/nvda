@@ -6352,8 +6352,6 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 				config.conf["general"]["loggingLevel"] = logging.getLevelName(selectedLogLevel)
 				logHandler.setLogLevelFromConfig()
 				self._savedLogLevel = selectedLogLevel
-			else:
-				log.debug("User cancelled log level change, keeping original control value.")
 
 		if updateCheck:
 			config.conf["update"]["allowUsageStats"] = self._allowUsageStatsCheckBox.IsChecked()
