@@ -26,6 +26,7 @@ import eventHandler
 import review
 import _magnifier
 import _magnifier.commands
+from _magnifier.utils.types import MagnifierFollowFocusType
 import controlTypes
 import api
 import textInfos
@@ -840,6 +841,51 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: Message presented when turning off reporting spelling errors or grammar in braille.
 			ui.message(_("Report errors in braille off"))
+
+	@script(
+		# Translators: Input help mode message for command to toggle braille automatic scroll.
+		description=_("Toggles braille automatic scroll"),
+		category=SCRCAT_BRAILLE,
+	)
+	def script_toggleBrailleAutoScroll(self, gesture: inputCore.InputGesture):
+		shouldEnableAutoScroll = braille.handler._autoScrollCallLater is None
+		timeout = 0
+		if shouldEnableAutoScroll:
+			# Translators: Message reported when automatic scrolling has been enabled in braille.
+			ui.message(_("Automatic scrolling enabled"))
+			if not (
+				config.conf["braille"]["showMessages"] == ShowMessages.DISABLED
+				or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value
+			):
+				timeout = config.conf["braille"]["messageTimeout"] * 1000
+		else:
+			# Translators: Message reported when automatic scrolling has been disabled in braille.
+			ui.message(_("Automatic scrolling disabled"))
+		core.callLater(timeout, braille.handler.autoScroll, shouldEnableAutoScroll)
+
+	@script(
+		# Translators: Input help mode message for command to increase the rate for braille automatic scroll.
+		description=_("Increases the rate for braille automatic scroll"),
+		category=SCRCAT_BRAILLE,
+	)
+	def script_increaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
+		config.conf.clampedIncrementAndUpdateConfig("braille", "autoScrollRate", step=0.5)
+		percentage = config.conf.valueToPercentage("braille", "autoScrollRate")
+		# Translators: Message shown when increasing the braille auto scroll rate.
+		# {rate} will be replaced with the rate as a whole number from 0 to 100.
+		ui.message(_("Scroll rate {rate}").format(rate=percentage))
+
+	@script(
+		# Translators: Input help mode message for command to decrease the rate for braille automatic scroll.
+		description=_("Decreases the rate for braille automatic scroll"),
+		category=SCRCAT_BRAILLE,
+	)
+	def script_decreaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
+		config.conf.clampedIncrementAndUpdateConfig("braille", "autoScrollRate", step=-0.5)
+		percentage = config.conf.valueToPercentage("braille", "autoScrollRate")
+		# Translators: Message shown when decreasing the braille auto scroll rate.
+		# {rate} will be replaced with the rate as a whole number from 0 to 100.
+		ui.message(_("Scroll rate {rate}").format(rate=percentage))
 
 	@script(
 		# Translators: Input help mode message for toggle report pages command.
@@ -5158,6 +5204,71 @@ class GlobalCommands(ScriptableObject):
 		gesture: inputCore.InputGesture,
 	) -> None:
 		_magnifier.commands.toggleFilter()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle follow mouse for the magnifier",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_toggleFollowMouse(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.MOUSE)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle follow system focus for the magnifier",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_toggleFollowSystemFocus(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.SYSTEM_FOCUS)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle follow review cursor for the magnifier",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_toggleFollowReview(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.REVIEW)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle follow navigator object for the magnifier",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_toggleFollowNavigatorObject(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.NAVIGATOR_OBJECT)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle all follow modes for the magnifier",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_toggleAllFollow(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleAllFollow()
 
 	@script(
 		description=_(

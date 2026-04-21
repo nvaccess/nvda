@@ -17,9 +17,7 @@ from speech.commands import (
 	SpeechCommand,
 	SynthCommand,
 )
-from logHandler import log
 from synthDriverHandler import getSynth, SynthDriver
-import libmathcat_py as libmathcat
 from .localization import getLanguageToUse
 from speech import getCurrentLanguage
 from speechXml import toXmlLang
@@ -52,7 +50,6 @@ RE_MATHML_SPEECH: re.Pattern = re.compile(
 def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	"""
 	Change the SSML in the text into NVDA's command structure.
-	The environment is examined to determine whether a language switch is needed.
 
 	:param text: The SSML text to convert.
 	:returns: A list of strings and SpeechCommand objects.
@@ -60,13 +57,6 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	# MathCAT's default rate is 180 wpm.
 	# Assume that 0% is 80 wpm and 100% is 450 wpm and scale accordingly.
 
-	# find MathCAT's language setting and store it away (could be "Auto")
-	# if MathCAT's setting doesn't match NVDA's language setting, change the language that is used
-	mathCATLanguageSetting: str = "en"  # set in case GetPreference fails
-	try:
-		mathCATLanguageSetting = libmathcat.GetPreference("Language")
-	except Exception as e:
-		log.exception(e)
 	language: str = getLanguageToUse()
 	nvdaLanguage: str = toXmlLang(getCurrentLanguage())
 	synth: SynthDriver = getSynth()
@@ -81,12 +71,6 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	# as of 7/23, oneCore voices do not implement the CharacterModeCommand despite it being in supported_commands
 	useCharacter: bool = CharacterModeCommand in supportedCommands and synth.name != "oneCore"
 	out: list[str | SpeechCommand] = []
-	if mathCATLanguageSetting.casefold() != language.casefold():
-		try:
-			libmathcat.SetPreference("Language", language)
-		except Exception as e:
-			log.exception(e)
-			language = mathCATLanguageSetting  # didn't set the language
 	if language != nvdaLanguage:
 		out.append(LangChangeCommand(language))
 
@@ -113,9 +97,10 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 				out.append(command(multiplier=int(m.group(m.lastgroup)) / 100.0))
 				resetProsody.append(command)
 		elif m.lastgroup == "prosodyReset":
-			# for command in resetProsody:    # only supported commands were added, so no need to check
-			command: type["BaseProsodyCommand"] = resetProsody.pop()
-			out.append(command(multiplier=1))
+			while len(resetProsody) > 0:
+				# only supported commands were added, so no need to check
+				command: type["BaseProsodyCommand"] = resetProsody.pop()
+				out.append(command(multiplier=1))
 		elif m.lastgroup == "phonemeText":
 			if usePhoneme:
 				out.append(PhonemeCommand(m.group("ipa"), text=m.group("phonemeText")))
@@ -128,12 +113,6 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	# there is a bug in MS Word that concats the math and the next character outside of math, so we add a space
 	out.append(" ")
 
-	if mathCATLanguageSetting.casefold() != language.casefold():
-		# restore the old value (probably "Auto")
-		try:
-			libmathcat.SetPreference("Language", mathCATLanguageSetting)
-		except Exception:
-			log.exception()
 	if language.casefold() != nvdaLanguage.casefold():
 		out.append(LangChangeCommand(None))
 	return out

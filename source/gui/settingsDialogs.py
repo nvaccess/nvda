@@ -41,7 +41,7 @@ import keyboardHandler
 import languageHandler
 import logHandler
 import _magnifier.config as magnifierConfig
-from _magnifier.utils.types import Filter, FullScreenMode
+from _magnifier.utils.types import Filter, FullScreenMode, MagnifierFollowFocusType
 import queueHandler
 import requests
 import speech
@@ -2928,14 +2928,6 @@ class MathSettingsPanel(SettingsPanel):
 		else:
 			self.navSpeechList.SetSelection(0)
 
-		# Translators: label for checkbox to use native math speech instead of MathCAT in Word and Outlook
-		useWordNativeMathText = pgettext("math", "Use native math speech in Word and Outlook")
-		self.useWordNativeMathCheckBox = speechGroup.addItem(
-			wx.CheckBox(speechGroupBox, label=useWordNativeMathText),
-		)
-		self.bindHelpEvent("MathUseWordNative", self.useWordNativeMathCheckBox)
-		self.useWordNativeMathCheckBox.SetValue(config.conf["math"]["other"]["useWordNativeMath"])
-
 		# Translators: Text for the navigation group.
 		navGroupText = pgettext("math", "Navigation")
 		navGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=navGroupText)
@@ -3045,6 +3037,24 @@ class MathSettingsPanel(SettingsPanel):
 				config.conf["math"]["braille"]["brailleNavHighlight"],
 			),
 		)
+
+		appSupportGroupSizer = wx.StaticBoxSizer(
+			wx.VERTICAL,
+			self,
+			# Translators: Text for the application support group in MathCAT options.
+			label=pgettext("math", "Application support"),
+		)
+		appSupportGroupBox = appSupportGroupSizer.GetStaticBox()
+		appSupportGroup = guiHelper.BoxSizerHelper(self, sizer=appSupportGroupSizer)
+		sHelper.addItem(appSupportGroup)
+
+		# Translators: label for checkbox to use native math presentation support instead of MathCAT in Word and Outlook
+		useWordNativeMathText = pgettext("math", "Use native math support in Word and Outlook")
+		self.useWordNativeMathCheckBox = appSupportGroup.addItem(
+			wx.CheckBox(appSupportGroupBox, label=useWordNativeMathText),
+		)
+		self.bindHelpEvent("MathUseWordNative", self.useWordNativeMathCheckBox)
+		self.useWordNativeMathCheckBox.SetValue(config.conf["math"]["other"]["useWordNativeMath"])
 
 	def onSave(self):
 		from mathPres.MathCAT.preferences import MathCATUserPreferences
@@ -5502,6 +5512,24 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
 
+		# Translators: The label for a setting in braille settings to change the rate for autoscroll.
+		autoScrollRateText = _("Auto&matic scroll rate")
+		self.autoScrollRateSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
+			autoScrollRateText,
+			nvdaControls.EnhancedInputSlider,
+			minValue=0,
+			maxValue=100,
+		)
+
+		self.autoScrollRateSlider.SetValue(
+			config.conf.valueToPercentage(
+				"braille",
+				"autoScrollRate",
+			),
+		)
+		self.autoScrollRateSlider.SetPageSize(10)
+		self.bindHelpEvent("BrailleAutoScrollRate", self.autoScrollRateSlider)
+
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start" % (time.time() - startTime))
 
@@ -5532,6 +5560,12 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		config.conf["braille"]["showMessages"] = self.showMessagesList.GetSelection()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
+
+		config.conf["braille"]["autoScrollRate"] = config.conf.percentageToValue(
+			"braille",
+			"autoScrollRate",
+			percentage=self.autoScrollRateSlider.GetValue(),
+		)
 		tetherChoice = [x.value for x in TetherTo][self.tetherList.GetSelection()]
 		if tetherChoice == TetherTo.AUTO.value:
 			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value
@@ -6134,6 +6168,34 @@ class MagnifierPanel(SettingsPanel):
 		fullscreenModeValue = magnifierConfig.getDefaultFullscreenMode()
 		self.fullscreenModeList.SetSelection(list(FullScreenMode).index(fullscreenModeValue))
 
+		# FOCUS GROUP
+		# Translators: This is the label for a group of focus options in the magnifier settings panel
+		focusGroupText = _("Focus")
+		focusGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=focusGroupText)
+		focusGroupBox = focusGroupSizer.GetStaticBox()
+		focusGroup = guiHelper.BoxSizerHelper(self, sizer=focusGroupSizer)
+		sHelper.addItem(focusGroup)
+
+		_followFocusLabels: dict[MagnifierFollowFocusType, tuple[str, str]] = {
+			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the mouse
+			MagnifierFollowFocusType.MOUSE: (_("Follow &mouse"), "MagnifierFollowMouse"),
+			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
+			MagnifierFollowFocusType.SYSTEM_FOCUS: (_("Follow &system focus"), "MagnifierFollowSystemFocus"),
+			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the review cursor
+			MagnifierFollowFocusType.REVIEW: (_("Follow &review cursor"), "MagnifierFollowReviewCursor"),
+			MagnifierFollowFocusType.NAVIGATOR_OBJECT: (
+				# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the navigator object
+				_("Follow &navigator object"),
+				"MagnifierFollowNavigatorObject",
+			),
+		}
+		self._followFocusCheckBoxes: dict[MagnifierFollowFocusType, wx.CheckBox] = {}
+		for focusType, (label, helpId) in _followFocusLabels.items():
+			checkBox = focusGroup.addItem(wx.CheckBox(focusGroupBox, label=label))
+			self.bindHelpEvent(helpId, checkBox)
+			checkBox.SetValue(magnifierConfig.getFollowState(focusType))
+			self._followFocusCheckBoxes[focusType] = checkBox
+
 		# KEEP MOUSE CENTERED
 		# Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
 		keepMouseCenteredText = _("Keep &mouse pointer centered in magnifier view")
@@ -6160,6 +6222,8 @@ class MagnifierPanel(SettingsPanel):
 		magnifierConfig.setDefaultFullscreenMode(list(FullScreenMode)[selectedModeIdx])
 
 		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterCheckBox.GetValue()
+		for focusType, checkBox in self._followFocusCheckBoxes.items():
+			magnifierConfig.setFollowState(focusType, checkBox.GetValue())
 		config.conf["magnifier"]["keepMouseCentered"] = self.keepMouseCenteredCheckBox.GetValue()
 
 
