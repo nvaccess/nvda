@@ -6319,10 +6319,6 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			self._allowUsageStatsCheckBox.Value = False
 			self._allowUsageStatsCheckBox.Disable()
 
-	def onApply(self, evt):
-
-		super().onApply(evt)
-
 	def onDiscard(self):
 		# Restore screen curtain state and setting to the most recently saved baseline,
 		# in case the user enabled or disabled it without saving.
