@@ -6348,12 +6348,8 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 
 		if not logHandler.isLogLevelForced():
 			selectedLogLevel = self._getSelectedLogLevel()
-			updateLogLevel = (
-				selectedLogLevel != self._savedLogLevel
-				and (
-					selectedLogLevel >= LoggingLevel.INFO
-					or self._confirmLogLevelChange(selectedLogLevel)
-				)
+			updateLogLevel = selectedLogLevel != self._savedLogLevel and (
+				selectedLogLevel >= LoggingLevel.INFO or self._confirmLogLevelChange(selectedLogLevel)
 			)
 			if not updateLogLevel:
 				log.debug("User cancelled log level change, keeping original control value.")
