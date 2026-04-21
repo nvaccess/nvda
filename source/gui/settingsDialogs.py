@@ -6319,10 +6319,6 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			self._allowUsageStatsCheckBox.Value = False
 			self._allowUsageStatsCheckBox.Disable()
 
-	def onApply(self, evt):
-
-		super().onApply(evt)
-
 	def onDiscard(self):
 		# Restore screen curtain state and setting to the most recently saved baseline,
 		# in case the user enabled or disabled it without saving.
@@ -6356,8 +6352,6 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 				config.conf["general"]["loggingLevel"] = logging.getLevelName(selectedLogLevel)
 				logHandler.setLogLevelFromConfig()
 				self._savedLogLevel = selectedLogLevel
-			else:
-				log.debug("User cancelled log level change, keeping original control value.")
 
 		if updateCheck:
 			config.conf["update"]["allowUsageStats"] = self._allowUsageStatsCheckBox.IsChecked()
