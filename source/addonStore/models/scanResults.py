@@ -28,6 +28,7 @@ class VirusTotalScanResults:
 		except KeyError:
 			return None
 		if "virusTotal" in scanResults:
+			# Installed add-on.
 			try:
 				analysisStats = scanResults["virusTotal"][0]["last_analysis_stats"]
 				return cls(
@@ -45,6 +46,7 @@ class VirusTotalScanResults:
 				log.error(f"Malformed VirusTotal API scan results: {addon!r}", exc_info=True)
 				return None
 		else:
+			# Data from the server.
 			try:
 				return cls(
 					scanUrl=scanResults["scanUrl"],
