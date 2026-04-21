@@ -10,8 +10,8 @@ Do not report security concerns via GitHub issues, instead follow our [security 
 Issues with materials handled by translators should be reported to the [NVDA Translators list](https://groups.io/g/nvda-translations).
 These include:
 
-* NVDA interface text that is incorrectly translated from English
-* Contents of the User Guide and Changes documents that are incorrectly translated from English
+* NVDA interface text that is incorrect in languages other than English
+* Contents of the User Guide and Changes documents that are incorrect in languages other than English
 * Input gestures, punctuation/symbol pronunciations, and character descriptions in languages other than English
 
 If you are reporting an issue with an application or website, please consider reporting the issue to the [authors of the application/website](./thirdPartyReporting.md) first.
