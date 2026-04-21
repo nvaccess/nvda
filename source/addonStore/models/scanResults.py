@@ -27,33 +27,39 @@ class VirusTotalScanResults:
 			scanResults = addon["scanResults"]
 		except KeyError:
 			return None
-		try:
-			analysisStats = scanResults["virusTotal"][0]["last_analysis_stats"]
-			return cls(
-				scanUrl=addon["vtScanUrl"],
-				malicious=analysisStats["malicious"],
-				undetected=analysisStats["undetected"],
-				harmless=analysisStats["harmless"],
-				suspicious=analysisStats["suspicious"],
-				failure=analysisStats["failure"],
-				timeout=analysisStats["timeout"],
-				confirmedTimeout=analysisStats["confirmed-timeout"],
-				typeUnsupported=analysisStats["type-unsupported"],
-			)
-		except (KeyError, IndexError, TypeError):
-			return cls(
-				scanUrl=scanResults["scanUrl"],
-				malicious=scanResults["malicious"],
-				undetected=scanResults["undetected"],
-				harmless=scanResults["harmless"],
-				suspicious=scanResults["suspicious"],
-				failure=scanResults["failure"],
-				timeout=scanResults["timeout"],
-				confirmedTimeout=scanResults["confirmedTimeout"],
-				typeUnsupported=scanResults["typeUnsupported"],
-			)
-		log.error(f"Malformed add-on scan results.: {addon!r}", exc_info=True)
-		return None
+		if "virusTotal" in scanResults:
+			try:
+				analysisStats = scanResults["virusTotal"][0]["last_analysis_stats"]
+				return cls(
+					scanUrl=addon["vtScanUrl"],
+					malicious=analysisStats["malicious"],
+					undetected=analysisStats["undetected"],
+					harmless=analysisStats["harmless"],
+					suspicious=analysisStats["suspicious"],
+					failure=analysisStats["failure"],
+					timeout=analysisStats["timeout"],
+					confirmedTimeout=analysisStats["confirmed-timeout"],
+					typeUnsupported=analysisStats["type-unsupported"],
+				)
+			except (KeyError, IndexError, TypeError):
+				log.error(f"Malformed VirusTotal API scan results: {addon!r}", exc_info=True)
+				return None
+		else:
+			try:
+				return cls(
+					scanUrl=scanResults["scanUrl"],
+					malicious=scanResults["malicious"],
+					undetected=scanResults["undetected"],
+					harmless=scanResults["harmless"],
+					suspicious=scanResults["suspicious"],
+					failure=scanResults["failure"],
+					timeout=scanResults["timeout"],
+					confirmedTimeout=scanResults["confirmedTimeout"],
+					typeUnsupported=scanResults["typeUnsupported"],
+				)
+			except KeyError:
+				log.error(f"Malformed installed add-on scan results: {addon!r}", exc_info=True)
+				return None
 
 	@property
 	def totalScans(self) -> int:
