@@ -38,21 +38,22 @@ We welcome participation from our user community. If you have a keen interest in
 
 ## Severity Levels
 
-* P1 (Critical): Vulnerabilities with a medium or higher severity (CVSS 4+) causing a significant risk to the security and privacy of NVDA users.
-* P2 (High): Vulnerabilities with a low severity (CVSS <4) that present a potential security risk.
+* P1 (Exploitable high): Vulnerabilities of critical or high severity (CVSS v3/v4 score 7+) that demonstrate practical exploitability (e.g. active exploitation, public PoC or trivial execution) and pose an imminent threat to NVDA users.
+* P2 (Theoretical high): Vulnerabilities with significant potential impact (high CVSS) where the risk is deemed theoretical due to high attack complexity, specific non-default configurations or lack of a viable exploit path.
+* P3 (Standard): All other issues, including minor security weaknesses, best-practice hardening or library vulnerabilities confirmed to be unreachable or unused in NVDA.
 
 ## Response Timelines (SLAs)
 
 * Acknowledgement and Triage: Within 3 business days of receipt.
-* P1 (Critical):
-  * Planning and Mitigation: Detailed assessment of the issue and assessment of possible technical solutions within 1 week of triage.
-  Development of a resolution will then begin immediately.
-  * Patch Release: Target patch release of a workaround within 2 weeks of completing assessment.
-  A thorough and complete resolution may need to be scheduled into the next minor release.
-
-* P2 (High):
-  * Planning and Mitigation: Assessment within 2 weeks of triage.
-  * Patch Release: Target patch release in the next scheduled minor release.
+* P1 - Immediate action:
+  * Planning and mitigation: Detailed assessment of the issue and possible technical solutions, within 1 week of triage.
+  * Release: Target patch release within 2 weeks of completing assessment.
+  If only a workaround is achievable in this timeframe, a thorough and complete resolution may need to be scheduled into the next minor release.
+* P2 - Scheduled remediation:
+  * Planning and mitigation: Assessment within 2 weeks of triage.
+  * Release: Target patch release or the next scheduled minor release (if within 60 days).
+* P3 - Backlog:
+  * To be addressed on a best-effort basis.
 * Security Advisory: A security advisory will be published concurrently with the release of the patch.
 The advisory will provide details of the vulnerability and rectification steps.
 As details of the vulnerability will be available in the code repository, immediate disclosure aligns with responsible disclosure principles.
@@ -61,3 +62,4 @@ As details of the vulnerability will be available in the code repository, immedi
 
 * P1 (Critical): Immediate attention from core developers and/or the Security Advisory Group. Other development tasks may be temporarily deprioritised.
 * P2 (High): Dedicated resources will be allocated, with prioritisation based on severity and available development bandwidth.
+* P3 (Moderate / low): Resources will be allocated on a best-effort basis.

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-09 08:28+0000\n"
-"PO-Revision-Date: 2026-04-12 23:26\n"
+"POT-Creation-Date: 2026-04-16 06:42+0000\n"
+"PO-Revision-Date: 2026-04-19 23:28\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -659,19 +659,19 @@ msgstr "⡑"
 #: braille.py:470
 msgctxt "braille formatting symbol"
 msgid "⠛"
-msgstr ""
+msgstr "⠛"
 
 #. Translators: Brailled at the end of invalid grammar text.
 #. This is the English letter "g" plus dot 7 in braille.
 #: braille.py:473
 msgctxt "braille formatting symbol"
 msgid "⡛"
-msgstr ""
+msgstr "⡛"
 
 #. Translators: Braille when there are further details/annotations that can be fetched manually.
 #: braille.py:686 speech\speech.py:2103
 msgid "details"
-msgstr "details"
+msgstr "dettagli"
 
 #. Translators: Braille when there are further details/annotations that can be fetched manually.
 #. %s specifies the type of details (e.g. "has comment suggestion")
@@ -1560,7 +1560,7 @@ msgstr "nessun paragrafo di testo precedente"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1186
 msgid "moves to the next vertically aligned paragraph"
-msgstr "passa al prossimo paragrafo allineato verticalmente"
+msgstr "vai al prossimo paragrafo allineato verticalmente"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1188
@@ -1620,22 +1620,22 @@ msgstr "Nessun testo precedente con stile diverso"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1223
 msgid "moves to the next reference"
-msgstr ""
+msgstr "vai al riferimento successivo"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1225
 msgid "no next reference"
-msgstr ""
+msgstr "nessun riferimento successivo"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1227
 msgid "moves to the previous reference"
-msgstr ""
+msgstr "vai al riferimento precedente"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1229
 msgid "no previous reference"
-msgstr ""
+msgstr "nessun riferimento precedente"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2835,29 +2835,29 @@ msgstr "leggi stile attivato"
 #. Translators: Input help mode message for toggle report spelling errors command.
 #: globalCommands.py:791
 msgid "Cycles through options for how to report spelling or grammar errors"
-msgstr ""
+msgstr "Scorre tra le opzioni sulla segnalazione di errori di ortografia o grammatica"
 
 #. Translators: Reported when the user cycles through the choices to report spelling or grammar errors.
 #. {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
 #: globalCommands.py:803
 #, python-brace-format
 msgid "Report errors {mode}"
-msgstr ""
+msgstr "Annuncia errori di {mode}"
 
 #. Translators: Input help mode message for command to toggle report spelling or grammar errors in braille.
 #: globalCommands.py:810
 msgid "Toggles reporting spelling or grammar errors in braille"
-msgstr ""
+msgstr "Attiva o disattiva la segnalazione errori di ortografia o grammatica in braille"
 
 #. Translators: Message presented when turning on reporting spelling or grammar errors in braille.
 #: globalCommands.py:820
 msgid "Report errors in braille on"
-msgstr ""
+msgstr "Mostra errori in braille attivo"
 
 #. Translators: Message presented when turning off reporting spelling errors or grammar in braille.
 #: globalCommands.py:823
 msgid "Report errors in braille off"
-msgstr ""
+msgstr "Mostra errori in braille disattivo"
 
 #. Translators: Input help mode message for toggle report pages command.
 #: globalCommands.py:827
@@ -3151,12 +3151,12 @@ msgstr "Attiva o disattiva la lettura degli articoli"
 #. Translators: The message announced when toggling the report articles document formatting setting.
 #: globalCommands.py:1138
 msgid "report articles off"
-msgstr "Lettura articoli disattivata"
+msgstr "lettura articoli disattivata"
 
 #. Translators: The message announced when toggling the report articles document formatting setting.
 #: globalCommands.py:1142
 msgid "report articles on"
-msgstr "Lettura articoli attivata"
+msgstr "lettura articoli attivata"
 
 #. Translators: Input help mode message for toggle report frames command.
 #: globalCommands.py:1148
@@ -3166,12 +3166,12 @@ msgstr "Attiva o disattiva la lettura dei frame"
 #. Translators: The message announced when toggling the report frames document formatting setting.
 #: globalCommands.py:1154
 msgid "report frames off"
-msgstr "Leggi Frame Disattivato"
+msgstr "leggi Frame Disattivato"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 #: globalCommands.py:1158
 msgid "report frames on"
-msgstr "Leggi Frame Attivato"
+msgstr "leggi Frame Attivato"
 
 #. Translators: Input help mode message for toggle report if clickable command.
 #: globalCommands.py:1164
@@ -3181,12 +3181,12 @@ msgstr "Attiva o disattiva la lettura degli elementi cliccabili"
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 #: globalCommands.py:1170
 msgid "report if clickable off"
-msgstr "Leggi Cliccabile disattivato"
+msgstr "lettura clickable disattivata"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 #: globalCommands.py:1174
 msgid "report if clickable on"
-msgstr "Leggi Cliccabile attivato"
+msgstr "lettura clickable attivata"
 
 #. Translators: Input help mode message for toggle report figures and captions command.
 #: globalCommands.py:1180
@@ -3197,13 +3197,13 @@ msgstr "Attiva e disattiva la segnalazione di figure e didascalie"
 #. setting.
 #: globalCommands.py:1187
 msgid "report figures and captions off"
-msgstr "Annuncia figure e didascalie disattivato"
+msgstr "annuncia figure e didascalie disattivato"
 
 #. Translators: The message announced when toggling the report figures and captions document formatting
 #. setting.
 #: globalCommands.py:1192
 msgid "report figures and captions on"
-msgstr "Annuncia figure e didascalie attivato"
+msgstr "annuncia figure e didascalie attivato"
 
 #. Translators: Input help mode message for cycle through automatic language switching mode command.
 #: globalCommands.py:1199
@@ -3246,7 +3246,7 @@ msgstr "Attiva o disattiva la descrizione ritardata dei caratteri al movimento d
 #. Translators: The message announced when toggling the delayed character description setting.
 #: globalCommands.py:1252
 msgid "delayed character descriptions on"
-msgstr "Descrizione ritardata dei caratteri attivata"
+msgstr "descrizione ritardata dei caratteri attivata"
 
 #. Translators: The message announced when toggling the delayed character description setting.
 #: globalCommands.py:1255
@@ -3334,19 +3334,19 @@ msgstr "Legge le informazioni inerenti la posizione del testo su cui si trova il
 #. Translators: Description for a keyboard command which reports location of the navigator object.
 #: globalCommands.py:1469
 msgid "Reports information about the location of the current navigator object."
-msgstr "Legge le informazioni inerenti la posizione del navigatore ad oggetti"
+msgstr "Legge le informazioni inerenti la posizione del navigatore ad oggetti."
 
 #. Translators: Description for a keyboard command which reports location of the
 #. current caret position falling back to the location of focused object if needed.
 #: globalCommands.py:1481
 msgid "Reports information about the location of the text at the caret, or location of the currently focused object if there is no caret."
-msgstr "Legge le informazioni inerenti la posizione del testo su cui si trova il cursore di sistema, oppure quella dell'oggetto con il focus se non esiste alcun cursore"
+msgstr "Legge le informazioni inerenti la posizione del testo su cui si trova il cursore di sistema, oppure quella dell'oggetto con il focus se non esiste alcun cursore."
 
 #. Translators: Description for a keyboard command which reports location of the
 #. currently focused object.
 #: globalCommands.py:1496
 msgid "Reports information about the location of the currently focused object."
-msgstr "Legge le informazioni inerenti la posizione dell'oggetto con il focus"
+msgstr "Legge le informazioni inerenti la posizione dell'oggetto con il focus."
 
 #. Translators: Description for report review cursor location command.
 #: globalCommands.py:1507
@@ -3363,7 +3363,7 @@ msgstr "Fornisce le informazioni sulla posizione del testo o dell'oggetto su cui
 #. Translators: Input help mode message for move navigator object to current focus command.
 #: globalCommands.py:1541
 msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
-msgstr "Sposta il navigatore di oggetti sul focus e il cursore di controllo alla posizione del cursore di sistema, se possibile"
+msgstr "Sposta il navigatore di oggetti sul focus,  e il cursore di controllo alla posizione del cursore di sistema, se possibile."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 #: globalCommands.py:1561
@@ -3438,7 +3438,7 @@ msgstr "Nessun oggetto interno"
 #. Translators: Input help mode message for activate current object command.
 #: globalCommands.py:1735
 msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
-msgstr "Esegue l'opzione predefinita sull'oggetto attuale nel navigatore, ad esempio lo preme se e' un pulsante"
+msgstr "Esegue l'opzione predefinita sull'oggetto attuale nel navigatore (ad esempio lo preme se e' un pulsante)"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 #: globalCommands.py:1782
@@ -3466,7 +3466,7 @@ msgstr "All'inizio"
 #. Translators: Input help mode message for read current line under review cursor command.
 #: globalCommands.py:1846
 msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."
-msgstr "Legge la riga dell'oggetto attuale nel navigatore dove e' posizionato il cursore di controllo"
+msgstr "Legge la riga dell'oggetto attuale nel navigatore dove e' posizionato il cursore di controllo."
 
 #. Translators: Input help mode message for move review cursor to next line command.
 #: globalCommands.py:1874
@@ -3600,7 +3600,7 @@ msgstr "Sposta il focus fuori dall'oggetto attuale posizionandolo al documento c
 #. in web browsing and other situations.
 #: globalCommands.py:2446 NVDAObjects\window\_msOfficeChart.py:634
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
-msgstr "Cicla tra le modalità navigazione e focus. Nella modalità focus, i tasti verranno passati direttamente all'applicazione, di conseguenza sarà possibile interagire con i controlli. Nella modalità navigazione, verrà attivato un cursore virtuale permettendo l'esplorazione della pagina e l'uso dei tasti rapidi di navigazione"
+msgstr "Passa tra le modalità navigazione e focus. Nella modalità focus, i tasti verranno inoltrati direttamente all'applicazione, di conseguenza sarà possibile interagire con i controlli. Nella modalità navigazione, verrà attivato un cursore virtuale permettendo l'esplorazione della pagina e l'uso dei tasti rapidi di navigazione."
 
 #. Translators: Input help mode message for quit NVDA command.
 #: globalCommands.py:2496
@@ -3640,12 +3640,12 @@ msgstr "Formattazione"
 #. Translators: Input help mode message for report formatting command.
 #: globalCommands.py:2648
 msgid "Reports formatting info for the current review cursor position."
-msgstr "Legge le informazioni di formattazione alla posizione attuale del cursore di controllo"
+msgstr "Legge le informazioni di formattazione alla posizione attuale del cursore di controllo."
 
 #. Translators: Input help mode message for show formatting at review cursor command.
 #: globalCommands.py:2657
 msgid "Presents, in browse mode, formatting info for the current review cursor position."
-msgstr "Presenta, in modalità navigazione, le informazioni di formattazione relative alla posizione attuale del cursore di controllo"
+msgstr "Presenta, in modalità navigazione, le informazioni di formattazione relative alla posizione attuale del cursore di controllo."
 
 #. Translators: Input help mode message for report formatting command.
 #: globalCommands.py:2666
@@ -3670,7 +3670,7 @@ msgstr "Legge le informazioni di formattazione relative al testo sotto il cursor
 #. Translators: the description for the reportDetailsSummary script.
 #: globalCommands.py:2766
 msgid "Report summary of any annotation details at the system caret."
-msgstr "Legge il riassunto di tutti i dettagli di un'annnotazione alla posizione del cursore di sistema"
+msgstr "Legge il riassunto di tutti i dettagli di un'annnotazione alla posizione del cursore di sistema."
 
 #. Translators: message given when there is no annotation details for the reportDetailsSummary script.
 #: globalCommands.py:2784
@@ -3680,7 +3680,7 @@ msgstr "Nessun dettaglio aggiuntivo"
 #. Translators: Input help mode message for report current focus command.
 #: globalCommands.py:2828
 msgid "Reports the object with focus. If pressed twice, spells the information. Pressing three times spells it using character descriptions."
-msgstr "Annuncia l'oggetto con il focus. Premendo due volte verrà effettuato lo spelling delle informazioni. La tripla pressione effettuerà lo spelling utilizzando la descrizione dei caratteri"
+msgstr "Annuncia l'oggetto con il focus. Premendo due volte verrà effettuato lo spelling delle informazioni. La tripla pressione effettuerà lo spelling utilizzando la descrizione dei caratteri."
 
 #. Translators: Reported when there is no status line for the current program or window.
 #: globalCommands.py:2904
@@ -3695,7 +3695,7 @@ msgstr "Legge la barra di stato dell'applicazione corrente."
 #. Translators: Reported when status line exist, but is empty.
 #: globalCommands.py:2924 globalCommands.py:2942 globalCommands.py:2976
 msgid "no status bar information"
-msgstr "Nessuna informazione sulla barra di stato"
+msgstr "nessuna informazione sulla barra di stato"
 
 #. Translators: Input help mode message for command which spells content of the status bar.
 #: globalCommands.py:2931
@@ -3752,17 +3752,17 @@ msgstr "Tracciamento del mouse attivato"
 #. Translators: Input help mode message for toggle mouse audio coordinates command.
 #: globalCommands.py:3043
 msgid "Toggles beeps that report mouse coordinates as the mouse moves"
-msgstr ""
+msgstr "Attiva o disattiva i bip che segnalano le coordinate del mouse mentre il mouse si muove"
 
 #. Translators: Reported when mouse audio coordinates are toggled on.
 #: globalCommands.py:3048
 msgid "Mouse audio coordinates on"
-msgstr ""
+msgstr "Coordinate audio del mouse attive"
 
 #. Translators: Reported when mouse audio coordinates are toggled off.
 #: globalCommands.py:3050
 msgid "Mouse audio coordinates off"
-msgstr ""
+msgstr "Coordinate audio del mouse disattive"
 
 #. Translators: Input help mode message for toggle mouse text unit resolution command.
 #: globalCommands.py:3060
@@ -3802,13 +3802,13 @@ msgstr "Apre lo strumento di ispezione della WX GUI. Viene usato per ottenere ul
 #. This command also serves as a shortcut to open NVDA log viewer.
 #: globalCommands.py:3151
 msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
-msgstr "Registra  nel file di log  informazioni sull'oggetto attuale nel navigatore utili agli sviluppatori e apre il visualizzatore log"
+msgstr "Registra  nel file di log  informazioni sull'oggetto attuale nel navigatore utili agli sviluppatori e apre il visualizzatore log."
 
 #. Translators: Input help mode message for a command to delimit then
 #. copy a fragment of the log to clipboard
 #: globalCommands.py:3172
 msgid "Mark the current end of the log as the start of the fragment to be copied to clipboard by pressing again."
-msgstr "Contrassegna la posizione finale corrente del log come inizio del frammento  da copiare negli appunti una volta che la combinazione di tasti è stata premuta nuovamente"
+msgstr "Contrassegna la posizione finale corrente del log come inizio del frammento  da copiare negli appunti una volta che la combinazione di tasti è stata premuta nuovamente."
 
 #. Translators: Message when marking the start of a fragment of the log file for later copy
 #. to clipboard
@@ -3878,27 +3878,27 @@ msgstr "Attiva o disattiva la lettura dei cambiamenti dei contenuti dinamici, co
 #. Translators: presented when the present dynamic changes is toggled.
 #: globalCommands.py:3252
 msgid "report dynamic content changes off"
-msgstr "Leggi i cambiamenti dei contenuti dinamici disattivato"
+msgstr "leggi i cambiamenti dei contenuti dinamici disattivato"
 
 #. Translators: presented when the present dynamic changes is toggled.
 #: globalCommands.py:3256
 msgid "report dynamic content changes on"
-msgstr "Leggi i cambiamenti dei contenuti dinamici attivato"
+msgstr "leggi i cambiamenti dei contenuti dinamici attivato"
 
 #. Translators: Input help mode message for toggle caret moves review cursor command.
 #: globalCommands.py:3262
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "Attiva o disattiva i movimenti del cursore di controllo in concomitanza con il cursore di sistema"
+msgstr "Attiva o disattiva i movimenti del cursore di controllo in concomitanza con il cursore di sistema."
 
 #. Translators: presented when toggled.
 #: globalCommands.py:3269
 msgid "caret moves review cursor off"
-msgstr "Il cursore di controllo segue il cursore di sistema disattivato"
+msgstr "il cursore di controllo segue il cursore di sistema disattivato"
 
 #. Translators: presented when toggled.
 #: globalCommands.py:3273
 msgid "caret moves review cursor on"
-msgstr "Il cursore di controllo segue il cursore di sistema attivato"
+msgstr "il cursore di controllo segue il cursore di sistema attivato"
 
 #. Translators: Input help mode message for toggle focus moves navigator object command.
 #: globalCommands.py:3279
@@ -3908,12 +3908,12 @@ msgstr "Attiva o disattiva l'inseguimento del focus, se attivo il navigatore di 
 #. Translators: presented when toggled.
 #: globalCommands.py:3286
 msgid "focus moves navigator object off"
-msgstr "Il navigatore di oggetti segue il focus disattivato"
+msgstr "il navigatore di oggetti segue il focus disattivato"
 
 #. Translators: presented when toggled.
 #: globalCommands.py:3290
 msgid "focus moves navigator object on"
-msgstr "Il navigatore di oggetti segue il focus attivato"
+msgstr "il navigatore di oggetti segue il focus attivato"
 
 #. Translators: Input help mode message for report battery status command.
 #: globalCommands.py:3297
@@ -3923,7 +3923,7 @@ msgstr "Legge lo stato della batteria e il tempo di autonomia rimasto se l'alime
 #. Translators: Input help mode message for pass next key through command.
 #: globalCommands.py:3308
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
-msgstr "Il tasto successivo premuto non verrà preso in considerazione da NVDA, ma sarà passato direttamente al controllo di windows"
+msgstr "Il tasto successivo premuto non verrà preso in considerazione da NVDA, ma sarà passato direttamente al controllo di windows."
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
 #: globalCommands.py:3317
@@ -3940,7 +3940,7 @@ msgstr "Legge il nome del file dell'applicazione corrente ed il modulo caricato"
 #: globalCommands.py:3335
 #, python-format
 msgid " %s module is loaded. "
-msgstr " modulo %s caricato."
+msgstr " modulo %s caricato. "
 
 #. Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
@@ -4080,7 +4080,7 @@ msgstr "Annuncia il profilo di configurazione attivo di NVDA"
 #. the default configuration profile is active.
 #: globalCommands.py:3581
 msgid "normal configuration profile active"
-msgstr "Profilo di configurazione normale attivo"
+msgstr "profilo di configurazione normale attivo"
 
 #. Translators: Message announced when the command to report the current configuration profile
 #. is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
@@ -4117,12 +4117,12 @@ msgstr "Attiva o disattiva il visualizzatore sintesi vocale, una finestra fluttu
 #. Translators: The message announced when disabling speech viewer.
 #: globalCommands.py:3655
 msgid "speech viewer disabled"
-msgstr "Visualizzatore sintesi vocale disattivato"
+msgstr "visualizzatore sintesi vocale disattivato"
 
 #. Translators: The message announced when enabling speech viewer.
 #: globalCommands.py:3660
 msgid "speech viewer enabled"
-msgstr "Visualizzatore sintesi vocale Attivato"
+msgstr "visualizzatore sintesi vocale Attivato"
 
 #. Translators: Input help mode message for toggle Braille viewer command.
 #: globalCommands.py:3668
@@ -4243,7 +4243,7 @@ msgstr "Parla durante la navigazione per riga o paragrafo col braille attivo"
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3852
 msgid "Speak when navigating by line or paragraph with braille off"
-msgstr "lettura durante la navigazione per righe o paragrafi in braille disattivata"
+msgstr "Lettura durante la navigazione per righe o paragrafi in braille disattivata"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 #: globalCommands.py:3857
@@ -4433,57 +4433,57 @@ msgstr "Elabora il braille inserito"
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4238
 msgid "Virtually toggles the shift key to emulate a keyboard shortcut with braille input"
-msgstr "simula la pressione del tasto shift per ottenere combinazioni di tasti dalla tastiera braille (Premere una volta per attivare e un'altra per disattivare il tasto)"
+msgstr "Simula la pressione del tasto shift per ottenere combinazioni di tasti dalla tastiera braille"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4247
 msgid "Virtually toggles the control key to emulate a keyboard shortcut with braille input"
-msgstr "simula la pressione del tasto control per ottenere combinazioni di tasti dalla tastiera braille (Premere una volta per attivare e un'altra per disattivare il tasto)"
+msgstr "Simula la pressione del tasto control per ottenere combinazioni di tasti dalla tastiera braille"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4256
 msgid "Virtually toggles the alt key to emulate a keyboard shortcut with braille input"
-msgstr "simula la pressione del tasto alt per ottenere combinazioni di tasti dalla tastiera braille (Premere una volta per attivare e un'altra per disattivare il tasto)"
+msgstr "Simula la pressione del tasto alt per ottenere combinazioni di tasti dalla tastiera braille"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4266
 msgid "Virtually toggles the left windows key to emulate a keyboard shortcut with braille input"
-msgstr "simula la pressione del tasto Windows di sinistra per ottenere combinazioni di tasti dalla tastiera braille (Premere una volta per attivare e un'altra per disattivare il tasto)"
+msgstr "Simula la pressione del tasto Windows di sinistra per ottenere combinazioni di tasti dalla tastiera braille"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4276
 msgid "Virtually toggles the NVDA key to emulate a keyboard shortcut with braille input"
-msgstr "simula la pressione del tasto NVDA per ottenere combinazioni di tasti dalla tastiera braille (Premere una volta per attivare e un'altra per disattivare il tasto)"
+msgstr "Simula la pressione del tasto NVDA per ottenere combinazioni di tasti dalla tastiera braille"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4286
 msgid "Virtually toggles the control and shift keys to emulate a keyboard shortcut with braille input"
-msgstr "simula la pressione di control e shift per effettuare combinazioni di tasti tramite l'immissione braille"
+msgstr "Simula la pressione di control e shift per effettuare combinazioni di tasti tramite l'immissione braille"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4297
 msgid "Virtually toggles the alt and shift keys to emulate a keyboard shortcut with braille input"
-msgstr "simula la pressione di alt e shift per effettuare combinazioni di tasti tramite l'immissione braille"
+msgstr "Simula la pressione di alt e shift per effettuare combinazioni di tasti tramite l'immissione braille"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4308
 msgid "Virtually toggles the left windows and shift keys to emulate a keyboard shortcut with braille input"
-msgstr "simula la pressione di Windows di sinistra e shift per effettuare combinazioni di tasti tramite l'immissione braille"
+msgstr "Simula la pressione di Windows di sinistra e shift per effettuare combinazioni di tasti tramite l'immissione braille"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4320
 msgid "Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut with braille input"
-msgstr "simula la pressione di NVDA e shift per effettuare combinazioni di tasti tramite l'immissione braille"
+msgstr "Simula la pressione di NVDA e shift per effettuare combinazioni di tasti tramite l'immissione braille"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4331
 msgid "Virtually toggles the control and alt keys to emulate a keyboard shortcut with braille input"
-msgstr "simula la pressione di control e alt per effettuare combinazioni di tasti tramite l'immissione braille"
+msgstr "Simula la pressione di control e alt per effettuare combinazioni di tasti tramite l'immissione braille"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4342
 msgid "Virtually toggles the control, alt, and shift keys to emulate a keyboard shortcut with braille input"
-msgstr "simula la pressione di control, alt e shift per effettuare combinazioni di tasti tramite l'immissione braille"
+msgstr "Simula la pressione di control, alt e shift per effettuare combinazioni di tasti tramite l'immissione braille"
 
 #. Translators: Input help mode message for reload plugins command.
 #: globalCommands.py:4354
@@ -4526,7 +4526,7 @@ msgstr "Impossibile ottenere la destinazione di questo link."
 #. Translators: Reported when using the command to report the destination of a link.
 #: globalCommands.py:4428
 msgid "Not a link."
-msgstr "Non è un link"
+msgstr "Non è un link."
 
 #. Translators: input help mode message for Report URL of a link in a window command
 #: globalCommands.py:4433
@@ -4592,7 +4592,7 @@ msgstr "Clicca il tasto destro del mouse una volta, alla posizione dell'ultimo t
 #. Translators: Reported when the object has no location for the mouse to move to it.
 #: globalCommands.py:4619
 msgid "object has no location"
-msgstr "L'oggetto non ha posizione"
+msgstr "l'oggetto non ha posizione"
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 #: globalCommands.py:4631
@@ -4602,7 +4602,7 @@ msgstr "Mostra la finestra configurazione profili di NVDA"
 #. Translators: Input help mode message for toggle configuration profile triggers command.
 #: globalCommands.py:4641
 msgid "Toggles disabling of all configuration profile triggers. Disabling remains in effect until NVDA is restarted"
-msgstr "abilita o disabilita il cambio automatico del profilo di configurazione in base a eventi. La disattivazione avrà effetto fino al prossimo riavvio di NVDA."
+msgstr "Abilita o disabilita il cambio automatico del profilo di configurazione in base a eventi. La disattivazione avrà effetto fino al prossimo riavvio di NVDA"
 
 #. Translators: The message announced when temporarily disabling all configuration profile triggers.
 #: globalCommands.py:4650
@@ -4638,7 +4638,7 @@ msgstr "OCR Windows non disponibile"
 #. Translators: Reported when screen curtain is enabled.
 #: globalCommands.py:4699
 msgid "Please disable screen curtain before using Windows OCR."
-msgstr "Si prega di disattivare la tenda schermo per utilizzare l'OCR di Windows"
+msgstr "Si prega di disattivare la tenda schermo per utilizzare l'OCR di Windows."
 
 #. Translators: Describes a command.
 #: globalCommands.py:4708
@@ -4668,12 +4668,12 @@ msgstr "Attiva o disattiva la lettura dei caratteri CLDR, ad esempio emoji"
 #. Translators: presented when the report CLDR is toggled.
 #: globalCommands.py:4761
 msgid "report CLDR characters off"
-msgstr "Lettura emoji disattivata"
+msgstr "lettura emoji disattivata"
 
 #. Translators: presented when the report CLDR is toggled.
 #: globalCommands.py:4765
 msgid "report CLDR characters on"
-msgstr "Lettura Emoji attivata"
+msgstr "lettura Emoji attivata"
 
 #. Translators: Input help mode message for speech Unicode normalization command.
 #: globalCommands.py:4773
@@ -4915,47 +4915,47 @@ msgstr "NVDA pacchetto componente aggiuntivo"
 #. Translators: This is the name of the back key found on multimedia keyboards for controlling the web-browser.
 #: keyLabels.py:15
 msgid "back"
-msgstr "Indietro"
+msgstr "indietro"
 
 #. Translators: This is the name of the forward key found on multimedia keyboards for controlling the web-browser.
 #: keyLabels.py:17
 msgid "forward"
-msgstr "Avanti"
+msgstr "avanti"
 
 #. Translators: This is the name of the refresh key found on multimedia keyboards for controlling the web-browser.
 #: keyLabels.py:19
 msgid "refresh"
-msgstr "Aggiorna"
+msgstr "aggiorna"
 
 #. Translators: This is the name of the stop key found on multimedia keyboards for controlling the web-browser.
 #: keyLabels.py:21
 msgid "browser stop"
-msgstr "Browser stop"
+msgstr "browser stop"
 
 #. Translators: This is the name of the back key found on multimedia keyboards to goto the search page of the web-browser.
 #: keyLabels.py:23
 msgid "search page"
-msgstr "Pagina di ricerca"
+msgstr "pagina di ricerca"
 
 #. Translators: This is the name of the favorites key found on multimedia keyboards to open favorites in the web-browser.
 #: keyLabels.py:25
 msgid "favorites"
-msgstr "Preferiti"
+msgstr "preferiti"
 
 #. Translators: This is the name of the home key found on multimedia keyboards to goto the home page in the web-browser.
 #: keyLabels.py:27
 msgid "home page"
-msgstr "Home page"
+msgstr "home page"
 
 #. Translators: This is the name of the mute key found on multimedia keyboards to control playback volume.
 #: keyLabels.py:29
 msgid "mute"
-msgstr "Muto"
+msgstr "muto"
 
 #. Translators: This is the name of the volume down key found on multimedia keyboards to reduce playback volume.
 #: keyLabels.py:31
 msgid "volume down"
-msgstr "Abbassa il volume"
+msgstr "abbassa il volume"
 
 #. Translators: This is the name of the volume up key found on multimedia keyboards to increase playback volume.
 #: keyLabels.py:33
@@ -5025,7 +5025,7 @@ msgstr "alt"
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:59
 msgid "shift"
-msgstr "Maiusc"
+msgstr "maiusc"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:61
@@ -5130,162 +5130,162 @@ msgstr "sei del tastierino numerico"
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:103
 msgid "numpad 8"
-msgstr "Otto del tastierino numerico"
+msgstr "otto del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:105
 msgid "numpad 2"
-msgstr "Due del tastierino numerico"
+msgstr "due del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:107
 msgid "numpad 9"
-msgstr "Nove del tastierino numerico"
+msgstr "nove del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:109
 msgid "numpad 3"
-msgstr "Tre del tastierino numerico"
+msgstr "tre del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:111
 msgid "numpad 1"
-msgstr "Uno del tastierino numerico"
+msgstr "uno del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:113
 msgid "numpad 7"
-msgstr "Sette del tastierino numerico"
+msgstr "sette del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:115
 msgid "numpad 5"
-msgstr "Cinque del tastierino numerico"
+msgstr "cinque del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:117
 msgid "numpad divide"
-msgstr "Barra del tastierino numerico"
+msgstr "barra del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:119
 msgid "numpad multiply"
-msgstr "Asterisco del tastierino numerico"
+msgstr "asterisco del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:121
 msgid "numpad minus"
-msgstr "Meno del tastierino numerico"
+msgstr "meno del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:123
 msgid "numpad plus"
-msgstr "Più del tastierino numerico"
+msgstr "più del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:125
 msgid "numpad decimal"
-msgstr "Punto del tastierino numerico"
+msgstr "punto del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:127
 msgid "numpad insert"
-msgstr "Insert del tastierino numerico"
+msgstr "insert del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:129
 msgid "numLock numpad 0"
-msgstr "Zero del tastierino numerico"
+msgstr "numLock zero del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:131
 msgid "numLock numpad 1"
-msgstr "Uno del tastierino numerico"
+msgstr "numLock uno del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:133
 msgid "numLock numpad 2"
-msgstr "Due del tastierino numerico"
+msgstr "numLock due del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:135
 msgid "numLock numpad 3"
-msgstr "Tre del tastierino numerico"
+msgstr "numLock tre del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:137
 msgid "numLock numpad 4"
-msgstr "Quattro del tastierino numerico"
+msgstr "numLock quattro del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:139
 msgid "numLock numpad 5"
-msgstr "Cinque del tastierino numerico"
+msgstr "numLock cinque del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:141
 msgid "numLock numpad 6"
-msgstr "Sei del tastierino numerico"
+msgstr "numLock sei del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:143
 msgid "numLock numpad 7"
-msgstr "Sette del tastierino numerico"
+msgstr "numLock sette del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:145
 msgid "numLock numpad 8"
-msgstr "Otto del tastierino numerico"
+msgstr "numLock otto del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:147
 msgid "numLock numpad 9"
-msgstr "Nove del tastierino numerico"
+msgstr "numLock nove del tastierino numerico"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:149
 msgid "insert"
-msgstr "Insert"
+msgstr "insert"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:151
 msgid "left control"
-msgstr "Control sinistro"
+msgstr "control sinistro"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:153
 msgid "right control"
-msgstr "Control destro"
+msgstr "control destro"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:155
 msgid "left windows"
-msgstr "Tasto windows sinistro"
+msgstr "tasto windows sinistro"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:157
 msgid "left shift"
-msgstr "Shift sinistro"
+msgstr "shift sinistro"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:159
 msgid "right shift"
-msgstr "Shift destro"
+msgstr "shift destro"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:161
 msgid "left alt"
-msgstr "Alt sinistro"
+msgstr "alt sinistro"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:163
 msgid "right alt"
-msgstr "Alt destro"
+msgstr "alt destro"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:165
 msgid "right windows"
-msgstr "Tasto windows destro"
+msgstr "tasto windows destro"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:167
@@ -5296,17 +5296,17 @@ msgstr "interruzione"
 #: keyLabels.py:169
 msgctxt "keyLabel"
 msgid "tab"
-msgstr "Tab"
+msgstr "tab"
 
 #. Translators: One of the keyboard layouts for NVDA.
 #: keyboardHandler.py:462
 msgid "desktop"
-msgstr "Desktop"
+msgstr "desktop"
 
 #. Translators: One of the keyboard layouts for NVDA.
 #: keyboardHandler.py:464
 msgid "laptop"
-msgstr "Laptop"
+msgstr "laptop"
 
 #. Translators: Reported for an unknown key press.
 #. %s will be replaced with the key code.
@@ -5320,7 +5320,7 @@ msgstr "%s sconosciuto"
 #: keyboardHandler.py:633 synthSettingsRing.py:117 controlTypes\state.py:202
 #: gui\speechDict.py:198
 msgid "on"
-msgstr "Attivato"
+msgstr "attivato"
 
 #. Translators: This is presented when a switch control is off.
 #. Translators: An option for progress bar output in the Object Presentation dialog
@@ -5329,7 +5329,7 @@ msgstr "Attivato"
 #: keyboardHandler.py:633 synthSettingsRing.py:117 controlTypes\state.py:231
 #: gui\settingsDialogs.py:2375 gui\speechDict.py:198
 msgid "off"
-msgstr "Disattivato"
+msgstr "disattivato"
 
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
@@ -5342,7 +5342,7 @@ msgstr "Layout %s"
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
 #: keyboardHandler.py:757
 msgid "keyboard, all layouts"
-msgstr "Tastiera, tutti i layout"
+msgstr "tastiera, tutti i layout"
 
 #. Translators: the label for the Windows default NVDA interface language.
 #: languageHandler.py:157
@@ -5530,7 +5530,7 @@ msgstr "Arco a tutto sesto"
 #: msoAutoShapeTypes.py:243
 msgctxt "shape"
 msgid "Can"
-msgstr "barattolo"
+msgstr "Barattolo"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5600,7 +5600,7 @@ msgstr "Angolo"
 #: msoAutoShapeTypes.py:273
 msgctxt "shape"
 msgid "four snipped corners"
-msgstr "Quattro angoli tagliati"
+msgstr "quattro angoli tagliati"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5656,7 +5656,7 @@ msgstr "Freccia su ricurva"
 #: msoAutoShapeTypes.py:297
 msgctxt "shape"
 msgid "Curved Up Ribbon banner"
-msgstr "banner nastro ricurvo verso l'alto"
+msgstr "Banner nastro ricurvo verso l'alto"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5670,7 +5670,7 @@ msgstr "Decagono"
 #: msoAutoShapeTypes.py:303
 msgctxt "shape"
 msgid "Diagonal stripe"
-msgstr "striscia diagonale"
+msgstr "Striscia diagonale"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5943,7 +5943,7 @@ msgstr "Simbolo terminatore"
 #: msoAutoShapeTypes.py:426
 msgctxt "shape"
 msgid "Folded corner"
-msgstr "angolo piegato"
+msgstr "Angolo piegato"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5978,7 +5978,7 @@ msgstr "Ingranaggio con nove denti"
 #: msoAutoShapeTypes.py:441
 msgctxt "shape"
 msgid "Half of rectangular picture frame"
-msgstr "mezza cornice rettangolare"
+msgstr "Mezza cornice rettangolare"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6335,7 +6335,7 @@ msgstr "Torta incompleta con fetta mancante"
 #: msoAutoShapeTypes.py:612
 msgctxt "shape"
 msgid "Quarter Pie Wedge"
-msgstr "un quarto di fetta di torta"
+msgstr "Un quarto di fetta di torta"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6489,14 +6489,14 @@ msgstr "Rettangolo con un angolo tagliato e un angolo arrotondato"
 #: msoAutoShapeTypes.py:681
 msgctxt "shape"
 msgid "Four small squares that define a rectangular shape"
-msgstr "Quattro piccoli quadrati che definiscono una forma rettangolare "
+msgstr "Quattro piccoli quadrati che definiscono una forma rettangolare"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:684
 msgctxt "shape"
 msgid "Right Arrow with Stripes"
-msgstr "Freccia a destra con Strisce "
+msgstr "Freccia a destra con Strisce"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6654,7 +6654,7 @@ msgstr "Suono"
 
 #: pythonConsole.py:38
 msgid "Type help(object) to get help about object."
-msgstr "Digita help(object) per ottenere aiuto su un oggetto"
+msgstr "Digita help(object) per ottenere aiuto su un oggetto."
 
 #: pythonConsole.py:55
 msgid "Type exit() to exit the console"
@@ -6791,11 +6791,11 @@ msgstr "Usa sistema audio moderno (WASAPI)"
 
 #: touchHandler.py:60
 msgid "text mode"
-msgstr "Modalità testo"
+msgstr "modalità testo"
 
 #: touchHandler.py:61
 msgid "object mode"
-msgstr "Modalità oggetti"
+msgstr "modalità oggetti"
 
 #. Translators: a touch screen action performed once
 #: touchHandler.py:160
@@ -6813,7 +6813,7 @@ msgstr "{action} doppio"
 #: touchHandler.py:164
 #, python-brace-format
 msgid "triple {action}"
-msgstr "Triplo {action}"
+msgstr "triplo {action}"
 
 #. Translators: a touch screen action performed 4 times
 #: touchHandler.py:166
@@ -6845,49 +6845,49 @@ msgstr "tap prolungato"
 #: touchTracker.py:36
 msgctxt "touch action"
 msgid "hold"
-msgstr "Prolungato"
+msgstr "prolungato"
 
 #. Translators: a quick swipe of a finger in an up direction, on a touch screen.
 #: touchTracker.py:38
 msgctxt "touch action"
 msgid "flick up"
-msgstr "Scorri su"
+msgstr "scorri su"
 
 #. Translators: a quick swipe of a finger in an down direction, on a touch screen.
 #: touchTracker.py:40
 msgctxt "touch action"
 msgid "flick down"
-msgstr "Scorri giù"
+msgstr "scorri giù"
 
 #. Translators: a quick swipe of a finger in a left direction, on a touch screen.
 #: touchTracker.py:42
 msgctxt "touch action"
 msgid "flick left"
-msgstr "Scorri a sinistra"
+msgstr "scorri a sinistra"
 
 #. Translators: a quick swipe of a finger in a right direction, on a touch screen.
 #: touchTracker.py:44
 msgctxt "touch action"
 msgid "flick right"
-msgstr "Scorri a destra"
+msgstr "scorri a destra"
 
 #. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
 #: touchTracker.py:46
 msgctxt "touch action"
 msgid "hover down"
-msgstr "Esplorazione iniziata"
+msgstr "esplorazione iniziata"
 
 #. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
 #: touchTracker.py:48
 msgctxt "touch action"
 msgid "hover"
-msgstr "Esplorazione"
+msgstr "esplorazione"
 
 #. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
 #: touchTracker.py:50
 msgctxt "touch action"
 msgid "hover up"
-msgstr "Esplorazione terminata"
+msgstr "esplorazione terminata"
 
 #. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
 #. when Windows is on a secure screen (sign-on screen / UAC prompt).
@@ -6903,12 +6903,12 @@ msgstr "Funzione non disponibile nelle schermate protette come la schermata di a
 #: ui.py:85
 #, python-brace-format
 msgid "This feature ({title}) is unavailable while on secure screens such as the sign-on screen or UAC prompt."
-msgstr "Questa funzionalità ({title}) non è disponibile nelle schermate protette quali l'accesso al sistema o i prompt UAC"
+msgstr "Questa funzionalità ({title}) non è disponibile nelle schermate protette quali l'accesso al sistema o i prompt UAC."
 
 #. Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message.
 #: ui.py:97 ui.py:138
 msgid "Feature unavailable."
-msgstr "Funzionalità non disponibile"
+msgstr "Funzionalità non disponibile."
 
 #. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
 #. because of a component failure.
@@ -7118,7 +7118,7 @@ msgstr "Scaricamento in corso"
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 #: updateCheck.py:924
 msgid "Error downloading update."
-msgstr "Errore nel download dell'aggiornamento"
+msgstr "Errore nel download dell'aggiornamento."
 
 #. Translators: The message requesting donations from users.
 #: updateCheck.py:947
@@ -7161,7 +7161,7 @@ msgstr "&Fatto"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1015 gui\installerGui.py:516
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr "Non è consigliabile aggiornare NVDA quando connesso come computer controllato tramite l'accesso remoto."
+msgstr "Non è consigliabile aggiornare NVDA quando connesso come computer controllato tramite l'accesso remoto. "
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
@@ -7257,7 +7257,7 @@ msgstr "Impossibile stabilire una connessione al server add-on store."
 #: addonStore\dataManager.py:256
 msgctxt "addonStore"
 msgid "Unable to fetch latest add-on data for compatible add-ons."
-msgstr "Impossibile recuperare i dati più recenti degli add-on compatibili"
+msgstr "Impossibile recuperare i dati più recenti degli add-on compatibili."
 
 #. Translators: A message shown when fetching add-on data from the store fails
 #: addonStore\dataManager.py:292
@@ -7588,7 +7588,7 @@ msgstr "&Add-on incompatibili installati"
 #, python-brace-format
 msgctxt "addonStore"
 msgid "An updated version of NVDA is required. NVDA version {nvdaVersion} or later."
-msgstr "è richiesta una versione aggiornata di NVDA. Versione NVDA {nvdaVersion} o successiva."
+msgstr "È necessaria una versione aggiornata di NVDA. Versione NVDA {nvdaVersion} o successiva."
 
 #. Translators: The reason an add-on is not compatible.
 #. The addon relies on older, removed features of NVDA, an updated add-on is required.
@@ -7604,7 +7604,7 @@ msgstr "È necessaria una versione aggiornata di questo add-on. Il componente ag
 #: addonStore\models\version.py:145
 msgctxt "addonStore"
 msgid "Your NVDA configuration contains add-ons that are incompatible with this version of NVDA. These add-ons will be disabled after installation. After installation, you will be able to manually re-enable these add-ons at your own risk. If you rely on these add-ons, please review the list to decide whether to continue with the installation. "
-msgstr "La configurazione di NVDA contiene componenti aggiuntivi non compatibili con questa versione. Tali addon saranno disabilitati dopo l'installazione. Se ritieni questi componenti aggiuntivi affidabili, consulta l'elenco per decidere se continuare con l'installazione"
+msgstr "La configurazione di NVDA contiene componenti aggiuntivi non compatibili con questa versione. Tali addon saranno disabilitati dopo l'installazione. Se ritieni questi componenti aggiuntivi affidabili, consulta l'elenco per decidere se continuare con l'installazione. "
 
 #. Translators: A message to confirm that the user understands that incompatible add-ons
 #. will be disabled after installation, and can be manually re-enabled.
@@ -7708,12 +7708,12 @@ msgstr "Pagina {pageNumber}"
 #. Translators: Reported when text is highlighted.
 #: appModules\kindle.py:326
 msgid "highlight"
-msgstr "Evidenziato"
+msgstr "evidenziato"
 
 #. Translators: Reported when text is not highlighted.
 #: appModules\kindle.py:329
 msgid "no highlight"
-msgstr "Non evidenziato"
+msgstr "non evidenziato"
 
 #. Translators: Reported in Kindle when text has been identified as a popular highlight;
 #. i.e. it has been highlighted by several people.
@@ -7726,7 +7726,7 @@ msgstr "%s evidenziato"
 #. Translators: Reported when moving out of a popular highlight.
 #: appModules\kindle.py:342
 msgid "out of popular highlight"
-msgstr "Fuori dall'evidenziazione popolare"
+msgstr "fuori dall'evidenziazione popolare"
 
 #. Translators: The name of a category of NVDA commands.
 #: appModules\miranda32.py:25
@@ -7746,12 +7746,12 @@ msgstr "Nessun messaggio"
 #. Translators: This Outlook Express message has an attachment
 #: appModules\msimn.py:20 appModules\outlook.py:571
 msgid "has attachment"
-msgstr "Contiene allegati"
+msgstr "contiene allegati"
 
 #. Translators: this Outlook Express message is flagged
 #: appModules\msimn.py:22
 msgid "flagged"
-msgstr "Contrassegnato"
+msgstr "contrassegnato"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 #: appModules\msimn.py:28
@@ -7796,12 +7796,12 @@ msgstr "Inoltra a:"
 #. Translators: This is presented in outlook or live mail
 #: appModules\msimn.py:44
 msgid "Answer to:"
-msgstr "Rispondi a"
+msgstr "Rispondi a:"
 
 #. Translators: This is presented in outlook or live mail
 #: appModules\msimn.py:46
 msgid "Organisation:"
-msgstr "Societa'"
+msgstr "Organizzazione:"
 
 #. Translators: This is presented in outlook or live mail
 #: appModules\msimn.py:48
@@ -7811,7 +7811,7 @@ msgstr "Distribuzione:"
 #. Translators: This is presented in outlook or live mail
 #: appModules\msimn.py:50
 msgid "Key words:"
-msgstr "Parole chiave"
+msgstr "Parole chiave:"
 
 #. Translators: This is presented in outlook or live mail, email blind carbon copy
 #: appModules\msimn.py:52
@@ -7821,7 +7821,7 @@ msgstr "Bcc:"
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
 #: appModules\msimn.py:161 appModules\outlook.py:97 appModules\outlook.py:547
 msgid "unread"
-msgstr "Non letto"
+msgstr "non letto"
 
 #. Translators: The name of a category of NVDA commands.
 #: appModules\nvda.py:58
@@ -7870,50 +7870,50 @@ msgstr "Modifica del profilo {profile}"
 #. Translators: the last action taken on an Outlook mail message
 #: appModules\outlook.py:57
 msgid "replied"
-msgstr "Risposto"
+msgstr "risposto"
 
 #. Translators: the last action taken on an Outlook mail message
 #: appModules\outlook.py:59
 msgid "replied all"
-msgstr "Risposto a tutti"
+msgstr "risposto a tutti"
 
 #. Translators: the last action taken on an Outlook mail message
 #: appModules\outlook.py:61
 msgid "forwarded"
-msgstr "Inoltrato"
+msgstr "inoltrato"
 
 #. Translators: for a high importance email
 #: appModules\outlook.py:71
 msgid "high importance"
-msgstr "Priorità alta"
+msgstr "priorità alta"
 
 #. Translators: For a low importance email
 #: appModules\outlook.py:73
 msgid "low importance"
-msgstr "Priorità bassa"
+msgstr "priorità bassa"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #: appModules\outlook.py:91 appModules\outlook.py:107
 #, python-format
 msgid "subject: %s"
-msgstr "Oggetto: %s"
+msgstr "oggetto: %s"
 
 #. Translators: This is presented in outlook or live mail, email received time
 #: appModules\outlook.py:93
 #, python-format
 msgid "received: %s"
-msgstr "Ricevuto: %s"
+msgstr "ricevuto: %s"
 
 #. Translators: This is presented in outlook or live mail, indicating email attachments
 #: appModules\outlook.py:100
 msgid "attachment"
-msgstr "Allegato"
+msgstr "allegato"
 
 #. Translators: This is presented in outlook or live mail, email sent date
 #: appModules\outlook.py:109
 #, python-format
 msgid "sent: %s"
-msgstr "Inviato: %s"
+msgstr "inviato: %s"
 
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 #: appModules\outlook.py:138
@@ -7938,8 +7938,8 @@ msgstr "{startTime} fino a {endTime}"
 #, python-brace-format
 msgid "category {categories}"
 msgid_plural "categories {categories}"
-msgstr[0] "Categoria {categories}"
-msgstr[1] "Categorie {categories}"
+msgstr[0] "categoria {categories}"
+msgstr[1] "categorie {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #: appModules\outlook.py:472
@@ -7950,12 +7950,12 @@ msgstr "Appuntamento {subject}, {time}"
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
 #: appModules\outlook.py:518
 msgid "Has appointment"
-msgstr "contiene appuntamenti"
+msgstr "Contiene appuntamenti"
 
 #. Translators: the email is a meeting request
 #: appModules\outlook.py:585
 msgid "meeting request"
-msgstr "Richiesta di meeting"
+msgstr "richiesta di meeting"
 
 #. Translators: The name of a category of NVDA commands.
 #: appModules\poedit.py:27
@@ -8031,7 +8031,7 @@ msgstr "Segnala un problema di traduzione, se presente. Se premuto due volte, mo
 #: appModules\poedit.py:217
 msgctxt "poedit"
 msgid "translation issue"
-msgstr "Problema traduzione"
+msgstr "problema traduzione"
 
 #. Translators: The name of a category of NVDA commands.
 #: appModules\powerpnt.py:49
@@ -8197,7 +8197,7 @@ msgstr "Diapositiva {slideNumber}"
 #. Translators:   an unlabelled item in Powerpoint another shape is overlapping
 #: appModules\powerpnt.py:633
 msgid "other item"
-msgstr "Altro elemento"
+msgstr "altro elemento"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:663
@@ -8267,13 +8267,13 @@ msgstr[1] "dietro la parte inferiore di {otherShape} di {distance:.3g} punti"
 #: appModules\powerpnt.py:743
 #, python-brace-format
 msgid "covers  {otherShape}"
-msgstr "Si sovrappone a  {otherShape}"
+msgstr "si sovrappone a  {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:746
 #, python-brace-format
 msgid "behind {otherShape}"
-msgstr "Dietro a {otherShape}"
+msgstr "dietro a {otherShape}"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. left edge to the slide's left edge
@@ -8428,15 +8428,15 @@ msgstr[1] "{val:.2f} centimetri"
 #: appModules\soffice.py:449
 #, python-brace-format
 msgid "cursor positioned {horizontalDistance} from left edge of page, {verticalDistance} from top edge of page"
-msgstr "Cursore posizionato a {horizontalDistance} dal bordo sinistro della pagina, {verticalDistance} dal bordo superiore della pagina"
+msgstr "cursore posizionato a {horizontalDistance} dal bordo sinistro della pagina, {verticalDistance} dal bordo superiore della pagina"
 
 #: appModules\totalcmd.py:36
 msgid "left"
-msgstr "Sinistra"
+msgstr "sinistra"
 
 #: appModules\totalcmd.py:38
 msgid "right"
-msgstr "Destra"
+msgstr "destra"
 
 #. Translators: The name of a category of NVDA commands.
 #: appModules\vipmud.py:18
@@ -8453,19 +8453,19 @@ msgstr "mAttivato"
 #: appModules\winamp.py:86
 msgctxt "shuffle"
 msgid "off"
-msgstr "Disattivato"
+msgstr "disattivato"
 
 #. Translators: the user has pressed the repeat track toggle in winamp, repeat is now on.
 #: appModules\winamp.py:95
 msgctxt "repeat"
 msgid "on"
-msgstr "Attivato"
+msgstr "attivato"
 
 #. Translators: the user has pressed the repeat track toggle in winamp, repeat is now off.
 #: appModules\winamp.py:98
 msgctxt "repeat"
 msgid "off"
-msgstr "Disattivato"
+msgstr "disattivato"
 
 #. Translators: A label for a 'candidate' list
 #. which contains symbols the user can choose from  when typing east-asian characters into a document.
@@ -8631,19 +8631,19 @@ msgstr "EcoBraille"
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\freedomScientific.py:176
 msgid "Freedom Scientific Focus/PAC Mate series"
-msgstr "Freedom Scientific serie Focus/PAC Mate "
+msgstr "Freedom Scientific serie Focus/PAC Mate"
 
 #. Translators: The name of a key on a braille display, that scrolls the display
 #. to show previous/next part of a long line.
 #: brailleDisplayDrivers\freedomScientific.py:186
 msgid "display scroll"
-msgstr "Scorrimento display"
+msgstr "scorrimento display"
 
 #. Translators: The name of a key on a braille display,
 #. that scrolls the display to show the next/previous line.
 #: brailleDisplayDrivers\freedomScientific.py:193
 msgid "line scroll"
-msgstr "Scorrimento riga"
+msgstr "scorrimento riga"
 
 #. Translators: The name of a series of braille displays.
 #: brailleDisplayDrivers\handyTech.py:680
@@ -9048,13 +9048,13 @@ msgstr "Inglese (Regno Unito) grado 2"
 #. braille settings dialog.
 #: brailleTables\__tables.py:160
 msgid "English grade 3"
-msgstr ""
+msgstr "Inglese grado 3"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:163
 msgid "English North American Braille Computer Code"
-msgstr "inglese Braille Computer nord america"
+msgstr "Inglese Braille Computer nord america"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9306,7 +9306,7 @@ msgstr "Italiano braille computer 8 punti"
 #. braille settings dialog.
 #: brailleTables\__tables.py:322
 msgid "Japanese (Kantenji) literary braille"
-msgstr "Giapponese (Kantenji), braille letterario."
+msgstr "Giapponese (Kantenji), braille letterario"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9384,7 +9384,7 @@ msgstr "Lao Grado 1"
 #. braille settings dialog.
 #: brailleTables\__tables.py:367
 msgid "Luganda literary braille"
-msgstr "Braille letterario Luganda "
+msgstr "Braille letterario Luganda"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9408,7 +9408,7 @@ msgstr "Lettone grado 1"
 #. braille settings dialog.
 #: brailleTables\__tables.py:379
 msgid "Macedonian grade 1"
-msgstr ""
+msgstr "Grado 1 macedone"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9522,7 +9522,7 @@ msgstr "Sepedi grado 2"
 #. braille settings dialog.
 #: brailleTables\__tables.py:436
 msgid "Chichewa (Malawi) literary braille"
-msgstr "Chichewa (Malawi) Braille letterario."
+msgstr "Chichewa (Malawi) Braille letterario"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9546,7 +9546,7 @@ msgstr "Polacco braille letterario"
 #. braille settings dialog.
 #: brailleTables\__tables.py:453
 msgid "Portuguese 6 dot computer braille"
-msgstr "Portoghese braille computer 6 puntiPortoghese "
+msgstr "Portoghese braille computer 6 puntiPortoghese"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9618,7 +9618,7 @@ msgstr "Russo Braille contratto"
 #. braille settings dialog.
 #: brailleTables\__tables.py:489
 msgid "Kinyarwanda literary braille"
-msgstr "Braille letterario Kinyarwanda "
+msgstr "Braille letterario Kinyarwanda"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9940,7 +9940,7 @@ msgstr "Sistema Braille cinese (Cina, mandarino) attuale"
 #. This should be translated to '中文中国汉语双拼盲文' in Mandarin.
 #: brailleTables\__tables.py:666
 msgid "Chinese (China, Mandarin) Double-phonic Braille System"
-msgstr "Sistema Braille a doppia fonica cinese (Cina, mandarino)."
+msgstr "Sistema Braille a doppia fonica cinese (Cina, mandarino)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10028,7 +10028,7 @@ msgstr "Mostra a tempo indeterminato"
 #. tethered to focus or review cursor automatically.
 #: config\configFlags.py:122
 msgid "automatically"
-msgstr "Automatico"
+msgstr "automatico"
 
 #. Translators: The label for a braille setting indicating that braille should be tethered to focus.
 #: config\configFlags.py:124
@@ -10266,7 +10266,7 @@ msgstr "Interruzione righe multipla"
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
 #: config\featureFlagEnums.py:92
 msgid "Never"
-msgstr "mai"
+msgstr "Mai"
 
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
 #: config\featureFlagEnums.py:94
@@ -10350,7 +10350,7 @@ msgstr "Riconoscimento in corso"
 #. i.e. not superscript or subscript.
 #: controlTypes\formatFields.py:34
 msgid "baseline"
-msgstr "Testo normale"
+msgstr "testo normale"
 
 #. Translators: Reported for subscript text.
 #. Translators: Describes text formatting.
@@ -10462,29 +10462,29 @@ msgstr "più piccolo"
 #. Translators: Reported when text is left-aligned.
 #: controlTypes\formatFields.py:130
 msgid "align left"
-msgstr "Allineamento a sinistra"
+msgstr "allineamento a sinistra"
 
 #. Translators: Reported when text is centered.
 #: controlTypes\formatFields.py:132
 msgid "align center"
-msgstr "Allineamento centrato"
+msgstr "allineamento centrato"
 
 #. Translators: Reported when text is right-aligned.
 #: controlTypes\formatFields.py:134
 msgid "align right"
-msgstr "Allineamento a destra"
+msgstr "allineamento a destra"
 
 #. Translators: Reported when text is justified.
 #. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
 #: controlTypes\formatFields.py:137
 msgid "align justify"
-msgstr "Allineamento giustificato"
+msgstr "allineamento giustificato"
 
 #. Translators: Reported when text is justified with character spacing (Japanese etc)
 #. See http://kohei.us/2010/01/21/distributed-text-justification/
 #: controlTypes\formatFields.py:140
 msgid "align distributed"
-msgstr "Allineamento distribuito"
+msgstr "allineamento distribuito"
 
 #. Translators: Reported when text is centered across multiple cells.
 #: controlTypes\formatFields.py:142
@@ -10495,13 +10495,13 @@ msgstr "allineamento centrato alla selezione"
 #. alignment in Excel aligning the cell's content depending on its type: text left and numbers right.
 #: controlTypes\formatFields.py:145
 msgid "align general"
-msgstr "Allineamento generale"
+msgstr "allineamento generale"
 
 #. Translators: Reported in Excel when text is formatted with "Fill" alignment, i.e. the name of the
 #. alignment in Excel repeating the cell's content for the width of the cell.
 #: controlTypes\formatFields.py:148
 msgid "align fill"
-msgstr "Allineamento riempi"
+msgstr "allineamento riempi"
 
 #. Translators: Reported when text is vertically top-aligned.
 #: controlTypes\formatFields.py:174
@@ -10521,7 +10521,7 @@ msgstr "allineato in basso verticalmente"
 #. Translators: Reported when text is vertically justified.
 #: controlTypes\formatFields.py:180
 msgid "vertical align justified"
-msgstr "Allineamento giustificato verticale"
+msgstr "allineamento giustificato verticale"
 
 #. Translators: Reported when text is vertically justified but with character spacing
 #. (For some Asian content).
@@ -10537,37 +10537,37 @@ msgstr "corrente"
 #. Translators: Presented when a page item is marked as current in a collection of page items
 #: controlTypes\isCurrent.py:44
 msgid "current page"
-msgstr "Pagina corrente"
+msgstr "pagina corrente"
 
 #. Translators: Presented when a step item is marked as current in a collection of step items
 #: controlTypes\isCurrent.py:46
 msgid "current step"
-msgstr "Step corrente"
+msgstr "step corrente"
 
 #. Translators: Presented when a location item is marked as current in a collection of location items
 #: controlTypes\isCurrent.py:48
 msgid "current location"
-msgstr "Luogo corrente"
+msgstr "luogo corrente"
 
 #. Translators: Presented when a date item is marked as current in a collection of date items
 #: controlTypes\isCurrent.py:50
 msgid "current date"
-msgstr "Data corrente"
+msgstr "data corrente"
 
 #. Translators: Presented when a time item is marked as current in a collection of time items
 #: controlTypes\isCurrent.py:52
 msgid "current time"
-msgstr "Orario corrente"
+msgstr "orario corrente"
 
 #. Translators: The word for window of a program such as document window.
 #: controlTypes\role.py:212
 msgid "window"
-msgstr "Finestra"
+msgstr "finestra"
 
 #. Translators: Used to identify title bar of a program.
 #: controlTypes\role.py:214
 msgid "title bar"
-msgstr "Barra del titolo"
+msgstr "barra del titolo"
 
 #. Translators: The word used for pane such as desktop pane.
 #: controlTypes\role.py:216
@@ -10577,74 +10577,74 @@ msgstr "riquadro"
 #. Translators: The word used to denote a dialog box such as open dialog.
 #: controlTypes\role.py:218
 msgid "dialog"
-msgstr "Dialogo"
+msgstr "dialogo"
 
 #. Translators: The text used to identify check boxes such as select check box.
 #: controlTypes\role.py:220
 msgid "check box"
-msgstr "Casella di controllo"
+msgstr "casella di controllo"
 
 #. Translators: The text used to identify radio buttons such as yes or no radio button.
 #: controlTypes\role.py:222
 msgid "radio button"
-msgstr "Pulsante radio"
+msgstr "pulsante radio"
 
 #. Translators: The word used to identify a static text such as dialog text.
 #: controlTypes\role.py:224
 msgid "text"
-msgstr "Testo"
+msgstr "testo"
 
 #. Translators: The word used to identify edit fields such as subject edit field.
 #: controlTypes\role.py:226
 msgid "edit"
-msgstr "Editazione"
+msgstr "editazione"
 
 #. Translators: The word used to identify a button such as OK button.
 #: controlTypes\role.py:228
 msgid "button"
-msgstr "Pulsante"
+msgstr "pulsante"
 
 #. Translators: Text used to identify menu bar of a program.
 #: controlTypes\role.py:230
 msgid "menu bar"
-msgstr "Barra dei menu'"
+msgstr "barra dei menu'"
 
 #. Translators: Used to identify a menu item such as an item in file menu.
 #: controlTypes\role.py:232
 msgid "menu item"
-msgstr "Elemento di menu'"
+msgstr "elemento di menu'"
 
 #. Translators: The word used for menus such as edit menu.
 #. Translators: Identifies a menu such as file menu.
 #: controlTypes\role.py:234 controlTypes\role.py:464
 msgid "menu"
-msgstr "Menu'"
+msgstr "menu"
 
 #. Translators: Used to identify combo boxes such as file type combo box.
 #: controlTypes\role.py:236
 msgid "combo box"
-msgstr "Casella combinata"
+msgstr "casella combinata"
 
 #. Translators: The word used for lists such as folder list.
 #: controlTypes\role.py:238
 msgid "list"
-msgstr "Elenco"
+msgstr "elenco"
 
 #. Translators: Used to identify a list item such as email list items.
 #: controlTypes\role.py:240
 msgid "list item"
-msgstr "Elemento di elenco"
+msgstr "elemento di elenco"
 
 #. Translators: The word used to identify graphics such as webpage graphics.
 #: controlTypes\role.py:242
 msgid "graphic"
-msgstr "Grafico"
+msgstr "grafico"
 
 #. Translators: Used to identify help balloon (a circular window with helpful text such as notification
 #. text).
 #: controlTypes\role.py:245
 msgid "help balloon"
-msgstr "Fumetto di aiuto"
+msgstr "fumetto di aiuto"
 
 #. Translators: Used to identify a tooltip (a small window with additional text about selected item such as
 #. file information).
@@ -10655,17 +10655,17 @@ msgstr "suggerimento"
 #. Translators: Identifies a link in webpage documents.
 #: controlTypes\role.py:250 speech\speech.py:2977
 msgid "link"
-msgstr "Link"
+msgstr "link"
 
 #. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
 #: controlTypes\role.py:252
 msgid "tree view"
-msgstr "Visualizzazione ad albero"
+msgstr "visualizzazione ad albero"
 
 #. Translators: Identifies a tree view item.
 #: controlTypes\role.py:254
 msgid "tree view item"
-msgstr "Elemento della visualizzazione ad albero"
+msgstr "elemento della visualizzazione ad albero"
 
 #. Translators: The word presented for tabs in a tab enabled window.
 #: controlTypes\role.py:256
@@ -10676,7 +10676,7 @@ msgstr "tab"
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 #: controlTypes\role.py:258
 msgid "tab control"
-msgstr "Pagina"
+msgstr "pagina"
 
 #. Translators: Identifies a slider such as volume slider.
 #: controlTypes\role.py:260
@@ -10686,60 +10686,60 @@ msgstr "cursore d'avanzamento"
 #. Translators: Identifies a progress bar such as NvDA update progress.
 #: controlTypes\role.py:262
 msgid "progress bar"
-msgstr "Barra di avanzamento"
+msgstr "barra di avanzamento"
 
 #. Translators: Identifies a scroll bar.
 #: controlTypes\role.py:264
 msgid "scroll bar"
-msgstr "Barra di scorrimento"
+msgstr "barra di scorrimento"
 
 #. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a
 #. document).
 #: controlTypes\role.py:267
 msgid "status bar"
-msgstr "Barra di stato"
+msgstr "barra di stato"
 
 #. Translators: Identifies a table such as ones used in various websites.
 #: controlTypes\role.py:269
 msgid "table"
-msgstr "Tabella"
+msgstr "tabella"
 
 #. Translators: Identifies a cell in a table.
 #: controlTypes\role.py:271
 msgid "cell"
-msgstr "Cella"
+msgstr "cella"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
 #: controlTypes\role.py:273
 msgid "column"
-msgstr "Colonna"
+msgstr "colonna"
 
 #. Translators: Identifies a row (a group of horizontal cells in a table).
 #: controlTypes\role.py:275
 msgid "row"
-msgstr "Riga"
+msgstr "riga"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
 #. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page
 #. embedded within a web page.
 #: controlTypes\role.py:277 controlTypes\role.py:453
 msgid "frame"
-msgstr "Frame"
+msgstr "frame"
 
 #. Translators: Identifies a tool bar.
 #: controlTypes\role.py:279
 msgid "tool bar"
-msgstr "Barra degli strumenti"
+msgstr "barra degli strumenti"
 
 #. Translators: Identifies a column header in tables and spreadsheets.
 #: controlTypes\role.py:281
 msgid "column header"
-msgstr "Intestazione colonna"
+msgstr "intestazione colonna"
 
 #. Translators: Identifies a row header in tables and spreadsheets.
 #: controlTypes\role.py:283
 msgid "row header"
-msgstr "Intestazione riga"
+msgstr "intestazione riga"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 #: controlTypes\role.py:285
@@ -10749,7 +10749,7 @@ msgstr "pulsante con menù a discesa"
 #. Translators: Identifies an element.
 #: controlTypes\role.py:287
 msgid "clock"
-msgstr "Orologio"
+msgstr "orologio"
 
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 #: controlTypes\role.py:289
@@ -10759,107 +10759,107 @@ msgstr "separatore"
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 #: controlTypes\role.py:291
 msgid "form"
-msgstr "Form"
+msgstr "form"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 #: controlTypes\role.py:293
 msgid "heading"
-msgstr "Intestazione"
+msgstr "intestazione"
 
 #. Translators: Identifies a heading level.
 #: controlTypes\role.py:295
 msgid "heading 1"
-msgstr "Intestazione 1"
+msgstr "intestazione 1"
 
 #. Translators: Identifies a heading level.
 #: controlTypes\role.py:297
 msgid "heading 2"
-msgstr "Intestazione 2"
+msgstr "intestazione 2"
 
 #. Translators: Identifies a heading level.
 #: controlTypes\role.py:299
 msgid "heading 3"
-msgstr "Intestazione 3"
+msgstr "intestazione 3"
 
 #. Translators: Identifies a heading level.
 #: controlTypes\role.py:301
 msgid "heading 4"
-msgstr "Intestazione 4"
+msgstr "intestazione 4"
 
 #. Translators: Identifies a heading level.
 #: controlTypes\role.py:303
 msgid "heading 5"
-msgstr "Intestazione 5"
+msgstr "intestazione 5"
 
 #. Translators: Identifies a heading level.
 #: controlTypes\role.py:305
 msgid "heading 6"
-msgstr "Intestazione 6"
+msgstr "intestazione 6"
 
 #. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
 #: controlTypes\role.py:307 textInfos\__init__.py:332
 msgid "paragraph"
-msgstr "Paragrafo"
+msgstr "paragrafo"
 
 #. Translators: Presented for a section in a document which is a block quotation;
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
 #. See http://en.wikipedia.org/wiki/Block_quotation
 #: controlTypes\role.py:311
 msgid "block quote"
-msgstr "Blocco tra virgolette"
+msgstr "blocco tra virgolette"
 
 #. Translators: Identifies a table header (a short text at the start of a table which describes what the
 #. table is about).
 #: controlTypes\role.py:314
 msgid "table header"
-msgstr "Intestazione tabella"
+msgstr "intestazione tabella"
 
 #. Translators: Identifies a table body (the main body of the table).
 #: controlTypes\role.py:316
 msgid "table body"
-msgstr "Corpo della tabella"
+msgstr "corpo della tabella"
 
 #. Translators: Identifies a table footer (text placed at the end of the table).
 #: controlTypes\role.py:318
 msgid "table footer"
-msgstr "Piede della tabella"
+msgstr "piede della tabella"
 
 #. Translators: Identifies a document (for example, a webpage document).
 #: controlTypes\role.py:320
 msgid "document"
-msgstr "Documento"
+msgstr "documento"
 
 #. Translators: Identifies an animation in a document or a webpage.
 #: controlTypes\role.py:322
 msgid "animation"
-msgstr "Animazione"
+msgstr "animazione"
 
 #. Translators: Identifies an application in webpages.
 #: controlTypes\role.py:324
 msgid "application"
-msgstr "Applicazione"
+msgstr "applicazione"
 
 #. Translators: Identifies a box element.
 #: controlTypes\role.py:326
 msgid "box"
-msgstr "Casella"
+msgstr "casella"
 
 #. Translators: Identifies a grouping (a number of related items grouped together, such as related options
 #. in dialogs).
 #: controlTypes\role.py:329
 msgid "grouping"
-msgstr "Gruppo"
+msgstr "gruppo"
 
 #. Translators: Identifies a property page such as drive properties dialog.
 #: controlTypes\role.py:331
 msgid "property page"
-msgstr "Pagina proprietà"
+msgstr "pagina proprietà"
 
 #. Translators: Identifies a canvas element on webpages (a box with some background color with some text
 #. drawn on the box, like a canvas).
 #: controlTypes\role.py:334
 msgid "canvas"
-msgstr "Canvas"
+msgstr "canvas"
 
 #. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
 #: controlTypes\role.py:336
@@ -10870,17 +10870,17 @@ msgstr "didascalia"
 #. name).
 #: controlTypes\role.py:339
 msgid "check menu item"
-msgstr "Elemento di menu' attivabile"
+msgstr "elemento di menu' attivabile"
 
 #. Translators: Identifies a data edit field.
 #: controlTypes\role.py:341
 msgid "date edit"
-msgstr "Editazione data"
+msgstr "data modificabile"
 
 #. Translators: Identifies an icon.
 #: controlTypes\role.py:343
 msgid "icon"
-msgstr "Icona"
+msgstr "icona"
 
 #. Translators: Identifies a directory pane.
 #: controlTypes\role.py:345
@@ -10890,22 +10890,22 @@ msgstr "riquadro cartelle"
 #. Translators: Identifies an object that is embedded in a document.
 #: controlTypes\role.py:347 NVDAObjects\window\edit.py:865
 msgid "embedded object"
-msgstr "Oggetto"
+msgstr "oggetto"
 
 #. Translators: Identifies an end note.
 #: controlTypes\role.py:349
 msgid "end note"
-msgstr "Fine nota"
+msgstr "fine nota"
 
 #. Translators: Identifies a footer (usually text).
 #: controlTypes\role.py:351
 msgid "footer"
-msgstr "Pié di pagina"
+msgstr "pié di pagina"
 
 #. Translators: Identifies a foot note (text at the end of a passage or used for annotations).
 #: controlTypes\role.py:353
 msgid "foot note"
-msgstr "Nota a margine"
+msgstr "nota a margine"
 
 #. Translators: Reported for an object which is a glass pane; i.e.
 #. a pane that is guaranteed to be on top of all panes beneath it.
@@ -10916,37 +10916,37 @@ msgstr "riquadro trasparente"
 #. Translators: Identifies a header (usually text at top of documents or on tops of pages).
 #: controlTypes\role.py:358
 msgid "header"
-msgstr "Intestazione"
+msgstr "intestazione"
 
 #. Translators: Identifies an image map (a type of graphical link).
 #: controlTypes\role.py:360
 msgid "image map"
-msgstr "Mappa immagine"
+msgstr "mappa immagine"
 
 #. Translators: Identifies an input window.
 #: controlTypes\role.py:362
 msgid "input window"
-msgstr "Finestra di immissione"
+msgstr "finestra di immissione"
 
 #. Translators: Identifies a label.
 #: controlTypes\role.py:364
 msgid "label"
-msgstr "Etichetta"
+msgstr "etichetta"
 
 #. Translators: Identifies a note field.
 #: controlTypes\role.py:366
 msgid "note"
-msgstr "Nota"
+msgstr "nota"
 
 #. Translators: Identifies a page.
 #: controlTypes\role.py:368
 msgid "page"
-msgstr "Pagina"
+msgstr "pagina"
 
 #. Translators: Identifies a radio menu item.
 #: controlTypes\role.py:370
 msgid "radio menu item"
-msgstr "Voce di menù a scelta singola"
+msgstr "voce di menù a scelta singola"
 
 #. Translators: Identifies a layered pane.
 #: controlTypes\role.py:372
@@ -10956,29 +10956,29 @@ msgstr "pannello a più livelli"
 #. Translators: Identifies a redundant object.
 #: controlTypes\role.py:374
 msgid "redundant object"
-msgstr "Oggetto ridondante"
+msgstr "oggetto ridondante"
 
 #. Translators: Identifies a root pane.
 #: controlTypes\role.py:376
 msgid "root pane"
-msgstr "Pannello radice"
+msgstr "pannello radice"
 
 #. Translators: May be reported for an editable text object in a toolbar.
 #. This is deprecated and is not often (if ever) used.
 #: controlTypes\role.py:379
 msgid "edit bar"
-msgstr "Barra editazione"
+msgstr "barra editazione"
 
 #. Translators: Identifies a terminal window such as command prompt.
 #: controlTypes\role.py:381
 msgid "terminal"
-msgstr "Terminale"
+msgstr "terminale"
 
 #. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in
 #. addition to text; encountered on webpages and NvDA log viewer).
 #: controlTypes\role.py:384
 msgid "rich edit"
-msgstr "Editazione"
+msgstr "editazione"
 
 #. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
 #: controlTypes\role.py:386
@@ -10988,17 +10988,17 @@ msgstr "righello"
 #. Translators: Identifies a scroll pane.
 #: controlTypes\role.py:388
 msgid "scroll pane"
-msgstr "Pannello a scorrimento"
+msgstr "pannello a scorrimento"
 
 #. Translators: Identifies a section of text.
 #: controlTypes\role.py:390
 msgid "section"
-msgstr "Sezione"
+msgstr "sezione"
 
 #. Translators: Identifies a shape.
 #: controlTypes\role.py:392
 msgid "shape"
-msgstr "Forma"
+msgstr "forma"
 
 #. Translators: Identifies a split pane.
 #: controlTypes\role.py:394
@@ -11010,53 +11010,53 @@ msgstr "pannello multifunzione"
 #. As the user manipulates the scroll bars, the contents of the view port can change.
 #: controlTypes\role.py:398
 msgid "view port"
-msgstr "Visualizzazione"
+msgstr "visualizzazione"
 
 #. Translators: Reported for an object that forms part of a menu system
 #. but which can be undocked from or torn off the menu system
 #. to exist as a separate window.
 #: controlTypes\role.py:402
 msgid "tear off menu"
-msgstr "Menu' fluttuante"
+msgstr "menu fluttuante"
 
 #. Translators: Identifies a text frame (a frame window which contains text).
 #: controlTypes\role.py:404
 msgid "text frame"
-msgstr "Frame testo"
+msgstr "frame testo"
 
 #. Translators: Identifies a toggle button (a button used to toggle something).
 #: controlTypes\role.py:406
 msgid "toggle button"
-msgstr "Interruttore"
+msgstr "interruttore"
 
 #: controlTypes\role.py:407
 msgid "border"
-msgstr "Bordo"
+msgstr "bordo"
 
 #. Translators: Identifies a caret object.
 #: controlTypes\role.py:409
 msgid "caret"
-msgstr "Circonflesso"
+msgstr "circonflesso"
 
 #. Translators: Identifies a character field (should not be confused with edit fields).
 #: controlTypes\role.py:411 textInfos\__init__.py:329
 msgid "character"
-msgstr "Carattere"
+msgstr "carattere"
 
 #. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
 #: controlTypes\role.py:413
 msgid "chart"
-msgstr "Tabella"
+msgstr "tabella"
 
 #. Translators: Identifies a cursor object.
 #: controlTypes\role.py:415
 msgid "cursor"
-msgstr "Cursore"
+msgstr "cursore"
 
 #. Translators: Identifies a diagram (seen on some websites and on Office documents).
 #: controlTypes\role.py:417
 msgid "diagram"
-msgstr "Diagramma"
+msgstr "diagramma"
 
 #. Translators: Identifies a dial object.
 #: controlTypes\role.py:419
@@ -11066,18 +11066,18 @@ msgstr "quadrante"
 #. Translators: Identifies a drop list.
 #: controlTypes\role.py:421
 msgid "drop list"
-msgstr "Elenco a discesa"
+msgstr "elenco a discesa"
 
 #. Translators: Identifies a split button (a control which performs different actions when different parts
 #. are clicked).
 #: controlTypes\role.py:424
 msgid "split button"
-msgstr "Pulsante multifunzione"
+msgstr "pulsante multifunzione"
 
 #. Translators: Identifies a menu button (a button which opens a menu of items).
 #: controlTypes\role.py:426
 msgid "menu button"
-msgstr "Pulsante di menu'"
+msgstr "pulsante di menu'"
 
 #. Translators: Reported for a button which expands a grid when it is pressed.
 #: controlTypes\role.py:428
@@ -11087,43 +11087,43 @@ msgstr "griglia con pulsante con menu a discesa"
 #. Translators: Identifies mathematical content.
 #: controlTypes\role.py:430
 msgid "math"
-msgstr "Matematica"
+msgstr "matematica"
 
 #. Translators: Identifies a grip control.
 #: controlTypes\role.py:432
 msgid "grip"
-msgstr "Presa"
+msgstr "presa"
 
 #. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as
 #. assigning shortcut for icons on the desktop).
 #: controlTypes\role.py:435
 msgid "hot key field"
-msgstr "Campo tasto di scelta rapida"
+msgstr "campo tasto di scelta rapida"
 
 #. Translators: Identifies an indicator control.
 #: controlTypes\role.py:437
 msgid "indicator"
-msgstr "Indicatore"
+msgstr "indicatore"
 
 #. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
 #: controlTypes\role.py:439
 msgid "spin button"
-msgstr "Pulsante spin"
+msgstr "pulsante spin"
 
 #. Translators: Identifies a sound clip on websites.
 #: controlTypes\role.py:441
 msgid "sound"
-msgstr "Suono"
+msgstr "suono"
 
 #. Translators: Identifies a whitespace.
 #: controlTypes\role.py:443
 msgid "white space"
-msgstr "Spazio vuoto"
+msgstr "spazio vuoto"
 
 #. Translators: Identifies a tree view button.
 #: controlTypes\role.py:445
 msgid "tree view button"
-msgstr "Pulsante visualizzazione ad albero"
+msgstr "pulsante visualizzazione ad albero"
 
 #. Translators: Identifies an IP address (an IP address field element).
 #: controlTypes\role.py:447
@@ -11134,131 +11134,131 @@ msgstr "Indirizzo ip"
 #. for programs).
 #: controlTypes\role.py:450
 msgid "desktop icon"
-msgstr "Icona desktop"
+msgstr "icona desktop"
 
 #. Translators: Identifies desktop pane (the desktop window).
 #: controlTypes\role.py:455
 msgid "desktop pane"
-msgstr "Riquadro desktop"
+msgstr "riquadro desktop"
 
 #. Translators: Identifies an option pane.
 #: controlTypes\role.py:457
 msgid "option pane"
-msgstr "Riquadro opzione"
+msgstr "iiquadro opzione"
 
 #. Translators: Identifies a color chooser.
 #: controlTypes\role.py:459
 msgid "color chooser"
-msgstr "Selezione colore"
+msgstr "selezione colore"
 
 #. Translators: Identifies a file chooser (to select a file or groups of files from a list).
 #: controlTypes\role.py:461
 msgid "file chooser"
-msgstr "Selezione file"
+msgstr "selezione file"
 
 #: controlTypes\role.py:462
 msgid "filler"
-msgstr "Riempitore"
+msgstr "riempitore"
 
 #. Translators: Identifies a panel control for grouping related options.
 #: controlTypes\role.py:466
 msgid "panel"
-msgstr "Pannello"
+msgstr "pannello"
 
 #. Translators: Identifies a password field (a protected edit field for entering passwords such as when
 #. logging into web-based email sites).
 #: controlTypes\role.py:469
 msgid "password edit"
-msgstr "Editazione password"
+msgstr "editazione password"
 
 #. Translators: Identifies a font chooser.
 #: controlTypes\role.py:471
 msgid "font chooser"
-msgstr "Selezione carattere"
+msgstr "selezione carattere"
 
 #: controlTypes\role.py:472 textInfos\__init__.py:331
 msgid "line"
-msgstr "Riga"
+msgstr "riga"
 
 #. Translators: Identifies a font name.
 #: controlTypes\role.py:474
 msgid "font name"
-msgstr "Nome carattere"
+msgstr "nome carattere"
 
 #. Translators: Identifies font size.
 #: controlTypes\role.py:476
 msgid "font size"
-msgstr "Dimensione carattere"
+msgstr "dimensione carattere"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported when text is bolded.
 #: controlTypes\role.py:478 speech\speech.py:2854
 msgid "bold"
-msgstr "Grassetto"
+msgstr "grassetto"
 
 #. Translators: Describes text formatting.
 #: controlTypes\role.py:480 speech\speech.py:2865
 msgid "italic"
-msgstr "Corsivo"
+msgstr "corsivo"
 
 #. Translators: Describes text formatting.
 #: controlTypes\role.py:482
 msgid "underline"
-msgstr "Sottolineato"
+msgstr "sottolineato"
 
 #. Translators: Describes text formatting.
 #: controlTypes\role.py:484
 msgid "foreground color"
-msgstr "Colore in primo piano"
+msgstr "colore in primo piano"
 
 #. Translators: Describes text formatting.
 #: controlTypes\role.py:486
 msgid "background color"
-msgstr "Colore di sfondo"
+msgstr "colore di sfondo"
 
 #. Translators: Describes style of text.
 #. Translators: a Microsoft Word revision type (style change)
 #: controlTypes\role.py:492 NVDAObjects\window\winword.py:419
 msgid "style"
-msgstr "Stile"
+msgstr "stile"
 
 #. Translators: Describes text formatting.
 #: controlTypes\role.py:494
 msgid "indent"
-msgstr "Rientranza"
+msgstr "rientranza"
 
 #. Translators: Describes text formatting.
 #: controlTypes\role.py:496
 msgid "alignment"
-msgstr "Allineamento"
+msgstr "allineamento"
 
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such
 #. as file downloads or pop-up blocker).
 #: controlTypes\role.py:499
 msgid "alert"
-msgstr "Avviso"
+msgstr "avviso"
 
 #. Translators: Identifies a data grid control (a grid which displays data).
 #: controlTypes\role.py:501
 msgid "data grid"
-msgstr "Griglia di dati"
+msgstr "griglia di dati"
 
 #: controlTypes\role.py:502
 msgid "data item"
-msgstr "Elemento di dati"
+msgstr "elemento di dati"
 
 #: controlTypes\role.py:503
 msgid "header item"
-msgstr "Elemento di intestazione"
+msgstr "elemento di intestazione"
 
 #. Translators: Identifies a thumb control (a button-like control for changing options).
 #: controlTypes\role.py:505
 msgid "thumb control"
-msgstr "Sfoglia"
+msgstr "sfoglia"
 
 #: controlTypes\role.py:506
 msgid "calendar"
-msgstr "Calendario"
+msgstr "calendario"
 
 #: controlTypes\role.py:507
 msgid "video"
@@ -11271,7 +11271,7 @@ msgstr "audio"
 #. Translators: Identifies a chart element.
 #: controlTypes\role.py:510
 msgid "chart element"
-msgstr "Elemento del grafico"
+msgstr "elemento del grafico"
 
 #. Translators: Identifies deleted content.
 #. Translators: Reported when text is marked as having been deleted
@@ -11308,7 +11308,7 @@ msgstr "figura"
 #. Translators: Identifies marked (highlighted) content
 #: controlTypes\role.py:524
 msgid "highlighted"
-msgstr "Evidenziato"
+msgstr "evidenziato"
 
 #. Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
 #: controlTypes\role.py:526
@@ -11323,7 +11323,7 @@ msgstr "commento"
 #. Translators: Identifies a suggestion.
 #: controlTypes\role.py:530
 msgid "suggestion"
-msgstr "Suggerimento"
+msgstr "suggerimento"
 
 #. Translators: The word role for a switch control
 #. I.e. a control that can be switched on or off.
@@ -11338,32 +11338,32 @@ msgstr "interruttore"
 #: controlTypes\state.py:47
 #, python-format
 msgid "not %s"
-msgstr "Non %s"
+msgstr "non %s"
 
 #. Translators: This is presented when a control or document is unavailable.
 #: controlTypes\state.py:116
 msgid "unavailable"
-msgstr "Non disponibile"
+msgstr "non disponibile"
 
 #. Translators: This is presented when a control has focus.
 #: controlTypes\state.py:118
 msgid "focused"
-msgstr "Evidenziato"
+msgstr "evidenziato"
 
 #. Translators: This is presented when the control is selected.
 #: controlTypes\state.py:120
 msgid "selected"
-msgstr "Selezionato"
+msgstr "selezionato"
 
 #. Translators: This is presented when a document is busy.
 #: controlTypes\state.py:122
 msgid "busy"
-msgstr "Occupato"
+msgstr "occupato"
 
 #. Translators: This is presented when a button is pressed.
 #: controlTypes\state.py:124
 msgid "pressed"
-msgstr "Premuto"
+msgstr "premuto"
 
 #. Translators: This is presented when a check box is checked.
 #: controlTypes\state.py:126
@@ -11373,98 +11373,98 @@ msgstr "attivato"
 #. Translators: This is presented when a three state check box is half checked.
 #: controlTypes\state.py:128
 msgid "half checked"
-msgstr "Parzialmente attivato"
+msgstr "parzialmente attivato"
 
 #. Translators: This is presented when a three state toggle button is half pressed.
 #: controlTypes\state.py:130
 msgid "half pressed"
-msgstr "Parzialmente premuto"
+msgstr "parzialmente premuto"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 #: controlTypes\state.py:132
 msgid "read only"
-msgstr "Sola lettura"
+msgstr "sola lettura"
 
 #. Translators: This is presented when a tree view or submenu item is expanded.
 #: controlTypes\state.py:134
 msgid "expanded"
-msgstr "Espanso"
+msgstr "espanso"
 
 #. Translators: This is presented when a tree view or submenu is collapsed.
 #: controlTypes\state.py:136
 msgid "collapsed"
-msgstr "Non espanso"
+msgstr "non espanso"
 
 #. Translators: This is presented when a control or a document becomes invisible.
 #: controlTypes\state.py:138
 msgid "invisible"
-msgstr "Invisibile"
+msgstr "invisibile"
 
 #. Translators: This is presented when a visited link is encountered.
 #: controlTypes\state.py:140
 msgid "visited"
-msgstr "Visitato"
+msgstr "visitato"
 
 #. Translators: This is presented when a link is encountered.
 #: controlTypes\state.py:142
 msgid "linked"
-msgstr "Collegato"
+msgstr "collegato"
 
 #. Translators: This is presented when the control menu item has a submenu.
 #: controlTypes\state.py:144
 msgid "subMenu"
-msgstr "Sottomenu'"
+msgstr "sottomenu"
 
 #. Translators: This is presented when a protected control or a document is encountered.
 #: controlTypes\state.py:146
 msgid "protected"
-msgstr "Protetto"
+msgstr "protetto"
 
 #. Translators: This is presented when a required form field is encountered.
 #: controlTypes\state.py:148
 msgid "required"
-msgstr "Richiesto"
+msgstr "richiesto"
 
 #. Translators: Reported when an object no longer exists in the user interface;
 #. i.e. it is dead and is no longer usable.
 #: controlTypes\state.py:151
 msgid "defunct"
-msgstr "Defunct"
+msgstr "defunct"
 
 #. Translators: This is presented when an invalid entry has been made.
 #: controlTypes\state.py:153
 msgid "invalid entry"
-msgstr "Voce non valida"
+msgstr "voce non valida"
 
 #: controlTypes\state.py:154
 msgid "modal"
-msgstr "Modale"
+msgstr "modale"
 
 #. Translators: This is presented when a field supports auto completion of entered text such as email
 #. address field in Microsoft Outlook.
 #: controlTypes\state.py:157
 msgid "has auto complete"
-msgstr "Con completamento automatico"
+msgstr "con completamento automatico"
 
 #. Translators: This is presented when an edit field allows typing multiple lines of text such as comment
 #. fields on websites.
 #: controlTypes\state.py:160
 msgid "multi line"
-msgstr "Multi linea"
+msgstr "multi linea"
 
 #: controlTypes\state.py:161
 msgid "iconified"
-msgstr "A icona"
+msgstr "a icona"
 
 #. Translators: Presented when the current control is located off screen.
 #: controlTypes\state.py:163
 msgid "off screen"
-msgstr "Fuori Schermo"
+msgstr "fuori Schermo"
 
 #. Translators: Presented when the control allows selection such as text fields.
 #: controlTypes\state.py:165
 msgid "selectable"
-msgstr "Selezionabile"
+msgstr "selezionabile"
 
 #. Translators: Presented when a control can be moved to using system focus.
 #: controlTypes\state.py:167
@@ -11474,41 +11474,41 @@ msgstr "evidenziabile"
 #. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
 #: controlTypes\state.py:169
 msgid "clickable"
-msgstr "Cliccabile"
+msgstr "cliccabile"
 
 #: controlTypes\state.py:170
 msgid "editable"
-msgstr "Modificabile"
+msgstr "modificabile"
 
 #: controlTypes\state.py:171
 msgid "checkable"
-msgstr "Attivabile"
+msgstr "attivabile"
 
 #: controlTypes\state.py:172
 msgid "draggable"
-msgstr "Trascinabile"
+msgstr "trascinabile"
 
 #: controlTypes\state.py:173
 msgid "dragging"
-msgstr "Trascinamento"
+msgstr "trascinamento"
 
 #. Translators: Reported where an object which is being dragged can be dropped.
 #. This is only reported for objects that support accessible drag and drop.
 #: controlTypes\state.py:176
 msgid "drop target"
-msgstr "Rilascia"
+msgstr "rilascia"
 
 #: controlTypes\state.py:177
 msgid "sorted"
-msgstr "Ordinato"
+msgstr "ordinato"
 
 #: controlTypes\state.py:178
 msgid "sorted ascending"
-msgstr "Ordinato in senso ascendente"
+msgstr "ordinato in senso ascendente"
 
 #: controlTypes\state.py:179
 msgid "sorted descending"
-msgstr "Ordinato in senso discendente"
+msgstr "ordinato in senso discendente"
 
 #. Translators: a state that denotes that an object (usually a graphic) has a long description.
 #: controlTypes\state.py:181
@@ -11518,18 +11518,18 @@ msgstr "contiene una descrizione"
 #. Translators: a state that denotes that an object is pinned in its current location
 #: controlTypes\state.py:183
 msgid "pinned"
-msgstr "Fisso"
+msgstr "fisso"
 
 #. Translators: a state that denotes the existance of a formula on a spreadsheet cell
 #: controlTypes\state.py:185
 msgid "has formula"
-msgstr "Con formula"
+msgstr "con formula"
 
 #. Translators: a state that denotes the existance of a comment.
 #. Translators: Reported when text contains a generic comment.
 #: controlTypes\state.py:187 speech\speech.py:2992
 msgid "has comment"
-msgstr "Contiene commenti"
+msgstr "contiene commenti"
 
 #. Translators: a state that denotes that the object is covered partially or fully by another object
 #: controlTypes\state.py:189
@@ -11540,12 +11540,12 @@ msgstr "oscurato"
 #. allocated/available space
 #: controlTypes\state.py:192
 msgid "cropped"
-msgstr "Ritagliato"
+msgstr "ritagliato"
 
 #. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
 #: controlTypes\state.py:194
 msgid "overflowing"
-msgstr "Sporgente"
+msgstr "sporgente"
 
 #. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected
 #. Excel spreadsheet).
@@ -11556,17 +11556,17 @@ msgstr "non protetta"
 #. Translators: a state that denotes the existence of a note.
 #: controlTypes\state.py:199
 msgid "has note"
-msgstr "Con nota"
+msgstr "con nota"
 
 #. Translators: Presented when a control has a pop-up dialog.
 #: controlTypes\state.py:204
 msgid "opens dialog"
-msgstr "Apre una finestra di dialogo"
+msgstr "apre una finestra di dialogo"
 
 #. Translators: Presented when a control has a pop-up grid.
 #: controlTypes\state.py:206
 msgid "opens grid"
-msgstr "Apre una griglia a comparsa"
+msgstr "apre una griglia a comparsa"
 
 #. Translators: Presented when a control has a pop-up list box.
 #: controlTypes\state.py:208
@@ -11576,19 +11576,19 @@ msgstr "apre un elenco"
 #. Translators: Presented when a control has a pop-up tree.
 #: controlTypes\state.py:210
 msgid "opens tree"
-msgstr "Apre una visualizzazione ad albero"
+msgstr "apre una visualizzazione ad albero"
 
 #. Translators: Presented when a link destination points to the page containing the link.
 #. For example, links of a table of contents of a document with different sections.
 #: controlTypes\state.py:213
 msgid "same page"
-msgstr "Interno"
+msgstr "interno"
 
 #. Translators: Presented when the control allows multiple selected objects.
 #. For example, a list box that allows selecting multiple items.
 #: controlTypes\state.py:216
 msgid "multi-select"
-msgstr "Multi-selezione"
+msgstr "multi-selezione"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 #: controlTypes\state.py:222
@@ -11598,7 +11598,7 @@ msgstr "non selezionato"
 #. Translators: This is presented when a button is not pressed.
 #: controlTypes\state.py:224
 msgid "not pressed"
-msgstr "Non premuto"
+msgstr "non premuto"
 
 #. Translators: This is presented when a checkbox is not checked.
 #: controlTypes\state.py:226
@@ -11609,7 +11609,7 @@ msgstr "non attivato"
 #. This is only reported for objects which support accessible drag and drop.
 #: controlTypes\state.py:229
 msgid "done dragging"
-msgstr "Trascinamento eseguito"
+msgstr "trascinamento eseguito"
 
 #. Translators: This is spoken when a paragraph is considered blank.
 #. Translators: This is spoken when the line is considered blank.
@@ -11618,7 +11618,7 @@ msgstr "Trascinamento eseguito"
 #: documentNavigation\paragraphHelper.py:128 speech\speech.py:237
 #: speech\speech.py:460 speech\speech.py:1876
 msgid "blank"
-msgstr "Vuoto"
+msgstr "vuoto"
 
 #. Translators: this message is given when there is no next paragraph when navigating by paragraph
 #: documentNavigation\paragraphHelper.py:134
@@ -11712,7 +11712,7 @@ msgstr "Configurazione applicata"
 #. by using restore configuration to factory defaults item in NVDA menu.
 #: gui\__init__.py:220
 msgid "Configuration restored to factory defaults"
-msgstr " onfigurazione ripristinata ai valori difabbrica"
+msgstr "Configurazione ripristinata ai valori difabbrica"
 
 #. Translators: Reported when current configuration has been saved.
 #: gui\__init__.py:231
@@ -11784,7 +11784,7 @@ msgstr "Lo strumento di correzione voci COM nel registro di sistema non ha avuto
 #. Translators: The title of a COM Registration Fixing Tool dialog, when the tool has failed
 #: gui\__init__.py:610
 msgid "COM Registration Fixing Tool Failed"
-msgstr "Errore nell'esecuzione dello strumento di correzione voci COM nel registro di sistema "
+msgstr "Errore nell'esecuzione dello strumento di correzione voci COM nel registro di sistema"
 
 #. Translators: Message shown when the COM Registration Fixing tool completes.
 #: gui\__init__.py:617
@@ -11811,12 +11811,12 @@ msgstr "&Dizionari"
 #. Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 #: gui\__init__.py:653
 msgid "&Punctuation/symbol pronunciation..."
-msgstr "&Pronuncia punteggiatura/simboli"
+msgstr "&Pronuncia punteggiatura/simboli..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 #: gui\__init__.py:656
 msgid "I&nput gestures..."
-msgstr "&Gesti e tasti di immissione"
+msgstr "&Gesti e tasti di immissione..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 #: gui\__init__.py:659
@@ -11992,7 +11992,7 @@ msgstr "L&icenza"
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
 #: gui\__init__.py:862
 msgid "We&lcome dialog..."
-msgstr "&Finestra di benvenuto"
+msgstr "&Finestra di benvenuto..."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 #: gui\__init__.py:867
@@ -12230,7 +12230,7 @@ msgstr "Configurazione normale"
 #. in the Configuration Profiles dialog.
 #: gui\configProfiles.py:145
 msgid "editing"
-msgstr "In fase di modifica"
+msgstr "in fase di modifica"
 
 #. Translators: Reported for a profile which has been manually activated
 #. in the Configuration Profiles dialog.
@@ -12242,7 +12242,7 @@ msgstr "manuale"
 #. in the Configuration Profiles dialog.
 #: gui\configProfiles.py:155
 msgid "triggered"
-msgstr "Con eventi associati"
+msgstr "con eventi associati"
 
 #. Translators: An error displayed when activating a configuration profile fails.
 #: gui\configProfiles.py:180
@@ -12264,7 +12264,7 @@ msgstr "Conferma cancellazione"
 #. Translators: An error displayed when deleting a configuration profile fails.
 #: gui\configProfiles.py:217
 msgid "Error deleting profile."
-msgstr "Errore durante l'eliminazione del profilo"
+msgstr "Errore durante l'eliminazione del profilo."
 
 #. Translators: The label of the button to manually deactivate the selected profile
 #. in the Configuration Profiles dialog.
@@ -12302,7 +12302,7 @@ msgstr "Quel profilo esiste già. Si prega di scegliere un altro nome."
 
 #: gui\configProfiles.py:292
 msgid "Error renaming profile."
-msgstr "Errore nel rinominare il profilo"
+msgstr "Errore nel rinominare il profilo."
 
 #. Translators: Displayed for the configuration profile trigger for the current application.
 #. %s is replaced by the application executable name.
@@ -12319,7 +12319,7 @@ msgstr "Dire tutto"
 #. Translators: An error displayed when saving configuration profile triggers fails.
 #: gui\configProfiles.py:335
 msgid "Error saving configuration profile triggers - probably read only file system."
-msgstr "Non posso salvare il file di configurazione per gli eventi, probabilmente il File System è di sola lettura"
+msgstr "Non posso salvare il file di configurazione per gli eventi, probabilmente il File System è di sola lettura."
 
 #. Translators: The title of the configuration profile triggers dialog.
 #: gui\configProfiles.py:360
@@ -12375,12 +12375,12 @@ msgstr "Questo evento è già associato ad un altro profilo. Se si continua, sar
 #. with an empty name.
 #: gui\configProfiles.py:513
 msgid "You must choose a name for this profile."
-msgstr "è necessario assegnare un nome a questo profilo."
+msgstr "È necessario assegnare un nome a questo profilo."
 
 #. Translators: An error displayed when creating a configuration profile fails.
 #: gui\configProfiles.py:539
 msgid "Error creating profile - probably read only file system."
-msgstr "Errore nella creazione del profilo, probabilmente il File System è di sola lettura"
+msgstr "Errore nella creazione del profilo, probabilmente il File System è di sola lettura."
 
 #. Translators: The prompt asking the user whether they wish to
 #. manually activate a configuration profile that has just been created.
@@ -12413,7 +12413,7 @@ msgstr "Riavvia"
 #. Translators: An option in the combo box to choose exit action.
 #: gui\exit.py:49
 msgid "Restart with add-ons disabled and debug logging enabled"
-msgstr "riavvia con gli add-on disattivati e il debug nei log attivo"
+msgstr "Riavvia con gli add-on disattivati e il debug nei log attivo"
 
 #. Translators: An option in the combo box to choose exit action.
 #: gui\exit.py:53
@@ -12439,7 +12439,7 @@ msgstr "Tutti i componenti aggiuntivi sono stati disattivati. Verranno riattivat
 #. overwritten from the command line.
 #: gui\exit.py:96
 msgid "NVDA's interface language is now forced from the command line. On the next restart, the language  saved in NVDA's configuration will be used instead."
-msgstr "La lingua dell'interfaccia utente di NVDA è stata forzata dalla riga di comando. Al prossimo riavvio dello screen reader sarà invece utilizzata quella salvata nella configurazione. "
+msgstr "La lingua dell'interfaccia utente di NVDA è stata forzata dalla riga di comando. Al prossimo riavvio dello screen reader sarà invece utilizzata quella salvata nella configurazione."
 
 #. Translators: The label for actions list in the Exit dialog.
 #: gui\exit.py:104
@@ -12457,7 +12457,7 @@ msgstr "{main} ({source})"
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 #: gui\inputGestures.py:79
 msgid "Enter input gesture:"
-msgstr "Immetti gesto"
+msgstr "Immetti gesto:"
 
 #. Translators: An gesture that will be emulated by some other new gesture. The token {emulateGesture}
 #. will be replaced by the gesture that can be triggered by a mapped gesture.
@@ -12526,7 +12526,7 @@ msgstr "Ripristina gesti"
 #. Translators: An error displayed when saving user defined input gestures fails.
 #: gui\inputGestures.py:807 gui\inputGestures.py:820
 msgid "Error saving user defined gestures - probably read only file system."
-msgstr "Non posso salvare il file di definizione dei gesti, probabilmente il File System è di sola lettura"
+msgstr "Non posso salvare il file di definizione dei gesti, probabilmente il File System è di sola lettura."
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
 #: gui\installerGui.py:69
@@ -12541,7 +12541,7 @@ msgstr "Installazione di NVDA in corso"
 #. Translators: The message displayed while NVDA is being updated.
 #: gui\installerGui.py:74
 msgid "Please wait while your previous installation of NVDA is being updated."
-msgstr "Si prega di attendere mentre vengono effettuate le operazioni di aggiornamento della versione precedente di NVDA"
+msgstr "Si prega di attendere mentre vengono effettuate le operazioni di aggiornamento della versione precedente di NVDA."
 
 #. Translators: The message displayed while NVDA is being installed.
 #: gui\installerGui.py:77
@@ -12562,17 +12562,17 @@ msgstr "File in uso"
 #. Translators: The message displayed when an error occurs during installation of NVDA.
 #: gui\installerGui.py:120
 msgid "The installation of NVDA failed. Please check the Log Viewer for more information."
-msgstr "L'installazione di NVDA non è andata a buon fine. Si prega di controllare  le informazioni presenti sul visualizzatore log"
+msgstr "L'installazione di NVDA non è andata a buon fine. Si prega di controllare  le informazioni presenti sul visualizzatore log."
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 #: gui\installerGui.py:131
 msgid "Successfully installed NVDA. "
-msgstr "Installazione di NVDA avvenuta  con successo"
+msgstr "Installazione di NVDA avvenuta  con successo. "
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 #: gui\installerGui.py:134
 msgid "Successfully updated your installation of NVDA. "
-msgstr "Aggiornamento della propria installazione di NVDA avvenuto con successo."
+msgstr "Aggiornamento della propria installazione di NVDA avvenuto con successo. "
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
@@ -12584,7 +12584,7 @@ msgstr "Per favore premere il pulsante OK per avviare la copia installata."
 #. and the installer is about to close without starting the installed copy.
 #: gui\installerGui.py:145
 msgid "Please press OK to close the installer."
-msgstr ""
+msgstr "Premi OK per chiudere il programma di installazione."
 
 #. Translators: The title of the Install NVDA dialog.
 #: gui\installerGui.py:209
@@ -12594,12 +12594,12 @@ msgstr "Installa NVDA"
 #. Translators: An informational message in the Install NVDA dialog.
 #: gui\installerGui.py:227
 msgid "To install NVDA to your hard drive, please press the Continue button."
-msgstr "Per installare NVDA sul disco fisso, premere il pulsante Continua"
+msgstr "Per installare NVDA sul disco fisso, premere il pulsante Continua."
 
 #. Translators: An informational message in the Install NVDA dialog.
 #: gui\installerGui.py:231
 msgid "A previous copy of NVDA has been found on your system. This copy will be updated."
-msgstr "è stata individuata una copia precedente di NVDA nel sistema. Verrà ora effettuato un aggiornamento"
+msgstr "è stata individuata una copia precedente di NVDA nel sistema. Verrà ora effettuato un aggiornamento."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
 #: gui\installerGui.py:236
@@ -12651,7 +12651,7 @@ msgstr "Si sta tentando di installare una versione precedente di NVDA rispetto a
 #. the state of the current NVDA installation.
 #: gui\installerGui.py:366
 msgid "An existing NVDA installation has been detected, but its version cannot be determined. If you are attempting to install an earlier version of NVDA, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
-msgstr ""
+msgstr "È stata rilevata un'installazione NVDA esistente, ma non è possibile determinarne la versione. Se stai tentando di installare una versione precedente di NVDA, devi prima annullare l'installazione e disinstallare completamente NVDA prima di installare la versione precedente."
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
@@ -12663,13 +12663,13 @@ msgstr "&Procedi con l'installazione (non consigliato)"
 #. to an older version.
 #: gui\installerGui.py:425
 msgid "You are attempting to replace an existing portable copy of NVDA with an earlier version. Downgrading NVDA is not recommended. You should cancel this operation and create a new portable copy instead. "
-msgstr ""
+msgstr "Stai tentando di sostituire una copia portable esistente di NVDA con una versione precedente. Non è consigliabile eseguire il downgrade di NVDA. Dovresti annullare questa operazione e creare invece una nuova copia portable. "
 
 #. Translators: A warning presented when the installer is unable to determine
 #. the state of the current NVDA installation.
 #: gui\installerGui.py:433
 msgid "An existing copy of NVDA has been detected in the chosen directory, but its version cannot be determined. If you are attempting to downgrade to an earlier version of NVDA, you should cancel this operation and create a new portable copy. "
-msgstr ""
+msgstr "È stata rilevata una copia esistente di NVDA nella directory scelta, ma non è possibile determinarne la versione. Se stai tentando di effettuare il downgrade a una versione precedente di NVDA, dovresti annullare questa operazione e creare una nuova copia portable. "
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
@@ -12701,14 +12701,14 @@ msgstr "La directory esiste"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:522
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr "Non è consigliabile installare NVDA quando connesso come computer controllato tramite l'accesso remoto."
+msgstr "Non è consigliabile installare NVDA quando connesso come computer controllato tramite l'accesso remoto. "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:528
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr "non sarà possibile rispondere alle richieste del Controllo dell'Account Utente (UAC) dal computer remoto. Procedere solo se si dispone dell'accesso fisico al computer controllato.\n"
+msgstr "Non sarà possibile rispondere alle richieste del Controllo dell'Account Utente (UAC) dal computer remoto. Procedere solo se si dispone dell'accesso fisico al computer controllato.\n"
 "Si desidera continuare ugualmente?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
@@ -12764,7 +12764,7 @@ msgstr "Per favore specificare una cartella nella quale creare la copia portable
 #: gui\installerGui.py:642
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. It may include system variables (e.g. %temp%, %homepath%) and must start with a drive letter (e.g. C:\\). Current path: {path}. "
-msgstr ""
+msgstr "Specificare il percorso assoluto in cui deve essere creata la copia portable. Può includere variabili di sistema (ad esempio %temp%, %homepath%) e deve iniziare con una lettera di unità (ad esempio C:\\). Percorso corrente: {path}. "
 
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
 #: gui\installerGui.py:694
@@ -12779,7 +12779,7 @@ msgstr "Creazione copia Portable"
 #. Translators: The message displayed while a portable copy of NVDA is being created.
 #: gui\installerGui.py:701
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr "Si prega di attendere mentre viene creata una copia portable di NVDA"
+msgstr "Si prega di attendere mentre viene creata una copia portable di NVDA."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 #: gui\installerGui.py:710
@@ -12890,7 +12890,7 @@ msgstr "Configurazione non valida"
 #. Translators: The label for the list of categories in a multi category settings dialog.
 #: gui\settingsDialogs.py:571
 msgid "&Categories:"
-msgstr "&Categorie"
+msgstr "&Categorie:"
 
 #. Translators: This is the label for the general settings panel.
 #. Translators: name of a grouping in Privacy and Security settings
@@ -13021,7 +13021,7 @@ msgstr "Impostazioni utente di NVDA copiate con successo"
 
 #: gui\settingsDialogs.py:1064
 msgid "This change requires administrator privileges."
-msgstr "Questa modifica richiede privilegi di amministratore"
+msgstr "Questa modifica richiede privilegi di amministratore."
 
 #: gui\settingsDialogs.py:1065
 msgid "Insufficient Privileges"
@@ -13074,7 +13074,7 @@ msgstr "Seleziona un Sintetizzatore"
 #. synthesizer combobox in the synthesizer dialog.
 #: gui\settingsDialogs.py:1229
 msgid "&Synthesizer:"
-msgstr "&Sintetizzatore"
+msgstr "&Sintetizzatore:"
 
 #. Translators: This is the label for the voice settings panel.
 #: gui\settingsDialogs.py:1613
@@ -13092,7 +13092,7 @@ msgstr "Cambia la lingua automaticamente (se supportato)"
 #. read text in that dialect).
 #: gui\settingsDialogs.py:1664
 msgid "Automatic dialect switching (when supported)"
-msgstr "cambiamento automatico dialetti (quando supportato)"
+msgstr "Cambiamento automatico dialetti (quando supportato)"
 
 #. Translators: This is the label for a checkbox in the voice settings panel. If checked, the language of the text been read will be reported.
 #: gui\settingsDialogs.py:1673
@@ -13196,7 +13196,7 @@ msgstr "Tastiera"
 #. Translators: The label of a combobox in the Welcome dialog.
 #: gui\settingsDialogs.py:1975 gui\startupDialogs.py:68
 msgid "&Keyboard layout:"
-msgstr "&Layout della tastiera"
+msgstr "&Layout della tastiera:"
 
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
@@ -13288,7 +13288,7 @@ msgstr "Abilita &Tracciamento del mouse"
 #. mouse settings panel.
 #: gui\settingsDialogs.py:2162
 msgid "Text &unit resolution:"
-msgstr "&Parte di testo letta"
+msgstr "&Parte di testo letta:"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -13317,7 +13317,7 @@ msgstr "Ignora il mouse se gestito da altre &applicazioni"
 #. Translators: This is the label for the review cursor settings panel.
 #: gui\settingsDialogs.py:2227
 msgid "Review Cursor"
-msgstr "Cursore di controllo..."
+msgstr "Cursore di controllo"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
@@ -13455,7 +13455,7 @@ msgstr "Leggi le &descrizioni degli oggetti"
 #. object presentation settings panel.
 #: gui\settingsDialogs.py:2453
 msgid "Progress &bar output:"
-msgstr "Aggiornamento &barre di avanzamento"
+msgstr "Aggiornamento &barre di avanzamento:"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -13562,13 +13562,13 @@ msgstr "Voce"
 #: gui\settingsDialogs.py:2744
 msgctxt "math"
 msgid "Impairment:"
-msgstr ""
+msgstr "Supporto richiesto:"
 
 #. Translators: MathCAT language option
 #: gui\settingsDialogs.py:2756
 msgctxt "math"
 msgid "Language:"
-msgstr ""
+msgstr "Lingua:"
 
 #. Translators: MathCAT decimal separator option.
 #: gui\settingsDialogs.py:2776
@@ -13580,13 +13580,13 @@ msgstr "Separatore decimale per i numeri:"
 #: gui\settingsDialogs.py:2791
 msgctxt "math"
 msgid "Speech style:"
-msgstr ""
+msgstr "Stile del parlato:"
 
 #. Translators: MathCAT's verbosity setting
 #: gui\settingsDialogs.py:2805
 msgctxt "math"
 msgid "Speech verbosity:"
-msgstr ""
+msgstr "Livello di dettaglio del parlato:"
 
 #. Translators: MathCAT's relative speed setting
 #: gui\settingsDialogs.py:2817
@@ -13604,19 +13604,19 @@ msgstr "Fattore di pausa"
 #: gui\settingsDialogs.py:2845
 msgctxt "math"
 msgid "Beep at the beginning and end of math"
-msgstr ""
+msgstr "Emetti un beep a inizio e fine matematica"
 
 #. Translators: label for combobox to specify how verbose/terse the speech should be
 #: gui\settingsDialogs.py:2851
 msgctxt "math"
 msgid "Chemical formulae:"
-msgstr ""
+msgstr "Formule chimiche:"
 
 #. Translators: label for combobox to specify whether the expression is spoken or described (an overview)
 #: gui\settingsDialogs.py:2863
 msgctxt "math"
 msgid "When entering an equation:"
-msgstr ""
+msgstr "Quando si entra in un’equazione:"
 
 #. Translators: "Speak" the expression after moving to it
 #: gui\settingsDialogs.py:2866
@@ -13628,19 +13628,19 @@ msgstr "Leggi"
 #: gui\settingsDialogs.py:2868
 msgctxt "math"
 msgid "Describe overview"
-msgstr ""
+msgstr "Descrivi in sintesi"
 
 #. Translators: Text for the navigation group.
 #: gui\settingsDialogs.py:2882
 msgctxt "math"
 msgid "Navigation"
-msgstr "Navigazione"
+msgstr "Esplorazione"
 
 #. Translators: label for combobox to specify one of three modes use to navigate math expressions
 #: gui\settingsDialogs.py:2889
 msgctxt "math"
 msgid "Default navigation mode:"
-msgstr ""
+msgstr "Modalità di esplorazione predefinita:"
 
 #. Translators: label for check box that determines whether MathCAT
 #. reverts to the user-selected "default navigation mode" when
@@ -13649,26 +13649,26 @@ msgstr ""
 #: gui\settingsDialogs.py:2904
 msgctxt "math"
 msgid "Reset to the default navigation mode for each new equation"
-msgstr ""
+msgstr "Ripristina la modalità di navigazione predefinita per ogni nuova equazione"
 
 #. Translators: label for checkbox that controls whether arrow keys move out of fractions, etc.,
 #. or whether you have to manually back out of the fraction, etc.
 #: gui\settingsDialogs.py:2911
 msgctxt "math"
 msgid "Automatically zoom out of two-dimensional notation"
-msgstr ""
+msgstr "Riduci automaticamente lo zoom nelle notazioni bidimensionali"
 
 #. Translators: label for combobox down to specify whether you want a terse or verbose reading of navigation commands
 #: gui\settingsDialogs.py:2917
 msgctxt "math"
 msgid "Navigation verbosity:"
-msgstr ""
+msgstr "Dettaglio dell'esplorazione:"
 
 #. Translators: label for combobox to specify how math will be copied to the clipboard
 #: gui\settingsDialogs.py:2935
 msgctxt "math"
 msgid "Copy math as:"
-msgstr ""
+msgstr "Copia la matematica come:"
 
 #. Translators: Text for the braille group.
 #: gui\settingsDialogs.py:2947
@@ -13680,7 +13680,7 @@ msgstr "Braille"
 #: gui\settingsDialogs.py:2953
 msgctxt "math"
 msgid "Output code:"
-msgstr ""
+msgstr "Tabella lettura:"
 
 #. Translators: An option in Math settings to select a braille code automatically,
 #. according to NVDA's language.
@@ -13688,25 +13688,25 @@ msgstr ""
 #, python-brace-format
 msgctxt "math"
 msgid "Automatic ({name})"
-msgstr ""
+msgstr "Automatico ({name})"
 
 #. Translators: label for combobox to specify how braille dots should be modified when navigating/selecting subexprs
 #: gui\settingsDialogs.py:2977
 msgctxt "math"
 msgid "Highlight navigation focus with dots 7 and 8"
-msgstr ""
+msgstr "Evidenzia il focus di navigazione con i punti 7 e 8"
 
 #. Translators: Text for the application support group in MathCAT options.
 #: gui\settingsDialogs.py:2995
 msgctxt "math"
 msgid "Application support"
-msgstr ""
+msgstr "Supporto applicativo"
 
 #. Translators: label for checkbox to use native math presentation support instead of MathCAT in Word and Outlook
 #: gui\settingsDialogs.py:3002
 msgctxt "math"
 msgid "Use native math support in Word and Outlook"
-msgstr ""
+msgstr "Usa il supporto matematico nativo in Word e Outlook"
 
 #. Translators: This is the label for the document formatting panel.
 #. Translators: This is the label for a group of advanced options in the
@@ -13742,7 +13742,7 @@ msgstr "&Dimensione carattere"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:3142
 msgid "Font attrib&utes"
-msgstr "attrib&uti carattere"
+msgstr "Attrib&uti carattere"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -13760,7 +13760,7 @@ msgstr "e&nfasi"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:3170
 msgid "Highlighted (mar&ked) text"
-msgstr "evidenziato (testo contrassegnato (&k)"
+msgstr "Evidenziato (testo contrassegnato (&k)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -13790,7 +13790,7 @@ msgstr "Commen&ti"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:3206
 msgid "&Bookmarks"
-msgstr "Segnali&bri..."
+msgstr "Segnali&bri"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -13802,7 +13802,7 @@ msgstr "R&evisioni"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:3219
 msgid "Spelling or grammar e&rrors"
-msgstr ""
+msgstr "E&rrori di ortografia o grammatica"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -13880,7 +13880,7 @@ msgstr "C&oordinate cella"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:3337
 msgid "Cell &borders:"
-msgstr "&Bordi della cella: "
+msgstr "&Bordi della cella:"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -13969,7 +13969,7 @@ msgstr "Stile &paragrafo:"
 #: gui\settingsDialogs.py:3513
 #, python-format
 msgid "Could not load the %s synthesizer."
-msgstr "Non posso caricare il sintetizzatore %s"
+msgstr "Non posso caricare il sintetizzatore %s."
 
 #. Translators: Dialog title presented when
 #. NVDA is unable to load the selected synthesizer.
@@ -13986,7 +13986,7 @@ msgstr "Periferica au&dio da utilizzare:"
 #. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
 #: gui\settingsDialogs.py:3546
 msgid "Audio d&ucking mode:"
-msgstr "Modalità atten&uazione audio"
+msgstr "Modalità atten&uazione audio:"
 
 #. Translators: This is the label for a checkbox control in the
 #. Audio settings panel.
@@ -14199,7 +14199,7 @@ msgstr "Aggiorna pe&riodicamente il contenuto riconosciuto"
 #. Translators: The label for a setting in OCR settings to automatically say all on result.
 #: gui\settingsDialogs.py:4133
 msgid "Automatically say all on result"
-msgstr "Avvia automaticamente Dire tutto sul risultato."
+msgstr "Avvia automaticamente Dire tutto sul risultato"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -14229,7 +14229,7 @@ msgstr "Microsoft UI Automation"
 #. Choices are automatic, selective, and global.
 #: gui\settingsDialogs.py:4206
 msgid "Regi&stration for UI Automation events and property changes:"
-msgstr "Regi&strazione per eventi UI Automation e cambiamenti di proprietà"
+msgstr "Regi&strazione per eventi UI Automation e cambiamenti di proprietà:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA decide whether to register
@@ -14294,7 +14294,7 @@ msgstr "Utilizza UI Automation per accedere ai controlli dei fogli di calcolo di
 #. Choices are automatic, UIA when available, and legacy.
 #: gui\settingsDialogs.py:4277
 msgid "Windows C&onsole support:"
-msgstr "supporto C&onsole di Windows:"
+msgstr "Supporto C&onsole di Windows:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine its Windows Console implementation
@@ -14376,7 +14376,7 @@ msgstr "Annuncia sempre descrizioni-aria"
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 #: gui\settingsDialogs.py:4374
 msgid "Report live regions:"
-msgstr "Segnala regioni live"
+msgstr "Segnala regioni live:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -14451,25 +14451,25 @@ msgstr "No"
 #. Translators: This is the label for combobox in the Advanced settings panel.
 #: gui\settingsDialogs.py:4480
 msgid "Attempt to cancel speech for expired focus events:"
-msgstr "Tenta di non leggere informazioni obsolete concernenti il focus"
+msgstr "Tenta di non leggere informazioni obsolete concernenti il focus:"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:4496
 msgid "Trim leading silence in speech audio"
-msgstr "Rimuovi silenzi iniziali della sintesi "
+msgstr "Rimuovi silenzi iniziali della sintesi"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:4504
 msgid "Use WASAPI for SAPI 4 audio output:"
-msgstr ""
+msgstr "Utilizza WASAPI per l'uscita audio SAPI 4:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 #: gui\settingsDialogs.py:4515
 msgid "Virtual Buffers"
-msgstr "buffer virtuali"
+msgstr "Buffer virtuali"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 #: gui\settingsDialogs.py:4523
@@ -14498,7 +14498,7 @@ msgstr "Annuncia i valori dei colori trasparenti"
 #. Advanced settings panel
 #: gui\settingsDialogs.py:4576
 msgid "Debug logging"
-msgstr "debug nei log"
+msgstr "Debug nei log"
 
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
@@ -14509,7 +14509,7 @@ msgstr "Categorie di log abilitate"
 #. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
 #: gui\settingsDialogs.py:4623
 msgid "Play a sound for logged e&rrors:"
-msgstr "Riproduci un suono per gli e&rrori loggati"
+msgstr "Riproduci un suono per gli e&rrori loggati:"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
 #: gui\settingsDialogs.py:4626
@@ -14574,7 +14574,7 @@ msgstr "Seleziona un display braille"
 #. Translators: The label for a setting in braille settings to choose a braille display.
 #: gui\settingsDialogs.py:4961
 msgid "Braille &display:"
-msgstr "&Display braille"
+msgstr "&Display braille:"
 
 #. Translators: The label for a setting in braille settings to enable displays for automatic detection.
 #: gui\settingsDialogs.py:4967
@@ -14643,7 +14643,7 @@ msgstr "&Forma del cursore focus:"
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
 #: gui\settingsDialogs.py:5253
 msgid "Cursor shape for &review:"
-msgstr "Fo&rma del cursore di controllo: "
+msgstr "Fo&rma del cursore di controllo:"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
@@ -14752,7 +14752,7 @@ msgstr "Impossibile chiudere normalmente i seguenti miglioramenti visivi:\n"
 #. Translators: This is a label appearing on the vision settings panel.
 #: gui\settingsDialogs.py:5694
 msgid "Configure visual aids."
-msgstr "Configura funzioni di miglioramento visivo"
+msgstr "Configura funzioni di miglioramento visivo."
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
 #: gui\settingsDialogs.py:5866
@@ -14769,7 +14769,7 @@ msgstr "Opzioni:"
 #. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
 #: gui\settingsDialogs.py:5919
 msgid "Unable to configure user interface for Vision Enhancement Provider, it can not be enabled."
-msgstr "Impossibile configurare l'interfaccia utente della sezione miglioramenti visivi di NVDA, non può essere attivata"
+msgstr "Impossibile configurare l'interfaccia utente della sezione miglioramenti visivi di NVDA, non può essere attivata."
 
 #. Translators: The title of the privacy and security category in NVDA's settings.
 #: gui\settingsDialogs.py:5956
@@ -14795,7 +14795,7 @@ msgstr "Ri&produci un suono quando si attiva o disattiva la tenda schermo"
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
 #: gui\settingsDialogs.py:6018
 msgid "L&ogging level:"
-msgstr "Livello di l&ogging"
+msgstr "Livello di l&ogging:"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
 #: gui\settingsDialogs.py:6040
@@ -14810,7 +14810,7 @@ msgstr "Impostazioni NVDA"
 #. Translators: The profile name for normal configuration
 #: gui\settingsDialogs.py:6212
 msgid "normal configuration"
-msgstr "Configurazione normale"
+msgstr "configurazione normale"
 
 #. Translators: This is the label for the add symbol dialog.
 #: gui\settingsDialogs.py:6247
@@ -14861,7 +14861,7 @@ msgstr "Livello"
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
 #: gui\settingsDialogs.py:6322
 msgid "Preserve"
-msgstr "conserva"
+msgstr "Conserva"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 #: gui\settingsDialogs.py:6326
@@ -15060,7 +15060,7 @@ msgstr "Mo&stra questa finestra all'avvio di NVDA"
 #. Translators: The title of an error message box displayed when validating the startup dialog
 #: gui\startupDialogs.py:123
 msgid "At least one NVDA modifier key must be set. Caps lock will remain as an NVDA modifier key. "
-msgstr "è necessario aver attivato almeno un tasto funzione NVDA. A tale scopo verrà usato il blocca maiuscole."
+msgstr "È necessario aver attivato almeno un tasto funzione NVDA. A tale scopo verrà usato il blocca maiuscole. "
 
 #. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
 #: gui\startupDialogs.py:190
@@ -15288,7 +15288,7 @@ msgstr "URL Licenza:"
 #: gui\addonStoreGui\controls\details.py:333
 msgctxt "addonStore"
 msgid "Download URL:"
-msgstr "URL di Download"
+msgstr "URL di Download:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:339
@@ -15373,7 +15373,7 @@ msgctxt "addonStore"
 msgid "Warning: add-on installation may result in downgrade: {name}. The installed add-on version cannot be compared with the add-on store version. Installed version: {oldVersion}. Available version: {version}.\n"
 "Proceed with installation anyway? "
 msgstr "Attenzione: l'installazione dell'add-on putrebbe comportare il ripristino di una versione precedente: {name}. La versione del componente aggiuntivo installata non può essere confrontata con quella dello store. Versione installata: {oldVersion}. Versione disponibile: {version}.\n"
-"Procedere comunque con l'installazione?"
+"Procedere comunque con l'installazione? "
 
 #. Translators: The title of a dialog presented when an error occurs.
 #: gui\addonStoreGui\controls\messageDialogs.py:144
@@ -15511,7 +15511,7 @@ msgstr "Avviso Add-on Store"
 #: gui\addonStoreGui\controls\messageDialogs.py:347
 msgctxt "addonStore"
 msgid "Add-ons are created by the NVDA community and are not vetted by NV Access. NV Access cannot be held responsible for add-on behavior. The functionality of add-ons is unrestricted and can include accessing your personal data or even the entire system. "
-msgstr "Gli add-on sono creati dalla comunità NVDA e non sono controllati da NV Access. La NV Access non può essere ritenuta responsabile per il loro comportamento. Le funzionalità degli add-on sono illimitate e possono includere l'accesso ai dati personali o persino all'intero sistema."
+msgstr "Gli add-on sono creati dalla comunità NVDA e non sono controllati da NV Access. La NV Access non può essere ritenuta responsabile per il loro comportamento. Le funzionalità degli add-on sono illimitate e possono includere l'accesso ai dati personali o persino all'intero sistema. "
 
 #. Translators: The label of a checkbox in the add-on store warning dialog
 #: gui\addonStoreGui\controls\messageDialogs.py:369
@@ -15573,31 +15573,31 @@ msgstr "Add-on aggiornati, riavvia NVDA per attivare le modifiche"
 #: gui\addonStoreGui\controls\messageDialogs.py:691
 msgctxt "addonStore"
 msgid "Copy Settings to System-wide Configuration"
-msgstr ""
+msgstr "Copia le impostazioni sulla Configurazione di sistema"
 
 #. Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:712
 msgctxt "addonStore"
 msgid "One or more add-ons are currently enabled in your NVDA configuration. If run on secure screens, they will have unrestricted, higher-than-administrator level access to your entire system. You are strongly encouraged to copy only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens."
-msgstr ""
+msgstr "Nella tua configurazione di NVDA sono abilitati uno o più add-on. Se eseguiti in schermate protette, avranno accesso illimitato e di livello superiore a quello di amministratore all'intero sistema. è consigliabile di copiare solo i componenti aggiuntivi di cui hai assolutamente bisogno per poter utilizzare NVDA durante l'accesso e su schermate protette."
 
 #. Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:722
 msgctxt "addonStore"
 msgid "The system-wide NVDA configuration contains add-ons that are not present in your configuration. If you continue, these add-ons will be removed from the system-wide configuration."
-msgstr ""
+msgstr "La configurazione di sistema di NVDA contiene add-on che non sono presenti nella tua configurazione utente. Se continui, questi add-on verranno rimossi dalla configurazione di sistema."
 
 #. Translators: Instructional text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:731
 msgctxt "addonStore"
 msgid "Check only the add-ons you wish to copy to the system-wide configuration."
-msgstr ""
+msgstr "Seleziona solo gli add-on che desideri copiare nella configurazione di sistema."
 
 #. Translators: The label of the list which allows users to select which add-ons to copy to the system profile
 #: gui\addonStoreGui\controls\messageDialogs.py:743
 msgctxt "addonStore"
 msgid "Add-ons"
-msgstr ""
+msgstr "Add-on"
 
 #. Translators: The label for a column in the copy add-ons dialog that displays the name of the add-on
 #. Translators: The name of the column that contains names of addons.
@@ -15611,37 +15611,37 @@ msgstr "Nome"
 #: gui\addonStoreGui\controls\messageDialogs.py:750
 msgctxt "addonStore"
 msgid "User version"
-msgstr ""
+msgstr "Versione utente"
 
 #. Translators: The label for a column in the copy add-ons dialog that displays the version of the add-on present in the system-wide configuration
 #: gui\addonStoreGui\controls\messageDialogs.py:752
 msgctxt "addonStore"
 msgid "System-wide version"
-msgstr ""
+msgstr "Versione a livello di sistema"
 
 #. Translators: The label for a button in the copy add-ons dialog which will initiate the copy process
 #: gui\addonStoreGui\controls\messageDialogs.py:767
 msgctxt "addonStore"
 msgid "&Continue"
-msgstr ""
+msgstr "&Continua"
 
 #. Translators: The label for a button in the copy add-ons dialog which will abandon the copy process
 #: gui\addonStoreGui\controls\messageDialogs.py:770
 msgctxt "addonStore"
 msgid "Cancel"
-msgstr ""
+msgstr "Annulla"
 
 #. Translators: Shown when the add-on is not installed.
 #: gui\addonStoreGui\controls\messageDialogs.py:794
 msgctxt "addonStore"
 msgid "Not installed"
-msgstr ""
+msgstr "Non installato"
 
 #. Translators: Prepended to the name of an add-on to indicate that it will be removed from the system-wide configuration.
 #: gui\addonStoreGui\controls\messageDialogs.py:796
 msgctxt "addonStore"
 msgid "[remove]"
-msgstr ""
+msgstr "[da rimuovere]"
 
 #. Translators: A message to warn the user when attempting to copy add-ons for use on secure screens
 #: gui\addonStoreGui\controls\messageDialogs.py:864
@@ -15649,8 +15649,8 @@ msgstr ""
 msgctxt "addonStore"
 msgid "You have selected to copy {num} add-on to NVDA's system-wide configuration. Using this add-on during sign-in and on secure screens is a serious security risk."
 msgid_plural "You have selected to copy {num} add-ons to NVDA's system-wide configuration. Using these add-ons during sign-in and on secure screens is a serious security risk."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Hai selezionato di copiare {num} add-on nella configurazione di sistema di NVDA. Utilizzare questo componente aggiuntivo durante l'accesso e su schermate sicure rappresenta un serio rischio per la sicurezza."
+msgstr[1] "Hai selezionato di copiare {num} add-on nella configurazione di sistema di NVDA. Utilizzare questi componenti aggiuntivi durante l'accesso e su schermate protette rappresenta un serio rischio per la sicurezza."
 
 #. Translators: A message to warn the user when copying their configuration will remove add-ons
 #: gui\addonStoreGui\controls\messageDialogs.py:876
@@ -15658,21 +15658,21 @@ msgstr[1] ""
 msgctxt "addonStore"
 msgid "This action will remove {num} add-on from NVDA's system-wide configuration. "
 msgid_plural "This action will remove {num} add-ons from NVDA's system-wide configuration. "
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Questa azione rimuoverà {num} add-on dalla configurazione di sistema di NVDA. "
+msgstr[1] "Questa azione rimuoverà {num} add-on dalla configurazione di sistema di NVDA. "
 
 #. Translators: A prompt asking the user to confirm whether to perform an action.
 #: gui\addonStoreGui\controls\messageDialogs.py:885
 msgctxt "addonStore"
 msgid "Are you sure you want to continue?"
-msgstr ""
+msgstr "Sei sicuro di voler continuare?"
 
 #. Translators: The title of the warning dialog displayed when trying to
 #. copy add-ons for use on secure screens.
 #: gui\addonStoreGui\controls\messageDialogs.py:892
 msgctxt "addonStore"
 msgid "Warning"
-msgstr ""
+msgstr "Attenzione"
 
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 #: gui\addonStoreGui\controls\storeDialog.py:38
@@ -15988,7 +15988,7 @@ msgstr "Termina l'interazione con contenuto di tipo matematico"
 #. but math interaction is not supported.
 #: mathPres\__init__.py:188
 msgid "Math interaction not supported."
-msgstr "Interazione con contenuto matematico non supportata"
+msgstr "Interazione con contenuto matematico non supportata."
 
 #. Translators: this message reports an error in starting navigation of math.
 #: mathPres\MathCAT\MathCAT.py:86
@@ -16000,7 +16000,7 @@ msgstr "Errore nell'avvio della navigazione matematica."
 #: mathPres\MathCAT\MathCAT.py:101
 msgctxt "math"
 msgid "Error in brailling math: see NVDA error log for details"
-msgstr "Errore nella trascrizione braille della matematica. Vedi il log di NVDA per i dettagli."
+msgstr "Errore nella trascrizione braille della matematica. Vedi il log di NVDA per i dettagli"
 
 #. Translators: this message alerts users to an error in navigating math.
 #: mathPres\MathCAT\MathCAT.py:170
@@ -16017,7 +16017,7 @@ msgstr "Errore nella trascrizione braille della matematica."
 #. Translators: Description of a MathCAT navigation gesture.
 #: mathPres\MathCAT\MathCAT.py:196
 msgid "Navigates within math"
-msgstr ""
+msgstr "Naviga all'interno della matematica"
 
 #. Translators: Message to be announced during Keyboard Help
 #: mathPres\MathCAT\MathCAT.py:202
@@ -16072,7 +16072,7 @@ msgstr "Errore nella generazione del braille matematico."
 #, python-brace-format
 msgctxt "math"
 msgid "{lang} ({code})"
-msgstr ""
+msgstr "{lang} ({code})"
 
 #. Translators: Learning disabilities includes dyslexia and ADHD
 #. category of impairment that MathCAT supports: people with learning disabilities
@@ -16097,14 +16097,14 @@ msgstr "Ipovisione"
 #: mathPres\MathCAT\preferences.py:48
 msgctxt "math"
 msgid "Automatic"
-msgstr ""
+msgstr "Automatico"
 
 #. Translators: options for decimal separator -- "Custom" = user sets it
 #. Currently there is no UI for how it is done yet, but eventually there will be a dialog that pops up to set it
 #: mathPres\MathCAT\preferences.py:55
 msgctxt "math"
 msgid "Custom"
-msgstr "personalizzato"
+msgstr "Personalizzato"
 
 #. Translators: options for speech verbosity -- "terse" = use less words
 #. Translators: options for navigation verbosity -- "terse" = use less words
@@ -16225,7 +16225,7 @@ msgstr "Modalità cursore  a forma dimezzata"
 #. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
 #: NVDAHelper\__init__.py:511 NVDAHelper\__init__.py:521
 msgid "half alphanumeric"
-msgstr "Metà alfanumerici"
+msgstr "metà alfanumerici"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
 #: NVDAHelper\__init__.py:513
@@ -16235,7 +16235,7 @@ msgstr "metà katakana"
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
 #: NVDAHelper\__init__.py:515 NVDAHelper\__init__.py:525
 msgid "alphanumeric"
-msgstr "Alfanumerici"
+msgstr "alfanumerici"
 
 #. Translators: For Japanese character input: Hiragana input mode.
 #: NVDAHelper\__init__.py:517
@@ -16275,12 +16275,12 @@ msgstr "IME chiuso"
 #. Translators: the label for an unknown language when switching input methods.
 #: NVDAHelper\__init__.py:611
 msgid "unknown language"
-msgstr "Lingua sconosciuta"
+msgstr "lingua sconosciuta"
 
 #. Translators: The label for an unknown input method when switching input methods.
 #: NVDAHelper\__init__.py:637
 msgid "unknown input method"
-msgstr "Metodo di immissione sconosciuto"
+msgstr "metodo di immissione sconosciuto"
 
 #. Translators: Reports navigator object's dimensions.
 #. Example output: Object edges positioned 20 per cent from left edge of screen,
@@ -16395,7 +16395,7 @@ msgstr "Imposto riga {rowNumber} colonna {columnNumber} come inizio intestazioni
 #: NVDAObjects\IAccessible\winword.py:268
 #, python-brace-format
 msgid "Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "riga {rowNumber} colonna {columnNumber} già impostate come inizio intestazioni colonna"
+msgstr "Riga {rowNumber} colonna {columnNumber} già impostate come inizio intestazioni colonna"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:277
@@ -16424,13 +16424,13 @@ msgstr "Imposta  riga {rowNumber} colonna {columnNumber} come inizio intestazion
 #: NVDAObjects\IAccessible\winword.py:320
 #, python-brace-format
 msgid "Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "riga {rowNumber} colonna {columnNumber} già impostate come inizio intestazioni riga"
+msgstr "Riga {rowNumber} colonna {columnNumber} già impostate come inizio intestazioni riga"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:329
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber} from row headers"
-msgstr "rimossa riga {rowNumber} colonna {columnNumber} dalle intestazioni di riga"
+msgstr "Rimossa riga {rowNumber} colonna {columnNumber} dalle intestazioni di riga"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:337
@@ -16441,7 +16441,7 @@ msgstr "Impossibile trovare riga {rowNumber} colonna {columnNumber} nelle intest
 #. Translators: a description for a script
 #: NVDAObjects\IAccessible\winword.py:346
 msgid "Reports the text of the comment where the system caret is located.If pressed twice, presents the information in browse mode."
-msgstr "Legge il testo del commento alla posizione del cursore di sistema. Se premuto due volte mostra le informazioni in modalità navigazione"
+msgstr "Legge il testo del commento alla posizione del cursore di sistema. Se premuto due volte mostra le informazioni in modalità navigazione."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 #: NVDAObjects\IAccessible\winword.py:379 NVDAObjects\UIA\wordDocument.py:786
@@ -16547,7 +16547,7 @@ msgstr "Formato numeri: {0}"
 #. Translators: If an excel cell has data validation set
 #: NVDAObjects\UIA\excel.py:271
 msgid "Has data validation"
-msgstr "con convalida dei dati"
+msgstr "Con convalida dei dati"
 
 #. Translators: the data validation prompt (input message) for an Excel cell
 #: NVDAObjects\UIA\excel.py:278
@@ -16558,7 +16558,7 @@ msgstr "Richiesta di convalida dei dati: {0}"
 #. Translators: If an excel cell has conditional formatting
 #: NVDAObjects\UIA\excel.py:285
 msgid "Has conditional formatting"
-msgstr "con formattazione condizionale"
+msgstr "Con formattazione condizionale"
 
 #. Translators: If an excel cell has visible gridlines
 #: NVDAObjects\UIA\excel.py:289
@@ -16653,13 +16653,13 @@ msgstr "&Errori"
 #. in the browse mode Elements List dialog.
 #: NVDAObjects\UIA\wordDocument.py:79 NVDAObjects\window\winword.py:2228
 msgid "&References"
-msgstr ""
+msgstr "& Riferimenti"
 
 #. Translators: The label shown for an insertion change
 #: NVDAObjects\UIA\wordDocument.py:96
 #, python-brace-format
 msgid "insertion: {text}"
-msgstr "Inserimento: {text}"
+msgstr "inserimento: {text}"
 
 #. Translators: The label shown for a deletion change
 #: NVDAObjects\UIA\wordDocument.py:99
@@ -16671,28 +16671,28 @@ msgstr "cancellazione: {text}"
 #: NVDAObjects\UIA\wordDocument.py:102
 #, python-brace-format
 msgid "track change: {text}"
-msgstr "Revisione: {text}"
+msgstr "revisione: {text}"
 
 #. Translators: The label shown for a footnote in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the footnote.
 #: NVDAObjects\UIA\wordDocument.py:141
 #, python-brace-format
 msgid "footnote reference: {text}"
-msgstr ""
+msgstr "riferimento in nota: {text}"
 
 #. Translators: The label shown for an endnote in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the endnote.
 #: NVDAObjects\UIA\wordDocument.py:145
 #, python-brace-format
 msgid "endnote reference: {text}"
-msgstr ""
+msgstr "riferimento alla nota finale: {text}"
 
 #. Translators: The label shown for a reference in the NVDA Elements List dialog in Microsoft Word.
 #. {name} will be replaced with the name of the reference.
 #: NVDAObjects\UIA\wordDocument.py:151
 #, python-brace-format
 msgid "reference: {name}"
-msgstr ""
+msgstr "riferimento: {name}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #: NVDAObjects\UIA\wordDocument.py:203
@@ -16881,13 +16881,13 @@ msgstr "Istogramma in Pila 100%"
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:214
 msgid "Clustered Cone Bar"
-msgstr "a Barre con coni raggruppati"
+msgstr "A barre con coni raggruppati"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:217
 msgid "Stacked Cone Bar"
-msgstr "a barre con coni in pila"
+msgstr "A barre con coni in pila"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
@@ -17164,12 +17164,12 @@ msgstr "fetta"
 #: NVDAObjects\window\_msOfficeChart.py:402
 msgctxt "chart"
 msgid "column"
-msgstr "Colonna"
+msgstr "colonna"
 
 #. Translators: A data point in a line chart.
 #: NVDAObjects\window\_msOfficeChart.py:413
 msgid "data point"
-msgstr "Punto dati"
+msgstr "punto dati"
 
 #. Translators: A segment of a chart for charts which don't have a specific name for segments.
 #: NVDAObjects\window\_msOfficeChart.py:416
@@ -17263,7 +17263,7 @@ msgstr "Niente"
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:476
 msgid "Walls"
-msgstr "muri"
+msgstr "Muri"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:478
@@ -17313,7 +17313,7 @@ msgstr "serie {number} {name}"
 #. Translators: Indicates that there are no series in a chart.
 #: NVDAObjects\window\_msOfficeChart.py:627
 msgid "No Series defined."
-msgstr "Non ci sono serie definite"
+msgstr "Non ci sono serie definite."
 
 #. Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
 #: NVDAObjects\window\_msOfficeChart.py:728
@@ -17339,13 +17339,13 @@ msgstr "Colore della fetta: {colorName} "
 #: NVDAObjects\window\_msOfficeChart.py:866
 #, python-brace-format
 msgid "no change from point {previousIndex}, "
-msgstr "Nessun cambiamento dal punto  {previousIndex}, "
+msgstr "nessun cambiamento dal punto  {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #: NVDAObjects\window\_msOfficeChart.py:871
 #, python-brace-format
 msgid "increased by {incrementValue} from point {previousIndex}, "
-msgstr "Aumentato di {incrementValue} dal punto {previousIndex}, "
+msgstr "aumentato di {incrementValue} dal punto {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #: NVDAObjects\window\_msOfficeChart.py:877
@@ -17466,12 +17466,12 @@ msgstr "Potenza"
 #. Translators: Substitute superscript two by square for R square value
 #: NVDAObjects\window\_msOfficeChart.py:1067
 msgid " square "
-msgstr "Quadrato"
+msgstr " quadrato "
 
 #. Translators: Substitute - by minus in trendline equations.
 #: NVDAObjects\window\_msOfficeChart.py:1072
 msgid " minus "
-msgstr "meno"
+msgstr " meno "
 
 #. Translators: This message gives trendline type and name for selected series
 #: NVDAObjects\window\_msOfficeChart.py:1075
@@ -17505,7 +17505,7 @@ msgstr "Area del Grafico, altezza: {chartAreaHeight}, larghezza: {chartAreaWidth
 #. Translators: Indicates the chart area of a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:1141
 msgid "Chart area "
-msgstr "Area Grafico"
+msgstr "Area Grafico "
 
 #. Translators: Details about the plot area of a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:1162
@@ -17516,7 +17516,7 @@ msgstr "Area Disegno, altezza all'interno : {plotAreaInsideHeight:.0f}, larghezz
 #. Translators: Indicates the plot area of a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:1174
 msgid "Plot area "
-msgstr "Area disegno"
+msgstr "Area disegno "
 
 #. Translators: a message for the legend entry of a chart in MS Office
 #: NVDAObjects\window\_msOfficeChart.py:1217
@@ -17558,25 +17558,25 @@ msgstr "Colore sconosciuto"
 #. Excel controls the pattern.
 #: NVDAObjects\window\excel.py:245
 msgid "automatic"
-msgstr "Automatico"
+msgstr "automatico"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
 #: NVDAObjects\window\excel.py:248
 msgid "diagonal crosshatch"
-msgstr "Tratteggio incrociato diagonale"
+msgstr "tratteggio incrociato diagonale"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
 #: NVDAObjects\window\excel.py:251
 msgid "thin diagonal crosshatch"
-msgstr "Tratteggio incrociato diagonale sottile"
+msgstr "tratteggio incrociato diagonale sottile"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
 #: NVDAObjects\window\excel.py:254
 msgid "reverse diagonal stripe"
-msgstr "Striscia diagonale inversa"
+msgstr "striscia diagonale inversa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 12.5% gray
@@ -17617,7 +17617,7 @@ msgstr "Grigio 6.25%"
 #. Grid
 #: NVDAObjects\window\excel.py:277
 msgid "thin horizontal crosshatch"
-msgstr "Tratteggio incrociato orizzontale sottile"
+msgstr "tratteggio incrociato orizzontale sottile"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
@@ -17659,7 +17659,7 @@ msgstr "nessuno"
 #. 75% dark moire
 #: NVDAObjects\window\excel.py:298
 msgid "thick diagonal crosshatch"
-msgstr "tratteggio incrociato diagonale spesso "
+msgstr "tratteggio incrociato diagonale spesso"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
@@ -17682,12 +17682,12 @@ msgstr "striscia verticale"
 #. Translators: A type of background pattern in Microsoft Excel.
 #: NVDAObjects\window\excel.py:309
 msgid "linear gradient"
-msgstr "Gradiente lineare"
+msgstr "gradiente lineare"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #: NVDAObjects\window\excel.py:311
 msgid "rectangular gradient"
-msgstr "Gradiente rettangolare"
+msgstr "gradiente rettangolare"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 #: NVDAObjects\window\excel.py:743
@@ -17762,12 +17762,12 @@ msgstr "Sottolineatura attivata"
 #. Translators: a message when toggling formatting in Microsoft Excel
 #: NVDAObjects\window\excel.py:1328
 msgid "Strikethrough off"
-msgstr "barrato disattivo"
+msgstr "Barrato disattivo"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #: NVDAObjects\window\excel.py:1330
 msgid "Strikethrough on"
-msgstr "barrato attivo"
+msgstr "Barrato attivo"
 
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1666
@@ -17881,22 +17881,22 @@ msgstr "{firstAddress}  {firstContent} fino a {lastAddress}  {lastContent}"
 #. Translators: border positions in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:23
 msgid "top edge"
-msgstr "Bordo superiore"
+msgstr "bordo superiore"
 
 #. Translators: border positions in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:25
 msgid "bottom edge"
-msgstr "Bordo inferiore"
+msgstr "bordo inferiore"
 
 #. Translators: border positions in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:27
 msgid "left edge"
-msgstr "Bordo sinistro"
+msgstr "bordo sinistro"
 
 #. Translators: border positions in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:29
 msgid "right edge"
-msgstr "Bordo destro"
+msgstr "bordo destro"
 
 #. Translators: border positions in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:31
@@ -17906,40 +17906,40 @@ msgstr "striscia diagonale verso l'alto a destra"
 #. Translators: border positions in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:33
 msgid "down-right diagonal line"
-msgstr "Striscia diagonale in basso a destra"
+msgstr "striscia diagonale in basso a destra"
 
 #. Translators: border positions in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:35
 msgid "horizontal borders except outside"
-msgstr "Bordi disposti orizzontalmente eccetto all'esterno"
+msgstr "bordi disposti orizzontalmente eccetto all'esterno"
 
 #. Translators: border positions in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:37
 msgid "vertical borders except outside"
-msgstr "Bordi disposti verticalmente eccetto all'esterno"
+msgstr "bordi disposti verticalmente eccetto all'esterno"
 
 #. Translators: border styles in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:52
 msgid "continuous"
-msgstr "Continuo"
+msgstr "continuo"
 
 #. Translators: border styles in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:54
 #: NVDAObjects\window\excelCellBorder.py:92
 msgid "dashed"
-msgstr "Tratteggiato"
+msgstr "tratteggiato"
 
 #. Translators: border styles in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:56
 #: NVDAObjects\window\excelCellBorder.py:90
 msgid "dash dot"
-msgstr "Tratto punto"
+msgstr "tratto punto"
 
 #. Translators: border styles in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:58
 #: NVDAObjects\window\excelCellBorder.py:88
 msgid "dash dot dot"
-msgstr "Tratto punto punto"
+msgstr "tratto punto punto"
 
 #. Translators: border styles in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:60
@@ -17951,7 +17951,7 @@ msgstr "punteggiato"
 #: NVDAObjects\window\excelCellBorder.py:62
 #: NVDAObjects\window\excelCellBorder.py:108
 msgid "double"
-msgstr "Doppio"
+msgstr "doppio"
 
 #. Translators: border styles in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:64
@@ -18014,7 +18014,7 @@ msgstr "{color} {desc}"
 #: NVDAObjects\window\excelCellBorder.py:140
 #, python-brace-format
 msgid "{desc} surrounding border"
-msgstr "Bordo circostante {desc} "
+msgstr "bordo circostante {desc}"
 
 #. Translators: border styles in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:147
@@ -18148,7 +18148,7 @@ msgstr "Maiuscola solo all'inizio della frase"
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:319
 msgid "Mixed case"
-msgstr "Maiuscole e minuscole mescolate "
+msgstr "Maiuscole e minuscole mescolate"
 
 #. Translators: a Microsoft Word character case type
 #: NVDAObjects\window\winword.py:321
@@ -18173,87 +18173,87 @@ msgstr "Hiragana"
 #. Translators: a Microsoft Word revision type (inserted content)
 #: NVDAObjects\window\winword.py:405
 msgid "insertion"
-msgstr "Inserimento"
+msgstr "inserimento"
 
 #. Translators: a Microsoft Word revision type (deleted content)
 #: NVDAObjects\window\winword.py:407
 msgid "deletion"
-msgstr "Cancellazione"
+msgstr "cancellazione"
 
 #. Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
 #: NVDAObjects\window\winword.py:409
 msgid "property"
-msgstr "Proprietà"
+msgstr "proprietà"
 
 #. Translators: a Microsoft Word revision type (changed paragraph number)
 #: NVDAObjects\window\winword.py:411
 msgid "paragraph number"
-msgstr "Numero paragrafo"
+msgstr "numero paragrafo"
 
 #. Translators: a Microsoft Word revision type (display field)
 #: NVDAObjects\window\winword.py:413
 msgid "display field"
-msgstr "Campo visualizzato"
+msgstr "campo visualizzato"
 
 #. Translators: a Microsoft Word revision type (reconcile)
 #: NVDAObjects\window\winword.py:415
 msgid "reconcile"
-msgstr "Risoluzione"
+msgstr "risoluzione"
 
 #. Translators: a Microsoft Word revision type (conflicting revision)
 #: NVDAObjects\window\winword.py:417
 msgid "conflict"
-msgstr "Conflitto"
+msgstr "conflitto"
 
 #. Translators: a Microsoft Word revision type (replaced content)
 #: NVDAObjects\window\winword.py:421
 msgid "replace"
-msgstr "Sostituire"
+msgstr "sostituire"
 
 #. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
 #: NVDAObjects\window\winword.py:423
 msgid "paragraph property"
-msgstr "Proprietà paragrafo"
+msgstr "proprietà paragrafo"
 
 #. Translators: a Microsoft Word revision type (table)
 #: NVDAObjects\window\winword.py:425
 msgid "table property"
-msgstr "Proprietà tabella"
+msgstr "proprietà tabella"
 
 #. Translators: a Microsoft Word revision type (section property)
 #: NVDAObjects\window\winword.py:427
 msgid "section property"
-msgstr "Proprietà sezione"
+msgstr "proprietà sezione"
 
 #. Translators: a Microsoft Word revision type (style definition)
 #: NVDAObjects\window\winword.py:429
 msgid "style definition"
-msgstr "Definizione stile"
+msgstr "definizione stile"
 
 #. Translators: a Microsoft Word revision type (moved from)
 #: NVDAObjects\window\winword.py:431
 msgid "moved from"
-msgstr "Spostato da"
+msgstr "spostato da"
 
 #. Translators: a Microsoft Word revision type (moved to)
 #: NVDAObjects\window\winword.py:433
 msgid "moved to"
-msgstr "Spostato a"
+msgstr "spostato a"
 
 #. Translators: a Microsoft Word revision type (inserted table cell)
 #: NVDAObjects\window\winword.py:435
 msgid "cell insertion"
-msgstr "Inserimento cella"
+msgstr "inserimento cella"
 
 #. Translators: a Microsoft Word revision type (deleted table cell)
 #: NVDAObjects\window\winword.py:437
 msgid "cell deletion"
-msgstr "Cancellazione cella"
+msgstr "cancellazione cella"
 
 #. Translators: a Microsoft Word revision type (merged table cells)
 #: NVDAObjects\window\winword.py:439
 msgid "cell merge"
-msgstr "Unione cella"
+msgstr "unione cella"
 
 #: NVDAObjects\window\winword.py:443
 msgid "Comments"
@@ -18316,7 +18316,7 @@ msgstr "{revisionType} {description}: {text} di {author} in data {date}"
 #: NVDAObjects\window\winword.py:634 UIAHandler\browseMode.py:117
 #, python-brace-format
 msgid "spelling: {text}"
-msgstr "O§rtografia: {text}"
+msgstr "ortografia: {text}"
 
 #. Translators: The label shown for a footnote reference in the NVDA Elements List dialog in Microsoft Word.
 #. {number} will be replaced with the footnote number.
@@ -18324,7 +18324,7 @@ msgstr "O§rtografia: {text}"
 #: NVDAObjects\window\winword.py:653
 #, python-brace-format
 msgid "footnote reference {number}: {text}"
-msgstr ""
+msgstr "riferimento nota a piè di pagina {number}: {text}"
 
 #. Translators: The label shown for a endnote reference in the NVDA Elements List dialog in Microsoft Word.
 #. {number} will be replaced with the endnote number.
@@ -18332,7 +18332,7 @@ msgstr ""
 #: NVDAObjects\window\winword.py:664
 #, python-brace-format
 msgid "endnote reference {number}: {text}"
-msgstr ""
+msgstr "riferimento alla nota finale {number}: {text}"
 
 #. Translators: a distance from the left edge of the page in Microsoft Word
 #: NVDAObjects\window\winword.py:874
@@ -18441,12 +18441,12 @@ msgstr "Giustificato"
 #. Translators: a message when toggling formatting in Microsoft word
 #: NVDAObjects\window\winword.py:1920
 msgid "Superscript"
-msgstr "apice"
+msgstr "Apice"
 
 #. Translators: a message when toggling formatting in Microsoft word
 #: NVDAObjects\window\winword.py:1923
 msgid "Subscript"
-msgstr "pedice"
+msgstr "Pedice"
 
 #. Translators: a message when toggling formatting in Microsoft word
 #: NVDAObjects\window\winword.py:1926
@@ -18552,7 +18552,7 @@ msgstr "Spaziatura righe singola"
 #. Translators: a message when switching to double line spacing  in Microsoft word
 #: NVDAObjects\window\winword.py:2115
 msgid "Double line spacing"
-msgstr "spaziatura righe doppia"
+msgstr "Spaziatura righe doppia"
 
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 #: NVDAObjects\window\winword.py:2118
@@ -18588,7 +18588,7 @@ msgstr "Impossibile abilitare la tenda schermo"
 #: screenCurtain\_screenCurtain.py:45
 msgctxt "screenCurtain"
 msgid "There was a problem enabling Screen Curtain. The contents of your screen are still visible. You may attempt to enable Screen Curtain manually."
-msgstr ""
+msgstr "C'è stato un problema nell'attivazione della tenda schermo. Il contenuto dello schermo è ancora visibile. Puoi provare ad abilitare manualmente la tenda schermo."
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -18634,7 +18634,7 @@ msgstr "su richiesta"
 #: speech\speech.py:389
 #, python-format
 msgid "cap %s"
-msgstr "Cap %s"
+msgstr "cap %s"
 
 #. Translators: 'Normalized' will be spoken after the given letter when it is normalized.
 #: speech\speech.py:396
@@ -18645,7 +18645,7 @@ msgstr "%s normalizzato"
 #. Translators: This is spoken when the given line has no indentation.
 #: speech\speech.py:1048
 msgid "no indent"
-msgstr "Nessun rientro"
+msgstr "nessun rientro"
 
 #. Translators: This is spoken to indicate that some text is already selected.
 #. 'selected' preceding text is intentional.
@@ -18653,7 +18653,7 @@ msgstr "Nessun rientro"
 #: speech\speech.py:1225
 #, python-format
 msgid "selected %s"
-msgstr "Selezionato %s"
+msgstr "selezionato %s"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #: speech\speech.py:1343
@@ -18670,13 +18670,13 @@ msgstr "%s ora selezionato"
 #. Translators: Reported when selection is removed.
 #: speech\speech.py:1353
 msgid "selection removed"
-msgstr "Selezione cancellata"
+msgstr "selezione cancellata"
 
 #. Translators: Speaks current row number (example output: row 3).
-#: speech\speech.py:2046 speech\speech.py:3097
+#: speech\speech.py:2046 speech\speech.py:3108
 #, python-format
 msgid "row %s"
-msgstr "Riga %s"
+msgstr "riga %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
 #: speech\speech.py:2050
@@ -18685,10 +18685,10 @@ msgid "through {endRow}"
 msgstr "fino a {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
-#: speech\speech.py:2066 speech\speech.py:3093
+#: speech\speech.py:2066 speech\speech.py:3104
 #, python-format
 msgid "column %s"
-msgstr "Colonna %s"
+msgstr "colonna %s"
 
 #. Translators: Speaks the column span added to the current column number (example output: through 5).
 #: speech\speech.py:2070
@@ -18712,7 +18712,7 @@ msgstr "con dettagli"
 #: speech\speech.py:2135
 #, python-format
 msgid "level %s"
-msgstr "Livello %s"
+msgstr "livello %s"
 
 #. Translators: Main part of the compound string to speak number of columns and rows in a table
 #. Example: If the reported compound string is "with 3 rows and 2 columns", {rowCountTranslation} will be
@@ -18753,7 +18753,7 @@ msgstr[1] "{rowCount} righe"
 #, python-brace-format
 msgid "{columnCount} column"
 msgid_plural "{columnCount} columns"
-msgstr[0] "{columnCount} colonna\t"
+msgstr[0] "{columnCount} colonna"
 msgstr[1] "{columnCount} colonne"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
@@ -18761,21 +18761,21 @@ msgstr[1] "{columnCount} colonne"
 #, python-format
 msgid "with %s item"
 msgid_plural "with %s items"
-msgstr[0] "Con %s elemento"
-msgstr[1] "Con %s elementi"
+msgstr[0] "con %s elemento"
+msgstr[1] "con %s elementi"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #: speech\speech.py:2519 speech\speech.py:2977
 #, python-format
 msgid "out of %s"
-msgstr "Fuori di %s"
+msgstr "fuori di %s"
 
 #. Translators: Indicates the page number in a document.
 #. %s will be replaced with the page number.
 #: speech\speech.py:2587
 #, python-format
 msgid "page %s"
-msgstr "Pagina %s"
+msgstr "pagina %s"
 
 #. Translators: Indicates the section number in a document.
 #. %s will be replaced with the section number.
@@ -18798,8 +18798,8 @@ msgstr "colonna {0} di {1}"
 #, python-format
 msgid "%s column"
 msgid_plural "%s columns"
-msgstr[0] "%s colonna\t"
-msgstr[1] "%s colonne\t"
+msgstr[0] "%s colonna"
+msgstr[1] "%s colonne"
 
 #. Translators: Indicates the text column number in a document.
 #: speech\speech.py:2623
@@ -18809,33 +18809,33 @@ msgstr "colonna {columnNumber}"
 
 #: speech\speech.py:2629
 msgid "continuous section break"
-msgstr "Interruzione sezione continua"
+msgstr "interruzione sezione continua"
 
 #: speech\speech.py:2631
 msgid "new column section break"
-msgstr "Interruzione di sezione nuova colonna"
+msgstr "interruzione di sezione nuova colonna"
 
 #: speech\speech.py:2633
 msgid "new page section break"
-msgstr "Interruzione di sezione nuova pagina"
+msgstr "interruzione di sezione nuova pagina"
 
 #: speech\speech.py:2635
 msgid "even pages section break"
-msgstr "Interruzione di sezione pagine pari"
+msgstr "interruzione di sezione pagine pari"
 
 #: speech\speech.py:2637
 msgid "odd pages section break"
-msgstr "Interruzione di sezione pagine dispari"
+msgstr "interruzione di sezione pagine dispari"
 
 #: speech\speech.py:2643
 msgid "column break"
-msgstr "Interruzione colonna"
+msgstr "interruzione colonna"
 
 #. Translators: Speaks the heading level (example output: heading level 2).
 #: speech\speech.py:2658
 #, python-format
 msgid "heading level %d"
-msgstr "Intestazione livello %d"
+msgstr "intestazione livello %d"
 
 #. Translators: Indicates the style of text.
 #. A style is a collection of formatting settings and depends on the application.
@@ -18843,13 +18843,13 @@ msgstr "Intestazione livello %d"
 #: speech\speech.py:2681
 #, python-format
 msgid "style %s"
-msgstr "Stile %s"
+msgstr "stile %s"
 
 #. Translators: Indicates that text has reverted to the default style.
 #. A style is a collection of formatting settings and depends on the application.
 #: speech\speech.py:2685
 msgid "default style"
-msgstr "Stile predefinito"
+msgstr "stile predefinito"
 
 #. Translators: Indicates that cell does not have border lines.
 #: speech\speech.py:2695
@@ -18890,14 +18890,14 @@ msgstr "Sfondo {backgroundColor}"
 #: speech\speech.py:2754
 #, python-brace-format
 msgid "background pattern {pattern}"
-msgstr "Motivo di sfondo {pattern}"
+msgstr "motivo di sfondo {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
 #: speech\speech.py:2761
 #, python-format
 msgid "line %s"
-msgstr "Riga %s"
+msgstr "riga %s"
 
 #. Translators: Reported when text is no longer marked as having been inserted.
 #: speech\speech.py:2773
@@ -18924,23 +18924,23 @@ msgstr "%s non ha revisioni"
 #. Translators: Reported when text is marked
 #: speech\speech.py:2804
 msgid "marked"
-msgstr "Marcato"
+msgstr "marcato"
 
 #. Translators: Reported when text is no longer marked
 #: speech\speech.py:2807
 msgid "not marked"
-msgstr "Non marcato"
+msgstr "non marcato"
 
 #. Translators: Reported when text is color-highlighted
 #: speech\speech.py:2817
 #, python-brace-format
 msgid "highlighted in {color}"
-msgstr "Evidenziato in {color}"
+msgstr "evidenziato in {color}"
 
 #. Translators: Reported when text is no longer marked
 #: speech\speech.py:2820
 msgid "not highlighted"
-msgstr "Non evidenziato"
+msgstr "non evidenziato"
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
 #: speech\speech.py:2830
@@ -18965,18 +18965,18 @@ msgstr "non enfatizzato"
 #. Translators: Reported when text is not bolded.
 #: speech\speech.py:2857
 msgid "no bold"
-msgstr "Non grassetto"
+msgstr "non grassetto"
 
 #. Translators: Reported when text is not italicized.
 #: speech\speech.py:2868
 msgid "no italic"
-msgstr "Non corsivo"
+msgstr "non corsivo"
 
 #. Translators: Reported when text is formatted with double strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 #: speech\speech.py:2878
 msgid "double strikethrough"
-msgstr "Barrato doppio"
+msgstr "barrato doppio"
 
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
@@ -18988,17 +18988,17 @@ msgstr "barrato"
 #. See http://en.wikipedia.org/wiki/Strikethrough
 #: speech\speech.py:2887
 msgid "no strikethrough"
-msgstr "Non barrato"
+msgstr "non barrato"
 
 #. Translators: Reported when text is underlined.
 #: speech\speech.py:2894
 msgid "underlined"
-msgstr "Sottolineato"
+msgstr "sottolineato"
 
 #. Translators: Reported when text is not underlined.
 #: speech\speech.py:2897
 msgid "not underlined"
-msgstr "Non sottolineato"
+msgstr "non sottolineato"
 
 #. Translators: Reported when text is hidden.
 #: speech\speech.py:2905
@@ -19013,48 +19013,48 @@ msgstr "visibile"
 #. Translators: the label for paragraph format left indent
 #: speech\speech.py:2936
 msgid "left indent"
-msgstr "Rientro a sinistra"
+msgstr "rientro a sinistra"
 
 #. Translators: the message when there is no paragraph format left indent
 #: speech\speech.py:2938
 msgid "no left indent"
-msgstr "Nessun rientro a sinistra"
+msgstr "nessun rientro a sinistra"
 
 #. Translators: the label for paragraph format right indent
 #: speech\speech.py:2942
 msgid "right indent"
-msgstr "Rientro a destra"
+msgstr "rientro a destra"
 
 #. Translators: the message when there is no paragraph format right indent
 #: speech\speech.py:2944
 msgid "no right indent"
-msgstr "Nessun rientro a destra"
+msgstr "nessun rientro a destra"
 
 #. Translators: the label for paragraph format hanging indent
 #: speech\speech.py:2948
 msgid "hanging indent"
-msgstr "Rientro sporgente"
+msgstr "rientro sporgente"
 
 #. Translators: the message when there is no paragraph format hanging indent
 #: speech\speech.py:2950
 msgid "no hanging indent"
-msgstr "Nessun rientro sporgente"
+msgstr "nessun rientro sporgente"
 
 #. Translators: the label for paragraph format first line indent
 #: speech\speech.py:2954
 msgid "first line indent"
-msgstr "Rientro prima riga"
+msgstr "rientro prima riga"
 
 #. Translators: the message when there is no paragraph format first line indent
 #: speech\speech.py:2956
 msgid "no first line indent"
-msgstr "Nessun rientro prima riga"
+msgstr "nessun rientro prima riga"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #: speech\speech.py:2972
 #, python-format
 msgid "line spacing %s"
-msgstr "Spaziatura righe %s"
+msgstr "spaziatura righe %s"
 
 #. Translators: Reported when text contains a draft comment.
 #: speech\speech.py:2986
@@ -19064,61 +19064,61 @@ msgstr "con commento bozza"
 #. Translators: Reported when text contains a resolved comment.
 #: speech\speech.py:2989
 msgid "has resolved comment"
-msgstr "Con commento risolto"
+msgstr "con commento risolto"
 
 #. Translators: Reported when text no longer contains a comment.
 #: speech\speech.py:2996
 msgid "out of comment"
-msgstr "Fuori commento"
+msgstr "fuori commento"
 
 #. Translators: Reported when text contains a bookmark
 #: speech\speech.py:3004
 msgid "bookmark"
-msgstr "Segnalibro"
+msgstr "segnalibro"
 
 #. Translators: Reported when text no longer contains a bookmark
 #: speech\speech.py:3008
 msgid "out of bookmark"
-msgstr "Fuori dal segnalibro"
+msgstr "fuori dal segnalibro"
 
 #. Translators: Reported when text contains a spelling error.
 #: speech\speech.py:3020
 msgid "spelling error"
-msgstr "Errore di ortografia"
+msgstr "errore di ortografia"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 #: speech\speech.py:3023
 msgid "out of spelling error"
-msgstr "Fuori dall'errore di ortografia"
+msgstr "fuori dall'errore di ortografia"
 
 #. Translators: Reported when text contains a grammar error.
 #: speech\speech.py:3034
 msgid "grammar error"
-msgstr "Errore grammaticale"
+msgstr "errore grammaticale"
 
 #. Translators: Reported when moving out of text containing a grammar error.
 #: speech\speech.py:3037
 msgid "out of grammar error"
-msgstr "Fuori dall'errore grammaticale"
+msgstr "fuori dall'errore grammaticale"
 
 #. Translators: Indicates end of a table.
-#: speech\speech.py:3070
+#: speech\speech.py:3081
 msgid "out of table"
-msgstr "Fuori tabella"
+msgstr "fuori tabella"
 
 #. Translators: Main part of the compound string to report a table
 #. Example: If the reported compound string is "table with 2 columns and 3 rows", {colCountTranslation}
 #. will be replaced by "2 columns" and {rowCountTranslation} by "3 rows"
-#: speech\speech.py:3085
+#: speech\speech.py:3096
 #, python-brace-format
 msgid "table with {columnCountText} and {rowCountText}"
-msgstr "Tabella con {columnCountText} e {rowCountText}"
+msgstr "tabella con {columnCountText} e {rowCountText}"
 
 #. Translators: name of the default espeak varient.
 #: synthDrivers\_espeak.py:417
 msgctxt "espeakVarient"
 msgid "none"
-msgstr "Nessuno"
+msgstr "nessuno"
 
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\oneCore.py:182
@@ -19128,17 +19128,17 @@ msgstr "Voci Windows OneCore"
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\sapi4_32.py:18
 msgid "Microsoft Speech API version 4"
-msgstr ""
+msgstr "Microsoft Speech API versione 4"
 
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\sapi5.py:558 _synthDrivers32\_sapi5.py:558
 msgid "Microsoft Speech API version 5 (64 bit)"
-msgstr ""
+msgstr "Microsoft Speech API versione 5 (64 bit)"
 
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\sapi5_32.py:15
 msgid "Microsoft Speech API version 5 (32 bit)"
-msgstr ""
+msgstr "Microsoft Speech API versione 5 (32 bit)"
 
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\silence.py:16
@@ -19153,7 +19153,7 @@ msgstr "parola"
 #: textInfos\__init__.py:437
 #, python-brace-format
 msgid "Positioned at {x}, {y}"
-msgstr "posizionato a {x}, {y}"
+msgstr "Posizionato a {x}, {y}"
 
 #. Translators: current position in a document as a percentage of the document length
 #: textInfos\offsets.py:184
@@ -19464,13 +19464,13 @@ msgstr "Impossibile connettersi al computer remoto"
 #: _remoteClient\client.py:333
 msgctxt "remote"
 msgid "Error Connecting"
-msgstr ""
+msgstr "Errore di collegamento"
 
 #. Translators: Message shown when unable to connect to the remote computer.
 #: _remoteClient\client.py:335
 msgctxt "remote"
 msgid "Unable to connect to the remote computer"
-msgstr ""
+msgstr "Impossibile connettersi al computer remoto"
 
 #. Translators: Message shown when trying to connect while already connected.
 #: _remoteClient\client.py:358 _remoteClient\client.py:705

@@ -198,6 +198,9 @@ addTable("es-g1.ctb", _("Spanish grade 1"))
 addTable("es-g2.ctb", _("Spanish grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("et-6dot.utb", _("Estonian 6 dot"), input=False)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("et-g0.utb", _("Estonian grade 0"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
@@ -307,7 +310,7 @@ addTable(
 	"it-it-comp6.utb",
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	_("Italian 6 dot computer braille"),
+	_("Italian 6 dot"),
 	inputForLangs={"it"},
 	outputForLangs={"it"},
 )

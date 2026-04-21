@@ -97,6 +97,7 @@ def initialize() -> None:
 		except:  # noqa: E722
 			log.warning("MathCAT not available.")
 		else:
+			MathCAT.MathCATInteraction._createNavScripts()
 			registerProvider(
 				provider,
 				speech=not speechProvider,

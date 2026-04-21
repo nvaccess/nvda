@@ -119,31 +119,35 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		)
 		driverRegistrar.addBluetoothDevices(
 			lambda m: (
-				m.type == bdDetect.ProtocolType.SERIAL
-				and (
-					m.id.startswith("Brailliant B") or m.id == "Brailliant 80" or "BrailleNote Touch" in m.id
-				)
-			)
-			or (
-				m.type == bdDetect.ProtocolType.HID
-				and m.deviceInfo.get("manufacturer") == "Humanware"
-				and (
-					(
-						m.deviceInfo.get("product")
-						in (
-							"APH Chameleon 20",
-							"APH Mantis Q40",
-							"Brailliant BI 40X",
-							"Brailliant BI 20X",
-						)
-						and bdDetect._isHIDUsagePageMatch(m, HID_USAGE_PAGE)
+				(
+					m.type == bdDetect.ProtocolType.SERIAL
+					and (
+						m.id.startswith("Brailliant B")
+						or m.id == "Brailliant 80"
+						or "BrailleNote Touch" in m.id
 					)
-					or m.deviceInfo.get("product")
-					in (
-						"Brailliant HID",
-						"Humanware BrailleOne",
-						"NLS eReader",
-						"NLS eReader Humanware",
+				)
+				or (
+					m.type == bdDetect.ProtocolType.HID
+					and m.deviceInfo.get("manufacturer") == "Humanware"
+					and (
+						(
+							m.deviceInfo.get("product")
+							in (
+								"APH Chameleon 20",
+								"APH Mantis Q40",
+								"Brailliant BI 40X",
+								"Brailliant BI 20X",
+							)
+							and bdDetect._isHIDUsagePageMatch(m, HID_USAGE_PAGE)
+						)
+						or m.deviceInfo.get("product")
+						in (
+							"Brailliant HID",
+							"Humanware BrailleOne",
+							"NLS eReader",
+							"NLS eReader Humanware",
+						)
 					)
 				)
 			),

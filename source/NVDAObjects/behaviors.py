@@ -80,7 +80,7 @@ class ProgressBar(NVDAObject):
 				queueHandler.eventQueue,
 				speech.speakMessage,
 				# Translators: This is presented to inform the user of a progress bar percentage.
-				_("%d percent") % percentage,
+				ngettext("%d percent", "%d percent", percentage) % percentage,
 			)
 			self.progressValueCache["speech,%d,%d" % (x, y)] = percentage
 

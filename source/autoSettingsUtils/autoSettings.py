@@ -2,21 +2,24 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019 NV Access Limited
+# Copyright (C) 2019-2025 NV Access Limited
 
 """autoSettings for add-ons"""
 
 from abc import abstractmethod
+from collections.abc import Iterable
 from copy import deepcopy
-from typing import Dict, Type, Any, Iterable
+from typing import Any
 
 import config
-from autoSettingsUtils.utils import paramToPercent, percentToParam, UnsupportedConfigParameterError
 from baseObject import AutoPropertyObject
 from logHandler import log
+
+from autoSettingsUtils.utils import UnsupportedConfigParameterError, paramToPercent, percentToParam
+
 from .driverSetting import DriverSetting
 
-SupportedSettingType: Type = Iterable[DriverSetting]
+type SupportedSettingType = Iterable[DriverSetting]
 
 
 class AutoSettings(AutoPropertyObject):
@@ -126,7 +129,7 @@ class AutoSettings(AutoPropertyObject):
 	def _getConfigSpecForSettings(
 		cls,
 		settings: SupportedSettingType,
-	) -> Dict:
+	) -> dict[str, str]:
 		section = cls._getConfigSection()
 		spec = deepcopy(config.confspec[section]["__many__"])
 		for setting in settings:

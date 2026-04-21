@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2025 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
+# Copyright (C) 2007-2026 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
 # Accessolutions, Julien Cochuyt, Cyrille Bougot, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -183,13 +183,21 @@ def getOnErrorSoundRequested() -> "extensionPoints.Action":
 def shouldPlayErrorSound() -> bool:
 	"""Indicates if an error sound should be played when an error is logged."""
 	import config
+	from config.configFlags import PlayErrorSound
 
-	# Only play the error sound if this is a test version or if the config states it explicitly.
-	return (
-		buildVersion.isTestVersion
-		# Play error sound: 1 = Yes
-		or (config.conf is not None and config.conf["featureFlag"]["playErrorSound"] == 1)
+	playErrorSound = (
+		PlayErrorSound(config.conf["featureFlag"]["playErrorSound"])
+		if config.conf
+		else PlayErrorSound.ONLY_IN_TEST_VERSIONS
 	)
+
+	match playErrorSound:
+		case PlayErrorSound.YES:
+			return True
+		case PlayErrorSound.NO:
+			return False
+		case PlayErrorSound.ONLY_IN_TEST_VERSIONS:
+			return buildVersion.isTestVersion
 
 
 # Function to strip the base path of our code from traceback text to improve readability.
@@ -649,12 +657,11 @@ def setLogLevelFromConfig():
 		return
 	import config
 
-	levelName = config.conf["general"]["loggingLevel"]
-	# logging.getLevelName can give you a level number if given a name.
-	level = logging.getLevelName(levelName)
+	levelName: str = config.conf["general"]["loggingLevel"]
+	level = logging.getLevelNamesMapping().get(levelName)
 	# The lone exception to level higher than INFO is "OFF" (100).
 	# Setting a log level to something other than options found in the GUI is unsupported.
-	if level not in (log.DEBUG, log.IO, log.DEBUGWARNING, log.INFO, log.OFF):
+	if level is None or level not in (log.DEBUG, log.IO, log.DEBUGWARNING, log.INFO, log.OFF):
 		log.warning("invalid setting for logging level: %s" % levelName)
 		level = log.INFO
 		config.conf["general"]["loggingLevel"] = logging.getLevelName(log.INFO)

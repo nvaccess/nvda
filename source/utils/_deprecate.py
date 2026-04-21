@@ -105,19 +105,30 @@ class MovedSymbol(DeprecatedSymbol):
 class RemovedSymbol(DeprecatedSymbol):
 	"""A symbol which has been removed from the public API."""
 
-	def __init__(self, name: str, value: Any, *, message: str = "No public replacement is planned."):
+	def __init__(
+		self,
+		name: str,
+		value: Any,
+		*,
+		callValue: bool = False,
+		message: str = "No public replacement is planned.",
+	):
 		"""Initialiser.
 
 		:param name: Old name of the symbol.
 		:param value: Old value of the symbol.
+		:param callValue: Whether to treat the value as a callable that should be called to get the actual value.
 		:param message: _description_, defaults to "No public replacement is planned."
 		"""
 		super().__init__(name)
 		self._value = value
+		self._callValue = callValue
 		self._extraMessage = message
 
 	@property
 	def value(self) -> Any:
+		if self._callValue:
+			return self._value()
 		return self._value
 
 	def getLogMessage(self, moduleName: str) -> str:
