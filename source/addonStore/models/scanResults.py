@@ -41,8 +41,19 @@ class VirusTotalScanResults:
 				typeUnsupported=analysisStats["type-unsupported"],
 			)
 		except (KeyError, IndexError, TypeError):
-			log.error(f"Malformed add-on scan results.: {addon!r}", exc_info=True)
-			return None
+			return cls(
+				scanUrl=scanResults["scanUrl"],
+				malicious=scanResults["malicious"],
+				undetected=scanResults["undetected"],
+				harmless=scanResults["harmless"],
+				suspicious=scanResults["suspicious"],
+				failure=scanResults["failure"],
+				timeout=scanResults["timeout"],
+				confirmedTimeout=scanResults["confirmedTimeout"],
+				typeUnsupported=scanResults["typeUnsupported"],
+			)
+		log.error(f"Malformed add-on scan results.: {addon!r}", exc_info=True)
+		return None
 
 	@property
 	def totalScans(self) -> int:
