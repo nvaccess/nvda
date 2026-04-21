@@ -1,36 +1,70 @@
 # Code/Docs contributions
 
-If you are new to the project, or looking for some way to help take a look at:
+## Guidelines:
+
+### First time contributors
+
+When making your first PR, we encourage starting with one of the following issues.
+This will help introduce you to the project.
+To get used to the contribution process, please wait for feedback on your first PR before opening any other PRs.
 
 * [label:"good first issue"](https://github.com/nvaccess/nvda/issues?q=label%3A%22good+first+issue%22)
 * [label:component/documentation](https://github.com/nvaccess/nvda/issues?q=label%3Acomponent%2Fdocumentation)
 * [label:closed/needs-new-author](https://github.com/nvaccess/nvda/issues?q=label%3Aclosed%2Fneeds-new-author)
 * [label:Abandoned](https://github.com/nvaccess/nvda/issues?q=label%3AAbandoned)
 
-## Guidelines:
+### Trivial changes
 
-* For anything other than minor bug fixes, please comment on an existing issue or create a new issue providing details about your proposed change.
-* Unrelated changes should be addressed in separate issues.
-* Include information about use cases, design, user experience, etc.
-  * This allows us to discuss these aspects and any other concerns that might arise, thus potentially avoiding a great deal of wasted time.
-* It is recommended to wait for acceptance of your proposal before you start coding.
-  * A `triaged` label is an indicator that an issue is ready for a fix.
-  * A triaged issue should have a priority, as a developer, consider focusing on higher priority issues (p1-p3) instead of lower priority issues (p4-p5).
-  * Please understand that we very likely will not accept changes that are not discussed first.
-  * Consider starting a [GitHub discussion](https://github.com/nvaccess/nvda/discussions) or [mailing list topic](https://groups.io/g/nvda-devel/topics) to see if there is interest.
-* A minor/trivial change which definitely wouldn't require design, user experience or implementation discussion, you can just create a pull request rather than using an issue first.
-  * e.g. a fix for a typo/obvious coding error or a simple synthesizer/braille display driver
-  * This should be fairly rare.
-* If in doubt, use an issue first.
-Use this issue to discuss the alternatives you have considered in regards to implementation, design, and user experience.
-Then give people time to offer feedback.
-* Issues with translations should be reported to the [NVDA Translators list](https://groups.io/g/nvda-translations).
+A minor/trivial change which definitely wouldn't require design, user experience or implementation discussion, you can just create a pull request rather than using an issue first.
+
+e.g. a fix for a typo/obvious coding error, or typing improvements.
+
+Issues with the translations of the NVDA interface, Changes or User Guide should be reported to the [NVDA Translators list](https://groups.io/g/nvda-translations).
+
+### Non-trivial changes
+
+For anything other than minor bug fixes, ensure an issue has been filed and triaged.
+Please understand that we very likely will not accept non-trivial changes that are not discussed first.
+
+A `triaged` label is an indicator that an issue is ready for a fix.
+A triaged issue should have a priority, as a developer, consider focusing on higher priority issues (p1-p3) instead of lower priority issues (p4-p5).
+
+If the issue has an `ADR-required` label, this is a complex change.
+Refer to ["Proposing Major Changes"](./proposingMajorChanges.md) before opening a PR.
+
+Once triaged and ready please comment on the issue or ADR to confirm you plan to work on it.
+
+### PR submission rules
+
+Avoid having too many concurrent PRs (e.g. more than 3 ongoing).
+NV Access is a small team and will try to respond to PRs within a couple of days.
+Having multiple ongoing PRs increases the time to merge for each of them.
+
+All PRs must be submitted by a human.
+PRs which have not been reviewed and tested by the author will be closed.
+
+### PR scope and size
+
+Unrelated changes should be addressed in separate issues and PRs.
+
+Avoid PRs where over 500 lines of code (LOC) is added.
+PRs over 500 LOC may be rejected at the reviewers' discretion.
+
+500-1000 line PRs can typically be broken into smaller changes such as automated tests, refactors, data-structures and core changes.
+These can be merged as stacked PRs if they depend on each other (e.g. `branchX` targets `master`, `branchY` targets `branchX`).
+
+Large refactors should instead target specific symbols/files/modules per PR to minimize mass changes.
+
+Ongoing feature development that cannot be merged straight to `master` can occur on `try-` branches, done in pieces.
+Ask NV Access on the corresponding ADR to create a `try-` branch.
 
 ## Overview of contribution process:
 
 1. [Setup your development environment](./createDevEnvironment.md).
    * Alternatively, you can use GitHub Actions to build NVDA for you, without setting up a local development environment, by following [our CI/CD README](../../ci/README.md).
 1. Ensure the issue you plan to fix is [triaged](../issues/triage.md)
+1. If the issue has an `ADR-required` label, this is a complex change.
+Refer to ["Proposing Major Changes"](./proposingMajorChanges.md) before opening a PR.
 1. Create a branch for the contribution, to be used for a pull request.
 	* Pull requests should be based on the latest commit in the official master branch.
 	This helps reduce the chance of merge conflicts.
@@ -70,6 +104,8 @@ Then give people time to offer feedback.
 		Sometimes system tests fail unexpectedly.
 		If you believe the failure is unrelated, feel free to ignore it unless it is raised by a reviewer.
 		* Security checks will be run.
+		* If this is your first PR, GitHub will require manual approval from NV Access before running CI/CD.
+		We encourage testing in your fork in this scenario (e.g. open a practice PR in your own fork).
 1. Participate in the code review process
 	* This process requires core NVDA developers to understand the intent of the change, read the code changes, asking questions or suggesting changes.
 	Please participate in this process, answering questions, and discussing the changes.

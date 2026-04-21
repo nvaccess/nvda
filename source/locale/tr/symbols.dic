@@ -1,7 +1,7 @@
-﻿#locale/tr/symbols.dic
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2023 NVDA Contributors
-#This file is covered by the GNU General Public License.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2011-2026 NV Access Limited
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 complexSymbols:
 # identifier	regexp
@@ -13,7 +13,7 @@ complexSymbols:
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Series of dots used for visual presentation, e.g. in table of contents
-çoklu .	\.{4,}
+multiple .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -28,6 +28,7 @@ symbols:
 ? sentence ending	soru	all	always
 ; phrase ending	noktalıvirgül	most	always
 : phrase ending	ikinokta	most	always
+multiple .	çoklu nokta	all	always
 decimal point		none	always
 in-word '	apostrof	all	norep
 negative number	eksi	none	norep
@@ -39,16 +40,18 @@ negative number	eksi	none	norep
 \f	sayfa geçişi	none
 \r	satır sonu	char
  	aralık	char
- 	aralık	char	# no-break space
- 	aralık	char
+ 	aralık	char	# no-break space (U+00A0)
 
 # Standard punctuation/symbols
 !	ünlem	all
+！	tam genişlikte ünlem	all
 "	tırnak	most
 \#	diyez	some
 $	dolar	all	norep
 £	paund	all	norep
 €	euro	all	norep
+¢	sent	all	norep
+¥	yen	all	norep
 ₹	Rupi	some	norep
 ₺	TL	all	norep
 ƒ	florin	all	norep
@@ -56,58 +59,47 @@ $	dolar	all	norep
 %	yüzde	some
 ‰	binde	some
 &	ve	some
-′	apostrof	all
-″	ikili apostrof	some
-‴	üçlü apostrof	some
+′	prime	some
+″	çift prime	some
+‴	üçlü prime	some
 '	kesme işareti	all
 (	açparantez	most	always
 )	kapaparantez	most	always
 *	yıldız	some
-+	artı	some
-−	eksi	some
-├	artı	most
-┤	artı	most
-┴	artı	most
-┼	artı	most
-╬	artı	most
-♀	artı	most
 ,	virgül	all	always
-+、	ideografik virgül	all	always
-+،	Arapça virgülü	all	always
+、	ideografik virgül	all	always
+،	Arapça virgülü	all	always
 -	tire	most	always
-┐	tire	most
-╗	tire	most
 .	nokta	all
+．	tam genişlikte nokta	some
 ·	orta nokta	all
 ‚	tek alt tırnak	most
 „	çift alt tırnak	most
 /	bölü	some
 :	ikinokta	most	norep
+：	tam genişlikte ikinokta	most	norep
 ;	noktalıvirgül	most
-+؛	Arapça noktalıvirgülü	most
-<	küçüktür	some
-◄	küçüktür	some
->	büyüktür	some
-►	büyüktür	some
-♂	büyüktür	some
-♂	büyüktür	some
-=	eşittir	some
-═	eşittir	some
+؛	Arapça noktalıvirgülü	most
+；	tam genişlikte noktalıvirgül	most
 ?	soru	all
-+؟	Arapça soru işareti	all
+؟	Arapça soru işareti	all
+？	tam genişlikte soru işareti	all
 @	et	some
 [	aç köşeli parantez	most
 ]	kapa köşeli parantez	most
 \\	tersbölü	most
 ^	düzeltme imi	most
-▲	düzeltme imi	most
 _	alt çizgi	most
 `	üst tırnak	most
-´	alt tırnak	most
+´	akut	most
 {	aç küme parantezi	most
 }	kapa küme parantezi	most
 |	dikçizgi	most
+¦	kırık çizgi	most
 ~	tilda	most
+¡	ters ünlem	some
+¿	ters soru	some
+‐	kısa tire	most	always
 
 # Other characters
 •	madde imi	some
@@ -117,23 +109,22 @@ _	alt çizgi	most
 ”	tırnakkapa	most
 ‘	tektırnakaç	most
 ’	tektırnakkapa	most
-	tırnak	most
-	tırnak	most
-–	ORTA TİRE	most	always
-—	uzuntire	most	always
+–	orta tire	most	always
+—	uzun tire	most	always
 ­	ince tire	most
 ⁃	kalın tire	none
 ●	daire	most
 ○	çember	most
 ¨	diaeresis	most
-   	soldan sağa işareti	char
-   	sağdan sola işareti	char
-■	siyah boşluk	some
-▪	siyah boşluk	some
-◾	siyah boşluk	some
+¯	uzatma işareti	most
+‎	soldan sağa işareti	char
+‏	sağdan sola işareti	char
+¶	paragraf işareti	most
+■	siyah kare	some
+▪	siyah kare	some
+◾	siyah kare	some
 □	boş kare	some
 ◦	beyaz madde imi	some
-⇒	sağ çift ok	some
 ⇨	sağ beyaz ok	some
 ➔	sağ ok	some
 ➢	sağ ok ucu	some
@@ -141,15 +132,13 @@ _	alt çizgi	most
 ❖	çizgili karo	some
 ♣	siyah sinek	some
 ♦	siyah karo	some
-¡	ters ünlem	most
-¦	kırık çizgi	most
-«	çift kancalı parantezaç	most	always
-¸	cedila	most
-¶	paragraf işareti	most
+◆	siyah karo	some
+§	bölüm	all
+°	derece	some
+«	çift kancalı parantez aç	most	always
 »	çift kancalı parantez kapa	most	always
 µ	mikro	some
-º	derece	some
-ª	üssü a	some
+¸	cedilla	most
 ⁰	üssü 0	some
 ¹	üssü 1	some
 ²	üssü 2	some
@@ -161,18 +150,10 @@ _	alt çizgi	most
 ⁸	üssü 8	some
 ⁹	üssü 9	some
 ⁺	üssü artı	some
-⁻	üssü eksi	some
 ⁼	üssü eşittir	some
 ⁽	üssü aç parantez	some
 ⁾	üssü parantez kapa	some
 ⁿ	üssü n	some
-®	kayıtlı	some
-™	ticari marka	some
-©	Telif hakkı	some
-℠	Hizmet işareti	some
-±	Artı veya Eksi	some
-×	çarpı	some
-÷	Bölü	some
 ₀	alt simge 0	some
 ₁	alt simge 1	some
 ₂	alt simge 2	some
@@ -188,89 +169,177 @@ _	alt çizgi	most
 ₌	alt simge eşittir	some
 ₍	alt simge sol parantez	some
 ₎	alt simge sağ parantez	some
-¿	ters soru	most
-‣	üçgen madde imi	none
-◆	siyah karo	some
-§	bölüm	all
-÷	bölü	some
-×	çarpı	some
-°	derece	some
-¢	sens	some
-¤	sembol	some
-−	eksi	some
-±	artı eksi	some
-¼	bir bölü dört	some
-½	bir bölü iki	some
-¾	üç bölü dört	some
-æ	ai	some
-™	marka	some
 ®	kayıtlı	some
-©	kopyahakkı	some
-℠	servisişareti	some
-→	sağ ok	some
+™	ticari marka	some
+©	telif hakkı	some
+℠	hizmet işareti	some
 ←	sol ok	some
 ↑	yukarı ok	some
+→	sağ ok	some
 ↓	aşağı ok	some
 ✓	onay	some
 ✔	onay	some
 🡺	sağ ok	some
 †	kama işareti	some
 ‡	çift kama işareti	some
+‣	üçgen madde imi	none
 ✗	x şeklinde madde imi	none
-¥	yen	some
-√	karekök	some
-∞	sonsuz	some
-#Mathematical Operators U+2200 to U+220F
-∀	Her 	none
-∁	Tümleyen	none
-∂	Kısmi Türev	none
+⊕	daireli artı	none
+⊖	daireli eksi	none
+⇄	sağ ok üstünde sol ok	none
+⇒	sağ çift ok	some
+⇐	sol çift ok	some
+⇏	gerektirmez	none
+
+#Arithmetic operators
++	artı	some
+−	eksi	some
+×	çarpı	some
+⋅	nokta çarpım	some
+⨯	vektörel çarpım	none
+∕	bölü	some
+⁄	bölü	some
+÷	bölü	some
+∓	eksi veya artı	some
+±	artı veya eksi	some
+
+#Set operations
+∖	küme farkı	none
+⊍	küme birleşimi	none
+𝒫	kümeler kümesi	none
+𝔓	kümeler kümesi	none
+℘	kümeler kümesi	none
+∁	tümleyen küme	none
+
+#Set relations and set constructions
+∅	boş küme	none
+⊂	alt kümesi	none
+⊄	alt kümesi değil	none
+⊃	üst kümesi	none
+⊅	üst kümesi değil	none
+⊆	eşit veya alt kümesi	none
+⊈	eşit veya alt kümesi değil	none
+⊇	eşit veya üst kümesi	none
+⊉	eşit veya üst kümesi değil	none
+⊌	çoklukümesi	none
+
+#Equality signs
+=	eşittir	some
+≃	asimptotik olarak eşit	none
+≄	asimptotik olarak eşit değil	none
+≅	yaklaşık olarak eşit	none
+≆	yaklaşık ama tam olarak eşit değil	none
+≈	hemen hemen eşit	none
+≌	tamamen eşit	none
+≍	denk	none
+≭	denk değil	none
+≎	geometrik olarak denk	none
+≑	geometrik olarak eşit	none
+≚	eş açılı	none
+≬	arasında	none
+≠	eşit değil	none
+≡	özdeş	none
+≣	kesinlikle özdeş	none
+≢	özdeş değil	none
+∼	benzer	none
+≙	tahmin	none
+≟	sorgulu eşittir	none
+
+#comparison signs
+<	küçüktür	some
+>	büyüktür	some
+≤	eşit veya küçüktür	none
+≦	eşit veya küçüktür	none
+≪	çok küçüktür	none
+≥	eşit veya büyüktür	none
+≧	eşit veya büyüktür	none
+≫	çok büyüktür	none
+≶	küçüktür veya büyüktür	none
+≷	büyüktür veya küçüktür	none
+≮	küçük değildir	none
+≯	büyük değildir	none
+
+#Functions
+⁻	ters	some
+∘	halka operatörü	none
+∂	kısmi türev	none
+∇	nabla	none
+
+#Geometry and linear Algebra
+⃗	vektör	none
+△	üçgen	none
+▭	dikdörtgen	none
+∟	dik açı	none
+∠	açı	none
+∥	paralel	none
+∦	paralel değil	none
+⊥	dik	none
+⟂	dik	none
+‖	vektör normu	none
+̂	şapka	none
+∿	sinüs dalgası	none
+∡	ölçülü açı	none
+∢	küresel açı	none
+
+#Logical operators
+∀	her biri için	none
 ∃	vardır	none
-∄	Hiçbir	none
-∅	Boş Küme	none
-∆	Artım	none
-∇	Nabla	none
-∈	Elemanıdır	none
-∉	Elemanı değildir	none
-∊	Küçük elemanıdır	none
-∋	Içerir	none
-∌	Içermez	none
-∍	Küçük içerir	none
-∎	İspat sonu	none
-∏	Çarpım	none
+∄	yoktur	none
+⇐	gerektirir	none
 
-# Miscellaneous Mathematical Operators
-∑	Toplam	none
-√	Karekök	none
-∛	Küp kök	none
-∜	4.dereceden kök	none
-∝	Orantılı	none
-∞	Sonsuz	none
-∟	Dik açı	none
-∠	Açı	none
-∥	Paralel	none
-∦	Paralel değil	none
-∧	Mantık ve	none
-∨	Mantık veya	none
-∩	Kesişim	none
-∪	Birleşim	none
-∫	İntegral	none
-∬	Çift entegral	none
-+∭	Üç katlı integral	none
-∴	Dolayısıyla	none
-∵	Çünkü	none
-∶	Oran	none
-∷	Orantı	none
-≤	Eşit veya daha az	none
-≥	Eşit veya daha fazla	none
-⊂	Alt kümesi	none
-⊃	Üstkümesi	none
-⊆	Eşit veya alt kümesi	none
-⊇	Eşit veya üstkümesi	none
- ⊀	Önce gelmez	none
- ⊁	does not succeed	none
-
+#Other mathematical Operators
+∈	elemanıdır	none
+∉	elemanı değildir	none
+∊	küçük elemanıdır	none
+∋	içerir	none
+∌	içermez	none
+∍	küçük içerir	none
+∎	ispat sonu	none
+∏	çarpım	none
+∐	ortak çarpım	none
+∑	toplam	none
+√	karekök	none
+∛	küp kök	none
+∜	dördüncü kök	none
+∝	orantılı	none
+∞	sonsuz	none
+∧	mantık ve	none
+∨	mantık veya	none
+¬	değil	none
+∩	kesişim	none
+∪	birleşim	none
+∫	integral	none
+∬	çift integral	none
+∭	üç katlı integral	none
+∮	kontur integrali	none
+∯	yüzey integrali	none
+∰	hacim integrali	none
+∱	saat yönünde integral	none
+∲	saat yönünde kontur integrali	none
+∳	saat yönü tersinde kontur integrali	none
+∴	dolayısıyla	none
+∵	çünkü	none
+∶	oran	none
+∷	orantı	none
+∹	fazlalık	none
+∺	geometrik oran	none
+≀	çelenk çarpımı	none
+≏	arasındaki fark	none
+≐	limite yaklaşır	none
+∙	madde imi operatörü	none
+∣	böler	none
+∤	bölmez	none
+≔	ikinokta eşittir	none
+≕	eşittir ikinokta	none
+≺	önce gelir	none
+≻	sonra gelir	none
+⊀	önce gelmez	none
+⊁	sonra gelmez	none
 
 # Vulgar Fractions U+2150 to U+215E
+¼	dörtte bir	none
+½	ikide bir	none
+¾	dörtte üç	none
 ⅐	yedide bir	none
 ⅑	dokuzda bir	none
 ⅒	onda bir	none
@@ -293,7 +362,7 @@ _	alt çizgi	most
 ℑ	karmaşık sayının sanal kısmı	none
 ℍ	dördey	none
 ℕ	doğal sayılar	none
-𝕁	negatif olmayan (tam) sayılar	none
+𝕁	negatif olmayan tam sayılar	none
 ℚ	rasyonel sayılar	none
 ℝ	gerçek sayılar	none
 ℜ	karmaşık sayının gerçek kısmı	none
@@ -302,8 +371,8 @@ _	alt çizgi	most
 ℶ	beth sayısı	none
 
 # Miscellaneous Technical
-⌘	Mek Komut tuşu	none
-⌥	mek Option tuşu	none
+⌘	Mac komut tuşu	none
+⌥	Mac option tuşu	none
 
 ## 6-dot cell
 ### note: the character on the next line is U+2800 (braille space), not U+0020 (ASCII space)
@@ -363,7 +432,7 @@ _	alt çizgi	most
 ⠵	braille 1 3 5 6
 ⠶	braille 2 3 5 6
 ⠷	braille 1 2 3 5 6
-⠸	braille 1 2 3
+⠸	braille 4 5 6
 ⠹	braille 1 4 5 6
 ⠺	braille 2 4 5 6
 ⠻	braille 1 2 4 5 6
@@ -492,7 +561,7 @@ _	alt çizgi	most
 ⢵	braille 1 3 5 6 8
 ⢶	braille 2 3 5 6 8
 ⢷	braille 1 2 3 5 6 8
-⢸	braille 1 2 3 8
+⢸	braille 4 5 6 8
 ⢹	braille 1 4 5 6 8
 ⢺	braille 2 4 5 6 8
 ⢻	braille 1 2 4 5 6 8
@@ -721,7 +790,6 @@ _	alt çizgi	most
 ژ	j	some
 ە	hemze	some
 پ	pe	some
-چ	çim	some
 ً	İki Üstün	some
 ؤ	Vav Hemze	some
 ئ	ya hemze	some
@@ -730,7 +798,6 @@ _	alt çizgi	most
 ى	ye	some
 َ	Üstün	some
 ّ	Şed	some
-ى	ye	some
 ِ	esre	some
 ْ	Cezim sükun	some
 ة	ta-yı merbut	some

@@ -219,17 +219,17 @@ body:
     validations:
       required: true
     attributes:
-      label: Does the issue still occur after you run the COM Registration Fixing Tool in NVDA's tools menu?
+      label: Does the issue still occur after you run the System Accessibility Repair Tool (COM Registration Fixing Tool in older versions) in NVDA's tools menu?
       description: |
         COM DLL files, which the IAccessible COM interface depends on, can get unregistered after installing and uninstalling different programs on a computer.
         The consequence is that NVDA in certain cases does not work properly.
         Specifically, it reports "unknown" when trying to navigate websites or fails to switch between focus and browse mode, it causes performance issues, focus instability and other odd problems.
-        The COM registry fixing tool has been introduced in order to re-register those DLL files.
+        The System Accessibility Repair Tool has been introduced in order to re-register those DLL files.
         In any case, re-registering those DLL files does not have any negative impact on a computer's functionality.
         Note that when installing NVDA, this tool is run automatically.
         Thus, it is recommended to run the fixing tool whenever focus problems, performance problems on websites or navigation problems in focus or browse mode on different interfaces are encountered.
       options: [
-        "I have run the COM Registration Fixing Tool and the issue still occurs",
-        "I have run the COM Registration Fixing Tool and the issue no longer occurs",
-        "I have not run the COM Registration Fixing Tool",
+        "I have run the System Accessibility Repair Tool and the issue still occurs",
+        "I have run the System Accessibility Repair Tool and the issue no longer occurs",
+        "I have not run the System Accessibility Repair Tool",
       ]

@@ -8,10 +8,16 @@ Focus Manager for the magnifier module.
 Handles all focus tracking logic and coordinate calculations.
 """
 
+from logHandler import log
 import api
 import winUser
 import mouseHandler
-from .types import Coordinates, FocusType
+import time
+import locationHelper
+import textInfos
+from textInfos.offsets import OffsetsTextInfo
+from .types import Coordinates, MagnifierFollowFocusType
+from ..config import getFollowState
 
 
 class FocusManager:
@@ -20,74 +26,119 @@ class FocusManager:
 	Tracks mouse, system focus, and navigator object positions.
 	"""
 
+	_SYSTEM_FOCUS_STICKINESS_SECONDS: float = 0.12
+
 	def __init__(self):
 		"""Initialize the focus manager."""
-		self._lastFocusedObject: FocusType | None = None
+		self._lastFocusedObject: MagnifierFollowFocusType | None = None
 		self._lastMousePosition = Coordinates(0, 0)
 		self._lastSystemFocusPosition = Coordinates(0, 0)
+		self._lastReviewPosition: Coordinates | None = None
 		self._lastNavigatorObjectPosition = Coordinates(0, 0)
 		self._lastValidSystemFocusPosition = Coordinates(0, 0)
+		self._lastValidReviewPosition = Coordinates(0, 0)
 		self._lastValidNavigatorObjectPosition = Coordinates(0, 0)
+		self._lastSystemFocusChangeTime: float = 0.0
 
 	def getCurrentFocusCoordinates(self) -> Coordinates:
 		"""
 		Get the current focus coordinates based on priority.
-		Priority: Mouse > System Focus > Navigator Object
+		Priority: Mouse (drag) > Mouse > System Focus > Review > Navigator Object.
+		Special case: when both the system focus and navigator object change simultaneously
+		but the review cursor does not (e.g. table cell navigation via numpad), the navigator
+		object takes priority over system focus.
+
+		Each source is only considered when its corresponding setting is enabled.
 
 		:return: The (x, y) coordinates of the current focus
 		"""
-		# Get all three positions
-		systemFocusPosition = self._getSystemFocusPosition()
-		navigatorObjectPosition = self._getNavigatorObjectPosition()
-		mousePosition = self._getMousePosition()
+		now = time.monotonic()
 
-		# Check if left mouse button is pressed
+		mousePosition = self._getMousePosition()
+		systemFocusPosition = self._getSystemFocusPosition()
+		reviewPosition = self._getReviewPosition()
+		navigatorPosition = self._getNavigatorObjectPosition()
 		isClickPressed = mouseHandler.isLeftMouseButtonLocked()
 
-		# Track which positions have changed
-		systemFocusChanged = self._lastSystemFocusPosition != systemFocusPosition
-		navigatorObjectChanged = self._lastNavigatorObjectPosition != navigatorObjectPosition
-		mouseChanged = self._lastMousePosition != mousePosition
+		# Cache settings once — each call reads from config.conf
+		isFollowMouse = getFollowState(MagnifierFollowFocusType.MOUSE)
+		isFollowSystemFocus = getFollowState(MagnifierFollowFocusType.SYSTEM_FOCUS)
+		isFollowReviewCursor = getFollowState(MagnifierFollowFocusType.REVIEW)
+		isFollowNavigatorObject = getFollowState(MagnifierFollowFocusType.NAVIGATOR_OBJECT)
 
-		# Update last positions
-		if systemFocusChanged:
-			self._lastSystemFocusPosition = systemFocusPosition
-		if navigatorObjectChanged:
-			self._lastNavigatorObjectPosition = navigatorObjectPosition
+		mouseChanged = self._lastMousePosition != mousePosition
+		systemFocusChanged = self._lastSystemFocusPosition != systemFocusPosition
+		reviewChanged = reviewPosition is not None and self._lastReviewPosition != reviewPosition
+		navigatorChanged = self._lastNavigatorObjectPosition != navigatorPosition
+
+		# Update tracked positions
 		if mouseChanged:
 			self._lastMousePosition = mousePosition
-
-		# Priority 1: Mouse during drag & drop
-		if isClickPressed:
-			self._lastFocusedObject = FocusType.MOUSE
-			return mousePosition
-
-		# Priority 2: Mouse movement (when not dragging)
-		if mouseChanged:
-			self._lastFocusedObject = FocusType.MOUSE
-			return mousePosition
-
-		# Priority 3: System focus (focus object + browse mode cursor)
 		if systemFocusChanged:
-			self._lastFocusedObject = FocusType.SYSTEM_FOCUS
+			self._lastSystemFocusPosition = systemFocusPosition
+			self._lastSystemFocusChangeTime = now
+		if reviewChanged:
+			self._lastReviewPosition = reviewPosition
+		if navigatorChanged:
+			self._lastNavigatorObjectPosition = navigatorPosition
+
+		# Priority 1: Mouse — drag (fires even when stationary) or movement
+		if (isClickPressed or mouseChanged) and isFollowMouse:
+			self._lastFocusedObject = MagnifierFollowFocusType.MOUSE
+			return mousePosition
+
+		# Special case: table cell navigation (numpad).
+		# When both the system focus and the navigator object change simultaneously but the
+		# review cursor does not, the navigator object reflects the user's explicit navigation
+		# intent and therefore takes priority over the system focus.
+		if navigatorChanged and systemFocusChanged and not reviewChanged and isFollowNavigatorObject:
+			self._lastFocusedObject = MagnifierFollowFocusType.NAVIGATOR_OBJECT
+			return navigatorPosition
+
+		# Priority 2: System focus (focus object + browse mode cursor)
+		if systemFocusChanged and isFollowSystemFocus:
+			self._lastFocusedObject = MagnifierFollowFocusType.SYSTEM_FOCUS
 			return systemFocusPosition
 
-		# Priority 4: Navigator object (NumPad navigation)
-		if navigatorObjectChanged:
-			self._lastFocusedObject = FocusType.NAVIGATOR
-			return navigatorObjectPosition
+		# Priority 3: Review cursor
+		if reviewChanged and isFollowReviewCursor and reviewPosition is not None:
+			self._lastFocusedObject = MagnifierFollowFocusType.REVIEW
+			return reviewPosition
 
-		# No changes detected - return last focused position
-		match self._lastFocusedObject:
-			case FocusType.MOUSE:
-				return mousePosition
-			case FocusType.SYSTEM_FOCUS:
-				return systemFocusPosition
-			case FocusType.NAVIGATOR:
-				return navigatorObjectPosition
-			case _:
-				# Default to mouse if no previous focus
-				return mousePosition
+		# Priority 4: Navigator object (NumPad navigation)
+		if navigatorChanged and isFollowNavigatorObject:
+			self._lastFocusedObject = MagnifierFollowFocusType.NAVIGATOR_OBJECT
+			return navigatorPosition
+
+		# Resolve the effective review position once (fallback to last valid when None)
+		reviewEffectivePosition = (
+			reviewPosition if reviewPosition is not None else self._lastValidReviewPosition
+		)
+
+		# All sources in priority order
+		_sources = (
+			(MagnifierFollowFocusType.MOUSE, isFollowMouse, mousePosition),
+			(MagnifierFollowFocusType.SYSTEM_FOCUS, isFollowSystemFocus, systemFocusPosition),
+			(MagnifierFollowFocusType.REVIEW, isFollowReviewCursor, reviewEffectivePosition),
+			(MagnifierFollowFocusType.NAVIGATOR_OBJECT, isFollowNavigatorObject, navigatorPosition),
+		)
+
+		# Keep current source if still enabled; otherwise mark it as NONE so we switch
+		for focusType, isEnabled, position in _sources:
+			if self._lastFocusedObject == focusType:
+				if isEnabled:
+					return position
+				self._lastFocusedObject = None
+				break
+
+		# No active source – switch to the highest-priority enabled source
+		for focusType, isEnabled, position in _sources:
+			if isEnabled:
+				self._lastFocusedObject = focusType
+				return position
+
+		# All sources disabled – return mouse position without changing focus state
+		return mousePosition
 
 	def _getMousePosition(self) -> Coordinates:
 		"""
@@ -108,7 +159,7 @@ class FocusManager:
 		try:
 			# Get caret position (works for both browse mode and regular focus)
 			caretPosition = api.getCaretPosition()
-			point = caretPosition.pointAtStart
+			point = self._getPointAtStart(caretPosition)
 			coords = Coordinates(point.x, point.y)
 			# Store as last valid position if not (0, 0)
 			if coords != Coordinates(0, 0):
@@ -134,19 +185,52 @@ class FocusManager:
 
 	def _getReviewPosition(self) -> Coordinates | None:
 		"""
-		Get the current review position (review cursor).
+		Get the current review cursor position.
 
-		:return: The (x, y) coordinates of the review position, or None if not available
+		:return: The (x, y) coordinates of the review cursor, or ``None`` if not available.
 		"""
 		reviewPosition = api.getReviewPosition()
 		if reviewPosition:
 			try:
-				point = reviewPosition.pointAtStart
-				return Coordinates(point.x, point.y)
+				point = self._getPointAtStart(reviewPosition)
+				coords = Coordinates(point.x, point.y)
+				if coords != Coordinates(0, 0):
+					self._lastValidReviewPosition = coords
+				return coords
 			except (NotImplementedError, LookupError, AttributeError):
 				# Review position may not support pointAtStart
 				pass
 		return None
+
+	def _getPointAtStart(self, textInfo: textInfos.TextInfo) -> locationHelper.Point:
+		"""
+		Get a point for the start of a text range with a local end-of-text fallback.
+
+		When a collapsed TextInfo is positioned at an exclusive end offset, use the
+		right edge of the previous character if available. This keeps the workaround
+		local to the magnifier instead of changing TextInfo behavior globally.
+		"""
+		try:
+			return textInfo.pointAtStart
+		except (NotImplementedError, LookupError, AttributeError) as e:
+			log.debug(f"pointAtStart failed for {textInfo!r}: {e}", exc_info=True)
+			originalExc = e
+
+		# Only apply the fallback for TextInfos exposing the offset-based internals
+		# we need. Otherwise, preserve the original failure.
+		if not (isinstance(textInfo, OffsetsTextInfo) and textInfo.isCollapsed and textInfo._startOffset > 0):
+			raise originalExc
+
+		prevOffset = textInfo._startOffset - 1
+		try:
+			return textInfo._getBoundingRectFromOffset(prevOffset).topRight
+		except (NotImplementedError, LookupError, AttributeError) as e:
+			log.debug(f"_getBoundingRectFromOffset failed: {e}", exc_info=True)
+			try:
+				return textInfo._getPointFromOffset(prevOffset)
+			except (NotImplementedError, LookupError, AttributeError) as e:
+				log.debug(f"_getPointFromOffset failed: {e}", exc_info=True)
+		raise originalExc
 
 	def _getNavigatorObjectLocation(self) -> Coordinates | None:
 		"""
@@ -169,29 +253,30 @@ class FocusManager:
 	def _getNavigatorObjectPosition(self) -> Coordinates:
 		"""
 		Get the navigator object position (NumPad navigation).
-		Tries review position first, then navigator object location.
 
-		:return: The (x, y) coordinates of the navigator object
+		Updates :attr:`_lastValidNavigatorObjectPosition` when a valid position is obtained.
+
+		:return: The (x, y) coordinates of the navigator object center,
+			or the last valid position as fallback.
 		"""
-		# Try review position first
-		position = self._getReviewPosition()
-		if position and position != Coordinates(0, 0):
-			self._lastValidNavigatorObjectPosition = position
-			return position
-
-		# Fallback: use navigator object location
 		position = self._getNavigatorObjectLocation()
 		if position and position != Coordinates(0, 0):
 			self._lastValidNavigatorObjectPosition = position
 			return position
-
-		# Return last valid navigator object position instead of (0, 0)
 		return self._lastValidNavigatorObjectPosition
 
-	def getLastFocusType(self) -> FocusType | None:
+	def getLastFocusType(self) -> MagnifierFollowFocusType | None:
 		"""
 		Get the type of the last focused object.
 
-		:return: The type of the last focused object
+		:return: The type of the last focused object, or None when no focus source is active.
 		"""
 		return self._lastFocusedObject
+
+	def updateFollowedFocus(self) -> None:
+		"""
+		Force an update of the magnifier focus based on current settings.
+		Called after toggling follow settings to immediately apply changes.
+		"""
+		self._lastFocusedObject = None  # Reset to force re-evaluation of focus
+		self.getCurrentFocusCoordinates()

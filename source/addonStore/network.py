@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2024 NV Access Limited
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2022-2026 NV Access Limited
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from concurrent.futures import (
 	Future,
@@ -112,7 +112,13 @@ class AddonFileDownloader:
 		if NVDAState.shouldWriteToDisk():
 			# empty temporary downloads
 			if os.path.exists(WritePaths.addonStoreDownloadDir):
-				shutil.rmtree(WritePaths.addonStoreDownloadDir)
+				try:
+					shutil.rmtree(WritePaths.addonStoreDownloadDir)
+				except OSError:
+					log.error(
+						f"Failed to remove addon store download directory: {WritePaths.addonStoreDownloadDir}",
+						exc_info=True,
+					)
 			# ensure downloads dir exist
 			pathlib.Path(WritePaths.addonStoreDownloadDir).mkdir(parents=True, exist_ok=True)
 
@@ -198,7 +204,14 @@ class AddonFileDownloader:
 		with self.DOWNLOAD_LOCK:
 			self.progress.clear()
 			self._pending.clear()
-		shutil.rmtree(WritePaths.addonStoreDownloadDir)
+		if NVDAState.shouldWriteToDisk() and os.path.exists(WritePaths.addonStoreDownloadDir):
+			try:
+				shutil.rmtree(WritePaths.addonStoreDownloadDir)
+			except OSError:
+				log.error(
+					f"Failed to remove addon store download directory: {WritePaths.addonStoreDownloadDir}",
+					exc_info=True,
+				)
 
 	def _downloadAddonToPath(
 		self,

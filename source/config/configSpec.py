@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
-# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen
+# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen, Kefas Lungu
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -13,7 +13,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 21
+latestSchemaVersion = 22
 
 #: The configuration specification string
 #: @type: String
@@ -84,6 +84,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	showMessages = integer(0, 2, default=1)
 	# Timeout after the message will disappear from braille display
 	messageTimeout = integer(default=4, min=1, max=20)
+	# Rate for automatic scroll (cells/sec)
+	autoScrollRate = float(default=10, min=1, max=20)
 	tetherTo = option("auto", "focus", "review", default="auto")
 	reviewRoutingMovesSystemCaret = featureFlag(\
 		optionsEnum="ReviewRoutingMovesSystemCaretFlag", behaviorOfDefault="NEVER")
@@ -115,10 +117,14 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 # Magnifier settings
 [magnifier]
 	defaultZoomLevel = float(min=1.0, max=10.0, default=2.0)
-	defaultPanStep = integer(min=1, max=100, default=10)
-	defaultFullscreenMode = string(default="center")
 	isTrueCentered = boolean(default=False)
 	defaultFilter = string(default="normal")
+	followMouse = boolean(default=True)
+	followSystemFocus = boolean(default=True)
+	followReviewCursor = boolean(default=True)
+	followNavigatorObject = boolean(default=True)
+	defaultPanStep = integer(min=1, max=100, default=10)
+	defaultFullscreenMode = string(default="center")
 	keepMouseCentered = boolean(default=false)
 	saveShortcutChanges = boolean(default=false)
 
@@ -215,6 +221,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enableOnPageLoad = boolean(default=true)
 	loadChromiumVBufOnBusyState = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	textParagraphRegex = string(default="{configDefaults.DEFAULT_TEXT_PARAGRAPH_REGEX}")
+	# Element types available for cycling in browse touch mode.
+	browseModeTouchNavigationElements = string_list(default=list("heading", "link", "formField", "list", "table"))
 
 [touch]
 	enabled = boolean(default=true)
@@ -386,9 +394,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	[[speech]]
 		impairment = option("LearningDisability", "Blindness", "LowVision", default="Blindness")
 		# any known language code and sub-code -- could be en-uk, etc
-		language = string(default="Auto")
-		# Any known speech style (falls back to ClearSpeak)
-		speechStyle = string(default="ClearSpeak")
+		language = string(default="en")
 		verbosity = option("Terse", "Medium", "Verbose", default="Medium")
 		# Change from text speech rate (%)
 		mathRate = integer(default=100, min=10, max=100)
@@ -461,6 +467,11 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 			combinationPermutation = string(default="Auto")
 			# Valid values: Bar, Conjugate, Mean, Auto
 			bar = string(default="Auto")
+
+		# Set a different speechStyle depending on the language
+		[[__many__]]
+			# Any known speech style for the language
+			speechStyle = string(default="")
 
 	[[navigation]]
 		navMode = option("Enhanced", "Simple", "Character", default="Enhanced")

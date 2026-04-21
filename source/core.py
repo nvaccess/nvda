@@ -323,11 +323,14 @@ def resetConfiguration(factoryDefaults=False):
 	import tones
 	import audio
 	import screenCurtain
+	import mathPres
 
 	log.debug("Terminating vision")
 	vision.terminate()
 	log.debug("Terminating Screen Curtain")
 	screenCurtain.terminate()
+	log.debug("Terminating math presentation")
+	mathPres.terminate()
 	log.debug("Terminating braille")
 	braille.terminate()
 	log.debug("Terminating brailleInput")
@@ -388,6 +391,9 @@ def resetConfiguration(factoryDefaults=False):
 	brailleInput.initialize()
 	log.debug("Initializing braille")
 	braille.initialize()
+	# Math
+	log.debug("Initializing math presentation")
+	mathPres.initialize()
 	# Vision
 	log.debug("initializing vision")
 	vision.initialize()
@@ -758,6 +764,10 @@ def main():
 
 	log.debug("Initializing appModule Handler")
 	appModuleHandler.initialize()
+	log.debug("Initializing asyncio event loop")
+	import _asyncioEventLoop
+
+	_asyncioEventLoop.initialize()
 	log.debug("initializing background i/o")
 	import hwIo
 
@@ -1100,6 +1110,7 @@ def main():
 	_terminate(characterProcessing)
 	_terminate(bdDetect)
 	_terminate(hwIo)
+	_terminate(_asyncioEventLoop, name="asyncio event loop")
 	_terminate(addonHandler)
 	_terminate(dataManager, name="addon dataManager")
 	_terminate(garbageHandler)

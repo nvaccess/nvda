@@ -51,6 +51,7 @@ import threading
 import weakref
 from typing import (
 	Any,
+	Final,
 	Generic,
 	Optional,
 	Type,
@@ -63,6 +64,10 @@ from typing import (
 import wx
 from wx.lib import scrolledpanel, newevent
 from abc import ABCMeta
+
+# 600 was fairly arbitrarily chosen by a visual user to look acceptable on their machine.
+COMPLEX_DIALOG_WIDTH: Final[int] = 600
+"""Width of complex (non-message) dialogs."""
 
 #: border space to be used around all controls in dialogs
 BORDER_FOR_DIALOGS = 10
