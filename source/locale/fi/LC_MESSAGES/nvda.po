@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-09 08:28+0000\n"
-"PO-Revision-Date: 2026-04-13 00:28\n"
+"POT-Creation-Date: 2026-04-16 06:42+0000\n"
+"PO-Revision-Date: 2026-04-20 00:29\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -3983,7 +3983,7 @@ msgstr "Näyttää NVDA:n ääniasetukset."
 #. Translators: Input help mode message for go to privacy and security settings command.
 #: globalCommands.py:3404
 msgid "Shows NVDA's privacy and security settings"
-msgstr "Näyttää NVDA:n yksityisyys- ja suojausasetukset."
+msgstr "Näyttää NVDA:n tietosuoja- ja suojausasetukset."
 
 #. Translators: Input help mode message for go to vision settings command.
 #: globalCommands.py:3413
@@ -14774,7 +14774,7 @@ msgstr "Näönparannuksen tarjoajaa ei voida ottaa käyttöön, koska sen kkäyt
 #. Translators: The title of the privacy and security category in NVDA's settings.
 #: gui\settingsDialogs.py:5956
 msgid "Privacy and Security"
-msgstr "Yksityisyys ja suojaus"
+msgstr "Tietosuoja ja suojaus"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
@@ -18673,7 +18673,7 @@ msgid "selection removed"
 msgstr "Valinta peruttu"
 
 #. Translators: Speaks current row number (example output: row 3).
-#: speech\speech.py:2046 speech\speech.py:3097
+#: speech\speech.py:2046 speech\speech.py:3108
 #, python-format
 msgid "row %s"
 msgstr "rivi %s"
@@ -18685,7 +18685,7 @@ msgid "through {endRow}"
 msgstr "/ {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
-#: speech\speech.py:2066 speech\speech.py:3093
+#: speech\speech.py:2066 speech\speech.py:3104
 #, python-format
 msgid "column %s"
 msgstr "sarake %s"
@@ -19102,14 +19102,14 @@ msgid "out of grammar error"
 msgstr "kielioppivirhe loppui"
 
 #. Translators: Indicates end of a table.
-#: speech\speech.py:3070
+#: speech\speech.py:3081
 msgid "out of table"
 msgstr "taulukko loppui"
 
 #. Translators: Main part of the compound string to report a table
 #. Example: If the reported compound string is "table with 2 columns and 3 rows", {colCountTranslation}
 #. will be replaced by "2 columns" and {rowCountTranslation} by "3 rows"
-#: speech\speech.py:3085
+#: speech\speech.py:3096
 #, python-brace-format
 msgid "table with {columnCountText} and {rowCountText}"
 msgstr "taulukko jossa {columnCountText} ja {rowCountText}"

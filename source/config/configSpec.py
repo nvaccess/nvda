@@ -117,9 +117,13 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 # Magnifier settings
 [magnifier]
 	zoomLevel = float(min=1.0, max=10.0, default=2.0)
-	panStep = integer(min=1, max=100, default=10)
 	isTrueCentered = boolean(default=False)
 	filter = string(default="normal")
+	followMouse = boolean(default=True)
+	followSystemFocus = boolean(default=True)
+	followReviewCursor = boolean(default=True)
+	followNavigatorObject = boolean(default=True)
+	panStep = integer(min=1, max=100, default=10)
 	fullscreenMode = string(default="center")
 	keepMouseCentered = boolean(default=false)
 

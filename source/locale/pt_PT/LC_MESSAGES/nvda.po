@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-09 08:28+0000\n"
-"PO-Revision-Date: 2026-04-13 00:28\n"
+"POT-Creation-Date: 2026-04-16 06:42+0000\n"
+"PO-Revision-Date: 2026-04-20 00:29\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -12645,7 +12645,7 @@ msgstr "Está a tentar instalar uma versão do NVDA anterior à que está instal
 #. the state of the current NVDA installation.
 #: gui\installerGui.py:366
 msgid "An existing NVDA installation has been detected, but its version cannot be determined. If you are attempting to install an earlier version of NVDA, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
-msgstr ""
+msgstr "Uma instalação do NVDA existente foi detectada, mas a versão não pode ser determinada. Se estiver a tentar instalar uma versão anterior do NVDA, deve primeiro cancelar esta instalação e desinstalar completamente o NVDA antes de instalar a versão anterior."
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
@@ -12657,13 +12657,13 @@ msgstr "&Prosseguir com a instalação (não recomendado)"
 #. to an older version.
 #: gui\installerGui.py:425
 msgid "You are attempting to replace an existing portable copy of NVDA with an earlier version. Downgrading NVDA is not recommended. You should cancel this operation and create a new portable copy instead. "
-msgstr ""
+msgstr "Está a tentar substituir uma cópia portátil existente do NVDA por uma versão anterior. O downgrade do NVDA não é recomendada. Deve cancelar esta operação e criar uma nova cópia portátil. "
 
 #. Translators: A warning presented when the installer is unable to determine
 #. the state of the current NVDA installation.
 #: gui\installerGui.py:433
 msgid "An existing copy of NVDA has been detected in the chosen directory, but its version cannot be determined. If you are attempting to downgrade to an earlier version of NVDA, you should cancel this operation and create a new portable copy. "
-msgstr ""
+msgstr "Uma cópia existente do NVDA foi detectada no diretório escolhido, mas a versão não pode ser determinada. Se estiver a tentar fazer o downgrade para uma versão anterior do NVDA, deve cancelar esta operação e criar uma nova cópia portátil. "
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
@@ -12758,7 +12758,7 @@ msgstr "Por favor especifique um diretório onde pretende criar a cópia portát
 #: gui\installerGui.py:642
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. It may include system variables (e.g. %temp%, %homepath%) and must start with a drive letter (e.g. C:\\). Current path: {path}. "
-msgstr ""
+msgstr "Especifique o caminho absoluto onde a cópia portátil deve ser criada. Pode incluir variáveis do sistema (por exemplo, %temp%, %homepath%) e deve começar com uma letra de unidade (por exemplo, C:\\). Caminho atual: {path}. "
 
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
 #: gui\installerGui.py:694
@@ -13694,13 +13694,13 @@ msgstr "Realçar o foco de navegação com os pontos 7 e 8"
 #: gui\settingsDialogs.py:2995
 msgctxt "math"
 msgid "Application support"
-msgstr ""
+msgstr "Suporte da Aplicação"
 
 #. Translators: label for checkbox to use native math presentation support instead of MathCAT in Word and Outlook
 #: gui\settingsDialogs.py:3002
 msgctxt "math"
 msgid "Use native math support in Word and Outlook"
-msgstr ""
+msgstr "Use o suporte matemático nativo no Word e no Outlook"
 
 #. Translators: This is the label for the document formatting panel.
 #. Translators: This is the label for a group of advanced options in the
@@ -14794,7 +14794,7 @@ msgstr "&Nível de registo:"
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
 #: gui\settingsDialogs.py:6040
 msgid "Allow NV Access to gather NVDA usage statistics"
-msgstr "Permitir que o NV Access recolha estatísticas de utilização do NVDA"
+msgstr "Permitir que a NV Access recolha estatísticas de utilização do NVDA"
 
 #. Translators: This is the label for the NVDA settings dialog.
 #: gui\settingsDialogs.py:6157
@@ -15323,7 +15323,7 @@ msgstr "Resultados da verificação do VirusTotal:"
 msgctxt "addonStore"
 msgid "{malicious} malware scanner detected this add-on as potentially malicious (out of {total})."
 msgid_plural "{malicious} malware scanners detected this add-on as potentially malicious (out of {total})."
-msgstr[0] "{malicious} O scanner de malware detetou este extra como potencialmente malicioso (de um total de {total})."
+msgstr[0] "{malicious} O scanner de malware detectou este extra como potencialmente malicioso (de um total de {total})."
 msgstr[1] "{malicious} O scanner de malware detetou este extra como potencialmente malicioso (de um total de {total})."
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
@@ -15567,25 +15567,25 @@ msgstr "Extras atualizados, reiniciar o NVDA para ativar as alterações"
 #: gui\addonStoreGui\controls\messageDialogs.py:691
 msgctxt "addonStore"
 msgid "Copy Settings to System-wide Configuration"
-msgstr ""
+msgstr "Copiar configurações para a configuração de todo o sistema"
 
 #. Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:712
 msgctxt "addonStore"
 msgid "One or more add-ons are currently enabled in your NVDA configuration. If run on secure screens, they will have unrestricted, higher-than-administrator level access to your entire system. You are strongly encouraged to copy only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens."
-msgstr ""
+msgstr "Um ou mais extras estão atualmente ativados na sua configuração do NVDA. Se forem executados em ecrãs seguros, eles terão acesso irrestrito, superior ao nível de administrador, a todo o sistema. Recomenda-se vivamente que copie apenas os extras que são absolutamente necessários para utilizar o NVDA durante o início de sessão e em ecrãs seguros."
 
 #. Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:722
 msgctxt "addonStore"
 msgid "The system-wide NVDA configuration contains add-ons that are not present in your configuration. If you continue, these add-ons will be removed from the system-wide configuration."
-msgstr ""
+msgstr "A configuração do NVDA de todo o sistema contém extras que não estão presentes na sua configuração. Se continuar, esses extras serão removidos da configuração de todo o sistema."
 
 #. Translators: Instructional text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:731
 msgctxt "addonStore"
 msgid "Check only the add-ons you wish to copy to the system-wide configuration."
-msgstr ""
+msgstr "Marque apenas os extras que deseja copiar para a configuração de todo o sistema."
 
 #. Translators: The label of the list which allows users to select which add-ons to copy to the system profile
 #: gui\addonStoreGui\controls\messageDialogs.py:743
@@ -15605,13 +15605,13 @@ msgstr "Nome"
 #: gui\addonStoreGui\controls\messageDialogs.py:750
 msgctxt "addonStore"
 msgid "User version"
-msgstr ""
+msgstr "Versão do utilizador"
 
 #. Translators: The label for a column in the copy add-ons dialog that displays the version of the add-on present in the system-wide configuration
 #: gui\addonStoreGui\controls\messageDialogs.py:752
 msgctxt "addonStore"
 msgid "System-wide version"
-msgstr ""
+msgstr "Versão para todo o sistema"
 
 #. Translators: The label for a button in the copy add-ons dialog which will initiate the copy process
 #: gui\addonStoreGui\controls\messageDialogs.py:767
@@ -15629,13 +15629,13 @@ msgstr "Cancelar"
 #: gui\addonStoreGui\controls\messageDialogs.py:794
 msgctxt "addonStore"
 msgid "Not installed"
-msgstr ""
+msgstr "Não instalado"
 
 #. Translators: Prepended to the name of an add-on to indicate that it will be removed from the system-wide configuration.
 #: gui\addonStoreGui\controls\messageDialogs.py:796
 msgctxt "addonStore"
 msgid "[remove]"
-msgstr ""
+msgstr "[Eliminar]"
 
 #. Translators: A message to warn the user when attempting to copy add-ons for use on secure screens
 #: gui\addonStoreGui\controls\messageDialogs.py:864
@@ -15652,8 +15652,8 @@ msgstr[1] "Selecionou copiar {num} extras para a configuração geral do sistema
 msgctxt "addonStore"
 msgid "This action will remove {num} add-on from NVDA's system-wide configuration. "
 msgid_plural "This action will remove {num} add-ons from NVDA's system-wide configuration. "
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Esta ação removerá {num} extra da configuração de todo o sistema do NVDA. "
+msgstr[1] "Esta ação removerá {num} extras da configuração de todo o sistema do NVDA. "
 
 #. Translators: A prompt asking the user to confirm whether to perform an action.
 #: gui\addonStoreGui\controls\messageDialogs.py:885
@@ -16011,7 +16011,7 @@ msgstr "Erro na matemática em braille"
 #. Translators: Description of a MathCAT navigation gesture.
 #: mathPres\MathCAT\MathCAT.py:196
 msgid "Navigates within math"
-msgstr ""
+msgstr "Navegar dentro da matemática"
 
 #. Translators: Message to be announced during Keyboard Help
 #: mathPres\MathCAT\MathCAT.py:202
@@ -16066,7 +16066,7 @@ msgstr "Erro na matemática em braille."
 #, python-brace-format
 msgctxt "math"
 msgid "{lang} ({code})"
-msgstr ""
+msgstr "{lang} ({code})"
 
 #. Translators: Learning disabilities includes dyslexia and ADHD
 #. category of impairment that MathCAT supports: people with learning disabilities
@@ -18667,7 +18667,7 @@ msgid "selection removed"
 msgstr "seleção eliminada"
 
 #. Translators: Speaks current row number (example output: row 3).
-#: speech\speech.py:2046 speech\speech.py:3097
+#: speech\speech.py:2046 speech\speech.py:3108
 #, python-format
 msgid "row %s"
 msgstr "linha %s"
@@ -18679,7 +18679,7 @@ msgid "through {endRow}"
 msgstr "até {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
-#: speech\speech.py:2066 speech\speech.py:3093
+#: speech\speech.py:2066 speech\speech.py:3104
 #, python-format
 msgid "column %s"
 msgstr "coluna %s"
@@ -19096,14 +19096,14 @@ msgid "out of grammar error"
 msgstr "fora do erro gramatical"
 
 #. Translators: Indicates end of a table.
-#: speech\speech.py:3070
+#: speech\speech.py:3081
 msgid "out of table"
 msgstr "fora da tabela"
 
 #. Translators: Main part of the compound string to report a table
 #. Example: If the reported compound string is "table with 2 columns and 3 rows", {colCountTranslation}
 #. will be replaced by "2 columns" and {rowCountTranslation} by "3 rows"
-#: speech\speech.py:3085
+#: speech\speech.py:3096
 #, python-brace-format
 msgid "table with {columnCountText} and {rowCountText}"
 msgstr "tabela com {columnCountText} e {rowCountText}"

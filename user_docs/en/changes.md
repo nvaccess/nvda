@@ -45,6 +45,7 @@ The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is int
 * Product version for File Explorer will reflect actual Windows version including correct build and revision numbers.
 This is more noticeable for Windows releases which are enablement packages on top of an earlier release such as Windows 11 2025 Update based on Windows 11 2024 Update. (#19802, @josephsl)
 * Math navigation commands now support input help, on-demand speech mode, and can be remapped. (#19871, @RyanMcCleary)
+* The "COM Registration Fixing Tool" has been renamed to "System Accessibility Repair Tool" for clarity. (#19622, @bramd)
 
 ### Bug Fixes
 
@@ -58,6 +59,7 @@ This is more noticeable for Windows releases which are enablement packages on to
 * Configuration profile triggers now activate when the Add-on Store is open. (#19583, @bramd)
 * Decorative Unicode letters such as negative squared, negative circled, and regional indicator symbol characters are now normalized to their base Latin letters when Unicode normalization is enabled. (#19608, @bramd)
 * NVDA no longer crashes when the Add-on Store download directory cannot be cleaned up due to file permission errors. (#19202, @christopherpross)
+* Fixed NVDA freezing when navigating in JetBrains IDEs. (#16741, @christopherpross)
 
 ### Changes for Developers
 
@@ -66,9 +68,9 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Updated components:
   * Python from 3.13.11 to 3.13.12. (#19572, @dpy013)
   * Ruff to 0.15.9. (#19548, #19908)
-  * uv to 0.11.4. (#19548, #19908)
+  * uv to 0.11.7. (#19548, #19908, #19968)
   * Requests to 2.33.0. (#19877)
-  * cryptography to 46.0.6. (#19877)
+  * cryptography to 46.0.7. (#19877, #19968)
 * NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)
 * Subclasses of `browseMode.BrowseModeDocumentTreeInterceptor` that support screen layout being on and off should override the `_toggleScreenLayout` method, rather than implementing `script_toggleScreenLayout` directly. (#19487)
 * A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handleCOMErrors`. (#19646, @Emil-18)
