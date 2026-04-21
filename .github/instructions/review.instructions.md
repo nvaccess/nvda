@@ -10,7 +10,7 @@ Use these instructions when reviewing pull requests in this repository.
 
 ## Review goals
 
-* Prioritize correctness, avoiding regressions, positive accessibility impact, API compatibility, and security.
+* Prioritize correctness, positive accessibility impact, API compatibility, security and avoiding regressions.
 * Keep feedback specific and actionable; prefer concrete code suggestions over generic comments.
 * Classify issues by severity:
   * **Blocking**: likely bug, regression risk, security concern, API break, missing required tests/docs.

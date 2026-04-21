@@ -1,5 +1,5 @@
 ---
-applyTo: **/*.py
+applyTo: **/*.py, **/*.pyw
 description: This file describes the Python code style for the project.
 ---
 
