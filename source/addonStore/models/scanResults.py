@@ -62,10 +62,10 @@ class VirusTotalScanResults:
 							"timeout": self.timeout,
 							"confirmed-timeout": self.confirmedTimeout,
 							"type-unsupported": self.typeUnsupported,
-						}
-					}
-				]
-			}
+						},
+					},
+				],
+			},
 		}
 
 	@property
