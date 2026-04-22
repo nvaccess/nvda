@@ -50,22 +50,20 @@ class VirusTotalScanResults:
 		:return: A dictionary representing the scan results.
 		"""
 		return {
-			"scanResults": {
-				"virusTotal": [
-					{
-						"last_analysis_stats": {
-							"malicious": self.malicious,
-							"undetected": self.undetected,
-							"harmless": self.harmless,
-							"suspicious": self.suspicious,
-							"failure": self.failure,
-							"timeout": self.timeout,
-							"confirmed-timeout": self.confirmedTimeout,
-							"type-unsupported": self.typeUnsupported,
-						},
+			"virusTotal": [
+				{
+					"last_analysis_stats": {
+						"malicious": self.malicious,
+						"undetected": self.undetected,
+						"harmless": self.harmless,
+						"suspicious": self.suspicious,
+						"failure": self.failure,
+						"timeout": self.timeout,
+						"confirmed-timeout": self.confirmedTimeout,
+						"type-unsupported": self.typeUnsupported,
 					},
-				],
-			},
+				},
+			],
 		}
 
 	@property

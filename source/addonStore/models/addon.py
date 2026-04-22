@@ -97,14 +97,16 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 	def asdict(self) -> dict[str, Any]:
 		assert dataclasses.is_dataclass(self)
 		jsonData = dataclasses.asdict(self)
-		for field in jsonData:
+		jsonDataCopy = jsonData.copy()
+		for field in jsonDataCopy:
 			# dataclasses.asdict parses NamedTuples to JSON arrays,
 			# rather than JSON object dictionaries,
 			# which is expected by add-on infrastructure.
 			fieldValue = getattr(self, field)
 			if isinstance(fieldValue, MajorMinorPatch):
 				jsonData[field] = fieldValue._asdict()
-			if isinstance(fieldValue, VirusTotalScanResults):
+			elif isinstance(fieldValue, VirusTotalScanResults):
+				jsonData["vtScanUrl"] = fieldValue.scanUrl
 				jsonData[field] = fieldValue.toDict()
 		return jsonData
 
