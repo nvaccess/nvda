@@ -2815,6 +2815,8 @@ The available logging levels are:
 If you are concerned about privacy, do not set the logging level to this option.
 * Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
 Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
+* Secrets: In addition to debug logging, NVDA will not redact secrets such as passwords and API keys from logs.
+Only enable this temporarily when important debugging information is being redacted.
 
 ##### Allow NV Access to gather NVDA usage statistics {#GeneralSettingsGatherUsageStats}
 
@@ -6350,7 +6352,7 @@ Following are the command line options for NVDA:
 |`-q` |`--quit` |Quit already running copy of NVDA|
 |`-k` |`--check-running` |Report whether NVDA is running via the exit code; 0 if running, 1 if not running|
 |`-f LOGFILENAME` |`--log-file=LOGFILENAME` |The file where log messages should be written to. Logging is always disabled if secure mode is enabled.|
-|`-l LOGLEVEL` |`--log-level=LOGLEVEL` |The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, disabled 100). Logging is always disabled if secure mode is enabled.|
+|`-l LOGLEVEL` |`--log-level=LOGLEVEL` |The lowest level of message logged (secrets 5, debug 10, input/output 12, debug warning 15, info 20, disabled 100). Logging is always disabled if secure mode is enabled.|
 |`-c CONFIGPATH` |`--config-path=CONFIGPATH` |The path where all settings for NVDA are stored. The default value is forced if secure mode is enabled.|
 |`-n LANGUAGE` |`--lang=LANGUAGE` |Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc.|
 |`-m` |`--minimal` |No sounds, no interface, no start message, etc.|

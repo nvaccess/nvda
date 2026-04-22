@@ -1,8 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2022-2026 NV Access Limited
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
+from collections.abc import Generator
 import dataclasses
 import json
 import os
@@ -10,12 +11,8 @@ from datetime import datetime
 from typing import (
 	TYPE_CHECKING,
 	Any,
-	Dict,
-	Generator,
-	List,
 	Optional,
 	Protocol,
-	Union,
 )
 
 from requests.structures import CaseInsensitiveDict
@@ -38,7 +35,7 @@ if TYPE_CHECKING:
 		AddonManifest,
 	)
 
-	AddonGUICollectionT = Dict[Channel, CaseInsensitiveDict["_AddonGUIModel"]]
+	AddonGUICollectionT = dict[Channel, CaseInsensitiveDict["_AddonGUIModel"]]
 	"""
 	Add-ons that have the same ID except differ in casing cause a path collision,
 	as add-on IDs are installed to a case insensitive path.
@@ -97,16 +94,20 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 	def listItemVMId(self) -> str:
 		return f"{self.addonId}-{self.channel}"
 
-	def asdict(self) -> Dict[str, Any]:
+	def asdict(self) -> dict[str, Any]:
 		assert dataclasses.is_dataclass(self)
 		jsonData = dataclasses.asdict(self)
-		for field in jsonData:
+		jsonDataCopy = jsonData.copy()
+		for field in jsonDataCopy:
 			# dataclasses.asdict parses NamedTuples to JSON arrays,
 			# rather than JSON object dictionaries,
 			# which is expected by add-on infrastructure.
 			fieldValue = getattr(self, field)
 			if isinstance(fieldValue, MajorMinorPatch):
 				jsonData[field] = fieldValue._asdict()
+			elif isinstance(fieldValue, VirusTotalScanResults):
+				jsonData["vtScanUrl"] = fieldValue.scanUrl
+				jsonData[field] = fieldValue.toDict()
 		return jsonData
 
 
@@ -337,10 +338,10 @@ class CachedAddonsModel:
 	cacheHash: Optional[str]
 	cachedLanguage: str
 	# AddonApiVersionT or the string .network._LATEST_API_VER
-	nvdaAPIVersion: Union[addonAPIVersion.AddonApiVersionT, str]
+	nvdaAPIVersion: addonAPIVersion.AddonApiVersionT | str
 
 
-def _createInstalledStoreModelFromData(addon: Dict[str, Any]) -> InstalledAddonStoreModel:
+def _createInstalledStoreModelFromData(addon: dict[str, Any]) -> InstalledAddonStoreModel:
 	return InstalledAddonStoreModel(
 		addonId=addon["addonId"],
 		publisher=addon["publisher"],
@@ -362,7 +363,7 @@ def _createInstalledStoreModelFromData(addon: Dict[str, Any]) -> InstalledAddonS
 	)
 
 
-def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
+def _createStoreModelFromData(addon: dict[str, Any]) -> AddonStoreModel:
 	return AddonStoreModel(
 		addonId=addon["addonId"],
 		displayName=addon["displayName"],
@@ -417,7 +418,7 @@ def _createStoreCollectionFromJson(jsonData: str) -> "AddonGUICollectionT":
 	See https://github.com/nvaccess/addon-datastore#api-data-generation-details
 	for details of the data.
 	"""
-	data: List[Dict[str, Any]] = json.loads(jsonData)
+	data: list[dict[str, Any]] = json.loads(jsonData)
 	addonCollection = _createAddonGUICollection()
 
 	for addon in data:

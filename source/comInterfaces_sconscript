@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 ###
 # This file is a part of the NVDA project.
 # URL: http://www.nvda-project.org/
@@ -101,7 +102,8 @@ else:
 	with open(path, "r") as interfaceFile:
 		fileContent = interfaceFile.read()
 		fileContent = importPattern.sub(
-			codeReplacer(importTemplate, indentedGroups=("importList",)), fileContent
+			codeReplacer(importTemplate, indentedGroups=("importList",)),
+			fileContent,
 		)
 
 	with open(path, "w") as interfaceFile:
