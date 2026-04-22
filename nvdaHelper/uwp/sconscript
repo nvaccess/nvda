@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2017-2025 NV Access Limited, Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
@@ -12,7 +13,7 @@ Import(
 	[
 		"thirdPartyEnv",
 		"sourceDir",
-	]
+	],
 )
 
 env: Environment = thirdPartyEnv
@@ -32,11 +33,11 @@ vcRedistDirs = glob.glob(
 		f"{msvc[:2]}*",
 		targetArch if (targetArch := env["TARGET_ARCH"]) != "x86_64" else "x64",
 		f"Microsoft.VC{msvc.replace('.', '')}.CRT",
-	)
+	),
 )
 if len(vcRedistDirs) == 0:
 	raise RuntimeError(
-		"Could not locate vc redistributables. Perhaps the Universal Windows Platform component in visual Studio is not installed"
+		"Could not locate vc redistributables. Perhaps the Universal Windows Platform component in visual Studio is not installed",
 	)
 vcRedistDirs.sort(reverse=True)
 vcRedistLibs = ["msvcp140.dll", "vccorlib140.dll", "vcruntime140.dll", "vcruntime140_1.dll"]
@@ -51,5 +52,5 @@ for fn in vcRedistLibs:
 			break
 		else:
 			raise RuntimeError(
-				f"Could not locate {fn}. Perhaps the Universal Windows Platform component in visual Studio is not installed"
+				f"Could not locate {fn}. Perhaps the Universal Windows Platform component in visual Studio is not installed",
 			)
