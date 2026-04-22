@@ -148,7 +148,7 @@ void nvdaHelperLocal_initialize(bool secureMode) {
 	// we can cancel such calls when they would otherwise freeze NVDA's process.
 	apiHook_hookFunction_safe(SendMessageW, fake_SendMessageW, &real_SendMessageW);
 	apiHook_hookFunction_safe(SendMessageTimeoutW, fake_SendMessageTimeoutW, &real_SendMessageTimeoutW);
-	// Hook also SendMessageA and SendMessageTimeoutA as Java Access  Bridge uses them
+	// Hook also SendMessageA and SendMessageTimeoutA as Java Access Bridge uses them
 	apiHook_hookFunction_safe(SendMessageA, fake_SendMessageA, &real_SendMessageA);
 	apiHook_hookFunction_safe(SendMessageTimeoutA, fake_SendMessageTimeoutA, &real_SendMessageTimeoutA);
 
