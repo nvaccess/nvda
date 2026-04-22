@@ -124,7 +124,7 @@ class FocusManager:
 			(MagnifierFollowFocusType.NAVIGATOR_OBJECT, isFollowNavigatorObject, navigatorPosition),
 		)
 
-		# Keep current source if still enabled; otherwise mark it as NONE so we switch
+		# Keep current source if still enabled; otherwise clear it and freeze at _lastReportedCoordinates
 		for focusType, isEnabled, position in _sources:
 			if self._lastFocusedObject == focusType:
 				if isEnabled:
@@ -273,11 +273,3 @@ class FocusManager:
 		:return: The type of the last focused object, or None when no focus source is active.
 		"""
 		return self._lastFocusedObject
-
-	def updateFollowedFocus(self) -> None:
-		"""
-		Force an update of the magnifier focus based on current settings.
-		Called after toggling follow settings to immediately apply changes.
-		"""
-		self._lastFocusedObject = None  # Reset to force re-evaluation of focus
-		self.getCurrentFocusCoordinates()
