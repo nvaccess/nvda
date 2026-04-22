@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 ###
 # This file is a part of the NVDA project.
 # URL: http://www.nvda-project.org/
@@ -18,7 +19,7 @@ Import(
 		"ia2RPCStubs",
 		"detoursLib",
 		"apiHookObj",
-	]
+	],
 )
 
 winIPCUtilsObj = env.Object("./winIPCUtils", "../common/winIPCUtils.cpp")

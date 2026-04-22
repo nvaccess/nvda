@@ -7528,9 +7528,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 185</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA is now built with Python 3.13.12, 64-bit. (#18591, #19111, #19351, #19572, @LeonarddeR, @dpy013)</source>
-        <target>NVDA is now built with Python 3.13.12, 64-bit. (#18591, #19111, #19351, #19572, @LeonarddeR, @dpy013)</target>
+        <target>NVDA est désormais compilé avec Python 3.13.12, 64 bits. (#18591, #19111, #19351, #19572, @LeonarddeR, @dpy013)</target>
       </segment>
     </unit>
     <unit id="b5739562-1de4-4085-ac7c-05e20074d59a">
@@ -7674,9 +7674,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 200</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than `HIDP_VALUE_CAPS` structures. (#18902)</source>
-        <target>The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than `HIDP_VALUE_CAPS` structures. (#18902)</target>
+        <target>La propriété `inputButtonCaps` des objets `hwIo.hid.Hid` renvoie désormais correctement un tableau de structures `hidpi.HIDP_BUTTON_CAPS` plutôt que de structures `HIDP_VALUE_CAPS`. (#18902)</target>
       </segment>
     </unit>
     <unit id="384cc255-1841-45de-a59d-0b44f445dd60">
@@ -7703,9 +7703,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 203</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The `rgpszUsageIdentifier` member of the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation. (#18956)</source>
-        <target>The `rgpszUsageIdentifier` member of the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation. (#18956)</target>
+        <target>Le membre `rgpszUsageIdentifier` de la structure `updateCheck.CERT_USAGE_MATCH` est maintenant du type `POINTER(LPSTR)` plutôt que `c_void_p` pour s'aligner correctement sur la documentation Microsoft. (#18956)</target>
       </segment>
     </unit>
     <unit id="40d08dc8-cdf5-4c02-ac66-7d49d8642669">
@@ -7936,9 +7936,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 227</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The `none` field has been renamed to `ftHandle`.</source>
-        <target>The `none` field has been renamed to `ftHandle`.</target>
+        <target>Le champ `none` a été renommé en `ftHandle`.</target>
       </segment>
     </unit>
     <unit id="853c4dc7-7617-45e0-9d9c-80cd58ae4503">
@@ -8115,9 +8115,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 245</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The `FTD2XX.purge` method now raises `ValueError` if the `toPurge` argument is not one of "TX", "RX" or "TXRX".</source>
-        <target>The `FTD2XX.purge` method now raises `ValueError` if the `toPurge` argument is not one of "TX", "RX" or "TXRX".</target>
+        <target>La méthode `FTD2XX.purge` lève maintenant une `ValueError` si l'argument `toPurge` n'est pas parmi "TX", "RX" ou "TXRX".</target>
       </segment>
     </unit>
     <unit id="e2b70ec0-9500-43d7-9e59-6d2bc7ec2059">
@@ -8904,18 +8904,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 329</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The `HardwareInput`, `Input`, `KeyBdInput`, `MouseInput` and `NMHdrStruct` structures from `winUser` are deprecated.</source>
-        <target>The `HardwareInput`, `Input`, `KeyBdInput`, `MouseInput` and `NMHdrStruct` structures from `winUser` are deprecated.</target>
+        <target>Les structures `HardwareInput`, `Input`, `KeyBdInput`, `MouseInput` et `NMHdrStruct` de `winUser` sont obsolètes.</target>
       </segment>
     </unit>
     <unit id="3436f6a1-8be4-44af-ab0d-83d1a868c286">
       <notes>
         <note appliesTo="source">line: 330</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT`, `MOUSEINPUT` and `NMHDR` from `winBindings.user32` instead. (#18883, #19808)</source>
-        <target>Use `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT`, `MOUSEINPUT` and `NMHDR` from `winBindings.user32` instead. (#18883, #19808)</target>
+        <target>Utilisez plutôt `HARDWAREINPUT`, `INPUT`, `KEYBDINPUT`, `MOUSEINPUT` et `NMHDR` de `winBindings.user32`. (#18883, #19808)</target>
       </segment>
     </unit>
     <unit id="f9346b23-f4d3-436d-b044-3d7d73b4e406">
@@ -8999,9 +8999,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       <notes>
         <note appliesTo="source">line: 339</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Use the `ListViewWindowStyle` enumeration instead. (#18926, @LeonarddeR)</source>
-        <target>Use the `ListViewWindowStyle` enumeration instead. (#18926, @LeonarddeR)</target>
+        <target>Utilisez plutôt les énumérations `ListViewWindowStyle`. (#18926, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="515b56bd-de92-48a2-bce4-56a889b0149d">
@@ -9076,9 +9076,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 347</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Deprecations in `addonHandler`: (#19564)</source>
-        <target>Deprecations in `addonHandler`: (#19564)</target>
+        <target>Dépréciations dans `addonHandler` : (#19564)</target>
       </segment>
     </unit>
     <unit id="f7578f9a-54dd-440b-b6b0-bd149fd46d16">
@@ -9086,18 +9086,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 348</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`stateFilename` is deprecated.</source>
-        <target>`stateFilename` is deprecated.</target>
+        <target>`stateFilename` est obsolète.</target>
       </segment>
     </unit>
     <unit id="70685a90-f2d6-4638-b400-4146b7f141ca">
       <notes>
         <note appliesTo="source">line: 349</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>  Use `STATE_FILENAME` instead.</source>
-        <target>  Use `STATE_FILENAME` instead.</target>
+        <target>  Utilisez plutôt `STATE_FILENAME`.</target>
       </segment>
     </unit>
     <unit id="65a727cb-3664-45fa-b662-956c440628cb">
@@ -9105,18 +9105,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 350</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`AddonsState.fromPickledDict` is deprecated.</source>
-        <target>`AddonsState.fromPickledDict` is deprecated.</target>
+        <target>`AddonsState.fromPickledDict` est obsolète.</target>
       </segment>
     </unit>
     <unit id="63e49a86-bf15-4bce-989c-1971f77b0c3b">
       <notes>
         <note appliesTo="source">line: 351</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>  Use `AddonsState.fromDict` instead.</source>
-        <target>  Use `AddonsState.fromDict` instead.</target>
+        <target>  Utilisez plutôt `AddonsState.fromDict`.</target>
       </segment>
     </unit>
     <unit id="f8e64de8-daf5-4df8-974f-b5b682040f5a">

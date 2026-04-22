@@ -16,6 +16,9 @@ from .config import (
 	getDefaultFilter,
 	getDefaultFullscreenMode,
 	ZoomLevel,
+	getFollowState,
+	setFollowState,
+	toggleAllFollowStates,
 )
 from .magnifier import Magnifier
 from .fullscreenMagnifier import FullScreenMagnifier
@@ -25,6 +28,7 @@ from .utils.types import (
 	MagnifierType,
 	FullScreenMode,
 	MagnifierAction,
+	MagnifierFollowFocusType,
 )
 from logHandler import log
 
@@ -173,6 +177,68 @@ def toggleFilter() -> None:
 				"Color filter changed to {filter}",
 			).format(filter=magnifier.filterType.displayString),
 		)
+
+
+def toggleFollow(focusType: MagnifierFollowFocusType) -> None:
+	"""
+	Toggle the specified follow mode setting and update focus immediately.
+
+	:param focusType: The follow mode to toggle (mouse, system focus, review cursor, navigator object)
+	"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.TOGGLE_FOLLOW_SETTINGS,
+	):
+		state = not getFollowState(focusType)
+		setFollowState(focusType, state)
+
+		magnifier._focusManager.updateFollowedFocus()
+
+		ui.message(
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when toggling a follow setting with {setting} being the name of the setting and {state} being either "enabled" or "disabled".
+				"{setting} {state}",
+			).format(
+				setting=focusType.displayString,
+				state=pgettext(
+					"magnifier",
+					# Translators: State of the follow setting being toggled enabled.
+					"enabled",
+				)
+				if state
+				else pgettext(
+					"magnifier",
+					# Translators: State of the follow setting being toggled disabled.
+					"disabled",
+				),
+			),
+		)
+
+
+def toggleAllFollow() -> None:
+	"""Toggle all follow settings at once and update focus immediately"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.TOGGLE_FOLLOW_SETTINGS,
+	):
+		isActiveNow = toggleAllFollowStates()
+		magnifier._focusManager.updateFollowedFocus()
+		if not isActiveNow:
+			stateMessage = pgettext(
+				"magnifier",
+				# Translators: State of all follow settings being toggled disabled.
+				"All follow settings disabled",
+			)
+		else:
+			stateMessage = pgettext(
+				"magnifier",
+				# Translators: State of all follow settings being toggled enabled.
+				"All follow settings enabled",
+			)
+		ui.message(stateMessage)
 
 
 def toggleFullscreenMode() -> None:

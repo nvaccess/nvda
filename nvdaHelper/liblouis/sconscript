@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2011-2025 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
@@ -15,7 +16,7 @@ Import(
 	[
 		"thirdPartyEnv",
 		"sourceDir",
-	]
+	],
 )
 sourceDir: Base = sourceDir
 thirdPartyEnv: Environment = thirdPartyEnv
@@ -29,7 +30,7 @@ unitTestTablesDir = env.Dir("#tests/unit/brailleTables")
 signExec = env["signExec"] if (bool(env["certFile"]) ^ bool(env["apiSigningToken"])) else None
 
 RE_AC_INIT = re.compile(
-	r"^AC_INIT\(\[(?P<package>.*)\], \[(?P<version>.*)\], \[(?P<bugReport>.*)\], \[(?P<tarName>.*)\], \[(?P<url>.*)\]\)"
+	r"^AC_INIT\(\[(?P<package>.*)\], \[(?P<version>.*)\], \[(?P<bugReport>.*)\], \[(?P<tarName>.*)\], \[(?P<url>.*)\]\)",
 )
 
 
@@ -48,7 +49,7 @@ clangDirs = glob.glob(os.path.join(find_vc_pdir(env.get("MSVC_VERSION"), env), r
 if len(clangDirs) == 0:
 	raise RuntimeError(
 		"Could not find the Clang compiler. "
-		"Perhaps the C++ Clang tools for Windows component in visual Studio is not installed"
+		"Perhaps the C++ Clang tools for Windows component in visual Studio is not installed",
 	)
 env["CC"] = "clang-cl"
 env["M4"] = f'"{env.File("#miscdeps/tools/m4.exe")}"'
@@ -72,7 +73,7 @@ env.Append(
 		"WIDECHARS_ARE_UCS4",
 		# Tell liblouis.h that we're exporting liblouis dll functions, not importing them.
 		"_EXPORTING",
-	]
+	],
 )
 env.Prepend(CPPPATH=[".", louisSourceDir])
 
@@ -80,7 +81,9 @@ env.Prepend(CPPPATH=[".", louisSourceDir])
 env["CPPDEFINES"].remove("UNICODE")
 
 liblouisH = env.Substfile(
-	"liblouis.h", louisSourceDir.File("liblouis.h.in"), SUBST_DICT={"@WIDECHAR_TYPE@": "unsigned int"}
+	"liblouis.h",
+	louisSourceDir.File("liblouis.h.in"),
+	SUBST_DICT={"@WIDECHAR_TYPE@": "unsigned int"},
 )
 
 sourceFiles = [
