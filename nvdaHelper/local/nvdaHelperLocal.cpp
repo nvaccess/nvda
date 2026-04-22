@@ -107,7 +107,9 @@ LRESULT cancellableSendMessageTimeoutTemplate(SendMessageFunction realSendMessag
 	return ret;
 }
 
-// Fix for nvdaHelperLocal.def
+// Keep this non-template wrapper with this exact name/signature because it is
+// exported via nvdaHelperLocal.def and used by source/NVDAHelper/localLib.py.
+// cancellableSendMessageTimeoutTemplate is only the internal implementation detail.
 LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult) {
 	return cancellableSendMessageTimeoutTemplate(real_SendMessageTimeoutW, hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
 }
