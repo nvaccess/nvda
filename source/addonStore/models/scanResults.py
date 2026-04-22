@@ -44,7 +44,7 @@ class VirusTotalScanResults:
 			log.error(f"Malformed add-on scan results.: {addon!r}", exc_info=True)
 			return None
 
-	def toDict(self) -> dict[str, int | str]:
+	def toDict(self) -> dict[str, Any]:
 		"""Store scan data in the same format as the original add-on scan results.
 
 		:return: A dictionary representing the scan results.
