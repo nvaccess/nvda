@@ -2947,6 +2947,54 @@ This option is disabled by default.
 |Options |Disabled, Enabled|
 |Default |Disabled|
 
+#### Follow mouse {#MagnifierFollowMouse}
+
+This checkbox controls whether the magnifier should follow the mouse pointer.
+When enabled, the magnified area will automatically move to follow the mouse pointer, which can be helpful for users who navigate primarily using the mouse rather than the keyboard.
+
+This option is enabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Enabled|
+
+#### Follow system focus {#MagnifierFollowSystemFocus}
+
+This checkbox controls whether the magnifier should follow the system focus.
+When enabled, the magnified area will automatically move to follow the system focus, which can be helpful for users who navigate primarily using the keyboard and want the magnifier to track their navigation.
+
+This option is enabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Enabled|
+
+#### Follow review cursor {#MagnifierFollowReviewCursor}
+
+This checkbox controls whether the magnifier should follow the review cursor.
+When enabled, the magnified area will automatically move to follow the review cursor, which can be helpful for users who use the review cursor to navigate through content and want the magnifier to track their navigation.
+
+This option is enabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Enabled|
+
+#### Follow navigator object {#MagnifierFollowNavigatorObject}
+
+This checkbox controls whether the magnifier should follow the navigator object.
+When enabled, the magnified area will automatically move to follow the navigator object, which can be helpful for users who use object navigation to navigate through content and want the magnifier to track their navigation.
+
+This option is enabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Enabled|
+
 ##### Keep mouse centered {#MagnifierKeepMouseCentered}
 
 This checkbox controls whether the mouse pointer should be automatically moved to the center of the magnified area when certain focus events occur.
@@ -4832,11 +4880,11 @@ This will open a dialog which allows you to create a portable copy of NVDA out o
 
 Follow the directions in [Creating a portable copy](#CreatingAPortableCopy) for more information.
 
-### Run COM registration fixing tool... {#RunCOMRegistrationFixingTool}
+### Run System Accessibility Repair Tool... {#RunCOMRegistrationFixingTool}
 
 Sometimes, problems can develop with the Windows Registry, that result in NVDA behaving abnormally.
 This can be caused by, for example, installing or uninstalling certain programs (such as Adobe Reader or Math Player), as well as Windows updates and other events.
-The COM Registration Fixing Tool attempts to fix these issues by repairing accessibility entries in the registry.
+The System Accessibility Repair Tool attempts to fix these issues by repairing accessibility entries in the registry.
 
 The types of problem this tool can fix include:
 

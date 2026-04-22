@@ -42,12 +42,17 @@ The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is int
 * NVDA can now be configured to not play error sounds, even in test versions. (#13021, @CyrilleB79)
 * NVDA now supports the Orbit Reader 40 in its proprietary HID mode. (#19756, @trypsynth)
 * NVDA will start in focus mode by default when using WhatsApp 2.2584.3.0 or newer. (#19655, @josephsl)
+* Input help mode has been improved: (#17629, @Cary-rowen, @Emil-18)
+  * When a key combination would produce a character in normal input mode, the key combination is reported first, followed by the character.
+  * If the key combination corresponds to an NVDA command, the behavior remains the same as before, i.e. the description of the command is reported.
 * Product version for File Explorer will reflect actual Windows version including correct build and revision numbers.
 This is more noticeable for Windows releases which are enablement packages on top of an earlier release such as Windows 11 2025 Update based on Windows 11 2024 Update. (#19802, @josephsl)
 * Math navigation commands now support input help, on-demand speech mode, and can be remapped. (#19871, @RyanMcCleary)
+* The "COM Registration Fixing Tool" has been renamed to "System Accessibility Repair Tool" for clarity. (#19622, @bramd)
 
 ### Bug Fixes
 
+* NVDA will attempt to recover more quickly from freezes in some applications, especially those written in Java. (#14396, @thgcode)
 * In Firefox browse mode, the accessible name of form controls (such as checkboxes and radio buttons) is now correctly announced when the control has an `aria-label` and an associated `<label>` element that contains only `aria-hidden` content. (#19409, @bramd)
 * The "Toggles on and off if the screen layout is preserved while rendering the document content" item in the "Browse mode" category of the Input Gestures dialog now behaves correctly. (#18378)
 * In Microsoft Word with UIA enabled, page changes are now correctly announced when navigating table rows that span multiple pages. (#19386, @akj)
@@ -58,6 +63,7 @@ This is more noticeable for Windows releases which are enablement packages on to
 * Configuration profile triggers now activate when the Add-on Store is open. (#19583, @bramd)
 * Decorative Unicode letters such as negative squared, negative circled, and regional indicator symbol characters are now normalized to their base Latin letters when Unicode normalization is enabled. (#19608, @bramd)
 * NVDA no longer crashes when the Add-on Store download directory cannot be cleaned up due to file permission errors. (#19202, @christopherpross)
+* Fixed NVDA freezing when navigating in JetBrains IDEs. (#16741, @christopherpross)
 
 ### Changes for Developers
 
@@ -66,9 +72,9 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Updated components:
   * Python from 3.13.11 to 3.13.12. (#19572, @dpy013)
   * Ruff to 0.15.9. (#19548, #19908)
-  * uv to 0.11.4. (#19548, #19908)
+  * uv to 0.11.7. (#19548, #19908, #19968)
   * Requests to 2.33.0. (#19877)
-  * cryptography to 46.0.6. (#19877)
+  * cryptography to 46.0.7. (#19877, #19968)
 * NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)
 * Subclasses of `browseMode.BrowseModeDocumentTreeInterceptor` that support screen layout being on and off should override the `_toggleScreenLayout` method, rather than implementing `script_toggleScreenLayout` directly. (#19487)
 * A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handleCOMErrors`. (#19646, @Emil-18)

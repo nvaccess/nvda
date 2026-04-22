@@ -3075,7 +3075,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				if formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.SPEECH.value:
 					# Translators: Reported when text contains a spelling error.
 					texts.append(_("spelling error"))
-			elif extraDetail:
+			elif extraDetail and _shouldReportOutOfError(formatConfig):
 				# Translators: Reported when moving out of text containing a spelling error.
 				texts.append(_("out of spelling error"))
 			textList.extend(texts)
@@ -3089,7 +3089,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				if formatConfig["reportSpellingErrors2"] & ReportSpellingErrors.SPEECH.value:
 					# Translators: Reported when text contains a grammar error.
 					texts.append(_("grammar error"))
-			elif extraDetail:
+			elif extraDetail and _shouldReportOutOfError(formatConfig):
 				# Translators: Reported when moving out of text containing a grammar error.
 				texts.append(_("out of grammar error"))
 			textList.extend(texts)
@@ -3112,6 +3112,17 @@ def getFormatFieldSpeech(  # noqa: C901
 		attrsCache.update(attrs)
 	types.logBadSequenceTypes(textList)
 	return textList
+
+
+def _shouldReportOutOfError(formatConfig: dict[str, Any]) -> bool:
+	"""
+	Determines whether to report moving out of a spelling or grammar error based on the reportSpellingErrors2 setting in formatConfig.
+	:param formatConfig: Format configuration dictionary containing user settings for document formatting.
+	:return: True if the error should be reported, False otherwise.
+	"""
+
+	errorReporting = formatConfig["reportSpellingErrors2"]
+	return bool(errorReporting & (ReportSpellingErrors.SPEECH.value | ReportSpellingErrors.SOUND.value))
 
 
 def getTableInfoSpeech(
