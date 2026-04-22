@@ -12,11 +12,12 @@ from typing import NamedTuple
 from utils.displayString import DisplayStringStrEnum, DisplayStringEnum
 
 
-class Coordinates(NamedTuple):
-	"""Named tuple representing x and y coordinates"""
+class MagnifierParameters(NamedTuple):
+	"""Named tuple representing the size, position and filter of the magnifier"""
 
-	x: int
-	y: int
+	magnifierSize: "Size"
+	coordinates: "Coordinates"
+	filter: "Filter"
 
 
 class Direction(Enum):
@@ -129,29 +130,11 @@ class MagnifierType(DisplayStringStrEnum):
 		}
 
 
-class Filter(DisplayStringStrEnum):
-	NORMAL = "normal"
-	GRAYSCALE = "grayscale"
-	INVERTED = "inverted"
+class Coordinates(NamedTuple):
+	"""Named tuple representing x and y coordinates"""
 
-	@property
-	def _displayStringLabels(self) -> dict["Filter", str]:
-		return {
-			# Translators: Magnifier color filter - no filter applied.
-			self.NORMAL: pgettext("magnifier", "Normal"),
-			# Translators: Magnifier color filter - grayscale/black and white.
-			self.GRAYSCALE: pgettext("magnifier", "Grayscale"),
-			# Translators: Magnifier color filter - inverted colors.
-			self.INVERTED: pgettext("magnifier", "Inverted"),
-		}
-
-
-class MagnifierParameters(NamedTuple):
-	"""Named tuple representing the size, position and filter of the magnifier"""
-
-	magnifierSize: Size
-	coordinates: Coordinates
-	filter: Filter
+	x: int
+	y: int
 
 
 class ZoomHistory(NamedTuple):
@@ -175,4 +158,21 @@ class FullScreenMode(DisplayStringStrEnum):
 			self.BORDER: pgettext("magnifier", "Border"),
 			# Translators: Magnifier focus mode - maintain relative position.
 			self.RELATIVE: pgettext("magnifier", "Relative"),
+		}
+
+
+class Filter(DisplayStringStrEnum):
+	NORMAL = "normal"
+	GRAYSCALE = "grayscale"
+	INVERTED = "inverted"
+
+	@property
+	def _displayStringLabels(self) -> dict["Filter", str]:
+		return {
+			# Translators: Magnifier color filter - no filter applied.
+			self.NORMAL: pgettext("magnifier", "Normal"),
+			# Translators: Magnifier color filter - grayscale/black and white.
+			self.GRAYSCALE: pgettext("magnifier", "Grayscale"),
+			# Translators: Magnifier color filter - inverted colors.
+			self.INVERTED: pgettext("magnifier", "Inverted"),
 		}
