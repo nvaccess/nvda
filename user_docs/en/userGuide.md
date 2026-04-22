@@ -1564,6 +1564,7 @@ It provides several configuration options to customize the magnification experie
 ### Enabling and Disabling the Magnifier {#MagnifierToggle}
 
 To enable or disable the magnifier, press `NVDA+shift+w`.
+The "Increase magnification level" keystroke, `NVDA+shift+equals`, will start the magnifier if it is not running.
 When the magnifier is enabled, NVDA will announce the current zoom level, color filter, and focus tracking mode.
 When disabled, the screen returns to its normal size.
 
