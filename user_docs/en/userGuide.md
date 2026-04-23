@@ -2870,7 +2870,7 @@ This settings category contains the following options:
 
 ##### Zoom level {#MagnifierZoom}
 
-This slider allows you to set the default zoom level when the magnifier is first enabled.
+This slider allows you to set the zoom level when using the magnifier.
 The zoom level can range from 1.0 (no magnification) to 10.0 (maximum magnification).
 The default value is 2.0 (200% zoom).
 
@@ -2883,7 +2883,7 @@ You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+e
 
 ##### Filter {#MagnifierFilter}
 
-This combo box allows you to select the filter to apply when the magnifier is first enabled.
+This combo box allows you to select the filter to apply when using the magnifier.
 You can cycle through the color filters by pressing `NVDA+shift+i`.
 The available options are:
 
@@ -2901,7 +2901,7 @@ The available options are:
 
 ##### Focus mode {#MagnifierFullscreenFocusMode}
 
-This combo box allows you to select the focus tracking mode when the magnifier is first enabled.
+This combo box allows you to select the focus tracking mode when using the magnifier.
 To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 The available options are:
 

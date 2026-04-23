@@ -245,7 +245,7 @@ def getFullscreenMode() -> FullScreenMode:
 
 def setFullscreenMode(mode: FullScreenMode) -> None:
 	"""
-	Set  full-screen mode from settings.
+	Set full-screen mode from settings.
 
 	:param mode: The full-screen mode to set.
 	"""
