@@ -674,7 +674,7 @@ jobs:
         path: output
     - name: VirusTotal Scan
       id: virusTotal
-      uses: crazy-max/ghaction-virustotal@v4
+      uses: crazy-max/ghaction-virustotal@v5.0.0
       with:
         vt_api_key: ${{ secrets.VT_API_KEY }}
         files: output/nvda*.exe
