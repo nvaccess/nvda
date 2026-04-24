@@ -1580,7 +1580,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 | Name |Key |Description|
 |---|---|---|
 |Toggles the magnifier on and off |`NVDA+shift+w` |Enables or disables the magnifier|
-|Increases the magnification level of the magnifier |`NVDA+shift+equals` |Increases the zoom level|
+| Increases the magnification level of the magnifier | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
 |Decreases the magnification level of the magnifier |`NVDA+shift+minus` |Decreases the zoom level|
 |Toggle filter of the magnifier |`NVDA+shift+i` |Cycles through available color filters (normal, grayscale, inverted)|
 |Toggle focus mode for the full-screen magnifier |None |Cycles through focus tracking modes (center, border, relative)|
