@@ -8,12 +8,13 @@ import subprocess
 from typing import Any
 import rpyc
 from rpyc.core.stream import PipeStream
+from utils.security import isRunningOnSecureDesktop
 import NVDAState
 from logHandler import log
 from _bridge.base import Connection, Service
 from _bridge.components.services.synthDriver import SynthDriverService
 from winBindings.jobapi2 import JOB_OBJECT_LIMIT
-import jobObject
+import secureProcess
 from _bridge.components.services.nvwave import WavePlayerService
 
 
@@ -92,22 +93,40 @@ def isSynthDriverHost32RuntimeAvailable() -> bool:
 	return os.path.isfile(_hostExe)
 
 
+launchConfig_standard = {
+	"removeElevation": True,
+	"removePrivileges": True,
+	"integrityLevel": "medium",
+	"applyUIRestrictions": True,
+	"restrictToken": True,
+	"retainUserInRestrictedToken": True,
+}
+launchConfig_secure = {
+	"username": "local service",
+	"domain": "nt authority",
+	"logonType": "service",
+	"appContainerName": "nvdaSecureART",
+	"appContainerCapabilities": [],
+	"isolateWindowStation": True,
+	"applyUIRestrictions": True,
+}
+
 def createSynthDriver(name: str, synthDriversPath: str) -> tuple[Connection, SynthDriverService]:
 	"""Start the 32-bit synth driver host process and connect to its RPYC service over the hosts standard pipes.
 	Instructs the host to install proxies that use the given NVDAService for remote calls back into NVDA.
 	:returns: The remote SynthDriverHostService instance.
 	"""
-	job = jobObject.Job()
-	job.setBasicLimits(JOB_OBJECT_LIMIT.KILL_ON_JOB_CLOSE)
 	log.debug(f"Starting synthDriverHost32 process: {_hostExe}")
-	hostProc = subprocess.Popen(
+	launchConfig = launchConfig_secure if isRunningOnSecureDesktop() else launchConfig_standard
+	hostProc = secureProcess.SecurePopen(
 		[_hostExe],
 		stdin=subprocess.PIPE,
 		stdout=subprocess.PIPE,
-		creationflags=subprocess.CREATE_NO_WINDOW,
+		killOnDelete=True,
+		createNoWindow=True,
+		hideCriticalErrorDialogs=True,
+		**launchConfig
 	)
-	job.assignProcess(hostProc._handle)
-	hostProc._job = job  # Prevent job from being GC'd while process is running
 	log.debug("Creating PipeStream over host process std pipes")
 	stream = PipeStream(hostProc.stdout, hostProc.stdin)
 	log.debug("Connecting to synthDriverHost32 process RPYC service over PipeStream")
