@@ -44,6 +44,12 @@ from ctypes.wintypes import (
 	LARGE_INTEGER,
 	WCHAR,
 )
+from .winnt import (
+	STARTUPINFOW,
+	PROCESS_INFORMATION,
+	PSID,
+	SECURITY_ATTRIBUTES,
+)
 from enum import IntEnum
 from serial.win32 import LPOVERLAPPED
 
@@ -51,6 +57,8 @@ from .advapi32 import SECURITY_ATTRIBUTES
 from .jobapi2 import (
 	JOBOBJECTINFOCLASS,
 )
+
+LPOVERLAPPED = LPVOID
 
 ULONG_PTR = c_size_t
 LPSECURITY_ATTRIBUTES = POINTER(SECURITY_ATTRIBUTES)
@@ -371,15 +379,6 @@ Retrieves a pseudo handle for the current process.
 """
 GetCurrentProcess.argtypes = ()
 GetCurrentProcess.restype = HANDLE
-
-GetCurrentProcessId = WINFUNCTYPE(None)(("GetCurrentProcessId", dll))
-"""
-Retrieves the process identifier of the calling process.
-.. seealso::
-	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getcurrentprocessid
-"""
-GetCurrentProcessId.argtypes = ()
-GetCurrentProcessId.restype = DWORD
 
 UnhandledExceptionFilter = WINFUNCTYPE(
 	c_void_p,  # lpTopLevelExceptionFilter: The pointer to the old unhandled exception filter function.
@@ -1563,6 +1562,130 @@ Retrieves the current OEM code page identifier.
 GetOEMCP.argtypes = ()
 GetOEMCP.restype = UINT
 
+# Add HLOCAL alias (use HGLOBAL which is already imported)
+HLOCAL = HGLOBAL
+
+LocalFree = WINFUNCTYPE(None)(("LocalFree", dll))
+"""
+Frees the specified local memory object and invalidates its handle.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-localfree
+"""
+LocalFree.argtypes = (
+	HLOCAL,  # hMem: A handle to the local memory object
+)
+LocalFree.restype = HLOCAL
+
+LPPROC_THREAD_ATTRIBUTE_LIST = LPVOID
+
+InitializeProcThreadAttributeList = WINFUNCTYPE(None)(("InitializeProcThreadAttributeList", dll))
+"""
+
+Initializes the specified list of attributes for process and thread creation.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-initializeprocthreadattributelist
+"""
+InitializeProcThreadAttributeList.argtypes = (
+	LPPROC_THREAD_ATTRIBUTE_LIST,  # lpAttributeList: A pointer to a list of attributes
+	DWORD,  # dwAttributeCount: The number of attributes in the list
+	DWORD,  # dwFlags: Reserved; must be zero
+	POINTER(c_size_t),  # lpSize: A pointer to a variable that receives the size of the attribute list
+)
+InitializeProcThreadAttributeList.restype = BOOL
+
+UpdateProcThreadAttribute = WINFUNCTYPE(None)(("UpdateProcThreadAttribute", dll))
+"""
+Updates the specified attribute in a list of attributes for process and thread creation.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-updateprocthreadattribute
+"""
+UpdateProcThreadAttribute.argtypes = (
+	LPPROC_THREAD_ATTRIBUTE_LIST,  # lpAttributeList: A pointer to a list of attributes
+	DWORD,  # dwFlags: Reserved; must be zero
+	c_void_p,  # Attribute: The attribute to be updated
+	LPVOID,  # lpValue: A pointer to the attribute value
+	c_size_t,  # cbSize: The size, in bytes, of the attribute value
+	LPVOID,  # lpPreviousValue: A pointer to a buffer that receives the previous value of the attribute
+	POINTER(c_size_t),  # lpReturnSize: A pointer to a variable that receives the size of the previous value
+)
+UpdateProcThreadAttribute.restype = BOOL
+
+DeleteProcThreadAttributeList = WINFUNCTYPE(None)(("DeleteProcThreadAttributeList", dll))
+"""
+Deletes a list of attributes for process and thread creation.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-deleteprocthreadattributelist
+"""
+DeleteProcThreadAttributeList.argtypes = (
+	LPPROC_THREAD_ATTRIBUTE_LIST,  # lpAttributeList: A pointer to a list of attributes
+)
+DeleteProcThreadAttributeList.restype = None
+
+
+CreateProcess = WINFUNCTYPE(None)(("CreateProcessW", dll))
+"""
+Creates a new process and its primary thread.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessasuserw
+"""
+CreateProcess.argtypes = (
+	LPCWSTR,  # lpApplicationName
+	LPWSTR,  # lpCommandLine
+	POINTER(SECURITY_ATTRIBUTES),  # lpProcessAttributes
+	POINTER(SECURITY_ATTRIBUTES),  # lpThreadAttributes
+	BOOL,  # bInheritHandles
+	DWORD,  # dwCreationFlags
+	LPVOID,  # lpEnvironment
+	LPCWSTR,  # lpCurrentDirectory
+	POINTER(STARTUPINFOW),  # lpStartupInfo
+	POINTER(PROCESS_INFORMATION),  # lpProcessInformation
+)
+CreateProcess.restype = BOOL
+
+SetHandleInformation = WINFUNCTYPE(None)(("SetHandleInformation", dll))
+"""
+Sets certain properties of an object handle.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-sethandleinformation
+"""
+SetHandleInformation.argtypes = (
+	HANDLE,  # hObject: A handle to an object
+	DWORD,  # dwMask: The bitmask that indicates the properties to be set
+	DWORD,  # dwFlags: The new values for the specified properties
+)
+SetHandleInformation.restype = BOOL
+
+GetExitCodeProcess = WINFUNCTYPE(None)(("GetExitCodeProcess", dll))
+"""
+Retrieves the termination status of the specified process.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getexitcodeprocess
+"""
+GetExitCodeProcess.argtypes = (
+	HANDLE,  # hProcess: A handle to the process
+	LPDWORD,  # lpExitCode: A pointer to a variable to receive the process termination status
+)
+GetExitCodeProcess.restype = BOOL
+
+kernelbase = windll.kernelbase
+DeriveCapabilitySidsFromName = WINFUNCTYPE(None)(("DeriveCapabilitySidsFromName", kernelbase))
+"""
+Derives the capability SIDs for a specified capability name.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-derivecapabilitysidsfromname
+"""
+DeriveCapabilitySidsFromName.argtypes = (
+	LPCWSTR,  # capabilityName: The name of the capability
+	POINTER(POINTER(PSID)),  # CapabilityGroupSids: The GroupSids with NTAuthority.
+	POINTER(DWORD),  # pCapabilityGroupSidCount: The count of GroupSids in the array.
+	POINTER(POINTER(PSID)),  # CapabilitySids: CapabilitySids with AppAuthority.
+	POINTER(DWORD),  # pCapabilitySidCount: The count of CapabilitySids in the array.
+)
+DeriveCapabilitySidsFromName.restype = HRESULT
+
 CreateJobObject = WINFUNCTYPE(None)(("CreateJobObjectW", dll))
 """
 Creates or opens a job object.
@@ -1604,6 +1727,29 @@ SetInformationJobObject.argtypes = (
 )
 SetInformationJobObject.restype = BOOL
 
+ResumeThread = WINFUNCTYPE(None)(("ResumeThread", dll))
+"""
+Decrements a thread's suspend count.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-resumethread
+"""
+ResumeThread.argtypes = (
+	HANDLE,  # hThread: A handle to the thread
+)
+ResumeThread.restype = DWORD
+
+SetErrorMode = WINFUNCTYPE(None)(("SetErrorMode", dll))
+"""
+Sets the process error mode.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-seterrormode
+"""
+SetErrorMode.argtypes = (
+	UINT,  # uMode: The process error mode
+)
+SetErrorMode.restype = UINT
 
 class PAGE(IntEnum):
 	"""
@@ -1722,3 +1868,11 @@ OpenFileMapping.argtypes = (
 	BOOL,  # bInheritHandle
 	LPCWSTR,  # lpName
 )
+
+GetCurrentProcessId = WINFUNCTYPE(None)(("GetCurrentProcessId", dll))
+"""Retrieves the process identifier of the calling process.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getcurrentprocessid
+"""
+GetCurrentProcessId.argtypes = ()
+GetCurrentProcessId.restype = DWORD

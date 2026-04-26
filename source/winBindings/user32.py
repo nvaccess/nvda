@@ -58,8 +58,12 @@ from ctypes.wintypes import (
 	WORD,
 	WPARAM,
 	ATOM,
+	LPVOID,
 )
 from enum import IntEnum, IntFlag
+from .winnt import (
+	LPSECURITY_ATTRIBUTES,
+)
 
 UINT_PTR = c_size_t
 ULONG_PTR = c_size_t
@@ -1657,19 +1661,49 @@ GetDpiForWindow.argtypes = (
 	HWND,  # hwnd: The window that you want to get information about
 )
 
-GetClientRect = WINFUNCTYPE(None)(("GetClientRect", dll))
+LPDEVMODEW = LPVOID
+
+CreateDesktopEx = WINFUNCTYPE(None)(("CreateDesktopExW", dll))
 """
-Retrieves the coordinates of a window's client area.
+Creates a new desktop object with extended attributes.
 
 .. seealso::
-	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getclientrect
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-createdesktopexw
 """
-GetClientRect.restype = BOOL
-GetClientRect.argtypes = (
-	HWND,  # hWnd: Handle to the window whose client rectangle is to be retrieved
-	LPRECT,  # lpRect: Pointer to a RECT structure that receives the client rectangle coordinates
+CreateDesktopEx.restype = HDESK
+CreateDesktopEx.argtypes = (
+	LPCWSTR,  # lpszDesktop: The name of the new desktop
+	LPCWSTR,  # lpszDevice: Reserved; must be NULL
+	LPDEVMODEW,  # pDevmode: Reserved; must be NULL
+	DWORD,  # dwFlags: Desktop creation flags
+	ACCESS_MASK,  # dwDesiredAccess: Access rights for the new desktop
+	LPSECURITY_ATTRIBUTES,  # lpsa: Pointer to a SECURITY_ATTRIBUTES structure that specifies a security descriptor for the new desktop
+	DWORD,  # ulHeapSize: The initial size, in bytes, of the desktop heap for the new desktop
+	LPVOID,  # pvoid: Reserved; must be NULL
 )
 
+CloseDesktop = WINFUNCTYPE(None)(("CloseDesktop", dll))
+"""
+Closes an open handle to a desktop object.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-closedesktop
+"""
+CloseDesktop.restype = BOOL
+CloseDesktop.argtypes = (
+	HDESK,  # hDesktop: Handle to the desktop to be closed
+)
+
+DESKTOP_ALL_ACCESS = 0x000F01FF
+
+GetShellWindow = WINFUNCTYPE(None)(("GetShellWindow", dll))
+"""
+Retrieves a handle to the Shell's desktop window.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getshellwindow
+"""
+GetShellWindow.restype = HWND
+GetShellWindow.argtypes = ()
 
 class NMHDR(Structure):
 	"""Contains information about a notification message.
