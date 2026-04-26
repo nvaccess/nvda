@@ -106,6 +106,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				"VID_0904&PID_600A",  # Brailliant2 80
 				"VID_0904&PID_6201",  # Vario 340
 				"VID_0483&PID_A1D3",  # Orbit Reader 20
+				"VID_0483&PID_A366",  # Orbit Reader 40
 				"VID_0904&PID_6301",  # Vario 4
 			},
 		)
@@ -147,6 +148,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					"Pronto!",
 					"VarioUltra",
 					"Orbit Reader 20",
+					"Orbit Reader 40",
 					"Vario 4",
 				)
 			),

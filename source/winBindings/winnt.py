@@ -5,10 +5,12 @@
 
 """Types and constants from winnt.h."""
 
+import enum
 from ctypes import (
 	Structure,
 	sizeof,
 	POINTER,
+	c_void_p,
 )
 from ctypes.wintypes import (
 	LONG,
@@ -24,7 +26,7 @@ from ctypes.wintypes import (
 MAXIMUM_ALLOWED = 0x02000000
 DISABLE_MAX_PRIVILEGE = 0x1
 
-PSID = POINTER(BYTE)
+PSID = c_void_p
 
 
 class LUID(Structure):
@@ -33,6 +35,7 @@ class LUID(Structure):
 
 	..seealso: https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-luid
 	"""
+
 	_fields_ = (
 		("LowPart", DWORD),
 		("HighPart", LONG),
@@ -45,6 +48,7 @@ class LUID_AND_ATTRIBUTES(Structure):
 
 	..seealso: https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-luid_and_attributes
 	"""
+
 	_fields_ = (
 		("Luid", LUID),
 		("Attributes", DWORD),
@@ -57,6 +61,7 @@ class SID_AND_ATTRIBUTES(Structure):
 
 	..seealso: https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-sid_and_attributes
 	"""
+
 	_fields_ = (
 		("Sid", PSID),
 		("Attributes", DWORD),
@@ -112,6 +117,7 @@ class STARTUPINFOEXW(Structure):
 		("lpAttributeList", LPVOID),
 	)
 
+
 STARTUPINFOEX = STARTUPINFOEXW
 
 
@@ -144,10 +150,14 @@ class SECURITY_CAPABILITIES(Structure):
 		("Capabilities", POINTER(SID_AND_ATTRIBUTES)),
 		("CapabilityCount", DWORD),
 		("Reserved", DWORD),
-	 )
+	)
 
-PROC_THREAD_ATTRIBUTE_SECURITY_CAPABILITIES = 0x20009
-PROC_THREAD_ATTRIBUTE_HANDLE_LIST = 0x20002
+
+class PROC_THREAD_ATTRIBUTE(enum.IntEnum):
+	HANDLE_LIST = 0x20002
+	SECURITY_CAPABILITIES = 0x20009
+
+
 SE_GROUP_ENABLED = 0x4
 EXTENDED_STARTUPINFO_PRESENT = 0x00080000
 HANDLE_FLAG_INHERIT = 0x1
@@ -162,6 +172,7 @@ CREATIONFLAGS_CREATE_SUSPENDED = 0x00000004
 CREATIONFLAGS_CREATE_UNICODE_ENVIRONMENT = 0x00000400
 GENERIC_ALL = 0x10000000
 
+
 class SECURITY_ATTRIBUTES(Structure):
 	"""
 	Contains the security descriptor for an object and specifies whether the handle retrieved by specifying this structure is inheritable.
@@ -175,5 +186,6 @@ class SECURITY_ATTRIBUTES(Structure):
 		("lpSecurityDescriptor", LPVOID),
 		("bInheritHandle", BOOL),
 	)
+
 
 LPSECURITY_ATTRIBUTES = POINTER(SECURITY_ATTRIBUTES)

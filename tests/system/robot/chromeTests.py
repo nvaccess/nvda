@@ -3025,3 +3025,119 @@ def test_reportNotSupportedLanguageAndOtherLanguages():
 			),
 		),
 	)
+
+
+# Constants for link destination tests
+REPORT_LINK_DESTINATION_GESTURE = "NVDA+k"
+
+
+def test_reportLinkDestination_plainLink():
+	"""Test NVDA+K reports the URL of a plain link."""
+	_chrome.prepareChrome('<p><a href="https://example.com/plain">Plain link</a></p>')
+
+	# Move to the first link line
+	actualSpeech = _NvdaLib.getSpeechAfterKey("downArrow")
+	_builtIn.should_contain(actualSpeech, "Plain link")
+
+	# Report link destination
+	actualSpeech = _NvdaLib.getSpeechAfterKey(REPORT_LINK_DESTINATION_GESTURE)
+	_asserts.strings_match(
+		actualSpeech,
+		"https: slash  slash example dot com slash plain",
+		message="NVDA+K should report the URL of a plain link",
+	)
+
+
+def test_reportLinkDestination_nestedStrong():
+	"""Test NVDA+K reports the URL when caret is on text inside a <strong> tag within a link (#17363)."""
+	_chrome.prepareChrome(
+		'<p><a href="https://example.com/strong"><strong>Bold link text</strong></a></p>',
+	)
+
+	# Move to the link
+	actualSpeech = _NvdaLib.getSpeechAfterKey("downArrow")
+	_builtIn.should_contain(actualSpeech, "Bold link text")
+
+	# Report link destination - this was broken before #17363 fix
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+k")
+	_asserts.strings_match(
+		actualSpeech,
+		"https: slash  slash example dot com slash strong",
+		message="NVDA+K should report the URL when caret is on nested <strong> inside a link",
+	)
+
+
+def test_reportLinkDestination_nestedEm():
+	"""Test NVDA+K reports the URL when caret is on text inside an <em> tag within a link (#17363)."""
+	_chrome.prepareChrome(
+		'<p><a href="https://example.com/em"><em>Italic link text</em></a></p>',
+	)
+
+	# Move to the link
+	actualSpeech = _NvdaLib.getSpeechAfterKey("downArrow")
+	_builtIn.should_contain(actualSpeech, "Italic link text")
+
+	# Report link destination
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+k")
+	_asserts.strings_match(
+		actualSpeech,
+		"https: slash  slash example dot com slash em",
+		message="NVDA+K should report the URL when caret is on nested <em> inside a link",
+	)
+
+
+def test_reportLinkDestination_deeplyNested():
+	"""Test NVDA+K reports the URL when caret is on deeply nested elements within a link (#17363)."""
+	_chrome.prepareChrome(
+		'<p><a href="https://example.com/nested"><strong><em><span>Deeply nested</span></em></strong></a></p>',
+	)
+
+	# Move to the link
+	actualSpeech = _NvdaLib.getSpeechAfterKey("downArrow")
+	_builtIn.should_contain(actualSpeech, "Deeply nested")
+
+	# Report link destination
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+k")
+	_asserts.strings_match(
+		actualSpeech,
+		"https: slash  slash example dot com slash nested",
+		message="NVDA+K should report the URL when caret is on deeply nested elements within a link",
+	)
+
+
+def test_reportLinkDestination_imageLink():
+	"""Test NVDA+K reports the URL of an image link (#14779)."""
+	_chrome.prepareChrome(
+		'<p><a href="https://example.com/image">'
+		'<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" '
+		'alt="Test image"></a></p>',
+	)
+
+	# Move to the image link
+	actualSpeech = _NvdaLib.getSpeechAfterKey("downArrow")
+	_builtIn.should_contain(actualSpeech, "Test image")
+
+	# Report link destination
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+k")
+	_asserts.strings_match(
+		actualSpeech,
+		"https: slash  slash example dot com slash image",
+		message="NVDA+K should report the URL of an image link",
+	)
+
+
+def test_reportLinkDestination_notALink():
+	"""Test NVDA+K reports 'Not a link' when caret is not on a link."""
+	_chrome.prepareChrome("<p><strong>Not a link</strong></p>")
+
+	# Move to the non-link element
+	actualSpeech = _NvdaLib.getSpeechAfterKey("downArrow")
+	_builtIn.should_contain(actualSpeech, "Not a link")
+
+	# Report link destination - should say "Not a link"
+	actualSpeech = _NvdaLib.getSpeechAfterKey(REPORT_LINK_DESTINATION_GESTURE)
+	_asserts.strings_match(
+		actualSpeech,
+		"Not a link.",
+		message="NVDA+K should report 'Not a link' when caret is not on a link",
+	)

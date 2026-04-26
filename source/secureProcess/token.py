@@ -4,6 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from __future__ import annotations
+import uuid
 import contextlib
 import win32api
 import win32profile
@@ -13,10 +14,10 @@ import win32con
 from winBindings.winnt import (
 	GENERIC_ALL,
 )
-
-import logging
-
-log = logging.getLogger(__name__)
+from winBindings.user32 import (
+	GetShellWindow,
+)
+from logHandler import log
 
 
 integrityLevels = {
@@ -67,14 +68,16 @@ allowedRestrictedSids = {
 	"Console Logon": "S-1-2-1",
 	"NT AUTHORITY\\LOCAL": "S-1-2-0",
 	"NT AUTHORITY\\Local account": "S-1-5-113",
-}
-
-requiredRestrictedSids = {
 	"Restricted": "S-1-5-12",
 }
 
 
-def createRestrictedToken(token, removePrivilages: bool = True, retainUser: bool = False):
+def createRestrictedToken(
+	token,
+	removePrivilages: bool = True,
+	retainUser: bool = False,
+	includeExtraSidStrings: list[str] = [],
+):
 	"""Create a new restricted token based on an existing token.
 
 	This function builds a reduced-privilege token by optionally disabling maximum
@@ -91,6 +94,7 @@ def createRestrictedToken(token, removePrivilages: bool = True, retainUser: bool
 	:param token: The source token to restrict.
 	:param removePrivilages: If True, disable all privileges on the created token, except SE_CHANGE_NOTIFY.
 	:param retainUser: If True, include the user's SID in the restricted SID list.
+	:param includeExtraSidStrings: List of additional SID strings to include in the restricted SID list.
 	:returns: A handle to the newly created restricted token.
 	:raises: Exceptions from underlying win32 API calls if token operations fail.
 	"""
@@ -101,15 +105,12 @@ def createRestrictedToken(token, removePrivilages: bool = True, retainUser: bool
 	oldGroups = win32security.GetTokenInformation(token, win32security.TokenGroups)
 	oldEnabledGroups = [sid for sid, attrs in oldGroups if attrs & win32security.SE_GROUP_ENABLED]
 	restrictToSids = []
-	for name, sidString in requiredRestrictedSids.items():
-		log.debug(f"Restricting to required group {name}...")
-		sid = win32security.ConvertStringSidToSid(sidString)
-		restrictToSids.append((sid, 0))
 	for name, sidString in allowedRestrictedSids.items():
 		sid = win32security.ConvertStringSidToSid(sidString)
 		if sid not in oldEnabledGroups:
-			continue
-		log.debug(f"Retaining existing group {name}...")
+			log.debug(f"Restricting to {name}...")
+		else:
+			log.debug(f"Restricting to existing group {name}...")
 		restrictToSids.append((sid, 0))
 	for sid, attrs in oldGroups:
 		if attrs & win32security.SE_GROUP_LOGON_ID:
@@ -119,8 +120,12 @@ def createRestrictedToken(token, removePrivilages: bool = True, retainUser: bool
 			break
 	if retainUser:
 		userSid = win32security.GetTokenInformation(token, win32security.TokenUser)[0]
-		log.debug("Retaining user SID in restricted token...")
+		log.debug("Restricting to user SID in restricted token...")
 		restrictToSids.append((userSid, 0))
+	for sidString in includeExtraSidStrings:
+		sid = win32security.ConvertStringSidToSid(sidString)
+		log.debug(f"Including extra restricted SID {sidString}...")
+		restrictToSids.append((sid, 0))
 	restrictedToken = win32security.CreateRestrictedToken(
 		token,
 		restrictFlags,
@@ -155,30 +160,6 @@ def setTokenIntegrityLevel(token: PyHandle, level: str):
 		win32security.TokenIntegrityLevel,
 		mandatoryLabel,
 	)
-
-
-def createServiceLogon():
-	"""
-	Create a logon token for the built-in LocalService account.
-
-	This is a small convenience wrapper around win32security.LogonUser that
-	requests a service-type logon for the "LocalService" account in the
-	"NT AUTHORITY" domain. The call uses the LOGON32_LOGON_SERVICE logon
-	type and the default logon provider.
-
-	:return: A handle to the created logon token.
-	:raises: Exceptions raised by the underlying LogonUser call if the logon
-		attempt fails or if the Win32 API returns an error.
-	"""
-	log.debug("Calling LogonUser for LocalService...")
-	token = win32security.LogonUser(
-		"LocalService",
-		"NT AUTHORITY",
-		"",
-		win32con.LOGON32_LOGON_SERVICE,
-		win32con.LOGON32_PROVIDER_DEFAULT,
-	)
-	return token
 
 
 def lookupTokenUserSidString(token) -> str:
@@ -329,54 +310,50 @@ def createRestrictedDacl(
 	return dacl
 
 
-def createRestrictedSecurityDescriptor(
-	uniqueRestrictedSidString: str,
-	integrityLevel: str | None = "low",
-	includeSystem: bool = True,
-	includeAdministrators: bool = True,
-	includeMe: bool = True,
-):
+def getTokenDefaultDacl(token):
 	"""
-	Create a security descriptor that restricts access to a single principal.
+	Return the default DACL for a given token.
 
-	This function builds a SECURITY_DESCRIPTOR whose DACL grants GENERIC_ALL to
-	the provided restricted SID and, optionally, to SYSTEM, the built-in
-	Administrators group, and the current calling user. If an integrityLevel is
-	provided, a mandatory integrity SACL is also attached to the security
-	descriptor to enforce the requested integrity policy.
+	:param token: The token whose default DACL will be retrieved.
+	:returns: The default DACL as an ACL object.
+	:raises: Underlying win32 API exceptions if reading the token information fails.
+	"""
+	dacl = win32security.GetTokenInformation(token, win32security.TokenDefaultDacl)
+	return dacl
 
-	:param uniqueRestrictedSidString: The string representation of the SID to
-		which access should be granted.
-	:param integrityLevel: Named integrity level to apply to the SACL (for
-		example "low", "medium", "high"), or None to omit a SACL.
-	:param includeSystem: If True, include an ACE granting access to the
-		local SYSTEM account.
-	:param includeAdministrators: If True, include an ACE granting access to
-		the built-in Administrators group.
-	:param includeMe: If True, include an ACE granting access to the current
-		calling user (unless that user is SYSTEM or equals the restricted SID).
 
-	:returns: A SECURITY_DESCRIPTOR with the requested DACL and optional SACL.
-	:raises: Exceptions propagated from underlying win32 API calls on failure.
+def createSaclFromToken(token):
+	"""
+	Create a SACL from the integrity level of a given token.
+
+	:param token: The token whose integrity level will be used to create the SACL.
+	:returns: An ACL object representing the SACL with the token's integrity level.
+	:raises: Underlying win32 API exceptions if reading the token information fails.
+	"""
+	integrityLevelInfo = win32security.GetTokenInformation(token, win32security.TokenIntegrityLevel)
+	sid = integrityLevelInfo[0]
+	sacl = win32security.ACL()
+	policy = win32security.SYSTEM_MANDATORY_LABEL_NO_WRITE_UP
+	sacl.AddMandatoryAce(win32security.ACL_REVISION_DS, 0, policy, sid)
+	return sacl
+
+
+def createSecurityDescriptorFromDaclAndSacl(dacl, sacl=None):
+	"""
+	Create a SECURITY_DESCRIPTOR from the given DACL and optional SACL.
+
+	:param dacl: The discretionary access control list to set on the security descriptor.
+	:param sacl: The optional system access control list to set on the security descriptor.
+	:returns: A SECURITY_DESCRIPTOR object with the requested DACL and optional SACL.
+	:raises: Underlying win32 API exceptions if creating or setting the security descriptor fails.
 	"""
 	sd = win32security.SECURITY_DESCRIPTOR()
 	sd.Initialize()
-	dacl = createRestrictedDacl(
-		uniqueRestrictedSidString,
-		includeSystem=includeSystem,
-		includeAdministrators=includeAdministrators,
-		includeMe=includeMe,
-	)
 	sd.SetSecurityDescriptorDacl(1, dacl, 0)
-	if integrityLevel:
-		log.debug(f"Setting integrity level to {integrityLevel}...")
-		levelId = integrityLevels[integrityLevel]
-		sid = win32security.CreateWellKnownSid(levelId, None)
-		sacl = win32security.ACL()
-		policy = win32security.SYSTEM_MANDATORY_LABEL_NO_WRITE_UP
-		sacl.AddMandatoryAce(win32security.ACL_REVISION_DS, 0, policy, sid)
+	if sacl:
 		sd.SetSecurityDescriptorSacl(1, sacl, 0)
 	return sd
+
 
 @contextlib.contextmanager
 def impersonateToken(token):
@@ -394,6 +371,7 @@ def impersonateToken(token):
 	finally:
 		win32security.RevertToSelf()
 
+
 def isTokenElevated(token) -> bool:
 	"""
 	Check if a given token is elevated.
@@ -401,8 +379,19 @@ def isTokenElevated(token) -> bool:
 	:param token: The token to check.
 	:return: True if the token is elevated, False otherwise.
 	"""
-	elevation = win32security.GetTokenInformation(token, win32security.TokenElevation)
-	return elevation != 0
+	elevationType = win32security.GetTokenInformation(token, win32security.TokenElevationType)
+	if elevationType == win32security.TokenElevationTypeLimited:
+		log.debug("Token has elevation type: limited (not elevated)")
+		return False
+	elif elevationType == win32security.TokenElevationTypeDefault:
+		log.debug("Token has elevation type: default (No elevation possible)")
+		return False
+	elif elevationType == win32security.TokenElevationTypeFull:
+		log.debug("Token has elevation type: full (elevated)")
+		return True
+	log.warning(f"Unknown token elevation type: {elevationType}")
+	return False
+
 
 def getUnelevatedCurrentInteractiveUserTokenFromShell():
 	"""Return an unelevated primary token for the current interactive user.
@@ -418,13 +407,88 @@ def getUnelevatedCurrentInteractiveUserTokenFromShell():
 		process.
 	"""
 
-	import ctypes
-	shellWindow = ctypes.windll.user32.GetShellWindow()
+	shellWindow = GetShellWindow()
 	if not shellWindow:
 		raise RuntimeError("Could not find shell window; no interactive user session?")
 	tid, pid = win32process.GetWindowThreadProcessId(shellWindow)
 	log.debug(f"Found shell process with PID {pid}...")
 	shellProcess = win32api.OpenProcess(win32con.PROCESS_QUERY_INFORMATION, False, pid)
 	token = win32security.OpenProcessToken(shellProcess, win32con.MAXIMUM_ALLOWED)
-	token = win32security.DuplicateTokenEx(token, win32security.SecurityImpersonation, win32security.TOKEN_ALL_ACCESS, win32security.TokenPrimary, None)
+	token = win32security.DuplicateTokenEx(
+		token,
+		win32security.SecurityImpersonation,
+		win32security.TOKEN_ALL_ACCESS,
+		win32security.TokenPrimary,
+		None,
+	)
 	return token
+
+
+logonTypes = {
+	"interactive": win32con.LOGON32_LOGON_INTERACTIVE,
+	"network": win32con.LOGON32_LOGON_NETWORK,
+	"batch": win32con.LOGON32_LOGON_BATCH,
+	"service": win32con.LOGON32_LOGON_SERVICE,
+	"unlock": win32con.LOGON32_LOGON_UNLOCK,
+	"networkCleartext": win32con.LOGON32_LOGON_NETWORK_CLEARTEXT,
+	"newCredentials": win32con.LOGON32_LOGON_NEW_CREDENTIALS,
+}
+
+
+def logonUser(username: str, domain: str = ".", password: str = "", logonType: str = "interactive"):
+	"""
+	Call LogonUser to obtain a logon token for a given user.
+
+	:param username: The username to log on.
+	:param domain: The domain of the user.
+	:param password: The password of the user.
+	:param logonType: The type of logon to perform (default is interactive).
+	:return: A handle to the created logon token.
+	:raises: Exceptions raised by the underlying LogonUser call if the logon
+		attempt fails or if the Win32 API returns an error.
+	"""
+	log.debug(f"Calling LogonUser for {domain}\\{username}...")
+	token = win32security.LogonUser(
+		username,
+		domain,
+		password,
+		logonTypes[logonType],
+		win32con.LOGON32_PROVIDER_DEFAULT,
+	)
+	return token
+
+
+def generateUniqueSandboxSidString() -> str:
+	"""
+	Generate a unique one-time SID for use in restricted tokens and ACLs.
+
+	:return: The string representation of the generated SID.
+	:raises: Underlying win32 API exceptions if SID creation fails.
+	"""
+	u = uuid.uuid4()
+	u = uuid.uuid4().int
+	a = (u >> 96) & 0xFFFFFFFF
+	b = (u >> 64) & 0xFFFFFFFF
+	c = (u >> 32) & 0xFFFFFFFF
+	rid = u & 0xFFFFFFFF
+	sidString = f"S-1-5-21-{a}-{b}-{c}-{rid}"
+	log.debug(f"Generated unique sandbox SID: {sidString}")
+	return sidString
+
+
+def duplicatePrimaryToken(token):
+	"""
+	Duplicate a primary token.
+
+	:param token: The primary token to duplicate.
+	:return: A duplicated primary token.
+	:raises: Underlying win32 API exceptions if token duplication fails.
+	"""
+	duplicatedToken = win32security.DuplicateTokenEx(
+		token,
+		win32security.SecurityImpersonation,
+		win32security.TOKEN_ALL_ACCESS,
+		win32security.TokenPrimary,
+		None,
+	)
+	return duplicatedToken

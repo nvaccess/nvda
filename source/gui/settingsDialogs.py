@@ -1,31 +1,30 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler,
 # Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
-# Neil Soiffer, Ryan McCleary.
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Neil Soiffer, Ryan McCleary, Kefas Lungu.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
+import bisect
 import copy
 import logging
+import math
 import os
 import re
-import typing
 from abc import ABCMeta, abstractmethod
-from collections.abc import Container
+from collections.abc import Callable, Container
 from enum import IntEnum
 from locale import strxfrm
 from typing import (
 	Any,
-	Callable,
 	List,
 	Optional,
 	Set,
-	Type,
 )
 
 import audio
@@ -41,17 +40,20 @@ import installer
 import keyboardHandler
 import languageHandler
 import logHandler
+import _magnifier.config as magnifierConfig
+from _magnifier.utils.types import Filter, FullScreenMode, MagnifierFollowFocusType
 import queueHandler
 import requests
 import speech
+import speechDictHandler
 import systemUtils
+from utils.security import isRunningOnSecureDesktop
 import vision
 import vision.providerBase
 import vision.providerInfo
 import winUser
 import wx
 from wx.lib import scrolledpanel
-from NVDAState import WritePaths
 
 import screenCurtain._screenCurtain
 from utils import mmdevice
@@ -64,6 +66,7 @@ from config.configFlags import (
 	NVDAKey,
 	OutputMode,
 	ParagraphStartMarker,
+	PlayErrorSound,
 	RemoteConnectionMode,
 	RemoteServerType,
 	ReportCellBorders,
@@ -74,6 +77,7 @@ from config.configFlags import (
 	ShowMessages,
 	TetherTo,
 	TypingEcho,
+	LoggingLevel,
 )
 from logHandler import log
 from synthDriverHandler import SynthDriver, changeVoice, getSynth, getSynthList, setSynth
@@ -81,6 +85,7 @@ from utils.displayString import DisplayStringEnum
 
 import gui
 import gui.contextHelp
+import gui.message
 import screenCurtain
 import api
 import ui
@@ -181,7 +186,7 @@ class SettingsDialog(
 	def _setInstanceDestroyedState(self):
 		# prevent race condition with object deletion
 		# prevent deletion of the object while we work on it.
-		nonWeak: typing.Dict[SettingsDialog, SettingsDialog.DialogState] = dict(SettingsDialog._instances)
+		nonWeak: dict[SettingsDialog, SettingsDialog.DialogState] = dict(SettingsDialog._instances)
 
 		if (
 			self in SettingsDialog._instances
@@ -515,7 +520,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	"""
 
 	title = ""
-	categoryClasses: typing.List[typing.Type[SettingsPanel]] = []
+	categoryClasses: list[type[SettingsPanel]] = []
 
 	class CategoryUnavailableError(RuntimeError):
 		pass
@@ -542,7 +547,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.setPostInitFocus = None
 		# dictionary key is index of category in self.catList, value is the instance.
 		# Partially filled, check for KeyError
-		self.catIdToInstanceMap: typing.Dict[int, SettingsPanel] = {}
+		self.catIdToInstanceMap: dict[int, SettingsPanel] = {}
 
 		super(MultiCategorySettingsDialog, self).__init__(
 			parent,
@@ -744,7 +749,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.container.SetupScrolling()
 		self.container.Thaw()
 
-	def onCategoryChange(self, evt):
+	def onCategoryChange(self, evt: wx.ListEvent):
 		currentCat = self.currentCategory
 		newIndex = evt.GetIndex()
 		if not currentCat or newIndex != self.categoryClasses.index(currentCat.__class__):
@@ -801,18 +806,6 @@ class GeneralSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the general settings panel.
 	title = _("General")
 	helpId = "GeneralSettings"
-	LOG_LEVELS = (
-		# Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
-		(log.OFF, _("disabled")),
-		# Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
-		(log.INFO, _("info")),
-		# Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
-		(log.DEBUGWARNING, _("debug warning")),
-		# Translators: One of the log levels of NVDA (the input/output shows keyboard commands and/or braille commands as well as speech and/or braille output of NVDA).
-		(log.IO, _("input/output")),
-		# Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
-		(log.DEBUG, _("debug")),
-	)
 
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -871,27 +864,6 @@ class GeneralSettingsPanel(SettingsPanel):
 		self.playStartAndExitSoundsCheckBox.SetValue(config.conf["general"]["playStartAndExitSounds"])
 		settingsSizerHelper.addItem(self.playStartAndExitSoundsCheckBox)
 
-		# Translators: The label for a setting in general settings to select logging level of NVDA as it runs
-		# (available options and what they are logging are found under comments for the logging level messages
-		# themselves).
-		logLevelLabelText = _("L&ogging level:")
-		logLevelChoices = [name for level, name in self.LOG_LEVELS]
-		self.logLevelList = settingsSizerHelper.addLabeledControl(
-			logLevelLabelText,
-			wx.Choice,
-			choices=logLevelChoices,
-		)
-		self.bindHelpEvent("GeneralSettingsLogLevel", self.logLevelList)
-		curLevel = log.getEffectiveLevel()
-		if logHandler.isLogLevelForced():
-			self.logLevelList.Disable()
-		for index, (level, name) in enumerate(self.LOG_LEVELS):
-			if level == curLevel:
-				self.logLevelList.SetSelection(index)
-				break
-		else:
-			log.debugWarning("Could not set log level list to current log level")
-
 		# Translators: The label for a setting in general settings to allow NVDA to start after logging onto
 		# Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
 		# start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
@@ -932,72 +904,63 @@ class GeneralSettingsPanel(SettingsPanel):
 			self.copySettingsButton.Disable()
 		settingsSizerHelper.addItem(self.copySettingsButton)
 
-		if updateCheck:
-			item = self.autoCheckForUpdatesCheckBox = wx.CheckBox(
-				self,
-				# Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA.
-				# If not checked, user must check for updates manually.
-				label=_("Automatically check for &updates to NVDA"),
-			)
-			self.bindHelpEvent("GeneralSettingsCheckForUpdates", self.autoCheckForUpdatesCheckBox)
-			item.Value = config.conf["update"]["autoCheck"]
-			if globalVars.appArgs.secure:
-				item.Disable()
-			settingsSizerHelper.addItem(item)
+		item = self.autoCheckForUpdatesCheckBox = wx.CheckBox(
+			self,
+			# Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA.
+			# If not checked, user must check for updates manually.
+			label=_("Automatically check for &updates to NVDA"),
+		)
+		self.bindHelpEvent("GeneralSettingsCheckForUpdates", self.autoCheckForUpdatesCheckBox)
+		item.Value = config.conf["update"]["autoCheck"]
+		if not updateCheck:
+			item.Value = False
+			item.Disable()
+		settingsSizerHelper.addItem(item)
 
-			item = self.notifyForPendingUpdateCheckBox = wx.CheckBox(
-				self,
-				# Translators: The label of a checkbox in general settings to toggle startup notifications
-				# for a pending NVDA update.
-				label=_("Notify for &pending update on startup"),
-			)
-			self.bindHelpEvent("GeneralSettingsNotifyPendingUpdates", self.notifyForPendingUpdateCheckBox)
-			item.Value = config.conf["update"]["startupNotification"]
-			if globalVars.appArgs.secure:
-				item.Disable()
-			settingsSizerHelper.addItem(item)
-			item = self.allowUsageStatsCheckBox = wx.CheckBox(
-				self,
-				# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
-				label=_("Allow NV Access to gather NVDA usage statistics"),
-			)
-			self.bindHelpEvent("GeneralSettingsGatherUsageStats", self.allowUsageStatsCheckBox)
-			item.Value = config.conf["update"]["allowUsageStats"]
-			if globalVars.appArgs.secure:
-				item.Disable()
-			settingsSizerHelper.addItem(item)
+		item = self.notifyForPendingUpdateCheckBox = wx.CheckBox(
+			self,
+			# Translators: The label of a checkbox in general settings to toggle startup notifications
+			# for a pending NVDA update.
+			label=_("Notify for &pending update on startup"),
+		)
+		self.bindHelpEvent("GeneralSettingsNotifyPendingUpdates", self.notifyForPendingUpdateCheckBox)
+		item.Value = config.conf["update"]["startupNotification"]
+		if not updateCheck:
+			item.Value = False
+			item.Disable()
+		settingsSizerHelper.addItem(item)
 
-			# Translators: The label for the update mirror on the General Settings panel.
-			mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Update mirror"))
-			mirrorBox = mirrorBoxSizer.GetStaticBox()
-			mirrorBoxSizerHelper = guiHelper.BoxSizerHelper(self, sizer=mirrorBoxSizer)
-			settingsSizerHelper.addItem(mirrorBoxSizerHelper)
+		# Translators: The label for the update mirror on the General Settings panel.
+		mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Update mirror"))
+		mirrorBox = mirrorBoxSizer.GetStaticBox()
+		mirrorBoxSizerHelper = guiHelper.BoxSizerHelper(self, sizer=mirrorBoxSizer)
+		settingsSizerHelper.addItem(mirrorBoxSizerHelper)
 
-			# Use an ExpandoTextCtrl because even when read-only it accepts focus from keyboard, which
-			# standard read-only TextCtrl does not. ExpandoTextCtrl is a TE_MULTILINE control, however
-			# by default it renders as a single line. Standard TextCtrl with TE_MULTILINE has two lines,
-			# and a vertical scroll bar. This is not neccessary for the single line of text we wish to
-			# display here.
-			# Note: To avoid code duplication, the value of this text box will be set in `onPanelActivated`.
-			self.mirrorURLTextBox = ExpandoTextCtrl(
-				mirrorBox,
-				size=(self.scaleSize(250), -1),
-				style=wx.TE_READONLY,
-			)
-			# Translators: This is the label for the button used to change the NVDA update mirror URL,
-			# it appears in the context of the update mirror group on the General page of NVDA's settings.
-			changeMirrorBtn = wx.Button(mirrorBox, label=_("Change..."))
-			mirrorBoxSizerHelper.addItem(
-				guiHelper.associateElements(
-					self.mirrorURLTextBox,
-					changeMirrorBtn,
-				),
-			)
-			self.bindHelpEvent("UpdateMirror", mirrorBox)
-			self.mirrorURLTextBox.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeMirrorURL)
-			changeMirrorBtn.Bind(wx.EVT_BUTTON, self.onChangeMirrorURL)
-			if globalVars.appArgs.secure:
-				mirrorBox.Disable()
+		# Use an ExpandoTextCtrl because even when read-only it accepts focus from keyboard, which
+		# standard read-only TextCtrl does not. ExpandoTextCtrl is a TE_MULTILINE control, however
+		# by default it renders as a single line. Standard TextCtrl with TE_MULTILINE has two lines,
+		# and a vertical scroll bar. This is not neccessary for the single line of text we wish to
+		# display here.
+		# Note: To avoid code duplication, the value of this text box will be set in `onPanelActivated`.
+		self.mirrorURLTextBox = ExpandoTextCtrl(
+			mirrorBox,
+			size=(self.scaleSize(250), -1),
+			style=wx.TE_READONLY,
+		)
+		# Translators: This is the label for the button used to change the NVDA update mirror URL,
+		# it appears in the context of the update mirror group on the General page of NVDA's settings.
+		changeMirrorBtn = wx.Button(mirrorBox, label=_("Change..."))
+		mirrorBoxSizerHelper.addItem(
+			guiHelper.associateElements(
+				self.mirrorURLTextBox,
+				changeMirrorBtn,
+			),
+		)
+		self.bindHelpEvent("UpdateMirror", mirrorBox)
+		self.mirrorURLTextBox.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeMirrorURL)
+		changeMirrorBtn.Bind(wx.EVT_BUTTON, self.onChangeMirrorURL)
+		if not updateCheck:
+			mirrorBox.Disable()
 
 		item = self.preventDisplayTurningOffCheckBox = wx.CheckBox(
 			self,
@@ -1038,20 +1001,10 @@ class GeneralSettingsPanel(SettingsPanel):
 			evt.Skip()
 
 	def onCopySettings(self, evt):
-		if os.path.isdir(WritePaths.addonsDir) and 0 < len(os.listdir(WritePaths.addonsDir)):
-			message = _(
-				# Translators: A message to warn the user when attempting to copy current
-				# settings to system settings.
-				"Add-ons were detected in your user settings directory. "
-				"Copying these to the system profile could be a security risk. "
-				"Do you still wish to copy your settings?",
-			)
-			# Translators: The title of the warning dialog displayed when trying to
-			# copy settings for use in secure screens.
-			title = _("Warning")
-			style = wx.YES | wx.NO | wx.ICON_WARNING
-			if wx.NO == gui.messageBox(message, title, style, self):
-				return
+		from .addonStoreGui.controls.messageDialogs import _getAddonsToCopy
+
+		if (addonsToCopy := _getAddonsToCopy(self.GetTopLevelParent())) is None:
+			return
 		progressDialog = gui.IndeterminateProgressDialog(
 			gui.mainFrame,
 			# Translators: The title of the dialog presented while settings are being copied
@@ -1062,7 +1015,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		)
 		while True:
 			try:
-				systemUtils.ExecAndPump(config.setSystemConfigToCurrentConfig)
+				systemUtils.ExecAndPump(config.setSystemConfigToCurrentConfig, addonsToCopy=addonsToCopy)
 				res = True
 				break
 			except installer.RetriableFailure:
@@ -1107,10 +1060,6 @@ class GeneralSettingsPanel(SettingsPanel):
 		config.conf["general"]["saveConfigurationOnExit"] = self.saveOnExitCheckBox.IsChecked()
 		config.conf["general"]["askToExit"] = self.askToExitCheckBox.IsChecked()
 		config.conf["general"]["playStartAndExitSounds"] = self.playStartAndExitSoundsCheckBox.IsChecked()
-		logLevel = self.LOG_LEVELS[self.logLevelList.GetSelection()][0]
-		if not logHandler.isLogLevelForced():
-			config.conf["general"]["loggingLevel"] = logging.getLevelName(logLevel)
-			logHandler.setLogLevelFromConfig()
 		if self.startAfterLogonCheckBox.IsEnabled():
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
 		if self.startOnLogonScreenCheckBox.IsEnabled():
@@ -1125,7 +1074,6 @@ class GeneralSettingsPanel(SettingsPanel):
 				)
 		if updateCheck:
 			config.conf["update"]["autoCheck"] = self.autoCheckForUpdatesCheckBox.IsChecked()
-			config.conf["update"]["allowUsageStats"] = self.allowUsageStatsCheckBox.IsChecked()
 			config.conf["update"]["startupNotification"] = self.notifyForPendingUpdateCheckBox.IsChecked()
 			updateCheck.terminate()
 			updateCheck.initialize()
@@ -1821,6 +1769,8 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 
 		self._appendDelayedCharacterDescriptions(settingsSizerHelper)
 
+		self._appendSpeechDictionariesList(settingsSizerHelper)
+
 		minPitchChange = int(
 			config.conf.getConfigValidation(
 				("speech", self.driver.name, "capPitchChange"),
@@ -1890,7 +1840,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			d for d in characterProcessing.listAvailableSymbolDictionaryDefinitions() if d.userVisible
 		]
 		self.symbolDictionariesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
-			# Translators: Label of the list where user can enable or disable symbol dictionaires.
+			# Translators: Label of the list where user can enable or disable symbol dictionaries.
 			_("E&xtra dictionaries for character and symbol processing:"),
 			nvdaControls.CustomCheckListBox,
 			choices=[d.displayName for d in self._availableSymbolDictionaries],
@@ -1900,6 +1850,22 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			i for i, d in enumerate(self._availableSymbolDictionaries) if d.enabled
 		]
 		self.symbolDictionariesList.Select(0)
+
+	def _appendSpeechDictionariesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		self._availableSpeechDictionaries = [
+			d for d in speechDictHandler.listAvailableSpeechDictDefinitions(forDisplay=True) if d.userVisible
+		]
+		self.speechDictionariesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
+			# Translators: Label of the list where user can enable or disable speech dictionaries.
+			_("Sp&eech dictionaries:"),
+			nvdaControls.CustomCheckListBox,
+			choices=[d.displayName for d in self._availableSpeechDictionaries],
+		)
+		self.bindHelpEvent("SpeechDictionaries", self.speechDictionariesList)
+		self.speechDictionariesList.CheckedItems = [
+			i for i, d in enumerate(self._availableSpeechDictionaries) if d.enabled
+		]
+		self.speechDictionariesList.Select(0)
 
 	def _appendSpeechModesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		self._allSpeechModes = list(speech.SpeechMode)
@@ -1958,6 +1924,11 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		if set(currentSymbolDictionaries) != set(newSymbolDictionaries):
 			# Either included or excluded symbol dictionaries, so clear the cache.
 			characterProcessing.clearSpeechSymbols()
+		config.conf["speech"]["speechDictionaries"] = [
+			d.name
+			for i, d in enumerate(self._availableSpeechDictionaries)
+			if i in self.speechDictionariesList.CheckedItems
+		]
 		delayedDescriptions = self.delayedCharacterDescriptionsCheckBox.IsChecked()
 		config.conf["speech"]["delayedCharacterDescriptions"] = delayedDescriptions
 		config.conf["speech"][self.driver.name]["capPitchChange"] = self.capPitchChangeEdit.Value
@@ -2692,6 +2663,23 @@ class BrowseModePanel(SettingsPanel):
 		)
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
 
+		# browseMode imports gui, which imports from settingsDialogs, so a top-level import
+		# would create a circular dependency. Keep this import lazy.
+		import browseMode
+
+		# Store element types for use in onSave (excludes the always-active "default" entry).
+		self._browseModeElements = list(browseMode.BrowseModeTreeInterceptor._browseTouchNavRegistry)
+		self._browseModeCheckListBox: nvdaControls.CustomCheckListBox = sHelper.addLabeledControl(
+			# Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
+			_("T&ouch navigation elements:"),
+			nvdaControls.CustomCheckListBox,
+			choices=[label for _itemType, label in self._browseModeElements],
+		)
+		self._browseModeCheckListBox.Enable(touchHandler.touchSupported())
+		enabledTypes = set(config.conf["virtualBuffers"]["browseModeTouchNavigationElements"])
+		for i, (itemType, _label) in enumerate(self._browseModeElements):
+			self._browseModeCheckListBox.Check(i, itemType in enabledTypes)
+
 	def onSave(self):
 		config.conf["virtualBuffers"]["maxLineLength"] = self.maxLengthEdit.GetValue()
 		config.conf["virtualBuffers"]["linesPerPage"] = self.pageLinesEdit.GetValue()
@@ -2711,6 +2699,11 @@ class BrowseModePanel(SettingsPanel):
 		config.conf["virtualBuffers"]["trapNonCommandGestures"] = (
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
+		config.conf["virtualBuffers"]["browseModeTouchNavigationElements"] = [
+			itemType
+			for i, (itemType, _label) in enumerate(self._browseModeElements)
+			if self._browseModeCheckListBox.IsChecked(i)
+		]
 
 
 class MathSettingsPanel(SettingsPanel):
@@ -2723,26 +2716,9 @@ class MathSettingsPanel(SettingsPanel):
 		"The following options control the presentation of mathematical content.",
 	)
 
-	def _getSpeechStyleDisplayString(self, configValue: str) -> str:
-		"""Helper function to get the display string for a speech style config value.
-
-		:param configValue: The config value to find the display string for
-		:return: The display string to show in the UI
-		"""
-		from mathPres.MathCAT.preferences import SpeechStyleOption
-
-		# Check if it's a known enum value by comparing directly
-		knownStyleValues = [style.value for style in SpeechStyleOption]
-		if configValue in knownStyleValues:
-			enumOption = SpeechStyleOption(configValue)
-			return enumOption.displayString
-		else:
-			# Not a known enum, so the config value IS the display string
-			return configValue
-
 	def _getEnumIndexFromConfigValue(
 		self,
-		enumClass: Type[DisplayStringEnum],
+		enumClass: type[DisplayStringEnum],
 		configValue: Any,
 	) -> int:
 		"""Helper function to get the index of an enum option based on its config value.
@@ -2759,7 +2735,7 @@ class MathSettingsPanel(SettingsPanel):
 
 	def _getEnumValueFromSelection(
 		self,
-		enumClass: Type[DisplayStringEnum],
+		enumClass: type[DisplayStringEnum],
 		selectionIndex: int,
 	) -> Any:
 		"""Helper function to get the config value from a selection index.
@@ -2774,18 +2750,35 @@ class MathSettingsPanel(SettingsPanel):
 			# If the selection is invalid, return the first option's value
 			return list(enumClass)[0].value
 
+	def _getPauseFactorSliderValue(
+		self,
+		pauseFactor: int,
+	) -> int:
+		"""Convert a pause factor value to the slider scale used in the UI."""
+		if pauseFactor <= 0:
+			return 0
+		from mathPres.MathCAT.preferences import PauseFactor
+
+		sliderValue: int = round(
+			math.log(
+				pauseFactor / PauseFactor.SCALE.value,
+				PauseFactor.LOG_BASE.value,
+			),
+		)
+		return max(0, min(14, sliderValue))
+
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		from mathPres.MathCAT import localization, preferences
 		from mathPres.MathCAT.preferences import (
-			ImpairmentOption,
-			DecimalSeparatorOption,
-			VerbosityOption,
+			BrailleNavHighlightOption,
 			ChemistryOption,
+			CopyAsOption,
+			DecimalSeparatorOption,
+			ImpairmentOption,
+			MathCATUserPreferences,
 			NavModeOption,
 			NavVerbosityOption,
-			CopyAsOption,
-			BrailleNavHighlightOption,
-			getSpeechStyleChoicesWithTranslations,
+			VerbosityOption,
 		)
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -2799,7 +2792,7 @@ class MathSettingsPanel(SettingsPanel):
 		sHelper.addItem(speechGroup)
 
 		# Translators: Select an impairment for MathCAT
-		impairmentText = pgettext("math", "Impairment")
+		impairmentText = pgettext("math", "Impairment:")
 		self.impairmentList = speechGroup.addLabeledControl(
 			impairmentText,
 			wx.Choice,
@@ -2811,15 +2804,23 @@ class MathSettingsPanel(SettingsPanel):
 		)
 
 		# Translators: MathCAT language option
-		languageText = pgettext("math", "Language")
-		self.languageOptions, self.languageCodes = localization.getLanguages()
+		languageText = pgettext("math", "Language:")
+		self.languageOptions = localization.getLanguages()
 		self.languageList = speechGroup.addLabeledControl(
 			languageText,
 			wx.Choice,
-			choices=self.languageOptions,
+			choices=[lang.description for lang in self.languageOptions],
 		)
 		self.bindHelpEvent("MathSpeechLanguage", self.languageList)
-		languageIndex = self.languageCodes.index(config.conf["math"]["speech"]["language"])
+		self.languageList.Bind(wx.EVT_CHOICE, self.onLanguageChange)
+		mathLang = config.conf["math"]["speech"]["language"]
+		try:
+			languageIndex = next(
+				idxLang for idxLang, langInfo in enumerate(self.languageOptions) if langInfo.code == mathLang
+			)
+		except StopIteration:
+			log.debugWarning(f'Language "{mathLang}" not supported; restoring to "Auto".')
+			languageIndex = 0
 		self.languageList.SetSelection(languageIndex)
 
 		# Translators: MathCAT decimal separator option.
@@ -2838,23 +2839,21 @@ class MathSettingsPanel(SettingsPanel):
 		)
 
 		# Translators: Select a speech style.
-		speechStyleText = pgettext("math", "Speech style")
-		self.speechStyleOptions = getSpeechStyleChoicesWithTranslations(
-			config.conf["math"]["speech"]["language"],
-		)
+		speechStyleText = pgettext("math", "Speech style:")
 		self.speechStyleList = speechGroup.addLabeledControl(
 			speechStyleText,
 			wx.Choice,
-			choices=self.speechStyleOptions,
+			choices=localization.getSpeechStyles(mathLang),
 		)
 		self.bindHelpEvent("MathSpeechStyle", self.speechStyleList)
-		speechStyleDisplayString = self._getSpeechStyleDisplayString(
-			config.conf["math"]["speech"]["speechStyle"],
-		)
-		self.speechStyleList.SetStringSelection(speechStyleDisplayString)
+		speechStyle = MathCATUserPreferences.getConfigForSpeechStyle(mathLang)
+		if speechStyle:
+			self.speechStyleList.SetStringSelection(speechStyle)
+		else:
+			self.speechStyleList.SetSelection(0)
 
 		# Translators: MathCAT's verbosity setting
-		speechAmountText = pgettext("math", "Speech verbosity")
+		speechAmountText = pgettext("math", "Speech verbosity:")
 		self.speechAmountList = speechGroup.addLabeledControl(
 			speechAmountText,
 			wx.Choice,
@@ -2867,17 +2866,21 @@ class MathSettingsPanel(SettingsPanel):
 
 		# Translators: MathCAT's relative speed setting
 		relativeSpeedText = pgettext("math", "Relative speech rate")
+		minMathRate = int(config.conf.getConfigValidation(("math", "speech", "mathRate")).kwargs["min"])
+		maxMathRate = int(config.conf.getConfigValidation(("math", "speech", "mathRate")).kwargs["max"])
 		self.relativeSpeedSlider: nvdaControls.EnhancedInputSlider = speechGroup.addLabeledControl(
 			relativeSpeedText,
 			nvdaControls.EnhancedInputSlider,
-			minValue=10,
-			maxValue=100,
+			minValue=minMathRate,
+			maxValue=maxMathRate,
 		)
 		self.bindHelpEvent("MathRelativeSpeed", self.relativeSpeedSlider)
 		self.relativeSpeedSlider.SetValue(config.conf["math"]["speech"]["mathRate"])
 
 		# Translators: label for slider that specifies relative factor to increase or decrease pauses in the math speech
 		pauseFactorText = pgettext("math", "Pause factor")
+		# Note: the UI uses a log scale for pause factors.
+		# The values 1 - 14 get mapped onto 0 - 1056, which are the actual config values.
 		self.pauseFactorSlider: nvdaControls.EnhancedInputSlider = speechGroup.addLabeledControl(
 			pauseFactorText,
 			nvdaControls.EnhancedInputSlider,
@@ -2885,16 +2888,18 @@ class MathSettingsPanel(SettingsPanel):
 			maxValue=14,
 		)
 		self.bindHelpEvent("MathSpeechPauseFactor", self.pauseFactorSlider)
-		self.pauseFactorSlider.SetValue(config.conf["math"]["speech"]["pauseFactor"])
+		pauseFactorValue: int = config.conf["math"]["speech"]["pauseFactor"]
+		sliderValue: int = self._getPauseFactorSliderValue(pauseFactorValue)
+		self.pauseFactorSlider.SetValue(sliderValue)
 
 		# Translators: label for check box controlling a beep sound when math speech starts/ends
-		speechSoundText = pgettext("math", "Make a sound when starting/ending math speech")
+		speechSoundText = pgettext("math", "Beep at the beginning and end of math")
 		self.speechSoundCheckBox = speechGroup.addItem(wx.CheckBox(speechGroupBox, label=speechSoundText))
 		self.bindHelpEvent("MathSpeechSound", self.speechSoundCheckBox)
 		self.speechSoundCheckBox.SetValue(config.conf["math"]["speech"]["speechSound"] != "None")
 
 		# Translators: label for combobox to specify how verbose/terse the speech should be
-		speechForChemicalText = pgettext("math", "Speech for chemical formulas")
+		speechForChemicalText = pgettext("math", "Chemical formulae:")
 		self.speechForChemicalList = speechGroup.addLabeledControl(
 			speechForChemicalText,
 			wx.Choice,
@@ -2905,32 +2910,13 @@ class MathSettingsPanel(SettingsPanel):
 			self._getEnumIndexFromConfigValue(ChemistryOption, config.conf["math"]["speech"]["chemistry"]),
 		)
 
-		# Translators: Text for the navigation group.
-		navGroupText = pgettext("math", "Navigation")
-		navGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=navGroupText)
-		navGroupBox = navGroupSizer.GetStaticBox()
-		navGroup = guiHelper.BoxSizerHelper(self, sizer=navGroupSizer)
-		sHelper.addItem(navGroup)
-
-		# Translators: label for combobox to specify one of three modes use to navigate math expressions
-		navModeText = pgettext("math", "Navigation mode to use when beginning to navigate an equation")
-		self.navModeList = speechGroup.addLabeledControl(
-			navModeText,
-			wx.Choice,
-			choices=[option.displayString for option in NavModeOption],
-		)
-		self.bindHelpEvent("MathNavMode", self.navModeList)
-		self.navModeList.SetSelection(
-			self._getEnumIndexFromConfigValue(NavModeOption, config.conf["math"]["navigation"]["navMode"]),
-		)
-
 		# Translators: label for combobox to specify whether the expression is spoken or described (an overview)
-		navSpeechText = pgettext("math", "Navigation speech to use when beginning to navigate an equation")
+		navSpeechText = pgettext("math", "When entering an equation:")
 		navSpeechOptions: list[str] = [
 			# Translators: "Speak" the expression after moving to it
 			pgettext("math", "Speak"),
-			# Translators: "Describe" the expression after moving to it ("overview is a synonym")
-			pgettext("math", "Describe/overview"),
+			# Translators: "Describe" the expression after moving to it
+			pgettext("math", "Describe overview"),
 		]
 		self.navSpeechList = speechGroup.addLabeledControl(
 			navSpeechText,
@@ -2943,21 +2929,43 @@ class MathSettingsPanel(SettingsPanel):
 		else:
 			self.navSpeechList.SetSelection(0)
 
-		# Translators: label for check box controlling a beep sound when math speech starts/ends
-		resetNavSpeechText = pgettext("math", "Make a sound when starting/ending math speech")
+		# Translators: Text for the navigation group.
+		navGroupText = pgettext("math", "Navigation")
+		navGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=navGroupText)
+		navGroupBox = navGroupSizer.GetStaticBox()
+		navGroup = guiHelper.BoxSizerHelper(self, sizer=navGroupSizer)
+		sHelper.addItem(navGroup)
+
+		# Translators: label for combobox to specify one of three modes use to navigate math expressions
+		navModeText = pgettext("math", "Default navigation mode:")
+		self.navModeList = navGroup.addLabeledControl(
+			navModeText,
+			wx.Choice,
+			choices=[option.displayString for option in NavModeOption],
+		)
+		self.bindHelpEvent("MathNavMode", self.navModeList)
+		self.navModeList.SetSelection(
+			self._getEnumIndexFromConfigValue(NavModeOption, config.conf["math"]["navigation"]["navMode"]),
+		)
+
+		# Translators: label for check box that determines whether MathCAT
+		# reverts to the user-selected "default navigation mode" when
+		# navigating into a new equation, even if they selected a different
+		# one this session.
+		resetNavSpeechText = pgettext("math", "Reset to the default navigation mode for each new equation")
 		self.resetNavSpeechCheckBox = navGroup.addItem(wx.CheckBox(navGroupBox, label=resetNavSpeechText))
 		self.bindHelpEvent("MathNavReset", self.resetNavSpeechCheckBox)
 		self.resetNavSpeechCheckBox.SetValue(config.conf["math"]["navigation"]["resetOverview"])
 
 		# Translators: label for checkbox that controls whether arrow keys move out of fractions, etc.,
 		# or whether you have to manually back out of the fraction, etc.
-		navAutoZoomText = pgettext("math", "Automatic zoom out of 2D notations")
+		navAutoZoomText = pgettext("math", "Automatically zoom out of two-dimensional notation")
 		self.navAutoZoomCheckBox = navGroup.addItem(wx.CheckBox(navGroupBox, label=navAutoZoomText))
 		self.bindHelpEvent("MathNavAutoZoom", self.navAutoZoomCheckBox)
 		self.navAutoZoomCheckBox.SetValue(config.conf["math"]["navigation"]["autoZoomOut"])
 
 		# Translators: label for combobox down to specify whether you want a terse or verbose reading of navigation commands
-		navSpeechAmountText = pgettext("math", "Speech amount for navigation")
+		navSpeechAmountText = pgettext("math", "Navigation verbosity:")
 		self.navSpeechAmountList = navGroup.addLabeledControl(
 			navSpeechAmountText,
 			wx.Choice,
@@ -2975,7 +2983,7 @@ class MathSettingsPanel(SettingsPanel):
 		)
 
 		# Translators: label for combobox to specify how math will be copied to the clipboard
-		navCopyAsText = pgettext("math", "Copy math as")
+		navCopyAsText = pgettext("math", "Copy math as:")
 		self.navCopyAsList = navGroup.addLabeledControl(
 			navCopyAsText,
 			wx.Choice,
@@ -2993,19 +3001,32 @@ class MathSettingsPanel(SettingsPanel):
 		sHelper.addItem(brailleGroup)
 
 		# Translators: label for combobox to specify which braille code to use
-		brailleMathCodeText = pgettext("math", "Braille math code for refreshable displays")
-		brailleMathCodeOptions: list[str] = preferences.getBrailleCodes()
-		self.brailleMathCodeList = navGroup.addLabeledControl(
+		brailleMathCodeText = pgettext("math", "Output code:")
+		availableBrailleCodes: list[str] = preferences.getBrailleCodes()
+		autoBrailleCode = preferences.getAutoBrailleCode(availableBrailleCodes)
+		# Translators: An option in Math settings to select a braille code automatically,
+		# according to NVDA's language.
+		autoDisplay = pgettext("math", "Automatic ({name})").format(name=autoBrailleCode)
+		self._brailleCodeIds: list[str] = ["Auto"]
+		brailleMathCodeOptions: list[str] = [autoDisplay]
+		self._brailleCodeIds.extend(availableBrailleCodes)
+		brailleMathCodeOptions.extend(availableBrailleCodes)
+		self.brailleMathCodeList = brailleGroup.addLabeledControl(
 			brailleMathCodeText,
 			wx.Choice,
 			choices=brailleMathCodeOptions,
 		)
 		self.bindHelpEvent("MathBrailleCode", self.brailleMathCodeList)
-		self.brailleMathCodeList.SetStringSelection(config.conf["math"]["braille"]["brailleCode"])
+		currentBrailleCode = config.conf["math"]["braille"]["brailleCode"]
+		try:
+			selectionIndex = self._brailleCodeIds.index(currentBrailleCode)
+		except ValueError:
+			selectionIndex = 0
+		self.brailleMathCodeList.SetSelection(selectionIndex)
 
 		# Translators: label for combobox to specify how braille dots should be modified when navigating/selecting subexprs
-		brailleHighlightsText = pgettext("math", "Highlight the current navigation node with dots 7 and 8")
-		self.brailleHighlightsList = navGroup.addLabeledControl(
+		brailleHighlightsText = pgettext("math", "Highlight navigation focus with dots 7 and 8")
+		self.brailleHighlightsList = brailleGroup.addLabeledControl(
 			brailleHighlightsText,
 			wx.Choice,
 			choices=[option.displayString for option in BrailleNavHighlightOption],
@@ -3018,21 +3039,36 @@ class MathSettingsPanel(SettingsPanel):
 			),
 		)
 
-	def onSave(self):
-		import math
+		appSupportGroupSizer = wx.StaticBoxSizer(
+			wx.VERTICAL,
+			self,
+			# Translators: Text for the application support group in MathCAT options.
+			label=pgettext("math", "Application support"),
+		)
+		appSupportGroupBox = appSupportGroupSizer.GetStaticBox()
+		appSupportGroup = guiHelper.BoxSizerHelper(self, sizer=appSupportGroupSizer)
+		sHelper.addItem(appSupportGroup)
 
+		# Translators: label for checkbox to use native math presentation support instead of MathCAT in Word and Outlook
+		useWordNativeMathText = pgettext("math", "Use native math support in Word and Outlook")
+		self.useWordNativeMathCheckBox = appSupportGroup.addItem(
+			wx.CheckBox(appSupportGroupBox, label=useWordNativeMathText),
+		)
+		self.bindHelpEvent("MathUseWordNative", self.useWordNativeMathCheckBox)
+		self.useWordNativeMathCheckBox.SetValue(config.conf["math"]["other"]["useWordNativeMath"])
+
+	def onSave(self):
 		from mathPres.MathCAT.preferences import MathCATUserPreferences
 		from mathPres.MathCAT.preferences import (
-			ImpairmentOption,
-			VerbosityOption,
-			DecimalSeparatorOption,
+			BrailleNavHighlightOption,
 			ChemistryOption,
+			CopyAsOption,
+			DecimalSeparatorOption,
+			ImpairmentOption,
 			NavModeOption,
 			NavVerbosityOption,
-			CopyAsOption,
-			BrailleNavHighlightOption,
 			PauseFactor,
-			getSpeechStyleConfigValue,
+			VerbosityOption,
 		)
 
 		mathConf = config.conf["math"]
@@ -3040,24 +3076,31 @@ class MathSettingsPanel(SettingsPanel):
 			ImpairmentOption,
 			self.impairmentList.GetSelection(),
 		)
-		mathConf["speech"]["language"] = self.languageCodes[self.languageList.GetSelection()]
+		mathLang = mathConf["speech"]["language"] = self.languageOptions[
+			self.languageList.GetSelection()
+		].code
 		mathConf["other"]["decimalSeparator"] = self._getEnumValueFromSelection(
 			DecimalSeparatorOption,
 			self.decimalSeparatorList.GetSelection(),
 		)
-		mathConf["speech"]["speechStyle"] = getSpeechStyleConfigValue(
-			self.speechStyleList.GetStringSelection(),
-		)
+		# Ensure the per-language speech configuration exists before setting the speech style.
+		MathCATUserPreferences.updateConfigForSpeechStyle(mathLang, self.speechStyleList.GetStringSelection())
 		mathConf["speech"]["verbosity"] = self._getEnumValueFromSelection(
 			VerbosityOption,
 			self.speechAmountList.GetSelection(),
 		)
 		mathConf["speech"]["mathRate"] = self.relativeSpeedSlider.GetValue()
-		pfSlider: int = self.pauseFactorSlider.GetValue()
+		pauseFactorSliderValue: int = self.pauseFactorSlider.GetValue()
 		pauseFactor: int = (
 			0
-			if pfSlider == 0
-			else round(PauseFactor.SCALE.value * math.pow(PauseFactor.LOG_BASE.value, pfSlider))
+			if pauseFactorSliderValue == 0
+			else round(
+				PauseFactor.SCALE.value
+				* math.pow(
+					PauseFactor.LOG_BASE.value,
+					pauseFactorSliderValue,
+				),
+			)
 		)  # avoid log(0)
 		mathConf["speech"]["pauseFactor"] = pauseFactor
 		if self.speechSoundCheckBox.GetValue():
@@ -3089,9 +3132,27 @@ class MathSettingsPanel(SettingsPanel):
 			BrailleNavHighlightOption,
 			self.brailleHighlightsList.GetSelection(),
 		)
-		mathConf["braille"]["brailleCode"] = self.brailleMathCodeList.GetStringSelection()
-		mcPrefs: MathCATUserPreferences = MathCATUserPreferences.fromNVDAConfig()
-		mcPrefs.save()
+		selectedBrailleIndex = self.brailleMathCodeList.GetSelection()
+		mathConf["braille"]["brailleCode"] = self._brailleCodeIds[selectedBrailleIndex]
+		mathConf["other"]["useWordNativeMath"] = self.useWordNativeMathCheckBox.GetValue()
+		mcPrefs = MathCATUserPreferences.fromNVDAConfig()
+		mcPrefs.apply()
+
+	def onLanguageChange(self, event: wx.CommandEvent) -> None:
+		from mathPres.MathCAT import localization
+
+		selectedLanguage = self.languageOptions[self.languageList.GetSelection()]
+		speechStyles = localization.getSpeechStyles(selectedLanguage.code)
+		self.speechStyleList.SetItems(speechStyles)
+		mathLang = config.conf["math"]["speech"]["language"]
+		if selectedLanguage.code == mathLang:
+			currentSpeechStyle = config.conf["math"]["speech"].get(mathLang, {}).get("speechStyle", "")
+			if currentSpeechStyle in speechStyles:
+				self.speechStyleList.SetStringSelection(currentSpeechStyle)
+			else:
+				self.speechStyleList.SetSelection(0)
+		else:
+			self.speechStyleList.SetSelection(0)
 
 
 class DocumentFormattingPanel(SettingsPanel):
@@ -3206,7 +3267,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		self._spellingErrorsChecklist = docInfoGroup.addLabeledControl(
 			# Translators: This is the label for a checklist in the
 			# document formatting settings panel.
-			_("Spelling e&rrors"),
+			_("Spelling or grammar e&rrors"),
 			nvdaControls.CustomCheckListBox,
 			choices=[i.displayString for i in ReportSpellingErrors],
 		)
@@ -3542,7 +3603,7 @@ class AudioPanel(SettingsPanel):
 		self.bindHelpEvent("SelectSynthesizerDuckingMode", self.duckingList)
 		index = config.conf["audio"]["audioDuckingMode"]
 		self.duckingList.SetSelection(index)
-		if not audioDucking.isAudioDuckingSupported():
+		if not audioDucking.isAudioDuckingSupported() or audioDucking._isAudioDuckingSuspended():
 			self.duckingList.Disable()
 
 		# Translators: This is the label for a checkbox control in the
@@ -4056,42 +4117,6 @@ class RemoteSettingsPanel(SettingsPanel):
 				_remoteClient.terminate()
 
 
-class LocalCaptionerSettingsPanel(SettingsPanel):
-	"""Settings panel for Local captioner configuration."""
-
-	# Translators: This is the label for the local captioner settings panel.
-	title = pgettext("imageDesc", "AI Image Descriptions")
-	helpId = "LocalCaptionerSettings"
-
-	def makeSettings(self, settingsSizer: wx.BoxSizer):
-		"""Create the settings controls for the panel.
-
-		:param settingsSizer: The sizer to add settings controls to.
-		"""
-
-		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-
-		self.enable = sHelper.addItem(
-			# Translators: A configuration in settings dialog.
-			wx.CheckBox(self, label=pgettext("imageDesc", "Enable image captioner")),
-		)
-		self.enable.SetValue(config.conf["automatedImageDescriptions"]["enable"])
-		self.bindHelpEvent("LocalCaptionToggle", self.enable)
-
-	def onSave(self) -> None:
-		"""Save the configuration settings."""
-		enabled = self.enable.GetValue()
-		oldEnabled = config.conf["automatedImageDescriptions"]["enable"]
-
-		if enabled != oldEnabled:
-			import _localCaptioner
-
-			if enabled != _localCaptioner.isModelLoaded():
-				_localCaptioner.toggleImageCaptioning()
-
-		config.conf["automatedImageDescriptions"]["enable"] = enabled
-
-
 class TouchInteractionPanel(SettingsPanel):
 	# Translators: This is the label for the touch interaction settings panel.
 	title = _("Touch Interaction")
@@ -4525,6 +4550,17 @@ class AdvancedPanelControls(
 		self.trimLeadingSilenceCheckBox.SetValue(config.conf["speech"]["trimLeadingSilence"])
 		self.trimLeadingSilenceCheckBox.defaultValue = self._getDefaultValue(["speech", "trimLeadingSilence"])
 
+		# Translators: This is the label for a combo-box control in the
+		#  Advanced settings panel.
+		label = _("Use WASAPI for SAPI 4 audio output:")
+		self.useWASAPIForSAPI4Combo = speechGroup.addLabeledControl(
+			labelText=label,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["speech", "useWASAPIForSAPI4"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("UseWASAPIForSAPI4", self.useWASAPIForSAPI4Combo)
+
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
 		label = _("Virtual Buffers")
@@ -4636,12 +4672,7 @@ class AdvancedPanelControls(
 
 		# Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
 		label = _("Play a sound for logged e&rrors:")
-		playErrorSoundChoices = (
-			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-			pgettext("advanced.playErrorSound", "Only in NVDA test versions"),
-			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-			pgettext("advanced.playErrorSound", "Yes"),
-		)
+		playErrorSoundChoices = [i.displayString for i in PlayErrorSound]
 		self.playErrorSoundCombo = debugLogGroup.addLabeledControl(
 			label,
 			wx.Choice,
@@ -4713,6 +4744,7 @@ class AdvancedPanelControls(
 			and self.cancelExpiredFocusSpeechCombo.GetSelection()
 			== self.cancelExpiredFocusSpeechCombo.defaultValue
 			and self.trimLeadingSilenceCheckBox.IsChecked() == self.trimLeadingSilenceCheckBox.defaultValue
+			and self.useWASAPIForSAPI4Combo.isValueConfigSpecDefault()
 			and self.loadChromeVBufWhenBusyCombo.isValueConfigSpecDefault()
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and self.reportTransparentColorCheckBox.GetValue()
@@ -4742,6 +4774,7 @@ class AdvancedPanelControls(
 		self.wtStrategyCombo.resetToConfigSpecDefault()
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.trimLeadingSilenceCheckBox.SetValue(self.trimLeadingSilenceCheckBox.defaultValue)
+		self.useWASAPIForSAPI4Combo.resetToConfigSpecDefault()
 		self.loadChromeVBufWhenBusyCombo.resetToConfigSpecDefault()
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
@@ -4755,6 +4788,8 @@ class AdvancedPanelControls(
 
 		shouldResetSynth = (
 			config.conf["speech"]["trimLeadingSilence"] != self.trimLeadingSilenceCheckBox.IsChecked()
+			or config.conf["speech"]["useWASAPIForSAPI4"]
+			!= self.useWASAPIForSAPI4Combo._getControlCurrentFlag()
 		)
 
 		config.conf["development"]["enableScratchpadDir"] = self.scratchpadCheckBox.IsChecked()
@@ -4770,6 +4805,7 @@ class AdvancedPanelControls(
 			self.cancelExpiredFocusSpeechCombo.GetSelection()
 		)
 		config.conf["speech"]["trimLeadingSilence"] = self.trimLeadingSilenceCheckBox.IsChecked()
+		self.useWASAPIForSAPI4Combo.saveCurrentValueToConf()
 		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
 		self.enhancedEventProcessingComboBox.saveCurrentValueToConf()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
@@ -5477,6 +5513,24 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
 
+		# Translators: The label for a setting in braille settings to change the rate for autoscroll.
+		autoScrollRateText = _("Auto&matic scroll rate")
+		self.autoScrollRateSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
+			autoScrollRateText,
+			nvdaControls.EnhancedInputSlider,
+			minValue=0,
+			maxValue=100,
+		)
+
+		self.autoScrollRateSlider.SetValue(
+			config.conf.valueToPercentage(
+				"braille",
+				"autoScrollRate",
+			),
+		)
+		self.autoScrollRateSlider.SetPageSize(10)
+		self.bindHelpEvent("BrailleAutoScrollRate", self.autoScrollRateSlider)
+
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start" % (time.time() - startTime))
 
@@ -5507,6 +5561,12 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		config.conf["braille"]["showMessages"] = self.showMessagesList.GetSelection()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
+
+		config.conf["braille"]["autoScrollRate"] = config.conf.percentageToValue(
+			"braille",
+			"autoScrollRate",
+			percentage=self.autoScrollRateSlider.GetValue(),
+		)
 		tetherChoice = [x.value for x in TetherTo][self.tetherList.GetSelection()]
 		if tetherChoice == TetherTo.AUTO.value:
 			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value
@@ -5961,10 +6021,213 @@ class VisionProviderSubPanel_Wrapper(
 			self._providerSettings.onSave()
 
 
+class MagnifierPanel(SettingsPanel):
+	# Translators: This is the label for the magnifier settings panel.
+	title = _("Magnifier")
+	helpId = "MagnifierSettings"
+
+	def makeSettings(
+		self,
+		settingsSizer: wx.BoxSizer,
+	):
+		sHelper = guiHelper.BoxSizerHelper(
+			self,
+			sizer=settingsSizer,
+		)
+
+		# ZOOM SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the default zoom level.
+		defaultZoomLabelText = _("Default &zoom level:")
+
+		zoomValues = magnifierConfig.ZoomLevel.zoom_range()
+		zoomChoices = magnifierConfig.ZoomLevel.zoom_strings()
+
+		self.defaultZoomList = sHelper.addLabeledControl(
+			defaultZoomLabelText,
+			wx.Choice,
+			choices=zoomChoices,
+		)
+		self.bindHelpEvent(
+			"MagnifierDefaultZoom",
+			self.defaultZoomList,
+		)
+
+		# Set default value from config
+		defaultZoom = magnifierConfig.getDefaultZoomLevel()
+		zoomIndex = bisect.bisect_left(zoomValues, defaultZoom)
+		# Find the closest value
+		if zoomIndex == 0:
+			closestIndex = 0
+		elif zoomIndex >= len(zoomValues):
+			closestIndex = len(zoomValues) - 1
+		else:
+			closestIndex = min(zoomIndex - 1, zoomIndex, key=lambda i: abs(zoomValues[i] - defaultZoom))
+		self.defaultZoomList.SetSelection(closestIndex)
+
+		# PAN SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
+		panStepSizeLabelText = _("&Panning step size (%):")
+
+		self.defaultPanSpinCtrl = sHelper.addLabeledControl(
+			panStepSizeLabelText,
+			wx.SpinCtrl,
+			min=1,
+			max=100,
+		)
+		self.bindHelpEvent(
+			"magnifierPanStep",
+			self.defaultPanSpinCtrl,
+		)
+
+		# Set default value from config
+		defaultPan = magnifierConfig.getDefaultPanStep()
+		self.defaultPanSpinCtrl.SetValue(defaultPan)
+
+		# FILTER SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the default filter
+		defaultFilterLabelText = _("Default &filter:")
+		filterChoices = [f.displayString for f in Filter]
+		self.defaultFilterList = sHelper.addLabeledControl(
+			defaultFilterLabelText,
+			wx.Choice,
+			choices=filterChoices,
+		)
+		self.bindHelpEvent("MagnifierDefaultFilter", self.defaultFilterList)
+
+		# Set default value from config
+		defaultFilter = magnifierConfig.getDefaultFilter()
+		self.defaultFilterList.SetSelection(list(Filter).index(defaultFilter))
+
+		# FULLSCREEN MODE SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the default full-screen mode
+		defaultFullscreenModeLabelText = _("Default &fullscreen mode:")
+		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
+		self.defaultFullscreenModeList = sHelper.addLabeledControl(
+			defaultFullscreenModeLabelText,
+			wx.Choice,
+			choices=fullscreenModeChoices,
+		)
+		self.bindHelpEvent(
+			"MagnifierDefaultFullscreenFocusMode",
+			self.defaultFullscreenModeList,
+		)
+
+		# TRUE CENTER
+		# Translators: The label for a setting in magnifier settings to select whether true center is used in full-screen mode
+		trueCenterText = _("Use &true center in fullscreen mode")
+		self.trueCenterCheckBox = sHelper.addItem(wx.CheckBox(self, label=trueCenterText))
+		self.bindHelpEvent(
+			"MagnifierUseTrueCenter",
+			self.trueCenterCheckBox,
+		)
+		self.trueCenterCheckBox.SetValue(magnifierConfig.isTrueCentered())
+
+		# Set default value from config
+		defaultFullscreenMode = magnifierConfig.getDefaultFullscreenMode()
+		self.defaultFullscreenModeList.SetSelection(list(FullScreenMode).index(defaultFullscreenMode))
+
+		# FOCUS GROUP
+		# Translators: This is the label for a group of focus options in the magnifier settings panel
+		focusGroupText = _("Focus")
+		focusGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=focusGroupText)
+		focusGroupBox = focusGroupSizer.GetStaticBox()
+		focusGroup = guiHelper.BoxSizerHelper(self, sizer=focusGroupSizer)
+		sHelper.addItem(focusGroup)
+
+		_followFocusLabels: dict[MagnifierFollowFocusType, tuple[str, str]] = {
+			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the mouse
+			MagnifierFollowFocusType.MOUSE: (_("Follow &mouse"), "MagnifierFollowMouse"),
+			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
+			MagnifierFollowFocusType.SYSTEM_FOCUS: (_("Follow &system focus"), "MagnifierFollowSystemFocus"),
+			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the review cursor
+			MagnifierFollowFocusType.REVIEW: (_("Follow &review cursor"), "MagnifierFollowReviewCursor"),
+			MagnifierFollowFocusType.NAVIGATOR_OBJECT: (
+				# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the navigator object
+				_("Follow &navigator object"),
+				"MagnifierFollowNavigatorObject",
+			),
+		}
+		self._followFocusCheckBoxes: dict[MagnifierFollowFocusType, wx.CheckBox] = {}
+		for focusType, (label, helpId) in _followFocusLabels.items():
+			checkBox = focusGroup.addItem(wx.CheckBox(focusGroupBox, label=label))
+			self.bindHelpEvent(helpId, checkBox)
+			checkBox.SetValue(magnifierConfig.getFollowState(focusType))
+			self._followFocusCheckBoxes[focusType] = checkBox
+
+		# KEEP MOUSE CENTERED
+		# Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
+		keepMouseCenteredText = _("Keep &mouse pointer centered in magnifier view")
+		self.keepMouseCenteredCheckBox = sHelper.addItem(wx.CheckBox(self, label=keepMouseCenteredText))
+		self.bindHelpEvent(
+			"MagnifierKeepMouseCentered",
+			self.keepMouseCenteredCheckBox,
+		)
+		self.keepMouseCenteredCheckBox.SetValue(magnifierConfig.shouldKeepMouseCentered())
+
+	def onSave(self):
+		"""Save the current selections to config."""
+		selectedZoom = self.defaultZoomList.GetSelection()
+		magnifierConfig.setDefaultZoomLevel(magnifierConfig.ZoomLevel.zoom_range()[selectedZoom])
+
+		magnifierConfig.setDefaultPanStep(self.defaultPanSpinCtrl.GetValue())
+
+		selectedFilterIdx = self.defaultFilterList.GetSelection()
+		magnifierConfig.setDefaultFilter(list(Filter)[selectedFilterIdx])
+
+		selectedModeIdx = self.defaultFullscreenModeList.GetSelection()
+		magnifierConfig.setDefaultFullscreenMode(list(FullScreenMode)[selectedModeIdx])
+
+		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterCheckBox.GetValue()
+		for focusType, checkBox in self._followFocusCheckBoxes.items():
+			magnifierConfig.setFollowState(focusType, checkBox.GetValue())
+		config.conf["magnifier"]["keepMouseCentered"] = self.keepMouseCenteredCheckBox.GetValue()
+
+
 class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 	# Translators: The title of the privacy and security category in NVDA's settings.
 	title = _("Privacy and Security")
 	helpId = "PrivacyAndSecuritySettings"
+
+	def _getSelectedLogLevel(self) -> LoggingLevel:
+		selection = self._logLevelCombo.GetSelection()
+		if selection == wx.NOT_FOUND:
+			return LoggingLevel[config.conf["general"]["loggingLevel"]]
+		return list(LoggingLevel)[selection]
+
+	def _confirmLogLevelChange(self, selectedLogLevel: LoggingLevel) -> bool:
+		if selectedLogLevel == LoggingLevel.SECRETS:
+			message = _(
+				# Translators: Warning shown when enabling the secrets log level from NVDA settings.
+				"Setting the logging level to secrets will write sensitive information to the log without redaction, "
+				"including passwords, API keys, or other private data. "
+				"Only enable this temporarily if you explicitly need unredacted diagnostic logs. "
+				"Do you want to continue?",
+			)
+			caption = _(
+				# Translators: Title of the warning dialog shown when enabling the secrets log level.
+				"High risk logging level",
+			)
+		else:
+			message = _(
+				# Translators: Warning shown when enabling a logging level above info from NVDA settings.
+				"Setting the logging level above info may record sensitive information such as typed input, "
+				"speech output, or other private data in the log. "
+				"Only enable higher logging levels temporarily while troubleshooting. "
+				"Do you want to continue?",
+			)
+			caption = _(
+				# Translators: Title of the warning dialog shown when enabling a risky logging level.
+				"Warning",
+			)
+		dialog = gui.message.MessageDialog(
+			parent=self,
+			message=message,
+			title=caption,
+			dialogType=gui.message.DialogType.WARNING,
+			buttons=gui.message.DefaultButtonSet.YES_NO,
+			helpId="GeneralSettingsLogLevel",
+		)
+		return dialog.ShowModal() == gui.message.ReturnCode.YES
 
 	def makeSettings(self, sizer: wx.BoxSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
@@ -5984,11 +6247,17 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 				label=_("Make screen black (immediate effect)"),
 			),
 		)
-		self._screenCurtainEnabledCheckbox.SetValue(
-			screenCurtain.screenCurtain is not None and screenCurtain.screenCurtain.enabled,
-		)
+		self._screenCurtainCheckboxChanged: bool = False
+		isScreenCurtainAvailable = screenCurtain.screenCurtain is not None
+		if isScreenCurtainAvailable:
+			self._cachedScreenCurtainConfigEnabled = screenCurtain.screenCurtain.settings["enabled"]
+			self._cachedScreenCurtainEnabled = screenCurtain.screenCurtain.enabled
+		else:
+			self._cachedScreenCurtainConfigEnabled = self._screenCurtainConfig["enabled"]
+			self._cachedScreenCurtainEnabled = False
+		self._screenCurtainEnabledCheckbox.SetValue(self._cachedScreenCurtainEnabled)
 		self._screenCurtainEnabledCheckbox.Bind(wx.EVT_CHECKBOX, self._ensureScreenCurtainEnableState)
-		self._screenCurtainEnabledCheckbox.Enable(screenCurtain.screenCurtain is not None)
+		self._screenCurtainEnabledCheckbox.Enable(isScreenCurtainAvailable)
 		self.bindHelpEvent("ScreenCurtainEnable", self._screenCurtainEnabledCheckbox)
 
 		self._screenCurtainWarnOnLoadCheckbox = screenCurtainGroup.addItem(
@@ -6010,13 +6279,87 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		self._screenCurtainPlayToggleSoundsCheckbox.SetValue(self._screenCurtainConfig["playToggleSounds"])
 		self.bindHelpEvent("ScreenCurtainPlayToggleSounds", self._screenCurtainPlayToggleSoundsCheckbox)
 
+		# Translators: name of a grouping in Privacy and Security settings
+		# which contains miscellaneous settings.
+		generalSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("General"))
+		generalBox = generalSizer.GetStaticBox()
+		generalGroup = guiHelper.BoxSizerHelper(self, sizer=generalSizer)
+		sHelper.addItem(generalGroup)
+
+		self._logLevelCombo: wx.Choice = generalGroup.addLabeledControl(
+			# Translators: The label for a setting in privacy and security settings to select NVDA's logging level
+			_("L&ogging level:"),
+			wx.Choice,
+			choices=[level.displayString for level in LoggingLevel],
+		)
+		self.bindHelpEvent("GeneralSettingsLogLevel", self._logLevelCombo)
+		if logHandler.isLogLevelForced():
+			self._logLevelCombo.Disable()
+		curLevel = log.getEffectiveLevel()
+		try:
+			self._logLevelCombo.SetSelection(
+				next(
+					filter(
+						lambda indexAndLevel: indexAndLevel[1] == curLevel,
+						enumerate(LoggingLevel.__members__.values()),
+					),
+				)[0],
+			)
+		except StopIteration:
+			log.debugWarning("Could not set log level list to current log level")
+		self._savedLogLevel = self._getSelectedLogLevel()
+
+		self._allowUsageStatsCheckBox: wx.CheckBox = generalGroup.addItem(
+			# Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
+			wx.CheckBox(generalBox, label=_("Allow NV Access to gather NVDA usage statistics")),
+		)
+		self.bindHelpEvent("GeneralSettingsGatherUsageStats", self._allowUsageStatsCheckBox)
+		self._allowUsageStatsCheckBox.Value = config.conf["update"]["allowUsageStats"]
+		if not updateCheck:
+			self._allowUsageStatsCheckBox.Value = False
+			self._allowUsageStatsCheckBox.Disable()
+
+	def onDiscard(self):
+		# Restore screen curtain state and setting to the most recently saved baseline,
+		# in case the user enabled or disabled it without saving.
+		if screenCurtain.screenCurtain is not None:
+			if screenCurtain.screenCurtain.enabled != self._cachedScreenCurtainEnabled:
+				if self._cachedScreenCurtainEnabled:
+					screenCurtain.screenCurtain.enable(persist=self._cachedScreenCurtainConfigEnabled)
+				else:
+					screenCurtain.screenCurtain.disable(persist=not self._cachedScreenCurtainConfigEnabled)
+			if screenCurtain.screenCurtain.settings["enabled"] != self._cachedScreenCurtainConfigEnabled:
+				screenCurtain.screenCurtain.settings["enabled"] = self._cachedScreenCurtainConfigEnabled
+		super().onDiscard()
+
 	def onSave(self):
-		# We intentionally don't save whether the screen curtain is enabled here,
+		# We only save whether the screen curtain is enabled here if the user has toggled the checkbox,
 		# so we don't unintentionally persist a temporary screen curtain to config.
+		if self._screenCurtainCheckboxChanged:
+			# We don't need to change the state of the screen curtain, as that is done when the checkbox is checked/unchecked.
+			self._screenCurtainConfig["enabled"] = self._screenCurtainEnabledCheckbox.IsChecked()
 		self._screenCurtainConfig["warnOnLoad"] = self._screenCurtainWarnOnLoadCheckbox.IsChecked()
 		self._screenCurtainConfig["playToggleSounds"] = (
 			self._screenCurtainPlayToggleSoundsCheckbox.IsChecked()
 		)
+
+		if not logHandler.isLogLevelForced():
+			selectedLogLevel = self._getSelectedLogLevel()
+			updateLogLevel = selectedLogLevel != self._savedLogLevel and (
+				selectedLogLevel >= LoggingLevel.INFO or self._confirmLogLevelChange(selectedLogLevel)
+			)
+			if updateLogLevel:
+				config.conf["general"]["loggingLevel"] = logging.getLevelName(selectedLogLevel)
+				logHandler.setLogLevelFromConfig()
+				self._savedLogLevel = selectedLogLevel
+
+		if updateCheck:
+			config.conf["update"]["allowUsageStats"] = self._allowUsageStatsCheckBox.IsChecked()
+			# updateCheck queries this value whenever checking for updates, so there's no need to restart it
+
+		if screenCurtain.screenCurtain is not None:
+			self._cachedScreenCurtainConfigEnabled = screenCurtain.screenCurtain.settings["enabled"]
+			self._cachedScreenCurtainEnabled = screenCurtain.screenCurtain.enabled
 
 	def _ocrActive(self) -> bool:
 		"""
@@ -6048,9 +6391,19 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			if not confirmed or self._ocrActive():
 				self._screenCurtainEnabledCheckbox.SetValue(False)
 			else:
-				screenCurtain.screenCurtain.enable()
+				try:
+					screenCurtain.screenCurtain.enable(persist=False)
+					self._screenCurtainCheckboxChanged = True
+				except Exception:
+					log.error("Error enabling Screen Curtain.", exc_info=True)
+					ui.message(
+						screenCurtain._screenCurtain.ERROR_ENABLING_MESSAGE,
+						speechPriority=speech.priorities.Spri.NOW,
+					)
+					self._screenCurtainEnabledCheckbox.SetValue(False)
 		elif not shouldBeEnabled and currentlyEnabled:
-			screenCurtain.screenCurtain.disable()
+			screenCurtain.screenCurtain.disable(persist=False)
+			self._screenCurtainCheckboxChanged = True
 
 	def _confirmEnableScreenCurtainWithUser(self) -> bool:
 		"""Confirm with the user before enabling Screen Curtain, if configured to do so.
@@ -6095,10 +6448,15 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
-		MathSettingsPanel,
+		MagnifierPanel,
 		RemoteSettingsPanel,
-		LocalCaptionerSettingsPanel,
 	]
+	# #19634: the desktop heap on the secure desktop is quite restrictive.
+	# The math settings panel contains many controls,
+	# none of which are particularly relevant when running on the secure desktop.
+	# Exclude this panel to try and avoid exhausting the desktop heap.
+	if not isRunningOnSecureDesktop():
+		categoryClasses.append(MathSettingsPanel)
 	# In secure mode, add-on update is disabled, so AddonStorePanel should not appear since it only contains
 	# add-on update related controls.
 	if not globalVars.appArgs.secure:
@@ -6126,6 +6484,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			or isinstance(self.currentCategory, GeneralSettingsPanel)
 			or isinstance(self.currentCategory, AddonStorePanel)
 			or isinstance(self.currentCategory, RemoteSettingsPanel)
+			or isinstance(self.currentCategory, MathSettingsPanel)
 			or isinstance(self.currentCategory, PrivacyAndSecuritySettingsPanel)
 		):
 			# Translators: The profile name for normal configuration
@@ -6143,8 +6502,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			configProfile=NvdaSettingsDialogActiveConfigProfile,
 		)
 
-	def onCategoryChange(self, evt):
-		super(NVDASettingsDialog, self).onCategoryChange(evt)
+	def onCategoryChange(self, evt: wx.ListEvent):
+		super().onCategoryChange(evt)
 		if evt.Skipped:
 			return
 		self._doOnCategoryChange()
@@ -6153,7 +6512,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		global NvdaSettingsDialogActiveConfigProfile, NvdaSettingsDialogWindowHandle
 		NvdaSettingsDialogActiveConfigProfile = None
 		NvdaSettingsDialogWindowHandle = None
-		super(NVDASettingsDialog, self).Destroy()
+		super().Destroy()
 
 
 class AddSymbolDialog(

@@ -1,10 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited
+# Copyright (C) 2025-2026 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from dataclasses import dataclass
 from typing import Any
+
+from logHandler import log
 
 
 @dataclass(frozen=True)
@@ -22,7 +24,11 @@ class VirusTotalScanResults:
 	@classmethod
 	def fromDict(cls, addon: dict[str, Any]) -> "VirusTotalScanResults | None":
 		try:
-			analysisStats = addon["scanResults"]["virusTotal"][0]["last_analysis_stats"]
+			scanResults = addon["scanResults"]
+		except KeyError:
+			return None
+		try:
+			analysisStats = scanResults["virusTotal"][0]["last_analysis_stats"]
 			return cls(
 				scanUrl=addon["vtScanUrl"],
 				malicious=analysisStats["malicious"],
@@ -34,8 +40,31 @@ class VirusTotalScanResults:
 				confirmedTimeout=analysisStats["confirmed-timeout"],
 				typeUnsupported=analysisStats["type-unsupported"],
 			)
-		except KeyError:
+		except (KeyError, IndexError, TypeError):
+			log.error(f"Malformed add-on scan results.: {addon!r}", exc_info=True)
 			return None
+
+	def toDict(self) -> dict[str, list[dict[str, dict[str, int]]]]:
+		"""Store scan data in the same format as the original add-on scan results.
+
+		:return: A dictionary representing the scan results.
+		"""
+		return {
+			"virusTotal": [
+				{
+					"last_analysis_stats": {
+						"malicious": self.malicious,
+						"undetected": self.undetected,
+						"harmless": self.harmless,
+						"suspicious": self.suspicious,
+						"failure": self.failure,
+						"timeout": self.timeout,
+						"confirmed-timeout": self.confirmedTimeout,
+						"type-unsupported": self.typeUnsupported,
+					},
+				},
+			],
+		}
 
 	@property
 	def totalScans(self) -> int:

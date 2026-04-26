@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited
+# Copyright (C) 2025-2026 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -50,6 +50,10 @@ from .winnt import (
 	PSID,
 	SECURITY_ATTRIBUTES,
 )
+from enum import IntEnum
+from serial.win32 import LPOVERLAPPED
+
+from .advapi32 import SECURITY_ATTRIBUTES
 from .jobapi2 import (
 	JOBOBJECTINFOCLASS,
 )
@@ -205,6 +209,20 @@ Releases ownership of the specified mutex object. The calling thread must have o
 """
 ReleaseMutex.argtypes = (HANDLE,)
 ReleaseMutex.restype = BOOL
+
+
+class WAIT(IntEnum):
+	"""Indicates the result of a Wait function."""
+
+	OBJECT_0 = 0x00000000
+	"""The state of the specified object is signaled."""
+
+	TIMEOUT = 0x00000102
+	"""The time-out interval elapsed, and the object's state is nonsignaled."""
+
+	FAILED = 0xFFFFFFFF
+	"""The function has failed."""
+
 
 WaitForSingleObject = WINFUNCTYPE(None)(("WaitForSingleObject", dll))
 """
@@ -1569,7 +1587,7 @@ Initializes the specified list of attributes for process and thread creation.
 	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-initializeprocthreadattributelist
 """
 InitializeProcThreadAttributeList.argtypes = (
-	LPPROC_THREAD_ATTRIBUTE_LIST ,  # lpAttributeList: A pointer to a list of attributes
+	LPPROC_THREAD_ATTRIBUTE_LIST,  # lpAttributeList: A pointer to a list of attributes
 	DWORD,  # dwAttributeCount: The number of attributes in the list
 	DWORD,  # dwFlags: Reserved; must be zero
 	POINTER(c_size_t),  # lpSize: A pointer to a variable that receives the size of the attribute list
@@ -1583,7 +1601,7 @@ Updates the specified attribute in a list of attributes for process and thread c
 	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-updateprocthreadattribute
 """
 UpdateProcThreadAttribute.argtypes = (
-	LPPROC_THREAD_ATTRIBUTE_LIST ,  # lpAttributeList: A pointer to a list of attributes
+	LPPROC_THREAD_ATTRIBUTE_LIST,  # lpAttributeList: A pointer to a list of attributes
 	DWORD,  # dwFlags: Reserved; must be zero
 	c_void_p,  # Attribute: The attribute to be updated
 	LPVOID,  # lpValue: A pointer to the attribute value
@@ -1600,14 +1618,11 @@ Deletes a list of attributes for process and thread creation.
 	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-deleteprocthreadattributelist
 """
 DeleteProcThreadAttributeList.argtypes = (
-	LPPROC_THREAD_ATTRIBUTE_LIST ,  # lpAttributeList: A pointer to a list of attributes
+	LPPROC_THREAD_ATTRIBUTE_LIST,  # lpAttributeList: A pointer to a list of attributes
 )
 DeleteProcThreadAttributeList.restype = None
 
 
-
-
-from .winnt import STARTUPINFOEXW
 CreateProcess = WINFUNCTYPE(None)(("CreateProcessW", dll))
 """
 Creates a new process and its primary thread.
@@ -1735,3 +1750,129 @@ SetErrorMode.argtypes = (
 	UINT,  # uMode: The process error mode
 )
 SetErrorMode.restype = UINT
+
+class PAGE(IntEnum):
+	"""
+	Specifies the page protection of a file mapping object.
+
+	.. note::
+		Possible values for the ``flProtect`` parameter of ``CreateFileMapping``.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-createfilemappingw
+	"""
+
+	EXECUTE_READ = 0x20
+	"""Allows views to be mapped for read-only, copy-on-write, or execute access."""
+
+	EXECUTE_READWRITE = 0x40
+	"""Allows views to be mapped for read-only, copy-on-write, read/write, or execute access."""
+
+	EXECUTE_WRITECOPY = 0x80
+	"""Allows views to be mapped for read-only, copy-on-write, or execute access."""
+
+	READONLY = 0x02
+	"""Allows views to be mapped for read-only or copy-on-write access."""
+
+	READWRITE = 0x04
+	"""Allows views to be mapped for read-only, copy-on-write, or read/write access."""
+
+	WRITECOPY = 0x08
+	"""Allows views to be mapped for read-only or copy-on-write access."""
+
+
+CreateFileMapping = WINFUNCTYPE(None)(("CreateFileMappingW", dll))
+"""
+Creates or opens a named or unnamed file mapping object for a specified file.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-createfilemappingw
+"""
+CreateFileMapping.restype = HANDLE
+CreateFileMapping.argtypes = (
+	HANDLE,  # hFile
+	LPSECURITY_ATTRIBUTES,  # lpFileMappingAttributes
+	DWORD,  # flProtect
+	DWORD,  # dwMaximumSizeHigh
+	DWORD,  # dwMaximumSizeLow
+	LPCWSTR,  # lpName
+)
+
+
+class FILE_MAP(IntEnum):
+	"""
+	The type of access to a file mapping object, which determines the page protection of the pages.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/memory/file-mapping-security-and-access-rights
+	"""
+
+	WRITE = 0x0002
+	"""
+	A read/write view of the file is mapped.
+
+	.. note::
+		When used with ``MapViewOfFile``, ``WRITE`` and ``ALL_ACCESS`` are equivalent.
+	"""
+
+	READ = 0x0004
+	"""A read-only view of the file is mapped."""
+
+	ALL_ACCESS = 0x000F001F
+	"""
+	A read/write view of the file is mapped.
+
+	.. note::
+		When used with ``MapViewOfFile``, ``ALL_ACCESS`` and ``WRITE`` are equivalent.
+	"""
+
+
+MapViewOfFile = WINFUNCTYPE(None)(("MapViewOfFile", dll))
+"""
+Maps a view of a file mapping into the address space of a calling process.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-mapviewoffile
+"""
+MapViewOfFile.restype = LPVOID
+MapViewOfFile.argtypes = (
+	HANDLE,  # hFileMappingObject
+	DWORD,  # dwDesiredAccess
+	DWORD,  # dwFileOffsetHigh
+	DWORD,  # dwFileOffsetLow
+	c_size_t,  # dwNumberOfBytesToMap
+)
+
+UnmapViewOfFile = WINFUNCTYPE(None)(("UnmapViewOfFile", dll))
+"""
+Unmaps a mapped view of a file from the calling process's address space.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-unmapviewoffile
+"""
+UnmapViewOfFile.restype = BOOL
+UnmapViewOfFile.argtypes = (
+	LPCVOID,  # lpBaseAddress
+)
+
+OpenFileMapping = WINFUNCTYPE(None)(("OpenFileMappingW", dll))
+"""
+Opens a named file mapping object.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-openfilemappingw
+"""
+OpenFileMapping.restype = HANDLE
+OpenFileMapping.argtypes = (
+	DWORD,  # dwDesiredAccess
+	BOOL,  # bInheritHandle
+	LPCWSTR,  # lpName
+)
+
+GetCurrentProcessId = WINFUNCTYPE(None)(("GetCurrentProcessId", dll))
+"""Retrieves the process identifier of the calling process.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getcurrentprocessid
+"""
+GetCurrentProcessId.argtypes = ()
+GetCurrentProcessId.restype = DWORD

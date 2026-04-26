@@ -1,5 +1,6 @@
+#!/usr/bin/env python3
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2009-2025 NV Access Limited, Cyrille Bougot, Christopher Toth
+# Copyright (C) 2009-2026 NV Access Limited, Cyrille Bougot, Christopher Toth
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -85,7 +86,7 @@ def main():
 		elif action == "setNvdaSystemConfig":
 			import config
 
-			config._setSystemConfig(args[0])
+			config._setSystemConfig(args[0], addonsToCopy=args[1:])
 		elif action == "config_setStartOnLogonScreen":
 			enable = bool(int(args[0]))
 			import config
@@ -112,7 +113,7 @@ def main():
 						# Translators: the message that is shown when the user tries to install an add-on
 						# from windows explorer and NVDA is not running.
 						"Cannot install NVDA add-on from {path}.\n"
-						"You must be running NVDA to be able to install add-ons."
+						"You must be running NVDA to be able to install add-ons.",
 					).format(path=addonPath),
 					0,
 					winUser.MB_ICONERROR,

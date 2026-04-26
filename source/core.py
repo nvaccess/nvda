@@ -323,11 +323,14 @@ def resetConfiguration(factoryDefaults=False):
 	import tones
 	import audio
 	import screenCurtain
+	import mathPres
 
 	log.debug("Terminating vision")
 	vision.terminate()
 	log.debug("Terminating Screen Curtain")
 	screenCurtain.terminate()
+	log.debug("Terminating math presentation")
+	mathPres.terminate()
 	log.debug("Terminating braille")
 	braille.terminate()
 	log.debug("Terminating brailleInput")
@@ -388,6 +391,9 @@ def resetConfiguration(factoryDefaults=False):
 	brailleInput.initialize()
 	log.debug("Initializing braille")
 	braille.initialize()
+	# Math
+	log.debug("Initializing math presentation")
+	mathPres.initialize()
 	# Vision
 	log.debug("initializing vision")
 	vision.initialize()
@@ -555,7 +561,6 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	import globalPluginHandler
 	import watchdog
 	import _remoteClient
-	import _localCaptioner
 
 	try:
 		import updateCheck
@@ -573,8 +578,6 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	brailleViewer.destroyBrailleViewer()
 	# Terminating remoteClient causes it to clean up its menus, so do it here while they still exist
 	_terminate(_remoteClient)
-
-	_terminate(_localCaptioner)
 
 
 def _initializeObjectCaches():
@@ -770,6 +773,10 @@ def main():
 
 	log.debug("Initializing appModule Handler")
 	appModuleHandler.initialize()
+	log.debug("Initializing asyncio event loop")
+	import _asyncioEventLoop
+
+	_asyncioEventLoop.initialize()
 	log.debug("initializing background i/o")
 	import hwIo
 
@@ -927,10 +934,6 @@ def main():
 	import _remoteClient
 
 	_remoteClient.initialize()
-
-	import _localCaptioner
-
-	_localCaptioner.initialize()
 
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui
@@ -1125,6 +1128,7 @@ def main():
 			artManager.stop()
 	except Exception:
 		log.error("Error terminating ART Manager", exc_info=True)
+	_terminate(_asyncioEventLoop, name="asyncio event loop")
 	_terminate(addonHandler)
 	_terminate(dataManager, name="addon dataManager")
 	_terminate(garbageHandler)

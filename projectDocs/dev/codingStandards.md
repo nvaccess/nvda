@@ -17,10 +17,6 @@ Files can be checked out locally using CRLF if needed for Windows development us
 ## Indentation
 
 * Indentation must be done with tabs (one per level), not spaces.
-* When splitting a single statement over multiple lines, just indent one or more additional levels.
-  Don't use vertical alignment; i.e. lining up with the bracket on the previous line.
-  * Be aware that this requires a new-line after an opening parenthesis/bracket/brace if you intend
-    to split the statement over multiple lines.
 
 ## Identifier Names
 
@@ -66,7 +62,8 @@ Files can be checked out locally using CRLF if needed for Windows development us
 
 ## Translatable Strings
 
-* All strings that could be presented to the user should be marked as translatable using the `_()` function
+* All strings that could be presented to the user should be translatable via one of the gettext functions
+  * i.e. `_()`, `pgettext()`, `ngettext()` or `npgettext()`.
   * e.g. `_("Text review")`.
 * All translatable strings should have a preceding translators comment describing the purpose of the string for translators.
 For example:
@@ -136,8 +133,8 @@ To learn more about reStructuredText, Sphinx and Python, check out the following
 
 * [reStructuredText Primer from the Sphinx docs](https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html)
 * [reStructuredText markup from the Python Developer's Guide](https://devguide.python.org/documentation/markup/)
-* [Sphynx' custom reStructuredText Directives](https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html)
-* [Sphynx' Python Domain](https://www.sphinx-doc.org/en/master/usage/domains/python.html)
+* [Sphinx' custom reStructuredText Directives](https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html)
+* [Sphinx' Python Domain](https://www.sphinx-doc.org/en/master/usage/domains/python.html)
 
 ## Type hints
 

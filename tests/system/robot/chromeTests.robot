@@ -246,3 +246,31 @@ styleNav
 	[Documentation]	Same style navigation
 	[Tags]	chrome_misc
 	test_styleNav
+
+## chrome_link tests
+### Link destination reporting (NVDA+K)
+
+Report link destination plain link
+	[Documentation]	NVDA+K reports the URL of a plain link.
+	[Tags]	chrome_link
+	test_reportLinkDestination_plainLink
+Report link destination nested strong
+	[Documentation]	NVDA+K reports the URL when caret is on text inside a strong tag within a link (#17363).
+	[Tags]	chrome_link
+	test_reportLinkDestination_nestedStrong
+Report link destination nested em
+	[Documentation]	NVDA+K reports the URL when caret is on text inside an em tag within a link (#17363).
+	[Tags]	chrome_link
+	test_reportLinkDestination_nestedEm
+Report link destination deeply nested
+	[Documentation]	NVDA+K reports the URL when caret is on deeply nested elements within a link (#17363).
+	[Tags]	chrome_link
+	test_reportLinkDestination_deeplyNested
+Report link destination image link
+	[Documentation]	NVDA+K reports the URL of an image link (#14779).
+	[Tags]	chrome_link
+	test_reportLinkDestination_imageLink
+Report link destination not a link
+	[Documentation]	NVDA+K reports 'Not a link' when caret is not on a link.
+	[Tags]	chrome_link
+	test_reportLinkDestination_notALink

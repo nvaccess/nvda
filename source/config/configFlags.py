@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot, Cary-rowen
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2022-2026 NV Access Limited, Cyrille Bougot, Cary-rowen
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Flags used to define the possible values for an option in the configuration.
 Use Flag.MEMBER.value to set a new value or compare with an option in the config;
@@ -13,6 +13,7 @@ the default value.
 
 from typing import TYPE_CHECKING
 from enum import unique, verify, CONTINUOUS
+from logHandler import Logger
 from utils.displayString import (
 	DisplayStringFlag,
 	DisplayStringIntEnum,
@@ -405,4 +406,64 @@ class RemoteServerType(DisplayStringFlag):
 			RemoteServerType.EXISTING: pgettext("remote", "Use existing"),
 			# Translators: Use NVDA as the Remote control server
 			RemoteServerType.LOCAL: pgettext("remote", "Host locally"),
+		}
+
+
+class LoggingLevel(DisplayStringIntEnum):
+	"""Enumeration containing the possible logging levels.
+
+	Use LoggingLevel.MEMBER.value to compare with the config;
+	use LoggingLevel.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+
+	OFF = Logger.OFF
+	INFO = Logger.INFO
+	DEBUGWARNING = Logger.DEBUGWARNING
+	IO = Logger.IO
+	DEBUG = Logger.DEBUG
+	SECRETS = Logger.SECRETS
+
+	@property
+	def _displayStringLabels(self) -> dict[int, str]:
+		return {
+			# Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
+			self.OFF: _("disabled"),
+			# Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
+			self.INFO: _("info"),
+			# Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
+			self.DEBUGWARNING: _("debug warning"),
+			# Translators: One of the log levels of NVDA (the input/output shows keyboard commands and/or braille commands as well as speech and/or braille output of NVDA).
+			self.IO: _("input/output"),
+			# Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
+			self.DEBUG: _("debug"),
+			# Translators: One of the log levels of NVDA (the secrets mode logs debug messages without redacting secrets).
+			self.SECRETS: _("secrets"),
+		}
+
+
+@unique
+class PlayErrorSound(DisplayStringIntEnum):
+	"""Enumeration containing the possible config values to play a sound when an error is logged, depending on
+	NVDA version type.
+
+	Use PlayErrorSound.MEMBER.value to compare with the config;
+	use PlayErrorSound.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+
+	ONLY_IN_TEST_VERSIONS = 0
+	YES = 1
+	NO = 2
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			PlayErrorSound.ONLY_IN_TEST_VERSIONS: pgettext(
+				"advanced.playErrorSound",
+				# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+				"Only in NVDA test versions",
+			),
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+			PlayErrorSound.YES: pgettext("advanced.playErrorSound", "Yes"),
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+			PlayErrorSound.NO: pgettext("advanced.playErrorSound", "No"),
 		}

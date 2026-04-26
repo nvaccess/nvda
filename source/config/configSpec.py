@@ -1,9 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
+# Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
-# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen, Kefas Lungu
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from io import StringIO
 from configobj import ConfigObj
@@ -13,7 +13,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 20
+latestSchemaVersion = 22
 
 #: The configuration specification string
 #: @type: String
@@ -24,7 +24,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	saveConfigurationOnExit = boolean(default=True)
 	askToExit = boolean(default=true)
 	playStartAndExitSounds = boolean(default=true)
-	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
+	# possible log levels are SECRETS, DEBUG, IO, DEBUGWARNING, INFO and OFF
 	loggingLevel = string(default="INFO")
 	showWelcomeDialogAtStartup = boolean(default=true)
 	preventDisplayTurningOff = boolean(default=true)
@@ -39,6 +39,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	reportNormalizedForCharacterNavigation = boolean(default=true)
 	symbolDictionaries = string_list(default=list("cldr"))
+	speechDictionaries = string_list(default=list("default", "voice"))
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	autoLanguageSwitching = boolean(default=true)
 	autoDialectSwitching = boolean(default=false)
@@ -47,6 +48,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	delayedCharacterDescriptions = boolean(default=false)
 	excludedSpeechModes = int_list(default=list())
 	trimLeadingSilence = boolean(default=true)
+	useWASAPIForSAPI4 = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
@@ -82,6 +84,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	showMessages = integer(0, 2, default=1)
 	# Timeout after the message will disappear from braille display
 	messageTimeout = integer(default=4, min=1, max=20)
+	# Rate for automatic scroll (cells/sec)
+	autoScrollRate = float(default=10, min=1, max=20)
 	tetherTo = option("auto", "focus", "review", default="auto")
 	reviewRoutingMovesSystemCaret = featureFlag(\
 		optionsEnum="ReviewRoutingMovesSystemCaretFlag", behaviorOfDefault="NEVER")
@@ -97,7 +101,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportLiveRegions = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	fontFormattingDisplay = featureFlag(optionsEnum="FontFormattingBrailleModeFlag", behaviorOfDefault="LIBLOUIS")
 	[[auto]]
-    	excludedDisplays = string_list(default=list("dotPad"))
+		excludedDisplays = string_list(default=list("dotPad"))
 
 	# Braille display driver settings
 	[[__many__]]
@@ -109,6 +113,20 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# Vision enhancement provider settings
 	[[__many__]]
 		enabled = boolean(default=false)
+
+# Magnifier settings
+[magnifier]
+	defaultZoomLevel = float(min=1.0, max=10.0, default=2.0)
+	isTrueCentered = boolean(default=False)
+	defaultFilter = string(default="normal")
+	followMouse = boolean(default=True)
+	followSystemFocus = boolean(default=True)
+	followReviewCursor = boolean(default=True)
+	followNavigatorObject = boolean(default=True)
+	defaultPanStep = integer(min=1, max=100, default=10)
+	defaultFullscreenMode = string(default="center")
+	keepMouseCentered = boolean(default=false)
+	saveShortcutChanges = boolean(default=false)
 
 # Presentation settings
 [presentation]
@@ -203,6 +221,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enableOnPageLoad = boolean(default=true)
 	loadChromiumVBufOnBusyState = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	textParagraphRegex = string(default="{configDefaults.DEFAULT_TEXT_PARAGRAPH_REGEX}")
+	# Element types available for cycling in browse touch mode.
+	browseModeTouchNavigationElements = string_list(default=list("heading", "link", "formField", "list", "table"))
 
 [touch]
 	enabled = boolean(default=true)
@@ -338,8 +358,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [featureFlag]
 	# 0:default, 1:yes, 2:no
 	cancelExpiredFocusSpeech = integer(0, 2, default=0)
-	# 0:Only in test versions, 1:yes
-	playErrorSound = integer(0, 1, default=0)
+	# 0: Only in test versions, 1: Yes, 2: No
+	playErrorSound = integer(0, 2, default=0)
 
 [addonStore]
 	automaticUpdates = option("notify", "update", "disabled", default="notify")
@@ -372,24 +392,20 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [math]
 	[[speech]]
-		# LearningDisability, Blindness, LowVision
-    	impairment = string(default="Blindness")
+		impairment = option("LearningDisability", "Blindness", "LowVision", default="Blindness")
 		# any known language code and sub-code -- could be en-uk, etc
-    	language = string(default="Auto")
-		# Any known speech style (falls back to ClearSpeak)
-    	speechStyle = string(default="ClearSpeak")
-		# Terse, Medium, Verbose
-    	verbosity = string(default="Medium")
+		language = string(default="en")
+		verbosity = option("Terse", "Medium", "Verbose", default="Medium")
 		# Change from text speech rate (%)
-    	mathRate = integer(default=100)
+		mathRate = integer(default=100, min=10, max=100)
 		# Change from normal pause length (%)
-    	pauseFactor = integer(default=100)
-		# make a sound when starting/ending math speech -- None, Beep
-    	speechSound = string(default="None")
+		pauseFactor = integer(default=100, min=0, max=1056)
+		# make a sound when starting/ending math speech
+		speechSound = option("None", "Beep", default="None")
 		# NOTE: not currently working in MathCAT
-    	subjectArea = string(default="General")
-		# SpellOut (H 2 0), AsCompound (Water) -- not implemented, Off (H sub 2 O)
-    	chemistry = string(default="SpellOut")
+		subjectArea = string(default="General")
+		# SpellOut (H 2 O), AsCompound (Water), or Off (H sub 2 O)
+		chemistry = option("SpellOut", "AsCompound", "Off", default="SpellOut")
 		# Verbose, Brief, SuperBrief
 		mathSpeak = string(default="Verbose")
 
@@ -452,27 +468,30 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 			# Valid values: Bar, Conjugate, Mean, Auto
 			bar = string(default="Auto")
 
+		# Set a different speechStyle depending on the language
+		[[__many__]]
+			# Any known speech style for the language
+			speechStyle = string(default="")
+
 	[[navigation]]
-		# Valid values: Enhanced, Simple, Character
-		navMode = string(default="Enhanced")
+		navMode = option("Enhanced", "Simple", "Character", default="Enhanced")
 		# remember previous value and use it
 		resetNavMode = boolean(default=false)
 		# speak the expression or give a description/overview
 		overview = boolean(default=false)
 		# remember previous value and use it
 		resetOverview = boolean(default=true)
-		# Terse, Medium, Full (words to say for nav command)
-		navVerbosity = string(default="Medium")
+		# words to say for nav command
+		navVerbosity = option("Terse", "Medium", "Verbose", default="Medium")
 		# Auto zoom out of 2D exprs (use shift-arrow to force zoom out if unchecked)
 		autoZoomOut = boolean(default=true)
-		# MathML, LaTeX, ASCIIMath
-		copyAs = string(default="MathML")
+		copyAs = option("MathML", "LaTeX", "ASCIIMath", "Speech", default="MathML")
 
 	[[braille]]
-		# Any supported braille code (currently Nemeth, UEB)
-		brailleCode = string(default="Nemeth")
-		# Highlight with dots 7 & 8 the current nav node -- values are Off, FirstChar, EndPoints, All
-		brailleNavHighlight = string(default="EndPoints")
+		# Any supported Braille code (such as UEB) or "Auto"
+		brailleCode = string(default="Auto")
+		# Highlight with dots 7 & 8 the current nav node
+		brailleNavHighlight = option("Off", "FirstChar", "EndPoints", "All", default="EndPoints")
 		# true/false
 		useSpacesAroundAllOperators = boolean(default=false)
 
@@ -528,10 +547,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		blockSeparators = string(default=", \u00a0\u202f")
 		# Auto, '.', ',', Custom
 		decimalSeparator = string(default="Auto")
-
-[automatedImageDescriptions]
-	enable = boolean(default=false)
-	defaultModel = string(default="Xenova/vit-gpt2-image-captioning")
+		# Use native math speech instead of MathCAT in Word and Outlook
+		useWordNativeMath = boolean(default=false)
 
 [screenCurtain]
 	enabled = boolean(default=false)

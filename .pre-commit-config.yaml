@@ -41,9 +41,10 @@ repos:
     # Checks that large files have not been added. Default cut-off for "large" files is 500kb.
     - id: check-added-large-files
       # POFiles and TTF fonts can't be made smaller
+      # XLIFF files can be moved here from exclude when pre-commit/identify#558 is released.
       exclude_types: ["pofile", "ttf"]
-      # Same applies for NVDA dictionary (.dic) files and Spline Font Database (.SFD) files, but these aren't recognised by the Identify library.
-      exclude: "\\.(dic|sfd)$"
+      # Same applies for XLIFF, NVDA dictionary (.dic) files and Spline Font Database (.SFD) files, but these aren't recognised by the Identify library.
+      exclude: "\\.(dic|sfd|xliff)$"
     # Checks python syntax
     - id: check-ast
     # Checks for filenames that will conflict on case insensitive filesystems (the majority of Windows filesystems, most of the time)
@@ -91,6 +92,12 @@ repos:
           )
         )
 
+- repo: https://github.com/rhysd/actionlint
+  rev: v1.7.12
+  hooks:
+    # Lint GitHub Actions workflow files.
+    - id: actionlint
+
 - repo: https://github.com/asottile/add-trailing-comma
   rev: v4.0.0
   hooks:
@@ -101,7 +108,7 @@ repos:
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Matches Ruff version in pyproject.
-  rev: v0.14.5
+  rev: v0.15.9
   hooks:
     - id: ruff
       name: lint with ruff
@@ -110,7 +117,7 @@ repos:
       name: format with ruff
 
 - repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.9.11
+  rev: 0.11.7
   hooks:
     - id: uv-lock
       name: Verify uv lock file
@@ -118,7 +125,7 @@ repos:
       args: ["-p3.13"]
 
 - repo: https://github.com/DavidAnson/markdownlint-cli2
-  rev: v0.18.1
+  rev: v0.22.0
   hooks:
   - id: markdownlint-cli2
     name: Lint markdown files
@@ -139,11 +146,12 @@ repos:
       types_or: [c, c++]
     - id: checkPot
       name: translation string check
-      entry: cmd.exe /c "scons checkPot --all-cores"
-      language: system
+      entry: ./runcheckpot.bat --all-cores
+      language: script
       pass_filenames: false
       types: [python]
       files: ^source/.*$
+      exclude: "(sconscript|sconstruct)$"
     - id: unitTest
       name: unit tests
       entry: ./rununittests.bat
@@ -161,3 +169,4 @@ repos:
       entry: uv run pyright
       language: system
       types: [python]
+      exclude: "(sconscript|sconstruct)$"

@@ -4,16 +4,17 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
-from typing import ParamSpec
 import io
 import contextlib
 import sys
 import threading
 import os
 import msvcrt
+import winerror
 import ctypes
 from ctypes import (
 	byref,
+	POINTER,
 	cast,
 	sizeof,
 )
@@ -21,23 +22,31 @@ from ctypes.wintypes import (
 	HANDLE,
 	DWORD,
 	LPVOID,
+	LPWSTR,
 )
+from comtypes.hresult import HRESULT_FROM_WIN32
 import subprocess
 import ctypes.wintypes
+import win32security
+import win32con
 from winBindings.advapi32 import (
 	CreateProcessWithToken,
 	CreateProcessAsUser,
+	FreeSid,
+	ConvertSidToStringSid,
 )
 from winBindings.winnt import (
-	STARTUPINFO,
 	STARTUPINFOEX,
-	PROC_THREAD_ATTRIBUTE_HANDLE_LIST,
 	PROCESS_INFORMATION,
 	STARTF_USESTDHANDLES,
 	CREATIONFLAGS_CREATE_NO_WINDOW,
 	CREATIONFLAGS_CREATE_SUSPENDED,
 	CREATIONFLAGS_CREATE_UNICODE_ENVIRONMENT,
 	CREATIONFLAGS_EXTENDED_STARTUPINFO_PRESENT,
+	PSID,
+	SECURITY_CAPABILITIES,
+	SID_AND_ATTRIBUTES,
+	PROC_THREAD_ATTRIBUTE,
 )
 from winBindings.kernel32 import (
 	GetExitCodeProcess,
@@ -50,6 +59,13 @@ from winBindings.kernel32 import (
 	InitializeProcThreadAttributeList,
 	UpdateProcThreadAttribute,
 	DeleteProcThreadAttributeList,
+	LocalFree,
+	DeriveCapabilitySidsFromName,
+	GetCurrentProcess,
+	DuplicateHandle,
+)
+from winBindings.ole32 import (
+	CoTaskMemFree,
 )
 from .token import (
 	createEnvironmentBlock,
@@ -58,14 +74,23 @@ from .raiiUtils import (
 	makeAutoFree,
 	OnDelete,
 )
-
-import logging
-log = logging.getLogger(__name__)
+from logHandler import log
 
 
 class BasicPopen:
-
-	def __init__(self, args: list[str], env: dict[str, str] | None=None, cwd: str | None=None, desktop: str | None=None, stdin: int | None=None, stdout: int | None =None, stderr: int | None=None, startSuspended: bool=False, hideCriticalErrorDialogs: bool=False):
+	def __init__(
+		self,
+		args: list[str],
+		env: dict[str, str] | None = None,
+		cwd: str | None = None,
+		desktop: str | None = None,
+		stdin: int | None = None,
+		stdout: int | None = None,
+		stderr: int | None = None,
+		startSuspended: bool = False,
+		hideCriticalErrorDialogs: bool = False,
+		createNoWindow: bool = False,
+	):
 		"""
 		Initialize and create a child process.
 
@@ -90,9 +115,12 @@ class BasicPopen:
 		:param startSuspended: If True, the child process is created suspended.
 		:param hideCriticalErrorDialogs: If True, the error mode is temporarily
 			changed to suppress critical error dialogs while creating the process.
+		:param createNoWindow: If True, the process is created without a window (I.e. CREATIONFLAGS_CREATE_NO_WINDOW).
 		"""
 		self.args = args
-		self._creationFlags = CREATIONFLAGS_CREATE_NO_WINDOW
+		self._creationFlags = 0
+		if createNoWindow:
+			self._creationFlags |= CREATIONFLAGS_CREATE_NO_WINDOW
 		self._hideCriticalErrorDialogs = hideCriticalErrorDialogs
 		if startSuspended:
 			self._creationFlags |= CREATIONFLAGS_CREATE_SUSPENDED
@@ -137,7 +165,7 @@ class BasicPopen:
 			if pStderrWrite and pStderrWrite != pStdoutWrite:
 				handlesList.append(pStderrWrite)
 			handlesBuf = (HANDLE * len(handlesList))(*handlesList)
-			self._addProcthreadAttribute("handle list", handlesBuf)
+			self._addProcthreadAttribute(PROC_THREAD_ATTRIBUTE.HANDLE_LIST, handlesBuf)
 		procThreadAttributes = self._getProcThreadAttributes()
 		if len(procThreadAttributes) > 0:
 			attribsBufSize = ctypes.c_size_t()
@@ -145,13 +173,25 @@ class BasicPopen:
 			if attribsBufSize.value == 0:
 				raise RuntimeError(f"Failed to get attribute list size, {ctypes.WinError()}")
 			attribsBuf = OnDelete(ctypes.c_buffer(attribsBufSize.value), DeleteProcThreadAttributeList)
-			if not InitializeProcThreadAttributeList(attribsBuf.value, len(procThreadAttributes), 0, byref(attribsBufSize)):
+			if not InitializeProcThreadAttributeList(
+				attribsBuf.value,
+				len(procThreadAttributes),
+				0,
+				byref(attribsBufSize),
+			):
 				raise RuntimeError(f"Failed to initialize attribute list, {ctypes.WinError()}")
 			log.debug(f"Initialized proc thread attributes, size ={attribsBufSize.value}")
-			for attribName, val in procThreadAttributes.items():
-				log.debug(f"Updating proc thread attribute: {attribName}")
-				attrib = globals().get(f"PROC_THREAD_ATTRIBUTE_{attribName.upper().replace(' ', '_')}")
-				if not UpdateProcThreadAttribute(attribsBuf.value, 0, attrib, byref(val), sizeof(val), None, None):
+			for attrib, val in procThreadAttributes.items():
+				log.debug(f"Updating proc thread attribute: {attrib.name}")
+				if not UpdateProcThreadAttribute(
+					attribsBuf.value,
+					0,
+					attrib,
+					byref(val),
+					sizeof(val),
+					None,
+					None,
+				):
 					raise RuntimeError(f"Failed to update attribute list, {ctypes.WinError()}")
 			siEx.lpAttributeList = cast(attribsBuf.value, LPVOID)
 			siEx._attribsBufRef = attribsBuf  # Keep a reference to avoid GC
@@ -167,11 +207,11 @@ class BasicPopen:
 		log.debug(f"Created process with PID: {self.pid}")
 
 	def _getProcThreadAttributes(self):
-		if not hasattr(self, '_procThreadAttributes'):
+		if not hasattr(self, "_procThreadAttributes"):
 			self._procThreadAttributes = {}
 		return self._procThreadAttributes
 
-	def _addProcthreadAttribute(self, attrib: str, value: object):
+	def _addProcthreadAttribute(self, attrib: PROC_THREAD_ATTRIBUTE, value: object):
 		"""
 		Add an attribute to the process thread attribute list.
 
@@ -203,25 +243,53 @@ class BasicPopen:
 		::raise RuntimeError: If process creation fails.
 		"""
 		log.debug("Calling CreateProcess...")
-		if not CreateProcess(None, self._cmdline, None, None, True, self._creationFlags, self._envBlock, self.cwd, byref(self._siEx.startupInfo), byref(self._pi)):
+		if not CreateProcess(
+			None,
+			self._cmdline,
+			None,
+			None,
+			True,
+			self._creationFlags,
+			self._envBlock,
+			self.cwd,
+			byref(self._siEx.startupInfo),
+			byref(self._pi),
+		):
 			raise RuntimeError(f"Failed to create process, {ctypes.WinError()}")
 
-	def _createPipe(self, push: bool=True) -> tuple[io.FileIO, HANDLE]:
+	def _duplicateHandleForProcess(self, handle: HANDLE, accessMask: int) -> HANDLE:
+		"""
+		Duplicate a handle into the child process.
+
+		:param handle: Handle to duplicate.
+		:param accessMask: Desired access mask for the duplicated handle.
+		:returns: Duplicated handle valid in the child process.
+		:raises RuntimeError: If duplicating the handle fails.
+		"""
+		dupHandle = HANDLE()
+		hCurProcess = GetCurrentProcess()
+		if not DuplicateHandle(hCurProcess, handle, self._handle, byref(dupHandle), accessMask, False, 0):
+			raise RuntimeError(f"Failed to duplicate handle into child process, {ctypes.WinError()}")
+		return dupHandle
+
+	def _createPipe(self, push: bool = True, duplicateIntoProcess: bool = False) -> tuple[io.FileIO, HANDLE]:
 		"""
 		Create an anonymous pipe and return the parent-side Python object and the
 		child-side HANDLE suitable for use as a standard stream.
 
 		When ``push`` is True this prepares a writable file object that the parent
 		can write to (typically connected to the child's standard input) and a
-		native HANDLE for the read end which is inheritable by the child.
+		native HANDLE for the read end.
 
 		When ``push`` is False this prepares a readable file object that the
 		parent can read from (typically connected to the child's standard output
-		or error) and a native HANDLE for the write end which is inheritable by
-		the child.
+		or error) and a native HANDLE for the write end.
+
+		If ``duplicateIntoProcess`` is True, the child-side HANDLE is duplicated
+		into the child process. useful if the child is already created .
 
 		The returned file objects are opened in binary mode with no buffering, and
-		the native HANDLEs are wrapped with makeAutoFree so they will be closed
+		if duplicateIntoProcess is True, the native handles are wrapped with makeAutoFree so they will be closed
 		automatically when no longer needed.
 
 		:param push: If True create a writable parent-side file and a child-side
@@ -231,15 +299,21 @@ class BasicPopen:
 		"""
 		r_fd, w_fd = os.pipe()
 		if push:
-				w_file = os.fdopen(w_fd, 'wb', 0)
+			w_file = os.fdopen(w_fd, "wb", 0)
+			r_handle = makeAutoFree(HANDLE, CloseHandle)(msvcrt.get_osfhandle(r_fd))
+			if duplicateIntoProcess:
+				r_handle = self._duplicateHandleForProcess(r_handle, win32con.GENERIC_READ)
+			else:
 				os.set_inheritable(r_fd, True)
-				r_handle = makeAutoFree(HANDLE, CloseHandle)(msvcrt.get_osfhandle(r_fd))
-				return w_file, r_handle
+			return w_file, r_handle
 		else:
-				r_file = os.fdopen(r_fd, 'rb', 0)
+			r_file = os.fdopen(r_fd, "rb", 0)
+			w_handle = makeAutoFree(HANDLE, CloseHandle)(msvcrt.get_osfhandle(w_fd))
+			if duplicateIntoProcess:
+				w_handle = self._duplicateHandleForProcess(w_handle, win32con.GENERIC_WRITE)
+			else:
 				os.set_inheritable(w_fd, True)
-				w_handle = makeAutoFree(HANDLE, CloseHandle)(msvcrt.get_osfhandle(w_fd))
-				return r_file, w_handle
+			return r_file, w_handle
 
 	def resume(self):
 		"""
@@ -283,12 +357,12 @@ class BasicPopen:
 		exitCode = DWORD()
 		if not GetExitCodeProcess(self._handle, byref(exitCode)):
 			raise RuntimeError(f"Failed to get process exit code, {ctypes.WinError()}")
-		if exitCode.value == 259: # STILL_ACTIVE
+		if exitCode.value == 259:  # STILL_ACTIVE
 			return None
 		self.returncode = exitCode.value
 		return self.returncode
 
-	def wait(self, timeoutMS: int | None=None):
+	def wait(self, timeoutMS: int | None = None):
 		"""
 		Wait for the child process to terminate.
 
@@ -300,7 +374,7 @@ class BasicPopen:
 		:raises RuntimeError: If querying the process exit code fails.
 		"""
 		if timeoutMS is None:
-			dur = 0xFFFFFFFF # INFINITE
+			dur = 0xFFFFFFFF  # INFINITE
 		else:
 			dur = timeoutMS
 		log.debug("Waiting for process to terminate...")
@@ -308,13 +382,13 @@ class BasicPopen:
 		return self.poll()
 
 	def terminate(self):
-		""" Terminates the process"""
+		"""Terminates the process"""
 		if self.poll() is None:
 			log.debug("Terminating process...")
 			TerminateProcess(self._handle, 1)
 
 	def isRunning(self) -> bool:
-		""" Check if the process is still running."""
+		"""Check if the process is still running."""
 		return self.poll() is None
 
 	def interact(self):
@@ -380,7 +454,7 @@ class PopenWithToken(BasicPopen):
 	or CreateProcessAsUser depending on the ``useSecLogon`` flag.
 	"""
 
-	def __init__(self, token: HANDLE, *args, useSecLogon: bool=False, logonFlags: int=0, **kwargs):
+	def __init__(self, token: HANDLE, *args, useSecLogon: bool = False, logonFlags: int = 0, **kwargs):
 		"""
 		Initialize the PopenWithToken instance.
 
@@ -410,7 +484,8 @@ class PopenWithToken(BasicPopen):
 	def _createProcessWithToken(self):
 		log.debug("Calling CreateProcessWithToken...")
 		creationFlags = self._creationFlags
-		# Remove extended startup info flag as it's not supported by CreateProcessWithToken
+		# Remove extended startup info flag as it's not "supported" by CreateProcessWithToken.
+		# Oddly enough, it will check cbSize of STARTUPINFO and honor it anyway.
 		creationFlags &= ~CREATIONFLAGS_EXTENDED_STARTUPINFO_PRESENT
 		if not CreateProcessWithToken(
 			self.token,
@@ -441,3 +516,95 @@ class PopenWithToken(BasicPopen):
 			byref(self._pi),
 		):
 			raise RuntimeError(f"CreateProcessAsUser failed, {ctypes.WinError()}")
+
+
+class PopenInAppContainerMixin(BasicPopen):
+	appContainerName: str
+	appContainerSidString: str
+	appContainerCapabilities: list[str]
+	appContainerPath: str
+
+	def appContainerInit(self, appContainerName: str, appContainerCapabilities: list[str]):
+		appContainerSid = makeAutoFree(PSID, FreeSid)()
+		res = ctypes.windll.userenv.CreateAppContainerProfile(
+			appContainerName,
+			appContainerName,
+			appContainerName,
+			None,
+			0,
+			byref(appContainerSid),
+		)
+		if res == HRESULT_FROM_WIN32(winerror.ERROR_ALREADY_EXISTS):
+			log.debug("AppContainer already exists")
+		elif res < 0:
+			raise RuntimeError(
+				f"Failed to create AppContainer profile {appContainerName}, {ctypes.WinError()}",
+			)
+		if (
+			ctypes.windll.userenv.DeriveAppContainerSidFromAppContainerName(
+				appContainerName,
+				byref(appContainerSid),
+			)
+			< 0
+		):
+			raise RuntimeError(
+				f"Failed to derive AppContainer SID from name {appContainerName}, {ctypes.WinError()}",
+			)
+		appContainerSidString = makeAutoFree(LPWSTR, LocalFree)()
+		if not ConvertSidToStringSid(appContainerSid, byref(appContainerSidString)):
+			raise RuntimeError(f"Failed to convert AppContainer SID to string, {ctypes.WinError()}")
+		appContainerPath = makeAutoFree(LPWSTR, CoTaskMemFree)()
+		if (
+			ctypes.windll.userenv.GetAppContainerFolderPath(appContainerSidString, byref(appContainerPath))
+			< 0
+		):
+			raise RuntimeError(f"Failed to get AppContainer folder path, {ctypes.WinError()}")
+		sc = SECURITY_CAPABILITIES()
+		sc.AppContainerSid = appContainerSid
+		sc._appContainerSidRef = appContainerSid  # prevent GC
+		if appContainerCapabilities:
+			capabilitySids = []
+			for name in appContainerCapabilities:
+				log.debug(f"Deriving capability SID for capability name: {name}...")
+				groupSids = makeAutoFree(POINTER(PSID), LocalFree)()
+				groupSidsCount = DWORD()
+				appSids = makeAutoFree(POINTER(PSID), LocalFree)()
+				appSidsCount = DWORD()
+				if not DeriveCapabilitySidsFromName(
+					name,
+					byref(groupSids),
+					byref(groupSidsCount),
+					byref(appSids),
+					byref(appSidsCount),
+				):
+					raise RuntimeError(
+						f"Failed to derive capability SID for capability name {name}, {ctypes.WinError()}",
+					)
+				for i in range(groupSidsCount.value):
+					psid = makeAutoFree(PSID, LocalFree)(groupSids[i])
+					# capabilitySids.append(psid)
+					sidString = makeAutoFree(LPWSTR, LocalFree)()
+					if not ConvertSidToStringSid(psid, byref(sidString)):
+						raise RuntimeError(f"Failed to convert capability SID to string, {ctypes.WinError()}")
+					log.debug(f"  Derived capability group SID: {sidString.value}")
+				for i in range(appSidsCount.value):
+					psid = makeAutoFree(PSID, LocalFree)(appSids[i])
+					capabilitySids.append(psid)
+					sidString = makeAutoFree(LPWSTR, LocalFree)()
+					if not ConvertSidToStringSid(psid, byref(sidString)):
+						raise RuntimeError(f"Failed to convert capability SID to string, {ctypes.WinError()}")
+					log.debug(f"  Derived capability app SID: {sidString.value}")
+			capabilitiesBuf = (SID_AND_ATTRIBUTES * len(capabilitySids))()
+			capabilitiesBuf._sidRefs = capabilitySids  # prevent GC
+			for i, psid in enumerate(capabilitySids):
+				capabilitiesBuf[i].Sid = psid
+				capabilitiesBuf[i].Attributes = win32security.SE_GROUP_ENABLED
+			sc.Capabilities = capabilitiesBuf
+			sc._capabilitiesBufRef = capabilitiesBuf  # prevent GC
+			sc.CapabilityCount = len(capabilitiesBuf)
+		# self._addProcthreadAttribute(PROC_THREAD_ATTRIBUTE.SECURITY_CAPABILITIES, sc)
+		self.appContainerName = appContainerName
+		self.appContainerSidString = appContainerSidString.value
+		self.appContainerCapabilities = appContainerCapabilities
+		self.appContainerPath = appContainerPath.value
+		self._appContainerSecurityCapabilities = sc

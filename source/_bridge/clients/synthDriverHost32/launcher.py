@@ -1,0 +1,142 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2025 NV Access Limited.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
+import os
+import subprocess
+from typing import Any
+import rpyc
+from rpyc.core.stream import PipeStream
+from utils.security import isRunningOnSecureDesktop
+import NVDAState
+from logHandler import log
+from _bridge.base import Connection, Service
+from _bridge.components.services.synthDriver import SynthDriverService
+from winBindings.jobapi2 import JOB_OBJECT_LIMIT
+import secureProcess
+from _bridge.components.services.nvwave import WavePlayerService
+
+
+@rpyc.service
+class NVDAService(Service):
+	"""The main NVDA service exposed to remote synth driver hosts."""
+
+	def __init__(self, childProcess: subprocess.Popen):
+		super().__init__(childProcess)
+
+	@Service.exposed
+	def getAppDir(self) -> str:
+		"""Get the NVDA application directory."""
+		import globalVars
+
+		return globalVars.appDir
+
+	@Service.exposed
+	def getAppArg(self, key: str) -> Any:
+		"""Get an NVDA commandline argument value."""
+		if key.startswith("_"):
+			raise RuntimeError(f"Cannot fetch key {key}")
+		import globalVars
+
+		return getattr(globalVars.appArgs, key)
+
+	@Service.exposed
+	def isRunningAsSource(self) -> bool:
+		"""Return whether NVDA is running from source."""
+		return NVDAState.isRunningAsSource()
+
+	@Service.exposed
+	def getVersionedLibPath(self) -> str:
+		return NVDAState.ReadPaths.versionedLibPath
+
+	@Service.exposed
+	def getConfigValue(self, *pathStrings):
+		import config
+
+		conf = config.conf
+		for part in pathStrings:
+			log.debug(f"Traversing config path part: {part}")
+			conf = conf[part]
+		if pathStrings[0] == "speech" and pathStrings[1] == "useWASAPIForSAPI4":
+			conf = bool(conf)
+		log.debug(f"Retrieved config value: {conf}")
+		return conf
+
+	@Service.exposed
+	def WavePlayer(
+		self,
+		channels: int,
+		samplesPerSec: int,
+		bitsPerSample: int,
+		outputDevice: str,
+		wantDucking: bool = True,
+	) -> WavePlayerService:
+		"""return a WavePlayer service wrapping a new real WavePlayer instance."""
+		return WavePlayerService(
+			self._childProcess,
+			channels=channels,
+			samplesPerSec=samplesPerSec,
+			bitsPerSample=bitsPerSample,
+			outputDevice=outputDevice,
+			wantDucking=wantDucking,
+		)
+
+
+_hostExe = os.path.join(
+	NVDAState.ReadPaths.versionedLibX86Path,
+	"synthDriverHost-runtime/nvda_synthDriverHost.exe",
+)
+
+
+def isSynthDriverHost32RuntimeAvailable() -> bool:
+	return os.path.isfile(_hostExe)
+
+
+launchConfig_standard = {
+	"removeElevation": True,
+	"removePrivileges": True,
+	"integrityLevel": "medium",
+	"applyUIRestrictions": True,
+	"restrictToken": True,
+	"retainUserInRestrictedToken": True,
+}
+launchConfig_secure = {
+	"username": "local service",
+	"domain": "nt authority",
+	"logonType": "service",
+	"appContainerName": "nvdaSecureART",
+	"appContainerCapabilities": [],
+	"isolateWindowStation": True,
+	"applyUIRestrictions": True,
+}
+
+def createSynthDriver(name: str, synthDriversPath: str) -> tuple[Connection, SynthDriverService]:
+	"""Start the 32-bit synth driver host process and connect to its RPYC service over the hosts standard pipes.
+	Instructs the host to install proxies that use the given NVDAService for remote calls back into NVDA.
+	:returns: The remote SynthDriverHostService instance.
+	"""
+	log.debug(f"Starting synthDriverHost32 process: {_hostExe}")
+	launchConfig = launchConfig_secure if isRunningOnSecureDesktop() else launchConfig_standard
+	hostProc = secureProcess.SecurePopen(
+		[_hostExe],
+		stdin=subprocess.PIPE,
+		stdout=subprocess.PIPE,
+		killOnDelete=True,
+		createNoWindow=True,
+		hideCriticalErrorDialogs=True,
+		**launchConfig
+	)
+	log.debug("Creating PipeStream over host process std pipes")
+	stream = PipeStream(hostProc.stdout, hostProc.stdin)
+	log.debug("Connecting to synthDriverHost32 process RPYC service over PipeStream")
+	service = NVDAService(hostProc)
+	conn = Connection(stream, service, name="synthDriverHost32")
+	conn.bgEventLoop(daemon=True)
+	log.debug("Connection to synthDriverHost32 process RPYC service established")
+
+	conn.remoteService.installProxies(service, brokerAudio=True)
+	log.debug("Creating SynthDriverProxy over remote SynthDriverService")
+	conn.remoteService.registerSynthDriversPath(synthDriversPath)
+	synthDriverService = conn.remoteService.SynthDriver(name)
+	return conn, synthDriverService

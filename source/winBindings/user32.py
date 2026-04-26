@@ -11,6 +11,7 @@ from ctypes import (
 	Union,
 	c_int,
 	c_size_t,
+	c_ssize_t,
 	c_uint,
 	c_long,
 	c_longlong,
@@ -32,6 +33,7 @@ from ctypes.wintypes import (
 	LPDWORD,
 	LPPOINT,
 	LPRECT,
+	LPVOID,
 	PBYTE,
 	PHANDLE,
 	PMSG,
@@ -60,11 +62,12 @@ from ctypes.wintypes import (
 )
 from enum import IntEnum, IntFlag
 from .winnt import (
-	LPSECURITY_ATTRIBUTES
+	LPSECURITY_ATTRIBUTES,
 )
 
 UINT_PTR = c_size_t
 ULONG_PTR = c_size_t
+LONG_PTR = c_ssize_t
 DWORD_PTR = c_size_t
 PDWORD_PTR = POINTER(DWORD_PTR)
 
@@ -166,6 +169,21 @@ DefWindowProc.argtypes = (
 	LPARAM,
 )
 DefWindowProc.restype = LRESULT
+
+CallWindowProc = WINFUNCTYPE(None)(("CallWindowProcW", dll))
+"""Passes message information to the specified window procedure.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-callwindowprocw
+"""
+CallWindowProc.restype = LRESULT
+CallWindowProc.argtypes = (
+	WNDPROC,  # lpPrevWndFunc: The previous window procedure.
+	HWND,  # hWnd
+	UINT,  # Msg
+	WPARAM,  # wParam
+	LPARAM,  # lParam
+)
 
 HWINEVENTHOOK = HANDLE
 """
@@ -1031,6 +1049,33 @@ SetWindowLong.argtypes = (
 )
 
 
+class GWLP(IntEnum):
+	"""Possible special values of the ``nIndex`` parameter to the ``SetWindowLongPtr`` function.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowlongptrw
+	"""
+
+	WNDPROC = -4
+	"""Sets a new address for the window procedure."""
+
+
+# On 32-bit Windows, SetWindowLongPtr is a macro alias for SetWindowLong and is not exported separately.
+_setWindowLongPtrName = "SetWindowLongW" if sizeof(c_void_p) == sizeof(LONG) else "SetWindowLongPtrW"
+SetWindowLongPtr = WINFUNCTYPE(None)((_setWindowLongPtrName, dll))
+"""Changes an attribute of the specified window.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowlongptrw
+"""
+SetWindowLongPtr.restype = LONG_PTR
+SetWindowLongPtr.argtypes = (
+	HWND,  # hWnd: handle to the window and, indirectly, the class to which it belongs.
+	c_int,  # nIndex: The zero-based, non-negative  offset to the value to be set, or a recognised special value.
+	LPVOID,  # dwNewLong: The replacement value.
+)
+
+
 SetLayeredWindowAttributes = WINFUNCTYPE(None)(("SetLayeredWindowAttributes", dll))
 """
 Sets the opacity and transparency color key of a layered window.
@@ -1634,7 +1679,7 @@ CreateDesktopEx.argtypes = (
 	ACCESS_MASK,  # dwDesiredAccess: Access rights for the new desktop
 	LPSECURITY_ATTRIBUTES,  # lpsa: Pointer to a SECURITY_ATTRIBUTES structure that specifies a security descriptor for the new desktop
 	DWORD,  # ulHeapSize: The initial size, in bytes, of the desktop heap for the new desktop
-	LPVOID, # pvoid: Reserved; must be NULL
+	LPVOID,  # pvoid: Reserved; must be NULL
 )
 
 CloseDesktop = WINFUNCTYPE(None)(("CloseDesktop", dll))
@@ -1650,3 +1695,25 @@ CloseDesktop.argtypes = (
 )
 
 DESKTOP_ALL_ACCESS = 0x000F01FF
+
+GetShellWindow = WINFUNCTYPE(None)(("GetShellWindow", dll))
+"""
+Retrieves a handle to the Shell's desktop window.
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getshellwindow
+"""
+GetShellWindow.restype = HWND
+GetShellWindow.argtypes = ()
+
+class NMHDR(Structure):
+	"""Contains information about a notification message.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-nmhdr
+	"""
+
+	_fields_ = (
+		("hwndFrom", HWND),
+		("idFrom", UINT_PTR),
+		("code", UINT),
+	)

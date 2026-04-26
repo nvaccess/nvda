@@ -24,6 +24,7 @@ jobs:
         fi
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_REPO: ${{ github.repository }}
 
     - name: Checkout repository
       uses: actions/checkout@v4
