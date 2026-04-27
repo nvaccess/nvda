@@ -111,7 +111,6 @@ class MagnifierType(DisplayStringStrEnum):
 	FIXED = "fixed"
 	DOCKED = "docked"
 	LENS = "lens"
-	PLACEHOLDER = "placeholder"
 
 	@property
 	def _displayStringLabels(self) -> dict["MagnifierType", str]:
@@ -124,8 +123,6 @@ class MagnifierType(DisplayStringStrEnum):
 			self.DOCKED: pgettext("magnifier", "Docked"),
 			# Translators: Magnifier type - lens mode.
 			self.LENS: pgettext("magnifier", "Lens"),
-			# Translators: Magnifier type - placeholder for unsupported types.
-			self.PLACEHOLDER: pgettext("magnifier", "Placeholder"),
 		}
 
 

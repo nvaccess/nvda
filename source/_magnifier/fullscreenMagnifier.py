@@ -28,11 +28,7 @@ class FullScreenMagnifier(Magnifier):
 		self._currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
 
-	@property
-	def filterType(self) -> Filter:
-		return self._filterType
-
-	@filterType.setter
+	@Magnifier.filterType.setter
 	def filterType(self, value: Filter) -> None:
 		self._filterType = value
 		if self._isActive:

@@ -60,6 +60,14 @@ class Magnifier:
 		self._screenCurtainIsActive: bool = False
 
 	@property
+	def filterType(self) -> Filter:
+		return self._filterType
+
+	@filterType.setter
+	def filterType(self, value: Filter) -> None:
+		self._filterType = value
+
+	@property
 	def zoomLevel(self) -> float:
 		return self._zoomLevel
 

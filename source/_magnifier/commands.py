@@ -199,14 +199,22 @@ def toggleFilter() -> None:
 		)
 
 
+_CYCLING_MAGNIFIER_TYPES = [
+	MagnifierType.FULLSCREEN,
+	MagnifierType.FIXED,
+	MagnifierType.DOCKED,
+	MagnifierType.LENS,
+]
+
+
 def cycleMagnifierType() -> None:
-	"""Cycle through magnifier types (full-screen, fixed, docked (to do), lens (to do))"""
+	"""Cycle through magnifier types (full-screen, fixed, docked, lens)"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
 		magnifier,
 		MagnifierAction.CHANGE_MAGNIFIER_TYPE,
 	):
-		types = list(MagnifierType)
+		types = _CYCLING_MAGNIFIER_TYPES
 		currentType = magnifier._magnifierType
 		idx = types.index(currentType)
 		newType = types[(idx + 1) % len(types)]

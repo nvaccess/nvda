@@ -34,19 +34,19 @@ def createMagnifier(magnifierType: MagnifierType) -> "Magnifier":
 			return FullScreenMagnifier()
 
 		case MagnifierType.FIXED:
-			from .placeholderMagnifier import PlaceholderMagnifier
+			from .fixedMagnifier import FixedMagnifier
 
-			return PlaceholderMagnifier()
+			return FixedMagnifier()
 
 		case MagnifierType.DOCKED:
-			from .placeholderMagnifier import PlaceholderMagnifier
+			from .dockedMagnifier import DockedMagnifier
 
-			return PlaceholderMagnifier()
+			return DockedMagnifier()
 
 		case MagnifierType.LENS:
-			from .placeholderMagnifier import PlaceholderMagnifier
+			from .lensMagnifier import LensMagnifier
 
-			return PlaceholderMagnifier()
+			return LensMagnifier()
 
 		case _:
 			raise ValueError(f"Unsupported magnifier type: {magnifierType}")
