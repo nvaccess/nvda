@@ -15,7 +15,6 @@ from typing import (
 	TYPE_CHECKING,
 	cast,
 	Callable,
-	Dict,
 	NamedTuple,
 	Optional,
 )
@@ -101,15 +100,15 @@ class AddonFileDownloader:
 	"""
 
 	def __init__(self):
-		self.progress: Dict["AddonListItemVM[_AddonStoreModel]", _DownloadProgress] = {}
+		self.progress: dict["AddonListItemVM[_AddonStoreModel]", _DownloadProgress] = {}
 		"""
 		Tracks the current download attempt for an add-on.
 
 		Usage should be protected by AddonFileDownloader.DOWNLOAD_LOCK.
 		"""
 
-		self._pending: Dict[Future[Optional[os.PathLike]], _PendingDownload] = {}
-		self.complete: Dict[
+		self._pending: dict[Future[os.PathLike | None], _PendingDownload] = {}
+		self.complete: dict[
 			"AddonListItemVM[_AddonStoreModel]",
 			# Path to downloaded file
 			Optional[os.PathLike],
@@ -186,7 +185,7 @@ class AddonFileDownloader:
 			# so the download can still be cancelled before the worker starts.
 			self.progress[addonData] = downloadProgress
 			assert self._executor is not None
-			f: Future[Optional[os.PathLike]] = self._executor.submit(
+			f: Future[os.PathLike | None] = self._executor.submit(
 				self._download,
 				addonData,
 				downloadProgress,
@@ -199,7 +198,7 @@ class AddonFileDownloader:
 			)
 			f.add_done_callback(self._done)
 
-	def _done(self, downloadAddonFuture: Future[Optional[os.PathLike]]):
+	def _done(self, downloadAddonFuture: Future[os.PathLike | None]):
 		with self.DOWNLOAD_LOCK:
 			pendingDownload = self._pending.pop(downloadAddonFuture, None)
 			isCancelled = (
@@ -313,7 +312,7 @@ class AddonFileDownloader:
 		self,
 		listItem: "AddonListItemVM[_AddonStoreModel]",
 		downloadProgress: _DownloadProgress,
-	) -> Optional[os.PathLike]:
+	) -> os.PathLike | None:
 		from gui.message import DisplayableError
 
 		# Translators: A title for a dialog notifying a user of an add-on download failure.
