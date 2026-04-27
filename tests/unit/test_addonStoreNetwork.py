@@ -274,6 +274,30 @@ class TestAddonFileDownloaderCancelAll(unittest.TestCase):
 		self.assertIn(secondFuture, self.downloader._pending)
 		onCompleteFirst.assert_not_called()
 
+	@patch("addonStore.network.ThreadPoolExecutor")
+	@patch("addonStore.network.NVDAState.shouldWriteToDisk", return_value=False)
+	def test_download_progressRemovalCancelsActiveAttempt(
+		self,
+		mockShouldWrite: MagicMock,
+		mockThreadPoolExecutor: MagicMock,
+	) -> None:
+		"""Removing progress should remain a cancellation signal for an active download."""
+		executor = _FakeExecutor()
+		mockThreadPoolExecutor.return_value = executor
+		self.downloader = AddonFileDownloader()
+		addonData = _makeAddonData()
+		onComplete = MagicMock()
+
+		self.downloader.download(addonData, onComplete, MagicMock())
+		_, _, _, future = executor.submitCalls[0]
+		self.downloader.progress.pop(addonData, None)
+
+		future.set_result(None)
+
+		self.assertNotIn(addonData, self.downloader._downloadProgress)
+		self.assertNotIn(future, self.downloader._pending)
+		onComplete.assert_not_called()
+
 	@patch("addonStore.network.pathlib.Path.mkdir")
 	@patch("addonStore.network.os.path.exists", side_effect=[False, True, False])
 	@patch("addonStore.network.shutil.rmtree")

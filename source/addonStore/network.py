@@ -16,7 +16,6 @@ from typing import (
 	cast,
 	Callable,
 	NamedTuple,
-	Optional,
 )
 
 import requests
@@ -86,7 +85,7 @@ class _PendingDownload(NamedTuple):
 
 class AddonFileDownloader:
 	OnCompleteT = Callable[
-		["AddonListItemVM[_AddonStoreModel]", Optional[os.PathLike]],
+		["AddonListItemVM[_AddonStoreModel]", os.PathLike | None],
 		None,
 	]
 
@@ -117,7 +116,7 @@ class AddonFileDownloader:
 		self.complete: dict[
 			"AddonListItemVM[_AddonStoreModel]",
 			# Path to downloaded file
-			Optional[os.PathLike],
+			os.PathLike | None,
 		] = {}
 		self._executor: ThreadPoolExecutor | None = self._createExecutor()
 		self._downloadAttemptId: int = 0
@@ -166,7 +165,11 @@ class AddonFileDownloader:
 		addonData: "AddonListItemVM[_AddonStoreModel]",
 		downloadProgress: _DownloadProgress,
 	) -> bool:
-		return self._downloadProgress.get(addonData) is downloadProgress
+		return addonData in self.progress and self._downloadProgress.get(addonData) is downloadProgress
+
+	def _removeDownloadProgress(self, pendingDownload: _PendingDownload) -> None:
+		if self._downloadProgress.get(pendingDownload.addonData) is pendingDownload.downloadProgress:
+			self._downloadProgress.pop(pendingDownload.addonData, None)
 
 	def _cleanupCancelledDownload(self, pendingDownload: _PendingDownload) -> None:
 		try:
@@ -228,13 +231,15 @@ class AddonFileDownloader:
 		if isCancelled:
 			log.debug("Download was cancelled, not calling onComplete")
 			if pendingDownload is not None:
+				with self.DOWNLOAD_LOCK:
+					self._removeDownloadProgress(pendingDownload)
 				self._cleanupCancelledDownload(pendingDownload)
 			return
 
 		assert pendingDownload is not None
 		addonData = pendingDownload.addonData
 		downloadAddonFutureException = downloadAddonFuture.exception()
-		cacheFilePath: Optional[os.PathLike]
+		cacheFilePath: os.PathLike | None
 		if downloadAddonFutureException:
 			cacheFilePath = None
 			from gui.message import DisplayableError
@@ -257,7 +262,7 @@ class AddonFileDownloader:
 				log.debug("Download was cancelled, not calling onComplete")
 				self._cleanupCancelledDownload(pendingDownload)
 				return
-			self._downloadProgress.pop(addonData, None)
+			self._removeDownloadProgress(pendingDownload)
 			self.progress.pop(addonData, None)
 			self.complete[addonData] = cacheFilePath
 		pendingDownload.onComplete(addonData, cacheFilePath)
