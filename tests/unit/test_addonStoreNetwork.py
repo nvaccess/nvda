@@ -227,12 +227,12 @@ class TestAddonFileDownloaderCancelAll(unittest.TestCase):
 		self.assertIs(self.downloader._executor, secondExecutor)
 		self.assertEqual(len(secondExecutor.submitCalls), 1)
 		_, submitArgs, submitKwargs, future = secondExecutor.submitCalls[0]
-		downloadProgress = self.downloader.progress[addonData]
+		downloadProgress = self.downloader._downloadProgress[addonData]
 		self.assertEqual(submitArgs, (addonData, downloadProgress))
 		self.assertEqual(submitKwargs, {})
 		self.assertIs(self.downloader._pending[future].addonData, addonData)
 		self.assertIs(self.downloader._pending[future].downloadProgress, downloadProgress)
-		self.assertEqual(downloadProgress.chunksDownloaded, 0)
+		self.assertEqual(self.downloader.progress[addonData], 0)
 
 	@patch("addonStore.network.ThreadPoolExecutor")
 	@patch("addonStore.network.NVDAState.shouldWriteToDisk", return_value=False)
@@ -254,12 +254,12 @@ class TestAddonFileDownloaderCancelAll(unittest.TestCase):
 		self.downloader.download(addonData, onCompleteFirst, MagicMock())
 		_, _, _, firstFuture = firstExecutor.submitCalls[0]
 		firstFuture.set_running_or_notify_cancel()
-		firstDownloadProgress = self.downloader.progress[addonData]
+		firstDownloadProgress = self.downloader._downloadProgress[addonData]
 
 		self.downloader.cancelAll()
 		self.downloader.download(addonData, onCompleteSecond, MagicMock())
 		_, _, _, secondFuture = secondExecutor.submitCalls[0]
-		secondDownloadProgress = self.downloader.progress[addonData]
+		secondDownloadProgress = self.downloader._downloadProgress[addonData]
 
 		self.assertNotEqual(
 			firstDownloadProgress.tempDownloadPath,
@@ -268,7 +268,8 @@ class TestAddonFileDownloaderCancelAll(unittest.TestCase):
 
 		firstFuture.set_result(None)
 
-		self.assertIs(self.downloader.progress[addonData], secondDownloadProgress)
+		self.assertIs(self.downloader._downloadProgress[addonData], secondDownloadProgress)
+		self.assertEqual(self.downloader.progress[addonData], 0)
 		self.assertNotIn(firstFuture, self.downloader._pending)
 		self.assertIn(secondFuture, self.downloader._pending)
 		onCompleteFirst.assert_not_called()

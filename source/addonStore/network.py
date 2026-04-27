@@ -72,7 +72,6 @@ def _getCacheHashURL() -> str:
 @dataclass
 class _DownloadProgress:
 	tempDownloadPath: str
-	chunksDownloaded: int = 0
 
 
 class _PendingDownload(NamedTuple):
@@ -100,7 +99,14 @@ class AddonFileDownloader:
 	"""
 
 	def __init__(self):
-		self.progress: dict["AddonListItemVM[_AddonStoreModel]", _DownloadProgress] = {}
+		self.progress: dict["AddonListItemVM[_AddonStoreModel]", int] = {}
+		"""
+		Counts chunks received in a download of an add-on.
+
+		Usage should be protected by AddonFileDownloader.DOWNLOAD_LOCK.
+		"""
+
+		self._downloadProgress: dict["AddonListItemVM[_AddonStoreModel]", _DownloadProgress] = {}
 		"""
 		Tracks the current download attempt for an add-on.
 
@@ -160,7 +166,7 @@ class AddonFileDownloader:
 		addonData: "AddonListItemVM[_AddonStoreModel]",
 		downloadProgress: _DownloadProgress,
 	) -> bool:
-		return self.progress.get(addonData) is downloadProgress
+		return self._downloadProgress.get(addonData) is downloadProgress
 
 	def _cleanupCancelledDownload(self, pendingDownload: _PendingDownload) -> None:
 		try:
@@ -183,7 +189,8 @@ class AddonFileDownloader:
 			downloadProgress = self._createDownloadProgress(addonData)
 			# Initialize progress for this download before submitting the task,
 			# so the download can still be cancelled before the worker starts.
-			self.progress[addonData] = downloadProgress
+			self.progress[addonData] = 0
+			self._downloadProgress[addonData] = downloadProgress
 			assert self._executor is not None
 			f: Future[os.PathLike | None] = self._executor.submit(
 				self._download,
@@ -244,12 +251,13 @@ class AddonFileDownloader:
 			cacheFilePath = downloadAddonFuture.result()
 
 		# If canceled after our previous isCancelled check,
-		# then progress will contain a different download attempt or be empty.
+		# then _downloadProgress will contain a different download attempt or be empty.
 		with self.DOWNLOAD_LOCK:
 			if not self._isDownloadActive(addonData, pendingDownload.downloadProgress):
 				log.debug("Download was cancelled, not calling onComplete")
 				self._cleanupCancelledDownload(pendingDownload)
 				return
+			self._downloadProgress.pop(addonData, None)
 			self.progress.pop(addonData, None)
 			self.complete[addonData] = cacheFilePath
 		pendingDownload.onComplete(addonData, cacheFilePath)
@@ -263,6 +271,7 @@ class AddonFileDownloader:
 			if self._executor is not None:
 				self._executor.shutdown(wait=False)
 				self._executor = None
+			self._downloadProgress.clear()
 			self.progress.clear()
 		if NVDAState.shouldWriteToDisk() and os.path.exists(WritePaths.addonStoreDownloadDir):
 			try:
@@ -305,7 +314,7 @@ class AddonFileDownloader:
 							log.debug(f"Cancelled download: {addonData.model.addonId}")
 							return False  # The download was cancelled
 						fd.write(chunk)
-						downloadProgress.chunksDownloaded += 1
+						self.progress[addonData] += 1
 		return True
 
 	def _download(
