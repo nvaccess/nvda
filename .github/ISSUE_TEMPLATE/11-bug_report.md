@@ -33,4 +33,4 @@ type: Bug
 
 #### If NVDA add-ons are disabled, is your problem still occurring?
 
-#### Does the issue still occur after you run the COM Registration Fixing Tool in NVDA's tools menu?
+#### Does the issue still occur after you run the System Accessibility Repair Tool in NVDA's tools menu?

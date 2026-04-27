@@ -2,8 +2,8 @@
 # Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
 # Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen, Kefas Lungu
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from io import StringIO
 from configobj import ConfigObj
@@ -24,7 +24,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	saveConfigurationOnExit = boolean(default=True)
 	askToExit = boolean(default=true)
 	playStartAndExitSounds = boolean(default=true)
-	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
+	# possible log levels are SECRETS, DEBUG, IO, DEBUGWARNING, INFO and OFF
 	loggingLevel = string(default="INFO")
 	showWelcomeDialogAtStartup = boolean(default=true)
 	preventDisplayTurningOff = boolean(default=true)
@@ -117,11 +117,15 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 # Magnifier settings
 [magnifier]
 	defaultZoomLevel = float(min=1.0, max=10.0, default=2.0)
-	defaultPanStep = integer(min=1, max=100, default=10)
 	magnifierType = string(default="fullscreen")
-	defaultFullscreenMode = string(default="center")
 	isTrueCentered = boolean(default=False)
 	defaultFilter = string(default="normal")
+	followMouse = boolean(default=True)
+	followSystemFocus = boolean(default=True)
+	followReviewCursor = boolean(default=True)
+	followNavigatorObject = boolean(default=True)
+	defaultPanStep = integer(min=1, max=100, default=10)
+	defaultFullscreenMode = string(default="center")
 	keepMouseCentered = boolean(default=false)
 	saveShortcutChanges = boolean(default=false)
 

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V., Cyrille Bougot,
+# Copyright (C) 2006-2026 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V., Cyrille Bougot,
 # Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
@@ -494,7 +494,7 @@ formatConfigFlagsMap = {
 	"reportColor": 0x8,
 	"reportAlignment": 0x10,
 	"reportStyle": 0x20,
-	"reportSpellingErrors": 0x40,
+	"reportSpellingErrors2": 0x40,
 	"reportPage": 0x80,
 	"reportLineNumber": 0x100,
 	"reportTables": 0x200,

@@ -1564,6 +1564,7 @@ It provides several configuration options to customize the magnification experie
 ### Enabling and Disabling the Magnifier {#MagnifierToggle}
 
 To enable or disable the magnifier, press `NVDA+shift+w`.
+The "Increase magnification level" keystroke, `NVDA+shift+equals`, will start the magnifier if it is not running.
 When the magnifier is enabled, NVDA will announce the current zoom level, color filter, and focus tracking mode.
 When disabled, the screen returns to its normal size.
 
@@ -1579,7 +1580,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 | Name |Key |Description|
 |---|---|---|
 |Toggles the magnifier on and off |`NVDA+shift+w` |Enables or disables the magnifier|
-|Increases the magnification level of the magnifier |`NVDA+shift+equals` |Increases the zoom level|
+| Increases the magnification level of the magnifier | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
 |Decreases the magnification level of the magnifier |`NVDA+shift+minus` |Decreases the zoom level|
 |Toggle filter of the magnifier |`NVDA+shift+i` |Cycles through available color filters (normal, grayscale, inverted)|
 |Toggle focus mode for the full-screen magnifier |None |Cycles through focus tracking modes (center, border, relative)|
@@ -2837,6 +2838,8 @@ The available logging levels are:
 If you are concerned about privacy, do not set the logging level to this option.
 * Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
 Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
+* Secrets: In addition to debug logging, NVDA will not redact secrets such as passwords and API keys from logs.
+Only enable this temporarily when important debugging information is being redacted.
 
 ##### Allow NV Access to gather NVDA usage statistics {#GeneralSettingsGatherUsageStats}
 
@@ -2968,6 +2971,54 @@ This option is disabled by default.
 |---|---|
 |Options |Disabled, Enabled|
 |Default |Disabled|
+
+#### Follow mouse {#MagnifierFollowMouse}
+
+This checkbox controls whether the magnifier should follow the mouse pointer.
+When enabled, the magnified area will automatically move to follow the mouse pointer, which can be helpful for users who navigate primarily using the mouse rather than the keyboard.
+
+This option is enabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Enabled|
+
+#### Follow system focus {#MagnifierFollowSystemFocus}
+
+This checkbox controls whether the magnifier should follow the system focus.
+When enabled, the magnified area will automatically move to follow the system focus, which can be helpful for users who navigate primarily using the keyboard and want the magnifier to track their navigation.
+
+This option is enabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Enabled|
+
+#### Follow review cursor {#MagnifierFollowReviewCursor}
+
+This checkbox controls whether the magnifier should follow the review cursor.
+When enabled, the magnified area will automatically move to follow the review cursor, which can be helpful for users who use the review cursor to navigate through content and want the magnifier to track their navigation.
+
+This option is enabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Enabled|
+
+#### Follow navigator object {#MagnifierFollowNavigatorObject}
+
+This checkbox controls whether the magnifier should follow the navigator object.
+When enabled, the magnified area will automatically move to follow the navigator object, which can be helpful for users who use object navigation to navigate through content and want the magnifier to track their navigation.
+
+This option is enabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Enabled|
 
 ##### Keep mouse centered {#MagnifierKeepMouseCentered}
 
@@ -4854,11 +4905,11 @@ This will open a dialog which allows you to create a portable copy of NVDA out o
 
 Follow the directions in [Creating a portable copy](#CreatingAPortableCopy) for more information.
 
-### Run COM registration fixing tool... {#RunCOMRegistrationFixingTool}
+### Run System Accessibility Repair Tool... {#RunCOMRegistrationFixingTool}
 
 Sometimes, problems can develop with the Windows Registry, that result in NVDA behaving abnormally.
 This can be caused by, for example, installing or uninstalling certain programs (such as Adobe Reader or Math Player), as well as Windows updates and other events.
-The COM Registration Fixing Tool attempts to fix these issues by repairing accessibility entries in the registry.
+The System Accessibility Repair Tool attempts to fix these issues by repairing accessibility entries in the registry.
 
 The types of problem this tool can fix include:
 
@@ -6324,7 +6375,7 @@ Following are the command line options for NVDA:
 |`-q` |`--quit` |Quit already running copy of NVDA|
 |`-k` |`--check-running` |Report whether NVDA is running via the exit code; 0 if running, 1 if not running|
 |`-f LOGFILENAME` |`--log-file=LOGFILENAME` |The file where log messages should be written to. Logging is always disabled if secure mode is enabled.|
-|`-l LOGLEVEL` |`--log-level=LOGLEVEL` |The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, disabled 100). Logging is always disabled if secure mode is enabled.|
+|`-l LOGLEVEL` |`--log-level=LOGLEVEL` |The lowest level of message logged (secrets 5, debug 10, input/output 12, debug warning 15, info 20, disabled 100). Logging is always disabled if secure mode is enabled.|
 |`-c CONFIGPATH` |`--config-path=CONFIGPATH` |The path where all settings for NVDA are stored. The default value is forced if secure mode is enabled.|
 |`-n LANGUAGE` |`--lang=LANGUAGE` |Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc.|
 |`-m` |`--minimal` |No sounds, no interface, no start message, etc.|

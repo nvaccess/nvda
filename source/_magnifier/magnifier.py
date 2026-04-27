@@ -9,6 +9,7 @@ Implements the magnifier global class and its basic functionalities.
 """
 
 from typing import Callable
+from comtypes import COMError
 from logHandler import log
 import wx
 import ui
@@ -53,6 +54,7 @@ class Magnifier:
 		self._lastFocusCoordinates = Coordinates(0, 0)
 		self._filterType: Filter = getDefaultFilter()
 		self._isManualPanning: bool = False
+		self._consecutiveErrors: int = 0
 		# Register for display changes
 		_displayTracking.displayChanged.register(self._onDisplayChanged)
 		self._screenCurtainIsActive: bool = False
@@ -133,18 +135,50 @@ class Magnifier:
 		self._isActive = True
 		self._currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
 
+	_MAX_CONSECUTIVE_ERRORS: int = 3
+
 	def _updateMagnifier(self) -> None:
 		"""
-		Update the magnifier position and content
+		Update the magnifier position and content.
+		This method is called repeatedly by the timer.
+		On transient errors (below threshold): reschedules itself to keep running.
+		On repeated errors (at threshold): delegates rescheduling to _attemptRecovery.
 		"""
 		if not self._isActive:
 			return
-		self._managePanning()
-		if not self._isManualPanning:
-			self._currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
-		if shouldKeepMouseCentered():
-			self._keepMouseCentered()
-		self._doUpdate()
+		try:
+			self._managePanning()
+			if not self._isManualPanning:
+				self._currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
+			if shouldKeepMouseCentered():
+				self._keepMouseCentered()
+			self._doUpdate()
+			self._consecutiveErrors = 0
+		except (OSError, COMError):
+			self._consecutiveErrors += 1
+			if self._consecutiveErrors >= self._MAX_CONSECUTIVE_ERRORS:
+				log.error(
+					f"Error updating magnifier ({self._consecutiveErrors}/{self._MAX_CONSECUTIVE_ERRORS}), attempting recovery",
+					exc_info=True,
+				)
+				try:
+					self._attemptRecovery()
+				except Exception:
+					# Recovery itself failed: reset counter and restart timer directly
+					# to avoid a permanent freeze (recovery is responsible for rescheduling
+					# but may fail before reaching that point).
+					log.error(
+						"Recovery failed unexpectedly, restarting timer to prevent freeze",
+						exc_info=True,
+					)
+					self._consecutiveErrors = 0
+					self._startTimer(self._updateMagnifier)
+				return
+			log.warning(
+				f"Transient error updating magnifier ({self._consecutiveErrors}/{self._MAX_CONSECUTIVE_ERRORS})",
+				exc_info=True,
+			)
+		# Always reschedule the timer to keep the magnifier alive
 		self._startTimer(self._updateMagnifier)
 
 	def _doUpdate(self) -> None:
@@ -152,6 +186,17 @@ class Magnifier:
 		Perform the actual update of the magnifier
 		"""
 		raise NotImplementedError("Subclasses must implement this method")
+
+	def _attemptRecovery(self) -> None:
+		"""
+		Attempt to recover from repeated errors in the update loop.
+		Subclasses should override this to perform API-specific recovery
+		(e.g., reinitializing the Magnification API).
+		The base implementation resets the error counter and restarts the timer.
+		"""
+		log.info("Attempting base magnifier recovery")
+		self._consecutiveErrors = 0
+		self._startTimer(self._updateMagnifier)
 
 	def _stopMagnifier(self) -> None:
 		"""

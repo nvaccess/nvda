@@ -18,6 +18,9 @@ from .config import (
 	getMagnifierType,
 	setMagnifierType,
 	ZoomLevel,
+	getFollowState,
+	setFollowState,
+	toggleAllFollowStates,
 )
 from .magnifier import Magnifier
 from .fullscreenMagnifier import FullScreenMagnifier
@@ -27,6 +30,7 @@ from .utils.types import (
 	MagnifierType,
 	FullScreenMode,
 	MagnifierAction,
+	MagnifierFollowFocusType,
 )
 from logHandler import log
 
@@ -138,13 +142,19 @@ def zoom(direction: Direction) -> None:
 	"""
 	action = MagnifierAction.ZOOM_IN if direction == Direction.IN else MagnifierAction.ZOOM_OUT
 	magnifier: Magnifier = getMagnifier()
-	if magnifierIsActiveVerify(magnifier, action):
-		magnifier._zoom(direction)
-		ui.message(
-			ZoomLevel.ZOOM_MESSAGE.format(
-				zoomLevel=f"{magnifier.zoomLevel:.1f}",
-			),
-		)
+	if not (magnifier and magnifier._isActive):
+		# Start magnifier if not already running
+		if direction == Direction.IN:
+			toggleMagnifier()
+		else:
+			magnifierIsActiveVerify(magnifier, action)
+		return
+	magnifier._zoom(direction)
+	ui.message(
+		ZoomLevel.ZOOM_MESSAGE.format(
+			zoomLevel=f"{magnifier.zoomLevel:.1f}",
+		),
+	)
 
 
 def pan(action: MagnifierAction) -> None:
@@ -211,6 +221,65 @@ def cycleMagnifierType() -> None:
 				"Magnifier type changed to {type}",
 			).format(type=magnifier._magnifierType.displayString),
 		)
+
+
+def toggleFollow(focusType: MagnifierFollowFocusType) -> None:
+	"""
+	Toggle the specified follow mode setting.
+
+	:param focusType: The follow mode to toggle (mouse, system focus, review cursor, navigator object)
+	"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.TOGGLE_FOLLOW_SETTINGS,
+	):
+		state = not getFollowState(focusType)
+		setFollowState(focusType, state)
+
+		ui.message(
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when toggling a follow setting with {setting} being the name of the setting and {state} being either "enabled" or "disabled".
+				"{setting} {state}",
+			).format(
+				setting=focusType.displayString,
+				state=pgettext(
+					"magnifier",
+					# Translators: State of the follow setting being toggled enabled.
+					"enabled",
+				)
+				if state
+				else pgettext(
+					"magnifier",
+					# Translators: State of the follow setting being toggled disabled.
+					"disabled",
+				),
+			),
+		)
+
+
+def toggleAllFollow() -> None:
+	"""Toggle all follow settings at once."""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.TOGGLE_FOLLOW_SETTINGS,
+	):
+		isDisabledNow = toggleAllFollowStates()
+		if isDisabledNow:
+			stateMessage = pgettext(
+				"magnifier",
+				# Translators: State of all follow settings being toggled disabled.
+				"All follow settings disabled",
+			)
+		else:
+			stateMessage = pgettext(
+				"magnifier",
+				# Translators: State of all follow settings being restored.
+				"All follow settings restored",
+			)
+		ui.message(stateMessage)
 
 
 def toggleFullscreenMode() -> None:

@@ -100,9 +100,7 @@ class UIATextInfo(textInfos.TextInfo):
 	# UIA property IDs that should be automatically cached for control fields
 	_controlFieldUIACachedPropertyIDs = {
 		UIAHandler.UIA_IsValuePatternAvailablePropertyId,
-		UIAHandler.UIA_HasKeyboardFocusPropertyId,
 		UIAHandler.UIA_NamePropertyId,
-		UIAHandler.UIA_ToggleToggleStatePropertyId,
 		UIAHandler.UIA_HelpTextPropertyId,
 		UIAHandler.UIA.UIA_FullDescriptionPropertyId,
 		UIAHandler.UIA_AccessKeyPropertyId,
