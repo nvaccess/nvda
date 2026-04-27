@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -267,20 +267,21 @@ class FullScreenMagnifier(Magnifier):
 		):
 			log.debug("Mouse button pressed, skipping cursor repositioning to avoid interfering with click")
 			return
+		center = self._computeMagnifiedViewCenter()
+		winUser.setCursorPos(center.x, center.y)
+
+	def _computeMagnifiedViewCenter(self) -> Coordinates:
+		"""
+		Compute the coordinates of the center of the currently magnified view.
+
+		:return: The (x, y) coordinates of the center of the magnified view
+		"""
+
 		coordinates = self._getCoordinatesForMode(self.currentCoordinates)
 		params = self._getMagnifierParameters(coordinates)
 		centerX = params.coordinates.x + params.magnifierSize.width // 2
 		centerY = params.coordinates.y + params.magnifierSize.height // 2
-		winUser.setCursorPos(centerX, centerY)
-
-	@trackNativeMagnifierErrors
-	def _setCursorToCenter(self, x: int, y: int) -> None:
-		"""
-		Set cursor to the specified position.
-		If this fails, it is logged but execution continues.
-		"""
-		winUser.setCursorPos(x, y)
-		log.debug(f"Cursor repositioned to center ({x}, {y})")
+		return Coordinates(centerX, centerY)
 
 	def _borderPos(
 		self,

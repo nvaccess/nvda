@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -15,6 +15,7 @@ import wx
 import ui
 import speech
 import screenCurtain
+import mouseHandler
 import winUser
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
@@ -359,6 +360,25 @@ class Magnifier:
 			if focusCoordinates != self._lastFocusCoordinates:
 				self._isManualPanning = False
 		self._lastFocusCoordinates = focusCoordinates
+
+	def moveMouseToViewCenter(self) -> None:
+		"""
+		Move the mouse cursor to the center of the magnified view.
+		Does not check for mouse button state, allowing use during drag-and-drop.
+		"""
+		center = self._computeMagnifiedViewCenter()
+		winUser.setCursorPos(center.x, center.y)
+		log.debug(f"Cursor manually repositioned to magnified view center ({center.x}, {center.y})")
+		mouseHandler.executeMouseMoveEvent(center.x, center.y)
+
+	def _computeMagnifiedViewCenter(self) -> Coordinates:
+		"""
+		Compute the coordinates of the center of the currently magnified view.
+		Subclasses must implement this method for their specific display mode.
+
+		:return: The (x, y) coordinates of the center of the magnified view
+		"""
+		raise NotImplementedError("Subclasses must implement this method")
 
 	def _keepMouseCentered(self) -> None:
 		"""

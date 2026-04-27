@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -363,7 +363,7 @@ class TestFullScreenMagnifierKeepMouseCentered(_TestMagnifier):
 		super().tearDown()
 
 	def _expectedCenter(self, rawCoords: Coordinates) -> tuple[int, int]:
-		"""Compute the expected cursor position using the same pipeline as _keepMouseCentered."""
+		"""Compute the expected cursor position using the same pipeline as _computeMagnifiedViewCenter."""
 		coords = self.magnifier._getCoordinatesForMode(rawCoords)
 		params = self.magnifier._getMagnifierParameters(coords)
 		return (
@@ -423,6 +423,7 @@ class TestFullScreenMagnifierKeepMouseCentered(_TestMagnifier):
 			self.magnifier._keepMouseCentered()
 			mockSet.assert_called_once_with(expectedX, expectedY)
 
+
 	def testCenterModeAtEdge(self):
 		"""CENTER mode near top-left corner: cursor lands at clamped view center, not raw coordinates."""
 		self.magnifier._fullscreenMode = FullScreenMode.CENTER
@@ -464,4 +465,53 @@ class TestFullScreenMagnifierKeepMouseCentered(_TestMagnifier):
 			patch("_magnifier.fullscreenMagnifier.winUser.setCursorPos") as mockSet,
 		):
 			self.magnifier._keepMouseCentered()
+			mockSet.assert_called_once_with(expectedX, expectedY)
+
+
+class TestFullScreenMagnifierMoveMouseToViewCenter(_TestMagnifier):
+	"""Tests for moveMouseToViewCenter in FullScreenMagnifier."""
+
+	def setUp(self):
+		super().setUp()
+		self.magnifier = FullScreenMagnifier()
+		self.magnifier._startMagnifier()
+		self.screen = getPrimaryDisplayOrientation()
+
+	def tearDown(self):
+		self.magnifier._stopMagnifier()
+		super().tearDown()
+
+	def _expectedCenter(self, rawCoords: Coordinates) -> tuple[int, int]:
+		"""Compute the expected cursor position using the same pipeline as _computeMagnifiedViewCenter."""
+		coords = self.magnifier._getCoordinatesForMode(rawCoords)
+		params = self.magnifier._getMagnifierParameters(coords)
+		return (
+			params.coordinates.x + params.magnifierSize.width // 2,
+			params.coordinates.y + params.magnifierSize.height // 2,
+		)
+
+	def testMoveMouseToViewCenterPlacesCursorAtCenter(self):
+		"""moveMouseToViewCenter places cursor at the computed view center."""
+		self.magnifier._fullscreenMode = FullScreenMode.CENTER
+		raw = Coordinates(self.screen.width // 2, self.screen.height // 2)
+		self.magnifier._currentCoordinates = raw
+		expectedX, expectedY = self._expectedCenter(raw)
+		with patch("_magnifier.fullscreenMagnifier.winUser.setCursorPos") as mockSet:
+			self.magnifier.moveMouseToViewCenter()
+			mockSet.assert_called_once_with(expectedX, expectedY)
+
+	def testMoveMouseToViewCenterIgnoresMouseButtons(self):
+		"""moveMouseToViewCenter moves cursor even when a mouse button is held."""
+		self.magnifier._fullscreenMode = FullScreenMode.CENTER
+		raw = Coordinates(self.screen.width // 2, self.screen.height // 2)
+		self.magnifier._currentCoordinates = raw
+		expectedX, expectedY = self._expectedCenter(raw)
+		with (
+			patch(
+				"_magnifier.fullscreenMagnifier.winUser.getAsyncKeyState",
+				return_value=-1,
+			),
+			patch("_magnifier.fullscreenMagnifier.winUser.setCursorPos") as mockSet,
+		):
+			self.magnifier.moveMouseToViewCenter()
 			mockSet.assert_called_once_with(expectedX, expectedY)

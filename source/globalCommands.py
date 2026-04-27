@@ -5194,6 +5194,21 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
+			"Moves the mouse cursor in the center of the magnified view",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_moveMouseToView(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.moveMouseToView()
+
+	
+	
+	@script(
+		description=_(
+			# Translators: Describes a command.
 			"Toggle filter of the magnifier",
 		),
 		category=SCRCAT_VISION,
