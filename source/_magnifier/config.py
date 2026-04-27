@@ -69,12 +69,6 @@ def getZoomLevelString() -> str:
 	zoomLevel = getZoomLevel()
 	zoomValues = ZoomLevel.zoom_range()
 	zoomStrings = ZoomLevel.zoom_strings()
-	if not zoomValues:
-		# Fallback: format the current zoom level directly if no predefined values are available.
-		return ZoomLevel.ZOOM_MESSAGE.format(
-			zoomLevel=f"{zoomLevel:.1f}",
-		)
-	# Find the index of the zoom value closest to the configured zoom level.
 	closestIndex = min(
 		range(len(zoomValues)),
 		key=lambda i: abs(zoomValues[i] - zoomLevel),
