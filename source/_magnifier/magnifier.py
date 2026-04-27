@@ -40,6 +40,7 @@ from .utils.focusManager import FocusManager
 class Magnifier:
 	_TIMER_INTERVAL_MS: int = 12
 	_MARGIN_BORDER: int = 50
+	_MAX_CONSECUTIVE_ERRORS: int = 3
 
 	def __init__(self):
 		self._displayOrientation = getPrimaryDisplayOrientation()
@@ -55,6 +56,7 @@ class Magnifier:
 		self._filterType: Filter = getDefaultFilter()
 		self._isManualPanning: bool = False
 		self._consecutiveErrors: int = 0
+		self._recoveryAttempts: int = 0
 		# Register for display changes
 		_displayTracking.displayChanged.register(self._onDisplayChanged)
 		self._screenCurtainIsActive: bool = False
@@ -135,8 +137,6 @@ class Magnifier:
 		self._isActive = True
 		self._currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
 
-	_MAX_CONSECUTIVE_ERRORS: int = 3
-
 	def _updateMagnifier(self) -> None:
 		"""
 		Update the magnifier position and content.
@@ -154,6 +154,7 @@ class Magnifier:
 				self._keepMouseCentered()
 			self._doUpdate()
 			self._consecutiveErrors = 0
+			self._recoveryAttempts = 0
 		except (OSError, COMError):
 			self._consecutiveErrors += 1
 			if self._consecutiveErrors >= self._MAX_CONSECUTIVE_ERRORS:

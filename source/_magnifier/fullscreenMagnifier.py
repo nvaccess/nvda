@@ -21,6 +21,8 @@ from .utils.errorHandling import trackNativeMagnifierErrors
 
 
 class FullScreenMagnifier(Magnifier):
+	_MAX_RECOVERY_ATTEMPTS: int = 3
+
 	def __init__(self):
 		super().__init__()
 		self._fullscreenMode = getDefaultFullscreenMode()
@@ -59,21 +61,42 @@ class FullScreenMagnifier(Magnifier):
 		log.debug(
 			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self._fullscreenMode}",
 		)
-		# Initialize Magnification API if not already initialized
-		self._initializeNativeMagnification()
+		try:
+			self._initializeNativeMagnification()
+		except OSError:
+			log.error("Failed to initialize magnification API", exc_info=True)
+			# _isActive is True from super(), so _stopMagnifier properly unregisters
+			self._stopMagnifier()
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Message when NVDA Magnifier cannot start because another magnifier is already using the magnification API.
+					"Cannot start magnifier: the magnification API is unavailable. Windows Magnifier may already be running.",
+				),
+			)
+			return
 
 		if self._isActive:
 			self._applyFilter()
 		self._startTimer(self._updateMagnifier)
 
-	@trackNativeMagnifierErrors
 	def _initializeNativeMagnification(self) -> None:
 		"""
-		Initialize the Magnification API.
-		If already initialized or on failure, continues anyway.
+		Initialize the Magnification API and verify it is fully usable.
+
+		Raises OSError if MagInitialize fails or if MagSetFullscreenTransform
+		fails (e.g. Windows Magnifier already holds the API). Cleans up after
+		itself on failure so the caller does not need to.
 		"""
 		magnification.MagInitialize()
 		log.debug("Magnification API initialized")
+		# MagSetFullscreenTransform is what actually fails when Windows Magnifier
+		# is running, even though MagInitialize succeeds in that case.
+		try:
+			magnification.MagSetFullscreenTransform(self.zoomLevel, 0, 0)
+		except OSError:
+			self._uninitializeNativeMagnification()
+			raise
 
 	def _doUpdate(self):
 		"""
@@ -120,34 +143,36 @@ class FullScreenMagnifier(Magnifier):
 		Attempt to recover from repeated Magnification API errors by
 		reinitializing the API. If recovery fails, the magnifier is stopped.
 
-		Each step (uninitialize, initialize, apply filter, restart timer) is
-		controlled independently. If any critical step fails, recovery is aborted.
+		Capped at _MAX_RECOVERY_ATTEMPTS to prevent an infinite restart loop
+		when the API is permanently unavailable (e.g. Windows Magnifier running).
 		"""
-		log.info("Attempting full-screen magnifier recovery via API reinitialization")
+		self._recoveryAttempts += 1
+		if self._recoveryAttempts > self._MAX_RECOVERY_ATTEMPTS:
+			log.error(
+				f"Max recovery attempts ({self._MAX_RECOVERY_ATTEMPTS}) reached, stopping magnifier",
+			)
+			self._conductRecoveryFailure()
+			return
 
-		# Step 1: Uninitialize (best effort, may already be uninitialized)
+		log.info(
+			f"Attempting full-screen magnifier recovery "
+			f"(attempt {self._recoveryAttempts}/{self._MAX_RECOVERY_ATTEMPTS})",
+		)
+
 		self._uninitializeNativeMagnification()
 
-		# Step 2: Initialize (critical - raises on failure)
 		try:
-			magnification.MagInitialize()
-			log.debug("Magnification API initialized during recovery")
-		except OSError:
-			log.error("MagInitialize during recovery failed, aborting recovery", exc_info=True)
-			self._conductRecoveryFailure()
-			return
-
-		# Step 3: Apply filter (critical - raises on failure)
-		try:
+			# _initializeNativeMagnification also probes MagSetFullscreenTransform,
+			# which is the call that fails when Windows Magnifier is running.
+			self._initializeNativeMagnification()
 			magnification.MagSetFullscreenColorEffect(self._getFilterMatrix().value)
-			log.debug("Filter applied during recovery")
 		except OSError:
-			log.error("Failed to apply filter during recovery, aborting recovery", exc_info=True)
+			log.error("Recovery failed", exc_info=True)
 			self._conductRecoveryFailure()
 			return
 
-		# All steps succeeded
 		self._consecutiveErrors = 0
+		self._recoveryAttempts = 0
 		log.info("Full-screen magnifier recovery succeeded")
 		self._startTimer(self._updateMagnifier)
 
