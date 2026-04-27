@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2007-2026 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
 # Accessolutions, Julien Cochuyt, Cyrille Bougot, Łukasz Golonka
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Utilities and classes to manage logging in NVDA"""
 
@@ -21,6 +21,7 @@ import winBindings.kernel32
 import winKernel
 import buildVersion
 from typing import (
+	Any,
 	Literal,
 	NamedTuple,
 	Protocol,
@@ -30,6 +31,7 @@ import exceptions
 import RPCConstants
 import NVDAState
 from NVDAState import WritePaths
+
 
 if TYPE_CHECKING:
 	import extensionPoints
@@ -222,6 +224,7 @@ class Logger(logging.Logger):
 	from logging import DEBUG, INFO, WARNING, WARN, ERROR, CRITICAL
 
 	# Our custom levels.
+	SECRETS = 5
 	IO = 12
 	DEBUGWARNING = 15
 	OFF = 100
@@ -233,15 +236,30 @@ class Logger(logging.Logger):
 
 	def _log(
 		self,
-		level,
-		msg,
-		args,
-		exc_info=None,
-		extra=None,
-		codepath=None,
-		activateLogViewer=False,
-		stack_info=None,
-	):
+		level: int,
+		msg: str,
+		args: tuple[Any, ...],
+		exc_info: _excInfo_t | bool | BaseException = None,
+		extra: dict | None = None,
+		codepath: str | None = None,
+		activateLogViewer: bool = False,
+		stack_info: list[traceback.FrameSummary] | bool | None = None,
+		redactSecrets: bool = False,
+	) -> Any:
+		"""Logs a message with the given severity level.
+
+		:param level: The severity level of the log message.
+		:param msg: The log message, which may contain format specifiers that will be replaced by the values in `args`.
+		:param args: The arguments to be merged into `msg` using the `%` operator for string formatting.
+		:param exc_info: Exception information to be logged
+		:param extra: Additional information to be logged
+		:param codepath: The code path where the log was generated
+		:param activateLogViewer: Whether to activate the log viewer
+		:param stack_info: Stack information to be logged
+		:param redactSecrets: Whether to check for and redact secrets in the log message
+		:return: The result of the logging operation (None for builtin handlers).
+		"""
+
 		if not extra:
 			extra = {}
 
@@ -273,7 +291,26 @@ class Logger(logging.Logger):
 				"".join(traceback.format_list(stack_info)).rstrip(),
 			)
 
-		res = super()._log(level, msg, args, exc_info, extra)
+		if redactSecrets and self.getEffectiveLevel() < self.SECRETS:
+			from detect_secrets.core.scan import scan_line
+			from detect_secrets.settings import default_settings
+
+			try:
+				formattedMsg = msg % args if args else msg
+			except Exception:
+				formattedMsg = msg
+				self.exception(
+					"Failed to format log message for secret redaction, logging unredacted exception.",
+				)
+
+			with default_settings():
+				for secret in list(scan_line(formattedMsg)):
+					formattedMsg = formattedMsg.replace(secret.secret_value, "****")
+
+			res = super()._log(level, formattedMsg, (), exc_info, extra)
+
+		else:
+			res = super()._log(level, msg, args, exc_info, extra)
 
 		if activateLogViewer:
 			# Make the log text we just wrote appear in the log viewer.
@@ -583,6 +620,7 @@ def initialize(shouldDoRemoteLogging=False):
 	@type shouldDoRemoteLogging: bool
 	"""
 	global log, logHandler
+	logging.addLevelName(Logger.SECRETS, "SECRETS")
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
 	logging.addLevelName(Logger.OFF, "OFF")
@@ -661,7 +699,7 @@ def setLogLevelFromConfig():
 	level = logging.getLevelNamesMapping().get(levelName)
 	# The lone exception to level higher than INFO is "OFF" (100).
 	# Setting a log level to something other than options found in the GUI is unsupported.
-	if level is None or level not in (log.DEBUG, log.IO, log.DEBUGWARNING, log.INFO, log.OFF):
+	if level is None or level not in (log.SECRETS, log.DEBUG, log.IO, log.DEBUGWARNING, log.INFO, log.OFF):
 		log.warning("invalid setting for logging level: %s" % levelName)
 		level = log.INFO
 		config.conf["general"]["loggingLevel"] = logging.getLevelName(log.INFO)

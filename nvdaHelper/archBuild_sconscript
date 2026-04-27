@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
@@ -82,9 +83,7 @@ isNVDACoreArch = (
 	or (PYTHON_PLATFORM == "win-arm64" and TARGET_ARCH == "arm64")
 )
 isNVDAHelperLocalArch = isNVDACoreArch or (
-	PYTHON_PLATFORM == "win-amd64"
-	and TARGET_ARCH == "arm64"
-	and isArm64EC
+	PYTHON_PLATFORM == "win-amd64" and TARGET_ARCH == "arm64" and isArm64EC
 )
 debug = env["nvdaHelperDebugFlags"]
 release = env["release"]
@@ -100,7 +99,7 @@ env.Append(
 		# NOMINMAX: prevent minwindef.h min/max macro definition, which unexpectedly override developer
 		# expectations
 		"NOMINMAX",
-	]
+	],
 )
 
 env.Append(CXXFLAGS=["/EHsc"])
@@ -116,13 +115,13 @@ env.Append(
 		"/WX",
 		subsystem,
 		"/release",  # We always want a checksum in the header
-	]
+	],
 )
 env.Append(
 	ARFLAGS=[
 		"/WX",
 		subsystem,
-	]
+	],
 )
 if TARGET_ARCH == "x86_64":
 	env.Append(MIDLFLAGS="/x64")
@@ -149,7 +148,7 @@ if "RTC" in debug:
 # We always want debug symbols
 env.Append(PDB="${TARGET}.pdb")
 env.Append(
-	LINKFLAGS="/OPT:REF"
+	LINKFLAGS="/OPT:REF",
 )  # having symbols usually turns this off but we have no need for unused symbols
 
 env.Append(
@@ -160,7 +159,7 @@ env.Append(
 		# It will output a list of the include files.
 		# The option also displays nested include files, that is, the files
 		# included by the files that you include.
-	]
+	],
 )
 
 if isArm64EC:
@@ -181,7 +180,7 @@ thirdPartyEnv = env.Clone()
 env.Append(
 	CCFLAGS=[
 		"/W3",  # warning level 3
-	]
+	],
 )
 if "analyze" in debug:
 	env.Append(CCFLAGS=["/analyze"])
@@ -195,7 +194,7 @@ else:
 	env.Append(
 		CCFLAGS=[
 			"/WX",  # warnings as error, don't do this with analyze, the build stops too early
-		]
+		],
 	)
 
 Export("thirdPartyEnv")
@@ -266,7 +265,7 @@ if not isNVDAHelperLocalArch:
 if isNVDACoreArch:
 	sonicLib = thirdPartyEnv.SConscript("sonic/sconscript")
 	Export("sonicLib")
-	env.Install(sourceDir.Dir('synthDrivers'), sonicLib)
+	env.Install(sourceDir.Dir("synthDrivers"), sonicLib)
 	thirdPartyEnv.SConscript("espeak/sconscript")
 	thirdPartyEnv.SConscript("liblouis/sconscript")
 	thirdPartyEnv.SConscript("javaAccessBridge/sconscript")
@@ -275,4 +274,4 @@ if isNVDACoreArch:
 if TARGET_ARCH == "x86":
 	sonicLib = thirdPartyEnv.SConscript("sonic/sconscript")
 	Export("sonicLib")
-	env.Install(sourceDir.Dir('_synthDrivers32'), sonicLib)
+	env.Install(sourceDir.Dir("_synthDrivers32"), sonicLib)

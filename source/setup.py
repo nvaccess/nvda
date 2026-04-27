@@ -288,8 +288,6 @@ freeze(
 			"winxptheme",
 			# numpy is an optional dependency of comtypes but we don't require it.
 			"numpy",
-			# multiprocessing isn't going to work in a frozen environment
-			"multiprocessing",
 			"concurrent.futures.process",
 			# Tomli is part of Python 3.11+ as Tomlib, but is imported as tomli by cryptography, which causes an infinite loop in py2exe
 			"tomli",
@@ -302,6 +300,16 @@ freeze(
 			"NVDAObjects.JAB",
 			"NVDAObjects.UIA",
 			"NVDAObjects.window",
+			# detect-secrets loads plugins and filters dynamically using pkgutil/importlib,
+			# so the relevant packages must be bundled explicitly for frozen builds.
+			"detect_secrets",
+			"detect_secrets.core",
+			"detect_secrets.core.plugins",
+			"detect_secrets.filters",
+			"detect_secrets.filters.gibberish",
+			"detect_secrets.plugins",
+			"detect_secrets.transformers",
+			"detect_secrets.util",
 			"virtualBuffers",
 			"appModules",
 			"comInterfaces",

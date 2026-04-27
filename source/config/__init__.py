@@ -27,7 +27,6 @@ from configobj import ConfigObj
 from configobj.validate import Validator
 from logHandler import log
 import logging
-from logging import DEBUG
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
 import winBindings.shell32
 from shlobj import FolderId, SHGetKnownFolderPath
@@ -584,24 +583,15 @@ class ConfigManager:
 		self.profiles.append(profile)
 		self._handleProfileSwitch()
 
-	def _loadConfig(self, fn: str | None, fileError: bool = False) -> ConfigObj:
-		log.info("Loading config: {0}".format(fn))
-		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=fileError)
-		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
-		profile.newlines = "\r\n"
-		profileCopy = deepcopy(profile)
-		try:
-			if NVDAState.shouldWriteToDisk() and profile.filename is not None:
-				writeProfileFunc = self._writeProfileToFile
-			else:
-				writeProfileFunc = None
-			profileUpgrader.upgrade(profile, self.validator, writeProfileFunc)
-		except Exception as e:
-			# Log at level info to ensure that the profile is logged.
-			log.info("Config before schema update:\n%s" % profileCopy, exc_info=False)
-			raise e
-		# since profile settings are not yet imported we have to "peek" to see
-		# if debug level logging is enabled.
+	@staticmethod
+	def _shouldLogConfigAtStartup(profile: ConfigObj) -> bool:
+		"""since profile settings are not yet imported we have to "peek" to see
+		if debug level logging is enabled.
+
+		:param profile: The profile to check for logging settings.
+		:return: True if debug level logging is enabled, False otherwise.
+		"""
+		#
 		try:
 			logLevelName: str = profile["general"]["loggingLevel"]
 			if not logLevelName:
@@ -610,13 +600,38 @@ class ConfigManager:
 				level = logging.getLevelNamesMapping().get(logLevelName)
 		except KeyError:
 			level = None
+		return log.isEnabledFor(log.DEBUG) or (level and logging.DEBUG >= level)
 
-		if log.isEnabledFor(log.DEBUG) or (level and DEBUG >= level):
-			# Log at level info to ensure that the profile is logged.
+	def _loadConfig(self, fn: str | None, fileError: bool = False) -> ConfigObj:
+		"""Load a configuration from a file.
+
+		:param fn: The filename of the configuration file to load.
+		:param fileError: Whether to raise an error if the file cannot be read, defaults to False
+		:raises e: Re-raises any exception that occurs during the profile upgrade process.
+		:return: The loaded configuration object.
+		"""
+		log.info("Loading config: {0}".format(fn))
+		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=fileError)
+		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
+		profile.newlines = "\r\n"
+		profileCopy = deepcopy(profile)
+		if NVDAState.shouldWriteToDisk() and profile.filename is not None:
+			writeProfileFunc = self._writeProfileToFile
+		else:
+			writeProfileFunc = None
+		try:
+			profileUpgrader.upgrade(profile, self.validator, writeProfileFunc)
+		except Exception as e:
+			if self._shouldLogConfigAtStartup(profileCopy):
+				# We must log at info level here as the logHandler hasn't been set to log at debug level yet.
+				log.info(f"Config before schema update:\n{profileCopy}", redactSecrets=True)
+			raise e
+
+		if self._shouldLogConfigAtStartup(profile):
+			# We must log at info level here as the logHandler hasn't been set to log at debug level yet.
 			log.info(
-				"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{0}".format(
-					profile,
-				),
+				f"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{profile}",
+				redactSecrets=True,
 			)
 		return profile
 
