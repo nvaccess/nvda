@@ -110,20 +110,20 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		magnifier._startMagnifier()
 
 		# Test position calculation
-		left, top, width, height = magnifier._getMagnifierPosition((500, 400))
+		params = magnifier._getMagnifierParameters((500, 400))
 
 		# Basic checks
-		self.assertIsInstance(left, int)
-		self.assertIsInstance(top, int)
-		self.assertIsInstance(width, int)
-		self.assertIsInstance(height, int)
+		self.assertIsInstance(params.coordinates.x, int)
+		self.assertIsInstance(params.coordinates.y, int)
+		self.assertIsInstance(params.magnifierSize.width, int)
+		self.assertIsInstance(params.magnifierSize.height, int)
 
 		# Width and height should be screen size divided by zoom
 		expectedWidth = int(magnifier._displayOrientation.width / 2.0)
 		expectedHeight = int(magnifier._displayOrientation.height / 2.0)
 
-		self.assertEqual(width, expectedWidth)
-		self.assertEqual(height, expectedHeight)
+		self.assertEqual(params.magnifierSize.width, expectedWidth)
+		self.assertEqual(params.magnifierSize.height, expectedHeight)
 
 		# Cleanup
 		magnifier._stopMagnifier()
@@ -297,8 +297,11 @@ class TestFullScreenMagnifierKeepMouseCentered(_TestMagnifier):
 	def _expectedCenter(self, rawCoords: Coordinates) -> tuple[int, int]:
 		"""Compute the expected cursor position using the same pipeline as _keepMouseCentered."""
 		coords = self.magnifier._getCoordinatesForMode(rawCoords)
-		left, top, w, h = self.magnifier._getMagnifierPosition(coords)
-		return left + w // 2, top + h // 2
+		params = self.magnifier._getMagnifierParameters(coords)
+		return (
+			params.coordinates.x + params.magnifierSize.width // 2,
+			params.coordinates.y + params.magnifierSize.height // 2,
+		)
 
 	def testSkipsWhenLeftButtonPressed(self):
 		"""Cursor is not moved when the left mouse button is held."""

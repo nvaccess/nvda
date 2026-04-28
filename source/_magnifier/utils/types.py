@@ -12,12 +12,12 @@ from typing import NamedTuple
 from utils.displayString import DisplayStringStrEnum, DisplayStringEnum
 
 
-class MagnifierParams(NamedTuple):
-	"""Named tuple representing magnifier parameters for initialization"""
+class MagnifierParameters(NamedTuple):
+	"""Named tuple representing the size, position and filter of the magnifier"""
 
-	zoomLevel: float
-	filter: str
-	fullscreenMode: str
+	magnifierSize: "Size"
+	coordinates: "Coordinates"
+	filter: "Filter"
 
 
 class Direction(Enum):
@@ -25,6 +25,13 @@ class Direction(Enum):
 
 	IN = True
 	OUT = False
+
+
+class Size(NamedTuple):
+	"""Named tuple representing width and height"""
+
+	width: int
+	height: int
 
 
 class MagnifierAction(DisplayStringEnum):
@@ -124,15 +131,6 @@ class MagnifierType(DisplayStringStrEnum):
 			# Translators: Magnifier type - lens mode.
 			self.LENS: pgettext("magnifier", "Lens"),
 		}
-
-
-class MagnifierPosition(NamedTuple):
-	"""Named tuple representing the position and size of the magnifier window"""
-
-	left: int
-	top: int
-	visibleWidth: int
-	visibleHeight: int
 
 
 class Coordinates(NamedTuple):
