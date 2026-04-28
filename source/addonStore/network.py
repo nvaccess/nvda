@@ -332,15 +332,14 @@ class AddonFileDownloader:
 		addonData = listItem.model
 		log.debug(f"starting download: {addonData.addonId}")
 		cacheFilePath = addonData.cachedDownloadPath
-		if os.path.exists(cacheFilePath):
-			log.debug(f"Cache file already exists, deleting {cacheFilePath}")
-			os.remove(cacheFilePath)
-
 		inProgressFilePath = tempDownloadPath
 		with self.DOWNLOAD_LOCK:
 			if not self._isDownloadActive(listItem, tempDownloadPath):
 				log.debug("the download was cancelled before it started.")
 				return None  # The download was cancelled
+			if os.path.exists(cacheFilePath):
+				log.debug(f"Cache file already exists, deleting {cacheFilePath}")
+				os.remove(cacheFilePath)
 		try:
 			if not self._downloadAddonToPath(listItem, tempDownloadPath):
 				return None  # The download was cancelled
