@@ -753,3 +753,38 @@ jobs:
             --repo ${{ github.repository }} \
             --clobber \
             $NVDA_EXE_NAME#Installer
+
+  submit-winget:
+    name: Submit manifest to WinGet Packages Repository
+    needs: [release]
+    runs-on: windows-latest
+    if: startsWith(github.ref_name, 'release-')
+    permissions:
+      contents: read
+    steps:
+    - name: Submit package using wingetcreate
+      env:
+        GH_TOKEN: ${{ github.token }}
+        # wingetcreate will read the token from the below environment variable
+        # Reference: https://aka.ms/winget-create-token
+        WINGET_CREATE_GITHUB_TOKEN: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}
+      run: |
+        # Strip the 'release-' prefix to get the package version
+        $packageVersion = "${{ github.ref_name }}" -replace '^release-', ''
+
+        # beta/rc tags submit to NVAccess.NVDA.Beta; all other release tags submit to NVAccess.NVDA
+        $isBeta = "${{ github.ref_name }}" -match 'beta|rc'
+        $wingetPackageId = if ($isBeta) { "NVAccess.NVDA.Beta" } else { "NVAccess.NVDA" }
+
+        # Retrieve the .exe installer URL from the published GitHub release
+        $releaseAssets = gh release view "${{ github.ref_name }}" `
+          --repo "${{ github.repository }}" `
+          --json assets | ConvertFrom-Json
+        $installerUrl = ($releaseAssets.assets | Where-Object { $_.name -like "*.exe" }).url
+
+        # Download wingetcreate and open a PR against the winget-pkgs repository
+        curl.exe -JLO https://aka.ms/wingetcreate/latest
+        .\wingetcreate.exe update $wingetPackageId `
+          --version $packageVersion `
+          --urls $installerUrl `
+          --submit
