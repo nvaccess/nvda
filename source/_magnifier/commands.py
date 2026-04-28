@@ -12,9 +12,9 @@ from typing import Literal
 import ui
 from . import getMagnifier, initialize, terminate
 from .config import (
-	getDefaultZoomLevelString,
-	getDefaultFilter,
-	getDefaultFullscreenMode,
+	getZoomLevelString,
+	getFilter,
+	getFullscreenMode,
 	ZoomLevel,
 	getFollowState,
 	setFollowState,
@@ -104,8 +104,8 @@ def toggleMagnifier() -> None:
 	else:
 		initialize()
 
-		filter = getDefaultFilter()
-		fullscreenMode = getDefaultFullscreenMode()
+		filter = getFilter()
+		fullscreenMode = getFullscreenMode()
 
 		ui.message(
 			pgettext(
@@ -113,7 +113,7 @@ def toggleMagnifier() -> None:
 				# Translators: Message announced when starting the NVDA magnifier.
 				"Starting magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
 			).format(
-				zoomLevel=getDefaultZoomLevelString(),
+				zoomLevel=getZoomLevelString(),
 				filter=filter.displayString,
 				fullscreenMode=fullscreenMode.displayString,
 			),

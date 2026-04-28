@@ -50,72 +50,75 @@ class ZoomLevel:
 		]
 
 
-def getDefaultZoomLevel() -> float:
+def getZoomLevel() -> float:
 	"""
-	Get default zoom level from config.
+	Get zoom level from config.
 
-	:return: The default zoom level.
+	:return: The zoom level.
 	"""
-	zoomLevel = config.conf["magnifier"]["defaultZoomLevel"]
+	zoomLevel = config.conf["magnifier"]["zoomLevel"]
 	return zoomLevel
 
 
-def getDefaultZoomLevelString() -> str:
+def getZoomLevelString() -> str:
 	"""
-	Get default zoom level as a formatted string.
+	Get zoom level as a formatted string.
 
 	:return: Formatted zoom level string.
 	"""
-	zoomLevel = getDefaultZoomLevel()
+	zoomLevel = getZoomLevel()
 	zoomValues = ZoomLevel.zoom_range()
 	zoomStrings = ZoomLevel.zoom_strings()
-	zoomIndex = zoomValues.index(zoomLevel)
-	return zoomStrings[zoomIndex]
+	closestIndex = min(
+		range(len(zoomValues)),
+		key=lambda i: abs(zoomValues[i] - zoomLevel),
+	)
+	return zoomStrings[closestIndex]
 
 
-def setDefaultZoomLevel(zoomLevel: float) -> None:
+def setZoomLevel(zoomLevel: float) -> None:
 	"""
-	Set default zoom level from settings.
+	Set zoom level from settings.
 
 	:param zoomLevel: The zoom level to set.
 	"""
-	config.conf["magnifier"]["defaultZoomLevel"] = zoomLevel
+	config.conf["magnifier"]["zoomLevel"] = zoomLevel
 
 
-def getDefaultPanStep() -> int:
+def getPanStep() -> int:
 	"""
-	Get default pan value from config.
+	Get pan value from config.
 
-	:return: The default pan value.
+	:return: The pan value.
 	"""
-	return config.conf["magnifier"]["defaultPanStep"]
+	return config.conf["magnifier"]["panStep"]
 
 
-def setDefaultPanStep(panStep: int) -> None:
+def setPanStep(panStep: int) -> None:
 	"""
-	Set default pan value from settings.
+	Set pan value from settings.
 
 	:param panStep: The pan value to set.
 	"""
-	config.conf["magnifier"]["defaultPanStep"] = panStep
+	config.conf["magnifier"]["panStep"] = panStep
 
 
-def getDefaultFilter() -> Filter:
+def getFilter() -> Filter:
 	"""
-	Get default filter from config.
+	Get filter from config.
 
-	:return: The default filter.
+	:return: The filter.
 	"""
-	return Filter(config.conf["magnifier"]["defaultFilter"])
+	return Filter(config.conf["magnifier"]["filter"])
 
 
-def setDefaultFilter(filter: Filter) -> None:
+def setFilter(filter: Filter) -> None:
 	"""
-	Set default filter from settings.
+	Set  filter from settings.
 
 	:param filter: The filter to set.
 	"""
-	config.conf["magnifier"]["defaultFilter"] = filter.value
+	config.conf["magnifier"]["filter"] = filter.value
 
 
 _FOLLOW_CONFIG_KEYS: dict[MagnifierFollowFocusType, str] = {
@@ -223,3 +226,21 @@ def shouldKeepMouseCentered() -> bool:
 	:return: True if mouse should be kept centered, False otherwise.
 	"""
 	return config.conf["magnifier"]["keepMouseCentered"]
+
+
+def getFullscreenMode() -> FullScreenMode:
+	"""
+	Get full-screen mode from config.
+
+	:return: The full-screen mode.
+	"""
+	return FullScreenMode(config.conf["magnifier"]["fullscreenMode"])
+
+
+def setFullscreenMode(mode: FullScreenMode) -> None:
+	"""
+	Set full-screen mode from settings.
+
+	:param mode: The full-screen mode to set.
+	"""
+	config.conf["magnifier"]["fullscreenMode"] = mode.value
