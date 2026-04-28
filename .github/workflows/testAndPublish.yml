@@ -209,7 +209,7 @@ jobs:
       run: ci/scripts/tests/translationCheck.ps1
     - name: Upload artifact
       if: ${{ success() || failure() }}
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: makePot results
         path: |
@@ -273,7 +273,7 @@ jobs:
       run: sed -i 's|file="..\\|file="|g' testOutput/unit/unitTests.xml
     - name: Upload artifact
       if: ${{ failure() }}
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: Unit tests results (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: testOutput/unit/unitTests.xml
@@ -299,7 +299,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Get makePot results
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: makePot results
         path: output
@@ -368,14 +368,14 @@ jobs:
         scons %sconsLauncherOutTargets% %sconsArgs% %sconsCores%
     - name: Upload launcher
       id: uploadLauncher
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: NVDA launcher (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: |
           output/nvda*.exe
           output/nvda*controllerClient.zip
     - name: Upload documentation artifacts
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       id: uploadBuildArtifacts
       with:
         name: Documentation files and packaging metadata (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
@@ -451,7 +451,7 @@ jobs:
         python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
     - name: Get NVDA launcher
       id: getLauncher
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: NVDA launcher (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: output
@@ -469,7 +469,7 @@ jobs:
         INCLUDE_SYSTEM_TEST_TAGS: ${{ matrix.testSuite }}
     - name: Upload system tests results
       if: ${{ failure() }}
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: "System tests results (${{ matrix.testSuite }}) (${{ matrix.runner }}, ${{ matrix.pythonVersion }}, ${{ matrix.arch }})"
         path: |
@@ -514,7 +514,7 @@ jobs:
       run: ci/scripts/buildSymbolStore.ps1
     - name: Upload symbols artifact
       id: uploadArtifact
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: Symbols (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: output/symbols.zip
@@ -614,7 +614,7 @@ jobs:
       name: snapshot
     steps:
     - name: Get NVDA launcher
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: NVDA launcher (${{ env.defaultPythonVersion }}, ${{ env.defaultArch }})
         path: output
@@ -668,13 +668,13 @@ jobs:
         echo RELEASE_NAME=$GITHUB_REF_NAME | sed 's/release-//g' >> $GITHUB_OUTPUT
         echo NORMALIZED_TAG_NAME=$GITHUB_REF_NAME | sed 's/\./-/g' | sed 's/release-//g' >> $GITHUB_OUTPUT
     - name: Get NVDA launcher
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: NVDA launcher (${{ env.defaultPythonVersion }}, ${{ env.defaultArch }})
         path: output
     - name: VirusTotal Scan
       id: virusTotal
-      uses: crazy-max/ghaction-virustotal@v4
+      uses: crazy-max/ghaction-virustotal@v5.0.0
       with:
         vt_api_key: ${{ secrets.VT_API_KEY }}
         files: output/nvda*.exe

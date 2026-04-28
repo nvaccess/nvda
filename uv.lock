@@ -189,6 +189,19 @@ wheels = [
 ]
 
 [[package]]
+name = "detect-secrets"
+version = "1.5.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pyyaml", marker = "sys_platform == 'win32'" },
+    { name = "requests", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/69/67/382a863fff94eae5a0cf05542179169a1c49a4c8784a9480621e2066ca7d/detect_secrets-1.5.0.tar.gz", hash = "sha256:6bb46dcc553c10df51475641bb30fd69d25645cc12339e46c824c1e0c388898a", size = 97351, upload-time = "2024-05-06T17:46:19.721Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4e/5e/4f5fe4b89fde1dc3ed0eb51bd4ce4c0bca406246673d370ea2ad0c58d747/detect_secrets-1.5.0-py3-none-any.whl", hash = "sha256:e24e7b9b5a35048c313e983f76c4bd09dad89f045ff059e354f9943bf45aa060", size = 120341, upload-time = "2024-05-06T17:46:16.628Z" },
+]
+
+[[package]]
 name = "distlib"
 version = "0.4.0"
 source = { registry = "https://pypi.org/simple" }
@@ -527,6 +540,7 @@ dependencies = [
     { name = "configobj", marker = "sys_platform == 'win32'" },
     { name = "crowdin-api-client", marker = "sys_platform == 'win32'" },
     { name = "cryptography", marker = "sys_platform == 'win32'" },
+    { name = "detect-secrets", marker = "sys_platform == 'win32'" },
     { name = "fast-diff-match-patch", marker = "sys_platform == 'win32'" },
     { name = "fuzzysearch", marker = "sys_platform == 'win32'" },
     { name = "l2m4m", marker = "sys_platform == 'win32'" },
@@ -585,6 +599,7 @@ requires-dist = [
     { name = "configobj", git = "https://github.com/DiffSK/configobj?rev=9c8a0a80c767bf8a3d6493ed01df6c351bddca42" },
     { name = "crowdin-api-client", specifier = "==1.24.1" },
     { name = "cryptography", specifier = "==46.0.7" },
+    { name = "detect-secrets", specifier = "==1.5.0" },
     { name = "fast-diff-match-patch", specifier = "==2.1.0" },
     { name = "fuzzysearch", specifier = "==0.8.1" },
     { name = "l2m4m", specifier = "==1.0.4" },

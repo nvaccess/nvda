@@ -118,8 +118,13 @@ class SpotlightManager:
 
 		if stepIndex < len(self._animationStepsList):
 			zoomLevel, coords = self._animationStepsList[stepIndex]
-			self._fullscreenMagnifier._setZoomRawValue(zoomLevel)
-			self._fullscreenMagnifier._fullscreenMagnifier(coords)
+			try:
+				self._fullscreenMagnifier._setZoomRawValue(zoomLevel)
+				self._fullscreenMagnifier._fullscreenMagnifier(coords)
+			except Exception:
+				log.error("Error during spotlight animation step, aborting spotlight", exc_info=True)
+				self._stopSpotlight()
+				return
 			self._currentZoomLevel = zoomLevel
 			self._currentCoordinates = coords
 			wx.CallLater(self._animationStepDelay, lambda: self._executeStep(stepIndex + 1, callback))

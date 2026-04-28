@@ -44,6 +44,28 @@ class VirusTotalScanResults:
 			log.error(f"Malformed add-on scan results.: {addon!r}", exc_info=True)
 			return None
 
+	def toDict(self) -> dict[str, list[dict[str, dict[str, int]]]]:
+		"""Store scan data in the same format as the original add-on scan results.
+
+		:return: A dictionary representing the scan results.
+		"""
+		return {
+			"virusTotal": [
+				{
+					"last_analysis_stats": {
+						"malicious": self.malicious,
+						"undetected": self.undetected,
+						"harmless": self.harmless,
+						"suspicious": self.suspicious,
+						"failure": self.failure,
+						"timeout": self.timeout,
+						"confirmed-timeout": self.confirmedTimeout,
+						"type-unsupported": self.typeUnsupported,
+					},
+				},
+			],
+		}
+
 	@property
 	def totalScans(self) -> int:
 		return self.malicious + self.undetected + self.harmless + self.suspicious

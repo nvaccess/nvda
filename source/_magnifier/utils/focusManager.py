@@ -8,6 +8,7 @@ Focus Manager for the magnifier module.
 Handles all focus tracking logic and coordinate calculations.
 """
 
+from comtypes import COMError
 from logHandler import log
 import api
 import winUser
@@ -31,6 +32,7 @@ class FocusManager:
 	def __init__(self):
 		"""Initialize the focus manager."""
 		self._lastFocusedObject: MagnifierFollowFocusType | None = None
+		self._lastReportedCoordinates = Coordinates(0, 0)
 		self._lastMousePosition = Coordinates(0, 0)
 		self._lastSystemFocusPosition = Coordinates(0, 0)
 		self._lastReviewPosition: Coordinates | None = None
@@ -85,7 +87,7 @@ class FocusManager:
 		# Priority 1: Mouse — drag (fires even when stationary) or movement
 		if (isClickPressed or mouseChanged) and isFollowMouse:
 			self._lastFocusedObject = MagnifierFollowFocusType.MOUSE
-			return mousePosition
+			return self._rememberAndReturnCoordinates(mousePosition)
 
 		# Special case: table cell navigation (numpad).
 		# When both the system focus and the navigator object change simultaneously but the
@@ -93,22 +95,22 @@ class FocusManager:
 		# intent and therefore takes priority over the system focus.
 		if navigatorChanged and systemFocusChanged and not reviewChanged and isFollowNavigatorObject:
 			self._lastFocusedObject = MagnifierFollowFocusType.NAVIGATOR_OBJECT
-			return navigatorPosition
+			return self._rememberAndReturnCoordinates(navigatorPosition)
 
 		# Priority 2: System focus (focus object + browse mode cursor)
 		if systemFocusChanged and isFollowSystemFocus:
 			self._lastFocusedObject = MagnifierFollowFocusType.SYSTEM_FOCUS
-			return systemFocusPosition
+			return self._rememberAndReturnCoordinates(systemFocusPosition)
 
 		# Priority 3: Review cursor
 		if reviewChanged and isFollowReviewCursor and reviewPosition is not None:
 			self._lastFocusedObject = MagnifierFollowFocusType.REVIEW
-			return reviewPosition
+			return self._rememberAndReturnCoordinates(reviewPosition)
 
 		# Priority 4: Navigator object (NumPad navigation)
 		if navigatorChanged and isFollowNavigatorObject:
 			self._lastFocusedObject = MagnifierFollowFocusType.NAVIGATOR_OBJECT
-			return navigatorPosition
+			return self._rememberAndReturnCoordinates(navigatorPosition)
 
 		# Resolve the effective review position once (fallback to last valid when None)
 		reviewEffectivePosition = (
@@ -123,22 +125,22 @@ class FocusManager:
 			(MagnifierFollowFocusType.NAVIGATOR_OBJECT, isFollowNavigatorObject, navigatorPosition),
 		)
 
-		# Keep current source if still enabled; otherwise mark it as NONE so we switch
+		# Keep current source if still enabled; otherwise clear it and freeze at _lastReportedCoordinates
 		for focusType, isEnabled, position in _sources:
 			if self._lastFocusedObject == focusType:
 				if isEnabled:
-					return position
+					return self._rememberAndReturnCoordinates(position)
 				self._lastFocusedObject = None
 				break
 
-		# No active source – switch to the highest-priority enabled source
-		for focusType, isEnabled, position in _sources:
-			if isEnabled:
-				self._lastFocusedObject = focusType
-				return position
+		# No eligible update event from an enabled source.
+		# Keep current magnifier location frozen until a followed source changes.
+		return self._lastReportedCoordinates
 
-		# All sources disabled – return mouse position without changing focus state
-		return mousePosition
+	def _rememberAndReturnCoordinates(self, coordinates: Coordinates) -> Coordinates:
+		"""Store coordinates as the current tracked position and return them."""
+		self._lastReportedCoordinates = coordinates
+		return coordinates
 
 	def _getMousePosition(self) -> Coordinates:
 		"""
@@ -165,8 +167,10 @@ class FocusManager:
 			if coords != Coordinates(0, 0):
 				self._lastValidSystemFocusPosition = coords
 			return coords
-		except (NotImplementedError, LookupError, AttributeError, RuntimeError):
-			# Fallback: use focus object location
+		except Exception:
+			# COM errors (_ctypes.COMError), UIA failures, and other unexpected errors
+			# can occur when querying caret position. Fall back to focus object location.
+			log.debug("Failed to get caret position, falling back to focus object location", exc_info=True)
 			try:
 				focusObj = api.getFocusObject()
 				if focusObj and focusObj.location:
@@ -180,7 +184,10 @@ class FocusManager:
 			except Exception:
 				# Focus object location may fail (e.g., object without location)
 				# Fall through to return last valid position
-				pass
+				log.debug(
+					"Failed to get focus object location, falling back to last valid position",
+					exc_info=True,
+				)
 		return self._lastValidSystemFocusPosition
 
 	def _getReviewPosition(self) -> Coordinates | None:
@@ -197,7 +204,7 @@ class FocusManager:
 				if coords != Coordinates(0, 0):
 					self._lastValidReviewPosition = coords
 				return coords
-			except (NotImplementedError, LookupError, AttributeError):
+			except (NotImplementedError, LookupError, AttributeError, COMError):
 				# Review position may not support pointAtStart
 				pass
 		return None
@@ -212,7 +219,7 @@ class FocusManager:
 		"""
 		try:
 			return textInfo.pointAtStart
-		except (NotImplementedError, LookupError, AttributeError) as e:
+		except (NotImplementedError, LookupError, AttributeError, COMError) as e:
 			log.debug(f"pointAtStart failed for {textInfo!r}: {e}", exc_info=True)
 			originalExc = e
 
@@ -247,7 +254,7 @@ class FocusManager:
 				return Coordinates(x, y)
 			except Exception:
 				# Navigator object may not have a valid location
-				pass
+				log.debug("Failed to get navigator object location", exc_info=True)
 		return None
 
 	def _getNavigatorObjectPosition(self) -> Coordinates:
@@ -272,11 +279,3 @@ class FocusManager:
 		:return: The type of the last focused object, or None when no focus source is active.
 		"""
 		return self._lastFocusedObject
-
-	def updateFollowedFocus(self) -> None:
-		"""
-		Force an update of the magnifier focus based on current settings.
-		Called after toggling follow settings to immediately apply changes.
-		"""
-		self._lastFocusedObject = None  # Reset to force re-evaluation of focus
-		self.getCurrentFocusCoordinates()

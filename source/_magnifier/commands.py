@@ -12,9 +12,9 @@ from typing import Literal
 import ui
 from . import getMagnifier, initialize, terminate
 from .config import (
-	getDefaultZoomLevelString,
-	getDefaultFilter,
-	getDefaultFullscreenMode,
+	getZoomLevelString,
+	getFilter,
+	getFullscreenMode,
 	ZoomLevel,
 	getFollowState,
 	setFollowState,
@@ -104,8 +104,8 @@ def toggleMagnifier() -> None:
 	else:
 		initialize()
 
-		filter = getDefaultFilter()
-		fullscreenMode = getDefaultFullscreenMode()
+		filter = getFilter()
+		fullscreenMode = getFullscreenMode()
 
 		ui.message(
 			pgettext(
@@ -113,7 +113,7 @@ def toggleMagnifier() -> None:
 				# Translators: Message announced when starting the NVDA magnifier.
 				"Starting magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
 			).format(
-				zoomLevel=getDefaultZoomLevelString(),
+				zoomLevel=getZoomLevelString(),
 				filter=filter.displayString,
 				fullscreenMode=fullscreenMode.displayString,
 			),
@@ -128,13 +128,19 @@ def zoom(direction: Direction) -> None:
 	"""
 	action = MagnifierAction.ZOOM_IN if direction == Direction.IN else MagnifierAction.ZOOM_OUT
 	magnifier: Magnifier = getMagnifier()
-	if magnifierIsActiveVerify(magnifier, action):
-		magnifier._zoom(direction)
-		ui.message(
-			ZoomLevel.ZOOM_MESSAGE.format(
-				zoomLevel=f"{magnifier.zoomLevel:.1f}",
-			),
-		)
+	if not (magnifier and magnifier._isActive):
+		# Start magnifier if not already running
+		if direction == Direction.IN:
+			toggleMagnifier()
+		else:
+			magnifierIsActiveVerify(magnifier, action)
+		return
+	magnifier._zoom(direction)
+	ui.message(
+		ZoomLevel.ZOOM_MESSAGE.format(
+			zoomLevel=f"{magnifier.zoomLevel:.1f}",
+		),
+	)
 
 
 def pan(action: MagnifierAction) -> None:
@@ -181,7 +187,7 @@ def toggleFilter() -> None:
 
 def toggleFollow(focusType: MagnifierFollowFocusType) -> None:
 	"""
-	Toggle the specified follow mode setting and update focus immediately.
+	Toggle the specified follow mode setting.
 
 	:param focusType: The follow mode to toggle (mouse, system focus, review cursor, navigator object)
 	"""
@@ -192,8 +198,6 @@ def toggleFollow(focusType: MagnifierFollowFocusType) -> None:
 	):
 		state = not getFollowState(focusType)
 		setFollowState(focusType, state)
-
-		magnifier._focusManager.updateFollowedFocus()
 
 		ui.message(
 			pgettext(
@@ -218,15 +222,14 @@ def toggleFollow(focusType: MagnifierFollowFocusType) -> None:
 
 
 def toggleAllFollow() -> None:
-	"""Toggle all follow settings at once and update focus immediately"""
+	"""Toggle all follow settings at once."""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
 		magnifier,
 		MagnifierAction.TOGGLE_FOLLOW_SETTINGS,
 	):
-		isActiveNow = toggleAllFollowStates()
-		magnifier._focusManager.updateFollowedFocus()
-		if not isActiveNow:
+		isDisabledNow = toggleAllFollowStates()
+		if isDisabledNow:
 			stateMessage = pgettext(
 				"magnifier",
 				# Translators: State of all follow settings being toggled disabled.
@@ -235,8 +238,8 @@ def toggleAllFollow() -> None:
 		else:
 			stateMessage = pgettext(
 				"magnifier",
-				# Translators: State of all follow settings being toggled enabled.
-				"All follow settings enabled",
+				# Translators: State of all follow settings being restored.
+				"All follow settings restored",
 			)
 		ui.message(stateMessage)
 

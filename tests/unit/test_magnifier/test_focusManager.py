@@ -10,6 +10,7 @@ import unittest
 from unittest.mock import MagicMock, Mock, patch
 import mouseHandler
 import winUser
+import _ctypes
 
 
 def _makeFollowStateSideEffect(
@@ -57,6 +58,7 @@ class TestFocusManager(unittest.TestCase):
 	def testFocusManagerCreation(self):
 		"""Can we create a FocusManager with initialized values?"""
 		self.assertIsNone(self.focusManager._lastFocusedObject)
+		self.assertEqual(self.focusManager._lastReportedCoordinates, Coordinates(0, 0))
 		self.assertIsNone(self.focusManager._lastReviewPosition)
 		self.assertEqual(self.focusManager._lastMousePosition, Coordinates(0, 0))
 		self.assertEqual(self.focusManager._lastSystemFocusPosition, Coordinates(0, 0))
@@ -118,6 +120,17 @@ class TestFocusManager(unittest.TestCase):
 			coords = self.focusManager._getReviewPosition()
 			self.assertIsNone(coords)
 
+	def testGetReviewPositionSurvivesCOMError(self):
+		"""_getReviewPosition catches COMError from pointAtStart."""
+
+		comError = _ctypes.COMError(-2147418113, "Défaillance irrémédiable", None)
+		mockReviewPos = Mock()
+		type(mockReviewPos).pointAtStart = property(lambda self: (_ for _ in ()).throw(comError))
+
+		with patch("_magnifier.utils.focusManager.api.getReviewPosition", return_value=mockReviewPos):
+			result = self.focusManager._getReviewPosition()
+			self.assertIsNone(result)
+
 	def testGetSystemFocusPosition(self):
 		"""Getting system focus position with different API responses."""
 		# Case 1: Caret position successful (browse mode)
@@ -146,6 +159,18 @@ class TestFocusManager(unittest.TestCase):
 				# Should return last valid position (250, 340)
 				self.assertEqual(coords, Coordinates(250, 340))
 
+	def testGetSystemFocusPositionSurvivesOSError(self):
+		"""OSError from magnification API calls must be caught."""
+		with patch(
+			"_magnifier.utils.focusManager.api.getCaretPosition",
+			side_effect=OSError("WinError"),
+		):
+			with patch("_magnifier.utils.focusManager.api.getFocusObject") as mock_focus:
+				mock_focus.return_value.location = (10, 20, 30, 40)
+
+				coords = self.focusManager._getSystemFocusPosition()
+				self.assertEqual(coords, Coordinates(25, 40))
+
 	def testGetMousePosition(self):
 		"""Getting mouse position."""
 		with patch("_magnifier.utils.focusManager.winUser.getCursorPos", return_value=(123, 456)):
@@ -158,7 +183,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(0, 0),
 				systemFocusPos=Coordinates(0, 0),
-				mousePos=(0, 0),
+				mousePos=Coordinates(0, 0),
 				leftPressed=True,
 				expectedCoords=Coordinates(0, 0),
 				expectedFocus=MagnifierFollowFocusType.MOUSE,
@@ -167,7 +192,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(0, 0),
 				systemFocusPos=Coordinates(0, 0),
-				mousePos=(10, 10),
+				mousePos=Coordinates(10, 10),
 				leftPressed=False,
 				expectedCoords=Coordinates(10, 10),
 				expectedFocus=MagnifierFollowFocusType.MOUSE,
@@ -176,7 +201,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(0, 0),
 				systemFocusPos=Coordinates(15, 15),
-				mousePos=(0, 0),
+				mousePos=Coordinates(0, 0),
 				leftPressed=False,
 				expectedCoords=Coordinates(15, 15),
 				expectedFocus=MagnifierFollowFocusType.SYSTEM_FOCUS,
@@ -185,7 +210,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(20, 20),
 				systemFocusPos=Coordinates(0, 0),
-				mousePos=(0, 0),
+				mousePos=Coordinates(0, 0),
 				leftPressed=False,
 				expectedCoords=Coordinates(20, 20),
 				expectedFocus=MagnifierFollowFocusType.NAVIGATOR_OBJECT,
@@ -194,7 +219,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(30, 30),
 				systemFocusPos=Coordinates(15, 15),
-				mousePos=(0, 0),
+				mousePos=Coordinates(0, 0),
 				leftPressed=False,
 				expectedCoords=Coordinates(30, 30),
 				expectedFocus=MagnifierFollowFocusType.NAVIGATOR_OBJECT,
@@ -203,7 +228,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(0, 0),
 				systemFocusPos=Coordinates(0, 0),
-				mousePos=(0, 0),
+				mousePos=Coordinates(0, 0),
 				leftPressed=False,
 				reviewPos=Coordinates(30, 30),
 				expectedCoords=Coordinates(30, 30),
@@ -234,7 +259,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(0, 0),
 				systemFocusPos=Coordinates(0, 0),
-				mousePos=(0, 0),
+				mousePos=Coordinates(0, 0),
 				leftPressed=False,
 				expectedCoords=Coordinates(0, 0),
 				expectedFocus=MagnifierFollowFocusType.MOUSE,
@@ -265,7 +290,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(10, 10),
 				systemFocusPos=Coordinates(0, 0),
-				mousePos=(20, 20),
+				mousePos=Coordinates(20, 20),
 				leftPressed=False,
 				expectedCoords=Coordinates(20, 20),
 				expectedFocus=MagnifierFollowFocusType.MOUSE,
@@ -274,7 +299,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(10, 10),
 				systemFocusPos=Coordinates(15, 15),
-				mousePos=(20, 20),
+				mousePos=Coordinates(20, 20),
 				leftPressed=True,
 				expectedCoords=Coordinates(20, 20),
 				expectedFocus=MagnifierFollowFocusType.MOUSE,
@@ -393,15 +418,56 @@ class TestFollowSettings(unittest.TestCase):
 		self.assertEqual(self.focusManager.getLastFocusType(), MagnifierFollowFocusType.NAVIGATOR_OBJECT)
 
 	def testAllFollowDisabled(self):
-		"""When all settings are False, no source fires and we fall back to default mouse."""
+		"""When all settings are False, no source fires and focus remains frozen."""
 		coords = self._run(
 			followMouse=False,
 			followSystemFocus=False,
 			followReview=False,
 			followNavigatorObject=False,
 		)
-		# No previous focus → default branch returns current mouse position
+		# No previous focus -> freeze at initial tracked coordinates.
+		self.assertEqual(coords, Coordinates(0, 0))
+
+	def testAllFollowDisabledKeepsLastTrackedPosition(self):
+		"""Disabling all follow modes keeps the most recently tracked coordinates."""
+		self.focusManager._getMousePosition = MagicMock(return_value=Coordinates(10, 10))
+		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
+		self.focusManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
+		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
+		mouseHandler.isLeftMouseButtonLocked = MagicMock(return_value=False)
+
+		followEnabledSideEffect = _makeFollowStateSideEffect(
+			followMouse=True,
+			followSystemFocus=True,
+			followReview=True,
+			followNavigatorObject=True,
+		)
+		with patch(
+			"_magnifier.utils.focusManager.getFollowState",
+			side_effect=followEnabledSideEffect,
+		):
+			coords = self.focusManager.getCurrentFocusCoordinates()
 		self.assertEqual(coords, Coordinates(10, 10))
+
+		# Move all sources, but disable every follow setting.
+		self.focusManager._getMousePosition = MagicMock(return_value=Coordinates(99, 99))
+		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(88, 88))
+		self.focusManager._getReviewPosition = MagicMock(return_value=Coordinates(77, 77))
+		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(66, 66))
+		followDisabledSideEffect = _makeFollowStateSideEffect(
+			followMouse=False,
+			followSystemFocus=False,
+			followReview=False,
+			followNavigatorObject=False,
+		)
+		with patch(
+			"_magnifier.utils.focusManager.getFollowState",
+			side_effect=followDisabledSideEffect,
+		):
+			coords = self.focusManager.getCurrentFocusCoordinates()
+
+		self.assertEqual(coords, Coordinates(10, 10))
+		self.assertIsNone(self.focusManager.getLastFocusType())
 
 	def testFollowMouseDragIgnoresSettings(self):
 		"""Mouse drag (left click held) with followMouse=True always wins regardless of others."""
@@ -427,10 +493,11 @@ class TestFollowSettings(unittest.TestCase):
 		self.assertEqual(coords, Coordinates(10, 10))
 		self.assertEqual(self.focusManager.getLastFocusType(), MagnifierFollowFocusType.MOUSE)
 
-	def testDisableFollowMouseFallsToSystemFocus(self):
-		"""When followMouse is disabled after mouse was the last focus, should fall back to system focus."""
+	def testDisableFollowMouseKeepsViewFrozen(self):
+		"""When followMouse is disabled, view remains frozen until a followed source changes."""
 		# Simulate: mouse was previously the active focus source
 		self.focusManager._lastFocusedObject = MagnifierFollowFocusType.MOUSE
+		self.focusManager._lastReportedCoordinates = Coordinates(10, 10)
 		# Positions haven't changed from last recorded values (no "change" detected)
 		self.focusManager._lastMousePosition = Coordinates(10, 10)
 		self.focusManager._lastSystemFocusPosition = Coordinates(20, 20)
@@ -455,12 +522,13 @@ class TestFollowSettings(unittest.TestCase):
 		):
 			coords = self.focusManager.getCurrentFocusCoordinates()
 
-		self.assertEqual(coords, Coordinates(20, 20))
-		self.assertEqual(self.focusManager.getLastFocusType(), MagnifierFollowFocusType.SYSTEM_FOCUS)
+		self.assertEqual(coords, Coordinates(10, 10))
+		self.assertIsNone(self.focusManager.getLastFocusType())
 
-	def testDisableFollowMouseWhileMouseMovingFallsToSystemFocus(self):
-		"""When followMouse is disabled and mouse is still moving, should not follow mouse."""
+	def testDisableFollowMouseWhileMouseMovingKeepsViewFrozen(self):
+		"""When followMouse is disabled, mouse movement alone does not move the view."""
 		self.focusManager._lastFocusedObject = MagnifierFollowFocusType.MOUSE
+		self.focusManager._lastReportedCoordinates = Coordinates(10, 10)
 		self.focusManager._lastMousePosition = Coordinates(10, 10)
 		self.focusManager._lastSystemFocusPosition = Coordinates(20, 20)
 		self.focusManager._lastNavigatorObjectPosition = Coordinates(40, 40)
@@ -485,12 +553,13 @@ class TestFollowSettings(unittest.TestCase):
 		):
 			coords = self.focusManager.getCurrentFocusCoordinates()
 
-		self.assertEqual(coords, Coordinates(20, 20))
-		self.assertEqual(self.focusManager.getLastFocusType(), MagnifierFollowFocusType.SYSTEM_FOCUS)
+		self.assertEqual(coords, Coordinates(10, 10))
+		self.assertIsNone(self.focusManager.getLastFocusType())
 
-	def testDisableFollowSystemFocusFallsToReview(self):
-		"""When last focus was system focus and its setting is disabled, should fall to review."""
+	def testDisableFollowSystemFocusKeepsViewFrozen(self):
+		"""When followSystemFocus is disabled, view remains frozen until a followed source changes."""
 		self.focusManager._lastFocusedObject = MagnifierFollowFocusType.SYSTEM_FOCUS
+		self.focusManager._lastReportedCoordinates = Coordinates(20, 20)
 		self.focusManager._lastMousePosition = Coordinates(10, 10)
 		self.focusManager._lastSystemFocusPosition = Coordinates(20, 20)
 		self.focusManager._lastReviewPosition = Coordinates(30, 30)
@@ -515,5 +584,5 @@ class TestFollowSettings(unittest.TestCase):
 		):
 			coords = self.focusManager.getCurrentFocusCoordinates()
 
-		self.assertEqual(coords, Coordinates(30, 30))
-		self.assertEqual(self.focusManager.getLastFocusType(), MagnifierFollowFocusType.REVIEW)
+		self.assertEqual(coords, Coordinates(20, 20))
+		self.assertIsNone(self.focusManager.getLastFocusType())

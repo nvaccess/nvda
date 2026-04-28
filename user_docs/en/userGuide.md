@@ -1566,6 +1566,7 @@ It provides several configuration options to customize the magnification experie
 ### Enabling and Disabling the Magnifier {#MagnifierToggle}
 
 To enable or disable the magnifier, press `NVDA+shift+w`.
+The "Increase magnification level" keystroke, `NVDA+shift+equals`, will start the magnifier if it is not running.
 When the magnifier is enabled, NVDA will announce the current zoom level, color filter, and focus tracking mode.
 When disabled, the screen returns to its normal size.
 
@@ -1581,7 +1582,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 | Name |Key |Description|
 |---|---|---|
 |Toggles the magnifier on and off |`NVDA+shift+w` |Enables or disables the magnifier|
-|Increases the magnification level of the magnifier |`NVDA+shift+equals` |Increases the zoom level|
+| Increases the magnification level of the magnifier | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
 |Decreases the magnification level of the magnifier |`NVDA+shift+minus` |Decreases the zoom level|
 |Toggle filter of the magnifier |`NVDA+shift+i` |Cycles through available color filters (normal, grayscale, inverted)|
 |Toggle focus mode for the full-screen magnifier |None |Cycles through focus tracking modes (center, border, relative)|
@@ -2816,6 +2817,8 @@ The available logging levels are:
 If you are concerned about privacy, do not set the logging level to this option.
 * Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
 Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
+* Secrets: In addition to debug logging, NVDA will not redact secrets such as passwords and API keys from logs.
+Only enable this temporarily when important debugging information is being redacted.
 
 ##### Allow NV Access to gather NVDA usage statistics {#GeneralSettingsGatherUsageStats}
 
@@ -2869,9 +2872,9 @@ Key: `NVDA+control+w`
 The Magnifier category in the NVDA Settings dialog allows you to configure the default behavior of NVDA's built-in [Magnifier](#Magnifier) feature.
 This settings category contains the following options:
 
-##### Default zoom level {#MagnifierDefaultZoom}
+##### Zoom level {#MagnifierZoom}
 
-This slider allows you to set the default zoom level when the magnifier is first enabled.
+This slider allows you to set the zoom level when using the magnifier.
 The zoom level can range from 1.0 (no magnification) to 10.0 (maximum magnification).
 The default value is 2.0 (200% zoom).
 
@@ -2882,9 +2885,9 @@ You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+e
 |Options |1.0 to 10.0|
 |Default |2.0|
 
-##### Default color filter {#MagnifierDefaultFilter}
+##### Filter {#MagnifierFilter}
 
-This combo box allows you to select the default color filter to apply when the magnifier is first enabled.
+This combo box allows you to select the filter to apply when using the magnifier.
 You can cycle through the color filters by pressing `NVDA+shift+i`.
 The available options are:
 
@@ -2900,9 +2903,9 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### Default focus mode {#MagnifierDefaultFullscreenFocusMode}
+##### Focus mode {#MagnifierFullscreenFocusMode}
 
-This combo box allows you to select the default focus tracking mode when the magnifier is first enabled.
+This combo box allows you to select the focus tracking mode when using the magnifier.
 To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 The available options are:
 
@@ -6351,7 +6354,7 @@ Following are the command line options for NVDA:
 |`-q` |`--quit` |Quit already running copy of NVDA|
 |`-k` |`--check-running` |Report whether NVDA is running via the exit code; 0 if running, 1 if not running|
 |`-f LOGFILENAME` |`--log-file=LOGFILENAME` |The file where log messages should be written to. Logging is always disabled if secure mode is enabled.|
-|`-l LOGLEVEL` |`--log-level=LOGLEVEL` |The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, disabled 100). Logging is always disabled if secure mode is enabled.|
+|`-l LOGLEVEL` |`--log-level=LOGLEVEL` |The lowest level of message logged (secrets 5, debug 10, input/output 12, debug warning 15, info 20, disabled 100). Logging is always disabled if secure mode is enabled.|
 |`-c CONFIGPATH` |`--config-path=CONFIGPATH` |The path where all settings for NVDA are stored. The default value is forced if secure mode is enabled.|
 |`-n LANGUAGE` |`--lang=LANGUAGE` |Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc.|
 |`-m` |`--minimal` |No sounds, no interface, no start message, etc.|

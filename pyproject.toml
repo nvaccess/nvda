@@ -55,6 +55,8 @@ dependencies = [
 	# pinned due to incompatibility with py2exe
 	# https://github.com/py2exe/py2exe/issues/241
 	"charset-normalizer==3.4.4",
+	# secret scanning for logging
+	"detect-secrets==1.5.0",
 ]
 
 [project.urls]

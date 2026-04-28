@@ -151,6 +151,7 @@ repos:
       pass_filenames: false
       types: [python]
       files: ^source/.*$
+      exclude: "(sconscript|sconstruct)$"
     - id: unitTest
       name: unit tests
       entry: ./rununittests.bat
@@ -168,3 +169,4 @@ repos:
       entry: uv run pyright
       language: system
       types: [python]
+      exclude: "(sconscript|sconstruct)$"

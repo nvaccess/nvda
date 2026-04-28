@@ -7,8 +7,8 @@
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
 # Neil Soiffer, Ryan McCleary, Kefas Lungu.
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import bisect
 import copy
@@ -85,6 +85,7 @@ from utils.displayString import DisplayStringEnum
 
 import gui
 import gui.contextHelp
+import gui.message
 import screenCurtain
 import api
 import ui
@@ -6045,7 +6046,7 @@ class MagnifierPanel(SettingsPanel):
 
 		# ZOOM SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the  zoom level.
-		zoomLabelText = _("Default &zoom level:")
+		zoomLabelText = _("&Zoom level:")
 
 		zoomValues = magnifierConfig.ZoomLevel.zoom_range()
 		zoomChoices = magnifierConfig.ZoomLevel.zoom_strings()
@@ -6056,12 +6057,12 @@ class MagnifierPanel(SettingsPanel):
 			choices=zoomChoices,
 		)
 		self.bindHelpEvent(
-			"MagnifierDefaultZoom",
+			"MagnifierZoom",
 			self.zoomList,
 		)
 
 		# Set  value from config
-		zoomLevel = magnifierConfig.getDefaultZoomLevel()
+		zoomLevel = magnifierConfig.getZoomLevel()
 		zoomIndex = bisect.bisect_left(zoomValues, zoomLevel)
 		# Find the closest value
 		if zoomIndex == 0:
@@ -6074,17 +6075,17 @@ class MagnifierPanel(SettingsPanel):
 
 		# FILTER SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the  filter
-		filterLabelText = _("Default &filter:")
+		filterLabelText = _("&Filter:")
 		filterChoices = [f.displayString for f in Filter]
 		self.filterList = generalGroup.addLabeledControl(
 			filterLabelText,
 			wx.Choice,
 			choices=filterChoices,
 		)
-		self.bindHelpEvent("MagnifierDefaultFilter", self.filterList)
+		self.bindHelpEvent("MagnifierFilter", self.filterList)
 
 		# Set  value from config
-		filterValue = magnifierConfig.getDefaultFilter()
+		filterValue = magnifierConfig.getFilter()
 		self.filterList.SetSelection(list(Filter).index(filterValue))
 
 		# TRUE CENTER
@@ -6115,58 +6116,8 @@ class MagnifierPanel(SettingsPanel):
 		)
 
 		# Set  value from config
-		panStep = magnifierConfig.getDefaultPanStep()
+		panStep = magnifierConfig.getPanStep()
 		self.panSpinCtrl.SetValue(panStep)
-
-		# FOCUS GROUP
-		# Translators: This is the label for a group of focus magnifier options in the
-		# magnifier settings panel
-		# focusGroupText = _("Focus")
-		# focusGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=focusGroupText)
-		# focusGroupBox = focusGroupSizer.GetStaticBox()
-		# focusGroup = guiHelper.BoxSizerHelper(self, sizer=focusGroupSizer)
-		# sHelper.addItem(focusGroup)
-
-		# placeholder for options Mouse, System focus, Review, and Navigator object.
-		# Translators: placeholder for Mouse
-		# mouseLabelText = _("Mouse")
-		# focusGroup.addItem(wx.StaticText(focusGroupBox, label=mouseLabelText))
-		# Translators: placeholder for System focus
-		# systemFocusLabelText = _("System focus")
-		# focusGroup.addItem(wx.StaticText(focusGroupBox, label=systemFocusLabelText))
-		# Translators: placeholder for  Review
-		# reviewLabelText = _("Review")
-		# focusGroup.addItem(wx.StaticText(focusGroupBox, label=reviewLabelText))
-		# Translators: placeholder for  Navigator object
-		# navigatorObjectLabelText = _("Navigator object")
-		# focusGroup.addItem(wx.StaticText(focusGroupBox, label=navigatorObjectLabelText))
-
-		# FULLSCREEN GROUP
-		# Translators: This is the label for a group of fullscreen magnifier options in the
-		# magnifier settings panel
-		fullscreenGroupText = _("Fullscreen")
-		self.fullscreenGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=fullscreenGroupText)
-		fullscreenGroupBox = self.fullscreenGroupSizer.GetStaticBox()
-		fullscreenGroup = guiHelper.BoxSizerHelper(self, sizer=self.fullscreenGroupSizer)
-		sHelper.addItem(fullscreenGroup)
-
-		# FULLSCREEN MODE SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the  full-screen mode
-		fullscreenModeLabelText = _("Default focus &mode:")
-		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
-		self.fullscreenModeList = fullscreenGroup.addLabeledControl(
-			fullscreenModeLabelText,
-			wx.Choice,
-			choices=fullscreenModeChoices,
-		)
-		self.bindHelpEvent(
-			"MagnifierDefaultFullscreenFocusMode",
-			self.fullscreenModeList,
-		)
-
-		# Set  value from config
-		fullscreenModeValue = magnifierConfig.getDefaultFullscreenMode()
-		self.fullscreenModeList.SetSelection(list(FullScreenMode).index(fullscreenModeValue))
 
 		# FOCUS GROUP
 		# Translators: This is the label for a group of focus options in the magnifier settings panel
@@ -6196,6 +6147,33 @@ class MagnifierPanel(SettingsPanel):
 			checkBox.SetValue(magnifierConfig.getFollowState(focusType))
 			self._followFocusCheckBoxes[focusType] = checkBox
 
+		# FULLSCREEN GROUP
+		# Translators: This is the label for a group of fullscreen magnifier options in the
+		# magnifier settings panel
+		fullscreenGroupText = _("Fullscreen")
+		self.fullscreenGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=fullscreenGroupText)
+		fullscreenGroupBox = self.fullscreenGroupSizer.GetStaticBox()
+		fullscreenGroup = guiHelper.BoxSizerHelper(self, sizer=self.fullscreenGroupSizer)
+		sHelper.addItem(fullscreenGroup)
+
+		# FULLSCREEN MODE SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the  full-screen mode
+		fullscreenModeLabelText = _("Focus &mode:")
+		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
+		self.fullscreenModeList = fullscreenGroup.addLabeledControl(
+			fullscreenModeLabelText,
+			wx.Choice,
+			choices=fullscreenModeChoices,
+		)
+		self.bindHelpEvent(
+			"MagnifierFullscreenFocusMode",
+			self.fullscreenModeList,
+		)
+
+		# Set  value from config
+		fullscreenModeValue = magnifierConfig.getFullscreenMode()
+		self.fullscreenModeList.SetSelection(list(FullScreenMode).index(fullscreenModeValue))
+
 		# KEEP MOUSE CENTERED
 		# Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
 		keepMouseCenteredText = _("Keep &mouse pointer centered in magnifier view")
@@ -6211,15 +6189,15 @@ class MagnifierPanel(SettingsPanel):
 	def onSave(self):
 		"""Save the current selections to config."""
 		selectedZoom = self.zoomList.GetSelection()
-		magnifierConfig.setDefaultZoomLevel(magnifierConfig.ZoomLevel.zoom_range()[selectedZoom])
+		magnifierConfig.setZoomLevel(magnifierConfig.ZoomLevel.zoom_range()[selectedZoom])
 
-		magnifierConfig.setDefaultPanStep(self.panSpinCtrl.GetValue())
+		magnifierConfig.setPanStep(self.panSpinCtrl.GetValue())
 
 		selectedFilterIdx = self.filterList.GetSelection()
-		magnifierConfig.setDefaultFilter(list(Filter)[selectedFilterIdx])
+		magnifierConfig.setFilter(list(Filter)[selectedFilterIdx])
 
 		selectedModeIdx = self.fullscreenModeList.GetSelection()
-		magnifierConfig.setDefaultFullscreenMode(list(FullScreenMode)[selectedModeIdx])
+		magnifierConfig.setFullscreenMode(list(FullScreenMode)[selectedModeIdx])
 
 		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterCheckBox.GetValue()
 		for focusType, checkBox in self._followFocusCheckBoxes.items():
@@ -6231,6 +6209,47 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 	# Translators: The title of the privacy and security category in NVDA's settings.
 	title = _("Privacy and Security")
 	helpId = "PrivacyAndSecuritySettings"
+
+	def _getSelectedLogLevel(self) -> LoggingLevel:
+		selection = self._logLevelCombo.GetSelection()
+		if selection == wx.NOT_FOUND:
+			return LoggingLevel[config.conf["general"]["loggingLevel"]]
+		return list(LoggingLevel)[selection]
+
+	def _confirmLogLevelChange(self, selectedLogLevel: LoggingLevel) -> bool:
+		if selectedLogLevel == LoggingLevel.SECRETS:
+			message = _(
+				# Translators: Warning shown when enabling the secrets log level from NVDA settings.
+				"Setting the logging level to secrets will write sensitive information to the log without redaction, "
+				"including passwords, API keys, or other private data. "
+				"Only enable this temporarily if you explicitly need unredacted diagnostic logs. "
+				"Do you want to continue?",
+			)
+			caption = _(
+				# Translators: Title of the warning dialog shown when enabling the secrets log level.
+				"High risk logging level",
+			)
+		else:
+			message = _(
+				# Translators: Warning shown when enabling a logging level above info from NVDA settings.
+				"Setting the logging level above info may record sensitive information such as typed input, "
+				"speech output, or other private data in the log. "
+				"Only enable higher logging levels temporarily while troubleshooting. "
+				"Do you want to continue?",
+			)
+			caption = _(
+				# Translators: Title of the warning dialog shown when enabling a risky logging level.
+				"Warning",
+			)
+		dialog = gui.message.MessageDialog(
+			parent=self,
+			message=message,
+			title=caption,
+			dialogType=gui.message.DialogType.WARNING,
+			buttons=gui.message.DefaultButtonSet.YES_NO,
+			helpId="GeneralSettingsLogLevel",
+		)
+		return dialog.ShowModal() == gui.message.ReturnCode.YES
 
 	def makeSettings(self, sizer: wx.BoxSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
@@ -6310,6 +6329,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			)
 		except StopIteration:
 			log.debugWarning("Could not set log level list to current log level")
+		self._savedLogLevel = self._getSelectedLogLevel()
 
 		self._allowUsageStatsCheckBox: wx.CheckBox = generalGroup.addItem(
 			# Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
@@ -6346,10 +6366,14 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		)
 
 		if not logHandler.isLogLevelForced():
-			config.conf["general"]["loggingLevel"] = logging.getLevelName(
-				list(LoggingLevel)[self._logLevelCombo.GetSelection()],
+			selectedLogLevel = self._getSelectedLogLevel()
+			updateLogLevel = selectedLogLevel != self._savedLogLevel and (
+				selectedLogLevel >= LoggingLevel.INFO or self._confirmLogLevelChange(selectedLogLevel)
 			)
-			logHandler.setLogLevelFromConfig()
+			if updateLogLevel:
+				config.conf["general"]["loggingLevel"] = logging.getLevelName(selectedLogLevel)
+				logHandler.setLogLevelFromConfig()
+				self._savedLogLevel = selectedLogLevel
 
 		if updateCheck:
 			config.conf["update"]["allowUsageStats"] = self._allowUsageStatsCheckBox.IsChecked()

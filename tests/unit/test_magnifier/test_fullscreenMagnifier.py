@@ -11,12 +11,13 @@ from _magnifier.magnifier import Magnifier
 from winAPI._displayTracking import getPrimaryDisplayOrientation
 
 
-class TestMagnifierEndToEnd(_TestMagnifier):
-	"""End-to-end test suite for Magnifier functionality."""
+class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
+	"""End-to-end test suite for fullscreen magnifier functionality."""
 
 	def testMagnifierCreation(self):
 		"""Test creating a magnifier."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		self.assertEqual(magnifier.zoomLevel, 2.0)
 		self.assertEqual(magnifier.filterType, Filter.NORMAL)
@@ -29,6 +30,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierZoom(self):
 		"""Test zoom functionality."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Set initial zoom to 1.0 for predictable testing
 		magnifier.zoomLevel = 1.0
@@ -48,6 +50,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierCoordinates(self):
 		"""Test coordinate handling."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Test setting coordinates
 		magnifier._currentCoordinates = (100, 200)
@@ -63,6 +66,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierUpdate(self):
 		"""Test magnifier update cycle."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Mock the update methods
 		magnifier._getCoordinatesForMode = MagicMock(return_value=(150, 250))
@@ -85,6 +89,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierStop(self):
 		"""Test stopping the magnifier."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Mock the timer
 		magnifier._stopTimer = MagicMock()
@@ -104,20 +109,20 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 		magnifier = FullScreenMagnifier()
 
 		# Test position calculation
-		left, top, width, height = magnifier._getMagnifierPosition((500, 400))
+		params = magnifier._getMagnifierParameters((500, 400))
 
 		# Basic checks
-		self.assertIsInstance(left, int)
-		self.assertIsInstance(top, int)
-		self.assertIsInstance(width, int)
-		self.assertIsInstance(height, int)
+		self.assertIsInstance(params.coordinates.x, int)
+		self.assertIsInstance(params.coordinates.y, int)
+		self.assertIsInstance(params.magnifierSize.width, int)
+		self.assertIsInstance(params.magnifierSize.height, int)
 
 		# Width and height should be screen size divided by zoom
 		expectedWidth = int(magnifier._displayOrientation.width / 2.0)
 		expectedHeight = int(magnifier._displayOrientation.height / 2.0)
 
-		self.assertEqual(width, expectedWidth)
-		self.assertEqual(height, expectedHeight)
+		self.assertEqual(params.magnifierSize.width, expectedWidth)
+		self.assertEqual(params.magnifierSize.height, expectedHeight)
 
 		# Cleanup
 		magnifier._stopMagnifier()
@@ -190,6 +195,7 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 		"""Test simple magnifier lifecycle."""
 		# Create magnifier
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 		self.assertTrue(magnifier._isActive)
 		self.assertEqual(magnifier.zoomLevel, 2.0)
 
@@ -213,6 +219,61 @@ class TestMagnifierEndToEnd(_TestMagnifier):
 		magnifier._stopMagnifier()
 		self.assertFalse(magnifier._isActive)
 
+	def testAttemptRecoverySuccess(self):
+		"""FullScreenMagnifier._attemptRecovery reinitialises API and restarts timer on success."""
+		magnifier = FullScreenMagnifier()
+		magnifier._consecutiveErrors = 3
+		magnifier._startTimer = MagicMock()
+
+		with patch("_magnifier.fullscreenMagnifier.magnification") as mock_mag:
+			magnifier._attemptRecovery()
+
+			mock_mag.MagUninitialize.assert_called_once()
+			mock_mag.MagInitialize.assert_called_once()
+			mock_mag.MagSetFullscreenColorEffect.assert_called_once()
+			self.assertEqual(magnifier._consecutiveErrors, 0)
+			magnifier._startTimer.assert_called_once_with(magnifier._updateMagnifier)
+
+		magnifier._stopMagnifier()
+
+	def testAttemptRecoveryFailureStopsMagnifier(self):
+		"""When recovery fails, magnifier is stopped and user is notified."""
+		magnifier = FullScreenMagnifier()
+		magnifier._consecutiveErrors = 3
+		magnifier._stopMagnifier = MagicMock()
+
+		with patch("_magnifier.fullscreenMagnifier.magnification") as mock_mag:
+			mock_mag.MagInitialize.side_effect = OSError("Init failed")
+			with patch("_magnifier.fullscreenMagnifier.ui.message"):
+				magnifier._attemptRecovery()
+
+		magnifier._stopMagnifier.assert_called_once()
+		self.assertEqual(magnifier._consecutiveErrors, 0)
+
+	def testUpdateLoopSurvivesSingleDoUpdateError(self):
+		"""A single _doUpdate error does not kill the update loop."""
+		magnifier = FullScreenMagnifier()
+		magnifier._startTimer = MagicMock()
+		magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
+			return_value=(100, 200),
+		)
+
+		# First call fails, second succeeds
+		magnifier._doUpdate = MagicMock(side_effect=[OSError("Transient"), None])
+
+		# First update — error
+		magnifier._updateMagnifier()
+		self.assertEqual(magnifier._consecutiveErrors, 1)
+		magnifier._startTimer.assert_called_with(magnifier._updateMagnifier)
+
+		# Second update — success
+		magnifier._startTimer.reset_mock()
+		magnifier._updateMagnifier()
+		self.assertEqual(magnifier._consecutiveErrors, 0)
+		magnifier._startTimer.assert_called_with(magnifier._updateMagnifier)
+
+		magnifier._stopMagnifier()
+
 
 class TestFullScreenMagnifierKeepMouseCentered(_TestMagnifier):
 	"""Tests for _keepMouseCentered in FullScreenMagnifier."""
@@ -229,8 +290,11 @@ class TestFullScreenMagnifierKeepMouseCentered(_TestMagnifier):
 	def _expectedCenter(self, rawCoords: Coordinates) -> tuple[int, int]:
 		"""Compute the expected cursor position using the same pipeline as _keepMouseCentered."""
 		coords = self.magnifier._getCoordinatesForMode(rawCoords)
-		left, top, w, h = self.magnifier._getMagnifierPosition(coords)
-		return left + w // 2, top + h // 2
+		params = self.magnifier._getMagnifierParameters(coords)
+		return (
+			params.coordinates.x + params.magnifierSize.width // 2,
+			params.coordinates.y + params.magnifierSize.height // 2,
+		)
 
 	def testSkipsWhenLeftButtonPressed(self):
 		"""Cursor is not moved when the left mouse button is held."""
