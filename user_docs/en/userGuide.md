@@ -1620,7 +1620,6 @@ The default color filter when the magnifier is first enabled can be configured i
 
 ### Magnifier Types {#MagnifierType}
 
-The magnifier offers three different modes for tracking focus and determining which part of the screen to magnify:
 The magnifier can be used in multiple modes, each designed to suit different user needs and preferences:
 
 * Full-screen: The entire screen is magnified, and the magnified view follows the system focus or mouse pointer.
@@ -1667,15 +1666,17 @@ If you move the mouse before the zoom-back occurs, the timer resets, giving you 
 
 ### Fixed Magnifier {#MagnifierFixed}
 
-Placeholder
+Fixed Magnifier provides a separate window that displays a magnified view of the area around the system focus or mouse pointer. This allows you to see both the magnified content and the surrounding context simultaneously.
+The fixed magnifier window can be resized and moved in corners, giving you flexibility in how you view magnified content.
 
 ### Docked Magnifier {#MagnifierDocked}
 
-Placeholder
+Docked Magnifier is a mode where the magnified view is docked to one edge of the screen, providing a larger view of the area around the system focus or mouse pointer while still showing most of the screen at normal size.
+You can choose to dock the magnifier to the top, bottom, left, or right edge of the screen, depending on your preference and the layout of your applications.
 
 ### Lens Magnifier {#MagnifierLens}
 
-Placeholder
+Lens Magnifier is a mode where a rectangular area around the system focus or mouse pointer is magnified, while the rest of the screen remains at normal size. This allows you to focus on a specific area without losing sight of the overall screen layout. The lens follows the system focus or mouse pointer, providing a dynamic magnification experience.
 
 ### Magnifier Settings {#MagnifierSettings}
 
