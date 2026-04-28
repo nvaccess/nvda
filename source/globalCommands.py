@@ -5208,7 +5208,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Cycle through Magnifier type",
+			"Cycle through magnifier types",
 		),
 		category=SCRCAT_VISION,
 		gesture="kb:nvda+shift+t",
