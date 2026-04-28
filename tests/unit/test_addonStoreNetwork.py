@@ -227,11 +227,11 @@ class TestAddonFileDownloaderCancelAll(unittest.TestCase):
 		self.assertIs(self.downloader._executor, secondExecutor)
 		self.assertEqual(len(secondExecutor.submitCalls), 1)
 		_, submitArgs, submitKwargs, future = secondExecutor.submitCalls[0]
-		downloadProgress = self.downloader._downloadProgress[addonData]
-		self.assertEqual(submitArgs, (addonData, downloadProgress))
+		tempDownloadPath = self.downloader._activeDownloadPaths[addonData]
+		self.assertEqual(submitArgs, (addonData, tempDownloadPath))
 		self.assertEqual(submitKwargs, {})
 		self.assertIs(self.downloader._pending[future].addonData, addonData)
-		self.assertIs(self.downloader._pending[future].downloadProgress, downloadProgress)
+		self.assertEqual(self.downloader._pending[future].tempDownloadPath, tempDownloadPath)
 		self.assertEqual(self.downloader.progress[addonData], 0)
 
 	@patch("addonStore.network.ThreadPoolExecutor")
@@ -254,21 +254,21 @@ class TestAddonFileDownloaderCancelAll(unittest.TestCase):
 		self.downloader.download(addonData, onCompleteFirst, MagicMock())
 		_, _, _, firstFuture = firstExecutor.submitCalls[0]
 		firstFuture.set_running_or_notify_cancel()
-		firstDownloadProgress = self.downloader._downloadProgress[addonData]
+		firstTempDownloadPath = self.downloader._activeDownloadPaths[addonData]
 
 		self.downloader.cancelAll()
 		self.downloader.download(addonData, onCompleteSecond, MagicMock())
 		_, _, _, secondFuture = secondExecutor.submitCalls[0]
-		secondDownloadProgress = self.downloader._downloadProgress[addonData]
+		secondTempDownloadPath = self.downloader._activeDownloadPaths[addonData]
 
 		self.assertNotEqual(
-			firstDownloadProgress.tempDownloadPath,
-			secondDownloadProgress.tempDownloadPath,
+			firstTempDownloadPath,
+			secondTempDownloadPath,
 		)
 
 		firstFuture.set_result(None)
 
-		self.assertIs(self.downloader._downloadProgress[addonData], secondDownloadProgress)
+		self.assertEqual(self.downloader._activeDownloadPaths[addonData], secondTempDownloadPath)
 		self.assertEqual(self.downloader.progress[addonData], 0)
 		self.assertNotIn(firstFuture, self.downloader._pending)
 		self.assertIn(secondFuture, self.downloader._pending)
@@ -294,7 +294,7 @@ class TestAddonFileDownloaderCancelAll(unittest.TestCase):
 
 		future.set_result(None)
 
-		self.assertNotIn(addonData, self.downloader._downloadProgress)
+		self.assertNotIn(addonData, self.downloader._activeDownloadPaths)
 		self.assertNotIn(future, self.downloader._pending)
 		onComplete.assert_not_called()
 
