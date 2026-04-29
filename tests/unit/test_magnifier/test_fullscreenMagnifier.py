@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from unittest.mock import MagicMock, patch
-from _magnifier.utils.types import Filter, FullScreenMode, MagnifierType, Direction, Coordinates
+from _magnifier.utils.types import Filter, FullScreenMode, MagnifiedView, Direction, Coordinates
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
 from _magnifier.magnifier import Magnifier
@@ -22,7 +22,7 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		self.assertEqual(magnifier.zoomLevel, 2.0)
 		self.assertEqual(magnifier.filterType, Filter.NORMAL)
 		self.assertEqual(magnifier._fullscreenMode, FullScreenMode.CENTER)
-		self.assertEqual(magnifier._magnifierType, MagnifierType.FULLSCREEN)
+		self.assertEqual(magnifier._magnifiedView, MagnifiedView.FULLSCREEN)
 		self.assertTrue(magnifier._isActive)
 
 		magnifier._stopMagnifier()
@@ -146,16 +146,16 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		# Cleanup
 		magnifier._stopMagnifier()
 
-	def testMagnifierTypeProperty(self):
-		"""Test magnifierType property for FullScreenMagnifier."""
+	def testMagnifiedViewProperty(self):
+		"""Test magnifiedView property for FullScreenMagnifier."""
 		magnifier = FullScreenMagnifier()
 		magnifier._startMagnifier()
 
 		# Should default to FULLSCREEN
-		self.assertEqual(magnifier._magnifierType, MagnifierType.FULLSCREEN)
+		self.assertEqual(magnifier._magnifiedView, MagnifiedView.FULLSCREEN)
 
 		# Test that we can read it (inherited property from Magnifier)
-		self.assertIsNotNone(magnifier._magnifierType)
+		self.assertIsNotNone(magnifier._magnifiedView)
 
 		# Cleanup
 		magnifier._stopMagnifier()
@@ -170,7 +170,7 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		# Test basic properties exist
 		self.assertTrue(hasattr(magnifier, "zoomLevel"))
 		self.assertTrue(hasattr(magnifier, "filterType"))
-		self.assertTrue(hasattr(magnifier, "_magnifierType"))
+		self.assertTrue(hasattr(magnifier, "_magnifiedView"))
 		self.assertTrue(hasattr(magnifier, "_fullscreenMode"))
 		self.assertTrue(hasattr(magnifier, "_isActive"))
 		self.assertTrue(hasattr(magnifier, "_currentCoordinates"))

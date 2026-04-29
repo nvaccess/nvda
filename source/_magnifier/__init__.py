@@ -9,8 +9,8 @@ Handles module initialization, configuration and settings interaction.
 """
 
 from typing import TYPE_CHECKING
-from .config import getMagnifierType
-from .utils.types import MagnifierType
+from .config import getMagnifiedView
+from .utils.types import MagnifiedView
 
 if TYPE_CHECKING:
 	from .magnifier import Magnifier
@@ -18,45 +18,45 @@ if TYPE_CHECKING:
 _magnifier: "Magnifier | None" = None
 
 
-def createMagnifier(magnifierType: MagnifierType) -> "Magnifier":
+def createMagnifier(magnifiedView: MagnifiedView) -> "Magnifier":
 	"""
 	Create a magnifier instance based on the specified type.
 
-	:param magnifierType: The type of magnifier to create
+	:param magnifiedView: The type of magnifier to create
 	:return: The created magnifier instance
 	:raises ValueError: If the magnifier type is not supported
 	"""
 
-	match magnifierType:
-		case MagnifierType.FULLSCREEN:
+	match magnifiedView:
+		case MagnifiedView.FULLSCREEN:
 			from .fullscreenMagnifier import FullScreenMagnifier
 
 			return FullScreenMagnifier()
 
-		case MagnifierType.FIXED:
+		case MagnifiedView.FIXED:
 			from .fixedMagnifier import FixedMagnifier
 
 			return FixedMagnifier()
 
-		case MagnifierType.DOCKED:
+		case MagnifiedView.DOCKED:
 			from .dockedMagnifier import DockedMagnifier
 
 			return DockedMagnifier()
 
-		case MagnifierType.LENS:
+		case MagnifiedView.LENS:
 			from .lensMagnifier import LensMagnifier
 
 			return LensMagnifier()
 
 		case _:
-			raise ValueError(f"Unsupported magnifier type: {magnifierType}")
+			raise ValueError(f"Unsupported magnifier type: {MagnifiedView}")
 
 
-def _setMagnifierType(magnifierType: MagnifierType) -> None:
+def _setMagnifiedView(magnifiedView: MagnifiedView) -> None:
 	"""
 	Set the magnifier type, stopping the current one if active and creating a new instance.
 
-	:param magnifierType: The type of magnifier to set
+	:param magnifiedView: The type of magnifier to set
 	"""
 	global _magnifier
 
@@ -65,15 +65,15 @@ def _setMagnifierType(magnifierType: MagnifierType) -> None:
 		_magnifier._stopMagnifier()
 
 	# Create and set new magnifier instance
-	_magnifier = createMagnifier(magnifierType)
+	_magnifier = createMagnifier(magnifiedView)
 
 
 def initialize() -> None:
 	"""
 	Initialize the magnifier module with the default magnifier type from config.
 	"""
-	magnifierType = getMagnifierType()
-	_setMagnifierType(magnifierType)
+	magnifiedView = getMagnifiedView()
+	_setMagnifiedView(magnifiedView)
 	_magnifier._startMagnifier()
 
 
@@ -87,19 +87,19 @@ def isActive() -> bool:
 	return _magnifier is not None and _magnifier._isActive
 
 
-def changeMagnifierType(magnifierType: MagnifierType) -> None:
+def changeMagnifiedView(magnifiedView: MagnifiedView) -> None:
 	"""
 	Change the magnifier type at runtime.
 	Stops the current magnifier and starts a new one of the specified type.
 
-	:param magnifierType: The new magnifier type to use
+	:param magnifiedView: The new magnifier type to use
 	:raises RuntimeError: If no magnifier is currently active
 	"""
 	global _magnifier
 	if not _magnifier or not _magnifier._isActive:
 		raise RuntimeError("Cannot change magnifier type: magnifier is not active")
 
-	_setMagnifierType(magnifierType)
+	_setMagnifiedView(magnifiedView)
 	_magnifier._startMagnifier()
 
 

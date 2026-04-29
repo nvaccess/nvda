@@ -111,7 +111,7 @@ class MagnifierFollowFocusType(DisplayStringEnum):
 		}
 
 
-class MagnifierType(DisplayStringStrEnum):
+class MagnifiedView(DisplayStringStrEnum):
 	"""Type of magnifier"""
 
 	FULLSCREEN = "fullscreen"
@@ -120,7 +120,7 @@ class MagnifierType(DisplayStringStrEnum):
 	LENS = "lens"
 
 	@property
-	def _displayStringLabels(self) -> dict["MagnifierType", str]:
+	def _displayStringLabels(self) -> dict["MagnifiedView", str]:
 		return {
 			# Translators: Magnifier type - full-screen mode.
 			self.FULLSCREEN: pgettext("magnifier", "Fullscreen"),

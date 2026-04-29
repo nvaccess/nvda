@@ -10,7 +10,7 @@ Handles module initialization, configuration and settings interaction.
 
 import config
 from dataclasses import dataclass, field
-from .utils.types import Filter, FullScreenMode, MagnifierFollowFocusType, MagnifierType
+from .utils.types import Filter, FullScreenMode, MagnifierFollowFocusType, MagnifiedView
 
 
 class ZoomLevel:
@@ -121,22 +121,22 @@ def setFilter(filter: Filter) -> None:
 	config.conf["magnifier"]["filter"] = filter.value
 
 
-def getMagnifierType() -> MagnifierType:
+def getMagnifiedView() -> MagnifiedView:
 	"""
 	Get magnifier type from config.
 
 	:return: The magnifier type.
 	"""
-	return MagnifierType(config.conf["magnifier"]["magnifierType"])
+	return MagnifiedView(config.conf["magnifier"]["magnifiedView"])
 
 
-def setMagnifierType(magnifierType: MagnifierType) -> None:
+def setMagnifiedView(magnifiedView: MagnifiedView) -> None:
 	"""
 	Set magnifier type from settings.
 
-	:param magnifierType: The magnifier type to set.
+	:param magnifiedView: The magnifier type to set.
 	"""
-	config.conf["magnifier"]["magnifierType"] = magnifierType.value
+	config.conf["magnifier"]["magnifiedView"] = magnifiedView.value
 
 
 _FOLLOW_CONFIG_KEYS: dict[MagnifierFollowFocusType, str] = {

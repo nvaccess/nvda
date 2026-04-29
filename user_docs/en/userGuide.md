@@ -1618,14 +1618,16 @@ NVDA will announce the name of the currently selected filter.
 
 The default color filter when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
-### Magnifier Types {#MagnifierType}
+### Magnified Views {#MagnifiedViews}
 
-The magnifier can be used in multiple modes, each designed to suit different user needs and preferences:
+The magnifier can be used in multiple types of view, each designed to suit different user needs and preferences:
 
 * Full-screen: The entire screen is magnified, and the magnified view follows the system focus or mouse pointer.
-* Fixed window: A separate window displays the magnified content, and the rest of the screen remains at normal size. This allows you to see both the magnified content and the surrounding context simultaneously.
+* Fixed window: A separate window displays the magnified content, and the rest of the screen remains at normal size.
+This allows you to see both the magnified content and the surrounding context simultaneously.
 * Docked: The magnified view is docked to one edge of the screen, providing a larger view of the area around the system focus or mouse pointer while still showing most of the screen at normal size.
-* Lens: A rectangular area around the system focus or mouse pointer is magnified, while the rest of the screen remains at normal size. This allows you to focus on a specific area without losing sight of the overall screen layout.
+* Lens: A rectangular area around the system focus or mouse pointer is magnified, while the rest of the screen remains at normal size.
+This allows you to focus on a specific area without losing sight of the overall screen layout.
 
 ### Fullscreen Focus Modes {#MagnifierFullscreenFocusModes}
 
@@ -1644,7 +1646,7 @@ NVDA will announce the name of the currently selected mode.
 
 The default focus mode when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
-#### Spotlight Mode {#MagnifierSpotlight}
+### Spotlight {#MagnifierSpotlight}
 
 Spotlight mode is a special fullscreen feature designed for presentations or focused reading tasks.
 When activated, it temporarily zooms out the magnified view to show the full screen, then zooms back in to the current focus position after a brief period of mouse inactivity.
@@ -1666,17 +1668,19 @@ If you move the mouse before the zoom-back occurs, the timer resets, giving you 
 
 ### Fixed Magnifier {#MagnifierFixed}
 
-Fixed Magnifier provides a separate window that displays a magnified view of the area around the system focus or mouse pointer. This allows you to see both the magnified content and the surrounding context simultaneously.
-The fixed magnifier window can be resized and moved in corners, giving you flexibility in how you view magnified content.
+Fixed Magnifier provides a separate window that displays a magnified view of the area around the system focus or mouse pointer.
+It is a floating magnifier window that can be moved and resized, and it is typically positioned in a screen corner.
+This lets you see the magnified content and the surrounding context at the same time, while keeping the rest of the screen visible.
 
 ### Docked Magnifier {#MagnifierDocked}
 
-Docked Magnifier is a mode where the magnified view is docked to one edge of the screen, providing a larger view of the area around the system focus or mouse pointer while still showing most of the screen at normal size.
-You can choose to dock the magnifier to the top, bottom, left, or right edge of the screen, depending on your preference and the layout of your applications.
+Docked Magnifier is a mode where the magnified view is anchored to one edge of the screen, providing a larger view of the area around the system focus or mouse pointer while still showing most of the screen at normal size.
+You can choose to dock the magnifier to the top, bottom, left, or right edge of the screen, so the magnified area forms a strip along that edge rather than a movable corner window.
 
 ### Lens Magnifier {#MagnifierLens}
 
-Lens Magnifier is a mode where a rectangular area around the system focus or mouse pointer is magnified, while the rest of the screen remains at normal size. This allows you to focus on a specific area without losing sight of the overall screen layout. The lens follows the system focus or mouse pointer, providing a dynamic magnification experience.
+Lens Magnifier is a mode where a rectangular area around the system focus or mouse pointer is magnified, while the rest of the screen remains at normal size.
+This allows you to focus on a specific area without losing sight of the overall screen layout. The lens follows the system focus or mouse pointer, providing a dynamic magnification experience.
 
 ### Magnifier Settings {#MagnifierSettings}
 

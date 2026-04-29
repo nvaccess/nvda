@@ -10,10 +10,10 @@ Contains the command functions and their logic for keyboard shortcuts.
 
 from typing import Literal
 import ui
-from . import getMagnifier, initialize, terminate, changeMagnifierType
+from . import getMagnifier, initialize, terminate, changeMagnifiedView
 from .config import (
-	getMagnifierType,
-	setMagnifierType,
+	getMagnifiedView,
+	setMagnifiedView,
 	getZoomLevelString,
 	getFilter,
 	getFullscreenMode,
@@ -27,7 +27,7 @@ from .fullscreenMagnifier import FullScreenMagnifier
 from .utils.types import (
 	Filter,
 	Direction,
-	MagnifierType,
+	MagnifiedView,
 	FullScreenMode,
 	MagnifierAction,
 	MagnifierFollowFocusType,
@@ -106,16 +106,16 @@ def toggleMagnifier() -> None:
 	else:
 		initialize()
 		filter = getFilter()
-		magnifierType = getMagnifierType()
+		magnifiedView = getMagnifiedView()
 		zoomLevel = getZoomLevelString()
-		if magnifierType == MagnifierType.FULLSCREEN:
+		if magnifiedView == MagnifiedView.FULLSCREEN:
 			fullscreenMode = getFullscreenMode()
 			msg = pgettext(
 				"magnifier",
 				# Translators: Message announced when starting the NVDA magnifier.
-				"Starting {magnifierType} magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
+				"Starting {MagnifiedView} magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
 			).format(
-				magnifierType=magnifierType.displayString,
+				MagnifiedView=magnifiedView.displayString,
 				zoomLevel=zoomLevel,
 				filter=filter.displayString,
 				fullscreenMode=fullscreenMode.displayString,
@@ -124,9 +124,9 @@ def toggleMagnifier() -> None:
 			msg = pgettext(
 				"magnifier",
 				# Translators: Message announced when starting the NVDA magnifier.
-				"Starting {magnifierType} magnifier with {zoomLevel} zoom level and {filter} filter",
+				"Starting {MagnifiedView} magnifier with {zoomLevel} zoom level and {filter} filter",
 			).format(
-				magnifierType=magnifierType.displayString,
+				MagnifiedView=magnifiedView.displayString,
 				zoomLevel=zoomLevel,
 				filter=filter.displayString,
 			)
@@ -187,7 +187,7 @@ def toggleFilter() -> None:
 		filters = list(Filter)
 		idx = filters.index(magnifier.filterType)
 		magnifier.filterType = filters[(idx + 1) % len(filters)]
-		if magnifier._magnifierType == MagnifierType.FULLSCREEN:
+		if magnifier._magnifiedView == MagnifiedView.FULLSCREEN:
 			magnifier._applyFilter()
 		ui.message(
 			pgettext(
@@ -199,14 +199,14 @@ def toggleFilter() -> None:
 
 
 _CYCLING_MAGNIFIER_TYPES = [
-	MagnifierType.FULLSCREEN,
-	MagnifierType.FIXED,
-	MagnifierType.DOCKED,
-	MagnifierType.LENS,
+	MagnifiedView.FULLSCREEN,
+	MagnifiedView.FIXED,
+	MagnifiedView.DOCKED,
+	MagnifiedView.LENS,
 ]
 
 
-def cycleMagnifierType() -> None:
+def cycleMagnifiedView() -> None:
 	"""Cycle through magnifier types (full-screen, fixed, docked, lens)"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
@@ -214,19 +214,19 @@ def cycleMagnifierType() -> None:
 		MagnifierAction.CHANGE_MAGNIFIER_TYPE,
 	):
 		types = _CYCLING_MAGNIFIER_TYPES
-		currentType = magnifier._magnifierType
+		currentType = magnifier._magnifiedView
 		idx = types.index(currentType)
 		newType = types[(idx + 1) % len(types)]
 		log.debug(f"Changing magnifier type from {currentType} to {newType}")
-		changeMagnifierType(newType)
-		setMagnifierType(newType)
+		changeMagnifiedView(newType)
+		setMagnifiedView(newType)
 		magnifier = getMagnifier()
 		ui.message(
 			pgettext(
 				"magnifier",
 				# Translators: Message announced when changing the magnifier type with {type} being the new magnifier type.
 				"Magnifier type changed to {type}",
-			).format(type=magnifier._magnifierType.displayString),
+			).format(type=magnifier._magnifiedView.displayString),
 		)
 
 
@@ -385,7 +385,7 @@ def magnifierIsFullscreenVerify(
 
 	:return: True if the magnifier is full-screen, False otherwise
 	"""
-	if magnifier._magnifierType == MagnifierType.FULLSCREEN:
+	if magnifier._magnifiedView == MagnifiedView.FULLSCREEN:
 		return True
 	else:
 		ui.message(
