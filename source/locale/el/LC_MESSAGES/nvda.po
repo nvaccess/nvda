@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-16 06:42+0000\n"
-"PO-Revision-Date: 2026-04-20 00:29\n"
+"POT-Creation-Date: 2026-04-28 00:44+0000\n"
+"PO-Revision-Date: 2026-04-29 00:15\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -1625,17 +1625,17 @@ msgstr "μετακινείται στο επόμενο πλαίσιο"
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1225
 msgid "no next reference"
-msgstr ""
+msgstr "δεν υπάρχει επόμενη αναφορά"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1227
 msgid "moves to the previous reference"
-msgstr ""
+msgstr "μετακινείται στην προηγούμενη αναφορά"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1229
 msgid "no previous reference"
-msgstr ""
+msgstr "καμία προηγούμενη αναφορά"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2835,29 +2835,29 @@ msgstr "ενεργοποίηση αναφοράς στυλ"
 #. Translators: Input help mode message for toggle report spelling errors command.
 #: globalCommands.py:791
 msgid "Cycles through options for how to report spelling or grammar errors"
-msgstr ""
+msgstr "Πραγματοποιεί εναλλαγή μεταξύ των επιλογών για τον τρόπο αναφοράς ορθογραφικών ή γραμματικών σφαλμάτων"
 
 #. Translators: Reported when the user cycles through the choices to report spelling or grammar errors.
 #. {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
 #: globalCommands.py:803
 #, python-brace-format
 msgid "Report errors {mode}"
-msgstr ""
+msgstr "Αναφορά σφαλμάτων {mode}"
 
 #. Translators: Input help mode message for command to toggle report spelling or grammar errors in braille.
 #: globalCommands.py:810
 msgid "Toggles reporting spelling or grammar errors in braille"
-msgstr ""
+msgstr "Εναλλάσσει την αναφορά ορθογραφικών ή γραμματικών σφαλμάτων σε braille"
 
 #. Translators: Message presented when turning on reporting spelling or grammar errors in braille.
 #: globalCommands.py:820
 msgid "Report errors in braille on"
-msgstr ""
+msgstr "Αναφορά σφαλμάτων σε braille ενεργή"
 
 #. Translators: Message presented when turning off reporting spelling errors or grammar in braille.
 #: globalCommands.py:823
 msgid "Report errors in braille off"
-msgstr ""
+msgstr "Αναφορά σφαλμάτων σε braille ανενεργή"
 
 #. Translators: Input help mode message for toggle report pages command.
 #: globalCommands.py:827
@@ -3752,17 +3752,17 @@ msgstr "Ενεργοποίηση παρακολούθησης ποντικιού
 #. Translators: Input help mode message for toggle mouse audio coordinates command.
 #: globalCommands.py:3043
 msgid "Toggles beeps that report mouse coordinates as the mouse moves"
-msgstr ""
+msgstr "Εναλλάσσει τους ήχους μπιπ που αναφέρουν τις συντεταγμένες του ποντικιού καθώς κινείται"
 
 #. Translators: Reported when mouse audio coordinates are toggled on.
 #: globalCommands.py:3048
 msgid "Mouse audio coordinates on"
-msgstr ""
+msgstr "Ηχητικές συντεταγμένες ποντικιού ενεργές"
 
 #. Translators: Reported when mouse audio coordinates are toggled off.
 #: globalCommands.py:3050
 msgid "Mouse audio coordinates off"
-msgstr ""
+msgstr "Ηχητικές συντεταγμένες ποντικιού ανενεργές"
 
 #. Translators: Input help mode message for toggle mouse text unit resolution command.
 #: globalCommands.py:3060
@@ -3983,7 +3983,7 @@ msgstr "Εμφανίζει τις ρυθμίσεις ήχου του NVDA"
 #. Translators: Input help mode message for go to privacy and security settings command.
 #: globalCommands.py:3404
 msgid "Shows NVDA's privacy and security settings"
-msgstr ""
+msgstr "Εμφανίζει τις ρυθμίσεις απορρήτου και ασφάλειας του NVDA"
 
 #. Translators: Input help mode message for go to vision settings command.
 #: globalCommands.py:3413
@@ -6813,7 +6813,7 @@ msgstr "διπλό {action}"
 #: touchHandler.py:164
 #, python-brace-format
 msgid "triple {action}"
-msgstr ""
+msgstr "τριπλό {action}"
 
 #. Translators: a touch screen action performed 4 times
 #: touchHandler.py:166
@@ -7161,7 +7161,7 @@ msgstr "&Τέλος"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1015 gui\installerGui.py:516
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr "Η ενημέρωση του NVDA όταν είστε συνδεδεμένοι μέσω του NVDA Remote Access ως ελεγχόμενος υπολογιστής δεν συνιστάται."
+msgstr "Η ενημέρωση του NVDA όταν είστε συνδεδεμένοι μέσω του NVDA Remote Access ως ελεγχόμενος υπολογιστής δε συνιστάται. "
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
@@ -7211,7 +7211,17 @@ msgid "{longName} ({name})\n"
 "It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html and https://www.gnu.org/licenses/gpl-3.0.en.html\n\n"
 "{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.\n"
 "If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
-msgstr ""
+msgstr "{longName} ({name})\n"
+"Έκδοση: {version} ({version_detailed})\n"
+"URL: {url}\n"
+"{copyright}\n\n"
+"Το {name} καλύπτεται από την GNU General Public License (Έκδοση 2 ή μεταγενέστερη).\n"
+"Είστε ελεύθεροι να κοινοποιείτε ή να τροποποιείτε αυτό το λογισμικό με οποιονδήποτε τρόπο, αρκεί να συνοδεύεται από την άδεια και να καθιστάτε διαθέσιμο όλο τον πηγαίο κώδικα σε όποιον το ζητήσει.\n"
+"Αυτό ισχύει τόσο για τα πρωτότυπα όσο και για τα τροποποιημένα αντίγραφα αυτού του λογισμικού, καθώς και για οποιαδήποτε παράγωγα έργα.\n"
+"Για περισσότερες λεπτομέρειες, μπορείτε να δείτε την άδεια από το μενού Βοήθεια.\n"
+"Μπορεί επίσης να προβληθεί διαδικτυακά στη διεύθυνση: [https://www.gnu.org/licenses/old-licenses/gpl-2.0.html] και https://www.gnu.org/licenses/old-licenses/gpl-2.0.html και [https://www.gnu.org/licenses/gpl-3.0.en.html] και https://www.gnu.org/licenses/gpl-3.0.en.html\n\n"
+"Το {name} αναπτύσσεται από την NV Access, έναν μη κερδοσκοπικό οργανισμό που δεσμεύεται να βοηθά και να προωθεί ελεύθερες και ανοιχτού κώδικα λύσεις για τυφλούς και άτομα με απώλεια όρασης.\n"
+"Αν θεωρείτε το NVDA χρήσιμο και θέλετε να συνεχίσει να βελτιώνεται, παρακαλούμε σκεφτείτε να κάνετε μια δωρεά στην NV Access. Μπορείτε να το κάνετε επιλέγοντας «Δωρεά» από το μενού του NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on
 #. from windows explorer and NVDA is not running.
@@ -9039,7 +9049,7 @@ msgstr "Αγγλικά (Ηνωμένο Βασίλειο) βαθμού 2"
 #. braille settings dialog.
 #: brailleTables\__tables.py:160
 msgid "English grade 3"
-msgstr ""
+msgstr "Αγγλικά βαθμού 3"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9303,7 +9313,7 @@ msgstr "Ιαπωνεζικό (Kantenji) φιλολογικό braile"
 #. braille settings dialog.
 #: brailleTables\__tables.py:330
 msgid "Japanese (Rokuten Kanji) Braille"
-msgstr ""
+msgstr "Ιαπωνικό (Rokuten Kanji) Braille​​​​​​​​​​​​​​​​"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9399,7 +9409,7 @@ msgstr "Λετονικά βαθμού 1"
 #. braille settings dialog.
 #: brailleTables\__tables.py:379
 msgid "Macedonian grade 1"
-msgstr ""
+msgstr "Βορειομακεδονικά βαθμού 1​​​​​​​​​​​​​​​​"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10073,33 +10083,33 @@ msgstr "Εκφώνηση και τόνοι"
 #: config\configFlags.py:203
 msgctxt "reportSpellingErrorsSetting"
 msgid "Off"
-msgstr ""
+msgstr "Ανενεργό​​​​​​​​​​​​​​​​"
 
 #. Translators: A value reported by the cycle script defining how spelling errors are reported, also used
 #. as choice in a checklist box in the document formatting dialog to report spelling errors with speech.
 #: config\configFlags.py:206
 msgctxt "reportSpellingErrorsSetting"
 msgid "Speech"
-msgstr ""
+msgstr "Εκφώνηση​​​​​​​​​​​​​​​​"
 
 #. Translators: A value reported by the cycle script defining how spelling errors are reported, also used
 #. as choice in a checklist box in the document formatting dialog to report spelling errors with a sound.
 #: config\configFlags.py:209
 msgctxt "reportSpellingErrorsSetting"
 msgid "Sound"
-msgstr ""
+msgstr "Ήχος​​​​​​​​​​​​​​​​"
 
 #. Translators: A value reported by the cycle script defining how spelling errors are reported.
 #: config\configFlags.py:213
 msgctxt "reportSpellingErrorsSetting"
 msgid "Speech and sound"
-msgstr ""
+msgstr "Εκφώνηση και ήχος​​​​​​​​​​​​​​​​"
 
 #. Translators: A value used as choice in a checklist box in the document formatting dialog to report spelling errors in braille.
 #: config\configFlags.py:216
 msgctxt "reportSpellingErrorsSetting"
 msgid "Braille"
-msgstr ""
+msgstr "Braille"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -11579,7 +11589,7 @@ msgstr "εντός σελίδας"
 #. For example, a list box that allows selecting multiple items.
 #: controlTypes\state.py:216
 msgid "multi-select"
-msgstr ""
+msgstr "πολλαπλή επιλογή​​​​​​​​​​​​​​​​"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 #: controlTypes\state.py:222
@@ -11731,12 +11741,12 @@ msgstr "Ο πίνακας ρυθμίσεων που προσπαθήσατε ν�
 #. from the about dialog
 #: gui\__init__.py:408
 msgid "Copied to clipboard"
-msgstr ""
+msgstr "Αντιγράφηκε στο πρόχειρο​​​​​​​​​​​​​​​​"
 
 #. Translators: The label for a button to copy the NVDA version number from the about dialog.
 #: gui\__init__.py:414
 msgid "&Copy version number"
-msgstr ""
+msgstr "&Αντιγραφή αριθμού έκδοσης​​​​​​​​​​​​​​​​"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 #: gui\__init__.py:419 gui\__init__.py:871
@@ -12575,7 +12585,7 @@ msgstr "Παρακαλώ πατήστε OK για να εκκινήσετε το
 #. and the installer is about to close without starting the installed copy.
 #: gui\installerGui.py:145
 msgid "Please press OK to close the installer."
-msgstr ""
+msgstr "Παρακαλώ πατήστε OK για να κλείσετε το πρόγραμμα εγκατάστασης.​​​​​​​​​​​​​​​​"
 
 #. Translators: The title of the Install NVDA dialog.
 #: gui\installerGui.py:209
@@ -12642,7 +12652,7 @@ msgstr "Επιχειρείτε να εγκαταστήσετε μια προηγ
 #. the state of the current NVDA installation.
 #: gui\installerGui.py:366
 msgid "An existing NVDA installation has been detected, but its version cannot be determined. If you are attempting to install an earlier version of NVDA, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
-msgstr ""
+msgstr "Εντοπίστηκε μια υπάρχουσα εγκατάσταση του NVDA, αλλά δεν είναι δυνατός ο προσδιορισμός της έκδοσής της. Αν προσπαθείτε να εγκαταστήσετε μια παλαιότερη έκδοση του NVDA, θα πρέπει πρώτα να ακυρώσετε αυτήν την εγκατάσταση και να απεγκαταστήσετε πλήρως το NVDA πριν εγκαταστήσετε την παλαιότερη έκδοση.​​​​​​​​​​​​​​​​"
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
@@ -12654,13 +12664,13 @@ msgstr "&Προχωρήστε στην εγκατάσταση (δε συστήν
 #. to an older version.
 #: gui\installerGui.py:425
 msgid "You are attempting to replace an existing portable copy of NVDA with an earlier version. Downgrading NVDA is not recommended. You should cancel this operation and create a new portable copy instead. "
-msgstr ""
+msgstr "Προσπαθείτε να αντικαταστήσετε ένα υπάρχον φορητό αντίγραφο του NVDA με μια παλαιότερη έκδοση. Η υποβάθμιση του NVDA δε συνιστάται. Θα πρέπει να ακυρώσετε αυτήν τη λειτουργία και να δημιουργήσετε ένα νέο φορητό αντίγραφο.​​​​​​​​​​​​​​​​ "
 
 #. Translators: A warning presented when the installer is unable to determine
 #. the state of the current NVDA installation.
 #: gui\installerGui.py:433
 msgid "An existing copy of NVDA has been detected in the chosen directory, but its version cannot be determined. If you are attempting to downgrade to an earlier version of NVDA, you should cancel this operation and create a new portable copy. "
-msgstr ""
+msgstr "Εντοπίστηκε ένα υπάρχον αντίγραφο του NVDA στον επιλεγμένο φάκελο, αλλά δεν είναι δυνατός ο προσδιορισμός της έκδοσής του. Αν προσπαθείτε να υποβαθμίσετε σε μια παλαιότερη έκδοση του NVDA, θα πρέπει να ακυρώσετε αυτήν τη λειτουργία και να δημιουργήσετε ένα νέο φορητό αντίγραφο.​​​​​​​​​​​​​​​​ "
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
@@ -12692,7 +12702,7 @@ msgstr "Ο Φάκελος Υπάρχει"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:522
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr "Η εγκατάσταση του NVDA ενώ είστε συνδεδεμένοι μέσω του NVDA Remote Access ως ελεγχόμενος υπολογιστής δεν συνιστάται. "
+msgstr "Η εγκατάσταση του NVDA ενώ είστε συνδεδεμένοι μέσω του NVDA Remote Access ως ελεγχόμενος υπολογιστής δε συνιστάται. "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
@@ -12755,7 +12765,7 @@ msgstr "Παρακαλώ ορίστε ένα φάκελο μέσα στον οπ
 #: gui\installerGui.py:642
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. It may include system variables (e.g. %temp%, %homepath%) and must start with a drive letter (e.g. C:\\). Current path: {path}. "
-msgstr ""
+msgstr "Παρακαλώ καθορίστε την απόλυτη διαδρομή όπου θα δημιουργηθεί το φορητό αντίγραφο. Μπορεί να περιλαμβάνει μεταβλητές συστήματος (π.χ. %temp%, %homepath%) και πρέπει να ξεκινά με γράμμα μονάδας δίσκου (π.χ. C:\\). Τρέχουσα διαδρομή: {path}.​​​​​​​​​​​​​​​​ "
 
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
 #: gui\installerGui.py:694
@@ -13089,7 +13099,7 @@ msgstr "Αυτόματη εναλλαγή διαλέκτου (όταν υποσ�
 #: gui\settingsDialogs.py:1673
 msgctxt "reportLanguage"
 msgid "Report lan&guage changes while reading"
-msgstr "Αναφορά αλ&λαγών γλώσσας κατά την ανάγνωση"
+msgstr "Αναφορά αλλαγών γλώ&σσας κατά την ανάγνωση"
 
 #. Translators: This is a label for a combobox in the Voice settings panel to select
 #. reporting when the language of the text being read is not supported by the current synthesizer.
@@ -13114,7 +13124,7 @@ msgstr "Αποδοχή της γλώσσας της φωνής κατά την �
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 #: gui\settingsDialogs.py:1736 gui\settingsDialogs.py:5451
 msgid "Unicode normali&zation"
-msgstr "Κανονικοποίηση &Unicode"
+msgstr "Κανονικο&ποίηση Unicode"
 
 #. Translators: This is the label for a checkbox in the
 #. speech settings panel.
@@ -13250,7 +13260,7 @@ msgstr "Διαχείριση εντολών από άλλες εφαρμογές
 #. Translators: The label for a control in keyboard settings to modify the timeout for a multiple keypress.
 #: gui\settingsDialogs.py:2094
 msgid "&Multiple key press timeout (ms):"
-msgstr "&Χρονικό όριο πολλαπλών πατημάτων πλήκτρων (ms):"
+msgstr "Χρονικό όριο &πολλαπλών πατημάτων πλήκτρων (ms):"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 #: gui\settingsDialogs.py:2110
@@ -13434,7 +13444,7 @@ msgstr "&Εικασία της πληροφορίας θέσεως αντικε�
 #. object presentation settings panel.
 #: gui\settingsDialogs.py:2437
 msgid "Report when objects support &multiple selection"
-msgstr ""
+msgstr "Αναφορά όταν τα αντικείμενα υποστηρίζουν &πολλαπλή επιλογή​​​​​​​​​​​​​​​​"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -13535,103 +13545,103 @@ msgstr "&Περιορισμός των χειρονομιών που δεν αφ
 #: gui\settingsDialogs.py:2660
 msgctxt "math"
 msgid "Math"
-msgstr ""
+msgstr "Μαθηματικά​​​​​​​​​​​​​​​​"
 
 #. Translators: The description of the math settings panel.
 #: gui\settingsDialogs.py:2665
 msgctxt "math"
 msgid "The following options control the presentation of mathematical content."
-msgstr ""
+msgstr "Οι ακόλουθες επιλογές ελέγχουν την παρουσίαση του μαθηματικού περιεχομένου.​​​​​​​​​​​​​​​​"
 
 #. Translators: options for Copy math to clipboard as -- speech text
 #: gui\settingsDialogs.py:2737 mathPres\MathCAT\preferences.py:140
 msgctxt "math"
 msgid "Speech"
-msgstr ""
+msgstr "Εκφώνηση​​​​​​​​​​​​​​​​"
 
 #. Translators: Select an impairment for MathCAT
 #: gui\settingsDialogs.py:2744
 msgctxt "math"
 msgid "Impairment:"
-msgstr ""
+msgstr "Μειονεξία:​​​​​​​​​​​​​​​​"
 
 #. Translators: MathCAT language option
 #: gui\settingsDialogs.py:2756
 msgctxt "math"
 msgid "Language:"
-msgstr ""
+msgstr "Γλώσσα:​​​​​​​​​​​​​​​​"
 
 #. Translators: MathCAT decimal separator option.
 #: gui\settingsDialogs.py:2776
 msgctxt "math"
 msgid "Decimal separator for numbers:"
-msgstr ""
+msgstr "Διαχωριστικό δεκαδικών για αριθμούς:​​​​​​​​​​​​​​​​"
 
 #. Translators: Select a speech style.
 #: gui\settingsDialogs.py:2791
 msgctxt "math"
 msgid "Speech style:"
-msgstr ""
+msgstr "Στυλ εκφώνησης:​​​​​​​​​​​​​​​​"
 
 #. Translators: MathCAT's verbosity setting
 #: gui\settingsDialogs.py:2805
 msgctxt "math"
 msgid "Speech verbosity:"
-msgstr ""
+msgstr "Λεπτομέρειες εκφώνησης:​​​​​​​​​​​​​​​​"
 
 #. Translators: MathCAT's relative speed setting
 #: gui\settingsDialogs.py:2817
 msgctxt "math"
 msgid "Relative speech rate"
-msgstr ""
+msgstr "Σχετικός ρυθμός εκφώνησης​​​​​​​​​​​​​​​​"
 
 #. Translators: label for slider that specifies relative factor to increase or decrease pauses in the math speech
 #: gui\settingsDialogs.py:2830
 msgctxt "math"
 msgid "Pause factor"
-msgstr ""
+msgstr "Συντελεστής παύσης​​​​​​​​​​​​​​​​"
 
 #. Translators: label for check box controlling a beep sound when math speech starts/ends
 #: gui\settingsDialogs.py:2845
 msgctxt "math"
 msgid "Beep at the beginning and end of math"
-msgstr ""
+msgstr "Ήχος μπιπ στην αρχή και στο τέλος των μαθηματικών​​​​​​​​​​​​​​​​"
 
 #. Translators: label for combobox to specify how verbose/terse the speech should be
 #: gui\settingsDialogs.py:2851
 msgctxt "math"
 msgid "Chemical formulae:"
-msgstr ""
+msgstr "Χημικοί τύποι:​​​​​​​​​​​​​​​​"
 
 #. Translators: label for combobox to specify whether the expression is spoken or described (an overview)
 #: gui\settingsDialogs.py:2863
 msgctxt "math"
 msgid "When entering an equation:"
-msgstr ""
+msgstr "Κατά την εισαγωγή μιας εξίσωσης:"
 
 #. Translators: "Speak" the expression after moving to it
 #: gui\settingsDialogs.py:2866
 msgctxt "math"
 msgid "Speak"
-msgstr ""
+msgstr "Εκφώνηση"
 
 #. Translators: "Describe" the expression after moving to it
 #: gui\settingsDialogs.py:2868
 msgctxt "math"
 msgid "Describe overview"
-msgstr ""
+msgstr "Περιγραφή επισκόπησης"
 
 #. Translators: Text for the navigation group.
 #: gui\settingsDialogs.py:2882
 msgctxt "math"
 msgid "Navigation"
-msgstr ""
+msgstr "Πλοήγηση"
 
 #. Translators: label for combobox to specify one of three modes use to navigate math expressions
 #: gui\settingsDialogs.py:2889
 msgctxt "math"
 msgid "Default navigation mode:"
-msgstr ""
+msgstr "Προεπιλεγμένη λειτουργία πλοήγησης:"
 
 #. Translators: label for check box that determines whether MathCAT
 #. reverts to the user-selected "default navigation mode" when
@@ -13640,38 +13650,38 @@ msgstr ""
 #: gui\settingsDialogs.py:2904
 msgctxt "math"
 msgid "Reset to the default navigation mode for each new equation"
-msgstr ""
+msgstr "Επαναφορά στην προεπιλεγμένη λειτουργία πλοήγησης για κάθε νέα εξίσωση"
 
 #. Translators: label for checkbox that controls whether arrow keys move out of fractions, etc.,
 #. or whether you have to manually back out of the fraction, etc.
 #: gui\settingsDialogs.py:2911
 msgctxt "math"
 msgid "Automatically zoom out of two-dimensional notation"
-msgstr ""
+msgstr "Αυτόματη σμίκρυνση δισδιάστατης σημειογραφίας"
 
 #. Translators: label for combobox down to specify whether you want a terse or verbose reading of navigation commands
 #: gui\settingsDialogs.py:2917
 msgctxt "math"
 msgid "Navigation verbosity:"
-msgstr ""
+msgstr "Λεπτομέρειες πλοήγησης:"
 
 #. Translators: label for combobox to specify how math will be copied to the clipboard
 #: gui\settingsDialogs.py:2935
 msgctxt "math"
 msgid "Copy math as:"
-msgstr ""
+msgstr "Αντιγραφή μαθηματικών ως:"
 
 #. Translators: Text for the braille group.
 #: gui\settingsDialogs.py:2947
 msgctxt "math"
 msgid "Braille"
-msgstr ""
+msgstr "Braille"
 
 #. Translators: label for combobox to specify which braille code to use
 #: gui\settingsDialogs.py:2953
 msgctxt "math"
 msgid "Output code:"
-msgstr ""
+msgstr "Κώδικας εξόδου:"
 
 #. Translators: An option in Math settings to select a braille code automatically,
 #. according to NVDA's language.
@@ -13679,25 +13689,25 @@ msgstr ""
 #, python-brace-format
 msgctxt "math"
 msgid "Automatic ({name})"
-msgstr ""
+msgstr "Αυτόματο ({name})"
 
 #. Translators: label for combobox to specify how braille dots should be modified when navigating/selecting subexprs
 #: gui\settingsDialogs.py:2977
 msgctxt "math"
 msgid "Highlight navigation focus with dots 7 and 8"
-msgstr ""
+msgstr "Επισήμανση εστίασης πλοήγησης με τις κουκκίδες 7 και 8"
 
 #. Translators: Text for the application support group in MathCAT options.
 #: gui\settingsDialogs.py:2995
 msgctxt "math"
 msgid "Application support"
-msgstr ""
+msgstr "Υποστήριξη εφαρμογής"
 
 #. Translators: label for checkbox to use native math presentation support instead of MathCAT in Word and Outlook
 #: gui\settingsDialogs.py:3002
 msgctxt "math"
 msgid "Use native math support in Word and Outlook"
-msgstr ""
+msgstr "Χρήση εγγενούς υποστήριξης μαθηματικών σε Word και Outlook"
 
 #. Translators: This is the label for the document formatting panel.
 #. Translators: This is the label for a group of advanced options in the
@@ -13775,7 +13785,7 @@ msgstr "Πληροφορίες εγγράφου"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:3200
 msgid "Commen&ts"
-msgstr ""
+msgstr "Σχόλ&ια"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -13793,7 +13803,7 @@ msgstr "&Αναθεωρήσεις συντάκτη"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:3219
 msgid "Spelling or grammar e&rrors"
-msgstr ""
+msgstr "Ορθογραφικά ή γραμματικά σ&φάλματα"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -14190,7 +14200,7 @@ msgstr "Περιοδική &ανανέωση αναγνωρισμένου περ
 #. Translators: The label for a setting in OCR settings to automatically say all on result.
 #: gui\settingsDialogs.py:4133
 msgid "Automatically say all on result"
-msgstr ""
+msgstr "Αυτόματη εκφώνηση όλων στο αποτέλεσμα"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -14454,7 +14464,7 @@ msgstr "Περικοπή σίγασης που προηγείται στον ή�
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:4504
 msgid "Use WASAPI for SAPI 4 audio output:"
-msgstr ""
+msgstr "Χρήση WASAPI για έξοδο ήχου SAPI 4:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -14680,7 +14690,7 @@ msgstr "&Εμφάνιση επιλογής"
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 #: gui\settingsDialogs.py:5413
 msgid "Formatting &display"
-msgstr "&Μορφοποίηση οθόνης"
+msgstr "Μορφοποίηση &οθόνης"
 
 #. Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
 #: gui\settingsDialogs.py:5422
@@ -14765,7 +14775,7 @@ msgstr "Αδυναμία διαμόρφωσης της διεπαφής χρήσ
 #. Translators: The title of the privacy and security category in NVDA's settings.
 #: gui\settingsDialogs.py:5956
 msgid "Privacy and Security"
-msgstr ""
+msgstr "Απόρρητο και Ασφάλεια"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
@@ -15309,7 +15319,7 @@ msgstr "Ημερομηνία δημοσίευσης:"
 #: gui\addonStoreGui\controls\details.py:372
 msgctxt "addonStore"
 msgid "VirusTotal scan results:"
-msgstr ""
+msgstr "Αποτελέσματα σάρωσης VirusTotal:"
 
 #. Translators: Summary of VirusTotal scan results for the selected add-on.
 #. {malicious} is the number of vendors that detected the add-on as malicious,
@@ -15320,14 +15330,14 @@ msgstr ""
 msgctxt "addonStore"
 msgid "{malicious} malware scanner detected this add-on as potentially malicious (out of {total})."
 msgid_plural "{malicious} malware scanners detected this add-on as potentially malicious (out of {total})."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{malicious} σαρωτής κακόβουλου λογισμικού εντόπισε αυτό το πρόσθετο ως πιθανώς κακόβουλο (από {total})."
+msgstr[1] "{malicious} σαρωτής κακόβουλου λογισμικού εντόπισε αυτό το πρόσθετο ως πιθανώς κακόβουλο (από {total})."
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:389
 msgctxt "addonStore"
 msgid "VirusTotal scan URL:"
-msgstr ""
+msgstr "URL σάρωσης VirusTotal:"
 
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
@@ -15558,37 +15568,37 @@ msgstr "Ενημέρωση προσθέτων σε εξέλιξη..."
 #: gui\addonStoreGui\controls\messageDialogs.py:625
 msgctxt "addonStore"
 msgid "Add-ons updated, restart NVDA to activate changes"
-msgstr "Τα πρόσθετα ενημερώθηκαν, επανεκκινήστε το NVDA για να ενεργοποιηθούν οι αλλαγές."
+msgstr "Τα πρόσθετα ενημερώθηκαν, επανεκκινήστε το NVDA για να ενεργοποιηθούν οι αλλαγές"
 
 #. Translators: The title of the dialog which allows users to select which add-ons to copy to the system profile.
 #: gui\addonStoreGui\controls\messageDialogs.py:691
 msgctxt "addonStore"
 msgid "Copy Settings to System-wide Configuration"
-msgstr ""
+msgstr "Αντιγραφή ρυθμίσεων στη διαμόρφωση συστήματος"
 
 #. Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:712
 msgctxt "addonStore"
 msgid "One or more add-ons are currently enabled in your NVDA configuration. If run on secure screens, they will have unrestricted, higher-than-administrator level access to your entire system. You are strongly encouraged to copy only add-ons that you absolutely require in order to use NVDA during sign-in and on secure screens."
-msgstr ""
+msgstr "Ένα ή περισσότερα πρόσθετα είναι ενεργοποιημένα στη διαμόρφωση του NVDA. Αν εκτελεστούν σε ασφαλείς οθόνες, θα έχουν απεριόριστη πρόσβαση σε ολόκληρο το σύστημά σας, υψηλότερη από το επίπεδο διαχειριστή. Συνιστάται έντονα να αντιγράψετε μόνο τα πρόσθετα που είναι απολύτως απαραίτητα για τη χρήση του NVDA κατά τη σύνδεση και σε ασφαλείς οθόνες."
 
 #. Translators: Explanatory text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:722
 msgctxt "addonStore"
 msgid "The system-wide NVDA configuration contains add-ons that are not present in your configuration. If you continue, these add-ons will be removed from the system-wide configuration."
-msgstr ""
+msgstr "Η διαμόρφωση του NVDA σε επίπεδο συστήματος περιέχει πρόσθετα που δεν υπάρχουν στη δική σας διαμόρφωση. Αν συνεχίσετε, αυτά τα πρόσθετα θα αφαιρεθούν από τη διαμόρφωση του συστήματος."
 
 #. Translators: Instructional text in the dialog which allows users to select which add-ons to copy to NVDA's system config.
 #: gui\addonStoreGui\controls\messageDialogs.py:731
 msgctxt "addonStore"
 msgid "Check only the add-ons you wish to copy to the system-wide configuration."
-msgstr ""
+msgstr "Επιλέξτε μόνο τα πρόσθετα που επιθυμείτε να αντιγράψετε στη διαμόρφωση του συστήματος."
 
 #. Translators: The label of the list which allows users to select which add-ons to copy to the system profile
 #: gui\addonStoreGui\controls\messageDialogs.py:743
 msgctxt "addonStore"
 msgid "Add-ons"
-msgstr ""
+msgstr "Πρόσθετα"
 
 #. Translators: The label for a column in the copy add-ons dialog that displays the name of the add-on
 #. Translators: The name of the column that contains names of addons.
@@ -15602,37 +15612,37 @@ msgstr "Όνομα"
 #: gui\addonStoreGui\controls\messageDialogs.py:750
 msgctxt "addonStore"
 msgid "User version"
-msgstr ""
+msgstr "Έκδοση χρήστη"
 
 #. Translators: The label for a column in the copy add-ons dialog that displays the version of the add-on present in the system-wide configuration
 #: gui\addonStoreGui\controls\messageDialogs.py:752
 msgctxt "addonStore"
 msgid "System-wide version"
-msgstr ""
+msgstr "Έκδοση συνολικά συστήματος"
 
 #. Translators: The label for a button in the copy add-ons dialog which will initiate the copy process
 #: gui\addonStoreGui\controls\messageDialogs.py:767
 msgctxt "addonStore"
 msgid "&Continue"
-msgstr ""
+msgstr "&Συνέχεια"
 
 #. Translators: The label for a button in the copy add-ons dialog which will abandon the copy process
 #: gui\addonStoreGui\controls\messageDialogs.py:770
 msgctxt "addonStore"
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #. Translators: Shown when the add-on is not installed.
 #: gui\addonStoreGui\controls\messageDialogs.py:794
 msgctxt "addonStore"
 msgid "Not installed"
-msgstr ""
+msgstr "Δεν έχει εγκατασταθεί"
 
 #. Translators: Prepended to the name of an add-on to indicate that it will be removed from the system-wide configuration.
 #: gui\addonStoreGui\controls\messageDialogs.py:796
 msgctxt "addonStore"
 msgid "[remove]"
-msgstr ""
+msgstr "[remove]"
 
 #. Translators: A message to warn the user when attempting to copy add-ons for use on secure screens
 #: gui\addonStoreGui\controls\messageDialogs.py:864
@@ -15640,8 +15650,8 @@ msgstr ""
 msgctxt "addonStore"
 msgid "You have selected to copy {num} add-on to NVDA's system-wide configuration. Using this add-on during sign-in and on secure screens is a serious security risk."
 msgid_plural "You have selected to copy {num} add-ons to NVDA's system-wide configuration. Using these add-ons during sign-in and on secure screens is a serious security risk."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Έχετε επιλέξει να αντιγράψετε το πρόσθετο {num} στη διαμόρφωση συνολικά του συστήματος του NVDA. Η χρήση αυτού του πρόσθετου κατά τη σύνδεση και σε ασφαλείς οθόνες αποτελεί σοβαρό κίνδυνο ασφαλείας."
+msgstr[1] "Έχετε επιλέξει να αντιγράψετε το πρόσθετο {num} στη διαμόρφωση συνολικά του συστήματος του NVDA. Η χρήση αυτού του πρόσθετου κατά τη σύνδεση και σε ασφαλείς οθόνες αποτελεί σοβαρό κίνδυνο ασφαλείας."
 
 #. Translators: A message to warn the user when copying their configuration will remove add-ons
 #: gui\addonStoreGui\controls\messageDialogs.py:876
@@ -15649,21 +15659,21 @@ msgstr[1] ""
 msgctxt "addonStore"
 msgid "This action will remove {num} add-on from NVDA's system-wide configuration. "
 msgid_plural "This action will remove {num} add-ons from NVDA's system-wide configuration. "
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Αυτή η ενέργεια θα αφαιρέσει το πρόσθετο {num} από τη διαμόρφωση συνολικά του συστήματος του NVDA. "
+msgstr[1] "Αυτή η ενέργεια θα αφαιρέσει το πρόσθετο {num} από τη διαμόρφωση συνολικά του συστήματος του NVDA "
 
 #. Translators: A prompt asking the user to confirm whether to perform an action.
 #: gui\addonStoreGui\controls\messageDialogs.py:885
 msgctxt "addonStore"
 msgid "Are you sure you want to continue?"
-msgstr ""
+msgstr "Είστε βέβαιοι ότι θέλετε να συνεχίσετε;"
 
 #. Translators: The title of the warning dialog displayed when trying to
 #. copy add-ons for use on secure screens.
 #: gui\addonStoreGui\controls\messageDialogs.py:892
 msgctxt "addonStore"
 msgid "Warning"
-msgstr ""
+msgstr "Προειδοποίηση"
 
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 #: gui\addonStoreGui\controls\storeDialog.py:38
@@ -15939,20 +15949,20 @@ msgstr "Α&ξιολογήσεις κοινότητας"
 #: gui\addonStoreGui\viewModels\store.py:266
 msgctxt "addonStore"
 msgid "VirusTotal scan results"
-msgstr ""
+msgstr "Αποτελέσματα σάρωσης VirusTotal"
 
 #. Translators: Label for an action that shows changelog for the selected addon
 #: gui\addonStoreGui\viewModels\store.py:274
 msgctxt "addonStore"
 msgid "&What's new"
-msgstr ""
+msgstr "&Τι νέο υπάρχει"
 
 #. Translators: Title for a message showing changes for the current add-on version.
 #: gui\addonStoreGui\viewModels\store.py:282
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Changes for {curVersion}"
-msgstr ""
+msgstr "Αλλαγές για την {curVersion}"
 
 #. Translators: The message displayed when the add-on cannot be enabled.
 #. {addon} is replaced with the add-on name.
@@ -15985,76 +15995,76 @@ msgstr "Δεν υποστηρίζεται η αλληλεπίδραση με μ�
 #: mathPres\MathCAT\MathCAT.py:86
 msgctxt "math"
 msgid "Error in starting navigation of math."
-msgstr ""
+msgstr "Σφάλμα κατά την έναρξη πλοήγησης μαθηματικών."
 
 #. Translators: this message alerts users to an error in brailling math.
 #: mathPres\MathCAT\MathCAT.py:101
 msgctxt "math"
 msgid "Error in brailling math: see NVDA error log for details"
-msgstr ""
+msgstr "Σφάλμα κατά τη μετατροπή μαθηματικών σε Braille: ανατρέξτε στο αρχείο καταγραφής σφαλμάτων του NVDA για λεπτομέρειες"
 
 #. Translators: this message alerts users to an error in navigating math.
 #: mathPres\MathCAT\MathCAT.py:170
 msgctxt "math"
 msgid "Error in navigating math"
-msgstr ""
+msgstr "Σφάλμα κατά την πλοήγηση μαθηματικών"
 
 #. Translators: this message alerts users to an error brailling math.
 #: mathPres\MathCAT\MathCAT.py:190
 msgctxt "math"
 msgid "Error in brailling math"
-msgstr ""
+msgstr "Σφάλμα κατά τη μετατροπή μαθηματικών σε Braille"
 
 #. Translators: Description of a MathCAT navigation gesture.
 #: mathPres\MathCAT\MathCAT.py:196
 msgid "Navigates within math"
-msgstr ""
+msgstr "Πλοήγηση μέσα στα μαθηματικά"
 
 #. Translators: Message to be announced during Keyboard Help
 #: mathPres\MathCAT\MathCAT.py:202
 msgid "Copy navigation focus to clipboard"
-msgstr ""
+msgstr "Αντιγραφή εστίασης πλοήγησης στο πρόχειρο"
 
 #. Translators: Name of the section in "Input gestures" dialog.
 #: mathPres\MathCAT\MathCAT.py:204
 msgid "Clipboard"
-msgstr ""
+msgstr "Πρόχειρο"
 
 #. Translators: copy to clipboard
 #: mathPres\MathCAT\MathCAT.py:250
 msgctxt "math"
 msgid "copy as "
-msgstr ""
+msgstr "αντιγραφή ως"
 
 #. Translators: this message directs users to look in the log file
 #: mathPres\MathCAT\MathCAT.py:351
 msgctxt "math"
 msgid "Error navigating math"
-msgstr ""
+msgstr "Σφάλμα κατά την πλοήγηση μαθηματικών"
 
 #. Translators: this message reports when invalid math is found.
 #: mathPres\MathCAT\MathCAT.py:374
 msgctxt "math"
 msgid "Invalid math formatting found"
-msgstr ""
+msgstr "Βρέθηκε μη έγκυρη μορφοποίηση μαθηματικών"
 
 #. Translators: this message reports an error in speaking math.
 #: mathPres\MathCAT\MathCAT.py:401
 msgctxt "math"
 msgid "Error in speaking math."
-msgstr ""
+msgstr "Σφάλμα κατά την εκφώνηση μαθηματικών."
 
 #. Translators: this message reports illegal MathML.
 #: mathPres\MathCAT\MathCAT.py:426
 msgctxt "math"
 msgid "Illegal MathML found."
-msgstr ""
+msgstr "Βρέθηκε μη έγκυρο MathML."
 
 #. Translators: this message reports an error in brailling math.
 #: mathPres\MathCAT\MathCAT.py:433
 msgctxt "math"
 msgid "Error in brailling math."
-msgstr ""
+msgstr "Σφάλμα κατά τη μετατροπή μαθηματικών σε Braille."
 
 #. Translators: {lang} is the name of the language in that language,
 #. and {code} is the code for that language variant,
@@ -16063,135 +16073,135 @@ msgstr ""
 #, python-brace-format
 msgctxt "math"
 msgid "{lang} ({code})"
-msgstr ""
+msgstr "{lang} ({code})"
 
 #. Translators: Learning disabilities includes dyslexia and ADHD
 #. category of impairment that MathCAT supports: people with learning disabilities
 #: mathPres\MathCAT\preferences.py:30
 msgctxt "math"
 msgid "Learning disabilities"
-msgstr ""
+msgstr "Μαθησιακές δυσκολίες"
 
 #. Translators: category of impairment that MathCAT supports: people who are blind
 #: mathPres\MathCAT\preferences.py:32
 msgctxt "math"
 msgid "Blindness"
-msgstr ""
+msgstr "Τύφλωση"
 
 #. Translators: category of impairment that MathCAT supports: people who have low vision
 #: mathPres\MathCAT\preferences.py:34
 msgctxt "math"
 msgid "Low vision"
-msgstr ""
+msgstr "Χαμηλή όραση"
 
 #. Translators: options for decimal separator -- "Auto" = automatically pick the choice based on the language
 #: mathPres\MathCAT\preferences.py:48
 msgctxt "math"
 msgid "Automatic"
-msgstr ""
+msgstr "Αυτόματο"
 
 #. Translators: options for decimal separator -- "Custom" = user sets it
 #. Currently there is no UI for how it is done yet, but eventually there will be a dialog that pops up to set it
 #: mathPres\MathCAT\preferences.py:55
 msgctxt "math"
 msgid "Custom"
-msgstr ""
+msgstr "Προσαρμοσμένο"
 
 #. Translators: options for speech verbosity -- "terse" = use less words
 #. Translators: options for navigation verbosity -- "terse" = use less words
 #: mathPres\MathCAT\preferences.py:68 mathPres\MathCAT\preferences.py:116
 msgctxt "math"
 msgid "Terse"
-msgstr ""
+msgstr "Σύντομο"
 
 #. Translators: options for speech verbosity -- "medium" = try to be neither too terse nor too verbose
 #. Translators: options for navigation verbosity -- "medium" = try to be nether too terse nor too verbose words
 #: mathPres\MathCAT\preferences.py:70 mathPres\MathCAT\preferences.py:118
 msgctxt "math"
 msgid "Medium"
-msgstr ""
+msgstr "Μέτριο"
 
 #. Translators: options for speech verbosity -- "verbose" = use more words
 #. Translators: options for navigation verbosity -- "verbose" = use more words
 #: mathPres\MathCAT\preferences.py:72 mathPres\MathCAT\preferences.py:120
 msgctxt "math"
 msgid "Verbose"
-msgstr ""
+msgstr "Αναλυτικό"
 
 #. Translators: values for chemistry options with example speech in parenthesis
 #: mathPres\MathCAT\preferences.py:84
 msgctxt "math"
 msgid "Spell it out (H 2 O)"
-msgstr ""
+msgstr "Πες το αναλυτικά (H 2 O)"
 
 #. Translators: values for chemistry options with example speech in parenthesis (never interpret as chemistry)
 #: mathPres\MathCAT\preferences.py:86
 msgctxt "math"
 msgid "Off (H sub 2 O)"
-msgstr ""
+msgstr "Ανενεργό (H sub 2 O)"
 
 #. Translators: names of different modes of navigation. "Enhanced" mode understands math structure
 #: mathPres\MathCAT\preferences.py:99
 msgctxt "math"
 msgid "Enhanced"
-msgstr ""
+msgstr "Βελτιωμένο"
 
 #. Translators: "Simple" walks by character expect for things like fractions, roots, and scripts
 #: mathPres\MathCAT\preferences.py:101
 msgctxt "math"
 msgid "Simple"
-msgstr ""
+msgstr "Απλό"
 
 #. Translators: "Character" moves around by character, automatically moving into fractions, etc
 #: mathPres\MathCAT\preferences.py:103
 msgctxt "math"
 msgid "Character"
-msgstr ""
+msgstr "Χαρακτήρας"
 
 #. Translators: options for Copy expression to clipboard as -- "MathML"
 #: mathPres\MathCAT\preferences.py:134
 msgctxt "math"
 msgid "MathML"
-msgstr ""
+msgstr "MathML"
 
 #. Translators: options for Copy math to clipboard as -- "LaTeX"
 #: mathPres\MathCAT\preferences.py:136
 msgctxt "math"
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #. Translators: options for Copy math to clipboard as -- "ASCIIMath"
 #: mathPres\MathCAT\preferences.py:138
 msgctxt "math"
 msgid "ASCIIMath"
-msgstr ""
+msgstr "ASCIIMath"
 
 #. Translators: Math option for using dots 7 and 8: don't highlight
 #: mathPres\MathCAT\preferences.py:154
 msgctxt "math"
 msgid "Off"
-msgstr ""
+msgstr "Ανενεργό"
 
 #. Translators: Math option for using dots 7 and 8:
 #. only the first character of the current navigation node uses dots 7 & 8
 #: mathPres\MathCAT\preferences.py:157
 msgctxt "math"
 msgid "First character"
-msgstr ""
+msgstr "Πρώτος χαρακτήρας"
 
 #. Translators: Math option for using dots 7 and 8:
 #. only the first and last character of the current navigation node uses dots 7 & 8
 #: mathPres\MathCAT\preferences.py:160
 msgctxt "math"
 msgid "Endpoints"
-msgstr ""
+msgstr "Άκρα"
 
 #. Translators: Math option for using dots 7 and 8:
 #. all the characters for the current navigation node use dots 7 & 8
 #: mathPres\MathCAT\preferences.py:163
 msgctxt "math"
 msgid "All"
-msgstr ""
+msgstr "Όλα"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 #: NVDAHelper\__init__.py:497
@@ -16281,7 +16291,7 @@ msgstr "άγνωστη μέθοδος εισόδου"
 #: NVDAObjects\__init__.py:669
 #, python-brace-format
 msgid "Object edges positioned {left:.1f} percent from left edge of screen, {top:.1f} percent from top edge of screen, width is {width:.1f} percent of screen, height is {height:.1f} percent of screen"
-msgstr "Οι πλευρές του αντικειμένου βρίσκονται σε απόσταση {left:.1f}% από την αριστερή πλευρά της οθόνης, {top:.1f}% από την επάνω πλευρά της οθόνης, το πλάτος είναι {width:.1f}% της οθόνης και το ύψος είναι {height:.1f}% της οθόνης."
+msgstr "Οι πλευρές του αντικειμένου βρίσκονται σε απόσταση {left:.1f}% από την αριστερή πλευρά της οθόνης, {top:.1f}% από την επάνω πλευρά της οθόνης, το πλάτος είναι {width:.1f}% της οθόνης και το ύψος είναι {height:.1f}% της οθόνης"
 
 #. Translators: This is presented to inform the user of a progress bar percentage.
 #. Translators: This is presented to inform the user of the current battery percentage.
@@ -16499,7 +16509,7 @@ msgctxt "excel-UIA"
 msgid "Rotation: {0} degree"
 msgid_plural "Rotation: {0} degrees"
 msgstr[0] "Περιστροφή: {0} μοίρα"
-msgstr[1] "Περιστροφή: {0} μοίρα"
+msgstr[1] "Περιστροφή: {0} μοίρες"
 
 #. Translators: The outline (border) colors of an Excel cell.
 #: NVDAObjects\UIA\excel.py:232
@@ -16644,7 +16654,7 @@ msgstr "&Σφάλματα"
 #. in the browse mode Elements List dialog.
 #: NVDAObjects\UIA\wordDocument.py:79 NVDAObjects\window\winword.py:2228
 msgid "&References"
-msgstr ""
+msgstr "&Αναφορές"
 
 #. Translators: The label shown for an insertion change
 #: NVDAObjects\UIA\wordDocument.py:96
@@ -16669,21 +16679,21 @@ msgstr "παρακολούθηση αλλαγής: {text}"
 #: NVDAObjects\UIA\wordDocument.py:141
 #, python-brace-format
 msgid "footnote reference: {text}"
-msgstr ""
+msgstr "αναφορά υποσημείωσης: {text}"
 
 #. Translators: The label shown for an endnote in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the endnote.
 #: NVDAObjects\UIA\wordDocument.py:145
 #, python-brace-format
 msgid "endnote reference: {text}"
-msgstr ""
+msgstr "αναφορά σημείωσης τέλους: {text}"
 
 #. Translators: The label shown for a reference in the NVDA Elements List dialog in Microsoft Word.
 #. {name} will be replaced with the name of the reference.
 #: NVDAObjects\UIA\wordDocument.py:151
 #, python-brace-format
 msgid "reference: {name}"
-msgstr ""
+msgstr "αναφορά: {name}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #: NVDAObjects\UIA\wordDocument.py:203
@@ -16705,7 +16715,7 @@ msgstr "Η πλοήγηση κατά πρόταση δεν υποστηρίζε�
 #. Translators: a description for a script that reports the comment at the caret.
 #: NVDAObjects\UIA\wordDocument.py:764
 msgid "Reports the text of the comment where the system caret is located. If pressed twice, presents the information in a browsable message"
-msgstr "Αναφέρει το κείμενο του σχολίου όπου βρίσκεται ο δρομέας συστήματος. Αν πατηθεί δύο φορές, παρουσιάζει τις πληροφορίες σε μορφή μηνύματος με δυνατότητα περιήγησης."
+msgstr "Αναφέρει το κείμενο του σχολίου όπου βρίσκεται ο δρομέας συστήματος. Αν πατηθεί δύο φορές, παρουσιάζει τις πληροφορίες σε μορφή μηνύματος με δυνατότητα περιήγησης"
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
@@ -17837,7 +17847,7 @@ msgstr "Μήνυμα εισόδου είναι {message}"
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1920
 msgid "Reports the note on the current cell. If pressed twice, presents the information in browse mode"
-msgstr "Αναφέρει τη σημείωση στο τρέχον κελί. Αν πατηθεί δύο φορές, παρουσιάζει τις πληροφορίες σε λειτουργία περιήγησης."
+msgstr "Αναφέρει τη σημείωση στο τρέχον κελί. Αν πατηθεί δύο φορές, παρουσιάζει τις πληροφορίες σε λειτουργία περιήγησης"
 
 #. Translators: title for note on the current Excel cell dialog.
 #. Translators: Title for the note editing  dialog
@@ -18315,7 +18325,7 @@ msgstr "Ορθογραφικός έλεγχος: {text}"
 #: NVDAObjects\window\winword.py:653
 #, python-brace-format
 msgid "footnote reference {number}: {text}"
-msgstr ""
+msgstr "αναφορά υποσημείωσης {number}: {text}"
 
 #. Translators: The label shown for a endnote reference in the NVDA Elements List dialog in Microsoft Word.
 #. {number} will be replaced with the endnote number.
@@ -18323,7 +18333,7 @@ msgstr ""
 #: NVDAObjects\window\winword.py:664
 #, python-brace-format
 msgid "endnote reference {number}: {text}"
-msgstr ""
+msgstr "αναφορά σημείωσης τέλους {number}: {text}"
 
 #. Translators: a distance from the left edge of the page in Microsoft Word
 #: NVDAObjects\window\winword.py:874
@@ -18561,13 +18571,13 @@ msgstr "Διάστημα {val:g} στιγμών πριν την παράγραφ
 #: screenCurtain\_screenCurtain.py:30
 msgctxt "screenCurtain"
 msgid "Always &show a warning when enabling Screen Curtain"
-msgstr ""
+msgstr "Πάντα &εμφάνιση προειδοποίησης κατά την ενεργοποίηση της Κουρτίνας Οθόνης"
 
 #. Translators: Warning message when trying to enable the screen curtain when OCR is active.
 #: screenCurtain\_screenCurtain.py:35
 msgctxt "screenCurtain"
 msgid "Cannot enable screen curtain while performing content recognition"
-msgstr ""
+msgstr "Δεν είναι δυνατή η ενεργοποίηση της κουρτίνας οθόνης κατά την εκτέλεση αναγνώρισης περιεχομένου"
 
 #. Translators: Reported when the screen curtain could not be enabled.
 #: screenCurtain\_screenCurtain.py:39
@@ -18579,7 +18589,7 @@ msgstr "Δεν ήταν δυνατή η ενεργοποίηση της κουρ
 #: screenCurtain\_screenCurtain.py:45
 msgctxt "screenCurtain"
 msgid "There was a problem enabling Screen Curtain. The contents of your screen are still visible. You may attempt to enable Screen Curtain manually."
-msgstr ""
+msgstr "Παρουσιάστηκε πρόβλημα κατά την ενεργοποίηση της Κουρτίνας Οθόνης. Τα περιεχόμενα της οθόνης σας εξακολουθούν να είναι ορατά. Μπορείτε να επιχειρήσετε να ενεργοποιήσετε την Κουρτίνα Οθόνης χειροκίνητα."
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -19119,17 +19129,17 @@ msgstr "Φωνές Windows OneCore"
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\sapi4_32.py:18
 msgid "Microsoft Speech API version 4"
-msgstr ""
+msgstr "Microsoft Speech API έκδοση 4"
 
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\sapi5.py:558 _synthDrivers32\_sapi5.py:558
 msgid "Microsoft Speech API version 5 (64 bit)"
-msgstr ""
+msgstr "Microsoft Speech API έκδοση 5 (64 bit)"
 
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\sapi5_32.py:15
 msgid "Microsoft Speech API version 5 (32 bit)"
-msgstr ""
+msgstr "Microsoft Speech API έκδοση 5 (32 bit)"
 
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\silence.py:16
@@ -19347,7 +19357,7 @@ msgstr "Αποσυνδεδεμένο από την πρίζα"
 #. Translators: Reported when battery time is less than 1 minute.
 #: winAPI\_powerTracking.py:228
 msgid "Less than 1 minute remaining"
-msgstr ""
+msgstr "Απομένει λιγότερο από 1 λεπτό"
 
 #. Translators: This is the hour string part of the estimated remaining runtime of the laptop battery.
 #. E.g. if the full string is "1 hour and 34 minutes remaining", this string is "1 hour".
@@ -19379,14 +19389,14 @@ msgstr "Απομένουν {hourText} και {minuteText}"
 #: winAPI\_powerTracking.py:265
 #, python-brace-format
 msgid "{hourText} remaining"
-msgstr ""
+msgstr "Απομένει {hourText}"
 
 #. Translators: Reported when only minutes remaining for battery life.
 #. E.g. "30 minutes remaining"
 #: winAPI\_powerTracking.py:271
 #, python-brace-format
 msgid "{minuteText} remaining"
-msgstr ""
+msgstr "Απομένει {minuteText}"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 #: winAPI\secureDesktop.py:53
@@ -19455,13 +19465,13 @@ msgstr "Αδυναμία σύνδεσης με τον απομακρυσμένο
 #: _remoteClient\client.py:333
 msgctxt "remote"
 msgid "Error Connecting"
-msgstr ""
+msgstr "Σφάλμα Σύνδεσης"
 
 #. Translators: Message shown when unable to connect to the remote computer.
 #: _remoteClient\client.py:335
 msgctxt "remote"
 msgid "Unable to connect to the remote computer"
-msgstr ""
+msgstr "Αδυναμία σύνδεσης στον απομακρυσμένο υπολογιστή"
 
 #. Translators: Message shown when trying to connect while already connected.
 #: _remoteClient\client.py:358 _remoteClient\client.py:705
@@ -19626,7 +19636,7 @@ msgstr "Η εξωτερική IP ελήφθη, αλλά η θύρα {port} πι�
 #. Translators: Error message when unable to get IP address from portcheck server
 #: _remoteClient\dialogs.py:304
 msgid "Unable to contact portcheck server, please manually retrieve your IP address"
-msgstr "Αδυναμία επικοινωνίας με τον διακομιστή ελέγχου θύρας. Παρακαλώ ανακτήστε χειροκίνητα τη διεύθυνση IP σας."
+msgstr "Αδυναμία επικοινωνίας με τον διακομιστή ελέγχου θύρας, παρακαλώ ανακτήστε χειροκίνητα τη διεύθυνση IP σας"
 
 #. Translators: Message displayed when the host or key field is empty and the user tries to connect.
 #: _remoteClient\dialogs.py:414

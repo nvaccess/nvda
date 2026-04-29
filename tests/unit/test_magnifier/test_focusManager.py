@@ -183,7 +183,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(0, 0),
 				systemFocusPos=Coordinates(0, 0),
-				mousePos=(0, 0),
+				mousePos=Coordinates(0, 0),
 				leftPressed=True,
 				expectedCoords=Coordinates(0, 0),
 				expectedFocus=MagnifierFollowFocusType.MOUSE,
@@ -192,7 +192,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(0, 0),
 				systemFocusPos=Coordinates(0, 0),
-				mousePos=(10, 10),
+				mousePos=Coordinates(10, 10),
 				leftPressed=False,
 				expectedCoords=Coordinates(10, 10),
 				expectedFocus=MagnifierFollowFocusType.MOUSE,
@@ -201,7 +201,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(0, 0),
 				systemFocusPos=Coordinates(15, 15),
-				mousePos=(0, 0),
+				mousePos=Coordinates(0, 0),
 				leftPressed=False,
 				expectedCoords=Coordinates(15, 15),
 				expectedFocus=MagnifierFollowFocusType.SYSTEM_FOCUS,
@@ -210,7 +210,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(20, 20),
 				systemFocusPos=Coordinates(0, 0),
-				mousePos=(0, 0),
+				mousePos=Coordinates(0, 0),
 				leftPressed=False,
 				expectedCoords=Coordinates(20, 20),
 				expectedFocus=MagnifierFollowFocusType.NAVIGATOR_OBJECT,
@@ -219,7 +219,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(30, 30),
 				systemFocusPos=Coordinates(15, 15),
-				mousePos=(0, 0),
+				mousePos=Coordinates(0, 0),
 				leftPressed=False,
 				expectedCoords=Coordinates(30, 30),
 				expectedFocus=MagnifierFollowFocusType.NAVIGATOR_OBJECT,
@@ -228,7 +228,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(0, 0),
 				systemFocusPos=Coordinates(0, 0),
-				mousePos=(0, 0),
+				mousePos=Coordinates(0, 0),
 				leftPressed=False,
 				reviewPos=Coordinates(30, 30),
 				expectedCoords=Coordinates(30, 30),
@@ -259,7 +259,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(0, 0),
 				systemFocusPos=Coordinates(0, 0),
-				mousePos=(0, 0),
+				mousePos=Coordinates(0, 0),
 				leftPressed=False,
 				expectedCoords=Coordinates(0, 0),
 				expectedFocus=MagnifierFollowFocusType.MOUSE,
@@ -290,7 +290,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(10, 10),
 				systemFocusPos=Coordinates(0, 0),
-				mousePos=(20, 20),
+				mousePos=Coordinates(20, 20),
 				leftPressed=False,
 				expectedCoords=Coordinates(20, 20),
 				expectedFocus=MagnifierFollowFocusType.MOUSE,
@@ -299,7 +299,7 @@ class TestFocusManager(unittest.TestCase):
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(10, 10),
 				systemFocusPos=Coordinates(15, 15),
-				mousePos=(20, 20),
+				mousePos=Coordinates(20, 20),
 				leftPressed=True,
 				expectedCoords=Coordinates(20, 20),
 				expectedFocus=MagnifierFollowFocusType.MOUSE,

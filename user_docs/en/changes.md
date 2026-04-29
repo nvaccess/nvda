@@ -61,6 +61,7 @@ This is more noticeable for Windows releases which are enablement packages on to
 * The `NVDA+k` command now correctly reports the destination of links containing formatted text, such as bold or italics. (#19428, @Cary-rowen)
 * Capital indicators are now correctly announced when selecting single characters. (#19505, @cary-rowen)
 * Configuration profile triggers now activate when the Add-on Store is open. (#19583, @bramd)
+* After cancelling an add-on download and reopening the Add-on Store, downloading another add-on no longer fails. (#20015, @Cary-rowen)
 * Decorative Unicode letters such as negative squared, negative circled, and regional indicator symbol characters are now normalized to their base Latin letters when Unicode normalization is enabled. (#19608, @bramd)
 * NVDA no longer crashes when the Add-on Store download directory cannot be cleaned up due to file permission errors. (#19202, @christopherpross)
 * Fixed NVDA freezing when navigating in JetBrains IDEs. (#16741, @christopherpross)

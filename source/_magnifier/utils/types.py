@@ -12,12 +12,12 @@ from typing import NamedTuple
 from utils.displayString import DisplayStringStrEnum, DisplayStringEnum
 
 
-class MagnifierParams(NamedTuple):
-	"""Named tuple representing magnifier parameters for initialization"""
+class MagnifierParameters(NamedTuple):
+	"""Named tuple representing the size, position and filter of the magnifier"""
 
-	zoomLevel: float
-	filter: str
-	fullscreenMode: str
+	magnifierSize: "Size"
+	coordinates: "Coordinates"
+	filter: "Filter"
 
 
 class Direction(Enum):
@@ -25,6 +25,13 @@ class Direction(Enum):
 
 	IN = True
 	OUT = False
+
+
+class Size(NamedTuple):
+	"""Named tuple representing width and height"""
+
+	width: int
+	height: int
 
 
 class MagnifierAction(DisplayStringEnum):
@@ -105,6 +112,7 @@ class MagnifierType(DisplayStringStrEnum):
 	"""Type of magnifier"""
 
 	FULLSCREEN = "fullscreen"
+	FIXED = "fixed"
 	DOCKED = "docked"
 	LENS = "lens"
 
@@ -113,20 +121,13 @@ class MagnifierType(DisplayStringStrEnum):
 		return {
 			# Translators: Magnifier type - full-screen mode.
 			self.FULLSCREEN: pgettext("magnifier", "Fullscreen"),
+			# Translators: Magnifier type - fixed mode.
+			self.FIXED: pgettext("magnifier", "Fixed"),
 			# Translators: Magnifier type - docked mode.
 			self.DOCKED: pgettext("magnifier", "Docked"),
 			# Translators: Magnifier type - lens mode.
 			self.LENS: pgettext("magnifier", "Lens"),
 		}
-
-
-class MagnifierPosition(NamedTuple):
-	"""Named tuple representing the position and size of the magnifier window"""
-
-	left: int
-	top: int
-	visibleWidth: int
-	visibleHeight: int
 
 
 class Coordinates(NamedTuple):

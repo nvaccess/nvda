@@ -7681,7 +7681,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |`NVDA+downArrow` |`NVDA+a` |Starts reading from the current position, moving it along as it goes</source>
-        <target>Izgovori sve |`NVDA+strelicaDole` |`NVDA+a` |Počinje čitanje od trenutne pozicije, pomerajući kursor dok čita</target>
+        <target>Neprekidno čitanje |`NVDA+strelicaDole` |`NVDA+a` |Počinje čitanje od trenutne pozicije, pomerajući kursor dok čita</target>
       </segment>
     </unit>
     <unit id="fd3fa8cf-7c58-4704-862c-d2744715c7b1">
@@ -11042,7 +11042,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |NVDA+downArrow |NVDA+a |Starts reading from the current position of the system caret, moving it along as it goes</source>
-        <target>Izgovori sve |NVDA+Strelica dole |NVDA+a |Počinje čitanje od trenutne pozicije sistemskog kursora, pomerajući ga dok čita</target>
+        <target>Neprekidno čitanje |NVDA+Strelica dole |NVDA+a |Počinje čitanje od trenutne pozicije sistemskog kursora, pomerajući ga dok čita</target>
       </segment>
     </unit>
     <unit id="4c5405b9-09e7-44d7-915f-6d145a7b2b10">
@@ -11249,7 +11249,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all in column |`NVDA+control+alt+downArrow` |Reads the column vertically from the current cell downwards to the last cell in the column.</source>
-        <target>Izgovori sve u koloni |`NVDA+kontrol+alt+strelicaDole` |Čita kolonu vertikalno od trenutne ćelije dole do poslednje ćelije u koloni.</target>
+        <target>Neprekidno čitanje kolone |`NVDA+kontrol+alt+strelicaDole` |Čita kolonu vertikalno od trenutne ćelije dole do poslednje ćelije u koloni.</target>
       </segment>
     </unit>
     <unit id="8057c7b0-88ed-4aa7-80a9-e5060273077f">
@@ -11260,7 +11260,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all in row |`NVDA+control+alt+rightArrow` |Reads the row horizontally from the current cell rightwards to the last cell in the row.</source>
-        <target>Izgovori sve u redu |`NVDA+kontrol+alt+strelicaDesno` |Čita red horizontalno od trenutne ćelije desno do poslednje ćelije u redu.</target>
+        <target>Neprekidno čitanje reda |`NVDA+kontrol+alt+strelicaDesno` |Čita red horizontalno od trenutne ćelije desno do poslednje ćelije u redu.</target>
       </segment>
     </unit>
     <unit id="033ef5bc-fcfb-4591-b21b-5cbc821c2c01">
@@ -11962,7 +11962,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all with review |numpadPlus |NVDA+shift+a |3-finger flick down (text mode) |Reads from the current position of the review cursor, moving it as it goes</source>
-        <target>Izgovori sve uz pregled |Numerički plus |NVDA+šift+a |Prevlačenje dole sa 3 prsta(režim teksta) |Čita od trenutne pozicije preglednog kursora, pomerajući ga u toku čitanja</target>
+        <target>Neprekidno čitanje u pregledu |Numerički plus |NVDA+šift+a |Prevlačenje dole sa 3 prsta(režim teksta) |Čita od trenutne pozicije preglednog kursora, pomerajući ga u toku čitanja</target>
       </segment>
     </unit>
     <unit id="025c1550-198b-4c73-9234-53de940dccf0">
@@ -12668,7 +12668,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>All of NVDA's [system caret](#SystemCaret) key commands will work in this mode; e.g. say all, report formatting, table navigation commands, etc.</source>
-        <target>Sve komande programa NVDA [za sistemski kursor](#SystemCaret) će raditi u ovom režimu; na primer izgovori sve, prijavi formatiranje, komande za kretanje kroz tabelu, i tako dalje.</target>
+        <target>Sve komande programa NVDA [za sistemski kursor](#SystemCaret) će raditi u ovom režimu; na primer neprekidno čitanje, prijavi formatiranje, komande za kretanje kroz tabelu, i tako dalje.</target>
       </segment>
     </unit>
     <unit id="92099f33-3a99-48e2-a33f-0a7e5d980f03">
@@ -16670,7 +16670,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Windows 10 and later includes OCR for many languages.</source>
-        <target>Windows 10 i novije verzije uključuju OCR za puno jezika.</target>
+        <target>Windows 10 i novije verzije uključuju optičko prepoznavanje znakova za mnoge jezike.</target>
       </segment>
     </unit>
     <unit id="91e22169-3c58-4059-af47-acb40ef3abae">
@@ -16688,7 +16688,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>You can set the language to use for text recognition in the [Windows OCR category](#Win10OcrSettings) of the [NVDA Settings](#NVDASettings) dialog.</source>
-        <target>Možete podesiti jezik koji ćese koristiti za prepoznavanje u [Windows OCR kategoriji](#Win10OcrSettings) [NVDA podešavanja](#NVDASettings).</target>
+        <target>Možete podesiti jezik koji će se koristiti za prepoznavanje u kategoriji [Windows optičko prepoznavanje znakova](#Win10OcrSettings) [dijaloga sa NVDA podešavanjima](#NVDASettings).</target>
       </segment>
     </unit>
     <unit id="abeeabd0-92d6-49fe-90a2-f86d595bf3b3">
@@ -16715,7 +16715,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>This can also be done in the [Windows OCR category](#Win10OcrSettings) of the [NVDA Settings](#NVDASettings) dialog.</source>
-        <target>Ovo se takođe može uraditi u [Windows OCR kategoriji](#Win10OcrSettings) dijaloga [NVDA podešavanja](#NVDASettings).</target>
+        <target>Ovo se takođe može uraditi u [kategoriji Windows optičko prepoznavanje znakova](#Win10OcrSettings) dijaloga sa [NVDA podešavanjima](#NVDASettings).</target>
       </segment>
     </unit>
     <unit id="74f529c9-35ab-4532-8b88-d8f8212d072b">
@@ -16724,7 +16724,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Windows OCR may be partially or fully incompatible with [NVDA vision enhancements](#Vision) or other external visual aids. You will need to disable these aids before proceeding to a recognition.</source>
-        <target>Windows OCR može biti delimično ili potpuno nekompatibilan sa [NVDA vizuelnim poboljšanjima](#Vision) ili drugim vizuelnim pomoćnim alatima. Morate onemogućiti ove alate pre nego što započnete proces prepoznavanja.</target>
+        <target>Windows optičko prepoznavanje znakova može biti delimično ili potpuno nekompatibilno sa [NVDA vizuelnim pomoćnicima](#Vision) ili drugim vizuelnim pomoćnim alatima. Morate onemogućiti ove alate pre nego što započnete proces prepoznavanja.</target>
       </segment>
     </unit>
     <unit id="0ac3a78f-d6c6-41b2-84fd-4c464189cf76">
@@ -16733,7 +16733,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>To recognize the text in the current navigator object using Windows OCR, press NVDA+r.</source>
-        <target>Da prepoznate tekst trenutnog navigacionog objekta koristeći Windows OCR, pritisnite NVDA+r.</target>
+        <target>Da prepoznate tekst trenutnog navigacionog objekta koristeći Windows optičko prepoznavanje znakova, pritisnite NVDA+r.</target>
       </segment>
     </unit>
     <unit id="2b1a4fef-d044-4d09-92a0-7a471f41fbf0">
@@ -17728,7 +17728,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The page will be turned automatically as appropriate when you move the cursor or use the say all command.</source>
-        <target>Stranice se automatski menjaju kada pomerate kursor ili koristite komandu izgovori sve.</target>
+        <target>Stranice se automatski menjaju kada pomerate kursor ili koristite komandu neprekidnog čitanja.</target>
       </segment>
     </unit>
     <unit id="b7bc8709-2cbc-4261-ad67-c43417ac0b9d">
@@ -18821,7 +18821,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Prevent display from turning off during say all or reading with braille</source>
-        <target>Spreči da se ekran isključi tokom čitanja na brajevom redu ili u režimu izgovori sve</target>
+        <target>Spreči da se ekran isključi tokom čitanja na brajevom redu ili u režimu neprekidnog čitanja</target>
       </segment>
     </unit>
     <unit id="92438bd8-32e4-450d-a072-f6aee58f0eac">
@@ -18830,7 +18830,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>This check box, when enabled, ensures that the display stays on when reading with say all or with braille (e.g. when pressing scroll buttons).</source>
-        <target>Ovo izborno polje, kada je omogućeno, obezbeđuje da ekran ostane uključen kada se čita u režimu izgovori sve ili sa brajevim redom (na primer kada se pritiskaju tasteri za pomeranje).</target>
+        <target>Ovo izborno polje, kada je omogućeno, obezbeđuje da ekran ostane uključen kada se čita u režimu neprekidnog čitanja ili sa brajevim redom (na primer kada se pritiskaju tasteri za pomeranje).</target>
       </segment>
     </unit>
     <unit id="62b3430f-2c86-4cda-b6d7-5de458e5c8f7">
@@ -18839,7 +18839,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>This avoids the situation where the screen unexpectedly locks during a say all.</source>
-        <target>Ovo će izbeći situaciju u kojoj se ekran neočekivano zaključa tokom režima izgovori sve.</target>
+        <target>Ovo će izbeći situaciju u kojoj se ekran neočekivano zaključa tokom režima neprekidnog čitanja.</target>
       </segment>
     </unit>
     <unit id="388ad5ce-4a07-474b-a814-f5b2494040d1">
@@ -22940,36 +22940,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 2619</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option controls whether a sound cue is played when [Screen Curtain](#VisionScreenCurtain) is enabled or disabled.</source>
-        <target>This option controls whether a sound cue is played when [Screen Curtain](#VisionScreenCurtain) is enabled or disabled.</target>
+        <target>Ova opcija kontroliše da li će se čuti zvučni signal kada se [zatamnjivanje ekrana](#VisionScreenCurtain) omogući ili onemogući.</target>
       </segment>
     </unit>
     <unit id="7e62d46f-2d2f-4231-87c3-b59ae908a916">
       <notes>
         <note appliesTo="source">line: 2621</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>By default, sounds are played when Screen Curtain is toggled.</source>
-        <target>By default, sounds are played when Screen Curtain is toggled.</target>
+        <target>Podrazumevano, zvukovi se reprodukuju kada se uključi ili isključi zatamnjivanje ekrana.</target>
       </segment>
     </unit>
     <unit id="3d6eba1d-3ac8-4ef0-9b7a-3f2c6d9db788">
       <notes>
         <note appliesTo="source">line: 2622</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If you do not wish to hear these sounds, you can uncheck this checkbox.</source>
-        <target>If you do not wish to hear these sounds, you can uncheck this checkbox.</target>
+        <target>Ako ne želite da čujete ove zvukove, možete onemogućiti ovu opciju.</target>
       </segment>
     </unit>
     <unit id="18469df8-5738-4e57-bc6e-3fe838025377">
       <notes>
         <note appliesTo="source">line: 2623</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Note that you will still be alerted in speech and/or braille when Screen Curtain is toggled with an input gesture.</source>
-        <target>Note that you will still be alerted in speech and/or braille when Screen Curtain is toggled with an input gesture.</target>
+        <target>Imajte na umu da ćete još uvek dobijati govorna upozorenja ili upozorenja na brajevom redu kada se zatamnjivanje ekrana uključi ili isključi korišćenjem komande.</target>
       </segment>
     </unit>
     <unit id="9c0f6957-8383-4803-b35a-f42418f64870">
@@ -22978,45 +22978,45 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#GeneralSettingsLogLevel}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Logging level</source>
-        <target>Logging level</target>
+        <target>Nivo evidentiranja u dnevniku</target>
       </segment>
     </unit>
     <unit id="1e10ddb5-8a01-4562-88c2-a30b3e749bbf">
       <notes>
         <note appliesTo="source">line: 2627</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This is a combo box that lets you choose how much NVDA will log as it's running.</source>
-        <target>This is a combo box that lets you choose how much NVDA will log as it's running.</target>
+        <target>Ovo je izborni okvir koji vam dozvoljava da odaberete koliko informacija će NVDA evidentirati u dnevniku dok je pokrenut.</target>
       </segment>
     </unit>
     <unit id="9d165954-c665-4ae1-a5b6-2002f4a7f361">
       <notes>
         <note appliesTo="source">line: 2628</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Generally, users should not need to touch this, as not too much is logged.</source>
-        <target>Generally, users should not need to touch this, as not too much is logged.</target>
+        <target>U većini slučajeva, korisnici ne bi trebalo ovo da menjaju, budući da se previše informacija ne evidentira.</target>
       </segment>
     </unit>
     <unit id="e0d1f296-9b70-4774-a9b2-cde68dad13b2">
       <notes>
         <note appliesTo="source">line: 2629</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>However, if you wish to provide information in a bug report, or enable or disable logging altogether, then it may be a useful option.</source>
-        <target>However, if you wish to provide information in a bug report, or enable or disable logging altogether, then it may be a useful option.</target>
+        <target>Međutim, ako želite da pružite informacije prilikom prijavljivanja greške, ili da u potpunosti onemogućite i omogućite evidentiranje, ovo može biti korisna opcija.</target>
       </segment>
     </unit>
     <unit id="e4ca0659-8926-46c6-bed5-6386308a22b1">
       <notes>
         <note appliesTo="source">line: 2631</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The available logging levels are:</source>
-        <target>The available logging levels are:</target>
+        <target>Dostupni nivoi evidentiranja su:</target>
       </segment>
     </unit>
     <unit id="490d31c1-b480-48ea-a663-20ea59ad72fb">
@@ -23024,9 +23024,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2633</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Disabled: Apart from a brief startup message, NVDA will not log anything while it runs.</source>
-        <target>Disabled: Apart from a brief startup message, NVDA will not log anything while it runs.</target>
+        <target>Onemogućeno: osim kratke poruke o pokretanju, NVDA neće evidentirati ništa dok je pokrenut.</target>
       </segment>
     </unit>
     <unit id="a76fe52e-cdeb-44e8-96a0-8de600c54c31">
@@ -23034,9 +23034,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2634</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Info: NVDA will log basic information such as startup messages and information useful for developers.</source>
-        <target>Info: NVDA will log basic information such as startup messages and information useful for developers.</target>
+        <target>Info: NVDA će evidentirati osnovne informacije kao što su poruke o pokretanju i informacije koje su korisne za programere.</target>
       </segment>
     </unit>
     <unit id="311dcaf5-9c31-4d5d-b532-08e954f8ffde">
@@ -23044,9 +23044,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2635</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Debug warning: Warning messages that are not caused by severe errors will be logged.</source>
-        <target>Debug warning: Warning messages that are not caused by severe errors will be logged.</target>
+        <target>Upozorenje o ispravljanju greške: poruke upozorenja koje nisu izazvane ozbiljnim greškama će biti evidentirane.</target>
       </segment>
     </unit>
     <unit id="dc6f40d6-e276-4ffd-af22-daaeb0d1c89d">
@@ -23054,18 +23054,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2636</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Input/output: Input from keyboard and braille displays, as well as speech and braille output will be logged.</source>
-        <target>Input/output: Input from keyboard and braille displays, as well as speech and braille output will be logged.</target>
+        <target>Ulaz/izlaz: unos sa tastature i brajevih redova, kao i govorni i brajev izlaz će biti evidentirani.</target>
       </segment>
     </unit>
     <unit id="164f7171-d744-46a9-acbc-80d2ec105f82">
       <notes>
         <note appliesTo="source">line: 2637</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If you are concerned about privacy, do not set the logging level to this option.</source>
-        <target>If you are concerned about privacy, do not set the logging level to this option.</target>
+        <target>Ako vas brine privatnost, ne podešavajte nivo evidentiranja na ovu opciju.</target>
       </segment>
     </unit>
     <unit id="1d43ad0b-4133-4d42-b353-0948e7e0589a">
@@ -23073,18 +23073,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2638</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.</source>
-        <target>Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.</target>
+        <target>Ispravljanje greške: uz info, upozorenja i poruke ulaza/izlaza, evidentiraće se dodatne poruke korisne za otklanjanje grešaka.</target>
       </segment>
     </unit>
     <unit id="76336555-dc4c-4910-898e-33cc511217c7">
       <notes>
         <note appliesTo="source">line: 2639</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.</source>
-        <target>Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.</target>
+        <target>Kao i ulaz/izlaz, ako vas brine privatnost, ne podešavajte nivo evidentiranja na ovu opciju.</target>
       </segment>
     </unit>
     <unit id="15a4a49b-50a5-448e-94a0-7d863f5f5dbf">
@@ -23093,36 +23093,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#GeneralSettingsGatherUsageStats}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Allow NV Access to gather NVDA usage statistics</source>
-        <target>Allow NV Access to gather NVDA usage statistics</target>
+        <target>Dozvoli da NV Access prikuplja NVDA statistike korišćenja</target>
       </segment>
     </unit>
     <unit id="b331c548-8738-48c2-9414-41437e300806">
       <notes>
         <note appliesTo="source">line: 2643</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If this is enabled, NV Access will use the information from update checks, including particular demographics such as the operating system and country of origin, to track the number of NVDA users.</source>
-        <target>If this is enabled, NV Access will use the information from update checks, including particular demographics such as the operating system and country of origin, to track the number of NVDA users.</target>
+        <target>Ako je ova opcija omogućena, NV Access će koristiti informacije poslate tokom provere ažuriranja, uključujući određene demografske informacije kao što su operativni sistem i država, kako bi pratili broj NVDA korisnika.</target>
       </segment>
     </unit>
     <unit id="534e8a45-8027-433d-9ad1-4e4630650430">
       <notes>
         <note appliesTo="source">line: 2644</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Note that although your IP address will be used to calculate your country during the update check, the IP address is never kept.</source>
-        <target>Note that although your IP address will be used to calculate your country during the update check, the IP address is never kept.</target>
+        <target>Imajte na umu da iako se vaša IP adresa koristi za određivanje vaše države tokom provere ažuriranja, IP adresa se nikada ne čuva.</target>
       </segment>
     </unit>
     <unit id="ace31388-04f7-42d1-9d55-bddcf48b327c">
       <notes>
         <note appliesTo="source">line: 2645</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Apart from the [mandatory information required to check for updates](#GeneralSettingsCheckForUpdates), the following extra information is also currently sent:</source>
-        <target>Apart from the [mandatory information required to check for updates](#GeneralSettingsCheckForUpdates), the following extra information is also currently sent:</target>
+        <target>Pored [informacija neophodnih za proveru ažuriranja](#GeneralSettingsCheckForUpdates), sledeće dodatne informacije se takođe šalju:</target>
       </segment>
     </unit>
     <unit id="272b5bb0-a43f-4c4b-ad52-50222058ef8c">
@@ -23130,9 +23130,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2647</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>A unique ID for the current NVDA user, which changes once a month</source>
-        <target>A unique ID for the current NVDA user, which changes once a month</target>
+        <target>Jedinstveni identifikator trenutnog NVDA korisnika, koji se menja jednom mesečno</target>
       </segment>
     </unit>
     <unit id="43a1a027-6d02-4c93-aad2-2a9957da14ad">
@@ -23140,9 +23140,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2648</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA interface language</source>
-        <target>NVDA interface language</target>
+        <target>Jezik NVDA interfejsa</target>
       </segment>
     </unit>
     <unit id="14fd25a9-3d1b-4d51-9427-030f16046a98">
@@ -23150,9 +23150,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2649</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Whether this copy of NVDA is portable or installed</source>
-        <target>Whether this copy of NVDA is portable or installed</target>
+        <target>Da li je ova NVDA kopija prenosna ili instalirana</target>
       </segment>
     </unit>
     <unit id="3a6ad2e2-5fab-4304-923b-d96551532d3d">
@@ -23160,9 +23160,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2650</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Name of the current speech synthesizer in use (including the name of the add-on the driver comes from)</source>
-        <target>Name of the current speech synthesizer in use (including the name of the add-on the driver comes from)</target>
+        <target>Ime sintetizatora govora koji se trenutno koristi (uključujući ime dodatka drajvera)</target>
       </segment>
     </unit>
     <unit id="843bcd40-6791-4209-bcb6-97082d13cc03">
@@ -23170,9 +23170,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2651</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Name of the current Braille display in use (including the name of the add-on the driver comes from)</source>
-        <target>Name of the current Braille display in use (including the name of the add-on the driver comes from)</target>
+        <target>Ime brajevog reda koji se trenutno koristi (uključujući ime dodatka drajvera)</target>
       </segment>
     </unit>
     <unit id="c2225cda-80a8-4392-8169-4319732870c4">
@@ -23180,18 +23180,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2652</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The current output Braille table (if Braille is in use)</source>
-        <target>The current output Braille table (if Braille is in use)</target>
+        <target>Trenutna izlazna brajeva tabela (ako se koristi brajev red)</target>
       </segment>
     </unit>
     <unit id="bb775574-4bbf-4ccf-b70d-e752d5779da6">
       <notes>
         <note appliesTo="source">line: 2654</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This information greatly aids NV Access to prioritize future development of NVDA.</source>
-        <target>This information greatly aids NV Access to prioritize future development of NVDA.</target>
+        <target>Ove informacije su od ogromne pomoći za NV Access kako bi označili buduće prioritete u razvoju programa NVDA.</target>
       </segment>
     </unit>
     <unit id="7fd83f22-c800-472c-91e9-5122f20fef81">
@@ -23296,18 +23296,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 2672</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Note that checking and unchecking the "Enable Highlighting" check box will also change the state of the three other check boxes accordingly.</source>
-        <target>Note that checking and unchecking the "Enable Highlighting" check box will also change the state of the three other check boxes accordingly.</target>
+        <target>Imajte na umu da će omogućavanje ili onemogućavanje opcije "omogući označavanje" takođe promeniti stanje ostale tri opcije.</target>
       </segment>
     </unit>
     <unit id="2ec52e2b-9d6d-4b94-a0a5-af277ed176bf">
       <notes>
         <note appliesTo="source">line: 2673</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Therefore, if "Enable Highlighting" is off and you check this check box, the other three check boxes will also be checked automatically.</source>
-        <target>Therefore, if "Enable Highlighting" is off and you check this check box, the other three check boxes will also be checked automatically.</target>
+        <target>Dakle, ako je opcija "omogući označavanje" onemogućena i označite ovo izborno polje, ostale tri opcije će takođe automatski biti označene.</target>
       </segment>
     </unit>
     <unit id="012f6bab-27a4-4ee9-be21-dfada7a151c2">
@@ -23443,7 +23443,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The checkboxes in this list control what keys can be used as [NVDA modifier keys](#TheNVDAModifierKey). The following keys are available to choose from:</source>
-        <target>Izborni okviri u ovoj listi kontrolišu koji tasteri ćese koristiti kao [NVDA modifikatorski tasteri](#TheNVDAModifierKey). Sledeći tasteri su dostupni za izbor:</target>
+        <target>Izborni okviri u ovoj listi kontrolišu koji tasteri će se koristiti kao [NVDA modifikatorski tasteri](#TheNVDAModifierKey). Sledeći tasteri su dostupni za izbor:</target>
       </segment>
     </unit>
     <unit id="96ad23fb-05b8-4f25-a88c-fa3b0095f5bf">
@@ -23669,7 +23669,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Allow skim reading in Say All</source>
-        <target>Dozvoli površno čitanje u Izgovori sve režimu</target>
+        <target>Dozvoli površno čitanje u režimu neprekidnog čitanja</target>
       </segment>
     </unit>
     <unit id="a34bace8-933b-40bd-91a1-ee9158b929cb">
@@ -23678,7 +23678,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>If on, certain navigation commands (such as quick navigation in browse mode or moving by line or paragraph) do not stop Say All, rather Say All jumps to the new position and continues reading.</source>
-        <target>Ako je uključeno, određene komande navigacije(kao što je brza navigacija u režimu pretraživanja i kretanje po redovima i pasusima) ne zaustavljaju režim izgovori sve, već ovaj režim nastavlja čitanje i skače na novu poziciju.</target>
+        <target>Ako je uključeno, određene komande navigacije(kao što je brza navigacija u režimu pretraživanja i kretanje po redovima i pasusima) ne zaustavljaju režim neprekidnog čitanja, već ovaj režim nastavlja čitanje i skače na novu poziciju.</target>
       </segment>
     </unit>
     <unit id="ae0b9467-0e3f-499d-a2f5-02138dc825a5">
@@ -23772,9 +23772,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 2762</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option is only available if [reporting of spelling errors](#ReportSpellingErrors) is enabled in NVDA's Document Formatting Settings.</source>
-        <target>This option is only available if [reporting of spelling errors](#ReportSpellingErrors) is enabled in NVDA's Document Formatting Settings.</target>
+        <target>Ova opcija je dostupna samo ako je [prijavljivanje pravopisnih grešaka](#ReportSpellingErrors) omogućeno u NVDA podešavanjima formatiranja dokumenta.</target>
       </segment>
     </unit>
     <unit id="c6c0276b-40ff-437e-a935-b4c145f14cb4">
@@ -24105,9 +24105,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 2821</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>You can also assign a custom gesture in the Mouse category of the Input Gestures dialog to toggle this option.</source>
-        <target>You can also assign a custom gesture in the Mouse category of the Input Gestures dialog to toggle this option.</target>
+        <target>Možete takođe podesiti prilagođenu komandu u kategoriji miš dijaloga ulaznih komandi kako biste uključili ili isključili ovu opciju.</target>
       </segment>
     </unit>
     <unit id="ac7a28a4-1671-497a-981c-164122b6394d">
@@ -24638,27 +24638,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#ReportMultiSelect}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Report when objects support multiple selection</source>
-        <target>Report when objects support multiple selection</target>
+        <target>Prijavi kada objekti podržavaju višestruki izbor</target>
       </segment>
     </unit>
     <unit id="da9f4ea0-1ca6-49c7-9381-b05d2825c9b3">
       <notes>
         <note appliesTo="source">line: 2924</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When this option is enabled, NVDA will report when an object, such as a list box, supports selecting multiple items.</source>
-        <target>When this option is enabled, NVDA will report when an object, such as a list box, supports selecting multiple items.</target>
+        <target>Kada je ova opcija omogućena, NVDA će prijaviti kada neki objekat, kao što je lista, podržava izbor više stavki.</target>
       </segment>
     </unit>
     <unit id="aba743e9-539a-4778-8acd-13fa6d73be77">
       <notes>
         <note appliesTo="source">line: 2925</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>As it is usually possible to infer multiple selection support from the context of a list box, this option is disabled by default.</source>
-        <target>As it is usually possible to infer multiple selection support from the context of a list box, this option is disabled by default.</target>
+        <target>Budući da je obično moguće zaključiti podršku za izbor više stavki iz konteksta liste, ova opcija je podrazumevano onemogućena.</target>
       </segment>
     </unit>
     <unit id="9516f4a2-a0f3-462b-aa6e-d277f555aaa2">
@@ -25337,7 +25337,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Automatic Say All on page load</source>
-        <target>Automatski Izgovori sve režim kada se učita stranica</target>
+        <target>Automatsko neprekidno čitanje kada se učita stranica</target>
       </segment>
     </unit>
     <unit id="46549110-7229-4329-9d04-1ba772bb31b7">
@@ -25770,9 +25770,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 3111</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Spelling or grammar errors [(Speech, Sound, Braille)](#ReportSpellingErrors)</source>
-        <target>Spelling or grammar errors [(Speech, Sound, Braille)](#ReportSpellingErrors)</target>
+        <target>Pravopisne ili gramatičke greške [(govor, zvuk, brajevo pismo)](#ReportSpellingErrors)</target>
       </segment>
     </unit>
     <unit id="97d0bcd4-9d76-4196-851a-d147426e4b36">
@@ -26166,27 +26166,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#ReportSpellingErrors}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Spelling and grammar error reporting</source>
-        <target>Spelling and grammar error reporting</target>
+        <target>Prijavljivanje pravopisnih i gramatičkih grešaka</target>
       </segment>
     </unit>
     <unit id="0a90706c-a0f8-403d-931e-6c23f960b0f1">
       <notes>
         <note appliesTo="source">line: 3162</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The checkboxes in this list allow you to configure how spelling and grammar errors are reported while reading text.</source>
-        <target>The checkboxes in this list allow you to configure how spelling and grammar errors are reported while reading text.</target>
+        <target>Izborna polja u ovoj listi vam dozvoljavaju da podesite kako će se prijaviti pravopisne i gramatičke greške dok čitate tekst.</target>
       </segment>
     </unit>
     <unit id="1ad9f14b-2817-40fc-9b56-79ed26586c55">
       <notes>
         <note appliesTo="source">line: 3163</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>You can choose any combination of the following three options:</source>
-        <target>You can choose any combination of the following three options:</target>
+        <target>Možete izabrati bilo koju kombinaciju sledeće tri opcije:</target>
       </segment>
     </unit>
     <unit id="b0f15a22-528b-4ac7-976f-2f7c33b287cd">
@@ -26194,9 +26194,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 3165</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Speech: NVDA will say "spelling error" or "grammar error" when an error is encountered while reading text.</source>
-        <target>Speech: NVDA will say "spelling error" or "grammar error" when an error is encountered while reading text.</target>
+        <target>Govor: NVDA će izgovoriti "greška u pravopisu" ili "gramatička greška" kada naiđete na grešku tokom čitanja teksta.</target>
       </segment>
     </unit>
     <unit id="aad15891-3612-4279-8370-69d6bee0e7d7">
@@ -26204,18 +26204,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 3166</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Sound: NVDA will play a short buzzer sound when a spelling or grammar error is encountered while reading text.</source>
-        <target>Sound: NVDA will play a short buzzer sound when a spelling or grammar error is encountered while reading text.</target>
+        <target>Zvuk: NVDA će reprodukovati kratak zvučni signal kada naiđete na pravopisnu ili gramatičku grešku tokom čitanja teksta.</target>
       </segment>
     </unit>
     <unit id="68732419-ae34-4e51-abd6-3085509d8caa">
       <notes>
         <note appliesTo="source">line: 3167</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When navigating word by word or character by character, "out of spelling error" or "out of grammar error" is also reported if the "Speech" or "Sound" option is selected.</source>
-        <target>When navigating word by word or character by character, "out of spelling error" or "out of grammar error" is also reported if the "Speech" or "Sound" option is selected.</target>
+        <target>Kada se krećete znak po znak ili reč po reč, "van greške u pravopisu" ili "van gramatičke greške" će takođe biti prijavljeno ako su izabrane opcije "govor" ili "zvuk".</target>
       </segment>
     </unit>
     <unit id="3ef70923-ce01-4c34-9d5b-c76b743df126">
@@ -26223,72 +26223,72 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 3168</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Braille: NVDA will indicate spelling or grammar errors in braille.</source>
-        <target>Braille: NVDA will indicate spelling or grammar errors in braille.</target>
+        <target>Na brajevom redu: NVDA će označiti pravopisne ili gramatičke greške na brajevom redu.</target>
       </segment>
     </unit>
     <unit id="3fb1eed2-fc0c-4c9b-a098-46830e902e52">
       <notes>
         <note appliesTo="source">line: 3169</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>To have spelling or grammar errors reported in braille, [formatting display with tags](#BrailleFormattingDisplayTags) must be enabled.</source>
-        <target>To have spelling or grammar errors reported in braille, [formatting display with tags](#BrailleFormattingDisplayTags) must be enabled.</target>
+        <target>Kako bi pravopisne ili gramatičke greške bile prikazane na brajevom redu, [prikazivanje formatiranja sa oznakama](#BrailleFormattingDisplayTags) mora biti omogućeno.</target>
       </segment>
     </unit>
     <unit id="4335ebe1-e36d-4079-af57-49dd24a250b6">
       <notes>
         <note appliesTo="source">line: 3171</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Due to performance limitations, errors are not reported with speech or sounds when navigating by paragraph or by cell in tables, no matter the options selected.</source>
-        <target>Due to performance limitations, errors are not reported with speech or sounds when navigating by paragraph or by cell in tables, no matter the options selected.</target>
+        <target>Zbog ograničenja u brzini, greške se ne prijavljuju izgovorom ili zvukom kada se krećete po pasusima ili ćelijama u tabelama, bez obzira na izabrane opcije.</target>
       </segment>
     </unit>
     <unit id="f4205182-a1d3-4246-92eb-a510c45b2bc9">
       <notes>
         <note appliesTo="source">line: 3172</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>In these cases, errors can only be reported in braille.</source>
-        <target>In these cases, errors can only be reported in braille.</target>
+        <target>U ovim slučajevima, greške se mogu prikazati samo na brajevom redu.</target>
       </segment>
     </unit>
     <unit id="5d30b890-5603-4f83-b0df-77dc7a184239">
       <notes>
         <note appliesTo="source">line: 3174</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>By default, errors will be reported with speech.</source>
-        <target>By default, errors will be reported with speech.</target>
+        <target>Podrazumevano, greške će biti prijavljene govorom.</target>
       </segment>
     </unit>
     <unit id="914693e0-a079-4efa-a7ea-411cad608437">
       <notes>
         <note appliesTo="source">line: 3176</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>To cycle through available options to report errors via audio, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).</source>
-        <target>To cycle through available options to report errors via audio, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).</target>
+        <target>Kako biste kružili kroz dostupne opcije prijavljivanja grešaka zvukom, molimo podesite prilagođenu komandu korišćenjem [dijaloga ulaznih komandi](#InputGestures).</target>
       </segment>
     </unit>
     <unit id="d0515726-f915-4e7e-a146-b271ec54ebc6">
       <notes>
         <note appliesTo="source">line: 3177</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The available options are: Off, Speech, Sound, Speech and sound.</source>
-        <target>The available options are: Off, Speech, Sound, Speech and sound.</target>
+        <target>Dostupne opcije su: isključeno, govor, zvuk, govor i zvuk.</target>
       </segment>
     </unit>
     <unit id="cafe3ced-2974-4a1d-9cd0-4c09bce07a1b">
       <notes>
         <note appliesTo="source">line: 3179</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>You can also assign a custom gesture to toggle the reporting of errors in braille using the [Input Gestures dialog](#InputGestures).</source>
-        <target>You can also assign a custom gesture to toggle the reporting of errors in braille using the [Input Gestures dialog](#InputGestures).</target>
+        <target>Možete takođe podesiti prilagođenu komandu za isključivanje ili uključivanje prikazivanja grešaka na brajevom redu korišćenjem [dijaloga ulaznih komandi](#InputGestures).</target>
       </segment>
     </unit>
     <unit id="224870b6-bb34-4022-9bc7-828a1c3b3582">
@@ -26382,9 +26382,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 3193</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This may be useful when reading a document where blank lines are used to separate indented blocks of text, such as in programming source code.</source>
-        <target>This may be useful when reading a document where blank lines are used to separate indented blocks of text, such as in programming source code.</target>
+        <target>Ovo može biti korisno kada čitate dokument u kom se prazni redovi koriste za odvajanje uvučenih blokova teksta, na primer u izvornom kodu programa.</target>
       </segment>
     </unit>
     <unit id="603616f5-4091-4d86-8c9a-81f9a3e2c11d">
@@ -26539,18 +26539,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: #### </note>
         <note appliesTo="source">suffix:  {#MathSettings}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Math Settings</source>
-        <target>Math Settings</target>
+        <target>Podešavanja matematike</target>
       </segment>
     </unit>
     <unit id="79eb320a-afe4-49f4-a72b-77bdb9b22305">
       <notes>
         <note appliesTo="source">line: 3221</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This category allows you to adjust how NVDA reads mathematical content.</source>
-        <target>This category allows you to adjust how NVDA reads mathematical content.</target>
+        <target>Ova kategorija vam dozvoljava da promenite kako NVDA čita matematički sadržaj.</target>
       </segment>
     </unit>
     <unit id="93db6a8d-37a8-4856-94b7-9d6d25004ff6">
@@ -26559,9 +26559,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#MathCATSpeechOptions}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Speech Options</source>
-        <target>Speech Options</target>
+        <target>Opcije govora</target>
       </segment>
     </unit>
     <unit id="9907cc97-b1ab-4892-89da-3819168e90ee">
@@ -26570,18 +26570,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ###### </note>
         <note appliesTo="source">suffix:  {#MathSpeechImpairment}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Impairment</source>
-        <target>Impairment</target>
+        <target>Oštećenje</target>
       </segment>
     </unit>
     <unit id="abbdb948-a480-41eb-9fe6-73d5e17f2fcb">
       <notes>
         <note appliesTo="source">line: 3227</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This controls whether certain notations are disambiguated or not in speech.</source>
-        <target>This controls whether certain notations are disambiguated or not in speech.</target>
+        <target>Ova opcija kontroliše da li se određene notacije govorno pojašnjavaju ili ne.</target>
       </segment>
     </unit>
     <unit id="95018172-aa7a-48fb-bc65-e2bc1395d794">
@@ -26590,9 +26590,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Blindness, Low Vision, Learning disabilities </source>
-        <target> Options | Blindness, Low Vision, Learning disabilities </target>
+        <target> Opcije | Slep, slabovid, poteškoće u učenju </target>
       </segment>
     </unit>
     <unit id="30f164e6-7bee-4390-92e9-dc5d505bf273">
@@ -26601,9 +26601,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Blindness </source>
-        <target> Default | Blindness </target>
+        <target> Podrazumevano | Slep </target>
       </segment>
     </unit>
     <unit id="e44e8963-cc27-4bda-aa0a-4082e62dffbd">
@@ -26612,36 +26612,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ###### </note>
         <note appliesTo="source">suffix:  {#MathSpeechLanguage}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Language</source>
-        <target>Language</target>
+        <target>Jezik</target>
       </segment>
     </unit>
     <unit id="7ed436d2-286b-4a51-a65e-8159086c50cd">
       <notes>
         <note appliesTo="source">line: 3236</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This value determines the language to be used.</source>
-        <target>This value determines the language to be used.</target>
+        <target>Ova vrednost određuje jezik koji će se koristiti.</target>
       </segment>
     </unit>
     <unit id="a97af23f-1047-4177-b1d3-5fbada3dd65d">
       <notes>
         <note appliesTo="source">line: 3237</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If the regional variant is not found among the speech rules, the speech will fall back to using the main language.</source>
-        <target>If the regional variant is not found among the speech rules, the speech will fall back to using the main language.</target>
+        <target>Ako se regionalna varijanta ne pronađe u pravilima govora, govor će se vratiti na korišćenje glavnog jezika.</target>
       </segment>
     </unit>
     <unit id="e6dd553c-1739-4b12-9b98-bd304223b091">
       <notes>
         <note appliesTo="source">line: 3238</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If speech rules for the main language cannot be found, English ("en") is used.</source>
-        <target>If speech rules for the main language cannot be found, English ("en") is used.</target>
+        <target>Ako se pravila govora ne pronađu za glavni jezik, engleski ("en") se koristi.</target>
       </segment>
     </unit>
     <unit id="f06b8879-dbc4-4c62-9593-801896c45f83">
@@ -26650,9 +26650,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Automatic, English, English (en-GB), Chinese (Traditional) (zh-TW), Finnish, German, Indonesian, Norwegian Bokmål, Spanish, Swedish, Vietnamese </source>
-        <target> Options | Automatic, English, English (en-GB), Chinese (Traditional) (zh-TW), Finnish, German, Indonesian, Norwegian Bokmål, Spanish, Swedish, Vietnamese </target>
+        <target> Opcije| Automatski, English, English (en-GB), Chinese (Traditional) (zh-TW), Finnish, German, Indonesian, Norwegian Bokmål, Spanish, Swedish, Vietnamese </target>
       </segment>
     </unit>
     <unit id="aa88b007-3eb9-4803-8e97-7065a86c8685">
@@ -26661,9 +26661,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Automatic (the language of the current voice if supported, or fallback to English) </source>
-        <target> Default | Automatic (the language of the current voice if supported, or fallback to English) </target>
+        <target> Podrazumevano | Automatski (jezik trenutnog glasa ako je podržan, ili vraćanje na engleski) </target>
       </segment>
     </unit>
     <unit id="20abdbbd-06a2-4e3e-9d16-7fbc72e1da64">
@@ -26672,36 +26672,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ###### </note>
         <note appliesTo="source">suffix:  {#MathSpeechStyle}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Speech Style</source>
-        <target>Speech Style</target>
+        <target>Stil govora</target>
       </segment>
     </unit>
     <unit id="8ae345f5-2710-4c4d-9203-e3796b6e6f9c">
       <notes>
         <note appliesTo="source">line: 3247</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Different styles can be used to speak mathematical content.</source>
-        <target>Different styles can be used to speak mathematical content.</target>
+        <target>Različiti stilovi se mogu koristiti za izgovor matematičkog sadržaja.</target>
       </segment>
     </unit>
     <unit id="9e8911d7-d9be-4531-9e08-07b3db61f0bf">
       <notes>
         <note appliesTo="source">line: 3248</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Each [math speech language](#MathSpeechLanguage) has different speech styles available.</source>
-        <target>Each [math speech language](#MathSpeechLanguage) has different speech styles available.</target>
+        <target>Svaki [jezik izgovora matematike](#MathSpeechLanguage) ima različite dostupne stilove govora.</target>
       </segment>
     </unit>
     <unit id="fba95dc8-b306-46cb-83bd-b7e6288fdf5a">
       <notes>
         <note appliesTo="source">line: 3250</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For English and most languages, the following styles are available:</source>
-        <target>For English and most languages, the following styles are available:</target>
+        <target>Za engleski i većinu jezika, sledeći stilovi su dostupni:</target>
       </segment>
     </unit>
     <unit id="33c784bb-4b9d-49b1-ac00-3f2762f68210">
@@ -26709,18 +26709,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 3252</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>ClearSpeak was developed by the Educational Testing Service for use on university-admission and other high-stakes tests in the United States.</source>
-        <target>ClearSpeak was developed by the Educational Testing Service for use on university-admission and other high-stakes tests in the United States.</target>
+        <target>ClearSpeak je razvio Educational Testing Service za korišćenje na prijemnim testovima na fakultetima i ostalim testovima višeg nivoa u Sjedinjenim Američkim Državama.</target>
       </segment>
     </unit>
     <unit id="28d1bf46-1173-4a02-a720-b9942cf594fd">
       <notes>
         <note appliesTo="source">line: 3253</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Refer to the [ClearSpeak specification details in this Word document](https://daisy.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).</source>
-        <target>Refer to the [ClearSpeak specification details in this Word document](https://daisy.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).</target>
+        <target>Pogledajte [ClearSpeak detalje specifikacije u ovom Word dokumentu](https://daisy.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).</target>
       </segment>
     </unit>
     <unit id="496bd608-0629-4446-b308-b5a764cea8aa">
@@ -26728,18 +26728,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 3254</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").</source>
-        <target>SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").</target>
+        <target>SimpleSpeak pokušava da umanji govor izgovaranjem jednostavnih izraza kao što su $\frac{a}{b}$ brzo bez opisnih reči ("a over b").</target>
       </segment>
     </unit>
     <unit id="434f44b7-4fd1-4a24-aed4-a0c4a65b445e">
       <notes>
         <note appliesTo="source">line: 3255</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").</source>
-        <target>These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").</target>
+        <target>One se razlikuju od kompleksnijih izraza $\frac{a}{b+1}$ koje će uvek imati opisne reči ("fraction a over b plus 1 end fraction").</target>
       </segment>
     </unit>
     <unit id="422d5a68-c21c-45dc-aa60-347e29f11e11">
@@ -26747,27 +26747,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 3256</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>LiteralSpeak tells MathCAT to speak math expressions almost exactly as written, without interpreting the symbols or meaning.</source>
-        <target>LiteralSpeak tells MathCAT to speak math expressions almost exactly as written, without interpreting the symbols or meaning.</target>
+        <target>LiteralSpeak govori MathCAT-u da izgovara matematičke izraze skoro onako kako su napisani, bez tumačenja simbola ili značenja.</target>
       </segment>
     </unit>
     <unit id="94cb820f-4862-4674-a47c-6b51d1b034d0">
       <notes>
         <note appliesTo="source">line: 3257</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>It prioritizes literal reading (character-by-character or symbol-by-symbol), rather than mathematical meaning.</source>
-        <target>It prioritizes literal reading (character-by-character or symbol-by-symbol), rather than mathematical meaning.</target>
+        <target>Prioritet je bukvalno čitanje (znak po znak ili simbol po simbol), a ne matematičko značenje.</target>
       </segment>
     </unit>
     <unit id="73aba824-0e61-468d-a6c5-6cec4e23bee6">
       <notes>
         <note appliesTo="source">line: 3259</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Examples of each type of speech:</source>
-        <target>Examples of each type of speech:</target>
+        <target>Primeri svake vrste govora:</target>
       </segment>
     </unit>
     <unit id="612055ee-b76d-40b6-9894-4a0fc294f0a4">
@@ -26776,9 +26776,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Expression | LiteralSpeak | SimpleSpeak | ClearSpeak </source>
-        <target> Expression | LiteralSpeak | SimpleSpeak | ClearSpeak </target>
+        <target> Izraz | LiteralSpeak | SimpleSpeak | ClearSpeak </target>
       </segment>
     </unit>
     <unit id="e0a0e84f-7524-4b40-bfd4-fa9e66c4ce1e">
@@ -26787,7 +26787,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> 1/2 | 1 slash 2 | 1 divided by 2 | one half </source>
         <target> 1/2 | 1 slash 2 | 1 divided by 2 | one half </target>
       </segment>
@@ -26798,7 +26798,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> √x | radical x | square root x | square root of x </source>
         <target> √x | radical x | square root x | square root of x </target>
       </segment>
@@ -26809,9 +26809,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | ClearSpeak, SimpleSpeak, LiteralSpeak, or other options depending on your language </source>
-        <target> Options | ClearSpeak, SimpleSpeak, LiteralSpeak, or other options depending on your language </target>
+        <target> Opcije | ClearSpeak, SimpleSpeak, LiteralSpeak, ili druge opcije u zavisnosti od vašeg jezika </target>
       </segment>
     </unit>
     <unit id="8cad6d60-b711-4316-90db-c276a75dc254">
@@ -26820,9 +26820,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Depends on the language </source>
-        <target> Default | Depends on the language </target>
+        <target> Podrazumevano | Zavisi od jezika </target>
       </segment>
     </unit>
     <unit id="b636dc14-f4ca-4740-923f-8684ea9800de">
@@ -26831,27 +26831,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ###### </note>
         <note appliesTo="source">suffix:  {#MathSpeechVerbosity}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Speech verbosity</source>
-        <target>Speech verbosity</target>
+        <target>Obim govora</target>
       </segment>
     </unit>
     <unit id="24151c2e-dd3a-42f2-a213-daf633d810b8">
       <notes>
         <note appliesTo="source">line: 3273</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option controls how much "extra" speech is used.</source>
-        <target>This option controls how much "extra" speech is used.</target>
+        <target>Ova opcija kontroliše koliko "dodatnog" govora se koristi.</target>
       </segment>
     </unit>
     <unit id="2d6836fc-531a-4731-8cb5-8e63b80616a3">
       <notes>
         <note appliesTo="source">line: 3274</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For example, square roots are verbosely spoken as "the square root of x" and tersely spoken as "square root x".</source>
-        <target>For example, square roots are verbosely spoken as "the square root of x" and tersely spoken as "square root x".</target>
+        <target>Na primer, kvadratni koreni se obimno izgovaraju kao "the square root of x" a terse kao "square root x".</target>
       </segment>
     </unit>
     <unit id="e9afc84c-cba6-4146-b8f3-5fb932d4e3d1">
@@ -26860,9 +26860,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Terse, Medium, Verbose </source>
-        <target> Options | Terse, Medium, Verbose </target>
+        <target> Opcije | Terse, srednji, obiman </target>
       </segment>
     </unit>
     <unit id="c8827e40-90a5-4dc7-aebe-11b31c27d34a">
@@ -26871,9 +26871,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Medium </source>
-        <target> Default | Medium </target>
+        <target> Podrazumevano | Srednji </target>
       </segment>
     </unit>
     <unit id="647ab47f-d9e9-4fa9-9e8d-8e3204db951d">
@@ -26882,36 +26882,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ###### </note>
         <note appliesTo="source">suffix:  {#MathRelativeSpeed}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Relative speech rate</source>
-        <target>Relative speech rate</target>
+        <target>Relativna brzina govora</target>
       </segment>
     </unit>
     <unit id="fa3111e7-505a-4c1e-a6f7-fb360986017a">
       <notes>
         <note appliesTo="source">line: 3283</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Changes the relative speech rate.</source>
-        <target>Changes the relative speech rate.</target>
+        <target>Menja relativnu brzinu govora.</target>
       </segment>
     </unit>
     <unit id="d10fde30-cf58-4ba7-b603-76c634342ea0">
       <notes>
         <note appliesTo="source">line: 3284</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The change is a percentage speed change from the standard speech engine's rate.</source>
-        <target>The change is a percentage speed change from the standard speech engine's rate.</target>
+        <target>Promena je procentualna promena brzine u odnosu na standardnu brzinu sintetizatora.</target>
       </segment>
     </unit>
     <unit id="4b3a2773-5e43-42b8-b77a-574c96fa47ee">
       <notes>
         <note appliesTo="source">line: 3285</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`100` means the reading rates of text and math content are the same, whereas `50` means that math content is read at half the speed of other content.</source>
-        <target>`100` means the reading rates of text and math content are the same, whereas `50` means that math content is read at half the speed of other content.</target>
+        <target>`100` znači da su brzine čitanja matematičkog sadržaja i standardnog teksta iste, dok `50` znači da se matematički sadržaj čita polovičnom brzinom u odnosu na ostali sadržaj.</target>
       </segment>
     </unit>
     <unit id="83ad1c3a-1cee-4182-8bbc-e37f90b7109d">
@@ -26920,9 +26920,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Number between 1 and 100 </source>
-        <target> Options | Number between 1 and 100 </target>
+        <target> Opcije | Broj od 1 do 100 </target>
       </segment>
     </unit>
     <unit id="305511b0-9f4e-4f98-b118-60a385031059">
@@ -26931,9 +26931,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | 100 </source>
-        <target> Default | 100 </target>
+        <target> Podrazumevano | 100 </target>
       </segment>
     </unit>
     <unit id="b69374bc-ac51-4106-8d70-164445ffdf9a">
@@ -26942,27 +26942,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ###### </note>
         <note appliesTo="source">suffix:  {#MathSpeechPauseFactor}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Pause Factor</source>
-        <target>Pause Factor</target>
+        <target>Faktor pauze</target>
       </segment>
     </unit>
     <unit id="ad53bb6b-539c-4208-b5c3-55190b36671c">
       <notes>
         <note appliesTo="source">line: 3294</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Changes the relative amount of pausing that MathCAT adds.</source>
-        <target>Changes the relative amount of pausing that MathCAT adds.</target>
+        <target>Menja relativnu količinu pauza koje MathCAT dodaje.</target>
       </segment>
     </unit>
     <unit id="a9657b5c-685e-4a2d-aece-98747aebdeab">
       <notes>
         <note appliesTo="source">line: 3295</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`0` turns off all pausing and `100` makes the pauses 10 times longer than normal.</source>
-        <target>`0` turns off all pausing and `100` makes the pauses 10 times longer than normal.</target>
+        <target>`0` isključuje sve pauze a `100` čini pauze 10 puta dužim od običnih.</target>
       </segment>
     </unit>
     <unit id="04d71262-651c-4cd5-b990-a965efbc9e0a">
@@ -26971,9 +26971,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Number between 0 and 100 </source>
-        <target> Options | Number between 0 and 100 </target>
+        <target> Opcije | Broj od 0 do 100 </target>
       </segment>
     </unit>
     <unit id="916d1af1-5779-489a-af97-3380e2f54593">
@@ -26982,9 +26982,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | 50 </source>
-        <target> Default | 50 </target>
+        <target> Podrazumevano | 50 </target>
       </segment>
     </unit>
     <unit id="81a72cdf-7019-4988-b473-80e159989bb0">
@@ -26993,27 +26993,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ###### </note>
         <note appliesTo="source">suffix:  {#MathSpeechSound}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Beep at the beginning and end of math</source>
-        <target>Beep at the beginning and end of math</target>
+        <target>Pišti na početku i kraju matematičkog sadržaja</target>
       </segment>
     </unit>
     <unit id="8c1f26cc-b95b-4655-a538-1b78e96f6c06">
       <notes>
         <note appliesTo="source">line: 3304</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option determines whether NVDA beeps at the beginning and end of math content.</source>
-        <target>This option determines whether NVDA beeps at the beginning and end of math content.</target>
+        <target>Ova opcija određuje da li će NVDA reprodukovati pištanje na početku i kraju matematičkog sadržaja.</target>
       </segment>
     </unit>
     <unit id="c4ceff71-8e4a-4d81-a14c-6098b6ce3280">
       <notes>
         <note appliesTo="source">line: 3305</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option is disabled by default.</source>
-        <target>This option is disabled by default.</target>
+        <target>Ova opcija je podrazumevano onemogućena.</target>
       </segment>
     </unit>
     <unit id="4227a6b7-4f86-4f0d-8107-3c30873a5483">
@@ -27022,9 +27022,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Checked, Unchecked </source>
-        <target> Options | Checked, Unchecked </target>
+        <target> Opcije | Označeno, nije označeno </target>
       </segment>
     </unit>
     <unit id="2021db76-75da-4707-870c-9f0a05a13822">
@@ -27033,9 +27033,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Unchecked </source>
-        <target> Default | Unchecked </target>
+        <target> Podrazumevano | Nije označeno </target>
       </segment>
     </unit>
     <unit id="f0cd663f-db53-4eb8-881e-668ebc2e029e">
@@ -27044,27 +27044,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ###### </note>
         <note appliesTo="source">suffix:  {#MathSpeechForChemical}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Chemical formulae</source>
-        <target>Chemical formulae</target>
+        <target>Hemijske formule</target>
       </segment>
     </unit>
     <unit id="7bc4748c-fc67-4154-94aa-458a8213f93a">
       <notes>
         <note appliesTo="source">line: 3314</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option controls how chemical formulae are read.</source>
-        <target>This option controls how chemical formulae are read.</target>
+        <target>Ova opcija kontroliše kako se čitaju hemijske formule.</target>
       </segment>
     </unit>
     <unit id="451bfa58-b72a-47cd-b3bd-a66133640e1e">
       <notes>
         <note appliesTo="source">line: 3315</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Examples for $\mathrm{H}_2\mathrm{O}$:</source>
-        <target>Examples for $\mathrm{H}_2\mathrm{O}$:</target>
+        <target>Primeri za $\mathrm{H}_2\mathrm{O}$:</target>
       </segment>
     </unit>
     <unit id="c603f153-f230-4e12-b420-40d4652771dd">
@@ -27072,9 +27072,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 3317</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Spell it out: "H 2 O" ([verbosity](#MathSpeechVerbosity) controls whether "sub"/"super" is spoken)</source>
-        <target>Spell it out: "H 2 O" ([verbosity](#MathSpeechVerbosity) controls whether "sub"/"super" is spoken)</target>
+        <target>Sricanje: "H 2 O" ([obim govora](#MathSpeechVerbosity) kontroliše da li se čita "sub"/"super")</target>
       </segment>
     </unit>
     <unit id="dd86be64-022c-4198-925e-465ea41ce4c1">
@@ -27082,9 +27082,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 3318</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Off: "H sub 2 O"</source>
-        <target>Off: "H sub 2 O"</target>
+        <target>Isključeno: "H sub 2 O"</target>
       </segment>
     </unit>
     <unit id="3fc04ee8-cc23-4f7a-bd6e-2eb1f579112a">
@@ -27093,9 +27093,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Spell it out, Off </source>
-        <target> Options | Spell it out, Off </target>
+        <target> Opcije | Sricanje, isključeno </target>
       </segment>
     </unit>
     <unit id="d9f8780d-2ca4-463d-a436-814ea79e3e7d">
@@ -27104,9 +27104,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Spell it out </source>
-        <target> Default | Spell it out </target>
+        <target> Podrazumevano | Sricanje </target>
       </segment>
     </unit>
     <unit id="db4c6c6b-4c5f-49da-906e-6e0dc478c0bf">
@@ -27115,18 +27115,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ###### </note>
         <note appliesTo="source">suffix:  {#MathNavSpeech}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When entering an equation</source>
-        <target>When entering an equation</target>
+        <target>Kada se uđe u jednačinu</target>
       </segment>
     </unit>
     <unit id="40f4ad15-061b-4b2f-b092-2ff539f73f4a">
       <notes>
         <note appliesTo="source">line: 3327</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Whether to speak the expression after moving to it or give an overview.</source>
-        <target>Whether to speak the expression after moving to it or give an overview.</target>
+        <target>Da li će se izgovarati izraz nakon što se dođe do njega, ili će se pružiti kratak opis.</target>
       </segment>
     </unit>
     <unit id="e59b53e7-b59d-4374-a0d9-e3b56cea3f41">
@@ -27135,9 +27135,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Speak, Describe overview </source>
-        <target> Options | Speak, Describe overview </target>
+        <target> Opcije | Izgovori, opiši pregled </target>
       </segment>
     </unit>
     <unit id="0766114e-130c-4064-9451-ef65c9a354cd">
@@ -27146,9 +27146,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Speak </source>
-        <target> Default | Speak </target>
+        <target> Podrazumevano | Izgovori </target>
       </segment>
     </unit>
     <unit id="1e97c0cc-fecc-483d-bc31-661758d43f57">
@@ -27157,9 +27157,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#MathNavigation}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Navigation Options</source>
-        <target>Navigation Options</target>
+        <target>Opcije navigacije</target>
       </segment>
     </unit>
     <unit id="e9285d8e-5ec6-410e-8473-94293b011dfd">
@@ -27168,36 +27168,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ###### </note>
         <note appliesTo="source">suffix:  {#MathNavMode}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Default navigation mode</source>
-        <target>Default navigation mode</target>
+        <target>Podrazumevani režim navigacije</target>
       </segment>
     </unit>
     <unit id="a0d8b420-1655-4fe7-a585-b5aa24db2bf3">
       <notes>
         <note appliesTo="source">line: 3338</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>"Enhanced" mode understands math structure.</source>
-        <target>"Enhanced" mode understands math structure.</target>
+        <target>"Poboljšani" režim shvata strukturu matematike.</target>
       </segment>
     </unit>
     <unit id="13f0c454-1608-4859-abd8-577dc1c98225">
       <notes>
         <note appliesTo="source">line: 3339</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>"Simple" mode walks by character to find things like fractions, roots, and scripts.</source>
-        <target>"Simple" mode walks by character to find things like fractions, roots, and scripts.</target>
+        <target>"Jednostavan" režim se kreće po znakovima kako bi pronašao stvari poput razlomaka, korena i slova.</target>
       </segment>
     </unit>
     <unit id="3d712bdd-faab-482f-8719-130f8cc997c9">
       <notes>
         <note appliesTo="source">line: 3340</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>"Character" mode moves around by character, automatically moving into fractions, etc.</source>
-        <target>"Character" mode moves around by character, automatically moving into fractions, etc.</target>
+        <target>Režim "po znakovima" se kreće po znakovima, automatski ulazeći u razlomke, i tako dalje.</target>
       </segment>
     </unit>
     <unit id="d281d012-5727-40b5-a7cd-95fc09a3a481">
@@ -27206,9 +27206,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Enhanced, Character, Simple </source>
-        <target> Options | Enhanced, Character, Simple </target>
+        <target> Opcije | Poboljšani, po znakovima, jednostavan </target>
       </segment>
     </unit>
     <unit id="509a71e8-a78d-4860-8c14-31c68b4522d7">
@@ -27217,9 +27217,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Enhanced </source>
-        <target> Default | Enhanced </target>
+        <target> Podrazumevani | Poboljšani </target>
       </segment>
     </unit>
     <unit id="db3f17c9-1773-45b3-836f-ac30bd320ab3">
@@ -27228,36 +27228,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ###### </note>
         <note appliesTo="source">suffix:  {#MathNavReset}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Reset to the default navigation mode for each new equation</source>
-        <target>Reset to the default navigation mode for each new equation</target>
+        <target>Vrati se u podrazumevani režim navigacije za svaku novu jednačinu</target>
       </segment>
     </unit>
     <unit id="cbf38290-d76d-4572-a37d-956f4a11f577">
       <notes>
         <note appliesTo="source">line: 3349</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option selects whether NVDA resets to the default navigation mode when entering a new equation.</source>
-        <target>This option selects whether NVDA resets to the default navigation mode when entering a new equation.</target>
+        <target>Ova opcija bira da li će se NVDA vratiti u podrazumevani režim navigacije kada se uđe u novu jednačinu.</target>
       </segment>
     </unit>
     <unit id="73d889b5-1bde-48a1-95a6-183789ec32d2">
       <notes>
         <note appliesTo="source">line: 3350</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When this option is disabled, NVDA preserves the last selected navigation mode across equations in the same NVDA session.</source>
-        <target>When this option is disabled, NVDA preserves the last selected navigation mode across equations in the same NVDA session.</target>
+        <target>Kada je ova opcija onemogućena, NVDA čuva poslednji izabran režim navigacije kroz različite zadatke u istoj NVDA sesiji.</target>
       </segment>
     </unit>
     <unit id="13fc2e11-681a-4572-b4fd-1bfbbc37d202">
       <notes>
         <note appliesTo="source">line: 3351</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option is enabled by default.</source>
-        <target>This option is enabled by default.</target>
+        <target>Ova opcija je podrazumevano omogućena.</target>
       </segment>
     </unit>
     <unit id="768271b7-859c-4aeb-9a08-e6be95c1cb7b">
@@ -27266,9 +27266,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Checked, Unchecked </source>
-        <target> Options | Checked, Unchecked </target>
+        <target> Opcije | Označeno, nije označeno </target>
       </segment>
     </unit>
     <unit id="b0cc4051-fd94-4714-be03-421940954544">
@@ -27277,9 +27277,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Checked </source>
-        <target> Default | Checked </target>
+        <target> Podrazumevano | Označeno </target>
       </segment>
     </unit>
     <unit id="756e5e38-5645-4183-a880-535bb003bd12">
@@ -27288,27 +27288,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ###### </note>
         <note appliesTo="source">suffix:  {#MathNavAutoZoom}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Automatically zoom out of two-dimensional notation</source>
-        <target>Automatically zoom out of two-dimensional notation</target>
+        <target>Automatski umanji dvodimenzionalni zapis</target>
       </segment>
     </unit>
     <unit id="9cf81616-53ca-4c05-8667-3fb97cbf5609">
       <notes>
         <note appliesTo="source">line: 3360</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Auto zoom out of 2D expressions like fractions (use `upArrow` to manually zoom out if this is unchecked).</source>
-        <target>Auto zoom out of 2D expressions like fractions (use `upArrow` to manually zoom out if this is unchecked).</target>
+        <target>Automatski umanji 2D izraze kao što su razlomci (koristite `strelicu gore` da ih ručno umanjite ako ovo nije označeno).</target>
       </segment>
     </unit>
     <unit id="5454dcc7-df50-4495-b1c0-d13f7dd63ae7">
       <notes>
         <note appliesTo="source">line: 3361</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option is enabled by default.</source>
-        <target>This option is enabled by default.</target>
+        <target>Ova opcija je podrazumevano omogućena.</target>
       </segment>
     </unit>
     <unit id="3a57d5c8-f7f9-4df4-a9b0-b9b601ca0ba8">
@@ -27317,9 +27317,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Checked, Unchecked </source>
-        <target> Options | Checked, Unchecked </target>
+        <target> Opcije | Označeno, nije označeno </target>
       </segment>
     </unit>
     <unit id="6f66711d-9c48-410c-b432-d0db096bc741">
@@ -27328,9 +27328,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Checked </source>
-        <target> Default | Checked </target>
+        <target> Podrazumevano | Označeno </target>
       </segment>
     </unit>
     <unit id="d79e578a-f203-4701-82bf-0d865af2284a">
@@ -27339,18 +27339,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ###### </note>
         <note appliesTo="source">suffix:  {#MathNavSpeechAmount}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Navigation verbosity</source>
-        <target>Navigation verbosity</target>
+        <target>Obim navigacije</target>
       </segment>
     </unit>
     <unit id="9bf1013a-82e3-49ab-a6ad-fcd3b2e8f64d">
       <notes>
         <note appliesTo="source">line: 3370</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option specifies whether NVDA should read mathematical expressions in a terse or verbose manner during navigation.</source>
-        <target>This option specifies whether NVDA should read mathematical expressions in a terse or verbose manner during navigation.</target>
+        <target>Ova opcija određuje da li će NVDA čitati matematičke izraze u terse ili obimnom načinu tokom navigacije.</target>
       </segment>
     </unit>
     <unit id="b2e84c2a-d2b8-46d5-9f9d-dfb06ac89bb8">
@@ -27359,9 +27359,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Terse, Medium, Verbose </source>
-        <target> Options | Terse, Medium, Verbose </target>
+        <target> Opcije | Terse, srednji, obiman </target>
       </segment>
     </unit>
     <unit id="31a52af7-046d-47a8-9549-1380f08bb1c8">
@@ -27370,9 +27370,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Medium </source>
-        <target> Default | Medium </target>
+        <target> Podrazumevano | Srednji </target>
       </segment>
     </unit>
     <unit id="a4d6faee-8291-487c-b682-ec464904aea2">
@@ -27381,18 +27381,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ###### </note>
         <note appliesTo="source">suffix:  {#MathNavCopyAs}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Copy math as</source>
-        <target>Copy math as</target>
+        <target>Kopiraj matematički sadržaj kao</target>
       </segment>
     </unit>
     <unit id="bec987c4-0266-4af4-9002-7e561ddd0345">
       <notes>
         <note appliesTo="source">line: 3379</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option selects the format of math content copied to the clipboard.</source>
-        <target>This option selects the format of math content copied to the clipboard.</target>
+        <target>Ova opcija bira format matematičkog sadržaja koji se kopira u privremenu memoriju.</target>
       </segment>
     </unit>
     <unit id="07e9f262-0ccf-4138-97a4-639666811959">
@@ -27401,9 +27401,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | MathML, LaTeX, ASCIIMath, Speech </source>
-        <target> Options | MathML, LaTeX, ASCIIMath, Speech </target>
+        <target> Opcije | MathML, LaTeX, ASCIIMath, govor </target>
       </segment>
     </unit>
     <unit id="8af582e9-7a9a-4d03-8524-690fe7801a6e">
@@ -27412,9 +27412,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | MathML </source>
-        <target> Default | MathML </target>
+        <target> Podrazumevano | MathML </target>
       </segment>
     </unit>
     <unit id="d0037639-3e75-4dab-8916-47ec1c9ac7d2">
@@ -27423,9 +27423,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#MathBrailleOptions}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Braille Options</source>
-        <target>Braille Options</target>
+        <target>Opcije brajevog pisma</target>
       </segment>
     </unit>
     <unit id="612003b7-b092-48d5-a63a-53dc68903513">
@@ -27434,27 +27434,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ###### </note>
         <note appliesTo="source">suffix:  {#MathBrailleCode}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Output code</source>
-        <target>Output code</target>
+        <target>Izlazni kod</target>
       </segment>
     </unit>
     <unit id="c0c7ffba-ea92-4257-85c2-5d87aa593e29">
       <notes>
         <note appliesTo="source">line: 3390</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The braille math code to use.</source>
-        <target>The braille math code to use.</target>
+        <target>Matematički kod brajevog pisma koji će se koristiti.</target>
       </segment>
     </unit>
     <unit id="0f8a5c04-6339-4e4a-8502-921345b92480">
       <notes>
         <note appliesTo="source">line: 3391</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When this option is set to "Automatic", NVDA selects a default math braille code based on the current NVDA language.</source>
-        <target>When this option is set to "Automatic", NVDA selects a default math braille code based on the current NVDA language.</target>
+        <target>Kada je ova opcija podešena na "automatski", NVDA bira podrazumevani matematički brajev kod na osnovu trenutnog NVDA jezika.</target>
       </segment>
     </unit>
     <unit id="9e0cdc5e-bd53-42bb-bf71-6254b05debec">
@@ -27463,9 +27463,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Automatic, ASCIIMath, ASCIIMath-Finnish, CMU, LaTeX, Nemeth, Swedish, UEB, Vietnam </source>
-        <target> Options | Automatic, ASCIIMath, ASCIIMath-Finnish, CMU, LaTeX, Nemeth, Swedish, UEB, Vietnam </target>
+        <target> Opcije | Automatski, ASCIIMath, ASCIIMath-Finnish, CMU, LaTeX, Nemeth, Swedish, UEB, Vietnam </target>
       </segment>
     </unit>
     <unit id="9857c66e-b35b-4e4d-bde2-6a1a1422460a">
@@ -27474,9 +27474,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Automatic </source>
-        <target> Default | Automatic </target>
+        <target> Podrazumevano | Automatski </target>
       </segment>
     </unit>
     <unit id="ea0bbf51-a140-4f29-a6cf-d0393cfcda76">
@@ -27485,27 +27485,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ###### </note>
         <note appliesTo="source">suffix:  {#MathBrailleHighlights}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Highlight navigation focus with dots 7 and 8</source>
-        <target>Highlight navigation focus with dots 7 and 8</target>
+        <target>Obeleži fokus navigacije tačkicama 7 i 8</target>
       </segment>
     </unit>
     <unit id="54357583-088a-46ad-bbeb-d0d0d7fc5937">
       <notes>
         <note appliesTo="source">line: 3400</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option determines whether NVDA indicates the currently selected subexpression with dots 7 and 8 during navigation.</source>
-        <target>This option determines whether NVDA indicates the currently selected subexpression with dots 7 and 8 during navigation.</target>
+        <target>Ova opcija određuje da li će NVDA označiti trenutno izabrani podizraz tačkicama 7 i 8 u toku navigacije.</target>
       </segment>
     </unit>
     <unit id="649de93f-cb35-4ee7-948e-fe8e4a3c26f4">
       <notes>
         <note appliesTo="source">line: 3401</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The options allow for either no highlighting, only highlighting of the first character, highlighting of the first and last character, or highlighting of the entire subexpression.</source>
-        <target>The options allow for either no highlighting, only highlighting of the first character, highlighting of the first and last character, or highlighting of the entire subexpression.</target>
+        <target>Opcije dozvoljavaju da ne postoji nikakvo označavanje, da se označi samo prvi znak, da se označe prvi i poslednji znakovi, ili da se označi ceo podizraz.</target>
       </segment>
     </unit>
     <unit id="576370ce-cb41-4e71-a422-106dc0ce2fdf">
@@ -27514,9 +27514,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Off, First Character, Endpoints, All </source>
-        <target> Options | Off, First Character, Endpoints, All </target>
+        <target> Opcije | Isključeno, prvi znak, krajevi, sve </target>
       </segment>
     </unit>
     <unit id="6965cebe-05f7-41b9-a8d6-daf6fcbfb2f8">
@@ -27525,9 +27525,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Endpoints </source>
-        <target> Default | Endpoints </target>
+        <target> Podrazumevano | Krajevi </target>
       </segment>
     </unit>
     <unit id="0007ae64-3808-4e1f-b53d-0507e8af1f66">
@@ -27536,9 +27536,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#MathApplicationSupport}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Application support</source>
-        <target>Application support</target>
+        <target>Podrška za aplikacije</target>
       </segment>
     </unit>
     <unit id="b9f7517f-eb14-443c-8410-3b15382551c3">
@@ -27547,45 +27547,45 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ###### </note>
         <note appliesTo="source">suffix:  {#MathUseWordNative}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Use native math support in Word and Outlook</source>
-        <target>Use native math support in Word and Outlook</target>
+        <target>Koristi ugrađenu podršku za matematičke izraze u Wordu i Outlooku</target>
       </segment>
     </unit>
     <unit id="83e462ec-3f06-417e-9d99-c58ba90413fa">
       <notes>
         <note appliesTo="source">line: 3412</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option disables MathCAT when reading and interacting with equations in Microsoft Word or Outlook.</source>
-        <target>This option disables MathCAT when reading and interacting with equations in Microsoft Word or Outlook.</target>
+        <target>Ova opcija će onemogućiti MathCAT kada čitate i vršite interakciju sa zadacima u programu Microsoft Word ili Outlook.</target>
       </segment>
     </unit>
     <unit id="8bed1153-10c9-449b-ac49-7358b9983292">
       <notes>
         <note appliesTo="source">line: 3413</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This allows you to use the math presentation (speech, braille, and interaction) that is built-in to these programs.</source>
-        <target>This allows you to use the math presentation (speech, braille, and interaction) that is built-in to these programs.</target>
+        <target>Ovo vam dozvoljava da koristite predstavljanje matematike (govor, brajevo pismo i interakciju) koje je ugrađeno u ove programe.</target>
       </segment>
     </unit>
     <unit id="a9e7fcb2-feab-4683-8fe2-38f14a45a992">
       <notes>
         <note appliesTo="source">line: 3415</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>You cannot use MathCAT in Microsoft Word or Outlook when this option is enabled.</source>
-        <target>You cannot use MathCAT in Microsoft Word or Outlook when this option is enabled.</target>
+        <target>Ne možete da koristite MathCAT u programima Microsoft Word ili Outlook kada je ova opcija omogućena.</target>
       </segment>
     </unit>
     <unit id="ffd9f46d-1597-4fb4-b7e0-ddfad2c1acd6">
       <notes>
         <note appliesTo="source">line: 3416</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option does not affect MathCAT support in other programs.</source>
-        <target>This option does not affect MathCAT support in other programs.</target>
+        <target>Ova opcija ne utiče na MathCAT podršku u drugim programima.</target>
       </segment>
     </unit>
     <unit id="96c11495-13b4-414e-a835-d079c3857738">
@@ -27594,9 +27594,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Checked, Unchecked </source>
-        <target> Options | Checked, Unchecked </target>
+        <target> Opcije | Označeno, nije označeno </target>
       </segment>
     </unit>
     <unit id="7a10eb0f-cfdb-46a3-a20b-2c1366058964">
@@ -27605,9 +27605,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Unchecked </source>
-        <target> Default | Unchecked </target>
+        <target> Podrazumevano | Nije označeno </target>
       </segment>
     </unit>
     <unit id="9bdf175e-b215-4ca7-a07d-5bbdd2406bb4">
@@ -28522,7 +28522,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Windows OCR Settings</source>
-        <target>Windows OCR podešavanja</target>
+        <target>Podešavanja Windows optičkog prepoznavanja znakova</target>
       </segment>
     </unit>
     <unit id="0d2fca3f-e541-455e-82d3-fd21910f489b">
@@ -28531,7 +28531,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The settings in this category allow you to configure [Windows OCR](#Win10Ocr).</source>
-        <target>Podešavanja u ovoj kategoriji vam dozvoljavaju da podesite [Windows OCR](#Win10Ocr).</target>
+        <target>Podešavanja u ovoj kategoriji vam dozvoljavaju da podesite [Windows optičko prepoznavanje znakova](#Win10Ocr).</target>
       </segment>
     </unit>
     <unit id="dbda2279-9668-45d4-89c2-0ed1f0682578">
@@ -28614,9 +28614,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 3593</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option is disabled by default.</source>
-        <target>This option is disabled by default.</target>
+        <target>Ova opcija je podrazumevano onemogućena.</target>
       </segment>
     </unit>
     <unit id="140575f8-408e-4874-9ee8-d2ab85760ad1">
@@ -28625,18 +28625,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#Win10OcrSettingsAutoSayAllOnResult}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Automatically say all on result</source>
-        <target>Automatically say all on result</target>
+        <target>Automatsko neprekidno čitanje rezultata</target>
       </segment>
     </unit>
     <unit id="e5cfdaa4-3ba1-4db2-b8ca-b9339884969c">
       <notes>
         <note appliesTo="source">line: 3597</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This checkbox toggles the automatic reading of all recognized content after a recognition is complete.</source>
-        <target>This checkbox toggles the automatic reading of all recognized content after a recognition is complete.</target>
+        <target>Ovo izborno polje uključuje ili isključuje automatsko čitanje celokupnog prepoznatog sadržaja nakon što se prepoznavanje završi.</target>
       </segment>
     </unit>
     <unit id="4c2518dc-03b4-4526-8ede-29d74414b5e0">
@@ -28788,216 +28788,216 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: #### </note>
         <note appliesTo="source">suffix:  {#CopyAddonsToSystemProfileDialog}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Copy Settings to System-wide Configuration Dialog</source>
-        <target>Copy Settings to System-wide Configuration Dialog</target>
+        <target>Dijalog kopiranja podešavanja u sistemsku konfiguraciju</target>
       </segment>
     </unit>
     <unit id="645ba606-ae0d-4137-b31e-38eb0b43fa04">
       <notes>
         <note appliesTo="source">line: 3624</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This dialog appears if you choose to [copy your settings to NVDA's system-wide configuration](#GeneralSettingsCopySettings) and your NVDA configuration or the system-wide NVDA configuration contains [add-ons](#AddonsManager).</source>
-        <target>This dialog appears if you choose to [copy your settings to NVDA's system-wide configuration](#GeneralSettingsCopySettings) and your NVDA configuration or the system-wide NVDA configuration contains [add-ons](#AddonsManager).</target>
+        <target>Ovaj dijalog se pojavljuje ako odaberete da [kopirate vaša podešavanja u NVDA sistemsku konfiguraciju](#GeneralSettingsCopySettings) i vaša NVDA podešavanja ili podešavanja u sistemskoj NVDA konfiguraciji sadrže [dodatke](#AddonsManager).</target>
       </segment>
     </unit>
     <unit id="fa8201e7-3b62-46f1-ae26-a80f77323c05">
       <notes>
         <note appliesTo="source">line: 3625</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>It allows you to choose which of your add-ons to copy to the system-wide configuration, which is used during sign-in and on [secure screens](#SecureScreens).</source>
-        <target>It allows you to choose which of your add-ons to copy to the system-wide configuration, which is used during sign-in and on [secure screens](#SecureScreens).</target>
+        <target>Dozvoljava vam da izaberete koje dodatke želite da kopirate u sistemsku konfiguraciju, koja se koristi u toku prijave i na [bezbednim ekranima](#SecureScreens).</target>
       </segment>
     </unit>
     <unit id="12034a15-6a66-44bc-9550-4561cc9abb33">
       <notes>
         <note appliesTo="source">line: 3626</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>It also shows which add-ons are already present in the system-wide configuration.</source>
-        <target>It also shows which add-ons are already present in the system-wide configuration.</target>
+        <target>Takođe prikazuje koji dodaci su već prisutni u sistemskoj konfiguraciji.</target>
       </segment>
     </unit>
     <unit id="9259fc6e-4b3a-40e9-be99-dd0a914a6924">
       <notes>
         <note appliesTo="source">line: 3627</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>By default, only add-ons that are already present in the system-wide configuration will be included.</source>
-        <target>By default, only add-ons that are already present in the system-wide configuration will be included.</target>
+        <target>Podrazumevano, biće uključeni samo dodaci koji su već prisutni u sistemskoj konfiguraciji.</target>
       </segment>
     </unit>
     <unit id="e21544ee-caba-4d34-a9b2-e423ef89e065">
       <notes>
         <note appliesTo="source">line: 3629</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Copying add-ons to the system-wide configuration is a serious security risk.</source>
-        <target>Copying add-ons to the system-wide configuration is a serious security risk.</target>
+        <target>Kopiranje dodataka u sistemsku konfiguraciju je ozbiljan bezbednosni rizik.</target>
       </segment>
     </unit>
     <unit id="6ad80be6-44d5-44d3-ac80-6fa40d50a9be">
       <notes>
         <note appliesTo="source">line: 3630</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA uses this configuration when running on secure screens, including the sign-in and User Account Control (UAC) screens.</source>
-        <target>NVDA uses this configuration when running on secure screens, including the sign-in and User Account Control (UAC) screens.</target>
+        <target>NVDA koristi ovu konfiguraciju kada je pokrenut na bezbednim ekranima, što uključuje ekran za prijavljivanje kao i ekrane kontrole korisničkog naloga (kkn).</target>
       </segment>
     </unit>
     <unit id="41ab7772-62ff-407f-9c99-0d1b10924724">
       <notes>
         <note appliesTo="source">line: 3631</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When running on secure screens, NVDA runs as the system user, which has privileges even greater than administrators.</source>
-        <target>When running on secure screens, NVDA runs as the system user, which has privileges even greater than administrators.</target>
+        <target>Kada je pokrenut na bezbednim ekranima, NVDA je pokrenut kao sistemski korisnik, koji ima privilegije koje su veće čak i od administratorskih.</target>
       </segment>
     </unit>
     <unit id="9718e22f-2b97-467d-9dc1-df2ed07564fa">
       <notes>
         <note appliesTo="source">line: 3632</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This means that many of the usual security and privacy features of Windows, like User Account Control (UAC), do not apply.</source>
-        <target>This means that many of the usual security and privacy features of Windows, like User Account Control (UAC), do not apply.</target>
+        <target>Ovo znači da se mnoge standardne funkcije privatnosti Windowsa, kao što je kontrola korisničkog naloga (kkn) ne primenjuju.</target>
       </segment>
     </unit>
     <unit id="1189fd16-5d7d-4f9d-b6af-2ab06873055f">
       <notes>
         <note appliesTo="source">line: 3633</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Allowing add-ons to run in this environment grants them unrestricted access to your entire system.</source>
-        <target>Allowing add-ons to run in this environment grants them unrestricted access to your entire system.</target>
+        <target>Dozvoljavanje dodacima da se pokreću u ovakvom okruženju im daje neograničen pristup vašem sistemu.</target>
       </segment>
     </unit>
     <unit id="520c33c7-f963-4921-9ee1-253d1fb5be13">
       <notes>
         <note appliesTo="source">line: 3635</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The list of add-ons shows all add-ons enabled in the currently running NVDA configuration and/or present in the system-wide NVDA configuration.</source>
-        <target>The list of add-ons shows all add-ons enabled in the currently running NVDA configuration and/or present in the system-wide NVDA configuration.</target>
+        <target>Lista dodataka prikazuje sve dodatke koji su omogućeni u trenutno pokrenutoj NVDA konfiguraciji i/ili prisutni u sistemskoj konfiguraciji.</target>
       </segment>
     </unit>
     <unit id="a29b8b70-1531-4c40-a1d2-356d12ddd8b2">
       <notes>
         <note appliesTo="source">line: 3636</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The version of the add-on installed in the currently running configuration is shown in the "User version" column.</source>
-        <target>The version of the add-on installed in the currently running configuration is shown in the "User version" column.</target>
+        <target>Verzija dodatka koji je instaliran u trenutno pokrenutoj konfiguraciji je prikazana u koloni "korisnička verzija".</target>
       </segment>
     </unit>
     <unit id="1919cf88-2cb8-461b-b597-d607fc474155">
       <notes>
         <note appliesTo="source">line: 3637</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The version installed in the system-wide configuration is shown in the "System-wide version" column.</source>
-        <target>The version installed in the system-wide configuration is shown in the "System-wide version" column.</target>
+        <target>Verzija instalirana u sistemskoj konfiguraciji je prikazana u koloni "sistemska verzija".</target>
       </segment>
     </unit>
     <unit id="683ef2d0-6124-4511-a59d-f6702379933f">
       <notes>
         <note appliesTo="source">line: 3638</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If the add-on is not present in the currently running or system-wide configuration, "Not installed" is shown in the appropriate column.</source>
-        <target>If the add-on is not present in the currently running or system-wide configuration, "Not installed" is shown in the appropriate column.</target>
+        <target>Ako dodatak nije prisutan u konfiguraciji koja je trenutno pokrenuta ili u sistemskoj konfiguraciji, "nije instaliran" će biti prikazano u odgovarajućoj koloni.</target>
       </segment>
     </unit>
     <unit id="2edf4d02-9c8e-4259-986f-e4bb58d65794">
       <notes>
         <note appliesTo="source">line: 3640</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>To copy one or more add-ons to the system-wide configuration, check them in the list of add-ons.</source>
-        <target>To copy one or more add-ons to the system-wide configuration, check them in the list of add-ons.</target>
+        <target>Da biste kopirali jedan ili više dodataka u sistemsku konfiguraciju, označite ih u listi dodataka.</target>
       </segment>
     </unit>
     <unit id="f75a744e-8950-4dfa-9d1f-8a6546d5c048">
       <notes>
         <note appliesTo="source">line: 3641</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>You are strongly recommended to leave all add-ons that you do not require to access secure screens unchecked.</source>
-        <target>You are strongly recommended to leave all add-ons that you do not require to access secure screens unchecked.</target>
+        <target>Preporučujemo vam da ostavite sve dodatke koji vam nisu neophodni za pristup bezbednim ekranima onemogućenim.</target>
       </segment>
     </unit>
     <unit id="d0ba22fd-b89f-44d8-9973-a1dfd1f835af">
       <notes>
         <note appliesTo="source">line: 3643</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>To get more information about an add-on, select the add-on in the list of add-ons and press the "About add-on..." button.</source>
-        <target>To get more information about an add-on, select the add-on in the list of add-ons and press the "About add-on..." button.</target>
+        <target>Da biste dobili više informacija o dodatku, izaberite dodatak u listi dodataka i pritisnite dugme "o dodatku...".</target>
       </segment>
     </unit>
     <unit id="e1711202-de9b-48ea-bbfb-def8af29f513">
       <notes>
         <note appliesTo="source">line: 3644</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The details shown are for the version in the currently running configuration.</source>
-        <target>The details shown are for the version in the currently running configuration.</target>
+        <target>Detalji koji se prikazuju su za verziju u trenutno pokrenutoj konfiguraciji.</target>
       </segment>
     </unit>
     <unit id="9e347c09-ca14-4ea5-9e9b-c000638fb465">
       <notes>
         <note appliesTo="source">line: 3645</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If the add-on is not installed in the currently running configuration, the details of the version in the system-wide configuration are shown instead.</source>
-        <target>If the add-on is not installed in the currently running configuration, the details of the version in the system-wide configuration are shown instead.</target>
+        <target>Ako dodatak nije instaliran u trenutno pokrenutoj konfiguraciji, detalji će biti prikazani za verziju u sistemskoj konfiguraciji.</target>
       </segment>
     </unit>
     <unit id="eec22e97-5216-4082-88a6-792a2c55c00b">
       <notes>
         <note appliesTo="source">line: 3647</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Please note that you may only copy currently enabled add-ons to the system-wide configuration.</source>
-        <target>Please note that you may only copy currently enabled add-ons to the system-wide configuration.</target>
+        <target>Molimo imajte na umu da možete da kopirate samo trenutno omogućene dodatke u sistemsku konfiguraciju.</target>
       </segment>
     </unit>
     <unit id="3365d724-9d0e-4cd0-88f3-08645f2f7977">
       <notes>
         <note appliesTo="source">line: 3648</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Add-ons that are "pending restart" cannot be copied.</source>
-        <target>Add-ons that are "pending restart" cannot be copied.</target>
+        <target>Dodaci koji "čekaju na ponovno pokretanje" se ne mogu kopirati.</target>
       </segment>
     </unit>
     <unit id="3bf65d37-c8f1-4373-b706-c74cfd21fa00">
       <notes>
         <note appliesTo="source">line: 3650</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Add-ons that are currently installed in the system-wide configuration, but are not present in the running NVDA configuration will be removed.</source>
-        <target>Add-ons that are currently installed in the system-wide configuration, but are not present in the running NVDA configuration will be removed.</target>
+        <target>Dodaci koji su trenutno instalirani u sistemskoj konfiguraciji, ali nisu prisutni u trenutno pokrenutoj NVDA konfiguraciji će biti uklonjeni.</target>
       </segment>
     </unit>
     <unit id="80041c1e-a509-4ab5-8547-f588a2c7dd0e">
       <notes>
         <note appliesTo="source">line: 3651</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>These items cannot be checked.</source>
-        <target>These items cannot be checked.</target>
+        <target>Ove stavke se ne mogu označiti.</target>
       </segment>
     </unit>
     <unit id="550f0137-e562-4aa3-83c0-4b4b944b7a7e">
       <notes>
         <note appliesTo="source">line: 3652</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>They also begin with "[remove]" for easy identification.</source>
-        <target>They also begin with "[remove]" for easy identification.</target>
+        <target>Takođe počinju sa "[ukloni]" radi lakšeg prepoznavanja.</target>
       </segment>
     </unit>
     <unit id="e3d0c2c5-1a59-4caf-9b4f-67e824c90639">
@@ -30172,9 +30172,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 3834</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>UIA notifications: This option defers the responsibility of determining what text to speak to Windows Terminal itself, meaning that NVDA no longer has to determine what text currently on-screen is "new".</source>
-        <target>UIA notifications: This option defers the responsibility of determining what text to speak to Windows Terminal itself, meaning that NVDA no longer has to determine what text currently on-screen is "new".</target>
+        <target>UIA obaveštenja: ova opcija prebacuje odgovornost određivanja koji tekst treba da se izgovori na sam Windows Terminal, što znači da NVDA više ne mora da odredi koji tekst na ekranu je "nov".</target>
       </segment>
     </unit>
     <unit id="4ee646a7-dc69-4527-b062-f87971870c02">
@@ -30286,54 +30286,54 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#UseWASAPIForSAPI4}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Use WASAPI for SAPI 4 audio output</source>
-        <target>Use WASAPI for SAPI 4 audio output</target>
+        <target>Koristi WASAPI za SAPI 4 zvučni izlaz</target>
       </segment>
     </unit>
     <unit id="b72c2742-df61-471b-90f9-ac6122e4e547">
       <notes>
         <note appliesTo="source">line: 3853</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option enables Microsoft Speech API version 4 (SAPI 4) voices to output audio via the Windows Audio Session API (WASAPI).</source>
-        <target>This option enables Microsoft Speech API version 4 (SAPI 4) voices to output audio via the Windows Audio Session API (WASAPI).</target>
+        <target>Ova opcija dozvoljava glasovima Microsoft govornog API-a verzije 4 (SAPI 4) da reprodukuju zvuk korišćenjem Windows API-a zvučne sesije (WASAPI).</target>
       </segment>
     </unit>
     <unit id="f43848dc-bae1-4d0e-975a-963b9c45ed69">
       <notes>
         <note appliesTo="source">line: 3854</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This can allow SAPI 4 voices to work with more features, such as leading silence trimming and keeping audio device awake.</source>
-        <target>This can allow SAPI 4 voices to work with more features, such as leading silence trimming and keeping audio device awake.</target>
+        <target>Ovo može omogućiti SAPI 4 glasovima da podržavaju više funkcija, kao što su uklanjanje početnih tišina i održavanje zvučnog uređaja budnim.</target>
       </segment>
     </unit>
     <unit id="6b1daae4-93c0-4a87-a437-b6b0da25616f">
       <notes>
         <note appliesTo="source">line: 3855</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>However, some SAPI 4 voices might not work with the current WASAPI implementation.</source>
-        <target>However, some SAPI 4 voices might not work with the current WASAPI implementation.</target>
+        <target>Međutim, neki SAPI 4 glasovi možda neće raditi uz trenutnu WASAPI implementaciju.</target>
       </segment>
     </unit>
     <unit id="71ee9713-f475-4f5d-a153-e9dedfe23e8f">
       <notes>
         <note appliesTo="source">line: 3856</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If you find that the SAPI 4 voice you are using stops working, you may disable this option.</source>
-        <target>If you find that the SAPI 4 voice you are using stops working, you may disable this option.</target>
+        <target>Ako primetite da je SAPI 4 glas koji koristite prestao da radi, možete onemogućiti ovu opciju.</target>
       </segment>
     </unit>
     <unit id="d5c44b45-555a-4439-b59a-31fcaa5e9757">
       <notes>
         <note appliesTo="source">line: 3858</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Note that in Speech settings, there is a similar [option for SAPI 5 voices](#SpeechSettingsUseWasapi), not to be confused with this one.</source>
-        <target>Note that in Speech settings, there is a similar [option for SAPI 5 voices](#SpeechSettingsUseWasapi), not to be confused with this one.</target>
+        <target>Imajte na umu da u podešavanjima govora postoji slična [opcija za SAPI 5 glasove](#SpeechSettingsUseWasapi), koju ne treba mešati sa ovom.</target>
       </segment>
     </unit>
     <unit id="0b8a8675-b930-4dc8-9be8-81deb09ca609">
@@ -30342,9 +30342,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Options |Default (Enabled), Disabled, Enabled</source>
-        <target>Options |Default (Enabled), Disabled, Enabled</target>
+        <target>Opcije |Podrazumevano (omogućeno), onemogućeno, omogućeno</target>
       </segment>
     </unit>
     <unit id="09351fbd-5c78-4d8a-8f42-f06205c49ccf">
@@ -30353,9 +30353,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Default |Enabled</source>
-        <target>Default |Enabled</target>
+        <target>Podrazumevano |Omogućeno</target>
       </segment>
     </unit>
     <unit id="9818ec02-721e-4b97-aa0e-668e024c4ab0">
@@ -30802,9 +30802,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 3933</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For an introductory tutorial, please refer to [Python's Regular Expression Guide](https://docs.python.org/3.13/howto/regex.html).</source>
-        <target>For an introductory tutorial, please refer to [Python's Regular Expression Guide](https://docs.python.org/3.13/howto/regex.html).</target>
+        <target>Za uvodni tutorijal, molimo pogledajte [Python vodič regularnih izraza](https://docs.python.org/3.13/howto/regex.html).</target>
       </segment>
     </unit>
     <unit id="909761ee-4a29-4728-af07-9622d4e8ef0f">
@@ -31712,7 +31712,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all: Triggered while reading with the say all command.</source>
-        <target>Izgovori sve: Aktivira se kada čitate koristeći komandu izgovori sve.</target>
+        <target>Neprekidno čitanje: Aktivira se kada čitate koristeći komandu nepekidnog čitanja.</target>
       </segment>
     </unit>
     <unit id="bb150724-c7ea-49d8-9fc3-f3b40a8f5567">
@@ -31795,7 +31795,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>To edit the profile associated with say all, you must [manually activate](#ConfigProfileManual) that profile.</source>
-        <target>Da uredite profil koji se koristi za režim izgovori sve, morate [ručno aktivirati](#ConfigProfileManual) taj profil.</target>
+        <target>Da uredite profil koji se koristi za neprekidno čitanje, morate [ručno aktivirati](#ConfigProfileManual) taj profil.</target>
       </segment>
     </unit>
     <unit id="6bdc8413-e51a-467f-9ff8-d64968a2bded">
@@ -32237,18 +32237,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 4167</note>
         <note appliesTo="source">prefix:    * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>You may include the port to connect on by appending a colon (":") and the port number to the host address.</source>
-        <target>You may include the port to connect on by appending a colon (":") and the port number to the host address.</target>
+        <target>Možete upisati port na kojem ćete se povezati dodavanjem dvotačke (":") uz broj porta u adresi servera.</target>
       </segment>
     </unit>
     <unit id="a3daaa38-dd68-4226-93f7-98096375d797">
       <notes>
         <note appliesTo="source">line: 4168</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>     For example, `example.com:1234`.</source>
-        <target>     For example, `example.com:1234`.</target>
+        <target>     Na primer, `primer.com:1234`.</target>
       </segment>
     </unit>
     <unit id="c0c4cd99-9bc9-46e6-8fb9-1b39fcfc2acc">
@@ -32265,9 +32265,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 4171</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>   Be careful to type the key exactly as given.</source>
-        <target>   Be careful to type the key exactly as given.</target>
+        <target>   Obradite pažnju da ste upisali šifru tačno onako kako ste je dobili.</target>
       </segment>
     </unit>
     <unit id="49d587fc-7af4-4cce-a2f7-9cfeaf1600f1">
@@ -32324,9 +32324,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 4180</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>   You will need to provide this address to the other person.</source>
-        <target>   You will need to provide this address to the other person.</target>
+        <target>   Moraćete da date ovu adresu drugoj osobi.</target>
       </segment>
     </unit>
     <unit id="f2fd05f7-ed87-474b-bc33-b84f4739209b">
@@ -32334,18 +32334,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 4182</note>
         <note appliesTo="source">prefix:    * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>You may include the port to connect on by appending a colon (":") and the port number to the host.</source>
-        <target>You may include the port to connect on by appending a colon (":") and the port number to the host.</target>
+        <target>Možete upisati port na koji ćete se povezati dodavanjem dvotačke (":") uz broj porta u adresu servera.</target>
       </segment>
     </unit>
     <unit id="9dfd2f00-e81f-4e04-a05c-c1b9ed1c5853">
       <notes>
         <note appliesTo="source">line: 4183</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>     For example, `example.com:1234`.</source>
-        <target>     For example, `example.com:1234`.</target>
+        <target>     Na primer, `primer.com:1234`.</target>
       </segment>
     </unit>
     <unit id="dada18fb-997b-4047-9346-4f9d438e04a6">
@@ -32362,9 +32362,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 4186</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>   You will need to provide this to the other person.</source>
-        <target>   You will need to provide this to the other person.</target>
+        <target>   Moraćete ovo da date drugoj osobi.</target>
       </segment>
     </unit>
     <unit id="640c6834-557f-4288-9aa9-13a06961ccc0">
@@ -32372,9 +32372,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 4188</note>
         <note appliesTo="source">prefix:    * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.</source>
-        <target>Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.</target>
+        <target>Imajte na umu da ključ ima svrhu identifikatora veze ali i lozinke, tako da je veoma važno da bude težak za pogađanje.</target>
       </segment>
     </unit>
     <unit id="4e76d0e7-ce86-4e4e-8189-2ccfcb7da8f8">
@@ -32479,9 +32479,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 4203</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>   The other person will also need this.</source>
-        <target>   The other person will also need this.</target>
+        <target>   Drugoj osobi će ovo takođe biti potrebno.</target>
       </segment>
     </unit>
     <unit id="ee7e1342-5a0a-459c-9554-845f0da3b0f4">
@@ -32489,9 +32489,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 4205</note>
         <note appliesTo="source">prefix:    * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This should be a port that is not used by any other services.</source>
-        <target>This should be a port that is not used by any other services.</target>
+        <target>Ovo treba da bude port koji ne koristi nijedna druga usluga.</target>
       </segment>
     </unit>
     <unit id="346442a1-7945-4250-b587-4296507a3d2a">
@@ -32499,9 +32499,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 4206</note>
         <note appliesTo="source">prefix:    * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>By default, Remote Access uses port 6837.</source>
-        <target>By default, Remote Access uses port 6837.</target>
+        <target>Podrazumevano, daljinski pristup koristi port 6837.</target>
       </segment>
     </unit>
     <unit id="a3c833f9-9798-4277-9c99-c8719e7fa8d9">
@@ -32509,27 +32509,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 4207</note>
         <note appliesTo="source">prefix:    * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If connecting over the internet, the port may need to be forwarded.</source>
-        <target>If connecting over the internet, the port may need to be forwarded.</target>
+        <target>Ako se povezujete putem interneta, port možda mora da se preusmeri.</target>
       </segment>
     </unit>
     <unit id="047d4c13-607a-4667-a571-7294c4ded0e6">
       <notes>
         <note appliesTo="source">line: 4208</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>     This documentation does not cover how to forward ports.</source>
-        <target>     This documentation does not cover how to forward ports.</target>
+        <target>     Ova dokumentacija ne objašnjava kako se preusmeravaju portovi.</target>
       </segment>
     </unit>
     <unit id="26ff4425-2e8c-45c7-a718-a599da8b4c7a">
       <notes>
         <note appliesTo="source">line: 4209</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>     You may need to contact your network administrator to do this.</source>
-        <target>     You may need to contact your network administrator to do this.</target>
+        <target>     Možda ćete morati da kontaktirate administratora vaše mreže kako biste ovo uradili.</target>
       </segment>
     </unit>
     <unit id="d995902d-8e11-47a8-9306-aab1445ce6b9">
@@ -32546,9 +32546,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 4212</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>   You will need to provide this to the other person.</source>
-        <target>   You will need to provide this to the other person.</target>
+        <target>   Moraćete ovo da date drugoj osobi.</target>
       </segment>
     </unit>
     <unit id="7838d750-c53d-4bf9-a677-6f9393ae174a">
@@ -32556,9 +32556,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 4214</note>
         <note appliesTo="source">prefix:    * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.</source>
-        <target>Note that the key acts as both the identifier for the session and the password, so it is very important it is hard to guess.</target>
+        <target>Imajte na umu da ključ ima svrhu identifikatora veze ali i lozinke, tako da je veoma važno da bude težak za pogađanje.</target>
       </segment>
     </unit>
     <unit id="6be70a23-825b-4949-a94c-5788cb14f373">
@@ -32906,108 +32906,108 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ### </note>
         <note appliesTo="source">suffix:  {#AddonStoreSecurityWarning}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Security warning for add-ons</source>
-        <target>Security warning for add-ons</target>
+        <target>Bezbednosno upozorenje o dodacima</target>
       </segment>
     </unit>
     <unit id="9eb4ffb3-0f85-4bb0-bffa-1edf7a7601c1">
       <notes>
         <note appliesTo="source">line: 4266</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Add-ons listed in the Add-on Store have not been vetted by NV Access or anyone else.</source>
-        <target>Add-ons listed in the Add-on Store have not been vetted by NV Access or anyone else.</target>
+        <target>Dodatke u prodavnici dodataka ne proverava NV Access ili bilo ko drugi.</target>
       </segment>
     </unit>
     <unit id="b96f88ab-ac3a-4757-95a6-05cffaf2a4b3">
       <notes>
         <note appliesTo="source">line: 4267</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>It is very important to only install add-ons from sources you trust.</source>
-        <target>It is very important to only install add-ons from sources you trust.</target>
+        <target>Veoma je važno da instalirate dodatke samo iz izvora kojima verujete.</target>
       </segment>
     </unit>
     <unit id="c3b4e4fa-8ca5-4f03-b864-55d5c9db2928">
       <notes>
         <note appliesTo="source">line: 4268</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The functionality of add-ons is unrestricted inside NVDA.</source>
-        <target>The functionality of add-ons is unrestricted inside NVDA.</target>
+        <target>Funkcionalnost dodataka je neograničena u programu NVDA.</target>
       </segment>
     </unit>
     <unit id="bf373123-1f00-4809-a7af-0f9420b2d770">
       <notes>
         <note appliesTo="source">line: 4269</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This could include accessing and modifying your personal data or even the entire system.</source>
-        <target>This could include accessing and modifying your personal data or even the entire system.</target>
+        <target>Ovo može da uključi pristup i izmenu vaših ličnih podataka ili čak i celokupnog sistema.</target>
       </segment>
     </unit>
     <unit id="4e66fb57-8d22-49cd-9210-529046e98fec">
       <notes>
         <note appliesTo="source">line: 4271</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Add-ons submitted to the Add-on Store are scanned by [VirusTotal](https://www.virustotal.com/).</source>
-        <target>Add-ons submitted to the Add-on Store are scanned by [VirusTotal](https://www.virustotal.com/).</target>
+        <target>Dodatke poslate u prodavnicu dodataka skenira [VirusTotal](https://www.virustotal.com/).</target>
       </segment>
     </unit>
     <unit id="4ff19a0f-ec9e-4398-9192-db43105cde94">
       <notes>
         <note appliesTo="source">line: 4272</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This can detect malware that was known when the add-on was submitted.</source>
-        <target>This can detect malware that was known when the add-on was submitted.</target>
+        <target>On može da prepozna viruse koji su poznati u vreme kada je dodatak poslat.</target>
       </segment>
     </unit>
     <unit id="c1a107d1-8c4b-403e-ba4e-578f2fb3bbf2">
       <notes>
         <note appliesTo="source">line: 4273</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>However, VirusTotal results may be inaccurate or out of date.</source>
-        <target>However, VirusTotal results may be inaccurate or out of date.</target>
+        <target>Međutim, VirusTotal rezultati mogu biti neprecizni ili da ne budu aktuelni.</target>
       </segment>
     </unit>
     <unit id="876cd922-8ab8-48d0-b837-46eb4af081cb">
       <notes>
         <note appliesTo="source">line: 4274</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For example, an add-on that is marked as malicious might not be malicious, and an add-on that is not marked as malicious might actually be malicious.</source>
-        <target>For example, an add-on that is marked as malicious might not be malicious, and an add-on that is not marked as malicious might actually be malicious.</target>
+        <target>Na primer, dodatak koji je označen kao zlonameran ne mora da bude zlonameran, a dodatak koji nije označen kao zlonameran može zapravo da bude zlonameran.</target>
       </segment>
     </unit>
     <unit id="e5f3cc8a-c881-4bcd-8c94-43e6db6e805f">
       <notes>
         <note appliesTo="source">line: 4275</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>You can view a summary of the scan results for a scanned add-on by reviewing the add-on's details.</source>
-        <target>You can view a summary of the scan results for a scanned add-on by reviewing the add-on's details.</target>
+        <target>Možete videti sažetak rezultata skeniranja za skeniran dodatak pregledom detalja dodatka.</target>
       </segment>
     </unit>
     <unit id="5b0afe6c-3e79-4297-99b4-536567119c19">
       <notes>
         <note appliesTo="source">line: 4276</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>You can view the VirusTotal scan results directly using the "VirusTotal scan results" [action from the context menu](#AddonStoreActions).</source>
-        <target>You can view the VirusTotal scan results directly using the "VirusTotal scan results" [action from the context menu](#AddonStoreActions).</target>
+        <target>Možete pogledati rezultate skeniranja uz VirusTotal direktno korišćenjem radnje "Rezultati skeniranja usluge VirusTotal" [iz kontekstnog menija](#AddonStoreActions).</target>
       </segment>
     </unit>
     <unit id="25bc5d71-91ec-4475-b439-627892fc6c89">
       <notes>
         <note appliesTo="source">line: 4278</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>There are a number of other ways of investigating the safety of an add-on:</source>
-        <target>There are a number of other ways of investigating the safety of an add-on:</target>
+        <target>Postoje brojni drugi načini za proveru bezbednosti nekog dodatka:</target>
       </segment>
     </unit>
     <unit id="178b39c8-b8f9-442f-b12d-d07d306ce16f">
@@ -33015,9 +33015,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 4280</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Research the developer's reputation (e.g. how long have they been contributing)</source>
-        <target>Research the developer's reputation (e.g. how long have they been contributing)</target>
+        <target>Istražite reputaciju programera (na primer koliko dugo doprinose)</target>
       </segment>
     </unit>
     <unit id="75e1acae-d366-42ea-9a49-5b7dc4cac08e">
@@ -33025,9 +33025,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 4281</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Look for user feedback in the [NVDA user group](https://groups.google.com/a/nvaccess.org/g/nvda-users) or the [NVDA add-on group](https://nvda-addons.groups.io/g/nvda-addons)</source>
-        <target>Look for user feedback in the [NVDA user group](https://groups.google.com/a/nvaccess.org/g/nvda-users) or the [NVDA add-on group](https://nvda-addons.groups.io/g/nvda-addons)</target>
+        <target>Potražite povratne informacije korisnika u [NVDA korisničkoj grupi](https://groups.google.com/a/nvaccess.org/g/nvda-users) ili [grupi NVDA dodataka](https://nvda-addons.groups.io/g/nvda-addons)</target>
       </segment>
     </unit>
     <unit id="2360bc2d-dc3c-490b-b19d-a5543e61bea4">
@@ -33035,9 +33035,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 4282</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Verify that the add-on is regularly updated</source>
-        <target>Verify that the add-on is regularly updated</target>
+        <target>Proverite da li se dodatak često ažurira</target>
       </segment>
     </unit>
     <unit id="e4e15b30-06bf-4209-80d2-312d0e9b6c0a">
@@ -33045,9 +33045,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 4283</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Read [Community reviews](#AddonStoreReviews) of the add-on</source>
-        <target>Read [Community reviews](#AddonStoreReviews) of the add-on</target>
+        <target>Pročitajte [recenzije zajednice](#AddonStoreReviews) za dodatak</target>
       </segment>
     </unit>
     <unit id="c37be615-8152-43da-9932-e58834121f10">
@@ -33055,9 +33055,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 4284</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Seek community feedback through forums or social media</source>
-        <target>Seek community feedback through forums or social media</target>
+        <target>Potražite povratne informacije zajednice na forumima ili društvenim mrežama</target>
       </segment>
     </unit>
     <unit id="ff714bb0-cec9-478a-849a-a808a9b6551e">
@@ -33442,9 +33442,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 4343</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Add-ons can be sorted in ascending or descending order.</source>
-        <target>Add-ons can be sorted in ascending or descending order.</target>
+        <target>Dodaci se mogu sortirati u rastućem ili opadajućem redosledu.</target>
       </segment>
     </unit>
     <unit id="10117f60-a5e0-435d-b6a0-273c46a23c9c">
@@ -33500,27 +33500,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 4353</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Note: Add-ons are programs that can modify and access your device like any other software you download.</source>
-        <target>Note: Add-ons are programs that can modify and access your device like any other software you download.</target>
+        <target>Napomena: dodaci su programi koji mogu da izmene ili pristupe vašem uređaju kao i bilo koji drugi softver koji preuzmete.</target>
       </segment>
     </unit>
     <unit id="05ebf0c7-e109-4145-a448-78757d7381f2">
       <notes>
         <note appliesTo="source">line: 4354</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Make sure to only install add-ons from sources you trust.</source>
-        <target>Make sure to only install add-ons from sources you trust.</target>
+        <target>Uverite se da instalirate dodatke samo iz izvora kojima verujete.</target>
       </segment>
     </unit>
     <unit id="bd853d15-92e9-4500-8ac2-bff118026c59">
       <notes>
         <note appliesTo="source">line: 4355</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Please read [our security warning](#AddonStoreSecurityWarning) for more details before installing add-ons.</source>
-        <target>Please read [our security warning](#AddonStoreSecurityWarning) for more details before installing add-ons.</target>
+        <target>Molimo pročitajte [naše bezbednosno upozorenje](#AddonStoreSecurityWarning) za više detalja pre nego što instalirate dodatke.</target>
       </segment>
     </unit>
     <unit id="8d21a467-edc9-484e-849d-1c0828d846e2">
@@ -34005,36 +34005,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: #### </note>
         <note appliesTo="source">suffix:  {#AddonStoreChangelog}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>What's new in the current version</source>
-        <target>What's new in the current version</target>
+        <target>Šta je novo u trenutnoj verziji</target>
       </segment>
     </unit>
     <unit id="7ab56d43-e81a-41ad-a639-70e76aeabaf4">
       <notes>
         <note appliesTo="source">line: 4425</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If an add-on lists what's new for the current version, an action will be available to show these changes in browse mode.</source>
-        <target>If an add-on lists what's new for the current version, an action will be available to show these changes in browse mode.</target>
+        <target>Ako dodatak objavi šta je novo u trenutnoj verziji, biće dostupna radnja koja će prikazati ove promene u režimu pretraživanja.</target>
       </segment>
     </unit>
     <unit id="92617b56-9be9-493a-946b-0381130d93c0">
       <notes>
         <note appliesTo="source">line: 4426</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The add-on version is included in the title of the message.</source>
-        <target>The add-on version is included in the title of the message.</target>
+        <target>Verzija dodatka je uključena u naslov poruke.</target>
       </segment>
     </unit>
     <unit id="f8ebf5a9-d1fc-44cd-b57f-0f34295d527a">
       <notes>
         <note appliesTo="source">line: 4427</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Buttons are provided to copy the presented information or close the message window.</source>
-        <target>Buttons are provided to copy the presented information or close the message window.</target>
+        <target>Dostupna su dugmad za kopiranje prikazanih informacija ili zatvaranje prozora sa porukom.</target>
       </segment>
     </unit>
     <unit id="258db609-7d25-4412-a50d-9353188df5e7">
@@ -34650,9 +34650,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 4531</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The COM Registration Fixing Tool attempts to fix these issues by repairing accessibility entries in the registry.</source>
-        <target>The COM Registration Fixing Tool attempts to fix these issues by repairing accessibility entries in the registry.</target>
+        <target>Alatka za ispravljanje COM registracije pokušava da ispravi ove probleme popravljanjem stavki pristupačnosti u registru.</target>
       </segment>
     </unit>
     <unit id="bd84720e-3e8e-4bc3-97c3-7a22976b0d64">
@@ -34893,45 +34893,45 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ### </note>
         <note appliesTo="source">suffix:  {#SAPI4}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Microsoft Speech API version 4 (SAPI 4)</source>
-        <target>Microsoft Speech API version 4 (SAPI 4)</target>
+        <target>Microsoft govorni API verzija 4 (SAPI 4)</target>
       </segment>
     </unit>
     <unit id="5090bc19-81cb-4f58-bc27-bdc553bf00ad">
       <notes>
         <note appliesTo="source">line: 4576</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>SAPI 4 is an older Microsoft standard for software speech synthesizers.</source>
-        <target>SAPI 4 is an older Microsoft standard for software speech synthesizers.</target>
+        <target>SAPI 4 je stariji Microsoft standard za softverske sintetizatore govora.</target>
       </segment>
     </unit>
     <unit id="b02ed5ea-b76b-4c26-85ff-2cfb6fe92c27">
       <notes>
         <note appliesTo="source">line: 4577</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA still supports this for users who already have SAPI 4 synthesizers installed.</source>
-        <target>NVDA still supports this for users who already have SAPI 4 synthesizers installed.</target>
+        <target>NVDA ga još uvek podržava za korisnike koji već imaju instalirane SAPI 4 sintetizatore.</target>
       </segment>
     </unit>
     <unit id="9d4fa197-d603-4cc7-a383-3be2ea1edad1">
       <notes>
         <note appliesTo="source">line: 4578</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>However, Microsoft no longer support this and needed components are no longer available from Microsoft.</source>
-        <target>However, Microsoft no longer support this and needed components are no longer available from Microsoft.</target>
+        <target>Međutim, Microsoft ga više ne podržava i neophodne komponente više nisu dostupne od Microsofta.</target>
       </segment>
     </unit>
     <unit id="a840c2e1-4592-47ec-a780-d7c645e95878">
       <notes>
         <note appliesTo="source">line: 4580</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When using this synthesizer with NVDA, the available voices (accessed from the [Speech category](#SpeechSettings) of the [NVDA Settings](#NVDASettings) dialog or by the [Synth Settings Ring](#SynthSettingsRing)) will contain all the voices from all the installed SAPI 4 engines found on your system.</source>
-        <target>When using this synthesizer with NVDA, the available voices (accessed from the [Speech category](#SpeechSettings) of the [NVDA Settings](#NVDASettings) dialog or by the [Synth Settings Ring](#SynthSettingsRing)) will contain all the voices from all the installed SAPI 4 engines found on your system.</target>
+        <target>Kada se ovaj sintetizator koristi uz NVDA, dostupni glasovi (kojima se pristupa iz [kategorije govor](#SpeechSettings) [dijaloga sa NVDA podešavanjima](#NVDASettings) ili putem [kruga podešavanja sintetizatora](#SynthSettingsRing)) će sadržati sve glasove svih instaliranih SAPI 4 sintetizatora koji su pronađeni na vašem sistemu.</target>
       </segment>
     </unit>
     <unit id="6542e9c1-5486-4878-a6f7-c8f59d735348">
@@ -34958,18 +34958,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 4585</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA supports both 32-bit and 64-bit SAPI 5 voices.</source>
-        <target>NVDA supports both 32-bit and 64-bit SAPI 5 voices.</target>
+        <target>NVDA podržava i 32-bitne i 64-bitne SAPI 5 glasove.</target>
       </segment>
     </unit>
     <unit id="ee0723b9-9315-4238-981f-cc63e0846d91">
       <notes>
         <note appliesTo="source">line: 4586</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For the best performance and feature compatibility, 64-bit voices should be preferred.</source>
-        <target>For the best performance and feature compatibility, 64-bit voices should be preferred.</target>
+        <target>Za najbolje performanse i kompatibilnost funkcija, treba preferirati 64-bitne glasove.</target>
       </segment>
     </unit>
     <unit id="58603ade-f768-4b49-9674-875490f18148">
@@ -34985,18 +34985,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 4589</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When using the 32-bit or 64-bit SAPI 5 synthesizer with NVDA, the available voices (accessed from the [Speech category](#SpeechSettings) of the [NVDA Settings](#NVDASettings) dialog or by the [Synth Settings Ring](#SynthSettingsRing)) will contain all the voices from all the installed 32-bit or 64-bit SAPI 5 engines found on your system, respectively.</source>
-        <target>When using the 32-bit or 64-bit SAPI 5 synthesizer with NVDA, the available voices (accessed from the [Speech category](#SpeechSettings) of the [NVDA Settings](#NVDASettings) dialog or by the [Synth Settings Ring](#SynthSettingsRing)) will contain all the voices from all the installed 32-bit or 64-bit SAPI 5 engines found on your system, respectively.</target>
+        <target>Kada se koristi 32-bitni ili 64-bitni SAPI 5 sintetizator uz NVDA, dostupni glasovi (kojima se pristupa iz [kategorije govor](#SpeechSettings) [dijaloga sa NVDA podešavanjima](#NVDASettings) ili putem [kruga podešavanja sintetizatora](#SynthSettingsRing)) će sadržati sve glasove iz svih instaliranih 32-bitnih ili 64-bitnih SAPI 5 sintetizatora koji su pronađeni na vašem sistemu.</target>
       </segment>
     </unit>
     <unit id="20a40a6b-4ea7-480f-a275-d95fc120706c">
       <notes>
         <note appliesTo="source">line: 4590</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If you are unable to find a SAPI 5 voice that is installed on your system, try switching to the other SAPI 5 synthesizer using the [Select Synthesizer dialog](#SelectSynthesizer).</source>
-        <target>If you are unable to find a SAPI 5 voice that is installed on your system, try switching to the other SAPI 5 synthesizer using the [Select Synthesizer dialog](#SelectSynthesizer).</target>
+        <target>Ako ne možete da pronađete SAPI 5 glas koji je instaliran na vašem sistemu, pokušajte da pređete na drugi SAPI 5 sintetizator korišćenjem [dijaloga za izbor sintetizatora](#SelectSynthesizer).</target>
       </segment>
     </unit>
     <unit id="96f14247-84d5-4bec-96d0-f0d9c6751874">
@@ -35042,9 +35042,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 4599</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>[Microsoft Speech Platform - Runtime (Version 11), x64](https://www.microsoft.com/en-us/download/details.aspx?id=27225)</source>
-        <target>[Microsoft Speech Platform - Runtime (Version 11), x64](https://www.microsoft.com/en-us/download/details.aspx?id=27225)</target>
+        <target>[Microsoft Speech Platform - Runtime (verzija 11), x64](https://www.microsoft.com/en-us/download/details.aspx?id=27225)</target>
       </segment>
     </unit>
     <unit id="8ceb6f6e-4584-4d9a-985e-bfddb14700b6">
@@ -35052,9 +35052,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 4600</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>[Microsoft Speech Platform - Runtime Languages (Version 11)](https://www.microsoft.com/en-us/download/details.aspx?id=27224)</source>
-        <target>[Microsoft Speech Platform - Runtime Languages (Version 11)](https://www.microsoft.com/en-us/download/details.aspx?id=27224)</target>
+        <target>[Microsoft Speech Platform - Runtime jezici (verzija 11)](https://www.microsoft.com/en-us/download/details.aspx?id=27224)</target>
       </segment>
     </unit>
     <unit id="d6dfa3fd-b917-492d-8603-c29643ae5497">
@@ -35071,18 +35071,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 4602</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>  Choose the files containing the TTS data for the desired languages/voices.</source>
-        <target>  Choose the files containing the TTS data for the desired languages/voices.</target>
+        <target>  Izaberite datoteke koje sadrže TTS podatke za željene jezike ili glasove.</target>
       </segment>
     </unit>
     <unit id="36bac650-d44a-43d1-8d6b-433b70b194c1">
       <notes>
         <note appliesTo="source">line: 4603</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>  For example, the file MSSpeech_TTS_en-US_ZiraPro.msi is a U.S. English voice.</source>
-        <target>  For example, the file MSSpeech_TTS_en-US_ZiraPro.msi is a U.S. English voice.</target>
+        <target>  Na primer, datoteka MSSpeech_TTS_en-US_ZiraPro.msi je glas za engleski (Sjedinjene Američke Države).</target>
       </segment>
     </unit>
     <unit id="8668b0f5-6f98-46a3-9ded-501b71afa24b">
@@ -35118,9 +35118,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 4609</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA uses Windows OneCore voices by default.</source>
-        <target>NVDA uses Windows OneCore voices by default.</target>
+        <target>NVDA podrazumevano koristi Windows OneCore glasove.</target>
       </segment>
     </unit>
     <unit id="42bdcd64-0d3e-4da9-b9e8-78fdb5febf27">
@@ -37360,7 +37360,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |`space+dot1+dot2+dot3+dot4+dot5+dot6`</source>
-        <target>Izgovori sve |`Razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6`</target>
+        <target>Neprekidno čitanje |`Razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6`</target>
       </segment>
     </unit>
     <unit id="b146f952-9c84-439b-934a-834282492eb1">
@@ -37579,7 +37579,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |B6</source>
-        <target>Izgovori sve |B6</target>
+        <target>Neprekidno čitanje |B6</target>
       </segment>
     </unit>
     <unit id="3a1f61aa-a31d-467e-a1ff-cb1d58adf1c2">
@@ -37723,7 +37723,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |B6</source>
-        <target>Izgovori sve |B6</target>
+        <target>Neprekidno čitanje |B6</target>
       </segment>
     </unit>
     <unit id="1a439088-6e82-4e1a-a389-d4322a1cbf1c">
@@ -38070,7 +38070,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |space+dot1+dot2+dot3+dot4+dot5+dot6</source>
-        <target>Izgovori sve |razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6</target>
+        <target>Neprekidno čitanje |razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6</target>
       </segment>
     </unit>
     <unit id="47103566-db0a-465c-b789-1876d774cf07">
@@ -38125,7 +38125,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |c1+c2+c3+c4+c5+c6</source>
-        <target>Izgovori sve |c1+c2+c3+c4+c5+c6</target>
+        <target>Neprekidno čitanje |c1+c2+c3+c4+c5+c6</target>
       </segment>
     </unit>
     <unit id="fae8ec4d-72f7-4744-b6ce-763368210686">
@@ -39125,7 +39125,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |b6</source>
-        <target>Izgovori sve |b6</target>
+        <target>Neprekidno čitanje |b6</target>
       </segment>
     </unit>
     <unit id="63b94084-6365-4583-87ca-fe8560e4a58c">
@@ -39283,7 +39283,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |space+Backspace</source>
-        <target>Izgovori sve |razmak+backspace</target>
+        <target>Neprekidno čitanje |razmak+backspace</target>
       </segment>
     </unit>
     <unit id="7b52017c-2f0e-4f8b-8d5d-50f5dfd9c8a9">
@@ -43396,9 +43396,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`control+end` key |`rightKeypadRight+rightKeypadDown`</source>
-        <target>`control+end` key |`rightKeypadRight+rightKeypadDown`</target>
+        <target>`control+end` |`rightKeypadRight+rightKeypadDown`</target>
       </segment>
     </unit>
     <unit id="07bd8eca-ba86-4eae-b708-575312597884">
@@ -44188,7 +44188,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all using review cursor |`say_below` (speak from current line through bottom of screen)</source>
-        <target>Izgovori sve preglednim kursorom |`say_below` (izgovori od trenutnog reda do dna ekrana)</target>
+        <target>Neprekidno čitanje preglednim kursorom |`say_below` (izgovori od trenutnog reda do dna ekrana)</target>
       </segment>
     </unit>
     <unit id="c19f69a2-c69c-4629-ab2a-e2e17c1d6e72">
@@ -44718,7 +44718,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |`f14`</source>
-        <target>Izgovori sve |`f14`</target>
+        <target>Neprekidno čitanje |`f14`</target>
       </segment>
     </unit>
     <unit id="8473b8ae-5dda-46e4-bc9b-dc1919c2ea8c">
@@ -45268,7 +45268,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |space+dot1+dot2+dot3+dot4+dot5+dot6</source>
-        <target>Izgovori sve |Razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6</target>
+        <target>Neprekidno čitanje |Razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6</target>
       </segment>
     </unit>
     <unit id="513cb8d7-5906-4ded-82b9-b8ef062cabf1">
@@ -45572,9 +45572,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 5928</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Manually initiating a new [Remote Access](#RemoteAccess) session (sessions previously configured to [automatically connect](#RemoteAutoconnect) will still be started)</source>
-        <target>Manually initiating a new [Remote Access](#RemoteAccess) session (sessions previously configured to [automatically connect](#RemoteAutoconnect) will still be started)</target>
+        <target>Ručno uspostavljanje nove [veze daljinskog pristupa](#RemoteAccess) (veze koje su prethodno podešene da [se automatski uspostave](#RemoteAutoconnect) će još uvek biti uspostavljene)</target>
       </segment>
     </unit>
     <unit id="4ae4d726-7d09-4b4c-afd1-cc62d664bdb6">
@@ -45622,9 +45622,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 5933</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Opening external documents from the NVDA menu, such as the User Guide</source>
-        <target>Opening external documents from the NVDA menu, such as the User Guide</target>
+        <target>Otvaranje eksternih dokumenata iz NVDA menija, kao što je korisničko uputstvo</target>
       </segment>
     </unit>
     <unit id="66707e65-701c-45c6-b665-372858e71fd9">
@@ -45732,18 +45732,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 5951</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When running on a secure screen, NVDA uses its system-wide configuration for preferences.</source>
-        <target>When running on a secure screen, NVDA uses its system-wide configuration for preferences.</target>
+        <target>Kada je pokrenut na bezbednom ekranu, NVDA koristi svoju sistemsku konfiguraciju za parametre.</target>
       </segment>
     </unit>
     <unit id="446bb7f1-b91d-4de7-913c-9d56f2f060d2">
       <notes>
         <note appliesTo="source">line: 5952</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA user preferences can be copied [for use on secure screens](#GeneralSettingsCopySettings).</source>
-        <target>NVDA user preferences can be copied [for use on secure screens](#GeneralSettingsCopySettings).</target>
+        <target>NVDA korisnička podešavanja se mogu kopirati [za korišćenje na bezbednim ekranima](#GeneralSettingsCopySettings).</target>
       </segment>
     </unit>
     <unit id="0627dff2-dc87-4db5-b4b2-77beb45ed1a9">
@@ -46150,9 +46150,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>None |`--enable-start-on-logon=True|False` |When installing, enable NVDA's [Use NVDA during Windows sign-in](#StartAtWindowsLogon)</source>
-        <target>None |`--enable-start-on-logon=True|False` |When installing, enable NVDA's [Use NVDA during Windows sign-in](#StartAtWindowsLogon)</target>
+        <target>Nema |`--enable-start-on-logon=True|False` |U toku instalacije, omogući NVDA podešavanje [pokreni NVDA u toku prijavljivanja](#StartAtWindowsLogon)</target>
       </segment>
     </unit>
     <unit id="c55692e2-bb7f-40e7-84ea-b070001d3590">
@@ -46214,9 +46214,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 6017</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA's uninstaller is called `uninstall.exe` and resides under the NVDA installation directory, `%ProgramFiles%\nvda`.</source>
-        <target>NVDA's uninstaller is called `uninstall.exe` and resides under the NVDA installation directory, `%ProgramFiles%\nvda`.</target>
+        <target>NVDA deinstalacija se zove `uninstall.exe` i nalazi se u folderu NVDA instalacije, `%ProgramFiles%\nvda`.</target>
       </segment>
     </unit>
     <unit id="1e697e5d-f8ea-437e-97b2-95a272e0c8e9">
@@ -46319,9 +46319,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 6036</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>These values are stored in the registry under the key `HKEY_LOCAL_MACHINE\SOFTWARE\nvda`.</source>
-        <target>These values are stored in the registry under the key `HKEY_LOCAL_MACHINE\SOFTWARE\nvda`.</target>
+        <target>Ove vrednosti se čuvaju u registru pod ključem `HKEY_LOCAL_MACHINE\SOFTWARE\nvda`.</target>
       </segment>
     </unit>
     <unit id="f041ba92-f068-49a1-992b-db61cb9dca29">
