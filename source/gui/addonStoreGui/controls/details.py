@@ -213,7 +213,16 @@ class AddonDetails(
 			# SetDefaultStyle, however, this means the text control must start empty.
 			self.otherDetailsTextCtrl.SetValue("")
 			if numSelectedAddons > 1:
-				self.contentsPanel.Hide()
+				# Keep the actions button reachable so the user can run a batch action
+				# (the Application key context menu is the only other entry point).
+				# Hide the per-add-on description and other-details fields, since they
+				# can only show information for a single add-on. The descriptionLabel is
+				# already permanently hidden at construction (kept for accessibility name).
+				self.contentsPanel.Show()
+				self.descriptionTextCtrl.Hide()
+				self.otherDetailsLabel.Hide()
+				self.otherDetailsTextCtrl.Hide()
+				self.actionsButton.Show()
 				self.updateAddonName(
 					npgettext(
 						"addonStore",
@@ -231,6 +240,12 @@ class AddonDetails(
 				else:
 					self.updateAddonName(AddonDetails._noAddonSelectedLabelText)
 			else:
+				# Restore the per-add-on fields in case they were hidden by a previous
+				# multi-select refresh. descriptionLabel stays hidden -- it only serves
+				# as the accessible name for descriptionTextCtrl.
+				self.descriptionTextCtrl.Show()
+				self.otherDetailsLabel.Show()
+				self.otherDetailsTextCtrl.Show()
 				self.updateAddonName(details.displayName)
 				self.descriptionLabel.SetLabelText(AddonDetails._descriptionLabelText)
 				# For a ExpandoTextCtr, SetDefaultStyle can not be used to set the style (along with the use
