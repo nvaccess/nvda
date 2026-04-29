@@ -112,7 +112,7 @@ def main():
 						# Translators: the message that is shown when the user tries to install an add-on
 						# from windows explorer and NVDA is not running.
 						"Cannot install NVDA add-on from {path}.\n"
-						"You must be running NVDA to be able to install add-ons."
+						"You must be running NVDA to be able to install add-ons.",
 					).format(path=addonPath),
 					0,
 					winUser.MB_ICONERROR,
