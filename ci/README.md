@@ -35,6 +35,7 @@ Some of these steps run concurrently.
   * On snapshot builds, deploy to the server.
   * On beta branch builds, upload translation to Crowdin.
   * On release builds, publish the release on GitHub and deploy to the server.
+  * On release builds, submit a PR for the new version to the WinGet community repository.
 * Clean up build cache.
 
 ### Build behaviours
