@@ -8,13 +8,13 @@ Docked magnifier module.
 """
 
 from .magnifier import Magnifier
-from .utils.types import MagnifierType
+from .utils.types import MagnifiedView
 
 
 class DockedMagnifier(Magnifier):
 	def __init__(self):
 		super().__init__()
-		self._magnifierType = MagnifierType.DOCKED
+		self._magnifiedView = MagnifiedView.DOCKED
 
 	def _startMagnifier(self) -> None:
 		super()._startMagnifier()

@@ -8,13 +8,13 @@ Lens magnifier module.
 """
 
 from .magnifier import Magnifier
-from .utils.types import MagnifierType
+from .utils.types import MagnifiedView
 
 
 class LensMagnifier(Magnifier):
 	def __init__(self):
 		super().__init__()
-		self._magnifierType = MagnifierType.LENS
+		self._magnifiedView = MagnifiedView.LENS
 
 	def _startMagnifier(self) -> None:
 		super()._startMagnifier()

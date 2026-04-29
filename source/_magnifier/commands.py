@@ -188,7 +188,8 @@ def toggleFilter() -> None:
 		idx = filters.index(magnifier.filterType)
 		magnifier.filterType = filters[(idx + 1) % len(filters)]
 		if magnifier._magnifiedView == MagnifiedView.FULLSCREEN:
-			magnifier._applyFilter()
+			fullscreenMagnifier: FullScreenMagnifier = magnifier
+			fullscreenMagnifier._applyFilter()
 		ui.message(
 			pgettext(
 				"magnifier",
@@ -300,12 +301,13 @@ def toggleFullscreenMode() -> None:
 			magnifier,
 			MagnifierAction.CHANGE_FULLSCREEN_MODE,
 		):
+			fullscreenMagnifier: FullScreenMagnifier = magnifier
 			modes = list(FullScreenMode)
-			currentMode = magnifier._fullscreenMode
+			currentMode = fullscreenMagnifier._fullscreenMode
 			idx = modes.index(currentMode)
 			newMode = modes[(idx + 1) % len(modes)]
 			log.debug(f"Changing full-screen mode from {currentMode} to {newMode}")
-			magnifier._fullscreenMode = newMode
+			fullscreenMagnifier._fullscreenMode = newMode
 			ui.message(
 				pgettext(
 					"magnifier",
@@ -326,8 +328,9 @@ def startSpotlight() -> None:
 			magnifier,
 			MagnifierAction.START_SPOTLIGHT,
 		):
+			fullscreenMagnifier: FullScreenMagnifier = magnifier
 			log.debug("trying to launch spotlight mode")
-			if magnifier._spotlightManager._spotlightIsActive:
+			if fullscreenMagnifier._spotlightManager._spotlightIsActive:
 				log.debug("found spotlight manager and it is active")
 				ui.message(
 					pgettext(
@@ -338,7 +341,7 @@ def startSpotlight() -> None:
 				)
 			else:
 				log.debug("no active spotlight manager found, starting new one")
-				magnifier._startSpotlight()
+				fullscreenMagnifier._startSpotlight()
 				ui.message(
 					pgettext(
 						"magnifier",
