@@ -7681,7 +7681,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |`NVDA+downArrow` |`NVDA+a` |Starts reading from the current position, moving it along as it goes</source>
-        <target>Izgovori sve |`NVDA+strelicaDole` |`NVDA+a` |Počinje čitanje od trenutne pozicije, pomerajući kursor dok čita</target>
+        <target>Neprekidno čitanje |`NVDA+strelicaDole` |`NVDA+a` |Počinje čitanje od trenutne pozicije, pomerajući kursor dok čita</target>
       </segment>
     </unit>
     <unit id="fd3fa8cf-7c58-4704-862c-d2744715c7b1">
@@ -11042,7 +11042,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |NVDA+downArrow |NVDA+a |Starts reading from the current position of the system caret, moving it along as it goes</source>
-        <target>Izgovori sve |NVDA+Strelica dole |NVDA+a |Počinje čitanje od trenutne pozicije sistemskog kursora, pomerajući ga dok čita</target>
+        <target>Neprekidno čitanje |NVDA+Strelica dole |NVDA+a |Počinje čitanje od trenutne pozicije sistemskog kursora, pomerajući ga dok čita</target>
       </segment>
     </unit>
     <unit id="4c5405b9-09e7-44d7-915f-6d145a7b2b10">
@@ -11249,7 +11249,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all in column |`NVDA+control+alt+downArrow` |Reads the column vertically from the current cell downwards to the last cell in the column.</source>
-        <target>Izgovori sve u koloni |`NVDA+kontrol+alt+strelicaDole` |Čita kolonu vertikalno od trenutne ćelije dole do poslednje ćelije u koloni.</target>
+        <target>Neprekidno čitanje kolone |`NVDA+kontrol+alt+strelicaDole` |Čita kolonu vertikalno od trenutne ćelije dole do poslednje ćelije u koloni.</target>
       </segment>
     </unit>
     <unit id="8057c7b0-88ed-4aa7-80a9-e5060273077f">
@@ -11260,7 +11260,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all in row |`NVDA+control+alt+rightArrow` |Reads the row horizontally from the current cell rightwards to the last cell in the row.</source>
-        <target>Izgovori sve u redu |`NVDA+kontrol+alt+strelicaDesno` |Čita red horizontalno od trenutne ćelije desno do poslednje ćelije u redu.</target>
+        <target>Neprekidno čitanje reda |`NVDA+kontrol+alt+strelicaDesno` |Čita red horizontalno od trenutne ćelije desno do poslednje ćelije u redu.</target>
       </segment>
     </unit>
     <unit id="033ef5bc-fcfb-4591-b21b-5cbc821c2c01">
@@ -11962,7 +11962,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all with review |numpadPlus |NVDA+shift+a |3-finger flick down (text mode) |Reads from the current position of the review cursor, moving it as it goes</source>
-        <target>Izgovori sve uz pregled |Numerički plus |NVDA+šift+a |Prevlačenje dole sa 3 prsta(režim teksta) |Čita od trenutne pozicije preglednog kursora, pomerajući ga u toku čitanja</target>
+        <target>Neprekidno čitanje u pregledu |Numerički plus |NVDA+šift+a |Prevlačenje dole sa 3 prsta(režim teksta) |Čita od trenutne pozicije preglednog kursora, pomerajući ga u toku čitanja</target>
       </segment>
     </unit>
     <unit id="025c1550-198b-4c73-9234-53de940dccf0">
@@ -12668,7 +12668,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>All of NVDA's [system caret](#SystemCaret) key commands will work in this mode; e.g. say all, report formatting, table navigation commands, etc.</source>
-        <target>Sve komande programa NVDA [za sistemski kursor](#SystemCaret) će raditi u ovom režimu; na primer izgovori sve, prijavi formatiranje, komande za kretanje kroz tabelu, i tako dalje.</target>
+        <target>Sve komande programa NVDA [za sistemski kursor](#SystemCaret) će raditi u ovom režimu; na primer neprekidno čitanje, prijavi formatiranje, komande za kretanje kroz tabelu, i tako dalje.</target>
       </segment>
     </unit>
     <unit id="92099f33-3a99-48e2-a33f-0a7e5d980f03">
@@ -16670,7 +16670,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Windows 10 and later includes OCR for many languages.</source>
-        <target>Windows 10 i novije verzije uključuju OCR za puno jezika.</target>
+        <target>Windows 10 i novije verzije uključuju optičko prepoznavanje znakova za mnoge jezike.</target>
       </segment>
     </unit>
     <unit id="91e22169-3c58-4059-af47-acb40ef3abae">
@@ -16688,7 +16688,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>You can set the language to use for text recognition in the [Windows OCR category](#Win10OcrSettings) of the [NVDA Settings](#NVDASettings) dialog.</source>
-        <target>Možete podesiti jezik koji ćese koristiti za prepoznavanje u [Windows OCR kategoriji](#Win10OcrSettings) [NVDA podešavanja](#NVDASettings).</target>
+        <target>Možete podesiti jezik koji će se koristiti za prepoznavanje u kategoriji [Windows optičko prepoznavanje znakova](#Win10OcrSettings) [dijaloga sa NVDA podešavanjima](#NVDASettings).</target>
       </segment>
     </unit>
     <unit id="abeeabd0-92d6-49fe-90a2-f86d595bf3b3">
@@ -16715,7 +16715,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>This can also be done in the [Windows OCR category](#Win10OcrSettings) of the [NVDA Settings](#NVDASettings) dialog.</source>
-        <target>Ovo se takođe može uraditi u [Windows OCR kategoriji](#Win10OcrSettings) dijaloga [NVDA podešavanja](#NVDASettings).</target>
+        <target>Ovo se takođe može uraditi u [kategoriji Windows optičko prepoznavanje znakova](#Win10OcrSettings) dijaloga sa [NVDA podešavanjima](#NVDASettings).</target>
       </segment>
     </unit>
     <unit id="74f529c9-35ab-4532-8b88-d8f8212d072b">
@@ -16724,7 +16724,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Windows OCR may be partially or fully incompatible with [NVDA vision enhancements](#Vision) or other external visual aids. You will need to disable these aids before proceeding to a recognition.</source>
-        <target>Windows OCR može biti delimično ili potpuno nekompatibilan sa [NVDA vizuelnim poboljšanjima](#Vision) ili drugim vizuelnim pomoćnim alatima. Morate onemogućiti ove alate pre nego što započnete proces prepoznavanja.</target>
+        <target>Windows optičko prepoznavanje znakova može biti delimično ili potpuno nekompatibilno sa [NVDA vizuelnim pomoćnicima](#Vision) ili drugim vizuelnim pomoćnim alatima. Morate onemogućiti ove alate pre nego što započnete proces prepoznavanja.</target>
       </segment>
     </unit>
     <unit id="0ac3a78f-d6c6-41b2-84fd-4c464189cf76">
@@ -16733,7 +16733,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>To recognize the text in the current navigator object using Windows OCR, press NVDA+r.</source>
-        <target>Da prepoznate tekst trenutnog navigacionog objekta koristeći Windows OCR, pritisnite NVDA+r.</target>
+        <target>Da prepoznate tekst trenutnog navigacionog objekta koristeći Windows optičko prepoznavanje znakova, pritisnite NVDA+r.</target>
       </segment>
     </unit>
     <unit id="2b1a4fef-d044-4d09-92a0-7a471f41fbf0">
@@ -17728,7 +17728,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The page will be turned automatically as appropriate when you move the cursor or use the say all command.</source>
-        <target>Stranice se automatski menjaju kada pomerate kursor ili koristite komandu izgovori sve.</target>
+        <target>Stranice se automatski menjaju kada pomerate kursor ili koristite komandu neprekidnog čitanja.</target>
       </segment>
     </unit>
     <unit id="b7bc8709-2cbc-4261-ad67-c43417ac0b9d">
@@ -18821,7 +18821,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Prevent display from turning off during say all or reading with braille</source>
-        <target>Spreči da se ekran isključi tokom čitanja na brajevom redu ili u režimu izgovori sve</target>
+        <target>Spreči da se ekran isključi tokom čitanja na brajevom redu ili u režimu neprekidnog čitanja</target>
       </segment>
     </unit>
     <unit id="92438bd8-32e4-450d-a072-f6aee58f0eac">
@@ -18830,7 +18830,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>This check box, when enabled, ensures that the display stays on when reading with say all or with braille (e.g. when pressing scroll buttons).</source>
-        <target>Ovo izborno polje, kada je omogućeno, obezbeđuje da ekran ostane uključen kada se čita u režimu izgovori sve ili sa brajevim redom (na primer kada se pritiskaju tasteri za pomeranje).</target>
+        <target>Ovo izborno polje, kada je omogućeno, obezbeđuje da ekran ostane uključen kada se čita u režimu neprekidnog čitanja ili sa brajevim redom (na primer kada se pritiskaju tasteri za pomeranje).</target>
       </segment>
     </unit>
     <unit id="62b3430f-2c86-4cda-b6d7-5de458e5c8f7">
@@ -18839,7 +18839,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>This avoids the situation where the screen unexpectedly locks during a say all.</source>
-        <target>Ovo će izbeći situaciju u kojoj se ekran neočekivano zaključa tokom režima izgovori sve.</target>
+        <target>Ovo će izbeći situaciju u kojoj se ekran neočekivano zaključa tokom režima neprekidnog čitanja.</target>
       </segment>
     </unit>
     <unit id="388ad5ce-4a07-474b-a814-f5b2494040d1">
@@ -23443,7 +23443,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The checkboxes in this list control what keys can be used as [NVDA modifier keys](#TheNVDAModifierKey). The following keys are available to choose from:</source>
-        <target>Izborni okviri u ovoj listi kontrolišu koji tasteri ćese koristiti kao [NVDA modifikatorski tasteri](#TheNVDAModifierKey). Sledeći tasteri su dostupni za izbor:</target>
+        <target>Izborni okviri u ovoj listi kontrolišu koji tasteri će se koristiti kao [NVDA modifikatorski tasteri](#TheNVDAModifierKey). Sledeći tasteri su dostupni za izbor:</target>
       </segment>
     </unit>
     <unit id="96ad23fb-05b8-4f25-a88c-fa3b0095f5bf">
@@ -23669,7 +23669,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Allow skim reading in Say All</source>
-        <target>Dozvoli površno čitanje u Izgovori sve režimu</target>
+        <target>Dozvoli površno čitanje u režimu neprekidnog čitanja</target>
       </segment>
     </unit>
     <unit id="a34bace8-933b-40bd-91a1-ee9158b929cb">
@@ -23678,7 +23678,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>If on, certain navigation commands (such as quick navigation in browse mode or moving by line or paragraph) do not stop Say All, rather Say All jumps to the new position and continues reading.</source>
-        <target>Ako je uključeno, određene komande navigacije(kao što je brza navigacija u režimu pretraživanja i kretanje po redovima i pasusima) ne zaustavljaju režim izgovori sve, već ovaj režim nastavlja čitanje i skače na novu poziciju.</target>
+        <target>Ako je uključeno, određene komande navigacije(kao što je brza navigacija u režimu pretraživanja i kretanje po redovima i pasusima) ne zaustavljaju režim neprekidnog čitanja, već ovaj režim nastavlja čitanje i skače na novu poziciju.</target>
       </segment>
     </unit>
     <unit id="ae0b9467-0e3f-499d-a2f5-02138dc825a5">
@@ -25337,7 +25337,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Automatic Say All on page load</source>
-        <target>Automatski Izgovori sve režim kada se učita stranica</target>
+        <target>Automatsko neprekidno čitanje kada se učita stranica</target>
       </segment>
     </unit>
     <unit id="46549110-7229-4329-9d04-1ba772bb31b7">
@@ -28522,7 +28522,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Windows OCR Settings</source>
-        <target>Windows OCR podešavanja</target>
+        <target>Podešavanja Windows optičkog prepoznavanja znakova</target>
       </segment>
     </unit>
     <unit id="0d2fca3f-e541-455e-82d3-fd21910f489b">
@@ -28531,7 +28531,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The settings in this category allow you to configure [Windows OCR](#Win10Ocr).</source>
-        <target>Podešavanja u ovoj kategoriji vam dozvoljavaju da podesite [Windows OCR](#Win10Ocr).</target>
+        <target>Podešavanja u ovoj kategoriji vam dozvoljavaju da podesite [Windows optičko prepoznavanje znakova](#Win10Ocr).</target>
       </segment>
     </unit>
     <unit id="dbda2279-9668-45d4-89c2-0ed1f0682578">
@@ -31712,7 +31712,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all: Triggered while reading with the say all command.</source>
-        <target>Izgovori sve: Aktivira se kada čitate koristeći komandu izgovori sve.</target>
+        <target>Neprekidno čitanje: Aktivira se kada čitate koristeći komandu nepekidnog čitanja.</target>
       </segment>
     </unit>
     <unit id="bb150724-c7ea-49d8-9fc3-f3b40a8f5567">
@@ -31795,7 +31795,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>To edit the profile associated with say all, you must [manually activate](#ConfigProfileManual) that profile.</source>
-        <target>Da uredite profil koji se koristi za režim izgovori sve, morate [ručno aktivirati](#ConfigProfileManual) taj profil.</target>
+        <target>Da uredite profil koji se koristi za neprekidno čitanje, morate [ručno aktivirati](#ConfigProfileManual) taj profil.</target>
       </segment>
     </unit>
     <unit id="6bdc8413-e51a-467f-9ff8-d64968a2bded">
@@ -37360,7 +37360,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |`space+dot1+dot2+dot3+dot4+dot5+dot6`</source>
-        <target>Izgovori sve |`Razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6`</target>
+        <target>Neprekidno čitanje |`Razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6`</target>
       </segment>
     </unit>
     <unit id="b146f952-9c84-439b-934a-834282492eb1">
@@ -37579,7 +37579,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |B6</source>
-        <target>Izgovori sve |B6</target>
+        <target>Neprekidno čitanje |B6</target>
       </segment>
     </unit>
     <unit id="3a1f61aa-a31d-467e-a1ff-cb1d58adf1c2">
@@ -37723,7 +37723,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |B6</source>
-        <target>Izgovori sve |B6</target>
+        <target>Neprekidno čitanje |B6</target>
       </segment>
     </unit>
     <unit id="1a439088-6e82-4e1a-a389-d4322a1cbf1c">
@@ -38070,7 +38070,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |space+dot1+dot2+dot3+dot4+dot5+dot6</source>
-        <target>Izgovori sve |razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6</target>
+        <target>Neprekidno čitanje |razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6</target>
       </segment>
     </unit>
     <unit id="47103566-db0a-465c-b789-1876d774cf07">
@@ -38125,7 +38125,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |c1+c2+c3+c4+c5+c6</source>
-        <target>Izgovori sve |c1+c2+c3+c4+c5+c6</target>
+        <target>Neprekidno čitanje |c1+c2+c3+c4+c5+c6</target>
       </segment>
     </unit>
     <unit id="fae8ec4d-72f7-4744-b6ce-763368210686">
@@ -39125,7 +39125,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |b6</source>
-        <target>Izgovori sve |b6</target>
+        <target>Neprekidno čitanje |b6</target>
       </segment>
     </unit>
     <unit id="63b94084-6365-4583-87ca-fe8560e4a58c">
@@ -39283,7 +39283,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |space+Backspace</source>
-        <target>Izgovori sve |razmak+backspace</target>
+        <target>Neprekidno čitanje |razmak+backspace</target>
       </segment>
     </unit>
     <unit id="7b52017c-2f0e-4f8b-8d5d-50f5dfd9c8a9">
@@ -44188,7 +44188,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all using review cursor |`say_below` (speak from current line through bottom of screen)</source>
-        <target>Izgovori sve preglednim kursorom |`say_below` (izgovori od trenutnog reda do dna ekrana)</target>
+        <target>Neprekidno čitanje preglednim kursorom |`say_below` (izgovori od trenutnog reda do dna ekrana)</target>
       </segment>
     </unit>
     <unit id="c19f69a2-c69c-4629-ab2a-e2e17c1d6e72">
@@ -44718,7 +44718,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |`f14`</source>
-        <target>Izgovori sve |`f14`</target>
+        <target>Neprekidno čitanje |`f14`</target>
       </segment>
     </unit>
     <unit id="8473b8ae-5dda-46e4-bc9b-dc1919c2ea8c">
@@ -45268,7 +45268,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all |space+dot1+dot2+dot3+dot4+dot5+dot6</source>
-        <target>Izgovori sve |Razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6</target>
+        <target>Neprekidno čitanje |Razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6</target>
       </segment>
     </unit>
     <unit id="513cb8d7-5906-4ded-82b9-b8ef062cabf1">
