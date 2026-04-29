@@ -9,6 +9,7 @@ Full-screen magnifier module.
 
 from logHandler import log
 import screenCurtain
+import speech
 import ui
 import winUser
 from winBindings import magnification
@@ -67,13 +68,12 @@ class FullScreenMagnifier(Magnifier):
 			log.exception("Failed to initialize magnification API")
 			# _isActive is True from super(), so _stopMagnifier properly unregisters
 			self._stopMagnifier()
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
-					"Cannot start magnifier. Another magnifier application may already be running.",
-				),
+			message = pgettext(
+				"magnifier",
+				# Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
+				"Cannot start magnifier. Another magnifier application may already be running.",
 			)
+			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
 			return
 
 		if self._isActive:
@@ -84,16 +84,21 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		Initialize the Magnification API and verify it is fully usable.
 
-		Raises OSError if MagInitialize fails or if MagSetFullscreenTransform
-		fails (e.g. Windows Magnifier already holds the API). Cleans up after
-		itself on failure so the caller does not need to.
+		Raises OSError if MagInitialize fails or if the initial fullscreen
+		transform fails (e.g. Windows Magnifier already holds the API). If
+		MagSetFullscreenTransform fails after a successful MagInitialize, this
+		method uninitializes the native magnification API before re-raising.
+		Failures from MagInitialize are propagated to the caller.
 		"""
 		magnification.MagInitialize()
 		log.debug("Magnification API initialized")
-		# MagSetFullscreenTransform is what actually fails when Windows Magnifier
-		# is running, even though MagInitialize succeeds in that case.
+		# Applying the first real update verifies the API is usable without
+		# briefly jumping the magnified view to the top-left corner.
 		try:
-			magnification.MagSetFullscreenTransform(self.zoomLevel, 0, 0)
+			coordinates = self._getCoordinatesForMode(self._currentCoordinates)
+			# Save screen position for mode continuity, matching _doUpdate.
+			self._lastScreenPosition = coordinates
+			self._fullscreenMagnifier(coordinates)
 		except OSError:
 			self._uninitializeNativeMagnification()
 			raise
@@ -172,7 +177,6 @@ class FullScreenMagnifier(Magnifier):
 			return
 
 		self._consecutiveErrors = 0
-		self._recoveryAttempts = 0
 		log.info("Full-screen magnifier recovery succeeded")
 		self._startTimer(self._updateMagnifier)
 
