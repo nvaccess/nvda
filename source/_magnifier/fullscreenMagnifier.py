@@ -64,14 +64,14 @@ class FullScreenMagnifier(Magnifier):
 		try:
 			self._initializeNativeMagnification()
 		except OSError:
-			log.error("Failed to initialize magnification API", exc_info=True)
+			log.exception("Failed to initialize magnification API")
 			# _isActive is True from super(), so _stopMagnifier properly unregisters
 			self._stopMagnifier()
 			ui.message(
 				pgettext(
 					"magnifier",
-					# Translators: Message when NVDA Magnifier cannot start because another magnifier is already using the magnification API.
-					"Cannot start magnifier: the magnification API is unavailable. Windows Magnifier may already be running.",
+					# Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
+					"Cannot start magnifier. Another magnifier application may already be running.",
 				),
 			)
 			return
