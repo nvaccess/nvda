@@ -183,6 +183,16 @@ To ensure this step of tagged builds succeeds, set:
 
 * `VT_API_KEY` as a secret.
 
+### WinGet manifest submission
+
+On release builds, a PR is automatically submitted to the [WinGet community repository](https://github.com/microsoft/winget-pkgs) with the new version's manifest.
+
+To ensure this step of release builds succeeds, set:
+
+* `WINGET_CREATE_GITHUB_TOKEN` as a secret with a GitHub personal access token that has permission to fork and open pull requests against `microsoft/winget-pkgs`.
+
+See [the winget-create documentation](https://aka.ms/winget-create-token) for the required token scopes.
+
 ### GitHub Discussions category
 
 This is only used when building tagged builds.
