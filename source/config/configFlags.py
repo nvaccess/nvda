@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2022-2026 NV Access Limited, Cyrille Bougot, Cary-rowen
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Flags used to define the possible values for an option in the configuration.
 Use Flag.MEMBER.value to set a new value or compare with an option in the config;
@@ -421,6 +421,7 @@ class LoggingLevel(DisplayStringIntEnum):
 	DEBUGWARNING = Logger.DEBUGWARNING
 	IO = Logger.IO
 	DEBUG = Logger.DEBUG
+	SECRETS = Logger.SECRETS
 
 	@property
 	def _displayStringLabels(self) -> dict[int, str]:
@@ -435,6 +436,8 @@ class LoggingLevel(DisplayStringIntEnum):
 			self.IO: _("input/output"),
 			# Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
 			self.DEBUG: _("debug"),
+			# Translators: One of the log levels of NVDA (the secrets mode logs debug messages without redacting secrets).
+			self.SECRETS: _("secrets"),
 		}
 
 

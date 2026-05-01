@@ -9,6 +9,7 @@ Implements the magnifier global class and its basic functionalities.
 """
 
 from typing import Callable
+from comtypes import COMError
 from logHandler import log
 import wx
 import ui
@@ -18,17 +19,17 @@ import winUser
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (
-	MagnifierPosition,
+	MagnifierParameters,
 	MagnifierAction,
-	Coordinates,
 	MagnifierType,
 	Direction,
 	Filter,
+	Coordinates,
 )
 from .config import (
-	getDefaultZoomLevel,
-	getDefaultPanStep,
-	getDefaultFilter,
+	getZoomLevel,
+	getPanStep,
+	getFilter,
 	ZoomLevel,
 	isTrueCentered,
 	shouldKeepMouseCentered,
@@ -39,20 +40,23 @@ from .utils.focusManager import FocusManager
 class Magnifier:
 	_TIMER_INTERVAL_MS: int = 12
 	_MARGIN_BORDER: int = 50
+	_MAX_CONSECUTIVE_ERRORS: int = 3
 
 	def __init__(self):
 		self._displayOrientation = getPrimaryDisplayOrientation()
-		self._magnifierType: MagnifierType = MagnifierType.FULLSCREEN
+		self._magnifierType: MagnifierType
 		self._isActive: bool = False
-		self._zoomLevel: float = getDefaultZoomLevel()
-		self._panStep: int = getDefaultPanStep()
+		self._zoomLevel: float = getZoomLevel()
+		self._panStep: int = getPanStep()
 		self._timer: None | wx.Timer = None
 		self._focusManager = FocusManager()
 		self._lastScreenPosition = Coordinates(0, 0)
 		self._currentCoordinates = Coordinates(0, 0)
 		self._lastFocusCoordinates = Coordinates(0, 0)
-		self._filterType: Filter = getDefaultFilter()
+		self._filterType: Filter = getFilter()
 		self._isManualPanning: bool = False
+		self._consecutiveErrors: int = 0
+		self._recoveryAttempts: int = 0
 		# Register for display changes
 		_displayTracking.displayChanged.register(self._onDisplayChanged)
 		self._screenCurtainIsActive: bool = False
@@ -135,16 +139,47 @@ class Magnifier:
 
 	def _updateMagnifier(self) -> None:
 		"""
-		Update the magnifier position and content
+		Update the magnifier position and content.
+		This method is called repeatedly by the timer.
+		On transient errors (below threshold): reschedules itself to keep running.
+		On repeated errors (at threshold): delegates rescheduling to _attemptRecovery.
 		"""
 		if not self._isActive:
 			return
-		self._managePanning()
-		if not self._isManualPanning:
-			self._currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
-		if shouldKeepMouseCentered():
-			self._keepMouseCentered()
-		self._doUpdate()
+		try:
+			self._managePanning()
+			if not self._isManualPanning:
+				self._currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
+			if shouldKeepMouseCentered():
+				self._keepMouseCentered()
+			self._doUpdate()
+			self._consecutiveErrors = 0
+			self._recoveryAttempts = 0
+		except (OSError, COMError):
+			self._consecutiveErrors += 1
+			if self._consecutiveErrors >= self._MAX_CONSECUTIVE_ERRORS:
+				log.error(
+					f"Error updating magnifier ({self._consecutiveErrors}/{self._MAX_CONSECUTIVE_ERRORS}), attempting recovery",
+					exc_info=True,
+				)
+				try:
+					self._attemptRecovery()
+				except Exception:
+					# Recovery itself failed: reset counter and restart timer directly
+					# to avoid a permanent freeze (recovery is responsible for rescheduling
+					# but may fail before reaching that point).
+					log.error(
+						"Recovery failed unexpectedly, restarting timer to prevent freeze",
+						exc_info=True,
+					)
+					self._consecutiveErrors = 0
+					self._startTimer(self._updateMagnifier)
+				return
+			log.warning(
+				f"Transient error updating magnifier ({self._consecutiveErrors}/{self._MAX_CONSECUTIVE_ERRORS})",
+				exc_info=True,
+			)
+		# Always reschedule the timer to keep the magnifier alive
 		self._startTimer(self._updateMagnifier)
 
 	def _doUpdate(self) -> None:
@@ -152,6 +187,17 @@ class Magnifier:
 		Perform the actual update of the magnifier
 		"""
 		raise NotImplementedError("Subclasses must implement this method")
+
+	def _attemptRecovery(self) -> None:
+		"""
+		Attempt to recover from repeated errors in the update loop.
+		Subclasses should override this to perform API-specific recovery
+		(e.g., reinitializing the Magnification API).
+		The base implementation resets the error counter and restarts the timer.
+		"""
+		log.info("Attempting base magnifier recovery")
+		self._consecutiveErrors = 0
+		self._startTimer(self._updateMagnifier)
 
 	def _stopMagnifier(self) -> None:
 		"""
@@ -298,29 +344,12 @@ class Magnifier:
 		else:
 			log.debug("no timer to stop")
 
-	def _getMagnifierPosition(
-		self,
-		coordinates: Coordinates,
-	) -> MagnifierPosition:
+	def _getMagnifierParameters(self, coordinates: Coordinates) -> MagnifierParameters:
 		"""
 		Compute the top-left corner of the magnifier window centered on (x, y)
 
 		:param coordinates: The (x, y) coordinates to center the magnifier on
 
-		:return: The position and size of the magnifier window
+		:return: The size, position and filter of the magnifier window
 		"""
-		x, y = coordinates
-		# Calculate the size of the capture area at the current zoom level
-		visibleWidth = self._displayOrientation.width / self.zoomLevel
-		visibleHeight = self._displayOrientation.height / self.zoomLevel
-
-		# Compute the top-left corner so that (x, y) is at the center
-		left = int(x - (visibleWidth / 2))
-		top = int(y - (visibleHeight / 2))
-
-		# Clamp to screen boundaries only if not in true center mode
-		if not isTrueCentered():
-			left = max(0, min(left, int(self._displayOrientation.width - visibleWidth)))
-			top = max(0, min(top, int(self._displayOrientation.height - visibleHeight)))
-
-		return MagnifierPosition(left, top, int(visibleWidth), int(visibleHeight))
+		raise NotImplementedError("Subclasses must implement this method")

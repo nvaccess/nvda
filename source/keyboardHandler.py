@@ -47,6 +47,43 @@ ignoreInjected = False
 _lastInjectedKeyUp: tuple[int, int] | None = None
 _injectionDoneEvent: int | None = None
 type _ModifierT = tuple[int, bool]
+_TO_UNICODE_EX_FLAG_NO_STATE_CHANGE = 0x04
+_TO_UNICODE_EX_BUFFER_LENGTH = 5
+_KEY_PRESSED_STATE = 0x80
+
+
+def _getKeyStates(
+	modifierVkCodes: list[int],
+	ignoredModifier: int | None = None,
+) -> ctypes.Array:
+	"""Return keyboard state for ToUnicodeEx while forcing selected modifiers pressed."""
+	states: ctypes.Array = (ctypes.c_ubyte * 256)()
+	for i in range(256):
+		if i in modifierVkCodes and i != ignoredModifier:
+			states[i] = _KEY_PRESSED_STATE
+		else:
+			states[i] = user32.GetKeyState(i)
+	return states
+
+
+def _toUnicodeEx(
+	vkCode: int,
+	scanCode: int,
+	states: ctypes.Array,
+	buffer: ctypes.Array,
+	keyboardLayout: int,
+) -> int:
+	"""Call ToUnicodeEx without modifying keyboard state."""
+	return user32.ToUnicodeEx(
+		vkCode,
+		scanCode,
+		states,
+		buffer,
+		len(buffer),
+		_TO_UNICODE_EX_FLAG_NO_STATE_CHANGE,
+		keyboardLayout,
+	)
+
 
 # Fake vk codes.
 # These constants should be assigned to the name that NVDA will use for the key.
@@ -565,6 +602,85 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			else localizedKeyLabels.get(key.lower(), key)
 			for key in self._keyNamesInDisplayOrder
 		)
+
+	def _get_character(self) -> str | None:
+		"""Get the character this key combination would produce.
+
+		Uses ToUnicodeEx with the no-state-change flag to avoid modifying keyboard state.
+		For dead keys, returns the dead key character itself.
+		Returns None for unprintable characters or when Windows key is pressed.
+		"""
+		try:
+			threadID = api.getFocusObject().windowThreadID
+		except AttributeError:
+			return None
+		keyboardLayout = user32.GetKeyboardLayout(threadID)
+		buffer = ctypes.create_unicode_buffer(_TO_UNICODE_EX_BUFFER_LENGTH)
+
+		modifierVkCodes: list[int] = []
+		hasWindowsModifier = False
+		for mod, _ in self.modifiers:
+			modifier = self.NORMAL_MODIFIER_KEYS.get(mod)
+			if modifier is None and mod in self.NORMAL_MODIFIER_KEYS.values():
+				modifier = mod
+			if modifier == VK_WIN:
+				hasWindowsModifier = True
+			elif modifier is not None:
+				modifierVkCodes.append(modifier)
+
+		# Characters with the Windows key are invalid.
+		if hasWindowsModifier:
+			return None
+
+		states = _getKeyStates(modifierVkCodes)
+
+		res = _toUnicodeEx(self.vkCode, self.scanCode, states, buffer, keyboardLayout)
+
+		# res < 0 means dead key - return the dead key character
+		if res < 0:
+			# Dead key: buffer contains the dead key character
+			# Call ToUnicodeEx again to get and clear the dead key from buffer
+			_toUnicodeEx(self.vkCode, self.scanCode, states, buffer, keyboardLayout)
+			return buffer.value[:1] if buffer.value else None
+
+		if res == 0:
+			return None
+
+		# Check alt key behavior - alt sometimes gives same character as without alt
+		if winUser.VK_MENU in modifierVkCodes:
+			altStates = _getKeyStates(modifierVkCodes, ignoredModifier=winUser.VK_MENU)
+			newBuffer = ctypes.create_unicode_buffer(_TO_UNICODE_EX_BUFFER_LENGTH)
+			_toUnicodeEx(
+				self.vkCode,
+				self.scanCode,
+				altStates,
+				newBuffer,
+				keyboardLayout,
+			)
+			# If same character with and without alt, it's not valid
+			if buffer.value == newBuffer.value:
+				return None
+
+		return buffer.value[:res]
+
+	def _get_inputHelpCharacter(self) -> str | None:
+		"""Returns the character this gesture should additionally report in input help mode."""
+		# Commands keep original behavior, even if they also produce a printable character.
+		if any(isNVDAModifierKey(mod, ext) for mod, ext in self.modifiers) or self.script:
+			return None
+
+		char = self.character
+		if not char:
+			return None
+
+		if not char.isprintable():
+			return None
+
+		# Avoid duplicating only when the display name already matches the produced character.
+		if self.displayName == char:
+			return None
+
+		return char
 
 	def _get_identifiers(self):
 		keyName = "+".join(self._keyNamesInDisplayOrder)
