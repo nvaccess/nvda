@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -21,7 +22,7 @@ Import(
 		"thirdPartyEnv",
 		"sourceDir",
 		"sonicLib",
-	]
+	],
 )
 
 freeLibrary = ctypes.windll.kernel32.FreeLibrary
@@ -29,13 +30,13 @@ freeLibrary.argtypes = (ctypes.wintypes.HANDLE,)
 DLL_DIRECTORY_COOKIE = ctypes.c_void_p
 AddDllDirectory = ctypes.windll.kernel32.AddDllDirectory
 AddDllDirectory.argtypes = (ctypes.wintypes.LPCWSTR,)
-AddDllDirectory.restype = DLL_DIRECTORY_COOKIE 
+AddDllDirectory.restype = DLL_DIRECTORY_COOKIE
 
 # Add the directory of the sonic dll to our DLL search path
 # So that eSpeak.dll cna find it when being loaded to compile dictionaries etc.
 sonicDllDir = sonicLib[0].get_dir().abspath
 AddDllDirectory(sonicDllDir)
- 
+
 
 class AutoFreeCDLL(ctypes.CDLL):
 	def __del__(self):
@@ -127,7 +128,7 @@ env.Append(
 		"/DUSE_SPEECHPLAYER=1",
 		"/DUSE_KLATT=1",
 		"/DUSE_LIBSONIC=1",
-	]
+	],
 )
 
 env.Append(
@@ -138,7 +139,7 @@ env.Append(
 		espeakSrcDir.Dir("speechPlayer/include"),
 		sonicSrcDir,
 		espeakSrcDir.Dir("ucd-tools/src/include"),
-	]
+	],
 )
 
 
@@ -148,7 +149,7 @@ def espeak_compilePhonemeData_buildEmitter(target, source, env):
 		[
 			[Dir(topDir).File(f) for f in files if f not in phSourceIgnores]
 			for topDir, subdirs, files in os.walk(source[0].abspath)
-		]
+		],
 	)
 	sources = env.Flatten([phSources])
 	targets = [
@@ -1046,12 +1047,13 @@ def espeak_compileDict_buildAction(
 				f"Failed to compile dictionary: '{target}'"
 				f"\n rulesPath: {rulesPathEncoded}"
 				f"\n language: '{lang}'"
-				f"\n result: {espeak_ng_STATUS(compileDictResult)!s}"
+				f"\n result: {espeak_ng_STATUS(compileDictResult)!s}",
 			)
 			return ACTION_FAILURE
 	finally:
 		espeak.espeak_Terminate()
 	return ACTION_SUCCESS
+
 
 espeakLib = env.SharedLibrary(
 	target="espeak",
@@ -1112,7 +1114,7 @@ espeakLib = env.SharedLibrary(
 		# com\ttsengine.cpp
 		# We do not use the ASYNC compile option in espeak.
 	],
-	LIBS=["advapi32", sonicLib[2]] ,
+	LIBS=["advapi32", sonicLib[2]],
 	LIBPATH=".",
 )
 
@@ -1131,7 +1133,8 @@ for i in phonemeData:
 env.AddPreAction(espeakLib, env.Action(cleanFiles_preBuildAction))
 # Move any extra dictionaries into dictsource for compilation
 env.Install(
-	espeakRepo.Dir("dictsource"), env.Glob(os.path.join(espeakRepo.abspath, "dictsource", "extra", "*_*"))
+	espeakRepo.Dir("dictsource"),
+	env.Glob(os.path.join(espeakRepo.abspath, "dictsource", "extra", "*_*")),
 )
 
 excludeLangs: typing.List[str] = []
@@ -1160,7 +1163,8 @@ for dictFileName, (langCode, inputFiles) in espeakDictionaryCompileList.items():
 	# Dictionaries can not be compiled in parallel, force SCons not to do this
 	env.SideEffect("_espeak_compileDict", dictFile)
 	env.InstallAs(  # Install files to the "synthDrivers/espeak-ng-data/" dir.
-		os.path.join(synthDriversDir.Dir("espeak-ng-data").abspath, dictFileName), dictFile
+		os.path.join(synthDriversDir.Dir("espeak-ng-data").abspath, dictFileName),
+		dictFile,
 	)
 
 env.Install(synthDriversDir, espeakLib)
@@ -1172,5 +1176,6 @@ espeakDataSource = espeakRepo.Dir("espeak-ng-data")
 # also install the lang and voices/!v directories. Exclude the voices/mb directory since we are not using mbrola.
 env.RecursiveInstall(targetEspeakDataDir.Dir("lang"), espeakDataSource.Dir("lang").abspath)
 env.RecursiveInstall(
-	targetEspeakDataDir.Dir("voices").Dir("!v"), espeakDataSource.Dir("voices").Dir("!v").abspath
+	targetEspeakDataDir.Dir("voices").Dir("!v"),
+	espeakDataSource.Dir("voices").Dir("!v").abspath,
 )

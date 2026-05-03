@@ -6,7 +6,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
-[Version]$UvVersion = '0.9.11'
+[Version]$UvVersion = '0.11.7'
 
 function Invoke-Uv {
 	& uv @UvArgs

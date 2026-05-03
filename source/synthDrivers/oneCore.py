@@ -109,7 +109,7 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 			log.debugWarning(f"Invalid language: {command.lang}")
 			return None
 
-		normalizedLanguage = command.lang.lower().replace("-", "_")
+		normalizedLanguage = speechXml.toNvdaLang(command.lang.lower())
 		normalizedLanguageWithoutLocale = normalizedLanguage.split("_")[0]
 		if (
 			normalizedLanguage not in self.lowerCaseAvailableLanguages
@@ -197,9 +197,13 @@ class OneCoreSynthDriver(SynthDriver):
 		# Only present this as an available synth if this is Windows 10.
 		return True
 
-	def _get_supportsProsodyOptions(self):
+	def _get_supportsProsodyOptions(self) -> bool:
 		self.supportsProsodyOptions = self._dll.ocSpeech_supportsProsodyOptions()
 		return self.supportsProsodyOptions
+
+	def _get_supportsPunctuationSilence(self) -> bool:
+		self.supportsPunctuationSilence = self._dll.ocSpeech_supportsPunctuationSilence()
+		return self.supportsPunctuationSilence
 
 	def _get_supportedSettings(self):
 		self.supportedSettings = settings = [
@@ -214,6 +218,8 @@ class OneCoreSynthDriver(SynthDriver):
 				SynthDriver.VolumeSetting(),
 			],
 		)
+		if self.supportsPunctuationSilence:
+			settings.append(SynthDriver.PunctuationSilenceSetting())
 		return settings
 
 	def __init__(self):
@@ -221,6 +227,8 @@ class OneCoreSynthDriver(SynthDriver):
 		self._dll = NVDAHelper.getHelperLocalWin10Dll()
 		self._dll.ocSpeech_initialize.restype = HANDLE
 		self._dll.ocSpeech_getCurrentVoiceLanguage.restype = ctypes.c_wchar_p
+		self._dll.ocSpeech_supportsProsodyOptions.restype = ctypes.c_bool
+		self._dll.ocSpeech_supportsPunctuationSilence.restype = ctypes.c_bool
 		# Set initial values for parameters that can't be queried when prosody is not supported.
 		# This initialises our cache for the value.
 		# When prosody is supported, the values are used for cachign reasons.
@@ -234,6 +242,11 @@ class OneCoreSynthDriver(SynthDriver):
 			self._dll.ocSpeech_getRate.restype = ctypes.c_double
 		else:
 			log.debugWarning("Prosody options not supported")
+
+		if self.supportsPunctuationSilence:
+			self._dll.ocSpeech_getPunctuationSilence.restype = ctypes.c_bool
+		else:
+			log.debugWarning("Punctuation silence not supported")
 
 		self._earlyExitCB = False
 		self._callbackInst = ocSpeech_Callback(self._callback)
@@ -370,10 +383,10 @@ class OneCoreSynthDriver(SynthDriver):
 
 	_rateBoost = False
 
-	def _get_rateBoost(self):
+	def _get_rateBoost(self) -> bool:
 		return self._rateBoost
 
-	def _set_rateBoost(self, enable):
+	def _set_rateBoost(self, enable: bool):
 		if enable == self._rateBoost:
 			return
 		# Use the cached rate to calculate the new rate with rate boost enabled.
@@ -381,6 +394,16 @@ class OneCoreSynthDriver(SynthDriver):
 		rate = self._rate
 		self._rateBoost = enable
 		self.rate = rate
+
+	def _get_punctuationSilence(self) -> bool:
+		if not self.supportsPunctuationSilence:
+			return True
+		return self._dll.ocSpeech_getPunctuationSilence(self._ocSpeechToken)
+
+	def _set_punctuationSilence(self, enable: bool):
+		if not self.supportsPunctuationSilence:
+			return
+		self._dll.ocSpeech_setPunctuationSilence(self._ocSpeechToken, ctypes.c_bool(enable))
 
 	def _processQueue(self):
 		if not self._queuedSpeech and self._player is None:
@@ -491,13 +514,13 @@ class OneCoreSynthDriver(SynthDriver):
 				log.debug("Done pushing audio")
 		self._processQueue()
 
-	def _getVoiceInfoFromOnecoreVoiceString(self, voiceStr):
+	def _getVoiceInfoFromOnecoreVoiceString(self, voiceStr: str):
 		"""
 		Produces an NVDA VoiceInfo object representing the given voice string from Onecore speech.
 		"""
 		# The voice string is made up of the ID, the language, and the display name.
 		ID, language, name = voiceStr.split(":")
-		language = language.replace("-", "_")
+		language = speechXml.toNvdaLang(language)
 		return VoiceInfo(ID, name, language=language)
 
 	def _getAvailableVoices(self):

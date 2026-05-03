@@ -21,20 +21,20 @@ Feature flags, comboboxes and checkboxes should be included using the following 
 Once the anchor is set it cannot be updated, while settings may move categories.
 
 ```md
-==== The name of a feature ====[FeatureDescriptionAnchor]
+##### The name of a feature {#FeatureDescriptionAnchor}
 
 Brief summary of the feature.
 This setting allows the feature of using functionality in a certain situation to be controlled in some way.
 If necessary, a description of a common use case that is supported by each option.
 
 | . {.hideHeaderRow} |.|
-|---|---|
+| --- | --- |
 |Options |Default (Enabled), Disabled, Enabled |
 |Default |Enabled |
 |Toggle command |`NVDA+shift+e` |
 
 |Option |Behaviour |
-|---|---|
+| --- | --- |
 |Enabled |behaviour of enabled |
 |Disabled |behaviour of disabled |
 ```
@@ -72,7 +72,7 @@ For example:
 
 ```md
 <!-- KC:beginInclude -->
-| Name | Desktop command | Laptop command | Description |
+| Name | Desktop key | Laptop key | Description |
 ...
 <!-- KC:endInclude -->
 ```
@@ -107,9 +107,9 @@ For example:
 #### Braille Tethered To
 
 | . {.hideHeaderRow} |.|
-|---|---|
-| Desktop command | `NVDA+control+t` |
-| Laptop Command | `NVDA+control+t` |
+| --- | --- |
+| Desktop key | `NVDA+control+t` |
+| Laptop key | `NVDA+control+t` |
 
 This option allows you to choose whether the braille display will follow the system focus, or whether it follows the navigator object / review cursor.
 ```

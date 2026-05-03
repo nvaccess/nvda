@@ -19,8 +19,9 @@ For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 decltype(&SendMessageW) real_SendMessageW = nullptr;
 decltype(&SendMessageTimeoutW) real_SendMessageTimeoutW = nullptr;
+decltype(&SendMessageA) real_SendMessageA = nullptr;
+decltype(&SendMessageTimeoutA) real_SendMessageTimeoutA = nullptr;
 decltype(&OpenClipboard) real_OpenClipboard = nullptr;
-
 
 handle_t createRemoteBindingHandle(wchar_t* uuidString) {
 	RPC_STATUS rpcStatus;
@@ -56,7 +57,8 @@ DWORD mainThreadId = 0;
 HANDLE cancelCallEvent = NULL;
 void(__stdcall *_notifySendMessageCancelled)() = NULL;
 
-LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult) {
+template<typename SendMessageFunction>
+LRESULT cancellableSendMessageTimeoutTemplate(SendMessageFunction realSendMessageFunction, HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult) {
 	if (!hwnd) {
 		// Return as early as possible when no hwnd is given.
 		SetLastError(ERROR_INVALID_WINDOW_HANDLE);
@@ -66,7 +68,7 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 	DWORD currentThreadId = GetCurrentThreadId();
 	if (GetWindowThreadProcessId(hwnd, NULL) == currentThreadId) {
 		// We're sending a message to the current thread, so just forward the call.
-		return real_SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
+		return realSendMessageFunction(hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
 	}
 
 	if (WaitForSingleObject(cancelCallEvent, 0) == WAIT_OBJECT_0) {
@@ -96,7 +98,7 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 			SetLastError(ERROR_CANCELLED);
 			return 0;
 		}
-		if ((ret = real_SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, std::min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), lpdwResult)) != 0 || GetLastError() != ERROR_TIMEOUT) {
+		if ((ret = realSendMessageFunction(hwnd, Msg, wParam, lParam, fuFlags, std::min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), lpdwResult)) != 0 || GetLastError() != ERROR_TIMEOUT) {
 			// Success or error other than timeout.
 			return ret;
 		}
@@ -105,14 +107,31 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 	return ret;
 }
 
+// Keep this non-template wrapper with this exact name/signature because it is
+// exported via nvdaHelperLocal.def and used by source/NVDAHelper/localLib.py.
+// cancellableSendMessageTimeoutTemplate is only the internal implementation detail.
+LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult) {
+	return cancellableSendMessageTimeoutTemplate(real_SendMessageTimeoutW, hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
+}
+
 LRESULT WINAPI fake_SendMessageW(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
 	DWORD_PTR result = 0;
-	cancellableSendMessageTimeout(hwnd, Msg, wParam, lParam, 0, 60000, &result);
+	cancellableSendMessageTimeoutTemplate(real_SendMessageTimeoutW, hwnd, Msg, wParam, lParam, 0, 60000, &result);
 	return (LRESULT)result;
 }
 
 LRESULT WINAPI fake_SendMessageTimeoutW(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult) {
-	return cancellableSendMessageTimeout(hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
+	return cancellableSendMessageTimeoutTemplate(real_SendMessageTimeoutW, hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
+}
+
+LRESULT WINAPI fake_SendMessageA(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
+	DWORD_PTR result = 0;
+	cancellableSendMessageTimeoutTemplate(real_SendMessageTimeoutA, hwnd, Msg, wParam, lParam, 0, 60000, &result);
+	return (LRESULT)result;
+}
+
+LRESULT WINAPI fake_SendMessageTimeoutA(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult) {
+	return cancellableSendMessageTimeoutTemplate(real_SendMessageTimeoutA, hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
 }
 
 //A replacement OpenClipboard function to disable the use of the clipboard in a secure mode NVDA process
@@ -131,6 +150,10 @@ void nvdaHelperLocal_initialize(bool secureMode) {
 	// we can cancel such calls when they would otherwise freeze NVDA's process.
 	apiHook_hookFunction_safe(SendMessageW, fake_SendMessageW, &real_SendMessageW);
 	apiHook_hookFunction_safe(SendMessageTimeoutW, fake_SendMessageTimeoutW, &real_SendMessageTimeoutW);
+	// Hook also SendMessageA and SendMessageTimeoutA as Java Access Bridge uses them
+	apiHook_hookFunction_safe(SendMessageA, fake_SendMessageA, &real_SendMessageA);
+	apiHook_hookFunction_safe(SendMessageTimeoutA, fake_SendMessageTimeoutA, &real_SendMessageTimeoutA);
+
 	// For secure mode NVDA process, hook OpenClipboard to disable usage of the clipboard
 	if (secureMode) {
 		apiHook_hookFunction_safe(OpenClipboard, fake_OpenClipboard, &real_OpenClipboard);

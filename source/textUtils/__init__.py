@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018-2025 NV Access Limited, Babbage B.V., Łukasz Golonka, Wang Chong
-# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
-# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+# Copyright (C) 2018-2026 NV Access Limited, Babbage B.V., Łukasz Golonka, Wang Chong
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """
 Classes and utilities to deal with offsets variable width encodings, particularly utf_16.
@@ -449,7 +449,10 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 		origOffset = normOffset = 0
 		normalized = ""
 		for origPart in splitAtCharacterBoundaries(text):
-			normPart = unicodedata.normalize(normalizationForm, origPart)
+			normPart = unicodedata.normalize(
+				normalizationForm,
+				origPart.translate(_supplementaryNormalizationTable),
+			)
 			normalized += normPart
 			isReorder = all(c in normPart for c in origPart)
 			if origPart == normPart:
@@ -520,13 +523,51 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 			return (resultStart, resultEnd)
 
 
+def _buildSupplementaryNormalizationTable() -> dict[int, str]:
+	"""Build a translation table for decorative Unicode characters not handled by standard NFKC normalization.
+
+	This includes characters such as negative squared and negative circled letters,
+	which are decorative variants of Latin letters
+	that ``unicodedata.normalize("NFKC", ...)`` does not decompose.
+	"""
+	table: dict[int, str] = {}
+	# Negative Circled Latin Capital Letters: U+1F150 - U+1F169 -> A-Z
+	for offset in range(26):
+		table[0x1F150 + offset] = chr(ord("A") + offset)
+	# Negative Squared Latin Capital Letters: U+1F170 - U+1F189 -> A-Z
+	# Skip codepoints that have emoji semantics:
+	# U+1F170 (🅰 A button/blood type), U+1F171 (🅱 B button/blood type),
+	# U+1F17E (🅾 O button/blood type), U+1F17F (🅿 P button)
+	_squaredEmojiCodepoints = {0x1F170, 0x1F171, 0x1F17E, 0x1F17F}
+	for offset in range(26):
+		codepoint = 0x1F170 + offset
+		if codepoint not in _squaredEmojiCodepoints:
+			table[codepoint] = chr(ord("A") + offset)
+	return table
+
+
+_supplementaryNormalizationTable: dict[int, str] = _buildSupplementaryNormalizationTable()
+
+
 def isUnicodeNormalized(text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM) -> bool:
-	"""Convenience function to wrap unicodedata.is_normalized with a default normalization form."""
+	"""Check whether the given text is already Unicode normalized.
+
+	This checks both standard Unicode normalization and supplementary normalization
+	for decorative letter characters not handled by the standard algorithm.
+	"""
+	if any(ord(c) in _supplementaryNormalizationTable for c in text):
+		return False
 	return unicodedata.is_normalized(normalizationForm, text)
 
 
 def unicodeNormalize(text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM) -> str:
-	"""Convenience function to wrap unicodedata.normalize with a default normalization form."""
+	"""Normalize the given text using the specified Unicode normalization form.
+
+	In addition to standard Unicode normalization (e.g. NFKC), this applies a supplementary
+	translation for decorative Unicode letter characters (such as negative squared and negative circled
+	letters) that are not decomposed by the standard algorithm.
+	"""
+	text = text.translate(_supplementaryNormalizationTable)
 	return unicodedata.normalize(normalizationForm, text)
 
 

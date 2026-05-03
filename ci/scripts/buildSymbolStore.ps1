@@ -4,12 +4,17 @@ foreach ($syms in
 	# We don't just include source\*.dll because that would include system dlls.
 	"source\liblouis.dll",
 	"source\*.pdb",
-	"source\lib\*.dll",
-	"source\lib\*.pdb",
-	# We include source\lib64\*.exe to cover nvdaHelperRemoteLoader.
-	"source\lib64\*.dll",
-	"source\lib64\*.exe",
-	"source\lib64\*.pdb",
+	"source\lib\x64\*.dll",
+	"source\lib\x64\*.pdb",
+	"source\lib\x86\*.dll",
+	"source\lib\x86\*.pdb",
+	# We include *.exe to cover nvdaHelperRemoteLoader.
+	"source\lib\x86\*.exe",
+	"source\lib\arm64\*.dll",
+	"source\lib\arm64\*.pdb",
+	"source\lib\arm64\*.exe",
+	"source\lib\arm64ec\*.dll",
+	"source\lib\arm64ec\*.pdb",
 	"source\synthDrivers\*.dll",
 	"source\synthDrivers\*.pdb"
 ) {

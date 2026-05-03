@@ -12,6 +12,8 @@ For the latter two actions, one can perform actions prior to and/or after they t
 
 from collections.abc import Collection
 from enum import Enum
+from typing import Any
+
 import globalVars
 import winreg
 import os
@@ -25,7 +27,6 @@ from configobj import ConfigObj
 from configobj.validate import Validator
 from logHandler import log
 import logging
-from logging import DEBUG
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
 import winBindings.shell32
 from shlobj import FolderId, SHGetKnownFolderPath
@@ -33,6 +34,7 @@ import baseObject
 import easeOfAccess
 from fileUtils import FaultTolerantFile
 import extensionPoints
+import functools
 
 from . import profileUpgrader
 from . import aggregatedSection
@@ -42,14 +44,6 @@ from .featureFlag import (
 	_validateConfig_featureFlag,
 )
 from .registry import RegistryKey as _RegistryKey
-from typing import (
-	Any,
-	Dict,
-	List,
-	Optional,
-	Set,
-	Tuple,
-)
 import NVDAState
 from NVDAState import WritePaths
 
@@ -168,7 +162,7 @@ def isInstalledCopy() -> bool:
 		return False
 
 
-def getInstalledUserConfigPath() -> Optional[str]:
+def getInstalledUserConfigPath() -> str | None:
 	try:
 		winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, _RegistryKey.NVDA.value)
 	except FileNotFoundError:
@@ -236,10 +230,10 @@ def getScratchpadDir(ensureExists: bool = False) -> str:
 	return path
 
 
-def initConfigPath(configPath: Optional[str] = None) -> None:
+def initConfigPath(configPath: str | None = None) -> None:
 	"""
 	Creates the current configuration path if it doesn't exist. Also makes sure that various sub directories also exist.
-	@param configPath: an optional path which should be used instead (only useful when being called from outside of NVDA)
+	:param configPath: an optional path which should be used instead (only useful when being called from outside of NVDA)
 	"""
 	if not configPath:
 		configPath = WritePaths.configDir
@@ -482,7 +476,7 @@ def _transformSpec(spec: ConfigObj):
 	)
 
 
-class ConfigManager(object):
+class ConfigManager:
 	"""Manages and provides access to configuration.
 	In addition to the base configuration, there can be multiple active configuration profiles.
 	Settings in more recently activated profiles take precedence,
@@ -511,9 +505,9 @@ class ConfigManager(object):
 		self.spec = confspec
 		_transformSpec(self.spec)
 		#: All loaded profiles by name.
-		self._profileCache: Optional[Dict[Optional[str], ConfigObj]] = {}
+		self._profileCache: dict[str | None, ConfigObj] = {}
 		#: The active profiles.
-		self.profiles: List[ConfigObj] = []
+		self.profiles: list[ConfigObj] = []
 		#: Whether profile triggers are enabled (read-only).
 		self.profileTriggersEnabled: bool = True
 		self.validator: Validator = Validator(
@@ -521,16 +515,16 @@ class ConfigManager(object):
 				"_featureFlag": _validateConfig_featureFlag,
 			},
 		)
-		self.rootSection: Optional[AggregatedSection] = None
+		self.rootSection: AggregatedSection | None = None
 		self._shouldHandleProfileSwitch: bool = True
 		self._pendingHandleProfileSwitch: bool = False
-		self._suspendedTriggers: Optional[List[ProfileTrigger]] = None
+		self._suspendedTriggers: list[ProfileTrigger] | None = None
 		self._initBaseConf()
 		#: Maps triggers to profiles.
-		self.triggersToProfiles: Optional[Dict[ProfileTrigger, ConfigObj]] = None
+		self.triggersToProfiles: dict[ProfileTrigger, ConfigObj] | None = None
 		self._loadProfileTriggers()
 		#: The names of all profiles that have been modified since they were last saved.
-		self._dirtyProfiles: Set[str] = set()
+		self._dirtyProfiles: set[str] = set()
 
 	def _handleProfileSwitch(self, shouldNotify=True):
 		if not self._shouldHandleProfileSwitch:
@@ -589,34 +583,55 @@ class ConfigManager(object):
 		self.profiles.append(profile)
 		self._handleProfileSwitch()
 
-	def _loadConfig(self, fn, fileError=False):
+	@staticmethod
+	def _shouldLogConfigAtStartup(profile: ConfigObj) -> bool:
+		"""since profile settings are not yet imported we have to "peek" to see
+		if debug level logging is enabled.
+
+		:param profile: The profile to check for logging settings.
+		:return: True if debug level logging is enabled, False otherwise.
+		"""
+		#
+		try:
+			logLevelName: str = profile["general"]["loggingLevel"]
+			if not logLevelName:
+				level = None
+			else:
+				level = logging.getLevelNamesMapping().get(logLevelName)
+		except KeyError:
+			level = None
+		return log.isEnabledFor(log.DEBUG) or (level and logging.DEBUG >= level)
+
+	def _loadConfig(self, fn: str | None, fileError: bool = False) -> ConfigObj:
+		"""Load a configuration from a file.
+
+		:param fn: The filename of the configuration file to load.
+		:param fileError: Whether to raise an error if the file cannot be read, defaults to False
+		:raises e: Re-raises any exception that occurs during the profile upgrade process.
+		:return: The loaded configuration object.
+		"""
 		log.info("Loading config: {0}".format(fn))
 		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=fileError)
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 		profile.newlines = "\r\n"
 		profileCopy = deepcopy(profile)
+		if NVDAState.shouldWriteToDisk() and profile.filename is not None:
+			writeProfileFunc = self._writeProfileToFile
+		else:
+			writeProfileFunc = None
 		try:
-			if NVDAState.shouldWriteToDisk() and profile.filename is not None:
-				writeProfileFunc = self._writeProfileToFile
-			else:
-				writeProfileFunc = None
 			profileUpgrader.upgrade(profile, self.validator, writeProfileFunc)
 		except Exception as e:
-			# Log at level info to ensure that the profile is logged.
-			log.info("Config before schema update:\n%s" % profileCopy, exc_info=False)
+			if self._shouldLogConfigAtStartup(profileCopy):
+				# We must log at info level here as the logHandler hasn't been set to log at debug level yet.
+				log.info(f"Config before schema update:\n{profileCopy}", redactSecrets=True)
 			raise e
-		# since profile settings are not yet imported we have to "peek" to see
-		# if debug level logging is enabled.
-		try:
-			logLevelName = profile["general"]["loggingLevel"]
-		except KeyError:
-			logLevelName = None
-		if log.isEnabledFor(log.DEBUG) or (logLevelName and DEBUG >= logging.getLevelName(logLevelName)):
-			# Log at level info to ensure that the profile is logged.
+
+		if self._shouldLogConfigAtStartup(profile):
+			# We must log at info level here as the logHandler hasn't been set to log at debug level yet.
 			log.info(
-				"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{0}".format(
-					profile,
-				),
+				f"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{profile}",
+				redactSecrets=True,
 			)
 		return profile
 
@@ -703,7 +718,7 @@ class ConfigManager(object):
 			return
 		self._dirtyProfiles.add(self.profiles[-1].name)
 
-	def _writeProfileToFile(self, filename, profile):
+	def _writeProfileToFile(self, filename: str, profile: ConfigObj):
 		with FaultTolerantFile(filename) as f:
 			profile.write(f)
 
@@ -1046,13 +1061,94 @@ class ConfigManager(object):
 		data.default = conf.validator.get_default_value(spec)
 		return data
 
+	def getConfigValue(self, *keyPath: *tuple[str, str, *tuple[str, ...]]) -> any:
+		"""
+		Retrieves the value of a configuration key.
+		:param keyPath: The path to the configuration key to retrieve.
+		:return: The value of the specified configuration key.
+		"""
+		return functools.reduce(lambda d, x: d.get(x), keyPath, self)
 
-class ConfigValidationData(object):
+	def setConfigValue(
+		self,
+		value: bool | int | float | str,
+		*keyPath: *tuple[str, str, *tuple[str, ...]],
+	) -> None:
+		"""
+		Sets the value of a configuration key.
+		:param value: The value to set for the configuration key.
+		:param keyPath: The path to the configuration key to set.
+		:return: None.
+		"""
+		dictToUpdate = functools.reduce(lambda d, x: d.get(x), keyPath[:-1], self)
+		dictToUpdate[keyPath[-1]] = value
+
+	def _getConfigValueRange(self, *keyPath: tuple[str, str, *tuple[str, ...]]) -> tuple[float, float]:
+		"""
+		Gets the minimum and maximum allowed values for a configuration key.
+		:param keyPath: The path to The configuration key to evaluate.
+		:return: A tuple of (minValue, maxValue).
+		"""
+		validation = self.getConfigValidation(keyPath)
+		minValue = float(validation.kwargs["min"])
+		maxValue = float(validation.kwargs["max"])
+		return minValue, maxValue
+
+	def _clampValue(self, currentValue: float, minValue: float, maxValue: float, step: float) -> float:
+		"""
+		Calculates a new value by applying a step, constrained within min/max bounds.
+		:param currentValue: The current value.
+		:param minValue: The minimum allowed value.
+		:param maxValue: The maximum allowed value.
+		:param step: The amount to change the value by (positive or negative).
+		:return: The new value, clamped between min and max.
+		"""
+		return min(max(currentValue + step, minValue), maxValue)
+
+	def valueToPercentage(self, *keyPath: tuple[str, str, *tuple[str, ...]]) -> int:
+		"""
+		Calculates the percentage representation of a configuration value within its defined range.
+		:param keyPath: The path to the configuration key to evaluate.
+		:return: The percentage (0-100) of the value within the range.
+		"""
+		minValue, maxValue = self._getConfigValueRange(*keyPath)
+		currentValue = self.getConfigValue(*keyPath)
+		return round((currentValue - minValue) / (maxValue - minValue) * 100)
+
+	def percentageToValue(self, *keyPath: tuple[str, str, *tuple[str, ...]], percentage: int) -> float:
+		"""
+		Calculates the configuration value corresponding to a given percentage within its defined range.
+		:param keyPath: The path to the configuration key to evaluate.
+		:param percentage: The percentage (0-100) to convert to a value.
+		:return: The value corresponding to the given percentage within the defined range.
+		"""
+		minValue, maxValue = self._getConfigValueRange(*keyPath)
+		percentage = max(0, min(100, percentage))
+		value = minValue + (maxValue - minValue) * (percentage / 100)
+		return value
+
+	def clampedIncrementAndUpdateConfig(
+		self,
+		*keyPath: tuple[str, str, *tuple[str, ...]],
+		step: float,
+	) -> None:
+		"""
+		Updates a configuration value by applying a step, constrained within its valid range.
+		:param keyPath: The path to the configuration key to update.
+		:param step: The step adjustment value (positive, negative, or 0).
+		"""
+		currentValue = self.getConfigValue(*keyPath)
+		minValue, maxValue = self._getConfigValueRange(*keyPath)
+		newValue = self._clampValue(currentValue, minValue, maxValue, step)
+		self.setConfigValue(newValue, *keyPath)
+
+
+class ConfigValidationData:
 	validationFuncName: str | None = None
 
 	def __init__(self, validationFuncName):
 		self.validationFuncName = validationFuncName
-		super(ConfigValidationData, self).__init__()
+		super().__init__()
 
 	# args passed to the convert function
 	args: list[Any] = []
@@ -1071,9 +1167,9 @@ class AggregatedSection:
 	def __init__(
 		self,
 		manager: ConfigManager,
-		path: Tuple[str],
+		path: tuple[str, ...],
 		spec: ConfigObj,
-		profiles: List[ConfigObj],
+		profiles: list[ConfigObj],
 	):
 		self.manager = manager
 		self.path = path
@@ -1355,7 +1451,7 @@ class AggregatedSection:
 		self._spec.update(val)
 
 
-class ProfileTrigger(object):
+class ProfileTrigger:
 	"""A trigger for automatic activation/deactivation of a configuration profile.
 	The user can associate a profile with a trigger.
 	When the trigger applies, the associated profile is activated.

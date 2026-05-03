@@ -42,7 +42,7 @@ Major highlights include:
 
 * Operating Systems: 64-bit editions of Windows 10 and Windows 11.
 Windows Server 2016, 2019, 2022 and 2025.
-  * both AMD64 and ARM64 variants of Windows 11 are supported, including Copilot+ PCs.
+  * Both AMD64 and ARM64 variants of Windows 11 are supported, including Copilot+ PCs.
   * Note that ARM64 Windows 10 is not supported.
   * Note that Windows 10 versions older than 22H2 and Windows Server versions older than 2022 are no longer under active support by NV Access.
 * at least 500 MB of storage space.
@@ -50,7 +50,7 @@ Windows Server 2016, 2019, 2022 and 2025.
 #### Recommended System Requirements {#RecommendedSystemRequirements}
 
 * Operating Systems: Windows 11 or Windows 10 (Version 22H2), and Windows Server 2025 or 2022.
-  * both AMD64 and ARM64 variants of Windows 11 are supported, including Copilot+ PCs.
+  * Both AMD64 and ARM64 variants of Windows 11 are supported, including Copilot+ PCs.
   * Note that ARM64 Windows 10 is not supported.
 * at least 500 MB of storage space.
 * at least 4 GB of RAM.
@@ -611,13 +611,13 @@ Therefore, gestures such as 2-finger flick up and 4-finger flick left are all po
 #### Touch Modes {#TouchModes}
 
 As there are many more NVDA commands than possible touch gestures, NVDA has several touch modes you can switch between which make certain subsets of commands available.
-The two modes are text mode and object mode.
+The three modes are text mode, object mode and browse mode.
 Certain NVDA commands listed in this document may have a touch mode listed in brackets after the touch gesture.
 For example, flick up (text mode) means that the command will be performed if you flick up, but only while in text mode.
 If the command does not have a mode listed, it will work in any mode.
 
 <!-- KC:beginInclude -->
-To toggle touch modes, perform a 3-finger tap.
+To switch between touch modes, perform a 3-finger tap.
 <!-- KC:endInclude -->
 
 #### Touch keyboard {#TouchKeyboard}
@@ -1062,6 +1062,38 @@ If you want to use these while still being able to use your cursor keys to read 
 To toggle single letter navigation on and off for the current document, press NVDA+shift+space.
 <!-- KC:endInclude -->
 
+#### Touch Navigation in Browse Mode {#BrowseModeTouch}
+
+When using a touch enabled device, NVDA provides an additional touch navigation mode for browsing content in browse mode.
+
+When browse mode is active in supported documents such as web pages or Word documents, NVDA can expose a browse touch mode.
+This mode allows users to navigate structural elements of a document using touch gestures, similar to browse mode navigation with the keyboard.
+
+In browse touch mode, flick gestures are used to move between common document elements such as links, buttons, headings, form fields, landmarks, and other document structures.
+
+This feature is intended to provide touch users with efficient, structured navigation that mirrors existing browse mode functionality.
+
+##### Touch gestures in browse mode
+
+<!-- KC:beginInclude -->
+
+| Name | Touch | Description |
+|---|---|---|
+| Select next element type | flick down | Switches to the next browse mode navigation element type |
+| Select previous element type | flick up | Switches to the previous browse mode navigation element type |
+| Move to next element | flick right | Moves to the next browse mode element of the selected type |
+| Move to previous element | flick left | Moves to the previous browse mode element of the selected type |
+
+<!-- KC:endInclude -->
+
+When the "default" element type is selected, flicking left or right moves through all elements in the document.
+When any other element type is selected, flicking left or right moves to the previous or next element of that type.
+Flicking up or down cycles through the available element types.
+
+The selected element type is remembered separately for each document while it remains open.
+Note that browse touch mode gestures only take effect when browse mode is active in the document.
+If focus moves outside the document (for example, to the browser address bar or the taskbar), browse touch mode gestures will not navigate the document until focus returns to it in browse mode.
+
 #### Text paragraph navigation command {#TextNavigationCommand}
 
 You can jump to the next or previous text paragraph by pressing `p` or `shift+p`.
@@ -1188,7 +1220,7 @@ However, for scenarios where you wish to copy an entire table or paragraph of ri
 ## Reading Mathematical Content {#ReadingMath}
 
 NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille.
-NVDA uses [MathCAT](https://nsoiffer.github.io/MathCAT/) for reading mathematical content.
+NVDA uses [MathCAT](https://daisy.github.io/MathCAT/) for reading mathematical content.
 
 ### Supported math content {#SupportedMathContent}
 
@@ -1208,9 +1240,9 @@ MathType needs to be installed in order for this to work.
 The trial version is sufficient.
 It can be downloaded from the [MathType presentation page](https://www.wiris.com/en/mathtype/).
 * Adobe Acrobat Reader:
-Tagged PDF with MathML Structure elements.
+Tagged PDF with MathML structure elements.
 * Foxit PDF Reader:
-Tagged PDF with MathML embedded as Associated files or MathML Structure Elements.
+Tagged PDF with MathML embedded as associated files or MathML structure elements.
 * Kindle Reader for PC:
 NVDA can read and navigate Math in Kindle for PC for books with accessible math.
 
@@ -1248,7 +1280,7 @@ To activate the button or the element containing the formula, press ctrl+enter.
 Below is a summary of the most useful commands for those wanting to quickly get started with navigating mathematical content.
 
 * Use the arrow keys to move left/right or up/down a mathematical structure (e.g. into/out of a fraction).
-* If inside of a table, `control+arrow` will move by cell.
+* If inside a table, `control+arrow` keys will move by cell.
 * `home` / `end` moves to the start/end of the expression.
 * `space` reads your current position.
 * `shift+upArrow` / `shift+downArrow` will change the mode of navigation, which will be discussed in more detail in the following section.
@@ -1264,11 +1296,11 @@ The format of the math copied to the clipboard can be adjusted through the [math
 
 MathCAT supports the following navigation modes:
 
-* Enhanced Mode: navigation is by mathematically meaningful pieces (operators, delimiters, and operands).
-* Simple mode: moves by words except when you get to a 2D notation (fractions, roots, ...), then it speaks the entire notation.
+* Enhanced mode: navigation is by mathematically meaningful pieces (operators, delimiters, and operands).
+* Simple mode: moves by words except when you get to a 2D notation (fractions, roots, etc), then it speaks the entire notation.
 Zooming in lets you explore the 2D notation in the same mode.
 Zooming out or moving out of the 2D notation brings you back to the outer/higher level of navigation.
-* Character Mode: this is actually two modes - word mode and character mode (zoom in to get "real" character mode).
+* Character mode: this is actually two modes - word mode and character mode (zoom in to get "real" character mode).
 Moves by words/characters.
 This differs for numbers of more than one digit and function names such as "sin" that are multiple characters.
 Otherwise, word and character navigation is the same.
@@ -1287,7 +1319,7 @@ The following are key commands used to navigate math:
 | Read next | `shift+rightArrow` |
 | Describe next | `control+shift+rightArrow` |
 | Zoom out | `upArrow` |
-| Move to cell above in a table, or digit above in columnar math. | `control+upArrow` or `control+alt+upArrow` |
+| Move to cell above in a table, or digit above in columnar math | `control+upArrow` or `control+alt+upArrow` |
 | Change Navigation Mode (Enhanced/Simple/Character) to larger | `shift+upArrow` |
 | Zoom out all the way | `control+shift+upArrow` |
 | Zoom in | `downArrow` |
@@ -1299,7 +1331,7 @@ The following are key commands used to navigate math:
 | Jump to placemarker | `1` through `0` (`0` is 10) |
 | Set placemarker | `control+1` through `control+0` |
 | Read placemarker | `shift+1` through `shift+0` |
-| Describe placemarker | `control+shift+1` through `shift+0` |
+| Describe placemarker | `control+shift+1` through `control+shift+0` |
 | Read current | `space` |
 | Read current cell | `control+space` |
 | Toggle "speech mode" to Read or Describe | `shift+space` |
@@ -1313,19 +1345,19 @@ The following are key commands used to navigate math:
 | Move back to last position | `backspace` |
 <!-- KC:endInclude -->
 
-#### Typical Use
+#### Typical Use {#MathTypicalUse}
 
 Typically, you will start at the first term of an expression and move right as needed.
 You might move up and down levels if needed.
 This is done with the arrow keys.
-`control+alt+arrow` is used to move around tabular entries.
+You can also move around tabular entries with `control+alt+arrow` keys.
 
-Backspace will take you back to where you were, which is not always the same as moving to the left.
-For example, if right arrow moved you out of a fraction, backspace will take you back to where you were in the denominator and left arrow will land on the entire fraction.
+Pressing `backspace` will take you back to where you were, which is not always the same as moving to the left.
+For example, if `rightArrow` moved you out of a fraction, `backspace` will take you back to where you were in the denominator and `leftArrow` will land on the entire fraction.
 
 You will likely find one mode of navigation the most natural for you most of the time.
-The default mode can be set in the math settings panel.
-However, at any time during navigation, you can switch navigation modes using `shift+up/down arrow` to take advantage of the differing strengths of each navigation mode.
+The default mode can be set in [the math settings panel](#MathSettings).
+However, at any time during navigation, you can switch navigation modes using `shift+upArrow/downArrow` to take advantage of the differing strengths of each navigation mode.
 
 ## Braille {#Braille}
 
@@ -1511,6 +1543,7 @@ You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAnd
 | Name |Key |Description|
 |---|---|---|
 |Toggles the state of the screen curtain |`NVDA+control+escape` |Enable to make the screen black or disable to show the contents of the screen. Pressed once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it.|
+| Reports the state of the screen curtain | `None` | Announces the current status of the screen curtain, whether it is disabled or enabled or in temporary mode. |
 
 <!-- KC:endInclude -->
 
@@ -1531,6 +1564,7 @@ It provides several configuration options to customize the magnification experie
 ### Enabling and Disabling the Magnifier {#MagnifierToggle}
 
 To enable or disable the magnifier, press `NVDA+shift+w`.
+The "Increase magnification level" keystroke, `NVDA+shift+equals`, will start the magnifier if it is not running.
 When the magnifier is enabled, NVDA will announce the current zoom level, color filter, and focus tracking mode.
 When disabled, the screen returns to its normal size.
 
@@ -1546,7 +1580,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 | Name |Key |Description|
 |---|---|---|
 |Toggles the magnifier on and off |`NVDA+shift+w` |Enables or disables the magnifier|
-|Increases the magnification level of the magnifier |`NVDA+shift+equals` |Increases the zoom level|
+| Increases the magnification level of the magnifier | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
 |Decreases the magnification level of the magnifier |`NVDA+shift+minus` |Decreases the zoom level|
 |Toggle filter of the magnifier |`NVDA+shift+i` |Cycles through available color filters (normal, grayscale, inverted)|
 |Toggle focus mode for the full-screen magnifier |None |Cycles through focus tracking modes (center, border, relative)|
@@ -2091,6 +2125,12 @@ This option is a slider which goes from 0 to 100 - 0 being the lowest volume and
 
 This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with.
 
+##### Natural pause after punctuation {#SpeechSettingPunctuationSilence}
+
+Disabling this option will remove the pauses after punctuation marks.
+This option is enabled by default.
+This option only exists for Windows OneCore voices, and is supported on Windows 10 version 1803 or later.
+
 ##### Use modern audio output system (WASAPI) {#SpeechSettingsUseWasapi}
 
 This option enables audio output via the Windows Audio Session API (WASAPI).
@@ -2151,9 +2191,10 @@ If you find that NVDA is reading punctuation in the wrong language for a particu
 
 ##### Unicode normalization {#SpeechUnicodeNormalization}
 
-When this option is enabled, unicode normalization is performed on the text that is spoken by NVDA.
+When this option is enabled, Unicode normalization is performed on the text that is spoken by NVDA.
 This is beneficial when speaking characters that can be represented in several forms.
-NVDA uses the NFKC (Normalization Form Compatibility Composition) algorithm, which provides the following benefits, among others:
+NVDA uses the NFKC (Normalization Form Compatibility Composition) algorithm, with additional normalization applied.
+NFKC provides the following benefits, among others:
 
 1. The bold and italic versions of characters that are part of the Unicode standard and are commonly used on social media are normalized to their most common compatible equivalent.
 For example, the Latin letter "h" can also be presented as "𝐡" (bold), "ℎ" (italic), etc. but will always be spoken as "h" when normalization is enabled.
@@ -2167,9 +2208,14 @@ This aspect of normalization also aids in reading equations in the Microsoft Wor
 
    Unicode normalization ensures that only one form will be used throughout all speech output, which is the single-character variant.
 
-1. Decomposition of some ligatures, Including "ĳ" (ligature ij) to their two letter form ("ij").
+1. Decomposition of some ligatures, including "ĳ" (ligature ij) to their two letter form ("ij").
 
 1. Stable ordering of modifiers in composite characters, for example in ancient Hebrew.
+
+The additional normalization in NVDA handles decorative letter variants that the standard NFKC algorithm does not decompose.
+Certain Unicode characters, such as negative circled Latin capital letters (🅐–🅩) and negative squared Latin capital letters (🅲–🅩), are treated as autonomous symbols by the Unicode standard and have no compatibility decomposition.
+NVDA extends NFKC by mapping these characters to their plain Latin letter equivalents (A–Z).
+Note that a small number of negative squared letters that have emoji semantics (🅰, 🅱, 🅾, 🅿) are excluded from this mapping to preserve their distinct meaning.
 
 To toggle Unicode normalization from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
@@ -2518,6 +2564,19 @@ Enabling this option will cause NVDA to speak lines or paragraphs reached using 
 
 To toggle this option from anywhere, please assign a custom gesture to "speakOnNavigatingByUnit" in the "Braille" section of the [Input Gestures dialog](#InputGestures).
 
+##### Automatic Scroll Rate {#BrailleAutoScrollRate}
+
+This slider controls the rate of automatic braille display scrolling, measured in cells per second.
+The minimum value (0%) will be 1 cell per second, and the maximum value (100%), 20 cells per second.
+For example, with the default value of 10 cells/sec, if a braille display with 40 cells is used, the number of seconds between automatic scrolls will be 4.
+If the display had 20 cells, each line of braille would be shown for 2 seconds.
+
+While the automatic scroll option is enabled, you can still use the scroll back command to read previous contents again, and scroll forward, for example, to skip a blank line, or if the line being read is too short.
+
+Automatic scrolling will be disabled if a routing key is pressed, if a message is presented in braille, if a new object is displayed, when entering a secure screen, when the session is locked, or when the end of the window is reached.
+
+Commands can be assigned to toggle the automatic scroll option, and to increase or decrease the scroll rate, from the "Braille" section of the [Input Gestures dialog](#InputGestures).
+
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
 
 If this is enabled, a word which is too large to fit at the end of the braille display will not be split.
@@ -2640,7 +2699,7 @@ This option allows you to choose if NVDA should lower the volume of other applic
 This option is only available if NVDA has been installed.
 It is not possible to support audio ducking for portable and temporary copies of NVDA.
 
-Audio ducking is not available when using [Microsoft Speech API version 4 (SAPI 4)](#SAPI4) or 32 bit [Microsoft Speech API version 5 (SAPI 5)](#SAPI5) voices.
+Audio ducking is not available when using [Microsoft Speech API version 4 (SAPI 4)](#SAPI4) or 32-bit [Microsoft Speech API version 5 (SAPI 5)](#SAPI5) voices.
 
 ##### Volume of NVDA sounds follows voice volume {#SoundVolumeFollowsVoice}
 
@@ -2757,6 +2816,8 @@ The available logging levels are:
 If you are concerned about privacy, do not set the logging level to this option.
 * Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
 Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
+* Secrets: In addition to debug logging, NVDA will not redact secrets such as passwords and API keys from logs.
+Only enable this temporarily when important debugging information is being redacted.
 
 ##### Allow NV Access to gather NVDA usage statistics {#GeneralSettingsGatherUsageStats}
 
@@ -2764,14 +2825,14 @@ If this is enabled, NV Access will use the information from update checks, inclu
 Note that although your IP address will be used to calculate your country during the update check, the IP address is never kept.
 Apart from the [mandatory information required to check for updates](#GeneralSettingsCheckForUpdates), the following extra information is also currently sent:
 
-* A unique ID for the current NVDA user, this changes once a month
+* A unique ID for the current NVDA user, which changes once a month
 * NVDA interface language
 * Whether this copy of NVDA is portable or installed
 * Name of the current speech synthesizer in use (including the name of the add-on the driver comes from)
 * Name of the current Braille display in use (including the name of the add-on the driver comes from)
 * The current output Braille table (if Braille is in use)
 
-This information greatly aides NV Access to prioritize future development of NVDA.
+This information greatly aids NV Access to prioritize future development of NVDA.
 
 #### Vision {#VisionSettings}
 
@@ -2810,9 +2871,9 @@ Key: `NVDA+control+w`
 The Magnifier category in the NVDA Settings dialog allows you to configure the default behavior of NVDA's built-in [Magnifier](#Magnifier) feature.
 This settings category contains the following options:
 
-##### Default zoom level {#MagnifierDefaultZoom}
+##### Zoom level {#MagnifierZoom}
 
-This slider allows you to set the default zoom level when the magnifier is first enabled.
+This slider allows you to set the zoom level when using the magnifier.
 The zoom level can range from 1.0 (no magnification) to 10.0 (maximum magnification).
 The default value is 2.0 (200% zoom).
 
@@ -2823,9 +2884,9 @@ You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+e
 |Options |1.0 to 10.0|
 |Default |2.0|
 
-##### Default color filter {#MagnifierDefaultFilter}
+##### Filter {#MagnifierFilter}
 
-This combo box allows you to select the default color filter to apply when the magnifier is first enabled.
+This combo box allows you to select the filter to apply when using the magnifier.
 You can cycle through the color filters by pressing `NVDA+shift+i`.
 The available options are:
 
@@ -2841,9 +2902,9 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### Default focus mode {#MagnifierDefaultFullscreenFocusMode}
+##### Focus mode {#MagnifierFullscreenFocusMode}
 
-This combo box allows you to select the default focus tracking mode when the magnifier is first enabled.
+This combo box allows you to select the focus tracking mode when using the magnifier.
 To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 The available options are:
 
@@ -2888,6 +2949,54 @@ This option is disabled by default.
 |---|---|
 |Options |Disabled, Enabled|
 |Default |Disabled|
+
+#### Follow mouse {#MagnifierFollowMouse}
+
+This checkbox controls whether the magnifier should follow the mouse pointer.
+When enabled, the magnified area will automatically move to follow the mouse pointer, which can be helpful for users who navigate primarily using the mouse rather than the keyboard.
+
+This option is enabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Enabled|
+
+#### Follow system focus {#MagnifierFollowSystemFocus}
+
+This checkbox controls whether the magnifier should follow the system focus.
+When enabled, the magnified area will automatically move to follow the system focus, which can be helpful for users who navigate primarily using the keyboard and want the magnifier to track their navigation.
+
+This option is enabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Enabled|
+
+#### Follow review cursor {#MagnifierFollowReviewCursor}
+
+This checkbox controls whether the magnifier should follow the review cursor.
+When enabled, the magnified area will automatically move to follow the review cursor, which can be helpful for users who use the review cursor to navigate through content and want the magnifier to track their navigation.
+
+This option is enabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Enabled|
+
+#### Follow navigator object {#MagnifierFollowNavigatorObject}
+
+This checkbox controls whether the magnifier should follow the navigator object.
+When enabled, the magnified area will automatically move to follow the navigator object, which can be helpful for users who use object navigation to navigate through content and want the magnifier to track their navigation.
+
+This option is enabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Enabled|
 
 ##### Keep mouse centered {#MagnifierKeepMouseCentered}
 
@@ -2981,7 +3090,7 @@ When enabled, NVDA will announce all non-character keys you type on the keyboard
 ##### Play sound for spelling errors while typing {#KeyboardSettingsAlertForSpellingErrors}
 
 When enabled, a short buzzer sound will be played when a word you type contains a spelling error.
-This option is only available if [reporting of spelling errors](#reportSpellingErrors) is enabled in NVDA's Document Formatting Settings.
+This option is only available if [reporting of spelling errors](#ReportSpellingErrors) is enabled in NVDA's Document Formatting Settings.
 
 ##### Handle keys from other applications {#KeyboardSettingsHandleKeys}
 
@@ -3303,6 +3412,15 @@ Enabled by default, this option allows you to choose if gestures (such as key pr
 As an example, if enabled and the letter j was pressed, it would be trapped from reaching the document, even though it is not a quick navigation command nor is it likely to be a command in the application itself.
 In this case NVDA will tell Windows to play a default sound whenever a key which gets trapped is pressed.
 
+##### Browse mode touch navigation elements {#BrowseModeSettingsBrowseModeNavigationElements}
+
+This list allows you to choose which element types are available when cycling through elements in browse touch mode.
+Use the checkboxes to enable or disable individual element types.
+Only the checked element types will appear when flicking up or down to cycle through browse mode navigation elements.
+This setting only affects touch navigation and has no effect on keyboard browse mode navigation.
+
+Available element types are those available from [single letter navigation](#SingleLetterNavigation).
+
 #### Document Formatting {#DocumentFormattingSettings}
 
 <!-- KC:setting -->
@@ -3330,7 +3448,7 @@ You can configure reporting of:
   * Comments
   * Bookmarks
   * Editor revisions
-  * Spelling errors [(Off, Speech, Sound, braille)](#reportSpellingErrors)
+  * Spelling or grammar errors [(Speech, Sound, Braille)](#ReportSpellingErrors)
 * Pages and spacing
   * Page numbers
   * Line numbers
@@ -3381,17 +3499,17 @@ Enable this option while proof reading documents in applications such as WordPad
 
 ##### Spelling and grammar error reporting {#ReportSpellingErrors}
 
-This option allows you to configure how spelling and grammar errors are reported while reading text.
-This checklist box has three options:
+The checkboxes in this list allow you to configure how spelling and grammar errors are reported while reading text.
+You can choose any combination of the following three options:
 
-* Speech: NVDA will say "spelling error" or "grammar error" when an error is encountered while reading text
-* Sound: NVDA will play a short buzzer sound when a spelling or grammar error is encountered while reading text
+* Speech: NVDA will say "spelling error" or "grammar error" when an error is encountered while reading text.
+* Sound: NVDA will play a short buzzer sound when a spelling or grammar error is encountered while reading text.
 When navigating word by word or character by character, "out of spelling error" or "out of grammar error" is also reported if the "Speech" or "Sound" option is selected.
 * Braille: NVDA will indicate spelling or grammar errors in braille.
 To have spelling or grammar errors reported in braille, [formatting display with tags](#BrailleFormattingDisplayTags) must be enabled.
 
-Due to performance limitations, errors are not reported with speech or sounds when navigating by paragraph or by cell in tables, no matter the choice selected in this checklist box.
-In these cases, errors can be reported just in braille.
+Due to performance limitations, errors are not reported with speech or sounds when navigating by paragraph or by cell in tables, no matter the options selected.
+In these cases, errors can only be reported in braille.
 
 By default, errors will be reported with speech.
 
@@ -3461,20 +3579,22 @@ If speech rules for the main language cannot be found, English ("en") is used.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | Any known language code and sub-code, e.g. "en-uk". |
-| Default | en |
+| Options | Automatic, English, English (en-GB), Chinese (Traditional) (zh-TW), Finnish, German, Indonesian, Norwegian Bokmål, Spanish, Swedish, Vietnamese |
+| Default | Automatic (the language of the current voice if supported, or fallback to English) |
 
-###### Speech Style {MathSpeechStyle}
+###### Speech Style {#MathSpeechStyle}
 
-Different styles can be used to speak mathematical content:
+Different styles can be used to speak mathematical content.
+Each [math speech language](#MathSpeechLanguage) has different speech styles available.
+
+For English and most languages, the following styles are available:
 
 * ClearSpeak was developed by the Educational Testing Service for use on university-admission and other high-stakes tests in the United States.
-Refer to the [ClearSpeak specification details in this Word document](https://nsoiffer.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
+Refer to the [ClearSpeak specification details in this Word document](https://daisy.github.io/MathCAT/ClearSpeakRulesAndPreferences.docx).
 * SimpleSpeak tries to minimize speech by speaking simple expressions such as $\frac{a}{b}$ quickly without bracketing words ("a over b").
 These are distinguished from more complex expressions such as $\frac{a}{b+1}$ which will always have bracketing words ("fraction a over b plus 1 end fraction").
 * LiteralSpeak tells MathCAT to speak math expressions almost exactly as written, without interpreting the symbols or meaning.
 It prioritizes literal reading (character-by-character or symbol-by-symbol), rather than mathematical meaning.
-* Other speech styles may exist designed for individual languages.
 
 Examples of each type of speech:
 
@@ -3485,8 +3605,8 @@ Examples of each type of speech:
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | ClearSpeak, SimpleSpeak, LiteralSpeak, and more options depending on your language |
-| Default | ClearSpeak |
+| Options | ClearSpeak, SimpleSpeak, LiteralSpeak, or other options depending on your language |
+| Default | Depends on the language |
 
 ###### Speech verbosity {#MathSpeechVerbosity}
 
@@ -3534,14 +3654,13 @@ This option is disabled by default.
 This option controls how chemical formulae are read.
 Examples for $\mathrm{H}_2\mathrm{O}$:
 
-* SpellOut: "H 2 O" (verbosity controls whether "sub"/"super" is spoken)
-* AsCompound: "Water"
+* Spell it out: "H 2 O" ([verbosity](#MathSpeechVerbosity) controls whether "sub"/"super" is spoken)
 * Off: "H sub 2 O"
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | Spell Out, As Compound, Off |
-| Default | SpellOut |
+| Options | Spell it out, Off |
+| Default | Spell it out |
 
 ###### When entering an equation {#MathNavSpeech}
 
@@ -3551,15 +3670,6 @@ Whether to speak the expression after moving to it or give an overview.
 |---|---|
 | Options | Speak, Describe overview |
 | Default | Speak |
-
-###### Use native math speech in Word and Outlook {#MathUseWordNative}
-
-When enabled, NVDA uses Microsoft Word's built-in math presentation (speech, braille, and interaction) instead of MathCAT when reading and interacting with equations in Word documents.
-
-| . {.hideHeaderRow} | . |
-|---|---|
-| Options | Checked, Unchecked |
-| Default | Unchecked |
 
 ##### Navigation Options {#MathNavigation}
 
@@ -3587,7 +3697,7 @@ This option is enabled by default.
 
 ###### Automatically zoom out of two-dimensional notation {#MathNavAutoZoom}
 
-Auto zoom out of 2D expressions like fractions (use `shift+arrow` to force zoom out if this is unchecked).
+Auto zoom out of 2D expressions like fractions (use `upArrow` to manually zoom out if this is unchecked).
 This option is enabled by default.
 
 | . {.hideHeaderRow} | . |
@@ -3610,7 +3720,7 @@ This option selects the format of math content copied to the clipboard.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Options | MathML, LaTeX, ASCIIMath |
+| Options | MathML, LaTeX, ASCIIMath, Speech |
 | Default | MathML |
 
 ##### Braille Options {#MathBrailleOptions}
@@ -3634,6 +3744,21 @@ The options allow for either no highlighting, only highlighting of the first cha
 |---|---|
 | Options | Off, First Character, Endpoints, All |
 | Default | Endpoints |
+
+##### Application support {#MathApplicationSupport}
+
+###### Use native math support in Word and Outlook {#MathUseWordNative}
+
+This option disables MathCAT when reading and interacting with equations in Microsoft Word or Outlook.
+This allows you to use the math presentation (speech, braille, and interaction) that is built-in to these programs.
+
+You cannot use MathCAT in Microsoft Word or Outlook when this option is enabled.
+This option does not affect MathCAT support in other programs.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Checked, Unchecked |
+| Default | Unchecked |
 
 #### Add-on Store Settings {#AddonStoreSettings}
 
@@ -3834,10 +3959,12 @@ Press this button to test the mirror URL you have entered.
 You must be connected to the internet for the test to succeed.
 It is recommended that you always test the URL before saving it.
 
-#### Copy Add-ons to System-wide Configuration Dialog {#CopyAddonsToSystemProfileDialog}
+#### Copy Settings to System-wide Configuration Dialog {#CopyAddonsToSystemProfileDialog}
 
-This dialog allows you to choose which of your [add-ons](#AddonsManager) to [copy to NVDA's system-wide configuration](#GeneralSettingsCopySettings), which is used during sign-in and on [secure screens](#SecureScreens).
-By default, NVDA will not copy any of your add-ons to the system-wide configuration.
+This dialog appears if you choose to [copy your settings to NVDA's system-wide configuration](#GeneralSettingsCopySettings) and your NVDA configuration or the system-wide NVDA configuration contains [add-ons](#AddonsManager).
+It allows you to choose which of your add-ons to copy to the system-wide configuration, which is used during sign-in and on [secure screens](#SecureScreens).
+It also shows which add-ons are already present in the system-wide configuration.
+By default, only add-ons that are already present in the system-wide configuration will be included.
 
 Copying add-ons to the system-wide configuration is a serious security risk.
 NVDA uses this configuration when running on secure screens, including the sign-in and User Account Control (UAC) screens.
@@ -3845,11 +3972,24 @@ When running on secure screens, NVDA runs as the system user, which has privileg
 This means that many of the usual security and privacy features of Windows, like User Account Control (UAC), do not apply.
 Allowing add-ons to run in this environment grants them unrestricted access to your entire system.
 
+The list of add-ons shows all add-ons enabled in the currently running NVDA configuration and/or present in the system-wide NVDA configuration.
+The version of the add-on installed in the currently running configuration is shown in the "User version" column.
+The version installed in the system-wide configuration is shown in the "System-wide version" column.
+If the add-on is not present in the currently running or system-wide configuration, "Not installed" is shown in the appropriate column.
+
 To copy one or more add-ons to the system-wide configuration, check them in the list of add-ons.
 You are strongly recommended to leave all add-ons that you do not require to access secure screens unchecked.
 
+To get more information about an add-on, select the add-on in the list of add-ons and press the "About add-on..." button.
+The details shown are for the version in the currently running configuration.
+If the add-on is not installed in the currently running configuration, the details of the version in the system-wide configuration are shown instead.
+
 Please note that you may only copy currently enabled add-ons to the system-wide configuration.
 Add-ons that are "pending restart" cannot be copied.
+
+Add-ons that are currently installed in the system-wide configuration, but are not present in the running NVDA configuration will be removed.
+These items cannot be checked.
+They also begin with "[remove]" for easy identification.
 
 #### Advanced Settings {#AdvancedSettings}
 
@@ -4642,7 +4782,8 @@ From an add-on's actions menu, using the submenu "Update channel", you can modif
 #### What's new in the current version {#AddonStoreChangelog}
 
 If an add-on lists what's new for the current version, an action will be available to show these changes in browse mode.
-The title of that message will indicate the add-on version, and it will be possible to copy the presented info, and close the message window, via dedicated buttons.
+The add-on version is included in the title of the message.
+Buttons are provided to copy the presented information or close the message window.
 
 ### Incompatible Add-ons {#incompatibleAddonsManager}
 
@@ -4742,11 +4883,11 @@ This will open a dialog which allows you to create a portable copy of NVDA out o
 
 Follow the directions in [Creating a portable copy](#CreatingAPortableCopy) for more information.
 
-### Run COM registration fixing tool... {#RunCOMRegistrationFixingTool}
+### Run System Accessibility Repair Tool... {#RunCOMRegistrationFixingTool}
 
 Sometimes, problems can develop with the Windows Registry, that result in NVDA behaving abnormally.
 This can be caused by, for example, installing or uninstalling certain programs (such as Adobe Reader or Math Player), as well as Windows updates and other events.
-The COM Registration Fixing Tool attempts to fix these issues by repairing accessibility entries in the registry.
+The System Accessibility Repair Tool attempts to fix these issues by repairing accessibility entries in the registry.
 
 The types of problem this tool can fix include:
 
@@ -4800,7 +4941,7 @@ When using this synthesizer with NVDA, the available voices (accessed from the [
 ### Microsoft Speech API version 5 (SAPI 5) {#SAPI5}
 
 SAPI 5 is a Microsoft standard for software speech synthesizers.
-NVDA supports both 32-bit and 64-bit SAPI5 voices.
+NVDA supports both 32-bit and 64-bit SAPI 5 voices.
 For the best performance and feature compatibility, 64-bit voices should be preferred.
 Many speech synthesizers that comply with this standard may be purchased or downloaded for free from various companies and websites, though your system will probably already come with at least one SAPI 5 voice preinstalled.
 
@@ -5072,16 +5213,13 @@ These include:
 * Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
 * HumanWare: Brailliant, BrailleConnect, Brailliant2
 * APH: Refreshabraille
-* Orbit: Orbit Reader 20
+* Orbit: Orbit Reader 20, Orbit Reader 40
 
 Some other displays manufactured by Baum may also work, though this has not been tested.
 
 If connecting via USB to displays which do not use HID, you must first install the USB drivers provided by the manufacturer.
 The VarioUltra and Pronto! use HID.
-The Refreshabraille and Orbit Reader 20 can use HID if configured appropriately.
-
-The USB serial mode of the Orbit Reader 20 is currently only supported in Windows 10 and later.
-USB HID should generally be used instead.
+The Refreshabraille, Orbit Reader 20, and Orbit Reader 40 can use HID if configured appropriately.
 
 Following are the key assignments for these displays with NVDA.
 Please see your display's documentation for descriptions of where these keys can be found.
@@ -6103,7 +6241,9 @@ The A300 model has a tactile graphics area of 120 by 80 dots, which can fit 8 li
 
 You can configure whether NVDA displays braille on the dedicated braille display line or on the tactile graphics area via the Braille Destination option in NVDA's Braille settings for this driver.
 
-Panning keys are supported, but due to limited buttons on the device, other commands and routing capabilities are currently not available.
+The Dot Pad has left and right panning keys and four function keys (f1 through f4).
+Multiple buttons can be pressed simultaneously to create combination gestures (e.g., `f1+panLeft`), which can be assigned via the Input Gestures dialog.
+Apart from panning, no other commands are assigned by default.
 
 The Dot Pad driver supports automatic detection of USB-connected devices.
 However, automatic detection is disabled by default due to the device using generic USB identifiers that could conflict with other devices.
@@ -6118,8 +6258,8 @@ Make sure to lift your hand entirely off the device when navigating with NVDA, a
 
 | Name |Key|
 |---|---|
-|Scroll braille display back | `pan_left` |
-|Scroll braille display forward | `pan_right` |
+|Scroll braille display back | `panLeft` |
+|Scroll braille display forward | `panRight` |
 
 <!-- KC:endInclude -->
 
@@ -6213,7 +6353,7 @@ Following are the command line options for NVDA:
 |`-q` |`--quit` |Quit already running copy of NVDA|
 |`-k` |`--check-running` |Report whether NVDA is running via the exit code; 0 if running, 1 if not running|
 |`-f LOGFILENAME` |`--log-file=LOGFILENAME` |The file where log messages should be written to. Logging is always disabled if secure mode is enabled.|
-|`-l LOGLEVEL` |`--log-level=LOGLEVEL` |The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, disabled 100). Logging is always disabled if secure mode is enabled.|
+|`-l LOGLEVEL` |`--log-level=LOGLEVEL` |The lowest level of message logged (secrets 5, debug 10, input/output 12, debug warning 15, info 20, disabled 100). Logging is always disabled if secure mode is enabled.|
 |`-c CONFIGPATH` |`--config-path=CONFIGPATH` |The path where all settings for NVDA are stored. The default value is forced if secure mode is enabled.|
 |`-n LANGUAGE` |`--lang=LANGUAGE` |Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc.|
 |`-m` |`--minimal` |No sounds, no interface, no start message, etc.|
@@ -6266,3 +6406,5 @@ The following values can be set under this registry key:
 If you require further information or assistance regarding NVDA, please visit the [NVDA web site](NVDA_URL).
 Here, you can find additional documentation, as well as technical support and community resources.
 This site also provides information and resources concerning NVDA development.
+
+<!-- markdownlint-disable-file MD060 -->
