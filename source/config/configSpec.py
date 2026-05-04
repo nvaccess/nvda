@@ -280,6 +280,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportClickable = boolean(default=true)
 
 [documentNavigation]
+	# Hidden option to eagerly initialize Chinese word segmentation even when the current languages do not use it.
 	initWordSegForUnusedLang = boolean(default=false)
 	wordSegmentationStandard = featureFlag(optionsEnum="WordNavigationUnitFlag", behaviorOfDefault="Auto")
 	paragraphStyle = featureFlag(optionsEnum="ParagraphNavigationFlag", behaviorOfDefault="application")

@@ -6,6 +6,8 @@
 """Unit tests for the textUtils module."""
 
 import unittest
+from types import SimpleNamespace
+from unittest.mock import Mock, patch
 
 from textUtils import UnicodeNormalizationOffsetConverter, WideStringOffsetConverter, WordSegmenter
 from textUtils.uniscribe import splitAtCharacterBoundaries
@@ -443,6 +445,95 @@ class TestUniscribeSplitAtCharacterBoundaries(unittest.TestCase):
 
 	def test_hebrew(self):
 		self._testHelper("בְּרֵאשִׁית", ["בְּ", "רֵ", "א", "שִׁ", "י", "ת"])
+
+
+class TestChineseWordSegmentationInitialization(unittest.TestCase):
+	def _makeMockJiebaDll(self):
+		return SimpleNamespace(
+			initJieba=Mock(return_value=True),
+			calculateWordOffsets=Mock(),
+			insertUserWord=Mock(),
+			deleteUserWord=Mock(),
+			find=Mock(),
+			freeOffsets=Mock(),
+		)
+
+	def _setWordSegConfig(self, *, initForUnusedLang: bool):
+		import config
+		from config.featureFlag import FeatureFlag
+		from config.featureFlagEnums import WordNavigationUnitFlag
+
+		originalInitForUnusedLang = config.conf["documentNavigation"]["initWordSegForUnusedLang"]
+		originalWordSegmentationStandard = config.conf["documentNavigation"]["wordSegmentationStandard"]
+		config.conf["documentNavigation"]["initWordSegForUnusedLang"] = initForUnusedLang
+		config.conf["documentNavigation"]["wordSegmentationStandard"] = FeatureFlag(
+			WordNavigationUnitFlag.AUTO,
+			behaviorOfDefault=WordNavigationUnitFlag.AUTO,
+		)
+
+		def restoreConfig():
+			config.conf["documentNavigation"]["initWordSegForUnusedLang"] = originalInitForUnusedLang
+			config.conf["documentNavigation"]["wordSegmentationStandard"] = originalWordSegmentationStandard
+
+		return restoreConfig
+
+	def test_doesNotInitializeForUnusedLanguageByDefault(self):
+		from textUtils.wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
+
+		originalLib = ChineseWordSegmentationStrategy._lib
+		restoreConfig = self._setWordSegConfig(initForUnusedLang=False)
+		ChineseWordSegmentationStrategy._lib = None
+		try:
+			with (
+				patch.object(ChineseWordSegmentationStrategy, "isUsingRelatedLanguage", return_value=False),
+				patch("textUtils.wordSeg.wordSegStrategy.ctypes.cdll.LoadLibrary") as loadLibrary,
+			):
+				ChineseWordSegmentationStrategy._initCppJieba()
+
+			loadLibrary.assert_not_called()
+		finally:
+			ChineseWordSegmentationStrategy._lib = originalLib
+			restoreConfig()
+
+	def test_initializesForUnusedLanguageWhenConfigured(self):
+		from textUtils.wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
+
+		mockDll = self._makeMockJiebaDll()
+		originalLib = ChineseWordSegmentationStrategy._lib
+		restoreConfig = self._setWordSegConfig(initForUnusedLang=True)
+		ChineseWordSegmentationStrategy._lib = None
+		try:
+			with (
+				patch.object(ChineseWordSegmentationStrategy, "isUsingRelatedLanguage", return_value=False),
+				patch("textUtils.wordSeg.wordSegStrategy.ctypes.cdll.LoadLibrary", return_value=mockDll) as loadLibrary,
+			):
+				ChineseWordSegmentationStrategy._initCppJieba()
+
+			loadLibrary.assert_called_once()
+			mockDll.initJieba.assert_called_once()
+		finally:
+			ChineseWordSegmentationStrategy._lib = originalLib
+			restoreConfig()
+
+	def test_forceInitStillInitializesForUnusedLanguage(self):
+		from textUtils.wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
+
+		mockDll = self._makeMockJiebaDll()
+		originalLib = ChineseWordSegmentationStrategy._lib
+		restoreConfig = self._setWordSegConfig(initForUnusedLang=False)
+		ChineseWordSegmentationStrategy._lib = None
+		try:
+			with (
+				patch.object(ChineseWordSegmentationStrategy, "isUsingRelatedLanguage", return_value=False),
+				patch("textUtils.wordSeg.wordSegStrategy.ctypes.cdll.LoadLibrary", return_value=mockDll) as loadLibrary,
+			):
+				ChineseWordSegmentationStrategy._initCppJieba(forceInit=True)
+
+			loadLibrary.assert_called_once()
+			mockDll.initJieba.assert_called_once()
+		finally:
+			ChineseWordSegmentationStrategy._lib = originalLib
+			restoreConfig()
 
 
 class TestWordSegmenter(unittest.TestCase):
