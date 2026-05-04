@@ -332,7 +332,7 @@ class EditorChunk(Ia2Web):
 class Math(Ia2Web):
 	def _get_mathMl(self):
 		# Chromium browsers now expose a 'math' IAccessible2 attribute,
-		# which contains all the raw mathML.
+		# which contains all the raw MathML.
 		# Check for this attribute first before falling back to ISimpleDOM.
 		mathAttr = self.IA2Attributes.get("math")
 		if mathAttr:
