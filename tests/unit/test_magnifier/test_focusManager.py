@@ -8,7 +8,6 @@ from _magnifier.utils.focusManager import FocusManager
 from _magnifier.utils.types import Coordinates, MagnifierFollowFocusType
 import unittest
 from unittest.mock import MagicMock, Mock, patch
-import winUser
 import _ctypes
 
 
@@ -322,8 +321,6 @@ class TestFocusManager(unittest.TestCase):
 				)
 				self.focusManager._getSystemFocusPosition = MagicMock(return_value=param.systemFocusPos)
 				self.focusManager._getReviewPosition = MagicMock(return_value=param.reviewPos)
-				winUser.getAsyncKeyState = MagicMock(side_effect=lambda _key: -1 if param.leftPressed else 0)
-				winUser.getCursorPos = MagicMock(return_value=param.mousePos)
 
 				followStateSideEffect = _makeFollowStateSideEffect(
 					followMouse=param.followMouse,
@@ -332,9 +329,19 @@ class TestFocusManager(unittest.TestCase):
 					followNavigatorObject=param.followNavigatorObject,
 				)
 
-				with patch(
-					"_magnifier.utils.focusManager.getFollowState",
-					side_effect=followStateSideEffect,
+				with (
+					patch(
+						"_magnifier.utils.focusManager.getFollowState",
+						side_effect=followStateSideEffect,
+					),
+					patch(
+						"_magnifier.utils.focusManager.winUser.getAsyncKeyState",
+						side_effect=lambda _key: -1 if param.leftPressed else 0,
+					),
+					patch(
+						"_magnifier.utils.focusManager.winUser.getCursorPos",
+						return_value=param.mousePos,
+					),
 				):
 					# Execute
 					focusCoordinates = self.focusManager.getCurrentFocusCoordinates()
@@ -368,7 +375,6 @@ class TestFollowSettings(unittest.TestCase):
 		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
 		self.focusManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
 		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
-		winUser.getAsyncKeyState = MagicMock(return_value=0)
 
 		followStateSideEffect = _makeFollowStateSideEffect(
 			followMouse=followMouse,
@@ -377,9 +383,12 @@ class TestFollowSettings(unittest.TestCase):
 			followNavigatorObject=followNavigatorObject,
 		)
 
-		with patch(
-			"_magnifier.utils.focusManager.getFollowState",
-			side_effect=followStateSideEffect,
+		with (
+			patch(
+				"_magnifier.utils.focusManager.getFollowState",
+				side_effect=followStateSideEffect,
+			),
+			patch("_magnifier.utils.focusManager.winUser.getAsyncKeyState", return_value=0),
 		):
 			return self.focusManager.getCurrentFocusCoordinates()
 
@@ -433,7 +442,6 @@ class TestFollowSettings(unittest.TestCase):
 		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
 		self.focusManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
 		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
-		winUser.getAsyncKeyState = MagicMock(return_value=0)
 
 		followEnabledSideEffect = _makeFollowStateSideEffect(
 			followMouse=True,
@@ -441,9 +449,12 @@ class TestFollowSettings(unittest.TestCase):
 			followReview=True,
 			followNavigatorObject=True,
 		)
-		with patch(
-			"_magnifier.utils.focusManager.getFollowState",
-			side_effect=followEnabledSideEffect,
+		with (
+			patch(
+				"_magnifier.utils.focusManager.getFollowState",
+				side_effect=followEnabledSideEffect,
+			),
+			patch("_magnifier.utils.focusManager.winUser.getAsyncKeyState", return_value=0),
 		):
 			coords = self.focusManager.getCurrentFocusCoordinates()
 		self.assertEqual(coords, Coordinates(10, 10))
@@ -459,9 +470,12 @@ class TestFollowSettings(unittest.TestCase):
 			followReview=False,
 			followNavigatorObject=False,
 		)
-		with patch(
-			"_magnifier.utils.focusManager.getFollowState",
-			side_effect=followDisabledSideEffect,
+		with (
+			patch(
+				"_magnifier.utils.focusManager.getFollowState",
+				side_effect=followDisabledSideEffect,
+			),
+			patch("_magnifier.utils.focusManager.winUser.getAsyncKeyState", return_value=0),
 		):
 			coords = self.focusManager.getCurrentFocusCoordinates()
 
@@ -474,7 +488,6 @@ class TestFollowSettings(unittest.TestCase):
 		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
 		self.focusManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
 		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
-		winUser.getAsyncKeyState = MagicMock(return_value=-1)
 
 		followStateSideEffect = _makeFollowStateSideEffect(
 			followMouse=True,
@@ -483,9 +496,12 @@ class TestFollowSettings(unittest.TestCase):
 			followNavigatorObject=True,
 		)
 
-		with patch(
-			"_magnifier.utils.focusManager.getFollowState",
-			side_effect=followStateSideEffect,
+		with (
+			patch(
+				"_magnifier.utils.focusManager.getFollowState",
+				side_effect=followStateSideEffect,
+			),
+			patch("_magnifier.utils.focusManager.winUser.getAsyncKeyState", return_value=-1),
 		):
 			coords = self.focusManager.getCurrentFocusCoordinates()
 
@@ -506,7 +522,6 @@ class TestFollowSettings(unittest.TestCase):
 		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
 		self.focusManager._getReviewPosition = MagicMock(return_value=None)
 		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
-		winUser.getAsyncKeyState = MagicMock(return_value=0)
 
 		followStateSideEffect = _makeFollowStateSideEffect(
 			followMouse=False,
@@ -515,9 +530,12 @@ class TestFollowSettings(unittest.TestCase):
 			followNavigatorObject=True,
 		)
 
-		with patch(
-			"_magnifier.utils.focusManager.getFollowState",
-			side_effect=followStateSideEffect,
+		with (
+			patch(
+				"_magnifier.utils.focusManager.getFollowState",
+				side_effect=followStateSideEffect,
+			),
+			patch("_magnifier.utils.focusManager.winUser.getAsyncKeyState", return_value=0),
 		):
 			coords = self.focusManager.getCurrentFocusCoordinates()
 
@@ -537,7 +555,6 @@ class TestFollowSettings(unittest.TestCase):
 		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
 		self.focusManager._getReviewPosition = MagicMock(return_value=None)
 		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
-		winUser.getAsyncKeyState = MagicMock(return_value=0)
 
 		followStateSideEffect = _makeFollowStateSideEffect(
 			followMouse=False,
@@ -546,9 +563,12 @@ class TestFollowSettings(unittest.TestCase):
 			followNavigatorObject=True,
 		)
 
-		with patch(
-			"_magnifier.utils.focusManager.getFollowState",
-			side_effect=followStateSideEffect,
+		with (
+			patch(
+				"_magnifier.utils.focusManager.getFollowState",
+				side_effect=followStateSideEffect,
+			),
+			patch("_magnifier.utils.focusManager.winUser.getAsyncKeyState", return_value=0),
 		):
 			coords = self.focusManager.getCurrentFocusCoordinates()
 
@@ -568,7 +588,6 @@ class TestFollowSettings(unittest.TestCase):
 		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
 		self.focusManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
 		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
-		winUser.getAsyncKeyState = MagicMock(return_value=0)
 
 		followStateSideEffect = _makeFollowStateSideEffect(
 			followMouse=False,
@@ -577,9 +596,12 @@ class TestFollowSettings(unittest.TestCase):
 			followNavigatorObject=True,
 		)
 
-		with patch(
-			"_magnifier.utils.focusManager.getFollowState",
-			side_effect=followStateSideEffect,
+		with (
+			patch(
+				"_magnifier.utils.focusManager.getFollowState",
+				side_effect=followStateSideEffect,
+			),
+			patch("_magnifier.utils.focusManager.winUser.getAsyncKeyState", return_value=0),
 		):
 			coords = self.focusManager.getCurrentFocusCoordinates()
 
