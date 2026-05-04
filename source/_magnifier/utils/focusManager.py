@@ -59,11 +59,7 @@ class FocusManager:
 		systemFocusPosition = self._getSystemFocusPosition()
 		reviewPosition = self._getReviewPosition()
 		navigatorPosition = self._getNavigatorObjectPosition()
-		isClickPressed = (
-			winUser.getAsyncKeyState(winUser.VK_LBUTTON) < 0
-			or winUser.getAsyncKeyState(winUser.VK_RBUTTON) < 0
-			or winUser.getAsyncKeyState(winUser.VK_MBUTTON) < 0
-		)
+		isClickPressed = winUser.getAsyncKeyState(winUser.VK_LBUTTON) < 0
 
 		# Cache settings once — each call reads from config.conf
 		isFollowMouse = getFollowState(MagnifierFollowFocusType.MOUSE)
@@ -207,8 +203,8 @@ class FocusManager:
 				if coords != Coordinates(0, 0):
 					self._lastValidReviewPosition = coords
 				return coords
-			except (NotImplementedError, LookupError, AttributeError, COMError):
-				# Review position may not support pointAtStart
+			except (NotImplementedError, LookupError, AttributeError, COMError, RuntimeError):
+				# Review position may not support pointAtStart, or COM object may not be IAccessible
 				pass
 		return None
 
@@ -222,7 +218,7 @@ class FocusManager:
 		"""
 		try:
 			return textInfo.pointAtStart
-		except (NotImplementedError, LookupError, AttributeError, COMError) as e:
+		except (NotImplementedError, LookupError, AttributeError, COMError, RuntimeError) as e:
 			log.debug(f"pointAtStart failed for {textInfo!r}: {e}", exc_info=True)
 			originalExc = e
 
