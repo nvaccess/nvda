@@ -341,7 +341,10 @@ class Math(Ia2Web):
 
 			langAttr = f' xml:lang="{self.language}"' if self.language else ""
 			mathMl = f"<math{langAttr}>{mathAttr}</math>"
-			log.debug(f"Got MathML from IA2 math attribute: {mathMl!r}")
+			log.debug(
+				f"Got MathML from IA2 math attribute (length {len(mathMl)}): "
+				f"{mathMl[:100]!r}{'...' if len(mathMl) > 100 else ''}",
+			)
 			return mathMl
 
 		from comtypes.gen.ISimpleDOM import ISimpleDOMNode  # type: ignore[reportMissingImports]
