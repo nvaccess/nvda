@@ -340,7 +340,9 @@ class Math(Ia2Web):
 			mathAttr = re.sub(r"<!--.*?-->", "", mathAttr, flags=re.DOTALL)
 
 			langAttr = f' xml:lang="{self.language}"' if self.language else ""
-			return f"<math{langAttr}>{mathAttr}</math>"
+			mathMl = f"<math{langAttr}>{mathAttr}</math>"
+			log.debug(f"Got MathML from IA2 math attribute: {mathMl!r}")
+			return mathMl
 
 		from comtypes.gen.ISimpleDOM import ISimpleDOMNode  # type: ignore[reportMissingImports]
 
