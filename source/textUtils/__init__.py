@@ -602,7 +602,7 @@ class WordSegmenter:
 		self.wordSegFlag: WordSegFlag = wordSegFlag
 		self.strategy: wordSegStrategy.WordSegmentationStrategy = self._chooseStrategy()
 
-	def _chooseStrategy(self) -> wordSegStrategy.WordSegmentationStrategy:  # TODO: optimize
+	def _chooseStrategy(self) -> wordSegStrategy.WordSegmentationStrategy:  # TODO: Limit regex scans for large text.
 		"""Choose the appropriate segmentation strategy based on the text content."""
 		if self.wordSegFlag == WordSegFlag.AUTO:
 			if (
@@ -627,6 +627,7 @@ class WordSegmenter:
 						return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 				case _:
 					return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
+		return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 
 	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
 		"""Get the segment containing the given offset."""

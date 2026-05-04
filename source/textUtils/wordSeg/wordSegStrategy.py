@@ -4,12 +4,12 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import os
-import ctypes
 from ctypes import (
 	c_bool,
 	c_char_p,
 	c_int,
 	create_string_buffer,
+	cdll,
 	POINTER,
 	byref,
 )
@@ -122,8 +122,8 @@ class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
 
 		helperFunc = NVDAHelper.localLib.calculateWordOffsets
 
-		relStart = ctypes.c_int()
-		relEnd = ctypes.c_int()
+		relStart = c_int()
+		relEnd = c_int()
 		# uniscribe does some strange things
 		# when you give it a string  with not more than two alphanumeric chars in a row.
 		# Inject two alphanumeric characters at the end to fix this
@@ -139,8 +139,8 @@ class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
 			uniscribeLineText,
 			uniscribeLineLength,
 			relOffset,
-			ctypes.byref(relStart),
-			ctypes.byref(relEnd),
+			byref(relStart),
+			byref(relEnd),
 		):
 			relStart = relStart.value
 			relEnd = min(lineLength, relEnd.value)
@@ -163,7 +163,7 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 
 	@classmethod
 	@initializerRegistry
-	def _initCppJieba(cls, forceInit: bool = False):  # TODO: make cppjieba alternative
+	def _initCppJieba(cls, forceInit: bool = False):  # TODO: Add a fallback when cppjieba.dll is unavailable.
 		"""
 		Class-level initializer: attempts to load the versioned cppjieba library and
 		set up ctypes signatures.
@@ -187,7 +187,7 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			from NVDAState import ReadPaths
 
 			lib_path = os.path.join(ReadPaths.coreArchLibPath, "cppjieba.dll")
-			cls._lib = ctypes.cdll.LoadLibrary(lib_path)
+			cls._lib = cdll.LoadLibrary(lib_path)
 
 			# Setup function signatures
 			# bool initJieba(const char* dictDir)
@@ -226,9 +226,9 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			cls._lib = None
 
 	@lru_cache(maxsize=256)
-	def _callCppjiebaCached(self, text_utf8: bytes) -> list[int] | None:
+	def _callCppjiebaCached(self, text_utf8: bytes) -> list[int]:
 		if self._lib is None:
-			return None
+			return []
 
 		charPtr = POINTER(c_int)()
 		outLen = c_int(0)
@@ -236,7 +236,7 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 		try:
 			success: bool = self._lib.calculateWordOffsets(text_utf8, byref(charPtr), byref(outLen))
 			if not success or not bool(charPtr) or outLen.value <= 0:
-				return None
+				return []
 
 			try:
 				n = outLen.value
@@ -249,14 +249,14 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			try:
 				if bool(charPtr):
 					self._lib.freeOffsets(charPtr)
-			except Exception:
-				pass
-			return None
+			except Exception as cleanupErr:
+				log.debugWarning("Failed to free cppjieba offsets after error: %s", cleanupErr)
+			return []
 
-	def _callCPPJieba(self) -> list[int] | None:
+	def _callCPPJieba(self) -> list[int]:
 		"""
 		Instance method: encode self.text and call cppjieba.
-		Returns list[int] on success, None on failure.
+		Returns list[int] on success, or an empty list on failure.
 		Uses LRU cache keyed by utf-8 bytes.
 		"""
 		data = self.text.encode("utf-8")
@@ -265,14 +265,14 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			return self._callCppjiebaCached(data)
 		else:
 			if self._lib is None:
-				return None
+				return []
 
 			charPtr = POINTER(c_int)()
 			outLen = c_int(0)
 			try:
 				success: bool = self._lib.calculateWordOffsets(data, byref(charPtr), byref(outLen))
 				if not success or not bool(charPtr) or outLen.value <= 0:
-					return None
+					return []
 
 				try:
 					n = outLen.value
@@ -284,9 +284,9 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 				try:
 					if bool(charPtr):
 						self._lib.freeOffsets(charPtr)
-				except Exception:
-					pass
-				return None
+				except Exception as cleanupErr:
+					log.debugWarning("Failed to free cppjieba offsets after error: %s", cleanupErr)
+				return []
 
 	def segmentedText(self, sep: str = " ", newSepIndex: list[int] | None = None) -> str:
 		"""Segments the text using the word end indices."""
@@ -321,9 +321,8 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 				result += sep
 				if newSepIndex is not None:
 					newSepIndex.append(len(result) - len(sep))
-		else:
-			# append the final trailing token after the loop
-			result += self.text[curIndex:postIndex]
+		# append the final trailing token after the loop
+		result += self.text[curIndex:postIndex]
 
 		return result
 

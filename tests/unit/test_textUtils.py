@@ -486,7 +486,7 @@ class TestChineseWordSegmentationInitialization(unittest.TestCase):
 		try:
 			with (
 				patch.object(ChineseWordSegmentationStrategy, "isUsingRelatedLanguage", return_value=False),
-				patch("textUtils.wordSeg.wordSegStrategy.ctypes.cdll.LoadLibrary") as loadLibrary,
+				patch("textUtils.wordSeg.wordSegStrategy.cdll.LoadLibrary") as loadLibrary,
 			):
 				ChineseWordSegmentationStrategy._initCppJieba()
 
@@ -505,7 +505,7 @@ class TestChineseWordSegmentationInitialization(unittest.TestCase):
 		try:
 			with (
 				patch.object(ChineseWordSegmentationStrategy, "isUsingRelatedLanguage", return_value=False),
-				patch("textUtils.wordSeg.wordSegStrategy.ctypes.cdll.LoadLibrary", return_value=mockDll) as loadLibrary,
+				patch("textUtils.wordSeg.wordSegStrategy.cdll.LoadLibrary", return_value=mockDll) as loadLibrary,
 			):
 				ChineseWordSegmentationStrategy._initCppJieba()
 
@@ -525,7 +525,7 @@ class TestChineseWordSegmentationInitialization(unittest.TestCase):
 		try:
 			with (
 				patch.object(ChineseWordSegmentationStrategy, "isUsingRelatedLanguage", return_value=False),
-				patch("textUtils.wordSeg.wordSegStrategy.ctypes.cdll.LoadLibrary", return_value=mockDll) as loadLibrary,
+				patch("textUtils.wordSeg.wordSegStrategy.cdll.LoadLibrary", return_value=mockDll) as loadLibrary,
 			):
 				ChineseWordSegmentationStrategy._initCppJieba(forceInit=True)
 
@@ -559,3 +559,99 @@ class TestWordSegmenter(unittest.TestCase):
 		self.assertEqual(segmenter.getSegmentForOffset(2), (2, 4))
 		self.assertEqual(segmenter.getSegmentForOffset(3), (2, 4))
 		self.assertEqual(segmenter.getSegmentForOffset(4), (2, 4))
+
+	def test_chineseSegmentationFailureStoresEmptyWordEnds(self):
+		from textUtils.wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
+
+		mockDll = SimpleNamespace(
+			calculateWordOffsets=Mock(return_value=False),
+			freeOffsets=Mock(),
+		)
+		originalLib = ChineseWordSegmentationStrategy._lib
+		ChineseWordSegmentationStrategy._lib = mockDll
+		try:
+			strategy = ChineseWordSegmentationStrategy("你好世界")
+			self.assertEqual(strategy.wordEnds, [])
+			self.assertEqual(strategy.segmentedText(), "你好世界")
+		finally:
+			ChineseWordSegmentationStrategy._lib = originalLib
+
+
+class TestWordSegInitialize(unittest.TestCase):
+	def test_runsAllRegisteredInitializers(self):
+		from textUtils import wordSeg
+		from textUtils.wordSeg import wordSegStrategy
+
+		calls = []
+
+		def firstInitializer():
+			calls.append("first")
+
+		def secondInitializer():
+			calls.append("second")
+
+		class ImmediateThread:
+			def __init__(self, target, args=None, kwargs=None, daemon=False):
+				self.target = target
+				self.args = () if args is None else args
+				self.kwargs = {} if kwargs is None else kwargs
+				self.daemon = daemon
+
+			def start(self):
+				self.target(*self.args, **self.kwargs)
+
+		initializerList = [
+			("missingModule", "firstInitializer", firstInitializer, (), {}),
+			("missingModule", "secondInitializer", secondInitializer, (), {}),
+		]
+		with (
+			patch.object(wordSegStrategy, "initializerList", initializerList),
+			patch("threading.Thread", ImmediateThread),
+		):
+			wordSeg.initialize()
+
+		self.assertEqual(calls, ["first", "second"])
+
+
+class TestWordSegWithSeparatorOffsetConverter(unittest.TestCase):
+	def _makeConverter(self):
+		from textUtils.wordSeg.wordSegUtils import WordSegWithSeparatorOffsetConverter
+
+		def segmentedText(sep, newSepIndex):
+			newSepIndex.append(2)
+			return "ab cd"
+
+		with patch(
+			"textUtils.wordSeg.wordSegUtils.WordSegmenter",
+			return_value=SimpleNamespace(segmentedText=segmentedText),
+		):
+			return WordSegWithSeparatorOffsetConverter("abcd")
+
+	def test_strToEncodedOffsetsMapsEndAndClampsOutOfRange(self):
+		converter = self._makeConverter()
+
+		self.assertEqual(converter.strToEncodedOffsets(-1), 0)
+		self.assertEqual(converter.strToEncodedOffsets(2, 4), (3, 5))
+		self.assertEqual(converter.strToEncodedOffsets(4), 5)
+		self.assertEqual(converter.strToEncodedOffsets(5, 6), (5, 5))
+
+	def test_strToEncodedOffsetsRaisesOnOutOfRangeWhenRequested(self):
+		converter = self._makeConverter()
+
+		with self.assertRaises(IndexError):
+			converter.strToEncodedOffsets(5, raiseOnError=True)
+
+	def test_encodedToStrOffsetsMapsEndAndClampsOutOfRange(self):
+		converter = self._makeConverter()
+
+		self.assertEqual(converter.encodedToStrOffsets(-1), 0)
+		self.assertEqual(converter.encodedToStrOffsets(2), 2)
+		self.assertEqual(converter.encodedToStrOffsets(2, 3), (2, 2))
+		self.assertEqual(converter.encodedToStrOffsets(5), 4)
+		self.assertEqual(converter.encodedToStrOffsets(6, 7), (4, 4))
+
+	def test_encodedToStrOffsetsRaisesOnOutOfRangeWhenRequested(self):
+		converter = self._makeConverter()
+
+		with self.assertRaises(IndexError):
+			converter.encodedToStrOffsets(6, raiseOnError=True)
