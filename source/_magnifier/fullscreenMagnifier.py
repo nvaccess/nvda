@@ -234,9 +234,9 @@ class FullScreenMagnifier(Magnifier):
 		Skips if a mouse button is currently pressed to avoid interfering with clicks.
 		"""
 		if (
-			winUser.getKeyState(winUser.VK_LBUTTON) < 0
-			or winUser.getKeyState(winUser.VK_RBUTTON) < 0
-			or winUser.getKeyState(winUser.VK_MBUTTON) < 0
+			winUser.getAsyncKeyState(winUser.VK_LBUTTON) < 0
+			or winUser.getAsyncKeyState(winUser.VK_RBUTTON) < 0
+			or winUser.getAsyncKeyState(winUser.VK_MBUTTON) < 0
 		):
 			log.debug("Mouse button pressed, skipping cursor repositioning to avoid interfering with click")
 			return

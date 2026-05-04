@@ -12,7 +12,6 @@ from comtypes import COMError
 from logHandler import log
 import api
 import winUser
-import mouseHandler
 import time
 import locationHelper
 import textInfos
@@ -60,7 +59,11 @@ class FocusManager:
 		systemFocusPosition = self._getSystemFocusPosition()
 		reviewPosition = self._getReviewPosition()
 		navigatorPosition = self._getNavigatorObjectPosition()
-		isClickPressed = mouseHandler.isLeftMouseButtonLocked()
+		isClickPressed = (
+			winUser.getAsyncKeyState(winUser.VK_LBUTTON) < 0
+			or winUser.getAsyncKeyState(winUser.VK_RBUTTON) < 0
+			or winUser.getAsyncKeyState(winUser.VK_MBUTTON) < 0
+		)
 
 		# Cache settings once — each call reads from config.conf
 		isFollowMouse = getFollowState(MagnifierFollowFocusType.MOUSE)

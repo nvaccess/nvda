@@ -8,7 +8,6 @@ from _magnifier.utils.focusManager import FocusManager
 from _magnifier.utils.types import Coordinates, MagnifierFollowFocusType
 import unittest
 from unittest.mock import MagicMock, Mock, patch
-import mouseHandler
 import winUser
 import _ctypes
 
@@ -323,7 +322,7 @@ class TestFocusManager(unittest.TestCase):
 				)
 				self.focusManager._getSystemFocusPosition = MagicMock(return_value=param.systemFocusPos)
 				self.focusManager._getReviewPosition = MagicMock(return_value=param.reviewPos)
-				mouseHandler.isLeftMouseButtonLocked = MagicMock(return_value=param.leftPressed)
+				winUser.getAsyncKeyState = MagicMock(side_effect=lambda _key: -1 if param.leftPressed else 0)
 				winUser.getCursorPos = MagicMock(return_value=param.mousePos)
 
 				followStateSideEffect = _makeFollowStateSideEffect(
@@ -369,7 +368,7 @@ class TestFollowSettings(unittest.TestCase):
 		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
 		self.focusManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
 		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
-		mouseHandler.isLeftMouseButtonLocked = MagicMock(return_value=False)
+		winUser.getAsyncKeyState = MagicMock(return_value=0)
 
 		followStateSideEffect = _makeFollowStateSideEffect(
 			followMouse=followMouse,
@@ -434,7 +433,7 @@ class TestFollowSettings(unittest.TestCase):
 		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
 		self.focusManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
 		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
-		mouseHandler.isLeftMouseButtonLocked = MagicMock(return_value=False)
+		winUser.getAsyncKeyState = MagicMock(return_value=0)
 
 		followEnabledSideEffect = _makeFollowStateSideEffect(
 			followMouse=True,
@@ -475,7 +474,7 @@ class TestFollowSettings(unittest.TestCase):
 		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
 		self.focusManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
 		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
-		mouseHandler.isLeftMouseButtonLocked = MagicMock(return_value=True)
+		winUser.getAsyncKeyState = MagicMock(return_value=-1)
 
 		followStateSideEffect = _makeFollowStateSideEffect(
 			followMouse=True,
@@ -507,7 +506,7 @@ class TestFollowSettings(unittest.TestCase):
 		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
 		self.focusManager._getReviewPosition = MagicMock(return_value=None)
 		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
-		mouseHandler.isLeftMouseButtonLocked = MagicMock(return_value=False)
+		winUser.getAsyncKeyState = MagicMock(return_value=0)
 
 		followStateSideEffect = _makeFollowStateSideEffect(
 			followMouse=False,
@@ -538,7 +537,7 @@ class TestFollowSettings(unittest.TestCase):
 		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
 		self.focusManager._getReviewPosition = MagicMock(return_value=None)
 		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
-		mouseHandler.isLeftMouseButtonLocked = MagicMock(return_value=False)
+		winUser.getAsyncKeyState = MagicMock(return_value=0)
 
 		followStateSideEffect = _makeFollowStateSideEffect(
 			followMouse=False,
@@ -569,7 +568,7 @@ class TestFollowSettings(unittest.TestCase):
 		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
 		self.focusManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
 		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
-		mouseHandler.isLeftMouseButtonLocked = MagicMock(return_value=False)
+		winUser.getAsyncKeyState = MagicMock(return_value=0)
 
 		followStateSideEffect = _makeFollowStateSideEffect(
 			followMouse=False,
