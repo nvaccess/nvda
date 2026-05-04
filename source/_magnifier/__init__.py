@@ -20,11 +20,11 @@ _magnifier: "Magnifier | None" = None
 
 def createMagnifier(magnifiedView: MagnifiedView) -> "Magnifier":
 	"""
-	Create a magnifier instance based on the specified type.
+	Create a magnifier instance based on the specified view.
 
-	:param magnifiedView: The type of magnifier to create
+	:param magnifiedView: The magnifier view to create
 	:return: The created magnifier instance
-	:raises ValueError: If the magnifier type is not supported
+	:raises ValueError: If the magnifier view is not supported
 	"""
 
 	match magnifiedView:
@@ -49,14 +49,14 @@ def createMagnifier(magnifiedView: MagnifiedView) -> "Magnifier":
 			return LensMagnifier()
 
 		case _:
-			raise ValueError(f"Unsupported magnifier type: {MagnifiedView}")
+			raise ValueError(f"Unsupported magnifier view: {MagnifiedView}")
 
 
 def _setMagnifiedView(magnifiedView: MagnifiedView) -> None:
 	"""
-	Set the magnifier type, stopping the current one if active and creating a new instance.
+	Set the magnifier view, stopping the current one if active and creating a new instance.
 
-	:param magnifiedView: The type of magnifier to set
+	:param magnifiedView: The magnifier view to set
 	"""
 	global _magnifier
 
@@ -70,7 +70,7 @@ def _setMagnifiedView(magnifiedView: MagnifiedView) -> None:
 
 def initialize() -> None:
 	"""
-	Initialize the magnifier module with the default magnifier type from config.
+	Initialize the magnifier module with the default magnifier view from config.
 	"""
 	magnifiedView = getMagnifiedView()
 	_setMagnifiedView(magnifiedView)
@@ -89,15 +89,15 @@ def isActive() -> bool:
 
 def changeMagnifiedView(magnifiedView: MagnifiedView) -> None:
 	"""
-	Change the magnifier type at runtime.
-	Stops the current magnifier and starts a new one of the specified type.
+	Change the magnifier view at runtime.
+	Stops the current magnifier and starts a new one of the specified view.
 
-	:param magnifiedView: The new magnifier type to use
+	:param magnifiedView: The new magnifier view to use
 	:raises RuntimeError: If no magnifier is currently active
 	"""
 	global _magnifier
 	if not _magnifier or not _magnifier._isActive:
-		raise RuntimeError("Cannot change magnifier type: magnifier is not active")
+		raise RuntimeError("Cannot change magnifier view: magnifier is not active")
 
 	_setMagnifiedView(magnifiedView)
 	_magnifier._startMagnifier()

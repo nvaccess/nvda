@@ -12,6 +12,8 @@ from .utils.types import MagnifiedView
 
 
 class DockedMagnifier(Magnifier):
+	"""Displays a magnified panel anchored to one edge of the screen."""
+
 	def __init__(self):
 		super().__init__()
 		self._magnifiedView = MagnifiedView.DOCKED

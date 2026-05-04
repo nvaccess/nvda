@@ -123,18 +123,18 @@ def setFilter(filter: Filter) -> None:
 
 def getMagnifiedView() -> MagnifiedView:
 	"""
-	Get magnifier type from config.
+	Get magnifier view from config.
 
-	:return: The magnifier type.
+	:return: The magnifier view.
 	"""
 	return MagnifiedView(config.conf["magnifier"]["magnifiedView"])
 
 
 def setMagnifiedView(magnifiedView: MagnifiedView) -> None:
 	"""
-	Set magnifier type from settings.
+	Set magnifier view in settings.
 
-	:param magnifiedView: The magnifier type to set.
+	:param magnifiedView: The magnifier view to set.
 	"""
 	config.conf["magnifier"]["magnifiedView"] = magnifiedView.value
 

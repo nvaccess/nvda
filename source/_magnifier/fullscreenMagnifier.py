@@ -29,6 +29,8 @@ from .utils.errorHandling import trackNativeMagnifierErrors
 
 
 class FullScreenMagnifier(Magnifier):
+	"""Magnifier that uses the Windows Magnification API to magnify the entire screen."""
+
 	_MAX_RECOVERY_ATTEMPTS: int = 3
 
 	def __init__(self):

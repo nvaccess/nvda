@@ -113,9 +113,9 @@ def toggleMagnifier() -> None:
 			msg = pgettext(
 				"magnifier",
 				# Translators: Message announced when starting the NVDA magnifier.
-				"Starting {MagnifiedView} magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
+				"Starting {magnifiedView} magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
 			).format(
-				MagnifiedView=magnifiedView.displayString,
+				magnifiedView=magnifiedView.displayString,
 				zoomLevel=zoomLevel,
 				filter=filter.displayString,
 				fullscreenMode=fullscreenMode.displayString,
@@ -124,9 +124,9 @@ def toggleMagnifier() -> None:
 			msg = pgettext(
 				"magnifier",
 				# Translators: Message announced when starting the NVDA magnifier.
-				"Starting {MagnifiedView} magnifier with {zoomLevel} zoom level and {filter} filter",
+				"Starting {magnifiedView} magnifier with {zoomLevel} zoom level and {filter} filter",
 			).format(
-				MagnifiedView=magnifiedView.displayString,
+				magnifiedView=magnifiedView.displayString,
 				zoomLevel=zoomLevel,
 				filter=filter.displayString,
 			)
@@ -199,35 +199,27 @@ def toggleFilter() -> None:
 		)
 
 
-_CYCLING_MAGNIFIER_TYPES = [
-	MagnifiedView.FULLSCREEN,
-	MagnifiedView.FIXED,
-	MagnifiedView.DOCKED,
-	MagnifiedView.LENS,
-]
-
-
 def cycleMagnifiedView() -> None:
-	"""Cycle through magnifier types (full-screen, fixed, docked, lens)"""
+	"""Cycle through magnifier views (full-screen, fixed, docked, lens)"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
 		magnifier,
-		MagnifierAction.CHANGE_MAGNIFIER_TYPE,
+		MagnifierAction.CHANGE_MAGNIFIER_VIEW,
 	):
-		types = _CYCLING_MAGNIFIER_TYPES
-		currentType = magnifier._magnifiedView
-		idx = types.index(currentType)
-		newType = types[(idx + 1) % len(types)]
-		log.debug(f"Changing magnifier type from {currentType} to {newType}")
-		changeMagnifiedView(newType)
-		setMagnifiedView(newType)
+		views = list(MagnifiedView)
+		currentView = magnifier._magnifiedView
+		idx = views.index(currentView)
+		newView = views[(idx + 1) % len(views)]
+		log.debug(f"Changing magnifier view from {currentView} to {newView}")
+		changeMagnifiedView(newView)
+		setMagnifiedView(newView)
 		magnifier = getMagnifier()
 		ui.message(
 			pgettext(
 				"magnifier",
-				# Translators: Message announced when changing the magnifier type with {type} being the new magnifier type.
-				"Magnifier type changed to {type}",
-			).format(type=magnifier._magnifiedView.displayString),
+				# Translators: Message announced when changing the magnifier view with {view} being the new magnifier view.
+				"Magnifier view changed to {view}",
+			).format(view=magnifier._magnifiedView.displayString),
 		)
 
 
