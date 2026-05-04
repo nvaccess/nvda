@@ -1,15 +1,38 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2026 NV Access Limited, Christopher Pross
+# Copyright (C) 2026 NV Access Limited, Christopher Pross, Cary-rowen
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Unit tests for the addonStore.network module."""
 
+from concurrent.futures import Future
+from typing import Any
 import unittest
 from unittest.mock import patch, MagicMock
 
 from addonStore.network import AddonFileDownloader
 from NVDAState import WritePaths
+
+
+def _makeAddonData() -> MagicMock:
+	addonData = MagicMock()
+	addonData.model.addonId = "testAddon"
+	addonData.model.tempDownloadPath = r"C:\temp\testAddon.download"
+	return addonData
+
+
+class _FakeExecutor:
+	def __init__(self) -> None:
+		self.submitCalls: list[tuple[Any, tuple[Any, ...], dict[str, Any], Future[Any]]] = []
+		self.shutdownCalls: list[bool] = []
+
+	def submit(self, fn: Any, *args: Any, **kwargs: Any) -> Future[Any]:
+		future: Future[Any] = Future()
+		self.submitCalls.append((fn, args, kwargs, future))
+		return future
+
+	def shutdown(self, wait: bool = False) -> None:
+		self.shutdownCalls.append(wait)
 
 
 class TestAddonFileDownloaderInit(unittest.TestCase):
@@ -169,3 +192,131 @@ class TestAddonFileDownloaderCancelAll(unittest.TestCase):
 		self._createDownloader()
 		self.downloader.cancelAll()
 		mockRmtree.assert_not_called()
+
+	@patch("addonStore.network.NVDAState.shouldWriteToDisk", return_value=False)
+	def test_cancelAll_whenExecutorAlreadyNone_doesNotCrash(
+		self,
+		mockShouldWrite: MagicMock,
+	) -> None:
+		"""cancelAll should tolerate being called after a previous cancelAll shut down the executor."""
+		self._createDownloader()
+		self.downloader.cancelAll()
+		self.downloader.cancelAll()
+		self.assertIsNone(self.downloader._executor)
+
+	@patch("addonStore.network.ThreadPoolExecutor")
+	@patch("addonStore.network.NVDAState.shouldWriteToDisk", return_value=False)
+	def test_downloadAfterCancelAll_recreatesExecutor(
+		self,
+		mockShouldWrite: MagicMock,
+		mockThreadPoolExecutor: MagicMock,
+	) -> None:
+		"""download should recreate the executor after cancelAll shuts it down."""
+		firstExecutor = _FakeExecutor()
+		secondExecutor = _FakeExecutor()
+		mockThreadPoolExecutor.side_effect = [firstExecutor, secondExecutor]
+		self.downloader = AddonFileDownloader()
+
+		self.downloader.cancelAll()
+		self.assertIsNone(self.downloader._executor)
+		self.assertEqual(firstExecutor.shutdownCalls, [False])
+
+		addonData = _makeAddonData()
+		self.downloader.download(addonData, MagicMock(), MagicMock())
+
+		self.assertIs(self.downloader._executor, secondExecutor)
+		self.assertEqual(len(secondExecutor.submitCalls), 1)
+		_, submitArgs, submitKwargs, future = secondExecutor.submitCalls[0]
+		tempDownloadPath = self.downloader._activeDownloadPaths[addonData]
+		self.assertEqual(submitArgs, (addonData, tempDownloadPath))
+		self.assertEqual(submitKwargs, {})
+		self.assertIs(self.downloader._pending[future].addonData, addonData)
+		self.assertEqual(self.downloader._pending[future].tempDownloadPath, tempDownloadPath)
+		self.assertEqual(self.downloader.progress[addonData], 0)
+
+	@patch("addonStore.network.ThreadPoolExecutor")
+	@patch("addonStore.network.NVDAState.shouldWriteToDisk", return_value=False)
+	def test_downloadAfterCancelAll_runningAttemptDoesNotReplaceNewAttemptState(
+		self,
+		mockShouldWrite: MagicMock,
+		mockThreadPoolExecutor: MagicMock,
+	) -> None:
+		"""A cancelled retry should keep the new attempt active until it finishes."""
+		firstExecutor = _FakeExecutor()
+		secondExecutor = _FakeExecutor()
+		mockThreadPoolExecutor.side_effect = [firstExecutor, secondExecutor]
+		self.downloader = AddonFileDownloader()
+
+		addonData = _makeAddonData()
+		onCompleteFirst = MagicMock()
+		onCompleteSecond = MagicMock()
+
+		self.downloader.download(addonData, onCompleteFirst, MagicMock())
+		_, _, _, firstFuture = firstExecutor.submitCalls[0]
+		firstFuture.set_running_or_notify_cancel()
+		firstTempDownloadPath = self.downloader._activeDownloadPaths[addonData]
+
+		self.downloader.cancelAll()
+		self.downloader.download(addonData, onCompleteSecond, MagicMock())
+		_, _, _, secondFuture = secondExecutor.submitCalls[0]
+		secondTempDownloadPath = self.downloader._activeDownloadPaths[addonData]
+
+		self.assertNotEqual(
+			firstTempDownloadPath,
+			secondTempDownloadPath,
+		)
+
+		firstFuture.set_result(None)
+
+		self.assertEqual(self.downloader._activeDownloadPaths[addonData], secondTempDownloadPath)
+		self.assertEqual(self.downloader.progress[addonData], 0)
+		self.assertNotIn(firstFuture, self.downloader._pending)
+		self.assertIn(secondFuture, self.downloader._pending)
+		onCompleteFirst.assert_not_called()
+
+	@patch("addonStore.network.ThreadPoolExecutor")
+	@patch("addonStore.network.NVDAState.shouldWriteToDisk", return_value=False)
+	def test_download_progressRemovalCancelsActiveAttempt(
+		self,
+		mockShouldWrite: MagicMock,
+		mockThreadPoolExecutor: MagicMock,
+	) -> None:
+		"""Removing progress should remain a cancellation signal for an active download."""
+		executor = _FakeExecutor()
+		mockThreadPoolExecutor.return_value = executor
+		self.downloader = AddonFileDownloader()
+		addonData = _makeAddonData()
+		onComplete = MagicMock()
+
+		self.downloader.download(addonData, onComplete, MagicMock())
+		_, _, _, future = executor.submitCalls[0]
+		self.downloader.progress.pop(addonData, None)
+
+		future.set_result(None)
+
+		self.assertNotIn(addonData, self.downloader._activeDownloadPaths)
+		self.assertNotIn(future, self.downloader._pending)
+		onComplete.assert_not_called()
+
+	@patch("addonStore.network.pathlib.Path.mkdir")
+	@patch("addonStore.network.os.path.exists", side_effect=[False, True, False])
+	@patch("addonStore.network.shutil.rmtree")
+	@patch("addonStore.network.ThreadPoolExecutor")
+	@patch("addonStore.network.NVDAState.shouldWriteToDisk", return_value=True)
+	def test_downloadAfterCancelAll_recreatesDownloadDirectory(
+		self,
+		mockShouldWrite: MagicMock,
+		mockThreadPoolExecutor: MagicMock,
+		mockRmtree: MagicMock,
+		mockExists: MagicMock,
+		mockMkdir: MagicMock,
+	) -> None:
+		"""download should recreate the download directory after cancelAll removes it."""
+		mockThreadPoolExecutor.side_effect = [_FakeExecutor(), _FakeExecutor()]
+		self.downloader = AddonFileDownloader()
+
+		self.downloader.cancelAll()
+		self.downloader.download(_makeAddonData(), MagicMock(), MagicMock())
+
+		self.assertEqual(mockMkdir.call_count, 2)
+		mockRmtree.assert_called_once_with(WritePaths.addonStoreDownloadDir)

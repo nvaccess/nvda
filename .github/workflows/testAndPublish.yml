@@ -278,7 +278,7 @@ jobs:
         name: Unit tests results (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: testOutput/unit/unitTests.xml
     - name: Publish unit test report
-      uses: mikepenz/action-junit-report@v5
+      uses: mikepenz/action-junit-report@v6
       if: ${{ failure() }}
       with:
         check_name: Unit tests (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
@@ -477,7 +477,7 @@ jobs:
           testOutput/install
           !testOutput/install/nvda_install_temp.log
     - name: Publish system test report
-      uses: mikepenz/action-junit-report@v5
+      uses: mikepenz/action-junit-report@v6
       if: ${{ failure() }}
       with:
         check_name: "System tests (${{ matrix.testSuite }}) (${{ matrix.runner }}, ${{ matrix.pythonVersion }}, ${{ matrix.arch }})"

@@ -9,6 +9,7 @@ Full-screen magnifier module.
 
 from logHandler import log
 import screenCurtain
+import speech
 import ui
 import winUser
 from winBindings import magnification
@@ -28,6 +29,8 @@ from .utils.errorHandling import trackNativeMagnifierErrors
 
 
 class FullScreenMagnifier(Magnifier):
+	_MAX_RECOVERY_ATTEMPTS: int = 3
+
 	def __init__(self):
 		super().__init__()
 		self._magnifiedView = MagnifiedView.FULLSCREEN
@@ -64,21 +67,46 @@ class FullScreenMagnifier(Magnifier):
 		log.debug(
 			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self._fullscreenMode}",
 		)
-		# Initialize Magnification API if not already initialized
-		self._initializeNativeMagnification()
+		try:
+			self._initializeNativeMagnification()
+		except OSError:
+			log.exception("Failed to initialize magnification API")
+			# _isActive is True from super(), so _stopMagnifier properly unregisters
+			self._stopMagnifier()
+			message = pgettext(
+				"magnifier",
+				# Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
+				"Cannot start magnifier. Another magnifier application may already be running.",
+			)
+			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
+			return
 
 		if self._isActive:
 			self._applyFilter()
 		self._startTimer(self._updateMagnifier)
 
-	@trackNativeMagnifierErrors
 	def _initializeNativeMagnification(self) -> None:
 		"""
-		Initialize the Magnification API.
-		If already initialized or on failure, continues anyway.
+		Initialize the Magnification API and verify it is fully usable.
+
+		Raises OSError if MagInitialize fails or if the initial fullscreen
+		transform fails (e.g. Windows Magnifier already holds the API). If
+		MagSetFullscreenTransform fails after a successful MagInitialize, this
+		method uninitializes the native magnification API before re-raising.
+		Failures from MagInitialize are propagated to the caller.
 		"""
 		magnification.MagInitialize()
 		log.debug("Magnification API initialized")
+		# Applying the first real update verifies the API is usable without
+		# briefly jumping the magnified view to the top-left corner.
+		try:
+			coordinates = self._getCoordinatesForMode(self._currentCoordinates)
+			# Save screen position for mode continuity, matching _doUpdate.
+			self._lastScreenPosition = coordinates
+			self._fullscreenMagnifier(coordinates)
+		except OSError:
+			self._uninitializeNativeMagnification()
+			raise
 
 	def _doUpdate(self):
 		"""
@@ -125,33 +153,34 @@ class FullScreenMagnifier(Magnifier):
 		Attempt to recover from repeated Magnification API errors by
 		reinitializing the API. If recovery fails, the magnifier is stopped.
 
-		Each step (uninitialize, initialize, apply filter, restart timer) is
-		controlled independently. If any critical step fails, recovery is aborted.
+		Capped at _MAX_RECOVERY_ATTEMPTS to prevent an infinite restart loop
+		when the API is permanently unavailable (e.g. Windows Magnifier running).
 		"""
-		log.info("Attempting full-screen magnifier recovery via API reinitialization")
+		self._recoveryAttempts += 1
+		if self._recoveryAttempts > self._MAX_RECOVERY_ATTEMPTS:
+			log.error(
+				f"Max recovery attempts ({self._MAX_RECOVERY_ATTEMPTS}) reached, stopping magnifier",
+			)
+			self._conductRecoveryFailure()
+			return
 
-		# Step 1: Uninitialize (best effort, may already be uninitialized)
+		log.info(
+			f"Attempting full-screen magnifier recovery "
+			f"(attempt {self._recoveryAttempts}/{self._MAX_RECOVERY_ATTEMPTS})",
+		)
+
 		self._uninitializeNativeMagnification()
 
-		# Step 2: Initialize (critical - raises on failure)
 		try:
-			magnification.MagInitialize()
-			log.debug("Magnification API initialized during recovery")
-		except OSError:
-			log.error("MagInitialize during recovery failed, aborting recovery", exc_info=True)
-			self._conductRecoveryFailure()
-			return
-
-		# Step 3: Apply filter (critical - raises on failure)
-		try:
+			# _initializeNativeMagnification also probes MagSetFullscreenTransform,
+			# which is the call that fails when Windows Magnifier is running.
+			self._initializeNativeMagnification()
 			magnification.MagSetFullscreenColorEffect(self._getFilterMatrix().value)
-			log.debug("Filter applied during recovery")
 		except OSError:
-			log.error("Failed to apply filter during recovery, aborting recovery", exc_info=True)
+			log.error("Recovery failed", exc_info=True)
 			self._conductRecoveryFailure()
 			return
 
-		# All steps succeeded
 		self._consecutiveErrors = 0
 		log.info("Full-screen magnifier recovery succeeded")
 		self._startTimer(self._updateMagnifier)
