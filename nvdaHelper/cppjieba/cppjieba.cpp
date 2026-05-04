@@ -15,7 +15,11 @@ JiebaSingleton* JiebaSingleton::instance = nullptr;
 std::once_flag JiebaSingleton::initFlag;
 
 JiebaSingleton& JiebaSingleton::getInstance(const char* dictDir) {
-    // convert incoming C-string+length to std::string (handles dictDir == nullptr)
+    if (!dictDir) {
+        throw std::invalid_argument("JiebaSingleton::getInstance() requires a non-null dictionary path.");
+    }
+
+    // convert incoming C-string to std::string before entering call_once
     std::string dir = dictDir;
 
     // ensure singleton is constructed exactly once
@@ -64,6 +68,8 @@ void JiebaSingleton::getWordEndOffsets(const std::string& text, std::vector<int>
 extern "C" {
 
 bool initJieba(const char* dictDir) {
+    if (!dictDir) return false;
+
     try {
         // simply force the singleton into existence
         (void)JiebaSingleton::getInstance(dictDir);
@@ -105,16 +111,34 @@ bool calculateWordOffsets(const char* text, int** wordEndOffsets, int* outLen) {
     }
 }
 
-bool insertUserWord(const char* word, int freq, const char* tag = cppjieba::UNKNOWN_TAG) {
-	return JiebaSingleton::getInstance().InsertUserWord(string(word), freq, string(tag));
+bool insertUserWord(const char* word, int freq, const char* tag) {
+    if (!word || !tag) return false;
+
+    try {
+        return JiebaSingleton::getInstance().InsertUserWord(string(word), freq, string(tag));
+    } catch (...) {
+        return false;
+    }
 }
 
-bool deleteUserWord(const char* word, const char* tag = cppjieba::UNKNOWN_TAG) {
-	return JiebaSingleton::getInstance().DeleteUserWord(string(word), string(tag));
+bool deleteUserWord(const char* word, const char* tag) {
+    if (!word || !tag) return false;
+
+    try {
+        return JiebaSingleton::getInstance().DeleteUserWord(string(word), string(tag));
+    } catch (...) {
+        return false;
+    }
 }
 
 bool find(const char* word) {
-	return JiebaSingleton::getInstance().Find(string(word));
+    if (!word) return false;
+
+    try {
+        return JiebaSingleton::getInstance().Find(string(word));
+    } catch (...) {
+        return false;
+    }
 }
 
 void freeOffsets(int* ptr) {
