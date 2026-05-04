@@ -171,7 +171,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			case config.featureFlagEnums.WordNavigationUnitFlag.CHINESE:
 				return WordSegFlag.CHINESE
 			case _:
-				log.error(f"Unknown word segmentation standard, {self.__wordSegConf.calculated()!r}")
+				log.error(f"Unknown word segmentation standard, {self.wordSegConf.calculated()!r}")
+				return None
 
 	#: The encoding internal to the underlying text info implementation.
 	encoding: Optional[str] = textUtils.WCHAR_ENCODING
