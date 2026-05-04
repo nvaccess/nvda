@@ -25,6 +25,7 @@ from comInterfaces import IAccessible2Lib as IA2
 import controlTypes
 from logHandler import log
 from documentBase import DocumentWithTableNavigation
+from IAccessibleHandler.utils import isMSAADebugLoggingEnabled
 from NVDAObjects.behaviors import Dialog, WebDialog
 from . import IAccessible, Groupbox
 from .ia2TextMozilla import MozillaCompoundTextInfo
