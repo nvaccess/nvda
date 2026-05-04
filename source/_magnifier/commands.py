@@ -17,7 +17,9 @@ from .config import (
 	getFullscreenMode,
 	ZoomLevel,
 	getFollowState,
+	setFilter,
 	setFollowState,
+	setFullscreenMode,
 	toggleAllFollowStates,
 )
 from .magnifier import Magnifier
@@ -171,11 +173,13 @@ def toggleFilter() -> None:
 		magnifier,
 		MagnifierAction.TOGGLE_FILTER,
 	):
+		assert isinstance(magnifier, FullScreenMagnifier)
 		filters = list(Filter)
 		idx = filters.index(magnifier.filterType)
 		magnifier.filterType = filters[(idx + 1) % len(filters)]
 		if magnifier._magnifierType == MagnifierType.FULLSCREEN:
 			magnifier._applyFilter()
+		setFilter(magnifier.filterType)
 		ui.message(
 			pgettext(
 				"magnifier",
@@ -255,12 +259,14 @@ def toggleFullscreenMode() -> None:
 			magnifier,
 			MagnifierAction.CHANGE_FULLSCREEN_MODE,
 		):
+			assert isinstance(magnifier, FullScreenMagnifier)
 			modes = list(FullScreenMode)
 			currentMode = magnifier._fullscreenMode
 			idx = modes.index(currentMode)
 			newMode = modes[(idx + 1) % len(modes)]
 			log.debug(f"Changing full-screen mode from {currentMode} to {newMode}")
 			magnifier._fullscreenMode = newMode
+			setFullscreenMode(newMode)
 			ui.message(
 				pgettext(
 					"magnifier",
