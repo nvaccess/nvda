@@ -40,6 +40,7 @@ import installer
 import keyboardHandler
 import languageHandler
 import logHandler
+from _magnifier.commands import toggleMagnifier
 import _magnifier.config as magnifierConfig
 from _magnifier.utils.types import Filter, FullScreenMode, MagnifierFollowFocusType
 import queueHandler
@@ -6035,6 +6036,17 @@ class MagnifierPanel(SettingsPanel):
 			sizer=settingsSizer,
 		)
 
+		# Enable the magnifier
+		# Translators: The label for a setting in magnifier settings to enable or disable the magnifier.
+		enableMagnifierText = _("&Enable magnifier (immediate effect)")
+		self.enableMagnifierCheckBox = sHelper.addItem(wx.CheckBox(self, label=enableMagnifierText))
+		self.bindHelpEvent(
+			"MagnifierEnable",
+			self.enableMagnifierCheckBox,
+		)
+		self.enableMagnifierCheckBox.Bind(wx.EVT_CHECKBOX, self.onEnableMagnifierChange)
+		self.enableMagnifierCheckBox.SetValue(magnifierConfig.getEnabled())
+
 		# ZOOM SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the zoom level.
 		zoomLabelText = _("&Zoom level:")
@@ -6052,7 +6064,7 @@ class MagnifierPanel(SettingsPanel):
 			self.zoomList,
 		)
 
-		# Set  value from config
+		# Set value from config
 		zoomLevel = magnifierConfig.getZoomLevel()
 		zoomIndex = bisect.bisect_left(zoomValues, zoomLevel)
 		# Find the closest value
@@ -6085,7 +6097,7 @@ class MagnifierPanel(SettingsPanel):
 
 		# FILTER SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the default filter
-		filterLabelText = _("&filter:")
+		filterLabelText = _("&Filter:")
 		filterChoices = [f.displayString for f in Filter]
 		self.filterList = sHelper.addLabeledControl(
 			filterLabelText,
@@ -6100,7 +6112,7 @@ class MagnifierPanel(SettingsPanel):
 
 		# FULLSCREEN MODE SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the full-screen mode
-		fullscreenModeLabelText = _("&fullscreen mode:")
+		fullscreenModeLabelText = _("F&ullscreen mode:")
 		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
 		self.fullscreenModeList = sHelper.addLabeledControl(
 			fullscreenModeLabelText,
@@ -6156,7 +6168,7 @@ class MagnifierPanel(SettingsPanel):
 
 		# KEEP MOUSE CENTERED
 		# Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
-		keepMouseCenteredText = _("Keep &mouse pointer centered in magnifier view")
+		keepMouseCenteredText = _("Keep mouse pointer &centered in magnifier view")
 		self.keepMouseCenteredCheckBox = sHelper.addItem(wx.CheckBox(self, label=keepMouseCenteredText))
 		self.bindHelpEvent(
 			"MagnifierKeepMouseCentered",
@@ -6166,6 +6178,8 @@ class MagnifierPanel(SettingsPanel):
 
 	def onSave(self):
 		"""Save the current selections to config."""
+		magnifierConfig.setEnabled(self.enableMagnifierCheckBox.GetValue())
+
 		selectedZoom = self.zoomList.GetSelection()
 		magnifierConfig.setZoomLevel(magnifierConfig.ZoomLevel.zoom_range()[selectedZoom])
 
@@ -6181,6 +6195,9 @@ class MagnifierPanel(SettingsPanel):
 		for focusType, checkBox in self._followFocusCheckBoxes.items():
 			magnifierConfig.setFollowState(focusType, checkBox.GetValue())
 		config.conf["magnifier"]["keepMouseCentered"] = self.keepMouseCenteredCheckBox.GetValue()
+
+	def onEnableMagnifierChange(self, evt: wx.CommandEvent):
+		toggleMagnifier()
 
 
 class PrivacyAndSecuritySettingsPanel(SettingsPanel):

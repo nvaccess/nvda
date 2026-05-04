@@ -10,15 +10,16 @@ Contains the command functions and their logic for keyboard shortcuts.
 
 from typing import Literal
 import ui
-from . import getMagnifier, initialize, terminate
+from . import getMagnifier, initialize, isActive, terminate
 from .config import (
 	getZoomLevelString,
 	getFilter,
-	getFullscreenMode,
-	ZoomLevel,
 	getFollowState,
+	getFullscreenMode,
+	setEnabled,
 	setFollowState,
 	toggleAllFollowStates,
+	ZoomLevel,
 )
 from .magnifier import Magnifier
 from .fullscreenMagnifier import FullScreenMagnifier
@@ -100,7 +101,6 @@ def toggleMagnifier() -> None:
 				"Cannot start magnifier: Screen Curtain is active. Please disable Screen Curtain first.",
 			),
 		)
-		return
 	else:
 		initialize()
 
@@ -118,6 +118,7 @@ def toggleMagnifier() -> None:
 				fullscreenMode=fullscreenMode.displayString,
 			),
 		)
+	setEnabled(isActive())
 
 
 def zoom(direction: Direction) -> None:
