@@ -221,7 +221,11 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 
 	def testAttemptRecoverySuccess(self):
 		"""FullScreenMagnifier._attemptRecovery reinitialises API and restarts timer on success."""
-		magnifier = FullScreenMagnifier()
+		with patch(
+			"_magnifier.magnifier.FocusManager.getCurrentFocusCoordinates",
+			return_value=Coordinates(0, 0),
+		):
+			magnifier = FullScreenMagnifier()
 		magnifier._consecutiveErrors = 3
 		magnifier._startTimer = MagicMock()
 
