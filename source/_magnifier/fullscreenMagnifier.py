@@ -32,10 +32,10 @@ class FullScreenMagnifier(Magnifier):
 	"""Magnifier that uses the Windows Magnification API to magnify the entire screen."""
 
 	_MAX_RECOVERY_ATTEMPTS: int = 3
+	_MAGNIFIED_VIEW = MagnifiedView.FULLSCREEN
 
 	def __init__(self):
 		super().__init__()
-		self._magnifiedView = MagnifiedView.FULLSCREEN
 		self._fullscreenMode = getFullscreenMode()
 		self._currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)

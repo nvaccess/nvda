@@ -41,10 +41,10 @@ class Magnifier:
 	_TIMER_INTERVAL_MS: int = 12
 	_MARGIN_BORDER: int = 50
 	_MAX_CONSECUTIVE_ERRORS: int = 3
+	_MAGNIFIED_VIEW: MagnifiedView
 
 	def __init__(self):
 		self._displayOrientation = getPrimaryDisplayOrientation()
-		self._magnifiedView: MagnifiedView
 		self._isActive: bool = False
 		self._zoomLevel: float = getZoomLevel()
 		self._panStep: int = getPanStep()

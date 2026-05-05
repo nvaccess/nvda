@@ -14,9 +14,10 @@ from .utils.types import MagnifiedView
 class FixedMagnifier(Magnifier):
 	"""Displays a magnified panel anchored to one corner of the screen."""
 
+	_MAGNIFIED_VIEW = MagnifiedView.FIXED
+
 	def __init__(self):
 		super().__init__()
-		self._magnifiedView = MagnifiedView.FIXED
 
 	def _startMagnifier(self) -> None:
 		super()._startMagnifier()

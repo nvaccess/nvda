@@ -14,9 +14,10 @@ from .utils.types import MagnifiedView
 class LensMagnifier(Magnifier):
 	"""Displays a magnified panel above the focused object and magnifies it."""
 
+	_MAGNIFIED_VIEW = MagnifiedView.LENS
+
 	def __init__(self):
 		super().__init__()
-		self._magnifiedView = MagnifiedView.LENS
 
 	def _startMagnifier(self) -> None:
 		super()._startMagnifier()

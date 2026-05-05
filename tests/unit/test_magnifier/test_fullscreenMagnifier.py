@@ -22,7 +22,7 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		self.assertEqual(magnifier.zoomLevel, 2.0)
 		self.assertEqual(magnifier.filterType, Filter.NORMAL)
 		self.assertEqual(magnifier._fullscreenMode, FullScreenMode.CENTER)
-		self.assertEqual(magnifier._magnifiedView, MagnifiedView.FULLSCREEN)
+		self.assertEqual(magnifier._MAGNIFIED_VIEW, MagnifiedView.FULLSCREEN)
 		self.assertTrue(magnifier._isActive)
 
 		magnifier._stopMagnifier()
@@ -152,10 +152,10 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		magnifier._startMagnifier()
 
 		# Should default to FULLSCREEN
-		self.assertEqual(magnifier._magnifiedView, MagnifiedView.FULLSCREEN)
+		self.assertEqual(magnifier._MAGNIFIED_VIEW, MagnifiedView.FULLSCREEN)
 
 		# Test that we can read it (inherited property from Magnifier)
-		self.assertIsNotNone(magnifier._magnifiedView)
+		self.assertIsNotNone(magnifier._MAGNIFIED_VIEW)
 
 		# Cleanup
 		magnifier._stopMagnifier()
@@ -170,7 +170,7 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		# Test basic properties exist
 		self.assertTrue(hasattr(magnifier, "zoomLevel"))
 		self.assertTrue(hasattr(magnifier, "filterType"))
-		self.assertTrue(hasattr(magnifier, "_magnifiedView"))
+		self.assertTrue(hasattr(magnifier, "_MAGNIFIED_VIEW"))
 		self.assertTrue(hasattr(magnifier, "_fullscreenMode"))
 		self.assertTrue(hasattr(magnifier, "_isActive"))
 		self.assertTrue(hasattr(magnifier, "_currentCoordinates"))

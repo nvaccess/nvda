@@ -70,7 +70,7 @@ class TestCycleMagnifiedView(unittest.TestCase):
 	def _makeMockMagnifier(self, magnifiedView: MagnifiedView):
 		magnifier = MagicMock()
 		magnifier._isActive = True
-		magnifier._magnifiedView = magnifiedView
+		magnifier._MAGNIFIED_VIEW = magnifiedView
 		return magnifier
 
 	def testFullCycle(self):

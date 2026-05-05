@@ -187,7 +187,7 @@ def toggleFilter() -> None:
 		filters = list(Filter)
 		idx = filters.index(magnifier.filterType)
 		magnifier.filterType = filters[(idx + 1) % len(filters)]
-		if magnifier._magnifiedView == MagnifiedView.FULLSCREEN:
+		if magnifier._MAGNIFIED_VIEW == MagnifiedView.FULLSCREEN:
 			fullscreenMagnifier: FullScreenMagnifier = magnifier
 			fullscreenMagnifier._applyFilter()
 		ui.message(
@@ -207,7 +207,7 @@ def cycleMagnifiedView() -> None:
 		MagnifierAction.CHANGE_MAGNIFIER_VIEW,
 	):
 		views = list(MagnifiedView)
-		currentView = magnifier._magnifiedView
+		currentView = magnifier._MAGNIFIED_VIEW
 		idx = views.index(currentView)
 		newView = views[(idx + 1) % len(views)]
 		log.debug(f"Changing magnifier view from {currentView} to {newView}")
@@ -219,7 +219,7 @@ def cycleMagnifiedView() -> None:
 				"magnifier",
 				# Translators: Message announced when changing the magnifier view with {view} being the new magnifier view.
 				"Magnifier view changed to {view}",
-			).format(view=magnifier._magnifiedView.displayString),
+			).format(view=magnifier._MAGNIFIED_VIEW.displayString),
 		)
 
 
@@ -380,7 +380,7 @@ def magnifierIsFullscreenVerify(
 
 	:return: True if the magnifier is full-screen, False otherwise
 	"""
-	if magnifier._magnifiedView == MagnifiedView.FULLSCREEN:
+	if magnifier._MAGNIFIED_VIEW == MagnifiedView.FULLSCREEN:
 		return True
 	else:
 		ui.message(
