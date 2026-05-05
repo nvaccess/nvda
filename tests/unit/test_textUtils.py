@@ -539,6 +539,33 @@ class TestChineseWordSegmentationInitialization(unittest.TestCase):
 			ChineseWordSegmentationStrategy._lib = originalLib
 			restoreConfig()
 
+	def test_initFailureDisablesCppJieba(self):
+		from textUtils.wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
+
+		mockDll = self._makeMockJiebaDll()
+		mockDll.initJieba.return_value = False
+		originalLib = ChineseWordSegmentationStrategy._lib
+		restoreConfig = self._setWordSegConfig(initForUnusedLang=False)
+		ChineseWordSegmentationStrategy._lib = None
+		try:
+			with (
+				patch.object(ChineseWordSegmentationStrategy, "isUsingRelatedLanguage", return_value=False),
+				patch(
+					"textUtils.wordSeg.wordSegStrategy.cdll.LoadLibrary", return_value=mockDll
+				) as loadLibrary,
+				patch("textUtils.wordSeg.wordSegStrategy.log.debugWarning") as debugWarning,
+			):
+				ChineseWordSegmentationStrategy._initCppJieba(forceInit=True)
+
+			loadLibrary.assert_called_once()
+			mockDll.initJieba.assert_called_once()
+			self.assertIsNone(ChineseWordSegmentationStrategy._lib)
+			debugWarning.assert_called_once()
+			self.assertIn("Failed to initialize cppjieba", debugWarning.call_args.args[0])
+		finally:
+			ChineseWordSegmentationStrategy._lib = originalLib
+			restoreConfig()
+
 
 class TestWordSegmenter(unittest.TestCase):
 	"""Tests for the WordSegmenter class."""

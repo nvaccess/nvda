@@ -187,32 +187,32 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			from NVDAState import ReadPaths
 
 			lib_path = os.path.join(ReadPaths.coreArchLibPath, "cppjieba.dll")
-			cls._lib = cdll.LoadLibrary(lib_path)
+			lib = cdll.LoadLibrary(lib_path)
 
 			# Setup function signatures
 			# bool initJieba(const char* dictDir)
-			cls._lib.initJieba.restype = c_bool
-			cls._lib.initJieba.argtypes = [c_char_p]
+			lib.initJieba.restype = c_bool
+			lib.initJieba.argtypes = [c_char_p]
 
 			# bool calculateWordOffsets(const char* text, int** wordEndOffsets, int* outLen)
-			cls._lib.calculateWordOffsets.restype = c_bool
-			cls._lib.calculateWordOffsets.argtypes = [c_char_p, POINTER(POINTER(c_int)), POINTER(c_int)]
+			lib.calculateWordOffsets.restype = c_bool
+			lib.calculateWordOffsets.argtypes = [c_char_p, POINTER(POINTER(c_int)), POINTER(c_int)]
 
 			# bool insertUserWord(const char* word, int freq, const char* tag)
-			cls._lib.insertUserWord.restype = c_bool
-			cls._lib.insertUserWord.argtypes = [c_char_p, c_int, c_char_p]
+			lib.insertUserWord.restype = c_bool
+			lib.insertUserWord.argtypes = [c_char_p, c_int, c_char_p]
 
 			# bool deleteUserWord(const char* word, const char* tag)
-			cls._lib.deleteUserWord.restype = c_bool
-			cls._lib.deleteUserWord.argtypes = [c_char_p, c_char_p]
+			lib.deleteUserWord.restype = c_bool
+			lib.deleteUserWord.argtypes = [c_char_p, c_char_p]
 
 			# bool find(const char* word)
-			cls._lib.find.restype = c_bool
-			cls._lib.find.argtypes = [c_char_p]
+			lib.find.restype = c_bool
+			lib.find.argtypes = [c_char_p]
 
 			# void freeOffsets(int* offsets)
-			cls._lib.freeOffsets.restype = None
-			cls._lib.freeOffsets.argtypes = [POINTER(c_int)]
+			lib.freeOffsets.restype = None
+			lib.freeOffsets.argtypes = [POINTER(c_int)]
 
 			# Initialize with dictionary path
 			import globalVars
@@ -220,7 +220,11 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			DICTS_DIR = os.path.join(globalVars.appDir, "cppjieba", "dicts")
 			DICTS_DIR_BYTES = DICTS_DIR.encode("utf-8")
 			dictDir = create_string_buffer(DICTS_DIR_BYTES)
-			cls._lib.initJieba(dictDir)
+			if not lib.initJieba(dictDir):
+				log.debugWarning("Failed to initialize cppjieba library with dictionary path: %s", DICTS_DIR)
+				cls._lib = None
+				return
+			cls._lib = lib
 		except Exception as e:
 			log.debugWarning("Failed to load cppjieba library: %s", e)
 			cls._lib = None
