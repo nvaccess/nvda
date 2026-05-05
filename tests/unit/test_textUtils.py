@@ -506,7 +506,8 @@ class TestChineseWordSegmentationInitialization(unittest.TestCase):
 			with (
 				patch.object(ChineseWordSegmentationStrategy, "isUsingRelatedLanguage", return_value=False),
 				patch(
-					"textUtils.wordSeg.wordSegStrategy.cdll.LoadLibrary", return_value=mockDll
+					"textUtils.wordSeg.wordSegStrategy.cdll.LoadLibrary",
+					return_value=mockDll,
 				) as loadLibrary,
 			):
 				ChineseWordSegmentationStrategy._initCppJieba()
@@ -528,7 +529,8 @@ class TestChineseWordSegmentationInitialization(unittest.TestCase):
 			with (
 				patch.object(ChineseWordSegmentationStrategy, "isUsingRelatedLanguage", return_value=False),
 				patch(
-					"textUtils.wordSeg.wordSegStrategy.cdll.LoadLibrary", return_value=mockDll
+					"textUtils.wordSeg.wordSegStrategy.cdll.LoadLibrary",
+					return_value=mockDll,
 				) as loadLibrary,
 			):
 				ChineseWordSegmentationStrategy._initCppJieba(forceInit=True)
@@ -551,7 +553,8 @@ class TestChineseWordSegmentationInitialization(unittest.TestCase):
 			with (
 				patch.object(ChineseWordSegmentationStrategy, "isUsingRelatedLanguage", return_value=False),
 				patch(
-					"textUtils.wordSeg.wordSegStrategy.cdll.LoadLibrary", return_value=mockDll
+					"textUtils.wordSeg.wordSegStrategy.cdll.LoadLibrary",
+					return_value=mockDll,
 				) as loadLibrary,
 				patch("textUtils.wordSeg.wordSegStrategy.log.debugWarning") as debugWarning,
 			):
