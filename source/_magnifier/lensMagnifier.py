@@ -12,7 +12,7 @@ from .utils.types import MagnifiedView
 
 
 class LensMagnifier(Magnifier):
-	"""Displays a magnified panel above the focused object and magnifies it."""
+	"""Displays a magnified panel beside the focused object and magnifies it."""
 
 	_MAGNIFIED_VIEW = MagnifiedView.LENS
 
