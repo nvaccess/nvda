@@ -12,7 +12,7 @@ from .utils.types import MagnifiedView
 
 
 class FixedMagnifier(Magnifier):
-	"""Displays a magnified panel anchored to one corner of the screen."""
+	"""Displays a floating magnified panel that can be pinned anywhere on the screen."""
 
 	_MAGNIFIED_VIEW = MagnifiedView.FIXED
 
