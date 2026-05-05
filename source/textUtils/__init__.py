@@ -602,7 +602,9 @@ class WordSegmenter:
 		self.wordSegFlag: WordSegFlag = wordSegFlag
 		self.strategy: wordSegStrategy.WordSegmentationStrategy = self._chooseStrategy()
 
-	def _chooseStrategy(self) -> wordSegStrategy.WordSegmentationStrategy:  # TODO: Limit regex scans for large text.
+	def _chooseStrategy(
+		self,
+	) -> wordSegStrategy.WordSegmentationStrategy:  # TODO: Limit regex scans for large text.
 		"""Choose the appropriate segmentation strategy based on the text content."""
 		if self.wordSegFlag == WordSegFlag.AUTO:
 			if (
