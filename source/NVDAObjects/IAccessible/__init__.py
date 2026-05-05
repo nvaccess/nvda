@@ -2037,7 +2037,7 @@ class IAccessible(Window):
 		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 		for child in self.recursiveDescendants:
 			speech.speakObject(child, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
-			braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
+			braille.handler.message(braille.getPropertiesBraille(name=child.name, role=child.role))
 
 	def event_caret(self):
 		focus = api.getFocusObject()
