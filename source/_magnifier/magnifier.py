@@ -89,6 +89,25 @@ class Magnifier:
 			value = closestZoom
 		self._zoomLevel = value
 
+	@property
+	def currentCoordinates(self) -> Coordinates:
+		"""
+		Get the current coordinates of the magnifier.
+
+		:return: The current coordinates
+		"""
+		return self._currentCoordinates
+
+	@currentCoordinates.setter
+	def currentCoordinates(self, coordinates: Coordinates) -> None:
+		"""
+		Set the current coordinates of the magnifier, applying screen boundary protection.
+		The magnifier will never move beyond the visible screen boundaries.
+
+		:param coordinates: The new coordinates to set
+		"""
+		self._currentCoordinates = self._clampCoordinates(coordinates)
+
 	def _getScreenLimits(self) -> tuple[int, int, int, int]:
 		"""
 		Get screen coordinate limits based on current mode.
@@ -107,6 +126,20 @@ class Magnifier:
 			maxX = int(self._displayOrientation.width - (visibleWidth / 2))
 			maxY = int(self._displayOrientation.height - (visibleHeight / 2))
 			return (minX, minY, maxX, maxY)
+
+	def _clampCoordinates(self, coordinates: Coordinates) -> Coordinates:
+		"""
+		Clamp coordinates to stay within screen boundaries.
+		Ensures the magnified view always displays content within the visible range.
+
+		:param coordinates: The coordinates to clamp
+		:return: The clamped coordinates
+		"""
+		x, y = coordinates
+		minX, minY, maxX, maxY = self._getScreenLimits()
+		x = max(minX, min(x, maxX))
+		y = max(minY, min(y, maxY))
+		return Coordinates(x, y)
 
 	def _setZoomRawValue(self, value: float) -> None:
 		"""
@@ -143,7 +176,7 @@ class Magnifier:
 			return
 
 		self._isActive = True
-		self._currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
+		self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
 
 	def _updateMagnifier(self) -> None:
 		"""
@@ -157,7 +190,7 @@ class Magnifier:
 		try:
 			self._managePanning()
 			if not self._isManualPanning:
-				self._currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
+				self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
 			if shouldKeepMouseCentered():
 				self._keepMouseCentered()
 			self._doUpdate()
@@ -307,7 +340,7 @@ class Magnifier:
 				log.error(f"Unknown pan action: {action}")
 
 		self._isManualPanning = True
-		self._currentCoordinates = Coordinates(x, y)
+		self.currentCoordinates = Coordinates(x, y)
 		self._doUpdate()
 
 		return (x, y) != (originalX, originalY)
