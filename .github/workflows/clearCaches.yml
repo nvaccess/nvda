@@ -11,7 +11,7 @@ on:
         required: false
 
 env:
-  CACHE_EXPIRATION_HOUR: ${{ inputs.cache_expiration || vars.CACHE_EXPERITATION_HOURS }}
+  CACHE_EXPIRATION_HOUR: ${{ inputs.cache_expiration || vars.CACHE_EXPIRATION_HOUR || 6 }}
 
 jobs:
   cleanupCache:
