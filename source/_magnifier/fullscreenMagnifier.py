@@ -37,7 +37,7 @@ class FullScreenMagnifier(Magnifier):
 	def __init__(self):
 		super().__init__()
 		self._fullscreenMode = getFullscreenMode()
-		self._currentCoordinates = Coordinates(0, 0)
+		self.currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
 		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
 		self._startMagnifier()
@@ -102,7 +102,7 @@ class FullScreenMagnifier(Magnifier):
 		# Applying the first real update verifies the API is usable without
 		# briefly jumping the magnified view to the top-left corner.
 		try:
-			coordinates = self._getCoordinatesForMode(self._currentCoordinates)
+			coordinates = self._getCoordinatesForMode(self.currentCoordinates)
 			# Save screen position for mode continuity, matching _doUpdate.
 			self._lastScreenPosition = coordinates
 			self._fullscreenMagnifier(coordinates)
@@ -115,7 +115,7 @@ class FullScreenMagnifier(Magnifier):
 		Perform the actual update of the magnifier
 		"""
 		# Calculate new position based on focus mode
-		coordinates = self._getCoordinatesForMode(self._currentCoordinates)
+		coordinates = self._getCoordinatesForMode(self.currentCoordinates)
 		# Always save screen position for mode continuity
 		self._lastScreenPosition = coordinates
 
@@ -267,7 +267,7 @@ class FullScreenMagnifier(Magnifier):
 		):
 			log.debug("Mouse button pressed, skipping cursor repositioning to avoid interfering with click")
 			return
-		coordinates = self._getCoordinatesForMode(self._currentCoordinates)
+		coordinates = self._getCoordinatesForMode(self.currentCoordinates)
 		params = self._getMagnifierParameters(coordinates)
 		centerX = params.coordinates.x + params.magnifierSize.width // 2
 		centerY = params.coordinates.y + params.magnifierSize.height // 2

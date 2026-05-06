@@ -308,14 +308,10 @@ class Magnifier:
 		:param action: The pan action (left, right, up, down)
 		:return: True if the actions results in the pan successfully moving, False otherwise.
 		"""
-		x, y = self._currentCoordinates
+		x, y = self.currentCoordinates
 		originalX, originalY = x, y
 
 		minX, minY, maxX, maxY = self._getScreenLimits()
-
-		# Clamp current position if out of bounds
-		x = max(minX, min(x, maxX))
-		y = max(minY, min(y, maxY))
 
 		panPixels = int((self._displayOrientation.width / self.zoomLevel) * self._panStep / 100)
 
@@ -360,7 +356,7 @@ class Magnifier:
 		Move the mouse cursor to the center of the magnified view.
 		Subclasses may override this to adapt the behavior for specific modes.
 		"""
-		centerX, centerY = self._currentCoordinates
+		centerX, centerY = self.currentCoordinates
 		winUser.setCursorPos(centerX, centerY)
 
 	def _startTimer(self, callback: Callable[[], None] = None) -> None:
