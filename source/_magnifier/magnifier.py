@@ -19,17 +19,17 @@ import winUser
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (
-	MagnifierPosition,
+	MagnifierParameters,
 	MagnifierAction,
-	Coordinates,
-	MagnifierType,
+	MagnifiedView,
 	Direction,
 	Filter,
+	Coordinates,
 )
 from .config import (
-	getDefaultZoomLevel,
-	getDefaultPanStep,
-	getDefaultFilter,
+	getZoomLevel,
+	getPanStep,
+	getFilter,
 	ZoomLevel,
 	isTrueCentered,
 	shouldKeepMouseCentered,
@@ -40,24 +40,34 @@ from .utils.focusManager import FocusManager
 class Magnifier:
 	_TIMER_INTERVAL_MS: int = 12
 	_MARGIN_BORDER: int = 50
+	_MAX_CONSECUTIVE_ERRORS: int = 3
+	_MAGNIFIED_VIEW: MagnifiedView
 
 	def __init__(self):
 		self._displayOrientation = getPrimaryDisplayOrientation()
-		self._magnifierType: MagnifierType = MagnifierType.FULLSCREEN
 		self._isActive: bool = False
-		self._zoomLevel: float = getDefaultZoomLevel()
-		self._panStep: int = getDefaultPanStep()
+		self._zoomLevel: float = getZoomLevel()
+		self._panStep: int = getPanStep()
 		self._timer: None | wx.Timer = None
 		self._focusManager = FocusManager()
 		self._lastScreenPosition = Coordinates(0, 0)
 		self._currentCoordinates = Coordinates(0, 0)
 		self._lastFocusCoordinates = Coordinates(0, 0)
-		self._filterType: Filter = getDefaultFilter()
+		self._filterType: Filter = getFilter()
 		self._isManualPanning: bool = False
 		self._consecutiveErrors: int = 0
+		self._recoveryAttempts: int = 0
 		# Register for display changes
 		_displayTracking.displayChanged.register(self._onDisplayChanged)
 		self._screenCurtainIsActive: bool = False
+
+	@property
+	def filterType(self) -> Filter:
+		return self._filterType
+
+	@filterType.setter
+	def filterType(self, value: Filter) -> None:
+		self._filterType = value
 
 	@property
 	def zoomLevel(self) -> float:
@@ -135,8 +145,6 @@ class Magnifier:
 		self._isActive = True
 		self._currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
 
-	_MAX_CONSECUTIVE_ERRORS: int = 3
-
 	def _updateMagnifier(self) -> None:
 		"""
 		Update the magnifier position and content.
@@ -154,6 +162,7 @@ class Magnifier:
 				self._keepMouseCentered()
 			self._doUpdate()
 			self._consecutiveErrors = 0
+			self._recoveryAttempts = 0
 		except (OSError, COMError):
 			self._consecutiveErrors += 1
 			if self._consecutiveErrors >= self._MAX_CONSECUTIVE_ERRORS:
@@ -343,29 +352,12 @@ class Magnifier:
 		else:
 			log.debug("no timer to stop")
 
-	def _getMagnifierPosition(
-		self,
-		coordinates: Coordinates,
-	) -> MagnifierPosition:
+	def _getMagnifierParameters(self, coordinates: Coordinates) -> MagnifierParameters:
 		"""
 		Compute the top-left corner of the magnifier window centered on (x, y)
 
 		:param coordinates: The (x, y) coordinates to center the magnifier on
 
-		:return: The position and size of the magnifier window
+		:return: The size, position and filter of the magnifier window
 		"""
-		x, y = coordinates
-		# Calculate the size of the capture area at the current zoom level
-		visibleWidth = self._displayOrientation.width / self.zoomLevel
-		visibleHeight = self._displayOrientation.height / self.zoomLevel
-
-		# Compute the top-left corner so that (x, y) is at the center
-		left = int(x - (visibleWidth / 2))
-		top = int(y - (visibleHeight / 2))
-
-		# Clamp to screen boundaries only if not in true center mode
-		if not isTrueCentered():
-			left = max(0, min(left, int(self._displayOrientation.width - visibleWidth)))
-			top = max(0, min(top, int(self._displayOrientation.height - visibleHeight)))
-
-		return MagnifierPosition(left, top, int(visibleWidth), int(visibleHeight))
+		raise NotImplementedError("Subclasses must implement this method")

@@ -116,17 +116,17 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Magnifier settings
 [magnifier]
-	defaultZoomLevel = float(min=1.0, max=10.0, default=2.0)
+	magnifiedView = string(default="fullscreen")
+	zoomLevel = float(min=1.0, max=10.0, default=2.0)
 	isTrueCentered = boolean(default=False)
-	defaultFilter = string(default="normal")
+	filter = string(default="normal")
 	followMouse = boolean(default=True)
 	followSystemFocus = boolean(default=True)
 	followReviewCursor = boolean(default=True)
 	followNavigatorObject = boolean(default=True)
-	defaultPanStep = integer(min=1, max=100, default=10)
-	defaultFullscreenMode = string(default="center")
+	panStep = integer(min=1, max=100, default=10)
+	fullscreenMode = string(default="center")
 	keepMouseCentered = boolean(default=false)
-	saveShortcutChanges = boolean(default=false)
 
 # Presentation settings
 [presentation]
@@ -360,6 +360,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	cancelExpiredFocusSpeech = integer(0, 2, default=0)
 	# 0: Only in test versions, 1: Yes, 2: No
 	playErrorSound = integer(0, 2, default=0)
+	speechDictsUseModernRegex = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 
 [addonStore]
 	automaticUpdates = option("notify", "update", "disabled", default="notify")

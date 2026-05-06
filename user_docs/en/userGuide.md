@@ -2871,9 +2871,9 @@ Key: `NVDA+control+w`
 The Magnifier category in the NVDA Settings dialog allows you to configure the default behavior of NVDA's built-in [Magnifier](#Magnifier) feature.
 This settings category contains the following options:
 
-##### Default zoom level {#MagnifierDefaultZoom}
+##### Zoom level {#MagnifierZoom}
 
-This slider allows you to set the default zoom level when the magnifier is first enabled.
+This slider allows you to set the zoom level when using the magnifier.
 The zoom level can range from 1.0 (no magnification) to 10.0 (maximum magnification).
 The default value is 2.0 (200% zoom).
 
@@ -2884,9 +2884,9 @@ You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+e
 |Options |1.0 to 10.0|
 |Default |2.0|
 
-##### Default color filter {#MagnifierDefaultFilter}
+##### Filter {#MagnifierFilter}
 
-This combo box allows you to select the default color filter to apply when the magnifier is first enabled.
+This combo box allows you to select the filter to apply when using the magnifier.
 You can cycle through the color filters by pressing `NVDA+shift+i`.
 The available options are:
 
@@ -2902,9 +2902,9 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### Default focus mode {#MagnifierDefaultFullscreenFocusMode}
+##### Focus mode {#MagnifierFullscreenFocusMode}
 
-This combo box allows you to select the default focus tracking mode when the magnifier is first enabled.
+This combo box allows you to select the focus tracking mode when using the magnifier.
 To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 The available options are:
 
@@ -4202,6 +4202,16 @@ Note that in Speech settings, there is a similar [option for SAPI 5 voices](#Spe
 |Options |Default (Enabled), Disabled, Enabled|
 |Default |Enabled|
 
+##### Use modern regular expression engine for speech dictionary entries {#SpeechDictsUseModernRegex}
+
+This setting controls how Regular expression entries in [speech dictionaries](#SpeechDictionaries) are matched.
+The [modern engine](https://pypi.org/project/regex/) has better support for non-Latin scripts, such as Hebrew and Arabic, and offers more powerful matching options.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Disabled), Disabled, Enabled|
+|Default |Disabled|
+
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
 This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
@@ -4282,6 +4292,7 @@ For example, if you replace "bird" with "frog" using end of word matching, it wo
 * Regular expression: The pattern is treated as a regular expression, which is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
 Regular expressions are not covered in this user guide.
 For an introductory tutorial, please refer to [Python's Regular Expression Guide](https://docs.python.org/3.13/howto/regex.html).
+Also consider [the advanced setting to enable a more modern engine](#SpeechDictsUseModernRegex), especially when dealing with non-Latin scripts, such as Hebrew and Arabic.
 * Unix shell-style wildcards: The pattern uses Unix shell-style wildcards for matching.
 For example:
   * `*` matches any sequence of characters.
