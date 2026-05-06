@@ -70,7 +70,7 @@ from winBindings.ole32 import (
 from .token import (
 	createEnvironmentBlock,
 )
-from .raiiUtils import (
+from utils.raii import (
 	makeAutoFree,
 	OnDelete,
 )
