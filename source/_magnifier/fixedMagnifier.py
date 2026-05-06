@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -12,7 +12,7 @@ from .magnifier import Magnifier
 from .utils.types import (
 	Coordinates,
 	Size,
-	MagnifierType,
+	MagnifiedView,
 	WindowMagnifierParameters,
 	MagnifierParameters,
 	Filter,
@@ -28,11 +28,12 @@ from .config import (
 
 
 class FixedMagnifier(Magnifier, WindowedMagnifier):
+	_MAGNIFIED_VIEW = MagnifiedView.FIXED
+
 	def __init__(self):
 		Magnifier.__init__(self)
 		windowParameters = self._getWindowParameters()
 		WindowedMagnifier.__init__(self, windowParameters)
-		self._magnifierType = MagnifierType.FIXED
 		self._currentCoordinates = Coordinates(0, 0)
 		self._windowParameters = windowParameters
 

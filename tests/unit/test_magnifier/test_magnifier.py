@@ -5,6 +5,7 @@
 
 from _magnifier.magnifier import Magnifier
 from _magnifier.utils.types import Filter, Direction, Coordinates, MagnifierAction
+from comtypes import COMError
 import unittest
 from winAPI._displayTracking import getPrimaryDisplayOrientation
 from unittest.mock import MagicMock, patch
@@ -22,18 +23,19 @@ class _TestMagnifier(unittest.TestCase):
 
 	def setUp(self):
 		"""Setup before each test - mock magnification API to prevent actual screen magnification."""
-		# Mock the Windows Magnification API to prevent affecting the user's screen
 		self.mag_patcher = patch("winBindings.magnification")
 		self.mock_mag = self.mag_patcher.start()
-
-		# Configure mocked API methods to return success
-		self.mock_mag.MagInitialize.return_value = True
-		self.mock_mag.MagUninitialize.return_value = True
-		self.mock_mag.MagSetFullscreenTransform.return_value = True
-		self.mock_mag.MagSetFullscreenColorEffect.return_value = True
+		self.mag_fs_patcher = patch("_magnifier.fullscreenMagnifier.magnification")
+		self.mock_mag_fs = self.mag_fs_patcher.start()
+		for mock in (self.mock_mag, self.mock_mag_fs):
+			mock.MagInitialize.return_value = True
+			mock.MagUninitialize.return_value = True
+			mock.MagSetFullscreenTransform.return_value = True
+			mock.MagSetFullscreenColorEffect.return_value = True
 
 	def tearDown(self):
 		"""Cleanup after each test."""
+		self.mag_fs_patcher.stop()
 		self.mag_patcher.stop()
 
 
@@ -65,6 +67,7 @@ class TestMagnifier(_TestMagnifier):
 		self.assertEqual(self.magnifier._filterType, Filter.NORMAL)
 		self.assertFalse(self.magnifier._isActive)
 		self.assertIsNotNone(self.magnifier._focusManager)
+		self.assertEqual(self.magnifier._consecutiveErrors, 0)
 
 	def testZoomLevelProperty(self):
 		"""ZoomLevel property."""
@@ -128,12 +131,111 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._isActive = True
 		self.magnifier._updateMagnifier()
 
-		self.magnifier._focusManager.getCurrentFocusCoordinates.assert_called_once()
+		# getCurrentFocusCoordinates is called twice: once in _managePanning and once to update _currentCoordinates
+		self.assertEqual(
+			self.magnifier._focusManager.getCurrentFocusCoordinates.call_count,
+			2,
+		)
 		self.magnifier._doUpdate.assert_called_once()
 		self.magnifier._startTimer.assert_called_once_with(
 			self.magnifier._updateMagnifier,
 		)
 		self.assertEqual(self.magnifier._currentCoordinates, Coordinates(100, 200))
+		# Successful update should reset error counter
+		self.assertEqual(self.magnifier._consecutiveErrors, 0)
+
+	def testUpdateMagnifierResumesAfterSingleError(self):
+		"""Timer must always be rescheduled even when _doUpdate raises an exception."""
+		self.magnifier._isActive = True
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
+			return_value=Coordinates(100, 200),
+		)
+		self.magnifier._doUpdate = MagicMock(side_effect=OSError("COM failure"))
+		self.magnifier._startTimer = MagicMock()
+
+		self.magnifier._updateMagnifier()
+
+		# Timer must still be rescheduled despite the error
+		self.magnifier._startTimer.assert_called_once_with(
+			self.magnifier._updateMagnifier,
+		)
+		self.assertEqual(self.magnifier._consecutiveErrors, 1)
+
+	def testUpdateMagnifierTriggersRecoveryAfterMaxErrors(self):
+		"""After _MAX_CONSECUTIVE_ERRORS failures, _attemptRecovery is called instead of restarting timer."""
+		self.magnifier._isActive = True
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
+			return_value=Coordinates(100, 200),
+		)
+		self.magnifier._doUpdate = MagicMock(side_effect=OSError("COM failure"))
+		self.magnifier._startTimer = MagicMock()
+		self.magnifier._attemptRecovery = MagicMock()
+
+		# Simulate reaching max errors
+		self.magnifier._consecutiveErrors = Magnifier._MAX_CONSECUTIVE_ERRORS - 1
+		self.magnifier._updateMagnifier()
+
+		# Recovery should be called, timer should NOT be rescheduled directly
+		self.magnifier._attemptRecovery.assert_called_once()
+		self.magnifier._startTimer.assert_not_called()
+
+	def testUpdateMagnifierCatchesCOMError(self):
+		"""COMError from UIA must be caught and the timer rescheduled."""
+		self.magnifier._isActive = True
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
+			return_value=Coordinates(100, 200),
+		)
+		self.magnifier._doUpdate = MagicMock(side_effect=COMError(-2147417848, "RPC_E_DISCONNECTED", None))
+		self.magnifier._startTimer = MagicMock()
+
+		self.magnifier._updateMagnifier()
+
+		self.magnifier._startTimer.assert_called_once_with(self.magnifier._updateMagnifier)
+		self.assertEqual(self.magnifier._consecutiveErrors, 1)
+
+	def testUpdateMagnifierRecoveryFailureSafelyRestartsTimer(self):
+		"""If _attemptRecovery itself raises, the timer must still be restarted to prevent a freeze."""
+		self.magnifier._isActive = True
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
+			return_value=Coordinates(100, 200),
+		)
+		self.magnifier._doUpdate = MagicMock(side_effect=OSError("API failure"))
+		self.magnifier._startTimer = MagicMock()
+		self.magnifier._attemptRecovery = MagicMock(side_effect=RuntimeError("recovery crashed"))
+
+		self.magnifier._consecutiveErrors = Magnifier._MAX_CONSECUTIVE_ERRORS - 1
+		self.magnifier._updateMagnifier()
+
+		# Timer must be restarted by the safety net even though recovery failed
+		self.magnifier._startTimer.assert_called_once_with(self.magnifier._updateMagnifier)
+		self.assertEqual(self.magnifier._consecutiveErrors, 0)
+
+	def testUpdateMagnifierResetsErrorCountOnSuccess(self):
+		"""A successful update after errors resets the consecutive error counter."""
+		self.magnifier._isActive = True
+		self.magnifier._consecutiveErrors = 2
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
+			return_value=Coordinates(100, 200),
+		)
+		self.magnifier._doUpdate = MagicMock()  # Success
+		self.magnifier._startTimer = MagicMock()
+
+		self.magnifier._updateMagnifier()
+
+		self.assertEqual(self.magnifier._consecutiveErrors, 0)
+		self.magnifier._startTimer.assert_called_once()
+
+	def testAttemptRecoveryBase(self):
+		"""Base _attemptRecovery resets errors and restarts timer."""
+		self.magnifier._consecutiveErrors = 3
+		self.magnifier._startTimer = MagicMock()
+
+		self.magnifier._attemptRecovery()
+
+		self.assertEqual(self.magnifier._consecutiveErrors, 0)
+		self.magnifier._startTimer.assert_called_once_with(
+			self.magnifier._updateMagnifier,
+		)
 
 	def testDoUpdate(self):
 		"""DoUpdate function raises NotImplementedError."""
@@ -335,6 +437,38 @@ class TestMagnifier(_TestMagnifier):
 			axis="y",
 			edgeAttr="bottom",
 		)
+
+	def testManagePanning(self):
+		"""Manual panning ends when focus coordinates change, and _lastFocusCoordinates is always kept up to date."""
+		focusA = Coordinates(100, 200)
+		focusB = Coordinates(300, 400)
+
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=focusA)
+
+		# When not panning, _lastFocusCoordinates is updated every cycle
+		self.magnifier._isManualPanning = False
+		self.magnifier._managePanning()
+		self.assertFalse(self.magnifier._isManualPanning)
+		self.assertEqual(self.magnifier._lastFocusCoordinates, focusA)
+
+		# When panning starts and focus hasn't changed, panning continues
+		self.magnifier._isManualPanning = True
+		self.magnifier._managePanning()
+		self.assertTrue(self.magnifier._isManualPanning)
+		self.assertEqual(self.magnifier._lastFocusCoordinates, focusA)
+
+		# When focus changes while panning, manual panning ends
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=focusB)
+		self.magnifier._managePanning()
+		self.assertFalse(self.magnifier._isManualPanning)
+		self.assertEqual(self.magnifier._lastFocusCoordinates, focusB)
+
+	def testKeepMouseCentered(self):
+		"""Base _keepMouseCentered moves cursor to _currentCoordinates."""
+		self.magnifier._currentCoordinates = Coordinates(640, 360)
+		with patch("_magnifier.magnifier.winUser.setCursorPos") as mockSetCursor:
+			self.magnifier._keepMouseCentered()
+			mockSetCursor.assert_called_once_with(640, 360)
 
 	def testStartTimer(self):
 		"""Starting the timer."""

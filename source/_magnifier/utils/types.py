@@ -12,18 +12,19 @@ from typing import NamedTuple
 from utils.displayString import DisplayStringStrEnum, DisplayStringEnum
 
 
+class MagnifierParameters(NamedTuple):
+	"""Named tuple representing the size, position and filter of the magnifier"""
+
+	magnifierSize: "Size"
+	coordinates: "Coordinates"
+	filter: "Filter"
+
+
 class Direction(Enum):
 	"""Direction for zoom operations"""
 
 	IN = True
 	OUT = False
-
-
-class Coordinates(NamedTuple):
-	"""Named tuple representing x and y coordinates"""
-
-	x: int
-	y: int
 
 
 class Size(NamedTuple):
@@ -47,7 +48,8 @@ class MagnifierAction(DisplayStringEnum):
 	PAN_TOP_EDGE = auto()
 	PAN_BOTTOM_EDGE = auto()
 	TOGGLE_FILTER = auto()
-	CHANGE_MAGNIFIER_TYPE = auto()
+	CHANGE_MAGNIFIER_VIEW = auto()
+	TOGGLE_FOLLOW_SETTINGS = auto()
 	CHANGE_FULLSCREEN_MODE = auto()
 	START_SPOTLIGHT = auto()
 
@@ -74,10 +76,12 @@ class MagnifierAction(DisplayStringEnum):
 			self.PAN_TOP_EDGE: pgettext("magnifier action", "pan to top edge"),
 			# Translators: Action description for panning to bottom edge.
 			self.PAN_BOTTOM_EDGE: pgettext("magnifier action", "pan to bottom edge"),
+			# Translators: Action description for toggling settings.
+			self.TOGGLE_FOLLOW_SETTINGS: pgettext("magnifier action", "toggle follow settings"),
 			# Translators: Action description for toggling color filters.
 			self.TOGGLE_FILTER: pgettext("magnifier action", "toggle filters"),
-			# Translators: Action description for changing magnifier type.
-			self.CHANGE_MAGNIFIER_TYPE: pgettext("magnifier action", "change magnifier type"),
+			# Translators: Action description for changing magnifier view.
+			self.CHANGE_MAGNIFIER_VIEW: pgettext("magnifier action", "change magnifier view"),
 			# Translators: Action description for changing full-screen mode.
 			self.CHANGE_FULLSCREEN_MODE: pgettext("magnifier action", "change full-screen mode"),
 			# Translators: Action description for starting spotlight mode.
@@ -85,7 +89,29 @@ class MagnifierAction(DisplayStringEnum):
 		}
 
 
-class MagnifierType(DisplayStringStrEnum):
+class MagnifierFollowFocusType(DisplayStringEnum):
+	"""Type of focus the magnifier should follow based on user settings"""
+
+	MOUSE = auto()
+	SYSTEM_FOCUS = auto()
+	REVIEW = auto()
+	NAVIGATOR_OBJECT = auto()
+
+	@property
+	def _displayStringLabels(self) -> dict["MagnifierFollowFocusType", str]:
+		return {
+			# Translators: Focus type for magnifier to follow - mouse cursor.
+			self.MOUSE: pgettext("magnifier follow focus type", "Mouse"),
+			# Translators: Focus type for magnifier to follow - system focus (active element).
+			self.SYSTEM_FOCUS: pgettext("magnifier follow focus type", "System focus"),
+			# Translators: Focus type for magnifier to follow - review cursor position.
+			self.REVIEW: pgettext("magnifier follow focus type", "Review cursor"),
+			# Translators: Focus type for magnifier to follow - navigator object position.
+			self.NAVIGATOR_OBJECT: pgettext("magnifier follow focus type", "Navigator object"),
+		}
+
+
+class MagnifiedView(DisplayStringStrEnum):
 	"""Type of magnifier"""
 
 	FULLSCREEN = "fullscreen"
@@ -94,64 +120,24 @@ class MagnifierType(DisplayStringStrEnum):
 	LENS = "lens"
 
 	@property
-	def _displayStringLabels(self) -> dict["MagnifierType", str]:
+	def _displayStringLabels(self) -> dict["MagnifiedView", str]:
 		return {
-			# Translators: Magnifier type - full-screen mode.
+			# Translators: Magnifier view - full-screen mode.
 			self.FULLSCREEN: pgettext("magnifier", "Fullscreen"),
-			# Translators: Magnifier type - fixed mode.
+			# Translators: Magnifier view - fixed mode.
 			self.FIXED: pgettext("magnifier", "Fixed"),
-			# Translators: Magnifier type - docked mode.
+			# Translators: Magnifier view - docked mode.
 			self.DOCKED: pgettext("magnifier", "Docked"),
-			# Translators: Magnifier type - lens mode.
+			# Translators: Magnifier view - lens mode.
 			self.LENS: pgettext("magnifier", "Lens"),
 		}
 
 
-class Filter(DisplayStringStrEnum):
-	NORMAL = "normal"
-	GRAYSCALE = "grayscale"
-	INVERTED = "inverted"
+class Coordinates(NamedTuple):
+	"""Named tuple representing x and y coordinates"""
 
-	@property
-	def _displayStringLabels(self) -> dict["Filter", str]:
-		return {
-			# Translators: Magnifier color filter - no filter applied.
-			self.NORMAL: pgettext("magnifier", "Normal"),
-			# Translators: Magnifier color filter - grayscale/black and white.
-			self.GRAYSCALE: pgettext("magnifier", "Grayscale"),
-			# Translators: Magnifier color filter - inverted colors.
-			self.INVERTED: pgettext("magnifier", "Inverted"),
-		}
-
-
-class FocusType(Enum):
-	"""Type of focus being tracked by the magnifier"""
-
-	MOUSE = auto()
-	SYSTEM_FOCUS = auto()
-	NAVIGATOR = auto()
-
-
-class MagnifierParameters(NamedTuple):
-	"""Named tuple representing the size and position of the magnifier"""
-
-	magnifierSize: Size
-	coordinates: Coordinates
-	filter: Filter
-
-
-class WindowMagnifierParameters(NamedTuple):
-	"""
-	Named tuple representing the position and size of the magnifier window.
-	The styles field is no longer used since window styles are now determined
-	by the MagnifierOverlayWindow class for proper NVDA invisibility,
-	anti-capture and click-through behaviour.
-	"""
-
-	title: str
-	windowSize: Size
-	windowPosition: Coordinates
-	styles: int = 0
+	x: int
+	y: int
 
 
 class ZoomHistory(NamedTuple):
@@ -176,6 +162,37 @@ class FullScreenMode(DisplayStringStrEnum):
 			# Translators: Magnifier focus mode - maintain relative position.
 			self.RELATIVE: pgettext("magnifier", "Relative"),
 		}
+
+
+class Filter(DisplayStringStrEnum):
+	NORMAL = "normal"
+	GRAYSCALE = "grayscale"
+	INVERTED = "inverted"
+
+	@property
+	def _displayStringLabels(self) -> dict["Filter", str]:
+		return {
+			# Translators: Magnifier color filter - no filter applied.
+			self.NORMAL: pgettext("magnifier", "Normal"),
+			# Translators: Magnifier color filter - grayscale/black and white.
+			self.GRAYSCALE: pgettext("magnifier", "Grayscale"),
+			# Translators: Magnifier color filter - inverted colors.
+			self.INVERTED: pgettext("magnifier", "Inverted"),
+		}
+
+
+class WindowMagnifierParameters(NamedTuple):
+	"""
+	Named tuple representing the position and size of the magnifier window.
+	The styles field is no longer used since window styles are now determined
+	by the MagnifierOverlayWindow class for proper NVDA invisibility,
+	anti-capture and click-through behaviour.
+	"""
+
+	title: str
+	windowSize: Size
+	windowPosition: Coordinates
+	styles: int = 0
 
 
 class FixedWindowPosition(DisplayStringStrEnum):

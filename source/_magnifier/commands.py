@@ -10,22 +10,27 @@ Contains the command functions and their logic for keyboard shortcuts.
 
 from typing import Literal
 import ui
-from . import getMagnifier, initialize, changeMagnifierType, terminate
+from . import getMagnifier, initialize, terminate, changeMagnifiedView
 from .config import (
+	getMagnifiedView,
+	setMagnifiedView,
 	getZoomLevelString,
 	getFilter,
-	getMagnifierType,
 	getFullscreenMode,
 	ZoomLevel,
+	getFollowState,
+	setFollowState,
+	toggleAllFollowStates,
 )
 from .magnifier import Magnifier
 from .fullscreenMagnifier import FullScreenMagnifier
 from .utils.types import (
 	Filter,
 	Direction,
-	MagnifierType,
+	MagnifiedView,
 	FullScreenMode,
 	MagnifierAction,
+	MagnifierFollowFocusType,
 )
 from logHandler import log
 
@@ -100,35 +105,32 @@ def toggleMagnifier() -> None:
 		return
 	else:
 		initialize()
-
 		filter = getFilter()
-		magnifierType = getMagnifierType()
-		if magnifierType == MagnifierType.FULLSCREEN:
+		magnifiedView = getMagnifiedView()
+		zoomLevel = getZoomLevelString()
+		if magnifiedView == MagnifiedView.FULLSCREEN:
 			fullscreenMode = getFullscreenMode()
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Message announced when starting the NVDA magnifier.
-					"Starting fullscreen magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
-				).format(
-					magnifierType=magnifierType.displayString,
-					zoomLevel=getZoomLevelString(),
-					filter=filter.displayString,
-					fullscreenMode=fullscreenMode.displayString,
-				),
+			msg = pgettext(
+				"magnifier",
+				# Translators: Message announced when starting the NVDA magnifier.
+				"Starting {magnifiedView} magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
+			).format(
+				magnifiedView=magnifiedView.displayString,
+				zoomLevel=zoomLevel,
+				filter=filter.displayString,
+				fullscreenMode=fullscreenMode.displayString,
 			)
 		else:
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Message announced when starting the NVDA magnifier.
-					"Starting {magnifierType} magnifier with {zoomLevel} zoom level and {filter} filter",
-				).format(
-					magnifierType=magnifierType.displayString,
-					zoomLevel=getZoomLevelString(),
-					filter=filter.displayString,
-				),
+			msg = pgettext(
+				"magnifier",
+				# Translators: Message announced when starting the NVDA magnifier.
+				"Starting {magnifiedView} magnifier with {zoomLevel} zoom level and {filter} filter",
+			).format(
+				magnifiedView=magnifiedView.displayString,
+				zoomLevel=zoomLevel,
+				filter=filter.displayString,
 			)
+		ui.message(msg)
 
 
 def zoom(direction: Direction) -> None:
@@ -139,13 +141,19 @@ def zoom(direction: Direction) -> None:
 	"""
 	action = MagnifierAction.ZOOM_IN if direction == Direction.IN else MagnifierAction.ZOOM_OUT
 	magnifier: Magnifier = getMagnifier()
-	if magnifierIsActiveVerify(magnifier, action):
-		magnifier._zoom(direction)
-		ui.message(
-			ZoomLevel.ZOOM_MESSAGE.format(
-				zoomLevel=f"{magnifier.zoomLevel:.1f}",
-			),
-		)
+	if not (magnifier and magnifier._isActive):
+		# Start magnifier if not already running
+		if direction == Direction.IN:
+			toggleMagnifier()
+		else:
+			magnifierIsActiveVerify(magnifier, action)
+		return
+	magnifier._zoom(direction)
+	ui.message(
+		ZoomLevel.ZOOM_MESSAGE.format(
+			zoomLevel=f"{magnifier.zoomLevel:.1f}",
+		),
+	)
 
 
 def pan(action: MagnifierAction) -> None:
@@ -168,29 +176,6 @@ def pan(action: MagnifierAction) -> None:
 			)
 
 
-def cycleMagnifierType() -> None:
-	"""Cycle through magnifier types (full-screen, fixed, docked (to do), lens (to do))"""
-	magnifier: Magnifier = getMagnifier()
-	if magnifierIsActiveVerify(
-		magnifier,
-		MagnifierAction.CHANGE_MAGNIFIER_TYPE,
-	):
-		types = list(MagnifierType)
-		currentType = magnifier._magnifierType
-		idx = types.index(currentType)
-		newType = types[(idx + 1) % len(types)]
-		log.debug(f"Changing magnifier type from {currentType} to {newType}")
-		changeMagnifierType(newType)
-		magnifier = getMagnifier()
-		ui.message(
-			pgettext(
-				"magnifier",
-				# Translators: Message announced when changing the magnifier type with {type} being the new magnifier type.
-				"Magnifier type changed to {type}",
-			).format(type=magnifier._magnifierType.displayString),
-		)
-
-
 def cycleFilter() -> None:
 	"""Cycle through color filters"""
 	magnifier: Magnifier = getMagnifier()
@@ -202,8 +187,9 @@ def cycleFilter() -> None:
 		filters = list(Filter)
 		idx = filters.index(magnifier.filterType)
 		magnifier.filterType = filters[(idx + 1) % len(filters)]
-		if magnifier._magnifierType == MagnifierType.FULLSCREEN:
-			magnifier._applyFilter()
+		if magnifier._MAGNIFIED_VIEW == MagnifiedView.FULLSCREEN:
+			fullscreenMagnifier: FullScreenMagnifier = magnifier
+			fullscreenMagnifier._applyFilter()
 		ui.message(
 			pgettext(
 				"magnifier",
@@ -213,7 +199,90 @@ def cycleFilter() -> None:
 		)
 
 
-def cycleFullscreenMode() -> None:
+def cycleMagnifiedView() -> None:
+	"""Cycle through magnifier views (full-screen, fixed, docked, lens)"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.CHANGE_MAGNIFIER_VIEW,
+	):
+		views = list(MagnifiedView)
+		currentView = magnifier._MAGNIFIED_VIEW
+		idx = views.index(currentView)
+		newView = views[(idx + 1) % len(views)]
+		log.debug(f"Changing magnifier view from {currentView} to {newView}")
+		changeMagnifiedView(newView)
+		setMagnifiedView(newView)
+		magnifier = getMagnifier()
+		ui.message(
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when changing the magnifier view with {view} being the new magnifier view.
+				"Magnifier view changed to {view}",
+			).format(view=magnifier._MAGNIFIED_VIEW.displayString),
+		)
+
+
+def toggleFollow(focusType: MagnifierFollowFocusType) -> None:
+	"""
+	Toggle the specified follow mode setting.
+
+	:param focusType: The follow mode to toggle (mouse, system focus, review cursor, navigator object)
+	"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.TOGGLE_FOLLOW_SETTINGS,
+	):
+		state = not getFollowState(focusType)
+		setFollowState(focusType, state)
+
+		ui.message(
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when toggling a follow setting with {setting} being the name of the setting and {state} being either "enabled" or "disabled".
+				"{setting} {state}",
+			).format(
+				setting=focusType.displayString,
+				state=pgettext(
+					"magnifier",
+					# Translators: State of the follow setting being toggled enabled.
+					"enabled",
+				)
+				if state
+				else pgettext(
+					"magnifier",
+					# Translators: State of the follow setting being toggled disabled.
+					"disabled",
+				),
+			),
+		)
+
+
+def toggleAllFollow() -> None:
+	"""Toggle all follow settings at once."""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.TOGGLE_FOLLOW_SETTINGS,
+	):
+		isDisabledNow = toggleAllFollowStates()
+		if isDisabledNow:
+			stateMessage = pgettext(
+				"magnifier",
+				# Translators: State of all follow settings being toggled disabled.
+				"All follow settings disabled",
+			)
+		else:
+			stateMessage = pgettext(
+				"magnifier",
+				# Translators: State of all follow settings being restored.
+				"All follow settings restored",
+			)
+		ui.message(stateMessage)
+
+
+def toggleFullscreenMode() -> None:
 	"""Cycle through full-screen focus modes (center, border, relative)"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
@@ -224,12 +293,13 @@ def cycleFullscreenMode() -> None:
 			magnifier,
 			MagnifierAction.CHANGE_FULLSCREEN_MODE,
 		):
+			fullscreenMagnifier: FullScreenMagnifier = magnifier
 			modes = list(FullScreenMode)
-			currentMode = magnifier._fullscreenMode
+			currentMode = fullscreenMagnifier._fullscreenMode
 			idx = modes.index(currentMode)
 			newMode = modes[(idx + 1) % len(modes)]
 			log.debug(f"Changing full-screen mode from {currentMode} to {newMode}")
-			magnifier._fullscreenMode = newMode
+			fullscreenMagnifier._fullscreenMode = newMode
 			ui.message(
 				pgettext(
 					"magnifier",
@@ -250,8 +320,9 @@ def startSpotlight() -> None:
 			magnifier,
 			MagnifierAction.START_SPOTLIGHT,
 		):
+			fullscreenMagnifier: FullScreenMagnifier = magnifier
 			log.debug("trying to launch spotlight mode")
-			if magnifier._spotlightManager._spotlightIsActive:
+			if fullscreenMagnifier._spotlightManager._spotlightIsActive:
 				log.debug("found spotlight manager and it is active")
 				ui.message(
 					pgettext(
@@ -262,7 +333,7 @@ def startSpotlight() -> None:
 				)
 			else:
 				log.debug("no active spotlight manager found, starting new one")
-				magnifier._startSpotlight()
+				fullscreenMagnifier._startSpotlight()
 				ui.message(
 					pgettext(
 						"magnifier",
@@ -309,7 +380,7 @@ def magnifierIsFullscreenVerify(
 
 	:return: True if the magnifier is full-screen, False otherwise
 	"""
-	if magnifier._magnifierType == MagnifierType.FULLSCREEN:
+	if magnifier._MAGNIFIED_VIEW == MagnifiedView.FULLSCREEN:
 		return True
 	else:
 		ui.message(
