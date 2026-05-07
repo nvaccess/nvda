@@ -102,7 +102,6 @@ def toggleMagnifier() -> None:
 				"Cannot start magnifier: Screen Curtain is active. Please disable Screen Curtain first.",
 			),
 		)
-		return
 	else:
 		initialize()
 		filter = getFilter()
