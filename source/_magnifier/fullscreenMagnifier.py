@@ -7,6 +7,8 @@
 Full-screen magnifier module.
 """
 
+from typing import override
+
 from logHandler import log
 import speech
 import ui
@@ -55,6 +57,7 @@ class FullScreenMagnifier(Magnifier):
 		log.debug("Full-screen Magnifier gain focus event")
 		nextHandler()
 
+	@override
 	def _startMagnifier(self) -> None:
 		"""
 		Start the Full-screen magnifier using windows DLL
@@ -104,6 +107,7 @@ class FullScreenMagnifier(Magnifier):
 			self._uninitializeNativeMagnification()
 			raise
 
+	@override
 	def _doUpdate(self):
 		"""
 		Perform the actual update of the magnifier
@@ -115,6 +119,7 @@ class FullScreenMagnifier(Magnifier):
 
 		self._fullscreenMagnifier(coordinates)
 
+	@override
 	def _stopMagnifier(self) -> None:
 		"""
 		Stop the Full-screen magnifier using windows DLL
@@ -144,6 +149,7 @@ class FullScreenMagnifier(Magnifier):
 		magnification.MagUninitialize()
 		log.debug("Magnification API uninitialized")
 
+	@override
 	def _attemptRecovery(self) -> None:
 		"""
 		Attempt to recover from repeated Magnification API errors by
@@ -249,6 +255,7 @@ class FullScreenMagnifier(Magnifier):
 			case FullScreenMode.CENTER:
 				return coordinates
 
+	@override
 	def _keepMouseCentered(self) -> None:
 		"""
 		Move the mouse to the center of the magnified view.
@@ -371,6 +378,7 @@ class FullScreenMagnifier(Magnifier):
 		self._spotlightManager._spotlightIsActive = False
 		self._startTimer(self._updateMagnifier)
 
+	@override
 	def _getMagnifierParameters(self, coordinates: Coordinates) -> MagnifierParameters:
 		"""
 		Compute the top-left corner of the magnifier window centered on (x, y)
