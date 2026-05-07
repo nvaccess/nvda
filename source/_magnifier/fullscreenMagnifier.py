@@ -8,7 +8,6 @@ Full-screen magnifier module.
 """
 
 from logHandler import log
-import screenCurtain
 import speech
 import ui
 import winUser
@@ -60,11 +59,6 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		Start the Full-screen magnifier using windows DLL
 		"""
-		# Check if Screen Curtain is active
-		if screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled:
-			log.warning("Cannot start magnifier: Screen Curtain is active")
-			raise RuntimeError("Screen Curtain is active")
-
 		super()._startMagnifier()
 		log.debug(
 			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self._fullscreenMode}",
