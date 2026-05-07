@@ -104,7 +104,7 @@ def toggleMagnifier() -> None:
 		)
 	else:
 		initialize()
-		filter = getFilter()
+		currentFilter = getFilter()
 		magnifiedView = getMagnifiedView()
 		zoomLevel = getZoomLevelString()
 		if magnifiedView == MagnifiedView.FULLSCREEN:
@@ -116,7 +116,7 @@ def toggleMagnifier() -> None:
 			).format(
 				magnifiedView=magnifiedView.displayString,
 				zoomLevel=zoomLevel,
-				filter=filter.displayString,
+				filter=currentFilter.displayString,
 				fullscreenMode=fullscreenMode.displayString,
 			)
 		else:
@@ -127,7 +127,7 @@ def toggleMagnifier() -> None:
 			).format(
 				magnifiedView=magnifiedView.displayString,
 				zoomLevel=zoomLevel,
-				filter=filter.displayString,
+				filter=currentFilter.displayString,
 			)
 		ui.message(msg)
 
