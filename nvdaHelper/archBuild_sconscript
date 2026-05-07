@@ -207,16 +207,12 @@ if isNVDACoreArch:
 
 ia2RPCStubs = env.SConscript("ia2_sconscript")
 Export("ia2RPCStubs")
-if signExec:
-	env.AddPostAction(ia2RPCStubs[0], [signExec])
-env.Install(libInstallDir, ia2RPCStubs[0])  # proxy dll
+env.copyAndSign(libInstallDir, ia2RPCStubs[0])  # proxy dll
 if isNVDACoreArch:
 	env.Install(sourceTypelibDir, ia2RPCStubs[1])  # typelib
 
 iSimpleDomRPCStubs = env.SConscript("ISimpleDOM_sconscript")
-if signExec:
-	env.AddPostAction(iSimpleDomRPCStubs[0], [signExec])
-env.Install(libInstallDir, iSimpleDomRPCStubs[0])  # proxy dll
+env.copyAndSign(libInstallDir, iSimpleDomRPCStubs[0])  # proxy dll
 if isNVDACoreArch:
 	env.Install(sourceTypelibDir, iSimpleDomRPCStubs[1])  # typelib
 
@@ -228,39 +224,27 @@ Export("apiHookObj")
 
 localLib = env.SConscript("local/sconscript")
 Export("localLib")
-if signExec:
-	env.AddPostAction(localLib[0], [signExec])
-env.Install(libInstallDir, localLib)
+env.copyAndSign(libInstallDir, localLib)
 
 if isNVDAHelperLocalArch:
 	win10localLib = env.SConscript(
 		"localWin10/sconscript",
 	)
-	if signExec:
-		env.AddPostAction(win10localLib[0], [signExec])
-	env.Install(libInstallDir, win10localLib)
+	env.copyAndSign(libInstallDir, win10localLib)
 	UIARemoteLib = env.SConscript("UIARemote/sconscript")
-	if signExec:
-		env.AddPostAction(UIARemoteLib[0], [signExec])
-	env.Install(libInstallDir, UIARemoteLib)
+	env.copyAndSign(libInstallDir, UIARemoteLib)
 
 clientLib = env.SConscript("client/sconscript")
 Export("clientLib")
-if signExec:
-	env.AddPostAction(clientLib[0], [signExec])
-env.Install(clientInstallDir, clientLib)
+env.copyAndSign(clientInstallDir, clientLib)
 
 remoteLib = env.SConscript("remote/sconscript")
 Export("remoteLib")
-if signExec:
-	env.AddPostAction(remoteLib[0], [signExec])
-env.Install(libInstallDir, remoteLib)
+env.copyAndSign(libInstallDir, remoteLib)
 
 if not isNVDAHelperLocalArch:
 	remoteLoaderProgram = env.SConscript("remoteLoader/sconscript")
-	if signExec:
-		env.AddPostAction(remoteLoaderProgram, [signExec])
-	env.Install(libInstallDir, remoteLoaderProgram)
+	env.copyAndSign(libInstallDir, remoteLoaderProgram)
 
 if isNVDACoreArch:
 	sonicLib = thirdPartyEnv.SConscript("sonic/sconscript")

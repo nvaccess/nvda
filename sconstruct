@@ -234,6 +234,23 @@ elif certFile:
 	# Export via scons environment so other libraries can be signed
 	env["signExec"] = signExecCert
 
+# A builder that copies and optionally signs the file if signing info is provided.
+def copyAndSign(env, targetDir, source):
+	actions = [
+		Copy("$TARGET", "$SOURCE"),
+	]
+	if certFile or apiSigningToken:
+		actions.append(env["signExec"])
+	firstSource = env.Flatten(source)[0]
+	target = env.Dir(targetDir).File(firstSource.name)
+	return env.Command(
+		target=target,
+		source=source,
+		action=actions,
+	)
+
+env.AddMethod(copyAndSign, "copyAndSign")
+
 # architecture-specific environments
 archTools = ["default", "midl", "msrpc"]
 env32 = env.Clone(TARGET_ARCH="x86", tools=archTools)
@@ -512,11 +529,10 @@ uninstGen = env.Command(
 			"/DINSTEXE=${TARGET.abspath}",
 			"$SOURCE",
 		],
+		env["signExec"]
 	],
 )
 uninstaller = env.Command(uninstFile, uninstGen, [uninstGen])
-if certFile or apiSigningToken:
-	env.AddPostAction(uninstaller, [env["signExec"]])
 
 devDocTargets = env.SConscript(
 	"projectDocs/dev/developerGuide/sconscript",
@@ -550,10 +566,10 @@ launcher = env.Command(
 			"/DLAUNCHEREXE=${TARGET.abspath}",
 			"$SOURCE",
 		],
+		env["signExec"]
 	],
 )
-if certFile or apiSigningToken:
-	env.AddPostAction(launcher, [env["signExec"]])
+
 env.Alias("launcher", launcher)
 
 clientArchive = env.ZipArchive(
@@ -770,3 +786,4 @@ env.Command(
 	sourceDir.File("speech/types.py"),
 	Copy("$TARGET", "$SOURCE"),
 )
+

@@ -98,9 +98,7 @@ sourceFiles = [
 ]
 objs = [env.Object("%s.obj" % f, louisSourceDir.File(f)) for f in sourceFiles]
 louisLib = env.SharedLibrary("liblouis", objs)
-if signExec:
-	env.AddPostAction(louisLib[0], [signExec])
-env.Install(sourceDir, louisLib)
+env.copyAndSign(sourceDir, louisLib)
 
 louisPython = env.Substfile(
 	outDir.File("__init__.py"),
