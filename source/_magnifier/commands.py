@@ -82,7 +82,7 @@ def toggleMagnifier() -> None:
 	"""Toggle the NVDA magnifier on/off"""
 	import screenCurtain
 
-	magnifier: Magnifier = getMagnifier()
+	magnifier: Magnifier | None = getMagnifier()
 	if magnifier and magnifier._isActive:
 		# Stop magnifier
 		terminate()
