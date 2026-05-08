@@ -511,6 +511,7 @@ def ZipArchiveAction(target, source, env):
 env["BUILDERS"]["ZipArchive"] = Builder(action=ZipArchiveAction)
 
 uninstFile = File("dist/uninstall.exe")
+# Build the uninstaller generator executable.
 uninstGen = env.Command(
 	File("uninstaller/uninstGen.exe"),
 	"uninstaller/uninst.nsi",
@@ -529,10 +530,14 @@ uninstGen = env.Command(
 			"/DINSTEXE=${TARGET.abspath}",
 			"$SOURCE",
 		],
-		env["signExec"]
 	],
 )
-uninstaller = env.Command(uninstFile, uninstGen, [uninstGen])
+# Actually generate the final uninstaller executable.
+# optionally signing it if required.
+actions = [uninstGen]
+if certFile or apiSigningToken: 
+	actions.append(env["signExec"])
+uninstaller = env.Command(uninstFile, uninstGen, actions)
 
 devDocTargets = env.SConscript(
 	"projectDocs/dev/developerGuide/sconscript",
@@ -548,6 +553,11 @@ env.Clean(dist, dist)
 # Clean the intermediate build directory.
 env.Clean([dist], buildDir)
 
+# A command to build the NvDA launcher file,
+# Optionally signing if required.
+extraActions = []
+if certFile or apiSigningToken:
+	extraActions.append(env["signExec"])
 launcher = env.Command(
 	outputDir.File("%s.exe" % outFilePrefix),
 	["launcher/nvdaLauncher.nsi", dist],
@@ -566,7 +576,7 @@ launcher = env.Command(
 			"/DLAUNCHEREXE=${TARGET.abspath}",
 			"$SOURCE",
 		],
-		env["signExec"]
+		*extraActions,
 	],
 )
 
