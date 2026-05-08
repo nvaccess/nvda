@@ -379,9 +379,8 @@ freeze(
 			else []
 		)
 		+ getRecursiveDataFiles(
-			"include/nvda-mathcat/assets",
-			"../include/nvda-mathcat/assets",
-			excludes=tuple(f"*{ext}" for ext in importlib.machinery.all_suffixes()),
+			"include/nvda-mathcat/assets/Rules",
+			"../include/nvda-mathcat/assets/Rules",
 		)
 		+ getRecursiveDataFiles(
 			"synthDrivers",
