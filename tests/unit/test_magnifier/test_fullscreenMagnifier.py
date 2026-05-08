@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from unittest.mock import MagicMock, patch
-from _magnifier.utils.types import Filter, FullScreenMode, MagnifierType, Direction, Coordinates
+from _magnifier.utils.types import Filter, FullScreenMode, MagnifiedView, Direction, Coordinates
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
 from _magnifier.magnifier import Magnifier
@@ -22,7 +22,7 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		self.assertEqual(magnifier.zoomLevel, 2.0)
 		self.assertEqual(magnifier.filterType, Filter.NORMAL)
 		self.assertEqual(magnifier._fullscreenMode, FullScreenMode.CENTER)
-		self.assertEqual(magnifier._magnifierType, MagnifierType.FULLSCREEN)
+		self.assertEqual(magnifier._MAGNIFIED_VIEW, MagnifiedView.FULLSCREEN)
 		self.assertTrue(magnifier._isActive)
 
 		magnifier._stopMagnifier()
@@ -107,6 +107,7 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierPositionCalculation(self):
 		"""Test position calculation."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Test position calculation
 		params = magnifier._getMagnifierParameters((500, 400))
@@ -130,6 +131,7 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierZoomBoundaries(self):
 		"""Test zoom boundaries."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 		magnifier.zoomLevel = 1.0
 
 		# Test minimum boundary
@@ -144,15 +146,16 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		# Cleanup
 		magnifier._stopMagnifier()
 
-	def testMagnifierTypeProperty(self):
-		"""Test magnifierType property for FullScreenMagnifier."""
+	def testMagnifiedViewProperty(self):
+		"""Test magnifiedView property for FullScreenMagnifier."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Should default to FULLSCREEN
-		self.assertEqual(magnifier._magnifierType, MagnifierType.FULLSCREEN)
+		self.assertEqual(magnifier._MAGNIFIED_VIEW, MagnifiedView.FULLSCREEN)
 
 		# Test that we can read it (inherited property from Magnifier)
-		self.assertIsNotNone(magnifier._magnifierType)
+		self.assertIsNotNone(magnifier._MAGNIFIED_VIEW)
 
 		# Cleanup
 		magnifier._stopMagnifier()
@@ -160,13 +163,14 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierInheritance(self):
 		"""Test inheritance structure."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		self.assertIsInstance(magnifier, Magnifier)
 
 		# Test basic properties exist
 		self.assertTrue(hasattr(magnifier, "zoomLevel"))
 		self.assertTrue(hasattr(magnifier, "filterType"))
-		self.assertTrue(hasattr(magnifier, "_magnifierType"))
+		self.assertTrue(hasattr(magnifier, "_MAGNIFIED_VIEW"))
 		self.assertTrue(hasattr(magnifier, "_fullscreenMode"))
 		self.assertTrue(hasattr(magnifier, "_isActive"))
 		self.assertTrue(hasattr(magnifier, "_currentCoordinates"))
@@ -177,6 +181,7 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 	def testMagnifierApiHandling(self):
 		"""Test API error handling."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 
 		# Mock magnification API to fail
 		magnifier._stopTimer = MagicMock()
@@ -221,7 +226,11 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 
 	def testAttemptRecoverySuccess(self):
 		"""FullScreenMagnifier._attemptRecovery reinitialises API and restarts timer on success."""
-		magnifier = FullScreenMagnifier()
+		with patch(
+			"_magnifier.magnifier.FocusManager.getCurrentFocusCoordinates",
+			return_value=Coordinates(0, 0),
+		):
+			magnifier = FullScreenMagnifier()
 		magnifier._consecutiveErrors = 3
 		magnifier._startTimer = MagicMock()
 
@@ -230,6 +239,7 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 
 			mock_mag.MagUninitialize.assert_called_once()
 			mock_mag.MagInitialize.assert_called_once()
+			mock_mag.MagSetFullscreenTransform.assert_called_once_with(magnifier.zoomLevel, 0, 0)
 			mock_mag.MagSetFullscreenColorEffect.assert_called_once()
 			self.assertEqual(magnifier._consecutiveErrors, 0)
 			magnifier._startTimer.assert_called_once_with(magnifier._updateMagnifier)
@@ -253,6 +263,7 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 	def testUpdateLoopSurvivesSingleDoUpdateError(self):
 		"""A single _doUpdate error does not kill the update loop."""
 		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
 		magnifier._startTimer = MagicMock()
 		magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
 			return_value=(100, 200),
@@ -275,12 +286,73 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		magnifier._stopMagnifier()
 
 
+class TestFullScreenMagnifierApiConflict(_TestMagnifier):
+	"""Tests for Windows Magnification API conflict detection at startup and during recovery."""
+
+	def testCannotStartWhenWindowsMagnifierRunning(self):
+		"""
+		MagInitialize succeeds but MagSetFullscreenTransform fails: Windows Magnifier is running.
+		NVDA Magnifier must not start, the user must be notified, and no timer must be started.
+		"""
+		self.mock_mag_fs.MagSetFullscreenTransform.side_effect = OSError("API in use by another magnifier")
+
+		with patch("_magnifier.fullscreenMagnifier.ui.message") as mock_message:
+			magnifier = FullScreenMagnifier()
+
+		self.assertFalse(magnifier._isActive)
+		mock_message.assert_called_once()
+		self.assertIsNone(magnifier._timer)
+
+	def testCannotStartWhenMagInitializeFails(self):
+		"""
+		MagInitialize itself fails: NVDA Magnifier must not start and the user must be notified.
+		"""
+		self.mock_mag_fs.MagInitialize.side_effect = OSError("Cannot initialize magnification API")
+
+		with patch("_magnifier.fullscreenMagnifier.ui.message") as mock_message:
+			magnifier = FullScreenMagnifier()
+
+		self.assertFalse(magnifier._isActive)
+		mock_message.assert_called_once()
+		self.assertIsNone(magnifier._timer)
+
+	def testRecoveryCapStopsMagnifier(self):
+		"""
+		After _MAX_RECOVERY_ATTEMPTS failed attempts, the magnifier stops and the user is notified.
+		"""
+		magnifier = FullScreenMagnifier()
+		magnifier._recoveryAttempts = FullScreenMagnifier._MAX_RECOVERY_ATTEMPTS
+
+		with patch("_magnifier.fullscreenMagnifier.ui.message") as mock_message:
+			magnifier._attemptRecovery()
+
+		self.assertFalse(magnifier._isActive)
+		mock_message.assert_called_once()
+
+	def testRecoveryFailsWhenTransformStillUnavailable(self):
+		"""
+		Recovery declares failure if MagSetFullscreenTransform still raises after reinit.
+		This is the root cause of the Windows Magnifier conflict infinite loop.
+		"""
+		magnifier = FullScreenMagnifier()
+		magnifier._startTimer = MagicMock()
+
+		with patch("_magnifier.fullscreenMagnifier.magnification") as mock_mag:
+			mock_mag.MagSetFullscreenTransform.side_effect = OSError("Still in use")
+			with patch("_magnifier.fullscreenMagnifier.ui.message"):
+				magnifier._attemptRecovery()
+
+		self.assertFalse(magnifier._isActive)
+		magnifier._startTimer.assert_not_called()
+
+
 class TestFullScreenMagnifierKeepMouseCentered(_TestMagnifier):
 	"""Tests for _keepMouseCentered in FullScreenMagnifier."""
 
 	def setUp(self):
 		super().setUp()
 		self.magnifier = FullScreenMagnifier()
+		self.magnifier._startMagnifier()
 		self.screen = getPrimaryDisplayOrientation()
 
 	def tearDown(self):
@@ -301,7 +373,7 @@ class TestFullScreenMagnifierKeepMouseCentered(_TestMagnifier):
 		self.magnifier._currentCoordinates = Coordinates(500, 400)
 		with (
 			patch(
-				"_magnifier.fullscreenMagnifier.winUser.getKeyState",
+				"_magnifier.fullscreenMagnifier.winUser.getAsyncKeyState",
 				side_effect=lambda key: -1 if key == 1 else 0,
 			),
 			patch("_magnifier.fullscreenMagnifier.winUser.setCursorPos") as mockSet,
@@ -314,7 +386,7 @@ class TestFullScreenMagnifierKeepMouseCentered(_TestMagnifier):
 		self.magnifier._currentCoordinates = Coordinates(500, 400)
 		with (
 			patch(
-				"_magnifier.fullscreenMagnifier.winUser.getKeyState",
+				"_magnifier.fullscreenMagnifier.winUser.getAsyncKeyState",
 				side_effect=lambda key: -1 if key == 2 else 0,
 			),
 			patch("_magnifier.fullscreenMagnifier.winUser.setCursorPos") as mockSet,
@@ -327,7 +399,7 @@ class TestFullScreenMagnifierKeepMouseCentered(_TestMagnifier):
 		self.magnifier._currentCoordinates = Coordinates(500, 400)
 		with (
 			patch(
-				"_magnifier.fullscreenMagnifier.winUser.getKeyState",
+				"_magnifier.fullscreenMagnifier.winUser.getAsyncKeyState",
 				side_effect=lambda key: -1 if key == 4 else 0,
 			),
 			patch("_magnifier.fullscreenMagnifier.winUser.setCursorPos") as mockSet,
@@ -342,7 +414,7 @@ class TestFullScreenMagnifierKeepMouseCentered(_TestMagnifier):
 		self.magnifier._currentCoordinates = raw
 		expectedX, expectedY = self._expectedCenter(raw)
 		with (
-			patch("_magnifier.fullscreenMagnifier.winUser.getKeyState", return_value=0),
+			patch("_magnifier.fullscreenMagnifier.winUser.getAsyncKeyState", return_value=0),
 			patch("_magnifier.fullscreenMagnifier.winUser.setCursorPos") as mockSet,
 		):
 			self.magnifier._keepMouseCentered()
@@ -357,7 +429,7 @@ class TestFullScreenMagnifierKeepMouseCentered(_TestMagnifier):
 		# Clamping should shift the center away from (10, 10)
 		self.assertNotEqual((expectedX, expectedY), (raw.x, raw.y))
 		with (
-			patch("_magnifier.fullscreenMagnifier.winUser.getKeyState", return_value=0),
+			patch("_magnifier.fullscreenMagnifier.winUser.getAsyncKeyState", return_value=0),
 			patch("_magnifier.fullscreenMagnifier.winUser.setCursorPos") as mockSet,
 		):
 			self.magnifier._keepMouseCentered()
@@ -370,7 +442,7 @@ class TestFullScreenMagnifierKeepMouseCentered(_TestMagnifier):
 		self.magnifier._currentCoordinates = raw
 		expectedX, expectedY = self._expectedCenter(raw)
 		with (
-			patch("_magnifier.fullscreenMagnifier.winUser.getKeyState", return_value=0),
+			patch("_magnifier.fullscreenMagnifier.winUser.getAsyncKeyState", return_value=0),
 			patch("_magnifier.fullscreenMagnifier.winUser.setCursorPos") as mockSet,
 		):
 			self.magnifier._keepMouseCentered()
@@ -385,7 +457,7 @@ class TestFullScreenMagnifierKeepMouseCentered(_TestMagnifier):
 		self.magnifier._currentCoordinates = screenCenter
 		expectedX, expectedY = self._expectedCenter(screenCenter)
 		with (
-			patch("_magnifier.fullscreenMagnifier.winUser.getKeyState", return_value=0),
+			patch("_magnifier.fullscreenMagnifier.winUser.getAsyncKeyState", return_value=0),
 			patch("_magnifier.fullscreenMagnifier.winUser.setCursorPos") as mockSet,
 		):
 			self.magnifier._keepMouseCentered()

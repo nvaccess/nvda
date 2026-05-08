@@ -48,6 +48,7 @@ class MagnifierAction(DisplayStringEnum):
 	PAN_TOP_EDGE = auto()
 	PAN_BOTTOM_EDGE = auto()
 	TOGGLE_FILTER = auto()
+	CHANGE_MAGNIFIER_VIEW = auto()
 	TOGGLE_FOLLOW_SETTINGS = auto()
 	CHANGE_FULLSCREEN_MODE = auto()
 	START_SPOTLIGHT = auto()
@@ -79,6 +80,8 @@ class MagnifierAction(DisplayStringEnum):
 			self.TOGGLE_FOLLOW_SETTINGS: pgettext("magnifier action", "toggle follow settings"),
 			# Translators: Action description for toggling color filters.
 			self.TOGGLE_FILTER: pgettext("magnifier action", "toggle filters"),
+			# Translators: Action description for changing magnifier view.
+			self.CHANGE_MAGNIFIER_VIEW: pgettext("magnifier action", "change magnifier view"),
 			# Translators: Action description for changing full-screen mode.
 			self.CHANGE_FULLSCREEN_MODE: pgettext("magnifier action", "change full-screen mode"),
 			# Translators: Action description for starting spotlight mode.
@@ -108,7 +111,7 @@ class MagnifierFollowFocusType(DisplayStringEnum):
 		}
 
 
-class MagnifierType(DisplayStringStrEnum):
+class MagnifiedView(DisplayStringStrEnum):
 	"""Type of magnifier"""
 
 	FULLSCREEN = "fullscreen"
@@ -117,15 +120,15 @@ class MagnifierType(DisplayStringStrEnum):
 	LENS = "lens"
 
 	@property
-	def _displayStringLabels(self) -> dict["MagnifierType", str]:
+	def _displayStringLabels(self) -> dict["MagnifiedView", str]:
 		return {
-			# Translators: Magnifier type - full-screen mode.
+			# Translators: Magnifier view - full-screen mode.
 			self.FULLSCREEN: pgettext("magnifier", "Fullscreen"),
-			# Translators: Magnifier type - fixed mode.
+			# Translators: Magnifier view - fixed mode.
 			self.FIXED: pgettext("magnifier", "Fixed"),
-			# Translators: Magnifier type - docked mode.
+			# Translators: Magnifier view - docked mode.
 			self.DOCKED: pgettext("magnifier", "Docked"),
-			# Translators: Magnifier type - lens mode.
+			# Translators: Magnifier view - lens mode.
 			self.LENS: pgettext("magnifier", "Lens"),
 		}
 
