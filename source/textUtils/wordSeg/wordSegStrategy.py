@@ -314,10 +314,14 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 
 			# Unicode categories for punctuation
 			PUNCTUATION_CATEGORIES: str = "pP"
+			# Unicode categories for other (mainly for braille) patterns
+			OTHER_PATTERN_CATEGORIES: str = "So"
 			# Determine whether any punctuation forbids a separator
 			noSep = (
 				unicodedata.category(self.text[curIndex - 1])[0] in PUNCTUATION_CATEGORIES
+				or unicodedata.category(self.text[curIndex - 1]) == OTHER_PATTERN_CATEGORIES
 				or unicodedata.category(self.text[curIndex])[0] in PUNCTUATION_CATEGORIES
+				or unicodedata.category(self.text[curIndex]) == OTHER_PATTERN_CATEGORIES
 			)
 
 			if not noSep:
