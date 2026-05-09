@@ -2232,7 +2232,7 @@ class BrowseModeDocumentTreeInterceptor(
 				# See #7435 for a discussion on this.
 				# #17750: It's important that we do this *after* speaking the object.
 				# Otherwise, the cached info would prevent NVDA from detecting things like
-				# row and column changes. 
+				# row and column changes.
 				speech.speakTextInfo(focusInfo, reason=OutputReason.ONLYCACHE)
 			focusInfo.collapse()
 			if self._focusEventMustUpdateCaretPosition:
