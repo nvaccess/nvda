@@ -772,9 +772,10 @@ jobs:
         # Strip the 'release-' prefix to get the package version
         $packageVersion = "${{ github.ref_name }}" -replace '^release-', ''
 
-        # beta/rc tags submit to NVAccess.NVDA.Beta; all other release tags submit to NVAccess.NVDA
-        $isBeta = "${{ github.ref_name }}" -match 'beta|rc'
-        $wingetPackageId = if ($isBeta) { "NVAccess.NVDA.Beta" } else { "NVAccess.NVDA" }
+        # Determine the appropriate package ID based on stable, beta, or rc release
+        $isBeta = "${{ github.ref_name }}" -match 'beta'
+        $isRc = "${{ github.ref_name }}" -match 'rc'
+        $wingetPackageId = if ($isBeta) { "NVAccess.NVDA.Beta" } elseif ($isRc) { "NVAccess.NVDA.RC" } else { "NVAccess.NVDA" }
 
         # Retrieve the .exe installer URL from the published GitHub release
         $releaseAssets = gh release view "${{ github.ref_name }}" `
