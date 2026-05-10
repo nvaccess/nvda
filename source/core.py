@@ -950,7 +950,9 @@ def main():
 			warnForNonEmptyDirectory=warnForNonEmptyDirectory,
 		)
 	elif not globalVars.appArgs.minimal:
-		if screenCurtain.ScreenCurtain.enabled and config.conf.getConfigValue("screenCurtain", "playToggleSounds"):
+		if screenCurtain.ScreenCurtain.enabled and config.conf.getConfigValue(
+			"screenCurtain", "playToggleSounds"
+		):
 			# Translators: This is shown on a braille display (if one is connected) when NVDA starts with the screen curtain enabled.
 			initialMessage = _("NVDA started with screen curtain enabled")
 		else:
