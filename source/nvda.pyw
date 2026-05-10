@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2025 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka,
 # Cyrille Bougot
@@ -231,7 +232,7 @@ def _acquireMutex(_desktopName: str) -> wintypes.HANDLE | None:
 				"Prior NVDA exited without releasing mutex, taking ownership."
 				" Note: Restarting your system is recommended."
 				" This error indicates that NVDA previously did not exit correctly or was terminated"
-				" (perhaps by the task manager)."
+				" (perhaps by the task manager).",
 			)
 			return _mutex  # mutex ownership acquired
 		else:

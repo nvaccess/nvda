@@ -26,6 +26,7 @@ import eventHandler
 import review
 import _magnifier
 import _magnifier.commands
+from _magnifier.utils.types import MagnifierFollowFocusType
 import controlTypes
 import api
 import textInfos
@@ -5203,6 +5204,71 @@ class GlobalCommands(ScriptableObject):
 		gesture: inputCore.InputGesture,
 	) -> None:
 		_magnifier.commands.toggleFilter()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle follow mouse for the magnifier",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_toggleFollowMouse(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.MOUSE)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle follow system focus for the magnifier",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_toggleFollowSystemFocus(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.SYSTEM_FOCUS)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle follow review cursor for the magnifier",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_toggleFollowReview(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.REVIEW)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle follow navigator object for the magnifier",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_toggleFollowNavigatorObject(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.NAVIGATOR_OBJECT)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle all follow modes for the magnifier",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_toggleAllFollow(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleAllFollow()
 
 	@script(
 		description=_(
