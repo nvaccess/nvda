@@ -950,7 +950,7 @@ def main():
 			warnForNonEmptyDirectory=warnForNonEmptyDirectory,
 		)
 	elif not globalVars.appArgs.minimal:
-		if screenCurtain.ScreenCurtain.enabled and config.conf.getConfigValue(
+		if screenCurtain.screenCurtain.enabled and config.conf.getConfigValue(
 			"screenCurtain",
 			"playToggleSounds",
 		):
