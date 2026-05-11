@@ -247,8 +247,9 @@ def copyAndSign(env, targetDir, source):
 	actions = [
 		Copy("$TARGET", "$SOURCE"),
 	]
-	if certFile or apiSigningToken:
-		actions.append(env["signExec"])
+	signExec = env.get("signExec")
+	if signExec:
+		actions.append(signExec)
 	target = env.Dir(targetDir).File(source.name)
 	return env.Command(
 		target=target,
