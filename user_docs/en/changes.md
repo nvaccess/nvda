@@ -1,5 +1,24 @@
 # What's New in NVDA
 
+## 2026.3
+
+### Important notes
+
+### New Features
+
+### Changes
+
+### Bug Fixes
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+#### Deprecations
+
+<!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
+<!-- markdownlint-disable -->
+
 ## 2026.2
 
 ### Important notes
@@ -116,9 +135,6 @@ Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`,
 * The `speechDictHandler.ENTRY_TYPE_*` constants are deprecated.
 Use the `speechDictHandler.types.EntryType` enumeration instead. (#19430, @LeonarddeR)
 * `speechDictHandler.SpeechDictEntry` and `speechDictHandler.SpeechDict` have been moved to `speechDictHandler.types`. (#19430, @LeonarddeR)
-
-<!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
-<!-- markdownlint-disable -->
 
 ## 2026.1
 
