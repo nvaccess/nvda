@@ -1,5 +1,24 @@
 # What's New in NVDA
 
+## 2026.3
+
+### Important notes
+
+### New Features
+
+### Changes
+
+### Bug Fixes
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+#### Deprecations
+
+<!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
+<!-- markdownlint-disable -->
+
 ## 2026.2
 
 ### Important notes
@@ -116,35 +135,6 @@ Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`,
 * The `speechDictHandler.ENTRY_TYPE_*` constants are deprecated.
 Use the `speechDictHandler.types.EntryType` enumeration instead. (#19430, @LeonarddeR)
 * `speechDictHandler.SpeechDictEntry` and `speechDictHandler.SpeechDict` have been moved to `speechDictHandler.types`. (#19430, @LeonarddeR)
-
-## 2026.1.1
-
-This is a patch release to fix security issues.
-A bug fix is also included for an issue introduced in 2026.1 with how `ctrl+f` is handled in File Explorer.
-A change introduced in 2026.1 with how NVDA handles connection issues with Remote Access was removed.
-
-### Security fixes
-
-Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
-
-* Fixed an issue which could cause NVDA to connect to an untrusted Remote Access server. ([GHSA-m268-mc77-j2cr](https://github.com/nvaccess/nvda/security/advisories/GHSA-m268-mc77-j2cr))
-* Prevents a situation which could cause unselected add-ons to be copied to the system-wide configuration. ([GHSA-669f-7gpr-5vqm](https://github.com/nvaccess/nvda/security/advisories/GHSA-669f-7gpr-5vqm))
-
-### Bug Fixes
-
-* In File Explorer, pressing `ctrl+f` once again focuses the search box without subsequently reporting a pane. (#20021, @Cary-rowen)
-
-### Changes
-
-* Remote Access once again attempts automatic reconnection after a failed initial connection as the controlled computer, rather than failing immediately.
-This means that headless or otherwise physically inaccessible machines configured to automatically connect at startup will be reachable once the network is available. (#20122)
-
-### Changes for Developers
-
-* The `winBindings.cfgmgr32` module is now included in NVDA binary builds. (#20089, @Cary-rowen)
-
-<!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
-<!-- markdownlint-disable -->
 
 ## 2026.1
 
