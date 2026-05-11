@@ -6211,7 +6211,10 @@ class MagnifierPanel(SettingsPanel):
 		config.conf["magnifier"]["keepMouseCentered"] = self.keepMouseCenteredCheckBox.GetValue()
 
 	def onEnableMagnifierChange(self, evt: wx.CommandEvent):
-		toggleMagnifier()
+		requestedEnabled = evt.IsChecked()
+		currentEnabled = magnifierConfig.getEnabled()
+		if requestedEnabled != currentEnabled:
+			toggleMagnifier()
 
 
 class PrivacyAndSecuritySettingsPanel(SettingsPanel):
