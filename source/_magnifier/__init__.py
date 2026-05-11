@@ -90,7 +90,7 @@ def terminate() -> None:
 	global _magnifier
 
 	log.debug("Terminating magnifier")
-	stop()
+	stop(persist=False)
 	_magnifier = None
 
 
@@ -102,10 +102,15 @@ def start() -> None:
 	setEnabled(True)
 
 
-def stop() -> None:
+def stop(persist: bool = True) -> None:
+	"""Stop the magnifier if it is active.
+
+	:param persist: Whether to persist the magnifier state
+	"""
 	if isActive():
 		_magnifier._stopMagnifier()
-		setEnabled(False)
+		if persist:
+			setEnabled(False)
 	else:
 		log.debug("Attempted to stop magnifier, but it is not active.")
 
