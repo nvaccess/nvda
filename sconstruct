@@ -561,7 +561,7 @@ env.Clean(dist, dist)
 # Clean the intermediate build directory.
 env.Clean([dist], buildDir)
 
-# A command to build the NvDA launcher file,
+# A command to build the NVDA launcher file,
 # Optionally signing if required.
 extraActions = []
 if certFile or apiSigningToken:
