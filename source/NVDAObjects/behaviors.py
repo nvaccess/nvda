@@ -76,14 +76,20 @@ class ProgressBar(NVDAObject):
 			lastSpeechProgressValue is None
 			or abs(percentage - lastSpeechProgressValue) >= pbConf["speechPercentageInterval"]
 		):
+			# Translators: This is presented to inform the user of a progress bar percentage.
+			msg_template = npgettext(
+				"progress bar",
+				"%d percent",
+				"%d percent\u200B",
+				percentage
+			)
+			msg = (msg_template % percentage).replace('\u200B', '')
 			queueHandler.queueFunction(
 				queueHandler.eventQueue,
 				speech.speakMessage,
-				# Translators: This is presented to inform the user of a progress bar percentage.
-				ngettext("%d percent", "%d percent", percentage) % percentage,
+				msg
 			)
 			self.progressValueCache["speech,%d,%d" % (x, y)] = percentage
-
 
 class Dialog(NVDAObject):
 	"""Overrides the description property to obtain dialog text."""

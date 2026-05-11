@@ -212,11 +212,20 @@ def _getACStatusText(systemPowerStatus: SystemPowerStatus) -> str:
 
 def _getBatteryInformation(systemPowerStatus: SystemPowerStatus) -> List[str]:
 	text: List[str] = []
-	# Translators: This is presented to inform the user of the current battery percentage.
-	text.append(
-		ngettext("%d percent", "%d percent", systemPowerStatus.BatteryLifePercent)
-		% systemPowerStatus.BatteryLifePercent,
-	)
+	# Translators: This is presented to inform the user of the current battery percentage. The second string contains a zero-width space (\u200B)
+# to force plural form extraction. It will be removed at runtime.
+	# Using npgettext with the "battery level" context
+	percent_msg = npgettext(
+		"battery level",
+		"%d percent",                     
+		"%d percent\u200B",               
+		systemPowerStatus.BatteryLifePercent
+	) % systemPowerStatus.BatteryLifePercent
+	
+	# Remove the zero-width spaces in case the synthesizer makes them sound
+	percent_msg = percent_msg.replace('\u200B', '')
+	text.append(percent_msg)
+	
 	SECONDS_PER_HOUR = 3600
 	SECONDS_PER_MIN = 60
 	if systemPowerStatus.BatteryLifeTime != BATTERY_LIFE_TIME_UNKNOWN:
