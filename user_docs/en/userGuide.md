@@ -2882,6 +2882,11 @@ This settings category contains the following options:
 Enables the magnifier.
 When toggled, the magnifier will start and stop immediately, rather than on-save.
 
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Disabled|
+
 ##### Zoom level {#MagnifierZoom}
 
 This slider allows you to set the zoom level when using the magnifier.
