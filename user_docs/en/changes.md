@@ -56,7 +56,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 
 ### Bug Fixes
 
-* Fixed an error when a synthesizer doesn't have available languages, and NVDA tries to report if a language is supported. (#20080, @nvdaes)
+* Fixed an error that could occur when NVDA checked whether a language is supported for a synthesizer with invalid languages. (#20080, @nvdaes)
 * NVDA will attempt to recover more quickly from freezes in some applications, especially those written in Java. (#14396, @thgcode)
 * In Firefox browse mode, the accessible name of form controls (such as checkboxes and radio buttons) is now correctly announced when the control has an `aria-label` and an associated `<label>` element that contains only `aria-hidden` content. (#19409, @bramd)
 * The "Toggles on and off if the screen layout is preserved while rendering the document content" item in the "Browse mode" category of the Input Gestures dialog now behaves correctly. (#18378)
