@@ -17,7 +17,7 @@ def setEnabled(enable: bool) -> None:
 	"""
 	Set the config for the magnifier state (enable or disabled).
 
-	:param enabled: True if the magnifier is enabled, False if it is disabled.
+	:param enable: True if the magnifier is enabled, False if it is disabled.
 	"""
 	config.conf["magnifier"]["enabled"] = enable
 

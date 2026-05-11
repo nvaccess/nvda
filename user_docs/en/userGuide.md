@@ -2877,7 +2877,7 @@ Key: `NVDA+control+w`
 The Magnifier category in the NVDA Settings dialog allows you to configure the default behavior of NVDA's built-in [Magnifier](#Magnifier) feature.
 This settings category contains the following options:
 
-##### Enable Magnfier {#MagnifierEnable}
+##### Enable Magnifier {#MagnifierEnable}
 
 Enables the magnifier.
 When toggled, the magnifier will start and stop immediately, rather than on-save.
