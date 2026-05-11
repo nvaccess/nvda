@@ -117,6 +117,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 # Magnifier settings
 [magnifier]
 	enabled = boolean(default=false)
+	magnifiedView = string(default="fullscreen")
 	zoomLevel = float(min=1.0, max=10.0, default=2.0)
 	isTrueCentered = boolean(default=False)
 	filter = string(default="normal")
@@ -360,6 +361,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	cancelExpiredFocusSpeech = integer(0, 2, default=0)
 	# 0: Only in test versions, 1: Yes, 2: No
 	playErrorSound = integer(0, 2, default=0)
+	speechDictsUseModernRegex = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 
 [addonStore]
 	automaticUpdates = option("notify", "update", "disabled", default="notify")

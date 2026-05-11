@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-29 00:54+0000\n"
-"PO-Revision-Date: 2026-05-04 02:29\n"
+"POT-Creation-Date: 2026-05-04 03:01+0000\n"
+"PO-Revision-Date: 2026-05-11 02:43\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -1440,22 +1440,22 @@ msgstr "Ei edellistä välilehteä"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1113
 msgid "moves to the next figure"
-msgstr "Siirtää seuraavaan kuvituskuvaan."
+msgstr "Siirtää seuraavaan kuvioon."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1115
 msgid "no next figure"
-msgstr "Ei seuraavaa kuvituskuvaa"
+msgstr "Ei seuraavaa kuviota"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1117
 msgid "moves to the previous figure"
-msgstr "Siirtää edelliseen kuvituskuvaan."
+msgstr "Siirtää edelliseen kuvioon."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1119
 msgid "no previous figure"
-msgstr "Ei edellistä kuvituskuvaa"
+msgstr "Ei edellistä kuviota"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1125
@@ -2575,7 +2575,7 @@ msgstr "Vieritä oikealle hiiren sijainnissa"
 #. Translators: Input help mode message for report current selection command.
 #: globalCommands.py:370
 msgid "Announces the current selection in edit controls and documents. Pressing twice spells this information. Pressing three times spells it using character descriptions. Pressing four times shows it in a browsable message. "
-msgstr "Puhuu nykyisen valinnan muokkkaussäätimissä ja asiakirjoissa. Kahdesti painettaessa valinta tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. Neljästi painettaessa valinta näytetään selaustilassa."
+msgstr "Puhuu nykyisen valinnan muokkauskentissä ja asiakirjoissa. Kahdesti painettaessa valinta tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. Neljästi painettaessa valinta näytetään selaustilassa."
 
 #. Translators: The message reported after selected text
 #. Translators: This is spoken to indicate what has just been selected.
@@ -3191,19 +3191,19 @@ msgstr "Napsautettavat kohteet ilmoitetaan"
 #. Translators: Input help mode message for toggle report figures and captions command.
 #: globalCommands.py:1180
 msgid "Toggles on and off the reporting of figures and captions"
-msgstr "Ottaa kuvituskuvien ja kuvatekstien ilmoittamisen käyttöön tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön kuvioiden ja kuvatekstien ilmoittamisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report figures and captions document formatting
 #. setting.
 #: globalCommands.py:1187
 msgid "report figures and captions off"
-msgstr "Kuvituskuvia ja kuvatekstejä ei ilmoiteta"
+msgstr "Kuvioita ja kuvatekstejä ei ilmoiteta"
 
 #. Translators: The message announced when toggling the report figures and captions document formatting
 #. setting.
 #: globalCommands.py:1192
 msgid "report figures and captions on"
-msgstr "Kuvituskuvat ja kuvatekstit ilmoitetaan"
+msgstr "Kuviot ja kuvatekstit ilmoitetaan"
 
 #. Translators: Input help mode message for cycle through automatic language switching mode command.
 #: globalCommands.py:1199
@@ -3396,12 +3396,12 @@ msgstr "Ei kohdistinta"
 #. Translators: Input help mode message for move to parent object command.
 #: globalCommands.py:1613
 msgid "Moves the navigator object to the object containing it"
-msgstr "Siirtää navigointiobjektin ylemmän tason objektiin."
+msgstr "Siirtää navigointiobjektin pääobjektiin."
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 #: globalCommands.py:1629
 msgid "No containing object"
-msgstr "Ei säilöobjektia"
+msgstr "Ei pääobjektia"
 
 #. Translators: Input help mode message for move to next object command.
 #: globalCommands.py:1644
@@ -3428,12 +3428,12 @@ msgstr "Ei edellistä"
 #. Translators: Input help mode message for move to first child object command.
 #: globalCommands.py:1703
 msgid "Moves the navigator object to the first object inside it"
-msgstr "Siirtää navigointiobjektin ensimmäiseen sen sisällä olevaan objektiin."
+msgstr "Siirtää navigointiobjektin ensimmäiseen aliobjektiin."
 
 #. Translators: Reported when there is no contained (first child) object such as inside a document.
 #: globalCommands.py:1719
 msgid "No objects inside"
-msgstr "Ei objekteja sisällä"
+msgstr "Ei aliobjekteja"
 
 #. Translators: Input help mode message for activate current object command.
 #: globalCommands.py:1735
@@ -3600,7 +3600,7 @@ msgstr "Siirtää kohdistuksen pois nykyisestä upotetusta objektista sen sisäl
 #. in web browsing and other situations.
 #: globalCommands.py:2446 NVDAObjects\window\_msOfficeChart.py:634
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
-msgstr "Vaihtaa selaus- ja lomaketilojen välillä. Lomaketilassa näppäinten painallukset välitetään suoraan nykyiselle sovellukselle, mikä mahdollistaa suoran vuorovaikutuksen säädinten kanssa. Selaustilassa oltaessa asiakirjassa voidaan liikkua kohdistimella, pikanavigointinäppäimillä jne."
+msgstr "Vaihtaa selaus- ja lomaketilojen välillä. Lomaketilassa näppäinten painallukset välitetään suoraan nykyiselle sovellukselle, mikä mahdollistaa suoran vuorovaikutuksen ohjausobjektien kanssa. Selaustilassa oltaessa asiakirjassa voidaan liikkua kohdistimella, pikanavigointinäppäimillä jne."
 
 #. Translators: Input help mode message for quit NVDA command.
 #: globalCommands.py:2496
@@ -3790,7 +3790,7 @@ msgstr "Ei nimeä"
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 #: globalCommands.py:3114
 msgid "Reads all controls in the active window"
-msgstr "Lukee kaikki aktiivisen ikkunan säätimet."
+msgstr "Lukee kaikki aktiivisen ikkunan ohjausobjektit."
 
 #. Translators: GUI development tool, to get information about the components used in the NVDA GUI
 #: globalCommands.py:3136
@@ -9995,7 +9995,7 @@ msgstr "Ei käytössä"
 #. Translators: One of the choices for typing echo in keyboard settings
 #: config\configFlags.py:72
 msgid "Only in edit controls"
-msgstr "Vain muokkaussäätimissä"
+msgstr "Vain muokkauskentissä"
 
 #. Translators: One of the choices for typing echo in keyboard settings
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
@@ -10676,7 +10676,7 @@ msgstr "välilehti"
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 #: controlTypes\role.py:258
 msgid "tab control"
-msgstr "välilehtisäädin"
+msgstr "välilehti"
 
 #. Translators: Identifies a slider such as volume slider.
 #: controlTypes\role.py:260
@@ -11254,7 +11254,7 @@ msgstr "ylätunnisteen kohde"
 #. Translators: Identifies a thumb control (a button-like control for changing options).
 #: controlTypes\role.py:505
 msgid "thumb control"
-msgstr "asetussäädin"
+msgstr "pikkukuva"
 
 #: controlTypes\role.py:506
 msgid "calendar"
@@ -11303,7 +11303,7 @@ msgstr "alue"
 #. Translators: Identifies a figure (commonly seen on some websites).
 #: controlTypes\role.py:522
 msgid "figure"
-msgstr "kuvituskuva"
+msgstr "kuvio"
 
 #. Translators: Identifies marked (highlighted) content
 #: controlTypes\role.py:524
@@ -13306,7 +13306,7 @@ msgstr "Ilmaise hiiren k&oordinaatit merkkiäänillä"
 #. mouse settings panel.
 #: gui\settingsDialogs.py:2197
 msgid "&Brightness controls audio coordinates volume"
-msgstr "Äänikoordinaattien &voimakkuutta säädetään ruudun kirkkauden mukaan"
+msgstr "Säädä äänikoordinaattien &voimakkuutta ruudun kirkkauden perusteella"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -13381,7 +13381,7 @@ msgstr "Ilmoita kooste&merkkijonon muutokset"
 #. Translators: This is a label appearing on the Object Presentation settings panel.
 #: gui\settingsDialogs.py:2363
 msgid "Configure how much information NVDA will present about controls. These options apply to focus reporting and NVDA object navigation, but not when reading text content e.g. web content with browse mode."
-msgstr "Määritä, paljonko tietoja NVDA kertoo säätimistä. Nämä asetukset koskevat kohdistuksen ilmaisemista ja NVDA:n objektinavigointia, mutta eivät tekstisisällön lukemista, esim. verkkosisältöä selaustilassa."
+msgstr "Määritä, paljonko tietoja NVDA kertoo ohjausobjekteista. Nämä asetukset koskevat kohdistuksen ilmaisemista ja NVDA:n objektinavigointia, mutta eivät tekstisisällön lukemista, esim. verkkosisältöä selaustilassa."
 
 #. Translators: This is the label for the object presentation panel.
 #: gui\settingsDialogs.py:2369
@@ -14527,13 +14527,13 @@ msgstr "Kyllä"
 #. advanced settings panel.
 #: gui\settingsDialogs.py:4641
 msgid "Regular expression for text paragraph navigation"
-msgstr "Tekstikappalenavigoinnin sääntölauseke"
+msgstr "Tekstikappalenavigoinnin säännöllinen lauseke"
 
 #. Translators: Message shown when invalid text paragraph regex entered
 #: gui\settingsDialogs.py:4663
 #, python-format
 msgid "Failed to compile text paragraph regular expression: %s"
-msgstr "Tekstikappalenavigoinnin sääntölausekkeen kääntäminen epäonnistui: %s"
+msgstr "Tekstikappalenavigoinnin säännöllisen lausekkeen kääntäminen epäonnistui: %s"
 
 #. Translators: This is the label for the Advanced settings panel.
 #: gui\settingsDialogs.py:4793
@@ -14910,7 +14910,7 @@ msgstr "Koko &sana"
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: gui\speechDict.py:35
 msgid "Regular &expression"
-msgstr "Sääntö&lauseke"
+msgstr "Säännöllinen &lauseke"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 #: gui\speechDict.py:44
@@ -14947,13 +14947,13 @@ msgstr "Virhe sanastomäärityksessä"
 #: gui\speechDict.py:116
 #, python-brace-format
 msgid "Regular Expression error in the pattern field: \"{error}\"."
-msgstr "Virhe Korvattava-kentän sääntölausekkeessa: \"{error}\"."
+msgstr "Virhe Korvattava-kentän säännöllisessä lausekkeessa: \"{error}\"."
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #: gui\speechDict.py:134
 #, python-brace-format
 msgid "Regular Expression error in the replacement field: \"{error}\"."
-msgstr "Virhe Korvaava-kentän sääntölausekkeessa: \"{error}\"."
+msgstr "Virhe Korvaava-kentän säännöllisessä lausekkeessa: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 #: gui\speechDict.py:178

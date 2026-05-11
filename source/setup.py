@@ -379,8 +379,8 @@ freeze(
 			else []
 		)
 		+ getRecursiveDataFiles(
-			"include/nvda-mathcat/assets",
-			"../include/nvda-mathcat/assets",
+			"include/nvda-mathcat/assets/Rules",
+			"../include/nvda-mathcat/assets/Rules",
 		)
 		+ getRecursiveDataFiles(
 			"synthDrivers",

@@ -10,6 +10,7 @@ from typing import (
 	Optional,
 	Tuple,
 )
+import re
 from ctypes import c_short
 from comtypes import COMError, BSTR
 from comtypes.hresult import E_NOTIMPL
@@ -24,6 +25,7 @@ from comInterfaces import IAccessible2Lib as IA2
 import controlTypes
 from logHandler import log
 from documentBase import DocumentWithTableNavigation
+from IAccessibleHandler.utils import isMSAADebugLoggingEnabled
 from NVDAObjects.behaviors import Dialog, WebDialog
 from . import IAccessible, Groupbox
 from .ia2TextMozilla import MozillaCompoundTextInfo
@@ -102,6 +104,10 @@ class IA2WebAnnotation(AnnotationOrigin):
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib = True
+	# The IAccessibleText implementation in web browsers exposes embedded object
+	# characters which need to be traversed to read the content. That isn't useful
+	# to users.
+	_shouldUseTextInfoForReading = False
 
 	def isDescendantOf(self, obj: "NVDAObjects.NVDAObject") -> bool:
 		if obj.windowHandle != self.windowHandle:
@@ -282,6 +288,9 @@ class Figure(Ia2Web):
 
 class Editor(Ia2Web, DocumentWithTableNavigation):
 	TextInfo = MozillaCompoundTextInfo
+	# MozillaCompoundTextInfo traverses embedded objects and is suitable for
+	# presentation to users.
+	_shouldUseTextInfoForReading = True
 
 	def _getTableCellAt(self, tableID, startPos, destRow, destCol):
 		# Locate the table in the object ancestry of the given document position.
@@ -330,6 +339,20 @@ class EditorChunk(Ia2Web):
 
 class Math(Ia2Web):
 	def _get_mathMl(self):
+		# Chromium browsers now expose a 'math' IAccessible2 attribute,
+		# which contains all the raw MathML.
+		# Check for this attribute first before falling back to ISimpleDOM.
+		mathAttr = self.IA2Attributes.get("math")
+		if mathAttr:
+			# Chromium sometimes embeds HTML comments in the MathML, strip them
+			mathAttr = re.sub(r"<!--.*?-->", "", mathAttr, flags=re.DOTALL)
+
+			langAttr = f' xml:lang="{self.language}"' if self.language else ""
+			mathMl = f"<math{langAttr}>{mathAttr}</math>"
+			if log.isEnabledFor(log.DEBUG) and isMSAADebugLoggingEnabled():
+				log.debug(f"Got MathML from IA2 math attribute: {mathMl}")
+			return mathMl
+
 		from comtypes.gen.ISimpleDOM import ISimpleDOMNode  # type: ignore[reportMissingImports]
 
 		try:

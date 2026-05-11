@@ -1,8 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2023 NV Access Limited
+# Copyright (C) 2012-2026 NV Access Limited, Kefas Lungu
 
+import math
 import threading
 import time
 from collections import OrderedDict
@@ -20,14 +21,25 @@ action_hover = "hover"
 action_hoverUp = "hoverup"
 action_unknown = "unknown"
 hoverActions = (action_hoverDown, action_hover, action_hoverUp)
+# Pinch gesture actions
+#: Two fingers moving toward each other.
+action_pinchIn: str = "pinchin"
+#: Two fingers moving away from each other.
+action_pinchOut: str = "pinchout"
 # timeout for detection of flicks and plural trackers
 multitouchTimeout = 0.25
 # The distance a finger must travel to be treeted as a flick
 minFlickDistance = 50
 # How far a finger is allowed to drift purpandicular to a flick direction to make the flick impossible
 maxAccidentalDrift = 10
+#: Minimum change in distance between two fingers (in pixels) required to classify a pinch gesture.
+minPinchDistance: int = 50
 
 actionLabels = {
+	# Translators: a touch screen gesture where two fingers move toward each other (zoom out)
+	action_pinchIn: pgettext("touch action", "pinch in"),
+	# Translators: a touch screen gesture where two fingers move away from each other (zoom in)
+	action_pinchOut: pgettext("touch action", "pinch out"),
 	# Translators: a very quick touch and release of a finger on a touch screen
 	action_tap: pgettext("touch action", "tap"),
 	# Translators: a very quick touch and release, then another touch with no release, on a touch screen
@@ -243,6 +255,12 @@ class TrackerManager(object):
 		self.curHoverStack = []
 		self.numUnknownTrackers = 0
 		self._lock = threading.Lock()
+		self._pinchStartDistance: float | None = None
+		self._pinchStartMidX: int = 0
+		self._pinchStartMidY: int = 0
+		self._pinchStartTime: float = 0.0
+		#: Last known (x, y) for each finger ID, used to compute final pinch distance after both fingers lift.
+		self._pinchLastPositions: dict[int, tuple[int, int]] = {}
 
 	def makePreheldTrackerFromSingleTouchTrackers(self, trackers):
 		childTrackers = [
@@ -296,10 +314,14 @@ class TrackerManager(object):
 			if oldAction == action_unknown and newAction != action_unknown:
 				self.numUnknownTrackers -= 1
 			if complete:  # This finger has broken contact
+				# Record final position before deletion for pinch distance calculation
+				self._pinchLastPositions[ID] = (tracker.x, tracker.y)
 				# Forget about this finger
 				del self.singleTouchTrackersByID[ID]
 				if tracker.action == action_unknown:
 					self.numUnknownTrackers -= 1
+			# Update pinch tracking whenever any finger moves or lifts
+			self._updatePinch(complete)
 			# if the action changed and its not unknown, then we will be queuing it
 			if newAction != oldAction and newAction != action_unknown:
 				if newAction == action_hover:
@@ -321,6 +343,54 @@ class TrackerManager(object):
 						rawSingleTouchTracker=tracker,
 					),
 				)
+
+	def _updatePinch(self, complete: bool) -> None:
+		"""Track two-finger pinch gestures by monitoring the distance between two fingers.
+
+		Records the initial distance when two fingers are first on screen together,
+		and emits a pinch in or pinch out gesture when both fingers have lifted
+		if the change in distance exceeds :data:`minPinchDistance`.
+
+		:param complete: Whether a finger has just broken contact.
+		"""
+		trackers = list(self.singleTouchTrackersByID.values())
+		numActive = len(trackers)
+		if numActive == 2 and not complete:
+			# Two fingers on screen: record start distance the first time
+			if self._pinchStartDistance is None:
+				t1, t2 = trackers
+				self._pinchStartDistance = math.hypot(t2.x - t1.x, t2.y - t1.y)
+				self._pinchStartMidX = (t1.x + t2.x) // 2
+				self._pinchStartMidY = (t1.y + t2.y) // 2
+				self._pinchStartTime = time.time()
+				# Clear any stale positions from a previous gesture before recording new ones
+				self._pinchLastPositions.clear()
+		elif numActive == 0 and complete and self._pinchStartDistance is not None:
+			# Both fingers have lifted: compute final distance from stored last positions
+			if len(self._pinchLastPositions) == 2:
+				positions = list(self._pinchLastPositions.values())
+				finalDist = math.hypot(
+					positions[1][0] - positions[0][0],
+					positions[1][1] - positions[0][1],
+				)
+				distChange = finalDist - self._pinchStartDistance
+				if abs(distChange) >= minPinchDistance:
+					pinchAction = action_pinchOut if distChange > 0 else action_pinchIn
+					self.processAndQueueMultiTouchTracker(
+						MultiTouchTracker(
+							pinchAction,
+							self._pinchStartMidX,
+							self._pinchStartMidY,
+							self._pinchStartTime,
+							time.time(),
+							numFingers=2,
+						),
+					)
+			self._pinchStartDistance = None
+			self._pinchLastPositions.clear()
+		elif numActive == 0 and complete:
+			# Single finger lifted with no active pinch — reset stored positions
+			self._pinchLastPositions.clear()
 
 	def makeMergedTrackerIfPossible(self, oldTracker, newTracker):
 		if (
