@@ -345,12 +345,9 @@ class SynthDriver(driverHandler.Driver):
 		if lang is None:
 			return True
 		for availableLang in self.availableLanguages:
-			if (
-				availableLang is not None
-				and (
-					lang == languageHandler.normalizeLanguage(availableLang)
-					or lang == languageHandler.normalizeLanguage(availableLang).split("_")[0]
-				)
+			if availableLang is not None and (
+				lang == languageHandler.normalizeLanguage(availableLang)
+				or lang == languageHandler.normalizeLanguage(availableLang).split("_")[0]
 			):
 				return True
 		rootLang = languageHandler.normalizeLanguage(lang).split("_")[0]
