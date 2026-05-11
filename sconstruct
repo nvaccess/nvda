@@ -234,6 +234,7 @@ elif certFile:
 	# Export via scons environment so other libraries can be signed
 	env["signExec"] = signExecCert
 
+
 # A builder that copies and optionally signs the file if signing info is provided.
 def copyAndSign(env, targetDir, source):
 	"""
@@ -254,6 +255,7 @@ def copyAndSign(env, targetDir, source):
 		source=source,
 		action=actions,
 	)
+
 
 env.AddMethod(copyAndSign, "copyAndSign")
 
@@ -541,7 +543,7 @@ uninstGen = env.Command(
 # Actually generate the final uninstaller executable.
 # optionally signing it if required.
 actions = [uninstGen]
-if certFile or apiSigningToken: 
+if certFile or apiSigningToken:
 	actions.append(env["signExec"])
 uninstaller = env.Command(uninstFile, uninstGen, actions)
 
