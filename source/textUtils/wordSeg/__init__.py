@@ -43,4 +43,3 @@ def initialize():
 			Thread(target=callable_to_call, args=args, kwargs=kwargs, daemon=True).start()
 		except Exception as e:
 			log.debug("Initializer %s.%s failed: %s", module_name, qualname, e)
-		return

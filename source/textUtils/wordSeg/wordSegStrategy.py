@@ -4,12 +4,12 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import os
-import ctypes
 from ctypes import (
 	c_bool,
 	c_char_p,
 	c_int,
 	create_string_buffer,
+	cdll,
 	POINTER,
 	byref,
 )
@@ -122,8 +122,8 @@ class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
 
 		helperFunc = NVDAHelper.localLib.calculateWordOffsets
 
-		relStart = ctypes.c_int()
-		relEnd = ctypes.c_int()
+		relStart = c_int()
+		relEnd = c_int()
 		# uniscribe does some strange things
 		# when you give it a string  with not more than two alphanumeric chars in a row.
 		# Inject two alphanumeric characters at the end to fix this
@@ -139,8 +139,8 @@ class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
 			uniscribeLineText,
 			uniscribeLineLength,
 			relOffset,
-			ctypes.byref(relStart),
-			ctypes.byref(relEnd),
+			byref(relStart),
+			byref(relEnd),
 		):
 			relStart = relStart.value
 			relEnd = min(lineLength, relEnd.value)
@@ -163,52 +163,56 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 
 	@classmethod
 	@initializerRegistry
-	def _initCppJieba(cls, forceInit: bool = False):  # TODO: make cppjieba alternative
+	def _initCppJieba(cls, forceInit: bool = False):  # TODO: Add a fallback when cppjieba.dll is unavailable.
 		"""
 		Class-level initializer: attempts to load the versioned cppjieba library and
 		set up ctypes signatures.
 		"""
 		import config
 
-		if not forceInit and (
-			cls._lib
-			or (
-				config.conf["documentNavigation"]["wordSegmentationStandard"].calculated()
-				!= config.featureFlagEnums.WordNavigationUnitFlag.CHINESE
-				and not cls.isUsingRelatedLanguage()
-			)
-		):
+		if cls._lib:
 			return
+
+		if not forceInit:
+			documentNavigationConf = config.conf["documentNavigation"]
+			shouldInit = (
+				documentNavigationConf["wordSegmentationStandard"].calculated()
+				== config.featureFlagEnums.WordNavigationUnitFlag.CHINESE
+				or cls.isUsingRelatedLanguage()
+				or documentNavigationConf["initWordSegForUnusedLang"]
+			)
+			if not shouldInit:
+				return
 		try:
 			from NVDAState import ReadPaths
 
 			lib_path = os.path.join(ReadPaths.coreArchLibPath, "cppjieba.dll")
-			cls._lib = ctypes.cdll.LoadLibrary(lib_path)
+			lib = cdll.LoadLibrary(lib_path)
 
 			# Setup function signatures
 			# bool initJieba(const char* dictDir)
-			cls._lib.initJieba.restype = c_bool
-			cls._lib.initJieba.argtypes = [c_char_p]
+			lib.initJieba.restype = c_bool
+			lib.initJieba.argtypes = [c_char_p]
 
 			# bool calculateWordOffsets(const char* text, int** wordEndOffsets, int* outLen)
-			cls._lib.calculateWordOffsets.restype = c_bool
-			cls._lib.calculateWordOffsets.argtypes = [c_char_p, POINTER(POINTER(c_int)), POINTER(c_int)]
+			lib.calculateWordOffsets.restype = c_bool
+			lib.calculateWordOffsets.argtypes = [c_char_p, POINTER(POINTER(c_int)), POINTER(c_int)]
 
 			# bool insertUserWord(const char* word, int freq, const char* tag)
-			cls._lib.insertUserWord.restype = c_bool
-			cls._lib.insertUserWord.argtypes = [c_char_p, c_int, c_char_p]
+			lib.insertUserWord.restype = c_bool
+			lib.insertUserWord.argtypes = [c_char_p, c_int, c_char_p]
 
 			# bool deleteUserWord(const char* word, const char* tag)
-			cls._lib.deleteUserWord.restype = c_bool
-			cls._lib.deleteUserWord.argtypes = [c_char_p, c_char_p]
+			lib.deleteUserWord.restype = c_bool
+			lib.deleteUserWord.argtypes = [c_char_p, c_char_p]
 
 			# bool find(const char* word)
-			cls._lib.find.restype = c_bool
-			cls._lib.find.argtypes = [c_char_p]
+			lib.find.restype = c_bool
+			lib.find.argtypes = [c_char_p]
 
 			# void freeOffsets(int* offsets)
-			cls._lib.freeOffsets.restype = None
-			cls._lib.freeOffsets.argtypes = [POINTER(c_int)]
+			lib.freeOffsets.restype = None
+			lib.freeOffsets.argtypes = [POINTER(c_int)]
 
 			# Initialize with dictionary path
 			import globalVars
@@ -216,15 +220,19 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			DICTS_DIR = os.path.join(globalVars.appDir, "cppjieba", "dicts")
 			DICTS_DIR_BYTES = DICTS_DIR.encode("utf-8")
 			dictDir = create_string_buffer(DICTS_DIR_BYTES)
-			cls._lib.initJieba(dictDir)
+			if not lib.initJieba(dictDir):
+				log.debugWarning("Failed to initialize cppjieba library with dictionary path: %s", DICTS_DIR)
+				cls._lib = None
+				return
+			cls._lib = lib
 		except Exception as e:
 			log.debugWarning("Failed to load cppjieba library: %s", e)
 			cls._lib = None
 
 	@lru_cache(maxsize=256)
-	def _callCppjiebaCached(self, text_utf8: bytes) -> list[int] | None:
+	def _callCppjiebaCached(self, text_utf8: bytes) -> list[int]:
 		if self._lib is None:
-			return None
+			return []
 
 		charPtr = POINTER(c_int)()
 		outLen = c_int(0)
@@ -232,7 +240,7 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 		try:
 			success: bool = self._lib.calculateWordOffsets(text_utf8, byref(charPtr), byref(outLen))
 			if not success or not bool(charPtr) or outLen.value <= 0:
-				return None
+				return []
 
 			try:
 				n = outLen.value
@@ -245,14 +253,14 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			try:
 				if bool(charPtr):
 					self._lib.freeOffsets(charPtr)
-			except Exception:
-				pass
-			return None
+			except Exception as cleanupErr:
+				log.debugWarning("Failed to free cppjieba offsets after error: %s", cleanupErr)
+			return []
 
-	def _callCPPJieba(self) -> list[int] | None:
+	def _callCPPJieba(self) -> list[int]:
 		"""
 		Instance method: encode self.text and call cppjieba.
-		Returns list[int] on success, None on failure.
+		Returns list[int] on success, or an empty list on failure.
 		Uses LRU cache keyed by utf-8 bytes.
 		"""
 		data = self.text.encode("utf-8")
@@ -261,14 +269,14 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			return self._callCppjiebaCached(data)
 		else:
 			if self._lib is None:
-				return None
+				return []
 
 			charPtr = POINTER(c_int)()
 			outLen = c_int(0)
 			try:
 				success: bool = self._lib.calculateWordOffsets(data, byref(charPtr), byref(outLen))
 				if not success or not bool(charPtr) or outLen.value <= 0:
-					return None
+					return []
 
 				try:
 					n = outLen.value
@@ -280,9 +288,9 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 				try:
 					if bool(charPtr):
 						self._lib.freeOffsets(charPtr)
-				except Exception:
-					pass
-				return None
+				except Exception as cleanupErr:
+					log.debugWarning("Failed to free cppjieba offsets after error: %s", cleanupErr)
+				return []
 
 	def segmentedText(self, sep: str = " ", newSepIndex: list[int] | None = None) -> str:
 		"""Segments the text using the word end indices."""
@@ -306,10 +314,14 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 
 			# Unicode categories for punctuation
 			PUNCTUATION_CATEGORIES: str = "pP"
+			# Unicode categories for other (mainly for braille) patterns
+			OTHER_PATTERN_CATEGORIES: str = "So"
 			# Determine whether any punctuation forbids a separator
 			noSep = (
 				unicodedata.category(self.text[curIndex - 1])[0] in PUNCTUATION_CATEGORIES
+				or unicodedata.category(self.text[curIndex - 1]) == OTHER_PATTERN_CATEGORIES
 				or unicodedata.category(self.text[curIndex])[0] in PUNCTUATION_CATEGORIES
+				or unicodedata.category(self.text[curIndex]) == OTHER_PATTERN_CATEGORIES
 			)
 
 			if not noSep:
@@ -317,9 +329,8 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 				result += sep
 				if newSepIndex is not None:
 					newSepIndex.append(len(result) - len(sep))
-		else:
-			# append the final trailing token after the loop
-			result += self.text[curIndex:postIndex]
+		# append the final trailing token after the loop
+		result += self.text[curIndex:postIndex]
 
 		return result
 

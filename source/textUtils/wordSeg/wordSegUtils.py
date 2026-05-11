@@ -29,14 +29,11 @@ class WordSegWithSeparatorOffsetConverter(OffsetConverter):
 	@cached_property
 	def computedStrToEncodedOffsets(self) -> list[int]:
 		"""
-		Compute a list of offsets so that:
-			encodedIndex = strIndex + relevantStrToEncodedOffsets[strIndex]
-
 		We build an explicit mapping from original string indices to encoded indices
 		by marking separator positions in the encoded string and then assigning
 		each non-separator encoded slot to the next original-character index.
-		The returned list contains the delta (encodedIndex - strIndex) for each
-		original index.
+		The returned list contains the absolute encoded index for each original
+		character index.
 		"""
 		strLen = self.strLength
 
@@ -80,6 +77,16 @@ class WordSegWithSeparatorOffsetConverter(OffsetConverter):
 		"""Returns the length of the string in its subclass-specific encoded representation."""
 		return len(self.encoded)
 
+	def _strOffsetToEncodedOffset(self, offset: int) -> int:
+		if offset == self.strLength:
+			return self.encodedStringLength
+		return self.computedStrToEncodedOffsets[offset]
+
+	def _encodedOffsetToStrOffset(self, offset: int) -> int:
+		if offset == self.encodedStringLength:
+			return self.strLength
+		return self.computedEncodedToStrOffsets[offset]
+
 	def strToEncodedOffsets(
 		self,
 		strStart: int,
@@ -87,33 +94,29 @@ class WordSegWithSeparatorOffsetConverter(OffsetConverter):
 		raiseOnError: bool = False,
 	) -> int | tuple[int, int]:
 		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
-		if strStart == 0:
-			resultStart = 0
-		else:
-			resultStart = self.computedStrToEncodedOffsets[strStart]
+		strStart = max(0, min(strStart, self.strLength))
+		resultStart = self._strOffsetToEncodedOffset(strStart)
 		if strEnd is None:
 			return resultStart
-		elif strStart == strEnd:
+		strEnd = max(0, min(strEnd, self.strLength))
+		if strStart == strEnd:
 			return (resultStart, resultStart)
-		else:
-			resultEnd = self.computedStrToEncodedOffsets[strEnd]
-			return (resultStart, resultEnd)
+		resultEnd = self._strOffsetToEncodedOffset(strEnd)
+		return (resultStart, resultEnd)
 
 	def encodedToStrOffsets(
 		self,
 		encodedStart: int,
 		encodedEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | tuple[int]:
+	) -> int | tuple[int, int]:
 		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
-		if encodedStart == 0:
-			resultStart = 0
-		else:
-			resultStart = self.computedEncodedToStrOffsets[encodedStart]
+		encodedStart = max(0, min(encodedStart, self.encodedStringLength))
+		resultStart = self._encodedOffsetToStrOffset(encodedStart)
 		if encodedEnd is None:
 			return resultStart
-		elif encodedStart == encodedEnd:
+		encodedEnd = max(0, min(encodedEnd, self.encodedStringLength))
+		if encodedStart == encodedEnd:
 			return (resultStart, resultStart)
-		else:
-			resultEnd = self.computedEncodedToStrOffsets[encodedEnd]
-			return (resultStart, resultEnd)
+		resultEnd = self._encodedOffsetToStrOffset(encodedEnd)
+		return (resultStart, resultEnd)

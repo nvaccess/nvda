@@ -8,6 +8,7 @@
 """Unit tests for the textInfos module, its submodules and classes."""
 
 import unittest
+from unittest.mock import patch
 from .textProvider import BasicTextProvider, MockBlackBoxTextInfo
 import textInfos
 from textInfos.offsets import Offsets
@@ -190,6 +191,22 @@ class TestWordExpansion(unittest.TestCase):
 		ti.expand(textInfos.UNIT_WORD)
 		self.assertEqual(ti.text, "")
 		self.assertEqual(ti.offsets, (7, 7))
+
+
+class TestWordSegFlag(unittest.TestCase):
+	class _UnknownWordSegConf:
+		def calculated(self):
+			return "unexpected"
+
+	def test_unknownWordSegConfigReturnsNoneAfterLogging(self):
+		obj = BasicTextProvider(text="abc")
+		ti = obj.makeTextInfo(Offsets(0, 0))
+		ti.wordSegConf = self._UnknownWordSegConf()
+
+		with patch("textInfos.offsets.log.error") as mockLogError:
+			self.assertIsNone(ti.wordSegFlag)
+
+		mockLogError.assert_called_once_with("Unknown word segmentation standard, 'unexpected'")
 
 
 class TestMoveToCodepointOffsetInBlackBoxTextInfo(unittest.TestCase):

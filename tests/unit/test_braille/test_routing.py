@@ -13,6 +13,7 @@ import controlTypes
 from ..textProvider import CursorManager, BasicTextProvider
 import unittest
 import time
+from unittest.mock import Mock, patch
 from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag
 
 
@@ -29,6 +30,42 @@ class CursorManager(CursorManager):
 	caretLastUpdateTime: float = 0.0
 	lastActivateTime: float = 0.0
 	TextInfo = CursorManagerTextInfo
+
+
+class TestBrailleOffsetConverters(unittest.TestCase):
+	def test_chineseWordSegmentationAndUnicodeNormalizationOffsetsAreComposed(self):
+		originalTranslationTable = config.conf["braille"]["translationTable"]
+		originalUnicodeNormalization = config.conf["braille"]["unicodeNormalization"]
+		config.conf["braille"]["translationTable"] = "zh-chn.ctb"
+		config.conf["braille"]["unicodeNormalization"] = "enabled"
+
+		def segmentedText(sep, newSepIndex):
+			newSepIndex.append(1)
+			return "你 ℌ"
+
+		wordSegmenter = Mock()
+		wordSegmenter.segmentedText.side_effect = segmentedText
+		translate = Mock(return_value=([1, 2, 3], [0, 1, 2], [0, 1, 2], 2))
+		try:
+			with (
+				patch("textUtils.wordSeg.wordSegUtils.WordSegmenter", return_value=wordSegmenter),
+				patch("braille.louisHelper.translate", translate),
+			):
+				region = braille.Region()
+				region.rawText = "你ℌ"
+				region.rawTextTypeforms = [11, 22]
+				region.cursorPos = 1
+
+				region.update()
+
+			self.assertEqual(translate.call_args.args[1], "你 H")
+			self.assertEqual(translate.call_args.kwargs["cursorPos"], 2)
+			self.assertEqual(translate.call_args.kwargs["typeform"], [11, 22, 22])
+			self.assertEqual(region.brailleToRawPos, [0, 1, 1])
+			self.assertEqual(region.rawToBraillePos, [0, 2])
+		finally:
+			config.conf["braille"]["translationTable"] = originalTranslationTable
+			config.conf["braille"]["unicodeNormalization"] = originalUnicodeNormalization
 
 
 class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
