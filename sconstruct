@@ -236,13 +236,19 @@ elif certFile:
 
 # A builder that copies and optionally signs the file if signing info is provided.
 def copyAndSign(env, targetDir, source):
+	"""
+	Copies a file to the target directory, and optionally signs it if signing information is provided in the environment.
+	:param env: The scons environment to use to perform the copy and optional signing.
+	:param targetDir: The directory to which the file should be copied.
+	:param source: The file to copy, as a SCons File node.
+	:return: A SCons Node representing the copied (and possibly signed) file in the target directory.
+	"""
 	actions = [
 		Copy("$TARGET", "$SOURCE"),
 	]
 	if certFile or apiSigningToken:
 		actions.append(env["signExec"])
-	firstSource = env.Flatten(source)[0]
-	target = env.Dir(targetDir).File(firstSource.name)
+	target = env.Dir(targetDir).File(source.name)
 	return env.Command(
 		target=target,
 		source=source,
@@ -796,4 +802,3 @@ env.Command(
 	sourceDir.File("speech/types.py"),
 	Copy("$TARGET", "$SOURCE"),
 )
-
