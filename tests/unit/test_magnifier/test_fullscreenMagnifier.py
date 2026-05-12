@@ -298,6 +298,7 @@ class TestFullScreenMagnifierApiConflict(_TestMagnifier):
 
 		with patch("_magnifier.fullscreenMagnifier.ui.message") as mock_message:
 			magnifier = FullScreenMagnifier()
+			magnifier._startMagnifier()
 
 		self.assertFalse(magnifier._isActive)
 		mock_message.assert_called_once()
@@ -311,6 +312,7 @@ class TestFullScreenMagnifierApiConflict(_TestMagnifier):
 
 		with patch("_magnifier.fullscreenMagnifier.ui.message") as mock_message:
 			magnifier = FullScreenMagnifier()
+			magnifier._startMagnifier()
 
 		self.assertFalse(magnifier._isActive)
 		mock_message.assert_called_once()
