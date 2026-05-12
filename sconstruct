@@ -249,6 +249,10 @@ def copyAndSign(env, targetDir, source):
 	]
 	signExec = env.get("signExec")
 	if signExec:
+		# Force SCons to check content to see if the signed file has changed rather than timestamp.
+		# As Github actions cache restore seems to confuse SCons timestamping for these files.
+		env = env.Clone()
+		env.Decider("content")
 		actions.append(signExec)
 	target = env.Dir(targetDir).File(source.name)
 	return env.Command(
