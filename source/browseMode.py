@@ -1,7 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2007-2026 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
-# Thomas Stivers, Accessolutions, Julien Cochuyt, Cyrille Bougot, Kefas Lungu,
-# Wang Chong
+# Thomas Stivers, Accessolutions, Julien Cochuyt, Cyrille Bougot, Kefas Lungu
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
