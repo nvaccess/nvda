@@ -114,7 +114,11 @@ jobs:
         key: ${{ env.SCONS_CACHE_KEY }}
     - name: Prepare source code
       shell: cmd
-      run: scons source %sconsArgs% %sconsCores%
+      run: |
+        PowerShell -Command "Set-ExecutionPolicy Bypass"
+        PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
+        PowerShell -Command "Install-Module -Name SignPath -Force"
+        scons source %sconsArgs% %sconsCores%
     - name: Run synthDriverHost32 runtime builder with its own Python
       shell: pwsh
       env:
