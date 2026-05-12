@@ -6215,6 +6215,7 @@ class MagnifierPanel(SettingsPanel):
 		currentEnabled = magnifierConfig.getEnabled()
 		if requestedEnabled != currentEnabled:
 			toggleMagnifier()
+			self.enableMagnifierCheckBox.SetValue(magnifierConfig.getEnabled())
 
 
 class PrivacyAndSecuritySettingsPanel(SettingsPanel):
