@@ -17,7 +17,7 @@
   * The magnifier cannot be used simultaneously with Screen Curtain for security reasons.
 * A new command, assigned to `NVDA+x`, has been introduced to repeat the last information spoken by NVDA; pressing it twice shows it in a browseable message. (#625, @CyrilleB79)
 * Added an unassigned command to toggle keyboard layout. (#19211, @CyrilleB79)
-* Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @hdzrvcc0X74)
+* Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @tareh7z)
 * Added touch based navigation of browse mode elements, allowing touch screen users to move between links, headings, form fields, lists, tables and other quick navigation elements. (#3424, @kefaslungu)
   * Flick down or up to cycle through element types; flick right or left to navigate between elements of the selected type.
   * The element types shown when cycling can be configured in the Browse Mode settings panel.
@@ -56,6 +56,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 
 ### Bug Fixes
 
+* Fixed an error when a synthesizer doesn't have available languages, and NVDA tries to report if a language is supported. (#20080, @nvdaes)
 * NVDA will attempt to recover more quickly from freezes in some applications, especially those written in Java. (#14396, @thgcode)
 * In Firefox browse mode, the accessible name of form controls (such as checkboxes and radio buttons) is now correctly announced when the control has an `aria-label` and an associated `<label>` element that contains only `aria-hidden` content. (#19409, @bramd)
 * The "Toggles on and off if the screen layout is preserved while rendering the document content" item in the "Browse mode" category of the Input Gestures dialog now behaves correctly. (#18378)
