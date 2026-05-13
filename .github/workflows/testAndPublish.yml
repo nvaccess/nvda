@@ -378,7 +378,7 @@ jobs:
       run: scons client %sconsArgs% %sconsCores%
       - name: Create NVDA launcher
       shell: cmd
-        run: scons %sconsLauncherOutTargets% %sconsArgs%
+      run: scons %sconsLauncherOutTargets% %sconsArgs%
     - name: Upload launcher
       id: uploadLauncher
       uses: actions/upload-artifact@v7
