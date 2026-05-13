@@ -112,13 +112,15 @@ jobs:
       with:
         path: ${{ env.SCONS_CACHE_MSVC_CONFIG }}
         key: ${{ env.SCONS_CACHE_KEY }}
-    - name: Prepare source code
+    - name: Install signPath
       shell: cmd
       run: |
         PowerShell -Command "Set-ExecutionPolicy Bypass"
         PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
         PowerShell -Command "Install-Module -Name SignPath -Force"
-        scons source %sconsArgs% %sconsCores%
+      - name: Prepare source code
+      shell: cmd
+      run: scons source %sconsArgs% %sconsCores%
     - name: Run synthDriverHost32 runtime builder with its own Python
       shell: pwsh
       env:
@@ -365,15 +367,18 @@ jobs:
       shell: cmd
       run: scons %sconsDocsOutTargets% %sconsArgs% %sconsCores%
     # Run launcher separately as we can't safely generate that in parallel to docs scons targets (#18867)
-    - name: Create launcher and controller client
+    - name: Install signpath
       shell: cmd
       run: |
         PowerShell -Command "Set-ExecutionPolicy Bypass"
         PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
         PowerShell -Command "Install-Module -Name SignPath -Force"
-        # Note launcher  does not build with multiple cores as it must stay sequential.
-        scons %sconsLauncherOutTargets% %sconsArgs%
-        scons client %sconsArgs% %sconsCores%
+      - name: Build NVDAController client
+      shell: cmd
+      run: scons client %sconsArgs% %sconsCores%
+      - name: Create NVDA launcher
+      shell: cmd
+        run: scons %sconsLauncherOutTargets% %sconsArgs%
     - name: Upload launcher
       id: uploadLauncher
       uses: actions/upload-artifact@v7
