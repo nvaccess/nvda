@@ -371,7 +371,7 @@ jobs:
         PowerShell -Command "Set-ExecutionPolicy Bypass"
         PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
         PowerShell -Command "Install-Module -Name SignPath -Force"
-        scons %sconsLauncherOutTargets% %sconsArgs% %sconsCores%
+        scons %sconsLauncherOutTargets% %sconsArgs%
     - name: Upload launcher
       id: uploadLauncher
       uses: actions/upload-artifact@v7
