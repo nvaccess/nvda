@@ -371,7 +371,9 @@ jobs:
         PowerShell -Command "Set-ExecutionPolicy Bypass"
         PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
         PowerShell -Command "Install-Module -Name SignPath -Force"
+        # Note launcher  does not build with multiple cores as it must stay sequential.
         scons %sconsLauncherOutTargets% %sconsArgs%
+        scons client %sconsArgs% %sconsCores%
     - name: Upload launcher
       id: uploadLauncher
       uses: actions/upload-artifact@v7

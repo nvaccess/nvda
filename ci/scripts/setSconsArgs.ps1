@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop";
 $sconsDocsOutTargets = "developerGuide changes userGuide keyCommands user_docs"
-$sconsLauncherOutTargets = "launcher client moduleList"
+$sconsLauncherOutTargets = "launcher moduleList"
 $sconsArgs = "version=$env:version"
 $sconsCores = "--all-cores"
 if ($env:release) {
