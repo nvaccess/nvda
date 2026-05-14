@@ -113,7 +113,9 @@ jobs:
         path: ${{ env.SCONS_CACHE_MSVC_CONFIG }}
         key: ${{ env.SCONS_CACHE_KEY }}
     - name: Install signPath
-      if: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN }}
+      env:
+        apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN || '' }}
+      if: ${{ env.apiSigningToken }}
       shell: cmd
       run: |
         PowerShell -Command "Set-ExecutionPolicy Bypass"
@@ -369,7 +371,10 @@ jobs:
       run: scons %sconsDocsOutTargets% %sconsArgs% %sconsCores%
     # Run launcher separately as we can't safely generate that in parallel to docs scons targets (#18867)
     - name: Install signpath
-      if: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN }}
+      - name: Install signPath
+      env:
+        apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN || '' }}
+      if: ${{ env.apiSigningToken }}
       shell: cmd
       run: |
         PowerShell -Command "Set-ExecutionPolicy Bypass"
