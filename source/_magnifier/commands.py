@@ -59,25 +59,25 @@ PAN_ACTION_TO_EDGE_MESSAGES = {
 		"magnifier",
 		# Translators: Message announced when already at left edge of the screen while panning the magnified view
 		# to left edge
-		"left",
+		"left edge",
 	),
 	MagnifierAction.PAN_RIGHT_EDGE: pgettext(
 		"magnifier",
 		# Translators: Message announced when already at right edge of the screen while panning the magnified view
 		# to right edge
-		"right",
+		"right edge",
 	),
 	MagnifierAction.PAN_TOP_EDGE: pgettext(
 		"magnifier",
 		# Translators: Message announced when already at top edge of the screen while panning the magnified view
 		# to top edge
-		"top",
+		"top edge",
 	),
 	MagnifierAction.PAN_BOTTOM_EDGE: pgettext(
 		"magnifier",
 		# Translators: Message announced when already at left edge of the screen while panning the magnified view
 		# to left edge
-		"bottom",
+		"bottom edge",
 	),
 }
 
