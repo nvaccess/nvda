@@ -2,12 +2,9 @@
 
 ## 2026.1.1
 
-This is a patch release to fix a bug for add-on developers.
-
 ### Changes for Developers
 
-* The `winBindings.cfgmgr32` module is now included in NVDA binary builds.
-This allows add-ons to import `CM_Get_Device_ID`, `CR_SUCCESS`, and `MAX_DEVICE_ID_LEN` from `winBindings.cfgmgr32` as documented in NVDA 2026.1. (#20089, @Cary-rowen)
+* The `winBindings.cfgmgr32` module is now included in NVDA binary builds. (#20089, @Cary-rowen)
 
 ## 2026.1
 
