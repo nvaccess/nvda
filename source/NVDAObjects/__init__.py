@@ -1605,12 +1605,6 @@ class NVDAObject(
 		else:
 			return False
 
-	#: Whether the TextInfo should be used for the review cursor, the read current
-	#: line command, etc. This should be False where the TextInfo is only used
-	#: internally and doesn't provide text that is suitable for presentation to the
-	#: user; e.g. it includes raw embedded object characters.
-	_shouldUseTextInfoForReading: bool = True
-
 	def _get_hasIrrelevantLocation(self):
 		"""Returns whether the location of this object is irrelevant for mouse or magnification tracking or highlighting,
 		either because it is programatically hidden (State.INVISIBLE), off screen or the object has no location."""
