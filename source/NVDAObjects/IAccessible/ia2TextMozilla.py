@@ -29,9 +29,9 @@ from logHandler import log
 
 
 def _getRawTextInfo(obj) -> Type[offsets.OffsetsTextInfo]:
-	if obj.TextInfo is NVDAObjectTextInfo:
-		return NVDAObjectTextInfo
-	return IA2TextTextInfo
+	if hasattr(obj, "IAccessibleTextObject"):
+		return IA2TextTextInfo
+	return NVDAObjectTextInfo
 
 
 def _getEmbedded(obj, offset) -> typing.Optional[IAccessible]:
