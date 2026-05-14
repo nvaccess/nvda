@@ -371,7 +371,6 @@ jobs:
       run: scons %sconsDocsOutTargets% %sconsArgs% %sconsCores%
     # Run launcher separately as we can't safely generate that in parallel to docs scons targets (#18867)
     - name: Install signpath
-      - name: Install signPath
       env:
         apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN || '' }}
       if: ${{ env.apiSigningToken }}
