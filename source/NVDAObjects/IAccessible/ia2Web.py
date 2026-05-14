@@ -107,7 +107,7 @@ class Ia2Web(IAccessible):
 	# The IAccessibleText implementation in web browsers exposes embedded object
 	# characters which need to be traversed to read the content. That isn't useful
 	# to users.
-	_shouldUseTextInfoForReading = False
+	TextInfo = NVDAObjects.NVDAObjectTextInfo
 
 	def isDescendantOf(self, obj: "NVDAObjects.NVDAObject") -> bool:
 		if obj.windowHandle != self.windowHandle:
