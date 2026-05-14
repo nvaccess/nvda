@@ -1,5 +1,18 @@
 # What's New in NVDA
 
+## 2026.1.1
+
+### Changes
+
+### Bug Fixes
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+<!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
+<!-- markdownlint-disable -->
+
 ## 2026.1
 
 This release includes support for reading math content with MathCAT, which is now built-in to NVDA.
@@ -348,9 +361,6 @@ Use the `OffsetsTextInfo.allowMoveToUnitOffsetPastEnd` method instead. (#19152, 
   Use `STATE_FILENAME` instead.
   * `AddonsState.fromPickledDict` is deprecated.
   Use `AddonsState.fromDict` instead.
-
-<!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
-<!-- markdownlint-disable -->
 
 ## 2025.3.3
 
