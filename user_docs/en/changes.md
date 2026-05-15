@@ -17,6 +17,10 @@ Please responsibly disclose security issues following NVDA's [security policy](h
 * Remote Access once again attempts automatic reconnection after a failed initial connection as the controlled computer, rather than failing immediately.
   This means that headless or otherwise physically inaccessible machines configured to automatically connect at startup will be reachable once the network is available. (#20122)
 
+### Changes for Developers
+
+* The `winBindings.cfgmgr32` module is now included in NVDA binary builds. (#20089, @Cary-rowen)
+
 <!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
 <!-- markdownlint-disable -->
 
