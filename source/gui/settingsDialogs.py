@@ -6112,7 +6112,7 @@ class MagnifierPanel(SettingsPanel):
 
 		# FILTER SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the default filter
-		filterLabelText = _("&Filter:")
+		filterLabelText = _("F&ilter:")
 		filterChoices = [f.displayString for f in Filter]
 		self.filterList = sHelper.addLabeledControl(
 			filterLabelText,
@@ -6127,7 +6127,7 @@ class MagnifierPanel(SettingsPanel):
 
 		# FULLSCREEN MODE SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the full-screen mode
-		fullscreenModeLabelText = _("F&ullscreen mode:")
+		fullscreenModeLabelText = _("&Fullscreen mode:")
 		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
 		self.fullscreenModeList = sHelper.addLabeledControl(
 			fullscreenModeLabelText,
