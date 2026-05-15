@@ -2042,9 +2042,9 @@ class IAccessible(Window):
 				controlTypes.Role.LISTITEM,
 			)
 				or
-				(child.role == controlTypes.Role.STATICTEXT and child.parent.role == controlTypes.Role.PARAGRAPH)):
+				(child.role == controlTypes.Role.STATICTEXT and child.parent is not None and child.parent.role == controlTypes.Role.PARAGRAPH)):
 					speech.speakObject(child, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
-					braille.handler.message(braille.getPropertiesBraille(name=child.name, role=child.role))
+					braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
 	def event_caret(self):
 		focus = api.getFocusObject()
