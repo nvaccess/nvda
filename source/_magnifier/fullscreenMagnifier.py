@@ -230,7 +230,7 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		params = self._getMagnifierParameters(coordinates)
 		magnification.MagSetFullscreenTransform(
-			self.zoomLevel,
+			self.zoomLevelRatio,
 			params.coordinates.x,
 			params.coordinates.y,
 		)
@@ -340,7 +340,7 @@ class FullScreenMagnifier(Magnifier):
 		:return: The (x, y) coordinates of the magnifier center
 		"""
 
-		zoom = self.zoomLevel
+		zoom = self.zoomLevelRatio
 		mouseX, mouseY = coordinates
 		magnifierWidth = self._displayOrientation.width / zoom
 		magnifierHeight = self._displayOrientation.height / zoom
@@ -388,8 +388,8 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		x, y = coordinates
 		# Calculate the size of the capture area at the current zoom level
-		magnifierWidth = self._displayOrientation.width / self.zoomLevel
-		magnifierHeight = self._displayOrientation.height / self.zoomLevel
+		magnifierWidth = self._displayOrientation.width / self.zoomLevelRatio
+		magnifierHeight = self._displayOrientation.height / self.zoomLevelRatio
 
 		# Compute the top-left corner so that (x, y) is at the center
 		left = int(x - (magnifierWidth / 2))

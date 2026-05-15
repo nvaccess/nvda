@@ -2898,8 +2898,8 @@ You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+e
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Options | 1.0 to 10.0 |
-| Default | 2.0 |
+|Options |1.0 to 40.0|
+|Default |2.0|
 
 ##### Filter {#MagnifierFilter}
 

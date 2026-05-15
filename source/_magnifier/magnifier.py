@@ -70,23 +70,29 @@ class Magnifier:
 		self._filterType = value
 
 	@property
+	def zoomLevelRatio(self) -> float:
+		"""Get the zoom level as a float (e.g., 2.0 for 200% zoom)"""
+		return self._zoomLevel / 100.0
+
+	@property
 	def zoomLevel(self) -> float:
+		"""Get the zoom level as a percentage (e.g., 200 for 200% zoom)"""
 		return self._zoomLevel
 
 	@zoomLevel.setter
-	def zoomLevel(self, value: float) -> None:
+	def zoomLevel(self, value: int) -> None:
 		"""
 		Set zoom level, ensuring it's a valid value in the zoom range.
 
 		:param value: The zoom level to set
 		:raises ValueError: If the value is not in the valid zoom range
 		"""
-		validZoomValues = ZoomLevel.zoom_range()
-		if value not in validZoomValues:
-			# Find the closest valid zoom value
-			closestZoom = min(validZoomValues, key=lambda x: abs(x - value))
-			log.warning(f"Invalid zoom level {value}, using closest valid value {closestZoom}")
-			value = closestZoom
+		if not isinstance(value, int):
+			raise ValueError("Zoom level must be an integer percentage")
+		if not (ZoomLevel.MIN_ZOOM <= value <= ZoomLevel.MAX_ZOOM):
+			raise ValueError(f"Zoom level must be between {ZoomLevel.MIN_ZOOM} and {ZoomLevel.MAX_ZOOM}")
+		if value % ZoomLevel.STEP_FACTOR != 0:
+			raise ValueError(f"Zoom level must be a multiple of {ZoomLevel.STEP_FACTOR}")
 		self._zoomLevel = value
 
 	@property
@@ -119,8 +125,8 @@ class Magnifier:
 			return (0, 0, self._displayOrientation.width, self._displayOrientation.height)
 		else:
 			# In normal mode: calculate limits to keep view within screen
-			visibleWidth = self._displayOrientation.width / self.zoomLevel
-			visibleHeight = self._displayOrientation.height / self.zoomLevel
+			visibleWidth = self._displayOrientation.width / self.zoomLevelRatio
+			visibleHeight = self._displayOrientation.height / self.zoomLevelRatio
 			minX = int(visibleWidth / 2)
 			minY = int(visibleHeight / 2)
 			maxX = int(self._displayOrientation.width - (visibleWidth / 2))
@@ -313,7 +319,7 @@ class Magnifier:
 
 		minX, minY, maxX, maxY = self._getScreenLimits()
 
-		panPixels = int((self._displayOrientation.width / self.zoomLevel) * self._panStep / 100)
+		panPixels = int((self._displayOrientation.width / self.zoomLevelRatio) * self._panStep / 100)
 
 		match action:
 			case MagnifierAction.PAN_LEFT:
