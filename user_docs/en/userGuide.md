@@ -2890,16 +2890,16 @@ The selected state is also saved for future NVDA sessions, so if you enable Magn
 
 ##### Zoom level {#MagnifierZoom}
 
-This slider allows you to set the zoom level when using the magnifier.
-The zoom level can range from 1.0 (no magnification) to 10.0 (maximum magnification).
-The default value is 2.0 (200% zoom).
+This setting allows you to set the zoom level when using the magnifier.
+The zoom level can range from 100% (no magnification) to 5000% (maximum magnification).
+The default value is 200%.
 
 You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+equals`) and zoom out (`NVDA+shift+minus`) commands while the magnifier is active.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |1.0 to 40.0|
-|Default |2.0|
+| Options | 100% to 5000% |
+| Default | 200% |
 
 ##### Filter {#MagnifierFilter}
 
