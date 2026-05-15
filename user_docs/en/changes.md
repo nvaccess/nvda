@@ -2,9 +2,21 @@
 
 ## 2026.1.1
 
+This is a patch release to fix a security issue and an add-on API issue.
+
+### Security fixes
+
+Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
+
+* Fixed an issue which could cause NVDA to connect to an untrusted Remote Access server. ([GHSA-m268-mc77-j2cr](https://github.com/nvaccess/nvda/security/advisories/GHSA-m268-mc77-j2cr))
+* Prevents a situation which could cause unselected add-ons to be copied to the system-wide configuration. ([GHSA-669f-7gpr-5vqm](https://github.com/nvaccess/nvda/security/advisories/GHSA-669f-7gpr-5vqm))
+
 ### Changes for Developers
 
 * The `winBindings.cfgmgr32` module is now included in NVDA binary builds. (#20089, @Cary-rowen)
+
+<!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
+<!-- markdownlint-disable -->
 
 ## 2026.1
 
@@ -354,9 +366,6 @@ Use the `OffsetsTextInfo.allowMoveToUnitOffsetPastEnd` method instead. (#19152, 
   Use `STATE_FILENAME` instead.
   * `AddonsState.fromPickledDict` is deprecated.
   Use `AddonsState.fromDict` instead.
-
-<!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
-<!-- markdownlint-disable -->
 
 ## 2025.3.3
 

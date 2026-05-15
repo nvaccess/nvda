@@ -308,7 +308,7 @@ class RemoteClient:
 
 	@alwaysCallAfter
 	def onConnectAsLeaderFailed(self):
-		if self.leaderTransport.successfulConnects == 0:
+		if self.leaderTransport is not None and self.leaderTransport.successfulConnects == 0:
 			log.error(f"Failed to connect to {self.leaderTransport.address}")
 			self.disconnectAsLeader()
 			# Translators: Title of the connection error dialog.
@@ -478,15 +478,16 @@ class RemoteClient:
 		log.warning(f"Certificate validation failed for {transport.address}")
 		self.lastFailAddress = transport.address
 		self.lastFailKey = transport.channel
+		self._lastFailFingerprint = transport.lastFailFingerprint
 		self.disconnect(_silent=True)
 		try:
-			certHash = transport.lastFailFingerprint
-
-			wnd = dialogs.CertificateUnauthorizedDialog(None, fingerprint=certHash)
+			wnd = dialogs.CertificateUnauthorizedDialog(None, fingerprint=self._lastFailFingerprint)
 			a = wnd.ShowModal()
 			if a == wx.ID_YES:
 				config = configuration.getRemoteConfig()
-				config["trustedCertificates"][hostPortToAddress(self.lastFailAddress)] = certHash
+				config["trustedCertificates"][hostPortToAddress(self.lastFailAddress)] = (
+					self._lastFailFingerprint
+				)
 			if a == wx.ID_YES or a == wx.ID_NO:
 				return True
 		except Exception as ex:
@@ -502,6 +503,7 @@ class RemoteClient:
 				port=self.lastFailAddress[1],
 				key=self.lastFailKey,
 				insecure=True,
+				trustedFingerprint=self._lastFailFingerprint,
 			)
 			self.connectAsLeader(connectionInfo=connectionInfo)
 
@@ -514,6 +516,7 @@ class RemoteClient:
 				port=self.lastFailAddress[1],
 				key=self.lastFailKey,
 				insecure=True,
+				trustedFingerprint=self._lastFailFingerprint,
 			)
 			self.connectAsFollower(connectionInfo=connectionInfo)
 

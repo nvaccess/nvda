@@ -71,6 +71,9 @@ class ConnectionInfo:
 	insecure: bool = False
 	"""Allow insecure connections without SSL/TLS, defaults to False"""
 
+	trustedFingerprint: str | None = None
+	"""Specifies a single certificate fingerprint to trust if :attr:`insecure` is ``True``."""
+
 	def __post_init__(self) -> None:
 		self.port = self.port or SERVER_PORT
 		self.mode = ConnectionMode(self.mode)
