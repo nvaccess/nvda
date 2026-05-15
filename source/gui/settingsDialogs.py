@@ -6049,14 +6049,23 @@ class MagnifierPanel(SettingsPanel):
 			sizer=settingsSizer,
 		)
 
+		# GENERAL GROUP
+		# Translators: This is the label for a group of general magnifier options in the
+		# magnifier settings panel
+		generalGroupText = _("General")
+		generalGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=generalGroupText)
+		generalGroupBox = generalGroupSizer.GetStaticBox()
+		generalGroup = guiHelper.BoxSizerHelper(self, sizer=generalGroupSizer)
+		sHelper.addItem(generalGroup)
+
 		# ZOOM SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the zoom level.
+		# Translators: The label for a setting in magnifier settings to select the  zoom level.
 		zoomLabelText = _("&Zoom level:")
 
 		zoomValues = magnifierConfig.ZoomLevel.zoom_range()
 		zoomChoices = magnifierConfig.ZoomLevel.zoom_strings()
 
-		self.zoomList = sHelper.addLabeledControl(
+		self.zoomList = generalGroup.addLabeledControl(
 			zoomLabelText,
 			wx.Choice,
 			choices=zoomChoices,
@@ -6078,30 +6087,11 @@ class MagnifierPanel(SettingsPanel):
 			closestIndex = min(zoomIndex - 1, zoomIndex, key=lambda i: abs(zoomValues[i] - zoomLevel))
 		self.zoomList.SetSelection(closestIndex)
 
-		# PAN SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
-		panStepSizeLabelText = _("&Panning step size (%):")
-
-		self.panSpinCtrl = sHelper.addLabeledControl(
-			panStepSizeLabelText,
-			wx.SpinCtrl,
-			min=1,
-			max=100,
-		)
-		self.bindHelpEvent(
-			"magnifierPanStep",
-			self.panSpinCtrl,
-		)
-
-		# Set  value from config
-		panStep = magnifierConfig.getPanStep()
-		self.panSpinCtrl.SetValue(panStep)
-
 		# FILTER SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the default filter
-		filterLabelText = _("&filter:")
+		# Translators: The label for a setting in magnifier settings to select the  filter
+		filterLabelText = _("&Filter:")
 		filterChoices = [f.displayString for f in Filter]
-		self.filterList = sHelper.addLabeledControl(
+		self.filterList = generalGroup.addLabeledControl(
 			filterLabelText,
 			wx.Choice,
 			choices=filterChoices,
@@ -6112,33 +6102,36 @@ class MagnifierPanel(SettingsPanel):
 		filterValue = magnifierConfig.getFilter()
 		self.filterList.SetSelection(list(Filter).index(filterValue))
 
-		# FULLSCREEN MODE SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the full-screen mode
-		fullscreenModeLabelText = _("&fullscreen mode:")
-		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
-		self.fullscreenModeList = sHelper.addLabeledControl(
-			fullscreenModeLabelText,
-			wx.Choice,
-			choices=fullscreenModeChoices,
-		)
-		self.bindHelpEvent(
-			"MagnifierFullscreenFocusMode",
-			self.fullscreenModeList,
-		)
-
 		# TRUE CENTER
 		# Translators: The label for a setting in magnifier settings to select whether true center is used in full-screen mode
-		trueCenterText = _("Use &true center in fullscreen mode")
-		self.trueCenterCheckBox = sHelper.addItem(wx.CheckBox(self, label=trueCenterText))
+		trueCenterText = _("Use &true center")
+		self.trueCenterCheckBox = generalGroup.addItem(
+			wx.CheckBox(generalGroupBox, label=trueCenterText),
+		)
 		self.bindHelpEvent(
 			"MagnifierUseTrueCenter",
 			self.trueCenterCheckBox,
 		)
 		self.trueCenterCheckBox.SetValue(magnifierConfig.isTrueCentered())
 
-		# Set default value from config
-		defaultFullscreenMode = magnifierConfig.getFullscreenMode()
-		self.fullscreenModeList.SetSelection(list(FullScreenMode).index(defaultFullscreenMode))
+		# PAN SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
+		panStepSizeLabelText = _("&Panning step size (%):")
+
+		self.panSpinCtrl = generalGroup.addLabeledControl(
+			panStepSizeLabelText,
+			wx.SpinCtrl,
+			min=1,
+			max=100,
+		)
+		self.bindHelpEvent(
+			"MagnifierPanningStepSize",
+			self.panSpinCtrl,
+		)
+
+		# Set  value from config
+		panStep = magnifierConfig.getPanStep()
+		self.panSpinCtrl.SetValue(panStep)
 
 		# FOCUS GROUP
 		# Translators: This is the label for a group of focus options in the magnifier settings panel
@@ -6168,10 +6161,39 @@ class MagnifierPanel(SettingsPanel):
 			checkBox.SetValue(magnifierConfig.getFollowState(focusType))
 			self._followFocusCheckBoxes[focusType] = checkBox
 
+		# FULLSCREEN GROUP
+		# Translators: This is the label for a group of fullscreen magnifier options in the
+		# magnifier settings panel
+		fullscreenGroupText = _("Fullscreen")
+		self.fullscreenGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=fullscreenGroupText)
+		fullscreenGroupBox = self.fullscreenGroupSizer.GetStaticBox()
+		fullscreenGroup = guiHelper.BoxSizerHelper(self, sizer=self.fullscreenGroupSizer)
+		sHelper.addItem(fullscreenGroup)
+
+		# FULLSCREEN MODE SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the  full-screen mode
+		fullscreenModeLabelText = _("Focus &mode:")
+		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
+		self.fullscreenModeList = fullscreenGroup.addLabeledControl(
+			fullscreenModeLabelText,
+			wx.Choice,
+			choices=fullscreenModeChoices,
+		)
+		self.bindHelpEvent(
+			"MagnifierFullscreenFocusMode",
+			self.fullscreenModeList,
+		)
+
+		# Set  value from config
+		fullscreenModeValue = magnifierConfig.getFullscreenMode()
+		self.fullscreenModeList.SetSelection(list(FullScreenMode).index(fullscreenModeValue))
+
 		# KEEP MOUSE CENTERED
 		# Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
 		keepMouseCenteredText = _("Keep &mouse pointer centered in magnifier view")
-		self.keepMouseCenteredCheckBox = sHelper.addItem(wx.CheckBox(self, label=keepMouseCenteredText))
+		self.keepMouseCenteredCheckBox = fullscreenGroup.addItem(
+			wx.CheckBox(fullscreenGroupBox, label=keepMouseCenteredText),
+		)
 		self.bindHelpEvent(
 			"MagnifierKeepMouseCentered",
 			self.keepMouseCenteredCheckBox,
