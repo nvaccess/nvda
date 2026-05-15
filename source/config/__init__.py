@@ -13,6 +13,7 @@ For the latter two actions, one can perform actions prior to and/or after they t
 from collections.abc import Collection
 from enum import Enum
 from typing import Any
+from addonAPIVersion import BACK_COMPAT_TO
 
 import globalVars
 import winreg
@@ -39,6 +40,7 @@ import functools
 from . import profileUpgrader
 from . import aggregatedSection
 from .configSpec import confspec
+from .featureFlagEnums import BrailleTextWrapFlag
 from .featureFlag import (
 	_transformSpec_AddFeatureFlagDefault,
 	_validateConfig_featureFlag,
@@ -373,7 +375,7 @@ def _setSystemConfig(
 		else:
 			relativePath = os.path.relpath(curSourceDir, fromPath)
 			curDestDir = os.path.join(toPath, relativePath)
-			if not isMigration and relativePath.casefold() == "addons":
+			if not isMigration and relativePath == "addons":
 				_prepareToCopyAddons(fromPath, toPath, subDirs, addonsToCopy)
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
@@ -1381,14 +1383,14 @@ class AggregatedSection:
 
 		# Alias old config items to their new counterparts for backwards compatibility.
 		# Uncomment when there are new links that need to be made.
-		# if BACK_COMPAT_TO < (2027, 1, 0) and NVDAState._allowDeprecatedAPI():
-		# self._linkDeprecatedValues(key, val)
+		if BACK_COMPAT_TO < (2027, 1, 0) and NVDAState._allowDeprecatedAPI():
+			self._linkDeprecatedValues(key, val)
 
 	def _linkDeprecatedValues(self, key: aggregatedSection._cacheKeyT, val: aggregatedSection._cacheValueT):
 		"""Link deprecated config keys and values to their replacements.
 
-		:arg key: The configuration key to link to its new or old counterpart.
-		:arg val: The value associated with the configuration key.
+		:param key: The configuration key to link to its new or old counterpart.
+		:param val: The value associated with the configuration key.
 
 		Example of how to link values:
 
@@ -1409,7 +1411,35 @@ class AggregatedSection:
 		>>> 		return
 		>>> ...
 		"""
+		# cacheVal defaults to val; overridden when profile and cache need different types.
+		cacheVal = val
 		match self.path:
+			case "braille":
+				match key:
+					case "wordWrap":
+						# The "wordWrap" setting was renamed to "textWrap" and became a feature flag.
+						log.warning(
+							"braille.wordWrap is deprecated. Use braille.textWrap instead.",
+							stack_info=True,
+						)
+						key = "textWrap"
+						flagEnum = BrailleTextWrapFlag.AT_WORD_BOUNDARIES if val else BrailleTextWrapFlag.NONE
+						# Profile stores strings; cache must hold a validated FeatureFlag object
+						# (matching what __setitem__ normally stores) so .calculated() works on next read.
+						# Validate through the spec to avoid hardcoding behaviorOfDefault here.
+						val = flagEnum.name
+						cacheVal = self.manager.validator.check(self._spec[key], val)
+					case "textWrap":
+						# The "textWrap" setting was added in place of "wordWrap" and became a feature flag.
+						key = "wordWrap"
+						calculated: BrailleTextWrapFlag = val.calculated()
+						val = calculated == BrailleTextWrapFlag.AT_WORD_BOUNDARIES
+						cacheVal = val
+
+					case _:
+						# We don't care about other keys in this section.
+						return
+
 			case _:
 				# We don't care about other sections.
 				return
@@ -1417,7 +1447,7 @@ class AggregatedSection:
 		# Update the value in the most recently activated profile.
 		# If we have reached this point, we must have a new key and value to set.
 		self._getUpdateSection()[key] = val
-		self._cache[key] = val
+		self._cache[key] = cacheVal
 
 	def _getUpdateSection(self):
 		profile = self.profiles[-1]

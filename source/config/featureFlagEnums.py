@@ -139,6 +139,30 @@ class FontFormattingBrailleModeFlag(DisplayStringEnum):
 		}
 
 
+class BrailleTextWrapFlag(DisplayStringEnum):
+	"""Enumeration containing the possible ways to wrap text in braille when a row would exceed the display.
+
+	The continuation mark (dots 7-8) is shown on rows where a word was cut,
+	regardless of mode (except for NONE, which never shows the mark).
+	"""
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
+			self.NONE: pgettext("braille text wrap", "Off"),
+			# Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
+			self.MARK_WORD_CUTS: pgettext("braille text wrap", "Show mark when words are cut"),
+			# Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
+			self.AT_WORD_BOUNDARIES: pgettext("braille text wrap", "At word boundaries"),
+		}
+
+	DEFAULT = enum.auto()
+	NONE = enum.auto()
+	MARK_WORD_CUTS = enum.auto()
+	AT_WORD_BOUNDARIES = enum.auto()
+
+
 def getAvailableEnums() -> typing.Generator[typing.Tuple[str, FlagValueEnum], None, None]:
 	for name, value in globals().items():
 		if (

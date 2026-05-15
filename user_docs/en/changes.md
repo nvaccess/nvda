@@ -6,6 +6,9 @@
 
 ### New Features
 
+* The braille "word wrap" option has been replaced with a three-valued "Text wrap" option: Off, Show mark when words are cut, and At word boundaries. (#17010, @LeonarddeR)
+  * When a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
+
 ### Changes
 
 ### Bug Fixes
@@ -17,6 +20,8 @@
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 #### Deprecations
+
+* The `braille.wordWrap` configuration key is deprecated and bridged to `braille.textWrap`. (#17010, @LeonarddeR)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->

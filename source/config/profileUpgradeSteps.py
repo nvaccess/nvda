@@ -30,6 +30,7 @@ from config.configFlags import (
 	TetherTo,
 	TypingEcho,
 )
+from config.featureFlagEnums import BrailleTextWrapFlag
 
 
 def upgradeConfigFrom_0_to_1(profile: ConfigObj) -> None:
@@ -687,3 +688,28 @@ def upgradeConfigFrom_21_to_22(profile: ConfigObj):
 	if language.casefold() == "auto":
 		speechConf["language"] = "en"
 		log.debug("Changed math.speech.language from 'Auto' to 'en'.")
+
+
+def upgradeConfigFrom_22_to_23(profile: ConfigObj) -> None:
+	"""
+	If the wordWrap braille config flag is explicitly set in a profile,
+	set the new text wrap option to word boundaries,
+	rather than the new default of word or syllable boundaries.
+	"""
+	section = "braille"
+	key = "wordWrap"
+	newKey = "textWrap"
+	try:
+		oldValue: bool = profile[section].as_bool(key)
+	except KeyError:
+		log.debug(f"'{key}' not present in config, no action taken.")
+		return
+	except ValueError:
+		log.error(f"'{key}' is not a boolean, got {profile[section][key]!r}. No action taken.")
+		return
+
+	newValue = BrailleTextWrapFlag.AT_WORD_BOUNDARIES.name if oldValue else BrailleTextWrapFlag.NONE.name
+	profile[section][newKey] = newValue
+	log.debug(
+		f"Converted '{key}' with value {oldValue} to '{newKey}' with value {newValue}.",
+	)
