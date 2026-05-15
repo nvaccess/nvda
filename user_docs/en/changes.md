@@ -10,6 +10,8 @@
 
 ### Bug Fixes
 
+* When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
+
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
@@ -93,7 +95,6 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 * Fixed NVDA freezing when navigating in JetBrains IDEs. (#16741, @christopherpross)
 * Speech dictionary entries of type Whole word now correctly handle words containing Unicode combining marks (e.g. Hebrew niqqud, Arabic harakat). (#20013, @LeonarddeR)
   * In particular, Whole word entries no longer incorrectly match inside larger words when those words contain combining marks.
-* When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
 * In focus mode in web browsers, it is now possible to review and spell the labels of controls when those labels are specifically provided for accessibility; e.g. via aria-label or aria-labelledby. (#15159, @jcsteh)
 
 ### Changes for Developers
