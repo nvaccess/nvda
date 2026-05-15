@@ -2,7 +2,7 @@
 
 ## 2026.1.1
 
-This is a patch release to fix a security issue and an add-on API issue.
+This is a patch release to fix a security issue.
 
 ### Security fixes
 
