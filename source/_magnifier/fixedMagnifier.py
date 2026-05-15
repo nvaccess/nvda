@@ -7,23 +7,129 @@
 Fixed magnifier module.
 """
 
+from logHandler import log
 from .magnifier import Magnifier
-from .utils.types import MagnifiedView
+from .utils.types import (
+	Coordinates,
+	Size,
+	MagnifiedView,
+	WindowMagnifierParameters,
+	MagnifierParameters,
+	Filter,
+	FixedWindowPosition,
+)
+from .utils.windowCreator import WindowedMagnifier
+from .config import (
+	getFixedWindowWidth,
+	getFixedWindowHeight,
+	getFixedWindowPosition,
+	isTrueCentered,
+)
 
 
-class FixedMagnifier(Magnifier):
-	"""Displays a floating magnified panel that can be pinned anywhere on the screen."""
-
+class FixedMagnifier(Magnifier, WindowedMagnifier):
 	_MAGNIFIED_VIEW = MagnifiedView.FIXED
 
 	def __init__(self):
-		super().__init__()
+		Magnifier.__init__(self)
+		windowParameters = self._getWindowParameters()
+		WindowedMagnifier.__init__(self, windowParameters)
+		self._currentCoordinates = Coordinates(0, 0)
+		self._windowParameters = windowParameters
+
+	@property
+	def filterType(self) -> Filter:
+		return self._filterType
+
+	@filterType.setter
+	def filterType(self, value: Filter) -> None:
+		self._filterType = value
+
+	def event_gainFocus(
+		self,
+		obj,
+		nextHandler,
+	):
+		log.debug("Fixed Magnifier gain focus event")
+		nextHandler()
 
 	def _startMagnifier(self) -> None:
+		"""
+		Start the Fixed magnifier by creating a window and starting the update timer.
+		"""
 		super()._startMagnifier()
-
-	def _stopMagnifier(self) -> None:
-		super()._stopMagnifier()
+		if not self._overlayWindow:
+			self._createWindow()
+		self._startTimer(self._updateMagnifier)
+		log.debug(
+			f"Starting fixed magnifier position:{self._windowParameters.windowPosition} size:{self._windowParameters.windowSize}\n with zoom level {self.zoomLevel} and filter {self.filterType}",
+		)
 
 	def _doUpdate(self):
-		pass
+		params = self._getMagnifierParameters(self._currentCoordinates)
+		super()._setContent(params, self.zoomLevel)
+
+	def _stopMagnifier(self) -> None:
+		super()._destroyWindow()
+		super()._stopMagnifier()
+
+	def _getWindowParameters(self) -> WindowMagnifierParameters:
+		"""
+		Get the parameters for the magnifier window from configuration.
+
+		:return: The parameters for the magnifier window
+		"""
+		case = getFixedWindowPosition()
+		windowSize = Size(getFixedWindowWidth(), getFixedWindowHeight())
+		displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
+		log.info(
+			f"Getting window parameters for fixed magnifier with position {case}, window size {windowSize}",
+		)
+
+		match case:
+			case FixedWindowPosition.TOP_LEFT:
+				position = Coordinates(0, 0)
+			case FixedWindowPosition.TOP_RIGHT:
+				position = Coordinates(displaySize.width - windowSize.width, 0)
+			case FixedWindowPosition.BOTTOM_LEFT:
+				position = Coordinates(0, displaySize.height - windowSize.height)
+			case FixedWindowPosition.BOTTOM_RIGHT:
+				position = Coordinates(
+					displaySize.width - windowSize.width,
+					displaySize.height - windowSize.height,
+				)
+
+		return WindowMagnifierParameters(
+			title="NVDA Fixed Magnifier",
+			windowSize=windowSize,
+			windowPosition=position,
+		)
+
+	def _getMagnifierParameters(self, coordinates: Coordinates) -> MagnifierParameters:
+		"""
+		Compute the top-left corner of the magnifier window centered on (x, y)
+
+		:param coordinates: The (x, y) coordinates to center the magnifier on
+		:param displaySize: The size of the display area (width, height) - used to calculate capture size
+
+		:return: The size, position and filter of the magnifier window
+		"""
+		x, y = coordinates
+		# Calculate the size of the capture area at the current zoom level
+		magnifierWidth = self._windowParameters.windowSize.width / self.zoomLevel
+		magnifierHeight = self._windowParameters.windowSize.height / self.zoomLevel
+
+		# Compute the top-left corner so that (x, y) is at the center
+		left = int(x - (magnifierWidth / 2))
+		top = int(y - (magnifierHeight / 2))
+
+		# Clamp to screen boundaries only if not in true center mode
+		if not isTrueCentered():
+			left = max(0, min(left, int(self._displayOrientation.width - magnifierWidth)))
+			top = max(0, min(top, int(self._displayOrientation.height - magnifierHeight)))
+
+		return MagnifierParameters(
+			Size(int(magnifierWidth), int(magnifierHeight)),
+			Coordinates(left, top),
+			self._filterType,
+		)

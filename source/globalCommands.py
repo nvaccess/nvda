@@ -5194,16 +5194,16 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle filter of the magnifier",
+			"Cycle through Magnifier type",
 		),
 		category=SCRCAT_VISION,
-		gesture="kb:NVDA+shift+i",
+		gesture="kb:nvda+shift+t",
 	)
-	def script_toggleFilter(
+	def script_cycleMagnifierType(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleFilter()
+		_magnifier.commands.cycleMagnifiedView()
 
 	@script(
 		description=_(
@@ -5274,6 +5274,20 @@ class GlobalCommands(ScriptableObject):
 		description=_(
 			# Translators: Describes a command.
 			"Toggle focus mode for the full-screen magnifier",
+		),
+		category=SCRCAT_VISION,
+		gesture="kb:NVDA+shift+i",
+	)
+	def script_cycleFilter(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.cycleFilter()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Cycle through focus mode for the full-screen magnifier",
 		),
 		category=SCRCAT_VISION,
 	)

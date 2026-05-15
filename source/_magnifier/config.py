@@ -10,7 +10,7 @@ Handles module initialization, configuration and settings interaction.
 
 import config
 from dataclasses import dataclass, field
-from .utils.types import Filter, FullScreenMode, MagnifierFollowFocusType, MagnifiedView
+from .utils.types import Filter, FullScreenMode, MagnifierFollowFocusType, MagnifiedView, FixedWindowPosition
 
 
 class ZoomLevel:
@@ -114,7 +114,7 @@ def getFilter() -> Filter:
 
 def setFilter(filter: Filter) -> None:
 	"""
-	Set  filter from settings.
+	Set filter from settings.
 
 	:param filter: The filter to set.
 	"""
@@ -262,3 +262,57 @@ def setFullscreenMode(mode: FullScreenMode) -> None:
 	:param mode: The full-screen mode to set.
 	"""
 	config.conf["magnifier"]["fullscreenMode"] = mode.value
+
+
+def getFixedWindowWidth() -> int:
+	"""
+	Get fixed magnifier window width from config.
+
+	:return: The fixed magnifier window width.
+	"""
+	return config.conf["magnifier"]["fixedWindowWidth"]
+
+
+def setFixedWindowWidth(width: int) -> None:
+	"""
+	Set fixed magnifier window width from settings.
+
+	:param width: The fixed magnifier window width to set.
+	"""
+	config.conf["magnifier"]["fixedWindowWidth"] = width
+
+
+def getFixedWindowHeight() -> int:
+	"""
+	Get fixed magnifier window height from config.
+
+	:return: The fixed magnifier window height.
+	"""
+	return config.conf["magnifier"]["fixedWindowHeight"]
+
+
+def setFixedWindowHeight(height: int) -> None:
+	"""
+	Set fixed magnifier window height from settings.
+
+	:param height: The fixed magnifier window height to set.
+	"""
+	config.conf["magnifier"]["fixedWindowHeight"] = height
+
+
+def getFixedWindowPosition() -> FixedWindowPosition:
+	"""
+	Get magnifier window position from config.
+
+	:return: The magnifier window position.
+	"""
+	return FixedWindowPosition(config.conf["magnifier"]["fixedWindowPosition"])
+
+
+def setFixedWindowPosition(position: FixedWindowPosition) -> None:
+	"""
+	Set magnifier window position from settings.
+
+	:param position: The magnifier window position to set.
+	"""
+	config.conf["magnifier"]["fixedWindowPosition"] = position.value

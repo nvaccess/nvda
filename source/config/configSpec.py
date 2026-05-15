@@ -127,6 +127,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	panStep = integer(min=1, max=100, default=10)
 	fullscreenMode = string(default="center")
 	keepMouseCentered = boolean(default=false)
+	fixedWindowWidth = integer(default=200, min=50, max=1000)
+	fixedWindowHeight = integer(default=200, min=50, max=1000)
+	fixedWindowPosition = string(default="topLeft")
 
 # Presentation settings
 [presentation]

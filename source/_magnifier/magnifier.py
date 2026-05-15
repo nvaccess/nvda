@@ -386,6 +386,7 @@ class Magnifier:
 		Compute the top-left corner of the magnifier window centered on (x, y)
 
 		:param coordinates: The (x, y) coordinates to center the magnifier on
+		:param displaySize: The size of the display area (width, height) - used to calculate capture size
 
 		:return: The size, position and filter of the magnifier window
 		"""

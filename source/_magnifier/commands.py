@@ -172,7 +172,7 @@ def pan(action: MagnifierAction) -> None:
 			ui.message(PAN_ACTION_TO_EDGE_MESSAGES[action])
 
 
-def toggleFilter() -> None:
+def cycleFilter() -> None:
 	"""Cycle through color filters"""
 	magnifier: Magnifier = getMagnifier()
 	log.debug(f"Toggling filter for magnifier: {magnifier}")
