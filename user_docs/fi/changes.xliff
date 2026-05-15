@@ -6095,7 +6095,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode in web browsers, NVDA no longer treats controls with 0 width or height as invisible.</source>
-        <target>NVDA ei enää käsittele verkkoselaimissa selaustilassa oltaessa näkymättöminä säätimiä, joiden leveys tai korkeus on 0.</target>
+        <target>NVDA ei enää tulkitse nollalevyisiä tai -korkuisia ohjausobjekteja näkymättömiksi verkkoselaimissa selaustilassa oltaessa.</target>
       </segment>
     </unit>
     <unit id="d60e3915-b303-4ed0-82cd-deb8c648b4bc">
@@ -6472,7 +6472,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added the possibility to report when multiple items can be selected in a control such as a list.</source>
-        <target>NVDA ilmoittaa nyt, kun säädin, kuten luettelo, tukee useiden kohteiden valintaa.</target>
+        <target>NVDA ilmoittaa nyt, kun ohjausobjekti, kuten luettelo, tukee monivalintaa.</target>
       </segment>
     </unit>
     <unit id="954d0282-ebec-416e-a6a2-798616fd50fe">
@@ -6708,7 +6708,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode in web browsers, NVDA no longer sometimes treats controls with 0 visual width or height as invisible.</source>
-        <target>NVDA ei enää toisinaan verkkoselaimissa selaustilassa oltaessa käsittele näkymättöminä säätimiä, joiden visuaalinen leveys tai korkeus on 0.</target>
+        <target>NVDA ei enää toisinaan verkkoselaimissa selaustilassa oltaessa tulkitse näkymättömiksi ohjausobjekteja, joiden visuaalinen leveys tai korkeus on 0.</target>
       </segment>
     </unit>
     <unit id="92a0576d-9c7f-49b4-a231-6264b97247c4">
@@ -6726,7 +6726,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Such controls will now be accessible in browse mode where they weren't before. (#13897, @jcsteh)</source>
-        <target>Tällaiset säätimet ovat nyt käytettävissä selaustilassa. (#13897, @jcsteh)</target>
+        <target>Tällaiset ohjausobjektit ovat nyt käytettävissä selaustilassa. (#13897, @jcsteh)</target>
       </segment>
     </unit>
     <unit id="b3b36c69-d07d-45ea-bdf7-e99d898097a4">
@@ -6935,7 +6935,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer fails to read the contents of wx Web View controls. (#17273, @LeonarddeR)</source>
-        <target>NVDA lukee nyt wx Web View -säätimien sisällön. (#17273, @LeonarddeR)</target>
+        <target>NVDA lukee nyt wx Web View -ohjausobjektien sisällön. (#17273, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="b73dd62e-f769-4ab4-8720-0af37891d679">
@@ -10351,7 +10351,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In WinUI 3 apps including Microsoft Copilot and parts of Windows 11 File Explorer, NVDA will no longer fail to announce controls when using mouse and touch interaction. (#17407, #17771, @josephsl)</source>
-        <target>NVDA ei enää jätä ilmoittamatta säätimiä hiirtä ja kosketuseleitä käytettäessä WinUI 3 -sovelluksissa, kuten Microsoft Copilotissa ja osissa Windows 11:n Resurssienhallintaa. (#17407, #17771, @josephsl)</target>
+        <target>NVDA ei enää jätä ilmoittamatta ohjausobjekteja hiirtä ja kosketuseleitä käytettäessä WinUI 3 -sovelluksissa, kuten Microsoft Copilotissa ja Windows 11:n Resurssienhallinnan tietyissä osissa. (#17407, #17771, @josephsl)</target>
       </segment>
     </unit>
     <unit id="66e6038e-9c92-4f78-8ca0-931d53599ee0">
@@ -11728,7 +11728,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The keyboard settings for "Speak typed characters" and "Speak typed words" now have three options: Off, Only in edit controls, and Always. (#17505, @Cary-rowen)</source>
-        <target>Näppäimistö-kategorian "Puhu kirjoitetut merkit"- ja "Puhu kirjoitetut sanat" -asetuksilla on nyt kolme vaihtoehtoa: "Ei käytössä", "Vain muokkaussäätimissä" ja "Aina". (#17505, @Cary-rowen)</target>
+        <target>Näppäimistö-kategorian "Puhu kirjoitetut merkit"- ja "Puhu kirjoitetut sanat" -asetuksilla on nyt kolme vaihtoehtoa: "Ei käytössä", "Vain muokkauskentissä" ja "Aina". (#17505, @Cary-rowen)</target>
       </segment>
     </unit>
     <unit id="40802643-728a-4a88-a06c-ce4062fde34b">
@@ -11738,7 +11738,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>By default, "Speak typed characters" is now set to "Only in edit controls".</source>
-        <target>Puhu kirjoitetut merkit -asetuksen oletusarvo on nyt "Vain muokkaussäätimissä".</target>
+        <target>Puhu kirjoitetut merkit -asetuksen oletusarvo on nyt "Vain muokkauskentissä".</target>
       </segment>
     </unit>
     <unit id="684378a3-2c36-43c7-bd73-5fb6088d09be">
@@ -12057,7 +12057,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Certain section elements are now correctly recognized as editable controls in Visual Studio Code. (#17573, @Cary-rowen)</source>
-        <target>Tietyt osioelementit tunnistetaan nyt oikein muokattaviksi säätimiksi Visual Studio Codessa. (#17573, @Cary-rowen)</target>
+        <target>Tietyt osioelementit tunnistetaan nyt oikein muokattaviksi ohjausobjekteiksi Visual Studio Codessa. (#17573, @Cary-rowen)</target>
       </segment>
     </unit>
     <unit id="d3d716d5-967e-4d21-9def-0aebbe12c4d6">
@@ -13979,7 +13979,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer throws an error when panning the braille display forward in some empty edit controls. (#12885)</source>
-        <target>NVDA ei enää aiheuta virhettä, kun pistenäyttöä vieritetään eteenpäin joissakin tyhjissä muokkaussäätimissä. (#12885)</target>
+        <target>NVDA ei enää aiheuta virhettä, kun pistenäyttöä vieritetään eteenpäin joissakin tyhjissä muokkauskentissä. (#12885)</target>
       </segment>
     </unit>
     <unit id="17b2feda-817f-48d3-8b4f-178d16c8914e">
@@ -14079,7 +14079,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer reads the last line when the cursor is on the second-last line of a multiline edit control in Java applications. (#17027)</source>
-        <target>NVDA ei enää lue viimeistä riviä, kun kohdistin on toiseksi viimeisellä rivillä monirivisessä muokkaussäätimessä Java-sovelluksissa. (#17027)</target>
+        <target>NVDA ei enää lue viimeistä riviä, kun kohdistin on toiseksi viimeisellä rivillä monirivisessä muokkauskentässä Java-sovelluksissa. (#17027)</target>
       </segment>
     </unit>
     <unit id="e5dc8388-ac23-415b-b3e6-7b9e900d422a">
@@ -16996,7 +16996,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When accessing Microsoft Edge using UI Automation, NVDA is able to activate more controls in browse mode. (#14612)</source>
-        <target>Kun Microsoft Edgeä käytetään UI Automation -rajapinnan avulla, NVDA pystyy aktivoimaan selaustilassa useampia säätimiä. (#14612)</target>
+        <target>Kun Microsoft Edgeä käytetään UI Automation -rajapinnan avulla, NVDA pystyy aktivoimaan selaustilassa useampia ohjausobjekteja. (#14612)</target>
       </segment>
     </unit>
     <unit id="41917e95-72e5-490b-ae89-7dde716be546">
@@ -17016,7 +17016,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed support for System List view (`SysListView32`) controls in Windows Forms applications. (#15283, @LeonarddeR)</source>
-        <target>Korjattu järjestelmän luettelonäkymä (`SysListView32`) -säädinten tuki Windows Forms -sovelluksissa. (#15283, @LeonarddeR)</target>
+        <target>Korjattu järjestelmän luettelonäkymäohjausobjektien (`SysListView32`) tuki Windows Forms -sovelluksissa. (#15283, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="33374d53-01d7-481e-9398-d03edddd4d34">
@@ -20050,7 +20050,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using `aria-haspopup`. (#8235)</source>
-        <target>NVDA ilmoittaa nyt Mozilla Firefoxissa ja Google Chromessa, kun säädin avaa valintaikkunan, ruudukon, luettelon tai puunäkymän, mikäli sivuston tekijä on määrittänyt sen `aria-haspopup`-attribuuttia käyttäen. (#8235)</target>
+        <target>NVDA ilmoittaa nyt Mozilla Firefoxissa ja Google Chromessa, kun ohjausobjekti avaa valintaikkunan, ruudukon, luettelon tai puunäkymän, mikäli sivuston tekijä on määrittänyt sen `aria-haspopup`-attribuuttia käyttäen. (#8235)</target>
       </segment>
     </unit>
     <unit id="90f5b353-4dd0-48ae-8c72-091520808074">
@@ -20248,7 +20248,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA responds faster when moving the cursor in edit controls. (#14708)</source>
-        <target>NVDA reagoi nopeammin, kun kohdistinta siirretään muokkaussäätimissä. (#14708)</target>
+        <target>NVDA reagoi nopeammin, kun kohdistinta siirretään muokkauskentissä. (#14708)</target>
       </segment>
     </unit>
     <unit id="0e852094-9621-426c-8a24-db4714a0327f">
@@ -20397,7 +20397,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>You can now use browse mode in Chromium Embedded Controls where it was not possible previously. (#13493, #8553)</source>
-        <target>Selaustilaa on nyt mahdollista käyttää sellaisissa upotetuissa Chromium-säätimissä, joissa se ei ollut aiemmin mahdollista. (#13493, #8553)</target>
+        <target>Selaustilaa on nyt mahdollista käyttää sellaisissa upotetuissa Chromium-ohjausobjekteissa, joissa se ei ollut aiemmin mahdollista. (#13493, #8553)</target>
       </segment>
     </unit>
     <unit id="5755cbd5-0dcb-4377-93c6-deadb1a4cb25">
@@ -20446,7 +20446,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Browse mode, NVDA will no longer incorrectly ignore focus moving to a parent or child control e.g. moving from a control to its parent list item or gridcell. (#14611)</source>
-        <target>NVDA ei enää ohita virheellisesti selaustilassa kohdistuksen siirtymistä ylemmän tai alemman tason säätimeen, esim. siirryttäessä säätimestä luettelokohteeseen tai ruudukkosoluun. (#14611)</target>
+        <target>NVDA ei enää ohita virheellisesti selaustilassa kohdistuksen siirtymistä pää- tai aliohjausobjektiin, esim. siirryttäessä ohjausobjektista luettelokohteeseen tai ruudukkosoluun. (#14611)</target>
       </segment>
     </unit>
     <unit id="cc3d8adf-5ade-471e-8ae8-b5657c093336">
@@ -20566,7 +20566,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>It is now possible to use the backslash character in the replacement field of a dictionaries entry, when the type is not set to regular expression. (#14556)</source>
-        <target>Kenoviivamerkkiä on nyt mahdollista käyttää puhesanastomäärityksen Korvaava teksti -kentässä, kun tyyppinä ei ole sääntölauseke. (#14556)</target>
+        <target>Kenoviivamerkkiä on nyt mahdollista käyttää puhesanastomäärityksen Korvaava teksti -kentässä, kun tyyppinä ei ole säännöllinen lauseke. (#14556)</target>
       </segment>
     </unit>
     <unit id="aa9809d5-023f-49f9-a65f-bbb982092862">
@@ -21455,7 +21455,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Java applications with controls using the selectable state will now announce when an item is not selected rather than when the item is selected. (#14336)</source>
-        <target>Java-sovellukset, joissa käytetään valittavissa-tilan sisältäviä säätimiä, ilmoittavat nyt, kun kohde ei ole valittavissa  sen sijaan, että ilmoittaisivat, kun se on valittu. (#14336)</target>
+        <target>Java-sovellukset, joissa käytetään valittavissa-tilan sisältäviä ohjausobjekteja, ilmoittavat nyt, kun kohde ei ole valittavissa  sen sijaan, että ilmoittaisivat, kun se on valittuna. (#14336)</target>
       </segment>
     </unit>
     <unit id="f13f5feb-3277-4aa9-b662-5a74aac1da49">
@@ -21535,7 +21535,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In the Google Chrome location bar, suggestion controls (switch to tab, remove suggestion etc) are now reported when selected. (#13522)</source>
-        <target>Ehdotussäätimet (Siirry välilehteen, Poista ehdotus jne.) puhutaan valittaessa Google Chromen sijaintipalkissa. (#13522)</target>
+        <target>Ehdotusohjausobjektit (Siirry välilehteen, Poista ehdotus jne.) puhutaan valittaessa Google Chromen sijaintipalkissa. (#13522)</target>
       </segment>
     </unit>
     <unit id="fa11529b-cb04-477e-af67-331d2cec9409">
@@ -21565,7 +21565,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The date picker controls in Outlook 2016 / 365 Advanced search dialog now report their label and value. (#12726)</source>
-        <target>Päivämäärän valitsinsäätimet ilmoittavat nyt nimensä ja arvonsa Outlook 2016:n / 365:n Edistynyt haku -valintaikkunassa. (#12726)</target>
+        <target>Päivämäärän valitsinohjausobjektit ilmoittavat nyt nimensä ja arvonsa Outlook 2016:n / 365:n Edistynyt haku -valintaikkunassa. (#12726)</target>
       </segment>
     </unit>
     <unit id="6123500f-243f-43e1-9696-80136acbb997">
@@ -21575,7 +21575,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>ARIA switch controls are now actually reported as switches in Firefox, Chrome and Edge, rather than checkboxes. (#11310)</source>
-        <target>ARIA-valitsinsäätimet ilmoitetaan nyt Firefoxissa, Chromessa ja Edgessä valintaruutujen asemesta valitsimina. (#11310)</target>
+        <target>ARIA-valitsinohjausobjektit ilmoitetaan nyt Firefoxissa, Chromessa ja Edgessä valintaruutujen asemesta valitsimina. (#11310)</target>
       </segment>
     </unit>
     <unit id="039da45d-9dff-4a24-94f5-6fd3dcdb42b8">
@@ -21615,7 +21615,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Controls in tables in Java applications will now be announced more accurately by NVDA. (#14347)</source>
-        <target>NVDA puhuu nyt tarkemmin taulukoiden säätimet Java-sovelluksissa. (#14347)</target>
+        <target>NVDA puhuu nyt tarkemmin taulukoiden ohjausobjektit Java-sovelluksissa. (#14347)</target>
       </segment>
     </unit>
     <unit id="4810f86b-3a09-4d24-bf56-88a211479262">
@@ -23092,7 +23092,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Text reporting, Braille output, and password suppression now work as expected in the embedded Windows Terminal control in Visual Studio 2022. (#14194)</source>
-        <target>Tekstin lukeminen, pistekirjoituksen tulostus sekä salasanan lukemisen estäminen toimivat nyt odotetusti Visual Studio 2022:n upotetussa Windows-pääte-säätimessä. (#14194)</target>
+        <target>Tekstin lukeminen, pistekirjoituksen tulostus sekä salasanan lukemisen estäminen toimivat nyt odotetusti Visual Studio 2022:n upotetussa Windows-päätteen ohjausobjektissa. (#14194)</target>
       </segment>
     </unit>
     <unit id="73983b68-df93-4a7e-bc6c-f200e6c79e1c">
@@ -24563,7 +24563,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added new role for "busy indicator" controls. (#10644)</source>
-        <target>Lisätty uusi rooli "varattu"-ilmaisinsäätimille. (#10644)</target>
+        <target>Lisätty uusi rooli "varattu"-ilmaisinohjausobjekteille. (#10644)</target>
       </segment>
     </unit>
     <unit id="39aaaea6-8c62-4a1c-a8a4-908df572c8da">
@@ -24713,7 +24713,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA will now announce position information for tab controls. (#13744)</source>
-        <target>NVDA ilmoittaa nyt välilehtisäädinten sijaintitiedot. (#13744)</target>
+        <target>NVDA ilmoittaa nyt välilehtiohjausobjektien sijaintitiedot. (#13744)</target>
       </segment>
     </unit>
     <unit id="cd0f08ff-7716-425b-9f0b-9af5f6947395">
@@ -24733,7 +24733,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fix braille output when navigating certain text in Mozilla rich edit controls, such as drafting a message in Thunderbird. (#12542)</source>
-        <target>Korjattu pistekirjoituksen tulostus liikuttaessa tietyssä tekstissä Mozillan monipuolisissa muokkaussäätimissä, kuten Thunderbirdin viestinkirjoitusikkunassa. (#12542)</target>
+        <target>Korjattu pistekirjoituksen tulostus liikuttaessa tietyssä tekstissä Mozillan monipuolisissa muokkauskentissä, kuten Thunderbirdin viestinkirjoitusikkunassa. (#12542)</target>
       </segment>
     </unit>
     <unit id="9e15db33-fdbf-42ab-8dfa-579ce50b31f3">
@@ -25867,7 +25867,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When moving the review cursor past the end of text controls, such as in Microsoft Word with UI Automation, "bottom" is correctly reported in more situations. (#12808)</source>
-        <target>"Alareuna" ilmoitetaan asianmukaisesti useammissa tilanteissa, kun tarkastelukohdistin siirretään tekstisäätimien lopun ohi esim. Microsoft Wordissa UI Automation -rajapinnan ollessa käytössä. (#12808)</target>
+        <target>"Alareuna" ilmoitetaan asianmukaisesti useammissa tilanteissa, kun tarkastelukohdistin siirretään tekstikenttien lopun ohi esim. Microsoft Wordissa UI Automation -rajapinnan ollessa käytössä. (#12808)</target>
       </segment>
     </unit>
     <unit id="ce78290a-8c10-4e7c-b041-bcb426e36180">
@@ -27353,7 +27353,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Table navigation is now supported in grid controls created using the Out-GridView cmdlet in PowerShell. (#12928)</source>
-        <target>Taulukossa liikkumista tuetaan nyt ruudukkosäätimissä, jotka on luotu PowerShellin Out-GridView-cmdlet-komentoa käyttäen. (#12928)</target>
+        <target>Taulukossa liikkumista tuetaan nyt ruudukko-ohjausobjekteissa, jotka on luotu PowerShellin Out-GridView-cmdletiä käyttäen. (#12928)</target>
       </segment>
     </unit>
     <unit id="fc069da8-2712-4a3b-a7b0-39754c305a8e">
@@ -27592,7 +27592,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When using UI Automation to access Microsoft Excel spreadsheet controls, NVDA no longer redundantly announces when a single cell is selected. (#12530)</source>
-        <target>Kun Microsoft Excel -laskentataulukon säätimissä käytetään UI Automation -rajapintaa, NVDA ei enää ilmoita tarpeettomasti valittuna olevaa yksittäistä solua. (#12530)</target>
+        <target>Kun Microsoft Excel -laskentataulukon ohjausobjekteissa käytetään UI Automation -rajapintaa, NVDA ei enää ilmoita tarpeettomasti valittuna olevaa yksittäistä solua. (#12530)</target>
       </segment>
     </unit>
     <unit id="1768d5fe-b168-4250-a15c-b7139586e626">
@@ -28475,7 +28475,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode, controls can now be activated with braille cursor routing on their descriptor (ie. "lnk" for a link). This is especially useful for activating eg. check-boxes with no labels. (#7447)</source>
-        <target>Säätimiä on nyt mahdollista aktivoida niiden kuvauksen kohdalta (esim. "lnk" linkillä) selaustilassa pistenäytön kosketuskohdistinnäppäimillä. Tämä on erityisen hyödyllistä esim. nimettömiä valintaruutuja aktivoitaessa. (#7447)</target>
+        <target>Ohjausobjekteja on nyt mahdollista aktivoida niiden kuvauksen kohdalta (esim. "lnk" linkillä) selaustilassa pistenäytön kosketuskohdistinnäppäimillä. Tämä on erityisen hyödyllistä esim. nimettömiä valintaruutuja aktivoitaessa. (#7447)</target>
       </segment>
     </unit>
     <unit id="83864dbd-b364-4c8d-bcf2-2402c9c7a29a">
@@ -28745,7 +28745,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)</source>
-        <target>Tunnettu ongelma oikealta vasemmalle luettavissa kielissä: Selitteet/säätimet katkaisevat ryhmien oikean reunan. (#12181)</target>
+        <target>Tunnettu ongelma oikealta vasemmalle luettavissa kielissä: ryhmäkehysten oikea reuna katkaisee selitteet ja ohjausobjektit. (#12181)</target>
       </segment>
     </unit>
     <unit id="7c38640b-7b1c-4e72-a61f-d361fcdd8305">
@@ -28765,7 +28765,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>TextInfo.getTextInChunks no longer freezes when called on Rich Edit controls such as the NVDA log viewer. (#11613)</source>
-        <target>TextInfo.getTextInChunks ei enää jumiudu kutsuttaessa Rich Edit -säätimissä, kuten NVDA:n lokin tarkastelussa. (#11613)</target>
+        <target>TextInfo.getTextInChunks ei enää jumiudu kutsuttaessa sitä Rich Edit -ohjausobjekteissa, kuten NVDA:n lokin tarkastelussa. (#11613)</target>
       </segment>
     </unit>
     <unit id="9188053b-8c87-46d6-a0ad-1dbba6182fb4">
@@ -29859,7 +29859,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Users are now notified when attempting to create Speech Dictionary entries with invalid regular expression substitutions. (#11407)</source>
-        <target>Käyttäjille ilmoitetaan nyt heidän yrittäessään luoda puhesanastomäärityksiä, joissa on virheellisiä sääntölausekkeiden korvaavia tekstejä. (#11407)</target>
+        <target>Käyttäjille ilmoitetaan nyt heidän yrittäessään luoda puhesanastomäärityksiä, joissa on virheellisiä säännöllisten lausekkeiden korvaavia tekstejä. (#11407)</target>
       </segment>
     </unit>
     <unit id="2e7dff3e-b997-4721-9ae1-d377fafc780f">
@@ -30089,7 +30089,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Labels for controls are now disabled (greyed out) when the control is disabled. (#11809)</source>
-        <target>Säätimien selitteet poistetaan nyt käytöstä (näytetään harmaana), kun säädin ei ole käytössä. (#11809)</target>
+        <target>Ohjausobjektien selitteet poistetaan nyt käytöstä (näytetään harmaana), kun ohjausobjekti ei ole käytössä. (#11809)</target>
       </segment>
     </unit>
     <unit id="1ff66e09-2000-4d26-a371-8ba4506b5ca2">
@@ -30557,7 +30557,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA now detects read-only text UIA controls. (#10494)</source>
-        <target>NVDA tunnistaa nyt vain luku -tyyppiset UIA-tekstisäätimet. (#10494)</target>
+        <target>NVDA tunnistaa nyt ei-muokattavat UIA-tekstikentät. (#10494)</target>
       </segment>
     </unit>
     <unit id="decc00b6-f635-410e-b7a2-32f33f3ce3de">
@@ -30867,7 +30867,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Google chrome, NVDA will now report not checked for all checkable controls (not just check boxes) that are currently not checked. (#11377)</source>
-        <target>NVDA sanoo nyt Google Chromessa "ei valittu" kaikista valittavista säätimistä, jotka eivät ole valittuina (ei pelkästään valintaruuduista). (#11377)</target>
+        <target>NVDA sanoo nyt Google Chromessa "ei valittu" kaikista valittavista ohjausobjekteista, jotka eivät ole valittuina (ei pelkästään valintaruuduista). (#11377)</target>
       </segment>
     </unit>
     <unit id="30d72c8c-25b7-4f4d-9df2-1db7dcb1ce03">
@@ -30877,7 +30877,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>It is once again possible to navigate in various controls when NVDA's language is set to Aragonese. (#11384)</source>
-        <target>Useissa säätimissä liikkuminen on taas mahdollista, kun NVDA:n kieleksi on määritetty aragonia. (#11384)</target>
+        <target>Useissa ohjausobjekteissa liikkuminen on taas mahdollista, kun NVDA:n kieleksi on määritetty aragonia. (#11384)</target>
       </segment>
     </unit>
     <unit id="9a4b5735-0ec7-412a-b2d9-60797dea4c1a">
@@ -31416,7 +31416,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA error sounds are no longer heard when accessing DevExpress text controls. (#10918)</source>
-        <target>NVDA:n virheääniä ei enää kuulu käytettäessä DevExpressin tekstisäätimiä. (#10918)</target>
+        <target>NVDA:n virheääniä ei enää kuulu käytettäessä DevExpressin tekstiohjausobjekteja. (#10918)</target>
       </segment>
     </unit>
     <unit id="bff2d1e2-4cd8-40ce-b758-bc9458e78b01">
@@ -31695,7 +31695,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode, NVDA now reports "not checked" for unchecked check boxes where it sometimes didn't previously. (#10781)</source>
-        <target>NVDA ilmoittaa nyt selaustilassa "ei valittu" sellaisille ei-valituille valintaruuduille, joista sitä ei aiemmin ilmoitettu. (#10781)</target>
+        <target>NVDA ilmoittaa nyt selaustilassa "ei valittu" sellaisista ei-valituista valintaruuduista, joista sitä ei aiemmin ilmoitettu. (#10781)</target>
       </segment>
     </unit>
     <unit id="b1183b39-a1cd-4304-9a11-891d46d29043">
@@ -31705,7 +31705,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>ARIA switch controls no longer report confusing information such as "not pressed checked" or "pressed checked". (#9187)</source>
-        <target>ARIA-kytkinsäätimistä ei enää puhuta sekavaa tietoa, kuten "ei painettu valittu" tai "painettu valittu". (#9187)</target>
+        <target>ARIA-valitsinohjausobjekteista ei enää puhuta sekavaa tietoa, kuten "ei painettu valittu" tai "painettu valittu". (#9187)</target>
       </segment>
     </unit>
     <unit id="1ae04ff6-43ef-4115-8733-be2b8638b5b1">
@@ -32400,7 +32400,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Controls in Audacitys compressor dialog are now announced when navigating the dialog. (#10103)</source>
-        <target>Audacityn kompressorivalintaikkunan säätimet puhutaan nyt valintaikkunassa liikuttaessa . (#10103)</target>
+        <target>Audacityn kompressorivalintaikkunan ohjausobjektit puhutaan nyt valintaikkunassa liikuttaessa . (#10103)</target>
       </segment>
     </unit>
     <unit id="ac8dd57c-700b-4b42-875a-ab6be2db0fdf">
@@ -32430,7 +32430,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>On Windows 10, braille will now follow when editing cell contents in Microsoft Excel and in other UIA text controls where it was lagging behind. (#9749)</source>
-        <target>Pistenäyttö seuraa nyt Windows 10:ssä, kun solun sisältöä muokataan Microsoft Excelissä sekä muissa UIA-tekstisäätimissä, joissa se jäi aiemmin jälkeen. (#9749)</target>
+        <target>Pistenäyttö seuraa nyt Windows 10:ssä, kun solun sisältöä muokataan Microsoft Excelissä sekä muissa UIA-tekstikentissä, joissa se jäi aiemmin jälkeen. (#9749)</target>
       </segment>
     </unit>
     <unit id="d003cbf8-f900-46ea-b381-1330d5d2ffe1">
@@ -32450,7 +32450,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA is no longer silent when focusing an HTML tab control header in Internet Explorer. (#8898)</source>
-        <target>NVDA ei enää hiljene, kun kohdistus siirtyy Internet Explorerissa HTML-välilehtisäätimen otsakkeeseen. (#8898)</target>
+        <target>NVDA ei enää hiljene, kun kohdistus siirtyy Internet Explorerissa HTML-välilehtiohjausobjektin otsakkeeseen. (#8898)</target>
       </segment>
     </unit>
     <unit id="77547960-7f8c-4916-a45c-99fb42086420">
@@ -32480,7 +32480,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA will no longer report content of visually hidden columns for list items in SysListView32 controls. (#8268)</source>
-        <target>NVDA ei enää puhu luettelokohteiden visuaalisesti piilossa olevia sarakkeita SysListView32-säätimissä. (#8268)</target>
+        <target>NVDA ei enää puhu luettelokohteiden visuaalisesti piilossa olevia sarakkeita SysListView32-ohjausobjekteissa. (#8268)</target>
       </segment>
     </unit>
     <unit id="4ef3db5e-f9c5-4820-a18b-6714f3ce880c">
@@ -32560,7 +32560,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Invalid regular expressions in speech dictionaries no longer completely break speech in NVDA. (#10334)</source>
-        <target>Puhesanastojen virheelliset sääntölausekkeet eivät enää mykistä täysin NVDA:n puhetta. (#10334)</target>
+        <target>Puhesanastojen virheelliset säännölliset lausekkeet eivät enää mykistä täysin NVDA:n puhetta. (#10334)</target>
       </segment>
     </unit>
     <unit id="832a2485-4063-4f7d-857b-567e2e2f8794">
@@ -33818,7 +33818,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Scintilla controls such as Notepad++, NVDA can read the correct line when wordwrap is enabled. (#9424)</source>
-        <target>NVDA lukee  asianmukaisen rivin, kun automaattinen rivitys on käytössä Scintilla-säätimissä, kuten Notepad++:ssa. (#9424)</target>
+        <target>NVDA lukee  asianmukaisen rivin, kun automaattinen rivitys on käytössä Scintilla-ohjausobjekteissa, kuten Notepad++:ssa. (#9424)</target>
       </segment>
     </unit>
     <unit id="60810153-3a96-4183-b563-0ab0ae6b7e70">
@@ -34222,7 +34222,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Mozilla Firefox and Google Chrome, browse mode now reports the selected item in list boxes and trees.</source>
-        <target>Valittu kohde ilmoitetaan nyt listaruuduissa ja puunäkymissä selaustilassa oltaessa Mozilla Firefoxissa ja Google Chromessa.</target>
+        <target>Valittu kohde ilmoitetaan nyt luetteloruuduissa ja puunäkymissä selaustilassa oltaessa Mozilla Firefoxissa ja Google Chromessa.</target>
       </segment>
     </unit>
     <unit id="12aad9c4-8888-49e7-8af2-750ed2b64316">
@@ -34242,7 +34242,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>This does not work for certain list boxes (HTML select controls) in Chrome.</source>
-        <target>Ei toimi Chromessa tietyissä listaruuduissa (HTML-valintasäätimet).</target>
+        <target>Ei toimi Chromessa tietyissä luetteloruuduissa (HTML-valintaohjausobjektit).</target>
       </segment>
     </unit>
     <unit id="c7b16a5f-6265-4987-873a-f9a293faa4f6">
@@ -34342,7 +34342,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The move mouse to navigator object command is now available in Microsoft Word as well as for UIA controls, particularly Microsoft Edge. (#7916, #8371)</source>
-        <target>Siirrä hiiri navigointiobjektiin -komento on nyt käytettävissä Microsoft Wordissa sekä  UIA-säätimissä, erityisesti Microsoft Edgessä. (#7916, #8371)</target>
+        <target>Siirrä hiiri navigointiobjektiin -komento on nyt käytettävissä Microsoft Wordissa sekä  UIA-ohjausobjekteissa, erityisesti Microsoft Edgessä. (#7916, #8371)</target>
       </segment>
     </unit>
     <unit id="d9b2d6f6-4c49-4224-8fbf-191e875cf331">
@@ -34432,7 +34432,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When moving by character in plain text controls (such as Notepad) or browse mode, 32 bit emoji characters consisting of two UTF-16 code points (such as 🤦) will now read properly. (#8782)</source>
-        <target>32-bittiset emoji-merkit, jotka koostuvat kahdesta UTF-16-koodipisteestä (kuten 🤦), luetaan nyt oikein liikuttaessa merkki kerrallaan pelkkä teksti -säätimissä (kuten Muistiossa) tai selaustilassa. (#8782)</target>
+        <target>32-bittiset emoji-merkit, jotka koostuvat kahdesta UTF-16-koodipisteestä (kuten 🤦), luetaan nyt oikein liikuttaessa merkki kerrallaan pelkkä teksti -tyyppisissä ohjausobjekteissa (kuten Muistiossa) tai selaustilassa. (#8782)</target>
       </segment>
     </unit>
     <unit id="bc39ac8f-74d8-4351-bec2-0f252d1331cd">
@@ -34502,7 +34502,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In action Center in Windows 10 October 2018 Update and earlier, NVDA will recognize brightness quick action control as a button instead of a toggle button. (#8845)</source>
-        <target>NVDA tunnistaa kirkkaus-pikatoimintosäätimen tilanvaihtopainikkeen sijaan painikkeeksi Windows 10 October 2018 Updaten ja aiempien Toimintokeskuksessa. (#8845)</target>
+        <target>NVDA tunnistaa kirkkaus-pikatoimintoohjausobjektin vaihtopainikkeen sijaan painikkeeksi Windows 10 October 2018 Updaten ja aiempien Toimintokeskuksessa. (#8845)</target>
       </segment>
     </unit>
     <unit id="2f7b2e85-a35b-48ef-afdd-340e6b31820e">
@@ -34532,7 +34532,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer fails to report the focus for some controls in the Microsoft Office 2016 ribbon when collapsed.</source>
-        <target>NVDA ilmoittaa asianmukaisesti kohdistuksen joissakin Microsoft Office 2016:n valintanauhan säätimissä, kun ne ovat supistettuina.</target>
+        <target>NVDA ilmoittaa asianmukaisesti kohdistuksen joissakin Microsoft Office 2016:n valintanauhan ohjausobjekteissa, kun ne ovat supistettuina.</target>
       </segment>
     </unit>
     <unit id="51d02bc2-e2d7-47e9-bdc4-51594e9d0c02">
@@ -34662,7 +34662,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>It should be no longer necessary to turn off in-cell editing in Microsoft Excel's options to access the cell edit control with NVDA in Excel 2016/365. (#8146).</source>
-        <target>Solunsisäisen muokkauksen käytöstä poistamisen ei pitäisi olla enää tarpeen Microsoft Excelin asetuksista solunmuokkaussäätimen käyttämiseksi NVDA:lla Excel 2016:ssa/365:ssä. (#8146).</target>
+        <target>Solunsisäisen muokkauksen käytöstä poistamisen ei pitäisi olla enää tarpeen Microsoft Excelin asetuksista solunmuokkauskentän käyttämiseksi NVDA:lla Excel 2016:ssa/365:ssä. (#8146).</target>
       </segment>
     </unit>
     <unit id="b4da24a5-afc7-44fa-8f18-0bc12d2a0e74">
@@ -35100,7 +35100,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Google Slides with Mozilla Firefox, NVDA no longer reports selected text on every control with focus. (#8964)</source>
-        <target>NVDA ei enää ilmoita Google Slidesissa jokaisen aktiivisen säätimen valittua tekstiä Mozilla Firefoxia käytettäessä. (#8964)</target>
+        <target>NVDA ei enää ilmoita Google Slidesissa jokaisen aktiivisen ohjausobjektin valittua tekstiä Mozilla Firefoxia käytettäessä. (#8964)</target>
       </segment>
     </unit>
     <unit id="88355501-5c4b-4b3d-be95-674db83a2c1d">
@@ -35567,7 +35567,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Mouse tracking is now much more accurate in Notepad and other plain text edit controls when in a document with more than 65535 characters. (#8397)</source>
-        <target>Hiiren seuranta on nyt paljon tarkempaa Muistiossa sekä muissa pelkkäteksti-muokkaussäätimissä oltaessa asiakirjassa, jossa on enemmän kuin 65535 merkkiä. (#8397)</target>
+        <target>Hiiren seuranta on nyt paljon tarkempaa Muistiossa sekä muissa pelkkä teksti -tyyppisissä muokkauskentissä oltaessa asiakirjassa, jossa on enemmän kuin 65535 merkkiä. (#8397)</target>
       </segment>
     </unit>
     <unit id="e47bc33f-8e82-4097-aa55-c72a7844417e">
@@ -35607,7 +35607,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed an issue where the "not checked" state on controls is not reported in speech if the control has previously been half checked. (#6946)</source>
-        <target>Korjattu ongelma, jonka vuoksi säätimen "ei valittu" -tilaa ei ilmoitettu puheella, mikäli kyseinen säädin oli aiemmin osittain valittuna. (#6946)</target>
+        <target>Korjattu ongelma, jonka vuoksi ohjausobjektin "ei valittu" -tilaa ei ilmoitettu puheella, mikäli kyseinen ohjausobjekti oli aiemmin osittain valittuna. (#6946)</target>
       </segment>
     </unit>
     <unit id="c410f035-6867-42ef-b6ea-fc1c45242c64">
@@ -36115,7 +36115,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Contracted braille input tables will automatically fall back to uncontracted mode in non-editable cases (i.e. controls where there is no cursor or in browse mode). (#7306)</source>
-        <target>Lyhennepistekirjoituksen syöttötaulukot vaihtavat automaattisesti takaisin lyhentämättömään tilaan ei-muokattavissa paikoissa (ts. säätimissä, joissa ei ole kohdistinta, tai selaustilassa). (#7306)</target>
+        <target>Lyhennepistekirjoituksen syöttötaulukot vaihtavat automaattisesti takaisin lyhentämättömään tilaan ei-muokattavissa paikoissa (ts. ohjausobjekteissa, joissa ei ole kohdistinta, tai selaustilassa). (#7306)</target>
       </segment>
     </unit>
     <unit id="4331bcf1-9602-44fa-b1cb-9b4e6738380c">
@@ -36165,7 +36165,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer fails to read focused controls in the Microsoft Account sign-in screen in Settings after entering an email address. (#7997)</source>
-        <target>NVDA lukee nyt Asetukset-sovelluksen Microsoft-tilin kirjautumisnäytön aktiiviset säätimet sähköpostiosoitteen syöttämisen jälkeen. (#7997)</target>
+        <target>NVDA lukee nyt Asetukset-sovelluksen Microsoft-tilin kirjautumisnäytön aktiiviset ohjausobjektit sähköpostiosoitteen syöttämisen jälkeen. (#7997)</target>
       </segment>
     </unit>
     <unit id="addacd84-8a08-4399-9ab1-d41334a0cf76">
@@ -36355,7 +36355,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In some text controls, particularly in Delphi applications, the information provided about editing and navigating is now much more reliable. (#636, #8102)</source>
-        <target>Muokkausta ja navigointia koskevat tiedot ovat nyt paljon luotettavampia joissakin tekstisäätimissä, erityisesti Delphi-sovelluksissa. (#636, #8102)</target>
+        <target>Muokkausta ja navigointia koskevat tiedot ovat nyt paljon luotettavampia joissakin tekstikentissä, erityisesti Delphi-sovelluksissa. (#636, #8102)</target>
       </segment>
     </unit>
     <unit id="6b16a7ca-97b8-45e4-8ce0-1bf131d2fc71">
@@ -36603,7 +36603,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When typing with the on-screen keyboard via touch interaction, by default you now need to double tap each key the same way you would activate any other control. (#7309)</source>
-        <target>Kun näyttönäppäimistöllä kirjoitetaan kosketusvuorovaikutuksen avulla, kutakin näppäintä on oletusarvoisesti kaksoisnapautettava samoin kuin mitä tahansa muutakin säädintä aktivoitaessa. (#7309)</target>
+        <target>Kun näyttönäppäimistöllä kirjoitetaan kosketusvuorovaikutuksen avulla, kutakin näppäintä on oletusarvoisesti kaksoisnapautettava samoin kuin mitä tahansa muutakin ohjausobjektia aktivoitaessa. (#7309)</target>
       </segment>
     </unit>
     <unit id="29c331f0-ff15-4dae-901a-c9ef6d8e2982">
@@ -36773,7 +36773,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In speech and braille output, control states will now always be reported in the same order, regardless whether they are positive or negative. (#7076)</source>
-        <target>Säätimien tilat ilmoitetaan nyt puheella ja pistekirjoituksella aina samassa järjestyksessä riippumatta siitä, ovatko ne positiivisia vai negatiivisia. (#7076)</target>
+        <target>Ohjausobjektien tilat ilmoitetaan nyt puheella ja pistekirjoituksella aina samassa järjestyksessä riippumatta siitä, ovatko ne positiivisia vai negatiivisia. (#7076)</target>
       </segment>
     </unit>
     <unit id="1e29b3f8-0c8e-4d66-9ee6-4d887b5f85b3">
@@ -37311,7 +37311,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Accessible labels for controls in Mozilla Firefox are now more readily reported in browse mode when the label does not appear as content itself. (#4773)</source>
-        <target>Säätimien saavutettavat selitteet ilmoitetaan nyt herkemmin selaustilassa Mozilla Firefoxissa, kun selite ei näy sisältönä. (#4773)</target>
+        <target>Ohjausobjektien saavutettavat nimet ilmoitetaan nyt herkemmin selaustilassa Mozilla Firefoxissa, kun nimi ei näy sisältönä. (#4773)</target>
       </segment>
     </unit>
     <unit id="e8552cb4-8c19-4ac7-bb80-09df2e3a7103">
@@ -37580,7 +37580,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added support for the Date picker control found in Microsoft Outlook Appointment dialogs. (#7217)</source>
-        <target>Lisätty tuki Microsoft Outlookin tapaamisenluontivalintaikkunoiden päivämääränvalitsinsäätimelle. (#7217)</target>
+        <target>Lisätty tuki Microsoft Outlookin tapaamisenluontivalintaikkunoiden päivämääränvalitsinohjausobjektille. (#7217)</target>
       </segment>
     </unit>
     <unit id="a376b602-7f13-4fcf-9e85-39ff1f7369d0">
@@ -37800,7 +37800,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Many more control types and states have been abbreviated for braille. Landmarks have also been abbreviated. Please see "Control Type, State and Landmark Abbreviations" under Braille in the User Guide for a complete list. (#7188, #3975)</source>
-        <target>Entistä useampia säädintyyppejä ja -tiloja sekä kiintopisteitä on lyhennetty pistekirjoituksella. Katso täydellinen luettelo käyttöoppaan "Säädintyyppien ja -tilojen sekä kiintopisteiden lyhenteet" -kappaleesta, joka löytyy Pistekirjoitus-kohdan alta. (#7188, #3975)</target>
+        <target>Entistä useampia ohjausobjektityyppejä ja -tiloja sekä kiintopisteitä on lyhennetty pistekirjoituksella. Katso täydellinen luettelo käyttöoppaan "Ohjausobjektien ja niiden tilojen sekä kiintopisteiden lyhenteet" -kappaleesta, joka löytyy Pistekirjoitus-kohdan alta. (#7188, #3975)</target>
       </segment>
     </unit>
     <unit id="982fbe76-dd94-407c-8c44-1b8416ad36c2">
@@ -38379,7 +38379,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Improved support for control descriptions provided on web pages in Internet Explorer 11 (specifically, support for aria-describedby within iframes and when multiple IDs are provided). (#5784)</source>
-        <target>Paranneltu verkkosivujen säädinkuvausten tukea Internet Explorer 11:ssä (erityisesti aria-describedby-attribuutille kehyksissä ja kun useita tunnuksia on saatavilla). (#5784)</target>
+        <target>Parannettu verkkosivujen ohjausobjektikuvausten tukea Internet Explorer 11:ssä (erityisesti aria-describedby-attribuutille kehyksissä ja kun useita tunnuksia on saatavilla). (#5784)</target>
       </segment>
     </unit>
     <unit id="23e176ab-0ec1-4df9-897b-10915719570e">
@@ -38399,7 +38399,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA will no longer fail to navigate to or report certain (UIA) controls where a keyboard shortcut is not defined. (#6779)</source>
-        <target>Tiettyihin UIA-säätimiin siirtyminen tai niiden ilmoittaminen ei enää epäonnistu NVDA:ta käyttäen, kun niihin ei ole määritetty pikanäppäintä. (#6779)</target>
+        <target>Tiettyihin UIA-ohjausobjekteihin siirtyminen tai niiden ilmoittaminen ei enää epäonnistu NVDA:ta käyttäen, kun niihin ei ole määritetty pikanäppäintä. (#6779)</target>
       </segment>
     </unit>
     <unit id="51d137f0-dc34-4a88-8caf-4502d38ab008">
@@ -38409,7 +38409,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Two empty spaces are no longer added in keyboard shortcut information for certain (UIA) controls. (#6790)</source>
-        <target>Pikanäppäintietoihin ei enää lisätä kahta välilyöntiä tietyissä UIA-säätimissä. (#6790)</target>
+        <target>Pikanäppäintietoihin ei enää lisätä kahta välilyöntiä tietyissä UIA-ohjausobjekteissa. (#6790)</target>
       </segment>
     </unit>
     <unit id="8c6fb7a0-5699-47b5-9c7d-3e95eec5756f">
@@ -38988,7 +38988,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Controls in the Microsoft Excel Ribbon that are unavailable are now reported as such. (#6430)</source>
-        <target>Microsoft Excelin valintanauhan säätimet, jotka eivät ole käytettävissä, ilmoitetaan nyt sellaisina. (#6430)</target>
+        <target>Microsoft Excelin valintanauhan ohjausobjektit, jotka eivät ole käytettävissä, ilmoitetaan nyt sellaisina. (#6430)</target>
       </segment>
     </unit>
     <unit id="1ee3a646-6d9c-4686-94d2-b86a3f1affe1">
@@ -39277,7 +39277,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Spin Controls are now used for numeric input fields such as the "Capital pitch change percentage" setting  in the Voice Settings dialog. You can enter the desired value or use the up and down arrow keys to adjust the value. (#6099)</source>
-        <target>Numeeristen arvojen syöttökentissä, kuten Puheäänen asetukset -valintaikkunan "Äänenkorkeuden muutos prosentteina isoille kirjaimille" -asetuksessa, käytetään nyt kiertosäätimiä. Voit kirjoittaa haluamasi arvon tai käyttää nuoli ylös- ja nuoli alas -näppäimiä sen muuttamiseen. (#6099)</target>
+        <target>Numeeristen arvojen syöttökentissä, kuten Puheäänen asetukset -valintaikkunan "Äänenkorkeuden muutos prosentteina isoille kirjaimille" -asetuksessa, käytetään nyt askellusohjausobjekteja. Voit kirjoittaa haluamasi arvon tai käyttää nuoli ylös- ja nuoli alas -näppäimiä sen muuttamiseen. (#6099)</target>
       </segment>
     </unit>
     <unit id="11893420-1562-43ae-ae49-2c18d7c3dd69">
@@ -39876,7 +39876,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When editing dictionary entries, feedback is now given for invalid regular expressions. NVDA no longer crashes if a dictionary file contains an invalid regular expression. (#4834)</source>
-        <target>Virheellisistä sääntölausekkeista annetaan nyt palaute sanastomäärityksiä muokattaessa. NVDA ei enää kaadu, mikäli sanastotiedosto sisältää virheellisen sääntölausekkeen. (#4834)</target>
+        <target>Virheellisistä säännöllisistä lausekkeista annetaan nyt palaute sanastomäärityksiä muokattaessa. NVDA ei enää kaadu, mikäli sanastotiedosto sisältää virheellisen säännöllisen lausekkeen. (#4834)</target>
       </segment>
     </unit>
     <unit id="a01c0471-ad82-48a2-8f73-01378dec2a2a">
@@ -40084,7 +40084,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode in Internet Explorer and other MSHTML controls, using first letter navigation to move by annotation (a and shift+a) now moves to inserted and deleted text. (#5691)</source>
-        <target>Pikanavigointinäppäimillä selitteisiin siirtyminen (A ja Shift+A) siirtää nyt lisättyyn ja poistettuun tekstiin selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä. (#5691)</target>
+        <target>Pikanavigointinäppäimillä selitteisiin siirtyminen (A ja Shift+A) siirtää nyt lisättyyn ja poistettuun tekstiin selaustilassa Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. (#5691)</target>
       </segment>
     </unit>
     <unit id="7d087f58-ebbb-494f-83ac-8f20fdd0bc33">
@@ -40144,7 +40144,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>If reporting of spelling errors is enabled and supported in the focused control, NVDA will play a sound to alert you of a spelling error made while typing. This can be disabled using the new "Play sound for spelling errors while typing" option in NVDA's Keyboard Settings dialog. (#2024)</source>
-        <target>Jos kirjoitusvirheiden ilmoittaminen on käytössä ja sitä tuetaan aktiivisessa säätimessä, NVDA toistaa kirjoitettaessa äänen ilmoittaakseen kirjoitusvirheestä. Tämä voidaan poistaa käytöstä uudella "Ilmaise kirjoitusvirheet kirjoitettaessa toistamalla ääni" -asetuksella NVDA:n Näppäimistöasetukset-valintaikkunassa. (#2024)</target>
+        <target>Jos kirjoitusvirheiden ilmoittaminen on käytössä ja sitä tuetaan aktiivisessa ohjausobjektissa, NVDA toistaa kirjoitettaessa äänen ilmoittaakseen kirjoitusvirheestä. Tämä voidaan poistaa käytöstä uudella "Ilmaise kirjoitusvirheet kirjoitettaessa merkkiäänellä" -asetuksella NVDA:n Näppäimistöasetukset-valintaikkunassa. (#2024)</target>
       </segment>
     </unit>
     <unit id="67a20a66-e19e-4ace-99e8-9cee52e4b3b2">
@@ -40334,7 +40334,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, moving focus to certain controls (specifically, where aria-activedescendant is used) no longer incorrectly switches to browse mode. This occurred, for example, when moving to suggestions in address fields when composing a message in Gmail. (#5676)</source>
-        <target>Kohdistuksen siirtäminen tiettyihin säätimiin (erityisesti sellaisiin, joissa käytetään aria-activedescendant-attribuuttia) ei vaihda enää virheellisesti selaustilaan Internet Explorerissa ja muissa MSHTML-säätimissä. Tätä ilmeni esim. Gmailissa siirryttäessä viestiä kirjoitettaessa  osoitekenttien ehdotuksiin. (#5676)</target>
+        <target>Kohdistuksen siirtäminen tiettyihin ohjausobjekteihin (erityisesti sellaisiin, joissa käytetään aria-activedescendant-attribuuttia) ei vaihda enää virheellisesti selaustilaan Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. Tätä ilmeni esim. Gmailissa siirryttäessä viestiä kirjoitettaessa  osoitekenttien ehdotuksiin. (#5676)</target>
       </segment>
     </unit>
     <unit id="dc2062fa-5543-406d-80bb-f91d702ecc0c">
@@ -40573,7 +40573,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, moving to specific heading levels with single letter navigation now behaves as expected when the level of a heading is overridden for accessibility purposes (specifically, when aria-level overrides the level of an h tag). (#5434)</source>
-        <target>Tiettyihin otsikkotasoihin siirtyminen pikanavigointinäppäimillä toimii nyt odotetusti Internet Explorerissa ja muissa MSHTML-säätimissä, kun otsikon taso ohitetaan saavutettavuustarkoituksessa (erityisesti, kun aria-level ohittaa h-tagin tason). (#5434)</target>
+        <target>Tiettyihin otsikkotasoihin siirtyminen pikanavigointinäppäimillä toimii nyt odotetusti Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa, kun otsikon taso ohitetaan saavutettavuustarkoituksessa (erityisesti, kun aria-level ohittaa h-tagin tason). (#5434)</target>
       </segment>
     </unit>
     <unit id="e34bd491-d12e-4fbd-82a0-21ff912729d2">
@@ -41062,7 +41062,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>A Report Emphasis option has been added to NVDA's Document formatting settings dialog. On by default, this option allows NVDA to automatically report the existence of emphasised text in documents. So far, this is only supported for em and strong tags in Browse Mode for Internet Explorer and other MSHTML controls. (#4920)</source>
-        <target>NVDA:n Asiakirjojen muotoiluasetukset -valintaikkunaan on lisätty Ilmoita korostus -asetus. Tämän asetuksen avulla, joka on oletusarvoisesti käytössä, NVDA ilmoittaa automaattisesti asiakirjojen korostetun tekstin. Tätä tuetaan toistaiseksi vain em- ja strong-tageille selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä. (#4920)</target>
+        <target>NVDA:n Asiakirjojen muotoiluasetukset -valintaikkunaan on lisätty Ilmoita korostus -asetus. Tämän asetuksen avulla, joka on oletusarvoisesti käytössä, NVDA ilmoittaa automaattisesti asiakirjojen korostetun tekstin. Tätä tuetaan toistaiseksi vain em- ja strong-tageille selaustilassa Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. (#4920)</target>
       </segment>
     </unit>
     <unit id="28199ba7-a909-42cd-a035-fc19d240e84e">
@@ -41072,7 +41072,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The existence of inserted and deleted text is now reported in Browse Mode for Internet Explorer and other MSHTML controls if NVDA's Report Editor Revisions option is enabled. (#4920)</source>
-        <target>Lisätty ja poistettu teksti ilmoitetaan nyt selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä, jos NVDA:n Lue muokkaajan merkinnät -asetus on käytössä. (#4920)</target>
+        <target>Lisätty ja poistettu teksti ilmoitetaan nyt selaustilassa Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa, jos NVDA:n Lue muokkaajan merkinnät -asetus on käytössä. (#4920)</target>
       </segment>
     </unit>
     <unit id="94dac0b3-9ccf-4ff3-b6a5-842888600b47">
@@ -41372,7 +41372,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA now correctly switches to focus mode when tabbing to read-only ARIA grid controls in Browse Mode for Mozilla Firefox and other Gecko-based controls. (#5118)</source>
-        <target>NVDA siirtyy nyt asianmukaisesti vuorovaikutustilaan liikuttaessa selaustilassa Sarkain-näppäimellä vain luku -tyyppisten ARIA-ruudukkosäädinten kohdalle Mozilla Firefoxissa ja muissa Gecko-pohjaisissa sovelluksissa. (#5118)</target>
+        <target>NVDA vaihtaa nyt asianmukaisesti vuorovaikutustilaan liikuttaessa selaustilassa Sarkain-näppäimellä ei-muokattavien ARIA-ruudukoiden kohdalle Mozilla Firefoxissa ja muissa Gecko-pohjaisissa sovelluksissa. (#5118)</target>
       </segment>
     </unit>
     <unit id="651fe106-dccf-4860-b5ad-88cf7535e50a">
@@ -41511,7 +41511,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The existence of spelling errors is announced in editable fields for Internet Explorer and other MSHTML controls. (#4174)</source>
-        <target>Kirjoitusvirheet ilmoitetaan muokkauskentissä Internet Explorerissa ja muissa MSHTML-säätimissä. (#4174)</target>
+        <target>Kirjoitusvirheet ilmoitetaan muokkauskentissä Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. (#4174)</target>
       </segment>
     </unit>
     <unit id="bd017e49-8f9c-4ebc-977e-d610d88c502d">
@@ -41641,7 +41641,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode for Internet Explorer and other MSHTML controls, quick navigation by form field no longer incorrectly includes presentational list items. (#4204)</source>
-        <target>Lomakekenttiin siirtyminen pikanavigoinnilla selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä ei enää siirrä virheellisesti esitystarkoituksiin käytettäviin luettelokohteisiin. (#4204)</target>
+        <target>Lomakekenttiin siirtyminen pikanavigoinnilla selaustilassa Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa ei enää siirrä virheellisesti esitystarkoituksiin käytettäviin luettelokohteisiin. (#4204)</target>
       </segment>
     </unit>
     <unit id="4f52c889-e649-4cca-948d-1589211a59a3">
@@ -41661,7 +41661,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, tabbing into sections, articles or dialogs  no longer inappropriately reports all content in the container. (#5021, #5025)</source>
-        <target>Sarkaimella siirtyminen osiin, artikkeleihin tai valintaikkunoihin Internet Explorerissa ja muissa MSHTML-säätimissä ei enää virheellisesti lue kaikkea säilön sisältöä. (#5021, #5025)</target>
+        <target>Sarkaimella siirtyminen osiin, artikkeleihin tai valintaikkunoihin Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa ei enää virheellisesti lue kaikkea säilön sisältöä. (#5021, #5025)</target>
       </segment>
     </unit>
     <unit id="8f7849df-e4b8-4065-917f-9a2e0f49ca5b">
@@ -41701,7 +41701,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode in Internet Explorer and other MSHTML controls, the correct content is now reported when an element appears or changes and is immediately focused. (#5040)</source>
-        <target>Asianmukainen sisältö luetaan nyt Internet Explorerissa ja muissa MSHTML-säätimissä, kun elementti tulee näkyviin tai muuttuu, ja kohdistus siirretään heti sen kohdalle. (#5040)</target>
+        <target>Asianmukainen sisältö luetaan nyt Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa, kun elementti tulee näkyviin tai muuttuu, ja kohdistus siirretään heti sen kohdalle. (#5040)</target>
       </segment>
     </unit>
     <unit id="a43bc85b-1726-4684-8c4b-e9452dd9953f">
@@ -41721,7 +41721,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In braille, extraneous spaces are no longer displayed between or after indicators for controls and formatting. (#5043)</source>
-        <target>Pistenäytöllä ei enää näytetä ylimääräisiä välilyöntejä säädin- ja muotoiluilmaisimien välissä tai niiden jälkeen. (#5043)</target>
+        <target>Pistenäytöllä ei enää näytetä ylimääräisiä välilyöntejä ohjausobjekti- ja muotoiluilmaisimien välissä tai niiden jälkeen. (#5043)</target>
       </segment>
     </unit>
     <unit id="fc4ed586-c77f-4aaa-9f70-3170156d9013">
@@ -42040,7 +42040,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, typed characters are no longer inappropriately announced in editable combo boxes such as the Google search field on the Google home page. (#4976)</source>
-        <target>Kirjoitettuja merkkejä ei enää virheellisesti puhuta muokattavissa yhdistelmäruuduissa, kuten Googlen kotisivulla olevassa hakukentässä Internet Explorerissa ja muissa MSHTML-säätimissä. (#4976)</target>
+        <target>Kirjoitettuja merkkejä ei enää virheellisesti puhuta muokattavissa yhdistelmäruuduissa, kuten Googlen kotisivulla olevassa hakukentässä Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. (#4976)</target>
       </segment>
     </unit>
     <unit id="7b156d3c-c47f-455f-a8e3-5b310ddd765f">
@@ -42100,7 +42100,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, pressing g or shift+g to navigate to graphics now includes elements marked as images for accessibility purposes (i.e. ARIA role img). (#5062)</source>
-        <target>G:n tai Vaihto+G:n painaminen Internet Explorerissa ja muissa MSHTML-säätimissä grafiikoihin siirtymiseksi ottaa nyt huomioon myös saavutettavuustarkoituksessa kuviksi nimetyt elementit (esim. ARIA-roolin img). (#5062)</target>
+        <target>G:n tai Vaihto+G:n painaminen Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa grafiikoihin siirtymiseksi ottaa nyt huomioon myös saavutettavuustarkoituksessa kuviksi nimetyt elementit (esim. ARIA-roolin img). (#5062)</target>
       </segment>
     </unit>
     <unit id="017203db-1a49-4bcb-aa3d-5ff15b968c81">
@@ -42579,7 +42579,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Browse mode will reflect updates, and live regions will be announced, for   browse mode documents within ARIA applications embedded in a document in Internet Explorer or other MSHTML controls. (#4798)</source>
-        <target>Päivitykset näytetään selaustilassa, ja aktiiviset alueet ilmoitetaan asiakirjaan upotettujen ARIA-sovellusten sisällä olevissa selaustila-asiakirjoissa Internet Explorerissa tai muissa MSHTML-säätimissä. (#4798)</target>
+        <target>Päivitykset näytetään selaustilassa, ja aktiiviset alueet ilmoitetaan asiakirjaan upotettujen ARIA-sovellusten sisällä olevissa selaustila-asiakirjoissa Internet Explorerissa tai muissa MSHTML-ohjausobjekteissa. (#4798)</target>
       </segment>
     </unit>
     <unit id="6af861ed-a6f7-4e0c-80e1-2619ea1c4d4f">
@@ -42589,7 +42589,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When text is changed or added in live regions in Internet Explorer and other MSHTML controls where the author has specified that text is relevant, only the changed or added text is announced, rather than all of the text in the containing element. (#4800)</source>
-        <target>Kun teksti muuttuu tai sitä lisätään text-relevant -tyyppisiin aktiivisiin alueisiin Internet Explorerissa ja muissa MSHTML-säätimissä, vain muutettu tai lisätty teksti puhutaan säilöelementin kaiken tekstin sijasta. (#4800)</target>
+        <target>Kun teksti muuttuu tai sitä lisätään text-relevant -tyyppisiin aktiivisiin alueisiin Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa, säilöelementin kaiken tekstin sijaan puhutaan vain muutettu tai lisätty teksti. (#4800)</target>
       </segment>
     </unit>
     <unit id="2b1f3fe1-5ea4-44c3-8d01-028d72768d10">
@@ -42599,7 +42599,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Content indicated by the aria-labelledby attribute on elements in Internet Explorer and other MSHTML controls correctly replaces the original content  where it is appropriate to do so. (#4575)</source>
-        <target>Internet Explorerissa ja muissa MSHTML-säätimissä aria-labeledby-attribuutilla ilmaistava elementtien sisältö korvaa oikein alkuperäisen sisällön, jos se on tarkoituksenmukaista. (#4575)</target>
+        <target>Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa aria-labelledby-attribuutilla ilmaistava elementtien sisältö korvaa oikein alkuperäisen sisällön, jos se on tarkoituksenmukaista. (#4575)</target>
       </segment>
     </unit>
     <unit id="e25c9324-7926-4714-a3d2-8ea1b9e07c16">
@@ -42619,7 +42619,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, content inside elements hidden with visibility:hidden is no longer inappropriately presented in browse mode. (#4839, #3776)</source>
-        <target>Visibility:hidden-attribuutilla piilotetuissa elementeissä olevaa sisältöä ei enää näytetä asiaankuulumattomasti selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä. #3776)</target>
+        <target>Visibility:hidden-attribuutilla piilotetuissa elementeissä olevaa sisältöä ei enää näytetä asiaankuulumattomasti selaustilassa Internet Explorerissa tai muissa MSHTML-ohjausobjekteissa. #3776)</target>
       </segment>
     </unit>
     <unit id="33dd66a7-5640-4f09-b03a-f4a6efa4e2d4">
@@ -42629,7 +42629,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, the title attribute on form controls no longer inappropriately takes preference over other label associations. (#4491)</source>
-        <target>Lomakesäätimien title-attribuutti ei enää ole asiaankuulumattomasti etusijalla muihin seliteliitoksiin nähden Internet Explorerissa ja muissa MSHTML-säätimissä. (#4491)</target>
+        <target>Lomakeohjausobjektien title-attribuutti ei enää ole asiaankuulumattomasti etusijalla muihin seliteliitoksiin nähden Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. (#4491)</target>
       </segment>
     </unit>
     <unit id="3ffdb6a5-491a-475d-8119-720fe48b1956">
@@ -42639,7 +42639,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, NVDA no longer ignores focusing  of elements  due to the aria-activedescendant attribute. (#4667)</source>
-        <target>NVDA ei jätä enää huomiotta kohdistuksen siirtymistä elementteihin aria-activedescendant-attribuutin vuoksi Internet Explorerissa ja muissa MSHTML-säätimissä. (#4667)</target>
+        <target>NVDA ei jätä enää huomiotta kohdistuksen siirtymistä elementteihin aria-activedescendant-attribuutin vuoksi Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. (#4667)</target>
       </segment>
     </unit>
     <unit id="cc6bff22-2c88-45e9-a522-357d79b134b0">
@@ -42819,7 +42819,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When moving focus back to a browse mode document (e.g. alt+tabbing to an already opened web page), the review cursor is properly positioned at the virtual caret, rather than the focused control (e.g. a nearby link). (#4369)</source>
-        <target>Kun kohdistus siirretään takaisin selaustila-asiakirjaan (esim. siirtymällä Alt+sarkain-näppäinyhdistelmällä jo avoimelle verkkosivulle), tarkastelukohdistin sijoitetaan oikein näennäiskohdistimen kohdalle aktiivisen säätimen (esim. lähellä olevan linkin) sijasta. (#4369)</target>
+        <target>Kun kohdistus siirretään takaisin selaustila-asiakirjaan (esim. siirtymällä Alt+sarkain-näppäinyhdistelmällä jo avoimelle verkkosivulle), tarkastelukohdistin sijoitetaan oikein näennäiskohdistimen kohdalle aktiivisen ohjausobjektin (esim. lähellä olevan linkin) sijasta. (#4369)</target>
       </segment>
     </unit>
     <unit id="bd951c24-c4e4-4df3-9ed3-b595c9ff15b3">
@@ -42839,7 +42839,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Mozilla Firefox and other Gecko-based browsers, new content within a live region will be announced even if the new content has a usable ARIA live type different to the parent live region; e.g. when content marked as assertive is added to a live region marked as polite. (#4169)</source>
-        <target>Aktiivisen alueen uusi sisältö luetaan Mozilla Firefoxissa ja muissa Gecko-pohjaisissa selaimissa, vaikka sisällöllä on käyttökelpoinen ARIA-live-attribuutti, joka eroaa ylemmän tason aktiivisen alueen attribuutista. Esim. assertive-attribuutilla merkitty sisältö lisätään polite-attribuutilla merkittyyn aktiiviseen alueeseen. (#4169).</target>
+        <target>Aktiivisen alueen uusi sisältö luetaan Mozilla Firefoxissa ja muissa Gecko-pohjaisissa selaimissa, vaikka sisällöllä on käyttökelpoinen ARIA-live-attribuutti, joka eroaa päätason aktiivisen alueen attribuutista. Esim. assertive-attribuutilla merkitty sisältö lisätään polite-attribuutilla merkittyyn aktiiviseen alueeseen. (#4169).</target>
       </segment>
     </unit>
     <unit id="5477e4cb-d597-40d8-98a8-d8b0fcde1ee1">
@@ -42849,7 +42849,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, some cases where a document is contained within another document no longer prevent the user from accessing some of the content (specifically, framesets inside framesets). (#4418)</source>
-        <target>Tapaukset, joissa asiakirjan sisällä on toinen asiakirja, eivät enää estä osan sisällön käyttöä (tarkemmin sanottuna sisäkkäisiä kehyksiä) Internet Explorerissa ja muissa MSHTML-säätimissä. (#4418)</target>
+        <target>Tapaukset, joissa asiakirjan sisällä on toinen asiakirja, eivät enää estä osan sisällön käyttöä (tarkemmin sanottuna sisäkkäisiä kehyksiä) Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. (#4418)</target>
       </segment>
     </unit>
     <unit id="9ad99b8d-55df-431c-896b-b38a39cd0497">
@@ -42879,7 +42879,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Serious problems with editable text controls in dialogs in recent versions of Eclipse have been fixed. (#3872)</source>
-        <target>Vakavia Eclipsen uusimpien versioiden valintaikkunoissa käytettävien muokattavien tekstisäädinten ongelmia korjattu. (#3872)</target>
+        <target>Korjattu vakavia Eclipsen uusimpien versioiden valintaikkunoissa käytettävien muokattavien tekstikenttien ongelmia. (#3872)</target>
       </segment>
     </unit>
     <unit id="ce6ff42b-582d-4ff3-826a-953d07294ee1">
@@ -42939,7 +42939,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When selecting text in the code editing control in the Eclipse IDE, the entire selection is no longer announced every time the selection changes. (#2314)</source>
-        <target>Kun tekstiä valitaan Eclipse-kehitysympäristön koodinmuokkaussäätimessä, Kaikkea valittua tekstiä ei enää lueta joka kerta valinnan muuttuessa. (#2314)</target>
+        <target>Kun tekstiä valitaan Eclipse-kehitysympäristön koodinmuokkauskentässä, Kaikkea valittua tekstiä ei enää lueta aina valinnan muuttuessa. (#2314)</target>
       </segment>
     </unit>
     <unit id="dbde90f9-2f6c-4046-94cc-00f3ba2eee8a">
@@ -42959,7 +42959,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Mouse tracking and touch exploration in Internet Explorer and other MSHTML controls (including many Windows 8 applications) is now much more accurate  on high DPI displays or when document zoom is changed. (#3494)</source>
-        <target>Hiiren seuranta ja kosketuksella tutkiminen on nyt paljon tarkempaa suuren DPI-tarkkuuden näytöillä tai kun asiakirjan zoomaus muuttuu Internet Explorerissa ja muissa MSHTML-säätimissä (useat Windows 8 -sovellukset mukaan lukien). (#3494)</target>
+        <target>Hiiren seuranta ja kosketuksella tutkiminen on nyt paljon tarkempaa suuren DPI-tarkkuuden näytöillä tai kun asiakirjan zoomaus muuttuu Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa (useat Windows 8 -sovellukset mukaan lukien). (#3494)</target>
       </segment>
     </unit>
     <unit id="57dcc6e4-8de0-4632-a69c-c26af8d26067">
@@ -42969,7 +42969,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Mouse tracking and touch exploration in Internet Explorer and other MSHTML controls will now announce the label of more buttons. (#4173)</source>
-        <target>Entistä useampien painikkeiden selitteet luetaan nyt Internet Explorerissa ja muissa MSHTML-säätimissä hiiren seurantaa ja kosketuksella tutkimista käytettäessä. (#4173)</target>
+        <target>Entistä useampien painikkeiden nimet luetaan nyt Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa hiiren seurantaa ja kosketuksella tutkimista käytettäessä. (#4173)</target>
       </segment>
     </unit>
     <unit id="9509b02e-da3c-47b7-bae0-00640306a3ea">
@@ -43448,7 +43448,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Pressing this command twice will produce the previous behaviour of reporting the location information for the entire control.</source>
-        <target>Kahdesti painettaessa komento toimii entiseen tapaan lukemalla koko säätimen sijaintitiedot.</target>
+        <target>Kahdesti painettaessa komento toimii entiseen tapaan lukemalla koko ohjausobjektin sijaintitiedot.</target>
       </segment>
     </unit>
     <unit id="675ef430-4821-4e27-bcec-a4686d68dc41">
@@ -43508,7 +43508,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode in Mozilla applications, pressing enter on a button, etc. no longer fails to activate it (or activates the wrong control) in certain cases such as the buttons at the top of Facebook. (#4106)</source>
-        <target>Painikkeen tms. aktivoiminen Enteriä painamalla ei enää epäonnistu (eikä väärää säädintä aktivoida) joissakin tapauksissa, kuten esim. Facebookin sivun yläosan painikkeiden kohdalla selaustilassa Mozilla-sovelluksissa. (#4106)</target>
+        <target>Painikkeen tms. aktivoiminen Enteriä painamalla ei enää epäonnistu (eikä väärää ohjausobjektia aktivoida) joissakin tapauksissa, kuten esim. Facebookin sivun yläosan painikkeiden kohdalla selaustilassa Mozilla-sovelluksissa. (#4106)</target>
       </segment>
     </unit>
     <unit id="59cf6eea-b203-4e80-bdfa-9d0615ce67db">
@@ -43608,7 +43608,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode in Internet Explorer and other MSHTML controls, tabbing or using single letter navigation to move to form fields again reports the label in many cases where it didn't (specifically, where HTML label elements are used). (#4170)</source>
-        <target>Kun selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä siirrytään sarkaimella tai pikanavigointinäppäimiä käyttäen lomakekenttiin, niiden selitteet luetaan taas tilanteissa, joissa niitä ei aiemmin luettu (erityisesti sellaisissa, joissa käytetään HTML-label-elementtejä). (#4170)</target>
+        <target>Kun selaustilassa Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa siirrytään sarkaimella tai pikanavigointinäppäimiä käyttäen lomakekenttiin, niiden selitteet luetaan taas tilanteissa, joissa niitä ei aiemmin luettu (erityisesti sellaisissa, joissa käytetään HTML-label-elementtejä). (#4170)</target>
       </segment>
     </unit>
     <unit id="92b93727-ca9a-4089-9062-be7b41cf6d54">
@@ -43628,7 +43628,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Navigation of certain dialogs in MS Office products such as Word, Excel and Outlook has been improved by no longer reporting particular control container toolbars which are not useful to the user. (#4198)</source>
-        <target>Tiettyjen Microsoft Office -ohjelmien, kuten Wordin, Excelin ja Outlookin valintaikkunoissa navigointia paranneltu estämällä sellaisten säädinsäilötyökalurivien lukeminen, joista ei ole hyötyä käyttäjälle. (#4198)</target>
+        <target>Parannettu navigointia tiettyjen Microsoft Office -ohjelmien, kuten Wordin, Excelin ja Outlookin, valintaikkunoissa estämällä käyttäjälle hyödyttömien ohjausobjektisäilötyökalupalkkien lukeminen. (#4198)</target>
       </segment>
     </unit>
     <unit id="9ef909c2-7859-43cf-9aac-30299c21a950">
@@ -43848,7 +43848,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In accessible Java applications, position information is now announced for radio buttons and other controls that expose group information. (#3754)</source>
-        <target>Sijaintitiedot luetaan nyt saavutettavissa Java -sovelluksissa valintapainikkeille ja muille säätimille, jotka välittävät ryhmätietoja. (#3754)</target>
+        <target>Sijaintitiedot luetaan nyt saavutettavissa Java -sovelluksissa valintapainikkeille ja muille ohjausobjekteille, jotka välittävät ryhmätietoja. (#3754)</target>
       </segment>
     </unit>
     <unit id="e928d2d1-4c51-4f92-9c46-1575fb86aa4f">
@@ -43858,7 +43858,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In accessible Java applications, keyboard shortcuts are now announced for controls that have them. (#3881)</source>
-        <target>Pikanäppäimet luetaan nyt saavutettavissa Java -sovelluksissa sellaisille säätimille, joilla niitä on. (#3881)</target>
+        <target>Pikanäppäimet luetaan nyt saavutettavissa Java -sovelluksissa sellaisille ohjausobjekteille, joilla niitä on. (#3881)</target>
       </segment>
     </unit>
     <unit id="658a3ffb-02b2-4fe7-b9af-14ade45579c9">
@@ -43968,7 +43968,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode, the labels of controls such as links and buttons are now rendered correctly where the label has been overridden by the author for accessibility purposes (specifically, using aria-label or aria-labelledby). (#1354)</source>
-        <target>Säädinten, kuten  linkkien ja painikkeiden, selitteet hahmonnetaan nyt oikein selaustilassa, jos sivun tekijä on korvannut selitteen saavutettavuustarkoituksessa (erityisesti aria-label- tai aria-labeledby-ominaisuuksia käyttäen). (#1354)</target>
+        <target>Ohjausobjektien, kuten  linkkien ja painikkeiden, nimet näytetään nyt oikein selaustilassa, kun sivun tekijä on uudelleenmäärittänyt ne saavutettavuustarkoituksessa (erityisesti aria-label- tai aria-labelledby-attribuutteja käyttäen). (#1354)</target>
       </segment>
     </unit>
     <unit id="b6f5858a-e172-4360-b3c8-9d1499e13314">
@@ -43998,7 +43998,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode, radio and check menu items are reported as controls instead of just clickable text. (#4092)</source>
-        <target>Valikkokohteina olevat valintapainikkeet tai -ruudut ilmoitetaan selaustilassa pelkän napsautettavan tekstin sijaan nyt säätimiksi. (#4092)</target>
+        <target>Valikkokohteina olevat valintapainikkeet tai -ruudut ilmoitetaan selaustilassa pelkän napsautettavan tekstin sijaan nyt ohjausobjekteiksi. (#4092)</target>
       </segment>
     </unit>
     <unit id="de4a86cf-9d6d-435f-b317-f7aeccbdd1ba">
@@ -44398,7 +44398,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer causes certain programs to crash when moving the mouse over their rich edit (TRichEdit) controls. Programs include Jarte 5.1 and BRfácil. (#3693, #3603, #3581)</source>
-        <target>NVDA ei enää aiheuta tiettyjen ohjelmien kaatumista siirrettäessä hiiri niiden rich edit (TRichEdit) -säädinten päälle. Tällaisia ohjelmia ovat mm. Jarte 5.1 sekä BRfácil. (#3693, #3603, #3581)</target>
+        <target>NVDA ei enää aiheuta tiettyjen ohjelmien kaatumista, kun hiiri siirretään niiden rich edit -OHJAUSOBJEKTIEN päälle. Tällaisia ohjelmia ovat mm. Jarte 5.1 sekä BRfácil. (#3693, #3603, #3581)</target>
       </segment>
     </unit>
     <unit id="cd00bdaa-6d04-49c5-a57f-192f44f701c0">
@@ -44408,7 +44408,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, containers such as tables marked as presentation by ARIA are no longer reported to the user. (#3713)</source>
-        <target>Tiettyjä säilöjä (kuten esim. ARIA:n esittelyattribuutilla merkittyjä taulukoita) ei enää lueta Internet Explorerissa ja muissa MSHTML-säätimissä. (#3713)</target>
+        <target>Tiettyjä säilöjä (kuten esim. ARIA:n esittelyattribuutilla merkittyjä taulukoita) ei enää lueta Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. (#3713)</target>
       </segment>
     </unit>
     <unit id="618e1cc2-2842-452b-bde2-57e68902cded">
@@ -44468,7 +44468,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When entering Asian input into a control within NVDA itself (e.g. the browse mode Find dialog), "NVDA" is no longer incorrectly reported in place of the candidate. (#3726)</source>
-        <target>Ehdokkaan sijasta ei enää virheellisesti lueta "NVDA"-sanaa syötettäessä aasialaisia merkkejä NVDA:n omaan säätimeen (esim. selaustilan Etsi-valintaikkunaan). (#3726)</target>
+        <target>Ehdokkaan sijasta ei enää virheellisesti lueta "NVDA"-sanaa syötettäessä aasialaisia merkkejä NVDA:n omaan ohjausobjektiin (esim. selaustilan Etsi-valintaikkunaan). (#3726)</target>
       </segment>
     </unit>
     <unit id="7c6f0cc7-fc5d-4e13-89ab-36cee691ca60">
@@ -44558,7 +44558,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The initially focused control in a frame or dialog no longer fails to be reported when the frame or dialog comes to the foreground. (#3753)</source>
-        <target>Kehyksen tai valintaikkunan ensimmäinen aktiivinen säädin luetaan nyt oikein kyseisen kehyksen tai valintaikkunan tullessa etualalle. (#3753)</target>
+        <target>Kehyksen tai valintaikkunan ensimmäinen aktiivinen ohjausobjekti luetaan nyt oikein kyseisen kehyksen tai valintaikkunan tullessa etualalle. (#3753)</target>
       </segment>
     </unit>
     <unit id="5494288b-5381-464b-ba4e-a509e7264e2a">
@@ -44578,7 +44578,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Better reporting of JComboBox controls (html no longer reported, better reporting of expanded and collapsed states). (#3755)</source>
-        <target>JComboBox-säätimet luetaan paremmin (enää ei lueta HTML-koodia ja avattu- ja suljettu-tilat ilmoitetaan paremmin). (#3755)</target>
+        <target>JComboBox-ohjausobjektit luetaan paremmin (enää ei lueta HTML-koodia ja avattu- ja suljettu-tilat ilmoitetaan paremmin). (#3755)</target>
       </segment>
     </unit>
     <unit id="62516c5a-b69a-4887-8a91-6001d1264ffd">
@@ -44598,7 +44598,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Changes to the name, value or description of the focused control is now reported more accurately. (#3770)</source>
-        <target>Aktiivisen säätimen nimen, arvon tai kuvauksen muutokset luetaan nyt tarkemmin. (#3770)</target>
+        <target>Aktiivisen ohjausobjektin nimen, arvon tai kuvauksen muutokset luetaan nyt tarkemmin. (#3770)</target>
       </segment>
     </unit>
     <unit id="9ba94412-06f0-4be7-8242-05baccfe3004">
@@ -44608,7 +44608,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fix a crash in NVDA seen in Windows 8 when focusing on certain RichEdit controls containing large amounts of text (e.g. NVDA's log viewer, windbg). (#3867)</source>
-        <target>Korjattu Windows 8:ssa havaittu NVDA:n kaatuminen, kun kohdistus siirretään tiettyihin paljon tekstiä sisältäviin RichEdit-säätimiin (esim. NVDA:n lokintarkastelutoiminto ja Windbg). (#3867)</target>
+        <target>Korjattu Windows 8:ssa havaittu NVDA:n kaatuminen, kun kohdistus siirretään tiettyihin paljon tekstiä sisältäviin RichEdit-ohjausobjekteihin (esim. NVDA:n lokintarkastelutoiminto ja Windbg). (#3867)</target>
       </segment>
     </unit>
     <unit id="248eec2a-9828-463a-a7ed-d4d483e6818d">
@@ -44828,7 +44828,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA will now report the pinned state for pinned controls such as tabs in Mozilla Firefox. (#3372)</source>
-        <target>NVDA lukee nyt kiinnitettyjen säädinten kuten esim. Mozilla Firefoxin välilehtien tilan. (#3372)</target>
+        <target>NVDA lukee nyt kiinnitettyjen ohjausobjektien, kuten välilehtien, tilan Mozilla Firefoxissa. (#3372)</target>
       </segment>
     </unit>
     <unit id="45223e2e-bc18-472c-b595-0c992d0121cc">
@@ -44938,7 +44938,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA can now correctly read XHTML documents in Microsoft Internet Explorer and other MSHTML controls. (#3542)</source>
-        <target>NVDA lukee nyt XHTML-asiakirjat oikein Internet Explorerissa ja muissa MSHTML-säätimissä. (#3542)</target>
+        <target>NVDA lukee nyt XHTML-asiakirjat oikein Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. (#3542)</target>
       </segment>
     </unit>
     <unit id="b303f5c1-602a-413e-b137-d2f182443df7">
@@ -45078,7 +45078,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for the Chromium Embedded Framework, which is a web browser control used in several applications. (#3108)</source>
-        <target>Tuki sisäänrakennetulle Chromium-sovelluskehykselle, joka on useissa sovelluksissa käytettävä verkkoselainsäädin. (#3108)</target>
+        <target>Tuki sisäänrakennetulle Chromium-sovelluskehykselle, joka on useissa sovelluksissa käytettävä verkkoselainohjausobjekti. (#3108)</target>
       </segment>
     </unit>
     <unit id="58c72473-32e4-4374-8918-f3666a48889e">
@@ -45508,7 +45508,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Java applications, changes to the label or value of the focused control are now announced automatically, and are reflected when subsequently querying the control. (#3119)</source>
-        <target>Aktiivisen säätimen selitteen tai arvon muutokset luetaan nyt Java-sovelluksissa automaattisesti sekä hyödynnetään myöhemmin kyseistä säädintä kyseltäessä. (#3119)</target>
+        <target>Aktiivisen ohjausobjektin nimen tai arvon muutokset luetaan nyt Java-sovelluksissa automaattisesti sekä hyödynnetään myöhemmin kyseistä ohjausobjektia kyseltäessä. (#3119)</target>
       </segment>
     </unit>
     <unit id="650aac30-ae35-45a8-b424-4b6462b514ab">
@@ -45518,7 +45518,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Scintilla controls, lines are now reported correctly when word wrap is enabled. (#885)</source>
-        <target>Rivit luetaan nyt oikein Scintilla-säätimissä automaattisen rivityksen ollessa käytössä. (#885)</target>
+        <target>Rivit luetaan nyt oikein Scintilla-ohjausobjekteissa automaattisen rivityksen ollessa käytössä. (#885)</target>
       </segment>
     </unit>
     <unit id="a07e4efe-29a7-4308-b1ab-03b199d9ad98">
@@ -45747,7 +45747,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, fields marked as containing an invalid entry are now handled correctly. (#3256)</source>
-        <target>Kentät, jotka on merkitty virheellisen syötteen sisältäviksi, käsitellään nyt oikein Internet Explorerissa ja muissa MSHTML-säätimissä. (#3256)</target>
+        <target>Kentät, jotka on merkitty virheellistä syötettä sisältäviksi, käsitellään nyt oikein Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. (#3256)</target>
       </segment>
     </unit>
     <unit id="1f80d34d-66f9-4f20-a9cc-47f214d037a2">
@@ -45966,7 +45966,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Automatic reporting of table row and column headers is now supported for browse mode documents in Internet Explorer and other MSHTML controls. (#778)</source>
-        <target>Automaattista taulukon rivien ja sarakkeiden otsikoiden lukemista tuetaan nyt selaustila-asiakirjoissa Internet Explorerissa ja muissa MSHTML-säätimissä. (#778)</target>
+        <target>Automaattista taulukon rivien ja sarakkeiden otsikoiden lukemista tuetaan nyt selaustila-asiakirjoissa Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. (#778)</target>
       </segment>
     </unit>
     <unit id="4e357dc3-e0b5-4d02-b7fd-a3702e3addf0">
@@ -46116,7 +46116,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The quick navigation keys for jumping to the next or previous separator in Browse Mode now work in Internet Explorer and other MSHTML controls. (#2781)</source>
-        <target>Seuraavaan tai edelliseen erottimeen siirtävät Pikanavigointinäppäimet toimivat nyt selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä. (#2781)</target>
+        <target>Seuraavaan tai edelliseen erottimeen siirtävät Pikanavigointinäppäimet toimivat nyt selaustilassa Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. (#2781)</target>
       </segment>
     </unit>
     <unit id="1741ff6a-0cf2-485c-a3d2-593e3f83cfec">
@@ -46256,7 +46256,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, block quotes are now reported where appropriate. (#2888)</source>
-        <target>Sisennetyt lainaukset luetaan nyt Internet Explorerissa ja muissa MSHTML-säätimissä. (#2888)</target>
+        <target>Sisennetyt lainaukset luetaan nyt Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. (#2888)</target>
       </segment>
     </unit>
     <unit id="ddc8489f-2700-4d67-80ee-6a2f187ab067">
@@ -46306,7 +46306,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Text selection is now correctly shown on a braille display in applications such as Microsoft word 2003 and Internet Explorer edit controls.</source>
-        <target>Tekstin valitseminen näytetään nyt oikein pistenäytöllä sellaisissa sovelluksissa kuin Microsoft word 2003 ja Internet Explorerin muokkaussäätimet.</target>
+        <target>Tekstin valitseminen näytetään nyt oikein pistenäytöllä Microsoft word 2003:n ja Internet Explorerin muokkauskentissä.</target>
       </segment>
     </unit>
     <unit id="e6f73059-a8cf-4b7b-95d0-67ce1cfc30f9">
@@ -46326,7 +46326,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When reviewing,  backspacing or deleting characters  In Scintilla edit controls, NVDA correctly announces multibyte characters. (#2855)</source>
-        <target>NVDA lukee monitavuiset merkit oikein Scintilla-muokkaussäätimissä tekstiä luettaessa, askelpalautinta käytettäessä tai merkkejä poistettaessa. (#2855)</target>
+        <target>NVDA lukee monitavuiset merkit oikein Scintilla-muokkauskentissä tekstiä luettaessa, askelpalautinta käytettäessä tai merkkejä poistettaessa. (#2855)</target>
       </segment>
     </unit>
     <unit id="de5d3a0c-360e-44de-a59a-12f1e169b1e6">
@@ -46346,7 +46346,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Reporting of groups for List View controls (SysListview32) in 64-bit applications no longer causes an error.</source>
-        <target>Luettelonäkymäsäädinten (SysListview32) ryhmien ilmoittaminen ei aiheuta enää virhettä 64-bittisissä sovelluksissa.</target>
+        <target>Luettelonäkymäohjausobjektien ryhmien ilmoittaminen ei aiheuta enää virhettä 64-bittisissä sovelluksissa.</target>
       </segment>
     </unit>
     <unit id="402bcaeb-f817-46f7-8f84-b495c3452bd9">
@@ -46555,7 +46555,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Highlights of this release include support for Asian character input; experimental support for touch screens on Windows 8; reporting of page numbers and improved support for tables in Adobe Reader; table navigation commands in focused table rows and Windows list-view controls; support for several more braille displays; and reporting of row and column headers in Microsoft Excel.</source>
-        <target>Tämän version uusia ominaisuuksia ovat mm. tuki aasialaisten kielten merkkien syöttämiselle, kokeellinen tuki kosketusnäytöille Windows 8:ssa, sivunumeroiden lukeminen ja paranneltu taulukoiden tuki Adobe Readerissa, taulukkokomennot aktiivisille taulukon riveille ja Windowsin luettelonäkymäsäätimille, tuki usealle uudelle pistenäytölle sekä rivien ja sarakkeiden otsikoiden lukeminen Microsoft Excelissä.</target>
+        <target>Tämän version uusia ominaisuuksia ovat mm. tuki aasialaisten kielten merkkien syöttämiselle, kokeellinen tuki kosketusnäytöille Windows 8:ssa, sivunumeroiden lukeminen ja paranneltu taulukoiden tuki Adobe Readerissa, taulukkokomennot aktiivisille taulukon riveille ja Windowsin luettelonäkymäohjausobjekteille, tuki usealle uudelle pistenäytölle sekä rivien ja sarakkeiden otsikoiden lukeminen Microsoft Excelissä.</target>
       </segment>
     </unit>
     <unit id="833d5ca8-24d4-4887-87b1-b51f010a561d">
@@ -46825,7 +46825,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Preliminary support for the document control in Microsoft Word 2013. (#2543)</source>
-        <target>Alustava tuki Microsoft Word 2013:n asiakirjasäätimelle. (#2543)</target>
+        <target>Alustava tuki Microsoft Word 2013:n asiakirjaohjausobjektille. (#2543)</target>
       </segment>
     </unit>
     <unit id="9711ecbd-6f70-48ba-a1e5-726014646459">
@@ -46845,7 +46845,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When a table row or standard Windows list-view control with multiple columns is focused, you can now use the table navigation commands to access individual cells. (#828)</source>
-        <target>Kun taulukon rivi tai normaali Windowsin useita sarakkeita sisältävä luettelonäkymäsäädin  on aktiivisena, taulukossa liikkumiseen tarkoitettuja komentoja voidaan nyt käyttää yksittäisiin soluihin pääsemiseen. (#828)</target>
+        <target>Kun taulukon rivi tai normaali Windowsin useita sarakkeita sisältävä luettelonäkymäohjausobjekti on aktiivisena, taulukkonavigointikomentoja voidaan nyt käyttää yksittäisiin soluihin siirtymiseen. (#828)</target>
       </segment>
     </unit>
     <unit id="c4e8302b-2e25-4df6-8e14-f38da1c6975c">
@@ -46885,7 +46885,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Position information (e.g. 1 of 4) is now reported for Windows Explorer list items on Windows 7 and above. This also includes any UIAutomation controls that support the itemIndex and itemCount custom properties. (#2643)</source>
-        <target>Sijaintitiedot (esim. 1 / 4) luetaan nyt Resurssienhallinnan luettelokohteille Windows 7:ssä ja uudemmissa käyttöjärjestelmissä. Tähän sisältyvät myös kaikki mukautettuja itemIndex- ja itemCount-ominaisuuksia tukevat UIAutomation-säätimet. (#2643)</target>
+        <target>Sijaintitiedot (esim. 1 / 4) luetaan nyt Resurssienhallinnan luettelokohteille Windows 7:ssä ja uudemmissa käyttöjärjestelmissä. Tähän sisältyvät myös kaikki mukautettuja itemIndex- ja itemCount-ominaisuuksia tukevat UI Automation -ohjausobjektit. (#2643)</target>
       </segment>
     </unit>
     <unit id="4218ad6f-fe9c-4d9e-977a-4dee237d6709">
@@ -47105,7 +47105,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Passwords are no longer announced when reading password fields in Microsoft Outlook and other standard edit controls that are marked as protected. (#2021)</source>
-        <target>Salasanoja ei enää puhuta luettaessa salasanakenttiä Microsoft Outlookissa ja muissa normaaleissa muokkaussäätimissä, jotka on merkitty suojatuiksi. (#2021)</target>
+        <target>Salasanoja ei enää puhuta luettaessa salasanakenttiä Microsoft Outlookissa ja muissa normaaleissa suojatuiksi merkityissä muokkauskentissä. (#2021)</target>
       </segment>
     </unit>
     <unit id="101e580a-7cbb-4cc2-b52b-354f9d0c28ed">
@@ -47165,7 +47165,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In applications using UI Automation (such as .net and Silverlight applications), the calculation of numeric values for controls such as sliders has been corrected. (#2417)</source>
-        <target>Säädinten (esim. liukusäädinten) numeeristen arvojen laskeminen  on nyt korjattu UI Automation -rajapintaa käyttävissä sovelluksissa (esim. sellaisissa kuin .NET ja Silverlight). (#2417)</target>
+        <target>Ohjausobjektien, kuten liukusäädinten, numeeristen arvojen laskeminen  on nyt korjattu UI Automation -rajapintaa käyttävissä .NET- ja Silverlight-sovelluksissa. (#2417)</target>
       </segment>
     </unit>
     <unit id="2c5bfdcd-3e4c-4f32-a23b-dbf4f2f1dbe0">
@@ -47285,7 +47285,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode in Mozilla applications, certain controls that were rendered with an incorrect label or just whitespace are now rendered with the correct label.</source>
-        <target>Sellaiset säätimet, jotka näytettiin virheellisillä nimillä tai vain tyhjänä tilana, näytetään nyt asianmukaisilla nimillä selaustilassa Mozilla-sovelluksissa.</target>
+        <target>Sellaiset ohjausobjektit, jotka näytettiin virheellisillä nimillä tai vain tyhjänä tilana, näytetään nyt asianmukaisilla nimillä selaustilassa Mozilla-sovelluksissa.</target>
       </segment>
     </unit>
     <unit id="05480c5a-41ca-44f8-ac75-b000f9380f38">
@@ -47435,7 +47435,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>UI Automation text controls (e.g.  the search field in the Windows 7 Start Menu) are now  correctly announced when moving the mouse over them rather than staying silent.</source>
-        <target>UI Automation -tekstisäätimet (esim. Windows 7:n Käynnistä-valikon hakukenttä) luetaan nyt oikein siirrettäessä hiiri niiden päälle.</target>
+        <target>UI Automation -tekstiohjausobjektit (esim. Windows 7:n Käynnistä-valikon hakukenttä) luetaan nyt oikein siirrettäessä hiiri niiden päälle.</target>
       </segment>
     </unit>
     <unit id="3a44635d-adee-4a75-bee8-4dc66ef08f64">
@@ -47455,7 +47455,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The entire content of some UI Automation editable text controls (e.g. the Search Box in the Windows 7/8 Start Menu) is no longer announced every time it changes.</source>
-        <target>Joidenkin muokattavien UI Automation -tekstisäädinten (esim. Windows 7:n/8:n Käynnistä-valikon hakuruudun) koko sisältöä ei enää lueta joka kerta sen muuttuessa.</target>
+        <target>Joidenkin muokattavien UI Automation -rajapinbtaa hyödyntävien tekstikenttien (esim. Windows 7:n/8:n Käynnistä-valikon hakuruudun) koko sisältöä ei enää lueta aina sen muuttuessa.</target>
       </segment>
     </unit>
     <unit id="baf9cbfc-7b8c-4848-b3eb-b5d2fa318790">
@@ -47823,7 +47823,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>With auto language switching enabled, Content such as alt text for graphics and labels for other certain controls in Mozilla Gecko (e.g. Firefox) are now reported in the correct language if marked up appropriately.</source>
-        <target>Kun automaattinen kielen vaihtaminen on käytössä, sellainen sisältö kuin grafiikoiden alt-teksti ja tiettyjen muiden säädinten nimet luetaan nyt Mozilla Gecko -sovelluksissa (esim. Firefoxissa) asianmukaisella kielellä, mikäli se on merkitty oikein.</target>
+        <target>Kun automaattinen kielen vaihtaminen on käytössä, esimerkiksi grafiikoiden alt-teksti ja tiettyjen muiden ohjausobjektien nimet luetaan nyt Mozilla Gecko -sovelluksissa, kuten Firefoxissa, asianmukaisella kielellä, mikäli se on merkitty oikein.</target>
       </segment>
     </unit>
     <unit id="83c1c82a-e3a2-49cb-bfca-38ddf742cd0c">
@@ -47833,7 +47833,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>SayAll in BibleSeeker (and other TRxRichEdit controls) no longer stops in the middle of a passage.</source>
-        <target>Jatkuva luku -toiminto ei enää keskeydy kappaleen keskellä BibleSeeker-sovelluksessa eikä muissa TRxRichEdit-säätimissä.</target>
+        <target>Jatkuva luku -toiminto ei enää keskeydy kappaleen keskellä BibleSeeker-sovelluksessa eikä muissa TRxRichEdit-ohjausobjekteissa.</target>
       </segment>
     </unit>
     <unit id="f293863c-66ed-4c38-b553-658304806d13">
@@ -48092,7 +48092,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Braille now reports information about controls within documents such as links, buttons and headings. (#202)</source>
-        <target>Pistenäytöllä näytetään nyt tiedot asiakirjoissa olevista säätimistä, kuten linkeistä, painikkeista ja otsikoista. (#202)</target>
+        <target>Pistenäytöllä näytetään nyt tiedot asiakirjoissa olevista ohjausobjekteista, kuten linkeistä, painikkeista ja otsikoista. (#202)</target>
       </segment>
     </unit>
     <unit id="5c5a8f38-fcdf-412e-a255-1d828fb39ed8">
@@ -48582,7 +48582,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Microsoft Internet Explorer, errors no longer occur when focusing on certain rare controls. (#2121)</source>
-        <target>Internet Explorerissa ei enää ilmene virheitä siirrettäessä kohdistusta tiettyjen harvojen säädinten kohdalle. (#2121)</target>
+        <target>Internet Explorerissa ei enää ilmene virheitä siirrettäessä kohdistusta tiettyjen harvojen ohjausobjektien kohdalle. (#2121)</target>
       </segment>
     </unit>
     <unit id="572523e5-5121-434f-9bb5-38d4843e4ac0">
@@ -48791,7 +48791,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Text with underline and/or strikethrough can now be detected and reported in standard IAccessible2 text controls such as in Mozilla applications.</source>
-        <target>Alle- ja/tai yliviivatun tekstin havaitseminen ja ilmoittaminen on nyt mahdollista standardinmukaisissa IAccessible2-tekstisäätimissä, esim. Mozilla-sovelluksissa.</target>
+        <target>Alle- ja/tai yliviivatun tekstin havaitseminen ja ilmoittaminen on nyt mahdollista standardinmukaisissa IAccessible2-tekstikentissä, esim. Mozilla-sovelluksissa.</target>
       </segment>
     </unit>
     <unit id="4e1ae15a-09cb-4df9-bb36-d250ad39b28f">
@@ -48851,7 +48851,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In applications using the Java Access Bridge, the activate current navigator object command now works on controls where appropriate. (#1744)</source>
-        <target>Aktivoi nykyinen navigointiobjekti -komento toimii nyt sellaisissa Java Access Bridgeä käyttävien sovellusten  säätimissä, joissa sitä on mahdollista käyttää. (#1744)</target>
+        <target>Aktivoi nykyinen navigointiobjekti -komento toimii nyt sellaisissa Java Access Bridgeä käyttävien sovellusten  ohjausobjekteissa, joissa sitä on mahdollista käyttää. (#1744)</target>
       </segment>
     </unit>
     <unit id="9a6eb1a9-ba1e-4ef3-b61c-f657b27af810">
@@ -48911,7 +48911,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>the Read active window script (NVDA+b) has been improved to filter out unuseful controls   and also is now much more easy to silence. (#1499)</source>
-        <target>Lue aktiivinen ikkuna -skriptiä (NVDA+b) on paranneltu suodattamaan tarpeettomia säätimiä, ja lisäksi sen mykistäminen on nyt paljon helpompaa. (#1499)</target>
+        <target>Lue aktiivinen ikkuna -skriptiä (NVDA+b) on paranneltu suodattamaan tarpeettomia ohjausobjekteja, ja lisäksi sen mykistäminen on nyt paljon helpompaa. (#1499)</target>
       </segment>
     </unit>
     <unit id="09860f9d-d52b-4fdb-84a0-c393a042b727">
@@ -48981,7 +48981,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA  no longer shows bullets or numbering for lists in Internet Explorer and other MSHTML controls when the author has indicated that these should not be shown (i.e. the list style is "none"). (#1671)</source>
-        <target>NVDA  ei näytä enää luettelomerkkejä tai numerointia luetteloissa Internet Explorerissa ja muissa MSHTML-säätimissä, kun sivun tekijä on määrittänyt, ettei niitä näytetä (ts. luettelotyyli on "none"). (#1671)</target>
+        <target>NVDA  ei näytä enää luettelomerkkejä tai numerointia luetteloissa Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa, kun sivun tekijä on määrittänyt, ettei niitä näytetä (ts. luettelotyyli on "none"). (#1671)</target>
       </segment>
     </unit>
     <unit id="92dc13c6-0315-4a93-a92d-03b14addd93e">
@@ -49061,7 +49061,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>A text control's text is no longer presented twice on a braille display in some cases, e.g. scrolling back from the start of Wordpad documents.</source>
-        <target>Tekstisäätimen tekstiä ei enää näytetä pistenäytöllä kahta kertaa joissakin tapauksissa, esim. vieritettäessä taaksepäin WordPad-asiakirjojen alusta.</target>
+        <target>Tekstikentän tekstiä ei enää näytetä pistenäytöllä kahdesti joissakin tapauksissa, esim. vieritettäessä taaksepäin WordPad-asiakirjojen alusta.</target>
       </segment>
     </unit>
     <unit id="ece66964-5c1c-4909-a109-51743a6c69ab">
@@ -49121,7 +49121,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA will no longer announce label controls when focus moves inside of them. Stops double announcements of labels for some form fields in Firefox (Gecko) and Internet Explorer (MSHTML). (#1650)</source>
-        <target>NVDA ei enää lue nimisäätimiä kohdistuksen siirtyessä niiden sisään. Tämä saa loppumaan joidenkin lomakekenttien nimien kahteen kertaan lukemisen Firefoxissa (Gecko) ja Internet Explorerissa (MSHTML). (#1650)</target>
+        <target>NVDA ei enää lue nimiohjausobjekteja kohdistuksen siirtyessä niiden sisään. Tämä saa loppumaan joidenkin lomakekenttien nimien kahdesti lukemisen Firefoxissa (Gecko) ja Internet Explorerissa (MSHTML). (#1650)</target>
       </segment>
     </unit>
     <unit id="449990d8-3b7a-48c2-8c41-919e67bda97a">
@@ -49141,7 +49141,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Adobe Reader, extraneous information about the document is no longer announced when moving to a control on a different page in focus mode. (#1659)</source>
-        <target>Adobe Readerissa ei enää lueta asiakirjasta epäolennaista tietoa siirryttäessä vuorovaikutustilassa eri sivulla olevaan säätimeen. (#1659)</target>
+        <target>Adobe Readerissa ei enää lueta asiakirjasta epäolennaista tietoa siirryttäessä vuorovaikutustilassa eri sivulla olevaan ohjausobjektiin. (#1659)</target>
       </segment>
     </unit>
     <unit id="f2e11f48-22a2-4cc3-9bbe-95cb25733c75">
@@ -49221,7 +49221,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed reviewing by word in Windows Edit controls. (#1877)</source>
-        <target>Korjattu sanoittain lukeminen Windowsin muokkaussäätimissä. (#1877)</target>
+        <target>Korjattu sanoittain lukeminen Windowsin muokkauskentissä. (#1877)</target>
       </segment>
     </unit>
     <unit id="21c465f1-db32-4ff1-b587-7d33151ae30d">
@@ -49390,7 +49390,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls when focus moves inside a group of controls (surrounded by a fieldset), NVDA will now announce the name of the group (the legend). (#535)</source>
-        <target>Kun kohdistus siirtyy kenttäjoukon ympäröimän säädinryhmän sisään Internet Explorerissa ja muissa MSHTML-säätimissä, NVDA ilmoittaa nyt kyseisen ryhmän nimen (selitteen). (#535)</target>
+        <target>Kun kohdistus siirtyy kenttäjoukon ympäröimän ohjausobjektiryhmän sisään Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa, NVDA ilmoittaa nyt kyseisen ryhmän nimen. (#535)</target>
       </segment>
     </unit>
     <unit id="aeb9da6d-b82c-4297-af5d-04b5ae2dcd1b">
@@ -49400,7 +49400,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, the aria-labelledBy and aria-describedBy properties are now honoured.</source>
-        <target>Aria-labeledBy- ja aria-describedBy-ominaisuuksia noudatetaan nyt Internet Explorerissa ja muissa MSHTML-säätimissä.</target>
+        <target>Aria-labeledBy- ja aria-describedBy-ominaisuuksia noudatetaan nyt Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa.</target>
       </segment>
     </unit>
     <unit id="417fa849-7939-40d8-bd4e-9946410d341e">
@@ -49410,7 +49410,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>in Internet Explorer and other MSHTML controls, support for ARIA list, gridcell, slider and progressbar controls has been improved.</source>
-        <target>ARIA- ja ruudukkolistojen sekä liukusäädinten ja edistymispalkkisäädinten tukea on paranneltu Internet Explorerissa ja muissa MSHTML-sovelluksissa.</target>
+        <target>ARIA- ja ruudukkoluetteloiden sekä liukusäädinten ja edistymispalkkien tukea on parannettu Internet Explorerissa ja muissa MSHTML-sovelluksissa.</target>
       </segment>
     </unit>
     <unit id="35b03c77-9dda-4afe-8078-c7dc0ad3964b">
@@ -49490,7 +49490,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for the  calendar control found in the Date and Time Information dialog accessed from the  Windows 7 clock. (#1637)</source>
-        <target>Tuki Windows 7:n kellon päivämäärä ja aika -valintaikkunan kalenterisäätimelle. (#1637)</target>
+        <target>Tuki Windows 7:n kellon päivämäärä ja aika -valintaikkunan kalenteriohjausobjektille. (#1637)</target>
       </segment>
     </unit>
     <unit id="1b6c752b-f086-40ae-9ba0-460652d9a844">
@@ -49570,7 +49570,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, browse mode now works for documents inside ARIA applications. (#1452)</source>
-        <target>Selaustila toimii nyt ARIA-sovellusten sisällä olevissa asiakirjoissa Internet Explorerissa ja muissa MSHTML-säätimissä. (#1452)</target>
+        <target>Selaustila toimii nyt ARIA-sovellusten sisällä olevissa asiakirjoissa Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. (#1452)</target>
       </segment>
     </unit>
     <unit id="76dcdfde-648e-46a9-8df4-86e6c76d7d3d">
@@ -49590,7 +49590,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When in browse mode  and jumping to a control with quicknav or focus, the description of the control is now announced if it has one.</source>
-        <target>Jos säätimellä on kuvaus, se luetaan nyt siirryttäessä selaustilassa sen kohdalle pikanavigoinnilla tai kohdistuksella.</target>
+        <target>Jos ohjausobjektilla on kuvaus, se luetaan nyt siirryttäessä selaustilassa sen kohdalle pikanavigoinnilla tai kohdistuksella.</target>
       </segment>
     </unit>
     <unit id="b566e593-f76d-4635-9d1a-fab8bcf9d842">
@@ -49670,7 +49670,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA now announces the state of a container when focus moves to a control inside it (e.g. if focus moves inside a document that is still loading it will report it as busy).</source>
-        <target>NVDA kertoo nyt säilön tilan kohdistuksen siirtyessä sen sisällä olevaan säätimeen (esim. jos kohdistus siirtyy sivulla, joka yhä latautuu, NVDA ilmoittaa nyt, että se on varattu).</target>
+        <target>NVDA kertoo nyt säilön tilan kohdistuksen siirtyessä sen sisällä olevaan ohjausobjektiin (esim. jos kohdistus siirtyy sivulla, joka yhä latautuu, NVDA ilmoittaa nyt, että se on varattu).</target>
       </segment>
     </unit>
     <unit id="c033d03f-914d-444c-b74b-110b6d402d9a">
@@ -49820,7 +49820,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, ARIA listbox controls are now treeted as lists, rather than list items.</source>
-        <target>ARIA-luetteloruudut käsitellään nyt luettelokohteiden sijasta luetteloina Internet Explorerissa ja muissa MSHTML-säätimissä.</target>
+        <target>ARIA-luetteloruudut käsitellään nyt luettelokohteiden sijasta luetteloina Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa.</target>
       </segment>
     </unit>
     <unit id="2c45d3cb-9563-4fcf-ac5e-e0540a8c6d7a">
@@ -49830,7 +49830,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When a read-only editable text control receives focus, NVDA now reports that it is read-only. (#1436)</source>
-        <target>Kun kohdistus siirtyy vain luku -tyyppiä olevaan muokattavaan tekstisäätimeen, NVDA ilmoittaa nyt sen olevan sellainen. (#1436)</target>
+        <target>Kun kohdistus siirtyy ei-muokattavaan tekstikenttään, NVDA ilmoittaa nyt sen olevan sellainen. (#1436)</target>
       </segment>
     </unit>
     <unit id="d6b4b24a-f01d-4552-a887-dbbfe986afff">
@@ -49850,7 +49850,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In browse mode documents, NVDA no longer incorrectly switches out of focus mode when aria-activedescendant is set; e.g. when the completion list appeared in some auto complete controls.</source>
-        <target>NVDA ei enää virheellisesti siirry pois vuorovaikutustilasta, kun aria-activedescendant-ominaisuus on asetettu, esim. täydennyslistan tullessa näkyviin joissakin automaattisen täydennyksen sisältävissä säätimissä.</target>
+        <target>NVDA ei enää virheellisesti siirry pois vuorovaikutustilasta, kun aria-activedescendant-ominaisuus on asetettu, esim. täydennysluettelon tullessa näkyviin joissakin automaattista täydennystä tukevissa ohjausobjekteissa.</target>
       </segment>
     </unit>
     <unit id="3067d0ba-f2b8-48cf-8ff3-0d3d3fab83a9">
@@ -49860,7 +49860,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Adobe Reader, the name of controls is now reported when moving focus or using quick navigation in browse mode.</source>
-        <target>Säädinten nimet ilmoitetaan nyt Adobe Readerissa kohdistusta siirrettäessä tai selaustilassa pikanavigointia käytettäessä.</target>
+        <target>Ohjausobjektien nimet ilmoitetaan nyt Adobe Readerissa kohdistusta siirrettäessä tai selaustilassa pikanavigointia käytettäessä.</target>
       </segment>
     </unit>
     <unit id="dabe953e-8095-4a40-9cf3-b3667febdad9">
@@ -49930,7 +49930,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>nodes with an ARIA role of description in Internet Explorer and other MSHTML controls now are classed as static text, not edit fields.</source>
-        <target>Alkiot, joissa on ARIA-kuvausrooli, luokitellaan nyt Internet Explorerissa ja muissa MSHTML-säätimissä muuttumattomaksi tekstiksi, ei muokkauskentiksi.</target>
+        <target>Alkiot, joissa on ARIA-kuvausrooli, luokitellaan nyt Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa muuttumattomaksi tekstiksi, ei muokkauskentiksi.</target>
       </segment>
     </unit>
     <unit id="40ac27ca-939f-4b26-9dd0-0a72bf7605ae">
@@ -50000,7 +50000,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Controls in Firefox and other Gecko applications can now be activated while in browse mode even if their content has been floated off-screen. (#801)</source>
-        <target>Firefoxin ja muiden Gecko-sovellusten säädinten aktivoiminen on nyt mahdollista selaustilassa, vaikka niiden sisältö olisi osittain poissa näytöltä. (#801)</target>
+        <target>Firefoxin ja muiden Gecko-sovellusten ohjausobjektien aktivoiminen on nyt mahdollista selaustilassa, vaikka niiden sisältö olisi osittain poissa näytöltä. (#801)</target>
       </segment>
     </unit>
     <unit id="27a2f92f-c4e7-482e-9d49-293c7474e9e8">
@@ -50090,7 +50090,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Say all and say all with review are now able to work in UI automation text controls that support all required functionality. For example, you can now use say all with review on XPS Viewer documents.</source>
-        <target>Jatkuva luku -komennot  toimivat nyt joissakin UI automation -tekstisäätimissä, jotka tukevat kaikkia tarvittavia toimintoja. (esim. tarkastelukohdistimen nykyisestä kohdasta aloittavaa jatkuva luku -komentoa on nyt mahdollista käyttää XPS-katseluohjelmassa).</target>
+        <target>Jatkuva luku -komennot  toimivat nyt joissakin UI Automation -tekstikentissä, jotka tukevat kaikkia tarvittavia toimintoja. (esim. tarkastelukohdistimen nykyisestä kohdasta aloittavaa jatkuva luku -komentoa on nyt mahdollista käyttää XPS-katseluohjelmassa).</target>
       </segment>
     </unit>
     <unit id="42ca0f34-391e-46a7-bf8a-0171b3b46acc">
@@ -50160,7 +50160,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, fixed the inability to read parts of rare pages which contain iframes marked with an ARIA role of presentation. (#1569)</source>
-        <target>Korjattu ARIA-esitysroolilla merkittyjä upotettuja kehyksiä sisältävien sivujen lukeminen Internet Explorerissa ja muissa MSHTML-säätimissä. (#1569)</target>
+        <target>Korjattu ARIA-esitysroolilla merkittyjä upotettuja kehyksiä sisältävien sivujen lukeminen Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. (#1569)</target>
       </segment>
     </unit>
     <unit id="0c4e1236-9368-45dd-bb55-61b5f6385eb4">
@@ -50170,7 +50170,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, fixed a rare problem where the focus kept bouncing infinitely between the document and a multi-line editable text field in focus mode. (#1566)</source>
-        <target>Korjattu harvinainen ongelma, joka aiheutti loputtomasti kohdistuksen hyppimistä asiakirjan ja monirivisen muokattavan tekstikentän välillä vuorovaikutustilassa Internet Explorerissa ja muissa MSHTML-säätimissä. (#1566)</target>
+        <target>Korjattu harvinainen ongelma, joka aiheutti loputtomasti kohdistuksen hyppimistä asiakirjan ja monirivisen muokattavan tekstikentän välillä vuorovaikutustilassa Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. (#1566)</target>
       </segment>
     </unit>
     <unit id="f1fd897f-200e-4a0b-9f9d-8569c7c4fb21">
@@ -50190,7 +50190,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In multi-line editable text fields in Internet Explorer and other MSHTML controls, selection on lines after the first is now reported correctly. (#1590)</source>
-        <target>Valinta ilmoitetaan nyt oikein Internet Explorerin ja muiden MSHTML-säädinten muokattavissa monirivisissä tekstikentissä muillakin riveillä kuin ensimmäisellä. (#1590)</target>
+        <target>Valinta ilmoitetaan nyt oikein Internet Explorerin ja muiden MSHTML-ohjausobjektien muokattavissa monirivisissä tekstikentissä muillakin riveillä kuin ensimmäisellä. (#1590)</target>
       </segment>
     </unit>
     <unit id="3e62cbf8-392b-488b-b8ac-b5f5800d8402">
@@ -50200,7 +50200,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Improved moving by word in many cases, including browse mode and Windows Edit controls. (#1580)</source>
-        <target>Sana kerrallaan liikkumista paranneltu monissa tilanteissa, selaustila ja Windowsin muokkaussäätimet mukaan lukien. (#1580)</target>
+        <target>Sanoittain liikkumista parannettu monissa tilanteissa, kuten selaustilassa ja Windowsin muokkauskentissä. (#1580)</target>
       </segment>
     </unit>
     <unit id="086020a3-ff99-4622-ab13-5ab4d3baa67f">
@@ -50230,7 +50230,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In editable text fields in Internet Explorer and other MSHTML controls, NVDA no longer lags or freezes when braille is enabled.</source>
-        <target>NVDA ei enää hidastu tai jää jumiin Internet Explorerin ja muiden MSHTML-säädinten muokattavissa tekstikentissä, kun pistenäyttö on käytössä.</target>
+        <target>NVDA ei enää hidastu tai jää jumiin Internet Explorerin ja muiden MSHTML-ohjausobjektien muokattavissa tekstikentissä, kun pistenäyttö on käytössä.</target>
       </segment>
     </unit>
     <unit id="297ef349-d7f8-48f4-8d4e-fcedbacb4876">
@@ -50320,7 +50320,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet explorer and other MSHTML controls, spaces are no longer ignored in browse mode in certain cases (e.g. after a link).</source>
-        <target>Selaustilassa ei jätetä enää tietyissä tapauksissa välilyöntejä huomiotta (esim. linkin jälkeen) Internet explorerissa ja muissa MSHTML-säätimissä.</target>
+        <target>Selaustilassa ei jätetä enää tietyissä tapauksissa välilyöntejä huomiotta (esim. linkin jälkeen) Internet explorerissa ja muissa MSHTML-ohjausobjekteissa.</target>
       </segment>
     </unit>
     <unit id="941cdee5-1610-4873-8c7a-367813021323">
@@ -50330,7 +50330,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, some extraneous line breaks have been eliminated in browse mode. specifically, HTML elements with a display style of None no longer force a line break. (#1685)</source>
-        <target>Jätetty huomiotta joitakin ylimääräisiä rivinvaihtoja selaustilassa internet Explorerissa ja muissa MSHTML-säätimissä. Erityisesti HTML-elementit, joissa on None-näyttötyyli, eivät enää aiheuta pakotettua rivinvaihtoa. (#1685)</target>
+        <target>Jätetty huomiotta joitakin ylimääräisiä rivinvaihtoja selaustilassa internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. Erityisesti HTML-elementit, joissa on None-näyttötyyli, eivät enää aiheuta pakotettua rivinvaihtoa. (#1685)</target>
       </segment>
     </unit>
     <unit id="b957fe99-64f0-47e9-b0fa-63de76594d90">
@@ -50618,7 +50618,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Highlights of this release include automatic reporting of new text output in mIRC, PuTTY, Tera Term and SecureCRT; support for global plugins; announcement of bullets and numbering in Microsoft Word; additional key bindings for braille displays, including keys to move to the next and previous line; support for several Baum, HumanWare and APH braille displays; and reporting of colors for some controls, including IBM Lotus Symphony text controls.</source>
-        <target>Tämän version tärkeimpiä uusia ominaisuuksia ovat automaattinen uuden tekstin lukeminen mIRC-, PuTTY-, Tera Term- ja SecureCRT-sovelluksissa, tuki yleisliitännäisille, luettelomerkkien ja numeroinnin lukeminen Microsoft Wordissa, lisänäppäinkomennot pistenäytöille, mukaan lukien näppäimet seuraavalle ja edelliselle riville siirtymiseksi, tuki useille Baum-, HumanWare- ja APH-pistenäytöille sekä joidenkin säädinten värien ilmoittaminen, esim. IBM Lotus Symphonyn tekstisäätimissä.</target>
+        <target>Tämän version tärkeimpiä uusia ominaisuuksia ovat automaattinen uuden tekstin lukeminen mIRC-, PuTTY-, Tera Term- ja SecureCRT-sovelluksissa, tuki yleisliitännäisille, luettelomerkkien ja numeroinnin lukeminen Microsoft Wordissa, pistenäyttöjen lisänäppäinkomennot, kuten seuraavalle ja edelliselle riville siirtyminen, tuki useille Baum-, HumanWare- ja APH-pistenäytöille sekä joidenkin ohjausobjektien värien ilmoittaminen, esim. IBM Lotus Symphonyn tekstikentissä.</target>
       </segment>
     </unit>
     <unit id="de603578-54a8-406e-8a92-0ce47aa727bf">
@@ -50638,7 +50638,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Colors can now be reported for some controls. Automatic announcement can be configured in the Document Formatting preferences dialog. It can also be reported on demand using the report text formatting command (NVDA+f).</source>
-        <target>Värien ilmoittaminen on nyt mahdollista joissakin säätimissä. Automaattinen lukeminen voidaan määrittää Asiakirjojen muotoiluasetukset -valintaikkunasta. Värit on mahdollista lukea myös tekstin muotoilutietojen lukukomennolla (NVDA+f).</target>
+        <target>Värien ilmoittaminen on nyt mahdollista joissakin ohjausobjekteissa. Automaattinen lukeminen voidaan määrittää Asiakirjojen muotoiluasetukset -valintaikkunasta. Värit on mahdollista lukea myös tekstin muotoilutietojen lukukomennolla (NVDA+f).</target>
       </segment>
     </unit>
     <unit id="ad071bf8-939e-4fb4-b271-68ee7ffb871f">
@@ -50648,7 +50648,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Initially, this is supported in standard IAccessible2 editable text controls (such as in Mozilla applications), RichEdit controls (such as in Wordpad) and IBM Lotus Symphony text controls.</source>
-        <target>Tätä tuetaan aluksi tavallisissa muokattavissa IAccessible2-tekstisäätimissä (esim. Mozilla-sovelluksissa), RichEdit-säätimissä (esim. WordPadissa) ja IBM Lotus Symphonyn tekstisäätimissä.</target>
+        <target>Tätä tuetaan aluksi tavallisissa muokattavissa IAccessible2-tekstikentissä (esim. Mozilla-sovelluksissa), RichEdit-ohjausobjekteissa (esim. WordPadissa) ja IBM Lotus Symphonyn tekstikentissä.</target>
       </segment>
     </unit>
     <unit id="2ac93c0f-97eb-4f7e-a9db-d7e6060053fb">
@@ -50918,7 +50918,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In speech dictionary dialogs, the content of the Regular expression and Case sensitive columns of the Dictionary entries list is now presented in the configured NVDA language instead of always in English.</source>
-        <target>Puhesanastovalintaikkunoiden sanastomääritysluettelon Sääntölauseke- ja Sama kirjainkoko -sarakkeiden sisältö näytetään nyt NVDA:ssa käytössä olevalla kielellä sen sijaan, että ne näytettäisiin aina englanniksi.</target>
+        <target>Puhesanastovalintaikkunoiden sanastomääritysluettelon Säännöllinen lauseke- ja Sama kirjainkoko -sarakkeiden sisältö näytetään nyt NVDA:ssa englannin sijaan käytössä olevalla kielellä.</target>
       </segment>
     </unit>
     <unit id="334198e9-cd11-4698-a818-affe8de10ad7">
@@ -51028,7 +51028,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, NVDA now uses the URL as a last resort to determine the name of a link, rather than presenting empty links. (#633)</source>
-        <target>NVDA käyttää nyt Internet Explorerissa ja muissa MSHTML-säätimissä  linkin nimen selvittämiseen viimeisenä keinona URL-osoitetta sen sijaan, että näyttäisi tyhjiä linkkejä. (#633)</target>
+        <target>NVDA käyttää nyt Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa linkin nimen selvittämiseen viimeisenä keinona URL-osoitetta sen sijaan, että näyttäisi tyhjiä linkkejä. (#633)</target>
       </segment>
     </unit>
     <unit id="27107921-46e4-4272-9fc5-0b39b934daa8">
@@ -51098,7 +51098,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, NVDA no longer presents destination anchors as empty links in its virtual buffer. Instead, these anchors are hidden as they should be. (#1326)</source>
-        <target>NVDA ei enää näytä Internet Explorerissa ja muissa MSHTML-säätimissä ankkurin kohteita tyhjinä linkkeinä näennäispuskurissaan, vaan ne ovat piilotettuja kuten pitääkin. (#1326)</target>
+        <target>NVDA ei enää näytä Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa ankkurin kohteita tyhjinä linkkeinä näennäispuskurissaan, vaan ne ovat piilotettuja kuten pitääkin. (#1326)</target>
       </segment>
     </unit>
     <unit id="13c2f47d-23eb-4bee-9bec-6dabf454f915">
@@ -51158,7 +51158,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The Elements List dialog for virtual buffers is now usable by sighted users. All controls are visible on screen. (#1321)</source>
-        <target>Elementtilista-valintaikkuna on nyt näkevien käytettävissä. Kaikki säätimet näkyvät ruudulla. (#1321)</target>
+        <target>Elementtilista-valintaikkuna on nyt näkevien käytettävissä. Kaikki ohjausobjektit näkyvät ruudulla. (#1321)</target>
       </segment>
     </unit>
     <unit id="5984c228-49fb-4f19-a57f-d0c35dbed8ed">
@@ -51607,7 +51607,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Notable features of this release include greatly simplified object navigation; virtual buffers for Adobe Flash content; access to many previously inaccessible controls by retrieving text written to the screen; flat review of screen text; support for IBM Lotus Symphony documents; reporting of table row and column headers in Mozilla Firefox; and significantly improved user documentation.</source>
-        <target>Tämän version merkittävimpiä uusia ominaisuuksia ovat huomattavasti yksinkertaistettu objektinavigointi, näennäispuskurit Flash-sisällölle, monien aiemmin esteellisten säädinten käyttäminen ruudun tekstiä kaappaamalla, kokonaistarkastelu ruudulla olevalle tekstille, tuki IBM Lotus Symphony -asiakirjoille, taulukon rivien ja sarakkeiden otsikoiden lukeminen Mozilla Firefoxissa sekä huomattavasti parannellut käyttöohjeet.</target>
+        <target>Tämän version merkittävimpiä uusia ominaisuuksia ovat huomattavasti yksinkertaistettu objektinavigointi, näennäispuskurit Flash-sisällölle, monien aiemmin esteellisten ohjausobjektien käyttäminen ruudun tekstiä kaappaamalla, kokonaistarkastelu ruudulla olevalle tekstille, tuki IBM Lotus Symphony -asiakirjoille, taulukon rivien ja sarakkeiden otsikoiden lukeminen Mozilla Firefoxissa sekä huomattavasti parannellut käyttöohjeet.</target>
       </segment>
     </unit>
     <unit id="c2557408-6dd7-4bae-ac1c-9b055fcb2b99">
@@ -51637,7 +51637,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In applications using the Java Access Bridge (including OpenOffice.org), formatting can now be reported in text controls. (#358, #463)</source>
-        <target>Tekstisäädinten muotoilutietojen lukeminen on nyt mahdollista Java Access Bridgeä käyttävissä sovelluksissa, openOffice mukaan lukien. (#358, #463)</target>
+        <target>Tekstikenttien muotoilutietojen lukeminen on nyt mahdollista Java Access Bridgeä käyttävissä sovelluksissa, kuten openOfficessa. (#358, #463)</target>
       </segment>
     </unit>
     <unit id="ba980832-0e46-46aa-94ad-d544674aa103">
@@ -51667,7 +51667,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>A virtualBuffer can now be used to navigate adobe Flash content. Object navigation and interacting with the controls directly (by turning on focus mode) is still supported. (#453)</source>
-        <target>Näennäispuskurin käyttäminen Flash -sisällössä liikkumiseen on nyt mahdollista. Objektinavigointia ja suoraa vuorovaikutusta säädinten kanssa vuorovaikutustilaa käyttäen tuetaan edelleen. (#453)</target>
+        <target>Näennäispuskurin käyttäminen Flash -sisällössä liikkumiseen on nyt mahdollista. Objektinavigointia ja suoraa vuorovaikutusta ohjausobjektien kanssa vuorovaikutustilaa käyttäen tuetaan edelleen. (#453)</target>
       </segment>
     </unit>
     <unit id="e37e83bb-838f-46cc-975a-20e4a958eacc">
@@ -51677,7 +51677,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Editable text controls in the Eclipse IDE, including the code editor, are now accessible. You must be using Eclipse 3.6 or later. (#256, #641)</source>
-        <target>Eclipse-kehitysympäristön muokattavat tekstisäätimet koodieditori mukaan lukien ovat nyt saavutettavia. Käytössä on oltava Eclipse 3.6 tai uudempi. (#256, #641)</target>
+        <target>Eclipse-kehitysympäristön muokattavat tekstikentät koodieditori mukaan lukien ovat nyt saavutettavia. Käytössä on oltava Eclipse 3.6 tai uudempi. (#256, #641)</target>
       </segment>
     </unit>
     <unit id="fb106660-699c-4836-b894-8979fdc9814e">
@@ -51697,7 +51697,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>This allows for reading of controls which do not expose information in more direct/reliable ways.</source>
-        <target>Tämä mahdollistaa sellaisten säädinten lukemisen, jotka eivät välitä tietoja suoremmilla ja luotettavammilla tavoilla.</target>
+        <target>Tämä mahdollistaa sellaisten ohjausobjektien lukemisen, jotka eivät välitä tietoja suoremmilla ja luotettavammilla tavoilla.</target>
       </segment>
     </unit>
     <unit id="40de196e-4b70-4d7b-b82a-0a5b6732194e">
@@ -51707,7 +51707,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Controls made accessible by this feature include: some menu items which display icons (e.g. the Open With menu on files in Windows XP) (#151), editable text fields in Windows Live applications (#200), the errors list in Outlook Express (#582), the editable text control in TextPad (#605), lists in Eudora, many controls in Australian E-tax and the formula bar in Microsoft Excel.</source>
-        <target>Tämä ominaisuus tekee saavutettaviksi mm. jotkin kuvakkeita sisältävät valikkokohteet (esim. Windows XP:n Avaa sovelluksessa -valikko) (#151), Windows Live -sovellusten muokattavat tekstikentät (#200), Outlook Expressin virheluettelo (#582), TextPadin muokattava tekstisäädin (#605), Eudoran luettelot, useat Australian E-tax:in säätimet ja Microsoft Excelin kaavapalkki.</target>
+        <target>Tämä ominaisuus tekee saavutettaviksi mm. jotkin kuvakkeita sisältävät valikkokohteet (esim. Windows XP:n Avaa sovelluksessa -valikko) (#151), Windows Live -sovellusten muokattavat tekstikentät (#200), Outlook Expressin virheluettelo (#582), TextPadin muokattava tekstikenttä (#605), Eudoran luettelot, useat Australian E-tax:in ohjausobjektit ja Microsoft Excelin kaavapalkki.</target>
       </segment>
     </unit>
     <unit id="a442d669-7746-4f31-aa15-47d27d2b0400">
@@ -52047,7 +52047,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Mozilla applications, "not checked" is now correctly reported for checkable controls such as checkable table cells. (#571)</source>
-        <target>Valittavissa olevien säädinten, kuten valittavien taulukon solujen, ei valittu -tila ilmoitetaan nyt oikein Mozilla-sovelluksissa. (#571)</target>
+        <target>Valittavissa olevien ohjausobjektien, kuten taulukon solujen, ei valittu -tila ilmoitetaan nyt oikein Mozilla-sovelluksissa. (#571)</target>
       </segment>
     </unit>
     <unit id="44b2e817-1140-4b8a-bf8c-ec3c39b9e551">
@@ -52067,7 +52067,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>in Internet Explorer and other MSHTML controls, the ARIA level attribute is now  honoured correctly.</source>
-        <target>ARIA:n taso-attribuuttia noudatetaan nyt oikein Internet Explorerissa ja muissa MSHTML-säätimissä.</target>
+        <target>ARIA:n taso-attribuuttia noudatetaan nyt oikein Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa.</target>
       </segment>
     </unit>
     <unit id="770ec7c0-d439-421c-a2da-beefa23cb8e8">
@@ -52077,7 +52077,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Internet Explorer and other MSHTML controls, the ARIA role is now chosen over other type information to give a much more correct and predictable ARIA experience.</source>
-        <target>ARIA:n rooli valitaan nyt muiden tyyppitietojen sijasta virheettömämmän ja odotustenmukaisemman ARIA-kokemuksen antamiseksi Internet Explorerissa ja muissa MSHTML-säätimissä.</target>
+        <target>ARIA:n rooli valitaan nyt muiden tyyppitietojen sijasta virheettömämmän ja odotustenmukaisemman ARIA-kokemuksen antamiseksi Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa.</target>
       </segment>
     </unit>
     <unit id="70fcd6b0-a051-4c17-a25a-21e188c69f34">
@@ -52157,7 +52157,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The selection is now announced when control+a is pressed to select all text in some editable text controls such as in Microsoft Word. (#761)</source>
-        <target>Kaiken tekstin valitseminen ilmoitetaan nyt painettaessa Ctrl+A joissakin muokattavissa tekstisäätimissä kuten Microsoft Wordissa. (#761)</target>
+        <target>Kaiken tekstin valitseminen ilmoitetaan nyt painettaessa Ctrl+A joissakin muokattavissa tekstikentissä, kuten Microsoft Wordissa. (#761)</target>
       </segment>
     </unit>
     <unit id="d355e964-3b48-44e3-8605-1bee19fd42c9">
@@ -52167,7 +52167,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Scintilla controls (e.g. Notepad++), text is no longer incorrectly selected when NVDA moves the caret such as during say all. (#746)</source>
-        <target>Tekstiä ei enää virheellisesti valita Scintilla-säätimissä (esim. Notepad++:ssa) NVDA:n siirtäessä järjestelmäkohdistinta esim. jatkuva luku -toiminnon aikana tai siirrettäessä kohdistinta samaan paikkaan, jossa pistenäytöllä ollaan. (#746)</target>
+        <target>Tekstiä ei enää virheellisesti valita Scintilla-ohjausobjekteissa (esim. Notepad++:ssa) NVDA:n siirtäessä järjestelmäkohdistinta esim. jatkuva luku -toiminnon aikana tai siirrettäessä kohdistinta samaan paikkaan, jossa pistenäytöllä ollaan. (#746)</target>
       </segment>
     </unit>
     <unit id="a5a0f9ad-1c74-4ebc-b999-e17e397aa72d">
@@ -52217,7 +52217,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Scintilla controls (e.g. Notepad++), the beginning of long lines is no longer truncated when it scrolls off the screen. Also, these long lines will be correctly displayed in braille when they are selected.</source>
-        <target>Pitkien rivien alkua ei enää katkaista Scintilla-säätimissä (esim. Notepad++:ssa), jos ne eivät sovi kokonaan ruudulle. Lisäksi tällaiset rivit näytetään nyt oikein pistenäytöllä, kun ne valitaan.</target>
+        <target>Pitkien rivien alkua ei enää katkaista Scintilla-ohjausobjekteissa (esim. Notepad++:ssa), jos ne eivät sovi kokonaan ruudulle. Lisäksi tällaiset rivit näytetään nyt oikein pistenäytöllä, kun ne valitaan.</target>
       </segment>
     </unit>
     <unit id="c6243f29-180d-4acf-8e94-89998bc5bba6">
@@ -52237,7 +52237,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The URL of the document and "MSAAHTML Registered Handler" are no longer sometimes spuriously reported in Internet Explorer and other MSHTML controls. (#811)</source>
-        <target>URL-osoitetta ja "MSAAHTML Rekisteröityä Käsittelijää" ei enää turhaan ilmoiteta Internet Explorerissa ja muissa MSHTML-säätimissä. (#811)</target>
+        <target>URL-osoitetta ja "MSAAHTML Rekisteröityä Käsittelijää" ei enää turhaan ilmoiteta Internet Explorerissa ja muissa MSHTML-ohjausobjekteissa. (#811)</target>
       </segment>
     </unit>
     <unit id="809cfe44-2651-4c8c-80bd-e555d783f552">
@@ -52247,7 +52247,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In tree views in the Eclipse IDE, the previously focused item is no longer incorrectly announced when focus moves to a new item.</source>
-        <target>Eclipse-kehitysympäristön puunäkymäsäätimissä ei enää virheellisesti lueta aiempaa aktiivista kohtaa kohdistuksen siirtyessä uuteen.</target>
+        <target>Eclipse-kehitysympäristön puunäkymissä ei enää virheellisesti lueta aiempaa aktiivista kohtaa kohdistuksen siirtyessä uuteen.</target>
       </segment>
     </unit>
     <unit id="56d074a4-f326-480a-aef2-9dc06b976cb2">
@@ -52366,7 +52366,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA now announces the word being deleted when pressing control+backspace in controls that support it. (#491)</source>
-        <target>NVDA lukee nyt sanan, joka poistetaan painettaessa Ctrl+askelpalautin säätimissä, jotka tukevat sitä. (#491)</target>
+        <target>NVDA lukee nyt sanan, joka poistetaan painettaessa Ctrl+askelpalautin ohjausobjekteissa, jotka tukevat sitä. (#491)</target>
       </segment>
     </unit>
     <unit id="508eb891-86c4-4d2a-b847-498cf902f8b3">
@@ -52696,7 +52696,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Blank lines in Microsoft Word documents and  Microsoft HTML edit controls are now shown appropriately on braille displays. Previously NVDA was displaying the current sentence on the display, not the current line for these situations. (#420)</source>
-        <target>Word-asiakirjojen ja  HTML-muokkaussäädinten tyhjät rivit näytetään nyt asianmukaisesti pistenäytöllä. NVDA näytti aiemmin vain nykyisen virkkeen. (#420)</target>
+        <target>Word-asiakirjojen ja  HTML-muokkauskenttien tyhjät rivit näytetään nyt asianmukaisesti pistenäytöllä. NVDA näytti aiemmin vain nykyisen virkkeen. (#420)</target>
       </segment>
     </unit>
     <unit id="f9537453-c511-4019-b006-481e1c891fe9">
@@ -52856,7 +52856,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Certain standard tree view controls in 64 bit applications (e.g. the Contents tree view in Microsoft HTML Help) are now accessible. (#473)</source>
-        <target>Tietyt standardit 64-bittisten sovellusten puunäkymäsäädint, esim. Microsoft HTML-ohjeen Sisällys-puunäkymä, ovat nyt saavutettavia. (#473)</target>
+        <target>Tietyt standardinmukaiset 64-bittisten sovellusten puunäkymäohjausobjektit, kuten Microsoft HTML-ohjeen Sisällys-näkymä, ovat nyt saavutettavia. (#473)</target>
       </segment>
     </unit>
     <unit id="4242a055-51f9-4ccb-b1df-f51e316f1725">
@@ -53005,7 +53005,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Improved support for the date selection control found in the Windows Vista Date / Time properties dialog.</source>
-        <target>Päivämäärän valintasäätimen tukea paranneltu Windows Vistan Päivämäärän ja ajan ominaisuudet -valintaikkunassa</target>
+        <target>Päivämäärän valintaohjausobjektin tukea parannettu Windows Vistan Päivämäärän ja ajan ominaisuudet -valintaikkunassa</target>
       </segment>
     </unit>
     <unit id="dc0da73c-b22e-46a5-b4cd-bd41db3677ef">
@@ -53295,7 +53295,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Some generic roles, such as pane, application and frame, are no longer reported on focus unless the control is unnamed.</source>
-        <target>Joitakin yleisiä rooleja, kuten ruutu, sovellus ja kehys, ei enää lueta kohdistettaessa, ellei säädinlla ole nimeä.</target>
+        <target>Joitakin yleisiä rooleja, kuten ruutu, sovellus ja kehys, ei enää lueta kohdistettaessa, ellei ohjausobjektilla ole nimeä.</target>
       </segment>
     </unit>
     <unit id="02b04de0-5453-4092-99ae-009b0f8a048c">
@@ -53405,7 +53405,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Make the  keyword search field in Windows Help (CHM) viewer much more usable. Due to buggyness in that control, the current keyword could not be read as it would be continually changing.</source>
-        <target>Windowsin ohjeen Avainsana-hakukentästä tehty paljon käyttökelpoisempi. Kyseisen säädinn viallisuuden vuoksi nykyistä avainsanaa ei voitu lukea, koska se muuttuu jatkuvasti.</target>
+        <target>Windowsin ohjeen Avainsana-hakukentästä tehty paljon käyttökelpoisempi. Kyseisen ohjausobjektin viallisuuden vuoksi nykyistä avainsanaa ei voitu lukea, koska se muuttuu jatkuvasti.</target>
       </segment>
     </unit>
     <unit id="b3b87dde-cab0-422b-960f-4fd45c6dff54">
@@ -53425,7 +53425,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Better support for edit fields found in Microsoft Word dialogs (e.g. the Font dialog). It is now possible  to navigate these controls with the arrow keys.</source>
-        <target>Parempi tuki Wordin valintaikkunoiden muokkauskentille (esim. Fontti-valintaikkuna). Näissä säätimissä on nyt mahdollista liikkua nuolinäppäimillä.</target>
+        <target>Parempi tuki Wordin valintaikkunoiden muokkauskentille (esim. Fontti-valintaikkuna). Näissä ohjausobjekteissa on nyt mahdollista liikkua nuolinäppäimillä.</target>
       </segment>
     </unit>
     <unit id="c448d1bb-fd5c-4dc5-ac98-a87d8295e1c7">
@@ -53515,7 +53515,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA now recognises the existence of controls in AIM 7.</source>
-        <target>NVDA tunnistaa nyt AOL Instant Messenger 7:n säädint.</target>
+        <target>NVDA tunnistaa nyt AOL Instant Messenger 7:n ohjausobjektit.</target>
       </segment>
     </unit>
     <unit id="8cadd2ce-8e26-4025-a8bb-1196f3f6c966">
@@ -53605,7 +53605,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Worked around a Windows bug which was causing garbage to be spoken after the name of link controls in Windows Explorer and Internet Explorer dialogs. (#451)</source>
-        <target>Korjattu Windowsin virhe, joka aiheutti tarpeettoman tiedon lukemista Resurssienhallinnan ja Internet Explorerin valintaikkunoiden linkkisäätimissä. (#451)</target>
+        <target>Korjattu Windowsin virhe, joka aiheutti tarpeettoman tiedon lukemista Resurssienhallinnan ja Internet Explorerin valintaikkunoiden linkkiohjausobjekteissa. (#451)</target>
       </segment>
     </unit>
     <unit id="b6543072-dcfe-41a2-8117-4e42a2d03d3c">
@@ -53675,7 +53675,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for formatting in IAccessible2 text controls, including Mozilla applications.</source>
-        <target>Tuki muotoilulle IAccessible2-tekstisäätimissä, Mozilla-sovellukset mukaan lukien.</target>
+        <target>Tuki muotoilulle IAccessible2-tekstikentissä, Mozilla-sovellukset mukaan lukien.</target>
       </segment>
     </unit>
     <unit id="b5ebe979-f1a0-430c-a11e-cf3154b2ad32">
@@ -53705,7 +53705,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Links can now be identified in richedit controls.</source>
-        <target>Linkit tunnistetaan nyt RichEdit-säätimissä.</target>
+        <target>Linkit tunnistetaan nyt RichEdit-ohjausobjekteissa.</target>
       </segment>
     </unit>
     <unit id="f3728fdb-4a77-4910-b8d4-c3b7894fb2bf">
@@ -53715,7 +53715,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The mouse can now be moved to the character under the review cursor in most editable text controls. Previously, the mouse could only be moved to the center of the control.</source>
-        <target>Hiiri voidaan nyt siirtää tarkastelukohdistimen alla olevaan merkkiin useimmissa muokattavissa tekstisäätimissä. Aiemmin hiiri voitiin siirtää vain keskelle säädina.</target>
+        <target>Hiiri voidaan nyt siirtää tarkastelukohdistimen alla olevaan merkkiin useimmissa muokattavissa tekstikentissä. Aiemmin hiiri voitiin siirtää vain ohjausobjektin keskelle.</target>
       </segment>
     </unit>
     <unit id="ab9b7b33-b103-48e5-9855-3255586d79cd">
@@ -53735,7 +53735,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Handle some additional states on Java controls.</source>
-        <target>Lisätty tuki muutamille uusille Java-säädinten tiloille.</target>
+        <target>Lisätty tuki muutamille uusille Java-ohjausobjektien tiloille.</target>
       </segment>
     </unit>
     <unit id="e60e48ed-9f72-44d7-bbff-e0569d5ae897">
@@ -53815,7 +53815,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In virtual buffers, when the focus changes or the caret is moved, NVDA can automatically switch to focus mode or browse mode as appropriate for the control under the caret. This is configured from the Virtual Buffers dialog. (#157)</source>
-        <target>Kun kohdistus muuttuu tai kohdistinta liikutetaan näennäispuskureissa, NVDA voi automaattisesti vaihtaa kohdistus- tai selaustilaan kohdistimen alla olevasta säädinsta riippuen. Asetus määritetään Näennäispuskureiden asetukset -valintaikkunasta. (#157)</target>
+        <target>Kun kohdistus muuttuu tai kohdistinta liikutetaan näennäispuskureissa, NVDA voi automaattisesti vaihtaa kohdistus- tai selaustilaan kohdistimen alla olevasta ohjausobjektista riippuen. Asetus määritetään Näennäispuskureiden asetukset -valintaikkunasta. (#157)</target>
       </segment>
     </unit>
     <unit id="b3816da2-f6e3-4bfe-ab78-55a5f5e8114d">
@@ -53855,7 +53855,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added support for position information for IAccessible2 controls.</source>
-        <target>Lisätty tuki IAccessible2-säädinten sijaintitiedoille.</target>
+        <target>Lisätty tuki IAccessible2-ohjausobjektien sijaintitiedoille.</target>
       </segment>
     </unit>
     <unit id="457c4f66-586b-47cf-9599-d8753f620695">
@@ -53875,7 +53875,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added support for some edit controls in pinacle tv software.</source>
-        <target>Lisätty tuki joillekin Pinnacle TV -ohjelmiston muokkaussäätimille.</target>
+        <target>Lisätty tuki joillekin Pinnacle TV -ohjelmiston muokkauskentille.</target>
       </segment>
     </unit>
     <unit id="a07d3c8a-5ce7-42d0-acdb-e692914dce9c">
@@ -54055,7 +54055,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The NVDA log viewer now uses richedit instead of just edit to display the log. This improves reading by word with NVDA.</source>
-        <target>NVDA:n lokintarkastelutoiminto käyttää nyt  lokin näyttämiseen richeditiä pelkän muokkaussäätimen sijasta. Tämä parantaa sana kerrallaan lukemista.</target>
+        <target>NVDA:n lokintarkastelutoiminto käyttää nyt  lokin näyttämiseen richeditiä pelkän muokkausKENTÄN sijasta. Tämä parantaa sana kerrallaan lukemista.</target>
       </segment>
     </unit>
     <unit id="1b5e6301-d414-4004-a368-df35cb967847">
@@ -54065,7 +54065,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fix some issues related to embedded objects in richedit controls.</source>
-        <target>Korjattu joitakin upotettuihin objekteihin liittyviä ongelmia richedit-säätimissä.</target>
+        <target>Korjattu joitakin upotettuihin objekteihin liittyviä ongelmia richedit-ohjausobjektEISSA.</target>
       </segment>
     </unit>
     <unit id="f7512916-447f-429d-b332-647e04cb6435">
@@ -54135,7 +54135,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed an issue which meant that text selection changes were not being read in Windows standard edit controls before the first focus change after NVDA was started.</source>
-        <target>Korjattu ongelma, jossa tekstivalinnan muutoksia ei luettu Windowsin standardeissa muokkaussäätimissä ennen ensimmäistä NVDA:n käynnistyksen jälkeistä kohdistusmuutosta.</target>
+        <target>Korjattu ongelma, jossa tekstivalinnan muutoksia ei luettu Windowsin standardinmukaisissa muokkauskentissä ennen ensimmäistä NVDA:n käynnistyksen jälkeistä kohdistusmuutosta.</target>
       </segment>
     </unit>
     <unit id="ca16b331-0b22-4119-a05e-aebf1dd09921">
@@ -54275,7 +54275,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer announces the unselection of text when leaving some edit controls (example: Internet Explorer address bar, Thunderbird 3 email address fields).</source>
-        <target>NVDA ei enää ilmoita valitun tekstin perumista poistuttaessa joistakin muokkaussäätimistä (esim. Internet Explorerin osoiterivi ja Thunderbird 3:n sähköpostiosoitekentät).</target>
+        <target>NVDA ei enää ilmoita valitun tekstin perumista poistuttaessa joistakin muokkauskentistä (esim. Internet Explorerin osoiterivi ja Thunderbird 3:n sähköpostiosoitekentät).</target>
       </segment>
     </unit>
     <unit id="cadffc13-a684-4076-997f-9de9dba5d305">
@@ -54305,7 +54305,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA can now read text past 65535 characters in standard edit controls (e.g. a large file in Notepad).</source>
-        <target>NVDA voi nyt lukea standardeissa muokkaussäätimissä tekstiä, jossa on enemmän kuin 65535 merkkiä (esim. iso tiedosto Muistiossa).</target>
+        <target>NVDA voi nyt lukea standardinmukaisissa muokkauskentissä tekstiä, jossa on enemmän kuin 65535 merkkiä (esim. iso tiedosto Muistiossa).</target>
       </segment>
     </unit>
     <unit id="0e3875ee-a1ee-4f8f-b709-40f26d7634bf">
@@ -54365,7 +54365,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for grouping items in SysListView32 controls, mainly found in Windows Vista. (#27)</source>
-        <target>Tuki SysListView32-säädinten ryhmäkohdille, joita on pääasiassa Windows Vistassa. (#27)</target>
+        <target>Tuki SysListView32-ohjausobjektien ryhmäkohteille, joita on pääasiassa Windows Vistassa. (#27)</target>
       </segment>
     </unit>
     <unit id="3968b19f-5a81-4446-8c60-da090fcd8488">
@@ -54375,7 +54375,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Report the checked state of treeview items in SysTreeview32 controls.</source>
-        <target>Puunäkymäkohteiden valinnan tila ilmoitetaan SysTreeview32-säätimissä.</target>
+        <target>Puunäkymäkohteiden valinnan tila ilmoitetaan SysTreeview32-ohjausobjekteissa.</target>
       </segment>
     </unit>
     <unit id="efbe416c-45de-4c9a-9eb0-e73323a4ae6a">
@@ -54425,7 +54425,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Speech dictionaries (previously User dictionaries) now can be either case sensitive or insensitive, and the patterns can optionally be regular expressions. (#39)</source>
-        <target>Puhesanastot (aiemmin käyttäjän sanastot) voivat nyt olla joko kirjainkoon huomioivia tai huomiotta jättäviä, ja korvattavien merkkijonojen tyyppinä voi olla valinnaisesti sääntölauseke. (#39)</target>
+        <target>Puhesanastot (aiemmin käyttäjän sanastot) voivat nyt olla joko kirjainkoon huomioivia tai huomiotta jättäviä, ja korvattavien merkkijonojen tyyppinä voi olla valinnaisesti säännöllinen lauseke. (#39)</target>
       </segment>
     </unit>
     <unit id="f34c3e70-0b49-4d77-8514-aed2ed035f4f">
@@ -54695,7 +54695,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Winamp,  Added ability to announce state of the shuffle and repeat controls as they are switched. Works in the main window and in the playlist editor</source>
-        <target>Lisätty mahdollisuus satunnaissoitto- ja toistosäädinten tilan lukemiseen Winampissa. Toimii pääikkunassa ja soittolistamuokkaimessa.</target>
+        <target>Lisätty mahdollisuus satunnaissoitto- ja uudelleentoisto-ohjausobjektien tilan lukemiseen Winampissa. Toimii pääikkunassa ja soittolistamuokkaimessa.</target>
       </segment>
     </unit>
     <unit id="f6e1ea75-3e90-448d-8899-b38bf4833e5c">
@@ -54955,7 +54955,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Labels for standard controls in NVDA's dialogs (such as Ok and cancel buttons) should now show in the language NVDA is set to, rather than just staying in English.</source>
-        <target>NVDA:n valintaikkunoiden standardisäädinten nimien (kuten OK ja Peruuta-painikkeet) pitäisi nyt näkyä samalla kielellä, jota NVDA on asetettu käyttämään.</target>
+        <target>NVDA:n valintaikkunoiden standardinmukaisten ohjausobjektien nimien (kuten OK ja Peruuta-painikkeet) pitäisi nyt näkyä samalla kielellä, jota NVDA on asetettu käyttämään.</target>
       </segment>
     </unit>
     <unit id="b915f960-edb4-43ec-80b8-319404d6db80">
@@ -55005,7 +55005,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for AkelEdit controls found in Akelpad 4.0</source>
-        <target>Tuki AkelPad 4.0:n AkelEdit-säätimille.</target>
+        <target>Tuki AkelPad 4.0:n AkelEdit-ohjausobjekteille.</target>
       </segment>
     </unit>
     <unit id="5b371c15-916a-4a5a-afaa-5e2bc867ab7f">
@@ -55105,7 +55105,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>By default the new virtualBuffers represent the document in a screen layout (links and controls are not on separate lines unless they really are visually). You can toggle this feature with NVDA+v.</source>
-        <target>Uudet näennäispuskurit näyttävät verkkosivun ruutuasettelussa (linkit ja säädint eivät ole omilla riveillään, elleivät ne ole niin visuaalisesti). Asetus voidaan ottaa käyttöön ja poistaa käytöstä painamalla NVDA+V.</target>
+        <target>Uudet näennäispuskurit näyttävät verkkosivun ruutuasettelussa (linkit ja ohjausobjektit eivät ole omilla riveillään, elleivät ne ole niin visuaalisesti). Asetus voidaan ottaa käyttöön ja poistaa käytöstä painamalla NVDA+V.</target>
       </segment>
     </unit>
     <unit id="e26194a9-dfbb-452b-95d6-0e161a817dc2">
@@ -55385,7 +55385,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added user dictionaries to NVDA. These allow you to make NVDA speak certain text differently. There are three dictionaries: default, voice, and temporary. Entries you add to the default dictionary will happen all the time in NVDA. Voice dictionaries are specific to the current synthesizer and voice you currently have set. And temporary dictionary is  for those times you quickly want to set a rule while you are doing a particular task, but you don't want it to be perminant (it will disappear if you close NVDA). For now the rules are regular expressions, not just normal text.</source>
-        <target>Lisätty käyttäjäsanastoja, joiden avulla NVDA saadaan lukemaan tietyt sanat eri tavalla. Sanastoja on kolmea eri tyyppiä: oletus, puheäänikohtainen ja tilapäinen. Oletussanastoon lisätyt sanat vaikuttavat NVDA:han jatkuvasti ja puheäänikohtaiset sanastot vain nykyiseen puheääneen. Tilapäissanasto on sellaisia tilanteita varten, joissa halutaan nopeasti lisätä sana jotakin tiettyä tehtävää varten, mutta sitä ei haluta pysyväksi (se häviää kun NVDA suljetaan). Sanastoihin lisättävät säännöt ovat toistaiseksi sääntölausekkeita.</target>
+        <target>Lisätty käyttäjäsanastoja, joiden avulla NVDA saadaan lukemaan tietyt sanat eri tavalla. Sanastoja on kolmea eri tyyppiä: oletus, puheäänikohtainen ja tilapäinen. Oletussanastoon lisätyt sanat vaikuttavat NVDA:han jatkuvasti ja puheäänikohtaiset sanastot vain nykyiseen puheääneen. Tilapäissanasto on sellaisia tilanteita varten, joissa halutaan nopeasti lisätä sana jotakin tiettyä tehtävää varten, mutta sitä ei haluta pysyväksi (se häviää kun NVDA suljetaan). Sanastoihin lisättävät säännöt ovat toistaiseksi säännöllisiä lausekkeita.</target>
       </segment>
     </unit>
     <unit id="158821ac-1c43-4b8c-b3bf-a6bf2def9119">
@@ -55415,7 +55415,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer takes up a huge amount of system memory , when editing messages in mshtml edit controls</source>
-        <target>NVDA ei vie enää paljon muistia muokattaessa viestejä MSHTML-muokkaussäätimissä</target>
+        <target>NVDA ei vie enää paljon muistia muokattaessa viestejä MSHTML-muokkauskentissä</target>
       </segment>
     </unit>
     <unit id="9b557211-c40c-4b07-9602-67c7df07a067">
@@ -55425,7 +55425,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Improved performance when reviewing text inside many controls that do not actually have a real cursor. e.g. MSN Messenger history window, treeview items, listview items etc.</source>
-        <target>Suorituskykyä paranneltu tarkasteltaessa tekstiä monissa säätimissä, joissa ei ole todellista kohdistinta, esim. MSN Messengerin historiaikkuna, puu- ja luettelonäkymän kohdat jne.</target>
+        <target>Suorituskykyä paranneltu tarkasteltaessa tekstiä monissa ohjausobjekteissa, joissa ei ole todellista kohdistinta, esim. MSN Messengerin historiaikkuna, puu- ja luettelonäkymän kohdat jne.</target>
       </segment>
     </unit>
     <unit id="b4a002cd-bc71-4b64-b488-4537700d1eae">
@@ -55565,7 +55565,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added support for a few edit/text controls in Skype</source>
-        <target>Lisätty tuki muutamille Skypen muokkaus- ja tekstisäätimille.</target>
+        <target>Lisätty tuki muutamille Skypen muokkaus- ja tekstikentille.</target>
       </segment>
     </unit>
     <unit id="46981680-1233-4eeb-ab4f-9e33a501da76">
@@ -55645,7 +55645,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added support for the IAccessible2 accessibility API. A part from the ability to announce more control types, this also allows NVDA to access the cursor in applications such as Firefox 3 and Thunderbird 3, allowing you to navigate, select or edit text.</source>
-        <target>Lisätty tuki IAccessible2-saavutettavuusrajapinnalle. Entistä useampien säädintyyppien tunnistamisen lisäksi NVDA voi tämän avulla käyttää kohdistinta myös sellaisissa sovelluksissa kuin Firefox 3 ja Thunderbird 3 mahdollistaen tekstissä liikkumisen sekä tekstin valitsemisen ja muokkaamisen.</target>
+        <target>Lisätty tuki IAccessible2-saavutettavuusrajapinnalle. Entistä useampien ohjausobjektityyppien tunnistamisen lisäksi NVDA voi tämän avulla käyttää kohdistinta myös esim. Firefox 3:ssa ja Thunderbird 3:ssa mahdollistaen tekstissä liikkumisen sekä tekstin valitsemisen ja muokkaamisen.</target>
       </segment>
     </unit>
     <unit id="f6728d38-9365-42b8-af5b-ec09d1fe4814">
@@ -55655,7 +55655,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added support for Scintilla edit controls (such controls can be found in Notepad++ or Tortoise SVN).</source>
-        <target>Lisätty tuki Scintilla-muokkaussäätimille, joita on esim. Notepad++:ssa ja TortoiseSVN:ssä.</target>
+        <target>Lisätty tuki Scintilla-muokkauskentille, joita on esim. Notepad++:ssa ja TortoiseSVN:ssä.</target>
       </segment>
     </unit>
     <unit id="baef437a-83c2-4c4f-9db5-4457ffb8d9ed">
@@ -55685,7 +55685,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Improved support for reading what is under the mouse pointer as it moves. It is now much faster, and it also now has the ability in some controls such as standard edit fields, Java and IAccessible2 controls, to read the current word, not just the current object. This may be of some used to vision impared people who just want to read a specific bit of text with the mouse.</source>
-        <target>Paranneltu hiiren alla olevan tekstin lukemista. Se on nyt paljon nopeampaa, ja lisäksi joissakin säätimissä, kuten standardeissa muokkauskentissä sekä Java- ja IAccessible2-säätimissä, on mahdollista lukea myös nykyinen sana, eikä vain nykyistä objektia. Tästä voi olla hyötyä joillekin heikkonäköisille käyttäjille, jotka haluavat lukea hiiren avulla vain jonkin tietyn osan tekstistä.</target>
+        <target>Paranneltu hiiren alla olevan tekstin lukemista. Se on nyt paljon nopeampaa, ja lisäksi joissakin ohjausobjekteissa, kuten standardinmukaisissa muokkauskentissä sekä Java- ja IAccessible2-ohjausobjekteissa, on mahdollista lukea myös nykyinen sana, eikä vain nykyistä objektia. Tästä voi olla hyötyä joillekin heikkonäköisille käyttäjille, jotka haluavat lukea hiiren avulla vain jonkin tietyn osan tekstistä.</target>
       </segment>
     </unit>
     <unit id="1b6334c6-e638-44c5-a90f-2417ff03c4ee">
@@ -55715,7 +55715,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Improved support for most common treeview controls. NVDA now tells you how many items are in the branch when you expand it. It also announces the level when moving in and out of branches. And, it announces the current item number and number of items, according to the current branch, not the entire treeview.</source>
-        <target>Paranneltu tuki yleisimmille puunäkymäsäätimille. NVDA kertoo nyt puunäkymän haaraa laajennettaessa, montako kohtaa siinä on. Myös puunäkymän taso ilmoitetaan siirryttäessä haaraan ja siitä pois. Lisäksi nykyisen kohdan numero ja kohtien lukumäärä ilmoitetaan nykyisen haaran mukaan koko puunäkymän sijasta.</target>
+        <target>Paranneltu tuki yleisimmille puunäkymäohjausobjekteille. NVDA kertoo nyt puunäkymän haaraa laajennettaessa, montako kohtaa siinä on. Myös puunäkymän taso ilmoitetaan siirryttäessä haaraan ja siitä pois. Lisäksi nykyisen kohdan numero ja kohtien lukumäärä ilmoitetaan nykyisen haaran mukaan koko puunäkymän sijasta.</target>
       </segment>
     </unit>
     <unit id="b16b3d0b-9ec8-42b8-8b39-5d797299e171">
@@ -55725,7 +55725,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Improved what is announced when focus changes as you move around applications or the operating system. Now instead of just hearing the control you land on, you hear information about any controls this control is positioned inside of. For instance if you tab and land on a button inside a groupbox, the groupbox will also get announced.</source>
-        <target>Paranneltu sitä, mitä kohdistuksen muuttuessa luetaan. Sen sijaan että vain nykyinen säädin luetaan, nyt luetaan myös tiedot kaikista sisäkkäin olevista säätimistä. Jos esimerkiksi siirrytään sarkaimella ja tullaan ryhmäruudussa olevan painikkeen kohdalle, myös kyseinen ryhmäruutu luetaan.</target>
+        <target>Parannettu sitä, mitä kohdistuksen muuttuessa luetaan. Sen sijaan että vain nykyinen ohjausobjekti luetaan, nyt luetaan myös tiedot kaikista sisäkkäisistä ohjausobjekteista. Jos esimerkiksi siirrytään sarkaimella ja tullaan ryhmäruudussa olevan painikkeen kohdalle, myös kyseinen ryhmäruutu luetaan.</target>
       </segment>
     </unit>
     <unit id="17f9cd32-20ac-46d1-8dfd-d37d94b046e4">
@@ -55755,7 +55755,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA automatically announces selected text in edit controls when focus moves to them. If there isn't any selected text, then it just announces the current line like usual.</source>
-        <target>NVDA lukee automaattisesti valitun tekstin muokkaussäätimissä, kun kohdistus siirtyy niihin. Jos yhtään tekstiä ei ole valittuna, tällöin vain nykyinen rivi luetaan kuten tavallisesti.</target>
+        <target>NVDA lukee automaattisesti valitun tekstin muokkauskentissä, kun kohdistus siirtyy niihin. Jos yhtään tekstiä ei ole valittuna, tällöin vain nykyinen rivi luetaan kuten tavallisesti.</target>
       </segment>
     </unit>
     <unit id="b1e9f86f-3a04-4fef-8a7f-acaca1fcf8a3">
@@ -56035,7 +56035,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Renamed some control types for better readability. Editable text is now edit, outline is now tree view and push button is now button.</source>
-        <target>Uudelleennimetty joitakin säädintyyppejä luettavuuden parantamiseksi. Muokattava teksti on nyt muokattava, runko on nyt puunäkymä ja painonappi on nyt painike.</target>
+        <target>Uudelleennimetty joitakin ohjausobjektityyppejä luettavuuden parantamiseksi. Muokattava teksti on nyt muokattava, runko on nyt puunäkymä ja painonappi on nyt painike.</target>
       </segment>
     </unit>
     <unit id="1bf0337a-f942-4789-b15d-ec3f8ea14e4f">
@@ -56045,7 +56045,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When arrowing around list items in a list, or tree view items in a tree view, the control type (list item, tree view item) is no longer spoken, to speed up navigation.</source>
-        <target>Nuolinäppäimillä liikkumisen nopeuttamiseksi luettelon tai puunäkymän kohteissa säädinn tyyppiä (luettelon tai puunäkymän kohdetta) ei enää lueta.</target>
+        <target>Nuolinäppäimillä liikkumisen nopeuttamiseksi luettelon tai puunäkymän kohteissa ohjausobjektin tyyppiä (luettelon tai puunäkymän kohdetta) ei enää lueta.</target>
       </segment>
     </unit>
     <unit id="19e660d9-98f6-430a-b42a-5324f27f58c3">
@@ -56075,7 +56075,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed some problems with reviewing static text controls.</source>
-        <target>Korjattu joitakin ongelmia staattisten tekstisäädinten tarkastelussa.</target>
+        <target>Korjattu joitakin ongelmia staattisten tekstiohjausobjektien tarkastelussa.</target>
       </segment>
     </unit>
     <unit id="08d59d48-f0f1-428d-b6dd-e2ca9e2043dc">
