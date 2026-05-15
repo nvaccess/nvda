@@ -3,6 +3,7 @@
 ## 2026.1.1
 
 This is a patch release to fix a security issue.
+A bug fix is also included for an issue introduced in 2026.1 with how `ctrl+f` is handled in File Explorer.
 
 ### Security fixes
 
