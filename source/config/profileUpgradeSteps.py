@@ -688,6 +688,7 @@ def upgradeConfigFrom_21_to_22(profile: ConfigObj):
 		speechConf["language"] = "en"
 		log.debug("Changed math.speech.language from 'Auto' to 'en'.")
 
+
 def upgradeConfigFrom_22_to_23(profile: ConfigObj):
 	"""Turn magnifier zoom from ratio to percentage."""
 	magnifierConf = profile.get("magnifier")
