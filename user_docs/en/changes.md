@@ -3,7 +3,7 @@
 ## 2026.1.1
 
 This is a patch release to fix a security issue.
-We have also removed a change we introduced in 2026.1 with how we handle connection issues with Remote Access.
+A change introduced in 2026.1 with how NVDA handles connection issues with Remote Access was removed.
 
 ### Security fixes
 
