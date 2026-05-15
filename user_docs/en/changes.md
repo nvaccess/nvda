@@ -10,6 +10,8 @@
 
 ### Bug Fixes
 
+* When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
+
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
