@@ -2879,8 +2879,8 @@ This settings category contains the following options:
 
 ##### Enable Magnifier {#MagnifierEnable}
 
-Enables the magnifier.
-When toggled, the magnifier will start and stop immediately, rather than on-save.
+When toggled, the magnifier will start and stop immediately.
+The selected state is also saved for future NVDA sessions, so if you enable Magnifier here, it will start automatically after restarting NVDA.
 
 | . {.hideHeaderRow} |.|
 |---|---|
