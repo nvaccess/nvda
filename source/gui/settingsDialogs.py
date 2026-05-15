@@ -6053,13 +6053,14 @@ class MagnifierPanel(SettingsPanel):
 		# Enable the magnifier
 		# Translators: The label for a setting in magnifier settings to enable or disable the magnifier.
 		enableMagnifierText = _("&Enable magnifier (immediate effect)")
+		self._magnifierEnabledInitially = magnifierConfig.getEnabled()
 		self.enableMagnifierCheckBox = sHelper.addItem(wx.CheckBox(self, label=enableMagnifierText))
 		self.bindHelpEvent(
 			"MagnifierEnable",
 			self.enableMagnifierCheckBox,
 		)
 		self.enableMagnifierCheckBox.Bind(wx.EVT_CHECKBOX, self.onEnableMagnifierChange)
-		self.enableMagnifierCheckBox.SetValue(magnifierConfig.getEnabled())
+		self.enableMagnifierCheckBox.SetValue(self._magnifierEnabledInitially)
 
 		# ZOOM SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the zoom level.
@@ -6210,7 +6211,14 @@ class MagnifierPanel(SettingsPanel):
 			magnifierConfig.setFollowState(focusType, checkBox.GetValue())
 		config.conf["magnifier"]["keepMouseCentered"] = self.keepMouseCenteredCheckBox.GetValue()
 
+	def onDiscard(self):
+		"""Restore magnifier state from original settings from config."""
+		if self._magnifierEnabledInitially != magnifierConfig.getEnabled():
+			toggleMagnifier()
+			self.enableMagnifierCheckBox.SetValue(self._magnifierEnabledInitially)
+
 	def onEnableMagnifierChange(self, evt: wx.CommandEvent):
+		"""Enable magnifier immediately when the checkbox is toggled, and update the checkbox state if there is an error enabling the magnifier."""
 		requestedEnabled = evt.IsChecked()
 		currentEnabled = magnifierConfig.getEnabled()
 		if requestedEnabled != currentEnabled:
