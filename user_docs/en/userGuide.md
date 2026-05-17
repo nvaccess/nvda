@@ -1573,6 +1573,7 @@ To enable or disable the magnifier, press `NVDA+shift+w`.
 The "Increase magnification level" keystroke, `NVDA+shift+equals`, will start the magnifier if it is not running.
 When the magnifier is enabled, NVDA will announce the current zoom level, color filter, and focus tracking mode.
 When disabled, the screen returns to its normal size.
+The Magnifier state is saved for future NVDA sessions, so after enabling Magnifier, it will start automatically after restarting NVDA
 
 Important: The NVDA Magnifier cannot be used simultaneously with Screen Curtain for security reasons.
 If you attempt to enable the magnifier while Screen Curtain is active, NVDA will prompt you to disable Screen Curtain first, and vice versa.
@@ -2876,6 +2877,16 @@ Key: `NVDA+control+w`
 
 The Magnifier category in the NVDA Settings dialog allows you to configure the default behavior of NVDA's built-in [Magnifier](#Magnifier) feature.
 This settings category contains the following options:
+
+##### Enable Magnifier {#MagnifierEnable}
+
+When toggled, Magnifier will start and stop immediately.
+The selected state is also saved for future NVDA sessions, so if you enable Magnifier here, it will start automatically after restarting NVDA.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Disabled|
 
 ##### Zoom level {#MagnifierZoom}
 

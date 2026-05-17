@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -11,6 +11,24 @@ Handles module initialization, configuration and settings interaction.
 import config
 from dataclasses import dataclass, field
 from .utils.types import Filter, FullScreenMode, MagnifierFollowFocusType, MagnifiedView
+
+
+def setEnabled(enable: bool) -> None:
+	"""
+	Set the config for the magnifier state (enable or disabled).
+
+	:param enable: True if the magnifier is enabled, False if it is disabled.
+	"""
+	config.conf["magnifier"]["enabled"] = enable
+
+
+def getEnabled() -> bool:
+	"""
+	Check if the magnifier is enabled in config.
+
+	:return: True if the magnifier is enabled, False otherwise.
+	"""
+	return config.conf["magnifier"]["enabled"]
 
 
 class ZoomLevel:

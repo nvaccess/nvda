@@ -132,3 +132,39 @@ class test_synthDriverHandler(unittest.TestCase):
 			**expectedKwargs,
 		):
 			synthDriverHandler.setSynth("auto")
+
+
+class TestLanguageIsSupported(unittest.TestCase):
+	def setUp(self) -> None:
+		self._synth = MockSynth(FAKE_DEFAULT_SYNTH_NAME)
+		self._synth.availableLanguages = set()
+
+	def tearDown(self) -> None:
+		del self._synth
+
+	def _languageIsSupported(self, lang: str | None) -> bool:
+		return synthDriverHandler.SynthDriver.languageIsSupported(self._synth, lang)
+
+	def test_noneLanguageIsSupported(self):
+		self._synth.availableLanguages = {"en_US"}
+		self.assertTrue(self._languageIsSupported(None))
+
+	def test_normalizedExactLanguageMatch(self):
+		self._synth.availableLanguages = {"en_US"}
+		self.assertTrue(self._languageIsSupported("en-us"))
+
+	def test_rootLanguageMatch(self):
+		self._synth.availableLanguages = {"en_GB"}
+		self.assertTrue(self._languageIsSupported("en"))
+
+	def test_unsupportedLanguage(self):
+		self._synth.availableLanguages = {"en_US"}
+		self.assertFalse(self._languageIsSupported("fr"))
+
+	def test_metaAndNoneAvailableLanguagesIgnored(self):
+		self._synth.availableLanguages = {None, "x-western", "en_US"}
+		self.assertTrue(self._languageIsSupported("en"))
+
+	def test_metaInputLanguageNotSupported(self):
+		self._synth.availableLanguages = {"en_US"}
+		self.assertFalse(self._languageIsSupported("x-western"))

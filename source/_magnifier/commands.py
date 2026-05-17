@@ -10,17 +10,17 @@ Contains the command functions and their logic for keyboard shortcuts.
 
 from typing import Literal
 import ui
-from . import getMagnifier, initialize, terminate, changeMagnifiedView
+from . import changeMagnifiedView, getMagnifier, start, stop
 from .config import (
 	getMagnifiedView,
 	setMagnifiedView,
 	getZoomLevelString,
 	getFilter,
-	getFullscreenMode,
-	ZoomLevel,
 	getFollowState,
+	getFullscreenMode,
 	setFollowState,
 	toggleAllFollowStates,
+	ZoomLevel,
 )
 from .magnifier import Magnifier
 from .fullscreenMagnifier import FullScreenMagnifier
@@ -34,46 +34,50 @@ from .utils.types import (
 )
 from logHandler import log
 
-PAN_ACTION_TO_EDGE_NAME = {
+PAN_ACTION_TO_EDGE_MESSAGES = {
 	MagnifierAction.PAN_LEFT: pgettext(
 		"magnifier",
-		# Translators: Short name for the left edge, used in messages.
-		"left",
+		# Translators: Message announced when already at left edge of the screen while panning the magnified view
+		"left edge",
 	),
 	MagnifierAction.PAN_RIGHT: pgettext(
 		"magnifier",
-		# Translators: Short name for the right edge, used in messages.
-		"right",
+		# Translators: Message announced when already at right edge of the screen while panning the magnified view
+		"right edge",
 	),
 	MagnifierAction.PAN_UP: pgettext(
 		"magnifier",
-		# Translators: Short name for the top edge, used in messages.
-		"top",
+		# Translators: Message announced when already at top edge of the screen while panning the magnified view
+		"top edge",
 	),
 	MagnifierAction.PAN_DOWN: pgettext(
 		"magnifier",
-		# Translators: Short name for the bottom edge, used in messages.
-		"bottom",
+		# Translators: Message announced when already at bottom edge of the screen while panning the magnified view
+		"bottom edge",
 	),
 	MagnifierAction.PAN_LEFT_EDGE: pgettext(
 		"magnifier",
-		# Translators: Short name for the left edge, used in messages.
-		"left",
+		# Translators: Message announced when already at left edge of the screen while panning the magnified view
+		# to left edge
+		"left edge",
 	),
 	MagnifierAction.PAN_RIGHT_EDGE: pgettext(
 		"magnifier",
-		# Translators: Short name for the right edge, used in messages.
-		"right",
+		# Translators: Message announced when already at right edge of the screen while panning the magnified view
+		# to right edge
+		"right edge",
 	),
 	MagnifierAction.PAN_TOP_EDGE: pgettext(
 		"magnifier",
-		# Translators: Short name for the top edge, used in messages.
-		"top",
+		# Translators: Message announced when already at top edge of the screen while panning the magnified view
+		# to top edge
+		"top edge",
 	),
 	MagnifierAction.PAN_BOTTOM_EDGE: pgettext(
 		"magnifier",
-		# Translators: Short name for the bottom edge, used in messages.
-		"bottom",
+		# Translators: Message announced when already at left edge of the screen while panning the magnified view
+		# to left edge
+		"bottom edge",
 	),
 }
 
@@ -85,7 +89,7 @@ def toggleMagnifier() -> None:
 	magnifier: Magnifier | None = getMagnifier()
 	if magnifier and magnifier._isActive:
 		# Stop magnifier
-		terminate()
+		stop()
 		ui.message(
 			pgettext(
 				"magnifier",
@@ -103,7 +107,7 @@ def toggleMagnifier() -> None:
 			),
 		)
 	else:
-		initialize()
+		start()
 		currentFilter = getFilter()
 		magnifiedView = getMagnifiedView()
 		zoomLevel = getZoomLevelString()
@@ -165,14 +169,7 @@ def pan(action: MagnifierAction) -> None:
 	if magnifierIsActiveVerify(magnifier, action):
 		hasMoved = magnifier._pan(action)
 		if not hasMoved:
-			edgeName = PAN_ACTION_TO_EDGE_NAME.get(action)
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Message announced when arriving at the {edge} edge.
-					"{edge} edge",
-				).format(edge=edgeName),
-			)
+			ui.message(PAN_ACTION_TO_EDGE_MESSAGES[action])
 
 
 def toggleFilter() -> None:

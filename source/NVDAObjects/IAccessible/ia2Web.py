@@ -104,10 +104,6 @@ class IA2WebAnnotation(AnnotationOrigin):
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib = True
-	# The IAccessibleText implementation in web browsers exposes embedded object
-	# characters which need to be traversed to read the content. That isn't useful
-	# to users.
-	_shouldUseTextInfoForReading = False
 
 	def isDescendantOf(self, obj: "NVDAObjects.NVDAObject") -> bool:
 		if obj.windowHandle != self.windowHandle:
@@ -288,9 +284,6 @@ class Figure(Ia2Web):
 
 class Editor(Ia2Web, DocumentWithTableNavigation):
 	TextInfo = MozillaCompoundTextInfo
-	# MozillaCompoundTextInfo traverses embedded objects and is suitable for
-	# presentation to users.
-	_shouldUseTextInfoForReading = True
 
 	def _getTableCellAt(self, tableID, startPos, destRow, destCol):
 		# Locate the table in the object ancestry of the given document position.

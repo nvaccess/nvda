@@ -9,7 +9,10 @@ Handles module initialization, configuration and settings interaction.
 """
 
 from typing import TYPE_CHECKING
-from .config import getMagnifiedView
+
+from logHandler import log
+
+from .config import getMagnifiedView, getEnabled, setEnabled
 from .utils.types import MagnifiedView
 
 if TYPE_CHECKING:
@@ -72,9 +75,44 @@ def initialize() -> None:
 	"""
 	Initialize the magnifier module with the default magnifier view from config.
 	"""
+	log.debug("Initializing magnifier")
 	magnifiedView = getMagnifiedView()
 	_setMagnifiedView(magnifiedView)
+	if getEnabled():
+		start()
+
+
+def terminate() -> None:
+	"""
+	Terminate the magnifier module.
+	Called when NVDA shuts down.
+	"""
+	global _magnifier
+
+	log.debug("Terminating magnifier")
+	stop(persist=False)
+	_magnifier = None
+
+
+def start() -> None:
+	if _magnifier is None:
+		log.error("Attempted to start magnifier, but it is not initialized.")
+		return
 	_magnifier._startMagnifier()
+	setEnabled(True)
+
+
+def stop(persist: bool = True) -> None:
+	"""Stop the magnifier if it is active.
+
+	:param persist: Whether to persist the magnifier state
+	"""
+	if isActive():
+		_magnifier._stopMagnifier()
+		if persist:
+			setEnabled(False)
+	else:
+		log.debug("Attempted to stop magnifier, but it is not active.")
 
 
 def isActive() -> bool:
@@ -111,14 +149,3 @@ def getMagnifier() -> "Magnifier | None":
 	"""
 	global _magnifier
 	return _magnifier
-
-
-def terminate() -> None:
-	"""
-	Terminate the magnifier module.
-	Called when NVDA shuts down.
-	"""
-	global _magnifier
-	if _magnifier and _magnifier._isActive:
-		_magnifier._stopMagnifier()
-	_magnifier = None
