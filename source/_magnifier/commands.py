@@ -10,68 +10,74 @@ Contains the command functions and their logic for keyboard shortcuts.
 
 from typing import Literal
 import ui
-from . import getMagnifier, initialize, terminate
+from . import changeMagnifiedView, getMagnifier, start, stop
 from .config import (
+	getMagnifiedView,
+	setMagnifiedView,
 	getZoomLevelString,
 	getFilter,
-	getFullscreenMode,
-	ZoomLevel,
 	getFollowState,
+	getFullscreenMode,
 	setFollowState,
 	toggleAllFollowStates,
+	ZoomLevel,
 )
 from .magnifier import Magnifier
 from .fullscreenMagnifier import FullScreenMagnifier
 from .utils.types import (
 	Filter,
 	Direction,
-	MagnifierType,
+	MagnifiedView,
 	FullScreenMode,
 	MagnifierAction,
 	MagnifierFollowFocusType,
 )
 from logHandler import log
 
-PAN_ACTION_TO_EDGE_NAME = {
+PAN_ACTION_TO_EDGE_MESSAGES = {
 	MagnifierAction.PAN_LEFT: pgettext(
 		"magnifier",
-		# Translators: Short name for the left edge, used in messages.
-		"left",
+		# Translators: Message announced when already at left edge of the screen while panning the magnified view
+		"left edge",
 	),
 	MagnifierAction.PAN_RIGHT: pgettext(
 		"magnifier",
-		# Translators: Short name for the right edge, used in messages.
-		"right",
+		# Translators: Message announced when already at right edge of the screen while panning the magnified view
+		"right edge",
 	),
 	MagnifierAction.PAN_UP: pgettext(
 		"magnifier",
-		# Translators: Short name for the top edge, used in messages.
-		"top",
+		# Translators: Message announced when already at top edge of the screen while panning the magnified view
+		"top edge",
 	),
 	MagnifierAction.PAN_DOWN: pgettext(
 		"magnifier",
-		# Translators: Short name for the bottom edge, used in messages.
-		"bottom",
+		# Translators: Message announced when already at bottom edge of the screen while panning the magnified view
+		"bottom edge",
 	),
 	MagnifierAction.PAN_LEFT_EDGE: pgettext(
 		"magnifier",
-		# Translators: Short name for the left edge, used in messages.
-		"left",
+		# Translators: Message announced when already at left edge of the screen while panning the magnified view
+		# to left edge
+		"left edge",
 	),
 	MagnifierAction.PAN_RIGHT_EDGE: pgettext(
 		"magnifier",
-		# Translators: Short name for the right edge, used in messages.
-		"right",
+		# Translators: Message announced when already at right edge of the screen while panning the magnified view
+		# to right edge
+		"right edge",
 	),
 	MagnifierAction.PAN_TOP_EDGE: pgettext(
 		"magnifier",
-		# Translators: Short name for the top edge, used in messages.
-		"top",
+		# Translators: Message announced when already at top edge of the screen while panning the magnified view
+		# to top edge
+		"top edge",
 	),
 	MagnifierAction.PAN_BOTTOM_EDGE: pgettext(
 		"magnifier",
-		# Translators: Short name for the bottom edge, used in messages.
-		"bottom",
+		# Translators: Message announced when already at left edge of the screen while panning the magnified view
+		# to left edge
+		"bottom edge",
 	),
 }
 
@@ -80,10 +86,10 @@ def toggleMagnifier() -> None:
 	"""Toggle the NVDA magnifier on/off"""
 	import screenCurtain
 
-	magnifier: Magnifier = getMagnifier()
+	magnifier: Magnifier | None = getMagnifier()
 	if magnifier and magnifier._isActive:
 		# Stop magnifier
-		terminate()
+		stop()
 		ui.message(
 			pgettext(
 				"magnifier",
@@ -100,24 +106,34 @@ def toggleMagnifier() -> None:
 				"Cannot start magnifier: Screen Curtain is active. Please disable Screen Curtain first.",
 			),
 		)
-		return
 	else:
-		initialize()
-
-		filter = getFilter()
-		fullscreenMode = getFullscreenMode()
-
-		ui.message(
-			pgettext(
+		start()
+		currentFilter = getFilter()
+		magnifiedView = getMagnifiedView()
+		zoomLevel = getZoomLevelString()
+		if magnifiedView == MagnifiedView.FULLSCREEN:
+			fullscreenMode = getFullscreenMode()
+			msg = pgettext(
 				"magnifier",
 				# Translators: Message announced when starting the NVDA magnifier.
-				"Starting magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
+				"Starting {magnifiedView} magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
 			).format(
-				zoomLevel=getZoomLevelString(),
-				filter=filter.displayString,
+				magnifiedView=magnifiedView.displayString,
+				zoomLevel=zoomLevel,
+				filter=currentFilter.displayString,
 				fullscreenMode=fullscreenMode.displayString,
-			),
-		)
+			)
+		else:
+			msg = pgettext(
+				"magnifier",
+				# Translators: Message announced when starting the NVDA magnifier.
+				"Starting {magnifiedView} magnifier with {zoomLevel} zoom level and {filter} filter",
+			).format(
+				magnifiedView=magnifiedView.displayString,
+				zoomLevel=zoomLevel,
+				filter=currentFilter.displayString,
+			)
+		ui.message(msg)
 
 
 def zoom(direction: Direction) -> None:
@@ -153,14 +169,7 @@ def pan(action: MagnifierAction) -> None:
 	if magnifierIsActiveVerify(magnifier, action):
 		hasMoved = magnifier._pan(action)
 		if not hasMoved:
-			edgeName = PAN_ACTION_TO_EDGE_NAME.get(action)
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Message announced when arriving at the {edge} edge.
-					"{edge} edge",
-				).format(edge=edgeName),
-			)
+			ui.message(PAN_ACTION_TO_EDGE_MESSAGES[action])
 
 
 def toggleFilter() -> None:
@@ -174,14 +183,39 @@ def toggleFilter() -> None:
 		filters = list(Filter)
 		idx = filters.index(magnifier.filterType)
 		magnifier.filterType = filters[(idx + 1) % len(filters)]
-		if magnifier._magnifierType == MagnifierType.FULLSCREEN:
-			magnifier._applyFilter()
+		if magnifier._MAGNIFIED_VIEW == MagnifiedView.FULLSCREEN:
+			fullscreenMagnifier: FullScreenMagnifier = magnifier
+			fullscreenMagnifier._applyFilter()
 		ui.message(
 			pgettext(
 				"magnifier",
 				# Translators: Message announced when changing the color filter with {filter} being the new color filter.
 				"Color filter changed to {filter}",
 			).format(filter=magnifier.filterType.displayString),
+		)
+
+
+def cycleMagnifiedView() -> None:
+	"""Cycle through magnifier views (full-screen, fixed, docked, lens)"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(
+		magnifier,
+		MagnifierAction.CHANGE_MAGNIFIER_VIEW,
+	):
+		views = list(MagnifiedView)
+		currentView = magnifier._MAGNIFIED_VIEW
+		idx = views.index(currentView)
+		newView = views[(idx + 1) % len(views)]
+		log.debug(f"Changing magnifier view from {currentView} to {newView}")
+		changeMagnifiedView(newView)
+		setMagnifiedView(newView)
+		magnifier = getMagnifier()
+		ui.message(
+			pgettext(
+				"magnifier",
+				# Translators: Message announced when changing the magnifier view with {view} being the new magnifier view.
+				"Magnifier view changed to {view}",
+			).format(view=magnifier._MAGNIFIED_VIEW.displayString),
 		)
 
 
@@ -255,12 +289,13 @@ def toggleFullscreenMode() -> None:
 			magnifier,
 			MagnifierAction.CHANGE_FULLSCREEN_MODE,
 		):
+			fullscreenMagnifier: FullScreenMagnifier = magnifier
 			modes = list(FullScreenMode)
-			currentMode = magnifier._fullscreenMode
+			currentMode = fullscreenMagnifier._fullscreenMode
 			idx = modes.index(currentMode)
 			newMode = modes[(idx + 1) % len(modes)]
 			log.debug(f"Changing full-screen mode from {currentMode} to {newMode}")
-			magnifier._fullscreenMode = newMode
+			fullscreenMagnifier._fullscreenMode = newMode
 			ui.message(
 				pgettext(
 					"magnifier",
@@ -281,8 +316,9 @@ def startSpotlight() -> None:
 			magnifier,
 			MagnifierAction.START_SPOTLIGHT,
 		):
+			fullscreenMagnifier: FullScreenMagnifier = magnifier
 			log.debug("trying to launch spotlight mode")
-			if magnifier._spotlightManager._spotlightIsActive:
+			if fullscreenMagnifier._spotlightManager._spotlightIsActive:
 				log.debug("found spotlight manager and it is active")
 				ui.message(
 					pgettext(
@@ -293,7 +329,7 @@ def startSpotlight() -> None:
 				)
 			else:
 				log.debug("no active spotlight manager found, starting new one")
-				magnifier._startSpotlight()
+				fullscreenMagnifier._startSpotlight()
 				ui.message(
 					pgettext(
 						"magnifier",
@@ -340,7 +376,7 @@ def magnifierIsFullscreenVerify(
 
 	:return: True if the magnifier is full-screen, False otherwise
 	"""
-	if magnifier._magnifierType == MagnifierType.FULLSCREEN:
+	if magnifier._MAGNIFIED_VIEW == MagnifiedView.FULLSCREEN:
 		return True
 	else:
 		ui.message(

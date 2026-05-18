@@ -1,11 +1,33 @@
 # What's New in NVDA
 
+## 2026.3
+
+### Important notes
+
+### New Features
+
+### Changes
+
+### Bug Fixes
+
+* When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+#### Deprecations
+
+<!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
+<!-- markdownlint-disable -->
+
 ## 2026.2
 
 ### Important notes
 
 ### New Features
 
+* Added pinch in and pinch out touch gestures, allowing two-finger pinch gestures to be bound to scripts. (#19938, @kefaslungu)
 * Added the ability to automatically scroll the braille display. (#18573, @nvdaes)
 * After installing or updating NVDA, a dialog now offers options to restart Windows, start the installed copy, or exit the installer. (#19268, #19718, @kefaslungu)
 * NVDA now includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen. (#19228, @Boumtchack)
@@ -16,7 +38,7 @@
   * The magnifier cannot be used simultaneously with Screen Curtain for security reasons.
 * A new command, assigned to `NVDA+x`, has been introduced to repeat the last information spoken by NVDA; pressing it twice shows it in a browseable message. (#625, @CyrilleB79)
 * Added an unassigned command to toggle keyboard layout. (#19211, @CyrilleB79)
-* Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @hdzrvcc0X74)
+* Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @tareh7z)
 * Added touch based navigation of browse mode elements, allowing touch screen users to move between links, headings, form fields, lists, tables and other quick navigation elements. (#3424, @kefaslungu)
   * Flick down or up to cycle through element types; flick right or left to navigate between elements of the selected type.
   * The element types shown when cycling can be configured in the Browse Mode settings panel.
@@ -38,6 +60,7 @@ The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is int
 
 ### Changes
 
+* When NVDA is started, if the screen curtain is enabled and a sound is played to inform about this, the state of the screen curtain will be also displayed in braille. (19441, @nvdaes)
 * Updated Liblouis Braille translator to [3.37.0](https://github.com/liblouis/liblouis/releases/tag/v3.37.0). (#19758, @codeofdusk)
   * Added new Italian and Estonian 6 dot tables.
 * It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)
@@ -52,9 +75,13 @@ The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is int
 This is more noticeable for Windows releases which are enablement packages on top of an earlier release such as Windows 11 2025 Update based on Windows 11 2024 Update. (#19802, @josephsl)
 * Math navigation commands now support input help, on-demand speech mode, and can be remapped. (#19871, @RyanMcCleary)
 * The "COM Registration Fixing Tool" has been renamed to "System Accessibility Repair Tool" for clarity. (#19622, @bramd)
+* Added an advanced setting to opt regular expression speech dictionary entries into a more modern `[regex](https://pypi.org/project/regex/)` engine.
+This provides Unicode-aware `\w` and `\b` and additional regex features.
+The setting is disabled by default. (#20013, @LeonarddeR)
 
 ### Bug Fixes
 
+* Fixed an error that could occur when NVDA checked whether a language is supported for a synthesizer with invalid languages. (#20080, @nvdaes)
 * NVDA will attempt to recover more quickly from freezes in some applications, especially those written in Java. (#14396, @thgcode)
 * In Firefox browse mode, the accessible name of form controls (such as checkboxes and radio buttons) is now correctly announced when the control has an `aria-label` and an associated `<label>` element that contains only `aria-hidden` content. (#19409, @bramd)
 * The "Toggles on and off if the screen layout is preserved while rendering the document content" item in the "Browse mode" category of the Input Gestures dialog now behaves correctly. (#18378)
@@ -65,9 +92,13 @@ This is more noticeable for Windows releases which are enablement packages on to
 * Capital indicators are now correctly announced when selecting single characters. (#19505, @cary-rowen)
 * Configuration profile triggers now activate when the Add-on Store is open. (#19583, @bramd)
 * After cancelling an add-on download and reopening the Add-on Store, downloading another add-on no longer fails. (#20015, @Cary-rowen)
+* In File Explorer, pressing `ctrl+f` once again focuses the search box without subsequently reporting a pane. (#20021, @Cary-rowen)
+* MathML in Chromium is more reliably read after NVDA starts or restarts. (#19813, @RyanMcCleary)
 * Decorative Unicode letters such as negative squared, negative circled, and regional indicator symbol characters are now normalized to their base Latin letters when Unicode normalization is enabled. (#19608, @bramd)
 * NVDA no longer crashes when the Add-on Store download directory cannot be cleaned up due to file permission errors. (#19202, @christopherpross)
 * Fixed NVDA freezing when navigating in JetBrains IDEs. (#16741, @christopherpross)
+* Speech dictionary entries of type Whole word now correctly handle words containing Unicode combining marks (e.g. Hebrew niqqud, Arabic harakat). (#20013, @LeonarddeR)
+  * In particular, Whole word entries no longer incorrectly match inside larger words when those words contain combining marks.
 
 ### Changes for Developers
 
@@ -113,8 +144,31 @@ Use the `speechDictHandler.types.EntryType` enumeration instead. (#19430, @Leona
 * `useUniscribe` from `textUtils.offset.OffsetsTextInfo` and its subclasses is deprecated.
   Use `charSegFlag` and `wordSegFlag` instead. (#18735)
 
-<!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
-<!-- markdownlint-disable -->
+## 2026.1.1
+
+This is a patch release to fix security issues.
+A bug fix is also included for an issue introduced in 2026.1 with how `ctrl+f` is handled in File Explorer.
+A change introduced in 2026.1 with how NVDA handles connection issues with Remote Access was removed.
+
+### Security fixes
+
+Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
+
+* Fixed an issue which could cause NVDA to connect to an untrusted Remote Access server. ([GHSA-m268-mc77-j2cr](https://github.com/nvaccess/nvda/security/advisories/GHSA-m268-mc77-j2cr))
+* Prevents a situation which could cause unselected add-ons to be copied to the system-wide configuration. ([GHSA-669f-7gpr-5vqm](https://github.com/nvaccess/nvda/security/advisories/GHSA-669f-7gpr-5vqm))
+
+### Bug Fixes
+
+* In File Explorer, pressing `ctrl+f` once again focuses the search box without subsequently reporting a pane. (#20021, @Cary-rowen)
+
+### Changes
+
+* Remote Access once again attempts automatic reconnection after a failed initial connection as the controlled computer, rather than failing immediately.
+This means that headless or otherwise physically inaccessible machines configured to automatically connect at startup will be reachable once the network is available. (#20122)
+
+### Changes for Developers
+
+* The `winBindings.cfgmgr32` module is now included in NVDA binary builds. (#20089, @Cary-rowen)
 
 ## 2026.1
 

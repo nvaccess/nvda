@@ -94,8 +94,10 @@ class TestMagnifier(_TestMagnifier):
 
 	def testStartMagnifier(self):
 		"""Activating the magnifier."""
+		# Use center coordinates which will always be within bounds
+		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
-			return_value=Coordinates(100, 200),
+			return_value=focusCoords,
 		)
 
 		# Test starting from inactive state
@@ -103,7 +105,7 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._startMagnifier()
 
 		self.assertTrue(self.magnifier._isActive)
-		self.assertEqual(self.magnifier._currentCoordinates, Coordinates(100, 200))
+		self.assertEqual(self.magnifier.currentCoordinates, focusCoords)
 		self.magnifier._focusManager.getCurrentFocusCoordinates.assert_called_once()
 
 		# Test starting when already active (should not call getCurrentFocusCoordinates again)
@@ -115,8 +117,10 @@ class TestMagnifier(_TestMagnifier):
 
 	def testUpdateMagnifier(self):
 		"""Updating the magnifier's properties."""
+		# Use center coordinates which will always be within bounds
+		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
-			return_value=Coordinates(100, 200),
+			return_value=focusCoords,
 		)
 		self.magnifier._doUpdate = MagicMock()
 		self.magnifier._startTimer = MagicMock()
@@ -131,7 +135,7 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._isActive = True
 		self.magnifier._updateMagnifier()
 
-		# getCurrentFocusCoordinates is called twice: once in _managePanning and once to update _currentCoordinates
+		# getCurrentFocusCoordinates is called twice: once in _managePanning and once to update currentCoordinates
 		self.assertEqual(
 			self.magnifier._focusManager.getCurrentFocusCoordinates.call_count,
 			2,
@@ -140,15 +144,16 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._startTimer.assert_called_once_with(
 			self.magnifier._updateMagnifier,
 		)
-		self.assertEqual(self.magnifier._currentCoordinates, Coordinates(100, 200))
+		self.assertEqual(self.magnifier.currentCoordinates, focusCoords)
 		# Successful update should reset error counter
 		self.assertEqual(self.magnifier._consecutiveErrors, 0)
 
 	def testUpdateMagnifierResumesAfterSingleError(self):
 		"""Timer must always be rescheduled even when _doUpdate raises an exception."""
 		self.magnifier._isActive = True
+		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
-			return_value=Coordinates(100, 200),
+			return_value=focusCoords,
 		)
 		self.magnifier._doUpdate = MagicMock(side_effect=OSError("COM failure"))
 		self.magnifier._startTimer = MagicMock()
@@ -164,8 +169,9 @@ class TestMagnifier(_TestMagnifier):
 	def testUpdateMagnifierTriggersRecoveryAfterMaxErrors(self):
 		"""After _MAX_CONSECUTIVE_ERRORS failures, _attemptRecovery is called instead of restarting timer."""
 		self.magnifier._isActive = True
+		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
-			return_value=Coordinates(100, 200),
+			return_value=focusCoords,
 		)
 		self.magnifier._doUpdate = MagicMock(side_effect=OSError("COM failure"))
 		self.magnifier._startTimer = MagicMock()
@@ -182,8 +188,9 @@ class TestMagnifier(_TestMagnifier):
 	def testUpdateMagnifierCatchesCOMError(self):
 		"""COMError from UIA must be caught and the timer rescheduled."""
 		self.magnifier._isActive = True
+		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
-			return_value=Coordinates(100, 200),
+			return_value=focusCoords,
 		)
 		self.magnifier._doUpdate = MagicMock(side_effect=COMError(-2147417848, "RPC_E_DISCONNECTED", None))
 		self.magnifier._startTimer = MagicMock()
@@ -196,8 +203,9 @@ class TestMagnifier(_TestMagnifier):
 	def testUpdateMagnifierRecoveryFailureSafelyRestartsTimer(self):
 		"""If _attemptRecovery itself raises, the timer must still be restarted to prevent a freeze."""
 		self.magnifier._isActive = True
+		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
-			return_value=Coordinates(100, 200),
+			return_value=focusCoords,
 		)
 		self.magnifier._doUpdate = MagicMock(side_effect=OSError("API failure"))
 		self.magnifier._startTimer = MagicMock()
@@ -214,8 +222,9 @@ class TestMagnifier(_TestMagnifier):
 		"""A successful update after errors resets the consecutive error counter."""
 		self.magnifier._isActive = True
 		self.magnifier._consecutiveErrors = 2
+		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
-			return_value=Coordinates(100, 200),
+			return_value=focusCoords,
 		)
 		self.magnifier._doUpdate = MagicMock()  # Success
 		self.magnifier._startTimer = MagicMock()
@@ -287,7 +296,7 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._panStep = 10  # 10% of screen width
 		centerX = self.screenWidth // 2
 		centerY = self.screenHeight // 2
-		self.magnifier._currentCoordinates = Coordinates(centerX, centerY)
+		self.magnifier.currentCoordinates = Coordinates(centerX, centerY)
 		expectedPanPixels = int(
 			(self.screenWidth / self.magnifier.zoomLevel) * 10 / 100,
 		)
@@ -318,30 +327,30 @@ class TestMagnifier(_TestMagnifier):
 			# Test normal pan - movement succeeds (position changes)
 			hasMoved = self.magnifier._pan(action)
 			self.assertTrue(hasMoved)
-			currentValue = getattr(self.magnifier._currentCoordinates, axis)
+			currentValue = getattr(self.magnifier.currentCoordinates, axis)
 			self.assertEqual(currentValue, centerValue + direction * expectedPanPixels)
 
 			# Test reaching edge - movement succeeds on first contact (position changes to edge)
 			if axis == "x":
-				self.magnifier._currentCoordinates = Coordinates(
+				self.magnifier.currentCoordinates = Coordinates(
 					edgeValue - direction * expectedPanPixels,
 					centerY,
 				)
 			else:
-				self.magnifier._currentCoordinates = Coordinates(
+				self.magnifier.currentCoordinates = Coordinates(
 					centerX,
 					edgeValue - direction * expectedPanPixels,
 				)
 
 			hasMoved = self.magnifier._pan(action)
 			self.assertTrue(hasMoved)
-			currentValue = getattr(self.magnifier._currentCoordinates, axis)
+			currentValue = getattr(self.magnifier.currentCoordinates, axis)
 			self.assertEqual(currentValue, edgeValue)
 
 			# Test trying to pan beyond edge - movement fails (already at edge, no movement)
 			hasMoved = self.magnifier._pan(action)
 			self.assertFalse(hasMoved)
-			currentValue = getattr(self.magnifier._currentCoordinates, axis)
+			currentValue = getattr(self.magnifier.currentCoordinates, axis)
 			self.assertEqual(currentValue, edgeValue)
 
 	def _testPanToEdge(self, action: MagnifierAction, axis: str, edgeAttr: str):
@@ -361,13 +370,13 @@ class TestMagnifier(_TestMagnifier):
 			# Test jump to edge - movement succeeds (moves to edge)
 			hasMoved = self.magnifier._pan(action)
 			self.assertTrue(hasMoved)
-			currentValue = getattr(self.magnifier._currentCoordinates, axis)
+			currentValue = getattr(self.magnifier.currentCoordinates, axis)
 			self.assertEqual(currentValue, edgeValue)
 
 			# Test trying to pan to edge again - movement fails (already at edge, no movement)
 			hasMoved = self.magnifier._pan(action)
 			self.assertFalse(hasMoved)
-			currentValue = getattr(self.magnifier._currentCoordinates, axis)
+			currentValue = getattr(self.magnifier.currentCoordinates, axis)
 			self.assertEqual(currentValue, edgeValue)
 
 	def testPanLeft(self):
@@ -464,8 +473,8 @@ class TestMagnifier(_TestMagnifier):
 		self.assertEqual(self.magnifier._lastFocusCoordinates, focusB)
 
 	def testKeepMouseCentered(self):
-		"""Base _keepMouseCentered moves cursor to _currentCoordinates."""
-		self.magnifier._currentCoordinates = Coordinates(640, 360)
+		"""Base _keepMouseCentered moves cursor to currentCoordinates."""
+		self.magnifier.currentCoordinates = Coordinates(640, 360)
 		with patch("_magnifier.magnifier.winUser.setCursorPos") as mockSetCursor:
 			self.magnifier._keepMouseCentered()
 			mockSetCursor.assert_called_once_with(640, 360)
@@ -497,3 +506,42 @@ class TestMagnifier(_TestMagnifier):
 		# Test stopping when no timer exists (should not raise error)
 		self.magnifier._stopTimer()
 		self.assertIsNone(self.magnifier._timer)
+
+	def testClampCoordinates(self):
+		"""Test all boundary clamps (left, right, top, bottom) for both modes."""
+		for isTrueCentered in (False, True):
+			self.magnifier.zoomLevel = 2.0
+			with patch("_magnifier.magnifier.isTrueCentered", return_value=isTrueCentered):
+				minX, minY, maxX, maxY = self.magnifier._getScreenLimits()
+
+				# Test left boundary (far below minimum)
+				self.magnifier.currentCoordinates = Coordinates(-1000, 100)
+				self.assertGreaterEqual(self.magnifier.currentCoordinates.x, minX)
+				self.assertLessEqual(self.magnifier.currentCoordinates.x, maxX)
+
+				# Test right boundary (far above maximum)
+				self.magnifier.currentCoordinates = Coordinates(100000, 100)
+				self.assertGreaterEqual(self.magnifier.currentCoordinates.x, minX)
+				self.assertLessEqual(self.magnifier.currentCoordinates.x, maxX)
+
+				# Test top boundary (far above minimum)
+				self.magnifier.currentCoordinates = Coordinates(100, -1000)
+				self.assertGreaterEqual(self.magnifier.currentCoordinates.y, minY)
+				self.assertLessEqual(self.magnifier.currentCoordinates.y, maxY)
+
+				# Test bottom boundary (far above maximum)
+				self.magnifier.currentCoordinates = Coordinates(100, 100000)
+				self.assertGreaterEqual(self.magnifier.currentCoordinates.y, minY)
+				self.assertLessEqual(self.magnifier.currentCoordinates.y, maxY)
+
+	def testClampCoordinatesWithinBounds(self):
+		"""Coordinates within bounds are not modified."""
+		self.magnifier.zoomLevel = 2.0
+		with patch("_magnifier.magnifier.isTrueCentered", return_value=False):
+			minX, minY, maxX, maxY = self.magnifier._getScreenLimits()
+			centerX = (minX + maxX) // 2
+			centerY = (minY + maxY) // 2
+
+			validCoords = Coordinates(centerX, centerY)
+			self.magnifier.currentCoordinates = validCoords
+			self.assertEqual(self.magnifier.currentCoordinates, validCoords)

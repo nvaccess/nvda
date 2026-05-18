@@ -608,6 +608,12 @@ There are 4 possible flick gestures depending on the direction: flick left, flic
 Just like taps, more than one finger can be used to perform the gesture.
 Therefore, gestures such as 2-finger flick up and 4-finger flick left are all possible.
 
+##### Pinch Gestures {#PinchGestures}
+
+Place two fingers on the screen and move them toward each other to perform a pinch in gesture.
+Move them away from each other to perform a pinch out gesture.
+The fingers must move at least 50 pixels closer together or further apart to be recognised as a pinch in or out.
+
 #### Touch Modes {#TouchModes}
 
 As there are many more NVDA commands than possible touch gestures, NVDA has several touch modes you can switch between which make certain subsets of commands available.
@@ -1567,6 +1573,7 @@ To enable or disable the magnifier, press `NVDA+shift+w`.
 The "Increase magnification level" keystroke, `NVDA+shift+equals`, will start the magnifier if it is not running.
 When the magnifier is enabled, NVDA will announce the current zoom level, color filter, and focus tracking mode.
 When disabled, the screen returns to its normal size.
+The Magnifier state is saved for future NVDA sessions, so after enabling Magnifier, it will start automatically after restarting NVDA
 
 Important: The NVDA Magnifier cannot be used simultaneously with Screen Curtain for security reasons.
 If you attempt to enable the magnifier while Screen Curtain is active, NVDA will prompt you to disable Screen Curtain first, and vice versa.
@@ -2870,6 +2877,16 @@ Key: `NVDA+control+w`
 
 The Magnifier category in the NVDA Settings dialog allows you to configure the default behavior of NVDA's built-in [Magnifier](#Magnifier) feature.
 This settings category contains the following options:
+
+##### Enable Magnifier {#MagnifierEnable}
+
+When toggled, Magnifier will start and stop immediately.
+The selected state is also saved for future NVDA sessions, so if you enable Magnifier here, it will start automatically after restarting NVDA.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Disabled, Enabled|
+|Default |Disabled|
 
 ##### Zoom level {#MagnifierZoom}
 
@@ -4202,6 +4219,16 @@ Note that in Speech settings, there is a similar [option for SAPI 5 voices](#Spe
 |Options |Default (Enabled), Disabled, Enabled|
 |Default |Enabled|
 
+##### Use modern regular expression engine for speech dictionary entries {#SpeechDictsUseModernRegex}
+
+This setting controls how Regular expression entries in [speech dictionaries](#SpeechDictionaries) are matched.
+The [modern engine](https://pypi.org/project/regex/) has better support for non-Latin scripts, such as Hebrew and Arabic, and offers more powerful matching options.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Disabled), Disabled, Enabled|
+|Default |Disabled|
+
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
 This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
@@ -4282,6 +4309,7 @@ For example, if you replace "bird" with "frog" using end of word matching, it wo
 * Regular expression: The pattern is treated as a regular expression, which is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
 Regular expressions are not covered in this user guide.
 For an introductory tutorial, please refer to [Python's Regular Expression Guide](https://docs.python.org/3.13/howto/regex.html).
+Also consider [the advanced setting to enable a more modern engine](#SpeechDictsUseModernRegex), especially when dealing with non-Latin scripts, such as Hebrew and Arabic.
 * Unix shell-style wildcards: The pattern uses Unix shell-style wildcards for matching.
 For example:
   * `*` matches any sequence of characters.

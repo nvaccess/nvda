@@ -338,6 +338,8 @@ freeze(
 			"win32file",
 			"win32event",
 			"win32pipe",
+			# Referenced dynamically by hwPortUtils deprecation aliases.
+			"winBindings.cfgmgr32",
 		],
 	},
 	data_files=[
@@ -380,8 +382,8 @@ freeze(
 			else []
 		)
 		+ getRecursiveDataFiles(
-			"include/nvda-mathcat/assets",
-			"../include/nvda-mathcat/assets",
+			"include/nvda-mathcat/assets/Rules",
+			"../include/nvda-mathcat/assets/Rules",
 		)
 		+ getRecursiveDataFiles(
 			"synthDrivers",

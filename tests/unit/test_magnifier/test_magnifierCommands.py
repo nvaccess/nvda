@@ -5,8 +5,8 @@
 
 import unittest
 from unittest.mock import MagicMock, patch
-from _magnifier.commands import zoom
-from _magnifier.utils.types import Direction
+from _magnifier.commands import zoom, cycleMagnifiedView
+from _magnifier.utils.types import Direction, MagnifiedView
 
 
 class TestZoomCommand(unittest.TestCase):
@@ -53,3 +53,40 @@ class TestZoomCommand(unittest.TestCase):
 		zoom(Direction.OUT)
 		self.mockToggle.assert_not_called()
 		mag._zoom.assert_called_once_with(Direction.OUT)
+
+
+class TestCycleMagnifiedView(unittest.TestCase):
+	"""Tests for cycleMagnifiedView command."""
+
+	def setUp(self):
+		self.mockMessage = patch("_magnifier.commands.ui.message").start()
+		self.mockGetMagnifier = patch("_magnifier.commands.getMagnifier").start()
+		self.mockChangeMagnifiedView = patch("_magnifier.commands.changeMagnifiedView").start()
+		self.mockSetMagnifiedView = patch("_magnifier.commands.setMagnifiedView").start()
+
+	def tearDown(self):
+		patch.stopall()
+
+	def _makeMockMagnifier(self, magnifiedView: MagnifiedView):
+		magnifier = MagicMock()
+		magnifier._isActive = True
+		magnifier._MAGNIFIED_VIEW = magnifiedView
+		return magnifier
+
+	def testFullCycle(self):
+		"""All four types cycle in order and wrap back to FULLSCREEN."""
+		expectedCycle = [
+			(MagnifiedView.FULLSCREEN, MagnifiedView.FIXED),
+			(MagnifiedView.FIXED, MagnifiedView.DOCKED),
+			(MagnifiedView.DOCKED, MagnifiedView.LENS),
+			(MagnifiedView.LENS, MagnifiedView.FULLSCREEN),
+		]
+		for currentType, expectedNext in expectedCycle:
+			with self.subTest(currentType=currentType):
+				self.mockGetMagnifier.side_effect = [
+					self._makeMockMagnifier(currentType),
+					self._makeMockMagnifier(expectedNext),
+				]
+				cycleMagnifiedView()
+				self.mockChangeMagnifiedView.assert_called_once_with(expectedNext)
+				self.mockChangeMagnifiedView.reset_mock()

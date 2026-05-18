@@ -2225,12 +2225,15 @@ class BrowseModeDocumentTreeInterceptor(
 				# we need to call it manually here.
 				vision.handler.handleGainFocus(obj)
 			else:
-				# Although we are going to speak the object rather than textInfo content, we still need to silently speak the textInfo content so that the textInfo speech cache is updated correctly.
-				# Not doing this would cause  later browseMode speaking to either not speak controlFields it had entered, or speak controlField exits after having already exited.
-				# See #7435 for a discussion on this.
-				speech.speakTextInfo(focusInfo, reason=OutputReason.ONLYCACHE)
 				self._replayFocusEnteredEvents()
 				nextHandler()
+				# Although we spoke the object rather than textInfo content, we still need to silently speak the textInfo content so that the textInfo speech cache is updated correctly.
+				# Not doing this would cause  later browseMode speaking to either not speak controlFields it had entered, or speak controlField exits after having already exited.
+				# See #7435 for a discussion on this.
+				# #17750: It's important that we do this *after* speaking the object.
+				# Otherwise, the cached info would prevent NVDA from detecting things like
+				# row and column changes.
+				speech.speakTextInfo(focusInfo, reason=OutputReason.ONLYCACHE)
 			focusInfo.collapse()
 			if self._focusEventMustUpdateCaretPosition:
 				self._set_selection(focusInfo, reason=OutputReason.FOCUS)
