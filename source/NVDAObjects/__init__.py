@@ -273,6 +273,10 @@ class NVDAObject(
 			return super()._getPropertyViaCache(getterMethod)
 		# This object belongs to a not-responding application: serve the last
 		# known value if cached, otherwise degrade to None without calling in.
+		# Note: the base raises ValueError when getterMethod is None; here we
+		# intentionally degrade to None instead. This is unreachable via the
+		# CachingGetter descriptor (which always passes a real getter), so the
+		# divergence is harmless and kept deliberately simple for this guard.
 		if getterMethod is not None:
 			try:
 				return self._propertyCache[getterMethod]

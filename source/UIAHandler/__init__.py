@@ -1216,7 +1216,7 @@ class UIAHandler(COMObject):
 		serialised behind a hung provider. While true, callers should avoid
 		blocking UIA calls and fall back to non-UIA APIs.
 		"""
-		return time.time() < self._uiaProviderStallUntil
+		return time.monotonic() < self._uiaProviderStallUntil
 
 	def noteUIAClientJam(self, reason: str) -> None:
 		"""Record that the UIA client appears jammed and open the breaker.
@@ -1228,7 +1228,8 @@ class UIAHandler(COMObject):
 		few seconds. The backoff is reset by a fast successful call (see
 		L{timedUIAClientCall}).
 		"""
-		now = time.time()
+		# Monotonic: a wall-clock jump (NTP, VM resume) must not wedge the breaker.
+		now = time.monotonic()
 		wasJammed = now < self._uiaProviderStallUntil
 		self._uiaJamBackoff = min(
 			max(self._uiaJamBackoff * 2.0, self._UIA_JAM_BACKOFF_BASE),
@@ -1288,7 +1289,8 @@ class UIAHandler(COMObject):
 		client is jammed (see L{isUIAClientJammed}).
 		"""
 		CACHE_TTL = 30.0
-		now = time.time()
+		# Monotonic: keep this TTL immune to wall-clock jumps.
+		now = time.monotonic()
 		cached = self._hasServerSideProviderCache.get(hwnd)
 		if cached is not None and (now - cached[1]) <= CACHE_TTL:
 			if isDebug:
