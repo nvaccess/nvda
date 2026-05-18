@@ -348,25 +348,13 @@ def normalizeIAccessible(
 	return pacc
 
 
-#: Hard cap (seconds) on the cross-process MSAA AccessibleObjectFromEvent call.
-#: When a UIA application hangs it can entangle shell/ghost/CoreWindow windows
-#: that are not themselves flagged not-responding, so this MSAA call could block
-#: the core for tens of seconds (observed: 65s) until the watchdog cancelled it.
-#: A healthy call returns in well under this.
-_MSAA_EVENT_OBJECT_TIMEOUT = 0.5
-
-
 def accessibleObjectFromEvent(window, objectID, childID):
-	import watchdog
-
+	# NOTE: this must NOT be offloaded to a worker thread (e.g. via
+	# watchdog.cancellableExecute): MSAA IAccessible pointers are STA
+	# apartment-bound, so a pointer obtained on another apartment fails with
+	# RPC_E_WRONG_THREAD when used on the core thread, blanking every object.
 	try:
-		pacc, childID = watchdog.cancellableExecute(
-			oleacc.AccessibleObjectFromEvent,
-			window,
-			objectID,
-			childID,
-			ccTimeout=_MSAA_EVENT_OBJECT_TIMEOUT,
-		)
+		pacc, childID = oleacc.AccessibleObjectFromEvent(window, objectID, childID)
 	except Exception as e:
 		if isMSAADebugLoggingEnabled():
 			log.debugWarning(
