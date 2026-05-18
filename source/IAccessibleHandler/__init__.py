@@ -568,6 +568,9 @@ def winEventToNVDAEvent(  # noqa: C901
 	# that previously froze NVDA for several seconds on first contact, and on
 	# every subsequent interaction with the hung window).
 	if winUser.isHungAppWindow(window):
+		import coreThreadProtection
+
+		coreThreadProtection.noteAppHang()
 		if isMSAADebugLoggingEnabled():
 			log.debugWarning(
 				f"Hung application. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}",

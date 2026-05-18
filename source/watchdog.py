@@ -164,6 +164,9 @@ def _watcher():
 		if _isAlive():
 			continue
 		else:
+			import coreThreadProtection
+
+			coreThreadProtection.noteAppHang()
 			isAttemptingRecovery = True
 			waitForFreezeRecovery(waitedSince)
 			isAttemptingRecovery = False
@@ -339,7 +342,17 @@ class CancellableCallThread(threading.Thread):
 		self._executionDoneEvent = winBindings.kernel32.CreateEvent(None, False, False, None)
 		self.isUsable = True
 
-	def execute(self, func, *args, pumpMessages=True, **kwargs):
+	def execute(self, func, *args, pumpMessages=True, timeout=None, **kwargs):
+		"""Run C{func} on this background thread and wait for it.
+
+		@param timeout: If given, the maximum time in seconds the calling (core)
+			thread will wait. If the call has not returned by then it is abandoned
+			exactly like a watchdog cancellation (this thread is discarded and
+			C{CallCancelled} is raised), guaranteeing the core never blocks longer
+			than C{timeout} on a cross-process call. If C{None} (default), the
+			original behaviour is kept: wait indefinitely until the call returns or
+			the watchdog cancels it.
+		"""
 		fname = repr(func)
 		self.name = f"{self.__class__.__module__}.{self.execute.__qualname__}({fname})"
 		# Don't even bother making the call if the core is already dead.
@@ -358,7 +371,25 @@ class CancellableCallThread(threading.Thread):
 			_cancelCallEvent,
 		)
 		waitIndex = ctypes.wintypes.DWORD()
-		if pumpMessages:
+		if timeout is not None:
+			# Bounded wait: the core must never block longer than `timeout`.
+			# Use WaitForMultipleObjects (no message pump) so the timeout is
+			# detected cleanly; on timeout the call is abandoned exactly like a
+			# watchdog cancellation (the stuck thread is discarded).
+			WAIT_TIMEOUT = 0x102
+			waitIndex.value = winBindings.kernel32.WaitForMultipleObjects(
+				2,
+				waitHandles,
+				False,
+				int(timeout * 1000),
+			)
+			if waitIndex.value == WAIT_TIMEOUT:
+				import coreThreadProtection
+
+				coreThreadProtection.noteAppHang()
+				self.isUsable = False
+				raise exceptions.CallCancelled
+		elif pumpMessages:
 			winBindings.ole32.CoWaitForMultipleHandles(
 				0,
 				winKernel.INFINITE,
@@ -403,15 +434,20 @@ class CancellableCallThread(threading.Thread):
 cancellableCallThread = None
 
 
-def cancellableExecute(func, *args, ccPumpMessages=True, **kwargs):
+def cancellableExecute(func, *args, ccPumpMessages=True, ccTimeout=None, **kwargs):
 	"""Execute a function in the main thread, making it cancellable.
 	@param func: The function to execute.
 	@type func: callable
 	@param ccPumpMessages: Whether to pump messages while waiting.
 	@type ccPumpMessages: bool
+	@param ccTimeout: Optional maximum seconds the core will wait before
+		abandoning the call (see L{CancellableCallThread.execute}). Use this for
+		blocking cross-process calls (UIA, in-process app helpers, etc.) so a hung
+		application can never freeze the core for longer than this.
+	@type ccTimeout: float or None
 	@param args: Positional arguments for the function.
 	@param kwargs: Keyword arguments for the function.
-	@raise CallCancelled: If the call was cancelled.
+	@raise CallCancelled: If the call was cancelled or timed out.
 	"""
 	global cancellableCallThread
 	if not isRunning or _suspended or threading.current_thread() is not threading.main_thread():
@@ -423,7 +459,13 @@ def cancellableExecute(func, *args, ccPumpMessages=True, **kwargs):
 		# Create a new one.
 		cancellableCallThread = CancellableCallThread()
 		cancellableCallThread.start()
-	return cancellableCallThread.execute(func, *args, pumpMessages=ccPumpMessages, **kwargs)
+	return cancellableCallThread.execute(
+		func,
+		*args,
+		pumpMessages=ccPumpMessages,
+		timeout=ccTimeout,
+		**kwargs,
+	)
 
 
 def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):

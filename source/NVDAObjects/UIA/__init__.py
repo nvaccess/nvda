@@ -1485,11 +1485,25 @@ class UIA(Window):
 	def kwargsFromSuper(cls, kwargs, relation=None, ignoreNonNativeElementsWithFocus=True):
 		UIAElement = None
 		windowHandle = kwargs.get("windowHandle")
+		if UIAHandler.handler and UIAHandler.handler.isUIAClientJammed():
+			# A UIA provider is hung and the UIA client is serialised behind it, so
+			# any UIA call here would block. Skip UIA entirely so findBestAPIClass
+			# falls back to MSAA/Window and NVDA stays responsive (rather than
+			# freezing on every window/focus change) until the client recovers.
+			if UIAHandler._isDebug():
+				log.debug("kwargsFromSuper: UIA client jammed, falling back to non-UIA")
+			return False
 		if isinstance(relation, tuple):
-			UIAElement = UIAHandler.handler.clientObject.ElementFromPointBuildCache(
-				POINT(relation[0], relation[1]),
-				UIAHandler.handler.baseCacheRequest,
-			)
+			try:
+				UIAElement = UIAHandler.handler.timedUIAClientCall(
+					"ElementFromPointBuildCache",
+					UIAHandler.handler.clientObject.ElementFromPointBuildCache,
+					POINT(relation[0], relation[1]),
+					UIAHandler.handler.baseCacheRequest,
+				)
+			except Exception:
+				log.debugWarning("ElementFromPointBuildCache failed", exc_info=True)
+				return False
 			if UIAHandler._isDebug():
 				log.debug(
 					f"kwargsFromSuper: given coordinates {relation}, "
@@ -1506,10 +1520,12 @@ class UIA(Window):
 			kwargs["windowHandle"] = None
 		elif relation == "focus":
 			try:
-				UIAElement = UIAHandler.handler.clientObject.getFocusedElementBuildCache(
+				UIAElement = UIAHandler.handler.timedUIAClientCall(
+					"getFocusedElementBuildCache",
+					UIAHandler.handler.clientObject.getFocusedElementBuildCache,
 					UIAHandler.handler.baseCacheRequest,
 				)
-			except COMError:
+			except Exception:
 				log.debugWarning("getFocusedElement failed", exc_info=True)
 				return False
 			if UIAHandler._isDebug():
@@ -1527,10 +1543,16 @@ class UIA(Window):
 			# This object may be in a different window, so we need to recalculate the window handle.
 			kwargs["windowHandle"] = None
 		else:
-			UIAElement = UIAHandler.handler.clientObject.ElementFromHandleBuildCache(
-				windowHandle,
-				UIAHandler.handler.baseCacheRequest,
-			)
+			try:
+				UIAElement = UIAHandler.handler.timedUIAClientCall(
+					"ElementFromHandleBuildCache",
+					UIAHandler.handler.clientObject.ElementFromHandleBuildCache,
+					windowHandle,
+					UIAHandler.handler.baseCacheRequest,
+				)
+			except Exception:
+				log.debugWarning("ElementFromHandleBuildCache failed", exc_info=True)
+				return False
 		if not UIAElement:
 			return False
 		kwargs["UIAElement"] = UIAElement
