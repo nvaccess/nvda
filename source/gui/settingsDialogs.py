@@ -4389,6 +4389,15 @@ class AdvancedPanelControls(
 		)
 		self.bindHelpEvent("UIAEnhancedEventProcessing", self.enhancedEventProcessingComboBox)
 
+		# Translators: This is the label for a checkbox in the Advanced settings panel.
+		label = _("Ignore events from u&nresponsive applications")
+		self.ignoreHungWindowEventsCheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
+		self.bindHelpEvent("UIAIgnoreHungWindowEvents", self.ignoreHungWindowEventsCheckBox)
+		self.ignoreHungWindowEventsCheckBox.SetValue(config.conf["UIA"]["ignoreHungWindowEvents"])
+		self.ignoreHungWindowEventsCheckBox.defaultValue = self._getDefaultValue(
+			["UIA", "ignoreHungWindowEvents"],
+		)
+
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
 		label = _("Annotations")
@@ -4744,6 +4753,8 @@ class AdvancedPanelControls(
 			and self.consoleCombo.GetSelection() == self.consoleCombo.defaultValue
 			and self.UIAInChromiumCombo.GetSelection() == self.UIAInChromiumCombo.defaultValue
 			and self.enhancedEventProcessingComboBox.isValueConfigSpecDefault()
+			and self.ignoreHungWindowEventsCheckBox.IsChecked()
+			== self.ignoreHungWindowEventsCheckBox.defaultValue
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
 			and self.ariaDescCheckBox.IsChecked() == self.ariaDescCheckBox.defaultValue
 			and self.brailleLiveRegionsCombo.isValueConfigSpecDefault()
@@ -4778,6 +4789,7 @@ class AdvancedPanelControls(
 		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue)
 		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
 		self.enhancedEventProcessingComboBox.resetToConfigSpecDefault()
+		self.ignoreHungWindowEventsCheckBox.SetValue(self.ignoreHungWindowEventsCheckBox.defaultValue)
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
 		self.ariaDescCheckBox.SetValue(self.ariaDescCheckBox.defaultValue)
 		self.brailleLiveRegionsCombo.resetToConfigSpecDefault()
@@ -4823,6 +4835,7 @@ class AdvancedPanelControls(
 		self.speechDictsUseModernRegexCombo.saveCurrentValueToConf()
 		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
 		self.enhancedEventProcessingComboBox.saveCurrentValueToConf()
+		config.conf["UIA"]["ignoreHungWindowEvents"] = self.ignoreHungWindowEventsCheckBox.IsChecked()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["terminals"]["keyboardSupportInLegacy"] = self.keyboardSupportInLegacyCheckBox.IsChecked()
 		diffAlgoChoice = self.diffAlgoCombo.GetSelection()

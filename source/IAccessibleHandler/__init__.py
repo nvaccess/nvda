@@ -515,6 +515,12 @@ def accNavigate(pacc, childID, direction):
 		return None
 
 
+#: The window handle of the most recently announced not-responding (hung) window.
+#: Used to avoid repeating the "not responding" announcement on every dropped
+#: winEvent from the same hung window.
+_lastHungWindowAnnounced: int | None = None
+
+
 # C901 'winEventToNVDAEvent' is too complex
 # Note: when working on winEventToNVDAEvent, look for opportunities to simplify
 # and move logic out into smaller helper functions.
@@ -560,6 +566,48 @@ def winEventToNVDAEvent(  # noqa: C901
 				f"Ghosted hung window. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}",
 			)
 		return None
+	# If the owning application has stopped responding, drop the event. Building or
+	# announcing the object would make a synchronous cross-process call (e.g.
+	# IAccessible accParent during the focus ancestor walk) that blocks the core
+	# until the watchdog cancels it. This engages as soon as the system flags the
+	# app, without waiting for its DWM ghost window to be created (which is the gap
+	# that previously froze NVDA for several seconds on first contact, and on every
+	# subsequent interaction with the hung window).
+	if winUser.isHungAppWindow(window):
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Hung application. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}",
+			)
+		global _lastHungWindowAnnounced
+		if NVDAEventName == "gainFocus" and window != _lastHungWindowAnnounced:
+			# The heavy object pipeline is skipped above to avoid freezing, but the
+			# user should still be told focus moved to a not-responding window.
+			# InternalGetWindowText (winUser.getWindowText) reads the window-manager
+			# caption and does NOT send WM_GETTEXT, so it is safe on a hung window.
+			_lastHungWindowAnnounced = window
+			# Windows decorates a hung window's caption with its own localized
+			# not-responding indicator (e.g. "Title (Not Responding)"), and
+			# InternalGetWindowText returns that decorated caption without sending
+			# WM_GETTEXT, so it is both safe on a hung window and already conveys the
+			# state. Announce it as-is rather than appending a second indicator.
+			name = winUser.getWindowText(window)
+			if not name:
+				# Undecorated/empty caption (rare): fall back to the class name plus
+				# an explicit indicator so the state is still conveyed.
+				# Translators: Announced when focus moves to a window whose
+				# application has stopped responding.
+				name = _("{className} not responding").format(
+					className=winUser.getClassName(window),
+				)
+			import ui
+			import queueHandler
+
+			queueHandler.queueFunction(queueHandler.eventQueue, ui.message, name)
+		return None
+	elif _lastHungWindowAnnounced is not None and NVDAEventName == "gainFocus":
+		# Focus moved to a responsive window; allow the hung announcement to fire
+		# again next time the user returns to a not-responding window.
+		_lastHungWindowAnnounced = None
 	# We do not support MSAA object proxied from native UIA
 	if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window, isDebug=isMSAADebugLoggingEnabled()):
 		if isMSAADebugLoggingEnabled():

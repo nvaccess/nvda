@@ -22,6 +22,7 @@ from comtypes import (
 	IUnknown,
 )
 
+import functools
 import threading
 import time
 import IAccessibleHandler.internalWinEventHandler
@@ -300,6 +301,38 @@ def shouldUseUIAInMSWord(appModule: appModuleHandler.AppModule) -> bool:
 		return False
 	log.debug(f"Using UIA due to suitable Office version: {officeVersion}")
 	return True
+
+
+def _catchUIAEventHandlerCOMError(func):
+	"""Decorator that stops an unresponsive application from flooding NVDA via UIA.
+
+	UIA delivers events on a dedicated thread (or, with enhanced event processing, the
+	C++ rate-limiter's flusher thread), where the handler makes live cross-process COM
+	calls against the sender element. If the sending application has stopped responding,
+	those calls raise COMError; with no guard the exception propagates into comtypes,
+	which logs it at ERROR level once per queued event, flooding the log with hundreds
+	of identical tracebacks and leaving NVDA partially dead until the application is
+	killed.
+
+	Swallowing the COMError here and logging it once at debug level keeps a single
+	unresponsive application from taking NVDA down with it. This is a safety net in
+	addition to the up-front hung-window check in each handler (see
+	L{utils._shouldSkipEventForHungWindow}); it deliberately does not alter any
+	handler's normal control flow.
+	"""
+
+	@functools.wraps(func)
+	def wrapper(self, *args, **kwargs):
+		try:
+			return func(self, *args, **kwargs)
+		except COMError:
+			log.debug(
+				f"{func.__name__}: swallowed COMError "
+				"(the sending application is likely unresponsive)",
+				exc_info=_isDebug(),
+			)
+
+	return wrapper
 
 
 class UIAHandler(COMObject):
@@ -730,6 +763,7 @@ class UIAHandler(COMObject):
 
 		self.MTAThreadQueue.put_nowait(func)
 
+	@_catchUIAEventHandlerCOMError
 	def IUIAutomationEventHandler_HandleAutomationEvent(self, sender, eventID):
 		if _isDebug():
 			log.debug(
@@ -741,6 +775,10 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug("HandleAutomationEvent: event received while not fully initialized")
 			return
+		if utils._shouldSkipEventForHungWindow(sender):
+			if _isDebug():
+				log.debug("HandleAutomationEvent: dropping event; sender's application is not responding")
+			return
 		if eventID == UIA_MenuOpenedEventId and eventHandler.isPendingEvents("gainFocus"):  # noqa: F405
 			# We don't need the menuOpened event if focus has been fired,
 			# as focus should be more correct.
@@ -748,12 +786,16 @@ class UIAHandler(COMObject):
 				log.debug("HandleAutomationEvent: Ignored MenuOpenedEvent while focus event pending")
 			return
 		if eventID == UIA.UIA_Text_TextChangedEventId:
+			# Use the cached class name: NVDA registers every event handler group with
+			# baseCacheRequest, which caches UIA_ClassNamePropertyId, so this avoids a
+			# slow (and, for an unresponsive app, hanging) live cross-process fetch on
+			# this high-frequency text-change path.
 			if (
-				sender.currentClassName in textChangeUIAClassNames
+				sender.CachedClassName in textChangeUIAClassNames
 				or sender.CachedAutomationID in textChangeUIAAutomationIDs
 				or (
 					not utils._shouldUseWindowsTerminalNotifications()
-					and sender.currentClassName in windowsTerminalUIAClassNames
+					and sender.CachedClassName in windowsTerminalUIAClassNames
 				)
 			):
 				NVDAEventName = "textChange"
@@ -839,6 +881,7 @@ class UIAHandler(COMObject):
 	# This is updated no matter if this is a native element, the window is UIA blacklisted by NVDA, or  the element is proxied from MSAA
 	lastFocusedUIAElement = None
 
+	@_catchUIAEventHandlerCOMError
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self, sender):
 		if _isDebug():
 			log.debug(f"handleFocusChangedEvent called with element {self.getUIAElementDebugString(sender)}")
@@ -846,6 +889,10 @@ class UIAHandler(COMObject):
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleFocusChangedEvent: event received while not fully initialized")
+			return
+		if utils._shouldSkipEventForHungWindow(sender):
+			if _isDebug():
+				log.debug("HandleFocusChangedEvent: dropping event; sender's application is not responding")
 			return
 		self.lastFocusedUIAElement = sender
 		if not self.isNativeUIAElement(sender):
@@ -921,6 +968,7 @@ class UIAHandler(COMObject):
 			)
 		eventHandler.queueEvent("gainFocus", obj)
 
+	@_catchUIAEventHandlerCOMError
 	def IUIAutomationPropertyChangedEventHandler_HandlePropertyChangedEvent(
 		self,
 		sender,
@@ -940,6 +988,11 @@ class UIAHandler(COMObject):
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandlePropertyChangedEvent: event received while not fully initialized")
+			return
+		# Note: this is intentionally after the #3867 newValue.vt = VT_EMPTY workaround above.
+		if utils._shouldSkipEventForHungWindow(sender):
+			if _isDebug():
+				log.debug("HandlePropertyChangedEvent: dropping event; sender's application is not responding")
 			return
 		try:
 			processId = sender.CachedProcessID
@@ -1017,6 +1070,7 @@ class UIAHandler(COMObject):
 			)
 		eventHandler.queueEvent(NVDAEventName, obj)
 
+	@_catchUIAEventHandlerCOMError
 	def IUIAutomationNotificationEventHandler_HandleNotificationEvent(
 		self,
 		sender: UIA.IUIAutomationElement,
@@ -1038,6 +1092,10 @@ class UIAHandler(COMObject):
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleNotificationEvent: event received while not fully initialized")
+			return
+		if utils._shouldSkipEventForHungWindow(sender):
+			if _isDebug():
+				log.debug("HandleNotificationEvent: dropping event; sender's application is not responding")
 			return
 		# Sometimes notification events can be fired on a UIAElement that has no windowHandle
 		# and does not connect through parents back to the desktop.
@@ -1108,6 +1166,7 @@ class UIAHandler(COMObject):
 			activityId=activityId,
 		)
 
+	@_catchUIAEventHandlerCOMError
 	def IUIAutomationActiveTextPositionChangedEventHandler_HandleActiveTextPositionChangedEvent(
 		self,
 		sender,
@@ -1121,6 +1180,13 @@ class UIAHandler(COMObject):
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleActiveTextPositionchangedEvent: event received while not fully initialized")
+			return
+		if utils._shouldSkipEventForHungWindow(sender):
+			if _isDebug():
+				log.debug(
+					"HandleActiveTextPositionChangedEvent: dropping event; "
+					"sender's application is not responding",
+				)
 			return
 		import NVDAObjects.UIA
 
