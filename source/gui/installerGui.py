@@ -697,6 +697,9 @@ class PortableCreaterDialog(
 			)
 			return
 		expandedPortableDirectory = os.path.expandvars(self.portableDirectoryEdit.Value)
+		# Normalize the path first so that bare drive letters (e.g. "D:") become
+		# absolute paths ("D:\...") before the isabs check. (#20159)
+		expandedPortableDirectory = os.path.abspath(expandedPortableDirectory)
 		if not os.path.isabs(expandedPortableDirectory):
 			gui.messageBox(
 				_(
@@ -713,10 +716,6 @@ class PortableCreaterDialog(
 				wx.OK | wx.ICON_ERROR,
 			)
 			return
-		# isabs determines if the path is absolute, with or without a drive letter. abspath adds any missing initial
-		# components to that path to make it absolute from other contexts, by adding a drive letter/share path if
-		# needed. The OS's idea of the current drive is used, as in os.getcwd(). (#14681)
-		expandedPortableDirectory = os.path.abspath(expandedPortableDirectory)
 		if self.newFolderCheckBox.Value:
 			expandedPortableDirectory = _getUniqueNewPortableDirectory(expandedPortableDirectory)
 
