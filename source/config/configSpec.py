@@ -116,6 +116,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Magnifier settings
 [magnifier]
+	enabled = boolean(default=false)
 	magnifiedView = string(default="fullscreen")
 	zoomLevel = float(min=1.0, max=10.0, default=2.0)
 	isTrueCentered = boolean(default=False)

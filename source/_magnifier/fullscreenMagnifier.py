@@ -41,7 +41,6 @@ class FullScreenMagnifier(Magnifier):
 		self.currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
 		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
-		self._startMagnifier()
 
 	@Magnifier.filterType.setter
 	def filterType(self, value: Filter) -> None:

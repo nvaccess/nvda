@@ -152,7 +152,7 @@ Use the `speechDictHandler.types.EntryType` enumeration instead. (#19430, @Leona
 
 ## 2026.1.1
 
-This is a patch release to fix a security issue.
+This is a patch release to fix security issues.
 A bug fix is also included for an issue introduced in 2026.1 with how `ctrl+f` is handled in File Explorer.
 A change introduced in 2026.1 with how NVDA handles connection issues with Remote Access was removed.
 
@@ -170,7 +170,7 @@ Please responsibly disclose security issues following NVDA's [security policy](h
 ### Changes
 
 * Remote Access once again attempts automatic reconnection after a failed initial connection as the controlled computer, rather than failing immediately.
-  This means that headless or otherwise physically inaccessible machines configured to automatically connect at startup will be reachable once the network is available. (#20122)
+This means that headless or otherwise physically inaccessible machines configured to automatically connect at startup will be reachable once the network is available. (#20122)
 
 ### Changes for Developers
 

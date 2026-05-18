@@ -10,17 +10,17 @@ Contains the command functions and their logic for keyboard shortcuts.
 
 from typing import Literal
 import ui
-from . import getMagnifier, initialize, terminate, changeMagnifiedView
+from . import changeMagnifiedView, getMagnifier, start, stop
 from .config import (
 	getMagnifiedView,
 	setMagnifiedView,
 	getZoomLevelString,
 	getFilter,
-	getFullscreenMode,
-	ZoomLevel,
 	getFollowState,
+	getFullscreenMode,
 	setFollowState,
 	toggleAllFollowStates,
+	ZoomLevel,
 )
 from .magnifier import Magnifier
 from .fullscreenMagnifier import FullScreenMagnifier
@@ -89,7 +89,7 @@ def toggleMagnifier() -> None:
 	magnifier: Magnifier | None = getMagnifier()
 	if magnifier and magnifier._isActive:
 		# Stop magnifier
-		terminate()
+		stop()
 		ui.message(
 			pgettext(
 				"magnifier",
@@ -107,7 +107,7 @@ def toggleMagnifier() -> None:
 			),
 		)
 	else:
-		initialize()
+		start()
 		currentFilter = getFilter()
 		magnifiedView = getMagnifiedView()
 		zoomLevel = getZoomLevelString()
