@@ -22,7 +22,9 @@ def _makeCOMError() -> COMError:
 	# Mirrors the error seen when an unresponsive application's element is accessed:
 	# (-2147220991, 'An event was unable to invoke any of the subscribers', ...)
 	return COMError(
-		-2147220991, "An event was unable to invoke any of the subscribers", (None, None, None, 0, None)
+		-2147220991,
+		"An event was unable to invoke any of the subscribers",
+		(None, None, None, 0, None),
 	)
 
 

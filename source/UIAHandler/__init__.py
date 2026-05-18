@@ -973,7 +973,7 @@ class UIAHandler(COMObject):
 		if utils._shouldSkipEventForHungWindow(sender):
 			if _isDebug():
 				log.debug(
-					"HandlePropertyChangedEvent: dropping event; sender's application is not responding"
+					"HandlePropertyChangedEvent: dropping event; sender's application is not responding",
 				)
 			return
 		try:
@@ -1241,8 +1241,7 @@ class UIAHandler(COMObject):
 		coreThreadProtection.noteAppHang()
 		if not wasJammed:
 			log.debugWarning(
-				f"UIA client jammed ({reason}); using non-UIA fallbacks for up to "
-				f"{self._uiaJamBackoff:.0f}s",
+				f"UIA client jammed ({reason}); using non-UIA fallbacks for up to {self._uiaJamBackoff:.0f}s",
 			)
 
 	def timedUIAClientCall(self, description: str, func, *args, **kwargs):
