@@ -3945,7 +3945,10 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			name = brailleInput.BrailleInputGesture._get_displayName(self)
 			if name:
 				return name
-		return self.id
+		id = self.id
+		if "+" not in id and self.cellIndexes:  # Single routing identifier
+			id += "+".join(f"{i + 1}" for i in self.cellIndexes)
+		return id
 
 	def _get_scriptableObject(self):
 		display = handler.display
