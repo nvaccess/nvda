@@ -348,9 +348,25 @@ def normalizeIAccessible(
 	return pacc
 
 
+#: Hard cap (seconds) on the cross-process MSAA AccessibleObjectFromEvent call.
+#: When a UIA application hangs it can entangle shell/ghost/CoreWindow windows
+#: that are not themselves flagged not-responding, so this MSAA call could block
+#: the core for tens of seconds (observed: 65s) until the watchdog cancelled it.
+#: A healthy call returns in well under this.
+_MSAA_EVENT_OBJECT_TIMEOUT = 0.5
+
+
 def accessibleObjectFromEvent(window, objectID, childID):
+	import watchdog
+
 	try:
-		pacc, childID = oleacc.AccessibleObjectFromEvent(window, objectID, childID)
+		pacc, childID = watchdog.cancellableExecute(
+			oleacc.AccessibleObjectFromEvent,
+			window,
+			objectID,
+			childID,
+			ccTimeout=_MSAA_EVENT_OBJECT_TIMEOUT,
+		)
 	except Exception as e:
 		if isMSAADebugLoggingEnabled():
 			log.debugWarning(
