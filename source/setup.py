@@ -6,7 +6,7 @@
 from __future__ import annotations
 
 import argparse
-from ast import Assign, NodeTransformer, fix_missing_locations, parse
+from ast import AST, Assign, NodeTransformer, Try, fix_missing_locations, parse
 import os
 import sys
 import gettext
@@ -129,7 +129,7 @@ class _PyphenTransformer(NodeTransformer):
 		self.rewritten: bool = False
 		self.relpath = relpath
 
-	def visit_Try(self, node):
+	def visit_Try(self, node: Try) -> AST:
 		# Match the upstream try/except TypeError block whose first body statement
 		# is ``dictionaries = resources.files('pyphen.dictionaries')``.
 		firstStmt = node.body[0] if node.body else None
@@ -143,7 +143,7 @@ class _PyphenTransformer(NodeTransformer):
 			).body[0]
 			self.rewritten = True
 			return replacement
-		return node
+		return self.generic_visit(node)
 
 
 def _hook_pyphen(finder: Scanner, module: Module) -> None:
@@ -173,6 +173,7 @@ def _hook_pyphen(finder: Scanner, module: Module) -> None:
 	# Inject imports needed by the rewritten expression.
 	tree.body.insert(0, parse("import os").body[0])
 	tree.body.insert(0, parse("import sys").body[0])
+	tree.body.insert(0, parse("from pathlib import Path").body[0])
 	transformer = _PyphenTransformer(DEST_DIR)
 	newTree = fix_missing_locations(transformer.visit(tree))
 	if not transformer.rewritten:
