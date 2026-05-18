@@ -216,7 +216,15 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			attrs["detailsRoles"] = set(self._normalizeDetailsRole(detailsRoles))
 			if config.conf["debugLog"]["annotations"]:
 				log.debug(f"detailsRoles: {attrs['detailsRoles']}")
-		return super()._normalizeControlField(attrs)
+		attrs = super()._normalizeControlField(attrs)
+		# #17750: The table-id attribute from the buffer is just a unique id.
+		# However, the IAccessible NVDAObject specifies the tableID as
+		# (windowHandle, uniqueId). These need to be compatible for speech cache
+		# comparison lest we break row/column change detection.
+		tableID = attrs.get("table-id")
+		if tableID:
+			attrs["table-id"] = (int(attrs["controlIdentifier_docHandle"]), tableID)
+		return attrs
 
 	def _normalizeDetailsRole(self, detailsRoles: str) -> Iterable[Optional[controlTypes.Role]]:
 		"""
@@ -579,8 +587,7 @@ class Gecko_ia2(VirtualBuffer):
 	event_scrollingStart.ignoreIsReady = True
 
 	def _getTableCellAt(self, tableID, startPos, destRow, destCol):
-		docHandle = self.rootDocHandle
-		table = self.getNVDAObjectFromIdentifier(docHandle, tableID)
+		table = self.getNVDAObjectFromIdentifier(*tableID)
 		try:
 			try:
 				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(
