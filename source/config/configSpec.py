@@ -299,7 +299,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# 0:default (where suitable), 1:Only when necessary, 2: where suitable, 3: always
 	allowInMSWord = integer(0, 3, default=0)
 	enhancedEventProcessing = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
-	ignoreHungWindowEvents = boolean(default=true)
 
 [annotations]
 	reportDetails = boolean(default=true)

@@ -440,14 +440,9 @@ def _shouldSkipEventForHungWindow(sender: "UIAHandler.UIA.IUIAutomationElement")
 	elements blocks until the app is killed, raising a flood of COMErrors out of the
 	UIA event handlers and leaving NVDA partially dead. Detecting the hung window up
 	front (cheaply, from the cached handle) lets us drop the event before touching any
-	live property.
-
-	Gated by the C{UIA.ignoreHungWindowEvents} setting so it can be disabled if it ever
-	misclassifies a slow-but-alive app; the unconditional try/except guards in the
-	handlers remain as a safety net regardless of this setting.
+	live property. This mirrors the existing, unconditional ghost-window handling:
+	there is no legitimate reason to keep polling a not-responding window.
 	"""
-	if not config.conf["UIA"]["ignoreHungWindowEvents"]:
-		return False
 	try:
 		window = _getCachedWindowHandleFromEvent(sender)
 		if not window:

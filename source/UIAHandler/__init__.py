@@ -22,7 +22,6 @@ from comtypes import (
 	IUnknown,
 )
 
-import functools
 import threading
 import time
 import IAccessibleHandler.internalWinEventHandler
@@ -301,37 +300,6 @@ def shouldUseUIAInMSWord(appModule: appModuleHandler.AppModule) -> bool:
 		return False
 	log.debug(f"Using UIA due to suitable Office version: {officeVersion}")
 	return True
-
-
-def _catchUIAEventHandlerCOMError(func):
-	"""Decorator that stops an unresponsive application from flooding NVDA via UIA.
-
-	UIA delivers events on a dedicated thread (or, with enhanced event processing, the
-	C++ rate-limiter's flusher thread), where the handler makes live cross-process COM
-	calls against the sender element. If the sending application has stopped responding,
-	those calls raise COMError; with no guard the exception propagates into comtypes,
-	which logs it at ERROR level once per queued event, flooding the log with hundreds
-	of identical tracebacks and leaving NVDA partially dead until the application is
-	killed.
-
-	Swallowing the COMError here and logging it once at debug level keeps a single
-	unresponsive application from taking NVDA down with it. This is a safety net in
-	addition to the up-front hung-window check in each handler (see
-	L{utils._shouldSkipEventForHungWindow}); it deliberately does not alter any
-	handler's normal control flow.
-	"""
-
-	@functools.wraps(func)
-	def wrapper(self, *args, **kwargs):
-		try:
-			return func(self, *args, **kwargs)
-		except COMError:
-			log.debug(
-				f"{func.__name__}: swallowed COMError (the sending application is likely unresponsive)",
-				exc_info=_isDebug(),
-			)
-
-	return wrapper
 
 
 class UIAHandler(COMObject):
@@ -762,7 +730,6 @@ class UIAHandler(COMObject):
 
 		self.MTAThreadQueue.put_nowait(func)
 
-	@_catchUIAEventHandlerCOMError
 	def IUIAutomationEventHandler_HandleAutomationEvent(self, sender, eventID):
 		if _isDebug():
 			log.debug(
@@ -880,7 +847,6 @@ class UIAHandler(COMObject):
 	# This is updated no matter if this is a native element, the window is UIA blacklisted by NVDA, or  the element is proxied from MSAA
 	lastFocusedUIAElement = None
 
-	@_catchUIAEventHandlerCOMError
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self, sender):
 		if _isDebug():
 			log.debug(f"handleFocusChangedEvent called with element {self.getUIAElementDebugString(sender)}")
@@ -967,7 +933,6 @@ class UIAHandler(COMObject):
 			)
 		eventHandler.queueEvent("gainFocus", obj)
 
-	@_catchUIAEventHandlerCOMError
 	def IUIAutomationPropertyChangedEventHandler_HandlePropertyChangedEvent(
 		self,
 		sender,
@@ -1071,7 +1036,6 @@ class UIAHandler(COMObject):
 			)
 		eventHandler.queueEvent(NVDAEventName, obj)
 
-	@_catchUIAEventHandlerCOMError
 	def IUIAutomationNotificationEventHandler_HandleNotificationEvent(
 		self,
 		sender: UIA.IUIAutomationElement,
@@ -1167,7 +1131,6 @@ class UIAHandler(COMObject):
 			activityId=activityId,
 		)
 
-	@_catchUIAEventHandlerCOMError
 	def IUIAutomationActiveTextPositionChangedEventHandler_HandleActiveTextPositionChangedEvent(
 		self,
 		sender,

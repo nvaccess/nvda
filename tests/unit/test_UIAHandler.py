@@ -3,11 +3,10 @@
 # See the file COPYING for more details.
 # Copyright (C) 2026 NV Access Limited
 
-"""Unit tests for the UIAHandler hung-window guards.
+"""Unit tests for the UIAHandler hung-window guard.
 
-These cover the mechanism that stops an unresponsive application from making NVDA
-itself unresponsive or flooding the log with COMError tracebacks out of the UIA
-event handlers.
+These cover the mechanism that drops UIA events from a not-responding
+application so it cannot freeze NVDA or flood the log.
 """
 
 from unittest import TestCase
@@ -15,9 +14,7 @@ from unittest.mock import patch
 
 from comtypes import COMError
 
-import config
 import winUser
-from UIAHandler import _catchUIAEventHandlerCOMError
 from UIAHandler import utils
 
 
@@ -67,66 +64,19 @@ class Test_getCachedWindowHandleFromEvent(TestCase):
 
 
 class Test_shouldSkipEventForHungWindow(TestCase):
-	def setUp(self):
-		self._origSetting = config.conf["UIA"]["ignoreHungWindowEvents"]
-
-	def tearDown(self):
-		config.conf["UIA"]["ignoreHungWindowEvents"] = self._origSetting
-
-	def test_disabledByConfig(self):
-		config.conf["UIA"]["ignoreHungWindowEvents"] = False
-		with patch.object(winUser, "isHungAppWindow", side_effect=AssertionError("must not be called")):
-			self.assertFalse(utils._shouldSkipEventForHungWindow(_FakeElement(cachedHandle=1)))
-
 	def test_noWindowHandleIsNotSkipped(self):
-		config.conf["UIA"]["ignoreHungWindowEvents"] = True
 		with patch.object(winUser, "isHungAppWindow", side_effect=AssertionError("must not be called")):
 			self.assertFalse(utils._shouldSkipEventForHungWindow(_FakeElement(cachedHandle=0)))
 
 	def test_hungWindowIsSkipped(self):
-		config.conf["UIA"]["ignoreHungWindowEvents"] = True
 		with patch.object(winUser, "isHungAppWindow", return_value=True):
 			self.assertTrue(utils._shouldSkipEventForHungWindow(_FakeElement(cachedHandle=1)))
 
 	def test_respondingWindowIsNotSkipped(self):
-		config.conf["UIA"]["ignoreHungWindowEvents"] = True
 		with patch.object(winUser, "isHungAppWindow", return_value=False):
 			self.assertFalse(utils._shouldSkipEventForHungWindow(_FakeElement(cachedHandle=1)))
 
 	def test_guardNeverRaises(self):
-		config.conf["UIA"]["ignoreHungWindowEvents"] = True
 		with patch.object(winUser, "isHungAppWindow", side_effect=RuntimeError("boom")):
 			# A failure inside the guard itself must never escape into the COM handler.
 			self.assertFalse(utils._shouldSkipEventForHungWindow(_FakeElement(cachedHandle=1)))
-
-
-class Test_catchUIAEventHandlerCOMError(TestCase):
-	def test_comErrorIsSwallowed(self):
-		class Handler:
-			@_catchUIAEventHandlerCOMError
-			def IUIAutomationEventHandler_HandleAutomationEvent(self, sender, eventID):
-				raise _makeCOMError()
-
-		# Must not raise: this is what stops the flood out through comtypes.
-		self.assertIsNone(Handler().IUIAutomationEventHandler_HandleAutomationEvent(object(), 0))
-
-	def test_returnValueIsPreserved(self):
-		class Handler:
-			@_catchUIAEventHandlerCOMError
-			def IUIAutomationEventHandler_HandleAutomationEvent(self, sender, eventID):
-				return "ok"
-
-		self.assertEqual(
-			Handler().IUIAutomationEventHandler_HandleAutomationEvent(object(), 0),
-			"ok",
-		)
-
-	def test_nonCOMErrorStillRaises(self):
-		class Handler:
-			@_catchUIAEventHandlerCOMError
-			def IUIAutomationEventHandler_HandleAutomationEvent(self, sender, eventID):
-				raise ValueError("real bug")
-
-		# Only COMError is a safety-net concern; genuine bugs must not be hidden.
-		with self.assertRaises(ValueError):
-			Handler().IUIAutomationEventHandler_HandleAutomationEvent(object(), 0)

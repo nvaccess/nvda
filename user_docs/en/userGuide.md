@@ -4083,18 +4083,6 @@ Microsoft Excel's UI automation implementation is ever changing, and versions of
 When this option is enabled, NVDA should remain responsive when being flooded with many UI Automation events, e.g. large amounts of text in a terminal.
 After changing this option, you will need to restart NVDA for the change to take effect.
 
-##### Ignore events from unresponsive applications {#UIAIgnoreHungWindowEvents}
-
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Enabled, Disabled|
-|Default |Enabled|
-
-When this option is enabled, NVDA drops UI Automation events coming from an application that the system reports as not responding, until that application recovers.
-This prevents an unresponsive application from making NVDA itself unresponsive or causing it to stop reading correctly.
-It is recommended to leave this option enabled.
-Disable it only if you find that NVDA is failing to read an application which is slow but still working.
-
 ##### Windows Console support {#AdvancedSettingsConsoleUIA}
 
 | . {.hideHeaderRow} |.|
