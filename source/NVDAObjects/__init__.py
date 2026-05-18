@@ -269,7 +269,7 @@ class NVDAObject(
 		import winUser
 
 		windowHandle = getattr(self, "windowHandle", 0)
-		if not windowHandle or not winUser.isHungAppWindow(windowHandle):
+		if not windowHandle or not winUser.isWindowOfHungApp(windowHandle):
 			return super()._getPropertyViaCache(getterMethod)
 		# This object belongs to a not-responding application: serve the last
 		# known value if cached, otherwise degrade to None without calling in.

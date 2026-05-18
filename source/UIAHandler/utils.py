@@ -447,7 +447,7 @@ def _shouldSkipEventForHungWindow(sender: "UIAHandler.UIA.IUIAutomationElement")
 		window = _getCachedWindowHandleFromEvent(sender)
 		if not window:
 			return False
-		return winUser.isHungAppWindow(window)
+		return winUser.isWindowOfHungApp(window)
 	except Exception:
 		# Never let the guard itself raise into the COM event handler.
 		return False

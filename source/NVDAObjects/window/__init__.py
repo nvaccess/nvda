@@ -37,7 +37,7 @@ def isUsableWindow(windowHandle):
 	# (which otherwise freeze the core until the watchdog cancels them ~6s later),
 	# and so child windows of the hung app (which have no ghost of their own) are
 	# also covered.
-	if winUser.isHungAppWindow(windowHandle):
+	if winUser.isWindowOfHungApp(windowHandle):
 		return False
 	return True
 
@@ -94,7 +94,7 @@ class Window(NVDAObject):
 		# API (UIA/MSAA/JAB) would make a synchronous cross-process call that blocks
 		# until the app recovers. Falling back to a plain Window object here keeps NVDA
 		# responsive instead of freezing the core until the watchdog intervenes.
-		if winUser.isHungAppWindow(windowHandle):
+		if winUser.isWindowOfHungApp(windowHandle):
 			return
 		if windowClassName == "EXCEL7" and (relation == "focus" or isinstance(relation, tuple)):
 			from . import excel

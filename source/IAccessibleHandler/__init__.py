@@ -583,7 +583,7 @@ def winEventToNVDAEvent(  # noqa: C901
 	# without waiting for its DWM ghost window to be created (which is the gap
 	# that previously froze NVDA for several seconds on first contact, and on
 	# every subsequent interaction with the hung window).
-	if winUser.isHungAppWindow(window):
+	if winUser.isWindowOfHungApp(window):
 		import coreThreadProtection
 
 		coreThreadProtection.noteAppHang()
