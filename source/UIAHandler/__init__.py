@@ -957,7 +957,7 @@ class UIAHandler(COMObject):
 		if utils._shouldSkipEventForHungWindow(sender):
 			if _isDebug():
 				log.debug(
-					"HandlePropertyChangedEvent: dropping event; sender's application is not responding"
+					"HandlePropertyChangedEvent: dropping event; sender's application is not responding",
 				)
 			return
 		try:
