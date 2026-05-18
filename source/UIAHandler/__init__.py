@@ -327,8 +327,7 @@ def _catchUIAEventHandlerCOMError(func):
 			return func(self, *args, **kwargs)
 		except COMError:
 			log.debug(
-				f"{func.__name__}: swallowed COMError "
-				"(the sending application is likely unresponsive)",
+				f"{func.__name__}: swallowed COMError (the sending application is likely unresponsive)",
 				exc_info=_isDebug(),
 			)
 
@@ -992,7 +991,9 @@ class UIAHandler(COMObject):
 		# Note: this is intentionally after the #3867 newValue.vt = VT_EMPTY workaround above.
 		if utils._shouldSkipEventForHungWindow(sender):
 			if _isDebug():
-				log.debug("HandlePropertyChangedEvent: dropping event; sender's application is not responding")
+				log.debug(
+					"HandlePropertyChangedEvent: dropping event; sender's application is not responding"
+				)
 			return
 		try:
 			processId = sender.CachedProcessID
