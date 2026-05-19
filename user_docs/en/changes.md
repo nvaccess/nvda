@@ -11,8 +11,8 @@ Touch support has been significantly expanded with new pinch gestures and touch-
 You can now navigate between links, headings, form fields, and other elements using touch flicks.
 
 Speech features have been enhanced with support for custom speech dictionaries that can be provided by add-ons and new dictionary entry types for more granular control.
-A new voice setting for OneCore voices was added to control pauses after punctuation
-A new command allows repeating the last spoken information, with the ability to display it in a browseable message.
+A new voice setting for OneCore voices was added to control pauses after punctuation.
+A new command allows repeating the last spoken information, with the ability to display it in a browsable message.
 
 The braille display can now automatically scroll and DotPad devices support multi-button combinations.
 
@@ -106,7 +106,6 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 * Clarified NV Access's policy on API breaking changes in the [Developer Guide](https://download.nvaccess.org/documentation/developerGuide.html#API). (#19599)
 * Updated components:
-  * Python from 3.13.11 to 3.13.12. (#19572, @dpy013)
   * Ruff to 0.15.9. (#19736, #19908)
   * uv to 0.11.7. (#19736, #19908, #19968)
   * Requests to 2.33.0. (#19877)
