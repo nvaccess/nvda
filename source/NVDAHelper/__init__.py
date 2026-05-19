@@ -196,6 +196,16 @@ def nvdaController_brailleMessage(text: str) -> SystemErrorCodes:
 	return SystemErrorCodes.SUCCESS
 
 
+@WINFUNCTYPE(c_long, POINTER(c_bool))
+def nvdaController_isSpeaking(isSpeaking):
+	if not isSpeaking:
+		return SystemErrorCodes.INVALID_PARAMETER
+	import speech
+
+	isSpeaking[0] = speech.isSpeaking()
+	return SystemErrorCodes.SUCCESS
+
+
 def _lookupKeyboardLayoutNameWithHexString(layoutString):
 	buf = create_unicode_buffer(1024)
 	bufSize = c_ulong(2048)
@@ -787,6 +797,7 @@ def initialize() -> None:
 		("nvdaController_speakSsml", nvdaController_speakSsml),
 		("nvdaController_cancelSpeech", nvdaController_cancelSpeech),
 		("nvdaController_brailleMessage", nvdaController_brailleMessage),
+		("nvdaController_isSpeaking", nvdaController_isSpeaking),
 		("nvdaControllerInternal_requestRegistration", nvdaControllerInternal_requestRegistration),
 		("nvdaControllerInternal_reportLiveRegion", nvdaControllerInternal_reportLiveRegion),
 		("nvdaControllerInternal_inputLangChangeNotify", nvdaControllerInternal_inputLangChangeNotify),
