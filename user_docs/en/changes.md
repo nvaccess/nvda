@@ -2,47 +2,71 @@
 
 ## 2026.2
 
+This release includes a new built-in Magnifier feature, improvements to touch gestures and navigation, and expanded speech and braille capabilities.
+
+The Magnifier provides zoom and color filtering options to assist users with visual impairments.
+The Magnifier currently only supports fullscreen mode, with docked modes planned in a future release.
+
+Touch support has been significantly expanded with new pinch gestures and touch-based browse mode navigation for web content.
+You can now navigate between links, headings, form fields, and other elements using touch flicks.
+
+Speech features have been enhanced with support for custom speech dictionaries that can be provided by add-ons and new dictionary entry types for more granular control.
+A new voice setting for OneCore voices was added to control pauses after punctuation
+A new command allows repeating the last spoken information, with the ability to display it in a browseable message.
+
+The braille display can now automatically scroll and DotPad devices support multi-button combinations.
+
+Liblouis has been updated with new Italian and Estonian braille tables.
+
+When resetting NVDA to factory defaults, an Undo button is now available to restore the previous configuration.
+
 ### Important notes
 
 ### New Features
 
-* Added pinch in and pinch out touch gestures, allowing two-finger pinch gestures to be bound to scripts. (#19938, @kefaslungu)
-* Added the ability to automatically scroll the braille display. (#18573, @nvdaes)
-* After installing or updating NVDA, a dialog now offers options to restart Windows, start the installed copy, or exit the installer. (#19268, #19718, @kefaslungu)
-* NVDA now includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen. (#19228, @Boumtchack)
+* Magnifier:
+  * NVDA now includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen. (#19228, @Boumtchack)
   * The magnifier supports various zoom levels, color filters (normal, grayscale, inverted), and different focus tracking modes.
   * Color filters can help users with visual impairments or light sensitivity by inverting or desaturating screen colors.
   * A spotlight mode is available for presentations or focused reading tasks.
   * All magnifier settings can be configured in a new "Magnifier" panel in NVDA Settings.
   * The magnifier cannot be used simultaneously with Screen Curtain for security reasons.
-* A new command, assigned to `NVDA+x`, has been introduced to repeat the last information spoken by NVDA; pressing it twice shows it in a browseable message. (#625, @CyrilleB79)
+* Speech:
+  * A new voice setting "Natural pause after punctuation" was added for OneCore voices, allowing users to turn punctuation pauses on or off. (#11876, @gexgd0419)
+  * A new command, assigned to `NVDA+x`, has been introduced to repeat the last information spoken by NVDA; pressing it twice shows it in a browseable message. (#625, @CyrilleB79)
+* Braille:
+  * Added the ability to automatically scroll the braille display. (#18573, @nvdaes)
+  * DotPad braille displays now support multi-button combination gestures. (#19565, @bramd)
+    * You can now press multiple buttons simultaneously to create custom gestures (e.g., `f1+panLeft`).
+* Touch:
+  * Added pinch in and pinch out touch gestures, allowing two-finger pinch gestures to be bound to scripts. (#19938, @kefaslungu)
+  * Added touch based navigation of browse mode elements, allowing touch screen users to move between links, headings, form fields, lists, tables and other quick navigation elements. (#3424, @kefaslungu)
+    * Flick down or up to cycle through element types; flick right or left to navigate between elements of the selected type.
+    * The element types shown when cycling can be configured in the Browse Mode settings panel.
+* Speech dictionaries:
+  * Added support for custom speech dictionaries. (#19558, #17468, @LeonarddeR)
+    * Dictionaries can be provided in the `speechDicts` folder in an add-on package.
+    * Dictionary metadata can be added to an optional `speechDictionaries` section in the add-on manifest.
+    * Please consult the [Custom speech dictionaries section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSpeechDictionaries) for more details.
+  * New types have been added for speech dictionary entries, such as part of word and start of word.
+  Consult the speech dictionaries section in the User Guide for more details. (#19506, @LeonarddeR)
+* After installing or updating NVDA, a dialog now offers options to restart Windows, start the installed copy, or exit the installer. (#19268, #19718, @kefaslungu)
 * Added an unassigned command to toggle keyboard layout. (#19211, @CyrilleB79)
 * Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @tareh7z)
-* Added touch based navigation of browse mode elements, allowing touch screen users to move between links, headings, form fields, lists, tables and other quick navigation elements. (#3424, @kefaslungu)
-  * Flick down or up to cycle through element types; flick right or left to navigate between elements of the selected type.
-  * The element types shown when cycling can be configured in the Browse Mode settings panel.
-* Added support for custom speech dictionaries. (#19558, #17468, @LeonarddeR)
-  * Dictionaries can be provided in the `speechDicts` folder in an add-on package.
-  * Dictionary metadata can be added to an optional `speechDictionaries` section in the add-on manifest.
-  * Please consult the [Custom speech dictionaries section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSpeechDictionaries) for more details.
-* New types have been added for Speech Dictionary entries, such as part of word and start of word.
-Consult the speech dictionaries section in the User Guide for more details. (#19506, @LeonarddeR)
 * When resetting the configuration to factory defaults from the NVDA menu, a dialog is now shown afterwards with an Undo button to restore the previous configuration.
 The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is intended for recovery scenarios. (#19575, @bramd)
 * Added an unassigned command to report the current status of the Screen Curtain. (#19759)
-* DotPad braille displays now support multi-button combination gestures. (#19565, @bramd)
-  * You can now press multiple buttons simultaneously to create custom gestures (e.g., `f1+panLeft`).
-* A new voice setting "Natural pause after punctuation" was added for OneCore voices, allowing users to turn punctuation pauses on or off. (#11876, @gexgd0419)
 
 ### Changes
 
-* When NVDA is started, if the screen curtain is enabled and a sound is played to inform about this, the state of the screen curtain will be also displayed in braille. (19441, @nvdaes)
 * Updated Liblouis Braille translator to [3.37.0](https://github.com/liblouis/liblouis/releases/tag/v3.37.0). (#19758, @codeofdusk)
   * Added new Italian and Estonian 6 dot tables.
+* Braille:
+  * When NVDA is started, if the screen curtain is enabled and a sound is played to inform about this, the state of the screen curtain will be also displayed in braille. (#19441, @nvdaes)
+  * NVDA now supports the Orbit Reader 40 in its proprietary HID mode. (#19756, @trypsynth)
 * It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)
 * Improved search algorithm for filtering add-ons in the Add-on Store. (#19309)
 * NVDA can now be configured to not play error sounds, even in test versions. (#13021, @CyrilleB79)
-* NVDA now supports the Orbit Reader 40 in its proprietary HID mode. (#19756, @trypsynth)
 * NVDA will start in focus mode by default when using WhatsApp 2.2584.3.0 or newer. (#19655, @josephsl)
 * Input help mode has been improved: (#17629, @Cary-rowen, @Emil-18)
   * When a key combination would produce a character in normal input mode, the key combination is reported first, followed by the character.
@@ -57,6 +81,10 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 
 ### Bug Fixes
 
+* Add-on Store:
+  * NVDA no longer crashes when the Add-on Store download directory cannot be cleaned up due to file permission errors. (#19202, @christopherpross)
+  * After cancelling an add-on download and reopening the Add-on Store, downloading another add-on no longer fails. (#20015, @Cary-rowen)
+  * Configuration profile triggers now activate when the Add-on Store is open. (#19583, @bramd)
 * Fixed an error that could occur when NVDA checked whether a language is supported for a synthesizer with invalid languages. (#20080, @nvdaes)
 * NVDA will attempt to recover more quickly from freezes in some applications, especially those written in Java. (#14396, @thgcode)
 * In Firefox browse mode, the accessible name of form controls (such as checkboxes and radio buttons) is now correctly announced when the control has an `aria-label` and an associated `<label>` element that contains only `aria-hidden` content. (#19409, @bramd)
@@ -66,12 +94,9 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 * Braille should no longer stop following focus when moving around in the Microsoft Copilot application. (#19646, @Emil-18)
 * The `NVDA+k` command now correctly reports the destination of links containing formatted text, such as bold or italics. (#19428, @Cary-rowen)
 * Capital indicators are now correctly announced when selecting single characters. (#19505, @cary-rowen)
-* Configuration profile triggers now activate when the Add-on Store is open. (#19583, @bramd)
-* After cancelling an add-on download and reopening the Add-on Store, downloading another add-on no longer fails. (#20015, @Cary-rowen)
 * In File Explorer, pressing `ctrl+f` once again focuses the search box without subsequently reporting a pane. (#20021, @Cary-rowen)
 * MathML in Chromium is more reliably read after NVDA starts or restarts. (#19813, @RyanMcCleary)
 * Decorative Unicode letters such as negative squared, negative circled, and regional indicator symbol characters are now normalized to their base Latin letters when Unicode normalization is enabled. (#19608, @bramd)
-* NVDA no longer crashes when the Add-on Store download directory cannot be cleaned up due to file permission errors. (#19202, @christopherpross)
 * Fixed NVDA freezing when navigating in JetBrains IDEs. (#16741, @christopherpross)
 * Speech dictionary entries of type Whole word now correctly handle words containing Unicode combining marks (e.g. Hebrew niqqud, Arabic harakat). (#20013, @LeonarddeR)
   * In particular, Whole word entries no longer incorrectly match inside larger words when those words contain combining marks.
@@ -79,6 +104,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+This section has been thoroughly updated in this release.
 
 * Updated components:
   * Python from 3.13.11 to 3.13.12. (#19572, @dpy013)
@@ -100,7 +126,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 It only ran the translation string comment check, which is equivalent to `scons checkPot`.
 The `scons checkPot` target has also been replaced with `runcheckpot.bat`.
 Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`, `runsystemtests.bat`, `runlint.bat`. (#19606, #19676, @bramd)
-* Updated Python 3.13.11 to 3.13.12 (#19572, @dpy013)
+* Updated Python 3.13.11 to 3.13.12. (#19572, @dpy013)
 * Added a private `_asyncioEventLoop` module that provides an asyncio event loop running on a background thread for use by NVDA components. (#19816, @bramd)
 * Added several functions related to the braille auto-scroll feature. (#18573, @nvdaes):
   * Added an `autoScroll` method to `braille.handler`.
