@@ -54,7 +54,7 @@ When resetting NVDA to factory defaults, an Undo button is now available to rest
 * Added an unassigned command to toggle keyboard layout. (#19211, @CyrilleB79)
 * Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @tareh7z)
 * When resetting the configuration to factory defaults from the NVDA menu, a dialog is now shown afterwards with an Undo button to restore the previous configuration.
-The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is intended for recovery scenarios. (#19575, @bramd)
+The triple-press keyboard shortcut (`NVDA+control+r`) is not affected, as it is intended for recovery scenarios. (#19575, @bramd)
 * Added an unassigned command to report the current status of the Screen Curtain. (#19759)
 
 ### Changes
@@ -94,7 +94,6 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 * Braille should no longer stop following focus when moving around in the Microsoft Copilot application. (#19646, @Emil-18)
 * The `NVDA+k` command now correctly reports the destination of links containing formatted text, such as bold or italics. (#19428, @Cary-rowen)
 * Capital indicators are now correctly announced when selecting single characters. (#19505, @cary-rowen)
-* In File Explorer, pressing `ctrl+f` once again focuses the search box without subsequently reporting a pane. (#20021, @Cary-rowen)
 * MathML in Chromium is more reliably read after NVDA starts or restarts. (#19813, @RyanMcCleary)
 * Decorative Unicode letters such as negative squared, negative circled, and regional indicator symbol characters are now normalized to their base Latin letters when Unicode normalization is enabled. (#19608, @bramd)
 * Fixed NVDA freezing when navigating in JetBrains IDEs. (#16741, @christopherpross)
