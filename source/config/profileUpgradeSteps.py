@@ -694,7 +694,7 @@ def upgradeConfigFrom_22_to_23(profile: ConfigObj) -> None:
 	"""
 	If the wordWrap braille config flag is explicitly set in a profile,
 	set the new text wrap option to word boundaries,
-	rather than the new default of word or syllable boundaries.
+	rather than the new default of at word boundaries.
 	"""
 	section = "braille"
 	key = "wordWrap"
