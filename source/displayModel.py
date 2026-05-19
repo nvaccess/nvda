@@ -530,7 +530,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	charSegFlag = CharSegFlag.NONE
 
 	@property
-	def wordSegFlag(self):
+	def wordSegFlag(self) -> WordSegFlag:
 		return WordSegFlag.NONE
 
 	def _getTextRange(self, start, end):

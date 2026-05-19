@@ -14,15 +14,15 @@ _CHINESE: int = 1 << 2
 class CharSegFlag(IntFlag):
 	"""Character-level segmentation flags."""
 
-	NONE: int = 0
-	AUTO: int = _AUTO
-	UNISCRIBE: int = _UNISCRIBE
+	NONE = 0
+	AUTO = _AUTO
+	UNISCRIBE = _UNISCRIBE
 
 
 class WordSegFlag(IntFlag):
 	"""Word-level segmentation flags."""
 
-	NONE: int = 0
-	AUTO: int = _AUTO
-	UNISCRIBE: int = _UNISCRIBE
-	CHINESE: int = _CHINESE
+	NONE = 0
+	AUTO = _AUTO
+	UNISCRIBE = _UNISCRIBE
+	CHINESE = _CHINESE

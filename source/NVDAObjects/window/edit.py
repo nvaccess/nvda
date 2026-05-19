@@ -168,7 +168,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 	charSegFlag = CharSegFlag.UNISCRIBE
 
 	@property
-	def wordSegFlag(self):
+	def wordSegFlag(self) -> WordSegFlag:
 		return WordSegFlag.UNISCRIBE
 
 	def _getPointFromOffset(self, offset):

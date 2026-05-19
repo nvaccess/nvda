@@ -142,6 +142,11 @@ class FontFormattingBrailleModeFlag(DisplayStringEnum):
 class WordNavigationUnitFlag(DisplayStringEnum):
 	"""Enumeration for word navigation."""
 
+	DEFAULT = enum.auto()
+	AUTO = enum.auto()
+	UNISCRIBE = enum.auto()
+	CHINESE = enum.auto()
+
 	@property
 	def _displayStringLabels(self):
 		return {
@@ -152,11 +157,6 @@ class WordNavigationUnitFlag(DisplayStringEnum):
 			# Translators: Label for a method of word segmentation.
 			self.CHINESE: _("Chinese"),
 		}
-
-	DEFAULT = enum.auto()
-	AUTO = enum.auto()
-	UNISCRIBE = enum.auto()
-	CHINESE = enum.auto()
 
 
 def getAvailableEnums() -> typing.Generator[typing.Tuple[str, FlagValueEnum], None, None]:

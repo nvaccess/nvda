@@ -72,6 +72,7 @@ from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverS
 from utils.security import objectBelowLockScreenAndWindowsIsLocked, post_sessionLockStateChanged
 from winAPI.secureDesktop import post_secureDesktopStateChange
 from textUtils import isUnicodeNormalized, OffsetConverter, UnicodeNormalizationOffsetConverter
+from textUtils.wordSeg.wordSegUtils import WordSegWithSeparatorOffsetConverter
 import hwIo
 from editableText import EditableText
 from gui.guiHelper import wxCallOnMain
@@ -539,6 +540,21 @@ def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 	return displayList
 
 
+def _applyOffsetConverter(
+	converter: OffsetConverter,
+	textToTranslateTypeforms: list[int] | None,
+	cursorPos: int | None,
+) -> tuple[str, list[int] | None, int | None]:
+	if textToTranslateTypeforms is not None:
+		textToTranslateTypeforms = [
+			textToTranslateTypeforms[typing.cast(int, converter.encodedToStrOffsets(encodedOffset))]
+			for encodedOffset in range(converter.encodedStringLength)
+		]
+	if cursorPos is not None:
+		cursorPos = typing.cast(int, converter.strToEncodedOffsets(cursorPos))
+	return typing.cast(str, getattr(converter, "encoded")), textToTranslateTypeforms, cursorPos
+
+
 class Region(object):
 	"""A region of braille to be displayed.
 	Each portion of braille to be displayed is represented by a region.
@@ -605,28 +621,26 @@ class Region(object):
 		textToTranslateTypeforms = self.rawTextTypeforms
 		cursorPos = self.cursorPos
 
-		def _applyConverter(converter: OffsetConverter) -> None:
-			nonlocal cursorPos, textToTranslate, textToTranslateTypeforms
-			if textToTranslateTypeforms is not None:
-				textToTranslateTypeforms = [
-					textToTranslateTypeforms[converter.encodedToStrOffsets(encodedOffset)]
-					for encodedOffset in range(converter.encodedStringLength)
-				]
-			if cursorPos is not None:
-				cursorPos = converter.strToEncodedOffsets(cursorPos)
-			textToTranslate = converter.encoded
-			converters.append(converter)
-
 		if (
 			config.conf["braille"]["translationTable"].startswith("zh")
 			or config.conf["braille"]["translationTable"] == "auto"
 			and brailleTables.getDefaultTableForCurLang(brailleTables.TableType.OUTPUT).startswith("zh")
 		):
-			from textUtils.wordSeg.wordSegUtils import WordSegWithSeparatorOffsetConverter  # noqa: F401
-
-			_applyConverter(WordSegWithSeparatorOffsetConverter(textToTranslate))
+			converter = WordSegWithSeparatorOffsetConverter(textToTranslate)
+			textToTranslate, textToTranslateTypeforms, cursorPos = _applyOffsetConverter(
+				converter,
+				textToTranslateTypeforms,
+				cursorPos,
+			)
+			converters.append(converter)
 		if config.conf["braille"]["unicodeNormalization"] and not isUnicodeNormalized(textToTranslate):
-			_applyConverter(UnicodeNormalizationOffsetConverter(textToTranslate))
+			converter = UnicodeNormalizationOffsetConverter(textToTranslate)
+			textToTranslate, textToTranslateTypeforms, cursorPos = _applyOffsetConverter(
+				converter,
+				textToTranslateTypeforms,
+				cursorPos,
+			)
+			converters.append(converter)
 		self.brailleCells, brailleToRawPos, rawToBraillePos, self.brailleCursorPos = louisHelper.translate(
 			[handler.table.fileName, "braille-patterns.cti"],
 			textToTranslate,

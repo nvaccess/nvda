@@ -4,10 +4,27 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import importlib
+import threading
+from collections.abc import Callable
+from typing import Any
+
 from logHandler import log
 
 
-def initialize():
+def _runInitializer(
+	initializer: Callable[..., Any],
+	module_name: str,
+	qualname: str,
+	args: tuple[Any, ...],
+	kwargs: dict[str, Any],
+) -> None:
+	try:
+		initializer(*args, **kwargs)
+	except Exception:
+		log.exception(f"Initializer {module_name}.{qualname} failed")
+
+
+def initialize() -> None:
 	"""
 	Call all registered initializer functions recorded in wordSegStrategy.initializerList.
 
@@ -20,12 +37,11 @@ def initialize():
 	failing initializer doesn't stop the rest.
 	"""
 
+	log.debug("Initializing word segmentation module")
 	from . import wordSegStrategy
-	from threading import Thread
 
 	for module_name, qualname, func_obj, args, kwargs in wordSegStrategy.initializerList:
-		callable_to_call = None
-		# try to resolve module + qualname to a current attribute (handles classmethod/staticmethod)
+		callable_to_call: Callable[..., Any] = func_obj
 		try:
 			mod = importlib.import_module(module_name)
 			obj = mod
@@ -33,13 +49,19 @@ def initialize():
 				obj = getattr(obj, part)
 			callable_to_call = obj
 		except Exception:
-			# fallback to original function object captured during decoration
-			callable_to_call = func_obj
+			log.debugWarning(
+				f"Could not resolve initializer {module_name}.{qualname}; falling back to the registered function",
+				exc_info=True,
+			)
 
-		# Final call with its args/kwargs and exception handling
+		if not callable(callable_to_call):
+			log.debugWarning(f"Resolved initializer {module_name}.{qualname} is not callable; skipping")
+			continue
 		try:
-			if not callable(callable_to_call):
-				raise TypeError(f"Resolved initializer is not callable: {module_name}.{qualname}")
-			Thread(target=callable_to_call, args=args, kwargs=kwargs, daemon=True).start()
-		except Exception as e:
-			log.debug("Initializer %s.%s failed: %s", module_name, qualname, e)
+			threading.Thread(
+				target=_runInitializer,
+				args=(callable_to_call, module_name, qualname, args, kwargs),
+				daemon=True,
+			).start()
+		except Exception:
+			log.exception(f"Failed to start initializer {module_name}.{qualname}")
