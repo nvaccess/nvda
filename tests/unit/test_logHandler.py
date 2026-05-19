@@ -16,7 +16,7 @@ import logHandler
 class TestLoggerSecretRedaction(unittest.TestCase):
 	def setUp(self):
 		self.logger = logHandler.Logger("testLogHandler")
-		self.logger.setLevel(logging.NOTSET)
+		self.logger.setLevel(logging.INFO)
 		self.logger.parent = None
 
 	def test_logWithoutRedactionPassesMessageAndArgsThrough(self):
