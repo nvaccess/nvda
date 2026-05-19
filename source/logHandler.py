@@ -699,7 +699,14 @@ def setLogLevelFromConfig():
 	level = logging.getLevelNamesMapping().get(levelName)
 	# The lone exception to level higher than INFO is "OFF" (100).
 	# Setting a log level to something other than options found in the GUI is unsupported.
-	if level is None or level not in (log.DEBUG_UNREDACTED, log.DEBUG, log.IO, log.DEBUGWARNING, log.INFO, log.OFF):
+	if level is None or level not in (
+		log.DEBUG_UNREDACTED,
+		log.DEBUG,
+		log.IO,
+		log.DEBUGWARNING,
+		log.INFO,
+		log.OFF,
+	):
 		log.warning("invalid setting for logging level: %s" % levelName)
 		level = log.INFO
 		config.conf["general"]["loggingLevel"] = logging.getLevelName(log.INFO)
