@@ -26,12 +26,11 @@ class TestWindowBrailleCells(unittest.TestCase):
 		braille.filter_displayDimensions.unregister(_getDisplayDimensions)
 
 	def test_continuationRow_hasContinuationShape(self):
-		"""A row present in _continuationRows gets CONTINUATION_SHAPE as its last cell."""
+		"""A row with hasContinuation=True gets CONTINUATION_SHAPE as its last cell."""
 		buffer = braille.handler.buffer
 		# 15 real cells in row 0, remainder will be padded; row index 0 is marked.
 		buffer.brailleCells = [1] * 15 + [1] * 5
-		buffer._windowRowBufferOffsets = [(0, 15), (15, 20)]
-		buffer._continuationRows = [0]
+		buffer._windowRowBufferOffsets = [(0, 15, True), (15, 20, False)]
 		cells = buffer.windowBrailleCells
 		# First row: 15 real cells, then CONTINUATION_SHAPE, then 4 padding zeroes.
 		self.assertEqual(len(cells), 40)
@@ -39,11 +38,10 @@ class TestWindowBrailleCells(unittest.TestCase):
 		self.assertEqual(cells[16:20], [0, 0, 0, 0])
 
 	def test_nonContinuationRow_lastCellIsZero(self):
-		"""A row absent from _continuationRows has padding zero, not CONTINUATION_SHAPE."""
+		"""A row with hasContinuation=False has padding zero, not CONTINUATION_SHAPE."""
 		buffer = braille.handler.buffer
 		buffer.brailleCells = [1] * 15 + [1] * 5
-		buffer._windowRowBufferOffsets = [(0, 15), (15, 20)]
-		buffer._continuationRows = []
+		buffer._windowRowBufferOffsets = [(0, 15, False), (15, 20, False)]
 		cells = buffer.windowBrailleCells
 		# No continuation marker anywhere; positions 15..19 of row 0 should all be 0.
 		self.assertEqual(cells[15:20], [0, 0, 0, 0, 0])

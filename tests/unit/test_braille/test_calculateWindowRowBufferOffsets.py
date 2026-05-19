@@ -44,31 +44,31 @@ class TestCalculate(unittest.TestCase):
 		_setTextWrap(BrailleTextWrapFlag.NONE)
 
 	def test_noCells(self):
-		"""Check that, if list of braille cells is empty, offsets will be (0, 0)."""
+		"""Check that, if list of braille cells is empty, offsets will be (0, 0, False)."""
 		braille.handler.buffer.brailleCells = []
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
-		expectedOffsets = [(0, 0)]
+		expectedOffsets = [(0, 0, False)]
 		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, expectedOffsets)
 
 	def test_firstPosition(self):
 		"""Checks that first offset is equal to start parameter."""
 		braille.handler.buffer.brailleCells = [1] * braille.handler.displaySize
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
-		expectedOffsets = [(0, 20), (20, 40)]
+		expectedOffsets = [(0, 20, False), (20, 40, False)]
 		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, expectedOffsets)
 		braille.handler.buffer._calculateWindowRowBufferOffsets(1)
-		expectedOffsets = [(1, 21), (21, 40)]
+		expectedOffsets = [(1, 21, False), (21, 40, False)]
 		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, expectedOffsets)
 
 	def test_end(self):
 		"""Check that last row offset won't be greater than length of list of braille cells."""
 		braille.handler.buffer.brailleCells = [1] * (braille.handler.displaySize - 10)
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
-		expectedOffsets = [(0, 20), (20, 30)]
+		expectedOffsets = [(0, 20, False), (20, 30, False)]
 		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, expectedOffsets)
 		braille.handler.buffer.brailleCells = [1] * braille.handler.displaySize
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
-		expectedOffsets = [(0, 20), (20, 40)]
+		expectedOffsets = [(0, 20, False), (20, 40, False)]
 		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, expectedOffsets)
 
 	def test_textWrapFirstRowWithSpace(self):
@@ -79,11 +79,11 @@ class TestCalculate(unittest.TestCase):
 		cells.extend([1] * (braille.handler.displayDimensions.numCols + 4))
 		braille.handler.buffer.brailleCells = cells
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
-		expectedOffsets = [(0, 16), (16, 35)]
+		expectedOffsets = [(0, 16, False), (16, 35, True)]
 		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, expectedOffsets)
 		_setTextWrap(BrailleTextWrapFlag.NONE)
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
-		expectedOffsets = [(0, 20), (20, 40)]
+		expectedOffsets = [(0, 20, False), (20, 40, False)]
 		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, expectedOffsets)
 
 	def test_textWrapSecondRowStartsWithSpace(self):
@@ -94,7 +94,7 @@ class TestCalculate(unittest.TestCase):
 		cells.extend([1] * (braille.handler.displayDimensions.numCols - 1))
 		braille.handler.buffer.brailleCells = cells
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
-		expectedOffsets = [(0, 20), (20, 40)]
+		expectedOffsets = [(0, 20, False), (20, 40, False)]
 		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, expectedOffsets)
 		_setTextWrap(BrailleTextWrapFlag.NONE)
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
@@ -106,8 +106,8 @@ class TestCalculate(unittest.TestCase):
 		# 25 consecutive non-zero cells: no space anywhere in the first row.
 		braille.handler.buffer.brailleCells = [1] * 25
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
-		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, [(0, 20), (20, 25)])
-		self.assertEqual(braille.handler.buffer._continuationRows, [])
+		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, [(0, 20, False), (20, 25, False)])
+		self.assertFalse(any(cont for _, _, cont in braille.handler.buffer._windowRowBufferOffsets))
 
 	def test_markWordCuts_oneCellEarlierAndMarksRow(self):
 		"""MARK_WORD_CUTS cuts one cell earlier than NONE and records the row in _continuationRows."""
@@ -115,8 +115,8 @@ class TestCalculate(unittest.TestCase):
 		braille.handler.buffer.brailleCells = [1] * 25
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
 		# With MARK_WORD_CUTS, the end is pulled back by 1 to leave room for the marker.
-		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets[0], (0, 19))
-		self.assertIn(0, braille.handler.buffer._continuationRows)
+		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets[0], (0, 19, True))
+		self.assertTrue(braille.handler.buffer._windowRowBufferOffsets[0][2])
 
 	def test_markWordCuts_cleanRowHasNoMarker(self):
 		"""MARK_WORD_CUTS does not mark a row that ends naturally at a space."""
@@ -125,7 +125,7 @@ class TestCalculate(unittest.TestCase):
 		cells = [1] * 19 + [0] + [1] * 10
 		braille.handler.buffer.brailleCells = cells
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
-		self.assertNotIn(0, braille.handler.buffer._continuationRows)
+		self.assertFalse(braille.handler.buffer._windowRowBufferOffsets[0][2])
 
 	def test_atWordBoundaries_noSpaceInWindowMarksCut(self):
 		"""AT_WORD_BOUNDARIES with no whitespace in the window hard-cuts AND marks the row."""
@@ -133,5 +133,5 @@ class TestCalculate(unittest.TestCase):
 		# No zero anywhere in row 0; the `rindex` call raises and falls through.
 		braille.handler.buffer.brailleCells = [1] * 25
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
-		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets[0], (0, 19))
-		self.assertIn(0, braille.handler.buffer._continuationRows)
+		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets[0], (0, 19, True))
+		self.assertTrue(braille.handler.buffer._windowRowBufferOffsets[0][2])

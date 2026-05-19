@@ -1838,14 +1838,12 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		#: The translated braille representation of the entire buffer.
 		#: @type: [int, ...]
 		self.brailleCells = []
-		self._windowRowBufferOffsets: list[tuple[int, int]] = [(0, 0)]
+		self._windowRowBufferOffsets: list[tuple[int, int, bool]] = [(0, 0, False)]
 		"""
 		A list representing the rows in the braille window,
-		each item being a tuple of start and end braille buffer offsets.
+		each item being a tuple of start and end braille buffer offsets and a bool indicating whether a continuation mark should appear.
 		Splitting the window into independent rows allows for optional avoidance of splitting words across rows.
 		"""
-		self._continuationRows: list[int] = []
-		"""A list of row indexes which should contain a continuation indicator at the end."""
 
 	def clear(self):
 		"""Clear the entire buffer.
@@ -1962,7 +1960,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		:param bufferPos: The position relative to the braille buffer.
 		:return: The position relative to the braille window.
 		"""
-		for row, (start, end) in enumerate(self._windowRowBufferOffsets):
+		for row, (start, end, _) in enumerate(self._windowRowBufferOffsets):
 			if start <= bufferPos < end:
 				return row * self.handler.displayDimensions.numCols + (bufferPos - start)
 		raise LookupError("buffer pos not in window")
@@ -1976,7 +1974,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		windowPos = max(min(windowPos, self.handler.displaySize), 0)
 		row, col = divmod(windowPos, self.handler.displayDimensions.numCols)
 		if row < len(self._windowRowBufferOffsets):
-			start, end = self._windowRowBufferOffsets[row]
+			start, end, _ = self._windowRowBufferOffsets[row]
 			return max(min(start + col, end - 1), 0)
 		raise ValueError("Position outside window")
 
@@ -1989,6 +1987,10 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 	def _set_windowStartPos(self, pos: int) -> None:
 		self._calculateWindowRowBufferOffsets(pos)
 
+	def _isMidWordCut(self, end: int, bufferEnd: int) -> bool:
+		"""Return True when the cut at `end` falls in the middle of a word (both adjacent cells are non-space)."""
+		return end < bufferEnd and all(self.brailleCells[end - 1 : end + 1])
+
 	def _calculateWindowRowBufferOffsets(self, pos: int) -> None:
 		"""
 		Calculates the start and end positions of each row in the braille window.
@@ -1997,10 +1999,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		:param pos: The start position of the braille window.
 		"""
 		self._windowRowBufferOffsets.clear()
-		self._continuationRows.clear()
 		if len(self.brailleCells) == 0:
 			# Initialising with no actual braille content.
-			self._windowRowBufferOffsets = [(0, 0)]
+			self._windowRowBufferOffsets = [(0, 0, False)]
 			return
 		textWrap: BrailleTextWrapFlag = config.conf["braille"]["textWrap"].calculated()
 		bufferEnd = len(self.brailleCells)
@@ -2012,28 +2013,22 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			if end > bufferEnd:
 				end = bufferEnd
 				clippedEnd = True
-			elif (
-				textWrap == BrailleTextWrapFlag.MARK_WORD_CUTS
-				and end < bufferEnd
-				and all(self.brailleCells[end - 1 : end + 1])
-			):
+			elif textWrap == BrailleTextWrapFlag.MARK_WORD_CUTS and self._isMidWordCut(end, bufferEnd):
 				end -= 1
 				showContinuationMark = True
 			elif textWrap == BrailleTextWrapFlag.AT_WORD_BOUNDARIES:
 				try:
 					lastSpaceIndex = rindex(self.brailleCells, 0, start, end + 1)
 					if lastSpaceIndex < end:
-						# The next braille window doesn't start with space.
-						end = rindex(self.brailleCells, 0, start, end) + 1
+						# lastSpaceIndex < end proves brailleCells[end] is non-zero,
+						# so searching [start, end) yields the same lastSpaceIndex.
+						end = lastSpaceIndex + 1
 				except (ValueError, IndexError):
 					# No space on line - fall back to display-edge cut.
-					if all(self.brailleCells[end - 1 : end + 1]):
-						if end - start == self.handler.displayDimensions.numCols and end < bufferEnd:
-							end -= 1
-							showContinuationMark = True
-			if showContinuationMark:
-				self._continuationRows.append(len(self._windowRowBufferOffsets))
-			self._windowRowBufferOffsets.append((start, end))
+					if self._isMidWordCut(end, bufferEnd):
+						end -= 1
+						showContinuationMark = True
+			self._windowRowBufferOffsets.append((start, end, showContinuationMark))
 			if clippedEnd:
 				break
 			start = end
@@ -2042,7 +2037,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 	"""The end position of the braille window in the braille buffer."""
 
 	def _get_windowEndPos(self) -> int:
-		start, end = self._windowRowBufferOffsets[-1]
+		start, end, _ = self._windowRowBufferOffsets[-1]
 		return end
 
 	def _set_windowEndPos(self, endPos: int) -> None:
@@ -2197,10 +2192,10 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 
 	def _get_windowBrailleCells(self) -> list[int]:
 		windowCells = []
-		for row, (start, end) in enumerate(self._windowRowBufferOffsets):
+		for row, (start, end, hasCont) in enumerate(self._windowRowBufferOffsets):
 			rowCells = self.brailleCells[start:end]
 			remaining = self.handler.displayDimensions.numCols - len(rowCells)
-			if remaining > 0 and row in self._continuationRows:
+			if remaining > 0 and hasCont:
 				rowCells.append(CONTINUATION_SHAPE)
 				remaining -= 1
 			if remaining > 0:
