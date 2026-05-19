@@ -32,7 +32,7 @@ class CursorManager(CursorManager):
 	TextInfo = CursorManagerTextInfo
 
 
-def _segmentedTextWithSeparator(_sep: str, newSepIndex: list[int]) -> str:
+def _segmentedTextWithSeparator(sep: str, newSepIndex: list[int]) -> str:
 	newSepIndex.append(1)
 	return "你 ℌ"
 
