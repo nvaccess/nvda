@@ -6,6 +6,10 @@
 
 ### New Features
 
+* Chinese text can now be navigated by word using built-in input gestures.
+  Several GUI elements were added to configure this in the `Document Navigation` panel. (#18735, @CrazySteve0605)
+* Braille output for Chinese now includes spaces between words. (#18865, @CrazySteve0605)
+
 ### Changes
 
 ### Bug Fixes
@@ -15,6 +19,8 @@
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* Added [cppjieba](https://github.com/yanyiwu/cppjieba) as a git submodule for Chinese word segmentation. (#18548, @CrazySteve0605)
 
 #### Deprecations
 
@@ -50,9 +56,6 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 Consult the speech dictionaries section in the User Guide for more details. (#19506, @LeonarddeR)
 * When resetting the configuration to factory defaults from the NVDA menu, a dialog is now shown afterwards with an Undo button to restore the previous configuration.
 The triple-press keyboard shortcut (`NVDA+ctrl+r`) is not affected, as it is intended for recovery scenarios. (#19575, @bramd)
-* Chinese text can now be navigated by word using built-in input gestures.
-  Several GUI elements were added to configure this in the `Document Navigation` panel. (#18735, @CrazySteve0605)
-* Braille output for Chinese now includes spaces between words. (#18865, @CrazySteve0605)
 * Added an unassigned command to report the current status of the Screen Curtain. (#19759)
 * DotPad braille displays now support multi-button combination gestures. (#19565, @bramd)
   * You can now press multiple buttons simultaneously to create custom gestures (e.g., `f1+panLeft`).
@@ -125,7 +128,6 @@ It only ran the translation string comment check, which is equivalent to `scons 
 The `scons checkPot` target has also been replaced with `runcheckpot.bat`.
 Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`, `runsystemtests.bat`, `runlint.bat`. (#19606, #19676, @bramd)
 * Updated Python 3.13.11 to 3.13.12 (#19572, @dpy013)
-* Added [cppjieba](https://github.com/yanyiwu/cppjieba) as a git submodule for Chinese word segmentation. (#18548, @CrazySteve0605)
 * Added a private `_asyncioEventLoop` module that provides an asyncio event loop running on a background thread for use by NVDA components. (#19816, @bramd)
 * Added several functions related to the braille auto-scroll feature. (#18573, @nvdaes):
   * Added an `autoScroll` method to `braille.handler`.
