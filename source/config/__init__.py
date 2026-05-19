@@ -375,7 +375,7 @@ def _setSystemConfig(
 		else:
 			relativePath = os.path.relpath(curSourceDir, fromPath)
 			curDestDir = os.path.join(toPath, relativePath)
-			if not isMigration and relativePath == "addons":
+			if not isMigration and relativePath.casefold() == "addons":
 				_prepareToCopyAddons(fromPath, toPath, subDirs, addonsToCopy)
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
