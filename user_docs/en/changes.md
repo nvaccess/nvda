@@ -39,7 +39,7 @@ When resetting NVDA to factory defaults, an Undo button is now available to rest
   * DotPad braille displays now support multi-button combination gestures. (#19565, @bramd)
     * You can now press multiple buttons simultaneously to create custom gestures (e.g., `f1+panLeft`).
 * Touch:
-  * Added pinch in and pinch out touch gestures, allowing two-finger pinch gestures to be bound to scripts. (#19938, @kefaslungu)
+  * Added pinch in and pinch out touch gestures, allowing two-finger pinch gestures to be bound to scripts. (#19963, @kefaslungu)
   * Added touch based navigation of browse mode elements, allowing touch screen users to move between links, headings, form fields, lists, tables and other quick navigation elements. (#3424, @kefaslungu)
     * Flick down or up to cycle through element types; flick right or left to navigate between elements of the selected type.
     * The element types shown when cycling can be configured in the Browse Mode settings panel.
@@ -68,14 +68,14 @@ The triple-press keyboard shortcut (`NVDA+control+r`) is not affected, as it is 
 * Improved search algorithm for filtering add-ons in the Add-on Store. (#19309)
 * NVDA can now be configured to not play error sounds, even in test versions. (#13021, @CyrilleB79)
 * NVDA will start in focus mode by default when using WhatsApp 2.2584.3.0 or newer. (#19655, @josephsl)
-* Input help mode has been improved: (#17629, @Cary-rowen, @Emil-18)
+* Input help mode has been improved: (#6621, @Cary-rowen, @Emil-18)
   * When a key combination would produce a character in normal input mode, the key combination is reported first, followed by the character.
   * If the key combination corresponds to an NVDA command, the behavior remains the same as before, i.e. the description of the command is reported.
 * Product version for File Explorer will reflect actual Windows version including correct build and revision numbers.
 This is more noticeable for Windows releases which are enablement packages on top of an earlier release such as Windows 11 2025 Update based on Windows 11 2024 Update. (#19802, @josephsl)
 * Math navigation commands now support input help, on-demand speech mode, and can be remapped. (#19871, @RyanMcCleary)
 * The "COM Registration Fixing Tool" has been renamed to "System Accessibility Repair Tool" for clarity. (#19622, @bramd)
-* Added an advanced setting to opt regular expression speech dictionary entries into a more modern `[regex](https://pypi.org/project/regex/)` engine.
+* Added an advanced setting to opt regular expression speech dictionary entries into a more modern [`regex`](https://pypi.org/project/regex/) engine.
 This provides Unicode-aware `\w` and `\b` and additional regex features.
 The setting is disabled by default. (#20013, @LeonarddeR)
 
@@ -94,7 +94,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 * Braille should no longer stop following focus when moving around in the Microsoft Copilot application. (#19646, @Emil-18)
 * The `NVDA+k` command now correctly reports the destination of links containing formatted text, such as bold or italics. (#19428, @Cary-rowen)
 * Capital indicators are now correctly announced when selecting single characters. (#19505, @cary-rowen)
-* MathML in Chromium is more reliably read after NVDA starts or restarts. (#19813, @RyanMcCleary)
+* MathML in Chromium is more reliably read after NVDA starts or restarts. (#20049, @RyanMcCleary)
 * Decorative Unicode letters such as negative squared, negative circled, and regional indicator symbol characters are now normalized to their base Latin letters when Unicode normalization is enabled. (#19608, @bramd)
 * Fixed NVDA freezing when navigating in JetBrains IDEs. (#16741, @christopherpross)
 * Speech dictionary entries of type Whole word now correctly handle words containing Unicode combining marks (e.g. Hebrew niqqud, Arabic harakat). (#20013, @LeonarddeR)
@@ -103,31 +103,29 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
-This section has been thoroughly updated in this release.
 
+* Clarified NV Access's policy on API breaking changes in the [Developer Guide](https://download.nvaccess.org/documentation/developerGuide.html#API). (#19599)
 * Updated components:
   * Python from 3.13.11 to 3.13.12. (#19572, @dpy013)
-  * Ruff to 0.15.9. (#19548, #19908)
-  * uv to 0.11.7. (#19548, #19908, #19968)
+  * Ruff to 0.15.9. (#19736, #19908)
+  * uv to 0.11.7. (#19736, #19908, #19968)
   * Requests to 2.33.0. (#19877)
   * cryptography to 46.0.7. (#19877, #19968)
 * A new parameter `redactSecrets` has been added to logging functions e.g. `log.debug`. (#19966)
   * When set to `True`, logging output will be sanitized to replace detected secrets with asterisks.
   * This is set to `False` by default for performance purposes.
   * It is encouraged to enable this when logging anything particularly sensitive e.g. clipboard content.
-  * Added a `SECRETS` logging level for cases where developers explicitly need debug logging without `redactSecrets` masking. (#19966)
+  * Added a `SECRETS` logging level for cases where developers explicitly need debug logging without `redactSecrets` masking.
 * NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)
 * Subclasses of `browseMode.BrowseModeDocumentTreeInterceptor` that support screen layout being on and off should override the `_toggleScreenLayout` method, rather than implementing `script_toggleScreenLayout` directly. (#19487)
-* A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handleCOMErrors`. (#19646, @Emil-18)
+* A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handleCOMErrors`. (#19713, @Emil-18)
   * This method calls `_getUIACacheablePropertyValue`, and takes an extra argument (`onError`) that specifies the value that should be returned if a `COMError` is raised.
-* Clarified NV Access's policy on API breaking changes in the Developer Guide. (#19599)
 * The `scons tests` build target has been removed, as it was misleadingly named.
 It only ran the translation string comment check, which is equivalent to `scons checkPot`.
 The `scons checkPot` target has also been replaced with `runcheckpot.bat`.
 Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`, `runsystemtests.bat`, `runlint.bat`. (#19606, #19676, @bramd)
-* Updated Python 3.13.11 to 3.13.12. (#19572, @dpy013)
 * Added a private `_asyncioEventLoop` module that provides an asyncio event loop running on a background thread for use by NVDA components. (#19816, @bramd)
-* Added several functions related to the braille auto-scroll feature. (#18573, @nvdaes):
+* Added several functions related to the braille auto-scroll feature. (#19126, @nvdaes):
   * Added an `autoScroll` method to `braille.handler`.
   * Added several functions for handling configuration value conversions and updates in `config.conf`:
     * Added a `getConfigValue` function to get the value for a provided configuration key path.
