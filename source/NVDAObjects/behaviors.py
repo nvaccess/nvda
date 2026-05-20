@@ -29,7 +29,7 @@ import braille
 import core
 import nvwave
 import globalVars
-from typing import List, Union
+from typing import List, Union, optional
 import diffHandler
 from config.configFlags import (
 	TypingEcho,
@@ -391,7 +391,7 @@ class LiveText(NVDAObject):
 		self._event = threading.Event()
 		self._monitorThread = None
 		self._keepMonitoring = False
-		self._reportNewLinesGenID = None
+		self._reportNewLinesGenID: optional[int] = None
 		pre_speechCanceled.register(self._onSpeechCanceled)
 
 	def startMonitoring(self):
