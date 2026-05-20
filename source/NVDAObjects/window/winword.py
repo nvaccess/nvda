@@ -1072,14 +1072,30 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			formatConfigFlags &= ~formatConfigFlagsMap["reportRevisions"]
 		if self.obj.ignorePageNumbers:
 			formatConfigFlags &= ~formatConfigFlagsMap["reportPage"]
-		res = NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(
-			self.obj.appModule.helperLocalBindingHandle,
-			self.obj.documentWindowHandle,
-			startOffset,
-			endOffset,
-			formatConfigFlags,
-			ctypes.byref(text),
-		)
+		# This call reaches into Word's process. If Word is busy/hung (e.g. a huge
+		# "delete all text" on a very large document) it would otherwise block
+		# NVDA's core indefinitely. Run it via the watchdog's cancellable thread
+		# with a hard cap so the core stays responsive and we degrade gracefully.
+		import watchdog
+		import exceptions
+
+		try:
+			res = watchdog.cancellableExecute(
+				NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange,
+				self.obj.appModule.helperLocalBindingHandle,
+				self.obj.documentWindowHandle,
+				startOffset,
+				endOffset,
+				formatConfigFlags,
+				ctypes.byref(text),
+				ccTimeout=2.0,
+			)
+		except exceptions.CallCancelled:
+			import coreThreadProtection
+
+			coreThreadProtection.noteAppHang()
+			log.debugWarning("winword_getTextInRange cancelled; Word is not responding")
+			return [self.text]
 		if res or not text:
 			log.debugWarning("winword_getTextInRange failed with %d" % res)
 			return [self.text]

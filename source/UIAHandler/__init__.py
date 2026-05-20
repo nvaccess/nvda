@@ -33,6 +33,7 @@ from config import (
 import api
 import appModuleHandler
 import controlTypes
+import exceptions
 import globalVars
 from winBindings import user32
 import winBindings.ole32
@@ -523,6 +524,21 @@ class UIAHandler(COMObject):
 			self.windowCacheRequest = self.clientObject.CreateCacheRequest()
 			self.windowCacheRequest.AddProperty(UIA_NativeWindowHandlePropertyId)  # noqa: F405
 			self.UIAWindowHandleCache = {}
+			#: Long-lived per-window-handle cache of UiaHasServerSideProvider results.
+			#: Whether a window exposes a UIA server-side provider is effectively fixed
+			#: for the window's lifetime, but that call is a blocking cross-process UIA
+			#: call that stalls the core when the UIA subsystem is busy/unresponsive
+			#: (e.g. a very large Word document or a paste storm flooding winEvents).
+			#: isUIAWindow() revalidates only every 0.5s, so without this the blocking
+			#: call was being made repeatedly under load. Maps hwnd -> (result, time).
+			self._hasServerSideProviderCache = {}
+			#: Circuit breaker: while > now, the UIA subsystem is treated as jammed by
+			#: a hung provider and the blocking UiaHasServerSideProvider call is
+			#: skipped (see _getCachedHasServerSideProvider).
+			self._uiaProviderStallUntil = 0.0
+			#: Current jam cooldown length (seconds); grows with exponential backoff
+			#: on consecutive jams and resets to 0 on a fast successful UIA call.
+			self._uiaJamBackoff = 0.0
 			self.baseTreeWalker = self.clientObject.RawViewWalker
 			self.baseCacheRequest = self.windowCacheRequest.Clone()
 			for propertyId in baseCachePropertyIDs:
@@ -741,6 +757,10 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug("HandleAutomationEvent: event received while not fully initialized")
 			return
+		if utils._shouldSkipEventForHungWindow(sender):
+			if _isDebug():
+				log.debug("HandleAutomationEvent: dropping event; sender's application is not responding")
+			return
 		if eventID == UIA_MenuOpenedEventId and eventHandler.isPendingEvents("gainFocus"):  # noqa: F405
 			# We don't need the menuOpened event if focus has been fired,
 			# as focus should be more correct.
@@ -748,12 +768,16 @@ class UIAHandler(COMObject):
 				log.debug("HandleAutomationEvent: Ignored MenuOpenedEvent while focus event pending")
 			return
 		if eventID == UIA.UIA_Text_TextChangedEventId:
+			# Use the cached class name: NVDA registers every event handler group with
+			# baseCacheRequest, which caches UIA_ClassNamePropertyId, so this avoids a
+			# slow (and, for an unresponsive app, hanging) live cross-process fetch on
+			# this high-frequency text-change path.
 			if (
-				sender.currentClassName in textChangeUIAClassNames
+				sender.CachedClassName in textChangeUIAClassNames
 				or sender.CachedAutomationID in textChangeUIAAutomationIDs
 				or (
 					not utils._shouldUseWindowsTerminalNotifications()
-					and sender.currentClassName in windowsTerminalUIAClassNames
+					and sender.CachedClassName in windowsTerminalUIAClassNames
 				)
 			):
 				NVDAEventName = "textChange"
@@ -846,6 +870,10 @@ class UIAHandler(COMObject):
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleFocusChangedEvent: event received while not fully initialized")
+			return
+		if utils._shouldSkipEventForHungWindow(sender):
+			if _isDebug():
+				log.debug("HandleFocusChangedEvent: dropping event; sender's application is not responding")
 			return
 		self.lastFocusedUIAElement = sender
 		if not self.isNativeUIAElement(sender):
@@ -940,6 +968,13 @@ class UIAHandler(COMObject):
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandlePropertyChangedEvent: event received while not fully initialized")
+			return
+		# Note: this is intentionally after the #3867 newValue.vt = VT_EMPTY workaround above.
+		if utils._shouldSkipEventForHungWindow(sender):
+			if _isDebug():
+				log.debug(
+					"HandlePropertyChangedEvent: dropping event; sender's application is not responding",
+				)
 			return
 		try:
 			processId = sender.CachedProcessID
@@ -1039,6 +1074,10 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug("HandleNotificationEvent: event received while not fully initialized")
 			return
+		if utils._shouldSkipEventForHungWindow(sender):
+			if _isDebug():
+				log.debug("HandleNotificationEvent: dropping event; sender's application is not responding")
+			return
 		# Sometimes notification events can be fired on a UIAElement that has no windowHandle
 		# and does not connect through parents back to the desktop.
 		# #17841: yet messages such as window restored/maximized coming from File Explorer (Windows shell)
@@ -1122,6 +1161,13 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug("HandleActiveTextPositionchangedEvent: event received while not fully initialized")
 			return
+		if utils._shouldSkipEventForHungWindow(sender):
+			if _isDebug():
+				log.debug(
+					"HandleActiveTextPositionChangedEvent: dropping event; "
+					"sender's application is not responding",
+				)
+			return
 		import NVDAObjects.UIA
 
 		try:
@@ -1145,6 +1191,127 @@ class UIAHandler(COMObject):
 				f"for NVDAObject {obj}",
 			)
 		eventHandler.queueEvent("UIA_activeTextPositionChanged", obj, textRange=textRange)
+
+	#: First cooldown (seconds) applied when the UIA client is detected jammed.
+	#: While jammed, NVDA skips UIA in favour of non-UIA APIs so it stays
+	#: responsive when a single hung provider (e.g. a frozen Word) serialises the
+	#: whole UIA client.
+	_UIA_JAM_BACKOFF_BASE = 3.0
+	#: Maximum cooldown (seconds). On each consecutive jam the cooldown doubles up
+	#: to this cap, so a long hang only costs a handful of brief reprobes instead
+	#: of one every few seconds. A fast successful call resets it immediately.
+	_UIA_JAM_BACKOFF_MAX = 30.0
+	#: A single UIA client call slower than this (seconds) is taken as evidence
+	#: the UIA client is jammed; a healthy call returns in well under this.
+	_UIA_SLOW_CALL_THRESHOLD = 0.3
+	#: The maximum time (seconds) the core thread will ever wait for a UIA client
+	#: call. The call runs on a dedicated worker; if it does not return within
+	#: this window the core stops waiting, the worker call is cancelled, and the
+	#: caller falls back to a non-UIA API. This is the hard cap on UIA-induced
+	#: core latency, even when a provider is completely hung.
+	_UIA_CALL_TIMEOUT = 0.35
+
+	def isUIAClientJammed(self) -> bool:
+		"""Whether a recent UIA client call stalled, indicating the client is
+		serialised behind a hung provider. While true, callers should avoid
+		blocking UIA calls and fall back to non-UIA APIs.
+		"""
+		return time.monotonic() < self._uiaProviderStallUntil
+
+	def noteUIAClientJam(self, reason: str) -> None:
+		"""Record that the UIA client appears jammed and open the breaker.
+
+		The cooldown uses exponential backoff: the first jam after a healthy
+		period lasts ``_UIA_JAM_BACKOFF_BASE`` seconds, and each consecutive jam
+		(reprobe still slow) doubles it up to ``_UIA_JAM_BACKOFF_MAX``. This bounds
+		a long hang to a handful of brief reprobes instead of a ~2s stall every
+		few seconds. The backoff is reset by a fast successful call (see
+		L{timedUIAClientCall}).
+		"""
+		# Monotonic: a wall-clock jump (NTP, VM resume) must not wedge the breaker.
+		now = time.monotonic()
+		wasJammed = now < self._uiaProviderStallUntil
+		self._uiaJamBackoff = min(
+			max(self._uiaJamBackoff * 2.0, self._UIA_JAM_BACKOFF_BASE),
+			self._UIA_JAM_BACKOFF_MAX,
+		)
+		self._uiaProviderStallUntil = now + self._uiaJamBackoff
+		import coreThreadProtection
+
+		coreThreadProtection.noteAppHang()
+		if not wasJammed:
+			log.debugWarning(
+				f"UIA client jammed ({reason}); using non-UIA fallbacks for up to {self._uiaJamBackoff:.0f}s",
+			)
+
+	def timedUIAClientCall(self, description: str, func, *args, **kwargs):
+		"""Run a blocking UIA client call without ever blocking the core thread.
+
+		The call is executed via the watchdog's cancellable background thread with
+		a hard ``_UIA_CALL_TIMEOUT`` cap. If it returns in time the result is
+		returned and the jam breaker is reset (the UIA client is healthy). If it
+		overruns or fails, the breaker is opened with exponential backoff (see
+		L{noteUIAClientJam}) and the exception propagates so the caller falls back
+		to a non-UIA API. Net effect: a hung UIA provider can no longer freeze
+		NVDA's core for longer than ``_UIA_CALL_TIMEOUT``.
+		"""
+		import watchdog
+
+		try:
+			res = watchdog.cancellableExecute(
+				func,
+				*args,
+				ccTimeout=self._UIA_CALL_TIMEOUT,
+				**kwargs,
+			)
+		except exceptions.CallCancelled:
+			self.noteUIAClientJam(
+				f"{description} exceeded {self._UIA_CALL_TIMEOUT:.2f}s (cancelled)",
+			)
+			raise
+		except Exception:
+			self.noteUIAClientJam(f"{description} failed")
+			raise
+		# Returned within the timeout: the UIA client is responsive again.
+		self._uiaJamBackoff = 0.0
+		self._uiaProviderStallUntil = 0.0
+		return res
+
+	def _getCachedHasServerSideProvider(self, hwnd: int, isDebug: bool = False) -> bool:
+		"""Whether the window exposes a UIA server-side provider, cached per hwnd.
+
+		``UiaHasServerSideProvider`` is a blocking cross-process UIA call whose
+		result is effectively constant for a window's lifetime. ``isUIAWindow``
+		only revalidates every 0.5s, so under a winEvent flood (e.g. a 3000-page
+		Word document or a paste storm) it was made repeatedly and stalled the
+		core. It is memoised with a long TTL, and skipped entirely while the UIA
+		client is jammed (see L{isUIAClientJammed}).
+		"""
+		CACHE_TTL = 30.0
+		# Monotonic: keep this TTL immune to wall-clock jumps.
+		now = time.monotonic()
+		cached = self._hasServerSideProviderCache.get(hwnd)
+		if cached is not None and (now - cached[1]) <= CACHE_TTL:
+			if isDebug:
+				log.debug(f"Using cached UiaHasServerSideProvider {cached[0]} for hwnd {hwnd}")
+			return cached[0]
+		if self.isUIAClientJammed():
+			if isDebug:
+				log.debug("UIA client jammed; skipping UiaHasServerSideProvider")
+			return cached[0] if cached is not None else False
+		try:
+			res = bool(
+				self.timedUIAClientCall(
+					"UiaHasServerSideProvider",
+					winBindings.uiAutomationCore.UiaHasServerSideProvider,
+					hwnd,
+				),
+			)
+		except Exception:
+			log.debugWarning("UiaHasServerSideProvider failed", exc_info=True)
+			return cached[0] if cached is not None else False
+		self._hasServerSideProviderCache[hwnd] = (res, now)
+		return res
 
 	# C901: '_isUIAWindowHelper' is too complex
 	# Note: when working on _isUIAWindowHelper, look for opportunities to simplify
@@ -1217,8 +1384,9 @@ class UIAHandler(COMObject):
 							log.debug("Office 2013 ribon or older. Treating as non-UIA")
 						return False
 					parentHwnd = winUser.getAncestor(parentHwnd, winUser.GA_PARENT)
-		# Ask the window if it supports UIA natively
-		res = winBindings.uiAutomationCore.UiaHasServerSideProvider(hwnd)
+		# Ask the window if it supports UIA natively (cached per hwnd: this is a
+		# blocking cross-process call and the answer does not change in practice).
+		res = self._getCachedHasServerSideProvider(hwnd, isDebug=isDebug)
 		if res:
 			if isDebug:
 				log.debug("window has UIA server side provider")

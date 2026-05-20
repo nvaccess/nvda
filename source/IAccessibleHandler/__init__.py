@@ -349,6 +349,10 @@ def normalizeIAccessible(
 
 
 def accessibleObjectFromEvent(window, objectID, childID):
+	# NOTE: this must NOT be offloaded to a worker thread (e.g. via
+	# watchdog.cancellableExecute): MSAA IAccessible pointers are STA
+	# apartment-bound, so a pointer obtained on another apartment fails with
+	# RPC_E_WRONG_THREAD when used on the core thread, blanking every object.
 	try:
 		pacc, childID = oleacc.AccessibleObjectFromEvent(window, objectID, childID)
 	except Exception as e:
@@ -558,6 +562,22 @@ def winEventToNVDAEvent(  # noqa: C901
 		if isMSAADebugLoggingEnabled():
 			log.debug(
 				f"Ghosted hung window. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}",
+			)
+		return None
+	# If the owning application has stopped responding, drop the event. Building
+	# the object would make a synchronous cross-process call (e.g. IAccessible
+	# accParent during the focus ancestor walk) that blocks the core until the
+	# watchdog cancels it. This engages as soon as the system flags the app,
+	# without waiting for its DWM ghost window to be created (which is the gap
+	# that previously froze NVDA for several seconds on first contact, and on
+	# every subsequent interaction with the hung window).
+	if winUser.isWindowOfHungApp(window):
+		import coreThreadProtection
+
+		coreThreadProtection.noteAppHang()
+		if isMSAADebugLoggingEnabled():
+			log.debugWarning(
+				f"Hung application. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}",
 			)
 		return None
 	# We do not support MSAA object proxied from native UIA

@@ -538,6 +538,33 @@ def isWindow(hwnd):
 	return _user32.IsWindow(hwnd)
 
 
+def isHungAppWindow(hwnd):
+	"""Whether the system considers the given window's application to be not responding.
+
+	See L{winBindings.user32.IsHungAppWindow}. This is a read-only query against the
+	window manager's input-processing state; it does not pump messages or enter the
+	target process, so it is safe to call from any thread (including the UIA event
+	delivery thread).
+	"""
+	return bool(_user32.IsHungAppWindow(hwnd))
+
+
+def isWindowOfHungApp(hwnd):
+	"""Whether hwnd belongs to a *different* application that is not responding.
+
+	Unlike L{isHungAppWindow}, this returns False for NVDA's own windows.
+	NVDA's GUI runs on the same thread as the core, so the system briefly
+	reports NVDA's own windows as not responding whenever the core is busy;
+	NVDA must never treat its own UI (menu, dialogs, ...) as a hung foreign
+	application or it would make its own interface inaccessible.
+	"""
+	if not isHungAppWindow(hwnd):
+		return False
+	import globalVars
+
+	return getWindowThreadProcessID(hwnd)[0] != globalVars.appPid
+
+
 def isDescendantWindow(parentHwnd, childHwnd):
 	if (parentHwnd == childHwnd) or _user32.IsChild(parentHwnd, childHwnd):
 		return True

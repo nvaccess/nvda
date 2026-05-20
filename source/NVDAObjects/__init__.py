@@ -24,6 +24,7 @@ import review
 import eventHandler
 from displayModel import DisplayModelTextInfo
 import baseObject
+import coreThreadProtection
 import documentBase
 import speech
 import ui
@@ -234,6 +235,54 @@ class NVDAObject(
 	"""
 
 	cachePropertiesByDefault = True
+
+	def _getPropertyViaCache(self, getterMethod=None):
+		"""Resolve a cached property, guarding against a hung owning application.
+
+		In normal operation this is byte-identical to
+		L{baseObject.AutoPropertyObject._getPropertyViaCache}: when no hang has
+		recently been detected (the overwhelmingly common case) the only added
+		cost is a single timestamp comparison.
+
+		When a hang was recently detected I{and} this object's window belongs to
+		an application the system reports as not responding, NVDA never calls
+		into that application from the core thread. The last cached value is
+		served if available; otherwise the property degrades to C{None} rather
+		than blocking. This keeps NVDA responsive (Orca-like) when one
+		application hangs instead of the core blocking on every property of the
+		hung object. Other applications are unaffected: the check is per-object,
+		so a healthy application still takes the normal, unguarded path even
+		while another is hung.
+
+		Deliberately, the getter is not run on a background/cancellable thread
+		here: app COM/IAccessible proxies are apartment-bound to the core thread,
+		so the safe, predictable degradation for a confirmed not-responding app
+		is cached-or-C{None}. The winEvent layer already drops the heavy pipeline
+		for hung-app objects and announces "not responding"; this is a
+		defence-in-depth backstop so no stray property access can freeze the core.
+		"""
+		if not coreThreadProtection.isHungModeActive():
+			return super()._getPropertyViaCache(getterMethod)
+		# A hang was detected recently. Only divert this object if its *own*
+		# application is the unresponsive one. windowHandle is a cheap plain
+		# attribute set at construction, so this check cannot itself block.
+		import winUser
+
+		windowHandle = getattr(self, "windowHandle", 0)
+		if not windowHandle or not winUser.isWindowOfHungApp(windowHandle):
+			return super()._getPropertyViaCache(getterMethod)
+		# This object belongs to a not-responding application: serve the last
+		# known value if cached, otherwise degrade to None without calling in.
+		# Note: the base raises ValueError when getterMethod is None; here we
+		# intentionally degrade to None instead. This is unreachable via the
+		# CachingGetter descriptor (which always passes a real getter), so the
+		# divergence is harmless and kept deliberately simple for this guard.
+		if getterMethod is not None:
+			try:
+				return self._propertyCache[getterMethod]
+			except KeyError:
+				pass
+		return None
 
 	#: The TextInfo class this object should use to provide access to text.
 	#: @type: type; L{textInfos.TextInfo}
