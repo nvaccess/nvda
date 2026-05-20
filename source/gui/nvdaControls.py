@@ -681,21 +681,3 @@ class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedCl
 		if res:
 			self._checkboxlessIndices.add(itemIndex)
 		return bool(res)
-
-
-class SpinStepCtrl(wx.SpinCtrl):
-	def __init__(self, *args, step: int = 1, **kwargs):
-		super().__init__(*args, **kwargs)
-		self.step = step
-		self.Bind(wx.EVT_SPINCTRL, self.OnSpin)
-
-	def OnSpin(self, event: wx.SpinEvent):
-		pos = event.GetPosition()
-		if (pos - 1) % self.step == 0:
-			self.SetValue(pos - 1 + self.step)
-		else:
-			self.SetValue(pos + 1 - self.step)
-
-	def SetValue(self, pos: int) -> None:
-		pos = round(pos / self.step) * self.step
-		return super().SetValue(pos)

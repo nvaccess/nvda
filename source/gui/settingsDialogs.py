@@ -6067,11 +6067,11 @@ class MagnifierPanel(SettingsPanel):
 
 		self.zoomCtrl = sHelper.addLabeledControl(
 			zoomLabelText,
-			nvdaControls.SpinStepCtrl,
-			step=magnifierConfig.ZoomLevel.STEP_FACTOR,
+			wx.SpinCtrl,
 			min=magnifierConfig.ZoomLevel.MIN_ZOOM,
 			max=magnifierConfig.ZoomLevel.MAX_ZOOM,
 		)
+		self.zoomCtrl.SetIncrement(magnifierConfig.ZoomLevel.STEP_FACTOR)
 		self.bindHelpEvent(
 			"MagnifierZoom",
 			self.zoomCtrl,
