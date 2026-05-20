@@ -8,6 +8,7 @@
 """Unit tests for the textInfos module, its submodules and classes."""
 
 import unittest
+from unittest.mock import patch
 from .textProvider import BasicTextProvider, MockBlackBoxTextInfo
 import textInfos
 from textInfos.offsets import Offsets
@@ -174,6 +175,39 @@ class TestEndpoints(unittest.TestCase):
 		self.assertEqual((ti1._startOffset, ti1._endOffset), (3, 3))
 		ti1.start = ti2.end
 		self.assertEqual((ti1._startOffset, ti1._endOffset), (5, 5))
+
+
+class TestWordExpansion(unittest.TestCase):
+	def test_expandWordDoesNotRequireFlowsToBeforeEndOfStory(self):
+		obj = BasicTextProvider(text="one two")
+		ti = obj.makeTextInfo(Offsets(0, 0))
+		ti.expand(textInfos.UNIT_WORD)
+		self.assertEqual(ti.text, "one ")
+
+	def test_expandWordAtEndOfStoryWithoutFlowsToDoesNothing(self):
+		obj = BasicTextProvider(text="one two")
+		ti = obj.makeTextInfo(textInfos.POSITION_ALL)
+		ti.collapse(end=True)
+		ti.expand(textInfos.UNIT_WORD)
+		self.assertEqual(ti.text, "")
+		self.assertEqual(ti.offsets, (7, 7))
+
+
+class _UnknownWordSegConf:
+	def calculated(self) -> str:
+		return "unexpected"
+
+
+class TestWordSegFlag(unittest.TestCase):
+	def test_unknownWordSegConfigReturnsNoneAfterLogging(self):
+		obj = BasicTextProvider(text="abc")
+		ti = obj.makeTextInfo(Offsets(0, 0))
+		ti.wordSegConf = _UnknownWordSegConf()
+
+		with patch("textInfos.offsets.log.error") as mockLogError:
+			self.assertIsNone(ti.wordSegFlag)
+
+		mockLogError.assert_called_once_with("Unknown word segmentation standard, 'unexpected'")
 
 
 class TestMoveToCodepointOffsetInBlackBoxTextInfo(unittest.TestCase):
