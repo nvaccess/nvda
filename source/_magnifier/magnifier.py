@@ -93,7 +93,7 @@ class Magnifier:
 			raise ValueError(f"Zoom level must be between {ZoomLevel.MIN_ZOOM} and {ZoomLevel.MAX_ZOOM}")
 		if value % ZoomLevel.STEP_FACTOR != 0:
 			raise ValueError(f"Zoom level must be a multiple of {ZoomLevel.STEP_FACTOR}")
-		self._zoomLevel = value
+		self._zoomLevel = float(value)
 
 	@property
 	def currentCoordinates(self) -> Coordinates:
@@ -300,11 +300,11 @@ class Magnifier:
 		:param direction: Direction.IN to zoom in, Direction.OUT to zoom out
 		"""
 		if direction == Direction.IN:
-			newZoom = self.zoomLevel + ZoomLevel.STEP_FACTOR
+			newZoom = int(self.zoomLevel + ZoomLevel.STEP_FACTOR)
 			if newZoom <= ZoomLevel.MAX_ZOOM:
 				self.zoomLevel = newZoom
 		elif direction == Direction.OUT:
-			newZoom = self.zoomLevel - ZoomLevel.STEP_FACTOR
+			newZoom = int(self.zoomLevel - ZoomLevel.STEP_FACTOR)
 			if newZoom >= ZoomLevel.MIN_ZOOM:
 				self.zoomLevel = newZoom
 
@@ -320,7 +320,7 @@ class Magnifier:
 
 		minX, minY, maxX, maxY = self._getScreenLimits()
 
-		panPixels = int((self._displayOrientation.width / self.zoomLevelRatio) * self._panStep / 100)
+		panPixels = int(self._displayOrientation.width * self._panStep / self.zoomLevel)
 
 		match action:
 			case MagnifierAction.PAN_LEFT:
