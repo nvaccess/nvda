@@ -320,7 +320,7 @@ class Magnifier:
 
 		minX, minY, maxX, maxY = self._getScreenLimits()
 
-		panPixels = int(self._displayOrientation.width * self._panStep / self.zoomLevel)
+		panPixels = int((self._displayOrientation.width / self.zoomLevelRatio) * self._panStep / 100)
 
 		match action:
 			case MagnifierAction.PAN_LEFT:
