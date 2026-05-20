@@ -385,6 +385,9 @@ class LiveText(NVDAObject):
 	#: subclasses may override this to allow for custom line reporting batches
 	maxLines = 100
 
+	maxLines = 100
+	"""the maximum number of lines that will be reported when a large number of lines are queued
+	subclasses may override this to allow for custom line reporting batches"""
 	announceNewLineText = False
 
 	def initOverlayClass(self):
