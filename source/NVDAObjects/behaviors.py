@@ -381,9 +381,6 @@ class LiveText(NVDAObject):
 	STABILIZE_DELAY = 0
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
-	#: the maximum number of lines that will be reported when a large number of lines are  queued
-	#: subclasses may override this to allow for custom line reporting batches
-	maxLines = 100
 
 	maxLines = 100
 	"""the maximum number of lines that will be reported when a large number of lines are queued
@@ -460,7 +457,7 @@ class LiveText(NVDAObject):
 		ti = self.makeTextInfo(textInfos.POSITION_ALL)
 		return self.diffAlgo._getText(ti)
 
-	def _reportNewLines(self, lines):
+	def _reportNewLines(self, lines: list[str]) -> None:
 		"""
 		Reports new lines of text using _reportNewText for each new line.
 		Subclasses may override this method to provide custom filtering of new text,
@@ -468,11 +465,11 @@ class LiveText(NVDAObject):
 		"""
 		droppedCount = len(lines) - self.maxLines
 		if droppedCount > 0:
-			# Translators: Announced when a large burst of live-text output is truncated.
 			speech.speakMessage(
+				# Translators: Announced when a large burst of live-text output is truncated.
 				ngettext("{numLines} line skipped", "{numLines} lines skipped", droppedCount).format(
-					numLines=droppedCount
-				)
+					numLines=droppedCount,
+				),
 			)
 			lines = lines[-self.maxLines :]
 		if self._reportNewLinesGenID is not None:
@@ -480,7 +477,7 @@ class LiveText(NVDAObject):
 			self._reportNewLinesGenID = None
 		self._reportNewLinesGenID = queueHandler.registerGeneratorObject(self._reportNewLinesGenerator(lines))
 
-	def _reportNewLinesGenerator(self, lines):
+	def _reportNewLinesGenerator(self, lines: list[str]) -> None:
 		YIELD_EVERY = 5  # Sweet spot between yielding on every line and a batch
 		try:
 			for i, line in enumerate(lines, 1):
