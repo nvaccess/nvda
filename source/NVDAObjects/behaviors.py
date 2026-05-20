@@ -477,7 +477,7 @@ class LiveText(NVDAObject):
 			self._reportNewLinesGenID = None
 		self._reportNewLinesGenID = queueHandler.registerGeneratorObject(self._reportNewLinesGenerator(lines))
 
-	def _reportNewLinesGenerator(self, lines: list[str]) -> None:
+	def _reportNewLinesGenerator(self, lines: list[str]) -> Generator[None]:
 		YIELD_EVERY = 5  # Sweet spot between yielding on every line and a batch
 		try:
 			for i, line in enumerate(lines, 1):
