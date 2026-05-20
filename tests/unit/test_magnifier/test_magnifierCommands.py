@@ -23,7 +23,7 @@ class TestZoomCommand(unittest.TestCase):
 	def _makeMockMagnifier(self, isActive: bool):
 		magnifier = MagicMock()
 		magnifier.configure_mock(**{"_isActive": isActive})
-		magnifier.zoomLevel = 2.0
+		magnifier.zoomLevel = 200
 		return magnifier
 
 	def testInactiveZoomIn(self):

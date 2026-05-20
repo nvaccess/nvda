@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2025 NV Access Limited, Bill Dengler, Cyrille Bougot, Łukasz Golonka, Leonard de Ruijter, Cary-rowen
+# Copyright (C) 2016-2026 NV Access Limited, Bill Dengler, Cyrille Bougot, Łukasz Golonka, Leonard de Ruijter, Cary-rowen
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -687,3 +687,27 @@ def upgradeConfigFrom_21_to_22(profile: ConfigObj):
 	if language.casefold() == "auto":
 		speechConf["language"] = "en"
 		log.debug("Changed math.speech.language from 'Auto' to 'en'.")
+
+
+def upgradeConfigFrom_22_to_23(profile: ConfigObj):
+	"""Turn magnifier zoom from ratio to percentage."""
+	magnifierConf = profile.get("magnifier")
+	if not magnifierConf:
+		log.debug("No magnifier section in profile. No action taken.")
+		return
+	zoom = magnifierConf.get("zoomLevel")
+	if zoom is None:
+		log.debug("magnifier.zoomLevel not set in profile. No action taken.")
+		return
+	try:
+		zoomRatio = float(zoom)
+	except ValueError:
+		log.error(
+			f"Invalid magnifier.zoomLevel value during profile upgrade: "
+			f"expected a string representing a float, got {zoom!r}. Skipping upgrade step.",
+		)
+		return
+	# Convert ratio to percentage and round to nearest 50%
+	zoomPercentage = round(zoomRatio * 100.0 / 50.0) * 50
+	magnifierConf["zoomLevel"] = zoomPercentage
+	log.debug(f"Converted magnifier.zoomLevel from ratio {zoomRatio} to percentage {zoomPercentage}%.")
