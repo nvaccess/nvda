@@ -62,7 +62,7 @@ The triple-press keyboard shortcut (`NVDA+control+r`) is not affected, as it is 
 * Updated Liblouis Braille translator to [3.37.0](https://github.com/liblouis/liblouis/releases/tag/v3.37.0). (#19758, @codeofdusk)
   * Added new Italian and Estonian 6 dot tables.
 * Braille:
-  * When NVDA is started, if the screen curtain is enabled and a sound is played to inform about this, the state of the screen curtain will be also displayed in braille. (#19441, @nvdaes)
+  * The braille message when NVDA is started was updated to mention if screen curtain is enabled. (#19441, @nvdaes)
   * NVDA now supports the Orbit Reader 40 in its proprietary HID mode. (#19756, @trypsynth)
 * It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)
 * Improved search algorithm for filtering add-ons in the Add-on Store. (#19309)

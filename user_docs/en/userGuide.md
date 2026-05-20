@@ -2929,7 +2929,6 @@ The available options are:
 |---|---|
 | Options | Center, Border, Relative |
 | Default | Center |
-| Toggle command | None |
 
 | Option | Description |
 |---|---|
@@ -4399,10 +4398,10 @@ After resetting, a dialog will appear allowing you to undo the reset and restore
 The following NVDA key commands are also useful:
 <!-- KC:beginInclude -->
 
-| Name | Desktop key | Laptop key | Description |
-|---|---|---|---|
-| Save configuration | `NVDA+control+c` | `NVDA+control+c` | Saves your current configuration so that it is not lost when you exit NVDA |
-| Revert configuration | `NVDA+control+r` | `NVDA+control+r` | Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults without showing the undo dialog. |
+| Name | Key | Description |
+|---|---|---|
+| Save configuration | `NVDA+control+c` | Saves your current configuration so that it is not lost when you exit NVDA |
+| Revert configuration | `NVDA+control+r` | Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults without showing the undo dialog. |
 
 <!-- KC:endInclude -->
 
