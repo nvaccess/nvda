@@ -30,11 +30,13 @@ import core
 import nvwave
 import globalVars
 from typing import List, Union
+from collections.abc import Generator
 import diffHandler
 from config.configFlags import (
 	TypingEcho,
 	ReportSpellingErrors,
 )
+from speech.extensions import pre_speechCanceled
 
 
 class ProgressBar(NVDAObject):
@@ -381,12 +383,17 @@ class LiveText(NVDAObject):
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
 
+	MAX_LINES = 100
+	"""the maximum number of lines that will be reported when a large number of lines are queued
+	subclasses may override this to allow for custom line reporting batches"""
 	announceNewLineText = False
 
 	def initOverlayClass(self):
 		self._event = threading.Event()
 		self._monitorThread = None
 		self._keepMonitoring = False
+		self._reportNewLinesGenID: int | None = None
+		pre_speechCanceled.register(self._onSpeechCanceled)
 
 	def startMonitoring(self):
 		"""Start monitoring for new text.
@@ -451,14 +458,40 @@ class LiveText(NVDAObject):
 		ti = self.makeTextInfo(textInfos.POSITION_ALL)
 		return self.diffAlgo._getText(ti)
 
-	def _reportNewLines(self, lines):
+	def _reportNewLines(self, lines: list[str]) -> None:
 		"""
 		Reports new lines of text using _reportNewText for each new line.
 		Subclasses may override this method to provide custom filtering of new text,
 		where logic depends on multiple lines.
 		"""
-		for line in lines:
-			self._reportNewText(line)
+		droppedCount = len(lines) - self.MAX_LINES
+		if droppedCount > 0:
+			speech.speakMessage(
+				# Translators: Announced when a large burst of live-text output is truncated.
+				ngettext("{numLines} line skipped", "{numLines} lines skipped", droppedCount).format(
+					numLines=droppedCount,
+				),
+			)
+			lines = lines[-self.MAX_LINES :]
+		if self._reportNewLinesGenID is not None:
+			queueHandler.cancelGeneratorObject(self._reportNewLinesGenID)
+			self._reportNewLinesGenID = None
+		self._reportNewLinesGenID = queueHandler.registerGeneratorObject(self._reportNewLinesGenerator(lines))
+
+	def _reportNewLinesGenerator(self, lines: list[str]) -> Generator[None, None, None]:
+		YIELD_EVERY = 5  # Sweet spot between yielding on every line and a batch
+		try:
+			for i, line in enumerate(lines, 1):
+				self._reportNewText(line)
+				if i % YIELD_EVERY == 0:
+					yield
+		finally:
+			self._reportNewLinesGenID = None
+
+	def _onSpeechCanceled(self):
+		if self._reportNewLinesGenID is not None:
+			queueHandler.cancelGeneratorObject(self._reportNewLinesGenID)
+			self._reportNewLinesGenID = None
 
 	def _reportNewText(self, line):
 		"""Report a line of new text."""
