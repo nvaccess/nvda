@@ -3557,6 +3557,8 @@ This may be useful when reading a document where blank lines are used to separat
 
 This category allows you to adjust various aspects of document navigation.
 
+##### Word Segmentation Standard {#WordSegmentationStandard}
+
 ##### Paragraph Style {#ParagraphStyle}
 
 | . {.hideHeaderRow} |.|

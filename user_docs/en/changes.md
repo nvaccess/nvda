@@ -6,6 +6,9 @@
 
 ### New Features
 
+* Chinese text can now be navigated by word using built-in input gestures.
+Several GUI elements were added to configure this in the "Document Navigation" panel. (#18735, @CrazySteve0605)
+* Braille output for Chinese now includes spaces between words. (#18865, @CrazySteve0605)
 * The braille "word wrap" option has been replaced with a three-valued "Text wrap" option: Off, Show mark when words are cut, and At word boundaries. (#17010, @LeonarddeR)
   * In modes that show a continuation mark, when a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
 
@@ -18,6 +21,8 @@
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* Added [cppjieba](https://github.com/yanyiwu/cppjieba) as a git submodule for Chinese word segmentation. (#18548, @CrazySteve0605)
 
 #### Deprecations
 
@@ -142,6 +147,8 @@ Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`,
 * The `speechDictHandler.ENTRY_TYPE_*` constants are deprecated.
 Use the `speechDictHandler.types.EntryType` enumeration instead. (#19430, @LeonarddeR)
 * `speechDictHandler.SpeechDictEntry` and `speechDictHandler.SpeechDict` have been moved to `speechDictHandler.types`. (#19430, @LeonarddeR)
+* `useUniscribe` from `textUtils.offset.OffsetsTextInfo` and its subclasses is deprecated.
+  Use `charSegFlag` and `wordSegFlag` instead. (#18735)
 
 ## 2026.1.1
 
