@@ -27,7 +27,6 @@ import winBindings.sas
 import api
 import braille
 from config.registry import RegistryKey
-import inputCore
 import nvwave
 import speech
 import tones
@@ -125,9 +124,6 @@ class LocalMachine:
 		"""When True, most remote commands will be ignored"""
 
 		self.receivingBraille = False
-
-		self._cachedSizes: list[int] | None = None
-		"""Cached braille display sizes from remote machines"""
 
 		self._showingLocalUiMessage: bool = False
 		"""Whether we're currently showing a `ui.message` while showing remote braille."""
@@ -257,41 +253,7 @@ class LocalMachine:
 		:param kwargs: Gesture parameters passed to BrailleInputGesture
 		:note: Silently ignores gestures that have no associated action.
 		"""
-		try:
-			inputCore.manager.executeGesture(input.BrailleInputGesture(**kwargs))
-		except inputCore.NoInputGestureAction:
-			pass
-
-	def setBrailleDisplaySize(self, sizes: list[int]) -> None:
-		"""Cache remote braille display sizes for size negotiation.
-
-		:param sizes: List of display sizes (cells) from remote machines
-		"""
-		self._cachedSizes = sizes
-
-	def _handleFilterDisplayDimensions(self, value: braille.DisplayDimensions) -> braille.DisplayDimensions:
-		"""Filter the local display dimensions based on remote display dimensions.
-
-		Determines the optimal display dimensions when sharing braille output by
-		finding the smallest positive width among local and remote displays.
-
-		.. note::
-			We can currently only support a single line of braille,
-			as sending display dimensions would require changing the Remote Access protocol.
-
-		:param value: Local display dimensions
-		:return: The negotiated display dimensions to use.
-		"""
-		if not self._cachedSizes:
-			# We cannot support multiline displays without breaking the Remote Access protocol,
-			# so always force numRows to 1.
-			return value._replace(numRows=1)
-		# There is no point storing the number of rows if we are always going to set it to 1.
-		sizes = self._cachedSizes + [value.numCols]
-		try:
-			return braille.DisplayDimensions(numRows=1, numCols=min(i for i in sizes if i > 0))
-		except ValueError:
-			return value._replace(numRows=1)
+		braille.injectGesture(input.BrailleInputGesture(**kwargs))
 
 	def handleDecideEnabled(self) -> bool:
 		"""Determine if the local braille display should be enabled.

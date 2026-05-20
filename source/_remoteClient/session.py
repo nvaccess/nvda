@@ -270,6 +270,26 @@ class RemoteSession:
 		return self.connectedLeadersCount + self.connectedFollowersCount
 
 
+class _FollowerBrailleMirror(braille.BrailleMirror):
+	"""BrailleMirror that forwards display updates to connected leader machines.
+
+	Registered while at least one leader with a braille display is connected.
+	:meth:`numCells` returns the smallest positive leader display size so NVDA
+	negotiates a compatible display width.
+	"""
+
+	def __init__(self, session: "FollowerSession") -> None:
+		self._session = session
+
+	def display(self, cells: list[int]) -> None:
+		if self._session.hasBrailleLeaders():
+			self._session.transport.send(type=RemoteMessageType.DISPLAY, cells=cells)
+
+	def numCells(self) -> int:
+		sizes = [s for s in self._session.leaderDisplaySizes if s > 0]
+		return min(sizes) if sizes else 0
+
+
 class FollowerSession(RemoteSession):
 	"""Session that runs on the controlled (follower) NVDA instance.
 
@@ -302,6 +322,9 @@ class FollowerSession(RemoteSession):
 		self.leaders = defaultdict(dict)
 		self.leaderDisplaySizes = []
 		self.followers = set()
+		self._brailleMirror = _FollowerBrailleMirror(self)
+		# The remote protocol only supports single-row braille; force numRows to 1.
+		braille.filter_displayDimensions.register(self._filterNumRowsToOne)
 		self.transport.transportClosing.register(self.handleTransportClosing)
 		self.transport.registerInbound(
 			RemoteMessageType.CHANNEL_JOINED,
@@ -314,9 +337,6 @@ class FollowerSession(RemoteSession):
 		self.transport.registerInbound(
 			RemoteMessageType.SET_DISPLAY_SIZE,
 			self.setDisplaySize,
-		)
-		braille.filter_displayDimensions.register(
-			self.localMachine._handleFilterDisplayDimensions,
 		)
 		self.transport.registerInbound(
 			RemoteMessageType.BRAILLE_INPUT,
@@ -340,7 +360,7 @@ class FollowerSession(RemoteSession):
 		)
 		self.transport.registerOutbound(decide_playWaveFile, RemoteMessageType.WAVE)
 		self.transport.registerOutbound(post_speechPaused, RemoteMessageType.PAUSE_SPEECH)
-		braille.pre_writeCells.register(self.display)
+		braille.registerMirror(self._brailleMirror)
 		pre_speechQueued.register(self.sendSpeech)
 		self.callbacksAdded = True
 
@@ -351,7 +371,7 @@ class FollowerSession(RemoteSession):
 		self.transport.unregisterOutbound(RemoteMessageType.CANCEL)
 		self.transport.unregisterOutbound(RemoteMessageType.WAVE)
 		self.transport.unregisterOutbound(RemoteMessageType.PAUSE_SPEECH)
-		braille.pre_writeCells.unregister(self.display)
+		braille.unregisterMirror(self._brailleMirror)
 		pre_speechQueued.unregister(self.sendSpeech)
 		self.callbacksAdded = False
 
@@ -382,6 +402,7 @@ class FollowerSession(RemoteSession):
 		to ensure clean shutdown of remote features.
 		"""
 		self.unregisterCallbacks()
+		braille.filter_displayDimensions.unregister(self._filterNumRowsToOne)
 
 	def handleTransportDisconnected(self) -> None:
 		"""Handle disconnection from the transport layer.
@@ -408,7 +429,14 @@ class FollowerSession(RemoteSession):
 			sizes if sizes else [info.get("braille_numCells", 0) for info in self.leaders.values()]
 		)
 		log.debug(f"Setting follower display size to: {self.leaderDisplaySizes!r}")
-		self.localMachine.setBrailleDisplaySize(self.leaderDisplaySizes)
+
+	def _filterNumRowsToOne(self, value: braille.DisplayDimensions) -> braille.DisplayDimensions:
+		"""Force single-row braille output.
+
+		The remote protocol does not support multi-row displays,
+		so we always constrain numRows to 1.
+		"""
+		return value._replace(numRows=1)
 
 	def handleBrailleInfo(
 		self,
@@ -450,15 +478,6 @@ class FollowerSession(RemoteSession):
 	def pauseSpeech(self, switch: bool) -> None:
 		"""Toggle speech pause state on leader instances."""
 		self.transport.send(type=RemoteMessageType.PAUSE_SPEECH, switch=switch)
-
-	def display(self, cells: list[int]) -> None:
-		"""Forward braille display content to leader instances.
-
-		Only sends braille data if there are connected leaders with braille displays.
-		"""
-		# Only send braille data when there are controlling machines with a braille display
-		if self.hasBrailleLeaders():
-			self.transport.send(type=RemoteMessageType.DISPLAY, cells=cells)
 
 	def hasBrailleLeaders(self) -> bool:
 		"""Check if any connected leaders have braille displays.
