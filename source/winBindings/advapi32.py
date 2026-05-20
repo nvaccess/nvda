@@ -35,6 +35,7 @@ __all__ = (
 	"RegQueryValueEx",
 	"CreateProcessAsUser",
 	"GetTokenInformation",
+	"ConvertStringSecurityDescriptorToSecurityDescriptorW",
 )
 
 
@@ -259,3 +260,21 @@ GetTokenInformation.argtypes = (
 	POINTER(DWORD),  # ReturnLength
 )
 GetTokenInformation.restype = BOOL
+
+
+ConvertStringSecurityDescriptorToSecurityDescriptorW = WINFUNCTYPE(None)(
+	("ConvertStringSecurityDescriptorToSecurityDescriptorW", dll),
+)
+"""
+Converts a string-format security descriptor into a valid, functional security descriptor.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/sddl/nf-sddl-convertstringsecuritydescriptortosecuritydescriptorw
+"""
+ConvertStringSecurityDescriptorToSecurityDescriptorW.restype = BOOL
+ConvertStringSecurityDescriptorToSecurityDescriptorW.argtypes = (
+	LPCWSTR,  # StringSecurityDescriptor: The string-format security descriptor to convert
+	DWORD,  # StringSDRevision: The revision level of the StringSecurityDescriptor string
+	POINTER(c_void_p),  # SecurityDescriptor: Receives a pointer to the converted security descriptor
+	c_void_p,  # SecurityDescriptorSize: Optional pointer to receive the size; pass None if not needed
+)

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2026 Pneuma Solutions
+# Copyright (C) 2026 NV Access Limited, Pneuma Solutions
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Named-pipe IPC server that exposes the Braille Mirror and Direct Braille Window APIs to external processes.
 
@@ -22,16 +22,15 @@ import json
 import queue
 import struct
 import threading
-from typing import Optional
 
 import wx
 
 import braille
 from logHandler import log
 from utils.security import isRunningOnSecureDesktop
-
-_kernel32 = ctypes.windll.kernel32  # type: ignore[attr-defined]
-_advapi32 = ctypes.windll.advapi32  # type: ignore[attr-defined]
+from winBindings import advapi32 as _advapi32
+from winBindings import kernel32 as _kernel32
+from winBindings.advapi32 import SECURITY_ATTRIBUTES
 
 INVALID_HANDLE_VALUE = ctypes.wintypes.HANDLE(-1).value
 ERROR_PIPE_CONNECTED = 535
@@ -52,18 +51,7 @@ SDDL_REVISION_1 = 1
 _NORMAL_PIPE_SDDL = "D:(A;;GA;;;OW)(A;;GRGW;;;SY)"
 
 
-class _SECURITY_ATTRIBUTES(ctypes.Structure):
-	_fields_ = [
-		("nLength", ctypes.wintypes.DWORD),
-		("lpSecurityDescriptor", ctypes.c_void_p),
-		("bInheritHandle", ctypes.wintypes.BOOL),
-	]
-
-	def __init__(self, **kwargs):
-		super().__init__(nLength=ctypes.sizeof(self), **kwargs)
-
-
-def _buildSystemAccessSA() -> tuple["_SECURITY_ATTRIBUTES", ctypes.c_void_p]:
+def _buildSystemAccessSA() -> tuple[SECURITY_ATTRIBUTES, ctypes.c_void_p]:
 	"""Build a SECURITY_ATTRIBUTES granting SYSTEM read/write on the normal-desktop pipe.
 
 	Returns ``(sa, sd)`` where *sd* is the LocalAlloc'd security descriptor that must be freed with ``_kernel32.LocalFree(sd)`` when the pipe server stops.
@@ -77,16 +65,16 @@ def _buildSystemAccessSA() -> tuple["_SECURITY_ATTRIBUTES", ctypes.c_void_p]:
 	)
 	if not ok:
 		raise ctypes.WinError()
-	sa = _SECURITY_ATTRIBUTES(lpSecurityDescriptor=sd)
+	sa = SECURITY_ATTRIBUTES(nLength=ctypes.sizeof(SECURITY_ATTRIBUTES), lpSecurityDescriptor=sd)
 	return sa, sd
 
 
 def _createPipeInstance(
 	name: str,
-	sa: Optional["_SECURITY_ATTRIBUTES"] = None,
+	sa: SECURITY_ATTRIBUTES | None = None,
 ) -> ctypes.wintypes.HANDLE:
 	"""Create a single named-pipe instance and return its handle."""
-	handle = _kernel32.CreateNamedPipeW(
+	handle = _kernel32.CreateNamedPipe(
 		name,
 		PIPE_ACCESS_DUPLEX,
 		PIPE_TYPE_BYTE | PIPE_READMODE_BYTE | PIPE_WAIT,
@@ -112,7 +100,7 @@ def _connectClient(handle: ctypes.wintypes.HANDLE) -> bool:
 	return False
 
 
-def _readExact(handle: ctypes.wintypes.HANDLE, n: int) -> Optional[bytes]:
+def _readExact(handle: ctypes.wintypes.HANDLE, n: int) -> bytes | None:
 	"""Read exactly *n* bytes from *handle*.  Return None on pipe break."""
 	buf = (ctypes.c_char * n)()
 	total = 0
@@ -152,7 +140,7 @@ def _sendMessage(handle: ctypes.wintypes.HANDLE, obj: dict) -> bool:
 	return _writeAll(handle, _frameMessage(obj))
 
 
-def _recvMessage(handle: ctypes.wintypes.HANDLE) -> Optional[dict]:
+def _recvMessage(handle: ctypes.wintypes.HANDLE) -> dict | None:
 	header = _readExact(handle, 4)
 	if header is None:
 		return None
@@ -341,9 +329,9 @@ class _PipeServer:
 		self._pipeName = pipeName
 		self._useSystemDacl = useSystemDacl
 		self._stop = threading.Event()
-		self._thread: Optional[threading.Thread] = None
-		self._sa: Optional[_SECURITY_ATTRIBUTES] = None
-		self._sd: Optional[ctypes.c_void_p] = None
+		self._thread: threading.Thread | None = None
+		self._sa: SECURITY_ATTRIBUTES | None = None
+		self._sd: ctypes.c_void_p | None = None
 		# Queue for registrations that arrive before braille.handler is ready.
 		self._pending: queue.Queue = queue.Queue()
 
@@ -363,7 +351,7 @@ class _PipeServer:
 		self._stop.set()
 		# Unblock the accept loop by opening a dummy connection.
 		try:
-			dummy = _kernel32.CreateFileW(
+			dummy = _kernel32.CreateFile(
 				self._pipeName,
 				0,  # GENERIC_READ | GENERIC_WRITE not needed, just unblock
 				0,
@@ -452,7 +440,7 @@ def _driveSession(handle: ctypes.wintypes.HANDLE, session) -> None:
 		_kernel32.CloseHandle(handle)
 
 
-_server: Optional[_PipeServer] = None
+_server: _PipeServer | None = None
 
 
 def initialize() -> None:

@@ -134,6 +134,10 @@ __all__ = (
 	"MoveFileEx",
 	"LCIDToLocaleName",
 	"GetACP",
+	"CreateNamedPipe",
+	"ConnectNamedPipe",
+	"ReadFile",
+	"LocalFree",
 )
 
 
@@ -1721,4 +1725,68 @@ OpenFileMapping.argtypes = (
 	DWORD,  # dwDesiredAccess
 	BOOL,  # bInheritHandle
 	LPCWSTR,  # lpName
+)
+
+
+CreateNamedPipe = WINFUNCTYPE(None)(("CreateNamedPipeW", dll))
+"""
+Creates an instance of a named pipe and returns a handle for subsequent pipe operations.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createnamedpipew
+"""
+CreateNamedPipe.restype = HANDLE
+CreateNamedPipe.argtypes = (
+	LPCWSTR,  # lpName: The unique pipe name
+	DWORD,  # dwOpenMode: The open mode
+	DWORD,  # dwPipeMode: The pipe mode
+	DWORD,  # nMaxInstances: The maximum number of instances that can be created for this pipe
+	DWORD,  # nOutBufferSize: The number of bytes to reserve for the output buffer
+	DWORD,  # nInBufferSize: The number of bytes to reserve for the input buffer
+	DWORD,  # nDefaultTimeOut: The default time-out value, in milliseconds
+	LPSECURITY_ATTRIBUTES,  # lpSecurityAttributes: A pointer to a SECURITY_ATTRIBUTES structure
+)
+
+
+ConnectNamedPipe = WINFUNCTYPE(None)(("ConnectNamedPipe", dll))
+"""
+Enables a named pipe server process to wait for a client process to connect to an instance of a named pipe.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/namedpipeapi/nf-namedpipeapi-connectnamedpipe
+"""
+ConnectNamedPipe.restype = BOOL
+ConnectNamedPipe.argtypes = (
+	HANDLE,  # hNamedPipe: A handle to the server end of a named pipe instance
+	LPOVERLAPPED,  # lpOverlapped: A pointer to an OVERLAPPED structure (NULL for synchronous I/O)
+)
+
+
+ReadFile = WINFUNCTYPE(None)(("ReadFile", dll))
+"""
+Reads data from the specified file or input/output (I/O) device.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-readfile
+"""
+ReadFile.restype = BOOL
+ReadFile.argtypes = (
+	HANDLE,  # hFile: A handle to the device
+	LPVOID,  # lpBuffer: A pointer to the buffer that receives the data read from a file or device
+	DWORD,  # nNumberOfBytesToRead: The maximum number of bytes to be read
+	LPDWORD,  # lpNumberOfBytesRead: A pointer to the variable that receives the number of bytes read
+	LPOVERLAPPED,  # lpOverlapped: A pointer to an OVERLAPPED structure (NULL for synchronous I/O)
+)
+
+
+LocalFree = WINFUNCTYPE(None)(("LocalFree", dll))
+"""
+Frees the specified local memory object and invalidates its handle.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-localfree
+"""
+LocalFree.restype = HANDLE
+LocalFree.argtypes = (
+	HANDLE,  # hMem: A handle to the local memory object
 )
