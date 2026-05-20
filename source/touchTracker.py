@@ -26,6 +26,20 @@ hoverActions = (action_hoverDown, action_hover, action_hoverUp)
 action_pinchIn: str = "pinchin"
 #: Two fingers moving away from each other.
 action_pinchOut: str = "pinchout"
+# Sequential two-flick gesture actions (opposite directions)
+action_flickRightThenLeft = "flickrightflickleft"
+action_flickLeftThenRight = "flickleftflickright"
+action_flickUpThenDown = "flickupflickdown"
+action_flickDownThenUp = "flickdownflickup"
+# Sequential two-flick gesture actions (perpendicular / L-shaped)
+action_flickRightThenUp = "flickrightflickup"
+action_flickRightThenDown = "flickrightflickdown"
+action_flickLeftThenUp = "flickleftflickup"
+action_flickLeftThenDown = "flickleftflickdown"
+action_flickUpThenRight = "flickupflickright"
+action_flickUpThenLeft = "flickupflickleft"
+action_flickDownThenRight = "flickdownflickright"
+action_flickDownThenLeft = "flickdownflickleft"
 # timeout for detection of flicks and plural trackers
 multitouchTimeout = 0.25
 # The distance a finger must travel to be treeted as a flick
@@ -34,6 +48,14 @@ minFlickDistance = 50
 maxAccidentalDrift = 10
 #: Minimum change in distance between two fingers (in pixels) required to classify a pinch gesture.
 minPinchDistance: int = 50
+#: Time window in seconds of touch samples used for velocity calculation.
+_VELOCITY_SAMPLE_WINDOW: float = 0.1
+#: Minimum speed in pixels per second for a gesture to be classified as a flick.
+#: Kept low so deliberate-but-slow swipes still register; velocity is used mainly for direction.
+minFlickVelocity: float = 100.0
+#: Time in seconds allowed for the full first stroke of a continuous sequential flick.
+#: Longer than multitouchTimeout so users aren't forced to rush the gesture.
+continuousFlickTimeout: float = 0.6
 
 actionLabels = {
 	# Translators: a touch screen gesture where two fingers move toward each other (zoom out)
@@ -60,6 +82,30 @@ actionLabels = {
 	action_hover: pgettext("touch action", "hover"),
 	# Translators: a finger that was hovering (touching the touch screen for a long time) has been released
 	action_hoverUp: pgettext("touch action", "hover up"),
+	# Translators: a quick swipe right followed by a quick swipe left, on a touch screen.
+	action_flickRightThenLeft: pgettext("touch action", "flick right then left"),
+	# Translators: a quick swipe left followed by a quick swipe right, on a touch screen.
+	action_flickLeftThenRight: pgettext("touch action", "flick left then right"),
+	# Translators: a quick swipe up followed by a quick swipe down, on a touch screen.
+	action_flickUpThenDown: pgettext("touch action", "flick up then down"),
+	# Translators: a quick swipe down followed by a quick swipe up, on a touch screen.
+	action_flickDownThenUp: pgettext("touch action", "flick down then up"),
+	# Translators: a quick swipe right followed by a quick swipe up, on a touch screen.
+	action_flickRightThenUp: pgettext("touch action", "flick right then up"),
+	# Translators: a quick swipe right followed by a quick swipe down, on a touch screen.
+	action_flickRightThenDown: pgettext("touch action", "flick right then down"),
+	# Translators: a quick swipe left followed by a quick swipe up, on a touch screen.
+	action_flickLeftThenUp: pgettext("touch action", "flick left then up"),
+	# Translators: a quick swipe left followed by a quick swipe down, on a touch screen.
+	action_flickLeftThenDown: pgettext("touch action", "flick left then down"),
+	# Translators: a quick swipe up followed by a quick swipe right, on a touch screen.
+	action_flickUpThenRight: pgettext("touch action", "flick up then right"),
+	# Translators: a quick swipe up followed by a quick swipe left, on a touch screen.
+	action_flickUpThenLeft: pgettext("touch action", "flick up then left"),
+	# Translators: a quick swipe down followed by a quick swipe right, on a touch screen.
+	action_flickDownThenRight: pgettext("touch action", "flick down then right"),
+	# Translators: a quick swipe down followed by a quick swipe left, on a touch screen.
+	action_flickDownThenLeft: pgettext("touch action", "flick down then left"),
 }
 
 
@@ -97,58 +143,97 @@ class SingleTouchTracker(object):
 		"y",
 		"startX",
 		"startY",
+		"peakX",
+		"peakY",
 		"startTime",
 		"endTime",
 		"maxAbsDeltaX",
 		"maxAbsDeltaY",
 		"action",
 		"complete",
+		"_samples",
 	]
 
 	def __init__(self, ID, x, y):
 		self.ID = ID
-		self.x = self.startX = x
-		self.y = self.startY = y
+		self.x = self.startX = self.peakX = x
+		self.y = self.startY = self.peakY = y
 		self.startTime = time.time()
 		self.endTime = -1
 		self.maxAbsDeltaX = 0
 		self.maxAbsDeltaY = 0
 		self.action = action_unknown
 		self.complete = False
+		self._samples: list[tuple[int, int, float]] = []
 
 	def update(self, x, y, complete=False):
 		"""Called to alert this single tracker that the finger has moved or broken contact."""
 		self.x = x
 		self.y = y
-		deltaX = x - self.startX
-		deltaY = y - self.startY
-		absDeltaX = abs(deltaX)
-		absDeltaY = abs(deltaY)
-		self.maxAbsDeltaX = max(absDeltaX, self.maxAbsDeltaX)
-		self.maxAbsDeltaY = max(absDeltaY, self.maxAbsDeltaY)
+		absDeltaX = abs(x - self.startX)
+		absDeltaY = abs(y - self.startY)
+		if absDeltaX > self.maxAbsDeltaX:
+			self.maxAbsDeltaX = absDeltaX
+			self.peakX = x
+		if absDeltaY > self.maxAbsDeltaY:
+			self.maxAbsDeltaY = absDeltaY
+			self.peakY = y
 		curTime = time.time()
+		# Record sample and prune the rolling window
+		self._samples.append((x, y, curTime))
+		cutoff = curTime - _VELOCITY_SAMPLE_WINDOW
+		while self._samples and self._samples[0][2] < cutoff:
+			self._samples.pop(0)
 		deltaTime = curTime - self.startTime
 		if deltaTime < multitouchTimeout:  # not timed out yet
-			if complete and self.maxAbsDeltaX < maxAccidentalDrift and self.maxAbsDeltaY < maxAccidentalDrift:
-				# The completed quick touch never drifted too far from its initial contact point therefore its a tap
-				self.action = action_tap
-			elif complete and self.maxAbsDeltaX >= minFlickDistance and self.maxAbsDeltaX > self.maxAbsDeltaY:
-				# The completed quick touch traveled far enough horizontally to be a flick and was also not off by more than 45 degrees.
-				if deltaX > 0:  # Traveling to the right
-					self.action = action_flickRight
-				else:  # traveling to the left
-					self.action = action_flickLeft
-			elif complete and self.maxAbsDeltaY >= minFlickDistance and self.maxAbsDeltaY > self.maxAbsDeltaX:
-				# The completed quick touch traveled far enough vertically to be a flick and was also not off by more than 45 degrees.
-				if deltaY > 0:  # traveling down
-					self.action = action_flickDown
-				else:  # traveling up
-					self.action = action_flickUp
+			if complete:
+				if self.maxAbsDeltaX < maxAccidentalDrift and self.maxAbsDeltaY < maxAccidentalDrift:
+					# The completed quick touch never drifted too far from its initial contact point therefore its a tap
+					self.action = action_tap
+				else:
+					vx, vy = self.getVelocity()
+					speed = math.hypot(vx, vy)
+					hasFlickDistance = (
+						self.maxAbsDeltaX >= minFlickDistance or self.maxAbsDeltaY >= minFlickDistance
+					)
+					if speed >= minFlickVelocity and hasFlickDistance:
+						# Use velocity direction rather than total displacement direction,
+						# so late-stroke direction changes are reflected correctly.
+						if abs(vx) >= abs(vy):
+							self.action = action_flickRight if vx > 0 else action_flickLeft
+						else:
+							self.action = action_flickDown if vy > 0 else action_flickUp
 		else:  # timeout exceeded, must be a kind of hover
 			self.action = action_hover
 		self.complete = complete
 		if complete:
 			self.endTime = curTime
+
+	def getVelocity(self) -> tuple[float, float]:
+		"""Return ``(vx, vy)`` in pixels per second using least-squares linear regression over recent samples.
+
+		Only samples recorded at or after :attr:`startTime` are used,
+		so resets in :meth:`TrackerManager._checkContinuousFlick` are respected automatically.
+
+		:return: A ``(vx, vy)`` tuple of velocity components in pixels per second.
+			Returns ``(0.0, 0.0)`` if fewer than two usable samples are available.
+		"""
+		samples = [(sx, sy, st) for sx, sy, st in self._samples if st >= self.startTime]
+		n = len(samples)
+		if n < 2:
+			return 0.0, 0.0
+		t0 = samples[0][2]
+		ts = [st - t0 for _, _, st in samples]
+		xs = [sx for sx, _, _ in samples]
+		ys = [sy for _, sy, _ in samples]
+		sum_t = sum(ts)
+		sum_t2 = sum(t * t for t in ts)
+		denom = n * sum_t2 - sum_t * sum_t
+		if denom == 0.0:
+			return 0.0, 0.0
+		vx = (n * sum(t * x for t, x in zip(ts, xs)) - sum_t * sum(xs)) / denom
+		vy = (n * sum(t * y for t, y in zip(ts, ys)) - sum_t * sum(ys)) / denom
+		return vx, vy
 
 
 class MultiTouchTracker:
@@ -322,6 +407,10 @@ class TrackerManager(object):
 					self.numUnknownTrackers -= 1
 			# Update pinch tracking whenever any finger moves or lifts
 			self._updatePinch(complete)
+			# Check for continuous (no finger lift) sequential flick direction reversal.
+			# Run even after hover kicks in, as continuousFlickTimeout is longer than multitouchTimeout.
+			if not complete:
+				self._checkContinuousFlick(tracker)
 			# if the action changed and its not unknown, then we will be queuing it
 			if newAction != oldAction and newAction != action_unknown:
 				if newAction == action_hover:
@@ -391,6 +480,59 @@ class TrackerManager(object):
 		elif numActive == 0 and complete:
 			# Single finger lifted with no active pinch — reset stored positions
 			self._pinchLastPositions.clear()
+
+	def _checkContinuousFlick(self, tracker: SingleTouchTracker) -> None:
+		"""Detect a continuous (no finger lift) sequential flick by checking for significant movement away from the peak.
+
+		If the finger traveled far enough to form a first flick and has now moved far enough away from
+		the peak position in any direction (including perpendicular), the first flick is queued and
+		the tracker is reset so the return stroke is tracked as the second gesture.
+
+		:param tracker: The single touch tracker to inspect.
+		"""
+		curTime = time.time()
+		if curTime - tracker.startTime >= continuousFlickTimeout:
+			return
+		# Determine the first flick direction from start → peak displacement
+		peakDeltaX = tracker.peakX - tracker.startX
+		peakDeltaY = tracker.peakY - tracker.startY
+		absPeakDeltaX = abs(peakDeltaX)
+		absPeakDeltaY = abs(peakDeltaY)
+		if absPeakDeltaX < minFlickDistance and absPeakDeltaY < minFlickDistance:
+			return  # hasn't built up enough displacement for a first flick yet
+		if absPeakDeltaX >= absPeakDeltaY:
+			firstAction = action_flickRight if peakDeltaX > 0 else action_flickLeft
+		else:
+			firstAction = action_flickDown if peakDeltaY > 0 else action_flickUp
+		# Check how far the finger has traveled from the peak in any direction
+		if (
+			abs(tracker.x - tracker.peakX) < minFlickDistance
+			and abs(tracker.y - tracker.peakY) < minFlickDistance
+		):
+			return  # hasn't moved far enough from peak for a second stroke yet
+		self.processAndQueueMultiTouchTracker(
+			MultiTouchTracker(
+				firstAction,
+				tracker.startX,
+				tracker.startY,
+				tracker.startTime,
+				curTime,
+				rawSingleTouchTracker=tracker,
+			),
+		)
+		# Reset the tracker so it accumulates displacement for the return stroke.
+		# Reset action to unknown so the second stroke can be classified as a flick even if the
+		# first stroke had already timed out into a hover.
+		tracker.startX = tracker.peakX
+		tracker.startY = tracker.peakY
+		tracker.startTime = curTime
+		tracker.maxAbsDeltaX = 0
+		tracker.maxAbsDeltaY = 0
+		tracker.peakX = tracker.x
+		tracker.peakY = tracker.y
+		if tracker.action != action_unknown:
+			tracker.action = action_unknown
+			self.numUnknownTrackers += 1
 
 	def makeMergedTrackerIfPossible(self, oldTracker, newTracker):
 		if (
