@@ -67,7 +67,6 @@ import extensionPoints
 import hwPortUtils
 import bdDetect
 import queueHandler
-import winUser
 import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked, post_sessionLockStateChanged
@@ -3974,18 +3973,6 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 
 
 inputCore.registerGestureSource("br", BrailleDisplayGesture)
-
-
-from _brailleMirror import (
-	BrailleMirror,
-	DirectBrailleWindow,
-	injectGesture,
-	registerMirror,
-	unregisterMirror,
-	_mirrorFilterDisplayDimensions,
-	_mirrorPreWriteCells,
-	_registeredMirrors,
-)
 
 
 def getSerialPorts(filterFunc=None) -> typing.Iterator[typing.Tuple[str, str]]:
