@@ -29,7 +29,7 @@ import braille
 import core
 import nvwave
 import globalVars
-from typing import List, Union, optional
+from typing import List, Union
 import diffHandler
 from config.configFlags import (
 	TypingEcho,
@@ -382,7 +382,7 @@ class LiveText(NVDAObject):
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
 
-	maxLines = 100
+	MAX_LINES = 100
 	"""the maximum number of lines that will be reported when a large number of lines are queued
 	subclasses may override this to allow for custom line reporting batches"""
 	announceNewLineText = False
@@ -391,7 +391,7 @@ class LiveText(NVDAObject):
 		self._event = threading.Event()
 		self._monitorThread = None
 		self._keepMonitoring = False
-		self._reportNewLinesGenID: optional[int] = None
+		self._reportNewLinesGenID: int | None = None
 		pre_speechCanceled.register(self._onSpeechCanceled)
 
 	def startMonitoring(self):
@@ -463,7 +463,7 @@ class LiveText(NVDAObject):
 		Subclasses may override this method to provide custom filtering of new text,
 		where logic depends on multiple lines.
 		"""
-		droppedCount = len(lines) - self.maxLines
+		droppedCount = len(lines) - self.MAX_LINES
 		if droppedCount > 0:
 			speech.speakMessage(
 				# Translators: Announced when a large burst of live-text output is truncated.
@@ -471,7 +471,7 @@ class LiveText(NVDAObject):
 					numLines=droppedCount,
 				),
 			)
-			lines = lines[-self.maxLines :]
+			lines = lines[-self.MAX_LINES :]
 		if self._reportNewLinesGenID is not None:
 			queueHandler.cancelGeneratorObject(self._reportNewLinesGenID)
 			self._reportNewLinesGenID = None
