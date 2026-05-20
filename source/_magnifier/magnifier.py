@@ -154,6 +154,7 @@ class Magnifier:
 
 		:param value: The zoom level to set (can be any intermediate value)
 		"""
+		value = max(ZoomLevel.MIN_ZOOM, min(value, ZoomLevel.MAX_ZOOM))
 		self._zoomLevel = value
 
 	def _onDisplayChanged(self, orientationState: OrientationState) -> None:

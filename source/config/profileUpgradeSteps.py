@@ -707,7 +707,7 @@ def upgradeConfigFrom_22_to_23(profile: ConfigObj):
 			f"expected a string representing a float, got {zoom!r}. Skipping upgrade step.",
 		)
 		return
-	# Convert ratio to percentage and round to nearest 10%
-	zoomPercentage = round(zoomRatio * 100 / 10) * 10
+	# Convert ratio to percentage and round to nearest 50%
+	zoomPercentage = round(zoomRatio * 100.0 / 50.0) * 50
 	magnifierConf["zoomLevel"] = zoomPercentage
 	log.debug(f"Converted magnifier.zoomLevel from ratio {zoomRatio} to percentage {zoomPercentage}%.")

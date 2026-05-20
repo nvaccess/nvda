@@ -39,11 +39,15 @@ class ZoomLevel:
 	MAX_ZOOM: int = 5000
 	MIN_ZOOM: int = 100
 	STEP_FACTOR: int = 50
-	ZOOM_MESSAGE = pgettext(
-		"magnifier",
-		# Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
-		"{zoomLevel}%",
-	)
+
+	@staticmethod
+	def zoomMessage(zoomLevel: int) -> str:
+		zoomLevel = zoomLevel / 100.0
+		return pgettext(
+			"magnifier",
+			# Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
+			"{zoomLevel}x",
+		)
 
 
 def getZoomLevel() -> int:
@@ -63,7 +67,7 @@ def getZoomLevelString() -> str:
 	:return: Formatted zoom level string.
 	"""
 	zoomLevel = getZoomLevel()
-	return ZoomLevel.ZOOM_MESSAGE.format(zoomLevel=zoomLevel)
+	return ZoomLevel.zoomMessage(zoomLevel)
 
 
 def setZoomLevel(zoomLevel: int) -> None:

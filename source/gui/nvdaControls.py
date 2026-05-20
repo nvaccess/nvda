@@ -695,3 +695,7 @@ class SpinStepCtrl(wx.SpinCtrl):
 			self.SetValue(pos - 1 + self.step)
 		else:
 			self.SetValue(pos + 1 - self.step)
+
+	def SetValue(self, pos: int) -> None:
+		pos = round(pos / self.step) * self.step
+		return super().SetValue(pos)
