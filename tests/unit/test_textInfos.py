@@ -178,13 +178,13 @@ class TestEndpoints(unittest.TestCase):
 
 
 class TestWordExpansion(unittest.TestCase):
-	def test_expandWordDoesNotRequireFlowsToBeforeEndOfStory(self):
+	def test_expandWordDoesNotRequireFlowsToBeforeEndOfStory(self) -> None:
 		obj = BasicTextProvider(text="one two")
 		ti = obj.makeTextInfo(Offsets(0, 0))
 		ti.expand(textInfos.UNIT_WORD)
 		self.assertEqual(ti.text, "one ")
 
-	def test_expandWordAtEndOfStoryWithoutFlowsToDoesNothing(self):
+	def test_expandWordAtEndOfStoryWithoutFlowsToDoesNothing(self) -> None:
 		obj = BasicTextProvider(text="one two")
 		ti = obj.makeTextInfo(textInfos.POSITION_ALL)
 		ti.collapse(end=True)
@@ -199,7 +199,7 @@ class _UnknownWordSegConf:
 
 
 class TestWordSegFlag(unittest.TestCase):
-	def test_unknownWordSegConfigReturnsNoneAfterLogging(self):
+	def test_unknownWordSegConfigReturnsNoneAfterLogging(self) -> None:
 		obj = BasicTextProvider(text="abc")
 		ti = obj.makeTextInfo(Offsets(0, 0))
 		ti.wordSegConf = _UnknownWordSegConf()

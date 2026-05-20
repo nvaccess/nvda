@@ -148,7 +148,7 @@ class WordNavigationUnitFlag(DisplayStringEnum):
 	CHINESE = enum.auto()
 
 	@property
-	def _displayStringLabels(self):
+	def _displayStringLabels(self) -> dict["WordNavigationUnitFlag", str]:
 		return {
 			# Translators: Label for a method of word segmentation.
 			self.AUTO: _("Auto"),

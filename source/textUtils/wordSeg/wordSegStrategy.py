@@ -5,6 +5,7 @@
 
 import os
 from ctypes import (
+	CDLL,
 	c_bool,
 	c_char_p,
 	c_int,
@@ -15,8 +16,8 @@ from ctypes import (
 )
 from abc import ABC, abstractmethod
 from functools import lru_cache
-from collections.abc import Callable
-from typing import Any
+from collections.abc import Callable, Iterator
+from typing import Any, ParamSpec, TypeVar
 import re
 import unicodedata
 
@@ -24,40 +25,32 @@ import textUtils
 from logHandler import log
 
 
-# Initializer registry (robust: saves module + qualname + original function + args/kwargs)
-# Each entry: (module_name: str, qualname: str, func_obj: Callable, args: tuple, kwargs: dict)
-initializerList: list[tuple[str, str, Callable[..., Any], tuple[Any, ...], dict[str, Any]]] = []
+_P = ParamSpec("_P")
+_R = TypeVar("_R")
+_InitializerEntry = tuple[str, str, Callable[..., Any], tuple[Any, ...], dict[str, Any]]
+_initializerList: list[_InitializerEntry] = []
 
 
-def initializerRegistry(*decorator_args, **decorator_kwargs):
+def iterInitializers() -> Iterator[_InitializerEntry]:
+	"""Iterate over registered initializer entries."""
+	return iter(_initializerList)
+
+
+def initializerRegistry(func: Callable[_P, _R]) -> Callable[_P, _R]:
 	"""
 	A decorator to register an initializer function.
-	Usage:
-		@initializerRegistry
-		def f(): ...
-	or with arguments:
-		@initializerRegistry(arg1, arg2, kw=val)
-		def f(...): ...
-	We save (func.__module__, func.__qualname__, func, args, kwargs) so that during
-	package initialize() we can dynamically resolve the callable from the module
-	(this handles classmethod/staticmethod ordering issues).
+	We save (func.__module__, func.__qualname__, func) so that during package initialize()
+	we can dynamically resolve the callable from the module.
+	This handles classmethod/staticmethod ordering issues.
 	"""
-	if decorator_args and callable(decorator_args[0]) and len(decorator_args) == 1 and not decorator_kwargs:
-		func = decorator_args[0]
-		initializerList.append((func.__module__, func.__qualname__, func, (), {}))
-		return func
-
-	def _decorator(func: Callable[..., Any]):
-		initializerList.append((func.__module__, func.__qualname__, func, decorator_args, decorator_kwargs))
-		return func
-
-	return _decorator
+	_initializerList.append((func.__module__, func.__qualname__, func, (), {}))
+	return func
 
 
 class WordSegmentationStrategy(ABC):
 	"""Abstract base class for word segmentation strategies."""
 
-	def __init__(self, text: str, encoding: str | None = None):
+	def __init__(self, text: str, encoding: str | None = None) -> None:
 		self.text: str = text
 		self.encoding: str | None = encoding
 		self.wordEnds: list[int] = []
@@ -158,12 +151,17 @@ class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
 
 
 class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
-	_lib = None
-	_LANGUAGE_PATTERN = re.compile(r"^zh", re.IGNORECASE)
+	_lib: CDLL | None = None
+	_LANGUAGE_PATTERN: re.Pattern[str] = re.compile(r"^zh", re.IGNORECASE)
+	_PUNCTUATION_CATEGORY_PREFIXES: str = "pP"
+	_OTHER_PATTERN_CATEGORY: str = "So"
 
 	@classmethod
 	@initializerRegistry
-	def _initCppJieba(cls, forceInit: bool = False):  # TODO: Add a fallback when cppjieba.dll is unavailable.
+	def _initCppJieba(
+		cls,
+		forceInit: bool = False,
+	) -> None:  # TODO: Add a fallback when cppjieba.dll is unavailable.
 		"""
 		Class-level initializer: attempts to load the versioned cppjieba library and
 		set up ctypes signatures.
@@ -186,8 +184,8 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 		try:
 			from NVDAState import ReadPaths
 
-			lib_path = os.path.join(ReadPaths.coreArchLibPath, "cppjieba.dll")
-			lib = cdll.LoadLibrary(lib_path)
+			libPath = os.path.join(ReadPaths.coreArchLibPath, "cppjieba.dll")
+			lib = cdll.LoadLibrary(libPath)
 
 			# Setup function signatures
 			# bool initJieba(const char* dictDir)
@@ -217,11 +215,11 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			# Initialize with dictionary path
 			import globalVars
 
-			DICTS_DIR = os.path.join(globalVars.appDir, "cppjieba", "dicts")
-			DICTS_DIR_BYTES = DICTS_DIR.encode("utf-8")
-			dictDir = create_string_buffer(DICTS_DIR_BYTES)
+			dictsDir = os.path.join(globalVars.appDir, "cppjieba", "dicts")
+			dictsDirBytes = dictsDir.encode("utf-8")
+			dictDir = create_string_buffer(dictsDirBytes)
 			if not lib.initJieba(dictDir):
-				log.debugWarning("Failed to initialize cppjieba library with dictionary path: %s", DICTS_DIR)
+				log.debugWarning("Failed to initialize cppjieba library with dictionary path: %s", dictsDir)
 				cls._lib = None
 				return
 			cls._lib = lib
@@ -230,7 +228,7 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 			cls._lib = None
 
 	@lru_cache(maxsize=256)
-	def _callCppjiebaCached(self, text_utf8: bytes) -> list[int]:
+	def _callCppJiebaCached(self, textUtf8: bytes) -> list[int]:
 		if self._lib is None:
 			return []
 
@@ -238,7 +236,7 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 		outLen = c_int(0)
 
 		try:
-			success: bool = self._lib.calculateWordOffsets(text_utf8, byref(charPtr), byref(outLen))
+			success: bool = self._lib.calculateWordOffsets(textUtf8, byref(charPtr), byref(outLen))
 			if not success or not bool(charPtr) or outLen.value <= 0:
 				return []
 
@@ -257,7 +255,7 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 				log.debugWarning("Failed to free cppjieba offsets after error: %s", cleanupErr)
 			return []
 
-	def _callCPPJieba(self) -> list[int]:
+	def _callCppJieba(self) -> list[int]:
 		"""
 		Instance method: encode self.text and call cppjieba.
 		Returns list[int] on success, or an empty list on failure.
@@ -266,7 +264,7 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 		data = self.text.encode("utf-8")
 
 		if getattr(self, "_lib", None) is ChineseWordSegmentationStrategy._lib:
-			return self._callCppjiebaCached(data)
+			return self._callCppJiebaCached(data)
 		else:
 			if self._lib is None:
 				return []
@@ -312,16 +310,12 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 				# separator already present at either side -> skip adding
 				continue
 
-			# Unicode categories for punctuation
-			PUNCTUATION_CATEGORIES: str = "pP"
-			# Unicode categories for other (mainly for braille) patterns
-			OTHER_PATTERN_CATEGORIES: str = "So"
 			# Determine whether any punctuation forbids a separator
 			noSep = (
-				unicodedata.category(self.text[curIndex - 1])[0] in PUNCTUATION_CATEGORIES
-				or unicodedata.category(self.text[curIndex - 1]) == OTHER_PATTERN_CATEGORIES
-				or unicodedata.category(self.text[curIndex])[0] in PUNCTUATION_CATEGORIES
-				or unicodedata.category(self.text[curIndex]) == OTHER_PATTERN_CATEGORIES
+				unicodedata.category(self.text[curIndex - 1])[0] in self._PUNCTUATION_CATEGORY_PREFIXES
+				or unicodedata.category(self.text[curIndex - 1]) == self._OTHER_PATTERN_CATEGORY
+				or unicodedata.category(self.text[curIndex])[0] in self._PUNCTUATION_CATEGORY_PREFIXES
+				or unicodedata.category(self.text[curIndex]) == self._OTHER_PATTERN_CATEGORY
 			)
 
 			if not noSep:
@@ -337,6 +331,6 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
 		return self.getWordOffsetRange(offset)
 
-	def __init__(self, text, encoding=None):
+	def __init__(self, text: str, encoding: str | None = None) -> None:
 		super().__init__(text, encoding)
-		self.wordEnds = self._callCPPJieba()
+		self.wordEnds = self._callCppJieba()

@@ -11,6 +11,7 @@ import NVDAHelper
 import config.featureFlagEnums
 import NVDAState
 import config
+from config.featureFlag import FeatureFlag
 import textInfos
 import locationHelper
 from treeInterceptorHandler import TreeInterceptor
@@ -494,9 +495,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		Subclasses may extend this to perform implementation specific initialisation, calling their superclass method afterwards.
 		"""
 		super(OffsetsTextInfo, self).__init__(obj, position)
-		self.wordSegConf: config.featureFlag.FeatureFlag = config.conf["documentNavigation"][
-			"wordSegmentationStandard"
-		]
+		self.wordSegConf: FeatureFlag = config.conf["documentNavigation"]["wordSegmentationStandard"]
 
 		from NVDAObjects import NVDAObject
 
@@ -586,7 +585,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def expand(self, unit):
 		if unit == textInfos.UNIT_WORD and self.isCollapsed and self._startOffset == self._getStoryLength():
 			try:
-				flowsTo = self.obj.flowsTo
+				flowsTo: object | None = self.obj.flowsTo
 			except (AttributeError, NotImplementedError):
 				flowsTo = None
 			if not flowsTo:

@@ -15,7 +15,7 @@ from . import wordSegStrategy
 
 def _runInitializer(
 	initializer: Callable[..., Any],
-	module_name: str,
+	moduleName: str,
 	qualname: str,
 	args: tuple[Any, ...],
 	kwargs: dict[str, Any],
@@ -23,17 +23,17 @@ def _runInitializer(
 	try:
 		initializer(*args, **kwargs)
 	except Exception:
-		log.exception(f"Initializer {module_name}.{qualname} failed")
+		log.exception(f"Initializer {moduleName}.{qualname} failed")
 
 
 def initialize() -> None:
 	"""
-	Call all registered initializer functions recorded in wordSegStrategy.initializerList.
+	Call all registered initializer functions recorded in wordSegStrategy.
 
-	Each entry is a tuple: (module_name, qualname, func_obj, args, kwargs).
+	Each entry is a tuple: (moduleName, qualname, funcObj, args, kwargs).
 	We try to resolve the callable from the module and qualname at runtime
-	(this handles classmethod/staticmethod wrapping order). If resolution fails,
-	we fall back to the stored func_obj.
+	(this handles classmethod/staticmethod wrapping order).
+	If resolution fails, we fall back to the stored funcObj.
 
 	Exceptions from individual initializers are caught and logged so that one
 	failing initializer doesn't stop the rest.
@@ -41,29 +41,29 @@ def initialize() -> None:
 
 	log.debug("Initializing word segmentation module")
 
-	for module_name, qualname, func_obj, args, kwargs in wordSegStrategy.initializerList:
-		callable_to_call: Callable[..., Any] = func_obj
+	for moduleName, qualname, funcObj, args, kwargs in wordSegStrategy.iterInitializers():
+		callableToCall: Callable[..., Any] = funcObj
 		try:
-			mod = importlib.import_module(module_name)
+			mod = importlib.import_module(moduleName)
 			obj = mod
 			for part in qualname.split("."):
 				obj = getattr(obj, part)
-			callable_to_call = obj
+			callableToCall = obj
 		except Exception:
 			log.debugWarning(
-				f"Could not resolve initializer {module_name}.{qualname}; falling back to the registered function",
+				f"Could not resolve initializer {moduleName}.{qualname}; falling back to the registered function",
 				exc_info=True,
 			)
 
-		if not callable(callable_to_call):
-			log.debugWarning(f"Resolved initializer {module_name}.{qualname} is not callable; skipping")
+		if not callable(callableToCall):
+			log.debugWarning(f"Resolved initializer {moduleName}.{qualname} is not callable; skipping")
 			continue
 		try:
 			threading.Thread(
 				target=_runInitializer,
-				args=(callable_to_call, module_name, qualname, args, kwargs),
-				name=f"wordSeg initializer {module_name}.{qualname}",
+				args=(callableToCall, moduleName, qualname, args, kwargs),
+				name=f"wordSeg initializer {moduleName}.{qualname}",
 				daemon=True,
 			).start()
 		except Exception:
-			log.exception(f"Failed to start initializer {module_name}.{qualname}")
+			log.exception(f"Failed to start initializer {moduleName}.{qualname}")

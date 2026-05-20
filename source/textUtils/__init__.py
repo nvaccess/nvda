@@ -592,11 +592,16 @@ class WordSegmenter:
 
 	# Precompiled patterns
 	# Chinese characters and Japanese kanji (CJK Unified Ideographs U+4E00 - U+9FFF)
-	_CHINESE_CHARACTER_AND_JAPANESE_KANJI: re.Pattern = re.compile(r"[\u4E00-\u9FFF]")
+	_CHINESE_CHARACTER_AND_JAPANESE_KANJI: re.Pattern[str] = re.compile(r"[\u4E00-\u9FFF]")
 	# Japanese kana (Hiragana U+3040 - U+309F, Katakana U+30A0 - U+30FF)
-	_KANA: re.Pattern = re.compile(r"[\u3040-\u309F\u30A0-\u30FF]")
+	_KANA: re.Pattern[str] = re.compile(r"[\u3040-\u309F\u30A0-\u30FF]")
 
-	def __init__(self, text: str, encoding: str = "UTF-8", wordSegFlag: WordSegFlag = WordSegFlag.AUTO):
+	def __init__(
+		self,
+		text: str,
+		encoding: str | None = "UTF-8",
+		wordSegFlag: WordSegFlag = WordSegFlag.AUTO,
+	) -> None:
 		self.text: str = text
 		self.encoding: str | None = encoding
 		self.wordSegFlag: WordSegFlag = wordSegFlag

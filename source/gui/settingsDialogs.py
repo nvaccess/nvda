@@ -3565,11 +3565,11 @@ class DocumentNavigationPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("ParagraphStyle", self.paragraphStyleCombo)
 
-	def onSave(self):
+	def onSave(self) -> None:
 		self.wordSegCombo.saveCurrentValueToConf()
 		self.paragraphStyleCombo.saveCurrentValueToConf()
 
-	def postSave(self):
+	def postSave(self) -> None:
 		from textUtils import wordSeg
 
 		try:
