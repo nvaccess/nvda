@@ -30,6 +30,11 @@ class VKMapType(IntEnum):
 class BrailleInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	def __init__(self, **kwargs):
 		super().__init__()
+		# Normalize legacy routingIndex field into cellIndexes before assignment
+		# to avoid triggering the deprecation warning on the setter.
+		legacyRoutingIndex = kwargs.pop("routingIndex", None)
+		if "cellIndexes" not in kwargs and legacyRoutingIndex is not None:
+			kwargs["cellIndexes"] = [legacyRoutingIndex]
 		for key, value in kwargs.items():
 			setattr(self, key, value)
 		self.source = f"remote{self.source.capitalize()}"

@@ -765,7 +765,7 @@ class RoutingGesture(InputGesture):
 		else:
 			# pylint: disable=invalid-name
 			self.id = "routing"
-			self.routingIndex = routingIndex
+			self.cellIndexes = [routingIndex]
 		super(RoutingGesture, self).__init__(model)
 
 

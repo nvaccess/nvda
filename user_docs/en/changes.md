@@ -6,6 +6,10 @@
 
 ### New Features
 
+* On supported braille displays, pressing multiple routing keys simultaneously can now be bound to a new "multi routing" gesture. (#20001, @LeonarddeR)
+  * The "select range" command, which selects the text from the first up to the last pressed routing key, is bound to this gesture by default on supporting drivers.
+  * Drivers with built-in support for multi routing: ALVA, Baum (and compatible), HumanWare Brailliant BI/B series, Handy Tech, NLS eReader Zoomax, Seika Notetaker, and Standard HID Braille displays.
+
 ### Changes
 
 ### Bug Fixes
@@ -16,7 +20,14 @@
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* `braille.BrailleDisplayGesture` now exposes a `cellIndexes` list attribute, replacing the single-valued `routingIndex`. (#20001, @LeonarddeR)
+  * Drivers should set `cellIndexes` directly instead of `routingIndex`.
+  * When a gesture addresses more than one cell, its `id` should be set to `"multiRouting"` (or be built via the new `BrailleDisplayGesture.idForCellCount(n)` helper).
+  * `cellIndexes` is not limited to routing keys; touch-sensitive cells (e.g. Handy Tech Active Tactile Control) can reuse the same attribute.
+
 #### Deprecations
+
+* The `braille.BrailleDisplayGesture.routingIndex` attribute is deprecated. Use the `cellIndexes` attribute instead. (#20001, @LeonarddeR)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
@@ -134,6 +145,7 @@ Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`,
 
 #### Deprecations
 
+* `braille.BrailleDisplayGesture.routingIndex` is deprecated. Use `cellIndexes` instead. (#20001, @LeonarddeR)
 * The `speechDictHandler.ENTRY_TYPE_*` constants are deprecated.
 Use the `speechDictHandler.types.EntryType` enumeration instead. (#19430, @LeonarddeR)
 * `speechDictHandler.SpeechDictEntry` and `speechDictHandler.SpeechDict` have been moved to `speechDictHandler.types`. (#19430, @LeonarddeR)

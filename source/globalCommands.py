@@ -4222,7 +4222,9 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_braille_routeTo(self, gesture):
-		braille.handler.routeTo(gesture.routingIndex)
+		if not gesture.cellIndexes:
+			return
+		braille.handler.routeTo(gesture.cellIndexes[0])
 
 	@script(
 		# Translators: Input help mode message for Braille report formatting command.
@@ -4230,12 +4232,37 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_braille_reportFormatting(self, gesture):
-		info = braille.handler.getTextInfoForWindowPos(gesture.routingIndex)
+		if not gesture.cellIndexes:
+			return
+		info = braille.handler.getTextInfoForWindowPos(gesture.cellIndexes[0])
 		if info is None:
 			# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 			ui.message(_("No formatting information"))
 			return
 		self._reportFormattingHelper(info, False)
+
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Selects the text from the first up to the last braille cell"),
+		category=SCRCAT_BRAILLE,
+	)
+	def script_braille_selectRange(self, gesture):
+		if not gesture.cellIndexes or len(gesture.cellIndexes) < 2:
+			return
+		startPos = min(gesture.cellIndexes)
+		endPos = max(gesture.cellIndexes)
+		startInfo = braille.handler.getTextInfoForWindowPos(startPos)
+		endInfo = braille.handler.getTextInfoForWindowPos(endPos)
+		if startInfo is None or endInfo is None:
+			# Translators: Reported when selection via multiple routing keys is not possible.
+			ui.message(_("Cannot select from braille routing keys"))
+			return
+		startInfo.setEndPoint(endInfo, "endToEnd")
+		try:
+			startInfo.updateSelection()
+		except NotImplementedError:
+			# Translators: Reported when selection via multiple routing keys is not supported by the focused control.
+			ui.message(_("Selection not supported here"))
 
 	@script(
 		# Translators: Input help mode message for a braille command.

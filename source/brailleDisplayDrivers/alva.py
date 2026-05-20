@@ -476,6 +476,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				"braille_scrollForward": ("br(alva):t5", "br(alva):etouch3"),
 				"braille_routeTo": ("br(alva):routing",),
 				"braille_reportFormatting": ("br(alva):secondRouting",),
+				"braille_selectRange": ("br(alva):multiRouting",),
 				"review_top": ("br(alva):t1+t2",),
 				"review_bottom": ("br(alva):t4+t5",),
 				"braille_toggleTether": ("br(alva):t1+t3",),
@@ -522,17 +523,16 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		secondaryNames = []
 		dots = 0
 		space = False
+		cellIndexesByRange: dict[str, list[int]] = {}
 		for group, number in self.keyCodes:
 			if group == ALVA_CR_GROUP:
 				if number & ALVA_2ND_CR_MASK:
-					keyName = "secondRouting"
-					self.routingIndex = number & ~ALVA_2ND_CR_MASK
+					rangeName = "secondRouting"
+					cellIndex = number & ~ALVA_2ND_CR_MASK
 				else:
-					keyName = "routing"
-					self.routingIndex = number
-				names.append(keyName)
-				if isNoBC640:
-					secondaryNames.append(keyName)
+					rangeName = "routing"
+					cellIndex = number
+				cellIndexesByRange.setdefault(rangeName, []).append(cellIndex)
 			else:
 				try:
 					keyName = ALVA_KEYS[group][number]
@@ -556,6 +556,17 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 						brailleInput = False
 				else:
 					brailleInput = False
+
+		if cellIndexesByRange:
+			allIndexes: list[int] = []
+			for rangeName, indexes in sorted(cellIndexesByRange.items()):
+				indexes.sort()
+				allIndexes.extend(indexes)
+				idName = self.idForCellCount(len(indexes), rangeName)
+				names.append(idName)
+				if isNoBC640:
+					secondaryNames.append(idName)
+			self.cellIndexes = allIndexes
 
 		self.id = "+".join(names)
 		self.secondaryId = "+".join(secondaryNames) if isNoBC640 else self.id

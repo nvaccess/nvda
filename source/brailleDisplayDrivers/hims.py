@@ -837,5 +837,5 @@ class RoutingInputGesture(braille.BrailleDisplayGesture):
 
 	def __init__(self, routingINdex):
 		super(RoutingInputGesture, self).__init__()
-		self.routingIndex = routingINdex
+		self.cellIndexes = [routingINdex]
 		self.id = "routing"

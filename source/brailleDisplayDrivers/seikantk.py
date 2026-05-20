@@ -295,12 +295,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _handleRouting(self, arg: bytes):
 		routingIndexes = _getRoutingIndexes(arg)
-		for routingIndex in routingIndexes:
-			gesture = InputGestureRouting(routingIndex)
-			try:
-				inputCore.manager.executeGesture(gesture)
-			except inputCore.NoInputGestureAction:
-				log.debug("No action for Seika Notetaker routing command")
+		if not routingIndexes:
+			return
+		gesture = InputGestureRouting(sorted(routingIndexes))
+		try:
+			inputCore.manager.executeGesture(gesture)
+		except inputCore.NoInputGestureAction:
+			log.debug("No action for Seika Notetaker routing command")
 
 	def _handleKeys(self, arg: bytes):
 		brailleDots = arg[0]
@@ -331,6 +332,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		{
 			"globalCommands.GlobalCommands": {
 				"braille_routeTo": ("br(seikantk):routing",),
+				"braille_selectRange": ("br(seikantk):multiRouting",),
 				"braille_scrollBack": ("br(seikantk):LB",),
 				"braille_scrollForward": ("br(seikantk):RB",),
 				"braille_previousLine": ("br(seikantk):LJ_UP",),
@@ -366,10 +368,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 class InputGestureRouting(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, index):
+	def __init__(self, indexes: list[int] | int):
 		super().__init__()
-		self.id = "routing"
-		self.routingIndex = index
+		if isinstance(indexes, int):
+			# Backwards compat: callers historically passed a single index.
+			indexes = [indexes]
+		self.cellIndexes = indexes
+		self.id = self.idForCellCount(len(self.cellIndexes))
 
 
 def _getKeyNames(keys: int, names: Dict[int, str]) -> Set[str]:
@@ -404,6 +409,6 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				names.update(_getKeyNames(space, _keyNames))
 			names.update(_getKeyNames(dots, _dotNames))
 		elif routing is not None:
-			self.routingIndex = routing
+			self.cellIndexes = [routing]
 			names.add("routing")
 		self.id = "+".join(names)

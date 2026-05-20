@@ -3834,7 +3834,8 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
 	Subclasses must provide L{source} and L{id}.
 	Optionally, L{model} can be provided to facilitate model specific gestures.
-	L{routingIndex} should be provided for routing buttons.
+	L{cellIndexes} should be provided for gestures addressed to specific braille cells,
+	such as routing keys or touch-sensitive cells (e.g. Handy Tech Active Tactile Control).
 	Subclasses can also inherit from L{brailleInput.BrailleInputGesture} if the display has a braille keyboard.
 	If the braille display driver is a L{baseObject.ScriptableObject}, it can provide scripts specific to input gestures from this display.
 	"""
@@ -3868,9 +3869,60 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		"""
 		raise NotImplementedError
 
-	#: The index of the routing key or C{None} if this is not a routing key.
-	#: @type: int
-	routingIndex = None
+	cellIndexes: list[int] | None = None
+	"""Indexes of braille cells addressed by this gesture, e.g. routing keys or touch cells.
+	C{None} if this gesture is not cell-addressed.
+	"""
+
+	@classmethod
+	def idForCellCount(cls, count: int, baseName: str = "routing") -> str:
+		"""Return the conventional gesture id suffix for a cell-addressed gesture.
+
+		When more than one cell is addressed, the base name is prefixed with ``"multi"``
+		and its first character is uppercased.  For example::
+
+			idForCellCount(1, "routing")        # "routing"
+			idForCellCount(2, "routing")        # "multiRouting"
+			idForCellCount(2, "secondRouting")  # "multiSecondRouting"
+
+		:param count: Number of cells addressed.
+		:param baseName: The gesture id for a single-cell press in this range.
+		:return: The base name if *count* <= 1, otherwise the multi-prefixed form.
+		"""
+		if count > 1:
+			return f"multi{baseName[0].upper()}{baseName[1:]}"
+		return baseName
+
+	def _get_routingIndex(self) -> int | None:
+		"""Deprecated. Use :attr:`cellIndexes` instead.
+
+		Returns the highest cell index, or ``None`` if no cells are addressed.
+		"""
+		import NVDAState
+
+		if not NVDAState._allowDeprecatedAPI():
+			raise AttributeError(
+				"BrailleDisplayGesture.routingIndex is deprecated, use cellIndexes instead.",
+			)
+		log.warning(
+			"BrailleDisplayGesture.routingIndex is deprecated, use cellIndexes instead.",
+			stack_info=True,
+		)
+		return max(self.cellIndexes) if self.cellIndexes else None
+
+	def _set_routingIndex(self, value: int | None) -> None:
+		"""Deprecated. Set :attr:`cellIndexes` instead."""
+		import NVDAState
+
+		if not NVDAState._allowDeprecatedAPI():
+			raise AttributeError(
+				"Setting BrailleDisplayGesture.routingIndex is deprecated, set cellIndexes instead.",
+			)
+		log.warning(
+			"Setting BrailleDisplayGesture.routingIndex is deprecated, set cellIndexes instead.",
+			stack_info=True,
+		)
+		self.cellIndexes = [value] if value is not None else None
 
 	def _get_identifiers(self):
 		ids = ["br({source}):{id}".format(source=self.source, id=self.id)]
@@ -3893,7 +3945,10 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			name = brailleInput.BrailleInputGesture._get_displayName(self)
 			if name:
 				return name
-		return self.id
+		id = self.id
+		if "+" not in id and self.cellIndexes:  # Single routing identifier
+			id += "+".join(f"{i + 1}" for i in self.cellIndexes)
+		return id
 
 	def _get_scriptableObject(self):
 		display = handler.display

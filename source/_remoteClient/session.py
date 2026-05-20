@@ -662,8 +662,10 @@ class LeaderSession(RemoteSession):
 				dict["dots"] = gesture.dots
 			if hasattr(gesture, "space") and "space" not in dict:
 				dict["space"] = gesture.space
-			if hasattr(gesture, "routingIndex") and "routingIndex" not in dict:
-				dict["routingIndex"] = gesture.routingIndex
+			if hasattr(gesture, "cellIndexes") and "cellIndexes" not in dict and gesture.cellIndexes:
+				dict["cellIndexes"] = gesture.cellIndexes
+				# Legacy field for older peers that only know routingIndex.
+				dict.setdefault("routingIndex", max(gesture.cellIndexes))
 			self.localMachine._dismissLocalBrailleMessage()
 			self.transport.send(type=RemoteMessageType.BRAILLE_INPUT, **dict)
 			return False
