@@ -41,14 +41,14 @@ class TestBrailleOffsetConverters(unittest.TestCase):
 	def setUp(self) -> None:
 		self._originalTranslationTable = config.conf["braille"]["translationTable"]
 		self._originalUnicodeNormalization = config.conf["braille"]["unicodeNormalization"]
-		config.conf["braille"]["translationTable"] = "zh-chn.ctb"
-		config.conf["braille"]["unicodeNormalization"] = "enabled"
 
 	def tearDown(self) -> None:
 		config.conf["braille"]["translationTable"] = self._originalTranslationTable
 		config.conf["braille"]["unicodeNormalization"] = self._originalUnicodeNormalization
 
 	def test_chineseWordSegmentationAndUnicodeNormalizationOffsetsAreComposed(self):
+		config.conf["braille"]["translationTable"] = "zh-chn.ctb"
+		config.conf["braille"]["unicodeNormalization"] = "enabled"
 		wordSegmenter = Mock()
 		wordSegmenter.segmentedText.side_effect = _segmentedTextWithSeparator
 		translate = Mock(return_value=([1, 2, 3], [0, 1, 2], [0, 1, 2], 2))

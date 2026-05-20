@@ -10,6 +10,8 @@ from typing import Any
 
 from logHandler import log
 
+from . import wordSegStrategy
+
 
 def _runInitializer(
 	initializer: Callable[..., Any],
@@ -38,7 +40,6 @@ def initialize() -> None:
 	"""
 
 	log.debug("Initializing word segmentation module")
-	from . import wordSegStrategy
 
 	for module_name, qualname, func_obj, args, kwargs in wordSegStrategy.initializerList:
 		callable_to_call: Callable[..., Any] = func_obj
@@ -61,6 +62,7 @@ def initialize() -> None:
 			threading.Thread(
 				target=_runInitializer,
 				args=(callable_to_call, module_name, qualname, args, kwargs),
+				name=f"wordSeg initializer {module_name}.{qualname}",
 				daemon=True,
 			).start()
 		except Exception:

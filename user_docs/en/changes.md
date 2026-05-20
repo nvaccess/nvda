@@ -7,7 +7,7 @@
 ### New Features
 
 * Chinese text can now be navigated by word using built-in input gestures.
-  Several GUI elements were added to configure this in the `Document Navigation` panel. (#18735, @CrazySteve0605)
+  Several GUI elements were added to configure this in the "Document Navigation" panel. (#18735, @CrazySteve0605)
 * Braille output for Chinese now includes spaces between words. (#18865, @CrazySteve0605)
 
 ### Changes

@@ -11,6 +11,7 @@ from typing import (
 	TYPE_CHECKING,
 	Any,
 	Callable,
+	cast,
 	Dict,
 	Final,
 	Generator,
@@ -547,12 +548,12 @@ def _applyOffsetConverter(
 ) -> tuple[str, list[int] | None, int | None]:
 	if textToTranslateTypeforms is not None:
 		textToTranslateTypeforms = [
-			textToTranslateTypeforms[typing.cast(int, converter.encodedToStrOffsets(encodedOffset))]
+			textToTranslateTypeforms[cast(int, converter.encodedToStrOffsets(encodedOffset))]
 			for encodedOffset in range(converter.encodedStringLength)
 		]
 	if cursorPos is not None:
-		cursorPos = typing.cast(int, converter.strToEncodedOffsets(cursorPos))
-	return typing.cast(str, getattr(converter, "encoded")), textToTranslateTypeforms, cursorPos
+		cursorPos = cast(int, converter.strToEncodedOffsets(cursorPos))
+	return cast(str, getattr(converter, "encoded")), textToTranslateTypeforms, cursorPos
 
 
 class Region(object):
