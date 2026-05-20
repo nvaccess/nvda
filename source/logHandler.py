@@ -291,7 +291,7 @@ class Logger(logging.Logger):
 				"".join(traceback.format_list(stack_info)).rstrip(),
 			)
 
-		if redactSecrets and self.getEffectiveLevel() < self.SECRETS:
+		if redactSecrets and self.getEffectiveLevel() > self.SECRETS:
 			from detect_secrets.core.scan import scan_line
 			from detect_secrets.settings import default_settings
 
