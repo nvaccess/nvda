@@ -44,6 +44,12 @@ class MultitaskingViewFrameListItem(UIA):
 			return super(MultitaskingViewFrameListItem, self).container
 
 
+class SearchBoxClient(IAccessible):
+	# #20021: File Explorer can fire a redundant MSAA focus event on the search band pane
+	# immediately after the UIA SearchEditBox gains focus.
+	shouldAllowIAccessibleFocusEvent = False
+
+
 # Class for menu items  for Windows Places and Frequently used Programs (in start menu)
 # Also used for desktop items
 class SysListView32EmittingDuplicateFocusEvents(IAccessible):
@@ -224,6 +230,14 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):  # NOQA: C901
 		windowClass = obj.windowClassName
 		role = obj.role
+
+		if (
+			windowClass in ("Search Box", "UniversalSearchBand")
+			and role == controlTypes.Role.PANE
+			and isinstance(obj, IAccessible)
+		):
+			clsList.insert(0, SearchBoxClient)
+			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if windowClass == "ToolbarWindow32":
 			if role != controlTypes.Role.POPUPMENU:

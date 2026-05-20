@@ -35,7 +35,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from logHandler import log
 from queue import Queue
-from typing import Any, Literal, Optional, Self
+from typing import Any, Literal, Optional, Self, cast
 
 import wx
 from extensionPoints import Action, HandlerRegistrar
@@ -263,6 +263,8 @@ class TCPTransport(Transport):
 		address: tuple[str, int],
 		timeout: int = 0,
 		insecure: bool = False,
+		*,
+		trustedFingerprint: str | None = None,
 	) -> None:
 		"""Initialize the TCP transport.
 
@@ -270,6 +272,7 @@ class TCPTransport(Transport):
 		:param address: Remote address to connect to, as (host, port) tuple
 		:param timeout: Connection timeout in seconds, defaults to 0
 		:param insecure: Skip certificate verification, defaults to False
+		:param trustedFingerprint: Certificate fingerprint to trust this session if connecting insecurely.
 		"""
 		super().__init__(serializer=serializer)
 		self.closed: bool = False
@@ -304,6 +307,8 @@ class TCPTransport(Transport):
 		self.insecure: bool = insecure
 		"""Whether to skip certificate verification"""
 
+		self._trustedFingerprint = trustedFingerprint
+
 	def run(self) -> None:
 		"""
 		Establishes a connection to the server and manages the transport lifecycle.
@@ -319,10 +324,9 @@ class TCPTransport(Transport):
 		thread, and enters the read loop. Upon disconnection, it clears the connected
 		event, notifies about the transport disconnection, and performs cleanup.
 
-		Raises:
-			ssl.SSLCertVerificationError: If SSL certificate verification fails and
-										  the fingerprint is not trusted.
-			Exception: For any other exceptions during the connection process.
+		:raises ssl.SSLCertVerificationError: If SSL certificate verification fails and
+			the fingerprint is not trusted.
+			:raises Exception: For any other exceptions during the connection process.
 		"""
 		self.closed = False
 		try:
@@ -338,6 +342,7 @@ class TCPTransport(Transport):
 			except Exception:
 				pass
 			if self.isFingerprintTrusted(fingerprint):
+				self._trustedFingerprint = fingerprint
 				self.insecure = True
 				return self.run()
 			self.lastFailFingerprint = fingerprint
@@ -346,6 +351,20 @@ class TCPTransport(Transport):
 		except Exception:
 			self.transportConnectionFailed.notify()
 			raise
+		# If connecting without certificate verification and we were given a fingerprint to trust,
+		# check that the server's certificate matches it.
+		if (
+			self.insecure
+			and self._trustedFingerprint is not None
+			# Since this is a client-side socket, if connection was successful it will always return a certificate.
+			and (fingerprint := self._derCert2fingerprint(cast(bytes, self.serverSock.getpeercert(True))))
+			!= self._trustedFingerprint
+		):
+			self._disconnect()
+			self.lastFailFingerprint = fingerprint
+			self.transportCertificateAuthenticationFailed.notify()
+			self.transportConnectionFailed.notify()
+			return
 		self.onTransportConnected()
 		self.startQueueThread()
 		self._readLoop()
@@ -366,13 +385,18 @@ class TCPTransport(Transport):
 			and config["trustedCertificates"][hostPortToAddress(self.address)] == fingerprint
 		)
 
+	@staticmethod
+	def _derCert2fingerprint(cert: bytes) -> str:
+		"""Convert a DER-encoded certificate to a certificate fingerprint."""
+		return hashlib.sha256(cert).hexdigest().lower()
+
 	def getHostFingerprint(self) -> str:
 		tempConnection = self.createOutboundSocket(*self.address, insecure=True)
 		tempConnection.connect(self.address)
 		certBin = tempConnection.getpeercert(True)
 		tempConnection.close()
-		fingerprint = hashlib.sha256(certBin).hexdigest().lower()
-		return fingerprint
+		# Since this is a client-side socket, if connection was successful it will always return a certificate.
+		return self._derCert2fingerprint(cast(bytes, certBin))
 
 	def startQueueThread(self) -> None:
 		"""Start the outbound message queue thread."""
@@ -609,6 +633,8 @@ class RelayTransport(TCPTransport):
 		connectionType: str | None = None,
 		protocolVersion: int = PROTOCOL_VERSION,
 		insecure: bool = False,
+		*,
+		trustedFingerprint: str | None = None,
 	) -> None:
 		"""Initialize a new RelayTransport instance.
 
@@ -619,12 +645,14 @@ class RelayTransport(TCPTransport):
 		:param connectionType: Connection type identifier, defaults to ``None``
 		:param protocolVersion: Protocol version to use, defaults to :const:`PROTOCOL_VERSION`
 		:param insecure: Whether to skip certificate verification, defaults to ``False``
+		:param trustedFingerprint: Certificate fingerprint to trust this session if connecting insecurely.
 		"""
 		super().__init__(
 			address=address,
 			serializer=serializer,
 			timeout=timeout,
 			insecure=insecure,
+			trustedFingerprint=trustedFingerprint,
 		)
 		log.info(f"Connecting to {address} channel {channel}")
 		self.channel: str | None = channel
@@ -652,6 +680,7 @@ class RelayTransport(TCPTransport):
 			channel=connectionInfo.key,
 			connectionType=connectionInfo.mode,
 			insecure=connectionInfo.insecure,
+			trustedFingerprint=connectionInfo.trustedFingerprint,
 		)
 
 	def onConnected(self) -> None:
