@@ -383,7 +383,7 @@ class LiveText(NVDAObject):
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
 
-	MAX_LINES= 100
+	MAX_LINES = 100
 	"""the maximum number of lines that will be reported when a large number of lines are queued
 	subclasses may override this to allow for custom line reporting batches"""
 	announceNewLineText = False
