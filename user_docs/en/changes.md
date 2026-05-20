@@ -7,8 +7,10 @@
 ### New Features
 
 * Chinese text can now be navigated by word using built-in input gestures.
-  Several GUI elements were added to configure this in the "Document Navigation" panel. (#18735, @CrazySteve0605)
+Several GUI elements were added to configure this in the "Document Navigation" panel. (#18735, @CrazySteve0605)
 * Braille output for Chinese now includes spaces between words. (#18865, @CrazySteve0605)
+* The braille "word wrap" option has been replaced with a three-valued "Text wrap" option: Off, Show mark when words are cut, and At word boundaries. (#17010, @LeonarddeR)
+  * In modes that show a continuation mark, when a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
 
 ### Changes
 
@@ -23,6 +25,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Added [cppjieba](https://github.com/yanyiwu/cppjieba) as a git submodule for Chinese word segmentation. (#18548, @CrazySteve0605)
 
 #### Deprecations
+
+* The `braille.wordWrap` configuration key is deprecated and bridged to `braille.textWrap`. (#17010, @LeonarddeR)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
