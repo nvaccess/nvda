@@ -2584,7 +2584,7 @@ Automatic scrolling will be disabled if a routing key is pressed, if a message i
 
 Commands can be assigned to toggle the automatic scroll option, and to increase or decrease the scroll rate, from the "Braille" section of the [Input Gestures dialog](#InputGestures).
 
-##### Text wrap {#BrailleSettingsTextWrap}
+##### Text wrap {#BrailleSettingsWordWrap}
 
 This combo box allows you to configure how NVDA handles text that is too long to fit on the braille display.
 When a word is cut across rows, the continuation mark (dots 7 and 8) is shown in the last cell of the row, unless otherwise noted below.

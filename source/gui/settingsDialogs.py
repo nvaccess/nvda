@@ -5507,7 +5507,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			keyPath=["braille", "textWrap"],
 			conf=config.conf,
 		)
-		self.bindHelpEvent("BrailleSettingsTextWrap", self.textWrapComboBox)
+		self.bindHelpEvent("BrailleSettingsWordWrap", self.textWrapComboBox)
 
 		self.unicodeNormalizationCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=_(

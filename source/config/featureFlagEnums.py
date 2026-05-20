@@ -146,6 +146,11 @@ class BrailleTextWrapFlag(DisplayStringEnum):
 	regardless of mode (except for NONE, which never shows the mark).
 	"""
 
+	DEFAULT = enum.auto()
+	NONE = enum.auto()
+	MARK_WORD_CUTS = enum.auto()
+	AT_WORD_BOUNDARIES = enum.auto()
+
 	@property
 	def _displayStringLabels(self):
 		return {
@@ -156,11 +161,6 @@ class BrailleTextWrapFlag(DisplayStringEnum):
 			# Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 			self.AT_WORD_BOUNDARIES: pgettext("braille text wrap", "At word boundaries"),
 		}
-
-	DEFAULT = enum.auto()
-	NONE = enum.auto()
-	MARK_WORD_CUTS = enum.auto()
-	AT_WORD_BOUNDARIES = enum.auto()
 
 
 def getAvailableEnums() -> typing.Generator[typing.Tuple[str, FlagValueEnum], None, None]:
