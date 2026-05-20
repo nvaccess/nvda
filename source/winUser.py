@@ -538,10 +538,10 @@ def isWindow(hwnd):
 	return _user32.IsWindow(hwnd)
 
 
-def isHungAppWindow(hwnd):
+def isHungAppWindow(hwnd: HWNDVal) -> bool:
 	"""Whether the system considers the given window's application to be not responding.
 
-	See L{winBindings.user32.IsHungAppWindow}. This is a read-only query against the
+	See `winBindings.user32.IsHungAppWindow`. This is a read-only query against the
 	window manager's input-processing state; it does not pump messages or enter the
 	target process, so it is safe to call from any thread (including the UIA event
 	delivery thread).

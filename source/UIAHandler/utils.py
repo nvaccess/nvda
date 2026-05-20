@@ -423,11 +423,15 @@ def _getCachedWindowHandleFromEvent(sender: "UIAHandler.UIA.IUIAutomationElement
 	is local: it must never trigger a cross-process call, which is what makes it safe to
 	use as a hung-window guard (a live read would itself hang on an unresponsive app).
 
-	@return: The window handle, or C{None} if it could not be obtained.
+	:return: The window handle, or C{None} if it could not be obtained.
 	"""
 	try:
 		return sender.cachedNativeWindowHandle or None
 	except COMError:
+		log.debug(
+			"Failed to read cachedNativeWindowHandle from UIA event sender",
+			exc_info=True,
+		)
 		# The element has no cached window handle, or the cache request did not apply.
 		# Deliberately do not fall back to the live (current) property: that could hang.
 		return None
@@ -449,6 +453,10 @@ def _shouldSkipEventForHungWindow(sender: "UIAHandler.UIA.IUIAutomationElement")
 			return False
 		return winUser.isHungAppWindow(window)
 	except Exception:
+		log.debug(
+			"Exception in _shouldSkipEventForHungWindow; treating as not hung",
+			exc_info=True,
+		)
 		# Never let the guard itself raise into the COM event handler.
 		return False
 

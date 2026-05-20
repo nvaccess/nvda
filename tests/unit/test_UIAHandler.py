@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2026 NV Access Limited
+# Copyright (C) 2026 NV Access Limited, Tobias Heath
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file:
+# https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Unit tests for the UIAHandler hung-window guard.
 
@@ -31,12 +32,12 @@ def _makeCOMError() -> COMError:
 class _FakeElement:
 	"""Stand-in for an IUIAutomationElement event sender."""
 
-	def __init__(self, cachedHandle=0, raiseOnCached=False):
+	def __init__(self, cachedHandle: int = 0, raiseOnCached: bool = False) -> None:
 		self._cachedHandle = cachedHandle
 		self._raiseOnCached = raiseOnCached
 
 	@property
-	def cachedNativeWindowHandle(self):
+	def cachedNativeWindowHandle(self) -> int:
 		if self._raiseOnCached:
 			raise _makeCOMError()
 		return self._cachedHandle
