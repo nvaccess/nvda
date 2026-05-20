@@ -1,9 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2025 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
+# Copyright (C) 2008-2026 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
 # Leonard de Ruijter, Burman's Computer and Education Ltd., Julien Cochuyt
 
+import bisect
 from enum import StrEnum
 import dataclasses
 import itertools
@@ -35,10 +36,13 @@ import ctypes.wintypes
 import threading
 import time
 import wx
+import languageHandler
 import louisHelper
 import louis
 import gui
 from controlTypes.state import State
+import textUtils
+import textUtils.hyphenation
 import winBindings.kernel32
 import winKernel
 import keyboardHandler
@@ -553,45 +557,46 @@ class Region(object):
 	L{routeTo} will be called to handle a cursor routing request.
 	"""
 
+	rawText: str = ""
+	"""The original, raw text of this region."""
+	cursorPos: int | None = None
+	"""The position of the cursor in L{rawText}, C{None} if the cursor is not in this region."""
+	selectionStart: int | None = None
+	"""The start of the selection in L{rawText} (inclusive), C{None} if there is no selection in this region."""
+	selectionEnd: int | None = None
+	"""The end of the selection in L{rawText} (exclusive), C{None} if there is no selection in this region."""
+	rawTextTypeforms: list[int] | None = None
+	"""liblouis typeform flags for each character in L{rawText}, C{None} if no typeform info."""
+	brailleCursorPos: int | None = None
+	"""The position of the cursor in L{brailleCells}, C{None} if the cursor is not in this region."""
+	brailleSelectionStart: int | None = None
+	"""The position of the selection start in L{brailleCells}, C{None} if there is no selection in this region."""
+	brailleSelectionEnd: int | None = None
+	"""The position of the selection end in L{brailleCells}, C{None} if there is no selection in this region."""
+	hidePreviousRegions: bool = False
+	"""Whether to hide all previous regions."""
+	focusToHardLeft: bool = False
+	"""Whether this region should be positioned at the absolute left of the display when focused."""
+
 	def __init__(self):
-		#: The original, raw text of this region.
-		self.rawText = ""
-		#: The position of the cursor in L{rawText}, C{None} if the cursor is not in this region.
-		#: @type: int
-		self.cursorPos = None
-		#: The start of the selection in L{rawText} (inclusive), C{None} if there is no selection in this region.
-		#: @type: int
-		self.selectionStart = None
-		#: The end of the selection in L{rawText} (exclusive), C{None} if there is no selection in this region.
-		#: @type: int
-		self.selectionEnd = None
-		#: The translated braille representation of this region.
-		#: @type: [int, ...]
-		self.brailleCells = []
-		#: liblouis typeform flags for each character in L{rawText},
-		#: C{None} if no typeform info.
-		#: @type: [int, ...]
-		self.rawTextTypeforms = None
-		#: A list mapping positions in L{rawText} to positions in L{brailleCells}.
-		#: @type: [int, ...]
-		self.rawToBraillePos = []
-		#: A list mapping positions in L{brailleCells} to positions in L{rawText}.
-		#: @type: [int, ...]
-		self.brailleToRawPos = []
-		#: The position of the cursor in L{brailleCells}, C{None} if the cursor is not in this region.
-		self.brailleCursorPos: Optional[int] = None
-		#: The position of the selection start in L{brailleCells}, C{None} if there is no selection in this region.
-		#: @type: int
-		self.brailleSelectionStart = None
-		#: The position of the selection end in L{brailleCells}, C{None} if there is no selection in this region.
-		#: @type: int
-		self.brailleSelectionEnd = None
-		#: Whether to hide all previous regions.
-		#: @type: bool
-		self.hidePreviousRegions = False
-		#: Whether this region should be positioned at the absolute left of the display when focused.
-		#: @type: bool
-		self.focusToHardLeft = False
+		self._languageIndexes: dict[int, str] = {0: self._getDefaultRegionLanguage()}
+		"""Language indexes in L{rawText}. The last language is assumed to be the final language in the region."""
+		self.brailleCells: list[int] = []
+		"""The translated braille representation of this region."""
+		self.rawToBraillePos: list[int] = []
+		"""A list mapping positions in L{rawText} to positions in L{brailleCells}."""
+		self.brailleToRawPos: list[int] = []
+		"""A list mapping positions in L{brailleCells} to positions in L{rawText}."""
+
+	def _getDefaultRegionLanguage(self) -> str:
+		"""Get the default language for a region."""
+		return louisHelper.getTableLanguage(handler.table.fileName) or languageHandler.getLanguage()
+
+	def _getLanguageAtPos(self, pos: int) -> str:
+		"""Get the language at a given position in L{rawText} based on L{_languageIndexes}."""
+		keys = list(self._languageIndexes)
+		i = bisect.bisect_right(keys, pos) - 1
+		return self._languageIndexes[keys[i]]
 
 	def update(self):
 		"""Update this region.
@@ -1400,8 +1405,15 @@ class TextInfoRegion(Region):
 		if separate and self.rawText:
 			# Separate this field text from the rest of the text.
 			text = TEXT_SEPARATOR + text
-		self.rawText += text
 		textLen = len(text)
+		# Fields are reported in NVDA's language
+		fieldLanguage = languageHandler.getLanguage()
+		rawTextLen = len(self.rawText)
+		lastLanguage = self._getLanguageAtPos(rawTextLen)
+		if fieldLanguage != lastLanguage:
+			self._languageIndexes[rawTextLen] = fieldLanguage
+			self._languageIndexes[rawTextLen + textLen] = lastLanguage
+		self.rawText += text
 		self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
 		self._rawToContentPos.extend((contentPos,) * textLen)
 
@@ -1454,16 +1466,21 @@ class TextInfoRegion(Region):
 				field = command.field
 				if cmd == "formatChange":
 					typeform = self._getTypeformFromFormatField(field, formatConfig)
+					language = field.get("language")
 					text = getFormatFieldBraille(
 						field,
 						formatFieldAttributesCache,
 						self._isFormatFieldAtStart,
 						formatConfig,
 					)
+					if text:
+						# Map this field text to the start of the field's content.
+						self._addFieldText(text, self._currentContentPos)
+					rawTextLen = len(self.rawText)
+					if language and self._getLanguageAtPos(rawTextLen) != language:
+						self._languageIndexes[rawTextLen] = language
 					if not text:
 						continue
-					# Map this field text to the start of the field's content.
-					self._addFieldText(text, self._currentContentPos)
 				elif cmd == "controlStart":
 					if self._skipFieldsNotAtStartOfNode and not field.get("_startOfNode"):
 						text = None
@@ -1531,6 +1548,7 @@ class TextInfoRegion(Region):
 		self.rawText = ""
 		self.rawTextTypeforms = []
 		self.cursorPos = None
+		self._languageIndexes: dict[int, str] = {0: self._getDefaultRegionLanguage()}
 		# The output includes text representing fields which isn't part of the real content in the control.
 		# Therefore, maintain a map of positions in the output to positions in the content.
 		self._rawToContentPos = []
@@ -1917,6 +1935,11 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 				return region, bufferPos - start
 		raise LookupError("No such position")
 
+	def _getLanguageAtBufferPos(self, pos: int) -> str:
+		"""Gets the language at the given braille buffer position."""
+		region, regionPos = self.bufferPosToRegionPos(pos)
+		return region._getLanguageAtPos(regionPos)
+
 	def regionPosToBufferPos(self, region: Region, pos: int, allowNearest: bool = False) -> int:
 		"""Converts a position relative to a region to a position relative to the braille buffer.
 		:param region: The region the position is relative to.
@@ -2029,13 +2052,32 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			elif textWrap == BrailleTextWrapFlag.MARK_WORD_CUTS and self._isMidWordCut(end, bufferEnd):
 				end -= 1
 				showContinuationMark = True
-			elif textWrap == BrailleTextWrapFlag.AT_WORD_BOUNDARIES:
+			elif textWrap in (
+				BrailleTextWrapFlag.AT_WORD_BOUNDARIES,
+				BrailleTextWrapFlag.AT_WORD_OR_SYLLABLE_BOUNDARIES,
+			):
 				try:
 					lastSpaceIndex = rindex(self.brailleCells, 0, start, end + 1)
 					if lastSpaceIndex < end:
 						# lastSpaceIndex < end proves brailleCells[end] is non-zero,
 						# so searching [start, end) yields the same lastSpaceIndex.
+						oldEnd = end
 						end = lastSpaceIndex + 1
+						if end < oldEnd and textWrap == BrailleTextWrapFlag.AT_WORD_OR_SYLLABLE_BOUNDARIES:
+							# Prefer splitting the word at a syllable boundary closer to the display edge.
+							# Note that, when the below index call fails, it is appropriately handled by the except block,
+							# which means that we won't split at a syllable boundary in this case.
+							nextSpace = self.brailleCells.index(0, oldEnd, bufferEnd)
+							word = self.bufferPositionsToRawText(end, nextSpace - 1)
+							if word:
+								language = self._getLanguageAtBufferPos(end)
+								rawPos = self.brailleToRawPos[end]
+								positions = textUtils.hyphenation.getHyphenPositions(word, language)
+								for posInWord in reversed(positions):
+									if (newEnd := self.rawToBraillePos[posInWord + rawPos]) < oldEnd:
+										end = newEnd
+										showContinuationMark = True
+										break
 				except (ValueError, IndexError):
 					# No space on line - fall back to display-edge cut.
 					if self._isMidWordCut(end, bufferEnd):

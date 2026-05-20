@@ -2600,6 +2600,9 @@ Instead, there will be some blank space at the end of the display.
 When you scroll the display, you will be able to read the entire word.
 Note that if the word is too large to fit on the display even by itself, the word must still be split; the continuation mark is then shown.
 This option may allow for more fluent reading, but generally requires you to scroll the display more.
+* At word or syllable boundaries: Like "At word boundaries", but long words that don't fit are split at a syllable boundary when possible, using the language of the word if known.
+For example, the word `behave` may be split between `be` and `have`.
+The continuation mark is shown whenever a word is split.
 
 ##### Unicode normalization {#BrailleUnicodeNormalization}
 

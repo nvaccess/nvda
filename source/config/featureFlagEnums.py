@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited, Bill Dengler, Rob Meredith
+# Copyright (C) 2022-2026 NV Access Limited, Bill Dengler, Rob Meredith, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -150,6 +150,7 @@ class BrailleTextWrapFlag(DisplayStringEnum):
 	NONE = enum.auto()
 	MARK_WORD_CUTS = enum.auto()
 	AT_WORD_BOUNDARIES = enum.auto()
+	AT_WORD_OR_SYLLABLE_BOUNDARIES = enum.auto()
 
 	@property
 	def _displayStringLabels(self):
@@ -160,6 +161,11 @@ class BrailleTextWrapFlag(DisplayStringEnum):
 			self.MARK_WORD_CUTS: pgettext("braille text wrap", "Show mark when words are cut"),
 			# Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 			self.AT_WORD_BOUNDARIES: pgettext("braille text wrap", "At word boundaries"),
+			self.AT_WORD_OR_SYLLABLE_BOUNDARIES: pgettext(
+				"braille text wrap",
+				# Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
+				"At word or syllable boundaries",
+			),
 		}
 
 
