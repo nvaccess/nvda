@@ -644,9 +644,7 @@ class TestWordSegInitialize(unittest.TestCase):
 			def start(self) -> None:
 				self.target(*self.args, **self.kwargs)
 
-		initializerList: list[
-			tuple[str, str, Callable[..., Any], tuple[Any, ...], dict[str, Any]]
-		] = [
+		initializerList: list[tuple[str, str, Callable[..., Any], tuple[Any, ...], dict[str, Any]]] = [
 			("missingModule", "firstInitializer", firstInitializer, (), {}),
 			("missingModule", "secondInitializer", secondInitializer, (), {}),
 		]
