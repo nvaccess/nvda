@@ -711,5 +711,5 @@ def upgradeConfigFrom_22_to_23(profile: ConfigObj) -> None:
 	newValue = BrailleTextWrapFlag.AT_WORD_BOUNDARIES.name if oldValue else BrailleTextWrapFlag.NONE.name
 	profile[section][newKey] = newValue
 	log.debug(
-		f"Converted '{key}' with value {oldValue} to '{newKey}' with value {newValue}. Deleted '{key}'.",
+		f"Converted '{key}' with value {oldValue} to '{newKey}' with value {newValue}.",
 	)

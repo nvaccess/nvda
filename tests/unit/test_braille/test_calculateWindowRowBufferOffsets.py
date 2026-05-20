@@ -113,7 +113,7 @@ class TestCalculate(unittest.TestCase):
 		self.assertFalse(any(r.showContinuationMark for r in braille.handler.buffer._windowRowBufferOffsets))
 
 	def test_markWordCuts_oneCellEarlierAndMarksRow(self):
-		"""MARK_WORD_CUTS cuts one cell earlier than NONE and records the row in _continuationRows."""
+		"""MARK_WORD_CUTS cuts one cell earlier than NONE and marks the row via _WindowRowPositions.showContinuationMark."""
 		_setTextWrap(BrailleTextWrapFlag.MARK_WORD_CUTS)
 		braille.handler.buffer.brailleCells = [1] * 25
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
