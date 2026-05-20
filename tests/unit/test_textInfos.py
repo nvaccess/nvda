@@ -193,15 +193,16 @@ class TestWordExpansion(unittest.TestCase):
 		self.assertEqual(ti.offsets, (7, 7))
 
 
-class TestWordSegFlag(unittest.TestCase):
-	class _UnknownWordSegConf:
-		def calculated(self):
-			return "unexpected"
+class _UnknownWordSegConf:
+	def calculated(self) -> str:
+		return "unexpected"
 
+
+class TestWordSegFlag(unittest.TestCase):
 	def test_unknownWordSegConfigReturnsNoneAfterLogging(self):
 		obj = BasicTextProvider(text="abc")
 		ti = obj.makeTextInfo(Offsets(0, 0))
-		ti.wordSegConf = self._UnknownWordSegConf()
+		ti.wordSegConf = _UnknownWordSegConf()
 
 		with patch("textInfos.offsets.log.error") as mockLogError:
 			self.assertIsNone(ti.wordSegFlag)

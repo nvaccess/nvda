@@ -930,12 +930,8 @@ def main():
 
 	from textUtils import wordSeg
 
-	log.debug("Initializing word segmentation module")
-
 	try:
 		wordSeg.initialize()
-	except RuntimeError:
-		log.warning("Word segmentation module disabled in configuration")
 	except Exception:
 		log.error("Error initializing word segmentation module", exc_info=True)
 

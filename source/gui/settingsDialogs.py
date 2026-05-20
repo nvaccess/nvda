@@ -3553,7 +3553,7 @@ class DocumentNavigationPanel(SettingsPanel):
 			keyPath=["documentNavigation", "wordSegmentationStandard"],
 			conf=config.conf,
 		)
-		self.bindHelpEvent("wordSegmentationStandard", self.wordSegCombo)
+		self.bindHelpEvent("WordSegmentationStandard", self.wordSegCombo)
 
 		# Translators: This is a label for the paragraph navigation style in the document navigation dialog
 		paragraphStyleLabel = _("&Paragraph style:")
@@ -3572,12 +3572,8 @@ class DocumentNavigationPanel(SettingsPanel):
 	def postSave(self):
 		from textUtils import wordSeg
 
-		log.debug("Reinitializing word segmentation module")
-
 		try:
 			wordSeg.initialize()
-		except RuntimeError:
-			log.warning("Word segmentation module disabled in configuration")
 		except Exception:
 			log.error("Error reinitializing word segmentation module", exc_info=True)
 
