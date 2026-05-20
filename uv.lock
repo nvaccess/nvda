@@ -380,13 +380,13 @@ wheels = [
 
 [[package]]
 name = "lxml"
-version = "6.0.2"
+version = "6.1.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/aa/88/262177de60548e5a2bfc46ad28232c9e9cbde697bd94132aeb80364675cb/lxml-6.0.2.tar.gz", hash = "sha256:cd79f3367bd74b317dda655dc8fcfa304d9eb6e4fb06b7168c5cf27f96e0cd62", size = 4073426, upload-time = "2025-09-22T04:04:59.287Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/28/30/9abc9e34c657c33834eaf6cd02124c61bdf5944d802aa48e69be8da3585d/lxml-6.1.0.tar.gz", hash = "sha256:bfd57d8008c4965709a919c3e9a98f76c2c7cb319086b3d26858250620023b13", size = 4197006, upload-time = "2026-04-18T04:32:51.613Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/76/04/5c5e2b8577bc936e219becb2e98cdb1aca14a4921a12995b9d0c523502ae/lxml-6.0.2-cp313-cp313-win32.whl", hash = "sha256:e8cd2415f372e7e5a789d743d133ae474290a90b9023197fd78f32e2dc6873e2", size = 3610700, upload-time = "2025-09-22T04:02:24.465Z" },
-    { url = "https://files.pythonhosted.org/packages/fe/0a/4643ccc6bb8b143e9f9640aa54e38255f9d3b45feb2cbe7ae2ca47e8782e/lxml-6.0.2-cp313-cp313-win_amd64.whl", hash = "sha256:b30d46379644fbfc3ab81f8f82ae4de55179414651f110a1514f0b1f8f6cb2d7", size = 4010347, upload-time = "2025-09-22T04:02:26.286Z" },
-    { url = "https://files.pythonhosted.org/packages/31/ef/dcf1d29c3f530577f61e5fe2f1bd72929acf779953668a8a47a479ae6f26/lxml-6.0.2-cp313-cp313-win_arm64.whl", hash = "sha256:13dcecc9946dca97b11b7c40d29fba63b55ab4170d3c0cf8c0c164343b9bfdcf", size = 3671248, upload-time = "2025-09-22T04:02:27.918Z" },
+    { url = "https://files.pythonhosted.org/packages/5e/73/16596f7e4e38fa33084b9ccbccc22a15f82a290a055126f2c1541236d2ff/lxml-6.1.0-cp313-cp313-win32.whl", hash = "sha256:28902146ffbe5222df411c5d19e5352490122e14447e98cd118907ee3fd6ee62", size = 3596938, upload-time = "2026-04-18T04:31:56.206Z" },
+    { url = "https://files.pythonhosted.org/packages/8e/63/981401c5680c1eb30893f00a19641ac80db5d1e7086c62cb4b13ed813038/lxml-6.1.0-cp313-cp313-win_amd64.whl", hash = "sha256:4a1503c56e4e2b38dc76f2f2da7bae69670c0f1933e27cfa34b2fa5876410b16", size = 3995728, upload-time = "2026-04-18T04:31:58.763Z" },
+    { url = "https://files.pythonhosted.org/packages/e7/e8/c358a38ac3e541d16a1b527e4e9cb78c0419b0506a070ace11777e5e8404/lxml-6.1.0-cp313-cp313-win_arm64.whl", hash = "sha256:e0af85773850417d994d019741239b901b22c6680206f46a34766926e466141d", size = 3658372, upload-time = "2026-04-18T04:32:03.629Z" },
 ]
 
 [[package]]
@@ -604,7 +604,7 @@ requires-dist = [
     { name = "fast-diff-match-patch", specifier = "==2.1.0" },
     { name = "fuzzysearch", specifier = "==0.8.1" },
     { name = "l2m4m", specifier = "==1.0.4" },
-    { name = "lxml", specifier = "==6.0.2" },
+    { name = "lxml", specifier = "==6.1.0" },
     { name = "markdown", specifier = "==3.10" },
     { name = "markdown-link-attr-modifier", specifier = "==0.2.1" },
     { name = "mdx-gh-links", specifier = "==0.4" },
@@ -1258,11 +1258,11 @@ wheels = [
 
 [[package]]
 name = "urllib3"
-version = "2.6.3"
+version = "2.7.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/c7/24/5f1b3bdffd70275f6661c76461e25f024d5a38a46f04aaca912426a2b1d3/urllib3-2.6.3.tar.gz", hash = "sha256:1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed", size = 435556, upload-time = "2026-01-07T16:24:43.925Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/53/0c/06f8b233b8fd13b9e5ee11424ef85419ba0d8ba0b3138bf360be2ff56953/urllib3-2.7.0.tar.gz", hash = "sha256:231e0ec3b63ceb14667c67be60f2f2c40a518cb38b03af60abc813da26505f4c", size = 433602, upload-time = "2026-05-07T16:13:18.596Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/39/08/aaaad47bc4e9dc8c725e68f9d04865dbcb2052843ff09c97b08904852d84/urllib3-2.6.3-py3-none-any.whl", hash = "sha256:bf272323e553dfb2e87d9bfd225ca7b0f467b919d7bbd355436d3fd37cb0acd4", size = 131584, upload-time = "2026-01-07T16:24:42.685Z" },
+    { url = "https://files.pythonhosted.org/packages/7f/3e/5db95bcf282c52709639744ca2a8b149baccf648e39c8cc87553df9eae0c/urllib3-2.7.0-py3-none-any.whl", hash = "sha256:9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897", size = 131087, upload-time = "2026-05-07T16:13:17.151Z" },
 ]
 
 [[package]]
