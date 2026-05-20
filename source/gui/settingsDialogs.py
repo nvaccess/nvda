@@ -3546,9 +3546,9 @@ class DocumentNavigationPanel(SettingsPanel):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: This is a label for the word segmentation standard in the document navigation dialog
-		WordNavigationUnitLabel = _("&Word Segmentation Standard:")
+		wordNavigationUnitLabel = _("&Word Segmentation Standard:")
 		self.wordSegCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
-			labelText=WordNavigationUnitLabel,
+			labelText=wordNavigationUnitLabel,
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
 			keyPath=["documentNavigation", "wordSegmentationStandard"],
 			conf=config.conf,
