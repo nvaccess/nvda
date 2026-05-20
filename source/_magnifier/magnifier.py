@@ -8,7 +8,7 @@ Magnifier module.
 Implements the magnifier global class and its basic functionalities.
 """
 
-from typing import Callable
+from collections.abc import Callable
 from comtypes import COMError
 from logHandler import log
 import wx
@@ -30,9 +30,10 @@ from .config import (
 	getZoomLevel,
 	getPanStep,
 	getFilter,
-	ZoomLevel,
 	isTrueCentered,
+	setZoomLevel,
 	shouldKeepMouseCentered,
+	ZoomLevel,
 )
 from .utils.focusManager import FocusManager
 
@@ -87,6 +88,7 @@ class Magnifier:
 			closestZoom = min(validZoomValues, key=lambda x: abs(x - value))
 			log.warning(f"Invalid zoom level {value}, using closest valid value {closestZoom}")
 			value = closestZoom
+		setZoomLevel(value)
 		self._zoomLevel = value
 
 	@property
