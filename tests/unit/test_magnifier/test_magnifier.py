@@ -299,7 +299,7 @@ class TestMagnifier(_TestMagnifier):
 		centerY = self.screenHeight // 2
 		self.magnifier.currentCoordinates = Coordinates(centerX, centerY)
 		expectedPanPixels = int(
-			(self.screenWidth / self.magnifier.zoomLevel) * 10 / 100,
+			(self.screenWidth / self.magnifier.zoomLevelRatio) * 10 / 100,
 		)
 		return centerX, centerY, expectedPanPixels
 
