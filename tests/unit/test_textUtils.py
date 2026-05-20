@@ -6,7 +6,9 @@
 """Unit tests for the textUtils module."""
 
 import unittest
+from collections.abc import Callable
 from types import SimpleNamespace
+from typing import Any
 from unittest.mock import Mock, patch
 
 from textUtils import UnicodeNormalizationOffsetConverter, WideStringOffsetConverter, WordSegmenter
@@ -616,26 +618,35 @@ class TestWordSegInitialize(unittest.TestCase):
 		from textUtils import wordSeg
 		from textUtils.wordSeg import wordSegStrategy
 
-		calls = []
+		calls: list[str] = []
 
-		def firstInitializer():
+		def firstInitializer() -> None:
 			calls.append("first")
 
-		def secondInitializer():
+		def secondInitializer() -> None:
 			calls.append("second")
 
 		class ImmediateThread:
-			def __init__(self, target, args=None, kwargs=None, daemon=False, name=None):
-				self.target = target
-				self.args = () if args is None else args
-				self.kwargs = {} if kwargs is None else kwargs
-				self.daemon = daemon
-				self.name = name
+			def __init__(
+				self,
+				target: Callable[..., Any],
+				args: tuple[Any, ...] | None = None,
+				kwargs: dict[str, Any] | None = None,
+				daemon: bool = False,
+				name: str | None = None,
+			) -> None:
+				self.target: Callable[..., Any] = target
+				self.args: tuple[Any, ...] = () if args is None else args
+				self.kwargs: dict[str, Any] = {} if kwargs is None else kwargs
+				self.daemon: bool = daemon
+				self.name: str | None = name
 
-			def start(self):
+			def start(self) -> None:
 				self.target(*self.args, **self.kwargs)
 
-		initializerList = [
+		initializerList: list[
+			tuple[str, str, Callable[..., Any], tuple[Any, ...], dict[str, Any]]
+		] = [
 			("missingModule", "firstInitializer", firstInitializer, (), {}),
 			("missingModule", "secondInitializer", secondInitializer, (), {}),
 		]
