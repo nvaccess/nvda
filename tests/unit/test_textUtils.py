@@ -14,6 +14,7 @@ from unittest.mock import Mock, patch
 from textUtils import UnicodeNormalizationOffsetConverter, WideStringOffsetConverter, WordSegmenter
 from textUtils.uniscribe import splitAtCharacterBoundaries
 from textUtils.segFlag import WordSegFlag
+from textUtils.wordSeg.wordSegUtils import WordSegWithSeparatorOffsetConverter
 
 FACE_PALM = "\U0001f926"  # 🤦
 SMILE = "\U0001f60a"  # 😊
@@ -450,7 +451,7 @@ class TestUniscribeSplitAtCharacterBoundaries(unittest.TestCase):
 
 
 class TestChineseWordSegmentationInitialization(unittest.TestCase):
-	def _makeMockJiebaDll(self):
+	def _makeMockJiebaDll(self) -> SimpleNamespace:
 		return SimpleNamespace(
 			initJieba=Mock(return_value=True),
 			calculateWordOffsets=Mock(),
@@ -460,7 +461,7 @@ class TestChineseWordSegmentationInitialization(unittest.TestCase):
 			freeOffsets=Mock(),
 		)
 
-	def _setWordSegConfig(self, *, initForUnusedLang: bool):
+	def _setWordSegConfig(self, *, initForUnusedLang: bool) -> Callable[[], None]:
 		import config
 		from config.featureFlag import FeatureFlag
 		from config.featureFlagEnums import WordNavigationUnitFlag
@@ -473,13 +474,13 @@ class TestChineseWordSegmentationInitialization(unittest.TestCase):
 			behaviorOfDefault=WordNavigationUnitFlag.AUTO,
 		)
 
-		def restoreConfig():
+		def restoreConfig() -> None:
 			config.conf["documentNavigation"]["initWordSegForUnusedLang"] = originalInitForUnusedLang
 			config.conf["documentNavigation"]["wordSegmentationStandard"] = originalWordSegmentationStandard
 
 		return restoreConfig
 
-	def test_doesNotInitializeForUnusedLanguageByDefault(self):
+	def test_doesNotInitializeForUnusedLanguageByDefault(self) -> None:
 		from textUtils.wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
 
 		originalLib = ChineseWordSegmentationStrategy._lib
@@ -497,7 +498,7 @@ class TestChineseWordSegmentationInitialization(unittest.TestCase):
 			ChineseWordSegmentationStrategy._lib = originalLib
 			restoreConfig()
 
-	def test_initializesForUnusedLanguageWhenConfigured(self):
+	def test_initializesForUnusedLanguageWhenConfigured(self) -> None:
 		from textUtils.wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
 
 		mockDll = self._makeMockJiebaDll()
@@ -520,7 +521,7 @@ class TestChineseWordSegmentationInitialization(unittest.TestCase):
 			ChineseWordSegmentationStrategy._lib = originalLib
 			restoreConfig()
 
-	def test_forceInitStillInitializesForUnusedLanguage(self):
+	def test_forceInitStillInitializesForUnusedLanguage(self) -> None:
 		from textUtils.wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
 
 		mockDll = self._makeMockJiebaDll()
@@ -543,7 +544,7 @@ class TestChineseWordSegmentationInitialization(unittest.TestCase):
 			ChineseWordSegmentationStrategy._lib = originalLib
 			restoreConfig()
 
-	def test_initFailureDisablesCppJieba(self):
+	def test_initFailureDisablesCppJieba(self) -> None:
 		from textUtils.wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
 
 		mockDll = self._makeMockJiebaDll()
@@ -575,7 +576,7 @@ class TestChineseWordSegmentationInitialization(unittest.TestCase):
 class TestWordSegmenter(unittest.TestCase):
 	"""Tests for the WordSegmenter class."""
 
-	def test_basicLatin(self):
+	def test_basicLatin(self) -> None:
 		text = "hello world"
 		segmenter = WordSegmenter(text, wordSegFlag=WordSegFlag.UNISCRIBE)
 		self.assertEqual(segmenter.getSegmentForOffset(0), (0, 6))
@@ -583,7 +584,7 @@ class TestWordSegmenter(unittest.TestCase):
 		self.assertEqual(segmenter.getSegmentForOffset(6), (6, 11))
 		self.assertEqual(segmenter.getSegmentForOffset(11), (6, 11))
 
-	def test_chinese(self):
+	def test_chinese(self) -> None:
 		text = "你好世界"
 
 		from textUtils.wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
@@ -596,7 +597,7 @@ class TestWordSegmenter(unittest.TestCase):
 		self.assertEqual(segmenter.getSegmentForOffset(3), (2, 4))
 		self.assertEqual(segmenter.getSegmentForOffset(4), (2, 4))
 
-	def test_chineseSegmentationFailureStoresEmptyWordEnds(self):
+	def test_chineseSegmentationFailureStoresEmptyWordEnds(self) -> None:
 		from textUtils.wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
 
 		mockDll = SimpleNamespace(
@@ -614,7 +615,7 @@ class TestWordSegmenter(unittest.TestCase):
 
 
 class TestWordSegInitialize(unittest.TestCase):
-	def test_runsAllRegisteredInitializers(self):
+	def test_runsAllRegisteredInitializers(self) -> None:
 		from textUtils import wordSeg
 		from textUtils.wordSeg import wordSegStrategy
 
@@ -649,7 +650,7 @@ class TestWordSegInitialize(unittest.TestCase):
 			("missingModule", "secondInitializer", secondInitializer, (), {}),
 		]
 		with (
-			patch.object(wordSegStrategy, "initializerList", initializerList),
+			patch.object(wordSegStrategy, "_initializerList", initializerList),
 			patch("threading.Thread", ImmediateThread),
 		):
 			wordSeg.initialize()
@@ -658,10 +659,8 @@ class TestWordSegInitialize(unittest.TestCase):
 
 
 class TestWordSegWithSeparatorOffsetConverter(unittest.TestCase):
-	def _makeConverter(self):
-		from textUtils.wordSeg.wordSegUtils import WordSegWithSeparatorOffsetConverter
-
-		def segmentedText(sep, newSepIndex):
+	def _makeConverter(self) -> WordSegWithSeparatorOffsetConverter:
+		def segmentedText(sep: str, newSepIndex: list[int]) -> str:
 			newSepIndex.append(2)
 			return "ab cd"
 
@@ -671,7 +670,7 @@ class TestWordSegWithSeparatorOffsetConverter(unittest.TestCase):
 		):
 			return WordSegWithSeparatorOffsetConverter("abcd")
 
-	def test_strToEncodedOffsetsMapsEndAndClampsOutOfRange(self):
+	def test_strToEncodedOffsetsMapsEndAndClampsOutOfRange(self) -> None:
 		converter = self._makeConverter()
 
 		self.assertEqual(converter.strToEncodedOffsets(-1), 0)
@@ -679,13 +678,13 @@ class TestWordSegWithSeparatorOffsetConverter(unittest.TestCase):
 		self.assertEqual(converter.strToEncodedOffsets(4), 5)
 		self.assertEqual(converter.strToEncodedOffsets(5, 6), (5, 5))
 
-	def test_strToEncodedOffsetsRaisesOnOutOfRangeWhenRequested(self):
+	def test_strToEncodedOffsetsRaisesOnOutOfRangeWhenRequested(self) -> None:
 		converter = self._makeConverter()
 
 		with self.assertRaises(IndexError):
 			converter.strToEncodedOffsets(5, raiseOnError=True)
 
-	def test_encodedToStrOffsetsMapsEndAndClampsOutOfRange(self):
+	def test_encodedToStrOffsetsMapsEndAndClampsOutOfRange(self) -> None:
 		converter = self._makeConverter()
 
 		self.assertEqual(converter.encodedToStrOffsets(-1), 0)
@@ -694,7 +693,7 @@ class TestWordSegWithSeparatorOffsetConverter(unittest.TestCase):
 		self.assertEqual(converter.encodedToStrOffsets(5), 4)
 		self.assertEqual(converter.encodedToStrOffsets(6, 7), (4, 4))
 
-	def test_encodedToStrOffsetsRaisesOnOutOfRangeWhenRequested(self):
+	def test_encodedToStrOffsetsRaisesOnOutOfRangeWhenRequested(self) -> None:
 		converter = self._makeConverter()
 
 		with self.assertRaises(IndexError):
