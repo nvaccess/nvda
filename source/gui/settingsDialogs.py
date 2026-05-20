@@ -6238,16 +6238,16 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		return list(LoggingLevel)[selection]
 
 	def _confirmLogLevelChange(self, selectedLogLevel: LoggingLevel) -> bool:
-		if selectedLogLevel == LoggingLevel.SECRETS:
+		if selectedLogLevel == LoggingLevel.DEBUG_UNREDACTED:
 			message = _(
-				# Translators: Warning shown when enabling the secrets log level from NVDA settings.
-				"Setting the logging level to secrets will write sensitive information to the log without redaction, "
+				# Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
+				'Setting the logging level to "debug (unredacted)" will write sensitive information to the log without redaction, '
 				"including passwords, API keys, or other private data. "
 				"Only enable this temporarily if you explicitly need unredacted diagnostic logs. "
 				"Do you want to continue?",
 			)
 			caption = _(
-				# Translators: Title of the warning dialog shown when enabling the secrets log level.
+				# Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
 				"High risk logging level",
 			)
 		else:
