@@ -13,6 +13,7 @@ You can now navigate between links, headings, form fields, and other elements us
 Speech features have been enhanced with support for custom speech dictionaries that can be provided by add-ons and new dictionary entry types for more granular control.
 A new voice setting for OneCore voices was added to control pauses after punctuation.
 A new command allows repeating the last spoken information, with the ability to display it in a browsable message.
+The default gesture to repeat the last spoken information is `NVDA+x`, which can be changed in the Input Gestures dialog.
 
 The braille display can now automatically scroll and DotPad devices support multi-button combinations.
 
