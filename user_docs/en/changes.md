@@ -96,6 +96,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 * Fixed NVDA freezing when navigating in JetBrains IDEs. (#16741, @christopherpross)
 * Speech dictionary entries of type Whole word now correctly handle words containing Unicode combining marks (e.g. Hebrew niqqud, Arabic harakat). (#20013, @LeonarddeR)
   * In particular, Whole word entries no longer incorrectly match inside larger words when those words contain combining marks.
+* In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen. (#20177)
 
 ### Changes for Developers
 
@@ -131,6 +132,8 @@ Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`,
     * Added a `valueToPercentage` function to calculate the percentage representation of a configuration value within its range.
     * Added a `percentageToValue` function to convert a percentage to the corresponding configuration value.
     * Added a `clampedIncrementAndUpdateConfig` function to update a configuration value by applying a step, constrained within its valid range.
+* The `_reportNewLines` function in `NVDAObjects.behaviors.LiveText` now uses a pumping generator and is therefore not synchronous.
+* A new attribute, `maxLines`, has been added in subclasses of `NVDAObjects.behaviors.LiveText`, to allow for the controlling of the maximum number of lines that NVDA will report at once.
 
 #### Deprecations
 
