@@ -625,11 +625,12 @@ class TestWordSegInitialize(unittest.TestCase):
 			calls.append("second")
 
 		class ImmediateThread:
-			def __init__(self, target, args=None, kwargs=None, daemon=False):
+			def __init__(self, target, args=None, kwargs=None, daemon=False, name=None):
 				self.target = target
 				self.args = () if args is None else args
 				self.kwargs = {} if kwargs is None else kwargs
 				self.daemon = daemon
+				self.name = name
 
 			def start(self):
 				self.target(*self.args, **self.kwargs)
