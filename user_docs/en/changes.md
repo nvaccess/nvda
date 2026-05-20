@@ -132,8 +132,6 @@ Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`,
     * Added a `valueToPercentage` function to calculate the percentage representation of a configuration value within its range.
     * Added a `percentageToValue` function to convert a percentage to the corresponding configuration value.
     * Added a `clampedIncrementAndUpdateConfig` function to update a configuration value by applying a step, constrained within its valid range.
-* The `_reportNewLines` function in `NVDAObjects.behaviors.LiveText` now uses a pumping generator and is therefore not synchronous.
-* A new attribute, `maxLines`, has been added in subclasses of `NVDAObjects.behaviors.LiveText`, to allow for the controlling of the maximum number of lines that NVDA will report at once.
 
 #### Deprecations
 
