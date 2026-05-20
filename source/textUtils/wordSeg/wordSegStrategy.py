@@ -159,7 +159,8 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 	@classmethod
 	@initializerRegistry
 	def _initCppJieba(
-		cls, forceInit: bool = False
+		cls,
+		forceInit: bool = False,
 	) -> None:  # TODO: Add a fallback when cppjieba.dll is unavailable.
 		"""
 		Class-level initializer: attempts to load the versioned cppjieba library and
