@@ -56,7 +56,7 @@ def getZoomLevel() -> int:
 
 	:return: The zoom level (percentage).
 	"""
-	zoomLevel = config.conf["magnifier"]["zoomLevel"]
+	zoomLevel = config.conf["magnifier"]["zoom"]
 	return zoomLevel
 
 
@@ -82,7 +82,7 @@ def setZoomLevel(zoomLevel: int) -> None:
 		raise ValueError(f"Zoom level must be between {ZoomLevel.MIN_ZOOM} and {ZoomLevel.MAX_ZOOM}")
 	if zoomLevel % ZoomLevel.STEP_FACTOR != 0:
 		raise ValueError(f"Zoom level must be a multiple of {ZoomLevel.STEP_FACTOR}")
-	config.conf["magnifier"]["zoomLevel"] = zoomLevel
+	config.conf["magnifier"]["zoom"] = zoomLevel
 
 
 def getPanStep() -> int:
