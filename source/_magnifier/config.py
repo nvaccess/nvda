@@ -47,7 +47,7 @@ class ZoomLevel:
 			"magnifier",
 			# Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
 			"{zoomLevel}x",
-		).format(f"{zoomLevel:.1f}")
+		).format(zoomLevel=f"{zoomLevel:.1f}")
 
 
 def getZoomLevel() -> int:
