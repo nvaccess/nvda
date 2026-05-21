@@ -89,7 +89,7 @@ def getRawGithubURLForPath(filePath: str) -> str:
 	return f"{RAW_GITHUB_REPO_URL}/{commitID}/{relativePath}"
 
 
-def preprocessMarkdownLines(mdLines: Iterable[str]) -> Iterable[str]:
+def preprocessMarkdownLines(mdLines: Iterable[str]) -> Generator[str, None, None]:
 	"""
 	Preprocess markdown lines such as removing inline markdown lint comments.\
 	:param mdLines: The markdown lines to preprocess
@@ -276,12 +276,18 @@ def generateXliff(
 		outputFile.write(f"<skeleton>\n{xmlEscape(skelContent)}\n</skeleton>\n")
 		res.numTranslatableStrings = 0
 		for lineNo, (mdLine, skelLine) in enumerate(
-			zip(
+			zip_longest(
 				preprocessMarkdownLines(mdFile.readlines()),
 				skelContent.splitlines(keepends=True),
 			),
 			start=1,
 		):
+			if mdLine is None:
+				print(f"Warning: {prettyPathString(mdPath)} has fewer lines than {prettyPathString(skelPath)}")
+				mdLine = ""
+			if skelLine is None:
+				print(f"Warning: {prettyPathString(skelPath)} has fewer lines than {prettyPathString(mdPath)}")
+				skelLine = ""
 			mdLine = mdLine.rstrip()
 			skelLine = skelLine.rstrip()
 			if m := re_translationID.match(skelLine):
@@ -380,11 +386,17 @@ def translateXliff(
 		skeletonContent = skeletonNode.text.strip()
 		for lineNo, (skelLine, pretranslatedLine) in enumerate(
 			zip_longest(
-				skeletonContent.splitlines(),
+				skeletonContent.splitlines(keepends=True),
 				preprocessMarkdownLines(pretranslatedMdFile.readlines()),
 			),
 			start=1,
 		):
+			if skelLine is None:
+				print(f"Warning: {prettyPathString(skelLine)} has fewer lines than {prettyPathString(pretranslatedMdPath)}")
+				skelLine = ""
+			if pretranslatedLine is None:
+				print(f"Warning: {prettyPathString(pretranslatedMdPath)} has fewer lines than {prettyPathString(skelLine)}")
+				pretranslatedLine = ""
 			skelLine = skelLine.rstrip()
 			pretranslatedLine = pretranslatedLine.rstrip()
 			if m := re_translationID.match(skelLine):
@@ -510,6 +522,12 @@ def ensureMarkdownFilesMatch(path1: str, path2: str, allowBadAnchors: bool = Fal
 			),
 			start=1,
 		):
+			if line1 is None:
+				print(f"Warning: {prettyPathString(path1)} has fewer lines than {prettyPathString(path2)}")
+				line1 = ""
+			if line2 is None:
+				print(f"Warning: {prettyPathString(path2)} has fewer lines than {prettyPathString(path1)}")
+				line2 = ""
 			line1 = line1.rstrip()
 			line2 = line2.rstrip()
 			if line1 != line2:
