@@ -46,7 +46,7 @@ class TestBrailleOffsetConverters(unittest.TestCase):
 		config.conf["braille"]["translationTable"] = self._originalTranslationTable
 		config.conf["braille"]["unicodeNormalization"] = self._originalUnicodeNormalization
 
-	def test_chineseWordSegmentationAndUnicodeNormalizationOffsetsAreComposed(self):
+	def test_chineseWordSegmentationAndUnicodeNormalizationOffsetsAreComposed(self) -> None:
 		config.conf["braille"]["translationTable"] = "zh-chn.ctb"
 		config.conf["braille"]["unicodeNormalization"] = "enabled"
 		wordSegmenter = Mock()

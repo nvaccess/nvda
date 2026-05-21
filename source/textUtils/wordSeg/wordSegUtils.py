@@ -14,10 +14,10 @@ class WordSegWithSeparatorOffsetConverter(OffsetConverter):
 	computedStrToEncodedOffsets: list[int]
 	computedEncodedToStrOffsets: list[int]
 
-	def __init__(self, text: str):
+	def __init__(self, text: str) -> None:
 		super().__init__(text)
 		self.newSepIndex: list[int] = []
-		self.encoded = WordSegmenter(text).segmentedText(sep=self.sep, newSepIndex=self.newSepIndex)
+		self.encoded: str = WordSegmenter(text).segmentedText(sep=self.sep, newSepIndex=self.newSepIndex)
 
 	@cached_property
 	def _separatorFlag(self) -> list[bool]:

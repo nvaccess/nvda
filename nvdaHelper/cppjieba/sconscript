@@ -4,7 +4,6 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import typing  # noqa: E402
-import os
 
 Import(
 	[
@@ -19,14 +18,13 @@ cppjiebaPath = Dir("#include/cppjieba")
 cppjiebaSrcPath = cppjiebaPath.Dir("include/cppjieba")
 cppjiebaDictPath = cppjiebaPath.Dir("dict")
 outDir = sourceDir.Dir("cppjieba")
-unitTestDictsDir = env.Dir("#tests/unit/cppjiebaDicts")
-LimonpPath = cppjiebaPath.Dir("deps/limonp")  # cppjieba's dependency
-LimonpSrcPath = LimonpPath.Dir("include/limonp")
+limonpPath = cppjiebaPath.Dir("deps/limonp")  # cppjieba's dependency
+limonpSrcPath = limonpPath.Dir("include/limonp")
 
 env.Prepend(
 	CPPPATH=[
 		cppjiebaSrcPath,
-		LimonpSrcPath.Dir(".."),
+		limonpSrcPath.Dir(".."),
 	]
 )
 
@@ -36,8 +34,8 @@ sourceFiles = [
 ]
 
 env.AppendUnique(
-    CCFLAGS=['/wd4819'],
-    CXXFLAGS=['/wd4819'],
+	CCFLAGS=["/wd4819"],
+	CXXFLAGS=["/wd4819"],
 )
 
 cppjiebaLib = env.SharedLibrary(target="cppjieba", source=sourceFiles)
@@ -51,7 +49,7 @@ env.Install(
 			"user.dict.utf8",
 			"hmm_model.utf8",
 		)
-	]
+	],
 )
 
 Return("cppjiebaLib")
