@@ -1072,14 +1072,25 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			formatConfigFlags &= ~formatConfigFlagsMap["reportRevisions"]
 		if self.obj.ignorePageNumbers:
 			formatConfigFlags &= ~formatConfigFlagsMap["reportPage"]
-		res = NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(
-			self.obj.appModule.helperLocalBindingHandle,
-			self.obj.documentWindowHandle,
-			startOffset,
-			endOffset,
-			formatConfigFlags,
-			ctypes.byref(text),
-		)
+		# This call reaches into Word's process and blocks the core if Word is
+		# unresponsive (e.g. a huge document operation). Run it via the watchdog's
+		# cancellable thread so the watchdog can cancel it.
+		import watchdog
+		import exceptions
+
+		try:
+			res = watchdog.cancellableExecute(
+				NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange,
+				self.obj.appModule.helperLocalBindingHandle,
+				self.obj.documentWindowHandle,
+				startOffset,
+				endOffset,
+				formatConfigFlags,
+				ctypes.byref(text),
+			)
+		except exceptions.CallCancelled:
+			log.debugWarning("winword_getTextInRange cancelled; Word is not responding")
+			return [self.text]
 		if res or not text:
 			log.debugWarning("winword_getTextInRange failed with %d" % res)
 			return [self.text]
