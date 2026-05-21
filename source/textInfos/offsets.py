@@ -19,13 +19,17 @@ import textUtils
 from textUtils.segFlag import CharSegFlag, WordSegFlag
 from dataclasses import dataclass
 from typing import (
-	Optional,
-	Tuple,
 	Dict,
 	List,
+	Optional,
 	Self,
+	Tuple,
+	TYPE_CHECKING,
 )
 from logHandler import log
+
+if TYPE_CHECKING:
+	from NVDAObjects import NVDAObject
 
 
 @dataclass
@@ -585,7 +589,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def expand(self, unit):
 		if unit == textInfos.UNIT_WORD and self.isCollapsed and self._startOffset == self._getStoryLength():
 			try:
-				flowsTo: object | None = self.obj.flowsTo
+				flowsTo: "NVDAObject | None" = self.obj.flowsTo
 			except (AttributeError, NotImplementedError):
 				flowsTo = None
 			if not flowsTo:
