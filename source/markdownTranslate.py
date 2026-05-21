@@ -392,10 +392,10 @@ def translateXliff(
 			start=1,
 		):
 			if skelLine is None:
-				print(f"Warning: {prettyPathString(skelLine)} has fewer lines than {prettyPathString(pretranslatedMdPath)}")
+				print(f"Warning: {prettyPathString(xliffPath)} has fewer lines than {prettyPathString(pretranslatedMdPath)}")
 				skelLine = ""
 			if pretranslatedLine is None:
-				print(f"Warning: {prettyPathString(pretranslatedMdPath)} has fewer lines than {prettyPathString(skelLine)}")
+				print(f"Warning: {prettyPathString(pretranslatedMdPath)} has fewer lines than {prettyPathString(xliffPath)}")
 				pretranslatedLine = ""
 			skelLine = skelLine.rstrip()
 			pretranslatedLine = pretranslatedLine.rstrip()
