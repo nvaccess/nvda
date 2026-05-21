@@ -94,10 +94,12 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 	if startAfterInstall:
 		# Translators: Button in the post-install dialog to start the newly installed NVDA.
 		dialog.addButton(ReturnCode.CUSTOM_1, label=_("&Start NVDA"), defaultFocus=True, fallbackAction=True)
-	# Translators: Button in the post-install dialog to restart Windows immediately.
 	dialog.addButton(
 		ReturnCode.CUSTOM_2,
-		label=_("Restart &Windows"),
+		label=_(
+			# Translators: Button in the post-install dialog to restart Windows immediately.
+			"Restart &Windows",
+		),
 		defaultFocus=not startAfterInstall,
 	)
 	# Translators: Button in the post-install dialog to exit NVDA.
