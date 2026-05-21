@@ -422,6 +422,9 @@ class LiveText(NVDAObject):
 		self._keepMonitoring = False
 		self._event.set()
 		self._monitorThread = None
+		if self._reportNewLinesGenID is not None:
+			queueHandler.cancelGeneratorObject(self._reportNewLinesGenID)
+			self._reportNewLinesGenID = None
 
 	def event_textChange(self):
 		"""Fired when the text changes.
