@@ -1,10 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2024 NV Access Limited.
+# Copyright (C) 2024-2026 NV Access Limited.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Generator
-from collections.abc import Iterable
+from collections.abc import Iterable, Generator
 import tempfile
 import os
 import contextlib
@@ -277,7 +276,7 @@ def generateXliff(
 		outputFile.write(f"<skeleton>\n{xmlEscape(skelContent)}\n</skeleton>\n")
 		res.numTranslatableStrings = 0
 		for lineNo, (mdLine, skelLine) in enumerate(
-			zip_longest(
+			zip(
 				preprocessMarkdownLines(mdFile.readlines()),
 				skelContent.splitlines(keepends=True),
 			),
