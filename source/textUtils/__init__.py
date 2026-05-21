@@ -630,7 +630,7 @@ class WordSegmenter:
 					if wordSegStrategy.ChineseWordSegmentationStrategy._lib:
 						return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
 					else:
-						log.debugWarning("Chinese word segmenter is loading. Falling back to Uniscribe.")
+						log.debugWarning("Chinese word segmenter is currently unavailable. Falling back to Uniscribe.")
 						return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 				case _:
 					return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
