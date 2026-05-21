@@ -10,7 +10,6 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import bisect
 import copy
 import logging
 import math
@@ -6064,32 +6063,23 @@ class MagnifierPanel(SettingsPanel):
 
 		# ZOOM SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the zoom level.
-		zoomLabelText = _("&Zoom level:")
+		zoomLabelText = _("&Zoom (%):")
 
-		zoomValues = magnifierConfig.ZoomLevel.zoom_range()
-		zoomChoices = magnifierConfig.ZoomLevel.zoom_strings()
-
-		self.zoomList = sHelper.addLabeledControl(
+		self.zoomCtrl = sHelper.addLabeledControl(
 			zoomLabelText,
-			wx.Choice,
-			choices=zoomChoices,
+			wx.SpinCtrl,
+			min=magnifierConfig.ZoomLevel.MIN_ZOOM,
+			max=magnifierConfig.ZoomLevel.MAX_ZOOM,
 		)
+		self.zoomCtrl.SetIncrement(magnifierConfig.ZoomLevel.STEP_FACTOR)
 		self.bindHelpEvent(
 			"MagnifierZoom",
-			self.zoomList,
+			self.zoomCtrl,
 		)
 
 		# Set value from config
 		zoomLevel = magnifierConfig.getZoomLevel()
-		zoomIndex = bisect.bisect_left(zoomValues, zoomLevel)
-		# Find the closest value
-		if zoomIndex == 0:
-			closestIndex = 0
-		elif zoomIndex >= len(zoomValues):
-			closestIndex = len(zoomValues) - 1
-		else:
-			closestIndex = min(zoomIndex - 1, zoomIndex, key=lambda i: abs(zoomValues[i] - zoomLevel))
-		self.zoomList.SetSelection(closestIndex)
+		self.zoomCtrl.SetValue(zoomLevel)
 
 		# PAN SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
@@ -6102,7 +6092,7 @@ class MagnifierPanel(SettingsPanel):
 			max=100,
 		)
 		self.bindHelpEvent(
-			"magnifierPanStep",
+			"MagnifierPanningStepSize",
 			self.panSpinCtrl,
 		)
 
@@ -6195,8 +6185,8 @@ class MagnifierPanel(SettingsPanel):
 		"""Save the current selections to config."""
 		magnifierConfig.setEnabled(self.enableMagnifierCheckBox.GetValue())
 
-		selectedZoom = self.zoomList.GetSelection()
-		magnifierConfig.setZoomLevel(magnifierConfig.ZoomLevel.zoom_range()[selectedZoom])
+		selectedZoom = self.zoomCtrl.GetValue()
+		magnifierConfig.setZoomLevel(selectedZoom)
 
 		magnifierConfig.setPanStep(self.panSpinCtrl.GetValue())
 
