@@ -153,7 +153,9 @@ def zoom(direction: Direction) -> None:
 		return
 	magnifier._zoom(direction)
 	ui.message(
-		ZoomLevel.zoomMessage(magnifier.zoomLevel),
+		ZoomLevel.ZOOM_MESSAGE.format(
+			zoomLevel=f"{magnifier.zoomLevel:.1f}",
+		),
 	)
 
 

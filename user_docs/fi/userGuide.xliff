@@ -7802,7 +7802,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Report text formatting |`NVDA+f` |`NVDA+f` |Reports text formatting. Pressing twice shows the information in a window</source>
-        <target>Ilmoita tekstin muotoilutiedot | `NVDA+F` | `NVDA+F` | Ilmoittaa tekstin muotoilutiedot. Kahdesti painettaessa ne näytetään selaustilassa.</target>
+        <target>Ilmoita tekstin muotoilutiedot | `NVDA+F` | `NVDA+F` | Ilmoittaa tekstin muotoilutiedot. Kahdesti painettaessa tiedot näytetään selaustilassa.</target>
       </segment>
     </unit>
     <unit id="85eb7fc3-aea0-4669-b0a9-ecb073bebfc7">
@@ -9676,7 +9676,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>If it is taking an extra-long time to start, NVDA should say "Loading NVDA. Please wait..."</source>
-        <target>Jos käynnistyminen kestää erityisen kauan, NVDA ilmoittaa "NVDA käynnistyy, odota..."</target>
+        <target>Jos käynnistyminen kestää erityisen kauan, NVDA:n pitäisi sanoa "NVDA käynnistetään, odota..."</target>
       </segment>
     </unit>
     <unit id="3696d0e3-a740-4d7d-8b1a-4f4f8967b87c">
@@ -11401,7 +11401,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Moving to a list item's containing object will take you back to the list.</source>
-        <target>Takaisin luetteloon pääsee siirtymällä luettelokohteen sisältävään objektiin.</target>
+        <target>Takaisin luetteloon pääsee siirtymällä luettelokohteen säilöobjektiin.</target>
       </segment>
     </unit>
     <unit id="60209728-4cc7-4dca-b6af-6beb0ddc729d">
@@ -11428,7 +11428,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>If you yet prefer to move back and forth between every single object on the system, you can use commands to move to the previous/next object in a flattened view.</source>
-        <target>Jos kuitenkin haluat liikkua järjestelmän kaikkien objektien välillä peräkkäin, voit käyttää komentoja, jotka siirtävät edelliseen tai seuraavaan objektiin tasatussa näkymässä.</target>
+        <target>Jos haluat mieluummin liikkua järjestelmässä jokaisen yksittäisen objektin välillä, voit käyttää edelliseen tai seuraavaan objektiinn tasatussa näkymässä siirtäviä komentoja.</target>
       </segment>
     </unit>
     <unit id="be9cd6be-a321-4585-9cf1-432f07085662">
@@ -11437,7 +11437,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>For example, if you move to the next object in this flattened view and the current object contains other objects, NVDA will automatically move to the first object that it contains.</source>
-        <target>Jos esimerkiksi siirryt tasatussa näkymässä seuraavaan objektiin ja nykyinen objekti sisältää muita objekteja, NVDA siirtyy automaattisesti ensimmäiseen sen sisältämään objektiin.</target>
+        <target>Jos esimerkiksi siirryt tasatussa näkymässä seuraavaan objektiin ja nykyinen objekti sisältää muita objekteja, NVDA siirtyy automaattisesti ensimmäiseen nykyisen objektin sisältämään objektiin.</target>
       </segment>
     </unit>
     <unit id="8274ac01-60fa-4bd4-a2fa-cd370b75d04a">
@@ -11446,7 +11446,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Alternatively, if the current object doesn't contain any objects, NVDA will move to the next object at the current level of the hierarchy.</source>
-        <target>Vaihtoehtoisesti, jos nykyinen objekti ei sisällä muita objekteja, NVDA siirtyy hierarkian samalla tasolla olevaan seuraavaan objektiin.</target>
+        <target>Vaihtoehtoisesti, jos nykyinen objekti ei sisällä muita objekteja, NVDA siirtyy seuraavaan objektiin nykyisellä hierarkiatasolla.</target>
       </segment>
     </unit>
     <unit id="cbf9544c-ba51-40a3-9607-49abbca090af">
@@ -11455,7 +11455,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>If there is no such next object, NVDA will try to find the next object in the hierarchy based on containing objects until there are no more objects to move to.</source>
-        <target>Mikäli seuraavaa objektia ei ole samalla tasolla, NVDA yrittää etsiä seuraavan hierarkiassa olevan objektin ylemmältä tasolta, kunnes uusia objekteja ei enää löydy.</target>
+        <target>Mikäli tällaista objektia ei ole, NVDA yrittää löytää seuraavan objektinn hierarkiassa sen sisältämien objektien perusteella, kunnes ei ole enää objekteja, joihin siirtyä.</target>
       </segment>
     </unit>
     <unit id="fabb340a-26da-41cf-88a4-39be99e55946">
@@ -11551,7 +11551,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Move to containing object |NVDA+numpad8 |NVDA+shift+upArrow |flick up (object mode) |Moves to the object containing the current navigator object</source>
-        <target>Siirrä ylemmän tason objektiin | NVDA+Laskinnäppäimistön 8 | NVDA+Vaihto+Nuoli ylös | Pyyhkäisy ylös (objektitila) | Siirtää ylemmän tason objektiin, jossa nykyinen navigointiobjekti on.</target>
+        <target>Siirrä säilöobjektiin | NVDA+Laskinnäppäimistön 8 | NVDA+Vaihto+Nuoli ylös | Pyyhkäisy ylös (objektitila) | Siirtää objektiin, joka sisältää nykyisen navigointiobjektin.</target>
       </segment>
     </unit>
     <unit id="8fb6b8fa-e7b4-4937-9ef0-02ffd3f2b79d">
@@ -11606,7 +11606,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Move to first contained object |NVDA+numpad2 |NVDA+shift+downArrow |flick down (object mode) |Moves to the first object contained by the current navigator object</source>
-        <target>Siirrä ensimmäiseen aliobjektiin | NVDA+Laskinnäppäimistön 2 | NVDA+Vaihto+Nuoli alas | Pyyhkäisy alas (objektitila) | Siirtää ensimmäiseen navigointiobjektissa olevaan aliobjektiin.</target>
+        <target>Siirrä ensimmäiseen sisältöobjektiin | NVDA+Laskinnäppäimistön 2 | NVDA+Vaihto+Nuoli alas | Pyyhkäisy alas (objektitila) | Siirtää ensimmäiseen navigointiobjektin sisällä olevaan objektiin.</target>
       </segment>
     </unit>
     <unit id="201af03b-8c31-4973-b218-202be0930980">
@@ -11639,7 +11639,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Move System focus or caret to current review position |NVDA+shift+numpadMinus |NVDA+shift+backspace |none |pressed once Moves the System focus to the current navigator object, pressed twice moves the system caret to the position of the review cursor</source>
-        <target>Siirrä järjestelmän kohdistus tai kohdistin tarkastelukohtaan | NVDA+Vaihto+Laskinnäppäimistön miinus | NVDA+Vaihto+Askelpalautin | Ei mitään | Siirtää kerran painettaessa järjestelmän kohdistuksen nykyiseen navigointiobjektiin tai kahdesti painettaessa järjestelmäkohdistimen tarkastelukohdistimen kohdalle.</target>
+        <target>Siirrä kohdistus tai kohdistin tarkastelukohtaan | NVDA+Vaihto+Laskinnäppäimistön miinus | NVDA+Vaihto+Askelpalautin | Ei mitään | Siirtää kerran painettaessa järjestelmän kohdistuksen nykyiseen navigointiobjektiin tai kahdesti painettaessa järjestelmäkohdistimen tarkastelukohdistimen kohdalle.</target>
       </segment>
     </unit>
     <unit id="ef240f08-ade8-4eac-9b4a-903acc5a149e">
@@ -13144,7 +13144,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Move to start of container |shift+comma |Moves to the start of the container (list, table, etc.) where the caret is positioned</source>
-        <target>Siirrä säilön alkuun | `Vaihto+pilkku` | Siirtää sen säilöelementin (luettelo, taulukko jne.) alkuun, jossa kohdistin on.</target>
+        <target>Siirrä säilöelementin alkuun | `Vaihto+pilkku` | Siirtää sen säilöelementin alkuun, jossa kohdistin on (luettelo, taulukko jne).</target>
       </segment>
     </unit>
     <unit id="80b6ff05-0ade-473d-babc-af8f5958228f">
@@ -13155,7 +13155,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Move past end of container |comma |Moves past the end of the container (list, table, etc.) where the caret is positioned</source>
-        <target>Siirrä säilön loppuun | `Pilkku` | Siirtää sen säilöelementin (luettelo, taulukko jne.) loppuun, jossa kohdistin on.</target>
+        <target>Siirrä säilöelementin loppuun | `Pilkku` | Siirtää sen säilöelementin loppuun, jossa kohdistin on (luettelo, taulukko jne).</target>
       </segment>
     </unit>
     <unit id="33a302d1-6a82-4080-9c98-20ab42a571ae">

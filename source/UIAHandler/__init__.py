@@ -741,10 +741,6 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug("HandleAutomationEvent: event received while not fully initialized")
 			return
-		if utils._shouldSkipEventForHungWindow(sender):
-			if _isDebug():
-				log.debug("HandleAutomationEvent: dropping event; sender's application is not responding")
-			return
 		if eventID == UIA_MenuOpenedEventId and eventHandler.isPendingEvents("gainFocus"):  # noqa: F405
 			# We don't need the menuOpened event if focus has been fired,
 			# as focus should be more correct.
@@ -752,16 +748,12 @@ class UIAHandler(COMObject):
 				log.debug("HandleAutomationEvent: Ignored MenuOpenedEvent while focus event pending")
 			return
 		if eventID == UIA.UIA_Text_TextChangedEventId:
-			# Use the cached class name: NVDA registers every event handler group with
-			# baseCacheRequest, which caches UIA_ClassNamePropertyId, so this avoids a
-			# slow (and, for an unresponsive app, hanging) live cross-process fetch on
-			# this high-frequency text-change path.
 			if (
-				sender.CachedClassName in textChangeUIAClassNames
+				sender.currentClassName in textChangeUIAClassNames
 				or sender.CachedAutomationID in textChangeUIAAutomationIDs
 				or (
 					not utils._shouldUseWindowsTerminalNotifications()
-					and sender.CachedClassName in windowsTerminalUIAClassNames
+					and sender.currentClassName in windowsTerminalUIAClassNames
 				)
 			):
 				NVDAEventName = "textChange"
@@ -854,10 +846,6 @@ class UIAHandler(COMObject):
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleFocusChangedEvent: event received while not fully initialized")
-			return
-		if utils._shouldSkipEventForHungWindow(sender):
-			if _isDebug():
-				log.debug("HandleFocusChangedEvent: dropping event; sender's application is not responding")
 			return
 		self.lastFocusedUIAElement = sender
 		if not self.isNativeUIAElement(sender):
@@ -952,13 +940,6 @@ class UIAHandler(COMObject):
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandlePropertyChangedEvent: event received while not fully initialized")
-			return
-		# Note: this is intentionally after the #3867 newValue.vt = VT_EMPTY workaround above.
-		if utils._shouldSkipEventForHungWindow(sender):
-			if _isDebug():
-				log.debug(
-					"HandlePropertyChangedEvent: dropping event; sender's application is not responding",
-				)
 			return
 		try:
 			processId = sender.CachedProcessID
@@ -1058,10 +1039,6 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug("HandleNotificationEvent: event received while not fully initialized")
 			return
-		if utils._shouldSkipEventForHungWindow(sender):
-			if _isDebug():
-				log.debug("HandleNotificationEvent: dropping event; sender's application is not responding")
-			return
 		# Sometimes notification events can be fired on a UIAElement that has no windowHandle
 		# and does not connect through parents back to the desktop.
 		# #17841: yet messages such as window restored/maximized coming from File Explorer (Windows shell)
@@ -1144,13 +1121,6 @@ class UIAHandler(COMObject):
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleActiveTextPositionchangedEvent: event received while not fully initialized")
-			return
-		if utils._shouldSkipEventForHungWindow(sender):
-			if _isDebug():
-				log.debug(
-					"HandleActiveTextPositionChangedEvent: dropping event; "
-					"sender's application is not responding",
-				)
 			return
 		import NVDAObjects.UIA
 

@@ -91,28 +91,15 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 		buttons=None,
 		helpId="RestartWindowsAfterInstall",
 	)
+	# Translators: Button in the post-install dialog to restart Windows immediately.
+	dialog.addButton(ReturnCode.CUSTOM_1, label=_("Restart &Windows"), defaultFocus=True)
 	if startAfterInstall:
 		# Translators: Button in the post-install dialog to start the newly installed NVDA.
-		dialog.addButton(ReturnCode.CUSTOM_1, label=_("&Start NVDA"), defaultFocus=True, fallbackAction=True)
-	dialog.addButton(
-		ReturnCode.CUSTOM_2,
-		label=_(
-			# Translators: Button in the post-install dialog to restart Windows immediately.
-			"Restart &Windows",
-		),
-		defaultFocus=not startAfterInstall,
-	)
+		dialog.addButton(ReturnCode.CUSTOM_2, label=_("&Start NVDA"), fallbackAction=True)
 	# Translators: Button in the post-install dialog to exit NVDA.
 	dialog.addButton(ReturnCode.CANCEL, label=_("E&xit NVDA"), fallbackAction=not startAfterInstall)
 	match dialog.ShowModal():
 		case ReturnCode.CUSTOM_1:
-			newNVDA = core.NewNVDAInstance(
-				filePath=os.path.join(WritePaths.defaultInstallDir, "nvda.exe"),
-				parameters=_generate_executionParameters(),
-			)
-			if not core.triggerNVDAExit(newNVDA):
-				log.error("NVDA already in process of exiting, this indicates a logic error.")
-		case ReturnCode.CUSTOM_2:
 			if _restartWindows():
 				if not core.triggerNVDAExit(None):
 					log.error("NVDA already in process of exiting, this indicates a logic error.")
@@ -136,6 +123,13 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 				else:
 					if not core.triggerNVDAExit(None):
 						log.error("NVDA already in process of exiting, this indicates a logic error.")
+		case ReturnCode.CUSTOM_2:
+			newNVDA = core.NewNVDAInstance(
+				filePath=os.path.join(WritePaths.defaultInstallDir, "nvda.exe"),
+				parameters=_generate_executionParameters(),
+			)
+			if not core.triggerNVDAExit(newNVDA):
+				log.error("NVDA already in process of exiting, this indicates a logic error.")
 		case ReturnCode.CANCEL:
 			if not core.triggerNVDAExit(None):
 				log.error("NVDA already in process of exiting, this indicates a logic error.")

@@ -5,7 +5,6 @@
 # Leonard de Ruijter, Burman's Computer and Education Ltd., Julien Cochuyt
 
 from enum import StrEnum
-import dataclasses
 import itertools
 import typing
 from typing import (
@@ -53,11 +52,7 @@ from config.configFlags import (
 	OutputMode,
 	ReportSpellingErrors,
 )
-from config.featureFlagEnums import (
-	BrailleTextWrapFlag,
-	FontFormattingBrailleModeFlag,
-	ReviewRoutingMovesSystemCaretFlag,
-)
+from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag, FontFormattingBrailleModeFlag
 from logHandler import log
 import controlTypes
 import api
@@ -331,7 +326,6 @@ CURSOR_SHAPES = (
 	(0xFF, _("All dots")),
 )
 SELECTION_SHAPE = 0xC0  #: Dots 7 and 8
-CONTINUATION_SHAPE = 0xC0  #: Dots 7 and 8
 
 END_OF_BRAILLE_OUTPUT_SHAPE = 0xFF  # All dots
 """
@@ -1391,12 +1385,7 @@ class TextInfoRegion(Region):
 			typeform |= louis.underline
 		return typeform
 
-	def _addFieldText(
-		self,
-		text: str,
-		contentPos: int,
-		separate: bool = True,
-	):
+	def _addFieldText(self, text, contentPos, separate=True):
 		if separate and self.rawText:
 			# Separate this field text from the rest of the text.
 			text = TEXT_SEPARATOR + text
@@ -1823,25 +1812,11 @@ def rindex(seq, item, start, end):
 	raise ValueError("%r is not in sequence" % item)
 
 
-@dataclasses.dataclass(frozen=True)
-class _WindowRowPositions:
-	"""Braille buffer positions for a single row of the braille window."""
-
-	start: int
-	"""Start position (inclusive) in the braille buffer."""
-	end: int
-	"""End position (exclusive) in the braille buffer."""
-	showContinuationMark: bool = False
-	"""Whether to append a continuation mark (`CONTINUATION_SHAPE`) after the row cells."""
-
-
 class BrailleBuffer(baseObject.AutoPropertyObject):
-	handler: "BrailleHandler"
-	regions: list[Region]
-	"""The regions in this buffer."""
-
 	def __init__(self, handler):
 		self.handler = handler
+		#: The regions in this buffer.
+		#: @type: [L{Region}, ...]
 		self.regions = []
 		#: The raw text of the entire buffer.
 		self.rawText = ""
@@ -1851,10 +1826,10 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		#: The translated braille representation of the entire buffer.
 		#: @type: [int, ...]
 		self.brailleCells = []
-		self._windowRowBufferOffsets: list[_WindowRowPositions] = [_WindowRowPositions(0, 0)]
+		self._windowRowBufferOffsets: list[tuple[int, int]] = [(0, 0)]
 		"""
 		A list representing the rows in the braille window,
-		each item containing start and end braille buffer offsets and whether a continuation mark should appear.
+		each item being a tuple of start and end braille buffer offsets.
 		Splitting the window into independent rows allows for optional avoidance of splitting words across rows.
 		"""
 
@@ -1885,21 +1860,21 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			yield RegionWithPositions(region, start, end)
 			start = end
 
-	rawToBraillePos: list[int]
-	"""Type definition for auto prop '_get_rawToBraillePos'"""
-
-	def _get_rawToBraillePos(self) -> list[int]:
-		""":return: a list mapping positions in L{rawText} to positions in L{brailleCells} for the entire buffer."""
+	def _get_rawToBraillePos(self):
+		"""@return: a list mapping positions in L{rawText} to positions in L{brailleCells} for the entire buffer.
+		@rtype: [int, ...]
+		"""
 		rawToBraillePos = []
 		for region, regionStart, regionEnd in self.regionsWithPositions:
 			rawToBraillePos.extend(p + regionStart for p in region.rawToBraillePos)
 		return rawToBraillePos
 
-	brailleToRawPos: list[int]
-	"""Type definition for auto prop '_get_brailleToRawPos'"""
+	brailleToRawPos: List[int]
 
-	def _get_brailleToRawPos(self) -> list[int]:
-		""":return: a list mapping positions in L{brailleCells} to positions in L{rawText} for the entire buffer."""
+	def _get_brailleToRawPos(self):
+		"""@return: a list mapping positions in L{brailleCells} to positions in L{rawText} for the entire buffer.
+		@rtype: [int, ...]
+		"""
 		brailleToRawPos = []
 		start = 0
 		for region in self.visibleRegions:
@@ -1907,23 +1882,13 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			start += len(region.rawText)
 		return brailleToRawPos
 
-	def bufferPosToRegionPos(self, bufferPos: int) -> tuple[Region, int]:
-		"""Converts a position relative to the braille buffer to a position relative to the region it is in.
-		:param bufferPos: The position relative to the braille buffer.
-		:return: A tuple of the region and the position relative to that region.
-		"""
+	def bufferPosToRegionPos(self, bufferPos):
 		for region, start, end in self.regionsWithPositions:
 			if end > bufferPos:
 				return region, bufferPos - start
 		raise LookupError("No such position")
 
-	def regionPosToBufferPos(self, region: Region, pos: int, allowNearest: bool = False) -> int:
-		"""Converts a position relative to a region to a position relative to the braille buffer.
-		:param region: The region the position is relative to.
-		:param pos: The position relative to the region.
-		:param allowNearest: If True, if the position is outside the region, return the nearest position within the region. If False, raise LookupError if the position is outside the region.
-		:return: The position relative to the braille buffer.
-		"""
+	def regionPosToBufferPos(self, region, pos, allowNearest=False):
 		start: int = 0
 		for testRegion, start, end in self.regionsWithPositions:
 			if region == testRegion:
@@ -1940,13 +1905,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			return start
 		raise LookupError("No such position")
 
-	def bufferPositionsToRawText(self, startPos: int, endPos: int) -> str:
-		"""
-		Converts a range of positions in the braille buffer to the corresponding raw text.
-		:param startPos: The start position in the braille buffer.
-		:param endPos: The end position in the braille buffer.
-		:return: The corresponding raw text.
-		"""
+	def bufferPositionsToRawText(self, startPos, endPos):
 		brailleToRawPos = self.brailleToRawPos
 		if not brailleToRawPos or not self.rawText:
 			# if either are empty, just return an empty string.
@@ -1968,14 +1927,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			return ""
 
 	def bufferPosToWindowPos(self, bufferPos: int) -> int:
-		"""
-		Converts a position relative to the braille buffer to a position relative to the braille window.
-		:param bufferPos: The position relative to the braille buffer.
-		:return: The position relative to the braille window.
-		"""
-		for row, rowPositions in enumerate(self._windowRowBufferOffsets):
-			if rowPositions.start <= bufferPos < rowPositions.end:
-				return row * self.handler.displayDimensions.numCols + (bufferPos - rowPositions.start)
+		for row, (start, end) in enumerate(self._windowRowBufferOffsets):
+			if start <= bufferPos < end:
+				return row * self.handler.displayDimensions.numCols + (bufferPos - start)
 		raise LookupError("buffer pos not in window")
 
 	def windowPosToBufferPos(self, windowPos: int) -> int:
@@ -1987,8 +1941,8 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		windowPos = max(min(windowPos, self.handler.displaySize), 0)
 		row, col = divmod(windowPos, self.handler.displayDimensions.numCols)
 		if row < len(self._windowRowBufferOffsets):
-			rowPositions = self._windowRowBufferOffsets[row]
-			return max(min(rowPositions.start + col, rowPositions.end - 1), 0)
+			start, end = self._windowRowBufferOffsets[row]
+			return max(min(start + col, end - 1), 0)
 		raise ValueError("Position outside window")
 
 	windowStartPos: int
@@ -2000,48 +1954,36 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 	def _set_windowStartPos(self, pos: int) -> None:
 		self._calculateWindowRowBufferOffsets(pos)
 
-	def _isMidWordCut(self, end: int, bufferEnd: int) -> bool:
-		"""Return True when the cut at `end` falls in the middle of a word (both adjacent cells are non-space)."""
-		return end < bufferEnd and all(self.brailleCells[end - 1 : end + 1])
-
 	def _calculateWindowRowBufferOffsets(self, pos: int) -> None:
 		"""
 		Calculates the start and end positions of each row in the braille window.
-		Ensures that words are not split across rows when text wrap is enabled.
+		Ensures that words are not split across rows when word wrap is enabled.
 		Ensures that the window does not extend past the end of the braille buffer.
 		:param pos: The start position of the braille window.
 		"""
 		self._windowRowBufferOffsets.clear()
 		if len(self.brailleCells) == 0:
 			# Initialising with no actual braille content.
-			self._windowRowBufferOffsets = [_WindowRowPositions(0, 0)]
+			self._windowRowBufferOffsets = [(0, 0)]
 			return
-		textWrap: BrailleTextWrapFlag = config.conf["braille"]["textWrap"].calculated()
+		doWordWrap = config.conf["braille"]["wordWrap"]
 		bufferEnd = len(self.brailleCells)
 		start = pos
 		clippedEnd = False
 		for row in range(self.handler.displayDimensions.numRows):
-			showContinuationMark = False
 			end = start + self.handler.displayDimensions.numCols
 			if end > bufferEnd:
 				end = bufferEnd
 				clippedEnd = True
-			elif textWrap == BrailleTextWrapFlag.MARK_WORD_CUTS and self._isMidWordCut(end, bufferEnd):
-				end -= 1
-				showContinuationMark = True
-			elif textWrap == BrailleTextWrapFlag.AT_WORD_BOUNDARIES:
+			elif doWordWrap:
 				try:
 					lastSpaceIndex = rindex(self.brailleCells, 0, start, end + 1)
 					if lastSpaceIndex < end:
-						# lastSpaceIndex < end proves brailleCells[end] is non-zero,
-						# so searching [start, end) yields the same lastSpaceIndex.
-						end = lastSpaceIndex + 1
+						# The next braille window doesn't start with space.
+						end = rindex(self.brailleCells, 0, start, end) + 1
 				except (ValueError, IndexError):
-					# No space on line - fall back to display-edge cut.
-					if self._isMidWordCut(end, bufferEnd):
-						end -= 1
-						showContinuationMark = True
-			self._windowRowBufferOffsets.append(_WindowRowPositions(start, end, showContinuationMark))
+					pass  # No space on line
+			self._windowRowBufferOffsets.append((start, end))
 			if clippedEnd:
 				break
 			start = end
@@ -2050,7 +1992,8 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 	"""The end position of the braille window in the braille buffer."""
 
 	def _get_windowEndPos(self) -> int:
-		return self._windowRowBufferOffsets[-1].end
+		start, end = self._windowRowBufferOffsets[-1]
+		return end
 
 	def _set_windowEndPos(self, endPos: int) -> None:
 		"""Sets the end position for the braille window and recalculates the window start position based on several variables.
@@ -2058,7 +2001,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		2. Whether one of the regions should be shown hard left on the braille display;
 			i.e. because of The configuration setting for focus context representation
 			or whether the braille region that corresponds with the focus represents a multi line edit box.
-		3. Whether text wrap is enabled."""
+		3. Whether word wrap is enabled."""
 		startPos = endPos - self.handler.displaySize
 		# Loop through the currently displayed regions in reverse order
 		# If focusToHardLeft is set for one of the regions, the display shouldn't scroll further back than the start of that region
@@ -2079,10 +2022,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		if startPos <= restrictPos:
 			self.windowStartPos = restrictPos
 			return
-		if config.conf["braille"]["textWrap"].calculated() in (
-			BrailleTextWrapFlag.NONE,
-			BrailleTextWrapFlag.MARK_WORD_CUTS,
-		):
+		if not config.conf["braille"]["wordWrap"]:
 			self.windowStartPos = startPos
 			return
 		try:
@@ -2097,7 +2037,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 					break
 		except ValueError:
 			pass
-		# When text wrap is enabled, the first block of spaces may be removed from the current window.
+		# When word wrap is enabled, the first block of spaces may be removed from the current window.
 		# This may prevent displaying the start of paragraphs.
 		paragraphStartMarker = getParagraphStartMarker()
 		if paragraphStartMarker and self.regions[-1].rawText.startswith(
@@ -2204,12 +2144,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 
 	def _get_windowBrailleCells(self) -> list[int]:
 		windowCells = []
-		for row, rowPositions in enumerate(self._windowRowBufferOffsets):
-			rowCells = self.brailleCells[rowPositions.start : rowPositions.end]
+		for start, end in self._windowRowBufferOffsets:
+			rowCells = self.brailleCells[start:end]
 			remaining = self.handler.displayDimensions.numCols - len(rowCells)
-			if remaining > 0 and rowPositions.showContinuationMark:
-				rowCells.append(CONTINUATION_SHAPE)
-				remaining -= 1
 			if remaining > 0:
 				rowCells.extend([0] * remaining)
 			windowCells.extend(rowCells)
