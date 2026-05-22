@@ -13,7 +13,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 22
+latestSchemaVersion = 23
 
 #: The configuration specification string
 #: @type: String
@@ -24,7 +24,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	saveConfigurationOnExit = boolean(default=True)
 	askToExit = boolean(default=true)
 	playStartAndExitSounds = boolean(default=true)
-	# possible log levels are SECRETS, DEBUG, IO, DEBUGWARNING, INFO and OFF
+	# possible log levels are DEBUG_UNREDACTED, DEBUG, IO, DEBUGWARNING, INFO and OFF
 	loggingLevel = string(default="INFO")
 	showWelcomeDialogAtStartup = boolean(default=true)
 	preventDisplayTurningOff = boolean(default=true)
@@ -91,7 +91,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		optionsEnum="ReviewRoutingMovesSystemCaretFlag", behaviorOfDefault="NEVER")
 	readByParagraph = boolean(default=false)
 	paragraphStartMarker = option("", " ", "¶", default="")
+	# Deprecated in 2026.3
 	wordWrap = boolean(default=true)
+	textWrap = featureFlag(optionsEnum="BrailleTextWrapFlag", behaviorOfDefault="AT_WORD_BOUNDARIES")
 	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
 	interruptSpeechWhileScrolling = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
@@ -118,7 +120,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [magnifier]
 	enabled = boolean(default=false)
 	magnifiedView = string(default="fullscreen")
-	zoomLevel = float(min=1.0, max=10.0, default=2.0)
+	zoom = integer(min=100, max=5000, default=200)
 	isTrueCentered = boolean(default=False)
 	filter = string(default="normal")
 	followMouse = boolean(default=True)
