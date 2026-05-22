@@ -41,6 +41,8 @@ import winKernel
 import winUser
 import winVersion
 import eventHandler
+import exceptions
+import watchdog
 from logHandler import log
 import winBindings.uiAutomationCore
 from . import utils
@@ -1251,9 +1253,6 @@ class UIAHandler(COMObject):
 		# Run via the watchdog's cancellable thread: this is a blocking
 		# cross-process call that the watchdog cannot otherwise cancel, so a
 		# hung application could freeze the core here until it is killed.
-		import watchdog
-		import exceptions
-
 		try:
 			res = watchdog.cancellableExecute(
 				winBindings.uiAutomationCore.UiaHasServerSideProvider,

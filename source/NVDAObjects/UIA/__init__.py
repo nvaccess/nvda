@@ -1485,21 +1485,11 @@ class UIA(Window):
 	def kwargsFromSuper(cls, kwargs, relation=None, ignoreNonNativeElementsWithFocus=True):
 		UIAElement = None
 		windowHandle = kwargs.get("windowHandle")
-		# These UIA client calls block the core if the target application is
-		# unresponsive; run them via the watchdog's cancellable thread so the
-		# watchdog can cancel them (e.g. when the user switches away).
-		import watchdog
-		import exceptions
-
 		if isinstance(relation, tuple):
-			try:
-				UIAElement = watchdog.cancellableExecute(
-					UIAHandler.handler.clientObject.ElementFromPointBuildCache,
-					POINT(relation[0], relation[1]),
-					UIAHandler.handler.baseCacheRequest,
-				)
-			except exceptions.CallCancelled:
-				return False
+			UIAElement = UIAHandler.handler.clientObject.ElementFromPointBuildCache(
+				POINT(relation[0], relation[1]),
+				UIAHandler.handler.baseCacheRequest,
+			)
 			if UIAHandler._isDebug():
 				log.debug(
 					f"kwargsFromSuper: given coordinates {relation}, "
@@ -1516,11 +1506,10 @@ class UIA(Window):
 			kwargs["windowHandle"] = None
 		elif relation == "focus":
 			try:
-				UIAElement = watchdog.cancellableExecute(
-					UIAHandler.handler.clientObject.getFocusedElementBuildCache,
+				UIAElement = UIAHandler.handler.clientObject.getFocusedElementBuildCache(
 					UIAHandler.handler.baseCacheRequest,
 				)
-			except (COMError, exceptions.CallCancelled):
+			except COMError:
 				log.debugWarning("getFocusedElement failed", exc_info=True)
 				return False
 			if UIAHandler._isDebug():
@@ -1538,14 +1527,10 @@ class UIA(Window):
 			# This object may be in a different window, so we need to recalculate the window handle.
 			kwargs["windowHandle"] = None
 		else:
-			try:
-				UIAElement = watchdog.cancellableExecute(
-					UIAHandler.handler.clientObject.ElementFromHandleBuildCache,
-					windowHandle,
-					UIAHandler.handler.baseCacheRequest,
-				)
-			except exceptions.CallCancelled:
-				return False
+			UIAElement = UIAHandler.handler.clientObject.ElementFromHandleBuildCache(
+				windowHandle,
+				UIAHandler.handler.baseCacheRequest,
+			)
 		if not UIAElement:
 			return False
 		kwargs["UIAElement"] = UIAElement

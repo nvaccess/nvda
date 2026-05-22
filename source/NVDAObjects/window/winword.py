@@ -19,6 +19,8 @@ import comtypes.client
 import comtypes.automation
 import colorsys
 import eventHandler
+import exceptions
+import watchdog
 import braille
 import scriptHandler
 from scriptHandler import script
@@ -1075,9 +1077,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		# This call reaches into Word's process and blocks the core if Word is
 		# unresponsive (e.g. a huge document operation). Run it via the watchdog's
 		# cancellable thread so the watchdog can cancel it.
-		import watchdog
-		import exceptions
-
 		try:
 			res = watchdog.cancellableExecute(
 				NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange,
