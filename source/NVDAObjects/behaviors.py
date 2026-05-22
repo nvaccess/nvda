@@ -469,12 +469,6 @@ class LiveText(NVDAObject):
 		"""
 		droppedCount = len(lines) - self.MAX_LINES
 		if droppedCount > 0:
-			speech.speakMessage(
-				# Translators: Announced when a large burst of live-text output is truncated.
-				ngettext("{numLines} line skipped", "{numLines} lines skipped", droppedCount).format(
-					numLines=droppedCount,
-				),
-			)
 			lines = lines[-self.MAX_LINES :]
 		if self._reportNewLinesGenID is not None:
 			queueHandler.cancelGeneratorObject(self._reportNewLinesGenID)
