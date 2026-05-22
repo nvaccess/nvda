@@ -10,7 +10,6 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import bisect
 import copy
 import logging
 import math
@@ -5499,12 +5498,15 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS,
 		)
 
-		# Translators: The label for a setting in braille settings to enable word wrap
-		# (try to avoid splitting words at the end of the braille display).
-		wordWrapText = _("Avoid splitting &words when possible")
-		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
-		self.bindHelpEvent("BrailleSettingsWordWrap", self.wordWrapCheckBox)
-		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
+		self.textWrapComboBox: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			# Translators: The label for a setting in braille settings to configure text wrap behaviour
+			# (how to break lines that don't fit on the braille display).
+			labelText=_("Text &wrap"),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "textWrap"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleSettingsWordWrap", self.textWrapComboBox)
 
 		self.unicodeNormalizationCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=_(
@@ -5594,7 +5596,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		config.conf["braille"]["speakOnRouting"] = self.speakOnRoutingCheckBox.Value
 		config.conf["braille"]["speakOnNavigatingByUnit"] = self.speakOnNavigatingCheckBox.Value
-		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
+		self.textWrapComboBox.saveCurrentValueToConf()
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[
 			self.focusContextPresentationList.GetSelection()
@@ -6064,32 +6066,23 @@ class MagnifierPanel(SettingsPanel):
 
 		# ZOOM SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the zoom level.
-		zoomLabelText = _("&Zoom level:")
+		zoomLabelText = _("&Zoom (%):")
 
-		zoomValues = magnifierConfig.ZoomLevel.zoom_range()
-		zoomChoices = magnifierConfig.ZoomLevel.zoom_strings()
-
-		self.zoomList = sHelper.addLabeledControl(
+		self.zoomCtrl = sHelper.addLabeledControl(
 			zoomLabelText,
-			wx.Choice,
-			choices=zoomChoices,
+			wx.SpinCtrl,
+			min=magnifierConfig.ZoomLevel.MIN_ZOOM,
+			max=magnifierConfig.ZoomLevel.MAX_ZOOM,
 		)
+		self.zoomCtrl.SetIncrement(magnifierConfig.ZoomLevel.STEP_FACTOR)
 		self.bindHelpEvent(
 			"MagnifierZoom",
-			self.zoomList,
+			self.zoomCtrl,
 		)
 
 		# Set value from config
 		zoomLevel = magnifierConfig.getZoomLevel()
-		zoomIndex = bisect.bisect_left(zoomValues, zoomLevel)
-		# Find the closest value
-		if zoomIndex == 0:
-			closestIndex = 0
-		elif zoomIndex >= len(zoomValues):
-			closestIndex = len(zoomValues) - 1
-		else:
-			closestIndex = min(zoomIndex - 1, zoomIndex, key=lambda i: abs(zoomValues[i] - zoomLevel))
-		self.zoomList.SetSelection(closestIndex)
+		self.zoomCtrl.SetValue(zoomLevel)
 
 		# PAN SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
@@ -6102,7 +6095,7 @@ class MagnifierPanel(SettingsPanel):
 			max=100,
 		)
 		self.bindHelpEvent(
-			"magnifierPanStep",
+			"MagnifierPanningStepSize",
 			self.panSpinCtrl,
 		)
 
@@ -6195,8 +6188,8 @@ class MagnifierPanel(SettingsPanel):
 		"""Save the current selections to config."""
 		magnifierConfig.setEnabled(self.enableMagnifierCheckBox.GetValue())
 
-		selectedZoom = self.zoomList.GetSelection()
-		magnifierConfig.setZoomLevel(magnifierConfig.ZoomLevel.zoom_range()[selectedZoom])
+		selectedZoom = self.zoomCtrl.GetValue()
+		magnifierConfig.setZoomLevel(selectedZoom)
 
 		magnifierConfig.setPanStep(self.panSpinCtrl.GetValue())
 
@@ -6238,16 +6231,16 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		return list(LoggingLevel)[selection]
 
 	def _confirmLogLevelChange(self, selectedLogLevel: LoggingLevel) -> bool:
-		if selectedLogLevel == LoggingLevel.SECRETS:
+		if selectedLogLevel == LoggingLevel.DEBUG_UNREDACTED:
 			message = _(
-				# Translators: Warning shown when enabling the secrets log level from NVDA settings.
-				"Setting the logging level to secrets will write sensitive information to the log without redaction, "
+				# Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
+				'Setting the logging level to "debug (unredacted)" will write sensitive information to the log without redaction, '
 				"including passwords, API keys, or other private data. "
 				"Only enable this temporarily if you explicitly need unredacted diagnostic logs. "
 				"Do you want to continue?",
 			)
 			caption = _(
-				# Translators: Title of the warning dialog shown when enabling the secrets log level.
+				# Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
 				"High risk logging level",
 			)
 		else:
