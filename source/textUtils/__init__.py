@@ -609,7 +609,7 @@ class WordSegmenter:
 
 	def _chooseStrategy(
 		self,
-	) -> wordSegStrategy.WordSegmentationStrategy:  # TODO: Limit regex scans for large text.
+	) -> wordSegStrategy.WordSegmentationStrategy:
 		"""Choose the appropriate segmentation strategy based on the text content."""
 		if self.wordSegFlag == WordSegFlag.AUTO:
 			if (
@@ -644,11 +644,8 @@ class WordSegmenter:
 			return self.strategy.getSegmentForOffset(offset)
 		except Exception as e:
 			log.debugWarning(
-				"WordSegmenter.getSegmentForOffset failed: %s  text: '%s' offset: %s  segmentation strategy: %s",
-				e,
-				self.text,
-				offset,
-				self.strategy,
+				f"WordSegmenter.getSegmentForOffset failed: {e}  "
+				f"text: {self.text!r} offset: {offset}  segmentation strategy: {self.strategy}",
 			)
 			return None
 

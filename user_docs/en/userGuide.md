@@ -3557,8 +3557,6 @@ This may be useful when reading a document where blank lines are used to separat
 
 This category allows you to adjust various aspects of document navigation.
 
-##### Word Segmentation Standard {#WordSegmentationStandard}
-
 ##### Paragraph Style {#ParagraphStyle}
 
 | . {.hideHeaderRow} |.|
@@ -3578,6 +3576,8 @@ This style works best when working with documents which use block paragraphs.
 Note that this paragraph style cannot be used in Microsoft Word or Microsoft Outlook, unless you are using UIA to access Microsoft Word controls.
 
 You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog](#InputGestures).
+
+##### Word Segmentation Standard {#WordSegmentationStandard}
 
 #### Math Settings {#MathSettings}
 
