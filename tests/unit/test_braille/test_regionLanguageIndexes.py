@@ -12,6 +12,21 @@ import braille
 import textInfos
 
 
+class _FakeObj:
+	_brailleFormatFieldAttributesCache: dict = {}
+
+
+class _FakeInfo:
+	isCollapsed = False
+	obj = _FakeObj()
+
+	def __init__(self, commands):
+		self._commands = commands
+
+	def getTextWithFields(self, formatConfig=None):
+		return self._commands
+
+
 def _makeTextInfoRegion() -> braille.TextInfoRegion:
 	"""Build a TextInfoRegion without going through __init__ (which requires an NVDAObject)."""
 	region = braille.TextInfoRegion.__new__(braille.TextInfoRegion)
@@ -71,16 +86,6 @@ class TestLanguageIndexes(unittest.TestCase):
 			"post",
 		]
 
-		class FakeObj:
-			_brailleFormatFieldAttributesCache: dict = {}
-
-		class FakeInfo:
-			isCollapsed = False
-			obj = FakeObj()
-
-			def getTextWithFields(self, formatConfig=None):
-				return commands
-
 		formatConfig = {
 			"reportClickable": False,
 		}
@@ -93,7 +98,7 @@ class TestLanguageIndexes(unittest.TestCase):
 				return_value=0,
 			),
 		):
-			region._addTextWithFields(FakeInfo(), formatConfig)
+			region._addTextWithFields(_FakeInfo(commands), formatConfig)
 		# The language switch should have been recorded at len("pre ") == 4.
 		self.assertIn(4, region._languageIndexes)
 		self.assertEqual(region._languageIndexes[4], "de")

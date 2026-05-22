@@ -553,26 +553,26 @@ class Region(object):
 	"""A region of braille to be displayed.
 	Each portion of braille to be displayed is represented by a region.
 	The region is responsible for retrieving its text and the cursor and selection positions, translating it into braille cells and handling cursor routing requests relative to its braille cells.
-	The L{BrailleBuffer} containing this region will call L{update} and expect that L{brailleCells}, L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} will be set appropriately.
-	L{routeTo} will be called to handle a cursor routing request.
+	The :class:`BrailleBuffer` containing this region will call :meth:`update` and expect that :attr:`brailleCells`, :attr:`brailleCursorPos`, :attr:`brailleSelectionStart` and :attr:`brailleSelectionEnd` will be set appropriately.
+	:meth:`routeTo` will be called to handle a cursor routing request.
 	"""
 
 	rawText: str = ""
 	"""The original, raw text of this region."""
 	cursorPos: int | None = None
-	"""The position of the cursor in L{rawText}, C{None} if the cursor is not in this region."""
+	"""The position of the cursor in :attr:`rawText`, ``None`` if the cursor is not in this region."""
 	selectionStart: int | None = None
-	"""The start of the selection in L{rawText} (inclusive), C{None} if there is no selection in this region."""
+	"""The start of the selection in :attr:`rawText` (inclusive), ``None`` if there is no selection in this region."""
 	selectionEnd: int | None = None
-	"""The end of the selection in L{rawText} (exclusive), C{None} if there is no selection in this region."""
+	"""The end of the selection in :attr:`rawText` (exclusive), ``None`` if there is no selection in this region."""
 	rawTextTypeforms: list[int] | None = None
-	"""liblouis typeform flags for each character in L{rawText}, C{None} if no typeform info."""
+	"""liblouis typeform flags for each character in :attr:`rawText`, ``None`` if no typeform info."""
 	brailleCursorPos: int | None = None
-	"""The position of the cursor in L{brailleCells}, C{None} if the cursor is not in this region."""
+	"""The position of the cursor in :attr:`brailleCells`, ``None`` if the cursor is not in this region."""
 	brailleSelectionStart: int | None = None
-	"""The position of the selection start in L{brailleCells}, C{None} if there is no selection in this region."""
+	"""The position of the selection start in :attr:`brailleCells`, ``None`` if there is no selection in this region."""
 	brailleSelectionEnd: int | None = None
-	"""The position of the selection end in L{brailleCells}, C{None} if there is no selection in this region."""
+	"""The position of the selection end in :attr:`brailleCells`, ``None`` if there is no selection in this region."""
 	hidePreviousRegions: bool = False
 	"""Whether to hide all previous regions."""
 	focusToHardLeft: bool = False
@@ -580,21 +580,21 @@ class Region(object):
 
 	def __init__(self):
 		self._languageIndexes: dict[int, str] = {0: self._getDefaultRegionLanguage()}
-		"""Language indexes in L{rawText}. The last language is assumed to be the final language in the region."""
+		"""Language indexes in :attr:`rawText`. The last language is assumed to be the final language in the region."""
 		self.brailleCells: list[int] = []
 		"""The translated braille representation of this region."""
 		self.rawToBraillePos: list[int] = []
-		"""A list mapping positions in L{rawText} to positions in L{brailleCells}."""
+		"""A list mapping positions in :attr:`rawText` to positions in :attr:`brailleCells`."""
 		self.brailleToRawPos: list[int] = []
-		"""A list mapping positions in L{brailleCells} to positions in L{rawText}."""
+		"""A list mapping positions in :attr:`brailleCells` to positions in :attr:`rawText`."""
 
 	def _getDefaultRegionLanguage(self) -> str:
 		"""Get the default language for a region."""
 		return louisHelper.getTableLanguage(handler.table.fileName) or languageHandler.getLanguage()
 
 	def _getLanguageAtPos(self, pos: int) -> str:
-		"""Get the language at a given position in L{rawText} based on L{_languageIndexes}."""
-		keys = list(self._languageIndexes)
+		"""Get the language at a given position in :attr:`rawText` based on :attr:`_languageIndexes`."""
+		keys = sorted(self._languageIndexes)
 		i = bisect.bisect_right(keys, pos) - 1
 		return self._languageIndexes[keys[i]]
 
