@@ -486,7 +486,7 @@ class LiveText(NVDAObject):
 		finally:
 			self._reportNewLinesGenID = None
 
-	def _onSpeechCanceled(self):
+	def _onSpeechCanceled(self) -> None:
 		if self._reportNewLinesGenID is not None:
 			queueHandler.cancelGeneratorObject(self._reportNewLinesGenID)
 			self._reportNewLinesGenID = None
