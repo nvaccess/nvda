@@ -174,9 +174,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v6
-      with:
-        # Include gettext
-        submodules: true
+    - name: Init miscDeps submodule
+      run: git submodule update --init miscDeps
     - name: Set up python
       uses: actions/setup-python@v6
       with:
