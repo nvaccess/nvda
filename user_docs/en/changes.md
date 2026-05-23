@@ -105,7 +105,6 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
-* NVDA is now built with Visual Studio 2026. (#20203, @LeonarddeR)
 * Clarified NV Access's policy on API breaking changes in the [Developer Guide](https://download.nvaccess.org/documentation/developerGuide.html#API). (#19599)
 * Updated components:
   * Ruff to 0.15.9. (#19736, #19908)
@@ -134,6 +133,7 @@ Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`,
     * Added a `valueToPercentage` function to calculate the percentage representation of a configuration value within its range.
     * Added a `percentageToValue` function to convert a percentage to the corresponding configuration value.
     * Added a `clampedIncrementAndUpdateConfig` function to update a configuration value by applying a step, constrained within its valid range.
+* NVDA is now built with Visual Studio 2026. (#20203, @LeonarddeR)
 
 #### Deprecations
 
