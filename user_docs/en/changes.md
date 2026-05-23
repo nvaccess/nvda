@@ -105,6 +105,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* NVDA is now built with Visual Studio 2026. (#20203, @LeonarddeR)
 * Clarified NV Access's policy on API breaking changes in the [Developer Guide](https://download.nvaccess.org/documentation/developerGuide.html#API). (#19599)
 * Updated components:
   * Ruff to 0.15.9. (#19736, #19908)
