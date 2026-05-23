@@ -383,9 +383,10 @@ class LiveText(NVDAObject):
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
 
-	MAX_LINES = 100
-	"""the maximum number of lines that will be reported when a large number of lines are queued
-	subclasses may override this to allow for custom line reporting batches"""
+	MAX_LINES: int = 100
+	"""The maximum number of lines that will be reported when a large number of lines are queued.
+	Subclasses may override this to allow custom line reporting batches.
+	"""
 	announceNewLineText = False
 
 	def initOverlayClass(self):
