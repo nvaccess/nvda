@@ -14,9 +14,10 @@ from unittest.mock import Mock, patch
 import config
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import WordNavigationUnitFlag
-from textUtils import WordSegmenter, wordSeg
+from textUtils import wordSeg
 from textUtils.segFlag import WordSegFlag
 from textUtils.wordSeg import wordSegStrategy
+from textUtils.wordSeg.wordSegmenter import WordSegmenter
 from textUtils.wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
 from textUtils.wordSeg.wordSegUtils import WordSegWithSeparatorOffsetConverter
 
@@ -170,6 +171,22 @@ class TestWordSegmenter(unittest.TestCase):
 			self.assertEqual(strategy.segmentedText(), "你好世界")
 		finally:
 			ChineseWordSegmentationStrategy._lib = originalLib
+
+	def test_getSegmentForOffsetReturnsNoneForRecoverableError(self) -> None:
+		segmenter = WordSegmenter("hello world", wordSegFlag=WordSegFlag.UNISCRIBE)
+		with (
+			patch.object(segmenter.strategy, "getSegmentForOffset", side_effect=IndexError("bad offset")),
+			patch("textUtils.wordSeg.wordSegmenter.log.debugWarning") as debugWarning,
+		):
+			self.assertIsNone(segmenter.getSegmentForOffset(0))
+
+		debugWarning.assert_called_once()
+
+	def test_getSegmentForOffsetPropagatesUnexpectedError(self) -> None:
+		segmenter = WordSegmenter("hello world", wordSegFlag=WordSegFlag.UNISCRIBE)
+		with patch.object(segmenter.strategy, "getSegmentForOffset", side_effect=RuntimeError("unexpected")):
+			with self.assertRaises(RuntimeError):
+				segmenter.getSegmentForOffset(0)
 
 
 class TestWordSegInitialize(unittest.TestCase):

@@ -4,7 +4,9 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from functools import cached_property
-from textUtils import OffsetConverter, WordSegmenter
+from textUtils import OffsetConverter
+
+from .wordSegmenter import WordSegmenter
 
 
 class WordSegWithSeparatorOffsetConverter(OffsetConverter):

@@ -17,6 +17,7 @@ import locationHelper
 from treeInterceptorHandler import TreeInterceptor
 import textUtils
 from textUtils.segFlag import CharSegFlag, WordSegFlag
+from textUtils.wordSeg.wordSegmenter import WordSegmenter
 from dataclasses import dataclass
 from typing import (
 	Dict,
@@ -423,7 +424,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		lineText = lineText.translate({0: " ", 0xA0: " "})
 		relOffset = offset - lineStart
 		if self.wordSegFlag:
-			offsets = textUtils.WordSegmenter(lineText, self.encoding, self.wordSegFlag).getSegmentForOffset(
+			offsets = WordSegmenter(lineText, self.encoding, self.wordSegFlag).getSegmentForOffset(
 				relOffset,
 			)
 			if offsets is not None:
