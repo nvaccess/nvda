@@ -1877,9 +1877,12 @@ class IAccessible(Window):
 		)
 		if config.conf["debugLog"]["annotations"]:
 			log.debug(f"Got {count} relations, given maxRelations: {maxRelations}")
-		if count == 0:
-			return
-		yield from (targets[i] for i in range(min(maxRelations, count)))
+		try:
+			if count == 0:
+				return
+			yield from (targets[i] for i in range(min(maxRelations, count)))
+		finally:
+			winBindings.ole32.CoTaskMemFree(targets)
 
 	def _getIA2RelationFirstTarget(
 		self,
