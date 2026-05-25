@@ -44,6 +44,7 @@ _gestureMap = inputCore.GlobalGestureMap(
 				"br(albatross):rWheelRight",
 			),
 			"braille_routeTo": ("br(albatross):routing",),
+			"braille_selectRange": ("br(albatross):home1+multiRouting", "br(albatross):home2+multiRouting"),
 			"braille_reportFormatting": ("br(albatross):secondRouting",),
 			"braille_toggleFocusContextPresentation": ("br(albatross):attribute1+attribute3",),
 			"speechMode": ("br(albatross):attribute2+attribute4",),

@@ -5144,6 +5144,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to next line |t4|
 |Scroll braille display forward |t5, etouch3|
 |Route to braille cell |routing|
+|Select range from first up to last braille cell |multiRouting|
 |Report text formatting under braille cell |secondary routing|
 |Toggle HID keyboard simulation |t1+spEnter|
 |Move to top line in review |t1+t2|
@@ -5196,6 +5197,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |b4|
 |Move braille display to next line |b5|
 |Route to braille cell |routing|
+|Select range from first up to last braille cell |multiRouting|
 |shift+tab key |esc, left triple action key up+down|
 |alt key |b2+b4+b5|
 |escape key |b4+b6|
@@ -5266,6 +5268,7 @@ Please see your display's documentation for descriptions of where these keys can
 |Move braille display to previous line |`d1`|
 |Move braille display to next line |`d3`|
 |Route to braille cell |`routing`|
+|Select range from first up to last braille cell |`multiRouting`|
 |`shift+tab` key |`space+dot1+dot3`|
 |`tab` key |`space+dot4+dot6`|
 |`alt` key |`space+dot1+dot3+dot4` (`space+m`)|
@@ -5361,6 +5364,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |up|
 |Move braille display to next line |down|
 |Route to braille cell |routing|
+|Select range from first up to last braille cell |multiRouting|
 |Toggle braille tethered to |up+down|
 |upArrow key |space+dot1|
 |downArrow key |space+dot4|
@@ -5542,6 +5546,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |leftArrow key |RJ left|
 |rightArrow key |RJ right|
 |Route to braille cell |routing|
+|Select range from first up to last braille cell |multiRouting|
 |shift+upArrow key |Space+RJ up, Backspace+RJ up|
 |shift+downArrow key |Space+RJ down, Backspace+RJ down|
 |shift+leftArrow key |Space+RJ left, Backspace+RJ left|
@@ -6169,6 +6174,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Scroll braille display back |`left`, `lWheelLeft`, `rWheelLeft`|
 |Scroll braille display forward |`right`, `lWheelRight`, `rWheelRight`|
 |Route to braille cell |`routing`|
+|Select range from first up to last braille cell |`home1+multiRouting`, `home2+multiRouting`|
 |Report text formatting under braille cell |`secondary routing`|
 |Toggle the way context information is presented in braille |`attribute1+attribute3`|
 |Cycles between speech modes |`attribute2+attribute4`|
@@ -6226,6 +6232,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |`d1`|
 |Move braille display to next line |`d3`|
 |Route to braille cell |`routing`|
+|Select range from first up to last braille cell |`multiRouting`|
 |Up arrow key |`up`|
 |Down arrow key |`down`|
 |Left arrow key |`left`|
@@ -6249,6 +6256,7 @@ Following are the current key assignments for these displays.
 |Scroll braille display back |pan left or rocker up|
 |Scroll braille display forward |pan right or rocker down|
 |Route to braille cell |routing set 1|
+|Select range from first up to last braille cell |multiple routing set 1 keys|
 |Toggle braille tethered to |up+down|
 |upArrow key |joystick up, dpad up or space+dot1|
 |downArrow key |joystick down, dpad down or space+dot4|
