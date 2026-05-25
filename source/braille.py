@@ -12,7 +12,6 @@ from typing import (
 	TYPE_CHECKING,
 	Any,
 	Callable,
-	cast,
 	Dict,
 	Final,
 	Generator,
@@ -66,6 +65,7 @@ import textInfos
 import brailleDisplayDrivers
 import inputCore
 import brailleTables
+from brailleTextUtils import _applyOffsetConverter
 import re
 import scriptHandler
 import collections
@@ -545,21 +545,6 @@ def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 	if lastDisplay:
 		displayList.append(lastDisplay)
 	return displayList
-
-
-def _applyOffsetConverter(
-	converter: OffsetConverter,
-	textToTranslateTypeforms: list[int] | None,
-	cursorPos: int | None,
-) -> tuple[str, list[int] | None, int | None]:
-	if textToTranslateTypeforms is not None:
-		textToTranslateTypeforms = [
-			textToTranslateTypeforms[cast(int, converter.encodedToStrOffsets(encodedOffset))]
-			for encodedOffset in range(converter.encodedStringLength)
-		]
-	if cursorPos is not None:
-		cursorPos = cast(int, converter.strToEncodedOffsets(cursorPos))
-	return cast(str, getattr(converter, "encoded")), textToTranslateTypeforms, cursorPos
 
 
 class Region(object):
