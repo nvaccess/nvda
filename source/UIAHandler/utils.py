@@ -10,6 +10,7 @@ from config.featureFlagEnums import WindowsTerminalStrategyFlag
 import ctypes
 import UIAHandler
 import weakref
+import winUser
 import winVersion
 from functools import lru_cache
 from logHandler import log
@@ -411,6 +412,53 @@ def _shouldSelectivelyRegister() -> bool:
 def _shouldUseWindowsTerminalNotifications() -> bool:
 	"Determines whether to use notifications for new text reporting in Windows Terminal."
 	return config.conf["terminals"]["wtStrategy"] == WindowsTerminalStrategyFlag.NOTIFICATIONS
+
+
+def _getCachedWindowHandleFromEvent(sender: "UIAHandler.UIA.IUIAutomationElement") -> int | None:
+	"""Get the native window handle for a UIA event's sender element.
+
+	This only ever reads the I{cached} native window handle. NVDA registers all event
+	handler groups with a cache request that includes
+	C{UIA_NativeWindowHandlePropertyId}, so the sender arrives pre-cached and this read
+	is local: it must never trigger a cross-process call, which is what makes it safe to
+	use as a hung-window guard (a live read would itself hang on an unresponsive app).
+
+	:return: The window handle, or C{None} if it could not be obtained.
+	"""
+	try:
+		return sender.cachedNativeWindowHandle or None
+	except COMError:
+		log.debug(
+			"Failed to read cachedNativeWindowHandle from UIA event sender",
+			exc_info=True,
+		)
+		# The element has no cached window handle, or the cache request did not apply.
+		# Deliberately do not fall back to the live (current) property: that could hang.
+		return None
+
+
+def _shouldSkipEventForHungWindow(sender: "UIAHandler.UIA.IUIAutomationElement") -> bool:
+	"""Whether a UIA event should be dropped because its window's app is not responding.
+
+	When an application stops responding, any live cross-process COM call against its
+	elements blocks until the app is killed, raising a flood of COMErrors out of the
+	UIA event handlers and leaving NVDA partially dead. Detecting the hung window up
+	front (cheaply, from the cached handle) lets us drop the event before touching any
+	live property. This mirrors the existing, unconditional ghost-window handling:
+	there is no legitimate reason to keep polling a not-responding window.
+	"""
+	try:
+		window = _getCachedWindowHandleFromEvent(sender)
+		if not window:
+			return False
+		return winUser.isHungAppWindow(window)
+	except Exception:
+		log.debug(
+			"Exception in _shouldSkipEventForHungWindow; treating as not hung",
+			exc_info=True,
+		)
+		# Never let the guard itself raise into the COM event handler.
+		return False
 
 
 def _isFrameworkIdWinForm(hwnd: int) -> bool:

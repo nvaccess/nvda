@@ -1,13 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from unittest.mock import MagicMock, patch
+from _magnifier.config import ZoomLevel
+from _magnifier.magnifier import Magnifier
 from _magnifier.utils.types import Filter, FullScreenMode, MagnifiedView, Direction, Coordinates
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
-from _magnifier.magnifier import Magnifier
 from winAPI._displayTracking import getPrimaryDisplayOrientation
 
 
@@ -19,7 +20,7 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		magnifier = FullScreenMagnifier()
 		magnifier._startMagnifier()
 
-		self.assertEqual(magnifier.zoomLevel, 2.0)
+		self.assertEqual(magnifier.zoomLevel, 200)
 		self.assertEqual(magnifier.filterType, Filter.NORMAL)
 		self.assertEqual(magnifier._fullscreenMode, FullScreenMode.CENTER)
 		self.assertEqual(magnifier._MAGNIFIED_VIEW, MagnifiedView.FULLSCREEN)
@@ -32,17 +33,17 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		magnifier = FullScreenMagnifier()
 		magnifier._startMagnifier()
 
-		# Set initial zoom to 1.0 for predictable testing
-		magnifier.zoomLevel = 1.0
+		# Set initial zoom to 100 for predictable testing
+		magnifier.zoomLevel = 100
 
 		# Test zoom in
 		magnifier._zoom(Direction.IN)
-		self.assertEqual(magnifier.zoomLevel, 1.5)
+		self.assertEqual(magnifier.zoomLevel, 150)
 
 		# Test zoom out
 		magnifier._zoom(Direction.OUT)
-		self.assertEqual(magnifier.zoomLevel, 1.0)
-		self.assertEqual(magnifier.zoomLevel, 1.0)
+		self.assertEqual(magnifier.zoomLevel, 100)
+		self.assertEqual(magnifier.zoomLevel, 100)
 
 		# Cleanup
 		magnifier._stopMagnifier()
@@ -132,16 +133,16 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		"""Test zoom boundaries."""
 		magnifier = FullScreenMagnifier()
 		magnifier._startMagnifier()
-		magnifier.zoomLevel = 1.0
+		magnifier.zoomLevel = ZoomLevel.MIN_ZOOM
 
 		# Test minimum boundary
 		magnifier._zoom(Direction.OUT)  # Try to zoom out below minimum
-		self.assertEqual(magnifier.zoomLevel, 1.0)
+		self.assertEqual(magnifier.zoomLevel, ZoomLevel.MIN_ZOOM)
 
 		# Test maximum boundary
-		magnifier.zoomLevel = 10.0
+		magnifier.zoomLevel = ZoomLevel.MAX_ZOOM
 		magnifier._zoom(Direction.IN)  # Try to zoom in above maximum
-		self.assertEqual(magnifier.zoomLevel, 10.0)
+		self.assertEqual(magnifier.zoomLevel, ZoomLevel.MAX_ZOOM)
 
 		# Cleanup
 		magnifier._stopMagnifier()
@@ -202,11 +203,11 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		magnifier = FullScreenMagnifier()
 		magnifier._startMagnifier()
 		self.assertTrue(magnifier._isActive)
-		self.assertEqual(magnifier.zoomLevel, 2.0)
+		self.assertEqual(magnifier.zoomLevel, 200)
 
 		# Zoom a bit
 		magnifier._zoom(Direction.IN)
-		self.assertEqual(magnifier.zoomLevel, 2.5)
+		self.assertEqual(magnifier.zoomLevel, 250)
 
 		# Set some coordinates
 		magnifier._currentCoordinates = (200, 300)
@@ -239,7 +240,7 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 
 			mock_mag.MagUninitialize.assert_called_once()
 			mock_mag.MagInitialize.assert_called_once()
-			mock_mag.MagSetFullscreenTransform.assert_called_once_with(magnifier.zoomLevel, 0, 0)
+			mock_mag.MagSetFullscreenTransform.assert_called_once_with(magnifier.zoomLevel / 100.0, 0, 0)
 			mock_mag.MagSetFullscreenColorEffect.assert_called_once()
 			self.assertEqual(magnifier._consecutiveErrors, 0)
 			magnifier._startTimer.assert_called_once_with(magnifier._updateMagnifier)
@@ -298,6 +299,7 @@ class TestFullScreenMagnifierApiConflict(_TestMagnifier):
 
 		with patch("_magnifier.fullscreenMagnifier.ui.message") as mock_message:
 			magnifier = FullScreenMagnifier()
+			magnifier._startMagnifier()
 
 		self.assertFalse(magnifier._isActive)
 		mock_message.assert_called_once()
@@ -311,6 +313,7 @@ class TestFullScreenMagnifierApiConflict(_TestMagnifier):
 
 		with patch("_magnifier.fullscreenMagnifier.ui.message") as mock_message:
 			magnifier = FullScreenMagnifier()
+			magnifier._startMagnifier()
 
 		self.assertFalse(magnifier._isActive)
 		mock_message.assert_called_once()
