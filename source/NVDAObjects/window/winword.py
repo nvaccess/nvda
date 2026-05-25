@@ -1088,8 +1088,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				ctypes.byref(text),
 			)
 		except exceptions.CallCancelled:
-			log.debugWarning("winword_getTextInRange cancelled; Word is not responding")
-			return [self.text]
+			# Don't fall back to self.text here: that reads self._rangeObj.text, which
+			# is another COM call into the same (still hung) Word and would re-block
+			# the core, defeating the cancellation.
+			log.debug("winword_getTextInRange cancelled; Word is not responding")
+			return [""]
 		if res or not text:
 			log.debugWarning("winword_getTextInRange failed with %d" % res)
 			return [self.text]

@@ -16,7 +16,7 @@
 * When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
 * When an application stops responding, NVDA no longer freezes or floods its log with errors; it stays responsive and drops UIA and MSAA events from the unresponsive application until it recovers. (#16749, @heath-toby)
 * Reduced lag on UI Automation text change events, improving the responsiveness of controls such as combo boxes and of File Explorer, by using the cached element class name instead of a live cross-process fetch. (#16749, @heath-toby)
-* When an application stops responding, two blocking calls NVDA makes into it (a UI Automation provider check and a Microsoft Word text retrieval) can now be cancelled by the watchdog, so NVDA recovers more quickly. (#20169, @heath-toby)
+* NVDA recovers more quickly when an application stops responding; in particular, switching away from a hung application returns NVDA to responsiveness immediately. (#20169, @heath-toby)
 
 ### Changes for Developers
 
