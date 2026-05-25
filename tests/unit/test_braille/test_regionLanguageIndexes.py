@@ -20,10 +20,10 @@ class _FakeInfo:
 	isCollapsed = False
 	obj = _FakeObj()
 
-	def __init__(self, commands):
+	def __init__(self, commands: textInfos.TextInfo.TextWithFieldsT):
 		self._commands = commands
 
-	def getTextWithFields(self, formatConfig=None):
+	def getTextWithFields(self, formatConfig: dict | None = None):
 		return self._commands
 
 
