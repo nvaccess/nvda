@@ -65,7 +65,6 @@ import textInfos
 import brailleDisplayDrivers
 import inputCore
 import brailleTables
-from brailleTextUtils import _applyOffsetConverter
 import re
 import scriptHandler
 import collections
@@ -78,6 +77,7 @@ from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverS
 from utils.security import objectBelowLockScreenAndWindowsIsLocked, post_sessionLockStateChanged
 from winAPI.secureDesktop import post_secureDesktopStateChange
 from textUtils import isUnicodeNormalized, OffsetConverter, UnicodeNormalizationOffsetConverter
+from textUtils.braille import _applyOffsetConverter
 from textUtils.wordSeg.wordSegUtils import WordSegWithSeparatorOffsetConverter
 import hwIo
 from editableText import EditableText
