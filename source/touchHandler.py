@@ -191,7 +191,6 @@ touchWindow = None
 touchThread = None
 
 
-#: The set of single-direction flick actions that can begin a sequential flick gesture.
 _flickActions: frozenset[str] = frozenset(
 	{
 		touchTracker.action_flickRight,
@@ -200,8 +199,8 @@ _flickActions: frozenset[str] = frozenset(
 		touchTracker.action_flickDown,
 	},
 )
+"""The set of single-direction flick actions that can begin a sequential flick gesture."""
 
-#: Maps (firstFlickAction, secondFlickAction) to the corresponding sequential flick action.
 _flickSequenceMap: dict[tuple[str, str], str] = {
 	(touchTracker.action_flickRight, touchTracker.action_flickLeft): touchTracker.action_flickRightThenLeft,
 	(touchTracker.action_flickLeft, touchTracker.action_flickRight): touchTracker.action_flickLeftThenRight,
@@ -216,6 +215,7 @@ _flickSequenceMap: dict[tuple[str, str], str] = {
 	(touchTracker.action_flickDown, touchTracker.action_flickRight): touchTracker.action_flickDownThenRight,
 	(touchTracker.action_flickDown, touchTracker.action_flickLeft): touchTracker.action_flickDownThenLeft,
 }
+"""Maps (firstFlickAction, secondFlickAction) to the corresponding sequential flick action."""
 
 
 class TouchInputGesture(inputCore.InputGesture):
@@ -294,7 +294,7 @@ class TouchInputGesture(inputCore.InputGesture):
 			foundAction = foundPlural = False
 			for subID in reversed(ID.split("_")):
 				if not foundAction:
-					action = touchTracker.actionLabels[subID]
+					action = touchTracker.TouchAction(subID).displayString
 					foundAction = True
 					continue
 				if not foundPlural:
@@ -426,6 +426,32 @@ class TouchHandler(threading.Thread):
 		except inputCore.NoInputGestureAction:
 			pass
 
+	def _tryBuildSequentialGesture(
+		self,
+		first: "TouchInputGesture",
+		second: "TouchInputGesture",
+	) -> "TouchInputGesture | None":
+		"""Attempt to combine two consecutive flick gestures into a single sequential flick gesture.
+
+		:param first: The first flick gesture.
+		:param second: The second flick gesture.
+		:return: A combined sequential gesture, or ``None`` if the pair is not a recognised combination.
+		"""
+		if first.tracker.numFingers != second.tracker.numFingers:
+			return None
+		compoundAction = _flickSequenceMap.get((first.tracker.action, second.tracker.action))
+		if compoundAction is None:
+			return None
+		compoundTracker = touchTracker.MultiTouchTracker(
+			compoundAction,
+			first.tracker.x,
+			first.tracker.y,
+			first.tracker.startTime,
+			second.tracker.endTime,
+			numFingers=second.tracker.numFingers,
+		)
+		return TouchInputGesture(first.preheldTracker, compoundTracker, first.mode)
+
 	def pump(self):
 		# pendingFlick holds the first flick within this pump cycle, waiting to see if a second follows.
 		# This is a local variable — no timer, no cross-pump buffering, so normal flicks fire immediately.
@@ -433,23 +459,9 @@ class TouchHandler(threading.Thread):
 		for preheldTracker, tracker in self.trackerManager.emitTrackers():
 			gesture = TouchInputGesture(preheldTracker, tracker, self._curTouchMode.value)
 			if tracker.action in _flickActions:
-				if pendingFlick is not None and pendingFlick.tracker.numFingers == tracker.numFingers:
-					compoundAction = _flickSequenceMap.get((pendingFlick.tracker.action, tracker.action))
-					if compoundAction is not None:
-						# Two matching flicks arrived in the same pump cycle: combine into a sequential gesture.
-						compoundTracker = touchTracker.MultiTouchTracker(
-							compoundAction,
-							pendingFlick.tracker.x,
-							pendingFlick.tracker.y,
-							pendingFlick.tracker.startTime,
-							tracker.endTime,
-							numFingers=tracker.numFingers,
-						)
-						sequentialGesture = TouchInputGesture(
-							pendingFlick.preheldTracker,
-							compoundTracker,
-							pendingFlick.mode,
-						)
+				if pendingFlick is not None:
+					sequentialGesture = self._tryBuildSequentialGesture(pendingFlick, gesture)
+					if sequentialGesture is not None:
 						pendingFlick = None
 						self._executeGesture(sequentialGesture)
 						continue

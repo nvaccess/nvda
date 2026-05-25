@@ -1,6 +1,6 @@
 # What's New in NVDA
 
-## 2026.2
+## 2026.3
 
 ### Important notes
 
@@ -9,6 +9,13 @@
 * Added sequential two-flick touch gestures that combine two flicks performed in quick succession into a single gesture, increasing the number of touch gestures that can be bound to scripts. (#19938, @kefaslungu)
   * Twelve combinations are recognised: opposite-direction pairs (e.g. flick right then flick left) and perpendicular L-shaped pairs (e.g. flick right then flick up).
   * The two flicks can be performed either by lifting the finger between strokes or as a single continuous swipe with a sharp change in direction.
+
+## 2026.2
+
+### Important notes
+
+### New Features
+
 * Added the ability to automatically scroll the braille display. (#18573, @nvdaes)
 * After installing or updating NVDA, a dialog now offers options to restart Windows, start the installed copy, or exit the installer. (#19268, #19718, @kefaslungu)
 * NVDA now includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen. (#19228, @Boumtchack)

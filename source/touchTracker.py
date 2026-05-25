@@ -7,39 +7,125 @@ import math
 import threading
 import time
 from collections import OrderedDict
+from functools import cached_property
+from typing import Self
 
-# Possible actions (single trackers)
-action_tap = "tap"
-action_hold = "hold"
-action_tapAndHold = "tapandhold"
-action_flickUp = "flickup"
-action_flickDown = "flickdown"
-action_flickLeft = "flickleft"
-action_flickRight = "flickright"
-action_hoverDown = "hoverdown"
-action_hover = "hover"
-action_hoverUp = "hoverup"
-action_unknown = "unknown"
+from utils.displayString import DisplayStringStrEnum
+
+
+class TouchAction(DisplayStringStrEnum):
+	"""All recognised touch screen actions, with translated display strings."""
+
+	TAP = "tap"
+	HOLD = "hold"
+	TAP_AND_HOLD = "tapandhold"
+	FLICK_UP = "flickup"
+	FLICK_DOWN = "flickdown"
+	FLICK_LEFT = "flickleft"
+	FLICK_RIGHT = "flickright"
+	HOVER_DOWN = "hoverdown"
+	HOVER = "hover"
+	HOVER_UP = "hoverup"
+	UNKNOWN = "unknown"
+	# Pinch gesture actions
+	PINCH_IN = "pinchin"
+	PINCH_OUT = "pinchout"
+	# Sequential two-flick gesture actions (opposite directions)
+	FLICK_RIGHT_THEN_LEFT = "flickrightthenleft"
+	FLICK_LEFT_THEN_RIGHT = "flickleftthenright"
+	FLICK_UP_THEN_DOWN = "flickupthendown"
+	FLICK_DOWN_THEN_UP = "flickdownthenup"
+	# Sequential two-flick gesture actions (perpendicular / L-shaped)
+	FLICK_RIGHT_THEN_UP = "flickrightthenup"
+	FLICK_RIGHT_THEN_DOWN = "flickrightthendown"
+	FLICK_LEFT_THEN_UP = "flickleftthenup"
+	FLICK_LEFT_THEN_DOWN = "flickleftthendown"
+	FLICK_UP_THEN_RIGHT = "flickupthenright"
+	FLICK_UP_THEN_LEFT = "flickupthenleft"
+	FLICK_DOWN_THEN_RIGHT = "flickdownthenright"
+	FLICK_DOWN_THEN_LEFT = "flickdownthenleft"
+
+	@cached_property
+	def _displayStringLabels(self) -> dict[Self, str]:
+		return {
+			# Translators: a very quick touch and release of a finger on a touch screen
+			TouchAction.TAP: pgettext("touch action", "tap"),
+			# Translators: a touch with no release, on a touch screen.
+			TouchAction.HOLD: pgettext("touch action", "hold"),
+			# Translators: a very quick touch and release, then another touch with no release, on a touch screen
+			TouchAction.TAP_AND_HOLD: pgettext("touch action", "tap and hold"),
+			# Translators: a quick swipe of a finger in an up direction, on a touch screen.
+			TouchAction.FLICK_UP: pgettext("touch action", "flick up"),
+			# Translators: a quick swipe of a finger in a down direction, on a touch screen.
+			TouchAction.FLICK_DOWN: pgettext("touch action", "flick down"),
+			# Translators: a quick swipe of a finger in a left direction, on a touch screen.
+			TouchAction.FLICK_LEFT: pgettext("touch action", "flick left"),
+			# Translators: a quick swipe of a finger in a right direction, on a touch screen.
+			TouchAction.FLICK_RIGHT: pgettext("touch action", "flick right"),
+			# Translators: a finger has been held on the touch screen long enough to be considered as hovering
+			TouchAction.HOVER_DOWN: pgettext("touch action", "hover down"),
+			# Translators: a finger is still touching the touch screen and is moving around without breaking contact.
+			TouchAction.HOVER: pgettext("touch action", "hover"),
+			# Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+			TouchAction.HOVER_UP: pgettext("touch action", "hover up"),
+			# Translators: a touch screen gesture where two fingers move toward each other (zoom out)
+			TouchAction.PINCH_IN: pgettext("touch action", "pinch in"),
+			# Translators: a touch screen gesture where two fingers move away from each other (zoom in)
+			TouchAction.PINCH_OUT: pgettext("touch action", "pinch out"),
+			# Translators: a quick swipe right followed by a quick swipe left, on a touch screen.
+			TouchAction.FLICK_RIGHT_THEN_LEFT: pgettext("touch action", "flick right then left"),
+			# Translators: a quick swipe left followed by a quick swipe right, on a touch screen.
+			TouchAction.FLICK_LEFT_THEN_RIGHT: pgettext("touch action", "flick left then right"),
+			# Translators: a quick swipe up followed by a quick swipe down, on a touch screen.
+			TouchAction.FLICK_UP_THEN_DOWN: pgettext("touch action", "flick up then down"),
+			# Translators: a quick swipe down followed by a quick swipe up, on a touch screen.
+			TouchAction.FLICK_DOWN_THEN_UP: pgettext("touch action", "flick down then up"),
+			# Translators: a quick swipe right followed by a quick swipe up, on a touch screen.
+			TouchAction.FLICK_RIGHT_THEN_UP: pgettext("touch action", "flick right then up"),
+			# Translators: a quick swipe right followed by a quick swipe down, on a touch screen.
+			TouchAction.FLICK_RIGHT_THEN_DOWN: pgettext("touch action", "flick right then down"),
+			# Translators: a quick swipe left followed by a quick swipe up, on a touch screen.
+			TouchAction.FLICK_LEFT_THEN_UP: pgettext("touch action", "flick left then up"),
+			# Translators: a quick swipe left followed by a quick swipe down, on a touch screen.
+			TouchAction.FLICK_LEFT_THEN_DOWN: pgettext("touch action", "flick left then down"),
+			# Translators: a quick swipe up followed by a quick swipe right, on a touch screen.
+			TouchAction.FLICK_UP_THEN_RIGHT: pgettext("touch action", "flick up then right"),
+			# Translators: a quick swipe up followed by a quick swipe left, on a touch screen.
+			TouchAction.FLICK_UP_THEN_LEFT: pgettext("touch action", "flick up then left"),
+			# Translators: a quick swipe down followed by a quick swipe right, on a touch screen.
+			TouchAction.FLICK_DOWN_THEN_RIGHT: pgettext("touch action", "flick down then right"),
+			# Translators: a quick swipe down followed by a quick swipe left, on a touch screen.
+			TouchAction.FLICK_DOWN_THEN_LEFT: pgettext("touch action", "flick down then left"),
+		}
+
+
+# Module-level aliases for backwards compatibility
+action_tap = TouchAction.TAP
+action_hold = TouchAction.HOLD
+action_tapAndHold = TouchAction.TAP_AND_HOLD
+action_flickUp = TouchAction.FLICK_UP
+action_flickDown = TouchAction.FLICK_DOWN
+action_flickLeft = TouchAction.FLICK_LEFT
+action_flickRight = TouchAction.FLICK_RIGHT
+action_hoverDown = TouchAction.HOVER_DOWN
+action_hover = TouchAction.HOVER
+action_hoverUp = TouchAction.HOVER_UP
+action_unknown = TouchAction.UNKNOWN
 hoverActions = (action_hoverDown, action_hover, action_hoverUp)
-# Pinch gesture actions
-#: Two fingers moving toward each other.
-action_pinchIn: str = "pinchin"
-#: Two fingers moving away from each other.
-action_pinchOut: str = "pinchout"
-# Sequential two-flick gesture actions (opposite directions)
-action_flickRightThenLeft = "flickrightflickleft"
-action_flickLeftThenRight = "flickleftflickright"
-action_flickUpThenDown = "flickupflickdown"
-action_flickDownThenUp = "flickdownflickup"
-# Sequential two-flick gesture actions (perpendicular / L-shaped)
-action_flickRightThenUp = "flickrightflickup"
-action_flickRightThenDown = "flickrightflickdown"
-action_flickLeftThenUp = "flickleftflickup"
-action_flickLeftThenDown = "flickleftflickdown"
-action_flickUpThenRight = "flickupflickright"
-action_flickUpThenLeft = "flickupflickleft"
-action_flickDownThenRight = "flickdownflickright"
-action_flickDownThenLeft = "flickdownflickleft"
+action_pinchIn = TouchAction.PINCH_IN
+action_pinchOut = TouchAction.PINCH_OUT
+action_flickRightThenLeft = TouchAction.FLICK_RIGHT_THEN_LEFT
+action_flickLeftThenRight = TouchAction.FLICK_LEFT_THEN_RIGHT
+action_flickUpThenDown = TouchAction.FLICK_UP_THEN_DOWN
+action_flickDownThenUp = TouchAction.FLICK_DOWN_THEN_UP
+action_flickRightThenUp = TouchAction.FLICK_RIGHT_THEN_UP
+action_flickRightThenDown = TouchAction.FLICK_RIGHT_THEN_DOWN
+action_flickLeftThenUp = TouchAction.FLICK_LEFT_THEN_UP
+action_flickLeftThenDown = TouchAction.FLICK_LEFT_THEN_DOWN
+action_flickUpThenRight = TouchAction.FLICK_UP_THEN_RIGHT
+action_flickUpThenLeft = TouchAction.FLICK_UP_THEN_LEFT
+action_flickDownThenRight = TouchAction.FLICK_DOWN_THEN_RIGHT
+action_flickDownThenLeft = TouchAction.FLICK_DOWN_THEN_LEFT
 # timeout for detection of flicks and plural trackers
 multitouchTimeout = 0.25
 # The distance a finger must travel to be treeted as a flick
@@ -56,57 +142,6 @@ minFlickVelocity: float = 100.0
 #: Time in seconds allowed for the full first stroke of a continuous sequential flick.
 #: Longer than multitouchTimeout so users aren't forced to rush the gesture.
 continuousFlickTimeout: float = 0.6
-
-actionLabels = {
-	# Translators: a touch screen gesture where two fingers move toward each other (zoom out)
-	action_pinchIn: pgettext("touch action", "pinch in"),
-	# Translators: a touch screen gesture where two fingers move away from each other (zoom in)
-	action_pinchOut: pgettext("touch action", "pinch out"),
-	# Translators: a very quick touch and release of a finger on a touch screen
-	action_tap: pgettext("touch action", "tap"),
-	# Translators: a very quick touch and release, then another touch with no release, on a touch screen
-	action_tapAndHold: pgettext("touch action", "tap and hold"),
-	# Translators: a touch with no release, on a touch screen.
-	action_hold: pgettext("touch action", "hold"),
-	# Translators: a quick swipe of a finger in an up direction, on a touch screen.
-	action_flickUp: pgettext("touch action", "flick up"),
-	# Translators: a quick swipe of a finger in an down direction, on a touch screen.
-	action_flickDown: pgettext("touch action", "flick down"),
-	# Translators: a quick swipe of a finger in a left direction, on a touch screen.
-	action_flickLeft: pgettext("touch action", "flick left"),
-	# Translators: a quick swipe of a finger in a right direction, on a touch screen.
-	action_flickRight: pgettext("touch action", "flick right"),
-	# Translators:  a finger has been held on the touch screen long enough to be considered as hovering
-	action_hoverDown: pgettext("touch action", "hover down"),
-	# Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
-	action_hover: pgettext("touch action", "hover"),
-	# Translators: a finger that was hovering (touching the touch screen for a long time) has been released
-	action_hoverUp: pgettext("touch action", "hover up"),
-	# Translators: a quick swipe right followed by a quick swipe left, on a touch screen.
-	action_flickRightThenLeft: pgettext("touch action", "flick right then left"),
-	# Translators: a quick swipe left followed by a quick swipe right, on a touch screen.
-	action_flickLeftThenRight: pgettext("touch action", "flick left then right"),
-	# Translators: a quick swipe up followed by a quick swipe down, on a touch screen.
-	action_flickUpThenDown: pgettext("touch action", "flick up then down"),
-	# Translators: a quick swipe down followed by a quick swipe up, on a touch screen.
-	action_flickDownThenUp: pgettext("touch action", "flick down then up"),
-	# Translators: a quick swipe right followed by a quick swipe up, on a touch screen.
-	action_flickRightThenUp: pgettext("touch action", "flick right then up"),
-	# Translators: a quick swipe right followed by a quick swipe down, on a touch screen.
-	action_flickRightThenDown: pgettext("touch action", "flick right then down"),
-	# Translators: a quick swipe left followed by a quick swipe up, on a touch screen.
-	action_flickLeftThenUp: pgettext("touch action", "flick left then up"),
-	# Translators: a quick swipe left followed by a quick swipe down, on a touch screen.
-	action_flickLeftThenDown: pgettext("touch action", "flick left then down"),
-	# Translators: a quick swipe up followed by a quick swipe right, on a touch screen.
-	action_flickUpThenRight: pgettext("touch action", "flick up then right"),
-	# Translators: a quick swipe up followed by a quick swipe left, on a touch screen.
-	action_flickUpThenLeft: pgettext("touch action", "flick up then left"),
-	# Translators: a quick swipe down followed by a quick swipe right, on a touch screen.
-	action_flickDownThenRight: pgettext("touch action", "flick down then right"),
-	# Translators: a quick swipe down followed by a quick swipe left, on a touch screen.
-	action_flickDownThenLeft: pgettext("touch action", "flick down then left"),
-}
 
 
 class SingleTouchTracker(object):
@@ -154,7 +189,7 @@ class SingleTouchTracker(object):
 		"_samples",
 	]
 
-	def __init__(self, ID, x, y):
+	def __init__(self, ID: int, x: int, y: int) -> None:
 		self.ID = ID
 		self.x = self.startX = self.peakX = x
 		self.y = self.startY = self.peakY = y
@@ -166,7 +201,7 @@ class SingleTouchTracker(object):
 		self.complete = False
 		self._samples: list[tuple[int, int, float]] = []
 
-	def update(self, x, y, complete=False):
+	def update(self, x: int, y: int, complete: bool = False) -> None:
 		"""Called to alert this single tracker that the finger has moved or broken contact."""
 		self.x = x
 		self.y = y
