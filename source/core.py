@@ -930,10 +930,7 @@ def main():
 
 	from textUtils import wordSeg
 
-	try:
-		wordSeg.initialize()
-	except Exception:
-		log.error("Error initializing word segmentation module", exc_info=True)
+	wordSeg.initialize()
 
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui

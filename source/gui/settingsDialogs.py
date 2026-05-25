@@ -3545,16 +3545,6 @@ class DocumentNavigationPanel(SettingsPanel):
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
-		# Translators: This is a label for the word segmentation standard in the document navigation dialog
-		wordNavigationUnitLabel = _("&Word Segmentation Standard:")
-		self.wordSegCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
-			labelText=wordNavigationUnitLabel,
-			wxCtrlClass=nvdaControls.FeatureFlagCombo,
-			keyPath=["documentNavigation", "wordSegmentationStandard"],
-			conf=config.conf,
-		)
-		self.bindHelpEvent("WordSegmentationStandard", self.wordSegCombo)
-
 		# Translators: This is a label for the paragraph navigation style in the document navigation dialog
 		paragraphStyleLabel = _("&Paragraph style:")
 		self.paragraphStyleCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
@@ -3565,17 +3555,24 @@ class DocumentNavigationPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("ParagraphStyle", self.paragraphStyleCombo)
 
+		# Translators: This is a label for the word segmentation standard in the document navigation dialog
+		wordNavigationUnitLabel = _("&Word Segmentation Standard:")
+		self.wordSegCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=wordNavigationUnitLabel,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["documentNavigation", "wordSegmentationStandard"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("WordSegmentationStandard", self.wordSegCombo)
+
 	def onSave(self) -> None:
-		self.wordSegCombo.saveCurrentValueToConf()
 		self.paragraphStyleCombo.saveCurrentValueToConf()
+		self.wordSegCombo.saveCurrentValueToConf()
 
 	def postSave(self) -> None:
 		from textUtils import wordSeg
 
-		try:
-			wordSeg.initialize()
-		except Exception:
-			log.error("Error reinitializing word segmentation module", exc_info=True)
+		wordSeg.initialize()
 
 
 def _synthWarningDialog(newSynth: str):
