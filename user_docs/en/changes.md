@@ -6,8 +6,9 @@
 
 ### New Features
 
-* The braille "word wrap" option has been replaced with a three-valued "Text wrap" option: Off, Show mark when words are cut, and At word boundaries. (#17010, @LeonarddeR)
+* The braille "word wrap" option has been replaced with a four-valued "Text wrap" option: Off, Show mark when words are cut, At word boundaries, and At word or syllable boundaries. (#17010, @LeonarddeR)
   * In modes that show a continuation mark, when a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
+  * The "At word or syllable boundaries" option uses hyphenation dictionaries to split long words at syllable boundaries when they do not fit on the display.
 
 ### Changes
 
