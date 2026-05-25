@@ -22,6 +22,31 @@ from textUtils.wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
 from textUtils.wordSeg.wordSegUtils import WordSegWithSeparatorOffsetConverter
 
 
+class _ImmediateThread:
+	def __init__(
+		self,
+		target: Callable[..., Any],
+		args: tuple[Any, ...] | None = None,
+		kwargs: dict[str, Any] | None = None,
+		daemon: bool = False,
+		name: str | None = None,
+	) -> None:
+		self.target: Callable[..., Any] = target
+		self.args: tuple[Any, ...] = () if args is None else args
+		self.kwargs: dict[str, Any] = {} if kwargs is None else kwargs
+		self.daemon: bool = daemon
+		self.name: str | None = name
+
+	def start(self) -> None:
+		self.target(*self.args, **self.kwargs)
+
+
+def _segmentedTextWithSeparator(sep: str, newSepIndex: list[int] | None = None) -> str:
+	if newSepIndex is not None:
+		newSepIndex.append(2)
+	return f"ab{sep}cd"
+
+
 class TestChineseWordSegmentationInitialization(unittest.TestCase):
 	def _makeMockJiebaDll(self) -> SimpleNamespace:
 		return SimpleNamespace(
@@ -199,31 +224,13 @@ class TestWordSegInitialize(unittest.TestCase):
 		def secondInitializer() -> None:
 			calls.append("second")
 
-		class ImmediateThread:
-			def __init__(
-				self,
-				target: Callable[..., Any],
-				args: tuple[Any, ...] | None = None,
-				kwargs: dict[str, Any] | None = None,
-				daemon: bool = False,
-				name: str | None = None,
-			) -> None:
-				self.target: Callable[..., Any] = target
-				self.args: tuple[Any, ...] = () if args is None else args
-				self.kwargs: dict[str, Any] = {} if kwargs is None else kwargs
-				self.daemon: bool = daemon
-				self.name: str | None = name
-
-			def start(self) -> None:
-				self.target(*self.args, **self.kwargs)
-
 		initializerList: list[tuple[str, str, Callable[..., Any], tuple[Any, ...], dict[str, Any]]] = [
 			("missingModule", "firstInitializer", firstInitializer, (), {}),
 			("missingModule", "secondInitializer", secondInitializer, (), {}),
 		]
 		with (
 			patch.object(wordSegStrategy, "_initializerList", initializerList),
-			patch("threading.Thread", ImmediateThread),
+			patch("threading.Thread", _ImmediateThread),
 		):
 			wordSeg.initialize()
 
@@ -232,13 +239,9 @@ class TestWordSegInitialize(unittest.TestCase):
 
 class TestWordSegWithSeparatorOffsetConverter(unittest.TestCase):
 	def _makeConverter(self) -> WordSegWithSeparatorOffsetConverter:
-		def segmentedText(sep: str, newSepIndex: list[int]) -> str:
-			newSepIndex.append(2)
-			return "ab cd"
-
 		with patch(
 			"textUtils.wordSeg.wordSegUtils.WordSegmenter",
-			return_value=SimpleNamespace(segmentedText=segmentedText),
+			return_value=SimpleNamespace(segmentedText=_segmentedTextWithSeparator),
 		):
 			return WordSegWithSeparatorOffsetConverter("abcd")
 
