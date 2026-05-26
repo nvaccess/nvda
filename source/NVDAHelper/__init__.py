@@ -29,7 +29,8 @@ from ctypes import (
 	cast,
 	create_unicode_buffer,
 	windll,
-	wstring_at, _Pointer
+	wstring_at,
+	_Pointer,
 )
 
 from winBindings import user32
