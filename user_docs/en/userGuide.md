@@ -3387,7 +3387,7 @@ If it is disabled, interactive elements, such as links and buttons, will be plac
 Non-interactive text following a link or button will still follow on the same line for ease of reading.
 This may be easier to understand during line by line page navigation and make items easier to interact with for some users.
 
-##### Reading order when navigating by line {#BrowseModeSettingsControlFieldReadingOrder}
+##### Reading order when navigating by line or Say All {#BrowseModeSettingsControlFieldReadingOrder}
 
 This option controls whether control information (such as the type and state of an element) is announced before or after the element's content when navigating with the caret (arrow keys) or Say All.
 

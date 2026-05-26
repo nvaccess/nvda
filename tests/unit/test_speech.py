@@ -659,7 +659,6 @@ class _ShouldSpeakContentFirstBase(unittest.TestCase):
 	def _makeAttrs(
 		self,
 		role: Role = Role.BUTTON,
-		presCat: str = ControlField.PRESCAT_SINGLELINE,
 		states=None,
 	) -> ControlField:
 		"""Create a minimal ControlField with the given properties."""
@@ -679,7 +678,7 @@ class _ShouldSpeakContentFirstBase(unittest.TestCase):
 		tableID: str | None = None,
 		states: set[State] | None = None,
 	) -> bool:
-		attrs = self._makeAttrs(role=role, presCat=presCat, states=states)
+		attrs = self._makeAttrs(role=role, states=states)
 		return _shouldSpeakContentFirst(
 			reason=reason,
 			role=role,
