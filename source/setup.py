@@ -383,7 +383,6 @@ freeze(
 			"brailleDisplayDrivers.eurobraille",
 			"brailleDisplayDrivers.dotPad",
 			"synthDrivers",
-			"textUtils",
 			"visionEnhancementProviders",
 			# Required for markdown, markdown implicitly imports this so it isn't picked up
 			"html.parser",

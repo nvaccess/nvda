@@ -6,17 +6,20 @@
 
 ### New Features
 
-* The braille "word wrap" option has been replaced with a three-valued "Text wrap" option: Off, Show mark when words are cut, and At word boundaries. (#17010, @LeonarddeR)
+* The braille "word wrap" option has been replaced with a four-valued "Text wrap" option: Off, Show mark when words are cut, At word boundaries, and At word or syllable boundaries. (#17010, @LeonarddeR)
   * In modes that show a continuation mark, when a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
+  * The "At word or syllable boundaries" option uses hyphenation dictionaries to split long words at syllable boundaries when they do not fit on the display.
 
 ### Changes
 
 ### Bug Fixes
 
 * When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
+* In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen. (#20177)
 * When an application stops responding, NVDA no longer freezes or floods its log with errors; it stays responsive and drops UIA and MSAA events from the unresponsive application until it recovers. (#16749, @heath-toby)
 * Reduced lag on UI Automation text change events, improving the responsiveness of controls such as combo boxes and of File Explorer, by using the cached element class name instead of a live cross-process fetch. (#16749, @heath-toby)
 * NVDA recovers more quickly when an application stops responding; in particular, switching away from a hung application returns NVDA to responsiveness immediately. (#20169, @heath-toby)
+* In Mozilla Firefox, reporting annotation details now works correctly in focus mode on controls which are not editable text. (#20208, @jcsteh)
 
 ### Changes for Developers
 
@@ -162,6 +165,7 @@ Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`,
     * Added a `valueToPercentage` function to calculate the percentage representation of a configuration value within its range.
     * Added a `percentageToValue` function to convert a percentage to the corresponding configuration value.
     * Added a `clampedIncrementAndUpdateConfig` function to update a configuration value by applying a step, constrained within its valid range.
+* NVDA is now built with Visual Studio 2026. (#20203, @LeonarddeR)
 
 #### Deprecations
 
