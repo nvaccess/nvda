@@ -30,7 +30,7 @@ class SpotlightManager:
 		self._animationSteps: int = 40
 		self._animationStepDelay: int = 12
 		self._currentCoordinates: Coordinates = fullscreenMagnifier._focusManager.getCurrentFocusCoordinates()
-		self._originalZoomLevel: float = 0.0
+		self._originalZoomLevel: int = 0
 		self._currentZoomLevel: float = 0.0
 		self._originalMode: FullScreenMode | None = None
 
@@ -92,8 +92,8 @@ class SpotlightManager:
 		)
 
 		self._animationStepsList = self._computeAnimationSteps(
-			self._currentZoomLevel,
-			target.zoomLevel,
+			round(self._currentZoomLevel),
+			round(target.zoomLevel),
 			self._currentCoordinates,
 			target.coordinates,
 		)
@@ -175,8 +175,8 @@ class SpotlightManager:
 
 	def _computeAnimationSteps(
 		self,
-		zoomStart: float,
-		zoomEnd: float,
+		zoomStart: int,
+		zoomEnd: int,
 		coordinateStart: Coordinates,
 		coordinateEnd: Coordinates,
 	) -> list[ZoomHistory]:
@@ -196,7 +196,7 @@ class SpotlightManager:
 
 		startX, startY = coordinateStart
 		endX, endY = coordinateEnd
-		animationSteps = []
+		animationSteps: list[ZoomHistory] = []
 
 		zoomDelta = (zoomEnd - zoomStart) / self._animationSteps
 		coordDeltaX = (endX - startX) / self._animationSteps

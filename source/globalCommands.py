@@ -2785,6 +2785,7 @@ class GlobalCommands(ScriptableObject):
 			relation' in that range, and we don't yet have a way for the user to select which one to report.
 			For now, we minimise this risk by only reporting details at the current location.
 		"""
+		_isDebugLogCatEnabled = bool(config.conf["debugLog"]["annotations"])
 		try:
 			# Common cases use Caret Position: vbuf available or object supports text range
 			# Eg editable text, or regular web content
@@ -2792,28 +2793,26 @@ class GlobalCommands(ScriptableObject):
 			caret: textInfos.TextInfo = api.getCaretPosition()
 		except RuntimeError:
 			log.debugWarning("Unable to get the caret position.", exc_info=True)
-			return None
-		caret.expand(textInfos.UNIT_CHARACTER)
-		objAtStart: NVDAObject = caret.NVDAObjectAtStart
-		_isDebugLogCatEnabled = bool(config.conf["debugLog"]["annotations"])
-		if _isDebugLogCatEnabled:
-			log.debug(f"Trying with nvdaObject : {objAtStart}")
-
-		if objAtStart.annotations:
+		else:
+			caret.expand(textInfos.UNIT_CHARACTER)
+			objAtStart: NVDAObject = caret.NVDAObjectAtStart
 			if _isDebugLogCatEnabled:
-				log.debug("NVDAObjectAtStart of caret has details")
-			return objAtStart
-		elif api.getFocusObject():
+				log.debug(f"Trying with nvdaObject : {objAtStart}")
+			if objAtStart.annotations:
+				if _isDebugLogCatEnabled:
+					log.debug("NVDAObjectAtStart of caret has details")
+				return objAtStart
+
+		focus: NVDAObject = api.getFocusObject()
+		if focus:
 			# If fetching from the caret position fails, try via the focus object
 			# This case is to support where there is no virtual buffer or text interface and a caret position can
 			# not be fetched.
 			# There may still be an object with focus that has details.
-			# There isn't a known test case for this, however there isn't a known downside to attempt this.
-			focus = api.getFocusObject()
 			if _isDebugLogCatEnabled:
 				log.debug(f"Trying focus object: {focus}")
 
-			if objAtStart.annotations:
+			if focus.annotations:
 				if _isDebugLogCatEnabled:
 					log.debug("focus object has details, able to proceed")
 				return focus
