@@ -3183,7 +3183,7 @@ def clearTypedWordBuffer() -> None:
 
 def isSpeaking() -> bool:
 	"""Whether NVDA is currently producing speech audio.
-	True iff the synth driver has reported it is mid-utterance
+	True if the synth driver has reported it is mid-utterance
 	and speech is neither paused nor disabled.
 	"""
 	state = getState()
