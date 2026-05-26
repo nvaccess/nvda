@@ -98,7 +98,7 @@ def preprocessMarkdownLines(mdLines: Iterable[str]) -> Iterable[str]:
 	"""
 	for mdLine in mdLines:
 		# #18982: Remove markdown lint comments completely - not needed for intermediate markdown or final html.
-		mdLine = re_inlineMarkdownLintComment.sub(r"\1\2", mdLine)
+		mdLine = re_inlineMarkdownLintComment.sub(r"\1\2\n", mdLine)
 		yield mdLine
 
 
