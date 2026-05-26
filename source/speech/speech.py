@@ -3187,7 +3187,7 @@ def isSpeaking() -> bool:
 	and speech is neither paused nor disabled.
 	"""
 	state = getState()
-	if state.speechMode != SpeechMode.talk:
+	if state.speechMode in (SpeechMode.off, SpeechMode.beeps):
 		return False
 	if state.isPaused:
 		return False

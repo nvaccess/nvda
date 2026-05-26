@@ -51,9 +51,12 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 			return FALSE;
 		}
 	} else if(reason==DLL_PROCESS_DETACH) {
-		RpcBindingFree(&nvdaController3BindingHandle);
-		RpcBindingFree(&nvdaController2BindingHandle);
-		RpcBindingFree(&nvdaControllerBindingHandle);
+		if (nvdaController3BindingHandle)
+			RpcBindingFree(&nvdaController3BindingHandle);
+		if (nvdaController2BindingHandle)
+			RpcBindingFree(&nvdaController2BindingHandle);
+		if (nvdaControllerBindingHandle)
+			RpcBindingFree(&nvdaControllerBindingHandle);
 	}
 	return TRUE;
 }

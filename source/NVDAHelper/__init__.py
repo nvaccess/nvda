@@ -29,7 +29,7 @@ from ctypes import (
 	cast,
 	create_unicode_buffer,
 	windll,
-	wstring_at,
+	wstring_at, _Pointer
 )
 
 from winBindings import user32
@@ -197,12 +197,12 @@ def nvdaController_brailleMessage(text: str) -> SystemErrorCodes:
 
 
 @WINFUNCTYPE(c_long, POINTER(c_bool))
-def nvdaController_isSpeaking(isSpeaking):
-	if not isSpeaking:
+def nvdaController_isSpeaking(pSpeaking: _Pointer[c_bool]) -> int:
+	if not pSpeaking:
 		return SystemErrorCodes.INVALID_PARAMETER
 	import speech
 
-	isSpeaking[0] = speech.isSpeaking()
+	pSpeaking[0] = speech.isSpeaking()
 	return SystemErrorCodes.SUCCESS
 
 
