@@ -2823,7 +2823,7 @@ The available logging levels are:
 If you are concerned about privacy, do not set the logging level to this option.
 * Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
 Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
-* Secrets: In addition to debug logging, NVDA will not redact secrets such as passwords and API keys from logs.
+* Debug (unredacted): In addition to debug logging, NVDA will not redact secrets such as passwords and API keys from logs.
 Only enable this temporarily when important debugging information is being redacted.
 
 ##### Allow NV Access to gather NVDA usage statistics {#GeneralSettingsGatherUsageStats}
@@ -2890,16 +2890,16 @@ The selected state is also saved for future NVDA sessions, so if you enable Magn
 
 ##### Zoom level {#MagnifierZoom}
 
-This slider allows you to set the zoom level when using the magnifier.
-The zoom level can range from 1.0 (no magnification) to 10.0 (maximum magnification).
-The default value is 2.0 (200% zoom).
+This setting allows you to set the zoom level when using the magnifier.
+The zoom level can range from 100% (no magnification) to 5000% (maximum magnification).
+The default value is 200%.
 
 You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+equals`) and zoom out (`NVDA+shift+minus`) commands while the magnifier is active.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Options | 1.0 to 10.0 |
-| Default | 2.0 |
+| Options | 100% to 5000% |
+| Default | 200% |
 
 ##### Filter {#MagnifierFilter}
 
@@ -6380,7 +6380,7 @@ Following are the command line options for NVDA:
 |`-q` |`--quit` |Quit already running copy of NVDA|
 |`-k` |`--check-running` |Report whether NVDA is running via the exit code; 0 if running, 1 if not running|
 |`-f LOGFILENAME` |`--log-file=LOGFILENAME` |The file where log messages should be written to. Logging is always disabled if secure mode is enabled.|
-| `-l LOGLEVEL` | `--log-level=LOGLEVEL` | The lowest level of message logged (secrets 5, debug 10, input/output 12, debug warning 15, info 20, disabled 100). Logging is always disabled if secure mode is enabled. |
+| `-l LOGLEVEL` | `--log-level=LOGLEVEL` | The lowest level of message logged (debug (unredacted) 5, debug 10, input/output 12, debug warning 15, info 20, disabled 100). Logging is always disabled if secure mode is enabled. |
 |`-c CONFIGPATH` |`--config-path=CONFIGPATH` |The path where all settings for NVDA are stored. The default value is forced if secure mode is enabled.|
 |`-n LANGUAGE` |`--lang=LANGUAGE` |Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc.|
 |`-m` |`--minimal` |No sounds, no interface, no start message, etc.|
