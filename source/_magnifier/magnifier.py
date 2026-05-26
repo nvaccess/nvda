@@ -95,7 +95,6 @@ class Magnifier:
 		if value % ZoomLevel.STEP_FACTOR != 0:
 			raise ValueError(f"Zoom level must be a multiple of {ZoomLevel.STEP_FACTOR}")
 		self._zoomLevel = float(value)
-		setZoomLevel(value)
 
 	@property
 	def currentCoordinates(self) -> Coordinates:
@@ -309,6 +308,7 @@ class Magnifier:
 			newZoom = int(self.zoomLevel - ZoomLevel.STEP_FACTOR)
 			if newZoom >= ZoomLevel.MIN_ZOOM:
 				self.zoomLevel = newZoom
+		setZoomLevel(int(self.zoomLevel))
 
 	def _pan(self, action: MagnifierAction) -> bool:
 		"""
