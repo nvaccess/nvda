@@ -180,11 +180,11 @@ def toggleFilter() -> None:
 		magnifier,
 		MagnifierAction.TOGGLE_FILTER,
 	):
-		assert isinstance(magnifier, FullScreenMagnifier)
 		filters = list(Filter)
 		idx = filters.index(magnifier.filterType)
 		magnifier.filterType = filters[(idx + 1) % len(filters)]
 		if magnifier._MAGNIFIED_VIEW == MagnifiedView.FULLSCREEN:
+			assert isinstance(magnifier, FullScreenMagnifier)
 			fullscreenMagnifier: FullScreenMagnifier = magnifier
 			fullscreenMagnifier._applyFilter()
 		setFilter(magnifier.filterType)
