@@ -286,3 +286,7 @@ Control field reading order content first
 	[Documentation]	With contentFirst setting, content is announced before control info when navigating by line (#11103, #7232).
 	[Tags]	chrome_readingOrder
 	test_controlFieldReadingOrder_contentFirst
+Control field reading order clickable deferral
+	[Documentation]	Clickable announcements are deferred after content in contentFirst mode (#11103).
+	[Tags]	chrome_readingOrder
+	test_controlFieldReadingOrder_clickableDeferral

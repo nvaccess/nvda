@@ -700,23 +700,23 @@ class Test_shouldSpeakContentFirst_FocusAndQuickNav(_ShouldSpeakContentFirstBase
 	def tearDown(self):
 		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = self._original
 
-	def test_focus_button_contentFirst(self):
-		"""FOCUS on a button should always speak content first."""
+	def test_focus_button_alwaysContentFirst(self):
+		"""FOCUS on a button should always speak content first, even with controlInfoFirst config."""
 		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = "controlInfoFirst"
 		self.assertTrue(self._call(OutputReason.FOCUS, Role.BUTTON))
 
-	def test_focus_button_contentFirst_withContentFirstConfig(self):
+	def test_focus_button_alwaysContentFirst_withContentFirstConfig(self):
 		"""FOCUS on a button should speak content first even when config is contentFirst."""
 		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = "contentFirst"
 		self.assertTrue(self._call(OutputReason.FOCUS, Role.BUTTON))
 
-	def test_quicknav_link_contentFirst(self):
-		"""QUICKNAV on a link should always speak content first."""
+	def test_quicknav_link_alwaysContentFirst(self):
+		"""QUICKNAV on a link should always speak content first, regardless of config."""
 		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = "controlInfoFirst"
 		self.assertTrue(self._call(OutputReason.QUICKNAV, Role.LINK))
 
-	def test_quicknav_button_contentFirst(self):
-		"""QUICKNAV on a button should always speak content first."""
+	def test_quicknav_button_alwaysContentFirst(self):
+		"""QUICKNAV on a button should always speak content first, regardless of config."""
 		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = "controlInfoFirst"
 		self.assertTrue(self._call(OutputReason.QUICKNAV, Role.BUTTON))
 

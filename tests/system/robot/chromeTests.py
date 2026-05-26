@@ -3155,10 +3155,6 @@ def test_controlFieldReadingOrder_default():
 		<p><a href="#">Link content</a></p>
 		""",
 	)
-	spy = _NvdaLib.getSpyLib()
-	# Chrome sometimes exposes elements as clickable inconsistently.
-	# Disable clickable reporting to avoid flakiness.
-	spy.set_configValue(["documentFormatting", "reportClickable"], False)
 
 	# Navigate by line (downArrow) to the heading.
 	# With controlInfoFirst, role info comes before content.
@@ -3191,7 +3187,6 @@ def test_controlFieldReadingOrder_contentFirst():
 		""",
 	)
 	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(["documentFormatting", "reportClickable"], False)
 	spy.set_configValue(["virtualBuffers", "controlFieldReadingOrder"], "contentFirst")
 
 	# Navigate by line (downArrow) to the heading.
@@ -3209,4 +3204,41 @@ def test_controlFieldReadingOrder_contentFirst():
 		actualSpeech,
 		SPEECH_SEP.join(["Link content", "link"]),
 		message="contentFirst: link content should be announced before link role",
+	)
+
+
+def test_controlFieldReadingOrder_clickableDeferral():
+	"""
+	With contentFirst, 'clickable' announcements for layout containers (e.g. a span with
+	an onclick handler) should be deferred until after the content text.
+	With the default controlInfoFirst, 'clickable' should appear before the content.
+	See #11103.
+	"""
+	_chrome.prepareChrome(
+		"""
+		<p><span onclick="void(0)">Default order</span></p>
+		<p><span onclick="void(0)">Content first order</span></p>
+		<p>After</p>
+		""",
+	)
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(["documentFormatting", "reportClickable"], True)
+
+	# Default mode (controlInfoFirst): clickable before content.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(["clickable", "Default order"]),
+		message="controlInfoFirst: clickable should be announced before content",
+	)
+
+	# Switch to contentFirst mode before navigating to the next element.
+	spy.set_configValue(["virtualBuffers", "controlFieldReadingOrder"], "contentFirst")
+
+	# Navigate to the second clickable span — now clickable should come after content.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(["Content first order", "clickable"]),
+		message="contentFirst: clickable should be announced after content",
 	)

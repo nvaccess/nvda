@@ -2279,11 +2279,11 @@ _NEVER_SPEAK_CONTENT_FIRST_ROLES = (
 
 def _shouldSpeakContentFirst(
 	reason: OutputReason,
-	role: int,
+	role: controlTypes.Role,
 	presCat: str,
 	attrs: textInfos.ControlField,
-	tableID: Any,
-	states: Iterable[int],
+	tableID: str | None,
+	states: set[controlTypes.State],
 ) -> bool:
 	"""
 	Determines whether or not to speak the content before the controlField information.
