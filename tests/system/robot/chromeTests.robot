@@ -274,3 +274,15 @@ Report link destination not a link
 	[Documentation]	NVDA+K reports 'Not a link' when caret is not on a link.
 	[Tags]	chrome_link
 	test_reportLinkDestination_notALink
+
+## chrome_readingOrder tests
+### Control field reading order (content first vs control info first)
+
+Control field reading order default
+	[Documentation]	With default setting, control info is announced before content when navigating by line (#11103, #7232).
+	[Tags]	chrome_readingOrder
+	test_controlFieldReadingOrder_default
+Control field reading order content first
+	[Documentation]	With contentFirst setting, content is announced before control info when navigating by line (#11103, #7232).
+	[Tags]	chrome_readingOrder
+	test_controlFieldReadingOrder_contentFirst

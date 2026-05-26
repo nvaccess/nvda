@@ -3141,3 +3141,72 @@ def test_reportLinkDestination_notALink():
 		"Not a link.",
 		message="NVDA+K should report 'Not a link' when caret is not on a link",
 	)
+
+
+def test_controlFieldReadingOrder_default():
+	"""
+	With the default controlInfoFirst setting, control field info (role, states) should be
+	announced before content when navigating by line in browse mode.
+	See #11103 and #7232.
+	"""
+	_chrome.prepareChrome(
+		"""
+		<h2>Heading content</h2>
+		<p><a href="#">Link content</a></p>
+		""",
+	)
+	spy = _NvdaLib.getSpyLib()
+	# Chrome sometimes exposes elements as clickable inconsistently.
+	# Disable clickable reporting to avoid flakiness.
+	spy.set_configValue(["documentFormatting", "reportClickable"], False)
+
+	# Navigate by line (downArrow) to the heading.
+	# With controlInfoFirst, role info comes before content.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(["heading  level 2", "Heading content"]),
+		message="controlInfoFirst: heading info should be announced before heading content",
+	)
+
+	# Navigate by line to the link.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(["link", "Link content"]),
+		message="controlInfoFirst: link role should be announced before link content",
+	)
+
+
+def test_controlFieldReadingOrder_contentFirst():
+	"""
+	With the contentFirst setting, content should be announced before control field info
+	(role, states) when navigating by line in browse mode.
+	See #11103 and #7232.
+	"""
+	_chrome.prepareChrome(
+		"""
+		<h2>Heading content</h2>
+		<p><a href="#">Link content</a></p>
+		""",
+	)
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(["documentFormatting", "reportClickable"], False)
+	spy.set_configValue(["virtualBuffers", "controlFieldReadingOrder"], "contentFirst")
+
+	# Navigate by line (downArrow) to the heading.
+	# With contentFirst, content comes before role info.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(["Heading content", "heading  level 2"]),
+		message="contentFirst: heading content should be announced before heading info",
+	)
+
+	# Navigate by line to the link.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(["Link content", "link"]),
+		message="contentFirst: link content should be announced before link role",
+	)
