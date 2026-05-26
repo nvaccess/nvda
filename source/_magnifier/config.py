@@ -210,24 +210,6 @@ def toggleAllFollowStates() -> bool:
 	return _followStateOverride.isActive
 
 
-def getDefaultFullscreenMode() -> FullScreenMode:
-	"""
-	Get default full-screen mode from config.
-
-	:return: The default full-screen mode.
-	"""
-	return FullScreenMode(config.conf["magnifier"]["defaultFullscreenMode"])
-
-
-def setDefaultFullscreenMode(mode: FullScreenMode) -> None:
-	"""
-	Set default full-screen mode from settings.
-
-	:param mode: The full-screen mode to set.
-	"""
-	config.conf["magnifier"]["defaultFullscreenMode"] = mode.value
-
-
 def isTrueCentered() -> bool:
 	"""
 	Check if true centered mode is enabled in config.

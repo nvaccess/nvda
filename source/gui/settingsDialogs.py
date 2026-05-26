@@ -6140,8 +6140,8 @@ class MagnifierPanel(SettingsPanel):
 		self.trueCenterCheckBox.SetValue(magnifierConfig.isTrueCentered())
 
 		# Set default value from config
-		defaultFullscreenMode = magnifierConfig.getFullscreenMode()
-		self.fullscreenModeList.SetSelection(list(FullScreenMode).index(defaultFullscreenMode))
+		fullscreenMode = magnifierConfig.getFullscreenMode()
+		self.fullscreenModeList.SetSelection(list(FullScreenMode).index(fullscreenMode))
 
 		# FOCUS GROUP
 		# Translators: This is the label for a group of focus options in the magnifier settings panel
