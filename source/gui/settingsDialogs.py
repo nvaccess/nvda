@@ -6049,7 +6049,9 @@ class MagnifierPanel(SettingsPanel):
 		selectedFilter = list(Filter)[self.filterList.GetSelection()]
 		selectedMode = list(FullScreenMode)[self.fullscreenModeList.GetSelection()]
 
-		magnifierConfig.setZoomLevel(selectedZoom)
+		roundedZoom = magnifierConfig.roundZoomLevel(selectedZoom)
+		magnifierConfig.setZoomLevel(roundedZoom)
+		self.zoomCtrl.SetValue(roundedZoom)
 		magnifierConfig.setPanStep(selectedPanStep)
 		magnifierConfig.setFilter(selectedFilter)
 		magnifierConfig.setFullscreenMode(selectedMode)
@@ -6060,7 +6062,7 @@ class MagnifierPanel(SettingsPanel):
 
 		magnifier = getMagnifier()
 		if magnifier:
-			magnifier.zoomLevel = selectedZoom
+			magnifier.zoomLevel = roundedZoom
 			magnifier._panStep = selectedPanStep
 			magnifier.filterType = selectedFilter
 			if isinstance(magnifier, FullScreenMagnifier):
@@ -6068,11 +6070,7 @@ class MagnifierPanel(SettingsPanel):
 
 	def _onImmediateSettingChange(self, evt: wx.CommandEvent):
 		"""Handle immediate updates for non-enable magnifier settings."""
-		# Spin controls can briefly report invalid intermediate values while typing.
-		try:
-			self._applyCurrentSettingsToConfigAndRuntime()
-		except ValueError:
-			pass
+		self._applyCurrentSettingsToConfigAndRuntime()
 		evt.Skip()
 
 	def makeSettings(
@@ -6117,7 +6115,6 @@ class MagnifierPanel(SettingsPanel):
 		self._zoomInitially = zoomLevel
 		self.zoomCtrl.SetValue(zoomLevel)
 		self.zoomCtrl.Bind(wx.EVT_SPINCTRL, self._onImmediateSettingChange)
-		self.zoomCtrl.Bind(wx.EVT_TEXT, self._onImmediateSettingChange)
 
 		# PAN SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).

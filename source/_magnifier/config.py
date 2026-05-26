@@ -70,6 +70,20 @@ def getZoomLevelString() -> str:
 	return ZoomLevel.zoomMessage(zoomLevel)
 
 
+def roundZoomLevel(zoomLevel: int) -> int:
+	"""
+	Round a zoom level to the nearest valid step.
+
+	:param zoomLevel: The zoom level to round.
+	:return: The rounded zoom level.
+	"""
+	remainder = zoomLevel % ZoomLevel.STEP_FACTOR
+	if remainder >= ZoomLevel.STEP_FACTOR / 2:
+		return zoomLevel + (ZoomLevel.STEP_FACTOR - remainder)
+	else:
+		return zoomLevel - remainder
+
+
 def setZoomLevel(zoomLevel: int) -> None:
 	"""
 	Set zoom level from settings.
