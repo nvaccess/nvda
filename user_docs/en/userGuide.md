@@ -3387,6 +3387,25 @@ If it is disabled, interactive elements, such as links and buttons, will be plac
 Non-interactive text following a link or button will still follow on the same line for ease of reading.
 This may be easier to understand during line by line page navigation and make items easier to interact with for some users.
 
+##### Reading order when navigating by line {#BrowseModeSettingsControlFieldReadingOrder}
+
+This option controls whether control information (such as the type and state of an element) is announced before or after the element's content when navigating with the caret (arrow keys) or Say All.
+
+For example, when navigating to a link with the text "Home" that has been visited:
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Control information before content (default), Content before control information |
+|Default |Control information before content |
+
+|Option |Behaviour |
+|---|---|
+|Control information before content |"visited link Home" is announced (type, then content). This is the traditional NVDA behaviour. |
+|Content before control information |"Home visited link" is announced (content, then type). This may be more natural for some users as it mirrors how sighted users perceive content first. |
+
+This setting only affects caret navigation (arrow keys) and Say All.
+Quick navigation (e.g. pressing H to jump to headings) and focus changes always announce content before control information, regardless of this setting.
+
 ##### Enable browse mode on page load {#BrowseModeSettingsEnableOnPageLoad}
 
 This checkbox toggles whether browse mode should be automatically enabled when loading a page.
