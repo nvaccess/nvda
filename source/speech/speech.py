@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter, Łukasz Golonka, Cary-rowen
 
 """High-level functions to speak information."""
@@ -1698,6 +1698,12 @@ def getTextInfoSpeech(  # noqa: C901
 
 	# When true, we are inside a clickable field, and should therefore not announce any more new clickable fields
 	inClickable = False
+	# When contentFirst is active for caret/sayAll, defer "clickable" announcements until after text.
+	shouldDeferClickable = (
+		reason in (OutputReason.CARET, OutputReason.SAYALL)
+		and config.conf["virtualBuffers"]["controlFieldReadingOrder"] == "contentFirst"
+	)
+	hasPendingClickable = False
 	# Get speech text for any fields in the new controlFieldStack that are not in the old controlFieldStack
 	for count in range(commonFieldCount, len(newControlFieldStack)):
 		field = newControlFieldStack[count]
@@ -1707,7 +1713,10 @@ def getTextInfoSpeech(  # noqa: C901
 				# We entered the most outer clickable, so announce it, if we won't be announcing anything else interesting for this field
 				presCat = field.getPresentationCategory(newControlFieldStack[0:count], formatConfig, reason)
 				if not presCat or presCat is field.PRESCAT_LAYOUT:
-					speechSequence.append(controlTypes.State.CLICKABLE.displayString)
+					if shouldDeferClickable:
+						hasPendingClickable = True
+					else:
+						speechSequence.append(controlTypes.State.CLICKABLE.displayString)
 					shouldConsiderTextInfoBlank = False
 				inClickable = True
 		fieldSequence = info.getControlFieldSpeech(
@@ -1799,6 +1808,10 @@ def getTextInfoSpeech(  # noqa: C901
 				else:
 					relativeSpeechSequence.append(command)
 					inTextChunk = True
+				# Emit deferred clickable after the text content.
+				if hasPendingClickable:
+					relativeSpeechSequence.append(controlTypes.State.CLICKABLE.displayString)
+					hasPendingClickable = False
 		elif isinstance(command, textInfos.FieldCommand):
 			newLanguage = None
 			if command.command == "controlStart":
@@ -1816,7 +1829,10 @@ def getTextInfoSpeech(  # noqa: C901
 							reason,
 						)
 						if not presCat or presCat is command.field.PRESCAT_LAYOUT:
-							fieldSequence.append(controlTypes.State.CLICKABLE.displayString)
+							if shouldDeferClickable:
+								hasPendingClickable = True
+							else:
+								fieldSequence.append(controlTypes.State.CLICKABLE.displayString)
 						inClickable = True
 				fieldSequence.extend(
 					info.getControlFieldSpeech(
@@ -1896,6 +1912,10 @@ def getTextInfoSpeech(  # noqa: C901
 			speechSequence.extend(indentationSpeech)
 		if speakTextInfoState:
 			speakTextInfoState.indentationCache = allIndentation
+	# If clickable was deferred but no text followed to trigger emission, emit it now.
+	if hasPendingClickable:
+		relativeSpeechSequence.append(controlTypes.State.CLICKABLE.displayString)
+		hasPendingClickable = False
 	# Don't add this text if it is blank.
 	relativeBlank = True
 	for x in relativeSpeechSequence:
@@ -2246,6 +2266,17 @@ def _columnCountText(count: int) -> str:
 	).format(columnCount=count)
 
 
+#: Roles that should never use content-first reading order regardless of config or reason.
+_NEVER_SPEAK_CONTENT_FIRST_ROLES = (
+	controlTypes.Role.EDITABLETEXT,
+	controlTypes.Role.COMBOBOX,
+	controlTypes.Role.TREEVIEW,
+	controlTypes.Role.LIST,
+	controlTypes.Role.LANDMARK,
+	controlTypes.Role.REGION,
+)
+
+
 def _shouldSpeakContentFirst(
 	reason: OutputReason,
 	role: int,
@@ -2258,21 +2289,23 @@ def _shouldSpeakContentFirst(
 	Determines whether or not to speak the content before the controlField information.
 	Helper function for getControlFieldSpeech.
 	"""
-	_neverSpeakContentFirstRoles = (
-		controlTypes.Role.EDITABLETEXT,
-		controlTypes.Role.COMBOBOX,
-		controlTypes.Role.TREEVIEW,
-		controlTypes.Role.LIST,
-		controlTypes.Role.LANDMARK,
-		controlTypes.Role.REGION,
-	)
+	# For FOCUS and QUICKNAV, always speak content first (existing behavior).
+	# For CARET and SAYALL, respect the user's configured reading order.
+	if reason in (OutputReason.FOCUS, OutputReason.QUICKNAV):
+		isAllowedByReason = True
+	elif reason in (OutputReason.CARET, OutputReason.SAYALL):
+		isAllowedByReason = (
+			config.conf["virtualBuffers"]["controlFieldReadingOrder"] == "contentFirst"
+		)
+	else:
+		isAllowedByReason = False
 	return (
-		reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
+		isAllowedByReason
 		and (
 			# the category is not a container, unless it's an article (#11103)
 			presCat != attrs.PRESCAT_CONTAINER or role == controlTypes.Role.ARTICLE
 		)
-		and role not in _neverSpeakContentFirstRoles
+		and role not in _NEVER_SPEAK_CONTENT_FIRST_ROLES
 		and not tableID
 		and controlTypes.State.EDITABLE not in states
 	)

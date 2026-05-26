@@ -2588,6 +2588,29 @@ class BrowseModePanel(SettingsPanel):
 		self.bindHelpEvent("BrowseModeSettingsScreenLayout", self.useScreenLayoutCheckBox)
 		self.useScreenLayoutCheckBox.SetValue(config.conf["virtualBuffers"]["useScreenLayout"])
 
+		# Translators: This is the label for a combobox in the
+		# browse mode settings panel.
+		controlFieldOrderLabelText = _("&Reading order when navigating by line:")
+		# Translators: An option in the browse mode settings "Reading order when navigating by line" combo box.
+		# When selected, the control information (role, state, etc.) is spoken before the content.
+		self.controlFieldOrderLabels = [
+			("controlInfoFirst", _("Control information before content (e.g. visited link Home)")),
+			# Translators: An option in the browse mode settings "Reading order when navigating by line" combo box.
+			# When selected, the content is spoken before the control information (role, state, etc.).
+			("contentFirst", _("Content before control information (e.g. Home visited link)")),
+		]
+		controlFieldOrderChoices = [name for setting, name in self.controlFieldOrderLabels]
+		self.controlFieldOrderList = sHelper.addLabeledControl(
+			controlFieldOrderLabelText, wx.Choice, choices=controlFieldOrderChoices,
+		)
+		self.bindHelpEvent("BrowseModeSettingsControlFieldReadingOrder", self.controlFieldOrderList)
+		for index, (setting, name) in enumerate(self.controlFieldOrderLabels):
+			if setting == config.conf["virtualBuffers"]["controlFieldReadingOrder"]:
+				self.controlFieldOrderList.SetSelection(index)
+				break
+		else:
+			self.controlFieldOrderList.SetSelection(0)
+
 		# Translators: The label for a checkbox in browse mode settings to
 		# enable browse mode on page load.
 		enableOnPageLoadText = _("&Enable browse mode on page load")
@@ -2684,6 +2707,9 @@ class BrowseModePanel(SettingsPanel):
 		config.conf["virtualBuffers"]["maxLineLength"] = self.maxLengthEdit.GetValue()
 		config.conf["virtualBuffers"]["linesPerPage"] = self.pageLinesEdit.GetValue()
 		config.conf["virtualBuffers"]["useScreenLayout"] = self.useScreenLayoutCheckBox.IsChecked()
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = (
+			self.controlFieldOrderLabels[self.controlFieldOrderList.GetSelection()][0]
+		)
 		config.conf["virtualBuffers"]["enableOnPageLoad"] = self.enableOnPageLoadCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoSayAllOnPageLoad"] = self.autoSayAllCheckBox.IsChecked()
 		config.conf["documentFormatting"]["includeLayoutTables"] = self.layoutTablesCheckBox.IsChecked()

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2021-2024 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
+# Copyright (C) 2021-2026 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
 
 """Unit tests for the speech module."""
 
@@ -11,6 +11,7 @@ import unittest
 
 import config
 from characterProcessing import processSpeechSymbol
+from controlTypes import OutputReason, Role, State
 from speech import (
 	_getSpellingCharAddCapNotification,
 	_getSpellingSpeechAddCharMode,
@@ -27,6 +28,8 @@ from speech.commands import (
 	LangChangeCommand,
 	PitchCommand,
 )
+from speech.speech import _shouldSpeakContentFirst
+from textInfos import ControlField
 
 from .extensionPointTestHelpers import actionTester
 
@@ -648,3 +651,235 @@ class SpeechExtensionPoints(unittest.TestCase):
 
 		with actionTester(self, post_speechPaused, switch=False):
 			pauseSpeech(False)
+
+
+class _ShouldSpeakContentFirstBase(unittest.TestCase):
+	"""Base class providing helper methods for _shouldSpeakContentFirst tests."""
+
+	def _makeAttrs(
+		self,
+		role: Role = Role.BUTTON,
+		presCat: str = ControlField.PRESCAT_SINGLELINE,
+		states=None,
+	) -> ControlField:
+		"""Create a minimal ControlField with the given properties."""
+		attrs = ControlField()
+		attrs["role"] = role
+		if states:
+			attrs["states"] = states
+		else:
+			attrs["states"] = set()
+		return attrs
+
+	def _call(
+		self,
+		reason: OutputReason,
+		role: Role = Role.BUTTON,
+		presCat: str = ControlField.PRESCAT_SINGLELINE,
+		tableID: str | None = None,
+		states: set[State] | None = None,
+	) -> bool:
+		attrs = self._makeAttrs(role=role, presCat=presCat, states=states)
+		return _shouldSpeakContentFirst(
+			reason=reason,
+			role=role,
+			presCat=presCat,
+			attrs=attrs,
+			tableID=tableID,
+			states=states or set(),
+		)
+
+
+class Test_shouldSpeakContentFirst_FocusAndQuickNav(_ShouldSpeakContentFirstBase):
+	"""FOCUS and QUICKNAV should always speak content first for non-container roles,
+	regardless of the config setting.
+	"""
+
+	def setUp(self):
+		self._original = config.conf["virtualBuffers"]["controlFieldReadingOrder"]
+
+	def tearDown(self):
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = self._original
+
+	def test_focus_button_contentFirst(self):
+		"""FOCUS on a button should always speak content first."""
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = "controlInfoFirst"
+		self.assertTrue(self._call(OutputReason.FOCUS, Role.BUTTON))
+
+	def test_focus_button_contentFirst_withContentFirstConfig(self):
+		"""FOCUS on a button should speak content first even when config is contentFirst."""
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = "contentFirst"
+		self.assertTrue(self._call(OutputReason.FOCUS, Role.BUTTON))
+
+	def test_quicknav_link_contentFirst(self):
+		"""QUICKNAV on a link should always speak content first."""
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = "controlInfoFirst"
+		self.assertTrue(self._call(OutputReason.QUICKNAV, Role.LINK))
+
+	def test_quicknav_button_contentFirst(self):
+		"""QUICKNAV on a button should always speak content first."""
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = "controlInfoFirst"
+		self.assertTrue(self._call(OutputReason.QUICKNAV, Role.BUTTON))
+
+
+class Test_shouldSpeakContentFirst_CaretWithControlInfoFirstConfig(_ShouldSpeakContentFirstBase):
+	"""With controlFieldReadingOrder='controlInfoFirst' (default), CARET should NOT speak content first."""
+
+	def setUp(self):
+		self._original = config.conf["virtualBuffers"]["controlFieldReadingOrder"]
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = "controlInfoFirst"
+
+	def tearDown(self):
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = self._original
+
+	def test_caret_button_controlInfoFirst(self):
+		"""CARET on a button with controlInfoFirst config should NOT speak content first."""
+		self.assertFalse(self._call(OutputReason.CARET, Role.BUTTON))
+
+	def test_caret_link_controlInfoFirst(self):
+		"""CARET on a link with controlInfoFirst config should NOT speak content first."""
+		self.assertFalse(self._call(OutputReason.CARET, Role.LINK))
+
+	def test_caret_heading_controlInfoFirst(self):
+		"""CARET on a heading with controlInfoFirst config should NOT speak content first."""
+		self.assertFalse(self._call(OutputReason.CARET, Role.HEADING, presCat=ControlField.PRESCAT_SINGLELINE))
+
+	def test_sayall_button_controlInfoFirst(self):
+		"""SAYALL on a button with controlInfoFirst config should NOT speak content first."""
+		self.assertFalse(self._call(OutputReason.SAYALL, Role.BUTTON))
+
+
+class Test_shouldSpeakContentFirst_CaretWithContentFirstConfig(_ShouldSpeakContentFirstBase):
+	"""With controlFieldReadingOrder='contentFirst', CARET should speak content first."""
+
+	def setUp(self):
+		self._original = config.conf["virtualBuffers"]["controlFieldReadingOrder"]
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = "contentFirst"
+
+	def tearDown(self):
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = self._original
+
+	def test_caret_button_contentFirst(self):
+		"""CARET on a button with contentFirst config should speak content first."""
+		self.assertTrue(self._call(OutputReason.CARET, Role.BUTTON))
+
+	def test_caret_link_contentFirst(self):
+		"""CARET on a link with contentFirst config should speak content first."""
+		self.assertTrue(self._call(OutputReason.CARET, Role.LINK))
+
+	def test_caret_heading_contentFirst(self):
+		"""CARET on a heading with contentFirst config should speak content first."""
+		self.assertTrue(self._call(OutputReason.CARET, Role.HEADING, presCat=ControlField.PRESCAT_SINGLELINE))
+
+	def test_sayall_button_contentFirst(self):
+		"""SAYALL on a button with contentFirst config should speak content first."""
+		self.assertTrue(self._call(OutputReason.SAYALL, Role.BUTTON))
+
+	def test_sayall_link_contentFirst(self):
+		"""SAYALL on a link with contentFirst config should speak content first."""
+		self.assertTrue(self._call(OutputReason.SAYALL, Role.LINK))
+
+
+class Test_shouldSpeakContentFirst_NeverContentFirstRoles(_ShouldSpeakContentFirstBase):
+	"""Certain roles should never speak content first, regardless of config or reason."""
+
+	def setUp(self):
+		self._original = config.conf["virtualBuffers"]["controlFieldReadingOrder"]
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = "contentFirst"
+
+	def tearDown(self):
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = self._original
+
+	def test_editableText_neverContentFirst(self):
+		"""EDITABLETEXT should never speak content first."""
+		self.assertFalse(self._call(OutputReason.FOCUS, Role.EDITABLETEXT))
+
+	def test_combobox_neverContentFirst(self):
+		"""COMBOBOX should never speak content first."""
+		self.assertFalse(self._call(OutputReason.FOCUS, Role.COMBOBOX))
+
+	def test_treeview_neverContentFirst(self):
+		"""TREEVIEW should never speak content first."""
+		self.assertFalse(self._call(OutputReason.FOCUS, Role.TREEVIEW))
+
+	def test_list_neverContentFirst(self):
+		"""LIST should never speak content first."""
+		self.assertFalse(self._call(OutputReason.FOCUS, Role.LIST))
+
+	def test_landmark_neverContentFirst(self):
+		"""LANDMARK should never speak content first."""
+		self.assertFalse(self._call(OutputReason.QUICKNAV, Role.LANDMARK))
+
+	def test_region_neverContentFirst(self):
+		"""REGION should never speak content first."""
+		self.assertFalse(self._call(OutputReason.QUICKNAV, Role.REGION))
+
+
+class Test_shouldSpeakContentFirst_Containers(_ShouldSpeakContentFirstBase):
+	"""Container controls should not speak content first, except articles."""
+
+	def setUp(self):
+		self._original = config.conf["virtualBuffers"]["controlFieldReadingOrder"]
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = "contentFirst"
+
+	def tearDown(self):
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = self._original
+
+	def test_container_notContentFirst(self):
+		"""A generic container should not speak content first."""
+		self.assertFalse(
+			self._call(OutputReason.FOCUS, Role.GROUPING, presCat=ControlField.PRESCAT_CONTAINER),
+		)
+
+	def test_article_container_contentFirst(self):
+		"""An article container should speak content first (#11103)."""
+		self.assertTrue(
+			self._call(OutputReason.QUICKNAV, Role.ARTICLE, presCat=ControlField.PRESCAT_CONTAINER),
+		)
+
+
+class Test_shouldSpeakContentFirst_Tables(_ShouldSpeakContentFirstBase):
+	"""Controls inside tables (with a tableID) should not speak content first."""
+
+	def setUp(self):
+		self._original = config.conf["virtualBuffers"]["controlFieldReadingOrder"]
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = "contentFirst"
+
+	def tearDown(self):
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = self._original
+
+	def test_button_inTable_notContentFirst(self):
+		"""A button inside a table should not speak content first."""
+		self.assertFalse(self._call(OutputReason.FOCUS, Role.BUTTON, tableID="table1"))
+
+
+class Test_shouldSpeakContentFirst_EditableState(_ShouldSpeakContentFirstBase):
+	"""Controls with EDITABLE state should not speak content first."""
+
+	def setUp(self):
+		self._original = config.conf["virtualBuffers"]["controlFieldReadingOrder"]
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = "contentFirst"
+
+	def tearDown(self):
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = self._original
+
+	def test_editable_notContentFirst(self):
+		"""A control with EDITABLE state should not speak content first."""
+		self.assertFalse(
+			self._call(OutputReason.FOCUS, Role.BUTTON, states={State.EDITABLE}),
+		)
+
+
+class Test_shouldSpeakContentFirst_UnknownReason(_ShouldSpeakContentFirstBase):
+	"""An unhandled OutputReason should never speak content first."""
+
+	def setUp(self):
+		self._original = config.conf["virtualBuffers"]["controlFieldReadingOrder"]
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = "contentFirst"
+
+	def tearDown(self):
+		config.conf["virtualBuffers"]["controlFieldReadingOrder"] = self._original
+
+	def test_onlycache_notContentFirst(self):
+		"""ONLYCACHE reason should never speak content first."""
+		self.assertFalse(self._call(OutputReason.ONLYCACHE, Role.BUTTON))
