@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler,
-# Burman's Computer and Education Ltd, Cary-rowen, Cyrille Bougot
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler,
+# Burman's Computer and Education Ltd, Cary-rowen, Cyrille Bougot, Ethin Probst
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
@@ -11,6 +11,7 @@ Behaviors described in this mix-in include providing table navigation commands f
 import os
 import time
 import threading
+import math
 import tones
 import queueHandler
 import eventHandler
@@ -383,10 +384,6 @@ class LiveText(NVDAObject):
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
 
-	MAX_LINES: int = 100
-	"""The maximum number of lines that will be reported when a large number of lines are queued.
-	Subclasses may override this to allow custom line reporting batches.
-	"""
 	announceNewLineText = False
 
 	def initOverlayClass(self):
@@ -468,20 +465,55 @@ class LiveText(NVDAObject):
 		Subclasses may override this method to provide custom filtering of new text,
 		where logic depends on multiple lines.
 		"""
-		droppedCount = len(lines) - self.MAX_LINES
-		if droppedCount > 0:
-			lines = lines[-self.MAX_LINES :]
+		maxNewLines: int = config.conf["terminals"]["maxNewLines"]
+		if maxNewLines:
+			droppedCount = len(lines) - maxNewLines
+			if droppedCount > 0:
+				if (
+					config.conf["terminals"]["beepForSkippedLines"]
+					and speech.getState().speechMode == speech.SpeechMode.talk
+				):
+					tones.beep(
+						config.conf["terminals"]["skippedLinesBeepHz"],
+						self._getSkippedLinesBeepLength(droppedCount),
+					)
+				lines = lines[-maxNewLines:]
 		if self._reportNewLinesGenID is not None:
 			queueHandler.cancelGeneratorObject(self._reportNewLinesGenID)
 			self._reportNewLinesGenID = None
-		self._reportNewLinesGenID = queueHandler.registerGeneratorObject(self._reportNewLinesGenerator(lines))
+		newLinesBatchSize: int = config.conf["terminals"]["newLinesBatchSize"]
+		if newLinesBatchSize <= 0:  # Report synchronously
+			for line in lines:
+				self._reportNewText(line)
+		else:
+			self._reportNewLinesGenID = queueHandler.registerGeneratorObject(
+				self._reportNewLinesGenerator(
+					lines,
+					newLinesBatchSize,
+				),
+			)
 
-	def _reportNewLinesGenerator(self, lines: list[str]) -> Generator[None, None, None]:
-		YIELD_EVERY = 5  # Sweet spot between yielding on every line and a batch
+	@staticmethod
+	def _getSkippedLinesBeepLength(droppedCount: int) -> int:
+		minLengthMs: int = config.conf["terminals"]["skippedLinesBeepMinDurationMs"]
+		maxLengthMs: int = config.conf["terminals"]["skippedLinesBeepMaxDurationMs"]
+		if maxLengthMs < minLengthMs:
+			maxLengthMs = minLengthMs
+		droppedCount = max(droppedCount, 1)
+		maxNewLines: int = config.conf["terminals"]["maxNewLines"]
+		ratio = 1.0 if maxNewLines <= 1 else min(1.0, math.log(droppedCount, maxNewLines))
+		lengthRange = maxLengthMs - minLengthMs
+		return round(minLengthMs + lengthRange * ratio)
+
+	def _reportNewLinesGenerator(
+		self,
+		lines: list[str],
+		batchSize: int,
+	) -> Generator[None, None, None]:
 		try:
 			for i, line in enumerate(lines, 1):
 				self._reportNewText(line)
-				if i % YIELD_EVERY == 0:
+				if i % batchSize == 0:
 					yield
 		finally:
 			self._reportNewLinesGenID = None
