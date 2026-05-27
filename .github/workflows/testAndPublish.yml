@@ -762,12 +762,10 @@ jobs:
     permissions:
       contents: read
     steps:
-    - name: Checkout cached build
-      uses: actions/cache/restore@v5
+    - name: Checkout NVDA
+      uses: actions/checkout@v6
       with:
-        path: .
-        key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
-        fail-on-cache-miss: true
+        submodules: false
 
     - name: Submit package using wingetcreate
       env:
