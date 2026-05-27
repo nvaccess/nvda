@@ -44,6 +44,10 @@ class AnimationManager:
 		:param maxSteps: Upper bound on the auto-computed step count.  Has no effect when
 		    speedPxPerTick is None.
 		"""
+		if totalSteps < 1:
+			raise ValueError(f"totalSteps must be >= 1, got {totalSteps}")
+		if speedPxPerTick is not None and speedPxPerTick <= 0:
+			raise ValueError(f"speedPxPerTick must be > 0, got {speedPxPerTick}")
 		self._totalSteps = totalSteps
 		self._speedPxPerTick = speedPxPerTick
 		self._maxSteps = maxSteps
@@ -96,6 +100,8 @@ class AnimationManager:
 		self._isComplete = False
 		self._step = 0
 		if totalSteps is not None:
+			if totalSteps < 1:
+				raise ValueError(f"totalSteps must be >= 1, got {totalSteps}")
 			self._totalSteps = totalSteps
 		elif self._speedPxPerTick is not None and self._start is not None:
 			dx = target.coordinates.x - self._start.coordinates.x

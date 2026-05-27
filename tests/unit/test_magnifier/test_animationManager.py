@@ -255,3 +255,20 @@ class TestAnimationManager(unittest.TestCase):
 		# Speed config must be preserved
 		self.assertEqual(manager._speedPxPerTick, 10.0)
 		self.assertEqual(manager._maxSteps, 20)
+
+	def testInvalidTotalStepsRaisesValueError(self):
+		"""totalSteps=0 in constructor must raise ValueError."""
+		with self.assertRaises(ValueError):
+			AnimationManager(totalSteps=0)
+
+	def testInvalidSpeedPxPerTickRaisesValueError(self):
+		"""speedPxPerTick=0 in constructor must raise ValueError."""
+		with self.assertRaises(ValueError):
+			AnimationManager(speedPxPerTick=0.0)
+
+	def testInvalidTotalStepsOverrideInSetTargetRaisesValueError(self):
+		"""An explicit totalSteps=0 in setTarget must raise ValueError."""
+		manager = AnimationManager(totalSteps=10)
+		manager.start(_frame(200.0, 0, 0))
+		with self.assertRaises(ValueError):
+			manager.setTarget(_frame(100.0, 100, 0), totalSteps=0)
