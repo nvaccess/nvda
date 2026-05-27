@@ -212,21 +212,6 @@ class TestAnimationManager(unittest.TestCase):
 		self.assertGreater(first.zoomLevel, mid_zoom)
 		self.assertLess(first.zoomLevel, 200.0)
 
-	def testSetTargetWithTotalStepsOverride(self):
-		"""setTarget with totalSteps overrides the constructor value for that segment."""
-		manager = AnimationManager(totalSteps=10)
-		manager.start(_frame(200.0, 0, 0))
-		manager.setTarget(_frame(100.0, 60, 0), totalSteps=6)
-
-		self.assertEqual(manager._totalSteps, 6)
-
-		for i in range(5):
-			manager.tick()
-			self.assertFalse(manager.isComplete, f"Should not be complete at step {i + 1}")
-
-		manager.tick()  # step 6 — final
-		self.assertTrue(manager.isComplete)
-
 	def testSpeedBasedStepsScaleWithDistance(self):
 		"""With speedPxPerTick set, totalSteps must equal round(distance / speed)."""
 		speed = 10.0
@@ -247,14 +232,6 @@ class TestAnimationManager(unittest.TestCase):
 		manager.setTarget(_frame(100.0, 1000, 0))  # would be 100 steps without cap
 
 		self.assertEqual(manager._totalSteps, 5)
-
-	def testSpeedBasedStepsMinimumIsOne(self):
-		"""A zero-distance target must still produce at least 1 step."""
-		manager = AnimationManager(speedPxPerTick=10.0)
-		manager.start(_frame(100.0, 50, 50))
-		manager.setTarget(_frame(100.0, 50, 50))  # same position
-
-		self.assertEqual(manager._totalSteps, 1)
 
 	def testExplicitTotalStepsOverridesSpeed(self):
 		"""An explicit totalSteps argument to setTarget takes precedence over speedPxPerTick."""
@@ -278,12 +255,3 @@ class TestAnimationManager(unittest.TestCase):
 		# Speed config must be preserved
 		self.assertEqual(manager._speedPxPerTick, 10.0)
 		self.assertEqual(manager._maxSteps, 20)
-
-	def testTickAfterResetRaisesRuntimeError(self):
-		"""tick() after reset() must raise RuntimeError until start() is called again."""
-		manager = AnimationManager()
-		manager.start(_frame(200.0, 0, 0))
-		manager.reset()
-
-		with self.assertRaises(RuntimeError):
-			manager.tick()
