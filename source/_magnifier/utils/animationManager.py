@@ -94,6 +94,8 @@ class AnimationManager:
 		  2. Auto-computed from distance when speedPxPerTick was set at construction.
 		  3. The totalSteps value from the constructor (unchanged).
 		"""
+		if self._current is None:
+			raise RuntimeError("AnimationManager not initialised — call start() first")
 		self._start = self._current
 		self._target = target
 		self._onComplete = onComplete

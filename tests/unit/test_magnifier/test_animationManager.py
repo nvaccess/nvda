@@ -256,6 +256,12 @@ class TestAnimationManager(unittest.TestCase):
 		self.assertEqual(manager._speedPxPerTick, 10.0)
 		self.assertEqual(manager._maxSteps, 20)
 
+	def testSetTargetBeforeStartRaisesRuntimeError(self):
+		"""setTarget() before start() must raise RuntimeError."""
+		manager = AnimationManager()
+		with self.assertRaises(RuntimeError):
+			manager.setTarget(_frame(100.0, 100, 0))
+
 	def testInvalidTotalStepsRaisesValueError(self):
 		"""totalSteps=0 in constructor must raise ValueError."""
 		with self.assertRaises(ValueError):
