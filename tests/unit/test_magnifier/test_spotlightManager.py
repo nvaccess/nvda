@@ -82,7 +82,11 @@ class TestSpotlightManager(_TestMagnifier):
 
 		target = AnimationFrame(100.0, Coordinates(960, 540))
 		callback = MagicMock()
-		spotlightManager._animateZoom(target, callback)
+		with patch(
+			"_magnifier.utils.spotlightManager.wx.CallLater",
+			side_effect=lambda delay, func, *args, **kwargs: MagicMock(),
+		):
+			spotlightManager._animateZoom(target, callback)
 
 		self.assertFalse(spotlightManager._animator.isComplete)
 		self.assertEqual(spotlightManager._animator._target, target)

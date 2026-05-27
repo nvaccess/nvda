@@ -140,6 +140,7 @@ class SpotlightManager:
 		self._currentCoordinates = frame.coordinates
 
 		if self._animator.isComplete:
+			self._timer = None
 			log.debug(
 				f"[spotlight] animation complete at step {self._animationStep} "
 				f"— final zoom={frame.zoomLevel:.2f}, coords={frame.coordinates}",
