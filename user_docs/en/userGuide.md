@@ -2966,7 +2966,7 @@ This option is disabled by default.
 | Options | Disabled, Enabled |
 | Default | Disabled |
 
-#### Follow mouse {#MagnifierFollowMouse}
+##### Follow mouse {#MagnifierFollowMouse}
 
 This checkbox controls whether the magnifier should follow the mouse pointer.
 When enabled, the magnified area will automatically move to follow the mouse pointer, which can be helpful for users who navigate primarily using the mouse rather than the keyboard.
@@ -2978,7 +2978,7 @@ This option is enabled by default.
 | Options | Disabled, Enabled |
 | Default | Enabled |
 
-#### Follow system focus {#MagnifierFollowSystemFocus}
+##### Follow system focus {#MagnifierFollowSystemFocus}
 
 This checkbox controls whether the magnifier should follow the system focus.
 When enabled, the magnified area will automatically move to follow the system focus, which can be helpful for users who navigate primarily using the keyboard and want the magnifier to track their navigation.
@@ -2990,7 +2990,7 @@ This option is enabled by default.
 | Options | Disabled, Enabled |
 | Default | Enabled |
 
-#### Follow review cursor {#MagnifierFollowReviewCursor}
+##### Follow review cursor {#MagnifierFollowReviewCursor}
 
 This checkbox controls whether the magnifier should follow the review cursor.
 When enabled, the magnified area will automatically move to follow the review cursor, which can be helpful for users who use the review cursor to navigate through content and want the magnifier to track their navigation.
@@ -3002,7 +3002,7 @@ This option is enabled by default.
 | Options | Disabled, Enabled |
 | Default | Enabled |
 
-#### Follow navigator object {#MagnifierFollowNavigatorObject}
+##### Follow navigator object {#MagnifierFollowNavigatorObject}
 
 This checkbox controls whether the magnifier should follow the navigator object.
 When enabled, the magnified area will automatically move to follow the navigator object, which can be helpful for users who use object navigation to navigate through content and want the magnifier to track their navigation.
