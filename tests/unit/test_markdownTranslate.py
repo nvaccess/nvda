@@ -169,3 +169,4 @@ class TestMarkdownTranslate(unittest.TestCase):
 		self.assertIn("$(ID:", skeletonContent)
 		self.assertIn("<!-- markdownlint-disable-line MD041 -->", skeletonContent)
 		self.assertIn("<!-- markdownlint-disable-line MD013 -->", skeletonContent)
+		self.assertIn("<!-- markdownlint-disable MD011 -->", skeletonContent)
