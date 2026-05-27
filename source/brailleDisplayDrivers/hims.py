@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2023 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter,
+# Copyright (C) 2010-2026 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter,
 # Bram Duvigneau
 
 from typing import List, Iterator
@@ -835,7 +835,7 @@ class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGe
 class RoutingInputGesture(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, routingINdex):
-		super(RoutingInputGesture, self).__init__()
-		self.cellIndexes = [routingINdex]
+	def __init__(self, routingIndex):
+		super().__init__()
+		self.cellIndexes = [routingIndex]
 		self.id = "routing"
