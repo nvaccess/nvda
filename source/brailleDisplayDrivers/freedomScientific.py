@@ -759,13 +759,8 @@ class RoutingGesture(InputGesture):
 	"""Gesture to handle cursor routing and second row of routing keys on older models"""
 
 	def __init__(self, model: str, routingIndex: int, topRow: bool = False):
-		if topRow:
-			# pylint: disable=invalid-name
-			self.id = "topRouting%d" % (routingIndex + 1)
-		else:
-			# pylint: disable=invalid-name
-			self.id = "routing"
-			self.cellIndexes = [routingIndex]
+		self.id = "topRouting" if topRow else "routing"
+		self.cellIndexes = [routingIndex]
 		super(RoutingGesture, self).__init__(model)
 
 

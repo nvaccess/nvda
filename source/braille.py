@@ -4029,14 +4029,25 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		)
 		self.cellIndexes = [value] if value is not None else None
 
+	_cellIndexesStr: str | None
+
+	def _get__cellIndexesStr(self) -> str | None:
+		"""A string representation of cell indexes for identification and display purposes."""
+		if "+" not in self.id and self.cellIndexes:
+			# This is an indexed gesture without additional keys, in which case the identifier can be extended with indexes.
+			return "+".join(f"{i + 1}" for i in self.cellIndexes)
+		return None
+
 	def _get_identifiers(self):
-		ids = ["br({source}):{id}".format(source=self.source, id=self.id)]
+		ids = []
+		if self._cellIndexesStr:
+			ids.append(f"br({self.source}):{self.id}{self._cellIndexesStr}")
+		ids.append(f"br({self.source}):{self.id}")
 		if self.model:
 			# Model based ids should take priority.
-			ids.insert(
-				0,
-				"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=self.id),
-			)
+			if self._cellIndexesStr:
+				ids.insert(0, f"br({self.source}.{self.model}):{self.id}{self._cellIndexesStr}")
+			ids.insert(0, f"br({self.source}.{self.model}):{self.id}")
 		import brailleInput
 
 		if isinstance(self, brailleInput.BrailleInputGesture):
@@ -4050,10 +4061,9 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			name = brailleInput.BrailleInputGesture._get_displayName(self)
 			if name:
 				return name
-		id = self.id
-		if "+" not in id and self.cellIndexes:  # Single routing identifier
-			id += "+".join(f"{i + 1}" for i in self.cellIndexes)
-		return id
+		if self._cellIndexesStr:
+			return f"{self.id}{self._cellIndexesStr}"
+		return self.id
 
 	def _get_scriptableObject(self):
 		display = handler.display
