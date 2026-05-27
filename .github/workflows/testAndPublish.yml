@@ -762,30 +762,17 @@ jobs:
     permissions:
       contents: read
     steps:
+    - name: Checkout cached build
+      uses: actions/cache/restore@v5
+      with:
+        path: .
+        key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
+        fail-on-cache-miss: true
+
     - name: Submit package using wingetcreate
       env:
         GH_TOKEN: ${{ github.token }}
         # wingetcreate will read the token from the below environment variable
         # Reference: https://aka.ms/winget-create-token
         WINGET_CREATE_GITHUB_TOKEN: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}
-      run: |
-        # Strip the 'release-' prefix to get the package version
-        $packageVersion = "${{ github.ref_name }}" -replace '^release-', ''
-
-        # Determine the appropriate package ID based on stable, beta, or rc release
-        $isBeta = "${{ github.ref_name }}" -match 'beta'
-        $isRc = "${{ github.ref_name }}" -match 'rc'
-        $wingetPackageId = if ($isBeta) { "NVAccess.NVDA.Beta" } elseif ($isRc) { "NVAccess.NVDA.RC" } else { "NVAccess.NVDA" }
-
-        # Retrieve the .exe installer URL from the published GitHub release
-        $releaseAssets = gh release view "${{ github.ref_name }}" `
-          --repo "${{ github.repository }}" `
-          --json assets | ConvertFrom-Json
-        $installerUrl = ($releaseAssets.assets | Where-Object { $_.name -like "*.exe" }).url
-
-        # Download wingetcreate and open a PR against the winget-pkgs repository
-        curl.exe -JLO https://aka.ms/wingetcreate/latest
-        .\wingetcreate.exe update $wingetPackageId `
-          --version $packageVersion `
-          --urls $installerUrl `
-          --submit
+      run: ci/scripts/submitWinGet.ps1
