@@ -2044,20 +2044,20 @@ class IAccessible(Window):
 			if hasDescription and not isFocusable:
 				shouldSpeak = isFocusable
 			else:
-					shouldSpeak = (
-						isFocusable
-						or child.role
-						in (
-							controlTypes.Role.HEADING,
-							controlTypes.Role.LIST,
-							controlTypes.Role.LISTITEM
-							)
-						or (
-							child.role == controlTypes.Role.STATICTEXT
-							and child.parent is not None
-							and child.parent.role == controlTypes.Role.PARAGRAPH
-						)
+				shouldSpeak = (
+					isFocusable
+					or child.role
+					in (
+						controlTypes.Role.HEADING,
+						controlTypes.Role.LIST,
+						controlTypes.Role.LISTITEM,
 					)
+					or (
+						child.role == controlTypes.Role.STATICTEXT
+						and child.parent is not None
+						and child.parent.role == controlTypes.Role.PARAGRAPH
+					)
+				)
 			if shouldSpeak:
 				speech.speakObject(child, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
 				braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
