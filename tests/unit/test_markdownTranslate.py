@@ -1,15 +1,19 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2024 NV Access Limited
+# Copyright (C) 2024-2026 NV Access Limited
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Unit tests for the markdownTranslate module."""
 
+import importlib.util
 import tempfile
 import unittest
+from unittest import mock
 import subprocess
 import sys
 import os
+from pathlib import Path
+import xml.etree.ElementTree as ET
 
 
 class TestMarkdownTranslate(unittest.TestCase):
@@ -137,3 +141,31 @@ class TestMarkdownTranslate(unittest.TestCase):
 				os.path.join(testDir, "fr_pretranslated_2024.3beta6_userGuide.md"),
 			],
 		)
+
+	def test_generateXliff_preservesInlineMarkdownLintCommentsInSkeleton(self):
+		outDir = self.outDir.name
+		inputMdPath = os.path.join(self.testDir, "markdownlint_inlineComments.md")
+		xliffPath = os.path.join(outDir, "markdownlint.xliff")
+		spec = importlib.util.spec_from_file_location("markdownTranslateUnderTest", self.markdownTranslateScriptPath)
+		self.assertIsNotNone(spec)
+		if spec is None or spec.loader is None:
+			self.fail("Unable to load markdownTranslate module for testing")
+		markdownTranslateModule = importlib.util.module_from_spec(spec)
+		spec.loader.exec_module(markdownTranslateModule)
+		with mock.patch.object(
+			markdownTranslateModule,
+			"getRawGithubURLForPath",
+			return_value=Path(inputMdPath).resolve().as_uri(),
+		):
+			markdownTranslateModule.generateXliff(mdPath=inputMdPath, outputPath=xliffPath)
+
+		xliff = ET.parse(xliffPath)
+		xliffRoot = xliff.getroot()
+		namespace = {"xliff": "urn:oasis:names:tc:xliff:document:2.0"}
+		skeletonNode = xliffRoot.find("./xliff:file/xliff:skeleton", namespace)
+		self.assertIsNotNone(skeletonNode)
+		skeletonContent = skeletonNode.text
+		self.assertIsNotNone(skeletonContent)
+		self.assertIn("$(ID:", skeletonContent)
+		self.assertIn("<!-- markdownlint-disable-line MD041 -->", skeletonContent)
+		self.assertIn("<!-- markdownlint-disable-line MD013 -->", skeletonContent)
