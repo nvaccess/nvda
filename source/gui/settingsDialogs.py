@@ -2590,12 +2590,12 @@ class BrowseModePanel(SettingsPanel):
 
 		# Translators: This is the label for a combobox in the
 		# browse mode settings panel.
-		controlFieldOrderLabelText = _("&Reading order when navigating by line or Say All:")
-		# Translators: An option in the browse mode settings "Reading order when navigating by line or Say All" combo box.
+		controlFieldOrderLabelText = _("&Control announcement order when reading:")
+		# Translators: An option in the browse mode settings "Control announcement order when reading" combo box.
 		# When selected, the control information (role, state, etc.) is spoken before the content.
 		self.controlFieldOrderLabels = [
 			("controlInfoFirst", _("Control information before content (e.g. visited link Home)")),
-			# Translators: An option in the browse mode settings "Reading order when navigating by line or Say All" combo box.
+			# Translators: An option in the browse mode settings "Control announcement order when reading" combo box.
 			# When selected, the content is spoken before the control information (role, state, etc.).
 			("contentFirst", _("Content before control information (e.g. Home visited link)")),
 		]
