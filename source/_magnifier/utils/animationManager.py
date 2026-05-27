@@ -8,6 +8,7 @@ Linear animation manager for smooth magnifier transitions.
 Does not own a timer — callers drive animation by invoking tick() at their own cadence.
 """
 
+import math
 from typing import Callable
 from .types import AnimationFrame, Coordinates
 
@@ -21,14 +22,31 @@ class AnimationManager:
 
 	Callers are responsible for the timer: call tick() each interval until isComplete is True.
 	A new setTarget() call mid-animation redirects from the current frame in a new totalSteps sequence.
+
+	When speedPxPerTick is provided, setTarget() computes totalSteps from the Euclidean distance
+	between the current and target coordinates, capped at maxSteps.  An explicit totalSteps
+	argument to setTarget() always takes precedence over the auto-computed value.
 	"""
 
-	def __init__(self, totalSteps: int = 40) -> None:
+	def __init__(
+		self,
+		totalSteps: int = 40,
+		speedPxPerTick: float | None = None,
+		maxSteps: int | None = None,
+	) -> None:
 		"""
-		:param totalSteps: Number of ticks to reach the target.
+		:param totalSteps: Default number of ticks per animation segment.
+		    Used when speedPxPerTick is None, or as the fallback when distance is zero.
 		    At 12 ms/tick, 40 steps = 480 ms (matches the original spotlight animation).
+		:param speedPxPerTick: Pixels to travel per tick.  When set, setTarget() computes
+		    the number of steps from distance ÷ speed so every segment animates at the same
+		    visual velocity regardless of distance.
+		:param maxSteps: Upper bound on the auto-computed step count.  Has no effect when
+		    speedPxPerTick is None.
 		"""
 		self._totalSteps = totalSteps
+		self._speedPxPerTick = speedPxPerTick
+		self._maxSteps = maxSteps
 		self._step: int = 0
 		self._start: AnimationFrame | None = None
 		self._current: AnimationFrame | None = None
@@ -45,20 +63,48 @@ class AnimationManager:
 		self._onComplete = None
 		self._step = 0
 
+	def reset(self) -> None:
+		"""
+		Return to uninitialised state without discarding speed/step configuration.
+		After reset(), start() must be called before tick() can be used again.
+		"""
+		self._step = 0
+		self._start = None
+		self._current = None
+		self._target = None
+		self._onComplete = None
+		self._isComplete = True
+
 	def setTarget(
 		self,
 		target: AnimationFrame,
 		onComplete: Callable[[], None] | None = None,
+		totalSteps: int | None = None,
 	) -> None:
 		"""
 		Set a new destination frame, starting a fresh linear sequence from the current position.
 		Redirects any in-progress animation from the current frame without jumping.
+
+		Step count resolution (highest priority first):
+		  1. The explicit totalSteps argument, if provided.
+		  2. Auto-computed from distance when speedPxPerTick was set at construction.
+		  3. The totalSteps value from the constructor (unchanged).
 		"""
 		self._start = self._current
 		self._target = target
 		self._onComplete = onComplete
 		self._isComplete = False
 		self._step = 0
+		if totalSteps is not None:
+			self._totalSteps = totalSteps
+		elif self._speedPxPerTick is not None and self._start is not None:
+			dx = target.coordinates.x - self._start.coordinates.x
+			dy = target.coordinates.y - self._start.coordinates.y
+			dist = math.hypot(dx, dy)
+			steps = round(dist / self._speedPxPerTick)
+			if self._maxSteps is not None:
+				steps = min(steps, self._maxSteps)
+			self._totalSteps = max(1, steps)
 
 	def tick(self) -> AnimationFrame:
 		"""

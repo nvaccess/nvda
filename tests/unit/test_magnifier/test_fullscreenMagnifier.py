@@ -6,7 +6,14 @@
 from unittest.mock import MagicMock, patch
 from _magnifier.config import ZoomLevel
 from _magnifier.magnifier import Magnifier
-from _magnifier.utils.types import Filter, FullScreenMode, MagnifiedView, Direction, Coordinates
+from _magnifier.utils.types import (
+	Filter,
+	FullScreenMode,
+	MagnifiedView,
+	Direction,
+	Coordinates,
+	MagnifierFollowFocusType,
+)
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
 from winAPI._displayTracking import getPrimaryDisplayOrientation
@@ -72,6 +79,8 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		# Mock the update methods
 		magnifier._getCoordinatesForMode = MagicMock(return_value=(150, 250))
 		magnifier._fullscreenMagnifier = MagicMock()
+		# Bypass animation so this test only covers _doUpdate plumbing
+		magnifier._advanceAnimation = MagicMock(side_effect=lambda coords, **_: coords)
 
 		# Set initial coordinates
 		magnifier._currentCoordinates = (100, 200)
@@ -285,6 +294,141 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		magnifier._startTimer.assert_called_with(magnifier._updateMagnifier)
 
 		magnifier._stopMagnifier()
+
+
+class TestFullScreenMagnifierPositionAnimation(_TestMagnifier):
+	"""Tests for smooth position animation in FullScreenMagnifier._doUpdate."""
+
+	def setUp(self):
+		super().setUp()
+		self.magnifier = FullScreenMagnifier()
+		self.magnifier._startMagnifier()
+		self.magnifier._fullscreenMagnifier = MagicMock()
+		# Isolate from real system state: real mouse position at setUp time can set
+		# _lastFocusedObject = MOUSE, which would force animate=False in all tests.
+		self.magnifier._focusManager.getLastFocusType = MagicMock(return_value=None)
+
+	def tearDown(self):
+		self.magnifier._stopMagnifier()
+		super().tearDown()
+
+	def testAnimatorInitialisedOnStart(self):
+		"""Position animator must be ready after _startMagnifier."""
+		self.assertIsNotNone(self.magnifier._positionAnimator)
+
+	def testDoUpdateAnimatesPositionOverMultipleSteps(self):
+		"""For a distance larger than one speed unit, _doUpdate must interpolate on the first tick."""
+		start = Coordinates(0, 0)
+		# 10× speed_px_per_tick guarantees > 1 step
+		dist = int(Magnifier._ANIMATION_SPEED_PX_PER_TICK * 10)
+		target = Coordinates(dist, 0)
+		self.magnifier._initPositionAnimator(start)
+		self.magnifier._getCoordinatesForMode = MagicMock(return_value=target)
+
+		self.magnifier._doUpdate()
+		firstPos = self.magnifier._lastScreenPosition
+
+		self.assertGreater(firstPos.x, start.x)
+		self.assertLess(firstPos.x, target.x)
+
+	def testDoUpdateReachesTargetWhenComplete(self):
+		"""Once the animation completes, _doUpdate must render exactly the target."""
+		start = Coordinates(0, 0)
+		target = Coordinates(100, 0)
+		self.magnifier._initPositionAnimator(start)
+		self.magnifier._getCoordinatesForMode = MagicMock(return_value=target)
+
+		for _ in range(60):  # generous upper bound
+			self.magnifier._doUpdate()
+			if self.magnifier._positionAnimator.isComplete:
+				break
+
+		self.assertEqual(self.magnifier._lastScreenPosition, target)
+
+	def testDoUpdateSpeedIsConstantOverDistance(self):
+		"""The number of animation steps must scale linearly with distance."""
+		speed = Magnifier._ANIMATION_SPEED_PX_PER_TICK
+
+		self.magnifier._initPositionAnimator(Coordinates(0, 0))
+		self.magnifier._getCoordinatesForMode = MagicMock(return_value=Coordinates(int(speed * 5), 0))
+		self.magnifier._doUpdate()
+		short_steps = self.magnifier._positionAnimator._totalSteps
+
+		self.magnifier._initPositionAnimator(Coordinates(0, 0))
+		self.magnifier._getCoordinatesForMode = MagicMock(return_value=Coordinates(int(speed * 10), 0))
+		self.magnifier._doUpdate()
+		long_steps = self.magnifier._positionAnimator._totalSteps
+
+		self.assertEqual(long_steps, short_steps * 2)
+
+	def testDoUpdateRedirectsOnNewTarget(self):
+		"""A new target mid-animation must redirect smoothly and end at the new target."""
+		start = Coordinates(0, 0)
+		first_target = Coordinates(int(Magnifier._ANIMATION_SPEED_PX_PER_TICK * 10), 0)
+		self.magnifier._initPositionAnimator(start)
+		self.magnifier._getCoordinatesForMode = MagicMock(return_value=first_target)
+
+		for _ in range(3):
+			self.magnifier._doUpdate()
+		mid = self.magnifier._lastScreenPosition
+		self.assertGreater(mid.x, start.x)
+
+		new_target = Coordinates(0, int(Magnifier._ANIMATION_SPEED_PX_PER_TICK * 10))
+		self.magnifier._getCoordinatesForMode = MagicMock(return_value=new_target)
+
+		for _ in range(60):
+			self.magnifier._doUpdate()
+			if self.magnifier._positionAnimator.isComplete:
+				break
+
+		self.assertEqual(self.magnifier._lastScreenPosition, new_target)
+
+	def testDoUpdateNoAnimationBeforeInit(self):
+		"""Without a position animator, _doUpdate applies target coordinates immediately."""
+		self.magnifier._positionAnimator = None
+		target = Coordinates(300, 200)
+		self.magnifier._getCoordinatesForMode = MagicMock(return_value=target)
+
+		self.magnifier._doUpdate()
+
+		self.assertEqual(self.magnifier._lastScreenPosition, target)
+
+	def testDoUpdateNoAnimationForMouseTracking(self):
+		"""When tracking the mouse, _doUpdate must snap to target without interpolation."""
+		dist = int(Magnifier._ANIMATION_SPEED_PX_PER_TICK * 10)
+		self.magnifier._initPositionAnimator(Coordinates(0, 0))
+		self.magnifier._focusManager.getLastFocusType = MagicMock(
+			return_value=MagnifierFollowFocusType.MOUSE,
+		)
+		self.magnifier._getCoordinatesForMode = MagicMock(return_value=Coordinates(dist, 0))
+
+		self.magnifier._doUpdate()
+
+		self.assertEqual(self.magnifier._lastScreenPosition, Coordinates(dist, 0))
+
+	def testTransitionFromMouseToKeyboardAnimatesFromMousePosition(self):
+		"""After mouse tracking ends, animation must depart from the last mouse position."""
+		mousePos = Coordinates(200, 0)
+		keyboardPos = Coordinates(0, 0)
+
+		self.magnifier._initPositionAnimator(Coordinates(0, 0))
+
+		# Snap to mouse position
+		self.magnifier._focusManager.getLastFocusType = MagicMock(
+			return_value=MagnifierFollowFocusType.MOUSE,
+		)
+		self.magnifier._getCoordinatesForMode = MagicMock(return_value=mousePos)
+		self.magnifier._doUpdate()
+		self.assertEqual(self.magnifier._lastScreenPosition, mousePos)
+
+		# Switch to keyboard focus — first animated step must depart from mousePos
+		self.magnifier._focusManager.getLastFocusType = MagicMock(return_value=None)
+		self.magnifier._getCoordinatesForMode = MagicMock(return_value=keyboardPos)
+		self.magnifier._doUpdate()
+
+		firstPos = self.magnifier._lastScreenPosition
+		self.assertGreater(firstPos.x, keyboardPos.x)
+		self.assertLess(firstPos.x, mousePos.x)
 
 
 class TestFullScreenMagnifierApiConflict(_TestMagnifier):

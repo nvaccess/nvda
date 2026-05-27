@@ -24,6 +24,7 @@ from .utils.types import (
 	Size,
 	MagnifierParameters,
 	Coordinates,
+	MagnifierFollowFocusType,
 )
 from .config import getFullscreenMode, isTrueCentered
 from .utils.errorHandling import trackNativeMagnifierErrors
@@ -81,6 +82,8 @@ class FullScreenMagnifier(Magnifier):
 
 		if self._isActive:
 			self._applyFilter()
+			initialCoords = self._getCoordinatesForMode(self.currentCoordinates)
+			self._initPositionAnimator(initialCoords)
 		self._startTimer(self._updateMagnifier)
 
 	def _initializeNativeMagnification(self) -> None:
@@ -111,11 +114,10 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		Perform the actual update of the magnifier
 		"""
-		# Calculate new position based on focus mode
-		coordinates = self._getCoordinatesForMode(self.currentCoordinates)
-		# Always save screen position for mode continuity
+		targetCoords = self._getCoordinatesForMode(self.currentCoordinates)
+		isMouseTracking = self._focusManager.getLastFocusType() == MagnifierFollowFocusType.MOUSE
+		coordinates = self._advanceAnimation(targetCoords, animate=not isMouseTracking)
 		self._lastScreenPosition = coordinates
-
 		self._fullscreenMagnifier(coordinates)
 
 	@override
@@ -375,6 +377,7 @@ class FullScreenMagnifier(Magnifier):
 		Stop and destroy Spotlight from Full-screen class
 		"""
 		self._spotlightManager._spotlightIsActive = False
+		self._resetPositionAnimator()
 		self._startTimer(self._updateMagnifier)
 
 	@override

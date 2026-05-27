@@ -25,6 +25,7 @@ from .utils.types import (
 	Direction,
 	Filter,
 	Coordinates,
+	AnimationFrame,
 )
 from .config import (
 	getZoomLevel,
@@ -35,6 +36,7 @@ from .config import (
 	shouldKeepMouseCentered,
 )
 from .utils.focusManager import FocusManager
+from .utils.animationManager import AnimationManager
 
 
 class Magnifier:
@@ -42,6 +44,8 @@ class Magnifier:
 	_MARGIN_BORDER: int = 50
 	_MAX_CONSECUTIVE_ERRORS: int = 3
 	_MAGNIFIED_VIEW: MagnifiedView
+	_ANIMATION_SPEED_PX_PER_TICK: float = 12.0  # pixels per 12 ms tick ≈ 1000 px/s
+	_ANIMATION_MAX_STEPS: int = 25  # cap at 300 ms for large jumps
 
 	def __init__(self):
 		self._displayOrientation = getPrimaryDisplayOrientation()
@@ -57,6 +61,8 @@ class Magnifier:
 		self._isManualPanning: bool = False
 		self._consecutiveErrors: int = 0
 		self._recoveryAttempts: int = 0
+		self._positionAnimator: AnimationManager | None = None
+		self._targetScreenPosition: Coordinates | None = None
 		# Register for display changes
 		_displayTracking.displayChanged.register(self._onDisplayChanged)
 		self._screenCurtainIsActive: bool = False
@@ -163,6 +169,50 @@ class Magnifier:
 		"""
 		log.debug("Display configuration changed, updating screen dimensions")
 		self.orientationState = orientationState
+
+	def _initPositionAnimator(self, initialCoords: Coordinates) -> None:
+		"""
+		Create and start the position animator at a known screen position.
+		Call this in _startMagnifier once the initial screen coordinates are known.
+		"""
+		self._positionAnimator = AnimationManager(
+			speedPxPerTick=self._ANIMATION_SPEED_PX_PER_TICK,
+			maxSteps=self._ANIMATION_MAX_STEPS,
+		)
+		self._positionAnimator.start(AnimationFrame(self.zoomLevel, initialCoords))
+		self._targetScreenPosition = initialCoords
+
+	def _resetPositionAnimator(self) -> None:
+		"""
+		Discard the current animation state so the animator reinitialises on the next
+		_advanceAnimation call.  Call this whenever an external event (e.g. spotlight end)
+		puts the view in an unknown position.
+		"""
+		if self._positionAnimator is not None:
+			self._positionAnimator.reset()
+		self._targetScreenPosition = None
+
+	def _advanceAnimation(self, targetCoords: Coordinates, animate: bool = True) -> Coordinates:
+		"""
+		Tick the position animator toward targetCoords and return the interpolated position.
+		If no animator has been initialised, returns targetCoords unchanged (no animation).
+
+		When animate is False the view snaps directly to targetCoords and the animator is
+		synchronised to that position so there is no visual jump when animation resumes.
+		"""
+		if self._positionAnimator is None:
+			return targetCoords
+		if not animate:
+			self._positionAnimator.start(AnimationFrame(self.zoomLevel, targetCoords))
+			self._targetScreenPosition = targetCoords
+			return targetCoords
+		if self._positionAnimator.currentFrame is None:
+			self._positionAnimator.start(AnimationFrame(self.zoomLevel, targetCoords))
+			self._targetScreenPosition = targetCoords
+		if targetCoords != self._targetScreenPosition:
+			self._targetScreenPosition = targetCoords
+			self._positionAnimator.setTarget(AnimationFrame(self.zoomLevel, targetCoords))
+		return self._positionAnimator.tick().coordinates
 
 	def _startMagnifier(self) -> None:
 		"""
