@@ -4047,7 +4047,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			# Model based ids should take priority.
 			if self._cellIndexesStr:
 				ids.insert(0, f"br({self.source}.{self.model}):{self.id}{self._cellIndexesStr}")
-			ids.insert(0, f"br({self.source}.{self.model}):{self.id}")
+			ids.insert(1, f"br({self.source}.{self.model}):{self.id}")
 		import brailleInput
 
 		if isinstance(self, brailleInput.BrailleInputGesture):
