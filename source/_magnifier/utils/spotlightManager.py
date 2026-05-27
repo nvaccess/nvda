@@ -10,7 +10,9 @@ Manages the spotlight effect, including zooming in on focus and zooming back.
 
 from typing import TYPE_CHECKING, Callable
 import ui
-from .types import Coordinates, ZoomHistory, FullScreenMode
+from .types import Coordinates, AnimationFrame, FullScreenMode
+from .animationManager import AnimationManager
+from ..config import ZoomLevel
 import wx
 from logHandler import log
 
@@ -27,12 +29,13 @@ class SpotlightManager:
 		self._spotlightIsActive: bool = False
 		self._lastMousePosition = Coordinates(0, 0)
 		self._timer: wx.CallLater | None = None
-		self._animationSteps: int = 40
 		self._animationStepDelay: int = 12
+		self._animator: AnimationManager = AnimationManager(totalSteps=40)
 		self._currentCoordinates: Coordinates = fullscreenMagnifier._focusManager.getCurrentFocusCoordinates()
 		self._originalZoomLevel: int = 0
 		self._currentZoomLevel: float = 0.0
 		self._originalMode: FullScreenMode | None = None
+		self._animationStep: int = 0
 
 	def _startSpotlight(self) -> None:
 		"""
@@ -40,10 +43,6 @@ class SpotlightManager:
 		"""
 		self._originalZoomLevel = self._fullscreenMagnifier.zoomLevel
 		self._currentZoomLevel = self._fullscreenMagnifier.zoomLevel
-
-		log.debug("start spotlight")
-
-		self._spotlightIsActive = True
 
 		startCoords = self._fullscreenMagnifier._focusManager.getCurrentFocusCoordinates()
 		startCoords = self._fullscreenMagnifier._getCoordinatesForMode(startCoords)
@@ -55,13 +54,21 @@ class SpotlightManager:
 		# Save the current mode for zoom back
 		self._originalMode = self._fullscreenMagnifier._fullscreenMode
 		self._currentCoordinates = startCoords
-		self._animateZoom(ZoomHistory(1.0, centerScreen), self._startMouseMonitoring)
+
+		log.debug(
+			f"[spotlight] start — zoom={self._originalZoomLevel}, "
+			f"startCoords={startCoords}, centerScreen={centerScreen}, mode={self._originalMode}",
+		)
+
+		self._spotlightIsActive = True
+		self._animator.start(AnimationFrame(self._currentZoomLevel, self._currentCoordinates))
+		self._animateZoom(AnimationFrame(float(ZoomLevel.MIN_ZOOM), centerScreen), self._startMouseMonitoring)
 
 	def _stopSpotlight(self) -> None:
 		"""
 		Stop the spotlight
 		"""
-		log.debug("stop spotlight")
+		log.debug("[spotlight] _stopSpotlight called — stopping timer and notifying user")
 		ui.message(
 			pgettext(
 				"magnifier",
@@ -78,65 +85,74 @@ class SpotlightManager:
 
 	def _animateZoom(
 		self,
-		target: ZoomHistory,
+		target: AnimationFrame,
 		callback: Callable[[], None],
 	) -> None:
 		"""
-		Animate the zoom level change
+		Animate the zoom level change towards target, then call callback.
 
-		:param target: The target zoom history (zoom level and coordinates)
+		:param target: The target animation frame (zoom level and coordinates)
 		:param callback: The function to call after animation completes
 		"""
+		self._animationStep = 0
 		log.debug(
-			f"animate zoom with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
+			f"[spotlight] _animateZoom — from zoom={self._currentZoomLevel:.2f} "
+			f"to zoom={target.zoomLevel:.2f}, coords={target.coordinates}, callback={getattr(callback, '__name__', type(callback).__name__)}",
 		)
+		self._animator.setTarget(target, onComplete=callback)
+		self._driveAnimation()
 
-		self._animationStepsList = self._computeAnimationSteps(
-			round(self._currentZoomLevel),
-			round(target.zoomLevel),
-			self._currentCoordinates,
-			target.coordinates,
-		)
-
-		self._executeStep(0, callback)
-
-	def _executeStep(
-		self,
-		stepIndex: int,
-		callback: Callable[[], None],
-	) -> None:
+	def _driveAnimation(self) -> None:
 		"""
-		Execute one animation step.
-		Also queues the next animation step.
-
-		:param stepIndex: The index of the current animation step
-		:param callback: The function to call after animation completes
+		Advance the animator by one step, apply the resulting frame to the magnifier,
+		and schedule the next step if the animation is not yet complete.
 		"""
-		log.debug(
-			f"execute step with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
-		)
+		if not self._fullscreenMagnifier._isActive:
+			log.debug(
+				f"[spotlight] _driveAnimation aborted at step {self._animationStep} — magnifier no longer active",
+			)
+			if self._timer:
+				self._timer.Stop()
+				self._timer = None
+			self._spotlightIsActive = False
+			return
 
-		if stepIndex < len(self._animationStepsList):
-			zoomLevel, coords = self._animationStepsList[stepIndex]
-			try:
-				self._fullscreenMagnifier._setZoomRawValue(zoomLevel)
-				self._fullscreenMagnifier._fullscreenMagnifier(coords)
-			except Exception:
-				log.error("Error during spotlight animation step, aborting spotlight", exc_info=True)
-				self._stopSpotlight()
-				return
-			self._currentZoomLevel = zoomLevel
-			self._currentCoordinates = coords
-			wx.CallLater(self._animationStepDelay, lambda: self._executeStep(stepIndex + 1, callback))
+		self._animationStep += 1
+		frame = self._animator.tick()
+
+		if self._animationStep == 1 or self._animationStep % 10 == 0:
+			log.debug(
+				f"[spotlight] step {self._animationStep} — zoom={frame.zoomLevel:.2f}, coords={frame.coordinates}",
+			)
+
+		try:
+			self._fullscreenMagnifier._setZoomRawValue(frame.zoomLevel)
+			self._fullscreenMagnifier._fullscreenMagnifier(frame.coordinates)
+		except Exception:
+			log.error(
+				f"[spotlight] error at step {self._animationStep} — aborting spotlight",
+				exc_info=True,
+			)
+			self._stopSpotlight()
+			return
+
+		self._currentZoomLevel = frame.zoomLevel
+		self._currentCoordinates = frame.coordinates
+
+		if self._animator.isComplete:
+			log.debug(
+				f"[spotlight] animation complete at step {self._animationStep} "
+				f"— final zoom={frame.zoomLevel:.2f}, coords={frame.coordinates}",
+			)
 		else:
-			if callback:
-				callback()
+			self._timer = wx.CallLater(self._animationStepDelay, self._driveAnimation)
 
 	def _startMouseMonitoring(self) -> None:
 		"""
 		Start monitoring the mouse position to detect idleness
 		"""
 		self._lastMousePosition = Coordinates(*wx.GetMousePosition())
+		log.debug(f"[spotlight] _startMouseMonitoring — mouse at {self._lastMousePosition}, waiting 2000 ms")
 		self._timer = wx.CallLater(2000, self._checkMouseIdle)
 
 	def _checkMouseIdle(self) -> None:
@@ -144,6 +160,10 @@ class SpotlightManager:
 		Check if the mouse has been idle
 		"""
 		currentMousePosition = Coordinates(*wx.GetMousePosition())
+		log.debug(
+			f"[spotlight] _checkMouseIdle — current={currentMousePosition}, last={self._lastMousePosition}, "
+			f"idle={currentMousePosition == self._lastMousePosition}",
+		)
 		if currentMousePosition == self._lastMousePosition:
 			self.zoomBack()
 		else:
@@ -156,10 +176,6 @@ class SpotlightManager:
 		"""
 		Zoom back to mouse position
 		"""
-		log.debug(
-			f"zoom back with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
-		)
-
 		focus = self._fullscreenMagnifier._focusManager.getCurrentFocusCoordinates()
 
 		if self._originalMode == FullScreenMode.RELATIVE:
@@ -171,47 +187,8 @@ class SpotlightManager:
 			endCoordinates = focus
 			self._fullscreenMagnifier._lastScreenPosition = endCoordinates
 
-		self._animateZoom(ZoomHistory(self._originalZoomLevel, endCoordinates), self._stopSpotlight)
-
-	def _computeAnimationSteps(
-		self,
-		zoomStart: int,
-		zoomEnd: int,
-		coordinateStart: Coordinates,
-		coordinateEnd: Coordinates,
-	) -> list[ZoomHistory]:
-		"""
-		Compute all intermediate animation steps with zoom levels and Coordinates
-
-		:param zoomStart: Starting zoom level
-		:param zoomEnd: Ending zoom level
-		:param coordinateStart: Starting Coordinates (x, y)
-		:param coordinateEnd: Ending Coordinates (x, y)
-
-		:return: List of animation steps as ZoomHistory for each animation step
-		"""
 		log.debug(
-			f"compute animation steps with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
+			f"[spotlight] zoomBack — originalZoom={self._originalZoomLevel}, "
+			f"currentZoom={self._currentZoomLevel:.2f}, focus={focus}, endCoords={endCoordinates}",
 		)
-
-		startX, startY = coordinateStart
-		endX, endY = coordinateEnd
-		animationSteps: list[ZoomHistory] = []
-
-		zoomDelta = (zoomEnd - zoomStart) / self._animationSteps
-		coordDeltaX = (endX - startX) / self._animationSteps
-		coordDeltaY = (endY - startY) / self._animationSteps
-
-		for step in range(1, self._animationSteps + 1):
-			currentZoom = zoomStart + zoomDelta * step
-
-			currentX = startX + coordDeltaX * step
-			currentY = startY + coordDeltaY * step
-
-			animationSteps.append(
-				ZoomHistory(
-					round(currentZoom, 2),
-					Coordinates(round(currentX), round(currentY)),
-				),
-			)
-		return animationSteps
+		self._animateZoom(AnimationFrame(self._originalZoomLevel, endCoordinates), self._stopSpotlight)

@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from unittest.mock import MagicMock, patch
-from _magnifier.utils.types import FullScreenMode, Coordinates
+from _magnifier.utils.types import FullScreenMode, Coordinates, AnimationFrame
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
 
@@ -19,7 +19,8 @@ class TestSpotlightManager(_TestMagnifier):
 
 		self.assertIsNotNone(spotlightManager)
 		self.assertFalse(spotlightManager._spotlightIsActive)
-		self.assertEqual(spotlightManager._animationSteps, 40)
+		self.assertIsNotNone(spotlightManager._animator)
+		self.assertEqual(spotlightManager._animator._totalSteps, 40)
 		self.assertEqual(spotlightManager._originalZoomLevel, 0)
 		self.assertEqual(spotlightManager._currentZoomLevel, 0.0)
 
@@ -67,39 +68,51 @@ class TestSpotlightManager(_TestMagnifier):
 
 		magnifier._stopMagnifier()
 
-	def testComputeAnimationSteps(self):
-		"""Test animation steps calculation."""
+	def testAnimateZoomSetsAnimatorTarget(self):
+		"""Test that _animateZoom sets the correct target on the animator."""
 		magnifier = FullScreenMagnifier()
 		spotlightManager = magnifier._spotlightManager
 
-		# Test animation from zoom 2.0 to 1.0, coordinates (500, 400) to (960, 540)
-		steps = spotlightManager._computeAnimationSteps(
-			200,
-			100,
-			(500, 400),
-			(960, 540),
-		)
+		spotlightManager._currentZoomLevel = 200.0
+		spotlightManager._currentCoordinates = Coordinates(500, 400)
+		spotlightManager._animator.start(AnimationFrame(200.0, Coordinates(500, 400)))
+		magnifier._isActive = True
+		magnifier._setZoomRawValue = MagicMock()
+		magnifier._fullscreenMagnifier = MagicMock()
 
-		# Should have 40 steps
-		self.assertEqual(len(steps), 40)
+		target = AnimationFrame(100.0, Coordinates(960, 540))
+		callback = MagicMock()
+		spotlightManager._animateZoom(target, callback)
 
-		# First step should be closer to start
-		firstZoom, firstCoords = steps[0]
-		self.assertLess(abs(firstZoom - 200), abs(firstZoom - 100))
+		self.assertFalse(spotlightManager._animator.isComplete)
+		self.assertEqual(spotlightManager._animator._target, target)
 
-		# Last step should be at target
-		lastZoom, lastCoords = steps[-1]
-		self.assertEqual(lastZoom, 100)
-		self.assertEqual(lastCoords, (960, 540))
+		magnifier._stopMagnifier()
 
-		# Steps should progress linearly (decreasing from 200 to 100)
-		for i in range(len(steps) - 1):
-			currentZoom, _ = steps[i]
-			nextZoom, _ = steps[i + 1]
-			self.assertGreater(
-				currentZoom,
-				nextZoom,
-			)  # Zoom should decrease from 200 to 100
+	def testAnimationCompletesAfterTotalSteps(self):
+		"""Test that the animation driven by _driveAnimation completes in exactly totalSteps ticks."""
+		magnifier = FullScreenMagnifier()
+		spotlightManager = magnifier._spotlightManager
+
+		magnifier._isActive = True
+		magnifier._setZoomRawValue = MagicMock()
+		magnifier._fullscreenMagnifier = MagicMock()
+
+		initial = AnimationFrame(200.0, Coordinates(500, 400))
+		target = AnimationFrame(100.0, Coordinates(960, 540))
+		callback = MagicMock()
+
+		spotlightManager._currentZoomLevel = 200.0
+		spotlightManager._currentCoordinates = Coordinates(500, 400)
+		spotlightManager._animator.start(initial)
+		spotlightManager._animator.setTarget(target, onComplete=callback)
+
+		steps = spotlightManager._animator._totalSteps
+		for _ in range(steps):
+			spotlightManager._animator.tick()
+
+		self.assertTrue(spotlightManager._animator.isComplete)
+		callback.assert_called_once()
 
 		magnifier._stopMagnifier()
 

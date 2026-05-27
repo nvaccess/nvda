@@ -140,8 +140,8 @@ class Coordinates(NamedTuple):
 	y: int
 
 
-class ZoomHistory(NamedTuple):
-	"""Named tuple representing zoom history entry with zoom level and coordinates"""
+class AnimationFrame(NamedTuple):
+	"""Named tuple representing a magnifier animation frame with zoom level and coordinates"""
 
 	zoomLevel: float
 	coordinates: Coordinates
