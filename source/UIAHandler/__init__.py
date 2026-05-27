@@ -41,6 +41,8 @@ import winKernel
 import winUser
 import winVersion
 import eventHandler
+import exceptions
+import watchdog
 from logHandler import log
 import winBindings.uiAutomationCore
 from . import utils
@@ -1247,8 +1249,19 @@ class UIAHandler(COMObject):
 							log.debug("Office 2013 ribon or older. Treating as non-UIA")
 						return False
 					parentHwnd = winUser.getAncestor(parentHwnd, winUser.GA_PARENT)
-		# Ask the window if it supports UIA natively
-		res = winBindings.uiAutomationCore.UiaHasServerSideProvider(hwnd)
+		# Ask the window if it supports UIA natively.
+		# Run via the watchdog's cancellable thread: this is a blocking
+		# cross-process call that the watchdog cannot otherwise cancel, so a
+		# hung application could freeze the core here until it is killed.
+		try:
+			res = watchdog.cancellableExecute(
+				winBindings.uiAutomationCore.UiaHasServerSideProvider,
+				hwnd,
+			)
+		except exceptions.CallCancelled:
+			if isDebug:
+				log.debug("UiaHasServerSideProvider cancelled; treating window as non-UIA")
+			return False
 		if res:
 			if isDebug:
 				log.debug("window has UIA server side provider")
