@@ -111,6 +111,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * uv to 0.11.7. (#19736, #19908, #19968)
   * Requests to 2.33.0. (#19877)
   * cryptography to 46.0.7. (#19877, #19968)
+  * Python to 3.13.13. (#20231, @dpy013)
 * A new parameter `redactSecrets` has been added to logging functions e.g. `log.debug`. (#19966)
   * When set to `True`, logging output will be sanitized to replace detected secrets with asterisks.
   * This is set to `False` by default for performance purposes.
