@@ -5204,8 +5204,6 @@ class GlobalCommands(ScriptableObject):
 	) -> None:
 		_magnifier.commands.moveMouseToView()
 
-	
-	
 	@script(
 		description=_(
 			# Translators: Describes a command.

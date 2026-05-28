@@ -423,7 +423,6 @@ class TestFullScreenMagnifierKeepMouseCentered(_TestMagnifier):
 			self.magnifier._keepMouseCentered()
 			mockSet.assert_called_once_with(expectedX, expectedY)
 
-
 	def testCenterModeAtEdge(self):
 		"""CENTER mode near top-left corner: cursor lands at clamped view center, not raw coordinates."""
 		self.magnifier._fullscreenMode = FullScreenMode.CENTER
