@@ -1,39 +1,5 @@
 # What's New in NVDA
 
-## 2026.3
-
-### Important notes
-
-### New Features
-
-* The braille "word wrap" option has been replaced with a four-valued "Text wrap" option: Off, Show mark when words are cut, At word boundaries, and At word or syllable boundaries. (#17010, @LeonarddeR)
-  * In modes that show a continuation mark, when a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
-  * The "At word or syllable boundaries" option uses hyphenation dictionaries to split long words at syllable boundaries when they do not fit on the display.
-
-### Changes
-
-### Bug Fixes
-
-* When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
-* In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen. (#20177)
-* When an application stops responding, NVDA no longer freezes or floods its log with errors; it stays responsive and drops UIA and MSAA events from the unresponsive application until it recovers. (#16749, @heath-toby)
-* Reduced lag on UI Automation text change events, improving the responsiveness of controls such as combo boxes and of File Explorer, by using the cached element class name instead of a live cross-process fetch. (#16749, @heath-toby)
-* NVDA recovers more quickly when an application stops responding; in particular, switching away from a hung application returns NVDA to responsiveness immediately. (#20169, @heath-toby)
-* In Mozilla Firefox, reporting annotation details now works correctly in focus mode on controls which are not editable text. (#20208, @jcsteh)
-
-### Changes for Developers
-
-Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
-
-* Updated components:
-  * Python to 3.13.13.
-
-#### Deprecations
-
-* The `braille.wordWrap` configuration key is deprecated and bridged to `braille.textWrap`. (#17010, @LeonarddeR)
-
-<!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
-<!-- markdownlint-disable -->
 ## 2026.2
 
 This release includes a new built-in Magnifier feature, improvements to touch gestures and navigation, and expanded speech and braille capabilities.
@@ -145,6 +111,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * uv to 0.11.7. (#19736, #19908, #19968)
   * Requests to 2.33.0. (#19877)
   * cryptography to 46.0.7. (#19877, #19968)
+  * Python to 3.13.13. (#20231, @dpy013)
 * A new parameter `redactSecrets` has been added to logging functions e.g. `log.debug`. (#19966)
   * When set to `True`, logging output will be sanitized to replace detected secrets with asterisks.
   * This is set to `False` by default for performance purposes.
