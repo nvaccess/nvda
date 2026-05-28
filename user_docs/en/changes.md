@@ -144,6 +144,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * Requests to 2.33.0. (#19877)
   * cryptography to 46.0.7. (#19877, #19968)
   * Python to 3.13.13. (#20231, @dpy013)
+  * wxPython to 4.2.5.
 * A new parameter `redactSecrets` has been added to logging functions e.g. `log.debug`. (#19966)
   * When set to `True`, logging output will be sanitized to replace detected secrets with asterisks.
   * This is set to `False` by default for performance purposes.
@@ -346,7 +347,6 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Sphinx to 8.1.3 (#18475)
   * Pyright to 1.1.407 (#17749, #19162)
     * enabled the Node.js-backed server (`pyright[nodejs]`) for faster and more reliable analysis.
-  * wxPython to 4.2.4 (#19080, #19196)
   * uv to 0.9.11 (#19162)
   * Ruff to 0.14.5 (#19162)
   * comtypes to 1.4.13 (#19196)
