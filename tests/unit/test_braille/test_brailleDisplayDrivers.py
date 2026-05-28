@@ -188,6 +188,19 @@ class _MultiRoutingGesture(braille.BrailleDisplayGesture):
 	id = "multiRouting"
 
 
+class _ModelRoutingGesture(braille.BrailleDisplayGesture):
+	source = "testDriver"
+	model = "testModel"
+	id = "routing"
+
+
+class _ComboGesture(braille.BrailleDisplayGesture):
+	"""Gesture whose id contains '+', simulating a routing key combined with a modifier."""
+
+	source = "test"
+	id = "key1+routing"
+
+
 class TestBrailleDisplayGestureCellIndexes(unittest.TestCase):
 	"""Tests for :attr:`braille.BrailleDisplayGesture.cellIndexes` and the deprecated ``routingIndex`` shim."""
 
@@ -237,6 +250,71 @@ class TestBrailleDisplayGestureCellIndexes(unittest.TestCase):
 		for identifier in g.identifiers:
 			if identifier.startswith("br"):
 				self.assertRegex(identifier, braille.BrailleDisplayGesture.ID_PARTS_REGEX)
+
+	def test_cellIndexesStr_none_when_no_cellIndexes(self):
+		g = _RoutingGesture()
+		self.assertIsNone(g._cellIndexesStr)
+
+	def test_cellIndexesStr_single_cell(self):
+		g = _RoutingGesture()
+		g.cellIndexes = [2]
+		self.assertEqual("3", g._cellIndexesStr)
+
+	def test_cellIndexesStr_multiple_cells(self):
+		g = _MultiRoutingGesture()
+		g.cellIndexes = [0, 3, 7]
+		self.assertEqual("1+4+8", g._cellIndexesStr)
+
+	def test_cellIndexesStr_none_when_id_contains_plus(self):
+		g = _ComboGesture()
+		g.cellIndexes = [2]
+		self.assertIsNone(g._cellIndexesStr)
+
+	def test_identifiers_no_cellIndexes(self):
+		g = _RoutingGesture()
+		self.assertEqual(["br(test):routing"], g.identifiers)
+
+	def test_identifiers_single_cell(self):
+		g = _RoutingGesture()
+		g.cellIndexes = [2]
+		self.assertEqual(["br(test):routing3", "br(test):routing"], g.identifiers)
+
+	def test_identifiers_multi_cell(self):
+		g = _MultiRoutingGesture()
+		g.cellIndexes = [0, 3]
+		self.assertEqual(["br(test):multiRouting1+4", "br(test):multiRouting"], g.identifiers)
+
+	def test_identifiers_with_model_single_cell(self):
+		g = _ModelRoutingGesture()
+		g.cellIndexes = [4]
+		self.assertEqual(
+			[
+				"br(testDriver.testModel):routing5",
+				"br(testDriver.testModel):routing",
+				"br(testDriver):routing5",
+				"br(testDriver):routing",
+			],
+			g.identifiers,
+		)
+
+	def test_identifiers_combo_no_cellIndexesStr(self):
+		g = _ComboGesture()
+		g.cellIndexes = [2]
+		self.assertEqual(["br(test):key1+routing"], g.identifiers)
+
+	def test_displayName_no_cellIndexes(self):
+		g = _RoutingGesture()
+		self.assertEqual("routing", g.displayName)
+
+	def test_displayName_single_cell(self):
+		g = _RoutingGesture()
+		g.cellIndexes = [2]
+		self.assertEqual("routing3", g.displayName)
+
+	def test_displayName_multi_cell(self):
+		g = _MultiRoutingGesture()
+		g.cellIndexes = [0, 3, 7]
+		self.assertEqual("multiRouting1+4+8", g.displayName)
 
 
 class TestBRLTTY(unittest.TestCase):
