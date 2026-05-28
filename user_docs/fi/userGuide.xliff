@@ -18485,7 +18485,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>restart with add-ons disabled and debug logging enabled</source>
-        <target>Käynnistä uudelleen, poista lisäosat käytöstä ja ota virheenkorjausloki käyttöön</target>
+        <target>Käynnistä uudelleen, poista lisäosat käytöstä ja ota vianetsintäloki käyttöön</target>
       </segment>
     </unit>
     <unit id="f48d699f-cfe1-4fc9-a812-3891df7ebc36">
@@ -18495,7 +18495,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>restart with debug logging enabled</source>
-        <target>Käynnistä uudelleen ja ota virheenkorjausloki käyttöön</target>
+        <target>Käynnistä uudelleen ja ota vianetsintäloki käyttöön</target>
       </segment>
     </unit>
     <unit id="e740ab36-822f-423d-ade1-c53a9a103fff">
@@ -23046,7 +23046,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Debug warning: Warning messages that are not caused by severe errors will be logged.</source>
-        <target>Virheenkorjausvaroitus: Lokiin tallennetaan varoituksia, jotka eivät ole vakavien virheiden aiheuttamia.</target>
+        <target>Vianetsintä ja varoitukset: Lokiin tallennetaan varoituksia, jotka eivät ole vakavien virheiden aiheuttamia.</target>
       </segment>
     </unit>
     <unit id="dc6f40d6-e276-4ffd-af22-daaeb0d1c89d">
@@ -23075,7 +23075,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.</source>
-        <target>Virheenkorjaus: Lokiin tallennetaan tiedot-, varoitukset- ja syöttö/tulostus-ilmoitusten lisäksi virheenkorjauksen lisäilmoituksia.</target>
+        <target>Vianetsintä: Lokiin tallennetaan tiedot-, varoitukset- ja syöttö/tulostus-ilmoitusten lisäksi vianetsinnän lisäilmoituksia.</target>
       </segment>
     </unit>
     <unit id="76336555-dc4c-4910-898e-33cc511217c7">
@@ -23084,7 +23084,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.</source>
-        <target>Kuten syöttö/tulostus-tasolla, älä määritä lokitasoksi tätä vaihtoehtoa, mikäli olet huolissasi tietosuojasta.</target>
+        <target>Kuten syöttö/tulostus-tasolla, älä määritä lokitasoksi tätä vaihtoehtoa, jos olet huolissasi tietosuojasta.</target>
       </segment>
     </unit>
     <unit id="15a4a49b-50a5-448e-94a0-7d863f5f5dbf">
@@ -29683,7 +29683,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Yes: If the browser makes UIA available, NVDA will use it.</source>
-        <target>Kyllä: Jos UIA on käytettävissä selaimessa, NVDA käyttää sitä.</target>
+        <target>Kyllä: NVDA käyttää UIA-rajapintaa, mikäli se on käytettävissä selaimessa.</target>
       </segment>
     </unit>
     <unit id="5696f813-a5c0-4024-babe-99945a3dfee1">
@@ -29693,7 +29693,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>No: Don't use UIA, even if NVDA is unable to inject in process. This may be useful for developers debugging issues with IA2 and want to ensure that NVDA does not fall back to UIA.</source>
-        <target>Ei: Älä käytä UIA:ta, vaikka NVDA ei pysty toimimaan selainprosessin sisällä. Tästä voi olla hyötyä kehittäjille, jotka selvittävät IA2:n ongelmia ja haluavat varmistaa, ettei NVDA ala käyttää UIA:ta.</target>
+        <target>Ei: Älä käytä UIA-rajapintaa, vaikka NVDA ei pystyisi toimimaan selainprosessin sisällä. Tästä voi olla hyötyä kehittäjille, jotka jäljittävät IA2-rajapinnan ongelmia ja haluavat varmistaa, ettei NVDA käytä UIA:ta varavaihtoehtona.</target>
       </segment>
     </unit>
     <unit id="c51550f6-1784-499b-92ef-c334a338155c">
@@ -30442,7 +30442,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Debug logging categories</source>
-        <target>Virheenkorjauslokin kategoriat</target>
+        <target>Käytössä olevat lokikategoriat</target>
       </segment>
     </unit>
     <unit id="f3f831cb-7c6f-4c61-9949-09a95b6d8a46">
@@ -30451,7 +30451,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.</source>
-        <target>Tämän luettelon valintaruuduilla voidaan ottaa käyttöön tiettyjen kategorioiden virheenkorjausilmoituksia NVDA:n lokissa.</target>
+        <target>Tämän luettelon valintaruuduilla voidaan ottaa käyttöön määrättyjä NVDA:n lokiin tallennettavien vianetsintäilmoitusten kategorioita.</target>
       </segment>
     </unit>
     <unit id="b79d5111-de80-41f3-a883-344eea1d11e8">
@@ -30460,7 +30460,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Logging these messages can result in decreased performance and large log files.</source>
-        <target>Näiden ilmoitusten tallentamisesta lokiin voi olla seurauksena suorituskyvyn huonontumista sekä suurikokoisia lokitiedostoja.</target>
+        <target>Näiden ilmoitusten tallentamisesta voi olla seurauksena suorituskyvyn heikentyminen sekä suurikokoiset lokitiedostot.</target>
       </segment>
     </unit>
     <unit id="7761509d-d877-474e-b085-ad9464c37a5a">
@@ -30469,7 +30469,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Only turn one of these on if specifically instructed to by an NVDA developer e.g. when debugging why a braille display driver is not functioning correctly.</source>
-        <target>Ota jokin näistä käyttöön vain, jos NVDA:n kehittäjä on neuvonut tekemään niin, esim. sen selvittämiseksi, miksi pistenäytön ajuri ei toimi oikein.</target>
+        <target>Ota jokin näistä käyttöön vain, jos NVDA:n kehittäjä on erikseen ohjeistanut tekemään niin, esimerkiksi selvitettäessä, miksi pistenäytön ajuri ei toimi oikein.</target>
       </segment>
     </unit>
     <unit id="2f8ec454-6730-4879-b2cf-e12459e7bc7c">
@@ -34500,7 +34500,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>To prevent unintentionally routing to cells, the command is delayed.</source>
-        <target>Komentoa viivästetään, jotta tahaton soluihin siirtäminen estetään.</target>
+        <target>Komentoa viivästetään, jotta tahaton soluihin siirtäminen vältetään.</target>
       </segment>
     </unit>
     <unit id="d58a36e9-ffd9-4fa3-b8ed-4c398ae44a7e">
@@ -34547,7 +34547,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.</source>
-        <target>NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-alivalikosta, on kehitystyökalu, joka on hyödyllinen virheiden etsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen saavutettavuushierarkian tutkimisessa.</target>
+        <target>NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-alivalikosta, on kehitystyökalu, josta on hyötyä vianetsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen saavutettavuushierarkian tutkimisessa.</target>
       </segment>
     </unit>
     <unit id="87b7657c-0d87-4eba-ad96-65ea11eddc98">
@@ -34556,7 +34556,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>For more information, please see the [NVDA Developer Guide](https://download.nvaccess.org/documentation/developerGuide.html).</source>
-        <target>Katso lisätietoja [NVDA:n kehittäjien oppaasta](https://download.nvaccess.org/documentation/developerGuide.html).</target>
+        <target>Katso lisätietoja [NVDA-kehittäjien oppaasta](https://download.nvaccess.org/documentation/developerGuide.html).</target>
       </segment>
     </unit>
     <unit id="fbe34ff0-4e78-4297-9007-77e91341c6ec">
@@ -45487,7 +45487,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>NVDA runs in secure mode when executed on [secure screens](#SecureScreens), unless the `serviceDebug` [system wide parameter](#SystemWideParameters) is enabled.</source>
-        <target>NVDA on käynnissä suojatussa tilassa, kun se suoritetaan [suojatuissa ruuduissa](#SecureScreens), ellei [järjestelmänlaajuista parametria](#SystemWideParameters) `serviceDebug` ole otettu käyttöön.</target>
+        <target>NVDA toimii suojatussa tilassa, kun sitä käytetään [suojatuissa ruuduissa](#SecureScreens), ellei [järjestelmänlaajuista parametria](#SystemWideParameters) `serviceDebug` ole otettu käyttöön.</target>
       </segment>
     </unit>
     <unit id="9cf5cc52-f515-4df5-97c6-4dd71139ab5c">
@@ -45725,7 +45725,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>NVDA runs in [secure mode](#SecureMode) when executed on secure screens unless the `serviceDebug` [system wide parameter](#SystemWideParameters) is enabled.</source>
-        <target>NVDA on käynnissä [suojatussa tilassa](#SecureMode), kun se suoritetaan suojatuissa ruuduissa, ellei [järjestelmänlaajuista parametria](#SystemWideParameters) `serviceDebug` ole otettu käyttöön.</target>
+        <target>NVDA toimii [suojatussa tilassa](#SecureMode), kun sitä käytetään suojatuissa ruuduissa, ellei [järjestelmänlaajuista parametria](#SystemWideParameters) `serviceDebug` ole otettu käyttöön.</target>
       </segment>
     </unit>
     <unit id="8e0db686-e049-4d33-a189-2e55429c325e">
@@ -45934,7 +45934,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>`nvda -l 10` |Tells NVDA to start with log level set to debug</source>
-        <target>`nvda -l 10` | Käynnistää NVDA:n virheenkorjaus-lokitasolla.</target>
+        <target>`nvda -l 10` | Käynnistää NVDA:n vianetsintä-lokitasolla.</target>
       </segment>
     </unit>
     <unit id="46cbc1f5-d160-44e4-a8e5-c4f309b2df23">
@@ -46031,7 +46031,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>`-l LOGLEVEL` |`--log-level=LOGLEVEL` |The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, disabled 100). Logging is always disabled if secure mode is enabled.</source>
-        <target>`-l LOKITASO` | `--log-level=LOKITASO` | Alin taso, jonka viestit tallennetaan lokiin (virheenkorjaus = 10, syöttö/tulostus = 12, virheenkorjausvaroitus = 15, tiedot = 20, ei käytössä = 100). Lokin tallennus on aina poissa käytöstä, jos suojattu tila on käytössä.</target>
+        <target>`-l LOKITASO` | `--log-level=LOKITASO` | Alin taso, jonka ilmoitukset tallennetaan lokiin (vianetsintä = 10, syöttö/tulostus = 12, vianetsintä ja varoitukset = 15, tiedot = 20, ei käytössä = 100). Lokin tallennus on aina poissa käytöstä suojatussa tilassa.</target>
       </segment>
     </unit>
     <unit id="8fd0f754-30ff-4384-beea-588b241fa1d5">
@@ -46097,7 +46097,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>None |`--debug-logging` |Enable debug level logging just for this run. This setting will override any other log level ( `--loglevel`, `-l`) argument given, including no logging option.</source>
-        <target>Ei mitään | `--debug-logging` | Ottaa käyttöön virheenkorjaus-lokitason vain nykyisessä istunnossa. Tämä asetus korvaa minkä tahansa muun annetun lokitason argumentin (`--loglevel`, `-l`), myös lokin käytöstä poistavan valitsimen.</target>
+        <target>Ei mitään | `--debug-logging` | Ottaa käyttöön vianetsintä-lokitason vain nykyisessä istunnossa. Tämä määritys ohittaa kaikki muut annetut lokitasoargumentit (`--loglevel`, `-l`) sekä lokin käytöstä poistavan valitsimen.</target>
       </segment>
     </unit>
     <unit id="db00661b-bc39-4184-8eaa-4184387ecddd">
@@ -46108,7 +46108,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>None |`--no-logging` |Disable logging altogether while using NVDA. This setting can be overridden if a log level (`--loglevel`, `-l`) is specified from command line or if debug logging is turned on.</source>
-        <target>Ei mitään | `--no-logging` | Poistaa lokin kokonaan käytöstä NVDA:ta käytettäessä. Tämä asetus voidaan ohittaa, mikäli lokitaso (`--loglevel`, `-l`) määritetään komentoriviparametrilla tai jos virheenkorjauslokin tallennus otetaan käyttöön.</target>
+        <target>Ei mitään | `--no-logging` | Poistaa lokin kokonaan käytöstä. Tämä ohitetaan, jos lokitaso (`--loglevel`, `-l`) määritetään komentoriviparametrilla tai jos vianetsintälokin tallennus otetaan käyttöön.</target>
       </segment>
     </unit>
     <unit id="d7cd7445-af1b-4bc0-b413-651d84ad1396">

@@ -8,7 +8,7 @@ Magnifier module.
 Implements the magnifier global class and its basic functionalities.
 """
 
-from typing import Callable
+from collections.abc import Callable
 from comtypes import COMError
 from logHandler import log
 import wx
@@ -30,9 +30,10 @@ from .config import (
 	getZoomLevel,
 	getPanStep,
 	getFilter,
-	ZoomLevel,
 	isTrueCentered,
+	setZoomLevel,
 	shouldKeepMouseCentered,
+	ZoomLevel,
 )
 from .utils.focusManager import FocusManager
 
@@ -307,6 +308,7 @@ class Magnifier:
 			newZoom = int(self.zoomLevel - ZoomLevel.STEP_FACTOR)
 			if newZoom >= ZoomLevel.MIN_ZOOM:
 				self.zoomLevel = newZoom
+		setZoomLevel(int(self.zoomLevel))
 
 	def _pan(self, action: MagnifierAction) -> bool:
 		"""

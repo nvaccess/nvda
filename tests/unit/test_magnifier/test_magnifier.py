@@ -48,6 +48,8 @@ class TestMagnifier(_TestMagnifier):
 		super().setUp()
 
 		self.magnifier = Magnifier()
+		self.magnifier.zoomLevel = 200  # Set a default zoom level for testing (2.0x)
+		self.magnifier.filterType = Filter.NORMAL  # Set a default filter type for testing
 		self.screenWidth = getPrimaryDisplayOrientation().width
 		self.screenHeight = getPrimaryDisplayOrientation().height
 
