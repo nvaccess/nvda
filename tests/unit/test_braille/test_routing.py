@@ -53,7 +53,7 @@ class TestBrailleOffsetConverters(unittest.TestCase):
 		wordSegmenter.segmentedText.side_effect = _segmentedTextWithSeparator
 		translate = Mock(return_value=([1, 2, 3], [0, 1, 2], [0, 1, 2], 2))
 		with (
-			patch("textUtils.wordSeg.wordSegUtils.WordSegmenter", return_value=wordSegmenter),
+			patch("textUtils._wordSeg.wordSegUtils.WordSegmenter", return_value=wordSegmenter),
 			patch("braille.louisHelper.translate", translate),
 		):
 			region = braille.Region()

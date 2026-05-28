@@ -17,7 +17,7 @@ import locationHelper
 from treeInterceptorHandler import TreeInterceptor
 import textUtils
 from textUtils.segFlag import CharSegFlag, WordSegFlag
-from textUtils.wordSeg.wordSegmenter import WordSegmenter
+from textUtils._wordSeg.wordSegmenter import WordSegmenter
 from dataclasses import dataclass
 from typing import (
 	Dict,
