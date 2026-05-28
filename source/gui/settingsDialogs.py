@@ -6234,7 +6234,26 @@ class MagnifierPanel(SettingsPanel):
 	def onSave(self):
 		"""Save the current selections to config."""
 		magnifierConfig.setEnabled(self.enableMagnifierCheckBox.GetValue())
+		self._magnifierEnabledInitially = self.enableMagnifierCheckBox.GetValue()
 		self._applyCurrentSettingsToConfigAndRuntime()
+
+		selectedZoom = self.zoomCtrl.GetValue()
+		selectedPanStep = self.panSpinCtrl.GetValue()
+		selectedFilter = list(Filter)[self.filterList.GetSelection()]
+		selectedMode = list(FullScreenMode)[self.fullscreenModeList.GetSelection()]
+		isTrueCentered = self.trueCenterCheckBox.GetValue()
+		keepMouseCentered = self.keepMouseCenteredCheckBox.GetValue()
+
+		roundedZoom = magnifierConfig.roundZoomLevel(selectedZoom)
+		self._zoomInitially = roundedZoom
+		self._panStepInitially = selectedPanStep
+		self._filterInitially = selectedFilter
+		self._fullscreenModeInitially = selectedMode
+		self._trueCenterInitially = isTrueCentered
+		for focusType, checkBox in self._followFocusCheckBoxes.items():
+			shouldFollow = checkBox.GetValue()
+			self._followFocusInitially[focusType] = shouldFollow
+		self._keepMouseCenteredInitially = keepMouseCentered
 
 	def onDiscard(self):
 		"""Restore magnifier state from original settings from config."""
