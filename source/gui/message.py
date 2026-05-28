@@ -453,7 +453,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		contentsSizer = self._contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
 		self._isHtmlMessage = isHtmlMessage
 		if isHtmlMessage:
-			messageControl = self._messageControl = WebView.New(self)
+			messageControl = self._messageControl = WebView.New(self, backend=wx.html2.WebViewBackendIE)
 		else:
 			messageControl = self._messageControl = wx.StaticText(self)
 		contentsSizer.addItem(messageControl)

@@ -9,12 +9,14 @@ This refers to the user interface presented by the screen reader alone, not the 
 See L{gui} for the graphical user interface.
 """
 
+import os
 from collections.abc import Callable
 from html import escape
 from typing import Final
 
 import braille
 import core
+import globalVars
 import gui
 import nh3
 import speech
@@ -28,6 +30,9 @@ _DELAY_BEFORE_MESSAGE_MS: Final[int] = 1
 """Duration in milliseconds for which to delay speaking and brailling a message, so that any UI changes don't interrupt it.
 1ms is a magic number. It can be increased if it is found to be too short, but it should be kept to a minimum.
 """
+
+_BROWSEABLE_MESSAGE_ACTION_CLOSE: Final[str] = "nvda-action://close"
+_BROWSEABLE_MESSAGE_ACTION_COPY: Final[str] = "nvda-action://copy"
 
 
 def _warnBrowsableMessageNotAvailableOnSecureScreens(title: str | None = None) -> None:
@@ -97,18 +102,23 @@ def browseableMessage(
 	if title is None:
 		title = _("NVDA Message")
 
+	htmlPath = os.path.join(globalVars.appDir, "message.html")
+	if not os.path.isfile(htmlPath):
+		log.error(f"Browseable message template not found: {htmlPath!r}")
+		return
+
 	# Sanitize/prepare HTML
 	if not isHtml:
 		messageSanitized = f"<pre>{escape(message)}</pre>"
 	else:
 		messageSanitized = sanitizeHtmlFunc(message)
-	templatedMessage = (
-		f"<!doctype html>"
-		f"<html style=\"width: 350px; height: 300px\">"
-		f"<head><title>{escape(title)}</title></head>"
-		f"<body style=\"margin: 1em\"><div id=\"messageDiv\">{messageSanitized}</div></body>"
-		f"</html>"
-	)
+
+	with open(htmlPath, encoding="utf-8") as f:
+		templatedMessage = (
+			f.read()
+			.replace("{{TITLE}}", escape(title))
+			.replace("{{MESSAGE}}", messageSanitized)
+		)
 
 	# --- build the dialog ---
 	dialog = MessageDialog(
@@ -119,23 +129,34 @@ def browseableMessage(
 		isHtmlMessage=True,
 	)
 
+	def doCopy(evt=None):
+		if wx.TheClipboard.Open():
+			wx.TheClipboard.SetData(wx.TextDataObject(message))
+			wx.TheClipboard.Close()
+			reviewMessage(_("Text copied."))
+		else:
+			reviewMessage(_("Couldn't copy to clipboard."))
+
 	if closeButton or not copyButton:
-		dialog.addCloseButton()
+		dialog.addCloseButton(fallbackAction=True)
 	if copyButton:
-
-		def doCopy(evt):
-			if wx.TheClipboard.Open():
-				wx.TheClipboard.SetData(wx.TextDataObject(message))
-				wx.TheClipboard.Close()
-				reviewMessage(_("Text copied."))
-			else:
-				reviewMessage(_("Couldn't copy to clipboard."))
-
 		dialog.addButton(ReturnCode.CUSTOM_1, label=_("&Copy"), callback=doCopy, closesDialog=False)
+
+	def _onNavigating(evt: wx.html2.WebViewEvent) -> None:
+		url = evt.GetURL()
+		if url == _BROWSEABLE_MESSAGE_ACTION_CLOSE:
+			evt.Veto()
+			dialog.Close()
+		elif url == _BROWSEABLE_MESSAGE_ACTION_COPY and copyButton:
+			evt.Veto()
+			doCopy()
+
+	dialog._messageControl.Bind(wx.html2.EVT_WEBVIEW_NAVIGATING, _onNavigating)
 
 	gui.mainFrame.prePopup()
 	dialog.Show()
 	gui.mainFrame.postPopup()
+	dialog._messageControl.SetFocus()
 
 
 def message(

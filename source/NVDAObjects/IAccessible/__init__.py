@@ -2339,26 +2339,15 @@ class WindowRoot(GenericWindow):
 
 
 class ShellDocObjectView(IAccessible):
-	def event_gainFocus(self):
-		# Sometimes Shell DocObject View gets focus, when really the document inside it should
-		# Adobe Reader 9 licence agreement
+	def _get_focusRedirect(self):
+		# Sometimes Shell DocObject View gets focus, when really the document inside it should.
+		# E.g. Adobe Reader 9 licence agreement, WX Web View
 		if eventHandler.isPendingEvents("gainFocus") or self.childCount != 1:
-			return super(ShellDocObjectView, self).event_gainFocus()
+			return None
 		child = self.firstChild
-		if (
-			not child
-			or child.windowClassName != "Internet Explorer_Server"
-			or child.role != controlTypes.Role.PANE
-		):
-			return super(ShellDocObjectView, self).event_gainFocus()
-		child = child.firstChild
-		if (
-			not child
-			or child.windowClassName != "Internet Explorer_Server"
-			or child.role != controlTypes.Role.DOCUMENT
-		):
-			return super(ShellDocObjectView, self).event_gainFocus()
-		eventHandler.queueEvent("gainFocus", child)
+		if not child or child.windowClassName != "Internet Explorer_Server":
+			return None
+		return child
 
 
 class JavaVMRoot(IAccessible):

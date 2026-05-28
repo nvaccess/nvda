@@ -16,11 +16,17 @@ from .. import NVDAObject
 
 
 def findExtraOverlayClasses(obj: IAccessible, clsList: list[NVDAObject]):
-	if obj.name == "wxWebView":
+	if obj.name == "wxWebView" and obj.event_objectID == winUser.OBJID_CLIENT:
 		clsList.insert(0, WxWebView)
 
 
 class WxWebView(IAccessible):
+	presentationType = IAccessible.presType_layout
+	name = None
+
+	def reportFocus(self):
+		pass
+
 	def event_gainFocus(self) -> None:
 		super().event_gainFocus()
 		firstChild = self.firstChild
