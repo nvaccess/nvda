@@ -4219,7 +4219,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Routes the cursor to or activates the object under this braille cell"),
 		category=SCRCAT_BRAILLE,
 	)
-	def script_braille_routeTo(self, gesture):
+	def script_braille_routeTo(self, gesture: braille.BrailleDisplayGesture):
 		if not gesture.cellIndexes:
 			return
 		braille.handler.routeTo(gesture.cellIndexes[0])
@@ -4229,7 +4229,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Reports formatting info for the text under this braille cell"),
 		category=SCRCAT_BRAILLE,
 	)
-	def script_braille_reportFormatting(self, gesture):
+	def script_braille_reportFormatting(self, gesture: braille.BrailleDisplayGesture):
 		if not gesture.cellIndexes:
 			return
 		info = braille.handler.getTextInfoForWindowPos(gesture.cellIndexes[0])
@@ -4244,7 +4244,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Selects the text from the first up to the last braille cell"),
 		category=SCRCAT_BRAILLE,
 	)
-	def script_braille_selectRange(self, gesture):
+	def script_braille_selectRange(self, gesture: braille.BrailleDisplayGesture):
 		if not gesture.cellIndexes or len(gesture.cellIndexes) < 2:
 			return
 		startPos = min(gesture.cellIndexes)

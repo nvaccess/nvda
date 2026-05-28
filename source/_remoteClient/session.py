@@ -666,7 +666,9 @@ class LeaderSession(RemoteSession):
 			if hasattr(gesture, "cellIndexes") and "cellIndexes" not in dict and gesture.cellIndexes:
 				dict["cellIndexes"] = gesture.cellIndexes
 				# Legacy field for older peers that only know routingIndex.
-				dict.setdefault("routingIndex", max(gesture.cellIndexes))
+				# Only emit for single-cell presses; multi-cell presses have no safe single-index equivalent.
+				if len(gesture.cellIndexes) == 1:
+					dict.setdefault("routingIndex", gesture.cellIndexes[0])
 			self.localMachine._dismissLocalBrailleMessage()
 			self.transport.send(type=RemoteMessageType.BRAILLE_INPUT, **dict)
 			return False

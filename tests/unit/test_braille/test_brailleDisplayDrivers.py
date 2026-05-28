@@ -178,18 +178,21 @@ class TestGestureMap(unittest.TestCase):
 					self.assertRegex(gesture, braille.BrailleDisplayGesture.ID_PARTS_REGEX)
 
 
+class _RoutingGesture(braille.BrailleDisplayGesture):
+	source = "test"
+	id = "routing"
+
+
+class _MultiRoutingGesture(braille.BrailleDisplayGesture):
+	source = "test"
+	id = "multiRouting"
+
+
 class TestBrailleDisplayGestureCellIndexes(unittest.TestCase):
 	"""Tests for :attr:`braille.BrailleDisplayGesture.cellIndexes` and the deprecated ``routingIndex`` shim."""
 
-	def _makeGesture(self):
-		class _Gesture(braille.BrailleDisplayGesture):
-			source = "test"
-			id = "routing"
-
-		return _Gesture()
-
 	def test_default_cellIndexes_none(self):
-		g = self._makeGesture()
+		g = _RoutingGesture()
 		self.assertIsNone(g.cellIndexes)
 
 	def test_idForCellCount(self):
@@ -209,31 +212,27 @@ class TestBrailleDisplayGestureCellIndexes(unittest.TestCase):
 		self.assertEqual("multiUpperRouting", braille.BrailleDisplayGesture.idForCellCount(3, "upperRouting"))
 
 	def test_routingIndex_getter_returns_highest_cell(self):
-		g = self._makeGesture()
+		g = _RoutingGesture()
 		g.cellIndexes = [3, 7]
 		self.assertEqual(7, g.routingIndex)
 
 	def test_routingIndex_getter_none_when_empty(self):
-		g = self._makeGesture()
+		g = _RoutingGesture()
 		self.assertIsNone(g.routingIndex)
 
 	def test_routingIndex_setter_wraps_into_cellIndexes(self):
-		g = self._makeGesture()
+		g = _RoutingGesture()
 		g.routingIndex = 5
 		self.assertEqual([5], g.cellIndexes)
 
 	def test_routingIndex_setter_none_clears_cellIndexes(self):
-		g = self._makeGesture()
+		g = _RoutingGesture()
 		g.cellIndexes = [1, 2]
 		g.routingIndex = None
 		self.assertIsNone(g.cellIndexes)
 
 	def test_multiRouting_identifier_matches_regex(self):
-		class _Gesture(braille.BrailleDisplayGesture):
-			source = "test"
-			id = "multiRouting"
-
-		g = _Gesture()
+		g = _MultiRoutingGesture()
 		g.cellIndexes = [0, 3, 7]
 		for identifier in g.identifiers:
 			if identifier.startswith("br"):

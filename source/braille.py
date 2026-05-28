@@ -77,6 +77,7 @@ import hwPortUtils
 import bdDetect
 import queueHandler
 import brailleViewer
+import NVDAState
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked, post_sessionLockStateChanged
 from winAPI.secureDesktop import post_secureDesktopStateChange
@@ -3937,12 +3938,12 @@ class BrailleDisplayDriver(driverHandler.Driver):
 
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
-	Subclasses must provide L{source} and L{id}.
-	Optionally, L{model} can be provided to facilitate model specific gestures.
-	L{cellIndexes} should be provided for gestures addressed to specific braille cells,
+	Subclasses must provide :attr:`source` and :attr:`id`.
+	Optionally, :attr:`model` can be provided to facilitate model specific gestures.
+	:attr:`cellIndexes` should be provided for gestures addressed to specific braille cells,
 	such as routing keys or touch-sensitive cells (e.g. Handy Tech Active Tactile Control).
-	Subclasses can also inherit from L{brailleInput.BrailleInputGesture} if the display has a braille keyboard.
-	If the braille display driver is a L{baseObject.ScriptableObject}, it can provide scripts specific to input gestures from this display.
+	Subclasses can also inherit from :class:`brailleInput.BrailleInputGesture` if the display has a braille keyboard.
+	If the braille display driver is a :class:`baseObject.ScriptableObject`, it can provide scripts specific to input gestures from this display.
 	"""
 
 	shouldPreventSystemIdle = True
@@ -3976,7 +3977,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 
 	cellIndexes: list[int] | None = None
 	"""Indexes of braille cells addressed by this gesture, e.g. routing keys or touch cells.
-	C{None} if this gesture is not cell-addressed.
+	``None`` if this gesture is not cell-addressed.
 	"""
 
 	@classmethod
@@ -3998,36 +3999,22 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			return f"multi{baseName[0].upper()}{baseName[1:]}"
 		return baseName
 
-	def _get_routingIndex(self) -> int | None:
-		"""Deprecated. Use :attr:`cellIndexes` instead.
+	if NVDAState._allowDeprecatedAPI():
 
-		Returns the highest cell index, or ``None`` if no cells are addressed.
-		"""
-		import NVDAState
+		def _get_routingIndex(self) -> int | None:
+			"""Deprecated. Use :attr:`cellIndexes` instead.
 
-		if not NVDAState._allowDeprecatedAPI():
-			raise AttributeError(
-				"BrailleDisplayGesture.routingIndex is deprecated, use cellIndexes instead.",
-			)
-		log.warning(
-			"BrailleDisplayGesture.routingIndex is deprecated, use cellIndexes instead.",
-			stack_info=True,
-		)
-		return max(self.cellIndexes) if self.cellIndexes else None
+			Returns the highest cell index, or ``None`` if no cells are addressed.
+			"""
+			return max(self.cellIndexes) if self.cellIndexes else None
 
-	def _set_routingIndex(self, value: int | None) -> None:
-		"""Deprecated. Set :attr:`cellIndexes` instead."""
-		import NVDAState
-
-		if not NVDAState._allowDeprecatedAPI():
-			raise AttributeError(
+		def _set_routingIndex(self, value: int | None) -> None:
+			"""Deprecated. Set :attr:`cellIndexes` instead."""
+			log.warning(
 				"Setting BrailleDisplayGesture.routingIndex is deprecated, set cellIndexes instead.",
+				stack_info=True,
 			)
-		log.warning(
-			"Setting BrailleDisplayGesture.routingIndex is deprecated, set cellIndexes instead.",
-			stack_info=True,
-		)
-		self.cellIndexes = [value] if value is not None else None
+			self.cellIndexes = [value] if value is not None else None
 
 	_cellIndexesStr: str | None
 

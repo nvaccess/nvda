@@ -35,7 +35,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 #### Deprecations
 
-* The `braille.BrailleDisplayGesture.routingIndex` attribute is deprecated. Use the `cellIndexes` attribute instead. (#20001, @LeonarddeR)
+* The `braille.BrailleDisplayGesture.routingIndex` attribute is deprecated.
+  Use the `cellIndexes` attribute instead. (#20001, @LeonarddeR)
 * The `braille.wordWrap` configuration key is deprecated and bridged to `braille.textWrap`. (#17010, @LeonarddeR)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
@@ -180,7 +181,6 @@ Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`,
 
 #### Deprecations
 
-* `braille.BrailleDisplayGesture.routingIndex` is deprecated. Use `cellIndexes` instead. (#20001, @LeonarddeR)
 * The `speechDictHandler.ENTRY_TYPE_*` constants are deprecated.
 Use the `speechDictHandler.types.EntryType` enumeration instead. (#19430, @LeonarddeR)
 * `speechDictHandler.SpeechDictEntry` and `speechDictHandler.SpeechDict` have been moved to `speechDictHandler.types`. (#19430, @LeonarddeR)
