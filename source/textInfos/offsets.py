@@ -20,17 +20,59 @@ from textUtils.segFlag import CharSegFlag, WordSegFlag
 from textUtils._wordSeg.wordSegmenter import WordSegmenter
 from dataclasses import dataclass
 from typing import (
+	Any,
 	Dict,
 	List,
 	Optional,
 	Self,
 	Tuple,
-	TYPE_CHECKING,
 )
 from logHandler import log
 
-if TYPE_CHECKING:
-	from NVDAObjects import NVDAObject
+
+def _warnUseUniscribeDeprecated() -> None:
+	log.warning(
+		"OffsetsTextInfo.useUniscribe is deprecated. "
+		"Use OffsetsTextInfo.charSegFlag and OffsetsTextInfo.wordSegFlag instead.",
+		stack_info=True,
+	)
+
+
+class _OffsetsTextInfoMeta(type(textInfos.TextInfo)):
+	def __init__(
+		cls,
+		name: str,
+		bases: tuple[type, ...],
+		namespace: dict[str, Any],
+		/,
+		**kwargs: Any,
+	) -> None:
+		super().__init__(name, bases, namespace, **kwargs)
+		legacyUseUniscribe = namespace.get("useUniscribe")
+		if not isinstance(legacyUseUniscribe, bool):
+			return
+		type.__delattr__(cls, "useUniscribe")
+		type.__setattr__(cls, "_useUniscribeOverride", legacyUseUniscribe)
+
+	def __getattribute__(cls, name: str) -> Any:
+		if name != "useUniscribe":
+			return super().__getattribute__(name)
+		if not NVDAState._allowDeprecatedAPI():
+			raise AttributeError(f"'{cls.__name__}' has no attribute 'useUniscribe'")
+		_warnUseUniscribeDeprecated()
+		override = cls._getUseUniscribeClassOverride()
+		if override is not None:
+			return override
+		return type.__getattribute__(cls, "charSegFlag") == CharSegFlag.UNISCRIBE
+
+	def __setattr__(cls, name: str, value: Any) -> None:
+		if name != "useUniscribe":
+			super().__setattr__(name, value)
+			return
+		if not NVDAState._allowDeprecatedAPI():
+			raise AttributeError(f"'{cls.__name__}' has no attribute 'useUniscribe'")
+		_warnUseUniscribeDeprecated()
+		type.__setattr__(cls, "_useUniscribeOverride", bool(value))
 
 
 @dataclass
@@ -144,7 +186,7 @@ def findEndOfWord(text, offset, lineLength=None):
 	return offset
 
 
-class OffsetsTextInfo(textInfos.TextInfo):
+class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 	"""An abstract TextInfo for text implementations which represent ranges using numeric offsets relative to the start of the text.
 	In such implementations, the start of the text is represented by 0 and the end is the length of the entire text.
 
@@ -166,6 +208,59 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	detectFormattingAfterCursorMaybeSlow: bool = True
 	#: Method to calculate character and word offsets.
 	charSegFlag: CharSegFlag = CharSegFlag.UNISCRIBE
+	#: Backing value for the deprecated useUniscribe compatibility attribute.
+	_useUniscribeOverride: bool | None = None
+
+	def _getDeprecatedUseUniscribe(self) -> bool:
+		if not NVDAState._allowDeprecatedAPI():
+			raise AttributeError(f"'{type(self).__name__}' object has no attribute 'useUniscribe'")
+		_warnUseUniscribeDeprecated()
+		override = self._getUseUniscribeCompatOverride()
+		if override is not None:
+			return override
+		return self._getEffectiveCharSegFlag() == CharSegFlag.UNISCRIBE and bool(
+			self._getEffectiveWordSegFlag(),
+		)
+
+	def _setDeprecatedUseUniscribe(self, value: bool) -> None:
+		if not NVDAState._allowDeprecatedAPI():
+			raise AttributeError(f"'{type(self).__name__}' object has no attribute 'useUniscribe'")
+		_warnUseUniscribeDeprecated()
+		self._useUniscribeOverride = bool(value)
+
+	# Deprecated pending removal in the 2027.1 API breaking release.
+	# Use charSegFlag and wordSegFlag instead.
+	useUniscribe = property(_getDeprecatedUseUniscribe, _setDeprecatedUseUniscribe)
+
+	@classmethod
+	def _getUseUniscribeClassOverride(cls) -> bool | None:
+		for klass in cls.__mro__:
+			override = klass.__dict__.get("_useUniscribeOverride")
+			if override is not None:
+				return bool(override)
+		return None
+
+	def _getUseUniscribeCompatOverride(self) -> bool | None:
+		override = self.__dict__.get("_useUniscribeOverride")
+		if override is not None:
+			return bool(override)
+		return type(self)._getUseUniscribeClassOverride()
+
+	def _getEffectiveCharSegFlag(self) -> CharSegFlag:
+		useUniscribe = self._getUseUniscribeCompatOverride()
+		if useUniscribe is False:
+			return CharSegFlag.NONE
+		if useUniscribe is True:
+			return CharSegFlag.UNISCRIBE
+		return self.charSegFlag
+
+	def _getEffectiveWordSegFlag(self) -> WordSegFlag | None:
+		useUniscribe = self._getUseUniscribeCompatOverride()
+		if useUniscribe is False:
+			return WordSegFlag.NONE
+		if useUniscribe is True:
+			return WordSegFlag.UNISCRIBE
+		return self.wordSegFlag
 
 	@property
 	def wordSegFlag(self) -> WordSegFlag | None:
@@ -178,7 +273,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 				return WordSegFlag.CHINESE
 			case _:
 				log.error(f"Unknown word segmentation standard, {self.wordSegConf.calculated()!r}")
-				return None
+		return None
 
 	#: The encoding internal to the underlying text info implementation.
 	encoding: Optional[str] = textUtils.WCHAR_ENCODING
@@ -399,7 +494,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		lineStart, lineEnd = self._getLineOffsets(offset)
 		lineText = self._getTextRange(lineStart, lineEnd)
 		relOffset = offset - lineStart
-		if self.charSegFlag == CharSegFlag.UNISCRIBE:
+		if self._getEffectiveCharSegFlag() == CharSegFlag.UNISCRIBE:
 			offsets = self._calculateUniscribeOffsets(lineText, textInfos.UNIT_CHARACTER, relOffset)
 			if offsets is not None:
 				return (offsets[0] + lineStart, offsets[1] + lineStart)
@@ -423,8 +518,9 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		# Convert NULL and non-breaking space to space to make sure that words will break on them
 		lineText = lineText.translate({0: " ", 0xA0: " "})
 		relOffset = offset - lineStart
-		if self.wordSegFlag:
-			offsets = WordSegmenter(lineText, self.encoding, self.wordSegFlag).getSegmentForOffset(
+		wordSegFlag = self._getEffectiveWordSegFlag()
+		if wordSegFlag:
+			offsets = WordSegmenter(lineText, self.encoding, wordSegFlag).getSegmentForOffset(
 				relOffset,
 			)
 			if offsets is not None:
@@ -590,7 +686,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def expand(self, unit):
 		if unit == textInfos.UNIT_WORD and self.isCollapsed and self._startOffset == self._getStoryLength():
 			try:
-				flowsTo: "NVDAObject | None" = self.obj.flowsTo
+				flowsTo = self.obj.flowsTo
 			except (AttributeError, NotImplementedError):
 				flowsTo = None
 			if not flowsTo:

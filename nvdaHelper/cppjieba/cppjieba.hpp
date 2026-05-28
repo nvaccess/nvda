@@ -126,7 +126,7 @@ public:
     static std::once_flag initFlag;
 
 private:
-    JiebaSingleton(const char* dictDir);         ///< private ctor initializes base Jieba
+    JiebaSingleton(const char* dictDir);  ///< private ctor initializes base Jieba
 
     /// Disable copy and move
     JiebaSingleton(const JiebaSingleton&) = delete;
@@ -134,7 +134,7 @@ private:
     JiebaSingleton(JiebaSingleton&&) = delete;
     JiebaSingleton& operator = (JiebaSingleton&&) = delete;
 
-    std::mutex segMutex;      ///< guards concurrent Cut() calls
+    std::mutex segMutex;  ///< guards concurrent Cut() calls
 };
 
 #ifdef _WIN32
