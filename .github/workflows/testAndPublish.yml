@@ -756,8 +756,8 @@ jobs:
 
   submit-winget:
     name: Submit manifest to WinGet Packages Repository
-    needs: [release]
-    runs-on: windows-latest
+    needs: [matrix, release]
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     if: startsWith(github.ref_name, 'release-')
     permissions:
       contents: read
