@@ -451,6 +451,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		# Scafold the dialog.
 		mainSizer = self._mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = self._contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
+		self._isHtmlMessage = isHtmlMessage
 		if isHtmlMessage:
 			messageControl = self._messageControl = WebView.New(self)
 		else:
@@ -669,7 +670,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		:param message: New message to show.
 		:return: Updated instance for chaining.
 		"""
-		if isinstance(self._messageControl, WebView):
+		if self._isHtmlMessage:
 			self._messageControl.SetPage(message, "")
 		else:
 			# Use SetLabelText to avoid ampersands being interpreted as accelerators.
@@ -963,7 +964,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if gui._isDebug():
 			startTime = time.time()
 			log.debug("Laying out message dialog")
-		if isinstance(self._messageControl, wx.StaticText):
+		if not self._isHtmlMessage:
 			self._messageControl.Wrap(self.scaleSize(self.GetSize().Width))
 		self._mainSizer.Fit(self)
 		if self.Parent == gui.mainFrame:

@@ -30,20 +30,6 @@ _DELAY_BEFORE_MESSAGE_MS: Final[int] = 1
 """
 
 
-# From urlmon.h
-URL_MK_UNIFORM = 1
-
-# Dialog box properties
-DIALOG_OPTIONS = "resizable:yes;help:no"
-
-# dwDialogFlags for ShowHTMLDialogEx from mshtmhst.h
-HTMLDLG_NOUI = 0x0010
-HTMLDLG_MODAL = 0x0020
-HTMLDLG_MODELESS = 0x0040
-HTMLDLG_PRINT_TEMPLATE = 0x0080
-HTMLDLG_VERIFY = 0x0100
-
-
 def _warnBrowsableMessageNotAvailableOnSecureScreens(title: str | None = None) -> None:
 	"""Warn the user that a browsable message could not be shown on a secure screen (sign-on screen / UAC
 	prompt).
@@ -73,51 +59,7 @@ def _warnBrowsableMessageNotAvailableOnSecureScreens(title: str | None = None) -
 			" such as the sign-on screen or UAC prompt.",
 		).format(title=title)
 
-	import gui  # Late import to prevent circular dependency.
-	import wx  # Late import to prevent circular dependency.
-
 	log.debug("Presenting browsable message unavailable warning.")
-	wx.CallAfter(
-		gui.messageBox,
-		browsableMessageUnavailableMsg,
-		# Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message.
-		caption=_("Feature unavailable."),
-		style=wx.ICON_ERROR | wx.OK,
-	)
-
-
-def _warnBrowsableMessageComponentFailure(title: str | None = None) -> None:
-	"""Warn the user that a browsable message could not be shown because of a component failure.
-
-	:param title: If provided, the title of the browsable message to give the user more context.
-	"""
-	log.warning(
-		"A browsable message could not be shown because of a component failure."
-		f" Attempted to open message with title: {title!r}",
-	)
-
-	if not title:
-		browsableMessageUnavailableMsg: str = _(
-			# Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
-			# because of a component failure.
-			"An error has caused this feature to be unavailable at this time. "
-			"Restarting NVDA or Windows may solve this problem.",
-		)
-	else:
-		browsableMessageUnavailableMsg: str = _(
-			# Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
-			# because of a component failure. This prompt includes the title
-			# of the Window that could not be opened for context.
-			# The {title} will be replaced with the title.
-			# The title may be something like "Formatting".
-			"An error has caused this feature ({title}) to be unavailable at this time. "
-			"Restarting NVDA or Windows may solve this problem.",
-		).format(title=title)
-
-	log.debug("Presenting browsable message unavailable warning.")
-	import gui  # Late import to prevent circular dependency.
-	import wx  # Late import to prevent circular dependency.
-
 	wx.CallAfter(
 		gui.messageBox,
 		browsableMessageUnavailableMsg,
@@ -135,6 +77,19 @@ def browseableMessage(
 	copyButton: bool = False,
 	sanitizeHtmlFunc: Callable[[str], str] = nh3.clean,
 ) -> None:
+	"""Present a message to the user that can be read in browse mode.
+	The message will be presented in an HTML document.
+
+	:param message: The message in either html or text.
+	:param title: The title for the message, defaults to "NVDA Message".
+	:param isHtml: Whether the message is html, defaults to False.
+	:param closeButton: Whether to include a "close" button, defaults to False.
+	:param copyButton: Whether to include a "copy" (to clipboard) button, defaults to False.
+	:param sanitizeHtmlFunc: How to sanitize the html message, if isHtml is True.
+		Defaults to `nh3.clean` with default arguments.
+		Ensure to sanitize the html message if the source of it could be untrusted.
+		Any translatable string, or user generated content should be sanitized.
+	"""
 	if isRunningOnSecureDesktop():
 		_warnBrowsableMessageNotAvailableOnSecureScreens(title)
 		return
@@ -147,17 +102,13 @@ def browseableMessage(
 		messageSanitized = f"<pre>{escape(message)}</pre>"
 	else:
 		messageSanitized = sanitizeHtmlFunc(message)
-	templatedMessage = f"""
-	<!doctype html>
-	<HTML style="width : 350; height: 300">
-		<HEAD>
-			<TITLE>{title}</TITLE>
-		</HEAD>
-		<body style="margin:1em">
-			<div id="messageDiv">{messageSanitized}</div>
-		</body>
-	</html>
-	"""
+	templatedMessage = (
+		f"<!doctype html>"
+		f"<html style=\"width: 350px; height: 300px\">"
+		f"<head><title>{escape(title)}</title></head>"
+		f"<body style=\"margin: 1em\"><div id=\"messageDiv\">{messageSanitized}</div></body>"
+		f"</html>"
+	)
 
 	# --- build the dialog ---
 	dialog = MessageDialog(
@@ -168,11 +119,11 @@ def browseableMessage(
 		isHtmlMessage=True,
 	)
 
-	if closeButton:
+	if closeButton or not copyButton:
 		dialog.addCloseButton()
 	if copyButton:
 
-		def doCopy(payload):
+		def doCopy(evt):
 			if wx.TheClipboard.Open():
 				wx.TheClipboard.SetData(wx.TextDataObject(message))
 				wx.TheClipboard.Close()
@@ -182,7 +133,9 @@ def browseableMessage(
 
 		dialog.addButton(ReturnCode.CUSTOM_1, label=_("&Copy"), callback=doCopy, closesDialog=False)
 
+	gui.mainFrame.prePopup()
 	dialog.Show()
+	gui.mainFrame.postPopup()
 
 
 def message(
