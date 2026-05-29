@@ -765,18 +765,18 @@ class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 		keys = [self.keyLabels[num] for num in range(24) if (keyBits >> num) & 1]
 		extendedKeys = [self.extendedKeyLabels[num] for num in range(4) if (extendedKeyBits >> num) & 1]
 		idParts = keys + extendedKeys
-		if routingKeyBits:
-			routingIndexes = self._bitmaskToIndexes(routingKeyBits)
-			self.cellIndexes = routingIndexes
-			idParts.append(self.idForCellCount(len(routingIndexes)))
-		if topRoutingKeyBits:
-			topIndexes = self._bitmaskToIndexes(topRoutingKeyBits)
-			if len(topIndexes) == 1:
-				idParts.append(f"topRouting{(topIndexes[0] + 1)}")
-			else:
-				# Simultaneous main-row + top-row presses are implausible; top-row wins for cellIndexes.
-				self.cellIndexes = topIndexes
-				idParts.append(self.idForCellCount(len(topIndexes), "topRouting"))
+		# Merge the cells addressed by every routing range into a single cellIndexes list,
+		# mirroring other multi-range drivers (e.g. ALVA, Standard HID Braille).
+		# Each pressed range contributes its own id part via idForCellCount.
+		cellIndexes: list[int] = []
+		for rangeName, rangeBits in (("routing", routingKeyBits), ("topRouting", topRoutingKeyBits)):
+			if not rangeBits:
+				continue
+			rangeIndexes = self._bitmaskToIndexes(rangeBits)
+			cellIndexes.extend(rangeIndexes)
+			idParts.append(self.idForCellCount(len(rangeIndexes), rangeName))
+		if cellIndexes:
+			self.cellIndexes = sorted(cellIndexes)
 		self.id = "+".join(idParts)
 		# Don't say is this a dots gesture if some keys either from dots and space are pressed.
 		# Guard keyBits != 0 to avoid treating a pure-routing release as a zero-dots braille input.

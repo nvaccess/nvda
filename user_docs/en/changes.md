@@ -36,7 +36,6 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 #### Deprecations
 
-<<<<<<< HEAD
 * The `braille.BrailleDisplayGesture.routingIndex` attribute is deprecated.
 Use the `cellIndexes` attribute instead. (#20001, @LeonarddeR)
 * `brailleDisplayDrivers.freedomScientific.RoutingGesture` is deprecated.
