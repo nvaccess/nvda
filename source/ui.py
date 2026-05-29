@@ -22,7 +22,7 @@ import nh3
 import speech
 import wx
 from config.configFlags import TetherTo
-from gui.message import HtmlMessageDialog, ReturnCode
+from gui.message import HtmlMessageDialog
 from logHandler import log
 from utils.security import isRunningOnSecureDesktop
 
@@ -120,15 +120,18 @@ def browseableMessage(
 
 	def doCopy(evt=None):
 		import api  # Late import to avoid a circular dependency (api imports ui).
+		import ui  # Self-import so the module's message() is reachable past the `message` parameter.
 
-		api.copyToClip(message, notify=True)
+		api.copyToClip(message)
+		# Translators: Reported when the content of a browseable message is copied to the clipboard.
+		ui.message(_("Copied to clipboard"))
 
 	# HtmlMessageDialog refuses to show without at least one button, so ensure a dismiss button always
 	# exists: add Close unless the caller asked only for a Copy button.
 	if closeButton or not copyButton:
 		dialog.addCloseButton(fallbackAction=True)
 	if copyButton:
-		dialog.addButton(ReturnCode.CUSTOM_1, label=_("&Copy"), callback=doCopy, closesDialog=False)
+		dialog.addButton(wx.ID_COPY, label=_("&Copy"), callback=doCopy, closesDialog=False)
 		# The WebView captures keyboard input, so the button's accelerator never reaches it. The HTML
 		# routes Alt+C to the same handler via the nvda-action://copy URL (see HtmlMessageDialog).
 		dialog.registerAction("copy", doCopy)
