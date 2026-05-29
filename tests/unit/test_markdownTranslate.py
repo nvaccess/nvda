@@ -147,7 +147,8 @@ class TestMarkdownTranslate(unittest.TestCase):
 		inputMdPath = os.path.join(self.testDir, "markdownlint_inlineComments.md")
 		xliffPath = os.path.join(outDir, "markdownlint.xliff")
 		spec = importlib.util.spec_from_file_location(
-			"markdownTranslateUnderTest", self.markdownTranslateScriptPath
+			"markdownTranslateUnderTest",
+			self.markdownTranslateScriptPath,
 		)
 		self.assertIsNotNone(spec)
 		if spec is None or spec.loader is None:
