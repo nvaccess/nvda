@@ -928,9 +928,9 @@ def main():
 
 	_remoteClient.initialize()
 
-	from textUtils import wordSeg
+	import textUtils._wordSeg
 
-	wordSeg.initialize()
+	textUtils._wordSeg.initialize()
 
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui

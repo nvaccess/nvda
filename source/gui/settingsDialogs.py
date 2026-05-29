@@ -3570,9 +3570,9 @@ class DocumentNavigationPanel(SettingsPanel):
 		self.wordSegCombo.saveCurrentValueToConf()
 
 	def postSave(self) -> None:
-		from textUtils import wordSeg
+		import textUtils._wordSeg
 
-		wordSeg.initialize()
+		textUtils._wordSeg.initialize()
 
 
 def _synthWarningDialog(newSynth: str):

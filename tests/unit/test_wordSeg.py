@@ -14,12 +14,12 @@ from unittest.mock import Mock, patch
 import config
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import WordNavigationUnitFlag
-from textUtils import wordSeg
+import textUtils._wordSeg
 from textUtils.segFlag import WordSegFlag
-from textUtils.wordSeg import wordSegStrategy
-from textUtils.wordSeg.wordSegmenter import WordSegmenter
-from textUtils.wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
-from textUtils.wordSeg.wordSegUtils import WordSegWithSeparatorOffsetConverter
+from textUtils._wordSeg import wordSegStrategy
+from textUtils._wordSeg.wordSegmenter import WordSegmenter
+from textUtils._wordSeg.wordSegStrategy import ChineseWordSegmentationStrategy
+from textUtils._wordSeg.wordSegUtils import WordSegWithSeparatorOffsetConverter
 
 
 class _ImmediateThread:
@@ -80,7 +80,7 @@ class TestChineseWordSegmentationInitialization(unittest.TestCase):
 		try:
 			with (
 				patch.object(ChineseWordSegmentationStrategy, "isUsingRelatedLanguage", return_value=False),
-				patch("textUtils.wordSeg.wordSegStrategy.cdll.LoadLibrary") as loadLibrary,
+				patch("textUtils._wordSeg.wordSegStrategy.cdll.LoadLibrary") as loadLibrary,
 			):
 				ChineseWordSegmentationStrategy._initCppJieba()
 
@@ -98,7 +98,7 @@ class TestChineseWordSegmentationInitialization(unittest.TestCase):
 			with (
 				patch.object(ChineseWordSegmentationStrategy, "isUsingRelatedLanguage", return_value=False),
 				patch(
-					"textUtils.wordSeg.wordSegStrategy.cdll.LoadLibrary",
+					"textUtils._wordSeg.wordSegStrategy.cdll.LoadLibrary",
 					return_value=mockDll,
 				) as loadLibrary,
 			):
@@ -119,7 +119,7 @@ class TestChineseWordSegmentationInitialization(unittest.TestCase):
 			with (
 				patch.object(ChineseWordSegmentationStrategy, "isUsingRelatedLanguage", return_value=False),
 				patch(
-					"textUtils.wordSeg.wordSegStrategy.cdll.LoadLibrary",
+					"textUtils._wordSeg.wordSegStrategy.cdll.LoadLibrary",
 					return_value=mockDll,
 				) as loadLibrary,
 			):
@@ -141,10 +141,10 @@ class TestChineseWordSegmentationInitialization(unittest.TestCase):
 			with (
 				patch.object(ChineseWordSegmentationStrategy, "isUsingRelatedLanguage", return_value=False),
 				patch(
-					"textUtils.wordSeg.wordSegStrategy.cdll.LoadLibrary",
+					"textUtils._wordSeg.wordSegStrategy.cdll.LoadLibrary",
 					return_value=mockDll,
 				) as loadLibrary,
-				patch("textUtils.wordSeg.wordSegStrategy.log.debugWarning") as debugWarning,
+				patch("textUtils._wordSeg.wordSegStrategy.log.debugWarning") as debugWarning,
 			):
 				ChineseWordSegmentationStrategy._initCppJieba(forceInit=True)
 
@@ -201,7 +201,7 @@ class TestWordSegmenter(unittest.TestCase):
 		segmenter = WordSegmenter("hello world", wordSegFlag=WordSegFlag.UNISCRIBE)
 		with (
 			patch.object(segmenter.strategy, "getSegmentForOffset", side_effect=IndexError("bad offset")),
-			patch("textUtils.wordSeg.wordSegmenter.log.debugWarning") as debugWarning,
+			patch("textUtils._wordSeg.wordSegmenter.log.debugWarning") as debugWarning,
 		):
 			self.assertIsNone(segmenter.getSegmentForOffset(0))
 
@@ -232,7 +232,7 @@ class TestWordSegInitialize(unittest.TestCase):
 			patch.object(wordSegStrategy, "_initializerList", initializerList),
 			patch("threading.Thread", _ImmediateThread),
 		):
-			wordSeg.initialize()
+			textUtils._wordSeg.initialize()
 
 		self.assertEqual(calls, ["first", "second"])
 
@@ -240,7 +240,7 @@ class TestWordSegInitialize(unittest.TestCase):
 class TestWordSegWithSeparatorOffsetConverter(unittest.TestCase):
 	def _makeConverter(self) -> WordSegWithSeparatorOffsetConverter:
 		with patch(
-			"textUtils.wordSeg.wordSegUtils.WordSegmenter",
+			"textUtils._wordSeg.wordSegUtils.WordSegmenter",
 			return_value=SimpleNamespace(segmentedText=_segmentedTextWithSeparator),
 		):
 			return WordSegWithSeparatorOffsetConverter("abcd")
