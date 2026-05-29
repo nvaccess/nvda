@@ -21,10 +21,9 @@ def findExtraOverlayClasses(obj: IAccessible, clsList: list[NVDAObject]):
 
 
 class WxWebView(IAccessible):
-	presentationType = IAccessible.presType_layout
-	name = None
 
 	def reportFocus(self):
+		# Reporting the wxWebView control gaining focus is redundant since it redirects focus to its inner content.
 		pass
 
 	def event_gainFocus(self) -> None:

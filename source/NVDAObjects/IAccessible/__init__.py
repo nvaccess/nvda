@@ -2342,8 +2342,6 @@ class ShellDocObjectView(IAccessible):
 	def _get_focusRedirect(self):
 		# Sometimes Shell DocObject View gets focus, when really the document inside it should.
 		# E.g. Adobe Reader 9 licence agreement, WX Web View
-		if eventHandler.isPendingEvents("gainFocus") or self.childCount != 1:
-			return None
 		child = self.firstChild
 		if not child or child.windowClassName != "Internet Explorer_Server":
 			return None
