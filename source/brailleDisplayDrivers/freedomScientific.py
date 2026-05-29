@@ -779,8 +779,7 @@ class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 			self.cellIndexes = cellIndexes
 		self.id = "+".join(idParts)
 		# Don't say is this a dots gesture if some keys either from dots and space are pressed.
-		# Guard keyBits != 0 to avoid treating a pure-routing release as a zero-dots braille input.
-		if keyBits and not extendedKeyBits and not keyBits & ~(0xFF | (1 << 0xF)):
+		if not extendedKeyBits and not keyBits & ~(0xFF | (1 << 0xF)):
 			self.dots = keyBits & 0xFF
 			# Is space?
 			if keyBits & (1 << 0xF):
