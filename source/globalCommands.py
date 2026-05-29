@@ -5219,7 +5219,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Moves the mouse cursor in the center of the magnified view",
+			"Moves the mouse cursor to the center of the magnified view",
 		),
 		category=SCRCAT_VISION,
 	)
