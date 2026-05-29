@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2008-2023 NV Access Limited, Bram Duvigneau, Leonard de Ruijter
+# Copyright (C) 2008-2026 NV Access Limited, Bram Duvigneau, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
 Braille display driver for Freedom Scientific braille displays.
@@ -759,13 +759,8 @@ class RoutingGesture(InputGesture):
 	"""Gesture to handle cursor routing and second row of routing keys on older models"""
 
 	def __init__(self, model: str, routingIndex: int, topRow: bool = False):
-		if topRow:
-			# pylint: disable=invalid-name
-			self.id = "topRouting%d" % (routingIndex + 1)
-		else:
-			# pylint: disable=invalid-name
-			self.id = "routing"
-			self.routingIndex = routingIndex
+		self.id = "topRouting" if topRow else "routing"
+		self.cellIndexes = [routingIndex]
 		super(RoutingGesture, self).__init__(model)
 
 
