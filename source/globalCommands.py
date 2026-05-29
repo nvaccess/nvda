@@ -1,11 +1,10 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
 # Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
 # Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis,
 # Burman's Computer and Education Ltd, Cary-rowen.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import itertools
 from typing import (
@@ -4220,21 +4219,48 @@ class GlobalCommands(ScriptableObject):
 		description=_("Routes the cursor to or activates the object under this braille cell"),
 		category=SCRCAT_BRAILLE,
 	)
-	def script_braille_routeTo(self, gesture):
-		braille.handler.routeTo(gesture.routingIndex)
+	def script_braille_routeTo(self, gesture: braille.BrailleDisplayGesture):
+		if not gesture.cellIndexes:
+			return
+		braille.handler.routeTo(gesture.cellIndexes[0])
 
 	@script(
 		# Translators: Input help mode message for Braille report formatting command.
 		description=_("Reports formatting info for the text under this braille cell"),
 		category=SCRCAT_BRAILLE,
 	)
-	def script_braille_reportFormatting(self, gesture):
-		info = braille.handler.getTextInfoForWindowPos(gesture.routingIndex)
+	def script_braille_reportFormatting(self, gesture: braille.BrailleDisplayGesture):
+		if not gesture.cellIndexes:
+			return
+		info = braille.handler.getTextInfoForWindowPos(gesture.cellIndexes[0])
 		if info is None:
 			# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 			ui.message(_("No formatting information"))
 			return
 		self._reportFormattingHelper(info, False)
+
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Selects the text from the first up to the last braille cell"),
+		category=SCRCAT_BRAILLE,
+	)
+	def script_braille_selectRange(self, gesture: braille.BrailleDisplayGesture):
+		if not gesture.cellIndexes or len(gesture.cellIndexes) < 2:
+			return
+		startPos = min(gesture.cellIndexes)
+		endPos = max(gesture.cellIndexes)
+		startInfo = braille.handler.getTextInfoForWindowPos(startPos)
+		endInfo = braille.handler.getTextInfoForWindowPos(endPos)
+		if startInfo is None or endInfo is None:
+			# Translators: Reported when selection via multiple routing keys is not possible.
+			ui.message(_("Cannot select from braille routing keys"))
+			return
+		startInfo.setEndPoint(endInfo, "endToEnd")
+		try:
+			startInfo.updateSelection()
+		except NotImplementedError:
+			# Translators: Reported when selection via multiple routing keys is not supported by the focused control.
+			ui.message(_("Selection not supported here"))
 
 	@script(
 		# Translators: Input help mode message for a braille command.

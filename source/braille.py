@@ -77,6 +77,7 @@ import hwPortUtils
 import bdDetect
 import queueHandler
 import brailleViewer
+import NVDAState
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked, post_sessionLockStateChanged
 from winAPI.secureDesktop import post_secureDesktopStateChange
@@ -3937,11 +3938,12 @@ class BrailleDisplayDriver(driverHandler.Driver):
 
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
-	Subclasses must provide L{source} and L{id}.
-	Optionally, L{model} can be provided to facilitate model specific gestures.
-	L{routingIndex} should be provided for routing buttons.
-	Subclasses can also inherit from L{brailleInput.BrailleInputGesture} if the display has a braille keyboard.
-	If the braille display driver is a L{baseObject.ScriptableObject}, it can provide scripts specific to input gestures from this display.
+	Subclasses must provide :attr:`source` and :attr:`id`.
+	Optionally, :attr:`model` can be provided to facilitate model specific gestures.
+	:attr:`cellIndexes` should be provided for gestures addressed to specific braille cells,
+	such as routing keys or touch-sensitive cells (e.g. Handy Tech Active Tactile Control).
+	Subclasses can also inherit from :class:`brailleInput.BrailleInputGesture` if the display has a braille keyboard.
+	If the braille display driver is a :class:`baseObject.ScriptableObject`, it can provide scripts specific to input gestures from this display.
 	"""
 
 	shouldPreventSystemIdle = True
@@ -3973,18 +3975,66 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		"""
 		raise NotImplementedError
 
-	#: The index of the routing key or C{None} if this is not a routing key.
-	#: @type: int
-	routingIndex = None
+	cellIndexes: list[int] | None = None
+	"""Indexes of braille cells addressed by this gesture, e.g. routing keys or touch cells.
+	``None`` if this gesture is not cell-addressed.
+	"""
+
+	@classmethod
+	def idForCellCount(cls, count: int, baseName: str = "routing") -> str:
+		"""Return the conventional gesture id suffix for a cell-addressed gesture.
+
+		When more than one cell is addressed, the base name is prefixed with ``"multi"``
+		and its first character is uppercased.  For example::
+
+			idForCellCount(1, "routing")        # "routing"
+			idForCellCount(2, "routing")        # "multiRouting"
+			idForCellCount(2, "secondRouting")  # "multiSecondRouting"
+
+		:param count: Number of cells addressed.
+		:param baseName: The gesture id for a single-cell press in this range.
+		:return: The base name if *count* <= 1, otherwise the multi-prefixed form.
+		"""
+		if count > 1:
+			return f"multi{baseName[0].upper()}{baseName[1:]}"
+		return baseName
+
+	if NVDAState._allowDeprecatedAPI():
+
+		def _get_routingIndex(self) -> int | None:
+			"""Deprecated. Use :attr:`cellIndexes` instead.
+
+			Returns the highest cell index, or ``None`` if no cells are addressed.
+			"""
+			return max(self.cellIndexes) if self.cellIndexes else None
+
+		def _set_routingIndex(self, value: int | None) -> None:
+			"""Deprecated. Set :attr:`cellIndexes` instead."""
+			log.warning(
+				"Setting BrailleDisplayGesture.routingIndex is deprecated, set cellIndexes instead.",
+				stack_info=True,
+			)
+			self.cellIndexes = [value] if value is not None else None
+
+	_cellIndexesStr: str | None
+
+	def _get__cellIndexesStr(self) -> str | None:
+		"""A string representation of cell indexes for identification and display purposes."""
+		if "+" not in self.id and self.cellIndexes:
+			# This is an indexed gesture without additional keys, in which case the identifier can be extended with indexes.
+			return "+".join(f"{i + 1}" for i in self.cellIndexes)
+		return None
 
 	def _get_identifiers(self):
-		ids = ["br({source}):{id}".format(source=self.source, id=self.id)]
+		ids = []
+		if self._cellIndexesStr:
+			ids.append(f"br({self.source}):{self.id}{self._cellIndexesStr}")
+		ids.append(f"br({self.source}):{self.id}")
 		if self.model:
 			# Model based ids should take priority.
-			ids.insert(
-				0,
-				"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=self.id),
-			)
+			if self._cellIndexesStr:
+				ids.insert(0, f"br({self.source}.{self.model}):{self.id}{self._cellIndexesStr}")
+			ids.insert(1, f"br({self.source}.{self.model}):{self.id}")
 		import brailleInput
 
 		if isinstance(self, brailleInput.BrailleInputGesture):
@@ -3998,6 +4048,8 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			name = brailleInput.BrailleInputGesture._get_displayName(self)
 			if name:
 				return name
+		if self._cellIndexesStr:
+			return f"{self.id}{self._cellIndexesStr}"
 		return self.id
 
 	def _get_scriptableObject(self):

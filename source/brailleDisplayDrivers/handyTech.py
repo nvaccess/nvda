@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2008-2025 NV Access Limited, Bram Duvigneau, Babbage B.V.,
+# Copyright (C) 2008-2026 NV Access Limited, Bram Duvigneau, Babbage B.V.,
 # Felix Grützmacher (Handy Tech Elektronik GmbH), Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
 Braille display driver for Handy Tech braille displays.
@@ -1143,6 +1143,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		{
 			"globalCommands.GlobalCommands": {
 				"braille_routeTo": ("br(handyTech):routing",),
+				"braille_selectRange": ("br(handyTech):multiRouting",),
 				"braille_scrollBack": (
 					"br(handytech):leftSpace",
 					"br(handytech):leftTakTop",
@@ -1209,6 +1210,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		self.keyNames = names = []
 		if isBrailleInput:
 			self.dots = self._calculateDots()
+		routingIndexes: list[int] = []
 		for key in keys:
 			if isBrailleInput and (
 				key in KEY_SPACES or (key in (KEY_LEFT, KEY_RIGHT) and isinstance(model, EasyBraille))
@@ -1218,13 +1220,16 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			elif isBrailleInput and key in KEY_DOTS:
 				names.append("dot%d" % KEY_DOTS[key])
 			elif KEY_ROUTING <= key < KEY_ROUTING + model.numCells:
-				self.routingIndex = key - KEY_ROUTING
-				names.append("routing")
+				routingIndexes.append(key - KEY_ROUTING)
 			else:
 				try:
 					names.append(model.keys[key])
 				except KeyError:
 					log.debugWarning("Unknown key %d" % key)
+		if routingIndexes:
+			routingIndexes.sort()
+			self.cellIndexes = routingIndexes
+			names.append(self.idForCellCount(len(routingIndexes)))
 
 		self.id = "+".join(names)
 
