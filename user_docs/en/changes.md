@@ -15,6 +15,8 @@
 
 ### Changes
 
+* The dialog used to present browseable messages (such as formatting information) has been modernized. (#18878, @LeonarddeR)
+
 ### Bug Fixes
 
 * When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
@@ -29,6 +31,10 @@
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* Added `gui.message.HtmlMessageDialog`, a `MessageDialog` subclass that renders a full HTML document in a `wx.html2.WebView`. (#18878, @LeonarddeR)
+  * The WebView backend can be overridden via the `_webViewBackend` class attribute, which defaults to the IE backend.
+  * JavaScript in the message can trigger NVDA actions by navigating to `nvda-action://<action>` URLs; `close` is handled internally and other actions can be registered with `registerAction`.
+* `gui.message.MessageDialog` gained the protected `_createMessageControl` and `_wrapMessageControl` hooks, so subclasses can use a different control for the message body. (#18878, @LeonarddeR)
 * `braille.BrailleDisplayGesture` now exposes a `cellIndexes` list attribute, replacing the single-valued `routingIndex`. (#20001, @LeonarddeR)
   * Drivers should set `cellIndexes` directly instead of `routingIndex`.
   * When a gesture addresses more than one cell, its `id` should be set to `"multiRouting"` (or be built via the new `BrailleDisplayGesture.idForCellCount(n)` helper).
