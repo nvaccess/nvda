@@ -100,13 +100,13 @@ DOTS_TABLE_SIZE = 8
 TRANSLATION_TABLE_SIZE = 2**DOTS_TABLE_SIZE
 
 
-def _makeTranslationTable(dotsTable):
+def _makeTranslationTable(dotsTable: list[int]) -> list[int]:
 	"""Create a translation table for braille dot combinations
 
-	@param dotsTable: The list of 8 bitmasks to use for each dot (dot 1 - 8)
+	:param dotsTable: The list of 8 bitmasks to use for each dot (dot 1 - 8)
 	"""
 
-	def isoDot(number):
+	def isoDot(number: int) -> int:
 		"""
 		Returns the ISO 11548 formatted braille dot for the given number.
 
@@ -118,8 +118,7 @@ def _makeTranslationTable(dotsTable):
 
 		Based on: https://github.com/brltty/brltty/blob/master/Headers/brl_dots.h
 
-		@param number: The dot to encode (1-8)
-		@type number: int
+		:param number: The dot to encode (1-8)
 		"""
 		return 1 << (number - 1)
 
@@ -133,21 +132,16 @@ def _makeTranslationTable(dotsTable):
 	return outputTable
 
 
-def _translate(cells, translationTable):
+def _translate(cells: list[int], translationTable: list[int]) -> list[int]:
 	"""Translate cells according to a translation table
 
 	The translation table contains the bytes to encode all the possible dot combinations.
 	See :meth:`_makeTranslationTable` as well.
 
-	@param cells: The cells to translate, given in ISO 11548 format (used by most braille displays)
-	@type cells: [int]
-	@param translationTable: A list of all possible braille dot combinations
-	@type translationTable: [int]
+	:param cells: The cells to translate, given in ISO 11548 format (used by most braille displays)
+	:param translationTable: A list of all possible braille dot combinations
 	"""
-	outCells = [0] * len(cells)
-	for i, cell in enumerate(cells):
-		outCells[i] = translationTable[cell]
-	return outCells
+	return [translationTable[cell] for cell in cells]
 
 
 #: Dots table used by first generation Focus displays
@@ -197,7 +191,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	]
 
 	@classmethod
-	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar) -> None:
 		driverRegistrar.addUsbDevices(
 			bdDetect.ProtocolType.CUSTOM,
 			{
@@ -220,7 +214,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			),
 		)
 
-	def __init__(self, port="auto"):
+	def __init__(self, port: str | bdDetect.DeviceMatch = "auto"):
 		self.numCells = 0
 		self._ackPending = False
 		self._pendingCells = []
@@ -301,7 +295,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		)
 		self._restarting = False
 
-	def terminate(self):
+	def terminate(self) -> None:
 		try:
 			super().terminate()
 		finally:
@@ -316,32 +310,23 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		arg2: bytes = FS_BYTE_NULL,
 		arg3: bytes = FS_BYTE_NULL,
 		data: bytes = FS_DATA_EMPTY,
-	):
+	) -> None:
 		"""Send a packet to the display
-		@param packetType: Type of packet (first byte), use one of the FS_PKT constants
-		@param arg1: First argument (second byte of packet)
-		@param arg2: Second argument (third byte of packet)
-		@param arg3: Third argument (fourth byte of packet)
-		@param data: Data to send if this is an extended packet, required checksum will
+		:param packetType: Type of packet (first byte), use one of the FS_PKT constants
+		:param arg1: First argument (second byte of packet)
+		:param arg2: Second argument (third byte of packet)
+		:param arg3: Third argument (fourth byte of packet)
+		:param data: Data to send if this is an extended packet, required checksum will
 			be added automatically
 		"""
 
-		def handleArg(arg: bytes) -> bytes:
-			if isinstance(arg, bytes):
-				return arg
-			else:
-				raise TypeError("Expected arg to be bytes")
-
-		arg1 = handleArg(arg1)
-		arg2 = handleArg(arg2)
-		arg3 = handleArg(arg3)
 		packet = b"".join([packetType, arg1, arg2, arg3, data])
 		if data:
 			checksum = BrailleDisplayDriver._calculateChecksum(packet)
 			packet += intToByte(checksum)
 		self._dev.write(packet)
 
-	def _onReceive(self, data: bytes):
+	def _onReceive(self, data: bytes) -> None:
 		"""Event handler when data from the display is received
 
 		Formats a packet of four bytes in a packet type and three arguments.
@@ -367,7 +352,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			calculatedChecksum = BrailleDisplayDriver._calculateChecksum(
 				packetType + arg1 + arg2 + arg3 + payload,
 			)
-			assert calculatedChecksum == checksum, f"Checksum mismatch, expected {checksum} but got {payload[-1]}"
+			assert calculatedChecksum == checksum, (
+				f"Checksum mismatch, expected {checksum} but got {payload[-1]}"
+			)
 		else:
 			payload = FS_DATA_EMPTY
 
@@ -391,7 +378,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		arg2: bytes,
 		arg3: bytes,
 		payload: bytes,
-	):
+	) -> None:
 		"""Handle a packet from the device"
 
 		The following packet types are handled:
@@ -467,11 +454,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				log.debugWarning("wheelNumber unknown")
 				return
 			for _i in range(count):
-				gesture = WizWheelGesture(self._model, isDown, isRight)
-				try:
-					inputCore.manager.executeGesture(gesture)
-				except inputCore.NoInputGestureAction:
-					pass
+				self._executeGesture(WizWheelGesture(self._model, isDown, isRight))
 		elif packetType == FS_PKT_BUTTON:
 			key = ord(arg1)
 			# the least significant bit is set when the key is pressed
@@ -488,14 +471,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		else:
 			log.debugWarning("Unknown packet of type: %r", packetType)
 
-	def _handleAck(self):
+	@staticmethod
+	def _executeGesture(gesture: "InputGesture") -> None:
+		"""Execute a gesture, ignoring it if no action is mapped."""
+		try:
+			inputCore.manager.executeGesture(gesture)
+		except inputCore.NoInputGestureAction:
+			pass
+
+	def _handleAck(self) -> None:
 		"Displays any queued cells after receiving an ACK"
 		super()._handleAck()
 		if self._pendingCells:
 			self.display(self._pendingCells)
 
 	@staticmethod
-	def _updateKeyBits(keyBits: int, oldKeyBits: int, keyCount: int):
+	def _updateKeyBits(keyBits: int, oldKeyBits: int, keyCount: int) -> tuple[int, bool, int, bool]:
 		"""Helper function that reports if keys have been pressed and which keys have been released
 		based on old and new keybits.
 		"""
@@ -521,7 +512,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			keyBit <<= 1
 		return oldKeyBits, isRelease, keyBitsBeforeRelease, newKeysPressed
 
-	def _handleKeys(self, keyBits: int):
+	def _handleKeys(self, keyBits: int) -> None:
 		"""Send gestures if keys are released and update self._keyBits"""
 		keyBits, isRelease, keyBitsBeforeRelease, newKeysPressed = self._updateKeyBits(
 			keyBits,
@@ -532,20 +523,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._ignoreKeyReleases = False
 		self._keyBits = keyBits
 		if isRelease and not self._ignoreKeyReleases:
-			gesture = KeyGesture(
-				self._model,
-				keyBitsBeforeRelease,
-				self._extendedKeyBits,
-				self._routingKeyBits,
-				self._topRoutingKeyBits,
+			self._executeGesture(
+				KeyGesture(
+					self._model,
+					keyBitsBeforeRelease,
+					self._extendedKeyBits,
+					self._routingKeyBits,
+					self._topRoutingKeyBits,
+				),
 			)
-			try:
-				inputCore.manager.executeGesture(gesture)
-			except inputCore.NoInputGestureAction:
-				pass
 			self._ignoreKeyReleases = True
 
-	def _handleExtendedKeys(self, keyBits: int):
+	def _handleExtendedKeys(self, keyBits: int) -> None:
 		"""Send gestures if keys are released and update self._extendedKeyBits"""
 		keyBits, isRelease, keyBitsBeforeRelease, newKeysPressed = self._updateKeyBits(
 			keyBits,
@@ -556,20 +545,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._ignoreKeyReleases = False
 		self._extendedKeyBits = keyBits
 		if isRelease and not self._ignoreKeyReleases:
-			gesture = KeyGesture(
-				self._model,
-				self._keyBits,
-				keyBitsBeforeRelease,
-				self._routingKeyBits,
-				self._topRoutingKeyBits,
+			self._executeGesture(
+				KeyGesture(
+					self._model,
+					self._keyBits,
+					keyBitsBeforeRelease,
+					self._routingKeyBits,
+					self._topRoutingKeyBits,
+				),
 			)
-			try:
-				inputCore.manager.executeGesture(gesture)
-			except inputCore.NoInputGestureAction:
-				pass
 			self._ignoreKeyReleases = True
 
-	def _handleRoutingKey(self, key: int, isPress: bool, isTopRow: bool):
+	def _handleRoutingKey(self, key: int, isPress: bool, isTopRow: bool) -> None:
 		"""Track routing key presses and fire a gesture on the first release."""
 		keyMask = 1 << key
 		if isPress:
@@ -583,17 +570,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		# Guard against stray release with no preceding press.
 		currentBits = self._topRoutingKeyBits if isTopRow else self._routingKeyBits
 		if currentBits & keyMask and not self._ignoreKeyReleases:
-			gesture = KeyGesture(
-				self._model,
-				self._keyBits,
-				self._extendedKeyBits,
-				self._routingKeyBits,
-				self._topRoutingKeyBits,
+			self._executeGesture(
+				KeyGesture(
+					self._model,
+					self._keyBits,
+					self._extendedKeyBits,
+					self._routingKeyBits,
+					self._topRoutingKeyBits,
+				),
 			)
-			try:
-				inputCore.manager.executeGesture(gesture)
-			except inputCore.NoInputGestureAction:
-				pass
 			self._ignoreKeyReleases = True
 		if isTopRow:
 			self._topRoutingKeyBits &= ~keyMask
@@ -603,13 +588,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	@staticmethod
 	def _calculateChecksum(data: bytes) -> int:
 		"""Calculate the checksum for extended packets"""
-		checksum = 0
-		for byte in data:
-			checksum -= byte
-		checksum = checksum & 0xFF
-		return checksum
+		return (-sum(data)) & 0xFF
 
-	def display(self, cells: list[int]):
+	def display(self, cells: list[int]) -> None:
 		if self.translationTable:
 			cells = _translate(cells, FOCUS_1_TRANSLATION_TABLE)
 		if not self._awaitingAck:
@@ -624,7 +605,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		else:
 			self._pendingCells = cells
 
-	def _configureDisplay(self):
+	def _configureDisplay(self) -> None:
 		"""Enable extended keys on Focus firmware 3 and up"""
 		if not self._model or not self._firmwareVersion:
 			return
@@ -637,17 +618,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			)
 			self._sendPacket(FS_PKT_CONFIG, FS_CFG_EXTKEY)
 
-	def script_toggleLeftWizWheelAction(self, _gesture):
-		# Python 3: review required
-		# original: self.leftWizWheelActionCycle.next()
+	def script_toggleLeftWizWheelAction(self, _gesture: inputCore.InputGesture) -> None:
 		action = next(self.leftWizWheelActionCycle)
 		self.gestureMap.add("br(freedomScientific):leftWizWheelUp", *action[1], replace=True)
 		self.gestureMap.add("br(freedomScientific):leftWizWheelDown", *action[2], replace=True)
 		braille.handler.message(action[0])
 
-	def script_toggleRightWizWheelAction(self, _gesture):
-		# Python 3: review required
-		# original: self.rightWizWheelActionCycle.next()
+	def script_toggleRightWizWheelAction(self, _gesture: inputCore.InputGesture) -> None:
 		action = next(self.rightWizWheelActionCycle)
 		self.gestureMap.add("br(freedomScientific):rightWizWheelUp", *action[1], replace=True)
 		self.gestureMap.add("br(freedomScientific):rightWizWheelDown", *action[2], replace=True)
@@ -722,13 +699,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	)
 
 
-# pylint: disable=abstract-method
 class InputGesture(braille.BrailleDisplayGesture):
 	"""Base gesture for this braille display"""
 
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, model: str):
+	def __init__(self, model: str) -> None:
 		self.model = model.replace(" ", "")
 		super().__init__()
 
@@ -773,29 +749,29 @@ class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 		"rightRockerBarDown",
 	]
 
+	@staticmethod
+	def _bitmaskToIndexes(bitmask: int) -> list[int]:
+		"""Return the ascending indexes of the set bits in C{bitmask}."""
+		return [i for i in range(bitmask.bit_length()) if (bitmask >> i) & 1]
+
 	def __init__(
 		self,
-		model,
+		model: str,
 		keyBits: int,
 		extendedKeyBits: int,
 		routingKeyBits: int = 0,
 		topRoutingKeyBits: int = 0,
-	):
+	) -> None:
 		super().__init__(model)
 		keys = [self.keyLabels[num] for num in range(24) if (keyBits >> num) & 1]
 		extendedKeys = [self.extendedKeyLabels[num] for num in range(4) if (extendedKeyBits >> num) & 1]
-		# pylint: disable=invalid-name
 		idParts = keys + extendedKeys
 		if routingKeyBits:
-			routingIndexes = sorted(
-				i for i in range(routingKeyBits.bit_length()) if (routingKeyBits >> i) & 1
-			)
+			routingIndexes = self._bitmaskToIndexes(routingKeyBits)
 			self.cellIndexes = routingIndexes
 			idParts.append(self.idForCellCount(len(routingIndexes)))
 		if topRoutingKeyBits:
-			topIndexes = sorted(
-				i for i in range(topRoutingKeyBits.bit_length()) if (topRoutingKeyBits >> i) & 1
-			)
+			topIndexes = self._bitmaskToIndexes(topRoutingKeyBits)
 			if len(topIndexes) == 1:
 				idParts.append(f"topRouting{(topIndexes[0] + 1)}")
 			else:
@@ -815,10 +791,9 @@ class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 class WizWheelGesture(InputGesture):
 	"""Gesture to handle wiz wheels movements"""
 
-	def __init__(self, model: str, isDown: bool, isRight: bool):
+	def __init__(self, model: str, isDown: bool, isRight: bool) -> None:
 		which = "right" if isRight else "left"
 		direction = "Down" if isDown else "Up"
-		# pylint: disable=invalid-name
 		self.id = f"{which}WizWheel{direction}"
 		super().__init__(model)
 
