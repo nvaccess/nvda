@@ -20,9 +20,9 @@ import globalVars
 import gui
 import nh3
 import speech
-import wx.html2
+import wx
 from config.configFlags import TetherTo
-from gui.message import MessageDialog, ReturnCode
+from gui.message import HtmlMessageDialog, ReturnCode
 from logHandler import log
 from utils.security import isRunningOnSecureDesktop
 
@@ -30,9 +30,6 @@ _DELAY_BEFORE_MESSAGE_MS: Final[int] = 1
 """Duration in milliseconds for which to delay speaking and brailling a message, so that any UI changes don't interrupt it.
 1ms is a magic number. It can be increased if it is found to be too short, but it should be kept to a minimum.
 """
-
-_BROWSEABLE_MESSAGE_ACTION_CLOSE: Final[str] = "nvda-action://close"
-_BROWSEABLE_MESSAGE_ACTION_COPY: Final[str] = "nvda-action://copy"
 
 
 def _warnBrowsableMessageNotAvailableOnSecureScreens(title: str | None = None) -> None:
@@ -115,48 +112,31 @@ def browseableMessage(
 
 	with open(htmlPath, encoding="utf-8") as f:
 		templatedMessage = (
-			f.read()
-			.replace("{{TITLE}}", escape(title))
-			.replace("{{MESSAGE}}", messageSanitized)
+			f.read().replace("{{TITLE}}", escape(title)).replace("{{MESSAGE}}", messageSanitized)
 		)
 
 	# --- build the dialog ---
-	dialog = MessageDialog(
-		gui.mainFrame,
-		templatedMessage,
-		title,
-		buttons=None,
-		isHtmlMessage=True,
-	)
+	dialog = HtmlMessageDialog(gui.mainFrame, templatedMessage, title, buttons=None)
 
 	def doCopy(evt=None):
-		if wx.TheClipboard.Open():
-			wx.TheClipboard.SetData(wx.TextDataObject(message))
-			wx.TheClipboard.Close()
-			reviewMessage(_("Text copied."))
-		else:
-			reviewMessage(_("Couldn't copy to clipboard."))
+		import api  # Late import to avoid a circular dependency (api imports ui).
 
+		api.copyToClip(message, notify=True)
+
+	# HtmlMessageDialog refuses to show without at least one button, so ensure a dismiss button always
+	# exists: add Close unless the caller asked only for a Copy button.
 	if closeButton or not copyButton:
 		dialog.addCloseButton(fallbackAction=True)
 	if copyButton:
 		dialog.addButton(ReturnCode.CUSTOM_1, label=_("&Copy"), callback=doCopy, closesDialog=False)
-
-	def _onNavigating(evt: wx.html2.WebViewEvent) -> None:
-		url = evt.GetURL()
-		if url == _BROWSEABLE_MESSAGE_ACTION_CLOSE:
-			evt.Veto()
-			dialog.Close()
-		elif url == _BROWSEABLE_MESSAGE_ACTION_COPY and copyButton:
-			evt.Veto()
-			doCopy()
-
-	dialog._messageControl.Bind(wx.html2.EVT_WEBVIEW_NAVIGATING, _onNavigating)
+		# The WebView captures keyboard input, so the button's accelerator never reaches it. The HTML
+		# routes Alt+C to the same handler via the nvda-action://copy URL (see HtmlMessageDialog).
+		dialog.registerAction("copy", doCopy)
 
 	gui.mainFrame.prePopup()
 	dialog.Show()
 	gui.mainFrame.postPopup()
-	dialog._messageControl.SetFocus()
+	dialog.focusMessage()
 
 
 def message(

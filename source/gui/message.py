@@ -414,7 +414,6 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		*,
 		buttons: Collection[Button] | None = (DefaultButton.OK,),
 		helpId: str = "",
-		isHtmlMessage: bool = False,
 	):
 		"""Initialize the MessageDialog.
 
@@ -427,7 +426,6 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		:param buttons: What buttons to place in the dialog, defaults to (DefaultButton.OK,).
 			Further buttons can easily be added later.
 		:param helpId: URL fragment of the relevant help entry in the user guide for this dialog, defaults to ""
-		:param isHtmlMessage: Whether the given message is a HTML message
 		"""
 		self._checkMainThread()
 		self.helpId = helpId  # Must be set before initialising ContextHelpMixin.
@@ -451,11 +449,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		# Scafold the dialog.
 		mainSizer = self._mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = self._contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
-		self._isHtmlMessage = isHtmlMessage
-		if isHtmlMessage:
-			messageControl = self._messageControl = WebView.New(self, backend=wx.html2.WebViewBackendIE)
-		else:
-			messageControl = self._messageControl = wx.StaticText(self)
+		messageControl = self._messageControl = self._createMessageControl()
 		contentsSizer.addItem(messageControl)
 		buttonHelper = self._buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		mainSizer.Add(
@@ -664,17 +658,28 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		)
 		return self
 
+	def _createMessageControl(self) -> wx.Window:
+		"""Create the control used to display the dialog's message.
+
+		Override to render the message with a different control (see :class:`HtmlMessageDialog`).
+		"""
+		return wx.StaticText(self)
+
+	def _wrapMessageControl(self) -> None:
+		"""Wrap the message control's text to the dialog width, as part of laying out the dialog.
+
+		Override when the message control lays out its own content and needs no wrapping.
+		"""
+		self._messageControl.Wrap(self.scaleSize(self.GetSize().Width))
+
 	def setMessage(self, message: str) -> Self:
 		"""Set the textual message to display in the dialog.
 
 		:param message: New message to show.
 		:return: Updated instance for chaining.
 		"""
-		if self._isHtmlMessage:
-			self._messageControl.SetPage(message, "")
-		else:
-			# Use SetLabelText to avoid ampersands being interpreted as accelerators.
-			self._messageControl.SetLabelText(message)
+		# Use SetLabelText to avoid ampersands being interpreted as accelerators.
+		self._messageControl.SetLabelText(message)
 		self._isLayoutFullyRealized = False
 		return self
 
@@ -964,8 +969,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if gui._isDebug():
 			startTime = time.time()
 			log.debug("Laying out message dialog")
-		if not self._isHtmlMessage:
-			self._messageControl.Wrap(self.scaleSize(self.GetSize().Width))
+		self._wrapMessageControl()
 		self._mainSizer.Fit(self)
 		if self.Parent == gui.mainFrame:
 			# NVDA's main frame is not visible on screen, so centre on screen rather than on `mainFrame` to avoid the dialog appearing at the top left of the screen.
@@ -1181,6 +1185,84 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			self.Close()
 
 	# endregion
+
+
+class HtmlMessageDialog(MessageDialog):
+	"""A :class:`MessageDialog` that renders its message as HTML in a WebView.
+
+	The message passed to the dialog must be a full HTML document.
+	Because the WebView captures keyboard focus, key presses are routed from JavaScript to NVDA via
+	``nvda-action://<action>`` URLs. The ``close`` action is handled internally; register handlers for
+	any other actions with :meth:`registerAction`.
+	"""
+
+	_ACTION_URL_PREFIX = "nvda-action://"
+
+	_webViewBackend: str = wx.html2.WebViewBackendIE
+	"""Identifier of the WebView backend to render the message with. Override in a subclass to use another."""
+
+	def __init__(self, *args, **kwargs):
+		# Initialised before super().__init__() because it creates the WebView (binding its events) and sets
+		# its initial content, both of which can fire those events.
+		self._actionHandlers: dict[str, Callable[[], None]] = {}
+		self._isContentLoaded = False
+		self._focusContentWhenLoaded = False
+		super().__init__(*args, **kwargs)
+
+	def registerAction(self, action: str, handler: Callable[[], None]) -> Self:
+		"""Register a handler for an ``nvda-action://<action>`` URL triggered from the HTML message.
+
+		:param action: The action name, i.e. the part of the URL after ``nvda-action://``.
+		:param handler: Called when the message navigates to the action's URL.
+		:return: Updated instance for chaining.
+		"""
+		self._actionHandlers[action] = handler
+		return self
+
+	def focusMessage(self) -> None:
+		"""Move focus to the message WebView, which redirects focus to its inner document.
+
+		Some backends (e.g. Edge) load their content asynchronously, so focus is deferred until the content
+		has loaded; focusing an unloaded WebView would not reach the inner document.
+		"""
+		if self._isContentLoaded:
+			self._messageControl.SetFocus()
+		else:
+			self._focusContentWhenLoaded = True
+
+	def _createMessageControl(self) -> WebView:
+		control = WebView.New(self, backend=self._webViewBackend)
+		# Bind before MessageDialog.__init__ sets the initial content, so the first load and navigation are observed.
+		control.Bind(wx.html2.EVT_WEBVIEW_NAVIGATING, self._onNavigating)
+		control.Bind(wx.html2.EVT_WEBVIEW_LOADED, self._onLoaded)
+		return control
+
+	def _wrapMessageControl(self) -> None:
+		# A WebView lays out its own content, so there is nothing to wrap.
+		pass
+
+	def setMessage(self, message: str) -> Self:
+		self._messageControl.SetPage(message, "")
+		self._isLayoutFullyRealized = False
+		return self
+
+	def _onLoaded(self, evt: wx.html2.WebViewEvent) -> None:
+		self._isContentLoaded = True
+		if self._focusContentWhenLoaded:
+			self._focusContentWhenLoaded = False
+			self._messageControl.SetFocus()
+		evt.Skip()
+
+	def _onNavigating(self, evt: wx.html2.WebViewEvent) -> None:
+		url = evt.GetURL()
+		if not url.startswith(self._ACTION_URL_PREFIX):
+			return
+		evt.Veto()
+		action = url[len(self._ACTION_URL_PREFIX) :]
+		if action == "close":
+			self.Close()
+		elif handler := self._actionHandlers.get(action):
+			handler()
 
 
 def _messageBoxShim(message: str, caption: str, style: int, parent: wx.Window | None):
