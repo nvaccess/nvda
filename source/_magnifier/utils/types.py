@@ -88,7 +88,7 @@ class MagnifierAction(DisplayStringEnum):
 			# Translators: Action description for starting spotlight mode.
 			self.START_SPOTLIGHT: pgettext("magnifier action", "start spotlight mode"),
 			# Translators: Action description for move mouse to view
-			self.MOVE_MOUSE_TO_VIEW: pgettext("magnifier action", "move move mouse to view"),
+			self.MOVE_MOUSE_TO_VIEW: pgettext("magnifier action", "move mouse to view"),
 		}
 
 
