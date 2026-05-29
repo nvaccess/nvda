@@ -8,20 +8,19 @@ Braille display driver for Freedom Scientific braille displays.
 A c(lang) reference implementation is available in brltty.
 """
 
-from io import BytesIO
 import itertools
+from io import BytesIO
 
-import braille
-import inputCore
-from baseObject import ScriptableObject
-from logHandler import log
 import bdDetect
+import braille
 import brailleInput
 import hwIo
-from hwIo import intToByte
+import inputCore
 import serial
-from utils._deprecate import handleDeprecations, MovedSymbol
-
+from baseObject import ScriptableObject
+from hwIo import intToByte
+from logHandler import log
+from utils._deprecate import MovedSymbol, handleDeprecations
 
 BAUD_RATE = 57600
 PARITY = serial.PARITY_NONE
