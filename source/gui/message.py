@@ -1202,7 +1202,15 @@ class HtmlMessageDialog(MessageDialog):
 	"""HtmlMessageDialog can be shown without buttons; the HTML content handles its own close action."""
 
 	_webViewBackend: str = wx.html2.WebViewBackendIE
-	"""Identifier of the WebView backend to render the message with. Override in a subclass to use another."""
+	"""Identifier of the WebView backend to render the message with. Override in a subclass to use another.
+
+	.. note:: The Edge backend (wx.html2.WebViewBackendEdge) is preferred over IE for modern HTML support,
+		but incurs a ~4 second cold start on each new WebView instance because wxPython 4.2 does not expose
+		wx.html2.WebViewConfiguration, preventing reuse of the underlying CoreWebView2Environment across
+		instances. Once NVDA upgrades to wxPython 4.3.0, WebViewConfiguration can be created once, held
+		alive, and passed to each WebView.New() call to eliminate the cold start. Switch this backend to
+		wx.html2.WebViewBackendEdge at that point.
+	"""
 
 	def __init__(self, *args, **kwargs):
 		# Initialised before super().__init__() because it creates the WebView (binding its events) and sets
