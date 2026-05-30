@@ -1198,6 +1198,9 @@ class HtmlMessageDialog(MessageDialog):
 
 	_ACTION_URL_PREFIX = "nvda-action://"
 
+	_FAIL_ON_NO_BUTTONS = False
+	"""HtmlMessageDialog can be shown without buttons; the HTML content handles its own close action."""
+
 	_webViewBackend: str = wx.html2.WebViewBackendIE
 	"""Identifier of the WebView backend to render the message with. Override in a subclass to use another."""
 
@@ -1206,8 +1209,16 @@ class HtmlMessageDialog(MessageDialog):
 		# its initial content, both of which can fire those events.
 		self._actionHandlers: dict[str, Callable[[], None]] = {}
 		self._isContentLoaded = False
-		self._focusContentWhenLoaded = False
+		self._deferShowUntilLoaded = False
 		super().__init__(*args, **kwargs)
+		# The WebView (IE backend) consumes Escape natively before JavaScript keydown fires.
+		# Use a wx accelerator table, which is translated before the message reaches the focused
+		# child window, so Escape reliably triggers Close() regardless of what IE does with it.
+		escapeId = wx.NewIdRef()
+		self.Bind(wx.EVT_MENU, lambda evt: self.Close(), id=escapeId)
+		self.SetAcceleratorTable(wx.AcceleratorTable([
+			wx.AcceleratorEntry(wx.ACCEL_NORMAL, wx.WXK_ESCAPE, escapeId),
+		]))
 
 	def registerAction(self, action: str, handler: Callable[[], None]) -> Self:
 		"""Register a handler for an ``nvda-action://<action>`` URL triggered from the HTML message.
@@ -1219,16 +1230,17 @@ class HtmlMessageDialog(MessageDialog):
 		self._actionHandlers[action] = handler
 		return self
 
-	def focusMessage(self) -> None:
-		"""Move focus to the message WebView, which redirects focus to its inner document.
+	def Show(self, show: bool = True) -> bool:
+		"""Show the dialog, deferring until the WebView content has loaded.
 
-		Some backends (e.g. Edge) load their content asynchronously, so focus is deferred until the content
-		has loaded; focusing an unloaded WebView would not reach the inner document.
+		Some backends (e.g. Edge) load content asynchronously; showing the dialog before the content
+		is ready would present a blank WebView to the user.  If content is not yet loaded, the show is
+		deferred until :meth:`_onLoaded` fires.
 		"""
-		if self._isContentLoaded:
-			self._messageControl.SetFocus()
-		else:
-			self._focusContentWhenLoaded = True
+		if show and not self._isContentLoaded:
+			self._deferShowUntilLoaded = True
+			return False
+		return super().Show(show)
 
 	def _createMessageControl(self) -> WebView:
 		control = WebView.New(self, backend=self._webViewBackend)
@@ -1248,9 +1260,9 @@ class HtmlMessageDialog(MessageDialog):
 
 	def _onLoaded(self, evt: wx.html2.WebViewEvent) -> None:
 		self._isContentLoaded = True
-		if self._focusContentWhenLoaded:
-			self._focusContentWhenLoaded = False
-			self._messageControl.SetFocus()
+		if self._deferShowUntilLoaded:
+			self._deferShowUntilLoaded = False
+			self.Show()
 		evt.Skip()
 
 	def _onNavigating(self, evt: wx.html2.WebViewEvent) -> None:
@@ -1263,6 +1275,17 @@ class HtmlMessageDialog(MessageDialog):
 			self.Close()
 		elif handler := self._actionHandlers.get(action):
 			handler()
+
+	def _getFallbackAction(self) -> _Command | None:
+		"""Return a fallback close action even when no buttons are registered.
+
+		HtmlMessageDialog may be shown without buttons; in that case escape and the title bar close
+		button must still work.
+		"""
+		action = super()._getFallbackAction()
+		if action is None and not self._commands:
+			return _Command(callback=None, closesDialog=True, returnCode=ReturnCode.CLOSE)
+		return action
 
 
 def _messageBoxShim(message: str, caption: str, style: int, parent: wx.Window | None):

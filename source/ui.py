@@ -127,10 +127,6 @@ def browseableMessage(
 		# Translators: Reported when the content of a browseable message is copied to the clipboard.
 		ui.message(_("Copied to clipboard"))
 
-	# HtmlMessageDialog refuses to show without at least one button, so ensure a dismiss button always
-	# exists: add Close unless the caller asked only for a Copy button.
-	if closeButton or not copyButton:
-		dialog.addCloseButton(fallbackAction=True)
 	if copyButton:
 		dialog.addButton(
 			wx.ID_COPY,
@@ -142,11 +138,12 @@ def browseableMessage(
 		# The WebView captures keyboard input, so the button's accelerator never reaches it. The HTML
 		# routes Alt+C to the same handler via the nvda-action://copy URL (see HtmlMessageDialog).
 		dialog.registerAction("copy", doCopy)
+	if closeButton:
+		dialog.addCloseButton(fallbackAction=True)
 
 	gui.mainFrame.prePopup()
 	dialog.Show()
 	gui.mainFrame.postPopup()
-	dialog.focusMessage()
 
 
 def message(
