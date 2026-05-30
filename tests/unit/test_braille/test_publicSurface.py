@@ -108,3 +108,13 @@ class TestBraillePublicSurface(unittest.TestCase):
 	def test_boundPrivatesPresent(self):
 		missing = sorted(name for name in EXPECTED_BOUND_PRIVATE if not hasattr(braille, name))
 		self.assertEqual(missing, [], f"externally-used private braille symbols missing: {missing}")
+
+	def test_publicSymbolsExported(self):
+		notExported = sorted(EXPECTED_PUBLIC - set(braille.__all__))
+		self.assertEqual(notExported, [], f"public symbols not in braille.__all__: {notExported}")
+		unresolved = sorted(name for name in braille.__all__ if not hasattr(braille, name))
+		self.assertEqual(unresolved, [], f"names in braille.__all__ that don't resolve: {unresolved}")
+
+	def test_privatesNotExported(self):
+		leaked = sorted(EXPECTED_BOUND_PRIVATE & set(braille.__all__))
+		self.assertEqual(leaked, [], f"private symbols leaked into braille.__all__: {leaked}")
