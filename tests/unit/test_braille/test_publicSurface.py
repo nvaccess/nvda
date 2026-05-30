@@ -84,7 +84,7 @@ EXPECTED_PUBLIC = frozenset(
 		"displaySizeChanged",
 		"displayChanged",
 		"decide_enabled",
-	}
+	},
 )
 
 #: Private symbols with known external consumers (bdDetect, gui, _remoteClient, tests).
@@ -96,7 +96,7 @@ EXPECTED_BOUND_PRIVATE = frozenset(
 		"_pre_showBrailleMessage",
 		"_post_dismissBrailleMessage",
 		"_decide_disabledIncludesMessages",
-	}
+	},
 )
 
 
