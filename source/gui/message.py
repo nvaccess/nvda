@@ -1216,9 +1216,13 @@ class HtmlMessageDialog(MessageDialog):
 		# child window, so Escape reliably triggers Close() regardless of what IE does with it.
 		escapeId = wx.NewIdRef()
 		self.Bind(wx.EVT_MENU, lambda evt: self.Close(), id=escapeId)
-		self.SetAcceleratorTable(wx.AcceleratorTable([
-			wx.AcceleratorEntry(wx.ACCEL_NORMAL, wx.WXK_ESCAPE, escapeId),
-		]))
+		self.SetAcceleratorTable(
+			wx.AcceleratorTable(
+				[
+					wx.AcceleratorEntry(wx.ACCEL_NORMAL, wx.WXK_ESCAPE, escapeId),
+				]
+			),
+		)
 
 	def registerAction(self, action: str, handler: Callable[[], None]) -> Self:
 		"""Register a handler for an ``nvda-action://<action>`` URL triggered from the HTML message.
