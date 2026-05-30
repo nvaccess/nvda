@@ -29,6 +29,8 @@
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* The `braille` module is now a package (`braille/`), split into focused submodules (`braille.labels`, `braille.regions`, `braille.buffer`, `braille.display`).
+  The public API is unchanged: every symbol previously accessed as `braille.X` remains available. (#12772)
 * `braille.BrailleDisplayGesture` now exposes a `cellIndexes` list attribute, replacing the single-valued `routingIndex`. (#20001, @LeonarddeR)
   * Drivers should set `cellIndexes` directly instead of `routingIndex`.
   * When a gesture addresses more than one cell, its `id` should be set to `"multiRouting"` (or be built via the new `BrailleDisplayGesture.idForCellCount(n)` helper).
