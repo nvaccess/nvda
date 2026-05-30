@@ -16,6 +16,7 @@
 ### Changes
 
 * The dialog used to present browseable messages (such as formatting information) has been modernized. (#18878, @LeonarddeR)
+  * The dialog's shortcut to copy contents of the message to the clipboard was changed to `alt+c`.
 
 ### Bug Fixes
 

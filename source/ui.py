@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2025 NV Access Limited, James Teh, Dinesh Kaushal, Davy Kager, André-Abush Clause,
+# Copyright (C) 2008-2026 NV Access Limited, James Teh, Dinesh Kaushal, Davy Kager, André-Abush Clause,
 # Babbage B.V., Leonard de Ruijter, Michael Curran, Accessolutions, Julien Cochuyt, Cyrille Bougot
-# This file may be used under the terms of the GNU General Public License, version 2 or later.
-# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """User interface functionality.
 This refers to the user interface presented by the screen reader alone, not the graphical user interface.
@@ -97,6 +97,7 @@ def browseableMessage(
 		return
 
 	if title is None:
+		# Translators: The title for the dialog used to present general NVDA messages in browse mode.
 		title = _("NVDA Message")
 
 	htmlPath = os.path.join(globalVars.appDir, "message.html")
@@ -131,7 +132,13 @@ def browseableMessage(
 	if closeButton or not copyButton:
 		dialog.addCloseButton(fallbackAction=True)
 	if copyButton:
-		dialog.addButton(wx.ID_COPY, label=_("&Copy"), callback=doCopy, closesDialog=False)
+		dialog.addButton(
+			wx.ID_COPY,
+			# Translators: The label of a button to copy the text of the window to the clipboard.
+			label=_("&Copy"),
+			callback=doCopy,
+			closesDialog=False,
+		)
 		# The WebView captures keyboard input, so the button's accelerator never reaches it. The HTML
 		# routes Alt+C to the same handler via the nvda-action://copy URL (see HtmlMessageDialog).
 		dialog.registerAction("copy", doCopy)
