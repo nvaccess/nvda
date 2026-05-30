@@ -57,7 +57,7 @@ def test_browseableMessage_opens():
 				f"{_EXPECTED_DIALOG_TITLE}  dialog",
 				f"{_EXPECTED_DIALOG_TITLE}  document",
 				"Character:  right-pointing arrow",
-			]
+			],
 		),
 	)
 	# Close the dialog before teardown
