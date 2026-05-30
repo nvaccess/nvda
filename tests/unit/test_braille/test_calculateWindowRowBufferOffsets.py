@@ -173,7 +173,7 @@ class TestCalculate(unittest.TestCase):
 			),
 			patch.object(braille.handler.buffer, "_getLanguageAtBufferPos", return_value="en_US"),
 			patch(
-				"braille.buffer.textUtils.hyphenation.getHyphenPositions",
+				"braille.buffers.textUtils.hyphenation.getHyphenPositions",
 				return_value=(3,),
 			),
 		):
@@ -198,7 +198,7 @@ class TestCalculate(unittest.TestCase):
 			patch.object(braille.handler.buffer, "bufferPositionsToRawText", return_value="word"),
 			patch.object(braille.handler.buffer, "_getLanguageAtBufferPos", return_value="en_US"),
 			patch(
-				"braille.buffer.textUtils.hyphenation.getHyphenPositions",
+				"braille.buffers.textUtils.hyphenation.getHyphenPositions",
 				return_value=(),
 			),
 		):
@@ -223,7 +223,7 @@ class TestCalculate(unittest.TestCase):
 			patch.object(braille.handler.buffer, "_getLanguageAtBufferPos", return_value="en_US"),
 			# Position that maps past the display edge.
 			patch(
-				"braille.buffer.textUtils.hyphenation.getHyphenPositions",
+				"braille.buffers.textUtils.hyphenation.getHyphenPositions",
 				return_value=(22,),
 			),
 		):
@@ -247,7 +247,7 @@ class TestCalculate(unittest.TestCase):
 			patch.object(braille.handler.buffer, "bufferPositionsToRawText", return_value="word"),
 			patch.object(braille.handler.buffer, "_getLanguageAtBufferPos", return_value="zz_ZZ"),
 			patch(
-				"braille.buffer.textUtils.hyphenation.getHyphenPositions",
+				"braille.buffers.textUtils.hyphenation.getHyphenPositions",
 				return_value=(),
 			),
 		):
