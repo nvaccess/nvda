@@ -1228,7 +1228,7 @@ class HtmlMessageDialog(MessageDialog):
 			wx.AcceleratorTable(
 				[
 					wx.AcceleratorEntry(wx.ACCEL_NORMAL, wx.WXK_ESCAPE, escapeId),
-				]
+				],
 			),
 		)
 
