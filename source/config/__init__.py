@@ -478,6 +478,30 @@ def _transformSpec(spec: ConfigObj):
 	)
 
 
+def addSection(sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: True =False):
+	"""Add a section to the configuration.
+	This is intended for use by add-ons to add sections to the configspec.
+	:param sectionName: The name of the section to add.
+	:param sectionSpec: The configspec for the section to add.
+	:param isBaseOnly: Whether this section should only be in the base configuration, defaults to False.
+	"""
+	if isBaseOnly:
+		conf.BASE_ONLY_SECTIONS.add(sectionName)
+		confspec[sectionName] = sectionSpec
+		profile = conf.profiles[0]
+		try:
+			sect = profile[sectionName]
+		except KeyError:
+			profile[sectionName] = {}
+			# ConfigObj mutates this into a configobj.Section.
+			sect = profile[sectionName]
+		sect.configspec = confspec[sectionName]
+		try:
+			profile.validate(conf.validator, section=sect)
+		except Exception:
+			log.error("Error validating section %s", sectionName, exc_info=True)
+
+
 class ConfigManager:
 	"""Manages and provides access to configuration.
 	In addition to the base configuration, there can be multiple active configuration profiles.
