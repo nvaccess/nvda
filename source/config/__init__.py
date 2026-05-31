@@ -1168,22 +1168,6 @@ class ConfigManager:
 		newValue = self._clampValue(currentValue, minValue, maxValue, step)
 		self.setConfigValue(newValue, *keyPath)
 
-	def addSection(self, sectionName: str, sectionSpec: "dict[str, Any]", isBaseOnly: bool = False):
-		"""Add a new section to the configuration spec, and saves it if necessary (i.e., if it's a base-only section added by an add-on).
-		:param sectionName: The name of the new section.
-		:param sectionSpec: The spec for the new section, as a dictionary.
-		:param isBaseOnly: Whether this section should only apply to the base configuration, defaults to False.
-		"""
-		self.spec[sectionName] = sectionSpec
-		if isBaseOnly:
-			self.BASE_ONLY_SECTIONS.add(sectionName)
-			baseProfile = self.profiles[0]
-			if sectionName not in baseProfile:
-				baseProfile[sectionName] = {}
-			sect = baseProfile[sectionName]
-			sect.configspec = self.spec[sectionName]
-			baseProfile.validate(self.validator, section=sect)
-
 
 class ConfigValidationData:
 	validationFuncName: str | None = None
