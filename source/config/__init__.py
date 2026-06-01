@@ -56,6 +56,10 @@ isAppX = False
 #: @type: ConfigManager
 conf = None
 
+#: Sections queued via addSection before initialize() has run.
+#: Each entry is a (sectionName, sectionSpec, isBaseOnly) tuple.
+_pendingSections: list[tuple[str, dict[str, Any], bool]] = []
+
 #: Notifies after the configuration profile has been switched.
 #: This allows components and add-ons to apply changes required by the new configuration.
 #: For example, braille switches braille displays if necessary.
@@ -478,9 +482,8 @@ def _transformSpec(spec: ConfigObj):
 	)
 
 
-def addSection(sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: True =False):
+def addSection(sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool = False):
 	"""Add a section to the configuration.
-	This is intended for use by add-ons to add sections to the configspec.
 	:param sectionName: The name of the section to add.
 	:param sectionSpec: The configspec for the section to add.
 	:param isBaseOnly: Whether this section should only be in the base configuration, defaults to False.
@@ -762,6 +765,7 @@ class ConfigManager:
 				self._writeProfileToFile(self._profileCache[name].filename, self._profileCache[name])
 				log.info("Saved configuration profile %s" % name)
 			self._dirtyProfiles.clear()
+			saveSectionsToFile(os.path.join(WritePaths.configDir, "configSections.ini"))
 		except PermissionError as e:
 			log.warning("Error saving configuration; probably read only file system", exc_info=True)
 			raise e
