@@ -102,6 +102,7 @@ badUIAWindowClassNames = (
 	"WuDuiListView",
 	"ComboBox",
 	"msctls_progress32",
+	"msctls_trackbar32",
 	"Edit",
 	"CommonPlacesWrapperWndClass",
 	"SysMonthCal32",
