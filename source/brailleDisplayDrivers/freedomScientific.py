@@ -352,7 +352,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				packetType + arg1 + arg2 + arg3 + payload,
 			)
 			assert calculatedChecksum == checksum, (
-				f"Checksum mismatch, expected {checksum} but got {payload[-1]}"
+				f"Checksum mismatch, expected {calculatedChecksum} but got {checksum}"
 			)
 		else:
 			payload = FS_DATA_EMPTY
@@ -378,7 +378,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		arg3: bytes,
 		payload: bytes,
 	) -> None:
-		"""Handle a packet from the device"
+		"""Handle a packet from the device.
 
 		The following packet types are handled:
 
@@ -750,7 +750,7 @@ class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 
 	@staticmethod
 	def _bitmaskToIndexes(bitmask: int) -> list[int]:
-		"""Return the ascending indexes of the set bits in C{bitmask}."""
+		"""Return the ascending indexes of the set bits in `bitmask`."""
 		return [i for i in range(bitmask.bit_length()) if (bitmask >> i) & 1]
 
 	def __init__(
