@@ -8,7 +8,6 @@ from __future__ import annotations
 import itertools
 import typing
 from typing import (
-	TYPE_CHECKING,
 	Any,
 	Callable,
 	Generator,
@@ -39,9 +38,6 @@ import hwPortUtils
 import bdDetect
 import NVDAState
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
-
-if TYPE_CHECKING:
-	pass
 
 from .constants import (
 	AUTOMATIC_PORT,

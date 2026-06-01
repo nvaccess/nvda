@@ -132,6 +132,10 @@ fontAttributeFormattingMarkers: dict[str, FormattingMarker] = {
 	),
 }
 
+# The submodule imports below are intentionally not at the top of the file (hence noqa: E402).
+# regions imports the constants and formatting markers defined above back from this package
+# (e.g. `from . import FormattingMarker`), so those names must already exist on the package when
+# the submodule is imported during this package's own (partial) initialisation.
 from .labels import (  # noqa: E402
 	roleLabels,
 	positiveStateLabels,
@@ -305,6 +309,8 @@ class DisplayDimensions(NamedTuple):
 		return self.numCols * self.numRows
 
 
+# BrailleHandler imports FALLBACK_TABLE, DisplayDimensions and the
+# focus helpers defined above back from this package, so they must be defined before it is imported.
 from .display import (  # noqa: E402
 	getDisplayList,
 	RENAMED_DRIVERS,

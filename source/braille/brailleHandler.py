@@ -73,7 +73,6 @@ from .display import (
 	_getDisplayDriver,
 )
 
-import braille
 from . import (
 	FALLBACK_TABLE,
 	DisplayDimensions,
@@ -282,9 +281,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		_showSpeechInBrailleRegions.append(region)
 		self.mainBuffer.regions = _showSpeechInBrailleRegions.copy()
 		if not currentRegions:
-			braille.handler.mainBuffer.focus(_showSpeechInBrailleRegions[0])
-		braille.handler.mainBuffer.update()
-		braille.handler.update()
+			self.mainBuffer.focus(_showSpeechInBrailleRegions[0])
+		self.mainBuffer.update()
+		self.update()
 
 	_suppressClearBrailleRegions: bool = False
 
