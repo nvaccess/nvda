@@ -5057,7 +5057,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Increases the magnification level of the magnifier",
+			"Increases the magnification level",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+=",
@@ -5071,7 +5071,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Decreases the magnification level of the magnifier",
+			"Decreases the magnification level",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+-",
@@ -5085,7 +5085,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnifier view to the left",
+			"Pan the magnified view to the left",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+alt+leftArrow",
@@ -5099,7 +5099,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnifier view to the right",
+			"Pan the magnified view to the right",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+alt+rightArrow",
@@ -5113,7 +5113,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnifier view up",
+			"Pan the magnified view up",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+alt+upArrow",
@@ -5127,7 +5127,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnifier view down",
+			"Pan the magnified view down",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+alt+downArrow",
@@ -5141,7 +5141,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnifier view to left edge",
+			"Pan the magnified view to left edge",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+shift+alt+leftArrow",
@@ -5155,7 +5155,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnifier view to right edge",
+			"Pan the magnified view to right edge",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+shift+alt+rightArrow",
@@ -5169,7 +5169,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnifier view to top edge",
+			"Pan the magnified view to top edge",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+shift+alt+upArrow",
@@ -5183,7 +5183,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnifier view to bottom edge",
+			"Pan the magnified view to bottom edge",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+shift+alt+downArrow",
@@ -5197,7 +5197,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle filter of the magnifier",
+			"Cycle through the color filters",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+i",
@@ -5211,7 +5211,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle follow mouse for the magnifier",
+			"Toggle mouse tracking",
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
@@ -5224,7 +5224,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle follow system focus for the magnifier",
+			"Toggle system focus tracking",
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
@@ -5237,7 +5237,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle follow review cursor for the magnifier",
+			"Toggle review cursor tracking",
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
@@ -5250,7 +5250,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle follow navigator object for the magnifier",
+			"Toggle navigator object for the magnifier",
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
@@ -5263,7 +5263,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle all follow modes for the magnifier",
+			"Toggle all tracking options",
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
@@ -5276,7 +5276,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle focus mode for the full-screen magnifier",
+			"Toggle focus mode",
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
@@ -5289,11 +5289,11 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describe a command.
-			"Launch spotlight if magnifier is full-screen",
+			"Temporary show the entire screen with spotlight around the mouse cursor",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+l",
-	)
+	)---------------
 	def script_startSpotlight(
 		self,
 		gesture: inputCore.InputGesture,
