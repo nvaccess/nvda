@@ -24,7 +24,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	saveConfigurationOnExit = boolean(default=True)
 	askToExit = boolean(default=true)
 	playStartAndExitSounds = boolean(default=true)
-	# possible log levels are SECRETS, DEBUG, IO, DEBUGWARNING, INFO and OFF
+	# possible log levels are DEBUG_UNREDACTED, DEBUG, IO, DEBUGWARNING, INFO and OFF
 	loggingLevel = string(default="INFO")
 	showWelcomeDialogAtStartup = boolean(default=true)
 	preventDisplayTurningOff = boolean(default=true)
@@ -116,7 +116,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Magnifier settings
 [magnifier]
-	zoomLevel = float(min=1.0, max=10.0, default=2.0)
+	enabled = boolean(default=false)
+	magnifiedView = string(default="fullscreen")
+	zoom = integer(min=100, max=5000, default=200)
 	isTrueCentered = boolean(default=False)
 	filter = string(default="normal")
 	followMouse = boolean(default=True)
@@ -359,6 +361,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	cancelExpiredFocusSpeech = integer(0, 2, default=0)
 	# 0: Only in test versions, 1: Yes, 2: No
 	playErrorSound = integer(0, 2, default=0)
+	speechDictsUseModernRegex = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 
 [addonStore]
 	automaticUpdates = option("notify", "update", "disabled", default="notify")

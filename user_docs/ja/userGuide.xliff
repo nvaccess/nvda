@@ -10855,7 +10855,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The system focus, also known simply as the focus, is the [object](#Objects) which receives keys typed on the keyboard.</source>
-        <target>システムフォーカス (または単にフォーカスとも呼ばれます) とは、 [オブジェクト](#Objects)で、キーボードからの入力を受け取るもののことです。</target>
+        <target>キーボードフォーカス (またはシステムフォーカスや単にフォーカスとも呼ばれます) とは、 [オブジェクト](#Objects)で、キーボードからの入力を受け取るもののことです。</target>
       </segment>
     </unit>
     <unit id="23f66eb1-5ac5-41ca-9c9d-0b4f8e235a81">
@@ -11099,7 +11099,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Report link destination |`NVDA+k` |`NVDA+k` |Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review</source>
-        <target>リンク先URLの報告 |`NVDA+k` |`NVDA+k` |1回押すとテキストカーソルまたはシステムフォーカスの位置のリンク先URLを報告します。2回押すとウィンドウを開いて表示します。</target>
+        <target>リンク先URLの報告 |`NVDA+k` |`NVDA+k` |1回押すとテキストカーソルまたはキーボードフォーカスの位置のリンク先URLを報告します。2回押すとウィンドウを開いて表示します。</target>
       </segment>
     </unit>
     <unit id="2a490217-b233-4a4f-a523-08c5f31232a6">
@@ -16598,7 +16598,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>By default, the navigator object follows the system focus or browse mode cursor, so you can usually just move the focus or browse mode cursor where desired.</source>
-        <target>既定の設定では、ナビゲーターオブジェクトはシステムフォーカスまたはブラウズモードのカーソルに追従するので、まず認識したい場所にシステムフォーカスまたはブラウズモードのカーソルを移動します。</target>
+        <target>既定の設定では、ナビゲーターオブジェクトはキーボードフォーカスまたはブラウズモードのカーソルに追従するので、まず認識したい場所にシステムフォーカスまたはブラウズモードのカーソルを移動します。</target>
       </segment>
     </unit>
     <unit id="0ad964f5-007a-4e33-a7d1-c77b48457727">
@@ -20546,7 +20546,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>When follow cursors is selected, the braille display will follow either the system focus/caret or the navigator object/review cursor, depending on what braille is tethered to.</source>
-        <target>「カーソルに追従」が選択されている場合、点字ディスプレイはシステムフォーカス/テキストカーソルまたはナビゲーターオブジェクト/レビューカーソルのいずれかに追従します。どちらに追従するかは「点字表示の切り替え」によります。</target>
+        <target>「カーソルに追従」が選択されている場合、点字ディスプレイはキーボードフォーカス/テキストカーソルまたはナビゲーターオブジェクト/レビューカーソルのいずれかに追従します。どちらに追従するかは「点字表示の切り替え」によります。</target>
       </segment>
     </unit>
     <unit id="52d88a5e-4e39-4a6a-93d4-8dc82422aa04">
@@ -20834,7 +20834,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>In this case, when the navigator object or the review cursor position is changed by means of explicit user interaction, NVDA will tether to review temporarily, until the focus or the caret changes.</source>
-        <target>ユーザーの操作によってナビゲーターオブジェクトやレビューカーソルが移動したときには、点字表示は、再びシステムフォーカスやテキストカーソルが移動するまで、一時的にレビュー追従になります。</target>
+        <target>ユーザーの操作によってナビゲーターオブジェクトやレビューカーソルが移動したときには、点字表示は、再びキーボードフォーカスやテキストカーソルが移動するまで、一時的にレビュー追従になります。</target>
       </segment>
     </unit>
     <unit id="6f2884c5-d573-46d4-959f-e9e1c5e4a896">
@@ -20870,7 +20870,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>In this case, Braille will not follow system focus and system caret.</source>
-        <target>この場合、点字はシステムフォーカスやテキストカーソルには追従しません。</target>
+        <target>この場合、点字はキーボードフォーカスやテキストカーソルには追従しません。</target>
       </segment>
     </unit>
     <unit id="8227c48e-3d11-412e-80c2-437ff9ccf394">
@@ -24488,7 +24488,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>These options typically apply to focus reporting and NVDA object navigation, but not reading text content e.g. browse mode.</source>
-        <target>このオプションは通常、システムフォーカスの報告とNVDAのオブジェクトナビゲーションに適用されます。テキストの内容を読む操作には影響しません。</target>
+        <target>このオプションは通常、キーボードフォーカスの報告とNVDAのオブジェクトナビゲーションに適用されます。テキストの内容を読む操作には影響しません。</target>
       </segment>
     </unit>
     <unit id="5df0cae7-a2f9-4ba5-abe4-fd18eaca5a5e">
@@ -25778,7 +25778,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Spelling or grammar errors [(Speech, Sound, Braille)](#ReportSpellingErrors)</source>
-        <target>[スペルミスまたは文法エラー[(読み上げ、音、点字)](#ReportSpellingErrors)</target>
+        <target>スペルミスまたは文法エラー[(読み上げ、音、点字)](#ReportSpellingErrors)</target>
       </segment>
     </unit>
     <unit id="97d0bcd4-9d76-4196-851a-d147426e4b36">
@@ -26658,8 +26658,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source> Options | Automatic, English, English (en-GB), Chinese (Traditional) (zh-TW), Finnish, German, Indonesian, Norwegian Bokmål, Spanish, Swedish, Vietnamese </source>
-        <target> 選択肢 | 自動、英語、英語（イギリス）（en-GB）、中国語（繁体字）（zh-TW）、フィンランド語、ドイツ語、インドネシア語、ノルウェー語（ブークモール）、スペイン語、スウェーデン語、ベトナム語
- </target>
+        <target> 選択肢 | 自動、英語、英語（イギリス）（en-GB）、中国語（繁体字）（zh-TW）、フィンランド語、ドイツ語、インドネシア語、ノルウェー語（ブークモール）、スペイン語、スウェーデン語、ベトナム語 </target>
       </segment>
     </unit>
     <unit id="aa88b007-3eb9-4803-8e97-7065a86c8685">
@@ -28303,8 +28302,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Allow this computer to be controlled |Use this computer as the "controlled" computer. This allows the operator of the "controlling" computer to use this computer as if they were sitting in front of it. </source>
-        <target>このPCの操作を許可 | このPCを「操作される側」として使用します。これにより「操作する側」のPCのユーザーが、このPCを目の前で操作しているかのように使用できるようになります。
- </target>
+        <target>このPCの操作を許可 | このPCを「操作される側」として使用します。これにより「操作する側」のPCのユーザーが、このPCを目の前で操作しているかのように使用できるようになります。 </target>
       </segment>
     </unit>
     <unit id="b9e02315-fd92-42e4-941a-68e452bb789f">
@@ -28378,8 +28376,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Host locally |Use this instance of NVDA as the Remote Access server (advanced). This option may require network configuration that is out of scope for this manual. </source>
-        <target>ローカルでホスト | このNVDAをリモートアクセスサーバーとして使用します（上級者向け）。このオプションを使用するには、本マニュアルの範囲外となるネットワーク設定が必要になる場合があります。
- </target>
+        <target>ローカルでホスト | このNVDAをリモートアクセスサーバーとして使用します（上級者向け）。このオプションを使用するには、本マニュアルの範囲外となるネットワーク設定が必要になる場合があります。 </target>
       </segment>
     </unit>
     <unit id="e508195a-301a-4839-a056-a306d6f799a2">
@@ -29251,7 +29248,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Selective: NVDA will limit event registration to the system focus for most events.</source>
-        <target>選択的: NVDA は多くのイベントについてイベント取得の登録をシステムフォーカスに限定します。</target>
+        <target>選択的: NVDA は多くのイベントについてイベント取得の登録をキーボードフォーカスに限定します。</target>
       </segment>
     </unit>
     <unit id="9c579d2e-fd2d-46b6-bc69-0c20902aa310">
@@ -44347,7 +44344,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Sets the navigator object to the current focus |`eCursor1`, `eCursor2`</source>
-        <target>ナビゲーターオブジェクトを現在のシステムフォーカスに移動 |`eCursor1`, `eCursor2`</target>
+        <target>ナビゲーターオブジェクトを現在のキーボードフォーカスに移動 |`eCursor1`, `eCursor2`</target>
       </segment>
     </unit>
     <unit id="0819ce53-8e78-483d-9fba-0cd454947f74">
@@ -44358,7 +44355,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Move to current focus |`cursor1`, `cursor2`</source>
-        <target>現在のシステムフォーカスに移動 |`cursor1`, `cursor2`</target>
+        <target>現在のキーボードフォーカスに移動 |`cursor1`, `cursor2`</target>
       </segment>
     </unit>
     <unit id="eead0db5-8896-4792-ae56-c2171e164c2c">
@@ -44391,7 +44388,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Moves focus to current navigator object |`eCursor1+eCursor2`</source>
-        <target>現在のナビゲーターオブジェクトにシステムフォーカスを移動 |`eCursor1+eCursor2`</target>
+        <target>現在のナビゲーターオブジェクトにキーボードフォーカスを移動 |`eCursor1+eCursor2`</target>
       </segment>
     </unit>
     <unit id="b44be3a0-115c-403a-ac76-971ec77a4027">

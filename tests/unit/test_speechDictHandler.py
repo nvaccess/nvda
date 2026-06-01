@@ -7,6 +7,8 @@
 
 import unittest
 
+import config
+
 from speechDictHandler.types import SpeechDictEntry, EntryType
 
 
@@ -251,3 +253,76 @@ class TestSpeechDictEntry(unittest.TestCase):
 		expected = "replaced"
 		actual = entry.sub("test.txt")
 		self.assertEqual(expected, actual)
+
+
+class TestSpeechDictEntryCombiningMarks(unittest.TestCase):
+	"""\\w/\\b in Python's `re` skip Unicode combining marks.
+	The four word-boundary entry types must use the `regex` module so
+	combining marks (Hebrew niqqud, Arabic harakat, etc.) are matched."""
+
+	def test_word_hebrewWithNiqqud_doesNotMatchInLargerWord(self):
+		"""WORD entry for אָב must NOT match inside אָבִי because, with combining
+		marks treated as word characters, there is no word boundary between
+		BET and the trailing HIRIQ. With stdlib `re` (broken), HIRIQ is
+		non-word, a spurious `\\b` exists there, and the entry would match.
+		"""
+		entry = SpeechDictEntry("אָב", "FATHER", type=EntryType.WORD)
+		self.assertEqual("אָבִי", entry.sub("אָבִי"))
+
+	def test_word_hebrewWithNiqqud_matchesAsStandaloneWord(self):
+		"""WORD entry for אָב matches when surrounded by whitespace."""
+		entry = SpeechDictEntry("אָב", "FATHER", type=EntryType.WORD)
+		self.assertEqual(" FATHER ", entry.sub(" אָב "))
+
+	def test_startOfWord_hebrewWithNiqqud_matchesAtStart(self):
+		entry = SpeechDictEntry("אָב", "FATHER", type=EntryType.START_OF_WORD)
+		self.assertEqual("FATHERִי", entry.sub("אָבִי"))
+
+	def test_endOfWord_hebrewWithNiqqud_matchesAtEnd(self):
+		entry = SpeechDictEntry("בִי", "MY", type=EntryType.END_OF_WORD)
+		self.assertEqual("אָMY", entry.sub("אָבִי"))
+
+	def test_partOfWord_hebrewWithNiqqud_matchesInside(self):
+		entry = SpeechDictEntry("ָב", "X", type=EntryType.PART_OF_WORD)
+		# Pattern: QAMATS + BET. Should match between ALEF and HIRIQ.
+		self.assertEqual("אXִי", entry.sub("אָבִי"))
+
+	def test_word_arabicWithHarakat_matches(self):
+		"""Arabic kitāb كِتَاب (KAF KASRA TAA FATHA ALEF BAA)."""
+		entry = SpeechDictEntry("كِتَاب", "BOOK", type=EntryType.WORD)
+		self.assertEqual("BOOK", entry.sub("كِتَاب"))
+
+
+class TestSpeechDictEntryRegexpFlag(unittest.TestCase):
+	"""REGEXP entry type opt-in to the `regex` module via the
+	`speechDictsUseModernRegex` feature flag."""
+
+	def setUp(self):
+		# Save and clear any saved feature-flag value so the spec default
+		# (disabled) takes effect for the first half of each test.
+		self._origValue = config.conf["featureFlag"]["speechDictsUseModernRegex"]
+		config.conf["featureFlag"]["speechDictsUseModernRegex"] = "default"
+
+	def tearDown(self):
+		config.conf["featureFlag"]["speechDictsUseModernRegex"] = self._origValue
+
+	def test_regexp_flagDisabled_useReSemantics(self):
+		"""With the flag disabled (default), `\\w` should NOT match the
+		Hebrew QAMATS combining mark, matching legacy `re` behaviour."""
+		config.conf["featureFlag"]["speechDictsUseModernRegex"] = "disabled"
+		entry = SpeechDictEntry(r"\w+", "X", type=EntryType.REGEXP)
+		# `re` splits אָב into two separate \w+ runs around the QAMATS.
+		self.assertEqual("XָX", entry.sub("אָב"))
+
+	def test_regexp_flagEnabled_useRegexSemantics(self):
+		"""With the flag enabled, `\\w` should match the entire Hebrew
+		word including the QAMATS combining mark."""
+		config.conf["featureFlag"]["speechDictsUseModernRegex"] = "enabled"
+		entry = SpeechDictEntry(r"\w+", "X", type=EntryType.REGEXP)
+		self.assertEqual("X", entry.sub("אָב"))
+
+	def test_regexp_flagDefault_matchesDisabled(self):
+		"""behaviorOfDefault=\"disabled\" — explicit default resolves to re."""
+		config.conf["featureFlag"]["speechDictsUseModernRegex"] = "default"
+		entry = SpeechDictEntry(r"\w+", "X", type=EntryType.REGEXP)
+		self.assertEqual("XָX", entry.sub("אָב"))

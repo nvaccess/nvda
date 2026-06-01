@@ -7,8 +7,10 @@
 Full-screen magnifier module.
 """
 
+from typing import override
+
 from logHandler import log
-import screenCurtain
+import speech
 import ui
 import winUser
 from winBindings import magnification
@@ -17,7 +19,7 @@ from .utils.filterHandler import FilterMatrix
 from .utils.spotlightManager import SpotlightManager
 from .utils.types import (
 	Filter,
-	MagnifierType,
+	MagnifiedView,
 	FullScreenMode,
 	Size,
 	MagnifierParameters,
@@ -28,20 +30,19 @@ from .utils.errorHandling import trackNativeMagnifierErrors
 
 
 class FullScreenMagnifier(Magnifier):
+	"""Magnifier that uses the Windows Magnification API to magnify the entire screen."""
+
+	_MAX_RECOVERY_ATTEMPTS: int = 3
+	_MAGNIFIED_VIEW = MagnifiedView.FULLSCREEN
+
 	def __init__(self):
 		super().__init__()
-		self._magnifierType = MagnifierType.FULLSCREEN
 		self._fullscreenMode = getFullscreenMode()
-		self._currentCoordinates = Coordinates(0, 0)
+		self.currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
 		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
-		self._startMagnifier()
 
-	@property
-	def filterType(self) -> Filter:
-		return self._filterType
-
-	@filterType.setter
+	@Magnifier.filterType.setter
 	def filterType(self, value: Filter) -> None:
 		self._filterType = value
 		if self._isActive:
@@ -55,46 +56,69 @@ class FullScreenMagnifier(Magnifier):
 		log.debug("Full-screen Magnifier gain focus event")
 		nextHandler()
 
+	@override
 	def _startMagnifier(self) -> None:
 		"""
 		Start the Full-screen magnifier using windows DLL
 		"""
-		# Check if Screen Curtain is active
-		if screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled:
-			log.warning("Cannot start magnifier: Screen Curtain is active")
-			raise RuntimeError("Screen Curtain is active")
-
 		super()._startMagnifier()
 		log.debug(
 			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self._fullscreenMode}",
 		)
-		# Initialize Magnification API if not already initialized
-		self._initializeNativeMagnification()
+		try:
+			self._initializeNativeMagnification()
+		except OSError:
+			log.exception("Failed to initialize magnification API")
+			# _isActive is True from super(), so _stopMagnifier properly unregisters
+			self._stopMagnifier()
+			message = pgettext(
+				"magnifier",
+				# Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
+				"Cannot start magnifier. Another magnifier application may already be running.",
+			)
+			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
+			return
 
 		if self._isActive:
 			self._applyFilter()
 		self._startTimer(self._updateMagnifier)
 
-	@trackNativeMagnifierErrors
 	def _initializeNativeMagnification(self) -> None:
 		"""
-		Initialize the Magnification API.
-		If already initialized or on failure, continues anyway.
+		Initialize the Magnification API and verify it is fully usable.
+
+		Raises OSError if MagInitialize fails or if the initial fullscreen
+		transform fails (e.g. Windows Magnifier already holds the API). If
+		MagSetFullscreenTransform fails after a successful MagInitialize, this
+		method uninitializes the native magnification API before re-raising.
+		Failures from MagInitialize are propagated to the caller.
 		"""
 		magnification.MagInitialize()
 		log.debug("Magnification API initialized")
+		# Applying the first real update verifies the API is usable without
+		# briefly jumping the magnified view to the top-left corner.
+		try:
+			coordinates = self._getCoordinatesForMode(self.currentCoordinates)
+			# Save screen position for mode continuity, matching _doUpdate.
+			self._lastScreenPosition = coordinates
+			self._fullscreenMagnifier(coordinates)
+		except OSError:
+			self._uninitializeNativeMagnification()
+			raise
 
+	@override
 	def _doUpdate(self):
 		"""
 		Perform the actual update of the magnifier
 		"""
 		# Calculate new position based on focus mode
-		coordinates = self._getCoordinatesForMode(self._currentCoordinates)
+		coordinates = self._getCoordinatesForMode(self.currentCoordinates)
 		# Always save screen position for mode continuity
 		self._lastScreenPosition = coordinates
 
 		self._fullscreenMagnifier(coordinates)
 
+	@override
 	def _stopMagnifier(self) -> None:
 		"""
 		Stop the Full-screen magnifier using windows DLL
@@ -124,38 +148,40 @@ class FullScreenMagnifier(Magnifier):
 		magnification.MagUninitialize()
 		log.debug("Magnification API uninitialized")
 
+	@override
 	def _attemptRecovery(self) -> None:
 		"""
 		Attempt to recover from repeated Magnification API errors by
 		reinitializing the API. If recovery fails, the magnifier is stopped.
 
-		Each step (uninitialize, initialize, apply filter, restart timer) is
-		controlled independently. If any critical step fails, recovery is aborted.
+		Capped at _MAX_RECOVERY_ATTEMPTS to prevent an infinite restart loop
+		when the API is permanently unavailable (e.g. Windows Magnifier running).
 		"""
-		log.info("Attempting full-screen magnifier recovery via API reinitialization")
+		self._recoveryAttempts += 1
+		if self._recoveryAttempts > self._MAX_RECOVERY_ATTEMPTS:
+			log.error(
+				f"Max recovery attempts ({self._MAX_RECOVERY_ATTEMPTS}) reached, stopping magnifier",
+			)
+			self._conductRecoveryFailure()
+			return
 
-		# Step 1: Uninitialize (best effort, may already be uninitialized)
+		log.info(
+			f"Attempting full-screen magnifier recovery "
+			f"(attempt {self._recoveryAttempts}/{self._MAX_RECOVERY_ATTEMPTS})",
+		)
+
 		self._uninitializeNativeMagnification()
 
-		# Step 2: Initialize (critical - raises on failure)
 		try:
-			magnification.MagInitialize()
-			log.debug("Magnification API initialized during recovery")
-		except OSError:
-			log.error("MagInitialize during recovery failed, aborting recovery", exc_info=True)
-			self._conductRecoveryFailure()
-			return
-
-		# Step 3: Apply filter (critical - raises on failure)
-		try:
+			# _initializeNativeMagnification also probes MagSetFullscreenTransform,
+			# which is the call that fails when Windows Magnifier is running.
+			self._initializeNativeMagnification()
 			magnification.MagSetFullscreenColorEffect(self._getFilterMatrix().value)
-			log.debug("Filter applied during recovery")
 		except OSError:
-			log.error("Failed to apply filter during recovery, aborting recovery", exc_info=True)
+			log.error("Recovery failed", exc_info=True)
 			self._conductRecoveryFailure()
 			return
 
-		# All steps succeeded
 		self._consecutiveErrors = 0
 		log.info("Full-screen magnifier recovery succeeded")
 		self._startTimer(self._updateMagnifier)
@@ -204,7 +230,7 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		params = self._getMagnifierParameters(coordinates)
 		magnification.MagSetFullscreenTransform(
-			self.zoomLevel,
+			self.zoomLevelRatio,
 			params.coordinates.x,
 			params.coordinates.y,
 		)
@@ -228,19 +254,20 @@ class FullScreenMagnifier(Magnifier):
 			case FullScreenMode.CENTER:
 				return coordinates
 
+	@override
 	def _keepMouseCentered(self) -> None:
 		"""
 		Move the mouse to the center of the magnified view.
 		Skips if a mouse button is currently pressed to avoid interfering with clicks.
 		"""
 		if (
-			winUser.getKeyState(winUser.VK_LBUTTON) < 0
-			or winUser.getKeyState(winUser.VK_RBUTTON) < 0
-			or winUser.getKeyState(winUser.VK_MBUTTON) < 0
+			winUser.getAsyncKeyState(winUser.VK_LBUTTON) < 0
+			or winUser.getAsyncKeyState(winUser.VK_RBUTTON) < 0
+			or winUser.getAsyncKeyState(winUser.VK_MBUTTON) < 0
 		):
 			log.debug("Mouse button pressed, skipping cursor repositioning to avoid interfering with click")
 			return
-		coordinates = self._getCoordinatesForMode(self._currentCoordinates)
+		coordinates = self._getCoordinatesForMode(self.currentCoordinates)
 		params = self._getMagnifierParameters(coordinates)
 		centerX = params.coordinates.x + params.magnifierSize.width // 2
 		centerY = params.coordinates.y + params.magnifierSize.height // 2
@@ -313,7 +340,7 @@ class FullScreenMagnifier(Magnifier):
 		:return: The (x, y) coordinates of the magnifier center
 		"""
 
-		zoom = self.zoomLevel
+		zoom = self.zoomLevelRatio
 		mouseX, mouseY = coordinates
 		magnifierWidth = self._displayOrientation.width / zoom
 		magnifierHeight = self._displayOrientation.height / zoom
@@ -350,6 +377,7 @@ class FullScreenMagnifier(Magnifier):
 		self._spotlightManager._spotlightIsActive = False
 		self._startTimer(self._updateMagnifier)
 
+	@override
 	def _getMagnifierParameters(self, coordinates: Coordinates) -> MagnifierParameters:
 		"""
 		Compute the top-left corner of the magnifier window centered on (x, y)
@@ -360,8 +388,8 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		x, y = coordinates
 		# Calculate the size of the capture area at the current zoom level
-		magnifierWidth = self._displayOrientation.width / self.zoomLevel
-		magnifierHeight = self._displayOrientation.height / self.zoomLevel
+		magnifierWidth = self._displayOrientation.width / self.zoomLevelRatio
+		magnifierHeight = self._displayOrientation.height / self.zoomLevelRatio
 
 		# Compute the top-left corner so that (x, y) is at the center
 		left = int(x - (magnifierWidth / 2))

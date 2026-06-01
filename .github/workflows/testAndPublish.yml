@@ -31,12 +31,12 @@ env:
   VSCMD_SKIP_SENDTELEMETRY: 1
   # Cache details about available MSVC tooling for subsequent SCons invocations to the provided file.
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
-  defaultRunner: 'windows-2025'
-  supportedRunners: '["windows-2022", "windows-2025"]'
+  defaultRunner: 'windows-2025-vs2026'
+  supportedRunners: '["windows-2022", "windows-2025-vs2026"]'
   defaultArch: x64
   supportedArchitectures: '["x64"]'
-  defaultPythonVersion: '3.13.12'
-  supportedPythonVersions: '["3.13.12"]'
+  defaultPythonVersion: '3.13.13'
+  supportedPythonVersions: '["3.13.13"]'
 
 jobs:
   matrix:
@@ -278,7 +278,7 @@ jobs:
         name: Unit tests results (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: testOutput/unit/unitTests.xml
     - name: Publish unit test report
-      uses: mikepenz/action-junit-report@v5
+      uses: mikepenz/action-junit-report@v6
       if: ${{ failure() }}
       with:
         check_name: Unit tests (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
@@ -477,7 +477,7 @@ jobs:
           testOutput/install
           !testOutput/install/nvda_install_temp.log
     - name: Publish system test report
-      uses: mikepenz/action-junit-report@v5
+      uses: mikepenz/action-junit-report@v6
       if: ${{ failure() }}
       with:
         check_name: "System tests (${{ matrix.testSuite }}) (${{ matrix.runner }}, ${{ matrix.pythonVersion }}, ${{ matrix.arch }})"
