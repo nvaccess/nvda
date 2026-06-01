@@ -1255,9 +1255,6 @@ class HtmlMessageDialog(MessageDialog):
 		return super().Show(show)
 
 	def _createMessageControl(self) -> WebView:
-		# Ensure IE11 emulation when the IE backend is used (explicit or as a fallback).
-		# No-op when Edge is the active backend.
-		WebView.MSWSetEmulationLevel(wx.html2.WEBVIEWIE_EMU_IE11)
 		control = WebView.New(self, backend=self._webViewBackend)
 		control.EnableContextMenu(False)
 		control.EnableHistory(False)
