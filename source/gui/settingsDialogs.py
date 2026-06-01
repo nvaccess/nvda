@@ -6088,7 +6088,7 @@ class MagnifierPanel(SettingsPanel):
 		generalGroupText = _("General")
 		generalGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=generalGroupText)
 		generalGroupBox = generalGroupSizer.GetStaticBox()
-		generalGroup = guiHelper.BoxSizerHelper(self, sizer=generalGroupSizer)
+		generalGroup = guiHelper.BoxSizerHelper(generalGroupBox, sizer=generalGroupSizer)
 		sHelper.addItem(generalGroup)
 
 		# Enable the magnifier
@@ -6138,7 +6138,7 @@ class MagnifierPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("MagnifierFilter", self.filterList)
 
-		# Set  value from config
+		# Set value from config
 		filterValue = magnifierConfig.getFilter()
 		self._filterInitially = filterValue
 		self.filterList.SetSelection(list(Filter).index(filterValue))
@@ -6185,7 +6185,7 @@ class MagnifierPanel(SettingsPanel):
 		focusGroupText = _("Focus")
 		focusGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=focusGroupText)
 		focusGroupBox = focusGroupSizer.GetStaticBox()
-		focusGroup = guiHelper.BoxSizerHelper(self, sizer=focusGroupSizer)
+		focusGroup = guiHelper.BoxSizerHelper(focusGroupBox, sizer=focusGroupSizer)
 		sHelper.addItem(focusGroup)
 
 		_followFocusLabels: dict[MagnifierFollowFocusType, tuple[str, str]] = {
@@ -6218,11 +6218,11 @@ class MagnifierPanel(SettingsPanel):
 		fullscreenGroupText = _("Fullscreen")
 		self.fullscreenGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=fullscreenGroupText)
 		fullscreenGroupBox = self.fullscreenGroupSizer.GetStaticBox()
-		fullscreenGroup = guiHelper.BoxSizerHelper(self, sizer=self.fullscreenGroupSizer)
+		fullscreenGroup = guiHelper.BoxSizerHelper(fullscreenGroupBox, sizer=self.fullscreenGroupSizer)
 		sHelper.addItem(fullscreenGroup)
 
 		# FULLSCREEN MODE SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the  full-screen mode
+		# Translators: The label for a setting in magnifier settings to select the full-screen mode
 		fullscreenModeLabelText = _("Focus &mode:")
 		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
 		self.fullscreenModeList = fullscreenGroup.addLabeledControl(
@@ -6235,9 +6235,11 @@ class MagnifierPanel(SettingsPanel):
 			self.fullscreenModeList,
 		)
 
-		# Set  value from config
+		# Set value from config
 		fullscreenModeValue = magnifierConfig.getFullscreenMode()
+		self._fullscreenModeInitially = fullscreenModeValue
 		self.fullscreenModeList.SetSelection(list(FullScreenMode).index(fullscreenModeValue))
+		self.fullscreenModeList.Bind(wx.EVT_CHOICE, self._onImmediateSettingChange)
 
 		# KEEP MOUSE CENTERED
 		# Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
