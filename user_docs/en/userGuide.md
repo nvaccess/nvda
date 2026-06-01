@@ -6315,6 +6315,18 @@ Secure screens include:
 * The User Access Control dialog, active when performing an action as an administrator
   * This includes installing programs
 
+### Downloading NVDA {#DownloadingNVDA}
+
+NVDA can be downloaded and installed using the Windows Package Manager (WinGet).
+Run the following command in Command Prompt (`cmd`) or PowerShell to install the latest version of NVDA:
+
+`winget install --id NVAccess.NVDA`
+
+To install beta or RC versions, use the following WinGet package identifiers:
+
+* Beta: `--id NVAccess.NVDA.Beta`
+* RC: `--id NVAccess.NVDA.RC`
+
 ### Command Line Options {#CommandLineOptions}
 
 NVDA can accept one or more additional options when it starts which alter its behaviour.
