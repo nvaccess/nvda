@@ -37,6 +37,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * Drivers should set `cellIndexes` directly instead of `routingIndex`.
   * When a gesture addresses more than one cell, its `id` should be set to `"multiRouting"` (or be built via the new `BrailleDisplayGesture.idForCellCount(n)` helper).
   * `cellIndexes` is not limited to routing keys; touch-sensitive cells (e.g. Handy Tech Active Tactile Control) can reuse the same attribute.
+* Component updates:
+  * Updated py2exe to 0.14.1.1. (#20260, @LeonarddeR)
 
 #### Deprecations
 
