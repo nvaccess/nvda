@@ -108,6 +108,7 @@ class FullScreenMagnifier(Magnifier):
 			self._fullscreenMagnifier(coordinates)
 		except OSError:
 			self._uninitializeNativeMagnification()
+			self._nativeApiInitialized = False
 			raise
 
 	@override
@@ -139,6 +140,21 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		self._uninitializeNativeMagnification()
 		self._nativeApiInitialized = False
+
+	@override
+	def onScreenCurtainEnabled(self) -> None:
+		"""
+		Release the Magnification API before the screen curtain takes ownership.
+		The screen curtain performs its own MagInitialize/MagUninitialize cycle,
+		which resets the Windows API state and allows the magnifier to re-initialize
+		cleanly when the screen curtain is disabled.
+		Without this, the screen curtain's MagUninitialize would kill our
+		kept-alive initialization, causing WinError 1 on the next magnifier start.
+		"""
+		super().onScreenCurtainEnabled()
+		if self._nativeApiInitialized:
+			self._uninitializeNativeMagnification()
+			self._nativeApiInitialized = False
 
 	@trackNativeMagnifierErrors
 	def _resetMagnification(self) -> None:
