@@ -56,9 +56,6 @@ isAppX = False
 #: @type: ConfigManager
 conf = None
 
-#: Sections queued via addSection before initialize() has run.
-#: Each entry is a (sectionName, sectionSpec, isBaseOnly) tuple.
-_pendingSections: list[tuple[str, dict[str, Any], bool]] = []
 
 #: Notifies after the configuration profile has been switched.
 #: This allows components and add-ons to apply changes required by the new configuration.
@@ -765,7 +762,6 @@ class ConfigManager:
 				self._writeProfileToFile(self._profileCache[name].filename, self._profileCache[name])
 				log.info("Saved configuration profile %s" % name)
 			self._dirtyProfiles.clear()
-			saveSectionsToFile(os.path.join(WritePaths.configDir, "configSections.ini"))
 		except PermissionError as e:
 			log.warning("Error saving configuration; probably read only file system", exc_info=True)
 			raise e
