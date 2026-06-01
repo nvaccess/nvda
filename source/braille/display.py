@@ -43,7 +43,7 @@ from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverS
 if TYPE_CHECKING:
 	pass
 
-from .labels import (
+from .constants import (
 	AUTOMATIC_PORT,
 	USB_PORT,
 	BLUETOOTH_PORT,

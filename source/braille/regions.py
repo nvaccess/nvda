@@ -49,10 +49,14 @@ from .labels import (
 	positiveStateLabels,
 	negativeStateLabels,
 	landmarkLabels,
+)
+from .constants import (
 	SELECTION_SHAPE,
 	INPUT_START_IND,
 	INPUT_END_IND,
 	TEXT_SEPARATOR,
+)
+from . import (
 	FormatTagDelimiter,
 	fontAttributeFormattingMarkers,
 	FormattingMarker,

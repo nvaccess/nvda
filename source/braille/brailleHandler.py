@@ -53,10 +53,11 @@ if TYPE_CHECKING:
 	from speech.types import SpeechSequence
 
 
-from .labels import (
+from .constants import (
 	AUTO_DISPLAY_NAME,
 	NO_BRAILLE_DISPLAY_NAME,
 	CONTEXTPRES_CHANGEDCONTEXT,
+	TEXT_SEPARATOR,
 )
 from .regions import (
 	TextRegion,
@@ -65,10 +66,6 @@ from .regions import (
 )
 from .buffers import (
 	BrailleBuffer,
-	DisplayDimensions,
-	getFocusContextRegions,
-	getFocusRegions,
-	formatCellsForLog,
 )
 from .display import (
 	BrailleDisplayDriver,
@@ -77,6 +74,12 @@ from .display import (
 )
 
 import braille
+from . import (
+	FALLBACK_TABLE,
+	DisplayDimensions,
+	getFocusContextRegions,
+	getFocusRegions,
+)
 
 from .extensions import (
 	pre_writeCells,
@@ -90,8 +93,20 @@ from .extensions import (
 	_post_dismissBrailleMessage,
 )
 
-FALLBACK_TABLE = config.conf.getConfigValidation(("braille", "translationTable")).default
-"""Table to use if the output table configuration is invalid."""
+
+def formatCellsForLog(cells: List[int]) -> str:
+	"""Formats a sequence of braille cells so that it is suitable for logging.
+	The output contains the dot numbers for each cell, with each cell separated by a space.
+	A C{-} indicates an empty cell.
+	@param cells: The cells to format.
+	@return: The formatted cells.
+	"""
+	# optimisation: This gets called a lot, so needs to be as efficient as possible.
+	# List comprehensions without function calls are faster than loops.
+	# For str.join, list comprehensions are faster than generator comprehensions.
+	return TEXT_SEPARATOR.join(
+		["".join([str(dot + 1) for dot in range(8) if cell & (1 << dot)]) if cell else "-" for cell in cells],
+	)
 
 
 class BrailleHandler(baseObject.AutoPropertyObject):
