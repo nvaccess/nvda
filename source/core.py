@@ -347,6 +347,10 @@ def resetConfiguration(factoryDefaults=False):
 	audio.soundSplit.terminate()
 	log.debug("Terminating background braille display detection")
 	bdDetect.terminate()
+	log.debug("Terminating BLE I/O")
+	import hwIo.ble
+
+	hwIo.ble.terminate()
 	log.debug("Terminating background i/o")
 	hwIo.terminate()
 	log.debug("terminating addonHandler")
@@ -371,6 +375,10 @@ def resetConfiguration(factoryDefaults=False):
 	# Hardware background i/o
 	log.debug("initializing background i/o")
 	hwIo.initialize()
+	log.debug("Initializing BLE I/O")
+	import hwIo.ble
+
+	hwIo.ble.initialize()
 	log.debug("Initializing background braille display detection")
 	bdDetect.initialize()
 	# Tones
@@ -772,6 +780,10 @@ def main():
 	import hwIo
 
 	hwIo.initialize()
+	log.debug("Initializing BLE I/O")
+	import hwIo.ble
+
+	hwIo.ble.initialize()
 	log.debug("Initializing background braille display detection")
 	import bdDetect
 

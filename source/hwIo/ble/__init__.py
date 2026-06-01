@@ -17,15 +17,35 @@ from bleak.exc import BleakError
 from bleak.backends.device import BLEDevice
 from logHandler import log
 
-from ._scanner import Scanner  # noqa: F401
-from ._io import Ble  # noqa: F401
+from ._scanner import Scanner
+from ._io import Ble
+from ..base import requiresBackgroundThread
+
+__all__ = ["Scanner", "Ble", "scanner", "findDeviceByAddress"]
 
 #: Module-level singleton scanner shared by all BLE consumers.
 #: Using a single scanner avoids contention over the Windows BLE stack and
 #: lets multiple callers share the set of already-discovered devices.
-scanner = Scanner()
+#: None until initialize() is called.
+scanner: Scanner | None = None
 
 
+def initialize() -> None:
+	"""Initialize the hwIo.ble module, creating the shared BLE scanner singleton."""
+	global scanner
+	scanner = Scanner()
+
+
+def terminate() -> None:
+	"""Terminate the hwIo.ble module, stopping any active BLE scan and releasing the scanner."""
+	global scanner
+	if scanner is not None:
+		if scanner.isScanning:
+			scanner.stop()
+		scanner = None
+
+
+@requiresBackgroundThread
 def findDeviceByAddress(address: str, timeout: float = 5.0, pollInterval: float = 0.1) -> BLEDevice | None:
 	"""Find a BLE device by its address.
 
@@ -36,6 +56,8 @@ def findDeviceByAddress(address: str, timeout: float = 5.0, pollInterval: float 
 	:param pollInterval: How often to check results in seconds (default 0.1)
 	:return: The BLE device object if found, None otherwise
 	"""
+	if scanner is None:
+		raise RuntimeError("hwIo.ble.initialize() must be called before using findDeviceByAddress")
 	log.debug(f"Searching for BLE device with address {address}")
 
 	# Check if device already discovered

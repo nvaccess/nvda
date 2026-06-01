@@ -10,7 +10,7 @@ from typing import Callable, Iterator
 import weakref
 
 from _asyncioEventLoop.utils import runCoroutineSync
-from ..base import _isDebug, IoBase
+from ..base import _isDebug, IoBase, requiresBackgroundThread
 from ..ioThread import IoThread
 from logHandler import log
 
@@ -23,6 +23,7 @@ CONNECT_TIMEOUT_SECONDS: int = 2
 WINRT_CLIENT_ARGS = WinRTClientArgs(use_cached_services=True)
 
 
+@requiresBackgroundThread
 def queueReader(
 	queue: Queue[bytes],
 	onReceive: Callable[[bytes], None],

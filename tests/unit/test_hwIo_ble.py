@@ -13,6 +13,9 @@ from unittest.mock import MagicMock, patch
 
 from bleak.backends.device import BLEDevice
 from bleak.backends.scanner import AdvertisementData
+from hwIo.ble._scanner import Scanner
+from hwIo.ble._io import Ble
+from hwIo.ble import findDeviceByAddress
 
 
 class TestScanner(unittest.TestCase):
@@ -20,6 +23,7 @@ class TestScanner(unittest.TestCase):
 
 	def setUp(self):
 		"""Set up patches and create Scanner instance."""
+
 		self.bleakScannerPatcher = patch("hwIo.ble._scanner.bleak.BleakScanner")
 		self.mockBleakScannerClass = self.bleakScannerPatcher.start()
 
@@ -44,12 +48,11 @@ class TestScanner(unittest.TestCase):
 		self.mockScannerInstance = MagicMock()
 		self.mockBleakScannerClass.return_value = self.mockScannerInstance
 
-		from hwIo.ble._scanner import Scanner
-
 		self.Scanner = Scanner
 
 	def tearDown(self):
 		"""Clean up patches."""
+
 		self.runCoroutinePatcher.stop()
 		self.bleakScannerPatcher.stop()
 
@@ -82,7 +85,7 @@ class TestScanner(unittest.TestCase):
 
 		handlerCalls = []
 
-		def testHandler(device, advertisementData, isNew):
+		def testHandler(device: BLEDevice, advertisementData: AdvertisementData, isNew: bool) -> None:
 			handlerCalls.append(
 				{
 					"device": device,
@@ -168,6 +171,7 @@ class TestBle(unittest.TestCase):
 
 	def setUp(self):
 		"""Set up patches for Ble testing."""
+
 		self.bleakClientPatcher = patch("hwIo.ble._io.bleak.BleakClient")
 		self.mockBleakClientClass = self.bleakClientPatcher.start()
 
@@ -212,8 +216,6 @@ class TestBle(unittest.TestCase):
 		)
 		self.mockRunCoroutineSync = self.runCoroutineSyncPatcher.start()
 
-		from hwIo.ble._io import Ble
-
 		self.Ble = Ble
 		# Track Ble instances so tearDown can close them while patches
 		# are still active (avoiding __del__ errors at GC time when the
@@ -223,6 +225,7 @@ class TestBle(unittest.TestCase):
 
 	def tearDown(self):
 		"""Clean up Ble instances and patches."""
+
 		# Mark the mock client disconnected so the close() called from
 		# Ble.__del__ at GC time becomes a no-op (it would otherwise hit
 		# the real, unmocked runCoroutineSync and raise).
@@ -237,6 +240,7 @@ class TestBle(unittest.TestCase):
 
 	def _makeBle(self, **kwargs) -> "object":
 		"""Construct a Ble instance and track it for cleanup."""
+
 		ble = self.Ble(**kwargs)
 		self._bleInstances.append(ble)
 		return ble
@@ -251,7 +255,7 @@ class TestBle(unittest.TestCase):
 
 		receivedData = []
 
-		def onReceive(data):
+		def onReceive(data: bytes) -> None:
 			receivedData.append(data)
 
 		ble = self._makeBle(
@@ -381,15 +385,21 @@ class TestFindDeviceByAddress(unittest.TestCase):
 
 	def setUp(self):
 		"""Set up patches for findDeviceByAddress testing."""
+
 		self.scannerPatcher = patch("hwIo.ble.scanner")
 		self.mockScanner = self.scannerPatcher.start()
 
-		from hwIo.ble import findDeviceByAddress
+		# findDeviceByAddress is decorated with @requiresBackgroundThread; patch out the
+		# main-thread check so tests can call it directly without spawning threads.
+		self.mainThreadPatcher = patch("hwIo.base.threading.main_thread", return_value=MagicMock())
+		self.mainThreadPatcher.start()
 
 		self.findDeviceByAddress = findDeviceByAddress
 
 	def tearDown(self):
 		"""Clean up patches."""
+
+		self.mainThreadPatcher.stop()
 		self.scannerPatcher.stop()
 
 	def test_deviceAlreadyInResults(self):
