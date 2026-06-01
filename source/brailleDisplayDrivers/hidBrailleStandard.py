@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2021 NV Access Limited
+# Copyright (C) 2021-2026 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from dataclasses import dataclass
 from typing import List
@@ -271,6 +271,7 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 					"br(hidBrailleStandard):rockerDown",
 				),
 				"braille_routeTo": ("br(hidBrailleStandard):routerSet1_routerKey",),
+				"braille_selectRange": ("br(hidBrailleStandard):routerSet1_multiRouterKey",),
 				"braille_toggleTether": ("br(hidBrailleStandard):up+down",),
 				"kb:upArrow": (
 					"br(hidBrailleStandard):joystickUp",
@@ -318,8 +319,9 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		self.keyCodes = set(dataIndices)
 
 		self.keyNames = names = []
-		namePrefix = None
 		isBrailleInput = True
+		routingIndexes: list[int] = []
+		routingNamePrefix: str | None = None
 		for index in dataIndices:
 			buttonCapsInfo = driver._inputButtonCapsByDataIndex.get(index)
 			buttonCaps = buttonCapsInfo.buttonCaps
@@ -354,14 +356,21 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				# We must assume that any input in the router set is a routing key,
 				# Because some devices expose the routing keys as 1-bit values
 				# which Windows then combines into a usage range.
-				self.routingIndex = buttonCapsInfo.relativeIndexInCollection
+				routingIndexes.append(buttonCapsInfo.relativeIndexInCollection)
 				usageID = BraillePageUsageID.ROUTER_KEY
 				# Prefix the gesture name with the specific routing collection name (E.g. routerSet1)
-				namePrefix = self._usageIDToGestureName(linkUsagePage, linkUsageID)
+				routingNamePrefix = self._usageIDToGestureName(linkUsagePage, linkUsageID)
+				continue
 			name = self._usageIDToGestureName(usagePage, usageID)
-			if namePrefix:
-				name = "_".join([namePrefix, name])
 			names.append(name)
+		if routingIndexes:
+			routingIndexes.sort()
+			self.cellIndexes = routingIndexes
+			routingIdName = self._usageIDToGestureName(HID_USAGE_PAGE_BRAILLE, BraillePageUsageID.ROUTER_KEY)
+			routingIdName = self.idForCellCount(len(routingIndexes), routingIdName)
+			if routingNamePrefix:
+				routingIdName = f"{routingNamePrefix}_{routingIdName}"
+			names.append(routingIdName)
 		self.id = "+".join(names)
 
 	def _usageIDToGestureName(self, usagePage: int, usageID: int):

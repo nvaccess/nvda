@@ -12,6 +12,9 @@ For the latter two actions, one can perform actions prior to and/or after they t
 
 from collections.abc import Collection
 from enum import Enum
+from typing import Any
+from addonAPIVersion import BACK_COMPAT_TO
+
 import globalVars
 import winreg
 import os
@@ -25,7 +28,6 @@ from configobj import ConfigObj
 from configobj.validate import Validator
 from logHandler import log
 import logging
-from logging import DEBUG
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
 import winBindings.shell32
 from shlobj import FolderId, SHGetKnownFolderPath
@@ -38,19 +40,12 @@ import functools
 from . import profileUpgrader
 from . import aggregatedSection
 from .configSpec import confspec
+from .featureFlagEnums import BrailleTextWrapFlag
 from .featureFlag import (
 	_transformSpec_AddFeatureFlagDefault,
 	_validateConfig_featureFlag,
 )
 from .registry import RegistryKey as _RegistryKey
-from typing import (
-	Any,
-	Dict,
-	List,
-	Optional,
-	Set,
-	Tuple,
-)
 import NVDAState
 from NVDAState import WritePaths
 
@@ -169,7 +164,7 @@ def isInstalledCopy() -> bool:
 		return False
 
 
-def getInstalledUserConfigPath() -> Optional[str]:
+def getInstalledUserConfigPath() -> str | None:
 	try:
 		winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, _RegistryKey.NVDA.value)
 	except FileNotFoundError:
@@ -237,10 +232,10 @@ def getScratchpadDir(ensureExists: bool = False) -> str:
 	return path
 
 
-def initConfigPath(configPath: Optional[str] = None) -> None:
+def initConfigPath(configPath: str | None = None) -> None:
 	"""
 	Creates the current configuration path if it doesn't exist. Also makes sure that various sub directories also exist.
-	@param configPath: an optional path which should be used instead (only useful when being called from outside of NVDA)
+	:param configPath: an optional path which should be used instead (only useful when being called from outside of NVDA)
 	"""
 	if not configPath:
 		configPath = WritePaths.configDir
@@ -380,7 +375,7 @@ def _setSystemConfig(
 		else:
 			relativePath = os.path.relpath(curSourceDir, fromPath)
 			curDestDir = os.path.join(toPath, relativePath)
-			if not isMigration and relativePath == "addons":
+			if not isMigration and relativePath.casefold() == "addons":
 				_prepareToCopyAddons(fromPath, toPath, subDirs, addonsToCopy)
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
@@ -483,7 +478,7 @@ def _transformSpec(spec: ConfigObj):
 	)
 
 
-class ConfigManager(object):
+class ConfigManager:
 	"""Manages and provides access to configuration.
 	In addition to the base configuration, there can be multiple active configuration profiles.
 	Settings in more recently activated profiles take precedence,
@@ -512,9 +507,9 @@ class ConfigManager(object):
 		self.spec = confspec
 		_transformSpec(self.spec)
 		#: All loaded profiles by name.
-		self._profileCache: Optional[Dict[Optional[str], ConfigObj]] = {}
+		self._profileCache: dict[str | None, ConfigObj] = {}
 		#: The active profiles.
-		self.profiles: List[ConfigObj] = []
+		self.profiles: list[ConfigObj] = []
 		#: Whether profile triggers are enabled (read-only).
 		self.profileTriggersEnabled: bool = True
 		self.validator: Validator = Validator(
@@ -522,16 +517,16 @@ class ConfigManager(object):
 				"_featureFlag": _validateConfig_featureFlag,
 			},
 		)
-		self.rootSection: Optional[AggregatedSection] = None
+		self.rootSection: AggregatedSection | None = None
 		self._shouldHandleProfileSwitch: bool = True
 		self._pendingHandleProfileSwitch: bool = False
-		self._suspendedTriggers: Optional[List[ProfileTrigger]] = None
+		self._suspendedTriggers: list[ProfileTrigger] | None = None
 		self._initBaseConf()
 		#: Maps triggers to profiles.
-		self.triggersToProfiles: Optional[Dict[ProfileTrigger, ConfigObj]] = None
+		self.triggersToProfiles: dict[ProfileTrigger, ConfigObj] | None = None
 		self._loadProfileTriggers()
 		#: The names of all profiles that have been modified since they were last saved.
-		self._dirtyProfiles: Set[str] = set()
+		self._dirtyProfiles: set[str] = set()
 
 	def _handleProfileSwitch(self, shouldNotify=True):
 		if not self._shouldHandleProfileSwitch:
@@ -590,34 +585,55 @@ class ConfigManager(object):
 		self.profiles.append(profile)
 		self._handleProfileSwitch()
 
-	def _loadConfig(self, fn, fileError=False):
+	@staticmethod
+	def _shouldLogConfigAtStartup(profile: ConfigObj) -> bool:
+		"""since profile settings are not yet imported we have to "peek" to see
+		if debug level logging is enabled.
+
+		:param profile: The profile to check for logging settings.
+		:return: True if debug level logging is enabled, False otherwise.
+		"""
+		#
+		try:
+			logLevelName: str = profile["general"]["loggingLevel"]
+			if not logLevelName:
+				level = None
+			else:
+				level = logging.getLevelNamesMapping().get(logLevelName)
+		except KeyError:
+			level = None
+		return log.isEnabledFor(log.DEBUG) or (level and logging.DEBUG >= level)
+
+	def _loadConfig(self, fn: str | None, fileError: bool = False) -> ConfigObj:
+		"""Load a configuration from a file.
+
+		:param fn: The filename of the configuration file to load.
+		:param fileError: Whether to raise an error if the file cannot be read, defaults to False
+		:raises e: Re-raises any exception that occurs during the profile upgrade process.
+		:return: The loaded configuration object.
+		"""
 		log.info("Loading config: {0}".format(fn))
 		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=fileError)
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 		profile.newlines = "\r\n"
 		profileCopy = deepcopy(profile)
+		if NVDAState.shouldWriteToDisk() and profile.filename is not None:
+			writeProfileFunc = self._writeProfileToFile
+		else:
+			writeProfileFunc = None
 		try:
-			if NVDAState.shouldWriteToDisk() and profile.filename is not None:
-				writeProfileFunc = self._writeProfileToFile
-			else:
-				writeProfileFunc = None
 			profileUpgrader.upgrade(profile, self.validator, writeProfileFunc)
 		except Exception as e:
-			# Log at level info to ensure that the profile is logged.
-			log.info("Config before schema update:\n%s" % profileCopy, exc_info=False)
+			if self._shouldLogConfigAtStartup(profileCopy):
+				# We must log at info level here as the logHandler hasn't been set to log at debug level yet.
+				log.info(f"Config before schema update:\n{profileCopy}", redactSecrets=True)
 			raise e
-		# since profile settings are not yet imported we have to "peek" to see
-		# if debug level logging is enabled.
-		try:
-			logLevelName = profile["general"]["loggingLevel"]
-		except KeyError:
-			logLevelName = None
-		if log.isEnabledFor(log.DEBUG) or (logLevelName and DEBUG >= logging.getLevelName(logLevelName)):
-			# Log at level info to ensure that the profile is logged.
+
+		if self._shouldLogConfigAtStartup(profile):
+			# We must log at info level here as the logHandler hasn't been set to log at debug level yet.
 			log.info(
-				"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{0}".format(
-					profile,
-				),
+				f"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{profile}",
+				redactSecrets=True,
 			)
 		return profile
 
@@ -704,7 +720,7 @@ class ConfigManager(object):
 			return
 		self._dirtyProfiles.add(self.profiles[-1].name)
 
-	def _writeProfileToFile(self, filename, profile):
+	def _writeProfileToFile(self, filename: str, profile: ConfigObj):
 		with FaultTolerantFile(filename) as f:
 			profile.write(f)
 
@@ -1129,12 +1145,12 @@ class ConfigManager(object):
 		self.setConfigValue(newValue, *keyPath)
 
 
-class ConfigValidationData(object):
+class ConfigValidationData:
 	validationFuncName: str | None = None
 
 	def __init__(self, validationFuncName):
 		self.validationFuncName = validationFuncName
-		super(ConfigValidationData, self).__init__()
+		super().__init__()
 
 	# args passed to the convert function
 	args: list[Any] = []
@@ -1153,9 +1169,9 @@ class AggregatedSection:
 	def __init__(
 		self,
 		manager: ConfigManager,
-		path: Tuple[str],
+		path: tuple[str, ...],
 		spec: ConfigObj,
-		profiles: List[ConfigObj],
+		profiles: list[ConfigObj],
 	):
 		self.manager = manager
 		self.path = path
@@ -1367,14 +1383,14 @@ class AggregatedSection:
 
 		# Alias old config items to their new counterparts for backwards compatibility.
 		# Uncomment when there are new links that need to be made.
-		# if BACK_COMPAT_TO < (2027, 1, 0) and NVDAState._allowDeprecatedAPI():
-		# self._linkDeprecatedValues(key, val)
+		if BACK_COMPAT_TO < (2027, 1, 0) and NVDAState._allowDeprecatedAPI():
+			self._linkDeprecatedValues(key, val)
 
 	def _linkDeprecatedValues(self, key: aggregatedSection._cacheKeyT, val: aggregatedSection._cacheValueT):
 		"""Link deprecated config keys and values to their replacements.
 
-		:arg key: The configuration key to link to its new or old counterpart.
-		:arg val: The value associated with the configuration key.
+		:param key: The configuration key to link to its new or old counterpart.
+		:param val: The value associated with the configuration key.
 
 		Example of how to link values:
 
@@ -1395,7 +1411,35 @@ class AggregatedSection:
 		>>> 		return
 		>>> ...
 		"""
+		# cacheVal defaults to val; overridden when profile and cache need different types.
+		cacheVal = val
 		match self.path:
+			case "braille":
+				match key:
+					case "wordWrap":
+						# The "wordWrap" setting was renamed to "textWrap" and became a feature flag.
+						log.warning(
+							"braille.wordWrap is deprecated. Use braille.textWrap instead.",
+							stack_info=True,
+						)
+						key = "textWrap"
+						flagEnum = BrailleTextWrapFlag.AT_WORD_BOUNDARIES if val else BrailleTextWrapFlag.NONE
+						# Profile stores strings; cache must hold a validated FeatureFlag object
+						# (matching what __setitem__ normally stores) so .calculated() works on next read.
+						# Validate through the spec to avoid hardcoding behaviorOfDefault here.
+						val = flagEnum.name
+						cacheVal = self.manager.validator.check(self._spec[key], val)
+					case "textWrap":
+						# The "textWrap" setting was added in place of "wordWrap" and became a feature flag.
+						key = "wordWrap"
+						calculated: BrailleTextWrapFlag = val.calculated()
+						val = calculated == BrailleTextWrapFlag.AT_WORD_BOUNDARIES
+						cacheVal = val
+
+					case _:
+						# We don't care about other keys in this section.
+						return
+
 			case _:
 				# We don't care about other sections.
 				return
@@ -1403,7 +1447,7 @@ class AggregatedSection:
 		# Update the value in the most recently activated profile.
 		# If we have reached this point, we must have a new key and value to set.
 		self._getUpdateSection()[key] = val
-		self._cache[key] = val
+		self._cache[key] = cacheVal
 
 	def _getUpdateSection(self):
 		profile = self.profiles[-1]
@@ -1437,7 +1481,7 @@ class AggregatedSection:
 		self._spec.update(val)
 
 
-class ProfileTrigger(object):
+class ProfileTrigger:
 	"""A trigger for automatic activation/deactivation of a configuration profile.
 	The user can associate a profile with a trigger.
 	When the trigger applies, the associated profile is activated.

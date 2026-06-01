@@ -7,10 +7,9 @@
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
 # Neil Soiffer, Ryan McCleary, Kefas Lungu.
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import bisect
 import copy
 import logging
 import math
@@ -40,8 +39,11 @@ import installer
 import keyboardHandler
 import languageHandler
 import logHandler
+from _magnifier import getMagnifier
+from _magnifier.commands import toggleMagnifier
 import _magnifier.config as magnifierConfig
-from _magnifier.utils.types import Filter, FullScreenMode
+from _magnifier.utils.types import Filter, FullScreenMode, MagnifierFollowFocusType
+from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 import queueHandler
 import requests
 import speech
@@ -85,6 +87,7 @@ from utils.displayString import DisplayStringEnum
 
 import gui
 import gui.contextHelp
+import gui.message
 import screenCurtain
 import api
 import ui
@@ -4560,6 +4563,17 @@ class AdvancedPanelControls(
 		)
 		self.bindHelpEvent("UseWASAPIForSAPI4", self.useWASAPIForSAPI4Combo)
 
+		# Translators: This is the label for a combo-box control in the
+		# Advanced settings panel.
+		label = _("Use modern regular expression engine for speech dictionary entries:")
+		self.speechDictsUseModernRegexCombo: nvdaControls.FeatureFlagCombo = speechGroup.addLabeledControl(
+			labelText=label,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["featureFlag", "speechDictsUseModernRegex"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("SpeechDictsUseModernRegex", self.speechDictsUseModernRegexCombo)
+
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
 		label = _("Virtual Buffers")
@@ -4744,6 +4758,7 @@ class AdvancedPanelControls(
 			== self.cancelExpiredFocusSpeechCombo.defaultValue
 			and self.trimLeadingSilenceCheckBox.IsChecked() == self.trimLeadingSilenceCheckBox.defaultValue
 			and self.useWASAPIForSAPI4Combo.isValueConfigSpecDefault()
+			and self.speechDictsUseModernRegexCombo.isValueConfigSpecDefault()
 			and self.loadChromeVBufWhenBusyCombo.isValueConfigSpecDefault()
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and self.reportTransparentColorCheckBox.GetValue()
@@ -4774,6 +4789,7 @@ class AdvancedPanelControls(
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.trimLeadingSilenceCheckBox.SetValue(self.trimLeadingSilenceCheckBox.defaultValue)
 		self.useWASAPIForSAPI4Combo.resetToConfigSpecDefault()
+		self.speechDictsUseModernRegexCombo.resetToConfigSpecDefault()
 		self.loadChromeVBufWhenBusyCombo.resetToConfigSpecDefault()
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
@@ -4805,6 +4821,7 @@ class AdvancedPanelControls(
 		)
 		config.conf["speech"]["trimLeadingSilence"] = self.trimLeadingSilenceCheckBox.IsChecked()
 		self.useWASAPIForSAPI4Combo.saveCurrentValueToConf()
+		self.speechDictsUseModernRegexCombo.saveCurrentValueToConf()
 		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
 		self.enhancedEventProcessingComboBox.saveCurrentValueToConf()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
@@ -5483,12 +5500,15 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS,
 		)
 
-		# Translators: The label for a setting in braille settings to enable word wrap
-		# (try to avoid splitting words at the end of the braille display).
-		wordWrapText = _("Avoid splitting &words when possible")
-		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
-		self.bindHelpEvent("BrailleSettingsWordWrap", self.wordWrapCheckBox)
-		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
+		self.textWrapComboBox: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			# Translators: The label for a setting in braille settings to configure text wrap behaviour
+			# (how to break lines that don't fit on the braille display).
+			labelText=_("Text &wrap"),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "textWrap"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleSettingsWordWrap", self.textWrapComboBox)
 
 		self.unicodeNormalizationCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=_(
@@ -5578,7 +5598,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		config.conf["braille"]["speakOnRouting"] = self.speakOnRoutingCheckBox.Value
 		config.conf["braille"]["speakOnNavigatingByUnit"] = self.speakOnNavigatingCheckBox.Value
-		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
+		self.textWrapComboBox.saveCurrentValueToConf()
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[
 			self.focusContextPresentationList.GetSelection()
@@ -6025,6 +6045,37 @@ class MagnifierPanel(SettingsPanel):
 	title = _("Magnifier")
 	helpId = "MagnifierSettings"
 
+	def _applyCurrentSettingsToConfigAndRuntime(self):
+		"""Apply current control values to config and to the active magnifier instance."""
+		selectedZoom = self.zoomCtrl.GetValue()
+		selectedPanStep = self.panSpinCtrl.GetValue()
+		selectedFilter = list(Filter)[self.filterList.GetSelection()]
+		selectedMode = list(FullScreenMode)[self.fullscreenModeList.GetSelection()]
+
+		roundedZoom = magnifierConfig.roundZoomLevel(selectedZoom)
+		magnifierConfig.setZoomLevel(roundedZoom)
+		self.zoomCtrl.SetValue(roundedZoom)
+		magnifierConfig.setPanStep(selectedPanStep)
+		magnifierConfig.setFilter(selectedFilter)
+		magnifierConfig.setFullscreenMode(selectedMode)
+		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterCheckBox.GetValue()
+		for focusType, checkBox in self._followFocusCheckBoxes.items():
+			magnifierConfig.setFollowState(focusType, checkBox.GetValue())
+		config.conf["magnifier"]["keepMouseCentered"] = self.keepMouseCenteredCheckBox.GetValue()
+
+		magnifier = getMagnifier()
+		if magnifier:
+			magnifier.zoomLevel = roundedZoom
+			magnifier._panStep = selectedPanStep
+			magnifier.filterType = selectedFilter
+			if isinstance(magnifier, FullScreenMagnifier):
+				magnifier._fullscreenMode = selectedMode
+
+	def _onImmediateSettingChange(self, evt: wx.CommandEvent):
+		"""Handle immediate updates for non-enable magnifier settings."""
+		self._applyCurrentSettingsToConfigAndRuntime()
+		evt.Skip()
+
 	def makeSettings(
 		self,
 		settingsSizer: wx.BoxSizer,
@@ -6034,81 +6085,91 @@ class MagnifierPanel(SettingsPanel):
 			sizer=settingsSizer,
 		)
 
-		# ZOOM SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the default zoom level.
-		defaultZoomLabelText = _("Default &zoom level:")
-
-		zoomValues = magnifierConfig.ZoomLevel.zoom_range()
-		zoomChoices = magnifierConfig.ZoomLevel.zoom_strings()
-
-		self.defaultZoomList = sHelper.addLabeledControl(
-			defaultZoomLabelText,
-			wx.Choice,
-			choices=zoomChoices,
-		)
+		# Enable the magnifier
+		# Translators: The label for a setting in magnifier settings to enable or disable the magnifier.
+		enableMagnifierText = _("&Enable magnifier (immediate effect)")
+		self._magnifierEnabledInitially = magnifierConfig.getEnabled()
+		self.enableMagnifierCheckBox = sHelper.addItem(wx.CheckBox(self, label=enableMagnifierText))
 		self.bindHelpEvent(
-			"MagnifierDefaultZoom",
-			self.defaultZoomList,
+			"MagnifierEnable",
+			self.enableMagnifierCheckBox,
+		)
+		self.enableMagnifierCheckBox.Bind(wx.EVT_CHECKBOX, self.onEnableMagnifierChange)
+		self.enableMagnifierCheckBox.SetValue(self._magnifierEnabledInitially)
+
+		# ZOOM SETTINGS
+		# Translators: The label for a setting in magnifier settings to select the zoom level.
+		zoomLabelText = _("&Zoom (%):")
+
+		self.zoomCtrl = sHelper.addLabeledControl(
+			zoomLabelText,
+			wx.SpinCtrl,
+			min=magnifierConfig.ZoomLevel.MIN_ZOOM,
+			max=magnifierConfig.ZoomLevel.MAX_ZOOM,
+		)
+		self.zoomCtrl.SetIncrement(magnifierConfig.ZoomLevel.STEP_FACTOR)
+		self.bindHelpEvent(
+			"MagnifierZoom",
+			self.zoomCtrl,
 		)
 
-		# Set default value from config
-		defaultZoom = magnifierConfig.getDefaultZoomLevel()
-		zoomIndex = bisect.bisect_left(zoomValues, defaultZoom)
-		# Find the closest value
-		if zoomIndex == 0:
-			closestIndex = 0
-		elif zoomIndex >= len(zoomValues):
-			closestIndex = len(zoomValues) - 1
-		else:
-			closestIndex = min(zoomIndex - 1, zoomIndex, key=lambda i: abs(zoomValues[i] - defaultZoom))
-		self.defaultZoomList.SetSelection(closestIndex)
+		# Set value from config
+		zoomLevel = magnifierConfig.getZoomLevel()
+		self._zoomInitially = zoomLevel
+		self.zoomCtrl.SetValue(zoomLevel)
+		self.zoomCtrl.Bind(wx.EVT_SPINCTRL, self._onImmediateSettingChange)
 
 		# PAN SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
 		panStepSizeLabelText = _("&Panning step size (%):")
 
-		self.defaultPanSpinCtrl = sHelper.addLabeledControl(
+		self.panSpinCtrl = sHelper.addLabeledControl(
 			panStepSizeLabelText,
 			wx.SpinCtrl,
 			min=1,
 			max=100,
 		)
 		self.bindHelpEvent(
-			"magnifierPanStep",
-			self.defaultPanSpinCtrl,
+			"MagnifierPanningStepSize",
+			self.panSpinCtrl,
 		)
 
-		# Set default value from config
-		defaultPan = magnifierConfig.getDefaultPanStep()
-		self.defaultPanSpinCtrl.SetValue(defaultPan)
+		# Set  value from config
+		panStep = magnifierConfig.getPanStep()
+		self._panStepInitially = panStep
+		self.panSpinCtrl.SetValue(panStep)
+		self.panSpinCtrl.Bind(wx.EVT_SPINCTRL, self._onImmediateSettingChange)
+		self.panSpinCtrl.Bind(wx.EVT_TEXT, self._onImmediateSettingChange)
 
 		# FILTER SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the default filter
-		defaultFilterLabelText = _("Default &filter:")
+		filterLabelText = _("F&ilter:")
 		filterChoices = [f.displayString for f in Filter]
-		self.defaultFilterList = sHelper.addLabeledControl(
-			defaultFilterLabelText,
+		self.filterList = sHelper.addLabeledControl(
+			filterLabelText,
 			wx.Choice,
 			choices=filterChoices,
 		)
-		self.bindHelpEvent("MagnifierDefaultFilter", self.defaultFilterList)
+		self.bindHelpEvent("MagnifierFilter", self.filterList)
 
-		# Set default value from config
-		defaultFilter = magnifierConfig.getDefaultFilter()
-		self.defaultFilterList.SetSelection(list(Filter).index(defaultFilter))
+		# Set  value from config
+		filterValue = magnifierConfig.getFilter()
+		self._filterInitially = filterValue
+		self.filterList.SetSelection(list(Filter).index(filterValue))
+		self.filterList.Bind(wx.EVT_CHOICE, self._onImmediateSettingChange)
 
 		# FULLSCREEN MODE SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the default full-screen mode
-		defaultFullscreenModeLabelText = _("Default &fullscreen mode:")
+		# Translators: The label for a setting in magnifier settings to select the full-screen mode
+		fullscreenModeLabelText = _("&Fullscreen mode:")
 		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
-		self.defaultFullscreenModeList = sHelper.addLabeledControl(
-			defaultFullscreenModeLabelText,
+		self.fullscreenModeList = sHelper.addLabeledControl(
+			fullscreenModeLabelText,
 			wx.Choice,
 			choices=fullscreenModeChoices,
 		)
 		self.bindHelpEvent(
-			"MagnifierDefaultFullscreenFocusMode",
-			self.defaultFullscreenModeList,
+			"MagnifierFullscreenFocusMode",
+			self.fullscreenModeList,
 		)
 
 		# TRUE CENTER
@@ -6120,42 +6181,160 @@ class MagnifierPanel(SettingsPanel):
 			self.trueCenterCheckBox,
 		)
 		self.trueCenterCheckBox.SetValue(magnifierConfig.isTrueCentered())
+		self._trueCenterInitially = self.trueCenterCheckBox.GetValue()
+		self.trueCenterCheckBox.Bind(wx.EVT_CHECKBOX, self._onImmediateSettingChange)
 
 		# Set default value from config
-		defaultFullscreenMode = magnifierConfig.getDefaultFullscreenMode()
-		self.defaultFullscreenModeList.SetSelection(list(FullScreenMode).index(defaultFullscreenMode))
+		fullscreenMode = magnifierConfig.getFullscreenMode()
+		self._fullscreenModeInitially = fullscreenMode
+		self.fullscreenModeList.SetSelection(list(FullScreenMode).index(fullscreenMode))
+		self.fullscreenModeList.Bind(wx.EVT_CHOICE, self._onImmediateSettingChange)
+
+		# FOCUS GROUP
+		# Translators: This is the label for a group of focus options in the magnifier settings panel
+		focusGroupText = _("Focus")
+		focusGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=focusGroupText)
+		focusGroupBox = focusGroupSizer.GetStaticBox()
+		focusGroup = guiHelper.BoxSizerHelper(self, sizer=focusGroupSizer)
+		sHelper.addItem(focusGroup)
+
+		_followFocusLabels: dict[MagnifierFollowFocusType, tuple[str, str]] = {
+			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the mouse
+			MagnifierFollowFocusType.MOUSE: (_("Follow &mouse"), "MagnifierFollowMouse"),
+			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
+			MagnifierFollowFocusType.SYSTEM_FOCUS: (_("Follow &system focus"), "MagnifierFollowSystemFocus"),
+			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the review cursor
+			MagnifierFollowFocusType.REVIEW: (_("Follow &review cursor"), "MagnifierFollowReviewCursor"),
+			MagnifierFollowFocusType.NAVIGATOR_OBJECT: (
+				# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the navigator object
+				_("Follow &navigator object"),
+				"MagnifierFollowNavigatorObject",
+			),
+		}
+		self._followFocusCheckBoxes: dict[MagnifierFollowFocusType, wx.CheckBox] = {}
+		self._followFocusInitially: dict[MagnifierFollowFocusType, bool] = {}
+		for focusType, (label, helpId) in _followFocusLabels.items():
+			checkBox = focusGroup.addItem(wx.CheckBox(focusGroupBox, label=label))
+			self.bindHelpEvent(helpId, checkBox)
+			followState = magnifierConfig.getFollowState(focusType)
+			self._followFocusInitially[focusType] = followState
+			checkBox.SetValue(followState)
+			checkBox.Bind(wx.EVT_CHECKBOX, self._onImmediateSettingChange)
+			self._followFocusCheckBoxes[focusType] = checkBox
 
 		# KEEP MOUSE CENTERED
 		# Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
-		keepMouseCenteredText = _("Keep &mouse pointer centered in magnifier view")
+		keepMouseCenteredText = _("Keep mouse pointer &centered in magnifier view")
 		self.keepMouseCenteredCheckBox = sHelper.addItem(wx.CheckBox(self, label=keepMouseCenteredText))
 		self.bindHelpEvent(
 			"MagnifierKeepMouseCentered",
 			self.keepMouseCenteredCheckBox,
 		)
 		self.keepMouseCenteredCheckBox.SetValue(magnifierConfig.shouldKeepMouseCentered())
+		self._keepMouseCenteredInitially = self.keepMouseCenteredCheckBox.GetValue()
+		self.keepMouseCenteredCheckBox.Bind(wx.EVT_CHECKBOX, self._onImmediateSettingChange)
 
 	def onSave(self):
 		"""Save the current selections to config."""
-		selectedZoom = self.defaultZoomList.GetSelection()
-		magnifierConfig.setDefaultZoomLevel(magnifierConfig.ZoomLevel.zoom_range()[selectedZoom])
+		magnifierConfig.setEnabled(self.enableMagnifierCheckBox.GetValue())
+		self._magnifierEnabledInitially = self.enableMagnifierCheckBox.GetValue()
+		self._applyCurrentSettingsToConfigAndRuntime()
 
-		magnifierConfig.setDefaultPanStep(self.defaultPanSpinCtrl.GetValue())
+		selectedZoom = self.zoomCtrl.GetValue()
+		selectedPanStep = self.panSpinCtrl.GetValue()
+		selectedFilter = list(Filter)[self.filterList.GetSelection()]
+		selectedMode = list(FullScreenMode)[self.fullscreenModeList.GetSelection()]
+		isTrueCentered = self.trueCenterCheckBox.GetValue()
+		keepMouseCentered = self.keepMouseCenteredCheckBox.GetValue()
 
-		selectedFilterIdx = self.defaultFilterList.GetSelection()
-		magnifierConfig.setDefaultFilter(list(Filter)[selectedFilterIdx])
+		roundedZoom = magnifierConfig.roundZoomLevel(selectedZoom)
+		self._zoomInitially = roundedZoom
+		self._panStepInitially = selectedPanStep
+		self._filterInitially = selectedFilter
+		self._fullscreenModeInitially = selectedMode
+		self._trueCenterInitially = isTrueCentered
+		for focusType, checkBox in self._followFocusCheckBoxes.items():
+			shouldFollow = checkBox.GetValue()
+			self._followFocusInitially[focusType] = shouldFollow
+		self._keepMouseCenteredInitially = keepMouseCentered
 
-		selectedModeIdx = self.defaultFullscreenModeList.GetSelection()
-		magnifierConfig.setDefaultFullscreenMode(list(FullScreenMode)[selectedModeIdx])
+	def onDiscard(self):
+		"""Restore magnifier state from original settings from config."""
+		magnifierConfig.setZoomLevel(self._zoomInitially)
+		magnifierConfig.setPanStep(self._panStepInitially)
+		magnifierConfig.setFilter(self._filterInitially)
+		magnifierConfig.setFullscreenMode(self._fullscreenModeInitially)
+		config.conf["magnifier"]["isTrueCentered"] = self._trueCenterInitially
+		for focusType, state in self._followFocusInitially.items():
+			magnifierConfig.setFollowState(focusType, state)
+		config.conf["magnifier"]["keepMouseCentered"] = self._keepMouseCenteredInitially
 
-		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterCheckBox.GetValue()
-		config.conf["magnifier"]["keepMouseCentered"] = self.keepMouseCenteredCheckBox.GetValue()
+		magnifier = getMagnifier()
+		if magnifier:
+			magnifier.zoomLevel = self._zoomInitially
+			magnifier._panStep = self._panStepInitially
+			magnifier.filterType = self._filterInitially
+			if isinstance(magnifier, FullScreenMagnifier):
+				magnifier._fullscreenMode = self._fullscreenModeInitially
+
+		if self._magnifierEnabledInitially != magnifierConfig.getEnabled():
+			toggleMagnifier()
+			self.enableMagnifierCheckBox.SetValue(self._magnifierEnabledInitially)
+
+	def onEnableMagnifierChange(self, evt: wx.CommandEvent):
+		"""Enable magnifier immediately when the checkbox is toggled, and update the checkbox state if there is an error enabling the magnifier."""
+		requestedEnabled = evt.IsChecked()
+		currentEnabled = magnifierConfig.getEnabled()
+		if requestedEnabled != currentEnabled:
+			toggleMagnifier()
+			self.enableMagnifierCheckBox.SetValue(magnifierConfig.getEnabled())
 
 
 class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 	# Translators: The title of the privacy and security category in NVDA's settings.
 	title = _("Privacy and Security")
 	helpId = "PrivacyAndSecuritySettings"
+
+	def _getSelectedLogLevel(self) -> LoggingLevel:
+		selection = self._logLevelCombo.GetSelection()
+		if selection == wx.NOT_FOUND:
+			return LoggingLevel[config.conf["general"]["loggingLevel"]]
+		return list(LoggingLevel)[selection]
+
+	def _confirmLogLevelChange(self, selectedLogLevel: LoggingLevel) -> bool:
+		if selectedLogLevel == LoggingLevel.DEBUG_UNREDACTED:
+			message = _(
+				# Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
+				'Setting the logging level to "debug (unredacted)" will write sensitive information to the log without redaction, '
+				"including passwords, API keys, or other private data. "
+				"Only enable this temporarily if you explicitly need unredacted diagnostic logs. "
+				"Do you want to continue?",
+			)
+			caption = _(
+				# Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
+				"High risk logging level",
+			)
+		else:
+			message = _(
+				# Translators: Warning shown when enabling a logging level above info from NVDA settings.
+				"Setting the logging level above info may record sensitive information such as typed input, "
+				"speech output, or other private data in the log. "
+				"Only enable higher logging levels temporarily while troubleshooting. "
+				"Do you want to continue?",
+			)
+			caption = _(
+				# Translators: Title of the warning dialog shown when enabling a risky logging level.
+				"Warning",
+			)
+		dialog = gui.message.MessageDialog(
+			parent=self,
+			message=message,
+			title=caption,
+			dialogType=gui.message.DialogType.WARNING,
+			buttons=gui.message.DefaultButtonSet.YES_NO,
+			helpId="GeneralSettingsLogLevel",
+		)
+		return dialog.ShowModal() == gui.message.ReturnCode.YES
 
 	def makeSettings(self, sizer: wx.BoxSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
@@ -6235,6 +6414,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			)
 		except StopIteration:
 			log.debugWarning("Could not set log level list to current log level")
+		self._savedLogLevel = self._getSelectedLogLevel()
 
 		self._allowUsageStatsCheckBox: wx.CheckBox = generalGroup.addItem(
 			# Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
@@ -6271,10 +6451,14 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		)
 
 		if not logHandler.isLogLevelForced():
-			config.conf["general"]["loggingLevel"] = logging.getLevelName(
-				list(LoggingLevel)[self._logLevelCombo.GetSelection()],
+			selectedLogLevel = self._getSelectedLogLevel()
+			updateLogLevel = selectedLogLevel != self._savedLogLevel and (
+				selectedLogLevel >= LoggingLevel.INFO or self._confirmLogLevelChange(selectedLogLevel)
 			)
-			logHandler.setLogLevelFromConfig()
+			if updateLogLevel:
+				config.conf["general"]["loggingLevel"] = logging.getLevelName(selectedLogLevel)
+				logHandler.setLogLevelFromConfig()
+				self._savedLogLevel = selectedLogLevel
 
 		if updateCheck:
 			config.conf["update"]["allowUsageStats"] = self._allowUsageStatsCheckBox.IsChecked()

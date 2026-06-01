@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -9,7 +9,26 @@ Handles module initialization, configuration and settings interaction.
 """
 
 import config
-from .utils.types import Filter, FullScreenMode
+from dataclasses import dataclass, field
+from .utils.types import Filter, FullScreenMode, MagnifierFollowFocusType, MagnifiedView
+
+
+def setEnabled(enable: bool) -> None:
+	"""
+	Set the config for the magnifier state (enable or disabled).
+
+	:param enable: True if the magnifier is enabled, False if it is disabled.
+	"""
+	config.conf["magnifier"]["enabled"] = enable
+
+
+def getEnabled() -> bool:
+	"""
+	Check if the magnifier is enabled in config.
+
+	:return: True if the magnifier is enabled, False otherwise.
+	"""
+	return config.conf["magnifier"]["enabled"]
 
 
 class ZoomLevel:
@@ -17,128 +36,192 @@ class ZoomLevel:
 	Constants and utilities for zoom level management.
 	"""
 
-	MAX_ZOOM: float = 10.0
-	MIN_ZOOM: float = 1.0
-	STEP_FACTOR: float = 0.5
-	ZOOM_MESSAGE = pgettext(
-		"magnifier",
-		# Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
-		"{zoomLevel}x",
-	)
+	MAX_ZOOM: int = 5000
+	MIN_ZOOM: int = 100
+	STEP_FACTOR: int = 50
 
-	@classmethod
-	def zoom_range(cls) -> list[float]:
-		"""
-		Return the list of available zoom levels.
-		"""
-		start = round(cls.MIN_ZOOM / cls.STEP_FACTOR)
-		end = round(cls.MAX_ZOOM / cls.STEP_FACTOR)
-
-		return [i * cls.STEP_FACTOR for i in range(start, end + 1)]
-
-	@classmethod
-	def zoom_strings(cls) -> list[str]:
-		"""
-		Return localized zoom level strings.
-		"""
-		return [
-			cls.ZOOM_MESSAGE.format(
-				zoomLevel=f"{value:.1f}",
-			)
-			for value in cls.zoom_range()
-		]
+	@staticmethod
+	def zoomMessage(zoomLevel: int) -> str:
+		zoomLevel = zoomLevel / 100.0
+		return pgettext(
+			"magnifier",
+			# Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
+			"{zoomLevel}x",
+		).format(zoomLevel=f"{zoomLevel:.1f}")
 
 
-def getDefaultZoomLevel() -> float:
+def getZoomLevel() -> int:
 	"""
-	Get default zoom level from config.
+	Get zoom level from config.
 
-	:return: The default zoom level.
+	:return: The zoom level (percentage).
 	"""
-	zoomLevel = config.conf["magnifier"]["defaultZoomLevel"]
+	zoomLevel = config.conf["magnifier"]["zoom"]
 	return zoomLevel
 
 
-def getDefaultZoomLevelString() -> str:
+def getZoomLevelString() -> str:
 	"""
-	Get default zoom level as a formatted string.
+	Get zoom level as a formatted string.
 
 	:return: Formatted zoom level string.
 	"""
-	zoomLevel = getDefaultZoomLevel()
-	zoomValues = ZoomLevel.zoom_range()
-	zoomStrings = ZoomLevel.zoom_strings()
-	zoomIndex = zoomValues.index(zoomLevel)
-	return zoomStrings[zoomIndex]
+	zoomLevel = getZoomLevel()
+	return ZoomLevel.zoomMessage(zoomLevel)
 
 
-def setDefaultZoomLevel(zoomLevel: float) -> None:
+def roundZoomLevel(zoomLevel: int) -> int:
 	"""
-	Set default zoom level from settings.
+	Round a zoom level to the nearest valid step.
+
+	:param zoomLevel: The zoom level to round.
+	:return: The rounded zoom level.
+	"""
+	remainder = zoomLevel % ZoomLevel.STEP_FACTOR
+	if remainder >= ZoomLevel.STEP_FACTOR / 2:
+		return zoomLevel + (ZoomLevel.STEP_FACTOR - remainder)
+	else:
+		return zoomLevel - remainder
+
+
+def setZoomLevel(zoomLevel: int) -> None:
+	"""
+	Set zoom level from settings.
 
 	:param zoomLevel: The zoom level to set.
 	"""
+	if not isinstance(zoomLevel, int):
+		raise ValueError("Zoom level must be an integer percentage")
+	if not (ZoomLevel.MIN_ZOOM <= zoomLevel <= ZoomLevel.MAX_ZOOM):
+		raise ValueError(f"Zoom level must be between {ZoomLevel.MIN_ZOOM} and {ZoomLevel.MAX_ZOOM}")
+	if zoomLevel % ZoomLevel.STEP_FACTOR != 0:
+		raise ValueError(f"Zoom level must be a multiple of {ZoomLevel.STEP_FACTOR}")
+	config.conf["magnifier"]["zoom"] = zoomLevel
 
-	if "magnifier" not in config.conf:
-		config.conf["magnifier"] = {}
-	config.conf["magnifier"]["defaultZoomLevel"] = zoomLevel
 
-
-def getDefaultPanStep() -> int:
+def getPanStep() -> int:
 	"""
-	Get default pan value from config.
+	Get pan value from config.
 
-	:return: The default pan value.
+	:return: The pan value.
 	"""
-	return config.conf["magnifier"]["defaultPanStep"]
+	return config.conf["magnifier"]["panStep"]
 
 
-def setDefaultPanStep(panStep: int) -> None:
+def setPanStep(panStep: int) -> None:
 	"""
-	Set default pan value from settings.
+	Set pan value from settings.
 
 	:param panStep: The pan value to set.
 	"""
-
-	if "magnifier" not in config.conf:
-		config.conf["magnifier"] = {}
-	config.conf["magnifier"]["defaultPanStep"] = panStep
+	config.conf["magnifier"]["panStep"] = panStep
 
 
-def getDefaultFilter() -> Filter:
+def getFilter() -> Filter:
 	"""
-	Get default filter from config.
+	Get filter from config.
 
-	:return: The default filter.
+	:return: The filter.
 	"""
-	return Filter(config.conf["magnifier"]["defaultFilter"])
+	return Filter(config.conf["magnifier"]["filter"])
 
 
-def setDefaultFilter(filter: Filter) -> None:
+def setFilter(filter: Filter) -> None:
 	"""
-	Set default filter from settings.
+	Set  filter from settings.
 
 	:param filter: The filter to set.
 	"""
-	config.conf["magnifier"]["defaultFilter"] = filter.value
+	config.conf["magnifier"]["filter"] = filter.value
 
 
-def getDefaultFullscreenMode() -> FullScreenMode:
+def getMagnifiedView() -> MagnifiedView:
 	"""
-	Get default full-screen mode from config.
+	Get magnifier view from config.
 
-	:return: The default full-screen mode.
+	:return: The magnifier view.
 	"""
-	return FullScreenMode(config.conf["magnifier"]["defaultFullscreenMode"])
+	return MagnifiedView(config.conf["magnifier"]["magnifiedView"])
 
 
-def setDefaultFullscreenMode(mode: FullScreenMode) -> None:
+def setMagnifiedView(magnifiedView: MagnifiedView) -> None:
 	"""
-	Set default full-screen mode from settings.
+	Set magnifier view in settings.
 
-	:param mode: The full-screen mode to set.
+	:param magnifiedView: The magnifier view to set.
 	"""
-	config.conf["magnifier"]["defaultFullscreenMode"] = mode.value
+	config.conf["magnifier"]["magnifiedView"] = magnifiedView.value
+
+
+_FOLLOW_CONFIG_KEYS: dict[MagnifierFollowFocusType, str] = {
+	MagnifierFollowFocusType.MOUSE: "followMouse",
+	MagnifierFollowFocusType.SYSTEM_FOCUS: "followSystemFocus",
+	MagnifierFollowFocusType.REVIEW: "followReviewCursor",
+	MagnifierFollowFocusType.NAVIGATOR_OBJECT: "followNavigatorObject",
+}
+
+
+@dataclass
+class _FollowStateOverride:
+	savedStates: dict[MagnifierFollowFocusType, bool] = field(default_factory=dict)
+	isActive: bool = False
+
+
+_followStateOverride = _FollowStateOverride()
+
+
+def _ensureSavedStatesInitialized() -> None:
+	"""
+	Populate _followStateOverride.savedStates from current config if not yet done.
+	Called lazily to avoid reading config.conf at module import time.
+	"""
+	if not _followStateOverride.savedStates:
+		saveFollowStates()
+
+
+def getFollowState(focusType: MagnifierFollowFocusType) -> bool:
+	"""
+	Get the current follow state for a given focus type.
+
+	:param focusType: The focus type to query.
+	:return: True if the magnifier follows the given focus type, False otherwise.
+	"""
+	return config.conf["magnifier"][_FOLLOW_CONFIG_KEYS[focusType]]
+
+
+def setFollowState(focusType: MagnifierFollowFocusType, state: bool) -> None:
+	"""
+	Set the follow state for a given focus type.
+
+	:param focusType: The focus type to update.
+	:param state: True to enable following, False to disable.
+	"""
+	config.conf["magnifier"][_FOLLOW_CONFIG_KEYS[focusType]] = state
+
+
+def saveFollowStates() -> None:
+	"""Save current follow states so they can be restored later."""
+	for focusType in _FOLLOW_CONFIG_KEYS:
+		_followStateOverride.savedStates[focusType] = getFollowState(focusType)
+
+
+def toggleAllFollowStates() -> bool:
+	"""
+	Toggle all follow states between forced-disabled and previously saved states.
+
+	:return: True when all follow states are forced disabled after the call, False when restored.
+	"""
+	_ensureSavedStatesInitialized()
+	if _followStateOverride.isActive:
+		for focusType, state in _followStateOverride.savedStates.items():
+			setFollowState(focusType, state)
+		_followStateOverride.isActive = False
+	else:
+		saveFollowStates()
+		for focusType in _FOLLOW_CONFIG_KEYS:
+			setFollowState(focusType, False)
+		_followStateOverride.isActive = True
+	return _followStateOverride.isActive
 
 
 def isTrueCentered() -> bool:
@@ -157,3 +240,21 @@ def shouldKeepMouseCentered() -> bool:
 	:return: True if mouse should be kept centered, False otherwise.
 	"""
 	return config.conf["magnifier"]["keepMouseCentered"]
+
+
+def getFullscreenMode() -> FullScreenMode:
+	"""
+	Get full-screen mode from config.
+
+	:return: The full-screen mode.
+	"""
+	return FullScreenMode(config.conf["magnifier"]["fullscreenMode"])
+
+
+def setFullscreenMode(mode: FullScreenMode) -> None:
+	"""
+	Set full-screen mode from settings.
+
+	:param mode: The full-screen mode to set.
+	"""
+	config.conf["magnifier"]["fullscreenMode"] = mode.value

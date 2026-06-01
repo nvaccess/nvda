@@ -1,8 +1,7 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2024 NV Access Limited, Cyrille Bougot
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2024-2026 NV Access Limited, Cyrille Bougot
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import argparse
 import sys
@@ -108,8 +107,8 @@ def _createNVDAArgParser() -> NoConsoleOptionParser:
 		dest="logLevel",
 		type=int,
 		default=0,  # 0 means unspecified in command line.
-		choices=[10, 12, 15, 20, 100],
-		help="The lowest level of message logged (debug 10, input/output 12, debugwarning 15, info 20, off 100).\n"
+		choices=[5, 10, 12, 15, 20, 100],
+		help="The lowest level of message logged (secrets 5, debug 10, input/output 12, debugwarning 15, info 20, off 100).\n"
 		"Default value is 20 (info) or the user configured setting.\n"
 		"Logging is always disabled if secure mode is enabled.\n",
 	)

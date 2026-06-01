@@ -1,11 +1,10 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
 # Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
 # Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis,
 # Burman's Computer and Education Ltd, Cary-rowen.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import itertools
 from typing import (
@@ -26,6 +25,7 @@ import eventHandler
 import review
 import _magnifier
 import _magnifier.commands
+from _magnifier.utils.types import MagnifierFollowFocusType
 import controlTypes
 import api
 import textInfos
@@ -2784,6 +2784,7 @@ class GlobalCommands(ScriptableObject):
 			relation' in that range, and we don't yet have a way for the user to select which one to report.
 			For now, we minimise this risk by only reporting details at the current location.
 		"""
+		_isDebugLogCatEnabled = bool(config.conf["debugLog"]["annotations"])
 		try:
 			# Common cases use Caret Position: vbuf available or object supports text range
 			# Eg editable text, or regular web content
@@ -2791,28 +2792,26 @@ class GlobalCommands(ScriptableObject):
 			caret: textInfos.TextInfo = api.getCaretPosition()
 		except RuntimeError:
 			log.debugWarning("Unable to get the caret position.", exc_info=True)
-			return None
-		caret.expand(textInfos.UNIT_CHARACTER)
-		objAtStart: NVDAObject = caret.NVDAObjectAtStart
-		_isDebugLogCatEnabled = bool(config.conf["debugLog"]["annotations"])
-		if _isDebugLogCatEnabled:
-			log.debug(f"Trying with nvdaObject : {objAtStart}")
-
-		if objAtStart.annotations:
+		else:
+			caret.expand(textInfos.UNIT_CHARACTER)
+			objAtStart: NVDAObject = caret.NVDAObjectAtStart
 			if _isDebugLogCatEnabled:
-				log.debug("NVDAObjectAtStart of caret has details")
-			return objAtStart
-		elif api.getFocusObject():
+				log.debug(f"Trying with nvdaObject : {objAtStart}")
+			if objAtStart.annotations:
+				if _isDebugLogCatEnabled:
+					log.debug("NVDAObjectAtStart of caret has details")
+				return objAtStart
+
+		focus: NVDAObject = api.getFocusObject()
+		if focus:
 			# If fetching from the caret position fails, try via the focus object
 			# This case is to support where there is no virtual buffer or text interface and a caret position can
 			# not be fetched.
 			# There may still be an object with focus that has details.
-			# There isn't a known test case for this, however there isn't a known downside to attempt this.
-			focus = api.getFocusObject()
 			if _isDebugLogCatEnabled:
 				log.debug(f"Trying focus object: {focus}")
 
-			if objAtStart.annotations:
+			if focus.annotations:
 				if _isDebugLogCatEnabled:
 					log.debug("focus object has details, able to proceed")
 				return focus
@@ -4220,21 +4219,48 @@ class GlobalCommands(ScriptableObject):
 		description=_("Routes the cursor to or activates the object under this braille cell"),
 		category=SCRCAT_BRAILLE,
 	)
-	def script_braille_routeTo(self, gesture):
-		braille.handler.routeTo(gesture.routingIndex)
+	def script_braille_routeTo(self, gesture: braille.BrailleDisplayGesture):
+		if not gesture.cellIndexes:
+			return
+		braille.handler.routeTo(gesture.cellIndexes[0])
 
 	@script(
 		# Translators: Input help mode message for Braille report formatting command.
 		description=_("Reports formatting info for the text under this braille cell"),
 		category=SCRCAT_BRAILLE,
 	)
-	def script_braille_reportFormatting(self, gesture):
-		info = braille.handler.getTextInfoForWindowPos(gesture.routingIndex)
+	def script_braille_reportFormatting(self, gesture: braille.BrailleDisplayGesture):
+		if not gesture.cellIndexes:
+			return
+		info = braille.handler.getTextInfoForWindowPos(gesture.cellIndexes[0])
 		if info is None:
 			# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 			ui.message(_("No formatting information"))
 			return
 		self._reportFormattingHelper(info, False)
+
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Selects the text from the first up to the last braille cell"),
+		category=SCRCAT_BRAILLE,
+	)
+	def script_braille_selectRange(self, gesture: braille.BrailleDisplayGesture):
+		if not gesture.cellIndexes or len(gesture.cellIndexes) < 2:
+			return
+		startPos = min(gesture.cellIndexes)
+		endPos = max(gesture.cellIndexes)
+		startInfo = braille.handler.getTextInfoForWindowPos(startPos)
+		endInfo = braille.handler.getTextInfoForWindowPos(endPos)
+		if startInfo is None or endInfo is None:
+			# Translators: Reported when selection via multiple routing keys is not possible.
+			ui.message(_("Cannot select from braille routing keys"))
+			return
+		startInfo.setEndPoint(endInfo, "endToEnd")
+		try:
+			startInfo.updateSelection()
+		except NotImplementedError:
+			# Translators: Reported when selection via multiple routing keys is not supported by the focused control.
+			ui.message(_("Selection not supported here"))
 
 	@script(
 		# Translators: Input help mode message for a braille command.
@@ -5203,6 +5229,71 @@ class GlobalCommands(ScriptableObject):
 		gesture: inputCore.InputGesture,
 	) -> None:
 		_magnifier.commands.toggleFilter()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle follow mouse for the magnifier",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_toggleFollowMouse(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.MOUSE)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle follow system focus for the magnifier",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_toggleFollowSystemFocus(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.SYSTEM_FOCUS)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle follow review cursor for the magnifier",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_toggleFollowReview(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.REVIEW)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle follow navigator object for the magnifier",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_toggleFollowNavigatorObject(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.NAVIGATOR_OBJECT)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggle all follow modes for the magnifier",
+		),
+		category=SCRCAT_VISION,
+	)
+	def script_toggleAllFollow(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.toggleAllFollow()
 
 	@script(
 		description=_(

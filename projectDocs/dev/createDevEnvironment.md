@@ -49,7 +49,7 @@ The following dependencies need to be installed on your system:
 
 #### Python
 
-[Python](https://www.python.org/), version 3.13.12, 64-bit.
+[Python](https://www.python.org/), version 3.13.13, 64-bit.
 Install the python version listed in [.python-versions](../../.python-versions)
 
 #### uv
@@ -86,10 +86,10 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 #### Run time dependencies
 
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit `b0b605c8a80f76c4c19e18033c6780c3cc4afc5b`
-* [Sonic](https://github.com/waywardgeek/sonic), commit `d2cdb40fbdc82b464be364a50b34e8dd82b6c80a`
+* [Sonic](https://github.com/waywardgeek/sonic), commit `b93885dcb70aae50c6f76b0fe4e0868f029a077e`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `c9ae003d9c85eb707716928de97e055f5b77189c`
 * [liblouis](http://www.liblouis.io/), version 3.37.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 48.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 48.2
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [Microsoft Detours](https://github.com/microsoft/Detours), commit `9764cebcb1a75940e68fa83d6730ffaf0f669401`
 * brlapi Python bindings, version 0.8.7 or later, built with [GitHub Actions in the NV Access fork of the brlTTY repository](https://github.com/nvaccess/brltty/actions)

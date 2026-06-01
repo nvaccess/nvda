@@ -100,9 +100,7 @@ class UIATextInfo(textInfos.TextInfo):
 	# UIA property IDs that should be automatically cached for control fields
 	_controlFieldUIACachedPropertyIDs = {
 		UIAHandler.UIA_IsValuePatternAvailablePropertyId,
-		UIAHandler.UIA_HasKeyboardFocusPropertyId,
 		UIAHandler.UIA_NamePropertyId,
-		UIAHandler.UIA_ToggleToggleStatePropertyId,
 		UIAHandler.UIA_HelpTextPropertyId,
 		UIAHandler.UIA.UIA_FullDescriptionPropertyId,
 		UIAHandler.UIA_AccessKeyPropertyId,
@@ -1692,7 +1690,13 @@ class UIA(Window):
 		p = self.UIASelectionItemPattern
 		if not p:
 			return None
-		e = p.currentSelectionContainer
+		try:
+			e = p.currentSelectionContainer
+		except COMError:
+			# Some providers (e.g. Qt's QWindowsUiaSelectionItemProvider when the
+			# accessible has no actionInterface) raise instead of returning a value.
+			# Treat the same as no selection container so focus speech is not aborted.
+			return None
 		if not e:
 			# Some implementations of SelectionItemPattern, such as the Outlook attachment list
 			# give back a NULL selectionContainer
