@@ -117,6 +117,7 @@ def initialize():
 	post_configSave.unregister(_saveSections)
 	post_configSave.register(_saveSections)
 
+
 def loadCustomSections() -> None:
 	"""Read sections.yaml and register any custom sections stored there."""
 	path = os.path.join(WritePaths.configDir, "sections.yaml")
@@ -576,7 +577,6 @@ class ConfigManager:
 	i.e. they cannot be overridden in profiles.
 	Note this set may be extended by add-ons.
 	"""
-
 
 	def __init__(self):
 		self.spec = confspec
