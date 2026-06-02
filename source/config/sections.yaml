@@ -1,0 +1,12 @@
+# Built-in configuration sections loaded at startup via config.addSection.
+# Each entry must have:
+#   name: str         - the INI section name
+#   isBaseOnly: bool  - true if the section cannot be overridden by profiles
+#   spec: dict        - mapping of key names to configobj validator strings
+#
+# Example:
+# - name: mySection
+#   isBaseOnly: false
+#   spec:
+#     myKey: "boolean(default=True)"
+#     myOtherKey: "string(default='value')"

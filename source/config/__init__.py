@@ -36,6 +36,7 @@ import easeOfAccess
 from fileUtils import FaultTolerantFile
 import extensionPoints
 import functools
+import yaml
 
 from . import profileUpgrader
 from . import aggregatedSection
@@ -104,9 +105,52 @@ def __getattr__(attrName: str) -> Any:
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
+def _saveSections():
+	"""Write all registered custom sections to sections.yaml in the user config directory."""
+	conf.saveCustomSections()
+
+
 def initialize():
 	global conf
 	conf = ConfigManager()
+	loadCustomSections()
+	post_configSave.unregister(_saveSections)
+	post_configSave.register(_saveSections)
+
+def loadCustomSections() -> None:
+	"""Read sections.yaml and register any custom sections stored there."""
+	path = os.path.join(WritePaths.configDir, "sections.yaml")
+	try:
+		with open(path, encoding="utf-8") as _f:
+			sections = yaml.safe_load(_f)
+	except FileNotFoundError:
+		return
+	except OSError:
+		log.error("Error reading sections.yaml at %s", path, exc_info=True)
+		return
+	except yaml.YAMLError:
+		log.error("Error parsing sections.yaml at %s", path, exc_info=True)
+		return
+	if sections is None:
+		return
+	if not isinstance(sections, dict):
+		log.error("sections.yaml at %s has unexpected format (expected a mapping); ignoring.", path)
+		return
+	for name, entry in sections.items():
+		if not isinstance(name, str):
+			log.warning("Custom section name %r is not a string; skipping.", name)
+			continue
+		if name in confspec:
+			log.warning("Custom section %r shadows a built-in section; skipping.", name)
+			continue
+		if not isinstance(entry, dict) or "spec" not in entry:
+			log.warning("Custom section %r has an invalid entry; skipping.", name)
+			continue
+		if not isinstance(entry["spec"], dict):
+			log.warning("Custom section %r has a non-mapping spec; skipping.", name)
+			continue
+		isBaseOnly = bool(entry.get("isBaseOnly", False))
+		addSection(name, entry["spec"], isBaseOnly)
 
 
 def saveOnExit():
@@ -485,8 +529,9 @@ def addSection(sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool =
 	:param sectionSpec: The configspec for the section to add.
 	:param isBaseOnly: Whether this section should only be in the base configuration, defaults to False.
 	"""
+	# Save a plain-dict copy before configobj can mutate sectionSpec into a configobj.Section.
+	specCopy = dict(sectionSpec)
 	if isBaseOnly:
-		conf.BASE_ONLY_SECTIONS.add(sectionName)
 		confspec[sectionName] = sectionSpec
 		profile = conf.profiles[0]
 		try:
@@ -498,8 +543,13 @@ def addSection(sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool =
 		sect.configspec = confspec[sectionName]
 		try:
 			profile.validate(conf.validator, section=sect)
+			conf.BASE_ONLY_SECTIONS.add(sectionName)
 		except Exception:
 			log.error("Error validating section %s", sectionName, exc_info=True)
+			return
+	else:
+		conf.spec[sectionName] = sectionSpec
+	conf.customSections[sectionName] = {"spec": specCopy, "isBaseOnly": isBaseOnly}
 
 
 class ConfigManager:
@@ -527,6 +577,7 @@ class ConfigManager:
 	Note this set may be extended by add-ons.
 	"""
 
+
 	def __init__(self):
 		self.spec = confspec
 		_transformSpec(self.spec)
@@ -542,6 +593,7 @@ class ConfigManager:
 			},
 		)
 		self.rootSection: AggregatedSection | None = None
+		self.customSections: dict[str, dict[str, Any]] = {}
 		self._shouldHandleProfileSwitch: bool = True
 		self._pendingHandleProfileSwitch: bool = False
 		self._suspendedTriggers: list[ProfileTrigger] | None = None
@@ -551,6 +603,17 @@ class ConfigManager:
 		self._loadProfileTriggers()
 		#: The names of all profiles that have been modified since they were last saved.
 		self._dirtyProfiles: set[str] = set()
+
+	def saveCustomSections(self) -> None:
+		"""Write all registered custom sections to sections.yaml in the user config directory."""
+		if not NVDAState.shouldWriteToDisk():
+			return
+		path = os.path.join(WritePaths.configDir, "sections.yaml")
+		try:
+			with open(path, "w", encoding="utf-8") as _f:
+				yaml.safe_dump(self.customSections, _f, allow_unicode=True)
+		except Exception:
+			log.error("Error saving sections to %s", path, exc_info=True)
 
 	def _handleProfileSwitch(self, shouldNotify=True):
 		if not self._shouldHandleProfileSwitch:
