@@ -11,7 +11,6 @@ import extensionPoints
 
 from .display import DisplayDimensions
 
-
 pre_writeCells = extensionPoints.Action()
 """
 Notifies when cells are about to be written to a braille display.

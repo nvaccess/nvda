@@ -6,6 +6,8 @@
 from __future__ import annotations
 
 import bisect
+import collections
+import time
 import typing
 from typing import (
 	TYPE_CHECKING,
@@ -18,53 +20,51 @@ from typing import (
 	Union,
 )
 
-from annotation import _AnnotationRolesT
-import time
-import languageHandler
-import louisHelper
-import louis
-from controlTypes.state import State
+import api
 import config
+import controlTypes
+import languageHandler
+import louis
+import louisHelper
+import textInfos
+from annotation import _AnnotationRolesT
 from config.configFlags import (
-	TetherTo,
-	ReportTableHeaders,
 	OutputMode,
+	ReportTableHeaders,
+	TetherTo,
 )
 from config.featureFlagEnums import (
 	FontFormattingBrailleModeFlag,
 	ReviewRoutingMovesSystemCaretFlag,
 )
-from logHandler import log
-import controlTypes
-import api
-import textInfos
-import collections
-from utils.security import objectBelowLockScreenAndWindowsIsLocked
-from textUtils import isUnicodeNormalized, UnicodeNormalizationOffsetConverter
+from controlTypes.state import State
 from editableText import EditableText
+from logHandler import log
+from textUtils import UnicodeNormalizationOffsetConverter, isUnicodeNormalized
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
 
-from .labels import (
-	roleLabels,
-	positiveStateLabels,
-	negativeStateLabels,
-	landmarkLabels,
-)
+import braille
+
 from .constants import (
-	SELECTION_SHAPE,
-	INPUT_START_IND,
-	INPUT_END_IND,
-	TEXT_SEPARATOR,
 	CONTEXTPRES_CHANGEDCONTEXT,
+	INPUT_END_IND,
+	INPUT_START_IND,
+	SELECTION_SHAPE,
+	TEXT_SEPARATOR,
 )
 from .formatting import (
-	getParagraphStartMarker,
 	_getFormattingTags,
+	getParagraphStartMarker,
 )
-
-import braille
+from .labels import (
+	landmarkLabels,
+	negativeStateLabels,
+	positiveStateLabels,
+	roleLabels,
+)
 
 #: Named tuple for a region with start and end positions in a buffer
 RegionWithPositions = collections.namedtuple("RegionWithPositions", ("region", "start", "end"))
@@ -1460,9 +1460,9 @@ def getFocusRegions(
 		return
 
 	# Late import to avoid circular import.
-	from treeInterceptorHandler import TreeInterceptor, DocumentTreeInterceptor
 	from cursorManager import CursorManager
 	from NVDAObjects import NVDAObject
+	from treeInterceptorHandler import DocumentTreeInterceptor, TreeInterceptor
 
 	if isinstance(obj, CursorManager):
 		region2 = (ReviewCursorManagerRegion if review else CursorManagerRegion)(obj)

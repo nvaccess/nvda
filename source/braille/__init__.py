@@ -14,29 +14,53 @@ from config.configFlags import (
 )
 from logHandler import log
 
+from .brailleHandler import (
+	FALLBACK_TABLE,
+	BrailleHandler,
+	formatCellsForLog,
+)
+from .buffers import (
+	BrailleBuffer,
+	_WindowRowPositions as _WindowRowPositions,
+)
 from .constants import (
-	CURSOR_SHAPES,
-	SELECTION_SHAPE,
-	CONTINUATION_SHAPE,
-	END_OF_BRAILLE_OUTPUT_SHAPE,
-	INPUT_START_IND,
-	INPUT_END_IND,
-	TEXT_SEPARATOR,
+	AUTO_DISPLAY_NAME,
+	AUTOMATIC_PORT,
+	BLUETOOTH_PORT,
 	CONTEXTPRES_CHANGEDCONTEXT,
 	CONTEXTPRES_FILL,
 	CONTEXTPRES_SCROLL,
-	focusContextPresentations,
-	AUTOMATIC_PORT,
-	AUTO_DISPLAY_NAME,
+	CONTINUATION_SHAPE,
+	CURSOR_SHAPES,
+	END_OF_BRAILLE_OUTPUT_SHAPE,
+	INPUT_END_IND,
+	INPUT_START_IND,
 	NO_BRAILLE_DISPLAY_NAME,
+	SELECTION_SHAPE,
+	TEXT_SEPARATOR,
 	USB_PORT,
-	BLUETOOTH_PORT,
+	focusContextPresentations,
 )
-from .labels import (
-	roleLabels,
-	positiveStateLabels,
-	negativeStateLabels,
-	landmarkLabels,
+from .display import (
+	RENAMED_DRIVERS,
+	BrailleDisplayDriver,
+	BrailleDisplayGesture,
+	DisplayDimensions,
+	_getDisplayDriver as _getDisplayDriver,
+	getDisplayDrivers,
+	getDisplayList,
+	getSerialPorts,
+)
+from .extensions import (
+	_decide_disabledIncludesMessages as _decide_disabledIncludesMessages,
+	_post_dismissBrailleMessage as _post_dismissBrailleMessage,
+	_pre_showBrailleMessage as _pre_showBrailleMessage,
+	decide_enabled,
+	displayChanged,
+	displaySizeChanged,
+	filter_displayDimensions,
+	filter_displaySize,
+	pre_writeCells,
 )
 from .formatting import (
 	FormatTagDelimiter,
@@ -44,54 +68,30 @@ from .formatting import (
 	fontAttributeFormattingMarkers,
 	getParagraphStartMarker,
 )
+from .labels import (
+	landmarkLabels,
+	negativeStateLabels,
+	positiveStateLabels,
+	roleLabels,
+)
 from .regions import (
-	NVDAObjectHasUsefulText,
-	RegionWithPositions,
-	Region,
-	TextRegion,
-	getPropertiesBraille,
-	NVDAObjectRegion,
-	ReviewNVDAObjectRegion,
-	getControlFieldBraille,
-	getFormatFieldBraille,
-	TextInfoRegion,
 	CursorManagerRegion,
-	ReviewTextInfoRegion,
+	NVDAObjectHasUsefulText,
+	NVDAObjectRegion,
+	Region,
+	RegionWithPositions,
 	ReviewCursorManagerRegion,
-	rindex,
-	invalidateCachedFocusAncestors,
+	ReviewNVDAObjectRegion,
+	ReviewTextInfoRegion,
+	TextInfoRegion,
+	TextRegion,
+	getControlFieldBraille,
 	getFocusContextRegions,
 	getFocusRegions,
-)
-from .buffers import (
-	BrailleBuffer,
-	_WindowRowPositions as _WindowRowPositions,
-)
-from .display import (
-	getDisplayList,
-	RENAMED_DRIVERS,
-	BrailleDisplayDriver,
-	BrailleDisplayGesture,
-	getSerialPorts,
-	getDisplayDrivers,
-	DisplayDimensions,
-	_getDisplayDriver as _getDisplayDriver,
-)
-from .brailleHandler import (
-	BrailleHandler,
-	formatCellsForLog,
-	FALLBACK_TABLE,
-)
-from .extensions import (
-	pre_writeCells,
-	filter_displaySize,
-	filter_displayDimensions,
-	displaySizeChanged,
-	displayChanged,
-	decide_enabled,
-	_decide_disabledIncludesMessages as _decide_disabledIncludesMessages,
-	_pre_showBrailleMessage as _pre_showBrailleMessage,
-	_post_dismissBrailleMessage as _post_dismissBrailleMessage,
+	getFormatFieldBraille,
+	getPropertiesBraille,
+	invalidateCachedFocusAncestors,
+	rindex,
 )
 
 handler: Optional[BrailleHandler] = None

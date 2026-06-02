@@ -5,8 +5,14 @@
 
 from __future__ import annotations
 
+import collections
+import ctypes.wintypes
+import importlib
 import itertools
+import pkgutil
+import re
 import typing
+from locale import strxfrm
 from typing import (
 	Any,
 	Callable,
@@ -16,37 +22,31 @@ from typing import (
 	NamedTuple,
 	Optional,
 	Tuple,
-	Union,
 	Type,
+	Union,
 )
-from locale import strxfrm
 
-import driverHandler
-import pkgutil
-import importlib
-import ctypes.wintypes
-import winBindings.kernel32
-import keyboardHandler
 import baseObject
-import config
-from logHandler import log
-import brailleDisplayDrivers
-import inputCore
-import re
-import scriptHandler
-import collections
-import hwPortUtils
 import bdDetect
+import brailleDisplayDrivers
+import config
+import driverHandler
+import hwPortUtils
+import inputCore
+import keyboardHandler
 import NVDAState
+import scriptHandler
+import winBindings.kernel32
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
+from logHandler import log
+
+import braille
 
 from .constants import (
 	AUTOMATIC_PORT,
-	USB_PORT,
 	BLUETOOTH_PORT,
+	USB_PORT,
 )
-
-import braille
 
 
 class DisplayDimensions(NamedTuple):

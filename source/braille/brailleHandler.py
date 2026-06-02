@@ -5,89 +5,87 @@
 
 from __future__ import annotations
 
+import contextlib
+import ctypes.wintypes
 import itertools
+import threading
+import time
 import typing
 from typing import (
 	TYPE_CHECKING,
 	List,
 	Optional,
 	Set,
-	Union,
 	Type,
+	Union,
 )
 
-import contextlib
-import ctypes.wintypes
-import threading
-import time
-import wx
-import louisHelper
+import api
+import baseObject
+import bdDetect
+import brailleTables
+import brailleViewer
+import config
+import controlTypes
+import easeOfAccess
+import extensionPoints
 import gui
+import hwIo
+import inputCore
+import keyboardHandler
+import louisHelper
+import queueHandler
 import winBindings.kernel32
 import winKernel
-import keyboardHandler
-import baseObject
-import config
-import easeOfAccess
+import wx
 from config.configFlags import (
+	BrailleMode,
 	ShowMessages,
 	TetherTo,
-	BrailleMode,
 )
+from gui.guiHelper import wxCallOnMain
 from logHandler import log
-import controlTypes
-import api
-import inputCore
-import brailleTables
-import extensionPoints
-import bdDetect
-import queueHandler
-import brailleViewer
 from utils.security import objectBelowLockScreenAndWindowsIsLocked, post_sessionLockStateChanged
 from winAPI.secureDesktop import post_secureDesktopStateChange
-import hwIo
-from gui.guiHelper import wxCallOnMain
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
 	from speech.types import SpeechSequence
 
 
-from .constants import (
-	AUTO_DISPLAY_NAME,
-	NO_BRAILLE_DISPLAY_NAME,
-	CONTEXTPRES_CHANGEDCONTEXT,
-	TEXT_SEPARATOR,
-)
-from .regions import (
-	TextRegion,
-	NVDAObjectRegion,
-	TextInfoRegion,
-	getFocusContextRegions,
-	getFocusRegions,
-)
 from .buffers import (
 	BrailleBuffer,
 )
+from .constants import (
+	AUTO_DISPLAY_NAME,
+	CONTEXTPRES_CHANGEDCONTEXT,
+	NO_BRAILLE_DISPLAY_NAME,
+	TEXT_SEPARATOR,
+)
 from .display import (
-	BrailleDisplayDriver,
 	RENAMED_DRIVERS,
+	BrailleDisplayDriver,
 	DisplayDimensions,
 	_getDisplayDriver,
 )
-
 from .extensions import (
-	pre_writeCells,
-	filter_displaySize,
-	filter_displayDimensions,
-	displaySizeChanged,
-	displayChanged,
-	decide_enabled,
 	_decide_disabledIncludesMessages,
-	_pre_showBrailleMessage,
 	_post_dismissBrailleMessage,
+	_pre_showBrailleMessage,
+	decide_enabled,
+	displayChanged,
+	displaySizeChanged,
+	filter_displayDimensions,
+	filter_displaySize,
+	pre_writeCells,
 )
-
+from .regions import (
+	NVDAObjectRegion,
+	TextInfoRegion,
+	TextRegion,
+	getFocusContextRegions,
+	getFocusRegions,
+)
 
 FALLBACK_TABLE = config.conf.getConfigValidation(("braille", "translationTable")).default
 """Table to use if the output table configuration is invalid."""

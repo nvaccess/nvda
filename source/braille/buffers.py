@@ -10,10 +10,10 @@ from typing import (
 	TYPE_CHECKING,
 )
 
-import textUtils
-import textUtils.hyphenation
 import baseObject
 import config
+import textUtils
+import textUtils.hyphenation
 from config.featureFlagEnums import (
 	BrailleTextWrapFlag,
 )
@@ -23,19 +23,19 @@ if TYPE_CHECKING:
 	from . import BrailleHandler
 
 from .constants import (
-	TEXT_SEPARATOR,
-	CONTINUATION_SHAPE,
 	CONTEXTPRES_CHANGEDCONTEXT,
 	CONTEXTPRES_SCROLL,
+	CONTINUATION_SHAPE,
+	TEXT_SEPARATOR,
+)
+from .formatting import (
+	getParagraphStartMarker,
 )
 from .regions import (
 	Region,
 	RegionWithPositions,
 	TextInfoRegion,
 	rindex,
-)
-from .formatting import (
-	getParagraphStartMarker,
 )
 
 
