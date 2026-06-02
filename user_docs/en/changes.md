@@ -17,7 +17,7 @@ The default gesture to repeat the last spoken information is `NVDA+x`, which can
 
 The braille display can now automatically scroll and DotPad devices support multi-button combinations.
 
-Liblouis has been updated with new Italian and Estonian braille tables.
+Liblouis has been updated with new Italian, Estonian, Elfdalian, Sami, Swedish, and Spanish Braille tables.
 
 When resetting NVDA to factory defaults, an Undo button is now available to restore the previous configuration.
 
@@ -60,8 +60,8 @@ The triple-press keyboard shortcut (`NVDA+control+r`) is not affected, as it is 
 
 ### Changes
 
-* Updated Liblouis Braille translator to [3.37.0](https://github.com/liblouis/liblouis/releases/tag/v3.37.0). (#19758, @codeofdusk)
-  * Added new Italian and Estonian 6 dot tables.
+* Updated Liblouis Braille translator to [3.38.0](https://github.com/liblouis/liblouis/releases/tag/v3.38.0). (#19758, #20269, @codeofdusk)
+  * Added new Italian and Estonian 6 dot tables, Elfdalian and Sami tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
 * Braille:
   * The braille message when NVDA is started was updated to mention if screen curtain is enabled. (#19441, @nvdaes)
   * NVDA now supports the Orbit Reader 40 in its proprietary HID mode. (#19756, @trypsynth)
