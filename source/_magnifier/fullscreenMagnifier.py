@@ -254,25 +254,6 @@ class FullScreenMagnifier(Magnifier):
 			case FullScreenMode.CENTER:
 				return coordinates
 
-	@override
-	def _keepMouseCentered(self) -> None:
-		"""
-		Move the mouse to the center of the magnified view.
-		Skips if a mouse button is currently pressed to avoid interfering with clicks.
-		"""
-		if (
-			winUser.getAsyncKeyState(winUser.VK_LBUTTON) < 0
-			or winUser.getAsyncKeyState(winUser.VK_RBUTTON) < 0
-			or winUser.getAsyncKeyState(winUser.VK_MBUTTON) < 0
-		):
-			log.debug("Mouse button pressed, skipping cursor repositioning to avoid interfering with click")
-			return
-		coordinates = self._getCoordinatesForMode(self.currentCoordinates)
-		params = self._getMagnifierParameters(coordinates)
-		centerX = params.coordinates.x + params.magnifierSize.width // 2
-		centerY = params.coordinates.y + params.magnifierSize.height // 2
-		winUser.setCursorPos(centerX, centerY)
-
 	@trackNativeMagnifierErrors
 	def _setCursorToCenter(self, x: int, y: int) -> None:
 		"""

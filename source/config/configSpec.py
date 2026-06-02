@@ -127,7 +127,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	followNavigatorObject = boolean(default=True)
 	panStep = integer(min=1, max=100, default=10)
 	fullscreenMode = string(default="center")
-	keepMouseCentered = boolean(default=false)
 
 # Presentation settings
 [presentation]
