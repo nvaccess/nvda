@@ -1631,7 +1631,7 @@ The magnifier offers three different modes for tracking focus and determining wh
 
 * Center: The magnified area is centered on the current focus position.
 This mode keeps the focused element at the center of the screen and clamps to the screen edge.
-To disable clamping, activate [true center mode in the Magnifier settings](#MagnifierUseTrueCenter).
+To disable clamping, activate [true center mode in the Magnifier settings](#MagnifierUseTrueCenterTracking).
 * Border: The magnified area only moves when the focus approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
 * Relative: The magnified area maintains the relative position of the focus within the screen.
@@ -2936,6 +2936,18 @@ The available options are:
 | Border | The magnified area only moves when the focus approaches the edge of the visible area. |
 | Relative | The magnified area maintains the relative position of the focus within the screen. |
 
+##### Use true center tracking {#MagnifierUseTrueCenterTracking}
+
+This checkbox controls whether the magnifier should always keep the focus centered on the screen, or if it should allow the focus to move towards the edges of the screen before moving the magnified area.
+When enabled, the magnifier will always keep the focus centered on the screen, which can be helpful for users who prefer a consistent position of the focus within the magnified view.
+
+This option is disabled by default.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Disabled, Enabled |
+| Default | Disabled |
+
 ##### Panning step size {#MagnifierPanningStepSize}
 
 This slider allows you to set the panning step size as a percentage of the visible magnified window.
@@ -2953,18 +2965,6 @@ Available pan actions include:
 |---|---|
 | Options | 1 to 100 |
 | Default | 10 |
-
-##### Use true center {#MagnifierUseTrueCenter}
-
-This checkbox controls whether the magnifier should always keep the focus centered on the screen, or if it should allow the focus to move towards the edges of the screen before moving the magnified area.
-When enabled, the magnifier will always keep the focus centered on the screen, which can be helpful for users who prefer a consistent position of the focus within the magnified view.
-
-This option is disabled by default.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-| Options | Disabled, Enabled |
-| Default | Disabled |
 
 ##### Follow mouse {#MagnifierFollowMouse}
 

@@ -6144,19 +6144,19 @@ class MagnifierPanel(SettingsPanel):
 		self.filterList.SetSelection(list(Filter).index(filterValue))
 		self.filterList.Bind(wx.EVT_CHOICE, self._onImmediateSettingChange)
 
-		# TRUE CENTER
-		# Translators: The label for a setting in magnifier settings to select whether true center is used in full-screen mode
-		trueCenterText = _("Use &true center")
-		self.trueCenterCheckBox = generalGroup.addItem(
-			wx.CheckBox(generalGroupBox, label=trueCenterText),
+		# TRUE CENTER TRACKING
+		# Translators: The label for a setting in magnifier settings to select whether true center is used
+		trueCenterTrackingText = _("&True center tracking")
+		self.trueCenterTrackingCheckBox = generalGroup.addItem(
+			wx.CheckBox(generalGroupBox, label=trueCenterTrackingText),
 		)
 		self.bindHelpEvent(
-			"MagnifierUseTrueCenter",
-			self.trueCenterCheckBox,
+			"MagnifierUseTrueCenterTracking",
+			self.trueCenterTrackingCheckBox,
 		)
-		self.trueCenterCheckBox.SetValue(magnifierConfig.isTrueCentered())
-		self._trueCenterInitially = self.trueCenterCheckBox.GetValue()
-		self.trueCenterCheckBox.Bind(wx.EVT_CHECKBOX, self._onImmediateSettingChange)
+		self.trueCenterTrackingCheckBox.SetValue(magnifierConfig.isTrueCentered())
+		self._trueCenterInitially = self.trueCenterTrackingCheckBox.GetValue()
+		self.trueCenterTrackingCheckBox.Bind(wx.EVT_CHECKBOX, self._onImmediateSettingChange)
 
 		# PAN SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
@@ -6265,7 +6265,7 @@ class MagnifierPanel(SettingsPanel):
 		selectedPanStep = self.panSpinCtrl.GetValue()
 		selectedFilter = list(Filter)[self.filterList.GetSelection()]
 		selectedMode = list(FullScreenMode)[self.fullscreenModeList.GetSelection()]
-		isTrueCentered = self.trueCenterCheckBox.GetValue()
+		isTrueCentered = self.trueCenterTrackingCheckBox.GetValue()
 		keepMouseCentered = self.keepMouseCenteredCheckBox.GetValue()
 
 		roundedZoom = magnifierConfig.roundZoomLevel(selectedZoom)
