@@ -26,6 +26,7 @@ import winreg
 import winBindings.sas
 import api
 import braille
+import braille.extensions
 from config.registry import RegistryKey
 import inputCore
 import nvwave
@@ -139,9 +140,11 @@ class LocalMachine:
 		"""Cached cells for display when we return from controling the local computer, or displaying a `ui.message`."""
 
 		braille.decide_enabled.register(self.handleDecideEnabled)
-		braille._pre_showBrailleMessage.register(self._handleShowBrailleMessage)
-		braille._post_dismissBrailleMessage.register(self._handleDismissBrailleMessage)
-		braille._decide_disabledIncludesMessages.register(self._handleDecideDisabledIncludesMessages)
+		braille.extensions._pre_showBrailleMessage.register(self._handleShowBrailleMessage)
+		braille.extensions._post_dismissBrailleMessage.register(self._handleDismissBrailleMessage)
+		braille.extensions._decide_disabledIncludesMessages.register(
+			self._handleDecideDisabledIncludesMessages,
+		)
 
 	def terminate(self) -> None:
 		"""Clean up resources when the local machine controller is terminated.
@@ -150,9 +153,11 @@ class LocalMachine:
 		    ensure proper cleanup when the remote connection ends.
 		"""
 		braille.decide_enabled.unregister(self.handleDecideEnabled)
-		braille._pre_showBrailleMessage.unregister(self._handleShowBrailleMessage)
-		braille._post_dismissBrailleMessage.unregister(self._handleDismissBrailleMessage)
-		braille._decide_disabledIncludesMessages.unregister(self._handleDecideDisabledIncludesMessages)
+		braille.extensions._pre_showBrailleMessage.unregister(self._handleShowBrailleMessage)
+		braille.extensions._post_dismissBrailleMessage.unregister(self._handleDismissBrailleMessage)
+		braille.extensions._decide_disabledIncludesMessages.unregister(
+			self._handleDecideDisabledIncludesMessages,
+		)
 
 	def playWave(self, fileName: str) -> None:
 		"""Play a wave file on the local machine.

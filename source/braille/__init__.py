@@ -21,7 +21,6 @@ from .brailleHandler import (
 )
 from .buffers import (
 	BrailleBuffer,
-	_WindowRowPositions as _WindowRowPositions,
 )
 from .constants import (
 	AUTO_DISPLAY_NAME,
@@ -46,15 +45,11 @@ from .display import (
 	BrailleDisplayDriver,
 	BrailleDisplayGesture,
 	DisplayDimensions,
-	_getDisplayDriver as _getDisplayDriver,
 	getDisplayDrivers,
 	getDisplayList,
 	getSerialPorts,
 )
 from .extensions import (
-	_decide_disabledIncludesMessages as _decide_disabledIncludesMessages,
-	_post_dismissBrailleMessage as _post_dismissBrailleMessage,
-	_pre_showBrailleMessage as _pre_showBrailleMessage,
 	decide_enabled,
 	displayChanged,
 	displaySizeChanged,

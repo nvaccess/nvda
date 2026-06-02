@@ -8,6 +8,7 @@
 import unittest
 
 import braille
+import braille.buffers
 
 
 def _getDisplayDimensions(dimensions: braille.DisplayDimensions) -> braille.DisplayDimensions:
@@ -31,8 +32,8 @@ class TestWindowBrailleCells(unittest.TestCase):
 		# 15 real cells in row 0, remainder will be padded; row index 0 is marked.
 		buffer.brailleCells = [1] * 15 + [1] * 5
 		buffer._windowRowBufferOffsets = [
-			braille._WindowRowPositions(0, 15, True),
-			braille._WindowRowPositions(15, 20),
+			braille.buffers._WindowRowPositions(0, 15, True),
+			braille.buffers._WindowRowPositions(15, 20),
 		]
 		cells = buffer.windowBrailleCells
 		# First row: 15 real cells, then CONTINUATION_SHAPE, then 4 padding zeroes.
@@ -45,8 +46,8 @@ class TestWindowBrailleCells(unittest.TestCase):
 		buffer = braille.handler.buffer
 		buffer.brailleCells = [1] * 15 + [1] * 5
 		buffer._windowRowBufferOffsets = [
-			braille._WindowRowPositions(0, 15),
-			braille._WindowRowPositions(15, 20),
+			braille.buffers._WindowRowPositions(0, 15),
+			braille.buffers._WindowRowPositions(15, 20),
 		]
 		cells = buffer.windowBrailleCells
 		# No continuation marker anywhere; positions 15..19 of row 0 should all be 0.
