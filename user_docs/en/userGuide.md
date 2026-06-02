@@ -3579,27 +3579,20 @@ You may toggle through the available paragraph styles from anywhere by assigning
 
 ##### Word Segmentation Standard {#WordSegmentationStandard}
 
-This combo box allows you to select how NVDA determines word boundaries when navigating by word.
-
-NVDA's Chinese word segmentation support is also used for braille.
-When a Chinese braille output table is in use, NVDA can insert spaces between Chinese words in braille, making braille output easier to read.
+This setting controls how NVDA determines word boundaries when navigating by word.
+Chinese word segmentation is also used for braille.
+When a Chinese braille output table is in use, NVDA can insert spaces between Chinese words in braille.
 
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Default (Auto), Auto, Standard, Chinese|
 |Default |Auto|
 
-The Word Segmentation Standard combo box has three options:
-
-* Auto: NVDA will use Chinese word segmentation for Chinese text when available.
-For other text, NVDA will use standard word segmentation.
-This is the default option.
-* Standard: NVDA will use the standard Windows word segmentation.
-This option works well for most languages and matches NVDA's previous behaviour.
-* Chinese: NVDA will use Chinese word segmentation for word navigation.
-If Chinese word segmentation is not available, NVDA will fall back to standard word segmentation.
-
-For most users, the Auto option is recommended.
+|Option |Behaviour |
+|---|---|
+|Auto |Use Chinese word segmentation for Chinese text when available. For other text, use standard word segmentation. |
+|Standard |Use standard Windows word segmentation. |
+|Chinese |Use Chinese word segmentation. If Chinese word segmentation is not available, NVDA falls back to standard word segmentation. |
 
 #### Math Settings {#MathSettings}
 

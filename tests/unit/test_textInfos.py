@@ -219,6 +219,14 @@ class _LegacyNoUniscribeProvider(BasicTextProvider):
 	TextInfo = _LegacyNoUniscribeTextInfo
 
 
+class _RuntimeLegacyNoUniscribeTextInfo(BasicTextProvider.TextInfo):
+	pass
+
+
+class _RuntimeLegacyNoUniscribeProvider(BasicTextProvider):
+	TextInfo = _RuntimeLegacyNoUniscribeTextInfo
+
+
 class TestUseUniscribeCompatibility(unittest.TestCase):
 	def test_instanceOverrideFalseDisablesWordSegmenter(self) -> None:
 		obj = BasicTextProvider(text="abc def")
@@ -242,14 +250,9 @@ class TestUseUniscribeCompatibility(unittest.TestCase):
 		self.assertEqual(ti.text, "abc ")
 
 	def test_classAssignmentFalseDisablesWordSegmenter(self) -> None:
-		class RuntimeLegacyNoUniscribeTextInfo(BasicTextProvider.TextInfo):
-			pass
-
-		class RuntimeLegacyNoUniscribeProvider(BasicTextProvider):
-			TextInfo = RuntimeLegacyNoUniscribeTextInfo
-
-		RuntimeLegacyNoUniscribeTextInfo.useUniscribe = False
-		obj = RuntimeLegacyNoUniscribeProvider(text="abc def")
+		_RuntimeLegacyNoUniscribeTextInfo.useUniscribe = False
+		self.addCleanup(type.__delattr__, _RuntimeLegacyNoUniscribeTextInfo, "_useUniscribeOverride")
+		obj = _RuntimeLegacyNoUniscribeProvider(text="abc def")
 		ti = obj.makeTextInfo(Offsets(0, 0))
 
 		with patch("textInfos.offsets.WordSegmenter") as wordSegmenter:

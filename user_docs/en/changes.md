@@ -27,9 +27,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 #### Deprecations
 
 * The `braille.wordWrap` configuration key is deprecated and bridged to `braille.textWrap`. (#17010, @LeonarddeR)
-* The `useUniscribe` attribute of `textInfos.offsets.OffsetsTextInfo` and its subclasses is deprecated,
-  but remains available for backwards compatibility.
-  Use `charSegFlag` and `wordSegFlag` instead. (#18735)
+* The `useUniscribe` attribute of `textInfos.offsets.OffsetsTextInfo` and its subclasses is deprecated, use `charSegFlag` and `wordSegFlag` instead. (#18735)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
