@@ -14,7 +14,6 @@ from logHandler import log
 
 from .config import getMagnifiedView, getEnabled, setEnabled
 from .utils.types import MagnifiedView
-from .fullscreenMagnifier import FullScreenMagnifier
 
 if TYPE_CHECKING:
 	from .magnifier import Magnifier
@@ -92,8 +91,6 @@ def terminate() -> None:
 
 	log.debug("Terminating magnifier")
 	stop(persist=False)
-	if isinstance(_magnifier, FullScreenMagnifier):
-		_magnifier._finalUninitializeNativeMagnification()
 	_magnifier = None
 
 

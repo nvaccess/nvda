@@ -41,7 +41,6 @@ class FullScreenMagnifier(Magnifier):
 		self.currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
 		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
-		self._nativeApiInitialized: bool = False
 
 	@Magnifier.filterType.setter
 	def filterType(self, value: Filter) -> None:
@@ -87,18 +86,25 @@ class FullScreenMagnifier(Magnifier):
 	def _initializeNativeMagnification(self) -> None:
 		"""
 		Initialize the Magnification API and apply the initial fullscreen transform.
-		MagInitialize is called only once per instance lifetime: the Initialize →
-		Uninitialize → Initialize cycle within the same process causes
-		MagSetFullscreenTransform to fail with WinError 0. To avoid this, the API
-		stays initialized between magnifier toggles and is only uninitialized on
-		NVDA shutdown via _finalUninitializeNativeMagnification.
+
+		A dummy MagInitialize/MagUninitialize cycle is performed before the real
+		initialization. This is a workaround for a Windows bug: after a previous
+		MagSetFullscreenTransform call, MagUninitialize leaves internal state that
+		causes MagSetFullscreenTransform to fail with WinError 0 on the next
+		MagInitialize. A dummy cycle without any MagSetFullscreenTransform call
+		clears this stale state.
+
 		Raises OSError if MagInitialize fails or if MagSetFullscreenTransform fails
 		(e.g. Windows Magnifier already holds the API).
 		"""
-		if not self._nativeApiInitialized:
+		# Dummy cycle to clear any stale state from a previous MagSetFullscreenTransform.
+		try:
 			magnification.MagInitialize()
-			self._nativeApiInitialized = True
-			log.debug("Magnification API initialized")
+			magnification.MagUninitialize()
+		except OSError:
+			pass
+		magnification.MagInitialize()
+		log.debug("Magnification API initialized")
 		# Applying the first real update verifies the API is usable without
 		# briefly jumping the magnified view to the top-left corner.
 		try:
@@ -108,7 +114,6 @@ class FullScreenMagnifier(Magnifier):
 			self._fullscreenMagnifier(coordinates)
 		except OSError:
 			self._uninitializeNativeMagnification()
-			self._nativeApiInitialized = False
 			raise
 
 	@override
@@ -127,34 +132,10 @@ class FullScreenMagnifier(Magnifier):
 	def _stopMagnifier(self) -> None:
 		"""
 		Stop the Full-screen magnifier using windows DLL.
-		The native API is intentionally kept initialized to allow clean restarts;
-		it is only uninitialized on NVDA shutdown via _finalUninitializeNativeMagnification.
 		"""
 		super()._stopMagnifier()
 		self._resetMagnification()
-
-	def _finalUninitializeNativeMagnification(self) -> None:
-		"""
-		Uninitialize the Magnification API.
-		Must be called after _stopMagnifier, which already resets the transform.
-		"""
 		self._uninitializeNativeMagnification()
-		self._nativeApiInitialized = False
-
-	@override
-	def onScreenCurtainEnabled(self) -> None:
-		"""
-		Release the Magnification API before the screen curtain takes ownership.
-		The screen curtain performs its own MagInitialize/MagUninitialize cycle,
-		which resets the Windows API state and allows the magnifier to re-initialize
-		cleanly when the screen curtain is disabled.
-		Without this, the screen curtain's MagUninitialize would kill our
-		kept-alive initialization, causing WinError 1 on the next magnifier start.
-		"""
-		super().onScreenCurtainEnabled()
-		if self._nativeApiInitialized:
-			self._uninitializeNativeMagnification()
-			self._nativeApiInitialized = False
 
 	@trackNativeMagnifierErrors
 	def _resetMagnification(self) -> None:
@@ -198,9 +179,6 @@ class FullScreenMagnifier(Magnifier):
 			f"Attempting full-screen magnifier recovery "
 			f"(attempt {self._recoveryAttempts}/{self._MAX_RECOVERY_ATTEMPTS})",
 		)
-
-		self._uninitializeNativeMagnification()
-		self._nativeApiInitialized = False
 
 		try:
 			# _initializeNativeMagnification also probes MagSetFullscreenTransform,
