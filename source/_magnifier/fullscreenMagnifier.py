@@ -12,7 +12,6 @@ from typing import override
 from logHandler import log
 import speech
 import ui
-import winUser
 from winBindings import magnification
 from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
@@ -253,15 +252,6 @@ class FullScreenMagnifier(Magnifier):
 				return self._borderPos(coordinates)
 			case FullScreenMode.CENTER:
 				return coordinates
-
-	@trackNativeMagnifierErrors
-	def _setCursorToCenter(self, x: int, y: int) -> None:
-		"""
-		Set cursor to the specified position.
-		If this fails, it is logged but execution continues.
-		"""
-		winUser.setCursorPos(x, y)
-		log.debug(f"Cursor repositioned to center ({x}, {y})")
 
 	def _borderPos(
 		self,
