@@ -33,6 +33,8 @@ from .regions import (
 	RegionWithPositions,
 	TextInfoRegion,
 	rindex,
+)
+from .formatting import (
 	getParagraphStartMarker,
 )
 

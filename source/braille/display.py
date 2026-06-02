@@ -13,6 +13,7 @@ from typing import (
 	Generator,
 	Iterable,
 	List,
+	NamedTuple,
 	Optional,
 	Tuple,
 	Union,
@@ -46,6 +47,15 @@ from .constants import (
 )
 
 import braille
+
+
+class DisplayDimensions(NamedTuple):
+	numRows: int
+	numCols: int
+
+	@property
+	def displaySize(self) -> int:
+		return self.numCols * self.numRows
 
 
 def _getDisplayDriver(moduleName: str, caseSensitive: bool = True) -> Type["BrailleDisplayDriver"]:

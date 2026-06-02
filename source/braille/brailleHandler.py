@@ -63,6 +63,8 @@ from .regions import (
 	TextRegion,
 	NVDAObjectRegion,
 	TextInfoRegion,
+	getFocusContextRegions,
+	getFocusRegions,
 )
 from .buffers import (
 	BrailleBuffer,
@@ -70,14 +72,8 @@ from .buffers import (
 from .display import (
 	BrailleDisplayDriver,
 	RENAMED_DRIVERS,
-	_getDisplayDriver,
-)
-
-from . import (
-	FALLBACK_TABLE,
 	DisplayDimensions,
-	getFocusContextRegions,
-	getFocusRegions,
+	_getDisplayDriver,
 )
 
 from .extensions import (
@@ -91,6 +87,10 @@ from .extensions import (
 	_pre_showBrailleMessage,
 	_post_dismissBrailleMessage,
 )
+
+
+FALLBACK_TABLE = config.conf.getConfigValidation(("braille", "translationTable")).default
+"""Table to use if the output table configuration is invalid."""
 
 
 def formatCellsForLog(cells: List[int]) -> str:

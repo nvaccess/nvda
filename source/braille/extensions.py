@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import extensionPoints
 
-from . import DisplayDimensions
+from .display import DisplayDimensions
 
 
 pre_writeCells = extensionPoints.Action()
