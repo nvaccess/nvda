@@ -6155,7 +6155,7 @@ class MagnifierPanel(SettingsPanel):
 			self.trueCenterTrackingCheckBox,
 		)
 		self.trueCenterTrackingCheckBox.SetValue(magnifierConfig.isTrueCentered())
-		self._trueCenterInitially = self.trueCenterTrackingCheckBox.GetValue()
+		self._trueCenterTrackingInitially = self.trueCenterTrackingCheckBox.GetValue()
 		self.trueCenterTrackingCheckBox.Bind(wx.EVT_CHECKBOX, self._onImmediateSettingChange)
 
 		# PAN SETTINGS
@@ -6273,7 +6273,7 @@ class MagnifierPanel(SettingsPanel):
 		self._panStepInitially = selectedPanStep
 		self._filterInitially = selectedFilter
 		self._fullscreenModeInitially = selectedMode
-		self._trueCenterInitially = isTrueCentered
+		self._trueCenterTrackingInitially = isTrueCentered
 		for focusType, checkBox in self._followFocusCheckBoxes.items():
 			shouldFollow = checkBox.GetValue()
 			self._followFocusInitially[focusType] = shouldFollow
@@ -6285,7 +6285,7 @@ class MagnifierPanel(SettingsPanel):
 		magnifierConfig.setPanStep(self._panStepInitially)
 		magnifierConfig.setFilter(self._filterInitially)
 		magnifierConfig.setFullscreenMode(self._fullscreenModeInitially)
-		config.conf["magnifier"]["isTrueCentered"] = self._trueCenterInitially
+		config.conf["magnifier"]["isTrueCentered"] = self._trueCenterTrackingInitially
 		for focusType, state in self._followFocusInitially.items():
 			magnifierConfig.setFollowState(focusType, state)
 		config.conf["magnifier"]["keepMouseCentered"] = self._keepMouseCenteredInitially
