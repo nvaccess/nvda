@@ -1280,10 +1280,12 @@ class HtmlMessageDialog(MessageDialog):
 		evt.Skip()
 
 	def _onNavigating(self, evt: wx.html2.WebViewEvent) -> None:
-		url = evt.GetURL()
-		if not url.startswith(self._ACTION_URL_PREFIX):
-			return
 		evt.Veto()
+		url = evt.GetURL()
+		if not url.lower().startswith(self._ACTION_URL_PREFIX):
+			if url.lower().startswith(("http://", "https://")):
+				wx.LaunchDefaultBrowser(url)
+			return
 		action = url[len(self._ACTION_URL_PREFIX) :]
 		if action == "close":
 			self.Close()

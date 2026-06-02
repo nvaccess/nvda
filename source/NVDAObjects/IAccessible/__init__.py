@@ -2339,7 +2339,7 @@ class WindowRoot(GenericWindow):
 
 
 class ShellDocObjectView(IAccessible):
-	def _get_focusRedirect(self):
+	def _get_focusRedirect(self) -> IAccessible | None:
 		# Sometimes Shell DocObject View gets focus, when really the document inside it should.
 		# E.g. Adobe Reader 9 licence agreement, WX Web View
 		child = self.firstChild

@@ -101,6 +101,14 @@ def _warnBrowsableMessageNotAvailableOnSecureScreens(title: str | None = None) -
 	)
 
 
+def _copyBrowseableMessageToClipboard(text: str) -> None:
+	import api  # Late import to avoid a circular dependency (api imports ui).
+
+	api.copyToClip(text)
+	# Translators: Reported when the content of a browseable message is copied to the clipboard.
+	message(_("Copied to clipboard"))
+
+
 def browseableMessage(
 	message: str,
 	title: str | None = None,
@@ -131,9 +139,6 @@ def browseableMessage(
 		title = _("NVDA Message")
 
 	htmlPath = os.path.join(globalVars.appDir, "message.html")
-	if not os.path.isfile(htmlPath):
-		log.error(f"Browseable message template not found: {htmlPath!r}")
-		return
 
 	# Sanitize/prepare HTML
 	if not isHtml:
@@ -149,25 +154,20 @@ def browseableMessage(
 	# --- build the dialog ---
 	dialog = HtmlMessageDialog(gui.mainFrame, templatedMessage, title, buttons=None)
 
-	def doCopy(evt=None):
-		import api  # Late import to avoid a circular dependency (api imports ui).
-		import ui  # Self-import so the module's message() is reachable past the `message` parameter.
-
-		api.copyToClip(message)
-		# Translators: Reported when the content of a browseable message is copied to the clipboard.
-		ui.message(_("Copied to clipboard"))
-
 	if copyButton:
 		dialog.addButton(
 			wx.ID_COPY,
 			# Translators: The label of a button to copy the text of the window to the clipboard.
 			label=_("&Copy"),
-			callback=doCopy,
+			callback=lambda evt: _copyBrowseableMessageToClipboard(dialog._messageControl.GetPageText()),
 			closesDialog=False,
 		)
 		# The WebView captures keyboard input, so the button's accelerator never reaches it. The HTML
 		# routes Alt+C to the same handler via the nvda-action://copy URL (see HtmlMessageDialog).
-		dialog.registerAction("copy", doCopy)
+		dialog.registerAction(
+			"copy",
+			lambda: _copyBrowseableMessageToClipboard(dialog._messageControl.GetPageText()),
+		)
 	if closeButton:
 		dialog.addCloseButton(fallbackAction=True)
 
