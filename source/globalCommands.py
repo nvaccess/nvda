@@ -5263,7 +5263,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle all tracking options",
+			"Toggle all tracking settings",
 		),
 		category=SCRCAT_MAGNIFIER,
 	)

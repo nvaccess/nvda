@@ -12,13 +12,9 @@ from typing import Literal
 import ui
 from . import changeMagnifiedView, getMagnifier, start, stop
 from .config import (
-	getMagnifiedView,
 	setMagnifiedView,
-	getZoomLevelString,
-	getFilter,
 	getFollowState,
 	setFilter,
-	getFullscreenMode,
 	setFollowState,
 	setFullscreenMode,
 	toggleAllFollowStates,
@@ -96,7 +92,7 @@ def toggleMagnifier() -> None:
 			pgettext(
 				"magnifier",
 				# Translators: Message announced when stopping the NVDA magnifier.
-				"Exiting magnifier",
+				"Magnifier disabled",
 			),
 		)
 	# Check if Screen Curtain is active
@@ -110,32 +106,13 @@ def toggleMagnifier() -> None:
 		)
 	else:
 		start()
-		currentFilter = getFilter()
-		magnifiedView = getMagnifiedView()
-		zoomLevel = getZoomLevelString()
-		if magnifiedView == MagnifiedView.FULLSCREEN:
-			fullscreenMode = getFullscreenMode()
-			msg = pgettext(
+		ui.message(
+			pgettext(
 				"magnifier",
 				# Translators: Message announced when starting the NVDA magnifier.
-				"Starting {magnifiedView} magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
-			).format(
-				magnifiedView=magnifiedView.displayString,
-				zoomLevel=zoomLevel,
-				filter=currentFilter.displayString,
-				fullscreenMode=fullscreenMode.displayString,
-			)
-		else:
-			msg = pgettext(
-				"magnifier",
-				# Translators: Message announced when starting the NVDA magnifier.
-				"Starting {magnifiedView} magnifier with {zoomLevel} zoom level and {filter} filter",
-			).format(
-				magnifiedView=magnifiedView.displayString,
-				zoomLevel=zoomLevel,
-				filter=currentFilter.displayString,
-			)
-		ui.message(msg)
+				"Magnifier enabled",
+			),
+		)
 
 
 def zoom(direction: Direction) -> None:
@@ -193,7 +170,7 @@ def toggleFilter() -> None:
 			pgettext(
 				"magnifier",
 				# Translators: Message announced when changing the color filter with {filter} being the new color filter.
-				"Color filter changed to {filter}",
+				"Color filter {filter}",
 			).format(filter=magnifier.filterType.displayString),
 		)
 
@@ -217,7 +194,7 @@ def cycleMagnifiedView() -> None:
 			pgettext(
 				"magnifier",
 				# Translators: Message announced when changing the magnifier view with {view} being the new magnifier view.
-				"Magnifier view changed to {view}",
+				"{view} view",
 			).format(view=magnifier._MAGNIFIED_VIEW.displayString),
 		)
 
@@ -270,13 +247,13 @@ def toggleAllFollow() -> None:
 			stateMessage = pgettext(
 				"magnifier",
 				# Translators: State of all follow settings being toggled disabled.
-				"All follow settings disabled",
+				"All tracking settings disabled",
 			)
 		else:
 			stateMessage = pgettext(
 				"magnifier",
 				# Translators: State of all follow settings being restored.
-				"All follow settings restored",
+				"Tracking settings restored",
 			)
 		ui.message(stateMessage)
 
@@ -304,7 +281,7 @@ def toggleFullscreenMode() -> None:
 				pgettext(
 					"magnifier",
 					# Translators: Message announced when changing the full-screen mode with {mode} being the new full-screen mode.
-					"Full-screen mode changed to {mode}",
+					"Full-screen mode {mode}",
 				).format(mode=newMode.displayString),
 			)
 
