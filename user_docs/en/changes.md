@@ -48,6 +48,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * The `braille.BrailleDisplayGesture.routingIndex` attribute is deprecated.
   Use the `cellIndexes` attribute instead. (#20001, @LeonarddeR)
 * The `braille.wordWrap` configuration key is deprecated and bridged to `braille.textWrap`. (#17010, @LeonarddeR)
+* The `URL_MK_UNIFORM`, `DIALOG_OPTIONS` and `HTMLDLG_*` constants in `ui` are deprecated with no replacement, as the COM-based HTML dialog infrastructure has been removed.
+Use `gui.message.HtmlMessageDialog` instead. (#18878, @LeonarddeR)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->

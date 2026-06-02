@@ -24,7 +24,37 @@ import wx
 from config.configFlags import TetherTo
 from gui.message import HtmlMessageDialog
 from logHandler import log
+from utils._deprecate import handleDeprecations, RemovedSymbol
 from utils.security import isRunningOnSecureDesktop
+
+# Private stubs retained solely for RemovedSymbol values below.
+_URL_MK_UNIFORM = 1
+_DIALOG_OPTIONS = "resizable:yes;help:no"
+_HTMLDLG_NOUI = 0x0010
+_HTMLDLG_MODAL = 0x0020
+_HTMLDLG_MODELESS = 0x0040
+_HTMLDLG_PRINT_TEMPLATE = 0x0080
+_HTMLDLG_VERIFY = 0x0100
+
+_COM_HTML_DIALOG_DEPRECATION_MSG = (
+	"The COM-based HTML dialog infrastructure has been removed. Use gui.message.HtmlMessageDialog instead."
+)
+
+__getattr__ = handleDeprecations(
+	# Deprecated in 2026.3, remove in 2027.1
+	RemovedSymbol("URL_MK_UNIFORM", _URL_MK_UNIFORM, message=_COM_HTML_DIALOG_DEPRECATION_MSG),
+	RemovedSymbol("DIALOG_OPTIONS", _DIALOG_OPTIONS, message=_COM_HTML_DIALOG_DEPRECATION_MSG),
+	RemovedSymbol("HTMLDLG_NOUI", _HTMLDLG_NOUI, message=_COM_HTML_DIALOG_DEPRECATION_MSG),
+	RemovedSymbol("HTMLDLG_MODAL", _HTMLDLG_MODAL, message=_COM_HTML_DIALOG_DEPRECATION_MSG),
+	RemovedSymbol("HTMLDLG_MODELESS", _HTMLDLG_MODELESS, message=_COM_HTML_DIALOG_DEPRECATION_MSG),
+	RemovedSymbol(
+		"HTMLDLG_PRINT_TEMPLATE",
+		_HTMLDLG_PRINT_TEMPLATE,
+		message=_COM_HTML_DIALOG_DEPRECATION_MSG,
+	),
+	RemovedSymbol("HTMLDLG_VERIFY", _HTMLDLG_VERIFY, message=_COM_HTML_DIALOG_DEPRECATION_MSG),
+)
+"""Module level `__getattr__` used to preserve backward compatibility."""
 
 _DELAY_BEFORE_MESSAGE_MS: Final[int] = 1
 """Duration in milliseconds for which to delay speaking and brailling a message, so that any UI changes don't interrupt it.
