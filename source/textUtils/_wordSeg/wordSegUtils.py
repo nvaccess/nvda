@@ -39,7 +39,7 @@ class WordSegWithSeparatorOffsetConverter(OffsetConverter):
 		"""
 		strLen = self.strLength
 
-		# build explicit str -> encoded mapping
+		# build explicit str to encoded mapping
 		strToEncoded: list[int] = [0] * strLen
 		nextStrIndex = 0
 		for encodedIndex in range(self.encodedStringLength):
@@ -57,7 +57,7 @@ class WordSegWithSeparatorOffsetConverter(OffsetConverter):
 
 	@cached_property
 	def computedEncodedToStrOffsets(self) -> list[int]:
-		# build explicit encoded -> str mapping
+		# build explicit encoded to str mapping
 		# semantics: separator positions and the following encoded character
 		# both map to the same upcoming original str index (insertion point semantics).
 		encodedToStr: list[int] = [0] * self.encodedStringLength

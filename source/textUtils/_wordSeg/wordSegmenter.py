@@ -65,7 +65,8 @@ class WordSegmenter:
 				)
 				return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 			case _:
-				return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
+				pass
+		return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 
 	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
 		"""Get the segment containing the given offset."""
