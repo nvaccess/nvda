@@ -22,6 +22,12 @@ from hwIo import intToByte
 from logHandler import log
 from utils._deprecate import MovedSymbol, handleDeprecations
 
+__getattr__ = handleDeprecations(
+	MovedSymbol("RoutingGesture", "brailleDisplayDrivers.freedomScientific", "KeyGesture"),
+)
+"""Module level `__getattr__` used to preserve backward compatibility."""
+
+
 BAUD_RATE = 57600
 PARITY = serial.PARITY_NONE
 
@@ -794,9 +800,3 @@ class WizWheelGesture(InputGesture):
 		direction = "Down" if isDown else "Up"
 		self.id = f"{which}WizWheel{direction}"
 		super().__init__(model)
-
-
-__getattr__ = handleDeprecations(
-	MovedSymbol("RoutingGesture", "brailleDisplayDrivers.freedomScientific", "KeyGesture"),
-)
-"""Module level `__getattr__` used to preserve backward compatibility."""
