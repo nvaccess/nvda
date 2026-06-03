@@ -5056,6 +5056,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move back using right wiz wheel action |rightWizWheelUp|
 |Move forward using right wiz wheel action |rightWizWheelDown|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |shift+tab key |brailleSpaceBar+dot1+dot2|
 |tab key |brailleSpaceBar+dot4+dot5|
 |upArrow key |brailleSpaceBar+dot1|
