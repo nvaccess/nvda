@@ -772,3 +772,24 @@ jobs:
             --repo ${{ github.repository }} \
             --clobber \
             $NVDA_EXE_NAME#Installer
+
+  submit-winget:
+    name: Submit manifest to WinGet Packages Repository
+    needs: [matrix, release]
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
+    if: startsWith(github.ref_name, 'release-')
+    permissions:
+      contents: read
+    steps:
+    - name: Checkout NVDA
+      uses: actions/checkout@v6
+      with:
+        submodules: false
+
+    - name: Submit package using wingetcreate
+      env:
+        GH_TOKEN: ${{ github.token }}
+        # wingetcreate will read the token from the below environment variable
+        # Reference: https://aka.ms/winget-create-token
+        WINGET_CREATE_GITHUB_TOKEN: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}
+      run: ci/scripts/submitWinGet.ps1
