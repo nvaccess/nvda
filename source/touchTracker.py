@@ -10,6 +10,8 @@ from collections import OrderedDict
 from functools import cached_property
 from typing import Self
 
+from utils._deprecate import handleDeprecations, MovedSymbol
+
 from utils.displayString import DisplayStringStrEnum
 
 
@@ -99,7 +101,7 @@ class TouchAction(DisplayStringStrEnum):
 		}
 
 
-# Module-level aliases for backwards compatibility
+# Module-level aliases kept for internal use and backwards compatibility with add-ons.
 action_tap = TouchAction.TAP
 action_hold = TouchAction.HOLD
 action_tapAndHold = TouchAction.TAP_AND_HOLD
@@ -126,22 +128,32 @@ action_flickUpThenRight = TouchAction.FLICK_UP_THEN_RIGHT
 action_flickUpThenLeft = TouchAction.FLICK_UP_THEN_LEFT
 action_flickDownThenRight = TouchAction.FLICK_DOWN_THEN_RIGHT
 action_flickDownThenLeft = TouchAction.FLICK_DOWN_THEN_LEFT
+
+__getattr__ = handleDeprecations(
+	MovedSymbol("actionLabels", "touchTracker", "TouchAction"),
+)
+"""Module level ``__getattr__`` used to preserve backward compatibility."""
 # timeout for detection of flicks and plural trackers
 multitouchTimeout = 0.25
 # The distance a finger must travel to be treeted as a flick
 minFlickDistance = 50
 # How far a finger is allowed to drift purpandicular to a flick direction to make the flick impossible
 maxAccidentalDrift = 10
-#: Minimum change in distance between two fingers (in pixels) required to classify a pinch gesture.
 minPinchDistance: int = 50
-#: Time window in seconds of touch samples used for velocity calculation.
+"""Minimum change in distance between two fingers (in pixels) required to classify a pinch gesture."""
+
 _VELOCITY_SAMPLE_WINDOW: float = 0.1
-#: Minimum speed in pixels per second for a gesture to be classified as a flick.
-#: Kept low so deliberate-but-slow swipes still register; velocity is used mainly for direction.
+"""Time window in seconds of touch samples used for velocity calculation."""
+
 minFlickVelocity: float = 100.0
-#: Time in seconds allowed for the full first stroke of a continuous sequential flick.
-#: Longer than multitouchTimeout so users aren't forced to rush the gesture.
+"""Minimum speed in pixels per second for a gesture to be classified as a flick.
+Kept low so deliberate-but-slow swipes still register; velocity is used mainly for direction.
+"""
+
 continuousFlickTimeout: float = 0.6
+"""Time in seconds allowed for the full first stroke of a continuous sequential flick.
+Longer than multitouchTimeout so users aren't forced to rush the gesture.
+"""
 
 
 class SingleTouchTracker(object):
