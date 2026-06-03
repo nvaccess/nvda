@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -472,6 +472,11 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._managePanning()
 		self.assertFalse(self.magnifier._isManualPanning)
 		self.assertEqual(self.magnifier._lastFocusCoordinates, focusB)
+
+	def testComputeMagnifiedViewCenterRaisesNotImplemented(self):
+		"""Base _computeMagnifiedViewCenter must raise NotImplementedError."""
+		with self.assertRaises(NotImplementedError):
+			self.magnifier._computeMagnifiedViewCenter()
 
 	def testStartTimer(self):
 		"""Starting the timer."""

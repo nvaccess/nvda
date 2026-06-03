@@ -1600,6 +1600,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 | Pan to right edge | `NVDA+shift+alt+rightArrow` | Pan the magnified view directly to the right edge of the screen |
 | Pan to top edge | `NVDA+shift+alt+upArrow` | Pan the magnified view directly to the top edge of the screen |
 | Pan to bottom edge | `NVDA+shift+alt+downArrow` | Pan the magnified view directly to the bottom edge of the screen |
+| Move mouse to view | None | Move the mouse cursor to the center of the magnified view |
 
 <!-- KC:endInclude -->
 

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -9,6 +9,7 @@ from _magnifier.magnifier import Magnifier
 from _magnifier.utils.types import Filter, FullScreenMode, MagnifiedView, Direction, Coordinates
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
+from winAPI._displayTracking import getPrimaryDisplayOrientation
 
 
 class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
@@ -346,3 +347,36 @@ class TestFullScreenMagnifierApiConflict(_TestMagnifier):
 
 		self.assertFalse(magnifier._isActive)
 		magnifier._startTimer.assert_not_called()
+
+
+class TestFullScreenMagnifierMoveMouseToViewCenter(_TestMagnifier):
+	"""Tests for moveMouseToViewCenter in FullScreenMagnifier."""
+
+	def setUp(self):
+		super().setUp()
+		self.magnifier = FullScreenMagnifier()
+		self.magnifier._startMagnifier()
+		self.screen = getPrimaryDisplayOrientation()
+
+	def tearDown(self):
+		self.magnifier._stopMagnifier()
+		super().tearDown()
+
+	def _expectedCenter(self, rawCoords: Coordinates) -> tuple[int, int]:
+		"""Compute the expected cursor position using the same pipeline as _computeMagnifiedViewCenter."""
+		coords = self.magnifier._getCoordinatesForMode(rawCoords)
+		params = self.magnifier._getMagnifierParameters(coords)
+		return (
+			params.coordinates.x + params.magnifierSize.width // 2,
+			params.coordinates.y + params.magnifierSize.height // 2,
+		)
+
+	def testMoveMouseToViewCenterPlacesCursorAtCenter(self):
+		"""moveMouseToViewCenter places cursor at the computed view center."""
+		self.magnifier._fullscreenMode = FullScreenMode.CENTER
+		raw = Coordinates(self.screen.width // 2, self.screen.height // 2)
+		self.magnifier._currentCoordinates = raw
+		expectedX, expectedY = self._expectedCenter(raw)
+		with patch("_magnifier.magnifier.winUser.setCursorPos") as mockSet:
+			self.magnifier.moveMouseToViewCenter()
+			mockSet.assert_called_once_with(expectedX, expectedY)
