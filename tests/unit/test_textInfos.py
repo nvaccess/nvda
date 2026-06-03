@@ -13,6 +13,7 @@ from .textProvider import BasicTextProvider, MockBlackBoxTextInfo
 import textInfos
 from textInfos.offsets import Offsets
 import textUtils
+from textUtils.segFlag import WordSegFlag
 
 
 class TestCharacterOffsets(unittest.TestCase):
@@ -208,6 +209,69 @@ class TestWordSegFlag(unittest.TestCase):
 			self.assertIsNone(ti.wordSegFlag)
 
 		mockLogError.assert_called_once_with("Unknown word segmentation standard, 'unexpected'")
+
+
+class _LegacyNoUniscribeTextInfo(BasicTextProvider.TextInfo):
+	useUniscribe = False
+
+
+class _LegacyNoUniscribeProvider(BasicTextProvider):
+	TextInfo = _LegacyNoUniscribeTextInfo
+
+
+class _RuntimeLegacyNoUniscribeTextInfo(BasicTextProvider.TextInfo):
+	pass
+
+
+class _RuntimeLegacyNoUniscribeProvider(BasicTextProvider):
+	TextInfo = _RuntimeLegacyNoUniscribeTextInfo
+
+
+class TestUseUniscribeCompatibility(unittest.TestCase):
+	def test_instanceOverrideFalseDisablesWordSegmenter(self) -> None:
+		obj = BasicTextProvider(text="abc def")
+		ti = obj.makeTextInfo(Offsets(0, 0))
+		ti.useUniscribe = False
+
+		with patch("textInfos.offsets.WordSegmenter") as wordSegmenter:
+			ti.expand(textInfos.UNIT_WORD)
+
+		wordSegmenter.assert_not_called()
+		self.assertEqual(ti.text, "abc ")
+
+	def test_classOverrideFalseDisablesWordSegmenter(self) -> None:
+		obj = _LegacyNoUniscribeProvider(text="abc def")
+		ti = obj.makeTextInfo(Offsets(0, 0))
+
+		with patch("textInfos.offsets.WordSegmenter") as wordSegmenter:
+			ti.expand(textInfos.UNIT_WORD)
+
+		wordSegmenter.assert_not_called()
+		self.assertEqual(ti.text, "abc ")
+
+	def test_classAssignmentFalseDisablesWordSegmenter(self) -> None:
+		_RuntimeLegacyNoUniscribeTextInfo.useUniscribe = False
+		self.addCleanup(type.__delattr__, _RuntimeLegacyNoUniscribeTextInfo, "_useUniscribeOverride")
+		obj = _RuntimeLegacyNoUniscribeProvider(text="abc def")
+		ti = obj.makeTextInfo(Offsets(0, 0))
+
+		with patch("textInfos.offsets.WordSegmenter") as wordSegmenter:
+			ti.expand(textInfos.UNIT_WORD)
+
+		wordSegmenter.assert_not_called()
+		self.assertEqual(ti.text, "abc ")
+
+	def test_instanceOverrideTrueForcesUniscribeWordSegmentation(self) -> None:
+		obj = BasicTextProvider(text="abc def")
+		ti = obj.makeTextInfo(Offsets(0, 0))
+		ti.useUniscribe = True
+
+		with patch("textInfos.offsets.WordSegmenter") as wordSegmenter:
+			wordSegmenter.return_value.getSegmentForOffset.return_value = (0, 3)
+			ti.expand(textInfos.UNIT_WORD)
+
+		wordSegmenter.assert_called_once_with("abc def", textUtils.WCHAR_ENCODING, WordSegFlag.UNISCRIBE)
+		self.assertEqual(ti.text, "abc")
 
 
 class TestMoveToCodepointOffsetInBlackBoxTextInfo(unittest.TestCase):

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter, Wang Chong
+# Copyright (C) 2019-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Unit tests for the textUtils module."""
 
