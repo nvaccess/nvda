@@ -116,7 +116,7 @@ def createSynthDriver(name: str, synthDriversPath: str) -> tuple[Connection, Syn
 	conn.bgEventLoop(daemon=True)
 	log.debug("Connection to synthDriverHost32 process RPYC service established")
 
-	conn.remoteService.installProxies(service, brokerAudio=True)
+	conn.remoteService.installProxies(service, brokerAudio=False)
 	log.debug("Creating SynthDriverProxy over remote SynthDriverService")
 	conn.remoteService.registerSynthDriversPath(synthDriversPath)
 	synthDriverService = conn.remoteService.SynthDriver(name)

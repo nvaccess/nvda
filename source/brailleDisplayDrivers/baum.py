@@ -1,9 +1,7 @@
-# -*- coding: UTF-8 -*-
-# brailleDisplayDrivers/baum.py
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2010-2017 NV Access Limited, Babbage B.V.
+# Copyright (C) 2010-2026 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from io import BytesIO
 from typing import Union, List, Optional
@@ -299,7 +297,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._deviceID = arg.decode("latin-1", errors="strict")
 		elif command in KEY_NAMES:
 			arg = sum(byte << offset * 8 for offset, byte in enumerate(arg))
-			if arg < self._keysDown.get(command, 0):
+			prevArg = self._keysDown.get(command, 0)
+			if command == BAUM_ROUTING_KEY and arg > 0:
+				# BAUM_ROUTING_KEY sends a 1-indexed key number, not a cumulative bitmask.
+				# Normalize to accumulated bitmask so the shared press/release logic below works.
+				arg = prevArg | (1 << (arg - 1))
+			if arg < prevArg:
 				# Release.
 				if not self._ignoreKeyReleases:
 					# The first key released executes the key combination.
@@ -316,7 +319,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._ignoreKeyReleases = False
 			if arg > 0:
 				self._keysDown[command] = arg
-			elif command in self._keysDown:
+			elif prevArg:
 				# All keys in this group have been released.
 				# #3541: Remove this group so it doesn't count as a group with keys down.
 				del self._keysDown[command]
@@ -342,6 +345,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				"braille_previousLine": ("br(baum):d1",),
 				"braille_nextLine": ("br(baum):d3",),
 				"braille_routeTo": ("br(baum):routing",),
+				"braille_selectRange": ("br(baum):multiRouting",),
 				"kb:upArrow": ("br(baum):up",),
 				"kb:downArrow": ("br(baum):down",),
 				"kb:leftArrow": ("br(baum):left",),
@@ -406,15 +410,12 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				# 0xfc covers command keys. The space bars are covered by 0x3.
 				self.dots = groupKeysDown >> 8
 				self.space = groupKeysDown & 0x3
-			if group == BAUM_ROUTING_KEYS:
-				for index in range(braille.handler.display.numCells):
-					if groupKeysDown & (1 << index):
-						self.routingIndex = index
-						names.append("routing")
-						break
-			elif group == BAUM_ROUTING_KEY:
-				self.routingIndex = groupKeysDown - 1
-				names.append("routing")
+			if group in (BAUM_ROUTING_KEYS, BAUM_ROUTING_KEY):
+				self.cellIndexes = [
+					index for index in range(braille.handler.display.numCells) if groupKeysDown & (1 << index)
+				]
+				if self.cellIndexes:
+					names.append(self.idForCellCount(len(self.cellIndexes)))
 			else:
 				for index, name in enumerate(KEY_NAMES[group]):
 					if groupKeysDown & (1 << index):

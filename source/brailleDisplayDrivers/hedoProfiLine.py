@@ -211,4 +211,4 @@ class InputGestureRouting(braille.BrailleDisplayGesture):
 		super(InputGestureRouting, self).__init__()
 
 		self.id = "routing"
-		self.routingIndex = index
+		self.cellIndexes = [index]
