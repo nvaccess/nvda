@@ -6317,15 +6317,17 @@ Secure screens include:
 
 ### Downloading NVDA {#DownloadingNVDA}
 
-NVDA can be downloaded and installed using the Windows Package Manager (WinGet).
+The recommended place to download NVDA is from the NV Access download page at [https://www.nvaccess.org/download/](https://www.nvaccess.org/download/)
+
+NVDA can also be downloaded and installed using the Windows Package Manager (WinGet).
 Run the following command in Command Prompt (`cmd`) or PowerShell to install the latest version of NVDA:
 
 `winget install --id NVAccess.NVDA`
 
 To install beta or RC versions, use the following WinGet package identifiers:
 
-* Beta: `--id NVAccess.NVDA.Beta`
-* RC: `--id NVAccess.NVDA.RC`
+* Beta: `winget install --id NVAccess.NVDA.Beta`
+* RC: `winget install --id NVAccess.NVDA.RC`
 
 ### Command Line Options {#CommandLineOptions}
 
