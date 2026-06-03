@@ -94,15 +94,25 @@ class FullScreenMagnifier(Magnifier):
 		MagInitialize. A dummy cycle without any MagSetFullscreenTransform call
 		clears this stale state.
 
-		Raises OSError if MagInitialize fails or if MagSetFullscreenTransform fails
-		(e.g. Windows Magnifier already holds the API).
+		Errors during the dummy MagInitialize/MagUninitialize cycle are intentionally
+		suppressed.
+
+		Raises OSError if the real MagInitialize fails or if MagSetFullscreenTransform
+		fails (e.g. Windows Magnifier already holds the API).
 		"""
 		# Dummy cycle to clear any stale state from a previous MagSetFullscreenTransform.
+		dummyInitSucceeded = False
 		try:
 			magnification.MagInitialize()
-			magnification.MagUninitialize()
+			dummyInitSucceeded = True
 		except OSError:
 			pass
+		finally:
+			if dummyInitSucceeded:
+				try:
+					magnification.MagUninitialize()
+				except OSError:
+					pass
 		magnification.MagInitialize()
 		log.debug("Magnification API initialized")
 		# Applying the first real update verifies the API is usable without
@@ -131,7 +141,7 @@ class FullScreenMagnifier(Magnifier):
 	@override
 	def _stopMagnifier(self) -> None:
 		"""
-		Stop the Full-screen magnifier using windows DLL.
+		Stop the Full-screen magnifier using windows DLL
 		"""
 		super()._stopMagnifier()
 		self._resetMagnification()
