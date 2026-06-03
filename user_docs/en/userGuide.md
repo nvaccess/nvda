@@ -3022,18 +3022,6 @@ This option is enabled by default.
 | Options | Disabled, Enabled |
 | Default | Enabled |
 
-##### Keep mouse centered {#MagnifierKeepMouseCentered}
-
-This checkbox controls whether the mouse pointer should be automatically moved to the center of the magnified area when certain focus events occur.
-When enabled, NVDA will reposition the mouse pointer to keep it centered in the magnified view, which can be helpful for users who navigate primarily using the magnifier's focus tracking rather than the mouse.
-
-This option is disabled by default.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-| Options | Disabled, Enabled |
-| Default | Disabled |
-
 #### Keyboard {#KeyboardSettings}
 
 <!-- KC:setting -->
@@ -5069,6 +5057,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move back using right wiz wheel action |rightWizWheelUp|
 |Move forward using right wiz wheel action |rightWizWheelDown|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |shift+tab key |brailleSpaceBar+dot1+dot2|
 |tab key |brailleSpaceBar+dot4+dot5|
 |upArrow key |brailleSpaceBar+dot1|

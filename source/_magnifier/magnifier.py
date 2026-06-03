@@ -33,7 +33,6 @@ from .config import (
 	getFilter,
 	isTrueCentered,
 	setZoomLevel,
-	shouldKeepMouseCentered,
 	ZoomLevel,
 )
 from .utils.focusManager import FocusManager
@@ -200,8 +199,6 @@ class Magnifier:
 			self._managePanning()
 			if not self._isManualPanning:
 				self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
-			if shouldKeepMouseCentered():
-				self._keepMouseCentered()
 			self._doUpdate()
 			self._consecutiveErrors = 0
 			self._recoveryAttempts = 0
@@ -379,14 +376,6 @@ class Magnifier:
 		:return: The (x, y) coordinates of the center of the magnified view
 		"""
 		raise NotImplementedError("Subclasses must implement this method")
-
-	def _keepMouseCentered(self) -> None:
-		"""
-		Move the mouse cursor to the center of the magnified view.
-		Subclasses may override this to adapt the behavior for specific modes.
-		"""
-		centerX, centerY = self.currentCoordinates
-		winUser.setCursorPos(centerX, centerY)
 
 	def _startTimer(self, callback: Callable[[], None] = None) -> None:
 		"""

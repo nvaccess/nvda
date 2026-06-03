@@ -89,7 +89,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * [Sonic](https://github.com/waywardgeek/sonic), commit `b93885dcb70aae50c6f76b0fe4e0868f029a077e`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `c9ae003d9c85eb707716928de97e055f5b77189c`
 * [liblouis](http://www.liblouis.io/), version 3.37.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 48.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 48.2
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [Microsoft Detours](https://github.com/microsoft/Detours), commit `9764cebcb1a75940e68fa83d6730ffaf0f669401`
 * brlapi Python bindings, version 0.8.7 or later, built with [GitHub Actions in the NV Access fork of the brlTTY repository](https://github.com/nvaccess/brltty/actions)
