@@ -61,7 +61,6 @@ Reasons in favor of not reverting the pull request may be:
 * Documentation changes will be reviewed.
 A release summary will be added to the change log for the beta.
 * A tagged "beta release" will be created for wider testing.
-* New pull requests may be now considered for squash merging straight to beta.
 * As appropriate new tagged beta releases will be published once a week.
 * As necessary `beta` will be merged back into master.
   * For critical pull requests or translation merges.
