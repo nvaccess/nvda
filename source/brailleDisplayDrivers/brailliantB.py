@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2026 NV Access Limited, Babbage B.V., Leonard de Ruijter
-# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
-# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012-2023 NV Access Limited, Babbage B.V.
 
 import time
 from typing import List, Union
@@ -351,7 +351,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				"braille_previousLine": ("br(brailliantB):up",),
 				"braille_nextLine": ("br(brailliantB):down",),
 				"braille_routeTo": ("br(brailliantB):routing",),
-				"braille_selectRange": ("br(brailliantB):multiRouting",),
 				"braille_toggleTether": ("br(brailliantB):up+down",),
 				"kb:upArrow": ("br(brailliantB):space+dot1", "br(brailliantB):stickUp"),
 				"kb:downArrow": ("br(brailliantB):space+dot4", "br(brailliantB):stickDown"),
@@ -390,7 +389,6 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 		self.keyNames = names = []
 		isBrailleInput = True
-		routingIndexes: list[int] = []
 		for key in self.keyCodes:
 			if isBrailleInput:
 				if DOT1_KEY <= key <= DOT8_KEY:
@@ -403,15 +401,12 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 					self.dots = 0
 					self.space = False
 			if key >= FIRST_ROUTING_KEY:
-				routingIndexes.append(key - FIRST_ROUTING_KEY)
+				names.append("routing")
+				self.routingIndex = key - FIRST_ROUTING_KEY
 			else:
 				try:
 					names.append(KEY_NAMES[key])
 				except KeyError:
 					log.debugWarning("Unknown key with id %d" % key)
-		if routingIndexes:
-			routingIndexes.sort()
-			self.cellIndexes = routingIndexes
-			names.append(self.idForCellCount(len(routingIndexes)))
 
 		self.id = "+".join(names)

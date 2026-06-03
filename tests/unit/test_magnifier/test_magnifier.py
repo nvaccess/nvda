@@ -1,9 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025 NV Access Limited, Antoine Haffreingue
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from _magnifier.config import ZoomLevel
 from _magnifier.magnifier import Magnifier
 from _magnifier.utils.types import Filter, Direction, Coordinates, MagnifierAction
 from comtypes import COMError
@@ -48,8 +47,6 @@ class TestMagnifier(_TestMagnifier):
 		super().setUp()
 
 		self.magnifier = Magnifier()
-		self.magnifier.zoomLevel = 200  # Set a default zoom level for testing (2.0x)
-		self.magnifier.filterType = Filter.NORMAL  # Set a default filter type for testing
 		self.screenWidth = getPrimaryDisplayOrientation().width
 		self.screenHeight = getPrimaryDisplayOrientation().height
 
@@ -66,7 +63,7 @@ class TestMagnifier(_TestMagnifier):
 
 	def testMagnifierCreation(self):
 		"""Can we create a magnifier with valid parameters?"""
-		self.assertEqual(self.magnifier.zoomLevel, 200)
+		self.assertEqual(self.magnifier.zoomLevel, 2.0)
 		self.assertEqual(self.magnifier._filterType, Filter.NORMAL)
 		self.assertFalse(self.magnifier._isActive)
 		self.assertIsNotNone(self.magnifier._focusManager)
@@ -75,25 +72,25 @@ class TestMagnifier(_TestMagnifier):
 	def testZoomLevelProperty(self):
 		"""ZoomLevel property."""
 		# Test valid directions
-		self.magnifier.zoomLevel = 500
-		self.assertEqual(self.magnifier.zoomLevel, 500)
+		self.magnifier.zoomLevel = 5.0
+		self.assertEqual(self.magnifier.zoomLevel, 5.0)
 
-		self.magnifier.zoomLevel = 100
+		self.magnifier.zoomLevel = 1.0
 		self.magnifier._zoom(Direction.IN)
-		self.assertEqual(self.magnifier.zoomLevel, 150)
+		self.assertEqual(self.magnifier.zoomLevel, 1.5)
 
-		self.magnifier.zoomLevel = 1000
+		self.magnifier.zoomLevel = 10.0
 		self.magnifier._zoom(Direction.OUT)
-		self.assertEqual(self.magnifier.zoomLevel, 950)
+		self.assertEqual(self.magnifier.zoomLevel, 9.5)
 
 		# Test limits
-		self.magnifier.zoomLevel = ZoomLevel.MIN_ZOOM
+		self.magnifier.zoomLevel = 1.0
 		self.magnifier._zoom(Direction.OUT)  # Should stay at min
-		self.assertEqual(self.magnifier.zoomLevel, ZoomLevel.MIN_ZOOM)
+		self.assertEqual(self.magnifier.zoomLevel, 1.0)
 
-		self.magnifier.zoomLevel = ZoomLevel.MAX_ZOOM
+		self.magnifier.zoomLevel = 10.0
 		self.magnifier._zoom(Direction.IN)  # Should stay at max
-		self.assertEqual(self.magnifier.zoomLevel, ZoomLevel.MAX_ZOOM)
+		self.assertEqual(self.magnifier.zoomLevel, 10.0)
 
 	def testStartMagnifier(self):
 		"""Activating the magnifier."""
@@ -272,25 +269,25 @@ class TestMagnifier(_TestMagnifier):
 	def testZoom(self):
 		"""zoom in and out with valid values and check boundaries."""
 		# Set initial zoom to 1.0 for predictable testing
-		self.magnifier.zoomLevel = 100
+		self.magnifier.zoomLevel = 1.0
 
 		# Test zoom in
 		self.magnifier._zoom(Direction.IN)
-		self.assertEqual(self.magnifier.zoomLevel, 150)
+		self.assertEqual(self.magnifier.zoomLevel, 1.5)
 
 		# Test zoom out
 		self.magnifier._zoom(Direction.OUT)
-		self.assertEqual(self.magnifier.zoomLevel, 100)
+		self.assertEqual(self.magnifier.zoomLevel, 1.0)
 
 		# Test zoom in at maximum boundary
-		self.magnifier.zoomLevel = ZoomLevel.MAX_ZOOM
+		self.magnifier.zoomLevel = 10.0
 		self.magnifier._zoom(Direction.IN)
-		self.assertEqual(self.magnifier.zoomLevel, ZoomLevel.MAX_ZOOM)  # Should remain at max
+		self.assertEqual(self.magnifier.zoomLevel, 10.0)  # Should remain at max
 
 		# Test zoom out at minimum boundary
-		self.magnifier.zoomLevel = ZoomLevel.MIN_ZOOM
+		self.magnifier.zoomLevel = 1.0
 		self.magnifier._zoom(Direction.OUT)
-		self.assertEqual(self.magnifier.zoomLevel, ZoomLevel.MIN_ZOOM)  # Should remain at min
+		self.assertEqual(self.magnifier.zoomLevel, 1.0)  # Should remain at min
 
 	def _setupPanTest(self):
 		"""Common setup for pan tests."""
@@ -301,7 +298,7 @@ class TestMagnifier(_TestMagnifier):
 		centerY = self.screenHeight // 2
 		self.magnifier.currentCoordinates = Coordinates(centerX, centerY)
 		expectedPanPixels = int(
-			(self.screenWidth / self.magnifier.zoomLevelRatio) * 10 / 100,
+			(self.screenWidth / self.magnifier.zoomLevel) * 10 / 100,
 		)
 		return centerX, centerY, expectedPanPixels
 
@@ -326,34 +323,35 @@ class TestMagnifier(_TestMagnifier):
 		edgeValue = edgeMap[edgeAttr]
 		centerValue = centerX if axis == "x" else centerY
 
-		# Test normal pan - movement succeeds (position changes)
-		hasMoved = self.magnifier._pan(action)
-		self.assertTrue(hasMoved)
-		currentValue = getattr(self.magnifier.currentCoordinates, axis)
-		self.assertEqual(currentValue, centerValue + direction * expectedPanPixels)
+		with patch("_magnifier.magnifier.winUser.setCursorPos"):
+			# Test normal pan - movement succeeds (position changes)
+			hasMoved = self.magnifier._pan(action)
+			self.assertTrue(hasMoved)
+			currentValue = getattr(self.magnifier.currentCoordinates, axis)
+			self.assertEqual(currentValue, centerValue + direction * expectedPanPixels)
 
-		# Test reaching edge - movement succeeds on first contact (position changes to edge)
-		if axis == "x":
-			self.magnifier.currentCoordinates = Coordinates(
-				edgeValue - direction * expectedPanPixels,
-				centerY,
-			)
-		else:
-			self.magnifier.currentCoordinates = Coordinates(
-				centerX,
-				edgeValue - direction * expectedPanPixels,
-			)
+			# Test reaching edge - movement succeeds on first contact (position changes to edge)
+			if axis == "x":
+				self.magnifier.currentCoordinates = Coordinates(
+					edgeValue - direction * expectedPanPixels,
+					centerY,
+				)
+			else:
+				self.magnifier.currentCoordinates = Coordinates(
+					centerX,
+					edgeValue - direction * expectedPanPixels,
+				)
 
-		hasMoved = self.magnifier._pan(action)
-		self.assertTrue(hasMoved)
-		currentValue = getattr(self.magnifier.currentCoordinates, axis)
-		self.assertEqual(currentValue, edgeValue)
+			hasMoved = self.magnifier._pan(action)
+			self.assertTrue(hasMoved)
+			currentValue = getattr(self.magnifier.currentCoordinates, axis)
+			self.assertEqual(currentValue, edgeValue)
 
-		# Test trying to pan beyond edge - movement fails (already at edge, no movement)
-		hasMoved = self.magnifier._pan(action)
-		self.assertFalse(hasMoved)
-		currentValue = getattr(self.magnifier.currentCoordinates, axis)
-		self.assertEqual(currentValue, edgeValue)
+			# Test trying to pan beyond edge - movement fails (already at edge, no movement)
+			hasMoved = self.magnifier._pan(action)
+			self.assertFalse(hasMoved)
+			currentValue = getattr(self.magnifier.currentCoordinates, axis)
+			self.assertEqual(currentValue, edgeValue)
 
 	def _testPanToEdge(self, action: MagnifierAction, axis: str, edgeAttr: str):
 		"""
@@ -368,17 +366,18 @@ class TestMagnifier(_TestMagnifier):
 		edgeMap = {"left": minX, "right": maxX, "top": minY, "bottom": maxY}
 		edgeValue = edgeMap[edgeAttr]
 
-		# Test jump to edge - movement succeeds (moves to edge)
-		hasMoved = self.magnifier._pan(action)
-		self.assertTrue(hasMoved)
-		currentValue = getattr(self.magnifier.currentCoordinates, axis)
-		self.assertEqual(currentValue, edgeValue)
+		with patch("_magnifier.magnifier.winUser.setCursorPos"):
+			# Test jump to edge - movement succeeds (moves to edge)
+			hasMoved = self.magnifier._pan(action)
+			self.assertTrue(hasMoved)
+			currentValue = getattr(self.magnifier.currentCoordinates, axis)
+			self.assertEqual(currentValue, edgeValue)
 
-		# Test trying to pan to edge again - movement fails (already at edge, no movement)
-		hasMoved = self.magnifier._pan(action)
-		self.assertFalse(hasMoved)
-		currentValue = getattr(self.magnifier.currentCoordinates, axis)
-		self.assertEqual(currentValue, edgeValue)
+			# Test trying to pan to edge again - movement fails (already at edge, no movement)
+			hasMoved = self.magnifier._pan(action)
+			self.assertFalse(hasMoved)
+			currentValue = getattr(self.magnifier.currentCoordinates, axis)
+			self.assertEqual(currentValue, edgeValue)
 
 	def testPanLeft(self):
 		"""Pan left and detect edge limit."""
@@ -473,6 +472,13 @@ class TestMagnifier(_TestMagnifier):
 		self.assertFalse(self.magnifier._isManualPanning)
 		self.assertEqual(self.magnifier._lastFocusCoordinates, focusB)
 
+	def testKeepMouseCentered(self):
+		"""Base _keepMouseCentered moves cursor to currentCoordinates."""
+		self.magnifier.currentCoordinates = Coordinates(640, 360)
+		with patch("_magnifier.magnifier.winUser.setCursorPos") as mockSetCursor:
+			self.magnifier._keepMouseCentered()
+			mockSetCursor.assert_called_once_with(640, 360)
+
 	def testStartTimer(self):
 		"""Starting the timer."""
 		self.magnifier._stopTimer = MagicMock()
@@ -504,7 +510,7 @@ class TestMagnifier(_TestMagnifier):
 	def testClampCoordinates(self):
 		"""Test all boundary clamps (left, right, top, bottom) for both modes."""
 		for isTrueCentered in (False, True):
-			self.magnifier.zoomLevel = 200
+			self.magnifier.zoomLevel = 2.0
 			with patch("_magnifier.magnifier.isTrueCentered", return_value=isTrueCentered):
 				minX, minY, maxX, maxY = self.magnifier._getScreenLimits()
 
@@ -530,7 +536,7 @@ class TestMagnifier(_TestMagnifier):
 
 	def testClampCoordinatesWithinBounds(self):
 		"""Coordinates within bounds are not modified."""
-		self.magnifier.zoomLevel = 200
+		self.magnifier.zoomLevel = 2.0
 		with patch("_magnifier.magnifier.isTrueCentered", return_value=False):
 			minX, minY, maxX, maxY = self.magnifier._getScreenLimits()
 			centerX = (minX + maxX) // 2

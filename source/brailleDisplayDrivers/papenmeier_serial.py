@@ -305,12 +305,11 @@ class InputGesture(braille.BrailleDisplayGesture):
 			self.id = driver._lastkey
 			return
 		if pressed == 1 and keyindex >= 0:
-			cellIndex = keyindex - driver._offsetHorizontal
+			self.routingIndex = keyindex - driver._offsetHorizontal
 			self.id = "route"
 			if keyindex > 255:
-				cellIndex -= 256
+				self.routingIndex -= 256
 				self.id = "upperRouting"
-			self.cellIndexes = [cellIndex]
 		elif pressed == 0:
 			k: str = brl_keyname(keyindex, driver)
 			if driver._lastkey != k:

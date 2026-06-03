@@ -1690,13 +1690,7 @@ class UIA(Window):
 		p = self.UIASelectionItemPattern
 		if not p:
 			return None
-		try:
-			e = p.currentSelectionContainer
-		except COMError:
-			# Some providers (e.g. Qt's QWindowsUiaSelectionItemProvider when the
-			# accessible has no actionInterface) raise instead of returning a value.
-			# Treat the same as no selection container so focus speech is not aborted.
-			return None
+		e = p.currentSelectionContainer
 		if not e:
 			# Some implementations of SelectionItemPattern, such as the Outlook attachment list
 			# give back a NULL selectionContainer

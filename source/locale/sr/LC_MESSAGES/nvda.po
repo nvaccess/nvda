@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-29 05:49+0000\n"
-"PO-Revision-Date: 2026-06-01 03:33\n"
+"POT-Creation-Date: 2026-05-15 08:54+0000\n"
+"PO-Revision-Date: 2026-05-18 02:51\n"
 "Last-Translator: \n"
 "Language-Team: Serbian (Latin)\n"
 "Language: sr_CS\n"
@@ -1873,7 +1873,7 @@ msgstr "reference"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1439 gui\settingsDialogs.py:3411
+#: browseMode.py:1439 gui\settingsDialogs.py:3410
 msgid "Lin&ks"
 msgstr "Lin&kovi"
 
@@ -1881,7 +1881,7 @@ msgstr "Lin&kovi"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1442 gui\settingsDialogs.py:3406
+#: browseMode.py:1442 gui\settingsDialogs.py:3405
 msgid "&Headings"
 msgstr "&Naslovi"
 
@@ -2384,10 +2384,10 @@ msgstr "Neke radnje sa dodacima su neuspešne. Pogledajte datoteku dnevnika za v
 #: gui\configProfiles.py:293 gui\configProfiles.py:337
 #: gui\configProfiles.py:515 gui\configProfiles.py:530
 #: gui\configProfiles.py:541 gui\inputGestures.py:808 gui\inputGestures.py:822
-#: gui\installerGui.py:126 gui\installerGui.py:210 gui\installerGui.py:701
-#: gui\installerGui.py:718 gui\installerGui.py:790 gui\logViewer.py:112
-#: gui\logViewer.py:143 gui\message.py:160 gui\settingsDialogs.py:1044
-#: gui\settingsDialogs.py:6008 gui\settingsDialogs.py:6867
+#: gui\installerGui.py:113 gui\installerGui.py:204 gui\installerGui.py:695
+#: gui\installerGui.py:712 gui\installerGui.py:784 gui\logViewer.py:112
+#: gui\logViewer.py:143 gui\message.py:160 gui\settingsDialogs.py:1043
+#: gui\settingsDialogs.py:6007 gui\settingsDialogs.py:6806
 #: gui\startupDialogs.py:127 _remoteClient\dialogs.py:67
 #: _remoteClient\dialogs.py:306 _remoteClient\dialogs.py:430
 msgid "Error"
@@ -2435,7 +2435,7 @@ msgstr "Učitavanje NVDA. Molimo sačekajte..."
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts with the screen curtain enabled.
 #: core.py:957
 msgid "NVDA started with screen curtain enabled"
-msgstr "NVDA je pokrenut uz omogućeno zatamnjivanje ekrana"
+msgstr ""
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 #: core.py:960
@@ -2625,7 +2625,7 @@ msgstr "Sistemski kursor"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the mouse settings panel.
-#: globalCommands.py:89 gui\settingsDialogs.py:2171
+#: globalCommands.py:89 gui\settingsDialogs.py:2170
 msgid "Mouse"
 msgstr "Miš"
 
@@ -2634,8 +2634,8 @@ msgstr "Miš"
 #. Translators: This is the label for the speech panel
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: globalCommands.py:92 config\configFlags.py:314 gui\settingsDialogs.py:1146
-#: gui\settingsDialogs.py:4514
+#: globalCommands.py:92 config\configFlags.py:314 gui\settingsDialogs.py:1145
+#: gui\settingsDialogs.py:4513
 msgid "Speech"
 msgstr "Govor"
 
@@ -2654,14 +2654,14 @@ msgstr "Profili podešavanja"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 #. Translators: This is the label for the braille panel
-#: globalCommands.py:101 config\configFlags.py:316 gui\settingsDialogs.py:4420
-#: gui\settingsDialogs.py:4939
+#: globalCommands.py:101 config\configFlags.py:316 gui\settingsDialogs.py:4419
+#: gui\settingsDialogs.py:4938
 msgid "Braille"
 msgstr "Brajevi redovi"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the vision panel
-#: globalCommands.py:104 gui\settingsDialogs.py:5776
+#: globalCommands.py:104 gui\settingsDialogs.py:5775
 msgid "Vision"
 msgstr "Vid"
 
@@ -2699,13 +2699,13 @@ msgstr "Formatiranje dokumenta"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the audio settings panel.
-#: globalCommands.py:125 gui\settingsDialogs.py:3576
+#: globalCommands.py:125 gui\settingsDialogs.py:3575
 msgid "Audio"
 msgstr "Zvuk"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the Remote Access settings category in NVDA's Settings screen.
-#: globalCommands.py:128 gui\settingsDialogs.py:3854
+#: globalCommands.py:128 gui\settingsDialogs.py:3853
 msgctxt "remote"
 msgid "Remote Access"
 msgstr "Daljinski pristup"
@@ -5723,7 +5723,7 @@ msgstr "uključeno"
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 #: keyboardHandler.py:749 synthSettingsRing.py:117 controlTypes\state.py:231
-#: gui\settingsDialogs.py:2406 gui\speechDict.py:195
+#: gui\settingsDialogs.py:2405 gui\speechDict.py:195
 msgid "off"
 msgstr "isključeno"
 
@@ -7462,7 +7462,7 @@ msgstr "Ažuriranje na NVDA verziju {version} je preuzeto i može se primeniti."
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
-#: updateCheck.py:547 updateCheck.py:669 gui\installerGui.py:366
+#: updateCheck.py:547 updateCheck.py:669 gui\installerGui.py:360
 msgid "&Review add-ons..."
 msgstr "P&regledaj dodatke..."
 
@@ -7581,7 +7581,7 @@ msgstr "&Gotovo"
 
 #. Translators: Message shown to users when attempting to update NVDA
 #. on a computer which is being remotely controlled via NVDA Remote Access
-#: updateCheck.py:1015 gui\installerGui.py:585
+#: updateCheck.py:1015 gui\installerGui.py:579
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
 msgstr "Ažuriranje programa NVDA kada ste povezani na NVDA daljinski pristup kao kontrolisani računar nije preporučeno. "
 
@@ -7601,8 +7601,8 @@ msgstr "Trenutno aktivna veza možda neće biti nastavljena tokom ili nakon ažu
 #. Translators: The title of a dialog.
 #. Translators: Title of warning dialog
 #: updateCheck.py:1026 gui\_SetURLDialog.py:113 gui\configProfiles.py:500
-#: gui\installerGui.py:444 gui\installerGui.py:602 gui\settingsDialogs.py:1964
-#: gui\settingsDialogs.py:6324 screenCurtain\_screenCurtain.py:70
+#: gui\installerGui.py:438 gui\installerGui.py:596 gui\settingsDialogs.py:1963
+#: gui\settingsDialogs.py:6263 screenCurtain\_screenCurtain.py:70
 #: _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "Upozorenje"
@@ -10692,26 +10692,25 @@ msgstr "ulaz/izlaz"
 msgid "debug"
 msgstr "ispravljanje greške"
 
-#. Translators: One of the log levels of NVDA (the "debug (unredacted)" mode mode logs debug messages
-#. without redacting secrets).
-#: config\configFlags.py:441
-msgid "debug (unredacted)"
-msgstr "ispravljanje greške (bez prikrivanja)"
+#. Translators: One of the log levels of NVDA (the secrets mode logs debug messages without redacting secrets).
+#: config\configFlags.py:440
+msgid "secrets"
+msgstr "tajne informacije"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#: config\configFlags.py:464
+#: config\configFlags.py:463
 msgctxt "advanced.playErrorSound"
 msgid "Only in NVDA test versions"
 msgstr "Samo u NVDA verzijama za testiranje"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#: config\configFlags.py:467
+#: config\configFlags.py:466
 msgctxt "advanced.playErrorSound"
 msgid "Yes"
 msgstr "Da"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#: config\configFlags.py:469
+#: config\configFlags.py:468
 msgctxt "advanced.playErrorSound"
 msgid "No"
 msgstr "Ne"
@@ -12139,8 +12138,8 @@ msgstr "Uspešno povezan na datu adresu."
 #. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 #. Translators: The message title displayed when copying configuration to system settings was successful.
 #. Translators: Title of success dialog
-#: gui\_SetURLDialog.py:177 gui\installerGui.py:90 gui\installerGui.py:801
-#: gui\settingsDialogs.py:1050 _remoteClient\dialogs.py:280
+#: gui\_SetURLDialog.py:177 gui\installerGui.py:90 gui\installerGui.py:795
+#: gui\settingsDialogs.py:1049 _remoteClient\dialogs.py:280
 msgid "Success"
 msgstr "Uspeh"
 
@@ -12911,7 +12910,7 @@ msgstr "Pokreni ponovo"
 #. Translators: An option in the combo box to choose exit action.
 #: gui\exit.py:49
 msgid "Restart with add-ons disabled and debug logging enabled"
-msgstr "Pokreni ponovo sa onemogućenim dodacima i omogućenim dnevnicima za otklanjanje greške"
+msgstr "Ponovo pokreni sa onemogućenim dodacima i omogućenim dnevnicima za otklanjanje greške"
 
 #. Translators: An option in the combo box to choose exit action.
 #: gui\exit.py:53
@@ -12993,7 +12992,7 @@ msgstr "&Izdvoji po:"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:6755 gui\speechDict.py:212
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:6694 gui\speechDict.py:212
 msgid "&Add"
 msgstr "&Dodaj"
 
@@ -13039,238 +13038,238 @@ msgstr "Vaša NVDA instalacija je uspešno ažurirana. Preporučujemo da restart
 msgid "Successfully installed NVDA. It is recommended to restart Windows after installing. NVDA may malfunction without a restart."
 msgstr "NVDA je uspešno instaliran. Preporučujemo da restartujete vaš Windows nakon instalacije. NVDA možda neće ispravno funkcionisati bez restartovanja."
 
-#. Translators: Button in the post-install dialog to start the newly installed NVDA.
-#: gui\installerGui.py:96
-msgid "&Start NVDA"
-msgstr "&Pokreni NVDA"
-
 #. Translators: Button in the post-install dialog to restart Windows immediately.
-#: gui\installerGui.py:101
+#: gui\installerGui.py:95
 msgid "Restart &Windows"
 msgstr "Restartuj &Windows"
 
+#. Translators: Button in the post-install dialog to start the newly installed NVDA.
+#: gui\installerGui.py:98
+msgid "&Start NVDA"
+msgstr "&Pokreni NVDA"
+
 #. Translators: Button in the post-install dialog to exit NVDA.
-#: gui\installerGui.py:106
+#: gui\installerGui.py:100
 msgid "E&xit NVDA"
 msgstr "&Zatvori NVDA"
 
 #. Translators: Message shown when Windows restart fails after NVDA installation.
-#: gui\installerGui.py:124
+#: gui\installerGui.py:111
 msgid "Failed to restart Windows. Please restart Windows manually."
 msgstr "Restartovanje Windowsa nije uspelo. Molimo ručno ga restartujte."
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
-#: gui\installerGui.py:157
+#: gui\installerGui.py:151
 msgid "Updating NVDA"
 msgstr "Ažuriranje NVDA"
 
 #. Translators: The title of the dialog presented while NVDA is being installed.
-#: gui\installerGui.py:160
+#: gui\installerGui.py:154
 msgid "Installing NVDA"
 msgstr "Instaliranje NVDA"
 
 #. Translators: The message displayed while NVDA is being updated.
-#: gui\installerGui.py:162
+#: gui\installerGui.py:156
 msgid "Please wait while your previous installation of NVDA is being updated."
 msgstr "Molimo sačekajte dok se vaša prethodna NVDA instalacija ažurira."
 
 #. Translators: The message displayed while NVDA is being installed.
-#: gui\installerGui.py:165
+#: gui\installerGui.py:159
 msgid "Please wait while NVDA is being installed"
 msgstr "Molimo sačekajte dok se NVDA instalira"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
-#: gui\installerGui.py:189
+#: gui\installerGui.py:183
 msgid "The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again."
 msgstr "Instalacija ne može da ukloni ili zameni datoteku. Možda je neka druga kopija NVDA već pokrenuta na nekom drugom korisničkom nalogu. Molimo Vas da zatvorite sve kopije NVDA i pokušate ponovo instalaciju."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
-#: gui\installerGui.py:194 gui\installerGui.py:782
+#: gui\installerGui.py:188 gui\installerGui.py:776
 msgid "File in Use"
 msgstr "Datoteka u upotrebi"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
-#: gui\installerGui.py:208
+#: gui\installerGui.py:202
 msgid "The installation of NVDA failed. Please check the Log Viewer for more information."
 msgstr "Instalacija NVDA nije uspela. Molimo proverite Pregledač dnevnika za više informacija."
 
 #. Translators: The title of the Install NVDA dialog.
-#: gui\installerGui.py:278
+#: gui\installerGui.py:272
 msgid "Install NVDA"
 msgstr "Instaliraj NVDA"
 
 #. Translators: An informational message in the Install NVDA dialog.
-#: gui\installerGui.py:296
+#: gui\installerGui.py:290
 msgid "To install NVDA to your hard drive, please press the Continue button."
 msgstr "Da instalirate NVDA na vaš hard disk, molimo pritisnite Nastavi dugme."
 
 #. Translators: An informational message in the Install NVDA dialog.
-#: gui\installerGui.py:300
+#: gui\installerGui.py:294
 msgid "A previous copy of NVDA has been found on your system. This copy will be updated."
 msgstr "Prethodna kopija NVDA je pronađena na sistemu. Ta kopija će biti ažurirana."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#: gui\installerGui.py:305
+#: gui\installerGui.py:299
 #, python-brace-format
 msgid "The installation path for NVDA has changed. it will now  be installed in {path}"
 msgstr "Putanja za instalaciju NVDA je promenjena. NVDA će biti instaliran u {path}"
 
 #. Translators: The label for a group box containing the NVDA installation dialog options.
 #. Translators: The label for a group box containing the NVDA welcome dialog options.
-#: gui\installerGui.py:323 gui\startupDialogs.py:63
+#: gui\installerGui.py:317 gui\startupDialogs.py:63
 msgid "Options"
 msgstr "Opcije"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:329
+#: gui\installerGui.py:323
 msgid "Use NVDA during sign-in"
 msgstr "Pokreni NVDA u toku prijave"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:340
+#: gui\installerGui.py:334
 msgid "&Keep existing desktop shortcut"
 msgstr "&Zadrži postojeću prečicu na radnoj površini"
 
 #. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
 #. If the shortcut key has been changed for this locale,
 #. this change must also be reflected here.
-#: gui\installerGui.py:347
+#: gui\installerGui.py:341
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "&Napravi prečicu na radnoj površini i prečicu sa tastature (control+alt+n)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:354
+#: gui\installerGui.py:348
 msgid "Copy &portable configuration to current user account"
 msgstr "Kopiraj podešavanja iz &prenosne kopije u trenutni korisnički nalog"
 
 #. Translators: The label of a button to continue with the operation.
 #. Translators: The label for the Continue button in an NVDA dialog.
-#: gui\installerGui.py:371 gui\installerGui.py:681 gui\nvdaControls.py:387
+#: gui\installerGui.py:365 gui\installerGui.py:675 gui\nvdaControls.py:387
 msgid "&Continue"
 msgstr "Na&stavi"
 
 #. Translators: A warning presented when the user attempts to downgrade NVDA
 #. to an older version.
-#: gui\installerGui.py:425
+#: gui\installerGui.py:419
 msgid "You are attempting to install an earlier version of NVDA than the version currently installed. If you really wish to revert to an earlier version, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
 msgstr "Trenutno pokušavate da instalirate verziju NVDA stariju od one koja je već instalirana. Ako zaista želite da se vratite na stariju verziju, treba da zatvorite ovaj prozor i pre instalacije starije verzije, prvo potpuno uklonite trenutno instaliranu verziju NVDA."
 
 #. Translators: A warning presented when the installer is unable to determine
 #. the state of the current NVDA installation.
-#: gui\installerGui.py:435
+#: gui\installerGui.py:429
 msgid "An existing NVDA installation has been detected, but its version cannot be determined. If you are attempting to install an earlier version of NVDA, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
 msgstr "Otkrivena je postojeća NVDA instalacija, ali se njena verzija ne može odrediti. Ako pokušavate da instalirate stariju NVDA verziju, prvo otkažite ovu instalaciju i deinstalirajte NVDA pre nego što instalirate stariju verziju."
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
-#: gui\installerGui.py:462
+#: gui\installerGui.py:456
 msgid "&Proceed with installation (not recommended)"
 msgstr "Nastavi sa &instalacijom (ne preporučuje se)"
 
 #. Translators: A warning presented when the user attempts to downgrade NVDA
 #. to an older version.
-#: gui\installerGui.py:494
+#: gui\installerGui.py:488
 msgid "You are attempting to replace an existing portable copy of NVDA with an earlier version. Downgrading NVDA is not recommended. You should cancel this operation and create a new portable copy instead. "
 msgstr "Pokušavate da zamenite postojeću NVDA prenosnu kopiju starijom verzijom. Menjanje nove verzije starijom se ne preporučuje. Otkažite ovu radnju i umesto toga napravite novu prenosnu kopiju. "
 
 #. Translators: A warning presented when the installer is unable to determine
 #. the state of the current NVDA installation.
-#: gui\installerGui.py:502
+#: gui\installerGui.py:496
 msgid "An existing copy of NVDA has been detected in the chosen directory, but its version cannot be determined. If you are attempting to downgrade to an earlier version of NVDA, you should cancel this operation and create a new portable copy. "
 msgstr "Otkrivena je postojeća NVDA kopija u izabranom folderu, ali se njena verzija ne može prepoznati. Ako pokušavate da se vratite na stariju NVDA verziju, otkažite ovu radnju i napravite novu prenosnu kopiju. "
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
-#: gui\installerGui.py:543
+#: gui\installerGui.py:537
 #, python-brace-format
 msgid "A portable copy already exists in the directory '{portableDirectory}'. Do you want to update it?"
 msgstr "Prenosna kopija već postoji u folderu \"{portableDirectory}\". Da li želite da je ažurirate?"
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
-#: gui\installerGui.py:548
+#: gui\installerGui.py:542
 msgid "Portable Copy Exists"
 msgstr "Prenosna kopija postoji"
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
-#: gui\installerGui.py:565
+#: gui\installerGui.py:559
 #, python-brace-format
 msgid "The specified directory '{portableDirectory}' is not empty. Proceeding will delete and replace existing files in the directory. Do you want to overwrite the contents of this folder? "
 msgstr "Odabran folder \"{portableDirectory}\" nije prazan. Nastavak će obrisati i zameniti postojeće datoteke u folderu. Da li želite da zamenite sadržaj ovog foldera? "
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
-#: gui\installerGui.py:571
+#: gui\installerGui.py:565
 msgid "Directory Exists"
 msgstr "Folder postoji"
 
 #. Translators: Message shown to users when attempting to install NVDA
 #. on a computer which is being remotely controlled via NVDA Remote Access
-#: gui\installerGui.py:591
+#: gui\installerGui.py:585
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
 msgstr "Instaliranje programa NVDA kada ste povezani na NVDA daljinski pristup kao kontrolisani računar nije preporučeno. "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
-#: gui\installerGui.py:597
+#: gui\installerGui.py:591
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
 msgstr "Nećete moći da odgovorite na upite kontrole korisničkog naloga sa računara koji kontroliše. Nastavite samo ako imate fizički pristup računaru.\n\n"
 "Da li ste sigurni da želite da nastavite?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
-#: gui\installerGui.py:635
+#: gui\installerGui.py:629
 msgid "Create Portable NVDA"
 msgstr "Kreiraj prenosni NVDA"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
-#: gui\installerGui.py:641
+#: gui\installerGui.py:635
 msgid "To create a portable copy of NVDA, please select the path and other options and then press Continue"
 msgstr "Da napravite prenosnu kopiju NVDA, molimo izaberite putanju i druge opcije i onda pritisnite Nastavi"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:647
+#: gui\installerGui.py:641
 msgid "Portable directory:"
 msgstr "Folder prenosne kopije:"
 
 #. Translators: The label of a button to browse for a directory.
-#: gui\installerGui.py:652
+#: gui\installerGui.py:646
 msgid "Browse..."
 msgstr "Potraži..."
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
-#: gui\installerGui.py:655
+#: gui\installerGui.py:649
 msgid "Select portable directory"
 msgstr "Izbor foldera prenosne kopije"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:663
+#: gui\installerGui.py:657
 msgid "Create a &new folder for the portable copy"
 msgstr "Napravi &novi folder za prenosnu kopiju"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:668
+#: gui\installerGui.py:662
 msgid "Copy current &user configuration"
 msgstr "Kopiraj trenutna korisnička &podešavanja"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:674
+#: gui\installerGui.py:668
 msgid "&Start the new portable copy after creation"
 msgstr "&Pokreni novu prenosnu kopiju nakon pravljenja"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:699
+#: gui\installerGui.py:693
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "Molimo izaberite fasciklu u kojoj će se kreirati prenosna kopija."
 
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:711
+#: gui\installerGui.py:705
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. It must start with a drive letter (e.g. C:). It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
 "Current path: {path}. "
@@ -13278,35 +13277,35 @@ msgstr "Molimo odredite apsolutnu putanju na kojoj treba napraviti prenosnu kopi
 "Trenutna putanja: {path}. "
 
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
-#: gui\installerGui.py:764
+#: gui\installerGui.py:758
 msgid "Portable copy creation cancelled."
 msgstr "Pravljenje prenosne kopije otkazano."
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
-#: gui\installerGui.py:769
+#: gui\installerGui.py:763
 msgid "Creating Portable Copy"
 msgstr "Kreiranje prenosne kopije"
 
 #. Translators: The message displayed while a portable copy of NVDA is being created.
-#: gui\installerGui.py:771
+#: gui\installerGui.py:765
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Molimo sačekajte dok se kreira NVDA prenosna kopija."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
-#: gui\installerGui.py:780
+#: gui\installerGui.py:774
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA ne može da ukloni ili zameni datoteku."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. {error} will be replaced with the specific error message.
-#: gui\installerGui.py:788
+#: gui\installerGui.py:782
 #, python-brace-format
 msgid "Failed to create portable copy: {error}."
 msgstr "Neuspešno pravljenje prenosne kopije: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. {dir} will be replaced with the destination directory.
-#: gui\installerGui.py:799
+#: gui\installerGui.py:793
 #, python-brace-format
 msgid "Successfully created a portable copy of NVDA at {dir}"
 msgstr "Uspešno napravljena prenosna kopija NVDA u {dir}"
@@ -13384,7 +13383,7 @@ msgid "Default ({default})"
 msgstr "Podrazumevano ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
-#: gui\settingsDialogs.py:463
+#: gui\settingsDialogs.py:462
 #, python-brace-format
 msgid "{message}\n\n"
 "Category: \"{category}\"\n"
@@ -13394,25 +13393,25 @@ msgstr "{message}\n\n"
 "Podešavanje: \"{option}\""
 
 #. Translators: The title of the message box when a setting's configuration is not valid.
-#: gui\settingsDialogs.py:470
+#: gui\settingsDialogs.py:469
 msgid "Invalid configuration"
 msgstr "Neispravno podešavanje"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
-#: gui\settingsDialogs.py:579
+#: gui\settingsDialogs.py:578
 msgid "&Categories:"
 msgstr "&Kategorije:"
 
 #. Translators: This is the label for the general settings panel.
 #. Translators: name of a grouping in Privacy and Security settings
 #. which contains miscellaneous settings.
-#: gui\settingsDialogs.py:809 gui\settingsDialogs.py:6388
+#: gui\settingsDialogs.py:808 gui\settingsDialogs.py:6327
 msgid "General"
 msgstr "Opšta"
 
 #. Translators: Shown for a language which has been provided from the command line
 #. 'langDesc' would be replaced with description of the given locale.
-#: gui\settingsDialogs.py:823
+#: gui\settingsDialogs.py:822
 #, python-brace-format
 msgid "Command line option: {langDesc}"
 msgstr "Opcija komandne linije: {langDesc}"
@@ -13420,23 +13419,23 @@ msgstr "Opcija komandne linije: {langDesc}"
 #. Translators: The label for a setting in general settings to select NVDA's interface language
 #. (once selected, NVDA must be restarted; the option user default means the user's Windows language
 #. will be used).
-#: gui\settingsDialogs.py:829
+#: gui\settingsDialogs.py:828
 msgid "NVDA &Language (requires restart):"
 msgstr "NVDA &Jezik (zahteva ponovno pokretanje):"
 
 #. Translators: The label for a setting in general settings to save current configuration when NVDA
 #. exits (if it is not checked, user needs to save configuration before quitting NVDA).
-#: gui\settingsDialogs.py:847
+#: gui\settingsDialogs.py:846
 msgid "&Save configuration when exiting NVDA"
 msgstr "&Sačuvaj podešavanja pri izlazu iz NVDA"
 
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
-#: gui\settingsDialogs.py:855
+#: gui\settingsDialogs.py:854
 msgid "Sho&w exit options when exiting NVDA"
 msgstr "&Prikazivanje dodatnih opcija kada izađete iz programa NVDA"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
-#: gui\settingsDialogs.py:863
+#: gui\settingsDialogs.py:862
 msgid "&Play sounds when starting or exiting NVDA"
 msgstr "Reprodukuj &zvukove kada se NVDA zaustavlja i pokreće"
 
@@ -13444,7 +13443,7 @@ msgstr "Reprodukuj &zvukove kada se NVDA zaustavlja i pokreće"
 #. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
 #. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 #. Translators: The label of a checkbox in the Welcome dialog.
-#: gui\settingsDialogs.py:872 gui\startupDialogs.py:87
+#: gui\settingsDialogs.py:871 gui\startupDialogs.py:87
 msgid "St&art NVDA after I sign in"
 msgstr "Pokreni NVDA n&akon što se prijavim"
 
@@ -13452,7 +13451,7 @@ msgstr "Pokreni NVDA n&akon što se prijavim"
 #. allow NVDA to come up in Windows login screen (useful if user
 #. needs to enter passwords or if multiple user accounts are present
 #. to allow user to choose the correct account).
-#: gui\settingsDialogs.py:884
+#: gui\settingsDialogs.py:883
 msgid "Use NVDA during sign-in (requires administrator privileges)"
 msgstr "Pokreni NVDA u toku prijavljivanja (zahteva administratorske privilegije)"
 
@@ -13460,24 +13459,24 @@ msgstr "Pokreni NVDA u toku prijavljivanja (zahteva administratorske privilegije
 #. current user settings to system settings (to allow current
 #. settings to be used in secure screens such as User Account
 #. Control (UAC) dialog).
-#: gui\settingsDialogs.py:899
+#: gui\settingsDialogs.py:898
 msgid "Use currently saved settings during sign-in and on secure screens (requires administrator privileges)"
 msgstr "Koristi trenutno sačuvana podešavanja u toku prijave i drugim bezbednosnim ekranima (zahteva administratorske privilegije )"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA.
 #. If not checked, user must check for updates manually.
-#: gui\settingsDialogs.py:913
+#: gui\settingsDialogs.py:912
 msgid "Automatically check for &updates to NVDA"
 msgstr "Automatski proveri dostupna &ažuriranja za NVDA"
 
 #. Translators: The label of a checkbox in general settings to toggle startup notifications
 #. for a pending NVDA update.
-#: gui\settingsDialogs.py:926
+#: gui\settingsDialogs.py:925
 msgid "Notify for &pending update on startup"
 msgstr "Obavesti o odloženim ažuriranjima pri &pokretanju programa"
 
 #. Translators: The label for the update mirror on the General Settings panel.
-#: gui\settingsDialogs.py:936
+#: gui\settingsDialogs.py:935
 msgid "Update mirror"
 msgstr "Alternativna adresa ažuriranja"
 
@@ -13485,86 +13484,86 @@ msgstr "Alternativna adresa ažuriranja"
 #. it appears in the context of the update mirror group on the General page of NVDA's settings.
 #. Translators: This is the label for the button used to change the Add-on Store mirror URL,
 #. it appears in the context of the mirror server group on the Add-on Store page of NVDA's settings.
-#: gui\settingsDialogs.py:954 gui\settingsDialogs.py:3791
+#: gui\settingsDialogs.py:953 gui\settingsDialogs.py:3790
 msgid "Change..."
 msgstr "Promeni..."
 
 #. Translators: The label of a checkbox in general settings.
-#: gui\settingsDialogs.py:970
+#: gui\settingsDialogs.py:969
 msgid "Prevent &display from turning off during say all or reading with braille"
 msgstr "Spreči da se &ekran isključi tokom čitanja na brajevom redu ili u režimu neprekidnog čitanja"
 
 #. Translators: Title of the dialog used to change NVDA's update server mirror URL.
-#: gui\settingsDialogs.py:984
+#: gui\settingsDialogs.py:983
 msgid "Set NVDA Update Mirror"
 msgstr "Podesi alternativnu adresu NVDA ažuriranja"
 
 #. Translators: The title of the dialog presented while settings are being copied
-#: gui\settingsDialogs.py:1013
+#: gui\settingsDialogs.py:1012
 msgid "Copying Settings"
 msgstr "Kopiranje podešavanja"
 
 #. Translators: The message displayed while settings are being copied
 #. to the system configuration (for use on Windows logon etc)
-#: gui\settingsDialogs.py:1016
+#: gui\settingsDialogs.py:1015
 msgid "Please wait while settings are copied to the system configuration."
 msgstr "Molimo sačekajte dok se podešavanja iskopiraju u sistem."
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
-#: gui\settingsDialogs.py:1027
+#: gui\settingsDialogs.py:1026
 msgid "Unable to copy a file. Perhaps it is currently being used by another process or you have run out of disc space on the drive you are copying to."
 msgstr "Nije moguće kopirati datoteku. Možda je trenutno koristi neki proces ili vam je ponestalo slobodnog prostora na disku na koji kopirate."
 
 #. Translators: the title of a retry cancel dialog when copying settings  fails
-#: gui\settingsDialogs.py:1031
+#: gui\settingsDialogs.py:1030
 msgid "Error Copying"
 msgstr "Greška pri kopiranju"
 
 #. Translators: The message displayed when errors were found while trying to copy current configuration to system settings.
-#: gui\settingsDialogs.py:1044
+#: gui\settingsDialogs.py:1043
 msgid "Error copying NVDA user settings"
 msgstr "Greška pri kopiranju NVDA korisničkih podešavanja"
 
 #. Translators: The message displayed when copying configuration to system settings was successful.
-#: gui\settingsDialogs.py:1048
+#: gui\settingsDialogs.py:1047
 msgid "Successfully copied NVDA user settings"
 msgstr "Uspešno iskopirana NVDA korisnička podešavanja"
 
-#: gui\settingsDialogs.py:1072
+#: gui\settingsDialogs.py:1071
 msgid "This change requires administrator privileges."
 msgstr "Ova promena zahteva administratorske privilegije."
 
-#: gui\settingsDialogs.py:1073
+#: gui\settingsDialogs.py:1072
 msgid "Insufficient Privileges"
 msgstr "Nedovoljne privilegije"
 
 #. Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
-#: gui\settingsDialogs.py:1096 gui\settingsDialogs.py:3837
+#: gui\settingsDialogs.py:1095 gui\settingsDialogs.py:3836
 msgid "No mirror"
 msgstr "Nema alternativne adrese"
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
-#: gui\settingsDialogs.py:1113
+#: gui\settingsDialogs.py:1112
 msgid "Language Configuration Change"
 msgstr "Promena jezičkih podešavanja"
 
 #. Translators: The message displayed after NVDA interface language has been changed.
-#: gui\settingsDialogs.py:1118
+#: gui\settingsDialogs.py:1117
 msgid "NVDA must be restarted for the new language to take effect."
 msgstr "NVDA mora ponovo biti pokrenut kako bi se primenio novi jezik."
 
 #. Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
-#: gui\settingsDialogs.py:1123
+#: gui\settingsDialogs.py:1122
 msgid "Restart &now"
 msgstr "&Ponovo pokreni odmah"
 
 #. Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
-#: gui\settingsDialogs.py:1128
+#: gui\settingsDialogs.py:1127
 msgid "Restart &later"
 msgstr "&Ponovo pokreni kasnije"
 
 #. Translators: A label for the synthesizer on the speech panel.
-#: gui\settingsDialogs.py:1152
+#: gui\settingsDialogs.py:1151
 msgid "Synthesizer"
 msgstr "Sintetizator"
 
@@ -13572,593 +13571,593 @@ msgstr "Sintetizator"
 #. it appears in the context of a synthesizer group on the speech settings panel.
 #. Translators: This is the label for the button used to change braille display,
 #. it appears in the context of a braille display group on the braille settings panel.
-#: gui\settingsDialogs.py:1174 gui\settingsDialogs.py:4960
+#: gui\settingsDialogs.py:1173 gui\settingsDialogs.py:4959
 msgid "C&hange..."
 msgstr "&Promeni..."
 
 #. Translators: This is the label for the synthesizer selection dialog
-#: gui\settingsDialogs.py:1229
+#: gui\settingsDialogs.py:1228
 msgid "Select Synthesizer"
 msgstr "Izaberi sintetizatora"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
-#: gui\settingsDialogs.py:1237
+#: gui\settingsDialogs.py:1236
 msgid "&Synthesizer:"
 msgstr "&Sintetizator:"
 
 #. Translators: This is the label for the voice settings panel.
-#: gui\settingsDialogs.py:1621
+#: gui\settingsDialogs.py:1620
 msgid "Voice"
 msgstr "Glas"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
-#: gui\settingsDialogs.py:1656
+#: gui\settingsDialogs.py:1655
 msgid "Automatic language switching (when supported)"
 msgstr "Automatska promena jezika (kada je podržana )"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, different voices for dialects will be used to
 #. read text in that dialect).
-#: gui\settingsDialogs.py:1672
+#: gui\settingsDialogs.py:1671
 msgid "Automatic dialect switching (when supported)"
 msgstr "Automatska promena dijalekta (kada je podržana)"
 
 #. Translators: This is the label for a checkbox in the voice settings panel. If checked, the language of the text been read will be reported.
-#: gui\settingsDialogs.py:1681
+#: gui\settingsDialogs.py:1680
 msgctxt "reportLanguage"
 msgid "Report lan&guage changes while reading"
 msgstr "Prijavi promene &jezika pri čitanju"
 
 #. Translators: This is a label for a combobox in the Voice settings panel to select
 #. reporting when the language of the text being read is not supported by the current synthesizer.
-#: gui\settingsDialogs.py:1697
+#: gui\settingsDialogs.py:1696
 msgctxt "reportLanguage"
 msgid "Report when switching to language is not s&upported by synthesizer"
 msgstr "Prijavi kada sintetizator ne &podržava menjanje jezika"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings panel (possible choices are none, some, most and all).
-#: gui\settingsDialogs.py:1716
+#: gui\settingsDialogs.py:1715
 msgid "Punctuation/symbol &level:"
 msgstr "&Nivo izgovora znakova interpunkcije/simbola:"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
-#: gui\settingsDialogs.py:1734
+#: gui\settingsDialogs.py:1733
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Koristi jezik glasa za obradu znakova i simbola"
 
 #. Translators: This is a label for a combo-box in the Speech settings panel.
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:1744 gui\settingsDialogs.py:5513
+#: gui\settingsDialogs.py:1743 gui\settingsDialogs.py:5512
 msgid "Unicode normali&zation"
 msgstr "Unikodna standardi&zacija"
 
 #. Translators: This is the label for a checkbox in the
 #. speech settings panel.
-#: gui\settingsDialogs.py:1755
+#: gui\settingsDialogs.py:1754
 msgid "Report '&Normalized' when navigating by character"
 msgstr "Prijavi \"sta&ndardizovano\" prilikom kretanja po znakovima"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change
 #. voice pitch for capital letters; the higher the value, the pitch will be higher).
-#: gui\settingsDialogs.py:1790
+#: gui\settingsDialogs.py:1789
 msgid "Capital pitch change percentage"
 msgstr "Procenat promene visine za velika slova"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
-#: gui\settingsDialogs.py:1805
+#: gui\settingsDialogs.py:1804
 msgid "Say &cap before capitals"
 msgstr "Izgovori reč &veliko pre velikog slova"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
-#: gui\settingsDialogs.py:1816
+#: gui\settingsDialogs.py:1815
 msgid "&Beep for capitals"
 msgstr "&Pišti za velika slova"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
-#: gui\settingsDialogs.py:1830
+#: gui\settingsDialogs.py:1829
 msgid "Use &spelling functionality if supported"
 msgstr "Iskoristi funkciju &sricanja ako je podržana"
 
 #. Translators: Label of the list where user can enable or disable symbol dictionaries.
-#: gui\settingsDialogs.py:1846
+#: gui\settingsDialogs.py:1845
 msgid "E&xtra dictionaries for character and symbol processing:"
 msgstr "&Dodatni rečnici za obrađivanje znakova i simbola:"
 
 #. Translators: Label of the list where user can enable or disable speech dictionaries.
-#: gui\settingsDialogs.py:1862
+#: gui\settingsDialogs.py:1861
 msgid "Sp&eech dictionaries:"
 msgstr "&Govorni rečnici:"
 
 #. Translators: Label of the list where user can select speech modes that will be available.
-#: gui\settingsDialogs.py:1876
+#: gui\settingsDialogs.py:1875
 msgid "&Modes available in the Cycle speech mode command:"
 msgstr "Dostupni &režimi za komandu koja kruži kroz režime govora:"
 
 #. Translators: This is the label for a checkbox in the voice settings panel.
-#: gui\settingsDialogs.py:1890
+#: gui\settingsDialogs.py:1889
 msgid "&Delayed descriptions for characters on cursor movement"
 msgstr "&Odloženi opisi znakova pri pomeranju kursora"
 
 #. Translators: Warning shown when 'talk' speech mode is disabled in settings.
-#: gui\settingsDialogs.py:1959
+#: gui\settingsDialogs.py:1958
 msgid "You did not choose Talk as one of your speech mode options. Please note that this may result in no speech output at all. Are you sure you want to continue?"
 msgstr "Niste izabrali sa pričom kao jednu od vaših opcija režima govora. Molimo imajte na umu da ovo može dovesti do bez bilo kakvog govora. Da li ste sigurni da želite da nastavite?"
 
 #. Translators: Message shown when not enough speech modes are enabled.
-#: gui\settingsDialogs.py:1987
+#: gui\settingsDialogs.py:1986
 msgid "At least two speech modes have to be checked."
 msgstr "Bar dva režima govora se moraju označiti."
 
 #. Translators: Same as the label for the list of checkboxes where user can select speech modes that will
 #. be available in Speech Settings, but without keyboard accelerator (& character) nor final colon.
-#: gui\settingsDialogs.py:1990
+#: gui\settingsDialogs.py:1989
 msgid "Modes available in the Cycle speech mode command"
 msgstr "Dostupni režimi za komandu koja kruži kroz režime govora"
 
 #. Translators: This is the label for the keyboard settings panel.
-#: gui\settingsDialogs.py:1999
+#: gui\settingsDialogs.py:1998
 msgid "Keyboard"
 msgstr "Tastatura"
 
 #. Translators: This is the label for a combobox in the
 #. keyboard settings panel.
 #. Translators: The label of a combobox in the Welcome dialog.
-#: gui\settingsDialogs.py:2006 gui\startupDialogs.py:68
+#: gui\settingsDialogs.py:2005 gui\startupDialogs.py:68
 msgid "&Keyboard layout:"
 msgstr "&Raspored tastature:"
 
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
-#: gui\settingsDialogs.py:2020
+#: gui\settingsDialogs.py:2019
 msgid "&Select NVDA Modifier Keys"
 msgstr "&Izaberite modifikatorske tastere"
 
 #. Translators: This is the label for a combobox in the keyboard settings panel.
-#: gui\settingsDialogs.py:2036
+#: gui\settingsDialogs.py:2035
 msgid "Speak typed &characters:"
 msgstr "Izgovor upisanih &znakova:"
 
 #. Translators: This is the label for a combobox in the keyboard settings panel.
-#: gui\settingsDialogs.py:2047
+#: gui\settingsDialogs.py:2046
 msgid "Speak typed &words:"
 msgstr "Izgovor upisanih &reči:"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2059
+#: gui\settingsDialogs.py:2058
 msgid "Speech &interrupt for typed characters"
 msgstr "Prekid u izgovoru &ukucanih znakova"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2071
+#: gui\settingsDialogs.py:2070
 msgid "Speech i&nterrupt for Enter key"
 msgstr "Prekid izgovora za taster &Enter"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2080
+#: gui\settingsDialogs.py:2079
 msgid "Allow skim &reading in Say All"
 msgstr "Dozvoli &površno čitanje tokom neprekidnog čitanja"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2090
+#: gui\settingsDialogs.py:2089
 msgid "&Beep if typing lowercase letters when caps lock is on"
 msgstr "&Pišti ako se kucaju mala slova kada je uključen taster za velika slova"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2099
+#: gui\settingsDialogs.py:2098
 msgid "Speak c&ommand keys"
 msgstr "Izgovaraj &komandne tastere"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2106
+#: gui\settingsDialogs.py:2105
 msgid "Play sound for &spelling errors while typing"
 msgstr "&reprodukuj zvukove za greške u pravopisu u toku pisanja"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2117
+#: gui\settingsDialogs.py:2116
 msgid "Handle keys from other &applications"
 msgstr "Kontroliši tastere iz drugih &aplikacija"
 
 #. Translators: The label for a control in keyboard settings to modify the timeout for a multiple keypress.
-#: gui\settingsDialogs.py:2125
+#: gui\settingsDialogs.py:2124
 msgid "&Multiple key press timeout (ms):"
 msgstr "Vre&me isteka za pritiskanje više tastera (ms):"
 
 #. Translators: Message to report wrong configuration of the NVDA key
-#: gui\settingsDialogs.py:2141
+#: gui\settingsDialogs.py:2140
 msgid "At least one key must be used as the NVDA key."
 msgstr "Bar jedan taster mora da se koristi kao NVDA taster."
 
 #. Translators: Same as the label for the list of checkboxes controlling which keys are NVDA modifier
 #. keys in Keyboard Settings, but without keyboard accelerator (& character).
-#: gui\settingsDialogs.py:2144
+#: gui\settingsDialogs.py:2143
 msgid "Select NVDA Modifier Keys"
 msgstr "Izaberite NVDA modifikatorske tastere"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2179
+#: gui\settingsDialogs.py:2178
 msgid "Report mouse &shape changes"
 msgstr "Izveštavaj o promenama oblika &miša"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2186
+#: gui\settingsDialogs.py:2185
 msgid "Enable mouse &tracking"
 msgstr "Omogući &praćenje miša"
 
 #. Translators: This is the label for a combobox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2193
+#: gui\settingsDialogs.py:2192
 msgid "Text &unit resolution:"
 msgstr "Rezolucija &jedinice teksta:"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2212
+#: gui\settingsDialogs.py:2211
 msgid "Report &object when mouse enters it"
 msgstr "Prijavi &objekat kada miš uđe u njega"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2221
+#: gui\settingsDialogs.py:2220
 msgid "&Play audio coordinates when mouse moves"
 msgstr "Re&produkuj zvučne koordinate kada se miš pomera"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2228
+#: gui\settingsDialogs.py:2227
 msgid "&Brightness controls audio coordinates volume"
 msgstr "Osvetljenje kontroliše &jačinu zvučnih koordinata"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2237
+#: gui\settingsDialogs.py:2236
 msgid "Ignore mouse input from other &applications"
 msgstr "Ignoriši unos miša od strane drugih &aplikacija"
 
 #. Translators: This is the label for the review cursor settings panel.
-#: gui\settingsDialogs.py:2258
+#: gui\settingsDialogs.py:2257
 msgid "Review Cursor"
 msgstr "Pregledni kursor"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#: gui\settingsDialogs.py:2264
+#: gui\settingsDialogs.py:2263
 msgid "Follow system &focus"
 msgstr "Prati sistemski &fokus"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#: gui\settingsDialogs.py:2270
+#: gui\settingsDialogs.py:2269
 msgid "Follow System &Caret"
 msgstr "Prati sistemski &kursor"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#: gui\settingsDialogs.py:2276
+#: gui\settingsDialogs.py:2275
 msgid "Follow &mouse cursor"
 msgstr "Prati kursor &miša"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#: gui\settingsDialogs.py:2282
+#: gui\settingsDialogs.py:2281
 msgid "&Simple review mode"
 msgstr "&Jednostavan režim pregleda"
 
 #. Translators: This is the label for the Input Composition settings panel.
-#: gui\settingsDialogs.py:2296
+#: gui\settingsDialogs.py:2295
 msgid "Input Composition"
 msgstr "Ulazni sastav"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2305
+#: gui\settingsDialogs.py:2304
 msgid "Automatically report all available &candidates"
 msgstr "Automatski prijavi sve dostupne &unose"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2317
+#: gui\settingsDialogs.py:2316
 msgid "Announce &selected candidate"
 msgstr "Izgovori &Izabrani unos"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2332
+#: gui\settingsDialogs.py:2331
 msgid "Always include short character &description when announcing candidates"
 msgstr "Uvek uključi kratak &opis slova kada se izgovaraju unosi"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2347
+#: gui\settingsDialogs.py:2346
 msgid "Report changes to the &reading string"
 msgstr "Prijavi izmene u nizu karaktera koji se &čita"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2362
+#: gui\settingsDialogs.py:2361
 msgid "Report changes to the &composition string"
 msgstr "Prijavi &promene u nizu karaktera sastava"
 
 #. Translators: This is a label appearing on the Object Presentation settings panel.
-#: gui\settingsDialogs.py:2394
+#: gui\settingsDialogs.py:2393
 msgid "Configure how much information NVDA will present about controls. These options apply to focus reporting and NVDA object navigation, but not when reading text content e.g. web content with browse mode."
 msgstr "Podesite koliko će informacija NVDA prikazati o kontrolama. Ove opcije se primenjuju na prijavljivanje fokusa i objektnu navigaciju, ali ne primenjuju se kada čitate tekstualne sadržaje na primer Web stranice u režimu pretraživanja."
 
 #. Translators: This is the label for the object presentation panel.
-#: gui\settingsDialogs.py:2400
+#: gui\settingsDialogs.py:2399
 msgid "Object Presentation"
 msgstr "Predstavljanje objekata"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by speaking.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:2410
+#: gui\settingsDialogs.py:2409
 msgid "Speak"
 msgstr "Izgovaraj"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:2414
+#: gui\settingsDialogs.py:2413
 msgid "Beep"
 msgstr "Pišti"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by both speaking and beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:2418
+#: gui\settingsDialogs.py:2417
 msgid "Speak and beep"
 msgstr "Izgovaraj i pišti"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2431
+#: gui\settingsDialogs.py:2430
 msgid "Report &tooltips"
 msgstr "Prijavi opise &alata"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2438
+#: gui\settingsDialogs.py:2437
 msgid "Report &notifications"
 msgstr "Prijavi &obaveštenja"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2445
+#: gui\settingsDialogs.py:2444
 msgid "Report object shortcut &keys"
 msgstr "Prijavi prečice sa &tastature za objekte"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2452
+#: gui\settingsDialogs.py:2451
 msgid "Report object &position information"
 msgstr "&Prijavi informacije o poziciji objekta"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2459
+#: gui\settingsDialogs.py:2458
 msgid "&Guess object position information when unavailable"
 msgstr "Pogodi informacije o poziciji &objekta kada nisu dostupne"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2468
+#: gui\settingsDialogs.py:2467
 msgid "Report when objects support &multiple selection"
 msgstr "Prijavi kada objekti podržavaju &višestruki izbor"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2477
+#: gui\settingsDialogs.py:2476
 msgid "Report object &descriptions"
 msgstr "Prijavi opis obje&kta"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2484
+#: gui\settingsDialogs.py:2483
 msgid "Progress &bar output:"
 msgstr "&Informacije o traci napredovanja:"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2497
+#: gui\settingsDialogs.py:2496
 msgid "Report backg&round progress bars"
 msgstr "Obaveštavaj o &pozadinskim trakama napredovanja"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2511
+#: gui\settingsDialogs.py:2510
 msgid "Report dynamic &content changes"
 msgstr "Obaveštavaj o dinamičkim promenama &sadržaja"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2521
+#: gui\settingsDialogs.py:2520
 msgid "Play a sound when &auto-suggestions appear"
 msgstr "Reprodukuj zvukove kada se &automatski predlozi pojave"
 
 #. Translators: This is the label for the browse mode settings panel.
-#: gui\settingsDialogs.py:2555
+#: gui\settingsDialogs.py:2554
 msgid "Browse Mode"
 msgstr "Režim pretraživanja"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2562
+#: gui\settingsDialogs.py:2561
 msgid "&Maximum number of characters on one line"
 msgstr "&Maksimalan broj znakova u jednom redu"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2575
+#: gui\settingsDialogs.py:2574
 msgid "&Number of lines per page"
 msgstr "&Broj redova po stranici"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2588
+#: gui\settingsDialogs.py:2587
 msgid "Use &screen layout (when supported)"
 msgstr "&Koristi izgled ekrana (kada je podržan)"
 
 #. Translators: The label for a checkbox in browse mode settings to
 #. enable browse mode on page load.
-#: gui\settingsDialogs.py:2595
+#: gui\settingsDialogs.py:2594
 msgid "&Enable browse mode on page load"
 msgstr "&Omogući režim pretraživanja kada se stranica učita"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2602
+#: gui\settingsDialogs.py:2601
 msgid "Automatic &Say All on page load"
 msgstr "&Automatsko neprekidno čitanje kada se stranica učita"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2609
+#: gui\settingsDialogs.py:2608
 msgid "Include l&ayout tables"
 msgstr "Uključi t&abele za izgled"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2616
+#: gui\settingsDialogs.py:2615
 msgid "Automatic focus mode for focus changes"
 msgstr "Automatski režim fokusiranja za promene fokusa"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2630
+#: gui\settingsDialogs.py:2629
 msgid "Automatic focus mode for caret movement"
 msgstr "Automatski režim fokusiranja za pomeranje kursora"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2644
+#: gui\settingsDialogs.py:2643
 msgid "Audio indication of focus and browse modes"
 msgstr "Zvučna potvrda za režime fokusiranja i pretraživanja"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2658
+#: gui\settingsDialogs.py:2657
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr "&Spreči sve prečice koje nisu komande da dođu u susret sa dokumentom"
 
 #. Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
-#: gui\settingsDialogs.py:2676
+#: gui\settingsDialogs.py:2675
 msgid "T&ouch navigation elements:"
 msgstr "Elementi navigacije ekran&om osetljivim na dodir:"
 
 #. Translators: Title of the math settings panel.
-#: gui\settingsDialogs.py:2713
+#: gui\settingsDialogs.py:2712
 msgctxt "math"
 msgid "Math"
 msgstr "Matematika"
 
 #. Translators: The description of the math settings panel.
-#: gui\settingsDialogs.py:2718
+#: gui\settingsDialogs.py:2717
 msgctxt "math"
 msgid "The following options control the presentation of mathematical content."
 msgstr "Sledeće opcije kontrolišu predstavljanje matematičkog sadržaja."
 
 #. Translators: options for Copy math to clipboard as -- speech text
-#: gui\settingsDialogs.py:2790 mathPres\MathCAT\preferences.py:140
+#: gui\settingsDialogs.py:2789 mathPres\MathCAT\preferences.py:140
 msgctxt "math"
 msgid "Speech"
 msgstr "Govor"
 
 #. Translators: Select an impairment for MathCAT
-#: gui\settingsDialogs.py:2797
+#: gui\settingsDialogs.py:2796
 msgctxt "math"
 msgid "Impairment:"
 msgstr "Oštećenje:"
 
 #. Translators: MathCAT language option
-#: gui\settingsDialogs.py:2809
+#: gui\settingsDialogs.py:2808
 msgctxt "math"
 msgid "Language:"
 msgstr "Jezik:"
 
 #. Translators: MathCAT decimal separator option.
-#: gui\settingsDialogs.py:2829
+#: gui\settingsDialogs.py:2828
 msgctxt "math"
 msgid "Decimal separator for numbers:"
 msgstr "Decimalni razdvajač za brojeve:"
 
 #. Translators: Select a speech style.
-#: gui\settingsDialogs.py:2844
+#: gui\settingsDialogs.py:2843
 msgctxt "math"
 msgid "Speech style:"
 msgstr "Stil govora:"
 
 #. Translators: MathCAT's verbosity setting
-#: gui\settingsDialogs.py:2858
+#: gui\settingsDialogs.py:2857
 msgctxt "math"
 msgid "Speech verbosity:"
 msgstr "Obim govora:"
 
 #. Translators: MathCAT's relative speed setting
-#: gui\settingsDialogs.py:2870
+#: gui\settingsDialogs.py:2869
 msgctxt "math"
 msgid "Relative speech rate"
 msgstr "Relativna brzina govora"
 
 #. Translators: label for slider that specifies relative factor to increase or decrease pauses in the math speech
-#: gui\settingsDialogs.py:2883
+#: gui\settingsDialogs.py:2882
 msgctxt "math"
 msgid "Pause factor"
 msgstr "Faktor pauze"
 
 #. Translators: label for check box controlling a beep sound when math speech starts/ends
-#: gui\settingsDialogs.py:2898
+#: gui\settingsDialogs.py:2897
 msgctxt "math"
 msgid "Beep at the beginning and end of math"
 msgstr "Pišti na početku i kraju matematičkog sadržaja"
 
 #. Translators: label for combobox to specify how verbose/terse the speech should be
-#: gui\settingsDialogs.py:2904
+#: gui\settingsDialogs.py:2903
 msgctxt "math"
 msgid "Chemical formulae:"
 msgstr "Hemijske formule:"
 
 #. Translators: label for combobox to specify whether the expression is spoken or described (an overview)
-#: gui\settingsDialogs.py:2916
+#: gui\settingsDialogs.py:2915
 msgctxt "math"
 msgid "When entering an equation:"
 msgstr "Kada se uđe u jednačinu:"
 
 #. Translators: "Speak" the expression after moving to it
-#: gui\settingsDialogs.py:2919
+#: gui\settingsDialogs.py:2918
 msgctxt "math"
 msgid "Speak"
 msgstr "Izgovori"
 
 #. Translators: "Describe" the expression after moving to it
-#: gui\settingsDialogs.py:2921
+#: gui\settingsDialogs.py:2920
 msgctxt "math"
 msgid "Describe overview"
 msgstr "Opiši pregled"
 
 #. Translators: Text for the navigation group.
-#: gui\settingsDialogs.py:2935
+#: gui\settingsDialogs.py:2934
 msgctxt "math"
 msgid "Navigation"
 msgstr "Navigacija"
 
 #. Translators: label for combobox to specify one of three modes use to navigate math expressions
-#: gui\settingsDialogs.py:2942
+#: gui\settingsDialogs.py:2941
 msgctxt "math"
 msgid "Default navigation mode:"
 msgstr "Podrazumevani režim navigacije:"
@@ -14167,64 +14166,64 @@ msgstr "Podrazumevani režim navigacije:"
 #. reverts to the user-selected "default navigation mode" when
 #. navigating into a new equation, even if they selected a different
 #. one this session.
-#: gui\settingsDialogs.py:2957
+#: gui\settingsDialogs.py:2956
 msgctxt "math"
 msgid "Reset to the default navigation mode for each new equation"
 msgstr "Vrati se u podrazumevani režim navigacije za svaku novu jednačinu"
 
 #. Translators: label for checkbox that controls whether arrow keys move out of fractions, etc.,
 #. or whether you have to manually back out of the fraction, etc.
-#: gui\settingsDialogs.py:2964
+#: gui\settingsDialogs.py:2963
 msgctxt "math"
 msgid "Automatically zoom out of two-dimensional notation"
 msgstr "Automatski umanji dvodimenzionalni zapis"
 
 #. Translators: label for combobox down to specify whether you want a terse or verbose reading of navigation commands
-#: gui\settingsDialogs.py:2970
+#: gui\settingsDialogs.py:2969
 msgctxt "math"
 msgid "Navigation verbosity:"
 msgstr "Obim navigacije:"
 
 #. Translators: label for combobox to specify how math will be copied to the clipboard
-#: gui\settingsDialogs.py:2988
+#: gui\settingsDialogs.py:2987
 msgctxt "math"
 msgid "Copy math as:"
 msgstr "Kopiraj matematički sadržaj kao:"
 
 #. Translators: Text for the braille group.
-#: gui\settingsDialogs.py:3000
+#: gui\settingsDialogs.py:2999
 msgctxt "math"
 msgid "Braille"
 msgstr "Brajevo pismo"
 
 #. Translators: label for combobox to specify which braille code to use
-#: gui\settingsDialogs.py:3006
+#: gui\settingsDialogs.py:3005
 msgctxt "math"
 msgid "Output code:"
 msgstr "Izlazni kod:"
 
 #. Translators: An option in Math settings to select a braille code automatically,
 #. according to NVDA's language.
-#: gui\settingsDialogs.py:3011
+#: gui\settingsDialogs.py:3010
 #, python-brace-format
 msgctxt "math"
 msgid "Automatic ({name})"
 msgstr "Automatski ({name})"
 
 #. Translators: label for combobox to specify how braille dots should be modified when navigating/selecting subexprs
-#: gui\settingsDialogs.py:3030
+#: gui\settingsDialogs.py:3029
 msgctxt "math"
 msgid "Highlight navigation focus with dots 7 and 8"
 msgstr "Obeleži fokus navigacije tačkicama 7 i 8"
 
 #. Translators: Text for the application support group in MathCAT options.
-#: gui\settingsDialogs.py:3048
+#: gui\settingsDialogs.py:3047
 msgctxt "math"
 msgid "Application support"
 msgstr "Podrška za aplikacije"
 
 #. Translators: label for checkbox to use native math presentation support instead of MathCAT in Word and Outlook
-#: gui\settingsDialogs.py:3055
+#: gui\settingsDialogs.py:3054
 msgctxt "math"
 msgid "Use native math support in Word and Outlook"
 msgstr "Koristi ugrađenu podršku za matematičke izraze u Wordu i Outlooku"
@@ -14232,379 +14231,379 @@ msgstr "Koristi ugrađenu podršku za matematičke izraze u Wordu i Outlooku"
 #. Translators: This is the label for the document formatting panel.
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:3162 gui\settingsDialogs.py:4618
+#: gui\settingsDialogs.py:3161 gui\settingsDialogs.py:4617
 msgid "Document Formatting"
 msgstr "Formatiranje dokumenta"
 
 #. Translators: This is a label appearing on the document formatting settings panel.
-#: gui\settingsDialogs.py:3166
+#: gui\settingsDialogs.py:3165
 msgid "The following options control the types of document formatting reported by NVDA."
 msgstr "Sledeće opcije kontrolišu koje vrste formatiranja dokumenta će NVDA prijavljivati."
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3175
+#: gui\settingsDialogs.py:3174
 msgid "Font"
 msgstr "Fontovi"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3183
+#: gui\settingsDialogs.py:3182
 msgid "&Font name"
 msgstr "&ime fonta"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3189
+#: gui\settingsDialogs.py:3188
 msgid "Font &size"
 msgstr "&veličina fonta"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3195
+#: gui\settingsDialogs.py:3194
 msgid "Font attrib&utes"
 msgstr "Atri&buti fonta"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3207
+#: gui\settingsDialogs.py:3206
 msgid "Su&perscripts and subscripts"
 msgstr "&Eksponenti i indeksi"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3217
+#: gui\settingsDialogs.py:3216
 msgid "E&mphasis"
 msgstr "&Naglašavanja"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3223
+#: gui\settingsDialogs.py:3222
 msgid "Highlighted (mar&ked) text"
 msgstr "O&beležen tekst"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3233
+#: gui\settingsDialogs.py:3232
 msgid "St&yle"
 msgstr "&Stilovi"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3239
+#: gui\settingsDialogs.py:3238
 msgid "&Colors"
 msgstr "&Boje"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3245
+#: gui\settingsDialogs.py:3244
 msgid "Document information"
 msgstr "Informacije dokumenta"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3253
+#: gui\settingsDialogs.py:3252
 msgid "Commen&ts"
 msgstr "Komen&tari"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3259
+#: gui\settingsDialogs.py:3258
 msgid "&Bookmarks"
 msgstr "&Markeri"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3265
+#: gui\settingsDialogs.py:3264
 msgid "&Editor revisions"
 msgstr "ure&đivačke izmene"
 
 #. Translators: This is the label for a checklist in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3272
+#: gui\settingsDialogs.py:3271
 msgid "Spelling or grammar e&rrors"
 msgstr "G&ramatičke ili pravopisne greške"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3289
+#: gui\settingsDialogs.py:3288
 msgid "Pages and spacing"
 msgstr "Strane i odvajanja"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3297
+#: gui\settingsDialogs.py:3296
 msgid "&Pages"
 msgstr "S&trane"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3303
+#: gui\settingsDialogs.py:3302
 msgid "Line &numbers"
 msgstr "Broj red&ova"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-#: gui\settingsDialogs.py:3311
+#: gui\settingsDialogs.py:3310
 msgid "Line &indentation reporting:"
 msgstr "Prijavi uv&lačenje reda:"
 
 #. Translators: This is the label of a checkbox in the document formatting settings panel
 #. If this option is selected, NVDA will ignore blank lines for line indentation reporting
-#: gui\settingsDialogs.py:3325
+#: gui\settingsDialogs.py:3324
 msgid "Ignore &blank lines for line indentation reporting"
 msgstr "Zanemari &prazne redove za prijavljivanje uvlačenja redova"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
-#: gui\settingsDialogs.py:3337
+#: gui\settingsDialogs.py:3336
 msgid "&Paragraph indentation"
 msgstr "uvlačenje pa&susa"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report line spacing if available.
-#: gui\settingsDialogs.py:3346
+#: gui\settingsDialogs.py:3345
 msgid "&Line spacing"
 msgstr "&Odvajanje redova"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3353
+#: gui\settingsDialogs.py:3352
 msgid "&Alignment"
 msgstr "&Poravnavanje"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3359
+#: gui\settingsDialogs.py:3358
 msgid "Table information"
 msgstr "Informacije o tabelama"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3367
+#: gui\settingsDialogs.py:3366
 msgid "&Tables"
 msgstr "&Tabele"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3374
+#: gui\settingsDialogs.py:3373
 msgid "H&eaders"
 msgstr "&Zaglavlja"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3382
+#: gui\settingsDialogs.py:3381
 msgid "Cell c&oordinates"
 msgstr "Ko&ordinati ćelija u tabeli"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3390
+#: gui\settingsDialogs.py:3389
 msgid "Cell &borders:"
 msgstr "&Granice ćelija:"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3398
+#: gui\settingsDialogs.py:3397
 msgid "Elements"
 msgstr "Elementi"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3417
+#: gui\settingsDialogs.py:3416
 msgid "Link type"
 msgstr "Vrsta linka"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3423
+#: gui\settingsDialogs.py:3422
 msgid "&Graphics"
 msgstr "&Slike"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3428
+#: gui\settingsDialogs.py:3427
 msgid "&Lists"
 msgstr "&Liste"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3433
+#: gui\settingsDialogs.py:3432
 msgid "Block &quotes"
 msgstr "&citati"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3439
+#: gui\settingsDialogs.py:3438
 msgid "&Groupings"
 msgstr "&grupisanja"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3445
+#: gui\settingsDialogs.py:3444
 msgid "Lan&dmarks and regions"
 msgstr "&orjentiri i regioni"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3451
+#: gui\settingsDialogs.py:3450
 msgid "Arti&cles"
 msgstr "Član&ci"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3456
+#: gui\settingsDialogs.py:3455
 msgid "Fra&mes"
 msgstr "&Okviri"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3462
+#: gui\settingsDialogs.py:3461
 msgid "&Figures and captions"
 msgstr "&Figure i naslovi slika"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3468
+#: gui\settingsDialogs.py:3467
 msgid "&Clickable"
 msgstr "&Klikabilnost"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3473
+#: gui\settingsDialogs.py:3472
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr "Najavi promene u &formatiranju posle kursora (može izazvati usporen rad)"
 
 #. Translators: This is the label for the document navigation settings panel.
-#: gui\settingsDialogs.py:3543
+#: gui\settingsDialogs.py:3542
 msgid "Document Navigation"
 msgstr "Navigacija kroz dokument"
 
 #. Translators: This is a label for the paragraph navigation style in the document navigation dialog
-#: gui\settingsDialogs.py:3549
+#: gui\settingsDialogs.py:3548
 msgid "&Paragraph style:"
 msgstr "&Stil pasusa:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected synthesizer.
-#: gui\settingsDialogs.py:3566
+#: gui\settingsDialogs.py:3565
 #, python-format
 msgid "Could not load the %s synthesizer."
 msgstr "Nije moguće učitati %s sintetizator."
 
 #. Translators: Dialog title presented when
 #. NVDA is unable to load the selected synthesizer.
-#: gui\settingsDialogs.py:3569
+#: gui\settingsDialogs.py:3568
 msgid "Synthesizer Error"
 msgstr "Greška sintetizatora"
 
 #. Translators: This is the label for the select output device combo in NVDA audio settings.
 #. Examples of an output device are default soundcard, usb headphones, etc.
-#: gui\settingsDialogs.py:3584
+#: gui\settingsDialogs.py:3583
 msgid "Audio output &device:"
 msgstr "Izlazni uređaj za reprodukciju &zvukova:"
 
 #. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
-#: gui\settingsDialogs.py:3599
+#: gui\settingsDialogs.py:3598
 msgid "Audio d&ucking mode:"
 msgstr "Režim stišavanja &pozadinskih zvukova:"
 
 #. Translators: This is the label for a checkbox control in the
 #. Audio settings panel.
-#: gui\settingsDialogs.py:3613
+#: gui\settingsDialogs.py:3612
 msgid "Volume of NVDA sounds follows voice volume"
 msgstr "Jačina NVDA zvukova prati jačinu glasa"
 
 #. Translators: This is the label for a slider control in the
 #. Audio settings panel.
-#: gui\settingsDialogs.py:3621
+#: gui\settingsDialogs.py:3620
 msgid "Volume of NVDA sounds"
 msgstr "Jačina NVDA zvukova"
 
 #. Translators: This is a label for the sound split combo box in the Audio Settings dialog.
-#: gui\settingsDialogs.py:3632
+#: gui\settingsDialogs.py:3631
 msgid "&Sound split mode:"
 msgstr "&Režim razdvajanja zvuka:"
 
 #. Translators: The label for a setting in Audio settings panel
 #. to change how long the audio device is kept awake after speech
-#: gui\settingsDialogs.py:3649
+#: gui\settingsDialogs.py:3648
 msgid "Time to &keep audio device awake after speech (seconds)"
 msgstr "Vreme tokom &kojeg treba održavati zvučnu kartu budnom nakon govora (sekunde)"
 
 #. Translators: Label of the list where user can select sound split modes that will be available.
-#: gui\settingsDialogs.py:3666
+#: gui\settingsDialogs.py:3665
 msgid "&Modes available in the 'Cycle sound split mode' command:"
 msgstr "&Režimi dostupni za komandu koja kruži kroz režime razdvajanja zvukova:"
 
 #. Translators: Message shown when no sound split modes are enabled.
-#: gui\settingsDialogs.py:3724
+#: gui\settingsDialogs.py:3723
 msgid "At least one sound split mode has to be checked."
 msgstr "Bar jedan režim razdvajanja zvuka se mora označiti."
 
 #. Translators: Same as the label for the list of checkboxes controlling which sound split modes will be
 #. available. in Audio Settings, but without keyboard accelerator (& character) nor final colon.
-#: gui\settingsDialogs.py:3727
+#: gui\settingsDialogs.py:3726
 msgid "Modes available in the 'Cycle sound split mode' command"
 msgstr "Režimi dostupni za komandu koja kruži kroz režime razdvajanja zvuka"
 
 #. Translators: This is the label for the addon navigation settings panel.
-#: gui\settingsDialogs.py:3735
+#: gui\settingsDialogs.py:3734
 msgid "Add-on Store"
 msgstr "Prodavnica dodataka"
 
 #. Translators: This is a label for the automatic updates combo box in the Add-on Store Settings dialog.
-#: gui\settingsDialogs.py:3741
+#: gui\settingsDialogs.py:3740
 msgid "Automatic &updates:"
 msgstr "&Automatska ažuriranja:"
 
 #. Translators: This is the label for the default update channel combo box in the Add-on Store Settings dialog.
-#: gui\settingsDialogs.py:3753
+#: gui\settingsDialogs.py:3752
 msgid "Default update &channel:"
 msgstr "Podrazumevani &kanal ažuriranja:"
 
 #. Translators: Mute other apps checkbox in settings
-#: gui\settingsDialogs.py:3767
+#: gui\settingsDialogs.py:3766
 msgid "Allow automatic updates to install incompatible add-ons"
 msgstr "Dozvoli da automatska ažuriranja instaliraju nekompatibilne dodatke"
 
 #. Translators: The label for the mirror server on the Add-on Store Settings panel.
-#: gui\settingsDialogs.py:3773
+#: gui\settingsDialogs.py:3772
 msgid "Mirror server"
 msgstr "Alternativni server"
 
 #. Translators: Title of the dialog used to change the Add-on Store mirror URL.
-#: gui\settingsDialogs.py:3810
+#: gui\settingsDialogs.py:3809
 msgid "Set Add-on Store Mirror Server"
 msgstr "Podesi alternativni server prodavnice dodataka"
 
 #. Translators: Label of a checkbox in Remote Access settings
-#: gui\settingsDialogs.py:3864
+#: gui\settingsDialogs.py:3863
 msgctxt "remote"
 msgid "Enable Remote Access"
 msgstr "Omogući daljinski pristup"
 
 #. Translators: A checkbox in Remote Access settings to set whether to confirm when disconnecting as a follower.
-#: gui\settingsDialogs.py:3881
+#: gui\settingsDialogs.py:3880
 msgctxt "remote"
 msgid "Confirm before disconnecting when controlled"
 msgstr "Potvrda pre prekida veze kada se vaš računar kontroliše"
 
 #. Translators: A checkbox in Remote Access settings to mute speech and sounds from the remote computer
 #. when controlling the local computer.
-#: gui\settingsDialogs.py:3892
+#: gui\settingsDialogs.py:3891
 msgctxt "remote"
 msgid "&Mute when controlling the local computer"
 msgstr "&Utišaj kada se kontroliše lokalni računar"
 
 #. Translators: A checkbox in Remote Access settings to set whether NVDA should automatically connect to a control server on startup.
-#: gui\settingsDialogs.py:3902
+#: gui\settingsDialogs.py:3901
 msgctxt "remote"
 msgid "Automatically &connect after NVDA starts"
 msgstr "Automatsko povezivanje nakon što se NVDA pokrene"
 
 #. Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote Access connection at startup.
-#: gui\settingsDialogs.py:3912
+#: gui\settingsDialogs.py:3911
 msgctxt "remote"
 msgid "Automatic connection"
 msgstr "Automatsko povezivanje"
@@ -14612,7 +14611,7 @@ msgstr "Automatsko povezivanje"
 #. Translators: Label for a control in Remote Access settings,
 #. allowing the user to select whether their computer is controlling or controlled.
 #. Translators: Label of the control allowing users to set whether they are the controlling or controlled computer in the Remote Access connection dialog.
-#: gui\settingsDialogs.py:3921 _remoteClient\dialogs.py:325
+#: gui\settingsDialogs.py:3920 _remoteClient\dialogs.py:325
 msgctxt "remote"
 msgid "&Mode:"
 msgstr "&Režim:"
@@ -14620,7 +14619,7 @@ msgstr "&Režim:"
 #. Translators: Label for a control in Remote Access settings,
 #. allowing users to choose whether they want to use an existing server, or host their own.
 #. Translators: Label of the control allowing users to select whether to use a pre-existing Remote Access server, or to run their own.
-#: gui\settingsDialogs.py:3930 _remoteClient\dialogs.py:335
+#: gui\settingsDialogs.py:3929 _remoteClient\dialogs.py:335
 msgctxt "remote"
 msgid "&Server:"
 msgstr "&Server:"
@@ -14628,7 +14627,7 @@ msgstr "&Server:"
 #. Translators: Label for the host field in Remote Access settings.
 #. This is where users should enter the URL of the Remote Access server they want to use if they are not hosting their own.
 #. Translators: The label of an edit field in connect dialog to enter name or address of the remote computer.
-#: gui\settingsDialogs.py:3940 _remoteClient\dialogs.py:46
+#: gui\settingsDialogs.py:3939 _remoteClient\dialogs.py:46
 msgid "&Host:"
 msgstr "&adresa:"
 
@@ -14636,7 +14635,7 @@ msgstr "&adresa:"
 #. This is the port on which the local control server will be accessible,
 #. if the user has chosen to host their own.
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
-#: gui\settingsDialogs.py:3949 gui\settingsDialogs.py:5038
+#: gui\settingsDialogs.py:3948 gui\settingsDialogs.py:5037
 #: _remoteClient\dialogs.py:207
 msgid "&Port:"
 msgstr "&Port:"
@@ -14644,17 +14643,17 @@ msgstr "&Port:"
 #. Translators: Label for a control in Remote Access settings,
 #. Where users set the key for their connection.
 #. Translators: Label of the edit field to enter key (password) to secure the Remote Access connection.
-#: gui\settingsDialogs.py:3970 _remoteClient\dialogs.py:51
+#: gui\settingsDialogs.py:3969 _remoteClient\dialogs.py:51
 msgid "&Key:"
 msgstr "&Šifra:"
 
 #. Translators: A button in Remote Access settings to delete all fingerprints of unauthorized certificates.
-#: gui\settingsDialogs.py:3977
+#: gui\settingsDialogs.py:3976
 msgid "Delete all trusted fingerprints"
 msgstr "Obriši sve prihvaćene sertifikate"
 
 #. Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
-#: gui\settingsDialogs.py:4056
+#: gui\settingsDialogs.py:4055
 msgctxt "remote"
 msgid "This will cause NVDA to forget all previously trusted Remote Access servers. When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
 "Are you sure you want to continue?"
@@ -14662,184 +14661,184 @@ msgstr "Ovo će izazvati da NVDA zaboravi sve servere daljinskog pristupa koje s
 "Da li ste sigurni da želite da nastavite?"
 
 #. Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
-#: gui\settingsDialogs.py:4061
+#: gui\settingsDialogs.py:4060
 msgctxt "remote"
 msgid "Delete All Trusted Fingerprints"
 msgstr "Obriši sve odobrene sertifikate"
 
 #. Translators: This message is presented when the user tries to save the settings with the host or key field empty.
-#: gui\settingsDialogs.py:4078
+#: gui\settingsDialogs.py:4077
 msgctxt "remote"
 msgid "Both host and key must be set in the Remote Access section in order to automatically connect using an existing server after NVDA starts."
 msgstr "Morate upisati i server i šifru u kategoriji daljinskog pristupa kako biste se automatski povezali na postojeći server nakon što se NVDA pokrene."
 
 #. Translators: This message is presented when the user tries to save the settings with the port or key field empty.
-#: gui\settingsDialogs.py:4084
+#: gui\settingsDialogs.py:4083
 msgctxt "remote"
 msgid "Both port and key must be set in the Remote Access category in order to automatically connect using a locally hosted server after NVDA starts."
 msgstr "Morate upisati i port i šifru u kategoriji daljinskog pristupa kako biste se automatski povezali korišćenjem lokalnog servera nakon što se NVDA pokrene."
 
 #. Translators: Title of a dialog.
-#: gui\settingsDialogs.py:4090
+#: gui\settingsDialogs.py:4089
 msgctxt "remote"
 msgid "Remote Access Error"
 msgstr "Greška daljinskog pristupa"
 
 #. Translators: This is the label for the touch interaction settings panel.
-#: gui\settingsDialogs.py:4124
+#: gui\settingsDialogs.py:4123
 msgid "Touch Interaction"
 msgstr "Interakcija sa ekranom osetljivim na dodir"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
-#: gui\settingsDialogs.py:4131
+#: gui\settingsDialogs.py:4130
 msgid "Enable touch interaction support"
 msgstr "Omogući interakciju sa ekranom osetljivim na dodir"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
-#: gui\settingsDialogs.py:4137
+#: gui\settingsDialogs.py:4136
 msgid "&Touch typing mode"
 msgstr "Režim pisanja na ekranu ose&tljivom na dodir"
 
 #. Translators: The title of the Windows OCR panel.
-#: gui\settingsDialogs.py:4149
+#: gui\settingsDialogs.py:4148
 msgid "Windows OCR"
 msgstr "Windows OCR"
 
 #. Translators: Label for an option in the Windows OCR dialog.
-#: gui\settingsDialogs.py:4168
+#: gui\settingsDialogs.py:4167
 msgid "Recognition &language:"
 msgstr "&Jezik prepoznavanja:"
 
 #. Translators: Label for an option in the Windows OCR settings panel.
-#: gui\settingsDialogs.py:4178
+#: gui\settingsDialogs.py:4177
 msgid "Periodically &refresh recognized content"
 msgstr "Povremeno &osvežavaj prepoznat sadržaj"
 
 #. Translators: The label for a setting in OCR settings to automatically say all on result.
-#: gui\settingsDialogs.py:4186
+#: gui\settingsDialogs.py:4185
 msgid "Automatically say all on result"
 msgstr "Automatsko neprekidno čitanje rezultata"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4218
+#: gui\settingsDialogs.py:4217
 msgid "NVDA Development"
 msgstr "NVDA razvoj"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4226
+#: gui\settingsDialogs.py:4225
 msgid "Enable loading custom code from Developer Scratchpad directory"
 msgstr "Omogući učitavanje prilagođenog koda iz Developer Scratchpad foldera"
 
 #. Translators: the label for a button in the Advanced settings category
-#: gui\settingsDialogs.py:4239
+#: gui\settingsDialogs.py:4238
 msgid "Open developer scratchpad directory"
 msgstr "Otvori developer scratchpad folder"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4249
+#: gui\settingsDialogs.py:4248
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UI Automation"
 
 #. Translators: This is the label for a combo box for selecting the
 #. means of registering for UI Automation events in the advanced settings panel.
 #. Choices are automatic, selective, and global.
-#: gui\settingsDialogs.py:4259
+#: gui\settingsDialogs.py:4258
 msgid "Regi&stration for UI Automation events and property changes:"
 msgstr "Regi&stracija za promene UI Automation događaja i svojstava:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA decide whether to register
 #. selectively or globally for UI Automation events.
-#: gui\settingsDialogs.py:4265
+#: gui\settingsDialogs.py:4264
 msgid "Automatic (prefer selective)"
 msgstr "Automatska (preferiraj selektivnu)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register selectively for UI Automation events
 #. (i.e. not to request events for objects outside immediate focus).
-#: gui\settingsDialogs.py:4269
+#: gui\settingsDialogs.py:4268
 msgid "Selective"
 msgstr "Selektivna"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register for all UI Automation events
 #. in all cases.
-#: gui\settingsDialogs.py:4273
+#: gui\settingsDialogs.py:4272
 msgid "Global"
 msgstr "Globalna"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4302
+#: gui\settingsDialogs.py:4301
 msgctxt "advanced.uiaWithMSWord"
 msgid "Use UI Automation to access Microsoft &Word document controls"
 msgstr "Koristi UI Automation za pristup kontrolama dokumenata u programu Microsoft &Word"
 
 #. Translators: Label for the default value of the Use UIA with MS Word combobox,
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4307
+#: gui\settingsDialogs.py:4306
 msgctxt "advanced.uiaWithMSWord"
 msgid "Default (Where suitable)"
 msgstr "Podrazumevano (kada je moguće )"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4309
+#: gui\settingsDialogs.py:4308
 msgctxt "advanced.uiaWithMSWord"
 msgid "Only when necessary"
 msgstr "Samo kada je neophodno"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4311
+#: gui\settingsDialogs.py:4310
 msgctxt "advanced.uiaWithMSWord"
 msgid "Where suitable"
 msgstr "Kada je moguće"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4313
+#: gui\settingsDialogs.py:4312
 msgctxt "advanced.uiaWithMSWord"
 msgid "Always"
 msgstr "Uvek"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4322
+#: gui\settingsDialogs.py:4321
 msgid "Use UI Automation to access Microsoft &Excel spreadsheet controls when available"
 msgstr "Koristi UI Automation za pristup Microsoft &Excel kontrolama ćelija kada je dostupan"
 
 #. Translators: This is the label for a combo box for selecting the
 #. active console implementation in the advanced settings panel.
 #. Choices are automatic, UIA when available, and legacy.
-#: gui\settingsDialogs.py:4330
+#: gui\settingsDialogs.py:4329
 msgid "Windows C&onsole support:"
 msgstr "Podrška za Windows &konzole:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine its Windows Console implementation
 #. automatically.
-#: gui\settingsDialogs.py:4335
+#: gui\settingsDialogs.py:4334
 msgid "Automatic (prefer UIA)"
 msgstr "Automatski (preferiraj UIA)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use UIA in the Windows Console when available.
-#: gui\settingsDialogs.py:4338
+#: gui\settingsDialogs.py:4337
 msgid "UIA when available"
 msgstr "UIA kada je dostupan"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use its legacy Windows Console support
 #. in all cases.
-#: gui\settingsDialogs.py:4342
+#: gui\settingsDialogs.py:4341
 msgid "Legacy"
 msgstr "Zastarela"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
-#: gui\settingsDialogs.py:4365
+#: gui\settingsDialogs.py:4364
 msgctxt "advanced.uiaWithChromium"
 msgid "Use UIA with Microsoft Edge and other \n"
 "&Chromium based browsers when available:"
@@ -14848,72 +14847,72 @@ msgstr "Koristi UIA podršku za Microsoft Edge i druge\n"
 
 #. Translators: Label for the default value of the Use UIA with Chromium combobox,
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4370
+#: gui\settingsDialogs.py:4369
 msgctxt "advanced.uiaWithChromium"
 msgid "Default (Only when necessary)"
 msgstr "Podrazumevano (Samo kada je neophodna)"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4372
+#: gui\settingsDialogs.py:4371
 msgctxt "advanced.uiaWithChromium"
 msgid "Only when necessary"
 msgstr "Samo kada je neophodna"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4374
+#: gui\settingsDialogs.py:4373
 msgctxt "advanced.uiaWithChromium"
 msgid "Yes"
 msgstr "Da"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4376
+#: gui\settingsDialogs.py:4375
 msgctxt "advanced.uiaWithChromium"
 msgid "No"
 msgstr "Ne"
 
 #. Translators: This is the label for a COMBOBOX in the Advanced settings panel.
-#: gui\settingsDialogs.py:4384
+#: gui\settingsDialogs.py:4383
 msgid "Use en&hanced event processing (requires restart)"
 msgstr "Koristi &poboljšano obrađivanje događaja (zahteva ponovno pokretanje)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4395
+#: gui\settingsDialogs.py:4394
 msgid "Annotations"
 msgstr "Napomene"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4404
+#: gui\settingsDialogs.py:4403
 msgid "Report 'has details' for structured annotations"
 msgstr "Prijavi \"ima detalje\" za strukturne napomene"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4411
+#: gui\settingsDialogs.py:4410
 msgid "Report aria-description always"
 msgstr "Uvek prijavi aria-description opis"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4427
+#: gui\settingsDialogs.py:4426
 msgid "Report live regions:"
 msgstr "Prijavi žive regione:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4436
+#: gui\settingsDialogs.py:4435
 msgid "Terminal programs"
 msgstr "Terminal programi"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4443
+#: gui\settingsDialogs.py:4442
 msgid "Speak &passwords in all enhanced terminals (may improve performance)"
 msgstr "Izgovaraj lozinke u svim &poboljšanim terminalima (može poboljšati odziv)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4452
+#: gui\settingsDialogs.py:4451
 msgid "Use enhanced t&yped character support in legacy Windows Console when available"
 msgstr "Koristi poboljšanu podršku za &unos znakova u starijim Windows konzolama kada je dostupna"
 
@@ -14921,327 +14920,327 @@ msgstr "Koristi poboljšanu podršku za &unos znakova u starijim Windows konzola
 #. method of detecting changed content in terminals in the advanced
 #. settings panel.
 #. Choices are automatic, Diff Match Patch, and Difflib.
-#: gui\settingsDialogs.py:4465
+#: gui\settingsDialogs.py:4464
 msgid "&Diff algorithm:"
 msgstr "&Algoritam razlikovanja teksta:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#: gui\settingsDialogs.py:4470
+#: gui\settingsDialogs.py:4469
 msgid "Automatic (prefer Diff Match Patch)"
 msgstr "Automatski (preferiraj Diff Match Patch)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by character, using the diff match patch algorithm.
-#: gui\settingsDialogs.py:4474
+#: gui\settingsDialogs.py:4473
 msgid "Diff Match Patch"
 msgstr "Diff Match Patch"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
-#: gui\settingsDialogs.py:4478
+#: gui\settingsDialogs.py:4477
 msgid "Difflib"
 msgstr "Difflib"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4504
+#: gui\settingsDialogs.py:4503
 msgid "Speak new text in Windows Terminal via:"
 msgstr "Izgovaraj novi tekst u Windows terminalu koristeći:"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4523
+#: gui\settingsDialogs.py:4522
 msgid "Default (Yes)"
 msgstr "Podrazumevano (Da)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4526
+#: gui\settingsDialogs.py:4525
 msgid "Yes"
 msgstr "Da"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4529
+#: gui\settingsDialogs.py:4528
 msgid "No"
 msgstr "Ne"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4533
+#: gui\settingsDialogs.py:4532
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Pokušavanje otkazivanja govora za kontrole koje više nisu fokusirane:"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4549
+#: gui\settingsDialogs.py:4548
 msgid "Trim leading silence in speech audio"
 msgstr "Uklanjanje početne tišine u zvuku govora"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4557
+#: gui\settingsDialogs.py:4556
 msgid "Use WASAPI for SAPI 4 audio output:"
 msgstr "Koristi WASAPI za SAPI 4 zvučni izlaz:"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4568
+#: gui\settingsDialogs.py:4567
 msgid "Use modern regular expression engine for speech dictionary entries:"
 msgstr "Koristi moderni način obrade regularnih izraza za unose govornih rečnika:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4579
+#: gui\settingsDialogs.py:4578
 msgid "Virtual Buffers"
 msgstr "Virtuelni bufferi"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4587
+#: gui\settingsDialogs.py:4586
 msgid "Load Chromium virtual buffer when document busy."
 msgstr "Učitaj Chromium virtual buffer kada je dokument zauzet."
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4596
+#: gui\settingsDialogs.py:4595
 msgid "Editable Text"
 msgstr "Izmenjiv tekst"
 
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4603
+#: gui\settingsDialogs.py:4602
 msgid "Caret movement timeout (in ms)"
 msgstr "Vreme isteka pomeranja kursora (u milisekundama)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4626
+#: gui\settingsDialogs.py:4625
 msgid "Report transparent color values"
 msgstr "Prijavi vrednosti transparentnih boja"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4640
+#: gui\settingsDialogs.py:4639
 msgid "Debug logging"
 msgstr "Dnevnici za otkrivanje grešaka"
 
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4667
+#: gui\settingsDialogs.py:4666
 msgid "Enabled logging categories"
 msgstr "Omogućene kategorije preglednog dnevnika"
 
 #. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4687
+#: gui\settingsDialogs.py:4686
 msgid "Play a sound for logged e&rrors:"
 msgstr "Reprodukuj zvuk za &evidentirane greške:"
 
 #. Translators: This is the label for a textfield in the
 #. advanced settings panel.
-#: gui\settingsDialogs.py:4700
+#: gui\settingsDialogs.py:4699
 msgid "Regular expression for text paragraph navigation"
 msgstr "Regularni izraz za navigaciju po pasusima teksta"
 
 #. Translators: Message shown when invalid text paragraph regex entered
-#: gui\settingsDialogs.py:4722
+#: gui\settingsDialogs.py:4721
 #, python-format
 msgid "Failed to compile text paragraph regular expression: %s"
 msgstr "Nemoguće obraditi regularni izraz za navigaciju po pasusima teksta: %s"
 
 #. Translators: This is the label for the Advanced settings panel.
-#: gui\settingsDialogs.py:4855
+#: gui\settingsDialogs.py:4854
 msgid "Advanced"
 msgstr "Napredno"
 
 #. Translators: This is the label to warn users about the Advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4860
+#: gui\settingsDialogs.py:4859
 msgid "Warning!"
 msgstr "Upozorenje!"
 
 #. Translators: This is a label appearing on the Advanced settings panel.
-#: gui\settingsDialogs.py:4864
+#: gui\settingsDialogs.py:4863
 msgid "The following settings are for advanced users. Changing them may cause NVDA to function incorrectly. Please only change these if you know what you are doing or have been specifically instructed by NVDA developers."
 msgstr "Sledeća podešavanja su samo za napredne korisnike. Njihova promena može izazvati neispravno funkcionisanje programa NVDA. Molimo menjajte ih samo ako znate šta radite ili ste dobili uputstva za njihovo menjanje od strane NVDA programera."
 
 #. Translators: This is the label for a checkbox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4891
+#: gui\settingsDialogs.py:4890
 msgid "I understand that changing these settings may cause NVDA to function incorrectly."
 msgstr "Razumem da promena ovih podešavanja može izazvati neispravan rad programa NVDA."
 
 #. Translators: This is the label for a button in the Advanced settings panel
-#: gui\settingsDialogs.py:4902
+#: gui\settingsDialogs.py:4901
 msgid "Restore defaults"
 msgstr "Vrati na podrazumevana"
 
 #. Translators: A label for the braille display on the braille panel.
-#: gui\settingsDialogs.py:4945
+#: gui\settingsDialogs.py:4944
 msgid "Braille display"
 msgstr "Brajev red"
 
 #. Translators: This is the label for the braille display selection dialog.
-#: gui\settingsDialogs.py:5014
+#: gui\settingsDialogs.py:5013
 msgid "Select Braille Display"
 msgstr "Izaberi brajev red"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
-#: gui\settingsDialogs.py:5023
+#: gui\settingsDialogs.py:5022
 msgid "Braille &display:"
 msgstr "Brajev &red:"
 
 #. Translators: The label for a setting in braille settings to enable displays for automatic detection.
-#: gui\settingsDialogs.py:5029
+#: gui\settingsDialogs.py:5028
 msgid "&Displays to detect automatically:"
 msgstr "&Redovi koje treba automatski prepoznati:"
 
 #. Translators: The message in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:5145
+#: gui\settingsDialogs.py:5144
 #, python-brace-format
 msgid "Could not load the {display} display."
 msgstr "Nemoguće učitati {display} brajev red."
 
 #. Translators: The title in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:5148
+#: gui\settingsDialogs.py:5147
 msgid "Braille Display Error"
 msgstr "Greška brajevog reda"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
-#: gui\settingsDialogs.py:5181
+#: gui\settingsDialogs.py:5180
 msgid "&Output table:"
 msgstr "&Izlazna tabela:"
 
 #. Translators: An option in Braille settings to select a braille table automatically, according to the current language.
-#: gui\settingsDialogs.py:5189 gui\settingsDialogs.py:5216
+#: gui\settingsDialogs.py:5188 gui\settingsDialogs.py:5215
 #, python-brace-format
 msgid "Automatic ({name})"
 msgstr "Automatski ({name})"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
-#: gui\settingsDialogs.py:5208
+#: gui\settingsDialogs.py:5207
 msgid "&Input table:"
 msgstr "&Ulazna tabela:"
 
 #. Translators: The label for a setting in braille settings to select which braille mode to use
-#: gui\settingsDialogs.py:5234
+#: gui\settingsDialogs.py:5233
 msgid "Braille mode:"
 msgstr "Brajev režim:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
-#: gui\settingsDialogs.py:5249
+#: gui\settingsDialogs.py:5248
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Proširi na kompjuterski brajev kod za reč na poziciji kursora"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
-#: gui\settingsDialogs.py:5257
+#: gui\settingsDialogs.py:5256
 msgid "&Show cursor"
 msgstr "&prikaži kursor"
 
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
-#: gui\settingsDialogs.py:5266
+#: gui\settingsDialogs.py:5265
 msgid "Blink cursor"
 msgstr "Treperenje kursora"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
-#: gui\settingsDialogs.py:5277
+#: gui\settingsDialogs.py:5276
 msgid "Cursor blink rate (ms)"
 msgstr "Brzina treptanja kursora (u milisekundama)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
-#: gui\settingsDialogs.py:5299
+#: gui\settingsDialogs.py:5298
 msgid "Cursor shape for &focus:"
 msgstr "Oblik kursora za &fokus:"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
-#: gui\settingsDialogs.py:5315
+#: gui\settingsDialogs.py:5314
 msgid "Cursor shape for &review:"
 msgstr "&oblik kursora za pregled:"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
-#: gui\settingsDialogs.py:5337
+#: gui\settingsDialogs.py:5336
 msgid "Show messages"
 msgstr "Prikaži poruke"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-#: gui\settingsDialogs.py:5359
+#: gui\settingsDialogs.py:5358
 msgid "Message &timeout (sec)"
 msgstr "Vreme isteka &poruke (u sekundama)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-#: gui\settingsDialogs.py:5378
+#: gui\settingsDialogs.py:5377
 msgid "Tether B&raille:"
 msgstr "Vezivanje b&rajevog reda za:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5402
+#: gui\settingsDialogs.py:5401
 msgid "Move system caret when ro&uting review cursor"
 msgstr "Pomeranje sistemskog kursora kada se &prebacuje pregledni kursor"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
-#: gui\settingsDialogs.py:5418
+#: gui\settingsDialogs.py:5417
 msgid "Read by &paragraph"
 msgstr "Čitaj po &pasusima"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel to select paragraph start markers.
-#: gui\settingsDialogs.py:5427
+#: gui\settingsDialogs.py:5426
 msgid "Paragraph start marker:"
 msgstr "Obeleživač početka pasusa:"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
-#: gui\settingsDialogs.py:5442
+#: gui\settingsDialogs.py:5441
 msgid "Focus context presentation:"
 msgstr "Predstavljanje sadržaja fokusa:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5463
+#: gui\settingsDialogs.py:5462
 msgid "Show se&lection"
 msgstr "Prikaži &izbor"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5475
+#: gui\settingsDialogs.py:5474
 msgid "Formatting &display"
 msgstr "&Prikazivanje formatiranja"
 
 #. Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
-#: gui\settingsDialogs.py:5484
+#: gui\settingsDialogs.py:5483
 msgid "Spea&k character when routing cursor in text"
 msgstr "Izgovori zna&k kada se kursor pomera po tekstu"
 
 #. Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
-#: gui\settingsDialogs.py:5492
+#: gui\settingsDialogs.py:5491
 msgid "Speak when navigating by &line or paragraph"
 msgstr "Izgovor tokom kretanja po &redu ili pasusu"
 
 #. Translators: The label for a setting in braille settings to enable word wrap
 #. (try to avoid splitting words at the end of the braille display).
-#: gui\settingsDialogs.py:5505
+#: gui\settingsDialogs.py:5504
 msgid "Avoid splitting &words when possible"
 msgstr "&Izbegavaj razdvajanje reči kada je moguće"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5524
+#: gui\settingsDialogs.py:5523
 msgid "I&nterrupt speech while scrolling"
 msgstr "&Prekini izgovor u toku pomeranja"
 
 #. Translators: The label for a setting in braille settings to change the rate for autoscroll.
-#: gui\settingsDialogs.py:5533
+#: gui\settingsDialogs.py:5532
 msgid "Auto&matic scroll rate"
 msgstr "Brzina auto&matskog pomeranja"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
-#: gui\settingsDialogs.py:5642
+#: gui\settingsDialogs.py:5641
 #, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
 msgstr "Nemoguće učitati {providerName} provajdera poboljšanja vizuelnog sadržaja"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5649
+#: gui\settingsDialogs.py:5648
 #, python-brace-format
 msgid "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
@@ -15249,20 +15248,20 @@ msgstr "Nemoguće učitati sledeće provajdere poboljšanja vizuelnog sadržaja:
 "{providerNames}"
 
 #. Translators: The title of the vision enhancement provider error message box.
-#: gui\settingsDialogs.py:5655 gui\settingsDialogs.py:5685
+#: gui\settingsDialogs.py:5654 gui\settingsDialogs.py:5684
 msgid "Vision Enhancement Provider Error"
 msgstr "Greška u provajderima poboljšanja vizuelnog sadržaja"
 
 #. Translators: This message is presented when
 #. NVDA is unable to gracefully terminate a single vision enhancement provider.
-#: gui\settingsDialogs.py:5672
+#: gui\settingsDialogs.py:5671
 #, python-brace-format
 msgid "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr "Nemoguće ispravno zatvoriti{providerName} provajder poboljšanja vizuelnog sadržaja"
 
 #. Translators: This message is presented when
 #. NVDA is unable to terminate multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5680
+#: gui\settingsDialogs.py:5679
 #, python-brace-format
 msgid "Could not gracefully terminate the following vision enhancement providers:\n"
 "{providerNames}"
@@ -15270,229 +15269,229 @@ msgstr "Nemoguće ispravno zatvoriti sledeće provajdere poboljšanja vizuelnog 
 "{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
-#: gui\settingsDialogs.py:5780
+#: gui\settingsDialogs.py:5779
 msgid "Configure visual aids."
 msgstr "Podesite vizuelnu pomoć."
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
-#: gui\settingsDialogs.py:5952
+#: gui\settingsDialogs.py:5951
 msgid "Enable"
 msgstr "Omogući"
 
 #. Translators: Options label on a vision enhancement provider on the vision settings category panel
 #. Translators: The label for a group box containing the NVDA highlighter options.
-#: gui\settingsDialogs.py:5959
+#: gui\settingsDialogs.py:5958
 #: visionEnhancementProviders\NVDAHighlighter.py:397
 msgid "Options:"
 msgstr "Opcije:"
 
 #. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
-#: gui\settingsDialogs.py:6005
+#: gui\settingsDialogs.py:6004
 msgid "Unable to configure user interface for Vision Enhancement Provider, it can not be enabled."
 msgstr "Nemoguće podesiti korisnički interfejs za provajdera poboljšanja vizuelnog sadržaja, ne može se omogućiti."
 
 #. Translators: This is the label for the magnifier settings panel.
-#: gui\settingsDialogs.py:6042
+#: gui\settingsDialogs.py:6041
 msgid "Magnifier"
 msgstr "Lupa"
 
 #. Translators: The label for a setting in magnifier settings to enable or disable the magnifier.
-#: gui\settingsDialogs.py:6087
+#: gui\settingsDialogs.py:6055
 msgid "&Enable magnifier (immediate effect)"
-msgstr "&Omogući lupu (primenjuje se odmah)"
+msgstr ""
 
 #. Translators: The label for a setting in magnifier settings to select the zoom level.
-#: gui\settingsDialogs.py:6099
-msgid "&Zoom (%):"
-msgstr "&Zumiranje (%):"
+#: gui\settingsDialogs.py:6067
+msgid "&Zoom level:"
+msgstr "&Nivo zumiranja:"
 
 #. Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
-#: gui\settingsDialogs.py:6121
+#: gui\settingsDialogs.py:6096
 msgid "&Panning step size (%):"
 msgstr "&Veličina koraka pomeranja (%):"
 
 #. Translators: The label for a setting in magnifier settings to select the default filter
-#: gui\settingsDialogs.py:6143
+#: gui\settingsDialogs.py:6115
 msgid "F&ilter:"
-msgstr "F&ilter:"
+msgstr ""
 
 #. Translators: The label for a setting in magnifier settings to select the full-screen mode
-#: gui\settingsDialogs.py:6160
+#: gui\settingsDialogs.py:6130
 msgid "&Fullscreen mode:"
-msgstr "Režim &celog ekrana:"
+msgstr ""
 
 #. Translators: The label for a setting in magnifier settings to select whether true center is used in full-screen mode
-#: gui\settingsDialogs.py:6174
+#: gui\settingsDialogs.py:6144
 msgid "Use &true center in fullscreen mode"
 msgstr "Koristi &true center u režimu celog ekrana"
 
 #. Translators: This is the label for a group of focus options in the magnifier settings panel
-#: gui\settingsDialogs.py:6192
+#: gui\settingsDialogs.py:6158
 msgid "Focus"
 msgstr "Fokus"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the mouse
-#: gui\settingsDialogs.py:6200
+#: gui\settingsDialogs.py:6166
 msgid "Follow &mouse"
 msgstr "Prati &miš"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
-#: gui\settingsDialogs.py:6202
+#: gui\settingsDialogs.py:6168
 msgid "Follow &system focus"
 msgstr "Prati &sistemski fokus"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the review cursor
-#: gui\settingsDialogs.py:6204
+#: gui\settingsDialogs.py:6170
 msgid "Follow &review cursor"
 msgstr "Prati p&regledni kursor"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the navigator object
-#: gui\settingsDialogs.py:6207
+#: gui\settingsDialogs.py:6173
 msgid "Follow &navigator object"
 msgstr "Prati &navigacioni objekat"
 
 #. Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
-#: gui\settingsDialogs.py:6224
+#: gui\settingsDialogs.py:6186
 msgid "Keep mouse pointer &centered in magnifier view"
-msgstr "Zadrži pokazivač miša &centriran u prikazu lupe"
+msgstr ""
 
 #. Translators: The title of the privacy and security category in NVDA's settings.
-#: gui\settingsDialogs.py:6292
+#: gui\settingsDialogs.py:6231
 msgid "Privacy and Security"
 msgstr "Privatnost i bezbednost"
 
-#. Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
-#: gui\settingsDialogs.py:6305
-msgid "Setting the logging level to \"debug (unredacted)\" will write sensitive information to the log without redaction, including passwords, API keys, or other private data. Only enable this temporarily if you explicitly need unredacted diagnostic logs. Do you want to continue?"
-msgstr "Postavljanje nivoa evidentiranja na \"ispravljanje greške (bez prikrivanja)\" će upisivati osetljive informacije u dnevnik bez prikrivanja, što uključuje lozinke, API ključeve ili druge privatne podatke. Omogućite ovo samo privremeno ako su vam zaista potrebni dnevnici bez prikrivanja. Da li želite da nastavite?"
+#. Translators: Warning shown when enabling the secrets log level from NVDA settings.
+#: gui\settingsDialogs.py:6244
+msgid "Setting the logging level to secrets will write sensitive information to the log without redaction, including passwords, API keys, or other private data. Only enable this temporarily if you explicitly need unredacted diagnostic logs. Do you want to continue?"
+msgstr "Postavljanje nivoa evidentiranja dnevnika na tajne informacije će upisivati osetljive informacije u dnevnik bez prikrivanja, što uključuje lozinke, API ključeve, ili druge privatne podatke. Omogućite ovo samo privremeno ako su vam neophodni neprikriveni dnevnici. Da li želite da nastavite?"
 
-#. Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
-#: gui\settingsDialogs.py:6312
+#. Translators: Title of the warning dialog shown when enabling the secrets log level.
+#: gui\settingsDialogs.py:6251
 msgid "High risk logging level"
 msgstr "Nivo evidentiranja u dnevniku visokog rizika"
 
 #. Translators: Warning shown when enabling a logging level above info from NVDA settings.
-#: gui\settingsDialogs.py:6317
+#: gui\settingsDialogs.py:6256
 msgid "Setting the logging level above info may record sensitive information such as typed input, speech output, or other private data in the log. Only enable higher logging levels temporarily while troubleshooting. Do you want to continue?"
 msgstr "Podešavanje nivoa evidentiranja iznad informacija može sačuvati osetljive informacije kao što su upisan tekst, govor, ili druge privatne podatke u dnevnik. Omogućite veće nivoe evidentiranja samo privremeno tokom rešavanja problema. Da li želite da nastavite?"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
-#: gui\settingsDialogs.py:6342
+#: gui\settingsDialogs.py:6281
 msgid "Screen Curtain"
 msgstr "Zatamnjivanje ekrana"
 
 #. Translators: option to enable screen curtain in the privacy and security settings panel
-#: gui\settingsDialogs.py:6351
+#: gui\settingsDialogs.py:6290
 msgid "Make screen black (immediate effect)"
 msgstr "Učini da ekran bude crn(primenjuje se odmah)"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#: gui\settingsDialogs.py:6380
+#: gui\settingsDialogs.py:6319
 msgid "&Play sound when toggling Screen Curtain"
 msgstr "&Reprodukuj zvuk kada se zatamnjivanje ekrana omogući ili onemogući"
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
-#: gui\settingsDialogs.py:6395
+#: gui\settingsDialogs.py:6334
 msgid "L&ogging level:"
 msgstr "&Nivo evidentiranja u dnevniku:"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-#: gui\settingsDialogs.py:6418
+#: gui\settingsDialogs.py:6357
 msgid "Allow NV Access to gather NVDA usage statistics"
 msgstr "Dozvoli da NV Access prikuplja NVDA statistike korišćenja"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:6539
+#: gui\settingsDialogs.py:6478
 msgid "NVDA Settings"
 msgstr "NVDA podešavanja"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:6595
+#: gui\settingsDialogs.py:6534
 msgid "normal configuration"
 msgstr "globalna podešavanja"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:6630
+#: gui\settingsDialogs.py:6569
 msgid "Add Symbol"
 msgstr "Dodaj simbol"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:6635
+#: gui\settingsDialogs.py:6574
 msgid "&Symbol:"
 msgstr "&Simbol:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:6665
+#: gui\settingsDialogs.py:6604
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "Izgovor simbola (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:6679
+#: gui\settingsDialogs.py:6618
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "&Izdvoji po:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6688
+#: gui\settingsDialogs.py:6627
 msgid "&Symbols"
 msgstr "&Simboli"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:6698
+#: gui\settingsDialogs.py:6637
 msgid "Symbol"
 msgstr "Simbol"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6700 gui\speechDict.py:188
+#: gui\settingsDialogs.py:6639 gui\speechDict.py:188
 msgid "Replacement"
 msgstr "Zamena"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:6702
+#: gui\settingsDialogs.py:6641
 msgid "Level"
 msgstr "Nivo"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:6705
+#: gui\settingsDialogs.py:6644
 msgid "Preserve"
 msgstr "Zadrži"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:6709
+#: gui\settingsDialogs.py:6648
 msgid "Change selected symbol"
 msgstr "Promeni izabrani simbol"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6727 gui\speechDict.py:52
+#: gui\settingsDialogs.py:6666 gui\speechDict.py:52
 msgid "&Replacement"
 msgstr "&Zamena"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:6736
+#: gui\settingsDialogs.py:6675
 msgid "&Level"
 msgstr "&Nivo"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:6743
+#: gui\settingsDialogs.py:6682
 msgid "&Send actual symbol to synthesizer"
 msgstr "&Pošalji trenutni simbol do sintetizatora"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:6758
+#: gui\settingsDialogs.py:6697
 msgid "Re&move"
 msgstr "&Ukloni"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:6865
+#: gui\settingsDialogs.py:6804
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "Simbol \"%s\" već postoji."
@@ -16984,82 +16983,82 @@ msgid "All"
 msgstr "Sve"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
-#: NVDAHelper\__init__.py:505
+#: NVDAHelper\__init__.py:497
 msgid "Native input"
 msgstr "Prirodni unos dalekoistočnih simbola"
 
 #. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
-#: NVDAHelper\__init__.py:507
+#: NVDAHelper\__init__.py:499
 msgid "Alpha numeric input"
 msgstr "Alfanumerički unos dalekoistočnih simbola"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
-#: NVDAHelper\__init__.py:511
+#: NVDAHelper\__init__.py:503
 msgid "Full shaped mode"
 msgstr "Unos dalekoistočnih simbola u punom formatu"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in half-shaped (single-byte) characters, rather than the larger full-shaped (double-byte) ones.
-#: NVDAHelper\__init__.py:513
+#: NVDAHelper\__init__.py:505
 msgid "Half shaped mode"
 msgstr "Unos dalekoistočnih simbola u sažetom formatu"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
-#: NVDAHelper\__init__.py:519 NVDAHelper\__init__.py:529
+#: NVDAHelper\__init__.py:511 NVDAHelper\__init__.py:521
 msgid "half alphanumeric"
 msgstr "sažeti alfanumerički"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
-#: NVDAHelper\__init__.py:521
+#: NVDAHelper\__init__.py:513
 msgid "half katakana"
 msgstr "sažeti katakana unos"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
-#: NVDAHelper\__init__.py:523 NVDAHelper\__init__.py:533
+#: NVDAHelper\__init__.py:515 NVDAHelper\__init__.py:525
 msgid "alphanumeric"
 msgstr "alfanumerički unos dalekoistočnih simbola"
 
 #. Translators: For Japanese character input: Hiragana input mode.
-#: NVDAHelper\__init__.py:525
+#: NVDAHelper\__init__.py:517
 msgid "hiragana"
 msgstr "hiragana"
 
 #. Translators: For Japanese character input: Katacana input mode.
-#: NVDAHelper\__init__.py:527
+#: NVDAHelper\__init__.py:519
 msgid "katakana"
 msgstr "katakana"
 
 #. Translators: For Japanese character input: half katakana roman input mode.
-#: NVDAHelper\__init__.py:531
+#: NVDAHelper\__init__.py:523
 msgid "half katakana roman"
 msgstr "sažeti katakana rimski način"
 
 #. Translators: For Japanese character input: Hiragana Roman input mode.
-#: NVDAHelper\__init__.py:535
+#: NVDAHelper\__init__.py:527
 msgid "hiragana roman"
 msgstr "hiragana rimski način"
 
 #. Translators: For Japanese character input: Katacana Roman input mode.
-#: NVDAHelper\__init__.py:537
+#: NVDAHelper\__init__.py:529
 msgid "katakana roman"
 msgstr "katakana rimski način"
 
 #. Translators: a message when the IME open status changes to opened
-#: NVDAHelper\__init__.py:579
+#: NVDAHelper\__init__.py:571
 msgid "IME opened"
 msgstr "IME otvoreno"
 
 #. Translators: a message when the IME open status changes to closed
-#: NVDAHelper\__init__.py:582
+#: NVDAHelper\__init__.py:574
 msgid "IME closed"
 msgstr "IME zatvoreno"
 
 #. Translators: the label for an unknown language when switching input methods.
-#: NVDAHelper\__init__.py:619
+#: NVDAHelper\__init__.py:611
 msgid "unknown language"
 msgstr "nepoznat jezik"
 
 #. Translators: The label for an unknown input method when switching input methods.
-#: NVDAHelper\__init__.py:645
+#: NVDAHelper\__init__.py:637
 msgid "unknown input method"
 msgstr "nepoznat način unosa"
 
@@ -20279,141 +20278,141 @@ msgstr "Bezbedna radna površina"
 #. Translators: Message announced when already at left edge of the screen while panning the magnified view
 #. Translators: Message announced when already at left edge of the screen while panning the magnified view
 #. to left edge
-#: _magnifier\commands.py:43 _magnifier\commands.py:64
+#: _magnifier\commands.py:41 _magnifier\commands.py:62
 msgctxt "magnifier"
 msgid "left edge"
-msgstr "leva ivica"
+msgstr ""
 
 #. Translators: Message announced when already at right edge of the screen while panning the magnified view
 #. Translators: Message announced when already at right edge of the screen while panning the magnified view
 #. to right edge
-#: _magnifier\commands.py:48 _magnifier\commands.py:70
+#: _magnifier\commands.py:46 _magnifier\commands.py:68
 msgctxt "magnifier"
 msgid "right edge"
-msgstr "desna ivica"
+msgstr ""
 
 #. Translators: Message announced when already at top edge of the screen while panning the magnified view
 #. Translators: Message announced when already at top edge of the screen while panning the magnified view
 #. to top edge
-#: _magnifier\commands.py:53 _magnifier\commands.py:76
+#: _magnifier\commands.py:51 _magnifier\commands.py:74
 msgctxt "magnifier"
 msgid "top edge"
-msgstr "gornji ugao"
+msgstr ""
 
 #. Translators: Message announced when already at bottom edge of the screen while panning the magnified view
 #. Translators: Message announced when already at left edge of the screen while panning the magnified view
 #. to left edge
-#: _magnifier\commands.py:58 _magnifier\commands.py:82
+#: _magnifier\commands.py:56 _magnifier\commands.py:80
 msgctxt "magnifier"
 msgid "bottom edge"
-msgstr "donji ugao"
+msgstr ""
 
 #. Translators: Message announced when stopping the NVDA magnifier.
-#: _magnifier\commands.py:99
+#: _magnifier\commands.py:97
 msgctxt "magnifier"
 msgid "Exiting magnifier"
 msgstr "Izlaz iz lupe"
 
 #. Translators: Message announced when trying to start magnifier while Screen Curtain is active.
-#: _magnifier\commands.py:108
+#: _magnifier\commands.py:106
 msgctxt "magnifier"
 msgid "Cannot start magnifier: Screen Curtain is active. Please disable Screen Curtain first."
 msgstr "Nemoguće pokrenuti lupu: zatamnjivanje ekrana je omogućeno. Molimo prvo onemogućite zatamnjivanje ekrana."
 
 #. Translators: Message announced when starting the NVDA magnifier.
-#: _magnifier\commands.py:121
+#: _magnifier\commands.py:119
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Starting {magnifiedView} magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode"
 msgstr "Pokretanje {magnifiedView} lupe sa nivoom zumiranja {zoomLevel}, filterom {filter} i režimom celog ekrana {fullscreenMode}"
 
 #. Translators: Message announced when starting the NVDA magnifier.
-#: _magnifier\commands.py:132
+#: _magnifier\commands.py:130
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Starting {magnifiedView} magnifier with {zoomLevel} zoom level and {filter} filter"
 msgstr "Pokretanje {magnifiedView} lupe sa nivoom zumiranja {zoomLevel} i filterom {filter}"
 
 #. Translators: Message announced when changing the color filter with {filter} being the new color filter.
-#: _magnifier\commands.py:196
+#: _magnifier\commands.py:193
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Color filter changed to {filter}"
 msgstr "Filter boja promenjen na {filter}"
 
 #. Translators: Message announced when changing the magnifier view with {view} being the new magnifier view.
-#: _magnifier\commands.py:220
+#: _magnifier\commands.py:217
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Magnifier view changed to {view}"
 msgstr "Prikaz lupe promenjen na {view}"
 
 #. Translators: Message announced when toggling a follow setting with {setting} being the name of the setting and {state} being either "enabled" or "disabled".
-#: _magnifier\commands.py:243
+#: _magnifier\commands.py:240
 #, python-brace-format
 msgctxt "magnifier"
 msgid "{setting} {state}"
 msgstr "{setting} {state}"
 
 #. Translators: State of the follow setting being toggled enabled.
-#: _magnifier\commands.py:249
+#: _magnifier\commands.py:246
 msgctxt "magnifier"
 msgid "enabled"
 msgstr "omogućeno"
 
 #. Translators: State of the follow setting being toggled disabled.
-#: _magnifier\commands.py:255
+#: _magnifier\commands.py:252
 msgctxt "magnifier"
 msgid "disabled"
 msgstr "onemogućeno"
 
 #. Translators: State of all follow settings being toggled disabled.
-#: _magnifier\commands.py:273
+#: _magnifier\commands.py:270
 msgctxt "magnifier"
 msgid "All follow settings disabled"
 msgstr "Sva podešavanja praćenja su onemogućena"
 
 #. Translators: State of all follow settings being restored.
-#: _magnifier\commands.py:279
+#: _magnifier\commands.py:276
 msgctxt "magnifier"
 msgid "All follow settings restored"
 msgstr "Sva podešavanja praćenja su vraćena"
 
 #. Translators: Message announced when changing the full-screen mode with {mode} being the new full-screen mode.
-#: _magnifier\commands.py:307
+#: _magnifier\commands.py:303
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Full-screen mode changed to {mode}"
 msgstr "Režim celog ekrana je promenjen na {mode}"
 
 #. Translators: Message announced when trying to start spotlight mode while it's already active.
-#: _magnifier\commands.py:331
+#: _magnifier\commands.py:327
 msgctxt "magnifier"
 msgid "Spotlight mode is already active"
 msgstr "Režim reflektora je već aktivan"
 
 #. Translators: Message announced when spotlight mode is started.
-#: _magnifier\commands.py:341
+#: _magnifier\commands.py:337
 msgctxt "magnifier"
 msgid "Spotlight mode started"
 msgstr "Režim reflektora pokrenut"
 
 #. Translators: Message announced when the magnifier is not active.
-#: _magnifier\commands.py:365
+#: _magnifier\commands.py:361
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not active."
 msgstr "Nemoguće izvršiti radnju {action} kada lupa nije aktivna."
 
 #. Translators: Message announced when the magnifier is not full-screen.
-#: _magnifier\commands.py:390
+#: _magnifier\commands.py:386
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not full-screen."
 msgstr "Nemoguće izvršiti radnju {action} kada lupa nije preko celog ekrana."
 
 #. Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
-#: _magnifier\config.py:49
+#: _magnifier\config.py:45
 #, python-brace-format
 msgctxt "magnifier"
 msgid "{zoomLevel}x"
@@ -20432,19 +20431,19 @@ msgid "Magnifier stopped due to an error. Please restart it."
 msgstr "Lupa je zaustavljena zbog greške. Molimo ponovo je pokrenite."
 
 #. Translators: Message when trying to enable magnifier while screen curtain is active
-#: _magnifier\magnifier.py:181
+#: _magnifier\magnifier.py:173
 msgctxt "magnifier"
 msgid "Cannot enable magnifier: screen curtain is active. Please disable screen curtain first."
 msgstr "Nemoguće omogućiti lupu: zatamnjivanje ekrana je omogućeno. Molimo prvo onemogućite zatamnjivanje ekrana."
 
 #. Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
-#: _magnifier\magnifier.py:272
+#: _magnifier\magnifier.py:264
 msgctxt "magnifier"
 msgid "Magnifier is active, disabling it before enabling screen curtain"
 msgstr "Lupa je aktivna, biće onemogućena pre nego što se omogući zatamnjivanje ekrana"
 
 #. Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
-#: _magnifier\magnifier.py:290
+#: _magnifier\magnifier.py:282
 msgctxt "magnifier"
 msgid "Magnifier was active before screen curtain, re-enabling it"
 msgstr "Lupa je bila aktivna pre zatamnjivanja ekrana, biće ponovo omogućena"

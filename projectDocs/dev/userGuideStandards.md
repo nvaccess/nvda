@@ -29,14 +29,14 @@ If necessary, a description of a common use case that is supported by each optio
 
 | . {.hideHeaderRow} |.|
 | --- | --- |
-| Options | Default (Enabled), Disabled, Enabled |
-| Default | Enabled |
-| Toggle command | `NVDA+shift+e` |
+|Options |Default (Enabled), Disabled, Enabled |
+|Default |Enabled |
+|Toggle command |`NVDA+shift+e` |
 
-| Option | Behaviour |
+|Option |Behaviour |
 | --- | --- |
-| Enabled | behaviour of enabled |
-| Disabled | behaviour of disabled |
+|Enabled |behaviour of enabled |
+|Disabled |behaviour of disabled |
 ```
 
 ## Generation of Key Commands
