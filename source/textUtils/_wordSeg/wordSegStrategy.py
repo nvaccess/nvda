@@ -45,11 +45,6 @@ _CPPJIEBA_CALL_EXCEPTIONS = (
 	TypeError,
 	ValueError,
 )
-_CPPJIEBA_READ_EXCEPTIONS = (
-	IndexError,
-	TypeError,
-	ValueError,
-)
 
 
 def iterInitializers() -> Iterator[_InitializerEntry]:
@@ -130,9 +125,6 @@ def _callCppJiebaLib(lib: CDLL, textUtf8: bytes) -> list[int]:
 
 	try:
 		return [charPtr[i] for i in range(outLen.value)]
-	except _CPPJIEBA_READ_EXCEPTIONS:
-		log.exception("Failed to read cppjieba offsets")
-		return []
 	finally:
 		_freeCppJiebaOffsets(lib, charPtr)
 
@@ -197,8 +189,8 @@ class UniscribeWordSegmentationStrategy(WordSegmentationStrategy):
 		Calculates the bounds of a unit at an offset within a given string of text
 		using the Windows uniscribe  library, also used in Notepad, for example.
 		Units supported are character and word.
-		@param lineText: the text string to analyze
-		@param relOffset: the character offset within the text string at which to calculate the bounds.
+		:param lineText: the text string to analyze
+		:param relOffset: the character offset within the text string at which to calculate the bounds.
 		"""
 
 		helperFunc = NVDAHelper.localLib.calculateWordOffsets
