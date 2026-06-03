@@ -3585,14 +3585,14 @@ When a Chinese braille output table is in use, NVDA can insert spaces between Ch
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Default (Auto), Auto, Standard, Chinese|
-|Default |Auto|
+| Options | Default (Auto), Auto, Standard, Chinese |
+| Default | Auto |
 
-|Option |Behaviour |
+| Option | Behaviour |
 |---|---|
-|Auto |Use Chinese word segmentation for Chinese text when available. For other text, use standard word segmentation. |
-|Standard |Use standard Windows word segmentation. |
-|Chinese |Use Chinese word segmentation. If Chinese word segmentation is not available, NVDA falls back to standard word segmentation. |
+| Auto | Use Chinese word segmentation for Chinese text when available. For other text, use standard word segmentation. |
+| Standard | Use standard Windows word segmentation. |
+| Chinese | Use Chinese word segmentation. If Chinese word segmentation is not available, NVDA falls back to standard word segmentation. |
 
 #### Math Settings {#MathSettings}
 
