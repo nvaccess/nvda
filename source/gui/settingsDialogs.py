@@ -6058,7 +6058,6 @@ class MagnifierPanel(SettingsPanel):
 		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterCheckBox.GetValue()
 		for focusType, checkBox in self._followFocusCheckBoxes.items():
 			magnifierConfig.setFollowState(focusType, checkBox.GetValue())
-		config.conf["magnifier"]["keepMouseCentered"] = self.keepMouseCenteredCheckBox.GetValue()
 
 		magnifier = getMagnifier()
 		if magnifier:
@@ -6265,8 +6264,7 @@ class MagnifierPanel(SettingsPanel):
 		selectedPanStep = self.panSpinCtrl.GetValue()
 		selectedFilter = list(Filter)[self.filterList.GetSelection()]
 		selectedMode = list(FullScreenMode)[self.fullscreenModeList.GetSelection()]
-		isTrueCentered = self.trueCenterTrackingCheckBox.GetValue()
-		keepMouseCentered = self.keepMouseCenteredCheckBox.GetValue()
+		isTrueCentered = self.trueCenterCheckBox.GetValue()
 
 		roundedZoom = magnifierConfig.roundZoomLevel(selectedZoom)
 		self._zoomInitially = roundedZoom
@@ -6277,7 +6275,6 @@ class MagnifierPanel(SettingsPanel):
 		for focusType, checkBox in self._followFocusCheckBoxes.items():
 			shouldFollow = checkBox.GetValue()
 			self._followFocusInitially[focusType] = shouldFollow
-		self._keepMouseCenteredInitially = keepMouseCentered
 
 	def onDiscard(self):
 		"""Restore magnifier state from original settings from config."""
@@ -6288,7 +6285,6 @@ class MagnifierPanel(SettingsPanel):
 		config.conf["magnifier"]["isTrueCentered"] = self._trueCenterTrackingInitially
 		for focusType, state in self._followFocusInitially.items():
 			magnifierConfig.setFollowState(focusType, state)
-		config.conf["magnifier"]["keepMouseCentered"] = self._keepMouseCenteredInitially
 
 		magnifier = getMagnifier()
 		if magnifier:

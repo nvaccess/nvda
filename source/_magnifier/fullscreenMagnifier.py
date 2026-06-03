@@ -12,7 +12,6 @@ from typing import override
 from logHandler import log
 import speech
 import ui
-import winUser
 from winBindings import magnification
 from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
@@ -253,34 +252,6 @@ class FullScreenMagnifier(Magnifier):
 				return self._borderPos(coordinates)
 			case FullScreenMode.CENTER:
 				return coordinates
-
-	@override
-	def _keepMouseCentered(self) -> None:
-		"""
-		Move the mouse to the center of the magnified view.
-		Skips if a mouse button is currently pressed to avoid interfering with clicks.
-		"""
-		if (
-			winUser.getAsyncKeyState(winUser.VK_LBUTTON) < 0
-			or winUser.getAsyncKeyState(winUser.VK_RBUTTON) < 0
-			or winUser.getAsyncKeyState(winUser.VK_MBUTTON) < 0
-		):
-			log.debug("Mouse button pressed, skipping cursor repositioning to avoid interfering with click")
-			return
-		coordinates = self._getCoordinatesForMode(self.currentCoordinates)
-		params = self._getMagnifierParameters(coordinates)
-		centerX = params.coordinates.x + params.magnifierSize.width // 2
-		centerY = params.coordinates.y + params.magnifierSize.height // 2
-		winUser.setCursorPos(centerX, centerY)
-
-	@trackNativeMagnifierErrors
-	def _setCursorToCenter(self, x: int, y: int) -> None:
-		"""
-		Set cursor to the specified position.
-		If this fails, it is logged but execution continues.
-		"""
-		winUser.setCursorPos(x, y)
-		log.debug(f"Cursor repositioned to center ({x}, {y})")
 
 	def _borderPos(
 		self,
