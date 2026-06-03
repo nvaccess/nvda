@@ -538,6 +538,17 @@ def isWindow(hwnd):
 	return _user32.IsWindow(hwnd)
 
 
+def isHungAppWindow(hwnd: HWNDVal) -> bool:
+	"""Whether the system considers the given window's application to be not responding.
+
+	See `winBindings.user32.IsHungAppWindow`. This is a read-only query against the
+	window manager's input-processing state; it does not pump messages or enter the
+	target process, so it is safe to call from any thread (including the UIA event
+	delivery thread).
+	"""
+	return bool(_user32.IsHungAppWindow(hwnd))
+
+
 def isDescendantWindow(parentHwnd, childHwnd):
 	if (parentHwnd == childHwnd) or _user32.IsChild(parentHwnd, childHwnd):
 		return True

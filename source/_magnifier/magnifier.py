@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -8,13 +8,14 @@ Magnifier module.
 Implements the magnifier global class and its basic functionalities.
 """
 
-from typing import Callable
+from collections.abc import Callable
 from comtypes import COMError
 from logHandler import log
 import wx
 import ui
 import speech
 import screenCurtain
+import mouseHandler
 import winUser
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
@@ -30,9 +31,9 @@ from .config import (
 	getZoomLevel,
 	getPanStep,
 	getFilter,
-	ZoomLevel,
 	isTrueCentered,
-	shouldKeepMouseCentered,
+	setZoomLevel,
+	ZoomLevel,
 )
 from .utils.focusManager import FocusManager
 
@@ -70,24 +71,30 @@ class Magnifier:
 		self._filterType = value
 
 	@property
+	def zoomLevelRatio(self) -> float:
+		"""Get the zoom level as a float (e.g., 2.0 for 200% zoom)"""
+		return self._zoomLevel / 100.0
+
+	@property
 	def zoomLevel(self) -> float:
+		"""Get the zoom level as a percentage (e.g., 200 for 200% zoom)"""
 		return self._zoomLevel
 
 	@zoomLevel.setter
-	def zoomLevel(self, value: float) -> None:
+	def zoomLevel(self, value: int) -> None:
 		"""
 		Set zoom level, ensuring it's a valid value in the zoom range.
 
 		:param value: The zoom level to set
 		:raises ValueError: If the value is not in the valid zoom range
 		"""
-		validZoomValues = ZoomLevel.zoom_range()
-		if value not in validZoomValues:
-			# Find the closest valid zoom value
-			closestZoom = min(validZoomValues, key=lambda x: abs(x - value))
-			log.warning(f"Invalid zoom level {value}, using closest valid value {closestZoom}")
-			value = closestZoom
-		self._zoomLevel = value
+		if not isinstance(value, int):
+			raise ValueError("Zoom level must be an integer percentage")
+		if not (ZoomLevel.MIN_ZOOM <= value <= ZoomLevel.MAX_ZOOM):
+			raise ValueError(f"Zoom level must be between {ZoomLevel.MIN_ZOOM} and {ZoomLevel.MAX_ZOOM}")
+		if value % ZoomLevel.STEP_FACTOR != 0:
+			raise ValueError(f"Zoom level must be a multiple of {ZoomLevel.STEP_FACTOR}")
+		self._zoomLevel = float(value)
 
 	@property
 	def currentCoordinates(self) -> Coordinates:
@@ -119,8 +126,8 @@ class Magnifier:
 			return (0, 0, self._displayOrientation.width, self._displayOrientation.height)
 		else:
 			# In normal mode: calculate limits to keep view within screen
-			visibleWidth = self._displayOrientation.width / self.zoomLevel
-			visibleHeight = self._displayOrientation.height / self.zoomLevel
+			visibleWidth = self._displayOrientation.width / self.zoomLevelRatio
+			visibleHeight = self._displayOrientation.height / self.zoomLevelRatio
 			minX = int(visibleWidth / 2)
 			minY = int(visibleHeight / 2)
 			maxX = int(self._displayOrientation.width - (visibleWidth / 2))
@@ -148,6 +155,7 @@ class Magnifier:
 
 		:param value: The zoom level to set (can be any intermediate value)
 		"""
+		value = max(ZoomLevel.MIN_ZOOM, min(value, ZoomLevel.MAX_ZOOM))
 		self._zoomLevel = value
 
 	def _onDisplayChanged(self, orientationState: OrientationState) -> None:
@@ -191,8 +199,6 @@ class Magnifier:
 			self._managePanning()
 			if not self._isManualPanning:
 				self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
-			if shouldKeepMouseCentered():
-				self._keepMouseCentered()
 			self._doUpdate()
 			self._consecutiveErrors = 0
 			self._recoveryAttempts = 0
@@ -293,13 +299,14 @@ class Magnifier:
 		:param direction: Direction.IN to zoom in, Direction.OUT to zoom out
 		"""
 		if direction == Direction.IN:
-			newZoom = self.zoomLevel + ZoomLevel.STEP_FACTOR
+			newZoom = int(self.zoomLevel + ZoomLevel.STEP_FACTOR)
 			if newZoom <= ZoomLevel.MAX_ZOOM:
 				self.zoomLevel = newZoom
 		elif direction == Direction.OUT:
-			newZoom = self.zoomLevel - ZoomLevel.STEP_FACTOR
+			newZoom = int(self.zoomLevel - ZoomLevel.STEP_FACTOR)
 			if newZoom >= ZoomLevel.MIN_ZOOM:
 				self.zoomLevel = newZoom
+		setZoomLevel(int(self.zoomLevel))
 
 	def _pan(self, action: MagnifierAction) -> bool:
 		"""
@@ -313,7 +320,7 @@ class Magnifier:
 
 		minX, minY, maxX, maxY = self._getScreenLimits()
 
-		panPixels = int((self._displayOrientation.width / self.zoomLevel) * self._panStep / 100)
+		panPixels = int((self._displayOrientation.width / self.zoomLevelRatio) * self._panStep / 100)
 
 		match action:
 			case MagnifierAction.PAN_LEFT:
@@ -351,13 +358,24 @@ class Magnifier:
 				self._isManualPanning = False
 		self._lastFocusCoordinates = focusCoordinates
 
-	def _keepMouseCentered(self) -> None:
+	def moveMouseToViewCenter(self) -> None:
 		"""
 		Move the mouse cursor to the center of the magnified view.
-		Subclasses may override this to adapt the behavior for specific modes.
+		Does not check for mouse button state, allowing use during drag-and-drop.
 		"""
-		centerX, centerY = self.currentCoordinates
-		winUser.setCursorPos(centerX, centerY)
+		center = self._computeMagnifiedViewCenter()
+		winUser.setCursorPos(center.x, center.y)
+		log.debug(f"Cursor manually repositioned to magnified view center ({center.x}, {center.y})")
+		mouseHandler.executeMouseMoveEvent(center.x, center.y)
+
+	def _computeMagnifiedViewCenter(self) -> Coordinates:
+		"""
+		Compute the coordinates of the center of the currently magnified view.
+		Subclasses must implement this method for their specific display mode.
+
+		:return: The (x, y) coordinates of the center of the magnified view
+		"""
+		raise NotImplementedError("Subclasses must implement this method")
 
 	def _startTimer(self, callback: Callable[[], None] = None) -> None:
 		"""

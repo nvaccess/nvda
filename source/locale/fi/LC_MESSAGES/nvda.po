@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-15 08:54+0000\n"
-"PO-Revision-Date: 2026-05-18 02:50\n"
+"POT-Creation-Date: 2026-05-29 05:49+0000\n"
+"PO-Revision-Date: 2026-06-01 03:33\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -1873,7 +1873,7 @@ msgstr "viitteet"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1439 gui\settingsDialogs.py:3410
+#: browseMode.py:1439 gui\settingsDialogs.py:3411
 msgid "Lin&ks"
 msgstr "Lin&kit"
 
@@ -1881,7 +1881,7 @@ msgstr "Lin&kit"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1442 gui\settingsDialogs.py:3405
+#: browseMode.py:1442 gui\settingsDialogs.py:3406
 msgid "&Headings"
 msgstr "&Otsikot"
 
@@ -2381,10 +2381,10 @@ msgstr "Lisäosille ei voitu suorittaa kaikkia toimintoja. Katso lisätietoja lo
 #: gui\configProfiles.py:293 gui\configProfiles.py:337
 #: gui\configProfiles.py:515 gui\configProfiles.py:530
 #: gui\configProfiles.py:541 gui\inputGestures.py:808 gui\inputGestures.py:822
-#: gui\installerGui.py:113 gui\installerGui.py:204 gui\installerGui.py:695
-#: gui\installerGui.py:712 gui\installerGui.py:784 gui\logViewer.py:112
-#: gui\logViewer.py:143 gui\message.py:160 gui\settingsDialogs.py:1043
-#: gui\settingsDialogs.py:6007 gui\settingsDialogs.py:6806
+#: gui\installerGui.py:126 gui\installerGui.py:210 gui\installerGui.py:701
+#: gui\installerGui.py:718 gui\installerGui.py:790 gui\logViewer.py:112
+#: gui\logViewer.py:143 gui\message.py:160 gui\settingsDialogs.py:1044
+#: gui\settingsDialogs.py:6008 gui\settingsDialogs.py:6867
 #: gui\startupDialogs.py:127 _remoteClient\dialogs.py:67
 #: _remoteClient\dialogs.py:306 _remoteClient\dialogs.py:430
 msgid "Error"
@@ -2394,7 +2394,7 @@ msgstr "Virhe"
 #: core.py:147
 #, python-brace-format
 msgid "The following command line parameters are unknown to NVDA: {params}"
-msgstr "Seuraavat NVDA:n komentoriviparametrit ovat tuntemattomia: {params}"
+msgstr "NVDA ei tunnista seuraavia komentoriviparametreja: {params}"
 
 #. Translators: Title of the dialog letting user know
 #. that command line parameters they provided are unknown.
@@ -2406,8 +2406,8 @@ msgstr "Tuntemattomia komentoriviparametreja"
 #: core.py:161
 msgid "Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
 "More details about the errors can be found in the log file."
-msgstr "Asetustiedostossa on virheitä. Asetuksesi on palautettu oletusarvoihin.\n"
-"Lisätietoja virheistä löytyy lokitiedostosta."
+msgstr "Asetustiedostossa on virheitä. Oletusasetukset on palautettu.\n"
+"Lisätietoja löytyy lokitiedostosta."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 #: core.py:166
@@ -2622,7 +2622,7 @@ msgstr "järjestelmäkohdistin"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the mouse settings panel.
-#: globalCommands.py:89 gui\settingsDialogs.py:2170
+#: globalCommands.py:89 gui\settingsDialogs.py:2171
 msgid "Mouse"
 msgstr "Hiiri"
 
@@ -2631,8 +2631,8 @@ msgstr "Hiiri"
 #. Translators: This is the label for the speech panel
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: globalCommands.py:92 config\configFlags.py:314 gui\settingsDialogs.py:1145
-#: gui\settingsDialogs.py:4513
+#: globalCommands.py:92 config\configFlags.py:314 gui\settingsDialogs.py:1146
+#: gui\settingsDialogs.py:4514
 msgid "Speech"
 msgstr "Puhe"
 
@@ -2651,14 +2651,14 @@ msgstr "Asetusprofiilit"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 #. Translators: This is the label for the braille panel
-#: globalCommands.py:101 config\configFlags.py:316 gui\settingsDialogs.py:4419
-#: gui\settingsDialogs.py:4938
+#: globalCommands.py:101 config\configFlags.py:316 gui\settingsDialogs.py:4420
+#: gui\settingsDialogs.py:4939
 msgid "Braille"
 msgstr "Pistekirjoitus"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the vision panel
-#: globalCommands.py:104 gui\settingsDialogs.py:5775
+#: globalCommands.py:104 gui\settingsDialogs.py:5776
 msgid "Vision"
 msgstr "Näkö"
 
@@ -2696,13 +2696,13 @@ msgstr "Asiakirjojen muotoilu"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the audio settings panel.
-#: globalCommands.py:125 gui\settingsDialogs.py:3575
+#: globalCommands.py:125 gui\settingsDialogs.py:3576
 msgid "Audio"
 msgstr "Ääni"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the Remote Access settings category in NVDA's Settings screen.
-#: globalCommands.py:128 gui\settingsDialogs.py:3853
+#: globalCommands.py:128 gui\settingsDialogs.py:3854
 msgctxt "remote"
 msgid "Remote Access"
 msgstr "Etäkäyttö"
@@ -5114,7 +5114,7 @@ msgstr "Vaihtaa kappalenavigointityylin asetusta."
 #. Translators: Describes a command.
 #: globalCommands.py:5317
 msgid "Cycles through sound split modes"
-msgstr "Vaihtaa äänijaon tilaa."
+msgstr "Vaihtaa äänen jakotilaa."
 
 #. Translators: Input help mode message for report language for caret command.
 #: globalCommands.py:5329
@@ -5719,7 +5719,7 @@ msgstr "käytössä"
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 #: keyboardHandler.py:749 synthSettingsRing.py:117 controlTypes\state.py:231
-#: gui\settingsDialogs.py:2405 gui\speechDict.py:195
+#: gui\settingsDialogs.py:2406 gui\speechDict.py:195
 msgid "off"
 msgstr "ei käytössä"
 
@@ -7134,18 +7134,18 @@ msgstr "Nopeus"
 #. which further increases the speaking rate when enabled.
 #: synthDriverHandler.py:172
 msgid "Rate boos&t"
-msgstr "No&peuden lisäys"
+msgstr "No&peuden tehostus"
 
 #. Translators: Label for a setting in synth settings ring.
 #: synthDriverHandler.py:174
 msgctxt "synth setting"
 msgid "Rate boost"
-msgstr "Nopeuden lisäys"
+msgstr "Nopeuden tehostus"
 
 #. Translators: Label for a setting in voice settings dialog.
 #: synthDriverHandler.py:184
 msgid "V&olume"
-msgstr "&Voimakkuus"
+msgstr "V&oimakkuus"
 
 #. Translators: Label for a setting in synth settings ring.
 #: synthDriverHandler.py:189
@@ -7167,13 +7167,13 @@ msgstr "Korkeus"
 #. Translators: Label for a setting in voice settings dialog.
 #: synthDriverHandler.py:211
 msgid "&Inflection"
-msgstr "&Sävy"
+msgstr "Äänenkorkeuden va&ihtelu"
 
 #. Translators: Label for a setting in synth settings ring.
 #: synthDriverHandler.py:215
 msgctxt "synth setting"
 msgid "Inflection"
-msgstr "Sävy"
+msgstr "Äänenkorkeuden vaihtelu"
 
 #. Translators: Label for a setting in voice settings dialog.
 #. "WASAPI" is an acronym for an audio output framework, and should be translated as-is.
@@ -7205,25 +7205,25 @@ msgstr "selaustila"
 #: touchHandler.py:218
 #, python-brace-format
 msgid "single {action}"
-msgstr "{action} kerran"
+msgstr "{action}"
 
 #. Translators: a touch screen action performed twice
 #: touchHandler.py:220
 #, python-brace-format
 msgid "double {action}"
-msgstr "{action} kahdesti"
+msgstr "kaksois{action}"
 
 #. Translators: a touch screen action performed 3 times
 #: touchHandler.py:222
 #, python-brace-format
 msgid "triple {action}"
-msgstr "{action} kolmesti"
+msgstr "kolmois{action}"
 
 #. Translators: a touch screen action performed 4 times
 #: touchHandler.py:224
 #, python-brace-format
 msgid "quadruple {action}"
-msgstr "{action} neljästi"
+msgstr "nelois{action}"
 
 #. Translators: a touch screen action using multiple fingers
 #: touchHandler.py:284
@@ -7237,13 +7237,13 @@ msgstr[1] "{action} {numFingers} sormella"
 #: touchTracker.py:40
 msgctxt "touch action"
 msgid "pinch in"
-msgstr "loitonnus nipistämällä"
+msgstr "nipistys sisäänpäin"
 
 #. Translators: a touch screen gesture where two fingers move away from each other (zoom in)
 #: touchTracker.py:42
 msgctxt "touch action"
 msgid "pinch out"
-msgstr "lähennys nipistämällä"
+msgstr "nipistys ulospäin"
 
 #. Translators: a very quick touch and release of a finger on a touch screen
 #: touchTracker.py:44
@@ -7291,25 +7291,25 @@ msgstr "pyyhkäisy oikealle"
 #: touchTracker.py:58
 msgctxt "touch action"
 msgid "hover down"
-msgstr "pitkä painallus ja pyyhkäisy alas"
+msgstr "liu'utus alas"
 
 #. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
 #: touchTracker.py:60
 msgctxt "touch action"
 msgid "hover"
-msgstr "pitkä painallus"
+msgstr "liu'utus"
 
 #. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
 #: touchTracker.py:62
 msgctxt "touch action"
 msgid "hover up"
-msgstr "pitkä painallus ja pyyhkäisy ylös"
+msgstr "liu'utus ylös"
 
 #. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
 #. when Windows is on a secure screen (sign-on screen / UAC prompt).
 #: ui.py:76
 msgid "This feature is unavailable while on secure screens such as the sign-on screen or UAC prompt."
-msgstr "Tämä ominaisuus ei ole käytettävissä suojatuissa ruuduissa, kuten sisäänkirjautumisikkuna tai käyttäjätilien valvonnan kehote."
+msgstr "Tämä toiminto ei ole käytettävissä suojatuissa ruuduissa, kuten sisäänkirjautumisikkunassa tai käyttäjätilien valvonnan kehotteessa."
 
 #. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
 #. when Windows is on a secure screen (sign-on screen / UAC prompt). This prompt includes the title
@@ -7319,12 +7319,12 @@ msgstr "Tämä ominaisuus ei ole käytettävissä suojatuissa ruuduissa, kuten s
 #: ui.py:85
 #, python-brace-format
 msgid "This feature ({title}) is unavailable while on secure screens such as the sign-on screen or UAC prompt."
-msgstr "Tämä ominaisuus ({title}) ei ole käytettävissä suojatuissa ruuduissa, kuten sisäänkirjautumisikkuna tai käyttäjätilien valvonnan kehote."
+msgstr "Tämä toiminto ({title}) ei ole käytettävissä suojatuissa ruuduissa, kuten sisäänkirjautumisikkunassa tai käyttäjätilien valvonnan kehotteessa."
 
 #. Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message.
 #: ui.py:97 ui.py:138
 msgid "Feature unavailable."
-msgstr "Ominaisuus ei käytettävissä"
+msgstr "Toiminto ei käytettävissä"
 
 #. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
 #. because of a component failure.
@@ -7403,12 +7403,12 @@ msgstr "Kopioitu: {text}"
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 #: updateCheck.py:406
 msgid "Checking for Update"
-msgstr "Tarkistetaan päivitystä"
+msgstr "Päivitystarkistus"
 
 #. Translators: The progress message displayed while manually checking for an NVDA update.
 #: updateCheck.py:408
 msgid "Checking for update"
-msgstr "Tarkistetaan päivitystä"
+msgstr "Tarkistetaan päivitystä..."
 
 #. Translators: A suggestion of what to do when checking for NVDA updates fails and an update mirror is being used.
 #. {url} will be replaced with the mirror URL.
@@ -7417,7 +7417,7 @@ msgstr "Tarkistetaan päivitystä"
 msgctxt "updateCheck"
 msgid "Make sure you are connected to the internet, and the NVDA update mirror URL is valid.\n"
 "Mirror URL: {url}"
-msgstr "Varmista, että internet-yhteys on käytettävissä ja että NVDA:n päivityspeilipalvelimen URL-osoite on oikein.\n"
+msgstr "Varmista, että internet-yhteys on käytettävissä ja että NVDA:n päivityspeilin URL-osoite on oikein.\n"
 "Peilipalvelimen URL-osoite: {url}"
 
 #. Translators: Presented when fetching add-on data from the store fails and the default metadata URL is being used.
@@ -7440,12 +7440,12 @@ msgstr "Virhe päivitystä tarkistettaessa.\n"
 #. Translators: The title of the dialog asking the user to apply an NVDA update.
 #: updateCheck.py:501 updateCheck.py:641
 msgid "NVDA Update"
-msgstr "NVDA:n päivitys"
+msgstr "NVDA-päivitys"
 
 #. Translators: A message indicating that no update to NVDA is available.
 #: updateCheck.py:517
 msgid "No update available."
-msgstr "Päivitystä ei saatavilla."
+msgstr "Päivitystä ei ole saatavilla."
 
 #. Translators: A message indicating that an update to NVDA has been downloaded and is ready to be
 #. applied.
@@ -7456,7 +7456,7 @@ msgstr "NVDA {version} -päivitys on ladattu ja valmis asennettavaksi."
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
-#: updateCheck.py:547 updateCheck.py:669 gui\installerGui.py:360
+#: updateCheck.py:547 updateCheck.py:669 gui\installerGui.py:366
 msgid "&Review add-ons..."
 msgstr "T&arkastele lisäosia..."
 
@@ -7465,7 +7465,7 @@ msgstr "T&arkastele lisäosia..."
 #: updateCheck.py:553
 #, python-brace-format
 msgid "&Update to NVDA {version}"
-msgstr "&Päivitä NVDA versioon {version}"
+msgstr "&Päivitä NVDA-versioon {version}"
 
 #. Translators: The label of a button to re-download a pending NVDA update.
 #: updateCheck.py:563
@@ -7477,7 +7477,7 @@ msgstr "&Lataa päivitys uudelleen"
 #: updateCheck.py:568
 #, python-brace-format
 msgid "NVDA version {version} is available."
-msgstr "Versio {version} on saatavilla."
+msgstr "NVDA-versio {version} on saatavilla."
 
 #. Translators: The label of a button to download an NVDA update.
 #: updateCheck.py:572
@@ -7509,17 +7509,17 @@ msgstr "&Päivitä nyt"
 #. Translators: The label of a button to postpone an NVDA update.
 #: updateCheck.py:685
 msgid "&Postpone update"
-msgstr "&Lykkää päivitystä"
+msgstr "Siirrä &myöhemmäksi"
 
 #. Translators: The message when a downloaded update file could not be preserved.
 #: updateCheck.py:751
 msgid "Unable to postpone update."
-msgstr "Päivitystä ei voi lykätä."
+msgstr "Päivitystä ei voi siirtää myöhemmäksi."
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 #: updateCheck.py:810
 msgid "Downloading Update"
-msgstr "Ladataan päivitystä"
+msgstr "Päivitystä ladataan"
 
 #. Translators: The progress message indicating that a connection is being established.
 #: updateCheck.py:812
@@ -7534,7 +7534,7 @@ msgstr "Ladataan"
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 #: updateCheck.py:924
 msgid "Error downloading update."
-msgstr "Virhe ladattaessa päivitystä."
+msgstr "Virhe päivitystä ladattaessa."
 
 #. Translators: The message requesting donations from users.
 #: updateCheck.py:947
@@ -7543,16 +7543,16 @@ msgid "We need your help in order to continue to improve NVDA.\n"
 "If even $10 is donated for every download, we will be able to cover all of the ongoing costs of the project.\n"
 "All donations are received by NV Access, the non-profit organisation which develops NVDA.\n"
 "Thank you for your support."
-msgstr "Tarvitsemme apuasi voidaksemme jatkaa NVDA:n kehitystä.\n"
+msgstr "Tarvitsemme apuasi voidaksemme jatkaa NVDA:n kehittämistä.\n"
 "Tätä projektia rahoitetaan pääasiassa lahjoituksilla ja apurahoilla. Lahjoittamalla autat rahoittamaan kokopäiväistä kehitystä.\n"
-"Jos kutakin latausta kohti lahjoitettaisiin n. 6 euroa, kykenisimme kattamaan kaikki projektin kustannukset.\n"
+"Jos jokaisesta latauksesta lahjoitettaisiin vähintään 10 Australian dollaria, kykenisimme kattamaan kaikki projektin kustannukset.\n"
 "Lahjoitukset ottaa vastaan NV Access, NVDA:ta kehittävä voittoa tavoittelematon organisaatio.\n"
 "Kiitos tuestasi."
 
 #. Translators: The title of the dialog requesting donations from users.
 #: updateCheck.py:956
 msgid "Please Donate"
-msgstr "Ole hyvä ja lahjoita"
+msgstr "Tue toimintaamme"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
@@ -7575,7 +7575,7 @@ msgstr "V&almis"
 
 #. Translators: Message shown to users when attempting to update NVDA
 #. on a computer which is being remotely controlled via NVDA Remote Access
-#: updateCheck.py:1015 gui\installerGui.py:579
+#: updateCheck.py:1015 gui\installerGui.py:585
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
 msgstr "NVDA:n päivittäminen ei ole suositeltavaa NVDA-etäkäytön kautta hallittavassa koneessa. "
 
@@ -7595,8 +7595,8 @@ msgstr "Aktiivinen yhteys ei välttämättä palaudu päivityksen aikana tai sen
 #. Translators: The title of a dialog.
 #. Translators: Title of warning dialog
 #: updateCheck.py:1026 gui\_SetURLDialog.py:113 gui\configProfiles.py:500
-#: gui\installerGui.py:438 gui\installerGui.py:596 gui\settingsDialogs.py:1963
-#: gui\settingsDialogs.py:6263 screenCurtain\_screenCurtain.py:70
+#: gui\installerGui.py:444 gui\installerGui.py:602 gui\settingsDialogs.py:1964
+#: gui\settingsDialogs.py:6324 screenCurtain\_screenCurtain.py:70
 #: _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "Varoitus"
@@ -7965,7 +7965,7 @@ msgstr "Saatavilla olevat lisäosat"
 #: addonStore\models\status.py:184
 msgctxt "addonStore"
 msgid "Installed incompatible add-ons"
-msgstr "Asennetut yhteensopimattomat lisäosat"
+msgstr "Yhteensopimattomat lisäosat"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
@@ -7973,7 +7973,7 @@ msgstr "Asennetut yhteensopimattomat lisäosat"
 #: addonStore\models\status.py:193
 msgctxt "addonStore"
 msgid "Installed &add-ons"
-msgstr "Ase&nnetut lisäosat"
+msgstr "Asennetut l&isäosat"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
@@ -7981,7 +7981,7 @@ msgstr "Ase&nnetut lisäosat"
 #: addonStore\models\status.py:197
 msgctxt "addonStore"
 msgid "Updatable &add-ons"
-msgstr "&Päivitettävät lisäosat"
+msgstr "Päivitettävät l&isäosat"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
@@ -7989,7 +7989,7 @@ msgstr "&Päivitettävät lisäosat"
 #: addonStore\models\status.py:201
 msgctxt "addonStore"
 msgid "Available &add-ons"
-msgstr "Saatav&illa olevat lisäosat"
+msgstr "Saatavilla olevat l&isäosat"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
@@ -7997,7 +7997,7 @@ msgstr "Saatav&illa olevat lisäosat"
 #: addonStore\models\status.py:205
 msgctxt "addonStore"
 msgid "Installed incompatible &add-ons"
-msgstr "Asennetut &yhteensopimattomat lisäosat"
+msgstr "Yhteensopimattomat l&isäosat"
 
 #. Translators: The reason an add-on is not compatible.
 #. A more recent version of NVDA is required for the add-on to work.
@@ -8939,7 +8939,7 @@ msgstr "Muutosten jäljittäminen pois"
 #. Translators: a message when collapsing or expanding headings in MS Word
 #: appModules\winword.py:151
 msgid "No heading selected"
-msgstr "Otsikkoa ei valittu"
+msgstr "Otsikkoa ei ole valittuna"
 
 #. Translators: a message when collapsing a heading in MS Word
 #: appModules\winword.py:159
@@ -8961,43 +8961,43 @@ msgstr "Ei käytössä"
 #: audio\soundSplit.py:43
 msgctxt "SoundSplit"
 msgid "NVDA in both channels and applications in both channels"
-msgstr "NVDA ja sovellukset molemmissa kanavissa"
+msgstr "NVDA ja muut sovellukset molemmissa kanavissa"
 
 #. Translators: Sound split state
 #: audio\soundSplit.py:46
 msgid "NVDA on the left and applications on the right"
-msgstr "NVDA vasemmalla ja sovellukset oikealla"
+msgstr "NVDA vasemmalla ja muut sovellukset oikealla"
 
 #. Translators: Sound split state
 #: audio\soundSplit.py:48
 msgid "NVDA on the left and applications in both channels"
-msgstr "NVDA vasemmalla ja sovellukset molemmissa kanavissa"
+msgstr "NVDA vasemmalla ja muut sovellukset molemmissa kanavissa"
 
 #. Translators: Sound split state
 #: audio\soundSplit.py:50
 msgid "NVDA on the right and applications on the left"
-msgstr "NVDA oikealla ja sovellukset vasemmalla"
+msgstr "NVDA oikealla ja muut sovellukset vasemmalla"
 
 #. Translators: Sound split state
 #: audio\soundSplit.py:52
 msgid "NVDA on the right and applications in both channels"
-msgstr "NVDA oikealla ja sovellukset molemmissa kanavissa"
+msgstr "NVDA oikealla ja muut sovellukset molemmissa kanavissa"
 
 #. Translators: Sound split state
 #: audio\soundSplit.py:54
 msgid "NVDA in both channels and applications on the left"
-msgstr "NVDA molemmissa kanavissa ja sovellukset vasemmalla"
+msgstr "NVDA molemmissa kanavissa ja muut sovellukset vasemmalla"
 
 #. Translators: Sound split state
 #: audio\soundSplit.py:56
 msgid "NVDA in both channels and applications on the right"
-msgstr "NVDA molemmissa kanavissa ja sovellukset oikealla"
+msgstr "NVDA molemmissa kanavissa ja muut sovellukset oikealla"
 
 #. Translators: warning message when sound split trigger wasn't successful due to one of audio sessions
 #. had number of channels other than 2 .
 #: audio\soundSplit.py:220
 msgid "Warning: couldn't set volumes for sound split: one of audio sessions is either mono, or has more than 2 audio channels."
-msgstr "Varoitus: Äänijaon äänenvoimakkuuksia ei voitu määrittää: Jokin ääni-istunnoista on joko mono-tilassa tai siinä on enemmän kuin 2 kanavaa."
+msgstr "Varoitus: Äänen jakotilan voimakkuuksia ei voitu määrittää, koska jokin ääni-istunto on mono tai siinä on enemmän kuin kaksi kanavaa."
 
 #. Translators: The name of a braille display.
 #: brailleDisplayDrivers\alva.py:152
@@ -10655,7 +10655,7 @@ msgstr "tiedot"
 #. Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
 #: config\configFlags.py:434
 msgid "debug warning"
-msgstr "virheenkorjausvaroitus"
+msgstr "vianetsintä ja varoitukset"
 
 #. Translators: One of the log levels of NVDA (the input/output shows keyboard commands and/or braille commands as well as speech and/or braille output of NVDA).
 #: config\configFlags.py:436
@@ -10665,27 +10665,28 @@ msgstr "syöttö/tulostus"
 #. Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
 #: config\configFlags.py:438
 msgid "debug"
-msgstr "virheenkorjaus"
+msgstr "vianetsintä"
 
-#. Translators: One of the log levels of NVDA (the secrets mode logs debug messages without redacting secrets).
-#: config\configFlags.py:440
-msgid "secrets"
-msgstr "arkaluonteiset tiedot"
+#. Translators: One of the log levels of NVDA (the "debug (unredacted)" mode mode logs debug messages
+#. without redacting secrets).
+#: config\configFlags.py:441
+msgid "debug (unredacted)"
+msgstr "vianetsintä (sensuroimaton)"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#: config\configFlags.py:463
+#: config\configFlags.py:464
 msgctxt "advanced.playErrorSound"
 msgid "Only in NVDA test versions"
 msgstr "Vain NVDA:n testiversioissa"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#: config\configFlags.py:466
+#: config\configFlags.py:467
 msgctxt "advanced.playErrorSound"
 msgid "Yes"
 msgstr "Kyllä"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#: config\configFlags.py:468
+#: config\configFlags.py:469
 msgctxt "advanced.playErrorSound"
 msgid "No"
 msgstr "Ei"
@@ -12113,8 +12114,8 @@ msgstr "Yhteys muodostettu onnistuneesti annettuun URL-osoitteeseen."
 #. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 #. Translators: The message title displayed when copying configuration to system settings was successful.
 #. Translators: Title of success dialog
-#: gui\_SetURLDialog.py:177 gui\installerGui.py:90 gui\installerGui.py:795
-#: gui\settingsDialogs.py:1049 _remoteClient\dialogs.py:280
+#: gui\_SetURLDialog.py:177 gui\installerGui.py:90 gui\installerGui.py:801
+#: gui\settingsDialogs.py:1050 _remoteClient\dialogs.py:280
 msgid "Success"
 msgstr "Onnistui"
 
@@ -12521,7 +12522,7 @@ msgstr "OK"
 #: gui\addonGui.py:136
 #, python-format
 msgid "Failed to open add-on package file at %s - missing file or invalid file format"
-msgstr "Lisäosapaketin avaaminen epäonnistui kohteesta %s - tiedosto puuttuu tai virheellinen tiedostomuoto"
+msgstr "Lisäosapaketin avaus epäonnistui kohteesta %s - tiedosto puuttuu tai virheellinen tiedostomuoto"
 
 #. Translators: A title for the dialog asking if the user wishes to update a previously installed
 #. add-on with this one.
@@ -12534,24 +12535,24 @@ msgstr "Lisäosan asennus"
 #: gui\addonGui.py:175
 #, python-brace-format
 msgid "You are about to install version {newVersion} of {summary}, which appears to be already installed. Would you still like to update?"
-msgstr "Olet asentamassa versiota {newVersion} lisäosasta {summary}, joka on jo asennettu. Haluatko silti päivittää?"
+msgstr "Lisäosan {summary} versio {newVersion} on jo asennettu. Haluatko silti päivittää?"
 
 #. Translators: A message asking if the user wishes to update a previously installed
 #. add-on with this one.
 #: gui\addonGui.py:183
 #, python-brace-format
 msgid "A version of this add-on is already installed. Would you like to update {summary} version {curVersion} to version {newVersion}?"
-msgstr "Tämä lisäosa on jo asennettu. Haluatko päivittää {summary} {curVersion}:n versioksi {newVersion}?"
+msgstr "Tämä lisäosa on jo asennettu. Haluatko päivittää lisäosan {summary} version {curVersion} versioksi {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 #: gui\addonGui.py:231
 msgid "Installing Add-on"
-msgstr "Asennetaan lisäosaa"
+msgstr "Lisäosan asennus"
 
 #. Translators: The message displayed while an addon is being installed.
 #: gui\addonGui.py:233
 msgid "Please wait while the add-on is being installed."
-msgstr "Odota, kun lisäosaa asennetaan."
+msgstr "Odota, kun lisäosaa asennetaan..."
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #: gui\addonGui.py:256
@@ -12599,35 +12600,35 @@ msgstr "Yhteensopimattomuuden syy"
 #. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
 #: gui\blockAction.py:53
 msgid "Action unavailable in secure context"
-msgstr "Toiminto ei käytettävissä suojatussa kontekstissa"
+msgstr "Toiminto ei ole käytettävissä suojatussa ympäristössä"
 
 #. Translators: Reported when an action cannot be performed because NVDA has been installed
 #. from the Windows Store.
 #: gui\blockAction.py:59
 msgid "Action unavailable in NVDA Windows Store version"
-msgstr "Toiminto ei käytettävissä Microsoft Storesta asennetussa NVDA-versiossa"
+msgstr "Toiminto ei ole käytettävissä Microsoft Storesta asennetussa NVDA-versiossa"
 
 #. Translators: Reported when an action cannot be performed because NVDA is waiting
 #. for a response from a modal dialog
 #: gui\blockAction.py:65
 msgid "Action unavailable while a dialog requires a response"
-msgstr "Toiminto ei käytettävissä valintaikkunan odottaessa vastausta"
+msgstr "Toiminto ei ole käytettävissä valintaikkunan odottaessa vastausta"
 
 #. Translators: Reported when an action cannot be performed because Windows is locked.
 #: gui\blockAction.py:71
 msgid "Action unavailable while Windows is locked"
-msgstr "Toiminto ei käytettävissä Windowsin ollessa lukittuna"
+msgstr "Toiminto ei ole käytettävissä Windowsin ollessa lukittuna"
 
 #. Translators: Reported when an action cannot be performed because NVDA is running the launcher temporary
 #. version
 #: gui\blockAction.py:77
 msgid "Action unavailable in a temporary version of NVDA"
-msgstr "Toiminto ei käytettävissä NVDA:n tilapäisversiossa"
+msgstr "Toiminto ei ole käytettävissä NVDA:n tilapäisversiossa"
 
 #. Translators: Reported when trying to toggle an unsupported setting in speech output mode.
 #: gui\blockAction.py:82
 msgid "Action unavailable while the braille mode is set to speech output"
-msgstr "Toiminto ei käytettävissä kun pistekirjoitustilana on puhetuloste"
+msgstr "Toiminto ei ole käytettävissä kun pistekirjoitustilana on puhetuloste"
 
 #. Translators: Reported when an action cannot be performed because Remote Access functionality is disabled.
 #: gui\blockAction.py:87
@@ -12885,7 +12886,7 @@ msgstr "Käynnistä uudelleen"
 #. Translators: An option in the combo box to choose exit action.
 #: gui\exit.py:49
 msgid "Restart with add-ons disabled and debug logging enabled"
-msgstr "Käynnistä uudelleen,  poista lisäosat käytöstä ja ota käyttöön virheenkorjausloki"
+msgstr "Käynnistä uudelleen,  poista lisäosat käytöstä ja ota käyttöön vianetsintäloki"
 
 #. Translators: An option in the combo box to choose exit action.
 #: gui\exit.py:53
@@ -12895,7 +12896,7 @@ msgstr "Käynnistä uudelleen ja poista lisäosat käytöstä"
 #. Translators: An option in the combo box to choose exit action.
 #: gui\exit.py:56
 msgid "Restart with debug logging enabled"
-msgstr "Käynnistä uudelleen ja ota käyttöön virheenkorjaus-lokitaso"
+msgstr "Käynnistä uudelleen ja ota käyttöön vianetsintäloki"
 
 #. Translators: An option in the combo box to choose exit action.
 #: gui\exit.py:58
@@ -12966,7 +12967,7 @@ msgstr "&Suodata:"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:6694 gui\speechDict.py:212
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:6755 gui\speechDict.py:212
 msgid "&Add"
 msgstr "&Lisää"
 
@@ -13012,238 +13013,238 @@ msgstr "NVDA:n asennus päivitetty onnistuneesti. Windowsin uudelleenkäynnistä
 msgid "Successfully installed NVDA. It is recommended to restart Windows after installing. NVDA may malfunction without a restart."
 msgstr "NVDA asennettu onnistuneesti. Windowsin uudelleenkäynnistäminen on suositeltavaa asennuksen jälkeen. NVDA saattaa toimia virheellisesti ilman uudelleenkäynnistystä."
 
-#. Translators: Button in the post-install dialog to restart Windows immediately.
-#: gui\installerGui.py:95
-msgid "Restart &Windows"
-msgstr "&Käynnistä Windows uudelleen"
-
 #. Translators: Button in the post-install dialog to start the newly installed NVDA.
-#: gui\installerGui.py:98
+#: gui\installerGui.py:96
 msgid "&Start NVDA"
 msgstr "Kä&ynnistä NVDA"
 
+#. Translators: Button in the post-install dialog to restart Windows immediately.
+#: gui\installerGui.py:101
+msgid "Restart &Windows"
+msgstr "&Käynnistä Windows uudelleen"
+
 #. Translators: Button in the post-install dialog to exit NVDA.
-#: gui\installerGui.py:100
+#: gui\installerGui.py:106
 msgid "E&xit NVDA"
 msgstr "S&ulje NVDA"
 
 #. Translators: Message shown when Windows restart fails after NVDA installation.
-#: gui\installerGui.py:111
+#: gui\installerGui.py:124
 msgid "Failed to restart Windows. Please restart Windows manually."
 msgstr "Windowsin uudelleenkäynnistys epäonnistui. Käynnistä se uudelleen manuaalisesti."
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
-#: gui\installerGui.py:151
+#: gui\installerGui.py:157
 msgid "Updating NVDA"
-msgstr "Päivitetään NVDA:ta"
+msgstr "NVDA:n päivitys"
 
 #. Translators: The title of the dialog presented while NVDA is being installed.
-#: gui\installerGui.py:154
+#: gui\installerGui.py:160
 msgid "Installing NVDA"
-msgstr "Asennetaan NVDA:ta"
+msgstr "NVDA:n asennus"
 
 #. Translators: The message displayed while NVDA is being updated.
-#: gui\installerGui.py:156
+#: gui\installerGui.py:162
 msgid "Please wait while your previous installation of NVDA is being updated."
-msgstr "Odota, kun aiempaa NVDA:n asennusta päivitetään."
+msgstr "Odota, kun aiempaa NVDA:n asennusta päivitetään..."
 
 #. Translators: The message displayed while NVDA is being installed.
-#: gui\installerGui.py:159
+#: gui\installerGui.py:165
 msgid "Please wait while NVDA is being installed"
-msgstr "Odota, kun NVDA:ta asennetaan."
+msgstr "Odota, kun NVDA:ta asennetaan..."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
-#: gui\installerGui.py:183
+#: gui\installerGui.py:189
 msgid "The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again."
 msgstr "Asennus ei voi poistaa tai korvata tiedostoa. Toinen NVDA:n versio saattaa olla käynnissä toisella kirjautuneella käyttäjällä. Varmista, että kaikki asennetut NVDA:n versiot on suljettu ja yritä sitten asennusta uudelleen."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
-#: gui\installerGui.py:188 gui\installerGui.py:776
+#: gui\installerGui.py:194 gui\installerGui.py:782
 msgid "File in Use"
 msgstr "Tiedosto käytössä"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
-#: gui\installerGui.py:202
+#: gui\installerGui.py:208
 msgid "The installation of NVDA failed. Please check the Log Viewer for more information."
 msgstr "NVDA:n asennus epäonnistui. Katso lisätietoja lokista."
 
 #. Translators: The title of the Install NVDA dialog.
-#: gui\installerGui.py:272
+#: gui\installerGui.py:278
 msgid "Install NVDA"
 msgstr "Asenna NVDA"
 
 #. Translators: An informational message in the Install NVDA dialog.
-#: gui\installerGui.py:290
+#: gui\installerGui.py:296
 msgid "To install NVDA to your hard drive, please press the Continue button."
 msgstr "Asenna NVDA kiintolevylle painamalla Jatka-painiketta."
 
 #. Translators: An informational message in the Install NVDA dialog.
-#: gui\installerGui.py:294
+#: gui\installerGui.py:300
 msgid "A previous copy of NVDA has been found on your system. This copy will be updated."
 msgstr "Järjestelmästä löytyi aiempi NVDA:n versio. Se päivitetään."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#: gui\installerGui.py:299
+#: gui\installerGui.py:305
 #, python-brace-format
 msgid "The installation path for NVDA has changed. it will now  be installed in {path}"
 msgstr "NVDA:n asennushakemisto on muuttunut. Uusi hakemisto on {path}."
 
 #. Translators: The label for a group box containing the NVDA installation dialog options.
 #. Translators: The label for a group box containing the NVDA welcome dialog options.
-#: gui\installerGui.py:317 gui\startupDialogs.py:63
+#: gui\installerGui.py:323 gui\startupDialogs.py:63
 msgid "Options"
-msgstr "Asetukset"
+msgstr "Valinnat"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:323
+#: gui\installerGui.py:329
 msgid "Use NVDA during sign-in"
 msgstr "Kä&ytä NVDA:ta kirjautumisikkunassa"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:334
+#: gui\installerGui.py:340
 msgid "&Keep existing desktop shortcut"
 msgstr "&Säilytä nykyinen työpöydän pikakuvake"
 
 #. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
 #. If the shortcut key has been changed for this locale,
 #. this change must also be reflected here.
-#: gui\installerGui.py:341
+#: gui\installerGui.py:347
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "Luo &työpöydälle kuvake ja tee sille pikanäppäin (Ctrl+Alt+n)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:348
+#: gui\installerGui.py:354
 msgid "Copy &portable configuration to current user account"
 msgstr "Kopioi &massamuistiversion asetukset nykyiseen käyttäjätiliin"
 
 #. Translators: The label of a button to continue with the operation.
 #. Translators: The label for the Continue button in an NVDA dialog.
-#: gui\installerGui.py:365 gui\installerGui.py:675 gui\nvdaControls.py:387
+#: gui\installerGui.py:371 gui\installerGui.py:681 gui\nvdaControls.py:387
 msgid "&Continue"
 msgstr "&Jatka"
 
 #. Translators: A warning presented when the user attempts to downgrade NVDA
 #. to an older version.
-#: gui\installerGui.py:419
+#: gui\installerGui.py:425
 msgid "You are attempting to install an earlier version of NVDA than the version currently installed. If you really wish to revert to an earlier version, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
-msgstr "Yrität asentaa NVDA:n versiota, joka on vanhempi kuin tällä hetkellä asennettuna oleva. Mikäli haluat varmasti palata aiempaan versioon, sinun on ensin peruutettava tämä asennus ja poistettava NVDA kokonaan ennen aiemman version asentamista."
+msgstr "Yrität asentaa NVDA:n versiota, joka on vanhempi kuin tällä hetkellä asennettuna oleva versio. Mikäli haluat varmasti palata aiempaan versioon, sinun on ensin peruutettava tämä asennus ja poistettava NVDA kokonaan ennen aiemman version asentamista."
 
 #. Translators: A warning presented when the installer is unable to determine
 #. the state of the current NVDA installation.
-#: gui\installerGui.py:429
+#: gui\installerGui.py:435
 msgid "An existing NVDA installation has been detected, but its version cannot be determined. If you are attempting to install an earlier version of NVDA, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
 msgstr "Koneelta löytyi asennettu NVDA, mutta sen versiota ei voida selvittää. Jos yrität asentaa vanhempaa versiota, sinun kannattaa ensin peruuttaa tämä asennus ja poistaa NVDA kokonaan ennen vanhemman version asentamista."
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
-#: gui\installerGui.py:456
+#: gui\installerGui.py:462
 msgid "&Proceed with installation (not recommended)"
 msgstr "&Jatka asennusta (ei suositella)"
 
 #. Translators: A warning presented when the user attempts to downgrade NVDA
 #. to an older version.
-#: gui\installerGui.py:488
+#: gui\installerGui.py:494
 msgid "You are attempting to replace an existing portable copy of NVDA with an earlier version. Downgrading NVDA is not recommended. You should cancel this operation and create a new portable copy instead. "
 msgstr "Yrität korvata nykyisen NVDA:n massamuistiversion vanhemmalla versiolla. Alaspäin päivittämistä ei suositella. Sinun kannattaa peruuttaa tämä toiminto ja luoda sen sijaan uusi massamuistiversio. "
 
 #. Translators: A warning presented when the installer is unable to determine
 #. the state of the current NVDA installation.
-#: gui\installerGui.py:496
+#: gui\installerGui.py:502
 msgid "An existing copy of NVDA has been detected in the chosen directory, but its version cannot be determined. If you are attempting to downgrade to an earlier version of NVDA, you should cancel this operation and create a new portable copy. "
 msgstr "Valitusta hakemistosta löytyi NVDA, mutta sen versiota ei voida selvittää. Jos yrität päivittää alaspäin vanhempaan versioon, sinun kannattaa peruuttaa tämä toiminto ja luoda uusi massamuistiversio. "
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
-#: gui\installerGui.py:537
+#: gui\installerGui.py:543
 #, python-brace-format
 msgid "A portable copy already exists in the directory '{portableDirectory}'. Do you want to update it?"
 msgstr "Hakemistossa \"{portableDirectory}\" on jo massamuistiversio. Haluatko päivittää sen?"
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
-#: gui\installerGui.py:542
+#: gui\installerGui.py:548
 msgid "Portable Copy Exists"
-msgstr "Massamuistiversio on jo olemassa"
+msgstr "Massamuistiversio löytyi"
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
-#: gui\installerGui.py:559
+#: gui\installerGui.py:565
 #, python-brace-format
 msgid "The specified directory '{portableDirectory}' is not empty. Proceeding will delete and replace existing files in the directory. Do you want to overwrite the contents of this folder? "
-msgstr "Määritelty hakemisto \"{portableDirectory}\" ei ole tyhjä. Jos jatkat, hakemistossa jo olevat tiedostot poistetaan ja korvataan. Haluatko korvata tämän hakemiston sisällön?"
+msgstr "Määritetty hakemisto {portableDirectory} ei ole tyhjä. Jos jatkat, hakemistossa jo olevat tiedostot poistetaan ja korvataan. Haluatko korvata tämän hakemiston sisällön?"
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
-#: gui\installerGui.py:565
+#: gui\installerGui.py:571
 msgid "Directory Exists"
 msgstr "Hakemisto on jo olemassa"
 
 #. Translators: Message shown to users when attempting to install NVDA
 #. on a computer which is being remotely controlled via NVDA Remote Access
-#: gui\installerGui.py:585
+#: gui\installerGui.py:591
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
 msgstr "NVDA:n asentamista ei suositella etäkäytön kautta hallittavassa koneessa."
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
-#: gui\installerGui.py:591
+#: gui\installerGui.py:597
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
 msgstr "Käyttäjätilien valvonnan kehotteisiin ei voi vastata hallitsevalta koneelta. Jatka vain, jos sinulla on fyysinen pääsy hallittavalle koneelle.\n\n"
 "Haluatko varmasti jatkaa?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
-#: gui\installerGui.py:629
+#: gui\installerGui.py:635
 msgid "Create Portable NVDA"
-msgstr "Luo NVDA:n massamuistiversio"
+msgstr "NVDA:n massamuistiversion luonti"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
-#: gui\installerGui.py:635
+#: gui\installerGui.py:641
 msgid "To create a portable copy of NVDA, please select the path and other options and then press Continue"
-msgstr "Luo NVDA:n massamuistiversio valitsemalla sille hakemisto sekä muut asetukset, ja paina sitten Jatka-painiketta."
+msgstr "Luo NVDA:n massamuistiversio valitsemalla sille hakemisto sekä muut asetukset ja paina sitten Jatka-painiketta."
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:641
+#: gui\installerGui.py:647
 msgid "Portable directory:"
 msgstr "Massamuistiversion hakemisto:"
 
 #. Translators: The label of a button to browse for a directory.
-#: gui\installerGui.py:646
+#: gui\installerGui.py:652
 msgid "Browse..."
 msgstr "Selaa..."
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
-#: gui\installerGui.py:649
+#: gui\installerGui.py:655
 msgid "Select portable directory"
 msgstr "Valitse massamuistiversion hakemisto"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:657
+#: gui\installerGui.py:663
 msgid "Create a &new folder for the portable copy"
 msgstr "Luo massamuistiversiolle &uusi hakemisto"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:662
+#: gui\installerGui.py:668
 msgid "Copy current &user configuration"
 msgstr "Kopioi &käyttäjän nykyiset asetukset"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:668
+#: gui\installerGui.py:674
 msgid "&Start the new portable copy after creation"
-msgstr "&Käynnistä uusi massamuistiversio luonnin jälkeen"
+msgstr "&Käynnistä massamuistiversio luonnin jälkeen"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:693
+#: gui\installerGui.py:699
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "Määritä hakemisto, johon massamuistiversio luodaan."
 
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:705
+#: gui\installerGui.py:711
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. It must start with a drive letter (e.g. C:). It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
 "Current path: {path}. "
@@ -13251,35 +13252,35 @@ msgstr "Anna täydellinen hakemistopolku, johon massamuistiversio luodaan. Polun
 "Nykyinen polku: {path}. "
 
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
-#: gui\installerGui.py:758
+#: gui\installerGui.py:764
 msgid "Portable copy creation cancelled."
 msgstr "Massamuistiversion luonti peruutettu."
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
-#: gui\installerGui.py:763
+#: gui\installerGui.py:769
 msgid "Creating Portable Copy"
-msgstr "Luodaan massamuistiversiota"
+msgstr "Massamuistiversiota luodaan"
 
 #. Translators: The message displayed while a portable copy of NVDA is being created.
-#: gui\installerGui.py:765
+#: gui\installerGui.py:771
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr "Odota, kun NVDA:n massamuistiversiota luodaan."
+msgstr "Odota, kun NVDA:n massamuistiversiota luodaan..."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
-#: gui\installerGui.py:774
+#: gui\installerGui.py:780
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA ei voi poistaa tai korvata tiedostoa."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. {error} will be replaced with the specific error message.
-#: gui\installerGui.py:782
+#: gui\installerGui.py:788
 #, python-brace-format
 msgid "Failed to create portable copy: {error}."
 msgstr "Massamuistiversion luonti epäonnistui: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. {dir} will be replaced with the destination directory.
-#: gui\installerGui.py:793
+#: gui\installerGui.py:799
 #, python-brace-format
 msgid "Successfully created a portable copy of NVDA at {dir}"
 msgstr "NVDA:n massamuistiversio luotu onnistuneesti hakemistoon {dir}"
@@ -13357,7 +13358,7 @@ msgid "Default ({default})"
 msgstr "Oletus ({default})"
 
 #. Translators: Content of the message displayed when a validation error occurs in the settings dialog
-#: gui\settingsDialogs.py:462
+#: gui\settingsDialogs.py:463
 #, python-brace-format
 msgid "{message}\n\n"
 "Category: \"{category}\"\n"
@@ -13367,25 +13368,25 @@ msgstr "{message}\n\n"
 "Asetus: \"{option}\""
 
 #. Translators: The title of the message box when a setting's configuration is not valid.
-#: gui\settingsDialogs.py:469
+#: gui\settingsDialogs.py:470
 msgid "Invalid configuration"
 msgstr "Virhe asetuksissa"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
-#: gui\settingsDialogs.py:578
+#: gui\settingsDialogs.py:579
 msgid "&Categories:"
 msgstr "&Kategoriat:"
 
 #. Translators: This is the label for the general settings panel.
 #. Translators: name of a grouping in Privacy and Security settings
 #. which contains miscellaneous settings.
-#: gui\settingsDialogs.py:808 gui\settingsDialogs.py:6327
+#: gui\settingsDialogs.py:809 gui\settingsDialogs.py:6388
 msgid "General"
 msgstr "Yleiset"
 
 #. Translators: Shown for a language which has been provided from the command line
 #. 'langDesc' would be replaced with description of the given locale.
-#: gui\settingsDialogs.py:822
+#: gui\settingsDialogs.py:823
 #, python-brace-format
 msgid "Command line option: {langDesc}"
 msgstr "Komentorivivalitsin: {langDesc}"
@@ -13393,23 +13394,23 @@ msgstr "Komentorivivalitsin: {langDesc}"
 #. Translators: The label for a setting in general settings to select NVDA's interface language
 #. (once selected, NVDA must be restarted; the option user default means the user's Windows language
 #. will be used).
-#: gui\settingsDialogs.py:828
+#: gui\settingsDialogs.py:829
 msgid "NVDA &Language (requires restart):"
 msgstr "&Kieli (edellyttää uudelleenkäynnistystä):"
 
 #. Translators: The label for a setting in general settings to save current configuration when NVDA
 #. exits (if it is not checked, user needs to save configuration before quitting NVDA).
-#: gui\settingsDialogs.py:846
+#: gui\settingsDialogs.py:847
 msgid "&Save configuration when exiting NVDA"
 msgstr "&Tallenna asetukset suljettaessa"
 
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
-#: gui\settingsDialogs.py:854
+#: gui\settingsDialogs.py:855
 msgid "Sho&w exit options when exiting NVDA"
 msgstr "Nä&ytä sulkemisvalinnat"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
-#: gui\settingsDialogs.py:862
+#: gui\settingsDialogs.py:863
 msgid "&Play sounds when starting or exiting NVDA"
 msgstr "&Toista ääni käynnistettäessä ja suljettaessa"
 
@@ -13417,7 +13418,7 @@ msgstr "&Toista ääni käynnistettäessä ja suljettaessa"
 #. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
 #. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 #. Translators: The label of a checkbox in the Welcome dialog.
-#: gui\settingsDialogs.py:871 gui\startupDialogs.py:87
+#: gui\settingsDialogs.py:872 gui\startupDialogs.py:87
 msgid "St&art NVDA after I sign in"
 msgstr "Kä&ynnistä NVDA sisäänkirjautumisen jälkeen"
 
@@ -13425,7 +13426,7 @@ msgstr "Kä&ynnistä NVDA sisäänkirjautumisen jälkeen"
 #. allow NVDA to come up in Windows login screen (useful if user
 #. needs to enter passwords or if multiple user accounts are present
 #. to allow user to choose the correct account).
-#: gui\settingsDialogs.py:883
+#: gui\settingsDialogs.py:884
 msgid "Use NVDA during sign-in (requires administrator privileges)"
 msgstr "Käytä NVDA:ta kirjautumisikkunassa (edellyttää järjestelmänvalvojan oikeuksia)"
 
@@ -13433,24 +13434,24 @@ msgstr "Käytä NVDA:ta kirjautumisikkunassa (edellyttää järjestelmänvalvoja
 #. current user settings to system settings (to allow current
 #. settings to be used in secure screens such as User Account
 #. Control (UAC) dialog).
-#: gui\settingsDialogs.py:898
+#: gui\settingsDialogs.py:899
 msgid "Use currently saved settings during sign-in and on secure screens (requires administrator privileges)"
 msgstr "Käytä t&allennettuja asetuksia kirjautumisikkunassa ja suojatuissa ruuduissa (edellyttää järjestelmänvalvojan oikeuksia)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA.
 #. If not checked, user must check for updates manually.
-#: gui\settingsDialogs.py:912
+#: gui\settingsDialogs.py:913
 msgid "Automatically check for &updates to NVDA"
 msgstr "Tarkista &päivitykset automaattisesti"
 
 #. Translators: The label of a checkbox in general settings to toggle startup notifications
 #. for a pending NVDA update.
-#: gui\settingsDialogs.py:925
+#: gui\settingsDialogs.py:926
 msgid "Notify for &pending update on startup"
 msgstr "Ilmoita käynnistettäessä &odottavasta päivityksestä"
 
 #. Translators: The label for the update mirror on the General Settings panel.
-#: gui\settingsDialogs.py:935
+#: gui\settingsDialogs.py:936
 msgid "Update mirror"
 msgstr "Päivityspeilipalvelin"
 
@@ -13458,86 +13459,86 @@ msgstr "Päivityspeilipalvelin"
 #. it appears in the context of the update mirror group on the General page of NVDA's settings.
 #. Translators: This is the label for the button used to change the Add-on Store mirror URL,
 #. it appears in the context of the mirror server group on the Add-on Store page of NVDA's settings.
-#: gui\settingsDialogs.py:953 gui\settingsDialogs.py:3790
+#: gui\settingsDialogs.py:954 gui\settingsDialogs.py:3791
 msgid "Change..."
 msgstr "Va&ihda..."
 
 #. Translators: The label of a checkbox in general settings.
-#: gui\settingsDialogs.py:969
+#: gui\settingsDialogs.py:970
 msgid "Prevent &display from turning off during say all or reading with braille"
 msgstr "Estä näytön sammuminen &jatkuvassa luvussa tai pistenäytöllä luettaessa"
 
 #. Translators: Title of the dialog used to change NVDA's update server mirror URL.
-#: gui\settingsDialogs.py:983
+#: gui\settingsDialogs.py:984
 msgid "Set NVDA Update Mirror"
 msgstr "Määritä NVDA:n päivityspeilipalvelin"
 
 #. Translators: The title of the dialog presented while settings are being copied
-#: gui\settingsDialogs.py:1012
+#: gui\settingsDialogs.py:1013
 msgid "Copying Settings"
 msgstr "Kopioidaan asetuksia"
 
 #. Translators: The message displayed while settings are being copied
 #. to the system configuration (for use on Windows logon etc)
-#: gui\settingsDialogs.py:1015
+#: gui\settingsDialogs.py:1016
 msgid "Please wait while settings are copied to the system configuration."
 msgstr "Odota, kun asetuksia kopioidaan."
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
-#: gui\settingsDialogs.py:1026
+#: gui\settingsDialogs.py:1027
 msgid "Unable to copy a file. Perhaps it is currently being used by another process or you have run out of disc space on the drive you are copying to."
 msgstr "Tiedostoa ei voi kopioida. Se on ehkä jonkin toisen prosessin käytössä tai kohdeasemalta on loppunut levytila."
 
 #. Translators: the title of a retry cancel dialog when copying settings  fails
-#: gui\settingsDialogs.py:1030
+#: gui\settingsDialogs.py:1031
 msgid "Error Copying"
 msgstr "Virhe kopioitaessa"
 
 #. Translators: The message displayed when errors were found while trying to copy current configuration to system settings.
-#: gui\settingsDialogs.py:1043
+#: gui\settingsDialogs.py:1044
 msgid "Error copying NVDA user settings"
 msgstr "Virhe kopioitaessa asetuksia"
 
 #. Translators: The message displayed when copying configuration to system settings was successful.
-#: gui\settingsDialogs.py:1047
+#: gui\settingsDialogs.py:1048
 msgid "Successfully copied NVDA user settings"
 msgstr "Asetukset kopioitu onnistuneesti"
 
-#: gui\settingsDialogs.py:1071
+#: gui\settingsDialogs.py:1072
 msgid "This change requires administrator privileges."
 msgstr "Tämä muutos edellyttää järjestelmänvalvojan oikeuksia."
 
-#: gui\settingsDialogs.py:1072
+#: gui\settingsDialogs.py:1073
 msgid "Insufficient Privileges"
 msgstr "Oikeudet eivät riitä"
 
 #. Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
-#: gui\settingsDialogs.py:1095 gui\settingsDialogs.py:3836
+#: gui\settingsDialogs.py:1096 gui\settingsDialogs.py:3837
 msgid "No mirror"
 msgstr "Ei peilipalvelinta"
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
-#: gui\settingsDialogs.py:1112
+#: gui\settingsDialogs.py:1113
 msgid "Language Configuration Change"
 msgstr "Kieliasetuksen muutos"
 
 #. Translators: The message displayed after NVDA interface language has been changed.
-#: gui\settingsDialogs.py:1117
+#: gui\settingsDialogs.py:1118
 msgid "NVDA must be restarted for the new language to take effect."
 msgstr "NVDA on käynnistettävä uudelleen, jotta uusi kieli voidaan ottaa käyttöön."
 
 #. Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
-#: gui\settingsDialogs.py:1122
+#: gui\settingsDialogs.py:1123
 msgid "Restart &now"
 msgstr "Käynnistä uudelleen &nyt"
 
 #. Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
-#: gui\settingsDialogs.py:1127
+#: gui\settingsDialogs.py:1128
 msgid "Restart &later"
 msgstr "Käynnistä uudelleen &myöhemmin"
 
 #. Translators: A label for the synthesizer on the speech panel.
-#: gui\settingsDialogs.py:1151
+#: gui\settingsDialogs.py:1152
 msgid "Synthesizer"
 msgstr "Syntetisaattori"
 
@@ -13545,593 +13546,593 @@ msgstr "Syntetisaattori"
 #. it appears in the context of a synthesizer group on the speech settings panel.
 #. Translators: This is the label for the button used to change braille display,
 #. it appears in the context of a braille display group on the braille settings panel.
-#: gui\settingsDialogs.py:1173 gui\settingsDialogs.py:4959
+#: gui\settingsDialogs.py:1174 gui\settingsDialogs.py:4960
 msgid "C&hange..."
 msgstr "V&aihda..."
 
 #. Translators: This is the label for the synthesizer selection dialog
-#: gui\settingsDialogs.py:1228
+#: gui\settingsDialogs.py:1229
 msgid "Select Synthesizer"
 msgstr "Valitse syntetisaattori"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
-#: gui\settingsDialogs.py:1236
+#: gui\settingsDialogs.py:1237
 msgid "&Synthesizer:"
 msgstr "&Syntetisaattori:"
 
 #. Translators: This is the label for the voice settings panel.
-#: gui\settingsDialogs.py:1620
+#: gui\settingsDialogs.py:1621
 msgid "Voice"
 msgstr "Puheääni"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
-#: gui\settingsDialogs.py:1655
+#: gui\settingsDialogs.py:1656
 msgid "Automatic language switching (when supported)"
 msgstr "Vaihda kieltä automaattisesti"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, different voices for dialects will be used to
 #. read text in that dialect).
-#: gui\settingsDialogs.py:1671
+#: gui\settingsDialogs.py:1672
 msgid "Automatic dialect switching (when supported)"
 msgstr "Vaihda murretta automaattisesti"
 
 #. Translators: This is the label for a checkbox in the voice settings panel. If checked, the language of the text been read will be reported.
-#: gui\settingsDialogs.py:1680
+#: gui\settingsDialogs.py:1681
 msgctxt "reportLanguage"
 msgid "Report lan&guage changes while reading"
 msgstr "Ilmoita kie&len vaihtuminen luettaessa"
 
 #. Translators: This is a label for a combobox in the Voice settings panel to select
 #. reporting when the language of the text being read is not supported by the current synthesizer.
-#: gui\settingsDialogs.py:1696
+#: gui\settingsDialogs.py:1697
 msgctxt "reportLanguage"
 msgid "Report when switching to language is not s&upported by synthesizer"
 msgstr "Ilmoita, kun syntetisaattori ei tue kielen vai&htamista"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings panel (possible choices are none, some, most and all).
-#: gui\settingsDialogs.py:1715
+#: gui\settingsDialogs.py:1716
 msgid "Punctuation/symbol &level:"
 msgstr "Välimerkki- ja symboli&taso:"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
-#: gui\settingsDialogs.py:1733
+#: gui\settingsDialogs.py:1734
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä"
 
 #. Translators: This is a label for a combo-box in the Speech settings panel.
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:1743 gui\settingsDialogs.py:5512
+#: gui\settingsDialogs.py:1744 gui\settingsDialogs.py:5513
 msgid "Unicode normali&zation"
 msgstr "Unicode-normali&sointi"
 
 #. Translators: This is the label for a checkbox in the
 #. speech settings panel.
-#: gui\settingsDialogs.py:1754
+#: gui\settingsDialogs.py:1755
 msgid "Report '&Normalized' when navigating by character"
 msgstr "Ilmoita normalisointi merkeittäin liikuttaessa"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change
 #. voice pitch for capital letters; the higher the value, the pitch will be higher).
-#: gui\settingsDialogs.py:1789
+#: gui\settingsDialogs.py:1790
 msgid "Capital pitch change percentage"
 msgstr "Äänenkorkeuden muutos prosentteina isoille kirjaimille"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
-#: gui\settingsDialogs.py:1804
+#: gui\settingsDialogs.py:1805
 msgid "Say &cap before capitals"
 msgstr "Ilmaise &isot kirjaimet puheella"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
-#: gui\settingsDialogs.py:1815
+#: gui\settingsDialogs.py:1816
 msgid "&Beep for capitals"
 msgstr "Ilmaise isot kir&jaimet merkkiäänellä"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
-#: gui\settingsDialogs.py:1829
+#: gui\settingsDialogs.py:1830
 msgid "Use &spelling functionality if supported"
 msgstr "Käytä tava&ustoimintoa (jos mahdollista)"
 
 #. Translators: Label of the list where user can enable or disable symbol dictionaries.
-#: gui\settingsDialogs.py:1845
+#: gui\settingsDialogs.py:1846
 msgid "E&xtra dictionaries for character and symbol processing:"
 msgstr "&Lisäsanastot merkkien ja symbolien käsittelyyn:"
 
 #. Translators: Label of the list where user can enable or disable speech dictionaries.
-#: gui\settingsDialogs.py:1861
+#: gui\settingsDialogs.py:1862
 msgid "Sp&eech dictionaries:"
 msgstr "Pu&hesanastot:"
 
 #. Translators: Label of the list where user can select speech modes that will be available.
-#: gui\settingsDialogs.py:1875
+#: gui\settingsDialogs.py:1876
 msgid "&Modes available in the Cycle speech mode command:"
 msgstr "Pu&hetilakomennon valinnat:"
 
 #. Translators: This is the label for a checkbox in the voice settings panel.
-#: gui\settingsDialogs.py:1889
+#: gui\settingsDialogs.py:1890
 msgid "&Delayed descriptions for characters on cursor movement"
 msgstr "Viivästetyt merkkien kuvaukset koh&distinta siirrettäessä"
 
 #. Translators: Warning shown when 'talk' speech mode is disabled in settings.
-#: gui\settingsDialogs.py:1958
+#: gui\settingsDialogs.py:1959
 msgid "You did not choose Talk as one of your speech mode options. Please note that this may result in no speech output at all. Are you sure you want to continue?"
 msgstr "\"Puhe käytössä\" -tilaa ei ole valittu puhetilakomennon vaihtoehdoksi. Tästä saattaa olla seurauksena puheen mykistyminen. Haluatko varmasti jatkaa?"
 
 #. Translators: Message shown when not enough speech modes are enabled.
-#: gui\settingsDialogs.py:1986
+#: gui\settingsDialogs.py:1987
 msgid "At least two speech modes have to be checked."
 msgstr "Vähintään kaksi puhetilaa on valittava."
 
 #. Translators: Same as the label for the list of checkboxes where user can select speech modes that will
 #. be available in Speech Settings, but without keyboard accelerator (& character) nor final colon.
-#: gui\settingsDialogs.py:1989
+#: gui\settingsDialogs.py:1990
 msgid "Modes available in the Cycle speech mode command"
 msgstr "Puhetilakomennon valinnat"
 
 #. Translators: This is the label for the keyboard settings panel.
-#: gui\settingsDialogs.py:1998
+#: gui\settingsDialogs.py:1999
 msgid "Keyboard"
 msgstr "Näppäimistö"
 
 #. Translators: This is the label for a combobox in the
 #. keyboard settings panel.
 #. Translators: The label of a combobox in the Welcome dialog.
-#: gui\settingsDialogs.py:2005 gui\startupDialogs.py:68
+#: gui\settingsDialogs.py:2006 gui\startupDialogs.py:68
 msgid "&Keyboard layout:"
 msgstr "&Näppäinasettelu:"
 
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
-#: gui\settingsDialogs.py:2019
+#: gui\settingsDialogs.py:2020
 msgid "&Select NVDA Modifier Keys"
 msgstr "V&alitse NVDA-näppäimet"
 
 #. Translators: This is the label for a combobox in the keyboard settings panel.
-#: gui\settingsDialogs.py:2035
+#: gui\settingsDialogs.py:2036
 msgid "Speak typed &characters:"
 msgstr "Puhu kirjoitetut &merkit:"
 
 #. Translators: This is the label for a combobox in the keyboard settings panel.
-#: gui\settingsDialogs.py:2046
+#: gui\settingsDialogs.py:2047
 msgid "Speak typed &words:"
 msgstr "Puhu kirjoitetut sa&nat:"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2058
+#: gui\settingsDialogs.py:2059
 msgid "Speech &interrupt for typed characters"
 msgstr "Keskeytä puhe &merkkejä kirjoitettaessa"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2070
+#: gui\settingsDialogs.py:2071
 msgid "Speech i&nterrupt for Enter key"
 msgstr "K&eskeytä puhe Enter-näppäintä painettaessa"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2079
+#: gui\settingsDialogs.py:2080
 msgid "Allow skim &reading in Say All"
 msgstr "Salli p&ikanäppäimet jatkuvassa luvussa"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2089
+#: gui\settingsDialogs.py:2090
 msgid "&Beep if typing lowercase letters when caps lock is on"
 msgstr "&Anna merkkiääni pieniä kirjaimia kirjoitettaessa Caps Lockin ollessa käytössä"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2098
+#: gui\settingsDialogs.py:2099
 msgid "Speak c&ommand keys"
 msgstr "Puhu k&omentonäppäimet"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2105
+#: gui\settingsDialogs.py:2106
 msgid "Play sound for &spelling errors while typing"
 msgstr "Ilmaise &kirjoitusvirheet kirjoitettaessa merkkiäänellä"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#: gui\settingsDialogs.py:2116
+#: gui\settingsDialogs.py:2117
 msgid "Handle keys from other &applications"
 msgstr "Käsittele muiden &sovellusten näppäinpainallukset"
 
 #. Translators: The label for a control in keyboard settings to modify the timeout for a multiple keypress.
-#: gui\settingsDialogs.py:2124
+#: gui\settingsDialogs.py:2125
 msgid "&Multiple key press timeout (ms):"
 msgstr "&Usean näppäinpainalluksen aikakatkaisu (ms):"
 
 #. Translators: Message to report wrong configuration of the NVDA key
-#: gui\settingsDialogs.py:2140
+#: gui\settingsDialogs.py:2141
 msgid "At least one key must be used as the NVDA key."
 msgstr "Vähintään yhtä näppäintä on käytettävä NVDA-näppäimenä."
 
 #. Translators: Same as the label for the list of checkboxes controlling which keys are NVDA modifier
 #. keys in Keyboard Settings, but without keyboard accelerator (& character).
-#: gui\settingsDialogs.py:2143
+#: gui\settingsDialogs.py:2144
 msgid "Select NVDA Modifier Keys"
 msgstr "Valitse NVDA-näppäimet"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2178
+#: gui\settingsDialogs.py:2179
 msgid "Report mouse &shape changes"
 msgstr "Ilmoita &hiirikohdistimen muodon muutokset"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2185
+#: gui\settingsDialogs.py:2186
 msgid "Enable mouse &tracking"
 msgstr "Käytä hiiren &seurantaa"
 
 #. Translators: This is the label for a combobox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2192
+#: gui\settingsDialogs.py:2193
 msgid "Text &unit resolution:"
 msgstr "Teksti&yksikön tarkkuus:"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2211
+#: gui\settingsDialogs.py:2212
 msgid "Report &object when mouse enters it"
 msgstr "Ilmoita &objekti hiiren siirtyessä siihen"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2220
+#: gui\settingsDialogs.py:2221
 msgid "&Play audio coordinates when mouse moves"
 msgstr "Ilmaise hiiren k&oordinaatit merkkiäänillä"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2227
+#: gui\settingsDialogs.py:2228
 msgid "&Brightness controls audio coordinates volume"
 msgstr "Säädä äänikoordinaattien &voimakkuutta ruudun kirkkauden perusteella"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#: gui\settingsDialogs.py:2236
+#: gui\settingsDialogs.py:2237
 msgid "Ignore mouse input from other &applications"
 msgstr "Ohita hiirisyöte muista s&ovelluksista"
 
 #. Translators: This is the label for the review cursor settings panel.
-#: gui\settingsDialogs.py:2257
+#: gui\settingsDialogs.py:2258
 msgid "Review Cursor"
 msgstr "Tarkastelukohdistin"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#: gui\settingsDialogs.py:2263
+#: gui\settingsDialogs.py:2264
 msgid "Follow system &focus"
 msgstr "Seuraa järjestelmän &kohdistusta"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#: gui\settingsDialogs.py:2269
+#: gui\settingsDialogs.py:2270
 msgid "Follow System &Caret"
 msgstr "Seuraa &kohdistinta"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#: gui\settingsDialogs.py:2275
+#: gui\settingsDialogs.py:2276
 msgid "Follow &mouse cursor"
 msgstr "Seuraa &hiirikohdistinta"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#: gui\settingsDialogs.py:2281
+#: gui\settingsDialogs.py:2282
 msgid "&Simple review mode"
 msgstr "&Yksinkertainen tarkastelutila"
 
 #. Translators: This is the label for the Input Composition settings panel.
-#: gui\settingsDialogs.py:2295
+#: gui\settingsDialogs.py:2296
 msgid "Input Composition"
 msgstr "Syöttömenetelmä"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2304
+#: gui\settingsDialogs.py:2305
 msgid "Automatically report all available &candidates"
 msgstr "Ilmoita kaikki &ehdokkaat automaattisesti"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2316
+#: gui\settingsDialogs.py:2317
 msgid "Announce &selected candidate"
 msgstr "Ilmoita &valittu ehdokas"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2331
+#: gui\settingsDialogs.py:2332
 msgid "Always include short character &description when announcing candidates"
 msgstr "Ilmoita lyhyet merkki&kuvaukset aina ehdokkaita luettaessa"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2346
+#: gui\settingsDialogs.py:2347
 msgid "Report changes to the &reading string"
 msgstr "Ilmoita &lukumerkkijonon muutokset"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
-#: gui\settingsDialogs.py:2361
+#: gui\settingsDialogs.py:2362
 msgid "Report changes to the &composition string"
 msgstr "Ilmoita kooste&merkkijonon muutokset"
 
 #. Translators: This is a label appearing on the Object Presentation settings panel.
-#: gui\settingsDialogs.py:2393
+#: gui\settingsDialogs.py:2394
 msgid "Configure how much information NVDA will present about controls. These options apply to focus reporting and NVDA object navigation, but not when reading text content e.g. web content with browse mode."
 msgstr "Määritä, paljonko tietoja NVDA kertoo ohjausobjekteista. Nämä asetukset koskevat kohdistuksen ilmaisemista ja NVDA:n objektinavigointia, mutta eivät tekstisisällön lukemista, esim. verkkosisältöä selaustilassa."
 
 #. Translators: This is the label for the object presentation panel.
-#: gui\settingsDialogs.py:2399
+#: gui\settingsDialogs.py:2400
 msgid "Object Presentation"
 msgstr "Objektien lukeminen"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by speaking.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:2409
+#: gui\settingsDialogs.py:2410
 msgid "Speak"
 msgstr "Puhu"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:2413
+#: gui\settingsDialogs.py:2414
 msgid "Beep"
 msgstr "Anna merkkiääni"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by both speaking and beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:2417
+#: gui\settingsDialogs.py:2418
 msgid "Speak and beep"
 msgstr "Puhu ja anna merkkiääni"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2430
+#: gui\settingsDialogs.py:2431
 msgid "Report &tooltips"
 msgstr "Puhu &työkaluvihjeet"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2437
+#: gui\settingsDialogs.py:2438
 msgid "Report &notifications"
 msgstr "Puhu &ilmoitukset"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2444
+#: gui\settingsDialogs.py:2445
 msgid "Report object shortcut &keys"
 msgstr "Ilmoita objektien &pikanäppäimet"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2451
+#: gui\settingsDialogs.py:2452
 msgid "Report object &position information"
 msgstr "Ilmoita objektien sij&aintitiedot"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2458
+#: gui\settingsDialogs.py:2459
 msgid "&Guess object position information when unavailable"
 msgstr "Ar&vaa objektien sijaintitiedot, kun niitä ei ole käytettävissä"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2467
+#: gui\settingsDialogs.py:2468
 msgid "Report when objects support &multiple selection"
 msgstr "Ilmoita, kun objekti tukee &monivalintaa"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2476
+#: gui\settingsDialogs.py:2477
 msgid "Report object &descriptions"
 msgstr "Puhu objektien k&uvaukset"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2483
+#: gui\settingsDialogs.py:2484
 msgid "Progress &bar output:"
 msgstr "E&distymispalkkien päivitykset:"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2496
+#: gui\settingsDialogs.py:2497
 msgid "Report backg&round progress bars"
 msgstr "Ilmaise ta&ustalla olevat edistymispalkit"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2510
+#: gui\settingsDialogs.py:2511
 msgid "Report dynamic &content changes"
 msgstr "Puhu d&ynaamisen sisällön muutokset"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#: gui\settingsDialogs.py:2520
+#: gui\settingsDialogs.py:2521
 msgid "Play a sound when &auto-suggestions appear"
 msgstr "Toista ääni &automaattisten ehdotusten tullessa näkyviin"
 
 #. Translators: This is the label for the browse mode settings panel.
-#: gui\settingsDialogs.py:2554
+#: gui\settingsDialogs.py:2555
 msgid "Browse Mode"
 msgstr "Selaustila"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2561
+#: gui\settingsDialogs.py:2562
 msgid "&Maximum number of characters on one line"
 msgstr "&Merkkien enimmäismäärä rivillä"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2574
+#: gui\settingsDialogs.py:2575
 msgid "&Number of lines per page"
 msgstr "R&ivien enimmäismäärä sivulla"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2587
+#: gui\settingsDialogs.py:2588
 msgid "Use &screen layout (when supported)"
 msgstr "Käytä &ruutuasettelua"
 
 #. Translators: The label for a checkbox in browse mode settings to
 #. enable browse mode on page load.
-#: gui\settingsDialogs.py:2594
+#: gui\settingsDialogs.py:2595
 msgid "&Enable browse mode on page load"
 msgstr "&Ota selaustila käyttöön sivua ladattaessa"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2601
+#: gui\settingsDialogs.py:2602
 msgid "Automatic &Say All on page load"
 msgstr "Lue si&vu automaattisesti sen latauduttua"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2608
+#: gui\settingsDialogs.py:2609
 msgid "Include l&ayout tables"
 msgstr "Sisällytä as&ettelutaulukot"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2615
+#: gui\settingsDialogs.py:2616
 msgid "Automatic focus mode for focus changes"
 msgstr "Automaattinen lomaketila kohdistuksen muuttuessa"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2629
+#: gui\settingsDialogs.py:2630
 msgid "Automatic focus mode for caret movement"
 msgstr "Automaattinen lomaketila kohdistinta siirrettäessä"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2643
+#: gui\settingsDialogs.py:2644
 msgid "Audio indication of focus and browse modes"
 msgstr "Ilmaise lomake- ja selaustilat merkkiäänellä"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
-#: gui\settingsDialogs.py:2657
+#: gui\settingsDialogs.py:2658
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr "Estä mui&den kuin näppäinkomentojen pääsy asiakirjaan"
 
 #. Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
-#: gui\settingsDialogs.py:2675
+#: gui\settingsDialogs.py:2676
 msgid "T&ouch navigation elements:"
 msgstr "K&osketusnavigoinnin elementit:"
 
 #. Translators: Title of the math settings panel.
-#: gui\settingsDialogs.py:2712
+#: gui\settingsDialogs.py:2713
 msgctxt "math"
 msgid "Math"
 msgstr "Matemaattinen sisältö"
 
 #. Translators: The description of the math settings panel.
-#: gui\settingsDialogs.py:2717
+#: gui\settingsDialogs.py:2718
 msgctxt "math"
 msgid "The following options control the presentation of mathematical content."
 msgstr "Seuraavat asetukset vaikuttavat matemaattisen sisällön esittämiseen."
 
 #. Translators: options for Copy math to clipboard as -- speech text
-#: gui\settingsDialogs.py:2789 mathPres\MathCAT\preferences.py:140
+#: gui\settingsDialogs.py:2790 mathPres\MathCAT\preferences.py:140
 msgctxt "math"
 msgid "Speech"
 msgstr "Puhe"
 
 #. Translators: Select an impairment for MathCAT
-#: gui\settingsDialogs.py:2796
+#: gui\settingsDialogs.py:2797
 msgctxt "math"
 msgid "Impairment:"
 msgstr "Vamma:"
 
 #. Translators: MathCAT language option
-#: gui\settingsDialogs.py:2808
+#: gui\settingsDialogs.py:2809
 msgctxt "math"
 msgid "Language:"
 msgstr "Kieli:"
 
 #. Translators: MathCAT decimal separator option.
-#: gui\settingsDialogs.py:2828
+#: gui\settingsDialogs.py:2829
 msgctxt "math"
 msgid "Decimal separator for numbers:"
 msgstr "Numeroiden desimaalierotin:"
 
 #. Translators: Select a speech style.
-#: gui\settingsDialogs.py:2843
+#: gui\settingsDialogs.py:2844
 msgctxt "math"
 msgid "Speech style:"
 msgstr "Puhetyyli:"
 
 #. Translators: MathCAT's verbosity setting
-#: gui\settingsDialogs.py:2857
+#: gui\settingsDialogs.py:2858
 msgctxt "math"
 msgid "Speech verbosity:"
 msgstr "Puheen määrä:"
 
 #. Translators: MathCAT's relative speed setting
-#: gui\settingsDialogs.py:2869
+#: gui\settingsDialogs.py:2870
 msgctxt "math"
 msgid "Relative speech rate"
 msgstr "Puheen suhteellinen nopeus"
 
 #. Translators: label for slider that specifies relative factor to increase or decrease pauses in the math speech
-#: gui\settingsDialogs.py:2882
+#: gui\settingsDialogs.py:2883
 msgctxt "math"
 msgid "Pause factor"
 msgstr "Taukokerroin"
 
 #. Translators: label for check box controlling a beep sound when math speech starts/ends
-#: gui\settingsDialogs.py:2897
+#: gui\settingsDialogs.py:2898
 msgctxt "math"
 msgid "Beep at the beginning and end of math"
 msgstr "Toista merkkiääni matemaattisen sisällön puhumista aloitettaessa ja lopetettaessa"
 
 #. Translators: label for combobox to specify how verbose/terse the speech should be
-#: gui\settingsDialogs.py:2903
+#: gui\settingsDialogs.py:2904
 msgctxt "math"
 msgid "Chemical formulae:"
 msgstr "Kemialliset kaavat:"
 
 #. Translators: label for combobox to specify whether the expression is spoken or described (an overview)
-#: gui\settingsDialogs.py:2915
+#: gui\settingsDialogs.py:2916
 msgctxt "math"
 msgid "When entering an equation:"
 msgstr "Lausekkeeseen siirryttäessä:"
 
 #. Translators: "Speak" the expression after moving to it
-#: gui\settingsDialogs.py:2918
+#: gui\settingsDialogs.py:2919
 msgctxt "math"
 msgid "Speak"
 msgstr "Puhu"
 
 #. Translators: "Describe" the expression after moving to it
-#: gui\settingsDialogs.py:2920
+#: gui\settingsDialogs.py:2921
 msgctxt "math"
 msgid "Describe overview"
 msgstr "Anna yhteenveto"
 
 #. Translators: Text for the navigation group.
-#: gui\settingsDialogs.py:2934
+#: gui\settingsDialogs.py:2935
 msgctxt "math"
 msgid "Navigation"
 msgstr "Navigointi"
 
 #. Translators: label for combobox to specify one of three modes use to navigate math expressions
-#: gui\settingsDialogs.py:2941
+#: gui\settingsDialogs.py:2942
 msgctxt "math"
 msgid "Default navigation mode:"
 msgstr "Navigoinnin oletustila:"
@@ -14140,64 +14141,64 @@ msgstr "Navigoinnin oletustila:"
 #. reverts to the user-selected "default navigation mode" when
 #. navigating into a new equation, even if they selected a different
 #. one this session.
-#: gui\settingsDialogs.py:2956
+#: gui\settingsDialogs.py:2957
 msgctxt "math"
 msgid "Reset to the default navigation mode for each new equation"
 msgstr "Käytä uusissa lausekkeissa navigoinnin oletustilaa"
 
 #. Translators: label for checkbox that controls whether arrow keys move out of fractions, etc.,
 #. or whether you have to manually back out of the fraction, etc.
-#: gui\settingsDialogs.py:2963
+#: gui\settingsDialogs.py:2964
 msgctxt "math"
 msgid "Automatically zoom out of two-dimensional notation"
 msgstr "Siirry automaattisesti uloimmalle tasolle kaksiulotteisista merkinnöistä"
 
 #. Translators: label for combobox down to specify whether you want a terse or verbose reading of navigation commands
-#: gui\settingsDialogs.py:2969
+#: gui\settingsDialogs.py:2970
 msgctxt "math"
 msgid "Navigation verbosity:"
 msgstr "Puheen määrä navigoitaessa:"
 
 #. Translators: label for combobox to specify how math will be copied to the clipboard
-#: gui\settingsDialogs.py:2987
+#: gui\settingsDialogs.py:2988
 msgctxt "math"
 msgid "Copy math as:"
 msgstr "Kopioi matemaattinen sisältö muodossa:"
 
 #. Translators: Text for the braille group.
-#: gui\settingsDialogs.py:2999
+#: gui\settingsDialogs.py:3000
 msgctxt "math"
 msgid "Braille"
 msgstr "Pistekirjoitus"
 
 #. Translators: label for combobox to specify which braille code to use
-#: gui\settingsDialogs.py:3005
+#: gui\settingsDialogs.py:3006
 msgctxt "math"
 msgid "Output code:"
 msgstr "Pistekirjoitusstandardi:"
 
 #. Translators: An option in Math settings to select a braille code automatically,
 #. according to NVDA's language.
-#: gui\settingsDialogs.py:3010
+#: gui\settingsDialogs.py:3011
 #, python-brace-format
 msgctxt "math"
 msgid "Automatic ({name})"
 msgstr "Automaattinen ({name})"
 
 #. Translators: label for combobox to specify how braille dots should be modified when navigating/selecting subexprs
-#: gui\settingsDialogs.py:3029
+#: gui\settingsDialogs.py:3030
 msgctxt "math"
 msgid "Highlight navigation focus with dots 7 and 8"
 msgstr "Korosta nykyinen navigointikohta pisteillä 7 ja 8"
 
 #. Translators: Text for the application support group in MathCAT options.
-#: gui\settingsDialogs.py:3047
+#: gui\settingsDialogs.py:3048
 msgctxt "math"
 msgid "Application support"
 msgstr "Sovellustuki"
 
 #. Translators: label for checkbox to use native math presentation support instead of MathCAT in Word and Outlook
-#: gui\settingsDialogs.py:3054
+#: gui\settingsDialogs.py:3055
 msgctxt "math"
 msgid "Use native math support in Word and Outlook"
 msgstr "Käytä Wordissa ja Outlookissa alkuperäistä matemaattisen sisällön tukea"
@@ -14205,379 +14206,379 @@ msgstr "Käytä Wordissa ja Outlookissa alkuperäistä matemaattisen sisällön 
 #. Translators: This is the label for the document formatting panel.
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:3161 gui\settingsDialogs.py:4617
+#: gui\settingsDialogs.py:3162 gui\settingsDialogs.py:4618
 msgid "Document Formatting"
 msgstr "Asiakirjojen muotoilu"
 
 #. Translators: This is a label appearing on the document formatting settings panel.
-#: gui\settingsDialogs.py:3165
+#: gui\settingsDialogs.py:3166
 msgid "The following options control the types of document formatting reported by NVDA."
 msgstr "Seuraavat asetukset määrittävät, minkä tyyppisestä asiakirjamuotoilusta NVDA ilmoittaa."
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3174
+#: gui\settingsDialogs.py:3175
 msgid "Font"
 msgstr "Fontti"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3182
+#: gui\settingsDialogs.py:3183
 msgid "&Font name"
 msgstr "&Fontin nimi"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3188
+#: gui\settingsDialogs.py:3189
 msgid "Font &size"
 msgstr "Fontin &koko"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3194
+#: gui\settingsDialogs.py:3195
 msgid "Font attrib&utes"
 msgstr "Fontin mää&reet"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3206
+#: gui\settingsDialogs.py:3207
 msgid "Su&perscripts and subscripts"
 msgstr "Yl&ä- ja alaindeksit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3216
+#: gui\settingsDialogs.py:3217
 msgid "E&mphasis"
 msgstr "K&orostus"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3222
+#: gui\settingsDialogs.py:3223
 msgid "Highlighted (mar&ked) text"
 msgstr "Korostettu (mer&kitty) teksti"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3232
+#: gui\settingsDialogs.py:3233
 msgid "St&yle"
 msgstr "T&yyli"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3238
+#: gui\settingsDialogs.py:3239
 msgid "&Colors"
 msgstr "V&ärit"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3244
+#: gui\settingsDialogs.py:3245
 msgid "Document information"
 msgstr "Asiakirjan tiedot"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3252
+#: gui\settingsDialogs.py:3253
 msgid "Commen&ts"
 msgstr "Komme&ntit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3258
+#: gui\settingsDialogs.py:3259
 msgid "&Bookmarks"
 msgstr "&Kirjanmerkit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3264
+#: gui\settingsDialogs.py:3265
 msgid "&Editor revisions"
 msgstr "&Muokkausmerkinnät"
 
 #. Translators: This is the label for a checklist in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3271
+#: gui\settingsDialogs.py:3272
 msgid "Spelling or grammar e&rrors"
 msgstr "Kirjoitus- ja kielioppi&virheet"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3288
+#: gui\settingsDialogs.py:3289
 msgid "Pages and spacing"
 msgstr "Sivut ja välit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3296
+#: gui\settingsDialogs.py:3297
 msgid "&Pages"
 msgstr "&Sivut"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3302
+#: gui\settingsDialogs.py:3303
 msgid "Line &numbers"
 msgstr "Rivi&numerot"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-#: gui\settingsDialogs.py:3310
+#: gui\settingsDialogs.py:3311
 msgid "Line &indentation reporting:"
 msgstr "Rivien &sisennysten ilmoittaminen:"
 
 #. Translators: This is the label of a checkbox in the document formatting settings panel
 #. If this option is selected, NVDA will ignore blank lines for line indentation reporting
-#: gui\settingsDialogs.py:3324
+#: gui\settingsDialogs.py:3325
 msgid "Ignore &blank lines for line indentation reporting"
 msgstr "Ohita t&yhjät rivit rivien sisennyksiä ilmoitettaessa"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
-#: gui\settingsDialogs.py:3336
+#: gui\settingsDialogs.py:3337
 msgid "&Paragraph indentation"
 msgstr "Ka&ppalesisennykset"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report line spacing if available.
-#: gui\settingsDialogs.py:3345
+#: gui\settingsDialogs.py:3346
 msgid "&Line spacing"
 msgstr "Ri&vivälit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3352
+#: gui\settingsDialogs.py:3353
 msgid "&Alignment"
 msgstr "T&asaus"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3358
+#: gui\settingsDialogs.py:3359
 msgid "Table information"
 msgstr "Taulukon tiedot"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3366
+#: gui\settingsDialogs.py:3367
 msgid "&Tables"
 msgstr "Ta&ulukot"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3373
+#: gui\settingsDialogs.py:3374
 msgid "H&eaders"
 msgstr "O&tsikot"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3381
+#: gui\settingsDialogs.py:3382
 msgid "Cell c&oordinates"
 msgstr "Solujen koor&dinaatit"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3389
+#: gui\settingsDialogs.py:3390
 msgid "Cell &borders:"
 msgstr "Solun r&eunat:"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
-#: gui\settingsDialogs.py:3397
+#: gui\settingsDialogs.py:3398
 msgid "Elements"
 msgstr "Elementit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3416
+#: gui\settingsDialogs.py:3417
 msgid "Link type"
 msgstr "Linkin tyyppi"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3422
+#: gui\settingsDialogs.py:3423
 msgid "&Graphics"
 msgstr "&Grafiikat"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3427
+#: gui\settingsDialogs.py:3428
 msgid "&Lists"
 msgstr "&Luettelot"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3432
+#: gui\settingsDialogs.py:3433
 msgid "Block &quotes"
 msgstr "Sisennetyt &lainaukset"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3438
+#: gui\settingsDialogs.py:3439
 msgid "&Groupings"
 msgstr "R&yhmät"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3444
+#: gui\settingsDialogs.py:3445
 msgid "Lan&dmarks and regions"
 msgstr "Kii&ntopisteet ja alueet"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3450
+#: gui\settingsDialogs.py:3451
 msgid "Arti&cles"
 msgstr "A&rtikkelit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3455
+#: gui\settingsDialogs.py:3456
 msgid "Fra&mes"
 msgstr "Ke&hykset"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3461
+#: gui\settingsDialogs.py:3462
 msgid "&Figures and captions"
 msgstr "K&uvat ja kuvatekstit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3467
+#: gui\settingsDialogs.py:3468
 msgid "&Clickable"
 msgstr "&Napsautettavat kohteet"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: gui\settingsDialogs.py:3472
+#: gui\settingsDialogs.py:3473
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr "Ilmoita koh&distimen jälkeiset muotoilumuutokset (voi aiheuttaa hidastumista)"
 
 #. Translators: This is the label for the document navigation settings panel.
-#: gui\settingsDialogs.py:3542
+#: gui\settingsDialogs.py:3543
 msgid "Document Navigation"
 msgstr "Asiakirjan selaus"
 
 #. Translators: This is a label for the paragraph navigation style in the document navigation dialog
-#: gui\settingsDialogs.py:3548
+#: gui\settingsDialogs.py:3549
 msgid "&Paragraph style:"
 msgstr "Ka&ppaletyyli:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected synthesizer.
-#: gui\settingsDialogs.py:3565
+#: gui\settingsDialogs.py:3566
 #, python-format
 msgid "Could not load the %s synthesizer."
 msgstr "Syntetisaattoria %s ei voitu ladata."
 
 #. Translators: Dialog title presented when
 #. NVDA is unable to load the selected synthesizer.
-#: gui\settingsDialogs.py:3568
+#: gui\settingsDialogs.py:3569
 msgid "Synthesizer Error"
 msgstr "Syntetisaattorivirhe"
 
 #. Translators: This is the label for the select output device combo in NVDA audio settings.
 #. Examples of an output device are default soundcard, usb headphones, etc.
-#: gui\settingsDialogs.py:3583
+#: gui\settingsDialogs.py:3584
 msgid "Audio output &device:"
 msgstr "Äänen ulostulo&laite:"
 
 #. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
-#: gui\settingsDialogs.py:3598
+#: gui\settingsDialogs.py:3599
 msgid "Audio d&ucking mode:"
 msgstr "Äänenva&imennus:"
 
 #. Translators: This is the label for a checkbox control in the
 #. Audio settings panel.
-#: gui\settingsDialogs.py:3612
+#: gui\settingsDialogs.py:3613
 msgid "Volume of NVDA sounds follows voice volume"
 msgstr "NVDA-äänien voimakkuus mukautuu puheäänen voimakkuuteen"
 
 #. Translators: This is the label for a slider control in the
 #. Audio settings panel.
-#: gui\settingsDialogs.py:3620
+#: gui\settingsDialogs.py:3621
 msgid "Volume of NVDA sounds"
 msgstr "NVDA-äänien voimakkuus"
 
 #. Translators: This is a label for the sound split combo box in the Audio Settings dialog.
-#: gui\settingsDialogs.py:3631
+#: gui\settingsDialogs.py:3632
 msgid "&Sound split mode:"
-msgstr "&Äänijaon tila:"
+msgstr "&Äänen jakotila:"
 
 #. Translators: The label for a setting in Audio settings panel
 #. to change how long the audio device is kept awake after speech
-#: gui\settingsDialogs.py:3648
+#: gui\settingsDialogs.py:3649
 msgid "Time to &keep audio device awake after speech (seconds)"
-msgstr "Pidä äänilaite aktiivisena puheen jälkeen (sekuntia)"
+msgstr "Äänilaitteen aktiivisuusaika puheen jälkeen (sekunteina)"
 
 #. Translators: Label of the list where user can select sound split modes that will be available.
-#: gui\settingsDialogs.py:3665
+#: gui\settingsDialogs.py:3666
 msgid "&Modes available in the 'Cycle sound split mode' command:"
-msgstr "&Äänijakotilan valinnat:"
+msgstr "&Äänen jakotilan valinnat:"
 
 #. Translators: Message shown when no sound split modes are enabled.
-#: gui\settingsDialogs.py:3723
+#: gui\settingsDialogs.py:3724
 msgid "At least one sound split mode has to be checked."
-msgstr "Vähintään yksi äänijaon tila on valittava."
+msgstr "Vähintään yksi äänen jakotila on valittava."
 
 #. Translators: Same as the label for the list of checkboxes controlling which sound split modes will be
 #. available. in Audio Settings, but without keyboard accelerator (& character) nor final colon.
-#: gui\settingsDialogs.py:3726
+#: gui\settingsDialogs.py:3727
 msgid "Modes available in the 'Cycle sound split mode' command"
-msgstr "Äänijakotilan valinnat"
+msgstr "Äänen jakotilan valinnat"
 
 #. Translators: This is the label for the addon navigation settings panel.
-#: gui\settingsDialogs.py:3734
+#: gui\settingsDialogs.py:3735
 msgid "Add-on Store"
 msgstr "Lisäosakauppa"
 
 #. Translators: This is a label for the automatic updates combo box in the Add-on Store Settings dialog.
-#: gui\settingsDialogs.py:3740
+#: gui\settingsDialogs.py:3741
 msgid "Automatic &updates:"
 msgstr "Automaattiset &päivitykset:"
 
 #. Translators: This is the label for the default update channel combo box in the Add-on Store Settings dialog.
-#: gui\settingsDialogs.py:3752
+#: gui\settingsDialogs.py:3753
 msgid "Default update &channel:"
 msgstr "Oletuspäivitys&kanava:"
 
 #. Translators: Mute other apps checkbox in settings
-#: gui\settingsDialogs.py:3766
+#: gui\settingsDialogs.py:3767
 msgid "Allow automatic updates to install incompatible add-ons"
 msgstr "Salli automaattisten päivitysten asentaa yhteensopimattomia lisäosia"
 
 #. Translators: The label for the mirror server on the Add-on Store Settings panel.
-#: gui\settingsDialogs.py:3772
+#: gui\settingsDialogs.py:3773
 msgid "Mirror server"
 msgstr "Peilipalvelin"
 
 #. Translators: Title of the dialog used to change the Add-on Store mirror URL.
-#: gui\settingsDialogs.py:3809
+#: gui\settingsDialogs.py:3810
 msgid "Set Add-on Store Mirror Server"
 msgstr "Määritä lisäosakaupan peilipalvelin"
 
 #. Translators: Label of a checkbox in Remote Access settings
-#: gui\settingsDialogs.py:3863
+#: gui\settingsDialogs.py:3864
 msgctxt "remote"
 msgid "Enable Remote Access"
 msgstr "Salli etäkäyttö"
 
 #. Translators: A checkbox in Remote Access settings to set whether to confirm when disconnecting as a follower.
-#: gui\settingsDialogs.py:3880
+#: gui\settingsDialogs.py:3881
 msgctxt "remote"
 msgid "Confirm before disconnecting when controlled"
 msgstr "Pyydä vahvistus yhteyden katkaisulle, kun tätä konetta hallitaan"
 
 #. Translators: A checkbox in Remote Access settings to mute speech and sounds from the remote computer
 #. when controlling the local computer.
-#: gui\settingsDialogs.py:3891
+#: gui\settingsDialogs.py:3892
 msgctxt "remote"
 msgid "&Mute when controlling the local computer"
 msgstr "&Mykistä paikallista konetta hallittaessa"
 
 #. Translators: A checkbox in Remote Access settings to set whether NVDA should automatically connect to a control server on startup.
-#: gui\settingsDialogs.py:3901
+#: gui\settingsDialogs.py:3902
 msgctxt "remote"
 msgid "Automatically &connect after NVDA starts"
 msgstr "&Yhdistä automaattisesti NVDA:n käynnistyessä"
 
 #. Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote Access connection at startup.
-#: gui\settingsDialogs.py:3911
+#: gui\settingsDialogs.py:3912
 msgctxt "remote"
 msgid "Automatic connection"
 msgstr "Automaattinen yhteys"
@@ -14585,7 +14586,7 @@ msgstr "Automaattinen yhteys"
 #. Translators: Label for a control in Remote Access settings,
 #. allowing the user to select whether their computer is controlling or controlled.
 #. Translators: Label of the control allowing users to set whether they are the controlling or controlled computer in the Remote Access connection dialog.
-#: gui\settingsDialogs.py:3920 _remoteClient\dialogs.py:325
+#: gui\settingsDialogs.py:3921 _remoteClient\dialogs.py:325
 msgctxt "remote"
 msgid "&Mode:"
 msgstr "T&ila:"
@@ -14593,7 +14594,7 @@ msgstr "T&ila:"
 #. Translators: Label for a control in Remote Access settings,
 #. allowing users to choose whether they want to use an existing server, or host their own.
 #. Translators: Label of the control allowing users to select whether to use a pre-existing Remote Access server, or to run their own.
-#: gui\settingsDialogs.py:3929 _remoteClient\dialogs.py:335
+#: gui\settingsDialogs.py:3930 _remoteClient\dialogs.py:335
 msgctxt "remote"
 msgid "&Server:"
 msgstr "Pa&lvelin:"
@@ -14601,7 +14602,7 @@ msgstr "Pa&lvelin:"
 #. Translators: Label for the host field in Remote Access settings.
 #. This is where users should enter the URL of the Remote Access server they want to use if they are not hosting their own.
 #. Translators: The label of an edit field in connect dialog to enter name or address of the remote computer.
-#: gui\settingsDialogs.py:3939 _remoteClient\dialogs.py:46
+#: gui\settingsDialogs.py:3940 _remoteClient\dialogs.py:46
 msgid "&Host:"
 msgstr "I&säntä:"
 
@@ -14609,7 +14610,7 @@ msgstr "I&säntä:"
 #. This is the port on which the local control server will be accessible,
 #. if the user has chosen to host their own.
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
-#: gui\settingsDialogs.py:3948 gui\settingsDialogs.py:5037
+#: gui\settingsDialogs.py:3949 gui\settingsDialogs.py:5038
 #: _remoteClient\dialogs.py:207
 msgid "&Port:"
 msgstr "&Portti:"
@@ -14617,17 +14618,17 @@ msgstr "&Portti:"
 #. Translators: Label for a control in Remote Access settings,
 #. Where users set the key for their connection.
 #. Translators: Label of the edit field to enter key (password) to secure the Remote Access connection.
-#: gui\settingsDialogs.py:3969 _remoteClient\dialogs.py:51
+#: gui\settingsDialogs.py:3970 _remoteClient\dialogs.py:51
 msgid "&Key:"
 msgstr "&Avain:"
 
 #. Translators: A button in Remote Access settings to delete all fingerprints of unauthorized certificates.
-#: gui\settingsDialogs.py:3976
+#: gui\settingsDialogs.py:3977
 msgid "Delete all trusted fingerprints"
 msgstr "Poista kaikki luotetut sormenjäljet"
 
 #. Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
-#: gui\settingsDialogs.py:4055
+#: gui\settingsDialogs.py:4056
 msgctxt "remote"
 msgid "This will cause NVDA to forget all previously trusted Remote Access servers. When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
 "Are you sure you want to continue?"
@@ -14635,184 +14636,184 @@ msgstr "Tämä saa NVDA:n unohtamaan kaikki aiemmin luotetut etäkäyttöpalveli
 "Haluatko varmasti jatkaa?"
 
 #. Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
-#: gui\settingsDialogs.py:4060
+#: gui\settingsDialogs.py:4061
 msgctxt "remote"
 msgid "Delete All Trusted Fingerprints"
 msgstr "Luotettujen sormenjälkien poistaminen"
 
 #. Translators: This message is presented when the user tries to save the settings with the host or key field empty.
-#: gui\settingsDialogs.py:4077
+#: gui\settingsDialogs.py:4078
 msgctxt "remote"
 msgid "Both host and key must be set in the Remote Access section in order to automatically connect using an existing server after NVDA starts."
 msgstr "Isäntä ja avain on määritettävä Etäkäyttö-kategoriassa, jotta NVDA voi käynnistyessään muodostaa yhteyden automaattisesti olemassa olevaa palvelinta käyttäen."
 
 #. Translators: This message is presented when the user tries to save the settings with the port or key field empty.
-#: gui\settingsDialogs.py:4083
+#: gui\settingsDialogs.py:4084
 msgctxt "remote"
 msgid "Both port and key must be set in the Remote Access category in order to automatically connect using a locally hosted server after NVDA starts."
 msgstr "Isäntä ja avain on määritettävä Etäkäyttö-kategoriassa, jotta NVDA voi käynnistyessään muodostaa yhteyden automaattisesti paikallisesti isännöityä palvelinta käyttäen."
 
 #. Translators: Title of a dialog.
-#: gui\settingsDialogs.py:4089
+#: gui\settingsDialogs.py:4090
 msgctxt "remote"
 msgid "Remote Access Error"
 msgstr "Etäkäyttövirhe"
 
 #. Translators: This is the label for the touch interaction settings panel.
-#: gui\settingsDialogs.py:4123
+#: gui\settingsDialogs.py:4124
 msgid "Touch Interaction"
 msgstr "Kosketuksen vuorovaikutus"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
-#: gui\settingsDialogs.py:4130
+#: gui\settingsDialogs.py:4131
 msgid "Enable touch interaction support"
 msgstr "Ota käyttöön kosketusvuorovaikutuksen tuki"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
-#: gui\settingsDialogs.py:4136
+#: gui\settingsDialogs.py:4137
 msgid "&Touch typing mode"
 msgstr "&Kosketuskirjoitustila"
 
 #. Translators: The title of the Windows OCR panel.
-#: gui\settingsDialogs.py:4148
+#: gui\settingsDialogs.py:4149
 msgid "Windows OCR"
 msgstr "Windowsin tekstintunnistus"
 
 #. Translators: Label for an option in the Windows OCR dialog.
-#: gui\settingsDialogs.py:4167
+#: gui\settingsDialogs.py:4168
 msgid "Recognition &language:"
 msgstr "Tunnistus&kieli:"
 
 #. Translators: Label for an option in the Windows OCR settings panel.
-#: gui\settingsDialogs.py:4177
+#: gui\settingsDialogs.py:4178
 msgid "Periodically &refresh recognized content"
 msgstr "Päivitä tunnistettu s&isältö ajoittain"
 
 #. Translators: The label for a setting in OCR settings to automatically say all on result.
-#: gui\settingsDialogs.py:4185
+#: gui\settingsDialogs.py:4186
 msgid "Automatically say all on result"
 msgstr "Puhu tulos automaattisesti"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4217
+#: gui\settingsDialogs.py:4218
 msgid "NVDA Development"
 msgstr "NVDA:n kehitys"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4225
+#: gui\settingsDialogs.py:4226
 msgid "Enable loading custom code from Developer Scratchpad directory"
 msgstr "Lataa mukautettu koodi kehittäjän Scratchpad-hakemistosta"
 
 #. Translators: the label for a button in the Advanced settings category
-#: gui\settingsDialogs.py:4238
+#: gui\settingsDialogs.py:4239
 msgid "Open developer scratchpad directory"
 msgstr "Avaa kehittäjän Scratchpad-hakemisto"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4248
+#: gui\settingsDialogs.py:4249
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UI Automation"
 
 #. Translators: This is the label for a combo box for selecting the
 #. means of registering for UI Automation events in the advanced settings panel.
 #. Choices are automatic, selective, and global.
-#: gui\settingsDialogs.py:4258
+#: gui\settingsDialogs.py:4259
 msgid "Regi&stration for UI Automation events and property changes:"
 msgstr "UI Automation -tapahtumien ja ominaisuusmuutosten &rekisteröinti:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA decide whether to register
 #. selectively or globally for UI Automation events.
-#: gui\settingsDialogs.py:4264
+#: gui\settingsDialogs.py:4265
 msgid "Automatic (prefer selective)"
 msgstr "Automaattinen (etusijalla valikoiva)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register selectively for UI Automation events
 #. (i.e. not to request events for objects outside immediate focus).
-#: gui\settingsDialogs.py:4268
+#: gui\settingsDialogs.py:4269
 msgid "Selective"
 msgstr "Valikoiva"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register for all UI Automation events
 #. in all cases.
-#: gui\settingsDialogs.py:4272
+#: gui\settingsDialogs.py:4273
 msgid "Global"
 msgstr "Yleinen"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4301
+#: gui\settingsDialogs.py:4302
 msgctxt "advanced.uiaWithMSWord"
 msgid "Use UI Automation to access Microsoft &Word document controls"
 msgstr "Käytä UI automation -rajapintaa Microsoft &Word -asiakirjoissa"
 
 #. Translators: Label for the default value of the Use UIA with MS Word combobox,
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4306
+#: gui\settingsDialogs.py:4307
 msgctxt "advanced.uiaWithMSWord"
 msgid "Default (Where suitable)"
 msgstr "Oletus (jos käytettävissä)"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4308
+#: gui\settingsDialogs.py:4309
 msgctxt "advanced.uiaWithMSWord"
 msgid "Only when necessary"
 msgstr "Vain tarvittaessa"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4310
+#: gui\settingsDialogs.py:4311
 msgctxt "advanced.uiaWithMSWord"
 msgid "Where suitable"
 msgstr "Jos käytettävissä"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4312
+#: gui\settingsDialogs.py:4313
 msgctxt "advanced.uiaWithMSWord"
 msgid "Always"
 msgstr "Aina"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4321
+#: gui\settingsDialogs.py:4322
 msgid "Use UI Automation to access Microsoft &Excel spreadsheet controls when available"
 msgstr "Käytä UI Automation -rajapintaa Microsoft &Excelin laskentataulukoissa"
 
 #. Translators: This is the label for a combo box for selecting the
 #. active console implementation in the advanced settings panel.
 #. Choices are automatic, UIA when available, and legacy.
-#: gui\settingsDialogs.py:4329
+#: gui\settingsDialogs.py:4330
 msgid "Windows C&onsole support:"
 msgstr "Windows-k&onsolin tuki:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine its Windows Console implementation
 #. automatically.
-#: gui\settingsDialogs.py:4334
+#: gui\settingsDialogs.py:4335
 msgid "Automatic (prefer UIA)"
 msgstr "Automaattinen (UIA etusijalla)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use UIA in the Windows Console when available.
-#: gui\settingsDialogs.py:4337
+#: gui\settingsDialogs.py:4338
 msgid "UIA when available"
 msgstr "UIA kun käytettävissä"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use its legacy Windows Console support
 #. in all cases.
-#: gui\settingsDialogs.py:4341
+#: gui\settingsDialogs.py:4342
 msgid "Legacy"
 msgstr "Vanha"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
-#: gui\settingsDialogs.py:4364
+#: gui\settingsDialogs.py:4365
 msgctxt "advanced.uiaWithChromium"
 msgid "Use UIA with Microsoft Edge and other \n"
 "&Chromium based browsers when available:"
@@ -14821,72 +14822,72 @@ msgstr "Käytä UIA:ta Microsoft Edgessä ja muissa\n"
 
 #. Translators: Label for the default value of the Use UIA with Chromium combobox,
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4369
+#: gui\settingsDialogs.py:4370
 msgctxt "advanced.uiaWithChromium"
 msgid "Default (Only when necessary)"
 msgstr "Oletus (vain tarvittaessa)"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4371
+#: gui\settingsDialogs.py:4372
 msgctxt "advanced.uiaWithChromium"
 msgid "Only when necessary"
 msgstr "Vain tarvittaessa"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4373
+#: gui\settingsDialogs.py:4374
 msgctxt "advanced.uiaWithChromium"
 msgid "Yes"
 msgstr "Kyllä"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4375
+#: gui\settingsDialogs.py:4376
 msgctxt "advanced.uiaWithChromium"
 msgid "No"
 msgstr "Ei"
 
 #. Translators: This is the label for a COMBOBOX in the Advanced settings panel.
-#: gui\settingsDialogs.py:4383
+#: gui\settingsDialogs.py:4384
 msgid "Use en&hanced event processing (requires restart)"
 msgstr "Käytä laa&jennettua tapahtumienkäsittelyä (edellyttää uudelleenkäynnistystä)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4394
+#: gui\settingsDialogs.py:4395
 msgid "Annotations"
 msgstr "Merkinnät"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4403
+#: gui\settingsDialogs.py:4404
 msgid "Report 'has details' for structured annotations"
 msgstr "Ilmoita rakenteellisten merkintöjen lisätiedoista"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4410
+#: gui\settingsDialogs.py:4411
 msgid "Report aria-description always"
 msgstr "Puhu aina ARIA-kuvaukset"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4426
+#: gui\settingsDialogs.py:4427
 msgid "Report live regions:"
 msgstr "Ilmaise aktiiviset alueet:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4435
+#: gui\settingsDialogs.py:4436
 msgid "Terminal programs"
 msgstr "Pääteohjelmat"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4442
+#: gui\settingsDialogs.py:4443
 msgid "Speak &passwords in all enhanced terminals (may improve performance)"
 msgstr "Puhu &salasanat kaikissa laajennetuissa päätteissä (saattaa parantaa suorituskykyä)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4451
+#: gui\settingsDialogs.py:4452
 msgid "Use enhanced t&yped character support in legacy Windows Console when available"
 msgstr "Käytä laajennettua k&irjoitettujen merkkien tukea vanhassa Windows-konsolissa, kun käytettävissä"
 
@@ -14894,327 +14895,327 @@ msgstr "Käytä laajennettua k&irjoitettujen merkkien tukea vanhassa Windows-kon
 #. method of detecting changed content in terminals in the advanced
 #. settings panel.
 #. Choices are automatic, Diff Match Patch, and Difflib.
-#: gui\settingsDialogs.py:4464
+#: gui\settingsDialogs.py:4465
 msgid "&Diff algorithm:"
 msgstr "Muutosten &havaitsemismenetelmä:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#: gui\settingsDialogs.py:4469
+#: gui\settingsDialogs.py:4470
 msgid "Automatic (prefer Diff Match Patch)"
 msgstr "Automaattinen (Diff Match Patch etusijalla)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by character, using the diff match patch algorithm.
-#: gui\settingsDialogs.py:4473
+#: gui\settingsDialogs.py:4474
 msgid "Diff Match Patch"
 msgstr "Diff Match Patch"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
-#: gui\settingsDialogs.py:4477
+#: gui\settingsDialogs.py:4478
 msgid "Difflib"
 msgstr "Difflib"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4503
+#: gui\settingsDialogs.py:4504
 msgid "Speak new text in Windows Terminal via:"
 msgstr "Uuden tekstin puhumismenetelmä Windows-päätteessä:"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4522
+#: gui\settingsDialogs.py:4523
 msgid "Default (Yes)"
 msgstr "Oletus (kyllä)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4525
+#: gui\settingsDialogs.py:4526
 msgid "Yes"
 msgstr "Kyllä"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4528
+#: gui\settingsDialogs.py:4529
 msgid "No"
 msgstr "Ei"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4532
+#: gui\settingsDialogs.py:4533
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Yritä perua vanhentuneiden kohdistustapahtumien puhe:"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4548
+#: gui\settingsDialogs.py:4549
 msgid "Trim leading silence in speech audio"
 msgstr "Poista hi&ljaisuus puheen alusta"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4556
+#: gui\settingsDialogs.py:4557
 msgid "Use WASAPI for SAPI 4 audio output:"
 msgstr "Käytä WASAPI-rajapintaa SAPI 4:n äänentoistoon:"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4567
+#: gui\settingsDialogs.py:4568
 msgid "Use modern regular expression engine for speech dictionary entries:"
 msgstr "Käytä puhesanastomäärityksissä uudempaa säännöllisten lausekkeiden moottoria:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4578
+#: gui\settingsDialogs.py:4579
 msgid "Virtual Buffers"
 msgstr "Näennäispuskurit"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4586
+#: gui\settingsDialogs.py:4587
 msgid "Load Chromium virtual buffer when document busy."
 msgstr "Lataa Chromiumin näennäispuskuri, kun asiakirja on varattu"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4595
+#: gui\settingsDialogs.py:4596
 msgid "Editable Text"
 msgstr "Muokattava teksti"
 
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4602
+#: gui\settingsDialogs.py:4603
 msgid "Caret movement timeout (in ms)"
 msgstr "Kohdistimen siirtämisen aikakatkaisu (ms)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4625
+#: gui\settingsDialogs.py:4626
 msgid "Report transparent color values"
 msgstr "Ilmoita läpinäkyvien värien arvot"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4639
+#: gui\settingsDialogs.py:4640
 msgid "Debug logging"
-msgstr "Virheenkorjausloki"
+msgstr "Vianetsintäloki"
 
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4666
+#: gui\settingsDialogs.py:4667
 msgid "Enabled logging categories"
-msgstr "Virheenkorjauslokin kategoriat"
+msgstr "Käytössä olevat lokikategoriat"
 
 #. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4686
+#: gui\settingsDialogs.py:4687
 msgid "Play a sound for logged e&rrors:"
 msgstr "Ilmaise lokiin tallentuvat vi&rheet merkkiäänellä:"
 
 #. Translators: This is the label for a textfield in the
 #. advanced settings panel.
-#: gui\settingsDialogs.py:4699
+#: gui\settingsDialogs.py:4700
 msgid "Regular expression for text paragraph navigation"
 msgstr "Tekstikappalenavigoinnin säännöllinen lauseke"
 
 #. Translators: Message shown when invalid text paragraph regex entered
-#: gui\settingsDialogs.py:4721
+#: gui\settingsDialogs.py:4722
 #, python-format
 msgid "Failed to compile text paragraph regular expression: %s"
 msgstr "Tekstikappalenavigoinnin säännöllisen lausekkeen kääntäminen epäonnistui: %s"
 
 #. Translators: This is the label for the Advanced settings panel.
-#: gui\settingsDialogs.py:4854
+#: gui\settingsDialogs.py:4855
 msgid "Advanced"
 msgstr "Lisäasetukset"
 
 #. Translators: This is the label to warn users about the Advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4859
+#: gui\settingsDialogs.py:4860
 msgid "Warning!"
 msgstr "Varoitus!"
 
 #. Translators: This is a label appearing on the Advanced settings panel.
-#: gui\settingsDialogs.py:4863
+#: gui\settingsDialogs.py:4864
 msgid "The following settings are for advanced users. Changing them may cause NVDA to function incorrectly. Please only change these if you know what you are doing or have been specifically instructed by NVDA developers."
 msgstr "Seuraavat asetukset on tarkoitettu edistyneille käyttäjille. Niiden muuttaminen voi saada NVDA:n toimimaan virheellisesti. Muuta näitä asetuksia vain, jos tiedät mitä teet tai jos NVDA:n kehittäjät ovat niin kehottaneet."
 
 #. Translators: This is the label for a checkbox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4890
+#: gui\settingsDialogs.py:4891
 msgid "I understand that changing these settings may cause NVDA to function incorrectly."
 msgstr "Ymmärrän, että näiden asetusten muuttaminen voi saada NVDA:n toimimaan virheellisesti"
 
 #. Translators: This is the label for a button in the Advanced settings panel
-#: gui\settingsDialogs.py:4901
+#: gui\settingsDialogs.py:4902
 msgid "Restore defaults"
 msgstr "Palauta oletukset"
 
 #. Translators: A label for the braille display on the braille panel.
-#: gui\settingsDialogs.py:4944
+#: gui\settingsDialogs.py:4945
 msgid "Braille display"
 msgstr "Pistenäyttö"
 
 #. Translators: This is the label for the braille display selection dialog.
-#: gui\settingsDialogs.py:5013
+#: gui\settingsDialogs.py:5014
 msgid "Select Braille Display"
 msgstr "Valitse pistenäyttö"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
-#: gui\settingsDialogs.py:5022
+#: gui\settingsDialogs.py:5023
 msgid "Braille &display:"
 msgstr "Piste&näyttö:"
 
 #. Translators: The label for a setting in braille settings to enable displays for automatic detection.
-#: gui\settingsDialogs.py:5028
+#: gui\settingsDialogs.py:5029
 msgid "&Displays to detect automatically:"
 msgstr "&Automaattisesti tunnistettavat pistenäytöt:"
 
 #. Translators: The message in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:5144
+#: gui\settingsDialogs.py:5145
 #, python-brace-format
 msgid "Could not load the {display} display."
 msgstr "Pistenäyttöä {display} ei voitu ladata."
 
 #. Translators: The title in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:5147
+#: gui\settingsDialogs.py:5148
 msgid "Braille Display Error"
 msgstr "Pistenäyttövirhe"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
-#: gui\settingsDialogs.py:5180
+#: gui\settingsDialogs.py:5181
 msgid "&Output table:"
 msgstr "Tul&ostustaulukko:"
 
 #. Translators: An option in Braille settings to select a braille table automatically, according to the current language.
-#: gui\settingsDialogs.py:5188 gui\settingsDialogs.py:5215
+#: gui\settingsDialogs.py:5189 gui\settingsDialogs.py:5216
 #, python-brace-format
 msgid "Automatic ({name})"
 msgstr "Automaattinen ({name})"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
-#: gui\settingsDialogs.py:5207
+#: gui\settingsDialogs.py:5208
 msgid "&Input table:"
 msgstr "S&yöttötaulukko:"
 
 #. Translators: The label for a setting in braille settings to select which braille mode to use
-#: gui\settingsDialogs.py:5233
+#: gui\settingsDialogs.py:5234
 msgid "Braille mode:"
 msgstr "Pistekirjoitustila:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
-#: gui\settingsDialogs.py:5248
+#: gui\settingsDialogs.py:5249
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "Laa&jenna kohdistimen kohdalla oleva sana"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
-#: gui\settingsDialogs.py:5256
+#: gui\settingsDialogs.py:5257
 msgid "&Show cursor"
 msgstr "&Näytä kohdistin"
 
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
-#: gui\settingsDialogs.py:5265
+#: gui\settingsDialogs.py:5266
 msgid "Blink cursor"
 msgstr "Vilkkuva kohdistin"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
-#: gui\settingsDialogs.py:5276
+#: gui\settingsDialogs.py:5277
 msgid "Cursor blink rate (ms)"
 msgstr "Ko&hdistimen vilkkumisnopeus (ms)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
-#: gui\settingsDialogs.py:5298
+#: gui\settingsDialogs.py:5299
 msgid "Cursor shape for &focus:"
 msgstr "Kohdistimen muoto &kohdistukselle:"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
-#: gui\settingsDialogs.py:5314
+#: gui\settingsDialogs.py:5315
 msgid "Cursor shape for &review:"
 msgstr "Kohdistimen muoto t&arkastelukohdistimelle:"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
-#: gui\settingsDialogs.py:5336
+#: gui\settingsDialogs.py:5337
 msgid "Show messages"
 msgstr "Näytä ilmoitukset"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-#: gui\settingsDialogs.py:5358
+#: gui\settingsDialogs.py:5359
 msgid "Message &timeout (sec)"
 msgstr "Ilmoitusten aikakatkaisu (sek)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-#: gui\settingsDialogs.py:5377
+#: gui\settingsDialogs.py:5378
 msgid "Tether B&raille:"
 msgstr "Pistenäyttö s&euraa:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5401
+#: gui\settingsDialogs.py:5402
 msgid "Move system caret when ro&uting review cursor"
 msgstr "Siirrä &järjestelmäkohdistinta siirryttäessä tarkastelukohdistimen kohdalle"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
-#: gui\settingsDialogs.py:5417
+#: gui\settingsDialogs.py:5418
 msgid "Read by &paragraph"
 msgstr "Lue ka&ppaleittain"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel to select paragraph start markers.
-#: gui\settingsDialogs.py:5426
+#: gui\settingsDialogs.py:5427
 msgid "Paragraph start marker:"
 msgstr "Kappaleen aloitusmerkki:"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
-#: gui\settingsDialogs.py:5441
+#: gui\settingsDialogs.py:5442
 msgid "Focus context presentation:"
 msgstr "Kohdistuskontekstin näyttäminen:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5462
+#: gui\settingsDialogs.py:5463
 msgid "Show se&lection"
 msgstr "Näytä va&linta"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5474
+#: gui\settingsDialogs.py:5475
 msgid "Formatting &display"
 msgstr "Muotoilun &näyttö"
 
 #. Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
-#: gui\settingsDialogs.py:5483
+#: gui\settingsDialogs.py:5484
 msgid "Spea&k character when routing cursor in text"
 msgstr "Puhu mer&kki siirrettäessä kohdistinta kosketuskohdistinnäppäimillä"
 
 #. Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
-#: gui\settingsDialogs.py:5491
+#: gui\settingsDialogs.py:5492
 msgid "Speak when navigating by &line or paragraph"
 msgstr "Puhu r&iveittäin tai kappaleittain liikuttaessa"
 
 #. Translators: The label for a setting in braille settings to enable word wrap
 #. (try to avoid splitting words at the end of the braille display).
-#: gui\settingsDialogs.py:5504
+#: gui\settingsDialogs.py:5505
 msgid "Avoid splitting &words when possible"
 msgstr "Vältä &sanojen katkaisua"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5523
+#: gui\settingsDialogs.py:5524
 msgid "I&nterrupt speech while scrolling"
 msgstr "Keskeyt&ä puhe vieritettäessä"
 
 #. Translators: The label for a setting in braille settings to change the rate for autoscroll.
-#: gui\settingsDialogs.py:5532
+#: gui\settingsDialogs.py:5533
 msgid "Auto&matic scroll rate"
 msgstr "Auto&maattinen vieritysnopeus"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
-#: gui\settingsDialogs.py:5641
+#: gui\settingsDialogs.py:5642
 #, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
 msgstr "Näönparannuksen tarjoajaa {providerName} ei voitu ladata"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5648
+#: gui\settingsDialogs.py:5649
 #, python-brace-format
 msgid "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
@@ -15222,20 +15223,20 @@ msgstr "Seuraavia näönparannuksen tarjoajia ei voitu ladata:\n"
 "{providerNames}"
 
 #. Translators: The title of the vision enhancement provider error message box.
-#: gui\settingsDialogs.py:5654 gui\settingsDialogs.py:5684
+#: gui\settingsDialogs.py:5655 gui\settingsDialogs.py:5685
 msgid "Vision Enhancement Provider Error"
 msgstr "Virhe näönparannuksen tarjoajassa"
 
 #. Translators: This message is presented when
 #. NVDA is unable to gracefully terminate a single vision enhancement provider.
-#: gui\settingsDialogs.py:5671
+#: gui\settingsDialogs.py:5672
 #, python-brace-format
 msgid "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr "Näönparannuksen tarjoajaa {providerName} ei voitu pysäyttää oikein"
 
 #. Translators: This message is presented when
 #. NVDA is unable to terminate multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5679
+#: gui\settingsDialogs.py:5680
 #, python-brace-format
 msgid "Could not gracefully terminate the following vision enhancement providers:\n"
 "{providerNames}"
@@ -15243,229 +15244,229 @@ msgstr "Seuraavia näönparannuksen tarjoajia ei voitu pysäyttää oikein:\n"
 "{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
-#: gui\settingsDialogs.py:5779
+#: gui\settingsDialogs.py:5780
 msgid "Configure visual aids."
 msgstr "Määritä visuaalisten apuvälineiden asetukset."
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
-#: gui\settingsDialogs.py:5951
+#: gui\settingsDialogs.py:5952
 msgid "Enable"
 msgstr "Ota käyttöön"
 
 #. Translators: Options label on a vision enhancement provider on the vision settings category panel
 #. Translators: The label for a group box containing the NVDA highlighter options.
-#: gui\settingsDialogs.py:5958
+#: gui\settingsDialogs.py:5959
 #: visionEnhancementProviders\NVDAHighlighter.py:397
 msgid "Options:"
 msgstr "Asetukset:"
 
 #. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
-#: gui\settingsDialogs.py:6004
+#: gui\settingsDialogs.py:6005
 msgid "Unable to configure user interface for Vision Enhancement Provider, it can not be enabled."
 msgstr "Näönparannuksen tarjoajaa ei voida ottaa käyttöön, koska sen kkäyttöliittymän määrittäminen ei onnistu."
 
 #. Translators: This is the label for the magnifier settings panel.
-#: gui\settingsDialogs.py:6041
+#: gui\settingsDialogs.py:6042
 msgid "Magnifier"
 msgstr "Suurennus"
 
 #. Translators: The label for a setting in magnifier settings to enable or disable the magnifier.
-#: gui\settingsDialogs.py:6055
+#: gui\settingsDialogs.py:6087
 msgid "&Enable magnifier (immediate effect)"
 msgstr "&Ota suurennus käyttöön (vaikuttaa heti)"
 
 #. Translators: The label for a setting in magnifier settings to select the zoom level.
-#: gui\settingsDialogs.py:6067
-msgid "&Zoom level:"
-msgstr "&Suurennustaso:"
+#: gui\settingsDialogs.py:6099
+msgid "&Zoom (%):"
+msgstr "&Zoomaustaso (%):"
 
 #. Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
-#: gui\settingsDialogs.py:6096
+#: gui\settingsDialogs.py:6121
 msgid "&Panning step size (%):"
 msgstr "&Panoroinnin askelkoko (%):"
 
 #. Translators: The label for a setting in magnifier settings to select the default filter
-#: gui\settingsDialogs.py:6115
+#: gui\settingsDialogs.py:6143
 msgid "F&ilter:"
 msgstr "Väris&uodatin:"
 
 #. Translators: The label for a setting in magnifier settings to select the full-screen mode
-#: gui\settingsDialogs.py:6130
+#: gui\settingsDialogs.py:6160
 msgid "&Fullscreen mode:"
 msgstr "&Koko näytön tila:"
 
 #. Translators: The label for a setting in magnifier settings to select whether true center is used in full-screen mode
-#: gui\settingsDialogs.py:6144
+#: gui\settingsDialogs.py:6174
 msgid "Use &true center in fullscreen mode"
 msgstr "Käytä koko näytön tilassa t&arkkaa keskikohtaa"
 
 #. Translators: This is the label for a group of focus options in the magnifier settings panel
-#: gui\settingsDialogs.py:6158
+#: gui\settingsDialogs.py:6192
 msgid "Focus"
 msgstr "Kohdistus"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the mouse
-#: gui\settingsDialogs.py:6166
+#: gui\settingsDialogs.py:6200
 msgid "Follow &mouse"
 msgstr "Seuraa &hiirtä"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
-#: gui\settingsDialogs.py:6168
+#: gui\settingsDialogs.py:6202
 msgid "Follow &system focus"
 msgstr "Seuraa kohd&istusta"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the review cursor
-#: gui\settingsDialogs.py:6170
+#: gui\settingsDialogs.py:6204
 msgid "Follow &review cursor"
 msgstr "Seuraa ta&rkastelukohdistinta"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the navigator object
-#: gui\settingsDialogs.py:6173
+#: gui\settingsDialogs.py:6207
 msgid "Follow &navigator object"
 msgstr "Seuraa &navigointiobjektia"
 
 #. Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
-#: gui\settingsDialogs.py:6186
+#: gui\settingsDialogs.py:6224
 msgid "Keep mouse pointer &centered in magnifier view"
 msgstr "&Keskitä hiiren osoitin suurennusnäkymään"
 
 #. Translators: The title of the privacy and security category in NVDA's settings.
-#: gui\settingsDialogs.py:6231
+#: gui\settingsDialogs.py:6292
 msgid "Privacy and Security"
 msgstr "Tietosuoja ja suojaus"
 
-#. Translators: Warning shown when enabling the secrets log level from NVDA settings.
-#: gui\settingsDialogs.py:6244
-msgid "Setting the logging level to secrets will write sensitive information to the log without redaction, including passwords, API keys, or other private data. Only enable this temporarily if you explicitly need unredacted diagnostic logs. Do you want to continue?"
-msgstr "Kun lokitasoksi määritetään \"arkaluonteiset tiedot\", lokiin tallennetaan arkaluonteista tietoa, kuten salasanoja, API-avaimia ja muuta yksityistä. Käytä tätä vain tilapäisesti, mikäli tarvitset nimenomaan peittämättömiä diagnostiikkalokeja. Haluatko jatkaa?"
+#. Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
+#: gui\settingsDialogs.py:6305
+msgid "Setting the logging level to \"debug (unredacted)\" will write sensitive information to the log without redaction, including passwords, API keys, or other private data. Only enable this temporarily if you explicitly need unredacted diagnostic logs. Do you want to continue?"
+msgstr "Jos lokitasoksi määritetään ”vianetsintä (sensuroimaton)”, lokiin tallennetaan sensuroimattomina luottamuksellisia tietoja, kuten salasanoja tai API-avaimia. Ota tämä käyttöön vain tilapäisesti, jos tarvitset nimenomaan sensuroimattomia vianetsintälokeja. Haluatko jatkaa?"
 
-#. Translators: Title of the warning dialog shown when enabling the secrets log level.
-#: gui\settingsDialogs.py:6251
+#. Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
+#: gui\settingsDialogs.py:6312
 msgid "High risk logging level"
 msgstr "Korkean riskin lokitaso"
 
 #. Translators: Warning shown when enabling a logging level above info from NVDA settings.
-#: gui\settingsDialogs.py:6256
+#: gui\settingsDialogs.py:6317
 msgid "Setting the logging level above info may record sensitive information such as typed input, speech output, or other private data in the log. Only enable higher logging levels temporarily while troubleshooting. Do you want to continue?"
-msgstr "Jos lokitaso määritetään tiedot-tasoa korkeammaksi, lokiin saattaa tallentua arkaluonteisia tietoja, kuten näppäiltyä syötettä, puhetulostetta tai muita yksityisiä tietoja. Käytä korkeampia lokitasoja vain tilapäisesti vianmäärityksen aikana. Haluatko jatkaa?"
+msgstr "Jos lokitaso määritetään tiedot-tasoa korkeammaksi, lokiin saattaa tallentua luottamuksellisia tietoja, kuten näppäinpainalluksia tai puhesyntetisaattorin puhumaa tekstiä. Ota korkeampi lokitaso käyttöön vain tilapäisesti vianmäärityksen ajaksi. Haluatko jatkaa?"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
-#: gui\settingsDialogs.py:6281
+#: gui\settingsDialogs.py:6342
 msgid "Screen Curtain"
 msgstr "Näyttöverho"
 
 #. Translators: option to enable screen curtain in the privacy and security settings panel
-#: gui\settingsDialogs.py:6290
+#: gui\settingsDialogs.py:6351
 msgid "Make screen black (immediate effect)"
 msgstr "Pimennä näyttö (vaikuttaa heti)"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#: gui\settingsDialogs.py:6319
+#: gui\settingsDialogs.py:6380
 msgid "&Play sound when toggling Screen Curtain"
 msgstr "T&oista merkkiääni, kun näyttöverho otetaan käyttöön tai poistetaan käytöstä"
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
-#: gui\settingsDialogs.py:6334
+#: gui\settingsDialogs.py:6395
 msgid "L&ogging level:"
 msgstr "L&okitaso:"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-#: gui\settingsDialogs.py:6357
+#: gui\settingsDialogs.py:6418
 msgid "Allow NV Access to gather NVDA usage statistics"
 msgstr "Salli NVDA:n käyttötilastojen kerääminen"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:6478
+#: gui\settingsDialogs.py:6539
 msgid "NVDA Settings"
 msgstr "NVDA:n asetukset"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:6534
+#: gui\settingsDialogs.py:6595
 msgid "normal configuration"
 msgstr "normaalit asetukset"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:6569
+#: gui\settingsDialogs.py:6630
 msgid "Add Symbol"
 msgstr "Lisää symboli"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:6574
+#: gui\settingsDialogs.py:6635
 msgid "&Symbol:"
 msgstr "&Symboli:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:6604
+#: gui\settingsDialogs.py:6665
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "Symbolien puhuminen (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:6618
+#: gui\settingsDialogs.py:6679
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "&Suodata::"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6627
+#: gui\settingsDialogs.py:6688
 msgid "&Symbols"
 msgstr "&Symbolit"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:6637
+#: gui\settingsDialogs.py:6698
 msgid "Symbol"
 msgstr "Symboli"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6639 gui\speechDict.py:188
+#: gui\settingsDialogs.py:6700 gui\speechDict.py:188
 msgid "Replacement"
 msgstr "Korvaava"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:6641
+#: gui\settingsDialogs.py:6702
 msgid "Level"
 msgstr "Taso"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:6644
+#: gui\settingsDialogs.py:6705
 msgid "Preserve"
 msgstr "Säilytä"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:6648
+#: gui\settingsDialogs.py:6709
 msgid "Change selected symbol"
 msgstr "Muuta valittua symbolia"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6666 gui\speechDict.py:52
+#: gui\settingsDialogs.py:6727 gui\speechDict.py:52
 msgid "&Replacement"
 msgstr "Ko&rvaava"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:6675
+#: gui\settingsDialogs.py:6736
 msgid "&Level"
 msgstr "T&aso"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:6682
+#: gui\settingsDialogs.py:6743
 msgid "&Send actual symbol to synthesizer"
 msgstr "L&ähetä merkki syntetisaattorille"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:6697
+#: gui\settingsDialogs.py:6758
 msgid "Re&move"
 msgstr "Po&ista"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:6804
+#: gui\settingsDialogs.py:6865
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "Symboli \"%s\" on jo olemassa."
@@ -15913,7 +15914,7 @@ msgstr "Muista tämä valinta"
 msgctxt "addonStore"
 msgid "Warning: add-on installation may result in downgrade: {name}. The installed add-on version cannot be compared with the add-on store version. Installed version: {oldVersion}. Available version: {version}.\n"
 "Proceed with installation anyway? "
-msgstr "Varoitus: Lisäosan asentamisesta saattaa olla seurauksena alaspäin päivittäminen: {name}. Asennettuna olevaa versiota ei voi verrata lisäosakaupan versioon. Asennettuna oleva versio: {oldVersion}. Saatavilla oleva versio: {version}.\n"
+msgstr "Varoitus: Jos jatkat, lisäosasta {name} saatetaan asentaa vanhempi versio. Asennettuna olevaa versiota ei voi verrata lisäosakaupan versioon. Asennettuna oleva versio: {oldVersion}. Saatavilla oleva versio: {version}.\n"
 "Haluatko silti jatkaa asennusta?"
 
 #. Translators: The title of a dialog presented when an error occurs.
@@ -15921,7 +15922,7 @@ msgstr "Varoitus: Lisäosan asentamisesta saattaa olla seurauksena alaspäin pä
 #: gui\addonStoreGui\controls\messageDialogs.py:200
 msgctxt "addonStore"
 msgid "Install add-on"
-msgstr "Asenna lisäosa"
+msgstr "Lisäosan asennus"
 
 #. Translators: Presented when attempting to remove the selected add-on.
 #. {addon} is replaced with the add-on name.
@@ -15935,7 +15936,7 @@ msgstr "Haluatko varmasti poistaa lisäosan {addon} NVDA:sta? Poistoa ei voi per
 #: gui\addonStoreGui\controls\messageDialogs.py:167
 msgctxt "addonStore"
 msgid "Remove add-on"
-msgstr "Poista lisäosa"
+msgstr "Lisäosan poisto"
 
 #. Translators: The message displayed when installing an add-on package that is incompatible
 #. because the add-on is too old for the running version of NVDA.
@@ -15944,7 +15945,7 @@ msgstr "Poista lisäosa"
 msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Installation may cause unstable behavior in NVDA.\n"
 "Proceed with installation anyway? "
-msgstr "Varoitus: lisäosa ei ole yhteensopiva: {name} {version}. Tarkista, onko siitä saatavilla päivitettyä versiota. Tämä lisäosa on testattu viimeksi NVDA-versiolla {lastTestedNVDAVersion}. NVDA edellyttää, että se on testattu versiolla {nvdaVersion} tai uudemmalla. Asennus saattaa aiheuttaa NVDA:han epävakautta.\n"
+msgstr "Varoitus: lisäosa {name} {version} ei ole yhteensopiva. Tarkista, onko siitä saatavilla päivitettyä versiota. Tämä lisäosa on testattu viimeksi NVDA-versiolla {lastTestedNVDAVersion}. NVDA edellyttää, että se on testattu versiolla {nvdaVersion} tai uudemmalla. Asennus saattaa aiheuttaa NVDA:han epävakautta.\n"
 "Haluatko silti jatkaa asennusta?"
 
 #. Translators: The message displayed when enabling an add-on package that is incompatible
@@ -15954,14 +15955,14 @@ msgstr "Varoitus: lisäosa ei ole yhteensopiva: {name} {version}. Tarkista, onko
 msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Enabling may cause unstable behavior in NVDA.\n"
 "Proceed with enabling anyway? "
-msgstr "Varoitus: lisäosa ei ole yhteensopiva: {name} {version}. Tarkista, onko siitä saatavilla päivitettyä versiota. Tämä lisäosa on testattu viimeksi NVDA-versiolla {lastTestedNVDAVersion}. NVDA edellyttää, että se on testattu versiolla {nvdaVersion} tai uudemmalla. Käyttöönotto saattaa aiheuttaa NVDA:han epävakautta.\n"
+msgstr "Varoitus: lisäosa {name} {version} ei ole yhteensopiva. Tarkista, onko siitä saatavilla päivitettyä versiota. Tämä lisäosa on testattu viimeksi NVDA-versiolla {lastTestedNVDAVersion}. NVDA edellyttää, että se on testattu versiolla {nvdaVersion} tai uudemmalla. Käyttöönotto saattaa aiheuttaa NVDA:han epävakautta.\n"
 "Haluatko silti ottaa tämän lisäosan käyttöön?"
 
 #. Translators: The title of a dialog presented when an error occurs.
 #: gui\addonStoreGui\controls\messageDialogs.py:233
 msgctxt "addonStore"
 msgid "Enable add-on"
-msgstr "Ota lisäosa käyttöön"
+msgstr "Lisäosan käyttöönotto"
 
 #. Translators: The message displayed when installing an add-on package is prohibited,
 #. because it requires a later version of NVDA than is currently installed.
@@ -16076,7 +16077,7 @@ msgstr "Lisäosapäivityksiä saatavilla"
 #: gui\addonStoreGui\controls\messageDialogs.py:429
 msgctxt "addonStore"
 msgid "Updates are available for some of your installed add-ons. "
-msgstr "Joihinkin asentamiisi lisäosiin on saatavilla päivityksiä."
+msgstr "Asennettuihin lisäosiin on saatavilla päivityksiä."
 
 #. Translators: The label of a button in a dialog
 #: gui\addonStoreGui\controls\messageDialogs.py:442
@@ -16102,7 +16103,7 @@ msgstr "&Sulje"
 #: gui\addonStoreGui\controls\messageDialogs.py:587
 msgctxt "addonStore"
 msgid "Updating add-ons..."
-msgstr "Päivitetään lisäosia..."
+msgstr "Lisäosia päivitetään..."
 
 #. Translators: Message shown when updating add-ons automatically
 #: gui\addonStoreGui\controls\messageDialogs.py:625
@@ -16952,82 +16953,82 @@ msgid "All"
 msgstr "Kaikki"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
-#: NVDAHelper\__init__.py:497
+#: NVDAHelper\__init__.py:505
 msgid "Native input"
 msgstr "Alkuperäinen syöte"
 
 #. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
-#: NVDAHelper\__init__.py:499
+#: NVDAHelper\__init__.py:507
 msgid "Alpha numeric input"
 msgstr "Aakkosnumeerinen syöte"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
-#: NVDAHelper\__init__.py:503
+#: NVDAHelper\__init__.py:511
 msgid "Full shaped mode"
 msgstr "Kokonaiset merkit"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in half-shaped (single-byte) characters, rather than the larger full-shaped (double-byte) ones.
-#: NVDAHelper\__init__.py:505
+#: NVDAHelper\__init__.py:513
 msgid "Half shaped mode"
 msgstr "Puolikkaat merkit"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
-#: NVDAHelper\__init__.py:511 NVDAHelper\__init__.py:521
+#: NVDAHelper\__init__.py:519 NVDAHelper\__init__.py:529
 msgid "half alphanumeric"
 msgstr "puolikas aakkosnumeerinen"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
-#: NVDAHelper\__init__.py:513
+#: NVDAHelper\__init__.py:521
 msgid "half katakana"
 msgstr "puolikas katakana"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
-#: NVDAHelper\__init__.py:515 NVDAHelper\__init__.py:525
+#: NVDAHelper\__init__.py:523 NVDAHelper\__init__.py:533
 msgid "alphanumeric"
 msgstr "aakkosnumeerinen"
 
 #. Translators: For Japanese character input: Hiragana input mode.
-#: NVDAHelper\__init__.py:517
+#: NVDAHelper\__init__.py:525
 msgid "hiragana"
 msgstr "hiragana"
 
 #. Translators: For Japanese character input: Katacana input mode.
-#: NVDAHelper\__init__.py:519
+#: NVDAHelper\__init__.py:527
 msgid "katakana"
 msgstr "katakana"
 
 #. Translators: For Japanese character input: half katakana roman input mode.
-#: NVDAHelper\__init__.py:523
+#: NVDAHelper\__init__.py:531
 msgid "half katakana roman"
 msgstr "puolikas latinalaistettu katakana"
 
 #. Translators: For Japanese character input: Hiragana Roman input mode.
-#: NVDAHelper\__init__.py:527
+#: NVDAHelper\__init__.py:535
 msgid "hiragana roman"
 msgstr "latinalaistettu hiragana"
 
 #. Translators: For Japanese character input: Katacana Roman input mode.
-#: NVDAHelper\__init__.py:529
+#: NVDAHelper\__init__.py:537
 msgid "katakana roman"
 msgstr "latinalaistettu katakana"
 
 #. Translators: a message when the IME open status changes to opened
-#: NVDAHelper\__init__.py:571
+#: NVDAHelper\__init__.py:579
 msgid "IME opened"
 msgstr "Kirjoitustuki avattu"
 
 #. Translators: a message when the IME open status changes to closed
-#: NVDAHelper\__init__.py:574
+#: NVDAHelper\__init__.py:582
 msgid "IME closed"
 msgstr "Kirjoitustuki suljettu"
 
 #. Translators: the label for an unknown language when switching input methods.
-#: NVDAHelper\__init__.py:611
+#: NVDAHelper\__init__.py:619
 msgid "unknown language"
 msgstr "tuntematon kieli"
 
 #. Translators: The label for an unknown input method when switching input methods.
-#: NVDAHelper\__init__.py:637
+#: NVDAHelper\__init__.py:645
 msgid "unknown input method"
 msgstr "tuntematon syöttömenetelmä"
 
@@ -20227,7 +20228,7 @@ msgstr "Suojattu työpöytä"
 #. Translators: Message announced when already at left edge of the screen while panning the magnified view
 #. Translators: Message announced when already at left edge of the screen while panning the magnified view
 #. to left edge
-#: _magnifier\commands.py:41 _magnifier\commands.py:62
+#: _magnifier\commands.py:43 _magnifier\commands.py:64
 msgctxt "magnifier"
 msgid "left edge"
 msgstr "vasen reuna"
@@ -20235,7 +20236,7 @@ msgstr "vasen reuna"
 #. Translators: Message announced when already at right edge of the screen while panning the magnified view
 #. Translators: Message announced when already at right edge of the screen while panning the magnified view
 #. to right edge
-#: _magnifier\commands.py:46 _magnifier\commands.py:68
+#: _magnifier\commands.py:48 _magnifier\commands.py:70
 msgctxt "magnifier"
 msgid "right edge"
 msgstr "oikea reuna"
@@ -20243,7 +20244,7 @@ msgstr "oikea reuna"
 #. Translators: Message announced when already at top edge of the screen while panning the magnified view
 #. Translators: Message announced when already at top edge of the screen while panning the magnified view
 #. to top edge
-#: _magnifier\commands.py:51 _magnifier\commands.py:74
+#: _magnifier\commands.py:53 _magnifier\commands.py:76
 msgctxt "magnifier"
 msgid "top edge"
 msgstr "yläreuna"
@@ -20251,117 +20252,117 @@ msgstr "yläreuna"
 #. Translators: Message announced when already at bottom edge of the screen while panning the magnified view
 #. Translators: Message announced when already at left edge of the screen while panning the magnified view
 #. to left edge
-#: _magnifier\commands.py:56 _magnifier\commands.py:80
+#: _magnifier\commands.py:58 _magnifier\commands.py:82
 msgctxt "magnifier"
 msgid "bottom edge"
 msgstr "alareuna"
 
 #. Translators: Message announced when stopping the NVDA magnifier.
-#: _magnifier\commands.py:97
+#: _magnifier\commands.py:99
 msgctxt "magnifier"
 msgid "Exiting magnifier"
 msgstr "Suurennus lopetetaan"
 
 #. Translators: Message announced when trying to start magnifier while Screen Curtain is active.
-#: _magnifier\commands.py:106
+#: _magnifier\commands.py:108
 msgctxt "magnifier"
 msgid "Cannot start magnifier: Screen Curtain is active. Please disable Screen Curtain first."
 msgstr "Suurennusta ei voi käynnistää, koska näyttöverho on aktiivisena. Poista se ensin käytöstä."
 
 #. Translators: Message announced when starting the NVDA magnifier.
-#: _magnifier\commands.py:119
+#: _magnifier\commands.py:121
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Starting {magnifiedView} magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode"
-msgstr "Suurennus käynnistetään näkymässä {magnifiedView} suurennustasolla {zoomLevel}, värisuodattimella {filter} ja koko näytön tilassa {fullscreenMode}"
+msgstr "Suurennus käynnistetään näkymässä {magnifiedView}, zoomaustasolla {zoomLevel}, värisuodattimella {filter} ja koko näytön tilassa {fullscreenMode}"
 
 #. Translators: Message announced when starting the NVDA magnifier.
-#: _magnifier\commands.py:130
+#: _magnifier\commands.py:132
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Starting {magnifiedView} magnifier with {zoomLevel} zoom level and {filter} filter"
-msgstr "Suurennus käynnistetään näkymässä {magnifiedView} suurennustasolla {zoomLevel} ja värisuodattimella {filter}"
+msgstr "Suurennus käynnistetään näkymässä {magnifiedView}, zoomaustasolla {zoomLevel} ja värisuodattimella {filter}"
 
 #. Translators: Message announced when changing the color filter with {filter} being the new color filter.
-#: _magnifier\commands.py:193
+#: _magnifier\commands.py:196
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Color filter changed to {filter}"
 msgstr "Värisuodattimeksi vaihdettu {filter}"
 
 #. Translators: Message announced when changing the magnifier view with {view} being the new magnifier view.
-#: _magnifier\commands.py:217
+#: _magnifier\commands.py:220
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Magnifier view changed to {view}"
 msgstr "Suurennusnäkymäksi vaihdettu {view}"
 
 #. Translators: Message announced when toggling a follow setting with {setting} being the name of the setting and {state} being either "enabled" or "disabled".
-#: _magnifier\commands.py:240
+#: _magnifier\commands.py:243
 #, python-brace-format
 msgctxt "magnifier"
 msgid "{setting} {state}"
 msgstr "{setting} {state}"
 
 #. Translators: State of the follow setting being toggled enabled.
-#: _magnifier\commands.py:246
+#: _magnifier\commands.py:249
 msgctxt "magnifier"
 msgid "enabled"
 msgstr "käytössä"
 
 #. Translators: State of the follow setting being toggled disabled.
-#: _magnifier\commands.py:252
+#: _magnifier\commands.py:255
 msgctxt "magnifier"
 msgid "disabled"
 msgstr "ei käytössä"
 
 #. Translators: State of all follow settings being toggled disabled.
-#: _magnifier\commands.py:270
+#: _magnifier\commands.py:273
 msgctxt "magnifier"
 msgid "All follow settings disabled"
 msgstr "Kaikki seuranta-asetukset poistettu käytöstä"
 
 #. Translators: State of all follow settings being restored.
-#: _magnifier\commands.py:276
+#: _magnifier\commands.py:279
 msgctxt "magnifier"
 msgid "All follow settings restored"
 msgstr "Kaikki seuranta-asetukset palautettu"
 
 #. Translators: Message announced when changing the full-screen mode with {mode} being the new full-screen mode.
-#: _magnifier\commands.py:303
+#: _magnifier\commands.py:307
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Full-screen mode changed to {mode}"
 msgstr "Koko näytön tilaksi vaihdettu {mode}"
 
 #. Translators: Message announced when trying to start spotlight mode while it's already active.
-#: _magnifier\commands.py:327
+#: _magnifier\commands.py:331
 msgctxt "magnifier"
 msgid "Spotlight mode is already active"
 msgstr "Kohdevalo on jo käytössä"
 
 #. Translators: Message announced when spotlight mode is started.
-#: _magnifier\commands.py:337
+#: _magnifier\commands.py:341
 msgctxt "magnifier"
 msgid "Spotlight mode started"
 msgstr "Kohdevalo sytytetty"
 
 #. Translators: Message announced when the magnifier is not active.
-#: _magnifier\commands.py:361
+#: _magnifier\commands.py:365
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not active."
 msgstr "Toimintoa {action} ei voi suorittaa, kun suurennus ei ole aktiivisena."
 
 #. Translators: Message announced when the magnifier is not full-screen.
-#: _magnifier\commands.py:386
+#: _magnifier\commands.py:390
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not full-screen."
 msgstr "Toimintoa {action} ei voi suorittaa, kun suurennus ei ole koko näytön tilassa."
 
 #. Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
-#: _magnifier\config.py:45
+#: _magnifier\config.py:49
 #, python-brace-format
 msgctxt "magnifier"
 msgid "{zoomLevel}x"
@@ -20380,19 +20381,19 @@ msgid "Magnifier stopped due to an error. Please restart it."
 msgstr "Suurennus lopetettu virheen vuoksi. Ota se uudelleen käyttöön."
 
 #. Translators: Message when trying to enable magnifier while screen curtain is active
-#: _magnifier\magnifier.py:173
+#: _magnifier\magnifier.py:181
 msgctxt "magnifier"
 msgid "Cannot enable magnifier: screen curtain is active. Please disable screen curtain first."
 msgstr "Suurennusta ei voi ottaa käyttöön, koska  näyttöverho on aktiivisena. Poista se ensin käytöstä."
 
 #. Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
-#: _magnifier\magnifier.py:264
+#: _magnifier\magnifier.py:272
 msgctxt "magnifier"
 msgid "Magnifier is active, disabling it before enabling screen curtain"
 msgstr "Suurennus on aktiivisena. Se poistetaan käytöstä ennen näyttöverhon käyttöönottoa."
 
 #. Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
-#: _magnifier\magnifier.py:282
+#: _magnifier\magnifier.py:290
 msgctxt "magnifier"
 msgid "Magnifier was active before screen curtain, re-enabling it"
 msgstr "Suurennus oli aktiivisena ennen näyttöverhon käyttöönottoa. Se otetaan uudelleen käyttöön."
@@ -20930,7 +20931,7 @@ msgstr "Katkaisee nykyisen etäkäyttöistunnon yhteyden."
 #: _remoteClient\session.py:168
 msgctxt "remote"
 msgid "The Remote Access server you have connected to is not compatible with this version of NVDA. Please use a different server."
-msgstr "Etäkäyttöpalvelimen versio, johon olet muodostanut yhteyden, ei ole yhteensopiva tämän NVDA-version kanssa. Ole hyvä ja käytä eri palvelinta."
+msgstr "Etäkäyttöpalvelin, johon olet muodostanut yhteyden, ei ole yhteensopiva tämän NVDA-version kanssa. Käytä jotain toista palvelinta."
 
 #. Translators: Title of a dialog showing a message sent by a Remote Access server.
 #: _remoteClient\session.py:188
@@ -20942,5 +20943,5 @@ msgstr "Viesti etäkäyttöpalvelimelta"
 #: _remoteClient\session.py:553
 msgctxt "remote"
 msgid "Remote NVDA not connected"
-msgstr "Etä-NVDA ei yhdistetty"
+msgstr "Etä-NVDA ei ole yhdistetty"
 

@@ -17,8 +17,10 @@ from .config import (
 	getZoomLevelString,
 	getFilter,
 	getFollowState,
+	setFilter,
 	getFullscreenMode,
 	setFollowState,
+	setFullscreenMode,
 	toggleAllFollowStates,
 	ZoomLevel,
 )
@@ -153,9 +155,7 @@ def zoom(direction: Direction) -> None:
 		return
 	magnifier._zoom(direction)
 	ui.message(
-		ZoomLevel.ZOOM_MESSAGE.format(
-			zoomLevel=f"{magnifier.zoomLevel:.1f}",
-		),
+		ZoomLevel.zoomMessage(magnifier.zoomLevel),
 	)
 
 
@@ -172,6 +172,15 @@ def pan(action: MagnifierAction) -> None:
 			ui.message(PAN_ACTION_TO_EDGE_MESSAGES[action])
 
 
+def moveMouseToView() -> None:
+	"""
+	Move the mouse cursor to the center of the magnified view.
+	"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(magnifier, MagnifierAction.MOVE_MOUSE_TO_VIEW):
+		magnifier.moveMouseToViewCenter()
+
+
 def toggleFilter() -> None:
 	"""Cycle through color filters"""
 	magnifier: Magnifier = getMagnifier()
@@ -184,8 +193,11 @@ def toggleFilter() -> None:
 		idx = filters.index(magnifier.filterType)
 		magnifier.filterType = filters[(idx + 1) % len(filters)]
 		if magnifier._MAGNIFIED_VIEW == MagnifiedView.FULLSCREEN:
+			assert isinstance(magnifier, FullScreenMagnifier)
 			fullscreenMagnifier: FullScreenMagnifier = magnifier
 			fullscreenMagnifier._applyFilter()
+		setFilter(magnifier.filterType)
+
 		ui.message(
 			pgettext(
 				"magnifier",
@@ -296,6 +308,7 @@ def toggleFullscreenMode() -> None:
 			newMode = modes[(idx + 1) % len(modes)]
 			log.debug(f"Changing full-screen mode from {currentMode} to {newMode}")
 			fullscreenMagnifier._fullscreenMode = newMode
+			setFullscreenMode(newMode)
 			ui.message(
 				pgettext(
 					"magnifier",
