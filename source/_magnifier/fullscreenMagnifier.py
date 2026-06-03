@@ -100,6 +100,8 @@ class FullScreenMagnifier(Magnifier):
 		Raises OSError if the real MagInitialize fails or if MagSetFullscreenTransform
 		fails (e.g. Windows Magnifier already holds the API).
 		"""
+		# Best-effort uninit ensures we start from a clean state
+		self._uninitializeNativeMagnification()
 		# Dummy cycle to clear any stale state from a previous MagSetFullscreenTransform.
 		dummyInitSucceeded = False
 		try:

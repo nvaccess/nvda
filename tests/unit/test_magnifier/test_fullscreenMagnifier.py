@@ -238,7 +238,8 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		self.mock_mag_fs.reset_mock()
 		magnifier._attemptRecovery()
 
-		self.mock_mag_fs.MagUninitialize.assert_called_once()
+		# MagUninitialize: once best-effort at start + once in the dummy cycle finally block
+		self.assertEqual(self.mock_mag_fs.MagUninitialize.call_count, 2)
 		# MagInitialize: once in the dummy cycle + once for the real init
 		self.assertEqual(self.mock_mag_fs.MagInitialize.call_count, 2)
 		self.mock_mag_fs.MagSetFullscreenTransform.assert_called_once_with(magnifier.zoomLevel / 100.0, 0, 0)
