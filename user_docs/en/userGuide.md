@@ -1631,7 +1631,7 @@ The magnifier offers three different modes for tracking focus and determining wh
 
 * Center: The magnified area is centered on the current focus position.
 This mode keeps the focused element at the center of the screen and clamps to the screen edge.
-To disable clamping, activate [true center mode in the Magnifier settings](#MagnifierUseTrueCenterTracking).
+To disable clamping, activate [true center tracking in the Magnifier settings](#MagnifierUseTrueCenterTracking).
 * Border: The magnified area only moves when the focus approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
 * Relative: The magnified area maintains the relative position of the focus within the screen.
