@@ -20,7 +20,7 @@ class TestSpotlightManager(_TestMagnifier):
 		self.assertIsNotNone(spotlightManager)
 		self.assertFalse(spotlightManager._spotlightIsActive)
 		self.assertEqual(spotlightManager._animationSteps, 40)
-		self.assertEqual(spotlightManager._originalZoomLevel, 0.0)
+		self.assertEqual(spotlightManager._originalZoomLevel, 0)
 		self.assertEqual(spotlightManager._currentZoomLevel, 0.0)
 
 		magnifier._stopMagnifier()
@@ -74,8 +74,8 @@ class TestSpotlightManager(_TestMagnifier):
 
 		# Test animation from zoom 2.0 to 1.0, coordinates (500, 400) to (960, 540)
 		steps = spotlightManager._computeAnimationSteps(
-			2.0,
-			1.0,
+			200,
+			100,
 			(500, 400),
 			(960, 540),
 		)
@@ -85,21 +85,21 @@ class TestSpotlightManager(_TestMagnifier):
 
 		# First step should be closer to start
 		firstZoom, firstCoords = steps[0]
-		self.assertLess(abs(firstZoom - 2.0), abs(firstZoom - 1.0))
+		self.assertLess(abs(firstZoom - 200), abs(firstZoom - 100))
 
 		# Last step should be at target
 		lastZoom, lastCoords = steps[-1]
-		self.assertEqual(lastZoom, 1.0)
+		self.assertEqual(lastZoom, 100)
 		self.assertEqual(lastCoords, (960, 540))
 
-		# Steps should progress linearly (decreasing from 2.0 to 1.0)
+		# Steps should progress linearly (decreasing from 200 to 100)
 		for i in range(len(steps) - 1):
 			currentZoom, _ = steps[i]
 			nextZoom, _ = steps[i + 1]
 			self.assertGreater(
 				currentZoom,
 				nextZoom,
-			)  # Zoom should decrease from 2.0 to 1.0
+			)  # Zoom should decrease from 200 to 100
 
 		magnifier._stopMagnifier()
 
@@ -116,7 +116,7 @@ class TestSpotlightManager(_TestMagnifier):
 			spotlightManager._startMouseMonitoring()
 
 			# Verify initial state
-			self.assertEqual(spotlightManager._lastMousePosition, (100, 200))
+			self.assertEqual(spotlightManager._lastMousePosition, Coordinates(100, 200))
 			self.assertIsNotNone(spotlightManager._timer)
 
 		magnifier._stopMagnifier()
@@ -127,7 +127,7 @@ class TestSpotlightManager(_TestMagnifier):
 		spotlightManager = magnifier._spotlightManager
 
 		# Set initial position
-		spotlightManager._lastMousePosition = (100, 200)
+		spotlightManager._lastMousePosition = Coordinates(100, 200)
 
 		# Mock wx.GetMousePosition to return same position (idle)
 		with patch("wx.GetMousePosition") as mockGetMousePosition:
@@ -148,7 +148,7 @@ class TestSpotlightManager(_TestMagnifier):
 		spotlightManager = magnifier._spotlightManager
 
 		# Set initial position
-		spotlightManager._lastMousePosition = (100, 200)
+		spotlightManager._lastMousePosition = Coordinates(100, 200)
 
 		# Mock wx.GetMousePosition to return different position (moved)
 		with patch("wx.GetMousePosition") as mockGetMousePosition:

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -12,7 +12,6 @@ from typing import override
 from logHandler import log
 import speech
 import ui
-import winUser
 from winBindings import magnification
 from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
@@ -230,7 +229,7 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		params = self._getMagnifierParameters(coordinates)
 		magnification.MagSetFullscreenTransform(
-			self.zoomLevel,
+			self.zoomLevelRatio,
 			params.coordinates.x,
 			params.coordinates.y,
 		)
@@ -254,33 +253,18 @@ class FullScreenMagnifier(Magnifier):
 			case FullScreenMode.CENTER:
 				return coordinates
 
-	@override
-	def _keepMouseCentered(self) -> None:
+	def _computeMagnifiedViewCenter(self) -> Coordinates:
 		"""
-		Move the mouse to the center of the magnified view.
-		Skips if a mouse button is currently pressed to avoid interfering with clicks.
+		Compute the coordinates of the center of the currently magnified view.
+
+		:return: The (x, y) coordinates of the center of the magnified view
 		"""
-		if (
-			winUser.getAsyncKeyState(winUser.VK_LBUTTON) < 0
-			or winUser.getAsyncKeyState(winUser.VK_RBUTTON) < 0
-			or winUser.getAsyncKeyState(winUser.VK_MBUTTON) < 0
-		):
-			log.debug("Mouse button pressed, skipping cursor repositioning to avoid interfering with click")
-			return
+
 		coordinates = self._getCoordinatesForMode(self.currentCoordinates)
 		params = self._getMagnifierParameters(coordinates)
 		centerX = params.coordinates.x + params.magnifierSize.width // 2
 		centerY = params.coordinates.y + params.magnifierSize.height // 2
-		winUser.setCursorPos(centerX, centerY)
-
-	@trackNativeMagnifierErrors
-	def _setCursorToCenter(self, x: int, y: int) -> None:
-		"""
-		Set cursor to the specified position.
-		If this fails, it is logged but execution continues.
-		"""
-		winUser.setCursorPos(x, y)
-		log.debug(f"Cursor repositioned to center ({x}, {y})")
+		return Coordinates(centerX, centerY)
 
 	def _borderPos(
 		self,
@@ -340,7 +324,7 @@ class FullScreenMagnifier(Magnifier):
 		:return: The (x, y) coordinates of the magnifier center
 		"""
 
-		zoom = self.zoomLevel
+		zoom = self.zoomLevelRatio
 		mouseX, mouseY = coordinates
 		magnifierWidth = self._displayOrientation.width / zoom
 		magnifierHeight = self._displayOrientation.height / zoom
@@ -388,8 +372,8 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		x, y = coordinates
 		# Calculate the size of the capture area at the current zoom level
-		magnifierWidth = self._displayOrientation.width / self.zoomLevel
-		magnifierHeight = self._displayOrientation.height / self.zoomLevel
+		magnifierWidth = self._displayOrientation.width / self.zoomLevelRatio
+		magnifierHeight = self._displayOrientation.height / self.zoomLevelRatio
 
 		# Compute the top-left corner so that (x, y) is at the center
 		left = int(x - (magnifierWidth / 2))

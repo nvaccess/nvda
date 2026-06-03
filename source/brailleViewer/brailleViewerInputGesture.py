@@ -13,7 +13,7 @@ class BrailleViewerGesture_RouteTo(BrailleDisplayGesture):
 
 	def __init__(self, argument):
 		super().__init__()
-		self.routingIndex = argument
+		self.cellIndexes = [argument]
 		import globalCommands
 
 		self.script = globalCommands.commands.script_braille_routeTo

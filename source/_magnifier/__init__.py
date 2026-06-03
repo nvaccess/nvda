@@ -99,7 +99,7 @@ def start() -> None:
 		log.error("Attempted to start magnifier, but it is not initialized.")
 		return
 	_magnifier._startMagnifier()
-	setEnabled(True)
+	setEnabled(isActive())
 
 
 def stop(persist: bool = True) -> None:
@@ -110,7 +110,7 @@ def stop(persist: bool = True) -> None:
 	if isActive():
 		_magnifier._stopMagnifier()
 		if persist:
-			setEnabled(False)
+			setEnabled(isActive())
 	else:
 		log.debug("Attempted to stop magnifier, but it is not active.")
 

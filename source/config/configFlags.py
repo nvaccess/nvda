@@ -421,7 +421,7 @@ class LoggingLevel(DisplayStringIntEnum):
 	DEBUGWARNING = Logger.DEBUGWARNING
 	IO = Logger.IO
 	DEBUG = Logger.DEBUG
-	SECRETS = Logger.SECRETS
+	DEBUG_UNREDACTED = Logger.DEBUG_UNREDACTED
 
 	@property
 	def _displayStringLabels(self) -> dict[int, str]:
@@ -436,8 +436,9 @@ class LoggingLevel(DisplayStringIntEnum):
 			self.IO: _("input/output"),
 			# Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
 			self.DEBUG: _("debug"),
-			# Translators: One of the log levels of NVDA (the secrets mode logs debug messages without redacting secrets).
-			self.SECRETS: _("secrets"),
+			# Translators: One of the log levels of NVDA (the "debug (unredacted)" mode mode logs debug messages
+			# without redacting secrets).
+			self.DEBUG_UNREDACTED: _("debug (unredacted)"),
 		}
 
 
