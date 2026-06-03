@@ -326,35 +326,34 @@ class TestMagnifier(_TestMagnifier):
 		edgeValue = edgeMap[edgeAttr]
 		centerValue = centerX if axis == "x" else centerY
 
-		with patch("_magnifier.magnifier.winUser.setCursorPos"):
-			# Test normal pan - movement succeeds (position changes)
-			hasMoved = self.magnifier._pan(action)
-			self.assertTrue(hasMoved)
-			currentValue = getattr(self.magnifier.currentCoordinates, axis)
-			self.assertEqual(currentValue, centerValue + direction * expectedPanPixels)
+		# Test normal pan - movement succeeds (position changes)
+		hasMoved = self.magnifier._pan(action)
+		self.assertTrue(hasMoved)
+		currentValue = getattr(self.magnifier.currentCoordinates, axis)
+		self.assertEqual(currentValue, centerValue + direction * expectedPanPixels)
 
-			# Test reaching edge - movement succeeds on first contact (position changes to edge)
-			if axis == "x":
-				self.magnifier.currentCoordinates = Coordinates(
-					edgeValue - direction * expectedPanPixels,
-					centerY,
-				)
-			else:
-				self.magnifier.currentCoordinates = Coordinates(
-					centerX,
-					edgeValue - direction * expectedPanPixels,
-				)
+		# Test reaching edge - movement succeeds on first contact (position changes to edge)
+		if axis == "x":
+			self.magnifier.currentCoordinates = Coordinates(
+				edgeValue - direction * expectedPanPixels,
+				centerY,
+			)
+		else:
+			self.magnifier.currentCoordinates = Coordinates(
+				centerX,
+				edgeValue - direction * expectedPanPixels,
+			)
 
-			hasMoved = self.magnifier._pan(action)
-			self.assertTrue(hasMoved)
-			currentValue = getattr(self.magnifier.currentCoordinates, axis)
-			self.assertEqual(currentValue, edgeValue)
+		hasMoved = self.magnifier._pan(action)
+		self.assertTrue(hasMoved)
+		currentValue = getattr(self.magnifier.currentCoordinates, axis)
+		self.assertEqual(currentValue, edgeValue)
 
-			# Test trying to pan beyond edge - movement fails (already at edge, no movement)
-			hasMoved = self.magnifier._pan(action)
-			self.assertFalse(hasMoved)
-			currentValue = getattr(self.magnifier.currentCoordinates, axis)
-			self.assertEqual(currentValue, edgeValue)
+		# Test trying to pan beyond edge - movement fails (already at edge, no movement)
+		hasMoved = self.magnifier._pan(action)
+		self.assertFalse(hasMoved)
+		currentValue = getattr(self.magnifier.currentCoordinates, axis)
+		self.assertEqual(currentValue, edgeValue)
 
 	def _testPanToEdge(self, action: MagnifierAction, axis: str, edgeAttr: str):
 		"""
@@ -369,18 +368,17 @@ class TestMagnifier(_TestMagnifier):
 		edgeMap = {"left": minX, "right": maxX, "top": minY, "bottom": maxY}
 		edgeValue = edgeMap[edgeAttr]
 
-		with patch("_magnifier.magnifier.winUser.setCursorPos"):
-			# Test jump to edge - movement succeeds (moves to edge)
-			hasMoved = self.magnifier._pan(action)
-			self.assertTrue(hasMoved)
-			currentValue = getattr(self.magnifier.currentCoordinates, axis)
-			self.assertEqual(currentValue, edgeValue)
+		# Test jump to edge - movement succeeds (moves to edge)
+		hasMoved = self.magnifier._pan(action)
+		self.assertTrue(hasMoved)
+		currentValue = getattr(self.magnifier.currentCoordinates, axis)
+		self.assertEqual(currentValue, edgeValue)
 
-			# Test trying to pan to edge again - movement fails (already at edge, no movement)
-			hasMoved = self.magnifier._pan(action)
-			self.assertFalse(hasMoved)
-			currentValue = getattr(self.magnifier.currentCoordinates, axis)
-			self.assertEqual(currentValue, edgeValue)
+		# Test trying to pan to edge again - movement fails (already at edge, no movement)
+		hasMoved = self.magnifier._pan(action)
+		self.assertFalse(hasMoved)
+		currentValue = getattr(self.magnifier.currentCoordinates, axis)
+		self.assertEqual(currentValue, edgeValue)
 
 	def testPanLeft(self):
 		"""Pan left and detect edge limit."""
@@ -474,13 +472,6 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._managePanning()
 		self.assertFalse(self.magnifier._isManualPanning)
 		self.assertEqual(self.magnifier._lastFocusCoordinates, focusB)
-
-	def testKeepMouseCentered(self):
-		"""Base _keepMouseCentered moves cursor to currentCoordinates."""
-		self.magnifier.currentCoordinates = Coordinates(640, 360)
-		with patch("_magnifier.magnifier.winUser.setCursorPos") as mockSetCursor:
-			self.magnifier._keepMouseCentered()
-			mockSetCursor.assert_called_once_with(640, 360)
 
 	def testStartTimer(self):
 		"""Starting the timer."""
