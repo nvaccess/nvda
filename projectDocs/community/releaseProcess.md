@@ -53,14 +53,14 @@ Reasons in favor of not reverting the pull request may be:
 
 ### Beta phase
 
-* A commit without any known serious issues, will be selected from the 'master' branch and merged into 'beta'.
+* A commit will be selected from the `master` branch and merged into `beta`.
 * Once a beta commit is chosen, no further changes are included in the release, except the following will be considered:
   * addressing a bug introduced in the current or previous release cycle.
   * addressing a `p1` filed in the current or previous release cycle.
   * reverting code introduced in the current release cycle.
 * Documentation changes will be reviewed.
 A release summary will be added to the change log for the beta.
-* A tagged "beta release" will be created for wider testing.
+* Once considered stable enough, a tagged "beta release" will be created for wider testing.
 * As appropriate new tagged beta releases will be published once a week.
 * As necessary `beta` will be merged back into master.
   * For critical pull requests or translation merges.
