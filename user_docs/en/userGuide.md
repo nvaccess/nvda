@@ -1625,32 +1625,27 @@ NVDA will announce the name of the currently selected filter.
 
 The default color filter when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
-### Focus Tracking Modes {#MagnifierFullscreenFocusModes}
+### Fullscreen Tracking Modes {#MagnifierFullscreenTrackingModes}
 
-The magnifier offers three different modes for tracking focus and determining which part of the screen to magnify:
+The magnifier offers three different modes for tracking and determining which part of the screen to magnify:
 
-* Center: The magnified area is centered on the current focus position.
-This mode keeps the focused element at the center of the screen and clamps to the screen edge.
+* Center: The magnified area is centered on the current position.
+This mode keeps the followed element at the center of the screen and clamps to the screen edge.
 To disable clamping, activate [true center mode in the Magnifier settings](#MagnifierUseTrueCenter).
-* Border: The magnified area only moves when the focus approaches the edge of the visible area.
+* Border: The magnified area only moves when the followed element approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
-* Relative: The magnified area maintains the relative position of the focus within the screen.
-This mode mimics the behavior of the Windows Magnifier.
+* Relative: The magnified area maintains the relative position of the followed element with the screen. The magnified area will be centered if the followed element is in the center of the screen, and will be at the edge of the screen if the followed element is at the edge of the screen.
+This will move the tracking progressively towards the edge of the magnified area as it moves towards the edge of the screen, and will move progressively towards the center of the screen as it moves towards the center.
 
-To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 NVDA will announce the name of the currently selected mode.
 
-The default focus mode when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
+The default tracking mode when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
 ### Spotlight Mode {#MagnifierSpotlight}
 
-Spotlight mode is a special feature designed for presentations or focused reading tasks.
-When activated, it temporarily zooms out the magnified view to show the full screen, then zooms back in to the current focus position after a brief period of mouse inactivity.
-
-This is useful when you want to:
-
-* Show context to your audience during a presentation before zooming in on specific details
-* Temporarily view the full screen layout while magnifying
+Spotlight mode is a special feature designed to help get the context of where the magnifier is at the time.
+When activated, it temporarily zooms out the magnified view to show the full screen, then zooms back in to the current mouse position after a brief period of mouse inactivity.
 
 To activate spotlight mode, press `NVDA+shift+l` while the magnifier is enabled.
 Once activated, the magnifier will:
@@ -2919,10 +2914,10 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### Focus mode {#MagnifierFullscreenFocusMode}
+##### Tracking mode {#MagnifierFullscreenTrackingMode}
 
-This combo box allows you to select the focus tracking mode when using the magnifier.
-To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+This combo box allows you to select the tracking mode when using the magnifier.
+To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 The available options are:
 
 | . {.hideHeaderRow} |.|
@@ -2932,9 +2927,9 @@ The available options are:
 
 | Option | Description |
 |---|---|
-| Center | The magnified area is always centered on the current focus position. |
-| Border | The magnified area only moves when the focus approaches the edge of the visible area. |
-| Relative | The magnified area maintains the relative position of the focus within the screen. |
+| Center | The magnified area is always centered on the current followed position. |
+| Border | The magnified area only moves when the followed element approaches the edge of the visible area. |
+| Relative | The magnified area maintains the relative position of the followed element within the screen. |
 
 ##### Panning step size {#MagnifierPanningStepSize}
 
@@ -2946,7 +2941,7 @@ For example, if your visible magnified window is 200 pixels wide and you have a 
 Higher percentages cause larger movements, making it faster to navigate across the screen, while lower percentages provide finer control for precise positioning.
 The actual pixel distance will automatically adjust based on your current zoom level.
 
-Note: Pan commands allow you to manually move the magnified view in any direction, independent of the focus tracking mode.
+Note: Pan commands allow you to manually move the magnified view in any direction, independent of the tracking mode.
 Available pan actions include:
 
 | . {.hideHeaderRow} |.|
@@ -2956,8 +2951,8 @@ Available pan actions include:
 
 ##### Use true center {#MagnifierUseTrueCenter}
 
-This checkbox controls whether the magnifier should always keep the focus centered on the screen, or if it should allow the focus to move towards the edges of the screen before moving the magnified area.
-When enabled, the magnifier will always keep the focus centered on the screen, which can be helpful for users who prefer a consistent position of the focus within the magnified view.
+This checkbox controls whether the magnifier should always keep the followed element centered on the screen, or if it should allow the followed element to move towards the edges of the screen before moving the magnified area.
+When enabled, the magnifier will always keep the followed element centered on the screen, which can be helpful for users who prefer a consistent position of the followed element within the magnified view. Getting close to the edge of the screen, users will see out of screen areas.
 
 This option is disabled by default.
 
