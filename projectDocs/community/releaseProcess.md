@@ -53,7 +53,7 @@ Reasons in favor of not reverting the pull request may be:
 
 ### Beta phase
 
-* A commit without any known serious issues, will be selected from the 'master' branch and merged into 'beta'.
+* A commit without any known serious issues, will be selected from the `master` branch and merged into `beta`.
 * Once a beta commit is chosen, no further changes are included in the release, except the following will be considered:
   * addressing a bug introduced in the current or previous release cycle.
   * addressing a `p1` filed in the current or previous release cycle.
