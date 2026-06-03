@@ -6324,7 +6324,7 @@ Run the following command in Command Prompt (`cmd`) or PowerShell to install the
 
 `winget install --id NVAccess.NVDA`
 
-To install beta or RC versions, use the following WinGet package identifiers:
+To install beta or RC versions, use the following commands:
 
 * Beta: `winget install --id NVAccess.NVDA.Beta`
 * RC: `winget install --id NVAccess.NVDA.RC`
