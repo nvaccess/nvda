@@ -245,7 +245,7 @@ The actual commands will not execute while in input help mode.
 |Read window |`NVDA+b` |`NVDA+b` |Reads the entire current window (useful for dialogs)|
 |Read status bar |`NVDA+end` |`NVDA+shift+end` |Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard|
 |Read time |`NVDA+f12` |`NVDA+f12` |Pressing once reports the current time, pressing twice reports the date. The time and date are reported in the format specified in Windows settings for the system tray clock.|
-|Repeat last spoken information |`NVDA+x` |`NVDA+x` |Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
+| Repeat last spoken information | `NVDA+x` | `NVDA+x` | Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
 |Report text formatting |`NVDA+f` |`NVDA+f` |Reports text formatting. Pressing twice shows the information in a window|
 |Report link destination |`NVDA+k` |`NVDA+k` |Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review|
 
@@ -669,7 +669,7 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 |Starts or restarts NVDA |Control+alt+n |Control+alt+n |none |Starts or restarts NVDA from the Desktop, if this Windows shortcut is enabled during NVDA's installation process. This is a Windows specific shortcut and therefore it cannot be reassigned in the input gestures dialog.|
 |Stop speech |Control |control |2-finger tap |Instantly stops speaking|
 |Pause Speech |shift |shift |none |Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer)|
-|Repeat last spoken information |`NVDA+x` |`NVDA+x` |none |Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
+| Repeat last spoken information | `NVDA+x` | `NVDA+x` | None | Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
 |NVDA Menu |NVDA+n |NVDA+n |2-finger double-tap |Pops up the NVDA menu to allow you to access preferences, tools, help, etc.|
 |Toggle Input Help Mode |NVDA+1 |NVDA+1 |none |Pressing any key in this mode will report the key, and the description of any NVDA command associated with it|
 |Quit NVDA |NVDA+q |NVDA+q |none |Exits NVDA|
@@ -1584,22 +1584,22 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 
 <!-- KC:beginInclude -->
 
-| Name |Key |Description|
+| Name | Key | Description |
 |---|---|---|
-|Toggles the magnifier on and off |`NVDA+shift+w` |Enables or disables the magnifier|
+| Toggles the magnifier on and off | `NVDA+shift+w` | Enables or disables the magnifier |
 | Increases the magnification level of the magnifier | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
-|Decreases the magnification level of the magnifier |`NVDA+shift+minus` |Decreases the zoom level|
-|Toggle filter of the magnifier |`NVDA+shift+i` |Cycles through available color filters (normal, grayscale, inverted)|
-|Toggle focus mode for the full-screen magnifier |None |Cycles through focus tracking modes (center, border, relative)|
-|Launch spotlight if magnifier is full-screen |`NVDA+shift+l` |Activates spotlight mode for focused reading or presentations|
-|Pan left |`NVDA+alt+leftArrow` |Pan the magnified view to the left by the specified panning step size|
-|Pan right |`NVDA+alt+rightArrow` |Pan the magnified view to the right by the specified panning step size|
-|Pan up |`NVDA+alt+upArrow` |Pan the magnified view upwards by the specified panning step size|
-|Pan down |`NVDA+alt+downArrow` |Pan the magnified view downwards by the specified panning step size|
-|Pan to left edge |`NVDA+shift+alt+leftArrow` |Pan the magnified view directly to the left edge of the screen|
-|Pan to right edge |`NVDA+shift+alt+rightArrow` |Pan the magnified view directly to the right edge of the screen|
-|Pan to top edge |`NVDA+shift+alt+upArrow` |Pan the magnified view directly to the top edge of the screen|
-|Pan to bottom edge |`NVDA+shift+alt+downArrow` |Pan the magnified view directly to the bottom edge of the screen|
+| Decreases the magnification level of the magnifier | `NVDA+shift+minus` | Decreases the zoom level |
+| Toggle filter of the magnifier | `NVDA+shift+i` | Cycles through available color filters (normal, grayscale, inverted) |
+| Toggle focus mode for the full-screen magnifier | None | Cycles through focus tracking modes (center, border, relative) |
+| Launch spotlight if magnifier is full-screen | `NVDA+shift+l` | Activates spotlight mode for focused reading or presentations |
+| Pan left | `NVDA+alt+leftArrow` | Pan the magnified view to the left by the specified panning step size |
+| Pan right | `NVDA+alt+rightArrow` | Pan the magnified view to the right by the specified panning step size |
+| Pan up | `NVDA+alt+upArrow` | Pan the magnified view upwards by the specified panning step size |
+| Pan down | `NVDA+alt+downArrow` | Pan the magnified view downwards by the specified panning step size |
+| Pan to left edge | `NVDA+shift+alt+leftArrow` | Pan the magnified view directly to the left edge of the screen |
+| Pan to right edge | `NVDA+shift+alt+rightArrow` | Pan the magnified view directly to the right edge of the screen |
+| Pan to top edge | `NVDA+shift+alt+upArrow` | Pan the magnified view directly to the top edge of the screen |
+| Pan to bottom edge | `NVDA+shift+alt+downArrow` | Pan the magnified view directly to the bottom edge of the screen |
 
 <!-- KC:endInclude -->
 
@@ -2600,6 +2600,9 @@ Instead, there will be some blank space at the end of the display.
 When you scroll the display, you will be able to read the entire word.
 Note that if the word is too large to fit on the display even by itself, the word must still be split; the continuation mark is then shown.
 This option may allow for more fluent reading, but generally requires you to scroll the display more.
+* At word or syllable boundaries: Like "At word boundaries", but long words that don't fit are split at a syllable boundary when possible, using the language of the word if known.
+For example, the word `behave` may be split between `be` and `have`.
+The continuation mark is shown whenever a word is split.
 
 ##### Unicode normalization {#BrailleUnicodeNormalization}
 
@@ -2827,7 +2830,7 @@ The available logging levels are:
 If you are concerned about privacy, do not set the logging level to this option.
 * Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
 Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
-* Secrets: In addition to debug logging, NVDA will not redact secrets such as passwords and API keys from logs.
+* Debug (unredacted): In addition to debug logging, NVDA will not redact secrets such as passwords and API keys from logs.
 Only enable this temporarily when important debugging information is being redacted.
 
 ##### Allow NV Access to gather NVDA usage statistics {#GeneralSettingsGatherUsageStats}
@@ -2889,21 +2892,21 @@ The selected state is also saved for future NVDA sessions, so if you enable Magn
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Disabled, Enabled|
-|Default |Disabled|
+| Options | Disabled, Enabled |
+| Default | Disabled |
 
 ##### Zoom level {#MagnifierZoom}
 
-This slider allows you to set the zoom level when using the magnifier.
-The zoom level can range from 1.0 (no magnification) to 10.0 (maximum magnification).
-The default value is 2.0 (200% zoom).
+This setting allows you to set the zoom level when using the magnifier.
+The zoom level can range from 100% (no magnification) to 5000% (maximum magnification).
+The default value is 200%.
 
 You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+equals`) and zoom out (`NVDA+shift+minus`) commands while the magnifier is active.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |1.0 to 10.0|
-|Default |2.0|
+| Options | 100% to 5000% |
+| Default | 200% |
 
 ##### Filter {#MagnifierFilter}
 
@@ -2913,9 +2916,9 @@ The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options | Normal, Grayscale, Inverted |
-|Default |Normal |
-|Toggle command |`NVDA+shift+i` |
+| Options | Normal, Grayscale, Inverted |
+| Default | Normal |
+| Toggle command | `NVDA+shift+i` |
 
 | Option | Description |
 |---|---|
@@ -2931,9 +2934,8 @@ The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Center, Border, Relative|
-|Default |Center|
-|Toggle command |None |
+| Options | Center, Border, Relative |
+| Default | Center |
 
 | Option | Description |
 |---|---|
@@ -2956,8 +2958,8 @@ Available pan actions include:
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |1 to 100|
-|Default |10|
+| Options | 1 to 100 |
+| Default | 10 |
 
 ##### Use true center {#MagnifierUseTrueCenter}
 
@@ -2968,10 +2970,10 @@ This option is disabled by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Disabled, Enabled|
-|Default |Disabled|
+| Options | Disabled, Enabled |
+| Default | Disabled |
 
-#### Follow mouse {#MagnifierFollowMouse}
+##### Follow mouse {#MagnifierFollowMouse}
 
 This checkbox controls whether the magnifier should follow the mouse pointer.
 When enabled, the magnified area will automatically move to follow the mouse pointer, which can be helpful for users who navigate primarily using the mouse rather than the keyboard.
@@ -2980,10 +2982,10 @@ This option is enabled by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Disabled, Enabled|
-|Default |Enabled|
+| Options | Disabled, Enabled |
+| Default | Enabled |
 
-#### Follow system focus {#MagnifierFollowSystemFocus}
+##### Follow system focus {#MagnifierFollowSystemFocus}
 
 This checkbox controls whether the magnifier should follow the system focus.
 When enabled, the magnified area will automatically move to follow the system focus, which can be helpful for users who navigate primarily using the keyboard and want the magnifier to track their navigation.
@@ -2992,10 +2994,10 @@ This option is enabled by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Disabled, Enabled|
-|Default |Enabled|
+| Options | Disabled, Enabled |
+| Default | Enabled |
 
-#### Follow review cursor {#MagnifierFollowReviewCursor}
+##### Follow review cursor {#MagnifierFollowReviewCursor}
 
 This checkbox controls whether the magnifier should follow the review cursor.
 When enabled, the magnified area will automatically move to follow the review cursor, which can be helpful for users who use the review cursor to navigate through content and want the magnifier to track their navigation.
@@ -3004,10 +3006,10 @@ This option is enabled by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Disabled, Enabled|
-|Default |Enabled|
+| Options | Disabled, Enabled |
+| Default | Enabled |
 
-#### Follow navigator object {#MagnifierFollowNavigatorObject}
+##### Follow navigator object {#MagnifierFollowNavigatorObject}
 
 This checkbox controls whether the magnifier should follow the navigator object.
 When enabled, the magnified area will automatically move to follow the navigator object, which can be helpful for users who use object navigation to navigate through content and want the magnifier to track their navigation.
@@ -3016,20 +3018,8 @@ This option is enabled by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Disabled, Enabled|
-|Default |Enabled|
-
-##### Keep mouse centered {#MagnifierKeepMouseCentered}
-
-This checkbox controls whether the mouse pointer should be automatically moved to the center of the magnified area when certain focus events occur.
-When enabled, NVDA will reposition the mouse pointer to keep it centered in the magnified view, which can be helpful for users who navigate primarily using the magnifier's focus tracking rather than the mouse.
-
-This option is disabled by default.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Disabled, Enabled|
-|Default |Disabled|
+| Options | Disabled, Enabled |
+| Default | Enabled |
 
 #### Keyboard {#KeyboardSettings}
 
@@ -4247,8 +4237,8 @@ The [modern engine](https://pypi.org/project/regex/) has better support for non-
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Default (Disabled), Disabled, Enabled|
-|Default |Disabled|
+| Options | Default (Disabled), Disabled, Enabled |
+| Default | Disabled |
 
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
@@ -4271,9 +4261,9 @@ Only turn one of these on if specifically instructed to by an NVDA developer e.g
 ##### Play a sound for logged errors {#PlayErrorSound}
 
 This option allows you to specify if NVDA will play an error sound in case an error is logged.
-Choosing Only in test versions (default) makes NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
-Choosing Yes allows to enable error sounds whatever your current NVDA version is.
-Choosing No disables error sounds no matter what your current NVDA version is, i.e. even in test versions.
+Choosing "Only in test versions (default)" makes NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
+Choosing "Yes" allows to enable error sounds whatever your current NVDA version is.
+Choosing "No" disables error sounds no matter what your current NVDA version is, i.e. even in test versions.
 
 ##### Regular expression for text paragraph quick navigation commands {#TextParagraphRegexEdit}
 
@@ -4420,10 +4410,10 @@ After resetting, a dialog will appear allowing you to undo the reset and restore
 The following NVDA key commands are also useful:
 <!-- KC:beginInclude -->
 
-| Name |Desktop key |Laptop key |Description|
-|---|---|---|---|
-|Save configuration |`NVDA+control+c` |`NVDA+control+c` |Saves your current configuration so that it is not lost when you exit NVDA|
-|Revert configuration |`NVDA+control+r` |`NVDA+control+r` |Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults without showing the undo dialog.|
+| Name | Key | Description |
+|---|---|---|
+| Save configuration | `NVDA+control+c` | Saves your current configuration so that it is not lost when you exit NVDA |
+| Revert configuration | `NVDA+control+r` | Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults without showing the undo dialog. |
 
 <!-- KC:endInclude -->
 
@@ -5083,6 +5073,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move back using right wiz wheel action |rightWizWheelUp|
 |Move forward using right wiz wheel action |rightWizWheelDown|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |shift+tab key |brailleSpaceBar+dot1+dot2|
 |tab key |brailleSpaceBar+dot4+dot5|
 |upArrow key |brailleSpaceBar+dot1|
@@ -5159,6 +5150,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to next line |t4|
 |Scroll braille display forward |t5, etouch3|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |Report text formatting under braille cell |secondary routing|
 |Toggle HID keyboard simulation |t1+spEnter|
 |Move to top line in review |t1+t2|
@@ -5211,6 +5203,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |b4|
 |Move braille display to next line |b5|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |shift+tab key |esc, left triple action key up+down|
 |alt key |b2+b4+b5|
 |escape key |b4+b6|
@@ -5281,6 +5274,7 @@ Please see your display's documentation for descriptions of where these keys can
 |Move braille display to previous line |`d1`|
 |Move braille display to next line |`d3`|
 |Route to braille cell |`routing`|
+| Select range from first up to last braille cell | `multiRouting` |
 |`shift+tab` key |`space+dot1+dot3`|
 |`tab` key |`space+dot4+dot6`|
 |`alt` key |`space+dot1+dot3+dot4` (`space+m`)|
@@ -5376,6 +5370,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |up|
 |Move braille display to next line |down|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |Toggle braille tethered to |up+down|
 |upArrow key |space+dot1|
 |downArrow key |space+dot4|
@@ -5557,6 +5552,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |leftArrow key |RJ left|
 |rightArrow key |RJ right|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |shift+upArrow key |Space+RJ up, Backspace+RJ up|
 |shift+downArrow key |Space+RJ down, Backspace+RJ down|
 |shift+leftArrow key |Space+RJ left, Backspace+RJ left|
@@ -6184,6 +6180,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Scroll braille display back |`left`, `lWheelLeft`, `rWheelLeft`|
 |Scroll braille display forward |`right`, `lWheelRight`, `rWheelRight`|
 |Route to braille cell |`routing`|
+| Select range from first up to last braille cell | `home1+multiRouting`, `home2+multiRouting` |
 |Report text formatting under braille cell |`secondary routing`|
 |Toggle the way context information is presented in braille |`attribute1+attribute3`|
 |Cycles between speech modes |`attribute2+attribute4`|
@@ -6241,6 +6238,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |`d1`|
 |Move braille display to next line |`d3`|
 |Route to braille cell |`routing`|
+| Select range from first up to last braille cell | `multiRouting` |
 |Up arrow key |`up`|
 |Down arrow key |`down`|
 |Left arrow key |`left`|
@@ -6264,6 +6262,7 @@ Following are the current key assignments for these displays.
 |Scroll braille display back |pan left or rocker up|
 |Scroll braille display forward |pan right or rocker down|
 |Route to braille cell |routing set 1|
+| Select range from first up to last braille cell | multiple routing set 1 keys |
 |Toggle braille tethered to |up+down|
 |upArrow key |joystick up, dpad up or space+dot1|
 |downArrow key |joystick down, dpad down or space+dot4|
@@ -6305,10 +6304,10 @@ Make sure to lift your hand entirely off the device when navigating with NVDA, a
 
 <!-- KC:beginInclude -->
 
-| Name |Key|
+| Name | Key |
 |---|---|
-|Scroll braille display back | `panLeft` |
-|Scroll braille display forward | `panRight` |
+| Scroll braille display back | `panLeft` |
+| Scroll braille display forward | `panRight` |
 
 <!-- KC:endInclude -->
 
@@ -6364,6 +6363,20 @@ Secure screens include:
 * The User Access Control dialog, active when performing an action as an administrator
   * This includes installing programs
 
+### Downloading NVDA {#DownloadingNVDA}
+
+The recommended place to download NVDA is from the NV Access download page at [https://www.nvaccess.org/download/](https://www.nvaccess.org/download/).
+
+NVDA can also be downloaded and installed using the Windows Package Manager (WinGet).
+Run the following command in Command Prompt (`cmd`) or PowerShell to install the latest version of NVDA:
+
+`winget install --id NVAccess.NVDA`
+
+To install beta or RC versions, use the following commands:
+
+* Beta: `winget install --id NVAccess.NVDA.Beta`
+* RC: `winget install --id NVAccess.NVDA.RC`
+
 ### Command Line Options {#CommandLineOptions}
 
 NVDA can accept one or more additional options when it starts which alter its behaviour.
@@ -6402,7 +6415,7 @@ Following are the command line options for NVDA:
 |`-q` |`--quit` |Quit already running copy of NVDA|
 |`-k` |`--check-running` |Report whether NVDA is running via the exit code; 0 if running, 1 if not running|
 |`-f LOGFILENAME` |`--log-file=LOGFILENAME` |The file where log messages should be written to. Logging is always disabled if secure mode is enabled.|
-|`-l LOGLEVEL` |`--log-level=LOGLEVEL` |The lowest level of message logged (secrets 5, debug 10, input/output 12, debug warning 15, info 20, disabled 100). Logging is always disabled if secure mode is enabled.|
+| `-l LOGLEVEL` | `--log-level=LOGLEVEL` | The lowest level of message logged (debug (unredacted) 5, debug 10, input/output 12, debug warning 15, info 20, disabled 100). Logging is always disabled if secure mode is enabled. |
 |`-c CONFIGPATH` |`--config-path=CONFIGPATH` |The path where all settings for NVDA are stored. The default value is forced if secure mode is enabled.|
 |`-n LANGUAGE` |`--lang=LANGUAGE` |Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc.|
 |`-m` |`--minimal` |No sounds, no interface, no start message, etc.|

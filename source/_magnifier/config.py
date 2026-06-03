@@ -36,45 +36,27 @@ class ZoomLevel:
 	Constants and utilities for zoom level management.
 	"""
 
-	MAX_ZOOM: float = 10.0
-	MIN_ZOOM: float = 1.0
-	STEP_FACTOR: float = 0.5
-	ZOOM_MESSAGE = pgettext(
-		"magnifier",
-		# Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
-		"{zoomLevel}x",
-	)
+	MAX_ZOOM: int = 5000
+	MIN_ZOOM: int = 100
+	STEP_FACTOR: int = 50
 
-	@classmethod
-	def zoom_range(cls) -> list[float]:
-		"""
-		Return the list of available zoom levels.
-		"""
-		start = round(cls.MIN_ZOOM / cls.STEP_FACTOR)
-		end = round(cls.MAX_ZOOM / cls.STEP_FACTOR)
-
-		return [i * cls.STEP_FACTOR for i in range(start, end + 1)]
-
-	@classmethod
-	def zoom_strings(cls) -> list[str]:
-		"""
-		Return localized zoom level strings.
-		"""
-		return [
-			cls.ZOOM_MESSAGE.format(
-				zoomLevel=f"{value:.1f}",
-			)
-			for value in cls.zoom_range()
-		]
+	@staticmethod
+	def zoomMessage(zoomLevel: int) -> str:
+		zoomLevel = zoomLevel / 100.0
+		return pgettext(
+			"magnifier",
+			# Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
+			"{zoomLevel}x",
+		).format(zoomLevel=f"{zoomLevel:.1f}")
 
 
-def getZoomLevel() -> float:
+def getZoomLevel() -> int:
 	"""
 	Get zoom level from config.
 
-	:return: The zoom level.
+	:return: The zoom level (percentage).
 	"""
-	zoomLevel = config.conf["magnifier"]["zoomLevel"]
+	zoomLevel = config.conf["magnifier"]["zoom"]
 	return zoomLevel
 
 
@@ -85,22 +67,36 @@ def getZoomLevelString() -> str:
 	:return: Formatted zoom level string.
 	"""
 	zoomLevel = getZoomLevel()
-	zoomValues = ZoomLevel.zoom_range()
-	zoomStrings = ZoomLevel.zoom_strings()
-	closestIndex = min(
-		range(len(zoomValues)),
-		key=lambda i: abs(zoomValues[i] - zoomLevel),
-	)
-	return zoomStrings[closestIndex]
+	return ZoomLevel.zoomMessage(zoomLevel)
 
 
-def setZoomLevel(zoomLevel: float) -> None:
+def roundZoomLevel(zoomLevel: int) -> int:
+	"""
+	Round a zoom level to the nearest valid step.
+
+	:param zoomLevel: The zoom level to round.
+	:return: The rounded zoom level.
+	"""
+	remainder = zoomLevel % ZoomLevel.STEP_FACTOR
+	if remainder >= ZoomLevel.STEP_FACTOR / 2:
+		return zoomLevel + (ZoomLevel.STEP_FACTOR - remainder)
+	else:
+		return zoomLevel - remainder
+
+
+def setZoomLevel(zoomLevel: int) -> None:
 	"""
 	Set zoom level from settings.
 
 	:param zoomLevel: The zoom level to set.
 	"""
-	config.conf["magnifier"]["zoomLevel"] = zoomLevel
+	if not isinstance(zoomLevel, int):
+		raise ValueError("Zoom level must be an integer percentage")
+	if not (ZoomLevel.MIN_ZOOM <= zoomLevel <= ZoomLevel.MAX_ZOOM):
+		raise ValueError(f"Zoom level must be between {ZoomLevel.MIN_ZOOM} and {ZoomLevel.MAX_ZOOM}")
+	if zoomLevel % ZoomLevel.STEP_FACTOR != 0:
+		raise ValueError(f"Zoom level must be a multiple of {ZoomLevel.STEP_FACTOR}")
+	config.conf["magnifier"]["zoom"] = zoomLevel
 
 
 def getPanStep() -> int:
@@ -228,24 +224,6 @@ def toggleAllFollowStates() -> bool:
 	return _followStateOverride.isActive
 
 
-def getDefaultFullscreenMode() -> FullScreenMode:
-	"""
-	Get default full-screen mode from config.
-
-	:return: The default full-screen mode.
-	"""
-	return FullScreenMode(config.conf["magnifier"]["defaultFullscreenMode"])
-
-
-def setDefaultFullscreenMode(mode: FullScreenMode) -> None:
-	"""
-	Set default full-screen mode from settings.
-
-	:param mode: The full-screen mode to set.
-	"""
-	config.conf["magnifier"]["defaultFullscreenMode"] = mode.value
-
-
 def isTrueCentered() -> bool:
 	"""
 	Check if true centered mode is enabled in config.
@@ -253,15 +231,6 @@ def isTrueCentered() -> bool:
 	:return: True if true centered mode is enabled, False otherwise.
 	"""
 	return config.conf["magnifier"]["isTrueCentered"]
-
-
-def shouldKeepMouseCentered() -> bool:
-	"""
-	Check if mouse pointer should be kept centered in magnifier view.
-
-	:return: True if mouse should be kept centered, False otherwise.
-	"""
-	return config.conf["magnifier"]["keepMouseCentered"]
 
 
 def getFullscreenMode() -> FullScreenMode:

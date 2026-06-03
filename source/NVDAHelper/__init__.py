@@ -135,7 +135,6 @@ def nvdaController_speakSsml(  # noqa: C901
 
 		def prefixCallback():
 			synthDriverHandler.synthDoneSpeaking.register(onDoneSpeaking)
-			speech.speechCanceled.register(onSpeechCanceled)
 
 		def markCallable(name: str):
 			markQueue.put_nowait(name)
@@ -147,6 +146,15 @@ def nvdaController_speakSsml(  # noqa: C901
 	except Exception:
 		log.error("Error parsing SSML", exc_info=True)
 		return SystemErrorCodes.INVALID_PARAMETER
+
+	if not asynchronous:
+		# onSpeechCanceled must be registered before speech.speak is queued.
+		# If registered inside prefixCallback (a CallbackCommand), it runs on the synth
+		# thread after the sequence starts — leaving a window where speechCanceled fires
+		# between queueFunction returning and the synth reaching the CallbackCommand.
+		# onDoneSpeaking stays in prefixCallback because synthDoneSpeaking fires per
+		# sequence: registering it here would also catch a previous sequence that is still finishing.
+		speech.speechCanceled.register(onSpeechCanceled)
 
 	queueHandler.queueFunction(
 		queueHandler.eventQueue,

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2025 NV Access Limited, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
+# Copyright (C) 2018-2026 NV Access Limited, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
 
 """Helper module to ease communication to and from liblouis."""
 
@@ -17,6 +17,7 @@ from typing import Generator
 import brailleTables
 import config
 import globalVars
+import languageHandler
 from logHandler import log
 
 with os.add_dll_directory(globalVars.appDir):
@@ -176,3 +177,9 @@ def translate(
 	if cursorPos is None:
 		brailleCursorPos = None
 	return braille, brailleToRawPos, rawToBraillePos, brailleCursorPos
+
+
+def getTableLanguage(table: str) -> str | None:
+	"""Get the language of a braille table, if specified in the table file."""
+	lang = louis.getTableInfo(table, "language")
+	return languageHandler.normalizeLanguage(lang) if lang else None

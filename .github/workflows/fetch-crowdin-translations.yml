@@ -14,7 +14,7 @@ on:
 
 jobs:
   download-from-crowdin:
-    runs-on: windows-2025
+    runs-on: windows-2025-vs2026
     permissions:
       contents: write
       pull-requests: write
@@ -44,7 +44,7 @@ jobs:
     - name: Set up python
       uses: actions/setup-python@v6
       with:
-        python-version: '3.13.12'
+        python-version: '3.13.13'
         architecture: 'x64'
 
     - name: setup uv
