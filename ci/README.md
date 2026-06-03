@@ -35,7 +35,6 @@ Some of these steps run concurrently.
   * On snapshot builds, deploy to the server.
   * On beta branch builds, upload translation to Crowdin.
   * On release builds, publish the release on GitHub and deploy to the server.
-  * On release builds, submit a PR for the new version to the WinGet community repository.
 * Clean up build cache.
 
 ### Build behaviours
@@ -182,16 +181,6 @@ NV Access scans tagged builds with VirusTotal.
 To ensure this step of tagged builds succeeds, set:
 
 * `VT_API_KEY` as a secret.
-
-### WinGet manifest submission
-
-On release builds, a PR is automatically submitted to the [WinGet community repository](https://github.com/microsoft/winget-pkgs) with the new version's manifest.
-
-To ensure this step of release builds succeeds, set:
-
-* `WINGET_CREATE_GITHUB_TOKEN` as a secret with a GitHub personal access token that has permission to fork and open pull requests against `microsoft/winget-pkgs`.
-
-See [the winget-create documentation](https://aka.ms/winget-create-token) for the required token scopes.
 
 ### GitHub Discussions category
 

@@ -12,7 +12,7 @@ on:
         required: false
 
 env:
-  CACHE_EXPIRATION_HOUR: ${{ inputs.cache_expiration || fromJSON(vars.CACHE_EXPIRATION_HOUR || '6') }}
+  CACHE_EXPIRATION_HOUR: ${{ inputs.cache_expiration || fromJSON(vars.CACHE_EXPIRATION_HOUR) || 6 }}
 
 jobs:
   cleanupCache:

@@ -133,9 +133,9 @@ class TestLoggerSecretRedaction(unittest.TestCase):
 			self.assertIn("****", loggedMsg)
 			self.assertNotIn("86851a5bab3f33abc2858eca0922c34c34c38f0a", loggedMsg)
 
-	def test_logWithRedactionBypassesMaskingAtDebugUnredactedLevel(self):
+	def test_logWithRedactionBypassesMaskingAtSecretsLevel(self):
 		secret = types.SimpleNamespace(secret_value="secret-value")
-		self.logger.setLevel(logHandler.Logger.DEBUG_UNREDACTED)
+		self.logger.setLevel(logHandler.Logger.SECRETS)
 
 		with (
 			mock.patch.object(logging.Logger, "_log") as superLog,

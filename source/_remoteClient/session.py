@@ -1,8 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2026 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton,
-# Leonard de Ruijter and others.
-# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
-# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """NVDA Remote session management and message routing.
 
@@ -663,12 +662,8 @@ class LeaderSession(RemoteSession):
 				dict["dots"] = gesture.dots
 			if hasattr(gesture, "space") and "space" not in dict:
 				dict["space"] = gesture.space
-			if hasattr(gesture, "cellIndexes") and "cellIndexes" not in dict and gesture.cellIndexes:
-				dict["cellIndexes"] = gesture.cellIndexes
-				# Legacy field for older peers that only know routingIndex.
-				# Only emit for single-cell presses; multi-cell presses have no safe single-index equivalent.
-				if len(gesture.cellIndexes) == 1:
-					dict.setdefault("routingIndex", gesture.cellIndexes[0])
+			if hasattr(gesture, "routingIndex") and "routingIndex" not in dict:
+				dict["routingIndex"] = gesture.routingIndex
 			self.localMachine._dismissLocalBrailleMessage()
 			self.transport.send(type=RemoteMessageType.BRAILLE_INPUT, **dict)
 			return False

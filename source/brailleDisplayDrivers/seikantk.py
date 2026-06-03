@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2026 NV Access Limited, Ulf Beckmann <beckmann@flusoft.de>, Leonard de Ruijter
-# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
-# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012-2023 NV Access Limited, Ulf Beckmann <beckmann@flusoft.de>
 
 """
 Braille display driver for Seika Notetaker, a product from Nippon Telesoft
@@ -295,13 +295,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _handleRouting(self, arg: bytes):
 		routingIndexes = _getRoutingIndexes(arg)
-		if not routingIndexes:
-			return
-		gesture = InputGestureRouting(sorted(routingIndexes))
-		try:
-			inputCore.manager.executeGesture(gesture)
-		except inputCore.NoInputGestureAction:
-			log.debug("No action for Seika Notetaker routing command")
+		for routingIndex in routingIndexes:
+			gesture = InputGestureRouting(routingIndex)
+			try:
+				inputCore.manager.executeGesture(gesture)
+			except inputCore.NoInputGestureAction:
+				log.debug("No action for Seika Notetaker routing command")
 
 	def _handleKeys(self, arg: bytes):
 		brailleDots = arg[0]
@@ -332,7 +331,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		{
 			"globalCommands.GlobalCommands": {
 				"braille_routeTo": ("br(seikantk):routing",),
-				"braille_selectRange": ("br(seikantk):multiRouting",),
 				"braille_scrollBack": ("br(seikantk):LB",),
 				"braille_scrollForward": ("br(seikantk):RB",),
 				"braille_previousLine": ("br(seikantk):LJ_UP",),
@@ -368,13 +366,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 class InputGestureRouting(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, indexes: list[int] | int):
+	def __init__(self, index):
 		super().__init__()
-		if isinstance(indexes, int):
-			# Backwards compat: callers historically passed a single index.
-			indexes = [indexes]
-		self.cellIndexes = indexes
-		self.id = self.idForCellCount(len(self.cellIndexes))
+		self.id = "routing"
+		self.routingIndex = index
 
 
 def _getKeyNames(keys: int, names: Dict[int, str]) -> Set[str]:
@@ -409,6 +404,6 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				names.update(_getKeyNames(space, _keyNames))
 			names.update(_getKeyNames(dots, _dotNames))
 		elif routing is not None:
-			self.cellIndexes = [routing]
+			self.routingIndex = routing
 			names.add("routing")
 		self.id = "+".join(names)
