@@ -15,7 +15,6 @@ import wx
 import ui
 import speech
 import screenCurtain
-import winUser
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (
@@ -32,7 +31,6 @@ from .config import (
 	getFilter,
 	isTrueCentered,
 	setZoomLevel,
-	shouldKeepMouseCentered,
 	ZoomLevel,
 )
 from .utils.focusManager import FocusManager
@@ -199,8 +197,6 @@ class Magnifier:
 			self._managePanning()
 			if not self._isManualPanning:
 				self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
-			if shouldKeepMouseCentered():
-				self._keepMouseCentered()
 			self._doUpdate()
 			self._consecutiveErrors = 0
 			self._recoveryAttempts = 0
@@ -359,14 +355,6 @@ class Magnifier:
 			if focusCoordinates != self._lastFocusCoordinates:
 				self._isManualPanning = False
 		self._lastFocusCoordinates = focusCoordinates
-
-	def _keepMouseCentered(self) -> None:
-		"""
-		Move the mouse cursor to the center of the magnified view.
-		Subclasses may override this to adapt the behavior for specific modes.
-		"""
-		centerX, centerY = self.currentCoordinates
-		winUser.setCursorPos(centerX, centerY)
 
 	def _startTimer(self, callback: Callable[[], None] = None) -> None:
 		"""
