@@ -814,7 +814,6 @@ class ConfigManager:
 		post_configSave.notify()
 		self._saveCustomSections()
 
-
 	def reset(self, factoryDefaults=False):
 		"""Reset the configuration to saved settings or factory defaults.
 		@param factoryDefaults: C{True} to reset to factory defaults, C{False} to reset to saved configuration.

@@ -31,5 +31,5 @@ for name, entry in loaded.items():
 	print(f"  spec={spec!r}  (type: {type(spec).__name__})")
 	print(f"  isBaseOnly={isBaseOnly!r}")
 	print(
-		f"  spec value type: {type(next(iter(spec.values()))).__name__}" if spec else "  spec is empty/None"
+		f"  spec value type: {type(next(iter(spec.values()))).__name__}" if spec else "  spec is empty/None",
 	)
