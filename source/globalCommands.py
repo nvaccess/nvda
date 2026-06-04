@@ -5211,7 +5211,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle mouse tracking",
+			"Toggle magnifier mouse tracking",
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
@@ -5224,7 +5224,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle system focus tracking",
+			"Toggle magnifier system focus tracking",
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
@@ -5237,7 +5237,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle review cursor tracking",
+			"Toggle magnifier review cursor tracking",
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
@@ -5250,7 +5250,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle navigator object for the magnifier",
+			"Toggle magnifier navigator object tracking",
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
@@ -5263,7 +5263,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle all tracking settings",
+			"Toggle all magnifier tracking settings",
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
@@ -5276,7 +5276,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle focus mode",
+			"Toggle magnifier focus mode",
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
