@@ -5085,7 +5085,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnified view to the left",
+			"Pan the magnified view left",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+alt+leftArrow",
@@ -5099,7 +5099,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnified view to the right",
+			"Pan the magnified view right",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+alt+rightArrow",
@@ -5289,11 +5289,11 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describe a command.
-			"Temporary show the entire screen with spotlight around the mouse cursor",
+			"Temporarily show an overview of the entire screen",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+l",
-	)---------------
+	)
 	def script_startSpotlight(
 		self,
 		gesture: inputCore.InputGesture,
