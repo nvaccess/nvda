@@ -111,9 +111,9 @@ def _saveSections():
 
 
 def initialize():
+	loadCustomSections()
 	global conf
 	conf = ConfigManager()
-	loadCustomSections()
 	post_configSave.unregister(_saveSections)
 	post_configSave.register(_saveSections)
 
@@ -534,23 +534,10 @@ def addSection(sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool =
 	specCopy = dict(sectionSpec)
 	if isBaseOnly:
 		confspec[sectionName] = sectionSpec
-		profile = conf.profiles[0]
-		try:
-			sect = profile[sectionName]
-		except KeyError:
-			profile[sectionName] = {}
-			# ConfigObj mutates this into a configobj.Section.
-			sect = profile[sectionName]
-		sect.configspec = confspec[sectionName]
-		try:
-			profile.validate(conf.validator, section=sect)
-			conf.BASE_ONLY_SECTIONS.add(sectionName)
-		except Exception:
-			log.error("Error validating section %s", sectionName, exc_info=True)
-			return
+		ConfigManager.BASE_ONLY_SECTIONS.add(sectionName)
 	else:
-		conf.spec[sectionName] = sectionSpec
-	conf.customSections[sectionName] = {"spec": specCopy, "isBaseOnly": isBaseOnly}
+		ConfigManager.spec[sectionName] = sectionSpec
+	ConfigManager.customSections[sectionName] = {"spec": specCopy, "isBaseOnly": isBaseOnly}
 
 
 class ConfigManager:
@@ -578,6 +565,9 @@ class ConfigManager:
 	Note this set may be extended by add-ons.
 	"""
 
+	customSections: dict[str, dict[str, Any]] = {}
+	"""Sections added by add-ons."""
+
 	def __init__(self):
 		self.spec = confspec
 		_transformSpec(self.spec)
@@ -593,7 +583,6 @@ class ConfigManager:
 			},
 		)
 		self.rootSection: AggregatedSection | None = None
-		self.customSections: dict[str, dict[str, Any]] = {}
 		self._shouldHandleProfileSwitch: bool = True
 		self._pendingHandleProfileSwitch: bool = False
 		self._suspendedTriggers: list[ProfileTrigger] | None = None
