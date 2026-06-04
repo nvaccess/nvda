@@ -3014,18 +3014,6 @@ This option is enabled by default.
 | Options | Disabled, Enabled |
 | Default | Enabled |
 
-##### Keep mouse centered {#MagnifierKeepMouseCentered}
-
-This checkbox controls whether the mouse pointer should be automatically moved to the center of the magnified area when certain focus events occur.
-When enabled, NVDA will reposition the mouse pointer to keep it centered in the magnified view, which can be helpful for users who navigate primarily using the magnifier's focus tracking rather than the mouse.
-
-This option is disabled by default.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-| Options | Disabled, Enabled |
-| Default | Disabled |
-
 #### Keyboard {#KeyboardSettings}
 
 <!-- KC:setting -->
