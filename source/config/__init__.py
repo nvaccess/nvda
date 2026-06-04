@@ -603,7 +603,7 @@ class ConfigManager:
 			return
 		path = WritePaths.nvdaCustomSectionsFile
 		try:
-			with open(path, "w") as _f:
+			with open(path, "w", encoding="utf-8") as _f:
 				yaml.safe_dump(self.customSections, _f)
 		except (OSError, yaml.YAMLError):
 			log.error(f"Error saving sections to {path}.", exc_info=True)
