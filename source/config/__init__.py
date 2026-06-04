@@ -517,21 +517,18 @@ def _loadCustomSections() -> None:
 			log.debugWarning(f"Custom section {name} has a non-mapping spec; skipping.")
 			continue
 		isBaseOnly = bool(entry.get("isBaseOnly", False))
-		addSection(name, entry["spec"], isBaseOnly)
+		_addSection(name, entry["spec"], isBaseOnly)
 
 
-def addSection(sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool = False):
+def _addSection(sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool = False):
 	"""Add a section to the configuration.
 	:param sectionName: The name of the section to add.
 	:param sectionSpec: The configspec for the section to add.
 	:param isBaseOnly: Whether this section should only be in the base configuration, defaults to False.
 	"""
-	# Save a deep copy before configobj can mutate sectionSpec (and any nested subsections) into configobj.Section instances.
-	specCopy = deepcopy(sectionSpec)
 	confspec[sectionName] = sectionSpec
 	if isBaseOnly:
 		ConfigManager.BASE_ONLY_SECTIONS.add(sectionName)
-	ConfigManager.customSections[sectionName] = {"spec": specCopy, "isBaseOnly": isBaseOnly}
 
 
 class ConfigManager:
@@ -559,9 +556,6 @@ class ConfigManager:
 	Note this set may be extended by add-ons.
 	"""
 
-	customSections: dict[str, dict[str, Any]] = {}
-	"""Sections added by add-ons."""
-
 	def __init__(self):
 		self.spec = confspec
 		_transformSpec(self.spec)
@@ -586,6 +580,22 @@ class ConfigManager:
 		self._loadProfileTriggers()
 		#: The names of all profiles that have been modified since they were last saved.
 		self._dirtyProfiles: set[str] = set()
+		# Sections added by add-ons. The key is the section name, and the value is a dict with keys "spec" and "isBaseOnly".
+		self.customSections: dict[str, dict[str, Any]] = {}
+
+	def registerSection(self, sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool = False):
+		"""Register a section to be added to the configuration.
+		This is intended for add-ons to register custom sections.
+		:param sectionName: The name of the section to add.
+		:param sectionSpec: The configspec for the section to add.
+		:param isBaseOnly: Whether this section should only be in the base configuration.
+		"""
+		if sectionName in confspec:
+			raise ValueError(f"Section {sectionName!r} is already registered.")
+		if not isinstance(sectionSpec, dict):
+			raise TypeError(f"sectionSpec for {sectionName!r} must be a dict.")
+		self.customSections[sectionName] = {"spec": sectionSpec, "isBaseOnly": isBaseOnly}
+		self._saveCustomSections()
 
 	def _saveCustomSections(self) -> None:
 		"""Write all registered custom sections to disk."""
@@ -593,9 +603,9 @@ class ConfigManager:
 			return
 		path = WritePaths.nvdaCustomSectionsFile
 		try:
-			with open(path, "w", encoding="utf-8") as _f:
-				yaml.safe_dump(self.customSections, _f, allow_unicode=True)
-		except Exception:
+			with FaultTolerantFile(path) as _f:
+				_f.write(yaml.safe_dump(self.customSections, allow_unicode=True).encode("utf-8"))
+		except (OSError, yaml.YAMLError):
 			log.error(f"Error saving sections to {path}.", exc_info=True)
 
 	def _handleProfileSwitch(self, shouldNotify=True):
@@ -815,7 +825,6 @@ class ConfigManager:
 			log.warning("Error saving configuration", exc_info=True)
 			raise e
 		post_configSave.notify()
-		self._saveCustomSections()
 
 	def reset(self, factoryDefaults=False):
 		"""Reset the configuration to saved settings or factory defaults.
