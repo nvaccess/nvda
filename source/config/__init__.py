@@ -106,7 +106,10 @@ def __getattr__(attrName: str) -> Any:
 
 
 def initialize():
-	_loadCustomSections()
+	try:
+		_loadCustomSections()
+	except Exception:
+		log.error("Failed to load custom sections.", exc_info=True)
 	global conf
 	conf = ConfigManager()
 
@@ -483,7 +486,7 @@ def _transformSpec(spec: ConfigObj):
 
 def _loadCustomSections() -> None:
 	"""Add registered customSections to the configuration."""
-	path = WritePaths.customSectionsFile
+	path = WritePaths.nvdaCustomSectionsFile
 	try:
 		with open(path, encoding="utf-8") as _f:
 			customSections = yaml.safe_load(_f)
@@ -588,7 +591,7 @@ class ConfigManager:
 		"""Write all registered custom sections to disk."""
 		if not NVDAState.shouldWriteToDisk():
 			return
-		path = WritePaths.customSectionsFile
+		path = WritePaths.nvdaCustomSectionsFile
 		try:
 			with open(path, "w", encoding="utf-8") as _f:
 				yaml.safe_dump(self.customSections, _f, allow_unicode=True)
