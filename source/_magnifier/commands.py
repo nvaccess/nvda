@@ -304,8 +304,8 @@ def startSpotlight() -> None:
 				ui.message(
 					pgettext(
 						"magnifier",
-						# Translators: Message announced when trying to start spotlight mode while it's already active.
-						"Spotlight mode is already active",
+						# Translators: Message announced when trying to show temporary overview of the screen while it's already active.
+						"The screen overview is already active",
 					),
 				)
 			else:
@@ -314,8 +314,8 @@ def startSpotlight() -> None:
 				ui.message(
 					pgettext(
 						"magnifier",
-						# Translators: Message announced when spotlight mode is started.
-						"Spotlight mode started",
+						# Translators: Message announced when overview of the entire screen is being showed.
+						"Showing entire screen",
 					),
 				)
 
