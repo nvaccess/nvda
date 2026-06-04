@@ -493,7 +493,7 @@ def _loadCustomSections() -> None:
 		log.error(f"Error reading custom sections at {path}.", exc_info=True)
 		return
 	except yaml.YAMLError:
-		log.error("Error parsing {path}.", exc_info=True)
+		log.error(f"Error parsing {path}.", exc_info=True)
 		return
 	if customSections is None:
 		return
@@ -505,7 +505,7 @@ def _loadCustomSections() -> None:
 			log.debugWarning(f"Custom section name {name} is not a string; skipping.")
 			continue
 		if name in confspec:
-			log.debugWarning(f"Custom section {name} shadows a built-in section; skipping.")
+			log.debugWarning(f"Custom section {name} is already registered; skipping.")
 			continue
 		if not isinstance(entry, dict) or "spec" not in entry:
 			log.debugWarning(f"Custom section {name} has an invalid entry; skipping.")
