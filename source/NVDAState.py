@@ -72,6 +72,10 @@ class _WritePaths:
 		return os.path.join(self.configDir, "nvda.ini")
 
 	@property
+	def nvdaCustomSectionsFile(self) -> str:
+		return os.path.join(self.configDir, "customSections.yaml")
+
+	@property
 	def addonStateFile(self) -> str:
 		from addonHandler import STATE_FILENAME
 
