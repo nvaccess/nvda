@@ -6139,7 +6139,7 @@ class MagnifierPanel(SettingsPanel):
 
 		# FILTER SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the default filter
-		filterLabelText = _("F&ilter:")
+		filterLabelText = _("Color f&ilter:")
 		filterChoices = [f.displayString for f in Filter]
 		self.filterList = sHelper.addLabeledControl(
 			filterLabelText,
@@ -6170,7 +6170,7 @@ class MagnifierPanel(SettingsPanel):
 
 		# TRUE CENTER
 		# Translators: The label for a setting in magnifier settings to select whether true center is used in full-screen mode
-		trueCenterText = _("Use &true center in fullscreen mode")
+		trueCenterText = _("Use &true center tracking")
 		self.trueCenterCheckBox = sHelper.addItem(wx.CheckBox(self, label=trueCenterText))
 		self.bindHelpEvent(
 			"MagnifierUseTrueCenter",
@@ -6188,7 +6188,7 @@ class MagnifierPanel(SettingsPanel):
 
 		# FOCUS GROUP
 		# Translators: This is the label for a group of focus options in the magnifier settings panel
-		focusGroupText = _("Focus")
+		focusGroupText = _("Tracking")
 		focusGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=focusGroupText)
 		focusGroupBox = focusGroupSizer.GetStaticBox()
 		focusGroup = guiHelper.BoxSizerHelper(self, sizer=focusGroupSizer)
