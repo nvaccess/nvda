@@ -583,7 +583,7 @@ class ConfigManager:
 		# Sections added by add-ons. The key is the section name, and the value is a dict with keys "spec" and "isBaseOnly".
 		self.customSections: dict[str, dict[str, Any]] = {}
 
-	def registerSection(self, sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool = False):
+	def registerSection(self, sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool = False) -> None:
 		"""Register a section to be added to the configuration.
 		This is intended for add-ons to register custom sections.
 		:param sectionName: The name of the section to add.
@@ -595,6 +595,16 @@ class ConfigManager:
 		if not isinstance(sectionSpec, dict):
 			raise TypeError(f"sectionSpec for {sectionName!r} must be a dict.")
 		self.customSections[sectionName] = {"spec": sectionSpec, "isBaseOnly": isBaseOnly}
+		self._saveCustomSections()
+
+	def unregisterSection(self, sectionName: str) -> None:
+		"""Unregister a section that was added to the configuration.
+		This is intended for add-ons to unregister custom sections they added, for example when the add-on is uninstalled.
+		:param sectionName: The name of the section to remove.
+		"""
+		if sectionName not in self.customSections:
+			raise ValueError(f"Section {sectionName!r} is not registered.")
+		del self.customSections[sectionName]
 		self._saveCustomSections()
 
 	def _saveCustomSections(self) -> None:
