@@ -1636,23 +1636,21 @@ To cycle through the tracking modes, please assign a custom gesture using the [I
 
 ### Show entire screen overview {#MagnifierSpotlight}
 
-Spotlight mode is a special feature designed for presentations or focused reading tasks.
-When activated, it temporarily zooms out the magnified view to show the full screen, then zooms back in to the current focus position after a brief period of mouse inactivity.
+The magnifier can temporarily display an overview of the entire screen, making it useful for presentations or when you need to quickly understand the overall screen layout.
 
 This is useful when you want to:
 
 * Show context to your audience during a presentation before zooming in on specific details
 * Temporarily view the full screen layout while magnifying
 
-To activate spotlight mode, press `NVDA+shift+l` while the magnifier is enabled.
-Once activated, the magnifier will:
+To display an overview of the entire screen, press `NVDA+shift+l`.
+The magnifier will then:
 
 1. Smoothly zoom out to show the full screen (zoom level 1.0)
 2. Monitor mouse movement
-3. When the mouse remains still for approximately 2 seconds, automatically zoom back in to the original zoom level at the mouse position
+3. When the mouse remains still for approximately 2 seconds, automatically zoom back in to the original zoom level at the new mouse position
 
-Spotlight mode automatically deactivates after zooming back in.
-If you move the mouse before the zoom-back occurs, the timer resets, giving you more time to view the full screen.
+Moving the mouse before the zoom-back occurs gives you more time to view the full screen.
 
 ### Magnifier Settings {#MagnifierSettings}
 
