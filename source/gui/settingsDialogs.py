@@ -6528,6 +6528,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		AudioPanel,
 		PrivacyAndSecuritySettingsPanel,
 		VisionSettingsPanel,
+		MagnifierPanel,
 		KeyboardSettingsPanel,
 		MouseSettingsPanel,
 		ReviewCursorPanel,
@@ -6536,7 +6537,6 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
-		MagnifierPanel,
 		RemoteSettingsPanel,
 	]
 	# #19634: the desktop heap on the secure desktop is quite restrictive.
