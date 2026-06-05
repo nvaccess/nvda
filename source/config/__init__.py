@@ -484,12 +484,14 @@ def _transformSpec(spec: ConfigObj):
 	)
 
 
+customSections: dict[str, dict[str, Any]] = {}
+
 def _loadCustomSections() -> None:
 	"""Add registered customSections to the configuration."""
 	path = WritePaths.nvdaCustomSectionsFile
 	try:
 		with open(path, encoding="utf-8") as _f:
-			customSections = yaml.safe_load(_f)
+			sections = yaml.safe_load(_f)
 	except FileNotFoundError:
 		return
 	except OSError:
@@ -498,12 +500,12 @@ def _loadCustomSections() -> None:
 	except yaml.YAMLError:
 		log.error(f"Error parsing {path}.", exc_info=True)
 		return
-	if customSections is None:
+	if sections is None:
 		return
-	if not isinstance(customSections, dict):
+	if not isinstance(sections, dict):
 		log.error(f"{path} has unexpected format (expected a mapping).", exc_info=True)
 		return
-	for name, entry in customSections.items():
+	for name, entry in sections.items():
 		if not isinstance(name, str):
 			log.debugWarning(f"Custom section name {name} is not a string; skipping.")
 			continue
@@ -518,6 +520,7 @@ def _loadCustomSections() -> None:
 			continue
 		isBaseOnly = bool(entry.get("isBaseOnly", False))
 		_addSection(name, entry["spec"], isBaseOnly)
+		customSections.update(sections)
 
 
 def _addSection(sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool = False):
@@ -580,8 +583,6 @@ class ConfigManager:
 		self._loadProfileTriggers()
 		#: The names of all profiles that have been modified since they were last saved.
 		self._dirtyProfiles: set[str] = set()
-		# Sections added by add-ons. The key is the section name, and the value is a dict with keys "spec" and "isBaseOnly".
-		self.customSections: dict[str, dict[str, Any]] = {}
 
 	def registerSection(self, sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool = False) -> None:
 		"""Register a section to be added to the configuration.
@@ -594,7 +595,7 @@ class ConfigManager:
 			raise ValueError(f"Section {sectionName!r} is already registered.")
 		if not isinstance(sectionSpec, dict):
 			raise TypeError(f"sectionSpec for {sectionName!r} must be a dict.")
-		self.customSections[sectionName] = {"spec": sectionSpec, "isBaseOnly": isBaseOnly}
+		customSections[sectionName] = {"spec": sectionSpec, "isBaseOnly": isBaseOnly}
 		self._saveCustomSections()
 
 	def unregisterSection(self, sectionName: str) -> None:
@@ -602,9 +603,9 @@ class ConfigManager:
 		This is intended for add-ons to unregister custom sections they added, for example when the add-on is uninstalled.
 		:param sectionName: The name of the section to remove.
 		"""
-		if sectionName not in self.customSections:
+		if sectionName not in customSections:
 			raise ValueError(f"Section {sectionName!r} is not registered.")
-		del self.customSections[sectionName]
+		del customSections[sectionName]
 		self._saveCustomSections()
 
 	def _saveCustomSections(self) -> None:
@@ -614,7 +615,7 @@ class ConfigManager:
 		path = WritePaths.nvdaCustomSectionsFile
 		try:
 			with open(path, "w", encoding="utf-8") as _f:
-				yaml.safe_dump(self.customSections, _f, allow_unicode=True, default_flow_style=False)
+				yaml.safe_dump(customSections, _f, allow_unicode=True, default_flow_style=False)
 		except (OSError, yaml.YAMLError):
 			log.error(f"Error saving sections to {path}.", exc_info=True)
 
