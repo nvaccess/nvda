@@ -619,11 +619,13 @@ class Region(object):
 		textToTranslateTypeforms = self.rawTextTypeforms
 		cursorPos = self.cursorPos
 
-		if (
-			config.conf["braille"]["translationTable"].startswith("zh")
-			or config.conf["braille"]["translationTable"] == "auto"
-			and brailleTables.getDefaultTableForCurLang(brailleTables.TableType.OUTPUT).startswith("zh")
-		):
+		translationTable = config.conf["braille"]["translationTable"].casefold()
+		if translationTable == "auto":
+			translationTable = brailleTables.getDefaultTableForCurLang(
+				brailleTables.TableType.OUTPUT,
+			).casefold()
+
+		if translationTable.startswith("zh"):
 			converter = WordSegWithSeparatorOffsetConverter(textToTranslate)
 			textToTranslate, textToTranslateTypeforms, cursorPos = _applyOffsetConverter(
 				converter,

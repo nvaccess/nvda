@@ -33,6 +33,7 @@ sourceFiles = [
 	"cppjieba.def",
 ]
 
+# cppjieba headers contain non-ASCII comments which trigger MSVC warning C4819.
 env.AppendUnique(
 	CCFLAGS=["/wd4819"],
 	CXXFLAGS=["/wd4819"],

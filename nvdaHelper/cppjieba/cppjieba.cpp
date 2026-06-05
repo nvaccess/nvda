@@ -5,7 +5,7 @@ This file may be used under the terms of the GNU General Public License, version
 For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 */
 
-#include "cppjieba.hpp"
+#include "cppjieba.h"
 
 
 using namespace std;
