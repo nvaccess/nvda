@@ -2872,6 +2872,8 @@ This settings category contains the following options:
 
 ##### Enable Magnifier {#MagnifierEnable}
 
+Key: `NVDA+shift+w`
+
 When toggled, Magnifier will start and stop immediately.
 The selected state is also saved for future NVDA sessions, so if you enable Magnifier here, it will start automatically after restarting NVDA.
 
@@ -2895,15 +2897,16 @@ You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+e
 
 ##### Color filter {#MagnifierFilter}
 
-This combo box allows you to select the filter to apply when using the magnifier.
-You can cycle through the color filters by pressing `NVDA+shift+i`.
+Key: `NVDA+shift+i`
+
+This option allows you to select the filter to apply when using the magnifier.
+
 The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
 | Options | Normal, Grayscale, Inverted |
 | Default | Normal |
-| Toggle command | `NVDA+shift+i` |
 
 | Option | Description |
 |---|---|
