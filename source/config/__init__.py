@@ -486,6 +486,7 @@ def _transformSpec(spec: ConfigObj):
 
 customSections: dict[str, dict[str, Any]] = {}
 
+
 def _loadCustomSections() -> None:
 	"""Add registered customSections to the configuration."""
 	path = WritePaths.nvdaCustomSectionsFile
@@ -584,7 +585,9 @@ class ConfigManager:
 		#: The names of all profiles that have been modified since they were last saved.
 		self._dirtyProfiles: set[str] = set()
 
-	def registerSection(self, sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool = False) -> None:
+	def registerSection(
+		self, sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool = False
+	) -> None:
 		"""Register a section to be added to the configuration.
 		This is intended for add-ons to register custom sections.
 		:param sectionName: The name of the section to add.
