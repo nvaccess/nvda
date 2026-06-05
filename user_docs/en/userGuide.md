@@ -1578,7 +1578,7 @@ As with other NVDA settings, the Magnifier state is preserved across sessions.
 Important: The NVDA Magnifier cannot be used simultaneously with Screen Curtain for security reasons.
 If you attempt to enable the magnifier while Screen Curtain is active, NVDA will prompt you to disable Screen Curtain first.
 
-### Magnifier Controls {#MagnifierControls}
+### Magnifier Commands {#MagnifierCommands}
 
 Once the magnifier is enabled, you can use the following keyboard commands to control it:
 
@@ -1620,7 +1620,7 @@ The magnifier provides three color filter options:
 
 To cycle through the available filters press `NVDA+shift+i`.
 
-### Focus Tracking Modes {#MagnifierFullscreenFocusModes}
+### Tracking Modes {#MagnifierTrackingModes}
 
 The magnifier offers three different modes for tracking mouse, focus, review cursor and navigatore object, and determining which part of the screen to magnify:
 
@@ -1634,7 +1634,7 @@ This mode mimics the behavior of the Windows Magnifier.
 
 To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
-### Show entire screen overview {#MagnifierSpotlight}
+### Show entire screen overview {#MagnifierScreenOverview}
 
 The magnifier can temporarily display an overview of the entire screen, making it useful for presentations or when you need to quickly understand the overall screen layout.
 
@@ -2913,7 +2913,7 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### Tracking mode {#MagnifierFullscreenFocusMode}
+##### Tracking mode {#MagnifierTrackingMode}
 
 This combo box allows you to select the focus tracking mode when using the magnifier.
 To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
@@ -2932,7 +2932,7 @@ The available options are:
 
 ##### Panning step size {#MagnifierPanningStepSize}
 
-This slider allows you to set the panning step size as a percentage of the visible magnified window.
+This option allows you to set the panning step size as a percentage of the visible magnified window.
 This means that when you use manual pan commands, the magnified view will move by the specified percentage of the current visible window size.
 Higher percentages cause larger movements, making it faster to navigate across the screen, while lower percentages provide finer control for precise positioning.
 

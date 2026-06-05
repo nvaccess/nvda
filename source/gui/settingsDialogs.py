@@ -6138,7 +6138,7 @@ class MagnifierPanel(SettingsPanel):
 		self.panSpinCtrl.Bind(wx.EVT_TEXT, self._onImmediateSettingChange)
 
 		# FILTER SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the default filter
+		# Translators: The label for a setting in magnifier settings to select the filter
 		filterLabelText = _("Color f&ilter:")
 		filterChoices = [f.displayString for f in Filter]
 		self.filterList = sHelper.addLabeledControl(
@@ -6164,7 +6164,7 @@ class MagnifierPanel(SettingsPanel):
 			choices=fullscreenModeChoices,
 		)
 		self.bindHelpEvent(
-			"MagnifierFullscreenFocusMode",
+			"MagnifierTrackingMode",
 			self.fullscreenModeList,
 		)
 
@@ -6180,14 +6180,13 @@ class MagnifierPanel(SettingsPanel):
 		self._trueCenterInitially = self.trueCenterCheckBox.GetValue()
 		self.trueCenterCheckBox.Bind(wx.EVT_CHECKBOX, self._onImmediateSettingChange)
 
-		# Set default value from config
 		fullscreenMode = magnifierConfig.getFullscreenMode()
 		self._fullscreenModeInitially = fullscreenMode
 		self.fullscreenModeList.SetSelection(list(FullScreenMode).index(fullscreenMode))
 		self.fullscreenModeList.Bind(wx.EVT_CHOICE, self._onImmediateSettingChange)
 
-		# FOCUS GROUP
-		# Translators: This is the label for a group of focus options in the magnifier settings panel
+		# Tracking GROUP
+		# Translators: This is the label for a group of tracking options in the magnifier settings panel
 		focusGroupText = _("Tracking")
 		focusGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=focusGroupText)
 		focusGroupBox = focusGroupSizer.GetStaticBox()
