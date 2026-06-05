@@ -5202,7 +5202,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+i",
 	)
-	def script_toggleFilter(
+	def script_cycleFilters(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
@@ -5276,11 +5276,11 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle magnifier focus mode",
+			"Cycle through tracking modes",
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
-	def script_toggleFullscreenMode(
+	def script_cycleTrackingModes(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
@@ -5294,7 +5294,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+l",
 	)
-	def script_startSpotlight(
+	def script_showEntireScreenOverview(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
