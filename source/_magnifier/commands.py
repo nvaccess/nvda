@@ -101,7 +101,7 @@ def toggleMagnifier() -> None:
 			pgettext(
 				"magnifier",
 				# Translators: Message announced when trying to start magnifier while Screen Curtain is active.
-				"Cannot start magnifier: Screen Curtain is active. Please disable Screen Curtain first.",
+				"Cannot start magnifier. Please disable Screen Curtain first.",
 			),
 		)
 	else:

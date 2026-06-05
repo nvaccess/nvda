@@ -5043,7 +5043,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggles the magnifier on and off",
+			"Toggle the magnifier on and off",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+w",
@@ -5057,7 +5057,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Increases the magnification level",
+			"Increase the magnification level",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+=",
@@ -5071,7 +5071,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Decreases the magnification level",
+			"Decrease the magnification level",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+-",
