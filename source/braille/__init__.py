@@ -69,25 +69,16 @@ from .labels import (
 	positiveStateLabels,
 	roleLabels,
 )
-from .regions import (
+from .regions.base import Region, RegionWithPositions, TextRegion, rindex
+from .regions.properties import getControlFieldBraille, getFormatFieldBraille, getPropertiesBraille
+from .regions.nvdaobject import NVDAObjectHasUsefulText, NVDAObjectRegion, ReviewNVDAObjectRegion
+from .regions.textinfo import (
 	CursorManagerRegion,
-	NVDAObjectHasUsefulText,
-	NVDAObjectRegion,
-	Region,
-	RegionWithPositions,
 	ReviewCursorManagerRegion,
-	ReviewNVDAObjectRegion,
 	ReviewTextInfoRegion,
 	TextInfoRegion,
-	TextRegion,
-	getControlFieldBraille,
-	getFocusContextRegions,
-	getFocusRegions,
-	getFormatFieldBraille,
-	getPropertiesBraille,
-	invalidateCachedFocusAncestors,
-	rindex,
 )
+from .regions.focus import getFocusContextRegions, getFocusRegions, invalidateCachedFocusAncestors
 
 handler: Optional[BrailleHandler] = None
 
