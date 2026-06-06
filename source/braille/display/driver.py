@@ -10,55 +10,33 @@ import ctypes.wintypes
 import importlib
 import itertools
 import pkgutil
-import re
 import typing
-from locale import strxfrm
 from typing import (
-	Any,
-	Callable,
-	Generator,
 	Iterable,
-	List,
-	NamedTuple,
 	Optional,
-	Tuple,
-	Type,
 	Union,
 )
 
-import baseObject
 import bdDetect
 import brailleDisplayDrivers
-import config
 import driverHandler
 import hwPortUtils
 import inputCore
 import keyboardHandler
-import NVDAState
-import scriptHandler
 import winBindings.kernel32
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from logHandler import log
 
 import braille
 
-from .constants import (
+from ..constants import (
 	AUTOMATIC_PORT,
 	BLUETOOTH_PORT,
 	USB_PORT,
 )
 
 
-class DisplayDimensions(NamedTuple):
-	numRows: int
-	numCols: int
-
-	@property
-	def displaySize(self) -> int:
-		return self.numCols * self.numRows
-
-
-def _getDisplayDriver(moduleName: str, caseSensitive: bool = True) -> Type["BrailleDisplayDriver"]:
+def _getDisplayDriver(moduleName: str, caseSensitive: bool = True) -> typing.Type["BrailleDisplayDriver"]:
 	try:
 		return importlib.import_module(
 			"brailleDisplayDrivers.%s" % moduleName,
@@ -76,43 +54,6 @@ def _getDisplayDriver(moduleName: str, caseSensitive: bool = True) -> Type["Brai
 			).BrailleDisplayDriver
 		else:
 			raise initialException
-
-
-def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
-	"""Gets a list of available display driver names with their descriptions.
-	@param excludeNegativeChecks: excludes all drivers for which the check method returns C{False}.
-	@type excludeNegativeChecks: bool
-	@return: list of tuples with driver names and descriptions.
-	"""
-	displayList = []
-	# The display that should be placed at the end of the list.
-	lastDisplay = None
-	for display in getDisplayDrivers():
-		try:
-			if not excludeNegativeChecks or display.check():
-				if display.name == "noBraille":
-					lastDisplay = (display.name, display.description)
-				else:
-					displayList.append((display.name, display.description))
-			else:
-				log.debugWarning(f"Braille display driver {display.name} reports as unavailable, excluding")
-		except:  # noqa: E722
-			log.error("", exc_info=True)
-	displayList.sort(key=lambda d: strxfrm(d[1]))
-	if lastDisplay:
-		displayList.append(lastDisplay)
-	return displayList
-
-
-# Maps old braille display driver names to new drivers that supersede old drivers.
-# Ensure that if a user has set a preferred driver which has changed name, the new
-# user preference is retained.
-RENAMED_DRIVERS = {
-	# "oldDriverName": "newDriverName"
-	"syncBraille": "hims",
-	"alvaBC6": "alva",
-	"hid": "hidBrailleStandard",
-}
 
 
 class BrailleDisplayDriver(driverHandler.Driver):
@@ -450,290 +391,3 @@ class BrailleDisplayDriver(driverHandler.Driver):
 			_("&HID keyboard input simulation"),
 			useConfig=useConfig,
 		)
-
-
-class BrailleDisplayGesture(inputCore.InputGesture):
-	"""A button, wheel or other control pressed on a braille display.
-	Subclasses must provide :attr:`source` and :attr:`id`.
-	Optionally, :attr:`model` can be provided to facilitate model specific gestures.
-	:attr:`cellIndexes` should be provided for gestures addressed to specific braille cells,
-	such as routing keys or touch-sensitive cells (e.g. Handy Tech Active Tactile Control).
-	Subclasses can also inherit from :class:`brailleInput.BrailleInputGesture` if the display has a braille keyboard.
-	If the braille display driver is a :class:`baseObject.ScriptableObject`, it can provide scripts specific to input gestures from this display.
-	"""
-
-	shouldPreventSystemIdle = True
-
-	def _get_source(self):
-		"""The string used to identify all gestures from this display.
-		This should generally be the driver name.
-		This string will be included in the source portion of gesture identifiers.
-		For example, if this was C{alvaBC6},
-		a display specific gesture identifier might be C{br(alvaBC6):etouch1}.
-		@rtype: str
-		"""
-		raise NotImplementedError
-
-	def _get_model(self):
-		"""The string used to identify all gestures from a specific braille display model.
-		This should be an alphanumeric short version of the model name, without spaces.
-		This string will be included in the source portion of gesture identifiers.
-		For example, if this was C{alvaBC6},
-		the model string could look like C{680},
-		and a corresponding display specific gesture identifier might be C{br(alvaBC6.680):etouch1}.
-		@rtype: str; C{None} if model specific gestures are not supported
-		"""
-		return None
-
-	def _get_id(self):
-		"""The unique, display specific id for this gesture.
-		@rtype: str
-		"""
-		raise NotImplementedError
-
-	cellIndexes: list[int] | None = None
-	"""Indexes of braille cells addressed by this gesture, e.g. routing keys or touch cells.
-	``None`` if this gesture is not cell-addressed.
-	"""
-
-	@classmethod
-	def idForCellCount(cls, count: int, baseName: str = "routing") -> str:
-		"""Return the conventional gesture id suffix for a cell-addressed gesture.
-
-		When more than one cell is addressed, the base name is prefixed with ``"multi"``
-		and its first character is uppercased.  For example::
-
-			idForCellCount(1, "routing")        # "routing"
-			idForCellCount(2, "routing")        # "multiRouting"
-			idForCellCount(2, "secondRouting")  # "multiSecondRouting"
-
-		:param count: Number of cells addressed.
-		:param baseName: The gesture id for a single-cell press in this range.
-		:return: The base name if *count* <= 1, otherwise the multi-prefixed form.
-		"""
-		if count > 1:
-			return f"multi{baseName[0].upper()}{baseName[1:]}"
-		return baseName
-
-	if NVDAState._allowDeprecatedAPI():
-
-		def _get_routingIndex(self) -> int | None:
-			"""Deprecated. Use :attr:`cellIndexes` instead.
-
-			Returns the highest cell index, or ``None`` if no cells are addressed.
-			"""
-			return max(self.cellIndexes) if self.cellIndexes else None
-
-		def _set_routingIndex(self, value: int | None) -> None:
-			"""Deprecated. Set :attr:`cellIndexes` instead."""
-			log.warning(
-				"Setting BrailleDisplayGesture.routingIndex is deprecated, set cellIndexes instead.",
-				stack_info=True,
-			)
-			self.cellIndexes = [value] if value is not None else None
-
-	_cellIndexesStr: str | None
-
-	def _get__cellIndexesStr(self) -> str | None:
-		"""A string representation of cell indexes for identification and display purposes."""
-		if "+" not in self.id and self.cellIndexes:
-			# This is an indexed gesture without additional keys, in which case the identifier can be extended with indexes.
-			return "+".join(f"{i + 1}" for i in self.cellIndexes)
-		return None
-
-	def _get_identifiers(self):
-		ids = []
-		if self._cellIndexesStr:
-			ids.append(f"br({self.source}):{self.id}{self._cellIndexesStr}")
-		ids.append(f"br({self.source}):{self.id}")
-		if self.model:
-			# Model based ids should take priority.
-			if self._cellIndexesStr:
-				ids.insert(0, f"br({self.source}.{self.model}):{self.id}{self._cellIndexesStr}")
-			ids.insert(1, f"br({self.source}.{self.model}):{self.id}")
-		import brailleInput
-
-		if isinstance(self, brailleInput.BrailleInputGesture):
-			ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
-		return ids
-
-	def _get_displayName(self):
-		import brailleInput
-
-		if isinstance(self, brailleInput.BrailleInputGesture):
-			name = brailleInput.BrailleInputGesture._get_displayName(self)
-			if name:
-				return name
-		if self._cellIndexesStr:
-			return f"{self.id}{self._cellIndexesStr}"
-		return self.id
-
-	def _get_scriptableObject(self):
-		display = braille.handler.display
-		if isinstance(display, baseObject.ScriptableObject):
-			return display
-		return super(BrailleDisplayGesture, self).scriptableObject
-
-	def _get_script(self):
-		# Overrides L{inputCore.InputGesture._get_script} to support modifier keys.
-		# Also processes modifiers held by braille input.
-		# Import late to avoid circular import.
-		import brailleInput
-
-		gestureKeys = set(self.keyNames)
-		gestureModifiers = brailleInput.handler.currentModifiers.copy()
-		script = scriptHandler.findScript(self)
-		if script:
-			scriptName = script.__name__
-			if not (gestureModifiers and scriptName.startswith("script_kb:")):
-				self.script = script
-				return self.script
-		# Either no script for this gesture has been found, or braille input is holding modifiers.
-		# Process this gesture for possible modifiers if it consists of more than one key.
-		# For example, if L{self.id} is 'key1+key2',
-		# key1 is bound to 'kb:control' and key2 to 'kb:tab',
-		# this gesture should execute 'kb:control+tab'.
-		# Combining emulated modifiers with braille input (#7306) is not yet supported.
-		if len(gestureKeys) > 1:
-			for keys, modifiers in braille.handler.display._getModifierGestures(self.model):
-				if keys < gestureKeys:
-					gestureModifiers |= modifiers
-					gestureKeys -= keys
-		if not gestureModifiers:
-			return None
-		if gestureKeys != set(self.keyNames):
-			# Find a script for L{gestureKeys}.
-			id = "+".join(gestureKeys)
-			fakeGestureIds = ["br({source}):{id}".format(source=self.source, id=id)]
-			if self.model:
-				fakeGestureIds.insert(
-					0,
-					"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=id),
-				)
-			scriptNames = []
-			globalMaps = [inputCore.manager.userGestureMap, braille.handler.display.gestureMap]
-			for globalMap in globalMaps:
-				for fakeGestureId in fakeGestureIds:
-					scriptNames.extend(
-						scriptName
-						for cls, scriptName in globalMap.getScriptsForGesture(fakeGestureId.lower())
-						if scriptName and scriptName.startswith("kb")
-					)
-			if not scriptNames:
-				# Gesture contains modifiers, but no keyboard emulate script exists for the gesture without modifiers
-				return None
-			# We can't bother about multiple scripts for a gesture, we will just use the first one
-			combinedScriptName = "kb:{modifiers}+{keys}".format(
-				modifiers="+".join(gestureModifiers),
-				keys=scriptNames[0].split(":")[1],
-			)
-		elif script and scriptName:
-			combinedScriptName = "kb:{modifiers}+{keys}".format(
-				modifiers="+".join(gestureModifiers),
-				keys=scriptName.split(":")[1],
-			)
-		else:
-			return None
-		self.script = scriptHandler._makeKbEmulateScript(combinedScriptName)
-		brailleInput.handler.currentModifiers.clear()
-		return self.script
-
-	def _get_keyNames(self):
-		"""The names of the keys that are part of this gesture.
-		@rtype: list
-		"""
-		return self.id.split("+")
-
-	def _get_speechEffectWhenExecuted(self) -> Optional[str]:
-		from globalCommands import commands
-
-		if not config.conf["braille"]["interruptSpeechWhileScrolling"] and self.script in {
-			commands.script_braille_scrollBack,
-			commands.script_braille_scrollForward,
-		}:
-			return None
-		return super().speechEffectWhenExecuted
-
-	#: Compiled regular expression to match an identifier including an optional model name
-	#: The model name should be an alphanumeric string without spaces.
-	#: @type: RegexObject
-	ID_PARTS_REGEX = re.compile(r"br\((\w+)(?:\.(\w+))?\):([\w+]+)", re.U)
-
-	@classmethod
-	def getDisplayTextForIdentifier(cls, identifier):
-		# Translators: Displayed when the source driver of a braille display gesture is unknown.
-		unknownDisplayDescription = _("Unknown braille display")
-		idParts = cls.ID_PARTS_REGEX.match(identifier)
-		if not idParts:
-			log.error("Invalid braille gesture identifier: %s" % identifier)
-			return unknownDisplayDescription, "malformed:%s" % identifier
-		source, modelName, key = idParts.groups()
-		# Optimisation: Do not try to get the braille display class if this identifier belongs to the current driver.
-		if braille.handler.display.name.lower() == source.lower():
-			description = braille.handler.display.description
-		else:
-			try:
-				description = _getDisplayDriver(source, caseSensitive=False).description
-			except ImportError:
-				description = unknownDisplayDescription
-		if modelName:  # The identifier contains a model name
-			return description, "{modelName}: {key}".format(
-				modelName=modelName,
-				key=key,
-			)
-		else:
-			return description, key
-
-
-inputCore.registerGestureSource("br", BrailleDisplayGesture)
-
-
-def getSerialPorts(filterFunc=None) -> typing.Iterator[typing.Tuple[str, str]]:
-	"""Get available serial ports in a format suitable for L{BrailleDisplayDriver.getManualPorts}.
-	@param filterFunc: a function executed on every dictionary retrieved using L{hwPortUtils.listComPorts}.
-		For example, this can be used to filter by USB or Bluetooth com ports.
-	@type filterFunc: callable
-	"""
-	if filterFunc and not callable(filterFunc):
-		raise TypeError("The provided filterFunc is not callable")
-	for info in hwPortUtils.listComPorts():
-		if filterFunc and not filterFunc(info):
-			continue
-		if "bluetoothName" in info:
-			yield (
-				info["port"],
-				# Translators: Name of a Bluetooth serial communications port.
-				_("Bluetooth Serial: {port} ({deviceName})").format(
-					port=info["port"],
-					deviceName=info["bluetoothName"],
-				),
-			)
-		else:
-			yield (
-				info["port"],
-				# Translators: Name of a serial communications port.
-				_("Serial: {portName}").format(portName=info["friendlyName"]),
-			)
-
-
-def getDisplayDrivers(
-	filterFunc: Optional[Callable[[Type[BrailleDisplayDriver]], bool]] = None,
-) -> Generator[Type[BrailleDisplayDriver], Any, Any]:
-	"""Gets an iterator of braille display drivers meeting the given filter callable.
-	@param filterFunc: an optional callable that receives a driver as its only argument and returns
-		either True or False.
-	@return: Iterator of braille display drivers.
-	"""
-	for loader, name, isPkg in pkgutil.iter_modules(brailleDisplayDrivers.__path__):
-		if name.startswith("_"):
-			continue
-		try:
-			display = _getDisplayDriver(name)
-		except Exception:
-			log.error(
-				f"Error while importing braille display driver {name}",
-				exc_info=True,
-			)
-			continue
-		if not filterFunc or filterFunc(display):
-			yield display

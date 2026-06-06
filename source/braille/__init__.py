@@ -41,14 +41,14 @@ from .constants import (
 	focusContextPresentations,
 )
 from .display import (
-	RENAMED_DRIVERS,
-	BrailleDisplayDriver,
-	BrailleDisplayGesture,
 	DisplayDimensions,
+	RENAMED_DRIVERS,
 	getDisplayDrivers,
 	getDisplayList,
 	getSerialPorts,
 )
+from .display.driver import BrailleDisplayDriver
+from .display.gesture import BrailleDisplayGesture
 from .extensions import (
 	decide_enabled,
 	displayChanged,
