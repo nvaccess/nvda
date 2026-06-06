@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2021-2024 NV Access Limited, Leonard de Ruijter, Cyrille Bougot
+# Copyright (C) 2021-2026 NV Access Limited, Leonard de Ruijter, Cyrille Bougot
 
 """Unit tests for the synthDriverHandler"""
 
@@ -17,18 +17,29 @@ FAKE_DEFAULT_LANG = "fakeDefault"
 FAKE_DEFAULT_SYNTH_NAME = "defaultSynth"
 
 
-class MockSynth:
+class MockSynth(synthDriverHandler.SynthDriver):
 	def __init__(self, name: str):
 		self.name = name
+		self.settingsSaved = False
 		self.availableVoices = {
 			"fooId": synthDriverHandler.VoiceInfo("fooId", "foo language", FAKE_DEFAULT_LANG),
 		}
+
+	def _get_supportedSettings(self):
+		return []
+
+	def speak(self, speechSequence):
+		pass
 
 	def cancel(self):
 		pass
 
 	def terminate(self):
-		pass
+		super().terminate()
+
+	@classmethod
+	def _saveSpecificSettings(cls, clsOrInst, settings):
+		clsOrInst.settingsSaved = True
 
 	def initSettings(self):
 		pass
@@ -43,6 +54,7 @@ class test_synthDriverHandler(unittest.TestCase):
 		self._oldLang = languageHandler.getLanguage()
 		self._oldSynthConfig = config.conf["speech"]["synth"]
 		self._originalSynth = synthDriverHandler._curSynth
+		self._originalAudioOutputDevice = synthDriverHandler._audioOutputDevice
 		self._originalGetSynthDriver = synthDriverHandler._getSynthDriver
 		config.conf["speech"]["synth"] = FAKE_DEFAULT_LANG
 		synthDriverHandler._curSynth = MockSynth(FAKE_DEFAULT_SYNTH_NAME)
@@ -56,6 +68,7 @@ class test_synthDriverHandler(unittest.TestCase):
 	def tearDown(self) -> None:
 		config.conf["speech"]["synth"] = self._oldSynthConfig
 		synthDriverHandler._curSynth = self._originalSynth
+		synthDriverHandler._audioOutputDevice = self._originalAudioOutputDevice
 		synthDriverHandler._getSynthDriver = self._originalGetSynthDriver
 		languageHandler._language = self._oldLang
 
@@ -77,6 +90,30 @@ class test_synthDriverHandler(unittest.TestCase):
 			synthDriverHandler.setSynth(synthName)
 			self.assertEqual(synthName, synthDriverHandler.getSynth().name)
 			self.assertEqual(synthName, config.conf["speech"]["synth"])
+
+	def test_setSynth_savesCurrentSettings(self):
+		oldSynth = synthDriverHandler.getSynth()
+		synthDriverHandler.setSynth("espeak")
+		self.assertTrue(oldSynth.settingsSaved)
+
+	def test_profileSwitchDoesNotSaveCurrentSettingsOrResolveAutoSynthInConfig(self):
+		oldSynth = synthDriverHandler.getSynth()
+		config.conf["speech"]["synth"] = "auto"
+
+		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
+
+		self.assertFalse(oldSynth.settingsSaved)
+		self.assertEqual("auto", config.conf["speech"]["synth"])
+		self.assertEqual("oneCore", synthDriverHandler.getSynth().name)
+
+	def test_profileSwitchPreservesSynthFallback(self):
+		languageHandler._language = "bar"
+		config.conf["speech"]["synth"] = "auto"
+
+		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
+
+		self.assertEqual("auto", config.conf["speech"]["synth"])
+		self.assertEqual(FAKE_DEFAULT_SYNTH_NAME, synthDriverHandler.getSynth().name)
 
 	def test_setSynth_auto_fallbackMode(self):
 		"""

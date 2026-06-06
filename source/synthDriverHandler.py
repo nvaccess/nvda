@@ -112,6 +112,11 @@ class SynthDriver(driverHandler.Driver):
 	# type information for auto property _get_availableLanguages
 	# the set of languages available in the availableVoices
 	availableLanguages: set[str | None]
+	_shouldSaveSettings = True
+
+	def saveSettings(self) -> None:
+		if self._shouldSaveSettings:
+			super().saveSettings()
 
 	@classmethod
 	def LanguageSetting(cls):
@@ -502,7 +507,25 @@ def getSynthInstance(name: str, asDefault: bool = False):
 defaultSynthPriorityList = ["oneCore", "espeak", "silence"]
 
 
-def setSynth(name: str | None, isFallback: bool = False, *, _leftToTry: list[str] | None = None) -> bool:
+def _terminateSynth(synth: SynthDriver, *, saveSettings: bool) -> None:
+	if saveSettings:
+		synth.terminate()
+		return
+	shouldSaveSettings = synth._shouldSaveSettings
+	synth._shouldSaveSettings = False
+	try:
+		synth.terminate()
+	finally:
+		synth._shouldSaveSettings = shouldSaveSettings
+
+
+def setSynth(
+	name: str | None,
+	isFallback: bool = False,
+	*,
+	_leftToTry: list[str] | None = None,
+	_isConfigProfileSwitch: bool = False,
+) -> bool:
 	"""Set the currently active speech synth by name.
 
 	If the chosen synth cannot be used, this function will attempt to fall back to another synth.
@@ -512,6 +535,7 @@ def setSynth(name: str | None, isFallback: bool = False, *, _leftToTry: list[str
 	:param isFallback: Whether this synth is a fallback, i.e. it isn't the synth that the user wants. Defaults to ``False``.
 	:param _leftToTry: List of synth names to try falling back to, in reverse order of priority. Defaults to ``None``.
 		If ``None``, the list will be calculated automatically.
+	:param _isConfigProfileSwitch: Whether the synthesizer is being reloaded for a configuration profile switch.
 	:return: ``True`` if switching to the named synthesizer succeeds; ``False`` otherwise.
 	"""
 	from synthDrivers.silence import SynthDriver as SilenceSynthDriver
@@ -521,7 +545,7 @@ def setSynth(name: str | None, isFallback: bool = False, *, _leftToTry: list[str
 	if name is None:
 		if _curSynth is not None:
 			_curSynth.cancel()
-			_curSynth.terminate()
+			_terminateSynth(_curSynth, saveSettings=not _isConfigProfileSwitch)
 			_curSynth = None
 		return True
 	if name == "auto":
@@ -529,7 +553,7 @@ def setSynth(name: str | None, isFallback: bool = False, *, _leftToTry: list[str
 		name = defaultSynthPriorityList[0]
 	if _curSynth is not None:
 		_curSynth.cancel()
-		_curSynth.terminate()
+		_terminateSynth(_curSynth, saveSettings=not _isConfigProfileSwitch)
 		prevSynthName = _curSynth.name
 		_curSynth = None
 	else:
@@ -541,7 +565,7 @@ def setSynth(name: str | None, isFallback: bool = False, *, _leftToTry: list[str
 
 	if _curSynth is not None:
 		_audioOutputDevice = config.conf["audio"]["outputDevice"]
-		if not isFallback:
+		if not isFallback and not _isConfigProfileSwitch:
 			config.conf["speech"]["synth"] = name
 		log.info(f"Loaded synthDriver {_curSynth.name}")
 		synthChanged.notify(synth=_curSynth, audioOutputDevice=_audioOutputDevice, isFallback=isFallback)
@@ -596,7 +620,7 @@ def handlePostConfigProfileSwitch(resetSpeechIfNeeded=True):
 			import speech
 
 			speech.cancelSpeech()
-		setSynth(conf["synth"])
+		setSynth(conf["synth"], _isConfigProfileSwitch=True)
 		return
 	_curSynth.loadSettings(onlyChanged=True)
 
