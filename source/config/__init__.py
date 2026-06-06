@@ -586,7 +586,10 @@ class ConfigManager:
 		self._dirtyProfiles: set[str] = set()
 
 	def registerSection(
-		self, sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool = False
+		self,
+		sectionName: str,
+		sectionSpec: dict[str, Any],
+		isBaseOnly: bool = False,
 	) -> None:
 		"""Register a section to be added to the configuration.
 		This is intended for add-ons to register custom sections.
