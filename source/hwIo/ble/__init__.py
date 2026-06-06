@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2025-2026 NV Access Limited, Dot Incorporated, Bram Duvigneau
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Raw I/O for Bluetooth Low Energy (BLE) devices
 
@@ -32,12 +32,14 @@ scanner: Scanner | None = None
 
 def initialize() -> None:
 	"""Initialize the hwIo.ble module, creating the shared BLE scanner singleton."""
+	log.debug("Initializing BLE I/O")
 	global scanner
 	scanner = Scanner()
 
 
 def terminate() -> None:
 	"""Terminate the hwIo.ble module, stopping any active BLE scan and releasing the scanner."""
+	log.debug("Terminating BLE I/O")
 	global scanner
 	if scanner is not None:
 		if scanner.isScanning:
