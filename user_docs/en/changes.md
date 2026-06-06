@@ -36,6 +36,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * Drivers should set `cellIndexes` directly instead of `routingIndex`.
   * When a gesture addresses more than one cell, its `id` should be set to `"multiRouting"` (or be built via the new `BrailleDisplayGesture.idForCellCount(n)` helper).
   * `cellIndexes` is not limited to routing keys; touch-sensitive cells (e.g. Handy Tech Active Tactile Control) can reuse the same attribute.
+* Added a new `hwIo.ble` submodule for Bluetooth Low Energy device discovery and I/O, exposing a `Scanner` singleton (with a `deviceDiscovered` extension point), a `Ble` class implementing the `IoBase` contract, and a `findDeviceByAddress` helper.
+Built on top of [Bleak](https://bleak.readthedocs.io/) and the `_asyncioEventLoop` module. (#19838, @bramd)
 
 #### Deprecations
 
@@ -183,8 +185,6 @@ Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`,
     * Added a `clampedIncrementAndUpdateConfig` function to update a configuration value by applying a step, constrained within its valid range.
 * NVDA is now built with Visual Studio 2026. (#20203, @LeonarddeR)
 * Fixed a race condition in `nvdaController_speakSsml` with `asynchronous=False` where a `speechCanceled` signal fired between `queueFunction` returning and the synth thread executing the `CallbackCommand` would not be caught, causing the call to block indefinitely. (#20220, @LeonarddeR)
-* Added a new `hwIo.ble` submodule for Bluetooth Low Energy device discovery and I/O, exposing a `Scanner` singleton (with a `deviceDiscovered` extension point), a `Ble` class implementing the `IoBase` contract, and a `findDeviceByAddress` helper.
-Built on top of [Bleak](https://bleak.readthedocs.io/) and the `_asyncioEventLoop` module. (#19838, @bramd)
 
 #### Deprecations
 
