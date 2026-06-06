@@ -22,8 +22,8 @@ if TYPE_CHECKING:
 
 from .base import Region
 from ..constants import CONTEXTPRES_CHANGEDCONTEXT, TEXT_SEPARATOR
-from .nvdaobject import NVDAObjectRegion, NVDAObjectHasUsefulText, ReviewNVDAObjectRegion
-from .textinfo import (
+from .NVDAObject import NVDAObjectRegion, NVDAObjectHasUsefulText, ReviewNVDAObjectRegion
+from .textInfo import (
 	CursorManagerRegion,
 	ReviewCursorManagerRegion,
 	ReviewTextInfoRegion,

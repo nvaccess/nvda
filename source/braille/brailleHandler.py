@@ -80,8 +80,8 @@ from .extensions import (
 	pre_writeCells,
 )
 from .regions.base import TextRegion
-from .regions.nvdaobject import NVDAObjectRegion
-from .regions.textinfo import TextInfoRegion
+from .regions.NVDAObject import NVDAObjectRegion
+from .regions.textInfo import TextInfoRegion
 from .regions.focus import getFocusContextRegions, getFocusRegions
 
 FALLBACK_TABLE = config.conf.getConfigValidation(("braille", "translationTable")).default

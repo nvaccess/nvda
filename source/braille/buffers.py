@@ -32,7 +32,7 @@ from .formatting import (
 	getParagraphStartMarker,
 )
 from .regions.base import Region, RegionWithPositions, rindex
-from .regions.textinfo import TextInfoRegion
+from .regions.textInfo import TextInfoRegion
 
 
 @dataclasses.dataclass(frozen=True)

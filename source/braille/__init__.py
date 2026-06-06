@@ -71,8 +71,8 @@ from .labels import (
 )
 from .regions.base import Region, RegionWithPositions, TextRegion, rindex
 from .regions.properties import getControlFieldBraille, getFormatFieldBraille, getPropertiesBraille
-from .regions.nvdaobject import NVDAObjectHasUsefulText, NVDAObjectRegion, ReviewNVDAObjectRegion
-from .regions.textinfo import (
+from .regions.NVDAObject import NVDAObjectHasUsefulText, NVDAObjectRegion, ReviewNVDAObjectRegion
+from .regions.textInfo import (
 	CursorManagerRegion,
 	ReviewCursorManagerRegion,
 	ReviewTextInfoRegion,
