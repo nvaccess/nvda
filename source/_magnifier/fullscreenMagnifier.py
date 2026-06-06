@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -12,7 +12,6 @@ from typing import override
 from logHandler import log
 import speech
 import ui
-import winUser
 from winBindings import magnification
 from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
@@ -85,14 +84,36 @@ class FullScreenMagnifier(Magnifier):
 
 	def _initializeNativeMagnification(self) -> None:
 		"""
-		Initialize the Magnification API and verify it is fully usable.
+		Initialize the Magnification API and apply the initial fullscreen transform.
 
-		Raises OSError if MagInitialize fails or if the initial fullscreen
-		transform fails (e.g. Windows Magnifier already holds the API). If
-		MagSetFullscreenTransform fails after a successful MagInitialize, this
-		method uninitializes the native magnification API before re-raising.
-		Failures from MagInitialize are propagated to the caller.
+		A dummy MagInitialize/MagUninitialize cycle is performed before the real
+		initialization. This is a workaround for a Windows bug: after a previous
+		MagSetFullscreenTransform call, MagUninitialize leaves internal state that
+		causes MagSetFullscreenTransform to fail with WinError 0 on the next
+		MagInitialize. A dummy cycle without any MagSetFullscreenTransform call
+		clears this stale state.
+
+		Errors during the dummy MagInitialize/MagUninitialize cycle are intentionally
+		suppressed.
+
+		Raises OSError if the real MagInitialize fails or if MagSetFullscreenTransform
+		fails (e.g. Windows Magnifier already holds the API).
 		"""
+		# Best-effort uninit ensures we start from a clean state
+		self._uninitializeNativeMagnification()
+		# Dummy cycle to clear any stale state from a previous MagSetFullscreenTransform.
+		dummyInitSucceeded = False
+		try:
+			magnification.MagInitialize()
+			dummyInitSucceeded = True
+		except OSError:
+			pass
+		finally:
+			if dummyInitSucceeded:
+				try:
+					magnification.MagUninitialize()
+				except OSError:
+					pass
 		magnification.MagInitialize()
 		log.debug("Magnification API initialized")
 		# Applying the first real update verifies the API is usable without
@@ -169,8 +190,6 @@ class FullScreenMagnifier(Magnifier):
 			f"Attempting full-screen magnifier recovery "
 			f"(attempt {self._recoveryAttempts}/{self._MAX_RECOVERY_ATTEMPTS})",
 		)
-
-		self._uninitializeNativeMagnification()
 
 		try:
 			# _initializeNativeMagnification also probes MagSetFullscreenTransform,
@@ -254,33 +273,18 @@ class FullScreenMagnifier(Magnifier):
 			case FullScreenMode.CENTER:
 				return coordinates
 
-	@override
-	def _keepMouseCentered(self) -> None:
+	def _computeMagnifiedViewCenter(self) -> Coordinates:
 		"""
-		Move the mouse to the center of the magnified view.
-		Skips if a mouse button is currently pressed to avoid interfering with clicks.
+		Compute the coordinates of the center of the currently magnified view.
+
+		:return: The (x, y) coordinates of the center of the magnified view
 		"""
-		if (
-			winUser.getAsyncKeyState(winUser.VK_LBUTTON) < 0
-			or winUser.getAsyncKeyState(winUser.VK_RBUTTON) < 0
-			or winUser.getAsyncKeyState(winUser.VK_MBUTTON) < 0
-		):
-			log.debug("Mouse button pressed, skipping cursor repositioning to avoid interfering with click")
-			return
+
 		coordinates = self._getCoordinatesForMode(self.currentCoordinates)
 		params = self._getMagnifierParameters(coordinates)
 		centerX = params.coordinates.x + params.magnifierSize.width // 2
 		centerY = params.coordinates.y + params.magnifierSize.height // 2
-		winUser.setCursorPos(centerX, centerY)
-
-	@trackNativeMagnifierErrors
-	def _setCursorToCenter(self, x: int, y: int) -> None:
-		"""
-		Set cursor to the specified position.
-		If this fails, it is logged but execution continues.
-		"""
-		winUser.setCursorPos(x, y)
-		log.debug(f"Cursor repositioned to center ({x}, {y})")
+		return Coordinates(centerX, centerY)
 
 	def _borderPos(
 		self,

@@ -6062,7 +6062,6 @@ class MagnifierPanel(SettingsPanel):
 		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterCheckBox.GetValue()
 		for focusType, checkBox in self._followFocusCheckBoxes.items():
 			magnifierConfig.setFollowState(focusType, checkBox.GetValue())
-		config.conf["magnifier"]["keepMouseCentered"] = self.keepMouseCenteredCheckBox.GetValue()
 
 		magnifier = getMagnifier()
 		if magnifier:
@@ -6223,18 +6222,6 @@ class MagnifierPanel(SettingsPanel):
 			checkBox.Bind(wx.EVT_CHECKBOX, self._onImmediateSettingChange)
 			self._followFocusCheckBoxes[focusType] = checkBox
 
-		# KEEP MOUSE CENTERED
-		# Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
-		keepMouseCenteredText = _("Keep mouse pointer &centered in magnifier view")
-		self.keepMouseCenteredCheckBox = sHelper.addItem(wx.CheckBox(self, label=keepMouseCenteredText))
-		self.bindHelpEvent(
-			"MagnifierKeepMouseCentered",
-			self.keepMouseCenteredCheckBox,
-		)
-		self.keepMouseCenteredCheckBox.SetValue(magnifierConfig.shouldKeepMouseCentered())
-		self._keepMouseCenteredInitially = self.keepMouseCenteredCheckBox.GetValue()
-		self.keepMouseCenteredCheckBox.Bind(wx.EVT_CHECKBOX, self._onImmediateSettingChange)
-
 	def onSave(self):
 		"""Save the current selections to config."""
 		magnifierConfig.setEnabled(self.enableMagnifierCheckBox.GetValue())
@@ -6246,7 +6233,6 @@ class MagnifierPanel(SettingsPanel):
 		selectedFilter = list(Filter)[self.filterList.GetSelection()]
 		selectedMode = list(FullScreenMode)[self.fullscreenModeList.GetSelection()]
 		isTrueCentered = self.trueCenterCheckBox.GetValue()
-		keepMouseCentered = self.keepMouseCenteredCheckBox.GetValue()
 
 		roundedZoom = magnifierConfig.roundZoomLevel(selectedZoom)
 		self._zoomInitially = roundedZoom
@@ -6257,7 +6243,6 @@ class MagnifierPanel(SettingsPanel):
 		for focusType, checkBox in self._followFocusCheckBoxes.items():
 			shouldFollow = checkBox.GetValue()
 			self._followFocusInitially[focusType] = shouldFollow
-		self._keepMouseCenteredInitially = keepMouseCentered
 
 	def onDiscard(self):
 		"""Restore magnifier state from original settings from config."""
@@ -6268,7 +6253,6 @@ class MagnifierPanel(SettingsPanel):
 		config.conf["magnifier"]["isTrueCentered"] = self._trueCenterInitially
 		for focusType, state in self._followFocusInitially.items():
 			magnifierConfig.setFollowState(focusType, state)
-		config.conf["magnifier"]["keepMouseCentered"] = self._keepMouseCenteredInitially
 
 		magnifier = getMagnifier()
 		if magnifier:

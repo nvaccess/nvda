@@ -1600,6 +1600,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 | Pan to right edge | `NVDA+shift+alt+rightArrow` | Pan the magnified view directly to the right edge of the screen |
 | Pan to top edge | `NVDA+shift+alt+upArrow` | Pan the magnified view directly to the top edge of the screen |
 | Pan to bottom edge | `NVDA+shift+alt+downArrow` | Pan the magnified view directly to the bottom edge of the screen |
+| Move mouse to view | None | Move the mouse cursor to the center of the magnified view |
 
 <!-- KC:endInclude -->
 
@@ -3020,18 +3021,6 @@ This option is enabled by default.
 |---|---|
 | Options | Disabled, Enabled |
 | Default | Enabled |
-
-##### Keep mouse centered {#MagnifierKeepMouseCentered}
-
-This checkbox controls whether the mouse pointer should be automatically moved to the center of the magnified area when certain focus events occur.
-When enabled, NVDA will reposition the mouse pointer to keep it centered in the magnified view, which can be helpful for users who navigate primarily using the magnifier's focus tracking rather than the mouse.
-
-This option is disabled by default.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-| Options | Disabled, Enabled |
-| Default | Disabled |
 
 #### Keyboard {#KeyboardSettings}
 
@@ -5068,6 +5057,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move back using right wiz wheel action |rightWizWheelUp|
 |Move forward using right wiz wheel action |rightWizWheelDown|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |shift+tab key |brailleSpaceBar+dot1+dot2|
 |tab key |brailleSpaceBar+dot4+dot5|
 |upArrow key |brailleSpaceBar+dot1|
@@ -6356,6 +6346,20 @@ Secure screens include:
 * The Windows sign-in screen
 * The User Access Control dialog, active when performing an action as an administrator
   * This includes installing programs
+
+### Downloading NVDA {#DownloadingNVDA}
+
+The recommended place to download NVDA is from the NV Access download page at [https://www.nvaccess.org/download/](https://www.nvaccess.org/download/).
+
+NVDA can also be downloaded and installed using the Windows Package Manager (WinGet).
+Run the following command in Command Prompt (`cmd`) or PowerShell to install the latest version of NVDA:
+
+`winget install --id NVAccess.NVDA`
+
+To install beta or RC versions, use the following commands:
+
+* Beta: `winget install --id NVAccess.NVDA.Beta`
+* RC: `winget install --id NVAccess.NVDA.RC`
 
 ### Command Line Options {#CommandLineOptions}
 
