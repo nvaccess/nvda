@@ -79,13 +79,10 @@ from .extensions import (
 	filter_displaySize,
 	pre_writeCells,
 )
-from .regions import (
-	NVDAObjectRegion,
-	TextInfoRegion,
-	TextRegion,
-	getFocusContextRegions,
-	getFocusRegions,
-)
+from .regions.base import TextRegion
+from .regions.nvdaobject import NVDAObjectRegion
+from .regions.textinfo import TextInfoRegion
+from .regions.focus import getFocusContextRegions, getFocusRegions
 
 FALLBACK_TABLE = config.conf.getConfigValidation(("braille", "translationTable")).default
 """Table to use if the output table configuration is invalid."""

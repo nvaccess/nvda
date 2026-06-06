@@ -31,12 +31,8 @@ from .constants import (
 from .formatting import (
 	getParagraphStartMarker,
 )
-from .regions import (
-	Region,
-	RegionWithPositions,
-	TextInfoRegion,
-	rindex,
-)
+from .regions.base import Region, RegionWithPositions, rindex
+from .regions.textinfo import TextInfoRegion
 
 
 @dataclasses.dataclass(frozen=True)

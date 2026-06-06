@@ -24,7 +24,6 @@ import hwPortUtils
 from logHandler import log
 
 from .driver import BrailleDisplayDriver, _getDisplayDriver
-from .gesture import BrailleDisplayGesture as BrailleDisplayGesture
 
 
 class DisplayDimensions(NamedTuple):
