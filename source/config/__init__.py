@@ -521,7 +521,6 @@ def _loadCustomSections() -> None:
 			continue
 		isBaseOnly = bool(entry.get("isBaseOnly", False))
 		_addSection(name, entry["spec"], isBaseOnly)
-		customSections.update(sections)
 
 
 def _addSection(sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool = False):
@@ -531,6 +530,7 @@ def _addSection(sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool 
 	:param isBaseOnly: Whether this section should only be in the base configuration, defaults to False.
 	"""
 	confspec[sectionName] = sectionSpec
+	customSections[sectionName] = {"spec": sectionSpec, "isBaseOnly": isBaseOnly}
 	if isBaseOnly:
 		ConfigManager.BASE_ONLY_SECTIONS.add(sectionName)
 
