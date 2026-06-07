@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tests.unit.test_speechManager.InitialDevelopmentTests-20260607213444" tests="14" file="tests/unit/test_speechManager.py" time="0.035" timestamp="2026-06-07T21:34:44" failures="0" errors="0" skipped="0">
+	<testcase classname="tests.unit.test_speechManager.InitialDevelopmentTests" name="test2" time="0.001" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="556">
+		<!--Text, end utterance, text.
+Manual Test (in NVDA python console):
+        wx.CallLater(500, speech.speak, [
+                u"This is the first utterance", EndUtteranceCommand(), u"And this is the second"
+        ])
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.InitialDevelopmentTests" name="test3" time="0.001" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="578">
+		<!--Change pitch, text, end utterance, text.
+        wx.CallLater(500, speech.speak, [
+                PitchCommand(offset=50),
+                u"This is the first utterance in a higher pitch",
+                EndUtteranceCommand(), u"And this is the second"
+        ])
+Expected: All should be higher pitch.
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.InitialDevelopmentTests" name="test_1" time="0.003" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="514">
+		<!--Text, beep, beep, sound, text.
+Manual Test (in NVDA python console):
+        wx.CallLater(500, speech.speak, [
+                u"This is some speech and then comes a", BeepCommand(440, 10),
+                u"beep. If you liked that, let's ", BeepCommand(880, 10),
+                u"beep again. I'll speak the rest of this in a ", PitchCommand(offset=50),
+                u"higher pitch. And for the finale, let's ",
+                WaveFileCommand(r"waves\browseMode.wav"), u"play a sound."
+                ])
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.InitialDevelopmentTests" name="test_10_SPRI_profiles" time="0.002" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="1008">
+		<!--Utterance at SPRI_NORMAL. Utterance at SPRI_NOW with profile switch.
+Manual Test (in NVDA python console):
+        from speech import sayAll;
+        trigger = sayAll.SayAllProfileTrigger();
+        wx.CallLater(500, speech.speak, [
+                ConfigProfileTriggerCommand(trigger, True),
+                u"This is a normal utterance with a different profile"
+        ])
+        wx.CallLater(1000, speech.speak, [u"This is an interruption"], priority=speech.SPRI_NOW)
+Expected: Normal speaks but gets interrupted, interruption with different profile, normal speaks again
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.InitialDevelopmentTests" name="test_11_SPRI_Profile" time="0.003" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="1056">
+		<!--Utterance at SPRI_NORMAL with profile switch. Utterance at SPRI_NOW.
+Manual Test (in NVDA python console):
+        from speech import sayAll
+        trigger = sayAll.SayAllProfileTrigger()
+        wx.CallLater(500, speech.speak, [
+                ConfigProfileTriggerCommand(trigger, True),
+                u"This is a normal utterance with a different profile"
+                ])
+        wx.CallLater(1000, speech.speak, [u"This is an interruption"], priority=speech.SPRI_NOW)
+Expected:
+        Normal speaks with different profile but gets interrupted, interruption speaks with base config,
+        normal speaks again with different profile
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.InitialDevelopmentTests" name="test_12_SPRI_profile" time="0.005" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="1120">
+		<!--Utterance at SPRI_NORMAL with profile 1. Utterance at SPRI_NOW with profile 2.
+Manual Test (in NVDA python console):
+        from speech import sayAll, appModuleHandler
+        t1 = sayAll.SayAllProfileTrigger()
+        t2 = appModuleHandler.AppProfileTrigger("notepad")
+        wx.CallLater(500, speech.speak, [
+                ConfigProfileTriggerCommand(t1, True),
+                u"This is a normal utterance with profile 1"
+        ])
+        wx.CallLater(1000, speech.speak, [
+                ConfigProfileTriggerCommand(t2, True),
+                u"This is an interruption with profile 2"
+        ], priority=speech.SPRI_NOW)
+Expected: Normal speaks with profile 1 but gets interrupted, interruption speaks with profile 2,
+normal speaks again with profile 1
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.InitialDevelopmentTests" name="test_13_SPRI_interruptAfterIndexReached" time="0.002" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="819">
+		<!--Utterance at SPRI_NORMAL including a pitch change and beep. Utterance at SPRI_NOW.
+Manual Test (in NVDA python console):
+        wx.CallLater(500, speech.speak, [
+        PitchCommand(offset=100),
+        u"Text before the beep ",
+        BeepCommand(440, 10),
+        u"text after the beep, text, text, text, text"
+        ])
+        wx.CallLater(1500, speech.speak, [u"This is an interruption"], priority=speech.SPRI_NOW)
+Expected: Text speaks with higher pitch, beep, text gets interrupted,
+        interruption speaks with normal pitch, text after the beep speaks again with higher pitch
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.InitialDevelopmentTests" name="test_13_SPRI_interruptBeforeIndexReached" time="0.002" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="783">
+		<!--The same as the other test_13, but the first index is not reached before the interruption.
+In this cases speech manager is expected to finish the first utterance before interrupting.
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.InitialDevelopmentTests" name="test_4_profiles" time="0.003" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="884">
+		<!--Text, pitch, text, enter profile1, enter profile2, text, exit profile1, text.
+Manual Test (in NVDA python console):
+        from speech import sayAll, appModuleHandler
+        t1 = sayAll.SayAllProfileTrigger()
+        t2 = appModuleHandler.AppProfileTrigger("notepad")
+        wx.CallLater(500, speech.speak, [
+                u"Testing testing ", PitchCommand(offset=100), "1 2 3 4",
+                ConfigProfileTriggerCommand(t1, True), ConfigProfileTriggerCommand(t2, True),
+                u"5 6 7 8", ConfigProfileTriggerCommand(t1, False), u"9 10 11 12"
+        ])
+Expected:
+        All text after 1 2 3 4 should be higher pitch.
+        5 6 7 8 should have profile 1 and 2.
+        9 10 11 12 should be just profile 2.
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.InitialDevelopmentTests" name="test_5_profiles" time="0.004" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="966">
+		<!--Enter profile, text, exit profile.
+Manual Test (in NVDA python console):
+        from speech import sayAll
+        trigger = sayAll.SayAllProfileTrigger()
+        wx.CallLater(500, speech.speak, [
+                ConfigProfileTriggerCommand(trigger, True), u"5 6 7 8",
+                ConfigProfileTriggerCommand(trigger, False),
+                u"9 10 11 12"
+        ])
+Expected: 5 6 7 8 in different profile, 9 10 11 12 with base config.
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.InitialDevelopmentTests" name="test_6_SPRI" time="0.003" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="606">
+		<!--Two utterances at SPRI_NORMAL in same sequence. Two separate sequences at SPRI_NEXT.
+Manual Test (in NVDA python console):
+        wx.CallLater(500, speech.speak, [
+                u"1 2 3 ", u"4 5", EndUtteranceCommand(), u"16 17 18 19 20"
+        ])
+        wx.CallLater(510, speech.speak, [u"6 7 8 9 10"], priority=speech.SPRI_NEXT)
+        wx.CallLater(520, speech.speak, [u"11 12 13 14 15"], priority=speech.SPRI_NEXT)
+Expected result: numbers in order from 1 to 20.
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.InitialDevelopmentTests" name="test_7_SPRI" time="0.002" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="666">
+		<!--Utterance at SPRI_NORMAL including a beep. Utterance at SPRI_NOW.
+Manual Test (in NVDA python console):
+        wx.CallLater(500, speech.speak, [
+                u"Text before the beep ", BeepCommand(440, 10),
+                u"text after the beep, text, text, text, text"
+        ])
+        wx.CallLater(1500, speech.speak, [u"This is an interruption"], priority=speech.SPRI_NOW)
+Expected:
+        Text before the beep, beep, Text after..., This is an interruption., Text after the beep, text...
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.InitialDevelopmentTests" name="test_8_SPRI" time="0.001" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="713">
+		<!--Utterance with two sequences at SPRI_NOW. Utterance at SPRI_NOW.
+Manual Test (in NVDA python console):
+        wx.CallLater(500, speech.speak, [u"First ", u"utterance"], priority=speech.SPRI_NOW)
+        wx.CallLater(510, speech.speak, [u"Second ", u"utterance"], priority=speech.SPRI_NOW)
+Expected result: First utterance, second utterance
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.InitialDevelopmentTests" name="test_9_SPRI" time="0.001" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="748">
+		<!--Utterance with two sequences at SPRI_NOW. Utterance at SPRI_NEXT.
+Manual Test (in NVDA python console):
+        wx.CallLater(500, speech.speak, [u"First ", u"utterance"], priority=speech.SPRI_NOW)
+        wx.CallLater(501, speech.speak, [u"Second ", u"utterance"], priority=speech.SPRI_NEXT)
+Expected result: First utterance, second utterance
+-->
+	</testcase>
+</testsuite>

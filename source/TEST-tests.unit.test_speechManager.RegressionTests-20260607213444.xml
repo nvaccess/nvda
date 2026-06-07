@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tests.unit.test_speechManager.RegressionTests-20260607213444" tests="2" file="tests/unit/test_speechManager.py" time="0.002" timestamp="2026-06-07T21:34:44" failures="0" errors="0" skipped="0">
+	<testcase classname="tests.unit.test_speechManager.RegressionTests" name="test_nonSpokenCharacter" time="0.001" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="1233">
+		<!--Test for fix to GH#11752 - NVDA Freeze with unicode value U+000B
+Actually, the speech manager receives an empty string for the character U+000B. NVDA
+does not have a mapping for this character.
+It is questionable whether we should send anything to the synth when there is no content, however
+what constitutes 'content' is currently not easy to define.
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.RegressionTests" name="test_redundantSequenceAfterEndUtterance" time="0.001" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="1204">
+		<!--
+Tests that redundant param change and index commands are not emitted as an extra utterance
+when the preceeding utterance contained param change commands and an EndUtterance command.
+See PR #11651
+E.g. speaking a character.
+-->
+	</testcase>
+</testsuite>

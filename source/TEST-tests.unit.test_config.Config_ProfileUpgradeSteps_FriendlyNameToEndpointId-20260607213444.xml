@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tests.unit.test_config.Config_ProfileUpgradeSteps_FriendlyNameToEndpointId-20260607213444" tests="4" file="tests/unit/test_config.py" time="0.006" timestamp="2026-06-07T21:34:44" failures="0" errors="0" skipped="0">
+	<testcase classname="tests.unit.test_config.Config_ProfileUpgradeSteps_FriendlyNameToEndpointId" name="test_noDevices" time="0.001" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="986">
+		<!--Test that attempting a match for a friendly name that no device has returns None.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_ProfileUpgradeSteps_FriendlyNameToEndpointId" name="test_noDuplicates" time="0.002" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="951">
+		<!--Test that mapping from a friendly name to an endpoint ID works as expected when there are no duplicate friendly names.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_ProfileUpgradeSteps_FriendlyNameToEndpointId" name="test_nonexistant" time="0.001" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="981">
+		<!--Test that attempting a match for a friendly name that no device has returns None.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_ProfileUpgradeSteps_FriendlyNameToEndpointId" name="test_orderOfPrecedence" time="0.002" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="959">
+		<!--Test that, when there are devices with duplicate names in different states, the one with the preferred state is returned.-->
+	</testcase>
+</testsuite>

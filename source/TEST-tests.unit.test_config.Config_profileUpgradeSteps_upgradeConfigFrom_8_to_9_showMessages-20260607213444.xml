@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_showMessages-20260607213444" tests="6" file="tests/unit/test_config.py" time="0.001" timestamp="2026-06-07T21:34:44" failures="0" errors="0" skipped="0">
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_showMessages" name="test_DefaultProfile_RestoreUseTimeout4s" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="629">
+		<!--Braille Message timeout option explicitely restored to 4 second (default value) in default profile
+after having been set to a different value.
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_showMessages" name="test_DefaultProfile_ShowMessageDisabled" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="571">
+		<!--Braille Show message option set to Disabled in default profile.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_showMessages" name="test_DefaultProfile_ShowMessageIndefinitely" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="585">
+		<!--Braille Show message option set to Show indefinitely in default profile.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_showMessages" name="test_DefaultProfile_ShowMessageRestoreUseTimeout" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="599">
+		<!--Braille Show message option explicitely restored to Use timeout in default profile
+after having been set to Show indefinitely.
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_showMessages" name="test_DefaultProfile_Unmodified" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="559">
+		<!--Braille Show message and Message timeout option not modified in default profile.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_showMessages" name="test_DefaultProfile_UseTimeout1s" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="615">
+		<!--Braille Message timeout option set to 1 second in default profile.-->
+	</testcase>
+</testsuite>

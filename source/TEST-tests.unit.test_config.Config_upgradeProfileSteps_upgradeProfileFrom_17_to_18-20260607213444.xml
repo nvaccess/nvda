@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tests.unit.test_config.Config_upgradeProfileSteps_upgradeProfileFrom_17_to_18-20260607213444" tests="6" file="tests/unit/test_config.py" time="0.001" timestamp="2026-06-07T21:34:44" failures="0" errors="0" skipped="0">
+	<testcase classname="tests.unit.test_config.Config_upgradeProfileSteps_upgradeProfileFrom_17_to_18" name="test_dotPadAlreadyExcluded" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="1158">
+		<!--Test upgrading when dotPad is already in excludedDisplays - should not add it again.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_upgradeProfileSteps_upgradeProfileFrom_17_to_18" name="test_emptyExcludedDisplays" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="1131">
+		<!--Test upgrading when excludedDisplays exists but is empty - should add dotPad.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_upgradeProfileSteps_upgradeProfileFrom_17_to_18" name="test_existingExcludedDisplays" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="1145">
+		<!--Test upgrading when excludedDisplays has other entries - should add dotPad to the list.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_upgradeProfileSteps_upgradeProfileFrom_17_to_18" name="test_noAutoSection" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="1110">
+		<!--Test upgrading when braille section exists but no auto section - should create auto section and add dotPad.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_upgradeProfileSteps_upgradeProfileFrom_17_to_18" name="test_noBrailleSection" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="1103">
+		<!--Test upgrading when there is no braille section - should create the structure and add dotPad.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_upgradeProfileSteps_upgradeProfileFrom_17_to_18" name="test_noExcludedDisplaysKey" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="1120">
+		<!--Test upgrading when auto section exists but no excludedDisplays key - should create key and add dotPad.-->
+	</testcase>
+</testsuite>

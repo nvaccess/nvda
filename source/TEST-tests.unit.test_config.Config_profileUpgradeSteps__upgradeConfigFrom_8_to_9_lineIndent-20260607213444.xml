@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tests.unit.test_config.Config_profileUpgradeSteps__upgradeConfigFrom_8_to_9_lineIndent-20260607213444" tests="5" file="tests/unit/test_config.py" time="0.001" timestamp="2026-06-07T21:34:44" failures="0" errors="0" skipped="0">
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps__upgradeConfigFrom_8_to_9_lineIndent" name="test_DefaultProfile_LineIndentationRestoredToOff" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="402">
+		<!--Document formatting Line indentation reporting option explicitely restored to off in default profile
+after having previously selected speech and tones.
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps__upgradeConfigFrom_8_to_9_lineIndent" name="test_DefaultProfile_LineIndentationSpeech" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="421">
+		<!--Document formatting Line indentation reporting option set to Speech in default profile.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps__upgradeConfigFrom_8_to_9_lineIndent" name="test_DefaultProfile_LineIndentationSpeechAndTones" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="453">
+		<!--Document formatting Line indentation reporting option set to Speech and tones in default profile.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps__upgradeConfigFrom_8_to_9_lineIndent" name="test_DefaultProfile_LineIndentationTones" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="437">
+		<!--Document formatting Line indentation reporting option set to tones in default profile.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps__upgradeConfigFrom_8_to_9_lineIndent" name="test_DefaultProfile_Unmodified" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="391">
+		<!--Document formatting Line indentation reporting option not modified in default profile.-->
+	</testcase>
+</testsuite>

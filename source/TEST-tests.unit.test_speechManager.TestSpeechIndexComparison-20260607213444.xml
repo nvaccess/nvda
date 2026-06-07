@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tests.unit.test_speechManager.TestSpeechIndexComparison-20260607213444" tests="8" file="tests/unit/test_speechManager.py" time="0.003" timestamp="2026-06-07T21:34:44" failures="0" errors="0" skipped="0">
+	<testcase classname="tests.unit.test_speechManager.TestSpeechIndexComparison" name="testAllValuesHaveSymmetry" time="0.002" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="103">
+		<!--Test all B values for a given A value.
+Confirm the number of equivalent, A-before, B-before, and assert no B values are both before and after!
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.TestSpeechIndexComparison" name="testExtents_relativeToFirstIndex" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="64">
+		<!--How far ahead of the first index can b get before a is no longer considered before-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.TestSpeechIndexComparison" name="testExtents_relativeToLastIndex" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="76">
+		<!--How far ahead of the "last index" can b get before a is no longer considered before-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.TestSpeechIndexComparison" name="testExtents_relativeToMidPoint" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="89">
+		<!--Despite the largest possible index being odd, there is an even number of possible indexes since
+zero is not used as an index. For a given A value there will be a B value (in a space of 9998
+values) that is equal, leaving 9997 values which can not be split evenly into before / after.
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_speechManager.TestSpeechIndexComparison" name="testSimple_after" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="55"/>
+	<testcase classname="tests.unit.test_speechManager.TestSpeechIndexComparison" name="testSimple_before" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="49"/>
+	<testcase classname="tests.unit.test_speechManager.TestSpeechIndexComparison" name="testSimple_equal" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="52"/>
+	<testcase classname="tests.unit.test_speechManager.TestSpeechIndexComparison" name="testWrapped_beforeAfter" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_speechManager\__init__.py" line="58"/>
+</testsuite>

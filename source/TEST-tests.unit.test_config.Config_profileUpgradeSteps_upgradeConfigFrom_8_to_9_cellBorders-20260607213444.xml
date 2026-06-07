@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_cellBorders-20260607213444" tests="5" file="tests/unit/test_config.py" time="0.001" timestamp="2026-06-07T21:34:44" failures="0" errors="0" skipped="0">
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_cellBorders" name="test_DefaultProfile_CellBordersColorAndStyle" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="500">
+		<!--Document formatting Cell borders option set on Both color and style in default profile.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_cellBorders" name="test_DefaultProfile_CellBordersRestoreOff" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="516">
+		<!--Document formatting Cell borders option explicitely restored to Off after having been set
+on Both color and style in default profile.
+-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_cellBorders" name="test_DefaultProfile_CellBordersStyle" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="488">
+		<!--Document formatting Cell borders option set on style in default profile.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_cellBorders" name="test_DefaultProfile_Unmodified" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="478">
+		<!--Document formatting Cell borders option not modified in default profile.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_cellBorders" name="test_ManualProfile_CellBordersColorAndStyle" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="531">
+		<!--Document formatting Cell borders option set on:
+- Both color and style in manually activated profile
+- Style in default profile
+when manually activated profile is activated on top of default profile.
+Thus the configuration for manually activated profile only specifies the reportBorderColor key
+since reportBorderStyle is the same as default profile.
+-->
+	</testcase>
+</testsuite>

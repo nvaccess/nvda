@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_21_to_22-20260607213444" tests="7" file="tests/unit/test_config.py" time="0.001" timestamp="2026-06-07T21:34:44" failures="0" errors="0" skipped="0">
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_21_to_22" name="test_autoLowerCase_migratedToEn" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="1269">
+		<!--language = auto (all lowercase) is migrated to 'en'.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_21_to_22" name="test_autoMixedCase_migratedToEn" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="1258">
+		<!--language = Auto (canonical old default) is migrated to 'en'.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_21_to_22" name="test_autoUpperCase_migratedToEn" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="1280">
+		<!--language = AUTO (all uppercase) is migrated to 'en'.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_21_to_22" name="test_noLanguageKey_unchanged" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="1245">
+		<!--Profile with [math] / [[speech]] but no language key is not modified.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_21_to_22" name="test_noMathSection_unchanged" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="1227">
+		<!--Profile with no [math] section is not modified.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_21_to_22" name="test_noSpeechSection_unchanged" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="1234">
+		<!--Profile with [math] but no [[speech]] sub-section is not modified.-->
+	</testcase>
+	<testcase classname="tests.unit.test_config.Config_profileUpgradeSteps_upgradeConfigFrom_21_to_22" name="test_nonAutoLanguage_unchanged" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_config.py" line="1291">
+		<!--language set to a valid non-Auto value is not modified.-->
+	</testcase>
+</testsuite>

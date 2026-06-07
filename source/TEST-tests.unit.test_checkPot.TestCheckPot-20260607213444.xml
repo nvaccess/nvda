@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tests.unit.test_checkPot.TestCheckPot-20260607213444" tests="7" file="tests/unit/test_checkPot.py" time="0.002" timestamp="2026-06-07T21:34:44" failures="0" errors="0" skipped="0">
+	<testcase classname="tests.unit.test_checkPot.TestCheckPot" name="test_checkPot_allOk" time="0.001" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_checkPot\__init__.py" line="45">
+		<!--Test that no error is reported when every message has translators comment.-->
+	</testcase>
+	<testcase classname="tests.unit.test_checkPot.TestCheckPot" name="test_checkPot_expectedErrors" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_checkPot\__init__.py" line="114">
+		<!--Test that expected errors are reported as such.-->
+	</testcase>
+	<testcase classname="tests.unit.test_checkPot.TestCheckPot" name="test_checkPot_firstMessage" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_checkPot\__init__.py" line="59">
+		<!--Test that missing translators comment on the first message are reported.-->
+	</testcase>
+	<testcase classname="tests.unit.test_checkPot.TestCheckPot" name="test_checkPot_lastMessage" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_checkPot\__init__.py" line="73">
+		<!--Test that missing translators comment on the last message are reported.-->
+	</testcase>
+	<testcase classname="tests.unit.test_checkPot.TestCheckPot" name="test_checkPot_longMessages" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_checkPot\__init__.py" line="101">
+		<!--Test that missing translators comment on long messages are reported.-->
+	</testcase>
+	<testcase classname="tests.unit.test_checkPot.TestCheckPot" name="test_checkPot_shortMessages" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_checkPot\__init__.py" line="87">
+		<!--Test that missing translators comment on short messages are reported.-->
+	</testcase>
+	<testcase classname="tests.unit.test_checkPot.TestCheckPot" name="test_checkPot_unexpectedSuccesses" time="0.000" timestamp="2026-06-07T21:34:44" file="..\tests\unit\test_checkPot\__init__.py" line="128">
+		<!--Test that unexpected successes are reported as such.-->
+	</testcase>
+</testsuite>
