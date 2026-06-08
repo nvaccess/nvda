@@ -613,7 +613,9 @@ class ConfigManager:
 			del customSections[sectionName]
 			self._saveCustomSections()
 		except KeyError:
-			log.debugWarning(f"Attempted to unregister custom section {sectionName!r} that was not registered.")
+			log.debugWarning(
+				f"Attempted to unregister custom section {sectionName!r} that was not registered."
+			)
 
 	def _saveCustomSections(self) -> None:
 		"""Write all registered custom sections to disk."""

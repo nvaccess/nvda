@@ -1337,6 +1337,7 @@ class Config_loadCustomSections(unittest.TestCase):
 	def test_yamlError_logsAndReturnsWithoutAdding(self):
 		"""yaml.YAMLError is logged and customSections remains empty."""
 		import yaml
+
 		with patch("builtins.open", mock_open()):
 			with patch("config.yaml.safe_load", side_effect=yaml.YAMLError):
 				with patch("config.log.error") as mockLog:
