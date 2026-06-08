@@ -23,17 +23,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <objbase.h>
 
-// Tracks information about a COM interface registered in-process
-typedef struct {
-	// The name of the interface (for debugging)
-	std::wstring name;
-	// The unique identifier of the interface
-	IID iid;
-	// The CLSID of the original class object that handled creating / proxying of this interface.
-	// Used when unregistering, so we can put things back the way they were
-	CLSID clsid;
-} PSClsidBackup_t;
-
 // Represents the registration of a COM proxy dll and its interfaces.
 // this can be used for later unregistration of the COM proxy dll
 typedef struct {
@@ -41,8 +30,6 @@ typedef struct {
 	std::wstring dllPath;
 	// The cookie returned by CoRegisterClassObject, for later unregistration via CoRevokeClassObject
 	ULONG_PTR classObjectRegistrationCookie;
-	// Information for all the interfaces registered for this proxy dll via CoRegisterPSClsid
-	std::vector<PSClsidBackup_t> psClsidBackups;
 } COMProxyRegistration_t;
 
 /* Registers a COM proxy dll and all its interfaces for this process so that they can be marshalled to/from other processes
@@ -56,5 +43,16 @@ COMProxyRegistration_t* registerCOMProxy(const wchar_t* dllPath);
 	@return true if successful, false otherwise
 	*/
 bool unregisterCOMProxy(COMProxyRegistration_t* reg);
+
+/* Restores the original proxy CLSIDs for all interfaces for which the proxy CLSID was changed by registerCOMProxy.
+	Should be called before NvDA unloads from this process to restore the original state of the process as much as possible.
+	@return void
+	*/
+void restoreInterfaceProxyBackups();
+
+/* Clears the cache used for storing generated proxy CLSIDs for dlls. Should be called when NvDA unloads from this process to free cached CLSIDs.
+	@return void
+	*/
+void clearCOMProxyRegistrationCache();
 
 #endif

@@ -24,7 +24,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 struct IA2InstallData {
 	COMProxyRegistration_t* IA2ProxyRegistration;
 	COMProxyRegistration_t* ISimpleDOMProxyRegistration;
-	HANDLE uiThreadHandle;
 };
 
 bool installIA2Support();
