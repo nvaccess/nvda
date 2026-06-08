@@ -33,6 +33,11 @@
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* `config.conf.registerSection` and `config.conf.unregisterSection` methods can be used to register and unregister configuration sections. (#7467, @nvdaes)
+  * In the `installTasks` module, add-on developers can add a spec for each configuration section to be registered.
+* The `config.conf.addSection` method can be used in the `onInstall`Function, and the `config.conf.unRegisterSection` should be used in the `onUninstall` function.
+  * To register a section to be used in the normal configuration, regardless of profiles, the `isBaseOnly` parameter should be set to `True`.
+
 * `braille.BrailleDisplayGesture` now exposes a `cellIndexes` list attribute, replacing the single-valued `routingIndex`. (#20001, @LeonarddeR)
   * Drivers should set `cellIndexes` directly instead of `routingIndex`.
   * When a gesture addresses more than one cell, its `id` should be set to `"multiRouting"` (or be built via the new `BrailleDisplayGesture.idForCellCount(n)` helper).
