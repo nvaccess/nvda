@@ -598,7 +598,7 @@ class ConfigManager:
 		:param isBaseOnly: Whether this section should only be in the base configuration.
 		"""
 		if sectionName in confspec:
-			raise ValueError(f"Section {sectionName!r} is already registered.")
+			log.debugWarning(f"Registering custom section {sectionName!r} that is already registered.")
 		if not isinstance(sectionSpec, dict):
 			raise TypeError(f"sectionSpec for {sectionName!r} must be a dict.")
 		customSections[sectionName] = {"spec": sectionSpec, "isBaseOnly": isBaseOnly}
@@ -609,10 +609,11 @@ class ConfigManager:
 		This is intended for add-ons to unregister custom sections they added, for example when the add-on is uninstalled.
 		:param sectionName: The name of the section to remove.
 		"""
-		if sectionName not in customSections:
-			raise ValueError(f"Section {sectionName!r} is not registered.")
-		del customSections[sectionName]
-		self._saveCustomSections()
+		try:
+			del customSections[sectionName]
+			self._saveCustomSections()
+		except KeyError:
+			log.debugWarning(f"Attempted to unregister custom section {sectionName!r} that was not registered.")
 
 	def _saveCustomSections(self) -> None:
 		"""Write all registered custom sections to disk."""
