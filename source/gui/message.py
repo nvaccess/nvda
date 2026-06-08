@@ -1216,8 +1216,6 @@ class HtmlMessageDialog(MessageDialog):
 		# Initialised before super().__init__() because it creates the WebView (binding its events) and sets
 		# its initial content, both of which can fire those events.
 		self._actionHandlers: dict[str, Callable[[], None]] = {}
-		self._isContentLoaded = False
-		self._deferShowUntilLoaded = False
 		super().__init__(*args, **kwargs)
 		# The WebView (IE backend) consumes Escape natively before JavaScript keydown fires.
 		# Use a wx accelerator table, which is translated before the message reaches the focused
@@ -1242,25 +1240,12 @@ class HtmlMessageDialog(MessageDialog):
 		self._actionHandlers[action] = handler
 		return self
 
-	def Show(self, show: bool = True) -> bool:
-		"""Show the dialog, deferring until the WebView content has loaded.
-
-		Some backends (e.g. Edge) load content asynchronously; showing the dialog before the content
-		is ready would present a blank WebView to the user.  If content is not yet loaded, the show is
-		deferred until :meth:`_onLoaded` fires.
-		"""
-		if show and not self._isContentLoaded:
-			self._deferShowUntilLoaded = True
-			return False
-		return super().Show(show)
-
 	def _createMessageControl(self) -> WebView:
 		control = WebView.New(self, backend=self._webViewBackend)
 		control.EnableContextMenu(False)
 		control.EnableHistory(False)
 		# Bind before MessageDialog.__init__ sets the initial content, so the first load and navigation are observed.
 		control.Bind(wx.html2.EVT_WEBVIEW_NAVIGATING, self._onNavigating)
-		control.Bind(wx.html2.EVT_WEBVIEW_LOADED, self._onLoaded)
 		return control
 
 	def _wrapMessageControl(self) -> None:
@@ -1271,13 +1256,6 @@ class HtmlMessageDialog(MessageDialog):
 		self._messageControl.SetPage(message, "")
 		self._isLayoutFullyRealized = False
 		return self
-
-	def _onLoaded(self, evt: wx.html2.WebViewEvent) -> None:
-		self._isContentLoaded = True
-		if self._deferShowUntilLoaded:
-			self._deferShowUntilLoaded = False
-			self.Show()
-		evt.Skip()
 
 	def _onNavigating(self, evt: wx.html2.WebViewEvent) -> None:
 		evt.Veto()
