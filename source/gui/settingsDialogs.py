@@ -6240,20 +6240,6 @@ class MagnifierPanel(SettingsPanel):
 		self.fullscreenModeList.SetSelection(list(FullScreenMode).index(fullscreenModeValue))
 		self.fullscreenModeList.Bind(wx.EVT_CHOICE, self._onImmediateSettingChange)
 
-		# KEEP MOUSE CENTERED
-		# Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
-		keepMouseCenteredText = _("Keep mouse pointer &centered in magnifier view")
-		self.keepMouseCenteredCheckBox = fullscreenGroup.addItem(
-			wx.CheckBox(fullscreenGroupBox, label=keepMouseCenteredText),
-		)
-		self.bindHelpEvent(
-			"MagnifierKeepMouseCentered",
-			self.keepMouseCenteredCheckBox,
-		)
-		self.keepMouseCenteredCheckBox.SetValue(magnifierConfig.shouldKeepMouseCentered())
-		self._keepMouseCenteredInitially = self.keepMouseCenteredCheckBox.GetValue()
-		self.keepMouseCenteredCheckBox.Bind(wx.EVT_CHECKBOX, self._onImmediateSettingChange)
-
 	def onSave(self):
 		"""Save the current selections to config."""
 		magnifierConfig.setEnabled(self.enableMagnifierCheckBox.GetValue())

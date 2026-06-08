@@ -2919,23 +2919,6 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### Focus mode {#MagnifierFullscreenFocusMode}
-
-This combo box allows you to select the focus tracking mode when using the magnifier.
-To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-The available options are:
-
-| . {.hideHeaderRow} |.|
-|---|---|
-| Options | Center, Border, Relative |
-| Default | Center |
-
-| Option | Description |
-|---|---|
-| Center | The magnified area is always centered on the current focus position. |
-| Border | The magnified area only moves when the focus approaches the edge of the visible area. |
-| Relative | The magnified area maintains the relative position of the focus within the screen. |
-
 ##### Use true center tracking {#MagnifierUseTrueCenterTracking}
 
 This checkbox controls whether the magnifier should always keep the focus centered on the screen, or if it should allow the focus to move towards the edges of the screen before moving the magnified area.
@@ -3013,6 +2996,23 @@ This option is enabled by default.
 |---|---|
 | Options | Disabled, Enabled |
 | Default | Enabled |
+
+##### Focus mode {#MagnifierFullscreenFocusMode}
+
+This combo box allows you to select the focus tracking mode when using the magnifier.
+To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+The available options are:
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Center, Border, Relative |
+| Default | Center |
+
+| Option | Description |
+|---|---|
+| Center | The magnified area is always centered on the current focus position. |
+| Border | The magnified area only moves when the focus approaches the edge of the visible area. |
+| Relative | The magnified area maintains the relative position of the focus within the screen. |
 
 #### Keyboard {#KeyboardSettings}
 
