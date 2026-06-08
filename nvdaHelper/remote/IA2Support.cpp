@@ -145,7 +145,7 @@ bool isAppContainerProcess() {
 }
 
 void IA2Support_inProcess_initialize() {
-	if (IA2InstallMap.size() > 0 || isIA2SupportDisabled) {
+	if (isIA2SupportDisabled) {
 		return;
 	}
 	// #5417: disable IAccessible2 support for suspendable processes to work around a deadlock in NVDAHelperRemote (specifically seen in Win10 searchUI)
@@ -168,9 +168,7 @@ void IA2Support_inProcess_initialize() {
 void IA2Support_inProcess_terminate() {
 	// This will do nothing if the hook isn't registered.
 	unregisterWinEventHook(IA2Support_winEventProcHook);
-	if (IA2InstallMap.size()  == 0) {
-		return;
-	}
+	restoreInterfaceProxyBackups();
 	for (auto& [threadId, data] : IA2InstallMap) {
 		//Check if the UI thread is still alive, if not there's nothing for us to do
 		if (WaitForSingleObject(data.uiThreadHandle, 0) == 0) {
@@ -179,6 +177,8 @@ void IA2Support_inProcess_terminate() {
 		execInThread(threadId, uninstallIA2Support);
 		CloseHandle(data.uiThreadHandle);
 	}
+	clearCOMProxyRegistrationCache();
+	IA2InstallMap.clear();
 }
 
 const long FINDCONTENTDESCENDANT_FIRST=0;
