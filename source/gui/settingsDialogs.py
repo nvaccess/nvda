@@ -6040,7 +6040,7 @@ class VisionProviderSubPanel_Wrapper(
 class MagnifierPanel(SettingsPanel):
 	# Translators: This is the label for the magnifier settings panel.
 	title = _("Magnifier")
-	helpId = "MagnifierSettings"
+	helpId = "MagnifierSettingsCategory"
 
 	def _applyCurrentSettingsToConfigAndRuntime(self):
 		"""Apply current control values to config and to the active magnifier instance."""
