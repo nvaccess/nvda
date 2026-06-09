@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-29 05:49+0000\n"
-"PO-Revision-Date: 2026-06-01 03:33\n"
+"POT-Creation-Date: 2026-06-05 01:11+0000\n"
+"PO-Revision-Date: 2026-06-08 03:30\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -2384,7 +2384,7 @@ msgstr "Einige Operationen für Erweiterungen sind fehlgeschlagen. In der Protok
 #: gui\installerGui.py:126 gui\installerGui.py:210 gui\installerGui.py:701
 #: gui\installerGui.py:718 gui\installerGui.py:790 gui\logViewer.py:112
 #: gui\logViewer.py:143 gui\message.py:160 gui\settingsDialogs.py:1044
-#: gui\settingsDialogs.py:6008 gui\settingsDialogs.py:6867
+#: gui\settingsDialogs.py:6008 gui\settingsDialogs.py:6851
 #: gui\startupDialogs.py:127 _remoteClient\dialogs.py:67
 #: _remoteClient\dialogs.py:306 _remoteClient\dialogs.py:430
 msgid "Error"
@@ -5029,42 +5029,42 @@ msgstr "Verringert den Zoom-Faktor der Vergrößerung"
 #. Translators: Describes a command.
 #: globalCommands.py:5085
 msgid "Pan the magnifier view to the left"
-msgstr ""
+msgstr "Kamera nach links schwenken"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5099
 msgid "Pan the magnifier view to the right"
-msgstr ""
+msgstr "Kamera nach rechts schwenken"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5113
 msgid "Pan the magnifier view up"
-msgstr ""
+msgstr "Kamera nach oben schwenken"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5127
 msgid "Pan the magnifier view down"
-msgstr ""
+msgstr "Kamera nach unten schwenken"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5141
 msgid "Pan the magnifier view to left edge"
-msgstr ""
+msgstr "Kamera zum linken Randschwenken"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5155
 msgid "Pan the magnifier view to right edge"
-msgstr ""
+msgstr "Kamera zum rechten Randschwenken"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5169
 msgid "Pan the magnifier view to top edge"
-msgstr ""
+msgstr "Kamera zum oberen Randschwenken"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5183
 msgid "Pan the magnifier view to bottom edge"
-msgstr ""
+msgstr "Kamera zum unteren Randschwenken"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5197
@@ -5074,37 +5074,37 @@ msgstr "Schaltet den Filter der Vergrößerung um"
 #. Translators: Describes a command.
 #: globalCommands.py:5211
 msgid "Toggle follow mouse for the magnifier"
-msgstr ""
+msgstr "Schaltet die Verfolgung des Mauszeigers für die Vergrößerung ein oder aus"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5224
 msgid "Toggle follow system focus for the magnifier"
-msgstr ""
+msgstr "Schaltet die Verfolgung des System-Fokus ein oder aus"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5237
 msgid "Toggle follow review cursor for the magnifier"
-msgstr ""
+msgstr "Schaltet den Cursor für die Vergrößerung ein oder aus"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5250
 msgid "Toggle follow navigator object for the magnifier"
-msgstr ""
+msgstr "Schaltet die Verfolgung des Navigator-Objekts ein oder aus"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5263
 msgid "Toggle all follow modes for the magnifier"
-msgstr ""
+msgstr "Schaltet alle Modi für die Vergrößerung ein oder aus"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5276
 msgid "Toggle focus mode for the full-screen magnifier"
-msgstr ""
+msgstr "Schaltet den Interaktionsmodus für den Vollbildmodus der Vergrößerung ein oder aus"
 
 #. Translators: Describe a command.
 #: globalCommands.py:5289
 msgid "Launch spotlight if magnifier is full-screen"
-msgstr ""
+msgstr "Das Licht für die Kamera einschalten, wenn die Vergrößerung im Vollbildmodus ist"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5303
@@ -5210,7 +5210,7 @@ msgstr "Sendet alt + STRG + entfernen an den via Fernzugriff verbundenen Rechner
 #. Translators: Description for the repeat last speech script
 #: globalCommands.py:5465
 msgid "Repeat the last spoken information. Pressing twice shows it in a browsable message. "
-msgstr ""
+msgstr "Wiederholt die zuletzt gesprochene Information von der Sprachausgabe. Zweimaliges Drücken zeigt diese Informationen in einem lesbaren Fenster an."
 
 #. Translators: title for report last spoken information dialog.
 #: globalCommands.py:5483
@@ -7596,7 +7596,7 @@ msgstr "Die derzeit aktive Verbindung wird möglicherweise während oder nach de
 #. Translators: Title of warning dialog
 #: updateCheck.py:1026 gui\_SetURLDialog.py:113 gui\configProfiles.py:500
 #: gui\installerGui.py:444 gui\installerGui.py:602 gui\settingsDialogs.py:1964
-#: gui\settingsDialogs.py:6324 screenCurtain\_screenCurtain.py:70
+#: gui\settingsDialogs.py:6308 screenCurtain\_screenCurtain.py:70
 #: _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "Warnung"
@@ -10671,7 +10671,7 @@ msgstr "Debug-Meldungen"
 #. without redacting secrets).
 #: config\configFlags.py:441
 msgid "debug (unredacted)"
-msgstr ""
+msgstr "Debug (unbearbeitet)"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
 #: config\configFlags.py:464
@@ -12639,14 +12639,15 @@ msgstr "Aktion nicht verfügbar, wenn der Fernzugriff deaktiviert ist"
 #. Translators: The title of the dialog shown after resetting configuration to factory defaults.
 #: gui\configManagement.py:27
 msgid "Factory Defaults Restored"
-msgstr ""
+msgstr "Die Standard-Einstellungen wurden wiederhergestellt"
 
 #. Translators: The message shown in the dialog after the configuration has been reset to factory defaults.
 #. The user can choose to keep the factory defaults or undo the reset.
 #: gui\configManagement.py:31
 msgid "Your configuration has been reset to factory defaults.\n"
 "Choose OK to keep factory defaults, or Undo to restore your previous configuration."
-msgstr ""
+msgstr "Die Konfiguration wurde auf die Standard-Einstellungen zurückgesetzt.\n"
+"Klicken Sie auf \"OK\", um die Standard-Einstellungen beizubehalten, oder „Rückgängig“, um Ihre vorherige Konfiguration wiederherzustellen."
 
 #. Translators: The label of the undo button in the factory defaults reset dialog.
 #. Pressing this button restores the previous configuration.
@@ -12658,7 +12659,7 @@ msgstr "&Widerherstellen"
 #. and the previous configuration has been restored.
 #: gui\configManagement.py:68
 msgid "Factory reset undone. Previous configuration restored."
-msgstr ""
+msgstr "Das Zurücksetzen auf die Standard-Einstellungen wurde rückgängig gemacht. Die vorherige Konfiguration wurde wiederhergestellt."
 
 #. Translators: The title of the Configuration Profiles dialog.
 #: gui\configProfiles.py:36
@@ -12966,7 +12967,7 @@ msgstr "&Filtern nach:"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:6755 gui\speechDict.py:212
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:6739 gui\speechDict.py:212
 msgid "&Add"
 msgstr "&Hinzufügen"
 
@@ -13004,13 +13005,13 @@ msgstr "Fehler beim Speichern der benutzerdefinierten Tastenzuordnungen, möglic
 #. shown in the post-install dialog.
 #: gui\installerGui.py:74
 msgid "Successfully updated your installation of NVDA. It is recommended to restart Windows after updating. NVDA may malfunction without a restart."
-msgstr ""
+msgstr "Die Installation von NVDA wurde erfolgreich aktualisiert. Es wird empfohlen, Windows nach der Aktualisierung neu zu starten. Ohne einen Neustart kann es zu Fehlfunktionen bei NVDA kommen."
 
 #. Translators: The message displayed when NVDA has been successfully installed,
 #. shown in the post-install dialog.
 #: gui\installerGui.py:82
 msgid "Successfully installed NVDA. It is recommended to restart Windows after installing. NVDA may malfunction without a restart."
-msgstr ""
+msgstr "Die Installation von NVDA wurde erfolgreich durchgeführt. Es wird empfohlen, Windows nach der Installation neu zu starten. Ohne einen Neustart kann es zu Fehlfunktionen bei NVDA kommen."
 
 #. Translators: Button in the post-install dialog to start the newly installed NVDA.
 #: gui\installerGui.py:96
@@ -13030,7 +13031,7 @@ msgstr "NVDA &beenden"
 #. Translators: Message shown when Windows restart fails after NVDA installation.
 #: gui\installerGui.py:124
 msgid "Failed to restart Windows. Please restart Windows manually."
-msgstr ""
+msgstr "Der Neustart von Windows ist fehlgeschlagen. Bitte starten Sie Windows manuell neu."
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
 #: gui\installerGui.py:157
@@ -13247,7 +13248,8 @@ msgstr "Bitte geben Sie einen Ordner an, in dem die portable Version erstellt we
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. It must start with a drive letter (e.g. C:). It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
 "Current path: {path}. "
-msgstr ""
+msgstr "Bitte geben Sie den absoluten Pfad an, unter dem die portable Kopie erstellt werden soll. Dieser muss mit einem Laufwerksbuchstaben beginnen (z. B. C:) und kann Systemvariablen (z. B. %temp%, %homepath%) als Platzhalter für Teile des Pfades enthalten.\n"
+"Aktueller Pfad: {path}. "
 
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
 #: gui\installerGui.py:764
@@ -13378,7 +13380,7 @@ msgstr "&Kategorien:"
 #. Translators: This is the label for the general settings panel.
 #. Translators: name of a grouping in Privacy and Security settings
 #. which contains miscellaneous settings.
-#: gui\settingsDialogs.py:809 gui\settingsDialogs.py:6388
+#: gui\settingsDialogs.py:809 gui\settingsDialogs.py:6372
 msgid "General"
 msgstr "Allgemein"
 
@@ -15268,202 +15270,197 @@ msgid "Magnifier"
 msgstr "Vergrößerung"
 
 #. Translators: The label for a setting in magnifier settings to enable or disable the magnifier.
-#: gui\settingsDialogs.py:6087
+#: gui\settingsDialogs.py:6086
 msgid "&Enable magnifier (immediate effect)"
 msgstr "&Vergrößerung sofort aktivieren"
 
 #. Translators: The label for a setting in magnifier settings to select the zoom level.
-#: gui\settingsDialogs.py:6099
+#: gui\settingsDialogs.py:6098
 msgid "&Zoom (%):"
-msgstr ""
+msgstr "&Zoom-Faktor (in Prozent):"
 
 #. Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
-#: gui\settingsDialogs.py:6121
+#: gui\settingsDialogs.py:6120
 msgid "&Panning step size (%):"
-msgstr ""
+msgstr "&Schrittweite beim Schwenken der Kamera (in Prozent):"
 
 #. Translators: The label for a setting in magnifier settings to select the default filter
-#: gui\settingsDialogs.py:6143
+#: gui\settingsDialogs.py:6142
 msgid "F&ilter:"
 msgstr "F&ilter:"
 
 #. Translators: The label for a setting in magnifier settings to select the full-screen mode
-#: gui\settingsDialogs.py:6160
+#: gui\settingsDialogs.py:6159
 msgid "&Fullscreen mode:"
 msgstr "&Vollbildmodus:"
 
 #. Translators: The label for a setting in magnifier settings to select whether true center is used in full-screen mode
-#: gui\settingsDialogs.py:6174
+#: gui\settingsDialogs.py:6173
 msgid "Use &true center in fullscreen mode"
 msgstr "Im Vollbildmodus True Center verwenden"
 
 #. Translators: This is the label for a group of focus options in the magnifier settings panel
-#: gui\settingsDialogs.py:6192
+#: gui\settingsDialogs.py:6191
 msgid "Focus"
 msgstr "Fokus"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the mouse
-#: gui\settingsDialogs.py:6200
+#: gui\settingsDialogs.py:6199
 msgid "Follow &mouse"
 msgstr "&Maus verfolgen"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
-#: gui\settingsDialogs.py:6202
+#: gui\settingsDialogs.py:6201
 msgid "Follow &system focus"
 msgstr "&System-Fokus verfolgen"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the review cursor
-#: gui\settingsDialogs.py:6204
+#: gui\settingsDialogs.py:6203
 msgid "Follow &review cursor"
 msgstr "NVDA-Cu&rsor verfolgen"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the navigator object
-#: gui\settingsDialogs.py:6207
+#: gui\settingsDialogs.py:6206
 msgid "Follow &navigator object"
 msgstr "&Navigator-Objekt verfolgen"
 
-#. Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
-#: gui\settingsDialogs.py:6224
-msgid "Keep mouse pointer &centered in magnifier view"
-msgstr "Mauszeiger in der Vergrößerungsansicht &zentriert halten"
-
 #. Translators: The title of the privacy and security category in NVDA's settings.
-#: gui\settingsDialogs.py:6292
+#: gui\settingsDialogs.py:6276
 msgid "Privacy and Security"
 msgstr "Datenschutz und Sicherheit"
 
 #. Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
-#: gui\settingsDialogs.py:6305
+#: gui\settingsDialogs.py:6289
 msgid "Setting the logging level to \"debug (unredacted)\" will write sensitive information to the log without redaction, including passwords, API keys, or other private data. Only enable this temporarily if you explicitly need unredacted diagnostic logs. Do you want to continue?"
-msgstr ""
+msgstr "Wenn Sie die Protokollierungsstufe auf \"Debug (unbearbeitet)\" setzen, werden sensible Informationen wie Passwörter, API-Schlüssel oder andere private Daten in das Protokoll ungefragt übertragen. Aktivieren Sie diese Option nur vorübergehend, wenn Sie ausdrücklich unbearbeitete Diagnoseprotokolle benötigen. Möchten Sie fortfahren?"
 
 #. Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
-#: gui\settingsDialogs.py:6312
+#: gui\settingsDialogs.py:6296
 msgid "High risk logging level"
 msgstr "Hohes Risiko bei der Protokollierungsstufe"
 
 #. Translators: Warning shown when enabling a logging level above info from NVDA settings.
-#: gui\settingsDialogs.py:6317
+#: gui\settingsDialogs.py:6301
 msgid "Setting the logging level above info may record sensitive information such as typed input, speech output, or other private data in the log. Only enable higher logging levels temporarily while troubleshooting. Do you want to continue?"
 msgstr "Wenn Sie die Protokollierungsstufe auf einen Wert höher als die Stufe Informationen setzen, werden möglicherweise sensible Informationen wie Tastatureingaben, Sprachausgabe oder andere private Daten im Protokoll aufgezeichnet. Aktivieren Sie höhere Protokollierungsstufen nur vorübergehend zur Fehlerbehebung. Möchten Sie fortfahren?"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
-#: gui\settingsDialogs.py:6342
+#: gui\settingsDialogs.py:6326
 msgid "Screen Curtain"
 msgstr "Bildschirmvorhang"
 
 #. Translators: option to enable screen curtain in the privacy and security settings panel
-#: gui\settingsDialogs.py:6351
+#: gui\settingsDialogs.py:6335
 msgid "Make screen black (immediate effect)"
 msgstr "Bildschirm verdunkeln (sofort wirksam)"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#: gui\settingsDialogs.py:6380
+#: gui\settingsDialogs.py:6364
 msgid "&Play sound when toggling Screen Curtain"
 msgstr "&Sound beim Umschalten des Bildschirmvorhangs"
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
-#: gui\settingsDialogs.py:6395
+#: gui\settingsDialogs.py:6379
 msgid "L&ogging level:"
 msgstr "&Protokollierungsstufe:"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-#: gui\settingsDialogs.py:6418
+#: gui\settingsDialogs.py:6402
 msgid "Allow NV Access to gather NVDA usage statistics"
 msgstr "NV Access erlauben, NVDA-Nutzungsstatistiken zu sammeln"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:6539
+#: gui\settingsDialogs.py:6523
 msgid "NVDA Settings"
 msgstr "NVDA-Einstellungen"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:6595
+#: gui\settingsDialogs.py:6579
 msgid "normal configuration"
 msgstr "Standard-Konfiguration"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:6630
+#: gui\settingsDialogs.py:6614
 msgid "Add Symbol"
 msgstr "Symbol hinzufügen"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:6635
+#: gui\settingsDialogs.py:6619
 msgid "&Symbol:"
 msgstr "&Symbol:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:6665
+#: gui\settingsDialogs.py:6649
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "Symbol-Aussprache (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:6679
+#: gui\settingsDialogs.py:6663
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "&Filtern nach:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6688
+#: gui\settingsDialogs.py:6672
 msgid "&Symbols"
 msgstr "&Symbole"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:6698
+#: gui\settingsDialogs.py:6682
 msgid "Symbol"
 msgstr "Symbol"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6700 gui\speechDict.py:188
+#: gui\settingsDialogs.py:6684 gui\speechDict.py:188
 msgid "Replacement"
 msgstr "Ersetzen durch"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:6702
+#: gui\settingsDialogs.py:6686
 msgid "Level"
 msgstr "Stufe"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:6705
+#: gui\settingsDialogs.py:6689
 msgid "Preserve"
 msgstr "Beibehalten"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:6709
+#: gui\settingsDialogs.py:6693
 msgid "Change selected symbol"
 msgstr "Symbol ändern"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6727 gui\speechDict.py:52
+#: gui\settingsDialogs.py:6711 gui\speechDict.py:52
 msgid "&Replacement"
 msgstr "&Ersetzen durch"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:6736
+#: gui\settingsDialogs.py:6720
 msgid "&Level"
 msgstr "S&tufe"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:6743
+#: gui\settingsDialogs.py:6727
 msgid "&Send actual symbol to synthesizer"
 msgstr "&Aktuelles Symbol an Sprachausgabe senden"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:6758
+#: gui\settingsDialogs.py:6742
 msgid "Re&move"
 msgstr "&Entfernen"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:6865
+#: gui\settingsDialogs.py:6849
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "Das Symbol \"%s\" ist bereits vorhanden."
@@ -16623,25 +16620,25 @@ msgstr "{lang} ({code})"
 #: mathPres\MathCAT\navCommands.py:26
 msgctxt "math"
 msgid "Move to previous item in math"
-msgstr ""
+msgstr "Zum vorherigen Element in der Formel wechseln"
 
 #. Translators: Input help message for the command to move to the next item in math.
 #: mathPres\MathCAT\navCommands.py:32
 msgctxt "math"
 msgid "Move to next item in math"
-msgstr ""
+msgstr "Zum nächsten Element in der Formel wechseln"
 
 #. Translators: Input help message for the command to zoom out in math.
 #: mathPres\MathCAT\navCommands.py:38
 msgctxt "math"
 msgid "Zoom out in math"
-msgstr ""
+msgstr "Verkleiner in der Mathematik"
 
 #. Translators: Input help message for the command to zoom in in math.
 #: mathPres\MathCAT\navCommands.py:44
 msgctxt "math"
 msgid "Zoom in in math"
-msgstr ""
+msgstr "Vergrößern in der Mathematik"
 
 #. Translators: Input help message for the command to move to the previous table cell or digit in math.
 #: mathPres\MathCAT\navCommands.py:50
@@ -16798,28 +16795,28 @@ msgstr ""
 #, python-brace-format
 msgctxt "math"
 msgid "Jump to placemarker {n} in math"
-msgstr ""
+msgstr "Springt zur Markierung {n} in der Formel"
 
 #. Translators: Input help message for the command to set a placemarker in math; {n} is replaced with the placemarker number.
 #: mathPres\MathCAT\navCommands.py:222
 #, python-brace-format
 msgctxt "math"
 msgid "Set placemarker {n} in math"
-msgstr ""
+msgstr "Platzhalter {n} in der Formel definieren"
 
 #. Translators: Input help message for the command to read a placemarker in math; {n} is replaced with the placemarker number.
 #: mathPres\MathCAT\navCommands.py:228
 #, python-brace-format
 msgctxt "math"
 msgid "Read placemarker {n} in math"
-msgstr ""
+msgstr "Platzhalter {n} in der Formel vorlesen"
 
 #. Translators: Input help message for the command to describe a placemarker in math; {n} is replaced with the placemarker number.
 #: mathPres\MathCAT\navCommands.py:235
 #, python-brace-format
 msgctxt "math"
 msgid "Describe placemarker {n} in math"
-msgstr ""
+msgstr "Platzhalter {n} in der Formel beschreiben"
 
 #. Translators: Learning disabilities includes dyslexia and ADHD
 #. category of impairment that MathCAT supports: people with learning disabilities
@@ -20228,7 +20225,7 @@ msgstr "Geschützter Desktop"
 #: _magnifier\commands.py:43 _magnifier\commands.py:64
 msgctxt "magnifier"
 msgid "left edge"
-msgstr ""
+msgstr "Linker Rand"
 
 #. Translators: Message announced when already at right edge of the screen while panning the magnified view
 #. Translators: Message announced when already at right edge of the screen while panning the magnified view
@@ -20236,7 +20233,7 @@ msgstr ""
 #: _magnifier\commands.py:48 _magnifier\commands.py:70
 msgctxt "magnifier"
 msgid "right edge"
-msgstr ""
+msgstr "Rechter Rand"
 
 #. Translators: Message announced when already at top edge of the screen while panning the magnified view
 #. Translators: Message announced when already at top edge of the screen while panning the magnified view
@@ -20244,7 +20241,7 @@ msgstr ""
 #: _magnifier\commands.py:53 _magnifier\commands.py:76
 msgctxt "magnifier"
 msgid "top edge"
-msgstr ""
+msgstr "Oberer Rand"
 
 #. Translators: Message announced when already at bottom edge of the screen while panning the magnified view
 #. Translators: Message announced when already at left edge of the screen while panning the magnified view
@@ -20252,7 +20249,7 @@ msgstr ""
 #: _magnifier\commands.py:58 _magnifier\commands.py:82
 msgctxt "magnifier"
 msgid "bottom edge"
-msgstr ""
+msgstr "Unterer Rand"
 
 #. Translators: Message announced when stopping the NVDA magnifier.
 #: _magnifier\commands.py:99
@@ -20264,35 +20261,35 @@ msgstr "Vergrößerung beenden"
 #: _magnifier\commands.py:108
 msgctxt "magnifier"
 msgid "Cannot start magnifier: Screen Curtain is active. Please disable Screen Curtain first."
-msgstr ""
+msgstr "Die Vergrößerung konnte nicht gestartet werden: Der Bildschirmvorhang ist noch aktiv. Bitte deaktivieren Sie diesen zuerst."
 
 #. Translators: Message announced when starting the NVDA magnifier.
 #: _magnifier\commands.py:121
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Starting {magnifiedView} magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode"
-msgstr ""
+msgstr "Vergrößerung {magnifiedView} mit {zoomLevel} Zoom-Faktor, {filter} Filter und {fullscreenMode} Vollbildmodus gestartet"
 
 #. Translators: Message announced when starting the NVDA magnifier.
 #: _magnifier\commands.py:132
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Starting {magnifiedView} magnifier with {zoomLevel} zoom level and {filter} filter"
-msgstr ""
+msgstr "Vergrößerung {magnifiedView} mit {zoomLevel} Zoom-Faktor und {filter} Filter gestartet"
 
 #. Translators: Message announced when changing the color filter with {filter} being the new color filter.
 #: _magnifier\commands.py:196
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Color filter changed to {filter}"
-msgstr ""
+msgstr "Farbfilter geändert auf {filter}"
 
 #. Translators: Message announced when changing the magnifier view with {view} being the new magnifier view.
 #: _magnifier\commands.py:220
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Magnifier view changed to {view}"
-msgstr ""
+msgstr "Die Ansicht der Vergrößerung wurde geändert auf {view}"
 
 #. Translators: Message announced when toggling a follow setting with {setting} being the name of the setting and {state} being either "enabled" or "disabled".
 #: _magnifier\commands.py:243
@@ -20317,89 +20314,89 @@ msgstr "Ausgeschaltet"
 #: _magnifier\commands.py:273
 msgctxt "magnifier"
 msgid "All follow settings disabled"
-msgstr ""
+msgstr "Alle Einstellungen der Nachverfolgungen deaktiviert"
 
 #. Translators: State of all follow settings being restored.
 #: _magnifier\commands.py:279
 msgctxt "magnifier"
 msgid "All follow settings restored"
-msgstr ""
+msgstr "Alle Einstellungen der Nachverfolgungen wiederhergestellt"
 
 #. Translators: Message announced when changing the full-screen mode with {mode} being the new full-screen mode.
 #: _magnifier\commands.py:307
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Full-screen mode changed to {mode}"
-msgstr ""
+msgstr "Vollbildmodus geändert in {mode}"
 
 #. Translators: Message announced when trying to start spotlight mode while it's already active.
 #: _magnifier\commands.py:331
 msgctxt "magnifier"
 msgid "Spotlight mode is already active"
-msgstr ""
+msgstr "Das Licht für die Kamera ist bereits an"
 
 #. Translators: Message announced when spotlight mode is started.
 #: _magnifier\commands.py:341
 msgctxt "magnifier"
 msgid "Spotlight mode started"
-msgstr ""
+msgstr "Das Licht für die Kamera wurde eingeschaltet"
 
 #. Translators: Message announced when the magnifier is not active.
 #: _magnifier\commands.py:365
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not active."
-msgstr ""
+msgstr "Die Aktion {action} ist nicht möglich, wenn die Vergrößerung nicht aktiv ist."
 
 #. Translators: Message announced when the magnifier is not full-screen.
 #: _magnifier\commands.py:390
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not full-screen."
-msgstr ""
+msgstr "Die Aktion {action} ist nicht möglich, wenn die Vergrößerung nicht im Vollbildmodus angezeigt wird."
 
 #. Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
 #: _magnifier\config.py:49
 #, python-brace-format
 msgctxt "magnifier"
 msgid "{zoomLevel}x"
-msgstr ""
+msgstr "{zoomLevel}-fach"
 
 #. Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
-#: _magnifier\fullscreenMagnifier.py:77
+#: _magnifier\fullscreenMagnifier.py:76
 msgctxt "magnifier"
 msgid "Cannot start magnifier. Another magnifier application may already be running."
-msgstr ""
+msgstr "Die Vergrößerung konnte nicht gestartet werden. Möglicherweise ist bereits eine Anwendung einer anderen Vergrößerung aktiv."
 
 #. Translators: Message announced when the magnifier stops due to an unrecoverable error.
-#: _magnifier\fullscreenMagnifier.py:199
+#: _magnifier\fullscreenMagnifier.py:218
 msgctxt "magnifier"
 msgid "Magnifier stopped due to an error. Please restart it."
-msgstr ""
+msgstr "Die Vergrößerung wurde aufgrund eines Fehlers beendet. Bitte starten Sie sie erneut."
 
 #. Translators: Message when trying to enable magnifier while screen curtain is active
-#: _magnifier\magnifier.py:181
+#: _magnifier\magnifier.py:179
 msgctxt "magnifier"
 msgid "Cannot enable magnifier: screen curtain is active. Please disable screen curtain first."
-msgstr ""
+msgstr "Die Vergrößerung konnte nicht aktiviert werden: Der Bildschirmvorhang ist noch aktiv. Bitte deaktivieren Sie ihn zuerst."
 
 #. Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
-#: _magnifier\magnifier.py:272
+#: _magnifier\magnifier.py:268
 msgctxt "magnifier"
 msgid "Magnifier is active, disabling it before enabling screen curtain"
-msgstr ""
+msgstr "Die Vergrößerung ist noch aktiv; deaktivieren Sie sie, bevor Sie den Bildschirmvorhang aktivieren"
 
 #. Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
-#: _magnifier\magnifier.py:290
+#: _magnifier\magnifier.py:286
 msgctxt "magnifier"
 msgid "Magnifier was active before screen curtain, re-enabling it"
-msgstr ""
+msgstr "Die Vergrößerung war vor dem Bildschirmvorhang aktiv; sie wird wieder aktiviert"
 
 #. Translators: Message announced when stopping the magnifier spotlight.
 #: _magnifier\utils\spotlightManager.py:69
 msgctxt "magnifier"
 msgid "Magnifier spotlight stopped"
-msgstr ""
+msgstr "Das Licht für die Kamera wurde ausgeschaltet"
 
 #. Translators: Action description for zooming in.
 #: _magnifier\utils\types.py:60
@@ -20417,103 +20414,103 @@ msgstr "Verkleinern"
 #: _magnifier\utils\types.py:64
 msgctxt "magnifier action"
 msgid "pan left"
-msgstr ""
+msgstr "Kamera nach links bewegen"
 
 #. Translators: Action description for panning right.
 #: _magnifier\utils\types.py:66
 msgctxt "magnifier action"
 msgid "pan right"
-msgstr ""
+msgstr "Kamera nach rechts bewegen"
 
 #. Translators: Action description for panning up.
 #: _magnifier\utils\types.py:68
 msgctxt "magnifier action"
 msgid "pan up"
-msgstr ""
+msgstr "Kamera nach oben bewegen"
 
 #. Translators: Action description for panning down.
 #: _magnifier\utils\types.py:70
 msgctxt "magnifier action"
 msgid "pan down"
-msgstr ""
+msgstr "Kamera nach unten bewegen"
 
 #. Translators: Action description for panning to left edge.
 #: _magnifier\utils\types.py:72
 msgctxt "magnifier action"
 msgid "pan to left edge"
-msgstr ""
+msgstr "Kamera zum linken Rand bewegen"
 
 #. Translators: Action description for panning to right edge.
 #: _magnifier\utils\types.py:74
 msgctxt "magnifier action"
 msgid "pan to right edge"
-msgstr ""
+msgstr "Kamera zum rechten Rand bewegen"
 
 #. Translators: Action description for panning to top edge.
 #: _magnifier\utils\types.py:76
 msgctxt "magnifier action"
 msgid "pan to top edge"
-msgstr ""
+msgstr "Kamera zum oberen Rand bewegen"
 
 #. Translators: Action description for panning to bottom edge.
 #: _magnifier\utils\types.py:78
 msgctxt "magnifier action"
 msgid "pan to bottom edge"
-msgstr ""
+msgstr "Kamera zum unteren Rand bewegen"
 
 #. Translators: Action description for toggling settings.
 #: _magnifier\utils\types.py:80
 msgctxt "magnifier action"
 msgid "toggle follow settings"
-msgstr ""
+msgstr "Einstellungen der Nachverfolgung umschalten"
 
 #. Translators: Action description for toggling color filters.
 #: _magnifier\utils\types.py:82
 msgctxt "magnifier action"
 msgid "toggle filters"
-msgstr ""
+msgstr "Filter umschalten"
 
 #. Translators: Action description for changing magnifier view.
 #: _magnifier\utils\types.py:84
 msgctxt "magnifier action"
 msgid "change magnifier view"
-msgstr ""
+msgstr "Ansicht der Vergrößerung ändern"
 
 #. Translators: Action description for changing full-screen mode.
 #: _magnifier\utils\types.py:86
 msgctxt "magnifier action"
 msgid "change full-screen mode"
-msgstr ""
+msgstr "Vollbildmodus ändern"
 
 #. Translators: Action description for starting spotlight mode.
 #: _magnifier\utils\types.py:88
 msgctxt "magnifier action"
 msgid "start spotlight mode"
-msgstr ""
+msgstr "Spotlight-Modus starten"
 
 #. Translators: Focus type for magnifier to follow - mouse cursor.
 #: _magnifier\utils\types.py:104
 msgctxt "magnifier follow focus type"
 msgid "Mouse"
-msgstr ""
+msgstr "Mauszeiger"
 
 #. Translators: Focus type for magnifier to follow - system focus (active element).
 #: _magnifier\utils\types.py:106
 msgctxt "magnifier follow focus type"
 msgid "System focus"
-msgstr ""
+msgstr "System-Fokus"
 
 #. Translators: Focus type for magnifier to follow - review cursor position.
 #: _magnifier\utils\types.py:108
 msgctxt "magnifier follow focus type"
 msgid "Review cursor"
-msgstr ""
+msgstr "NVDA-Cursor"
 
 #. Translators: Focus type for magnifier to follow - navigator object position.
 #: _magnifier\utils\types.py:110
 msgctxt "magnifier follow focus type"
 msgid "Navigator object"
-msgstr ""
+msgstr "Navigator-Objekt"
 
 #. Translators: Magnifier view - full-screen mode.
 #: _magnifier\utils\types.py:126
@@ -20525,31 +20522,31 @@ msgstr "Vollbild"
 #: _magnifier\utils\types.py:128
 msgctxt "magnifier"
 msgid "Fixed"
-msgstr ""
+msgstr "Fixiert"
 
 #. Translators: Magnifier view - docked mode.
 #: _magnifier\utils\types.py:130
 msgctxt "magnifier"
 msgid "Docked"
-msgstr ""
+msgstr "Angeheftet"
 
 #. Translators: Magnifier view - lens mode.
 #: _magnifier\utils\types.py:132
 msgctxt "magnifier"
 msgid "Lens"
-msgstr ""
+msgstr "Linse"
 
 #. Translators: Magnifier focus mode - center mouse/focus on screen.
 #: _magnifier\utils\types.py:159
 msgctxt "magnifier"
 msgid "Center"
-msgstr ""
+msgstr "Zentriert"
 
 #. Translators: Magnifier focus mode - follow focus at screen borders.
 #: _magnifier\utils\types.py:161
 msgctxt "magnifier"
 msgid "Border"
-msgstr ""
+msgstr "Rahmen"
 
 #. Translators: Magnifier focus mode - maintain relative position.
 #: _magnifier\utils\types.py:163
