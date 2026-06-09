@@ -10,7 +10,7 @@ from collections import OrderedDict
 from functools import cached_property
 from typing import Self
 
-from utils._deprecate import handleDeprecations, MovedSymbol
+from utils._deprecate import handleDeprecations, MovedSymbol, RemovedSymbol
 
 from utils.displayString import DisplayStringStrEnum
 
@@ -101,36 +101,28 @@ class TouchAction(DisplayStringStrEnum):
 		}
 
 
-# Module-level aliases kept for internal use and backwards compatibility with add-ons.
-action_tap = TouchAction.TAP
-action_hold = TouchAction.HOLD
-action_tapAndHold = TouchAction.TAP_AND_HOLD
-action_flickUp = TouchAction.FLICK_UP
-action_flickDown = TouchAction.FLICK_DOWN
-action_flickLeft = TouchAction.FLICK_LEFT
-action_flickRight = TouchAction.FLICK_RIGHT
-action_hoverDown = TouchAction.HOVER_DOWN
-action_hover = TouchAction.HOVER
-action_hoverUp = TouchAction.HOVER_UP
-action_unknown = TouchAction.UNKNOWN
-hoverActions = (action_hoverDown, action_hover, action_hoverUp)
-action_pinchIn = TouchAction.PINCH_IN
-action_pinchOut = TouchAction.PINCH_OUT
-action_flickRightThenLeft = TouchAction.FLICK_RIGHT_THEN_LEFT
-action_flickLeftThenRight = TouchAction.FLICK_LEFT_THEN_RIGHT
-action_flickUpThenDown = TouchAction.FLICK_UP_THEN_DOWN
-action_flickDownThenUp = TouchAction.FLICK_DOWN_THEN_UP
-action_flickRightThenUp = TouchAction.FLICK_RIGHT_THEN_UP
-action_flickRightThenDown = TouchAction.FLICK_RIGHT_THEN_DOWN
-action_flickLeftThenUp = TouchAction.FLICK_LEFT_THEN_UP
-action_flickLeftThenDown = TouchAction.FLICK_LEFT_THEN_DOWN
-action_flickUpThenRight = TouchAction.FLICK_UP_THEN_RIGHT
-action_flickUpThenLeft = TouchAction.FLICK_UP_THEN_LEFT
-action_flickDownThenRight = TouchAction.FLICK_DOWN_THEN_RIGHT
-action_flickDownThenLeft = TouchAction.FLICK_DOWN_THEN_LEFT
+hoverActions = (TouchAction.HOVER_DOWN, TouchAction.HOVER, TouchAction.HOVER_UP)
 
 __getattr__ = handleDeprecations(
-	MovedSymbol("actionLabels", "touchTracker", "TouchAction"),
+	MovedSymbol("action_tap", "touchTracker", "TouchAction", "TAP"),
+	MovedSymbol("action_hold", "touchTracker", "TouchAction", "HOLD"),
+	MovedSymbol("action_tapAndHold", "touchTracker", "TouchAction", "TAP_AND_HOLD"),
+	MovedSymbol("action_flickUp", "touchTracker", "TouchAction", "FLICK_UP"),
+	MovedSymbol("action_flickDown", "touchTracker", "TouchAction", "FLICK_DOWN"),
+	MovedSymbol("action_flickLeft", "touchTracker", "TouchAction", "FLICK_LEFT"),
+	MovedSymbol("action_flickRight", "touchTracker", "TouchAction", "FLICK_RIGHT"),
+	MovedSymbol("action_hoverDown", "touchTracker", "TouchAction", "HOVER_DOWN"),
+	MovedSymbol("action_hover", "touchTracker", "TouchAction", "HOVER"),
+	MovedSymbol("action_hoverUp", "touchTracker", "TouchAction", "HOVER_UP"),
+	MovedSymbol("action_unknown", "touchTracker", "TouchAction", "UNKNOWN"),
+	MovedSymbol("action_pinchIn", "touchTracker", "TouchAction", "PINCH_IN"),
+	MovedSymbol("action_pinchOut", "touchTracker", "TouchAction", "PINCH_OUT"),
+	RemovedSymbol(
+		"actionLabels",
+		lambda: {a: a.displayString for a in TouchAction},
+		callValue=True,
+		message="Use TouchAction(value).displayString instead.",
+	),
 )
 """Module level ``__getattr__`` used to preserve backward compatibility."""
 # timeout for detection of flicks and plural trackers
@@ -178,7 +170,7 @@ class SingleTouchTracker(object):
 	@type maxAbsDeltaX: int
 	@ivar maxAbsDeltaY: the maximum distance this finger has traveled on the y access while making contact
 	@type maxAbsDeltaY: int
-	@ivar action: the action this finger has performed (one of the action_* constants,E.g. tap, flickRight, hover etc). If not enough data has been collected yet the action will be unknown.
+	@ivar action: the action this finger has performed (a L{TouchAction} value, e.g. TouchAction.TAP, TouchAction.FLICK_RIGHT, TouchAction.HOVER etc). If not enough data has been collected yet the action will be TouchAction.UNKNOWN.
 	@type action: string
 	@ivar complete: If true then this finger has broken contact
 	@type complete: bool
@@ -209,7 +201,7 @@ class SingleTouchTracker(object):
 		self.endTime = -1
 		self.maxAbsDeltaX = 0
 		self.maxAbsDeltaY = 0
-		self.action = action_unknown
+		self.action = TouchAction.UNKNOWN
 		self.complete = False
 		self._samples: list[tuple[int, int, float]] = []
 
@@ -236,7 +228,7 @@ class SingleTouchTracker(object):
 			if complete:
 				if self.maxAbsDeltaX < maxAccidentalDrift and self.maxAbsDeltaY < maxAccidentalDrift:
 					# The completed quick touch never drifted too far from its initial contact point therefore its a tap
-					self.action = action_tap
+					self.action = TouchAction.TAP
 				else:
 					vx, vy = self.getVelocity()
 					speed = math.hypot(vx, vy)
@@ -247,11 +239,11 @@ class SingleTouchTracker(object):
 						# Use velocity direction rather than total displacement direction,
 						# so late-stroke direction changes are reflected correctly.
 						if abs(vx) >= abs(vy):
-							self.action = action_flickRight if vx > 0 else action_flickLeft
+							self.action = TouchAction.FLICK_RIGHT if vx > 0 else TouchAction.FLICK_LEFT
 						else:
-							self.action = action_flickDown if vy > 0 else action_flickUp
+							self.action = TouchAction.FLICK_DOWN if vy > 0 else TouchAction.FLICK_UP
 		else:  # timeout exceeded, must be a kind of hover
-			self.action = action_hover
+			self.action = TouchAction.HOVER
 		self.complete = complete
 		if complete:
 			self.endTime = curTime
@@ -312,7 +304,7 @@ class MultiTouchTracker:
 		"""Represents an action jointly performed by 1 or more fingers.
 
 		:param action: the action this finger has performed.
-		One of the action_* constants, e.g. tap, flickRight, hover etc.
+		A L{TouchAction} value, e.g. TouchAction.TAP, TouchAction.FLICK_RIGHT, TouchAction.HOVER etc.
 		:param x: the x screen coordinate where the action was performed.
 		For multi-finger actions it is the average position of each of the fingers.
 		For plural actions it is based on the first occurrence
@@ -344,7 +336,7 @@ class MultiTouchTracker:
 		"""
 		self.rawSingleTouchTracker = rawSingleTouchTracker
 		# We only allow pluralizing of taps, no other action.
-		if pluralTimeout is None and action == action_tap:
+		if pluralTimeout is None and action == TouchAction.TAP:
 			pluralTimeout = startTime + multitouchTimeout
 		self.pluralTimeout = pluralTimeout
 
@@ -396,9 +388,9 @@ class TrackerManager(object):
 
 	def makePreheldTrackerFromSingleTouchTrackers(self, trackers):
 		childTrackers = [
-			MultiTouchTracker(action_hold, tracker.x, tracker.y, tracker.startTime, time.time())
+			MultiTouchTracker(TouchAction.HOLD, tracker.x, tracker.y, tracker.startTime, time.time())
 			for tracker in trackers
-			if tracker.action == action_hover
+			if tracker.action == TouchAction.HOVER
 		]
 		numFingers = len(childTrackers)
 		if numFingers == 0:
@@ -408,7 +400,7 @@ class TrackerManager(object):
 		avgX: int = sum(t.x for t in childTrackers) // numFingers
 		avgY: int = sum(t.y for t in childTrackers) // numFingers
 		tracker = MultiTouchTracker(
-			action_hold,
+			TouchAction.HOLD,
 			avgX,
 			avgY,
 			childTrackers[0].startTime,
@@ -419,8 +411,10 @@ class TrackerManager(object):
 		return tracker
 
 	def makePreheldTrackerForTracker(self, tracker):
-		curHoverSet = {x for x in self.singleTouchTrackersByID.values() if x.action == action_hover}
-		excludeHoverSet = {x for x in tracker.iterAllRawSingleTouchTrackers() if x.action == action_hover}
+		curHoverSet = {x for x in self.singleTouchTrackersByID.values() if x.action == TouchAction.HOVER}
+		excludeHoverSet = {
+			x for x in tracker.iterAllRawSingleTouchTrackers() if x.action == TouchAction.HOVER
+		}
 		return self.makePreheldTrackerFromSingleTouchTrackers(curHoverSet - excludeHoverSet)
 
 	def update(self, ID, x, y, complete=False):
@@ -443,14 +437,14 @@ class TrackerManager(object):
 			oldAction = tracker.action
 			tracker.update(x, y, complete)
 			newAction = tracker.action
-			if oldAction == action_unknown and newAction != action_unknown:
+			if oldAction == TouchAction.UNKNOWN and newAction != TouchAction.UNKNOWN:
 				self.numUnknownTrackers -= 1
 			if complete:  # This finger has broken contact
 				# Record final position before deletion for pinch distance calculation
 				self._pinchLastPositions[ID] = (tracker.x, tracker.y)
 				# Forget about this finger
 				del self.singleTouchTrackersByID[ID]
-				if tracker.action == action_unknown:
+				if tracker.action == TouchAction.UNKNOWN:
 					self.numUnknownTrackers -= 1
 			# Update pinch tracking whenever any finger moves or lifts
 			self._updatePinch(complete)
@@ -459,10 +453,10 @@ class TrackerManager(object):
 			if not complete:
 				self._checkContinuousFlick(tracker)
 			# if the action changed and its not unknown, then we will be queuing it
-			if newAction != oldAction and newAction != action_unknown:
-				if newAction == action_hover:
+			if newAction != oldAction and newAction != TouchAction.UNKNOWN:
+				if newAction == TouchAction.HOVER:
 					# New hovers must be queued as holds
-					newAction = action_hold
+					newAction = TouchAction.HOLD
 				# for most  gestures the start coordinates are what we want to emit with trackers
 				# But hovers should always use their current coordinates
 				x, y = (
@@ -511,7 +505,7 @@ class TrackerManager(object):
 				)
 				distChange = finalDist - self._pinchStartDistance
 				if abs(distChange) >= minPinchDistance:
-					pinchAction = action_pinchOut if distChange > 0 else action_pinchIn
+					pinchAction = TouchAction.PINCH_OUT if distChange > 0 else TouchAction.PINCH_IN
 					self.processAndQueueMultiTouchTracker(
 						MultiTouchTracker(
 							pinchAction,
@@ -548,9 +542,9 @@ class TrackerManager(object):
 		if absPeakDeltaX < minFlickDistance and absPeakDeltaY < minFlickDistance:
 			return  # hasn't built up enough displacement for a first flick yet
 		if absPeakDeltaX >= absPeakDeltaY:
-			firstAction = action_flickRight if peakDeltaX > 0 else action_flickLeft
+			firstAction = TouchAction.FLICK_RIGHT if peakDeltaX > 0 else TouchAction.FLICK_LEFT
 		else:
-			firstAction = action_flickDown if peakDeltaY > 0 else action_flickUp
+			firstAction = TouchAction.FLICK_DOWN if peakDeltaY > 0 else TouchAction.FLICK_UP
 		# Check how far the finger has traveled from the peak in any direction
 		if (
 			abs(tracker.x - tracker.peakX) < minFlickDistance
@@ -577,8 +571,8 @@ class TrackerManager(object):
 		tracker.maxAbsDeltaY = 0
 		tracker.peakX = tracker.x
 		tracker.peakY = tracker.y
-		if tracker.action != action_unknown:
-			tracker.action = action_unknown
+		if tracker.action != TouchAction.UNKNOWN:
+			tracker.action = TouchAction.UNKNOWN
 			self.numUnknownTrackers += 1
 
 	def makeMergedTrackerIfPossible(self, oldTracker, newTracker):
@@ -639,14 +633,14 @@ class TrackerManager(object):
 			) if newTracker.actionCount > 1 else mergedTracker.childTrackers.append(newTracker)
 		elif (
 			self.numUnknownTrackers == 0
-			and newTracker.action == action_hold
-			and oldTracker.action == action_tap
+			and newTracker.action == TouchAction.HOLD
+			and oldTracker.action == TouchAction.TAP
 			and newTracker.numFingers == oldTracker.numFingers
 			and newTracker.startTime > oldTracker.endTime
 		):
 			# A tap and then a hover down  is a tapAndHold
 			mergedTracker = MultiTouchTracker(
-				action_tapAndHold,
+				TouchAction.TAP_AND_HOLD,
 				oldTracker.x,
 				oldTracker.y,
 				oldTracker.startTime,
@@ -695,7 +689,7 @@ class TrackerManager(object):
 				if singleTouchTracker.complete:
 					self.curHoverStack.remove(singleTouchTracker)
 					tracker = MultiTouchTracker(
-						action_hoverUp,
+						TouchAction.HOVER_UP,
 						singleTouchTracker.x,
 						singleTouchTracker.y,
 						singleTouchTracker.startTime,
@@ -713,13 +707,13 @@ class TrackerManager(object):
 					if trackerTimeout <= 0:
 						self.multiTouchTrackers.remove(tracker)
 						# isolated holds should not be emitted as they are covered by hover downs later
-						if tracker.action == action_hold:
+						if tracker.action == TouchAction.HOLD:
 							continue
 						preheldTracker = self.makePreheldTrackerFromSingleTouchTrackers(self.curHoverStack)
 						# If this tracker was made up of any new hovers (e.g. a tapAndHold) they should be quietly added to the current hover stack so that hover downs are not produced
 						for singleTouchTracker in tracker.iterAllRawSingleTouchTrackers():
 							if (
-								singleTouchTracker.action == action_hover
+								singleTouchTracker.action == TouchAction.HOVER
 								and singleTouchTracker not in self.curHoverStack
 							):
 								self.curHoverStack.append(singleTouchTracker)
@@ -735,12 +729,12 @@ class TrackerManager(object):
 			if len(self.multiTouchTrackers) == 0:
 				for singleTouchTracker in self.singleTouchTrackersByID.values():
 					if (
-						singleTouchTracker.action == action_hover
+						singleTouchTracker.action == TouchAction.HOVER
 						and singleTouchTracker not in self.curHoverStack
 					):
 						self.curHoverStack.append(singleTouchTracker)
 						tracker = MultiTouchTracker(
-							action_hoverDown,
+							TouchAction.HOVER_DOWN,
 							singleTouchTracker.x,
 							singleTouchTracker.y,
 							singleTouchTracker.startTime,
@@ -754,7 +748,7 @@ class TrackerManager(object):
 			if len(self.curHoverStack) > 0:
 				singleTouchTracker = self.curHoverStack[-1]
 				tracker = MultiTouchTracker(
-					action_hover,
+					TouchAction.HOVER,
 					singleTouchTracker.x,
 					singleTouchTracker.y,
 					singleTouchTracker.startTime,

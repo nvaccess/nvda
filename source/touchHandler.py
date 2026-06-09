@@ -49,6 +49,7 @@ import inputCore
 import screenExplorer
 from logHandler import log
 import touchTracker
+from touchTracker import TouchAction
 import core
 import systemUtils
 from utils import _deprecate
@@ -191,68 +192,68 @@ touchWindow = None
 touchThread = None
 
 
-_flickActions: frozenset[touchTracker.TouchAction] = frozenset(
+_flickActions: frozenset[TouchAction] = frozenset(
 	{
-		touchTracker.TouchAction.FLICK_RIGHT,
-		touchTracker.TouchAction.FLICK_LEFT,
-		touchTracker.TouchAction.FLICK_UP,
-		touchTracker.TouchAction.FLICK_DOWN,
+		TouchAction.FLICK_RIGHT,
+		TouchAction.FLICK_LEFT,
+		TouchAction.FLICK_UP,
+		TouchAction.FLICK_DOWN,
 	},
 )
 """The set of single-direction flick actions that can begin a sequential flick gesture."""
 
 _flickSequenceMap: dict[
-	tuple[touchTracker.TouchAction, touchTracker.TouchAction],
-	touchTracker.TouchAction,
+	tuple[TouchAction, TouchAction],
+	TouchAction,
 ] = {
 	(
-		touchTracker.TouchAction.FLICK_RIGHT,
-		touchTracker.TouchAction.FLICK_LEFT,
-	): touchTracker.TouchAction.FLICK_RIGHT_THEN_LEFT,
+		TouchAction.FLICK_RIGHT,
+		TouchAction.FLICK_LEFT,
+	): TouchAction.FLICK_RIGHT_THEN_LEFT,
 	(
-		touchTracker.TouchAction.FLICK_LEFT,
-		touchTracker.TouchAction.FLICK_RIGHT,
-	): touchTracker.TouchAction.FLICK_LEFT_THEN_RIGHT,
+		TouchAction.FLICK_LEFT,
+		TouchAction.FLICK_RIGHT,
+	): TouchAction.FLICK_LEFT_THEN_RIGHT,
 	(
-		touchTracker.TouchAction.FLICK_UP,
-		touchTracker.TouchAction.FLICK_DOWN,
-	): touchTracker.TouchAction.FLICK_UP_THEN_DOWN,
+		TouchAction.FLICK_UP,
+		TouchAction.FLICK_DOWN,
+	): TouchAction.FLICK_UP_THEN_DOWN,
 	(
-		touchTracker.TouchAction.FLICK_DOWN,
-		touchTracker.TouchAction.FLICK_UP,
-	): touchTracker.TouchAction.FLICK_DOWN_THEN_UP,
+		TouchAction.FLICK_DOWN,
+		TouchAction.FLICK_UP,
+	): TouchAction.FLICK_DOWN_THEN_UP,
 	(
-		touchTracker.TouchAction.FLICK_RIGHT,
-		touchTracker.TouchAction.FLICK_UP,
-	): touchTracker.TouchAction.FLICK_RIGHT_THEN_UP,
+		TouchAction.FLICK_RIGHT,
+		TouchAction.FLICK_UP,
+	): TouchAction.FLICK_RIGHT_THEN_UP,
 	(
-		touchTracker.TouchAction.FLICK_RIGHT,
-		touchTracker.TouchAction.FLICK_DOWN,
-	): touchTracker.TouchAction.FLICK_RIGHT_THEN_DOWN,
+		TouchAction.FLICK_RIGHT,
+		TouchAction.FLICK_DOWN,
+	): TouchAction.FLICK_RIGHT_THEN_DOWN,
 	(
-		touchTracker.TouchAction.FLICK_LEFT,
-		touchTracker.TouchAction.FLICK_UP,
-	): touchTracker.TouchAction.FLICK_LEFT_THEN_UP,
+		TouchAction.FLICK_LEFT,
+		TouchAction.FLICK_UP,
+	): TouchAction.FLICK_LEFT_THEN_UP,
 	(
-		touchTracker.TouchAction.FLICK_LEFT,
-		touchTracker.TouchAction.FLICK_DOWN,
-	): touchTracker.TouchAction.FLICK_LEFT_THEN_DOWN,
+		TouchAction.FLICK_LEFT,
+		TouchAction.FLICK_DOWN,
+	): TouchAction.FLICK_LEFT_THEN_DOWN,
 	(
-		touchTracker.TouchAction.FLICK_UP,
-		touchTracker.TouchAction.FLICK_RIGHT,
-	): touchTracker.TouchAction.FLICK_UP_THEN_RIGHT,
+		TouchAction.FLICK_UP,
+		TouchAction.FLICK_RIGHT,
+	): TouchAction.FLICK_UP_THEN_RIGHT,
 	(
-		touchTracker.TouchAction.FLICK_UP,
-		touchTracker.TouchAction.FLICK_LEFT,
-	): touchTracker.TouchAction.FLICK_UP_THEN_LEFT,
+		TouchAction.FLICK_UP,
+		TouchAction.FLICK_LEFT,
+	): TouchAction.FLICK_UP_THEN_LEFT,
 	(
-		touchTracker.TouchAction.FLICK_DOWN,
-		touchTracker.TouchAction.FLICK_RIGHT,
-	): touchTracker.TouchAction.FLICK_DOWN_THEN_RIGHT,
+		TouchAction.FLICK_DOWN,
+		TouchAction.FLICK_RIGHT,
+	): TouchAction.FLICK_DOWN_THEN_RIGHT,
 	(
-		touchTracker.TouchAction.FLICK_DOWN,
-		touchTracker.TouchAction.FLICK_LEFT,
-	): touchTracker.TouchAction.FLICK_DOWN_THEN_LEFT,
+		TouchAction.FLICK_DOWN,
+		TouchAction.FLICK_LEFT,
+	): TouchAction.FLICK_DOWN_THEN_LEFT,
 }
 """Maps (firstFlickAction, secondFlickAction) to the corresponding sequential flick action."""
 
@@ -291,12 +292,12 @@ class TouchInputGesture(inputCore.InputGesture):
 	}
 
 	def _get_speechEffectWhenExecuted(self):
-		if self.tracker.action in (touchTracker.TouchAction.HOVER, touchTracker.TouchAction.HOVER_UP):
+		if self.tracker.action in (TouchAction.HOVER, TouchAction.HOVER_UP):
 			return None
 		return super(TouchInputGesture, self).speechEffectWhenExecuted
 
 	def _get_reportInInputHelp(self):
-		return self.tracker.action != touchTracker.TouchAction.HOVER
+		return self.tracker.action != TouchAction.HOVER
 
 	def __init__(self, preheldTracker, tracker, mode):
 		super(TouchInputGesture, self).__init__()
@@ -333,7 +334,7 @@ class TouchInputGesture(inputCore.InputGesture):
 			foundAction = foundPlural = False
 			for subID in reversed(ID.split("_")):
 				if not foundAction:
-					action = touchTracker.TouchAction(subID).displayString
+					action = TouchAction(subID).displayString
 					foundAction = True
 					continue
 				if not foundPlural:
@@ -363,7 +364,7 @@ class TouchInputGesture(inputCore.InputGesture):
 		# Because touch may produce a hover gesture for every pump, an immediate pump
 		# can result in exhaustion of the window message queue. Thus, don't do
 		# immediate pumps for hover gestures.
-		return not self.tracker.action == touchTracker.TouchAction.HOVER
+		return not self.tracker.action == TouchAction.HOVER
 
 
 inputCore.registerGestureSource("ts", TouchInputGesture)
