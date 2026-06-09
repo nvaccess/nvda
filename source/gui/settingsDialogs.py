@@ -6057,8 +6057,8 @@ class MagnifierPanel(SettingsPanel):
 		magnifierConfig.setFullscreenMode(selectedMode)
 		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterTrackingCheckBox
 
-		for focusType, checkBox in self._trackingTypeCheckBoxes.items():
-			magnifierConfig.setFollowState(focusType, checkBox.GetValue())
+		for trackingType, checkBox in self._trackingTypeCheckBoxes.items():
+			magnifierConfig.setFollowState(trackingType, checkBox.GetValue())
 
 		magnifier = getMagnifier()
 		if magnifier:
@@ -6259,9 +6259,9 @@ class MagnifierPanel(SettingsPanel):
 		self._filterInitially = selectedFilter
 		self._fullscreenModeInitially = selectedMode
 		self._trueCenterTrackingInitially = isTrueCentered
-		for focusType, checkBox in self._trackingTypeCheckBoxes.items():
+		for trackingType, checkBox in self._trackingTypeCheckBoxes.items():
 			shouldFollow = checkBox.GetValue()
-			self._trackingTypeInitially[focusType] = shouldFollow
+			self._trackingTypeInitially[trackingType] = shouldFollow
 
 	def onDiscard(self):
 		"""Restore magnifier state from original settings from config."""
@@ -6270,8 +6270,8 @@ class MagnifierPanel(SettingsPanel):
 		magnifierConfig.setFilter(self._filterInitially)
 		magnifierConfig.setFullscreenMode(self._fullscreenModeInitially)
 		config.conf["magnifier"]["isTrueCentered"] = self._trueCenterTrackingInitially
-		for focusType, state in self._trackingTypeInitially.items():
-			magnifierConfig.setFollowState(focusType, state)
+		for trackingType, state in self._trackingTypeInitially.items():
+			magnifierConfig.setFollowState(trackingType, state)
 
 		magnifier = getMagnifier()
 		if magnifier:
