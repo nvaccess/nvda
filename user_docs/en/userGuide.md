@@ -2870,6 +2870,8 @@ All the options of this category have immediate effect on the magnifier but pres
 
 This settings category contains the following options:
 
+<!-- KC:setting -->
+
 ##### Enable Magnifier {#MagnifierEnable}
 
 Key: `NVDA+shift+w`
@@ -2893,6 +2895,8 @@ You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+e
 |---|---|
 | Options | 100% to 5000% |
 | Default | 200% |
+
+<!-- KC:setting -->
 
 ##### Color filter {#MagnifierFilter}
 
