@@ -89,7 +89,7 @@ class MagnifierAction(DisplayStringEnum):
 		}
 
 
-class MagnifierFollowFocusType(DisplayStringEnum):
+class MagnifierTrackingType(DisplayStringEnum):
 	"""Type of focus the magnifier should follow based on user settings"""
 
 	MOUSE = auto()
@@ -98,7 +98,7 @@ class MagnifierFollowFocusType(DisplayStringEnum):
 	NAVIGATOR_OBJECT = auto()
 
 	@property
-	def _displayStringLabels(self) -> dict["MagnifierFollowFocusType", str]:
+	def _displayStringLabels(self) -> dict["MagnifierTrackingType", str]:
 		return {
 			# Translators: Focus type for magnifier to follow - mouse cursor.
 			self.MOUSE: pgettext("magnifier follow focus type", "Mouse"),

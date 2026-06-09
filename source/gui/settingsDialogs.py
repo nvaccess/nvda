@@ -42,7 +42,7 @@ import logHandler
 from _magnifier import getMagnifier
 from _magnifier.commands import toggleMagnifier
 import _magnifier.config as magnifierConfig
-from _magnifier.utils.types import Filter, FullScreenMode, MagnifierFollowFocusType
+from _magnifier.utils.types import Filter, FullScreenMode, MagnifierTrackingType
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 import queueHandler
 import requests
@@ -6188,21 +6188,21 @@ class MagnifierPanel(SettingsPanel):
 		trackingGroup = guiHelper.BoxSizerHelper(trackingGroupBox, sizer=trackingGroupSizer)
 		sHelper.addItem(trackingGroup)
 
-		_trackingTypeLabels: dict[MagnifierFollowFocusType, tuple[str, str]] = {
+		_trackingTypeLabels: dict[MagnifierTrackingType, tuple[str, str]] = {
 			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the mouse
-			MagnifierFollowFocusType.MOUSE: (_("Follow &mouse"), "MagnifierFollowMouse"),
+			MagnifierTrackingType.MOUSE: (_("Follow &mouse"), "MagnifierFollowMouse"),
 			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
-			MagnifierFollowFocusType.SYSTEM_FOCUS: (_("Follow &system focus"), "MagnifierFollowSystemFocus"),
+			MagnifierTrackingType.SYSTEM_FOCUS: (_("Follow &system focus"), "MagnifierFollowSystemFocus"),
 			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the review cursor
-			MagnifierFollowFocusType.REVIEW: (_("Follow &review cursor"), "MagnifierFollowReviewCursor"),
-			MagnifierFollowFocusType.NAVIGATOR_OBJECT: (
+			MagnifierTrackingType.REVIEW: (_("Follow &review cursor"), "MagnifierFollowReviewCursor"),
+			MagnifierTrackingType.NAVIGATOR_OBJECT: (
 				# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the navigator object
 				_("Follow &navigator object"),
 				"MagnifierFollowNavigatorObject",
 			),
 		}
-		self._trackingTypeCheckBoxes: dict[MagnifierFollowFocusType, wx.CheckBox] = {}
-		self._trackingTypeInitially: dict[MagnifierFollowFocusType, bool] = {}
+		self._trackingTypeCheckBoxes: dict[MagnifierTrackingType, wx.CheckBox] = {}
+		self._trackingTypeInitially: dict[MagnifierTrackingType, bool] = {}
 		for trackingType, (label, helpId) in _trackingTypeLabels.items():
 			checkBox = trackingGroup.addItem(wx.CheckBox(trackingGroupBox, label=label))
 			self.bindHelpEvent(helpId, checkBox)

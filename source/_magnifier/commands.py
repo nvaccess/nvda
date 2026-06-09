@@ -28,7 +28,7 @@ from .utils.types import (
 	MagnifiedView,
 	FullScreenMode,
 	MagnifierAction,
-	MagnifierFollowFocusType,
+	MagnifierTrackingType,
 )
 from logHandler import log
 
@@ -199,7 +199,7 @@ def cycleMagnifiedView() -> None:
 		)
 
 
-def toggleFollow(focusType: MagnifierFollowFocusType) -> None:
+def toggleFollow(focusType: MagnifierTrackingType) -> None:
 	"""
 	Toggle the specified follow mode setting.
 

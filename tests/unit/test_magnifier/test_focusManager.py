@@ -1,11 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from dataclasses import dataclass
 from _magnifier.utils.focusManager import FocusManager
-from _magnifier.utils.types import Coordinates, MagnifierFollowFocusType
+from _magnifier.utils.types import Coordinates, MagnifierTrackingType
 import unittest
 from unittest.mock import MagicMock, Mock, patch
 import _ctypes
@@ -19,10 +19,10 @@ def _makeFollowStateSideEffect(
 ):
 	"""Return a side_effect function for patching getFollowState."""
 	states = {
-		MagnifierFollowFocusType.MOUSE: followMouse,
-		MagnifierFollowFocusType.SYSTEM_FOCUS: followSystemFocus,
-		MagnifierFollowFocusType.REVIEW: followReview,
-		MagnifierFollowFocusType.NAVIGATOR_OBJECT: followNavigatorObject,
+		MagnifierTrackingType.MOUSE: followMouse,
+		MagnifierTrackingType.SYSTEM_FOCUS: followSystemFocus,
+		MagnifierTrackingType.REVIEW: followReview,
+		MagnifierTrackingType.NAVIGATOR_OBJECT: followNavigatorObject,
 	}
 	return states.__getitem__
 
@@ -36,9 +36,9 @@ class FocusTestParam:
 	mousePos: tuple
 	leftPressed: bool
 	expectedCoords: Coordinates
-	expectedFocus: MagnifierFollowFocusType | None
+	expectedFocus: MagnifierTrackingType | None
 	description: str = ""
-	lastFocusedObject: MagnifierFollowFocusType | None = None
+	lastFocusedObject: MagnifierTrackingType | None = None
 	reviewPos: Coordinates | None = None
 	followMouse: bool = True
 	followSystemFocus: bool = True
@@ -184,7 +184,7 @@ class TestFocusManager(unittest.TestCase):
 				mousePos=Coordinates(0, 0),
 				leftPressed=True,
 				expectedCoords=Coordinates(0, 0),
-				expectedFocus=MagnifierFollowFocusType.MOUSE,
+				expectedFocus=MagnifierTrackingType.MOUSE,
 				description="Left click is pressed should return mouse position",
 			),
 			FocusTestParam(
@@ -193,7 +193,7 @@ class TestFocusManager(unittest.TestCase):
 				mousePos=Coordinates(10, 10),
 				leftPressed=False,
 				expectedCoords=Coordinates(10, 10),
-				expectedFocus=MagnifierFollowFocusType.MOUSE,
+				expectedFocus=MagnifierTrackingType.MOUSE,
 				description="Mouse moving (not dragging)",
 			),
 			FocusTestParam(
@@ -202,7 +202,7 @@ class TestFocusManager(unittest.TestCase):
 				mousePos=Coordinates(0, 0),
 				leftPressed=False,
 				expectedCoords=Coordinates(15, 15),
-				expectedFocus=MagnifierFollowFocusType.SYSTEM_FOCUS,
+				expectedFocus=MagnifierTrackingType.SYSTEM_FOCUS,
 				description="System focus changed alone (navigator did not move)",
 			),
 			FocusTestParam(
@@ -211,7 +211,7 @@ class TestFocusManager(unittest.TestCase):
 				mousePos=Coordinates(0, 0),
 				leftPressed=False,
 				expectedCoords=Coordinates(20, 20),
-				expectedFocus=MagnifierFollowFocusType.NAVIGATOR_OBJECT,
+				expectedFocus=MagnifierTrackingType.NAVIGATOR_OBJECT,
 				description="Navigator object changed (NumPad navigation)",
 			),
 			FocusTestParam(
@@ -220,7 +220,7 @@ class TestFocusManager(unittest.TestCase):
 				mousePos=Coordinates(0, 0),
 				leftPressed=False,
 				expectedCoords=Coordinates(30, 30),
-				expectedFocus=MagnifierFollowFocusType.NAVIGATOR_OBJECT,
+				expectedFocus=MagnifierTrackingType.NAVIGATOR_OBJECT,
 				description="Both system focus and navigator changed (table cell navigation): navigator wins",
 			),
 			FocusTestParam(
@@ -230,7 +230,7 @@ class TestFocusManager(unittest.TestCase):
 				leftPressed=False,
 				reviewPos=Coordinates(30, 30),
 				expectedCoords=Coordinates(30, 30),
-				expectedFocus=MagnifierFollowFocusType.REVIEW,
+				expectedFocus=MagnifierTrackingType.REVIEW,
 				description="Review cursor changed with followReview enabled",
 			),
 			FocusTestParam(
@@ -240,7 +240,7 @@ class TestFocusManager(unittest.TestCase):
 				leftPressed=False,
 				reviewPos=Coordinates(30, 30),
 				expectedCoords=Coordinates(30, 30),
-				expectedFocus=MagnifierFollowFocusType.REVIEW,
+				expectedFocus=MagnifierTrackingType.REVIEW,
 				description="Review has higher priority than navigator",
 			),
 			FocusTestParam(
@@ -251,7 +251,7 @@ class TestFocusManager(unittest.TestCase):
 				reviewPos=Coordinates(30, 30),
 				followReview=False,
 				expectedCoords=Coordinates(20, 20),
-				expectedFocus=MagnifierFollowFocusType.NAVIGATOR_OBJECT,
+				expectedFocus=MagnifierTrackingType.NAVIGATOR_OBJECT,
 				description="Review cursor ignored when followReview=False",
 			),
 			FocusTestParam(
@@ -260,9 +260,9 @@ class TestFocusManager(unittest.TestCase):
 				mousePos=Coordinates(0, 0),
 				leftPressed=False,
 				expectedCoords=Coordinates(0, 0),
-				expectedFocus=MagnifierFollowFocusType.MOUSE,
+				expectedFocus=MagnifierTrackingType.MOUSE,
 				description="Nothing changed, last was Mouse",
-				lastFocusedObject=MagnifierFollowFocusType.MOUSE,
+				lastFocusedObject=MagnifierTrackingType.MOUSE,
 			),
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(0, 0),
@@ -270,9 +270,9 @@ class TestFocusManager(unittest.TestCase):
 				mousePos=(0, 0),
 				leftPressed=False,
 				expectedCoords=Coordinates(0, 0),
-				expectedFocus=MagnifierFollowFocusType.NAVIGATOR_OBJECT,
+				expectedFocus=MagnifierTrackingType.NAVIGATOR_OBJECT,
 				description="Nothing changed, last was NAVIGATOR",
-				lastFocusedObject=MagnifierFollowFocusType.NAVIGATOR_OBJECT,
+				lastFocusedObject=MagnifierTrackingType.NAVIGATOR_OBJECT,
 			),
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(0, 0),
@@ -281,9 +281,9 @@ class TestFocusManager(unittest.TestCase):
 				leftPressed=False,
 				reviewPos=Coordinates(30, 30),
 				expectedCoords=Coordinates(30, 30),
-				expectedFocus=MagnifierFollowFocusType.REVIEW,
+				expectedFocus=MagnifierTrackingType.REVIEW,
 				description="Nothing changed, last was REVIEW - returns current review position",
-				lastFocusedObject=MagnifierFollowFocusType.REVIEW,
+				lastFocusedObject=MagnifierTrackingType.REVIEW,
 			),
 			FocusTestParam(
 				navigatorObjectPos=Coordinates(10, 10),
@@ -291,7 +291,7 @@ class TestFocusManager(unittest.TestCase):
 				mousePos=Coordinates(20, 20),
 				leftPressed=False,
 				expectedCoords=Coordinates(20, 20),
-				expectedFocus=MagnifierFollowFocusType.MOUSE,
+				expectedFocus=MagnifierTrackingType.MOUSE,
 				description="Both mouse and navigator object moved (mouse has priority)",
 			),
 			FocusTestParam(
@@ -300,7 +300,7 @@ class TestFocusManager(unittest.TestCase):
 				mousePos=Coordinates(20, 20),
 				leftPressed=True,
 				expectedCoords=Coordinates(20, 20),
-				expectedFocus=MagnifierFollowFocusType.MOUSE,
+				expectedFocus=MagnifierTrackingType.MOUSE,
 				description="All three moved while dragging (mouse drag has highest priority)",
 			),
 		]
@@ -354,7 +354,7 @@ class TestFocusManager(unittest.TestCase):
 		"""Test getting the last focus type."""
 		self.assertIsNone(self.focusManager.getLastFocusType())
 
-		for focusType in MagnifierFollowFocusType:
+		for focusType in MagnifierTrackingType:
 			self.focusManager._lastFocusedObject = focusType
 			self.assertEqual(self.focusManager.getLastFocusType(), focusType)
 
@@ -401,7 +401,7 @@ class TestFollowSettings(unittest.TestCase):
 			followNavigatorObject=True,
 		)
 		self.assertEqual(coords, Coordinates(20, 20))
-		self.assertEqual(self.focusManager.getLastFocusType(), MagnifierFollowFocusType.SYSTEM_FOCUS)
+		self.assertEqual(self.focusManager.getLastFocusType(), MagnifierTrackingType.SYSTEM_FOCUS)
 
 	def testFollowSystemFocusDisabled(self):
 		"""When followSystemFocus=False, system focus changes are ignored and review wins."""
@@ -412,7 +412,7 @@ class TestFollowSettings(unittest.TestCase):
 			followNavigatorObject=True,
 		)
 		self.assertEqual(coords, Coordinates(30, 30))
-		self.assertEqual(self.focusManager.getLastFocusType(), MagnifierFollowFocusType.REVIEW)
+		self.assertEqual(self.focusManager.getLastFocusType(), MagnifierTrackingType.REVIEW)
 
 	def testFollowReviewDisabled(self):
 		"""When followReview=False, review changes are ignored and navigator wins."""
@@ -423,7 +423,7 @@ class TestFollowSettings(unittest.TestCase):
 			followNavigatorObject=True,
 		)
 		self.assertEqual(coords, Coordinates(40, 40))
-		self.assertEqual(self.focusManager.getLastFocusType(), MagnifierFollowFocusType.NAVIGATOR_OBJECT)
+		self.assertEqual(self.focusManager.getLastFocusType(), MagnifierTrackingType.NAVIGATOR_OBJECT)
 
 	def testAllFollowDisabled(self):
 		"""When all settings are False, no source fires and focus remains frozen."""
@@ -506,12 +506,12 @@ class TestFollowSettings(unittest.TestCase):
 			coords = self.focusManager.getCurrentFocusCoordinates()
 
 		self.assertEqual(coords, Coordinates(10, 10))
-		self.assertEqual(self.focusManager.getLastFocusType(), MagnifierFollowFocusType.MOUSE)
+		self.assertEqual(self.focusManager.getLastFocusType(), MagnifierTrackingType.MOUSE)
 
 	def testDisableFollowMouseKeepsViewFrozen(self):
 		"""When followMouse is disabled, view remains frozen until a followed source changes."""
 		# Simulate: mouse was previously the active focus source
-		self.focusManager._lastFocusedObject = MagnifierFollowFocusType.MOUSE
+		self.focusManager._lastFocusedObject = MagnifierTrackingType.MOUSE
 		self.focusManager._lastReportedCoordinates = Coordinates(10, 10)
 		# Positions haven't changed from last recorded values (no "change" detected)
 		self.focusManager._lastMousePosition = Coordinates(10, 10)
@@ -544,7 +544,7 @@ class TestFollowSettings(unittest.TestCase):
 
 	def testDisableFollowMouseWhileMouseMovingKeepsViewFrozen(self):
 		"""When followMouse is disabled, mouse movement alone does not move the view."""
-		self.focusManager._lastFocusedObject = MagnifierFollowFocusType.MOUSE
+		self.focusManager._lastFocusedObject = MagnifierTrackingType.MOUSE
 		self.focusManager._lastReportedCoordinates = Coordinates(10, 10)
 		self.focusManager._lastMousePosition = Coordinates(10, 10)
 		self.focusManager._lastSystemFocusPosition = Coordinates(20, 20)
@@ -577,7 +577,7 @@ class TestFollowSettings(unittest.TestCase):
 
 	def testDisableFollowSystemFocusKeepsViewFrozen(self):
 		"""When followSystemFocus is disabled, view remains frozen until a followed source changes."""
-		self.focusManager._lastFocusedObject = MagnifierFollowFocusType.SYSTEM_FOCUS
+		self.focusManager._lastFocusedObject = MagnifierTrackingType.SYSTEM_FOCUS
 		self.focusManager._lastReportedCoordinates = Coordinates(20, 20)
 		self.focusManager._lastMousePosition = Coordinates(10, 10)
 		self.focusManager._lastSystemFocusPosition = Coordinates(20, 20)

@@ -26,7 +26,7 @@ import eventHandler
 import review
 import _magnifier
 import _magnifier.commands
-from _magnifier.utils.types import MagnifierFollowFocusType
+from _magnifier.utils.types import MagnifierTrackingType
 import controlTypes
 import api
 import textInfos
@@ -5219,7 +5219,7 @@ class GlobalCommands(ScriptableObject):
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.MOUSE)
+		_magnifier.commands.toggleFollow(MagnifierTrackingType.MOUSE)
 
 	@script(
 		description=_(
@@ -5232,7 +5232,7 @@ class GlobalCommands(ScriptableObject):
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.SYSTEM_FOCUS)
+		_magnifier.commands.toggleFollow(MagnifierTrackingType.SYSTEM_FOCUS)
 
 	@script(
 		description=_(
@@ -5245,7 +5245,7 @@ class GlobalCommands(ScriptableObject):
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.REVIEW)
+		_magnifier.commands.toggleFollow(MagnifierTrackingType.REVIEW)
 
 	@script(
 		description=_(
@@ -5258,7 +5258,7 @@ class GlobalCommands(ScriptableObject):
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.NAVIGATOR_OBJECT)
+		_magnifier.commands.toggleFollow(MagnifierTrackingType.NAVIGATOR_OBJECT)
 
 	@script(
 		description=_(
