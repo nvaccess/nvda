@@ -6151,7 +6151,7 @@ class MagnifierPanel(SettingsPanel):
 			wx.CheckBox(generalGroupBox, label=trueCenterTrackingText),
 		)
 		self.bindHelpEvent(
-			"MagnifierUseTrueCenterTracking",
+			"MagnifierTrueCenterTracking",
 			self.trueCenterTrackingCheckBox,
 		)
 		self.trueCenterTrackingCheckBox.SetValue(magnifierConfig.isTrueCentered())
