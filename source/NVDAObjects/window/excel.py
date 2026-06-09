@@ -318,7 +318,7 @@ re_RC = re.compile(r"R(?:\[(\d+)\])?C(?:\[(\d+)\])?")
 re_absRC = re.compile(r"^R(\d+)C(\d+)(?::R(\d+)C(\d+))?$")
 
 
-def getPixelPerInch():
+def getPixelPerInch() -> tuple[int, int]:
 	hDC = user32.GetDC(None)
 	# pixels per inch along screen width
 	px = winBindings.gdi32.GetDeviceCaps(hDC, LOGPIXELSX)
@@ -1998,7 +1998,7 @@ class ExcelCell(ExcelBase):
 			speech.speak(sequence)
 		super(ExcelCell, self).reportFocus()
 
-	def _get_location(self):
+	def _get_location(self) -> RectLTWH:
 		cellObj = self.excelCellObject
 		if cellObj.mergeCells:
 			cellObj = cellObj.mergeArea
