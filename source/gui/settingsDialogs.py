@@ -6055,7 +6055,7 @@ class MagnifierPanel(SettingsPanel):
 		magnifierConfig.setPanStep(selectedPanStep)
 		magnifierConfig.setFilter(selectedFilter)
 		magnifierConfig.setFullscreenMode(selectedMode)
-		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterTrackingCheckBox
+		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterTrackingCheckBox.GetValue()
 
 		for trackingType, checkBox in self._trackingTypeCheckBoxes.items():
 			magnifierConfig.setFollowState(trackingType, checkBox.GetValue())
