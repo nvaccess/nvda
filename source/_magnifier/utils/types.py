@@ -155,11 +155,11 @@ class FullScreenMode(DisplayStringStrEnum):
 	@property
 	def _displayStringLabels(self) -> dict["FullScreenMode", str]:
 		return {
-			# Translators: Magnifier focus mode - center mouse/focus on screen.
+			# Translators: Magnifier tracking mode - center on screen.
 			self.CENTER: pgettext("magnifier", "Center"),
-			# Translators: Magnifier focus mode - follow focus at screen borders.
+			# Translators: Magnifier tracking mode - follow tracking at screen borders.
 			self.BORDER: pgettext("magnifier", "Border"),
-			# Translators: Magnifier focus mode - maintain relative position.
+			# Translators: Magnifier tracking mode - maintain relative position.
 			self.RELATIVE: pgettext("magnifier", "Relative"),
 		}
 

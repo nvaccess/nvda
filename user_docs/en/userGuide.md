@@ -1590,7 +1590,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 | Increases the magnification level of the magnifier | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
 | Decreases the magnification level of the magnifier | `NVDA+shift+minus` | Decreases the zoom level |
 | Toggle filter of the magnifier | `NVDA+shift+i` | Cycles through available color filters (normal, grayscale, inverted) |
-| Toggle focus mode for the full-screen magnifier | None | Cycles through focus tracking modes (center, border, relative) |
+| Toggle tracking for the full-screen magnifier | None | Cycles through tracking modes (center, border, relative) |
 | Launch spotlight if magnifier is full-screen | `NVDA+shift+l` | Activates spotlight mode for focused reading or presentations |
 | Pan left | `NVDA+alt+leftArrow` | Pan the magnified view to the left by the specified panning step size |
 | Pan right | `NVDA+alt+rightArrow` | Pan the magnified view to the right by the specified panning step size |

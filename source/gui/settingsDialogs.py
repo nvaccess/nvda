@@ -6225,7 +6225,7 @@ class MagnifierPanel(SettingsPanel):
 
 		# FULLSCREEN MODE SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the full-screen mode
-		fullscreenModeLabelText = _("Focus &mode:")
+		fullscreenModeLabelText = _("Tracking &mode:")
 		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
 		self.fullscreenModeList = fullscreenGroup.addLabeledControl(
 			fullscreenModeLabelText,
@@ -6233,7 +6233,7 @@ class MagnifierPanel(SettingsPanel):
 			choices=fullscreenModeChoices,
 		)
 		self.bindHelpEvent(
-			"MagnifierFullscreenFocusMode",
+			"MagnifierFullscreenTrackingMode",
 			self.fullscreenModeList,
 		)
 
