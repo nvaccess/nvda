@@ -173,10 +173,8 @@ class FocusManager:
 			try:
 				focusObj = api.getFocusObject()
 				if focusObj and focusObj.location:
-					left, top, width, height = focusObj.location
-					x = left + (width // 2)
-					y = top + (height // 2)
-					coords = Coordinates(x, y)
+					left, top, _width, _height = focusObj.location
+					coords = Coordinates(left, top)
 					if coords != Coordinates(0, 0):
 						self._lastValidSystemFocusPosition = coords
 					return coords
@@ -247,10 +245,8 @@ class FocusManager:
 		navigatorObject = api.getNavigatorObject()
 		if navigatorObject:
 			try:
-				left, top, width, height = navigatorObject.location
-				x = left + (width // 2)
-				y = top + (height // 2)
-				return Coordinates(x, y)
+				left, top, _width, _height = navigatorObject.location
+				return Coordinates(left, top)
 			except Exception:
 				# Navigator object may not have a valid location
 				log.debug("Failed to get navigator object location", exc_info=True)
