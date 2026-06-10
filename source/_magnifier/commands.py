@@ -32,7 +32,7 @@ from .utils.types import (
 	MagnifiedView,
 	FullScreenMode,
 	MagnifierAction,
-	MagnifierFollowFocusType,
+	MagnifierFollowTrackingType,
 )
 from logHandler import log
 
@@ -222,19 +222,19 @@ def cycleMagnifiedView() -> None:
 		)
 
 
-def toggleFollow(focusType: MagnifierFollowFocusType) -> None:
+def toggleFollow(trackingType: MagnifierFollowTrackingType) -> None:
 	"""
 	Toggle the specified follow mode setting.
 
-	:param focusType: The follow mode to toggle (mouse, system focus, review cursor, navigator object)
+	:param trackingType: The follow mode to toggle (mouse, system focus, review cursor, navigator object)
 	"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
 		magnifier,
 		MagnifierAction.TOGGLE_FOLLOW_SETTINGS,
 	):
-		state = not getFollowState(focusType)
-		setFollowState(focusType, state)
+		state = not getFollowState(trackingType)
+		setFollowState(trackingType, state)
 
 		ui.message(
 			pgettext(
@@ -242,7 +242,7 @@ def toggleFollow(focusType: MagnifierFollowFocusType) -> None:
 				# Translators: Message announced when toggling a follow setting with {setting} being the name of the setting and {state} being either "enabled" or "disabled".
 				"{setting} {state}",
 			).format(
-				setting=focusType.displayString,
+				setting=trackingType.displayString,
 				state=pgettext(
 					"magnifier",
 					# Translators: State of the follow setting being toggled enabled.
@@ -281,8 +281,8 @@ def toggleAllFollow() -> None:
 		ui.message(stateMessage)
 
 
-def toggleFullscreenMode() -> None:
-	"""Cycle through full-screen focus modes (center, border, relative)"""
+def cycleFullscreenMode() -> None:
+	"""Cycle through full-screen modes (center, border, relative)"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
 		magnifier,

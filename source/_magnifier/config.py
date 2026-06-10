@@ -10,7 +10,7 @@ Handles module initialization, configuration and settings interaction.
 
 import config
 from dataclasses import dataclass, field
-from .utils.types import Filter, FullScreenMode, MagnifierFollowFocusType, MagnifiedView
+from .utils.types import Filter, FullScreenMode, MagnifierFollowTrackingType, MagnifiedView
 
 
 def setEnabled(enable: bool) -> None:
@@ -153,17 +153,17 @@ def setMagnifiedView(magnifiedView: MagnifiedView) -> None:
 	config.conf["magnifier"]["magnifiedView"] = magnifiedView.value
 
 
-_FOLLOW_CONFIG_KEYS: dict[MagnifierFollowFocusType, str] = {
-	MagnifierFollowFocusType.MOUSE: "followMouse",
-	MagnifierFollowFocusType.SYSTEM_FOCUS: "followSystemFocus",
-	MagnifierFollowFocusType.REVIEW: "followReviewCursor",
-	MagnifierFollowFocusType.NAVIGATOR_OBJECT: "followNavigatorObject",
+_FOLLOW_CONFIG_KEYS: dict[MagnifierFollowTrackingType, str] = {
+	MagnifierFollowTrackingType.MOUSE: "followMouse",
+	MagnifierFollowTrackingType.SYSTEM_FOCUS: "followSystemFocus",
+	MagnifierFollowTrackingType.REVIEW: "followReviewCursor",
+	MagnifierFollowTrackingType.NAVIGATOR_OBJECT: "followNavigatorObject",
 }
 
 
 @dataclass
 class _FollowStateOverride:
-	savedStates: dict[MagnifierFollowFocusType, bool] = field(default_factory=dict)
+	savedStates: dict[MagnifierFollowTrackingType, bool] = field(default_factory=dict)
 	isActive: bool = False
 
 
@@ -179,30 +179,30 @@ def _ensureSavedStatesInitialized() -> None:
 		saveFollowStates()
 
 
-def getFollowState(focusType: MagnifierFollowFocusType) -> bool:
+def getFollowState(trackingType: MagnifierFollowTrackingType) -> bool:
 	"""
 	Get the current follow state for a given focus type.
 
-	:param focusType: The focus type to query.
+	:param trackingType: The focus type to query.
 	:return: True if the magnifier follows the given focus type, False otherwise.
 	"""
-	return config.conf["magnifier"][_FOLLOW_CONFIG_KEYS[focusType]]
+	return config.conf["magnifier"][_FOLLOW_CONFIG_KEYS[trackingType]]
 
 
-def setFollowState(focusType: MagnifierFollowFocusType, state: bool) -> None:
+def setFollowState(trackingType: MagnifierFollowTrackingType, state: bool) -> None:
 	"""
 	Set the follow state for a given focus type.
 
-	:param focusType: The focus type to update.
+	:param trackingType: The focus type to update.
 	:param state: True to enable following, False to disable.
 	"""
-	config.conf["magnifier"][_FOLLOW_CONFIG_KEYS[focusType]] = state
+	config.conf["magnifier"][_FOLLOW_CONFIG_KEYS[trackingType]] = state
 
 
 def saveFollowStates() -> None:
 	"""Save current follow states so they can be restored later."""
-	for focusType in _FOLLOW_CONFIG_KEYS:
-		_followStateOverride.savedStates[focusType] = getFollowState(focusType)
+	for trackingType in _FOLLOW_CONFIG_KEYS:
+		_followStateOverride.savedStates[trackingType] = getFollowState(trackingType)
 
 
 def toggleAllFollowStates() -> bool:
@@ -213,13 +213,13 @@ def toggleAllFollowStates() -> bool:
 	"""
 	_ensureSavedStatesInitialized()
 	if _followStateOverride.isActive:
-		for focusType, state in _followStateOverride.savedStates.items():
-			setFollowState(focusType, state)
+		for trackingType, state in _followStateOverride.savedStates.items():
+			setFollowState(trackingType, state)
 		_followStateOverride.isActive = False
 	else:
 		saveFollowStates()
-		for focusType in _FOLLOW_CONFIG_KEYS:
-			setFollowState(focusType, False)
+		for trackingType in _FOLLOW_CONFIG_KEYS:
+			setFollowState(trackingType, False)
 		_followStateOverride.isActive = True
 	return _followStateOverride.isActive
 

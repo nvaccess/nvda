@@ -89,7 +89,7 @@ class MagnifierAction(DisplayStringEnum):
 		}
 
 
-class MagnifierFollowFocusType(DisplayStringEnum):
+class MagnifierFollowTrackingType(DisplayStringEnum):
 	"""Type of focus the magnifier should follow based on user settings"""
 
 	MOUSE = auto()
@@ -98,16 +98,16 @@ class MagnifierFollowFocusType(DisplayStringEnum):
 	NAVIGATOR_OBJECT = auto()
 
 	@property
-	def _displayStringLabels(self) -> dict["MagnifierFollowFocusType", str]:
+	def _displayStringLabels(self) -> dict["MagnifierFollowTrackingType", str]:
 		return {
-			# Translators: Focus type for magnifier to follow - mouse cursor.
-			self.MOUSE: pgettext("magnifier follow focus type", "Mouse"),
-			# Translators: Focus type for magnifier to follow - system focus (active element).
-			self.SYSTEM_FOCUS: pgettext("magnifier follow focus type", "System focus"),
-			# Translators: Focus type for magnifier to follow - review cursor position.
-			self.REVIEW: pgettext("magnifier follow focus type", "Review cursor"),
-			# Translators: Focus type for magnifier to follow - navigator object position.
-			self.NAVIGATOR_OBJECT: pgettext("magnifier follow focus type", "Navigator object"),
+			# Translators: Tracking type for magnifier to follow - mouse cursor.
+			self.MOUSE: pgettext("magnifier follow tracking type", "Mouse"),
+			# Translators: Tracking type for magnifier to follow - system focus (active element).
+			self.SYSTEM_FOCUS: pgettext("magnifier follow tracking type", "System focus"),
+			# Translators: Tracking type for magnifier to follow - review cursor position.
+			self.REVIEW: pgettext("magnifier follow tracking type", "Review cursor"),
+			# Translators: Tracking type for magnifier to follow - navigator object position.
+			self.NAVIGATOR_OBJECT: pgettext("magnifier follow tracking type", "Navigator object"),
 		}
 
 

@@ -26,7 +26,7 @@ import eventHandler
 import review
 import _magnifier
 import _magnifier.commands
-from _magnifier.utils.types import MagnifierFollowFocusType
+from _magnifier.utils.types import MagnifierFollowTrackingType
 import controlTypes
 import api
 import textInfos
@@ -5216,7 +5216,7 @@ class GlobalCommands(ScriptableObject):
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.MOUSE)
+		_magnifier.commands.toggleFollow(MagnifierFollowTrackingType.MOUSE)
 
 	@script(
 		description=_(
@@ -5229,7 +5229,7 @@ class GlobalCommands(ScriptableObject):
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.SYSTEM_FOCUS)
+		_magnifier.commands.toggleFollow(MagnifierFollowTrackingType.SYSTEM_FOCUS)
 
 	@script(
 		description=_(
@@ -5242,7 +5242,7 @@ class GlobalCommands(ScriptableObject):
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.REVIEW)
+		_magnifier.commands.toggleFollow(MagnifierFollowTrackingType.REVIEW)
 
 	@script(
 		description=_(
@@ -5255,7 +5255,7 @@ class GlobalCommands(ScriptableObject):
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.NAVIGATOR_OBJECT)
+		_magnifier.commands.toggleFollow(MagnifierFollowTrackingType.NAVIGATOR_OBJECT)
 
 	@script(
 		description=_(
@@ -5273,15 +5273,15 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle focus mode for the full-screen magnifier",
+			"Cycle mode for the full-screen magnifier",
 		),
 		category=SCRCAT_VISION,
 	)
-	def script_toggleFullscreenMode(
+	def script_cycleFullscreenMode(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleFullscreenMode()
+		_magnifier.commands.cycleFullscreenMode()
 
 	@script(
 		description=_(

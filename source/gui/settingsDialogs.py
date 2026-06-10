@@ -42,7 +42,7 @@ import logHandler
 from _magnifier import getMagnifier
 from _magnifier.commands import toggleMagnifier
 import _magnifier.config as magnifierConfig
-from _magnifier.utils.types import Filter, FullScreenMode, MagnifierFollowFocusType
+from _magnifier.utils.types import Filter, FullScreenMode, MagnifierFollowTrackingType
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 import queueHandler
 import requests
@@ -2261,10 +2261,10 @@ class ReviewCursorPanel(SettingsPanel):
 	def makeSettings(self, settingsSizer):
 		# Translators: This is the label for a checkbox in the
 		# review cursor settings panel.
-		self.followFocusCheckBox = wx.CheckBox(self, label=_("Follow system &focus"))
-		self.bindHelpEvent("ReviewCursorFollowFocus", self.followFocusCheckBox)
-		self.followFocusCheckBox.SetValue(config.conf["reviewCursor"]["followFocus"])
-		settingsSizer.Add(self.followFocusCheckBox, border=10, flag=wx.BOTTOM)
+		self.followTrackingCheckBox = wx.CheckBox(self, label=_("Follow system &focus"))
+		self.bindHelpEvent("ReviewCursorFollowFocus", self.followTrackingCheckBox)
+		self.followTrackingCheckBox.SetValue(config.conf["reviewCursor"]["followTracking"])
+		settingsSizer.Add(self.followTrackingCheckBox, border=10, flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# review cursor settings panel.
 		self.followCaretCheckBox = wx.CheckBox(self, label=_("Follow System &Caret"))
@@ -2285,7 +2285,7 @@ class ReviewCursorPanel(SettingsPanel):
 		settingsSizer.Add(self.simpleReviewModeCheckBox, border=10, flag=wx.BOTTOM)
 
 	def onSave(self):
-		config.conf["reviewCursor"]["followFocus"] = self.followFocusCheckBox.IsChecked()
+		config.conf["reviewCursor"]["followTracking"] = self.followTrackingCheckBox.IsChecked()
 		config.conf["reviewCursor"]["followCaret"] = self.followCaretCheckBox.IsChecked()
 		config.conf["reviewCursor"]["followMouse"] = self.followMouseCheckBox.IsChecked()
 		config.conf["reviewCursor"]["simpleReviewMode"] = self.simpleReviewModeCheckBox.IsChecked()
@@ -6056,8 +6056,8 @@ class MagnifierPanel(SettingsPanel):
 		magnifierConfig.setFilter(selectedFilter)
 		magnifierConfig.setFullscreenMode(selectedMode)
 		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterCheckBox.GetValue()
-		for focusType, checkBox in self._followFocusCheckBoxes.items():
-			magnifierConfig.setFollowState(focusType, checkBox.GetValue())
+		for trackingType, checkBox in self._followTrackingCheckBoxes.items():
+			magnifierConfig.setFollowState(trackingType, checkBox.GetValue())
 
 		magnifier = getMagnifier()
 		if magnifier:
@@ -6179,37 +6179,40 @@ class MagnifierPanel(SettingsPanel):
 		self.panSpinCtrl.Bind(wx.EVT_SPINCTRL, self._onImmediateSettingChange)
 		self.panSpinCtrl.Bind(wx.EVT_TEXT, self._onImmediateSettingChange)
 
-		# FOCUS GROUP
+		# TRACKING GROUP
 		# Translators: This is the label for a group of focus options in the magnifier settings panel
-		focusGroupText = _("Focus")
-		focusGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=focusGroupText)
-		focusGroupBox = focusGroupSizer.GetStaticBox()
-		focusGroup = guiHelper.BoxSizerHelper(focusGroupBox, sizer=focusGroupSizer)
-		sHelper.addItem(focusGroup)
+		trackingGroupText = _("Tracking")
+		trackingGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=trackingGroupText)
+		trackingGroupBox = trackingGroupSizer.GetStaticBox()
+		trackingGroup = guiHelper.BoxSizerHelper(trackingGroupBox, sizer=trackingGroupSizer)
+		sHelper.addItem(trackingGroup)
 
-		_followFocusLabels: dict[MagnifierFollowFocusType, tuple[str, str]] = {
+		_followTrackingLabels: dict[MagnifierFollowTrackingType, tuple[str, str]] = {
 			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the mouse
-			MagnifierFollowFocusType.MOUSE: (_("Follow &mouse"), "MagnifierFollowMouse"),
-			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
-			MagnifierFollowFocusType.SYSTEM_FOCUS: (_("Follow &system focus"), "MagnifierFollowSystemFocus"),
+			MagnifierFollowTrackingType.MOUSE: (_("Follow &mouse"), "MagnifierFollowMouse"),
+			MagnifierFollowTrackingType.SYSTEM_FOCUS: (
+				# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
+				_("Follow &system focus"),
+				"MagnifierFollowSystemFocus",
+			),
 			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the review cursor
-			MagnifierFollowFocusType.REVIEW: (_("Follow &review cursor"), "MagnifierFollowReviewCursor"),
-			MagnifierFollowFocusType.NAVIGATOR_OBJECT: (
+			MagnifierFollowTrackingType.REVIEW: (_("Follow &review cursor"), "MagnifierFollowReviewCursor"),
+			MagnifierFollowTrackingType.NAVIGATOR_OBJECT: (
 				# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the navigator object
 				_("Follow &navigator object"),
 				"MagnifierFollowNavigatorObject",
 			),
 		}
-		self._followFocusCheckBoxes: dict[MagnifierFollowFocusType, wx.CheckBox] = {}
-		self._followFocusInitially: dict[MagnifierFollowFocusType, bool] = {}
-		for focusType, (label, helpId) in _followFocusLabels.items():
-			checkBox = focusGroup.addItem(wx.CheckBox(focusGroupBox, label=label))
+		self._followTrackingCheckBoxes: dict[MagnifierFollowTrackingType, wx.CheckBox] = {}
+		self._followTrackingInitially: dict[MagnifierFollowTrackingType, bool] = {}
+		for trackingType, (label, helpId) in _followTrackingLabels.items():
+			checkBox = trackingGroup.addItem(wx.CheckBox(trackingGroupBox, label=label))
 			self.bindHelpEvent(helpId, checkBox)
-			followState = magnifierConfig.getFollowState(focusType)
-			self._followFocusInitially[focusType] = followState
+			followState = magnifierConfig.getFollowState(trackingType)
+			self._followTrackingInitially[trackingType] = followState
 			checkBox.SetValue(followState)
 			checkBox.Bind(wx.EVT_CHECKBOX, self._onImmediateSettingChange)
-			self._followFocusCheckBoxes[focusType] = checkBox
+			self._followTrackingCheckBoxes[trackingType] = checkBox
 
 		# FULLSCREEN GROUP
 		# Translators: This is the label for a group of fullscreen magnifier options in the
@@ -6250,7 +6253,7 @@ class MagnifierPanel(SettingsPanel):
 		selectedPanStep = self.panSpinCtrl.GetValue()
 		selectedFilter = list(Filter)[self.filterList.GetSelection()]
 		selectedMode = list(FullScreenMode)[self.fullscreenModeList.GetSelection()]
-		isTrueCentered = self.trueCenterCheckBox.GetValue()
+		isTrueCentered = self.trueCenterTrackingCheckBox.GetValue()
 
 		roundedZoom = magnifierConfig.roundZoomLevel(selectedZoom)
 		self._zoomInitially = roundedZoom
@@ -6258,9 +6261,9 @@ class MagnifierPanel(SettingsPanel):
 		self._filterInitially = selectedFilter
 		self._fullscreenModeInitially = selectedMode
 		self._trueCenterTrackingInitially = isTrueCentered
-		for focusType, checkBox in self._followFocusCheckBoxes.items():
+		for trackingType, checkBox in self._followTrackingCheckBoxes.items():
 			shouldFollow = checkBox.GetValue()
-			self._followFocusInitially[focusType] = shouldFollow
+			self._followTrackingInitially[trackingType] = shouldFollow
 
 	def onDiscard(self):
 		"""Restore magnifier state from original settings from config."""
@@ -6269,8 +6272,8 @@ class MagnifierPanel(SettingsPanel):
 		magnifierConfig.setFilter(self._filterInitially)
 		magnifierConfig.setFullscreenMode(self._fullscreenModeInitially)
 		config.conf["magnifier"]["isTrueCentered"] = self._trueCenterTrackingInitially
-		for focusType, state in self._followFocusInitially.items():
-			magnifierConfig.setFollowState(focusType, state)
+		for trackingType, state in self._followTrackingInitially.items():
+			magnifierConfig.setFollowState(trackingType, state)
 
 		magnifier = getMagnifier()
 		if magnifier:
