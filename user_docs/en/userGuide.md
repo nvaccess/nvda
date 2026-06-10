@@ -1646,7 +1646,7 @@ This is useful when you want to:
 To display an overview of the entire screen, press `NVDA+shift+l`.
 The magnifier will then:
 
-1. Smoothly zoom out to show the full screen (zoom level 1.0)
+1. Smoothly zoom out to show the full screen (zoom level 1.0x)
 2. Monitor mouse movement
 3. When the mouse remains still for approximately 2 seconds, automatically zoom back in to the original zoom level at the new mouse position
 
