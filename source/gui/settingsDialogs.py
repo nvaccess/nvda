@@ -2261,10 +2261,10 @@ class ReviewCursorPanel(SettingsPanel):
 	def makeSettings(self, settingsSizer):
 		# Translators: This is the label for a checkbox in the
 		# review cursor settings panel.
-		self.followTrackingCheckBox = wx.CheckBox(self, label=_("Follow system &focus"))
-		self.bindHelpEvent("ReviewCursorFollowFocus", self.followTrackingCheckBox)
-		self.followTrackingCheckBox.SetValue(config.conf["reviewCursor"]["followTracking"])
-		settingsSizer.Add(self.followTrackingCheckBox, border=10, flag=wx.BOTTOM)
+		self.followFocusCheckBox = wx.CheckBox(self, label=_("Follow system &focus"))
+		self.bindHelpEvent("ReviewCursorFollowFocus", self.followFocusCheckBox)
+		self.followFocusCheckBox.SetValue(config.conf["reviewCursor"]["followFocus"])
+		settingsSizer.Add(self.followFocusCheckBox, border=10, flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# review cursor settings panel.
 		self.followCaretCheckBox = wx.CheckBox(self, label=_("Follow System &Caret"))
@@ -2285,7 +2285,7 @@ class ReviewCursorPanel(SettingsPanel):
 		settingsSizer.Add(self.simpleReviewModeCheckBox, border=10, flag=wx.BOTTOM)
 
 	def onSave(self):
-		config.conf["reviewCursor"]["followTracking"] = self.followTrackingCheckBox.IsChecked()
+		config.conf["reviewCursor"]["followFocus"] = self.followTrackingCheckBox.IsChecked()
 		config.conf["reviewCursor"]["followCaret"] = self.followCaretCheckBox.IsChecked()
 		config.conf["reviewCursor"]["followMouse"] = self.followMouseCheckBox.IsChecked()
 		config.conf["reviewCursor"]["simpleReviewMode"] = self.simpleReviewModeCheckBox.IsChecked()
@@ -6055,7 +6055,7 @@ class MagnifierPanel(SettingsPanel):
 		magnifierConfig.setPanStep(selectedPanStep)
 		magnifierConfig.setFilter(selectedFilter)
 		magnifierConfig.setFullscreenMode(selectedMode)
-		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterCheckBox.GetValue()
+		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterTrackingCheckBox.GetValue()
 		for trackingType, checkBox in self._followTrackingCheckBoxes.items():
 			magnifierConfig.setFollowState(trackingType, checkBox.GetValue())
 
@@ -6180,7 +6180,7 @@ class MagnifierPanel(SettingsPanel):
 		self.panSpinCtrl.Bind(wx.EVT_TEXT, self._onImmediateSettingChange)
 
 		# TRACKING GROUP
-		# Translators: This is the label for a group of focus options in the magnifier settings panel
+		# Translators: This is the label for a group of tracking options in the magnifier settings panel
 		trackingGroupText = _("Tracking")
 		trackingGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=trackingGroupText)
 		trackingGroupBox = trackingGroupSizer.GetStaticBox()

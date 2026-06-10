@@ -181,19 +181,19 @@ def _ensureSavedStatesInitialized() -> None:
 
 def getFollowState(trackingType: MagnifierFollowTrackingType) -> bool:
 	"""
-	Get the current follow state for a given focus type.
+	Get the current follow state for a given tracking type.
 
-	:param trackingType: The focus type to query.
-	:return: True if the magnifier follows the given focus type, False otherwise.
+	:param trackingType: The tracking type to query.
+	:return: True if the magnifier follows the given tracking type, False otherwise.
 	"""
 	return config.conf["magnifier"][_FOLLOW_CONFIG_KEYS[trackingType]]
 
 
 def setFollowState(trackingType: MagnifierFollowTrackingType, state: bool) -> None:
 	"""
-	Set the follow state for a given focus type.
+	Set the follow state for a given tracking type.
 
-	:param trackingType: The focus type to update.
+	:param trackingType: The tracking type to update.
 	:param state: True to enable following, False to disable.
 	"""
 	config.conf["magnifier"][_FOLLOW_CONFIG_KEYS[trackingType]] = state

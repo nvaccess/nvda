@@ -90,7 +90,7 @@ class MagnifierAction(DisplayStringEnum):
 
 
 class MagnifierFollowTrackingType(DisplayStringEnum):
-	"""Type of focus the magnifier should follow based on user settings"""
+	"""Type of tracking the magnifier should follow based on user settings"""
 
 	MOUSE = auto()
 	SYSTEM_FOCUS = auto()
