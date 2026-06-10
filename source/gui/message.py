@@ -1258,17 +1258,19 @@ class HtmlMessageDialog(MessageDialog):
 		return self
 
 	def _onNavigating(self, evt: wx.html2.WebViewEvent) -> None:
-		evt.Veto()
 		url = evt.GetURL()
-		if not url.lower().startswith(self._ACTION_URL_PREFIX):
-			if url.lower().startswith(("http://", "https://")):
-				wx.LaunchDefaultBrowser(url)
+		if url.lower().startswith("data:text/html"):
+			# Edge fires this URL for SetPage; allow it so content loads.
 			return
-		action = url[len(self._ACTION_URL_PREFIX) :]
-		if action == "close":
-			self.Close()
-		elif handler := self._actionHandlers.get(action):
-			handler()
+		evt.Veto()
+		if url.lower().startswith(self._ACTION_URL_PREFIX):
+			action = url[len(self._ACTION_URL_PREFIX) :]
+			if action == "close":
+				self.Close()
+			elif handler := self._actionHandlers.get(action):
+				handler()
+		elif url.lower().startswith(("http://", "https://")):
+			wx.LaunchDefaultBrowser(url)
 
 	def _getFallbackAction(self) -> _Command | None:
 		"""Return a fallback close action even when no buttons are registered.
