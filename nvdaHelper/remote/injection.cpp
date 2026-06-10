@@ -280,11 +280,15 @@ bool initInprocManagerThreadIfNeeded() {
 			}
 			if (MsgWaitForMultipleObjects(2, waitHandles, FALSE, (DWORD)remaining,
 					QS_POSTMESSAGE) == 2) {
+				// A posted window message has arrived.
 				MSG msg;
 				while(PeekMessage(&msg, nullptr, wm_execInThread, wm_execInThread, PM_REMOVE)) {
 					TranslateMessage(&msg);
 					DispatchMessage(&msg);
 				}
+			} else {
+				// Anything other than a window message means we should stop waiting.
+				break;
 			}
 		}
 	}
