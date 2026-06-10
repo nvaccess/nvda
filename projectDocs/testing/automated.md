@@ -5,28 +5,34 @@ These tests help to ensure that code changes do not unintentionally break functi
 
 ## Pre-commit hooks
 
-[Pre-commit hooks](https://pre-commit.com/) can be used to automatically run linting, translatable string checks and unit tests on files staged for commit.
+Pre-commit hooks can be used to automatically run linting, translatable string checks and unit tests on files staged for commit.
 This will automatically apply lint fixes where possible, and will cancel the commit on lint issues and other test failures.
+NVDA uses [prek](https://prek.j178.dev/), a faster, drop-in compatible alternative to [pre-commit](https://pre-commit.com/) that reads the same `.pre-commit-config.yaml`.
 
-From a shell, [set up pre-commit scripts](https://pre-commit.com/#pre-commit-install) for your NVDA python environment:
+From a shell, [set up the Git hooks](https://prek.j178.dev/reference/cli/#prek-install) for your NVDA python environment:
 
-`uv run pre-commit install`
+`uv run prek install`
 
-Alternatively, set up pre-commit scripts globally:
+Alternatively, set up the Git hooks globally:
 
-1. `pip install pre-commit`
-1. `pre-commit install --allow-missing-config`
+1. `uv tool install prek`
+1. `prek install --allow-missing-config`
 
-To skip pre-commit hooks from triggering, use the `--no-verify` CLI option.
+To skip the hooks from triggering, use the `--no-verify` CLI option.
 Example: `git commit -m "message" --no-verify`.
 
-### Manually running pre-commit hooks
+### Switching from pre-commit
 
-You can run pre-commit hooks manually with [`pre commit run`](https://pre-commit.com/#pre-commit-run).
+If you previously ran `pre-commit install`, an old `pre-commit` Git hook is still installed.
+Run `uv run prek install -f` once to overwrite it with the prek hook.
+
+### Manually running hooks
+
+You can run the hooks manually with [`prek run`](https://prek.j178.dev/reference/cli/#prek-run).
 
 * You can filter files with `--files` and `--all-files`
 * You can also compare two revisions:
-`uv run pre-commit run --from-ref origin/master --to-ref HEAD`
+`uv run prek run --from-ref origin/master --to-ref HEAD`
 
 ## Translatable string checks
 
