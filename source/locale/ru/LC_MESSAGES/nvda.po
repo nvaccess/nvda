@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-29 05:49+0000\n"
-"PO-Revision-Date: 2026-06-01 03:33\n"
+"POT-Creation-Date: 2026-06-05 01:11+0000\n"
+"PO-Revision-Date: 2026-06-08 03:30\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -2390,7 +2390,7 @@ msgstr "Некоторые операции с дополнениями не у�
 #: gui\installerGui.py:126 gui\installerGui.py:210 gui\installerGui.py:701
 #: gui\installerGui.py:718 gui\installerGui.py:790 gui\logViewer.py:112
 #: gui\logViewer.py:143 gui\message.py:160 gui\settingsDialogs.py:1044
-#: gui\settingsDialogs.py:6008 gui\settingsDialogs.py:6867
+#: gui\settingsDialogs.py:6008 gui\settingsDialogs.py:6851
 #: gui\startupDialogs.py:127 _remoteClient\dialogs.py:67
 #: _remoteClient\dialogs.py:306 _remoteClient\dialogs.py:430
 msgid "Error"
@@ -7609,7 +7609,7 @@ msgstr "В настоящее время активное соединение �
 #. Translators: Title of warning dialog
 #: updateCheck.py:1026 gui\_SetURLDialog.py:113 gui\configProfiles.py:500
 #: gui\installerGui.py:444 gui\installerGui.py:602 gui\settingsDialogs.py:1964
-#: gui\settingsDialogs.py:6324 screenCurtain\_screenCurtain.py:70
+#: gui\settingsDialogs.py:6308 screenCurtain\_screenCurtain.py:70
 #: _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "Внимание"
@@ -9041,7 +9041,7 @@ msgstr "NVDA в обоих каналах и приложения слева"
 #. Translators: Sound split state
 #: audio\soundSplit.py:56
 msgid "NVDA in both channels and applications on the right"
-msgstr "NVDA в обоих каналах и приложения слева"
+msgstr "NVDA в обоих каналах и приложения справа"
 
 #. Translators: warning message when sound split trigger wasn't successful due to one of audio sessions
 #. had number of channels other than 2 .
@@ -13019,7 +13019,7 @@ msgstr "Филь&тр:"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:6755 gui\speechDict.py:212
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:6739 gui\speechDict.py:212
 msgid "&Add"
 msgstr "&Добавить"
 
@@ -13432,7 +13432,7 @@ msgstr "&Категории:"
 #. Translators: This is the label for the general settings panel.
 #. Translators: name of a grouping in Privacy and Security settings
 #. which contains miscellaneous settings.
-#: gui\settingsDialogs.py:809 gui\settingsDialogs.py:6388
+#: gui\settingsDialogs.py:809 gui\settingsDialogs.py:6372
 msgid "General"
 msgstr "Общие"
 
@@ -13955,13 +13955,13 @@ msgstr "Проговаривать и воспроизводить звуков�
 #. object presentation settings panel.
 #: gui\settingsDialogs.py:2431
 msgid "Report &tooltips"
-msgstr "Читать в&сплывающие подсказки"
+msgstr "Сообщать в&сплывающие подсказки"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 #: gui\settingsDialogs.py:2438
 msgid "Report &notifications"
-msgstr "Читать системные &уведомления"
+msgstr "Сообщать &уведомления"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -14157,7 +14157,7 @@ msgstr "Воспроизводить звук в начале и в конце �
 #: gui\settingsDialogs.py:2904
 msgctxt "math"
 msgid "Chemical formulae:"
-msgstr "Химические формулы:"
+msgstr "Проговаривание химических формул:"
 
 #. Translators: label for combobox to specify whether the expression is spoken or described (an overview)
 #: gui\settingsDialogs.py:2916
@@ -15323,202 +15323,197 @@ msgid "Magnifier"
 msgstr "Лупа"
 
 #. Translators: The label for a setting in magnifier settings to enable or disable the magnifier.
-#: gui\settingsDialogs.py:6087
+#: gui\settingsDialogs.py:6086
 msgid "&Enable magnifier (immediate effect)"
 msgstr "&Включить лупу (применяется немедленно)"
 
 #. Translators: The label for a setting in magnifier settings to select the zoom level.
-#: gui\settingsDialogs.py:6099
+#: gui\settingsDialogs.py:6098
 msgid "&Zoom (%):"
 msgstr "&Масштаб (%):"
 
 #. Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
-#: gui\settingsDialogs.py:6121
+#: gui\settingsDialogs.py:6120
 msgid "&Panning step size (%):"
 msgstr "&Размер шага панорамирования (%):"
 
 #. Translators: The label for a setting in magnifier settings to select the default filter
-#: gui\settingsDialogs.py:6143
+#: gui\settingsDialogs.py:6142
 msgid "F&ilter:"
 msgstr "Ф&ильтр:"
 
 #. Translators: The label for a setting in magnifier settings to select the full-screen mode
-#: gui\settingsDialogs.py:6160
+#: gui\settingsDialogs.py:6159
 msgid "&Fullscreen mode:"
 msgstr "&Полноэкранный режим:"
 
 #. Translators: The label for a setting in magnifier settings to select whether true center is used in full-screen mode
-#: gui\settingsDialogs.py:6174
+#: gui\settingsDialogs.py:6173
 msgid "Use &true center in fullscreen mode"
 msgstr "Использовать &настоящий центр в полноэкранном режиме"
 
 #. Translators: This is the label for a group of focus options in the magnifier settings panel
-#: gui\settingsDialogs.py:6192
+#: gui\settingsDialogs.py:6191
 msgid "Focus"
 msgstr "Фокус"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the mouse
-#: gui\settingsDialogs.py:6200
+#: gui\settingsDialogs.py:6199
 msgid "Follow &mouse"
 msgstr "Отслеживать &мышь"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
-#: gui\settingsDialogs.py:6202
+#: gui\settingsDialogs.py:6201
 msgid "Follow &system focus"
 msgstr "Отслеживать &системный фокус"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the review cursor
-#: gui\settingsDialogs.py:6204
+#: gui\settingsDialogs.py:6203
 msgid "Follow &review cursor"
 msgstr "Отслеживать &просмотровый курсор"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the navigator object
-#: gui\settingsDialogs.py:6207
+#: gui\settingsDialogs.py:6206
 msgid "Follow &navigator object"
 msgstr "Отслеживать &объект навигатора"
 
-#. Translators: The label for a checkbox to keep the mouse pointer centered in the magnifier view
-#: gui\settingsDialogs.py:6224
-msgid "Keep mouse pointer &centered in magnifier view"
-msgstr "Держать указатель мыши по &центру при просмотре с лупой"
-
 #. Translators: The title of the privacy and security category in NVDA's settings.
-#: gui\settingsDialogs.py:6292
+#: gui\settingsDialogs.py:6276
 msgid "Privacy and Security"
 msgstr "Конфиденциальность и безопасность"
 
 #. Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
-#: gui\settingsDialogs.py:6305
+#: gui\settingsDialogs.py:6289
 msgid "Setting the logging level to \"debug (unredacted)\" will write sensitive information to the log without redaction, including passwords, API keys, or other private data. Only enable this temporarily if you explicitly need unredacted diagnostic logs. Do you want to continue?"
 msgstr "Если установить уровень ведения журнала \"отладка (неотредактированно)\", в журнал будет записываться конфиденциальная информация без редактирования, включая пароли, ключи API или другие личные данные. Включайте это временно только в том случае, если вам явно нужны неотредактированные журналы диагностики. Хотите продолжить?"
 
 #. Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
-#: gui\settingsDialogs.py:6312
+#: gui\settingsDialogs.py:6296
 msgid "High risk logging level"
 msgstr "Уровень ведения журнала высокого риска"
 
 #. Translators: Warning shown when enabling a logging level above info from NVDA settings.
-#: gui\settingsDialogs.py:6317
+#: gui\settingsDialogs.py:6301
 msgid "Setting the logging level above info may record sensitive information such as typed input, speech output, or other private data in the log. Only enable higher logging levels temporarily while troubleshooting. Do you want to continue?"
 msgstr "Установка уровня ведения журнала выше информационного может записывать в журнал конфиденциальную информацию, такую как вводимые данные, речевой вывод или другие личные данные. Включайте более высокие уровни ведения журнала только временно на время устранения неполадок. Хотите продолжить?"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
-#: gui\settingsDialogs.py:6342
+#: gui\settingsDialogs.py:6326
 msgid "Screen Curtain"
 msgstr "Затемнение экрана"
 
 #. Translators: option to enable screen curtain in the privacy and security settings panel
-#: gui\settingsDialogs.py:6351
+#: gui\settingsDialogs.py:6335
 msgid "Make screen black (immediate effect)"
 msgstr "Сделать экран чёрным (применяется немедленно)"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#: gui\settingsDialogs.py:6380
+#: gui\settingsDialogs.py:6364
 msgid "&Play sound when toggling Screen Curtain"
 msgstr "Воспроизводить &звук при переключении затемнения экрана"
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
-#: gui\settingsDialogs.py:6395
+#: gui\settingsDialogs.py:6379
 msgid "L&ogging level:"
 msgstr "Уровень ведения &журнала:"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-#: gui\settingsDialogs.py:6418
+#: gui\settingsDialogs.py:6402
 msgid "Allow NV Access to gather NVDA usage statistics"
 msgstr "Разрешить NV Access собирать статистику использования NVDA"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:6539
+#: gui\settingsDialogs.py:6523
 msgid "NVDA Settings"
 msgstr "Настройки NVDA"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:6595
+#: gui\settingsDialogs.py:6579
 msgid "normal configuration"
 msgstr "по умолчанию"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:6630
+#: gui\settingsDialogs.py:6614
 msgid "Add Symbol"
 msgstr "Добавление символа"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:6635
+#: gui\settingsDialogs.py:6619
 msgid "&Symbol:"
 msgstr "&Символ:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:6665
+#: gui\settingsDialogs.py:6649
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "Произношение символов (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:6679
+#: gui\settingsDialogs.py:6663
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "Филь&тр:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6688
+#: gui\settingsDialogs.py:6672
 msgid "&Symbols"
 msgstr "&Символы"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:6698
+#: gui\settingsDialogs.py:6682
 msgid "Symbol"
 msgstr "Символ"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6700 gui\speechDict.py:188
+#: gui\settingsDialogs.py:6684 gui\speechDict.py:188
 msgid "Replacement"
 msgstr "Замена"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:6702
+#: gui\settingsDialogs.py:6686
 msgid "Level"
 msgstr "Уровень"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:6705
+#: gui\settingsDialogs.py:6689
 msgid "Preserve"
 msgstr "Передавать синтезатору"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:6709
+#: gui\settingsDialogs.py:6693
 msgid "Change selected symbol"
 msgstr "Изменение выбранного символа"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6727 gui\speechDict.py:52
+#: gui\settingsDialogs.py:6711 gui\speechDict.py:52
 msgid "&Replacement"
 msgstr "&Замена"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:6736
+#: gui\settingsDialogs.py:6720
 msgid "&Level"
 msgstr "&Уровень"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:6743
+#: gui\settingsDialogs.py:6727
 msgid "&Send actual symbol to synthesizer"
 msgstr "Передавать &фактический символ на синтезатор"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:6758
+#: gui\settingsDialogs.py:6742
 msgid "Re&move"
 msgstr "Уд&алить"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:6865
+#: gui\settingsDialogs.py:6849
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "Символ «%s» уже существует."
@@ -16594,13 +16589,13 @@ msgstr "Не удалось отключить дополнение {addon}."
 #. Translators: Describes a command.
 #: mathPres\__init__.py:141
 msgid "Exit math interaction"
-msgstr "Завершить математическое взаимодействие"
+msgstr "Завершить взаимодействие с математическим выражением"
 
 #. Translators: Reported when the user attempts math interaction
 #. but math interaction is not supported.
 #: mathPres\__init__.py:189
 msgid "Math interaction not supported."
-msgstr "Математическое взаимодействие не поддерживается."
+msgstr "Взаимодействие с математическим выражением не поддерживается."
 
 #. Translators: The name of the category of MathCAT navigation commands in the Input Gestures dialog.
 #: mathPres\MathCAT\MathCAT.py:50
@@ -20473,31 +20468,31 @@ msgid "{zoomLevel}x"
 msgstr "{zoomLevel}x"
 
 #. Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
-#: _magnifier\fullscreenMagnifier.py:77
+#: _magnifier\fullscreenMagnifier.py:76
 msgctxt "magnifier"
 msgid "Cannot start magnifier. Another magnifier application may already be running."
 msgstr "Невозможно запустить лупу. Возможно, другое приложение увеличения уже запущено."
 
 #. Translators: Message announced when the magnifier stops due to an unrecoverable error.
-#: _magnifier\fullscreenMagnifier.py:199
+#: _magnifier\fullscreenMagnifier.py:218
 msgctxt "magnifier"
 msgid "Magnifier stopped due to an error. Please restart it."
 msgstr "Лупа остановлена из-за ошибки. Пожалуйста, перезапустите её."
 
 #. Translators: Message when trying to enable magnifier while screen curtain is active
-#: _magnifier\magnifier.py:181
+#: _magnifier\magnifier.py:179
 msgctxt "magnifier"
 msgid "Cannot enable magnifier: screen curtain is active. Please disable screen curtain first."
 msgstr "Не удалось включить лупу: активно затемнение экрана. Сначала отключите затемнение экрана."
 
 #. Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
-#: _magnifier\magnifier.py:272
+#: _magnifier\magnifier.py:268
 msgctxt "magnifier"
 msgid "Magnifier is active, disabling it before enabling screen curtain"
 msgstr "Лупа активна, выключите её перед включением затемнения экрана"
 
 #. Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
-#: _magnifier\magnifier.py:290
+#: _magnifier\magnifier.py:286
 msgctxt "magnifier"
 msgid "Magnifier was active before screen curtain, re-enabling it"
 msgstr "Лупа была активна до затемнения экрана, она снова включена"

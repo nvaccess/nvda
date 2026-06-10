@@ -1631,7 +1631,7 @@ The magnifier offers three different modes for tracking and determining which pa
 
 * Center: The magnified area is centered on the current position.
 This mode keeps the followed element at the center of the screen and clamps to the screen edge.
-To disable clamping, activate [true center mode in the Magnifier settings](#MagnifierUseTrueCenter).
+To disable clamping, activate [true center tracking in the Magnifier settings](#MagnifierUseTrueCenterTracking).
 * Border: The magnified area only moves when the followed element approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
 * Relative: The magnified area maintains the relative position of the followed element with the screen. The magnified area will be centered if the followed element is in the center of the screen, and will be at the edge of the screen if the followed element is at the edge of the screen.
@@ -2914,22 +2914,17 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### Tracking mode {#MagnifierFullscreenTrackingMode}
+##### Use true center {#MagnifierUseTrueCenter}
 
-This combo box allows you to select the tracking mode when using the magnifier.
-To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-The available options are:
+This checkbox controls whether the magnifier should always keep the followed element centered on the screen, or if it should allow the followed element to move towards the edges of the screen before moving the magnified area.
+When enabled, the magnifier will always keep the followed element centered on the screen, which can be helpful for users who prefer a consistent position of the followed element within the magnified view. Getting close to the edge of the screen, users will see out of screen areas.
+
+This option is disabled by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Options | Center, Border, Relative |
-| Default | Center |
-
-| Option | Description |
-|---|---|
-| Center | The magnified area is always centered on the current followed position. |
-| Border | The magnified area only moves when the followed element approaches the edge of the visible area. |
-| Relative | The magnified area maintains the relative position of the followed element within the screen. |
+| Options | Disabled, Enabled |
+| Default | Disabled |
 
 ##### Panning step size {#MagnifierPanningStepSize}
 
@@ -2948,18 +2943,6 @@ Available pan actions include:
 |---|---|
 | Options | 1 to 100 |
 | Default | 10 |
-
-##### Use true center {#MagnifierUseTrueCenter}
-
-This checkbox controls whether the magnifier should always keep the followed element centered on the screen, or if it should allow the followed element to move towards the edges of the screen before moving the magnified area.
-When enabled, the magnifier will always keep the followed element centered on the screen, which can be helpful for users who prefer a consistent position of the followed element within the magnified view. Getting close to the edge of the screen, users will see out of screen areas.
-
-This option is disabled by default.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-| Options | Disabled, Enabled |
-| Default | Disabled |
 
 ##### Follow mouse {#MagnifierFollowMouse}
 
@@ -3008,6 +2991,23 @@ This option is enabled by default.
 |---|---|
 | Options | Disabled, Enabled |
 | Default | Enabled |
+
+##### Tracking mode {#MagnifierFullscreenTrackingMode}
+
+This combo box allows you to select the tracking mode when using the magnifier.
+To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+The available options are:
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Center, Border, Relative |
+| Default | Center |
+
+| Option | Description |
+|---|---|
+| Center | The magnified area is always centered on the current followed position. |
+| Border | The magnified area only moves when the followed element approaches the edge of the visible area. |
+| Relative | The magnified area maintains the relative position of the followed element within the screen. |
 
 #### Keyboard {#KeyboardSettings}
 
