@@ -47,9 +47,16 @@ jobs:
     - name: Set up python
       uses: actions/setup-python@v6
       with:
+        # Keep in sync with defaultPythonVersion in testAndPublish.yml.
         python-version: '3.13.13'
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
+    - name: Settle the uv environment
+      # Ensure the uv environment is up to date before any other prek run.
+      # If the uv environment is outdated, running prek will trigger uv to generate a uv.lock file,
+      # which causes hooks to fail without clear errors because prek fails when files are changed during its run.
+      # On pull_request events the gate below is the first uv run, so settle here to avoid that spurious failure.
+      run: uv run prek run uv-lock --all-files
     # Autofix only on push events (write token), and never react to the bot's
     # own auto-fix commit (loop safety; GITHUB_TOKEN-pushed commits do not
     # re-trigger workflows, but this guards the rare manual re-run case too).
