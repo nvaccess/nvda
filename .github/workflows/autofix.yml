@@ -51,12 +51,11 @@ jobs:
         python-version: '3.13.13'
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
-    - name: Settle the uv environment
-      # Ensure the uv environment is up to date before any other prek run.
-      # If the uv environment is outdated, running prek will trigger uv to generate a uv.lock file,
-      # which causes hooks to fail without clear errors because prek fails when files are changed during its run.
-      # On pull_request events the gate below is the first uv run, so settle here to avoid that spurious failure.
-      run: uv run prek run uv-lock --all-files
+    # prek is run via `uvx` (an ephemeral, isolated tool run) rather than
+    # `uv run`. `uv run` would sync the project environment and could silently
+    # regenerate uv.lock as a side effect, masking a genuinely stale lock and
+    # causing spurious mid-run failures. `uvx` touches no project state, so the
+    # uv-lock hook itself is what gates lock staleness.
     # Autofix only on push events (write token), and never react to the bot's
     # own auto-fix commit (loop safety; GITHUB_TOKEN-pushed commits do not
     # re-trigger workflows, but this guards the rare manual re-run case too).
@@ -68,7 +67,7 @@ jobs:
       run: |
         # Fixers exit non-zero when they change files; that is expected here, so
         # do not let it fail the job.
-        uv run prek run --group autofix --all-files || true
+        uvx prek run --group autofix --all-files || true
         if ! git diff --quiet; then
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
@@ -84,7 +83,7 @@ jobs:
     - name: Lint gate
       shell: bash
       run: |
-        uv run prek run --all-files \
+        uvx prek run --all-files \
           --skip checkPo \
           --skip scons-source \
           --skip checkPot \
