@@ -1,6 +1,9 @@
-# Autofix-or-fail workflow.
-#
-# This replaces pre-commit.ci with native prek. It is a single job with two roles:
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2026 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
+# This flow has a single job with two roles:
 #   - Autofix: on push events, run the fixer hooks (the "autofix" group), commit
 #     any fixes back to the branch, and push them.
 #   - Gate: on every event, run all hooks (minus the heavy/env-bound ones that
@@ -9,7 +12,7 @@
 # The autofix step needs write access. On fork `pull_request` events GitHub
 # downgrades the token to read-only, so autofix is guarded to push events only
 # (it runs in a contributor's fork when they enable Actions, and on NV Access
-# `try-**` branches). On a fork PR with Actions disabled nothing gets fixed, so
+# branches). On a fork PR with Actions disabled nothing gets fixed, so
 # any lint issue fails the gate, forcing a manual fix or enabling fork Actions.
 
 name: Autofix or fail
@@ -27,9 +30,6 @@ on:
       - master
       - beta
       - rc
-
-# contents: write is needed so the autofix step can push fixes back.
-# GitHub automatically downgrades this to read-only on fork pull_request events.
 permissions:
   contents: write
 
