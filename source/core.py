@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
+# Copyright (C) 2006-2026 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -10,7 +10,6 @@ from dataclasses import dataclass
 from typing import (
 	TYPE_CHECKING,
 	Any,
-	List,
 	Optional,
 )
 import comtypes
@@ -135,7 +134,7 @@ def doStartupDialogs():
 		return cliArgument in ("-r", "--replace")
 
 	addonHandler.isCLIParamKnown.register(handleReplaceCLIArg)
-	unknownCLIParams: List[str] = list()
+	unknownCLIParams: list[str] = list()
 	for param in globalVars.unknownAppArgs:
 		isParamKnown = addonHandler.isCLIParamKnown.decide(cliArgument=param)
 		if not isParamKnown:
@@ -324,7 +323,9 @@ def resetConfiguration(factoryDefaults=False):
 	import audio
 	import screenCurtain
 	import mathPres
+	import _magnifier as magnifier
 
+	magnifier.terminate()
 	log.debug("Terminating vision")
 	vision.terminate()
 	log.debug("Terminating Screen Curtain")
@@ -399,6 +400,7 @@ def resetConfiguration(factoryDefaults=False):
 	vision.initialize()
 	log.debug("initializing Screen Curtain")
 	screenCurtain.initialize()
+	magnifier.initialize()
 	log.debug("Reloading user and locale input gesture maps")
 	inputCore.manager.loadUserGestureMap()
 	inputCore.manager.loadLocaleGestureMap()
@@ -731,6 +733,7 @@ def main():
 	# Initialize ART Manager (Add-on Runtime)
 	try:
 		from art.manager import ARTManager
+
 		log.debug("Initializing ART Manager")
 		artManager = ARTManager()
 		artManager.start()
@@ -959,9 +962,14 @@ def main():
 			warnForNonEmptyDirectory=warnForNonEmptyDirectory,
 		)
 	elif not globalVars.appArgs.minimal:
-		try:
+		if screenCurtain.screenCurtain.enabled:
+			# Translators: This is shown on a braille display (if one is connected) when NVDA starts with the screen curtain enabled.
+			initialMessage = _("NVDA started with screen curtain enabled")
+		else:
 			# Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-			braille.handler.message(_("NVDA started"))
+			initialMessage = _("NVDA started")
+		try:
+			braille.handler.message(initialMessage)
 		except:  # noqa: E722
 			log.error("", exc_info=True)
 		if globalVars.appArgs.launcher:
@@ -1062,6 +1070,10 @@ def main():
 
 	sessionTracking.initialize()
 
+	import _magnifier as magnifier
+
+	magnifier.initialize()
+
 	NVDAState._TrackNVDAInitialization.markInitializationComplete()
 
 	log.info("NVDA initialized")
@@ -1088,6 +1100,7 @@ def main():
 		)
 		queueHandler.pumpAll()
 	_terminate(gui)
+	_terminate(magnifier)
 	config.saveOnExit()
 
 	_doLoseFocus()
@@ -1122,6 +1135,7 @@ def main():
 	# Terminate ART Manager before addon handler
 	try:
 		from art.manager import getARTManager
+
 		artManager = getARTManager()
 		if artManager:
 			log.debug("Terminating ART Manager")

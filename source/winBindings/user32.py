@@ -33,7 +33,6 @@ from ctypes.wintypes import (
 	LPDWORD,
 	LPPOINT,
 	LPRECT,
-	LPVOID,
 	PBYTE,
 	PHANDLE,
 	PMSG,
@@ -531,6 +530,21 @@ Determines whether the specified window handle identifies an existing window.
 """
 IsWindow.restype = BOOL
 IsWindow.argtypes = (
+	HWND,  # hWnd: A handle to the window to be tested
+)
+
+IsHungAppWindow = WINFUNCTYPE(None)(("IsHungAppWindow", dll))
+"""
+Determines whether the system considers that a specified application is not responding.
+An application is considered to be not responding if it is not waiting for input,
+is not in startup processing, and has not called PeekMessage within the internal
+timeout period (5 seconds).
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-ishungappwindow
+"""
+IsHungAppWindow.restype = BOOL
+IsHungAppWindow.argtypes = (
 	HWND,  # hWnd: A handle to the window to be tested
 )
 
@@ -1704,6 +1718,7 @@ Retrieves a handle to the Shell's desktop window.
 """
 GetShellWindow.restype = HWND
 GetShellWindow.argtypes = ()
+
 
 class NMHDR(Structure):
 	"""Contains information about a notification message.

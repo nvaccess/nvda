@@ -10,17 +10,19 @@ Contains the command functions and their logic for keyboard shortcuts.
 
 from typing import Literal
 import ui
-from . import getMagnifier, initialize, terminate, changeMagnifiedView
+from . import changeMagnifiedView, getMagnifier, start, stop
 from .config import (
 	getMagnifiedView,
 	setMagnifiedView,
 	getZoomLevelString,
 	getFilter,
-	getFullscreenMode,
-	ZoomLevel,
 	getFollowState,
+	setFilter,
+	getFullscreenMode,
 	setFollowState,
+	setFullscreenMode,
 	toggleAllFollowStates,
+	ZoomLevel,
 )
 from .magnifier import Magnifier
 from .fullscreenMagnifier import FullScreenMagnifier
@@ -34,46 +36,50 @@ from .utils.types import (
 )
 from logHandler import log
 
-PAN_ACTION_TO_EDGE_NAME = {
+PAN_ACTION_TO_EDGE_MESSAGES = {
 	MagnifierAction.PAN_LEFT: pgettext(
 		"magnifier",
-		# Translators: Short name for the left edge, used in messages.
-		"left",
+		# Translators: Message announced when already at left edge of the screen while panning the magnified view
+		"left edge",
 	),
 	MagnifierAction.PAN_RIGHT: pgettext(
 		"magnifier",
-		# Translators: Short name for the right edge, used in messages.
-		"right",
+		# Translators: Message announced when already at right edge of the screen while panning the magnified view
+		"right edge",
 	),
 	MagnifierAction.PAN_UP: pgettext(
 		"magnifier",
-		# Translators: Short name for the top edge, used in messages.
-		"top",
+		# Translators: Message announced when already at top edge of the screen while panning the magnified view
+		"top edge",
 	),
 	MagnifierAction.PAN_DOWN: pgettext(
 		"magnifier",
-		# Translators: Short name for the bottom edge, used in messages.
-		"bottom",
+		# Translators: Message announced when already at bottom edge of the screen while panning the magnified view
+		"bottom edge",
 	),
 	MagnifierAction.PAN_LEFT_EDGE: pgettext(
 		"magnifier",
-		# Translators: Short name for the left edge, used in messages.
-		"left",
+		# Translators: Message announced when already at left edge of the screen while panning the magnified view
+		# to left edge
+		"left edge",
 	),
 	MagnifierAction.PAN_RIGHT_EDGE: pgettext(
 		"magnifier",
-		# Translators: Short name for the right edge, used in messages.
-		"right",
+		# Translators: Message announced when already at right edge of the screen while panning the magnified view
+		# to right edge
+		"right edge",
 	),
 	MagnifierAction.PAN_TOP_EDGE: pgettext(
 		"magnifier",
-		# Translators: Short name for the top edge, used in messages.
-		"top",
+		# Translators: Message announced when already at top edge of the screen while panning the magnified view
+		# to top edge
+		"top edge",
 	),
 	MagnifierAction.PAN_BOTTOM_EDGE: pgettext(
 		"magnifier",
-		# Translators: Short name for the bottom edge, used in messages.
-		"bottom",
+		# Translators: Message announced when already at left edge of the screen while panning the magnified view
+		# to left edge
+		"bottom edge",
 	),
 }
 
@@ -82,10 +88,10 @@ def toggleMagnifier() -> None:
 	"""Toggle the NVDA magnifier on/off"""
 	import screenCurtain
 
-	magnifier: Magnifier = getMagnifier()
+	magnifier: Magnifier | None = getMagnifier()
 	if magnifier and magnifier._isActive:
 		# Stop magnifier
-		terminate()
+		stop()
 		ui.message(
 			pgettext(
 				"magnifier",
@@ -102,10 +108,9 @@ def toggleMagnifier() -> None:
 				"Cannot start magnifier: Screen Curtain is active. Please disable Screen Curtain first.",
 			),
 		)
-		return
 	else:
-		initialize()
-		filter = getFilter()
+		start()
+		currentFilter = getFilter()
 		magnifiedView = getMagnifiedView()
 		zoomLevel = getZoomLevelString()
 		if magnifiedView == MagnifiedView.FULLSCREEN:
@@ -117,7 +122,7 @@ def toggleMagnifier() -> None:
 			).format(
 				magnifiedView=magnifiedView.displayString,
 				zoomLevel=zoomLevel,
-				filter=filter.displayString,
+				filter=currentFilter.displayString,
 				fullscreenMode=fullscreenMode.displayString,
 			)
 		else:
@@ -128,7 +133,7 @@ def toggleMagnifier() -> None:
 			).format(
 				magnifiedView=magnifiedView.displayString,
 				zoomLevel=zoomLevel,
-				filter=filter.displayString,
+				filter=currentFilter.displayString,
 			)
 		ui.message(msg)
 
@@ -150,9 +155,7 @@ def zoom(direction: Direction) -> None:
 		return
 	magnifier._zoom(direction)
 	ui.message(
-		ZoomLevel.ZOOM_MESSAGE.format(
-			zoomLevel=f"{magnifier.zoomLevel:.1f}",
-		),
+		ZoomLevel.zoomMessage(magnifier.zoomLevel),
 	)
 
 
@@ -166,14 +169,16 @@ def pan(action: MagnifierAction) -> None:
 	if magnifierIsActiveVerify(magnifier, action):
 		hasMoved = magnifier._pan(action)
 		if not hasMoved:
-			edgeName = PAN_ACTION_TO_EDGE_NAME.get(action)
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Message announced when arriving at the {edge} edge.
-					"{edge} edge",
-				).format(edge=edgeName),
-			)
+			ui.message(PAN_ACTION_TO_EDGE_MESSAGES[action])
+
+
+def moveMouseToView() -> None:
+	"""
+	Move the mouse cursor to the center of the magnified view.
+	"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(magnifier, MagnifierAction.MOVE_MOUSE_TO_VIEW):
+		magnifier.moveMouseToViewCenter()
 
 
 def toggleFilter() -> None:
@@ -188,8 +193,11 @@ def toggleFilter() -> None:
 		idx = filters.index(magnifier.filterType)
 		magnifier.filterType = filters[(idx + 1) % len(filters)]
 		if magnifier._MAGNIFIED_VIEW == MagnifiedView.FULLSCREEN:
+			assert isinstance(magnifier, FullScreenMagnifier)
 			fullscreenMagnifier: FullScreenMagnifier = magnifier
 			fullscreenMagnifier._applyFilter()
+		setFilter(magnifier.filterType)
+
 		ui.message(
 			pgettext(
 				"magnifier",
@@ -300,6 +308,7 @@ def toggleFullscreenMode() -> None:
 			newMode = modes[(idx + 1) % len(modes)]
 			log.debug(f"Changing full-screen mode from {currentMode} to {newMode}")
 			fullscreenMagnifier._fullscreenMode = newMode
+			setFullscreenMode(newMode)
 			ui.message(
 				pgettext(
 					"magnifier",

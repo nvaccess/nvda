@@ -13,7 +13,6 @@ import NVDAState
 from logHandler import log
 from _bridge.base import Connection, Service
 from _bridge.components.services.synthDriver import SynthDriverService
-from winBindings.jobapi2 import JOB_OBJECT_LIMIT
 import secureProcess
 from _bridge.components.services.nvwave import WavePlayerService
 
@@ -111,6 +110,7 @@ launchConfig_secure = {
 	"applyUIRestrictions": True,
 }
 
+
 def createSynthDriver(name: str, synthDriversPath: str) -> tuple[Connection, SynthDriverService]:
 	"""Start the 32-bit synth driver host process and connect to its RPYC service over the hosts standard pipes.
 	Instructs the host to install proxies that use the given NVDAService for remote calls back into NVDA.
@@ -125,7 +125,7 @@ def createSynthDriver(name: str, synthDriversPath: str) -> tuple[Connection, Syn
 		killOnDelete=True,
 		createNoWindow=True,
 		hideCriticalErrorDialogs=True,
-		**launchConfig
+		**launchConfig,
 	)
 	log.debug("Creating PipeStream over host process std pipes")
 	stream = PipeStream(hostProc.stdout, hostProc.stdin)
@@ -135,7 +135,7 @@ def createSynthDriver(name: str, synthDriversPath: str) -> tuple[Connection, Syn
 	conn.bgEventLoop(daemon=True)
 	log.debug("Connection to synthDriverHost32 process RPYC service established")
 
-	conn.remoteService.installProxies(service, brokerAudio=True)
+	conn.remoteService.installProxies(service, brokerAudio=False)
 	log.debug("Creating SynthDriverProxy over remote SynthDriverService")
 	conn.remoteService.registerSynthDriversPath(synthDriversPath)
 	synthDriverService = conn.remoteService.SynthDriver(name)

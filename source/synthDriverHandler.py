@@ -345,15 +345,21 @@ class SynthDriver(driverHandler.Driver):
 		"""
 		if lang is None:
 			return True
+		normalizedLang = languageHandler.normalizeLanguage(lang)
+		if normalizedLang is None:
+			return False
+		rootLang = normalizedLang.split("_")[0]
+		normalizedAvailableLangs: set[str] = set()
 		for availableLang in self.availableLanguages:
-			if (
-				lang == languageHandler.normalizeLanguage(availableLang)
-				or lang == languageHandler.normalizeLanguage(availableLang).split("_")[0]
-			):
-				return True
-		rootLang = languageHandler.normalizeLanguage(lang).split("_")[0]
-		fallbackLang = f"{rootLang}-{rootLang}"
-		if fallbackLang in self.availableLanguages:
+			if availableLang is None:
+				continue
+			normalizedAvailableLang = languageHandler.normalizeLanguage(availableLang)
+			if normalizedAvailableLang is None:
+				continue
+			normalizedAvailableLangs.add(normalizedAvailableLang)
+		if normalizedLang in normalizedAvailableLangs:
+			return True
+		if any(rootLang == availableLang.split("_")[0] for availableLang in normalizedAvailableLangs):
 			return True
 		return False
 
@@ -462,7 +468,7 @@ def _getSynthDriver(name: str) -> type[SynthDriver]:
 		log.debug(f"Loading ART synthesizer proxy for {name}")
 		module = sys.modules[f"synthDrivers.{name}"]
 		return module.SynthDriver
-	
+
 	# Regular synthesizer - use normal import
 	log.debug(f"Loading regular synthesizer {name}")
 	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
@@ -492,17 +498,18 @@ def getSynthList() -> list[tuple[str, str]]:
 				log.debugWarning("Synthesizer '%s' doesn't pass the check, excluding from list" % name)
 		except:  # noqa: E722 # Legacy bare except
 			log.error("", exc_info=True)
-	
+
 	# Add ART synthesizers to the list
 	try:
 		from art.manager import getARTManager
+
 		artManager = getARTManager()
 		if artManager:
 			# Get ART synths and avoid duplicates
 			existingNames = {name for name, desc in synthList}
 			if lastSynth:
 				existingNames.add(lastSynth[0])
-			
+
 			artSynthList = artManager.getAvailableSynthList()
 			for name, description in artSynthList:
 				if name not in existingNames:
@@ -511,10 +518,10 @@ def getSynthList() -> list[tuple[str, str]]:
 					log.debugWarning(f"ART synth '{name}' conflicts with existing synth, skipping")
 	except Exception:
 		log.debugWarning("Failed to query ART synthesizers", exc_info=True)
-	
+
 	# Sort the list to include any added ART synths and maintain order
 	synthList.sort(key=lambda s: strxfrm(s[1]))
-	
+
 	if lastSynth:
 		synthList.append(lastSynth)
 	return synthList
