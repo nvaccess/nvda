@@ -63,10 +63,8 @@ class _OffsetsTextInfoMeta(type(textInfos.TextInfo)):
 		type.__setattr__(self, "_useUniscribeOverride", legacyUseUniscribe)
 
 	def __getattribute__(self, name: str) -> Any:
-		if name != "useUniscribe":
+		if name != "useUniscribe" or not NVDAState._allowDeprecatedAPI():
 			return super().__getattribute__(name)
-		if not NVDAState._allowDeprecatedAPI():
-			raise AttributeError(f"'{self.__name__}' has no attribute 'useUniscribe'")
 		_warnUseUniscribeDeprecated()
 		override = _getUseUniscribeClassOverride(self)
 		if override is not None:
@@ -74,12 +72,8 @@ class _OffsetsTextInfoMeta(type(textInfos.TextInfo)):
 		return type.__getattribute__(self, "charSegFlag") == CharSegFlag.UNISCRIBE
 
 	def __setattr__(self, name: str, value: Any) -> None:
-		if name != "useUniscribe":
-			super().__setattr__(name, value)
-			return
-		if not NVDAState._allowDeprecatedAPI():
-			super().__setattr__(name, value)
-			return
+		if name != "useUniscribe" or not NVDAState._allowDeprecatedAPI():
+			return super().__setattr__(name, value)
 		_warnUseUniscribeDeprecated()
 		type.__setattr__(self, "_useUniscribeOverride", bool(value))
 
