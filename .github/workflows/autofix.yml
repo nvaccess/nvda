@@ -40,12 +40,10 @@ concurrency:
 jobs:
   autofix:
     name: Auto-fix and lint gate
-    runs-on: ubuntu-latest
+    runs-on: windows-2025-vs2026
     steps:
     - name: Checkout repository
       uses: actions/checkout@v6
-      with:
-        submodules: true
     - name: Set up python
       uses: actions/setup-python@v6
       with:
