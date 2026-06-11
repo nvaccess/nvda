@@ -18,6 +18,10 @@ permissions:
 jobs:
   prekAutoUpdate:
     name: Prek auto-update
+    # Upstream-only maintenance task. Forks enable Actions for the autofix
+    # workflow; without this guard they would also run this schedule and open
+    # spurious auto-update PRs against their own fork.
+    if: github.repository == 'nvaccess/nvda'
     runs-on: ubuntu-latest
     steps:
       # Auto-update only rewrites hook revisions in prek.toml,
