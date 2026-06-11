@@ -44,10 +44,9 @@ jobs:
         crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
 
-    - name: Install prek Git hooks
-      run: uv run prek install
-
-    # Job will fail if prek checks fail
+    # Linting is handled by the autofix-or-fail workflow, which runs on the push
+    # of the addLanguage branch below (a non-protected branch); no local hook is
+    # installed here.
     - name: Commit language files only
       id: commit
       shell: bash
