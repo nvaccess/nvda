@@ -50,6 +50,24 @@ from .speech import convertSSMLTextForNVDA
 SCRCAT_MATHCAT_NAV = _("MathCat navigation")
 
 
+class MathCATError(Exception):
+	"""MathCAT failure, including Rust panics from PyO3."""
+
+
+def _callMathCAT(func, /, *args, **kwargs):
+	"""Call libmathcat, translating PyO3 panics into MathCATError."""
+	try:
+		return func(*args, **kwargs)
+	except Exception:
+		raise
+	except BaseException as exc:
+		if isinstance(exc, (KeyboardInterrupt, SystemExit)):
+			raise
+		if type(exc).__name__ == "PanicException" and type(exc).__module__ == "pyo3_runtime":
+			raise MathCATError(str(exc)) from exc
+		raise
+
+
 class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 	"""An NVDA object used to interact with MathML."""
 
@@ -84,7 +102,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		"""Calls MathCAT's ZoomIn command and speaks the resulting text."""
 		super(MathCATInteraction, self).reportFocus()
 		try:
-			text: str = libmathcat.DoNavigateCommand("ZoomIn")
+			text: str = _callMathCAT(libmathcat.DoNavigateCommand, "ZoomIn")
 			speech.speak(convertSSMLTextForNVDA(text))
 		except Exception:
 			log.exception()
@@ -100,7 +118,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		region: braille.Region = braille.Region()
 		region.focusToHardLeft = True
 		try:
-			region.rawText = libmathcat.GetBraille("")
+			region.rawText = _callMathCAT(libmathcat.GetBraille, "")
 		except Exception:
 			log.exception()
 			# Translators: this message alerts users to an error in brailling math.
@@ -115,7 +133,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		:param commandName: The MathCAT command name (e.g. "MovePrevious").
 		"""
 		try:
-			text = libmathcat.DoNavigateCommand(commandName)
+			text = _callMathCAT(libmathcat.DoNavigateCommand, commandName)
 			speech.speak(convertSSMLTextForNVDA(text))
 		except Exception:
 			log.exception()
@@ -130,8 +148,8 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			return
 
 		try:
-			navNode: tuple[str, int] = libmathcat.GetNavigationMathMLId()
-			brailleChars = libmathcat.GetBraille(navNode[0])
+			navNode: tuple[str, int] = _callMathCAT(libmathcat.GetNavigationMathMLId)
+			brailleChars = _callMathCAT(libmathcat.GetBraille, navNode[0])
 			region: braille.Region = braille.Region()
 			region.rawText = brailleChars
 			region.focusToHardLeft = True
@@ -178,19 +196,21 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			copyAs: str = "mathml"  # value used even if "CopyAs" pref is invalid
 			textToCopy: str = ""
 			try:
-				copyAs = libmathcat.GetPreference("CopyAs").lower()
+				copyAs = _callMathCAT(libmathcat.GetPreference, "CopyAs").lower()
 			except Exception:
 				log.exception("Not able to get 'CopyAs' preference.")
 			if copyAs == "asciimath" or copyAs == "latex":
 				# save the old braille code, set the new one, get the braille, then reset the code
-				savedBrailleCode: str = libmathcat.GetPreference("BrailleCode")
-				libmathcat.SetPreference("BrailleCode", "LaTeX" if copyAs == "latex" else "ASCIIMath")
-				textToCopy = libmathcat.GetNavigationBraille()
-				libmathcat.SetPreference("BrailleCode", savedBrailleCode)
+				savedBrailleCode: str = _callMathCAT(libmathcat.GetPreference, "BrailleCode")
+				_callMathCAT(
+					libmathcat.SetPreference, "BrailleCode", "LaTeX" if copyAs == "latex" else "ASCIIMath"
+				)
+				textToCopy = _callMathCAT(libmathcat.GetNavigationBraille)
+				_callMathCAT(libmathcat.SetPreference, "BrailleCode", savedBrailleCode)
 				if copyAs == "asciimath":
 					copyAs = "ASCIIMath"  # speaks better in at least some voices
 			else:
-				mathml: str = libmathcat.GetNavigationMathML()[0]
+				mathml: str = _callMathCAT(libmathcat.GetNavigationMathML)[0]
 				if not re.match(self._startsWithMath, mathml):
 					mathml = "<math>\n" + mathml + "</math>"  # copy will fix up name spacing
 				elif self.initMathML != "":
@@ -198,15 +218,15 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 				if copyAs == "speech":
 					# save the old MathML, set the navigation MathML as MathMl, get the speech, then reset the MathML
 					savedMathML: str = self.initMathML
-					savedTTS: str = libmathcat.GetPreference("TTS")
+					savedTTS: str = _callMathCAT(libmathcat.GetPreference, "TTS")
 					if savedMathML == "":  # shouldn't happen
 						raise Exception("Internal error -- MathML not set for copy")
-					libmathcat.SetPreference("TTS", "None")
-					libmathcat.SetMathML(mathml)
+					_callMathCAT(libmathcat.SetPreference, "TTS", "None")
+					_callMathCAT(libmathcat.SetMathML, mathml)
 					# get the speech text and collapse the whitespace
-					textToCopy = " ".join(libmathcat.GetSpokenText().split())
-					libmathcat.SetPreference("TTS", savedTTS)
-					libmathcat.SetMathML(savedMathML)
+					textToCopy = " ".join(_callMathCAT(libmathcat.GetSpokenText).split())
+					_callMathCAT(libmathcat.SetPreference, "TTS", savedTTS)
+					_callMathCAT(libmathcat.SetMathML, savedMathML)
 				else:
 					textToCopy = self._wrapMathMLForClipBoard(mathml)
 
@@ -306,9 +326,9 @@ class MathCAT(mathPres.MathPresentationProvider):
 				ReadPaths.mathCATDir,
 				"Rules",
 			)
-			log.info(f"MathCAT {libmathcat.GetVersion()} installed. Using rules dir: {rulesDir}")
-			libmathcat.SetRulesDir(rulesDir)
-			libmathcat.SetPreference("TTS", "SSML")
+			log.info(f"MathCAT {_callMathCAT(libmathcat.GetVersion)} installed. Using rules dir: {rulesDir}")
+			_callMathCAT(libmathcat.SetRulesDir, rulesDir)
+			_callMathCAT(libmathcat.SetPreference, "TTS", "SSML")
 			applyUserPreferences()
 		except Exception:
 			log.exception()
@@ -330,35 +350,38 @@ class MathCAT(mathPres.MathPresentationProvider):
 			# need to set Language before the MathML for DecimalSeparator canonicalization
 			language: str = getLanguageToUse()
 			# MathCAT should probably be extended to accept "extlang" tagging, but it uses lang-region tagging at the moment
-			libmathcat.SetPreference("Language", language)
-			libmathcat.SetMathML(mathml)
+			_callMathCAT(libmathcat.SetPreference, "Language", language)
+			_callMathCAT(libmathcat.SetMathML, mathml)
 		except Exception:
-			log.exception()
-			log.exception(f"MathML is {mathml}")
+			log.exception(f"Invalid MathML: {mathml}")
 			# Translators: this message reports when invalid math is found.
 			ui.message(pgettext("math", "Invalid math formatting found"))
-			libmathcat.SetMathML("<math></math>")
+			_callMathCAT(libmathcat.SetMathML, "<math></math>")
 		try:
 			supportedCommands: set[Type["SynthCommand"]] = synth.supportedCommands
 			# Set preferences for capital letters
-			libmathcat.SetPreference(
+			_callMathCAT(
+				libmathcat.SetPreference,
 				"CapitalLetters_Beep",
 				"true" if synthConfig["beepForCapitals"] else "false",
 			)
-			libmathcat.SetPreference(
+			_callMathCAT(
+				libmathcat.SetPreference,
 				"CapitalLetters_UseWord",
 				"true" if synthConfig["sayCapForCapitals"] else "false",
 			)
 			if PitchCommand in supportedCommands:
-				libmathcat.SetPreference("CapitalLetters_Pitch", str(synthConfig["capPitchChange"]))
+				_callMathCAT(
+					libmathcat.SetPreference, "CapitalLetters_Pitch", str(synthConfig["capPitchChange"])
+				)
 			if self._addSounds():
 				return (
 					[BeepCommand(800, 25)]
-					+ convertSSMLTextForNVDA(libmathcat.GetSpokenText())
+					+ convertSSMLTextForNVDA(_callMathCAT(libmathcat.GetSpokenText))
 					+ [BeepCommand(600, 15)]
 				)
 			else:
-				return convertSSMLTextForNVDA(libmathcat.GetSpokenText())
+				return convertSSMLTextForNVDA(_callMathCAT(libmathcat.GetSpokenText))
 
 		except Exception:
 			log.exception()
@@ -372,7 +395,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 		:returns: True if MathCAT's `SpeechSound` preference is set, and False otherwise.
 		"""
 		try:
-			return libmathcat.GetPreference("SpeechSound") != "None"
+			return _callMathCAT(libmathcat.GetPreference, "SpeechSound") != "None"
 		except Exception:
 			log.exception()
 			return False
@@ -384,14 +407,14 @@ class MathCAT(mathPres.MathPresentationProvider):
 		:returns: A braille string representing the input MathML.
 		"""
 		try:
-			libmathcat.SetMathML(mathml)
+			_callMathCAT(libmathcat.SetMathML, mathml)
 		except Exception:
-			log.exception(f"MathML is {mathml}")
+			log.exception(f"Illegal MathML: {mathml}")
 			# Translators: this message reports illegal MathML.
 			ui.message(pgettext("math", "Illegal MathML found."))
-			libmathcat.SetMathML("<math></math>")
+			_callMathCAT(libmathcat.SetMathML, "<math></math>")
 		try:
-			return libmathcat.GetBraille("")
+			return _callMathCAT(libmathcat.GetBraille, "")
 		except Exception:
 			log.exception()
 			# Translators: this message reports an error in brailling math.
