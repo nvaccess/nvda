@@ -27,6 +27,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 #### Deprecations
 
 * The `braille.wordWrap` configuration key is deprecated and bridged to `braille.textWrap`. (#17010, @LeonarddeR)
+* In `touchTracker`, the module-level `action_*` string constants (`action_tap`, `action_hold`, `action_tapAndHold`, `action_flickUp`, `action_flickDown`, `action_flickLeft`, `action_flickRight`, `action_hoverDown`, `action_hover`, `action_hoverUp`, `action_unknown`, `action_pinchIn`, `action_pinchOut`) are deprecated. Use the corresponding `TouchAction` enum members instead (e.g. `TouchAction.TAP`, `TouchAction.FLICK_UP`). (#19938, @kefaslungu)
+* In `touchTracker`, `actionLabels` is deprecated. Use `TouchAction(value).displayString` instead. (#19938, @kefaslungu)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
