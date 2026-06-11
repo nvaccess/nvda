@@ -44,6 +44,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v6
+      with:
+        submodules: true
     - name: Set up python
       uses: actions/setup-python@v6
       with:
@@ -51,6 +53,8 @@ jobs:
         python-version: '3.13.13'
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
+      with:
+        activate-environment: "false"
     # prek is run via `uvx` (an ephemeral, isolated tool run) rather than
     # `uv run`. `uv run` would sync the project environment and could silently
     # regenerate uv.lock as a side effect, masking a genuinely stale lock and
