@@ -453,7 +453,7 @@ class SettingsPanel(
 		self,
 		message: str,
 		option: str,
-		category: Optional[str] = None
+		category: Optional[str] = None,
 	):
 		if category is None:
 			category = self.title
