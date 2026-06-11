@@ -44,6 +44,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v6
+      with:
+        submodules: true
     - name: Set up python
       uses: actions/setup-python@v6
       with:
