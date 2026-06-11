@@ -61,8 +61,13 @@ jobs:
     # causing spurious mid-run failures. `uvx` touches no project state, so the
     # uv-lock hook itself is what gates lock staleness.
     # Autofix only on push events (write token), and never react to the bot's
-    # own auto-fix commit (loop safety; GITHUB_TOKEN-pushed commits do not
-    # re-trigger workflows, but this guards the rare manual re-run case too).
+    # own auto-fix commit. A commit pushed with this repo's GITHUB_TOKEN does
+    # not re-trigger this repo's own push workflow, so the fix commit cannot
+    # loop back into another autofix run here; the actor guard below just
+    # covers the rare manual re-run case too. (Note: on a fork PR the fix
+    # commit DOES start a fresh pull_request run on the base repo, since that
+    # is a different repository - but it lands as "action required" pending
+    # maintainer approval because the bot is the triggering actor.)
     - name: Apply prek auto-fixes
       if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
       shell: bash
