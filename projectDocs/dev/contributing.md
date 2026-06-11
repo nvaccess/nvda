@@ -94,9 +94,9 @@ Refer to ["Proposing Major Changes"](./proposingMajorChanges.md) before opening 
 		* Consider if the PR should be made against `beta` or `rc` in the case of addressing bugs introduced in the current release cycle.
 	1. CI/CD testing:
 		* Every time a PR has a commit pushed to it, CI/CD checks will be run
-		* [pre-commit.ci](https://pre-commit.ci/) will apply linting fixes.
-			* re-run pre-commit on a pull request by commenting `pre-commit.ci run`.
-			* prevent pre-commit from pushing by putting `[skip ci]`, `[ci skip]`, `[skip pre-commit.ci]`, or `[pre-commit.ci skip]` in the commit message.
+		* GitHub Actions runs a lint check on every PR, which fails until any lint issues are fixed.
+			* To have lint fixes applied and pushed automatically, enable GitHub Actions on your fork so the autofix workflow runs on your branch pushes.
+			* Otherwise, fix the reported lint issues manually.
 		* GitHub Actions will build a copy of NVDA when changes are pushed to your PR.
 		A build artifact will be created for a successful build to allow for testing the PR.
 		* GitHub Actions will run system tests and other tests.

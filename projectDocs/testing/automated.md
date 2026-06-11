@@ -3,20 +3,25 @@
 If you make a change to the NVDA code, you should run NVDA's automated tests.
 These tests help to ensure that code changes do not unintentionally break functionality that was previously working.
 
-## Pre-commit hooks
+## Git hooks (prek)
 
-Pre-commit hooks can be used to automatically run linting, translatable string checks and unit tests on files staged for commit.
+Git hooks can be used to automatically run linting, translatable string checks and unit tests on files staged for commit.
 This will automatically apply lint fixes where possible, and will cancel the commit on lint issues and other test failures.
-NVDA uses [prek](https://prek.j178.dev/), a faster, drop-in compatible alternative to [pre-commit](https://pre-commit.com/) that reads the same `.pre-commit-config.yaml`.
+NVDA uses [prek](https://prek.j178.dev/), a faster, drop-in compatible alternative to [pre-commit](https://pre-commit.com/).
+The hooks are configured in prek's native `prek.toml`.
+
+There are two ways to run prek, and the examples below use both:
+
+* Via the project's uv environment, prefixing commands with `uv run` (e.g. `uv run prek install`). This needs no separate installation.
+* Via a global install, calling `prek` directly (e.g. `prek install`). Install it once with `uv tool install prek`.
 
 From a shell, [set up the Git hooks](https://prek.j178.dev/reference/cli/#prek-install) for your NVDA python environment:
 
 `uv run prek install`
 
-Alternatively, set up the Git hooks globally:
+Alternatively, if you installed prek globally, set up the Git hooks with:
 
-1. `uv tool install prek`
-1. `prek install --allow-missing-config`
+`prek install --allow-missing-config`
 
 To skip the hooks from triggering, use the `--no-verify` CLI option.
 Example: `git commit -m "message" --no-verify`.
@@ -29,6 +34,7 @@ Run `uv run prek install -f` once to overwrite it with the prek hook.
 ### Manually running hooks
 
 You can run the hooks manually with [`prek run`](https://prek.j178.dev/reference/cli/#prek-run).
+The examples below use the project's uv environment (`uv run prek run …`); if you installed prek globally, drop the `uv run` prefix and call `prek run …` directly.
 
 * You can filter files with `--files` and `--all-files`
 * You can also compare two revisions:

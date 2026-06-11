@@ -34,7 +34,8 @@
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * The local Git hook runner has been switched from [pre-commit](https://pre-commit.com/) to [prek](https://prek.j178.dev/), a faster, drop-in compatible alternative. (#20305, @LeonarddeR)
-  * The existing `.pre-commit-config.yaml` and the [pre-commit.ci](https://pre-commit.ci/) integration are unchanged.
+  * Hooks are now configured in prek's native `prek.toml` instead of `.pre-commit-config.yaml`.
+  * The [pre-commit.ci](https://pre-commit.ci/) integration has been dropped entirely; linting and autofixing now run via GitHub Actions, using an autofix-or-fail workflow plus a monthly `prek auto-update` workflow.
   * Developers who previously ran `pre-commit install` should run `uv run prek install -f` once to replace the installed Git hook.
 * `braille.BrailleDisplayGesture` now exposes a `cellIndexes` list attribute, replacing the single-valued `routingIndex`. (#20001, @LeonarddeR)
   * Drivers should set `cellIndexes` directly instead of `routingIndex`.
