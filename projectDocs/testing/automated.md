@@ -12,8 +12,10 @@ The hooks are configured in prek's native `prek.toml`.
 
 There are two ways to run prek, and the examples below use both:
 
-* Via the project's uv environment, prefixing commands with `uv run` (e.g. `uv run prek install`). This needs no separate installation.
-* Via a global install, calling `prek` directly (e.g. `prek install`). Install it once with `uv tool install prek`.
+* Via the project's uv environment, prefixing commands with `uv run` (e.g. `uv run prek install`).
+  This needs no separate installation.
+* Via a global install, calling `prek` directly (e.g. `prek install`).
+  Install it once with `uv tool install prek`.
 
 From a shell, [set up the Git hooks](https://prek.j178.dev/reference/cli/#prek-install) for your NVDA python environment:
 
