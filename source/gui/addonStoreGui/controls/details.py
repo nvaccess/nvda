@@ -129,7 +129,7 @@ class AddonDetails(
 		self.contents.Add(self.actionsButton)
 		self.actionsButton.Bind(
 			event=wx.EVT_BUTTON,
-			handler=lambda e: self._actionsContextMenu.popupContextMenuFromPosition(
+			handler=lambda e: self.Parent.addonListView._contextMenu.popupContextMenuFromPosition(
 				self,
 				self.actionsButton.Position,
 			),
@@ -213,7 +213,12 @@ class AddonDetails(
 			# SetDefaultStyle, however, this means the text control must start empty.
 			self.otherDetailsTextCtrl.SetValue("")
 			if numSelectedAddons > 1:
-				self.contentsPanel.Hide()
+				self.contentsPanel.Show()
+				self.actionsButton.Show()
+				self.descriptionLabel.Hide()
+				self.descriptionTextCtrl.Hide()
+				self.otherDetailsLabel.Hide()
+				self.otherDetailsTextCtrl.Hide()
 				self.updateAddonName(
 					npgettext(
 						"addonStore",
@@ -226,6 +231,11 @@ class AddonDetails(
 				)
 			elif not details:
 				self.contentsPanel.Hide()
+				self.actionsButton.Hide()
+				self.descriptionLabel.Hide()
+				self.descriptionTextCtrl.Hide()
+				self.otherDetailsLabel.Hide()
+				self.otherDetailsTextCtrl.Hide()
 				if self._detailsVM._listVM._isLoading:
 					self.updateAddonName(AddonDetails._loadingAddonsLabelText)
 				else:
@@ -391,6 +401,11 @@ class AddonDetails(
 						)
 
 				self.contentsPanel.Show()
+				self.actionsButton.Show()
+				self.descriptionLabel.Show()
+				self.descriptionTextCtrl.Show()
+				self.otherDetailsLabel.Show()
+				self.otherDetailsTextCtrl.Show()
 
 		self.Layout()
 		# Set caret/insertion point at the beginning so that NVDA users can more easily read from the start.
