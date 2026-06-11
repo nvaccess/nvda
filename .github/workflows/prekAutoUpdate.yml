@@ -24,12 +24,15 @@ jobs:
       # so submodule content is not needed.
       - name: Checkout code
         uses: actions/checkout@v6
-      - name: Install the latest version of uv
-        uses: astral-sh/setup-uv@v7
-      # Run prek as an ephemeral tool; it only edits prek.toml
-      # and does not need the project environment.
+      # Install prek as a standalone binary; auto-update only rewrites hook
+      # revisions in prek.toml, so neither uv nor the project environment is
+      # needed. The cargo-dist installer adds prek to $GITHUB_PATH.
+      - name: Install prek
+        run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/j178/prek/releases/latest/download/prek-installer.sh | sh
+      # --cooldown-days skips releases younger than 3 days, avoiding pinning to
+      # a freshly published (and potentially yanked/broken) hook revision.
       - name: Run prek auto-update
-        run: uvx prek auto-update
+        run: prek auto-update --cooldown-days 3
       - name: Create pull request
         uses: peter-evans/create-pull-request@v7
         with:

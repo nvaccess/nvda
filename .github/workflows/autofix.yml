@@ -84,13 +84,18 @@ jobs:
     # Blocking lint gate: runs on every event. The 6 skipped hooks are the
     # heavy / environment-bound checks that have their own dedicated jobs in
     # testAndPublish.yml. A non-zero exit here fails the job.
+    # Run via prek-action (not `uvx prek`) so prek's hook environments are
+    # cached across runs. The action installs prek standalone, so it does not
+    # touch uv.lock; on push events the gate runs against the tree already
+    # fixed by the autofix step above.
     - name: Lint gate
-      shell: bash
-      run: |
-        uvx prek run --all-files \
-          --skip checkPo \
-          --skip scons-source \
-          --skip checkPot \
-          --skip unitTest \
-          --skip licenseCheck \
+      uses: j178/prek-action@v2
+      with:
+        extra-args: >-
+          --all-files
+          --skip checkPo
+          --skip scons-source
+          --skip checkPot
+          --skip unitTest
+          --skip licenseCheck
           --skip pyright
