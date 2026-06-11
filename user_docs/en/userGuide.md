@@ -613,7 +613,6 @@ Therefore, gestures such as 2-finger flick up and 4-finger flick left are all po
 
 Place two fingers on the screen and move them toward each other to perform a pinch in gesture.
 Move them away from each other to perform a pinch out gesture.
-The fingers must move at least 50 pixels closer together or further apart to be recognised as a pinch in or out.
 
 #### Touch Modes {#TouchModes}
 
