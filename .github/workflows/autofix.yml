@@ -1,0 +1,86 @@
+# Autofix-or-fail workflow.
+#
+# This replaces pre-commit.ci with native prek. It is a single job with two roles:
+#   - Autofix: on push events, run the fixer hooks (the "autofix" group), commit
+#     any fixes back to the branch, and push them.
+#   - Gate: on every event, run all hooks (minus the heavy/env-bound ones that
+#     have their own dedicated jobs in testAndPublish.yml) as a blocking check.
+#
+# The autofix step needs write access. On fork `pull_request` events GitHub
+# downgrades the token to read-only, so autofix is guarded to push events only
+# (it runs in a contributor's fork when they enable Actions, and on NV Access
+# `try-**` branches). On a fork PR with Actions disabled nothing gets fixed, so
+# any lint issue fails the gate, forcing a manual fix or enabling fork Actions.
+
+name: Autofix or fail
+
+on:
+  push:
+    # Never auto-fix or push to the protected branches; PRs targeting them are
+    # handled by the pull_request trigger below.
+    branches-ignore:
+      - master
+      - beta
+      - rc
+  pull_request:
+    branches:
+      - master
+      - beta
+      - rc
+
+# contents: write is needed so the autofix step can push fixes back.
+# GitHub automatically downgrades this to read-only on fork pull_request events.
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  autofix:
+    name: Auto-fix and lint gate
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6
+    - name: Set up python
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.13.13'
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v7
+    # Autofix only on push events (write token), and never react to the bot's
+    # own auto-fix commit (loop safety; GITHUB_TOKEN-pushed commits do not
+    # re-trigger workflows, but this guards the rare manual re-run case too).
+    - name: Apply prek auto-fixes
+      if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
+      shell: bash
+      env:
+        REF_NAME: ${{ github.ref_name }}
+      run: |
+        # Fixers exit non-zero when they change files; that is expected here, so
+        # do not let it fail the job.
+        uv run prek run --group autofix --all-files || true
+        if ! git diff --quiet; then
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add -A
+          git commit -m "Auto-fix: apply prek fixes"
+          # Push via an explicit refspec so this works even if checkout left us
+          # in a detached HEAD state.
+          git push origin HEAD:"$REF_NAME"
+        fi
+    # Blocking lint gate: runs on every event. The 6 skipped hooks are the
+    # heavy / environment-bound checks that have their own dedicated jobs in
+    # testAndPublish.yml. A non-zero exit here fails the job.
+    - name: Lint gate
+      shell: bash
+      run: |
+        uv run prek run --all-files \
+          --skip checkPo \
+          --skip scons-source \
+          --skip checkPot \
+          --skip unitTest \
+          --skip licenseCheck \
+          --skip pyright
