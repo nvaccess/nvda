@@ -18,6 +18,12 @@ import braille
 import config
 import gui
 import libmathcat_py as libmathcat
+
+try:
+	from pyo3_runtime import PanicException
+except ImportError:
+	PanicException = None  # type: ignore[misc, assignment]
+
 import speech
 import ui
 import winKernel
@@ -54,16 +60,20 @@ class MathCATError(Exception):
 	"""MathCAT failure, including Rust panics from PyO3."""
 
 
+def _isPyO3Panic(exc: BaseException) -> bool:
+	if PanicException is not None and isinstance(exc, PanicException):
+		return True
+	return type(exc).__name__ == "PanicException" and type(exc).__module__ == "pyo3_runtime"
+
+
 def _callMathCAT(func, /, *args, **kwargs):
 	"""Call libmathcat, translating PyO3 panics into MathCATError."""
 	try:
 		return func(*args, **kwargs)
-	except Exception:
-		raise
 	except BaseException as exc:
-		if isinstance(exc, (KeyboardInterrupt, SystemExit)):
+		if isinstance(exc, (KeyboardInterrupt, SystemExit, GeneratorExit)):
 			raise
-		if type(exc).__name__ == "PanicException" and type(exc).__module__ == "pyo3_runtime":
+		if _isPyO3Panic(exc):
 			raise MathCATError(str(exc)) from exc
 		raise
 
