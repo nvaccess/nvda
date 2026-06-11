@@ -1077,8 +1077,6 @@ This mode allows users to navigate structural elements of a document using touch
 
 In browse touch mode, flick gestures are used to move between common document elements such as links, buttons, headings, form fields, landmarks, and other document structures.
 
-This feature is intended to provide touch users with efficient, structured navigation that mirrors existing browse mode functionality.
-
 ##### Touch gestures in browse mode
 
 <!-- KC:beginInclude -->
