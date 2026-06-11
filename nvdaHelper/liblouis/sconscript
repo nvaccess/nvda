@@ -49,7 +49,7 @@ def getLouisVersion():
 if not env.WhereIs("clang-cl"):
 	raise RuntimeError(
 		"Could not find the Clang compiler. "
-		"Perhaps the C++ Clang tools for Windows component in visual Studio is not installed",
+		"Perhaps the C++ Clang tools for Windows component in Visual Studio is not installed?",
 	)
 env["CC"] = "clang-cl"
 env["M4"] = f'"{env.File("#miscdeps/tools/m4.exe")}"'
