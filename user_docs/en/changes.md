@@ -58,7 +58,6 @@ Use the `cellIndexes` attribute instead. (#20028, @LeonarddeR)
 * `brailleDisplayDrivers.freedomScientific.RoutingGesture` is deprecated.
 Use `KeyGesture` instead. (#20250, @LeonarddeR)
 * The `braille.wordWrap` configuration key is deprecated and bridged to `braille.textWrap`. (#20146, @LeonarddeR)
-Use `KeyGesture` instead. (#20077, @LeonarddeR)
 * The `useUniscribe` attribute of `textInfos.offsets.OffsetsTextInfo` and its subclasses is deprecated, use `charSegFlag` and `wordSegFlag` instead. (#20183)
 * In `touchTracker`, the module-level `action_*` string constants are deprecated.
 Use the corresponding `TouchAction` enum members instead (e.g. `TouchAction.TAP`, `TouchAction.FLICK_UP`). (#20086, @kefaslungu)
