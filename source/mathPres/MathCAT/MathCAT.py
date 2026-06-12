@@ -19,11 +19,6 @@ import config
 import gui
 import libmathcat_py as libmathcat
 
-try:
-	from pyo3_runtime import PanicException
-except ImportError:
-	PanicException = None  # type: ignore[misc, assignment]
-
 import speech
 import ui
 import winKernel
@@ -61,8 +56,8 @@ class MathCATError(Exception):
 
 
 def _isPyO3Panic(exc: BaseException) -> bool:
-	if PanicException is not None and isinstance(exc, PanicException):
-		return True
+	# libmathcat_py raises pyo3_runtime.PanicException (BaseException), but pyo3_runtime
+	# is not importable as a standalone module in NVDA's shipped layout.
 	return type(exc).__name__ == "PanicException" and type(exc).__module__ == "pyo3_runtime"
 
 
