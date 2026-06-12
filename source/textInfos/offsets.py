@@ -38,9 +38,17 @@ def _warnUseUniscribeDeprecated() -> None:
 	)
 
 
+def _getUseUniscribeClassOverride(textInfoClass: type) -> bool | None:
+	for klass in textInfoClass.__mro__:
+		override = klass.__dict__.get("_useUniscribeOverride")
+		if override is not None:
+			return bool(override)
+	return None
+
+
 class _OffsetsTextInfoMeta(type(textInfos.TextInfo)):
 	def __init__(
-		cls,
+		self,
 		name: str,
 		bases: tuple[type, ...],
 		namespace: dict[str, Any],
@@ -51,28 +59,23 @@ class _OffsetsTextInfoMeta(type(textInfos.TextInfo)):
 		legacyUseUniscribe = namespace.get("useUniscribe")
 		if not isinstance(legacyUseUniscribe, bool):
 			return
-		type.__delattr__(cls, "useUniscribe")
-		type.__setattr__(cls, "_useUniscribeOverride", legacyUseUniscribe)
+		type.__delattr__(self, "useUniscribe")
+		type.__setattr__(self, "_useUniscribeOverride", legacyUseUniscribe)
 
-	def __getattribute__(cls, name: str) -> Any:
-		if name != "useUniscribe":
+	def __getattribute__(self, name: str) -> Any:
+		if name != "useUniscribe" or not NVDAState._allowDeprecatedAPI():
 			return super().__getattribute__(name)
-		if not NVDAState._allowDeprecatedAPI():
-			raise AttributeError(f"'{cls.__name__}' has no attribute 'useUniscribe'")
 		_warnUseUniscribeDeprecated()
-		override = cls._getUseUniscribeClassOverride()
+		override = _getUseUniscribeClassOverride(self)
 		if override is not None:
 			return override
-		return type.__getattribute__(cls, "charSegFlag") == CharSegFlag.UNISCRIBE
+		return type.__getattribute__(self, "charSegFlag") == CharSegFlag.UNISCRIBE
 
-	def __setattr__(cls, name: str, value: Any) -> None:
-		if name != "useUniscribe":
-			super().__setattr__(name, value)
-			return
-		if not NVDAState._allowDeprecatedAPI():
-			raise AttributeError(f"'{cls.__name__}' has no attribute 'useUniscribe'")
+	def __setattr__(self, name: str, value: Any) -> None:
+		if name != "useUniscribe" or not NVDAState._allowDeprecatedAPI():
+			return super().__setattr__(name, value)
 		_warnUseUniscribeDeprecated()
-		type.__setattr__(cls, "_useUniscribeOverride", bool(value))
+		type.__setattr__(self, "_useUniscribeOverride", bool(value))
 
 
 @dataclass
@@ -232,19 +235,11 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 	# Use charSegFlag and wordSegFlag instead.
 	useUniscribe = property(_getDeprecatedUseUniscribe, _setDeprecatedUseUniscribe)
 
-	@classmethod
-	def _getUseUniscribeClassOverride(cls) -> bool | None:
-		for klass in cls.__mro__:
-			override = klass.__dict__.get("_useUniscribeOverride")
-			if override is not None:
-				return bool(override)
-		return None
-
 	def _getUseUniscribeCompatOverride(self) -> bool | None:
 		override = self.__dict__.get("_useUniscribeOverride")
 		if override is not None:
 			return bool(override)
-		return type(self)._getUseUniscribeClassOverride()
+		return _getUseUniscribeClassOverride(type(self))
 
 	def _getEffectiveCharSegFlag(self) -> CharSegFlag:
 		useUniscribe = self._getUseUniscribeCompatOverride()

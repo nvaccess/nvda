@@ -323,6 +323,7 @@ def resetConfiguration(factoryDefaults=False):
 	import audio
 	import screenCurtain
 	import mathPres
+	import textUtils._wordSeg
 	import _magnifier as magnifier
 
 	magnifier.terminate()
@@ -392,6 +393,8 @@ def resetConfiguration(factoryDefaults=False):
 	brailleInput.initialize()
 	log.debug("Initializing braille")
 	braille.initialize()
+	log.debug("Initializing word segmentation")
+	textUtils._wordSeg.initialize()
 	# Math
 	log.debug("Initializing math presentation")
 	mathPres.initialize()
