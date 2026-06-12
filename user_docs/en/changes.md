@@ -6,6 +6,9 @@
 
 ### New Features
 
+* Added sequential two-flick touch gestures that combine two flicks performed in quick succession into a single gesture, increasing the number of touch gestures that can be bound to scripts. (#19938, @kefaslungu)
+  * Twelve combinations are recognised: opposite-direction pairs (e.g. flick right then flick left) and perpendicular L-shaped pairs (e.g. flick right then flick up).
+  * The two flicks can be performed either by lifting the finger between strokes or as a single continuous swipe with a sharp change in direction.
 * On supported braille displays, pressing multiple routing keys simultaneously can now be bound to a new "multi routing" gesture. (#20001, @LeonarddeR)
   * The "select range" command, which selects the text from the first up to the last pressed routing key, is bound to this gesture by default on supporting drivers.
   * Drivers with built-in support for multi routing: ALVA, Albatross (only when combined with `home1` or `home2`), Baum (and compatible), Freedom Scientific Focus/PAC Mate, HumanWare Brailliant BI/B series, Handy Tech, NLS eReader Zoomax, Seika Notetaker, and Standard HID Braille displays.
@@ -47,6 +50,10 @@ Use the `cellIndexes` attribute instead. (#20001, @LeonarddeR)
 * `brailleDisplayDrivers.freedomScientific.RoutingGesture` is deprecated.
 Use `KeyGesture` instead. (#20077, @LeonarddeR)
 * The `braille.wordWrap` configuration key is deprecated and bridged to `braille.textWrap`. (#17010, @LeonarddeR)
+* In `touchTracker`, the module-level `action_*` string constants are deprecated.
+Use the corresponding `TouchAction` enum members instead (e.g. `TouchAction.TAP`, `TouchAction.FLICK_UP`). (#19938, @kefaslungu)
+* In `touchTracker`, `actionLabels` is deprecated.
+Use `TouchAction(value).displayString` instead. (#19938, @kefaslungu)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
