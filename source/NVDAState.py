@@ -260,6 +260,14 @@ class _ReadPaths:
 		return os.path.join(self.coreArchLibPath, "nvdaHelperLocalWin10.dll")
 
 	@property
+	def cppjiebaDll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "cppjieba.dll")
+
+	@property
+	def cppjiebaDictsDir(self) -> str:
+		return os.path.join(globalVars.appDir, "cppjieba", "dicts")
+
+	@property
 	def mathCATDir(self) -> str:
 		"""
 		Base directory for MathCAT assets (rules etc.).

@@ -1,0 +1,56 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2025 NV Access Limited, Wang Chong
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
+import typing  # noqa: E402
+
+Import(
+	[
+		"thirdPartyEnv",
+		"sourceDir",
+	]
+)
+thirdPartyEnv: Environment = thirdPartyEnv
+env: Environment = typing.cast(Environment, thirdPartyEnv.Clone())
+
+cppjiebaPath = Dir("#include/cppjieba")
+cppjiebaSrcPath = cppjiebaPath.Dir("include/cppjieba")
+cppjiebaDictPath = cppjiebaPath.Dir("dict")
+outDir = sourceDir.Dir("cppjieba")
+limonpPath = cppjiebaPath.Dir("deps/limonp")  # cppjieba's dependency
+limonpSrcPath = limonpPath.Dir("include/limonp")
+
+env.Prepend(
+	CPPPATH=[
+		cppjiebaSrcPath,
+		limonpSrcPath.Dir(".."),
+	]
+)
+
+sourceFiles = [
+	"cppjieba.cpp",
+	"cppjieba.def",
+]
+
+# cppjieba headers contain non-ASCII comments which trigger MSVC warning C4819.
+env.AppendUnique(
+	CCFLAGS=["/wd4819"],
+	CXXFLAGS=["/wd4819"],
+)
+
+cppjiebaLib = env.SharedLibrary(target="cppjieba", source=sourceFiles)
+
+env.Install(
+	outDir.Dir("dicts"),
+	[
+		env.Dir(cppjiebaDictPath).File(name)
+		for name in (
+			"jieba.dict.utf8",
+			"user.dict.utf8",
+			"hmm_model.utf8",
+		)
+	],
+)
+
+Return("cppjiebaLib")

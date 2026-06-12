@@ -178,7 +178,7 @@ class Magnifier:
 			message = pgettext(
 				"magnifier",
 				# Translators: Message when trying to enable magnifier while screen curtain is active
-				"Cannot enable magnifier: screen curtain is active. Please disable screen curtain first.",
+				"Cannot enable magnifier. Please disable screen curtain first.",
 			)
 			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
 			return
@@ -267,7 +267,7 @@ class Magnifier:
 				pgettext(
 					"magnifier",
 					# Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
-					"Magnifier is active, disabling it before enabling screen curtain",
+					"Disabling magnifier",
 				),
 			)
 			self._stopMagnifier()
@@ -285,7 +285,7 @@ class Magnifier:
 				pgettext(
 					"magnifier",
 					# Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
-					"Magnifier was active before screen curtain, re-enabling it",
+					"Re-enabling magnifier",
 				),
 			)
 			self._startMagnifier()

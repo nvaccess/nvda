@@ -49,6 +49,7 @@ import inputCore
 import screenExplorer
 from logHandler import log
 import touchTracker
+from touchTracker import TouchAction
 import core
 import systemUtils
 from utils import _deprecate
@@ -191,6 +192,72 @@ touchWindow = None
 touchThread = None
 
 
+_flickActions: frozenset[TouchAction] = frozenset(
+	{
+		TouchAction.FLICK_RIGHT,
+		TouchAction.FLICK_LEFT,
+		TouchAction.FLICK_UP,
+		TouchAction.FLICK_DOWN,
+	},
+)
+"""The set of single-direction flick actions that can begin a sequential flick gesture."""
+
+_flickSequenceMap: dict[
+	tuple[TouchAction, TouchAction],
+	TouchAction,
+] = {
+	(
+		TouchAction.FLICK_RIGHT,
+		TouchAction.FLICK_LEFT,
+	): TouchAction.FLICK_RIGHT_THEN_LEFT,
+	(
+		TouchAction.FLICK_LEFT,
+		TouchAction.FLICK_RIGHT,
+	): TouchAction.FLICK_LEFT_THEN_RIGHT,
+	(
+		TouchAction.FLICK_UP,
+		TouchAction.FLICK_DOWN,
+	): TouchAction.FLICK_UP_THEN_DOWN,
+	(
+		TouchAction.FLICK_DOWN,
+		TouchAction.FLICK_UP,
+	): TouchAction.FLICK_DOWN_THEN_UP,
+	(
+		TouchAction.FLICK_RIGHT,
+		TouchAction.FLICK_UP,
+	): TouchAction.FLICK_RIGHT_THEN_UP,
+	(
+		TouchAction.FLICK_RIGHT,
+		TouchAction.FLICK_DOWN,
+	): TouchAction.FLICK_RIGHT_THEN_DOWN,
+	(
+		TouchAction.FLICK_LEFT,
+		TouchAction.FLICK_UP,
+	): TouchAction.FLICK_LEFT_THEN_UP,
+	(
+		TouchAction.FLICK_LEFT,
+		TouchAction.FLICK_DOWN,
+	): TouchAction.FLICK_LEFT_THEN_DOWN,
+	(
+		TouchAction.FLICK_UP,
+		TouchAction.FLICK_RIGHT,
+	): TouchAction.FLICK_UP_THEN_RIGHT,
+	(
+		TouchAction.FLICK_UP,
+		TouchAction.FLICK_LEFT,
+	): TouchAction.FLICK_UP_THEN_LEFT,
+	(
+		TouchAction.FLICK_DOWN,
+		TouchAction.FLICK_RIGHT,
+	): TouchAction.FLICK_DOWN_THEN_RIGHT,
+	(
+		TouchAction.FLICK_DOWN,
+		TouchAction.FLICK_LEFT,
+	): TouchAction.FLICK_DOWN_THEN_LEFT,
+}
+"""Maps (firstFlickAction, secondFlickAction) to the corresponding sequential flick action."""
+
+
 class TouchInputGesture(inputCore.InputGesture):
 	"""
 	Represents a gesture performed on a touch screen.
@@ -225,12 +292,12 @@ class TouchInputGesture(inputCore.InputGesture):
 	}
 
 	def _get_speechEffectWhenExecuted(self):
-		if self.tracker.action in (touchTracker.action_hover, touchTracker.action_hoverUp):
+		if self.tracker.action in (TouchAction.HOVER, TouchAction.HOVER_UP):
 			return None
 		return super(TouchInputGesture, self).speechEffectWhenExecuted
 
 	def _get_reportInInputHelp(self):
-		return self.tracker.action != touchTracker.action_hover
+		return self.tracker.action != TouchAction.HOVER
 
 	def __init__(self, preheldTracker, tracker, mode):
 		super(TouchInputGesture, self).__init__()
@@ -267,7 +334,7 @@ class TouchInputGesture(inputCore.InputGesture):
 			foundAction = foundPlural = False
 			for subID in reversed(ID.split("_")):
 				if not foundAction:
-					action = touchTracker.actionLabels[subID]
+					action = TouchAction(subID).displayString
 					foundAction = True
 					continue
 				if not foundPlural:
@@ -297,7 +364,7 @@ class TouchInputGesture(inputCore.InputGesture):
 		# Because touch may produce a hover gesture for every pump, an immediate pump
 		# can result in exhaustion of the window message queue. Thus, don't do
 		# immediate pumps for hover gestures.
-		return not self.tracker.action == touchTracker.action_hover
+		return not self.tracker.action == TouchAction.HOVER
 
 
 inputCore.registerGestureSource("ts", TouchInputGesture)
@@ -389,13 +456,70 @@ class TouchHandler(threading.Thread):
 			raise ValueError("Unknown mode %s" % mode)
 		self._curTouchMode = mode
 
-	def pump(self):
+	def _executeGesture(self, gesture: "TouchInputGesture") -> None:
+		"""Execute a touch gesture, silently ignoring unbound gestures.
+
+		:param gesture: The gesture to execute.
+		"""
+		try:
+			inputCore.manager.executeGesture(gesture)
+		except inputCore.NoInputGestureAction:
+			pass
+
+	def _tryBuildSequentialGesture(
+		self,
+		first: "TouchInputGesture",
+		second: "TouchInputGesture",
+	) -> "TouchInputGesture | None":
+		"""Attempt to combine two consecutive flick gestures into a single sequential flick gesture.
+
+		:param first: The first flick gesture.
+		:param second: The second flick gesture.
+		:return: A combined sequential gesture, or ``None`` if the pair is not a recognised combination.
+		"""
+		if first.tracker.numFingers != second.tracker.numFingers:
+			return None
+		compoundAction = _flickSequenceMap.get((first.tracker.action, second.tracker.action))
+		if compoundAction is None:
+			return None
+		compoundTracker = touchTracker.MultiTouchTracker(
+			compoundAction,
+			first.tracker.x,
+			first.tracker.y,
+			first.tracker.startTime,
+			second.tracker.endTime,
+			numFingers=second.tracker.numFingers,
+		)
+		return TouchInputGesture(first.preheldTracker, compoundTracker, first.mode)
+
+	def _processGestures(self) -> None:
+		"""Emit all pending touch trackers as gestures, combining consecutive flicks into sequential gestures."""
+		# pendingFlick holds the first flick within this cycle, waiting to see if a second follows.
+		# This is a local variable — no timer, no cross-pump buffering, so normal flicks fire immediately.
+		pendingFlick: TouchInputGesture | None = None
 		for preheldTracker, tracker in self.trackerManager.emitTrackers():
 			gesture = TouchInputGesture(preheldTracker, tracker, self._curTouchMode.value)
-			try:
-				inputCore.manager.executeGesture(gesture)
-			except inputCore.NoInputGestureAction:
-				pass
+			if tracker.action in _flickActions:
+				if pendingFlick is not None:
+					sequentialGesture = self._tryBuildSequentialGesture(pendingFlick, gesture)
+					if sequentialGesture is not None:
+						pendingFlick = None
+						self._executeGesture(sequentialGesture)
+						continue
+				# No match yet: flush any earlier flick, then hold this one for the rest of this cycle.
+				if pendingFlick is not None:
+					self._executeGesture(pendingFlick)
+				pendingFlick = gesture
+			else:
+				if pendingFlick is not None:
+					self._executeGesture(pendingFlick)
+					pendingFlick = None
+				self._executeGesture(gesture)
+		if pendingFlick is not None:
+			self._executeGesture(pendingFlick)
+
+	def pump(self):
+		self._processGestures()
 		interval = self.trackerManager.pendingEmitInterval
 		if interval and interval > 0:
 			# Ensure we are pumped again by the time more pending multiTouch trackers are ready

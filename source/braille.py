@@ -81,7 +81,9 @@ import NVDAState
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked, post_sessionLockStateChanged
 from winAPI.secureDesktop import post_secureDesktopStateChange
-from textUtils import isUnicodeNormalized, UnicodeNormalizationOffsetConverter
+from textUtils import isUnicodeNormalized, OffsetConverter, UnicodeNormalizationOffsetConverter
+from textUtils._braille import _applyOffsetConverter
+from textUtils._wordSeg.wordSegUtils import WordSegWithSeparatorOffsetConverter
 import hwIo
 from editableText import EditableText
 from gui.guiHelper import wxCallOnMain
@@ -612,21 +614,33 @@ class Region(object):
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
 
-		converter: UnicodeNormalizationOffsetConverter | None = None
+		converters: list[OffsetConverter] = []
 		textToTranslate = self.rawText
 		textToTranslateTypeforms = self.rawTextTypeforms
 		cursorPos = self.cursorPos
+
+		translationTable = config.conf["braille"]["translationTable"].casefold()
+		if translationTable == "auto":
+			translationTable = brailleTables.getDefaultTableForCurLang(
+				brailleTables.TableType.OUTPUT,
+			).casefold()
+
+		if translationTable.startswith("zh"):
+			converter = WordSegWithSeparatorOffsetConverter(textToTranslate)
+			textToTranslate, textToTranslateTypeforms, cursorPos = _applyOffsetConverter(
+				converter,
+				textToTranslateTypeforms,
+				cursorPos,
+			)
+			converters.append(converter)
 		if config.conf["braille"]["unicodeNormalization"] and not isUnicodeNormalized(textToTranslate):
 			converter = UnicodeNormalizationOffsetConverter(textToTranslate)
-			textToTranslate = converter.encoded
-			if textToTranslateTypeforms is not None:
-				# Typeforms must be adapted to represent normalized characters.
-				textToTranslateTypeforms = [
-					textToTranslateTypeforms[strOffset] for strOffset in converter.computedEncodedToStrOffsets
-				]
-			if cursorPos is not None:
-				# Convert the cursor position to a normalized offset.
-				cursorPos = converter.strToEncodedOffsets(cursorPos)
+			textToTranslate, textToTranslateTypeforms, cursorPos = _applyOffsetConverter(
+				converter,
+				textToTranslateTypeforms,
+				cursorPos,
+			)
+			converters.append(converter)
 		self.brailleCells, brailleToRawPos, rawToBraillePos, self.brailleCursorPos = louisHelper.translate(
 			[handler.table.fileName, "braille-patterns.cti"],
 			textToTranslate,
@@ -635,13 +649,13 @@ class Region(object):
 			cursorPos=cursorPos,
 		)
 
-		if converter:
-			# The received brailleToRawPos contains braille to normalized positions.
-			# Process them to represent real raw positions by converting them from normalized ones.
+		for converter in reversed(converters):
+			# Convert liblouis offsets from the most recently transformed text
+			# back through each transformation to the original raw text.
 			brailleToRawPos = [converter.encodedToStrOffsets(i) for i in brailleToRawPos]
-			# The received rawToBraillePos contains normalized to braille positions.
-			# Create a new list based on real raw positions.
-			rawToBraillePos = [rawToBraillePos[i] for i in converter.computedStrToEncodedOffsets]
+			rawToBraillePos = [
+				rawToBraillePos[converter.strToEncodedOffsets(i)] for i in range(converter.strLength)
+			]
 		self.brailleToRawPos = brailleToRawPos
 		self.rawToBraillePos = rawToBraillePos
 

@@ -12,13 +12,9 @@ from typing import Literal
 import ui
 from . import changeMagnifiedView, getMagnifier, start, stop
 from .config import (
-	getMagnifiedView,
 	setMagnifiedView,
-	getZoomLevelString,
-	getFilter,
 	getFollowState,
 	setFilter,
-	getFullscreenMode,
 	setFollowState,
 	setFullscreenMode,
 	toggleAllFollowStates,
@@ -32,7 +28,7 @@ from .utils.types import (
 	MagnifiedView,
 	FullScreenMode,
 	MagnifierAction,
-	MagnifierFollowFocusType,
+	MagnifierTrackingType,
 )
 from logHandler import log
 
@@ -96,7 +92,7 @@ def toggleMagnifier() -> None:
 			pgettext(
 				"magnifier",
 				# Translators: Message announced when stopping the NVDA magnifier.
-				"Exiting magnifier",
+				"Magnifier disabled",
 			),
 		)
 	# Check if Screen Curtain is active
@@ -105,37 +101,18 @@ def toggleMagnifier() -> None:
 			pgettext(
 				"magnifier",
 				# Translators: Message announced when trying to start magnifier while Screen Curtain is active.
-				"Cannot start magnifier: Screen Curtain is active. Please disable Screen Curtain first.",
+				"Cannot start magnifier. Please disable Screen Curtain first.",
 			),
 		)
 	else:
 		start()
-		currentFilter = getFilter()
-		magnifiedView = getMagnifiedView()
-		zoomLevel = getZoomLevelString()
-		if magnifiedView == MagnifiedView.FULLSCREEN:
-			fullscreenMode = getFullscreenMode()
-			msg = pgettext(
+		ui.message(
+			pgettext(
 				"magnifier",
 				# Translators: Message announced when starting the NVDA magnifier.
-				"Starting {magnifiedView} magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode",
-			).format(
-				magnifiedView=magnifiedView.displayString,
-				zoomLevel=zoomLevel,
-				filter=currentFilter.displayString,
-				fullscreenMode=fullscreenMode.displayString,
-			)
-		else:
-			msg = pgettext(
-				"magnifier",
-				# Translators: Message announced when starting the NVDA magnifier.
-				"Starting {magnifiedView} magnifier with {zoomLevel} zoom level and {filter} filter",
-			).format(
-				magnifiedView=magnifiedView.displayString,
-				zoomLevel=zoomLevel,
-				filter=currentFilter.displayString,
-			)
-		ui.message(msg)
+				"Magnifier enabled",
+			),
+		)
 
 
 def zoom(direction: Direction) -> None:
@@ -202,7 +179,7 @@ def toggleFilter() -> None:
 			pgettext(
 				"magnifier",
 				# Translators: Message announced when changing the color filter with {filter} being the new color filter.
-				"Color filter changed to {filter}",
+				"Color filter {filter}",
 			).format(filter=magnifier.filterType.displayString),
 		)
 
@@ -226,12 +203,12 @@ def cycleMagnifiedView() -> None:
 			pgettext(
 				"magnifier",
 				# Translators: Message announced when changing the magnifier view with {view} being the new magnifier view.
-				"Magnifier view changed to {view}",
+				"{view} view",
 			).format(view=magnifier._MAGNIFIED_VIEW.displayString),
 		)
 
 
-def toggleFollow(focusType: MagnifierFollowFocusType) -> None:
+def toggleFollow(focusType: MagnifierTrackingType) -> None:
 	"""
 	Toggle the specified follow mode setting.
 
@@ -279,13 +256,13 @@ def toggleAllFollow() -> None:
 			stateMessage = pgettext(
 				"magnifier",
 				# Translators: State of all follow settings being toggled disabled.
-				"All follow settings disabled",
+				"All tracking settings disabled",
 			)
 		else:
 			stateMessage = pgettext(
 				"magnifier",
 				# Translators: State of all follow settings being restored.
-				"All follow settings restored",
+				"Tracking settings restored",
 			)
 		ui.message(stateMessage)
 
@@ -313,7 +290,7 @@ def toggleFullscreenMode() -> None:
 				pgettext(
 					"magnifier",
 					# Translators: Message announced when changing the full-screen mode with {mode} being the new full-screen mode.
-					"Full-screen mode changed to {mode}",
+					"Full-screen mode {mode}",
 				).format(mode=newMode.displayString),
 			)
 
@@ -336,8 +313,8 @@ def startSpotlight() -> None:
 				ui.message(
 					pgettext(
 						"magnifier",
-						# Translators: Message announced when trying to start spotlight mode while it's already active.
-						"Spotlight mode is already active",
+						# Translators: Message announced when trying to show temporary overview of the screen while it's already active.
+						"The screen overview is already active",
 					),
 				)
 			else:
@@ -346,8 +323,8 @@ def startSpotlight() -> None:
 				ui.message(
 					pgettext(
 						"magnifier",
-						# Translators: Message announced when spotlight mode is started.
-						"Spotlight mode started",
+						# Translators: Message announced when overview of the entire screen is being showed.
+						"Showing entire screen",
 					),
 				)
 

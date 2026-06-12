@@ -22,6 +22,7 @@ readme = "readme.md"
 license = {file = "copying.txt"}
 dependencies = [
 	# NVDA's runtime dependencies
+	"bleak==3.0.2",
 	"comtypes==1.4.13",
 	"cryptography==46.0.7",
 	"pyserial==3.5",
@@ -53,9 +54,6 @@ dependencies = [
 	"l2m4m==1.0.4",
 	"pymdown-extensions==10.17.1",
 	"pyphen==0.17.2",
-	# pinned due to incompatibility with py2exe
-	# https://github.com/py2exe/py2exe/issues/241
-	"charset-normalizer==3.4.4",
 	# secret scanning for logging
 	"detect-secrets==1.5.0",
 	"regex==2026.4.4",
@@ -326,7 +324,7 @@ dev = [
 	# NVDA's build system is SCons
 	"SCons==4.10.1",
 	# Packaging NVDA
-	"py2exe==0.14.0.0",
+	"py2exe==0.14.1.1",
 	"setuptools~=80.10.2",
 	"nvda-mathcat",
 	"uv==0.11.7",
