@@ -20,6 +20,7 @@
 
 ### Bug Fixes
 
+* When selecting multiple addons in the addon store, the actions button is no longer disabled, and pressing it on multiple addons selection will open the context menu for bulk actions for the selected addons, and if a single addon is selected, it will open the context menu related to the selected addon only, same as the application key, or right click on the addons list. (#19971, @amirmahdifard)
 * When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
 * In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen. (#20177)
 * When an application stops responding, NVDA no longer freezes or floods its log with errors; it stays responsive and drops UIA and MSAA events from the unresponsive application until it recovers. (#16749, @heath-toby)
