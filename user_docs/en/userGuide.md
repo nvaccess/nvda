@@ -1547,7 +1547,7 @@ You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAnd
 | Name |Key |Description|
 |---|---|---|
 |Toggles the state of the screen curtain |`NVDA+control+escape` |Enable to make the screen black or disable to show the contents of the screen. Pressed once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it.|
-| Reports the state of the screen curtain | `None` | Announces the current status of the screen curtain, whether it is disabled or enabled or in temporary mode. |
+| Reports the state of the screen curtain | None | Announces the current status of the screen curtain, whether it is disabled or enabled or in temporary mode. |
 
 <!-- KC:endInclude -->
 
@@ -1619,11 +1619,11 @@ To cycle through the available filters press `NVDA+shift+i`.
 
 ### Tracking Modes {#MagnifierTrackingModes}
 
-The magnifier offers three different modes for tracking mouse, focus, review cursor and navigatore object, and determining which part of the screen to magnify:
+The magnifier offers three different modes for tracking the mouse, system focus, review cursor, and navigator object, and determining which part of the screen to magnify:
 
 * Center: The magnified area is centered on the currently tracked position.
 This mode keeps the tracked element at the center of the screen and clamps to the screen edge.
-To disable clamping, activate [true center tracking in the Magnifier settings](#MagnifierUseTrueCenterTracking).
+To disable clamping, activate [true center tracking in the Magnifier settings](#MagnifierTrueCenterTracking).
 * Border: The magnified area only moves when the tracked position approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
 * Relative: The magnified area maintains the relative position of the tracked element within the screen.
@@ -2865,7 +2865,7 @@ For the supported settings per provider, please refer to the documentation for t
 Key: `NVDA+control+w`
 
 The Magnifier category in the NVDA Settings dialog allows you to configure the default behavior of NVDA's built-in [Magnifier](#Magnifier) feature.
-All the options of this category have immediate effect on the magnifier but pressing "Cancel" or `escape` allow to dismiss the changes made.
+All options in this category take effect immediately, but selecting "Cancel" (or pressing `escape`) will discard any changes.
 
 This settings category contains the following options:
 
@@ -2916,7 +2916,7 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### true center tracking {#MagnifierTrueCenterTracking}
+##### True center tracking {#MagnifierTrueCenterTracking}
 
 This checkbox controls whether the magnifier should always keep the tracked position centered on the screen, even when the tracked element is next to the screen edges, or if it should allow the tracked position to move towards the edges of the screen.
 When enabled, the magnifier will always keep the tracked position centered on the screen, which can be helpful for users who prefer a consistent tracked position within the magnified view.
