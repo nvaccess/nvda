@@ -10,7 +10,6 @@ General enquiries should be directed to <info@nvaccess.org>.
 
 | GitHub | email | topics |
 | --- | --- | --- |
-| @gerald-hartig | <gerald@nvaccess.org> | Controversial product decisions |
 | @seanbudd | <sean@nvaccess.org> | Issue triage, technical decisions |
 | @SaschaCowley | <sascha@nvaccess.org> | Issue triage, technical decisions |
 | @michaelDCurran | <mick@nvaccess.org> | Advanced technical consulting |
