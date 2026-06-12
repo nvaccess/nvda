@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -65,8 +65,8 @@ class SpotlightManager:
 		ui.message(
 			pgettext(
 				"magnifier",
-				# Translators: Message announced when stopping the magnifier spotlight.
-				"Magnifier spotlight stopped",
+				# Translators: Message announced when turning back to normal view after entire screen overview.
+				"Back to normal view",
 			),
 		)
 		if self._timer:

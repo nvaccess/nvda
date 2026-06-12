@@ -16,7 +16,7 @@ import time
 import locationHelper
 import textInfos
 from textInfos.offsets import OffsetsTextInfo
-from .types import Coordinates, MagnifierFollowFocusType
+from .types import Coordinates, MagnifierTrackingType
 from ..config import getFollowState
 
 
@@ -30,7 +30,7 @@ class FocusManager:
 
 	def __init__(self):
 		"""Initialize the focus manager."""
-		self._lastFocusedObject: MagnifierFollowFocusType | None = None
+		self._lastFocusedObject: MagnifierTrackingType | None = None
 		self._lastReportedCoordinates = Coordinates(0, 0)
 		self._lastMousePosition = Coordinates(0, 0)
 		self._lastSystemFocusPosition = Coordinates(0, 0)
@@ -62,10 +62,10 @@ class FocusManager:
 		isClickPressed = winUser.getAsyncKeyState(winUser.VK_LBUTTON) < 0
 
 		# Cache settings once — each call reads from config.conf
-		isFollowMouse = getFollowState(MagnifierFollowFocusType.MOUSE)
-		isFollowSystemFocus = getFollowState(MagnifierFollowFocusType.SYSTEM_FOCUS)
-		isFollowReviewCursor = getFollowState(MagnifierFollowFocusType.REVIEW)
-		isFollowNavigatorObject = getFollowState(MagnifierFollowFocusType.NAVIGATOR_OBJECT)
+		isFollowMouse = getFollowState(MagnifierTrackingType.MOUSE)
+		isFollowSystemFocus = getFollowState(MagnifierTrackingType.SYSTEM_FOCUS)
+		isFollowReviewCursor = getFollowState(MagnifierTrackingType.REVIEW)
+		isFollowNavigatorObject = getFollowState(MagnifierTrackingType.NAVIGATOR_OBJECT)
 
 		mouseChanged = self._lastMousePosition != mousePosition
 		systemFocusChanged = self._lastSystemFocusPosition != systemFocusPosition
@@ -85,7 +85,7 @@ class FocusManager:
 
 		# Priority 1: Mouse — drag (fires even when stationary) or movement
 		if (isClickPressed or mouseChanged) and isFollowMouse:
-			self._lastFocusedObject = MagnifierFollowFocusType.MOUSE
+			self._lastFocusedObject = MagnifierTrackingType.MOUSE
 			return self._rememberAndReturnCoordinates(mousePosition)
 
 		# Special case: table cell navigation (numpad).
@@ -93,22 +93,22 @@ class FocusManager:
 		# review cursor does not, the navigator object reflects the user's explicit navigation
 		# intent and therefore takes priority over the system focus.
 		if navigatorChanged and systemFocusChanged and not reviewChanged and isFollowNavigatorObject:
-			self._lastFocusedObject = MagnifierFollowFocusType.NAVIGATOR_OBJECT
+			self._lastFocusedObject = MagnifierTrackingType.NAVIGATOR_OBJECT
 			return self._rememberAndReturnCoordinates(navigatorPosition)
 
 		# Priority 2: System focus (focus object + browse mode cursor)
 		if systemFocusChanged and isFollowSystemFocus:
-			self._lastFocusedObject = MagnifierFollowFocusType.SYSTEM_FOCUS
+			self._lastFocusedObject = MagnifierTrackingType.SYSTEM_FOCUS
 			return self._rememberAndReturnCoordinates(systemFocusPosition)
 
 		# Priority 3: Review cursor
 		if reviewChanged and isFollowReviewCursor and reviewPosition is not None:
-			self._lastFocusedObject = MagnifierFollowFocusType.REVIEW
+			self._lastFocusedObject = MagnifierTrackingType.REVIEW
 			return self._rememberAndReturnCoordinates(reviewPosition)
 
 		# Priority 4: Navigator object (NumPad navigation)
 		if navigatorChanged and isFollowNavigatorObject:
-			self._lastFocusedObject = MagnifierFollowFocusType.NAVIGATOR_OBJECT
+			self._lastFocusedObject = MagnifierTrackingType.NAVIGATOR_OBJECT
 			return self._rememberAndReturnCoordinates(navigatorPosition)
 
 		# Resolve the effective review position once (fallback to last valid when None)
@@ -118,10 +118,10 @@ class FocusManager:
 
 		# All sources in priority order
 		_sources = (
-			(MagnifierFollowFocusType.MOUSE, isFollowMouse, mousePosition),
-			(MagnifierFollowFocusType.SYSTEM_FOCUS, isFollowSystemFocus, systemFocusPosition),
-			(MagnifierFollowFocusType.REVIEW, isFollowReviewCursor, reviewEffectivePosition),
-			(MagnifierFollowFocusType.NAVIGATOR_OBJECT, isFollowNavigatorObject, navigatorPosition),
+			(MagnifierTrackingType.MOUSE, isFollowMouse, mousePosition),
+			(MagnifierTrackingType.SYSTEM_FOCUS, isFollowSystemFocus, systemFocusPosition),
+			(MagnifierTrackingType.REVIEW, isFollowReviewCursor, reviewEffectivePosition),
+			(MagnifierTrackingType.NAVIGATOR_OBJECT, isFollowNavigatorObject, navigatorPosition),
 		)
 
 		# Keep current source if still enabled; otherwise clear it and freeze at _lastReportedCoordinates
@@ -271,7 +271,7 @@ class FocusManager:
 			return position
 		return self._lastValidNavigatorObjectPosition
 
-	def getLastFocusType(self) -> MagnifierFollowFocusType | None:
+	def getLastFocusType(self) -> MagnifierTrackingType | None:
 		"""
 		Get the type of the last focused object.
 
