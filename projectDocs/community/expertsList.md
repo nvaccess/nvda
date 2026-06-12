@@ -27,4 +27,4 @@ General enquiries should be directed to <info@nvaccess.org>.
 | @RyanMcCleary | <remccleary@gmail.com> | Math |
 | @hwf1324 | <1398969445@qq.com> | Visual bugs: e.g. visual highlight, mouse tracking, magnifier |
 | @LeonarddeR | <alderuijter@gmail.com> | Braille (including hardware I/O and liblouis), text encoding and utilities (textUtils) |
-| @cary-rowen  | ? | Chinese input and word segmentation 
+| @cary-rowen  | ? | Chinese input and word segmentation
