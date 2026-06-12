@@ -679,7 +679,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		length = len(decodedkeys)
 		if length == 1 and 32 <= decodedkeys[0] < 32 + driver.numCells * 2:
 			# routing keys
-			self.routingIndex = (decodedkeys[0] - 32) // 2
+			self.cellIndexes = [(decodedkeys[0] - 32) // 2]
 			self.id = "route"
 			if decodedkeys[0] % 2 == 1:
 				self.id = "upperRouting"

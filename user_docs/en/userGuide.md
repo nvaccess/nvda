@@ -1600,6 +1600,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 | Pan to right edge | `NVDA+shift+alt+rightArrow` | Pan the magnified view directly to the right edge of the screen |
 | Pan to top edge | `NVDA+shift+alt+upArrow` | Pan the magnified view directly to the top edge of the screen |
 | Pan to bottom edge | `NVDA+shift+alt+downArrow` | Pan the magnified view directly to the bottom edge of the screen |
+| Move mouse to view | None | Move the mouse cursor to the center of the magnified view |
 
 <!-- KC:endInclude -->
 
@@ -1631,7 +1632,7 @@ The magnifier offers three different modes for tracking focus and determining wh
 
 * Center: The magnified area is centered on the current focus position.
 This mode keeps the focused element at the center of the screen and clamps to the screen edge.
-To disable clamping, activate [true center mode in the Magnifier settings](#MagnifierUseTrueCenter).
+To disable clamping, activate [true center tracking in the Magnifier settings](#MagnifierUseTrueCenterTracking).
 * Border: The magnified area only moves when the focus approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
 * Relative: The magnified area maintains the relative position of the focus within the screen.
@@ -2584,18 +2585,25 @@ Automatic scrolling will be disabled if a routing key is pressed, if a message i
 
 Commands can be assigned to toggle the automatic scroll option, and to increase or decrease the scroll rate, from the "Braille" section of the [Input Gestures dialog](#InputGestures).
 
-##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
+##### Text wrap {#BrailleSettingsWordWrap}
 
-If this is enabled, a word which is too large to fit at the end of the braille display will not be split.
+This combo box allows you to configure how NVDA handles text that is too long to fit on the braille display.
+When a word is cut across rows, the continuation mark (dots 7 and 8) is shown in the last cell of the row, unless otherwise noted below.
+The following options are available:
+
+* Off: Text wraps at the display edge, cutting words mid-way if necessary, without showing any continuation mark.
+As much of the text as possible will be displayed on each row.
+When you scroll the display, you will be able to read the rest of the text.
+* Show mark when words are cut: Text is not wrapped, but whenever a word is cut at the end of the display, a continuation mark is shown.
+When you scroll the display, you will be able to read the rest of the word.
+* At word boundaries: A word which is too large to fit at the end of the braille display will not be split.
 Instead, there will be some blank space at the end of the display.
 When you scroll the display, you will be able to read the entire word.
-This is sometimes called "word wrap".
-Note that if the word is too large to fit on the display even by itself, the word must still be split.
-
-If this is disabled, as much of the word as possible will be displayed, but the rest will be cut off.
-When you scroll the display, you will then be able to read the rest of the word.
-
-Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
+Note that if the word is too large to fit on the display even by itself, the word must still be split; the continuation mark is then shown.
+This option may allow for more fluent reading, but generally requires you to scroll the display more.
+* At word or syllable boundaries: Like "At word boundaries", but long words that don't fit are split at a syllable boundary when possible, using the language of the word if known.
+For example, the word `behave` may be split between `be` and `have`.
+The continuation mark is shown whenever a word is split.
 
 ##### Unicode normalization {#BrailleUnicodeNormalization}
 
@@ -2919,22 +2927,17 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### Focus mode {#MagnifierFullscreenFocusMode}
+##### Use true center tracking {#MagnifierUseTrueCenterTracking}
 
-This combo box allows you to select the focus tracking mode when using the magnifier.
-To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-The available options are:
+This checkbox controls whether the magnifier should always keep the focus centered on the screen, or if it should allow the focus to move towards the edges of the screen before moving the magnified area.
+When enabled, the magnifier will always keep the focus centered on the screen, which can be helpful for users who prefer a consistent position of the focus within the magnified view.
+
+This option is disabled by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Options | Center, Border, Relative |
-| Default | Center |
-
-| Option | Description |
-|---|---|
-| Center | The magnified area is always centered on the current focus position. |
-| Border | The magnified area only moves when the focus approaches the edge of the visible area. |
-| Relative | The magnified area maintains the relative position of the focus within the screen. |
+| Options | Disabled, Enabled |
+| Default | Disabled |
 
 ##### Panning step size {#MagnifierPanningStepSize}
 
@@ -2953,18 +2956,6 @@ Available pan actions include:
 |---|---|
 | Options | 1 to 100 |
 | Default | 10 |
-
-##### Use true center {#MagnifierUseTrueCenter}
-
-This checkbox controls whether the magnifier should always keep the focus centered on the screen, or if it should allow the focus to move towards the edges of the screen before moving the magnified area.
-When enabled, the magnifier will always keep the focus centered on the screen, which can be helpful for users who prefer a consistent position of the focus within the magnified view.
-
-This option is disabled by default.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-| Options | Disabled, Enabled |
-| Default | Disabled |
 
 ##### Follow mouse {#MagnifierFollowMouse}
 
@@ -3014,17 +3005,22 @@ This option is enabled by default.
 | Options | Disabled, Enabled |
 | Default | Enabled |
 
-##### Keep mouse centered {#MagnifierKeepMouseCentered}
+##### Focus mode {#MagnifierFullscreenFocusMode}
 
-This checkbox controls whether the mouse pointer should be automatically moved to the center of the magnified area when certain focus events occur.
-When enabled, NVDA will reposition the mouse pointer to keep it centered in the magnified view, which can be helpful for users who navigate primarily using the magnifier's focus tracking rather than the mouse.
-
-This option is disabled by default.
+This combo box allows you to select the focus tracking mode when using the magnifier.
+To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Options | Disabled, Enabled |
-| Default | Disabled |
+| Options | Center, Border, Relative |
+| Default | Center |
+
+| Option | Description |
+|---|---|
+| Center | The magnified area is always centered on the current focus position. |
+| Border | The magnified area only moves when the focus approaches the edge of the visible area. |
+| Relative | The magnified area maintains the relative position of the focus within the screen. |
 
 #### Keyboard {#KeyboardSettings}
 
@@ -5061,6 +5057,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move back using right wiz wheel action |rightWizWheelUp|
 |Move forward using right wiz wheel action |rightWizWheelDown|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |shift+tab key |brailleSpaceBar+dot1+dot2|
 |tab key |brailleSpaceBar+dot4+dot5|
 |upArrow key |brailleSpaceBar+dot1|
@@ -5137,6 +5134,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to next line |t4|
 |Scroll braille display forward |t5, etouch3|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |Report text formatting under braille cell |secondary routing|
 |Toggle HID keyboard simulation |t1+spEnter|
 |Move to top line in review |t1+t2|
@@ -5189,6 +5187,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |b4|
 |Move braille display to next line |b5|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |shift+tab key |esc, left triple action key up+down|
 |alt key |b2+b4+b5|
 |escape key |b4+b6|
@@ -5259,6 +5258,7 @@ Please see your display's documentation for descriptions of where these keys can
 |Move braille display to previous line |`d1`|
 |Move braille display to next line |`d3`|
 |Route to braille cell |`routing`|
+| Select range from first up to last braille cell | `multiRouting` |
 |`shift+tab` key |`space+dot1+dot3`|
 |`tab` key |`space+dot4+dot6`|
 |`alt` key |`space+dot1+dot3+dot4` (`space+m`)|
@@ -5354,6 +5354,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |up|
 |Move braille display to next line |down|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |Toggle braille tethered to |up+down|
 |upArrow key |space+dot1|
 |downArrow key |space+dot4|
@@ -5535,6 +5536,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |leftArrow key |RJ left|
 |rightArrow key |RJ right|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |shift+upArrow key |Space+RJ up, Backspace+RJ up|
 |shift+downArrow key |Space+RJ down, Backspace+RJ down|
 |shift+leftArrow key |Space+RJ left, Backspace+RJ left|
@@ -6162,6 +6164,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Scroll braille display back |`left`, `lWheelLeft`, `rWheelLeft`|
 |Scroll braille display forward |`right`, `lWheelRight`, `rWheelRight`|
 |Route to braille cell |`routing`|
+| Select range from first up to last braille cell | `home1+multiRouting`, `home2+multiRouting` |
 |Report text formatting under braille cell |`secondary routing`|
 |Toggle the way context information is presented in braille |`attribute1+attribute3`|
 |Cycles between speech modes |`attribute2+attribute4`|
@@ -6219,6 +6222,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |`d1`|
 |Move braille display to next line |`d3`|
 |Route to braille cell |`routing`|
+| Select range from first up to last braille cell | `multiRouting` |
 |Up arrow key |`up`|
 |Down arrow key |`down`|
 |Left arrow key |`left`|
@@ -6242,6 +6246,7 @@ Following are the current key assignments for these displays.
 |Scroll braille display back |pan left or rocker up|
 |Scroll braille display forward |pan right or rocker down|
 |Route to braille cell |routing set 1|
+| Select range from first up to last braille cell | multiple routing set 1 keys |
 |Toggle braille tethered to |up+down|
 |upArrow key |joystick up, dpad up or space+dot1|
 |downArrow key |joystick down, dpad down or space+dot4|
@@ -6341,6 +6346,20 @@ Secure screens include:
 * The Windows sign-in screen
 * The User Access Control dialog, active when performing an action as an administrator
   * This includes installing programs
+
+### Downloading NVDA {#DownloadingNVDA}
+
+The recommended place to download NVDA is from the NV Access download page at [https://www.nvaccess.org/download/](https://www.nvaccess.org/download/).
+
+NVDA can also be downloaded and installed using the Windows Package Manager (WinGet).
+Run the following command in Command Prompt (`cmd`) or PowerShell to install the latest version of NVDA:
+
+`winget install --id NVAccess.NVDA`
+
+To install beta or RC versions, use the following commands:
+
+* Beta: `winget install --id NVAccess.NVDA.Beta`
+* RC: `winget install --id NVAccess.NVDA.RC`
 
 ### Command Line Options {#CommandLineOptions}
 
