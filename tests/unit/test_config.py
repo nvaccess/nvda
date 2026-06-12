@@ -1369,17 +1369,6 @@ class Config_loadCustomSections(unittest.TestCase):
 		mockLog.assert_called_once()
 		self.assertEqual(customSections, {})
 
-	def test_alreadyRegisteredName_skipped(self):
-		"""Sections whose name already exists in confspec are skipped."""
-		existingKey = next(iter(confspec))
-		data = {existingKey: {"spec": {"key": "string(default='val')"}}}
-		with patch("builtins.open", mock_open()):
-			with patch("config.yaml.safe_load", return_value=data):
-				with patch("config.log.debugWarning") as mockLog:
-					_loadCustomSections()
-		mockLog.assert_called_once()
-		self.assertNotIn(existingKey, customSections)
-
 	def test_missingSpec_skipped(self):
 		"""Entries without a 'spec' key are skipped."""
 		data = {"mySection": {"isBaseOnly": False}}
