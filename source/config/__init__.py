@@ -504,15 +504,14 @@ def _loadCustomSections() -> None:
 	if sections is None:
 		return
 	if not isinstance(sections, dict):
-		log.error(f"{path} has unexpected format (expected a mapping).", exc_info=True)
+		log.error(f"{path} has unexpected format (expected a mapping).")
 		return
 	for name, entry in sections.items():
 		if not isinstance(name, str):
 			log.debugWarning(f"Custom section name {name} is not a string; skipping.")
 			continue
 		if name in confspec:
-			log.debugWarning(f"Custom section {name} is already registered; skipping.")
-			continue
+			log.debugWarning(f"Registering custom section {name!r} that is already registered.")
 		if not isinstance(entry, dict) or "spec" not in entry:
 			log.debugWarning(f"Custom section {name} has an invalid entry; skipping.")
 			continue
@@ -591,7 +590,7 @@ class ConfigManager:
 		sectionSpec: dict[str, Any],
 		isBaseOnly: bool = False,
 	) -> None:
-		"""Register a section to be added to the configuration.
+		"""Register a configuration section.
 		This is intended for add-ons to register custom sections.
 		:param sectionName: The name of the section to add.
 		:param sectionSpec: The configspec for the section to add.
@@ -623,8 +622,8 @@ class ConfigManager:
 			return
 		path = WritePaths.nvdaCustomSectionsFile
 		try:
-			with open(path, "w", encoding="utf-8") as _f:
-				yaml.safe_dump(customSections, _f, allow_unicode=True, default_flow_style=False)
+			with open(path, "w", encoding="utf-8") as f:
+				yaml.safe_dump(customSections, f, allow_unicode=True, default_flow_style=False)
 		except (OSError, yaml.YAMLError):
 			log.error(f"Error saving sections to {path}.", exc_info=True)
 
@@ -825,7 +824,7 @@ class ConfigManager:
 			profile.write(f)
 
 	def save(self):
-		"""Save all modified profiles and the base configuration to disk, and registered custom sections."""
+		"""Save all modified profiles and the base configuration to disk."""
 		# #7598: give others a chance to either save settings early or terminate tasks.
 		pre_configSave.notify()
 		if not NVDAState.shouldWriteToDisk():
