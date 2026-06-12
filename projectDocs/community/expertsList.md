@@ -25,4 +25,4 @@ General enquiries should be directed to <info@nvaccess.org>.
 | @jcsteh | <jamie@nvaccess.org> | Mozilla Firefox |
 | @alex19EP | <email@alex19ep.me> | eSpeak |
 | @RyanMcCleary | <remccleary@gmail.com> | Math |
-| @hwf1324 | ? | Visual bugs: e.g. visual highlight, mouse tracking, magnifier |
+| @hwf1324 | <1398969445@qq.com> | Visual bugs: e.g. visual highlight, mouse tracking, magnifier |
