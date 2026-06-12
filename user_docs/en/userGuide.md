@@ -614,6 +614,18 @@ Place two fingers on the screen and move them toward each other to perform a pin
 Move them away from each other to perform a pinch out gesture.
 The fingers must move at least 50 pixels closer together or further apart to be recognised as a pinch in or out.
 
+##### Sequential Flicks {#SequentialFlicks}
+
+You can perform two flicks in quick succession to trigger a sequential flick gesture.
+This greatly expands the number of touch gestures that can be assigned to NVDA commands.
+
+Both flicks can be performed in two ways:
+
+* Lifting your finger after the first flick and then performing the second flick before the gesture times out.
+* Or as a single continuous swipe that sharply changes direction, without lifting your finger.
+
+Twelve combinations are recognised: the four opposite-direction pairs (such as flick right then flick left), and the eight perpendicular L-shaped pairs (such as flick right then flick up).
+
 #### Touch Modes {#TouchModes}
 
 As there are many more NVDA commands than possible touch gestures, NVDA has several touch modes you can switch between which make certain subsets of commands available.
@@ -1632,7 +1644,7 @@ The magnifier offers three different modes for tracking focus and determining wh
 
 * Center: The magnified area is centered on the current focus position.
 This mode keeps the focused element at the center of the screen and clamps to the screen edge.
-To disable clamping, activate [true center mode in the Magnifier settings](#MagnifierUseTrueCenter).
+To disable clamping, activate [true center tracking in the Magnifier settings](#MagnifierUseTrueCenterTracking).
 * Border: The magnified area only moves when the focus approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
 * Relative: The magnified area maintains the relative position of the focus within the screen.
@@ -2927,22 +2939,17 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### Focus mode {#MagnifierFullscreenFocusMode}
+##### Use true center tracking {#MagnifierUseTrueCenterTracking}
 
-This combo box allows you to select the focus tracking mode when using the magnifier.
-To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-The available options are:
+This checkbox controls whether the magnifier should always keep the focus centered on the screen, or if it should allow the focus to move towards the edges of the screen before moving the magnified area.
+When enabled, the magnifier will always keep the focus centered on the screen, which can be helpful for users who prefer a consistent position of the focus within the magnified view.
+
+This option is disabled by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Options | Center, Border, Relative |
-| Default | Center |
-
-| Option | Description |
-|---|---|
-| Center | The magnified area is always centered on the current focus position. |
-| Border | The magnified area only moves when the focus approaches the edge of the visible area. |
-| Relative | The magnified area maintains the relative position of the focus within the screen. |
+| Options | Disabled, Enabled |
+| Default | Disabled |
 
 ##### Panning step size {#MagnifierPanningStepSize}
 
@@ -2961,18 +2968,6 @@ Available pan actions include:
 |---|---|
 | Options | 1 to 100 |
 | Default | 10 |
-
-##### Use true center {#MagnifierUseTrueCenter}
-
-This checkbox controls whether the magnifier should always keep the focus centered on the screen, or if it should allow the focus to move towards the edges of the screen before moving the magnified area.
-When enabled, the magnifier will always keep the focus centered on the screen, which can be helpful for users who prefer a consistent position of the focus within the magnified view.
-
-This option is disabled by default.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-| Options | Disabled, Enabled |
-| Default | Disabled |
 
 ##### Follow mouse {#MagnifierFollowMouse}
 
@@ -3021,6 +3016,23 @@ This option is enabled by default.
 |---|---|
 | Options | Disabled, Enabled |
 | Default | Enabled |
+
+##### Focus mode {#MagnifierFullscreenFocusMode}
+
+This combo box allows you to select the focus tracking mode when using the magnifier.
+To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+The available options are:
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Center, Border, Relative |
+| Default | Center |
+
+| Option | Description |
+|---|---|
+| Center | The magnified area is always centered on the current focus position. |
+| Border | The magnified area only moves when the focus approaches the edge of the visible area. |
+| Relative | The magnified area maintains the relative position of the focus within the screen. |
 
 #### Keyboard {#KeyboardSettings}
 

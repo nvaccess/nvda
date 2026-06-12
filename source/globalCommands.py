@@ -8,10 +8,12 @@
 
 import itertools
 from typing import (
+	TYPE_CHECKING,
 	Optional,
 	Tuple,
 	Union,
 )
+from comtypes import COMError
 from annotation import (
 	_AnnotationNavigation,
 	_AnnotationNavigationNode,
@@ -73,6 +75,9 @@ import audio
 import synthDriverHandler
 from utils.displayString import DisplayStringEnum
 import _remoteClient
+
+if TYPE_CHECKING:
+	import documentBase
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -183,6 +188,41 @@ def toggleIntegerValue(
 
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus."""
+
+	def __init__(self) -> None:
+		super().__init__()
+		self._reviewCopyStartMarker: textInfos.TextInfo | None = None
+		self._reviewCopyStartMarkerObj: "documentBase.TextContainerObject | None" = None
+		self._reviewSelectThenCopyRange: textInfos.TextInfo | None = None
+
+	def _clearReviewCopyStartMarker(self) -> None:
+		self._reviewCopyStartMarker = None
+		self._reviewCopyStartMarkerObj = None
+		self._reviewSelectThenCopyRange = None
+
+	def _getReviewCopyStartMarker(self, pos: textInfos.TextInfo) -> textInfos.TextInfo | None:
+		"""Return the review copy start marker if it is valid for ``pos``.
+
+		The marker is only valid when ``pos`` uses the same TextInfo implementation
+		and an equivalent text container. A comparison dry-run rejects stale native
+		ranges that cannot be used together.
+		"""
+		startMarker = self._reviewCopyStartMarker
+		if startMarker is None:
+			return None
+		startMarkerObj = self._reviewCopyStartMarkerObj
+		if startMarkerObj is None:
+			self._clearReviewCopyStartMarker()
+			return None
+		posObj = pos.obj
+		if pos.__class__ is not startMarker.__class__ or posObj != startMarkerObj:
+			return None
+		try:
+			pos.compareEndPoints(startMarker, "startToStart")
+		except (COMError, LookupError, NotImplementedError, RuntimeError) as e:
+			log.debug(f"Error comparing review position with marked text: {e}")
+			return None
+		return startMarker
 
 	@script(
 		description=_(
@@ -4080,13 +4120,12 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TEXTREVIEW,
 		gesture="kb:NVDA+f9",
 	)
-	def script_review_markStartForCopy(self, gesture):
+	def script_review_markStartForCopy(self, gesture: inputCore.InputGesture) -> None:
 		reviewPos = api.getReviewPosition()
-		# attach the marker to obj so that the marker is cleaned up when obj is cleaned up.
-		reviewPos.obj._copyStartMarker = reviewPos.copy()  # represents the start location
-		reviewPos.obj._selectThenCopyRange = (
-			None  # we may be part way through a select, reset the copy range.
-		)
+		self._reviewCopyStartMarker = reviewPos.copy()
+		self._reviewCopyStartMarkerObj = reviewPos.obj
+		# We may be part way through a select, reset the copy range.
+		self._reviewSelectThenCopyRange = None
 		# Translators: Indicates start of review cursor text to be copied to clipboard.
 		ui.message(_("Start marked"))
 
@@ -4099,13 +4138,13 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TEXTREVIEW,
 		gesture="kb:NVDA+shift+F9",
 	)
-	def script_review_moveToStartMarkedForCopy(self, gesture: inputCore.InputGesture):
-		pos = api.getReviewPosition()
-		if not getattr(pos.obj, "_copyStartMarker", None):
+	def script_review_moveToStartMarkedForCopy(self, gesture: inputCore.InputGesture) -> None:
+		startMarker = self._getReviewCopyStartMarker(api.getReviewPosition())
+		if not startMarker:
 			# Translators: Presented when attempting to move to the start marker for copy but none has been set.
 			ui.reviewMessage(_("No start marker set"))
 			return
-		startMarker = pos.obj._copyStartMarker.copy()
+		startMarker = startMarker.copy()
 		# This script is available on the lock screen via getSafeScripts,
 		# as such observe the setReviewPosition result to ensure
 		# the review position does not contain secure information
@@ -4132,16 +4171,16 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TEXTREVIEW,
 		gesture="kb:NVDA+f10",
 	)
-	def script_review_copy(self, gesture):
+	def script_review_copy(self, gesture: inputCore.InputGesture) -> None:
 		pos = api.getReviewPosition().copy()
-		if not getattr(pos.obj, "_copyStartMarker", None):
+		startMarker = self._getReviewCopyStartMarker(pos)
+		if not startMarker:
 			# Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 			ui.message(_("No start marker set"))
 			return
-		startMarker = api.getReviewPosition().obj._copyStartMarker
 		# first call, try to set the selection.
 		if getLastScriptRepeatCount() == 0:
-			if getattr(pos.obj, "_selectThenCopyRange", None):
+			if self._reviewSelectThenCopyRange:
 				# we have already tried selecting the text, dont try again. For now selections can not be ammended.
 				# Translators: Presented when text has already been marked for selection, but not yet copied.
 				ui.message(_("Press twice to copy or reset the start marker"))
@@ -4164,9 +4203,9 @@ class GlobalCommands(ScriptableObject):
 			if copyMarker.compareEndPoints(copyMarker, "startToEnd") == 0:
 				# Translators: Presented when there is no text selection to copy from review cursor.
 				ui.message(_("No text to copy"))
-				api.getReviewPosition().obj._copyStartMarker = None
+				self._clearReviewCopyStartMarker()
 				return
-			api.getReviewPosition().obj._selectThenCopyRange = copyMarker
+			self._reviewSelectThenCopyRange = copyMarker
 			# for applications such as word, where the selected text is not automatically spoken we must monitor it ourself
 			try:
 				# old selection info must be saved so that its possible to report on the changes to the selection.
@@ -4189,11 +4228,14 @@ class GlobalCommands(ScriptableObject):
 				log.debug("Error trying to update selection: %s" % e)
 				return
 		elif getLastScriptRepeatCount() == 1:  # the second call, try to copy the text
-			copyMarker = pos.obj._selectThenCopyRange
+			copyMarker = self._reviewSelectThenCopyRange
+			if copyMarker is None:
+				# Translators: Presented when attempting to copy some review cursor text but there is no start marker.
+				ui.message(_("No start marker set"))
+				return
 			copyMarker.copyToClipboard(notify=True)
 			# on the second call always clean up the start marker
-			api.getReviewPosition().obj._selectThenCopyRange = None
-			api.getReviewPosition().obj._copyStartMarker = None
+			self._clearReviewCopyStartMarker()
 		return
 
 	@script(

@@ -9,6 +9,9 @@
 * Chinese text can now be navigated by word using built-in input gestures.
   A Word Segmentation Standard setting was added to the "Document Navigation" panel. (#18735, @CrazySteve0605, @Cary-rowen)
 * Braille output for Chinese now includes spaces between words. (#18865, @CrazySteve0605, @Cary-rowen)
+* Added sequential two-flick touch gestures that combine two flicks performed in quick succession into a single gesture, increasing the number of touch gestures that can be bound to scripts. (#19938, @kefaslungu)
+  * Twelve combinations are recognised: opposite-direction pairs (e.g. flick right then flick left) and perpendicular L-shaped pairs (e.g. flick right then flick up).
+  * The two flicks can be performed either by lifting the finger between strokes or as a single continuous swipe with a sharp change in direction.
 * On supported braille displays, pressing multiple routing keys simultaneously can now be bound to a new "multi routing" gesture. (#20001, @LeonarddeR)
   * The "select range" command, which selects the text from the first up to the last pressed routing key, is bound to this gesture by default on supporting drivers.
   * Drivers with built-in support for multi routing: ALVA, Albatross (only when combined with `home1` or `home2`), Baum (and compatible), Freedom Scientific Focus/PAC Mate, HumanWare Brailliant BI/B series, Handy Tech, NLS eReader Zoomax, Seika Notetaker, and Standard HID Braille displays.
@@ -31,6 +34,7 @@
 * NVDA recovers more quickly when an application stops responding; in particular, switching away from a hung application returns NVDA to responsiveness immediately. (#20169, @heath-toby)
 * In Mozilla Firefox, reporting annotation details now works correctly in focus mode on controls which are not editable text. (#20208, @jcsteh)
 * NVDA now announces heading, paragraph, list, and list item children inside webpage alerts (`role="alert"`). (#14990, @mehm8128)
+* After marking the start of text for review cursor copy with `NVDA+f9`, moving with Find or Go To no longer causes `NVDA+f10` to report that no start marker is set. (#13864, @Cary-rowen)
 
 ### Changes for Developers
 
@@ -41,6 +45,10 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * Drivers should set `cellIndexes` directly instead of `routingIndex`.
   * When a gesture addresses more than one cell, its `id` should be set to `"multiRouting"` (or be built via the new `BrailleDisplayGesture.idForCellCount(n)` helper).
   * `cellIndexes` is not limited to routing keys; touch-sensitive cells (e.g. Handy Tech Active Tactile Control) can reuse the same attribute.
+* Added a new `hwIo.ble` submodule for Bluetooth Low Energy device discovery and I/O, exposing a `Scanner` singleton (with a `deviceDiscovered` extension point), a `Ble` class implementing the `IoBase` contract, and a `findDeviceByAddress` helper.
+Built on top of [Bleak](https://bleak.readthedocs.io/) and the `_asyncioEventLoop` module. (#19838, @bramd)
+* Component updates:
+  * Updated py2exe to 0.14.1.1. (#20260, @LeonarddeR)
 
 #### Deprecations
 
@@ -50,6 +58,10 @@ Use the `cellIndexes` attribute instead. (#20001, @LeonarddeR)
 Use `KeyGesture` instead. (#20077, @LeonarddeR)
 * The `braille.wordWrap` configuration key is deprecated and bridged to `braille.textWrap`. (#17010, @LeonarddeR)
 * The `useUniscribe` attribute of `textInfos.offsets.OffsetsTextInfo` and its subclasses is deprecated, use `charSegFlag` and `wordSegFlag` instead. (#18735)
+* In `touchTracker`, the module-level `action_*` string constants are deprecated.
+Use the corresponding `TouchAction` enum members instead (e.g. `TouchAction.TAP`, `TouchAction.FLICK_UP`). (#19938, @kefaslungu)
+* In `touchTracker`, `actionLabels` is deprecated.
+Use `TouchAction(value).displayString` instead. (#19938, @kefaslungu)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
@@ -146,6 +158,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 * The "Toggles on and off if the screen layout is preserved while rendering the document content" item in the "Browse mode" category of the Input Gestures dialog now behaves correctly. (#18378)
 * In Microsoft Word with UIA enabled, page changes are now correctly announced when navigating table rows that span multiple pages. (#19386, @akj)
 * Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)
+* In Excel, when visual highlight is enabled, the focused cell is now correctly highlighted. (#19641, @CyrilleB79)
 * Braille should no longer stop following focus when moving around in the Microsoft Copilot application. (#19646, @Emil-18)
 * The `NVDA+k` command now correctly reports the destination of links containing formatted text, such as bold or italics. (#19428, @Cary-rowen)
 * Capital indicators are now correctly announced when selecting single characters. (#19505, @cary-rowen)
