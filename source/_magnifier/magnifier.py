@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -8,13 +8,14 @@ Magnifier module.
 Implements the magnifier global class and its basic functionalities.
 """
 
-from typing import Callable
+from collections.abc import Callable
 from comtypes import COMError
 from logHandler import log
 import wx
 import ui
 import speech
 import screenCurtain
+import mouseHandler
 import winUser
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
@@ -30,9 +31,9 @@ from .config import (
 	getZoomLevel,
 	getPanStep,
 	getFilter,
-	ZoomLevel,
 	isTrueCentered,
-	shouldKeepMouseCentered,
+	setZoomLevel,
+	ZoomLevel,
 )
 from .utils.focusManager import FocusManager
 
@@ -198,8 +199,6 @@ class Magnifier:
 			self._managePanning()
 			if not self._isManualPanning:
 				self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
-			if shouldKeepMouseCentered():
-				self._keepMouseCentered()
 			self._doUpdate()
 			self._consecutiveErrors = 0
 			self._recoveryAttempts = 0
@@ -307,6 +306,7 @@ class Magnifier:
 			newZoom = int(self.zoomLevel - ZoomLevel.STEP_FACTOR)
 			if newZoom >= ZoomLevel.MIN_ZOOM:
 				self.zoomLevel = newZoom
+		setZoomLevel(int(self.zoomLevel))
 
 	def _pan(self, action: MagnifierAction) -> bool:
 		"""
@@ -358,13 +358,24 @@ class Magnifier:
 				self._isManualPanning = False
 		self._lastFocusCoordinates = focusCoordinates
 
-	def _keepMouseCentered(self) -> None:
+	def moveMouseToViewCenter(self) -> None:
 		"""
 		Move the mouse cursor to the center of the magnified view.
-		Subclasses may override this to adapt the behavior for specific modes.
+		Does not check for mouse button state, allowing use during drag-and-drop.
 		"""
-		centerX, centerY = self.currentCoordinates
-		winUser.setCursorPos(centerX, centerY)
+		center = self._computeMagnifiedViewCenter()
+		winUser.setCursorPos(center.x, center.y)
+		log.debug(f"Cursor manually repositioned to magnified view center ({center.x}, {center.y})")
+		mouseHandler.executeMouseMoveEvent(center.x, center.y)
+
+	def _computeMagnifiedViewCenter(self) -> Coordinates:
+		"""
+		Compute the coordinates of the center of the currently magnified view.
+		Subclasses must implement this method for their specific display mode.
+
+		:return: The (x, y) coordinates of the center of the magnified view
+		"""
+		raise NotImplementedError("Subclasses must implement this method")
 
 	def _startTimer(self, callback: Callable[[], None] = None) -> None:
 		"""

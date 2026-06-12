@@ -1877,9 +1877,12 @@ class IAccessible(Window):
 		)
 		if config.conf["debugLog"]["annotations"]:
 			log.debug(f"Got {count} relations, given maxRelations: {maxRelations}")
-		if count == 0:
-			return
-		yield from (targets[i] for i in range(min(maxRelations, count)))
+		try:
+			if count == 0:
+				return
+			yield from (targets[i] for i in range(min(maxRelations, count)))
+		finally:
+			winBindings.ole32.CoTaskMemFree(targets)
 
 	def _getIA2RelationFirstTarget(
 		self,
@@ -2035,8 +2038,27 @@ class IAccessible(Window):
 			return
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
 		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
+		hasDescription = bool(self.description)
 		for child in self.recursiveDescendants:
-			if controlTypes.State.FOCUSABLE in child.states:
+			isFocusable = controlTypes.State.FOCUSABLE in child.states
+			if hasDescription and not isFocusable:
+				shouldSpeak = isFocusable
+			else:
+				shouldSpeak = (
+					isFocusable
+					or child.role
+					in (
+						controlTypes.Role.HEADING,
+						controlTypes.Role.LIST,
+						controlTypes.Role.LISTITEM,
+					)
+					or (
+						child.role == controlTypes.Role.STATICTEXT
+						and child.parent is not None
+						and child.parent.role == controlTypes.Role.PARAGRAPH
+					)
+				)
+			if shouldSpeak:
 				speech.speakObject(child, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
 				braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 

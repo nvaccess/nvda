@@ -1,9 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2025 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
+# Copyright (C) 2008-2026 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
 # Leonard de Ruijter, Burman's Computer and Education Ltd., Julien Cochuyt
 
+import bisect
 from enum import StrEnum
 import dataclasses
 import itertools
@@ -35,10 +36,13 @@ import ctypes.wintypes
 import threading
 import time
 import wx
+import languageHandler
 import louisHelper
 import louis
 import gui
 from controlTypes.state import State
+import textUtils
+import textUtils.hyphenation
 import winBindings.kernel32
 import winKernel
 import keyboardHandler
@@ -73,6 +77,7 @@ import hwPortUtils
 import bdDetect
 import queueHandler
 import brailleViewer
+import NVDAState
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked, post_sessionLockStateChanged
 from winAPI.secureDesktop import post_secureDesktopStateChange
@@ -549,49 +554,50 @@ class Region(object):
 	"""A region of braille to be displayed.
 	Each portion of braille to be displayed is represented by a region.
 	The region is responsible for retrieving its text and the cursor and selection positions, translating it into braille cells and handling cursor routing requests relative to its braille cells.
-	The L{BrailleBuffer} containing this region will call L{update} and expect that L{brailleCells}, L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} will be set appropriately.
-	L{routeTo} will be called to handle a cursor routing request.
+	The :class:`BrailleBuffer` containing this region will call :meth:`update` and expect that :attr:`brailleCells`, :attr:`brailleCursorPos`, :attr:`brailleSelectionStart` and :attr:`brailleSelectionEnd` will be set appropriately.
+	:meth:`routeTo` will be called to handle a cursor routing request.
 	"""
 
+	rawText: str = ""
+	"""The original, raw text of this region."""
+	cursorPos: int | None = None
+	"""The position of the cursor in :attr:`rawText`, ``None`` if the cursor is not in this region."""
+	selectionStart: int | None = None
+	"""The start of the selection in :attr:`rawText` (inclusive), ``None`` if there is no selection in this region."""
+	selectionEnd: int | None = None
+	"""The end of the selection in :attr:`rawText` (exclusive), ``None`` if there is no selection in this region."""
+	rawTextTypeforms: list[int] | None = None
+	"""liblouis typeform flags for each character in :attr:`rawText`, ``None`` if no typeform info."""
+	brailleCursorPos: int | None = None
+	"""The position of the cursor in :attr:`brailleCells`, ``None`` if the cursor is not in this region."""
+	brailleSelectionStart: int | None = None
+	"""The position of the selection start in :attr:`brailleCells`, ``None`` if there is no selection in this region."""
+	brailleSelectionEnd: int | None = None
+	"""The position of the selection end in :attr:`brailleCells`, ``None`` if there is no selection in this region."""
+	hidePreviousRegions: bool = False
+	"""Whether to hide all previous regions."""
+	focusToHardLeft: bool = False
+	"""Whether this region should be positioned at the absolute left of the display when focused."""
+
 	def __init__(self):
-		#: The original, raw text of this region.
-		self.rawText = ""
-		#: The position of the cursor in L{rawText}, C{None} if the cursor is not in this region.
-		#: @type: int
-		self.cursorPos = None
-		#: The start of the selection in L{rawText} (inclusive), C{None} if there is no selection in this region.
-		#: @type: int
-		self.selectionStart = None
-		#: The end of the selection in L{rawText} (exclusive), C{None} if there is no selection in this region.
-		#: @type: int
-		self.selectionEnd = None
-		#: The translated braille representation of this region.
-		#: @type: [int, ...]
-		self.brailleCells = []
-		#: liblouis typeform flags for each character in L{rawText},
-		#: C{None} if no typeform info.
-		#: @type: [int, ...]
-		self.rawTextTypeforms = None
-		#: A list mapping positions in L{rawText} to positions in L{brailleCells}.
-		#: @type: [int, ...]
-		self.rawToBraillePos = []
-		#: A list mapping positions in L{brailleCells} to positions in L{rawText}.
-		#: @type: [int, ...]
-		self.brailleToRawPos = []
-		#: The position of the cursor in L{brailleCells}, C{None} if the cursor is not in this region.
-		self.brailleCursorPos: Optional[int] = None
-		#: The position of the selection start in L{brailleCells}, C{None} if there is no selection in this region.
-		#: @type: int
-		self.brailleSelectionStart = None
-		#: The position of the selection end in L{brailleCells}, C{None} if there is no selection in this region.
-		#: @type: int
-		self.brailleSelectionEnd = None
-		#: Whether to hide all previous regions.
-		#: @type: bool
-		self.hidePreviousRegions = False
-		#: Whether this region should be positioned at the absolute left of the display when focused.
-		#: @type: bool
-		self.focusToHardLeft = False
+		self._languageIndexes: dict[int, str] = {0: self._getDefaultRegionLanguage()}
+		"""Language indexes in :attr:`rawText`. The last language is assumed to be the final language in the region."""
+		self.brailleCells: list[int] = []
+		"""The translated braille representation of this region."""
+		self.rawToBraillePos: list[int] = []
+		"""A list mapping positions in :attr:`rawText` to positions in :attr:`brailleCells`."""
+		self.brailleToRawPos: list[int] = []
+		"""A list mapping positions in :attr:`brailleCells` to positions in :attr:`rawText`."""
+
+	def _getDefaultRegionLanguage(self) -> str:
+		"""Get the default language for a region."""
+		return louisHelper.getTableLanguage(handler.table.fileName) or languageHandler.getLanguage()
+
+	def _getLanguageAtPos(self, pos: int) -> str:
+		"""Get the language at a given position in :attr:`rawText` based on :attr:`_languageIndexes`."""
+		keys = sorted(self._languageIndexes)
+		i = bisect.bisect_right(keys, pos) - 1
+		return self._languageIndexes[keys[i]]
 
 	def update(self):
 		"""Update this region.
@@ -1400,8 +1406,15 @@ class TextInfoRegion(Region):
 		if separate and self.rawText:
 			# Separate this field text from the rest of the text.
 			text = TEXT_SEPARATOR + text
-		self.rawText += text
 		textLen = len(text)
+		# Fields are reported in NVDA's language
+		fieldLanguage = languageHandler.getLanguage()
+		rawTextLen = len(self.rawText)
+		lastLanguage = self._getLanguageAtPos(rawTextLen)
+		if fieldLanguage != lastLanguage:
+			self._languageIndexes[rawTextLen] = fieldLanguage
+			self._languageIndexes[rawTextLen + textLen] = lastLanguage
+		self.rawText += text
 		self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
 		self._rawToContentPos.extend((contentPos,) * textLen)
 
@@ -1454,16 +1467,21 @@ class TextInfoRegion(Region):
 				field = command.field
 				if cmd == "formatChange":
 					typeform = self._getTypeformFromFormatField(field, formatConfig)
+					language = field.get("language")
 					text = getFormatFieldBraille(
 						field,
 						formatFieldAttributesCache,
 						self._isFormatFieldAtStart,
 						formatConfig,
 					)
+					if text:
+						# Map this field text to the start of the field's content.
+						self._addFieldText(text, self._currentContentPos)
+					rawTextLen = len(self.rawText)
+					if language and self._getLanguageAtPos(rawTextLen) != language:
+						self._languageIndexes[rawTextLen] = language
 					if not text:
 						continue
-					# Map this field text to the start of the field's content.
-					self._addFieldText(text, self._currentContentPos)
 				elif cmd == "controlStart":
 					if self._skipFieldsNotAtStartOfNode and not field.get("_startOfNode"):
 						text = None
@@ -1531,6 +1549,7 @@ class TextInfoRegion(Region):
 		self.rawText = ""
 		self.rawTextTypeforms = []
 		self.cursorPos = None
+		self._languageIndexes: dict[int, str] = {0: self._getDefaultRegionLanguage()}
 		# The output includes text representing fields which isn't part of the real content in the control.
 		# Therefore, maintain a map of positions in the output to positions in the content.
 		self._rawToContentPos = []
@@ -1917,6 +1936,11 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 				return region, bufferPos - start
 		raise LookupError("No such position")
 
+	def _getLanguageAtBufferPos(self, pos: int) -> str:
+		"""Gets the language at the given braille buffer position."""
+		region, regionPos = self.bufferPosToRegionPos(pos)
+		return region._getLanguageAtPos(regionPos)
+
 	def regionPosToBufferPos(self, region: Region, pos: int, allowNearest: bool = False) -> int:
 		"""Converts a position relative to a region to a position relative to the braille buffer.
 		:param region: The region the position is relative to.
@@ -2029,13 +2053,32 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			elif textWrap == BrailleTextWrapFlag.MARK_WORD_CUTS and self._isMidWordCut(end, bufferEnd):
 				end -= 1
 				showContinuationMark = True
-			elif textWrap == BrailleTextWrapFlag.AT_WORD_BOUNDARIES:
+			elif textWrap in (
+				BrailleTextWrapFlag.AT_WORD_BOUNDARIES,
+				BrailleTextWrapFlag.AT_WORD_OR_SYLLABLE_BOUNDARIES,
+			):
 				try:
 					lastSpaceIndex = rindex(self.brailleCells, 0, start, end + 1)
 					if lastSpaceIndex < end:
 						# lastSpaceIndex < end proves brailleCells[end] is non-zero,
 						# so searching [start, end) yields the same lastSpaceIndex.
+						oldEnd = end
 						end = lastSpaceIndex + 1
+						if end < oldEnd and textWrap == BrailleTextWrapFlag.AT_WORD_OR_SYLLABLE_BOUNDARIES:
+							# Prefer splitting the word at a syllable boundary closer to the display edge.
+							# Note that, when the below index call fails, it is appropriately handled by the except block,
+							# which means that we won't split at a syllable boundary in this case.
+							nextSpace = self.brailleCells.index(0, oldEnd, bufferEnd)
+							word = self.bufferPositionsToRawText(end, nextSpace - 1)
+							if word:
+								language = self._getLanguageAtBufferPos(end)
+								rawPos = self.brailleToRawPos[end]
+								positions = textUtils.hyphenation.getHyphenPositions(word, language)
+								for posInWord in reversed(positions):
+									if (newEnd := self.rawToBraillePos[posInWord + rawPos]) < oldEnd:
+										end = newEnd
+										showContinuationMark = True
+										break
 				except (ValueError, IndexError):
 					# No space on line - fall back to display-edge cut.
 					if self._isMidWordCut(end, bufferEnd):
@@ -3895,11 +3938,12 @@ class BrailleDisplayDriver(driverHandler.Driver):
 
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
-	Subclasses must provide L{source} and L{id}.
-	Optionally, L{model} can be provided to facilitate model specific gestures.
-	L{routingIndex} should be provided for routing buttons.
-	Subclasses can also inherit from L{brailleInput.BrailleInputGesture} if the display has a braille keyboard.
-	If the braille display driver is a L{baseObject.ScriptableObject}, it can provide scripts specific to input gestures from this display.
+	Subclasses must provide :attr:`source` and :attr:`id`.
+	Optionally, :attr:`model` can be provided to facilitate model specific gestures.
+	:attr:`cellIndexes` should be provided for gestures addressed to specific braille cells,
+	such as routing keys or touch-sensitive cells (e.g. Handy Tech Active Tactile Control).
+	Subclasses can also inherit from :class:`brailleInput.BrailleInputGesture` if the display has a braille keyboard.
+	If the braille display driver is a :class:`baseObject.ScriptableObject`, it can provide scripts specific to input gestures from this display.
 	"""
 
 	shouldPreventSystemIdle = True
@@ -3931,18 +3975,66 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		"""
 		raise NotImplementedError
 
-	#: The index of the routing key or C{None} if this is not a routing key.
-	#: @type: int
-	routingIndex = None
+	cellIndexes: list[int] | None = None
+	"""Indexes of braille cells addressed by this gesture, e.g. routing keys or touch cells.
+	``None`` if this gesture is not cell-addressed.
+	"""
+
+	@classmethod
+	def idForCellCount(cls, count: int, baseName: str = "routing") -> str:
+		"""Return the conventional gesture id suffix for a cell-addressed gesture.
+
+		When more than one cell is addressed, the base name is prefixed with ``"multi"``
+		and its first character is uppercased.  For example::
+
+			idForCellCount(1, "routing")        # "routing"
+			idForCellCount(2, "routing")        # "multiRouting"
+			idForCellCount(2, "secondRouting")  # "multiSecondRouting"
+
+		:param count: Number of cells addressed.
+		:param baseName: The gesture id for a single-cell press in this range.
+		:return: The base name if *count* <= 1, otherwise the multi-prefixed form.
+		"""
+		if count > 1:
+			return f"multi{baseName[0].upper()}{baseName[1:]}"
+		return baseName
+
+	if NVDAState._allowDeprecatedAPI():
+
+		def _get_routingIndex(self) -> int | None:
+			"""Deprecated. Use :attr:`cellIndexes` instead.
+
+			Returns the highest cell index, or ``None`` if no cells are addressed.
+			"""
+			return max(self.cellIndexes) if self.cellIndexes else None
+
+		def _set_routingIndex(self, value: int | None) -> None:
+			"""Deprecated. Set :attr:`cellIndexes` instead."""
+			log.warning(
+				"Setting BrailleDisplayGesture.routingIndex is deprecated, set cellIndexes instead.",
+				stack_info=True,
+			)
+			self.cellIndexes = [value] if value is not None else None
+
+	_cellIndexesStr: str | None
+
+	def _get__cellIndexesStr(self) -> str | None:
+		"""A string representation of cell indexes for identification and display purposes."""
+		if "+" not in self.id and self.cellIndexes:
+			# This is an indexed gesture without additional keys, in which case the identifier can be extended with indexes.
+			return "+".join(f"{i + 1}" for i in self.cellIndexes)
+		return None
 
 	def _get_identifiers(self):
-		ids = ["br({source}):{id}".format(source=self.source, id=self.id)]
+		ids = []
+		if self._cellIndexesStr:
+			ids.append(f"br({self.source}):{self.id}{self._cellIndexesStr}")
+		ids.append(f"br({self.source}):{self.id}")
 		if self.model:
 			# Model based ids should take priority.
-			ids.insert(
-				0,
-				"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=self.id),
-			)
+			if self._cellIndexesStr:
+				ids.insert(0, f"br({self.source}.{self.model}):{self.id}{self._cellIndexesStr}")
+			ids.insert(1, f"br({self.source}.{self.model}):{self.id}")
 		import brailleInput
 
 		if isinstance(self, brailleInput.BrailleInputGesture):
@@ -3956,6 +4048,8 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			name = brailleInput.BrailleInputGesture._get_displayName(self)
 			if name:
 				return name
+		if self._cellIndexesStr:
+			return f"{self.id}{self._cellIndexesStr}"
 		return self.id
 
 	def _get_scriptableObject(self):

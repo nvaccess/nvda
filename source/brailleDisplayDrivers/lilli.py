@@ -189,4 +189,4 @@ class InputGesture(braille.BrailleDisplayGesture):
 		super(InputGesture, self).__init__()
 		self.id = command
 		if command == ROUTE_COMMAND:
-			self.routingIndex = argument
+			self.cellIndexes = [argument]

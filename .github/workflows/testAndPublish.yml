@@ -31,12 +31,12 @@ env:
   VSCMD_SKIP_SENDTELEMETRY: 1
   # Cache details about available MSVC tooling for subsequent SCons invocations to the provided file.
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
-  defaultRunner: 'windows-2025'
-  supportedRunners: '["windows-2022", "windows-2025"]'
+  defaultRunner: 'windows-2025-vs2026'
+  supportedRunners: '["windows-2022", "windows-2025-vs2026"]'
   defaultArch: x64
   supportedArchitectures: '["x64"]'
-  defaultPythonVersion: '3.13.12'
-  supportedPythonVersions: '["3.13.12"]'
+  defaultPythonVersion: '3.13.13'
+  supportedPythonVersions: '["3.13.13"]'
 
 jobs:
   matrix:
@@ -772,3 +772,24 @@ jobs:
             --repo ${{ github.repository }} \
             --clobber \
             $NVDA_EXE_NAME#Installer
+
+  submit-winget:
+    name: Submit manifest to WinGet Packages Repository
+    needs: [matrix, release]
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
+    if: startsWith(github.ref_name, 'release-')
+    permissions:
+      contents: read
+    steps:
+    - name: Checkout NVDA
+      uses: actions/checkout@v6
+      with:
+        submodules: false
+
+    - name: Submit package using wingetcreate
+      env:
+        GH_TOKEN: ${{ github.token }}
+        # wingetcreate will read the token from the below environment variable
+        # Reference: https://aka.ms/winget-create-token
+        WINGET_CREATE_GITHUB_TOKEN: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}
+      run: ci/scripts/submitWinGet.ps1

@@ -9,23 +9,46 @@
 * Added sequential two-flick touch gestures that combine two flicks performed in quick succession into a single gesture, increasing the number of touch gestures that can be bound to scripts. (#19938, @kefaslungu)
   * Twelve combinations are recognised: opposite-direction pairs (e.g. flick right then flick left) and perpendicular L-shaped pairs (e.g. flick right then flick up).
   * The two flicks can be performed either by lifting the finger between strokes or as a single continuous swipe with a sharp change in direction.
-* The braille "word wrap" option has been replaced with a three-valued "Text wrap" option: Off, Show mark when words are cut, and At word boundaries. (#17010, @LeonarddeR)
+* On supported braille displays, pressing multiple routing keys simultaneously can now be bound to a new "multi routing" gesture. (#20001, @LeonarddeR)
+  * The "select range" command, which selects the text from the first up to the last pressed routing key, is bound to this gesture by default on supporting drivers.
+  * Drivers with built-in support for multi routing: ALVA, Albatross (only when combined with `home1` or `home2`), Baum (and compatible), Freedom Scientific Focus/PAC Mate, HumanWare Brailliant BI/B series, Handy Tech, NLS eReader Zoomax, Seika Notetaker, and Standard HID Braille displays.
+* The braille "word wrap" option has been replaced with a four-valued "Text wrap" option: Off, Show mark when words are cut, At word boundaries, and At word or syllable boundaries. (#17010, @LeonarddeR)
   * In modes that show a continuation mark, when a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
+  * The "At word or syllable boundaries" option uses hyphenation dictionaries to split long words at syllable boundaries when they do not fit on the display.
+* Magnifier: A new unassigned command has been added to move the mouse cursor to the center of the magnified view. (#20127, @CyrilleB79)
 
 ### Changes
+
+* Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
 
 ### Bug Fixes
 
 * When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
+* In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen. (#20177)
 * When an application stops responding, NVDA no longer freezes or floods its log with errors; it stays responsive and drops UIA and MSAA events from the unresponsive application until it recovers. (#16749, @heath-toby)
 * Reduced lag on UI Automation text change events, improving the responsiveness of controls such as combo boxes and of File Explorer, by using the cached element class name instead of a live cross-process fetch. (#16749, @heath-toby)
+* Fixed UAC slider not being read when changing values with arrow keys in UI Automation. (#9356, @tareh7z)
+* NVDA recovers more quickly when an application stops responding; in particular, switching away from a hung application returns NVDA to responsiveness immediately. (#20169, @heath-toby)
+* In Mozilla Firefox, reporting annotation details now works correctly in focus mode on controls which are not editable text. (#20208, @jcsteh)
+* NVDA now announces heading, paragraph, list, and list item children inside webpage alerts (`role="alert"`). (#14990, @mehm8128)
 
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* `braille.BrailleDisplayGesture` now exposes a `cellIndexes` list attribute, replacing the single-valued `routingIndex`. (#20001, @LeonarddeR)
+  * Drivers should set `cellIndexes` directly instead of `routingIndex`.
+  * When a gesture addresses more than one cell, its `id` should be set to `"multiRouting"` (or be built via the new `BrailleDisplayGesture.idForCellCount(n)` helper).
+  * `cellIndexes` is not limited to routing keys; touch-sensitive cells (e.g. Handy Tech Active Tactile Control) can reuse the same attribute.
+* Added a new `hwIo.ble` submodule for Bluetooth Low Energy device discovery and I/O, exposing a `Scanner` singleton (with a `deviceDiscovered` extension point), a `Ble` class implementing the `IoBase` contract, and a `findDeviceByAddress` helper.
+Built on top of [Bleak](https://bleak.readthedocs.io/) and the `_asyncioEventLoop` module. (#19838, @bramd)
+
 #### Deprecations
 
+* The `braille.BrailleDisplayGesture.routingIndex` attribute is deprecated.
+Use the `cellIndexes` attribute instead. (#20001, @LeonarddeR)
+* `brailleDisplayDrivers.freedomScientific.RoutingGesture` is deprecated.
+Use `KeyGesture` instead. (#20077, @LeonarddeR)
 * The `braille.wordWrap` configuration key is deprecated and bridged to `braille.textWrap`. (#17010, @LeonarddeR)
 * In `touchTracker`, the module-level `action_*` string constants are deprecated.
 Use the corresponding `TouchAction` enum members instead (e.g. `TouchAction.TAP`, `TouchAction.FLICK_UP`). (#19938, @kefaslungu)
@@ -127,6 +150,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 * The "Toggles on and off if the screen layout is preserved while rendering the document content" item in the "Browse mode" category of the Input Gestures dialog now behaves correctly. (#18378)
 * In Microsoft Word with UIA enabled, page changes are now correctly announced when navigating table rows that span multiple pages. (#19386, @akj)
 * Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)
+* In Excel, when visual highlight is enabled, the focused cell is now correctly highlighted. (#19641, @CyrilleB79)
 * Braille should no longer stop following focus when moving around in the Microsoft Copilot application. (#19646, @Emil-18)
 * The `NVDA+k` command now correctly reports the destination of links containing formatted text, such as bold or italics. (#19428, @Cary-rowen)
 * Capital indicators are now correctly announced when selecting single characters. (#19505, @cary-rowen)
@@ -135,6 +159,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 * Fixed NVDA freezing when navigating in JetBrains IDEs. (#16741, @christopherpross)
 * Speech dictionary entries of type Whole word now correctly handle words containing Unicode combining marks (e.g. Hebrew niqqud, Arabic harakat). (#20013, @LeonarddeR)
   * In particular, Whole word entries no longer incorrectly match inside larger words when those words contain combining marks.
+* Focus is no longer silent on list items in Qt-based applications (such as Telegram Desktop) when the item exposes the UIA SelectionItem pattern without an associated action interface. (#20255, @rezabakhshilaktasaraei)
 
 ### Changes for Developers
 
@@ -146,6 +171,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * uv to 0.11.7. (#19736, #19908, #19968)
   * Requests to 2.33.0. (#19877)
   * cryptography to 46.0.7. (#19877, #19968)
+  * Python to 3.13.13. (#20231, @dpy013)
 * A new parameter `redactSecrets` has been added to logging functions e.g. `log.debug`. (#19966)
   * When set to `True`, logging output will be sanitized to replace detected secrets with asterisks.
   * This is set to `False` by default for performance purposes.
@@ -168,6 +194,8 @@ Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`,
     * Added a `valueToPercentage` function to calculate the percentage representation of a configuration value within its range.
     * Added a `percentageToValue` function to convert a percentage to the corresponding configuration value.
     * Added a `clampedIncrementAndUpdateConfig` function to update a configuration value by applying a step, constrained within its valid range.
+* NVDA is now built with Visual Studio 2026. (#20203, @LeonarddeR)
+* Fixed a race condition in `nvdaController_speakSsml` with `asynchronous=False` where a `speechCanceled` signal fired between `queueFunction` returning and the synth thread executing the `CallbackCommand` would not be caught, causing the call to block indefinitely. (#20220, @LeonarddeR)
 
 #### Deprecations
 

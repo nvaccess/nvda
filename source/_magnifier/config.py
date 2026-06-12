@@ -70,6 +70,20 @@ def getZoomLevelString() -> str:
 	return ZoomLevel.zoomMessage(zoomLevel)
 
 
+def roundZoomLevel(zoomLevel: int) -> int:
+	"""
+	Round a zoom level to the nearest valid step.
+
+	:param zoomLevel: The zoom level to round.
+	:return: The rounded zoom level.
+	"""
+	remainder = zoomLevel % ZoomLevel.STEP_FACTOR
+	if remainder >= ZoomLevel.STEP_FACTOR / 2:
+		return zoomLevel + (ZoomLevel.STEP_FACTOR - remainder)
+	else:
+		return zoomLevel - remainder
+
+
 def setZoomLevel(zoomLevel: int) -> None:
 	"""
 	Set zoom level from settings.
@@ -210,24 +224,6 @@ def toggleAllFollowStates() -> bool:
 	return _followStateOverride.isActive
 
 
-def getDefaultFullscreenMode() -> FullScreenMode:
-	"""
-	Get default full-screen mode from config.
-
-	:return: The default full-screen mode.
-	"""
-	return FullScreenMode(config.conf["magnifier"]["defaultFullscreenMode"])
-
-
-def setDefaultFullscreenMode(mode: FullScreenMode) -> None:
-	"""
-	Set default full-screen mode from settings.
-
-	:param mode: The full-screen mode to set.
-	"""
-	config.conf["magnifier"]["defaultFullscreenMode"] = mode.value
-
-
 def isTrueCentered() -> bool:
 	"""
 	Check if true centered mode is enabled in config.
@@ -235,15 +231,6 @@ def isTrueCentered() -> bool:
 	:return: True if true centered mode is enabled, False otherwise.
 	"""
 	return config.conf["magnifier"]["isTrueCentered"]
-
-
-def shouldKeepMouseCentered() -> bool:
-	"""
-	Check if mouse pointer should be kept centered in magnifier view.
-
-	:return: True if mouse should be kept centered, False otherwise.
-	"""
-	return config.conf["magnifier"]["keepMouseCentered"]
 
 
 def getFullscreenMode() -> FullScreenMode:
