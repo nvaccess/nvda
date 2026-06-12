@@ -6058,7 +6058,7 @@ class MagnifierPanel(SettingsPanel):
 		magnifierConfig.setPanStep(selectedPanStep)
 		magnifierConfig.setFilter(selectedFilter)
 		magnifierConfig.setFullscreenMode(selectedMode)
-		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterCheckBox.GetValue()
+		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterTrackingCheckBox.GetValue()
 		for focusType, checkBox in self._followFocusCheckBoxes.items():
 			magnifierConfig.setFollowState(focusType, checkBox.GetValue())
 
@@ -6253,7 +6253,7 @@ class MagnifierPanel(SettingsPanel):
 		selectedPanStep = self.panSpinCtrl.GetValue()
 		selectedFilter = list(Filter)[self.filterList.GetSelection()]
 		selectedMode = list(FullScreenMode)[self.fullscreenModeList.GetSelection()]
-		isTrueCentered = self.trueCenterCheckBox.GetValue()
+		isTrueCentered = self.trueCenterTrackingCheckBox.GetValue()
 
 		roundedZoom = magnifierConfig.roundZoomLevel(selectedZoom)
 		self._zoomInitially = roundedZoom
