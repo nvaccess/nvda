@@ -1572,9 +1572,6 @@ The "Increase magnification level" keystroke, `NVDA+shift+equals`, will start th
 When disabled, the screen returns to its normal size.
 As with other NVDA settings, the Magnifier state is preserved across sessions.
 
-Important: The NVDA Magnifier cannot be used simultaneously with Screen Curtain for security reasons.
-If you attempt to enable the magnifier while Screen Curtain is active, NVDA will prompt you to disable Screen Curtain first.
-
 ### Magnifier Commands {#MagnifierCommands}
 
 Once the magnifier is enabled, you can use the following keyboard commands to control it:
