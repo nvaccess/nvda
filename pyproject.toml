@@ -22,6 +22,7 @@ readme = "readme.md"
 license = {file = "copying.txt"}
 dependencies = [
 	# NVDA's runtime dependencies
+	"bleak==3.0.2",
 	"comtypes==1.4.13",
 	"cryptography==46.0.7",
 	"pyserial==3.5",
