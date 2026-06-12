@@ -2027,8 +2027,10 @@ This option is only available for installed copies of NVDA.
 
 ##### Use currently saved settings during sign-in and on secure screens (requires administrator privileges) {#GeneralSettingsCopySettings}
 
-Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it during sign-in and when running on User Account Control (UAC) and other [secure screens](#SecureScreens).
+Pressing this button will allow you to copy your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it during sign-in and when running on User Account Control (UAC) and other [secure screens](#SecureScreens).
 To make sure that all your settings are transferred, make sure to save your configuration first with control+NVDA+c or Save configuration in the NVDA menu.
+When this button is pressed, it first opens the [Copy Settings to System-wide Configuration](#CopyAddonsToSystemProfileDialog) dialog in which you can choose the add-ons you want to be copied to system configuration.
+
 This option is only available for installed copies of NVDA.
 
 ##### Automatically check for updates to NVDA {#GeneralSettingsCheckForUpdates}
