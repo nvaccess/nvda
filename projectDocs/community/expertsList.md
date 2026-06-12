@@ -24,3 +24,4 @@ General enquiries should be directed to <info@nvaccess.org>.
 | @michaelweghorn | <m.weghorn@posteo.de> | LibreOffice |
 | @jcsteh | <jamie@nvaccess.org> | Mozilla Firefox |
 | @alex19EP | <email@alex19ep.me> | eSpeak |
+| @RyanMcCleary | ? | Math |
