@@ -49,14 +49,14 @@ Built on top of [Bleak](https://bleak.readthedocs.io/) and the `_asyncioEventLoo
 #### Deprecations
 
 * The `braille.BrailleDisplayGesture.routingIndex` attribute is deprecated.
-Use the `cellIndexes` attribute instead. (#20001, @LeonarddeR)
+Use the `cellIndexes` attribute instead. (#20028, @LeonarddeR)
 * `brailleDisplayDrivers.freedomScientific.RoutingGesture` is deprecated.
-Use `KeyGesture` instead. (#20077, @LeonarddeR)
-* The `braille.wordWrap` configuration key is deprecated and bridged to `braille.textWrap`. (#17010, @LeonarddeR)
+Use `KeyGesture` instead. (#20250, @LeonarddeR)
+* The `braille.wordWrap` configuration key is deprecated and bridged to `braille.textWrap`. (#20146, @LeonarddeR)
 * In `touchTracker`, the module-level `action_*` string constants are deprecated.
-Use the corresponding `TouchAction` enum members instead (e.g. `TouchAction.TAP`, `TouchAction.FLICK_UP`). (#19938, @kefaslungu)
+Use the corresponding `TouchAction` enum members instead (e.g. `TouchAction.TAP`, `TouchAction.FLICK_UP`). (#20086, @kefaslungu)
 * In `touchTracker`, `actionLabels` is deprecated.
-Use `TouchAction(value).displayString` instead. (#19938, @kefaslungu)
+Use `TouchAction(value).displayString` instead. (#20086, @kefaslungu)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
