@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2026 NV Access Limited, Bill Dengler, Rob Meredith, Leonard de Ruijter
+# Copyright (C) 2022-2026 NV Access Limited, Bill Dengler, Rob Meredith, Leonard de Ruijter, Wang Chong
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -136,6 +136,26 @@ class FontFormattingBrailleModeFlag(DisplayStringEnum):
 			FontFormattingBrailleModeFlag.LIBLOUIS: _("Liblouis"),
 			# Translators: Label for a way of outputting formatting in braille.
 			FontFormattingBrailleModeFlag.TAGS: _("Tags"),
+		}
+
+
+class WordNavigationUnitFlag(DisplayStringEnum):
+	"""Enumeration for word navigation."""
+
+	DEFAULT = enum.auto()
+	AUTO = enum.auto()
+	UNISCRIBE = enum.auto()
+	CHINESE = enum.auto()
+
+	@property
+	def _displayStringLabels(self) -> dict["WordNavigationUnitFlag", str]:
+		return {
+			# Translators: Label for a method of word segmentation.
+			self.AUTO: _("Auto"),
+			# Translators: Label for a method of word segmentation.
+			self.UNISCRIBE: _("Standard"),
+			# Translators: Label for a method of word segmentation.
+			self.CHINESE: _("Chinese"),
 		}
 
 

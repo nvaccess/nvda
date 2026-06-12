@@ -3580,6 +3580,23 @@ Note that this paragraph style cannot be used in Microsoft Word or Microsoft Out
 
 You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog](#InputGestures).
 
+##### Word Segmentation Standard {#WordSegmentationStandard}
+
+This setting controls how NVDA determines word boundaries when navigating by word.
+Chinese word segmentation is also used for braille.
+When a Chinese braille output table is in use, NVDA can insert spaces between Chinese words in braille.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Default (Auto), Auto, Standard, Chinese |
+| Default | Auto |
+
+| Option | Behaviour |
+|---|---|
+| Auto | Use Chinese word segmentation for Chinese text when available. For other text, use standard word segmentation. |
+| Standard | Use standard Windows word segmentation. |
+| Chinese | Use Chinese word segmentation. If Chinese word segmentation is not available, NVDA falls back to standard word segmentation. |
+
 #### Math Settings {#MathSettings}
 
 This category allows you to adjust how NVDA reads mathematical content.
