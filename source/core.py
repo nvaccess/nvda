@@ -357,6 +357,8 @@ def resetConfiguration(factoryDefaults=False):
 	from addonStore import dataManager
 
 	log.debug("terminating addon dataManager")
+	if factoryDefaults and dataManager.addonDataManager is not None:
+		dataManager.addonDataManager.storeSettings.reset()
 	dataManager.terminate()
 	log.debug("Reloading config")
 	config.conf.reset(factoryDefaults=factoryDefaults)

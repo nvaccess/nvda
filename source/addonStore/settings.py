@@ -132,6 +132,12 @@ class _AddonStoreSettings:
 		"""
 		return self._addonSettings.get(addonId, _AddonSettings())
 
+	def reset(self):
+		"""Reset settings to factory defaults."""
+		self._showWarning = True
+		self._addonSettings = {}
+		self.save()
+
 	@property
 	def showWarning(self) -> bool:
 		return self._showWarning
