@@ -189,16 +189,7 @@ class AddonStoreVM:
 				# Translators: Label for an action that removes the selected addon
 				displayName=pgettext("addonStore", "&Remove"),
 				actionHandler=self.removeAddon,
-				validCheck=lambda aVM: (
-					aVM.canUseRemoveAction()
-					and self._filteredStatusKey
-					in (
-						# Removing add-ons in the updatable view fails,
-						# as the updated version cannot be removed.
-						_StatusFilterKey.INSTALLED,
-						_StatusFilterKey.INCOMPATIBLE,
-					)
-				),
+				validCheck=lambda aVM: aVM.canUseRemoveAction(),
 				actionTarget=selectedListItem,
 			),
 			AddonActionVM(

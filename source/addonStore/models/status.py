@@ -425,9 +425,12 @@ _installedAddonStatuses: set[AvailableAddonStatus] = {
 	# in the updatable tab context.
 	# These add-ons will show up in the installed tab
 	# with an INSTALLED status or similar.
-	# AvailableAddonStatus.UPDATE,
-	# AvailableAddonStatus.UPDATE_INCOMPATIBLE,
-	# AvailableAddonStatus.REPLACE_SIDE_LOAD,
+	#installedAddonStatuses is a set that defines States where the add-on files exist on the disk and can be deleted.
+	#UPDATE means The add-on is installed, AND a new version exists.
+	#Therefore, an UPDATE add-on is an installed add-on.
+	AvailableAddonStatus.UPDATE,
+	AvailableAddonStatus.UPDATE_INCOMPATIBLE,
+	AvailableAddonStatus.REPLACE_SIDE_LOAD,
 	AvailableAddonStatus.INSTALLED,
 	AvailableAddonStatus.PENDING_DISABLE,
 	AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
