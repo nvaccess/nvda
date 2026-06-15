@@ -6,7 +6,7 @@
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
-# Neil Soiffer, Ryan McCleary, Kefas Lungu.
+# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu.
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -42,14 +42,13 @@ import logHandler
 from _magnifier import getMagnifier
 from _magnifier.commands import toggleMagnifier
 import _magnifier.config as magnifierConfig
-from _magnifier.utils.types import Filter, FullScreenMode, MagnifierFollowFocusType
+from _magnifier.utils.types import Filter, FullScreenMode, MagnifierTrackingType
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 import queueHandler
 import requests
 import speech
 import speechDictHandler
 import systemUtils
-from utils.security import isRunningOnSecureDesktop
 import vision
 import vision.providerBase
 import vision.providerInfo
@@ -59,6 +58,7 @@ from wx.lib import scrolledpanel
 
 import screenCurtain._screenCurtain
 from utils import mmdevice
+from utils.security import isRunningOnSecureDesktop
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
@@ -3545,6 +3545,7 @@ class DocumentNavigationPanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
 		# Translators: This is a label for the paragraph navigation style in the document navigation dialog
 		paragraphStyleLabel = _("&Paragraph style:")
 		self.paragraphStyleCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
@@ -3555,8 +3556,24 @@ class DocumentNavigationPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("ParagraphStyle", self.paragraphStyleCombo)
 
-	def onSave(self):
+		# Translators: This is a label for the word segmentation standard in the document navigation dialog
+		wordNavigationUnitLabel = _("&Word Segmentation Standard:")
+		self.wordSegCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=wordNavigationUnitLabel,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["documentNavigation", "wordSegmentationStandard"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("WordSegmentationStandard", self.wordSegCombo)
+
+	def onSave(self) -> None:
 		self.paragraphStyleCombo.saveCurrentValueToConf()
+		self.wordSegCombo.saveCurrentValueToConf()
+
+	def postSave(self) -> None:
+		import textUtils._wordSeg
+
+		textUtils._wordSeg.initialize()
 
 
 def _synthWarningDialog(newSynth: str):
@@ -6043,7 +6060,7 @@ class VisionProviderSubPanel_Wrapper(
 class MagnifierPanel(SettingsPanel):
 	# Translators: This is the label for the magnifier settings panel.
 	title = _("Magnifier")
-	helpId = "MagnifierSettings"
+	helpId = "MagnifierSettingsCategory"
 
 	def _applyCurrentSettingsToConfigAndRuntime(self):
 		"""Apply current control values to config and to the active magnifier instance."""
@@ -6058,9 +6075,10 @@ class MagnifierPanel(SettingsPanel):
 		magnifierConfig.setPanStep(selectedPanStep)
 		magnifierConfig.setFilter(selectedFilter)
 		magnifierConfig.setFullscreenMode(selectedMode)
-		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterCheckBox.GetValue()
-		for focusType, checkBox in self._followFocusCheckBoxes.items():
-			magnifierConfig.setFollowState(focusType, checkBox.GetValue())
+		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterTrackingCheckBox.GetValue()
+
+		for trackingType, checkBox in self._trackingTypeCheckBoxes.items():
+			magnifierConfig.setFollowState(trackingType, checkBox.GetValue())
 
 		magnifier = getMagnifier()
 		if magnifier:
@@ -6130,8 +6148,8 @@ class MagnifierPanel(SettingsPanel):
 		self.zoomCtrl.Bind(wx.EVT_SPINCTRL, self._onImmediateSettingChange)
 
 		# FILTER SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the default filter
-		filterLabelText = _("F&ilter:")
+		# Translators: The label for a setting in magnifier settings to select the filter
+		filterLabelText = _("Color f&ilter:")
 		filterChoices = [f.displayString for f in Filter]
 		self.filterList = generalGroup.addLabeledControl(
 			filterLabelText,
@@ -6147,13 +6165,13 @@ class MagnifierPanel(SettingsPanel):
 		self.filterList.Bind(wx.EVT_CHOICE, self._onImmediateSettingChange)
 
 		# TRUE CENTER TRACKING
-		# Translators: The label for a setting in magnifier settings to select whether true center is used
+		# Translators: The label for a setting in magnifier settings to select whether true center tracking is used
 		trueCenterTrackingText = _("&True center tracking")
 		self.trueCenterTrackingCheckBox = generalGroup.addItem(
 			wx.CheckBox(generalGroupBox, label=trueCenterTrackingText),
 		)
 		self.bindHelpEvent(
-			"MagnifierUseTrueCenterTracking",
+			"MagnifierTrueCenterTracking",
 			self.trueCenterTrackingCheckBox,
 		)
 		self.trueCenterTrackingCheckBox.SetValue(magnifierConfig.isTrueCentered())
@@ -6182,37 +6200,37 @@ class MagnifierPanel(SettingsPanel):
 		self.panSpinCtrl.Bind(wx.EVT_SPINCTRL, self._onImmediateSettingChange)
 		self.panSpinCtrl.Bind(wx.EVT_TEXT, self._onImmediateSettingChange)
 
-		# FOCUS GROUP
-		# Translators: This is the label for a group of focus options in the magnifier settings panel
-		focusGroupText = _("Focus")
-		focusGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=focusGroupText)
-		focusGroupBox = focusGroupSizer.GetStaticBox()
-		focusGroup = guiHelper.BoxSizerHelper(focusGroupBox, sizer=focusGroupSizer)
-		sHelper.addItem(focusGroup)
+		# Tracking GROUP
+		# Translators: This is the label for a group of tracking options in the magnifier settings panel
+		trackingGroupText = _("Tracking")
+		trackingGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=trackingGroupText)
+		trackingGroupBox = trackingGroupSizer.GetStaticBox()
+		trackingGroup = guiHelper.BoxSizerHelper(trackingGroupBox, sizer=trackingGroupSizer)
+		sHelper.addItem(trackingGroup)
 
-		_followFocusLabels: dict[MagnifierFollowFocusType, tuple[str, str]] = {
+		_trackingTypeLabels: dict[MagnifierTrackingType, tuple[str, str]] = {
 			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the mouse
-			MagnifierFollowFocusType.MOUSE: (_("Follow &mouse"), "MagnifierFollowMouse"),
+			MagnifierTrackingType.MOUSE: (_("Follow &mouse"), "MagnifierFollowMouse"),
 			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
-			MagnifierFollowFocusType.SYSTEM_FOCUS: (_("Follow &system focus"), "MagnifierFollowSystemFocus"),
+			MagnifierTrackingType.SYSTEM_FOCUS: (_("Follow &system focus"), "MagnifierFollowSystemFocus"),
 			# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the review cursor
-			MagnifierFollowFocusType.REVIEW: (_("Follow &review cursor"), "MagnifierFollowReviewCursor"),
-			MagnifierFollowFocusType.NAVIGATOR_OBJECT: (
+			MagnifierTrackingType.REVIEW: (_("Follow &review cursor"), "MagnifierFollowReviewCursor"),
+			MagnifierTrackingType.NAVIGATOR_OBJECT: (
 				# Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the navigator object
 				_("Follow &navigator object"),
 				"MagnifierFollowNavigatorObject",
 			),
 		}
-		self._followFocusCheckBoxes: dict[MagnifierFollowFocusType, wx.CheckBox] = {}
-		self._followFocusInitially: dict[MagnifierFollowFocusType, bool] = {}
-		for focusType, (label, helpId) in _followFocusLabels.items():
-			checkBox = focusGroup.addItem(wx.CheckBox(focusGroupBox, label=label))
+		self._trackingTypeCheckBoxes: dict[MagnifierTrackingType, wx.CheckBox] = {}
+		self._trackingTypeInitially: dict[MagnifierTrackingType, bool] = {}
+		for trackingType, (label, helpId) in _trackingTypeLabels.items():
+			checkBox = trackingGroup.addItem(wx.CheckBox(trackingGroupBox, label=label))
 			self.bindHelpEvent(helpId, checkBox)
-			followState = magnifierConfig.getFollowState(focusType)
-			self._followFocusInitially[focusType] = followState
+			followState = magnifierConfig.getFollowState(trackingType)
+			self._trackingTypeInitially[trackingType] = followState
 			checkBox.SetValue(followState)
 			checkBox.Bind(wx.EVT_CHECKBOX, self._onImmediateSettingChange)
-			self._followFocusCheckBoxes[focusType] = checkBox
+			self._trackingTypeCheckBoxes[trackingType] = checkBox
 
 		# FULLSCREEN GROUP
 		# Translators: This is the label for a group of fullscreen magnifier options in the
@@ -6233,14 +6251,14 @@ class MagnifierPanel(SettingsPanel):
 			choices=fullscreenModeChoices,
 		)
 		self.bindHelpEvent(
-			"MagnifierFullscreenFocusMode",
+			"MagnifierTrackingMode",
 			self.fullscreenModeList,
 		)
 
 		# Set value from config
-		fullscreenModeValue = magnifierConfig.getFullscreenMode()
-		self._fullscreenModeInitially = fullscreenModeValue
-		self.fullscreenModeList.SetSelection(list(FullScreenMode).index(fullscreenModeValue))
+		fullscreenMode = magnifierConfig.getFullscreenMode()
+		self._fullscreenModeInitially = fullscreenMode
+		self.fullscreenModeList.SetSelection(list(FullScreenMode).index(fullscreenMode))
 		self.fullscreenModeList.Bind(wx.EVT_CHOICE, self._onImmediateSettingChange)
 
 	def onSave(self):
@@ -6253,7 +6271,7 @@ class MagnifierPanel(SettingsPanel):
 		selectedPanStep = self.panSpinCtrl.GetValue()
 		selectedFilter = list(Filter)[self.filterList.GetSelection()]
 		selectedMode = list(FullScreenMode)[self.fullscreenModeList.GetSelection()]
-		isTrueCentered = self.trueCenterCheckBox.GetValue()
+		isTrueCentered = self.trueCenterTrackingCheckBox.GetValue()
 
 		roundedZoom = magnifierConfig.roundZoomLevel(selectedZoom)
 		self._zoomInitially = roundedZoom
@@ -6261,9 +6279,9 @@ class MagnifierPanel(SettingsPanel):
 		self._filterInitially = selectedFilter
 		self._fullscreenModeInitially = selectedMode
 		self._trueCenterTrackingInitially = isTrueCentered
-		for focusType, checkBox in self._followFocusCheckBoxes.items():
+		for trackingType, checkBox in self._trackingTypeCheckBoxes.items():
 			shouldFollow = checkBox.GetValue()
-			self._followFocusInitially[focusType] = shouldFollow
+			self._trackingTypeInitially[trackingType] = shouldFollow
 
 	def onDiscard(self):
 		"""Restore magnifier state from original settings from config."""
@@ -6272,8 +6290,8 @@ class MagnifierPanel(SettingsPanel):
 		magnifierConfig.setFilter(self._filterInitially)
 		magnifierConfig.setFullscreenMode(self._fullscreenModeInitially)
 		config.conf["magnifier"]["isTrueCentered"] = self._trueCenterTrackingInitially
-		for focusType, state in self._followFocusInitially.items():
-			magnifierConfig.setFollowState(focusType, state)
+		for trackingType, state in self._trackingTypeInitially.items():
+			magnifierConfig.setFollowState(trackingType, state)
 
 		magnifier = getMagnifier()
 		if magnifier:
@@ -6553,6 +6571,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		AudioPanel,
 		PrivacyAndSecuritySettingsPanel,
 		VisionSettingsPanel,
+		MagnifierPanel,
 		KeyboardSettingsPanel,
 		MouseSettingsPanel,
 		ReviewCursorPanel,
@@ -6561,7 +6580,6 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
-		MagnifierPanel,
 		RemoteSettingsPanel,
 	]
 	# #19634: the desktop heap on the secure desktop is quite restrictive.

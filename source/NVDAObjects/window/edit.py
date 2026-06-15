@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter
+# Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter, Wang Chong
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -26,6 +26,7 @@ from ..behaviors import EditableTextWithAutoSelectDetection
 import watchdog
 import locationHelper
 import textUtils
+from textUtils.segFlag import CharSegFlag, WordSegFlag
 import NVDAHelper.localLib
 
 
@@ -163,6 +164,13 @@ WB_RIGHTBREAK = 7
 
 
 class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
+	# Override segFlags to enforce use of Uniscribe
+	charSegFlag = CharSegFlag.UNISCRIBE
+
+	@property
+	def wordSegFlag(self) -> WordSegFlag:
+		return WordSegFlag.UNISCRIBE
+
 	def _getPointFromOffset(self, offset):
 		if self.obj.editAPIVersion == 1 or self.obj.editAPIVersion >= 3:
 			processHandle = self.obj.processHandle
