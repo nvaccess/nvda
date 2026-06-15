@@ -56,7 +56,7 @@ Reasons in favor of not reverting the pull request may be:
 * A commit will be selected from the `master` branch and merged into `beta`.
 * Once a beta commit is chosen, only the following types of changes are included in the release:
   * addressing a bug introduced in the current or previous release cycle.
-  * addressing a `p1` filed in the current or previous release cycle.
+  * addressing a `p1` or `p2` filed in the current or previous release cycle.
   * reverting code introduced in the current release cycle.
   * updates to documentation introduced in this release cycle.
 * Documentation changes will be reviewed.
