@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -10,7 +10,7 @@ Handles module initialization, configuration and settings interaction.
 
 import config
 from dataclasses import dataclass, field
-from .utils.types import Filter, FullScreenMode, MagnifierFollowTrackingType, MagnifiedView
+from .utils.types import Filter, FullScreenMode, MagnifierTrackingType, MagnifiedView
 
 
 def setEnabled(enable: bool) -> None:
@@ -153,17 +153,17 @@ def setMagnifiedView(magnifiedView: MagnifiedView) -> None:
 	config.conf["magnifier"]["magnifiedView"] = magnifiedView.value
 
 
-_FOLLOW_CONFIG_KEYS: dict[MagnifierFollowTrackingType, str] = {
-	MagnifierFollowTrackingType.MOUSE: "followMouse",
-	MagnifierFollowTrackingType.SYSTEM_FOCUS: "followSystemFocus",
-	MagnifierFollowTrackingType.REVIEW: "followReviewCursor",
-	MagnifierFollowTrackingType.NAVIGATOR_OBJECT: "followNavigatorObject",
+_FOLLOW_CONFIG_KEYS: dict[MagnifierTrackingType, str] = {
+	MagnifierTrackingType.MOUSE: "followMouse",
+	MagnifierTrackingType.SYSTEM_FOCUS: "followSystemFocus",
+	MagnifierTrackingType.REVIEW: "followReviewCursor",
+	MagnifierTrackingType.NAVIGATOR_OBJECT: "followNavigatorObject",
 }
 
 
 @dataclass
 class _FollowStateOverride:
-	savedStates: dict[MagnifierFollowTrackingType, bool] = field(default_factory=dict)
+	savedStates: dict[MagnifierTrackingType, bool] = field(default_factory=dict)
 	isActive: bool = False
 
 
@@ -179,7 +179,7 @@ def _ensureSavedStatesInitialized() -> None:
 		saveFollowStates()
 
 
-def getFollowState(trackingType: MagnifierFollowTrackingType) -> bool:
+def getFollowState(trackingType: MagnifierTrackingType) -> bool:
 	"""
 	Get the current follow state for a given tracking type.
 
@@ -189,7 +189,7 @@ def getFollowState(trackingType: MagnifierFollowTrackingType) -> bool:
 	return config.conf["magnifier"][_FOLLOW_CONFIG_KEYS[trackingType]]
 
 
-def setFollowState(trackingType: MagnifierFollowTrackingType, state: bool) -> None:
+def setFollowState(trackingType: MagnifierTrackingType, state: bool) -> None:
 	"""
 	Set the follow state for a given tracking type.
 

@@ -35,6 +35,7 @@ Major highlights include:
 * Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation
 * Support for Windows Command Prompt and console applications
 * The ability to highlight the system focus
+* Built-in screen magnification and color filtering
 
 ### System Requirements {#SystemRequirements}
 
@@ -1549,7 +1550,7 @@ You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAnd
 | Name |Key |Description|
 |---|---|---|
 |Toggles the state of the screen curtain |`NVDA+control+escape` |Enable to make the screen black or disable to show the contents of the screen. Pressed once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it.|
-| Reports the state of the screen curtain | `None` | Announces the current status of the screen curtain, whether it is disabled or enabled or in temporary mode. |
+| Reports the state of the screen curtain | `None` | Announces the current status of the screen curtain, whether it is disabled or enabled or in temporary mode. |
 
 <!-- KC:endInclude -->
 
@@ -1571,14 +1572,13 @@ It provides several configuration options to customize the magnification experie
 
 To enable or disable the magnifier, press `NVDA+shift+w`.
 The "Increase magnification level" keystroke, `NVDA+shift+equals`, will start the magnifier if it is not running.
-When the magnifier is enabled, NVDA will announce the current zoom level, color filter, and focus tracking mode.
 When disabled, the screen returns to its normal size.
-The Magnifier state is saved for future NVDA sessions, so after enabling Magnifier, it will start automatically after restarting NVDA
+As with other NVDA settings, the Magnifier state is preserved across sessions.
 
 Important: The NVDA Magnifier cannot be used simultaneously with Screen Curtain for security reasons.
-If you attempt to enable the magnifier while Screen Curtain is active, NVDA will prompt you to disable Screen Curtain first, and vice versa.
+If you attempt to enable the magnifier while Screen Curtain is active, NVDA will prompt you to disable Screen Curtain first.
 
-### Magnifier Controls {#MagnifierControls}
+### Magnifier Commands {#MagnifierCommands}
 
 Once the magnifier is enabled, you can use the following keyboard commands to control it:
 
@@ -1586,30 +1586,28 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 
 | Name | Key | Description |
 |---|---|---|
-| Toggles the magnifier on and off | `NVDA+shift+w` | Enables or disables the magnifier |
-| Increases the magnification level of the magnifier | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
-| Decreases the magnification level of the magnifier | `NVDA+shift+minus` | Decreases the zoom level |
-| Toggle filter of the magnifier | `NVDA+shift+i` | Cycles through available color filters (normal, grayscale, inverted) |
-| Toggle tracking for the full-screen magnifier | None | Cycles through tracking modes (center, border, relative) |
-| Launch spotlight if magnifier is full-screen | `NVDA+shift+l` | Activates spotlight mode for focused reading or presentations |
-| Pan left | `NVDA+alt+leftArrow` | Pan the magnified view to the left by the specified panning step size |
-| Pan right | `NVDA+alt+rightArrow` | Pan the magnified view to the right by the specified panning step size |
-| Pan up | `NVDA+alt+upArrow` | Pan the magnified view upwards by the specified panning step size |
-| Pan down | `NVDA+alt+downArrow` | Pan the magnified view downwards by the specified panning step size |
-| Pan to left edge | `NVDA+shift+alt+leftArrow` | Pan the magnified view directly to the left edge of the screen |
-| Pan to right edge | `NVDA+shift+alt+rightArrow` | Pan the magnified view directly to the right edge of the screen |
-| Pan to top edge | `NVDA+shift+alt+upArrow` | Pan the magnified view directly to the top edge of the screen |
-| Pan to bottom edge | `NVDA+shift+alt+downArrow` | Pan the magnified view directly to the bottom edge of the screen |
+| Toggle the magnifier on and off | `NVDA+shift+w` | Enables or disables the magnifier |
+| Increase the magnification level | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
+| Decrease the magnification level | `NVDA+shift+minus` | Decreases the zoom level |
+| Cycle color filters | `NVDA+shift+i` | Cycles through the available color filters (normal, grayscale, inverted) |
+| Cycle tracking mode | None | Cycles through tracking modes (center, border, relative) |
+| Show entire screen overview | `NVDA+shift+l` | Temporarily shows an overview of the entire screen |
+| Pan left | `NVDA+alt+leftArrow` | Moves the magnified view left by the configured panning step size |
+| Pan right | `NVDA+alt+rightArrow` | Moves the magnified view right by the configured panning step size |
+| Pan up | `NVDA+alt+upArrow` | Moves the magnified view up by the configured panning step size |
+| Pan down | `NVDA+alt+downArrow` | Moves the magnified view down by the configured panning step size |
+| Pan to left edge | `NVDA+shift+alt+leftArrow` | Moves the magnified view directly to the left edge of the screen |
+| Pan to right edge | `NVDA+shift+alt+rightArrow` | Moves the magnified view directly to the right edge of the screen |
+| Pan to top edge | `NVDA+shift+alt+upArrow` | Moves the magnified view directly to the top edge of the screen |
+| Pan to bottom edge | `NVDA+shift+alt+downArrow` | Moves the magnified view directly to the bottom edge of the screen |
 
 <!-- KC:endInclude -->
 
 ### Zoom Levels {#MagnifierZoomLevels}
 
-The magnifier supports zoom levels from 1.0 (no magnification) to 10.0 (maximum magnification).
+The magnifier supports zoom levels from 1.0 (no magnification) to 50.0 (maximum magnification).
 You can adjust the zoom level using the zoom in (`NVDA+shift+equals`) and zoom out (`NVDA+shift+minus`) commands.
 Each press increases or decreases the zoom by a fixed increment.
-
-The default zoom level when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
 ### Color Filters {#MagnifierColorFilters}
 
@@ -1621,42 +1619,38 @@ The magnifier provides three color filter options:
 * Inverted: Inverts all colors on the screen (black becomes white, white becomes black, etc.), which can be helpful for users who prefer light text on dark backgrounds or have photophobia.
 
 To cycle through the available filters press `NVDA+shift+i`.
-NVDA will announce the name of the currently selected filter.
 
-The default color filter when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
+### Tracking Modes {#MagnifierTrackingModes}
 
-### Fullscreen Tracking Modes {#MagnifierFullscreenTrackingModes}
+The magnifier offers three different modes for tracking mouse, focus, review cursor and navigatore object, and determining which part of the screen to magnify:
 
-The magnifier offers three different modes for tracking and determining which part of the screen to magnify:
-
-* Center: The magnified area is centered on the current position.
-This mode keeps the followed element at the center of the screen and clamps to the screen edge.
+* Center: The magnified area is centered on the currently tracked position.
+This mode keeps the tracked element at the center of the screen and clamps to the screen edge.
 To disable clamping, activate [true center tracking in the Magnifier settings](#MagnifierUseTrueCenterTracking).
-* Border: The magnified area only moves when the followed element approaches the edge of the visible area.
+* Border: The magnified area only moves when the tracked position approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
-* Relative: The magnified area maintains the relative position of the followed element within the screen.
-The magnified area will be centered if the followed element is in the center of the screen, and will be at the edge of the screen if the followed element is at the edge of the screen.
-This will move the tracking progressively towards the edge of the magnified area as it moves towards the edge of the screen, and will move progressively towards the center of the screen as it moves towards the center.
+* Relative: The magnified area maintains the relative position of the tracked element within the screen.
+This mode mimics the behavior of the Windows Magnifier.
 
 To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-NVDA will announce the name of the currently selected mode.
 
-The default tracking mode when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
+### Show entire screen overview {#MagnifierScreenOverview}
 
-### Spotlight Mode {#MagnifierSpotlight}
+The magnifier can temporarily display an overview of the entire screen, making it useful for presentations or when you need to quickly understand the overall screen layout.
 
-Spotlight mode is a special feature designed to help get the context of where the magnifier is at the time.
-When activated, it temporarily zooms out the magnified view to show the full screen, then zooms back in to the current mouse position after a brief period of mouse inactivity.
+This is useful when you want to:
 
-To activate spotlight mode, press `NVDA+shift+l` while the magnifier is enabled.
-Once activated, the magnifier will:
+* Show context to your audience during a presentation before zooming in on specific details
+* Temporarily view the full screen layout while magnifying
 
-1. Smoothly zoom out to show the full screen (zoom level 1.0)
-2. Monitor mouse movement
-3. When the mouse remains still for approximately 2 seconds, automatically zoom back in to the original zoom level at the mouse position
+To display an overview of the entire screen, press `NVDA+shift+l`.
+The magnifier will then:
 
-Spotlight mode automatically deactivates after zooming back in.
-If you move the mouse before the zoom-back occurs, the timer resets, giving you more time to view the full screen.
+1. Smoothly zoom out to show the full screen (zoom level 1.0x)
+1. Monitor mouse movement
+1. When the mouse remains still for approximately 2 seconds, automatically zoom back in to the original zoom level at the new mouse position
+
+Moving the mouse before the zoom-back occurs gives you more time to view the full screen.
 
 ### Magnifier Settings {#MagnifierSettings}
 
@@ -2033,8 +2027,10 @@ This option is only available for installed copies of NVDA.
 
 ##### Use currently saved settings during sign-in and on secure screens (requires administrator privileges) {#GeneralSettingsCopySettings}
 
-Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it during sign-in and when running on User Account Control (UAC) and other [secure screens](#SecureScreens).
+Pressing this button will allow you to copy your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it during sign-in and when running on User Account Control (UAC) and other [secure screens](#SecureScreens).
 To make sure that all your settings are transferred, make sure to save your configuration first with control+NVDA+c or Save configuration in the NVDA menu.
+When this button is pressed, it first opens the [Copy Settings to System-wide Configuration](#CopyAddonsToSystemProfileDialog) dialog in which you can choose the add-ons you want to be copied to system configuration.
+
 This option is only available for installed copies of NVDA.
 
 ##### Automatically check for updates to NVDA {#GeneralSettingsCheckForUpdates}
@@ -2872,19 +2868,24 @@ For the supported settings per provider, please refer to the documentation for t
 Key: `NVDA+control+w`
 
 The Magnifier category in the NVDA Settings dialog allows you to configure the default behavior of NVDA's built-in [Magnifier](#Magnifier) feature.
+All the options of this category have immediate effect on the magnifier but pressing "Cancel" or `escape` allow to dismiss the changes made.
+
 This settings category contains the following options:
+
+<!-- KC:setting -->
 
 ##### Enable Magnifier {#MagnifierEnable}
 
-When toggled, Magnifier will start and stop immediately.
-The selected state is also saved for future NVDA sessions, so if you enable Magnifier here, it will start automatically after restarting NVDA.
+Key: `NVDA+shift+w`
+
+This option starts or stops the Magnifier.
 
 | . {.hideHeaderRow} |.|
 |---|---|
 | Options | Disabled, Enabled |
 | Default | Disabled |
 
-##### Zoom level {#MagnifierZoom}
+##### Zoom {#MagnifierZoom}
 
 This setting allows you to set the zoom level when using the magnifier.
 The zoom level can range from 100% (no magnification) to 5000% (maximum magnification).
@@ -2897,17 +2898,20 @@ You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+e
 | Options | 100% to 5000% |
 | Default | 200% |
 
-##### Filter {#MagnifierFilter}
+<!-- KC:setting -->
 
-This combo box allows you to select the filter to apply when using the magnifier.
-You can cycle through the color filters by pressing `NVDA+shift+i`.
+##### Color filter {#MagnifierFilter}
+
+Key: `NVDA+shift+i`
+
+This option allows you to select the filter to apply when using the magnifier.
+
 The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
 | Options | Normal, Grayscale, Inverted |
 | Default | Normal |
-| Toggle command | `NVDA+shift+i` |
 
 | Option | Description |
 |---|---|
@@ -2915,12 +2919,10 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### Use true center tracking {#MagnifierUseTrueCenterTracking}
+##### true center tracking {#MagnifierTrueCenterTracking}
 
-This checkbox controls whether the magnifier should always keep the followed element centered on the screen, or if it should allow the followed element to move towards the edges of the screen before moving the magnified area.
-When enabled, the magnifier will always keep the followed element centered on the screen, which can be helpful for users who prefer a consistent position of the followed element within the magnified view. Getting close to the edge of the screen, users will see out of screen areas.
-
-This option is disabled by default.
+This checkbox controls whether the magnifier should always keep the tracked position centered on the screen, even when the tracked element is next to the screen edges, or if it should allow the tracked position to move towards the edges of the screen.
+When enabled, the magnifier will always keep the tracked position centered on the screen, which can be helpful for users who prefer a consistent tracked position within the magnified view.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2929,11 +2931,8 @@ This option is disabled by default.
 
 ##### Panning step size {#MagnifierPanningStepSize}
 
-This slider allows you to set the panning step size as a percentage of the visible magnified window.
-The panning step size can range from 1% to 100%, with a default value of 10%.
+This option allows you to set the panning step size as a percentage of the visible magnified window.
 This means that when you use manual pan commands, the magnified view will move by the specified percentage of the current visible window size.
-
-For example, if your visible magnified window is 200 pixels wide and you have a panning step size of 10%, each pan command will move the view by 20 pixels.
 Higher percentages cause larger movements, making it faster to navigate across the screen, while lower percentages provide finer control for precise positioning.
 The actual pixel distance will automatically adjust based on your current zoom level.
 
@@ -2950,8 +2949,6 @@ Available pan actions include:
 This checkbox controls whether the magnifier should follow the mouse pointer.
 When enabled, the magnified area will automatically move to follow the mouse pointer, which can be helpful for users who navigate primarily using the mouse rather than the keyboard.
 
-This option is enabled by default.
-
 | . {.hideHeaderRow} |.|
 |---|---|
 | Options | Disabled, Enabled |
@@ -2961,8 +2958,6 @@ This option is enabled by default.
 
 This checkbox controls whether the magnifier should follow the system focus.
 When enabled, the magnified area will automatically move to follow the system focus, which can be helpful for users who navigate primarily using the keyboard and want the magnifier to track their navigation.
-
-This option is enabled by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2974,8 +2969,6 @@ This option is enabled by default.
 This checkbox controls whether the magnifier should follow the review cursor.
 When enabled, the magnified area will automatically move to follow the review cursor, which can be helpful for users who use the review cursor to navigate through content and want the magnifier to track their navigation.
 
-This option is enabled by default.
-
 | . {.hideHeaderRow} |.|
 |---|---|
 | Options | Disabled, Enabled |
@@ -2986,14 +2979,12 @@ This option is enabled by default.
 This checkbox controls whether the magnifier should follow the navigator object.
 When enabled, the magnified area will automatically move to follow the navigator object, which can be helpful for users who use object navigation to navigate through content and want the magnifier to track their navigation.
 
-This option is enabled by default.
-
 | . {.hideHeaderRow} |.|
 |---|---|
 | Options | Disabled, Enabled |
 | Default | Enabled |
 
-##### Tracking mode {#MagnifierFullscreenTrackingMode}
+##### Tracking mode {#MagnifierTrackingMode}
 
 This combo box allows you to select the tracking mode when using the magnifier.
 To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
@@ -3006,9 +2997,9 @@ The available options are:
 
 | Option | Description |
 |---|---|
-| Center | The magnified area is always centered on the current followed position. |
-| Border | The magnified area only moves when the followed element approaches the edge of the visible area. |
-| Relative | The magnified area maintains the relative position of the followed element within the screen. |
+| Center | The magnified area is always centered on the currently tracked position. |
+| Border | The magnified area only moves when the tracked element approaches the edge of the visible area. |
+| Relative | The magnified area maintains the relative position of the tracked element based on its position on the screen. |
 
 #### Keyboard {#KeyboardSettings}
 
