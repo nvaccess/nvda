@@ -20,7 +20,7 @@ General enquiries should be directed to <info@nvaccess.org>.
 | GitHub | email | topics |
 | --- | --- | --- |
 | @codeofdusk | <codeofdusk@gmail.com> | Windows Terminal and console, Microsoft UI Automation |
-| @nvdaes | <nrm1977@gmail.com> | Add-on store, braille |
+| @nvdaes | <nrm1977@gmail.com> | Add-on store, braille (reading experience) |
 | @michaelweghorn | <m.weghorn@posteo.de> | LibreOffice |
 | @jcsteh | <jamie@nvaccess.org> | Mozilla Firefox |
 | @alex19EP | <email@alex19ep.me> | eSpeak |
