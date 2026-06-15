@@ -6,19 +6,115 @@
 """Set of unit tests veryfying behavior of scripts defined in ``globalCommands``."""
 
 import unittest
+from unittest.mock import patch
 
 import config
 import globalCommands
 import inputCore
 import speech
+import textInfos
+
+from .textProvider import BasicTextProvider
 
 
 class _FakeInputGesture(inputCore.InputGesture):
 	"""An input gesture which does nothing, but can be passed to scripts."""
 
-	def _get_identifiers(self):
+	def _get_identifiers(self) -> list[str] | tuple[str, ...]:
 		"""Implemented just to satisfy base class requirements, where this is defined as abstract."""
 		raise RuntimeError("Should not be required in tests.")
+
+
+class _ReviewCopyTextProvider(BasicTextProvider):
+	def __init__(
+		self,
+		identity: str,
+		text: str = "",
+		selection: tuple[int, int] = (0, 0),
+	) -> None:
+		self._identity = identity
+		super().__init__(text=text, selection=selection)
+
+	def _isEqual(self, other: object) -> bool:
+		return isinstance(other, _ReviewCopyTextProvider) and self._identity == other._identity
+
+
+class ReviewCopyMarker(unittest.TestCase):
+	"""Tests review cursor select-then-copy marker handling."""
+
+	def setUp(self) -> None:
+		self.commands = globalCommands.GlobalCommands()
+		self.gesture = _FakeInputGesture()
+
+	def test_startMarkerSurvivesEquivalentReviewObjectChange(self) -> None:
+		startObj = _ReviewCopyTextProvider(identity="doc", text="hello world", selection=(0, 0))
+		endObj = _ReviewCopyTextProvider(identity="doc", text="hello world", selection=(5, 5))
+		startPosition = startObj.makeTextInfo(textInfos.POSITION_CARET)
+		endPosition = endObj.makeTextInfo(textInfos.POSITION_CARET)
+
+		with (
+			patch.object(globalCommands.api, "getReviewPosition", side_effect=[startPosition, endPosition]),
+			patch.object(globalCommands.ui, "message"),
+		):
+			self.commands.script_review_markStartForCopy(self.gesture)
+			with patch.object(globalCommands, "getLastScriptRepeatCount", return_value=0):
+				self.commands.script_review_copy(self.gesture)
+
+		self.assertEqual(startObj.selectionOffsets, (0, 6))
+
+	def test_moveToStartMarkerSurvivesEquivalentReviewObjectChange(self) -> None:
+		startObj = _ReviewCopyTextProvider(identity="doc", text="hello world", selection=(0, 0))
+		endObj = _ReviewCopyTextProvider(identity="doc", text="hello world", selection=(5, 5))
+		startPosition = startObj.makeTextInfo(textInfos.POSITION_CARET)
+		endPosition = endObj.makeTextInfo(textInfos.POSITION_CARET)
+
+		with (
+			patch.object(globalCommands.api, "getReviewPosition", side_effect=[startPosition, endPosition]),
+			patch.object(globalCommands.api, "setReviewPosition", return_value=True) as setReviewPosition,
+			patch.object(globalCommands.speech, "speakTextInfo"),
+			patch.object(globalCommands.ui, "message"),
+			patch.object(globalCommands.ui, "reviewMessage") as reviewMessage,
+		):
+			self.commands.script_review_markStartForCopy(self.gesture)
+			self.commands.script_review_moveToStartMarkedForCopy(self.gesture)
+
+		setReviewPosition.assert_called_once()
+		reviewMessage.assert_not_called()
+
+	def test_startMarkerIsNotUsedForDifferentReviewObject(self) -> None:
+		startObj = _ReviewCopyTextProvider(identity="sourceDoc", text="hello world", selection=(0, 0))
+		endObj = _ReviewCopyTextProvider(identity="otherDoc", text="hello world", selection=(5, 5))
+		startPosition = startObj.makeTextInfo(textInfos.POSITION_CARET)
+		endPosition = endObj.makeTextInfo(textInfos.POSITION_CARET)
+
+		with (
+			patch.object(globalCommands.api, "getReviewPosition", side_effect=[startPosition, endPosition]),
+			patch.object(globalCommands.ui, "message") as message,
+		):
+			self.commands.script_review_markStartForCopy(self.gesture)
+			with patch.object(globalCommands, "getLastScriptRepeatCount", return_value=0):
+				self.commands.script_review_copy(self.gesture)
+
+		self.assertEqual(startObj.selectionOffsets, (0, 0))
+		message.assert_called_with("No start marker set")
+
+	def test_moveToStartMarkerIsNotUsedForDifferentReviewObject(self) -> None:
+		startObj = _ReviewCopyTextProvider(identity="sourceDoc", text="hello world", selection=(0, 0))
+		endObj = _ReviewCopyTextProvider(identity="otherDoc", text="hello world", selection=(5, 5))
+		startPosition = startObj.makeTextInfo(textInfos.POSITION_CARET)
+		endPosition = endObj.makeTextInfo(textInfos.POSITION_CARET)
+
+		with (
+			patch.object(globalCommands.api, "getReviewPosition", side_effect=[startPosition, endPosition]),
+			patch.object(globalCommands.api, "setReviewPosition") as setReviewPosition,
+			patch.object(globalCommands.ui, "message"),
+			patch.object(globalCommands.ui, "reviewMessage") as reviewMessage,
+		):
+			self.commands.script_review_markStartForCopy(self.gesture)
+			self.commands.script_review_moveToStartMarkedForCopy(self.gesture)
+
+		setReviewPosition.assert_not_called()
+		reviewMessage.assert_called_with("No start marker set")
 
 
 class SpeechModeSwitching(unittest.TestCase):
