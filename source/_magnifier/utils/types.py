@@ -101,7 +101,7 @@ class MagnifierTrackingType(DisplayStringEnum):
 	def _displayStringLabels(self) -> dict["MagnifierTrackingType", str]:
 		return {
 			# Translators: Tracking type for magnifier to follow - mouse cursor.
-			self.MOUSE: pgettext("magnifier follow tracking type", "Mouse"),
+			self.MOUSE: pgettext("magnifier tracking type", "Mouse"),
 			# Translators: Tracking type for magnifier to follow - system focus (active element).
 			self.SYSTEM_FOCUS: pgettext("magnifier follow tracking type", "System focus"),
 			# Translators: Tracking type for magnifier to follow - review cursor position.
