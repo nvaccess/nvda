@@ -9,6 +9,10 @@
 * Add-ons can be removed from the "Updatable add-ons" tab in the Add-on Store. (#15030, @nvdaes)
 * Chinese text can now be navigated by word using built-in input gestures.
   A Word Segmentation Standard setting was added to the "Document Navigation" panel. (#18735, @CrazySteve0605, @Cary-rowen)
+* Word segmentation can now use the Windows built-in ICU library for boundary detection: Unicode Standard Annex #29 rules plus automatic dictionary-based segmentation selected by the script of the text.
+  A new "Windows Unicode (ICU)" option was added to the Word Segmentation Standard setting in the "Document Navigation" panel.
+  Under "Auto", ICU is now preferred over the legacy Windows segmentation wherever available, while Chinese word segmentation continues to take precedence for Chinese text.
+  This fixes word navigation in browse mode for Japanese and other scripts where the legacy Windows segmentation falls back to character-level boundaries. (#18735, #20343)
 * Braille output for Chinese now includes spaces between words. (#18865, @CrazySteve0605, @Cary-rowen)
 * Added sequential two-flick touch gestures that combine two flicks performed in quick succession into a single gesture, increasing the number of touch gestures that can be bound to scripts. (#19938, @kefaslungu)
   * Twelve combinations are recognised: opposite-direction pairs (e.g. flick right then flick left) and perpendicular L-shaped pairs (e.g. flick right then flick up).

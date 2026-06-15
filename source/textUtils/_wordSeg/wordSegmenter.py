@@ -10,6 +10,7 @@ from logHandler import log
 
 from ..segFlag import WordSegFlag
 from . import wordSegStrategy
+from winBindings.icu import ICU_AVAILABLE as _ICU_AVAILABLE
 
 
 _GET_SEGMENT_RECOVERABLE_EXCEPTIONS = (
@@ -43,29 +44,34 @@ class WordSegmenter:
 	def _chooseStrategy(
 		self,
 	) -> wordSegStrategy.WordSegmentationStrategy:
-		"""Choose the appropriate segmentation strategy based on the text content."""
-		if self.wordSegFlag == WordSegFlag.AUTO:
-			if (
-				wordSegStrategy.ChineseWordSegmentationStrategy._lib
-				and WordSegmenter._CHINESE_CHARACTER_AND_JAPANESE_KANJI.search(
-					self.text,
-				)
+		"""Choose the segmentation strategy, falling back Chinese -> ICU -> Uniscribe.
+
+		The CHINESE flag always uses the Chinese strategy when cppjieba is loaded; under
+		AUTO the Chinese strategy is used only for Chinese (non-kana) text.  ICU is used
+		for AUTO and ICU, and as the fallback when cppjieba is unavailable: it follows
+		UAX#29 plus script-driven dictionary segmentation, handling complex scripts that
+		Uniscribe breaks poorly.  Uniscribe is the final fallback and the only strategy
+		for the UNISCRIBE flag (it stays pinned where it is strictly required, e.g.
+		EditTextInfo, to match the Windows edit control / Notepad).
+		"""
+		flag = self.wordSegFlag
+		# Chinese: always for the CHINESE flag, or under AUTO for Chinese (non-kana) text.
+		if (
+			flag in (WordSegFlag.AUTO, WordSegFlag.CHINESE)
+			and wordSegStrategy.ChineseWordSegmentationStrategy._lib
+		):
+			if flag == WordSegFlag.CHINESE or (
+				WordSegmenter._CHINESE_CHARACTER_AND_JAPANESE_KANJI.search(self.text)
 				and not WordSegmenter._KANA.search(self.text)
 			):
 				return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
-			return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
-		match self.wordSegFlag:
-			case WordSegFlag.UNISCRIBE:
-				return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
-			case WordSegFlag.CHINESE:
-				if wordSegStrategy.ChineseWordSegmentationStrategy._lib:
-					return wordSegStrategy.ChineseWordSegmentationStrategy(self.text, self.encoding)
-				log.debugWarning(
-					"Chinese word segmenter is currently unavailable. Falling back to Uniscribe.",
-				)
-				return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
-			case _:
-				pass
+		elif flag == WordSegFlag.CHINESE:
+			log.debugWarning("Chinese word segmenter is unavailable. Falling back to ICU/Uniscribe.")
+		# ICU for everything except the explicit UNISCRIBE flag.
+		if flag != WordSegFlag.UNISCRIBE and _ICU_AVAILABLE:
+			return wordSegStrategy.IcuWordSegmentationStrategy(self.text, self.encoding)
+		elif flag == WordSegFlag.ICU:
+			log.debugWarning("ICU word segmenter is unavailable. Falling back to Uniscribe.")
 		return wordSegStrategy.UniscribeWordSegmentationStrategy(self.text, self.encoding)
 
 	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:

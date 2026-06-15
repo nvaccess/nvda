@@ -347,3 +347,28 @@ class ChineseWordSegmentationStrategy(WordSegmentationStrategy):
 	def __init__(self, text: str, encoding: str | None = None) -> None:
 		super().__init__(text, encoding)
 		self.wordEnds = self._callCppJieba()
+
+
+class IcuWordSegmentationStrategy(WordSegmentationStrategy):
+	"""ICU-based word segmentation (Windows built-in ICU library).
+
+	Word boundaries follow Unicode Standard Annex #29 default rules plus automatic
+	dictionary-based segmentation selected by the script of the text.
+	SegmentedText returns the text unchanged (no braille separator insertion).
+	"""
+
+	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
+		from textUtils import icu
+
+		if self.encoding == textUtils.WCHAR_ENCODING:
+			return icu.calculateWordOffsets(self.text, offset)
+		# Convert the str offset to a UTF-16 offset for ICU, then convert the result back.
+		offsetConverter = textUtils.WideStringOffsetConverter(self.text)
+		wideOffset = offsetConverter.strToEncodedOffsets(offset, offset)[0]
+		result = icu.calculateWordOffsets(self.text, wideOffset)
+		if result is None:
+			return None
+		return offsetConverter.encodedToStrOffsets(*result)
+
+	def segmentedText(self, sep: str = " ", newSepIndex: list[int] | None = None) -> str:
+		return self.text

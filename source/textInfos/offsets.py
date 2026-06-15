@@ -266,6 +266,8 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 				return WordSegFlag.AUTO
 			case config.featureFlagEnums.WordNavigationUnitFlag.CHINESE:
 				return WordSegFlag.CHINESE
+			case config.featureFlagEnums.WordNavigationUnitFlag.ICU:
+				return WordSegFlag.ICU
 			case _:
 				log.error(f"Unknown word segmentation standard, {self.wordSegConf.calculated()!r}")
 		return None
