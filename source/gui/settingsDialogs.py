@@ -6276,6 +6276,7 @@ class MagnifierPanel(SettingsPanel):
 		magnifier = getMagnifier()
 		if magnifier:
 			magnifier.zoomLevel = self._zoomInitially
+			magnifier._panStep = self._panStepInitially
 			magnifier.filterType = self._filterInitially
 			if isinstance(magnifier, FullScreenMagnifier):
 				magnifier._fullscreenMode = self._fullscreenModeInitially
