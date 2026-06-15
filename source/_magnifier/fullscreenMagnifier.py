@@ -10,6 +10,7 @@ Full-screen magnifier module.
 from typing import override
 
 from logHandler import log
+import screenCurtain
 import speech
 import ui
 from winBindings import magnification
@@ -40,6 +41,7 @@ class FullScreenMagnifier(Magnifier):
 		self.currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
 		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
+		self._screenCurtainIsActive: bool = False
 
 	@Magnifier.filterType.setter
 	def filterType(self, value: Filter) -> None:
@@ -55,11 +57,65 @@ class FullScreenMagnifier(Magnifier):
 		log.debug("Full-screen Magnifier gain focus event")
 		nextHandler()
 
+	def _isBlockedByScreenCurtain(self) -> bool:
+		"""
+		Check if the screen curtain is active and block magnifier start accordingly.
+
+		Returns True if the magnifier should not start.
+		At startup, defers silently so the magnifier auto-restarts when the screen curtain is disabled.
+		"""
+		if not (screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled):
+			return False
+		from NVDAState import _TrackNVDAInitialization
+
+		if _TrackNVDAInitialization.isInitializationComplete():
+			log.debug("Screen curtain is active, cannot start magnifier")
+			message = pgettext(
+				"magnifier",
+				# Translators: Message when trying to enable magnifier while screen curtain is active
+				"Cannot enable magnifier. Please disable screen curtain first.",
+			)
+			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
+		else:
+			self._screenCurtainIsActive = True
+		return True
+
+	def onScreenCurtainEnabled(self) -> None:
+		"""Called by screen curtain when it is enabled. Stops the magnifier if active."""
+		if self._isActive:
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
+					"Disabling magnifier",
+				),
+			)
+			self._stopMagnifier()
+			self._screenCurtainIsActive = True
+		else:
+			self._screenCurtainIsActive = False
+
+	def onScreenCurtainDisabled(self) -> None:
+		"""Called by screen curtain when it is disabled. Restarts the magnifier if it was active before."""
+		if self._screenCurtainIsActive:
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
+					"Re-enabling magnifier",
+				),
+			)
+			self._startMagnifier()
+			self._updateMagnifier()
+			self._screenCurtainIsActive = False
+
 	@override
 	def _startMagnifier(self) -> None:
 		"""
 		Start the Full-screen magnifier using windows DLL
 		"""
+		if self._isBlockedByScreenCurtain():
+			return
 		super()._startMagnifier()
 		log.debug(
 			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self._fullscreenMode}",
@@ -82,38 +138,33 @@ class FullScreenMagnifier(Magnifier):
 			self._applyFilter()
 		self._startTimer(self._updateMagnifier)
 
+	def _clearStaleApiState(self) -> None:
+		"""
+		Dummy MagInitialize/MagUninitialize cycle to clear stale Windows API state.
+
+		After a MagSetFullscreenTransform or MagSetFullscreenColorEffect call,
+		MagUninitialize leaves internal state that causes the next MagSetFullscreenTransform
+		to fail. Resetting the color effect to neutral here also clears stale state
+		left by a screen curtain session. All errors are suppressed.
+		"""
+		try:
+			magnification.MagInitialize()
+			try:
+				magnification.MagSetFullscreenColorEffect(FilterMatrix.NORMAL.value)
+			except OSError:
+				pass
+			magnification.MagUninitialize()
+		except OSError:
+			pass
+
 	def _initializeNativeMagnification(self) -> None:
 		"""
 		Initialize the Magnification API and apply the initial fullscreen transform.
 
-		A dummy MagInitialize/MagUninitialize cycle is performed before the real
-		initialization. This is a workaround for a Windows bug: after a previous
-		MagSetFullscreenTransform call, MagUninitialize leaves internal state that
-		causes MagSetFullscreenTransform to fail with WinError 0 on the next
-		MagInitialize. A dummy cycle without any MagSetFullscreenTransform call
-		clears this stale state.
-
-		Errors during the dummy MagInitialize/MagUninitialize cycle are intentionally
-		suppressed.
-
-		Raises OSError if the real MagInitialize fails or if MagSetFullscreenTransform
-		fails (e.g. Windows Magnifier already holds the API).
+		Raises OSError if MagInitialize or MagSetFullscreenTransform fails.
 		"""
-		# Best-effort uninit ensures we start from a clean state
 		self._uninitializeNativeMagnification()
-		# Dummy cycle to clear any stale state from a previous MagSetFullscreenTransform.
-		dummyInitSucceeded = False
-		try:
-			magnification.MagInitialize()
-			dummyInitSucceeded = True
-		except OSError:
-			pass
-		finally:
-			if dummyInitSucceeded:
-				try:
-					magnification.MagUninitialize()
-				except OSError:
-					pass
+		self._clearStaleApiState()
 		magnification.MagInitialize()
 		log.debug("Magnification API initialized")
 		# Applying the first real update verifies the API is usable without

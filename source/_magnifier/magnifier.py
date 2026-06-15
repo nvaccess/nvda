@@ -12,9 +12,6 @@ from collections.abc import Callable
 from comtypes import COMError
 from logHandler import log
 import wx
-import ui
-import speech
-import screenCurtain
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (
@@ -58,7 +55,6 @@ class Magnifier:
 		self._recoveryAttempts: int = 0
 		# Register for display changes
 		_displayTracking.displayChanged.register(self._onDisplayChanged)
-		self._screenCurtainIsActive: bool = False
 
 	@property
 	def filterType(self) -> Filter:
@@ -169,18 +165,6 @@ class Magnifier:
 		"""
 		if self._isActive:
 			return
-		# Check if screen curtain is active - if so, block magnifier from starting
-		if screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled:
-			log.debug("Screen curtain is active, cannot start magnifier")
-
-			message = pgettext(
-				"magnifier",
-				# Translators: Message when trying to enable magnifier while screen curtain is active
-				"Cannot enable magnifier. Please disable screen curtain first.",
-			)
-			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
-			return
-
 		self._isActive = True
 		self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
 
@@ -254,41 +238,6 @@ class Magnifier:
 		self._isActive = False
 		# Unregister from display changes
 		_displayTracking.displayChanged.unregister(self._onDisplayChanged)
-
-	def onScreenCurtainEnabled(self) -> None:
-		"""
-		Called when screen curtain is being enabled.
-		Handles disabling magnifier if it's active.
-		"""
-		if self._isActive:
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
-					"Disabling magnifier",
-				),
-			)
-			self._stopMagnifier()
-			self._screenCurtainIsActive = True
-		else:
-			self._screenCurtainIsActive = False
-
-	def onScreenCurtainDisabled(self) -> None:
-		"""
-		Called when screen curtain is being disabled.
-		Handles re-enabling magnifier if it was active before screen curtain.
-		"""
-		if self._screenCurtainIsActive:
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
-					"Re-enabling magnifier",
-				),
-			)
-			self._startMagnifier()
-			self._updateMagnifier()
-			self._screenCurtainIsActive = False
 
 	def _zoom(self, direction: Direction) -> None:
 		"""
