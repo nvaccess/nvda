@@ -719,29 +719,16 @@ jobs:
         echo "* [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }})" >> /tmp/releaseNotes.md
         echo "* SHA256 sum: \`${{ needs.createLauncher.outputs.launcherSha256 }}\`" >> /tmp/releaseNotes.md
     - name: Publish pre-release
-      if: ${{ contains(github.ref_name, 'rc') || contains(github.ref_name, 'beta') }}
-      shell: bash
-      env:
-        GH_TOKEN: ${{ github.token }}
-      run: |
-        gh release create ${{github.ref_name }} \
-          --repo ${{ github.repository }} \
-          --prerelease \
-          --title "${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
-          --notes-file /tmp/releaseNotes.md \
-          --verify-tag \
-          --discussion-category Releases
-    - name: Publish stable release
-      if: ${{ !contains(github.ref_name, 'rc') && !contains(github.ref_name, 'beta') }}
       shell: bash
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
         NVDA_EXE_NAME=$(ls output/nvda*.exe | head -n 1)
-        gh release create ${{github.ref_name }} \
+        gh release create ${{ github.ref_name }} \
           --repo ${{ github.repository }} \
           --title "${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
           --notes-file /tmp/releaseNotes.md \
           --verify-tag \
           --discussion-category Releases \
+          ${{ ( contains(github.ref_name, 'rc') || contains(github.ref_name, 'beta') ) && '--prerelease' || '' }} \
           $NVDA_EXE_NAME#Installer
