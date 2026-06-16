@@ -79,6 +79,7 @@ This is more noticeable for Windows releases which are enablement packages on to
 * Added an advanced setting to opt regular expression speech dictionary entries into a more modern [`regex`](https://pypi.org/project/regex/) engine.
 This provides Unicode-aware `\w` and `\b` and additional regex features.
 The setting is disabled by default. (#20013, @LeonarddeR)
+* The "Type" radio buttons in the "Add Dictionary Entry" dialog are now arranged vertically rather than horizontally. (#19657)
 
 ### Bug Fixes
 
