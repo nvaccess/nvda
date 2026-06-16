@@ -4170,8 +4170,8 @@ In untrusted environments, you may temporarily disable [speak typed characters](
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Disabled, Enabled|
-|Default |Enabled|
+| Options | Disabled, Enabled |
+| Default | Enabled |
 
 This setting controls whether NVDA plays a short beep when too many new lines arrive before they can all be reported.
 The beep indicates that some lines were skipped, and becomes slightly longer as more lines are skipped.
