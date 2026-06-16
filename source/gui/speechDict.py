@@ -66,7 +66,7 @@ class DictionaryEntryDialog(
 			DictionaryEntryDialog.TYPE_LABELS[i] for i in DictionaryEntryDialog.TYPE_LABELS_ORDERING
 		]
 		self.typeRadioBox = sHelper.addItem(
-			wx.RadioBox(self, label=typeText, choices=typeChoices, style=wx.RA_SPECIFY_ROWS)
+			wx.RadioBox(self, label=typeText, choices=typeChoices, style=wx.RA_SPECIFY_ROWS),
 		)
 
 		sHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, separated=True)
