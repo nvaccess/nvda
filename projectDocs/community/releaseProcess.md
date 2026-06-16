@@ -58,7 +58,7 @@ Reasons in favor of not reverting the pull request may be:
   * addressing a bug introduced in the current or previous release cycle.
   * addressing a `p1` or `p2` filed in the current or previous release cycle.
   * reverting code introduced in the current release cycle.
-  * updates to documentation introduced in this release cycle.
+  * updates to documentation introduced in the current or previous release cycle.
 * Documentation changes will be reviewed.
 A release summary will be added to the change log for the beta.
 * Once considered stable enough, a tagged "beta release" will be created for wider testing.
