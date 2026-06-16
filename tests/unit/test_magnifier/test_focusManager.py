@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from dataclasses import dataclass
-from _magnifier.utils.focusManager import FocusManager
+from _magnifier.utils.trackingManager import TrackingManager
 from _magnifier.utils.types import Coordinates, MagnifierTrackingType
 import unittest
 from unittest.mock import MagicMock, Mock, patch
@@ -17,7 +17,7 @@ def _makeFollowStateSideEffect(
 	followReview: bool = True,
 	followNavigatorObject: bool = True,
 ):
-	"""Return a side_effect function for patching getFollowState."""
+	"""Return a side_effect function for patching getTrackingState."""
 	states = {
 		MagnifierTrackingType.MOUSE: followMouse,
 		MagnifierTrackingType.SYSTEM_FOCUS: followSystemFocus,
@@ -46,76 +46,76 @@ class FocusTestParam:
 	followNavigatorObject: bool = True
 
 
-class TestFocusManager(unittest.TestCase):
-	"""Tests for the FocusManager class."""
+class TestTrackingManager(unittest.TestCase):
+	"""Tests for the TrackingManager class."""
 
 	def setUp(self):
 		"""Setup before each test."""
-		self.focusManager = FocusManager()
+		self.trackingManager = TrackingManager()
 
-	def testFocusManagerCreation(self):
-		"""Can we create a FocusManager with initialized values?"""
-		self.assertIsNone(self.focusManager._lastFocusedObject)
-		self.assertEqual(self.focusManager._lastReportedCoordinates, Coordinates(0, 0))
-		self.assertIsNone(self.focusManager._lastReviewPosition)
-		self.assertEqual(self.focusManager._lastMousePosition, Coordinates(0, 0))
-		self.assertEqual(self.focusManager._lastSystemFocusPosition, Coordinates(0, 0))
-		self.assertEqual(self.focusManager._lastNavigatorObjectPosition, Coordinates(0, 0))
-		self.assertEqual(self.focusManager._lastValidSystemFocusPosition, Coordinates(0, 0))
-		self.assertEqual(self.focusManager._lastValidReviewPosition, Coordinates(0, 0))
-		self.assertEqual(self.focusManager._lastValidNavigatorObjectPosition, Coordinates(0, 0))
+	def testTrackingManagerCreation(self):
+		"""Can we create a TrackingManager with initialized values?"""
+		self.assertIsNone(self.trackingManager._lastTrackedObject)
+		self.assertEqual(self.trackingManager._lastReportedCoordinates, Coordinates(0, 0))
+		self.assertIsNone(self.trackingManager._lastReviewPosition)
+		self.assertEqual(self.trackingManager._lastMousePosition, Coordinates(0, 0))
+		self.assertEqual(self.trackingManager._lastSystemFocusPosition, Coordinates(0, 0))
+		self.assertEqual(self.trackingManager._lastNavigatorObjectPosition, Coordinates(0, 0))
+		self.assertEqual(self.trackingManager._lastValidSystemFocusPosition, Coordinates(0, 0))
+		self.assertEqual(self.trackingManager._lastValidReviewPosition, Coordinates(0, 0))
+		self.assertEqual(self.trackingManager._lastValidNavigatorObjectPosition, Coordinates(0, 0))
 
 	def testGetNavigatorObjectPosition(self):
 		"""Getting navigator object position with different API responses."""
 		# Case 1: Navigator object location available
-		with patch("_magnifier.utils.focusManager.api.getNavigatorObject") as mock_navigator:
+		with patch("_magnifier.utils.trackingManager.api.getNavigatorObject") as mock_navigator:
 			mock_navigator.return_value.location = (100, 150, 200, 300)
 
-			coords = self.focusManager._getNavigatorObjectPosition()
+			coords = self.trackingManager._getNavigatorObjectPosition()
 			# Center: (100 + 200//2, 150 + 300//2) = (200, 300)
 			self.assertEqual(coords, Coordinates(200, 300))
 
 		# Case 2: Navigator object fails - should return last valid position from Case 1
-		with patch("_magnifier.utils.focusManager.api.getNavigatorObject") as mock_navigator:
+		with patch("_magnifier.utils.trackingManager.api.getNavigatorObject") as mock_navigator:
 			mock_navigator.return_value.location = Mock(side_effect=Exception())
 
-			coords = self.focusManager._getNavigatorObjectPosition()
+			coords = self.trackingManager._getNavigatorObjectPosition()
 			# Should return last valid position (200, 300)
 			self.assertEqual(coords, Coordinates(200, 300))
 
 		# Case 3: Navigator object is None - should return last valid position
-		with patch("_magnifier.utils.focusManager.api.getNavigatorObject", return_value=None):
-			coords = self.focusManager._getNavigatorObjectPosition()
+		with patch("_magnifier.utils.trackingManager.api.getNavigatorObject", return_value=None):
+			coords = self.trackingManager._getNavigatorObjectPosition()
 			self.assertEqual(coords, Coordinates(200, 300))
 
 	def testGetReviewPosition(self):
 		"""Getting review cursor position with different API responses."""
 		# Case 1: Review position available
-		with patch("_magnifier.utils.focusManager.api.getReviewPosition") as mock_review:
+		with patch("_magnifier.utils.trackingManager.api.getReviewPosition") as mock_review:
 			mock_point = Mock()
 			mock_point.x = 300
 			mock_point.y = 400
 			mock_review.return_value.pointAtStart = mock_point
 
-			coords = self.focusManager._getReviewPosition()
+			coords = self.trackingManager._getReviewPosition()
 			self.assertEqual(coords, Coordinates(300, 400))
 			# _lastValidReviewPosition must be updated
-			self.assertEqual(self.focusManager._lastValidReviewPosition, Coordinates(300, 400))
+			self.assertEqual(self.trackingManager._lastValidReviewPosition, Coordinates(300, 400))
 
 		# Case 2: pointAtStart raises NotImplementedError → returns None
-		with patch("_magnifier.utils.focusManager.api.getReviewPosition") as mock_review:
+		with patch("_magnifier.utils.trackingManager.api.getReviewPosition") as mock_review:
 			type(mock_review.return_value).pointAtStart = property(
 				fget=Mock(side_effect=NotImplementedError),
 			)
 
-			coords = self.focusManager._getReviewPosition()
+			coords = self.trackingManager._getReviewPosition()
 			self.assertIsNone(coords)
 			# _lastValidReviewPosition must NOT change
-			self.assertEqual(self.focusManager._lastValidReviewPosition, Coordinates(300, 400))
+			self.assertEqual(self.trackingManager._lastValidReviewPosition, Coordinates(300, 400))
 
 		# Case 3: getReviewPosition returns None → returns None
-		with patch("_magnifier.utils.focusManager.api.getReviewPosition", return_value=None):
-			coords = self.focusManager._getReviewPosition()
+		with patch("_magnifier.utils.trackingManager.api.getReviewPosition", return_value=None):
+			coords = self.trackingManager._getReviewPosition()
 			self.assertIsNone(coords)
 
 	def testGetReviewPositionSurvivesCOMError(self):
@@ -125,54 +125,54 @@ class TestFocusManager(unittest.TestCase):
 		mockReviewPos = Mock()
 		type(mockReviewPos).pointAtStart = property(lambda self: (_ for _ in ()).throw(comError))
 
-		with patch("_magnifier.utils.focusManager.api.getReviewPosition", return_value=mockReviewPos):
-			result = self.focusManager._getReviewPosition()
+		with patch("_magnifier.utils.trackingManager.api.getReviewPosition", return_value=mockReviewPos):
+			result = self.trackingManager._getReviewPosition()
 			self.assertIsNone(result)
 
 	def testGetSystemFocusPosition(self):
 		"""Getting system focus position with different API responses."""
 		# Case 1: Caret position successful (browse mode)
-		with patch("_magnifier.utils.focusManager.api.getCaretPosition") as mock_caret:
+		with patch("_magnifier.utils.trackingManager.api.getCaretPosition") as mock_caret:
 			mock_point = Mock()
 			mock_point.x = 500
 			mock_point.y = 600
 			mock_caret.return_value.pointAtStart = mock_point
 
-			coords = self.focusManager._getSystemFocusPosition()
+			coords = self.trackingManager._getSystemFocusPosition()
 			self.assertEqual(coords, Coordinates(500, 600))
 
 		# Case 2: Caret fails, focus object works
-		with patch("_magnifier.utils.focusManager.api.getCaretPosition", side_effect=RuntimeError):
-			with patch("_magnifier.utils.focusManager.api.getFocusObject") as mock_focus:
+		with patch("_magnifier.utils.trackingManager.api.getCaretPosition", side_effect=RuntimeError):
+			with patch("_magnifier.utils.trackingManager.api.getFocusObject") as mock_focus:
 				mock_focus.return_value.location = (200, 300, 100, 80)
 
-				coords = self.focusManager._getSystemFocusPosition()
+				coords = self.trackingManager._getSystemFocusPosition()
 				# Center: (200 + 100//2, 300 + 80//2) = (250, 340)
 				self.assertEqual(coords, Coordinates(250, 340))
 
 		# Case 3: Everything fails - should return last valid position from Case 2
-		with patch("_magnifier.utils.focusManager.api.getCaretPosition", side_effect=RuntimeError):
-			with patch("_magnifier.utils.focusManager.api.getFocusObject", return_value=None):
-				coords = self.focusManager._getSystemFocusPosition()
+		with patch("_magnifier.utils.trackingManager.api.getCaretPosition", side_effect=RuntimeError):
+			with patch("_magnifier.utils.trackingManager.api.getFocusObject", return_value=None):
+				coords = self.trackingManager._getSystemFocusPosition()
 				# Should return last valid position (250, 340)
 				self.assertEqual(coords, Coordinates(250, 340))
 
 	def testGetSystemFocusPositionSurvivesOSError(self):
 		"""OSError from magnification API calls must be caught."""
 		with patch(
-			"_magnifier.utils.focusManager.api.getCaretPosition",
+			"_magnifier.utils.trackingManager.api.getCaretPosition",
 			side_effect=OSError("WinError"),
 		):
-			with patch("_magnifier.utils.focusManager.api.getFocusObject") as mock_focus:
+			with patch("_magnifier.utils.trackingManager.api.getFocusObject") as mock_focus:
 				mock_focus.return_value.location = (10, 20, 30, 40)
 
-				coords = self.focusManager._getSystemFocusPosition()
+				coords = self.trackingManager._getSystemFocusPosition()
 				self.assertEqual(coords, Coordinates(25, 40))
 
 	def testGetMousePosition(self):
 		"""Getting mouse position."""
-		with patch("_magnifier.utils.focusManager.winUser.getCursorPos", return_value=(123, 456)):
-			coords = self.focusManager._getMousePosition()
+		with patch("_magnifier.utils.trackingManager.winUser.getCursorPos", return_value=(123, 456)):
+			coords = self.trackingManager._getMousePosition()
 			self.assertEqual(coords, Coordinates(123, 456))
 
 	def testGetCurrentFocusCoordinates(self):
@@ -308,19 +308,19 @@ class TestFocusManager(unittest.TestCase):
 		for param in subTestParams:
 			with self.subTest(description=param.description):
 				# Reset focus manager state
-				self.focusManager._lastNavigatorObjectPosition = Coordinates(0, 0)
-				self.focusManager._lastSystemFocusPosition = Coordinates(0, 0)
-				self.focusManager._lastMousePosition = Coordinates(0, 0)
-				self.focusManager._lastReviewPosition = None
-				self.focusManager._lastSystemFocusChangeTime = 0.0
-				self.focusManager._lastFocusedObject = param.lastFocusedObject
+				self.trackingManager._lastNavigatorObjectPosition = Coordinates(0, 0)
+				self.trackingManager._lastSystemFocusPosition = Coordinates(0, 0)
+				self.trackingManager._lastMousePosition = Coordinates(0, 0)
+				self.trackingManager._lastReviewPosition = None
+				self.trackingManager._lastSystemFocusChangeTime = 0.0
+				self.trackingManager._lastTrackedObject = param.lastFocusedObject
 
 				# Mock instance methods
-				self.focusManager._getNavigatorObjectPosition = MagicMock(
+				self.trackingManager._getNavigatorObjectPosition = MagicMock(
 					return_value=param.navigatorObjectPos,
 				)
-				self.focusManager._getSystemFocusPosition = MagicMock(return_value=param.systemFocusPos)
-				self.focusManager._getReviewPosition = MagicMock(return_value=param.reviewPos)
+				self.trackingManager._getSystemFocusPosition = MagicMock(return_value=param.systemFocusPos)
+				self.trackingManager._getReviewPosition = MagicMock(return_value=param.reviewPos)
 
 				followStateSideEffect = _makeFollowStateSideEffect(
 					followMouse=param.followMouse,
@@ -331,50 +331,50 @@ class TestFocusManager(unittest.TestCase):
 
 				with (
 					patch(
-						"_magnifier.utils.focusManager.getFollowState",
+						"_magnifier.utils.trackingManager.getTrackingState",
 						side_effect=followStateSideEffect,
 					),
 					patch(
-						"_magnifier.utils.focusManager.winUser.getAsyncKeyState",
+						"_magnifier.utils.trackingManager.winUser.getAsyncKeyState",
 						side_effect=lambda _key: -1 if param.leftPressed else 0,
 					),
 					patch(
-						"_magnifier.utils.focusManager.winUser.getCursorPos",
+						"_magnifier.utils.trackingManager.winUser.getCursorPos",
 						return_value=param.mousePos,
 					),
 				):
 					# Execute
-					focusCoordinates = self.focusManager.getCurrentFocusCoordinates()
+					focusCoordinates = self.trackingManager.getCurrentTrackedCoordinates()
 
 				# Assert
 				self.assertEqual(focusCoordinates, param.expectedCoords)
-				self.assertEqual(self.focusManager.getLastFocusType(), param.expectedFocus)
+				self.assertEqual(self.trackingManager.getLastTrackedType(), param.expectedFocus)
 
 	def testGetLastFocusType(self):
 		"""Test getting the last focus type."""
-		self.assertIsNone(self.focusManager.getLastFocusType())
+		self.assertIsNone(self.trackingManager.getLastTrackedType())
 
 		for focusType in MagnifierTrackingType:
-			self.focusManager._lastFocusedObject = focusType
-			self.assertEqual(self.focusManager.getLastFocusType(), focusType)
+			self.trackingManager._lastTrackedObject = focusType
+			self.assertEqual(self.trackingManager.getLastTrackedType(), focusType)
 
 
 class TestFollowSettings(unittest.TestCase):
 	"""Verify that each follow* setting actually gates its source."""
 
 	def setUp(self):
-		self.focusManager = FocusManager()
-		self.focusManager._lastMousePosition = Coordinates(0, 0)
-		self.focusManager._lastSystemFocusPosition = Coordinates(0, 0)
-		self.focusManager._lastReviewPosition = None
-		self.focusManager._lastNavigatorObjectPosition = Coordinates(0, 0)
+		self.trackingManager = TrackingManager()
+		self.trackingManager._lastMousePosition = Coordinates(0, 0)
+		self.trackingManager._lastSystemFocusPosition = Coordinates(0, 0)
+		self.trackingManager._lastReviewPosition = None
+		self.trackingManager._lastNavigatorObjectPosition = Coordinates(0, 0)
 
 	def _run(self, *, followMouse, followSystemFocus, followReview, followNavigatorObject):
-		"""Run getCurrentFocusCoordinates with all sources moved and the given settings."""
-		self.focusManager._getMousePosition = MagicMock(return_value=Coordinates(10, 10))
-		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
-		self.focusManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
-		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
+		"""Run getCurrentTrackedCoordinates with all sources moved and the given settings."""
+		self.trackingManager._getMousePosition = MagicMock(return_value=Coordinates(10, 10))
+		self.trackingManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
+		self.trackingManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
+		self.trackingManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
 
 		followStateSideEffect = _makeFollowStateSideEffect(
 			followMouse=followMouse,
@@ -385,12 +385,12 @@ class TestFollowSettings(unittest.TestCase):
 
 		with (
 			patch(
-				"_magnifier.utils.focusManager.getFollowState",
+				"_magnifier.utils.trackingManager.getTrackingState",
 				side_effect=followStateSideEffect,
 			),
-			patch("_magnifier.utils.focusManager.winUser.getAsyncKeyState", return_value=0),
+			patch("_magnifier.utils.trackingManager.winUser.getAsyncKeyState", return_value=0),
 		):
-			return self.focusManager.getCurrentFocusCoordinates()
+			return self.trackingManager.getCurrentTrackedCoordinates()
 
 	def testFollowMouseDisabled(self):
 		"""When followMouse=False, mouse changes are ignored and system focus wins."""
@@ -401,7 +401,7 @@ class TestFollowSettings(unittest.TestCase):
 			followNavigatorObject=True,
 		)
 		self.assertEqual(coords, Coordinates(20, 20))
-		self.assertEqual(self.focusManager.getLastFocusType(), MagnifierTrackingType.SYSTEM_FOCUS)
+		self.assertEqual(self.trackingManager.getLastTrackedType(), MagnifierTrackingType.SYSTEM_FOCUS)
 
 	def testFollowSystemFocusDisabled(self):
 		"""When followSystemFocus=False, system focus changes are ignored and review wins."""
@@ -412,7 +412,7 @@ class TestFollowSettings(unittest.TestCase):
 			followNavigatorObject=True,
 		)
 		self.assertEqual(coords, Coordinates(30, 30))
-		self.assertEqual(self.focusManager.getLastFocusType(), MagnifierTrackingType.REVIEW)
+		self.assertEqual(self.trackingManager.getLastTrackedType(), MagnifierTrackingType.REVIEW)
 
 	def testFollowReviewDisabled(self):
 		"""When followReview=False, review changes are ignored and navigator wins."""
@@ -423,7 +423,7 @@ class TestFollowSettings(unittest.TestCase):
 			followNavigatorObject=True,
 		)
 		self.assertEqual(coords, Coordinates(40, 40))
-		self.assertEqual(self.focusManager.getLastFocusType(), MagnifierTrackingType.NAVIGATOR_OBJECT)
+		self.assertEqual(self.trackingManager.getLastTrackedType(), MagnifierTrackingType.NAVIGATOR_OBJECT)
 
 	def testAllFollowDisabled(self):
 		"""When all settings are False, no source fires and focus remains frozen."""
@@ -438,10 +438,10 @@ class TestFollowSettings(unittest.TestCase):
 
 	def testAllFollowDisabledKeepsLastTrackedPosition(self):
 		"""Disabling all follow modes keeps the most recently tracked coordinates."""
-		self.focusManager._getMousePosition = MagicMock(return_value=Coordinates(10, 10))
-		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
-		self.focusManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
-		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
+		self.trackingManager._getMousePosition = MagicMock(return_value=Coordinates(10, 10))
+		self.trackingManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
+		self.trackingManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
+		self.trackingManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
 
 		followEnabledSideEffect = _makeFollowStateSideEffect(
 			followMouse=True,
@@ -451,19 +451,19 @@ class TestFollowSettings(unittest.TestCase):
 		)
 		with (
 			patch(
-				"_magnifier.utils.focusManager.getFollowState",
+				"_magnifier.utils.trackingManager.getTrackingState",
 				side_effect=followEnabledSideEffect,
 			),
-			patch("_magnifier.utils.focusManager.winUser.getAsyncKeyState", return_value=0),
+			patch("_magnifier.utils.trackingManager.winUser.getAsyncKeyState", return_value=0),
 		):
-			coords = self.focusManager.getCurrentFocusCoordinates()
+			coords = self.trackingManager.getCurrentTrackedCoordinates()
 		self.assertEqual(coords, Coordinates(10, 10))
 
 		# Move all sources, but disable every follow setting.
-		self.focusManager._getMousePosition = MagicMock(return_value=Coordinates(99, 99))
-		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(88, 88))
-		self.focusManager._getReviewPosition = MagicMock(return_value=Coordinates(77, 77))
-		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(66, 66))
+		self.trackingManager._getMousePosition = MagicMock(return_value=Coordinates(99, 99))
+		self.trackingManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(88, 88))
+		self.trackingManager._getReviewPosition = MagicMock(return_value=Coordinates(77, 77))
+		self.trackingManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(66, 66))
 		followDisabledSideEffect = _makeFollowStateSideEffect(
 			followMouse=False,
 			followSystemFocus=False,
@@ -472,22 +472,22 @@ class TestFollowSettings(unittest.TestCase):
 		)
 		with (
 			patch(
-				"_magnifier.utils.focusManager.getFollowState",
+				"_magnifier.utils.trackingManager.getTrackingState",
 				side_effect=followDisabledSideEffect,
 			),
-			patch("_magnifier.utils.focusManager.winUser.getAsyncKeyState", return_value=0),
+			patch("_magnifier.utils.trackingManager.winUser.getAsyncKeyState", return_value=0),
 		):
-			coords = self.focusManager.getCurrentFocusCoordinates()
+			coords = self.trackingManager.getCurrentTrackedCoordinates()
 
 		self.assertEqual(coords, Coordinates(10, 10))
-		self.assertIsNone(self.focusManager.getLastFocusType())
+		self.assertIsNone(self.trackingManager.getLastTrackedType())
 
 	def testFollowMouseDragIgnoresSettings(self):
 		"""Mouse drag (left click held) with followMouse=True always wins regardless of others."""
-		self.focusManager._getMousePosition = MagicMock(return_value=Coordinates(10, 10))
-		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
-		self.focusManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
-		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
+		self.trackingManager._getMousePosition = MagicMock(return_value=Coordinates(10, 10))
+		self.trackingManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
+		self.trackingManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
+		self.trackingManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
 
 		followStateSideEffect = _makeFollowStateSideEffect(
 			followMouse=True,
@@ -498,30 +498,30 @@ class TestFollowSettings(unittest.TestCase):
 
 		with (
 			patch(
-				"_magnifier.utils.focusManager.getFollowState",
+				"_magnifier.utils.trackingManager.getTrackingState",
 				side_effect=followStateSideEffect,
 			),
-			patch("_magnifier.utils.focusManager.winUser.getAsyncKeyState", return_value=-1),
+			patch("_magnifier.utils.trackingManager.winUser.getAsyncKeyState", return_value=-1),
 		):
-			coords = self.focusManager.getCurrentFocusCoordinates()
+			coords = self.trackingManager.getCurrentTrackedCoordinates()
 
 		self.assertEqual(coords, Coordinates(10, 10))
-		self.assertEqual(self.focusManager.getLastFocusType(), MagnifierTrackingType.MOUSE)
+		self.assertEqual(self.trackingManager.getLastTrackedType(), MagnifierTrackingType.MOUSE)
 
 	def testDisableFollowMouseKeepsViewFrozen(self):
 		"""When followMouse is disabled, view remains frozen until a followed source changes."""
 		# Simulate: mouse was previously the active focus source
-		self.focusManager._lastFocusedObject = MagnifierTrackingType.MOUSE
-		self.focusManager._lastReportedCoordinates = Coordinates(10, 10)
+		self.trackingManager._lastTrackedObject = MagnifierTrackingType.MOUSE
+		self.trackingManager._lastReportedCoordinates = Coordinates(10, 10)
 		# Positions haven't changed from last recorded values (no "change" detected)
-		self.focusManager._lastMousePosition = Coordinates(10, 10)
-		self.focusManager._lastSystemFocusPosition = Coordinates(20, 20)
-		self.focusManager._lastNavigatorObjectPosition = Coordinates(40, 40)
+		self.trackingManager._lastMousePosition = Coordinates(10, 10)
+		self.trackingManager._lastSystemFocusPosition = Coordinates(20, 20)
+		self.trackingManager._lastNavigatorObjectPosition = Coordinates(40, 40)
 
-		self.focusManager._getMousePosition = MagicMock(return_value=Coordinates(10, 10))
-		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
-		self.focusManager._getReviewPosition = MagicMock(return_value=None)
-		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
+		self.trackingManager._getMousePosition = MagicMock(return_value=Coordinates(10, 10))
+		self.trackingManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
+		self.trackingManager._getReviewPosition = MagicMock(return_value=None)
+		self.trackingManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
 
 		followStateSideEffect = _makeFollowStateSideEffect(
 			followMouse=False,
@@ -532,29 +532,29 @@ class TestFollowSettings(unittest.TestCase):
 
 		with (
 			patch(
-				"_magnifier.utils.focusManager.getFollowState",
+				"_magnifier.utils.trackingManager.getTrackingState",
 				side_effect=followStateSideEffect,
 			),
-			patch("_magnifier.utils.focusManager.winUser.getAsyncKeyState", return_value=0),
+			patch("_magnifier.utils.trackingManager.winUser.getAsyncKeyState", return_value=0),
 		):
-			coords = self.focusManager.getCurrentFocusCoordinates()
+			coords = self.trackingManager.getCurrentTrackedCoordinates()
 
 		self.assertEqual(coords, Coordinates(10, 10))
-		self.assertIsNone(self.focusManager.getLastFocusType())
+		self.assertIsNone(self.trackingManager.getLastTrackedType())
 
 	def testDisableFollowMouseWhileMouseMovingKeepsViewFrozen(self):
 		"""When followMouse is disabled, mouse movement alone does not move the view."""
-		self.focusManager._lastFocusedObject = MagnifierTrackingType.MOUSE
-		self.focusManager._lastReportedCoordinates = Coordinates(10, 10)
-		self.focusManager._lastMousePosition = Coordinates(10, 10)
-		self.focusManager._lastSystemFocusPosition = Coordinates(20, 20)
-		self.focusManager._lastNavigatorObjectPosition = Coordinates(40, 40)
+		self.trackingManager._lastTrackedObject = MagnifierTrackingType.MOUSE
+		self.trackingManager._lastReportedCoordinates = Coordinates(10, 10)
+		self.trackingManager._lastMousePosition = Coordinates(10, 10)
+		self.trackingManager._lastSystemFocusPosition = Coordinates(20, 20)
+		self.trackingManager._lastNavigatorObjectPosition = Coordinates(40, 40)
 
 		# Mouse has moved but followMouse is False
-		self.focusManager._getMousePosition = MagicMock(return_value=Coordinates(15, 15))
-		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
-		self.focusManager._getReviewPosition = MagicMock(return_value=None)
-		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
+		self.trackingManager._getMousePosition = MagicMock(return_value=Coordinates(15, 15))
+		self.trackingManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
+		self.trackingManager._getReviewPosition = MagicMock(return_value=None)
+		self.trackingManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
 
 		followStateSideEffect = _makeFollowStateSideEffect(
 			followMouse=False,
@@ -565,29 +565,29 @@ class TestFollowSettings(unittest.TestCase):
 
 		with (
 			patch(
-				"_magnifier.utils.focusManager.getFollowState",
+				"_magnifier.utils.trackingManager.getTrackingState",
 				side_effect=followStateSideEffect,
 			),
-			patch("_magnifier.utils.focusManager.winUser.getAsyncKeyState", return_value=0),
+			patch("_magnifier.utils.trackingManager.winUser.getAsyncKeyState", return_value=0),
 		):
-			coords = self.focusManager.getCurrentFocusCoordinates()
+			coords = self.trackingManager.getCurrentTrackedCoordinates()
 
 		self.assertEqual(coords, Coordinates(10, 10))
-		self.assertIsNone(self.focusManager.getLastFocusType())
+		self.assertIsNone(self.trackingManager.getLastTrackedType())
 
 	def testDisableFollowSystemFocusKeepsViewFrozen(self):
 		"""When followSystemFocus is disabled, view remains frozen until a followed source changes."""
-		self.focusManager._lastFocusedObject = MagnifierTrackingType.SYSTEM_FOCUS
-		self.focusManager._lastReportedCoordinates = Coordinates(20, 20)
-		self.focusManager._lastMousePosition = Coordinates(10, 10)
-		self.focusManager._lastSystemFocusPosition = Coordinates(20, 20)
-		self.focusManager._lastReviewPosition = Coordinates(30, 30)
-		self.focusManager._lastNavigatorObjectPosition = Coordinates(40, 40)
+		self.trackingManager._lastTrackedObject = MagnifierTrackingType.SYSTEM_FOCUS
+		self.trackingManager._lastReportedCoordinates = Coordinates(20, 20)
+		self.trackingManager._lastMousePosition = Coordinates(10, 10)
+		self.trackingManager._lastSystemFocusPosition = Coordinates(20, 20)
+		self.trackingManager._lastReviewPosition = Coordinates(30, 30)
+		self.trackingManager._lastNavigatorObjectPosition = Coordinates(40, 40)
 
-		self.focusManager._getMousePosition = MagicMock(return_value=Coordinates(10, 10))
-		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
-		self.focusManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
-		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
+		self.trackingManager._getMousePosition = MagicMock(return_value=Coordinates(10, 10))
+		self.trackingManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(20, 20))
+		self.trackingManager._getReviewPosition = MagicMock(return_value=Coordinates(30, 30))
+		self.trackingManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(40, 40))
 
 		followStateSideEffect = _makeFollowStateSideEffect(
 			followMouse=False,
@@ -598,12 +598,12 @@ class TestFollowSettings(unittest.TestCase):
 
 		with (
 			patch(
-				"_magnifier.utils.focusManager.getFollowState",
+				"_magnifier.utils.trackingManager.getTrackingState",
 				side_effect=followStateSideEffect,
 			),
-			patch("_magnifier.utils.focusManager.winUser.getAsyncKeyState", return_value=0),
+			patch("_magnifier.utils.trackingManager.winUser.getAsyncKeyState", return_value=0),
 		):
-			coords = self.focusManager.getCurrentFocusCoordinates()
+			coords = self.trackingManager.getCurrentTrackedCoordinates()
 
 		self.assertEqual(coords, Coordinates(20, 20))
-		self.assertIsNone(self.focusManager.getLastFocusType())
+		self.assertIsNone(self.trackingManager.getLastTrackedType())

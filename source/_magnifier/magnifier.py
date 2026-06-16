@@ -33,7 +33,7 @@ from .config import (
 	setZoomLevel,
 	ZoomLevel,
 )
-from .utils.focusManager import FocusManager
+from .utils.trackingManager import TrackingManager
 
 
 class Magnifier:
@@ -48,7 +48,7 @@ class Magnifier:
 		self._zoomLevel: float = getZoomLevel()
 		self._panStep: int = getPanStep()
 		self._timer: None | wx.Timer = None
-		self._focusManager = FocusManager()
+		self._trackingManager = TrackingManager()
 		self._lastScreenPosition = Coordinates(0, 0)
 		self._currentCoordinates = Coordinates(0, 0)
 		self._lastFocusCoordinates = Coordinates(0, 0)
@@ -182,7 +182,7 @@ class Magnifier:
 			return
 
 		self._isActive = True
-		self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
+		self.currentCoordinates = self._trackingManager.getCurrentTrackedCoordinates()
 
 	def _updateMagnifier(self) -> None:
 		"""
@@ -196,7 +196,7 @@ class Magnifier:
 		try:
 			self._managePanning()
 			if not self._isManualPanning:
-				self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
+				self.currentCoordinates = self._trackingManager.getCurrentTrackedCoordinates()
 			self._doUpdate()
 			self._consecutiveErrors = 0
 			self._recoveryAttempts = 0
@@ -350,7 +350,7 @@ class Magnifier:
 		"""
 		Ensure that manual panning mode (self._isManualPanning) is set to False when focus coordinates change.
 		"""
-		focusCoordinates = self._focusManager.getCurrentFocusCoordinates()
+		focusCoordinates = self._trackingManager.getCurrentTrackedCoordinates()
 		if self._isManualPanning:
 			if focusCoordinates != self._lastFocusCoordinates:
 				self._isManualPanning = False

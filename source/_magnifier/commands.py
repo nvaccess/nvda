@@ -13,11 +13,11 @@ import ui
 from . import changeMagnifiedView, getMagnifier, start, stop
 from .config import (
 	setMagnifiedView,
-	getFollowState,
+	getTrackingState,
 	setFilter,
-	setFollowState,
-	setFullscreenMode,
-	toggleAllFollowStates,
+	setTrackingState,
+	setFullscreenTrackingMode,
+	toggleAllTrackingStates,
 	ZoomLevel,
 )
 from .magnifier import Magnifier
@@ -26,7 +26,7 @@ from .utils.types import (
 	Filter,
 	Direction,
 	MagnifiedView,
-	FullScreenMode,
+	FullScreenTrackingMode,
 	MagnifierAction,
 	MagnifierTrackingType,
 )
@@ -199,67 +199,67 @@ def cycleMagnifiedView() -> None:
 		)
 
 
-def toggleFollow(focusType: MagnifierTrackingType) -> None:
+def toggleTracking() -> None:
 	"""
-	Toggle the specified follow mode setting.
+	Toggle the specified tracking mode setting.
 
-	:param MagnifierTrackingType: The follow mode to toggle (mouse, system focus, review cursor, navigator object)
+	:param MagnifierTrackingType: The tracking mode to toggle (mouse, system focus, review cursor, navigator object)
 	"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
 		magnifier,
-		MagnifierAction.TOGGLE_FOLLOW_SETTINGS,
+		MagnifierAction.TOGGLE_TRACKING_SETTINGS,
 	):
-		state = not getFollowState(MagnifierTrackingType)
-		setFollowState(MagnifierTrackingType, state)
+		state = not getTrackingState(MagnifierTrackingType)
+		setTrackingState(MagnifierTrackingType, state)
 
 		ui.message(
 			pgettext(
 				"magnifier",
-				# Translators: Message announced when toggling a follow setting with {setting} being the name of the setting and {state} being either "enabled" or "disabled".
+				# Translators: Message announced when toggling a tracking setting with {setting} being the name of the setting and {state} being either "enabled" or "disabled".
 				"{setting} {state}",
 			).format(
 				setting=MagnifierTrackingType.displayString,
 				state=pgettext(
 					"magnifier",
-					# Translators: State of the follow setting being toggled enabled.
+					# Translators: State of the tracking setting being toggled enabled.
 					"enabled",
 				)
 				if state
 				else pgettext(
 					"magnifier",
-					# Translators: State of the follow setting being toggled disabled.
+					# Translators: State of the tracking setting being toggled disabled.
 					"disabled",
 				),
 			),
 		)
 
 
-def toggleAllFollow() -> None:
-	"""Toggle all follow settings at once."""
+def toggleAllTracking() -> None:
+	"""Toggle all tracking settings at once."""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
 		magnifier,
-		MagnifierAction.TOGGLE_FOLLOW_SETTINGS,
+		MagnifierAction.TOGGLE_TRACKING_SETTINGS,
 	):
-		isDisabledNow = toggleAllFollowStates()
+		isDisabledNow = toggleAllTrackingStates()
 		if isDisabledNow:
 			stateMessage = pgettext(
 				"magnifier",
-				# Translators: State of all follow settings being toggled disabled.
+				# Translators: State of all tracking settings being toggled disabled.
 				"All tracking settings disabled",
 			)
 		else:
 			stateMessage = pgettext(
 				"magnifier",
-				# Translators: State of all follow settings being restored.
+				# Translators: State of all tracking settings being restored.
 				"Tracking settings restored",
 			)
 		ui.message(stateMessage)
 
 
-def cycleFullscreenMode() -> None:
-	"""Cycle through full-screen modes (center, border, relative)"""
+def cycleFullscreenTrackingMode() -> None:
+	"""Cycle through full-screen tracking modes (center, border, relative)"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
 		magnifier,
@@ -270,13 +270,13 @@ def cycleFullscreenMode() -> None:
 			MagnifierAction.CHANGE_FULLSCREEN_MODE,
 		):
 			fullscreenMagnifier: FullScreenMagnifier = magnifier
-			modes = list(FullScreenMode)
-			currentMode = fullscreenMagnifier._fullscreenMode
+			modes = list(FullScreenTrackingMode)
+			currentMode = fullscreenMagnifier._trackingMode
 			idx = modes.index(currentMode)
 			newMode = modes[(idx + 1) % len(modes)]
 			log.debug(f"Changing full-screen mode from {currentMode} to {newMode}")
-			fullscreenMagnifier._fullscreenMode = newMode
-			setFullscreenMode(newMode)
+			fullscreenMagnifier._trackingMode = newMode
+			setFullscreenTrackingMode(newMode)
 			ui.message(
 				pgettext(
 					"magnifier",

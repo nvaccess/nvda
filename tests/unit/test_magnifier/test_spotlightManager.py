@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from unittest.mock import MagicMock, patch
-from _magnifier.utils.types import FullScreenMode, Coordinates
+from _magnifier.utils.types import FullScreenTrackingMode, Coordinates
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
 
@@ -31,7 +31,9 @@ class TestSpotlightManager(_TestMagnifier):
 		spotlightManager = magnifier._spotlightManager
 
 		# Mock required methods
-		magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=Coordinates(500, 400))
+		magnifier._trackingManager.getCurrentTrackedCoordinates = MagicMock(
+			return_value=Coordinates(500, 400),
+		)
 		magnifier._getCoordinatesForMode = MagicMock(return_value=Coordinates(500, 400))
 		spotlightManager._animateZoom = MagicMock()
 
@@ -176,8 +178,10 @@ class TestSpotlightManager(_TestMagnifier):
 		# Set original zoom level
 		spotlightManager._originalZoomLevel = 3.0
 
-		# Mock getCurrentFocusCoordinates to return expected position
-		magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=Coordinates(500, 400))
+		# Mock getCurrentTrackedCoordinates to return expected position
+		magnifier._trackingManager.getCurrentTrackedCoordinates = MagicMock(
+			return_value=Coordinates(500, 400),
+		)
 		spotlightManager._animateZoom = MagicMock()
 
 		# Trigger zoom back
@@ -194,7 +198,7 @@ class TestSpotlightManager(_TestMagnifier):
 	def testZoomBackRelativeMode(self):
 		"""Test zoom back in RELATIVE mode."""
 		magnifier = FullScreenMagnifier()
-		magnifier._fullscreenMode = FullScreenMode.RELATIVE
+		magnifier._trackingMode = FullScreenTrackingMode.RELATIVE
 		spotlightManager = magnifier._spotlightManager
 
 		# Set original zoom level
@@ -210,7 +214,7 @@ class TestSpotlightManager(_TestMagnifier):
 			spotlightManager.zoomBack()
 
 			# Should use _getCoordinatesForMode for RELATIVE mode
-			# Note: The code has a bug checking magnifier.FullScreenMode instead of magnifier._fullscreenMode
+			# Note: The code has a bug checking magnifier.FullScreenTrackingMode instead of magnifier._trackingMode
 			# But we test the current behavior
 			spotlightManager._animateZoom.assert_called_once()
 
@@ -226,7 +230,9 @@ class TestSpotlightManager(_TestMagnifier):
 		self.assertEqual(spotlightManager._originalZoomLevel, 0.0)
 
 		# Mock methods for full test
-		magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=Coordinates(500, 400))
+		magnifier._trackingManager.getCurrentTrackedCoordinates = MagicMock(
+			return_value=Coordinates(500, 400),
+		)
 		magnifier._getCoordinatesForMode = MagicMock(return_value=Coordinates(500, 400))
 		magnifier._stopSpotlight = MagicMock()
 

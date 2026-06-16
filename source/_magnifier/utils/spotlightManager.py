@@ -10,7 +10,7 @@ Manages the spotlight effect, including zooming in on focus and zooming back.
 
 from typing import TYPE_CHECKING, Callable
 import ui
-from .types import Coordinates, ZoomHistory, FullScreenMode
+from .types import Coordinates, ZoomHistory, FullScreenTrackingMode
 import wx
 from logHandler import log
 
@@ -29,10 +29,12 @@ class SpotlightManager:
 		self._timer: wx.CallLater | None = None
 		self._animationSteps: int = 40
 		self._animationStepDelay: int = 12
-		self._currentCoordinates: Coordinates = fullscreenMagnifier._focusManager.getCurrentFocusCoordinates()
+		self._currentCoordinates: Coordinates = (
+			fullscreenMagnifier._trackingManager.getCurrentTrackedCoordinates()
+		)
 		self._originalZoomLevel: int = 0
 		self._currentZoomLevel: float = 0.0
-		self._originalMode: FullScreenMode | None = None
+		self._originalMode: FullScreenTrackingMode | None = None
 
 	def _startSpotlight(self) -> None:
 		"""
@@ -45,7 +47,7 @@ class SpotlightManager:
 
 		self._spotlightIsActive = True
 
-		startCoords = self._fullscreenMagnifier._focusManager.getCurrentFocusCoordinates()
+		startCoords = self._fullscreenMagnifier._trackingManager.getCurrentTrackedCoordinates()
 		startCoords = self._fullscreenMagnifier._getCoordinatesForMode(startCoords)
 		centerScreen = Coordinates(
 			self._fullscreenMagnifier._displayOrientation.width // 2,
@@ -53,7 +55,7 @@ class SpotlightManager:
 		)
 
 		# Save the current mode for zoom back
-		self._originalMode = self._fullscreenMagnifier._fullscreenMode
+		self._originalMode = self._fullscreenMagnifier._trackingMode
 		self._currentCoordinates = startCoords
 		self._animateZoom(ZoomHistory(1.0, centerScreen), self._startMouseMonitoring)
 
@@ -160,9 +162,9 @@ class SpotlightManager:
 			f"zoom back with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
 		)
 
-		focus = self._fullscreenMagnifier._focusManager.getCurrentFocusCoordinates()
+		focus = self._fullscreenMagnifier._trackingManager.getCurrentTrackedCoordinates()
 
-		if self._originalMode == FullScreenMode.RELATIVE:
+		if self._originalMode == FullScreenTrackingMode.RELATIVE:
 			savedZoom = self._fullscreenMagnifier.zoomLevel
 			self._fullscreenMagnifier.zoomLevel = self._originalZoomLevel
 			endCoordinates = self._fullscreenMagnifier._relativePos(focus)

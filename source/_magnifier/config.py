@@ -10,7 +10,7 @@ Handles module initialization, configuration and settings interaction.
 
 import config
 from dataclasses import dataclass, field
-from .utils.types import Filter, FullScreenMode, MagnifierTrackingType, MagnifiedView
+from .utils.types import Filter, FullScreenTrackingMode, MagnifierTrackingType, MagnifiedView
 
 
 def setEnabled(enable: bool) -> None:
@@ -179,7 +179,7 @@ def _ensureSavedStatesInitialized() -> None:
 		saveFollowStates()
 
 
-def getFollowState(trackingType: MagnifierTrackingType) -> bool:
+def getTrackingState(trackingType: MagnifierTrackingType) -> bool:
 	"""
 	Get the current follow state for a given tracking type.
 
@@ -189,7 +189,7 @@ def getFollowState(trackingType: MagnifierTrackingType) -> bool:
 	return config.conf["magnifier"][_FOLLOW_CONFIG_KEYS[trackingType]]
 
 
-def setFollowState(trackingType: MagnifierTrackingType, state: bool) -> None:
+def setTrackingState(trackingType: MagnifierTrackingType, state: bool) -> None:
 	"""
 	Set the follow state for a given tracking type.
 
@@ -202,10 +202,10 @@ def setFollowState(trackingType: MagnifierTrackingType, state: bool) -> None:
 def saveFollowStates() -> None:
 	"""Save current follow states so they can be restored later."""
 	for trackingType in _FOLLOW_CONFIG_KEYS:
-		_followStateOverride.savedStates[trackingType] = getFollowState(trackingType)
+		_followStateOverride.savedStates[trackingType] = getTrackingState(trackingType)
 
 
-def toggleAllFollowStates() -> bool:
+def toggleAllTrackingStates() -> bool:
 	"""
 	Toggle all follow states between forced-disabled and previously saved states.
 
@@ -214,12 +214,12 @@ def toggleAllFollowStates() -> bool:
 	_ensureSavedStatesInitialized()
 	if _followStateOverride.isActive:
 		for trackingType, state in _followStateOverride.savedStates.items():
-			setFollowState(trackingType, state)
+			setTrackingState(trackingType, state)
 		_followStateOverride.isActive = False
 	else:
 		saveFollowStates()
 		for trackingType in _FOLLOW_CONFIG_KEYS:
-			setFollowState(trackingType, False)
+			setTrackingState(trackingType, False)
 		_followStateOverride.isActive = True
 	return _followStateOverride.isActive
 
@@ -233,19 +233,19 @@ def isTrueCentered() -> bool:
 	return config.conf["magnifier"]["isTrueCentered"]
 
 
-def getFullscreenMode() -> FullScreenMode:
+def getFullscreenTrackingMode() -> FullScreenTrackingMode:
 	"""
 	Get full-screen mode from config.
 
 	:return: The full-screen mode.
 	"""
-	return FullScreenMode(config.conf["magnifier"]["fullscreenMode"])
+	return FullScreenTrackingMode(config.conf["magnifier"]["fullscreenTrackingMode"])
 
 
-def setFullscreenMode(mode: FullScreenMode) -> None:
+def setFullscreenTrackingMode(mode: FullScreenTrackingMode) -> None:
 	"""
 	Set full-screen mode from settings.
 
 	:param mode: The full-screen mode to set.
 	"""
-	config.conf["magnifier"]["fullscreenMode"] = mode.value
+	config.conf["magnifier"]["fullscreenTrackingMode"] = mode.value

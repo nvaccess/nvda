@@ -4,8 +4,8 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
-Focus Manager for the magnifier module.
-Handles all focus tracking logic and coordinate calculations.
+Tracking Manager for the magnifier module.
+Handles all tracking logic and coordinate calculations.
 """
 
 from comtypes import COMError
@@ -17,20 +17,20 @@ import locationHelper
 import textInfos
 from textInfos.offsets import OffsetsTextInfo
 from .types import Coordinates, MagnifierTrackingType
-from ..config import getFollowState
+from ..config import getTrackingState
 
 
-class FocusManager:
+class TrackingManager:
 	"""
-	Manages focus tracking for the magnifier.
+	Manages tracking for the magnifier.
 	Tracks mouse, system focus, and navigator object positions.
 	"""
 
 	_SYSTEM_FOCUS_STICKINESS_SECONDS: float = 0.12
 
 	def __init__(self):
-		"""Initialize the focus manager."""
-		self._lastFocusedObject: MagnifierTrackingType | None = None
+		"""Initialize the tracking manager."""
+		self._lastTrackedObject: MagnifierTrackingType | None = None
 		self._lastReportedCoordinates = Coordinates(0, 0)
 		self._lastMousePosition = Coordinates(0, 0)
 		self._lastSystemFocusPosition = Coordinates(0, 0)
@@ -41,9 +41,9 @@ class FocusManager:
 		self._lastValidNavigatorObjectPosition = Coordinates(0, 0)
 		self._lastSystemFocusChangeTime: float = 0.0
 
-	def getCurrentFocusCoordinates(self) -> Coordinates:
+	def getCurrentTrackedCoordinates(self) -> Coordinates:
 		"""
-		Get the current focus coordinates based on priority.
+		Get the current tracked coordinates based on priority.
 		Priority: Mouse (drag) > Mouse > System Focus > Review > Navigator Object.
 		Special case: when both the system focus and navigator object change simultaneously
 		but the review cursor does not (e.g. table cell navigation via numpad), the navigator
@@ -51,7 +51,7 @@ class FocusManager:
 
 		Each source is only considered when its corresponding setting is enabled.
 
-		:return: The (x, y) coordinates of the current focus
+		:return: The (x, y) coordinates of the current tracked object
 		"""
 		now = time.monotonic()
 
@@ -62,10 +62,10 @@ class FocusManager:
 		isClickPressed = winUser.getAsyncKeyState(winUser.VK_LBUTTON) < 0
 
 		# Cache settings once — each call reads from config.conf
-		isFollowMouse = getFollowState(MagnifierTrackingType.MOUSE)
-		isFollowSystemFocus = getFollowState(MagnifierTrackingType.SYSTEM_FOCUS)
-		isFollowReviewCursor = getFollowState(MagnifierTrackingType.REVIEW)
-		isFollowNavigatorObject = getFollowState(MagnifierTrackingType.NAVIGATOR_OBJECT)
+		isFollowMouse = getTrackingState(MagnifierTrackingType.MOUSE)
+		isFollowSystemFocus = getTrackingState(MagnifierTrackingType.SYSTEM_FOCUS)
+		isFollowReviewCursor = getTrackingState(MagnifierTrackingType.REVIEW)
+		isFollowNavigatorObject = getTrackingState(MagnifierTrackingType.NAVIGATOR_OBJECT)
 
 		mouseChanged = self._lastMousePosition != mousePosition
 		systemFocusChanged = self._lastSystemFocusPosition != systemFocusPosition
@@ -85,7 +85,7 @@ class FocusManager:
 
 		# Priority 1: Mouse — drag (fires even when stationary) or movement
 		if (isClickPressed or mouseChanged) and isFollowMouse:
-			self._lastFocusedObject = MagnifierTrackingType.MOUSE
+			self._lastTrackedObject = MagnifierTrackingType.MOUSE
 			return self._rememberAndReturnCoordinates(mousePosition)
 
 		# Special case: table cell navigation (numpad).
@@ -93,22 +93,22 @@ class FocusManager:
 		# review cursor does not, the navigator object reflects the user's explicit navigation
 		# intent and therefore takes priority over the system focus.
 		if navigatorChanged and systemFocusChanged and not reviewChanged and isFollowNavigatorObject:
-			self._lastFocusedObject = MagnifierTrackingType.NAVIGATOR_OBJECT
+			self._lastTrackedObject = MagnifierTrackingType.NAVIGATOR_OBJECT
 			return self._rememberAndReturnCoordinates(navigatorPosition)
 
 		# Priority 2: System focus (focus object + browse mode cursor)
 		if systemFocusChanged and isFollowSystemFocus:
-			self._lastFocusedObject = MagnifierTrackingType.SYSTEM_FOCUS
+			self._lastTrackedObject = MagnifierTrackingType.SYSTEM_FOCUS
 			return self._rememberAndReturnCoordinates(systemFocusPosition)
 
 		# Priority 3: Review cursor
 		if reviewChanged and isFollowReviewCursor and reviewPosition is not None:
-			self._lastFocusedObject = MagnifierTrackingType.REVIEW
+			self._lastTrackedObject = MagnifierTrackingType.REVIEW
 			return self._rememberAndReturnCoordinates(reviewPosition)
 
 		# Priority 4: Navigator object (NumPad navigation)
 		if navigatorChanged and isFollowNavigatorObject:
-			self._lastFocusedObject = MagnifierTrackingType.NAVIGATOR_OBJECT
+			self._lastTrackedObject = MagnifierTrackingType.NAVIGATOR_OBJECT
 			return self._rememberAndReturnCoordinates(navigatorPosition)
 
 		# Resolve the effective review position once (fallback to last valid when None)
@@ -125,11 +125,11 @@ class FocusManager:
 		)
 
 		# Keep current source if still enabled; otherwise clear it and freeze at _lastReportedCoordinates
-		for focusType, isEnabled, position in _sources:
-			if self._lastFocusedObject == focusType:
+		for trackedType, isEnabled, position in _sources:
+			if self._lastTrackedObject == trackedType:
 				if isEnabled:
 					return self._rememberAndReturnCoordinates(position)
-				self._lastFocusedObject = None
+				self._lastTrackedObject = None
 				break
 
 		# No eligible update event from an enabled source.
@@ -271,10 +271,10 @@ class FocusManager:
 			return position
 		return self._lastValidNavigatorObjectPosition
 
-	def getLastFocusType(self) -> MagnifierTrackingType | None:
+	def getLastTrackedType(self) -> MagnifierTrackingType | None:
 		"""
-		Get the type of the last focused object.
+		Get the type of the last tracked object.
 
-		:return: The type of the last focused object, or None when no focus source is active.
+		:return: The type of the last tracked object, or None when no tracked source is active.
 		"""
-		return self._lastFocusedObject
+		return self._lastTrackedObject

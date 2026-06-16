@@ -1625,8 +1625,8 @@ To cycle through the available filters press `NVDA+shift+i`.
 The magnifier offers three different modes for tracking mouse, focus, review cursor and navigatore object, and determining which part of the screen to magnify:
 
 * Center: The magnified area is centered on the currently tracked position.
-This mode keeps the tracked element at the center of the screen and clamps to the screen edge.
-To disable clamping, activate [true center tracking in the Magnifier settings](#MagnifierUseTrueCenterTracking).
+This mode keeps the tracked element at the center of the screen when possible.
+When the tracked element is next to a screen edge, the tracked element may or may not remain centered on the screen, depending on [true center tracking in the Magnifier settings](#MagnifierUseTrueCenterTracking).
 * Border: The magnified area only moves when the tracked position approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
 * Relative: The magnified area maintains the relative position of the tracked element within the screen.
@@ -2937,7 +2937,6 @@ Higher percentages cause larger movements, making it faster to navigate across t
 The actual pixel distance will automatically adjust based on your current zoom level.
 
 Note: Pan commands allow you to manually move the magnified view in any direction, independent of the tracking mode.
-Available pan actions include:
 
 | . {.hideHeaderRow} |.|
 |---|---|
