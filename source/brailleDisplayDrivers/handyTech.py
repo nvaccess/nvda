@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2008-2026 NV Access Limited, Bram Duvigneau, Babbage B.V.,
-# Felix Grützmacher (Handy Tech Elektronik GmbH), Leonard de Ruijter
+# Felix Grützmacher (Handy Tech Elektronik GmbH), Leonard de Ruijter, Bill Dengler
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -255,10 +255,62 @@ class OldProtocolMixin(object):
 class AtcMixin(object):
 	"""Support for displays with Active Tactile Control (ATC)"""
 
+	READING_POSITION_PACKET_LENGTH = 2
+	UNKNOWN_READING_POSITION = 0xFF
+	# ATC can report transient false reading positions immediately
+	# after cells are refreshed. Use a short settling window before
+	# accepting changes.
+	READ_SUPPRESS_AFTER_REFRESH_SECONDS = 0.25
+
+	def __init__(self, display):
+		super().__init__(display)
+		self._readingPosition: Optional[int] = None
+		self._lastRefreshTime = 0.0
+
 	def postInit(self):
 		super(AtcMixin, self).postInit()
 		log.debug("Enabling ATC")
 		self._display.atc = True
+
+	def display(self, cells: List[int]):
+		self._lastRefreshTime = time.monotonic()
+		super().display(cells)
+
+	def handleReadingPosition(self, packet: bytes) -> None:
+		if len(packet) != self.READING_POSITION_PACKET_LENGTH:
+			log.debugWarning(
+				f"Unexpected ATC reading position packet with length {len(packet)}: {packet!r}",
+			)
+			return
+		reading_position = packet[1]
+		elapsed_since_refresh = time.monotonic() - self._lastRefreshTime
+		is_settling_after_refresh = elapsed_since_refresh < self.READ_SUPPRESS_AFTER_REFRESH_SECONDS
+		if reading_position == self.UNKNOWN_READING_POSITION:
+			if is_settling_after_refresh:
+				return
+			self._readingPosition = None
+			return
+		if reading_position >= self.numCells:
+			log.debugWarning(
+				f"Display has {self.numCells} cells but reported an ATC "
+				f"reading position of {reading_position}",
+			)
+			return
+
+		# During refresh settling, preserve confirmed state. Real touches tend
+		# to remain near the previous cell, while refresh noise often appears
+		# as a release, a new touch from nowhere, or a large jump.
+		if is_settling_after_refresh and self._readingPosition is None:
+			return
+		if (
+			is_settling_after_refresh
+			and self._readingPosition is not None
+			and abs(reading_position - self._readingPosition) > 2
+		):
+			return
+		if reading_position == self._readingPosition:
+			return
+		self._readingPosition = reading_position
 
 
 class TimeSyncFirmnessMixin(object):
@@ -1078,6 +1130,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			elif extPacketType == HT_EXTPKT_ATC_INFO:
 				# Ignore ATC packets for now
 				pass
+			elif extPacketType == HT_EXTPKT_READING_POSITION:
+				if isinstance(self._model, AtcMixin):
+					self._model.handleReadingPosition(packet)
 			elif extPacketType == HT_EXTPKT_GET_PROTOCOL_PROPERTIES:
 				self.numCells = packet[3]
 			elif isinstance(self._model, TimeSyncFirmnessMixin):
