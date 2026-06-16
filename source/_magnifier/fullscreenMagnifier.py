@@ -8,7 +8,7 @@ Full-screen magnifier module.
 """
 
 from typing import override
-
+from NVDAState import _TrackNVDAInitialization
 from logHandler import log
 import screenCurtain
 import speech
@@ -66,7 +66,6 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		if not (screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled):
 			return False
-		from NVDAState import _TrackNVDAInitialization
 
 		if _TrackNVDAInitialization.isInitializationComplete():
 			log.debug("Screen curtain is active, cannot start magnifier")
