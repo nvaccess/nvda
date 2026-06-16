@@ -4456,7 +4456,7 @@ class AdvancedPanelControls(
 		)
 		self.keyboardSupportInLegacyCheckBox.Enable(winVersion.getWinVer() >= winVersion.WIN10_1607)
 		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
+		# Advanced settings panel.
 		label = _("Beep for &skipped lines")
 		self.beepForSkippedLinesCheckBox = terminalsGroup.addItem(
 			wx.CheckBox(terminalsBox, label=label),
