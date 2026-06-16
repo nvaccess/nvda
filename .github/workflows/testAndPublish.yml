@@ -267,6 +267,7 @@ jobs:
     permissions:
       contents: read
       actions: write
+      checks: write
     strategy:
       fail-fast: false
       matrix:
