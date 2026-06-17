@@ -495,7 +495,7 @@ def _loadCustomSections() -> None:
 	except FileNotFoundError:
 		return
 	except OSError:
-		log.error(f"Error reading custom sections at {path}.", exc_info=True)
+		log.exception(f"Error reading custom sections at {path}.")
 		return
 	except yaml.YAMLError:
 		log.error(f"Error parsing {path}.", exc_info=True)
