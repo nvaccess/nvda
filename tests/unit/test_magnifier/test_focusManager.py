@@ -356,7 +356,7 @@ class TestFocusManager(unittest.TestCase):
 		with (
 			patch("_magnifier.utils.focusManager.api.getCaretPosition", side_effect=RuntimeError),
 			patch("_magnifier.utils.focusManager.api.getFocusObject") as mock_focus,
-			patch("_magnifier.utils.focusManager._isRTL", return_value=True),
+			patch("_magnifier.utils.focusManager._isWindowRTL", return_value=True),
 		):
 			mock_focus.return_value.location = (200, 300, 100, 80)
 			coords = self.focusManager._getSystemFocusPosition()
@@ -367,7 +367,7 @@ class TestFocusManager(unittest.TestCase):
 		"""Navigator object bounding box uses right edge (left + width) in RTL mode."""
 		with (
 			patch("_magnifier.utils.focusManager.api.getNavigatorObject") as mock_navigator,
-			patch("_magnifier.utils.focusManager._isRTL", return_value=True),
+			patch("_magnifier.utils.focusManager._isWindowRTL", return_value=True),
 		):
 			mock_navigator.return_value.location = (100, 150, 200, 300)
 			coords = self.focusManager._getNavigatorObjectPosition()
