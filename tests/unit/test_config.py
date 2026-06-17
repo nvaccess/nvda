@@ -17,9 +17,11 @@ from pycaw.constants import DEVICE_STATE
 from config import (
 	AggregatedSection,
 	ConfigManager,
-	_loadCustomSections,
-	customSections,
 	featureFlag,
+)
+from config.configSections import (
+	_loadCustomSections,
+	_customSections,
 )
 from config.configSpec import confspec
 from config.featureFlag import (
@@ -1302,7 +1304,7 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_21_to_22(unittest.TestCase):
 
 class Config_loadCustomSections(unittest.TestCase):
 	def setUp(self):
-		customSections.clear()
+		_customSections.clear()
 		self._origConfspecKeys = set(confspec.keys())
 		self._origBaseOnlySections = set(ConfigManager.BASE_ONLY_SECTIONS)
 
@@ -1310,7 +1312,7 @@ class Config_loadCustomSections(unittest.TestCase):
 		for key in list(confspec.keys()):
 			if key not in self._origConfspecKeys:
 				del confspec[key]
-		customSections.clear()
+		_customSections.clear()
 		ConfigManager.BASE_ONLY_SECTIONS.clear()
 		ConfigManager.BASE_ONLY_SECTIONS.update(self._origBaseOnlySections)
 
@@ -1324,7 +1326,7 @@ class Config_loadCustomSections(unittest.TestCase):
 		"""FileNotFoundError means nothing is loaded and customSections remains empty."""
 		with patch("builtins.open", side_effect=FileNotFoundError):
 			_loadCustomSections()
-		self.assertEqual(customSections, {})
+		self.assertEqual(_customSections, {})
 
 	def test_osError_logsAndReturnsWithoutAdding(self):
 		"""OSError is logged and customSections remains empty."""
@@ -1332,7 +1334,7 @@ class Config_loadCustomSections(unittest.TestCase):
 			with patch("config.log.error") as mockLog:
 				_loadCustomSections()
 		mockLog.assert_called_once()
-		self.assertEqual(customSections, {})
+		self.assertEqual(_customSections, {})
 
 	def test_yamlError_logsAndReturnsWithoutAdding(self):
 		"""yaml.YAMLError is logged and customSections remains empty."""
@@ -1343,12 +1345,12 @@ class Config_loadCustomSections(unittest.TestCase):
 				with patch("config.log.error") as mockLog:
 					_loadCustomSections()
 		mockLog.assert_called_once()
-		self.assertEqual(customSections, {})
+		self.assertEqual(_customSections, {})
 
 	def test_noneContent_returnsWithoutAdding(self):
 		"""yaml.safe_load returning None means customSections remains empty."""
 		self._callWithYamlData(None)
-		self.assertEqual(customSections, {})
+		self.assertEqual(_customSections, {})
 
 	def test_nonDictContent_logsErrorAndReturnsWithoutAdding(self):
 		"""Non-dict YAML content logs an error and nothing is added."""
@@ -1357,7 +1359,7 @@ class Config_loadCustomSections(unittest.TestCase):
 				with patch("config.log.error") as mockLog:
 					_loadCustomSections()
 		mockLog.assert_called_once()
-		self.assertEqual(customSections, {})
+		self.assertEqual(_customSections, {})
 
 	def test_nonStringName_skipped(self):
 		"""Entries with non-string section names are skipped with a debug warning."""
@@ -1367,42 +1369,42 @@ class Config_loadCustomSections(unittest.TestCase):
 				with patch("config.log.debugWarning") as mockLog:
 					_loadCustomSections()
 		mockLog.assert_called_once()
-		self.assertEqual(customSections, {})
+		self.assertEqual(_customSections, {})
 
 	def test_missingSpec_skipped(self):
 		"""Entries without a 'spec' key are skipped."""
 		data = {"mySection": {"isBaseOnly": False}}
 		self._callWithYamlData(data)
-		self.assertNotIn("mySection", customSections)
+		self.assertNotIn("mySection", _customSections)
 
 	def test_nonDictEntry_skipped(self):
 		"""Entries that are not dicts are skipped."""
 		data = {"mySection": "notADict"}
 		self._callWithYamlData(data)
-		self.assertNotIn("mySection", customSections)
+		self.assertNotIn("mySection", _customSections)
 
 	def test_nonDictSpec_skipped(self):
 		"""Entries whose 'spec' value is not a dict are skipped."""
 		data = {"mySection": {"spec": "notADict"}}
 		self._callWithYamlData(data)
-		self.assertNotIn("mySection", customSections)
+		self.assertNotIn("mySection", _customSections)
 
 	def test_validSection_addedToCustomSections(self):
 		"""A valid section is added to customSections with isBaseOnly defaulting to False."""
 		spec = {"myKey": "string(default='hello')"}
 		data = {"mySection": {"spec": spec}}
 		self._callWithYamlData(data)
-		self.assertIn("mySection", customSections)
-		self.assertEqual(customSections["mySection"]["spec"], spec)
-		self.assertFalse(customSections["mySection"]["isBaseOnly"])
+		self.assertIn("mySection", _customSections)
+		self.assertEqual(_customSections["mySection"]["spec"], spec)
+		self.assertFalse(_customSections["mySection"]["isBaseOnly"])
 
 	def test_validSection_baseOnly_addedToBaseOnlySections(self):
 		"""A valid isBaseOnly section is added to ConfigManager.BASE_ONLY_SECTIONS."""
 		spec = {"myKey": "string(default='hello')"}
 		data = {"mySection": {"spec": spec, "isBaseOnly": True}}
 		self._callWithYamlData(data)
-		self.assertIn("mySection", customSections)
-		self.assertTrue(customSections["mySection"]["isBaseOnly"])
+		self.assertIn("mySection", _customSections)
+		self.assertTrue(_customSections["mySection"]["isBaseOnly"])
 		self.assertIn("mySection", ConfigManager.BASE_ONLY_SECTIONS)
 
 	def test_validSection_notBaseOnly_notInBaseOnlySections(self):
@@ -1410,7 +1412,7 @@ class Config_loadCustomSections(unittest.TestCase):
 		spec = {"myKey": "string(default='hello')"}
 		data = {"mySection": {"spec": spec, "isBaseOnly": False}}
 		self._callWithYamlData(data)
-		self.assertIn("mySection", customSections)
+		self.assertIn("mySection", _customSections)
 		self.assertNotIn("mySection", ConfigManager.BASE_ONLY_SECTIONS)
 
 	def test_multipleSections_allAdded(self):
@@ -1420,8 +1422,8 @@ class Config_loadCustomSections(unittest.TestCase):
 			"section2": {"spec": {"k2": "integer(default=1)"}},
 		}
 		self._callWithYamlData(data)
-		self.assertIn("section1", customSections)
-		self.assertIn("section2", customSections)
+		self.assertIn("section1", _customSections)
+		self.assertIn("section2", _customSections)
 
 	def test_nestedSubsections_addedToConfspecAndCustomSections(self):
 		"""A spec with nested subsections (dicts within dicts) is accepted and stored verbatim."""
@@ -1437,8 +1439,8 @@ class Config_loadCustomSections(unittest.TestCase):
 		}
 		data = {"myNestedSection": {"spec": spec}}
 		self._callWithYamlData(data)
-		self.assertIn("myNestedSection", customSections)
-		self.assertEqual(customSections["myNestedSection"]["spec"], spec)
-		self.assertFalse(customSections["myNestedSection"]["isBaseOnly"])
+		self.assertIn("myNestedSection", _customSections)
+		self.assertEqual(_customSections["myNestedSection"]["spec"], spec)
+		self.assertFalse(_customSections["myNestedSection"]["isBaseOnly"])
 		self.assertIn("myNestedSection", confspec)
 		self.assertEqual(confspec["myNestedSection"], spec)
