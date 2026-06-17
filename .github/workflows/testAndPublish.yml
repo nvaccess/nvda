@@ -718,7 +718,7 @@ jobs:
         echo "* Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/)." >> /tmp/releaseNotes.md
         echo "* [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }})" >> /tmp/releaseNotes.md
         echo "* SHA256 sum: \`${{ needs.createLauncher.outputs.launcherSha256 }}\`" >> /tmp/releaseNotes.md
-    - name: Publish pre-release
+    - name: Publish release
       shell: bash
       env:
         GH_TOKEN: ${{ github.token }}
