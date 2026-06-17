@@ -126,7 +126,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	followReviewCursor = boolean(default=True)
 	followNavigatorObject = boolean(default=True)
 	panStep = integer(min=1, max=100, default=10)
-	fullscreenTrackingMode = string(default="center")
+	fullscreenMode = string(default="center")
 
 # Presentation settings
 [presentation]

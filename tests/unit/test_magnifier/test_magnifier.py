@@ -69,7 +69,7 @@ class TestMagnifier(_TestMagnifier):
 		self.assertEqual(self.magnifier.zoomLevel, 200)
 		self.assertEqual(self.magnifier._filterType, Filter.NORMAL)
 		self.assertFalse(self.magnifier._isActive)
-		self.assertIsNotNone(self.magnifier._trackingManager)
+		self.assertIsNotNone(self.magnifier._focusManager)
 		self.assertEqual(self.magnifier._consecutiveErrors, 0)
 
 	def testZoomLevelProperty(self):
@@ -99,7 +99,7 @@ class TestMagnifier(_TestMagnifier):
 		"""Activating the magnifier."""
 		# Use center coordinates which will always be within bounds
 		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
-		self.magnifier._trackingManager.getCurrentTrackedCoordinates = MagicMock(
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
 			return_value=focusCoords,
 		)
 
@@ -109,20 +109,20 @@ class TestMagnifier(_TestMagnifier):
 
 		self.assertTrue(self.magnifier._isActive)
 		self.assertEqual(self.magnifier.currentCoordinates, focusCoords)
-		self.magnifier._trackingManager.getCurrentTrackedCoordinates.assert_called_once()
+		self.magnifier._focusManager.getCurrentFocusCoordinates.assert_called_once()
 
-		# Test starting when already active (should not call getCurrentTrackedCoordinates again)
-		self.magnifier._trackingManager.getCurrentTrackedCoordinates.reset_mock()
+		# Test starting when already active (should not call getCurrentFocusCoordinates again)
+		self.magnifier._focusManager.getCurrentFocusCoordinates.reset_mock()
 		self.magnifier._startMagnifier()
 
 		self.assertTrue(self.magnifier._isActive)
-		self.magnifier._trackingManager.getCurrentTrackedCoordinates.assert_not_called()
+		self.magnifier._focusManager.getCurrentFocusCoordinates.assert_not_called()
 
 	def testUpdateMagnifier(self):
 		"""Updating the magnifier's properties."""
 		# Use center coordinates which will always be within bounds
 		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
-		self.magnifier._trackingManager.getCurrentTrackedCoordinates = MagicMock(
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
 			return_value=focusCoords,
 		)
 		self.magnifier._doUpdate = MagicMock()
@@ -130,7 +130,7 @@ class TestMagnifier(_TestMagnifier):
 
 		# Call the update function without activation
 		self.magnifier._updateMagnifier()
-		self.magnifier._trackingManager.getCurrentTrackedCoordinates.assert_not_called()
+		self.magnifier._focusManager.getCurrentFocusCoordinates.assert_not_called()
 		self.magnifier._doUpdate.assert_not_called()
 		self.magnifier._startTimer.assert_not_called()
 
@@ -138,9 +138,9 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._isActive = True
 		self.magnifier._updateMagnifier()
 
-		# getCurrentTrackedCoordinates is called twice: once in _managePanning and once to update currentCoordinates
+		# getCurrentFocusCoordinates is called twice: once in _managePanning and once to update currentCoordinates
 		self.assertEqual(
-			self.magnifier._trackingManager.getCurrentTrackedCoordinates.call_count,
+			self.magnifier._focusManager.getCurrentFocusCoordinates.call_count,
 			2,
 		)
 		self.magnifier._doUpdate.assert_called_once()
@@ -155,7 +155,7 @@ class TestMagnifier(_TestMagnifier):
 		"""Timer must always be rescheduled even when _doUpdate raises an exception."""
 		self.magnifier._isActive = True
 		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
-		self.magnifier._trackingManager.getCurrentTrackedCoordinates = MagicMock(
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
 			return_value=focusCoords,
 		)
 		self.magnifier._doUpdate = MagicMock(side_effect=OSError("COM failure"))
@@ -173,7 +173,7 @@ class TestMagnifier(_TestMagnifier):
 		"""After _MAX_CONSECUTIVE_ERRORS failures, _attemptRecovery is called instead of restarting timer."""
 		self.magnifier._isActive = True
 		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
-		self.magnifier._trackingManager.getCurrentTrackedCoordinates = MagicMock(
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
 			return_value=focusCoords,
 		)
 		self.magnifier._doUpdate = MagicMock(side_effect=OSError("COM failure"))
@@ -192,7 +192,7 @@ class TestMagnifier(_TestMagnifier):
 		"""COMError from UIA must be caught and the timer rescheduled."""
 		self.magnifier._isActive = True
 		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
-		self.magnifier._trackingManager.getCurrentTrackedCoordinates = MagicMock(
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
 			return_value=focusCoords,
 		)
 		self.magnifier._doUpdate = MagicMock(side_effect=COMError(-2147417848, "RPC_E_DISCONNECTED", None))
@@ -207,7 +207,7 @@ class TestMagnifier(_TestMagnifier):
 		"""If _attemptRecovery itself raises, the timer must still be restarted to prevent a freeze."""
 		self.magnifier._isActive = True
 		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
-		self.magnifier._trackingManager.getCurrentTrackedCoordinates = MagicMock(
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
 			return_value=focusCoords,
 		)
 		self.magnifier._doUpdate = MagicMock(side_effect=OSError("API failure"))
@@ -226,7 +226,7 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._isActive = True
 		self.magnifier._consecutiveErrors = 2
 		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
-		self.magnifier._trackingManager.getCurrentTrackedCoordinates = MagicMock(
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
 			return_value=focusCoords,
 		)
 		self.magnifier._doUpdate = MagicMock()  # Success
@@ -453,7 +453,7 @@ class TestMagnifier(_TestMagnifier):
 		focusA = Coordinates(100, 200)
 		focusB = Coordinates(300, 400)
 
-		self.magnifier._trackingManager.getCurrentTrackedCoordinates = MagicMock(return_value=focusA)
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=focusA)
 
 		# When not panning, _lastFocusCoordinates is updated every cycle
 		self.magnifier._isManualPanning = False
@@ -468,7 +468,7 @@ class TestMagnifier(_TestMagnifier):
 		self.assertEqual(self.magnifier._lastFocusCoordinates, focusA)
 
 		# When focus changes while panning, manual panning ends
-		self.magnifier._trackingManager.getCurrentTrackedCoordinates = MagicMock(return_value=focusB)
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=focusB)
 		self.magnifier._managePanning()
 		self.assertFalse(self.magnifier._isManualPanning)
 		self.assertEqual(self.magnifier._lastFocusCoordinates, focusB)

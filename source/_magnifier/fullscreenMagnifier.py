@@ -19,12 +19,12 @@ from .utils.spotlightManager import SpotlightManager
 from .utils.types import (
 	Filter,
 	MagnifiedView,
-	FullScreenTrackingMode,
+	FullScreenMode,
 	Size,
 	MagnifierParameters,
 	Coordinates,
 )
-from .config import isTrueCentered, getFullscreenTrackingMode
+from .config import getFullscreenMode, isTrueCentered
 from .utils.errorHandling import trackNativeMagnifierErrors
 
 
@@ -36,7 +36,7 @@ class FullScreenMagnifier(Magnifier):
 
 	def __init__(self):
 		super().__init__()
-		self._trackingMode = getFullscreenTrackingMode()
+		self._fullscreenMode = getFullscreenMode()
 		self.currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
 		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
@@ -62,7 +62,7 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		super()._startMagnifier()
 		log.debug(
-			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self._trackingMode}",
+			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self._fullscreenMode}",
 		)
 		try:
 			self._initializeNativeMagnification()
@@ -265,12 +265,12 @@ class FullScreenMagnifier(Magnifier):
 		:return: Adjusted coordinates according to full-screen mode
 		"""
 
-		match self._trackingMode:
-			case FullScreenTrackingMode.RELATIVE:
+		match self._fullscreenMode:
+			case FullScreenMode.RELATIVE:
 				return self._relativePos(coordinates)
-			case FullScreenTrackingMode.BORDER:
+			case FullScreenMode.BORDER:
 				return self._borderPos(coordinates)
-			case FullScreenTrackingMode.CENTER:
+			case FullScreenMode.CENTER:
 				return coordinates
 
 	def _borderPos(
@@ -356,7 +356,7 @@ class FullScreenMagnifier(Magnifier):
 		Launch Spotlight from Full-screen class
 		"""
 		log.debug(
-			f"Launching spotlight mode from full-screen magnifier with mode {self._trackingMode}",
+			f"Launching spotlight mode from full-screen magnifier with mode {self._fullscreenMode}",
 		)
 		self._stopTimer()
 		self._spotlightManager._startSpotlight()

@@ -5215,11 +5215,11 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
-	def script_toggleTrackingMouse(
+	def script_toggleFollowMouse(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleTracking(MagnifierTrackingType.MOUSE)
+		_magnifier.commands.toggleFollow(MagnifierTrackingType.MOUSE)
 
 	@script(
 		description=_(
@@ -5228,11 +5228,11 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
-	def script_toggleTrackingSystemFocus(
+	def script_toggleFollowSystemFocus(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleTracking(MagnifierTrackingType.SYSTEM_FOCUS)
+		_magnifier.commands.toggleFollow(MagnifierTrackingType.SYSTEM_FOCUS)
 
 	@script(
 		description=_(
@@ -5241,11 +5241,11 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
-	def script_toggleTrackingReview(
+	def script_toggleFollowReview(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleTracking(MagnifierTrackingType.REVIEW)
+		_magnifier.commands.toggleFollow(MagnifierTrackingType.REVIEW)
 
 	@script(
 		description=_(
@@ -5254,11 +5254,11 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
-	def script_toggleTrackingNavigatorObject(
+	def script_toggleFollowNavigatorObject(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleTracking(MagnifierTrackingType.NAVIGATOR_OBJECT)
+		_magnifier.commands.toggleFollow(MagnifierTrackingType.NAVIGATOR_OBJECT)
 
 	@script(
 		description=_(
@@ -5267,11 +5267,11 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_MAGNIFIER,
 	)
-	def script_toggleAllTracking(
+	def script_toggleAllFollow(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleAllTracking()
+		_magnifier.commands.toggleAllFollow()
 
 	@script(
 		description=_(
@@ -5284,7 +5284,7 @@ class GlobalCommands(ScriptableObject):
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.cycleFullscreenTrackingMode()
+		_magnifier.commands.cycleFullscreenMode()
 
 	@script(
 		description=_(
