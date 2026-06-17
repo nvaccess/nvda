@@ -41,9 +41,9 @@
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
-* `config.conf.registerSection` and `config.conf.unregisterSection` methods can be used to register and unregister configuration sections. (#7467, @nvdaes)
+* `config.configSections.registerSection` and `config.configSections.unregisterSection` methods can be used to register and unregister configuration sections. (#7467, @nvdaes)
   * In the `installTasks` module, add-on developers can add a spec for each configuration section to be registered.
-* The `config.conf.registerSection` method can be used in the `onInstall` function, and the `config.conf.unregisterSection` should be used in the `onUninstall` function.
+* The `config.configSections.registerSection` method can be used in the `onInstall` function, and the `config.configSections.unregisterSection` should be used in the `onUninstall` function.
   * To register a section to be used in the normal configuration, regardless of profiles, the `isBaseOnly` parameter should be set to `True`.
 * Added [cppjieba](https://github.com/yanyiwu/cppjieba) as a git submodule for Chinese word segmentation. (#18548, @CrazySteve0605)
 * `braille.BrailleDisplayGesture` now exposes a `cellIndexes` list attribute, replacing the single-valued `routingIndex`. (#20001, @LeonarddeR)
