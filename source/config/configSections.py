@@ -7,7 +7,6 @@
 import yaml
 from typing import Any
 
-import config
 from .configSpec import confspec
 from logHandler import log
 from NVDAState import shouldWriteToDisk, WritePaths
@@ -60,7 +59,8 @@ def _addSection(sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool 
 	confspec[sectionName] = sectionSpec
 	_customSections[sectionName] = {"spec": sectionSpec, "isBaseOnly": isBaseOnly}
 	if isBaseOnly:
-		config.conf.BASE_ONLY_SECTIONS.add(sectionName)
+		from . import ConfigManager
+		ConfigManager.BASE_ONLY_SECTIONS.add(sectionName)
 
 
 def registerSection(
