@@ -261,6 +261,7 @@ class AtcMixin(object):
 	# after cells are refreshed. Use a short settling window before
 	# accepting changes.
 	READ_SUPPRESS_AFTER_REFRESH_SECONDS = 0.25
+	READING_POSITION_MAX_JUMP_DURING_SETTLE = 2
 
 	def __init__(self, display):
 		super().__init__(display)
@@ -268,13 +269,13 @@ class AtcMixin(object):
 		self._lastRefreshTime = 0.0
 
 	def postInit(self):
-		super(AtcMixin, self).postInit()
+		super().postInit()
 		log.debug("Enabling ATC")
 		self._display.atc = True
 
 	def display(self, cells: List[int]):
-		self._lastRefreshTime = time.monotonic()
 		super().display(cells)
+		self._lastRefreshTime = time.monotonic()
 
 	def handleReadingPosition(self, packet: bytes) -> None:
 		if len(packet) != self.READING_POSITION_PACKET_LENGTH:
@@ -300,14 +301,11 @@ class AtcMixin(object):
 		# During refresh settling, preserve confirmed state. Real touches tend
 		# to remain near the previous cell, while refresh noise often appears
 		# as a release, a new touch from nowhere, or a large jump.
-		if is_settling_after_refresh and self._readingPosition is None:
-			return
-		if (
-			is_settling_after_refresh
-			and self._readingPosition is not None
-			and abs(reading_position - self._readingPosition) > 2
-		):
-			return
+		if is_settling_after_refresh:
+			if self._readingPosition is None:
+				return
+			if abs(reading_position - self._readingPosition) > self.READING_POSITION_MAX_JUMP_DURING_SETTLE:
+				return
 		if reading_position == self._readingPosition:
 			return
 		self._readingPosition = reading_position
