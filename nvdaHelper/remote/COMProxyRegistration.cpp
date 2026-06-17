@@ -32,7 +32,12 @@ using namespace std;
 
 typedef void(RPC_ENTRY *LPFNGETPROXYDLLINFO)(ProxyFileInfo***, CLSID**);
 
-std::map<std::wstring, CLSID> interfaceProxyBackups;
+typedef struct {
+	bool hadOriginalProxy;
+	CLSID originalProxyClsid;
+} InterfaceProxyBackup_t;
+
+std::map<std::wstring, InterfaceProxyBackup_t> interfaceProxyBackups;
 std::map<std::wstring, CLSID> dllProxyClsidCache;
 std::mutex comProxyRegistrationMutex;
 
@@ -69,37 +74,30 @@ bool generateOrFetchUniqueClsidForProxyDll(const std::wstring& dllPath, CLSID* o
 	return true;
 }
 
-bool registerInterfaceProxyIfNeeded(IID iid, CLSID clsid) {
+bool registerInterfaceProxy(IID iid, CLSID clsid) {
+	HRESULT res;
 	auto iidString = guidToString(iid);
 	auto clsidString = guidToString(clsid);
+	InterfaceProxyBackup_t backup={0};
 	std::lock_guard<std::mutex> lock(comProxyRegistrationMutex);
 	auto it = interfaceProxyBackups.find(iidString);
 	if (it != interfaceProxyBackups.end()) {
-		LOG_DEBUG(L"Interface "<<iidString<<L" already registered by NVDA with a previous mapping backed up; skipping");
-		return true;
-	}
-	bool hasExistingProxy = false;
-	CLSID oldClsid={0};
-	HRESULT res=CoGetPSClsid(iid,&oldClsid);
-	if(res==S_OK) {
-		if(oldClsid==clsid) {
-			LOG_DEBUG(L"Interface "<<iidString<<L" is already registered  by something other than us with the same proxy CLSID "<<clsidString<<L", no need to register it again or back up its proxy CLSID");
-			return true;
-		}
-		auto oldClsidString = guidToString(oldClsid);
-		LOG_DEBUG(L"Interface "<<iidString<<L" is already registered with a different proxy CLSID "<<oldClsidString<<L", backing up this CLSID to restore later");
-		hasExistingProxy = true;
+		LOG_DEBUG(L"Interface "<<iidString<<L" already  backed up");
 	} else {
-		LOG_DEBUG(L"Interface "<<iidString<<L" is not yet registered with a proxy CLSID");
+		res=CoGetPSClsid(iid,&backup.originalProxyClsid);
+		if(res!=S_OK) {
+			LOG_DEBUG(L"Interface "<<iidString<<L" does not have an already registered proxy CLSID");
+			backup.hadOriginalProxy=false;
+		} else {
+			backup.hadOriginalProxy=true;
+		}
 	}
 	res = CoRegisterPSClsid(iid,clsid);
 	if(res!=S_OK) {
 		LOG_ERROR(L"Unable to register interface iid "<<iidString<<L" with proxy CLSID "<<clsidString<<L", code "<<res);
 		return false;
 	}
-	if (hasExistingProxy) {
-		interfaceProxyBackups[iidString] = oldClsid;
-	}
+	interfaceProxyBackups[iidString] = backup;
 	return true;
 }
 
@@ -228,7 +226,7 @@ COMProxyRegistration_t* registerCOMProxy(const wchar_t* dllPath) {
 			if(wstring::npos != indexOfFirstNull) {
 				name.resize(indexOfFirstNull );
 			}
-			if(!registerInterfaceProxyIfNeeded(iid,proxyClsidForRegistration)) {
+			if(!registerInterfaceProxy(iid,proxyClsidForRegistration)) {
 				LOG_ERROR(L"Failed to register proxy for interface "<<name<<L" ("<<iidString<<L") with CLSID "<<proxyClsidString<<L" for dll "<<dllPath);
 				continue;
 			}
@@ -259,14 +257,16 @@ bool unregisterCOMProxy(COMProxyRegistration_t* reg) {
 
 void restoreInterfaceProxyBackups() {
 	std::lock_guard<std::mutex> lock(comProxyRegistrationMutex);
-	for(const auto& backup : interfaceProxyBackups) {
-		auto iidString = backup.first;
+	for(auto [iidString, backup] : interfaceProxyBackups) {
 		auto iid = stringToGuid(iidString);
-		const CLSID& clsidBackup=backup.second;
-		auto clsidBackupString = guidToString(clsidBackup);
+		if(!backup.hadOriginalProxy) {
+			LOG_DEBUG(L"Not restoring backup for interface "<<iidString<<L" as it did not have an original proxy CLSID");
+			continue;
+		}
+		auto clsidBackupString = guidToString(backup.originalProxyClsid);
 		LOG_DEBUG(L"Restoring backup for interface "<<iidString<<L" to CLSID "<<clsidBackupString);
 		HRESULT res;
-		res=CoRegisterPSClsid(iid,clsidBackup);
+		res=CoRegisterPSClsid(iid,backup.originalProxyClsid);
 		if(res!=S_OK) {
 			LOG_ERROR(L"Unable to restore proxy CLSID for interface "<<iidString<<L" to "<<clsidBackupString<<L", code "<<res);
 			continue;
