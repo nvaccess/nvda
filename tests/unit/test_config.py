@@ -1319,7 +1319,7 @@ class Config_loadCustomSections(unittest.TestCase):
 	def _callWithYamlData(self, data):
 		"""Call _loadCustomSections with yaml.safe_load returning data."""
 		with patch("builtins.open", mock_open()):
-			with patch("config.yaml.safe_load", return_value=data):
+			with patch("config.configSections.yaml.safe_load", return_value=data):
 				_loadCustomSections()
 
 	def test_fileNotFound_returnsWithoutAdding(self):
@@ -1331,7 +1331,7 @@ class Config_loadCustomSections(unittest.TestCase):
 	def test_osError_logsAndReturnsWithoutAdding(self):
 		"""OSError is logged and customSections remains empty."""
 		with patch("builtins.open", side_effect=OSError):
-			with patch("config.log.error") as mockLog:
+			with patch("config.configSections.log.exception") as mockLog:
 				_loadCustomSections()
 		mockLog.assert_called_once()
 		self.assertEqual(_customSections, {})
@@ -1341,8 +1341,8 @@ class Config_loadCustomSections(unittest.TestCase):
 		import yaml
 
 		with patch("builtins.open", mock_open()):
-			with patch("config.yaml.safe_load", side_effect=yaml.YAMLError):
-				with patch("config.log.error") as mockLog:
+			with patch("config.configSections.yaml.safe_load", side_effect=yaml.YAMLError):
+				with patch("config.configSections.log.exception") as mockLog:
 					_loadCustomSections()
 		mockLog.assert_called_once()
 		self.assertEqual(_customSections, {})
@@ -1355,8 +1355,8 @@ class Config_loadCustomSections(unittest.TestCase):
 	def test_nonDictContent_logsErrorAndReturnsWithoutAdding(self):
 		"""Non-dict YAML content logs an error and nothing is added."""
 		with patch("builtins.open", mock_open()):
-			with patch("config.yaml.safe_load", return_value=["notADict"]):
-				with patch("config.log.error") as mockLog:
+			with patch("config.configSections.yaml.safe_load", return_value=["notADict"]):
+				with patch("config.configSections.log.error") as mockLog:
 					_loadCustomSections()
 		mockLog.assert_called_once()
 		self.assertEqual(_customSections, {})
@@ -1365,8 +1365,8 @@ class Config_loadCustomSections(unittest.TestCase):
 		"""Entries with non-string section names are skipped with a debug warning."""
 		data = {42: {"spec": {"key": "string(default='val')"}}}
 		with patch("builtins.open", mock_open()):
-			with patch("config.yaml.safe_load", return_value=data):
-				with patch("config.log.debugWarning") as mockLog:
+			with patch("config.configSections.yaml.safe_load", return_value=data):
+				with patch("config.configSections.log.debugWarning") as mockLog:
 					_loadCustomSections()
 		mockLog.assert_called_once()
 		self.assertEqual(_customSections, {})
