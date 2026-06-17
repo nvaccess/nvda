@@ -145,6 +145,13 @@ bool isAppContainerProcess() {
 }
 
 void IA2Support_inProcess_initialize() {
+	// In all processes except NVDA's own process, IA2InstallMap should be empty at
+	// this point. This is critical because otherwise, we won't initialize IA2.
+	// However, NVDA's own process explicitly calls installIA2Support from Python
+	// code in NVDAHelper.initialize to ensure IA2 support is initialized as early
+	// as possible, relying on this IA2InstallMap.size() check to avoid
+	// initializing twice. Thus, we unfortunately can't log an error here, since we
+	// can't tell which process is the NVDA process from here.
 	if (IA2InstallMap.size() > 0 || isIA2SupportDisabled) {
 		return;
 	}
@@ -179,6 +186,11 @@ void IA2Support_inProcess_terminate() {
 		execInThread(threadId, uninstallIA2Support);
 		CloseHandle(data.uiThreadHandle);
 	}
+	// If NVDA is restarted and this dll doesn't unload before the new copy of NVDA
+	// loads, the same instance of this dll will be used, including its global
+	// variables. Thus, it's critical that we clear IA2InstallMap here, since it
+	// contains stale data, including closed kernel handles.
+	IA2InstallMap.clear();
 }
 
 const long FINDCONTENTDESCENDANT_FIRST=0;
