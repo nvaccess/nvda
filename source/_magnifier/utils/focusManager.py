@@ -15,9 +15,17 @@ import winUser
 import time
 import locationHelper
 import textInfos
+import wx
+import core
 from textInfos.offsets import OffsetsTextInfo
 from .types import Coordinates, MagnifierTrackingType
 from ..config import getFollowState
+
+
+def _isRTL() -> bool:
+	"""Return True when NVDA is running in a right-to-left language."""
+	wxLang = core.getWxLangOrNone()
+	return wxLang is not None and wxLang.LayoutDirection == wx.Layout_RightToLeft
 
 
 class FocusManager:
@@ -173,8 +181,9 @@ class FocusManager:
 			try:
 				focusObj = api.getFocusObject()
 				if focusObj and focusObj.location:
-					left, top, _width, _height = focusObj.location
-					coords = Coordinates(left, top)
+					left, top, width, _height = focusObj.location
+					x = left + width if _isRTL() else left
+					coords = Coordinates(x, top)
 					if coords != Coordinates(0, 0):
 						self._lastValidSystemFocusPosition = coords
 					return coords
@@ -245,8 +254,9 @@ class FocusManager:
 		navigatorObject = api.getNavigatorObject()
 		if navigatorObject:
 			try:
-				left, top, _width, _height = navigatorObject.location
-				return Coordinates(left, top)
+				left, top, width, _height = navigatorObject.location
+				x = left + width if _isRTL() else left
+				return Coordinates(x, top)
 			except Exception:
 				# Navigator object may not have a valid location
 				log.debug("Failed to get navigator object location", exc_info=True)
