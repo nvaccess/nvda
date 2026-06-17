@@ -8,10 +8,12 @@
 
 import itertools
 from typing import (
+	TYPE_CHECKING,
 	Optional,
 	Tuple,
 	Union,
 )
+from comtypes import COMError
 from annotation import (
 	_AnnotationNavigation,
 	_AnnotationNavigationNode,
@@ -25,7 +27,7 @@ import eventHandler
 import review
 import _magnifier
 import _magnifier.commands
-from _magnifier.utils.types import MagnifierFollowFocusType
+from _magnifier.utils.types import MagnifierTrackingType
 import controlTypes
 import api
 import textInfos
@@ -74,6 +76,9 @@ import synthDriverHandler
 from utils.displayString import DisplayStringEnum
 import _remoteClient
 
+if TYPE_CHECKING:
+	import documentBase
+
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_TEXTREVIEW = _("Text review")
@@ -101,6 +106,9 @@ SCRCAT_BRAILLE = _("Braille")
 #: Script category for Vision commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_VISION = _("Vision")
+#: Script category for Magnifier commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_MAGNIFIER = _("Magnifier")
 #: Script category for tools commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_TOOLS = pgettext("script category", "Tools")
@@ -183,6 +191,41 @@ def toggleIntegerValue(
 
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus."""
+
+	def __init__(self) -> None:
+		super().__init__()
+		self._reviewCopyStartMarker: textInfos.TextInfo | None = None
+		self._reviewCopyStartMarkerObj: "documentBase.TextContainerObject | None" = None
+		self._reviewSelectThenCopyRange: textInfos.TextInfo | None = None
+
+	def _clearReviewCopyStartMarker(self) -> None:
+		self._reviewCopyStartMarker = None
+		self._reviewCopyStartMarkerObj = None
+		self._reviewSelectThenCopyRange = None
+
+	def _getReviewCopyStartMarker(self, pos: textInfos.TextInfo) -> textInfos.TextInfo | None:
+		"""Return the review copy start marker if it is valid for ``pos``.
+
+		The marker is only valid when ``pos`` uses the same TextInfo implementation
+		and an equivalent text container. A comparison dry-run rejects stale native
+		ranges that cannot be used together.
+		"""
+		startMarker = self._reviewCopyStartMarker
+		if startMarker is None:
+			return None
+		startMarkerObj = self._reviewCopyStartMarkerObj
+		if startMarkerObj is None:
+			self._clearReviewCopyStartMarker()
+			return None
+		posObj = pos.obj
+		if pos.__class__ is not startMarker.__class__ or posObj != startMarkerObj:
+			return None
+		try:
+			pos.compareEndPoints(startMarker, "startToStart")
+		except (COMError, LookupError, NotImplementedError, RuntimeError) as e:
+			log.debug(f"Error comparing review position with marked text: {e}")
+			return None
+		return startMarker
 
 	@script(
 		description=_(
@@ -4080,13 +4123,12 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TEXTREVIEW,
 		gesture="kb:NVDA+f9",
 	)
-	def script_review_markStartForCopy(self, gesture):
+	def script_review_markStartForCopy(self, gesture: inputCore.InputGesture) -> None:
 		reviewPos = api.getReviewPosition()
-		# attach the marker to obj so that the marker is cleaned up when obj is cleaned up.
-		reviewPos.obj._copyStartMarker = reviewPos.copy()  # represents the start location
-		reviewPos.obj._selectThenCopyRange = (
-			None  # we may be part way through a select, reset the copy range.
-		)
+		self._reviewCopyStartMarker = reviewPos.copy()
+		self._reviewCopyStartMarkerObj = reviewPos.obj
+		# We may be part way through a select, reset the copy range.
+		self._reviewSelectThenCopyRange = None
 		# Translators: Indicates start of review cursor text to be copied to clipboard.
 		ui.message(_("Start marked"))
 
@@ -4099,13 +4141,13 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TEXTREVIEW,
 		gesture="kb:NVDA+shift+F9",
 	)
-	def script_review_moveToStartMarkedForCopy(self, gesture: inputCore.InputGesture):
-		pos = api.getReviewPosition()
-		if not getattr(pos.obj, "_copyStartMarker", None):
+	def script_review_moveToStartMarkedForCopy(self, gesture: inputCore.InputGesture) -> None:
+		startMarker = self._getReviewCopyStartMarker(api.getReviewPosition())
+		if not startMarker:
 			# Translators: Presented when attempting to move to the start marker for copy but none has been set.
 			ui.reviewMessage(_("No start marker set"))
 			return
-		startMarker = pos.obj._copyStartMarker.copy()
+		startMarker = startMarker.copy()
 		# This script is available on the lock screen via getSafeScripts,
 		# as such observe the setReviewPosition result to ensure
 		# the review position does not contain secure information
@@ -4132,16 +4174,16 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TEXTREVIEW,
 		gesture="kb:NVDA+f10",
 	)
-	def script_review_copy(self, gesture):
+	def script_review_copy(self, gesture: inputCore.InputGesture) -> None:
 		pos = api.getReviewPosition().copy()
-		if not getattr(pos.obj, "_copyStartMarker", None):
+		startMarker = self._getReviewCopyStartMarker(pos)
+		if not startMarker:
 			# Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 			ui.message(_("No start marker set"))
 			return
-		startMarker = api.getReviewPosition().obj._copyStartMarker
 		# first call, try to set the selection.
 		if getLastScriptRepeatCount() == 0:
-			if getattr(pos.obj, "_selectThenCopyRange", None):
+			if self._reviewSelectThenCopyRange:
 				# we have already tried selecting the text, dont try again. For now selections can not be ammended.
 				# Translators: Presented when text has already been marked for selection, but not yet copied.
 				ui.message(_("Press twice to copy or reset the start marker"))
@@ -4164,9 +4206,9 @@ class GlobalCommands(ScriptableObject):
 			if copyMarker.compareEndPoints(copyMarker, "startToEnd") == 0:
 				# Translators: Presented when there is no text selection to copy from review cursor.
 				ui.message(_("No text to copy"))
-				api.getReviewPosition().obj._copyStartMarker = None
+				self._clearReviewCopyStartMarker()
 				return
-			api.getReviewPosition().obj._selectThenCopyRange = copyMarker
+			self._reviewSelectThenCopyRange = copyMarker
 			# for applications such as word, where the selected text is not automatically spoken we must monitor it ourself
 			try:
 				# old selection info must be saved so that its possible to report on the changes to the selection.
@@ -4189,11 +4231,14 @@ class GlobalCommands(ScriptableObject):
 				log.debug("Error trying to update selection: %s" % e)
 				return
 		elif getLastScriptRepeatCount() == 1:  # the second call, try to copy the text
-			copyMarker = pos.obj._selectThenCopyRange
+			copyMarker = self._reviewSelectThenCopyRange
+			if copyMarker is None:
+				# Translators: Presented when attempting to copy some review cursor text but there is no start marker.
+				ui.message(_("No start marker set"))
+				return
 			copyMarker.copyToClipboard(notify=True)
 			# on the second call always clean up the start marker
-			api.getReviewPosition().obj._selectThenCopyRange = None
-			api.getReviewPosition().obj._copyStartMarker = None
+			self._clearReviewCopyStartMarker()
 		return
 
 	@script(
@@ -5065,9 +5110,9 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggles the magnifier on and off",
+			"Toggle the magnifier on and off",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+w",
 	)
 	def script_toggleMagnifier(
@@ -5079,9 +5124,9 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Increases the magnification level of the magnifier",
+			"Increase the magnification level",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+=",
 	)
 	def script_zoomIn(
@@ -5093,9 +5138,9 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Decreases the magnification level of the magnifier",
+			"Decrease the magnification level",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+-",
 	)
 	def script_zoomOut(
@@ -5107,9 +5152,9 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnifier view to the left",
+			"Pan the magnified view left",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+alt+leftArrow",
 	)
 	def script_panLeft(
@@ -5121,9 +5166,9 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnifier view to the right",
+			"Pan the magnified view right",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+alt+rightArrow",
 	)
 	def script_panRight(
@@ -5135,9 +5180,9 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnifier view up",
+			"Pan the magnified view up",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+alt+upArrow",
 	)
 	def script_panUp(
@@ -5149,9 +5194,9 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnifier view down",
+			"Pan the magnified view down",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+alt+downArrow",
 	)
 	def script_panDown(
@@ -5163,9 +5208,9 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnifier view to left edge",
+			"Pan the magnified view to left edge",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+shift+alt+leftArrow",
 	)
 	def script_panToLeftEdge(
@@ -5177,9 +5222,9 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnifier view to right edge",
+			"Pan the magnified view to right edge",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+shift+alt+rightArrow",
 	)
 	def script_panToRightEdge(
@@ -5191,9 +5236,9 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnifier view to top edge",
+			"Pan the magnified view to top edge",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+shift+alt+upArrow",
 	)
 	def script_panToTopEdge(
@@ -5205,9 +5250,9 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Pan the magnifier view to bottom edge",
+			"Pan the magnified view to bottom edge",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 		gesture="kb:nvda+shift+alt+downArrow",
 	)
 	def script_panToBottomEdge(
@@ -5219,12 +5264,25 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle filter of the magnifier",
+			"Moves the mouse cursor to the center of the magnified view",
 		),
 		category=SCRCAT_VISION,
+	)
+	def script_moveMouseToView(
+		self,
+		gesture: inputCore.InputGesture,
+	) -> None:
+		_magnifier.commands.moveMouseToView()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Cycle through the color filters",
+		),
+		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+i",
 	)
-	def script_toggleFilter(
+	def script_cycleFilters(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
@@ -5233,61 +5291,61 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle follow mouse for the magnifier",
+			"Toggle magnifier mouse tracking",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 	)
 	def script_toggleFollowMouse(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.MOUSE)
+		_magnifier.commands.toggleFollow(MagnifierTrackingType.MOUSE)
 
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle follow system focus for the magnifier",
+			"Toggle magnifier system focus tracking",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 	)
 	def script_toggleFollowSystemFocus(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.SYSTEM_FOCUS)
+		_magnifier.commands.toggleFollow(MagnifierTrackingType.SYSTEM_FOCUS)
 
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle follow review cursor for the magnifier",
+			"Toggle magnifier review cursor tracking",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 	)
 	def script_toggleFollowReview(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.REVIEW)
+		_magnifier.commands.toggleFollow(MagnifierTrackingType.REVIEW)
 
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle follow navigator object for the magnifier",
+			"Toggle magnifier navigator object tracking",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 	)
 	def script_toggleFollowNavigatorObject(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.toggleFollow(MagnifierFollowFocusType.NAVIGATOR_OBJECT)
+		_magnifier.commands.toggleFollow(MagnifierTrackingType.NAVIGATOR_OBJECT)
 
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle all follow modes for the magnifier",
+			"Toggle all magnifier tracking settings",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 	)
 	def script_toggleAllFollow(
 		self,
@@ -5298,11 +5356,11 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle focus mode for the full-screen magnifier",
+			"Cycle through tracking modes",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 	)
-	def script_toggleFullscreenMode(
+	def script_cycleTrackingModes(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
@@ -5311,12 +5369,12 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describe a command.
-			"Launch spotlight if magnifier is full-screen",
+			"Temporarily show an overview of the entire screen",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+l",
 	)
-	def script_startSpotlight(
+	def script_showEntireScreenOverview(
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:

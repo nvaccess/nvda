@@ -60,6 +60,9 @@ jobs:
     needs: matrix
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     timeout-minutes: 30
+    permissions:
+      contents: read
+      actions: write
     strategy:
       fail-fast: false
       matrix:
@@ -78,7 +81,7 @@ jobs:
     - name: Checkout NVDA
       uses: actions/checkout@v6
       with:
-        submodules: true
+        submodules: recursive
     - name: Install Python
       uses: actions/setup-python@v6
       with:
@@ -150,6 +153,8 @@ jobs:
     name: Check types with Pyright
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    permissions:
+      contents: read
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v5
@@ -171,6 +176,8 @@ jobs:
     name: Check po files for errors
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: matrix
+    permissions:
+      contents: read
     steps:
     - name: Checkout repository
       uses: actions/checkout@v6
@@ -202,6 +209,9 @@ jobs:
     name: Check translator comments
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    permissions:
+      contents: read
+      actions: write
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v5
@@ -231,6 +241,8 @@ jobs:
     name: Check license compatibility of dependencies
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    permissions:
+      contents: read
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v5
@@ -252,6 +264,10 @@ jobs:
     name: Run unit tests
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    permissions:
+      contents: read
+      actions: write
+      checks: write
     strategy:
       fail-fast: false
       matrix:
@@ -302,6 +318,8 @@ jobs:
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA, checkPot]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' && vars.CROWDIN_PROJECT_ID }}
+    permissions:
+      contents: read
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v5
@@ -332,6 +350,9 @@ jobs:
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
     timeout-minutes: 35
+    permissions:
+      contents: read
+      actions: write
     strategy:
       fail-fast: false
       matrix:
@@ -425,6 +446,10 @@ jobs:
     runs-on: ${{ matrix.runner }}
     needs: [matrix, createLauncher]
     timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: write
+      checks: write
     strategy:
       fail-fast: false
       matrix:
@@ -511,6 +536,9 @@ jobs:
     name: Create symbols
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    permissions:
+      contents: read
+      actions: write
     strategy:
       fail-fast: false
       matrix:
@@ -554,6 +582,8 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     needs: [buildNVDA, typeCheck, checkPo, checkPot, licenseCheck, unitTests, createLauncher, systemTests, createSymbols]
+    permissions:
+      contents: read
     steps:
     - name: Check if all tests pass
       uses: re-actors/alls-green@v1.2.2
@@ -563,8 +593,10 @@ jobs:
   uploadSymbols:
     name: Upload symbols
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
-    needs: [matrix, buildNvda]
+    needs: [matrix, buildNVDA]
     if: ${{ github.event_name == 'push' && vars.feature_uploadSymbolsToMozilla }}
+    permissions:
+      contents: read
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v5
@@ -775,3 +807,24 @@ jobs:
             --repo ${{ github.repository }} \
             --clobber \
             $NVDA_EXE_NAME#Installer
+
+  submit-winget:
+    name: Submit manifest to WinGet Packages Repository
+    needs: [matrix, release]
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
+    if: startsWith(github.ref_name, 'release-')
+    permissions:
+      contents: read
+    steps:
+    - name: Checkout NVDA
+      uses: actions/checkout@v6
+      with:
+        submodules: false
+
+    - name: Submit package using wingetcreate
+      env:
+        GH_TOKEN: ${{ github.token }}
+        # wingetcreate will read the token from the below environment variable
+        # Reference: https://aka.ms/winget-create-token
+        WINGET_CREATE_GITHUB_TOKEN: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}
+      run: ci/scripts/submitWinGet.ps1
