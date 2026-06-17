@@ -7,8 +7,8 @@
 import yaml
 from typing import Any
 
+import config
 from .configSpec import confspec
-from . import conf
 from logHandler import log
 from NVDAState import shouldWriteToDisk, WritePaths
 
@@ -60,7 +60,7 @@ def _addSection(sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool 
 	confspec[sectionName] = sectionSpec
 	_customSections[sectionName] = {"spec": sectionSpec, "isBaseOnly": isBaseOnly}
 	if isBaseOnly:
-		conf.BASE_ONLY_SECTIONS.add(sectionName)
+		config.conf.BASE_ONLY_SECTIONS.add(sectionName)
 
 
 def registerSection(
@@ -82,7 +82,7 @@ def registerSection(
 	_saveCustomSections()
 
 
-def unregisterSection(self, sectionName: str) -> None:
+def unregisterSection(sectionName: str) -> None:
 	"""Unregister a section that was added to the configuration.
 	This is intended for add-ons to unregister custom sections they added, for example when the add-on is uninstalled.
 	:param sectionName: The name of the section to remove.
@@ -96,7 +96,7 @@ def unregisterSection(self, sectionName: str) -> None:
 		)
 
 
-def _saveCustomSections(self) -> None:
+def _saveCustomSections() -> None:
 	"""Write all registered custom sections to disk."""
 	if not shouldWriteToDisk():
 		return
