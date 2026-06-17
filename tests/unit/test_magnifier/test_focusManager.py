@@ -351,6 +351,29 @@ class TestFocusManager(unittest.TestCase):
 				self.assertEqual(focusCoordinates, param.expectedCoords)
 				self.assertEqual(self.focusManager.getLastFocusType(), param.expectedFocus)
 
+	def testGetSystemFocusPositionRTLFallback(self):
+		"""System focus bounding-box fallback uses right edge (left + width) in RTL mode."""
+		with (
+			patch("_magnifier.utils.focusManager.api.getCaretPosition", side_effect=RuntimeError),
+			patch("_magnifier.utils.focusManager.api.getFocusObject") as mock_focus,
+			patch("_magnifier.utils.focusManager._isRTL", return_value=True),
+		):
+			mock_focus.return_value.location = (200, 300, 100, 80)
+			coords = self.focusManager._getSystemFocusPosition()
+			# RTL: x = left + width = 200 + 100 = 300
+			self.assertEqual(coords, Coordinates(300, 300))
+
+	def testGetNavigatorObjectPositionRTL(self):
+		"""Navigator object bounding box uses right edge (left + width) in RTL mode."""
+		with (
+			patch("_magnifier.utils.focusManager.api.getNavigatorObject") as mock_navigator,
+			patch("_magnifier.utils.focusManager._isRTL", return_value=True),
+		):
+			mock_navigator.return_value.location = (100, 150, 200, 300)
+			coords = self.focusManager._getNavigatorObjectPosition()
+			# RTL: x = left + width = 100 + 200 = 300
+			self.assertEqual(coords, Coordinates(300, 150))
+
 	def testGetLastFocusType(self):
 		"""Test getting the last focus type."""
 		self.assertIsNone(self.focusManager.getLastFocusType())
