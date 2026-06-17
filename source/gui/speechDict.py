@@ -65,13 +65,16 @@ class DictionaryEntryDialog(
 		typeChoices = [
 			DictionaryEntryDialog.TYPE_LABELS[i] for i in DictionaryEntryDialog.TYPE_LABELS_ORDERING
 		]
-		self.typeRadioBox = sHelper.addItem(wx.RadioBox(self, label=typeText, choices=typeChoices))
+		self.typeRadioBox = sHelper.addItem(
+			wx.RadioBox(self, label=typeText, choices=typeChoices, style=wx.RA_SPECIFY_ROWS),
+		)
 
 		sHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, separated=True)
 
 		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+		self.CentreOnParent()
 		self.setType(EntryType.ANYWHERE)
 		self.patternTextCtrl.SetFocus()
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)

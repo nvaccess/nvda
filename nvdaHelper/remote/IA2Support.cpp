@@ -38,7 +38,6 @@ using namespace std;
 LONG WINAPI GetCurrentApplicationUserModelId(UINT32* pBufSize,PWSTR buf);
 
 
-UINT wm_uninstallIA2Support = 0;
 bool isIA2SupportDisabled=false;
 
 bool installIA2Support() {
@@ -48,10 +47,6 @@ bool installIA2Support() {
 map<DWORD, IA2InstallData> IA2InstallMap;
 
 pair<map<DWORD, IA2InstallData>::iterator, bool> installIA2SupportForThread(DWORD threadID) {
-	if (wm_uninstallIA2Support == 0) {
-		// Register our window message the first time we initialize IA2 support in a process
-		wm_uninstallIA2Support = RegisterWindowMessage(L"wm_uninstallIA2Support");
-	}
 	if (IA2InstallMap.find(threadID) != IA2InstallMap.end()) {
 		// Support already installed for this thread
 		return {IA2InstallMap.end(), false};
@@ -82,10 +77,6 @@ bool uninstallIA2Support() {
 }
 
 bool uninstallIA2SupportForThread(DWORD threadID) {
-	if (wm_uninstallIA2Support == 0) {
-		// IA2 support was never installed
-		return false;
-	}
 	auto it = IA2InstallMap.find(threadID);
 	if (it == IA2InstallMap.end()) {
 		return false;
@@ -113,20 +104,6 @@ void CALLBACK IA2Support_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, H
 		auto& data = installRes.first->second;
 		data.uiThreadHandle = OpenThread(SYNCHRONIZE, false, threadID);
 	}
-}
-
-LRESULT CALLBACK IA2Support_uninstallerHook(int code, WPARAM wParam, LPARAM lParam) {
-	MSG* pmsg=(MSG*)lParam;
-	if(pmsg->message==wm_uninstallIA2Support) {
-		auto threadId = GetCurrentThreadId();
-		uninstallIA2SupportForThread(threadId);
-		auto it = IA2InstallMap.find(threadId);
-		if (it != IA2InstallMap.end()) {
-			auto& data = it->second;
-			SetEvent(data.uiThreadUninstalledEvent);
-		}
-	}
-	return 0;
 }
 
 bool isSuspendableProcess() {
@@ -194,30 +171,14 @@ void IA2Support_inProcess_terminate() {
 	if (IA2InstallMap.size()  == 0) {
 		return;
 	}
-	registerWindowsHook(WH_GETMESSAGE, IA2Support_uninstallerHook);
 	for (auto& [threadId, data] : IA2InstallMap) {
 		//Check if the UI thread is still alive, if not there's nothing for us to do
 		if (WaitForSingleObject(data.uiThreadHandle, 0) == 0) {
 			continue;
 		}
-		//Instruct the UI thread to uninstall IA2
-		data.uiThreadUninstalledEvent = CreateEvent(NULL, true, false, NULL);
-		if (data.uiThreadUninstalledEvent == 0) {
-			// unable to create the event, can't continue
-			continue;
-		}
-		PostThreadMessage(threadId, wm_uninstallIA2Support, 0, 0);
-		const UINT WAIT_HANDLE_COUNT = 2;
-		HANDLE waitHandles[WAIT_HANDLE_COUNT] = {data.uiThreadUninstalledEvent, data.uiThreadHandle};
-		const UINT MAX_WAIT_TIME = 10000; // 10 seconds
-		int res = WaitForMultipleObjects(WAIT_HANDLE_COUNT, waitHandles, false, MAX_WAIT_TIME);
-		if (res != WAIT_OBJECT_0 && res != WAIT_OBJECT_0 + 1) {
-			LOG_DEBUGWARNING(L"WaitForMultipleObjects returned "<<res);
-		}
-		CloseHandle(data.uiThreadUninstalledEvent);
+		execInThread(threadId, uninstallIA2Support);
 		CloseHandle(data.uiThreadHandle);
 	}
-	unregisterWindowsHook(WH_GETMESSAGE,IA2Support_uninstallerHook);
 }
 
 const long FINDCONTENTDESCENDANT_FIRST=0;
