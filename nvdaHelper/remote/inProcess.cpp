@@ -41,8 +41,19 @@ windowsHookRegistry_t inProcess_registeredGetMessageWindowsHooks;
 
 UINT wm_execInThread;
 
+UINT getExecInThreadMessage() {
+	// If there was a previous instance of NVDA, RegisterWindowMessage will return
+	// the same identifier. If not, this will be the identifier used hereafter.
+	if (!wm_execInThread) {
+		wm_execInThread = RegisterWindowMessage(L"nvdaHelper_execInThread");
+	}
+	return wm_execInThread;
+}
+
 void inProcess_initialize() {
-	wm_execInThread=RegisterWindowMessage(L"nvdaHelper_execInThread");
+	// This should already have been called by initInprocManagerThreadIfNeeded,
+	// but it doesn't hurt to be safe.
+	getExecInThreadMessage();
 	IA2Support_inProcess_initialize();
 	ia2LiveRegions_inProcess_initialize();
 	typedCharacter_inProcess_initialize();
