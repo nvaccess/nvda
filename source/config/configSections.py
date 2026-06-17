@@ -60,6 +60,7 @@ def _addSection(sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool 
 	_customSections[sectionName] = {"spec": sectionSpec, "isBaseOnly": isBaseOnly}
 	if isBaseOnly:
 		from . import ConfigManager
+
 		ConfigManager.BASE_ONLY_SECTIONS.add(sectionName)
 
 
