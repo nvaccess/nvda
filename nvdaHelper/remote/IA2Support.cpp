@@ -191,7 +191,6 @@ void IA2Support_inProcess_terminate() {
 	// variables. Thus, it's critical that we clear IA2InstallMap here, since it
 	// contains stale data, including closed kernel handles.
 	IA2InstallMap.clear();
-	unregisterWindowsHook(WH_GETMESSAGE,IA2Support_uninstallerHook);
 }
 
 const long FINDCONTENTDESCENDANT_FIRST=0;
