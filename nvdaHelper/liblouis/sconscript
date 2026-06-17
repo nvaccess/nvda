@@ -6,8 +6,6 @@
 
 import os
 import re
-import glob
-from SCons.Tool.MSCommon.vc import find_vc_pdir
 import typing
 from SCons.Environment import Environment
 from SCons.Environment import Base
@@ -45,11 +43,13 @@ def getLouisVersion():
 
 
 # Liblouis is build with Clang, as Microsoft Visual C++ is unable to build C99 code.
-clangDirs = glob.glob(os.path.join(find_vc_pdir(env.get("MSVC_VERSION"), env), r"Tools\Llvm\bin"))
-if len(clangDirs) == 0:
+# The MSVC tool adds the C++ Clang tools for Windows component to the environment's PATH,
+# so locate clang-cl via PATH rather than hard-coding the Visual Studio install layout.
+# This is independent of the LLVM directory structure, which changed in Visual Studio 2026.
+if not env.WhereIs("clang-cl"):
 	raise RuntimeError(
 		"Could not find the Clang compiler. "
-		"Perhaps the C++ Clang tools for Windows component in visual Studio is not installed",
+		"Perhaps the C++ Clang tools for Windows component in Visual Studio is not installed?",
 	)
 env["CC"] = "clang-cl"
 env["M4"] = f'"{env.File("#miscdeps/tools/m4.exe")}"'
