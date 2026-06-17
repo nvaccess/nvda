@@ -458,6 +458,7 @@ jobs:
           - installer
           - startupShutdown
           - symbols
+          - browseableMessage
           # - vscode
           - chrome_annotations
           - chrome_list
@@ -471,10 +472,12 @@ jobs:
         arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
         pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
         # A bug exists with Windows 2022 notepad that prevents NVDA from focusing it.
-        # This causes our symbol pronunciation tests to fail on this runner.
+        # This causes our symbol pronunciation and browseable message tests to fail on this runner.
         exclude:
           - runner: windows-2022
             testSuite: symbols
+          - runner: windows-2022
+            testSuite: browseableMessage
     env:
       uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     steps:
