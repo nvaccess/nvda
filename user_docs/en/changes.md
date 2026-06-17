@@ -22,6 +22,7 @@
 
 ### Changes
 
+* The Speech Dictionaries dialog has been modernized. Edit and Remove actions for list entries are now available via a context menu, improving keyboard and screen reader accessibility. (#20036, @amirmahdifard)
 * The dialog used to present browseable messages (such as formatting information) has been modernized. (#18878, @LeonarddeR)
   * The dialog's shortcut to copy contents of the message to the clipboard was changed to `alt+c`.
 * Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
