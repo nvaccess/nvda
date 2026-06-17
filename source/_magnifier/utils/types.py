@@ -100,14 +100,14 @@ class MagnifierTrackingType(DisplayStringEnum):
 	@property
 	def _displayStringLabels(self) -> dict["MagnifierTrackingType", str]:
 		return {
-			# Translators: Tracking type for magnifier to follow - mouse cursor.
-			self.MOUSE: pgettext("magnifier follow tracking type", "Mouse"),
-			# Translators: Tracking type for magnifier to follow - system focus (active element).
-			self.SYSTEM_FOCUS: pgettext("magnifier follow tracking type", "System focus"),
-			# Translators: Tracking type for magnifier to follow - review cursor position.
-			self.REVIEW: pgettext("magnifier follow tracking type", "Review cursor"),
-			# Translators: Tracking type for magnifier to follow - navigator object position.
-			self.NAVIGATOR_OBJECT: pgettext("magnifier follow tracking type", "Navigator object"),
+			# Translators: Type of item tracked by the Magnifier - mouse cursor.
+			self.MOUSE: pgettext("magnifier", "Mouse"),
+			# Translators: Type of item tracked by the Magnifier - system focus (active element).
+			self.SYSTEM_FOCUS: pgettext("magnifier", "System focus"),
+			# Translators: Type of item tracked by the Magnifier - review cursor position.
+			self.REVIEW: pgettext("magnifier", "Review cursor"),
+			# Translators: Type of item tracked by the Magnifier - navigator object position.
+			self.NAVIGATOR_OBJECT: pgettext("magnifier", "Navigator object"),
 		}
 
 
@@ -155,11 +155,11 @@ class FullScreenMode(DisplayStringStrEnum):
 	@property
 	def _displayStringLabels(self) -> dict["FullScreenMode", str]:
 		return {
-			# Translators: Magnifier tracking mode - center on screen.
+			# Translators: Magnifier tracking mode - center the tracked item on the screen.
 			self.CENTER: pgettext("magnifier", "Center"),
-			# Translators: Magnifier tracking mode - follow tracking at screen borders.
+			# Translators: Magnifier tracking mode - follow the tracked item only when it reaches screen borders.
 			self.BORDER: pgettext("magnifier", "Border"),
-			# Translators: Magnifier tracking mode - maintain relative position.
+			# Translators: Magnifier tracking mode - preserve the tracked item's screen position within the magnified view (same relative screen location).
 			self.RELATIVE: pgettext("magnifier", "Relative"),
 		}
 

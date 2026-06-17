@@ -1629,8 +1629,7 @@ This mode keeps the tracked element at the center of the screen when possible.
 When the tracked element is next to a screen edge, the tracked element may or may not remain centered on the screen, depending on [true center tracking in the Magnifier settings](#MagnifierUseTrueCenterTracking).
 * Border: The magnified area only moves when the tracked position approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
-* Relative: The magnified area maintains the relative position of the tracked element within the screen.
-This mode mimics the behavior of the Windows Magnifier.
+* Relative: The magnified area maintains the relative position of the tracked element based on its position on the screen.
 
 To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 

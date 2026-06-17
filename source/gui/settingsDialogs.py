@@ -6082,7 +6082,7 @@ class MagnifierPanel(SettingsPanel):
 			sizer=settingsSizer,
 		)
 
-		# GENERAL GROUP
+		# General GROUP
 		# Translators: This is the label for a group of general magnifier options in the
 		# magnifier settings panel
 		generalGroupText = _("General")
@@ -6105,7 +6105,7 @@ class MagnifierPanel(SettingsPanel):
 		self.enableMagnifierCheckBox.Bind(wx.EVT_CHECKBOX, self.onEnableMagnifierChange)
 		self.enableMagnifierCheckBox.SetValue(self._magnifierEnabledInitially)
 
-		# ZOOM SETTINGS
+		# Zoom SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the zoom level.
 		zoomLabelText = _("&Zoom (%):")
 
@@ -6127,7 +6127,7 @@ class MagnifierPanel(SettingsPanel):
 		self.zoomCtrl.SetValue(zoomLevel)
 		self.zoomCtrl.Bind(wx.EVT_SPINCTRL, self._onImmediateSettingChange)
 
-		# FILTER SETTINGS
+		# Filter SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the filter
 		filterLabelText = _("Color f&ilter:")
 		filterChoices = [f.displayString for f in Filter]
@@ -6144,7 +6144,7 @@ class MagnifierPanel(SettingsPanel):
 		self.filterList.SetSelection(list(Filter).index(filterValue))
 		self.filterList.Bind(wx.EVT_CHOICE, self._onImmediateSettingChange)
 
-		# TRUE CENTER TRACKING
+		# True center tracking SETTINGS
 		# Translators: The label for a setting in magnifier settings to select whether true center tracking is used
 		trueCenterTrackingText = _("&True center tracking")
 		self.trueCenterTrackingCheckBox = generalGroup.addItem(
@@ -6158,7 +6158,7 @@ class MagnifierPanel(SettingsPanel):
 		self._trueCenterTrackingInitially = self.trueCenterTrackingCheckBox.GetValue()
 		self.trueCenterTrackingCheckBox.Bind(wx.EVT_CHECKBOX, self._onImmediateSettingChange)
 
-		# PAN SETTINGS
+		# Panning SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
 		panStepSizeLabelText = _("&Panning step size (%):")
 
@@ -6180,7 +6180,7 @@ class MagnifierPanel(SettingsPanel):
 		self.panSpinCtrl.Bind(wx.EVT_SPINCTRL, self._onImmediateSettingChange)
 		self.panSpinCtrl.Bind(wx.EVT_TEXT, self._onImmediateSettingChange)
 
-		# TRACKING GROUP
+		# Tracking GROUP
 		# Translators: This is the label for a group of tracking options in the magnifier settings panel
 		trackingGroupText = _("Tracking")
 		trackingGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=trackingGroupText)
