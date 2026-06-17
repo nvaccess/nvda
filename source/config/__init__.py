@@ -108,7 +108,7 @@ def initialize():
 	try:
 		_loadCustomSections()
 	except Exception:
-		log.error("Failed to load custom sections.", exc_info=True)
+		log.exception("Failed to load custom sections.")
 	global conf
 	conf = ConfigManager()
 
