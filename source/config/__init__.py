@@ -498,7 +498,7 @@ def _loadCustomSections() -> None:
 		log.exception(f"Error reading custom sections at {path}.")
 		return
 	except yaml.YAMLError:
-		log.error(f"Error parsing {path}.", exc_info=True)
+		log.exception(f"Error parsing {path}.")
 		return
 	if sections is None:
 		return
