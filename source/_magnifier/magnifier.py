@@ -15,6 +15,7 @@ import wx
 import ui
 import speech
 import screenCurtain
+import touchHandler
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (
@@ -59,6 +60,7 @@ class Magnifier:
 		# Register for display changes
 		_displayTracking.displayChanged.register(self._onDisplayChanged)
 		self._screenCurtainIsActive: bool = False
+		self._touchWasEnabled: bool = False
 
 	@property
 	def filterType(self) -> Filter:
@@ -183,6 +185,11 @@ class Magnifier:
 
 		self._isActive = True
 		self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
+		# Disable touch input while magnifier is running.
+		# touchSupported() returns False on portable copies, so this is a no-op there.
+		if touchHandler.touchSupported() and touchHandler.handler is not None:
+			touchHandler.setTouchSupport(False)
+			self._touchWasEnabled = True
 
 	def _updateMagnifier(self) -> None:
 		"""
@@ -252,8 +259,32 @@ class Magnifier:
 			return
 		self._stopTimer()
 		self._isActive = False
+		# Re-enable touch input if it was disabled when the magnifier started.
+		if self._touchWasEnabled:
+			try:
+				touchHandler.setTouchSupport(True)
+			except NotImplementedError:
+				pass
+			self._touchWasEnabled = False
 		# Unregister from display changes
 		_displayTracking.displayChanged.unregister(self._onDisplayChanged)
+
+	def onTouchSupportEnabling(self) -> bool:
+		"""
+		Called before touch support is enabled.
+		Returns False if touch cannot be enabled because the magnifier is active.
+		"""
+		if self._isActive:
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Message when trying to enable touch interaction while magnifier is active
+					"Cannot enable touch interaction. Please disable the magnifier first.",
+				),
+				speechPriority=speech.priorities.Spri.NOW,
+			)
+			return False
+		return True
 
 	def onScreenCurtainEnabled(self) -> None:
 		"""

@@ -445,6 +445,11 @@ def setTouchSupport(enable: bool):
 	if not touchSupported():
 		raise NotImplementedError
 	if not handler and enable:
+		import _magnifier
+
+		magnifierInstance = _magnifier.getMagnifier()
+		if magnifierInstance and not magnifierInstance.onTouchSupportEnabling():
+			return
 		handler = TouchHandler()
 		log.debug("Touch support enabled.")
 	elif handler and not enable:
