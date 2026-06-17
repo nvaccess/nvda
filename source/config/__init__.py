@@ -105,10 +105,7 @@ def __getattr__(attrName: str) -> Any:
 
 
 def initialize():
-	try:
-		_loadCustomSections()
-	except Exception:
-		log.exception("Failed to load custom sections.")
+	_loadCustomSections()
 	global conf
 	conf = ConfigManager()
 
@@ -481,56 +478,6 @@ def _transformSpec(spec: ConfigObj):
 		),
 		preserve_errors=True,
 	)
-
-
-customSections: dict[str, dict[str, Any]] = {}
-
-
-def _loadCustomSections() -> None:
-	"""Add registered customSections to the configuration."""
-	path = WritePaths.nvdaCustomSectionsFile
-	try:
-		with open(path, encoding="utf-8") as _f:
-			sections = yaml.safe_load(_f)
-	except FileNotFoundError:
-		return
-	except OSError:
-		log.exception(f"Error reading custom sections at {path}.")
-		return
-	except yaml.YAMLError:
-		log.exception(f"Error parsing {path}.")
-		return
-	if sections is None:
-		return
-	if not isinstance(sections, dict):
-		log.error(f"{path} has unexpected format (expected a mapping).")
-		return
-	for name, entry in sections.items():
-		if not isinstance(name, str):
-			log.debugWarning(f"Custom section name {name} is not a string; skipping.")
-			continue
-		if name in confspec:
-			log.debugWarning(f"Registering custom section {name!r} that is already registered.")
-		if not isinstance(entry, dict) or "spec" not in entry:
-			log.debugWarning(f"Custom section {name} has an invalid entry; skipping.")
-			continue
-		if not isinstance(entry["spec"], dict):
-			log.debugWarning(f"Custom section {name} has a non-mapping spec; skipping.")
-			continue
-		isBaseOnly = bool(entry.get("isBaseOnly", False))
-		_addSection(name, entry["spec"], isBaseOnly)
-
-
-def _addSection(sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool = False):
-	"""Add a section to the configuration.
-	:param sectionName: The name of the section to add.
-	:param sectionSpec: The configspec for the section to add.
-	:param isBaseOnly: Whether this section should only be in the base configuration, defaults to False.
-	"""
-	confspec[sectionName] = sectionSpec
-	customSections[sectionName] = {"spec": sectionSpec, "isBaseOnly": isBaseOnly}
-	if isBaseOnly:
-		ConfigManager.BASE_ONLY_SECTIONS.add(sectionName)
 
 
 class ConfigManager:
