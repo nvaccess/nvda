@@ -36,10 +36,10 @@ import easeOfAccess
 from fileUtils import FaultTolerantFile
 import extensionPoints
 import functools
-import yaml
 
 from . import profileUpgrader
 from . import aggregatedSection
+from .configSections import _loadCustomSections
 from .configSpec import confspec
 from .featureFlagEnums import BrailleTextWrapFlag
 from .featureFlag import (
@@ -529,49 +529,6 @@ class ConfigManager:
 		self._loadProfileTriggers()
 		#: The names of all profiles that have been modified since they were last saved.
 		self._dirtyProfiles: set[str] = set()
-
-	def registerSection(
-		self,
-		sectionName: str,
-		sectionSpec: dict[str, Any],
-		isBaseOnly: bool = False,
-	) -> None:
-		"""Register a configuration section.
-		This is intended for add-ons to register custom sections.
-		:param sectionName: The name of the section to add.
-		:param sectionSpec: The configspec for the section to add.
-		:param isBaseOnly: Whether this section should only be in the base configuration.
-		"""
-		if sectionName in confspec:
-			log.debugWarning(f"Registering custom section {sectionName!r} that is already registered.")
-		if not isinstance(sectionSpec, dict):
-			raise TypeError(f"sectionSpec for {sectionName!r} must be a dict.")
-		customSections[sectionName] = {"spec": sectionSpec, "isBaseOnly": isBaseOnly}
-		self._saveCustomSections()
-
-	def unregisterSection(self, sectionName: str) -> None:
-		"""Unregister a section that was added to the configuration.
-		This is intended for add-ons to unregister custom sections they added, for example when the add-on is uninstalled.
-		:param sectionName: The name of the section to remove.
-		"""
-		try:
-			del customSections[sectionName]
-			self._saveCustomSections()
-		except KeyError:
-			log.debugWarning(
-				f"Attempted to unregister custom section {sectionName!r} that was not registered.",
-			)
-
-	def _saveCustomSections(self) -> None:
-		"""Write all registered custom sections to disk."""
-		if not NVDAState.shouldWriteToDisk():
-			return
-		path = WritePaths.nvdaCustomSectionsFile
-		try:
-			with open(path, "w", encoding="utf-8") as f:
-				yaml.safe_dump(customSections, f, allow_unicode=True, default_flow_style=False)
-		except (OSError, yaml.YAMLError):
-			log.error(f"Error saving sections to {path}.", exc_info=True)
 
 	def _handleProfileSwitch(self, shouldNotify=True):
 		if not self._shouldHandleProfileSwitch:
