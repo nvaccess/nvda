@@ -2285,7 +2285,7 @@ class ReviewCursorPanel(SettingsPanel):
 		settingsSizer.Add(self.simpleReviewModeCheckBox, border=10, flag=wx.BOTTOM)
 
 	def onSave(self):
-		config.conf["reviewCursor"]["followFocus"] = self.followTrackingCheckBox.IsChecked()
+		config.conf["reviewCursor"]["followFocus"] = self.followFocusCheckBox.IsChecked()
 		config.conf["reviewCursor"]["followCaret"] = self.followCaretCheckBox.IsChecked()
 		config.conf["reviewCursor"]["followMouse"] = self.followMouseCheckBox.IsChecked()
 		config.conf["reviewCursor"]["simpleReviewMode"] = self.simpleReviewModeCheckBox.IsChecked()
