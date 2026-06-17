@@ -57,7 +57,6 @@ isAppX = False
 #: @type: ConfigManager
 conf = None
 
-
 #: Notifies after the configuration profile has been switched.
 #: This allows components and add-ons to apply changes required by the new configuration.
 #: For example, braille switches braille displays if necessary.
