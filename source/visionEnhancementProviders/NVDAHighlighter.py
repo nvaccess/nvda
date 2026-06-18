@@ -68,10 +68,12 @@ class HighlightStyle(NamedTuple):
 BLUE = RGB(0x03, 0x36, 0xFF)
 PINK = RGB(0xFF, 0x02, 0x66)
 YELLOW = RGB(0xFF, 0xDE, 0x03)
+ORANGE = RGB(0xFF, 0xA5, 0x00)
 DASH_BLUE = HighlightStyle(BLUE, 5, winGDI.DashStyleDash, 5)
 SOLID_PINK = HighlightStyle(PINK, 5, winGDI.DashStyleSolid, 5)
 SOLID_BLUE = HighlightStyle(BLUE, 5, winGDI.DashStyleSolid, 5)
 SOLID_YELLOW = HighlightStyle(YELLOW, 2, winGDI.DashStyleSolid, 2)
+SOLID_ORANGE = HighlightStyle(ORANGE, 2, winGDI.DashStyleSolid, 2)
 
 
 class HighlightWindow(CustomWindow):
@@ -491,7 +493,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		Context.NAVIGATOR: SOLID_PINK,
 		Context.FOCUS_NAVIGATOR: SOLID_BLUE,
 		Context.BROWSEMODE: SOLID_YELLOW,
-		Context.MATH: SOLID_YELLOW,
+		Context.MATH: SOLID_ORANGE,
 	}
 	_refreshInterval = 100
 	customWindowClass = HighlightWindow

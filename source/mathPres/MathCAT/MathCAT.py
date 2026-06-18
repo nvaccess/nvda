@@ -54,6 +54,8 @@ if TYPE_CHECKING:
 
 _MATHML_NAMESPACE = "http://www.w3.org/1998/Math/MathML"
 _NAV_NODE_ID_PREFIX = "nvda-math-node-"
+_NAV_NODE_ID_ADDED_ATTR = "data-nvda-math-id-added"
+_NAV_NODE_ORIGINAL_ID_ATTR = "data-nvda-math-original-id"
 
 # Translators: The name of the category of MathCAT navigation commands in the Input Gestures dialog.
 SCRCAT_MATHCAT_NAV = _("MathCat navigation")
@@ -136,9 +138,29 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		nodeInfoById: dict[str, tuple[tuple[int, ...], str]] = {}
 		for element, nodePath in cls._iterMathMlElements(root, ()):
 			nodeId = cls._getSyntheticNodeId(nodePath)
+			if originalId := element.get("id"):
+				element.set(_NAV_NODE_ORIGINAL_ID_ATTR, originalId)
 			element.set("id", nodeId)
+			element.set(_NAV_NODE_ID_ADDED_ATTR, "true")
 			nodeInfoById[nodeId] = (nodePath, cls._stripMathMlNamespace(element.tag))
 		return ElementTree.tostring(root, encoding="unicode"), nodeInfoById
+
+	@classmethod
+	def _removeSyntheticIdsFromMathMl(cls, mathml: str) -> str:
+		try:
+			root = ElementTree.fromstring(mathml)
+		except ElementTree.ParseError:
+			return mathml
+		for element, _nodePath in cls._iterMathMlElements(root, ()):
+			if element.get(_NAV_NODE_ID_ADDED_ATTR) != "true":
+				continue
+			originalId = element.attrib.pop(_NAV_NODE_ORIGINAL_ID_ATTR, None)
+			if originalId is not None:
+				element.set("id", originalId)
+			else:
+				element.attrib.pop("id", None)
+			element.attrib.pop(_NAV_NODE_ID_ADDED_ATTR, None)
+		return ElementTree.tostring(root, encoding="unicode")
 
 	@classmethod
 	def prepareMathMlForNavigation(
@@ -374,12 +396,11 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 
 	# not a perfect match sequence, but should capture normal MathML
 	_mathTagHasNameSpace: re.Pattern = re.compile("<math .*?xmlns.+?>")
-	_hasAddedId: re.Pattern = re.compile(" id='[^'].+' data-id-added='true'")
 	_hasDataAttr: re.Pattern = re.compile(" data-[^=]+='[^']*'")
 
 	def _wrapMathMLForClipBoard(self, text: str) -> str:
 		"""Cleanup the MathML a little."""
-		text = re.sub(self._hasAddedId, "", text)
+		text = self._removeSyntheticIdsFromMathMl(text)
 		mathMLWithNS: str = re.sub(self._hasDataAttr, "", text)
 		if not re.match(self._mathTagHasNameSpace, mathMLWithNS):
 			mathMLWithNS = mathMLWithNS.replace(
