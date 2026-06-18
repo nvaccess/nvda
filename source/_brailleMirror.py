@@ -15,11 +15,10 @@ from __future__ import annotations
 import inputCore
 import winUser
 import wx
+from typing import TYPE_CHECKING
 
-# Imported at module level for runtime isinstance checks and attribute access.
-# All references to braille.X names are inside function/method bodies so the
-# circular import (braille -> _brailleMirror -> braille) is safe.
-import braille
+if TYPE_CHECKING:
+	import braille
 
 
 class BrailleMirror:
@@ -55,6 +54,7 @@ def _mirrorPreWriteCells(cells: list[int], **kwargs) -> None:
 
 
 def _mirrorFilterDisplayDimensions(value: braille.DisplayDimensions) -> braille.DisplayDimensions:
+	import braille
 	sizes = [m.numCells() for m in _registeredMirrors if m.numCells() > 0]
 	if not sizes:
 		return value
@@ -69,6 +69,7 @@ def registerMirror(mirror: BrailleMirror) -> None:
 
 	:meth:`BrailleMirror.display` will be called on the main thread for every subsequent :meth:`braille.BrailleHandler._writeCells` call.  If *mirror* returns a positive value from :meth:`BrailleMirror.numCells`, it will also participate in display-width negotiation via :data:`braille.filter_displayDimensions`.
 	"""
+	import braille
 	if not _registeredMirrors:
 		braille.pre_writeCells.register(_mirrorPreWriteCells)
 		braille.filter_displayDimensions.register(_mirrorFilterDisplayDimensions)
@@ -82,6 +83,7 @@ def unregisterMirror(mirror: BrailleMirror) -> None:
 
 	Safe to call even if *mirror* is not currently registered.
 	"""
+	import braille
 	try:
 		_registeredMirrors.remove(mirror)
 	except ValueError:
@@ -133,6 +135,7 @@ class DirectBrailleWindow:
 
 		Thread safety: safe to call from any thread; the actual write is dispatched to the main thread via ``wx.CallAfter``.
 		"""
+		import braille
 		if braille.handler and self._isForeground():
 			wx.CallAfter(braille.handler._writeCells, cells)
 
@@ -148,6 +151,7 @@ class DirectBrailleWindow:
 		return not self._isForeground()
 
 	def _handleDecideExecuteGesture(self, gesture: inputCore.InputGesture) -> bool:
+		import braille
 		if not self._isForeground():
 			return True
 		if isinstance(gesture, braille.BrailleDisplayGesture):
@@ -169,6 +173,7 @@ class DirectBrailleWindow:
 		"""
 		if self._active:
 			return
+		import braille
 		self._active = True
 		braille.decide_enabled.register(self._handleDecideEnabled)
 		inputCore.decide_executeGesture.register(self._handleDecideExecuteGesture)
@@ -184,6 +189,7 @@ class DirectBrailleWindow:
 		"""
 		if not self._active:
 			return
+		import braille
 		self._active = False
 		braille.decide_enabled.unregister(self._handleDecideEnabled)
 		inputCore.decide_executeGesture.unregister(self._handleDecideExecuteGesture)
