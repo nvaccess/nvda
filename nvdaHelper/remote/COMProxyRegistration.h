@@ -45,12 +45,12 @@ COMProxyRegistration_t* registerCOMProxy(const wchar_t* dllPath);
 bool unregisterCOMProxy(COMProxyRegistration_t* reg);
 
 /* Restores the original proxy CLSIDs for all interfaces for which the proxy CLSID was changed by registerCOMProxy.
-	Should be called before NvDA unloads from this process to restore the original state of the process as much as possible.
+	Should be called before NVDA unloads from this process to restore the original state of the process as much as possible.
 	@return void
 	*/
 void restoreInterfaceProxyBackups();
 
-/* Clears the cache used for storing generated proxy CLSIDs for dlls. Should be called when NvDA unloads from this process to free cached CLSIDs.
+/* Clears the cache used for storing generated proxy CLSIDs for dlls. Should be called when NVDA unloads from this process to free cached CLSIDs.
 	@return void
 	*/
 void clearCOMProxyRegistrationCache();
