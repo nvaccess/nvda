@@ -60,6 +60,9 @@ jobs:
     needs: matrix
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     timeout-minutes: 30
+    permissions:
+      contents: read
+      actions: write
     strategy:
       fail-fast: false
       matrix:
@@ -78,7 +81,7 @@ jobs:
     - name: Checkout NVDA
       uses: actions/checkout@v6
       with:
-        submodules: true
+        submodules: recursive
     - name: Install Python
       uses: actions/setup-python@v6
       with:
@@ -150,6 +153,8 @@ jobs:
     name: Check types with Pyright
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    permissions:
+      contents: read
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v5
@@ -171,6 +176,8 @@ jobs:
     name: Check po files for errors
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: matrix
+    permissions:
+      contents: read
     steps:
     - name: Checkout repository
       uses: actions/checkout@v6
@@ -202,6 +209,9 @@ jobs:
     name: Check translator comments
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    permissions:
+      contents: read
+      actions: write
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v5
@@ -231,6 +241,8 @@ jobs:
     name: Check license compatibility of dependencies
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    permissions:
+      contents: read
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v5
@@ -252,6 +264,10 @@ jobs:
     name: Run unit tests
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    permissions:
+      contents: read
+      actions: write
+      checks: write
     strategy:
       fail-fast: false
       matrix:
@@ -302,6 +318,8 @@ jobs:
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA, checkPot]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' && vars.CROWDIN_PROJECT_ID }}
+    permissions:
+      contents: read
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v5
@@ -332,6 +350,9 @@ jobs:
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
     timeout-minutes: 35
+    permissions:
+      contents: read
+      actions: write
     strategy:
       fail-fast: false
       matrix:
@@ -425,6 +446,10 @@ jobs:
     runs-on: ${{ matrix.runner }}
     needs: [matrix, createLauncher]
     timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: write
+      checks: write
     strategy:
       fail-fast: false
       matrix:
@@ -433,6 +458,7 @@ jobs:
           - installer
           - startupShutdown
           - symbols
+          - browseableMessage
           # - vscode
           - chrome_annotations
           - chrome_list
@@ -446,10 +472,12 @@ jobs:
         arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
         pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
         # A bug exists with Windows 2022 notepad that prevents NVDA from focusing it.
-        # This causes our symbol pronunciation tests to fail on this runner.
+        # This causes our symbol pronunciation and browseable message tests to fail on this runner.
         exclude:
           - runner: windows-2022
             testSuite: symbols
+          - runner: windows-2022
+            testSuite: browseableMessage
     env:
       uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     steps:
@@ -508,6 +536,9 @@ jobs:
     name: Create symbols
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    permissions:
+      contents: read
+      actions: write
     strategy:
       fail-fast: false
       matrix:
@@ -551,6 +582,8 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     needs: [buildNVDA, typeCheck, checkPo, checkPot, licenseCheck, unitTests, createLauncher, systemTests, createSymbols]
+    permissions:
+      contents: read
     steps:
     - name: Check if all tests pass
       uses: re-actors/alls-green@v1.2.2
@@ -560,8 +593,10 @@ jobs:
   uploadSymbols:
     name: Upload symbols
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
-    needs: [matrix, buildNvda]
+    needs: [matrix, buildNVDA]
     if: ${{ github.event_name == 'push' && vars.feature_uploadSymbolsToMozilla }}
+    permissions:
+      contents: read
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v5

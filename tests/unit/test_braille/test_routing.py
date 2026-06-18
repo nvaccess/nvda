@@ -13,6 +13,7 @@ import controlTypes
 from ..textProvider import CursorManager, BasicTextProvider
 import unittest
 import time
+from unittest.mock import Mock, patch
 from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag
 
 
@@ -29,6 +30,44 @@ class CursorManager(CursorManager):
 	caretLastUpdateTime: float = 0.0
 	lastActivateTime: float = 0.0
 	TextInfo = CursorManagerTextInfo
+
+
+def _segmentedTextWithSeparator(sep: str, newSepIndex: list[int]) -> str:
+	newSepIndex.append(1)
+	return "你 ℌ"
+
+
+class TestBrailleOffsetConverters(unittest.TestCase):
+	def setUp(self) -> None:
+		self._originalTranslationTable = config.conf["braille"]["translationTable"]
+		self._originalUnicodeNormalization = config.conf["braille"]["unicodeNormalization"]
+
+	def tearDown(self) -> None:
+		config.conf["braille"]["translationTable"] = self._originalTranslationTable
+		config.conf["braille"]["unicodeNormalization"] = self._originalUnicodeNormalization
+
+	def test_chineseWordSegmentationAndUnicodeNormalizationOffsetsAreComposed(self) -> None:
+		config.conf["braille"]["translationTable"] = "zh-chn.ctb"
+		config.conf["braille"]["unicodeNormalization"] = "enabled"
+		wordSegmenter = Mock()
+		wordSegmenter.segmentedText.side_effect = _segmentedTextWithSeparator
+		translate = Mock(return_value=([1, 2, 3], [0, 1, 2], [0, 1, 2], 2))
+		with (
+			patch("textUtils._wordSeg.wordSegUtils.WordSegmenter", return_value=wordSegmenter),
+			patch("braille.louisHelper.translate", translate),
+		):
+			region = braille.Region()
+			region.rawText = "你ℌ"
+			region.rawTextTypeforms = [11, 22]
+			region.cursorPos = 1
+
+			region.update()
+
+		self.assertEqual(translate.call_args.args[1], "你 H")
+		self.assertEqual(translate.call_args.kwargs["cursorPos"], 2)
+		self.assertEqual(translate.call_args.kwargs["typeform"], [11, 22, 22])
+		self.assertEqual(region.brailleToRawPos, [0, 1, 1])
+		self.assertEqual(region.rawToBraillePos, [0, 2])
 
 
 class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):

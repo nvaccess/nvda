@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
-# Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from dataclasses import dataclass
 import threading
@@ -18,6 +18,7 @@ from typing import Any, Literal, NamedTuple, Optional, Self
 import core
 import extensionPoints
 import wx
+from wx.html2 import WebView
 from .contextHelp import ContextHelpMixin
 from logHandler import log
 
@@ -448,7 +449,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		# Scafold the dialog.
 		mainSizer = self._mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = self._contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
-		messageControl = self._messageControl = wx.StaticText(self)
+		messageControl = self._messageControl = self._createMessageControl()
 		contentsSizer.addItem(messageControl)
 		buttonHelper = self._buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		mainSizer.Add(
@@ -656,6 +657,20 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			(yesLabel, noLabel, cancelLabel),
 		)
 		return self
+
+	def _createMessageControl(self) -> wx.Window:
+		"""Create the control used to display the dialog's message.
+
+		Override to render the message with a different control (see :class:`HtmlMessageDialog`).
+		"""
+		return wx.StaticText(self)
+
+	def _wrapMessageControl(self) -> None:
+		"""Wrap the message control's text to the dialog width, as part of laying out the dialog.
+
+		Override when the message control lays out its own content and needs no wrapping.
+		"""
+		self._messageControl.Wrap(self.scaleSize(self.GetSize().Width))
 
 	def setMessage(self, message: str) -> Self:
 		"""Set the textual message to display in the dialog.
@@ -954,7 +969,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if gui._isDebug():
 			startTime = time.time()
 			log.debug("Laying out message dialog")
-		self._messageControl.Wrap(self.scaleSize(self.GetSize().Width))
+		self._wrapMessageControl()
 		self._mainSizer.Fit(self)
 		if self.Parent == gui.mainFrame:
 			# NVDA's main frame is not visible on screen, so centre on screen rather than on `mainFrame` to avoid the dialog appearing at the top left of the screen.
@@ -1170,6 +1185,103 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			self.Close()
 
 	# endregion
+
+
+class HtmlMessageDialog(MessageDialog):
+	"""A :class:`MessageDialog` that renders its message as HTML in a WebView.
+
+	The message passed to the dialog must be a full HTML document.
+	Because the WebView captures keyboard focus, key presses are routed from JavaScript to NVDA via
+	``nvda-action://<action>`` URLs. The ``close`` action is handled internally; register handlers for
+	any other actions with :meth:`registerAction`.
+	"""
+
+	_ACTION_URL_PREFIX = "nvda-action://"
+
+	_FAIL_ON_NO_BUTTONS = False
+	"""HtmlMessageDialog can be shown without buttons; the HTML content handles its own close action."""
+
+	_webViewBackend: str = wx.html2.WebViewBackendIE
+	"""Identifier of the WebView backend to render the message with. Override in a subclass to use another.
+
+	.. note:: The Edge backend (wx.html2.WebViewBackendEdge) is preferred over IE for modern HTML support,
+		but incurs a ~4 second cold start on each new WebView instance because wxPython 4.2 does not expose
+		wx.html2.WebViewConfiguration, preventing reuse of the underlying CoreWebView2Environment across
+		instances. Once NVDA upgrades to wxPython 4.3.0, WebViewConfiguration can be created once, held
+		alive, and passed to each WebView.New() call to eliminate the cold start. Switch this backend to
+		wx.html2.WebViewBackendEdge at that point.
+	"""
+
+	def __init__(self, *args, **kwargs):
+		# Initialised before super().__init__() because it creates the WebView (binding its events) and sets
+		# its initial content, both of which can fire those events.
+		self._actionHandlers: dict[str, Callable[[], None]] = {}
+		super().__init__(*args, **kwargs)
+		# The WebView (IE backend) consumes Escape natively before JavaScript keydown fires.
+		# Use a wx accelerator table, which is translated before the message reaches the focused
+		# child window, so Escape reliably triggers Close() regardless of what IE does with it.
+		escapeId = wx.NewIdRef()
+		self.Bind(wx.EVT_MENU, lambda evt: self.Close(), id=escapeId)
+		self.SetAcceleratorTable(
+			wx.AcceleratorTable(
+				[
+					wx.AcceleratorEntry(wx.ACCEL_NORMAL, wx.WXK_ESCAPE, escapeId),
+				],
+			),
+		)
+
+	def registerAction(self, action: str, handler: Callable[[], None]) -> Self:
+		"""Register a handler for an ``nvda-action://<action>`` URL triggered from the HTML message.
+
+		:param action: The action name, i.e. the part of the URL after ``nvda-action://``.
+		:param handler: Called when the message navigates to the action's URL.
+		:return: Updated instance for chaining.
+		"""
+		self._actionHandlers[action] = handler
+		return self
+
+	def _createMessageControl(self) -> WebView:
+		control = WebView.New(self, backend=self._webViewBackend)
+		control.EnableContextMenu(False)
+		control.EnableHistory(False)
+		# Bind before MessageDialog.__init__ sets the initial content, so the first load and navigation are observed.
+		control.Bind(wx.html2.EVT_WEBVIEW_NAVIGATING, self._onNavigating)
+		return control
+
+	def _wrapMessageControl(self) -> None:
+		# A WebView lays out its own content, so there is nothing to wrap.
+		pass
+
+	def setMessage(self, message: str) -> Self:
+		self._messageControl.SetPage(message, "")
+		self._isLayoutFullyRealized = False
+		return self
+
+	def _onNavigating(self, evt: wx.html2.WebViewEvent) -> None:
+		url = evt.GetURL()
+		if url.lower().startswith("data:text/html"):
+			# Edge fires this URL for SetPage; allow it so content loads.
+			return
+		evt.Veto()
+		if url.lower().startswith(self._ACTION_URL_PREFIX):
+			action = url[len(self._ACTION_URL_PREFIX) :]
+			if action == "close":
+				self.Close()
+			elif handler := self._actionHandlers.get(action):
+				handler()
+		elif url.lower().startswith(("http://", "https://")):
+			wx.LaunchDefaultBrowser(url)
+
+	def _getFallbackAction(self) -> _Command | None:
+		"""Return a fallback close action even when no buttons are registered.
+
+		HtmlMessageDialog may be shown without buttons; in that case escape and the title bar close
+		button must still work.
+		"""
+		action = super()._getFallbackAction()
+		if action is None and not self._commands:
+			return _Command(callback=None, closesDialog=True, returnCode=ReturnCode.CLOSE)
+		return action
 
 
 def _messageBoxShim(message: str, caption: str, style: int, parent: wx.Window | None):

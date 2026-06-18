@@ -22,9 +22,11 @@
 
 ### Changes
 
-* Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
 * Updated Liblouis Braille translator to [3.38.0](https://github.com/liblouis/liblouis/releases/tag/v3.38.0). (#20269, @codeofdusk)
   * Added new Elfdalian and Sami tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
+* The dialog used to present browseable messages (such as formatting information) has been modernized. (#18878, @LeonarddeR)
+  * The dialog's shortcut to copy contents of the message to the clipboard was changed to `alt+c`.
+* Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
 
 ### Bug Fixes
 
@@ -43,6 +45,10 @@
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* Added `gui.message.HtmlMessageDialog`, a `MessageDialog` subclass that renders a full HTML document in a `wx.html2.WebView`. (#18878, @LeonarddeR)
+  * The WebView backend can be overridden via the `_webViewBackend` class attribute, which defaults to the IE backend.
+  * JavaScript in the message can trigger NVDA actions by navigating to `nvda-action://<action>` URLs; `close` is handled internally and other actions can be registered with `registerAction`.
+* `gui.message.MessageDialog` gained the protected `_createMessageControl` and `_wrapMessageControl` hooks, so subclasses can use a different control for the message body. (#18878, @LeonarddeR)
 * Added [cppjieba](https://github.com/yanyiwu/cppjieba) as a git submodule for Chinese word segmentation. (#18548, @CrazySteve0605)
 * `braille.BrailleDisplayGesture` now exposes a `cellIndexes` list attribute, replacing the single-valued `routingIndex`. (#20001, @LeonarddeR)
   * Drivers should set `cellIndexes` directly instead of `routingIndex`.
@@ -65,6 +71,8 @@ Use `KeyGesture` instead. (#20250, @LeonarddeR)
 Use the corresponding `TouchAction` enum members instead (e.g. `TouchAction.TAP`, `TouchAction.FLICK_UP`). (#20086, @kefaslungu)
 * In `touchTracker`, `actionLabels` is deprecated.
 Use `TouchAction(value).displayString` instead. (#20086, @kefaslungu)
+* The `URL_MK_UNIFORM`, `DIALOG_OPTIONS` and `HTMLDLG_*` constants in `ui` are deprecated with no replacement, as the COM-based HTML dialog infrastructure has been removed.
+Use `gui.message.HtmlMessageDialog` instead. (#18878, @LeonarddeR)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
@@ -148,6 +156,7 @@ This is more noticeable for Windows releases which are enablement packages on to
 * Added an advanced setting to opt regular expression speech dictionary entries into a more modern [`regex`](https://pypi.org/project/regex/) engine.
 This provides Unicode-aware `\w` and `\b` and additional regex features.
 The setting is disabled by default. (#20013, @LeonarddeR)
+* The "Type" radio buttons in the "Add Dictionary Entry" dialog are now arranged vertically rather than horizontally. (#19657)
 
 ### Bug Fixes
 
