@@ -54,8 +54,12 @@ std::wstring guidToString(const GUID& guid) {
 }
 
 GUID stringToGuid(const std::wstring& guidString) {
-	GUID guid;
-	CLSIDFromString(guidString.c_str(), &guid);
+	GUID guid = GUID_NULL;
+	HRESULT res = CLSIDFromString(guidString.c_str(), &guid);
+	if (FAILED(res)) {
+		LOG_ERROR(L"CLSIDFromString failed for '"<<guidString<<L"', code "<<res);
+		return GUID_NULL;
+	}
 	return guid;
 }
 
