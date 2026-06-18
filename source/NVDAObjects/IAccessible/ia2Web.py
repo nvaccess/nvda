@@ -337,13 +337,83 @@ class EditorChunk(Ia2Web):
 class Math(Ia2Web):
 	_MATH_ID_ATTRS = ("id", "xml-id")
 
+	def _getMathObjChildren(self, obj: NVDAObjects.NVDAObject) -> tuple[NVDAObjects.NVDAObject, ...]:
+		try:
+			return tuple(obj.children)
+		except RuntimeError:
+			log.debugWarning("Error fetching MathML node children", exc_info=True)
+			return ()
+
+	def _getMathObjAttributes(self, obj: NVDAObjects.NVDAObject) -> dict[str, str]:
+		try:
+			return obj.IA2Attributes
+		except AttributeError:
+			return {}
+
+	def _getMathElementChildren(self, obj: NVDAObjects.NVDAObject) -> tuple[NVDAObjects.NVDAObject, ...]:
+		return tuple(
+			child
+			for child in self._getMathObjChildren(obj)
+			if self._getMathObjAttributes(child).get("tag")
+		)
+
+	def _getMathNodeMapRoot(self) -> NVDAObjects.NVDAObject:
+		if self._getMathObjAttributes(self).get("tag") == "math":
+			return self
+		mathChildren = tuple(
+			child
+			for child in self._getMathElementChildren(self)
+			if self._getMathObjAttributes(child).get("tag") == "math"
+		)
+		return mathChildren[0] if len(mathChildren) == 1 else self
+
+	def _getMathNodeRectFromObj(self, obj: NVDAObjects.NVDAObject) -> Optional["RectLTRB"]:
+		try:
+			if obj.hasIrrelevantLocation:
+				return None
+			location = obj.location
+		except Exception:
+			log.debugWarning("Error fetching MathML node location", exc_info=True)
+			return None
+		if not location or not location.width or not location.height:
+			return None
+		return location.toLTRB()
+
+	def getMathNodeInfoByPath(self) -> dict[tuple[int, ...], tuple[str, "RectLTRB"]]:
+		"""Map MathML element paths to tag names and screen rectangles for this IA2 math subtree.
+
+		Paths are based on MathML element child indexes only, ignoring static text
+		accessibles exposed below token elements.
+		"""
+		nodeInfoByPath: dict[tuple[int, ...], tuple[str, "RectLTRB"]] = {}
+		stack: list[tuple[NVDAObjects.NVDAObject, tuple[int, ...]]] = [
+			(self._getMathNodeMapRoot(), ()),
+		]
+		visitedCount = 0
+		while stack:
+			obj, path = stack.pop()
+			visitedCount += 1
+			tag = self._getMathObjAttributes(obj).get("tag")
+			if rect := self._getMathNodeRectFromObj(obj):
+				if tag:
+					nodeInfoByPath[path] = (tag, rect)
+			children = self._getMathElementChildren(obj)
+			stack.extend(
+				(child, path + (index,))
+				for index, child in reversed(tuple(enumerate(children)))
+			)
+		log.debug(
+			f"Math highlight built IA2 path map with {len(nodeInfoByPath)} usable rectangles "
+			f"after visiting {visitedCount} MathML element objects",
+		)
+		return nodeInfoByPath
+
 	def getMathNodeRectById(self, nodeId: str) -> Optional["RectLTRB"]:
 		"""Get the screen rectangle for a descendant MathML node with the given id."""
 		if not nodeId:
 			raise LookupError
 		stack: list[NVDAObjects.NVDAObject] = [self]
 		visitedCount = 0
-		visitedDetails: list[str] = []
 		while stack:
 			obj = stack.pop()
 			visitedCount += 1
@@ -351,13 +421,6 @@ class Math(Ia2Web):
 				attrs = obj.IA2Attributes
 			except AttributeError:
 				attrs = {}
-			if len(visitedDetails) < 30:
-				location = obj.location
-				visitedDetails.append(
-					f"role={obj.role!r}, name={obj.name!r}, "
-					f"tag={attrs.get('tag')!r}, id={attrs.get('id')!r}, "
-					f"xml-id={attrs.get('xml-id')!r}, location={location!r}",
-				)
 			matchedAttr = next((attr for attr in self._MATH_ID_ATTRS if attrs.get(attr) == nodeId), None)
 			if matchedAttr:
 				if obj.hasIrrelevantLocation:
@@ -369,14 +432,8 @@ class Math(Ia2Web):
 					raise LookupError
 				log.debug(f"Math highlight matched {matchedAttr}={nodeId!r} after visiting {visitedCount} IA2 objects")
 				return location.toLTRB()
-			try:
-				stack.extend(reversed(obj.children))
-			except RuntimeError:
-				log.debugWarning("Error fetching MathML node children", exc_info=True)
-		log.debug(
-			f"Math highlight found no IA2 object for id {nodeId!r} after visiting {visitedCount} IA2 objects. "
-			f"Visited IA2 math objects: {' | '.join(visitedDetails)}",
-		)
+			stack.extend(reversed(self._getMathObjChildren(obj)))
+		log.debug(f"Math highlight found no IA2 object for id {nodeId!r} after visiting {visitedCount} IA2 objects")
 		raise LookupError
 
 	def _get_mathMl(self):
