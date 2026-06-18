@@ -367,6 +367,7 @@ class NVDAHighlighterGuiPanel(
 			settingsToCheck = [
 				settingsStorage.highlightBrowseMode,
 				settingsStorage.highlightFocus,
+				settingsStorage.highlightMath,
 				settingsStorage.highlightNavigator,
 			]
 			if any(settingsToCheck):
@@ -376,6 +377,7 @@ class NVDAHighlighterGuiPanel(
 				)
 				settingsStorage.highlightBrowseMode = False
 				settingsStorage.highlightFocus = False
+				settingsStorage.highlightMath = False
 				settingsStorage.highlightNavigator = False
 		super().__init__(parent)
 
@@ -432,6 +434,7 @@ class NVDAHighlighterGuiPanel(
 		settingsToTriggerActivation = [
 			settingsStorage.highlightBrowseMode,
 			settingsStorage.highlightFocus,
+			settingsStorage.highlightMath,
 			settingsStorage.highlightNavigator,
 		]
 		isAnyEnabled = any(settingsToTriggerActivation)
@@ -450,6 +453,7 @@ class NVDAHighlighterGuiPanel(
 		settingsStorage: NVDAHighlighterSettings = self._getSettingsStorage()
 		settingsStorage.highlightBrowseMode = False
 		settingsStorage.highlightFocus = False
+		settingsStorage.highlightMath = False
 		settingsStorage.highlightNavigator = False
 		self.updateDriverSettings()
 		self._updateEnabledState()
@@ -468,6 +472,7 @@ class NVDAHighlighterGuiPanel(
 			isEnableAllChecked = evt.IsChecked()
 			settingsStorage.highlightBrowseMode = isEnableAllChecked
 			settingsStorage.highlightFocus = isEnableAllChecked
+			settingsStorage.highlightMath = isEnableAllChecked
 			settingsStorage.highlightNavigator = isEnableAllChecked
 			if not self._ensureEnableState(isEnableAllChecked) and isEnableAllChecked:
 				self._onEnableFailure()
