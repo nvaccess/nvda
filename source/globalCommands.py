@@ -4811,20 +4811,28 @@ class GlobalCommands(ScriptableObject):
 	def script_interactWithMath(self, gesture):
 		import mathPres
 
-		mathMl = mathPres.getMathMlFromTextInfo(api.getReviewPosition())
+		reviewPosition = api.getReviewPosition()
+		mathMl = mathPres.getMathMlFromTextInfo(reviewPosition)
+		sourceObj = None
 		if not mathMl:
 			obj = api.getNavigatorObject()
 			if obj.role == controlTypes.Role.MATH:
 				try:
 					mathMl = obj.mathMl
+					sourceObj = obj
 				except (NotImplementedError, LookupError):
 					mathMl = None
+		else:
+			try:
+				sourceObj = reviewPosition.NVDAObjectAtStart
+			except (NotImplementedError, LookupError):
+				pass
 		if not mathMl:
 			# Translators: Reported when the user attempts math interaction
 			# with something that isn't math.
 			ui.message(_("Not math"))
 			return
-		mathPres.interactWithMathMl(mathMl)
+		mathPres.interactWithMathMl(mathMl, sourceObj=sourceObj)
 
 	@script(
 		# Translators: Describes a command.

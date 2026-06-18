@@ -24,6 +24,7 @@ import ui
 import textInfos
 
 if typing.TYPE_CHECKING:
+	from NVDAObjects import NVDAObject
 	from speech.commands import SpeechCommand  # noqa F401: type-checking only
 
 
@@ -31,6 +32,7 @@ class MathPresentationProvider(object):
 	"""Implements presentation of math content.
 	A single provider does not need to implement all presentation types.
 	"""
+	supportsInteractionSourceObj: bool = False
 
 	def getSpeechForMathMl(self, mathMl: str) -> List[Union[str, "SpeechCommand"]]:
 		"""Get speech output for specified MathML markup.
@@ -46,9 +48,10 @@ class MathPresentationProvider(object):
 		"""
 		raise NotImplementedError
 
-	def interactWithMathMl(self, mathMl: str) -> None:
+	def interactWithMathMl(self, mathMl: str, sourceObj: Optional["NVDAObject"] = None) -> None:
 		"""Begin interaction with specified MathML markup.
 		@param mathMl: The MathML markup.
+		@param sourceObj: The source object containing the math, if known.
 		"""
 		raise NotImplementedError
 
@@ -120,9 +123,15 @@ class MathInteractionNVDAObject(Window):
 	# Any tree interceptor should not apply here.
 	treeInterceptor = None
 
-	def __init__(self, provider=None, mathMl=None):
+	def __init__(
+		self,
+		provider: MathPresentationProvider | None = None,
+		mathMl: str | None = None,
+		sourceObj: Optional["NVDAObject"] = None,
+	):
 		self.parent = parent = api.getFocusObject()
 		self.provider = provider
+		self.sourceObj = sourceObj
 		super(MathInteractionNVDAObject, self).__init__(windowHandle=parent.windowHandle)
 
 	def setFocus(self):
@@ -135,6 +144,10 @@ class MathInteractionNVDAObject(Window):
 		eventHandler.executeEvent("gainFocus", self)
 
 	def script_exit(self, gesture):
+		import vision
+
+		if vision.handler:
+			vision.handler.handleMathNavigation(None)
 		eventHandler.executeEvent("gainFocus", self.parent)
 
 	# Translators: Describes a command.
@@ -176,18 +189,21 @@ def getMathMlFromTextInfo(pos: textInfos.TextInfo) -> Optional[str]:
 	return None
 
 
-def interactWithMathMl(mathMl: str) -> None:
+def interactWithMathMl(mathMl: str, sourceObj: Optional["NVDAObject"] = None) -> None:
 	"""Begin interaction with specified MathML markup, reporting any errors to the user.
 	This is intended to be called from scripts.
 	If interaction isn't supported, this will be reported to the user.
 	The script should return after calling this function.
 	@param mathMl: The MathML markup.
+	@param sourceObj: The source object containing the math, if known.
 	"""
 	if not interactionProvider:
 		# Translators: Reported when the user attempts math interaction
 		# but math interaction is not supported.
 		ui.message(_("Math interaction not supported."))
 		return
+	if sourceObj is not None and getattr(interactionProvider, "supportsInteractionSourceObj", False):
+		return interactionProvider.interactWithMathMl(mathMl, sourceObj=sourceObj)
 	return interactionProvider.interactWithMathMl(mathMl)
 
 

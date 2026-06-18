@@ -308,9 +308,12 @@ _contextOptionLabelsWithAccelerators = {
 	# Translators: shown for a highlighter setting that toggles
 	# highlighting the navigator object.
 	Context.NAVIGATOR: _("Highlight navigator &object"),
+	# Translators: shown for a highlighter setting that toggles
+	# highlighting the current math navigation position.
+	Context.MATH: _("Highlight math &navigation"),
 }
 
-_supportedContexts = (Context.FOCUS, Context.NAVIGATOR, Context.BROWSEMODE)
+_supportedContexts = (Context.FOCUS, Context.NAVIGATOR, Context.BROWSEMODE, Context.MATH)
 
 
 class NVDAHighlighterSettings(providerBase.VisionEnhancementProviderSettings):
@@ -318,6 +321,7 @@ class NVDAHighlighterSettings(providerBase.VisionEnhancementProviderSettings):
 	highlightFocus = False
 	highlightNavigator = False
 	highlightBrowseMode = False
+	highlightMath = False
 
 	@override
 	@classmethod
@@ -482,6 +486,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		Context.NAVIGATOR: SOLID_PINK,
 		Context.FOCUS_NAVIGATOR: SOLID_BLUE,
 		Context.BROWSEMODE: SOLID_YELLOW,
+		Context.MATH: SOLID_YELLOW,
 	}
 	_refreshInterval = 100
 	customWindowClass = HighlightWindow
@@ -513,6 +518,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		extensionPoints.post_focusChange.register(self.handleFocusChange)
 		extensionPoints.post_reviewMove.register(self.handleReviewMove)
 		extensionPoints.post_browseModeMove.register(self.handleBrowseModeMove)
+		extensionPoints.post_mathNavigation.register(self.handleMathNavigation)
 
 	def __init__(self):
 		super().__init__()
@@ -587,6 +593,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		self.contextToRectMap[context] = rect
 
 	def handleFocusChange(self, obj: "NVDAObject") -> None:
+		self.contextToRectMap.pop(Context.MATH, None)
 		self.updateContextRect(context=Context.FOCUS, obj=obj)
 		if not api.isObjectInActiveTreeInterceptor(obj):
 			self.contextToRectMap.pop(Context.BROWSEMODE, None)
@@ -598,6 +605,9 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 
 	def handleBrowseModeMove(self, obj: "CursorManager | None" = None) -> None:
 		self.updateContextRect(context=Context.BROWSEMODE)
+
+	def handleMathNavigation(self, rect: RectLTRB | None) -> None:
+		self.updateContextRect(context=Context.MATH, rect=rect)
 
 	def refresh(self) -> None:
 		"""Refreshes the screen positions of the enabled highlights."""

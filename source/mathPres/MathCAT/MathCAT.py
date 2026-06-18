@@ -12,7 +12,7 @@ from ctypes import (
 	windll,
 )
 from os import path
-from typing import Type
+from typing import Optional, TYPE_CHECKING, Type
 
 import braille
 import config
@@ -46,6 +46,10 @@ from .navCommands import NAV_COMMANDS
 from .preferences import applyUserPreferences
 from .speech import convertSSMLTextForNVDA
 
+if TYPE_CHECKING:
+	from locationHelper import RectLTRB
+	from NVDAObjects import NVDAObject
+
 # Translators: The name of the category of MathCAT navigation commands in the Input Gestures dialog.
 SCRCAT_MATHCAT_NAV = _("MathCat navigation")
 
@@ -68,13 +72,15 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		self,
 		provider: mathPres.MathPresentationProvider | None = None,
 		mathMl: str | None = None,
+		sourceObj: Optional["NVDAObject"] = None,
 	):
 		"""Initialize the MathCATInteraction object.
 
 		:param provider: Optional presentation provider.
 		:param mathMl: Optional initial MathML string.
+		:param sourceObj: Optional source object containing the math.
 		"""
-		super(MathCATInteraction, self).__init__(provider=provider, mathMl=mathMl)
+		super(MathCATInteraction, self).__init__(provider=provider, mathMl=mathMl, sourceObj=sourceObj)
 		if mathMl is None:
 			self.initMathML = "<math></math>"
 		else:
@@ -86,10 +92,42 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		try:
 			text: str = libmathcat.DoNavigateCommand("ZoomIn")
 			speech.speak(convertSSMLTextForNVDA(text))
+			self._updateMathHighlight()
 		except Exception:
 			log.exception()
 			# Translators: this message reports an error in starting navigation of math.
 			ui.message(pgettext("math", "Error in starting navigation of math."))
+			self._clearMathHighlight()
+
+	def _getSourceRect(self) -> Optional["RectLTRB"]:
+		"""Get the whole-equation rectangle for a supported web math source object."""
+		sourceObj = self.sourceObj
+		if not sourceObj:
+			return None
+		from NVDAObjects.IAccessible.ia2Web import Math as Ia2WebMath
+
+		if not isinstance(sourceObj, Ia2WebMath):
+			return None
+		try:
+			if sourceObj.hasIrrelevantLocation:
+				return None
+			location = sourceObj.location
+		except Exception:
+			log.debugWarning("Error getting math source location", exc_info=True)
+			return None
+		return location.toLTRB() if location else None
+
+	def _updateMathHighlight(self) -> None:
+		import vision
+
+		if vision.handler:
+			vision.handler.handleMathNavigation(self._getSourceRect())
+
+	def _clearMathHighlight(self) -> None:
+		import vision
+
+		if vision.handler:
+			vision.handler.handleMathNavigation(None)
 
 	def getBrailleRegions(
 		self,
@@ -117,10 +155,12 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		try:
 			text = libmathcat.DoNavigateCommand(commandName)
 			speech.speak(convertSSMLTextForNVDA(text))
+			self._updateMathHighlight()
 		except Exception:
 			log.exception()
 			# Translators: this message alerts users to an error in navigating math.
 			ui.message(pgettext("math", "Error in navigating math"))
+			self._clearMathHighlight()
 
 		self._updateBraille()
 
@@ -297,6 +337,8 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 
 
 class MathCAT(mathPres.MathPresentationProvider):
+	supportsInteractionSourceObj: bool = True
+
 	def __init__(self):
 		"""Initializes MathCAT, loading the rules specified in the rules directory."""
 
@@ -398,11 +440,12 @@ class MathCAT(mathPres.MathPresentationProvider):
 			ui.message(pgettext("math", "Error in brailling math."))
 			return ""
 
-	def interactWithMathMl(self, mathml: str) -> None:
+	def interactWithMathMl(self, mathml: str, sourceObj: Optional["NVDAObject"] = None) -> None:
 		"""Interact with a MathML string, creating a MathCATInteraction object.
 
 		:param mathml: The MathML representing the math to interact with.
+		:param sourceObj: Optional source object containing the math.
 		"""
-		interaction = MathCATInteraction(provider=self, mathMl=mathml)
+		interaction = MathCATInteraction(provider=self, mathMl=mathml, sourceObj=sourceObj)
 		interaction.setFocus()
 		interaction._updateBraille()

@@ -21,5 +21,6 @@ class Context(str, Enum):
 	FOCUS_NAVIGATOR = "focusNavigator"
 	CARET = "caret"
 	BROWSEMODE = "browseMode"
+	MATH = "math"
 	REVIEW = "review"
 	MOUSE = "mouse"
