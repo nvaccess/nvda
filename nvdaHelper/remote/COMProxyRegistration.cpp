@@ -43,7 +43,11 @@ std::mutex comProxyRegistrationMutex;
 
 std::wstring guidToString(const GUID& guid) {
 	OLECHAR* guidString = nullptr;
-	StringFromCLSID(guid, &guidString);
+	HRESULT res = StringFromCLSID(guid, &guidString);
+	if (FAILED(res) || !guidString) {
+		LOG_ERROR(L"StringFromCLSID failed, code "<<res);
+		return L"";
+	}
 	std::wstring result(guidString);
 	CoTaskMemFree(guidString);
 	return result;
