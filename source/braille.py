@@ -4278,13 +4278,3 @@ def _speakOnNavigatingByUnit(info: textInfos.TextInfo, readingUnit: str) -> None
 
 # Re-export the public braille mirror/direct-window API so callers can use
 # braille.BrailleMirror etc. without importing _brailleMirror directly.
-from _brailleMirror import (
-	BrailleMirror,
-	DirectBrailleWindow,
-	injectGesture,
-	registerMirror,
-	unregisterMirror,
-	_mirrorFilterDisplayDimensions,
-	_mirrorPreWriteCells,
-	_registeredMirrors,
-)
