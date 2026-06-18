@@ -343,6 +343,7 @@ class Math(Ia2Web):
 			raise LookupError
 		stack: list[NVDAObjects.NVDAObject] = [self]
 		visitedCount = 0
+		visitedDetails: list[str] = []
 		while stack:
 			obj = stack.pop()
 			visitedCount += 1
@@ -350,6 +351,13 @@ class Math(Ia2Web):
 				attrs = obj.IA2Attributes
 			except AttributeError:
 				attrs = {}
+			if len(visitedDetails) < 30:
+				location = obj.location
+				visitedDetails.append(
+					f"role={obj.role!r}, name={obj.name!r}, "
+					f"tag={attrs.get('tag')!r}, id={attrs.get('id')!r}, "
+					f"xml-id={attrs.get('xml-id')!r}, location={location!r}",
+				)
 			matchedAttr = next((attr for attr in self._MATH_ID_ATTRS if attrs.get(attr) == nodeId), None)
 			if matchedAttr:
 				if obj.hasIrrelevantLocation:
@@ -365,7 +373,10 @@ class Math(Ia2Web):
 				stack.extend(reversed(obj.children))
 			except RuntimeError:
 				log.debugWarning("Error fetching MathML node children", exc_info=True)
-		log.debug(f"Math highlight found no IA2 object for id {nodeId!r} after visiting {visitedCount} IA2 objects")
+		log.debug(
+			f"Math highlight found no IA2 object for id {nodeId!r} after visiting {visitedCount} IA2 objects. "
+			f"Visited IA2 math objects: {' | '.join(visitedDetails)}",
+		)
 		raise LookupError
 
 	def _get_mathMl(self):
