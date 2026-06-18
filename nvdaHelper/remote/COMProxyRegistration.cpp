@@ -95,13 +95,13 @@ bool registerInterfaceProxy(IID iid, CLSID clsid) {
 		} else {
 			backup.hadOriginalProxy=true;
 		}
+		interfaceProxyBackups[iidString] = backup;
 	}
 	res = CoRegisterPSClsid(iid,clsid);
 	if(res!=S_OK) {
 		LOG_ERROR(L"Unable to register interface iid "<<iidString<<L" with proxy CLSID "<<clsidString<<L", code "<<res);
 		return false;
 	}
-	interfaceProxyBackups[iidString] = backup;
 	return true;
 }
 
