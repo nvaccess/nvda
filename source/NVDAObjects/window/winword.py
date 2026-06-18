@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V., Cyrille Bougot,
+# Copyright (C) 2006-2026 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V., Cyrille Bougot,
 # Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
@@ -19,6 +19,8 @@ import comtypes.client
 import comtypes.automation
 import colorsys
 import eventHandler
+import exceptions
+import watchdog
 import braille
 import scriptHandler
 from scriptHandler import script
@@ -494,7 +496,7 @@ formatConfigFlagsMap = {
 	"reportColor": 0x8,
 	"reportAlignment": 0x10,
 	"reportStyle": 0x20,
-	"reportSpellingErrors": 0x40,
+	"reportSpellingErrors2": 0x40,
 	"reportPage": 0x80,
 	"reportLineNumber": 0x100,
 	"reportTables": 0x200,
@@ -1072,14 +1074,25 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			formatConfigFlags &= ~formatConfigFlagsMap["reportRevisions"]
 		if self.obj.ignorePageNumbers:
 			formatConfigFlags &= ~formatConfigFlagsMap["reportPage"]
-		res = NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(
-			self.obj.appModule.helperLocalBindingHandle,
-			self.obj.documentWindowHandle,
-			startOffset,
-			endOffset,
-			formatConfigFlags,
-			ctypes.byref(text),
-		)
+		# This call reaches into Word's process and blocks the core if Word is
+		# unresponsive (e.g. a huge document operation). Run it via the watchdog's
+		# cancellable thread so the watchdog can cancel it.
+		try:
+			res = watchdog.cancellableExecute(
+				NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange,
+				self.obj.appModule.helperLocalBindingHandle,
+				self.obj.documentWindowHandle,
+				startOffset,
+				endOffset,
+				formatConfigFlags,
+				ctypes.byref(text),
+			)
+		except exceptions.CallCancelled:
+			# Don't fall back to self.text here: that reads self._rangeObj.text, which
+			# is another COM call into the same (still hung) Word and would re-block
+			# the core, defeating the cancellation.
+			log.debug("winword_getTextInRange cancelled; Word is not responding")
+			return [""]
 		if res or not text:
 			log.debugWarning("winword_getTextInRange failed with %d" % res)
 			return [self.text]

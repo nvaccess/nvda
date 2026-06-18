@@ -25,7 +25,7 @@ Add-ons relying on private symbols do so at their own risk.
 * **Pip packages:**
 These may be updated, downgraded or removed at any time.
 It is recommended to package any pip dependency directly with your add-on, rather than using NVDA's version of the package.
-The exception to this is `wxPython`, which must be used from NVDA.
+The exception to this is `wxPython`, where any breaking changes from `wxPython` will be treated as an API breaking change.
 
 #### The API release cycle
 
@@ -75,7 +75,7 @@ We aim to avoid silent breaks of add-on code.
 When removing or changing APIs in a breaking release (e.g. 2026.1) or due to an urgent security improvement (e.g. 2026.1.2):
 
 1. We will mark functions as deprecated, where possible, in the releases leading up to the break (e.g. raising a `DeprecationWarning` in 2025.4).
-2. All API breaking changes will be listed in the "Changes for Developers" section of the What's New document, and the [NVDA Add-on API Announcements](https://groups.google.com/a/nvaccess.org/g/nvda-api) email group.
+1. All API breaking changes will be listed in the "Changes for Developers" section of the What's New document, and the [NVDA Add-on API Announcements](https://groups.google.com/a/nvaccess.org/g/nvda-api) email group.
 
 #### Stability of transitive imports in the API {#APIImports}
 
@@ -1190,13 +1190,13 @@ For example:
 
 ```ini
 [symbolDictionaries]
-[[greek]]
-displayName = Greek
-mandatory = false
+	[[greek]]
+		displayName = Greek
+		mandatory = false
 
-[[hebrew]]
-displayName = Biblical Hebrew
-mandatory = true
+	[[hebrew]]
+		displayName = Biblical Hebrew
+		mandatory = true
 ```
 
 In the above example, `greek` is a symbol dictionary that is optional and will be listed in the speech category of NVDA's settings dialog under the "Extra dictionaries for character and symbol processing" setting.
@@ -1211,8 +1211,8 @@ For example, add the following to `locale\fr\manifest.ini`:
 
 ```ini
 [symbolDictionaries]
-[[hebrew]]
-displayName = Hébreu Biblique
+	[[hebrew]]
+		displayName = Hébreu Biblique
 ```
 
 ### Speech dictionaries {#AddonSpeechDictionaries}
@@ -1228,9 +1228,9 @@ For example:
 
 ```ini
 [speechDictionaries]
-[[pronunciation]]
-displayName = Dodgy Dictionary
-mandatory = false
+	[[pronunciation]]
+		displayName = Dodgy Dictionary
+		mandatory = false
 ```
 
 In the above example, `pronunciation` is a dictionary that is optional and will be listed in the speech category of NVDA's settings dialog under the "Speech Dictionaries" setting.
@@ -1242,8 +1242,8 @@ For example, add the following to `locale\fr\manifest.ini`:
 
 ```ini
 [speechDictionaries]
-[[pronunciation]]
-displayName = Dictionnaire douteux
+	[[pronunciation]]
+		displayName = Dictionnaire douteux
 ```
 
 Unlike symbol dictionaries, speech dictionaries are currently locale-agnostic.
@@ -1310,7 +1310,7 @@ This means that the word "LOL" (case insensitive, whole word) should be spoken a
 
 This uses Unix shell-style wildcards to match any string ending in ".txt" and replaces it with "text file".
 
-For more information on speech dictionaries, see the NVDA user guide section on speech.
+For more information on speech dictionaries, refer to the [User Guide](https://download.nvaccess.org/documentation/userGuide.html#SpeechDictionaries).
 
 ### Add-on Documentation {#AddonDoc}
 
@@ -1473,13 +1473,13 @@ NVDA's `extensionPoints` module allows code in different parts of NVDA, or in ad
 
 There are five kinds of extension point:
 
-| Type |Purpose|
-|---|---|
-|`Action` |Allows some code to find out what other code is doing. For example, an add-on can be notified before or after a config profile changes.|
-|`Filter` |Edits data. A filter registered in the speech module, might allow changing speech strings before they are spoken.|
-|`Decider` |Runs each registered handler until one of them returns `False`. If one does, it can be used to prevent the invoking code from running.|
-|`AccumulatingDecider` |Like `Decider`, but always runs all of its registered handlers, and only decides if one of them failed at the end. The expected result of each is `True` by default, though expecting `False` is possible.|
-|`Chain` |Allows registering handlers that return iterables (mainly generators). Calling `iter` on the `Chain` returns a generator that iterates over all the handlers.|
+| Type | Purpose |
+| --- | --- |
+| `Action` | Allows some code to find out what other code is doing. For example, an add-on can be notified before or after a config profile changes. |
+| `Filter` | Edits data. A filter registered in the speech module, might allow changing speech strings before they are spoken. |
+| `Decider` | Runs each registered handler until one of them returns `False`. If one does, it can be used to prevent the invoking code from running. |
+| `AccumulatingDecider` | Like `Decider`, but always runs all of its registered handlers, and only decides if one of them failed at the end. The expected result of each is `True` by default, though expecting `False` is possible. |
+| `Chain` | Allows registering handlers that return iterables (mainly generators). Calling `iter` on the `Chain` returns a generator that iterates over all the handlers. |
 
 The sections below provide the list of currently defined extension points in NVDA, along with brief descriptions for them.
 Please see code documentation in the associated files, or the code itself, for further explanation.
@@ -1489,145 +1489,145 @@ For examples of how to define and use new extension points, please see the code 
 
 ### braille {#brailleExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`Filter` |`filter_displaySize` | [Deprecated] Allows components or add-ons to change the display size used for braille output.|
-|`Filter` |`filter_displayDimensions` | Allows components or add-ons to change the number of rows and columns of the display used for braille output.|
-|`Action` |`displaySizeChanged` |Notifies of display size changes.|
-|`Action` |`pre_writeCells` |Notifies when cells are about to be written to a braille display|
-|`Action` |`displayChanged` |Notifies of braille display changes.|
-|`Decider` |`decide_enabled` |Allows deciding whether the braille handler should be forcefully disabled.|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Filter` | `filter_displaySize` | [Deprecated] Allows components or add-ons to change the display size used for braille output. |
+| `Filter` | `filter_displayDimensions` | Allows components or add-ons to change the number of rows and columns of the display used for braille output. |
+| `Action` | `displaySizeChanged` | Notifies of display size changes. |
+| `Action` | `pre_writeCells` | Notifies when cells are about to be written to a braille display |
+| `Action` | `displayChanged` | Notifies of braille display changes. |
+| `Decider` | `decide_enabled` | Allows deciding whether the braille handler should be forcefully disabled. |
 
 ### appModuleHandler {#appModuleHandlerExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`Action` |`post_appSwitch` |Triggered when the foreground application changes|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Action` | `post_appSwitch` | Triggered when the foreground application changes |
 
 ### addonHandler {#addonHandlerExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`AccumulatingDecider` |`isCLIParamKnown` |Allows adding NVDA commandline parameters which apply to plugins. See [this section of the Dev Guide](#PluginCLIArgs) for more information.|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `AccumulatingDecider` | `isCLIParamKnown` | Allows adding NVDA commandline parameters which apply to plugins. See [this section of the Dev Guide](#PluginCLIArgs) for more information. |
 
 ### brailleViewer {#brailleViewerExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`Action` |`postBrailleViewerToolToggledAction` |Triggered every time the Braille Viewer is created / shown or hidden / destroyed.|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Action` | `postBrailleViewerToolToggledAction` | Triggered every time the Braille Viewer is created / shown or hidden / destroyed. |
 
 ### config {#configExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`Action` |`post_configProfileSwitch` |Notifies after the configuration profile has been switched.|
-|`Action` |`pre_configSave` |Notifies before NVDA's configuration is saved to disk.|
-|`Action` |`post_configSave` |Notifies after NVDA's configuration has been saved to disk.|
-|`Action` |`pre_configReset` |Notifies before configuration is reloaded from disk or factory defaults are applied.|
-|`Action` |`post_configReset` |Notifies after configuration has been reloaded from disk or factory defaults were applied.|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Action` | `post_configProfileSwitch` | Notifies after the configuration profile has been switched. |
+| `Action` | `pre_configSave` | Notifies before NVDA's configuration is saved to disk. |
+| `Action` | `post_configSave` | Notifies after NVDA's configuration has been saved to disk. |
+| `Action` | `pre_configReset` | Notifies before configuration is reloaded from disk or factory defaults are applied. |
+| `Action` | `post_configReset` | Notifies after configuration has been reloaded from disk or factory defaults were applied. |
 
 ### core {#coreExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`Action` |`postNvdaStartup` |Notifies after NVDA has finished starting up.|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Action` | `postNvdaStartup` | Notifies after NVDA has finished starting up. |
 
 ### inputCore {#inputCoreExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`Decider` |`decide_handleRawKey` |Notifies when a raw keyboard event is received, before any NVDA processing, allowing other code to decide if it should be handled.|
-|`Decider` |`decide_executeGesture` |Notifies when a gesture is about to be executed, allowing other code to decide if it should be.|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Decider` | `decide_handleRawKey` | Notifies when a raw keyboard event is received, before any NVDA processing, allowing other code to decide if it should be handled. |
+| `Decider` | `decide_executeGesture` | Notifies when a gesture is about to be executed, allowing other code to decide if it should be. |
 
 ### logHandler {#logHandlerExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`Action` |`_onErrorSoundRequested` |Triggered every time an error sound needs to be played. This extension point should not be used directly but retrieved calling `getOnErrorSoundRequested()` instead.|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Action` | `_onErrorSoundRequested` | Triggered every time an error sound needs to be played. This extension point should not be used directly but retrieved calling `getOnErrorSoundRequested()` instead. |
 
 ### nvwave {#nvwaveExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`Decider` |`decide_playWaveFile` |Notifies when a wave file is about to be played, allowing other code to decide if it should be.|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Decider` | `decide_playWaveFile` | Notifies when a wave file is about to be played, allowing other code to decide if it should be. |
 
 ### speech {#speechExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`Action` |`speechCanceled` |Triggered when speech is canceled.|
-|`Action` |`pre_speechCanceled` |Triggered before speech is canceled.|
-|`Action` |`pre_speech` |Triggered before NVDA handles prepared speech.|
-|`Action` |`post_speechPaused` |Triggered when speech is paused or resumed.|
-|`Action` |`pre_speechQueued` |Triggered after speech is processed and normalized and directly before it is enqueued.|
-|`Filter` |`filter_speechSequence` |Allows components or add-ons to filter speech sequence before it passes to the synth driver.|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Action` | `speechCanceled` | Triggered when speech is canceled. |
+| `Action` | `pre_speechCanceled` | Triggered before speech is canceled. |
+| `Action` | `pre_speech` | Triggered before NVDA handles prepared speech. |
+| `Action` | `post_speechPaused` | Triggered when speech is paused or resumed. |
+| `Action` | `pre_speechQueued` | Triggered after speech is processed and normalized and directly before it is enqueued. |
+| `Filter` | `filter_speechSequence` | Allows components or add-ons to filter speech sequence before it passes to the synth driver. |
 
 ### synthDriverHandler {#synthDriverHandlerExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`Action` |`synthIndexReached` |Notifies when a synthesizer reaches an index during speech.|
-|`Action` |`synthDoneSpeaking` |Notifies when a synthesizer finishes speaking.|
-|`Action` |`synthChanged` |Notifies of synthesizer changes.|
-|`Action` |`pre_synthSpeak` |Notifies when the current synthesizer is about to speak something.|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Action` | `synthIndexReached` | Notifies when a synthesizer reaches an index during speech. |
+| `Action` | `synthDoneSpeaking` | Notifies when a synthesizer finishes speaking. |
+| `Action` | `synthChanged` | Notifies of synthesizer changes. |
+| `Action` | `pre_synthSpeak` | Notifies when the current synthesizer is about to speak something. |
 
 ### tones {#tonesExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`Decider` |`decide_beep` |Notifies when a beep is about to be generated and played, allowing a component to decide whether it should be.|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Decider` | `decide_beep` | Notifies when a beep is about to be generated and played, allowing a component to decide whether it should be. |
 
 ### treeInterceptorHandler {#treeInterceptorHandlerExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`Action` |`post_browseModeStateChange` |Notifies when browse mode state changes.|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Action` | `post_browseModeStateChange` | Notifies when browse mode state changes. |
 
 ### utils.security {#utils_securityExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`Action` |`post_sessionLockStateChanged` |Notifies when a session lock or unlock event occurs.|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Action` | `post_sessionLockStateChanged` | Notifies when a session lock or unlock event occurs. |
 
 ### winAPI._displayTracking {#winAPI_displayTrackingExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`Action` |`displayChanged` |Notifies when display configuration changes (resolution, monitor setup, etc.). Handlers receive the `OrientationState` as an argument.|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Action` | `displayChanged` | Notifies when display configuration changes (resolution, monitor setup, etc.). Handlers receive the `OrientationState` as an argument. |
 
 ### winAPI.messageWindow {#winAPI_messageWindowExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`Action` |`pre_handleWindowMessage` |Notifies when NVDA receives a window message, allowing components to perform an action when certain system events occur.|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Action` | `pre_handleWindowMessage` | Notifies when NVDA receives a window message, allowing components to perform an action when certain system events occur. |
 
 ### winAPI.secureDesktop {#winAPI_secureDesktopExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`Action` |`winAPI.secureDesktop.post_secureDesktopStateChange` |Notifies when the user has switched to/from the secure desktop|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Action` | `winAPI.secureDesktop.post_secureDesktopStateChange` | Notifies when the user has switched to/from the secure desktop |
 
 ### bdDetect {#bdDetectExtPts}
 
-| Type |Extension Point |Description|
-|---|---|---|
-|`Chain` |`scanForDevices` |Can be iterated to scan for braille devices.|
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Chain` | `scanForDevices` | Can be iterated to scan for braille devices. |
 
 ### vision.visionHandlerExtensionPoints.EventExtensionPoints {#visionExtPts}
 
 These extension points are expected to be used and registered to differently than other extension points.
 Please see the `EventExtensionPoints` class documentation for more information, and detailed descriptions.
 
-| Type |Extension Point |Notifies a vision enhancement provider when ...|
-|---|---|---|
-|`Action` |`post_objectUpdate` |an object property has changed.|
-|`Action` |`post_focusChange` |the focused NVDAObject has changed.|
-|`Action` |`post_foregroundChange` |the foreground NVDAObject has changed.|
-|`Action` |`post_caretMove` |a physical caret has moved.|
-|`Action` |`post_browseModeMove` |a virtual caret has moved.|
-|`Action` |`post_reviewMove` |the position of the review cursor has changed.|
-|`Action` |`post_mouseMove` |the mouse has moved.|
-|`Action` |`post_coreCycle` |the end of each core cycle has been reached.|
+| Type | Extension Point | Notifies a vision enhancement provider when ... |
+| --- | --- | --- |
+| `Action` | `post_objectUpdate` | an object property has changed. |
+| `Action` | `post_focusChange` | the focused NVDAObject has changed. |
+| `Action` | `post_foregroundChange` | the foreground NVDAObject has changed. |
+| `Action` | `post_caretMove` | a physical caret has moved. |
+| `Action` | `post_browseModeMove` | a virtual caret has moved. |
+| `Action` | `post_reviewMove` | the position of the review cursor has changed. |
+| `Action` | `post_mouseMove` | the mouse has moved. |
+| `Action` | `post_coreCycle` | the end of each core cycle has been reached. |
 
 ## Communicating with the user
 
@@ -1792,7 +1792,7 @@ A `Button` is an immutable data structure containing all of the information need
 Its fields are as follows:
 
 | Field | Type | Default | Explanation |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `id` | `ReturnCode` | No default | The ID used to refer to the button. |
 | `label` | `str` | No default | The text label to display on the button. Prefix accelerator keys with an ampersand (&). |
 | `callback` | `Callable` or `None` | `None` | The function to call when the button is clicked. This is most useful for non-modal dialogs. |
@@ -1819,7 +1819,7 @@ You can also add any of these buttons to an existing `MessageDialog` instance wi
 The following default buttons are available:
 
 | Button | Label | ID/return code | Closes dialog | Add button helper |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | `APPLY` | &Apply | `ReturnCode.APPLY` | No | `addApplyButton` |
 | `CANCEL` | Cancel | `ReturnCode.CANCEL` | Yes | `addCancelButton` |
 | `CLOSE` | Close | `ReturnCode.CLOSE` | Yes | `addCloseButton` |
@@ -1835,7 +1835,7 @@ You can also add any of these default button sets to an existing `MessageDialog`
 The following default button sets are available:
 
 | Button set | Contains | Add button set helper | Notes |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `OK_CANCEL` | `DefaultButton.OK` and `DefaultButton.Cancel` | `addOkCancelButtons` | |
 | `YES_NO` | `DefaultButton.YES` and `DefaultButton.NO` | `addYesNoButtons` | You must set a fallback action if you want the user to be able to press escape to close a dialog with only these buttons. |
 | `YES_NO_CANCEL` | `DefaultButton.YES`, `DefaultButton.NO` and `DefaultButton.CANCEL` | `addYesNoCancelButtons` | |
@@ -1861,7 +1861,7 @@ They are all thread safe.
 The following convenience class methods are provided (keyword arguments for overriding button labels indicated in parentheses):
 
 | Method | Buttons | Return values |
-|---|---|---|
+| --- | --- | --- |
 | `alert` | OK (`okLabel`) | `None` |
 | `confirm` | OK (`okLabel`) and Cancel (`cancelLabel`) | `ReturnCode.OK` or `ReturnCode.CANCEL` |
 | `ask` | Yes (`yesLabel`), No (`noLabel`) and Cancel (`cancelLabel`) | `ReturnCode.YES`, `ReturnCode.NO` or `ReturnCode.CANCEL` |

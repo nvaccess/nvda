@@ -1,9 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
-# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen,
+# Wang Chong, Kefas Lungu
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from io import StringIO
 from configobj import ConfigObj
@@ -13,7 +14,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 21
+latestSchemaVersion = 23
 
 #: The configuration specification string
 #: @type: String
@@ -24,7 +25,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	saveConfigurationOnExit = boolean(default=True)
 	askToExit = boolean(default=true)
 	playStartAndExitSounds = boolean(default=true)
-	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
+	# possible log levels are DEBUG_UNREDACTED, DEBUG, IO, DEBUGWARNING, INFO and OFF
 	loggingLevel = string(default="INFO")
 	showWelcomeDialogAtStartup = boolean(default=true)
 	preventDisplayTurningOff = boolean(default=true)
@@ -84,12 +85,16 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	showMessages = integer(0, 2, default=1)
 	# Timeout after the message will disappear from braille display
 	messageTimeout = integer(default=4, min=1, max=20)
+	# Rate for automatic scroll (cells/sec)
+	autoScrollRate = float(default=10, min=1, max=20)
 	tetherTo = option("auto", "focus", "review", default="auto")
 	reviewRoutingMovesSystemCaret = featureFlag(\
 		optionsEnum="ReviewRoutingMovesSystemCaretFlag", behaviorOfDefault="NEVER")
 	readByParagraph = boolean(default=false)
 	paragraphStartMarker = option("", " ", "¶", default="")
+	# Deprecated in 2026.3
 	wordWrap = boolean(default=true)
+	textWrap = featureFlag(optionsEnum="BrailleTextWrapFlag", behaviorOfDefault="AT_WORD_BOUNDARIES")
 	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
 	interruptSpeechWhileScrolling = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
@@ -114,13 +119,17 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Magnifier settings
 [magnifier]
-	defaultZoomLevel = float(min=1.0, max=10.0, default=2.0)
-	defaultPanStep = integer(min=1, max=100, default=10)
-	defaultFullscreenMode = string(default="center")
+	enabled = boolean(default=false)
+	magnifiedView = string(default="fullscreen")
+	zoom = integer(min=100, max=5000, default=200)
 	isTrueCentered = boolean(default=False)
-	defaultFilter = string(default="normal")
-	keepMouseCentered = boolean(default=false)
-	saveShortcutChanges = boolean(default=false)
+	filter = string(default="normal")
+	followMouse = boolean(default=True)
+	followSystemFocus = boolean(default=True)
+	followReviewCursor = boolean(default=True)
+	followNavigatorObject = boolean(default=True)
+	panStep = integer(min=1, max=100, default=10)
+	fullscreenMode = string(default="center")
 
 # Presentation settings
 [presentation]
@@ -215,6 +224,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enableOnPageLoad = boolean(default=true)
 	loadChromiumVBufOnBusyState = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	textParagraphRegex = string(default="{configDefaults.DEFAULT_TEXT_PARAGRAPH_REGEX}")
+	# Element types available for cycling in browse touch mode.
+	browseModeTouchNavigationElements = string_list(default=list("heading", "link", "formField", "list", "table"))
 
 [touch]
 	enabled = boolean(default=true)
@@ -272,6 +283,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportClickable = boolean(default=true)
 
 [documentNavigation]
+	# Hidden option to eagerly initialize Chinese word segmentation even when the current languages do not use it.
+	initWordSegForUnusedLang = boolean(default=false)
+	wordSegmentationStandard = featureFlag(optionsEnum="WordNavigationUnitFlag", behaviorOfDefault="Auto")
 	paragraphStyle = featureFlag(optionsEnum="ParagraphNavigationFlag", behaviorOfDefault="application")
 
 [reviewCursor]
@@ -352,6 +366,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	cancelExpiredFocusSpeech = integer(0, 2, default=0)
 	# 0: Only in test versions, 1: Yes, 2: No
 	playErrorSound = integer(0, 2, default=0)
+	speechDictsUseModernRegex = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 
 [addonStore]
 	automaticUpdates = option("notify", "update", "disabled", default="notify")
@@ -386,7 +401,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	[[speech]]
 		impairment = option("LearningDisability", "Blindness", "LowVision", default="Blindness")
 		# any known language code and sub-code -- could be en-uk, etc
-		language = string(default="Auto")
+		language = string(default="en")
 		verbosity = option("Terse", "Medium", "Verbose", default="Medium")
 		# Change from text speech rate (%)
 		mathRate = integer(default=100, min=10, max=100)

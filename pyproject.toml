@@ -22,13 +22,14 @@ readme = "readme.md"
 license = {file = "copying.txt"}
 dependencies = [
 	# NVDA's runtime dependencies
+	"bleak==3.0.2",
 	"comtypes==1.4.13",
-	"cryptography==46.0.5",
+	"cryptography==46.0.7",
 	"pyserial==3.5",
 	"wxPython==4.2.4",
 	# pinned to a commit in tool.uv.sources
 	"configobj",
-	"requests==2.32.5",
+	"requests==2.33.0",
 	"url-normalize==2.2.1",
 	"schedule==1.2.2",
 	# NVDA_DMP requires diff-match-patch
@@ -52,6 +53,10 @@ dependencies = [
 	"mdx-gh-links==0.4",
 	"l2m4m==1.0.4",
 	"pymdown-extensions==10.17.1",
+	"pyphen==0.17.2",
+	# secret scanning for logging
+	"detect-secrets==1.5.0",
+	"regex==2026.4.4",
 ]
 
 [project.urls]
@@ -319,13 +324,13 @@ dev = [
 	# NVDA's build system is SCons
 	"SCons==4.10.1",
 	# Packaging NVDA
-	"py2exe==0.14.0.0",
+	"py2exe==0.14.1.1",
 	"setuptools~=80.10.2",
 	"nvda-mathcat",
-	"uv==0.9.11",
+	"uv==0.11.7",
 ]
 lint = [
-	"ruff==0.14.5",
+	"ruff==0.15.9",
 	"pre-commit==4.2.0",
 	"pyright[nodejs]==1.1.407",
 ]

@@ -530,6 +530,21 @@ IsWindow.argtypes = (
 	HWND,  # hWnd: A handle to the window to be tested
 )
 
+IsHungAppWindow = WINFUNCTYPE(None)(("IsHungAppWindow", dll))
+"""
+Determines whether the system considers that a specified application is not responding.
+An application is considered to be not responding if it is not waiting for input,
+is not in startup processing, and has not called PeekMessage within the internal
+timeout period (5 seconds).
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-ishungappwindow
+"""
+IsHungAppWindow.restype = BOOL
+IsHungAppWindow.argtypes = (
+	HWND,  # hWnd: A handle to the window to be tested
+)
+
 IsChild = WINFUNCTYPE(None)(("IsChild", dll))
 """
 Determines whether a window is a child or descendant window of a specified parent window.
@@ -1056,7 +1071,9 @@ class GWLP(IntEnum):
 	"""Sets a new address for the window procedure."""
 
 
-SetWindowLongPtr = WINFUNCTYPE(None)(("SetWindowLongPtrW", dll))
+# On 32-bit Windows, SetWindowLongPtr is a macro alias for SetWindowLong and is not exported separately.
+_setWindowLongPtrName = "SetWindowLongW" if sizeof(c_void_p) == sizeof(LONG) else "SetWindowLongPtrW"
+SetWindowLongPtr = WINFUNCTYPE(None)((_setWindowLongPtrName, dll))
 """Changes an attribute of the specified window.
 
 .. seealso::

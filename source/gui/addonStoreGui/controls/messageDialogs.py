@@ -924,11 +924,13 @@ def _getAddonsToCopy(parent: wx.Window) -> list[str] | None:
 	enabledAddons = {
 		addon.name.casefold(): addon
 		for addon in getAvailableAddons(
-			filterFunc=lambda addon: getStatus(addon._addonGuiModel, _StatusFilterKey.INSTALLED)
-			in (
-				AvailableAddonStatus.ENABLED,
-				AvailableAddonStatus.RUNNING,
-				AvailableAddonStatus.INCOMPATIBLE_ENABLED,
+			filterFunc=lambda addon: (
+				getStatus(addon._addonGuiModel, _StatusFilterKey.INSTALLED)
+				in (
+					AvailableAddonStatus.ENABLED,
+					AvailableAddonStatus.RUNNING,
+					AvailableAddonStatus.INCOMPATIBLE_ENABLED,
+				)
 			),
 		)
 	}

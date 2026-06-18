@@ -29,6 +29,7 @@ typedef void (*ocSpeech_Callback)(BYTE* data, int length, const wchar_t* markers
 
 extern "C" {
 	export bool __stdcall ocSpeech_supportsProsodyOptions();
+	export bool __stdcall ocSpeech_supportsPunctuationSilence();
 
 	/* Initialize the ocSpeech system. The token returned is used to debug the life cycles of the ocSpeech system.
 	* Only one token may be active at a time.
@@ -64,4 +65,6 @@ extern "C" {
 	export void __stdcall ocSpeech_setVolume(void* token, double volume);
 	export double __stdcall ocSpeech_getRate(void* token);
 	export void __stdcall ocSpeech_setRate(void* token, double rate);
+	export bool __stdcall ocSpeech_getPunctuationSilence(void* token);
+	export void __stdcall ocSpeech_setPunctuationSilence(void* token, bool silence);
 }

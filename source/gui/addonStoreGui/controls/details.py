@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2026 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -129,7 +129,7 @@ class AddonDetails(
 		self.contents.Add(self.actionsButton)
 		self.actionsButton.Bind(
 			event=wx.EVT_BUTTON,
-			handler=lambda e: self._actionsContextMenu.popupContextMenuFromPosition(
+			handler=lambda e: self.Parent.addonListView._contextMenu.popupContextMenuFromPosition(
 				self,
 				self.actionsButton.Position,
 			),
@@ -213,7 +213,12 @@ class AddonDetails(
 			# SetDefaultStyle, however, this means the text control must start empty.
 			self.otherDetailsTextCtrl.SetValue("")
 			if numSelectedAddons > 1:
-				self.contentsPanel.Hide()
+				self.contentsPanel.Show()
+				self.actionsButton.Show()
+				self.descriptionLabel.Hide()
+				self.descriptionTextCtrl.Hide()
+				self.otherDetailsLabel.Hide()
+				self.otherDetailsTextCtrl.Hide()
 				self.updateAddonName(
 					npgettext(
 						"addonStore",
@@ -226,6 +231,11 @@ class AddonDetails(
 				)
 			elif not details:
 				self.contentsPanel.Hide()
+				self.actionsButton.Hide()
+				self.descriptionLabel.Hide()
+				self.descriptionTextCtrl.Hide()
+				self.otherDetailsLabel.Hide()
+				self.otherDetailsTextCtrl.Hide()
 				if self._detailsVM._listVM._isLoading:
 					self.updateAddonName(AddonDetails._loadingAddonsLabelText)
 				else:
@@ -348,12 +358,13 @@ class AddonDetails(
 						)
 
 				if isinstance(details, _AddonManifestModel):
-					# Installed add-ons with a manifest only
-					self._appendDetailsLabelValue(
-						# Translators: Label for an extra detail field for the selected add-on in the add-on store dialog.
-						pgettext("addonStore", "Install date:"),
-						details.installDate.strftime("%x"),
-					)
+					if details.installDate is not None:
+						# Installed add-ons with a manifest only
+						self._appendDetailsLabelValue(
+							# Translators: Label for an extra detail field for the selected add-on in the add-on store dialog.
+							pgettext("addonStore", "Install date:"),
+							details.installDate.strftime("%x"),
+						)
 
 				if isinstance(details, _AddonStoreModel):
 					if details.publicationDate is not None:
@@ -390,6 +401,11 @@ class AddonDetails(
 						)
 
 				self.contentsPanel.Show()
+				self.actionsButton.Show()
+				self.descriptionLabel.Show()
+				self.descriptionTextCtrl.Show()
+				self.otherDetailsLabel.Show()
+				self.otherDetailsTextCtrl.Show()
 
 		self.Layout()
 		# Set caret/insertion point at the beginning so that NVDA users can more easily read from the start.

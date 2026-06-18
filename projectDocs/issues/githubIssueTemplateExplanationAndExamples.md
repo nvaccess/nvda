@@ -18,11 +18,21 @@ We currently have the following templates:
 * For [integrating functionality from a community add-on into NVDA](https://github.com/nvaccess/nvda/issues/new?template=5-addon_integration_request.yaml):
   * This template is intended for proposing a specific feature from an existing community add-on to be integrated into NVDA.
   * The goal is to identify functionality that is essential for the core NVDA user experience.
+* For [Architecture Design Records to plan for major changes](https://github.com/nvaccess/nvda/issues/new?template=6-adr_major_project.yaml):
+  * This template is intended for proposing major changes to NVDA.
+  It may be requested by NV Access before starting work which require significant design decisions.
+  e.g a new feature or refactor.
+  * Review [Proposing Major Changes](../dev/proposingMajorChanges.md) for more information.
 * For [security vulnerabilities](https://github.com/nvaccess/nvda/security/advisories/new)
   * Please note that these are reported differently, for more information refer to our [disclosure policy/procedure](https://github.com/nvaccess/nvda/blob/master/security.md)
+* Issues with materials handled by translators should be reported to the [NVDA Translators list](https://groups.io/g/nvda-translations).
+These include:
+  * NVDA interface text that is incorrect in languages other than English
+  * Contents of the User Guide and Changes documents that are incorrect in languages other than English
+  * Input gestures, punctuation/symbol pronunciations, and character descriptions in languages other than English
 
-These are a fillable form that guides you through the process of providing the necessary information for your issue.
-The "Advanced" version of these templates listed when [choosing templates for new issues](https://github.com/nvaccess/nvda/issues/new/choose) asks for the same information, but in a more free-form manner, with less supporting information.
+These templates are fillable forms that guide you through the process of providing the necessary information for your issue.
+The "Advanced" versions of these templates listed when [choosing templates for new issues](https://github.com/nvaccess/nvda/issues/new/choose) ask for the same information, but in a more free-form manner that doesn't use separate fields to guide and structure the process.
 
 ## Help
 

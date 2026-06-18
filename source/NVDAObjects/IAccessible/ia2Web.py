@@ -10,6 +10,7 @@ from typing import (
 	Optional,
 	Tuple,
 )
+import re
 from ctypes import c_short
 from comtypes import COMError, BSTR
 from comtypes.hresult import E_NOTIMPL
@@ -24,6 +25,7 @@ from comInterfaces import IAccessible2Lib as IA2
 import controlTypes
 from logHandler import log
 from documentBase import DocumentWithTableNavigation
+from IAccessibleHandler.utils import isMSAADebugLoggingEnabled
 from NVDAObjects.behaviors import Dialog, WebDialog
 from . import IAccessible, Groupbox
 from .ia2TextMozilla import MozillaCompoundTextInfo
@@ -330,6 +332,20 @@ class EditorChunk(Ia2Web):
 
 class Math(Ia2Web):
 	def _get_mathMl(self):
+		# Chromium browsers now expose a 'math' IAccessible2 attribute,
+		# which contains all the raw MathML.
+		# Check for this attribute first before falling back to ISimpleDOM.
+		mathAttr = self.IA2Attributes.get("math")
+		if mathAttr:
+			# Chromium sometimes embeds HTML comments in the MathML, strip them
+			mathAttr = re.sub(r"<!--.*?-->", "", mathAttr, flags=re.DOTALL)
+
+			langAttr = f' xml:lang="{self.language}"' if self.language else ""
+			mathMl = f"<math{langAttr}>{mathAttr}</math>"
+			if log.isEnabledFor(log.DEBUG) and isMSAADebugLoggingEnabled():
+				log.debug(f"Got MathML from IA2 math attribute: {mathMl}")
+			return mathMl
+
 		from comtypes.gen.ISimpleDOM import ISimpleDOMNode  # type: ignore[reportMissingImports]
 
 		try:

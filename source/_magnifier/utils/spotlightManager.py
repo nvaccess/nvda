@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -30,7 +30,7 @@ class SpotlightManager:
 		self._animationSteps: int = 40
 		self._animationStepDelay: int = 12
 		self._currentCoordinates: Coordinates = fullscreenMagnifier._focusManager.getCurrentFocusCoordinates()
-		self._originalZoomLevel: float = 0.0
+		self._originalZoomLevel: int = 0
 		self._currentZoomLevel: float = 0.0
 		self._originalMode: FullScreenMode | None = None
 
@@ -65,8 +65,8 @@ class SpotlightManager:
 		ui.message(
 			pgettext(
 				"magnifier",
-				# Translators: Message announced when stopping the magnifier spotlight.
-				"Magnifier spotlight stopped",
+				# Translators: Message announced when turning back to normal view after entire screen overview.
+				"Back to normal view",
 			),
 		)
 		if self._timer:
@@ -92,8 +92,8 @@ class SpotlightManager:
 		)
 
 		self._animationStepsList = self._computeAnimationSteps(
-			self._currentZoomLevel,
-			target.zoomLevel,
+			round(self._currentZoomLevel),
+			round(target.zoomLevel),
 			self._currentCoordinates,
 			target.coordinates,
 		)
@@ -118,8 +118,13 @@ class SpotlightManager:
 
 		if stepIndex < len(self._animationStepsList):
 			zoomLevel, coords = self._animationStepsList[stepIndex]
-			self._fullscreenMagnifier._setZoomRawValue(zoomLevel)
-			self._fullscreenMagnifier._fullscreenMagnifier(coords)
+			try:
+				self._fullscreenMagnifier._setZoomRawValue(zoomLevel)
+				self._fullscreenMagnifier._fullscreenMagnifier(coords)
+			except Exception:
+				log.error("Error during spotlight animation step, aborting spotlight", exc_info=True)
+				self._stopSpotlight()
+				return
 			self._currentZoomLevel = zoomLevel
 			self._currentCoordinates = coords
 			wx.CallLater(self._animationStepDelay, lambda: self._executeStep(stepIndex + 1, callback))
@@ -170,8 +175,8 @@ class SpotlightManager:
 
 	def _computeAnimationSteps(
 		self,
-		zoomStart: float,
-		zoomEnd: float,
+		zoomStart: int,
+		zoomEnd: int,
 		coordinateStart: Coordinates,
 		coordinateEnd: Coordinates,
 	) -> list[ZoomHistory]:
@@ -191,7 +196,7 @@ class SpotlightManager:
 
 		startX, startY = coordinateStart
 		endX, endY = coordinateEnd
-		animationSteps = []
+		animationSteps: list[ZoomHistory] = []
 
 		zoomDelta = (zoomEnd - zoomStart) / self._animationSteps
 		coordDeltaX = (endX - startX) / self._animationSteps

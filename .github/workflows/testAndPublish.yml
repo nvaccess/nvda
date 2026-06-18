@@ -31,12 +31,12 @@ env:
   VSCMD_SKIP_SENDTELEMETRY: 1
   # Cache details about available MSVC tooling for subsequent SCons invocations to the provided file.
   SCONS_CACHE_MSVC_CONFIG: ".scons_msvc_cache.json"
-  defaultRunner: 'windows-2025'
-  supportedRunners: '["windows-2022", "windows-2025"]'
+  defaultRunner: 'windows-2025-vs2026'
+  supportedRunners: '["windows-2022", "windows-2025-vs2026"]'
   defaultArch: x64
   supportedArchitectures: '["x64"]'
-  defaultPythonVersion: '3.13.12'
-  supportedPythonVersions: '["3.13.12"]'
+  defaultPythonVersion: '3.13.13'
+  supportedPythonVersions: '["3.13.13"]'
 
 jobs:
   matrix:
@@ -59,7 +59,10 @@ jobs:
     name: Build NVDA
     needs: matrix
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
-    timeout-minutes: 15
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      actions: write
     strategy:
       fail-fast: false
       matrix:
@@ -78,7 +81,7 @@ jobs:
     - name: Checkout NVDA
       uses: actions/checkout@v6
       with:
-        submodules: true
+        submodules: recursive
     - name: Install Python
       uses: actions/setup-python@v6
       with:
@@ -99,6 +102,8 @@ jobs:
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
       run: ci/scripts/setSconsArgs.ps1
+      env:
+        apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN || '' }}
     - name: Set cache key for SCons MSVC Cache
       shell: bash
       run: echo "SCONS_CACHE_KEY=${RUNNER_OS}-${ImageVersion}" >> $GITHUB_ENV
@@ -110,6 +115,15 @@ jobs:
       with:
         path: ${{ env.SCONS_CACHE_MSVC_CONFIG }}
         key: ${{ env.SCONS_CACHE_KEY }}
+    - name: Install signPath
+      env:
+        apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN || '' }}
+      if: ${{ env.apiSigningToken }}
+      shell: cmd
+      run: |
+        PowerShell -Command "Set-ExecutionPolicy Bypass"
+        PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
+        PowerShell -Command "Install-Module -Name SignPath -Force"
     - name: Prepare source code
       shell: cmd
       run: scons source %sconsArgs% %sconsCores%
@@ -139,6 +153,8 @@ jobs:
     name: Check types with Pyright
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    permissions:
+      contents: read
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v5
@@ -160,6 +176,8 @@ jobs:
     name: Check po files for errors
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: matrix
+    permissions:
+      contents: read
     steps:
     - name: Checkout repository
       uses: actions/checkout@v6
@@ -191,6 +209,9 @@ jobs:
     name: Check translator comments
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    permissions:
+      contents: read
+      actions: write
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v5
@@ -209,7 +230,7 @@ jobs:
       run: ci/scripts/tests/translationCheck.ps1
     - name: Upload artifact
       if: ${{ success() || failure() }}
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: makePot results
         path: |
@@ -220,6 +241,8 @@ jobs:
     name: Check license compatibility of dependencies
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    permissions:
+      contents: read
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v5
@@ -241,6 +264,10 @@ jobs:
     name: Run unit tests
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    permissions:
+      contents: read
+      actions: write
+      checks: write
     strategy:
       fail-fast: false
       matrix:
@@ -273,12 +300,12 @@ jobs:
       run: sed -i 's|file="..\\|file="|g' testOutput/unit/unitTests.xml
     - name: Upload artifact
       if: ${{ failure() }}
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: Unit tests results (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: testOutput/unit/unitTests.xml
     - name: Publish unit test report
-      uses: mikepenz/action-junit-report@v5
+      uses: mikepenz/action-junit-report@v6
       if: ${{ failure() }}
       with:
         check_name: Unit tests (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
@@ -291,6 +318,8 @@ jobs:
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA, checkPot]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' && vars.CROWDIN_PROJECT_ID }}
+    permissions:
+      contents: read
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v5
@@ -299,7 +328,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Get makePot results
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: makePot results
         path: output
@@ -321,6 +350,9 @@ jobs:
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
     timeout-minutes: 35
+    permissions:
+      contents: read
+      actions: write
     strategy:
       fail-fast: false
       matrix:
@@ -359,23 +391,31 @@ jobs:
       shell: cmd
       run: scons %sconsDocsOutTargets% %sconsArgs% %sconsCores%
     # Run launcher separately as we can't safely generate that in parallel to docs scons targets (#18867)
-    - name: Create launcher and controller client
+    - name: Install signpath
+      env:
+        apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN || '' }}
+      if: ${{ env.apiSigningToken }}
       shell: cmd
       run: |
         PowerShell -Command "Set-ExecutionPolicy Bypass"
         PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
         PowerShell -Command "Install-Module -Name SignPath -Force"
-        scons %sconsLauncherOutTargets% %sconsArgs% %sconsCores%
+    - name: Build NVDAController client
+      shell: cmd
+      run: scons client %sconsArgs% %sconsCores%
+    - name: Create NVDA launcher
+      shell: cmd
+      run: scons %sconsLauncherOutTargets% %sconsArgs%
     - name: Upload launcher
       id: uploadLauncher
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: NVDA launcher (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: |
           output/nvda*.exe
           output/nvda*controllerClient.zip
     - name: Upload documentation artifacts
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       id: uploadBuildArtifacts
       with:
         name: Documentation files and packaging metadata (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
@@ -406,6 +446,10 @@ jobs:
     runs-on: ${{ matrix.runner }}
     needs: [matrix, createLauncher]
     timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: write
+      checks: write
     strategy:
       fail-fast: false
       matrix:
@@ -414,7 +458,8 @@ jobs:
           - installer
           - startupShutdown
           - symbols
-          - vscode
+          - browseableMessage
+          # - vscode
           - chrome_annotations
           - chrome_list
           - chrome_table
@@ -427,10 +472,12 @@ jobs:
         arch: ${{ fromJson(needs.matrix.outputs.supportedArchitectures) }}
         pythonVersion: ${{ fromJson(needs.matrix.outputs.supportedPythonVersions) }}
         # A bug exists with Windows 2022 notepad that prevents NVDA from focusing it.
-        # This causes our symbol pronunciation tests to fail on this runner.
+        # This causes our symbol pronunciation and browseable message tests to fail on this runner.
         exclude:
           - runner: windows-2022
             testSuite: symbols
+          - runner: windows-2022
+            testSuite: browseableMessage
     env:
       uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     steps:
@@ -451,7 +498,7 @@ jobs:
         python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
     - name: Get NVDA launcher
       id: getLauncher
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: NVDA launcher (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: output
@@ -469,7 +516,7 @@ jobs:
         INCLUDE_SYSTEM_TEST_TAGS: ${{ matrix.testSuite }}
     - name: Upload system tests results
       if: ${{ failure() }}
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: "System tests results (${{ matrix.testSuite }}) (${{ matrix.runner }}, ${{ matrix.pythonVersion }}, ${{ matrix.arch }})"
         path: |
@@ -477,7 +524,7 @@ jobs:
           testOutput/install
           !testOutput/install/nvda_install_temp.log
     - name: Publish system test report
-      uses: mikepenz/action-junit-report@v5
+      uses: mikepenz/action-junit-report@v6
       if: ${{ failure() }}
       with:
         check_name: "System tests (${{ matrix.testSuite }}) (${{ matrix.runner }}, ${{ matrix.pythonVersion }}, ${{ matrix.arch }})"
@@ -489,6 +536,9 @@ jobs:
     name: Create symbols
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
+    permissions:
+      contents: read
+      actions: write
     strategy:
       fail-fast: false
       matrix:
@@ -514,7 +564,7 @@ jobs:
       run: ci/scripts/buildSymbolStore.ps1
     - name: Upload symbols artifact
       id: uploadArtifact
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: Symbols (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
         path: output/symbols.zip
@@ -532,6 +582,8 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     needs: [buildNVDA, typeCheck, checkPo, checkPot, licenseCheck, unitTests, createLauncher, systemTests, createSymbols]
+    permissions:
+      contents: read
     steps:
     - name: Check if all tests pass
       uses: re-actors/alls-green@v1.2.2
@@ -541,8 +593,10 @@ jobs:
   uploadSymbols:
     name: Upload symbols
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
-    needs: [matrix, buildNvda]
+    needs: [matrix, buildNVDA]
     if: ${{ github.event_name == 'push' && vars.feature_uploadSymbolsToMozilla }}
+    permissions:
+      contents: read
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v5
@@ -614,7 +668,7 @@ jobs:
       name: snapshot
     steps:
     - name: Get NVDA launcher
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: NVDA launcher (${{ env.defaultPythonVersion }}, ${{ env.defaultArch }})
         path: output
@@ -668,13 +722,13 @@ jobs:
         echo RELEASE_NAME=$GITHUB_REF_NAME | sed 's/release-//g' >> $GITHUB_OUTPUT
         echo NORMALIZED_TAG_NAME=$GITHUB_REF_NAME | sed 's/\./-/g' | sed 's/release-//g' >> $GITHUB_OUTPUT
     - name: Get NVDA launcher
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: NVDA launcher (${{ env.defaultPythonVersion }}, ${{ env.defaultArch }})
         path: output
     - name: VirusTotal Scan
       id: virusTotal
-      uses: crazy-max/ghaction-virustotal@v4
+      uses: crazy-max/ghaction-virustotal@v5.0.0
       with:
         vt_api_key: ${{ secrets.VT_API_KEY }}
         files: output/nvda*.exe
@@ -753,3 +807,24 @@ jobs:
             --repo ${{ github.repository }} \
             --clobber \
             $NVDA_EXE_NAME#Installer
+
+  submit-winget:
+    name: Submit manifest to WinGet Packages Repository
+    needs: [matrix, release]
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
+    if: startsWith(github.ref_name, 'release-')
+    permissions:
+      contents: read
+    steps:
+    - name: Checkout NVDA
+      uses: actions/checkout@v6
+      with:
+        submodules: false
+
+    - name: Submit package using wingetcreate
+      env:
+        GH_TOKEN: ${{ github.token }}
+        # wingetcreate will read the token from the below environment variable
+        # Reference: https://aka.ms/winget-create-token
+        WINGET_CREATE_GITHUB_TOKEN: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}
+      run: ci/scripts/submitWinGet.ps1
