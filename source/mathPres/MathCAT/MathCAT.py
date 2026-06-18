@@ -113,9 +113,11 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		except Exception:
 			log.debugWarning("Error getting MathCAT navigation node id", exc_info=True)
 		else:
+			log.debug(f"Math highlight resolving MathCAT navigation node id {nodeId!r}")
 			try:
 				return sourceObj.getMathNodeRectById(nodeId)
 			except LookupError:
+				log.debug(f"Math highlight falling back to source rectangle for node id {nodeId!r}")
 				pass
 		try:
 			if sourceObj.hasIrrelevantLocation:
