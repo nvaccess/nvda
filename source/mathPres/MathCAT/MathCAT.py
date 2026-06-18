@@ -99,8 +99,8 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			ui.message(pgettext("math", "Error in starting navigation of math."))
 			self._clearMathHighlight()
 
-	def _getSourceRect(self) -> Optional["RectLTRB"]:
-		"""Get the whole-equation rectangle for a supported web math source object."""
+	def _getHighlightRect(self) -> Optional["RectLTRB"]:
+		"""Get the navigation rectangle for a supported web math source object."""
 		sourceObj = self.sourceObj
 		if not sourceObj:
 			return None
@@ -108,6 +108,15 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 
 		if not isinstance(sourceObj, Ia2WebMath):
 			return None
+		try:
+			nodeId = libmathcat.GetNavigationMathMLId()[0]
+		except Exception:
+			log.debugWarning("Error getting MathCAT navigation node id", exc_info=True)
+		else:
+			try:
+				return sourceObj.getMathNodeRectById(nodeId)
+			except LookupError:
+				pass
 		try:
 			if sourceObj.hasIrrelevantLocation:
 				return None
@@ -121,7 +130,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		import vision
 
 		if vision.handler:
-			vision.handler.handleMathNavigation(self._getSourceRect())
+			vision.handler.handleMathNavigation(self._getHighlightRect())
 
 	def _clearMathHighlight(self) -> None:
 		import vision

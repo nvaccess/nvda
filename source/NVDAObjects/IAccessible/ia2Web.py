@@ -8,6 +8,7 @@
 from typing import (
 	Generator,
 	Optional,
+	TYPE_CHECKING,
 	Tuple,
 )
 import re
@@ -34,6 +35,9 @@ import api
 import speech
 import config
 import NVDAObjects
+
+if TYPE_CHECKING:
+	from locationHelper import RectLTRB
 
 
 class IA2WebAnnotationTarget(AnnotationTarget):
@@ -331,6 +335,32 @@ class EditorChunk(Ia2Web):
 
 
 class Math(Ia2Web):
+	_MATH_ID_ATTRS = ("id", "xml-id")
+
+	def getMathNodeRectById(self, nodeId: str) -> Optional["RectLTRB"]:
+		"""Get the screen rectangle for a descendant MathML node with the given id."""
+		if not nodeId:
+			raise LookupError
+		stack: list[NVDAObjects.NVDAObject] = [self]
+		while stack:
+			obj = stack.pop()
+			try:
+				attrs = obj.IA2Attributes
+			except AttributeError:
+				attrs = {}
+			if any(attrs.get(attr) == nodeId for attr in self._MATH_ID_ATTRS):
+				if obj.hasIrrelevantLocation:
+					raise LookupError
+				location = obj.location
+				if not location or not location.width or not location.height:
+					raise LookupError
+				return location.toLTRB()
+			try:
+				stack.extend(reversed(obj.children))
+			except RuntimeError:
+				log.debugWarning("Error fetching MathML node children", exc_info=True)
+		raise LookupError
+
 	def _get_mathMl(self):
 		# Chromium browsers now expose a 'math' IAccessible2 attribute,
 		# which contains all the raw MathML.
