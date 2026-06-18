@@ -203,7 +203,9 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 				# save the old braille code, set the new one, get the braille, then reset the code
 				savedBrailleCode: str = _callMathCAT(libmathcat.GetPreference, "BrailleCode")
 				_callMathCAT(
-					libmathcat.SetPreference, "BrailleCode", "LaTeX" if copyAs == "latex" else "ASCIIMath"
+					libmathcat.SetPreference,
+					"BrailleCode",
+					"LaTeX" if copyAs == "latex" else "ASCIIMath",
 				)
 				textToCopy = _callMathCAT(libmathcat.GetNavigationBraille)
 				_callMathCAT(libmathcat.SetPreference, "BrailleCode", savedBrailleCode)
@@ -372,7 +374,9 @@ class MathCAT(mathPres.MathPresentationProvider):
 			)
 			if PitchCommand in supportedCommands:
 				_callMathCAT(
-					libmathcat.SetPreference, "CapitalLetters_Pitch", str(synthConfig["capPitchChange"])
+					libmathcat.SetPreference,
+					"CapitalLetters_Pitch",
+					str(synthConfig["capPitchChange"]),
 				)
 			if self._addSounds():
 				return (
