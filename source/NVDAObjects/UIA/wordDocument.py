@@ -244,6 +244,33 @@ class WordDocumentTextInfo(UIATextInfo):
 		self._ensureRangeVisibility()
 		super().updateCaret()
 
+	def _isActiveSelection(self) -> bool:
+		"""Return whether this range matches the current Microsoft Word selection."""
+		try:
+			selectionInfo = self.obj.makeTextInfo(textInfos.POSITION_SELECTION)
+			return (
+				self.compareEndPoints(selectionInfo, "startToStart") == 0
+				and self.compareEndPoints(selectionInfo, "endToEnd") == 0
+			)
+		except (COMError, NotImplementedError, RuntimeError):
+			return False
+
+	def copyToClipboard(self, notify: bool = False) -> bool:
+		"""Copy through the Word object model when this range is the active selection.
+
+		Word's UIA text provider can truncate large ranges when fetching text.
+		The object model copy path preserves the full selected content.
+		"""
+		if self._isActiveSelection():
+			try:
+				if not self.obj.WinwordSelectionObject:
+					return super().copyToClipboard(notify)
+				legacyInfo = LegacyWordDocumentTextInfo(self.obj, textInfos.POSITION_SELECTION)
+				return legacyInfo.copyToClipboard(notify)
+			except COMError as e:
+				log.debug(f"Could not copy selection using the Microsoft Word object model: {e}")
+		return super().copyToClipboard(notify)
+
 	def _get_locationText(self):
 		point = self.pointAtStart
 		# UIA has no good way yet to convert coordinates into user-configured distances such as inches or centimetres.
