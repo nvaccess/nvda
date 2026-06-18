@@ -181,6 +181,7 @@ class DictionaryDialog(
 			wx.ListCtrl,
 			style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
 		)
+		self.dictList.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.onContextMenu)
 		self.dictList.Bind(wx.EVT_CONTEXT_MENU, self.onContextMenu)
 		# Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 		self.dictList.AppendColumn(_("Comment"), width=150)
