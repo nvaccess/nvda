@@ -242,10 +242,10 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 				validCheck=lambda aVMs: (
 					self._storeVM._filteredStatusKey
 					in [
-						# Removing add-ons in the updatable view fails,
-						# as the updated version cannot be removed.
+						_StatusFilterKey.UPDATE,
 						_StatusFilterKey.INSTALLED,
 						_StatusFilterKey.INCOMPATIBLE,
+						_
 					]
 					and AddonListValidator(aVMs).canUseRemoveAction()
 				),
