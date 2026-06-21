@@ -12,6 +12,7 @@ using L{registerProvider}.
 
 import re
 import typing
+from dataclasses import dataclass
 from typing import List, Optional, Union
 
 from NVDAObjects.window import Window
@@ -24,8 +25,20 @@ import ui
 import textInfos
 
 if typing.TYPE_CHECKING:
+	from locationHelper import RectLTRB
 	from NVDAObjects import NVDAObject
 	from speech.commands import SpeechCommand  # noqa F401: type-checking only
+
+
+MathMlNodePath = tuple[int, ...]
+SyntheticMathMlNodeId = str
+
+
+@dataclass(frozen=True)
+class MathMlNodeInfo:
+	path: MathMlNodePath
+	tag: str
+	rect: "RectLTRB | None" = None
 
 
 class MathPresentationProvider(object):
@@ -48,7 +61,7 @@ class MathPresentationProvider(object):
 		"""
 		raise NotImplementedError
 
-	def interactWithMathMl(self, mathMl: str, sourceObj: Optional["NVDAObject"] = None) -> None:
+	def interactWithMathMl(self, mathMl: str, sourceObj: "NVDAObject | None" = None) -> None:
 		"""Begin interaction with specified MathML markup.
 		@param mathMl: The MathML markup.
 		@param sourceObj: The source object containing the math, if known.
@@ -127,7 +140,7 @@ class MathInteractionNVDAObject(Window):
 		self,
 		provider: MathPresentationProvider | None = None,
 		mathMl: str | None = None,
-		sourceObj: Optional["NVDAObject"] = None,
+		sourceObj: "NVDAObject | None" = None,
 	):
 		self.parent = parent = api.getFocusObject()
 		self.provider = provider
@@ -189,7 +202,7 @@ def getMathMlFromTextInfo(pos: textInfos.TextInfo) -> Optional[str]:
 	return None
 
 
-def interactWithMathMl(mathMl: str, sourceObj: Optional["NVDAObject"] = None) -> None:
+def interactWithMathMl(mathMl: str, sourceObj: "NVDAObject | None" = None) -> None:
 	"""Begin interaction with specified MathML markup, reporting any errors to the user.
 	This is intended to be called from scripts.
 	If interaction isn't supported, this will be reported to the user.

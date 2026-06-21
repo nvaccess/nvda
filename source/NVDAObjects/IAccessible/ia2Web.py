@@ -38,6 +38,7 @@ import NVDAObjects
 
 if TYPE_CHECKING:
 	from locationHelper import RectLTRB
+	from mathPres import MathMlNodeInfo, MathMlNodePath
 
 
 class IA2WebAnnotationTarget(AnnotationTarget):
@@ -379,13 +380,15 @@ class Math(Ia2Web):
 			return None
 		return location.toLTRB()
 
-	def getMathNodeInfoByPath(self) -> dict[tuple[int, ...], tuple[str, "RectLTRB"]]:
+	def getMathNodeInfoByPath(self) -> dict["MathMlNodePath", "MathMlNodeInfo"]:
 		"""Map MathML element paths to tag names and screen rectangles for this IA2 math subtree.
 
 		Paths are based on MathML element child indexes only, ignoring static text
 		accessibles exposed below token elements.
 		"""
-		nodeInfoByPath: dict[tuple[int, ...], tuple[str, "RectLTRB"]] = {}
+		from mathPres import MathMlNodeInfo
+
+		nodeInfoByPath: dict["MathMlNodePath", "MathMlNodeInfo"] = {}
 		stack: list[tuple[NVDAObjects.NVDAObject, tuple[int, ...]]] = [
 			(self._getMathNodeMapRoot(), ()),
 		]
@@ -396,7 +399,7 @@ class Math(Ia2Web):
 			tag = self._getMathObjAttributes(obj).get("tag")
 			if rect := self._getMathNodeRectFromObj(obj):
 				if tag:
-					nodeInfoByPath[path] = (tag, rect)
+					nodeInfoByPath[path] = MathMlNodeInfo(path=path, tag=tag, rect=rect)
 			children = self._getMathElementChildren(obj)
 			stack.extend(
 				(child, path + (index,))
@@ -423,15 +426,11 @@ class Math(Ia2Web):
 				attrs = {}
 			matchedAttr = next((attr for attr in self._MATH_ID_ATTRS if attrs.get(attr) == nodeId), None)
 			if matchedAttr:
-				if obj.hasIrrelevantLocation:
-					log.debug(f"Math highlight matched {matchedAttr}={nodeId!r}, but object has irrelevant location")
-					raise LookupError
-				location = obj.location
-				if not location or not location.width or not location.height:
+				if not (rect := self._getMathNodeRectFromObj(obj)):
 					log.debug(f"Math highlight matched {matchedAttr}={nodeId!r}, but object has no usable location")
 					raise LookupError
 				log.debug(f"Math highlight matched {matchedAttr}={nodeId!r} after visiting {visitedCount} IA2 objects")
-				return location.toLTRB()
+				return rect
 			stack.extend(reversed(self._getMathObjChildren(obj)))
 		log.debug(f"Math highlight found no IA2 object for id {nodeId!r} after visiting {visitedCount} IA2 objects")
 		raise LookupError
