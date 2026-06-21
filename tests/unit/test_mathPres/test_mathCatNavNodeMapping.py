@@ -12,35 +12,48 @@ from mathPres.MathCAT import navNodeMapping
 
 class TestMathCatNavNodeMapping(unittest.TestCase):
 	def test_stripMathMlNamespace(self):
-		self.assertEqual(
-			navNodeMapping._stripMathMlNamespace("{http://www.w3.org/1998/Math/MathML}mi"),
-			"mi",
-		)
-		self.assertEqual(navNodeMapping._stripMathMlNamespace("mi"), "mi")
+		testCases = [
+			("{http://www.w3.org/1998/Math/MathML}mi", "mi"),
+			("{http://www.w3.org/1998/Math/MathML}math", "math"),
+			("mi", "mi"),
+		]
+		for tag, expectedTag in testCases:
+			with self.subTest(tag=tag):
+				self.assertEqual(navNodeMapping._stripMathMlNamespace(tag), expectedTag)
 
 	def test_prepareMathMlForNavigation_withoutSourceObj_returnsOriginalMathMl(self):
-		mathml = "<math><mi>x</mi></math>"
-		self.assertEqual(navNodeMapping.prepareMathMlForNavigation(mathml, sourceObj=None), (mathml, {}))
+		testCases = [
+			"<math><mi>x</mi></math>",
+			"<math xmlns='http://www.w3.org/1998/Math/MathML'><mn>1</mn></math>",
+		]
+		for mathml in testCases:
+			with self.subTest(mathml=mathml):
+				self.assertEqual(navNodeMapping.prepareMathMlForNavigation(mathml, sourceObj=None), (mathml, {}))
 
-	def test_removeSyntheticIdsFromMathMl_removesGeneratedId(self):
-		mathml = (
-			'<math><mi id="nvda-math-node-0" data-nvda-math-id-added="true">x</mi></math>'
-		)
-		result = navNodeMapping.removeSyntheticIdsFromMathMl(mathml)
-		mi = ElementTree.fromstring(result).find("mi")
-		assert mi is not None
-		self.assertNotIn("id", mi.attrib)
-		self.assertNotIn("data-nvda-math-id-added", mi.attrib)
+	def test_removeSyntheticIdsFromMathMl(self):
+		testCases = [
+			(
+				'<math><mi id="nvda-math-node-0" data-nvda-math-id-added="true">x</mi></math>',
+				{},
+			),
+			(
+				'<math><mi id="nvda-math-node-0" '
+				'data-nvda-math-id-added="true" '
+				'data-nvda-math-original-id="author-id">x</mi></math>',
+				{"id": "author-id"},
+			),
+			(
+				'<math><mi id="author-id">x</mi></math>',
+				{"id": "author-id"},
+			),
+		]
+		for mathml, expectedAttrs in testCases:
+			with self.subTest(mathml=mathml):
+				result = navNodeMapping.removeSyntheticIdsFromMathMl(mathml)
+				mi = ElementTree.fromstring(result).find("mi")
+				assert mi is not None
+				self.assertEqual(mi.attrib, expectedAttrs)
 
-	def test_removeSyntheticIdsFromMathMl_restoresOriginalId(self):
-		mathml = (
-			'<math><mi id="nvda-math-node-0" '
-			'data-nvda-math-id-added="true" '
-			'data-nvda-math-original-id="author-id">x</mi></math>'
-		)
-		result = navNodeMapping.removeSyntheticIdsFromMathMl(mathml)
-		mi = ElementTree.fromstring(result).find("mi")
-		assert mi is not None
-		self.assertEqual(mi.get("id"), "author-id")
-		self.assertNotIn("data-nvda-math-id-added", mi.attrib)
-		self.assertNotIn("data-nvda-math-original-id", mi.attrib)
+	def test_removeSyntheticIdsFromMathMl_parseError_returnsOriginalMathMl(self):
+		mathml = "<math><mi>x</math>"
+		self.assertEqual(navNodeMapping.removeSyntheticIdsFromMathMl(mathml), mathml)
