@@ -245,7 +245,6 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 						_StatusFilterKey.UPDATE,
 						_StatusFilterKey.INSTALLED,
 						_StatusFilterKey.INCOMPATIBLE,
-						_
 					]
 					and AddonListValidator(aVMs).canUseRemoveAction()
 				),
