@@ -6,6 +6,7 @@
 
 ### New Features
 
+* Add-ons can be removed from the Updatable add-ons tab in the store. (#15030, @nvdaes)
 * Chinese text can now be navigated by word using built-in input gestures.
   A Word Segmentation Standard setting was added to the "Document Navigation" panel. (#18735, @CrazySteve0605, @Cary-rowen)
 * Braille output for Chinese now includes spaces between words. (#18865, @CrazySteve0605, @Cary-rowen)
