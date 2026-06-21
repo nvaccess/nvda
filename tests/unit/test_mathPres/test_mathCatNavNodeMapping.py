@@ -28,7 +28,9 @@ class TestMathCatNavNodeMapping(unittest.TestCase):
 		]
 		for mathml in testCases:
 			with self.subTest(mathml=mathml):
-				self.assertEqual(navNodeMapping.prepareMathMlForNavigation(mathml, sourceObj=None), (mathml, {}))
+				self.assertEqual(
+					navNodeMapping.prepareMathMlForNavigation(mathml, sourceObj=None), (mathml, {})
+				)
 
 	def test_removeSyntheticIdsFromMathMl(self):
 		testCases = [

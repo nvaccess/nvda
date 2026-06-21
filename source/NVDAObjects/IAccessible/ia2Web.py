@@ -351,9 +351,7 @@ class Math(Ia2Web):
 
 	def _getMathElementChildren(self, obj: NVDAObjects.NVDAObject) -> tuple[NVDAObjects.NVDAObject, ...]:
 		return tuple(
-			child
-			for child in self._getMathObjChildren(obj)
-			if self._getMathObjAttributes(child).get("tag")
+			child for child in self._getMathObjChildren(obj) if self._getMathObjAttributes(child).get("tag")
 		)
 
 	def _getMathNodeMapRoot(self) -> NVDAObjects.NVDAObject:
@@ -399,10 +397,7 @@ class Math(Ia2Web):
 				if tag:
 					nodeInfoByPath[path] = MathMlNodeRectInfo(path=path, tag=tag, rect=rect)
 			children = self._getMathElementChildren(obj)
-			stack.extend(
-				(child, path + (index,))
-				for index, child in reversed(tuple(enumerate(children)))
-			)
+			stack.extend((child, path + (index,)) for index, child in reversed(tuple(enumerate(children))))
 		log.debug(
 			f"Math highlight built IA2 path map with {len(nodeInfoByPath)} usable rectangles "
 			f"after visiting {visitedCount} MathML element objects",
