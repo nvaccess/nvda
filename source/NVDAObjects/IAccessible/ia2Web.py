@@ -336,8 +336,6 @@ class EditorChunk(Ia2Web):
 
 
 class Math(Ia2Web):
-	_MATH_ID_ATTRS = ("id", "xml-id")
-
 	def _getMathObjChildren(self, obj: NVDAObjects.NVDAObject) -> tuple[NVDAObjects.NVDAObject, ...]:
 		try:
 			return tuple(obj.children)
@@ -410,30 +408,6 @@ class Math(Ia2Web):
 			f"after visiting {visitedCount} MathML element objects",
 		)
 		return nodeInfoByPath
-
-	def getMathNodeRectById(self, nodeId: str) -> "RectLTRB":
-		"""Get the screen rectangle for a descendant MathML node with the given id."""
-		if not nodeId:
-			raise LookupError
-		stack: list[NVDAObjects.NVDAObject] = [self]
-		visitedCount = 0
-		while stack:
-			obj = stack.pop()
-			visitedCount += 1
-			try:
-				attrs = obj.IA2Attributes
-			except AttributeError:
-				attrs = {}
-			matchedAttr = next((attr for attr in self._MATH_ID_ATTRS if attrs.get(attr) == nodeId), None)
-			if matchedAttr:
-				if not (rect := self._getMathNodeRectFromObj(obj)):
-					log.debug(f"Math highlight matched {matchedAttr}={nodeId!r}, but object has no usable location")
-					raise LookupError
-				log.debug(f"Math highlight matched {matchedAttr}={nodeId!r} after visiting {visitedCount} IA2 objects")
-				return rect
-			stack.extend(reversed(self._getMathObjChildren(obj)))
-		log.debug(f"Math highlight found no IA2 object for id {nodeId!r} after visiting {visitedCount} IA2 objects")
-		raise LookupError
 
 	def _get_mathMl(self):
 		# Chromium browsers now expose a 'math' IAccessible2 attribute,

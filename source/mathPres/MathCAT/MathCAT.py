@@ -126,15 +126,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 				return self._mathNodeRectsById[nodeId]
 			if nodeId.startswith(NAV_NODE_ID_PREFIX):
 				log.debug(f"Math highlight found synthetic MathML id {nodeId!r}, but it has no mapped IA2 rectangle")
-				log.debug(f"Math highlight falling back to source rectangle for node id {nodeId!r}")
-			else:
-				try:
-					return sourceObj.getMathNodeRectById(nodeId)
-				except LookupError:
-					log.debug(f"Math highlight falling back to source rectangle for node id {nodeId!r}")
-				except Exception:
-					log.debugWarning("Error resolving MathCAT navigation id to IA2 object", exc_info=True)
-					log.debug(f"Math highlight falling back to source rectangle for node id {nodeId!r}")
+			log.debug(f"Math highlight falling back to source rectangle for node id {nodeId!r}")
 		try:
 			if sourceObj.hasIrrelevantLocation:
 				return None
