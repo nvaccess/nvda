@@ -38,7 +38,7 @@ import NVDAObjects
 
 if TYPE_CHECKING:
 	from locationHelper import RectLTRB
-	from mathPres import MathMlNodeInfo, MathMlNodePath
+	from mathPres.mathMlNode import MathMlNodePath, MathMlNodeRectInfo
 
 
 class IA2WebAnnotationTarget(AnnotationTarget):
@@ -368,7 +368,7 @@ class Math(Ia2Web):
 		)
 		return mathChildren[0] if len(mathChildren) == 1 else self
 
-	def _getMathNodeRectFromObj(self, obj: NVDAObjects.NVDAObject) -> Optional["RectLTRB"]:
+	def _getMathNodeRectFromObj(self, obj: NVDAObjects.NVDAObject) -> "RectLTRB | None":
 		try:
 			if obj.hasIrrelevantLocation:
 				return None
@@ -380,16 +380,16 @@ class Math(Ia2Web):
 			return None
 		return location.toLTRB()
 
-	def getMathNodeInfoByPath(self) -> dict["MathMlNodePath", "MathMlNodeInfo"]:
+	def getMathNodeInfoByPath(self) -> dict["MathMlNodePath", "MathMlNodeRectInfo"]:
 		"""Map MathML element paths to tag names and screen rectangles for this IA2 math subtree.
 
 		Paths are based on MathML element child indexes only, ignoring static text
 		accessibles exposed below token elements.
 		"""
-		from mathPres import MathMlNodeInfo
+		from mathPres.mathMlNode import MathMlNodeRectInfo
 
-		nodeInfoByPath: dict["MathMlNodePath", "MathMlNodeInfo"] = {}
-		stack: list[tuple[NVDAObjects.NVDAObject, tuple[int, ...]]] = [
+		nodeInfoByPath: dict["MathMlNodePath", "MathMlNodeRectInfo"] = {}
+		stack: list[tuple[NVDAObjects.NVDAObject, "MathMlNodePath"]] = [
 			(self._getMathNodeMapRoot(), ()),
 		]
 		visitedCount = 0
@@ -399,7 +399,7 @@ class Math(Ia2Web):
 			tag = self._getMathObjAttributes(obj).get("tag")
 			if rect := self._getMathNodeRectFromObj(obj):
 				if tag:
-					nodeInfoByPath[path] = MathMlNodeInfo(path=path, tag=tag, rect=rect)
+					nodeInfoByPath[path] = MathMlNodeRectInfo(path=path, tag=tag, rect=rect)
 			children = self._getMathElementChildren(obj)
 			stack.extend(
 				(child, path + (index,))
@@ -411,7 +411,7 @@ class Math(Ia2Web):
 		)
 		return nodeInfoByPath
 
-	def getMathNodeRectById(self, nodeId: str) -> Optional["RectLTRB"]:
+	def getMathNodeRectById(self, nodeId: str) -> "RectLTRB":
 		"""Get the screen rectangle for a descendant MathML node with the given id."""
 		if not nodeId:
 			raise LookupError

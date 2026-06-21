@@ -12,7 +12,6 @@ using L{registerProvider}.
 
 import re
 import typing
-from dataclasses import dataclass
 from typing import List, Optional, Union
 
 from NVDAObjects.window import Window
@@ -25,20 +24,8 @@ import ui
 import textInfos
 
 if typing.TYPE_CHECKING:
-	from locationHelper import RectLTRB
 	from NVDAObjects import NVDAObject
 	from speech.commands import SpeechCommand  # noqa F401: type-checking only
-
-
-MathMlNodePath = tuple[int, ...]
-SyntheticMathMlNodeId = str
-
-
-@dataclass(frozen=True)
-class MathMlNodeInfo:
-	path: MathMlNodePath
-	tag: str
-	rect: "RectLTRB | None" = None
 
 
 class MathPresentationProvider(object):

@@ -614,6 +614,9 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		self.updateContextRect(context=Context.BROWSEMODE)
 
 	def handleMathNavigation(self, rect: RectLTRB | None) -> None:
+		if rect is None:
+			self.contextToRectMap.pop(Context.MATH, None)
+			return
 		self.updateContextRect(context=Context.MATH, rect=rect)
 
 	def refresh(self) -> None:

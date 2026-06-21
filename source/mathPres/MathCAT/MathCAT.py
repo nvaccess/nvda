@@ -4,7 +4,6 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import re
-import xml.etree.ElementTree as ElementTree
 from collections.abc import Generator
 from ctypes import (
 	Array,
@@ -44,127 +43,17 @@ from textUtils import WCHAR_ENCODING
 import mathPres
 from .localization import getLanguageToUse
 from .navCommands import NAV_COMMANDS
+from .navNodeMapping import (
+	NAV_NODE_ID_PREFIX,
+	prepareMathMlForNavigation,
+	removeSyntheticIdsFromMathMl,
+)
 from .preferences import applyUserPreferences
 from .speech import convertSSMLTextForNVDA
 
 if TYPE_CHECKING:
 	from locationHelper import RectLTRB
 	from NVDAObjects import NVDAObject
-
-
-_MATHML_NAMESPACE = "http://www.w3.org/1998/Math/MathML"
-_NAV_NODE_ID_PREFIX = "nvda-math-node-"
-_NAV_NODE_ID_ADDED_ATTR = "data-nvda-math-id-added"
-_NAV_NODE_ORIGINAL_ID_ATTR = "data-nvda-math-original-id"
-
-
-def _stripMathMlNamespace(tag: str) -> str:
-	return tag.rsplit("}", 1)[-1]
-
-
-def _getSyntheticNodeId(nodePath: mathPres.MathMlNodePath) -> str:
-	if not nodePath:
-		return f"{_NAV_NODE_ID_PREFIX}root"
-	return f"{_NAV_NODE_ID_PREFIX}{'-'.join(str(index) for index in nodePath)}"
-
-
-def _iterMathMlElements(
-	element: ElementTree.Element,
-	nodePath: mathPres.MathMlNodePath,
-) -> Generator[tuple[ElementTree.Element, mathPres.MathMlNodePath], None, None]:
-	yield element, nodePath
-	mathElementChildren = tuple(child for child in element if isinstance(child.tag, str))
-	for index, child in enumerate(mathElementChildren):
-		yield from _iterMathMlElements(child, nodePath + (index,))
-
-
-def _addSyntheticIdsToMathMl(
-	mathml: str,
-) -> tuple[str, dict[mathPres.SyntheticMathMlNodeId, mathPres.MathMlNodeInfo]]:
-	ElementTree.register_namespace("", _MATHML_NAMESPACE)
-	try:
-		root = ElementTree.fromstring(mathPres.stripExtraneousXml(mathml))
-	except ElementTree.ParseError:
-		log.debugWarning("Math highlight could not parse MathML for synthetic node ids", exc_info=True)
-		return mathml, {}
-	if _stripMathMlNamespace(root.tag) != "math":
-		log.debug("Math highlight did not add synthetic ids because MathML root is not <math>")
-		return mathml, {}
-	nodeInfoById: dict[mathPres.SyntheticMathMlNodeId, mathPres.MathMlNodeInfo] = {}
-	for element, nodePath in _iterMathMlElements(root, ()):
-		nodeId = _getSyntheticNodeId(nodePath)
-		if originalId := element.get("id"):
-			element.set(_NAV_NODE_ORIGINAL_ID_ATTR, originalId)
-		element.set("id", nodeId)
-		element.set(_NAV_NODE_ID_ADDED_ATTR, "true")
-		nodeInfoById[nodeId] = mathPres.MathMlNodeInfo(
-			path=nodePath,
-			tag=_stripMathMlNamespace(element.tag),
-		)
-	return ElementTree.tostring(root, encoding="unicode"), nodeInfoById
-
-
-def _removeSyntheticIdsFromMathMl(mathml: str) -> str:
-	try:
-		root = ElementTree.fromstring(mathml)
-	except ElementTree.ParseError:
-		return mathml
-	for element, _nodePath in _iterMathMlElements(root, ()):
-		if element.get(_NAV_NODE_ID_ADDED_ATTR) != "true":
-			continue
-		originalId = element.attrib.pop(_NAV_NODE_ORIGINAL_ID_ATTR, None)
-		if originalId is not None:
-			element.set("id", originalId)
-		else:
-			element.attrib.pop("id", None)
-		element.attrib.pop(_NAV_NODE_ID_ADDED_ATTR, None)
-	return ElementTree.tostring(root, encoding="unicode")
-
-
-def _prepareMathMlForNavigation(
-	mathml: str,
-	sourceObj: "NVDAObject | None",
-) -> tuple[str, dict[mathPres.SyntheticMathMlNodeId, "RectLTRB"]]:
-	"""Add synthetic ids to MathML and map those ids to IA2 rectangles."""
-	if not sourceObj:
-		return mathml, {}
-	from NVDAObjects.IAccessible.ia2Web import Math as Ia2WebMath
-
-	if not isinstance(sourceObj, Ia2WebMath):
-		return mathml, {}
-	mathmlWithIds, mathMlNodeInfoById = _addSyntheticIdsToMathMl(mathml)
-	if not mathMlNodeInfoById:
-		return mathml, {}
-	try:
-		ia2NodeInfoByPath = sourceObj.getMathNodeInfoByPath()
-	except Exception:
-		log.debugWarning("Math highlight could not build IA2 rectangle map", exc_info=True)
-		return mathml, {}
-	nodeRectsById: dict[mathPres.SyntheticMathMlNodeId, "RectLTRB"] = {}
-	missingPathCount = 0
-	tagMismatchCount = 0
-	for nodeId, mathMlNodeInfo in mathMlNodeInfoById.items():
-		try:
-			ia2NodeInfo = ia2NodeInfoByPath[mathMlNodeInfo.path]
-		except KeyError:
-			missingPathCount += 1
-			continue
-		if ia2NodeInfo.tag != mathMlNodeInfo.tag:
-			tagMismatchCount += 1
-			continue
-		if ia2NodeInfo.rect is None:
-			missingPathCount += 1
-			continue
-		nodeRectsById[nodeId] = ia2NodeInfo.rect
-	log.debug(
-		f"Math highlight added synthetic ids to {len(mathMlNodeInfoById)} MathML nodes; "
-		f"mapped {len(nodeRectsById)} ids to IA2 rectangles; "
-		f"missing IA2 paths: {missingPathCount}; tag mismatches: {tagMismatchCount}",
-	)
-	if not nodeRectsById:
-		return mathml, {}
-	return mathmlWithIds, nodeRectsById
-
 
 # Translators: The name of the category of MathCAT navigation commands in the Input Gestures dialog.
 SCRCAT_MATHCAT_NAV = _("MathCat navigation")
@@ -197,7 +86,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		:param sourceObj: Optional source object containing the math.
 		"""
 		super(MathCATInteraction, self).__init__(provider=provider, mathMl=mathMl, sourceObj=sourceObj)
-		self.mathMlForNavigation, self._mathNodeRectsById = _prepareMathMlForNavigation(
+		self.mathMlForNavigation, self._mathNodeRectsById = prepareMathMlForNavigation(
 			mathMl or "<math></math>",
 			sourceObj,
 		)
@@ -233,15 +122,12 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		except Exception:
 			log.debugWarning("Error getting MathCAT navigation node id", exc_info=True)
 		else:
-			log.debug(f"Math highlight resolving MathCAT navigation node id {nodeId!r}")
 			if nodeId in self._mathNodeRectsById:
-				log.debug(f"Math highlight matched synthetic MathML id {nodeId!r}")
 				return self._mathNodeRectsById[nodeId]
-			if nodeId.startswith(_NAV_NODE_ID_PREFIX):
+			if nodeId.startswith(NAV_NODE_ID_PREFIX):
 				log.debug(f"Math highlight found synthetic MathML id {nodeId!r}, but it has no mapped IA2 rectangle")
 				log.debug(f"Math highlight falling back to source rectangle for node id {nodeId!r}")
 			else:
-				log.debug("Math highlight MathCAT navigation id was not an NVDA synthetic id")
 				try:
 					return sourceObj.getMathNodeRectById(nodeId)
 				except LookupError:
@@ -389,7 +275,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 					mathml = self.initMathML
 				if copyAs == "speech":
 					# save the old MathML, set the navigation MathML as MathMl, get the speech, then reset the MathML
-					savedMathML: str = self.initMathML
+					savedMathML: str = self.mathMlForNavigation
 					savedTTS: str = libmathcat.GetPreference("TTS")
 					if savedMathML == "":  # shouldn't happen
 						raise Exception("Internal error -- MathML not set for copy")
@@ -412,11 +298,11 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 
 	# not a perfect match sequence, but should capture normal MathML
 	_mathTagHasNameSpace: re.Pattern = re.compile("<math .*?xmlns.+?>")
-	_hasDataAttr: re.Pattern = re.compile(" data-[^=]+='[^']*'")
+	_hasDataAttr: re.Pattern = re.compile(r""" data-[^=]+=(['"]).*?\1""")
 
 	def _wrapMathMLForClipBoard(self, text: str) -> str:
 		"""Cleanup the MathML a little."""
-		text = _removeSyntheticIdsFromMathMl(text)
+		text = removeSyntheticIdsFromMathMl(text)
 		mathMLWithNS: str = re.sub(self._hasDataAttr, "", text)
 		if not re.match(self._mathTagHasNameSpace, mathMLWithNS):
 			mathMLWithNS = mathMLWithNS.replace(
