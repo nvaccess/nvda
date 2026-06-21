@@ -289,6 +289,7 @@ def _getUpdateStatus(model: "_AddonGUIModel") -> AvailableAddonStatus | None:
 	"""
 	from ..dataManager import addonDataManager
 	from ..models.addon import AddonStoreModel
+
 	if model.isPendingRemove:
 		return None
 	if not isinstance(model, AddonStoreModel):
