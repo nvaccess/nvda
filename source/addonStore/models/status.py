@@ -287,10 +287,11 @@ def _getUpdateStatus(model: "_AddonGUIModel") -> AvailableAddonStatus | None:
 	:return: Update status of add-on for the context of the current tab.
 	None if the add-on is not installed or cannot be updated.
 	"""
-	from ..dataManager import addonDataManager
-	from ..models.addon import AddonStoreModel
 	if model.isPendingRemove:
 		return None
+
+		from ..dataManager import addonDataManager
+	from ..models.addon import AddonStoreModel
 	if not isinstance(model, AddonStoreModel):
 		# If the listed add-on is installed from a side-load
 		# and not available on the add-on store
