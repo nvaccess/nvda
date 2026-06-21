@@ -186,8 +186,8 @@ class AddonListItemVM(Generic[_AddonModelT]):
 	def canUseRemoveAction(self) -> bool:
 		return (
 			self.model.isInstalled
-			and not self.model.isPendingRemove
 			and self.status in _installedAddonStatuses.union(_updatableStatuses)
+			and self.status not in (AvailableAddonStatus.DOWNLOADING, AvailableAddonStatus.DOWNLOAD_SUCCESS)
 			and self.status != AvailableAddonStatus.PENDING_REMOVE
 		)
 
