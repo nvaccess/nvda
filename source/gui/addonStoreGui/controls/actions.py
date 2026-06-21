@@ -241,11 +241,11 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 				actionHandler=self._storeVM.removeAddons,
 				validCheck=lambda aVMs: (
 					self._storeVM._filteredStatusKey
-					in [
+					in (
 						_StatusFilterKey.UPDATE,
 						_StatusFilterKey.INSTALLED,
 						_StatusFilterKey.INCOMPATIBLE,
-					]
+					)
 					and AddonListValidator(aVMs).canUseRemoveAction()
 				),
 				actionTarget=self._selectedAddons,
