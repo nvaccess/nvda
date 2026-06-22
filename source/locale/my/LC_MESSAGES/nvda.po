@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-12 03:40+0000\n"
-"PO-Revision-Date: 2026-06-15 03:41\n"
+"POT-Creation-Date: 2026-06-22 03:32+0000\n"
+"PO-Revision-Date: 2026-06-22 03:42\n"
 "Last-Translator: \n"
 "Language-Team: Burmese\n"
 "Language: my_MM\n"
@@ -5718,7 +5718,7 @@ msgstr "အမျိုးအမည်မသိ %s"
 #. Translators: a state that denotes a control is currently on
 #. E.g. a switch control.
 #: keyboardHandler.py:749 synthSettingsRing.py:117 controlTypes\state.py:202
-#: gui\speechDict.py:195
+#: gui\speechDict.py:198
 msgid "on"
 msgstr "ဖွင့်"
 
@@ -5727,7 +5727,7 @@ msgstr "ဖွင့်"
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 #: keyboardHandler.py:749 synthSettingsRing.py:117 controlTypes\state.py:231
-#: gui\settingsDialogs.py:2406 gui\speechDict.py:195
+#: gui\settingsDialogs.py:2406 gui\speechDict.py:198
 msgid "off"
 msgstr "ပိတ်"
 
@@ -12950,13 +12950,13 @@ msgstr "အရစိစစ်ယူရန် :"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:6762 gui\speechDict.py:212
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:6762 gui\speechDict.py:215
 msgid "&Add"
 msgstr "ပေါင်းထည့်ရန်"
 
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
-#: gui\inputGestures.py:620 gui\speechDict.py:224
+#: gui\inputGestures.py:620 gui\speechDict.py:227
 msgid "&Remove"
 msgstr "ဖယ်ရှားရန်"
 
@@ -15419,7 +15419,7 @@ msgstr "သင်္ကေတ"
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6707 gui\speechDict.py:188
+#: gui\settingsDialogs.py:6707 gui\speechDict.py:191
 msgid "Replacement"
 msgstr "အစားထိုးမှု"
 
@@ -15490,75 +15490,75 @@ msgstr "အမျိုးအစား"
 
 #. Translators: This is an error message to let the user know that the pattern field
 #. in the dictionary entry is not valid.
-#: gui\speechDict.py:90
+#: gui\speechDict.py:93
 msgid "A pattern is required."
 msgstr "အဆင်ပုံစံတစ်ခုလိုအပ်သည်"
 
 #. Translators: The title of an error message raised by the Dictionary Entry dialog
-#: gui\speechDict.py:92 gui\speechDict.py:115 gui\speechDict.py:133
+#: gui\speechDict.py:95 gui\speechDict.py:118 gui\speechDict.py:136
 msgid "Dictionary Entry Error"
 msgstr "အဘိဓာန်အသွင်းအမှား"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#: gui\speechDict.py:113
+#: gui\speechDict.py:116
 #, python-brace-format
 msgid "Regular Expression error in the pattern field: \"{error}\"."
 msgstr ""
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#: gui\speechDict.py:131
+#: gui\speechDict.py:134
 #, python-brace-format
 msgid "Regular Expression error in the replacement field: \"{error}\"."
 msgstr ""
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
-#: gui\speechDict.py:175
+#: gui\speechDict.py:178
 msgid "&Dictionary entries"
 msgstr "အဘိဓာန်အသွင်း"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 #. Translators: title for Word comment dialog.
-#: gui\speechDict.py:182 NVDAObjects\IAccessible\winword.py:375
+#: gui\speechDict.py:185 NVDAObjects\IAccessible\winword.py:375
 #: NVDAObjects\UIA\wordDocument.py:843
 msgid "Comment"
 msgstr "မှတ်ချက်"
 
 #. Translators: The label for a column in dictionary entries list used to identify pattern
 #. (original word or a pattern).
-#: gui\speechDict.py:185
+#: gui\speechDict.py:188
 msgid "Pattern"
 msgstr "အဆင်ပုံစံ"
 
 #. Translators: The label for a column in dictionary entries list used to identify
 #. whether the entry is case sensitive or not.
-#: gui\speechDict.py:191
+#: gui\speechDict.py:194
 msgid "case"
 msgstr "စာလုံးအကြီးအသေး"
 
 #. Translators: The label for a column in dictionary entries list used to identify
 #. whether the entry is a regular expression, matches whole words, or matches anywhere.
-#: gui\speechDict.py:194
+#: gui\speechDict.py:197
 msgid "Type"
 msgstr "အမျိုးအစား"
 
 #. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
-#: gui\speechDict.py:218
+#: gui\speechDict.py:221
 msgid "&Edit"
 msgstr "တည်းဖြတ်ရန်"
 
 #. Translators: The label for a button on the Speech Dictionary dialog.
 #. Translators: The title on a prompt for confirmation on the Speech Dictionary dialog.
-#: gui\speechDict.py:232 gui\speechDict.py:312
+#: gui\speechDict.py:235 gui\speechDict.py:315
 msgid "Remove all"
 msgstr ""
 
 #. Translators: This is the label for the add dictionary entry dialog.
-#: gui\speechDict.py:254
+#: gui\speechDict.py:257
 msgid "Add Dictionary Entry"
 msgstr "အဘိဓာန်ထည့်သွင်းမှုပေါင်းထည့်ရန်"
 
 #. Translators: A prompt for confirmation on the Speech Dictionary dialog.
-#: gui\speechDict.py:310
+#: gui\speechDict.py:313
 msgid "Are you sure you want to remove all the entries in this dictionary?"
 msgstr ""
 

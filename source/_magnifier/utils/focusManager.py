@@ -17,7 +17,15 @@ import locationHelper
 import textInfos
 from textInfos.offsets import OffsetsTextInfo
 from .types import Coordinates, MagnifierTrackingType
-from ..config import getFollowState
+from ..config import getFollowState, _isDebug
+
+
+def _isWindowRTL(obj) -> bool:
+	"""Return True when the focused window has RTL layout (WS_EX_LAYOUTRTL set)."""
+	hwnd = getattr(obj, "windowHandle", None)
+	if isinstance(hwnd, int) and hwnd:
+		return bool(winUser.getExtendedWindowStyle(hwnd) & winUser.WS_EX_LAYOUTRTL)
+	return False
 
 
 class FocusManager:
@@ -169,24 +177,28 @@ class FocusManager:
 		except Exception:
 			# COM errors (_ctypes.COMError), UIA failures, and other unexpected errors
 			# can occur when querying caret position. Fall back to focus object location.
-			log.debug("Failed to get caret position, falling back to focus object location", exc_info=True)
+			if _isDebug():
+				log.debug(
+					"Failed to get caret position, falling back to focus object location",
+					exc_info=True,
+				)
 			try:
 				focusObj = api.getFocusObject()
 				if focusObj and focusObj.location:
-					left, top, width, height = focusObj.location
-					x = left + (width // 2)
-					y = top + (height // 2)
-					coords = Coordinates(x, y)
+					left, top, width, _height = focusObj.location
+					x = left + width if _isWindowRTL(focusObj) else left
+					coords = Coordinates(x, top)
 					if coords != Coordinates(0, 0):
 						self._lastValidSystemFocusPosition = coords
 					return coords
 			except Exception:
 				# Focus object location may fail (e.g., object without location)
 				# Fall through to return last valid position
-				log.debug(
-					"Failed to get focus object location, falling back to last valid position",
-					exc_info=True,
-				)
+				if _isDebug():
+					log.debug(
+						"Failed to get focus object location, falling back to last valid position",
+						exc_info=True,
+					)
 		return self._lastValidSystemFocusPosition
 
 	def _getReviewPosition(self) -> Coordinates | None:
@@ -219,7 +231,8 @@ class FocusManager:
 		try:
 			return textInfo.pointAtStart
 		except (NotImplementedError, LookupError, AttributeError, COMError, RuntimeError) as e:
-			log.debug(f"pointAtStart failed for {textInfo!r}: {e}", exc_info=True)
+			if _isDebug():
+				log.debug(f"pointAtStart failed for {textInfo!r}: {e}", exc_info=True)
 			originalExc = e
 
 		# Only apply the fallback for TextInfos exposing the offset-based internals
@@ -231,11 +244,13 @@ class FocusManager:
 		try:
 			return textInfo._getBoundingRectFromOffset(prevOffset).topRight
 		except (NotImplementedError, LookupError, AttributeError) as e:
-			log.debug(f"_getBoundingRectFromOffset failed: {e}", exc_info=True)
+			if _isDebug():
+				log.debug(f"_getBoundingRectFromOffset failed: {e}", exc_info=True)
 			try:
 				return textInfo._getPointFromOffset(prevOffset)
 			except (NotImplementedError, LookupError, AttributeError) as e:
-				log.debug(f"_getPointFromOffset failed: {e}", exc_info=True)
+				if _isDebug():
+					log.debug(f"_getPointFromOffset failed: {e}", exc_info=True)
 		raise originalExc
 
 	def _getNavigatorObjectLocation(self) -> Coordinates | None:
@@ -247,13 +262,13 @@ class FocusManager:
 		navigatorObject = api.getNavigatorObject()
 		if navigatorObject:
 			try:
-				left, top, width, height = navigatorObject.location
-				x = left + (width // 2)
-				y = top + (height // 2)
-				return Coordinates(x, y)
+				left, top, width, _height = navigatorObject.location
+				x = left + width if _isWindowRTL(navigatorObject) else left
+				return Coordinates(x, top)
 			except Exception:
 				# Navigator object may not have a valid location
-				log.debug("Failed to get navigator object location", exc_info=True)
+				if _isDebug():
+					log.debug("Failed to get navigator object location", exc_info=True)
 		return None
 
 	def _getNavigatorObjectPosition(self) -> Coordinates:
