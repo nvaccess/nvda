@@ -11,6 +11,7 @@ Implements the magnifier global class and its basic functionalities.
 from collections.abc import Callable
 from comtypes import COMError
 from logHandler import log
+from NVDAState import _TrackNVDAInitialization
 import wx
 import ui
 import speech
@@ -173,7 +174,6 @@ class Magnifier:
 		"""
 		if not (screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled):
 			return False
-		from NVDAState import _TrackNVDAInitialization
 
 		if _TrackNVDAInitialization.isInitializationComplete():
 			log.debug("Screen curtain is active, cannot start magnifier")
@@ -271,7 +271,10 @@ class Magnifier:
 		_displayTracking.displayChanged.unregister(self._onDisplayChanged)
 
 	def onScreenCurtainEnabled(self) -> None:
-		"""Called by screen curtain when it is enabled. Stops the magnifier if active."""
+		"""
+		Called when screen curtain is being enabled.
+		Handles disabling magnifier if it's active.
+		"""
 		if self._isActive:
 			ui.message(
 				pgettext(
@@ -286,7 +289,10 @@ class Magnifier:
 			self._screenCurtainIsActive = False
 
 	def onScreenCurtainDisabled(self) -> None:
-		"""Called by screen curtain when it is disabled. Restarts the magnifier if it was active before."""
+		"""
+		Called when screen curtain is being disabled.
+		Handles re-enabling magnifier if it was active before screen curtain.
+		"""
 		if self._screenCurtainIsActive:
 			ui.message(
 				pgettext(
