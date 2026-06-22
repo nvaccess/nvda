@@ -126,7 +126,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 				return self._mathNodeRectsById[nodeId]
 			if nodeId.startswith(NAV_NODE_ID_PREFIX):
 				log.debug(
-					f"Math highlight found synthetic MathML id {nodeId!r}, but it has no mapped IA2 rectangle"
+					f"Math highlight found synthetic MathML id {nodeId!r}, but it has no mapped IA2 rectangle",
 				)
 			log.debug(f"Math highlight falling back to source rectangle for node id {nodeId!r}")
 		try:
