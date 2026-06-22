@@ -55,7 +55,7 @@ class TestLanguageIndexes(unittest.TestCase):
 		region._rawToContentPos = list(range(5))
 		rawTextLenBefore = len(region.rawText)
 		text = "field"
-		with patch("braille.languageHandler.getLanguage", return_value="fr"):
+		with patch("braille.regions.textInfo.languageHandler.getLanguage", return_value="fr"):
 			region._addFieldText(text, contentPos=0)
 		# `_addFieldText` prepends TEXT_SEPARATOR when `separate=True` and there is pre-existing text.
 		addedLen = len(braille.TEXT_SEPARATOR) + len(text)
@@ -91,7 +91,7 @@ class TestLanguageIndexes(unittest.TestCase):
 		}
 		# Stub helpers that would otherwise require a real NVDA environment.
 		with (
-			patch("braille.getFormatFieldBraille", return_value=""),
+			patch("braille.regions.textInfo.getFormatFieldBraille", return_value=""),
 			patch.object(
 				braille.TextInfoRegion,
 				"_getTypeformFromFormatField",

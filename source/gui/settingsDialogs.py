@@ -29,6 +29,7 @@ from typing import (
 import audio
 import audioDucking
 import braille
+import braille.display
 import brailleInput
 import brailleTables
 import characterProcessing
@@ -4678,6 +4679,7 @@ class AdvancedPanelControls(
 			"remoteClient",
 			"externalPythonDependencies",
 			"bdDetect",
+			"magnifier",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -5108,7 +5110,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		self.possiblePorts = []
 		isAutoDisplaySelected = displayName == braille.AUTOMATIC_PORT[0]
 		if not isAutoDisplaySelected:
-			displayCls = braille._getDisplayDriver(displayName)
+			displayCls = braille.display._getDisplayDriver(displayName)
 			try:
 				self.possiblePorts.extend(displayCls.getPossiblePorts().items())
 			except NotImplementedError:

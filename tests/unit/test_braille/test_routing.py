@@ -54,7 +54,7 @@ class TestBrailleOffsetConverters(unittest.TestCase):
 		translate = Mock(return_value=([1, 2, 3], [0, 1, 2], [0, 1, 2], 2))
 		with (
 			patch("textUtils._wordSeg.wordSegUtils.WordSegmenter", return_value=wordSegmenter),
-			patch("braille.louisHelper.translate", translate),
+			patch("braille.regions.base.louisHelper.translate", translate),
 		):
 			region = braille.Region()
 			region.rawText = "你ℌ"

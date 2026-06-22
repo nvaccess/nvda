@@ -27,6 +27,7 @@ from collections.abc import Callable, Generator, Iterable, Iterator
 import hwPortUtils
 import NVDAState
 import braille
+import braille.display
 import winUser
 import config
 import appModuleHandler
@@ -707,7 +708,7 @@ def driverSupportsAutoDetection(driver: str) -> bool:
 	@return: C{True} if de driver supports auto detection, C{False} otherwise.
 	"""
 	try:
-		driverCls = braille._getDisplayDriver(driver)
+		driverCls = braille.display._getDisplayDriver(driver)
 	except ImportError:
 		return False
 	return driverCls.isThreadSafe and driverCls.supportsAutomaticDetection

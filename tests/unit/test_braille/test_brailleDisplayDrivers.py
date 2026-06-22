@@ -8,6 +8,7 @@
 from brailleDisplayDrivers import seikantk
 import unittest
 import braille
+import braille.display
 
 
 class FakeSeikantkDriver(seikantk.BrailleDisplayDriver):
@@ -169,7 +170,7 @@ class TestGestureMap(unittest.TestCase):
 	def test_identifiers(self):
 		"""Checks whether all defined braille display gestures contain valid braille display key identifiers."""
 		for name, description in braille.getDisplayList(excludeNegativeChecks=False):
-			driver = braille._getDisplayDriver(name)
+			driver = braille.display._getDisplayDriver(name)
 			gmap = driver.gestureMap
 			if not gmap:
 				continue

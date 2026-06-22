@@ -5545,7 +5545,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Description for the repeat last speech script
-			"Repeat the last spoken information. Pressing twice shows it in a browsable message. ",
+			"Repeat the last spoken information. Pressing twice shows it in a browsable message.",
 		),
 		gesture="kb:NVDA+x",
 		category=SCRCAT_SPEECH,
