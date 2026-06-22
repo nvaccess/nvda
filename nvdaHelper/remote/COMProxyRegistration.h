@@ -30,6 +30,7 @@ typedef struct {
 	std::wstring dllPath;
 	// The cookie returned by CoRegisterClassObject, for later unregistration via CoRevokeClassObject
 	ULONG_PTR classObjectRegistrationCookie;
+	std::map<std::wstring, IID> registeredInterfaces;
 } COMProxyRegistration_t;
 
 /* Registers a COM proxy dll and all its interfaces for this process so that they can be marshalled to/from other processes
@@ -44,15 +45,29 @@ COMProxyRegistration_t* registerCOMProxy(const wchar_t* dllPath);
 	*/
 bool unregisterCOMProxy(COMProxyRegistration_t* reg);
 
-/* Restores the original proxy CLSIDs for all interfaces for which the proxy CLSID was changed by registerCOMProxy.
-	Should be called before NVDA unloads from this process to restore the original state of the process as much as possible.
+/* Registers a proxy for the specified interface, and backs up the original proxy CLSID for later restoration.
+	@param interfaceName the name of the interface (for debugging)
+	@param dllPath the relative path to the proxy dll (relative from this dll)
+	@param iid the IID of the interface to register the proxy for
+	@param clsid the CLSID of the proxy to register for this interface
+	@return true if successful, false otherwise
+	*/
+bool registerInterfaceProxy(std::wstring interfaceName, std::wstring dllPath, IID iid, CLSID clsid);
+
+/* Unregisters the proxy for the specified interface, restoring the original proxy CLSID if it was changed when registering the proxy.
+	@param iid the IID of the interface to unregister the proxy for
 	@return void
 	*/
-void restoreInterfaceProxyBackups();
+bool unregisterInterfaceProxy(IID iid);
 
 /* Clears the cache used for storing generated proxy CLSIDs for dlls. Should be called when NVDA unloads from this process to free cached CLSIDs.
 	@return void
 	*/
 void clearCOMProxyRegistrationCache();
+
+/* Clears the cache used for storing original proxy CLSIDs for interfaces. Should be called when NVDA unloads from this process to free cached CLSIDs.
+	@return void
+	*/
+void clearInterfaceProxyBackups();
 
 #endif
