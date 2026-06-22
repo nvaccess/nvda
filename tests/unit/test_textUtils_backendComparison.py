@@ -187,3 +187,38 @@ class TestWordOffsetsComplexScriptDivergence(unittest.TestCase):
 		self.assertNotEqual(icu_result, uni_result)
 		# ICU spans the whole word; Uniscribe returns a shorter cluster.
 		self.assertGreater(icu_result[1] - icu_result[0], uni_result[1] - uni_result[0])
+
+
+@skipIfNoICU
+class TestWordOffsetsEmojiZwjSequence(unittest.TestCase):
+	"""Multi-person emoji ZWJ sequence with skin-tone modifiers.
+
+	"👩🏻‍👧🏻‍👦🏻" (woman + girl + boy family, each with a light skin-tone modifier,
+	joined by ZERO WIDTH JOINER) is a single UAX#29 word.  ICU treats the whole
+	sequence as one segment; Uniscribe falls back to grapheme/surrogate-level
+	boundaries and returns only the leading part.  See #20343.
+
+	The sequence is 14 UTF-16 code units:
+	👩 (2) 🏻 (2) ZWJ (1) 👧 (2) 🏻 (2) ZWJ (1) 👦 (2) 🏻 (2).
+	"""
+
+	TEXT = "👩🏻‍👧🏻‍👦🏻"
+	# UTF-16 code-unit length of the whole sequence.
+	LENGTH = len(TEXT.encode("utf-16-le")) // 2
+
+	def test_length_is_as_expected(self):
+		# Guards the constant the assertions below rely on.
+		self.assertEqual(self.LENGTH, 14)
+
+	def test_icu_groups_whole_sequence(self):
+		# ICU returns the entire ZWJ sequence as one word from offset 0.
+		self.assertEqual(_icuWordOffsets(self.TEXT, 0), (0, self.LENGTH))
+
+	def test_backends_diverge(self):
+		# Uniscribe does not group the whole sequence; ICU does.
+		icu_result = _icuWordOffsets(self.TEXT, 0)
+		uni_result = _uniscribeWordOffsets(self.TEXT, 0)
+		self.assertNotEqual(icu_result, uni_result)
+		# ICU spans the full sequence; Uniscribe returns a shorter leading run.
+		self.assertEqual(icu_result, (0, self.LENGTH))
+		self.assertLess(uni_result[1] - uni_result[0], self.LENGTH)
