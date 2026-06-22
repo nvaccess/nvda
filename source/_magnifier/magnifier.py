@@ -34,6 +34,7 @@ from .config import (
 	isTrueCentered,
 	setZoomLevel,
 	ZoomLevel,
+	_isDebug,
 )
 from .utils.focusManager import FocusManager
 
@@ -242,7 +243,8 @@ class Magnifier:
 		(e.g., reinitializing the Magnification API).
 		The base implementation resets the error counter and restarts the timer.
 		"""
-		log.info("Attempting base magnifier recovery")
+		if _isDebug():
+			log.debug("Attempting base magnifier recovery")
 		self._consecutiveErrors = 0
 		self._startTimer(self._updateMagnifier)
 
@@ -397,7 +399,8 @@ class Magnifier:
 				self._timer.Stop()
 			self._timer = None
 		else:
-			log.debug("no timer to stop")
+			if _isDebug():
+				log.debug("no timer to stop")
 
 	def _getMagnifierParameters(self, coordinates: Coordinates) -> MagnifierParameters:
 		"""

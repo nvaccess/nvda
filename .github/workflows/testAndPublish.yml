@@ -772,41 +772,20 @@ jobs:
         echo "* Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/)." >> /tmp/releaseNotes.md
         echo "* [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }})" >> /tmp/releaseNotes.md
         echo "* SHA256 sum: \`${{ needs.createLauncher.outputs.launcherSha256 }}\`" >> /tmp/releaseNotes.md
-    - name: Publish pre-release
-      if: ${{ contains(github.ref_name, 'rc') || contains(github.ref_name, 'beta') }}
-      shell: bash
-      env:
-        GH_TOKEN: ${{ github.token }}
-      run: |
-        gh release create ${{github.ref_name }} \
-          --repo ${{ github.repository }} \
-          --prerelease \
-          --title "${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
-          --notes-file /tmp/releaseNotes.md \
-          --verify-tag \
-          --discussion-category Releases
-    - name: Publish stable release
-      if: ${{ !contains(github.ref_name, 'rc') && !contains(github.ref_name, 'beta') }}
-      shell: bash
-      env:
-        GH_TOKEN: ${{ github.token }}
-      run: |
-        gh release create ${{github.ref_name }} \
-          --repo ${{ github.repository }} \
-          --title "${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
-          --notes-file /tmp/releaseNotes.md \
-          --verify-tag \
-          --discussion-category Releases
-    - name: Upload exe to release assets
+    - name: Publish release
       shell: bash
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
         NVDA_EXE_NAME=$(ls output/nvda*.exe | head -n 1)
-        gh release upload ${{ github.ref_name }} \
-            --repo ${{ github.repository }} \
-            --clobber \
-            $NVDA_EXE_NAME#Installer
+        gh release create ${{ github.ref_name }} \
+          --repo ${{ github.repository }} \
+          --title "${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}" \
+          --notes-file /tmp/releaseNotes.md \
+          --verify-tag \
+          --discussion-category Releases \
+          ${{ ( contains(github.ref_name, 'rc') || contains(github.ref_name, 'beta') ) && '--prerelease' || '' }} \
+          $NVDA_EXE_NAME#Installer
 
   submit-winget:
     name: Submit manifest to WinGet Packages Repository

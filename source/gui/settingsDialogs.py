@@ -4678,6 +4678,7 @@ class AdvancedPanelControls(
 			"remoteClient",
 			"externalPythonDependencies",
 			"bdDetect",
+			"magnifier",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel

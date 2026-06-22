@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2026 NV Access Limited, Neil Soiffer, Ryan McCleary
+# Copyright (C) 2022-2026 NV Access Limited, Neil Soiffer, Ryan McCleary, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -47,7 +47,7 @@ from .preferences import applyUserPreferences
 from .speech import convertSSMLTextForNVDA
 
 # Translators: The name of the category of MathCAT navigation commands in the Input Gestures dialog.
-SCRCAT_MATHCAT_NAV = _("MathCat navigation")
+SCRCAT_MATHCAT_NAV = _("Math navigation")
 
 
 class MathCATInteraction(mathPres.MathInteractionNVDAObject):

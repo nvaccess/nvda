@@ -19,6 +19,7 @@ from .config import (
 	setFullscreenMode,
 	toggleAllFollowStates,
 	ZoomLevel,
+	_isDebug,
 )
 from .magnifier import Magnifier
 from .fullscreenMagnifier import FullScreenMagnifier
@@ -307,9 +308,11 @@ def startSpotlight() -> None:
 			MagnifierAction.START_SPOTLIGHT,
 		):
 			fullscreenMagnifier: FullScreenMagnifier = magnifier
-			log.debug("trying to launch spotlight mode")
+			if _isDebug():
+				log.debug("trying to launch spotlight mode")
 			if fullscreenMagnifier._spotlightManager._spotlightIsActive:
-				log.debug("found spotlight manager and it is active")
+				if _isDebug():
+					log.debug("found spotlight manager and it is active")
 				ui.message(
 					pgettext(
 						"magnifier",
@@ -318,7 +321,8 @@ def startSpotlight() -> None:
 					),
 				)
 			else:
-				log.debug("no active spotlight manager found, starting new one")
+				if _isDebug():
+					log.debug("no active spotlight manager found, starting new one")
 				fullscreenMagnifier._startSpotlight()
 				ui.message(
 					pgettext(
