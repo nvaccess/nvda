@@ -18,10 +18,6 @@ permissions:
 jobs:
   prekAutoUpdate:
     name: Prek auto-update
-    # Upstream-only maintenance task. Forks enable Actions for the autofix
-    # workflow; without this guard they would also run this schedule and open
-    # spurious auto-update PRs against their own fork.
-    if: github.repository == 'nvaccess/nvda'
     runs-on: ubuntu-latest
     steps:
       # Auto-update only rewrites hook revisions in prek.toml,
@@ -38,12 +34,22 @@ jobs:
       - name: Run prek auto-update
         run: prek auto-update --cooldown-days 3
       - name: Create pull request
-        uses: peter-evans/create-pull-request@v7
-        with:
-          branch: prek-autoupdate
-          delete-branch: true
-          title: Prek auto-update
-          commit-message: Prek auto-update
-          author: github-actions <github-actions@github.com>
-          body: |
-            Automated update of prek hook revisions in `prek.toml`.
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet; then
+            echo "No hook updates available."
+            exit 0
+          fi
+          git config --local user.name "github-actions"
+          git config --local user.email "github-actions@github.com"
+          git checkout -b prek-autoupdate
+          git commit -am "Prek auto-update"
+          # Force push so a re-run replaces a stale auto-update branch.
+          git push --force --set-upstream origin prek-autoupdate
+          # Reuse the existing PR if one is already open from a previous run.
+          gh pr create --base master --head prek-autoupdate \
+            --title "Prek auto-update" \
+            --body "Automated update of prek hook revisions in \`prek.toml\`." \
+            || echo "A pull request for prek-autoupdate already exists."
