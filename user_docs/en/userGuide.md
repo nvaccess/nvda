@@ -1290,6 +1290,7 @@ By default, the review cursor follows the system caret, so you can usually use t
 
 At this point, NVDA will enter Math mode, where you can use commands such as the arrow keys to explore the expression.
 For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
+When [Visual Highlight](#VisionFocusHighlight) is enabled and the browse mode cursor highlighter is enabled, the current subpart of MathML on the web is also exposed visually.
 
 When you wish to return to the document, simply press the escape key.
 
@@ -1545,7 +1546,7 @@ These positions are highlighted with a coloured rectangle outline.
 * Solid blue highlights a combined navigator object and system focus location (e.g. because [the navigator object follows the system focus](#ReviewCursorFollowFocus)).
 * Dashed blue highlights just the system focus object.
 * Solid pink highlights just the navigator object.
-* Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers).
+* Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers), the cursor in OCR recognition results, and the current subpart while navigating math on the web.
 
 When Visual Highlight is enabled in the [vision category](#VisionSettings) of the [NVDA Settings](#NVDASettings) dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret](#VisionSettingsFocusHighlight).
 
@@ -2867,7 +2868,7 @@ The check boxes in the Visual Highlight grouping control the behaviour of NVDA's
 * Enable Highlighting: Toggles Visual Highlight on and off.
 * Highlight system focus: toggles whether the [system focus](#SystemFocus) will be highlighted.
 * Highlight navigator object: toggles whether the [navigator object](#ObjectNavigation) will be highlighted.
-* Highlight browse mode cursor: Toggles whether the [virtual browse mode cursor](#BrowseMode) will be highlighted.
+* Highlight browse mode cursor: Toggles whether the [virtual browse mode cursor](#BrowseMode) will be highlighted, including the cursor in OCR recognition results and the current subpart while navigating math on the web.
 
 Note that checking and unchecking the "Enable Highlighting" check box will also change the state of the three other check boxes accordingly.
 Therefore, if "Enable Highlighting" is off and you check this check box, the other three check boxes will also be checked automatically.
