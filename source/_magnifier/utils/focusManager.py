@@ -20,6 +20,14 @@ from .types import Coordinates, MagnifierTrackingType
 from ..config import getFollowState
 
 
+def _isWindowRTL(obj) -> bool:
+	"""Return True when the focused window has RTL layout (WS_EX_LAYOUTRTL set)."""
+	hwnd = getattr(obj, "windowHandle", None)
+	if isinstance(hwnd, int) and hwnd:
+		return bool(winUser.getExtendedWindowStyle(hwnd) & winUser.WS_EX_LAYOUTRTL)
+	return False
+
+
 class FocusManager:
 	"""
 	Manages focus tracking for the magnifier.
@@ -173,10 +181,9 @@ class FocusManager:
 			try:
 				focusObj = api.getFocusObject()
 				if focusObj and focusObj.location:
-					left, top, width, height = focusObj.location
-					x = left + (width // 2)
-					y = top + (height // 2)
-					coords = Coordinates(x, y)
+					left, top, width, _height = focusObj.location
+					x = left + width if _isWindowRTL(focusObj) else left
+					coords = Coordinates(x, top)
 					if coords != Coordinates(0, 0):
 						self._lastValidSystemFocusPosition = coords
 					return coords
@@ -247,10 +254,9 @@ class FocusManager:
 		navigatorObject = api.getNavigatorObject()
 		if navigatorObject:
 			try:
-				left, top, width, height = navigatorObject.location
-				x = left + (width // 2)
-				y = top + (height // 2)
-				return Coordinates(x, y)
+				left, top, width, _height = navigatorObject.location
+				x = left + width if _isWindowRTL(navigatorObject) else left
+				return Coordinates(x, top)
 			except Exception:
 				# Navigator object may not have a valid location
 				log.debug("Failed to get navigator object location", exc_info=True)
