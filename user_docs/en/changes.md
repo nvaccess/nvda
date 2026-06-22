@@ -21,8 +21,6 @@ Liblouis has been updated with new Italian and Estonian braille tables.
 
 When resetting NVDA to factory defaults, an Undo button is now available to restore the previous configuration.
 
-### Important notes
-
 ### New Features
 
 * Magnifier:
