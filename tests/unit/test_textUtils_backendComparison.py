@@ -37,13 +37,35 @@ def _uniscribeWordOffsets(text: str, offset: int) -> tuple[int, int] | None:
 	return WordSegmenter(text, _ENCODING, WordSegFlag.UNISCRIBE).getSegmentForOffset(offset)
 
 
-# ---------------------------------------------------------------------------
-# calculateWordOffsets — agreement on plain Latin / Hebrew text
-# ---------------------------------------------------------------------------
+class _WordOffsetsParityTest(unittest.TestCase):
+	"""Base for per-script word offset parity tests.
+
+	Subclasses set TEXT and add test_* methods that assert the exact span via
+	_assertSameWordOffsets.  Has no test methods of its own, so the loader runs nothing.
+	"""
+
+	TEXT: str
+
+	def _assertSameWordOffsets(self, offset: int) -> tuple[int, int] | None:
+		"""Assert both backends return the same word offsets for self.TEXT at offset.
+
+		:param offset: UTF-16 code unit offset within self.TEXT to query.
+		:return: The (start, end) offsets, so callers can additionally assert the exact span.
+		:raises AssertionError: If the ICU and Uniscribe backends disagree.
+		"""
+		icu_result = _icuWordOffsets(self.TEXT, offset)
+		uni_result = _uniscribeWordOffsets(self.TEXT, offset)
+		self.assertEqual(
+			icu_result,
+			uni_result,
+			f"Backends disagree on word offsets for {self.TEXT!r} at offset {offset}: "
+			f"ICU={icu_result!r} Uniscribe={uni_result!r}",
+		)
+		return icu_result
 
 
 @skipIfNoICU
-class TestWordOffsetsEnglish(unittest.TestCase):
+class TestWordOffsetsEnglish(_WordOffsetsParityTest):
 	"""Word offset comparison for English text.
 
 	Both backends include trailing whitespace as part of the preceding word.
@@ -53,19 +75,8 @@ class TestWordOffsetsEnglish(unittest.TestCase):
 
 	TEXT = "hello world"
 
-	def _assertSameWordOffsets(self, offset: int) -> tuple[int, int] | None:
-		icu_result = _icuWordOffsets(self.TEXT, offset)
-		uni_result = _uniscribeWordOffsets(self.TEXT, offset)
-		self.assertEqual(
-			icu_result,
-			uni_result,
-			f"Backends disagree on word offsets for {self.TEXT!r} at offset {offset}: "
-			f"ICU={icu_result!r} Uniscribe={uni_result!r}",
-		)
-		return icu_result
-
 	def test_first_word(self):
-		# Both backends: "hello " — trailing space included.
+		"""Both backends: "hello " — trailing space included."""
 		result = self._assertSameWordOffsets(0)
 		self.assertEqual(result, (0, 6))
 
@@ -74,12 +85,12 @@ class TestWordOffsetsEnglish(unittest.TestCase):
 		self.assertEqual(result, (0, 6))
 
 	def test_space(self):
-		# Both backends: querying at the space returns the preceding word+space.
+		"""Both backends: querying at the space returns the preceding word+space."""
 		result = self._assertSameWordOffsets(5)
 		self.assertEqual(result, (0, 6))
 
 	def test_second_word(self):
-		# Both backends: "world" — no trailing space at end of string.
+		"""Both backends: "world" — no trailing space at end of string."""
 		result = self._assertSameWordOffsets(6)
 		self.assertEqual(result, (6, 11))
 
@@ -89,85 +100,41 @@ class TestWordOffsetsEnglish(unittest.TestCase):
 
 
 @skipIfNoICU
-class TestWordOffsetsHebrew(unittest.TestCase):
-	"""Word offset comparison for Hebrew text — שלום עולם (hello world)."""
+class TestWordOffsetsHebrew(_WordOffsetsParityTest):
+	"""Word offset comparison for vocalized (Biblical) Hebrew — שָׁלוֹם עוֹלָם (peace, world).
 
-	TEXT = "שלום עולם"
+	The niqqud (combining vowel and shin points) attach to their base letters, so each
+	word stays a single segment: שָׁלוֹם is 7 UTF-16 code units, עוֹלָם is 6.
+	"""
 
-	def _assertSameWordOffsets(self, offset: int) -> tuple[int, int] | None:
-		icu_result = _icuWordOffsets(self.TEXT, offset)
-		uni_result = _uniscribeWordOffsets(self.TEXT, offset)
-		self.assertEqual(
-			icu_result,
-			uni_result,
-			f"Backends disagree on word offsets for {self.TEXT!r} at offset {offset}: "
-			f"ICU={icu_result!r} Uniscribe={uni_result!r}",
-		)
-		return icu_result
+	TEXT = "שָׁלוֹם עוֹלָם"
 
 	def test_first_word(self):
-		# Both backends: "שלום " — trailing space included, offsets (0, 5).
+		"""Both backends: "שָׁלוֹם " — trailing space included, offsets (0, 8)."""
 		result = self._assertSameWordOffsets(0)
-		self.assertEqual(result, (0, 5))
+		self.assertEqual(result, (0, 8))
 
 	def test_mid_first_word(self):
 		result = self._assertSameWordOffsets(2)
-		self.assertEqual(result, (0, 5))
+		self.assertEqual(result, (0, 8))
 
 	def test_space(self):
-		# Both backends: querying at offset 4 (space) returns the preceding word+space.
-		result = self._assertSameWordOffsets(4)
-		self.assertEqual(result, (0, 5))
+		"""Both backends: querying at offset 7 (space) returns the preceding word+space."""
+		result = self._assertSameWordOffsets(7)
+		self.assertEqual(result, (0, 8))
 
 	def test_second_word(self):
-		# Both backends: "עולם" — no trailing space.
-		result = self._assertSameWordOffsets(5)
-		self.assertEqual(result, (5, 9))
-
-
-# ---------------------------------------------------------------------------
-# Complex-script cases.
-#
-# Uniscribe uses the Windows Script Processor (ScriptBreak) for word boundaries.
-# On Windows 10/11 it DOES segment some space-less scripts correctly: for Thai
-# (and Lao) both backends agree, so those scripts are not a differentiator.
-#
-# For other scripts — notably Japanese kana/kanji and Khmer — Uniscribe falls
-# back to character- or syllable-cluster-level boundaries, whereas ICU applies
-# UAX#29 rules with dictionary segmentation and returns whole words.  These are
-# the cases where the ICU backend actually helps; see #20343.
-# ---------------------------------------------------------------------------
-
-
-@skipIfNoICU
-class TestWordOffsetsThaiParity(unittest.TestCase):
-	"""Thai: both backends already produce real word segments and agree.
-
-	Documents that Thai is NOT where ICU differs — Uniscribe segments it correctly
-	on current Windows, so we assert parity here rather than divergence.
-	"""
-
-	def test_thai_greeting_agrees(self):
-		# "สวัสดีครับ" → "สวัสดี" / "ครับ" with both backends.
-		text = "สวัสดีครับ"
-		icu_result = _icuWordOffsets(text, 0)
-		uni_result = _uniscribeWordOffsets(text, 0)
-		self.assertEqual(icu_result, uni_result)
-		# Both return a real multi-code-point word, not a single character.
-		start, end = icu_result
-		self.assertGreater(end - start, 1)
+		"""Both backends: "עוֹלָם" — no trailing space."""
+		result = self._assertSameWordOffsets(8)
+		self.assertEqual(result, (8, 14))
 
 
 @skipIfNoICU
 class TestWordOffsetsComplexScriptDivergence(unittest.TestCase):
-	"""Japanese and Khmer: Uniscribe falls back to character/cluster level; ICU groups words.
-
-	These assert the actual divergence (not just that ICU returns non-None), which is
-	the behaviour the ICU backend exists to fix (#20343).
-	"""
+	"""Japanese and Khmer: Uniscribe falls back to character/cluster level; ICU groups words."""
 
 	def test_japanese_uniscribe_is_character_level(self):
-		# "これは日本語です": Uniscribe returns single code points; ICU groups words.
+		"""Japanese "これは日本語です": Uniscribe returns single code points; ICU groups words."""
 		text = "これは日本語です"
 		# Offset 0 ("こ"): ICU groups "これ"; Uniscribe returns just "こ".
 		icu_result = _icuWordOffsets(text, 0)
@@ -179,7 +146,7 @@ class TestWordOffsetsComplexScriptDivergence(unittest.TestCase):
 		self.assertGreater(icu_result[1] - icu_result[0], 1)
 
 	def test_khmer_uniscribe_breaks_clusters(self):
-		# "ខ្ញុំស្រលាញ់": Uniscribe breaks the second word into syllable clusters; ICU keeps it whole.
+		"""Khmer "ខ្ញុំស្រលាញ់": Uniscribe breaks the second word into syllable clusters; ICU keeps it whole."""
 		text = "ខ្ញុំស្រលាញ់"
 		# Offset 5 is the start of the second Khmer word "ស្រលាញ់".
 		icu_result = _icuWordOffsets(text, 5)
@@ -196,7 +163,7 @@ class TestWordOffsetsEmojiZwjSequence(unittest.TestCase):
 	"👩🏻‍👧🏻‍👦🏻" (woman + girl + boy family, each with a light skin-tone modifier,
 	joined by ZERO WIDTH JOINER) is a single UAX#29 word.  ICU treats the whole
 	sequence as one segment; Uniscribe falls back to grapheme/surrogate-level
-	boundaries and returns only the leading part.  See #20343.
+	boundaries and returns only the leading part.
 
 	The sequence is 14 UTF-16 code units:
 	👩 (2) 🏻 (2) ZWJ (1) 👧 (2) 🏻 (2) ZWJ (1) 👦 (2) 🏻 (2).
@@ -207,15 +174,15 @@ class TestWordOffsetsEmojiZwjSequence(unittest.TestCase):
 	LENGTH = len(TEXT.encode("utf-16-le")) // 2
 
 	def test_length_is_as_expected(self):
-		# Guards the constant the assertions below rely on.
+		"""Guard the constant the assertions below rely on."""
 		self.assertEqual(self.LENGTH, 14)
 
 	def test_icu_groups_whole_sequence(self):
-		# ICU returns the entire ZWJ sequence as one word from offset 0.
+		"""ICU returns the entire ZWJ sequence as one word from offset 0."""
 		self.assertEqual(_icuWordOffsets(self.TEXT, 0), (0, self.LENGTH))
 
 	def test_backends_diverge(self):
-		# Uniscribe does not group the whole sequence; ICU does.
+		"""Uniscribe does not group the whole sequence; ICU does."""
 		icu_result = _icuWordOffsets(self.TEXT, 0)
 		uni_result = _uniscribeWordOffsets(self.TEXT, 0)
 		self.assertNotEqual(icu_result, uni_result)

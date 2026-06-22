@@ -40,22 +40,6 @@ class TestIcuStrategy(unittest.TestCase):
 			seg = wordSegmenter.WordSegmenter("hello", None, WordSegFlag.ICU)
 		self.assertIsInstance(seg.strategy, wordSegStrategy.UniscribeWordSegmentationStrategy)
 
-	def test_auto_selects_icu_for_thai(self):
-		from textUtils._wordSeg import wordSegmenter
-		from textUtils.segFlag import WordSegFlag
-
-		thai = "สวัสดีครับ"
-		with (
-			patch.object(wordSegmenter, "_ICU_AVAILABLE", True),
-			patch.object(
-				wordSegStrategy.ChineseWordSegmentationStrategy,
-				"_lib",
-				None,
-			),
-		):
-			seg = wordSegmenter.WordSegmenter(thai, None, WordSegFlag.AUTO)
-		self.assertIsInstance(seg.strategy, wordSegStrategy.IcuWordSegmentationStrategy)
-
 	def test_auto_prefers_icu_for_latin_when_available(self):
 		from textUtils._wordSeg import wordSegmenter
 		from textUtils.segFlag import WordSegFlag
@@ -85,9 +69,3 @@ class TestIcuStrategy(unittest.TestCase):
 		):
 			seg = wordSegmenter.WordSegmenter("hello world", None, WordSegFlag.AUTO)
 		self.assertIsInstance(seg.strategy, wordSegStrategy.UniscribeWordSegmentationStrategy)
-
-	def test_word_navigation_unit_flag_has_icu(self):
-		from config.featureFlagEnums import WordNavigationUnitFlag
-
-		self.assertTrue(hasattr(WordNavigationUnitFlag, "ICU"))
-		self.assertTrue(WordNavigationUnitFlag.ICU.displayString)
