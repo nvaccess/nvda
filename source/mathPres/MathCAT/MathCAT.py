@@ -483,7 +483,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 		except Exception:
 			log.exception(f"MathML is {interaction.mathMlForNavigation}")
 			# Translators: this message reports illegal MathML.
-			ui.message(pgettext("math", "Illegal MathML found."))
+			ui.message(pgettext("math", "Invalid MathML found."))
 			libmathcat.SetMathML("<math></math>")
 			return
 		interaction.setFocus()

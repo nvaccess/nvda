@@ -379,8 +379,7 @@ class Math(Ia2Web):
 	def getMathNodeInfoByPath(self) -> dict["MathMlNodePath", "MathMlNodeRectInfo"]:
 		"""Map MathML element paths to tag names and screen rectangles for this IA2 math subtree.
 
-		Paths are based on MathML element child indexes only, ignoring static text
-		accessibles exposed below token elements.
+		Paths are tuples where each entry indicates an index of a child node to be traversed from the root.
 		"""
 		from mathPres.mathMlNode import MathMlNodeRectInfo
 
