@@ -4661,6 +4661,7 @@ class AdvancedPanelControls(
 			"remoteClient",
 			"externalPythonDependencies",
 			"bdDetect",
+			"magnifier",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -6047,7 +6048,7 @@ class MagnifierPanel(SettingsPanel):
 		selectedZoom = self.zoomCtrl.GetValue()
 		selectedPanStep = self.panSpinCtrl.GetValue()
 		selectedFilter = list(Filter)[self.filterList.GetSelection()]
-		selectedMode = list(FullScreenMode)[self.fullscreenModeList.GetSelection()]
+		selectedMode = list(FullScreenMode)[self.trackingModeList.GetSelection()]
 
 		roundedZoom = magnifierConfig.roundZoomLevel(selectedZoom)
 		magnifierConfig.setZoomLevel(roundedZoom)
@@ -6066,7 +6067,7 @@ class MagnifierPanel(SettingsPanel):
 			magnifier._panStep = selectedPanStep
 			magnifier.filterType = selectedFilter
 			if isinstance(magnifier, FullScreenMagnifier):
-				magnifier._fullscreenMode = selectedMode
+				magnifier._trackingMode = selectedMode
 
 	def _onImmediateSettingChange(self, evt: wx.CommandEvent):
 		"""Handle immediate updates for non-enable magnifier settings."""
@@ -6212,34 +6213,34 @@ class MagnifierPanel(SettingsPanel):
 			checkBox.Bind(wx.EVT_CHECKBOX, self._onImmediateSettingChange)
 			self._trackingTypeCheckBoxes[trackingType] = checkBox
 
-		# FULLSCREEN GROUP
-		# Translators: This is the label for a group of fullscreen magnifier options in the
+		# Tracking GROUP
+		# Translators: This is the label for a group of tracking magnifier options in the
 		# magnifier settings panel
-		fullscreenGroupText = _("Fullscreen")
-		self.fullscreenGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=fullscreenGroupText)
-		fullscreenGroupBox = self.fullscreenGroupSizer.GetStaticBox()
-		fullscreenGroup = guiHelper.BoxSizerHelper(fullscreenGroupBox, sizer=self.fullscreenGroupSizer)
-		sHelper.addItem(fullscreenGroup)
+		trackingGroupText = _("Tracking")
+		self.trackingGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=trackingGroupText)
+		trackingGroupBox = self.trackingGroupSizer.GetStaticBox()
+		trackingGroup = guiHelper.BoxSizerHelper(trackingGroupBox, sizer=self.trackingGroupSizer)
+		sHelper.addItem(trackingGroup)
 
-		# FULLSCREEN MODE SETTINGS
+		# Tracking MODE SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the full-screen mode
-		fullscreenModeLabelText = _("Tracking &mode:")
-		fullscreenModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
-		self.fullscreenModeList = fullscreenGroup.addLabeledControl(
-			fullscreenModeLabelText,
+		trackingModeLabelText = _("Tracking &mode:")
+		trackingModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
+		self.trackingModeList = trackingGroup.addLabeledControl(
+			trackingModeLabelText,
 			wx.Choice,
-			choices=fullscreenModeChoices,
+			choices=trackingModeChoices,
 		)
 		self.bindHelpEvent(
 			"MagnifierTrackingMode",
-			self.fullscreenModeList,
+			self.trackingModeList,
 		)
 
 		# Set value from config
-		fullscreenMode = magnifierConfig.getFullscreenMode()
-		self._fullscreenModeInitially = fullscreenMode
-		self.fullscreenModeList.SetSelection(list(FullScreenMode).index(fullscreenMode))
-		self.fullscreenModeList.Bind(wx.EVT_CHOICE, self._onImmediateSettingChange)
+		trackingMode = magnifierConfig.getFullscreenMode()
+		self._trackingModeInitially = trackingMode
+		self.trackingModeList.SetSelection(list(FullScreenMode).index(trackingMode))
+		self.trackingModeList.Bind(wx.EVT_CHOICE, self._onImmediateSettingChange)
 
 	def onSave(self):
 		"""Save the current selections to config."""
@@ -6250,14 +6251,14 @@ class MagnifierPanel(SettingsPanel):
 		selectedZoom = self.zoomCtrl.GetValue()
 		selectedPanStep = self.panSpinCtrl.GetValue()
 		selectedFilter = list(Filter)[self.filterList.GetSelection()]
-		selectedMode = list(FullScreenMode)[self.fullscreenModeList.GetSelection()]
+		selectedMode = list(FullScreenMode)[self.trackingModeList.GetSelection()]
 		isTrueCentered = self.trueCenterTrackingCheckBox.GetValue()
 
 		roundedZoom = magnifierConfig.roundZoomLevel(selectedZoom)
 		self._zoomInitially = roundedZoom
 		self._panStepInitially = selectedPanStep
 		self._filterInitially = selectedFilter
-		self._fullscreenModeInitially = selectedMode
+		self._trackingModeInitially = selectedMode
 		self._trueCenterTrackingInitially = isTrueCentered
 		for trackingType, checkBox in self._trackingTypeCheckBoxes.items():
 			shouldFollow = checkBox.GetValue()
@@ -6268,7 +6269,7 @@ class MagnifierPanel(SettingsPanel):
 		magnifierConfig.setZoomLevel(self._zoomInitially)
 		magnifierConfig.setPanStep(self._panStepInitially)
 		magnifierConfig.setFilter(self._filterInitially)
-		magnifierConfig.setFullscreenMode(self._fullscreenModeInitially)
+		magnifierConfig.setFullscreenMode(self._trackingModeInitially)
 		config.conf["magnifier"]["isTrueCentered"] = self._trueCenterTrackingInitially
 		for trackingType, state in self._trackingTypeInitially.items():
 			magnifierConfig.setFollowState(trackingType, state)
@@ -6279,7 +6280,7 @@ class MagnifierPanel(SettingsPanel):
 			magnifier._panStep = self._panStepInitially
 			magnifier.filterType = self._filterInitially
 			if isinstance(magnifier, FullScreenMagnifier):
-				magnifier._fullscreenMode = self._fullscreenModeInitially
+				magnifier._trackingMode = self._trackingModeInitially
 
 		if self._magnifierEnabledInitially != magnifierConfig.getEnabled():
 			toggleMagnifier()

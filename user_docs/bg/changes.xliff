@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="bg">
-  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/bea11d6c4fe2251c995e19e4a8ed66d181fbc5ad/user_docs/en/changes.md">
+  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/c5c6f909ecaeb1d4e671a52b5b3889e9ff71ec76/user_docs/en/changes.md">
     <skeleton>
 # $(ID:4bf3ec03-2d43-474a-aef0-92b334e594ed)
 
@@ -25,15 +25,13 @@ $(ID:bf820cf5-dfee-47f3-8918-1a00c6b7a664)
 
 $(ID:b4192a13-6451-4fd3-897f-c2a631effad7)
 
-### $(ID:c3b29ad4-4a8a-4d76-bbf6-19df3cb19546)
-
 ### $(ID:216e2064-a429-43a9-865a-29fc1edd47a9)
 
 * $(ID:350ee155-48c9-48f1-86e0-71eddbc791a2)
   * $(ID:1e43d31f-e489-449d-986f-96b35371371d)
   * $(ID:8391cab4-d1f8-4b00-90e3-0fa2a7ce982b)
   * $(ID:9ed6f120-3ab5-4ec3-a73a-55865cda0c91)
-  * $(ID:52025f05-a25e-4167-9c58-59cef825fd82)
+  * $(ID:5a4038d3-8f8a-46c3-81df-349f045f1d9b)
   * $(ID:fc145b84-b9f3-4ad4-9124-70e72a974340)
   * $(ID:778b1d44-596d-4c1d-8de1-905c79585155)
 * $(ID:e50f1514-cb8d-4c1d-accd-d72930cf1a86)
@@ -83,6 +81,7 @@ $(ID:4d885930-d362-4c6f-95dd-46da2fe9e79a)
 * $(ID:03536506-2e15-40c4-8587-7ac6b6103f28)
 $(ID:222fa698-e35a-42c9-94ec-cbccd32b3ca3)
 $(ID:90d9f201-8218-4885-afdf-e08b3a9cbcda)
+* $(ID:f691c21f-9b10-496a-b42c-c24984e3d703)
 
 ### $(ID:6e83ec90-ee84-4be0-819c-f475fa970a66)
 
@@ -96,6 +95,7 @@ $(ID:90d9f201-8218-4885-afdf-e08b3a9cbcda)
 * $(ID:c507f011-b58b-444a-a3d0-93b922b63bd2)
 * $(ID:46e2d6dc-1335-4678-ad59-f44cd323de0f)
 * $(ID:9ec14e36-02f1-44f0-ad8c-366cfcf7f7de)
+* $(ID:88c5328e-b1ba-485f-842a-019ed8d38696)
 * $(ID:46f5b2cc-76cb-460a-a744-969f63d29832)
 * $(ID:6bbd3536-a844-4718-81bf-693a96b63a62)
 * $(ID:e0054285-9543-47b4-b53e-60ee91375652)
@@ -174,7 +174,7 @@ $(ID:eb5096c1-7bff-45c7-a899-e66f7e5df8fd)
 * $(ID:c6d8d68d-f9d5-4604-9e67-5258e620e7ad)
 
 &lt;!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. --&gt;
-
+&lt;!-- markdownlint-disable --&gt;
 
 ## $(ID:2e9d82f2-0de8-4bed-a883-13977785e1c4)
 
@@ -6138,6 +6138,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 * $(ID:7301481f-3a7d-4e19-8be9-9af3ee485e99)
 * $(ID:5023a908-ff44-4868-a4a9-69c63c596ad2)
 * $(ID:10f9fec7-2a2c-412a-84af-5d9206d16c14)
+
 </skeleton>
     <unit id="4bf3ec03-2d43-474a-aef0-92b334e594ed">
       <notes>
@@ -6267,19 +6268,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>При връщане до фабричните настройки на NVDA вече е наличен бутон „Отмени“ за възстановяване на предишната конфигурация.</target>
       </segment>
     </unit>
-    <unit id="c3b29ad4-4a8a-4d76-bbf6-19df3cb19546">
-      <notes>
-        <note appliesTo="source">line: 25</note>
-        <note appliesTo="source">prefix: ### </note>
-      </notes>
-      <segment state="final">
-        <source>Important notes</source>
-        <target>Важни бележки</target>
-      </segment>
-    </unit>
     <unit id="216e2064-a429-43a9-865a-29fc1edd47a9">
       <notes>
-        <note appliesTo="source">line: 27</note>
+        <note appliesTo="source">line: 25</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
       <segment state="final">
@@ -6289,7 +6280,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="350ee155-48c9-48f1-86e0-71eddbc791a2">
       <notes>
-        <note appliesTo="source">line: 29</note>
+        <note appliesTo="source">line: 27</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6299,7 +6290,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="1e43d31f-e489-449d-986f-96b35371371d">
       <notes>
-        <note appliesTo="source">line: 30</note>
+        <note appliesTo="source">line: 28</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6309,7 +6300,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="8391cab4-d1f8-4b00-90e3-0fa2a7ce982b">
       <notes>
-        <note appliesTo="source">line: 31</note>
+        <note appliesTo="source">line: 29</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6319,7 +6310,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="9ed6f120-3ab5-4ec3-a73a-55865cda0c91">
       <notes>
-        <note appliesTo="source">line: 32</note>
+        <note appliesTo="source">line: 30</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6327,19 +6318,19 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>Цветните филтри могат да помогнат на потребители със зрителни увреждания или светлочувствителност, като инвертират или намаляват наситеността на цветовете на екрана.</target>
       </segment>
     </unit>
-    <unit id="52025f05-a25e-4167-9c58-59cef825fd82">
+    <unit id="5a4038d3-8f8a-46c3-81df-349f045f1d9b">
       <notes>
-        <note appliesTo="source">line: 33</note>
+        <note appliesTo="source">line: 31</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
-        <source>A spotlight mode is available for presentations or focused reading tasks.</source>
-        <target>Режим „прожектор“ е наличен за презентации или задачи за фокусирано четене.</target>
+        <source>A command allows temporarily showing an overview of the entire screen</source>
+        <target>Команда позволява временно показване на общ преглед на целия екран</target>
       </segment>
     </unit>
     <unit id="fc145b84-b9f3-4ad4-9124-70e72a974340">
       <notes>
-        <note appliesTo="source">line: 34</note>
+        <note appliesTo="source">line: 32</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6349,7 +6340,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="778b1d44-596d-4c1d-8de1-905c79585155">
       <notes>
-        <note appliesTo="source">line: 35</note>
+        <note appliesTo="source">line: 33</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6359,7 +6350,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="e50f1514-cb8d-4c1d-accd-d72930cf1a86">
       <notes>
-        <note appliesTo="source">line: 36</note>
+        <note appliesTo="source">line: 34</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6369,7 +6360,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="dff67b7d-d184-4424-9fc1-9552cb8b0a36">
       <notes>
-        <note appliesTo="source">line: 37</note>
+        <note appliesTo="source">line: 35</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6379,7 +6370,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="b6eb69bf-f728-4246-8afe-ea2b0fcb356c">
       <notes>
-        <note appliesTo="source">line: 38</note>
+        <note appliesTo="source">line: 36</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6389,7 +6380,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="2aa5a8e0-0968-4184-913c-32a66dc1f359">
       <notes>
-        <note appliesTo="source">line: 39</note>
+        <note appliesTo="source">line: 37</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6399,7 +6390,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="4a562b42-1805-4e96-aa57-0f49015c6673">
       <notes>
-        <note appliesTo="source">line: 40</note>
+        <note appliesTo="source">line: 38</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6409,7 +6400,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="944f7d81-fb89-4a22-a871-6204382def8a">
       <notes>
-        <note appliesTo="source">line: 41</note>
+        <note appliesTo="source">line: 39</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6419,7 +6410,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="825ffef2-2b8f-4c97-ad19-02dd035c9e9c">
       <notes>
-        <note appliesTo="source">line: 42</note>
+        <note appliesTo="source">line: 40</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
       <segment state="final">
@@ -6429,7 +6420,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="cf762b7f-3620-4f83-94a4-d535e955368e">
       <notes>
-        <note appliesTo="source">line: 43</note>
+        <note appliesTo="source">line: 41</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6439,7 +6430,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="b2334a9f-e1da-4a13-85bb-e4e346e3c60a">
       <notes>
-        <note appliesTo="source">line: 44</note>
+        <note appliesTo="source">line: 42</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6449,7 +6440,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="7a1bdd4a-366e-4fdc-bd04-a98cb32ca78f">
       <notes>
-        <note appliesTo="source">line: 45</note>
+        <note appliesTo="source">line: 43</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6459,7 +6450,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="99ca394c-1c1c-45c2-8372-ab8cc41ddfcf">
       <notes>
-        <note appliesTo="source">line: 46</note>
+        <note appliesTo="source">line: 44</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
       <segment state="final">
@@ -6469,7 +6460,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="2193361d-5c51-4a9b-b0a6-d7c2873e8ca3">
       <notes>
-        <note appliesTo="source">line: 47</note>
+        <note appliesTo="source">line: 45</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
       <segment state="final">
@@ -6479,7 +6470,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="ef09a520-ff4b-4241-b1d5-c1377f10c3dd">
       <notes>
-        <note appliesTo="source">line: 48</note>
+        <note appliesTo="source">line: 46</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6489,7 +6480,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="c9e2fcc3-9d71-4deb-bb65-de6f7848d9b9">
       <notes>
-        <note appliesTo="source">line: 49</note>
+        <note appliesTo="source">line: 47</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6499,7 +6490,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="10f06492-2753-43bd-8b7d-4f5f7c009c6b">
       <notes>
-        <note appliesTo="source">line: 50</note>
+        <note appliesTo="source">line: 48</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
       <segment state="final">
@@ -6509,7 +6500,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="34fc3368-ce55-4dc6-bfae-9ad747a61da2">
       <notes>
-        <note appliesTo="source">line: 51</note>
+        <note appliesTo="source">line: 49</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
       <segment state="final">
@@ -6519,7 +6510,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="78b553d2-c7ac-4977-a274-6b74f92e1a0a">
       <notes>
-        <note appliesTo="source">line: 52</note>
+        <note appliesTo="source">line: 50</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
       <segment state="final">
@@ -6529,7 +6520,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="92144327-75bc-492f-af8b-4b004616ead1">
       <notes>
-        <note appliesTo="source">line: 53</note>
+        <note appliesTo="source">line: 51</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6539,7 +6530,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="b9f62be6-6a50-4bbe-89d8-709e44c4fc96">
       <notes>
-        <note appliesTo="source">line: 54</note>
+        <note appliesTo="source">line: 52</note>
       </notes>
       <segment state="final">
         <source>  Consult the speech dictionaries section in the User Guide for more details. (#19506, @LeonarddeR)</source>
@@ -6548,7 +6539,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="b0846491-184b-44cd-b1e9-b29bb56e26c2">
       <notes>
-        <note appliesTo="source">line: 55</note>
+        <note appliesTo="source">line: 53</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6558,7 +6549,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="7c2b4b1b-2ee3-4262-abdd-4b10b927499a">
       <notes>
-        <note appliesTo="source">line: 56</note>
+        <note appliesTo="source">line: 54</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6568,7 +6559,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="80862cf4-23ab-4f1b-8c31-4db84ba7c098">
       <notes>
-        <note appliesTo="source">line: 57</note>
+        <note appliesTo="source">line: 55</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6578,7 +6569,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="6371f617-9fcf-49d8-8e8b-69c26cdeb382">
       <notes>
-        <note appliesTo="source">line: 58</note>
+        <note appliesTo="source">line: 56</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6588,7 +6579,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="aff4906d-1bb1-4b50-bda1-deb83b4aaefa">
       <notes>
-        <note appliesTo="source">line: 59</note>
+        <note appliesTo="source">line: 57</note>
       </notes>
       <segment state="final">
         <source>The triple-press keyboard shortcut (`NVDA+control+r`) is not affected, as it is intended for recovery scenarios. (#19575, @bramd)</source>
@@ -6597,7 +6588,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="bf5ab808-9e0c-4bde-87d7-8457bb7f4fe5">
       <notes>
-        <note appliesTo="source">line: 60</note>
+        <note appliesTo="source">line: 58</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6607,7 +6598,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="925fc6a6-5914-487e-92bf-9171dd9e0554">
       <notes>
-        <note appliesTo="source">line: 62</note>
+        <note appliesTo="source">line: 60</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
       <segment state="final">
@@ -6617,7 +6608,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="60e2fb6f-aae0-4692-aec2-07680ec05661">
       <notes>
-        <note appliesTo="source">line: 64</note>
+        <note appliesTo="source">line: 62</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6627,7 +6618,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="2671c513-c555-4c84-95b0-667eab9e0725">
       <notes>
-        <note appliesTo="source">line: 65</note>
+        <note appliesTo="source">line: 63</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6637,7 +6628,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="5c1844e7-813c-4a67-b775-9101ee3d0432">
       <notes>
-        <note appliesTo="source">line: 66</note>
+        <note appliesTo="source">line: 64</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6647,7 +6638,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="5c57913b-088a-4854-b1ec-c43d1e0607ad">
       <notes>
-        <note appliesTo="source">line: 67</note>
+        <note appliesTo="source">line: 65</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6657,7 +6648,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="f85b3c6e-1892-447a-ad2c-d1d8098fbc29">
       <notes>
-        <note appliesTo="source">line: 68</note>
+        <note appliesTo="source">line: 66</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6667,7 +6658,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="1189f042-6dbc-4b25-848e-5aea35e9e63d">
       <notes>
-        <note appliesTo="source">line: 69</note>
+        <note appliesTo="source">line: 67</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6677,7 +6668,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="c50ef6bd-7db9-44c6-b597-c285e49a9468">
       <notes>
-        <note appliesTo="source">line: 70</note>
+        <note appliesTo="source">line: 68</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6687,7 +6678,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="d735ec3c-106c-4fe3-b887-596a343dd75b">
       <notes>
-        <note appliesTo="source">line: 71</note>
+        <note appliesTo="source">line: 69</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6697,7 +6688,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="d1374a64-998f-462c-a249-a09bbe533a22">
       <notes>
-        <note appliesTo="source">line: 72</note>
+        <note appliesTo="source">line: 70</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6707,7 +6698,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="54b67317-c030-46bb-9434-66f4d4e05429">
       <notes>
-        <note appliesTo="source">line: 73</note>
+        <note appliesTo="source">line: 71</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6717,7 +6708,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="8a9dca45-39b9-48ba-b115-2064c793e5cd">
       <notes>
-        <note appliesTo="source">line: 74</note>
+        <note appliesTo="source">line: 72</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6727,7 +6718,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="c6e9db59-62ff-462d-b8ce-7fbaee3117d4">
       <notes>
-        <note appliesTo="source">line: 75</note>
+        <note appliesTo="source">line: 73</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6737,7 +6728,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="dc474811-5534-4c68-b430-57fde932f99a">
       <notes>
-        <note appliesTo="source">line: 76</note>
+        <note appliesTo="source">line: 74</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6747,7 +6738,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="4d885930-d362-4c6f-95dd-46da2fe9e79a">
       <notes>
-        <note appliesTo="source">line: 77</note>
+        <note appliesTo="source">line: 75</note>
       </notes>
       <segment state="final">
         <source>This is more noticeable for Windows releases which are enablement packages on top of an earlier release such as Windows 11 2025 Update based on Windows 11 2024 Update. (#19802, @josephsl)</source>
@@ -6756,7 +6747,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="d245edd3-10aa-42c6-bfc0-f07359de10e8">
       <notes>
-        <note appliesTo="source">line: 78</note>
+        <note appliesTo="source">line: 76</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6766,7 +6757,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="74af677f-13ad-435e-a49a-d4dc3525635b">
       <notes>
-        <note appliesTo="source">line: 79</note>
+        <note appliesTo="source">line: 77</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6776,7 +6767,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="03536506-2e15-40c4-8587-7ac6b6103f28">
       <notes>
-        <note appliesTo="source">line: 80</note>
+        <note appliesTo="source">line: 78</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6786,7 +6777,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="222fa698-e35a-42c9-94ec-cbccd32b3ca3">
       <notes>
-        <note appliesTo="source">line: 81</note>
+        <note appliesTo="source">line: 79</note>
       </notes>
       <segment state="final">
         <source>This provides Unicode-aware `\w` and `\b` and additional regex features.</source>
@@ -6795,16 +6786,26 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="90d9f201-8218-4885-afdf-e08b3a9cbcda">
       <notes>
-        <note appliesTo="source">line: 82</note>
+        <note appliesTo="source">line: 80</note>
       </notes>
       <segment state="final">
         <source>The setting is disabled by default. (#20013, @LeonarddeR)</source>
         <target>По подразбиране настройката е изключена. (#20013, @LeonarddeR)</target>
       </segment>
     </unit>
+    <unit id="f691c21f-9b10-496a-b42c-c24984e3d703">
+      <notes>
+        <note appliesTo="source">line: 81</note>
+        <note appliesTo="source">prefix: * </note>
+      </notes>
+      <segment state="final">
+        <source>The "Type" radio buttons in the "Add Dictionary Entry" dialog are now arranged vertically rather than horizontally. (#19657)</source>
+        <target>Радио бутоните в групата „Вид“ в диалоговия прозорец „Добави запис в речника“ вече са подредени вертикално, а не хоризонтално. (#19657)</target>
+      </segment>
+    </unit>
     <unit id="6e83ec90-ee84-4be0-819c-f475fa970a66">
       <notes>
-        <note appliesTo="source">line: 84</note>
+        <note appliesTo="source">line: 83</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
       <segment state="final">
@@ -6814,7 +6815,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="3d8e7f65-d898-4c1f-aa1b-1ee897dd85f2">
       <notes>
-        <note appliesTo="source">line: 86</note>
+        <note appliesTo="source">line: 85</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6824,7 +6825,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="31dff8e6-8c4f-4d3c-9500-fd0be6caf739">
       <notes>
-        <note appliesTo="source">line: 87</note>
+        <note appliesTo="source">line: 86</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6834,7 +6835,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="b6c22b8b-431a-48db-a8b6-52d09261614a">
       <notes>
-        <note appliesTo="source">line: 88</note>
+        <note appliesTo="source">line: 87</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6844,7 +6845,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="466642ed-1b63-488e-99b6-0441afae5c59">
       <notes>
-        <note appliesTo="source">line: 89</note>
+        <note appliesTo="source">line: 88</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6854,7 +6855,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="3f1a6c91-6128-45cf-aa29-400ca3d1ace5">
       <notes>
-        <note appliesTo="source">line: 90</note>
+        <note appliesTo="source">line: 89</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6864,7 +6865,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="9146d041-7a88-4ddd-86a4-75901098f944">
       <notes>
-        <note appliesTo="source">line: 91</note>
+        <note appliesTo="source">line: 90</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6874,7 +6875,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="3f080fd6-4c5f-4e13-abf4-66e2ad24386f">
       <notes>
-        <note appliesTo="source">line: 92</note>
+        <note appliesTo="source">line: 91</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6884,7 +6885,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="c507f011-b58b-444a-a3d0-93b922b63bd2">
       <notes>
-        <note appliesTo="source">line: 93</note>
+        <note appliesTo="source">line: 92</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6894,7 +6895,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="46e2d6dc-1335-4678-ad59-f44cd323de0f">
       <notes>
-        <note appliesTo="source">line: 94</note>
+        <note appliesTo="source">line: 93</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6904,12 +6905,22 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="9ec14e36-02f1-44f0-ad8c-366cfcf7f7de">
       <notes>
-        <note appliesTo="source">line: 95</note>
+        <note appliesTo="source">line: 94</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
         <source>Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)</source>
         <target>Поправено е прекомерното използване на ресурси и трептенето на открояването при използване на функцията „Визуално открояване“. (#17434, @hwf1324)</target>
+      </segment>
+    </unit>
+    <unit id="88c5328e-b1ba-485f-842a-019ed8d38696">
+      <notes>
+        <note appliesTo="source">line: 95</note>
+        <note appliesTo="source">prefix: * </note>
+      </notes>
+      <segment state="final">
+        <source>In Excel, when visual highlight is enabled, the focused cell is now correctly highlighted. (#19641, @CyrilleB79)</source>
+        <target>В Excel, когато визуалното открояване е включено, фокусираната клетка вече е правилно откроена. (#19641, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="46f5b2cc-76cb-460a-a744-969f63d29832">

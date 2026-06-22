@@ -249,3 +249,7 @@ def setFullscreenMode(mode: FullScreenMode) -> None:
 	:param mode: The full-screen mode to set.
 	"""
 	config.conf["magnifier"]["fullscreenMode"] = mode.value
+
+
+def _isDebug() -> bool:
+	return config.conf["debugLog"]["magnifier"]

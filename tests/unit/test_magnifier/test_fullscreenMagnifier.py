@@ -21,7 +21,7 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 
 		self.assertEqual(magnifier.zoomLevel, 200)
 		self.assertEqual(magnifier.filterType, Filter.NORMAL)
-		self.assertEqual(magnifier._fullscreenMode, FullScreenMode.CENTER)
+		self.assertEqual(magnifier._trackingMode, FullScreenMode.CENTER)
 		self.assertEqual(magnifier._MAGNIFIED_VIEW, MagnifiedView.FULLSCREEN)
 		self.assertTrue(magnifier._isActive)
 
@@ -171,7 +171,7 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		self.assertTrue(hasattr(magnifier, "zoomLevel"))
 		self.assertTrue(hasattr(magnifier, "filterType"))
 		self.assertTrue(hasattr(magnifier, "_MAGNIFIED_VIEW"))
-		self.assertTrue(hasattr(magnifier, "_fullscreenMode"))
+		self.assertTrue(hasattr(magnifier, "_trackingMode"))
 		self.assertTrue(hasattr(magnifier, "_isActive"))
 		self.assertTrue(hasattr(magnifier, "_currentCoordinates"))
 
@@ -213,8 +213,8 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		self.assertEqual(magnifier._currentCoordinates, (200, 300))
 
 		# Change mode
-		magnifier._fullscreenMode = FullScreenMode.RELATIVE
-		self.assertEqual(magnifier._fullscreenMode, FullScreenMode.RELATIVE)
+		magnifier._trackingMode = FullScreenMode.RELATIVE
+		self.assertEqual(magnifier._trackingMode, FullScreenMode.RELATIVE)
 
 		# Change filter
 		magnifier.filterType = Filter.INVERTED

@@ -194,7 +194,7 @@ class TestSpotlightManager(_TestMagnifier):
 	def testZoomBackRelativeMode(self):
 		"""Test zoom back in RELATIVE mode."""
 		magnifier = FullScreenMagnifier()
-		magnifier._fullscreenMode = FullScreenMode.RELATIVE
+		magnifier._trackingMode = FullScreenMode.RELATIVE
 		spotlightManager = magnifier._spotlightManager
 
 		# Set original zoom level
@@ -210,7 +210,7 @@ class TestSpotlightManager(_TestMagnifier):
 			spotlightManager.zoomBack()
 
 			# Should use _getCoordinatesForMode for RELATIVE mode
-			# Note: The code has a bug checking magnifier.FullScreenMode instead of magnifier._fullscreenMode
+			# Note: The code has a bug checking magnifier.FullScreenMode instead of magnifier._trackingMode
 			# But we test the current behavior
 			spotlightManager._animateZoom.assert_called_once()
 

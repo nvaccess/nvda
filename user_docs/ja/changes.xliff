@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="ja">
-  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/bea11d6c4fe2251c995e19e4a8ed66d181fbc5ad/user_docs/en/changes.md">
+  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/c5c6f909ecaeb1d4e671a52b5b3889e9ff71ec76/user_docs/en/changes.md">
     <skeleton>
 # $(ID:4bf3ec03-2d43-474a-aef0-92b334e594ed)
 
@@ -25,15 +25,13 @@ $(ID:bf820cf5-dfee-47f3-8918-1a00c6b7a664)
 
 $(ID:b4192a13-6451-4fd3-897f-c2a631effad7)
 
-### $(ID:c3b29ad4-4a8a-4d76-bbf6-19df3cb19546)
-
 ### $(ID:216e2064-a429-43a9-865a-29fc1edd47a9)
 
 * $(ID:350ee155-48c9-48f1-86e0-71eddbc791a2)
   * $(ID:1e43d31f-e489-449d-986f-96b35371371d)
   * $(ID:8391cab4-d1f8-4b00-90e3-0fa2a7ce982b)
   * $(ID:9ed6f120-3ab5-4ec3-a73a-55865cda0c91)
-  * $(ID:52025f05-a25e-4167-9c58-59cef825fd82)
+  * $(ID:5a4038d3-8f8a-46c3-81df-349f045f1d9b)
   * $(ID:fc145b84-b9f3-4ad4-9124-70e72a974340)
   * $(ID:778b1d44-596d-4c1d-8de1-905c79585155)
 * $(ID:e50f1514-cb8d-4c1d-accd-d72930cf1a86)
@@ -83,6 +81,7 @@ $(ID:4d885930-d362-4c6f-95dd-46da2fe9e79a)
 * $(ID:03536506-2e15-40c4-8587-7ac6b6103f28)
 $(ID:222fa698-e35a-42c9-94ec-cbccd32b3ca3)
 $(ID:90d9f201-8218-4885-afdf-e08b3a9cbcda)
+* $(ID:f691c21f-9b10-496a-b42c-c24984e3d703)
 
 ### $(ID:6e83ec90-ee84-4be0-819c-f475fa970a66)
 
@@ -96,6 +95,7 @@ $(ID:90d9f201-8218-4885-afdf-e08b3a9cbcda)
 * $(ID:c507f011-b58b-444a-a3d0-93b922b63bd2)
 * $(ID:46e2d6dc-1335-4678-ad59-f44cd323de0f)
 * $(ID:9ec14e36-02f1-44f0-ad8c-366cfcf7f7de)
+* $(ID:88c5328e-b1ba-485f-842a-019ed8d38696)
 * $(ID:46f5b2cc-76cb-460a-a744-969f63d29832)
 * $(ID:6bbd3536-a844-4718-81bf-693a96b63a62)
 * $(ID:e0054285-9543-47b4-b53e-60ee91375652)
@@ -174,7 +174,7 @@ $(ID:eb5096c1-7bff-45c7-a899-e66f7e5df8fd)
 * $(ID:c6d8d68d-f9d5-4604-9e67-5258e620e7ad)
 
 &lt;!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. --&gt;
-
+&lt;!-- markdownlint-disable --&gt;
 
 ## $(ID:2e9d82f2-0de8-4bed-a883-13977785e1c4)
 
@@ -6138,6 +6138,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 * $(ID:7301481f-3a7d-4e19-8be9-9af3ee485e99)
 * $(ID:5023a908-ff44-4868-a4a9-69c63c596ad2)
 * $(ID:10f9fec7-2a2c-412a-84af-5d9206d16c14)
+
 </skeleton>
     <unit id="4bf3ec03-2d43-474a-aef0-92b334e594ed">
       <notes>
@@ -6267,19 +6268,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>設定をリセットしてNVDAがインストールされた直後と同じ設定に戻す際、前の設定を復元するための「元に戻す」ボタンを追加しました。</target>
       </segment>
     </unit>
-    <unit id="c3b29ad4-4a8a-4d76-bbf6-19df3cb19546">
-      <notes>
-        <note appliesTo="source">line: 25</note>
-        <note appliesTo="source">prefix: ### </note>
-      </notes>
-      <segment state="final">
-        <source>Important notes</source>
-        <target>重要な注意事項</target>
-      </segment>
-    </unit>
     <unit id="216e2064-a429-43a9-865a-29fc1edd47a9">
       <notes>
-        <note appliesTo="source">line: 27</note>
+        <note appliesTo="source">line: 25</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
       <segment state="final">
@@ -6289,7 +6280,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="350ee155-48c9-48f1-86e0-71eddbc791a2">
       <notes>
-        <note appliesTo="source">line: 29</note>
+        <note appliesTo="source">line: 27</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6299,7 +6290,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="1e43d31f-e489-449d-986f-96b35371371d">
       <notes>
-        <note appliesTo="source">line: 30</note>
+        <note appliesTo="source">line: 28</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6309,7 +6300,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="8391cab4-d1f8-4b00-90e3-0fa2a7ce982b">
       <notes>
-        <note appliesTo="source">line: 31</note>
+        <note appliesTo="source">line: 29</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6319,7 +6310,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="9ed6f120-3ab5-4ec3-a73a-55865cda0c91">
       <notes>
-        <note appliesTo="source">line: 32</note>
+        <note appliesTo="source">line: 30</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6327,19 +6318,19 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>カラーフィルターは、画面の色を反転または彩度を低下させることによって、視覚障害や光過敏を持つユーザーを支援します。</target>
       </segment>
     </unit>
-    <unit id="52025f05-a25e-4167-9c58-59cef825fd82">
+    <unit id="5a4038d3-8f8a-46c3-81df-349f045f1d9b">
       <notes>
-        <note appliesTo="source">line: 33</note>
+        <note appliesTo="source">line: 31</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
-        <source>A spotlight mode is available for presentations or focused reading tasks.</source>
-        <target>スポットライトモードは、プレゼンテーションまたはフォーカスされたリーディングのタスクに使用できます。</target>
+        <source>A command allows temporarily showing an overview of the entire screen</source>
+        <target>画面全体の概要を一時的に表示できるコマンド</target>
       </segment>
     </unit>
     <unit id="fc145b84-b9f3-4ad4-9124-70e72a974340">
       <notes>
-        <note appliesTo="source">line: 34</note>
+        <note appliesTo="source">line: 32</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6349,7 +6340,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="778b1d44-596d-4c1d-8de1-905c79585155">
       <notes>
-        <note appliesTo="source">line: 35</note>
+        <note appliesTo="source">line: 33</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6359,7 +6350,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="e50f1514-cb8d-4c1d-accd-d72930cf1a86">
       <notes>
-        <note appliesTo="source">line: 36</note>
+        <note appliesTo="source">line: 34</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6369,7 +6360,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="dff67b7d-d184-4424-9fc1-9552cb8b0a36">
       <notes>
-        <note appliesTo="source">line: 37</note>
+        <note appliesTo="source">line: 35</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6379,7 +6370,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="b6eb69bf-f728-4246-8afe-ea2b0fcb356c">
       <notes>
-        <note appliesTo="source">line: 38</note>
+        <note appliesTo="source">line: 36</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6389,7 +6380,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="2aa5a8e0-0968-4184-913c-32a66dc1f359">
       <notes>
-        <note appliesTo="source">line: 39</note>
+        <note appliesTo="source">line: 37</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6399,7 +6390,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="4a562b42-1805-4e96-aa57-0f49015c6673">
       <notes>
-        <note appliesTo="source">line: 40</note>
+        <note appliesTo="source">line: 38</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6409,7 +6400,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="944f7d81-fb89-4a22-a871-6204382def8a">
       <notes>
-        <note appliesTo="source">line: 41</note>
+        <note appliesTo="source">line: 39</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6419,7 +6410,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="825ffef2-2b8f-4c97-ad19-02dd035c9e9c">
       <notes>
-        <note appliesTo="source">line: 42</note>
+        <note appliesTo="source">line: 40</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
       <segment state="final">
@@ -6429,7 +6420,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="cf762b7f-3620-4f83-94a4-d535e955368e">
       <notes>
-        <note appliesTo="source">line: 43</note>
+        <note appliesTo="source">line: 41</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6439,477 +6430,497 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="b2334a9f-e1da-4a13-85bb-e4e346e3c60a">
       <notes>
-        <note appliesTo="source">line: 44</note>
+        <note appliesTo="source">line: 42</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Added pinch in and pinch out touch gestures, allowing two-finger pinch gestures to be bound to scripts. (#19963, @kefaslungu)</source>
-        <target>Added pinch in and pinch out touch gestures, allowing two-finger pinch gestures to be bound to scripts. (#19963, @kefaslungu)</target>
+        <target>ピンチインとピンチアウトのタッチジェスチャーを追加し、2本指のピンチジェスチャーをスクリプトに割り当てられるようにしました。(#19963, @kefaslungu)</target>
       </segment>
     </unit>
     <unit id="7a1bdd4a-366e-4fdc-bd04-a98cb32ca78f">
       <notes>
-        <note appliesTo="source">line: 45</note>
+        <note appliesTo="source">line: 43</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Added touch based navigation of browse mode elements, allowing touch screen users to move between links, headings, form fields, lists, tables and other quick navigation elements. (#3424, @kefaslungu)</source>
-        <target>Added touch based navigation of browse mode elements, allowing touch screen users to move between links, headings, form fields, lists, tables and other quick navigation elements. (#3424, @kefaslungu)</target>
+        <target>ブラウズモードの要素に対するタッチベースのナビゲーションを追加しました。これにより、タッチスクリーンユーザーはリンク、見出し、フォーム項目、リスト、テーブル、その他の1文字ナビゲーション要素間を移動できるようになります。 (#3424, @kefaslungu)</target>
       </segment>
     </unit>
     <unit id="99ca394c-1c1c-45c2-8372-ab8cc41ddfcf">
       <notes>
-        <note appliesTo="source">line: 46</note>
+        <note appliesTo="source">line: 44</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Flick down or up to cycle through element types; flick right or left to navigate between elements of the selected type.</source>
-        <target>Flick down or up to cycle through element types; flick right or left to navigate between elements of the selected type.</target>
+        <target>選択した種類の要素の間を移動するには、左右にスワイプします。</target>
       </segment>
     </unit>
     <unit id="2193361d-5c51-4a9b-b0a6-d7c2873e8ca3">
       <notes>
-        <note appliesTo="source">line: 47</note>
+        <note appliesTo="source">line: 45</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The element types shown when cycling can be configured in the Browse Mode settings panel.</source>
-        <target>The element types shown when cycling can be configured in the Browse Mode settings panel.</target>
+        <target>切り替え操作時に表示される要素の種類は、ブラウズモード設定パネルで設定できます。</target>
       </segment>
     </unit>
     <unit id="ef09a520-ff4b-4241-b1d5-c1377f10c3dd">
       <notes>
-        <note appliesTo="source">line: 48</note>
+        <note appliesTo="source">line: 46</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Speech dictionaries:</source>
-        <target>Speech dictionaries:</target>
+        <target>読み上げ辞書:</target>
       </segment>
     </unit>
     <unit id="c9e2fcc3-9d71-4deb-bb65-de6f7848d9b9">
       <notes>
-        <note appliesTo="source">line: 49</note>
+        <note appliesTo="source">line: 47</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Added support for custom speech dictionaries. (#19558, #17468, @LeonarddeR)</source>
-        <target>Added support for custom speech dictionaries. (#19558, #17468, @LeonarddeR)</target>
+        <target>読み上げ辞書のカスタマイズに対応しました。（#19558, #17468, @LeonarddeR）</target>
       </segment>
     </unit>
     <unit id="10f06492-2753-43bd-8b7d-4f5f7c009c6b">
       <notes>
-        <note appliesTo="source">line: 50</note>
+        <note appliesTo="source">line: 48</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Dictionaries can be provided in the `speechDicts` folder in an add-on package.</source>
-        <target>Dictionaries can be provided in the `speechDicts` folder in an add-on package.</target>
+        <target>アドオンパッケージの `speechDicts` フォルダに辞書を格納できます。</target>
       </segment>
     </unit>
     <unit id="34fc3368-ce55-4dc6-bfae-9ad747a61da2">
       <notes>
-        <note appliesTo="source">line: 51</note>
+        <note appliesTo="source">line: 49</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Dictionary metadata can be added to an optional `speechDictionaries` section in the add-on manifest.</source>
-        <target>Dictionary metadata can be added to an optional `speechDictionaries` section in the add-on manifest.</target>
+        <target>辞書のメタデータは、アドオンのマニフェスト内のオプションの`speechDictionaries`セクションに追加できます。</target>
       </segment>
     </unit>
     <unit id="78b553d2-c7ac-4977-a274-6b74f92e1a0a">
       <notes>
-        <note appliesTo="source">line: 52</note>
+        <note appliesTo="source">line: 50</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Please consult the [Custom speech dictionaries section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSpeechDictionaries) for more details.</source>
-        <target>Please consult the [Custom speech dictionaries section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSpeechDictionaries) for more details.</target>
+        <target>詳細は [開発者ガイドのカスタム音声辞書セクション](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSpeechDictionaries) を参照してください。</target>
       </segment>
     </unit>
     <unit id="92144327-75bc-492f-af8b-4b004616ead1">
       <notes>
-        <note appliesTo="source">line: 53</note>
+        <note appliesTo="source">line: 51</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>New types have been added for speech dictionary entries, such as part of word and start of word.</source>
-        <target>New types have been added for speech dictionary entries, such as part of word and start of word.</target>
+        <target>単語の一部や単語の始まりなど、音声辞書のエントリに新しい種別が追加されました。</target>
       </segment>
     </unit>
     <unit id="b9f62be6-6a50-4bbe-89d8-709e44c4fc96">
       <notes>
-        <note appliesTo="source">line: 54</note>
+        <note appliesTo="source">line: 52</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>  Consult the speech dictionaries section in the User Guide for more details. (#19506, @LeonarddeR)</source>
-        <target>  Consult the speech dictionaries section in the User Guide for more details. (#19506, @LeonarddeR)</target>
+        <target>  詳細については、ユーザーガイドの音声辞書セクションを参照してください。(#19506, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="b0846491-184b-44cd-b1e9-b29bb56e26c2">
       <notes>
-        <note appliesTo="source">line: 55</note>
+        <note appliesTo="source">line: 53</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>After installing or updating NVDA, a dialog now offers options to restart Windows, start the installed copy, or exit the installer. (#19268, #19718, @kefaslungu)</source>
-        <target>After installing or updating NVDA, a dialog now offers options to restart Windows, start the installed copy, or exit the installer. (#19268, #19718, @kefaslungu)</target>
+        <target>NVDAのインストールまたは更新後、Windowsの再起動、インストールされたNVDAの起動、またはインストーラーの終了を選択できるダイアログが表示されます。(#19268, #19718, @kefaslungu)</target>
       </segment>
     </unit>
     <unit id="7c2b4b1b-2ee3-4262-abdd-4b10b927499a">
       <notes>
-        <note appliesTo="source">line: 56</note>
+        <note appliesTo="source">line: 54</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Added an unassigned command to toggle keyboard layout. (#19211, @CyrilleB79)</source>
-        <target>Added an unassigned command to toggle keyboard layout. (#19211, @CyrilleB79)</target>
+        <target>キーボードレイアウトを切り替えるための未割り当てのコマンドを追加しました。(#19211, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="80862cf4-23ab-4f1b-8c31-4db84ba7c098">
       <notes>
-        <note appliesTo="source">line: 57</note>
+        <note appliesTo="source">line: 55</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @tareh7z)</source>
-        <target>Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @tareh7z)</target>
+        <target>ブラウズモードで次または前のスライダーにジャンプするための未割り当ての1文字ナビゲーションコマンドを追加しました。(#17005, @tareh7z)</target>
       </segment>
     </unit>
     <unit id="6371f617-9fcf-49d8-8e8b-69c26cdeb382">
       <notes>
-        <note appliesTo="source">line: 58</note>
+        <note appliesTo="source">line: 56</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When resetting the configuration to factory defaults from the NVDA menu, a dialog is now shown afterwards with an Undo button to restore the previous configuration.</source>
-        <target>When resetting the configuration to factory defaults from the NVDA menu, a dialog is now shown afterwards with an Undo button to restore the previous configuration.</target>
+        <target>NVDAメニューから設定を初期値にリセットする際、直前に使用していた設定を復元するための「元に戻す」ボタンを備えたダイアログが表示されます。</target>
       </segment>
     </unit>
     <unit id="aff4906d-1bb1-4b50-bda1-deb83b4aaefa">
       <notes>
-        <note appliesTo="source">line: 59</note>
+        <note appliesTo="source">line: 57</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The triple-press keyboard shortcut (`NVDA+control+r`) is not affected, as it is intended for recovery scenarios. (#19575, @bramd)</source>
-        <target>The triple-press keyboard shortcut (`NVDA+control+r`) is not affected, as it is intended for recovery scenarios. (#19575, @bramd)</target>
+        <target>すばやく3回押すキーボードショートカット (`NVDA+control+r`) は今回の変更の対象ではありません。これはリカバリーでの利用を想定しているためです。 (#19575, @bramd)</target>
       </segment>
     </unit>
     <unit id="bf5ab808-9e0c-4bde-87d7-8457bb7f4fe5">
       <notes>
-        <note appliesTo="source">line: 60</note>
+        <note appliesTo="source">line: 58</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Added an unassigned command to report the current status of the Screen Curtain. (#19759)</source>
-        <target>Added an unassigned command to report the current status of the Screen Curtain. (#19759)</target>
+        <target>スクリーンカーテンの現在の状態を報告する未割り当てのコマンドを追加しました。(#19759)</target>
       </segment>
     </unit>
     <unit id="925fc6a6-5914-487e-92bf-9171dd9e0554">
       <notes>
-        <note appliesTo="source">line: 62</note>
+        <note appliesTo="source">line: 60</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Changes</source>
-        <target>Changes</target>
+        <target>変更点</target>
       </segment>
     </unit>
     <unit id="60e2fb6f-aae0-4692-aec2-07680ec05661">
       <notes>
-        <note appliesTo="source">line: 64</note>
+        <note appliesTo="source">line: 62</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Updated Liblouis Braille translator to [3.37.0](https://github.com/liblouis/liblouis/releases/tag/v3.37.0). (#19758, @codeofdusk)</source>
-        <target>Updated Liblouis Braille translator to [3.37.0](https://github.com/liblouis/liblouis/releases/tag/v3.37.0). (#19758, @codeofdusk)</target>
+        <target>LibLouis 点訳エンジンを[3.37.0](https://github.com/liblouis/liblouis/releases/tag/v3.37.0)に更新しました。(#19758, @codeofdusk)</target>
       </segment>
     </unit>
     <unit id="2671c513-c555-4c84-95b0-667eab9e0725">
       <notes>
-        <note appliesTo="source">line: 65</note>
+        <note appliesTo="source">line: 63</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Added new Italian and Estonian 6 dot tables.</source>
-        <target>Added new Italian and Estonian 6 dot tables.</target>
+        <target>イタリア語とエストニア語の6点テーブルを追加しました。</target>
       </segment>
     </unit>
     <unit id="5c1844e7-813c-4a67-b775-9101ee3d0432">
       <notes>
-        <note appliesTo="source">line: 66</note>
+        <note appliesTo="source">line: 64</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Braille:</source>
-        <target>Braille:</target>
+        <target>点字ディスプレイ:</target>
       </segment>
     </unit>
     <unit id="5c57913b-088a-4854-b1ec-c43d1e0607ad">
       <notes>
-        <note appliesTo="source">line: 67</note>
+        <note appliesTo="source">line: 65</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The braille message when NVDA is started was updated to mention if screen curtain is enabled. (#19441, @nvdaes)</source>
-        <target>The braille message when NVDA is started was updated to mention if screen curtain is enabled. (#19441, @nvdaes)</target>
+        <target>NVDAの起動時に表示される点字メッセージに、スクリーンカーテンが有効かどうかを示す情報が追加されました。 (#19441, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="f85b3c6e-1892-447a-ad2c-d1d8098fbc29">
       <notes>
-        <note appliesTo="source">line: 68</note>
+        <note appliesTo="source">line: 66</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA now supports the Orbit Reader 40 in its proprietary HID mode. (#19756, @trypsynth)</source>
-        <target>NVDA now supports the Orbit Reader 40 in its proprietary HID mode. (#19756, @trypsynth)</target>
+        <target>NVDAはOrbit Reader 40独自のHIDモードに対応しました。 (#19756, @trypsynth)</target>
       </segment>
     </unit>
     <unit id="1189f042-6dbc-4b25-848e-5aea35e9e63d">
       <notes>
-        <note appliesTo="source">line: 69</note>
+        <note appliesTo="source">line: 67</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)</source>
-        <target>It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)</target>
+        <target>ログレベルが「無効」に設定されている場合でも、 `NVDA+f1` でログビューアを開くことができるようになりました。(#19318, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="c50ef6bd-7db9-44c6-b597-c285e49a9468">
       <notes>
-        <note appliesTo="source">line: 70</note>
+        <note appliesTo="source">line: 68</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Improved search algorithm for filtering add-ons in the Add-on Store. (#19309)</source>
-        <target>Improved search algorithm for filtering add-ons in the Add-on Store. (#19309)</target>
+        <target>アドオンストアでアドオンをフィルタリングする検索アルゴリズムを改善しました。(#19309)</target>
       </segment>
     </unit>
     <unit id="d735ec3c-106c-4fe3-b887-596a343dd75b">
       <notes>
-        <note appliesTo="source">line: 71</note>
+        <note appliesTo="source">line: 69</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA can now be configured to not play error sounds, even in test versions. (#13021, @CyrilleB79)</source>
-        <target>NVDA can now be configured to not play error sounds, even in test versions. (#13021, @CyrilleB79)</target>
+        <target>NVDA はテスト版でもエラー音を再生しないように設定できるようになりました。(#13021, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="d1374a64-998f-462c-a249-a09bbe533a22">
       <notes>
-        <note appliesTo="source">line: 72</note>
+        <note appliesTo="source">line: 70</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA will start in focus mode by default when using WhatsApp 2.2584.3.0 or newer. (#19655, @josephsl)</source>
-        <target>NVDA will start in focus mode by default when using WhatsApp 2.2584.3.0 or newer. (#19655, @josephsl)</target>
+        <target>WhatsApp 2.2584.3.0 以降を使用している場合、NVDAは既定でフォーカスモードで起動します。 (#19655, @josephsl)</target>
       </segment>
     </unit>
     <unit id="54b67317-c030-46bb-9434-66f4d4e05429">
       <notes>
-        <note appliesTo="source">line: 73</note>
+        <note appliesTo="source">line: 71</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Input help mode has been improved: (#6621, @Cary-rowen, @Emil-18)</source>
-        <target>Input help mode has been improved: (#6621, @Cary-rowen, @Emil-18)</target>
+        <target>入力ヘルプモードが改善されました: (#6621, @Cary-rowen, @Emil-18)</target>
       </segment>
     </unit>
     <unit id="8a9dca45-39b9-48ba-b115-2064c793e5cd">
       <notes>
-        <note appliesTo="source">line: 74</note>
+        <note appliesTo="source">line: 72</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When a key combination would produce a character in normal input mode, the key combination is reported first, followed by the character.</source>
-        <target>When a key combination would produce a character in normal input mode, the key combination is reported first, followed by the character.</target>
+        <target>通常の入力モードでキーの組み合わせで文字を入力できる場合、先にキーの組み合わせが報告され、その後にその文字を読み上げます。</target>
       </segment>
     </unit>
     <unit id="c6e9db59-62ff-462d-b8ce-7fbaee3117d4">
       <notes>
-        <note appliesTo="source">line: 75</note>
+        <note appliesTo="source">line: 73</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If the key combination corresponds to an NVDA command, the behavior remains the same as before, i.e. the description of the command is reported.</source>
-        <target>If the key combination corresponds to an NVDA command, the behavior remains the same as before, i.e. the description of the command is reported.</target>
+        <target>キーの組み合わせが NVDA コマンドに対応する場合、動作は以前と同じです。つまり、コマンドの説明が報告されます。</target>
       </segment>
     </unit>
     <unit id="dc474811-5534-4c68-b430-57fde932f99a">
       <notes>
-        <note appliesTo="source">line: 76</note>
+        <note appliesTo="source">line: 74</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Product version for File Explorer will reflect actual Windows version including correct build and revision numbers.</source>
-        <target>Product version for File Explorer will reflect actual Windows version including correct build and revision numbers.</target>
+        <target>ファイルエクスプローラの製品バージョンは、正しいビルド番号とリビジョン番号を含む実際のWindowsバージョンを反映するようになります。</target>
       </segment>
     </unit>
     <unit id="4d885930-d362-4c6f-95dd-46da2fe9e79a">
       <notes>
-        <note appliesTo="source">line: 77</note>
+        <note appliesTo="source">line: 75</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This is more noticeable for Windows releases which are enablement packages on top of an earlier release such as Windows 11 2025 Update based on Windows 11 2024 Update. (#19802, @josephsl)</source>
-        <target>This is more noticeable for Windows releases which are enablement packages on top of an earlier release such as Windows 11 2025 Update based on Windows 11 2024 Update. (#19802, @josephsl)</target>
+        <target>Windows 11 2024 UpdateをベースにしたWindows 11 2025 Updateのように、以前のリリースに対する有効化パッケージ（enablement package）として提供されるWindowsリリースの場合は、この点がより顕著になります。 (#19802, @josephsl)</target>
       </segment>
     </unit>
     <unit id="d245edd3-10aa-42c6-bfc0-f07359de10e8">
       <notes>
-        <note appliesTo="source">line: 78</note>
+        <note appliesTo="source">line: 76</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Math navigation commands now support input help, on-demand speech mode, and can be remapped. (#19871, @RyanMcCleary)</source>
-        <target>Math navigation commands now support input help, on-demand speech mode, and can be remapped. (#19871, @RyanMcCleary)</target>
+        <target>数式ナビゲーションのコマンドが入力ヘルプとオンデマンド読み上げモードをサポートし、キー割り当ての変更も可能になりました。 (#19871, @RyanMcCleary)</target>
       </segment>
     </unit>
     <unit id="74af677f-13ad-435e-a49a-d4dc3525635b">
       <notes>
-        <note appliesTo="source">line: 79</note>
+        <note appliesTo="source">line: 77</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The "COM Registration Fixing Tool" has been renamed to "System Accessibility Repair Tool" for clarity. (#19622, @bramd)</source>
-        <target>The "COM Registration Fixing Tool" has been renamed to "System Accessibility Repair Tool" for clarity. (#19622, @bramd)</target>
+        <target>「COM登録修正ツール」が「システムアクセシビリティ修復ツール」に改名されました。(#19622, @bramd)</target>
       </segment>
     </unit>
     <unit id="03536506-2e15-40c4-8587-7ac6b6103f28">
       <notes>
-        <note appliesTo="source">line: 80</note>
+        <note appliesTo="source">line: 78</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Added an advanced setting to opt regular expression speech dictionary entries into a more modern [`regex`](https://pypi.org/project/regex/) engine.</source>
-        <target>Added an advanced setting to opt regular expression speech dictionary entries into a more modern [`regex`](https://pypi.org/project/regex/) engine.</target>
+        <target>音声辞書のエントリにおいて、正規表現に、よりモダンな [`regex`](https://pypi.org/project/regex/) エンジンを使用することを選択できる高度な設定を追加しました。</target>
       </segment>
     </unit>
     <unit id="222fa698-e35a-42c9-94ec-cbccd32b3ca3">
       <notes>
-        <note appliesTo="source">line: 81</note>
+        <note appliesTo="source">line: 79</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This provides Unicode-aware `\w` and `\b` and additional regex features.</source>
-        <target>This provides Unicode-aware `\w` and `\b` and additional regex features.</target>
+        <target>これにより、Unicode に対応した `\w` と `\b` と追加の正規表現機能が提供されます。</target>
       </segment>
     </unit>
     <unit id="90d9f201-8218-4885-afdf-e08b3a9cbcda">
       <notes>
-        <note appliesTo="source">line: 82</note>
+        <note appliesTo="source">line: 80</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The setting is disabled by default. (#20013, @LeonarddeR)</source>
-        <target>The setting is disabled by default. (#20013, @LeonarddeR)</target>
+        <target>この設定は既定で無効になっています。(#20013, @LeonarddeR)</target>
+      </segment>
+    </unit>
+    <unit id="f691c21f-9b10-496a-b42c-c24984e3d703">
+      <notes>
+        <note appliesTo="source">line: 81</note>
+        <note appliesTo="source">prefix: * </note>
+      </notes>
+      <segment state="final">
+        <source>The "Type" radio buttons in the "Add Dictionary Entry" dialog are now arranged vertically rather than horizontally. (#19657)</source>
+        <target>「辞書エントリーを追加」ダイアログの「種別」ラジオボタンが、水平方向ではなく垂直に配置されるようになりました。(#19657)</target>
       </segment>
     </unit>
     <unit id="6e83ec90-ee84-4be0-819c-f475fa970a66">
       <notes>
-        <note appliesTo="source">line: 84</note>
+        <note appliesTo="source">line: 83</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Bug Fixes</source>
-        <target>Bug Fixes</target>
+        <target>バグ修正</target>
       </segment>
     </unit>
     <unit id="3d8e7f65-d898-4c1f-aa1b-1ee897dd85f2">
       <notes>
-        <note appliesTo="source">line: 86</note>
+        <note appliesTo="source">line: 85</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Add-on Store:</source>
-        <target>Add-on Store:</target>
+        <target>アドオンストア:</target>
       </segment>
     </unit>
     <unit id="31dff8e6-8c4f-4d3c-9500-fd0be6caf739">
       <notes>
-        <note appliesTo="source">line: 87</note>
+        <note appliesTo="source">line: 86</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA no longer crashes when the Add-on Store download directory cannot be cleaned up due to file permission errors. (#19202, @christopherpross)</source>
-        <target>NVDA no longer crashes when the Add-on Store download directory cannot be cleaned up due to file permission errors. (#19202, @christopherpross)</target>
+        <target>アドオンストアのダウンロードディレクトリがファイルのアクセス許可エラーのためにクリーンアップできない場合、NVDA がクラッシュしていた問題を修正しました。(#19202, @christopherpros)</target>
       </segment>
     </unit>
     <unit id="b6c22b8b-431a-48db-a8b6-52d09261614a">
       <notes>
-        <note appliesTo="source">line: 88</note>
+        <note appliesTo="source">line: 87</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>After cancelling an add-on download and reopening the Add-on Store, downloading another add-on no longer fails. (#20015, @Cary-rowen)</source>
-        <target>After cancelling an add-on download and reopening the Add-on Store, downloading another add-on no longer fails. (#20015, @Cary-rowen)</target>
+        <target>アドオンのダウンロードをキャンセルし、アドオンストアを再開した後、別のアドオンをダウンロードすると失敗していた問題を修正しました。(#20015, @Cary-rowen)</target>
       </segment>
     </unit>
     <unit id="466642ed-1b63-488e-99b6-0441afae5c59">
       <notes>
-        <note appliesTo="source">line: 89</note>
+        <note appliesTo="source">line: 88</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Configuration profile triggers now activate when the Add-on Store is open. (#19583, @bramd)</source>
-        <target>Configuration profile triggers now activate when the Add-on Store is open. (#19583, @bramd)</target>
+        <target>設定プロファイルのトリガーはアドオンストアが開いているときに有効にならなかった問題を修正しました。(#19583, @bramd)</target>
       </segment>
     </unit>
     <unit id="3f1a6c91-6128-45cf-aa29-400ca3d1ace5">
       <notes>
-        <note appliesTo="source">line: 90</note>
+        <note appliesTo="source">line: 89</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Fixed an error that could occur when NVDA checked whether a language is supported for a synthesizer with invalid languages. (#20080, @nvdaes)</source>
-        <target>Fixed an error that could occur when NVDA checked whether a language is supported for a synthesizer with invalid languages. (#20080, @nvdaes)</target>
+        <target>音声エンジンが不適切な言語設定になっている場合、NVDAがその言語のサポート状況を確認する際に発生する可能性があったエラーを修正しました。 (#20080, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="9146d041-7a88-4ddd-86a4-75901098f944">
       <notes>
-        <note appliesTo="source">line: 91</note>
+        <note appliesTo="source">line: 90</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA will attempt to recover more quickly from freezes in some applications, especially those written in Java. (#14396, @thgcode)</source>
-        <target>NVDA will attempt to recover more quickly from freezes in some applications, especially those written in Java. (#14396, @thgcode)</target>
+        <target>NVDAは、一部のアプリ、特にJavaで作成されたアプリがフリーズした際に、より迅速に復旧を試みるようになりました。(#14396, @thgcode)</target>
       </segment>
     </unit>
     <unit id="3f080fd6-4c5f-4e13-abf4-66e2ad24386f">
       <notes>
-        <note appliesTo="source">line: 92</note>
+        <note appliesTo="source">line: 91</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>In Firefox browse mode, the accessible name of form controls (such as checkboxes and radio buttons) is now correctly announced when the control has an `aria-label` and an associated `&lt;label&gt;` element that contains only `aria-hidden` content. (#19409, @bramd)</source>
-        <target>In Firefox browse mode, the accessible name of form controls (such as checkboxes and radio buttons) is now correctly announced when the control has an `aria-label` and an associated `&lt;label&gt;` element that contains only `aria-hidden` content. (#19409, @bramd)</target>
+        <target>Firefoxのブラウズモードにおいて、コントロールに `aria-label` があり、かつ `aria-hidden` のコンテンツのみを含む関連付けられた `&lt;label&gt;` 要素がある場合、フォームコントロール（チェックボックスやラジオボタンなど）のアクセシブルな名前が正しく読み上げられるようになりました。(#19409, @bramd)</target>
       </segment>
     </unit>
     <unit id="c507f011-b58b-444a-a3d0-93b922b63bd2">
       <notes>
-        <note appliesTo="source">line: 93</note>
+        <note appliesTo="source">line: 92</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The "Toggles on and off if the screen layout is preserved while rendering the document content" item in the "Browse mode" category of the Input Gestures dialog now behaves correctly. (#18378)</source>
-        <target>The "Toggles on and off if the screen layout is preserved while rendering the document content" item in the "Browse mode" category of the Input Gestures dialog now behaves correctly. (#18378)</target>
+        <target>「入力ジェスチャー」ダイアログの「ブラウズモード」カテゴリにある「ドキュメントコンテンツのレンダリング時に画面レイアウトを維持するかどうかを切り替える」項目が、正しく動作するようになりました。(#18378)</target>
       </segment>
     </unit>
     <unit id="46e2d6dc-1335-4678-ad59-f44cd323de0f">
       <notes>
-        <note appliesTo="source">line: 94</note>
+        <note appliesTo="source">line: 93</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>In Microsoft Word with UIA enabled, page changes are now correctly announced when navigating table rows that span multiple pages. (#19386, @akj)</source>
-        <target>In Microsoft Word with UIA enabled, page changes are now correctly announced when navigating table rows that span multiple pages. (#19386, @akj)</target>
+        <target>UIAが有効になっているMicrosoft Wordでは、複数のページにまたがるテーブル行をナビゲートする際にページの変更が正しく報告されるようになりました。</target>
       </segment>
     </unit>
     <unit id="9ec14e36-02f1-44f0-ad8c-366cfcf7f7de">
       <notes>
+        <note appliesTo="source">line: 94</note>
+        <note appliesTo="source">prefix: * </note>
+      </notes>
+      <segment state="final">
+        <source>Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)</source>
+        <target>ビジュアルハイライトを使用しているときに発生していた、リソースの過剰な消費とハイライトのちらつきを修正しました。 (#17434, @hwf1324)</target>
+      </segment>
+    </unit>
+    <unit id="88c5328e-b1ba-485f-842a-019ed8d38696">
+      <notes>
         <note appliesTo="source">line: 95</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
-        <source>Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)</source>
-        <target>Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)</target>
+      <segment state="final">
+        <source>In Excel, when visual highlight is enabled, the focused cell is now correctly highlighted. (#19641, @CyrilleB79)</source>
+        <target>Excelでは、ビジュアルハイライトが有効な場合、フォーカスされたセルが正しくハイライトされるようになりました。(#19641, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="46f5b2cc-76cb-460a-a744-969f63d29832">
@@ -6917,9 +6928,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 96</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Braille should no longer stop following focus when moving around in the Microsoft Copilot application. (#19646, @Emil-18)</source>
-        <target>Braille should no longer stop following focus when moving around in the Microsoft Copilot application. (#19646, @Emil-18)</target>
+        <target>Microsoft Copilot アプリケーション内で移動する際、点字表示がフォーカスを追従しなくなる不具合を修正しました。(#19646, @Emil-18)</target>
       </segment>
     </unit>
     <unit id="6bbd3536-a844-4718-81bf-693a96b63a62">
@@ -6927,9 +6938,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 97</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The `NVDA+k` command now correctly reports the destination of links containing formatted text, such as bold or italics. (#19428, @Cary-rowen)</source>
-        <target>The `NVDA+k` command now correctly reports the destination of links containing formatted text, such as bold or italics. (#19428, @Cary-rowen)</target>
+        <target>`NVDA+k` コマンドで、太字や斜体などの書式付きテキストを含むリンク先が正しく報告されるようになりました。 (#19428, @Cary-rowen)</target>
       </segment>
     </unit>
     <unit id="e0054285-9543-47b4-b53e-60ee91375652">
@@ -6937,9 +6948,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 98</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Capital indicators are now correctly announced when selecting single characters. (#19505, @cary-rowen)</source>
-        <target>Capital indicators are now correctly announced when selecting single characters. (#19505, @cary-rowen)</target>
+        <target>単一文字を選択する際に、大文字である旨の通知が正しく読み上げられるようになりました。 (#19505, @cary-rowen)</target>
       </segment>
     </unit>
     <unit id="95b8da77-ffb6-4e97-8615-411ef76125fe">
@@ -6947,9 +6958,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 99</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>MathML in Chromium is more reliably read after NVDA starts or restarts. (#20049, @RyanMcCleary)</source>
-        <target>MathML in Chromium is more reliably read after NVDA starts or restarts. (#20049, @RyanMcCleary)</target>
+        <target>NVDAの起動または再起動後にChromiumのMathMLがより確実に読み込まれます。 (#20049, @RyanMcCleary)</target>
       </segment>
     </unit>
     <unit id="bc08aaac-f6ee-4d5f-88cf-aa9969288650">
@@ -6957,9 +6968,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 100</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Decorative Unicode letters such as negative squared, negative circled, and regional indicator symbol characters are now normalized to their base Latin letters when Unicode normalization is enabled. (#19608, @bramd)</source>
-        <target>Decorative Unicode letters such as negative squared, negative circled, and regional indicator symbol characters are now normalized to their base Latin letters when Unicode normalization is enabled. (#19608, @bramd)</target>
+        <target>白黒反転の四角や円、地域インジケータ記号などの装飾的なUnicode文字が、Unicode正規化を有効にすると基本ラテン文字に正規化されるようになりました。 (#19608, @bramd)</target>
       </segment>
     </unit>
     <unit id="3b3c32e3-e1eb-442e-85a0-db79cd82aa8e">
@@ -6967,9 +6978,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 101</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Fixed NVDA freezing when navigating in JetBrains IDEs. (#16741, @christopherpross)</source>
-        <target>Fixed NVDA freezing when navigating in JetBrains IDEs. (#16741, @christopherpross)</target>
+        <target>JetBrains IDEでナビゲーションを行うとNVDAがフリーズする問題の修正(#16741, @christopherpross)</target>
       </segment>
     </unit>
     <unit id="b1cc6fad-19e7-4315-8619-2ecf732787a2">
@@ -6977,9 +6988,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 102</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Speech dictionary entries of type Whole word now correctly handle words containing Unicode combining marks (e.g. Hebrew niqqud, Arabic harakat). (#20013, @LeonarddeR)</source>
-        <target>Speech dictionary entries of type Whole word now correctly handle words containing Unicode combining marks (e.g. Hebrew niqqud, Arabic harakat). (#20013, @LeonarddeR)</target>
+        <target>単語全体の種別の音声辞書エントリにおいて、Unicodeの結合文字（ヘブライ語のニクダー、アラビア語のハラカートなど）を含む単語を正しく処理するようになりました。 (#20013, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="e4f21899-9b3b-4c5d-94bd-f1d2422d9127">
@@ -7497,9 +7508,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 171</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The `winBindings.cfgmgr32` module is now included in NVDA binary builds. (#20089, @Cary-rowen)</source>
-        <target>The `winBindings.cfgmgr32` module is now included in NVDA binary builds. (#20089, @Cary-rowen)</target>
+        <target>`winBindings.cfgmgr32` モジュールが NVDA バイナリビルドに含まれるようになりました。 (#20089, @Cary-rowen)</target>
       </segment>
     </unit>
     <unit id="2e9d82f2-0de8-4bed-a883-13977785e1c4">
@@ -51155,9 +51166,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 5385</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When the user wishes to copy their user settings to the system profile for use on the logon screen, etc., and their settings contain custom plugins, they are now warned that this could be a security risk. (#1426)</source>
-        <target>When the user wishes to copy their user settings to the system profile for use on the logon screen, etc., and their settings contain custom plugins, they are now warned that this could be a security risk. (#1426)</target>
+        <target>ログオン画面などで使用するためにユーザー設定をシステムプロファイルへコピーする場合、設定にカスタムプラグインが含まれていると、セキュリティ上のリスクがある旨の警告が表示されるようになった。 (#1426)</target>
       </segment>
     </unit>
     <unit id="e032f209-22b1-4329-b1f2-16a5e2f5aebb">
@@ -51165,9 +51176,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 5386</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The NVDA service no longer starts and stops NVDA on user input desktops.</source>
-        <target>The NVDA service no longer starts and stops NVDA on user input desktops.</target>
+        <target>NVDA サービスは、ユーザー入力デスクトップ上で NVDA を起動および停止しなくなりました。</target>
       </segment>
     </unit>
     <unit id="c7dbe097-d95d-45bd-a6fb-0d39b151ae67">
