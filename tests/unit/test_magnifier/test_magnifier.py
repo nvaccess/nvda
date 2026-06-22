@@ -540,87 +540,56 @@ class TestMagnifier(_TestMagnifier):
 			self.magnifier.currentCoordinates = validCoords
 			self.assertEqual(self.magnifier.currentCoordinates, validCoords)
 
-	def testStartMagnifierDisablesTouchOnInstalledCopy(self):
-		"""Touch is disabled when the magnifier starts on an installed copy with touch active."""
+	def testStartMagnifierBlocksTouchOnInstalledCopy(self):
+		"""blockTouchInput is set to True when the magnifier starts with the touch handler active."""
 		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=focusCoords)
 
 		with (
-			patch("touchHandler.touchSupported", return_value=True),
 			patch("touchHandler.handler", new=MagicMock()),
-			patch("touchHandler.setTouchSupport") as mock_set_touch,
+			patch("touchHandler.blockTouchInput", False),
 		):
 			self.magnifier._startMagnifier()
+			import touchHandler
 
-		mock_set_touch.assert_called_once_with(False)
-		self.assertTrue(self.magnifier._touchWasEnabled)
+			self.assertTrue(touchHandler.blockTouchInput)
 
-	def testStartMagnifierSkipsTouchWhenAlreadyDisabled(self):
-		"""Touch is not touched when it was already inactive before the magnifier starts."""
+	def testStartMagnifierWarnsWhenTouchSupportedButHandlerInactive(self):
+		"""A warning dialog is shown when touch is supported but the handler is not running."""
 		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=focusCoords)
 
 		with (
-			patch("touchHandler.touchSupported", return_value=True),
 			patch("touchHandler.handler", new=None),
-			patch("touchHandler.setTouchSupport") as mock_set_touch,
+			patch("touchHandler.touchSupported", return_value=True),
+			patch("_magnifier.magnifier.wx.CallAfter") as mock_call_after,
 		):
 			self.magnifier._startMagnifier()
 
-		mock_set_touch.assert_not_called()
-		self.assertFalse(self.magnifier._touchWasEnabled)
+		mock_call_after.assert_called_once()
 
-	def testStartMagnifierSkipsTouchOnPortableCopy(self):
-		"""Touch is left untouched on portable copies where touchSupported() returns False."""
+	def testStartMagnifierWarnsOnPortableCopy(self):
+		"""A warning dialog is shown on portable copies where touch cannot be intercepted."""
 		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=focusCoords)
 
 		with (
+			patch("touchHandler.handler", new=None),
 			patch("touchHandler.touchSupported", return_value=False),
-			patch("touchHandler.setTouchSupport") as mock_set_touch,
+			patch("_magnifier.magnifier.wx.CallAfter") as mock_call_after,
 		):
 			self.magnifier._startMagnifier()
 
-		mock_set_touch.assert_not_called()
-		self.assertFalse(self.magnifier._touchWasEnabled)
+		mock_call_after.assert_called_once()
 
-	def testStopMagnifierRestoresTouch(self):
-		"""Touch is re-enabled when the magnifier stops if it was disabled on start."""
+	def testStopMagnifierUnblocksTouchInput(self):
+		"""blockTouchInput is reset to False unconditionally when the magnifier stops."""
+		import touchHandler
+
 		self.magnifier._stopTimer = MagicMock()
 		self.magnifier._isActive = True
-		self.magnifier._touchWasEnabled = True
+		touchHandler.blockTouchInput = True
 
-		with patch("touchHandler.setTouchSupport") as mock_set_touch:
-			self.magnifier._stopMagnifier()
+		self.magnifier._stopMagnifier()
 
-		mock_set_touch.assert_called_once_with(True)
-		self.assertFalse(self.magnifier._touchWasEnabled)
-
-	def testStopMagnifierDoesNotRestoreTouchIfNotDisabled(self):
-		"""Touch is not re-enabled on stop if it was already inactive when the magnifier started."""
-		self.magnifier._stopTimer = MagicMock()
-		self.magnifier._isActive = True
-		self.magnifier._touchWasEnabled = False
-
-		with patch("touchHandler.setTouchSupport") as mock_set_touch:
-			self.magnifier._stopMagnifier()
-
-		mock_set_touch.assert_not_called()
-
-	def testOnTouchSupportEnablingBlocksWhenMagnifierIsActive(self):
-		"""onTouchSupportEnabling returns False and speaks a message when the magnifier is running."""
-		self.magnifier._isActive = True
-
-		with patch("_magnifier.magnifier.ui.message") as mock_message:
-			result = self.magnifier.onTouchSupportEnabling()
-
-		self.assertFalse(result)
-		mock_message.assert_called_once()
-
-	def testOnTouchSupportEnablingAllowsWhenMagnifierIsInactive(self):
-		"""onTouchSupportEnabling returns True when the magnifier is not running."""
-		self.magnifier._isActive = False
-
-		result = self.magnifier.onTouchSupportEnabling()
-
-		self.assertTrue(result)
+		self.assertFalse(touchHandler.blockTouchInput)

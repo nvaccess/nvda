@@ -12,6 +12,7 @@ from collections.abc import Callable
 from comtypes import COMError
 from logHandler import log
 import wx
+import gui
 import ui
 import speech
 import screenCurtain
@@ -60,7 +61,6 @@ class Magnifier:
 		# Register for display changes
 		_displayTracking.displayChanged.register(self._onDisplayChanged)
 		self._screenCurtainIsActive: bool = False
-		self._touchWasEnabled: bool = False
 
 	@property
 	def filterType(self) -> Filter:
@@ -185,11 +185,39 @@ class Magnifier:
 
 		self._isActive = True
 		self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
-		# Disable touch input while magnifier is running.
-		# touchSupported() returns False on portable copies, so this is a no-op there.
-		if touchHandler.touchSupported() and touchHandler.handler is not None:
-			touchHandler.setTouchSupport(False)
-			self._touchWasEnabled = True
+		if touchHandler.handler is not None:
+			# Touch events are already intercepted by NVDA; block gesture execution
+			# to prevent incorrect coordinates from the magnified view reaching the system.
+			touchHandler.blockTouchInput = True
+		elif touchHandler.touchSupported():
+			# Touch is supported but the handler is not running (user disabled it).
+			# We can't intercept inputs, so warn the user.
+			wx.CallAfter(
+				gui.messageBox,
+				pgettext(
+					"magnifier",
+					# Translators: Warning shown when the magnifier starts and touch input cannot be intercepted
+					"Touch screen input cannot be intercepted because NVDA touch support is disabled. "
+					"Touch inputs may not behave as expected while the magnifier is running.",
+				),
+				# Translators: Title of the warning dialog shown when touch cannot be intercepted
+				pgettext("magnifier", "Magnifier — Touch screen warning"),
+				wx.OK | wx.ICON_WARNING,
+			)
+		else:
+			# Portable copy, running from source, or no UI access: touch cannot be intercepted.
+			wx.CallAfter(
+				gui.messageBox,
+				pgettext(
+					"magnifier",
+					# Translators: Warning shown when the magnifier starts on a portable/source copy with a touchscreen
+					"Touch screen input cannot be intercepted on portable copies of NVDA or without UI Access. "
+					"Touch inputs may not behave as expected while the magnifier is running.",
+				),
+				# Translators: Title of the warning dialog shown when touch cannot be intercepted
+				pgettext("magnifier", "Magnifier — Touch screen warning"),
+				wx.OK | wx.ICON_WARNING,
+			)
 
 	def _updateMagnifier(self) -> None:
 		"""
@@ -259,32 +287,9 @@ class Magnifier:
 			return
 		self._stopTimer()
 		self._isActive = False
-		# Re-enable touch input if it was disabled when the magnifier started.
-		if self._touchWasEnabled:
-			try:
-				touchHandler.setTouchSupport(True)
-			except NotImplementedError:
-				pass
-			self._touchWasEnabled = False
+		touchHandler.blockTouchInput = False
 		# Unregister from display changes
 		_displayTracking.displayChanged.unregister(self._onDisplayChanged)
-
-	def onTouchSupportEnabling(self) -> bool:
-		"""
-		Called before touch support is enabled.
-		Returns False if touch cannot be enabled because the magnifier is active.
-		"""
-		if self._isActive:
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Message when trying to enable touch interaction while magnifier is active
-					"Cannot enable touch interaction. Please disable the magnifier first.",
-				),
-				speechPriority=speech.priorities.Spri.NOW,
-			)
-			return False
-		return True
 
 	def onScreenCurtainEnabled(self) -> None:
 		"""
