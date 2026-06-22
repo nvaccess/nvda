@@ -30,6 +30,6 @@ General enquiries should be directed to <info@nvaccess.org>.
 | @cary-rowen | <cary-rowen@outlook.com> | Chinese input and word segmentation |
 | @bramd | <bram@bramd.nl> | Braille (including hardware I/O and liblouis), multi-line braille displays / tactile output |
 | @CyrilleB79 | <cyrille.bougot2@laposte.net> | Speech, l10n/i18n, MS Office, visual bugs/features |
-| @zstanecic | ? | Braille |
-| @Emil-18 | ? | UIA, NVDAObjects/TextInfos |
-| @josephsl | ? | Windows OS |
+| @zstanecic | N/A | Braille |
+| @Emil-18 | N/A | UIA, NVDAObjects/TextInfos |
+| @josephsl | N/A | Windows OS |
