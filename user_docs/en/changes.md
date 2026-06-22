@@ -6,6 +6,7 @@
 
 ### New Features
 
+* Add-ons can be removed from the "Updatable add-ons" tab in the Add-on Store. (#15030, @nvdaes)
 * Chinese text can now be navigated by word using built-in input gestures.
   A Word Segmentation Standard setting was added to the "Document Navigation" panel. (#18735, @CrazySteve0605, @Cary-rowen)
 * Braille output for Chinese now includes spaces between words. (#18865, @CrazySteve0605, @Cary-rowen)
@@ -98,15 +99,13 @@ Liblouis has been updated with new Italian and Estonian braille tables.
 
 When resetting NVDA to factory defaults, an Undo button is now available to restore the previous configuration.
 
-### Important notes
-
 ### New Features
 
 * Magnifier:
   * NVDA now includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen. (#19228, @Boumtchack)
   * The magnifier supports various zoom levels, color filters (normal, grayscale, inverted), and different focus tracking modes.
   * Color filters can help users with visual impairments or light sensitivity by inverting or desaturating screen colors.
-  * A command allows temporarily showing an overview of the entire screen
+  * A command allows temporarily showing an overview of the entire screen.
   * All magnifier settings can be configured in a new "Magnifier" panel in NVDA Settings.
   * The magnifier cannot be used simultaneously with Screen Curtain for security reasons.
 * Speech:

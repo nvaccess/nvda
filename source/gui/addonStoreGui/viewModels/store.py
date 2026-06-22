@@ -193,8 +193,7 @@ class AddonStoreVM:
 					aVM.canUseRemoveAction()
 					and self._filteredStatusKey
 					in (
-						# Removing add-ons in the updatable view fails,
-						# as the updated version cannot be removed.
+						_StatusFilterKey.UPDATE,
 						_StatusFilterKey.INSTALLED,
 						_StatusFilterKey.INCOMPATIBLE,
 					)

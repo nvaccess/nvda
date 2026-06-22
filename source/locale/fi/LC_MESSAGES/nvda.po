@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-12 03:40+0000\n"
-"PO-Revision-Date: 2026-06-15 03:41\n"
+"POT-Creation-Date: 2026-06-22 03:32+0000\n"
+"PO-Revision-Date: 2026-06-22 03:42\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -5055,22 +5055,22 @@ msgstr "Panoroi suurennusnäkymää alaspäin."
 #. Translators: Describes a command.
 #: globalCommands.py:5144
 msgid "Pan the magnified view to left edge"
-msgstr "Panoroi suurennusnäkymä vasempaan reunaan."
+msgstr "Panoroi suurennusnäkymän näytön vasempaan reunaan."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5158
 msgid "Pan the magnified view to right edge"
-msgstr "Panoroi suurennusnäkymä oikeaan reunaan."
+msgstr "Panoroi suurennusnäkymän näytön oikeaan reunaan."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5172
 msgid "Pan the magnified view to top edge"
-msgstr "Panoroi suurennusnäkymä yläreunaan."
+msgstr "Panoroi suurennusnäkymän näytön yläreunaan."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5186
 msgid "Pan the magnified view to bottom edge"
-msgstr "Panoroi suurennusnäkymä alareunaan."
+msgstr "Panoroi suurennusnäkymän näytön alareunaan."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5200
@@ -5716,7 +5716,7 @@ msgstr "tuntematon %s"
 #. Translators: a state that denotes a control is currently on
 #. E.g. a switch control.
 #: keyboardHandler.py:749 synthSettingsRing.py:117 controlTypes\state.py:202
-#: gui\speechDict.py:195
+#: gui\speechDict.py:198
 msgid "on"
 msgstr "käytössä"
 
@@ -5725,7 +5725,7 @@ msgstr "käytössä"
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 #: keyboardHandler.py:749 synthSettingsRing.py:117 controlTypes\state.py:231
-#: gui\settingsDialogs.py:2406 gui\speechDict.py:195
+#: gui\settingsDialogs.py:2406 gui\speechDict.py:198
 msgid "off"
 msgstr "ei käytössä"
 
@@ -7618,7 +7618,7 @@ msgstr "Ilmainen ja avoimen lähdekoodin ruudunlukuohjelma Microsoft Windowsille
 #: versionInfo.py:22
 #, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
-msgstr "Copyright (C) {years} NVDA:n tekijät"
+msgstr "Tekijänoikeudet © {years} NVDA:n kehittäjät"
 
 #. Translators: "About NVDA" dialog box message
 #: versionInfo.py:27
@@ -12973,13 +12973,13 @@ msgstr "&Suodata:"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:6762 gui\speechDict.py:212
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:6762 gui\speechDict.py:215
 msgid "&Add"
 msgstr "&Lisää"
 
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
-#: gui\inputGestures.py:620 gui\speechDict.py:224
+#: gui\inputGestures.py:620 gui\speechDict.py:227
 msgid "&Remove"
 msgstr "&Poista"
 
@@ -13203,7 +13203,7 @@ msgstr "Käyttäjätilien valvonnan kehotteisiin ei voi vastata hallitsevalta ko
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:635
 msgid "Create Portable NVDA"
-msgstr "NVDA:n massamuistiversion luonti"
+msgstr "Massamuistiversion luonti"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 #: gui\installerGui.py:641
@@ -14740,7 +14740,7 @@ msgstr "UI Automation -tapahtumien ja ominaisuusmuutosten &rekisteröinti:"
 #. selectively or globally for UI Automation events.
 #: gui\settingsDialogs.py:4265
 msgid "Automatic (prefer selective)"
-msgstr "Automaattinen (etusijalla valikoiva)"
+msgstr "Automaattinen (valikoiva ensisijaisena)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register selectively for UI Automation events
@@ -14805,13 +14805,13 @@ msgstr "Windows-k&onsolin tuki:"
 #. automatically.
 #: gui\settingsDialogs.py:4335
 msgid "Automatic (prefer UIA)"
-msgstr "Automaattinen (UIA etusijalla)"
+msgstr "Automaattinen (UIA ensisijaisena)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use UIA in the Windows Console when available.
 #: gui\settingsDialogs.py:4338
 msgid "UIA when available"
-msgstr "UIA kun käytettävissä"
+msgstr "UIA"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use its legacy Windows Console support
@@ -14827,7 +14827,7 @@ msgctxt "advanced.uiaWithChromium"
 msgid "Use UIA with Microsoft Edge and other \n"
 "&Chromium based browsers when available:"
 msgstr "Käytä UIA:ta Microsoft Edgessä ja muissa\n"
-"&Chromium-pohjaisissa selaimissa, kun käytettävissä:"
+"&Chromium-pohjaisissa selaimissa:"
 
 #. Translators: Label for the default value of the Use UIA with Chromium combobox,
 #. in the Advanced settings panel.
@@ -14898,7 +14898,7 @@ msgstr "Puhu &salasanat kaikissa laajennetuissa päätteissä (saattaa parantaa 
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:4452
 msgid "Use enhanced t&yped character support in legacy Windows Console when available"
-msgstr "Käytä laajennettua k&irjoitettujen merkkien tukea vanhassa Windows-konsolissa, kun käytettävissä"
+msgstr "Käytä vanhassa Windows-konsolissa laajennettua k&irjoitettujen merkkien tukea"
 
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
@@ -14913,7 +14913,7 @@ msgstr "Muutosten &havaitsemismenetelmä:"
 #. content in terminals automatically.
 #: gui\settingsDialogs.py:4470
 msgid "Automatic (prefer Diff Match Patch)"
-msgstr "Automaattinen (Diff Match Patch etusijalla)"
+msgstr "Automaattinen (Diff Match Patch ensisijaisena)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
@@ -15282,7 +15282,7 @@ msgstr "&Ota suurennus käyttöön (vaikuttaa heti)"
 #. Translators: The label for a setting in magnifier settings to select the zoom level.
 #: gui\settingsDialogs.py:6110
 msgid "&Zoom (%):"
-msgstr "S&uurennuksen taso (%):"
+msgstr "S&uurennustaso (%):"
 
 #. Translators: The label for a setting in magnifier settings to select the filter
 #: gui\settingsDialogs.py:6132
@@ -15292,7 +15292,7 @@ msgstr "Värisu&odatin:"
 #. Translators: The label for a setting in magnifier settings to select whether true center tracking is used
 #: gui\settingsDialogs.py:6149
 msgid "&True center tracking"
-msgstr "Seuraa tarkkaa &keskikohtaa"
+msgstr "Seuraa todellista &keskikohtaa"
 
 #. Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
 #: gui\settingsDialogs.py:6163
@@ -15394,7 +15394,7 @@ msgstr "normaalit asetukset"
 #. Translators: This is the label for the add symbol dialog.
 #: gui\settingsDialogs.py:6637
 msgid "Add Symbol"
-msgstr "Lisää symboli"
+msgstr "Symbolin lisäys"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
 #: gui\settingsDialogs.py:6642
@@ -15427,7 +15427,7 @@ msgstr "Symboli"
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6707 gui\speechDict.py:188
+#: gui\settingsDialogs.py:6707 gui\speechDict.py:191
 msgid "Replacement"
 msgstr "Korvaava"
 
@@ -15479,7 +15479,7 @@ msgstr "Symboli \"%s\" on jo olemassa."
 #. Translators: This is the label for the edit dictionary entry dialog.
 #: gui\speechDict.py:41
 msgid "Edit Dictionary Entry"
-msgstr "Muokkaa sanastomääritystä"
+msgstr "Sanastomäärityksen muokkaus"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 #: gui\speechDict.py:47
@@ -15498,77 +15498,77 @@ msgstr "&Tyyppi"
 
 #. Translators: This is an error message to let the user know that the pattern field
 #. in the dictionary entry is not valid.
-#: gui\speechDict.py:90
+#: gui\speechDict.py:93
 msgid "A pattern is required."
 msgstr "Korvattava merkkijono on pakollinen."
 
 #. Translators: The title of an error message raised by the Dictionary Entry dialog
-#: gui\speechDict.py:92 gui\speechDict.py:115 gui\speechDict.py:133
+#: gui\speechDict.py:95 gui\speechDict.py:118 gui\speechDict.py:136
 msgid "Dictionary Entry Error"
 msgstr "Virhe sanastomäärityksessä"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#: gui\speechDict.py:113
+#: gui\speechDict.py:116
 #, python-brace-format
 msgid "Regular Expression error in the pattern field: \"{error}\"."
 msgstr "Virhe Korvattava-kentän säännöllisessä lausekkeessa: \"{error}\"."
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#: gui\speechDict.py:131
+#: gui\speechDict.py:134
 #, python-brace-format
 msgid "Regular Expression error in the replacement field: \"{error}\"."
 msgstr "Virhe Korvaava-kentän säännöllisessä lausekkeessa: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
-#: gui\speechDict.py:175
+#: gui\speechDict.py:178
 msgid "&Dictionary entries"
 msgstr "&Sanastomääritykset"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 #. Translators: title for Word comment dialog.
-#: gui\speechDict.py:182 NVDAObjects\IAccessible\winword.py:375
+#: gui\speechDict.py:185 NVDAObjects\IAccessible\winword.py:375
 #: NVDAObjects\UIA\wordDocument.py:843
 msgid "Comment"
 msgstr "Kommentti"
 
 #. Translators: The label for a column in dictionary entries list used to identify pattern
 #. (original word or a pattern).
-#: gui\speechDict.py:185
+#: gui\speechDict.py:188
 msgid "Pattern"
 msgstr "Korvattava"
 
 #. Translators: The label for a column in dictionary entries list used to identify
 #. whether the entry is case sensitive or not.
-#: gui\speechDict.py:191
+#: gui\speechDict.py:194
 msgid "case"
 msgstr "Kirjainkoko"
 
 #. Translators: The label for a column in dictionary entries list used to identify
 #. whether the entry is a regular expression, matches whole words, or matches anywhere.
-#: gui\speechDict.py:194
+#: gui\speechDict.py:197
 msgid "Type"
 msgstr "Tyyppi"
 
 #. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
-#: gui\speechDict.py:218
+#: gui\speechDict.py:221
 msgid "&Edit"
 msgstr "&Muokkaa"
 
 #. Translators: The label for a button on the Speech Dictionary dialog.
 #. Translators: The title on a prompt for confirmation on the Speech Dictionary dialog.
-#: gui\speechDict.py:232 gui\speechDict.py:312
+#: gui\speechDict.py:235 gui\speechDict.py:315
 msgid "Remove all"
-msgstr "Poista kaikki"
+msgstr "Poista k&aikki"
 
 #. Translators: This is the label for the add dictionary entry dialog.
-#: gui\speechDict.py:254
+#: gui\speechDict.py:257
 msgid "Add Dictionary Entry"
-msgstr "Lisää sanastomääritys"
+msgstr "Sanastomäärityksen lisäys"
 
 #. Translators: A prompt for confirmation on the Speech Dictionary dialog.
-#: gui\speechDict.py:310
+#: gui\speechDict.py:313
 msgid "Are you sure you want to remove all the entries in this dictionary?"
-msgstr "Haluatko varmasti poistaa kaikki määritykset tästä sanastosta?"
+msgstr "Haluatko varmasti poistaa kaikki tämän sanaston määritykset?"
 
 #. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
 #: gui\startupDialogs.py:37
@@ -19879,12 +19879,12 @@ msgstr "Tilapäissanasto"
 #. Translators: Name of the default speech dictionary.
 #: speechDictHandler\definitions.py:56
 msgid "Default Dictionary"
-msgstr "Oletus"
+msgstr "Oletussanasto"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:54
 msgid "&Anywhere"
-msgstr "Täsmää ka&ikkialla"
+msgstr "Rajo&ittamaton"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:56

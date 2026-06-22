@@ -11,6 +11,7 @@ from collections.abc import Callable
 from functools import wraps
 from logHandler import log
 from typing import ParamSpec, TypeVar, cast
+from ..config import _isDebug
 
 
 # ParamSpec captures the full parameter signature of a callable (names, types, defaults).
@@ -41,8 +42,9 @@ def trackNativeMagnifierErrors(func: Callable[_P, _R]) -> Callable[_P, _R]:
 		try:
 			return func(*args, **kwargs)
 		except OSError:
-			functionPath = f"{func.__module__}.{func.__qualname__}"
-			log.debug(f"Native magnifier operation failed: {functionPath}", exc_info=True)
+			if _isDebug():
+				functionPath = f"{func.__module__}.{func.__qualname__}"
+				log.debug(f"Native magnifier operation failed: {functionPath}", exc_info=True)
 			return cast(_R, None)
 
 	return _wrapped
