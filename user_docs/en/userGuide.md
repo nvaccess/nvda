@@ -3571,9 +3571,9 @@ When a Chinese braille output table is in use, NVDA can insert spaces between Ch
 | Option | Behaviour |
 |---|---|
 | Auto | Use Chinese word segmentation for Chinese text when available. Otherwise, prefer Windows Unicode (ICU) word segmentation when available, falling back to the legacy Windows word segmentation. |
-| Windows (legacy) | Use the legacy Windows (Uniscribe) word segmentation. |
-| Chinese | Use Chinese word segmentation. If Chinese word segmentation is not available, NVDA falls back to the legacy Windows word segmentation. |
-| Windows Unicode (ICU) | Use the Windows built-in ICU library for word boundary detection: Unicode Standard Annex #29 rules plus automatic dictionary-based segmentation selected by the script of the text (Chinese, Japanese, Thai, Lao, Khmer and Burmese). This is particularly useful for scripts such as Japanese and Khmer, and for multi-character emoji sequences, where the legacy Windows word segmentation falls back to character-level boundaries. |
+| Windows (legacy) | Use the legacy Windows word segmentation as used in Notepad classic and other legacy Win32 edit controls. |
+| Chinese | Use Chinese word segmentation. If Chinese word segmentation is not available, NVDA uses the fallback path as in `Auto`. |
+| Windows Unicode (ICU) | Use the Windows built-in ICU library for word segmentation available in Windows 10 version 1703 (Creators Update) and later, falling back to legacy. |
 
 #### Math Settings {#MathSettings}
 
