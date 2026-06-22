@@ -9,6 +9,7 @@ import unittest
 from unittest.mock import patch
 
 import braille
+import braille.buffers
 import config
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import BrailleTextWrapFlag
@@ -51,28 +52,40 @@ class TestCalculate(unittest.TestCase):
 		"""Check that, if list of braille cells is empty, offsets will be (0, 0, False)."""
 		braille.handler.buffer.brailleCells = []
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
-		expectedOffsets = [braille._WindowRowPositions(0, 0)]
+		expectedOffsets = [braille.buffers._WindowRowPositions(0, 0)]
 		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, expectedOffsets)
 
 	def test_firstPosition(self):
 		"""Checks that first offset is equal to start parameter."""
 		braille.handler.buffer.brailleCells = [1] * braille.handler.displaySize
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
-		expectedOffsets = [braille._WindowRowPositions(0, 20), braille._WindowRowPositions(20, 40)]
+		expectedOffsets = [
+			braille.buffers._WindowRowPositions(0, 20),
+			braille.buffers._WindowRowPositions(20, 40),
+		]
 		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, expectedOffsets)
 		braille.handler.buffer._calculateWindowRowBufferOffsets(1)
-		expectedOffsets = [braille._WindowRowPositions(1, 21), braille._WindowRowPositions(21, 40)]
+		expectedOffsets = [
+			braille.buffers._WindowRowPositions(1, 21),
+			braille.buffers._WindowRowPositions(21, 40),
+		]
 		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, expectedOffsets)
 
 	def test_end(self):
 		"""Check that last row offset won't be greater than length of list of braille cells."""
 		braille.handler.buffer.brailleCells = [1] * (braille.handler.displaySize - 10)
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
-		expectedOffsets = [braille._WindowRowPositions(0, 20), braille._WindowRowPositions(20, 30)]
+		expectedOffsets = [
+			braille.buffers._WindowRowPositions(0, 20),
+			braille.buffers._WindowRowPositions(20, 30),
+		]
 		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, expectedOffsets)
 		braille.handler.buffer.brailleCells = [1] * braille.handler.displaySize
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
-		expectedOffsets = [braille._WindowRowPositions(0, 20), braille._WindowRowPositions(20, 40)]
+		expectedOffsets = [
+			braille.buffers._WindowRowPositions(0, 20),
+			braille.buffers._WindowRowPositions(20, 40),
+		]
 		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, expectedOffsets)
 
 	def test_textWrapFirstRowWithSpace(self):
@@ -83,11 +96,17 @@ class TestCalculate(unittest.TestCase):
 		cells.extend([1] * (braille.handler.displayDimensions.numCols + 4))
 		braille.handler.buffer.brailleCells = cells
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
-		expectedOffsets = [braille._WindowRowPositions(0, 16), braille._WindowRowPositions(16, 35, True)]
+		expectedOffsets = [
+			braille.buffers._WindowRowPositions(0, 16),
+			braille.buffers._WindowRowPositions(16, 35, True),
+		]
 		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, expectedOffsets)
 		_setTextWrap(BrailleTextWrapFlag.NONE)
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
-		expectedOffsets = [braille._WindowRowPositions(0, 20), braille._WindowRowPositions(20, 40)]
+		expectedOffsets = [
+			braille.buffers._WindowRowPositions(0, 20),
+			braille.buffers._WindowRowPositions(20, 40),
+		]
 		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, expectedOffsets)
 
 	def test_textWrapSecondRowStartsWithSpace(self):
@@ -98,7 +117,10 @@ class TestCalculate(unittest.TestCase):
 		cells.extend([1] * (braille.handler.displayDimensions.numCols - 1))
 		braille.handler.buffer.brailleCells = cells
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
-		expectedOffsets = [braille._WindowRowPositions(0, 20), braille._WindowRowPositions(20, 40)]
+		expectedOffsets = [
+			braille.buffers._WindowRowPositions(0, 20),
+			braille.buffers._WindowRowPositions(20, 40),
+		]
 		self.assertEqual(braille.handler.buffer._windowRowBufferOffsets, expectedOffsets)
 		_setTextWrap(BrailleTextWrapFlag.NONE)
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
@@ -112,7 +134,7 @@ class TestCalculate(unittest.TestCase):
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
 		self.assertEqual(
 			braille.handler.buffer._windowRowBufferOffsets,
-			[braille._WindowRowPositions(0, 20), braille._WindowRowPositions(20, 25)],
+			[braille.buffers._WindowRowPositions(0, 20), braille.buffers._WindowRowPositions(20, 25)],
 		)
 		self.assertFalse(any(r.showContinuationMark for r in braille.handler.buffer._windowRowBufferOffsets))
 
@@ -124,7 +146,7 @@ class TestCalculate(unittest.TestCase):
 		# With MARK_WORD_CUTS, the end is pulled back by 1 to leave room for the marker.
 		self.assertEqual(
 			braille.handler.buffer._windowRowBufferOffsets[0],
-			braille._WindowRowPositions(0, 19, True),
+			braille.buffers._WindowRowPositions(0, 19, True),
 		)
 		self.assertTrue(braille.handler.buffer._windowRowBufferOffsets[0].showContinuationMark)
 
@@ -145,7 +167,7 @@ class TestCalculate(unittest.TestCase):
 		braille.handler.buffer._calculateWindowRowBufferOffsets(0)
 		self.assertEqual(
 			braille.handler.buffer._windowRowBufferOffsets[0],
-			braille._WindowRowPositions(0, 19, True),
+			braille.buffers._WindowRowPositions(0, 19, True),
 		)
 		self.assertTrue(braille.handler.buffer._windowRowBufferOffsets[0].showContinuationMark)
 
@@ -173,7 +195,7 @@ class TestCalculate(unittest.TestCase):
 			),
 			patch.object(braille.handler.buffer, "_getLanguageAtBufferPos", return_value="en_US"),
 			patch(
-				"braille.textUtils.hyphenation.getHyphenPositions",
+				"braille.buffers.textUtils.hyphenation.getHyphenPositions",
 				return_value=(3,),
 			),
 		):
@@ -181,7 +203,7 @@ class TestCalculate(unittest.TestCase):
 		# Syllable split at rawPos 3 + brailleStart 11 = 14.
 		self.assertEqual(
 			braille.handler.buffer._windowRowBufferOffsets[0],
-			braille._WindowRowPositions(0, 14, True),
+			braille.buffers._WindowRowPositions(0, 14, True),
 		)
 		self.assertTrue(braille.handler.buffer._windowRowBufferOffsets[0].showContinuationMark)
 
@@ -198,7 +220,7 @@ class TestCalculate(unittest.TestCase):
 			patch.object(braille.handler.buffer, "bufferPositionsToRawText", return_value="word"),
 			patch.object(braille.handler.buffer, "_getLanguageAtBufferPos", return_value="en_US"),
 			patch(
-				"braille.textUtils.hyphenation.getHyphenPositions",
+				"braille.buffers.textUtils.hyphenation.getHyphenPositions",
 				return_value=(),
 			),
 		):
@@ -206,7 +228,7 @@ class TestCalculate(unittest.TestCase):
 		# End should be just after the last space in row 0 (index 15 -> end = 16).
 		self.assertEqual(
 			braille.handler.buffer._windowRowBufferOffsets[0],
-			braille._WindowRowPositions(0, 16, False),
+			braille.buffers._WindowRowPositions(0, 16, False),
 		)
 		self.assertFalse(braille.handler.buffer._windowRowBufferOffsets[0].showContinuationMark)
 
@@ -223,7 +245,7 @@ class TestCalculate(unittest.TestCase):
 			patch.object(braille.handler.buffer, "_getLanguageAtBufferPos", return_value="en_US"),
 			# Position that maps past the display edge.
 			patch(
-				"braille.textUtils.hyphenation.getHyphenPositions",
+				"braille.buffers.textUtils.hyphenation.getHyphenPositions",
 				return_value=(22,),
 			),
 		):
@@ -231,7 +253,7 @@ class TestCalculate(unittest.TestCase):
 		# Falls back to word boundary at position 16.
 		self.assertEqual(
 			braille.handler.buffer._windowRowBufferOffsets[0],
-			braille._WindowRowPositions(0, 16, False),
+			braille.buffers._WindowRowPositions(0, 16, False),
 		)
 		self.assertFalse(braille.handler.buffer._windowRowBufferOffsets[0].showContinuationMark)
 
@@ -247,13 +269,13 @@ class TestCalculate(unittest.TestCase):
 			patch.object(braille.handler.buffer, "bufferPositionsToRawText", return_value="word"),
 			patch.object(braille.handler.buffer, "_getLanguageAtBufferPos", return_value="zz_ZZ"),
 			patch(
-				"braille.textUtils.hyphenation.getHyphenPositions",
+				"braille.buffers.textUtils.hyphenation.getHyphenPositions",
 				return_value=(),
 			),
 		):
 			braille.handler.buffer._calculateWindowRowBufferOffsets(0)
 		self.assertEqual(
 			braille.handler.buffer._windowRowBufferOffsets[0],
-			braille._WindowRowPositions(0, 16, False),
+			braille.buffers._WindowRowPositions(0, 16, False),
 		)
 		self.assertFalse(braille.handler.buffer._windowRowBufferOffsets[0].showContinuationMark)

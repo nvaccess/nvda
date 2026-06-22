@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="ca">
-  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/bea11d6c4fe2251c995e19e4a8ed66d181fbc5ad/user_docs/en/changes.md">
+  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/c5c6f909ecaeb1d4e671a52b5b3889e9ff71ec76/user_docs/en/changes.md">
     <skeleton>
 # $(ID:4bf3ec03-2d43-474a-aef0-92b334e594ed)
 
@@ -25,15 +25,13 @@ $(ID:bf820cf5-dfee-47f3-8918-1a00c6b7a664)
 
 $(ID:b4192a13-6451-4fd3-897f-c2a631effad7)
 
-### $(ID:c3b29ad4-4a8a-4d76-bbf6-19df3cb19546)
-
 ### $(ID:216e2064-a429-43a9-865a-29fc1edd47a9)
 
 * $(ID:350ee155-48c9-48f1-86e0-71eddbc791a2)
   * $(ID:1e43d31f-e489-449d-986f-96b35371371d)
   * $(ID:8391cab4-d1f8-4b00-90e3-0fa2a7ce982b)
   * $(ID:9ed6f120-3ab5-4ec3-a73a-55865cda0c91)
-  * $(ID:52025f05-a25e-4167-9c58-59cef825fd82)
+  * $(ID:5a4038d3-8f8a-46c3-81df-349f045f1d9b)
   * $(ID:fc145b84-b9f3-4ad4-9124-70e72a974340)
   * $(ID:778b1d44-596d-4c1d-8de1-905c79585155)
 * $(ID:e50f1514-cb8d-4c1d-accd-d72930cf1a86)
@@ -83,6 +81,7 @@ $(ID:4d885930-d362-4c6f-95dd-46da2fe9e79a)
 * $(ID:03536506-2e15-40c4-8587-7ac6b6103f28)
 $(ID:222fa698-e35a-42c9-94ec-cbccd32b3ca3)
 $(ID:90d9f201-8218-4885-afdf-e08b3a9cbcda)
+* $(ID:f691c21f-9b10-496a-b42c-c24984e3d703)
 
 ### $(ID:6e83ec90-ee84-4be0-819c-f475fa970a66)
 
@@ -96,6 +95,7 @@ $(ID:90d9f201-8218-4885-afdf-e08b3a9cbcda)
 * $(ID:c507f011-b58b-444a-a3d0-93b922b63bd2)
 * $(ID:46e2d6dc-1335-4678-ad59-f44cd323de0f)
 * $(ID:9ec14e36-02f1-44f0-ad8c-366cfcf7f7de)
+* $(ID:88c5328e-b1ba-485f-842a-019ed8d38696)
 * $(ID:46f5b2cc-76cb-460a-a744-969f63d29832)
 * $(ID:6bbd3536-a844-4718-81bf-693a96b63a62)
 * $(ID:e0054285-9543-47b4-b53e-60ee91375652)
@@ -174,7 +174,7 @@ $(ID:eb5096c1-7bff-45c7-a899-e66f7e5df8fd)
 * $(ID:c6d8d68d-f9d5-4604-9e67-5258e620e7ad)
 
 &lt;!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. --&gt;
-
+&lt;!-- markdownlint-disable --&gt;
 
 ## $(ID:2e9d82f2-0de8-4bed-a883-13977785e1c4)
 
@@ -6138,6 +6138,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 * $(ID:7301481f-3a7d-4e19-8be9-9af3ee485e99)
 * $(ID:5023a908-ff44-4868-a4a9-69c63c596ad2)
 * $(ID:10f9fec7-2a2c-412a-84af-5d9206d16c14)
+
 </skeleton>
     <unit id="4bf3ec03-2d43-474a-aef0-92b334e594ed">
       <notes>
@@ -6267,19 +6268,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>Quan es restableix NVDA als valors per defecte de fàbrica, ara hi ha disponible un botó Desfer per restaurar la configuració anterior.</target>
       </segment>
     </unit>
-    <unit id="c3b29ad4-4a8a-4d76-bbf6-19df3cb19546">
-      <notes>
-        <note appliesTo="source">line: 25</note>
-        <note appliesTo="source">prefix: ### </note>
-      </notes>
-      <segment state="final">
-        <source>Important notes</source>
-        <target>Notes importants</target>
-      </segment>
-    </unit>
     <unit id="216e2064-a429-43a9-865a-29fc1edd47a9">
       <notes>
-        <note appliesTo="source">line: 27</note>
+        <note appliesTo="source">line: 25</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
       <segment state="final">
@@ -6289,7 +6280,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="350ee155-48c9-48f1-86e0-71eddbc791a2">
       <notes>
-        <note appliesTo="source">line: 29</note>
+        <note appliesTo="source">line: 27</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6299,7 +6290,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="1e43d31f-e489-449d-986f-96b35371371d">
       <notes>
-        <note appliesTo="source">line: 30</note>
+        <note appliesTo="source">line: 28</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6309,7 +6300,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="8391cab4-d1f8-4b00-90e3-0fa2a7ce982b">
       <notes>
-        <note appliesTo="source">line: 31</note>
+        <note appliesTo="source">line: 29</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6319,7 +6310,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="9ed6f120-3ab5-4ec3-a73a-55865cda0c91">
       <notes>
-        <note appliesTo="source">line: 32</note>
+        <note appliesTo="source">line: 30</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6327,19 +6318,19 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <target>Els filtres de color poden ajudar usuaris amb discapacitat visual o sensibilitat a la llum invertint o desaturant els colors de la pantalla.</target>
       </segment>
     </unit>
-    <unit id="52025f05-a25e-4167-9c58-59cef825fd82">
+    <unit id="5a4038d3-8f8a-46c3-81df-349f045f1d9b">
       <notes>
-        <note appliesTo="source">line: 33</note>
+        <note appliesTo="source">line: 31</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
-        <source>A spotlight mode is available for presentations or focused reading tasks.</source>
-        <target>Hi ha un mode spotlight disponible per a presentacions o tasques de lectura focalitzada.</target>
+        <source>A command allows temporarily showing an overview of the entire screen</source>
+        <target>Una ordre permet mostrar temporalment una visió general de tota la pantalla</target>
       </segment>
     </unit>
     <unit id="fc145b84-b9f3-4ad4-9124-70e72a974340">
       <notes>
-        <note appliesTo="source">line: 34</note>
+        <note appliesTo="source">line: 32</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6349,7 +6340,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="778b1d44-596d-4c1d-8de1-905c79585155">
       <notes>
-        <note appliesTo="source">line: 35</note>
+        <note appliesTo="source">line: 33</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6359,7 +6350,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="e50f1514-cb8d-4c1d-accd-d72930cf1a86">
       <notes>
-        <note appliesTo="source">line: 36</note>
+        <note appliesTo="source">line: 34</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6369,7 +6360,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="dff67b7d-d184-4424-9fc1-9552cb8b0a36">
       <notes>
-        <note appliesTo="source">line: 37</note>
+        <note appliesTo="source">line: 35</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6379,7 +6370,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="b6eb69bf-f728-4246-8afe-ea2b0fcb356c">
       <notes>
-        <note appliesTo="source">line: 38</note>
+        <note appliesTo="source">line: 36</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6389,7 +6380,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="2aa5a8e0-0968-4184-913c-32a66dc1f359">
       <notes>
-        <note appliesTo="source">line: 39</note>
+        <note appliesTo="source">line: 37</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6399,7 +6390,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="4a562b42-1805-4e96-aa57-0f49015c6673">
       <notes>
-        <note appliesTo="source">line: 40</note>
+        <note appliesTo="source">line: 38</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6409,7 +6400,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="944f7d81-fb89-4a22-a871-6204382def8a">
       <notes>
-        <note appliesTo="source">line: 41</note>
+        <note appliesTo="source">line: 39</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6419,7 +6410,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="825ffef2-2b8f-4c97-ad19-02dd035c9e9c">
       <notes>
-        <note appliesTo="source">line: 42</note>
+        <note appliesTo="source">line: 40</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
       <segment state="final">
@@ -6429,7 +6420,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="cf762b7f-3620-4f83-94a4-d535e955368e">
       <notes>
-        <note appliesTo="source">line: 43</note>
+        <note appliesTo="source">line: 41</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6439,7 +6430,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="b2334a9f-e1da-4a13-85bb-e4e346e3c60a">
       <notes>
-        <note appliesTo="source">line: 44</note>
+        <note appliesTo="source">line: 42</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6449,7 +6440,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="7a1bdd4a-366e-4fdc-bd04-a98cb32ca78f">
       <notes>
-        <note appliesTo="source">line: 45</note>
+        <note appliesTo="source">line: 43</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6459,7 +6450,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="99ca394c-1c1c-45c2-8372-ab8cc41ddfcf">
       <notes>
-        <note appliesTo="source">line: 46</note>
+        <note appliesTo="source">line: 44</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
       <segment state="final">
@@ -6469,7 +6460,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="2193361d-5c51-4a9b-b0a6-d7c2873e8ca3">
       <notes>
-        <note appliesTo="source">line: 47</note>
+        <note appliesTo="source">line: 45</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
       <segment state="final">
@@ -6479,7 +6470,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="ef09a520-ff4b-4241-b1d5-c1377f10c3dd">
       <notes>
-        <note appliesTo="source">line: 48</note>
+        <note appliesTo="source">line: 46</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6489,7 +6480,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="c9e2fcc3-9d71-4deb-bb65-de6f7848d9b9">
       <notes>
-        <note appliesTo="source">line: 49</note>
+        <note appliesTo="source">line: 47</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6499,7 +6490,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="10f06492-2753-43bd-8b7d-4f5f7c009c6b">
       <notes>
-        <note appliesTo="source">line: 50</note>
+        <note appliesTo="source">line: 48</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
       <segment state="final">
@@ -6509,7 +6500,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="34fc3368-ce55-4dc6-bfae-9ad747a61da2">
       <notes>
-        <note appliesTo="source">line: 51</note>
+        <note appliesTo="source">line: 49</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
       <segment state="final">
@@ -6519,7 +6510,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="78b553d2-c7ac-4977-a274-6b74f92e1a0a">
       <notes>
-        <note appliesTo="source">line: 52</note>
+        <note appliesTo="source">line: 50</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
       <segment state="final">
@@ -6529,7 +6520,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="92144327-75bc-492f-af8b-4b004616ead1">
       <notes>
-        <note appliesTo="source">line: 53</note>
+        <note appliesTo="source">line: 51</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6539,7 +6530,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="b9f62be6-6a50-4bbe-89d8-709e44c4fc96">
       <notes>
-        <note appliesTo="source">line: 54</note>
+        <note appliesTo="source">line: 52</note>
       </notes>
       <segment state="final">
         <source>  Consult the speech dictionaries section in the User Guide for more details. (#19506, @LeonarddeR)</source>
@@ -6548,7 +6539,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="b0846491-184b-44cd-b1e9-b29bb56e26c2">
       <notes>
-        <note appliesTo="source">line: 55</note>
+        <note appliesTo="source">line: 53</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6558,7 +6549,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="7c2b4b1b-2ee3-4262-abdd-4b10b927499a">
       <notes>
-        <note appliesTo="source">line: 56</note>
+        <note appliesTo="source">line: 54</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6568,7 +6559,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="80862cf4-23ab-4f1b-8c31-4db84ba7c098">
       <notes>
-        <note appliesTo="source">line: 57</note>
+        <note appliesTo="source">line: 55</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6578,7 +6569,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="6371f617-9fcf-49d8-8e8b-69c26cdeb382">
       <notes>
-        <note appliesTo="source">line: 58</note>
+        <note appliesTo="source">line: 56</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6588,7 +6579,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="aff4906d-1bb1-4b50-bda1-deb83b4aaefa">
       <notes>
-        <note appliesTo="source">line: 59</note>
+        <note appliesTo="source">line: 57</note>
       </notes>
       <segment state="final">
         <source>The triple-press keyboard shortcut (`NVDA+control+r`) is not affected, as it is intended for recovery scenarios. (#19575, @bramd)</source>
@@ -6597,7 +6588,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="bf5ab808-9e0c-4bde-87d7-8457bb7f4fe5">
       <notes>
-        <note appliesTo="source">line: 60</note>
+        <note appliesTo="source">line: 58</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6607,7 +6598,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="925fc6a6-5914-487e-92bf-9171dd9e0554">
       <notes>
-        <note appliesTo="source">line: 62</note>
+        <note appliesTo="source">line: 60</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
       <segment state="final">
@@ -6617,7 +6608,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="60e2fb6f-aae0-4692-aec2-07680ec05661">
       <notes>
-        <note appliesTo="source">line: 64</note>
+        <note appliesTo="source">line: 62</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6627,7 +6618,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="2671c513-c555-4c84-95b0-667eab9e0725">
       <notes>
-        <note appliesTo="source">line: 65</note>
+        <note appliesTo="source">line: 63</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6637,7 +6628,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="5c1844e7-813c-4a67-b775-9101ee3d0432">
       <notes>
-        <note appliesTo="source">line: 66</note>
+        <note appliesTo="source">line: 64</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6647,7 +6638,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="5c57913b-088a-4854-b1ec-c43d1e0607ad">
       <notes>
-        <note appliesTo="source">line: 67</note>
+        <note appliesTo="source">line: 65</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6657,7 +6648,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="f85b3c6e-1892-447a-ad2c-d1d8098fbc29">
       <notes>
-        <note appliesTo="source">line: 68</note>
+        <note appliesTo="source">line: 66</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6667,7 +6658,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="1189f042-6dbc-4b25-848e-5aea35e9e63d">
       <notes>
-        <note appliesTo="source">line: 69</note>
+        <note appliesTo="source">line: 67</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6677,7 +6668,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="c50ef6bd-7db9-44c6-b597-c285e49a9468">
       <notes>
-        <note appliesTo="source">line: 70</note>
+        <note appliesTo="source">line: 68</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6687,7 +6678,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="d735ec3c-106c-4fe3-b887-596a343dd75b">
       <notes>
-        <note appliesTo="source">line: 71</note>
+        <note appliesTo="source">line: 69</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6697,7 +6688,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="d1374a64-998f-462c-a249-a09bbe533a22">
       <notes>
-        <note appliesTo="source">line: 72</note>
+        <note appliesTo="source">line: 70</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6707,7 +6698,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="54b67317-c030-46bb-9434-66f4d4e05429">
       <notes>
-        <note appliesTo="source">line: 73</note>
+        <note appliesTo="source">line: 71</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6717,7 +6708,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="8a9dca45-39b9-48ba-b115-2064c793e5cd">
       <notes>
-        <note appliesTo="source">line: 74</note>
+        <note appliesTo="source">line: 72</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6727,7 +6718,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="c6e9db59-62ff-462d-b8ce-7fbaee3117d4">
       <notes>
-        <note appliesTo="source">line: 75</note>
+        <note appliesTo="source">line: 73</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6737,7 +6728,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="dc474811-5534-4c68-b430-57fde932f99a">
       <notes>
-        <note appliesTo="source">line: 76</note>
+        <note appliesTo="source">line: 74</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6747,7 +6738,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="4d885930-d362-4c6f-95dd-46da2fe9e79a">
       <notes>
-        <note appliesTo="source">line: 77</note>
+        <note appliesTo="source">line: 75</note>
       </notes>
       <segment state="final">
         <source>This is more noticeable for Windows releases which are enablement packages on top of an earlier release such as Windows 11 2025 Update based on Windows 11 2024 Update. (#19802, @josephsl)</source>
@@ -6756,7 +6747,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="d245edd3-10aa-42c6-bfc0-f07359de10e8">
       <notes>
-        <note appliesTo="source">line: 78</note>
+        <note appliesTo="source">line: 76</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6766,7 +6757,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="74af677f-13ad-435e-a49a-d4dc3525635b">
       <notes>
-        <note appliesTo="source">line: 79</note>
+        <note appliesTo="source">line: 77</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6776,7 +6767,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="03536506-2e15-40c4-8587-7ac6b6103f28">
       <notes>
-        <note appliesTo="source">line: 80</note>
+        <note appliesTo="source">line: 78</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6786,7 +6777,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="222fa698-e35a-42c9-94ec-cbccd32b3ca3">
       <notes>
-        <note appliesTo="source">line: 81</note>
+        <note appliesTo="source">line: 79</note>
       </notes>
       <segment state="final">
         <source>This provides Unicode-aware `\w` and `\b` and additional regex features.</source>
@@ -6795,16 +6786,26 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="90d9f201-8218-4885-afdf-e08b3a9cbcda">
       <notes>
-        <note appliesTo="source">line: 82</note>
+        <note appliesTo="source">line: 80</note>
       </notes>
       <segment state="final">
         <source>The setting is disabled by default. (#20013, @LeonarddeR)</source>
         <target>La configuració està desactivada per defecte. (#20013, @LeonarddeR)</target>
       </segment>
     </unit>
+    <unit id="f691c21f-9b10-496a-b42c-c24984e3d703">
+      <notes>
+        <note appliesTo="source">line: 81</note>
+        <note appliesTo="source">prefix: * </note>
+      </notes>
+      <segment state="initial">
+        <source>The "Type" radio buttons in the "Add Dictionary Entry" dialog are now arranged vertically rather than horizontally. (#19657)</source>
+        <target>The "Type" radio buttons in the "Add Dictionary Entry" dialog are now arranged vertically rather than horizontally. (#19657)</target>
+      </segment>
+    </unit>
     <unit id="6e83ec90-ee84-4be0-819c-f475fa970a66">
       <notes>
-        <note appliesTo="source">line: 84</note>
+        <note appliesTo="source">line: 83</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
       <segment state="final">
@@ -6814,7 +6815,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="3d8e7f65-d898-4c1f-aa1b-1ee897dd85f2">
       <notes>
-        <note appliesTo="source">line: 86</note>
+        <note appliesTo="source">line: 85</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6824,7 +6825,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="31dff8e6-8c4f-4d3c-9500-fd0be6caf739">
       <notes>
-        <note appliesTo="source">line: 87</note>
+        <note appliesTo="source">line: 86</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6834,7 +6835,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="b6c22b8b-431a-48db-a8b6-52d09261614a">
       <notes>
-        <note appliesTo="source">line: 88</note>
+        <note appliesTo="source">line: 87</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6844,7 +6845,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="466642ed-1b63-488e-99b6-0441afae5c59">
       <notes>
-        <note appliesTo="source">line: 89</note>
+        <note appliesTo="source">line: 88</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="final">
@@ -6854,7 +6855,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="3f1a6c91-6128-45cf-aa29-400ca3d1ace5">
       <notes>
-        <note appliesTo="source">line: 90</note>
+        <note appliesTo="source">line: 89</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6864,7 +6865,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="9146d041-7a88-4ddd-86a4-75901098f944">
       <notes>
-        <note appliesTo="source">line: 91</note>
+        <note appliesTo="source">line: 90</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6874,7 +6875,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="3f080fd6-4c5f-4e13-abf4-66e2ad24386f">
       <notes>
-        <note appliesTo="source">line: 92</note>
+        <note appliesTo="source">line: 91</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6884,7 +6885,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="c507f011-b58b-444a-a3d0-93b922b63bd2">
       <notes>
-        <note appliesTo="source">line: 93</note>
+        <note appliesTo="source">line: 92</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6894,7 +6895,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="46e2d6dc-1335-4678-ad59-f44cd323de0f">
       <notes>
-        <note appliesTo="source">line: 94</note>
+        <note appliesTo="source">line: 93</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
@@ -6904,12 +6905,22 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="9ec14e36-02f1-44f0-ad8c-366cfcf7f7de">
       <notes>
-        <note appliesTo="source">line: 95</note>
+        <note appliesTo="source">line: 94</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="final">
         <source>Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)</source>
         <target>S'ha corregit l'ús excessiu de recursos i el parpelleig de ressaltats quan s'utilitza el Ressaltat Visual. (#17434, @hwf1324)</target>
+      </segment>
+    </unit>
+    <unit id="88c5328e-b1ba-485f-842a-019ed8d38696">
+      <notes>
+        <note appliesTo="source">line: 95</note>
+        <note appliesTo="source">prefix: * </note>
+      </notes>
+      <segment state="final">
+        <source>In Excel, when visual highlight is enabled, the focused cell is now correctly highlighted. (#19641, @CyrilleB79)</source>
+        <target>A Excel, quan el ressaltat visual està activat, la cel·la enfocada ara es ressalta correctament. (#19641, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="46f5b2cc-76cb-460a-a744-969f63d29832">
@@ -7076,9 +7087,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 115</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Python to 3.13.13. (#20231, @dpy013)</source>
-        <target>Python to 3.13.13. (#20231, @dpy013)</target>
+        <target>Python a 3.13.13. (#20231, @dpy013)</target>
       </segment>
     </unit>
     <unit id="4f3c6ec3-30df-4ec6-9934-175b65a2be68">
@@ -7313,9 +7324,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 139</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Fixed a race condition in `nvdaController_speakSsml` with `asynchronous=False` where a `speechCanceled` signal fired between `queueFunction` returning and the synth thread executing the `CallbackCommand` would not be caught, causing the call to block indefinitely. (#20220, @LeonarddeR)</source>
-        <target>Fixed a race condition in `nvdaController_speakSsml` with `asynchronous=False` where a `speechCanceled` signal fired between `queueFunction` returning and the synth thread executing the `CallbackCommand` would not be caught, causing the call to block indefinitely. (#20220, @LeonarddeR)</target>
+        <target>S'ha corregit una condició de cursa a 'nvdaController_speakSsml' amb 'asynchronous=False' on un senyal de 'speechCanceled' disparat entre el retorn de 'queueFunction' i el fil de sintetitzador executant el 'CallbackCommand' no era detectat, cosa que feia que la trucada es bloquegés indefinidament. (#20220, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="0b560218-2ba2-4013-9e8e-67f60f3979f3">
@@ -48117,7 +48128,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Reporting and navigation of composition strings; and</source>
-        <target>&lt;target/&gt;</target>
+        <target>Anunci i navegació de cadenes de composició; i</target>
       </segment>
     </unit>
     <unit id="95b47787-9fcf-4e7d-80ef-1cc0b8e3ded1">
@@ -48127,7 +48138,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Reporting of reading strings.</source>
-        <target>Informes de cadenes de lectura.</target>
+        <target>Anunci de cadenes de lectura.</target>
       </segment>
     </unit>
     <unit id="a9c0f710-e8f3-4c15-8fd0-e47ebbaafc4d">
@@ -48137,7 +48148,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The presence of underline and strikethrough is now reported in Adobe Reader documents. (#2410)</source>
-        <target>&lt;target/&gt;</target>
+        <target>La presència de subratllat i ratllat ara es reporta en documents d'Adobe Reader. (#2410)</target>
       </segment>
     </unit>
     <unit id="83eebd7d-956b-4985-a698-7f3a65c44611">
@@ -48147,7 +48158,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When the Windows Sticky Keys function is enabled, the NVDA modifier key will now behave like other modifier keys. This allows you to use the NVDA modifier key without needing to hold it down while you press other keys. (#230)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan la funció de tecles fixes de Windows està activada, la tecla modificadora NVDA ara es comportarà com altres tecles modificadores. Això et permet utilitzar la tecla modificadora NVDA sense haver de mantenir-la premuda mentre prems altres tecles. (#230)</target>
       </segment>
     </unit>
     <unit id="16d76367-ea65-46c3-b9f7-370628c71bb3">
@@ -48157,7 +48168,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Automatic reporting of column and row headers is now supported in Microsoft Excel. Press NVDA+shift+c to set the row containing column headers and NVDA+shift+r to set the column containing row headers. Press either command twice in quick succession to clear the setting. (#1519)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Ara es suporta l'anunci automàtic d'encapçalaments de columnes i files a Microsoft Excel. Prem NVDA+shift+c per establir la fila que conté les capçaleres de columna i NVDA+shift+r per establir la columna que conté les capçaleres de files. Prem qualsevol de les dues ordres seguides per esborrar la configuració. (#1519)</target>
       </segment>
     </unit>
     <unit id="c7d71420-3e2d-4129-8225-f60bd68bfe1f">
@@ -48167,7 +48178,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for HIMS Braille Sense, Braille EDGE and SyncBraille braille displays. (#1266, #1267)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Suport per a línies braille HIMS Braille Sense, Braille EDGE i SyncBraille. (#1266, #1267)</target>
       </segment>
     </unit>
     <unit id="2bb2d4e8-26cd-4d0e-ac78-62c2c5794fad">
@@ -48177,7 +48188,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When Windows 8 Toast notifications appear, NVDA will report them if reporting of help balloons is enabled. (#2143)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan apareixen notificacions de Toast de Windows 8, NVDA les reportarà si està activat l'informe de globus d'ajuda. (#2143)</target>
       </segment>
     </unit>
     <unit id="1ef53c61-1c44-4fb1-bb7b-31ee42668955">
@@ -48197,7 +48208,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Reading text directly under your finger while moving it around</source>
-        <target>&lt;target/&gt;</target>
+        <target>Llegir el text directament sota el dit mentre el mous</target>
       </segment>
     </unit>
     <unit id="9c8351f5-2e85-4df0-a1c8-21d7d74e4c31">
@@ -48207,7 +48218,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Many gestures for performing object navigation, text review, and other NVDA commands.</source>
-        <target>Molts gestos per realitzar navegació d'objectes, revisió de text i altres ordres NVDA.</target>
+        <target>Molts gestos per realitzar navegació d'objectes, revisió de text i altres ordres de NVDA.</target>
       </segment>
     </unit>
     <unit id="9195d2ea-9b5c-4c15-84e5-c6f337a128b6">
@@ -48217,7 +48228,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for VIP Mud. (#1728)</source>
-        <target>Suport per a noves línies braille:</target>
+        <target>Suport per a VIP Mud. (#1728)</target>
       </segment>
     </unit>
     <unit id="d7b3d090-37a3-4ef4-8126-161a2fe31fb2">
@@ -48227,7 +48238,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Adobe Reader, if a table has a summary, it is now presented. (#2465)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Adobe Reader, si una taula té un resum, ara es presenta. (#2465)</target>
       </segment>
     </unit>
     <unit id="05a27952-1d72-4350-a4b7-585d12404f6e">
@@ -48237,7 +48248,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Adobe Reader, table row and column headers can now be reported. (#2193, #2527, #2528)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Adobe Reader, ara es poden anunciar les capçaleres de files i columnes de taula. (#2193, #2527, #2528)</target>
       </segment>
     </unit>
     <unit id="643a1ecd-7a16-4fea-8829-59c4c0383eeb">
@@ -48257,7 +48268,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA can now read auto complete suggestions when entering email addresses in Microsoft Outlook 2007. (#689)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA ara pot llegir suggeriments d'autocompletat quan introdueixes adreces de correu electrònic a Microsoft Outlook 2007. (#689)</target>
       </segment>
     </unit>
     <unit id="16c63e7a-12ff-482a-9b9d-b269861ea79a">
@@ -48267,7 +48278,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>New eSpeak voice variants: Gene, Gene2. (#2512)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Noves variants de veu d'eSpeak: Gene, Gene2. (#2512)</target>
       </segment>
     </unit>
     <unit id="c72f8ddd-04cc-4256-962b-7df7228ced71">
@@ -48277,7 +48288,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Adobe Reader, page numbers can now be reported. (#2534)</source>
-        <target>&lt;target/&gt;</target>
+        <target>A Adobe Reader, ara es poden anunciar els números de pàgina. (#2534)</target>
       </segment>
     </unit>
     <unit id="684a91e8-aa56-4345-bd35-84f15e2bed6d">
@@ -48287,7 +48298,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In Reader XI, page labels are reported where present, reflecting changes to page numbering in different sections, etc. In earlier versions, this is not possible and only sequential page numbers are reported.</source>
-        <target>En Reader XI, les etiquetes de pàgina es reporten quan hi ha, reflectint canvis en la numeració de les pàgines en diferents seccions, etc. En versions anteriors, això no és possible i només es reporten números de pàgina seqüencials.</target>
+        <target>En Reader XI, les etiquetes de pàgina s'anuncien quan hi ha, reflectint canvis en la numeració de les pàgines en diferents seccions, etc. En versions anteriors, això no és possible i només s'anuncien números de pàgina seqüencials.</target>
       </segment>
     </unit>
     <unit id="d2f3706b-c494-4289-8d78-2d1d95d84c5a">
@@ -48297,7 +48308,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>It is now possible to reset NVDA's configuration to factory defaults either by pressing NVDA+control+r three times quickly or by choosing Reset to Factory Defaults from the NVDA menu. (#2086)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Ara és possible restablir la configuració de NVDA als valors per defecte de fàbrica prement NVDA+control+r tres vegades ràpidament o triant Restablir als valors per defecte de fàbrica des del menú de NVDA. (#2086)</target>
       </segment>
     </unit>
     <unit id="9c50ea8d-a8b0-4fbd-96fd-c197b0d2c6bd">
@@ -48307,7 +48318,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for the Seika Version 3, 4 and 5 and Seika80 braille displays from Nippon Telesoft. (#2452)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Suport per a les versions Seika 3, 4 i 5 i línies braille Seika80 de Nippon Telesoft. (#2452)</target>
       </segment>
     </unit>
     <unit id="b262bccd-ba13-4c64-b360-c022b7a7ec52">
@@ -48317,7 +48328,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The first and last top routing buttons on Freedom Scientific PAC Mate and Focus Braille displays can now be used to scroll  backward and forward. (#2556)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Els primers i últims botons de rutament superiors de les línies braille de Freedom Scientific PAC Mate i Focus ara es poden utilitzar per desplaçar-se cap enrrere i endavant. (#2556)</target>
       </segment>
     </unit>
     <unit id="507bf96c-4348-4b42-9150-8787ac063ca8">
@@ -48327,7 +48338,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Many more features are supported on Freedom Scientific Focus Braille displays such as advance bars, rocker bars and certain dot combinations for common actions. (#2516)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Moltes més funcions són compatibles amb les línies Braille de Freedom Scientific Focus, com ara barres de desplaçament, barres oscil·lants i certes combinacions de punts per a accions comunes. (#2516)</target>
       </segment>
     </unit>
     <unit id="e818ad7c-e881-4a7e-a0e4-e3ba062531c9">
@@ -48337,7 +48348,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>In applications using IAccessible2 such as Mozilla applications, table row and column headers can now be reported outside of browse mode. (#926)</source>
-        <target>&lt;target/&gt;</target>
+        <target>En aplicacions que utilitzen IAccessible2 com les aplicacions de Mozilla, ara es poden reportar les capçaleres de files i columnes de taula fora del mode de navegació. (#926)</target>
       </segment>
     </unit>
     <unit id="34bd9571-e598-4b94-baea-d92dfa38e554">
@@ -48347,7 +48358,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Preliminary support for the document control in Microsoft Word 2013. (#2543)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Suport preliminar per al control de documents a Microsoft Word 2013. (#2543)</target>
       </segment>
     </unit>
     <unit id="9711ecbd-6f70-48ba-a1e5-726014646459">
@@ -48357,7 +48368,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Text alignment can now be reported in applications using IAccessible2 such as Mozilla applications. (#2612)</source>
-        <target>&lt;target/&gt;</target>
+        <target>L'alineació de text ara es pot anunciar en aplicacions que utilitzen IAccessible2, com ara les aplicacions de Mozilla. (#2612)</target>
       </segment>
     </unit>
     <unit id="999ddd34-fec2-4879-974f-666ebd3d2ebc">
@@ -48367,7 +48378,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When a table row or standard Windows list-view control with multiple columns is focused, you can now use the table navigation commands to access individual cells. (#828)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Quan una fila de taula o un control estàndard de vista de llista de Windows amb múltiples columnes està enfocat, ara pots utilitzar les ordres de navegació de taula per accedir a cèl·lules individuals. (#828)</target>
       </segment>
     </unit>
     <unit id="c4e8302b-2e25-4df6-8e14-f38da1c6975c">
@@ -48377,7 +48388,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>New braille translation tables: Estonian grade 0, Portuguese 8 dot computer braille, Italian 6 dot computer braille. (#2319, #2662)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Noves taules de transcripció braille: estonià grau 0, portuguès de 8 punts en braille d'ordinador, italià de 6 punts en braille d'ordinador. (#2319, #2662)</target>
       </segment>
     </unit>
     <unit id="17e097b3-d4fa-42ff-8631-4e9f663e7c02">
@@ -48387,7 +48398,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>If NVDA is installed on the system, directly opening an NVDA add-on package (e.g. from Windows Explorer or after downloading in a web browser) will install it into NVDA. (#2306)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Si NVDA està instal·lat al sistema, al obrir directament un paquet de complement de NVDA (per exemple, des de l'Explorador de Windows o després de descarregar-lo en un navegador web) s'instal·larà a NVDA. (#2306)</target>
       </segment>
     </unit>
     <unit id="799e2a7a-8da9-414d-9635-7a79a617de5f">
@@ -48397,7 +48408,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Support for newer models of Papenmeier BRAILLEX braille displays. (#1265)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Suport per a models més nous de línies Braille Papenmeier BRAILLEX. (#1265)</target>
       </segment>
     </unit>
     <unit id="ce0b7e18-2b1e-4d77-8196-6998dd984a1e">
@@ -48407,7 +48418,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Position information (e.g. 1 of 4) is now reported for Windows Explorer list items on Windows 7 and above. This also includes any UIAutomation controls that support the itemIndex and itemCount custom properties. (#2643)</source>
-        <target>&lt;target/&gt;</target>
+        <target>La informació de posició (per exemple, 1 de 4) ara s'anuncia per als elements de llista de l'Explorador de Windows a Windows 7 i superiors. Això també inclou qualsevol control UIAutomation que doni suport a les propietats personalitzades itemIndex i itemCount. (#2643)</target>
       </segment>
     </unit>
     <unit id="4218ad6f-fe9c-4d9e-977a-4dee237d6709">

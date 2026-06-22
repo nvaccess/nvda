@@ -34,6 +34,7 @@ from .config import (
 	isTrueCentered,
 	setZoomLevel,
 	ZoomLevel,
+	_isDebug,
 )
 from .utils.focusManager import FocusManager
 
@@ -178,7 +179,7 @@ class Magnifier:
 			message = pgettext(
 				"magnifier",
 				# Translators: Message when trying to enable magnifier while screen curtain is active
-				"Cannot enable magnifier: screen curtain is active. Please disable screen curtain first.",
+				"Cannot enable magnifier. Please disable screen curtain first.",
 			)
 			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
 			return
@@ -242,7 +243,8 @@ class Magnifier:
 		(e.g., reinitializing the Magnification API).
 		The base implementation resets the error counter and restarts the timer.
 		"""
-		log.info("Attempting base magnifier recovery")
+		if _isDebug():
+			log.debug("Attempting base magnifier recovery")
 		self._consecutiveErrors = 0
 		self._startTimer(self._updateMagnifier)
 
@@ -267,7 +269,7 @@ class Magnifier:
 				pgettext(
 					"magnifier",
 					# Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
-					"Magnifier is active, disabling it before enabling screen curtain",
+					"Disabling magnifier",
 				),
 			)
 			self._stopMagnifier()
@@ -285,7 +287,7 @@ class Magnifier:
 				pgettext(
 					"magnifier",
 					# Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
-					"Magnifier was active before screen curtain, re-enabling it",
+					"Re-enabling magnifier",
 				),
 			)
 			self._startMagnifier()
@@ -397,7 +399,8 @@ class Magnifier:
 				self._timer.Stop()
 			self._timer = None
 		else:
-			log.debug("no timer to stop")
+			if _isDebug():
+				log.debug("no timer to stop")
 
 	def _getMagnifierParameters(self, coordinates: Coordinates) -> MagnifierParameters:
 		"""
