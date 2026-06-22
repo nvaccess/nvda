@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="de">
-  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/bea11d6c4fe2251c995e19e4a8ed66d181fbc5ad/user_docs/en/changes.md">
+  <file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/c5c6f909ecaeb1d4e671a52b5b3889e9ff71ec76/user_docs/en/changes.md">
     <skeleton>
 # $(ID:4bf3ec03-2d43-474a-aef0-92b334e594ed)
 
@@ -25,15 +25,13 @@ $(ID:bf820cf5-dfee-47f3-8918-1a00c6b7a664)
 
 $(ID:b4192a13-6451-4fd3-897f-c2a631effad7)
 
-### $(ID:c3b29ad4-4a8a-4d76-bbf6-19df3cb19546)
-
 ### $(ID:216e2064-a429-43a9-865a-29fc1edd47a9)
 
 * $(ID:350ee155-48c9-48f1-86e0-71eddbc791a2)
   * $(ID:1e43d31f-e489-449d-986f-96b35371371d)
   * $(ID:8391cab4-d1f8-4b00-90e3-0fa2a7ce982b)
   * $(ID:9ed6f120-3ab5-4ec3-a73a-55865cda0c91)
-  * $(ID:52025f05-a25e-4167-9c58-59cef825fd82)
+  * $(ID:5a4038d3-8f8a-46c3-81df-349f045f1d9b)
   * $(ID:fc145b84-b9f3-4ad4-9124-70e72a974340)
   * $(ID:778b1d44-596d-4c1d-8de1-905c79585155)
 * $(ID:e50f1514-cb8d-4c1d-accd-d72930cf1a86)
@@ -83,6 +81,7 @@ $(ID:4d885930-d362-4c6f-95dd-46da2fe9e79a)
 * $(ID:03536506-2e15-40c4-8587-7ac6b6103f28)
 $(ID:222fa698-e35a-42c9-94ec-cbccd32b3ca3)
 $(ID:90d9f201-8218-4885-afdf-e08b3a9cbcda)
+* $(ID:f691c21f-9b10-496a-b42c-c24984e3d703)
 
 ### $(ID:6e83ec90-ee84-4be0-819c-f475fa970a66)
 
@@ -96,6 +95,7 @@ $(ID:90d9f201-8218-4885-afdf-e08b3a9cbcda)
 * $(ID:c507f011-b58b-444a-a3d0-93b922b63bd2)
 * $(ID:46e2d6dc-1335-4678-ad59-f44cd323de0f)
 * $(ID:9ec14e36-02f1-44f0-ad8c-366cfcf7f7de)
+* $(ID:88c5328e-b1ba-485f-842a-019ed8d38696)
 * $(ID:46f5b2cc-76cb-460a-a744-969f63d29832)
 * $(ID:6bbd3536-a844-4718-81bf-693a96b63a62)
 * $(ID:e0054285-9543-47b4-b53e-60ee91375652)
@@ -174,7 +174,7 @@ $(ID:eb5096c1-7bff-45c7-a899-e66f7e5df8fd)
 * $(ID:c6d8d68d-f9d5-4604-9e67-5258e620e7ad)
 
 &lt;!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. --&gt;
-
+&lt;!-- markdownlint-disable --&gt;
 
 ## $(ID:2e9d82f2-0de8-4bed-a883-13977785e1c4)
 
@@ -6138,6 +6138,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 * $(ID:7301481f-3a7d-4e19-8be9-9af3ee485e99)
 * $(ID:5023a908-ff44-4868-a4a9-69c63c596ad2)
 * $(ID:10f9fec7-2a2c-412a-84af-5d9206d16c14)
+
 </skeleton>
     <unit id="4bf3ec03-2d43-474a-aef0-92b334e594ed">
       <notes>
@@ -6163,123 +6164,113 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       <notes>
         <note appliesTo="source">line: 6</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>This release includes a new built-in Magnifier feature, improvements to touch gestures and navigation, and expanded speech and braille capabilities.</source>
-        <target>This release includes a new built-in Magnifier feature, improvements to touch gestures and navigation, and expanded speech and braille capabilities.</target>
+        <target>Diese Version enthält eine neue integrierte Vergrößerung, Verbesserungen bei den Touch-Gesten und der Navigation sowie erweiterte Funktionen für Sprachausgaben und Braille-Unterstützung.</target>
       </segment>
     </unit>
     <unit id="63d28b49-1495-4de8-878f-f7c12fd4ed84">
       <notes>
         <note appliesTo="source">line: 8</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The Magnifier provides zoom and color filtering options to assist users with visual impairments.</source>
-        <target>The Magnifier provides zoom and color filtering options to assist users with visual impairments.</target>
+        <target>Die Vergrößerung bietet Zoom- und Farbfilteroptionen, um sehbehinderte Nutzer zu unterstützen.</target>
       </segment>
     </unit>
     <unit id="2239327d-841b-4cc3-a147-0a8763970496">
       <notes>
         <note appliesTo="source">line: 9</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The Magnifier currently only supports fullscreen mode, with docked modes planned in a future release.</source>
-        <target>The Magnifier currently only supports fullscreen mode, with docked modes planned in a future release.</target>
+        <target>Die Vergrößerung unterstützt derzeit nur den Vollbildmodus; angedockte Modi sind für zukünftige Versionen geplant.</target>
       </segment>
     </unit>
     <unit id="534b348a-7d50-4ab8-82d5-5110b7d3f7e5">
       <notes>
         <note appliesTo="source">line: 11</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Touch support has been significantly expanded with new pinch gestures and touch-based browse mode navigation for web content.</source>
-        <target>Touch support has been significantly expanded with new pinch gestures and touch-based browse mode navigation for web content.</target>
+        <target>Die Touch-Funktionen wurden durch neue Zwei-Finger-Gesten und eine Touch-basierte Navigation im Lesemodus für Web-Inhalte deutlich erweitert.</target>
       </segment>
     </unit>
     <unit id="70fa7fb9-f970-4fb6-b2c6-230b1936d48b">
       <notes>
         <note appliesTo="source">line: 12</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>You can now navigate between links, headings, form fields, and other elements using touch flicks.</source>
-        <target>You can now navigate between links, headings, form fields, and other elements using touch flicks.</target>
+        <target>Sie können nun mithilfe von Wisch-Gesten zwischen Links, Überschriften, Formularfeldern und anderen Elementen navigieren.</target>
       </segment>
     </unit>
     <unit id="e0c83db4-ad69-41c1-ada1-18041e5335e1">
       <notes>
         <note appliesTo="source">line: 14</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Speech features have been enhanced with support for custom speech dictionaries that can be provided by add-ons and new dictionary entry types for more granular control.</source>
-        <target>Speech features have been enhanced with support for custom speech dictionaries that can be provided by add-ons and new dictionary entry types for more granular control.</target>
+        <target>Die Sprachausgaben-Funktionen wurden um die Unterstützung benutzerdefinierter Sprachausgaben-Wörterbücher erweitert, die über NVDA-Erweiterungen bereitgestellt werden können, sowie um neue Arten von Wörterbucheinträgen für eine detailliertere Steuerung.</target>
       </segment>
     </unit>
     <unit id="08349e4f-f444-4952-8ee3-1faf968dbb04">
       <notes>
         <note appliesTo="source">line: 15</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>A new voice setting for OneCore voices was added to control pauses after punctuation.</source>
-        <target>A new voice setting for OneCore voices was added to control pauses after punctuation.</target>
+        <target>Es wurde eine neue Sprachausgaben-Einstellung für Windows OneCore-Stimmen hinzugefügt, um Pausen nach Satzzeichen zu steuern.</target>
       </segment>
     </unit>
     <unit id="4b57e390-23b1-4bb4-8de1-c956bfb1d96f">
       <notes>
         <note appliesTo="source">line: 16</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>A new command allows repeating the last spoken information, with the ability to display it in a browsable message.</source>
-        <target>A new command allows repeating the last spoken information, with the ability to display it in a browsable message.</target>
+        <target>Ein neuer Befehl ermöglicht die zuletzt mitgeteilte Information zu wiederholen, wobei diese in einem Fenster zum Nachlesen angezeigt werden kann.</target>
       </segment>
     </unit>
     <unit id="5b09b1d8-f98a-4bd5-ba1a-9228b79d9bad">
       <notes>
         <note appliesTo="source">line: 17</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The default gesture to repeat the last spoken information is `NVDA+x`, which can be changed in the Input Gestures dialog.</source>
-        <target>The default gesture to repeat the last spoken information is `NVDA+x`, which can be changed in the Input Gestures dialog.</target>
+        <target>Die Standard-Tastenkombination zum Wiederholen der zuletzt mitgeteilten Information lautet `NVDA+X` und kann im Dialogfeld für die Tastenbefehle geändert werden.</target>
       </segment>
     </unit>
     <unit id="286da168-5231-479b-8ff2-c6e251ee7077">
       <notes>
         <note appliesTo="source">line: 19</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The braille display can now automatically scroll and DotPad devices support multi-button combinations.</source>
-        <target>The braille display can now automatically scroll and DotPad devices support multi-button combinations.</target>
+        <target>Braillezeilen unterstützen nun automatisches Weiterlesen und DotPad-Geräte das Drücken gleichzeitiger Schalter.</target>
       </segment>
     </unit>
     <unit id="bf820cf5-dfee-47f3-8918-1a00c6b7a664">
       <notes>
         <note appliesTo="source">line: 21</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Liblouis has been updated with new Italian and Estonian braille tables.</source>
-        <target>Liblouis has been updated with new Italian and Estonian braille tables.</target>
+        <target>Liblouis wurde aktualisiert mit neuen Italienischen und Estnischen Braille-Tabellen.</target>
       </segment>
     </unit>
     <unit id="b4192a13-6451-4fd3-897f-c2a631effad7">
       <notes>
         <note appliesTo="source">line: 23</note>
       </notes>
-      <segment state="initial">
-        <source>When resetting NVDA to factory defaults, an Undo button is now available to restore the previous configuration.</source>
-        <target>When resetting NVDA to factory defaults, an Undo button is now available to restore the previous configuration.</target>
-      </segment>
-    </unit>
-    <unit id="c3b29ad4-4a8a-4d76-bbf6-19df3cb19546">
-      <notes>
-        <note appliesTo="source">line: 25</note>
-        <note appliesTo="source">prefix: ### </note>
-      </notes>
       <segment state="translated">
-        <source>Important notes</source>
-        <target>Wichtige Hinweise</target>
+        <source>When resetting NVDA to factory defaults, an Undo button is now available to restore the previous configuration.</source>
+        <target>Wenn Sie NVDA auf die Standard-Einstellungen zurücksetzen, steht Ihnen nun eine Schaltfläche "Rückgängig" zur Verfügung, um die vorherige Konfiguration wiederherzustellen.</target>
       </segment>
     </unit>
     <unit id="216e2064-a429-43a9-865a-29fc1edd47a9">
       <notes>
-        <note appliesTo="source">line: 27</note>
+        <note appliesTo="source">line: 25</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
       <segment state="translated">
@@ -6289,325 +6280,325 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="350ee155-48c9-48f1-86e0-71eddbc791a2">
       <notes>
-        <note appliesTo="source">line: 29</note>
+        <note appliesTo="source">line: 27</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Magnifier:</source>
-        <target>Magnifier:</target>
+        <target>Vergrößerung:</target>
       </segment>
     </unit>
     <unit id="1e43d31f-e489-449d-986f-96b35371371d">
       <notes>
-        <note appliesTo="source">line: 30</note>
+        <note appliesTo="source">line: 28</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA now includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen. (#19228, @Boumtchack)</source>
-        <target>NVDA now includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen. (#19228, @Boumtchack)</target>
+        <target>NVDA verfügt nun über eine integrierte Vergrößerung, mit der Sie Teile des Bildschirms vergrößert darstellen können. (#19228, @Boumtchack)</target>
       </segment>
     </unit>
     <unit id="8391cab4-d1f8-4b00-90e3-0fa2a7ce982b">
+      <notes>
+        <note appliesTo="source">line: 29</note>
+        <note appliesTo="source">prefix:   * </note>
+      </notes>
+      <segment state="translated">
+        <source>The magnifier supports various zoom levels, color filters (normal, grayscale, inverted), and different focus tracking modes.</source>
+        <target>Die Vergrößerung unterstützt verschiedene Vergrößerungsstufen, Farbfilter (Normal, Graustufen, Invertiert) und verschiedene Verfolgungsmodi zur Interaktion.</target>
+      </segment>
+    </unit>
+    <unit id="9ed6f120-3ab5-4ec3-a73a-55865cda0c91">
+      <notes>
+        <note appliesTo="source">line: 30</note>
+        <note appliesTo="source">prefix:   * </note>
+      </notes>
+      <segment state="translated">
+        <source>Color filters can help users with visual impairments or light sensitivity by inverting or desaturating screen colors.</source>
+        <target>Farbfilter können Nutzern mit Sehbehinderungen oder Lichtempfindlichkeit helfen, indem sie die Bildschirmfarben umkehren oder weniger sättigende Farben verwenden.</target>
+      </segment>
+    </unit>
+    <unit id="5a4038d3-8f8a-46c3-81df-349f045f1d9b">
       <notes>
         <note appliesTo="source">line: 31</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="translated">
-        <source>The magnifier supports various zoom levels, color filters (normal, grayscale, inverted), and different focus tracking modes.</source>
-        <target>&lt;target/&gt;</target>
+        <source>A command allows temporarily showing an overview of the entire screen</source>
+        <target>Mit einem Befehl lässt sich vorübergehend eine Übersicht über den gesamten Bildschirm anzeigen</target>
       </segment>
     </unit>
-    <unit id="9ed6f120-3ab5-4ec3-a73a-55865cda0c91">
+    <unit id="fc145b84-b9f3-4ad4-9124-70e72a974340">
       <notes>
         <note appliesTo="source">line: 32</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="translated">
-        <source>Color filters can help users with visual impairments or light sensitivity by inverting or desaturating screen colors.</source>
-        <target>&lt;target/&gt;</target>
+        <source>All magnifier settings can be configured in a new "Magnifier" panel in NVDA Settings.</source>
+        <target>Alle Einstellungen für die Vergrößerung können in einem neuen Bereich "Vergrößerung" in den NVDA-Einstellungen konfiguriert werden.</target>
       </segment>
     </unit>
-    <unit id="52025f05-a25e-4167-9c58-59cef825fd82">
+    <unit id="778b1d44-596d-4c1d-8de1-905c79585155">
       <notes>
         <note appliesTo="source">line: 33</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="translated">
-        <source>A spotlight mode is available for presentations or focused reading tasks.</source>
-        <target>&lt;target/&gt;</target>
+        <source>The magnifier cannot be used simultaneously with Screen Curtain for security reasons.</source>
+        <target>Aus Sicherheitsgründen kann die Vergrößerung nicht gleichzeitig mit dem Bildschirmvorhang verwendet werden.</target>
       </segment>
     </unit>
-    <unit id="fc145b84-b9f3-4ad4-9124-70e72a974340">
+    <unit id="e50f1514-cb8d-4c1d-accd-d72930cf1a86">
       <notes>
         <note appliesTo="source">line: 34</note>
-        <note appliesTo="source">prefix:   * </note>
+        <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
-        <source>All magnifier settings can be configured in a new "Magnifier" panel in NVDA Settings.</source>
-        <target>&lt;target/&gt;</target>
+        <source>Speech:</source>
+        <target>Sprachausgabe:</target>
       </segment>
     </unit>
-    <unit id="778b1d44-596d-4c1d-8de1-905c79585155">
+    <unit id="dff67b7d-d184-4424-9fc1-9552cb8b0a36">
       <notes>
         <note appliesTo="source">line: 35</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="translated">
-        <source>The magnifier cannot be used simultaneously with Screen Curtain for security reasons.</source>
-        <target>&lt;target/&gt;</target>
-      </segment>
-    </unit>
-    <unit id="e50f1514-cb8d-4c1d-accd-d72930cf1a86">
-      <notes>
-        <note appliesTo="source">line: 36</note>
-        <note appliesTo="source">prefix: * </note>
-      </notes>
-      <segment state="initial">
-        <source>Speech:</source>
-        <target>Speech:</target>
-      </segment>
-    </unit>
-    <unit id="dff67b7d-d184-4424-9fc1-9552cb8b0a36">
-      <notes>
-        <note appliesTo="source">line: 37</note>
-        <note appliesTo="source">prefix:   * </note>
-      </notes>
-      <segment state="initial">
         <source>A new voice setting "Natural pause after punctuation" was added for OneCore voices, allowing users to turn punctuation pauses on or off. (#11876, @gexgd0419)</source>
-        <target>A new voice setting "Natural pause after punctuation" was added for OneCore voices, allowing users to turn punctuation pauses on or off. (#11876, @gexgd0419)</target>
+        <target>Für die Windows OneCore-Stimmen wurde eine neue Sprachausgaben-Einstellung namens "Natürliche Pause nach Satzzeichen" hinzugefügt, mit der Benutzer Pausen nach Satzzeichen aktivieren oder deaktivieren können. (#11876, @gexgd0419)</target>
       </segment>
     </unit>
     <unit id="b6eb69bf-f728-4246-8afe-ea2b0fcb356c">
       <notes>
-        <note appliesTo="source">line: 38</note>
+        <note appliesTo="source">line: 36</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>A new command, assigned to `NVDA+x`, has been introduced to repeat the last information spoken by NVDA; pressing it twice shows it in a browseable message. (#625, @CyrilleB79)</source>
-        <target>A new command, assigned to `NVDA+x`, has been introduced to repeat the last information spoken by NVDA; pressing it twice shows it in a browseable message. (#625, @CyrilleB79)</target>
+        <target>Es wurde ein neuer Befehl eingeführt, der der Tastenkombination `NVDA+X` zugewiesen ist und die zuletzt in NVDA mitgeteilte Information wiederholt; durch zweimaliges Drücken wird diese in einem Fenster zum Nachlesen angezeigt. (#625, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="2aa5a8e0-0968-4184-913c-32a66dc1f359">
       <notes>
-        <note appliesTo="source">line: 39</note>
+        <note appliesTo="source">line: 37</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Braille:</source>
         <target>Braille:</target>
       </segment>
     </unit>
     <unit id="4a562b42-1805-4e96-aa57-0f49015c6673">
       <notes>
-        <note appliesTo="source">line: 40</note>
+        <note appliesTo="source">line: 38</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Added the ability to automatically scroll the braille display. (#18573, @nvdaes)</source>
-        <target>Added the ability to automatically scroll the braille display. (#18573, @nvdaes)</target>
+        <target>Automatisches Weiterlesen auf der Braillezeile wurde hinzugefügt. (#18573, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="944f7d81-fb89-4a22-a871-6204382def8a">
       <notes>
-        <note appliesTo="source">line: 41</note>
+        <note appliesTo="source">line: 39</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>DotPad braille displays now support multi-button combination gestures. (#19565, @bramd)</source>
-        <target>DotPad braille displays now support multi-button combination gestures. (#19565, @bramd)</target>
+        <target>DotPad-Braillezeilen unterstützen nun das Drücken gleichzeitiger Schalter. (#19565, @bramd)</target>
       </segment>
     </unit>
     <unit id="825ffef2-2b8f-4c97-ad19-02dd035c9e9c">
       <notes>
-        <note appliesTo="source">line: 42</note>
+        <note appliesTo="source">line: 40</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>You can now press multiple buttons simultaneously to create custom gestures (e.g., `f1+panLeft`).</source>
-        <target>You can now press multiple buttons simultaneously to create custom gestures (e.g., `f1+panLeft`).</target>
+        <target>Sie können nun mehrere Tasten gleichzeitig drücken, um benutzerdefinierte Aktionen zu erstellen (z. B. `F1+PanLeft`).</target>
       </segment>
     </unit>
     <unit id="cf762b7f-3620-4f83-94a4-d535e955368e">
       <notes>
-        <note appliesTo="source">line: 43</note>
+        <note appliesTo="source">line: 41</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Touch:</source>
         <target>Touch:</target>
       </segment>
     </unit>
     <unit id="b2334a9f-e1da-4a13-85bb-e4e346e3c60a">
       <notes>
-        <note appliesTo="source">line: 44</note>
+        <note appliesTo="source">line: 42</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Added pinch in and pinch out touch gestures, allowing two-finger pinch gestures to be bound to scripts. (#19963, @kefaslungu)</source>
-        <target>Added pinch in and pinch out touch gestures, allowing two-finger pinch gestures to be bound to scripts. (#19963, @kefaslungu)</target>
+        <target>Es wurden die Touch-Gesten zum Zoomen hinzugefügt, sodass Zwei-Finger-Gesten nun mit Skripten verknüpft werden können. (#19963, @kefaslungu)</target>
       </segment>
     </unit>
     <unit id="7a1bdd4a-366e-4fdc-bd04-a98cb32ca78f">
       <notes>
-        <note appliesTo="source">line: 45</note>
+        <note appliesTo="source">line: 43</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Added touch based navigation of browse mode elements, allowing touch screen users to move between links, headings, form fields, lists, tables and other quick navigation elements. (#3424, @kefaslungu)</source>
-        <target>Added touch based navigation of browse mode elements, allowing touch screen users to move between links, headings, form fields, lists, tables and other quick navigation elements. (#3424, @kefaslungu)</target>
+        <target>Es wurde eine Touch-basierte Navigation für Elemente im Lesemodus hinzugefügt, sodass Nutzer von Touchscreens zwischen Links, Überschriften, Formularfeldern, Listen, Tabellen und anderen Elementen der Schnellnavigation wechseln können. (#3424, @kefaslungu)</target>
       </segment>
     </unit>
     <unit id="99ca394c-1c1c-45c2-8372-ab8cc41ddfcf">
       <notes>
-        <note appliesTo="source">line: 46</note>
+        <note appliesTo="source">line: 44</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Flick down or up to cycle through element types; flick right or left to navigate between elements of the selected type.</source>
-        <target>Flick down or up to cycle through element types; flick right or left to navigate between elements of the selected type.</target>
+        <target>Wischen Sie nach unten oder oben, um durch die Elementtypen zu navigieren; wischen Sie nach rechts oder links, um zwischen den Elementen des ausgewählten Typs zu navigieren.</target>
       </segment>
     </unit>
     <unit id="2193361d-5c51-4a9b-b0a6-d7c2873e8ca3">
       <notes>
-        <note appliesTo="source">line: 47</note>
+        <note appliesTo="source">line: 45</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The element types shown when cycling can be configured in the Browse Mode settings panel.</source>
-        <target>The element types shown when cycling can be configured in the Browse Mode settings panel.</target>
+        <target>Die beim Wechseln angezeigten Elementtypen können in den Lesemodus-Einstellungen konfiguriert werden.</target>
       </segment>
     </unit>
     <unit id="ef09a520-ff4b-4241-b1d5-c1377f10c3dd">
       <notes>
-        <note appliesTo="source">line: 48</note>
+        <note appliesTo="source">line: 46</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Speech dictionaries:</source>
-        <target>Speech dictionaries:</target>
+        <target>Wörterbücher für Sprachausgaben:</target>
       </segment>
     </unit>
     <unit id="c9e2fcc3-9d71-4deb-bb65-de6f7848d9b9">
       <notes>
-        <note appliesTo="source">line: 49</note>
+        <note appliesTo="source">line: 47</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Added support for custom speech dictionaries. (#19558, #17468, @LeonarddeR)</source>
-        <target>Added support for custom speech dictionaries. (#19558, #17468, @LeonarddeR)</target>
+        <target>Es wurde eine Unterstützung für benutzerdefinierte Sprachausgaben-Wörterbücher hinzugefügt. (#19558, #17468, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="10f06492-2753-43bd-8b7d-4f5f7c009c6b">
       <notes>
-        <note appliesTo="source">line: 50</note>
+        <note appliesTo="source">line: 48</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Dictionaries can be provided in the `speechDicts` folder in an add-on package.</source>
-        <target>Dictionaries can be provided in the `speechDicts` folder in an add-on package.</target>
+        <target>Wörterbücher können im Ordner `speechDicts` einer NVDA-Erweiterung bereitgestellt werden.</target>
       </segment>
     </unit>
     <unit id="34fc3368-ce55-4dc6-bfae-9ad747a61da2">
       <notes>
-        <note appliesTo="source">line: 51</note>
+        <note appliesTo="source">line: 49</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Dictionary metadata can be added to an optional `speechDictionaries` section in the add-on manifest.</source>
-        <target>Dictionary metadata can be added to an optional `speechDictionaries` section in the add-on manifest.</target>
+        <target>Metadaten zu Wörterbüchern können in einem optionalen Abschnitt `speechDictionaries` in der Manifest-Datei der NVDA-Erweiterung hinzugefügt werden.</target>
       </segment>
     </unit>
     <unit id="78b553d2-c7ac-4977-a274-6b74f92e1a0a">
       <notes>
-        <note appliesTo="source">line: 52</note>
+        <note appliesTo="source">line: 50</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Please consult the [Custom speech dictionaries section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSpeechDictionaries) for more details.</source>
-        <target>Please consult the [Custom speech dictionaries section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSpeechDictionaries) for more details.</target>
+        <target>Weitere Informationen finden Sie im Abschnitt [Benutzerdefinierte Sprachausgaben-Wörterbücher im Entwicklerhandbuch](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSpeechDictionaries).</target>
       </segment>
     </unit>
     <unit id="92144327-75bc-492f-af8b-4b004616ead1">
       <notes>
-        <note appliesTo="source">line: 53</note>
+        <note appliesTo="source">line: 51</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>New types have been added for speech dictionary entries, such as part of word and start of word.</source>
-        <target>New types have been added for speech dictionary entries, such as part of word and start of word.</target>
+        <target>Für Einträge im Sprachausgaben-Wörterbuch wurden neue Typen hinzugefügt, beispielsweise „Wortteil“ und „Wortanfang“.</target>
       </segment>
     </unit>
     <unit id="b9f62be6-6a50-4bbe-89d8-709e44c4fc96">
       <notes>
-        <note appliesTo="source">line: 54</note>
+        <note appliesTo="source">line: 52</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>  Consult the speech dictionaries section in the User Guide for more details. (#19506, @LeonarddeR)</source>
-        <target>  Consult the speech dictionaries section in the User Guide for more details. (#19506, @LeonarddeR)</target>
+        <target>  Weitere Informationen finden Sie im Abschnitt Sprachausgaben-Wörterbücher im Benutzerhandbuch. (#19506, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="b0846491-184b-44cd-b1e9-b29bb56e26c2">
       <notes>
-        <note appliesTo="source">line: 55</note>
+        <note appliesTo="source">line: 53</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>After installing or updating NVDA, a dialog now offers options to restart Windows, start the installed copy, or exit the installer. (#19268, #19718, @kefaslungu)</source>
-        <target>After installing or updating NVDA, a dialog now offers options to restart Windows, start the installed copy, or exit the installer. (#19268, #19718, @kefaslungu)</target>
+        <target>Nach der Installation oder Update von NVDA erscheint nun ein Dialogfeld mit den Optionen, Windows neu zu starten, die installierte Version zu starten oder die Installation zu beenden. (#19268, #19718, @kefaslungu)</target>
       </segment>
     </unit>
     <unit id="7c2b4b1b-2ee3-4262-abdd-4b10b927499a">
+      <notes>
+        <note appliesTo="source">line: 54</note>
+        <note appliesTo="source">prefix: * </note>
+      </notes>
+      <segment state="translated">
+        <source>Added an unassigned command to toggle keyboard layout. (#19211, @CyrilleB79)</source>
+        <target>Es wurde ein nicht zugewiesener Befehl zum Umschalten des Tastatur-Layouts hinzugefügt. (#19211, @CyrilleB79)</target>
+      </segment>
+    </unit>
+    <unit id="80862cf4-23ab-4f1b-8c31-4db84ba7c098">
+      <notes>
+        <note appliesTo="source">line: 55</note>
+        <note appliesTo="source">prefix: * </note>
+      </notes>
+      <segment state="translated">
+        <source>Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @tareh7z)</source>
+        <target>Es wurde ein nicht zugewiesener Schnellnavigationsbefehl hinzugefügt, mit dem man im Lesemodus zum nächsten bzw. vorherigen Schieberegler navigieren kann. (#17005, @tareh7z)</target>
+      </segment>
+    </unit>
+    <unit id="6371f617-9fcf-49d8-8e8b-69c26cdeb382">
       <notes>
         <note appliesTo="source">line: 56</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
-        <source>Added an unassigned command to toggle keyboard layout. (#19211, @CyrilleB79)</source>
-        <target>&lt;target/&gt;</target>
+        <source>When resetting the configuration to factory defaults from the NVDA menu, a dialog is now shown afterwards with an Undo button to restore the previous configuration.</source>
+        <target>Wenn Sie die Konfiguration über das NVDA-Menü auf die Standard-Einstellungen zurücksetzen, wird anschließend ein Dialogfeld mit einer Schaltfläche "Rückgängig" angezeigt, über die Sie die vorherige Konfiguration wiederherstellen können.</target>
       </segment>
     </unit>
-    <unit id="80862cf4-23ab-4f1b-8c31-4db84ba7c098">
+    <unit id="aff4906d-1bb1-4b50-bda1-deb83b4aaefa">
       <notes>
         <note appliesTo="source">line: 57</note>
-        <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
-        <source>Added an unassigned Quick Navigation Command for jumping to next/previous slider in browse mode. (#17005, @tareh7z)</source>
-        <target>&lt;target/&gt;</target>
+        <source>The triple-press keyboard shortcut (`NVDA+control+r`) is not affected, as it is intended for recovery scenarios. (#19575, @bramd)</source>
+        <target>Die Tastenkombination mit drei Tasten (`NVDA+Strg+R`) ist davon nicht betroffen, da sie für Wiederherstellungsszenarien vorgesehen ist. (#19575, @bramd)</target>
       </segment>
     </unit>
-    <unit id="6371f617-9fcf-49d8-8e8b-69c26cdeb382">
+    <unit id="bf5ab808-9e0c-4bde-87d7-8457bb7f4fe5">
       <notes>
         <note appliesTo="source">line: 58</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
-        <source>When resetting the configuration to factory defaults from the NVDA menu, a dialog is now shown afterwards with an Undo button to restore the previous configuration.</source>
-        <target>&lt;target/&gt;</target>
-      </segment>
-    </unit>
-    <unit id="aff4906d-1bb1-4b50-bda1-deb83b4aaefa">
-      <notes>
-        <note appliesTo="source">line: 59</note>
-      </notes>
-      <segment state="initial">
-        <source>The triple-press keyboard shortcut (`NVDA+control+r`) is not affected, as it is intended for recovery scenarios. (#19575, @bramd)</source>
-        <target>The triple-press keyboard shortcut (`NVDA+control+r`) is not affected, as it is intended for recovery scenarios. (#19575, @bramd)</target>
-      </segment>
-    </unit>
-    <unit id="bf5ab808-9e0c-4bde-87d7-8457bb7f4fe5">
-      <notes>
-        <note appliesTo="source">line: 60</note>
-        <note appliesTo="source">prefix: * </note>
-      </notes>
-      <segment state="translated">
         <source>Added an unassigned command to report the current status of the Screen Curtain. (#19759)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Es wurde ein nicht zugeordneter Befehl hinzugefügt, um den aktuellen Status des Bildschirmvorhangs anzuzeigen. (#19759)</target>
       </segment>
     </unit>
     <unit id="925fc6a6-5914-487e-92bf-9171dd9e0554">
       <notes>
-        <note appliesTo="source">line: 62</note>
+        <note appliesTo="source">line: 60</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
       <segment state="translated">
@@ -6617,7 +6608,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="60e2fb6f-aae0-4692-aec2-07680ec05661">
       <notes>
-        <note appliesTo="source">line: 64</note>
+        <note appliesTo="source">line: 62</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
@@ -6627,7 +6618,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="2671c513-c555-4c84-95b0-667eab9e0725">
       <notes>
-        <note appliesTo="source">line: 65</note>
+        <note appliesTo="source">line: 63</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="translated">
@@ -6637,47 +6628,47 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="5c1844e7-813c-4a67-b775-9101ee3d0432">
       <notes>
-        <note appliesTo="source">line: 66</note>
+        <note appliesTo="source">line: 64</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Braille:</source>
         <target>Braille:</target>
       </segment>
     </unit>
     <unit id="5c57913b-088a-4854-b1ec-c43d1e0607ad">
       <notes>
-        <note appliesTo="source">line: 67</note>
+        <note appliesTo="source">line: 65</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>The braille message when NVDA is started was updated to mention if screen curtain is enabled. (#19441, @nvdaes)</source>
-        <target>The braille message when NVDA is started was updated to mention if screen curtain is enabled. (#19441, @nvdaes)</target>
+        <target>Die Braille-Meldung beim NVDA-Start wurde aktualisiert und gibt nun an, ob der Bildschirmvorhang aktiviert ist. (#19441, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="f85b3c6e-1892-447a-ad2c-d1d8098fbc29">
       <notes>
-        <note appliesTo="source">line: 68</note>
+        <note appliesTo="source">line: 66</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA now supports the Orbit Reader 40 in its proprietary HID mode. (#19756, @trypsynth)</source>
-        <target>NVDA now supports the Orbit Reader 40 in its proprietary HID mode. (#19756, @trypsynth)</target>
+        <target>NVDA unterstützt nun den Orbit Reader 40 in dessen proprietärem HID-Modus. (#19756, @trypsynth)</target>
       </segment>
     </unit>
     <unit id="1189f042-6dbc-4b25-848e-5aea35e9e63d">
       <notes>
-        <note appliesTo="source">line: 69</note>
+        <note appliesTo="source">line: 67</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
         <source>It is now possible to open the log viewer with `NVDA+f1`, even when the log level is set to "disabled". (#19318, @CyrilleB79)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Es ist nun möglich, den Protokollbetrachter mit `NVDA+F1` zu öffnen, auch wenn die Protokollstufe auf "Deaktiviert" eingestellt ist. (#19318, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="c50ef6bd-7db9-44c6-b597-c285e49a9468">
       <notes>
-        <note appliesTo="source">line: 70</note>
+        <note appliesTo="source">line: 68</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
@@ -6687,57 +6678,57 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="d735ec3c-106c-4fe3-b887-596a343dd75b">
       <notes>
-        <note appliesTo="source">line: 71</note>
+        <note appliesTo="source">line: 69</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
         <source>NVDA can now be configured to not play error sounds, even in test versions. (#13021, @CyrilleB79)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA kann nun so konfiguriert werden, dass keine Töne bei Fehlern wiedergegeben werden, auch nicht in Testversionen. (#13021, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="d1374a64-998f-462c-a249-a09bbe533a22">
       <notes>
-        <note appliesTo="source">line: 72</note>
+        <note appliesTo="source">line: 70</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
         <source>NVDA will start in focus mode by default when using WhatsApp 2.2584.3.0 or newer. (#19655, @josephsl)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA startet bei Verwendung von WhatsApp 2.2584.3.0 oder neuer standardmäßig im Interaktionsmodus. (#19655, @josephsl)</target>
       </segment>
     </unit>
     <unit id="54b67317-c030-46bb-9434-66f4d4e05429">
       <notes>
-        <note appliesTo="source">line: 73</note>
+        <note appliesTo="source">line: 71</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Input help mode has been improved: (#6621, @Cary-rowen, @Emil-18)</source>
-        <target>Input help mode has been improved: (#6621, @Cary-rowen, @Emil-18)</target>
+        <target>Der Modus für die Eingabehilfe wurde verbessert: (#6621, @Cary-rowen, @Emil-18)</target>
       </segment>
     </unit>
     <unit id="8a9dca45-39b9-48ba-b115-2064c793e5cd">
       <notes>
-        <note appliesTo="source">line: 74</note>
+        <note appliesTo="source">line: 72</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="translated">
         <source>When a key combination would produce a character in normal input mode, the key combination is reported first, followed by the character.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Wenn eine Tastenkombination im normalen Eingabemodus ein Zeichen erzeugen würde, wird zunächst die Tastenkombination mitgeteilt, gefolgt vom Zeichen.</target>
       </segment>
     </unit>
     <unit id="c6e9db59-62ff-462d-b8ce-7fbaee3117d4">
       <notes>
-        <note appliesTo="source">line: 75</note>
+        <note appliesTo="source">line: 73</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
       <segment state="translated">
         <source>If the key combination corresponds to an NVDA command, the behavior remains the same as before, i.e. the description of the command is reported.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Entspricht die Tastenkombination einem NVDA-Befehl, bleibt das Verhalten unverändert, d. h., die Beschreibung des Befehls wird mitgeteilt.</target>
       </segment>
     </unit>
     <unit id="dc474811-5534-4c68-b430-57fde932f99a">
       <notes>
-        <note appliesTo="source">line: 76</note>
+        <note appliesTo="source">line: 74</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
@@ -6747,26 +6738,26 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="4d885930-d362-4c6f-95dd-46da2fe9e79a">
       <notes>
-        <note appliesTo="source">line: 77</note>
+        <note appliesTo="source">line: 75</note>
       </notes>
       <segment state="translated">
         <source>This is more noticeable for Windows releases which are enablement packages on top of an earlier release such as Windows 11 2025 Update based on Windows 11 2024 Update. (#19802, @josephsl)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Dies macht sich besonders bei Windows-Versionen bemerkbar, bei denen es sich um Erweiterungspakete auf Basis einer früheren Version handelt, wie beispielsweise das Windows 11 2025 Update, das auf dem Windows 11 2024 Update aufbaut. (#19802, @josephsl)</target>
       </segment>
     </unit>
     <unit id="d245edd3-10aa-42c6-bfc0-f07359de10e8">
       <notes>
-        <note appliesTo="source">line: 78</note>
+        <note appliesTo="source">line: 76</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
         <source>Math navigation commands now support input help, on-demand speech mode, and can be remapped. (#19871, @RyanMcCleary)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Die Befehle zur Navigation für Mathematische  ausdrücke unterstützen nun Eingabehilfen und den Sprachausgabenmodus auf Abruf und können neu zugewiesen werden. (#19871, @RyanMcCleary)</target>
       </segment>
     </unit>
     <unit id="74af677f-13ad-435e-a49a-d4dc3525635b">
       <notes>
-        <note appliesTo="source">line: 79</note>
+        <note appliesTo="source">line: 77</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
@@ -6776,35 +6767,45 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="03536506-2e15-40c4-8587-7ac6b6103f28">
       <notes>
-        <note appliesTo="source">line: 80</note>
+        <note appliesTo="source">line: 78</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Added an advanced setting to opt regular expression speech dictionary entries into a more modern [`regex`](https://pypi.org/project/regex/) engine.</source>
-        <target>Added an advanced setting to opt regular expression speech dictionary entries into a more modern [`regex`](https://pypi.org/project/regex/) engine.</target>
+        <target>Es wurde eine erweiterte Einstellung hinzugefügt, mit der Einträge im Sprachausgaben-Wörterbuch, die auf Reguläre Ausdrücke basiert, in eine modernere Engine namens [`regex`](https://pypi.org/project/regex/) umgestellt.</target>
       </segment>
     </unit>
     <unit id="222fa698-e35a-42c9-94ec-cbccd32b3ca3">
       <notes>
-        <note appliesTo="source">line: 81</note>
+        <note appliesTo="source">line: 79</note>
       </notes>
       <segment state="translated">
         <source>This provides Unicode-aware `\w` and `\b` and additional regex features.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Dies bietet Unicode-fähige Zeichen wie `\w` und `\b` sowie weitere Funktionen für Reguläre Ausdrücke.</target>
       </segment>
     </unit>
     <unit id="90d9f201-8218-4885-afdf-e08b3a9cbcda">
       <notes>
-        <note appliesTo="source">line: 82</note>
+        <note appliesTo="source">line: 80</note>
       </notes>
       <segment state="translated">
         <source>The setting is disabled by default. (#20013, @LeonarddeR)</source>
         <target>Die Einstellung ist standardmäßig deaktiviert. (#20013, @LeonarddeR)</target>
       </segment>
     </unit>
+    <unit id="f691c21f-9b10-496a-b42c-c24984e3d703">
+      <notes>
+        <note appliesTo="source">line: 81</note>
+        <note appliesTo="source">prefix: * </note>
+      </notes>
+      <segment state="translated">
+        <source>The "Type" radio buttons in the "Add Dictionary Entry" dialog are now arranged vertically rather than horizontally. (#19657)</source>
+        <target>Das Optionsfeld "Typ" im Dialogfeld "Wörterbucheintrag hinzufügen" ist nun vertikal statt horizontal angeordnet. (#19657)</target>
+      </segment>
+    </unit>
     <unit id="6e83ec90-ee84-4be0-819c-f475fa970a66">
       <notes>
-        <note appliesTo="source">line: 84</note>
+        <note appliesTo="source">line: 83</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
       <segment state="translated">
@@ -6814,102 +6815,112 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
     </unit>
     <unit id="3d8e7f65-d898-4c1f-aa1b-1ee897dd85f2">
       <notes>
-        <note appliesTo="source">line: 86</note>
+        <note appliesTo="source">line: 85</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Add-on Store:</source>
-        <target>Add-on Store:</target>
+        <target>Store für NVDA-Erweiterungen:</target>
       </segment>
     </unit>
     <unit id="31dff8e6-8c4f-4d3c-9500-fd0be6caf739">
       <notes>
-        <note appliesTo="source">line: 87</note>
+        <note appliesTo="source">line: 86</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA no longer crashes when the Add-on Store download directory cannot be cleaned up due to file permission errors. (#19202, @christopherpross)</source>
-        <target>NVDA no longer crashes when the Add-on Store download directory cannot be cleaned up due to file permission errors. (#19202, @christopherpross)</target>
+        <target>NVDA stürzt nicht mehr ab, wenn das Download-Verzeichnis für den Store auf Grund von Fehler in der Datei-Berechtigung nicht bereinigt werden konnte. (#19202, @christopherpross)</target>
       </segment>
     </unit>
     <unit id="b6c22b8b-431a-48db-a8b6-52d09261614a">
       <notes>
-        <note appliesTo="source">line: 88</note>
+        <note appliesTo="source">line: 87</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>After cancelling an add-on download and reopening the Add-on Store, downloading another add-on no longer fails. (#20015, @Cary-rowen)</source>
-        <target>After cancelling an add-on download and reopening the Add-on Store, downloading another add-on no longer fails. (#20015, @Cary-rowen)</target>
+        <target>Nachdem der Download einer NVDA-Erweiterung abgebrochen und der Store erneut geöffnet wurde, schlägt der Download einen anderen NVDA-Erweiterung nicht mehr fehl. (#20015, @Cary-rowen)</target>
       </segment>
     </unit>
     <unit id="466642ed-1b63-488e-99b6-0441afae5c59">
       <notes>
-        <note appliesTo="source">line: 89</note>
+        <note appliesTo="source">line: 88</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Configuration profile triggers now activate when the Add-on Store is open. (#19583, @bramd)</source>
-        <target>Configuration profile triggers now activate when the Add-on Store is open. (#19583, @bramd)</target>
+        <target>Die Trigger frü die Konfigurationsprofile werden nun aktiviert, wenn der Store für NVDA-Erweiterungen geöffnet ist. (#19583, @bramd)</target>
       </segment>
     </unit>
     <unit id="3f1a6c91-6128-45cf-aa29-400ca3d1ace5">
+      <notes>
+        <note appliesTo="source">line: 89</note>
+        <note appliesTo="source">prefix: * </note>
+      </notes>
+      <segment state="translated">
+        <source>Fixed an error that could occur when NVDA checked whether a language is supported for a synthesizer with invalid languages. (#20080, @nvdaes)</source>
+        <target>Es wurde ein Fehler behoben, der auftreten konnte, wenn NVDA bei einer Sprachausgabe mit ungültigen Sprachausgaben prüfte, ob eine Sprachausgabe unterstützt wird. (#20080, @nvdaes)</target>
+      </segment>
+    </unit>
+    <unit id="9146d041-7a88-4ddd-86a4-75901098f944">
       <notes>
         <note appliesTo="source">line: 90</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
-        <source>Fixed an error that could occur when NVDA checked whether a language is supported for a synthesizer with invalid languages. (#20080, @nvdaes)</source>
-        <target>&lt;target/&gt;</target>
+        <source>NVDA will attempt to recover more quickly from freezes in some applications, especially those written in Java. (#14396, @thgcode)</source>
+        <target>NVDA friert weniger bei einigen Anwendungen ein, die in Java geschrieben worden sind und stürzt nicht mehr so schnell ab. (#14396, @thgcode)</target>
       </segment>
     </unit>
-    <unit id="9146d041-7a88-4ddd-86a4-75901098f944">
+    <unit id="3f080fd6-4c5f-4e13-abf4-66e2ad24386f">
       <notes>
         <note appliesTo="source">line: 91</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
-        <source>NVDA will attempt to recover more quickly from freezes in some applications, especially those written in Java. (#14396, @thgcode)</source>
-        <target>&lt;target/&gt;</target>
+        <source>In Firefox browse mode, the accessible name of form controls (such as checkboxes and radio buttons) is now correctly announced when the control has an `aria-label` and an associated `&lt;label&gt;` element that contains only `aria-hidden` content. (#19409, @bramd)</source>
+        <target>Im Lesemodus in Firefox wird der barrierefreie Name von Formularsteuerelementen (wie Kontrollkästchen und Optionsfeldern) nun korrekt mitgeteilt, wenn das Steuerelement über ein Attribut namens `aria-label` und ein zugehöriges Element namens `&lt;label&gt;` verfügt, das ausschließlich versteckte Inhalte über `aria-hidden` enthält. (#19409, @bramd)</target>
       </segment>
     </unit>
-    <unit id="3f080fd6-4c5f-4e13-abf4-66e2ad24386f">
+    <unit id="c507f011-b58b-444a-a3d0-93b922b63bd2">
       <notes>
         <note appliesTo="source">line: 92</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
-        <source>In Firefox browse mode, the accessible name of form controls (such as checkboxes and radio buttons) is now correctly announced when the control has an `aria-label` and an associated `&lt;label&gt;` element that contains only `aria-hidden` content. (#19409, @bramd)</source>
-        <target>&lt;target/&gt;</target>
+        <source>The "Toggles on and off if the screen layout is preserved while rendering the document content" item in the "Browse mode" category of the Input Gestures dialog now behaves correctly. (#18378)</source>
+        <target>Der Punkt "Ein- und ausschalten, ob das Bildschirm-Layout beim Aufbauen des Dokumentinhalts beibehalten wird" in der Kategorie "Lesemodus" im Dialogfeld für die Tastenbefehle funktioniert nun korrekt. (#18378)</target>
       </segment>
     </unit>
-    <unit id="c507f011-b58b-444a-a3d0-93b922b63bd2">
+    <unit id="46e2d6dc-1335-4678-ad59-f44cd323de0f">
       <notes>
         <note appliesTo="source">line: 93</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
-        <source>The "Toggles on and off if the screen layout is preserved while rendering the document content" item in the "Browse mode" category of the Input Gestures dialog now behaves correctly. (#18378)</source>
-        <target>&lt;target/&gt;</target>
+        <source>In Microsoft Word with UIA enabled, page changes are now correctly announced when navigating table rows that span multiple pages. (#19386, @akj)</source>
+        <target>In Microsoft Word mit aktivierter UIA werden Seitenwechsel nun korrekt angesagt, wenn man durch Tabellenzeilen navigiert, die sich über mehrere Seiten erstrecken. (#19386, @akj)</target>
       </segment>
     </unit>
-    <unit id="46e2d6dc-1335-4678-ad59-f44cd323de0f">
+    <unit id="9ec14e36-02f1-44f0-ad8c-366cfcf7f7de">
       <notes>
         <note appliesTo="source">line: 94</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
-        <source>In Microsoft Word with UIA enabled, page changes are now correctly announced when navigating table rows that span multiple pages. (#19386, @akj)</source>
-        <target>&lt;target/&gt;</target>
+        <source>Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)</source>
+        <target>Der übermäßige Ressourcenverbrauch und das Flackern der Hervorhebung bei Verwendung beim visuellen Hervorheben wurden behoben. (#17434, @hwf1324)</target>
       </segment>
     </unit>
-    <unit id="9ec14e36-02f1-44f0-ad8c-366cfcf7f7de">
+    <unit id="88c5328e-b1ba-485f-842a-019ed8d38696">
       <notes>
         <note appliesTo="source">line: 95</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
       <segment state="translated">
-        <source>Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)</source>
-        <target>&lt;target/&gt;</target>
+        <source>In Excel, when visual highlight is enabled, the focused cell is now correctly highlighted. (#19641, @CyrilleB79)</source>
+        <target>Wenn in Microsoft Excel die visuelle Hervorhebung aktiviert ist, wird die aktuelle Zelle nun korrekt hervorgehoben. (#19641, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="46f5b2cc-76cb-460a-a744-969f63d29832">
@@ -6919,7 +6930,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Braille should no longer stop following focus when moving around in the Microsoft Copilot application. (#19646, @Emil-18)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Der Fokus auf der Braillezeile sollte nicht mehr verloren gehen, wenn man im Microsoft Copilot navigiert. (#19646, @Emil-18)</target>
       </segment>
     </unit>
     <unit id="6bbd3536-a844-4718-81bf-693a96b63a62">
@@ -6929,7 +6940,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>The `NVDA+k` command now correctly reports the destination of links containing formatted text, such as bold or italics. (#19428, @Cary-rowen)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Der Befehl `NVDA+K` zeigt nun das Ziel von Internet-Adressen, die formatierten Text enthalten, wie beispielsweise fettgedruckten oder kursiven Text, korrekt an. (#19428, @Cary-rowen)</target>
       </segment>
     </unit>
     <unit id="e0054285-9543-47b4-b53e-60ee91375652">
@@ -6939,7 +6950,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Capital indicators are now correctly announced when selecting single characters. (#19505, @cary-rowen)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Großbuchstaben werden nun bei der Auswahl einzelner Zeichen korrekt angezeigt. (#19505, @cary-rowen)</target>
       </segment>
     </unit>
     <unit id="95b8da77-ffb6-4e97-8615-411ef76125fe">
@@ -6947,9 +6958,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 99</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>MathML in Chromium is more reliably read after NVDA starts or restarts. (#20049, @RyanMcCleary)</source>
-        <target>MathML in Chromium is more reliably read after NVDA starts or restarts. (#20049, @RyanMcCleary)</target>
+        <target>MathML wird in Chromium nach dem Start oder Neustart von NVDA zuverlässiger vorgelesen. (#20049, @RyanMcCleary)</target>
       </segment>
     </unit>
     <unit id="bc08aaac-f6ee-4d5f-88cf-aa9969288650">
@@ -6959,7 +6970,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Decorative Unicode letters such as negative squared, negative circled, and regional indicator symbol characters are now normalized to their base Latin letters when Unicode normalization is enabled. (#19608, @bramd)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Dekorative Unicode-Zeichen wie Zeichen mit negativem Quadrat, negativem Kreis und regionalen Kennzeichen werden nun auf ihre lateinischen Basiszeichen normalisiert, wenn die Unicode-Normalisierung aktiviert ist. (#19608, @bramd)</target>
       </segment>
     </unit>
     <unit id="3b3c32e3-e1eb-442e-85a0-db79cd82aa8e">
@@ -6969,7 +6980,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Fixed NVDA freezing when navigating in JetBrains IDEs. (#16741, @christopherpross)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Das Einfrieren von NVDA beim Navigieren in IDES von JetBrains wurde behoben. (#16741, @christopherpross)</target>
       </segment>
     </unit>
     <unit id="b1cc6fad-19e7-4315-8619-2ecf732787a2">
@@ -6979,7 +6990,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Speech dictionary entries of type Whole word now correctly handle words containing Unicode combining marks (e.g. Hebrew niqqud, Arabic harakat). (#20013, @LeonarddeR)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Einträge im Sprachwörterbuch vom Typ "Ganzes Wort" verarbeiten korrekt nun Wörter, die Unicode-Kombinationszeichen enthalten (z. B. hebräische Niqqud, arabische Harakat). (#20013, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="e4f21899-9b3b-4c5d-94bd-f1d2422d9127">
@@ -6989,7 +7000,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>In particular, Whole word entries no longer incorrectly match inside larger words when those words contain combining marks.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Insbesondere werden ganze Wörter nicht mehr fälschlicherweise innerhalb größerer Wörter als Übereinstimmung erkannt, wenn diese Wörter Verbindungszeichen enthalten.</target>
       </segment>
     </unit>
     <unit id="65db2ddc-f0be-4fd8-97a0-b2ff4dc641a9">
@@ -7008,7 +7019,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Informationen zu den Änderungen der API in NVDA finden Sie im [Entwicklerhandbuch](https://download.nvaccess.org/documentation/developerGuide.html#API).</target>
       </segment>
     </unit>
     <unit id="5cbaebe9-ac84-433b-aaf9-f511bcf3b895">
@@ -7016,9 +7027,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 109</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Clarified NV Access's policy on API breaking changes in the [Developer Guide](https://download.nvaccess.org/documentation/developerGuide.html#API). (#19599)</source>
-        <target>Clarified NV Access's policy on API breaking changes in the [Developer Guide](https://download.nvaccess.org/documentation/developerGuide.html#API). (#19599)</target>
+        <target>Die Richtlinien von NV Access zu Änderungen der API, die die Kompatibilität beeinträchtigen, wurden im [Entwicklerhandbuch](https://download.nvaccess.org/documentation/developerGuide.html#API) präzisiert. (#19599)</target>
       </segment>
     </unit>
     <unit id="7c335ba5-44f5-41fe-9dd9-2ad8f9c047a0">
@@ -7036,9 +7047,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 111</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Ruff to 0.15.9. (#19736, #19908)</source>
-        <target>Ruff to 0.15.9. (#19736, #19908)</target>
+        <target>Ruff aktualisiert auf 0.15.9. (#19736, #19908)</target>
       </segment>
     </unit>
     <unit id="92cd5eeb-cf53-45f4-a68d-dac075385cd9">
@@ -7046,9 +7057,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 112</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>uv to 0.11.7. (#19736, #19908, #19968)</source>
-        <target>uv to 0.11.7. (#19736, #19908, #19968)</target>
+        <target>uv aktualisiert auf 0.11.7. (#19736, #19908, #19968)</target>
       </segment>
     </unit>
     <unit id="91f46535-62cf-484e-878a-3f53cd1bef4f">
@@ -7076,9 +7087,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 115</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Python to 3.13.13. (#20231, @dpy013)</source>
-        <target>Python to 3.13.13. (#20231, @dpy013)</target>
+        <target>Python aktualisiert auf 3.13.13. (#20231, @dpy013)</target>
       </segment>
     </unit>
     <unit id="4f3c6ec3-30df-4ec6-9934-175b65a2be68">
@@ -7088,7 +7099,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>A new parameter `redactSecrets` has been added to logging functions e.g. `log.debug`. (#19966)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Bei den Funktionen für die Protokollierung, z. B. `log.debug`, wurde ein neuer Parameter `redactSecrets` hinzugefügt. (#19966)</target>
       </segment>
     </unit>
     <unit id="5df1fb54-1d0b-4863-b3d1-64a22c5229ae">
@@ -7098,7 +7109,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>When set to `True`, logging output will be sanitized to replace detected secrets with asterisks.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Wenn der Wert auf "True" gesetzt ist, werden die Protokolleinträge bereinigt, sodass erkannte vertrauliche Informationen durch Sternchen ersetzt werden.</target>
       </segment>
     </unit>
     <unit id="a9107bfe-7697-4c29-8170-695af774265f">
@@ -7108,7 +7119,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>This is set to `False` by default for performance purposes.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Aus Leistungsgründen ist diese Option standardmäßig auf `False` gesetzt.</target>
       </segment>
     </unit>
     <unit id="2e3fa407-4806-43f3-88b9-c409d5a39843">
@@ -7118,7 +7129,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>It is encouraged to enable this when logging anything particularly sensitive e.g. clipboard content.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Es wird empfohlen, diese Option zu aktivieren, wenn besonders sensible Daten protokolliert werden, z. B. der Inhalt der Zwischenablage.</target>
       </segment>
     </unit>
     <unit id="05f1b497-e5cd-4056-a4e7-5f063f19f4e2">
@@ -7126,9 +7137,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 120</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Added a `DEBUG_UNREDACTED` logging level for cases where developers explicitly need debug logging without `redactSecrets` masking.</source>
-        <target>Added a `DEBUG_UNREDACTED` logging level for cases where developers explicitly need debug logging without `redactSecrets` masking.</target>
+        <target>Es wurde eine Protokollierungsstufe namens `DEBUG_UNREDACTED` hinzugefügt, für Fälle, in denen Entwickler ausdrücklich Debug-Protokolle ohne Maskierung durch `redactSecrets` benötigen.</target>
       </segment>
     </unit>
     <unit id="c464a307-6952-4bd3-8a11-d7b1f4be6998">
@@ -7138,7 +7149,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Die vom Build-System erstellten Bibliotheken für NVDA werden nun mit dem Flag [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) verknüpft, wodurch der Schutz vor bestimmten Malware-Angriffen verbessert wird. (#19435, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="3f08eb8c-6383-432c-b31a-94508aeacb26">
@@ -7148,7 +7159,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Subclasses of `browseMode.BrowseModeDocumentTreeInterceptor` that support screen layout being on and off should override the `_toggleScreenLayout` method, rather than implementing `script_toggleScreenLayout` directly. (#19487)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Unterklassen von `browseMode.BrowseModeDocumentTreeInterceptor`, die das Ein- und Ausschalten des Bildschirm-Layouts unterstützen, sollten die Methode `_toggleScreenLayout` überschreiben, anstatt `script_toggleScreenLayout` direkt zu implementieren. (#19487)</target>
       </segment>
     </unit>
     <unit id="9fa2fb22-9819-4bad-af98-f170843e8a93">
@@ -7156,9 +7167,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 123</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handleCOMErrors`. (#19713, @Emil-18)</source>
-        <target>A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handleCOMErrors`. (#19713, @Emil-18)</target>
+        <target>Der Klasse `UIA.UIA` wurde eine neue Methode namens `_getUIACacheablePropertyValue_handleCOMErrors` hinzugefügt. (#19713, @Emil-18)</target>
       </segment>
     </unit>
     <unit id="75eccd47-187e-47d9-a125-3ee5df162cfc">
@@ -7168,7 +7179,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>This method calls `_getUIACacheablePropertyValue`, and takes an extra argument (`onError`) that specifies the value that should be returned if a `COMError` is raised.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Diese Methode ruft `_getUIACacheablePropertyValue` auf und benötigt ein zusätzliches Argument (`onError`), das den Wert angibt, der zurückgegeben werden soll, falls ein `COMError` ausgelöst wird.</target>
       </segment>
     </unit>
     <unit id="1d4c9f14-0594-4e64-8eb2-bdbcac44b19c">
@@ -7178,7 +7189,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>The `scons tests` build target has been removed, as it was misleadingly named.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Das Build-Ziel `scons tests` wurde entfernt, da es eine irreführende Bezeichnung hatte.</target>
       </segment>
     </unit>
     <unit id="a24ba95b-e821-4cce-a2d8-9252add71178">
@@ -7187,7 +7198,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>It only ran the translation string comment check, which is equivalent to `scons checkPot`.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Es wurde lediglich die Überprüfung der Kommentare in den Übersetzungsstrings durchgeführt, was dem Befehl `scons checkPot` entspricht.</target>
       </segment>
     </unit>
     <unit id="5b121ec5-39dd-41c6-9057-b614fd28cc56">
@@ -7196,7 +7207,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>The `scons checkPot` target has also been replaced with `runcheckpot.bat`.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Das Ziel `scons checkPot` wurde ebenfalls durch `runcheckpot.bat` ersetzt.</target>
       </segment>
     </unit>
     <unit id="4159f85b-1fdf-410e-9438-3e1664d36aa5">
@@ -7205,7 +7216,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`, `runsystemtests.bat`, `runlint.bat`. (#19606, #19676, @bramd)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Verwenden Sie stattdessen die einzelnen Testbefehle: `runcheckpot.bat`, `rununittests.bat`, `runsystemtests.bat`, `runlint.bat`. (#19606, #19676, @bramd)</target>
       </segment>
     </unit>
     <unit id="aba81f60-fa0d-492e-835f-cd2853cd0664">
@@ -7215,7 +7226,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Added a private `_asyncioEventLoop` module that provides an asyncio event loop running on a background thread for use by NVDA components. (#19816, @bramd)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Es wurde ein privates Modul `_asyncioEventLoop` hinzugefügt, das eine Asyncio-Ereignisschleife bereitstellt, die in einem Hintergrund-Thread läuft und von Komponenten in NVDA genutzt werden kann. (#19816, @bramd)</target>
       </segment>
     </unit>
     <unit id="40496feb-3994-4036-9f7d-3cf52eb8035d">
@@ -7223,9 +7234,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 130</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Added several functions related to the braille auto-scroll feature. (#19126, @nvdaes):</source>
-        <target>Added several functions related to the braille auto-scroll feature. (#19126, @nvdaes):</target>
+        <target>Es wurden mehrere Funktionen im Zusammenhang mit der automatischen Bildlauf-Funktion für Braille hinzugefügt. (#19126, @nvdaes):</target>
       </segment>
     </unit>
     <unit id="0870508f-269c-44b8-818a-2d2be237b1ca">
@@ -7235,7 +7246,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Added an `autoScroll` method to `braille.handler`.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Die Methode `autoScroll` wurde zu `braille.handler` hinzugefügt.</target>
       </segment>
     </unit>
     <unit id="10f1b5c0-de14-4cf3-b19b-06738fbb7299">
@@ -7245,7 +7256,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Added several functions for handling configuration value conversions and updates in `config.conf`:</source>
-        <target>&lt;target/&gt;</target>
+        <target>Es wurden mehrere Funktionen zur Verarbeitung von Konvertierungen und Aktualisierungen von Konfigurationswerten in `config.conf` hinzugefügt:</target>
       </segment>
     </unit>
     <unit id="0e178e6d-b64e-49ad-876a-c2ac7c79470d">
@@ -7255,7 +7266,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Added a `getConfigValue` function to get the value for a provided configuration key path.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Es wurde eine Funktion `getConfigValue` hinzugefügt, um den Wert für einen angegebenen Konfigurationsschlüsselpfad abzurufen.</target>
       </segment>
     </unit>
     <unit id="28e3d3a4-2485-4bb3-b91a-36d894ebc105">
@@ -7265,7 +7276,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Added a `setConfigValue` function to set a value for a provided configuration key path.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Es wurde eine Funktion `setConfigValue` hinzugefügt, um einen Wert für einen angegebenen Konfigurationsschlüsselpfad festzulegen.</target>
       </segment>
     </unit>
     <unit id="871197c7-91a7-48e1-b7e2-dfb5f995ba51">
@@ -7275,7 +7286,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Added a `valueToPercentage` function to calculate the percentage representation of a configuration value within its range.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Es wurde eine Funktion `valueToPercentage` hinzugefügt, um den prozentualen Anteil eines Konfigurationswerts innerhalb seines Bereichs zu berechnen.</target>
       </segment>
     </unit>
     <unit id="712d6f44-684c-41fe-9f83-5426fc6123fa">
@@ -7285,7 +7296,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Added a `percentageToValue` function to convert a percentage to the corresponding configuration value.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Es wurde eine Funktion `percentageToValue` hinzugefügt, um einen Prozentsatz in den entsprechenden Konfigurationswert umzuwandeln.</target>
       </segment>
     </unit>
     <unit id="38b9d4fd-7fc5-427a-bd36-2b2f01a4ce5b">
@@ -7295,7 +7306,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Added a `clampedIncrementAndUpdateConfig` function to update a configuration value by applying a step, constrained within its valid range.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Es wurde die Funktion `clampedIncrementAndUpdateConfig` hinzugefügt, um einen Konfigurationswert durch Anwenden eines Schritts zu aktualisieren, der auf den gültigen Bereich beschränkt ist.</target>
       </segment>
     </unit>
     <unit id="1ffb0253-164e-46e4-83c3-32bff7ee710a">
@@ -7303,9 +7314,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 138</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>NVDA is now built with Visual Studio 2026. (#20203, @LeonarddeR)</source>
-        <target>NVDA is now built with Visual Studio 2026. (#20203, @LeonarddeR)</target>
+        <target>NVDA wird nun mit Visual Studio 2026 kompiliert. (#20203, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="86aac8b3-5b0d-4f42-8a22-dba003b55dfc">
@@ -7313,9 +7324,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 139</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fixed a race condition in `nvdaController_speakSsml` with `asynchronous=False` where a `speechCanceled` signal fired between `queueFunction` returning and the synth thread executing the `CallbackCommand` would not be caught, causing the call to block indefinitely. (#20220, @LeonarddeR)</source>
-        <target>Fixed a race condition in `nvdaController_speakSsml` with `asynchronous=False` where a `speechCanceled` signal fired between `queueFunction` returning and the synth thread executing the `CallbackCommand` would not be caught, causing the call to block indefinitely. (#20220, @LeonarddeR)</target>
+        <target>Es wurde eine Race Condition in `nvdaController_speakSsml` bei `asynchronous=False` behoben, bei der ein `speechCanceled`-Signal, das zwischen der Rückgabe von `queueFunction` und der Ausführung des `CallbackCommand` durch den Synth-Thread ausgelöst wurde, nicht abgefangen wurde, was dazu führte, dass der Aufruf auf unbestimmte Zeit blockiert blieb. (#20220, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="0b560218-2ba2-4013-9e8e-67f60f3979f3">
@@ -7335,7 +7346,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>The `speechDictHandler.ENTRY_TYPE_*` constants are deprecated.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Die Konstanten `speechDictHandler.ENTRY_TYPE_*` sind veraltet.</target>
       </segment>
     </unit>
     <unit id="b9c7204c-2999-4262-ae69-1dbe86b55ef0">
@@ -7344,7 +7355,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Use the `speechDictHandler.types.EntryType` enumeration instead. (#19430, @LeonarddeR)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Verwenden Sie stattdessen die Aufzählung `speechDictHandler.types.EntryType`. (#19430, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="8de04e8f-c927-48cf-b1a0-b1ff32a02622">
@@ -7354,7 +7365,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>`speechDictHandler.SpeechDictEntry` and `speechDictHandler.SpeechDict` have been moved to `speechDictHandler.types`. (#19430, @LeonarddeR)</source>
-        <target>&lt;target/&gt;</target>
+        <target>`speechDictHandler.SpeechDictEntry` und `speechDictHandler.SpeechDict` wurden verschoben nach `speechDictHandler.types`. (#19430, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="907ad75b-a7bb-45ec-83b5-42523a88bb63">
@@ -7382,7 +7393,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>A bug fix is also included for an issue introduced in 2026.1 with how `ctrl+f` is handled in File Explorer.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Außerdem wurde ein Fehler behoben, der in Version 2026.1 aufgetreten war und die Verarbeitung von `Strg+F` im Datei-Explorer betraf.</target>
       </segment>
     </unit>
     <unit id="a6e5e362-66af-44df-ba77-37cd1bd2dcd8">
@@ -7391,7 +7402,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>A change introduced in 2026.1 with how NVDA handles connection issues with Remote Access was removed.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Eine in Version 2026.1 eingeführte Änderung hinsichtlich der Art und Weise, wie NVDA Verbindungsprobleme bei Fernzugriffen behandelt, wurde zurückgenommen.</target>
       </segment>
     </unit>
     <unit id="c0ac123f-19a9-4113-815e-39ead62de217">
@@ -7410,7 +7421,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).</source>
-        <target>&lt;target/&gt;</target>
+        <target>Bitte melden Sie Sicherheitsprobleme verantwortungsbewusst gemäß der [Sicherheitsrichtlinie](https://github.com/nvaccess/nvda/blob/master/security.md) von NVDA.</target>
       </segment>
     </unit>
     <unit id="317dfc45-6f60-423c-aa37-eff87fc9a158">
@@ -7420,7 +7431,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Fixed an issue which could cause NVDA to connect to an untrusted Remote Access server. ([GHSA-m268-mc77-j2cr](https://github.com/nvaccess/nvda/security/advisories/GHSA-m268-mc77-j2cr))</source>
-        <target>&lt;target/&gt;</target>
+        <target>Es wurde ein Problem behoben, durch das NVDA möglicherweise eine Verbindung zu einem nicht vertrauenswürdigen Server via Fernzugriff hergestellt hat. ([GHSA-m268-mc77-j2cr](https://github.com/nvaccess/nvda/security/advisories/GHSA-m268-mc77-j2cr))</target>
       </segment>
     </unit>
     <unit id="1e0d50c1-2f0a-4cd6-ba2a-a0a39596cec6">
@@ -7430,7 +7441,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Prevents a situation which could cause unselected add-ons to be copied to the system-wide configuration. ([GHSA-669f-7gpr-5vqm](https://github.com/nvaccess/nvda/security/advisories/GHSA-669f-7gpr-5vqm))</source>
-        <target>&lt;target/&gt;</target>
+        <target>Verhindert, dass nicht ausgewählte NVDA-Erweiterungen in die systemweite Konfiguration kopiert werden. ([GHSA-669f-7gpr-5vqm](https://github.com/nvaccess/nvda/security/advisories/GHSA-669f-7gpr-5vqm))</target>
       </segment>
     </unit>
     <unit id="6fccf36b-d520-4756-8a6e-4825cc477bf5">
@@ -7450,7 +7461,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>In File Explorer, pressing `ctrl+f` once again focuses the search box without subsequently reporting a pane. (#20021, @Cary-rowen)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Wenn man im Datei-Explorer die Tastenkombination `Strg+F` drückt, wird das Suchfeld erneut aktiviert, ohne dass daraufhin ein Bereich angezeigt wird. (#20021, @Cary-rowen)</target>
       </segment>
     </unit>
     <unit id="af74bc3c-a99c-4b71-9cd9-aae06dfa5747">
@@ -7470,7 +7481,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Remote Access once again attempts automatic reconnection after a failed initial connection as the controlled computer, rather than failing immediately.</source>
-        <target>&lt;target/&gt;</target>
+        <target>Der Fernzugriff versucht nach einer fehlgeschlagenen ersten Verbindung erneut, eine automatische Wiederverbindung herzustellen, anstatt sofort abzubrechen.</target>
       </segment>
     </unit>
     <unit id="eb5096c1-7bff-45c7-a899-e66f7e5df8fd">
@@ -7479,7 +7490,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>This means that headless or otherwise physically inaccessible machines configured to automatically connect at startup will be reachable once the network is available. (#20122)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Das bedeutet, dass „Headless“ oder anderweitig physisch unzugängliche Computer, die so konfiguriert sind, dass sie sich beim Systemstart automatisch verbinden, erreichbar sind, sobald das Netzwerk verfügbar ist. (#20122)</target>
       </segment>
     </unit>
     <unit id="71450862-373e-4763-ad6a-034bfe272e44">
@@ -7499,7 +7510,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>The `winBindings.cfgmgr32` module is now included in NVDA binary builds. (#20089, @Cary-rowen)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Das Modul `winBindings.cfgmgr32` ist nun in den NVDA-Versionen enthalten. (#20089, @Cary-rowen)</target>
       </segment>
     </unit>
     <unit id="2e9d82f2-0de8-4bed-a883-13977785e1c4">
@@ -7581,7 +7592,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>It now continues to work when switching to a secure screen, like the sign-in screen or User Account Control dialog.</source>
-        <target>Braille funktioniert nun auch weiterhin, wenn zu einem sicheren Bildschirm gewechselt wird, wie beispielsweise dem Anmeldebildschirm oder dem Dialogfeld „Benutzerkontensteuerung“.</target>
+        <target>Braille funktioniert nun auch weiterhin, wenn zu einem sicheren Bildschirm gewechselt wird, wie beispielsweise dem Anmeldebildschirm oder dem Dialogfeld für die Benutzerkontensteuerung.</target>
       </segment>
     </unit>
     <unit id="62c68ed7-f77f-4904-8620-cebcf50f5ac3">
@@ -7954,7 +7965,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Also added unassigned Quick Navigation commands to jump to the next/previous reference. (#19300, @LeonarddeR)</source>
-        <target>Außerdem wurden nicht zugewiesene Schnellnavigationsbefehle hinzugefügt, um zur nächsten bzw. vorherigen Referenz zu springen. (#19300, @LeonarddeR)</target>
+        <target>Außerdem wurden nicht zugewiesene Schnellnavigationsbefehle hinzugefügt, um zur nächsten bzw. vorherigen Referenz zu navigieren. (#19300, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="ee602f94-ee64-4c0a-bc74-670aadcbf282">
@@ -8003,7 +8014,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>This can be enabled using the "Report when objects support multiple selection" setting in NVDA's object presentation settings. (#18365, @LeonarddeR)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Diese Funktion lässt sich über die Einstellung "Mitteilung bei Objekten, die eine Mehrfachauswahl unterstützen" in den Objektdarstellungseinstellungen von NVDA aktivieren. (#18365, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="a6f20c71-7c05-4c7a-b910-704d7936bedb">
@@ -8043,7 +8054,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>A new unassigned global command has been added to toggle the "Play audio coordinates when mouse moves" option. (#19026, @rlawnsrl123)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Es wurde ein neuer, noch nicht zugewiesener globaler Befehl hinzugefügt, mit dem die Option "Audio-Koordinaten beim Navigieren mit dem Mauszeiger wiedergeben" ein- oder ausgeschaltet werden können. (#19026, @rlawnsrl123)</target>
       </segment>
     </unit>
     <unit id="8b971a26-5ba8-4c03-a6e7-d6bf61ad2ee4">
@@ -8180,7 +8191,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Updated eSpeak NG to [commit `b0b605c8`](https://github.com/espeak-ng/espeak-ng/commit/b0b605c8a80f76c4c19e18033c6780c3cc4afc5b). (#19293)</source>
-        <target>eSpeak-NG aktualisiert auf [Commit `b0b605c8`](https://github.com/espeak-ng/espeak-ng/commit/b0b605c8a80f76c4c19e18033c6780c3cc4afc5b). (#19293)</target>
+        <target>Die Sprachausgabe eSpeak-NG wurde auf [Commit `b0b605c8`](https://github.com/espeak-ng/espeak-ng/commit/b0b605c8a80f76c4c19e18033c6780c3cc4afc5b) aktualisiert. (#19293)</target>
       </segment>
     </unit>
     <unit id="f1463787-52cf-4a0d-9024-ecd1bc5f4de7">
@@ -8248,7 +8259,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Such controls will now be accessible in browse mode where they weren't before. (#13897, @jcsteh)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Diese Steuerelemente sind nun im Lesemodus verfügbar, wo sie zuvor nicht verfügbar waren. (#13897, @jcsteh)</target>
       </segment>
     </unit>
     <unit id="b3b36c69-d07d-45ea-bdf7-e99d898097a4">
@@ -8277,7 +8288,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>It currently includes Screen Curtain's settings (previously in the "Vision" category), and the "Logging level" and "Allow NV Access to gather NVDA usage statistics" settings (previously in the "General" category). (#19177, #19296)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Derzeit umfasst sie die Einstellungen für den Bildschirmvorhang (zuvor in der Kategorie "Visiuelle Darstellung") sowie die Einstellungen "Protokollierungsstufe" und "NV-Zugriff zum Erfassen von NVDA-Nutzungsstatistiken zulassen" (zuvor in der Kategorie "Allgemein"). (#19177, #19296)</target>
       </segment>
     </unit>
     <unit id="a0f6c32f-ee90-4c07-aa60-2b02d14dff28">
@@ -8377,7 +8388,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>NVDA will no longer open multiple disconnection confirmation dialogs if the action is triggered repeatedly. (#19442, @Cary-rowen)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA öffnet keine mehreren Dialogfelder mehr zur Bestätigung für die Trennung, wenn die Aktion wiederholt ausgelöst wird. (#19442, @Cary-rowen)</target>
       </segment>
     </unit>
     <unit id="3391f057-cf3d-4a04-a165-76652551b2af">
@@ -8397,7 +8408,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>NVDA should now correctly identify downgrades and show the downgrade warning dialog appropriately, including for portable copies. (#19631, #18291)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA sollte nun Downgrades korrekt erkennen und den Warnungsdialog bei Downgrades entsprechend anzeigen, auch bei portablen Versionen. (#19631, #18291)</target>
       </segment>
     </unit>
     <unit id="0475575d-11a6-4169-98be-40f20e265b45">
@@ -8407,7 +8418,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>NVDA will now retain the "Use NVDA during sign-in" setting and desktop shortcut more consistently. (#19631)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA behält nun die Einstellung "NVDA während der Anmeldung verwenden" und die Desktop-Verknüpfung konsistenter bei. (#19631)</target>
       </segment>
     </unit>
     <unit id="4b44a032-6b74-431b-9881-f30627ffe230">
@@ -8427,7 +8438,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>When Unicode normalization is enabled for speech, navigating by character will again correctly announce combining diacritic characters like acute ( &amp;#x0301; ). (#18722, @LeonarddeR)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Wenn die Unicode-Normalisierung für die Sprachausgabe aktiviert ist, werden beim zeichenweisen Navigieren kombinierende diakritische Zeichen wie das Akut (&amp;#x0301;) wieder korrekt mitgeteilt. (#18722, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="af979d49-07b6-421f-91e4-a9c2cf179465">
@@ -8477,7 +8488,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Attempting to install an add-on that requires a newer version of NVDA from File Explorer no longer fails silently or shows the incompatible add-ons dialog. (#19260, #19261)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Der Versuch, eine NVDA-Erweiterung, für das eine neuere NVDA-Version erforderlich ist, über den Datei-Explorer zu installieren, schlägt nicht mehr stillschweigend fehl und es wird auch nicht mehr das Dialogfeld für inkompatible NVDA-Erweiterungen angezeigt. (#19260, #19261)</target>
       </segment>
     </unit>
     <unit id="24f6afd3-2a74-428a-91a6-08c137c38179">
@@ -8517,7 +8528,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>When a synthesizer has a fallback language for the current dialect, the language of the text being read will no longer be reported as unsupported. (#18876, @nvdaes)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Wenn eine Sprachausgabe über eine Ausweichsprache für den aktuellen Dialekt verfügt, wird die Sprache des vorgelesenen Textes nicht mehr als nicht unterstützt mitgeteilt. (#18876, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="db341fde-aad6-45ec-9b44-002ae80f83de">
@@ -8527,7 +8538,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>If the speech synthesizer is set to eSpeak NG and it fails to load when NVDA starts, NVDA will now attempt to fall back to OneCore before resorting to no speech. (#19603)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Wenn die Sprachausgabe auf "eSpeak NG" eingestellt ist und beim Start von NVDA nicht geladen werden konnte, versucht NVDA nun, auf "Windows OneCore" auszuweichen, bevor auf keine Sprachausgabe zurückgegriffen wird. (#19603)</target>
       </segment>
     </unit>
     <unit id="f39627b7-6521-49c9-9ccb-934da48686ae">
@@ -8537,7 +8548,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Certain settings will no longer erroneously be saved to disk when running NVDA from the launcher. (#18171)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Bestimmte Einstellungen werden nun nicht mehr fälschlicherweise auf dem Medium gespeichert, wenn NVDA über den Launcher gestartet wird. (#18171)</target>
       </segment>
     </unit>
     <unit id="be74c141-b61c-43ba-88a3-dafe9eef9a6e">
@@ -8587,7 +8598,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>In the Input Gestures dialog, gestures including an operator while Num Lock is on will now be correctly displayed. (#19214, @CyrilleB79)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Im Dialogfeld für die Tastenbefehle werden Tastenbefehle und Touch-Gesten, die ein Rechenzeichen enthalten, nun bei aktivierter Nummernblock-Taste korrekt angezeigt. (#19214, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="ea814725-447e-4c50-9973-b105e9a5da43">
@@ -8607,7 +8618,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>NVDA no longer plays a sound for spelling errors while typing if speech mode is set to on-demand or off. (#19323, @CyrilleB79)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA gibt beim Tippen keinen Sound mehr bei Rechtschreibfehlern aus, wenn der Sprachmodus auf "Bei Bedarf" oder auf "Aus" eingestellt ist. (#19323, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="df5f5692-6290-413f-a194-3db3486e5682">
@@ -8905,7 +8916,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>WAI-ARIA Authoring Practices Guide to commit `84b921a0` (#19196)</source>
-        <target>&lt;target/&gt;</target>
+        <target>WAI-ARIA-Leitfaden für Autoren – Commit `84b921a0` (#19196)</target>
       </segment>
     </unit>
     <unit id="eb414355-b155-4c45-8b52-330f348b962f">
@@ -9004,7 +9015,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>`synthDriverHandler.setSynth` and `synthDriverHandler.findAndSetNextSynth` now attempt to find fallback synthesizers starting from the start of `defaultSynthPriorityList`, rather than starting immediately after `name` or `currentSynthName`, respectively. (#19603)</source>
-        <target>&lt;target/&gt;</target>
+        <target>`synthDriverHandler.setSynth` und `synthDriverHandler.findAndSetNextSynth` versuchen nun, Sprachausgaben als Fallback ab dem Anfang der `defaultSynthPriorityList` zu suchen, anstatt jeweils unmittelbar nach `name` bzw. `currentSynthName` zu beginnen. (#19603)</target>
       </segment>
     </unit>
     <unit id="19b2e894-8a17-4654-9593-e09e32c41559">
@@ -9014,7 +9025,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>`gui.installerGui.doInstall` parameter `startOnLogon` default value is now `False`. (#19631)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Der Standardwert des Parameters `startOnLogon` von `gui.installerGui.doInstall` ist nun `False`. (#19631)</target>
       </segment>
     </unit>
     <unit id="f2dd3ab4-38da-4b0e-8f40-eb396461c7b3">
@@ -9198,7 +9209,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>The `inputButtonCaps` property on `hwIo.hid.Hid` objects now correctly returns an array of `hidpi.HIDP_BUTTON_CAPS` structures rather than `HIDP_VALUE_CAPS` structures. (#18902)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Die Eigenschaft `inputButtonCaps` von `hwIo.hid.Hid`-Objekten gibt nun korrekt ein Array von `hidpi.HIDP_BUTTON_CAPS`-Strukturen zurück, anstatt von `HIDP_VALUE_CAPS`-Strukturen. (#18902)</target>
       </segment>
     </unit>
     <unit id="384cc255-1841-45de-a59d-0b44f445dd60">
@@ -9227,7 +9238,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>The `rgpszUsageIdentifier` member of the `updateCheck.CERT_USAGE_MATCH` struct is now of type `POINTER(LPSTR)` rather than `c_void_p` to correctly align with Microsoft documentation. (#18956)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Das Element `rgpszUsageIdentifier` der Struktur `updateCheck.CERT_USAGE_MATCH` hat nun den Typ `POINTER(LPSTR)` anstelle von `c_void_p`, um es korrekt an die Microsoft-Dokument-Konventionen anzupassen. (#18956)</target>
       </segment>
     </unit>
     <unit id="40d08dc8-cdf5-4c02-ac66-7d49d8642669">
@@ -9266,7 +9277,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>The following symbols have been removed from `appModules.explorer` with no replacement: `SuggestionListItem`, `SearchBoxClient`, `GridTileElement`, `GridListTileElement`, `GridGroup`, `ImmersiveLauncher`. (#18757, @josephsl)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Die folgenden Symbole wurden aus `appModules.explorer` ersatzlos gestrichen: `SuggestionListItem`, `SearchBoxClient`, `GridTileElement`, `GridListTileElement`, `GridGroup`, `ImmersiveLauncher`. (#18757, @josephsl)</target>
       </segment>
     </unit>
     <unit id="376668f2-d12e-4f7a-938f-d51f098d07ca">
@@ -9639,7 +9650,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>The `FTD2XX.purge` method now raises `ValueError` if the `toPurge` argument is not one of "TX", "RX" or "TXRX".</source>
-        <target>&lt;target/&gt;</target>
+        <target>Die Methode `FTD2XX.purge` löst nun einen `ValueError` aus, wenn das Argument `toPurge` nicht "TX", "RX" oder "TXRX" lautet.</target>
       </segment>
     </unit>
     <unit id="e2b70ec0-9500-43d7-9e59-6d2bc7ec2059">
@@ -9729,7 +9740,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>The following symbols have been removed from `gui.settingsDialogs.GeneralSettingsPanel` without replacement: `logLevelList`, `allowUsageStatsCheckBox`. (#19296)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Die folgenden Symbole wurden aus `gui.settingsDialogs.GeneralSettingsPanel` ersatzlos gestrichen: `logLevelList`, `allowUsageStatsCheckBox`. (#19296)</target>
       </segment>
     </unit>
     <unit id="b72798af-9c26-4871-bafa-01ef0ba52427">
@@ -9815,7 +9826,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Only add-ons with the given IDs will be copied. (#19446)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Es werden nur NVDA-Erweiterungen mit den angegebenen IDs kopiert. (#19446)</target>
       </segment>
     </unit>
     <unit id="4791c8b8-b5c4-48db-a49f-237dd32676fb">
@@ -10600,7 +10611,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Deprecations in `addonHandler`: (#19564)</source>
-        <target>Veraltete Elemente in „addonHandler“: (#19564)</target>
+        <target>Veraltete Elemente in `addonHandler`: (#19564)</target>
       </segment>
     </unit>
     <unit id="f7578f9a-54dd-440b-b6b0-bd149fd46d16">
@@ -10619,7 +10630,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>  Use `STATE_FILENAME` instead.</source>
-        <target>  Verwenden Sie stattdessen „STATE_FILENAME“.</target>
+        <target>  Verwenden Sie stattdessen `STATE_FILENAME`.</target>
       </segment>
     </unit>
     <unit id="65a727cb-3664-45fa-b662-956c440628cb">
@@ -10629,7 +10640,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>`AddonsState.fromPickledDict` is deprecated.</source>
-        <target>„AddonsState.fromPickledDict“ ist veraltet.</target>
+        <target>`AddonsState.fromPickledDict` ist veraltet.</target>
       </segment>
     </unit>
     <unit id="63e49a86-bf15-4bce-989c-1971f77b0c3b">
@@ -10638,7 +10649,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>  Use `AddonsState.fromDict` instead.</source>
-        <target>  Verwenden Sie stattdessen „AddonsState.fromDict“.</target>
+        <target>  Verwenden Sie stattdessen `AddonsState.fromDict`.</target>
       </segment>
     </unit>
     <unit id="f8e64de8-daf5-4df8-974f-b5b682040f5a">
@@ -11320,7 +11331,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)</source>
-        <target>&lt;target/&gt;</target>
+        <target>detours aktualisiert auf `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="81bf02b2-48fc-4b1f-9c88-f5d28d15110d">
@@ -12733,7 +12744,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>In Word, when using the "report focus" command, the document layout will be announced if this information is available and reporting object descriptions is enabled. (#15088, @nvdaes)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Wenn Sie in Microsoft Word den Befehl "Fokus mitteilen" verwenden, wird das Dokument-Layout mitgeteilt, sofern diese Informationen verfügbar ist und die Beschreibung von Objekten mitteilen aktiviert ist. (#15088, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="e9a4a07d-5a69-4caf-a524-06340cf10b91">
@@ -12793,7 +12804,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>When applying the "Body Text" or a heading paragraph style using the corresponding keyboard shortcut in Writer 25.2 or newer, NVDA announces the new paragraph style. (#6915, @michaelweghorn)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Wenn man in LibreOffice Writer 25.2 oder in neueren Versionen den Absatzstil "Body Text" oder einen Überschriften-Absatzstil über die entsprechende Tastenkombination anwendet, teilt NVDA den neuen Absatzstil mit. (#6915, @michaelweghorn)</target>
       </segment>
     </unit>
     <unit id="7cbb5953-77f5-4680-b330-a60e56ab4c07">
@@ -12843,7 +12854,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Added an unassigned gesture to toggle periodically refreshing the Windows OCR result. (#16897)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Es wurde ein nicht zugewiesener Befehl hinzugefügt, mit der die regelmäßige Aktualisierung der Ergebnisse von der Windows-Texterkennung ein- oder ausgeschaltet werden können. (#16897)</target>
       </segment>
     </unit>
     <unit id="cb090932-3eea-4e80-a8e1-d978eaba98ce">
@@ -12913,7 +12924,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>NVDA is now able to report caret changes when pressing `alt+upArrow` or `alt+downArrow` gestures, for example in Visual Studio Code. (#17652, @LeonarddeR)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA teilt nun Änderungen der Cursor-Positionen mit, wenn die Tastenkombinationen `Alt+Pfeiltaste nach oben/unten` gedrückt werden, beispielsweise in Visual Studio Code. (#17652, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="1d64e38e-067e-4266-badc-8554ffddfcc4">
@@ -12923,7 +12934,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Added commands to move the review cursor to the first and last character of the selected text, assigned to `NVDA+alt+home` and `NVDA+alt+end`, respectively. (#17299, @nvdaes)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Es wurden Befehle hinzugefügt, um den NVDA-Cursor zum ersten bzw. letzten Zeichen des ausgewählten Textes zu navigieren; diese sind den Tastenkombinationen `NVDA+Alt+Pos1` bzw. `NVDA+Alt+Ende` zugewiesen. (#17299, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="2d8b21e8-b70d-45a6-91ff-47c2aa1d2993">
@@ -13052,7 +13063,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#17018, @XLTechie)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Die Dialogfelder für Linkziel des Berichts, Informationen zur Zeichen-Formatierung und Auswahl vorlesen enthalten nun zur Erleichterung für den Nutzer die Schaltflächen "Schließen" und "Kopieren". (#17018, @XLTechie)</target>
       </segment>
     </unit>
     <unit id="fa7acb79-4053-4977-95ba-445e5b387810">
@@ -13420,7 +13431,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>The command to "Report the destination URL of a link" now works as expected when using the legacy object model in Word, Outlook, Excel and PowerPoint. (#17292, #17362, #17435, @CyrilleB79)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Der Befehl "Ziel-Adresse eines Links mitteilen" funktioniert nun wie erwartet, wenn das alte Objektmodell in Word, Outlook, Excel und PowerPoint verwendet wird. (#17292, #17362, #17435, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="51a15094-f57b-43cb-8df2-c01d8e94f3a9">
@@ -13430,7 +13441,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>In Excel, the element list dialog (`NVDA+f7`) no longer fails to list comment or formulas on some non-English systems. (#11366, @CyrilleB79)</source>
-        <target>&lt;target/&gt;</target>
+        <target>In Microsoft Excel werden im Dialogfeld für die Elementlisten (`NVDA+F7`) auf einigen nicht-englischsprachigen Systemen nun auch Kommentare und Formeln korrekt aufgelistet. (#11366, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="33dfb2c2-0b62-49b8-abf2-26861fbc0020">
@@ -13450,7 +13461,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Die Cursor-Anzeige funktioniert nun auch einwandfrei, wenn der Text breite Zeichen wie Emojis enthält. (#17006 , @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="849f0377-dcce-4823-9592-38272a968f44">
@@ -13688,7 +13699,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>NVDA will no longer announce Windows 11 clipboard history entries when closing the window while items are present. (#17308, @josephsl)</source>
-        <target>&lt;target/&gt;</target>
+        <target>NVDA teilt die Einträge im Zwischenablageverlauf von Windows 11 nicht mehr mit, sobald das Fenster geschlossen wird, während sich noch Elemente darin befinden. (#17308, @josephsl)</target>
       </segment>
     </unit>
     <unit id="ef453176-3122-41c8-8fcb-6d4086323641">
@@ -13698,7 +13709,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="translated">
         <source>If the plugins are reloaded while a browseable message is opened, NVDA will no longer fail to report subsequent focus moves. (#17323, @CyrilleB79)</source>
-        <target>&lt;target/&gt;</target>
+        <target>Wenn die Plugins neu geladen werden, während eine Fenster zum Nachlesen noch geöffnet ist, versäumt NVDA nicht mehr, nachfolgende Fokuswechsel mitzuteilen. (#17323, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="9b6f55a2-fd8d-4330-885b-86ca19a9121c">

@@ -239,10 +239,10 @@ class SpeechDict(list[SpeechDictEntry]):
 		with open(fileName, "w", encoding="utf_8_sig", errors="replace") as file:
 			for entry in self:
 				if entry.comment:
-					file.write(f"#{entry.comment}\r\n")
+					file.write(f"#{entry.comment}\n")
 				pattern = entry.pattern.replace("#", r"\#")
 				replacement = entry.replacement.replace("#", r"\#")
-				file.write(f"{pattern}\t{replacement}\t{entry.caseSensitive:d}\t{entry.type:d}\r\n")
+				file.write(f"{pattern}\t{replacement}\t{entry.caseSensitive:d}\t{entry.type:d}\n")
 
 	def sub(self, text: str) -> str:
 		invalidEntries = []

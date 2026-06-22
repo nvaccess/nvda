@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-05 01:11+0000\n"
-"PO-Revision-Date: 2026-06-08 03:30\n"
+"POT-Creation-Date: 2026-06-22 03:32+0000\n"
+"PO-Revision-Date: 2026-06-22 03:42\n"
 "Last-Translator: \n"
 "Language-Team: Serbian (Latin)\n"
 "Language: sr_CS\n"
@@ -1887,7 +1887,7 @@ msgstr "&Naslovi"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1445 NVDAObjects\window\excel.py:762
+#: browseMode.py:1445 NVDAObjects\window\excel.py:773
 msgid "&Form fields"
 msgstr "polja za &unos"
 
@@ -1924,7 +1924,7 @@ msgstr "&Izdvoji po:"
 #. Beware not to set an accelerator that would collide with other controls in this dialog, such as an
 #. element type radio label.
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-#: browseMode.py:1515 globalCommands.py:1808
+#: browseMode.py:1515 globalCommands.py:1811
 msgid "Activate"
 msgstr "Aktiviraj"
 
@@ -1961,8 +1961,8 @@ msgstr "Pomera se na početak sadržajnog elementa, kao što je lista ili tabela
 #. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 #. Translators: Reported when attempting to move to the next result in the Python Console
 #. output pane while there is no next result.
-#: browseMode.py:2482 globalCommands.py:1958 globalCommands.py:2036
-#: globalCommands.py:2156 appModules\nvda.py:146
+#: browseMode.py:2482 globalCommands.py:1961 globalCommands.py:2039
+#: globalCommands.py:2159 appModules\nvda.py:146
 msgid "Bottom"
 msgstr "Dno"
 
@@ -2387,7 +2387,7 @@ msgstr "Neke radnje sa dodacima su neuspešne. Pogledajte datoteku dnevnika za v
 #: gui\installerGui.py:126 gui\installerGui.py:210 gui\installerGui.py:701
 #: gui\installerGui.py:718 gui\installerGui.py:790 gui\logViewer.py:112
 #: gui\logViewer.py:143 gui\message.py:160 gui\settingsDialogs.py:1044
-#: gui\settingsDialogs.py:6008 gui\settingsDialogs.py:6851
+#: gui\settingsDialogs.py:6008 gui\settingsDialogs.py:6874
 #: gui\startupDialogs.py:127 _remoteClient\dialogs.py:67
 #: _remoteClient\dialogs.py:306 _remoteClient\dialogs.py:430
 msgid "Error"
@@ -2491,7 +2491,7 @@ msgstr "pronađi prethodno pojavljivanje prethodno unetog teksta od trenutnog po
 #. Translators: The message reported when there is no selection
 #. Translators: When trying to read the documentation but there is no selected autocompletion item in
 #. Eclipse
-#: cursorManager.py:541 globalCommands.py:134 globalCommands.py:395
+#: cursorManager.py:541 globalCommands.py:137 globalCommands.py:398
 #: appModules\eclipse.py:69
 msgid "No selection"
 msgstr "Bez izbora"
@@ -2500,7 +2500,7 @@ msgstr "Bez izbora"
 #: displayModel.py:556 appModules\powerpnt.py:1223 appModules\soffice.py:99
 #: controlTypes\formatFields.py:53 NVDAObjects\JAB\__init__.py:206
 #: NVDAObjects\UIA\__init__.py:194 NVDAObjects\window\edit.py:339
-#: NVDAObjects\window\edit.py:702 NVDAObjects\window\excel.py:1362
+#: NVDAObjects\window\edit.py:702 NVDAObjects\window\excel.py:1373
 #: NVDAObjects\window\scintilla.py:154 NVDAObjects\window\winword.py:1272
 #: virtualBuffers\adobeAcrobat.py:83
 #, python-format
@@ -2666,154 +2666,160 @@ msgid "Vision"
 msgstr "Vid"
 
 #. Translators: The name of a category of NVDA commands.
-#: globalCommands.py:107
+#. Translators: This is the label for the magnifier settings panel.
+#: globalCommands.py:107 gui\settingsDialogs.py:6042
+msgid "Magnifier"
+msgstr "Lupa"
+
+#. Translators: The name of a category of NVDA commands.
+#: globalCommands.py:110
 msgctxt "script category"
 msgid "Tools"
 msgstr "Alati"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: a touch screen gesture
-#: globalCommands.py:110 touchHandler.py:291
+#: globalCommands.py:113 touchHandler.py:291
 msgid "Touch screen"
 msgstr "Ekran osetljiv na dodir"
 
 #. Translators: The name of a category of NVDA commands.
-#: globalCommands.py:113
+#: globalCommands.py:116
 msgid "System focus"
 msgstr "Sistemski fokus"
 
 #. Translators: The name of a category of NVDA commands.
-#: globalCommands.py:116
+#: globalCommands.py:119
 msgid "System status"
 msgstr "Status sistema"
 
 #. Translators: The name of a category of NVDA commands.
-#: globalCommands.py:119
+#: globalCommands.py:122
 msgid "Input"
 msgstr "Unos"
 
 #. Translators: The name of a category of NVDA commands.
-#: globalCommands.py:122
+#: globalCommands.py:125
 msgid "Document formatting"
 msgstr "Formatiranje dokumenta"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the audio settings panel.
-#: globalCommands.py:125 gui\settingsDialogs.py:3576
+#: globalCommands.py:128 gui\settingsDialogs.py:3576
 msgid "Audio"
 msgstr "Zvuk"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the Remote Access settings category in NVDA's Settings screen.
-#: globalCommands.py:128 gui\settingsDialogs.py:3854
+#: globalCommands.py:131 gui\settingsDialogs.py:3854
 msgctxt "remote"
 msgid "Remote Access"
 msgstr "Daljinski pristup"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring
 #. (example: when there is no setting for language).
-#: globalCommands.py:132
+#: globalCommands.py:135
 msgid "No settings"
 msgstr "Nema podešavanja"
 
 #. Translators: Describes the Cycle audio ducking mode command.
-#: globalCommands.py:191
+#: globalCommands.py:194
 msgid "Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds"
 msgstr "Kruži kroz režime stišavanja pozadinskih zvukova koji određuju u kojim situacijama će NVDA utišati pozadinske zvukove"
 
 #. Translators: a message when audio ducking is not supported on this machine
-#: globalCommands.py:199
+#: globalCommands.py:202
 msgid "Audio ducking not supported"
 msgstr "Stišavanje pozadinskih zvukova nije podržano"
 
 #. Translators: Input help mode message for toggle input help command.
-#: globalCommands.py:212
+#: globalCommands.py:215
 msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
 msgstr "Uključuje i isključuje pomoć za unos. Kada je uključena, svaki unos, kao na primer pritiskanje tastera, otkriće koja skripta je povezana sa tim unosom, ako je neka povezana."
 
 #. Translators: This will be presented when the input help is toggled.
-#: globalCommands.py:223
+#: globalCommands.py:226
 #, python-brace-format
 msgid "input help on. Press {gestureKeys} again to turn it off."
 msgstr "uključena pomoć za unos. Pritisnite {gestureKeys} ponovo da je isključite."
 
 #. Translators: This will be presented when the input help is toggled.
-#: globalCommands.py:227
+#: globalCommands.py:230
 msgid "input help off"
 msgstr "isključena pomoć za unos"
 
 #. Translators: Input help mode message for toggle sleep mode command.
-#: globalCommands.py:233
+#: globalCommands.py:236
 msgid "Toggles sleep mode on and off for the active application."
 msgstr "Uključuje i isključuje režim spavanja za trenutnu aplikaciju."
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
-#: globalCommands.py:243
+#: globalCommands.py:246
 msgid "Sleep mode off"
 msgstr "Isključen režim spavanja"
 
 #. Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
-#: globalCommands.py:249
+#: globalCommands.py:252
 msgid "Sleep mode on"
 msgstr "Uključen režim spavanja"
 
 #. Translators: Input help mode message for report current line command.
-#: globalCommands.py:254
+#: globalCommands.py:257
 msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line. Pressing three times will spell the line using character descriptions."
 msgstr "Ako se pritisne jednom, prijavljuje trenutni red ispod kursora za aplikacije. Ako se pritisne dva puta, sriče trenutni red. Ako se pritisne tri puta, sriče trenutni red koristeći opise za znakove."
 
 #. Translators: Input help mode message for left mouse click command.
-#: globalCommands.py:283
+#: globalCommands.py:286
 msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "Izvršava jedan klik na levo dugme miša na trenutnoj poziciji miša"
 
 #. Translators: Reported when left mouse button is clicked.
-#: globalCommands.py:289
+#: globalCommands.py:292
 msgid "Left click"
 msgstr "Levi klik"
 
 #. Translators: Input help mode message for right mouse click command.
-#: globalCommands.py:295
+#: globalCommands.py:298
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "Izvršava jedan klik na desno dugme miša na trenutnoj poziciji miša"
 
 #. Translators: Reported when right mouse button is clicked.
-#: globalCommands.py:301
+#: globalCommands.py:304
 msgid "Right click"
 msgstr "Desni klik"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
-#: globalCommands.py:307
+#: globalCommands.py:310
 msgid "Locks or unlocks the left mouse button"
 msgstr "Zaključava ili otključava levo dugme miša"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
-#: globalCommands.py:319
+#: globalCommands.py:322
 msgid "Locks or unlocks the right mouse button"
 msgstr "Zaključava ili otključava desno dugme miša"
 
 #. Translators: Input help mode message for scroll up at the mouse position command.
-#: globalCommands.py:332
+#: globalCommands.py:335
 msgid "Scroll up at the mouse position"
 msgstr "Pomeri točkić gore na poziciji miša"
 
 #. Translators: Input help mode message for scroll down at the mouse position command.
-#: globalCommands.py:342
+#: globalCommands.py:345
 msgid "Scroll down at the mouse position"
 msgstr "Pomeri točkić dole na poziciji miša"
 
 #. Translators: Input help mode message for scroll left at the mouse position command.
-#: globalCommands.py:352
+#: globalCommands.py:355
 msgid "Scroll left at the mouse position"
 msgstr "Pomeri točkić levo na poziciji miša"
 
 #. Translators: Input help mode message for scroll right at the mouse position command.
-#: globalCommands.py:362
+#: globalCommands.py:365
 msgid "Scroll right at the mouse position"
 msgstr "Pomeri točkić desno na poziciji miša"
 
 #. Translators: Input help mode message for report current selection command.
-#: globalCommands.py:372
+#: globalCommands.py:375
 msgid "Announces the current selection in edit controls and documents. Pressing twice spells this information. Pressing three times spells it using character descriptions. Pressing four times shows it in a browsable message. "
 msgstr "Izgovara trenutni izbor u kontrolama za uređivanje i dokumentima. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta sriče se uz opise znakova. Ako se pritisne četiri puta prikazuje se u poruci koja se može istražiti. "
 
@@ -2821,313 +2827,313 @@ msgstr "Izgovara trenutni izbor u kontrolama za uređivanje i dokumentima. Ako s
 #. Translators: This is spoken to indicate what has just been selected.
 #. The text preceding 'selected' is intentional.
 #. For example 'hello world selected'
-#: globalCommands.py:399 speech\speech.py:1283
+#: globalCommands.py:402 speech\speech.py:1283
 #, python-format
 msgid "%s selected"
 msgstr "%s izabrano"
 
 #. Translators: Input help mode message for report date and time command.
-#: globalCommands.py:434
+#: globalCommands.py:437
 msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
 msgstr "Ako se pritisne jednom, prijaviće se trenutno vreme. Ako se pritisne dvaput, prijaviće se trenutni datum"
 
 #. Translators: Input help mode message for set the first value in the synth ring setting.
-#: globalCommands.py:462
+#: globalCommands.py:465
 msgid "Set the first value of the current setting in the synth settings ring"
 msgstr "Podesi trenutno podešavanje u krugu govornih podešavanja na prvu vrednost"
 
 #. Translators: Input help mode message for set the last value in the synth ring settings.
-#: globalCommands.py:475
+#: globalCommands.py:478
 msgid "Set the last value of the current setting in the synth settings ring"
 msgstr "Podesi trenutno podešavanje u krugu govornih podešavanja na poslednju vrednost"
 
 #. Translators: Input help mode message for increase synth setting value command.
-#: globalCommands.py:488
+#: globalCommands.py:491
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr "Povećava trenutno podešavanje u krugu govornih podešavanja"
 
 #. Translators: Input help mode message for increasing synth setting value command in larger steps.
-#: globalCommands.py:502
+#: globalCommands.py:505
 msgid "Increases the currently active setting in the synth settings ring in a larger step"
 msgstr "Povećava trenutno podešavanje u krugu govornih podešavanja većim skokom"
 
 #. Translators: Input help mode message for decrease synth setting value command.
-#: globalCommands.py:516
+#: globalCommands.py:519
 msgid "Decreases the currently active setting in the synth settings ring"
 msgstr "Smanjuje trenutno podešavanje u krugu govornih podešavanja"
 
 #. Translators: Input help mode message for decreasing synth setting value command in larger steps.
-#: globalCommands.py:530
+#: globalCommands.py:533
 msgid "Decreases the currently active setting in the synth settings ring in a larger step"
 msgstr "Smanjuje trenutno podešavanje u krugu govornih podešavanja većim skokom"
 
 #. Translators: Input help mode message for next synth setting command.
-#: globalCommands.py:544
+#: globalCommands.py:547
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr "Premešta se na naredno dostupno podešavanje u krugu podešavanja govora"
 
 #. Translators: Input help mode message for previous synth setting command.
-#: globalCommands.py:558
+#: globalCommands.py:561
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "Premešta se na prethodno dostupno podešavanje u krugu podešavanja govora"
 
 #. Translators: Input help mode message for toggling keyboard layout.
-#: globalCommands.py:572
+#: globalCommands.py:575
 msgid "Toggles between desktop and laptop keyboard layout"
 msgstr "Prebacuje se između desktop i laptop rasporeda tastature"
 
 #. Translators: Reported when the user toggles keyboard layout.
 #. {layout} will be replaced with the new keyboard layout, i.e. desktop or laptop
-#: globalCommands.py:585
+#: globalCommands.py:588
 #, python-brace-format
 msgid "{layout} layout"
 msgstr "{layout} raspored tastature"
 
 #. Translators: Input help mode message for cycling the reporting of typed characters.
-#: globalCommands.py:590
+#: globalCommands.py:593
 msgid "Cycles through options for when to speak typed characters."
 msgstr "Kruži kroz opcije koje određuju kada će se izgovarati upisani znakovi."
 
 #. Translators: Reported when the user cycles through speak typed characters modes.
 #. {mode} will be replaced with the mode; e.g. Off, On, Only in edit controls.
-#: globalCommands.py:601
+#: globalCommands.py:604
 #, python-brace-format
 msgid "Speak typed characters {mode}"
 msgstr "Izgovor upisanih znakova {mode}"
 
 #. Translators: Input help mode message for cycling the reporting of typed words.
-#: globalCommands.py:606
+#: globalCommands.py:609
 msgid "Cycles through options for when to speak typed words."
 msgstr "Kruži kroz opcije koje određuju kada će se izgovarati upisane reči."
 
 #. Translators: Reported when the user cycles through speak typed words modes.
 #. {mode} will be replaced with the mode; e.g. Off, On, Only in edit controls.
-#: globalCommands.py:617
+#: globalCommands.py:620
 #, python-brace-format
 msgid "Speak typed words {mode}"
 msgstr "Izgovor upisanih reči {mode}"
 
 #. Translators: Input help mode message for toggle speak command keys command.
-#: globalCommands.py:622
+#: globalCommands.py:625
 msgid "Toggles on and off the speaking of command keys"
 msgstr "Uključuje ili isključuje izgovor komandnih tastera"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
-#: globalCommands.py:629
+#: globalCommands.py:632
 msgid "speak command keys off"
 msgstr "isključen izgovor komandnih tastera"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
-#: globalCommands.py:633
+#: globalCommands.py:636
 msgid "speak command keys on"
 msgstr "uključen izgovor komandnih tastera"
 
 #. Translators: Input help mode message for toggle report font name command.
-#: globalCommands.py:639
+#: globalCommands.py:642
 msgid "Toggles on and off the reporting of font changes"
 msgstr "Uključuje i isključuje prijavljivanje promena fonta"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
-#: globalCommands.py:645
+#: globalCommands.py:648
 msgid "report font name off"
 msgstr "isključeno prijavljivanje imena fonta"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
-#: globalCommands.py:649
+#: globalCommands.py:652
 msgid "report font name on"
 msgstr "uključeno prijavljivanje imena fonta"
 
 #. Translators: Input help mode message for toggle report font size command.
-#: globalCommands.py:655
+#: globalCommands.py:658
 msgid "Toggles on and off the reporting of font size changes"
 msgstr "Uključuje i isključuje prijavljivanje promene veličine fonta"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
-#: globalCommands.py:661
+#: globalCommands.py:664
 msgid "report font size off"
 msgstr "isključeno prijavljivanje veličine fonta"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
-#: globalCommands.py:665
+#: globalCommands.py:668
 msgid "report font size on"
 msgstr "uključeno prijavljivanje veličine fonta"
 
 #. Translators: Input help mode message for toggle report font attributes command.
-#: globalCommands.py:672
+#: globalCommands.py:675
 msgid "Cycles font attribute reporting between speech, braille, speech and braille, and off."
 msgstr "Menja prijavljivanje atributa fonta između prijavljivanja govorom, prijavljivanja na brajevom redu, prijavljivanja govorom i prijavljivanja na brajevom redu ili isključenog prijavljivanja."
 
 #. Translators: A state in which font attributes are not reported.
-#: globalCommands.py:682
+#: globalCommands.py:685
 msgid "Do not report font attributes"
 msgstr "Ne prijavljuj atribute fonta"
 
 #. Translators: A state in which font attributes are only spoken.
-#: globalCommands.py:685
+#: globalCommands.py:688
 msgid "Speak font attributes"
 msgstr "Izgovaraj atribute fonta"
 
 #. Translators: A state in which font attributes are only brailled.
-#: globalCommands.py:688
+#: globalCommands.py:691
 msgid "Braille font attributes"
 msgstr "Prikazuj atribute fonta na brajevom redu"
 
 #. Translators: A state in which font attributes are both spoken and brailled.
-#: globalCommands.py:691
+#: globalCommands.py:694
 msgid "Speak and braille font attributes"
 msgstr "Izgovaraj i prikazuj atribute fonta na brajevom redu"
 
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
-#: globalCommands.py:697
+#: globalCommands.py:700
 msgid "Toggles on and off the reporting of superscripts and subscripts"
 msgstr "Uključuje i isključuje prijavljivanje eksponenata i indeksa"
 
 #. Translators: The message announced when toggling the report superscripts and subscripts
 #. document formatting setting.
-#: globalCommands.py:706
+#: globalCommands.py:709
 msgid "report superscripts and subscripts on"
 msgstr "uključeno prijavljivanje eksponenata i indeksa"
 
 #. Translators: The message announced when toggling the report superscripts and subscripts
 #. document formatting setting.
-#: globalCommands.py:710
+#: globalCommands.py:713
 msgid "report superscripts and subscripts off"
 msgstr "isključeno prijavljivanje eksponenata i indeksa"
 
 #. Translators: Input help mode message for toggle report revisions command.
-#: globalCommands.py:715
+#: globalCommands.py:718
 msgid "Toggles on and off the reporting of revisions"
 msgstr "Uključuje i isključuje prijavljivanje izmena"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
-#: globalCommands.py:721
+#: globalCommands.py:724
 msgid "report revisions off"
 msgstr "isključeno prijavljivanje izmena"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
-#: globalCommands.py:725
+#: globalCommands.py:728
 msgid "report revisions on"
 msgstr "uključeno prijavljivanje izmena"
 
 #. Translators: Input help mode message for toggle report emphasis command.
-#: globalCommands.py:731
+#: globalCommands.py:734
 msgid "Toggles on and off the reporting of emphasis"
 msgstr "Uključuje i isključuje prijavljivanje naglašenog teksta"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
-#: globalCommands.py:737
+#: globalCommands.py:740
 msgid "report emphasis off"
 msgstr "isključeno prijavljivanje naglašenog teksta"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
-#: globalCommands.py:741
+#: globalCommands.py:744
 msgid "report emphasis on"
 msgstr "uključeno prijavljivanje naglašenog teksta"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-#: globalCommands.py:747
+#: globalCommands.py:750
 msgid "Toggles on and off the reporting of highlighted text"
 msgstr "Uključuje i isključuje prijavljivanje obeleženog teksta"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-#: globalCommands.py:755
+#: globalCommands.py:758
 msgid "report highlighted on"
 msgstr "uključeno prijavljivanje obeleženog teksta"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-#: globalCommands.py:758
+#: globalCommands.py:761
 msgid "report highlighted off"
 msgstr "isključeno prijavljivanje obeleženog teksta"
 
 #. Translators: Input help mode message for toggle report colors command.
-#: globalCommands.py:763
+#: globalCommands.py:766
 msgid "Toggles on and off the reporting of colors"
 msgstr "Uključuje i isključuje prijavljivanje boja"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
-#: globalCommands.py:769
+#: globalCommands.py:772
 msgid "report colors off"
 msgstr "isključeno prijavljivanje boja"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
-#: globalCommands.py:773
+#: globalCommands.py:776
 msgid "report colors on"
 msgstr "uključeno prijavljivanje boja"
 
 #. Translators: Input help mode message for toggle report alignment command.
-#: globalCommands.py:779
+#: globalCommands.py:782
 msgid "Toggles on and off the reporting of text alignment"
 msgstr "Uključuje i isključuje prijavljivanje poravnavanja teksta"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
-#: globalCommands.py:785
+#: globalCommands.py:788
 msgid "report alignment off"
 msgstr "isključeno prijavljivanje poravnavanja"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
-#: globalCommands.py:789
+#: globalCommands.py:792
 msgid "report alignment on"
 msgstr "uključeno prijavljivanje poravnavanja"
 
 #. Translators: Input help mode message for toggle report style command.
-#: globalCommands.py:795
+#: globalCommands.py:798
 msgid "Toggles on and off the reporting of style changes"
 msgstr "Uključuje i isključuje prijavljivanje promene stila"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
-#: globalCommands.py:801
+#: globalCommands.py:804
 msgid "report style off"
 msgstr "isključeno prijavljivanje stila"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
-#: globalCommands.py:805
+#: globalCommands.py:808
 msgid "report style on"
 msgstr "uključeno prijavljivanje stila"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
-#: globalCommands.py:811
+#: globalCommands.py:814
 msgid "Cycles through options for how to report spelling or grammar errors"
 msgstr "Kruži kroz opcije prijavljivanja pravopisnih i gramatičkih grešaka"
 
 #. Translators: Reported when the user cycles through the choices to report spelling or grammar errors.
 #. {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
-#: globalCommands.py:823
+#: globalCommands.py:826
 #, python-brace-format
 msgid "Report errors {mode}"
 msgstr "Prijavljivanje grešaka {mode}"
 
 #. Translators: Input help mode message for command to toggle report spelling or grammar errors in braille.
-#: globalCommands.py:830
+#: globalCommands.py:833
 msgid "Toggles reporting spelling or grammar errors in braille"
 msgstr "Uključuje ili isključuje prikazivanje pravopisnih ili gramatičkhih grešaka na brajevom redu"
 
 #. Translators: Message presented when turning on reporting spelling or grammar errors in braille.
-#: globalCommands.py:840
+#: globalCommands.py:843
 msgid "Report errors in braille on"
 msgstr "Uključeno prikazivanje grešaka na brajevom redu"
 
 #. Translators: Message presented when turning off reporting spelling errors or grammar in braille.
-#: globalCommands.py:843
+#: globalCommands.py:846
 msgid "Report errors in braille off"
 msgstr "Isključeno prikazivanje grešaka na brajevom redu"
 
 #. Translators: Input help mode message for command to toggle braille automatic scroll.
-#: globalCommands.py:847
+#: globalCommands.py:850
 msgid "Toggles braille automatic scroll"
 msgstr "Uključuje ili isključuje automatsko pomeranje brajevog reda"
 
 #. Translators: Message reported when automatic scrolling has been enabled in braille.
-#: globalCommands.py:855
+#: globalCommands.py:858
 msgid "Automatic scrolling enabled"
 msgstr "Omogućeno automatsko pomeranje brajevog reda"
 
 #. Translators: Message reported when automatic scrolling has been disabled in braille.
-#: globalCommands.py:863
+#: globalCommands.py:866
 msgid "Automatic scrolling disabled"
 msgstr "Onemogućeno automatsko pomeranje brajevog reda"
 
 #. Translators: Input help mode message for command to increase the rate for braille automatic scroll.
-#: globalCommands.py:868
+#: globalCommands.py:871
 msgid "Increases the rate for braille automatic scroll"
 msgstr "Povećava brzinu automatskog pomeranja brajevog reda"
 
@@ -3135,722 +3141,722 @@ msgstr "Povećava brzinu automatskog pomeranja brajevog reda"
 #. {rate} will be replaced with the rate as a whole number from 0 to 100.
 #. Translators: Message shown when decreasing the braille auto scroll rate.
 #. {rate} will be replaced with the rate as a whole number from 0 to 100.
-#: globalCommands.py:876 globalCommands.py:888
+#: globalCommands.py:879 globalCommands.py:891
 #, python-brace-format
 msgid "Scroll rate {rate}"
 msgstr "Brzina pomeranja {rate}"
 
 #. Translators: Input help mode message for command to decrease the rate for braille automatic scroll.
-#: globalCommands.py:880
+#: globalCommands.py:883
 msgid "Decreases the rate for braille automatic scroll"
 msgstr "Smanjuje brzinu automatskog pomeranja brajevog reda"
 
 #. Translators: Input help mode message for toggle report pages command.
-#: globalCommands.py:892
+#: globalCommands.py:895
 msgid "Toggles on and off the reporting of pages"
 msgstr "Uključuje i isključuje prijavljivanje stranica"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
-#: globalCommands.py:898
+#: globalCommands.py:901
 msgid "report pages off"
 msgstr "isključeno prijavljivanje stranica"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
-#: globalCommands.py:902
+#: globalCommands.py:905
 msgid "report pages on"
 msgstr "uključeno prijavljivanje stranica"
 
 #. Translators: Input help mode message for toggle report line numbers command.
-#: globalCommands.py:908
+#: globalCommands.py:911
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "Uključuje i isključuje prijavljivanje broja redova"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
-#: globalCommands.py:914
+#: globalCommands.py:917
 msgid "report line numbers off"
 msgstr "isključeno prijavljivanje broja redova"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
-#: globalCommands.py:918
+#: globalCommands.py:921
 msgid "report line numbers on"
 msgstr "uključeno prijavljivanje broja redova"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-#: globalCommands.py:924
+#: globalCommands.py:927
 msgid "Cycles through line indentation settings"
 msgstr "Kruži kroz podešavanja za prijavljivanje uvlačenja reda"
 
 #. Translators: A message reported when cycling through line indentation settings.
 #. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
-#: globalCommands.py:936
+#: globalCommands.py:939
 #, python-brace-format
 msgid "Report line indentation {mode}"
 msgstr "Prijavljivanje uvlačenja reda {mode}"
 
 #. Translators: Input help mode message for toggle ignore blank lines for line indentation reporting command.
-#: globalCommands.py:940
+#: globalCommands.py:943
 msgid "Toggles on and off the ignoring of blank lines for line indentation reporting"
 msgstr "Uključuje i isključuje zanemarivanje praznih redova za prijavljivanje uvlačenja redova"
 
 #. Translators: The message announced when toggling off the ignore blank lines for line indentation
 #. reporting document formatting setting.
-#: globalCommands.py:949
+#: globalCommands.py:952
 msgid "Ignore blank lines for line indentation reporting off"
 msgstr "Isključeno zanemarivanje praznih redova za prijavljivanje uvlačenja redova"
 
 #. Translators: The message announced when toggling on the ignore blank lines for line indentation
 #. reporting document formatting setting.
-#: globalCommands.py:953
+#: globalCommands.py:956
 msgid "Ignore blank lines for line indentation reporting on"
 msgstr "Uključeno zanemarivanje praznih redova za prijavljivanje uvlačenja redova"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
-#: globalCommands.py:957
+#: globalCommands.py:960
 msgid "Toggles on and off the reporting of paragraph indentation"
 msgstr "Uključuje i isključuje prijavljivanje uvlačenja pasusa"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
-#: globalCommands.py:963
+#: globalCommands.py:966
 msgid "report paragraph indentation off"
 msgstr "isključeno prijavljivanje uvlačenja pasusa"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
-#: globalCommands.py:967
+#: globalCommands.py:970
 msgid "report paragraph indentation on"
 msgstr "uključeno prijavljivanje uvlačenja pasusa"
 
 #. Translators: Input help mode message for toggle report line spacing command.
-#: globalCommands.py:973
+#: globalCommands.py:976
 msgid "Toggles on and off the reporting of line spacing"
 msgstr "Uključuje i isključuje Prijavljivanje odvajanja redova"
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
-#: globalCommands.py:979
+#: globalCommands.py:982
 msgid "report line spacing off"
 msgstr "isključeno prijavljivanje odvajanja redova"
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
-#: globalCommands.py:983
+#: globalCommands.py:986
 msgid "report line spacing on"
 msgstr "uključeno prijavljivanje odvajanja redova"
 
 #. Translators: Input help mode message for toggle report tables command.
-#: globalCommands.py:989
+#: globalCommands.py:992
 msgid "Toggles on and off the reporting of tables"
 msgstr "Uključuje i isključuje prijavljivanje tabela"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
-#: globalCommands.py:995
+#: globalCommands.py:998
 msgid "report tables off"
 msgstr "isključeno prijavljivanje tabela"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
-#: globalCommands.py:999
+#: globalCommands.py:1002
 msgid "report tables on"
 msgstr "uključeno prijavljivanje tabela"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
-#: globalCommands.py:1005
+#: globalCommands.py:1008
 msgid "Cycle through the possible modes to report table row and column headers"
 msgstr "Kruži kroz moguće režime prijavljivanja zaglavlja redova i kolona tabela"
 
 #. Translators: Reported when the user cycles through report table header modes.
 #. {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
-#: globalCommands.py:1015
+#: globalCommands.py:1018
 #, python-brace-format
 msgid "Report table headers {mode}"
 msgstr "Prijavljivanje zaglavlja tabela {mode}"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
-#: globalCommands.py:1019
+#: globalCommands.py:1022
 msgid "Toggles on and off the reporting of table cell coordinates"
 msgstr "Uključuje i isključuje prijavljivanje koordinata ćelija u tabeli"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
-#: globalCommands.py:1025
+#: globalCommands.py:1028
 msgid "report table cell coordinates off"
 msgstr "isključeno prijavljivanje koordinata ćelija u tabeli"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
-#: globalCommands.py:1029
+#: globalCommands.py:1032
 msgid "report table cell coordinates on"
 msgstr "uključeno prijavljivanje koordinata ćelija u tabeli"
 
 #. Translators: Input help mode message for toggle report cell borders command.
-#: globalCommands.py:1035
+#: globalCommands.py:1038
 msgid "Cycles through the cell border reporting settings"
 msgstr "Kruži kroz podešavanja za prijavljivanje granica ćelija"
 
 #. Translators: Reported when the user cycles through report cell border modes.
 #. {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
-#: globalCommands.py:1045
+#: globalCommands.py:1048
 #, python-brace-format
 msgid "Report cell borders {mode}"
 msgstr "Prijavljivanje granica ćelija {mode}"
 
 #. Translators: Input help mode message for toggle report links command.
-#: globalCommands.py:1049
+#: globalCommands.py:1052
 msgid "Toggles on and off the reporting of links"
 msgstr "Uključuje i isključuje prijavljivanje linkova"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
-#: globalCommands.py:1055
+#: globalCommands.py:1058
 msgid "report links off"
 msgstr "isključeno prijavljivanje linkova"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
-#: globalCommands.py:1059
+#: globalCommands.py:1062
 msgid "report links on"
 msgstr "uključeno prijavljivanje linkova"
 
 #. Translators: Input help mode message for toggle report link type command.
-#: globalCommands.py:1065
+#: globalCommands.py:1068
 msgid "Toggles on and off the reporting of link type"
 msgstr "Uključuje ili isključuje prijavljivanje vrste linka"
 
 #. Translators: The message announced when toggling the report link type document formatting setting.
-#: globalCommands.py:1074
+#: globalCommands.py:1077
 msgid "Report link type on"
 msgstr "Uključeno prijavljivanje vrste linka"
 
 #. Translators: The message announced when toggling the report link type document formatting setting.
-#: globalCommands.py:1076
+#: globalCommands.py:1079
 msgid "Report link type off"
 msgstr "Isključeno prijavljivanje vrste linka"
 
 #. Translators: The message announced when reporting links is disabled,
 #. and the user tries to toggle the report link type document formatting setting.
-#: globalCommands.py:1081
+#: globalCommands.py:1084
 msgid "The report links setting must be enabled to toggle report link type"
 msgstr "Podešavanje prijavljivanja linkova mora biti uključeno kako bi se prijavljivanje vrste linka uključilo ili isključilo"
 
 #. Translators: Input help mode message for toggle report graphics command.
-#: globalCommands.py:1085
+#: globalCommands.py:1088
 msgid "Toggles on and off the reporting of graphics"
 msgstr "Uključuje i isključuje prijavljivanje slika"
 
 #. Translators: The message announced when toggling the report graphics document formatting setting.
-#: globalCommands.py:1091
+#: globalCommands.py:1094
 msgid "report graphics off"
 msgstr "isključeno prijavljivanje slika"
 
 #. Translators: The message announced when toggling the report graphics document formatting setting.
-#: globalCommands.py:1095
+#: globalCommands.py:1098
 msgid "report graphics on"
 msgstr "uključeno prijavljivanje slika"
 
 #. Translators: Input help mode message for toggle report comments command.
-#: globalCommands.py:1101
+#: globalCommands.py:1104
 msgid "Toggles on and off the reporting of comments"
 msgstr "Uključuje i isključuje prijavljivanje komentara"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
-#: globalCommands.py:1107
+#: globalCommands.py:1110
 msgid "report comments off"
 msgstr "isključeno prijavljivanje komentara"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
-#: globalCommands.py:1111
+#: globalCommands.py:1114
 msgid "report comments on"
 msgstr "uključeno prijavljivanje komentara"
 
 #. Translators: Input help mode message for toggle report lists command.
-#: globalCommands.py:1117
+#: globalCommands.py:1120
 msgid "Toggles on and off the reporting of lists"
 msgstr "Uključuje i isključuje prijavljivanje lista"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
-#: globalCommands.py:1123
+#: globalCommands.py:1126
 msgid "report lists off"
 msgstr "isključeno prijavljivanje lista"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
-#: globalCommands.py:1127
+#: globalCommands.py:1130
 msgid "report lists on"
 msgstr "uključeno prijavljivanje lista"
 
 #. Translators: Input help mode message for toggle report headings command.
-#: globalCommands.py:1133
+#: globalCommands.py:1136
 msgid "Toggles on and off the reporting of headings"
 msgstr "Uključuje i isključuje prijavljivanje naslova"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
-#: globalCommands.py:1139
+#: globalCommands.py:1142
 msgid "report headings off"
 msgstr "isključeno prijavljivanje naslova"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
-#: globalCommands.py:1143
+#: globalCommands.py:1146
 msgid "report headings on"
 msgstr "uključeno prijavljivanje naslova"
 
 #. Translators: Input help mode message for toggle report groupings command.
-#: globalCommands.py:1149
+#: globalCommands.py:1152
 msgid "Toggles on and off the reporting of groupings"
 msgstr "Uključuje i isključuje prijavljivanje grupisanja"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#: globalCommands.py:1155
+#: globalCommands.py:1158
 msgid "report groupings off"
 msgstr "isključeno prijavljivanje grupisanja"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#: globalCommands.py:1159
+#: globalCommands.py:1162
 msgid "report groupings on"
 msgstr "uključeno prijavljivanje grupisanja"
 
 #. Translators: Input help mode message for toggle report block quotes command.
-#: globalCommands.py:1165
+#: globalCommands.py:1168
 msgid "Toggles on and off the reporting of block quotes"
 msgstr "Uključuje i isključuje prijavljivanje citata"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#: globalCommands.py:1171
+#: globalCommands.py:1174
 msgid "report block quotes off"
 msgstr "isključeno prijavljivanje citata"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#: globalCommands.py:1175
+#: globalCommands.py:1178
 msgid "report block quotes on"
 msgstr "uključeno prijavljivanje citata"
 
 #. Translators: Input help mode message for toggle report landmarks command.
-#: globalCommands.py:1181
+#: globalCommands.py:1184
 msgid "Toggles on and off the reporting of landmarks"
 msgstr "Uključuje i isključuje prijavljivanje orjentira"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-#: globalCommands.py:1187
+#: globalCommands.py:1190
 msgid "report landmarks and regions off"
 msgstr "isključeno prijavljivanje orjentira i regiona"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-#: globalCommands.py:1191
+#: globalCommands.py:1194
 msgid "report landmarks and regions on"
 msgstr "uključeno prijavljivanje orjentira i regiona"
 
 #. Translators: Input help mode message for toggle report articles command.
-#: globalCommands.py:1197
+#: globalCommands.py:1200
 msgid "Toggles on and off the reporting of articles"
 msgstr "Uključuje i isključuje prijavljivanje članaka"
 
 #. Translators: The message announced when toggling the report articles document formatting setting.
-#: globalCommands.py:1203
+#: globalCommands.py:1206
 msgid "report articles off"
 msgstr "isključeno prijavljivanje članaka"
 
 #. Translators: The message announced when toggling the report articles document formatting setting.
-#: globalCommands.py:1207
+#: globalCommands.py:1210
 msgid "report articles on"
 msgstr "uključeno prijavljivanje članaka"
 
 #. Translators: Input help mode message for toggle report frames command.
-#: globalCommands.py:1213
+#: globalCommands.py:1216
 msgid "Toggles on and off the reporting of frames"
 msgstr "Uključuje i isključuje prijavljivanje okvira"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
-#: globalCommands.py:1219
+#: globalCommands.py:1222
 msgid "report frames off"
 msgstr "isključeno prijavljivanje okvira"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
-#: globalCommands.py:1223
+#: globalCommands.py:1226
 msgid "report frames on"
 msgstr "uključeno prijavljivanje okvira"
 
 #. Translators: Input help mode message for toggle report if clickable command.
-#: globalCommands.py:1229
+#: globalCommands.py:1232
 msgid "Toggles on and off reporting if clickable"
 msgstr "Uključuje i isključuje prijavljivanje klikabilnih objekata"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
-#: globalCommands.py:1235
+#: globalCommands.py:1238
 msgid "report if clickable off"
 msgstr "isključeno prijavljivanje klikabilnih objekata"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
-#: globalCommands.py:1239
+#: globalCommands.py:1242
 msgid "report if clickable on"
 msgstr "uključeno prijavljivanje klikabilnih objekata"
 
 #. Translators: Input help mode message for toggle report figures and captions command.
-#: globalCommands.py:1245
+#: globalCommands.py:1248
 msgid "Toggles on and off the reporting of figures and captions"
 msgstr "Uključuje ili isključuje prijavljivanje figura i naslova slika"
 
 #. Translators: The message announced when toggling the report figures and captions document formatting
 #. setting.
-#: globalCommands.py:1252
+#: globalCommands.py:1255
 msgid "report figures and captions off"
 msgstr "isključeno prijavljivanje figura i naslova slika"
 
 #. Translators: The message announced when toggling the report figures and captions document formatting
 #. setting.
-#: globalCommands.py:1257
+#: globalCommands.py:1260
 msgid "report figures and captions on"
 msgstr "uključeno prijavljivanje figura i naslova slika"
 
 #. Translators: Input help mode message for cycle through automatic language switching mode command.
-#: globalCommands.py:1264
+#: globalCommands.py:1267
 msgid "Cycles through the possible choices for automatic language switching: off, language only and language and dialect."
 msgstr "Kruži kroz režime za automatsku promenu jezika: Isključeno, samo jezici ili jezici i dijalekti."
 
 #. Translators: A message reported when executing the cycle automatic language switching mode command.
-#: globalCommands.py:1273
+#: globalCommands.py:1276
 msgid "Automatic language switching off"
 msgstr "Isključena automatska promena jezika"
 
 #. Translators: A message reported when executing the cycle automatic language switching mode command.
-#: globalCommands.py:1278
+#: globalCommands.py:1281
 msgid "Automatic language and dialect switching on"
 msgstr "Uključena automatska promena jezika i dijalekta"
 
 #. Translators: A message reported when executing the cycle automatic language switching mode command.
-#: globalCommands.py:1282
+#: globalCommands.py:1285
 msgid "Automatic language switching on"
 msgstr "Uključena automatska promena jezika"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
-#: globalCommands.py:1289
+#: globalCommands.py:1292
 msgid "Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr "Kruži kroz nivoe simbola govora koji određuju koji simboli će biti izgovoreni"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
-#: globalCommands.py:1305
+#: globalCommands.py:1308
 #, python-format
 msgid "Symbol level %s"
 msgstr "Nivo simbola %s"
 
 #. Translators: Input help mode message for toggle delayed character description command.
-#: globalCommands.py:1309
+#: globalCommands.py:1312
 msgid "Toggles on and off delayed descriptions for characters on cursor movement"
 msgstr "Uključuje i isključuje odložene opise znakova pri pomeranju kursora"
 
 #. Translators: The message announced when toggling the delayed character description setting.
-#: globalCommands.py:1317
+#: globalCommands.py:1320
 msgid "delayed character descriptions on"
 msgstr "uključeni odloženi opisi znakova"
 
 #. Translators: The message announced when toggling the delayed character description setting.
-#: globalCommands.py:1320
+#: globalCommands.py:1323
 msgid "delayed character descriptions off"
 msgstr "isključeni odloženi opisi znakova"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
-#: globalCommands.py:1325
+#: globalCommands.py:1328
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "Pomera pokazivač miša na trenutni navigacioni objekat"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-#: globalCommands.py:1359
+#: globalCommands.py:1362
 msgid "Object has no location"
 msgstr "Objekat nema lokaciju"
 
 #. Translators: Input help mode message for move navigator object to mouse command.
-#: globalCommands.py:1371
+#: globalCommands.py:1374
 msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
 msgstr "Postavlja navigacioni objekat na trenutni objekat ispod pokazivača miša i izgovara ga"
 
 #. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
-#: globalCommands.py:1378
+#: globalCommands.py:1381
 msgid "Move navigator object to mouse"
 msgstr "Pomeri navigacioni objekat ka mišu"
 
 #. Translators: Script help message for next review mode command.
-#: globalCommands.py:1393
+#: globalCommands.py:1396
 msgid "Switches to the next review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"
 msgstr "Prelazi na sledeći režim pregleda (na primer objekat, dokument ili ekran) i postavlja lokaciju za pregled na mesto navigacionog objekta"
 
 #. Translators: reported when there are no other available review modes for this object
-#: globalCommands.py:1409
+#: globalCommands.py:1412
 msgid "No next review mode"
 msgstr "Ne postoji sledeći režim pregleda"
 
 #. Translators: Script help message for previous review mode command.
-#: globalCommands.py:1414
+#: globalCommands.py:1417
 msgid "Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"
 msgstr "Prelazi na prethodni režim pregleda (na primer objekat, dokument ili ekran) i postavlja lokaciju za pregled na mesto navigacionog objekta"
 
 #. Translators: reported when there are no other available review modes for this object
-#: globalCommands.py:1430
+#: globalCommands.py:1433
 msgid "No previous review mode"
 msgstr "Ne postoji prethodni režim pregleda"
 
 #. Translators: Input help mode message for toggle simple review mode command.
-#: globalCommands.py:1434
+#: globalCommands.py:1437
 msgid "Toggles simple review mode on and off"
 msgstr "Uključuje ili isključuje Režim jednostavnog pregleda"
 
 #. Translators: The message announced when toggling simple review mode.
-#: globalCommands.py:1440
+#: globalCommands.py:1443
 msgid "Simple review mode off"
 msgstr "Jednostavan režim pregleda isključen"
 
 #. Translators: The message announced when toggling simple review mode.
-#: globalCommands.py:1444
+#: globalCommands.py:1447
 msgid "Simple review mode on"
 msgstr "Jednostavan režim pregleda uključen"
 
 #. Translators: Input help mode message for report current navigator object command.
-#: globalCommands.py:1451
+#: globalCommands.py:1454
 msgid "Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this object to the clipboard"
 msgstr "Prijavljuje trenutni navigacioni objekat. Ako pritisnete dvaput sricaće ovu informaciju, ako pritisnete tri puta kopira vrednost ovog objekta u privremenu memoriju"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-#: globalCommands.py:1464 globalCommands.py:1687 globalCommands.py:1718
-#: globalCommands.py:1747 globalCommands.py:1777
+#: globalCommands.py:1467 globalCommands.py:1690 globalCommands.py:1721
+#: globalCommands.py:1750 globalCommands.py:1780
 msgid "No navigator object"
 msgstr "Nema navigacionog objekta"
 
 #. Translators: message when there is no location information
-#: globalCommands.py:1516
+#: globalCommands.py:1519
 msgid "No location information"
 msgstr "Nema informacija o lokaciji"
 
 #. Translators: Description for a keyboard command which reports location of the
 #. review cursor, falling back to the location of navigator object if needed.
-#: globalCommands.py:1522
+#: globalCommands.py:1525
 msgid "Reports information about the location of the text at the review cursor, or location of the navigator object if there is no text under review cursor."
 msgstr "Prijavljuje informacije o lokaciji teksta preglednog kursora, ili lokaciji navigacionog objekta ako nema teksta na poziciji preglednog kursora."
 
 #. Translators: Description for a keyboard command which reports location of the navigator object.
-#: globalCommands.py:1534
+#: globalCommands.py:1537
 msgid "Reports information about the location of the current navigator object."
 msgstr "Prijavljuje informacije o lokaciji trenutnog navigacionog objekta."
 
 #. Translators: Description for a keyboard command which reports location of the
 #. current caret position falling back to the location of focused object if needed.
-#: globalCommands.py:1546
+#: globalCommands.py:1549
 msgid "Reports information about the location of the text at the caret, or location of the currently focused object if there is no caret."
 msgstr "Prijavljuje informacije o lokaciji teksta na poziciji kursora, ili lokaciji fokusiranog objekta ako nema kursora."
 
 #. Translators: Description for a keyboard command which reports location of the
 #. currently focused object.
-#: globalCommands.py:1561
+#: globalCommands.py:1564
 msgid "Reports information about the location of the currently focused object."
 msgstr "Prijavljuje informacije o trenutno fokusiranom objektu."
 
 #. Translators: Description for report review cursor location command.
-#: globalCommands.py:1572
+#: globalCommands.py:1575
 msgid "Reports information about the location of the text or object at the review cursor. Pressing twice may provide further detail."
 msgstr "Daje informacije o lokaciji teksta ili objekta kod preglednog kursora. Ako pritisnete dvaput može pružiti više detalja."
 
 #. Translators: Description for a keyboard command
 #. which reports location of the text at the caret position
 #. or object with focus if there is no caret.
-#: globalCommands.py:1590
+#: globalCommands.py:1593
 msgid "Reports information about the location of the text or object at the position of system caret. Pressing twice may provide further detail."
 msgstr "Daje informacije o lokaciji teksta ili objekta na poziciji sistemskog kursora. Ako pritisnete dvaput može pružiti više detalja."
 
 #. Translators: Input help mode message for move navigator object to current focus command.
-#: globalCommands.py:1606
+#: globalCommands.py:1609
 msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
 msgstr "Postavlja navigacioni objekat na trenutni fokus, i pregledni kursor na poziciju sistemskog kursora unutar njega, ako je moguće."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
-#: globalCommands.py:1626
+#: globalCommands.py:1629
 msgid "Move to focus"
 msgstr "Premesti na fokus"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
-#: globalCommands.py:1632
+#: globalCommands.py:1635
 msgid "Pressed once sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"
 msgstr "Ako se pritisne jednom postavlja fokus tastature na navigacioni objekat, ako se pritisne dvaput postavlja sistemski kursor na pregledni kursor"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-#: globalCommands.py:1644 globalCommands.py:2907
+#: globalCommands.py:1647 globalCommands.py:2910
 msgid "No focus"
 msgstr "Nema fokusa"
 
 #. Translators: Reported when attempting to move focus to navigator object.
-#: globalCommands.py:1648
+#: globalCommands.py:1651
 msgid "Move focus"
 msgstr "Premesti fokus"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
 #. Translators: Reported when there is no caret.
-#: globalCommands.py:1670 globalCommands.py:2709
+#: globalCommands.py:1673 globalCommands.py:2712
 msgid "No caret"
 msgstr "Nema kursora"
 
 #. Translators: Input help mode message for move to parent object command.
-#: globalCommands.py:1678
+#: globalCommands.py:1681
 msgid "Moves the navigator object to the object containing it"
 msgstr "Premešta navigacioni objekat do objekta koji ga sadrži"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
-#: globalCommands.py:1694
+#: globalCommands.py:1697
 msgid "No containing object"
 msgstr "Nema sadržavajućeg objekta"
 
 #. Translators: Input help mode message for move to next object command.
-#: globalCommands.py:1709
+#: globalCommands.py:1712
 msgid "Moves the navigator object to the next object"
 msgstr "Pomera navigacioni objekat na sledeći objekat"
 
 #. Translators: Reported when there is no next object (current object is the last object).
 #. Translators: a message when there is no next object when navigating
-#: globalCommands.py:1724 globalCommands.py:4549
+#: globalCommands.py:1727 globalCommands.py:4552
 msgid "No next"
 msgstr "Nema sledećeg"
 
 #. Translators: Input help mode message for move to previous object command.
-#: globalCommands.py:1739
+#: globalCommands.py:1742
 msgid "Moves the navigator object to the previous object"
 msgstr "Pomera navigacioni objekat na prethodni objekat"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 #. Translators: a message when there is no previous object when navigating
-#: globalCommands.py:1753 globalCommands.py:4583
+#: globalCommands.py:1756 globalCommands.py:4586
 msgid "No previous"
 msgstr "Nema prethodnog"
 
 #. Translators: Input help mode message for move to first child object command.
-#: globalCommands.py:1768
+#: globalCommands.py:1771
 msgid "Moves the navigator object to the first object inside it"
 msgstr "Pomera navigacioni objekat na prvi objekat unutar njega"
 
 #. Translators: Reported when there is no contained (first child) object such as inside a document.
-#: globalCommands.py:1784
+#: globalCommands.py:1787
 msgid "No objects inside"
 msgstr "Nema unutrašnjih objekata"
 
 #. Translators: Input help mode message for activate current object command.
-#: globalCommands.py:1800
+#: globalCommands.py:1803
 msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
 msgstr "Izvršava podrazumevanu radnju na trenutnom navigacionom objektu (na primer: ako je dugme pritiska ga)."
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
-#: globalCommands.py:1847
+#: globalCommands.py:1850
 msgid "No action"
 msgstr "Nema radnje"
 
 #. Translators: Input help mode message for move review cursor to top line command.
-#: globalCommands.py:1852
+#: globalCommands.py:1855
 msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
 msgstr "Pomera pregledni kursor na prvi red trenutnog navigacionog objekta i izgovara ga"
 
 #. Translators: Input help mode message for move review cursor to previous line command.
-#: globalCommands.py:1877
+#: globalCommands.py:1880
 msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
 msgstr "Pomera pregledni kursor na prethodni red trenutnog navigacionog objekta i izgovara ga"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 #. Translators: Reported when attempting to move to the previous result in the Python Console
 #. output pane while there is no previous result.
-#: globalCommands.py:1890 globalCommands.py:1996 globalCommands.py:2088
+#: globalCommands.py:1893 globalCommands.py:1999 globalCommands.py:2091
 #: appModules\nvda.py:137
 msgid "Top"
 msgstr "Vrh"
 
 #. Translators: Input help mode message for read current line under review cursor command.
-#: globalCommands.py:1911
+#: globalCommands.py:1914
 msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."
 msgstr "Prijavljuje red trenutnog navigacionog objekta gde se nalazi pregledni kursor. Ako se taster dvaput pritisne, trenutni red biće srican. Ako se pritisne tri puta sricaće red koristeći opise karaktera."
 
 #. Translators: Input help mode message for move review cursor to next line command.
-#: globalCommands.py:1939
+#: globalCommands.py:1942
 msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
 msgstr "Pomera pregledni kursor na naredni red trenutnog navigacionog objekta i izgovara ga"
 
 #. Translators: Input help mode message for move review cursor to previous page command.
-#: globalCommands.py:1978
+#: globalCommands.py:1981
 msgid "Moves the review cursor to the previous page of the current navigator object and speaks it"
 msgstr "Pomera pregledni kursor na prethodnu stranicu trenutnog navigacionog objekta i izgovara je"
 
 #. Translators: a message reported when movement by page is unsupported
-#: globalCommands.py:1992 globalCommands.py:2028
+#: globalCommands.py:1995 globalCommands.py:2031
 msgid "Movement by page not supported"
 msgstr "Pomeranje po stranicama nije podržano"
 
 #. Translators: Input help mode message for move review cursor to next page command.
-#: globalCommands.py:2012
+#: globalCommands.py:2015
 msgid "Moves the review cursor to the next page of the current navigator object and speaks it"
 msgstr "Pomera pregledni kursor na sledeću stranicu trenutnog navigacionog objekta i izgovara je"
 
 #. Translators: Input help mode message for move review cursor to bottom line command.
-#: globalCommands.py:2051
+#: globalCommands.py:2054
 msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
 msgstr "Pomera pregledni kursor na poslednji red trenutnog navigacionog objekta i izgovara ga"
 
 #. Translators: Input help mode message for move review cursor to previous word command.
-#: globalCommands.py:2076
+#: globalCommands.py:2079
 msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
 msgstr "Pomera pregledni kursor na prethodnu reč trenutnog navigacionog objekta i izgovara je"
 
 #. Translators: Input help mode message for report current word under review cursor command.
-#: globalCommands.py:2109
+#: globalCommands.py:2112
 msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
 msgstr "Izgovara reč trenutnog navigacionog objekta gde se nalazi pregledni kursor. Ako se taster dvaput pritisne, sriče se reč. Ako se pritisne tri puta sriče se reč koristeći opise znakova"
 
 #. Translators: Input help mode message for move review cursor to next word command.
-#: globalCommands.py:2138
+#: globalCommands.py:2141
 msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
 msgstr "Pomera pregledni kursor na sledeću reč trenutnog navigacionog objekta i izgovara je"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
-#: globalCommands.py:2176
+#: globalCommands.py:2179
 msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
 msgstr "Pomera pregledni kursor na prvi znak reda gde je smešten u trenutnom navigacionom objektu i izgovara ga"
 
 #. Translators: Input help mode message for move review cursor to previous character command.
-#: globalCommands.py:2205
+#: globalCommands.py:2208
 msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
 msgstr "Pomera pregledni kursor na prethodni znak u trenutnom navigacionom objektu i izgovara ga"
 
 #. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
-#: globalCommands.py:2219
+#: globalCommands.py:2222
 msgid "Left"
 msgstr "Levo"
 
 #. Translators: Input help mode message for report current character under review cursor command.
-#: globalCommands.py:2242
+#: globalCommands.py:2245
 msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
 msgstr "Prijavljuje znak trenutnog navigacionog objekta gde se nalazi pregledni kursor. Ako se pritisne dvaput, prijavljuje opis ili primer tog znaka. Ako se pritisne tri puta prijaviće brojčanu vrednost znaka u decimalnom ili heksadecimalnom zapisu"
 
 #. Translators: Input help mode message for move review cursor to next character command.
-#: globalCommands.py:2290
+#: globalCommands.py:2293
 msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
 msgstr "Pomera pregledni kursor na naredni znak u trenutnom navigacionom objektu i izgovara ga"
 
 #. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
-#: globalCommands.py:2304
+#: globalCommands.py:2307
 msgid "Right"
 msgstr "Desno"
 
 #. Translators: Input help mode message for move review cursor to end of current line command.
-#: globalCommands.py:2327
+#: globalCommands.py:2330
 msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
 msgstr "Pomera pregledni kursor na poslednji znak reda gde je smešten u trenutnom navigacionom objektu i izgovara ga"
 
 #. Translators: Input help mode message for move review cursor to start of selection command.
-#: globalCommands.py:2356
+#: globalCommands.py:2359
 msgid "Moves the review cursor to the first character of the selection, and speaks it"
 msgstr "Pomera pregledni kursor na prvi znak izbora i izgovara ga"
 
 #. Translators: Input help mode message for move review cursor to end of selection command.
-#: globalCommands.py:2384
+#: globalCommands.py:2387
 msgid "Moves the review cursor to the last character of the selection, and speaks it"
 msgstr "Pomera pregledni kursor na poslednji znak izbora i izgovara ga"
 
 #. Translators: Input help mode message for Review Current Symbol command.
-#: globalCommands.py:2420
+#: globalCommands.py:2423
 msgid "Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode"
 msgstr "Prijavljuje simbol na trenutnoj poziciji preglednog kursora. Ako se pritisne 2 puta, prikazuje simbol kao i tekst koji se izgovara u režimu pretraživanja"
 
 #. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
-#: globalCommands.py:2436
+#: globalCommands.py:2439
 msgid "No symbol replacement"
 msgstr "Nema zamene za simbol"
 
 #. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
-#: globalCommands.py:2443
+#: globalCommands.py:2446
 #, python-brace-format
 msgid "Character: {character}\n"
 "Replacement: {replacement}"
@@ -3859,371 +3865,371 @@ msgstr "Znak: {character}\n"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #. {lang} will be replaced with the current voice's language.
-#: globalCommands.py:2450
+#: globalCommands.py:2453
 #, python-brace-format
 msgid "Expanded symbol ({lang})"
 msgstr "Proširen simbol ({lang})"
 
 #. Translators: Input help mode message for cycle speech mode command.
-#: globalCommands.py:2456
+#: globalCommands.py:2459
 msgid "Cycles between speech modes."
 msgstr "Kruži kroz režime govora."
 
 #. Translators: Announced when user switches to another speech mode.
 #. 'mode' is replaced with the translated name of the new mode.
-#: globalCommands.py:2479
+#: globalCommands.py:2482
 #, python-brace-format
 msgid "Speech mode {mode}"
 msgstr "Režim govora {mode}"
 
 #. Translators: Input help mode message for move to next document with focus command,
 #. mostly used in web browsing to move from embedded object to the webpage document.
-#: globalCommands.py:2486
+#: globalCommands.py:2489
 msgid "Moves the focus out of the current embedded object and into the document that contains it"
 msgstr "Premešta fokus van trenutnog umetnutog objekta u dokument koji ga sadrži"
 
 #. Translators: Input help mode message for toggle focus and browse mode command
 #. in web browsing and other situations.
-#: globalCommands.py:2511 NVDAObjects\window\_msOfficeChart.py:634
+#: globalCommands.py:2514 NVDAObjects\window\_msOfficeChart.py:634
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
 msgstr "Prebacuje između režima fokusiranja i pretraživanja. Kada je u režimu fokusiranja, tasteri se prosleđuju direktno u aplikaciju, omogućavajući interakciju sa kontrolama. Kada je u režimu pretraživanja, možete upravljati dokumentom pomoću kursora, navigacionih tastera, itd."
 
 #. Translators: Input help mode message for quit NVDA command.
-#: globalCommands.py:2561
+#: globalCommands.py:2564
 msgid "Quits NVDA!"
 msgstr "Isključuje NVDA!"
 
 #. Translators: Input help mode message for restart NVDA command.
-#: globalCommands.py:2569
+#: globalCommands.py:2572
 msgid "Restarts NVDA!"
 msgstr "Ponovo pokreće NVDA!"
 
 #. Translators: Input help mode message for show NVDA menu command.
-#: globalCommands.py:2576
+#: globalCommands.py:2579
 msgid "Shows the NVDA menu"
 msgstr "Prikazuje NVDA meni"
 
 #. Translators: Input help mode message for say all in review cursor command.
-#: globalCommands.py:2586
+#: globalCommands.py:2589
 msgid "Reads from the review cursor up to the end of the current text, moving the review cursor as it goes"
 msgstr "Čita od pozicije preglednog kursora do kraja trenutnog teksta, pomerajući kursor sa sobom"
 
 #. Translators: Input help mode message for say all with system caret command.
-#: globalCommands.py:2600
+#: globalCommands.py:2603
 msgid "Reads from the system caret up to the end of the text, moving the caret as it goes"
 msgstr "Čita od sistemskog kursora do kraja teksta, pomerajući kursor sa sobom"
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
-#: globalCommands.py:2661 globalCommands.py:2672 globalCommands.py:4236
+#: globalCommands.py:2664 globalCommands.py:2675 globalCommands.py:4239
 msgid "No formatting information"
 msgstr "Nema informacija o formatiranju"
 
 #. Translators: title for formatting information dialog.
-#: globalCommands.py:2681
+#: globalCommands.py:2684
 msgid "Formatting"
 msgstr "Formatiranje"
 
 #. Translators: Input help mode message for report formatting command.
-#: globalCommands.py:2713
+#: globalCommands.py:2716
 msgid "Reports formatting info for the current review cursor position."
 msgstr "Prijavljuje informacije o formatiranju teksta na poziciji preglednog kursora."
 
 #. Translators: Input help mode message for show formatting at review cursor command.
-#: globalCommands.py:2722
+#: globalCommands.py:2725
 msgid "Presents, in browse mode, formatting info for the current review cursor position."
 msgstr "Prikazuje, u režimu pretraživanja, informacije o  formatiranju za trenutnu poziciju preglednog kursora."
 
 #. Translators: Input help mode message for report formatting command.
-#: globalCommands.py:2731
+#: globalCommands.py:2734
 msgid "Reports formatting info for the current review cursor position. If pressed twice, presents the information in browse mode"
 msgstr "Prijavljuje informacije o formatiranju za trenutnu poziciju preglednog kursora. Ako se pritisne dva puta, prikazuje informacije u režimu pretraživanja"
 
 #. Translators: Input help mode message for report formatting at caret command.
-#: globalCommands.py:2747
+#: globalCommands.py:2750
 msgid "Reports formatting info for the text under the caret."
 msgstr "Prijavljuje informacije o formatiranju teksta za tekst na poziciji kursora."
 
 #. Translators: Input help mode message for show formatting at caret position command.
-#: globalCommands.py:2756
+#: globalCommands.py:2759
 msgid "Presents, in browse mode, formatting info for the text under the caret."
 msgstr "Prikazuje, u režimu pretraživanja, informacije o formatiranju za trenutnu poziciju kursora."
 
 #. Translators: Input help mode message for report formatting at caret command.
-#: globalCommands.py:2765
+#: globalCommands.py:2768
 msgid "Reports formatting info for the text under the caret. If pressed twice, presents the information in browse mode"
 msgstr "Prijavljuje informacije o formatiranju teksta na trenutnoj poziciji kursora. Ako se pritisne dva puta, prikazuje informacije u režimu pretraživanja"
 
 #. Translators: the description for the reportDetailsSummary script.
-#: globalCommands.py:2831
+#: globalCommands.py:2834
 msgid "Report summary of any annotation details at the system caret."
 msgstr "Prijavljuje kratak opis svih detalja i napomena na poziciji sistemskog kursora."
 
 #. Translators: message given when there is no annotation details for the reportDetailsSummary script.
-#: globalCommands.py:2849
+#: globalCommands.py:2852
 msgid "No additional details"
 msgstr "Nema dodatnih detalja"
 
 #. Translators: Input help mode message for report current focus command.
-#: globalCommands.py:2893
+#: globalCommands.py:2896
 msgid "Reports the object with focus. If pressed twice, spells the information. Pressing three times spells it using character descriptions."
 msgstr "Prijavljuje fokusirani objekat. Ako se pritisne dva puta, informacija se sriče. Ako se pritisne tri puta sriče se uz opise znakova."
 
 #. Translators: Reported when there is no status line for the current program or window.
-#: globalCommands.py:2969
+#: globalCommands.py:2972
 msgid "No status line found"
 msgstr "Nije pronađena statusna traka"
 
 #. Translators: Input help mode message for command which reads content of the status bar.
-#: globalCommands.py:2978
+#: globalCommands.py:2981
 msgid "Reads the current application status bar."
 msgstr "Čita statusnu traku trenutne aplikacije."
 
 #. Translators: Reported when status line exist, but is empty.
-#: globalCommands.py:2989 globalCommands.py:3007 globalCommands.py:3041
+#: globalCommands.py:2992 globalCommands.py:3010 globalCommands.py:3044
 msgid "no status bar information"
 msgstr "nema informacija na statusnoj traci"
 
 #. Translators: Input help mode message for command which spells content of the status bar.
-#: globalCommands.py:2996
+#: globalCommands.py:2999
 msgid "Spells the current application status bar."
 msgstr "Sriče statusnu traku trenutne aplikacije."
 
 #. Translators: Input help mode message for command which copies status bar content to the clipboard.
-#: globalCommands.py:3014
+#: globalCommands.py:3017
 msgid "Copies content of the status bar  of current application to the clipboard."
 msgstr "Kopira sadržaj statusne trake trenutne aplikacije u privremenu memoriju."
 
 #. Translators: Reported when user attempts to copy content of the empty status line.
-#: globalCommands.py:3024
+#: globalCommands.py:3027
 msgid "Unable to copy status bar content to clipboard"
 msgstr "Nemoguće kopirati sadržaj statusne trake u privremenu memoriju"
 
 #. Translators: Input help mode message for Command which moves review cursor to the status bar.
-#: globalCommands.py:3031
+#: globalCommands.py:3034
 msgid "Reads the current application status bar and moves navigator object into it."
 msgstr "Čita trenutnu statusnu traku aplikacije i  prebacuje navigacioni objekat na nju."
 
 #. Translators: Input help mode message for report status line text command.
-#: globalCommands.py:3048
+#: globalCommands.py:3051
 msgid "Reads the current application status bar. If pressed twice, spells the information. If pressed three times, copies the status bar to the clipboard"
 msgstr "Čita statusnu traku trenutne aplikacije. Ako se pritisne dvaput, sriče informaciju. Ako se pritisne tri puta, kopira statusnu traku u privremenu memoriju"
 
 #. Translators: Description for a keyboard command which reports the
 #. accelerator key of the currently focused object.
-#: globalCommands.py:3072
+#: globalCommands.py:3075
 msgid "Reports the shortcut key of the currently focused object"
 msgstr "Prijavljuje tastersku prečicu trenutno fokusiranog objekta"
 
 #. Translators: reported when a user requests the accelerator key
 #. of the currently focused object, but there is none set.
-#: globalCommands.py:3087
+#: globalCommands.py:3090
 msgid "No shortcut key"
 msgstr "Nema tasterske prečice"
 
 #. Translators: Input help mode message for toggle mouse tracking command.
-#: globalCommands.py:3091
+#: globalCommands.py:3094
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Uključuje ili isključuje prijavljivanje informacija dok se miš pomera"
 
 #. Translators: presented when the mouse tracking is toggled.
-#: globalCommands.py:3098
+#: globalCommands.py:3101
 msgid "Mouse tracking off"
 msgstr "Praćenje miša isključeno"
 
 #. Translators: presented when the mouse tracking is toggled.
-#: globalCommands.py:3102
+#: globalCommands.py:3105
 msgid "Mouse tracking on"
 msgstr "Praćenje miša uključeno"
 
 #. Translators: Input help mode message for toggle mouse audio coordinates command.
-#: globalCommands.py:3108
+#: globalCommands.py:3111
 msgid "Toggles beeps that report mouse coordinates as the mouse moves"
 msgstr "Uključuje ili isključuje zvučne signale koji prikazuju koordinate miša dok se pomera"
 
 #. Translators: Reported when mouse audio coordinates are toggled on.
-#: globalCommands.py:3113
+#: globalCommands.py:3116
 msgid "Mouse audio coordinates on"
 msgstr "Uključene zvučne koordinate miša"
 
 #. Translators: Reported when mouse audio coordinates are toggled off.
-#: globalCommands.py:3115
+#: globalCommands.py:3118
 msgid "Mouse audio coordinates off"
 msgstr "Isključene zvučne koordinate miša"
 
 #. Translators: Input help mode message for toggle mouse text unit resolution command.
-#: globalCommands.py:3125
+#: globalCommands.py:3128
 msgid "Toggles how much text will be spoken when the mouse moves"
 msgstr "Menja koliko će teksta biti pročitano dok se miš pomera"
 
 #. Translators: Reports the new state of the mouse text unit resolution:.
 #. %s will be replaced with the new label.
 #. For example, the full message might be "Mouse text unit resolution character"
-#: globalCommands.py:3142
+#: globalCommands.py:3145
 #, python-format
 msgid "Mouse text unit resolution %s"
 msgstr "Rezolucija jedinice teksta %s"
 
 #. Translators: Input help mode message for report title bar command.
-#: globalCommands.py:3147
+#: globalCommands.py:3150
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"
 msgstr "Prikazuje naslov trenutne aplikacije ili vidljivog prozora. Ako se pritisne dva puta, sriče naslov. Ako se pritisne tri puta, kopira naslov u privremenu memoriju"
 
 #. Translators: Reported when there is no title text for current program or window.
-#: globalCommands.py:3168
+#: globalCommands.py:3171
 msgid "No title"
 msgstr "Nema naslova"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-#: globalCommands.py:3179
+#: globalCommands.py:3182
 msgid "Reads all controls in the active window"
 msgstr "Čita sve kontrole u aktivnom prozoru"
 
 #. Translators: GUI development tool, to get information about the components used in the NVDA GUI
-#: globalCommands.py:3201
+#: globalCommands.py:3204
 msgid "Opens the WX GUI inspection tool. Used to get more information about the state of GUI components."
 msgstr "Otvara WX GUI inspection alatku. Koristi se za dobijanje dodatnih informacija o GUI komponentama."
 
 #. Translators: Input help mode message for developer info for current navigator object command,
 #. used by developers to examine technical info on navigator object.
 #. This command also serves as a shortcut to open NVDA log viewer.
-#: globalCommands.py:3216
+#: globalCommands.py:3219
 msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
 msgstr "Evidentira informacije o trenutnom navigacionom objektu koje su korisne programerima i aktivira preglednik dnevnika kako biste istražili informacije."
 
 #. Translators: Input help mode message for a command to delimit then
 #. copy a fragment of the log to clipboard
-#: globalCommands.py:3242
+#: globalCommands.py:3245
 msgid "Mark the current end of the log as the start of the fragment to be copied to clipboard by pressing again."
 msgstr "Obeležite trenutni kraj dnevnika kao početak fragmenta za kopiranje u privremenu memoriju ponovnim pritiskanjem."
 
 #. Translators: Message when marking the start of a fragment of the log file for later copy
 #. to clipboard
-#: globalCommands.py:3254
+#: globalCommands.py:3257
 msgid "Log fragment start position marked, press again to copy to clipboard"
 msgstr "Početak fragmenta dnevnika je obeležen, pritisnite ponovo za kopiranje u privremenu memoriju"
 
 #. Translators: Message when failed to mark the start of a
 #. fragment of the log file for later copy to clipboard
-#: globalCommands.py:3258
+#: globalCommands.py:3261
 msgid "Unable to mark log position"
 msgstr "Nemoguće obeležiti poziciju dnevnika"
 
 #. Translators: Message when attempting to copy an empty fragment of the log file
-#: globalCommands.py:3263
+#: globalCommands.py:3266
 msgid "No new log entry to copy"
 msgstr "Nema novih događaja u dnevniku za kopiranje"
 
 #. Translators: Message when a fragment of the log file has been
 #. copied to clipboard
-#: globalCommands.py:3268
+#: globalCommands.py:3271
 msgid "Log fragment copied to clipboard"
 msgstr "Fragment dnevnika kopiran u privremenu memoriju"
 
 #. Translators: Presented when unable to copy to the clipboard because of an error.
 #. Translators: Presented when unable to copy to the clipboard because of an error
 #. or the clipboard content did not match what was just copied.
-#: globalCommands.py:3271 ui.py:300
+#: globalCommands.py:3274 ui.py:300
 msgid "Unable to copy"
 msgstr "Nemoguće kopirati"
 
 #. Translators: Input help mode message for Open user configuration directory command.
-#: globalCommands.py:3275
+#: globalCommands.py:3278
 msgid "Opens NVDA configuration directory for the current user."
 msgstr "Otvara folder sa NVDA podešavanjima za trenutnog korisnika."
 
 #. Translators: Input help mode message for toggle progress bar output command.
-#: globalCommands.py:3285
+#: globalCommands.py:3288
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
 msgstr "Naizmenično uključuje režime pišti, izgovaraj, izgovaraj i pišti, i isključeno, za obaveštenja o promeni trake napredovanja"
 
 #. Translators: A mode where no progress bar updates are given.
-#: globalCommands.py:3295
+#: globalCommands.py:3298
 msgid "No progress bar updates"
 msgstr "Nema ažuriranja trake napredovanja"
 
 #. Translators: A mode where progress bar updates will be spoken.
-#: globalCommands.py:3299
+#: globalCommands.py:3302
 msgid "Speak progress bar updates"
 msgstr "Izgovaraj promene trake napredovanja"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-#: globalCommands.py:3303
+#: globalCommands.py:3306
 msgid "Beep for progress bar updates"
 msgstr "Pišti za promene trake napredovanja"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
-#: globalCommands.py:3307
+#: globalCommands.py:3310
 msgid "Beep and speak progress bar updates"
 msgstr "Pišti i izgovaraj promene trake napredovanja"
 
 #. Translators: Input help mode message for toggle dynamic content changes command.
-#: globalCommands.py:3313
+#: globalCommands.py:3316
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
 msgstr "Uključuje i isključuje prijavljivanje dinamičkih promena sadržaja, kao što je nov tekst u prozoru DOS konzole"
 
 #. Translators: presented when the present dynamic changes is toggled.
-#: globalCommands.py:3322
+#: globalCommands.py:3325
 msgid "report dynamic content changes off"
 msgstr "isključeno prijavljivanje dinamičkih promena sadržaja"
 
 #. Translators: presented when the present dynamic changes is toggled.
-#: globalCommands.py:3326
+#: globalCommands.py:3329
 msgid "report dynamic content changes on"
 msgstr "uključeno prijavljivanje dinamičkih promena sadržaja"
 
 #. Translators: Input help mode message for toggle caret moves review cursor command.
-#: globalCommands.py:3332
+#: globalCommands.py:3335
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "Aktivira i deaktivira pomeranje preglednog kursora sistemskim kursorom."
 
 #. Translators: presented when toggled.
-#: globalCommands.py:3339
+#: globalCommands.py:3342
 msgid "caret moves review cursor off"
 msgstr "isključeno pomeranje preglednog kursora sistemskim kursorom"
 
 #. Translators: presented when toggled.
-#: globalCommands.py:3343
+#: globalCommands.py:3346
 msgid "caret moves review cursor on"
 msgstr "uključeno pomeranje preglednog kursora sistemskim kursorom"
 
 #. Translators: Input help mode message for toggle focus moves navigator object command.
-#: globalCommands.py:3349
+#: globalCommands.py:3352
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "Aktivira i deaktivira kretanje navigacionog objekta tokom promena fokusa"
 
 #. Translators: presented when toggled.
-#: globalCommands.py:3356
+#: globalCommands.py:3359
 msgid "focus moves navigator object off"
 msgstr "isključeno pomeranje navigacionog objekta fokusom"
 
 #. Translators: presented when toggled.
-#: globalCommands.py:3360
+#: globalCommands.py:3363
 msgid "focus moves navigator object on"
 msgstr "uključeno pomeranje navigacionog objekta fokusom"
 
 #. Translators: Input help mode message for report battery status command.
-#: globalCommands.py:3367
+#: globalCommands.py:3370
 msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr "Obaveštava o statusu baterije i preostalom vremenu ako punjač nije povezan"
 
 #. Translators: Input help mode message for pass next key through command.
-#: globalCommands.py:3378
+#: globalCommands.py:3381
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "Sledeći pritisnut taster neće uopšte biti pod kontrolom NVDA, biće direktno prosleđen Windowsu."
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
-#: globalCommands.py:3387
+#: globalCommands.py:3390
 msgid "Pass next key through"
 msgstr "Prosledi naredni taster"
 
 #. Translators: Input help mode message for report current program name and app module name command.
-#: globalCommands.py:3392
+#: globalCommands.py:3395
 msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
 msgstr "Izgovara ime datoteke aktivne aplikacije zajedno sa imenom trenutno učitanog modula"
 
 #. Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 #. This message will not be presented if there is no module for the current program.
-#: globalCommands.py:3405
+#: globalCommands.py:3408
 #, python-format
 msgid " %s module is loaded. "
 msgstr " %s modul je učitan. "
@@ -4231,391 +4237,391 @@ msgstr " %s modul je učitan. "
 #. Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
 #. For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
-#: globalCommands.py:3410
+#: globalCommands.py:3413
 #, python-format
 msgid " %s is currently running."
 msgstr " %s je trenutno pokrenut."
 
 #. Translators: Input help mode message for go to general settings command.
-#: globalCommands.py:3415
+#: globalCommands.py:3418
 msgid "Shows NVDA's general settings"
 msgstr "Prikazuje NVDA opšta podešavanja"
 
 #. Translators: Input help mode message for go to select synthesizer command.
-#: globalCommands.py:3425
+#: globalCommands.py:3428
 msgid "Shows the NVDA synthesizer selection dialog"
 msgstr "Prikazuje NVDA dijalog za izbor sintetizatora"
 
 #. Translators: Input help mode message for go to speech settings command.
-#: globalCommands.py:3435
+#: globalCommands.py:3438
 msgid "Shows NVDA's speech settings"
 msgstr "Prikazuje NVDA podešavanja govora"
 
 #. Translators: Input help mode message for go to select braille display command.
-#: globalCommands.py:3445
+#: globalCommands.py:3448
 msgid "Shows the NVDA braille display selection dialog"
 msgstr "Prikazuje NVDA dijalog za izbor brajevog reda"
 
 #. Translators: Input help mode message for go to braille settings command.
-#: globalCommands.py:3455
+#: globalCommands.py:3458
 msgid "Shows NVDA's braille settings"
 msgstr "Prikazuje NVDA podešavanja brajevog reda"
 
 #. Translators: Input help mode message for go to audio settings command.
-#: globalCommands.py:3464
+#: globalCommands.py:3467
 msgid "Shows NVDA's audio settings"
 msgstr "Prikazuje NVDA podešavanja zvuka"
 
 #. Translators: Input help mode message for go to privacy and security settings command.
-#: globalCommands.py:3474
+#: globalCommands.py:3477
 msgid "Shows NVDA's privacy and security settings"
 msgstr "Prikazuje NVDA podešavanja bezbednosti i privatnosti"
 
 #. Translators: Input help mode message for go to vision settings command.
-#: globalCommands.py:3483
+#: globalCommands.py:3486
 msgid "Shows NVDA's vision settings"
 msgstr "Prikazuje NVDA podešavanja vida"
 
 #. Translators: Input help mode message for go to keyboard settings command.
-#: globalCommands.py:3492
+#: globalCommands.py:3495
 msgid "Shows NVDA's keyboard settings"
 msgstr "Prikazuje NVDA podešavanja tastature"
 
 #. Translators: Input help mode message for go to mouse settings command.
-#: globalCommands.py:3502
+#: globalCommands.py:3505
 msgid "Shows NVDA's mouse settings"
 msgstr "Prikazuje NVDA podešavanja miša"
 
 #. Translators: Input help mode message for go to review cursor settings command.
-#: globalCommands.py:3512
+#: globalCommands.py:3515
 msgid "Shows NVDA's review cursor settings"
 msgstr "Prikazuje NVDA podešavanja preglednog kursora"
 
 #. Translators: Input help mode message for go to input composition settings command.
-#: globalCommands.py:3521
+#: globalCommands.py:3524
 msgid "Shows NVDA's input composition settings"
 msgstr "Prikazuje NVDA podešavanja ulaznog sastava"
 
 #. Translators: Input help mode message for go to object presentation settings command.
-#: globalCommands.py:3530
+#: globalCommands.py:3533
 msgid "Shows NVDA's object presentation settings"
 msgstr "Prikazuje NVDA podešavanja predstavljanja objekata"
 
 #. Translators: Input help mode message for go to browse mode settings command.
-#: globalCommands.py:3540
+#: globalCommands.py:3543
 msgid "Shows NVDA's browse mode settings"
 msgstr "Prikazuje NVDA podešavanja režima pretraživanja"
 
 #. Translators: Input help mode message for go to document formatting settings command.
-#: globalCommands.py:3550
+#: globalCommands.py:3553
 msgid "Shows NVDA's document formatting settings"
 msgstr "Prikazuje NVDA podešavanja formatiranja dokumenta"
 
 #. Translators: Input help mode message for go to Remote Access settings command.
-#: globalCommands.py:3560
+#: globalCommands.py:3563
 msgctxt "remote"
 msgid "Shows the Remote Access settings"
 msgstr "Prikazuje podešavanja daljinskog pristupa"
 
 #. Translators: Input help mode message for go to Add-on Store settings command.
-#: globalCommands.py:3569
+#: globalCommands.py:3572
 msgid "Shows NVDA's Add-on Store settings"
 msgstr "Prikazuje podešavanja NVDA prodavnice dodataka"
 
 #. Translators: Input help mode message for go to Windows OCR settings command.
-#: globalCommands.py:3578
+#: globalCommands.py:3581
 msgid "Shows NVDA's Windows OCR settings"
 msgstr "Prikazuje NVDA podešavanja Windows optičkog prepoznavanja znakova"
 
 #. Translators: Input help mode message for go to Advanced settings command.
-#: globalCommands.py:3587
+#: globalCommands.py:3590
 msgid "Shows NVDA's Advanced settings"
 msgstr "Prikazuje napredna NVDA podešavanja"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
-#: globalCommands.py:3596
+#: globalCommands.py:3599
 msgid "Shows the NVDA default dictionary dialog"
 msgstr "Prikazuje NVDA dijalog podrazumevanog rečnika"
 
 #. Translators: Input help mode message for opening voice-specific dictionary dialog.
-#: globalCommands.py:3605
+#: globalCommands.py:3608
 msgid "Shows the NVDA voice-specific dictionary dialog"
 msgstr "Prikazuje NVDA dijalog rečnika glasa"
 
 #. Translators: Input help mode message for opening temporary dictionary.
-#: globalCommands.py:3614
+#: globalCommands.py:3617
 msgid "Shows the NVDA temporary dictionary dialog"
 msgstr "Prikazuje NVDA dijalog privremenog rečnika"
 
 #. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
-#: globalCommands.py:3623
+#: globalCommands.py:3626
 msgid "Shows the NVDA symbol pronunciation dialog"
 msgstr "Prikazuje NVDA dijalog za podešavanje izgovaranja simbola"
 
 #. Translators: Input help mode message for go to input gestures dialog command.
-#: globalCommands.py:3632
+#: globalCommands.py:3635
 msgid "Shows the NVDA input gestures dialog"
 msgstr "Prikazuje NVDA dijalog za podešavanje ulaznih komandi"
 
 #. Translators: Input help mode message for go to magnifier settings command.
-#: globalCommands.py:3641
+#: globalCommands.py:3644
 msgid "Shows NVDA's magnifier settings"
 msgstr "Prikazuje podešavanja NVDA lupe"
 
 #. Translators: Input help mode message for the report current configuration profile command.
-#: globalCommands.py:3651
+#: globalCommands.py:3654
 msgid "Reports the name of the current NVDA configuration profile"
 msgstr "Prijavljuje ime trenutnog profila podešavanja"
 
 #. Translators: Message announced when the command to report the current configuration profile and
 #. the default configuration profile is active.
-#: globalCommands.py:3661
+#: globalCommands.py:3664
 msgid "normal configuration profile active"
 msgstr "profil sa standardnim podešavanjima aktivan"
 
 #. Translators: Message announced when the command to report the current configuration profile
 #. is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
-#: globalCommands.py:3665
+#: globalCommands.py:3668
 #, python-brace-format
 msgid "{profileName} configuration profile active"
 msgstr "{profileName} je aktivan profil sa podešavanjima"
 
 #. Translators: Input help mode message for save current configuration command.
-#: globalCommands.py:3672
+#: globalCommands.py:3675
 msgid "Saves the current NVDA configuration"
 msgstr "Čuva trenutna NVDA podešavanja"
 
 #. Translators: Input help mode message for apply last saved or default settings command.
-#: globalCommands.py:3682
+#: globalCommands.py:3685
 msgid "Pressing once reverts the current configuration to the most recently saved state. Pressing three times resets to factory defaults."
 msgstr "Ako se pritisne jednom vraća trenutna podešavanja na poslednje sačuvano stanje. Ako se pritisne tri puta vraća na fabrička podešavanja."
 
 #. Translators: Input help mode message for activate python console command.
-#: globalCommands.py:3697
+#: globalCommands.py:3700
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Aktivira NVDA Python konzolu, prvenstveno korisnu za razvoj"
 
 #. Translators: Input help mode message to activate Add-on Store command.
-#: globalCommands.py:3717
+#: globalCommands.py:3720
 msgid "Activates the Add-on Store to browse and manage add-on packages for NVDA"
 msgstr "Aktivira prodavnicu dodataka kako biste istraživali i upravljali dodacima za NVDA"
 
 #. Translators: Input help mode message for toggle speech viewer command.
-#: globalCommands.py:3726
+#: globalCommands.py:3729
 msgid "Toggles the NVDA Speech viewer, a floating window that allows you to view all the text that NVDA is currently speaking"
 msgstr "Uključuje ili isključuje NVDA preglednik govora, plutajući prozor koji vam dozvoljava da vidite sav tekst koji NVDA izgovara"
 
 #. Translators: The message announced when disabling speech viewer.
-#: globalCommands.py:3735
+#: globalCommands.py:3738
 msgid "speech viewer disabled"
 msgstr "pregled govora onemogućen"
 
 #. Translators: The message announced when enabling speech viewer.
-#: globalCommands.py:3740
+#: globalCommands.py:3743
 msgid "speech viewer enabled"
 msgstr "pregled govora omogućen"
 
 #. Translators: Input help mode message for toggle Braille viewer command.
-#: globalCommands.py:3748
+#: globalCommands.py:3751
 msgid "Toggles the NVDA Braille viewer, a floating window that allows you to view braille output, and the text equivalent for each braille character"
 msgstr "Uključuje ili isključuje NVDA preglednik brajevog reda, plutajući prozor koji vam dozvoljava da vidite sav brajev izlaz, kao i tekstualne ekvivalente za svaki brajev znak"
 
 #. Translators: The message announced when disabling braille viewer.
-#: globalCommands.py:3759
+#: globalCommands.py:3762
 msgid "Braille viewer disabled"
 msgstr "Onemogućen preglednik brajevog reda"
 
 #. Translators: The message announced when enabling Braille viewer.
-#: globalCommands.py:3764
+#: globalCommands.py:3767
 msgid "Braille viewer enabled"
 msgstr "Omogućen preglednik brajevog reda"
 
 #. Translators: Input help mode message for toggle braille tether to command
 #. (tethered means connected to or follows).
-#: globalCommands.py:3772
+#: globalCommands.py:3775
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "Menja vezivanje brajevog reda između fokusa i pozicije pregleda"
 
 #. Translators: Reports which position braille is tethered to
 #. (braille can be tethered automatically or to either focus or review position).
-#: globalCommands.py:3792
+#: globalCommands.py:3795
 #, python-format
 msgid "Braille tethered %s"
 msgstr "Brajev red vezan za %s"
 
 #. Translators: Input help mode message for toggle braille mode command
-#: globalCommands.py:3796
+#: globalCommands.py:3799
 msgid "Toggles braille mode"
 msgstr "Menja brajev režim"
 
 #. Translators: The message reported when switching braille modes
-#: globalCommands.py:3811
+#: globalCommands.py:3814
 #, python-brace-format
 msgid "Braille mode {brailleMode}"
 msgstr "Brajev režim {brailleMode}"
 
 #. Translators: Input help mode message for cycle through
 #. braille move system caret when routing review cursor command.
-#: globalCommands.py:3822
+#: globalCommands.py:3825
 msgid "Cycle through the braille move system caret when routing review cursor states"
 msgstr "Kruži kroz stanja brajevog pomeranja sistemskog kursora kada se prebacuje pregledni kursor"
 
 #. Translators: Reported when action is unavailable because braille tether is to focus.
-#: globalCommands.py:3832
+#: globalCommands.py:3835
 msgid "Action unavailable. Braille is tethered to focus"
 msgstr "Radnja nedostupna. Brajev red je vezan za fokus"
 
 #. Translators: Used when reporting braille move system caret when routing review cursor
 #. state (default behavior).
-#: globalCommands.py:3848
+#: globalCommands.py:3851
 #, python-format
 msgid "Braille move system caret when routing review cursor default (%s)"
 msgstr "Brajevo pomeranje sistemskog kursora kada se prebacuje pregledni kursor podrazumevano (%s)"
 
 #. Translators: Used when reporting braille move system caret when routing review cursor state.
-#: globalCommands.py:3856
+#: globalCommands.py:3859
 #, python-format
 msgid "Braille move system caret when routing review cursor %s"
 msgstr "Brajevo pomeranje sistemskog kursora kada se prebacuje pregledni kursor %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
-#: globalCommands.py:3864
+#: globalCommands.py:3867
 msgid "Toggle the way context information is presented in braille"
 msgstr "Menja način prikazivanja informacija o promeni sadržaja na brajevom redu"
 
 #. Translators: Reports the new state of braille focus context presentation.
 #. %s will be replaced with the context presentation setting.
 #. For example, the full message might be "Braille focus context presentation: fill display for context changes"
-#: globalCommands.py:3882
+#: globalCommands.py:3885
 #, python-format
 msgid "Braille focus context presentation: %s"
 msgstr "Predstavljanje promena sadržaja na brajevom redu: %s"
 
 #. Translators: Input help mode message for toggle braille cursor command.
-#: globalCommands.py:3886
+#: globalCommands.py:3889
 msgid "Toggle the braille cursor on and off"
 msgstr "Uključuje ili isključuje brajev kursor"
 
 #. Translators: The message announced when toggling the braille cursor.
-#: globalCommands.py:3893
+#: globalCommands.py:3896
 msgid "Braille cursor off"
 msgstr "Brajev kursor isključen"
 
 #. Translators: The message announced when toggling the braille cursor.
-#: globalCommands.py:3897
+#: globalCommands.py:3900
 msgid "Braille cursor on"
 msgstr "Brajev kursor uključen"
 
 #. Translators: Input help mode message for speak on routing command.
-#: globalCommands.py:3905
+#: globalCommands.py:3908
 msgid "Toggles speaking the character under the cursor when routing cursor in text"
 msgstr "Uključuje ili isključuje izgovor znaka na poziciji kursora kada se kursor pomera po tekstu"
 
 #. Translators: The message announced when toggling on speaking character when routing.
-#: globalCommands.py:3913
+#: globalCommands.py:3916
 msgid "Enabled speak character when routing cursor in text"
 msgstr "Omogućen izgovor znaka kada se kursor pomera po tekstu"
 
 #. Translators: The message announced when toggling off speaking character when routing.
-#: globalCommands.py:3916
+#: globalCommands.py:3919
 msgid "Disabled speak character when routing cursor in text"
 msgstr "Onemogućen izgovor znaka kada se kursor pomera po tekstu"
 
 #. Translators: Input help mode message for toggle speaking when navigating by lines or paragraphs with braille.
-#: globalCommands.py:3921
+#: globalCommands.py:3924
 msgid "Toggles on and off speaking when navigating by lines or paragraph with braille"
 msgstr "Uključuje i isključuje izgovor tokom navigacije po redovima ili pasusima na brajevom redu"
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
-#: globalCommands.py:3930
+#: globalCommands.py:3933
 msgid "Speak when navigating by line or paragraph with braille on"
 msgstr "Uključen izgovor prilikom kretanja po redu ili pasusu sa brajevim redom"
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
-#: globalCommands.py:3932
+#: globalCommands.py:3935
 msgid "Speak when navigating by line or paragraph with braille off"
 msgstr "Isključen izgovor tokom navigacije po redovima ili pasusima na brajevom redu"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
-#: globalCommands.py:3937
+#: globalCommands.py:3940
 msgid "Cycle through the braille cursor shapes"
 msgstr "Kruži kroz oblike brajevog kursora"
 
 #. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
-#: globalCommands.py:3944
+#: globalCommands.py:3947
 msgid "Braille cursor is turned off"
 msgstr "Brajev kursor je isključen"
 
 #. Translators: Reports which braille cursor shape is activated.
-#: globalCommands.py:3960
+#: globalCommands.py:3963
 #, python-format
 msgid "Braille cursor %s"
 msgstr "Brajev kursor %s"
 
 #. Translators: Input help mode message for cycle through braille show messages command.
-#: globalCommands.py:3964
+#: globalCommands.py:3967
 msgid "Cycle through the braille show messages modes"
 msgstr "Kruži kroz režime prikazivanja poruka na brajevom redu"
 
 #. Translators: Reports which show braille message mode is used
 #. (disabled, timeout or indefinitely).
-#: globalCommands.py:3977
+#: globalCommands.py:3980
 #, python-format
 msgid "Braille show messages %s"
 msgstr "Prikazivanje poruka na brajevom redu %s"
 
 #. Translators: Input help mode message for cycle through braille show selection command.
-#: globalCommands.py:3982
+#: globalCommands.py:3985
 msgid "Cycle through the braille show selection states"
 msgstr "Kruži kroz načine prikazivanja izbora na brajevom redu"
 
 #. Translators: Used when reporting braille show selection state
 #. (default behavior).
-#: globalCommands.py:3999
+#: globalCommands.py:4002
 #, python-format
 msgid "Braille show selection default (%s)"
 msgstr "Podrazumevano prikazivanje brajevog izbora (%s)"
 
 #. Translators: Reports which show braille selection state is used
 #. (disabled or enabled).
-#: globalCommands.py:4003
+#: globalCommands.py:4006
 #, python-format
 msgid "Braille show selection %s"
 msgstr "Prikazivanje izbora na brajevom redu %s"
 
 #. Translators: Input help mode message for Braille Unicode normalization command.
-#: globalCommands.py:4010
+#: globalCommands.py:4013
 msgid "Cycle through the braille Unicode normalization states"
 msgstr "Kruži kroz stanja brajeve unikodne standardizacije"
 
 #. Translators: Used when reporting braille Unicode normalization state
 #. (default behavior).
-#: globalCommands.py:4025
+#: globalCommands.py:4028
 #, python-brace-format
 msgid "Braille Unicode normalization default ({default})"
 msgstr "Podrazumevana brajeva unikodna standardizacija ({default})"
 
 #. Translators: Used when reporting braille Unicode normalization state
 #. (disabled or enabled).
-#: globalCommands.py:4031
+#: globalCommands.py:4034
 #, python-brace-format
 msgid "Braille Unicode normalization {state}"
 msgstr "{state} brajeva unikodna standardizacija"
 
 #. Translators: Input help mode message for report clipboard text command.
-#: globalCommands.py:4039
+#: globalCommands.py:4042
 msgid "Reports the text on the Windows clipboard. Pressing twice spells this information. Pressing three times spells it using character descriptions."
 msgstr "Prijavljuje tekst u Windows privremenoj memoriji. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta sriče se uz opise znakova."
 
 #. Translators: Presented when there is no text on the clipboard.
-#: globalCommands.py:4054
+#: globalCommands.py:4057
 msgid "There is no text on the clipboard"
 msgstr "Nema teksta u privremenoj memoriji"
 
 #. Translators: If the number of characters on the clipboard is greater than about 1000, it reports this
 #. message and gives number of characters on the clipboard.
 #. Example output: The clipboard contains a large amount of text. It is 2300 characters long.
-#: globalCommands.py:4069
+#: globalCommands.py:4072
 #, python-format
 msgid "The clipboard contains a large amount of text. It is %s character long"
 msgid_plural "The clipboard contains a large amount of text. It is %s characters long"
@@ -4625,546 +4631,546 @@ msgstr[2] "U privremenoj memoriji je velika količina teksta. Sadrži %s znakova
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command
 #. (that is, marks the current review cursor position as the starting point for text to be selected).
-#: globalCommands.py:4080
+#: globalCommands.py:4083
 msgid "Marks the current position of the review cursor as the start of text to be selected or copied"
 msgstr "Označava trenutnu poziciju preglednog kursora kao početak teksta koji treba da se Izabere ili kopira"
 
 #. Translators: Indicates start of review cursor text to be copied to clipboard.
-#: globalCommands.py:4093
+#: globalCommands.py:4096
 msgid "Start marked"
 msgstr "Početak označen"
 
 #. Translators: Input help mode message for move review cursor to marked start position for a
 #. select or copy command
-#: globalCommands.py:4099
+#: globalCommands.py:4102
 msgid "Move the review cursor to the position marked as the start of text to be selected or copied"
 msgstr "Premešta pregledni kursor na poziciju koja je označena kao početak teksta za izbor ili kopiranje"
 
 #. Translators: Presented when attempting to move to the start marker for copy but none has been set.
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
-#: globalCommands.py:4108 globalCommands.py:4141
+#: globalCommands.py:4111 globalCommands.py:4144
 msgid "No start marker set"
 msgstr "Početni marker nije postavljen"
 
 #. Translators: Input help mode message for the select then copy command.
 #. The select then copy command first selects the review cursor text, then copies it to the clipboard.
-#: globalCommands.py:4131
+#: globalCommands.py:4134
 msgid "If pressed once, the text from the previously set start marker up to and including the current position of the review cursor is selected. If pressed twice, the text is copied to the clipboard"
 msgstr "Ako se pritisne jednom , tekst od prethodno postavljenog početnog markera uključujući trenutnu poziciju Preglednog kursora je izabran. Ako se pritisne dva puta , tekst je kopiran u privremenu memoriju"
 
 #. Translators: Presented when text has already been marked for selection, but not yet copied.
-#: globalCommands.py:4149
+#: globalCommands.py:4152
 msgid "Press twice to copy or reset the start marker"
 msgstr "Pritisnite dva  puta da kopirate ili resetujete početni marker"
 
 #. Translators: Presented when there is no text selection to copy from review cursor.
-#: globalCommands.py:4168
+#: globalCommands.py:4171
 msgid "No text to copy"
 msgstr "Nema teksta za kopiranje"
 
 #. Translators: Presented when unable to select the marked text.
-#: globalCommands.py:4190
+#: globalCommands.py:4193
 msgid "Can't select text, press twice to copy"
 msgstr "Nemoguće izabrati tekst , pritisnite dva puta za kopiranje"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4203
+#: globalCommands.py:4206
 msgid "Scrolls the braille display back"
 msgstr "Pomera brajev red nazad"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4212
+#: globalCommands.py:4215
 msgid "Scrolls the braille display forward"
 msgstr "Pomera brajev red napred"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4221
+#: globalCommands.py:4224
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "Preusmerava kursor na ili aktivira objekat ispod ove brajeve ćelije"
 
 #. Translators: Input help mode message for Braille report formatting command.
-#: globalCommands.py:4229
+#: globalCommands.py:4232
 msgid "Reports formatting info for the text under this braille cell"
 msgstr "Prijavljuje informacije o formatiranju teksta ispod trenutne brajeve ćelije"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4242
+#: globalCommands.py:4245
 msgid "Moves the braille display to the previous line"
 msgstr "Pomera brajev red na prethodni red"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4251
+#: globalCommands.py:4254
 msgid "Moves the braille display to the next line"
 msgstr "Pomera brajev red na sledeći red"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4260
+#: globalCommands.py:4263
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "Unosi brajeve tačke preko brajeve tastature"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4269
+#: globalCommands.py:4272
 msgid "Moves the braille display to the current focus"
 msgstr "Pomera brajev red na trenutni fokus"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4291
+#: globalCommands.py:4294
 msgid "Erases the last entered braille cell or character"
 msgstr "Briše poslednju dodatu brajevu ćeliju ili znak"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4300
+#: globalCommands.py:4303
 msgid "Translates any braille input and presses the enter key"
 msgstr "Prevodi brajev unos i pritiska taster enter"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4309
+#: globalCommands.py:4312
 msgid "Translates any braille input"
 msgstr "Prevodi brajev unos"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4318
+#: globalCommands.py:4321
 msgid "Virtually toggles the shift key to emulate a keyboard shortcut with braille input"
 msgstr "Virtuelno uključuje i isključuje taster šift za emulaciju tastaturne prečice putem brajevog unosa"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4327
+#: globalCommands.py:4330
 msgid "Virtually toggles the control key to emulate a keyboard shortcut with braille input"
 msgstr "Virtuelno uključuje i isključuje taster kontrol za emulaciju tastaturne prečice putem brajevog unosa"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4336
+#: globalCommands.py:4339
 msgid "Virtually toggles the alt key to emulate a keyboard shortcut with braille input"
 msgstr "Virtuelno uključuje i isključuje taster alt za emulaciju tastaturne prečice putem brajevog unosa"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4346
+#: globalCommands.py:4349
 msgid "Virtually toggles the left windows key to emulate a keyboard shortcut with braille input"
 msgstr "Virtuelno uključuje i isključuje taster levi Windows za emulaciju tastaturne prečice putem brajevog unosa"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4356
+#: globalCommands.py:4359
 msgid "Virtually toggles the NVDA key to emulate a keyboard shortcut with braille input"
 msgstr "Virtuelno uključuje i isključuje taster NVDA za emulaciju tastaturne prečice putem brajevog unosa"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4366
+#: globalCommands.py:4369
 msgid "Virtually toggles the control and shift keys to emulate a keyboard shortcut with braille input"
 msgstr "Virtuelno uključuje ili isključuje kontrol i šift tastere kako biste emulirali prečicu na brajevom unosu"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4377
+#: globalCommands.py:4380
 msgid "Virtually toggles the alt and shift keys to emulate a keyboard shortcut with braille input"
 msgstr "Virtuelno uključuje ili isključuje alt i šift tastere kako biste emulirali prečicu na brajevom unosu"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4388
+#: globalCommands.py:4391
 msgid "Virtually toggles the left windows and shift keys to emulate a keyboard shortcut with braille input"
 msgstr "Virtuelno uključuje ili isključuje levi Windows i šift tastere kako biste emulirali prečicu na brajevom unosu"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4400
+#: globalCommands.py:4403
 msgid "Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut with braille input"
 msgstr "Virtuelno uključuje ili isključuje NVDA i šift tastere kako biste emulirali prečicu na brajevom unosu"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4411
+#: globalCommands.py:4414
 msgid "Virtually toggles the control and alt keys to emulate a keyboard shortcut with braille input"
 msgstr "Virtuelno uključuje ili isključuje kontrol i alt tastere kako biste emulirali prečicu na brajevom unosu"
 
 #. Translators: Input help mode message for a braille command.
-#: globalCommands.py:4422
+#: globalCommands.py:4425
 msgid "Virtually toggles the control, alt, and shift keys to emulate a keyboard shortcut with braille input"
 msgstr "Virtuelno uključuje ili isključuje kontrol, alt i šift tastere kako biste emulirali prečicu na brajevom unosu"
 
 #. Translators: Input help mode message for reload plugins command.
-#: globalCommands.py:4434
+#: globalCommands.py:4437
 msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
 msgstr "Ponovno učitava module aplikacije i globalne dodatke bez ponovnog pokretanja NVDA, što može biti korisno programerima"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
-#: globalCommands.py:4446
+#: globalCommands.py:4449
 msgid "Plugins reloaded"
 msgstr "Dodaci ponovo učitani"
 
 #. Translators: input help mode message for Report destination URL of a link command
-#: globalCommands.py:4451
+#: globalCommands.py:4454
 msgid "Report the destination URL of the link at the position of caret or focus. If pressed twice, shows the URL in a window for easier review."
 msgstr "Prijavljuje odredišnu adresu linka na poziciji kursora ili fokusa. Ako se pritisne dva puta, prikazuje adresu u prozoru radi lakšeg pregleda."
 
 #. Translators: Reported when using the command to report the destination of a link.
-#: globalCommands.py:4481
+#: globalCommands.py:4484
 msgid "Link has no apparent destination"
 msgstr "Link nema prepoznatljivo odretište"
 
 #. Translators: Title of the browseable message when requesting the destination of a graphical link.
 #. Translators: A destination for braille output.
-#: globalCommands.py:4490 brailleDisplayDrivers\dotPad\driver.py:355
+#: globalCommands.py:4493 brailleDisplayDrivers\dotPad\driver.py:355
 msgid "Graphic"
 msgstr "Slika"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
-#: globalCommands.py:4495
+#: globalCommands.py:4498
 #, python-brace-format
 msgid "Destination of: {name}"
 msgstr "Odredište za: {name}"
 
 #. Translators: Reported when using the command to report the destination of a link.
-#: globalCommands.py:4505
+#: globalCommands.py:4508
 msgid "Unable to get the destination of this link."
 msgstr "Nemoguće pronaći odredište ovog linka."
 
 #. Translators: Reported when using the command to report the destination of a link.
-#: globalCommands.py:4508
+#: globalCommands.py:4511
 msgid "Not a link."
 msgstr "Nije link."
 
 #. Translators: input help mode message for Report URL of a link in a window command
-#: globalCommands.py:4513
+#: globalCommands.py:4516
 msgid "Displays the destination URL of the link at the position of caret or focus in a window, instead of just speaking it. May be preferred by braille users."
 msgstr "Prikazuje odredišnu adresu linka na poziciji kursora ili fokusa u prozoru, umesto da je samo izgovori. Može više odgovarati korisnicima brajevih redova."
 
 #. Translators: Input help mode message for a touchscreen gesture.
-#: globalCommands.py:4526
+#: globalCommands.py:4529
 msgid "Moves to the next object in a flattened view of the object navigation hierarchy"
 msgstr "Prelazi na sledeći objekat u ravnom prikazu u hijerarhiji navigacionih objekata"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-#: globalCommands.py:4564
+#: globalCommands.py:4567
 msgid "Moves to the previous object in a flattened view of the object navigation hierarchy"
 msgstr "Prelazi na prethodni objekat u ravnom prikazu u hijerarhiji navigacionih objekata"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4597
+#: globalCommands.py:4600
 msgid "Toggles the support of touch interaction"
 msgstr "Uključuje i isključuje podršku interakcije sa ekranom osetljivim na dodir"
 
 #. Translators: Presented when attempting to toggle touch interaction support
-#: globalCommands.py:4607
+#: globalCommands.py:4610
 msgid "Touch interaction not supported"
 msgstr "Interakcija sa ekranom osetljivim na dodir nije podržana"
 
 #. Translators: Presented when support of touch interaction has been enabled
-#: globalCommands.py:4613
+#: globalCommands.py:4616
 msgid "Touch interaction enabled"
 msgstr "Omogućena interakcija sa ekranom osetljivim na dodir"
 
 #. Translators: Presented when support of touch interaction has been disabled
-#: globalCommands.py:4616
+#: globalCommands.py:4619
 msgid "Touch interaction disabled"
 msgstr "Onemogućena interakcija sa ekranom osetljivim na dodir"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-#: globalCommands.py:4620
+#: globalCommands.py:4623
 msgid "Cycles between available touch modes"
 msgstr "Kruži kroz raspoložive režime dodira"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-#: globalCommands.py:4634
+#: globalCommands.py:4637
 msgid "Reports the object and content directly under your finger"
 msgstr "Obaveštava o objektu i sadržaju direktno pod Vašim prstom"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-#: globalCommands.py:4644
+#: globalCommands.py:4647
 msgid "Reports the new object or content under your finger if different to where your finger was last"
 msgstr "Obaveštava o novom objektu i sadržaju pod Vašim prstom ako se razlikuje od prethodne lokacije Vašeg prsta"
 
 #. Translators: Input help mode message for touch right click command.
-#: globalCommands.py:4670
+#: globalCommands.py:4673
 msgid "Clicks the right mouse button at the current touch position. This is generally used to activate a context menu."
 msgstr "Izvršava desni klik miša na trenutnoj poziciji ekrana. Ovo se obično koristi za otvaranje kontekstnih menija."
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-#: globalCommands.py:4694
+#: globalCommands.py:4697
 msgid "object has no location"
 msgstr "objekat nema lokaciju"
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
-#: globalCommands.py:4706
+#: globalCommands.py:4709
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Prikazuje NVDA dijalog za profile podešavanja"
 
 #. Translators: Input help mode message for toggle configuration profile triggers command.
-#: globalCommands.py:4716
+#: globalCommands.py:4719
 msgid "Toggles disabling of all configuration profile triggers. Disabling remains in effect until NVDA is restarted"
 msgstr "Uključuje i isključuje deaktiviranje aktivatora profila podešavanja. Oni ostaju deaktivirani dok se NVDA ponovo ne pokrene"
 
 #. Translators: The message announced when temporarily disabling all configuration profile triggers.
-#: globalCommands.py:4725
+#: globalCommands.py:4728
 msgid "Configuration profile triggers disabled"
 msgstr "Aktivatori profila podešavanja onemogućeni"
 
 #. Translators: The message announced when re-enabling all configuration profile triggers.
-#: globalCommands.py:4733
+#: globalCommands.py:4736
 msgid "Configuration profile triggers enabled"
 msgstr "Aktivatori profila podešavanja omogućeni"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4738
+#: globalCommands.py:4741
 msgid "Begins interaction with math content"
 msgstr "Započinje interakciju sa sadržajem u vidu matematičkog izraza"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
-#: globalCommands.py:4755
+#: globalCommands.py:4758
 msgid "Not math"
 msgstr "Nije matematički izraz"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4761
+#: globalCommands.py:4764
 msgid "Recognizes the content of the current navigator object with Windows OCR"
 msgstr "Prepoznaje tekst slike trenutnog navigacionog objekta koristeći Windows OCR"
 
 #. Translators: Reported when Windows OCR is not available.
-#: globalCommands.py:4767 globalCommands.py:4788 globalCommands.py:4809
+#: globalCommands.py:4770 globalCommands.py:4791 globalCommands.py:4812
 msgid "Windows OCR not available"
 msgstr "Windows OCR nije dostupan"
 
 #. Translators: Reported when screen curtain is enabled.
-#: globalCommands.py:4774
+#: globalCommands.py:4777
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr "Molimo onemogućite zatamnjivanje ekrana pre korišćenja funkcije Windows OCR."
 
 #. Translators: Describes a command.
-#: globalCommands.py:4783
+#: globalCommands.py:4786
 msgid "Cycles through the available languages for Windows OCR"
 msgstr "Kruži kroz dostupne jezike za Windows OCR"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4804
+#: globalCommands.py:4807
 msgid "Toggle periodical refresh of a Windows OCR result"
 msgstr "Uključuje ili isključuje povremeno osvežavanje Windows OCR rezultata"
 
 #. Translators: The message announced when toggling automatic refresh of recognized content
-#: globalCommands.py:4815
+#: globalCommands.py:4818
 msgid "Automatic refresh enabled"
 msgstr "Omogućeno automatsko osvežavanje"
 
 #. Translators: The message announced when toggling automatic refresh of recognized content
-#: globalCommands.py:4817
+#: globalCommands.py:4820
 msgid "Automatic refresh disabled"
 msgstr "Onemogućeno automatsko osvežavanje"
 
 #. Translators: Input help mode message for toggle report CLDR command.
-#: globalCommands.py:4827
+#: globalCommands.py:4830
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
 msgstr "Uključuje i isključuje prijavljivanje CLDR znakova, kao što su emoji"
 
 #. Translators: presented when the report CLDR is toggled.
-#: globalCommands.py:4836
+#: globalCommands.py:4839
 msgid "report CLDR characters off"
 msgstr "isključeno prijavljivanje CLDR znakova"
 
 #. Translators: presented when the report CLDR is toggled.
-#: globalCommands.py:4840
+#: globalCommands.py:4843
 msgid "report CLDR characters on"
 msgstr "uključeno prijavljivanje CLDR znakova"
 
 #. Translators: Input help mode message for speech Unicode normalization command.
-#: globalCommands.py:4848
+#: globalCommands.py:4851
 msgid "Cycle through the speech Unicode normalization states"
 msgstr "Kruži kroz stanja unikodne standardizacije izgovora"
 
 #. Translators: Used when reporting speech Unicode normalization state
 #. (default behavior).
-#: globalCommands.py:4863
+#: globalCommands.py:4866
 #, python-brace-format
 msgid "Speech Unicode normalization default ({default})"
 msgstr "Podrazumevana unikodna standardizacija izgovora ({default})"
 
 #. Translators: Used when reporting speech Unicode normalization state
 #. (disabled or enabled).
-#: globalCommands.py:4869
+#: globalCommands.py:4872
 #, python-brace-format
 msgid "Speech Unicode normalization {state}"
 msgstr "{state} unikodna standardizacija izgovora"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4881
+#: globalCommands.py:4884
 msgid "Toggles the state of the screen curtain, enable to make the screen black or disable to show the contents of the screen. Pressed once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it"
 msgstr "Menja stanje zatamnjivanja ekrana, omogućite da učinite da ekran bude crn ili onemogućite da prikažete sadržaj ekrana. Ako se pritisne jednom, zatamnjivanje ekrana će biti omogućeno do sledećeg ponovnog pokretanja NVDA. Ako se pritisne dva puta, zatamnjivanje ekrana će biti omogućeno dok ga ne onemogućite"
 
 #. Translators: Reported when the screen curtain is not available.
-#: globalCommands.py:4894 globalCommands.py:5023
+#: globalCommands.py:4897 globalCommands.py:5026
 msgid "Screen curtain not available"
 msgstr "Zatamnjivanje ekrana nije dostupno"
 
 #. Translators: Reported when the screen curtain is disabled.
-#: globalCommands.py:4940 globalCommands.py:5038
+#: globalCommands.py:4943 globalCommands.py:5041
 msgid "Screen curtain disabled"
 msgstr "Zatamnjen ekran onemogućen"
 
 #. Translators: Reported when the screen curtain could not be enabled.
-#: globalCommands.py:4947
+#: globalCommands.py:4950
 msgid "Could not disable screen curtain"
 msgstr "Nemoguće onemogućiti zatamnjen ekran"
 
 #. Translators: Reported when the screen curtain is enabled.
-#: globalCommands.py:4962 globalCommands.py:5035
+#: globalCommands.py:4965 globalCommands.py:5038
 msgid "Screen curtain enabled"
 msgstr "Zatamnjen ekran omogućen"
 
 #. Translators: Reported when the screen curtain is temporarily enabled.
-#: globalCommands.py:4965 globalCommands.py:5030
+#: globalCommands.py:4968 globalCommands.py:5033
 msgid "Temporary Screen curtain, enabled until next restart"
 msgstr "Ekran privremeno zatamnjen, omogućeno do sledećeg ponovnog pokretanja"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5013
+#: globalCommands.py:5016
 msgid "Reports the state of the screen curtain."
 msgstr "Prijavljuje stanje zatamnjivanja ekrana."
 
 #. Translators: Describes a command.
-#: globalCommands.py:5043
-msgid "Toggles the magnifier on and off"
-msgstr "Uključuje ili isključuje lupu"
+#: globalCommands.py:5046
+msgid "Toggle the magnifier on and off"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5057
-msgid "Increases the magnification level of the magnifier"
-msgstr "Podiže nivo povećavanja lupe"
+#: globalCommands.py:5060
+msgid "Increase the magnification level"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5071
-msgid "Decreases the magnification level of the magnifier"
-msgstr "Smanjuje nivo povećavanja lupe"
+#: globalCommands.py:5074
+msgid "Decrease the magnification level"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5085
-msgid "Pan the magnifier view to the left"
-msgstr "Pomera prikaz lupe levo"
+#: globalCommands.py:5088
+msgid "Pan the magnified view left"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5099
-msgid "Pan the magnifier view to the right"
-msgstr "Pomera prikaz lupe desno"
+#: globalCommands.py:5102
+msgid "Pan the magnified view right"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5113
-msgid "Pan the magnifier view up"
-msgstr "Pomera prikaz lupe gore"
+#: globalCommands.py:5116
+msgid "Pan the magnified view up"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5127
-msgid "Pan the magnifier view down"
-msgstr "Pomera prikaz lupe dole"
+#: globalCommands.py:5130
+msgid "Pan the magnified view down"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5141
-msgid "Pan the magnifier view to left edge"
-msgstr "Pomera prikaz lupe na levu ivicu"
+#: globalCommands.py:5144
+msgid "Pan the magnified view to left edge"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5155
-msgid "Pan the magnifier view to right edge"
-msgstr "Pomera prikaz lupe na desnu ivicu"
+#: globalCommands.py:5158
+msgid "Pan the magnified view to right edge"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5169
-msgid "Pan the magnifier view to top edge"
-msgstr "Pomera prikaz lupe u gornji ugao"
+#: globalCommands.py:5172
+msgid "Pan the magnified view to top edge"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5183
-msgid "Pan the magnifier view to bottom edge"
-msgstr "Pomera prikaz lupe u donji ugao"
+#: globalCommands.py:5186
+msgid "Pan the magnified view to bottom edge"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5197
-msgid "Toggle filter of the magnifier"
-msgstr "Uključuje ili isključuje filtriranje lupe"
+#: globalCommands.py:5200
+msgid "Cycle through the color filters"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5211
-msgid "Toggle follow mouse for the magnifier"
-msgstr "Uključuje ili isključuje praćenje miša za lupu"
+#: globalCommands.py:5214
+msgid "Toggle magnifier mouse tracking"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5224
-msgid "Toggle follow system focus for the magnifier"
-msgstr "Uključuje ili isključuje praćenje sistemskog fokusa za lupu"
+#: globalCommands.py:5227
+msgid "Toggle magnifier system focus tracking"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5237
-msgid "Toggle follow review cursor for the magnifier"
-msgstr "Uključuje ili isključuje praćenje preglednog kursora za lupu"
+#: globalCommands.py:5240
+msgid "Toggle magnifier review cursor tracking"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5250
-msgid "Toggle follow navigator object for the magnifier"
-msgstr "Uključuje ili isključuje praćenje navigacionog objekta za lupu"
+#: globalCommands.py:5253
+msgid "Toggle magnifier navigator object tracking"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5263
-msgid "Toggle all follow modes for the magnifier"
-msgstr "Uključuje ili isključuje sve režime praćenja za lupu"
+#: globalCommands.py:5266
+msgid "Toggle all magnifier tracking settings"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5276
-msgid "Toggle focus mode for the full-screen magnifier"
-msgstr "Uključuje ili isključuje režim fokusiranja za lupu celog ekrana"
+#: globalCommands.py:5279
+msgid "Cycle through tracking modes"
+msgstr ""
 
 #. Translators: Describe a command.
-#: globalCommands.py:5289
-msgid "Launch spotlight if magnifier is full-screen"
-msgstr "Pokreće reflektor ako je lupa na celom ekranu"
+#: globalCommands.py:5292
+msgid "Temporarily show an overview of the entire screen"
+msgstr ""
 
 #. Translators: Describes a command.
-#: globalCommands.py:5303
+#: globalCommands.py:5306
 msgid "Cycles through paragraph navigation styles"
 msgstr "Kruži kroz stilove navigacije po pasusima"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5317
+#: globalCommands.py:5320
 msgid "Cycles through sound split modes"
 msgstr "Kruži kroz režime razdvajanja zvukova"
 
 #. Translators: Input help mode message for report language for caret command.
-#: globalCommands.py:5329
+#: globalCommands.py:5332
 msgctxt "reportLanguage"
 msgid "Reports the language for the text under the caret. If pressed twice, presents the information in browse mode"
 msgstr "Prijavljuje jezik teksta na poziciji kursora. Ako se pritisne dva puta, prikazuje informaciju u režimu pretraživanja"
 
 #. Translators: Reported when the language of the text at caret is not defined.
-#: globalCommands.py:5344
+#: globalCommands.py:5347
 msgctxt "reportLanguage"
 msgid "Unknown language"
 msgstr "Nepoznat jezik"
 
 #. Translators: Language of the character at caret position when it's not supported by the current synthesizer.
-#: globalCommands.py:5355
+#: globalCommands.py:5358
 #, python-brace-format
 msgctxt "reportLanguage"
 msgid "{languageDescription} (not supported)"
 msgstr "{languageDescription} (nije podržan)"
 
 #. Translators: title for report caret language dialog.
-#: globalCommands.py:5364
+#: globalCommands.py:5367
 msgctxt "reportLanguage"
 msgid "Language at caret position"
 msgstr "Jezik na poziciji kursora"
 
 #. Translators: Documentation string for the script that toggles whether the output from the remote computer is muted.
-#: globalCommands.py:5369
+#: globalCommands.py:5372
 msgctxt "remote"
 msgid "Mutes or unmutes the speech coming from the remote computer"
 msgstr "Isključuje ili ponovo uključuje dolazni govor udaljenog računara"
 
 #. Translators: Documentation string for the script that sends the contents of the clipboard to the remote computer.
-#: globalCommands.py:5379
+#: globalCommands.py:5382
 msgctxt "remote"
 msgid "Sends the contents of the clipboard to the remote computer"
 msgstr "Šalje sadržaj privremene memorije udaljenom računaru"
 
 #. Translators: Documentation string for the script that copies a link to the Remote Access session to the clipboard.
-#: globalCommands.py:5387
+#: globalCommands.py:5390
 msgctxt "remote"
 msgid "Copies a link to the current Remote Access session to the clipboard"
 msgstr "Kopira link trenutne daljinske veze u privremenu memoriju"
 
 #. Translators: Documentation string for the script that disconnects a Remote Access session.
-#: globalCommands.py:5397
+#: globalCommands.py:5400
 msgctxt "remote"
 msgid "Disconnects from the current Remote Access session"
 msgstr "Prekida trenutnu daljinsku vezu"
@@ -5175,7 +5181,7 @@ msgstr "Prekida trenutnu daljinsku vezu"
 #. Translators: Message shown when trying to copy the link to connect to the remote computer while not connected.
 #. Translators: Message shown when attempting to send control+alt+delete when no session is connected.
 #. Translators: A message indicating that the remote client is not connected.
-#: globalCommands.py:5403 _remoteClient\client.py:136
+#: globalCommands.py:5406 _remoteClient\client.py:136
 #: _remoteClient\client.py:163 _remoteClient\client.py:185
 #: _remoteClient\client.py:201 _remoteClient\client.py:581
 msgctxt "remote"
@@ -5183,60 +5189,60 @@ msgid "Not connected"
 msgstr "Nije povezan"
 
 #. Translators: Documentation string for the script that starts a new Remote Access session.
-#: globalCommands.py:5409
+#: globalCommands.py:5412
 msgctxt "remote"
 msgid "Connects to a remote computer"
 msgstr "Povezuje se na udaljeni računar"
 
 #. Translators: A message indicating that the remote client is already connected.
-#: globalCommands.py:5420
+#: globalCommands.py:5423
 msgid "Already connected"
 msgstr "Već ste povezani"
 
 #. Translators: Describes the script that creates a new Remote Access session, or disconnects it if one already exists.
-#: globalCommands.py:5426
+#: globalCommands.py:5429
 msgctxt "remote"
 msgid "Toggles whether Remote Access is connected"
 msgstr "Povezuje ili prekida vezu daljinskog pristupa"
 
 #. Translators: Documentation string for the script that toggles the control between guest and host computers.
-#: globalCommands.py:5441
+#: globalCommands.py:5444
 msgctxt "remote"
 msgid "Switches whether the keyboard controls the local or remote computer"
 msgstr "Menja kontrolisanje tastature lokalnog ili udaljenog računara"
 
 #. Translators: Documentation string for the script that sends alt+ctrl+del to the remote computer
-#: globalCommands.py:5454
+#: globalCommands.py:5457
 msgctxt "remote"
 msgid "Sends control+alt+delete to the controlled computer."
 msgstr "Šalje kontrol+alt+delete računaru koji se kontroliše."
 
 #. Translators: Description for the repeat last speech script
-#: globalCommands.py:5465
+#: globalCommands.py:5468
 msgid "Repeat the last spoken information. Pressing twice shows it in a browsable message. "
 msgstr "Ponavlja poslednju izgovorenu informaciju. Pritiskanje dva puta će je prikazati u poruci koja se može istražiti. "
 
 #. Translators: title for report last spoken information dialog.
-#: globalCommands.py:5483
+#: globalCommands.py:5486
 msgid "Last spoken information"
 msgstr "Poslednja izgovorena informacija"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
-#: globalCommands.py:5519
+#: globalCommands.py:5522
 msgid "Can't change the active profile while an NVDA dialog is open"
 msgstr "Nemoguće promeniti aktivan profil dok je neki NVDA dijalog otvoren"
 
 #. Translators: a message when a configuration profile is manually deactivated.
 #. {profile} is replaced with the profile's name.
-#: globalCommands.py:5524
+#: globalCommands.py:5527
 #, python-brace-format
 msgid "{profile} profile deactivated"
 msgstr "{profile} profil deaktiviran"
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
-#: globalCommands.py:5529
+#: globalCommands.py:5532
 #, python-brace-format
 msgid "{profile} profile activated"
 msgstr "{profile} profil aktiviran"
@@ -5244,7 +5250,7 @@ msgstr "{profile} profil aktiviran"
 #. Translators: The description shown in input help for a script that
 #. activates or deactivates a config profile.
 #. {profile} is replaced with the profile's name.
-#: globalCommands.py:5545
+#: globalCommands.py:5548
 #, python-brace-format
 msgid "Activates or deactivates the {profile} configuration profile"
 msgstr "Aktivira ili deaktivira {profile} profil podešavanja"
@@ -5714,7 +5720,7 @@ msgstr "nepoznato %s"
 #. Translators: a state that denotes a control is currently on
 #. E.g. a switch control.
 #: keyboardHandler.py:749 synthSettingsRing.py:117 controlTypes\state.py:202
-#: gui\speechDict.py:195
+#: gui\speechDict.py:198
 msgid "on"
 msgstr "uključeno"
 
@@ -5723,7 +5729,7 @@ msgstr "uključeno"
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 #: keyboardHandler.py:749 synthSettingsRing.py:117 controlTypes\state.py:231
-#: gui\settingsDialogs.py:2406 gui\speechDict.py:195
+#: gui\settingsDialogs.py:2406 gui\speechDict.py:198
 msgid "off"
 msgstr "isključeno"
 
@@ -7563,7 +7569,7 @@ msgstr "Molimo vas, donirajte"
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
 #. Translators: The label for the menu item to open donate page.
-#: updateCheck.py:965 gui\__init__.py:741
+#: updateCheck.py:965 gui\__init__.py:740
 msgid "&Donate"
 msgstr "&Doniraj"
 
@@ -7602,7 +7608,7 @@ msgstr "Trenutno aktivna veza možda neće biti nastavljena tokom ili nakon ažu
 #. Translators: Title of warning dialog
 #: updateCheck.py:1026 gui\_SetURLDialog.py:113 gui\configProfiles.py:500
 #: gui\installerGui.py:444 gui\installerGui.py:602 gui\settingsDialogs.py:1964
-#: gui\settingsDialogs.py:6308 screenCurtain\_screenCurtain.py:70
+#: gui\settingsDialogs.py:6331 screenCurtain\_screenCurtain.py:70
 #: _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "Upozorenje"
@@ -12211,22 +12217,22 @@ msgstr "Panel sa podešavanjima koji ste pokušali da otvorite nije dostupan na 
 
 #. Translators: A message when the version number is copied to clipboard
 #. from the about dialog
-#: gui\__init__.py:426
+#: gui\__init__.py:425
 msgid "Copied to clipboard"
 msgstr "Kopirano u privremenu memoriju"
 
 #. Translators: The label for a button to copy the NVDA version number from the about dialog.
-#: gui\__init__.py:432
+#: gui\__init__.py:431
 msgid "&Copy version number"
 msgstr "&Kopiraj broj verzije"
 
 #. Translators: The title of the dialog to show about info for NVDA.
-#: gui\__init__.py:437 gui\__init__.py:889
+#: gui\__init__.py:436 gui\__init__.py:888
 msgid "About NVDA"
 msgstr "O NVDA"
 
 #. Translators: Explain the System Accessibility Repair Tool to users before running
-#: gui\__init__.py:557
+#: gui\__init__.py:556
 msgid "Welcome to the System Accessibility Repair Tool.\n\n"
 "Installing and uninstalling programs, as well as other events, can damage accessibility entries in the Windows registry. This can cause previously accessible elements to be presented incorrectly, or can cause \"unknown\" or \"pane\" to be spoken or brailled in some applications or Windows components, instead of the content you were expecting.\n\n"
 "This tool attempts to fix such common problems. Note that the tool must access the system registry, which requires administrative privileges.\n\n"
@@ -12237,17 +12243,17 @@ msgstr "Dobro došli u alatku za popravljanje pristupačnosti sistema.\n\n"
 "Pritisnite nastavi kako biste odmah pokrenuli alatku."
 
 #. Translators: The title of various dialogs displayed when using the System Accessibility Repair Tool
-#: gui\__init__.py:582
+#: gui\__init__.py:581
 msgid "System Accessibility Repair Tool"
 msgstr "Alatka za popravljanje pristupačnosti sistema"
 
 #. Translators: The message displayed while NVDA is running the System Accessibility Repair Tool
-#: gui\__init__.py:597
+#: gui\__init__.py:596
 msgid "Please wait while NVDA attempts to repair your system's accessibility registrations..."
 msgstr "Molimo sačekajte dok NVDA pokuša da popravi vaše registracije pristupačnosti sistema..."
 
 #. Translators: message shown to the user on System Accessibility Repair fail
-#: gui\__init__.py:624
+#: gui\__init__.py:623
 #, python-brace-format
 msgid "The System Accessibility Repair Tool was unsuccessful. This Windows error may provide more information.\n"
 "{error}"
@@ -12255,245 +12261,245 @@ msgstr "Alatka za popravljanje pristupačnosti sistema nije uspela. Ova Windows 
 "{error}"
 
 #. Translators: The title of a System Accessibility Repair Tool dialog, when the tool has failed
-#: gui\__init__.py:628
+#: gui\__init__.py:627
 msgid "System Accessibility Repair Failed"
 msgstr "Popravljanje pristupačnosti sistema nije uspelo"
 
 #. Translators: Message shown when the System Accessibility Repair Tool completes.
-#: gui\__init__.py:635
+#: gui\__init__.py:634
 msgid "The System Accessibility Repair Tool has completed successfully.\n"
 "It is highly recommended that you restart your computer now, to make sure the changes take full effect."
 msgstr "Alatka za popravljanje pristupačnosti sistema je uspešno izvršila neophodnu radnju.\n"
 "Preporučuje se da odmah restartujete vaš računar, kako biste se uverili da su se promene u potpunosti primenile."
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
-#: gui\__init__.py:662
+#: gui\__init__.py:661
 msgid "&Settings..."
 msgstr "&Podešavanja..."
 
 #. Translators: The description for the menu item to open NVDA Settings dialog.
-#: gui\__init__.py:664
+#: gui\__init__.py:663
 msgid "NVDA settings"
 msgstr "NVDA podešavanja"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
-#: gui\__init__.py:669
+#: gui\__init__.py:668
 msgid "Speech &dictionaries"
 msgstr "Govorni &rečnici"
 
 #. Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
-#: gui\__init__.py:671
+#: gui\__init__.py:670
 msgid "&Punctuation/symbol pronunciation..."
 msgstr "Izgovor znakova &interpunkcije i simbola..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
-#: gui\__init__.py:674
+#: gui\__init__.py:673
 msgid "I&nput gestures..."
 msgstr "&Ulazne komande..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
-#: gui\__init__.py:677
+#: gui\__init__.py:676
 msgid "&Preferences"
 msgstr "&Opcije"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
-#: gui\__init__.py:682
+#: gui\__init__.py:681
 msgid "View &log"
 msgstr "Pregled &dnevnika"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
-#: gui\__init__.py:688
+#: gui\__init__.py:687
 msgid "&Speech viewer"
 msgstr "Pregled &govora"
 
 #. Translators: The label for the menu item to toggle Braille Viewer.
-#: gui\__init__.py:696
+#: gui\__init__.py:695
 msgid "&Braille viewer"
 msgstr "Pregled &brajevog reda"
 
 #. Translators: The label of a menu item to open the Add-on store
-#: gui\__init__.py:708
+#: gui\__init__.py:707
 msgid "&Add-on store..."
 msgstr "&Prodavnica dodataka..."
 
 #. Translators: The label for the menu item to open NVDA Python Console.
-#: gui\__init__.py:713
+#: gui\__init__.py:712
 msgid "&Python console"
 msgstr "Python &konzola"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-#: gui\__init__.py:718
+#: gui\__init__.py:717
 msgid "&Create portable copy..."
 msgstr "&Napravi prenosnu kopiju..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
-#: gui\__init__.py:722
+#: gui\__init__.py:721
 msgid "&Install NVDA..."
 msgstr "&Instaliraj NVDA..."
 
 #. Translators: The label for the menu item to run the System Accessibility Repair Tool
-#: gui\__init__.py:725
+#: gui\__init__.py:724
 msgid "Run System Accessibility Repair Tool..."
 msgstr "Pokreni alatku za popravljanje pristupačnosti sistema..."
 
 #. Translators: The label for the menu item to reload plugins.
-#: gui\__init__.py:729
+#: gui\__init__.py:728
 msgid "Reload plugins"
 msgstr "Ponovo učitaj dodatke"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
-#: gui\__init__.py:732
+#: gui\__init__.py:731
 msgid "&Tools"
 msgstr "&Alati"
 
 #. Translators: The label for the menu item to exit NVDA
 #. Translators: The label for a menu item in NVDA log viewer to exit.
 #. Translators: The label for a button to exit the NVDA launcher.
-#: gui\__init__.py:750 gui\logViewer.py:58 gui\startupDialogs.py:206
+#: gui\__init__.py:749 gui\logViewer.py:58 gui\startupDialogs.py:206
 msgid "E&xit"
 msgstr "&Izlaz"
 
 #. Translators: The help string for the menu item to exit NVDA
 #. Translators: The title of the dialog to exit NVDA
-#: gui\__init__.py:752 gui\exit.py:79
+#: gui\__init__.py:751 gui\exit.py:79
 msgid "Exit NVDA"
 msgstr "Izlaz iz NVDA"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
-#: gui\__init__.py:787
+#: gui\__init__.py:786
 msgid "&Default dictionary..."
 msgstr "&Zadani rečnik..."
 
 #. Translators: The help text for the menu item to open Default speech dictionary dialog.
-#: gui\__init__.py:789
+#: gui\__init__.py:788
 msgid "A dialog where you can set default dictionary by adding dictionary entries to the list"
 msgstr "Dijalog u kojem možete postaviti zadani rečnik dodavanjem rečničkih unosa na spisak"
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
-#: gui\__init__.py:795
+#: gui\__init__.py:794
 msgid "&Voice dictionary..."
 msgstr "Rečnik &glasova..."
 
 #. Translators: The help text for the menu item
 #. to open Voice specific speech dictionary dialog.
-#: gui\__init__.py:799
+#: gui\__init__.py:798
 msgid "A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
 msgstr "Dijalog u kojem možete postaviti rečnik za specifični glas dodavanjem rečničkih unosa na spisak"
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
-#: gui\__init__.py:807
+#: gui\__init__.py:806
 msgid "&Temporary dictionary..."
 msgstr "Privre&meni rečnik..."
 
 #. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
-#: gui\__init__.py:809
+#: gui\__init__.py:808
 msgid "A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
 msgstr "Dijalog u kojem možete postaviti privremeni rečnik dodavanjem rečničkih unosa na spisak"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
-#: gui\__init__.py:817
+#: gui\__init__.py:816
 msgid "&Configuration profiles..."
 msgstr "P&rofili podešavanja..."
 
 #. Translators: The label for the menu item to revert to saved configuration.
-#: gui\__init__.py:822
+#: gui\__init__.py:821
 msgid "&Revert to saved configuration"
 msgstr "&Vrati na sačuvana podešavanja"
 
 #. Translators: The help text for the menu item to revert to saved configuration.
-#: gui\__init__.py:824
+#: gui\__init__.py:823
 msgid "Reset all settings to saved state"
 msgstr "Vrati sva podešavanja na sačuvano stanje"
 
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
-#: gui\__init__.py:831
+#: gui\__init__.py:830
 msgid "Reset configuration to &factory defaults"
 msgstr "Vrati podešavanja na &fabričke vrednosti"
 
 #. Translators: The help text for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
-#: gui\__init__.py:834
+#: gui\__init__.py:833
 msgid "Reset all settings to default state"
 msgstr "Vrati sva podešavanja na fabričko stanje"
 
 #. Translators: The label for the menu item to save current settings.
-#: gui\__init__.py:841
+#: gui\__init__.py:840
 msgid "&Save configuration"
 msgstr "&Sačuvaj podešavanja"
 
 #. Translators: The help text for the menu item to save current settings.
-#: gui\__init__.py:843
+#: gui\__init__.py:842
 msgid "Write the current configuration to nvda.ini"
 msgstr "Upiši trenutna podešavanja u nvda.ini"
 
 #. Translators: The label of a menu item to open NVDA user guide.
-#: gui\__init__.py:852
+#: gui\__init__.py:851
 msgid "&User Guide"
 msgstr "Korisničko uputstvo"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
-#: gui\__init__.py:855
+#: gui\__init__.py:854
 msgid "Commands &Quick Reference"
 msgstr "&Kratke napomene o komandama"
 
 #. Translators: The label for the menu item to open What's New document.
-#: gui\__init__.py:858
+#: gui\__init__.py:857
 msgid "What's &new"
 msgstr "Šta je &novo"
 
 #. Translators: The label for the menu item to view the NVDA website
-#: gui\__init__.py:864
+#: gui\__init__.py:863
 msgid "NV Access &web site"
 msgstr "NV Access &Websajt"
 
 #. Translators: The label for the menu item to view the NVDA website's get help section
-#: gui\__init__.py:867
+#: gui\__init__.py:866
 msgid "&Help, training and support"
 msgstr "&Pomoć, trening i podrška"
 
 #. Translators: The label for the menu item to view the NVDA website's get help section
-#: gui\__init__.py:870
+#: gui\__init__.py:869
 msgid "NV Access &shop"
 msgstr "NV Access &prodavnica"
 
 #. Translators: The label for the menu item to view the NVDA License.
-#: gui\__init__.py:876
+#: gui\__init__.py:875
 msgid "L&icense"
 msgstr "&Licenca"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-#: gui\__init__.py:880
+#: gui\__init__.py:879
 msgid "We&lcome dialog..."
 msgstr "Dijalog &dobrodošlice..."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
-#: gui\__init__.py:885
+#: gui\__init__.py:884
 msgid "&Check for update..."
 msgstr "&Proveri dostupna ažuriranja..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
-#: gui\__init__.py:889
+#: gui\__init__.py:888
 msgid "&About..."
 msgstr "&O programu..."
 
 #. Translators: The label for the Help submenu in NVDA menu.
-#: gui\__init__.py:893
+#: gui\__init__.py:892
 msgid "&Help"
 msgstr "&Pomoć"
 
 #. Translators: The label for the menu item to run a pending update.
-#: gui\__init__.py:909
+#: gui\__init__.py:908
 msgid "Install pending &update"
 msgstr "Instaliraj odloženo až&uriranje"
 
 #. Translators: The description for the menu item to run a pending update.
-#: gui\__init__.py:911
+#: gui\__init__.py:910
 msgid "Execute a previously downloaded NVDA update"
 msgstr "Pokreni prethodno preuzeto NVDA ažuriranje"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
-#: gui\__init__.py:995
+#: gui\__init__.py:994
 msgid "Please wait"
 msgstr "Molimo sačekajte"
 
@@ -12993,13 +12999,13 @@ msgstr "&Izdvoji po:"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:6739 gui\speechDict.py:212
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:6762 gui\speechDict.py:215
 msgid "&Add"
 msgstr "&Dodaj"
 
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
-#: gui\inputGestures.py:620 gui\speechDict.py:224
+#: gui\inputGestures.py:620 gui\speechDict.py:227
 msgid "&Remove"
 msgstr "&Ukloni"
 
@@ -13404,9 +13410,12 @@ msgid "&Categories:"
 msgstr "&Kategorije:"
 
 #. Translators: This is the label for the general settings panel.
+#. Translators: This is the label for a group of general magnifier options in the
+#. magnifier settings panel
 #. Translators: name of a grouping in Privacy and Security settings
 #. which contains miscellaneous settings.
-#: gui\settingsDialogs.py:809 gui\settingsDialogs.py:6372
+#: gui\settingsDialogs.py:809 gui\settingsDialogs.py:6088
+#: gui\settingsDialogs.py:6395
 msgid "General"
 msgstr "Opšta"
 
@@ -15291,203 +15300,204 @@ msgstr "Opcije:"
 msgid "Unable to configure user interface for Vision Enhancement Provider, it can not be enabled."
 msgstr "Nemoguće podesiti korisnički interfejs za provajdera poboljšanja vizuelnog sadržaja, ne može se omogućiti."
 
-#. Translators: This is the label for the magnifier settings panel.
-#: gui\settingsDialogs.py:6042
-msgid "Magnifier"
-msgstr "Lupa"
-
 #. Translators: The label for a setting in magnifier settings to enable or disable the magnifier.
-#: gui\settingsDialogs.py:6086
+#: gui\settingsDialogs.py:6096
 msgid "&Enable magnifier (immediate effect)"
 msgstr "&Omogući lupu (primenjuje se odmah)"
 
 #. Translators: The label for a setting in magnifier settings to select the zoom level.
-#: gui\settingsDialogs.py:6098
+#: gui\settingsDialogs.py:6110
 msgid "&Zoom (%):"
 msgstr "&Zumiranje (%):"
 
+#. Translators: The label for a setting in magnifier settings to select the filter
+#: gui\settingsDialogs.py:6132
+msgid "Color f&ilter:"
+msgstr ""
+
+#. Translators: The label for a setting in magnifier settings to select whether true center tracking is used
+#: gui\settingsDialogs.py:6149
+msgid "&True center tracking"
+msgstr ""
+
 #. Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
-#: gui\settingsDialogs.py:6120
+#: gui\settingsDialogs.py:6163
 msgid "&Panning step size (%):"
 msgstr "&Veličina koraka pomeranja (%):"
 
-#. Translators: The label for a setting in magnifier settings to select the default filter
-#: gui\settingsDialogs.py:6142
-msgid "F&ilter:"
-msgstr "F&ilter:"
-
-#. Translators: The label for a setting in magnifier settings to select the full-screen mode
-#: gui\settingsDialogs.py:6159
-msgid "&Fullscreen mode:"
-msgstr "Režim &celog ekrana:"
-
-#. Translators: The label for a setting in magnifier settings to select whether true center is used in full-screen mode
-#: gui\settingsDialogs.py:6173
-msgid "Use &true center in fullscreen mode"
-msgstr "Koristi &true center u režimu celog ekrana"
-
-#. Translators: This is the label for a group of focus options in the magnifier settings panel
-#: gui\settingsDialogs.py:6191
-msgid "Focus"
-msgstr "Fokus"
+#. Translators: This is the label for a group of tracking options in the magnifier settings panel
+#: gui\settingsDialogs.py:6185
+msgid "Tracking"
+msgstr ""
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the mouse
-#: gui\settingsDialogs.py:6199
+#: gui\settingsDialogs.py:6193
 msgid "Follow &mouse"
 msgstr "Prati &miš"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
-#: gui\settingsDialogs.py:6201
+#: gui\settingsDialogs.py:6195
 msgid "Follow &system focus"
 msgstr "Prati &sistemski fokus"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the review cursor
-#: gui\settingsDialogs.py:6203
+#: gui\settingsDialogs.py:6197
 msgid "Follow &review cursor"
 msgstr "Prati p&regledni kursor"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the navigator object
-#: gui\settingsDialogs.py:6206
+#: gui\settingsDialogs.py:6200
 msgid "Follow &navigator object"
 msgstr "Prati &navigacioni objekat"
 
+#. Translators: This is the label for a group of fullscreen magnifier options in the
+#. magnifier settings panel
+#: gui\settingsDialogs.py:6218
+msgid "Fullscreen"
+msgstr ""
+
+#. Translators: The label for a setting in magnifier settings to select the full-screen mode
+#: gui\settingsDialogs.py:6226
+msgid "Focus &mode:"
+msgstr ""
+
 #. Translators: The title of the privacy and security category in NVDA's settings.
-#: gui\settingsDialogs.py:6276
+#: gui\settingsDialogs.py:6299
 msgid "Privacy and Security"
 msgstr "Privatnost i bezbednost"
 
 #. Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
-#: gui\settingsDialogs.py:6289
+#: gui\settingsDialogs.py:6312
 msgid "Setting the logging level to \"debug (unredacted)\" will write sensitive information to the log without redaction, including passwords, API keys, or other private data. Only enable this temporarily if you explicitly need unredacted diagnostic logs. Do you want to continue?"
 msgstr "Postavljanje nivoa evidentiranja na \"ispravljanje greške (bez prikrivanja)\" će upisivati osetljive informacije u dnevnik bez prikrivanja, što uključuje lozinke, API ključeve ili druge privatne podatke. Omogućite ovo samo privremeno ako su vam zaista potrebni dnevnici bez prikrivanja. Da li želite da nastavite?"
 
 #. Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
-#: gui\settingsDialogs.py:6296
+#: gui\settingsDialogs.py:6319
 msgid "High risk logging level"
 msgstr "Nivo evidentiranja u dnevniku visokog rizika"
 
 #. Translators: Warning shown when enabling a logging level above info from NVDA settings.
-#: gui\settingsDialogs.py:6301
+#: gui\settingsDialogs.py:6324
 msgid "Setting the logging level above info may record sensitive information such as typed input, speech output, or other private data in the log. Only enable higher logging levels temporarily while troubleshooting. Do you want to continue?"
 msgstr "Podešavanje nivoa evidentiranja iznad informacija može sačuvati osetljive informacije kao što su upisan tekst, govor, ili druge privatne podatke u dnevnik. Omogućite veće nivoe evidentiranja samo privremeno tokom rešavanja problema. Da li želite da nastavite?"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
-#: gui\settingsDialogs.py:6326
+#: gui\settingsDialogs.py:6349
 msgid "Screen Curtain"
 msgstr "Zatamnjivanje ekrana"
 
 #. Translators: option to enable screen curtain in the privacy and security settings panel
-#: gui\settingsDialogs.py:6335
+#: gui\settingsDialogs.py:6358
 msgid "Make screen black (immediate effect)"
 msgstr "Učini da ekran bude crn(primenjuje se odmah)"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#: gui\settingsDialogs.py:6364
+#: gui\settingsDialogs.py:6387
 msgid "&Play sound when toggling Screen Curtain"
 msgstr "&Reprodukuj zvuk kada se zatamnjivanje ekrana omogući ili onemogući"
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
-#: gui\settingsDialogs.py:6379
+#: gui\settingsDialogs.py:6402
 msgid "L&ogging level:"
 msgstr "&Nivo evidentiranja u dnevniku:"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-#: gui\settingsDialogs.py:6402
+#: gui\settingsDialogs.py:6425
 msgid "Allow NV Access to gather NVDA usage statistics"
 msgstr "Dozvoli da NV Access prikuplja NVDA statistike korišćenja"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:6523
+#: gui\settingsDialogs.py:6546
 msgid "NVDA Settings"
 msgstr "NVDA podešavanja"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:6579
+#: gui\settingsDialogs.py:6602
 msgid "normal configuration"
 msgstr "globalna podešavanja"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:6614
+#: gui\settingsDialogs.py:6637
 msgid "Add Symbol"
 msgstr "Dodaj simbol"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:6619
+#: gui\settingsDialogs.py:6642
 msgid "&Symbol:"
 msgstr "&Simbol:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:6649
+#: gui\settingsDialogs.py:6672
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "Izgovor simbola (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:6663
+#: gui\settingsDialogs.py:6686
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "&Izdvoji po:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6672
+#: gui\settingsDialogs.py:6695
 msgid "&Symbols"
 msgstr "&Simboli"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:6682
+#: gui\settingsDialogs.py:6705
 msgid "Symbol"
 msgstr "Simbol"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6684 gui\speechDict.py:188
+#: gui\settingsDialogs.py:6707 gui\speechDict.py:191
 msgid "Replacement"
 msgstr "Zamena"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:6686
+#: gui\settingsDialogs.py:6709
 msgid "Level"
 msgstr "Nivo"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:6689
+#: gui\settingsDialogs.py:6712
 msgid "Preserve"
 msgstr "Zadrži"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:6693
+#: gui\settingsDialogs.py:6716
 msgid "Change selected symbol"
 msgstr "Promeni izabrani simbol"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6711 gui\speechDict.py:52
+#: gui\settingsDialogs.py:6734 gui\speechDict.py:52
 msgid "&Replacement"
 msgstr "&Zamena"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:6720
+#: gui\settingsDialogs.py:6743
 msgid "&Level"
 msgstr "&Nivo"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:6727
+#: gui\settingsDialogs.py:6750
 msgid "&Send actual symbol to synthesizer"
 msgstr "&Pošalji trenutni simbol do sintetizatora"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:6742
+#: gui\settingsDialogs.py:6765
 msgid "Re&move"
 msgstr "&Ukloni"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:6849
+#: gui\settingsDialogs.py:6872
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "Simbol \"%s\" već postoji."
@@ -15514,75 +15524,75 @@ msgstr "&Tip"
 
 #. Translators: This is an error message to let the user know that the pattern field
 #. in the dictionary entry is not valid.
-#: gui\speechDict.py:90
+#: gui\speechDict.py:93
 msgid "A pattern is required."
 msgstr "Morate upisati trenutnu reč."
 
 #. Translators: The title of an error message raised by the Dictionary Entry dialog
-#: gui\speechDict.py:92 gui\speechDict.py:115 gui\speechDict.py:133
+#: gui\speechDict.py:95 gui\speechDict.py:118 gui\speechDict.py:136
 msgid "Dictionary Entry Error"
 msgstr "Greška unosa u rečniku"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#: gui\speechDict.py:113
+#: gui\speechDict.py:116
 #, python-brace-format
 msgid "Regular Expression error in the pattern field: \"{error}\"."
 msgstr "Greška u regularnom izrazu u polju oblika: \"{error}\"."
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#: gui\speechDict.py:131
+#: gui\speechDict.py:134
 #, python-brace-format
 msgid "Regular Expression error in the replacement field: \"{error}\"."
 msgstr "Greška u regularnom izrazu u polju zamene: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
-#: gui\speechDict.py:175
+#: gui\speechDict.py:178
 msgid "&Dictionary entries"
 msgstr "&Unosi u rečniku"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 #. Translators: title for Word comment dialog.
-#: gui\speechDict.py:182 NVDAObjects\IAccessible\winword.py:375
+#: gui\speechDict.py:185 NVDAObjects\IAccessible\winword.py:375
 #: NVDAObjects\UIA\wordDocument.py:843
 msgid "Comment"
 msgstr "Komentar"
 
 #. Translators: The label for a column in dictionary entries list used to identify pattern
 #. (original word or a pattern).
-#: gui\speechDict.py:185
+#: gui\speechDict.py:188
 msgid "Pattern"
 msgstr "Oblik"
 
 #. Translators: The label for a column in dictionary entries list used to identify
 #. whether the entry is case sensitive or not.
-#: gui\speechDict.py:191
+#: gui\speechDict.py:194
 msgid "case"
 msgstr "osetljivo na veličinu slova"
 
 #. Translators: The label for a column in dictionary entries list used to identify
 #. whether the entry is a regular expression, matches whole words, or matches anywhere.
-#: gui\speechDict.py:194
+#: gui\speechDict.py:197
 msgid "Type"
 msgstr "Tip"
 
 #. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
-#: gui\speechDict.py:218
+#: gui\speechDict.py:221
 msgid "&Edit"
 msgstr "&Uredi"
 
 #. Translators: The label for a button on the Speech Dictionary dialog.
 #. Translators: The title on a prompt for confirmation on the Speech Dictionary dialog.
-#: gui\speechDict.py:232 gui\speechDict.py:312
+#: gui\speechDict.py:235 gui\speechDict.py:315
 msgid "Remove all"
 msgstr "Ukloni sve"
 
 #. Translators: This is the label for the add dictionary entry dialog.
-#: gui\speechDict.py:254
+#: gui\speechDict.py:257
 msgid "Add Dictionary Entry"
 msgstr "Dodaj unos u rečnik"
 
 #. Translators: A prompt for confirmation on the Speech Dictionary dialog.
-#: gui\speechDict.py:310
+#: gui\speechDict.py:313
 msgid "Are you sure you want to remove all the entries in this dictionary?"
 msgstr "Da li ste sigurni da želite da uklonite sve unose iz ovog rečnika?"
 
@@ -18339,316 +18349,316 @@ msgstr "Nepoznata boja"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Excel controls the pattern.
-#: NVDAObjects\window\excel.py:245
+#: NVDAObjects\window\excel.py:246
 msgid "automatic"
 msgstr "automatski"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-#: NVDAObjects\window\excel.py:248
+#: NVDAObjects\window\excel.py:249
 msgid "diagonal crosshatch"
 msgstr "dijagonalno prevlačenje"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
-#: NVDAObjects\window\excel.py:251
+#: NVDAObjects\window\excel.py:252
 msgid "thin diagonal crosshatch"
 msgstr "tanko dijagonalno prevlačenje"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-#: NVDAObjects\window\excel.py:254
+#: NVDAObjects\window\excel.py:255
 msgid "reverse diagonal stripe"
 msgstr "obrnuto dijagonalna traka"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 12.5% gray
-#: NVDAObjects\window\excel.py:258
+#: NVDAObjects\window\excel.py:259
 #, no-python-format
 msgid "12.5% gray"
 msgstr "12.5% siva"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-#: NVDAObjects\window\excel.py:262
+#: NVDAObjects\window\excel.py:263
 #, no-python-format
 msgid "25% gray"
 msgstr "25%  siva"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-#: NVDAObjects\window\excel.py:266
+#: NVDAObjects\window\excel.py:267
 #, no-python-format
 msgid "50% gray"
 msgstr "50%  siva"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-#: NVDAObjects\window\excel.py:270
+#: NVDAObjects\window\excel.py:271
 #, no-python-format
 msgid "75% gray"
 msgstr "75%  siva"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 6.25% gray
-#: NVDAObjects\window\excel.py:274
+#: NVDAObjects\window\excel.py:275
 #, no-python-format
 msgid "6.25% gray"
 msgstr "6.25% siva"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-#: NVDAObjects\window\excel.py:277
+#: NVDAObjects\window\excel.py:278
 msgid "thin horizontal crosshatch"
 msgstr "tanko horizontalno prevlačenje"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-#: NVDAObjects\window\excel.py:280
+#: NVDAObjects\window\excel.py:281
 msgid "horizontal stripe"
 msgstr "horizontalna traka"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-#: NVDAObjects\window\excel.py:283
+#: NVDAObjects\window\excel.py:284
 msgid "thin reverse diagonal stripe"
 msgstr "tanko obrnuto dijagonalna traka"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-#: NVDAObjects\window\excel.py:286
+#: NVDAObjects\window\excel.py:287
 msgid "thin horizontal stripe"
 msgstr "tanka horizontalna traka"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-#: NVDAObjects\window\excel.py:289
+#: NVDAObjects\window\excel.py:290
 msgid "thin diagonal stripe"
 msgstr "tanka dijagonalna traka"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-#: NVDAObjects\window\excel.py:292
+#: NVDAObjects\window\excel.py:293
 msgid "thin vertical stripe"
 msgstr "tanka uspravna traka"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
-#: NVDAObjects\window\excel.py:295 speech\speech.py:2810
+#: NVDAObjects\window\excel.py:296 speech\speech.py:2810
 msgid "none"
 msgstr "nijedan"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
-#: NVDAObjects\window\excel.py:298
+#: NVDAObjects\window\excel.py:299
 msgid "thick diagonal crosshatch"
 msgstr "debelo dijagonalno povlačenje"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
-#: NVDAObjects\window\excel.py:301
+#: NVDAObjects\window\excel.py:302
 msgid "solid"
 msgstr "čvrsto"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-#: NVDAObjects\window\excel.py:304
+#: NVDAObjects\window\excel.py:305
 msgid "diagonal stripe"
 msgstr "dijagonalna traka"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-#: NVDAObjects\window\excel.py:307
+#: NVDAObjects\window\excel.py:308
 msgid "vertical stripe"
 msgstr "uspravna traka"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#: NVDAObjects\window\excel.py:309
+#: NVDAObjects\window\excel.py:310
 msgid "linear gradient"
 msgstr "linearni preliv"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#: NVDAObjects\window\excel.py:311
+#: NVDAObjects\window\excel.py:312
 msgid "rectangular gradient"
 msgstr "pravougaoni preliv"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-#: NVDAObjects\window\excel.py:743
+#: NVDAObjects\window\excel.py:754
 msgid "Lists various types of elements in this spreadsheet"
 msgstr "Prikazuje različite vrste elemenata u ovoj tabeli"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: NVDAObjects\window\excel.py:753 NVDAObjects\window\winword.py:2222
+#: NVDAObjects\window\excel.py:764 NVDAObjects\window\winword.py:2222
 msgid "&Charts"
 msgstr "&Grafikoni"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: NVDAObjects\window\excel.py:756
+#: NVDAObjects\window\excel.py:767
 msgid "N&otes"
 msgstr "N&apomene"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: NVDAObjects\window\excel.py:759
+#: NVDAObjects\window\excel.py:770
 msgid "Fo&rmulas"
 msgstr "&Formule"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: NVDAObjects\window\excel.py:765
+#: NVDAObjects\window\excel.py:776
 msgid "&Sheets"
 msgstr "&Listovi"
 
 #. Translators: Used to express an address range in excel.
-#: NVDAObjects\window\excel.py:797 NVDAObjects\window\excel.py:1795
+#: NVDAObjects\window\excel.py:808 NVDAObjects\window\excel.py:1806
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} do {end}"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1286 NVDAObjects\window\winword.py:1763
+#: NVDAObjects\window\excel.py:1297 NVDAObjects\window\winword.py:1763
 msgid "Bold off"
 msgstr "Podebljanje isključeno"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1288 NVDAObjects\window\winword.py:1760
+#: NVDAObjects\window\excel.py:1299 NVDAObjects\window\winword.py:1760
 msgid "Bold on"
 msgstr "Podebljanje uključeno"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1300 NVDAObjects\window\winword.py:1781
+#: NVDAObjects\window\excel.py:1311 NVDAObjects\window\winword.py:1781
 msgid "Italic off"
 msgstr "Iskošenost isključena"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1302 NVDAObjects\window\winword.py:1778
+#: NVDAObjects\window\excel.py:1313 NVDAObjects\window\winword.py:1778
 msgid "Italic on"
 msgstr "Iskošenost uključena"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1314 NVDAObjects\window\winword.py:1810
+#: NVDAObjects\window\excel.py:1325 NVDAObjects\window\winword.py:1810
 msgid "Underline off"
 msgstr "Podvlačenje isključeno"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
-#: NVDAObjects\window\excel.py:1316
+#: NVDAObjects\window\excel.py:1327
 msgid "Underline on"
 msgstr "Podvlačenje uključeno"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
-#: NVDAObjects\window\excel.py:1328
+#: NVDAObjects\window\excel.py:1339
 msgid "Strikethrough off"
 msgstr "Precrtano isključeno"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
-#: NVDAObjects\window\excel.py:1330
+#: NVDAObjects\window\excel.py:1341
 msgid "Strikethrough on"
 msgstr "Precrtano uključeno"
 
 #. Translators: the description for a script for Excel
-#: NVDAObjects\window\excel.py:1666
+#: NVDAObjects\window\excel.py:1677
 msgid "Sets the current cell as start of column header. Pressing once will set this cell as the first column header for any cell lower and to the right of it within this region. Pressing twice will forget the current column header for this cell."
 msgstr "Postavlja trenutnu ćeliju kao početak zaglavlja kolone. Ako se pritisne jednom ova ćelija će biti postavljena kao prvo zaglavlje kolone za bilo koju ćeliju niže i desno od nje u ovoj oblasti. Ako se pritisne dva puta trenutno zaglavlje kolone za ovu ćeliju će biti obrisano."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#: NVDAObjects\window\excel.py:1678
+#: NVDAObjects\window\excel.py:1689
 #, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Postavljeno {address} kao početak kolone"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#: NVDAObjects\window\excel.py:1682
+#: NVDAObjects\window\excel.py:1693
 #, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "Već postavljeno {address} kao početak kolone"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#: NVDAObjects\window\excel.py:1687
+#: NVDAObjects\window\excel.py:1698
 #, python-brace-format
 msgid "Removed {address} from column headers"
 msgstr "Uklonjeno {address} kao zaglavlje kolona"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#: NVDAObjects\window\excel.py:1691
+#: NVDAObjects\window\excel.py:1702
 #, python-brace-format
 msgid "Cannot find {address} in column headers"
 msgstr "Nemoguće pronaći {address} u zaglavljima kolona"
 
 #. Translators: the description for a script for Excel
-#: NVDAObjects\window\excel.py:1697
+#: NVDAObjects\window\excel.py:1708
 msgid "Sets the current cell as start of row headers. Pressing once will set this cell as the first row header for any cell lower and to the right of it within this region. Pressing twice will forget the current row header for this cell."
 msgstr "Postavlja trenutnu ćeliju kao početak zaglavlja redova. Ako se pritisne jednom postaviće ovu ćeliju kao prvo zaglavlje reda za bilo koju ćeliju niže i desno od nje u ovoj oblasti. Ako se pritisne dva puta trenutno zaglavlje reda za ovu ćeliju će biti obrisano."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#: NVDAObjects\window\excel.py:1709
+#: NVDAObjects\window\excel.py:1720
 #, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "Postavljeno {address} kao početak zaglavlja redova"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#: NVDAObjects\window\excel.py:1713
+#: NVDAObjects\window\excel.py:1724
 #, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "Već postavljeno {address} kao početak zaglavlja redova"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#: NVDAObjects\window\excel.py:1718
+#: NVDAObjects\window\excel.py:1729
 #, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "Uklonjeno {address}    iz zaglavlja reda"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#: NVDAObjects\window\excel.py:1721
+#: NVDAObjects\window\excel.py:1732
 #, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "Nemoguće pronaći{address}    u zaglavljima reda"
 
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
-#: NVDAObjects\window\excel.py:1823
+#: NVDAObjects\window\excel.py:1834
 #, python-brace-format
 msgid "Sheet {0}, {1}"
 msgstr "List {0}, {1}"
 
-#: NVDAObjects\window\excel.py:1903
+#: NVDAObjects\window\excel.py:1914
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Ulazna poruka je {title}: {message}"
 
-#: NVDAObjects\window\excel.py:1905
+#: NVDAObjects\window\excel.py:1916
 #, python-brace-format
 msgid "Input Message is {message}"
 msgstr "Ulazna poruka je {message}"
 
 #. Translators: the description for a script for Excel
-#: NVDAObjects\window\excel.py:1920
+#: NVDAObjects\window\excel.py:1931
 msgid "Reports the note on the current cell. If pressed twice, presents the information in browse mode"
 msgstr "Prijavljuje napomenu u trenutnoj ćeliji. Ako se pritisne dva puta, prikazuje informaciju u režimu pretraživanja"
 
 #. Translators: title for note on the current Excel cell dialog.
 #. Translators: Title for the note editing  dialog
-#: NVDAObjects\window\excel.py:1937 NVDAObjects\window\excel.py:1956
+#: NVDAObjects\window\excel.py:1948 NVDAObjects\window\excel.py:1967
 msgid "Note"
 msgstr "Napomena"
 
 #. Translators: A message in Excel when there is no note
-#: NVDAObjects\window\excel.py:1941
+#: NVDAObjects\window\excel.py:1952
 msgid "Not on a note"
 msgstr "Nije na napomeni"
 
 #. Translators: the description  for a script for Excel
-#: NVDAObjects\window\excel.py:1945
+#: NVDAObjects\window\excel.py:1956
 msgid "Opens the note editing dialog"
 msgstr "Otvara dijalog za uređivanje napomene"
 
 #. Translators: Dialog text for the note editing dialog
-#: NVDAObjects\window\excel.py:1954
+#: NVDAObjects\window\excel.py:1965
 #, python-brace-format
 msgid "Editing note for cell {address}"
 msgstr "Uređivanje napomene za ćeliju {address}"
@@ -18656,7 +18666,7 @@ msgstr "Uređivanje napomene za ćeliju {address}"
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 #. Beware to keep two spaces between the address and the content. Otherwise some synthesizer
 #. may mix the address and the content when the cell contains a 3-digit number.
-#: NVDAObjects\window\excel.py:2010
+#: NVDAObjects\window\excel.py:2041
 #, python-brace-format
 msgid "{firstAddress}  {firstContent} through {lastAddress}  {lastContent}"
 msgstr "{firstAddress}  {firstContent} do {lastAddress}  {lastContent}"
@@ -20274,7 +20284,7 @@ msgstr "Bezbedna radna površina"
 #. Translators: Message announced when already at left edge of the screen while panning the magnified view
 #. Translators: Message announced when already at left edge of the screen while panning the magnified view
 #. to left edge
-#: _magnifier\commands.py:43 _magnifier\commands.py:64
+#: _magnifier\commands.py:39 _magnifier\commands.py:60
 msgctxt "magnifier"
 msgid "left edge"
 msgstr "leva ivica"
@@ -20282,7 +20292,7 @@ msgstr "leva ivica"
 #. Translators: Message announced when already at right edge of the screen while panning the magnified view
 #. Translators: Message announced when already at right edge of the screen while panning the magnified view
 #. to right edge
-#: _magnifier\commands.py:48 _magnifier\commands.py:70
+#: _magnifier\commands.py:44 _magnifier\commands.py:66
 msgctxt "magnifier"
 msgid "right edge"
 msgstr "desna ivica"
@@ -20290,7 +20300,7 @@ msgstr "desna ivica"
 #. Translators: Message announced when already at top edge of the screen while panning the magnified view
 #. Translators: Message announced when already at top edge of the screen while panning the magnified view
 #. to top edge
-#: _magnifier\commands.py:53 _magnifier\commands.py:76
+#: _magnifier\commands.py:49 _magnifier\commands.py:72
 msgctxt "magnifier"
 msgid "top edge"
 msgstr "gornji ugao"
@@ -20298,110 +20308,102 @@ msgstr "gornji ugao"
 #. Translators: Message announced when already at bottom edge of the screen while panning the magnified view
 #. Translators: Message announced when already at left edge of the screen while panning the magnified view
 #. to left edge
-#: _magnifier\commands.py:58 _magnifier\commands.py:82
+#: _magnifier\commands.py:54 _magnifier\commands.py:78
 msgctxt "magnifier"
 msgid "bottom edge"
 msgstr "donji ugao"
 
 #. Translators: Message announced when stopping the NVDA magnifier.
-#: _magnifier\commands.py:99
+#: _magnifier\commands.py:95
 msgctxt "magnifier"
-msgid "Exiting magnifier"
-msgstr "Izlaz iz lupe"
+msgid "Magnifier disabled"
+msgstr ""
 
 #. Translators: Message announced when trying to start magnifier while Screen Curtain is active.
-#: _magnifier\commands.py:108
+#: _magnifier\commands.py:104
 msgctxt "magnifier"
-msgid "Cannot start magnifier: Screen Curtain is active. Please disable Screen Curtain first."
-msgstr "Nemoguće pokrenuti lupu: zatamnjivanje ekrana je omogućeno. Molimo prvo onemogućite zatamnjivanje ekrana."
+msgid "Cannot start magnifier. Please disable Screen Curtain first."
+msgstr ""
 
 #. Translators: Message announced when starting the NVDA magnifier.
-#: _magnifier\commands.py:121
-#, python-brace-format
+#: _magnifier\commands.py:113
 msgctxt "magnifier"
-msgid "Starting {magnifiedView} magnifier with {zoomLevel} zoom level, {filter} filter, and {fullscreenMode} full-screen mode"
-msgstr "Pokretanje {magnifiedView} lupe sa nivoom zumiranja {zoomLevel}, filterom {filter} i režimom celog ekrana {fullscreenMode}"
-
-#. Translators: Message announced when starting the NVDA magnifier.
-#: _magnifier\commands.py:132
-#, python-brace-format
-msgctxt "magnifier"
-msgid "Starting {magnifiedView} magnifier with {zoomLevel} zoom level and {filter} filter"
-msgstr "Pokretanje {magnifiedView} lupe sa nivoom zumiranja {zoomLevel} i filterom {filter}"
+msgid "Magnifier enabled"
+msgstr ""
 
 #. Translators: Message announced when changing the color filter with {filter} being the new color filter.
-#: _magnifier\commands.py:196
+#: _magnifier\commands.py:173
 #, python-brace-format
 msgctxt "magnifier"
-msgid "Color filter changed to {filter}"
-msgstr "Filter boja promenjen na {filter}"
+msgid "Color filter {filter}"
+msgstr ""
 
 #. Translators: Message announced when changing the magnifier view with {view} being the new magnifier view.
-#: _magnifier\commands.py:220
+#: _magnifier\commands.py:197
 #, python-brace-format
 msgctxt "magnifier"
-msgid "Magnifier view changed to {view}"
-msgstr "Prikaz lupe promenjen na {view}"
+msgid "{view} view"
+msgstr ""
 
 #. Translators: Message announced when toggling a follow setting with {setting} being the name of the setting and {state} being either "enabled" or "disabled".
-#: _magnifier\commands.py:243
+#: _magnifier\commands.py:220
 #, python-brace-format
 msgctxt "magnifier"
 msgid "{setting} {state}"
 msgstr "{setting} {state}"
 
 #. Translators: State of the follow setting being toggled enabled.
-#: _magnifier\commands.py:249
+#: _magnifier\commands.py:226
 msgctxt "magnifier"
 msgid "enabled"
 msgstr "omogućeno"
 
 #. Translators: State of the follow setting being toggled disabled.
-#: _magnifier\commands.py:255
+#: _magnifier\commands.py:232
 msgctxt "magnifier"
 msgid "disabled"
 msgstr "onemogućeno"
 
 #. Translators: State of all follow settings being toggled disabled.
-#: _magnifier\commands.py:273
+#: _magnifier\commands.py:250
 msgctxt "magnifier"
-msgid "All follow settings disabled"
-msgstr "Sva podešavanja praćenja su onemogućena"
+msgid "All tracking settings disabled"
+msgstr ""
 
 #. Translators: State of all follow settings being restored.
-#: _magnifier\commands.py:279
+#: _magnifier\commands.py:256
 msgctxt "magnifier"
-msgid "All follow settings restored"
-msgstr "Sva podešavanja praćenja su vraćena"
+msgid "Tracking settings restored"
+msgstr ""
 
 #. Translators: Message announced when changing the full-screen mode with {mode} being the new full-screen mode.
-#: _magnifier\commands.py:307
+#: _magnifier\commands.py:284
 #, python-brace-format
 msgctxt "magnifier"
-msgid "Full-screen mode changed to {mode}"
-msgstr "Režim celog ekrana je promenjen na {mode}"
+msgid "Full-screen mode {mode}"
+msgstr ""
 
-#. Translators: Message announced when trying to start spotlight mode while it's already active.
-#: _magnifier\commands.py:331
+#. Translators: Message announced when trying to show temporary overview of the screen while it's already active.
+#: _magnifier\commands.py:308
 msgctxt "magnifier"
-msgid "Spotlight mode is already active"
-msgstr "Režim reflektora je već aktivan"
+msgid "The screen overview is already active"
+msgstr ""
 
-#. Translators: Message announced when spotlight mode is started.
-#: _magnifier\commands.py:341
+#. Translators: Message announced when overview of the entire screen is being showed.
+#: _magnifier\commands.py:318
 msgctxt "magnifier"
-msgid "Spotlight mode started"
-msgstr "Režim reflektora pokrenut"
+msgid "Showing entire screen"
+msgstr ""
 
 #. Translators: Message announced when the magnifier is not active.
-#: _magnifier\commands.py:365
+#: _magnifier\commands.py:342
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not active."
 msgstr "Nemoguće izvršiti radnju {action} kada lupa nije aktivna."
 
 #. Translators: Message announced when the magnifier is not full-screen.
-#: _magnifier\commands.py:390
+#: _magnifier\commands.py:367
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not full-screen."
@@ -20429,26 +20431,26 @@ msgstr "Lupa je zaustavljena zbog greške. Molimo ponovo je pokrenite."
 #. Translators: Message when trying to enable magnifier while screen curtain is active
 #: _magnifier\magnifier.py:179
 msgctxt "magnifier"
-msgid "Cannot enable magnifier: screen curtain is active. Please disable screen curtain first."
-msgstr "Nemoguće omogućiti lupu: zatamnjivanje ekrana je omogućeno. Molimo prvo onemogućite zatamnjivanje ekrana."
+msgid "Cannot enable magnifier. Please disable screen curtain first."
+msgstr ""
 
 #. Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
 #: _magnifier\magnifier.py:268
 msgctxt "magnifier"
-msgid "Magnifier is active, disabling it before enabling screen curtain"
-msgstr "Lupa je aktivna, biće onemogućena pre nego što se omogući zatamnjivanje ekrana"
+msgid "Disabling magnifier"
+msgstr ""
 
 #. Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
 #: _magnifier\magnifier.py:286
 msgctxt "magnifier"
-msgid "Magnifier was active before screen curtain, re-enabling it"
-msgstr "Lupa je bila aktivna pre zatamnjivanja ekrana, biće ponovo omogućena"
+msgid "Re-enabling magnifier"
+msgstr ""
 
-#. Translators: Message announced when stopping the magnifier spotlight.
+#. Translators: Message announced when turning back to normal view after entire screen overview.
 #: _magnifier\utils\spotlightManager.py:69
 msgctxt "magnifier"
-msgid "Magnifier spotlight stopped"
-msgstr "Reflektor lupe je zaustavljen"
+msgid "Back to normal view"
+msgstr ""
 
 #. Translators: Action description for zooming in.
 #: _magnifier\utils\types.py:60
@@ -20513,14 +20515,14 @@ msgstr "pomeri u donji ugao"
 #. Translators: Action description for toggling settings.
 #: _magnifier\utils\types.py:80
 msgctxt "magnifier action"
-msgid "toggle follow settings"
-msgstr "uključi ili isključi podešavanja praćenja"
+msgid "toggle tracking settings"
+msgstr ""
 
 #. Translators: Action description for toggling color filters.
 #: _magnifier\utils\types.py:82
 msgctxt "magnifier action"
-msgid "toggle filters"
-msgstr "uključi ili isključi filtere"
+msgid "cycle color filters"
+msgstr ""
 
 #. Translators: Action description for changing magnifier view.
 #: _magnifier\utils\types.py:84
@@ -20534,11 +20536,11 @@ msgctxt "magnifier action"
 msgid "change full-screen mode"
 msgstr "promeni režim celog ekrana"
 
-#. Translators: Action description for starting spotlight mode.
+#. Translators: Action description for showing entire screen overview.
 #: _magnifier\utils\types.py:88
 msgctxt "magnifier action"
-msgid "start spotlight mode"
-msgstr "pokreni režim reflektora"
+msgid "show screen overview"
+msgstr ""
 
 #. Translators: Focus type for magnifier to follow - mouse cursor.
 #: _magnifier\utils\types.py:104

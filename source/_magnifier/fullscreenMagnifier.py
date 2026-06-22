@@ -24,7 +24,7 @@ from .utils.types import (
 	MagnifierParameters,
 	Coordinates,
 )
-from .config import getFullscreenMode, isTrueCentered
+from .config import getFullscreenMode, isTrueCentered, _isDebug
 from .utils.errorHandling import trackNativeMagnifierErrors
 
 
@@ -52,7 +52,8 @@ class FullScreenMagnifier(Magnifier):
 		obj,
 		nextHandler,
 	):
-		log.debug("Full-screen Magnifier gain focus event")
+		if _isDebug():
+			log.debug("Full-screen Magnifier gain focus event")
 		nextHandler()
 
 	@override
@@ -63,9 +64,10 @@ class FullScreenMagnifier(Magnifier):
 		super()._startMagnifier()
 		if not self._isActive:
 			return
-		log.debug(
-			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self._fullscreenMode}",
-		)
+		if _isDebug():
+			log.debug(
+				f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self._fullscreenMode}",
+			)
 		try:
 			self._initializeNativeMagnification()
 		except OSError:
@@ -112,7 +114,8 @@ class FullScreenMagnifier(Magnifier):
 		self._uninitializeNativeMagnification()
 		self._clearStaleApiState()
 		magnification.MagInitialize()
-		log.debug("Magnification API initialized")
+		if _isDebug():
+			log.debug("Magnification API initialized")
 		# Applying the first real update verifies the API is usable without
 		# briefly jumping the magnified view to the top-left corner.
 		try:
@@ -155,7 +158,8 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		magnification.MagSetFullscreenTransform(1.0, 0, 0)
 		magnification.MagSetFullscreenColorEffect(FilterMatrix.NORMAL.value)
-		log.debug("Magnification reset to neutral state")
+		if _isDebug():
+			log.debug("Magnification reset to neutral state")
 
 	@trackNativeMagnifierErrors
 	def _uninitializeNativeMagnification(self) -> None:
@@ -164,7 +168,8 @@ class FullScreenMagnifier(Magnifier):
 		If already uninitialized or on failure, continues anyway.
 		"""
 		magnification.MagUninitialize()
-		log.debug("Magnification API uninitialized")
+		if _isDebug():
+			log.debug("Magnification API uninitialized")
 
 	@override
 	def _attemptRecovery(self) -> None:
@@ -183,7 +188,7 @@ class FullScreenMagnifier(Magnifier):
 			self._conductRecoveryFailure()
 			return
 
-		log.info(
+		log.debug(
 			f"Attempting full-screen magnifier recovery "
 			f"(attempt {self._recoveryAttempts}/{self._MAX_RECOVERY_ATTEMPTS})",
 		)
@@ -199,7 +204,7 @@ class FullScreenMagnifier(Magnifier):
 			return
 
 		self._consecutiveErrors = 0
-		log.info("Full-screen magnifier recovery succeeded")
+		log.debug("Full-screen magnifier recovery succeeded")
 		self._startTimer(self._updateMagnifier)
 
 	def _conductRecoveryFailure(self) -> None:
@@ -352,9 +357,10 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		Launch Spotlight from Full-screen class
 		"""
-		log.debug(
-			f"Launching spotlight mode from full-screen magnifier with mode {self._fullscreenMode}",
-		)
+		if _isDebug():
+			log.debug(
+				f"Launching spotlight mode from full-screen magnifier with mode {self._fullscreenMode}",
+			)
 		self._stopTimer()
 		self._spotlightManager._startSpotlight()
 
