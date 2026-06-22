@@ -68,12 +68,10 @@ class HighlightStyle(NamedTuple):
 BLUE = RGB(0x03, 0x36, 0xFF)
 PINK = RGB(0xFF, 0x02, 0x66)
 YELLOW = RGB(0xFF, 0xDE, 0x03)
-ORANGE = RGB(0xFF, 0xA5, 0x00)
 DASH_BLUE = HighlightStyle(BLUE, 5, winGDI.DashStyleDash, 5)
 SOLID_PINK = HighlightStyle(PINK, 5, winGDI.DashStyleSolid, 5)
 SOLID_BLUE = HighlightStyle(BLUE, 5, winGDI.DashStyleSolid, 5)
 SOLID_YELLOW = HighlightStyle(YELLOW, 2, winGDI.DashStyleSolid, 2)
-SOLID_ORANGE = HighlightStyle(ORANGE, 2, winGDI.DashStyleSolid, 2)
 
 
 class HighlightWindow(CustomWindow):
@@ -310,12 +308,9 @@ _contextOptionLabelsWithAccelerators = {
 	# Translators: shown for a highlighter setting that toggles
 	# highlighting the navigator object.
 	Context.NAVIGATOR: _("Highlight navigator &object"),
-	# Translators: shown for a highlighter setting that toggles
-	# highlighting the current math navigation position.
-	Context.MATH: _("Highlight math &navigation"),
 }
 
-_supportedContexts = (Context.FOCUS, Context.NAVIGATOR, Context.BROWSEMODE, Context.MATH)
+_supportedContexts = (Context.FOCUS, Context.NAVIGATOR, Context.BROWSEMODE)
 
 
 class NVDAHighlighterSettings(providerBase.VisionEnhancementProviderSettings):
@@ -323,7 +318,6 @@ class NVDAHighlighterSettings(providerBase.VisionEnhancementProviderSettings):
 	highlightFocus = False
 	highlightNavigator = False
 	highlightBrowseMode = False
-	highlightMath = False
 
 	@override
 	@classmethod
@@ -369,7 +363,6 @@ class NVDAHighlighterGuiPanel(
 			settingsToCheck = [
 				settingsStorage.highlightBrowseMode,
 				settingsStorage.highlightFocus,
-				settingsStorage.highlightMath,
 				settingsStorage.highlightNavigator,
 			]
 			if any(settingsToCheck):
@@ -379,7 +372,6 @@ class NVDAHighlighterGuiPanel(
 				)
 				settingsStorage.highlightBrowseMode = False
 				settingsStorage.highlightFocus = False
-				settingsStorage.highlightMath = False
 				settingsStorage.highlightNavigator = False
 		super().__init__(parent)
 
@@ -436,7 +428,6 @@ class NVDAHighlighterGuiPanel(
 		settingsToTriggerActivation = [
 			settingsStorage.highlightBrowseMode,
 			settingsStorage.highlightFocus,
-			settingsStorage.highlightMath,
 			settingsStorage.highlightNavigator,
 		]
 		isAnyEnabled = any(settingsToTriggerActivation)
@@ -455,7 +446,6 @@ class NVDAHighlighterGuiPanel(
 		settingsStorage: NVDAHighlighterSettings = self._getSettingsStorage()
 		settingsStorage.highlightBrowseMode = False
 		settingsStorage.highlightFocus = False
-		settingsStorage.highlightMath = False
 		settingsStorage.highlightNavigator = False
 		self.updateDriverSettings()
 		self._updateEnabledState()
@@ -474,7 +464,6 @@ class NVDAHighlighterGuiPanel(
 			isEnableAllChecked = evt.IsChecked()
 			settingsStorage.highlightBrowseMode = isEnableAllChecked
 			settingsStorage.highlightFocus = isEnableAllChecked
-			settingsStorage.highlightMath = isEnableAllChecked
 			settingsStorage.highlightNavigator = isEnableAllChecked
 			if not self._ensureEnableState(isEnableAllChecked) and isEnableAllChecked:
 				self._onEnableFailure()
@@ -493,7 +482,6 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		Context.NAVIGATOR: SOLID_PINK,
 		Context.FOCUS_NAVIGATOR: SOLID_BLUE,
 		Context.BROWSEMODE: SOLID_YELLOW,
-		Context.MATH: SOLID_ORANGE,
 	}
 	_refreshInterval = 100
 	customWindowClass = HighlightWindow
@@ -600,7 +588,6 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		self.contextToRectMap[context] = rect
 
 	def handleFocusChange(self, obj: "NVDAObject") -> None:
-		self.contextToRectMap.pop(Context.MATH, None)
 		self.updateContextRect(context=Context.FOCUS, obj=obj)
 		if not api.isObjectInActiveTreeInterceptor(obj):
 			self.contextToRectMap.pop(Context.BROWSEMODE, None)
@@ -615,9 +602,10 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 
 	def handleMathNavigation(self, rect: RectLTRB | None) -> None:
 		if rect is None:
-			self.contextToRectMap.pop(Context.MATH, None)
+			self.contextToRectMap.pop(Context.BROWSEMODE, None)
+			self.updateContextRect(context=Context.BROWSEMODE)
 			return
-		self.updateContextRect(context=Context.MATH, rect=rect)
+		self.updateContextRect(context=Context.BROWSEMODE, rect=rect)
 
 	def refresh(self) -> None:
 		"""Refreshes the screen positions of the enabled highlights."""
