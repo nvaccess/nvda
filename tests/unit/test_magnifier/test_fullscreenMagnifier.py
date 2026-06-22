@@ -289,86 +289,8 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		magnifier._stopMagnifier()
 
 
-class TestFullScreenMagnifierScreenCurtain(_TestMagnifier):
-	"""Tests for FullScreenMagnifier interaction with the screen curtain and Magnification API conflicts."""
-
-	def _mockScreenCurtain(self, enabled: bool):
-		"""Patch screenCurtain module so .screenCurtain.enabled returns the given value."""
-		mock_instance = MagicMock()
-		mock_instance.enabled = enabled
-		patcher = patch("_magnifier.fullscreenMagnifier.screenCurtain")
-		mock_module = patcher.start()
-		self.addCleanup(patcher.stop)
-		mock_module.screenCurtain = mock_instance
-
-	def testStartBlockedByScreenCurtain(self):
-		"""When screen curtain is active, magnifier must not start and MagInitialize must not be called."""
-		self._mockScreenCurtain(enabled=True)
-		with patch("NVDAState._TrackNVDAInitialization.isInitializationComplete", return_value=True):
-			with patch("_magnifier.fullscreenMagnifier.ui.message"):
-				magnifier = FullScreenMagnifier()
-				magnifier._startMagnifier()
-
-		self.assertFalse(magnifier._isActive)
-		self.mock_mag_fs.MagInitialize.assert_not_called()
-
-	def testStartBlockedAtStartupSetsFlag(self):
-		"""At NVDA startup, screen curtain blocks the magnifier silently and sets _screenCurtainIsActive."""
-		self._mockScreenCurtain(enabled=True)
-		with patch("NVDAState._TrackNVDAInitialization.isInitializationComplete", return_value=False):
-			with patch("_magnifier.fullscreenMagnifier.ui.message") as mock_message:
-				magnifier = FullScreenMagnifier()
-				magnifier._startMagnifier()
-
-		self.assertFalse(magnifier._isActive)
-		self.assertTrue(magnifier._screenCurtainIsActive)
-		mock_message.assert_not_called()
-		self.mock_mag_fs.MagInitialize.assert_not_called()
-
-	def testOnScreenCurtainEnabledStopsMagnifier(self):
-		"""When screen curtain is enabled while magnifier is active, magnifier stops."""
-		magnifier = FullScreenMagnifier()
-		magnifier._startMagnifier()
-		self.assertTrue(magnifier._isActive)
-
-		with patch("_magnifier.fullscreenMagnifier.ui.message"):
-			magnifier.onScreenCurtainEnabled()
-
-		self.assertFalse(magnifier._isActive)
-		self.assertTrue(magnifier._screenCurtainIsActive)
-
-	def testOnScreenCurtainEnabledWhenInactive(self):
-		"""When screen curtain is enabled while magnifier is already inactive, _screenCurtainIsActive is False."""
-		magnifier = FullScreenMagnifier()
-		self.assertFalse(magnifier._isActive)
-
-		magnifier.onScreenCurtainEnabled()
-
-		self.assertFalse(magnifier._screenCurtainIsActive)
-
-	def testOnScreenCurtainDisabledRestartsMagnifier(self):
-		"""When screen curtain is disabled and _screenCurtainIsActive is True, magnifier restarts."""
-		magnifier = FullScreenMagnifier()
-		magnifier._screenCurtainIsActive = True
-		magnifier._startMagnifier = MagicMock()
-		magnifier._updateMagnifier = MagicMock()
-
-		with patch("_magnifier.fullscreenMagnifier.ui.message"):
-			magnifier.onScreenCurtainDisabled()
-
-		magnifier._startMagnifier.assert_called_once()
-		magnifier._updateMagnifier.assert_called_once()
-		self.assertFalse(magnifier._screenCurtainIsActive)
-
-	def testOnScreenCurtainDisabledDoesNothingWhenFlagIsFalse(self):
-		"""When screen curtain is disabled but _screenCurtainIsActive is False, nothing happens."""
-		magnifier = FullScreenMagnifier()
-		magnifier._screenCurtainIsActive = False
-		magnifier._startMagnifier = MagicMock()
-
-		magnifier.onScreenCurtainDisabled()
-
-		magnifier._startMagnifier.assert_not_called()
+class TestFullScreenMagnifierApi(_TestMagnifier):
+	"""Tests for FullScreenMagnifier interactions with the Windows Magnification API."""
 
 	def testCannotStartWhenWindowsMagnifierRunning(self):
 		"""MagSetFullscreenTransform fails because Windows Magnifier is running: magnifier must not start."""

@@ -11,6 +11,9 @@ Implements the magnifier global class and its basic functionalities.
 from collections.abc import Callable
 from comtypes import COMError
 from logHandler import log
+import screenCurtain
+import speech
+import ui
 import wx
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
@@ -53,6 +56,7 @@ class Magnifier:
 		self._isManualPanning: bool = False
 		self._consecutiveErrors: int = 0
 		self._recoveryAttempts: int = 0
+		self._screenCurtainIsActive: bool = False
 		# Register for display changes
 		_displayTracking.displayChanged.register(self._onDisplayChanged)
 
@@ -159,11 +163,65 @@ class Magnifier:
 		log.debug("Display configuration changed, updating screen dimensions")
 		self.orientationState = orientationState
 
+	def _isBlockedByScreenCurtain(self) -> bool:
+		"""
+		Check if the screen curtain is active and block magnifier start accordingly.
+
+		Returns True if the magnifier should not start.
+		At startup, defers silently so the magnifier auto-restarts when the screen curtain is disabled.
+		"""
+		if not (screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled):
+			return False
+		from NVDAState import _TrackNVDAInitialization
+
+		if _TrackNVDAInitialization.isInitializationComplete():
+			log.debug("Screen curtain is active, cannot start magnifier")
+			message = pgettext(
+				"magnifier",
+				# Translators: Message when trying to enable magnifier while screen curtain is active
+				"Cannot enable magnifier. Please disable screen curtain first.",
+			)
+			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
+		else:
+			self._screenCurtainIsActive = True
+		return True
+
+	def onScreenCurtainEnabled(self) -> None:
+		"""Called by screen curtain when it is enabled. Stops the magnifier if active."""
+		if self._isActive:
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
+					"Disabling magnifier",
+				),
+			)
+			self._stopMagnifier()
+			self._screenCurtainIsActive = True
+		else:
+			self._screenCurtainIsActive = False
+
+	def onScreenCurtainDisabled(self) -> None:
+		"""Called by screen curtain when it is disabled. Restarts the magnifier if it was active before."""
+		if self._screenCurtainIsActive:
+			ui.message(
+				pgettext(
+					"magnifier",
+					# Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
+					"Re-enabling magnifier",
+				),
+			)
+			self._startMagnifier()
+			self._updateMagnifier()
+			self._screenCurtainIsActive = False
+
 	def _startMagnifier(self) -> None:
 		"""
 		Start the magnifier
 		"""
 		if self._isActive:
+			return
+		if self._isBlockedByScreenCurtain():
 			return
 		self._isActive = True
 		self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
