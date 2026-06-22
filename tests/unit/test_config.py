@@ -9,6 +9,7 @@ import typing
 import unittest
 from unittest.mock import MagicMock, mock_open, patch
 import io
+import yaml
 
 import configobj
 import configobj.validate
@@ -1338,7 +1339,6 @@ class Config_loadCustomSections(unittest.TestCase):
 
 	def test_yamlError_logsAndReturnsWithoutAdding(self):
 		"""yaml.YAMLError is logged and customSections remains empty."""
-		import yaml
 
 		with patch("builtins.open", mock_open()):
 			with patch("config.configSections.yaml.safe_load", side_effect=yaml.YAMLError):
