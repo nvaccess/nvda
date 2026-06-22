@@ -32,6 +32,7 @@ class MathPresentationProvider(object):
 	"""Implements presentation of math content.
 	A single provider does not need to implement all presentation types.
 	"""
+
 	supportsInteractionSourceObj: bool = False
 
 	def getSpeechForMathMl(self, mathMl: str) -> List[Union[str, "SpeechCommand"]]:
