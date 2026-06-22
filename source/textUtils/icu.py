@@ -84,7 +84,7 @@ def calculateWordOffsets(
 	try:
 		with _breakIterator(_icu.UBRK_WORD, _ROOT_LOCALE, buf) as bi:
 			# Find [start, end) — the ICU segment containing offset.
-			# ICU offsets are code-point indexed, so anchor on the boundary following
+			# ICU offsets are UTF-16 code-unit indexed, so anchor on the boundary following
 			# offset and take the boundary preceding that. (ubrk_preceding(offset + 1)
 			# would snap back for multi-unit segments.)
 			end = _icu.ubrk_following(bi, offset)
