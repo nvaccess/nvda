@@ -1042,7 +1042,7 @@ class Edit(EditableTextWithAutoSelectDetection, EditBase):
 	editAPIVersion = 0
 	editValueUnit = textInfos.UNIT_LINE
 
-	def _get_TextInfo(self):
+	def _get_TextInfo(self) -> EditTextInfo | ITextDocumentTextInfo:
 		if self.editAPIVersion != 0 and self.ITextDocumentObject and self.ITextSelectionObject:
 			return ITextDocumentTextInfo
 		else:
