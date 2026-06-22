@@ -23,7 +23,7 @@ jobs:
       # Auto-update only rewrites hook revisions in prek.toml,
       # so submodule content is not needed.
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       # Install prek as a standalone binary; auto-update only rewrites hook
       # revisions in prek.toml, so neither uv nor the project environment is
       # needed. The cargo-dist installer adds prek to $GITHUB_PATH.
