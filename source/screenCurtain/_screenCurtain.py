@@ -200,11 +200,11 @@ class ScreenCurtain:
 			log.debug("ScreenCurtain is already enabled.")
 			return
 
+		# Notify magnifier that screen curtain is being enabled
 		import _magnifier
-		from _magnifier.utils.types import MagnifiedView
 
 		magnifierInstance = _magnifier.getMagnifier()
-		if magnifierInstance and magnifierInstance._MAGNIFIED_VIEW == MagnifiedView.FULLSCREEN:
+		if magnifierInstance:
 			magnifierInstance.onScreenCurtainEnabled()
 
 		log.debug("Enabling ScreenCurtain")
@@ -258,12 +258,12 @@ class ScreenCurtain:
 				nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "screenCurtainOff.wav"))
 			except Exception:
 				log.exception()
+		# Notify magnifier that screen curtain is being disabled
 
 		import _magnifier
-		from _magnifier.utils.types import MagnifiedView
 
 		magnifierInstance = _magnifier.getMagnifier()
-		if magnifierInstance and magnifierInstance._MAGNIFIED_VIEW == MagnifiedView.FULLSCREEN:
+		if magnifierInstance:
 			magnifierInstance.onScreenCurtainDisabled()
 
 	def __del__(self) -> None:
