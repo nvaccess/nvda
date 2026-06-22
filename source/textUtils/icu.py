@@ -21,18 +21,18 @@ locale-driven (see calculateWordOffsets), so the root locale is always used.
 
 
 @contextmanager
-def _breakIterator(kind: int, locale: bytes, text: str):
+def _breakIterator(kind: int, locale: bytes, buf: ctypes.Array[ctypes.c_wchar]):
 	"""Context manager that opens an ICU BreakIterator, yields it, then closes it.
 
-	The ctypes buffer is kept alive for the duration of the block, satisfying
-	ICU's requirement that the text pointer remains valid while the iterator is in use.
+	The caller owns the text buffer and must keep it alive for the duration of the
+	block, satisfying ICU's requirement that the text pointer remains valid while
+	the iterator is in use.
 
 	:param kind: One of the UBRK_* constants from winBindings.icu.
 	:param locale: ICU locale byte string (the root locale, _ROOT_LOCALE).
-	:param text: Python str to analyze.
+	:param buf: NUL-terminated UTF-16 buffer (ctypes.create_unicode_buffer) to analyze.
 	:raises RuntimeError: If ICU reports an error opening the iterator.
 	"""
-	buf = ctypes.create_unicode_buffer(text)
 	textLength = len(buf) - 1
 	status = _icu.UErrorCode(0)
 	bi = _icu.ubrk_open(kind, locale, buf, textLength, ctypes.byref(status))
@@ -74,17 +74,15 @@ def calculateWordOffsets(
 	:return: (startOffset, endOffset) as UTF-16 code unit indices (endOffset exclusive),
 	    or None if the ICU call failed.
 	"""
-	utf16_bytes = text.encode("utf-16-le", errors="surrogatepass")
-	textLength = len(utf16_bytes) // 2
+	# A c_wchar buffer is UTF-16 code-unit indexed on Windows, so buf[a:b] is exactly
+	# the segment ICU's offsets refer to (lone surrogates decode as non-space).
+	buf = ctypes.create_unicode_buffer(text)
+	textLength = len(buf) - 1
 	if offset >= textLength:
 		return (offset, offset + 1)
-	locale = _ROOT_LOCALE
-
-	def _segText(segStart: int, segEnd: int) -> str:
-		return utf16_bytes[segStart * 2 : segEnd * 2].decode("utf-16-le", errors="surrogatepass")
 
 	try:
-		with _breakIterator(_icu.UBRK_WORD, locale, text) as bi:
+		with _breakIterator(_icu.UBRK_WORD, _ROOT_LOCALE, buf) as bi:
 			# Find [start, end) — the ICU segment containing offset.
 			# ICU offsets are code-point indexed, so anchor on the boundary following
 			# offset and take the boundary preceding that. (ubrk_preceding(offset + 1)
@@ -96,7 +94,7 @@ def calculateWordOffsets(
 			if start == _icu.UBRK_DONE:
 				start = 0
 
-			if _segText(start, end).isspace():
+			if buf[start:end].isspace():
 				# Offset is inside a whitespace run.  Attach this run to the
 				# preceding segment (mirroring the Uniscribe trailing-space rule).
 				if start > 0:
@@ -108,7 +106,7 @@ def calculateWordOffsets(
 				# Offset is inside a word/punctuation segment.  Extend the end
 				# through any immediately following whitespace run.
 				nextEnd = _icu.ubrk_following(bi, end)
-				if nextEnd != _icu.UBRK_DONE and _segText(end, nextEnd).isspace():
+				if nextEnd != _icu.UBRK_DONE and buf[end:nextEnd].isspace():
 					return (start, nextEnd)
 
 			return (start, end)

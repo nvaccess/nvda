@@ -28,35 +28,8 @@ for _dllName in ("icu.dll", "icuuc.dll"):
 ICU_AVAILABLE: bool = _lib is not None
 """True if an ICU library was successfully loaded."""
 
-UBRK_CHARACTER: int = 0
-"""Break iterator type for character boundaries."""
 UBRK_WORD: int = 1
 """Break iterator type for word boundaries."""
-UBRK_LINE: int = 2
-"""Break iterator type for line-break boundaries."""
-UBRK_SENTENCE: int = 3
-"""Break iterator type for sentence boundaries."""
-
-UBRK_WORD_NONE: int = 0
-"""Rule status tag: start of non-word boundary range (whitespace or punctuation between words)."""
-UBRK_WORD_NONE_LIMIT: int = 100
-"""Rule status tag: exclusive end of non-word boundary range."""
-UBRK_WORD_NUMBER: int = 100
-"""Rule status tag: start of number boundary range."""
-UBRK_WORD_NUMBER_LIMIT: int = 200
-"""Rule status tag: exclusive end of number boundary range."""
-UBRK_WORD_LETTER: int = 200
-"""Rule status tag: start of letter boundary range; values >= this are actual word boundaries."""
-UBRK_WORD_LETTER_LIMIT: int = 300
-"""Rule status tag: exclusive end of letter boundary range."""
-UBRK_WORD_KANA: int = 300
-"""Rule status tag: start of kana boundary range."""
-UBRK_WORD_KANA_LIMIT: int = 400
-"""Rule status tag: exclusive end of kana boundary range."""
-UBRK_WORD_IDEO: int = 400
-"""Rule status tag: start of ideograph boundary range."""
-UBRK_WORD_IDEO_LIMIT: int = 500
-"""Rule status tag: exclusive end of ideograph boundary range."""
 
 UBRK_DONE: int = -1
 """Returned by iterator functions when there are no more boundaries."""
@@ -85,10 +58,10 @@ if ICU_AVAILABLE:
 	"""
 	ubrk_open.restype = c_void_p
 	ubrk_open.argtypes = (
-		c_int32,              # kind: UBreakIteratorType
-		c_char_p,             # locale: UTF-8 locale ID or NULL
-		c_wchar_p,            # text: UTF-16 text to analyze
-		c_int32,              # textLength: code units, or -1 for NUL-terminated
+		c_int32,  # kind: UBreakIteratorType
+		c_char_p,  # locale: UTF-8 locale ID or NULL
+		c_wchar_p,  # text: UTF-16 text to analyze
+		c_int32,  # textLength: code units, or -1 for NUL-terminated
 		POINTER(UErrorCode),  # status: in/out error code
 	)
 
@@ -99,37 +72,6 @@ if ICU_AVAILABLE:
 		c_void_p,  # bi: UBreakIterator* handle to free
 	)
 
-	ubrk_setText = _lib.ubrk_setText
-	"""Rebind an existing iterator to new text without reallocating.
-
-	ICU holds a reference to the text buffer; the caller must keep it alive for the
-	lifetime of the iterator.
-	"""
-	ubrk_setText.restype = None
-	ubrk_setText.argtypes = (
-		c_void_p,             # bi: UBreakIterator* handle
-		c_wchar_p,            # text: new UTF-16 text buffer
-		c_int32,              # textLength: code units, or -1 for NUL-terminated
-		POINTER(UErrorCode),  # status: in/out error code
-	)
-
-	ubrk_first = _lib.ubrk_first
-	"""Move to the first boundary (start of text) and return its position."""
-	ubrk_first.restype = c_int32
-	ubrk_first.argtypes = (
-		c_void_p,  # bi: UBreakIterator* handle
-	)
-
-	ubrk_next = _lib.ubrk_next
-	"""Advance to the next boundary and return its position.
-
-	Returns UBRK_DONE when past the end of the text.
-	"""
-	ubrk_next.restype = c_int32
-	ubrk_next.argtypes = (
-		c_void_p,  # bi: UBreakIterator* handle
-	)
-
 	ubrk_preceding = _lib.ubrk_preceding
 	"""Return the largest boundary position strictly less than offset.
 
@@ -138,7 +80,7 @@ if ICU_AVAILABLE:
 	ubrk_preceding.restype = c_int32
 	ubrk_preceding.argtypes = (
 		c_void_p,  # bi: UBreakIterator* handle
-		c_int32,   # offset: position to search before
+		c_int32,  # offset: position to search before
 	)
 
 	ubrk_following = _lib.ubrk_following
@@ -149,16 +91,5 @@ if ICU_AVAILABLE:
 	ubrk_following.restype = c_int32
 	ubrk_following.argtypes = (
 		c_void_p,  # bi: UBreakIterator* handle
-		c_int32,   # offset: position to search after
-	)
-
-	ubrk_getRuleStatus = _lib.ubrk_getRuleStatus
-	"""Return the rule status tag for the most recently returned boundary.
-
-	For UBRK_WORD iterators, values < UBRK_WORD_NONE_LIMIT indicate non-word boundaries
-	(whitespace or punctuation); values >= UBRK_WORD_LETTER are actual word boundaries.
-	"""
-	ubrk_getRuleStatus.restype = c_int32
-	ubrk_getRuleStatus.argtypes = (
-		c_void_p,  # bi: UBreakIterator* handle
+		c_int32,  # offset: position to search after
 	)
