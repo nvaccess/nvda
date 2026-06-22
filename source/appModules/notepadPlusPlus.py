@@ -13,8 +13,10 @@ and the current name makes it possible to expose it from `nvdaBuiltin` for add-o
 import ctypes
 
 import appModuleHandler
+from NVDAObjects import NVDAObject
 from NVDAObjects.inputComposition import InputCompositionTextInfo
 import NVDAObjects.window.scintilla as ScintillaBase
+import textInfos
 
 
 class CharacterRangeStructLongLong(ctypes.Structure):
@@ -40,7 +42,7 @@ class ScintillaTextInfoNpp83(ScintillaBase.ScintillaTextInfo):
 		]
 
 
-def _hasActiveInputComposition(obj) -> bool:
+def _hasActiveInputComposition(obj: NVDAObject) -> bool:
 	"""Return True when NVDA has current IME composition text on this object."""
 	if getattr(obj, "isReading", False):
 		return bool(getattr(obj, "readingString", ""))
@@ -50,7 +52,7 @@ def _hasActiveInputComposition(obj) -> bool:
 class NppEdit(ScintillaBase.Scintilla):
 	name = None  # The name of the editor is not useful.
 
-	def _get_TextInfo(self):
+	def _get_TextInfo(self) -> type[textInfos.TextInfo]:
 		if _hasActiveInputComposition(self):
 			return InputCompositionTextInfo
 		if self.appModule.is64BitProcess:
