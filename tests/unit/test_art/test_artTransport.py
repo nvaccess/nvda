@@ -94,7 +94,3 @@ class TestArtTransport(unittest.TestCase):
 		self.assertFalse(child.terminated)
 		self.serverService.terminate()
 		self.assertTrue(child.terminated)
-
-
-if __name__ == "__main__":
-	unittest.main()
