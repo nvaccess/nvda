@@ -5284,7 +5284,7 @@ class GlobalCommands(ScriptableObject):
 		self,
 		gesture: inputCore.InputGesture,
 	) -> None:
-		_magnifier.commands.cycleFullscreenMode()
+		_magnifier.commands.toggleFullscreenMode()
 
 	@script(
 		description=_(

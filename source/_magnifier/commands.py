@@ -259,7 +259,7 @@ def toggleAllFollow() -> None:
 		ui.message(stateMessage)
 
 
-def cycleFullscreenMode() -> None:
+def toggleFullscreenMode() -> None:
 	"""Cycle through full-screen modes (center, border, relative)"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
