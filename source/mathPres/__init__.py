@@ -28,7 +28,7 @@ if typing.TYPE_CHECKING:
 	from speech.commands import SpeechCommand  # noqa F401: type-checking only
 
 
-class MathPresentationProvider(object):
+class MathPresentationProvider:
 	"""Implements presentation of math content.
 	A single provider does not need to implement all presentation types.
 	"""
@@ -52,7 +52,7 @@ class MathPresentationProvider(object):
 	def interactWithMathMl(self, mathMl: str, sourceObj: "NVDAObject | None" = None) -> None:
 		"""Begin interaction with specified MathML markup.
 		@param mathMl: The MathML markup.
-		@param sourceObj: The source object containing the math, if known.
+		:param sourceObj: The source object containing the math, if known.
 		"""
 		raise NotImplementedError
 
@@ -196,7 +196,7 @@ def interactWithMathMl(mathMl: str, sourceObj: "NVDAObject | None" = None) -> No
 	If interaction isn't supported, this will be reported to the user.
 	The script should return after calling this function.
 	@param mathMl: The MathML markup.
-	@param sourceObj: The source object containing the math, if known.
+	:param sourceObj: The source object containing the math, if known.
 	"""
 	if not interactionProvider:
 		# Translators: Reported when the user attempts math interaction
