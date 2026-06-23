@@ -20,15 +20,15 @@ import rpyc.core.vinegar
 #:
 #: These defaults are deliberately restrictive.
 #: Add-ons are untrusted, so they must only ever be able to invoke methods explicitly exposed on a :class:`.service.Service`.
-#: ``allow_getattr`` is intentionally left at the rpyc default (``True``) because exposed
-#: methods are reached via attribute access on the netref; with public, safe and all
-#: attribute access disabled, only the ``exposed`` allowlist remains reachable.
+#: ``allow_getattr`` is intentionally left at the rpyc default (``True``) because exposed methods are reached via attribute access on the netref;
+#: with public, safe and all attribute access disabled, only the ``exposed`` allowlist remains reachable.
 #:
-#: None of the security-critical flags below should be loosened without a security review.
+#: .. warning::
+#: 	None of the security-critical flags below should be loosened without a security review..
 PROTOCOL_CONFIG: dict[str, object] = {
 	# Only explicitly exposed methods may cross the boundary.
 	"allow_public_attrs": False,
-	"allow_safe_attrs": False,  # rpyc defaults this to True; turn it off.
+	"allow_safe_attrs": False,
 	"allow_all_attrs": False,
 	"allow_setattr": False,
 	"allow_delattr": False,
@@ -40,10 +40,14 @@ PROTOCOL_CONFIG: dict[str, object] = {
 
 
 def _applyPatches() -> None:
-	"""Apply the rpyc patches ``_art`` relies on. Idempotent."""
-	# NVDA ships its own top-level ``exceptions`` module. rpyc's vinegar imports
-	# ``exceptions`` (a Python 2 relic) in preference to ``builtins`` when present, which
-	# makes deserialization of remote exceptions fail. Force it back to ``builtins``.
+	"""Apply the rpyc patches that ART relies on.
+
+	.. note::
+		This function is idempotent.
+	"""
+	# NVDA ships its own top-level ``exceptions`` module.
+	# rpyc's vinegar imports ``exceptions`` (a Python 2 relic) in preference to ``builtins`` when present, which makes deserialization of remote exceptions fail.
+	# Force it back to ``builtins``.
 	rpyc.core.vinegar.exceptions_module = builtins
 
 

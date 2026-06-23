@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-"""The ``Service`` base class for objects exposed across the ``_art`` transport."""
+"""The base class for services exposed across the ART transport."""
 
 from __future__ import annotations
 
@@ -23,15 +23,13 @@ if TYPE_CHECKING:
 
 @rpyc.service
 class Service(rpyc.Service):
-	"""Base class for objects exposed across the ``_art`` transport boundary.
+	"""Base class for objects exposed across the ART transport boundary.
 
-	A ``Service`` wraps a real object and exposes a curated set of methods, each decorated
-	with :meth:`exposed`, to the remote peer. Concrete subclasses must also be decorated
-	with ``@rpyc.service``.
+	A ``Service`` wraps a real object and exposes a curated set of methods, each decorated with :meth:`exposed`, to the remote peer.
+	Concrete subclasses must also be decorated with ``@rpyc.service``.
 
-	A service owns the lifecycle of anything it hands out: dependent connections it opens
-	and dependant services it returns over the boundary are all torn down when it is
-	:meth:`terminate`\\ d.
+	A service owns the lifecycle of anything it hands out.
+	Dependent connections it opens and dependant services it returns over the boundary are all torn down when it is terminated.
 	"""
 
 	_terminated: bool = False
@@ -46,8 +44,7 @@ class Service(rpyc.Service):
 		"""Expose a method across the boundary.
 
 		Wraps :func:`rpyc.exposed`, additionally refusing calls on a terminated service
-		and registering any returned ``Service`` as a dependant so it shares this
-		service's lifetime.
+		and registering any returned ``Service`` as a dependant so it shares this service's lifetime.
 		"""
 		exposedFunc = rpyc.exposed(func)
 
@@ -72,8 +69,13 @@ class Service(rpyc.Service):
 	) -> Connection:
 		"""Open a connection bound to this service's lifetime.
 
-		The connection is closed automatically when this service is terminated. Used for
-		side channels such as audio streaming.
+		The connection is closed automatically when this service is terminated.
+		Used for side channels such as audio streaming.
+
+		:arg stream: Stream over which channel communications will take place.
+		:arg localService: Service to attach, defaults to ``None``.
+		:arg name: The name of this dependency, defaults to ``None``.
+			If ``None`` is given, a default name will be computed.
 		"""
 		from .connection import Connection
 
@@ -86,6 +88,7 @@ class Service(rpyc.Service):
 
 	@property
 	def terminated(self) -> bool:
+		"""Whether this service has been terminated."""
 		return self._terminated
 
 	def terminate(self) -> None:

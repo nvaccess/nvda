@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-"""The ``Proxy`` base class: the local-side wrapper around a remote ``Service``."""
+"""The ``Proxy`` base class, which mediates between local NVDA code and the ART."""
 
 from __future__ import annotations
 
@@ -18,15 +18,15 @@ if TYPE_CHECKING:
 	from .service import Service
 
 
-class Proxy[Service_t: "Service"]:
+class Proxy[Service_t: Service]:
 	"""Base class for the local-side wrapper around a remote :class:`.service.Service`.
 
-	A ``Proxy`` re-presents the remote service through NVDA's normal local interface, so
-	consuming code is unaware the implementation lives in another process. It may be used
-	as a mixin (e.g. alongside ``SynthDriver``); ``__init__`` and ``__del__`` cooperate
-	with the rest of the MRO.
+	A ``Proxy`` re-presents the remote service through NVDA's normal local interface,
+	so consuming code is unaware the implementation lives in another process.
+	It may be used as a mixin (e.g. alongside ``SynthDriver``);
+	``__init__`` and ``__del__`` cooperate with the rest of the MRO.
 
-	The proxy owns any connections it depends on and closes them when it is destroyed.
+	The proxy owns any connections on which it depends and closes them when it is destroyed.
 	"""
 
 	def __init__(self, remoteService: Service_t, *args, **kwargs) -> None:
@@ -34,8 +34,11 @@ class Proxy[Service_t: "Service"]:
 		self._remoteService = remoteService
 		self._heldConnections: list[Connection] = []
 
-	def holdConnection(self, conn: Connection) -> None:
-		"""Keep ``conn`` alive for at least as long as this proxy."""
+	def _holdConnection(self, conn: Connection) -> None:
+		"""Keep ``conn`` alive for at least as long as this proxy.
+
+		:arg con: Connection to keep alive.
+		"""
 		self._heldConnections.append(conn)
 
 	def _connectDependentService(
@@ -44,12 +47,17 @@ class Proxy[Service_t: "Service"]:
 		localService: Service | None = None,
 		name: str = "dependent service",
 	) -> Service:
-		"""Connect to a side-channel service and tie it to this proxy's lifetime."""
+		"""Connect to a side-channel service and tie it to this proxy's lifetime.
+
+		:arg stream: Stream over which the service will communicate.
+		:arg localService: The service to attach.
+		:arg name: Name of this dependency.
+		"""
 		from .connection import Connection
 
-		conn = Connection(stream, localService, name=name)
+		conn = Connection(stream, localService, name)
 		conn.bgEventLoop(daemon=True)
-		self.holdConnection(conn)
+		self._holdConnection(conn)
 		return conn.remoteService
 
 	def __del__(self):
