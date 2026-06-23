@@ -1890,7 +1890,7 @@ class BrowseModeDocumentTreeInterceptor(
 					speech.speakTextInfo(info, reason=OutputReason.CARET, unit=textInfos.UNIT_LINE)
 
 		reportPassThrough(self)
-		braille.handler.handleGainFocus(self)
+		braille.getHandler().handleGainFocus(self)
 
 	def event_caret(self, obj, nextHandler):
 		if self.passThrough:

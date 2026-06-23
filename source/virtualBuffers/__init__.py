@@ -866,7 +866,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		if not self.VBufHandle:
 			# #4859: The buffer was unloaded after this method was queued.
 			return
-		braille.handler.handleUpdate(self)
+		braille.getHandler().handleUpdate(self)
 
 	def getControlFieldForNVDAObject(self, obj):
 		docHandle, objId = self.getIdentifierFromNVDAObject(obj)

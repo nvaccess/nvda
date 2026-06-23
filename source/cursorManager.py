@@ -133,7 +133,7 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 	def _set_selection(self, info):
 		info.updateSelection()
 		review.handleCaretMove(info)
-		braille.handler.handleCaretMove(self)
+		braille.getHandler().handleCaretMove(self)
 		vision.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(
@@ -545,7 +545,7 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 	def reportSelectionChange(self, oldTextInfo):
 		newInfo = self.makeTextInfo(textInfos.POSITION_SELECTION)
 		speech.speakSelectionChange(oldTextInfo, newInfo)
-		braille.handler.handleCaretMove(self)
+		braille.getHandler().handleCaretMove(self)
 
 	__gestures = {
 		"kb:pageUp": "moveByPage_back",

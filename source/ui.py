@@ -175,7 +175,7 @@ def message(
 	@param brailleText: If specified, present this alternative text on the braille display.
 	"""
 	speech.speakMessage(text, priority=speechPriority)
-	braille.handler.message(brailleText if brailleText is not None else text)
+	braille.getHandler().message(brailleText if brailleText is not None else text)
 
 
 def delayedMessage(
@@ -212,8 +212,9 @@ def reviewMessage(text: str, speechPriority: speech.Spri | None = None):
 	@param speechPriority: The speech priority.
 	"""
 	speech.speakMessage(text, priority=speechPriority)
-	if braille.handler.shouldAutoTether or braille.handler.getTether() == TetherTo.REVIEW:
-		braille.handler.message(text)
+	handler = braille.getHandler()
+	if handler.shouldAutoTether or handler.getTether() == TetherTo.REVIEW:
+		handler.message(text)
 
 
 def reportTextCopiedToClipboard(text: str | None = None):

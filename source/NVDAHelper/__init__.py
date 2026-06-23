@@ -200,7 +200,7 @@ def nvdaController_brailleMessage(text: str) -> SystemErrorCodes:
 	if config.conf["braille"]["reportLiveRegions"]:
 		import braille
 
-		queueHandler.queueFunction(queueHandler.eventQueue, braille.handler.message, text)
+		queueHandler.queueFunction(queueHandler.eventQueue, braille.getHandler().message, text)
 	return SystemErrorCodes.SUCCESS
 
 
@@ -304,7 +304,7 @@ def nvdaControllerInternal_reportLiveRegion(text: str, politeness: str):
 	)
 	queueHandler.queueFunction(
 		queueHandler.eventQueue,
-		braille.handler.message,
+		braille.getHandler().message,
 		text,
 	)
 	return 0
