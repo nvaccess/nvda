@@ -332,11 +332,8 @@ class BrailleInputHandler(AutoPropertyObject):
 			inputCore.manager.emulateGesture(keyboardHandler.KeyboardInputGesture.fromName("backspace"))
 			char = self.bufferText[-1]
 			self.bufferText = self.bufferText[:-1]
-			region = (
-				braille.getHandler().mainBuffer.regions[-1]
-				if braille.getHandler().mainBuffer.regions
-				else None
-			)
+			handler = braille.getHandler()
+			region = handler.mainBuffer.regions[-1] if handler.mainBuffer.regions else None
 			if (
 				not isinstance(region, TextInfoRegion)
 				or region.cursorPos is None
