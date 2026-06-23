@@ -196,7 +196,7 @@ def interactWithMathMl(mathMl: str, sourceObj: "NVDAObject | None" = None) -> No
 	If interaction isn't supported, this will be reported to the user.
 	The script should return after calling this function.
 	@param mathMl: The MathML markup.
-	@param sourceObj: The source object containing the math, if known.
+	:param sourceObj: The source object containing the math, if known.
 	"""
 	if not interactionProvider:
 		# Translators: Reported when the user attempts math interaction
