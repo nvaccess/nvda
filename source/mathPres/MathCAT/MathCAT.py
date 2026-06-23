@@ -85,7 +85,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		:param mathMl: Optional initial MathML string.
 		:param sourceObj: Optional source object containing the math.
 		"""
-		super(MathCATInteraction, self).__init__(provider=provider, mathMl=mathMl, sourceObj=sourceObj)
+		super().__init__(provider=provider, mathMl=mathMl, sourceObj=sourceObj)
 		self.mathMlForNavigation, self._mathNodeRectsById = prepareMathMlForNavigation(
 			mathMl or "<math></math>",
 			sourceObj,
