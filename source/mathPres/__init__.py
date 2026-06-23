@@ -52,7 +52,7 @@ class MathPresentationProvider(object):
 	def interactWithMathMl(self, mathMl: str, sourceObj: "NVDAObject | None" = None) -> None:
 		"""Begin interaction with specified MathML markup.
 		@param mathMl: The MathML markup.
-		@param sourceObj: The source object containing the math, if known.
+		:param sourceObj: The source object containing the math, if known.
 		"""
 		raise NotImplementedError
 
