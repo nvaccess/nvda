@@ -667,7 +667,11 @@ class RemoteClient:
 		:param state: True to enable remote braille, False to disable
 		:note: Only enables if leader session and braille handler are ready
 		"""
-		if state and self.leaderSession.callbacksAdded and braille.handler.enabled:
+		try:
+			_brailleHandler = braille.getHandler()
+		except RuntimeError:
+			_brailleHandler = None
+		if state and self.leaderSession.callbacksAdded and _brailleHandler and _brailleHandler.enabled:
 			self.leaderSession.registerBrailleInput()
 			self.localMachine.receivingBraille = True
 		elif not state:

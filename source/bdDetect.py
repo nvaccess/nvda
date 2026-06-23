@@ -28,6 +28,8 @@ import hwPortUtils
 import NVDAState
 import braille
 import braille.display
+from braille.display import getDisplayDrivers
+from braille.display.driver import BrailleDisplayDriver
 import winUser
 import config
 import appModuleHandler
@@ -538,7 +540,7 @@ class _Detector:
 		if preferredDevice:
 			if _isDebug():
 				log.debug("Trying preferred device first: %r", preferredDevice)
-			if braille.handler.setDisplayByName(preferredDevice[0], detected=preferredDevice[1]):
+			if braille.getHandler().setDisplayByName(preferredDevice[0], detected=preferredDevice[1]):
 				if _isDebug():
 					log.debug("Switched to preferred device: %r", preferredDevice[0])
 				return
@@ -558,7 +560,7 @@ class _Detector:
 				return
 			if _isDebug():
 				log.debug("Processing driver %r, match %r", driver, match)
-			if braille.handler.setDisplayByName(driver, detected=match):
+			if braille.getHandler().setDisplayByName(driver, detected=match):
 				if _isDebug():
 					log.debug("Switched to driver %r, match %r", driver, match)
 				return
@@ -724,8 +726,8 @@ def driverIsEnabledForAutoDetection(driver: str) -> bool:
 
 def getSupportedBrailleDisplayDrivers(
 	onlyEnabled: bool = False,
-) -> Generator[type["braille.BrailleDisplayDriver"], Any, Any]:
-	return braille.getDisplayDrivers(
+) -> Generator[type[BrailleDisplayDriver], Any, Any]:
+	return getDisplayDrivers(
 		lambda d: (
 			d.isThreadSafe
 			and d.supportsAutomaticDetection

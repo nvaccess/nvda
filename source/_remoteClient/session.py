@@ -69,7 +69,11 @@ from collections import defaultdict
 from typing import Any, Final
 
 import braille
+import braille.extensions
 import brailleInput
+from braille.display import DisplayDimensions
+from braille.display.driver import BrailleDisplayDriver
+from braille.display.gesture import BrailleDisplayGesture
 import gui
 import inputCore
 import scriptHandler
@@ -316,7 +320,7 @@ class FollowerSession(RemoteSession):
 			RemoteMessageType.SET_DISPLAY_SIZE,
 			self.setDisplaySize,
 		)
-		braille.filter_displayDimensions.register(
+		braille.extensions.filter_displayDimensions.register(
 			self.localMachine._handleFilterDisplayDimensions,
 		)
 		self.transport.registerInbound(
@@ -341,7 +345,7 @@ class FollowerSession(RemoteSession):
 		)
 		self.transport.registerOutbound(decide_playWaveFile, RemoteMessageType.WAVE)
 		self.transport.registerOutbound(post_speechPaused, RemoteMessageType.PAUSE_SPEECH)
-		braille.pre_writeCells.register(self.display)
+		braille.extensions.pre_writeCells.register(self.display)
 		pre_speechQueued.register(self.sendSpeech)
 		self.callbacksAdded = True
 
@@ -352,7 +356,7 @@ class FollowerSession(RemoteSession):
 		self.transport.unregisterOutbound(RemoteMessageType.CANCEL)
 		self.transport.unregisterOutbound(RemoteMessageType.WAVE)
 		self.transport.unregisterOutbound(RemoteMessageType.PAUSE_SPEECH)
-		braille.pre_writeCells.unregister(self.display)
+		braille.extensions.pre_writeCells.unregister(self.display)
 		pre_speechQueued.unregister(self.sendSpeech)
 		self.callbacksAdded = False
 
@@ -535,15 +539,15 @@ class LeaderSession(RemoteSession):
 	def registerCallbacks(self) -> None:
 		if self.callbacksAdded:
 			return
-		braille.displayChanged.register(self.sendBrailleInfo)
-		braille.displaySizeChanged.register(self.sendBrailleInfo)
+		braille.extensions.displayChanged.register(self.sendBrailleInfo)
+		braille.extensions.displaySizeChanged.register(self.sendBrailleInfo)
 		self.callbacksAdded = True
 
 	def unregisterCallbacks(self) -> None:
 		if not self.callbacksAdded:
 			return
-		braille.displayChanged.unregister(self.sendBrailleInfo)
-		braille.displaySizeChanged.unregister(self.sendBrailleInfo)
+		braille.extensions.displayChanged.unregister(self.sendBrailleInfo)
+		braille.extensions.displaySizeChanged.unregister(self.sendBrailleInfo)
 		self.callbacksAdded = False
 
 	def handleNVDANotConnected(self) -> None:
@@ -590,13 +594,13 @@ class LeaderSession(RemoteSession):
 
 	def sendBrailleInfo(
 		self,
-		display: braille.BrailleDisplayDriver | None = None,
-		displayDimensions: braille.DisplayDimensions | None = None,
+		display: BrailleDisplayDriver | None = None,
+		displayDimensions: DisplayDimensions | None = None,
 	) -> None:
 		if display is None:
-			display = braille.handler.display
+			display = braille.getHandler().display
 		if displayDimensions is None:
-			displayDimensions = braille.handler.displayDimensions
+			displayDimensions = braille.getHandler().displayDimensions
 		displaySize = displayDimensions.numCols
 		log.debug(f"Sending braille info to follower - display: {display.name}, width: {displaySize}")
 		self.transport.send(
@@ -607,7 +611,7 @@ class LeaderSession(RemoteSession):
 
 	def handleDecideExecuteGesture(
 		self,
-		gesture: braille.BrailleDisplayGesture | brailleInput.BrailleInputGesture,
+		gesture: BrailleDisplayGesture | brailleInput.BrailleInputGesture,
 	) -> bool:
 		"""Handle and forward braille gestures to remote client.
 
@@ -618,7 +622,7 @@ class LeaderSession(RemoteSession):
 		# Import late to avoid circular import
 		from globalCommands import commands
 
-		if isinstance(gesture, (braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture)):
+		if isinstance(gesture, (BrailleDisplayGesture, brailleInput.BrailleInputGesture)):
 			if self.localMachine._showingLocalUiMessage and gesture.script in (
 				commands.script_braille_routeTo,
 				commands.script_braille_scrollBack,
@@ -639,9 +643,10 @@ class LeaderSession(RemoteSession):
 				dict["scriptPath"] = location + [name]
 			else:
 				scriptData = None
+				_display = braille.getHandler().display
 				maps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
-				if braille.handler.display.gestureMap:
-					maps.append(braille.handler.display.gestureMap)
+				if _display.gestureMap:
+					maps.append(_display.gestureMap)
 				for map in maps:
 					for identifier in gesture.identifiers:
 						try:
