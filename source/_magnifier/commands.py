@@ -204,15 +204,15 @@ def toggleFollow(focusType: MagnifierTrackingType) -> None:
 	"""
 	Toggle the specified follow mode setting.
 
-	:param MagnifierTrackingType: The follow mode to toggle (mouse, system focus, review cursor, navigator object)
+	:param focusType: The follow mode to toggle (mouse, system focus, review cursor, navigator object)
 	"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(
 		magnifier,
 		MagnifierAction.TOGGLE_FOLLOW_SETTINGS,
 	):
-		state = not getFollowState(MagnifierTrackingType)
-		setFollowState(MagnifierTrackingType, state)
+		state = not getFollowState(focusType)
+		setFollowState(focusType, state)
 
 		ui.message(
 			pgettext(
@@ -220,7 +220,7 @@ def toggleFollow(focusType: MagnifierTrackingType) -> None:
 				# Translators: Message announced when toggling a follow setting with {setting} being the name of the setting and {state} being either "enabled" or "disabled".
 				"{setting} {state}",
 			).format(
-				setting=MagnifierTrackingType.displayString,
+				setting=focusType.displayString,
 				state=pgettext(
 					"magnifier",
 					# Translators: State of the follow setting being toggled enabled.
