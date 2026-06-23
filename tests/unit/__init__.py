@@ -88,6 +88,8 @@ import speech  # noqa: E402
 speech.initialize()
 
 import braille  # noqa: E402
+from braille.display import DisplayDimensions as _BrailleDisplayDimensions  # noqa: E402
+from braille.extensions import filter_displayDimensions as _braille_filter_displayDimensions  # noqa: E402
 
 # Disable auto detection of braille displays when unit testing.
 config.conf["braille"]["display"] = "noBraille"
@@ -96,12 +98,12 @@ braille.initialize()
 
 # For braille unit tests, we need to enable the braille handler by providing it display dimensions
 # Give the display one row with 40 cells
-def getFakeDisplayDimensions(dimensions: braille.DisplayDimensions) -> braille.DisplayDimensions:
-	return braille.DisplayDimensions(numRows=1, numCols=40)
+def getFakeDisplayDimensions(dimensions: _BrailleDisplayDimensions) -> _BrailleDisplayDimensions:
+	return _BrailleDisplayDimensions(numRows=1, numCols=40)
 
 
-braille.filter_displayDimensions.register(getFakeDisplayDimensions)
-_original_handleReviewMove = braille.handler.handleReviewMove
+_braille_filter_displayDimensions.register(getFakeDisplayDimensions)
+_original_handleReviewMove = braille._handler.handleReviewMove
 
 
 def _patched_handleReviewMove(shouldAutoTether=True):
@@ -110,10 +112,10 @@ def _patched_handleReviewMove(shouldAutoTether=True):
 	by executing BrailleHandler._handlePendingUpdate after Braillehandler.handleReviewMove
 	"""
 	_original_handleReviewMove(shouldAutoTether)
-	braille.handler._handlePendingUpdate()
+	braille._handler._handlePendingUpdate()
 
 
-braille.handler.handleReviewMove = _patched_handleReviewMove
+braille._handler.handleReviewMove = _patched_handleReviewMove
 
 # Changing braille displays might call braille.handler.disableDetection(),
 # which requires the bdDetect.deviceInfoFetcher to be set.

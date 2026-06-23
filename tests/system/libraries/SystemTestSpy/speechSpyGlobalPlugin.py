@@ -15,7 +15,7 @@ from typing import (
 	Optional,
 	Tuple,
 )
-from braille import DisplayDimensions
+from braille.display import DisplayDimensions
 import core
 import globalPluginHandler
 import threading
@@ -196,10 +196,10 @@ class NVDASpyLib:
 	# callbacks for extension points
 	def _onNvdaStartupComplete(self):
 		self._isNvdaStartupComplete = True
-		import braille
+		from braille.extensions import filter_displayDimensions, pre_writeCells
 
-		braille.filter_displayDimensions.register(self.getBrailleDisplayDimensions)
-		braille.pre_writeCells.register(self._onNvdaBraille)
+		filter_displayDimensions.register(self.getBrailleDisplayDimensions)
+		pre_writeCells.register(self._onNvdaBraille)
 
 	def _onNvdaBraille(self, rawText: str):
 		if not rawText:

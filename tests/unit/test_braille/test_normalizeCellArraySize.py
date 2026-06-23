@@ -17,8 +17,8 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 	def test_shrinkSingleLine(self):
 		oldCells = [1, 2, 3, 4, 5, 6, 7, 8]  # fmt: skip
 		expectedNewCells = [1, 2, 3, 4]  # fmt: skip
-		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(
+		assert braille._handler is not None
+		newcells = braille.getHandler()._normalizeCellArraySize(
 			oldCells,
 			oldCellCount=8,
 			oldNumRows=1,
@@ -30,8 +30,8 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 	def test_growSingleLine(self):
 		oldCells = [1, 2, 3, 4]  # fmt: skip
 		expectedNewCells = [1, 2, 3, 4, 0, 0, 0, 0]  # fmt: skip
-		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(
+		assert braille._handler is not None
+		newcells = braille.getHandler()._normalizeCellArraySize(
 			oldCells,
 			oldCellCount=4,
 			oldNumRows=1,
@@ -50,8 +50,8 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 			1, 2, 3, 4, 5,
 			11, 12, 13, 14, 15,
 		]  # fmt: skip
-		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(
+		assert braille._handler is not None
+		newcells = braille.getHandler()._normalizeCellArraySize(
 			oldCells,
 			oldCellCount=15,
 			oldNumRows=3,
@@ -70,8 +70,8 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 			11, 12, 13, 14, 15,
 			0, 0, 0, 0, 0,
 		]  # fmt: skip
-		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(
+		assert braille._handler is not None
+		newcells = braille.getHandler()._normalizeCellArraySize(
 			oldCells,
 			oldCellCount=10,
 			oldNumRows=2,
@@ -91,8 +91,8 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 			11, 12,
 			21, 22,
 		]  # fmt: skip
-		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(
+		assert braille._handler is not None
+		newcells = braille.getHandler()._normalizeCellArraySize(
 			oldCells,
 			oldCellCount=12,
 			oldNumRows=3,
@@ -112,8 +112,8 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 			11, 12, 0, 0,
 			21, 22, 0, 0,
 		]  # fmt: skip
-		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(
+		assert braille._handler is not None
+		newcells = braille.getHandler()._normalizeCellArraySize(
 			oldCells,
 			oldCellCount=6,
 			oldNumRows=3,
@@ -132,8 +132,8 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 			1, 2,
 			11, 12,
 		]  # fmt: skip
-		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(
+		assert braille._handler is not None
+		newcells = braille.getHandler()._normalizeCellArraySize(
 			oldCells,
 			oldCellCount=15,
 			oldNumRows=3,
@@ -152,8 +152,8 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 			11, 12, 0, 0,
 			0, 0, 0, 0,
 		]  # fmt: skip
-		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(
+		assert braille._handler is not None
+		newcells = braille.getHandler()._normalizeCellArraySize(
 			oldCells,
 			oldCellCount=4,
 			oldNumRows=2,
@@ -172,8 +172,8 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 			1, 2, 0, 0,
 			11, 12, 0, 0,
 		]  # fmt: skip
-		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(
+		assert braille._handler is not None
+		newcells = braille.getHandler()._normalizeCellArraySize(
 			oldCells,
 			oldCellCount=6,
 			oldNumRows=3,
@@ -192,8 +192,8 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 			11, 12,
 			0, 0,
 		]  # fmt: skip
-		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(
+		assert braille._handler is not None
+		newcells = braille.getHandler()._normalizeCellArraySize(
 			oldCells,
 			oldCellCount=8,
 			oldNumRows=2,
