@@ -28,7 +28,7 @@ if typing.TYPE_CHECKING:
 	from speech.commands import SpeechCommand  # noqa F401: type-checking only
 
 
-class MathPresentationProvider(object):
+class MathPresentationProvider:
 	"""Implements presentation of math content.
 	A single provider does not need to implement all presentation types.
 	"""
