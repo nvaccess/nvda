@@ -710,7 +710,7 @@ class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
 			isCollapsed = False
 		if not isCollapsed:
 			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
-		braille.handler.handleCaretMove(self)
+		braille.getHandler().handleCaretMove(self)
 
 	def _iterTextStyle(
 		self,

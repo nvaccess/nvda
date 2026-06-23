@@ -815,7 +815,7 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 		speech.clearTypedWordBuffer()
 		# Alert review and braille the caret has moved to its new position
 		review.handleCaretMove(info)
-		braille.handler.handleCaretMove(self)
+		braille.getHandler().handleCaretMove(self)
 
 	@script(
 		gesture="kb:NVDA+alt+c",

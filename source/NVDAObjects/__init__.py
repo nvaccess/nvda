@@ -37,6 +37,8 @@ from treeInterceptorHandler import (
 	TreeInterceptor,
 )
 import braille
+from braille.labels import landmarkLabels as brailleLandmarkLabels, roleLabels as brailleRoleLabels
+from braille.regions.properties import getPropertiesBraille as getBrailleProperties
 from utils.security import _isObjectBelowLockScreen
 import vision
 import globalPluginHandler
@@ -517,8 +519,8 @@ class NVDAObject(
 		which will override the standard label for this object's role property as well as the value of roleText.
 		By default, NVDA falls back to using roleText.
 		"""
-		if self.landmark and self.landmark in braille.landmarkLabels:
-			return f"{braille.roleLabels[controlTypes.Role.LANDMARK]} {braille.landmarkLabels[self.landmark]}"
+		if self.landmark and self.landmark in brailleLandmarkLabels:
+			return f"{brailleRoleLabels[controlTypes.Role.LANDMARK]} {brailleLandmarkLabels[self.landmark]}"
 		return self.roleText
 
 	#: Typing information for auto property _get_value
@@ -1332,8 +1334,8 @@ class NVDAObject(
 				if api.setNavigatorObject(self, isFocus=True):
 					self.reportFocus()
 					# Display results as flash messages.
-					braille.handler.message(
-						braille.getPropertiesBraille(
+					braille.getHandler().message(
+						getBrailleProperties(
 							name=self.name,
 							role=self.role,
 							positionInfo=self.positionInfo,
@@ -1355,7 +1357,7 @@ class NVDAObject(
 		)
 		if inFocus:
 			speech.speakObjectProperties(self, states=True, reason=controlTypes.OutputReason.CHANGE)
-		braille.handler.handleUpdate(self)
+		braille.getHandler().handleUpdate(self)
 		vision.handler.handleUpdate(self, property="states")
 
 	def event_focusEntered(self):
@@ -1370,7 +1372,7 @@ class NVDAObject(
 		This code is executed if a gain focus event is received by this object.
 		"""
 		self.reportFocus()
-		braille.handler.handleGainFocus(self)
+		braille.getHandler().handleGainFocus(self)
 		brailleInput.handler.handleGainFocus(self)
 		vision.handler.handleGainFocus(self)
 
@@ -1397,8 +1399,8 @@ class NVDAObject(
 		"""
 		# When the navigator object follows the focus and braille is auto tethered to review,
 		# we should not update braille with the new review position as a tether to focus is due.
-		if not (braille.handler.shouldAutoTether and isFocus):
-			braille.handler.handleReviewMove(shouldAutoTether=not isFocus)
+		if not (braille.getHandler().shouldAutoTether and isFocus):
+			braille.getHandler().handleReviewMove(shouldAutoTether=not isFocus)
 		vision.handler.handleReviewMove(
 			context=vision.constants.Context.FOCUS if isFocus else vision.constants.Context.NAVIGATOR,
 		)
@@ -1406,19 +1408,19 @@ class NVDAObject(
 	def event_valueChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, value=True, reason=controlTypes.OutputReason.CHANGE)
-		braille.handler.handleUpdate(self)
+		braille.getHandler().handleUpdate(self)
 		vision.handler.handleUpdate(self, property="value")
 
 	def event_nameChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, name=True, reason=controlTypes.OutputReason.CHANGE)
-		braille.handler.handleUpdate(self)
+		braille.getHandler().handleUpdate(self)
 		vision.handler.handleUpdate(self, property="name")
 
 	def event_descriptionChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, description=True, reason=controlTypes.OutputReason.CHANGE)
-		braille.handler.handleUpdate(self)
+		braille.getHandler().handleUpdate(self)
 		vision.handler.handleUpdate(self, property="description")
 
 	def event_controllerForChange(self):
@@ -1426,7 +1428,7 @@ class NVDAObject(
 
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
-			braille.handler.handleCaretMove(self)
+			braille.getHandler().handleCaretMove(self)
 			brailleInput.handler.handleCaretMove(self)
 			vision.handler.handleCaretMove(self)
 			review.handleCaretMove(self)

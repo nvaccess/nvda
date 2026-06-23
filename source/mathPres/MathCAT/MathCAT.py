@@ -15,6 +15,8 @@ from os import path
 from typing import Type
 
 import braille
+from braille.regions.base import Region as BrailleRegion
+from braille.regions.NVDAObject import NVDAObjectRegion as NVDAObjectBrailleRegion
 import config
 import gui
 import libmathcat_py as libmathcat
@@ -94,10 +96,10 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 	def getBrailleRegions(
 		self,
 		review: bool = False,
-	) -> Generator[braille.Region, None, None]:
+	) -> Generator[BrailleRegion, None, None]:
 		"""Yields braille.Region objects for this MathCATInteraction object."""
-		yield braille.NVDAObjectRegion(self, appendText=" ")
-		region: braille.Region = braille.Region()
+		yield NVDAObjectBrailleRegion(self, appendText=" ")
+		region: BrailleRegion = BrailleRegion()
 		region.focusToHardLeft = True
 		try:
 			region.rawText = libmathcat.GetBraille("")
@@ -126,20 +128,21 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 
 	def _updateBraille(self) -> None:
 		"""Update the braille display to reflect the current navigation position."""
-		if not braille.handler.enabled:
+		handler = braille.getHandler()
+		if not handler.enabled:
 			return
 
 		try:
 			navNode: tuple[str, int] = libmathcat.GetNavigationMathMLId()
 			brailleChars = libmathcat.GetBraille(navNode[0])
-			region: braille.Region = braille.Region()
+			region: BrailleRegion = BrailleRegion()
 			region.rawText = brailleChars
 			region.focusToHardLeft = True
 			region.update()
-			braille.handler.buffer.regions.append(region)
-			braille.handler.buffer.focus(region)
-			braille.handler.buffer.update()
-			braille.handler.update()
+			handler.buffer.regions.append(region)
+			handler.buffer.focus(region)
+			handler.buffer.update()
+			handler.update()
 		except Exception:
 			log.exception()
 			# Translators: this message alerts users to an error brailling math.

@@ -35,7 +35,7 @@ class Document(IAccessible):
 class EditableText(Node):
 	def event_valueChange(self):
 		# We don't want the value to be spoken every time it is changed.
-		braille.handler.handleUpdate(self)
+		braille.getHandler().handleUpdate(self)
 
 
 def findExtraOverlayClasses(obj, clsList):

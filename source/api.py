@@ -23,6 +23,7 @@ import winUser
 import controlTypes
 import eventHandler
 import braille
+from braille.regions.focus import invalidateCachedFocusAncestors
 import vision
 import watchdog
 import exceptions
@@ -184,7 +185,7 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 	globalVars.focusDifferenceLevel = focusDifferenceLevel
 	globalVars.focusObject = obj
 	globalVars.focusAncestors = ancestors
-	braille.invalidateCachedFocusAncestors(focusDifferenceLevel)
+	invalidateCachedFocusAncestors(focusDifferenceLevel)
 	if config.conf["reviewCursor"]["followFocus"]:
 		setNavigatorObject(obj, isFocus=True)
 	# Fire focusExited event for all old focus ancestors not common with the new focus
@@ -278,8 +279,8 @@ def setReviewPosition(
 		globalVars.navigatorObject = None
 	# When the review cursor follows the caret and braille is auto tethered to review,
 	# we should not update braille with the new review position as a tether to focus is due.
-	if not (braille.handler.shouldAutoTether and isCaret):
-		braille.handler.handleReviewMove(shouldAutoTether=not isCaret)
+	if not (braille.getHandler().shouldAutoTether and isCaret):
+		braille.getHandler().handleReviewMove(shouldAutoTether=not isCaret)
 	if isCaret:
 		visionContext = vision.constants.Context.CARET
 	elif isMouse:

@@ -26,6 +26,7 @@ from scriptHandler import script
 import api
 import ui
 import braille
+from braille.regions.properties import getPropertiesBraille as getBrailleProperties
 import core
 import nvwave
 import globalVars
@@ -57,7 +58,7 @@ class ProgressBar(NVDAObject):
 		except (AttributeError, ValueError):
 			log.debugWarning("Invalid value: %r" % val)
 			return super(ProgressBar, self).event_valueChange()
-		braille.handler.handleUpdate(self)
+		braille.getHandler().handleUpdate(self)
 		if not pbConf["reportBackgroundProgressBars"] and not self.isInForeground:
 			return
 		try:
@@ -217,7 +218,7 @@ class InputFieldWithSuggestions(NVDAObject):
 		"""
 		# Translators: Announced in braille when suggestions appear when search term is entered
 		# in various search fields such as Start search box in Windows 10.
-		braille.handler.message(_("Suggestions"))
+		braille.getHandler().message(_("Suggestions"))
 		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
 			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsOpened.wav"))
 
@@ -564,7 +565,7 @@ class Terminal(LiveText, EditableText):
 		@note: Updates also braille.
 		"""
 		super().event_textChange()
-		braille.handler.handleUpdate(self)
+		braille.getHandler().handleUpdate(self)
 
 
 class EnhancedTermTypedCharSupport(Terminal):
@@ -1026,7 +1027,7 @@ class ToolTip(NVDAObject):
 			return
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		# Ideally, we wouldn't use getPropertiesBraille directly.
-		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
+		braille.getHandler().message(getBrailleProperties(name=self.name, role=self.role))
 
 
 class Notification(NVDAObject):
@@ -1040,7 +1041,7 @@ class Notification(NVDAObject):
 			return
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		# Ideally, we wouldn't use getPropertiesBraille directly.
-		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
+		braille.getHandler().message(getBrailleProperties(name=self.name, role=self.role))
 
 	event_show = event_alert
 

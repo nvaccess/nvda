@@ -138,7 +138,7 @@ class winampPlaylistEditor(winampMainWindow):
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
-			braille.handler.handleGainFocus(self)
+			braille.getHandler().handleGainFocus(self)
 
 	def event_nameChange(self):
 		return super(winampMainWindow, self).event_nameChange()

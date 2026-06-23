@@ -47,6 +47,7 @@ import globalVars  # noqa: F401
 from logHandler import log
 import speech
 import braille
+from braille.regions.properties import getPropertiesBraille
 import api
 import config
 import controlTypes
@@ -2037,7 +2038,7 @@ class IAccessible(Window):
 		if self in api.getFocusAncestors():
 			return
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
-		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
+		braille.getHandler().message(getPropertiesBraille(name=self.name, role=self.role))
 		hasDescription = bool(self.description)
 		for child in self.recursiveDescendants:
 			isFocusable = controlTypes.State.FOCUSABLE in child.states
@@ -2060,7 +2061,7 @@ class IAccessible(Window):
 				)
 			if shouldSpeak:
 				speech.speakObject(child, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
-				braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
+				braille.getHandler().message(getPropertiesBraille(name=self.name, role=self.role))
 
 	def event_caret(self):
 		focus = api.getFocusObject()

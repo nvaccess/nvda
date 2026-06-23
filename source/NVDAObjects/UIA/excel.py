@@ -572,7 +572,7 @@ class CellEdit(ExcelObject):
 	def event_typedCharacter(self, ch: str):
 		# this control does not fire text change events.
 		# Therefore, we need to update braille manually when typing characters.
-		braille.handler.handleCaretMove(self)
+		braille.getHandler().handleCaretMove(self)
 		super().event_typedCharacter(ch)
 
 

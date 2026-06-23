@@ -9,6 +9,7 @@ from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.behaviors import EditableTextWithSuggestions
 import speech
 import braille
+from braille.regions.properties import getPropertiesBraille
 import ui
 import api
 from speech import sayAll
@@ -106,7 +107,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
 			if documentObj.role == controlTypes.Role.DOCUMENT:
 				api.setNavigatorObject(documentObj)
-				braille.handler.handleReviewMove()
+				braille.getHandler().handleReviewMove()
 				sayAll.SayAllHandler.readText(sayAll.CURSOR.REVIEW)
 
 			elif documentObj.role == controlTypes.Role.EDITABLETEXT:
@@ -154,8 +155,8 @@ class AutocompletionListItem(IAccessible):
 
 			# Simply calling `reportFocus` doesn't output the text in braille
 			# and reporting with `ui.message` needs an extra translation string when reporting position info
-			braille.handler.message(
-				braille.getPropertiesBraille(
+			braille.getHandler().message(
+				getPropertiesBraille(
 					name=self.name,
 					role=self.role,
 					positionInfo=self.positionInfo,
