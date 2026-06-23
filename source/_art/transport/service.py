@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2026 NV Access Limited.
+# Copyright (C) 2026 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -72,9 +72,9 @@ class Service(rpyc.Service):
 		The connection is closed automatically when this service is terminated.
 		Used for side channels such as audio streaming.
 
-		:arg stream: Stream over which channel communications will take place.
-		:arg localService: Service to attach, defaults to ``None``.
-		:arg name: The name of this dependency, defaults to ``None``.
+		:param stream: Stream over which channel communications will take place.
+		:param localService: Service to attach, defaults to ``None``.
+		:param name: The name of this dependency, defaults to ``None``.
 			If ``None`` is given, a default name will be computed.
 		"""
 		from .connection import Connection

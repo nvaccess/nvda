@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2026 NV Access Limited.
+# Copyright (C) 2026 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -37,7 +37,7 @@ class Proxy[Service_t: Service]:
 	def _holdConnection(self, conn: Connection) -> None:
 		"""Keep ``conn`` alive for at least as long as this proxy.
 
-		:arg con: Connection to keep alive.
+		:param con: Connection to keep alive.
 		"""
 		self._heldConnections.append(conn)
 
@@ -49,9 +49,9 @@ class Proxy[Service_t: Service]:
 	) -> Service:
 		"""Connect to a side-channel service and tie it to this proxy's lifetime.
 
-		:arg stream: Stream over which the service will communicate.
-		:arg localService: The service to attach.
-		:arg name: Name of this dependency.
+		:param stream: Stream over which the service will communicate.
+		:param localService: The service to attach.
+		:param name: Name of this dependency.
 		"""
 		from .connection import Connection
 

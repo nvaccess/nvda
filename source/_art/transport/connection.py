@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2026 NV Access Limited.
+# Copyright (C) 2026 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -87,7 +87,7 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 		thread = threading.Thread(
 			target=self._bgEventLoop,
 			args=(weakref.ref(self), self._name),
-			name=f"_art connection event loop: {self._name}",
+			name=f"ART connection event loop: {self._name}",
 			daemon=daemon,
 		)
 		thread.start()
@@ -126,7 +126,7 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 			threading.Thread(
 				target=self._closeRawConnection,
 				args=(conn, self._name),
-				name=f"_art connection close: {self._name}",
+				name=f"ART connection close: {self._name}",
 				daemon=True,
 			).start()
 
