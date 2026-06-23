@@ -93,7 +93,7 @@ def _onGuiDestroyed():
 
 
 def _getDisplayDimensions(dimensions: "DisplayDimensions") -> "DisplayDimensions":
-	"""Called by the :attr:`braille.filter_displayDimensions` extension point to get the display dimensions."""
+	"""Called by the :attr:`braille.extensions.filter_displayDimensions` extension point to get the display dimensions."""
 	from braille.display import DisplayDimensions  # imported late to avoid a circular import.
 
 	return DisplayDimensions(

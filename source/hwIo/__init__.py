@@ -7,7 +7,7 @@
 """Raw input/output for braille displays via serial and HID.
 See the L{Serial} and L{Hid} classes.
 Braille display drivers must be thread-safe to use this, as it utilises a background thread.
-See L{braille.BrailleDisplayDriver.isThreadSafe}.
+See :attr:`braille.display.driver.BrailleDisplayDriver.isThreadSafe`.
 """
 
 from .base import (  # noqa: F401

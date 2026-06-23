@@ -77,9 +77,9 @@ Use `TouchAction(value).displayString` instead. (#20086, @kefaslungu)
 * The `URL_MK_UNIFORM`, `DIALOG_OPTIONS` and `HTMLDLG_*` constants in `ui` are deprecated with no replacement, as the COM-based HTML dialog infrastructure has been removed.
 Use `gui.message.HtmlMessageDialog` instead. (#18878, @LeonarddeR)
 * The symbols that moved out of the `braille` module facade when it became a package are deprecated.
-Accessing them as `braille.X` still works but logs a deprecation warning; import them from their new submodule instead, e.g. `braille.regions.base.Region`, `braille.regions.properties.getPropertiesBraille`, `braille.labels.roleLabels`, `braille.constants.CURSOR_SHAPES`, `braille.display.driver.BrailleDisplayDriver`, `braille.display.gesture.BrailleDisplayGesture` and `braille.extensions.pre_writeCells`. (#20252, @LeonarddeR)
+Accessing them as `braille.X` still works but logs a deprecation warning; import them from their new submodule instead, e.g. `braille.regions.base.Region`, `braille.regions.properties.getPropertiesBraille`, `braille.labels.roleLabels`, `braille.constants.CURSOR_SHAPES`, `braille.display.driver.BrailleDisplayDriver`, `braille.display.gesture.BrailleDisplayGesture` and `braille.extensions.pre_writeCells`. (#20381, @LeonarddeR)
 * `braille.handler` is deprecated.
-Use `braille.getHandler()` instead, which returns the active `BrailleHandler` and raises `RuntimeError` if braille is not initialized. (#20252, @LeonarddeR)
+Use `braille.getHandler()` instead, which returns the active `BrailleHandler` and raises `RuntimeError` if braille is not initialized. (#20381, @LeonarddeR)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->

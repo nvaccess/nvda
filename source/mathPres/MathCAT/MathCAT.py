@@ -97,7 +97,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		self,
 		review: bool = False,
 	) -> Generator[BrailleRegion, None, None]:
-		"""Yields braille.Region objects for this MathCATInteraction object."""
+		"""Yields :class:`braille.regions.base.Region` objects for this MathCATInteraction object."""
 		yield NVDAObjectBrailleRegion(self, appendText=" ")
 		region: BrailleRegion = BrailleRegion()
 		region.focusToHardLeft = True

@@ -442,9 +442,10 @@ class GlobalCommands(ScriptableObject):
 			scriptCount = getLastScriptRepeatCount()
 			# Translators: The message reported after selected text
 			selectMessage = speech.speech._getSelectionMessageSpeech(_("%s selected"), info.text)[0]
+			handler = braille.getHandler()
 			if scriptCount == 0:
 				speech.speakTextSelected(info.text)
-				braille.getHandler().message(selectMessage)
+				handler.message(selectMessage)
 			elif scriptCount == 3:
 				ui.browseableMessage(info.text, copyButton=True, closeButton=True)
 				return
@@ -453,7 +454,7 @@ class GlobalCommands(ScriptableObject):
 				speech.speakSpelling(info.text, useCharacterDescriptions=scriptCount > 1)
 			else:
 				speech.speakTextSelected(info.text)
-				braille.getHandler().message(selectMessage)
+				handler.message(selectMessage)
 
 	@staticmethod
 	def _getSelection() -> textInfos.TextInfo | None:
@@ -893,7 +894,8 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_toggleBrailleAutoScroll(self, gesture: inputCore.InputGesture):
-		shouldEnableAutoScroll = braille.getHandler()._autoScrollCallLater is None
+		handler = braille.getHandler()
+		shouldEnableAutoScroll = handler._autoScrollCallLater is None
 		timeout = 0
 		if shouldEnableAutoScroll:
 			# Translators: Message reported when automatic scrolling has been enabled in braille.
@@ -906,7 +908,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: Message reported when automatic scrolling has been disabled in braille.
 			ui.message(_("Automatic scrolling disabled"))
-		core.callLater(timeout, braille.getHandler().autoScroll, shouldEnableAutoScroll)
+		core.callLater(timeout, handler.autoScroll, shouldEnableAutoScroll)
 
 	@script(
 		# Translators: Input help mode message for command to increase the rate for braille automatic scroll.
@@ -2293,6 +2295,7 @@ class GlobalCommands(ScriptableObject):
 		speakOnDemand=True,
 	)
 	def script_review_currentCharacter(self, gesture: inputCore.InputGesture):
+		handler = braille.getHandler()
 		info = api.getReviewPosition().copy()
 		# This script is available on the lock screen via getSafeScripts, as such
 		# ensure the review position does not contain secure information
@@ -2303,7 +2306,7 @@ class GlobalCommands(ScriptableObject):
 
 		info.expand(textInfos.UNIT_CHARACTER)
 		# Explicitly tether here
-		braille.getHandler().handleReviewMove(shouldAutoTether=True)
+		handler.handleReviewMove(shouldAutoTether=True)
 		scriptCount = getLastScriptRepeatCount()
 		if scriptCount == 0:
 			speech.speakTextInfo(info, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
@@ -2320,7 +2323,7 @@ class GlobalCommands(ScriptableObject):
 					# Report hex along with decimal only when there is one character; else, it's confusing.
 					if len(cList) == 1:
 						speech.speakSpelling(hex(c))
-				braille.getHandler().message("; ".join(f"{c}, {hex(c)}" for c in cList))
+				handler.message("; ".join(f"{c}, {hex(c)}" for c in cList))
 			else:
 				log.debugWarning("Couldn't calculate ordinal for character %r" % info.text)
 				speech.speakTextInfo(
@@ -3819,6 +3822,7 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_toggleTether(self, gesture):
+		handler = braille.getHandler()
 		values = [x.value for x in TetherTo]
 		index = values.index(config.conf["braille"]["tetherTo"])
 		newIndex = (index + 1) % len(values)
@@ -3826,11 +3830,11 @@ class GlobalCommands(ScriptableObject):
 		if newTetherChoice == TetherTo.AUTO.value:
 			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value
 		else:
-			braille.getHandler().setTether(newTetherChoice, auto=False)
+			handler.setTether(newTetherChoice, auto=False)
 			if newTetherChoice == TetherTo.REVIEW.value:
-				braille.getHandler().handleReviewMove(shouldAutoTether=False)
+				handler.handleReviewMove(shouldAutoTether=False)
 			else:
-				braille.getHandler().handleGainFocus(api.getFocusObject(), shouldAutoTether=False)
+				handler.handleGainFocus(api.getFocusObject(), shouldAutoTether=False)
 		# Translators: Reports which position braille is tethered to
 		# (braille can be tethered automatically or to either focus or review position).
 		ui.message(_("Braille tethered %s") % TetherTo(newTetherChoice).displayString)
@@ -3842,23 +3846,24 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+alt+t",
 	)
 	def script_toggleBrailleMode(self, gesture: inputCore.InputGesture):
+		handler = braille.getHandler()
 		curMode = BrailleMode(config.conf["braille"]["mode"])
 		modeList = list(BrailleMode)
 		index = modeList.index(curMode)
 		index = index + 1 if not index == len(modeList) - 1 else 0
 		newMode = modeList[index]
 		config.conf["braille"]["mode"] = newMode.value
-		if braille.getHandler().buffer == braille.getHandler().messageBuffer:
-			braille.getHandler()._dismissMessage()
-		braille.getHandler().mainBuffer.clear()
+		if handler.buffer == handler.messageBuffer:
+			handler._dismissMessage()
+		handler.mainBuffer.clear()
 		# Translators: The message reported when switching braille modes
 		ui.message(_("Braille mode {brailleMode}").format(brailleMode=newMode.displayString))
 		if newMode == BrailleMode.SPEECH_OUTPUT:
 			return
-		if braille.getHandler().getTether() == TetherTo.REVIEW.value:
-			braille.getHandler().handleReviewMove(shouldAutoTether=braille.getHandler().shouldAutoTether)
+		if handler.getTether() == TetherTo.REVIEW.value:
+			handler.handleReviewMove(shouldAutoTether=handler.shouldAutoTether)
 			return
-		braille.getHandler().handleGainFocus(api.getFocusObject())
+		handler.handleGainFocus(api.getFocusObject())
 
 	@script(
 		# Translators: Input help mode message for cycle through
@@ -4295,10 +4300,11 @@ class GlobalCommands(ScriptableObject):
 	def script_braille_selectRange(self, gesture: BrailleDisplayGesture):
 		if not gesture.cellIndexes or len(gesture.cellIndexes) < 2:
 			return
+		handler = braille.getHandler()
 		startPos = min(gesture.cellIndexes)
 		endPos = max(gesture.cellIndexes)
-		startInfo = braille.getHandler().getTextInfoForWindowPos(startPos)
-		endInfo = braille.getHandler().getTextInfoForWindowPos(endPos)
+		startInfo = handler.getTextInfoForWindowPos(startPos)
+		endInfo = handler.getTextInfoForWindowPos(endPos)
 		if startInfo is None or endInfo is None:
 			# Translators: Reported when selection via multiple routing keys is not possible.
 			ui.message(_("Cannot select from braille routing keys"))
@@ -4316,8 +4322,9 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_braille_previousLine(self, gesture):
-		if braille.getHandler().buffer.regions:
-			braille.getHandler().buffer.regions[-1].previousLine(start=True)
+		handler = braille.getHandler()
+		if handler.buffer.regions:
+			handler.buffer.regions[-1].previousLine(start=True)
 
 	@script(
 		# Translators: Input help mode message for a braille command.
@@ -4325,8 +4332,9 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_braille_nextLine(self, gesture):
-		if braille.getHandler().buffer.regions:
-			braille.getHandler().buffer.regions[-1].nextLine()
+		handler = braille.getHandler()
+		if handler.buffer.regions:
+			handler.buffer.regions[-1].nextLine()
 
 	@script(
 		# Translators: Input help mode message for a braille command.
@@ -4343,25 +4351,22 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 	)
 	def script_braille_toFocus(self, gesture):
-		braille.getHandler().setTether(TetherTo.FOCUS.value, auto=True)
-		if braille.getHandler().getTether() == TetherTo.REVIEW.value:
+		handler = braille.getHandler()
+		handler.setTether(TetherTo.FOCUS.value, auto=True)
+		if handler.getTether() == TetherTo.REVIEW.value:
 			self.script_navigatorObject_toFocus(gesture)
 		else:
 			obj = api.getFocusObject()
-			region = (
-				braille.getHandler().mainBuffer.regions[-1]
-				if braille.getHandler().mainBuffer.regions
-				else None
-			)
+			region = handler.mainBuffer.regions[-1] if handler.mainBuffer.regions else None
 			if region and region.obj == obj:
-				braille.getHandler().mainBuffer.focus(region)
+				handler.mainBuffer.focus(region)
 				if region.brailleCursorPos is not None:
-					braille.getHandler().mainBuffer.scrollTo(region, region.brailleCursorPos)
+					handler.mainBuffer.scrollTo(region, region.brailleCursorPos)
 				elif region.brailleSelectionStart is not None:
-					braille.getHandler().mainBuffer.scrollTo(region, region.brailleSelectionStart)
-				braille.getHandler().mainBuffer.updateDisplay()
+					handler.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+				handler.mainBuffer.updateDisplay()
 			else:
-				braille.getHandler().handleGainFocus(obj, shouldAutoTether=False)
+				handler.handleGainFocus(obj, shouldAutoTether=False)
 
 	@script(
 		# Translators: Input help mode message for a braille command.
