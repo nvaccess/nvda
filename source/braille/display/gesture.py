@@ -137,7 +137,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		return self.id
 
 	def _get_scriptableObject(self):
-		display = braille.handler.display
+		display = braille.getHandler().display
 		if isinstance(display, baseObject.ScriptableObject):
 			return display
 		return super(BrailleDisplayGesture, self).scriptableObject
@@ -163,7 +163,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		# this gesture should execute 'kb:control+tab'.
 		# Combining emulated modifiers with braille input (#7306) is not yet supported.
 		if len(gestureKeys) > 1:
-			for keys, modifiers in braille.handler.display._getModifierGestures(self.model):
+			for keys, modifiers in braille.getHandler().display._getModifierGestures(self.model):
 				if keys < gestureKeys:
 					gestureModifiers |= modifiers
 					gestureKeys -= keys
@@ -179,7 +179,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 					"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=id),
 				)
 			scriptNames = []
-			globalMaps = [inputCore.manager.userGestureMap, braille.handler.display.gestureMap]
+			globalMaps = [inputCore.manager.userGestureMap, braille.getHandler().display.gestureMap]
 			for globalMap in globalMaps:
 				for fakeGestureId in fakeGestureIds:
 					scriptNames.extend(
@@ -237,8 +237,8 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			return unknownDisplayDescription, "malformed:%s" % identifier
 		source, modelName, key = idParts.groups()
 		# Optimisation: Do not try to get the braille display class if this identifier belongs to the current driver.
-		if braille.handler.display.name.lower() == source.lower():
-			description = braille.handler.display.description
+		if braille.getHandler().display.name.lower() == source.lower():
+			description = braille.getHandler().display.description
 		else:
 			try:
 				description = _getDisplayDriver(source, caseSensitive=False).description
