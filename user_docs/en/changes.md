@@ -46,8 +46,8 @@
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
-* The `braille` module is now a package.
-The public API is unchanged: every symbol previously accessed as `braille.X` remains available. (#12772, @LeonarddeR)
+* The `braille` module is now a package, split into focused submodules such as `braille.constants`, `braille.labels`, `braille.formatting`, `braille.regions`, `braille.display`, `braille.buffers`, `braille.brailleHandler` and `braille.extensions`. (#12772, @LeonarddeR)
+  * Symbols previously accessed as `braille.X` are still reachable, but those that moved to a submodule are now deprecated (see Deprecations below).
 * Added `gui.message.HtmlMessageDialog`, a `MessageDialog` subclass that renders a full HTML document in a `wx.html2.WebView`. (#18878, @LeonarddeR)
   * The WebView backend can be overridden via the `_webViewBackend` class attribute, which defaults to the IE backend.
   * JavaScript in the message can trigger NVDA actions by navigating to `nvda-action://<action>` URLs; `close` is handled internally and other actions can be registered with `registerAction`.
@@ -76,6 +76,10 @@ Use the corresponding `TouchAction` enum members instead (e.g. `TouchAction.TAP`
 Use `TouchAction(value).displayString` instead. (#20086, @kefaslungu)
 * The `URL_MK_UNIFORM`, `DIALOG_OPTIONS` and `HTMLDLG_*` constants in `ui` are deprecated with no replacement, as the COM-based HTML dialog infrastructure has been removed.
 Use `gui.message.HtmlMessageDialog` instead. (#18878, @LeonarddeR)
+* The symbols that moved out of the `braille` module facade when it became a package are deprecated.
+Accessing them as `braille.X` still works but logs a deprecation warning; import them from their new submodule instead, e.g. `braille.regions.base.Region`, `braille.regions.properties.getPropertiesBraille`, `braille.labels.roleLabels`, `braille.constants.CURSOR_SHAPES`, `braille.display.driver.BrailleDisplayDriver`, `braille.display.gesture.BrailleDisplayGesture` and `braille.extensions.pre_writeCells`. (#20252, @LeonarddeR)
+* `braille.handler` is deprecated.
+Use `braille.getHandler()` instead, which returns the active `BrailleHandler` and raises `RuntimeError` if braille is not initialized. (#20252, @LeonarddeR)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
