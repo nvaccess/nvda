@@ -31,6 +31,8 @@ from typing import (
 )
 
 import braille
+from braille.display.driver import BrailleDisplayDriver as BrailleDisplayDriverBase
+from braille.display import getSerialPorts
 import inputCore
 import ui
 
@@ -65,7 +67,7 @@ from .constants import (
 from .gestures import _gestureMap
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(BrailleDisplayDriverBase):
 	"""Communication with display.
 
 	Most important functions:
@@ -93,7 +95,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return getSerialPorts()
 
 	def __init__(self, port: str = "auto"):
 		super().__init__()
@@ -574,7 +576,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if len(self._oldCells) == self.numCells:
 			# Ensure display is updated after reconnection and exit from internal menu.
 			self._clearOldCells()
-			braille.handler._displayWithCursor()
+			braille.getHandler()._displayWithCursor()
 			log.debug(
 				"Updated display content after reconnection or display menu exit",
 			)

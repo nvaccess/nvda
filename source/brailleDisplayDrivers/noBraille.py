@@ -4,10 +4,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import braille
+from braille.display.driver import BrailleDisplayDriver as BrailleDisplayDriverBase
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(BrailleDisplayDriverBase):
 	"""A dummy braille display driver used to disable braille in NVDA."""
 
 	name = "noBraille"

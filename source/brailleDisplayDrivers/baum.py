@@ -7,6 +7,9 @@ from io import BytesIO
 from typing import Union, List, Optional
 
 import braille
+from braille.display.driver import BrailleDisplayDriver as BrailleDisplayDriverBase
+from braille.display.gesture import BrailleDisplayGesture as BrailleDisplayGestureBase
+from braille.display import getSerialPorts
 from hwIo import intToByte, boolToByte
 import inputCore
 from logHandler import log
@@ -71,7 +74,7 @@ KEY_NAMES = {
 }
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(BrailleDisplayDriverBase):
 	_dev: hwIo.IoBase
 	name = "baum"
 	# Translators: Names of braille displays.
@@ -154,7 +157,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return getSerialPorts()
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
@@ -392,7 +395,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(BrailleDisplayGestureBase, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keysDown):
@@ -412,7 +415,9 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				self.space = groupKeysDown & 0x3
 			if group in (BAUM_ROUTING_KEYS, BAUM_ROUTING_KEY):
 				self.cellIndexes = [
-					index for index in range(braille.handler.display.numCells) if groupKeysDown & (1 << index)
+					index
+					for index in range(braille.getHandler().display.numCells)
+					if groupKeysDown & (1 << index)
 				]
 				if self.cellIndexes:
 					names.append(self.idForCellCount(len(self.cellIndexes)))

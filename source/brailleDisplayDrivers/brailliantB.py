@@ -7,7 +7,9 @@ import time
 from typing import List, Union
 
 import serial
-import braille
+from braille.display.driver import BrailleDisplayDriver as BrailleDisplayDriverBase
+from braille.display.gesture import BrailleDisplayGesture as BrailleDisplayGestureBase
+from braille.display import getSerialPorts
 import inputCore
 from logHandler import log
 import brailleInput
@@ -79,7 +81,7 @@ DOT8_KEY = 9
 SPACE_KEY = 10
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(BrailleDisplayDriverBase):
 	_dev: Union[hwIo.Serial, hwIo.Hid]
 	name = "brailliantB"
 	# Translators: The name of a series of braille displays.
@@ -155,7 +157,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return getSerialPorts()
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
@@ -381,7 +383,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(BrailleDisplayGestureBase, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):

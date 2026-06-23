@@ -7,7 +7,8 @@
 from typing import List
 
 import inputCore
-import braille
+from braille.display.driver import BrailleDisplayDriver as BrailleDisplayDriverBase
+from braille.display.gesture import BrailleDisplayGesture as BrailleDisplayGestureBase
 import hwPortUtils
 from collections import OrderedDict
 from logHandler import log
@@ -380,7 +381,7 @@ def eco_out(cells: List[int]) -> bytes:
 	return bytes(ret)
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(BrailleDisplayDriverBase):
 	"""EcoBraille display driver."""
 
 	name = "ecoBraille"
@@ -499,7 +500,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGestureKeys(braille.BrailleDisplayGesture):
+class InputGestureKeys(BrailleDisplayGestureBase):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):
@@ -507,7 +508,7 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 		self.id = keyNames[keys]
 
 
-class InputGestureRouting(braille.BrailleDisplayGesture):
+class InputGestureRouting(BrailleDisplayGestureBase):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, index):

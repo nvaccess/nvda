@@ -7,6 +7,8 @@
 
 import bdDetect
 import braille
+from braille.display.driver import BrailleDisplayDriver as BrailleDisplayDriverBase
+from braille.display.gesture import BrailleDisplayGesture as BrailleDisplayGestureBase
 import brailleInput
 import hwIo
 import inputCore
@@ -85,7 +87,7 @@ COMMAND_RESPONSE_INFO: dict[DeviceCommand, DeviceResponseInfo] = {
 }
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(BrailleDisplayDriverBase):
 	_dev: hwIo.IoBase
 	name = "nlseReaderZoomax"
 	# Translators: Names of braille displays.
@@ -246,7 +248,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(BrailleDisplayGestureBase, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keysDown: dict[bytes, bytes]):
@@ -267,7 +269,9 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				self.space = groupKeysDown & SPACEBAR_KEYS_MASK
 			if group == DeviceCommand.ROUTING_KEYS:
 				self.cellIndexes = [
-					index for index in range(braille.handler.display.numCells) if groupKeysDown & (1 << index)
+					index
+					for index in range(braille.getHandler().display.numCells)
+					if groupKeysDown & (1 << index)
 				]
 				if self.cellIndexes:
 					names.append(self.idForCellCount(len(self.cellIndexes)))

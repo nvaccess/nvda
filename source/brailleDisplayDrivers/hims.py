@@ -9,7 +9,9 @@ import serial
 from io import BytesIO
 import hwIo
 from hwIo import intToByte
-import braille
+from braille.display.driver import BrailleDisplayDriver as BrailleDisplayDriverBase
+from braille.display.gesture import BrailleDisplayGesture as BrailleDisplayGestureBase
+from braille.display import getSerialPorts
 from logHandler import log
 from collections import OrderedDict
 import inputCore
@@ -269,7 +271,7 @@ modelMap = [
 ]
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(BrailleDisplayDriverBase):
 	name = "hims"
 	# Translators: The name of a series of braille displays.
 	description = _("HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series")
@@ -318,7 +320,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls) -> Iterator[tuple[str, str]]:
-		return braille.getSerialPorts()
+		return getSerialPorts()
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
@@ -794,7 +796,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class KeyInputGesture(BrailleDisplayGestureBase, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keys, isHid: bool = False):
@@ -831,7 +833,7 @@ class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGe
 		self.id = "+".join(names)
 
 
-class RoutingInputGesture(braille.BrailleDisplayGesture):
+class RoutingInputGesture(BrailleDisplayGestureBase):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, routingIndex: int):

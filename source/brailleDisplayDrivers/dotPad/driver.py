@@ -11,7 +11,9 @@ import enum
 from dataclasses import dataclass
 import serial
 import inputCore
-import braille
+from braille.display.driver import BrailleDisplayDriver as BrailleDisplayDriverBase
+from braille.display.gesture import BrailleDisplayGesture as BrailleDisplayGestureBase
+from braille.display import getSerialPorts
 import winBindings.kernel32
 import hwIo
 import bdDetect
@@ -72,7 +74,7 @@ class BrailleDestination(enum.StrEnum):
 	GRAPHIC = "graphic"
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(BrailleDisplayDriverBase):
 	"""
 	Driver for DotPad Braille / Tactile Graphic display.
 	"""
@@ -95,7 +97,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return getSerialPorts()
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
@@ -455,7 +457,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class DPInputGesture(braille.BrailleDisplayGesture):
+class DPInputGesture(BrailleDisplayGestureBase):
 	"""Input gesture for DotPad display supporting multi-button combinations."""
 
 	source = BrailleDisplayDriver.name
