@@ -77,7 +77,69 @@ Use `TouchAction(value).displayString` instead. (#20086, @kefaslungu)
 * The `URL_MK_UNIFORM`, `DIALOG_OPTIONS` and `HTMLDLG_*` constants in `ui` are deprecated with no replacement, as the COM-based HTML dialog infrastructure has been removed.
 Use `gui.message.HtmlMessageDialog` instead. (#18878, @LeonarddeR)
 * The symbols that moved out of the `braille` module facade when it became a package are deprecated.
-Accessing them as `braille.X` still works but logs a deprecation warning; import them from their new submodule instead, e.g. `braille.regions.base.Region`, `braille.regions.properties.getPropertiesBraille`, `braille.labels.roleLabels`, `braille.constants.CURSOR_SHAPES`, `braille.display.driver.BrailleDisplayDriver`, `braille.display.gesture.BrailleDisplayGesture` and `braille.extensions.pre_writeCells`. (#20381, @LeonarddeR)
+Accessing them as `braille.X` still works but logs a deprecation warning; import them from their new location instead, as listed below. (#20381, @LeonarddeR)
+
+| Old location | New location |
+| --- | --- |
+| `braille.BrailleDisplayDriver` | `braille.display.driver.BrailleDisplayDriver` |
+| `braille.BrailleDisplayGesture` | `braille.display.gesture.BrailleDisplayGesture` |
+| `braille.getSerialPorts` | `braille.display.getSerialPorts` |
+| `braille.getDisplayList` | `braille.display.getDisplayList` |
+| `braille.getDisplayDrivers` | `braille.display.getDisplayDrivers` |
+| `braille.RENAMED_DRIVERS` | `braille.display.RENAMED_DRIVERS` |
+| `braille.DisplayDimensions` | `braille.display.DisplayDimensions` |
+| `braille.Region` | `braille.regions.base.Region` |
+| `braille.RegionWithPositions` | `braille.regions.base.RegionWithPositions` |
+| `braille.TextRegion` | `braille.regions.base.TextRegion` |
+| `braille.rindex` | `braille.regions.base.rindex` |
+| `braille.NVDAObjectRegion` | `braille.regions.NVDAObject.NVDAObjectRegion` |
+| `braille.ReviewNVDAObjectRegion` | `braille.regions.NVDAObject.ReviewNVDAObjectRegion` |
+| `braille.NVDAObjectHasUsefulText` | `braille.regions.NVDAObject.NVDAObjectHasUsefulText` |
+| `braille.TextInfoRegion` | `braille.regions.textInfo.TextInfoRegion` |
+| `braille.CursorManagerRegion` | `braille.regions.textInfo.CursorManagerRegion` |
+| `braille.ReviewTextInfoRegion` | `braille.regions.textInfo.ReviewTextInfoRegion` |
+| `braille.ReviewCursorManagerRegion` | `braille.regions.textInfo.ReviewCursorManagerRegion` |
+| `braille.getControlFieldBraille` | `braille.regions.properties.getControlFieldBraille` |
+| `braille.getFormatFieldBraille` | `braille.regions.properties.getFormatFieldBraille` |
+| `braille.getPropertiesBraille` | `braille.regions.properties.getPropertiesBraille` |
+| `braille.getFocusContextRegions` | `braille.regions.focus.getFocusContextRegions` |
+| `braille.getFocusRegions` | `braille.regions.focus.getFocusRegions` |
+| `braille.invalidateCachedFocusAncestors` | `braille.regions.focus.invalidateCachedFocusAncestors` |
+| `braille.BrailleBuffer` | `braille.buffers.BrailleBuffer` |
+| `braille.BrailleHandler` | `braille.brailleHandler.BrailleHandler` |
+| `braille.formatCellsForLog` | `braille.brailleHandler.formatCellsForLog` |
+| `braille.FALLBACK_TABLE` | `braille.brailleHandler.FALLBACK_TABLE` |
+| `braille.roleLabels` | `braille.labels.roleLabels` |
+| `braille.positiveStateLabels` | `braille.labels.positiveStateLabels` |
+| `braille.negativeStateLabels` | `braille.labels.negativeStateLabels` |
+| `braille.landmarkLabels` | `braille.labels.landmarkLabels` |
+| `braille.FormatTagDelimiter` | `braille.formatting.FormatTagDelimiter` |
+| `braille.FormattingMarker` | `braille.formatting.FormattingMarker` |
+| `braille.fontAttributeFormattingMarkers` | `braille.formatting.fontAttributeFormattingMarkers` |
+| `braille.getParagraphStartMarker` | `braille.formatting.getParagraphStartMarker` |
+| `braille.AUTO_DISPLAY_NAME` | `braille.constants.AUTO_DISPLAY_NAME` |
+| `braille.AUTOMATIC_PORT` | `braille.constants.AUTOMATIC_PORT` |
+| `braille.BLUETOOTH_PORT` | `braille.constants.BLUETOOTH_PORT` |
+| `braille.USB_PORT` | `braille.constants.USB_PORT` |
+| `braille.NO_BRAILLE_DISPLAY_NAME` | `braille.constants.NO_BRAILLE_DISPLAY_NAME` |
+| `braille.CONTINUATION_SHAPE` | `braille.constants.CONTINUATION_SHAPE` |
+| `braille.CURSOR_SHAPES` | `braille.constants.CURSOR_SHAPES` |
+| `braille.SELECTION_SHAPE` | `braille.constants.SELECTION_SHAPE` |
+| `braille.END_OF_BRAILLE_OUTPUT_SHAPE` | `braille.constants.END_OF_BRAILLE_OUTPUT_SHAPE` |
+| `braille.INPUT_START_IND` | `braille.constants.INPUT_START_IND` |
+| `braille.INPUT_END_IND` | `braille.constants.INPUT_END_IND` |
+| `braille.TEXT_SEPARATOR` | `braille.constants.TEXT_SEPARATOR` |
+| `braille.CONTEXTPRES_*` | `braille.constants.CONTEXTPRES_*` |
+| `braille.focusContextPresentations` | `braille.constants.focusContextPresentations` |
+| `braille.pre_writeCells` | `braille.extensions.pre_writeCells` |
+| `braille.filter_displaySize` | `braille.extensions.filter_displaySize` |
+| `braille.filter_displayDimensions` | `braille.extensions.filter_displayDimensions` |
+| `braille.displaySizeChanged` | `braille.extensions.displaySizeChanged` |
+| `braille.displayChanged` | `braille.extensions.displayChanged` |
+| `braille.decide_enabled` | `braille.extensions.decide_enabled` |
+| `braille.BrailleMode` | `config.configFlags.BrailleMode` |
+| `braille.TetherTo` | `config.configFlags.TetherTo` |
+
 * `braille.handler` is deprecated.
 Use `braille.getHandler()` instead, which returns the active `BrailleHandler` and raises `RuntimeError` if braille is not initialized. (#20381, @LeonarddeR)
 
