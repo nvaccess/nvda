@@ -9,6 +9,7 @@ In order to use touch features, NVDA must be installed on a touchscreen computer
 """
 
 import threading
+import winsound
 from functools import cached_property
 from typing import (
 	TYPE_CHECKING,
@@ -393,9 +394,7 @@ class TouchHandler(threading.Thread):
 	def pump(self):
 		for preheldTracker, tracker in self.trackerManager.emitTrackers():
 			if blockTouchInput:
-				import tones
-
-				tones.beep(200, 50)
+				winsound.MessageBeep(winsound.MB_ICONASTERISK)
 				continue
 			gesture = TouchInputGesture(preheldTracker, tracker, self._curTouchMode.value)
 			try:

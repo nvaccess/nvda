@@ -18,6 +18,8 @@ import speech
 import screenCurtain
 import touchHandler
 from winAPI import _displayTracking
+from winAPI.winUser.constants import SystemMetrics
+from winBindings import user32
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (
 	MagnifierParameters,
@@ -190,33 +192,33 @@ class Magnifier:
 			# Touch events are already intercepted by NVDA; block gesture execution
 			# to prevent incorrect coordinates from the magnified view reaching the system.
 			touchHandler.blockTouchInput = True
-		elif touchHandler.touchSupported():
-			# Touch is supported but the handler is not running (user disabled it).
-			# We can't intercept inputs, so warn the user.
+		elif user32.GetSystemMetrics(SystemMetrics.MAXIMUM_TOUCHES) > 0:
+			# The user has a touchscreen but NVDA cannot intercept inputs; warn them.
+			if touchHandler.touchSupported():
+				reason = pgettext(
+					"magnifier",
+					# Translators: Warning when magnifier is started on a device with a touch screen but NVDA's touch support is disabled.
+					"Touch screen input cannot be intercepted because NVDA touch support is disabled. ",
+				)
+			else:
+				reason = pgettext(
+					"magnifier",
+					# Translators: Warning when the magnifier starts on a portable/source copy with a touchscreen.
+					"Touch screen input cannot be intercepted because NVDA is not installed. ",
+				)
 			wx.CallAfter(
 				gui.messageBox,
-				pgettext(
+				reason
+				+ pgettext(
 					"magnifier",
-					# Translators: Warning shown when the magnifier starts and touch input cannot be intercepted
-					"Touch screen input cannot be intercepted because NVDA touch support is disabled. "
+					# Translators: Suffix appended to touch warning when touch inputs cannot be blocked by the magnifier.
 					"Touch inputs may not behave as expected while the magnifier is running.",
 				),
-				# Translators: Title of the warning dialog shown when touch cannot be intercepted
-				pgettext("magnifier", "Magnifier — Touch screen warning"),
-				wx.OK | wx.ICON_WARNING,
-			)
-		else:
-			# Portable copy, running from source, or no UI access: touch cannot be intercepted.
-			wx.CallAfter(
-				gui.messageBox,
 				pgettext(
 					"magnifier",
-					# Translators: Warning shown when the magnifier starts on a portable/source copy with a touchscreen
-					"Touch screen input cannot be intercepted on portable copies of NVDA or without UI Access. "
-					"Touch inputs may not behave as expected while the magnifier is running.",
+					# Translators: Title of the warning dialog shown when touch cannot be intercepted while the magnifier is running.
+					"Touch Screen Warning",
 				),
-				# Translators: Title of the warning dialog shown when touch cannot be intercepted
-				pgettext("magnifier", "Magnifier — Touch screen warning"),
 				wx.OK | wx.ICON_WARNING,
 			)
 
@@ -289,7 +291,8 @@ class Magnifier:
 			return
 		self._stopTimer()
 		self._isActive = False
-		touchHandler.blockTouchInput = False
+		if touchHandler.handler is not None:
+			touchHandler.blockTouchInput = False
 		# Unregister from display changes
 		_displayTracking.displayChanged.unregister(self._onDisplayChanged)
 

@@ -7,6 +7,7 @@ from _magnifier.config import ZoomLevel
 from _magnifier.magnifier import Magnifier
 from _magnifier.utils.types import Filter, Direction, Coordinates, MagnifierAction
 from comtypes import COMError
+import touchHandler
 import unittest
 from winAPI._displayTracking import getPrimaryDisplayOrientation
 from unittest.mock import MagicMock, patch
@@ -540,8 +541,8 @@ class TestMagnifier(_TestMagnifier):
 			self.magnifier.currentCoordinates = validCoords
 			self.assertEqual(self.magnifier.currentCoordinates, validCoords)
 
-	def testStartMagnifierBlocksTouchOnInstalledCopy(self):
-		"""blockTouchInput is set to True when the magnifier starts with the touch handler active."""
+	def testStartMagnifierBlocksTouchWhenHandlerActive(self):
+		"""blockTouchInput is set when the magnifier starts with the touch handler running."""
 		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=focusCoords)
 
@@ -550,17 +551,16 @@ class TestMagnifier(_TestMagnifier):
 			patch("touchHandler.blockTouchInput", False),
 		):
 			self.magnifier._startMagnifier()
-			import touchHandler
-
 			self.assertTrue(touchHandler.blockTouchInput)
 
-	def testStartMagnifierWarnsWhenTouchSupportedButHandlerInactive(self):
-		"""A warning dialog is shown when touch is supported but the handler is not running."""
+	def testStartMagnifierWarnsWhenTouchSupportDisabled(self):
+		"""Dialog shown when device has a touchscreen but NVDA touch support is disabled."""
 		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=focusCoords)
 
 		with (
 			patch("touchHandler.handler", new=None),
+			patch("winBindings.user32.GetSystemMetrics", return_value=5),
 			patch("touchHandler.touchSupported", return_value=True),
 			patch("_magnifier.magnifier.wx.CallAfter") as mock_call_after,
 		):
@@ -568,13 +568,14 @@ class TestMagnifier(_TestMagnifier):
 
 		mock_call_after.assert_called_once()
 
-	def testStartMagnifierWarnsOnPortableCopy(self):
-		"""A warning dialog is shown on portable copies where touch cannot be intercepted."""
+	def testStartMagnifierWarnsOnPortableOrNoUIAccess(self):
+		"""Dialog shown when device has a touchscreen but NVDA cannot intercept (portable/no UI access)."""
 		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=focusCoords)
 
 		with (
 			patch("touchHandler.handler", new=None),
+			patch("winBindings.user32.GetSystemMetrics", return_value=5),
 			patch("touchHandler.touchSupported", return_value=False),
 			patch("_magnifier.magnifier.wx.CallAfter") as mock_call_after,
 		):
@@ -582,14 +583,28 @@ class TestMagnifier(_TestMagnifier):
 
 		mock_call_after.assert_called_once()
 
-	def testStopMagnifierUnblocksTouchInput(self):
-		"""blockTouchInput is reset to False unconditionally when the magnifier stops."""
-		import touchHandler
+	def testStartMagnifierNoActionWithoutTouchscreen(self):
+		"""No dialog and no blocking when the device has no touchscreen."""
+		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=focusCoords)
 
+		with (
+			patch("touchHandler.handler", new=None),
+			patch("winBindings.user32.GetSystemMetrics", return_value=0),
+			patch("_magnifier.magnifier.wx.CallAfter") as mock_call_after,
+		):
+			self.magnifier._startMagnifier()
+
+		mock_call_after.assert_not_called()
+
+	def testStopMagnifierUnblocksTouchInput(self):
+		"""blockTouchInput is reset to False when the magnifier stops with the touch handler active."""
 		self.magnifier._stopTimer = MagicMock()
 		self.magnifier._isActive = True
 		touchHandler.blockTouchInput = True
+		self.addCleanup(setattr, touchHandler, "blockTouchInput", False)
 
-		self.magnifier._stopMagnifier()
+		with patch("touchHandler.handler", new=MagicMock()):
+			self.magnifier._stopMagnifier()
 
 		self.assertFalse(touchHandler.blockTouchInput)
