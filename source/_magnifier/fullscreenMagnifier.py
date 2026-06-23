@@ -36,7 +36,7 @@ class FullScreenMagnifier(Magnifier):
 
 	def __init__(self):
 		super().__init__()
-		self._trackingMode = getFullscreenMode()
+		self._fullscreenMode = getFullscreenMode()
 		self.currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
 		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
@@ -64,7 +64,7 @@ class FullScreenMagnifier(Magnifier):
 		super()._startMagnifier()
 		if _isDebug():
 			log.debug(
-				f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self._trackingMode}",
+				f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self._fullscreenMode}",
 			)
 		try:
 			self._initializeNativeMagnification()
@@ -270,7 +270,7 @@ class FullScreenMagnifier(Magnifier):
 		:return: Adjusted coordinates according to full-screen mode
 		"""
 
-		match self._trackingMode:
+		match self._fullscreenMode:
 			case FullScreenMode.RELATIVE:
 				return self._relativePos(coordinates)
 			case FullScreenMode.BORDER:
@@ -362,7 +362,7 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		if _isDebug():
 			log.debug(
-				f"Launching spotlight mode from full-screen magnifier with mode {self._trackingMode}",
+				f"Launching spotlight mode from full-screen magnifier with mode {self._fullscreenMode}",
 			)
 		self._stopTimer()
 		self._spotlightManager._startSpotlight()

@@ -6067,7 +6067,7 @@ class MagnifierPanel(SettingsPanel):
 			magnifier._panStep = selectedPanStep
 			magnifier.filterType = selectedFilter
 			if isinstance(magnifier, FullScreenMagnifier):
-				magnifier._trackingMode = selectedMode
+				magnifier._fullscreenMode = selectedMode
 
 	def _onImmediateSettingChange(self, evt: wx.CommandEvent):
 		"""Handle immediate updates for non-enable magnifier settings."""
@@ -6280,7 +6280,7 @@ class MagnifierPanel(SettingsPanel):
 			magnifier._panStep = self._panStepInitially
 			magnifier.filterType = self._filterInitially
 			if isinstance(magnifier, FullScreenMagnifier):
-				magnifier._trackingMode = self._trackingModeInitially
+				magnifier._fullscreenMode = self._trackingModeInitially
 
 		if self._magnifierEnabledInitially != magnifierConfig.getEnabled():
 			toggleMagnifier()

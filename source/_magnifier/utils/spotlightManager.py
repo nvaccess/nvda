@@ -54,7 +54,7 @@ class SpotlightManager:
 		)
 
 		# Save the current mode for zoom back
-		self._originalMode = self._fullscreenMagnifier._trackingMode
+		self._originalMode = self._fullscreenMagnifier._fullscreenMode
 		self._currentCoordinates = startCoords
 		self._animateZoom(ZoomHistory(1.0, centerScreen), self._startMouseMonitoring)
 

@@ -179,30 +179,30 @@ def _ensureSavedStatesInitialized() -> None:
 		saveFollowStates()
 
 
-def getFollowState(trackingType: MagnifierTrackingType) -> bool:
+def getFollowState(focusType: MagnifierTrackingType) -> bool:
 	"""
 	Get the current follow state for a given tracking type.
 
-	:param trackingType: The tracking type to query.
+	:param focusType: The tracking type to query.
 	:return: True if the magnifier follows the given tracking type, False otherwise.
 	"""
-	return config.conf["magnifier"][_FOLLOW_CONFIG_KEYS[trackingType]]
+	return config.conf["magnifier"][_FOLLOW_CONFIG_KEYS[focusType]]
 
 
-def setFollowState(trackingType: MagnifierTrackingType, state: bool) -> None:
+def setFollowState(focusType: MagnifierTrackingType, state: bool) -> None:
 	"""
 	Set the follow state for a given tracking type.
 
-	:param trackingType: The tracking type to update.
+	:param focusType: The tracking type to update.
 	:param state: True to enable following, False to disable.
 	"""
-	config.conf["magnifier"][_FOLLOW_CONFIG_KEYS[trackingType]] = state
+	config.conf["magnifier"][_FOLLOW_CONFIG_KEYS[focusType]] = state
 
 
 def saveFollowStates() -> None:
 	"""Save current follow states so they can be restored later."""
-	for trackingType in _FOLLOW_CONFIG_KEYS:
-		_followStateOverride.savedStates[trackingType] = getFollowState(trackingType)
+	for focusType in _FOLLOW_CONFIG_KEYS:
+		_followStateOverride.savedStates[focusType] = getFollowState(focusType)
 
 
 def toggleAllFollowStates() -> bool:
@@ -213,13 +213,13 @@ def toggleAllFollowStates() -> bool:
 	"""
 	_ensureSavedStatesInitialized()
 	if _followStateOverride.isActive:
-		for trackingType, state in _followStateOverride.savedStates.items():
-			setFollowState(trackingType, state)
+		for focusType, state in _followStateOverride.savedStates.items():
+			setFollowState(focusType, state)
 		_followStateOverride.isActive = False
 	else:
 		saveFollowStates()
-		for trackingType in _FOLLOW_CONFIG_KEYS:
-			setFollowState(trackingType, False)
+		for focusType in _FOLLOW_CONFIG_KEYS:
+			setFollowState(focusType, False)
 		_followStateOverride.isActive = True
 	return _followStateOverride.isActive
 
