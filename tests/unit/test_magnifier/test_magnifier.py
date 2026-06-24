@@ -7,6 +7,7 @@ from _magnifier.config import ZoomLevel
 from _magnifier.magnifier import Magnifier
 from _magnifier.utils.types import Filter, Direction, Coordinates, MagnifierAction
 from comtypes import COMError
+import time
 import unittest
 from winAPI._displayTracking import getPrimaryDisplayOrientation
 from unittest.mock import MagicMock, patch
@@ -33,9 +34,14 @@ class _TestMagnifier(unittest.TestCase):
 			mock.MagUninitialize.return_value = True
 			mock.MagSetFullscreenTransform.return_value = True
 			mock.MagSetFullscreenColorEffect.return_value = True
+		self.winmm_patcher = patch("_magnifier.magnifier.winmm")
+		self.mock_winmm = self.winmm_patcher.start()
+		self.mock_winmm.timeBeginPeriod.return_value = 0
+		self.mock_winmm.TIMERR_NOERROR = 0
 
 	def tearDown(self):
 		"""Cleanup after each test."""
+		self.winmm_patcher.stop()
 		self.mag_fs_patcher.stop()
 		self.mag_patcher.stop()
 
@@ -257,6 +263,21 @@ class TestMagnifier(_TestMagnifier):
 
 		self.magnifier._stopTimer.assert_called_once()
 		self.assertFalse(self.magnifier._isActive)
+
+	def testTimeBeginPeriodReducesTimerResolution(self):
+		"""timeBeginPeriod(1) must reduce actual sleep(1ms) duration below 5ms."""
+		from winBindings import winmm as real_winmm
+
+		real_winmm.timeBeginPeriod(1)
+		try:
+			durations_ms = []
+			for _ in range(20):
+				t0 = time.perf_counter()
+				time.sleep(0.001)
+				durations_ms.append((time.perf_counter() - t0) * 1000)
+			self.assertLess(min(durations_ms), 5.0)
+		finally:
+			real_winmm.timeEndPeriod(1)
 
 	def testZoom(self):
 		"""zoom in and out with valid values and check boundaries."""
