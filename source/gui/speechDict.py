@@ -181,6 +181,8 @@ class DictionaryDialog(
 			wx.ListCtrl,
 			style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
 		)
+		self.dictList.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.onContextMenu)
+		self.dictList.Bind(wx.EVT_CONTEXT_MENU, self.onContextMenu)
 		# Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 		self.dictList.AppendColumn(_("Comment"), width=150)
 		# Translators: The label for a column in dictionary entries list used to identify pattern
@@ -236,6 +238,17 @@ class DictionaryDialog(
 		).Bind(wx.EVT_BUTTON, self.onRemoveAll)
 
 		sHelper.addItem(bHelper, flag=wx.EXPAND)
+
+	def onContextMenu(self, evt):
+		menu = wx.Menu()
+		# Translators: Context menu item label to edit an entry
+		editItem = menu.Append(wx.ID_ANY, _("&Edit"))
+		# Translators: Context menu item label to remove an entry
+		removeItem = menu.Append(wx.ID_ANY, _("&Remove"))
+		self.Bind(wx.EVT_MENU, self.onEditClick, editItem)
+		self.Bind(wx.EVT_MENU, self.onRemoveClick, removeItem)
+		self.PopupMenu(menu)
+		menu.Destroy()
 
 	def postInit(self):
 		self.dictList.SetFocus()

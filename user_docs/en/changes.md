@@ -6,6 +6,7 @@
 
 ### New Features
 
+* Added context menu to the list entries of the Speech Dictionaries dialog, Maximizing eas of access to the list entries actions. (#20036, @amirmahdifard)
 * Add-ons can be removed from the "Updatable add-ons" tab in the Add-on Store. (#15030, @nvdaes)
 * Chinese text can now be navigated by word using built-in input gestures.
   A Word Segmentation Standard setting was added to the "Document Navigation" panel. (#18735, @CrazySteve0605, @Cary-rowen)
