@@ -8,7 +8,6 @@ These tests help to ensure that code changes do not unintentionally break functi
 Git hooks can be used to automatically run linting, translatable string checks and unit tests on files staged for commit.
 This will automatically apply lint fixes where possible, and will cancel the commit on lint issues and other test failures.
 NVDA uses [prek](https://prek.j178.dev/), a faster, drop-in compatible alternative to [pre-commit](https://pre-commit.com/).
-The hooks are configured in prek's native `prek.toml`.
 
 There are two ways to run prek, and the examples below use both:
 

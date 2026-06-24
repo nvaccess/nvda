@@ -20,13 +20,9 @@ jobs:
     name: Prek auto-update
     runs-on: ubuntu-latest
     steps:
-      # Auto-update only rewrites hook revisions in prek.toml,
-      # so submodule content is not needed.
       - name: Checkout code
         uses: actions/checkout@v7
-      # Install prek as a standalone binary; auto-update only rewrites hook
-      # revisions in prek.toml, so neither uv nor the project environment is
-      # needed. The cargo-dist installer adds prek to $GITHUB_PATH.
+      # Install prek as a standalone binary
       - name: Install prek
         run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/j178/prek/releases/latest/download/prek-installer.sh | sh
       # --cooldown-days skips releases younger than 3 days, avoiding pinning to
@@ -51,5 +47,5 @@ jobs:
           # Reuse the existing PR if one is already open from a previous run.
           gh pr create --base master --head prek-autoupdate \
             --title "Prek auto-update" \
-            --body "Automated update of prek hook revisions in \`prek.toml\`." \
+            --body "Automated update of prek hook revisions." \
             || echo "A pull request for prek-autoupdate already exists."
