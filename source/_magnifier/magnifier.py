@@ -15,6 +15,7 @@ import wx
 import ui
 import speech
 import screenCurtain
+from winBindings import winmm
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (
@@ -38,7 +39,7 @@ from .utils.focusManager import FocusManager
 
 
 class Magnifier:
-	_TIMER_INTERVAL_MS: int = 12
+	_TIMER_INTERVAL_MS: int = 8
 	_MARGIN_BORDER: int = 50
 	_MAX_CONSECUTIVE_ERRORS: int = 3
 	_MAGNIFIED_VIEW: MagnifiedView
@@ -182,14 +183,17 @@ class Magnifier:
 			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
 			return
 
+		result = winmm.timeBeginPeriod(1)
+		if result != winmm.TIMERR_NOERROR:
+			log.warning(f"timeBeginPeriod(1) failed with code {result} — timer resolution stays at ~15ms")
+
 		self._isActive = True
 		self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
 
 	def _updateMagnifier(self) -> None:
 		"""
 		Update the magnifier position and content.
-		This method is called repeatedly by the timer.
-		On transient errors (below threshold): reschedules itself to keep running.
+		This method is called repeatedly by the repeating timer.
 		On repeated errors (at threshold): delegates rescheduling to _attemptRecovery.
 		"""
 		if not self._isActive:
@@ -225,8 +229,6 @@ class Magnifier:
 				f"Transient error updating magnifier ({self._consecutiveErrors}/{self._MAX_CONSECUTIVE_ERRORS})",
 				exc_info=True,
 			)
-		# Always reschedule the timer to keep the magnifier alive
-		self._startTimer(self._updateMagnifier)
 
 	def _doUpdate(self) -> None:
 		"""
@@ -253,6 +255,7 @@ class Magnifier:
 		if not self._isActive:
 			return
 		self._stopTimer()
+		winmm.timeEndPeriod(1)
 		self._isActive = False
 		# Unregister from display changes
 		_displayTracking.displayChanged.unregister(self._onDisplayChanged)
@@ -367,7 +370,7 @@ class Magnifier:
 		self._stopTimer()
 		self._timer = wx.Timer()
 		self._timer.Bind(wx.EVT_TIMER, lambda evt: callback())
-		self._timer.Start(self._TIMER_INTERVAL_MS, oneShot=True)
+		self._timer.Start(self._TIMER_INTERVAL_MS, oneShot=False)
 
 	def _stopTimer(self) -> None:
 		"""

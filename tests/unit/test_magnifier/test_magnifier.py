@@ -144,29 +144,22 @@ class TestMagnifier(_TestMagnifier):
 			2,
 		)
 		self.magnifier._doUpdate.assert_called_once()
-		self.magnifier._startTimer.assert_called_once_with(
-			self.magnifier._updateMagnifier,
-		)
+		self.magnifier._startTimer.assert_not_called()
 		self.assertEqual(self.magnifier.currentCoordinates, focusCoords)
 		# Successful update should reset error counter
 		self.assertEqual(self.magnifier._consecutiveErrors, 0)
 
 	def testUpdateMagnifierResumesAfterSingleError(self):
-		"""Timer must always be rescheduled even when _doUpdate raises an exception."""
+		"""Transient errors below the threshold increment the error counter without triggering recovery."""
 		self.magnifier._isActive = True
 		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
 			return_value=focusCoords,
 		)
 		self.magnifier._doUpdate = MagicMock(side_effect=OSError("COM failure"))
-		self.magnifier._startTimer = MagicMock()
 
 		self.magnifier._updateMagnifier()
 
-		# Timer must still be rescheduled despite the error
-		self.magnifier._startTimer.assert_called_once_with(
-			self.magnifier._updateMagnifier,
-		)
 		self.assertEqual(self.magnifier._consecutiveErrors, 1)
 
 	def testUpdateMagnifierTriggersRecoveryAfterMaxErrors(self):
@@ -189,18 +182,16 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._startTimer.assert_not_called()
 
 	def testUpdateMagnifierCatchesCOMError(self):
-		"""COMError from UIA must be caught and the timer rescheduled."""
+		"""COMError is caught like OSError and increments the consecutive error counter."""
 		self.magnifier._isActive = True
 		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
 			return_value=focusCoords,
 		)
 		self.magnifier._doUpdate = MagicMock(side_effect=COMError(-2147417848, "RPC_E_DISCONNECTED", None))
-		self.magnifier._startTimer = MagicMock()
 
 		self.magnifier._updateMagnifier()
 
-		self.magnifier._startTimer.assert_called_once_with(self.magnifier._updateMagnifier)
 		self.assertEqual(self.magnifier._consecutiveErrors, 1)
 
 	def testUpdateMagnifierRecoveryFailureSafelyRestartsTimer(self):
@@ -229,13 +220,11 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
 			return_value=focusCoords,
 		)
-		self.magnifier._doUpdate = MagicMock()  # Success
-		self.magnifier._startTimer = MagicMock()
+		self.magnifier._doUpdate = MagicMock()
 
 		self.magnifier._updateMagnifier()
 
 		self.assertEqual(self.magnifier._consecutiveErrors, 0)
-		self.magnifier._startTimer.assert_called_once()
 
 	def testAttemptRecoveryBase(self):
 		"""Base _attemptRecovery resets errors and restarts timer."""

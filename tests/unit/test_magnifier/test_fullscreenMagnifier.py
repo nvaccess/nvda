@@ -263,27 +263,19 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		self.assertEqual(magnifier._consecutiveErrors, 0)
 
 	def testUpdateLoopSurvivesSingleDoUpdateError(self):
-		"""A single _doUpdate error does not kill the update loop."""
+		"""A single _doUpdate error increments the counter; a subsequent success resets it."""
 		magnifier = FullScreenMagnifier()
 		magnifier._startMagnifier()
-		magnifier._startTimer = MagicMock()
 		magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
 			return_value=(100, 200),
 		)
-
-		# First call fails, second succeeds
 		magnifier._doUpdate = MagicMock(side_effect=[OSError("Transient"), None])
 
-		# First update — error
 		magnifier._updateMagnifier()
 		self.assertEqual(magnifier._consecutiveErrors, 1)
-		magnifier._startTimer.assert_called_with(magnifier._updateMagnifier)
 
-		# Second update — success
-		magnifier._startTimer.reset_mock()
 		magnifier._updateMagnifier()
 		self.assertEqual(magnifier._consecutiveErrors, 0)
-		magnifier._startTimer.assert_called_with(magnifier._updateMagnifier)
 
 		magnifier._stopMagnifier()
 
