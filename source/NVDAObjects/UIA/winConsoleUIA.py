@@ -18,9 +18,7 @@ from comtypes import COMError
 from diffHandler import prefer_difflib
 from logHandler import log
 from typing import (
-	Any,
 	Optional,
-	cast,
 )
 from UIAHandler.utils import _getConhostAPILevel
 from UIAHandler.constants import WinConsoleAPILevel
@@ -451,40 +449,30 @@ def findExtraOverlayClasses(obj, clsList):
 		clsList.append(consoleUIAWindow)
 
 
-class _WinTerminalDelayedCaretMovement:
-	"""Give Windows Terminal more time to update its UIA caret position."""
-
-	#: #19503: Windows Terminal sessions, especially remote shells, can update
-	#: their UIA selection after NVDA's default 100 ms caret movement timeout.
-	#: This causes stale character reporting after left/right arrow navigation.
-	#: Keep this additional wait scoped to Windows Terminal controls rather than
-	#: increasing the global editable text timeout.
-	_winTerminalMinCaretMovementTimeoutSec = 0.3
-
-	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=None, origWord=None):
-		if timeout is None:
-			conf = cast(Any, config.conf)
-			timeout = conf["editableText"]["caretMoveTimeoutMs"] / 1000
-		timeout = max(timeout, self._winTerminalMinCaretMovementTimeoutSec)
-		return cast(Any, super())._hasCaretMoved(bookmark, retryInterval, timeout, origWord)
-
-
-class _DiffBasedWinTerminalUIA(_WinTerminalDelayedCaretMovement, EnhancedTermTypedCharSupport):
+class _DiffBasedWinTerminalUIA(EnhancedTermTypedCharSupport):
 	"""
 	An overlay class for Windows Terminal (wt.exe) that uses diffing to speak
 	new text.
 	"""
+
+	def _get__caretMovementTimeoutMultiplier(self):
+		"Windows Terminal sessions can take a while to update the UIA caret. (#19503)"
+		return 3
 
 	def event_UIA_notification(self, **kwargs):
 		"Block notification events when diffing to prevent double reporting."
 		log.debugWarning(f"Notification event blocked to avoid double-report: {kwargs}")
 
 
-class _NotificationsBasedWinTerminalUIA(_WinTerminalDelayedCaretMovement, UIA):
+class _NotificationsBasedWinTerminalUIA(UIA):
 	"""
 	An overlay class for Windows Terminal (wt.exe) that uses UIA notification
 	events provided by the application to speak new text.
 	"""
+
+	def _get__caretMovementTimeoutMultiplier(self):
+		"Windows Terminal sessions can take a while to update the UIA caret. (#19503)"
+		return 3
 
 	#: Override the role, which is controlTypes.Role.STATICTEXT by default.
 	role = controlTypes.Role.TERMINAL
