@@ -47,7 +47,8 @@
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * The local Git hook runner has been switched from [pre-commit](https://pre-commit.com/) to [prek](https://prek.j178.dev/), a faster, drop-in compatible alternative. (#20305, @LeonarddeR)
-  * The [pre-commit.ci](https://pre-commit.ci/) integration has been dropped entirely; linting and autofixing now run via GitHub Actions, using an autofix-or-fail workflow plus an automatic `prek auto-update` workflow.
+  * The [pre-commit.ci](https://pre-commit.ci/) integration will be dropped entirely;.
+  Linting and autofixing now run via GitHub Actions, using an autofix-or-fail workflow plus an automatic `prek auto-update` workflow.
   * Developers who previously ran `pre-commit install` should run `uv run prek install -f` once to replace the installed Git hook.
 * The `braille` module is now a package.
 The public API is unchanged: every symbol previously accessed as `braille.X` remains available. (#12772, @LeonarddeR)

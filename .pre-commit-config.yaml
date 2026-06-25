@@ -1,9 +1,31 @@
 exclude: ^user_docs/(?!en/).+/.+\.md$
 
+# https://pre-commit.ci/
+# Configuration for Continuous Integration service
+ci:
+  # Can't run Windows scons scripts on Linux.
+  # unit testing requires our python environment,
+  # which cannot be configured with pre-commit.ci:
+  # https://stackoverflow.com/questions/70778806/pre-commit-not-using-virtual-environment .
+  # Can't run licenseCheck as it relies on telemetry,
+  # which CI blocks.
+  # Pyright does not seem to work in pre-commit CI
+  skip: [checkPo, scons-source, checkPot, unitTest, licenseCheck, pyright]
+  autofix_prs: false
+  autoupdate_schedule: quarterly
+  autoupdate_commit_msg: "Pre-commit auto-update"
+  autofix_commit_msg: "Pre-commit auto-fix"
+  submodules: true
+
 default_language_version:
   python: python3.13
 
 repos:
+- repo: https://github.com/pre-commit-ci/pre-commit-ci-config
+  rev: v1.6.1
+  hooks:
+    - id: check-pre-commit-ci-config
+
 - repo: meta
   hooks:
     # ensures that exclude directives apply to any file in the repository.
@@ -107,6 +129,8 @@ repos:
     - id: uv-lock
       name: Verify uv lock file
       groups: [autofix]
+      # Override python interpreter from .python-versions as that is too strict for pre-commit.ci
+      args: ["-p3.13"]
 
 - repo: https://github.com/DavidAnson/markdownlint-cli2
   rev: v0.22.0

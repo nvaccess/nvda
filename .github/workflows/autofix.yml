@@ -30,6 +30,8 @@ on:
       - master
       - beta
       - rc
+      - 'try-**'
+  workflow_dispatch:
 permissions:
   contents: write
 
@@ -74,9 +76,14 @@ jobs:
       env:
         REF_NAME: ${{ github.ref_name }}
       run: |
-        # Fixers exit non-zero when they change files; that is expected here, so
-        # do not let it fail the job.
-        uvx prek run --group autofix --all-files || true
+        # Fixers exit non-zero when they change files. Some fixers' output feeds
+        # another fixer, so a single pass may not reach a stable tree.
+        # Re-run on the fixed tree until prek exits clean or we hit the cap.
+        for attempt in 1 2 3; do
+          if uvx prek run --group autofix --all-files; then
+            break
+          fi
+        done
         if ! git diff --quiet; then
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
