@@ -114,6 +114,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		sourceObj = self.sourceObj
 		if not sourceObj:
 			return None
+		# Only import Math from ia2Web when it's actually needed (i.e., when a source object is present).
 		from NVDAObjects.IAccessible.ia2Web import Math as Ia2WebMath
 
 		if not isinstance(sourceObj, Ia2WebMath):
@@ -122,21 +123,17 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			nodeId = libmathcat.GetNavigationMathMLId()[0]
 		except Exception:
 			log.debugWarning("Error getting MathCAT navigation node id", exc_info=True)
-		else:
-			if nodeId in self._mathNodeRectsById:
-				return self._mathNodeRectsById[nodeId]
-			if nodeId.startswith(NAV_NODE_ID_PREFIX):
-				log.debug(
-					f"Math highlight found synthetic MathML id {nodeId!r}, but it has no mapped IA2 rectangle",
-				)
-			log.debug(f"Math highlight falling back to source rectangle for node id {nodeId!r}")
-		try:
-			if sourceObj.hasIrrelevantLocation:
-				return None
-			location = sourceObj.location
-		except Exception:
-			log.debugWarning("Error getting math source location", exc_info=True)
 			return None
+		if nodeId in self._mathNodeRectsById:
+			return self._mathNodeRectsById[nodeId]
+		if nodeId.startswith(NAV_NODE_ID_PREFIX):
+			log.debug(
+				f"Math highlight found synthetic MathML id {nodeId!r}, but it has no mapped IA2 rectangle",
+			)
+		log.debug(f"Math highlight falling back to source rectangle for node id {nodeId!r}")
+		if sourceObj.hasIrrelevantLocation:
+			return None
+		location = sourceObj.location
 		return location.toLTRB() if location else None
 
 	def _updateMathHighlight(self) -> None:
