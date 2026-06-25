@@ -4810,6 +4810,7 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_interactWithMath(self, gesture):
 		import mathPres
+
 		if isinstance(api.getFocusObject(), mathPres.MathInteractionNVDAObject):
 			# Translators: Reported when the user attempts math interaction and
 			# the interaction session is already in math.
