@@ -39,6 +39,7 @@ import functools
 
 from . import profileUpgrader
 from . import aggregatedSection
+from .configSections import _loadCustomSections
 from .configSpec import confspec
 from .featureFlagEnums import BrailleTextWrapFlag
 from .featureFlag import (
@@ -104,6 +105,7 @@ def __getattr__(attrName: str) -> Any:
 
 
 def initialize():
+	_loadCustomSections()
 	global conf
 	conf = ConfigManager()
 

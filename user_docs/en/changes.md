@@ -46,6 +46,10 @@
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* `config.configSections.registerSection` and `config.configSections.unregisterSection` methods can be used to register and unregister configuration sections. (#7467, @nvdaes)
+  * In the `installTasks` module, add-on developers can add a spec for each configuration section to be registered.
+  * The `config.configSections.registerSection` method can be used in the `onInstall` function.
+  * To register a section to be used in the normal configuration, regardless of profiles, the `isBaseOnly` parameter should be set to `True`.
 * The `braille` module is now a package.
 The public API is unchanged: every symbol previously accessed as `braille.X` remains available. (#12772, @LeonarddeR)
 * Added `gui.message.HtmlMessageDialog`, a `MessageDialog` subclass that renders a full HTML document in a `wx.html2.WebView`. (#18878, @LeonarddeR)
