@@ -129,6 +129,8 @@ SCRCAT_AUDIO = _("Audio")
 #: Script category for Remote Access commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_REMOTE = pgettext("remote", "Remote Access")
+# Translators: The name of the category of math navigation commands in the Input Gestures dialog.
+SCRCAT_MATH_NAV = _("Math navigation")
 
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
@@ -4739,6 +4741,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Describes a command.
 		description=_("Begins interaction with math content"),
+		category=SCRCAT_MATH_NAV,
 		gesture="kb:NVDA+alt+m",
 	)
 	def script_interactWithMath(self, gesture):
