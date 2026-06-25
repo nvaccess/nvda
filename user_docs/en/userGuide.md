@@ -613,7 +613,6 @@ Therefore, gestures such as 2-finger flick up and 4-finger flick left are all po
 
 Place two fingers on the screen and move them toward each other to perform a pinch in gesture.
 Move them away from each other to perform a pinch out gesture.
-The fingers must move at least 50 pixels closer together or further apart to be recognised as a pinch in or out.
 
 ##### Sequential Flicks {#SequentialFlicks}
 
@@ -1090,8 +1089,6 @@ This mode allows users to navigate structural elements of a document using touch
 
 In browse touch mode, flick gestures are used to move between common document elements such as links, buttons, headings, form fields, landmarks, and other document structures.
 
-This feature is intended to provide touch users with efficient, structured navigation that mirrors existing browse mode functionality.
-
 ##### Touch gestures in browse mode
 
 <!-- KC:beginInclude -->
@@ -1563,7 +1560,7 @@ You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAnd
 | Name |Key |Description|
 |---|---|---|
 |Toggles the state of the screen curtain |`NVDA+control+escape` |Enable to make the screen black or disable to show the contents of the screen. Pressed once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it.|
-| Reports the state of the screen curtain | `None` | Announces the current status of the screen curtain, whether it is disabled or enabled or in temporary mode. |
+| Reports the state of the screen curtain | None | Announces the current status of the screen curtain, whether it is disabled or enabled or in temporary mode. |
 
 <!-- KC:endInclude -->
 
@@ -1587,9 +1584,6 @@ To enable or disable the magnifier, press `NVDA+shift+w`.
 The "Increase magnification level" keystroke, `NVDA+shift+equals`, will start the magnifier if it is not running.
 When disabled, the screen returns to its normal size.
 As with other NVDA settings, the Magnifier state is preserved across sessions.
-
-Important: The NVDA Magnifier cannot be used simultaneously with Screen Curtain for security reasons.
-If you attempt to enable the magnifier while Screen Curtain is active, NVDA will prompt you to disable Screen Curtain first.
 
 ### Magnifier Commands {#MagnifierCommands}
 
@@ -1636,15 +1630,14 @@ To cycle through the available filters press `NVDA+shift+i`.
 
 ### Tracking Modes {#MagnifierTrackingModes}
 
-The magnifier offers three different modes for tracking mouse, focus, review cursor and navigatore object, and determining which part of the screen to magnify:
+The magnifier offers three different modes for tracking the mouse, system focus, review cursor, and navigator object, and determining which part of the screen to magnify:
 
 * Center: The magnified area is centered on the currently tracked position.
 This mode keeps the tracked element at the center of the screen and clamps to the screen edge.
-To disable clamping, activate [true center tracking in the Magnifier settings](#MagnifierUseTrueCenterTracking).
+To disable clamping, activate [true center tracking in the Magnifier settings](#MagnifierTrueCenterTracking).
 * Border: The magnified area only moves when the tracked position approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
-* Relative: The magnified area maintains the relative position of the tracked element within the screen.
-This mode mimics the behavior of the Windows Magnifier.
+* Relative: The magnified area maintains the relative position of the tracked element based on its position on the screen.
 
 To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
@@ -2226,7 +2219,7 @@ This aspect of normalization also aids in reading equations in the Microsoft Wor
 1. Stable ordering of modifiers in composite characters, for example in ancient Hebrew.
 
 The additional normalization in NVDA handles decorative letter variants that the standard NFKC algorithm does not decompose.
-Certain Unicode characters, such as negative circled Latin capital letters (🅐–🅩) and negative squared Latin capital letters (🅲–🅩), are treated as autonomous symbols by the Unicode standard and have no compatibility decomposition.
+Certain Unicode characters, such as negative circled Latin capital letters (🅐–🅩) and negative squared Latin capital letters (🅲–🆉), are treated as autonomous symbols by the Unicode standard and have no compatibility decomposition.
 NVDA extends NFKC by mapping these characters to their plain Latin letter equivalents (A–Z).
 Note that a small number of negative squared letters that have emoji semantics (🅰, 🅱, 🅾, 🅿) are excluded from this mapping to preserve their distinct meaning.
 
@@ -2889,7 +2882,7 @@ For the supported settings per provider, please refer to the documentation for t
 Key: `NVDA+control+w`
 
 The Magnifier category in the NVDA Settings dialog allows you to configure the default behavior of NVDA's built-in [Magnifier](#Magnifier) feature.
-All the options of this category have immediate effect on the magnifier but pressing "Cancel" or `escape` allow to dismiss the changes made.
+All options in this category take effect immediately, but selecting "Cancel" (or pressing `escape`) will discard any changes.
 
 This settings category contains the following options:
 
@@ -2940,7 +2933,7 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### true center tracking {#MagnifierTrueCenterTracking}
+##### True center tracking {#MagnifierTrueCenterTracking}
 
 This checkbox controls whether the magnifier should always keep the tracked position centered on the screen, even when the tracked element is next to the screen edges, or if it should allow the tracked position to move towards the edges of the screen.
 When enabled, the magnifier will always keep the tracked position centered on the screen, which can be helpful for users who prefer a consistent tracked position within the magnified view.
@@ -2955,6 +2948,9 @@ When enabled, the magnifier will always keep the tracked position centered on th
 This option allows you to set the panning step size as a percentage of the visible magnified window.
 This means that when you use manual pan commands, the magnified view will move by the specified percentage of the current visible window size.
 Higher percentages cause larger movements, making it faster to navigate across the screen, while lower percentages provide finer control for precise positioning.
+The actual pixel distance will automatically adjust based on your current zoom level.
+
+Note: Pan commands allow you to manually move the magnified view in any direction, independent of the tracking mode.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3003,8 +2999,8 @@ When enabled, the magnified area will automatically move to follow the navigator
 
 ##### Tracking mode {#MagnifierTrackingMode}
 
-This combo box allows you to select the focus tracking mode when using the magnifier.
-To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+This combo box allows you to select the tracking mode when using the magnifier.
+To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 The available options are:
 
 | . {.hideHeaderRow} |.|
@@ -3016,7 +3012,7 @@ The available options are:
 |---|---|
 | Center | The magnified area is always centered on the currently tracked position. |
 | Border | The magnified area only moves when the tracked element approaches the edge of the visible area. |
-| Relative | The magnified area maintains the relative position of the tracked element within the screen. |
+| Relative | The magnified area maintains the relative position of the tracked element based on its position on the screen. |
 
 #### Keyboard {#KeyboardSettings}
 

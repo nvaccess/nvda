@@ -72,21 +72,21 @@ class TestFocusManager(unittest.TestCase):
 			mock_navigator.return_value.location = (100, 150, 200, 300)
 
 			coords = self.focusManager._getNavigatorObjectPosition()
-			# Center: (100 + 200//2, 150 + 300//2) = (200, 300)
-			self.assertEqual(coords, Coordinates(200, 300))
+			# Top-left: (100, 150)
+			self.assertEqual(coords, Coordinates(100, 150))
 
 		# Case 2: Navigator object fails - should return last valid position from Case 1
 		with patch("_magnifier.utils.focusManager.api.getNavigatorObject") as mock_navigator:
 			mock_navigator.return_value.location = Mock(side_effect=Exception())
 
 			coords = self.focusManager._getNavigatorObjectPosition()
-			# Should return last valid position (200, 300)
-			self.assertEqual(coords, Coordinates(200, 300))
+			# Should return last valid position (100, 150)
+			self.assertEqual(coords, Coordinates(100, 150))
 
 		# Case 3: Navigator object is None - should return last valid position
 		with patch("_magnifier.utils.focusManager.api.getNavigatorObject", return_value=None):
 			coords = self.focusManager._getNavigatorObjectPosition()
-			self.assertEqual(coords, Coordinates(200, 300))
+			self.assertEqual(coords, Coordinates(100, 150))
 
 	def testGetReviewPosition(self):
 		"""Getting review cursor position with different API responses."""
@@ -147,15 +147,15 @@ class TestFocusManager(unittest.TestCase):
 				mock_focus.return_value.location = (200, 300, 100, 80)
 
 				coords = self.focusManager._getSystemFocusPosition()
-				# Center: (200 + 100//2, 300 + 80//2) = (250, 340)
-				self.assertEqual(coords, Coordinates(250, 340))
+				# Top-left: (200, 300)
+				self.assertEqual(coords, Coordinates(200, 300))
 
 		# Case 3: Everything fails - should return last valid position from Case 2
 		with patch("_magnifier.utils.focusManager.api.getCaretPosition", side_effect=RuntimeError):
 			with patch("_magnifier.utils.focusManager.api.getFocusObject", return_value=None):
 				coords = self.focusManager._getSystemFocusPosition()
-				# Should return last valid position (250, 340)
-				self.assertEqual(coords, Coordinates(250, 340))
+				# Should return last valid position (200, 300)
+				self.assertEqual(coords, Coordinates(200, 300))
 
 	def testGetSystemFocusPositionSurvivesOSError(self):
 		"""OSError from magnification API calls must be caught."""
@@ -167,7 +167,8 @@ class TestFocusManager(unittest.TestCase):
 				mock_focus.return_value.location = (10, 20, 30, 40)
 
 				coords = self.focusManager._getSystemFocusPosition()
-				self.assertEqual(coords, Coordinates(25, 40))
+				# Top-left: (10, 20)
+				self.assertEqual(coords, Coordinates(10, 20))
 
 	def testGetMousePosition(self):
 		"""Getting mouse position."""
@@ -349,6 +350,29 @@ class TestFocusManager(unittest.TestCase):
 				# Assert
 				self.assertEqual(focusCoordinates, param.expectedCoords)
 				self.assertEqual(self.focusManager.getLastFocusType(), param.expectedFocus)
+
+	def testGetSystemFocusPositionRTLFallback(self):
+		"""System focus bounding-box fallback uses right edge (left + width) in RTL mode."""
+		with (
+			patch("_magnifier.utils.focusManager.api.getCaretPosition", side_effect=RuntimeError),
+			patch("_magnifier.utils.focusManager.api.getFocusObject") as mock_focus,
+			patch("_magnifier.utils.focusManager._isWindowRTL", return_value=True),
+		):
+			mock_focus.return_value.location = (200, 300, 100, 80)
+			coords = self.focusManager._getSystemFocusPosition()
+			# RTL: x = left + width = 200 + 100 = 300
+			self.assertEqual(coords, Coordinates(300, 300))
+
+	def testGetNavigatorObjectPositionRTL(self):
+		"""Navigator object bounding box uses right edge (left + width) in RTL mode."""
+		with (
+			patch("_magnifier.utils.focusManager.api.getNavigatorObject") as mock_navigator,
+			patch("_magnifier.utils.focusManager._isWindowRTL", return_value=True),
+		):
+			mock_navigator.return_value.location = (100, 150, 200, 300)
+			coords = self.focusManager._getNavigatorObjectPosition()
+			# RTL: x = left + width = 100 + 200 = 300
+			self.assertEqual(coords, Coordinates(300, 150))
 
 	def testGetLastFocusType(self):
 		"""Test getting the last focus type."""
