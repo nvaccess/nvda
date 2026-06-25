@@ -184,6 +184,12 @@ def interactWithMathMl(mathMl: str) -> None:
 	@param mathMl: The MathML markup.
 	"""
 	if not interactionProvider:
+		# Translators: Try to invoke MathCAT even when Microsoft Word's 
+		# native reading is active
+		from .MathCAT import MathCAT
+		fallbackProvider = getProvider("mathCAT")
+		if fallbackProvider:
+			return fallbackProvider.interactWithMathMl(mathM1)
 		# Translators: Reported when the user attempts math interaction
 		# but math interaction is not supported.
 		ui.message(_("Math interaction not supported."))
