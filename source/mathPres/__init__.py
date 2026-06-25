@@ -18,6 +18,7 @@ from NVDAObjects.window import Window
 import controlTypes
 import api
 import virtualBuffers
+import vision
 import eventHandler
 from logHandler import log
 import ui
@@ -145,8 +146,6 @@ class MathInteractionNVDAObject(Window):
 		eventHandler.executeEvent("gainFocus", self)
 
 	def script_exit(self, gesture):
-		import vision
-
 		if vision.handler:
 			vision.handler.handleMathNavigation(None)
 		eventHandler.executeEvent("gainFocus", self.parent)

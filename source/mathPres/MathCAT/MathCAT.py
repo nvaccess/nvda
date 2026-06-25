@@ -20,6 +20,7 @@ import gui
 import libmathcat_py as libmathcat
 import speech
 import ui
+import vision
 import winKernel
 import winUser
 from api import getClipData
@@ -145,8 +146,6 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			log.debugWarning("Error updating math highlight", exc_info=True)
 			rect = None
 		try:
-			import vision
-
 			if vision.handler:
 				vision.handler.handleMathNavigation(rect)
 		except Exception:
@@ -154,8 +153,6 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 
 	def _clearMathHighlight(self) -> None:
 		try:
-			import vision
-
 			if vision.handler:
 				vision.handler.handleMathNavigation(None)
 		except Exception:
