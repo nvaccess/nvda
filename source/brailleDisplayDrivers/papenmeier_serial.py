@@ -12,8 +12,7 @@ import time
 from typing import List, Optional
 
 import wx
-from braille.display.driver import BrailleDisplayDriver as BrailleDisplayDriverBase
-from braille.display.gesture import BrailleDisplayGesture as BrailleDisplayGestureBase
+import braille
 import hwPortUtils
 from logHandler import log
 from baseObject import ScriptableObject
@@ -62,7 +61,7 @@ def brl_poll(dev: serial.Serial) -> bytes:
 	return b""
 
 
-class BrailleDisplayDriver(BrailleDisplayDriverBase, ScriptableObject):
+class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	"""papenmeier_serial braille display driver."""
 
 	name = "papenmeier_serial"
@@ -288,7 +287,7 @@ def brl_keyname(keyindex: int, driver: BrailleDisplayDriver) -> str:
 			return ""
 
 
-class InputGesture(BrailleDisplayGestureBase):
+class InputGesture(braille.BrailleDisplayGesture):
 	"""input gesture class for papenmeier_serial displays used only by the driver"""
 
 	source = BrailleDisplayDriver.name

@@ -6,7 +6,7 @@
 
 """Raw input/output for braille displays via HID
 Braille display drivers must be thread-safe to use this, as it utilises a background thread.
-See :attr:`braille.display.driver.BrailleDisplayDriver.isThreadSafe`.
+See L{braille.BrailleDisplayDriver.isThreadSafe}.
 """
 
 import ctypes

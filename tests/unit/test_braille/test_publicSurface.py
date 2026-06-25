@@ -12,7 +12,7 @@ are served via ``__getattr__`` with a log warning.
 """
 
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import braille
 import braille.brailleHandler
@@ -33,7 +33,7 @@ import config.configFlags
 
 
 #: Names that live directly on ``braille`` and must NOT emit a deprecation warning.
-RESIDENT = {"getHandler", "initialize", "pumpAll", "terminate"}
+RESIDENT = {"handler", "initialize", "pumpAll", "terminate"}
 
 #: Mapping of deprecated name -> the object it should resolve to.
 #: Import the canonical objects here so we can do an ``is`` check.
@@ -115,14 +115,6 @@ DEPRECATED = {
 
 
 class TestBraillePublicSurface(unittest.TestCase):
-	def setUp(self):
-		# Save and clear the handler so tests can control it independently.
-		self._savedHandler = braille._handler
-		braille._handler = None
-
-	def tearDown(self):
-		braille._handler = self._savedHandler
-
 	def test_residentNamesAccessibleWithoutWarning(self):
 		"""RESIDENT names must be reachable via getattr without any deprecation warning."""
 		with patch("logHandler.log") as mockLog:
@@ -146,37 +138,6 @@ class TestBraillePublicSurface(unittest.TestCase):
 						f"braille.{name} returned wrong object",
 					)
 					mockLog.warning.assert_called_once()
-
-	def test_deprecatedHandlerWithHandlerSet(self):
-		"""braille.handler returns the same object as braille.getHandler() and logs a warning."""
-		mockHandler = MagicMock()
-		braille._handler = mockHandler
-		with patch("logHandler.log") as mockLog:
-			result = braille.handler
-			self.assertIs(result, mockHandler)
-			mockLog.warning.assert_called_once()
-		# Also check consistency with getHandler()
-		self.assertIs(braille.getHandler(), mockHandler)
-
-	def test_deprecatedHandlerWithNoHandler(self):
-		"""braille.handler returns None (NOT raising) when _handler is None, and logs a warning."""
-		# _handler is already None from setUp
-		with patch("logHandler.log") as mockLog:
-			result = braille.handler
-			self.assertIsNone(result)
-			mockLog.warning.assert_called_once()
-
-	def test_getHandlerRaisesWhenNotInitialized(self):
-		"""getHandler() raises RuntimeError when _handler is None."""
-		# _handler is already None from setUp
-		with self.assertRaises(RuntimeError):
-			braille.getHandler()
-
-	def test_getHandlerReturnsHandlerWhenSet(self):
-		"""getHandler() returns the handler when _handler is set."""
-		mockHandler = MagicMock()
-		braille._handler = mockHandler
-		self.assertIs(braille.getHandler(), mockHandler)
 
 	def test_noAllAttribute(self):
 		"""braille.__all__ must not exist (it was removed)."""

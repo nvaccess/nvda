@@ -30,8 +30,6 @@ import audio
 import audioDucking
 import braille
 import braille.display
-from braille.constants import AUTO_DISPLAY_NAME, AUTOMATIC_PORT, CURSOR_SHAPES, focusContextPresentations
-from braille.display import getDisplayList
 import brailleInput
 import brailleTables
 import characterProcessing
@@ -68,7 +66,6 @@ import wx.lib.newevent
 from addonStore.models.channel import UpdateChannel
 from config.configFlags import (
 	AddonsAutomaticUpdate,
-	BrailleMode,
 	NVDAKey,
 	OutputMode,
 	ParagraphStartMarker,
@@ -5010,10 +5007,10 @@ class BrailleSettingsPanel(SettingsPanel):
 			self.Thaw()
 
 	def updateCurrentDisplay(self):
-		if config.conf["braille"]["display"] == AUTO_DISPLAY_NAME:
+		if config.conf["braille"]["display"] == braille.AUTO_DISPLAY_NAME:
 			displayDesc = BrailleDisplaySelectionDialog.getCurrentAutoDisplayDescription()
 		else:
-			displayDesc = braille.getHandler().display.description
+			displayDesc = braille.handler.display.description
 		self.displayNameCtrl.SetValue(displayDesc)
 
 	def onPanelActivated(self):
@@ -5070,26 +5067,26 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 
 	@staticmethod
 	def getCurrentAutoDisplayDescription():
-		description = AUTOMATIC_PORT[1]
+		description = braille.AUTOMATIC_PORT[1]
 		if (
-			config.conf["braille"]["display"] == AUTO_DISPLAY_NAME
-			and braille.getHandler().display.name != "noBraille"
+			config.conf["braille"]["display"] == braille.AUTO_DISPLAY_NAME
+			and braille.handler.display.name != "noBraille"
 		):
-			description = "%s (%s)" % (description, braille.getHandler().display.description)
+			description = "%s (%s)" % (description, braille.handler.display.description)
 		return description
 
 	def updateBrailleDisplayLists(self):
-		driverList = [(AUTO_DISPLAY_NAME, self.getCurrentAutoDisplayDescription())]
-		driverList.extend(getDisplayList())
+		driverList = [(braille.AUTO_DISPLAY_NAME, self.getCurrentAutoDisplayDescription())]
+		driverList.extend(braille.getDisplayList())
 		self.displayNames = [driver[0] for driver in driverList]
 		displayChoices = [driver[1] for driver in driverList]
 		self.displayList.Clear()
 		self.displayList.AppendItems(displayChoices)
 		try:
-			if config.conf["braille"]["display"] == AUTO_DISPLAY_NAME:
+			if config.conf["braille"]["display"] == braille.AUTO_DISPLAY_NAME:
 				selection = 0
 			else:
-				selection = self.displayNames.index(braille.getHandler().display.name)
+				selection = self.displayNames.index(braille.handler.display.name)
 			self.displayList.SetSelection(selection)
 		except:  # noqa: E722
 			pass
@@ -5111,7 +5108,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 	def updateStateDependentControls(self):
 		displayName = self.displayNames[self.displayList.GetSelection()]
 		self.possiblePorts = []
-		isAutoDisplaySelected = displayName == AUTOMATIC_PORT[0]
+		isAutoDisplaySelected = displayName == braille.AUTOMATIC_PORT[0]
 		if not isAutoDisplaySelected:
 			displayCls = braille.display._getDisplayDriver(displayName)
 			try:
@@ -5160,7 +5157,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 				n for i, n in enumerate(self.autoDetectValues) if i not in self.autoDetectList.CheckedItems
 			] + unknownDriversExcluded
 
-		if not braille.getHandler().setDisplayByName(display):
+		if not braille.handler.setDisplayByName(display):
 			gui.messageBox(
 				# Translators: The message in a dialog presented when NVDA is unable to load the selected
 				# braille display.
@@ -5185,7 +5182,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 	@property
 	def driver(self):
-		return braille.getHandler().display
+		return braille.handler.display
 
 	def getSettings(self) -> AutoSettings:
 		return self.driver
@@ -5216,7 +5213,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			if config.conf["braille"]["translationTable"] == "auto":
 				selection = 0
 			else:
-				selection = self.outTables.index(braille.getHandler().table) + 1
+				selection = self.outTables.index(braille.handler.table) + 1
 			self.outTableList.SetSelection(selection)
 		except:  # noqa: E722
 			log.exception()
@@ -5254,12 +5251,12 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			)
 		# Translators: The label for a setting in braille settings to select which braille mode to use
 		modeListText = _("Braille mode:")
-		modeChoices = [x.displayString for x in BrailleMode]
+		modeChoices = [x.displayString for x in braille.BrailleMode]
 		self.brailleModes = sHelper.addLabeledControl(modeListText, wx.Choice, choices=modeChoices)
 		self.bindHelpEvent("BrailleMode", self.brailleModes)
 		self.brailleModes.Bind(wx.EVT_CHOICE, self._onModeChange)
-		current = BrailleMode(config.conf["braille"]["mode"])
-		modeList = list(BrailleMode)
+		current = braille.BrailleMode(config.conf["braille"]["mode"])
+		modeList = list(braille.BrailleMode)
 		index = modeList.index(current)
 		self.brailleModes.SetSelection(index)
 		followCursorGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self)
@@ -5314,8 +5311,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		if not self.showCursorCheckBox.GetValue() or not self.cursorBlinkCheckBox.GetValue():
 			self.cursorBlinkRateEdit.Disable()
 
-		self.cursorShapes = [s[0] for s in CURSOR_SHAPES]
-		cursorShapeChoices = [s[1] for s in CURSOR_SHAPES]
+		self.cursorShapes = [s[0] for s in braille.CURSOR_SHAPES]
+		cursorShapeChoices = [s[1] for s in braille.CURSOR_SHAPES]
 
 		# Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
 		cursorShapeFocusLabelText = _("Cursor shape for &focus:")
@@ -5400,7 +5397,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		tetherListText = _("Tether B&raille:")
 		# Translators: The value for a setting in the braille settings, to set whether braille should be tethered to
 		# focus or review cursor.
-		tetherChoices = [x[1] for x in braille.getHandler().tetherValues]
+		tetherChoices = [x[1] for x in braille.handler.tetherValues]
 		self.tetherList = followCursorGroupHelper.addLabeledControl(
 			tetherListText,
 			wx.Choice,
@@ -5462,8 +5459,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 		focusContextPresentationLabelText = _("Focus context presentation:")
-		self.focusContextPresentationValues = [x[0] for x in focusContextPresentations]
-		focusContextPresentationChoices = [x[1] for x in focusContextPresentations]
+		self.focusContextPresentationValues = [x[0] for x in braille.focusContextPresentations]
+		focusContextPresentationChoices = [x[1] for x in braille.focusContextPresentations]
 		self.focusContextPresentationList = followCursorGroupHelper.addLabeledControl(
 			focusContextPresentationLabelText,
 			wx.Choice,
@@ -5519,7 +5516,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.speakOnNavigatingCheckBox.Value = config.conf["braille"]["speakOnNavigatingByUnit"]
 
 		self.followCursorGroupBox.Enable(
-			list(BrailleMode)[self.brailleModes.GetSelection()] is BrailleMode.FOLLOW_CURSORS,
+			list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS,
 		)
 
 		self.textWrapComboBox: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
@@ -5578,18 +5575,18 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
 		if self.outTableList.GetSelection() > 0:
-			braille.getHandler().table = self.outTables[self.outTableList.GetSelection() - 1]
+			braille.handler.table = self.outTables[self.outTableList.GetSelection() - 1]
 		else:
-			braille.getHandler().table = self.outTableForCurLang
+			braille.handler.table = self.outTableForCurLang
 			config.conf["braille"]["translationTable"] = "auto"
 		if self.inTableList.GetSelection():
 			brailleInput.handler.table = self.inTables[self.inTableList.GetSelection() - 1]
 		else:
 			brailleInput.handler.table = self.inTableForCurLang
 			config.conf["braille"]["inputTable"] = "auto"
-		mode = list(BrailleMode)[self.brailleModes.GetSelection()]
+		mode = list(braille.BrailleMode)[self.brailleModes.GetSelection()]
 		config.conf["braille"]["mode"] = mode.value
-		braille.getHandler().mainBuffer.clear()
+		braille.handler.mainBuffer.clear()
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
 		config.conf["braille"]["cursorBlink"] = self.cursorBlinkCheckBox.GetValue()
@@ -5612,7 +5609,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		if tetherChoice == TetherTo.AUTO.value:
 			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value
 		else:
-			braille.getHandler().setTether(tetherChoice, auto=False)
+			braille.handler.setTether(tetherChoice, auto=False)
 		self.brailleReviewRoutingMovesSystemCaretCombo.saveCurrentValueToConf()
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["paragraphStartMarker"] = [marker.value for marker in ParagraphStartMarker][

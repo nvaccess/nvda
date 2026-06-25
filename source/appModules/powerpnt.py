@@ -1425,7 +1425,7 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 	hadFocusOnce = False
 
 	def event_treeInterceptor_gainFocus(self):
-		braille.getHandler().handleGainFocus(self)
+		braille.handler.handleGainFocus(self)
 		self.rootNVDAObject.reportFocus()
 		self.reportNewSlide(self.hadFocusOnce)
 		if not self.hadFocusOnce:

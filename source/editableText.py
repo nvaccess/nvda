@@ -176,7 +176,7 @@ class EditableText(TextContainerObject, ScriptableObject):
 		if speakUnit and not willSayAllResume(gesture):
 			info.expand(speakUnit)
 			speech.speakTextInfo(info, unit=speakUnit, reason=controlTypes.OutputReason.CARET)
-		braille.getHandler().handleCaretMove(self)
+		braille.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(self, gesture, unit):
 		try:
@@ -339,7 +339,7 @@ class EditableText(TextContainerObject, ScriptableObject):
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		caretMoved, newInfo = self._hasCaretMoved(bookmark, origWord=word)
 		self._caretScriptPostMovedHelper(unit, gesture, newInfo)
-		braille.getHandler().handleCaretMove(self)
+		braille.handler.handleCaretMove(self)
 
 	def script_caret_deleteCharacter(self, gesture):
 		self._deleteScriptHelper(textInfos.UNIT_CHARACTER, gesture)
@@ -475,7 +475,7 @@ class EditableTextWithoutAutoSelectDetection(EditableText):
 		newInfo = self.makeTextInfo(textInfos.POSITION_SELECTION)
 		self._updateSelectionAnchor(oldTextInfo, newInfo)
 		speech.speakSelectionChange(oldTextInfo, newInfo)
-		braille.getHandler().handleCaretMove(self)
+		braille.handler.handleCaretMove(self)
 
 	def script_caret_changeSelection(self, gesture):
 		try:

@@ -270,7 +270,7 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 			"caretPos": _getCaretPos,
 			"review": api.getReviewPosition,
 			"mouse": api.getMouseObject,
-			"brlRegions": (lambda: braille.getHandler().buffer.regions),
+			"brlRegions": (lambda: braille.handler.buffer.regions),
 		}
 		self._namespaceSnapshotVars = {}
 		for name, getter in self._namespaceSnapshotVarsGetters.items():

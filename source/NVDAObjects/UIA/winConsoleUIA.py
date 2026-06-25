@@ -481,7 +481,7 @@ class _NotificationsBasedWinTerminalUIA(UIA):
 		# Do not announce output from background terminals.
 		if self.appModule != api.getFocusObject().appModule:
 			return
-		braille.getHandler().handleUpdate(self)
+		braille.handler.handleUpdate(self)
 		# microsoft/terminal#12358: Automatic reading of terminal output
 		# is provided by UIA notifications. If the user does not want
 		# automatic reporting of dynamic output, suppress this notification.

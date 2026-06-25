@@ -12,7 +12,7 @@ from typing import (
 	Tuple,
 )
 
-from braille.display.gesture import BrailleDisplayGesture as BrailleDisplayGestureBase
+import braille
 import inputCore
 
 from .constants import (
@@ -84,7 +84,7 @@ _gestureMap = inputCore.GlobalGestureMap(
 )
 
 
-class InputGestureKeys(BrailleDisplayGestureBase):
+class InputGestureKeys(braille.BrailleDisplayGesture):
 	"""Changes display key presses to gestures for NVDA input system."""
 
 	def __init__(self, keys: Set[int], name: str):

@@ -13,8 +13,6 @@ from io import BytesIO
 
 import bdDetect
 import braille
-from braille.display.driver import BrailleDisplayDriver as BrailleDisplayDriverBase
-from braille.display.gesture import BrailleDisplayGesture as BrailleDisplayGestureBase
 import brailleInput
 import hwIo
 import inputCore
@@ -167,7 +165,7 @@ FOCUS_1_DOTS_TABLE = [
 FOCUS_1_TRANSLATION_TABLE = _makeTranslationTable(FOCUS_1_DOTS_TABLE)
 
 
-class BrailleDisplayDriver(BrailleDisplayDriverBase, ScriptableObject):
+class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	"""
 	Driver for Freedom Scientific braille displays
 	"""
@@ -629,13 +627,13 @@ class BrailleDisplayDriver(BrailleDisplayDriverBase, ScriptableObject):
 		action = next(self.leftWizWheelActionCycle)
 		self.gestureMap.add("br(freedomScientific):leftWizWheelUp", *action[1], replace=True)
 		self.gestureMap.add("br(freedomScientific):leftWizWheelDown", *action[2], replace=True)
-		braille.getHandler().message(action[0])
+		braille.handler.message(action[0])
 
 	def script_toggleRightWizWheelAction(self, _gesture: inputCore.InputGesture) -> None:
 		action = next(self.rightWizWheelActionCycle)
 		self.gestureMap.add("br(freedomScientific):rightWizWheelUp", *action[1], replace=True)
 		self.gestureMap.add("br(freedomScientific):rightWizWheelDown", *action[2], replace=True)
-		braille.getHandler().message(action[0])
+		braille.handler.message(action[0])
 
 	__gestures = {
 		"br(freedomScientific):leftWizWheelPress": "toggleLeftWizWheelAction",
@@ -706,7 +704,7 @@ class BrailleDisplayDriver(BrailleDisplayDriverBase, ScriptableObject):
 	)
 
 
-class InputGesture(BrailleDisplayGestureBase):
+class InputGesture(braille.BrailleDisplayGesture):
 	"""Base gesture for this braille display"""
 
 	source = BrailleDisplayDriver.name

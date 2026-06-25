@@ -354,11 +354,10 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		"""Base implementation to handle acknowledgement packets."""
 		if not self.receivesAckPackets:
 			raise NotImplementedError("This display driver does not support ACK packet handling")
-		handler = braille.getHandler()
-		if not winBindings.kernel32.CancelWaitableTimer(handler.ackTimerHandle):
+		if not winBindings.kernel32.CancelWaitableTimer(braille.handler.ackTimerHandle):
 			raise ctypes.WinError()
 		self._awaitingAck = False
-		handler._writeCellsInBackground()
+		braille.handler._writeCellsInBackground()
 
 	@classmethod
 	def DotFirmnessSetting(cls, defaultVal, minVal, maxVal, useConfig=False):

@@ -23,10 +23,10 @@ class TestBdDetectExtensionPoints(unittest.TestCase):
 			[("noBraille", bdDetect.DeviceMatch("", "", "", {}))],
 			**kwargs,
 		):
-			braille.getHandler()._enableDetection(**kwargs)
+			braille.handler._enableDetection(**kwargs)
 			# wait for the detector to be terminated.
 			success, _endTimeOrNone = blockUntilConditionMet(
-				getValue=lambda: braille.getHandler()._detector,
+				getValue=lambda: braille.handler._detector,
 				giveUpAfterSeconds=3.0,
 				shouldStopEvaluator=lambda detector: detector is None,
 			)

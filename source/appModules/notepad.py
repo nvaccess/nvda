@@ -11,7 +11,6 @@ from comtypes import COMError
 import appModuleHandler
 import api
 import braille
-from braille.regions.properties import getPropertiesBraille
 import controlTypes
 import eventHandler
 import speech
@@ -32,8 +31,8 @@ class AppModule(appModuleHandler.AppModule):
 		):
 			speech.cancelSpeech()
 			speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
-			braille.getHandler().message(
-				getPropertiesBraille(
+			braille.handler.message(
+				braille.getPropertiesBraille(
 					name=obj.name,
 					role=obj.role,
 					states=obj.states,

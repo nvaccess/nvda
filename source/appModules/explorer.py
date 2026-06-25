@@ -17,7 +17,6 @@ import winVersion
 import api
 import speech
 import braille
-from braille.regions.properties import getPropertiesBraille
 import eventHandler
 import mouseHandler
 from NVDAObjects import NVDAObject
@@ -506,8 +505,8 @@ class AppModule(appModuleHandler.AppModule):
 			and not eventHandler.isPendingEvents(eventName="UIA_elementSelected")
 		):
 			speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
-			braille.getHandler().message(
-				getPropertiesBraille(
+			braille.handler.message(
+				braille.getPropertiesBraille(
 					name=obj.name,
 					role=obj.role,
 					states=obj.states,

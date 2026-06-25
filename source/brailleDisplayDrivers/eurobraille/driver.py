@@ -11,8 +11,6 @@ from io import BytesIO
 import serial
 import bdDetect
 import braille
-from braille.display.driver import BrailleDisplayDriver as BrailleDisplayDriverBase
-from braille.display import getSerialPorts
 import inputCore
 from logHandler import log
 import hwIo
@@ -32,7 +30,7 @@ def bytesToInt(byteData: bytes):
 	return int.from_bytes(byteData, byteorder="big", signed=False)
 
 
-class BrailleDisplayDriver(BrailleDisplayDriverBase, ScriptableObject):
+class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	_dev: hwIo.IoBase
 	# Used to for error checking.
 	_awaitingFrameReceipts: Dict[int, Any]
@@ -42,7 +40,7 @@ class BrailleDisplayDriver(BrailleDisplayDriverBase, ScriptableObject):
 	isThreadSafe = True
 	supportsAutomaticDetection = True
 	timeout = 0.2
-	supportedSettings = (BrailleDisplayDriverBase.HIDInputSetting(useConfig=True),)
+	supportedSettings = (braille.BrailleDisplayDriver.HIDInputSetting(useConfig=True),)
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
@@ -82,7 +80,7 @@ class BrailleDisplayDriver(BrailleDisplayDriverBase, ScriptableObject):
 
 	@classmethod
 	def getManualPorts(cls):
-		return getSerialPorts()
+		return braille.getSerialPorts()
 
 	def __init__(self, port="Auto"):
 		super().__init__()
@@ -213,7 +211,7 @@ class BrailleDisplayDriver(BrailleDisplayDriverBase, ScriptableObject):
 			elif packetType == constants.EB_MODE:
 				if packetSubType == constants.EB_MODE_DRIVER:
 					log.debug("Braille display switched to driver mode, updating display...")
-					braille.getHandler().update()
+					braille.handler.update()
 				elif packetSubType == constants.EB_MODE_INTERNAL:
 					log.debug("Braille display switched to internal mode")
 			elif packetType == constants.EB_KEY:

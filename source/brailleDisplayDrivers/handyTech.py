@@ -21,9 +21,7 @@ import serial
 import weakref
 import hwIo
 from hwIo import intToByte, boolToByte
-from braille.display.driver import BrailleDisplayDriver as BrailleDisplayDriverBase
-from braille.display.gesture import BrailleDisplayGesture as BrailleDisplayGestureBase
-from braille.display import getSerialPorts
+import braille
 import brailleInput
 import inputCore
 import ui
@@ -267,7 +265,7 @@ class TimeSyncFirmnessMixin(object):
 	"""Functionality for displays that support time synchronization and dot firmness adjustments."""
 
 	supportedSettings = (
-		BrailleDisplayDriverBase.DotFirmnessSetting(defaultVal=1, minVal=0, maxVal=2, useConfig=False),
+		braille.BrailleDisplayDriver.DotFirmnessSetting(defaultVal=1, minVal=0, maxVal=2, useConfig=False),
 	)
 
 	def postInit(self):
@@ -676,7 +674,7 @@ HT_HID_RPT_InBaud = b"\xfe"  # set baud rate of serial connection
 HT_HID_CMD_FlushBuffers = b"\x01"  # flush input and output buffers
 
 
-class BrailleDisplayDriver(BrailleDisplayDriverBase, ScriptableObject):
+class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	name = "handyTech"
 	# Translators: The name of a series of braille displays.
 	description = _("Handy Tech braille displays")
@@ -753,7 +751,7 @@ class BrailleDisplayDriver(BrailleDisplayDriverBase, ScriptableObject):
 
 	@classmethod
 	def getManualPorts(cls):
-		return getSerialPorts()
+		return braille.getSerialPorts()
 
 	_dev: Optional[Union[hwIo.Hid, hwIo.Serial]]
 
@@ -904,7 +902,7 @@ class BrailleDisplayDriver(BrailleDisplayDriverBase, ScriptableObject):
 
 	def _get_supportedSettings(self):
 		settings = [
-			BrailleDisplayDriverBase.BrailleInputSetting(),
+			braille.BrailleDisplayDriver.BrailleInputSetting(),
 		]
 		if self._model:
 			# Add the per model supported settings to the list.
@@ -1201,7 +1199,7 @@ class BrailleDisplayDriver(BrailleDisplayDriverBase, ScriptableObject):
 	)
 
 
-class InputGesture(BrailleDisplayGestureBase, brailleInput.BrailleInputGesture):
+class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keys, isBrailleInput=False):

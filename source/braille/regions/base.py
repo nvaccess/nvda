@@ -68,9 +68,7 @@ class Region(object):
 
 	def _getDefaultRegionLanguage(self) -> str:
 		"""Get the default language for a region."""
-		return (
-			louisHelper.getTableLanguage(braille.getHandler().table.fileName) or languageHandler.getLanguage()
-		)
+		return louisHelper.getTableLanguage(braille.handler.table.fileName) or languageHandler.getLanguage()
 
 	def _getLanguageAtPos(self, pos: int) -> str:
 		"""Get the language at a given position in :attr:`rawText` based on :attr:`_languageIndexes`."""
@@ -119,7 +117,7 @@ class Region(object):
 			)
 			converters.append(converter)
 		self.brailleCells, brailleToRawPos, rawToBraillePos, self.brailleCursorPos = louisHelper.translate(
-			[braille.getHandler().table.fileName, "braille-patterns.cti"],
+			[braille.handler.table.fileName, "braille-patterns.cti"],
 			textToTranslate,
 			typeform=textToTranslateTypeforms,
 			mode=mode,

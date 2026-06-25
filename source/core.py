@@ -966,7 +966,7 @@ def main():
 			# Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 			initialMessage = _("NVDA started")
 		try:
-			braille.getHandler().message(initialMessage)
+			braille.handler.message(initialMessage)
 		except:  # noqa: E722
 			log.error("", exc_info=True)
 		if globalVars.appArgs.launcher:

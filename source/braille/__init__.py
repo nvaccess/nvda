@@ -11,51 +11,37 @@ import config
 from logHandler import log
 
 from . import brailleHandler as _brailleHandler
-from utils._deprecate import handleDeprecations, MovedSymbol, RemovedSymbol
+from utils._deprecate import handleDeprecations, MovedSymbol
 
-_handler: Optional["_brailleHandler.BrailleHandler"] = None
-
-
-def getHandler() -> "_brailleHandler.BrailleHandler":
-	if _handler is None:
-		raise RuntimeError("Braille handler is not initialized")
-	return _handler
+handler: Optional["_brailleHandler.BrailleHandler"] = None
 
 
 def initialize():
-	global _handler
+	global handler
 	import louis
 
 	log.info("Using liblouis version %s" % louis.version())
 	import serial
 
 	log.info("Using pySerial version %s" % serial.VERSION)
-	_handler = _brailleHandler.BrailleHandler()
-	_handler.handlePostConfigProfileSwitch()
-	config.post_configProfileSwitch.register(_handler.handlePostConfigProfileSwitch)
+	handler = _brailleHandler.BrailleHandler()
+	handler.handlePostConfigProfileSwitch()
+	config.post_configProfileSwitch.register(handler.handlePostConfigProfileSwitch)
 
 
 def pumpAll():
 	"""Runs tasks at the end of each core cycle. For now just region updates, e.g. for caret movement."""
-	_handler._handlePendingUpdate()
+	handler._handlePendingUpdate()
 
 
 def terminate():
-	global _handler
-	_handler.terminate()
-	_handler = None
+	global handler
+	handler.terminate()
+	handler = None
 
 
 # Deprecated in 2026.3.
 __getattr__ = handleDeprecations(
-	# braille.handler must stay None-safe: lambda resolves _handler at access
-	# time. getHandler() is NOT used here because it raises on None.
-	RemovedSymbol(
-		"handler",
-		lambda: _handler,
-		callValue=True,
-		message="braille.handler is deprecated. Use braille.getHandler() instead.",
-	),
 	MovedSymbol("BrailleDisplayDriver", "braille.display.driver"),
 	MovedSymbol("BrailleDisplayGesture", "braille.display.gesture"),
 	MovedSymbol("getSerialPorts", "braille.display"),

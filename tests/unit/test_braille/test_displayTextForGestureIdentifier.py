@@ -5,15 +5,15 @@
 
 """Unit tests for the BrailleDisplayGesture classes in the braille module."""
 
+import braille
 import unittest
-from braille.display.gesture import BrailleDisplayGesture
 
 
 class TestDisplayTextForGestureIdentifier(unittest.TestCase):
 	"""A test for the regular expression code that handles display gesture identifiers."""
 
 	def test_regex(self):
-		regex = BrailleDisplayGesture.ID_PARTS_REGEX
+		regex = braille.BrailleDisplayGesture.ID_PARTS_REGEX
 		self.assertEqual(
 			regex.match("br(noBraille.noModel):noKey1+noKey2").groups(),
 			("noBraille", "noModel", "noKey1+noKey2"),
@@ -30,12 +30,12 @@ class TestDisplayTextForGestureIdentifier(unittest.TestCase):
 
 	def test_identifierWithModel(self):
 		self.assertEqual(
-			BrailleDisplayGesture.getDisplayTextForIdentifier("br(noBraille.noModel):noKey1+noKey2"),
+			braille.BrailleDisplayGesture.getDisplayTextForIdentifier("br(noBraille.noModel):noKey1+noKey2"),
 			("No braille", "noModel: noKey1+noKey2"),
 		)
 
 	def test_identifierWithoutModel(self):
 		self.assertEqual(
-			BrailleDisplayGesture.getDisplayTextForIdentifier("br(noBraille):noKey1+noKey2"),
+			braille.BrailleDisplayGesture.getDisplayTextForIdentifier("br(noBraille):noKey1+noKey2"),
 			("No braille", "noKey1+noKey2"),
 		)

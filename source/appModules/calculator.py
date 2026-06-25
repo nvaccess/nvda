@@ -103,7 +103,7 @@ class AppModule(appModuleHandler.AppModule):
 		# but they do not involve number entry.
 		# Therefore, only handle the below activity Id.
 		if activityId == "DisplayUpdated":
-			braille.getHandler().message(displayString)
+			braille.handler.message(displayString)
 			# Locate results via UIA tree traversal.
 			# Redesigned in 2019 due to introduction of "always on top" i.e. compact overlay mode.
 			clientObject = UIAHandler.handler.clientObject

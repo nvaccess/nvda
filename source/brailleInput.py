@@ -9,7 +9,6 @@ from typing import Optional, List, Set
 import louis
 import brailleTables
 import braille
-from braille.regions.textInfo import TextInfoRegion
 import config
 from logHandler import log
 import winUser
@@ -311,11 +310,10 @@ class BrailleInputHandler(AutoPropertyObject):
 
 	def updateDisplay(self):
 		"""Update the braille display to reflect untranslated input."""
-		handler = braille.getHandler()
-		region = handler.mainBuffer.regions[-1] if handler.mainBuffer.regions else None
-		if isinstance(region, TextInfoRegion):
-			handler._regionsPendingUpdate.add(region)
-			handler._handlePendingUpdate()
+		region = braille.handler.mainBuffer.regions[-1] if braille.handler.mainBuffer.regions else None
+		if isinstance(region, braille.TextInfoRegion):
+			braille.handler._regionsPendingUpdate.add(region)
+			braille.handler._handlePendingUpdate()
 
 	def eraseLastCell(self):
 		# Get the index of the cell being erased.
@@ -332,10 +330,9 @@ class BrailleInputHandler(AutoPropertyObject):
 			inputCore.manager.emulateGesture(keyboardHandler.KeyboardInputGesture.fromName("backspace"))
 			char = self.bufferText[-1]
 			self.bufferText = self.bufferText[:-1]
-			handler = braille.getHandler()
-			region = handler.mainBuffer.regions[-1] if handler.mainBuffer.regions else None
+			region = braille.handler.mainBuffer.regions[-1] if braille.handler.mainBuffer.regions else None
 			if (
-				not isinstance(region, TextInfoRegion)
+				not isinstance(region, braille.TextInfoRegion)
 				or region.cursorPos is None
 				or region.rawText[region.cursorPos - 1] != char
 			):

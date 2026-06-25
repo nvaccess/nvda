@@ -7,8 +7,7 @@ from dataclasses import dataclass
 from typing import List
 import enum
 import itertools
-from braille.display.driver import BrailleDisplayDriver as BrailleDisplayDriverBase
-from braille.display.gesture import BrailleDisplayGesture as BrailleDisplayGestureBase
+import braille
 import inputCore
 from logHandler import log
 import brailleInput
@@ -77,7 +76,7 @@ class ButtonCapsInfo:
 	relativeIndexInCollection: int = 0
 
 
-class HidBrailleDriver(BrailleDisplayDriverBase):
+class HidBrailleDriver(braille.BrailleDisplayDriver):
 	_dev: hwIo.hid.Hid
 	_numberOfCellsValueCaps: hidpi.HIDP_VALUE_CAPS | None = None
 	name = "hidBrailleStandard"
@@ -312,7 +311,7 @@ class HidBrailleDriver(BrailleDisplayDriverBase):
 	)
 
 
-class InputGesture(BrailleDisplayGestureBase, brailleInput.BrailleInputGesture):
+class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = HidBrailleDriver.name
 
 	def __init__(self, driver, dataIndices):

@@ -441,11 +441,11 @@ class TextInfoRegion(Region):
 				try:
 					dest.obj.turnPage()
 				except RuntimeError:
-					braille.getHandler().autoScroll(enable=False)
+					braille.handler.autoScroll(enable=False)
 				else:
 					dest = dest.obj.makeTextInfo(textInfos.POSITION_FIRST)
 			else:  # no page turn support
-				braille.getHandler().autoScroll(enable=False)
+				braille.handler.autoScroll(enable=False)
 				shouldCollapseToEnd = True
 		dest.collapse(shouldCollapseToEnd)
 		self._setCursor(dest)

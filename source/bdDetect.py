@@ -28,8 +28,6 @@ import hwPortUtils
 import NVDAState
 import braille
 import braille.display
-from braille.display import getDisplayDrivers
-from braille.display.driver import BrailleDisplayDriver
 import winUser
 import config
 import appModuleHandler
@@ -540,7 +538,7 @@ class _Detector:
 		if preferredDevice:
 			if _isDebug():
 				log.debug("Trying preferred device first: %r", preferredDevice)
-			if braille.getHandler().setDisplayByName(preferredDevice[0], detected=preferredDevice[1]):
+			if braille.handler.setDisplayByName(preferredDevice[0], detected=preferredDevice[1]):
 				if _isDebug():
 					log.debug("Switched to preferred device: %r", preferredDevice[0])
 				return
@@ -560,7 +558,7 @@ class _Detector:
 				return
 			if _isDebug():
 				log.debug("Processing driver %r, match %r", driver, match)
-			if braille.getHandler().setDisplayByName(driver, detected=match):
+			if braille.handler.setDisplayByName(driver, detected=match):
 				if _isDebug():
 					log.debug("Switched to driver %r, match %r", driver, match)
 				return
@@ -726,8 +724,8 @@ def driverIsEnabledForAutoDetection(driver: str) -> bool:
 
 def getSupportedBrailleDisplayDrivers(
 	onlyEnabled: bool = False,
-) -> Generator[type[BrailleDisplayDriver], Any, Any]:
-	return getDisplayDrivers(
+) -> Generator[type["braille.BrailleDisplayDriver"], Any, Any]:
+	return braille.getDisplayDrivers(
 		lambda d: (
 			d.isThreadSafe
 			and d.supportsAutomaticDetection
@@ -771,7 +769,7 @@ def terminate():
 class DriverRegistrar:
 	"""An object to facilitate registration of drivers in the bdDetect system.
 	It is instanciated for a specific driver and
-	passed to :meth:`braille.display.driver.BrailleDisplayDriver.registerAutomaticDetection`.
+	passed to L{braille.BrailleDisplayDriver.registerAutomaticDetection}.
 	"""
 
 	_driver: str

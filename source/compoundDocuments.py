@@ -548,12 +548,12 @@ class CompoundDocument(EditableText, DocumentTreeInterceptor):
 				speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 			else:
 				speech.speakPreselectedText(info.text)
-			braille.getHandler().handleGainFocus(self)
+			braille.handler.handleGainFocus(self)
 			self.initAutoSelectDetection()
 
 	def event_caret(self, obj, nextHandler):
 		self.detectPossibleSelectionChange()
-		braille.getHandler().handleCaretMove(self)
+		braille.handler.handleCaretMove(self)
 		vision.handler.handleCaretMove(self)
 		try:
 			caret = self.makeTextInfo(textInfos.POSITION_CARET)

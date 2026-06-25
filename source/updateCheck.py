@@ -221,11 +221,7 @@ def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 
 	if auto and allowUsageStats:
 		synthDriverClass = synthDriverHandler.getSynth().__class__
-		try:
-			_brailleHandler = braille.getHandler()
-		except RuntimeError:
-			_brailleHandler = None
-		brailleDisplayClass = _brailleHandler.display.__class__ if _brailleHandler else None
+		brailleDisplayClass = braille.handler.display.__class__ if braille.handler else None
 		# Following are parameters sent purely for stats gathering.
 		#  If new parameters are added here, they must be documented in the userGuide for transparency.
 		extraParams = {

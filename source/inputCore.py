@@ -590,13 +590,9 @@ class InputManager(baseObject.AutoPropertyObject):
 			# Import late to avoid circular import.
 			import braille
 
-			try:
-				_brailleHandler = braille.getHandler()
-			except RuntimeError:
-				_brailleHandler = None
-			if _brailleHandler:
+			if braille.handler:
 
-				@_brailleHandler.suppressClearBrailleRegions(script)
+				@braille.handler.suppressClearBrailleRegions(script)
 				def suppressCancelSpeech():
 					speech.cancelSpeech()
 
@@ -730,7 +726,7 @@ class InputManager(baseObject.AutoPropertyObject):
 
 		import braille
 
-		braille.getHandler().message("\t\t".join(brailleItems))
+		braille.handler.message("\t\t".join(brailleItems))
 		# Punctuation must be spoken for the gesture name so that punctuation keys are spoken.
 		speech.speakText(
 			displayName,
@@ -813,11 +809,7 @@ class _AllGestureMappingsRetriever(object):
 		self.addGlobalMap(manager.localeGestureMap)
 		import braille
 
-		try:
-			_brailleHandler = braille.getHandler()
-		except RuntimeError:
-			_brailleHandler = None
-		gmap = _brailleHandler.display.gestureMap if _brailleHandler and _brailleHandler.display else None
+		gmap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
 		if gmap:
 			self.addGlobalMap(gmap)
 
@@ -833,8 +825,8 @@ class _AllGestureMappingsRetriever(object):
 			self.addObj(app)
 
 		# Braille display driver
-		if _brailleHandler and isinstance(_brailleHandler.display, baseObject.ScriptableObject):
-			self.addObj(_brailleHandler.display)
+		if isinstance(braille.handler.display, baseObject.ScriptableObject):
+			self.addObj(braille.handler.display)
 
 		# Vision enhancement provider
 		import vision

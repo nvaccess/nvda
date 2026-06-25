@@ -183,7 +183,7 @@ class mirandaIMContactList(IAccessible):
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
-			braille.getHandler().handleGainFocus(self)
+			braille.handler.handleGainFocus(self)
 
 	__changeItemGestures = (
 		"kb:downArrow",

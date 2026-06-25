@@ -140,9 +140,6 @@ Accessing them as `braille.X` still works but logs a deprecation warning; import
 | `braille.BrailleMode` | `config.configFlags.BrailleMode` |
 | `braille.TetherTo` | `config.configFlags.TetherTo` |
 
-* `braille.handler` is deprecated.
-Use `braille.getHandler()` instead, which returns the active `BrailleHandler` and raises `RuntimeError` if braille is not initialized. (#20381, @LeonarddeR)
-
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
 

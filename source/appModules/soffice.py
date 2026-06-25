@@ -326,7 +326,7 @@ class SymphonyIATableCell(SymphonyTableCell):
 				cellCoordsText=True,
 				reason=controlTypes.OutputReason.CHANGE,
 			)
-		braille.getHandler().handleUpdate(self)
+		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="states")
 
 	def _get_cellCoordsText(self):

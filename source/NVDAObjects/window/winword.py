@@ -956,7 +956,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			tiCopy = self.copy()
 			tiCopy.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(tiCopy, reason=controlTypes.OutputReason.FOCUS)
-			braille.getHandler().handleCaretMove(self)
+			braille.handler.handleCaretMove(self)
 			return
 
 	def _getLinkAtCaretPosition(self) -> comtypes.client.lazybind.Dispatch | None:
@@ -1626,19 +1626,19 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	def script_nextRow(self, gesture):
 		self.rootNVDAObject._moveInTable(row=True, forward=True)
-		braille.getHandler().handleCaretMove(self)
+		braille.handler.handleCaretMove(self)
 
 	def script_previousRow(self, gesture):
 		self.rootNVDAObject._moveInTable(row=True, forward=False)
-		braille.getHandler().handleCaretMove(self)
+		braille.handler.handleCaretMove(self)
 
 	def script_nextColumn(self, gesture):
 		self.rootNVDAObject._moveInTable(row=False, forward=True)
-		braille.getHandler().handleCaretMove(self)
+		braille.handler.handleCaretMove(self)
 
 	def script_previousColumn(self, gesture):
 		self.rootNVDAObject._moveInTable(row=False, forward=False)
-		braille.getHandler().handleCaretMove(self)
+		braille.handler.handleCaretMove(self)
 
 	def _iterTextStyle(
 		self,
@@ -2050,7 +2050,7 @@ class WordDocument(Window, EditableTextBase):
 			isCollapsed = info.isCollapsed
 		if not isCollapsed:
 			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
-		braille.getHandler().handleCaretMove(self)
+		braille.handler.handleCaretMove(self)
 		if selectionObj and isCollapsed:
 			offset = selectionObj.information(wdHorizontalPositionRelativeToPage)
 			msg = self.getLocalizedMeasurementTextForPointSize(offset)
@@ -2182,7 +2182,7 @@ class WordDocument(Window, EditableTextBase):
 			time.sleep(retryInterval)
 		info.expand(textInfos.UNIT_CELL)
 		speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
-		braille.getHandler().handleCaretMove(self)
+		braille.handler.handleCaretMove(self)
 
 	def initOverlayClass(self):
 		if isinstance(self, EditableTextWithoutAutoSelectDetection):

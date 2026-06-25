@@ -15,9 +15,7 @@ from typing import Dict, List, Optional, Set
 
 import serial
 
-from braille.display.driver import BrailleDisplayDriver as BrailleDisplayDriverBase
-from braille.display.gesture import BrailleDisplayGesture as BrailleDisplayGestureBase
-from braille.display import getSerialPorts
+import braille
 from bdDetect import DeviceMatch, DriverRegistrar
 import brailleInput
 import inputCore
@@ -99,7 +97,7 @@ def isSeikaBluetoothDeviceMatch(match: DeviceMatch) -> bool:
 	return isSeikaBluetoothDeviceInfo(match.deviceInfo)
 
 
-class BrailleDisplayDriver(BrailleDisplayDriverBase):
+class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = SEIKA_NAME
 	# Translators: Name of a braille display.
 	description = _("Seika Notetaker")
@@ -120,7 +118,7 @@ class BrailleDisplayDriver(BrailleDisplayDriverBase):
 	@classmethod
 	def getManualPorts(cls) -> typing.Iterator[typing.Tuple[str, str]]:
 		"""@return: An iterator containing the name and description for each port."""
-		return getSerialPorts(isSeikaBluetoothDeviceInfo)
+		return braille.getSerialPorts(isSeikaBluetoothDeviceInfo)
 
 	def __init__(self, port: typing.Union[None, str, DeviceMatch]):
 		super().__init__()
@@ -367,7 +365,7 @@ class BrailleDisplayDriver(BrailleDisplayDriverBase):
 	)
 
 
-class InputGestureRouting(BrailleDisplayGestureBase):
+class InputGestureRouting(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, indexes: list[int] | int):
@@ -395,11 +393,11 @@ def _getRoutingIndexes(routingKeyBytes: bytes) -> Set[int]:
 	return {i for i in range(numRoutingKeys) if (1 << i) & combinedRoutingKeysBitSet}
 
 
-class InputGesture(BrailleDisplayGestureBase, brailleInput.BrailleInputGesture):
+class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys=None, dots=None, space=0, routing=None):
-		super(BrailleDisplayGestureBase, self).__init__()
+		super(braille.BrailleDisplayGesture, self).__init__()
 		# see what thumb keys are pressed:
 		names = set()
 		if keys is not None:

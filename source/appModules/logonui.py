@@ -6,7 +6,7 @@
 
 import speech
 import api
-from braille.regions.focus import invalidateCachedFocusAncestors
+import braille
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.behaviors import Dialog
@@ -124,5 +124,5 @@ class AppModule(appModuleHandler.AppModule):
 					role=True,
 					description=True,
 				)
-				invalidateCachedFocusAncestors(1)
+				braille.invalidateCachedFocusAncestors(1)
 		nextHandler()

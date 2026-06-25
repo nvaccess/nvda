@@ -96,11 +96,7 @@ def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> List["inputCore.In
 	"""
 	globalMapScripts: List["inputCore.InputGestureScriptT"] = []
 	globalMaps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
-	try:
-		_brailleHandler = braille.getHandler()
-	except RuntimeError:
-		_brailleHandler = None
-	globalMap = _brailleHandler.display.gestureMap if _brailleHandler and _brailleHandler.display else None
+	globalMap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
 	if globalMap:
 		globalMaps.append(globalMap)
 	for globalMap in globalMaps:
@@ -196,12 +192,8 @@ def _yieldObjectsForFindScript(
 	yield focus.appModule, None
 
 	# Braille display
-	try:
-		_brailleHandler = braille.getHandler()
-	except RuntimeError:
-		_brailleHandler = None
-	if _brailleHandler and isinstance(_brailleHandler.display, baseObject.ScriptableObject):
-		yield _brailleHandler.display, None
+	if braille.handler and isinstance(braille.handler.display, baseObject.ScriptableObject):
+		yield braille.handler.display, None
 
 	# Vision enhancement provider
 	if vision.handler:

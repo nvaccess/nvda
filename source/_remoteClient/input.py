@@ -9,8 +9,8 @@ from enum import IntEnum
 
 import api
 import baseObject
+import braille
 import brailleInput
-from braille.display.gesture import BrailleDisplayGesture
 import globalPluginHandler
 import scriptHandler
 import vision
@@ -28,7 +28,7 @@ class VKMapType(IntEnum):
 	"""Maps a virtual key code to a scan code."""
 
 
-class BrailleInputGesture(BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class BrailleInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	def __init__(self, **kwargs):
 		super().__init__()
 		# Normalize legacy routingIndex field into cellIndexes before assignment

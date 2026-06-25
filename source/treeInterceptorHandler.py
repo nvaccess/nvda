@@ -163,7 +163,7 @@ class TreeInterceptor(baseObject.ScriptableObject):
 					if not api.setNavigatorObject(focusObj, isFocus=True):
 						return
 			focusObj = api.getFocusObject()
-			braille.getHandler().handleGainFocus(focusObj)
+			braille.handler.handleGainFocus(focusObj)
 			vision.handler.handleGainFocus(focusObj)
 		else:
 			obj = api.getNavigatorObject()
@@ -171,7 +171,7 @@ class TreeInterceptor(baseObject.ScriptableObject):
 				if review.getCurrentMode() == "object":
 					# if navigator object is in this treeInterceptor and the review mode is object, then turning off passThrough should force document review
 					review.setCurrentMode("document", True)
-			braille.getHandler().handleGainFocus(self)
+			braille.handler.handleGainFocus(self)
 			vision.handler.handleGainFocus(self)
 
 	_cache_shouldPrepare = True

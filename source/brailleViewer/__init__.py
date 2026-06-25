@@ -12,7 +12,7 @@ import config
 from .brailleViewerGui import BrailleViewerFrame
 
 if typing.TYPE_CHECKING:
-	from braille.display import DisplayDimensions
+	from braille import DisplayDimensions
 
 """
 ### Overview
@@ -72,13 +72,13 @@ def destroyBrailleViewer():
 	d: BrailleViewerFrame | None = _brailleGui
 	_brailleGui = None  # protect against re-entrance
 	if d is not None:
-		from braille.extensions import pre_writeCells, filter_displayDimensions
+		import braille  # imported late to avoid a circular import.
 
 		if not d.isDestroyed:
-			updateBrailleDisplayedUnregistered = pre_writeCells.unregister(d.updateBrailleDisplayed)
+			updateBrailleDisplayedUnregistered = braille.pre_writeCells.unregister(d.updateBrailleDisplayed)
 			assert updateBrailleDisplayedUnregistered
 			d.saveInfoAndDestroy()
-		getDisplayDimensionsUnregistered = filter_displayDimensions.unregister(_getDisplayDimensions)
+		getDisplayDimensionsUnregistered = braille.filter_displayDimensions.unregister(_getDisplayDimensions)
 		assert getDisplayDimensionsUnregistered
 
 
@@ -93,8 +93,8 @@ def _onGuiDestroyed():
 
 
 def _getDisplayDimensions(dimensions: "DisplayDimensions") -> "DisplayDimensions":
-	"""Called by the :attr:`braille.extensions.filter_displayDimensions` extension point to get the display dimensions."""
-	from braille.display import DisplayDimensions  # imported late to avoid a circular import.
+	"""Called by the :attr:`braille.filter_displayDimensions` extension point to get the display dimensions."""
+	from braille import DisplayDimensions  # imported late to avoid a circular import.
 
 	return DisplayDimensions(
 		numRows=1,
@@ -108,19 +108,19 @@ def createBrailleViewerTool():
 		raise RuntimeError("Can not initialise the BrailleViewerGui: gui.mainFrame not yet initialised")
 
 	import braille  # imported late to avoid a circular import.
-	from braille.extensions import pre_writeCells, filter_displayDimensions
 
-	handler = braille.getHandler()
+	if not braille.handler:
+		raise RuntimeError("Can not initialise the BrailleViewerGui: braille.handler not yet initialised")
 
-	filter_displayDimensions.register(_getDisplayDimensions)
+	braille.filter_displayDimensions.register(_getDisplayDimensions)
 
 	global _brailleGui
 	if _brailleGui:
 		destroyBrailleViewer()
 
 	_brailleGui = BrailleViewerFrame(
-		handler.displaySize,
+		braille.handler.displaySize,
 		_onGuiDestroyed,
 	)
-	pre_writeCells.register(_brailleGui.updateBrailleDisplayed)
+	braille.pre_writeCells.register(_brailleGui.updateBrailleDisplayed)
 	postBrailleViewerToolToggledAction.notify(created=True)
