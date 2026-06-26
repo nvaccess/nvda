@@ -102,7 +102,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 * Fixed NVDA freezing when navigating in JetBrains IDEs. (#16741, @christopherpross)
 * Speech dictionary entries of type Whole word now correctly handle words containing Unicode combining marks (e.g. Hebrew niqqud, Arabic harakat). (#20013, @LeonarddeR)
   * In particular, Whole word entries no longer incorrectly match inside larger words when those words contain combining marks.
-* Fixed NVDA freezing when MathCAT panics while brailling MathML containing certain Unicode math characters. (#20319, @AAClause)
+* Fixed a case which could cause NVDA to freeze while reading math in braille. (#20319, @AAClause)
 
 ### Changes for Developers
 
