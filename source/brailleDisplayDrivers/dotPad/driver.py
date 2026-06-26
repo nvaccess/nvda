@@ -184,7 +184,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			packetLength = struct.unpack(">H", bytes(self._receiveBuffer[2:4]))[0]
 			totalLength = 4 + packetLength
 
-			# Real DotPad frames are small. A declared length beyond the plausible
+			# Real DotPad packets are small. A declared length beyond the plausible
 			# maximum means we locked onto a false header (line noise or desync), so
 			# discard one byte and resync rather than stalling on a huge bogus length.
 			if totalLength > DP_MAX_PACKET_SIZE:

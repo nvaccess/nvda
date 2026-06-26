@@ -81,7 +81,7 @@ class TestDotPadBufferedReceive(unittest.TestCase):
 		self.driver._onReceive(packet)
 
 		self.assertEqual(len(self.processedPackets), 1)
-		# The packet body passed on is the frame with the 4-byte sync/length header stripped.
+		# The body passed on is the packet with the 4-byte sync/length header stripped.
 		self.assertEqual(self.processedPackets[0], packet[4:])
 		self.assertEqual(len(self.driver._receiveBuffer), 0)
 
