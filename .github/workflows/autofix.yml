@@ -71,7 +71,6 @@ jobs:
     # is a different repository - but it lands as "action required" pending
     # maintainer approval because the bot is the triggering actor.)
     - name: Apply prek auto-fixes
-      if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
       shell: bash
       env:
         REF_NAME: ${{ github.ref_name }}
