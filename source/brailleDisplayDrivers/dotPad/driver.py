@@ -170,13 +170,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""
 		self._receiveBuffer.extend(data)
 
-		if len(self._receiveBuffer) > DP_MAX_PACKET_SIZE:
-			log.warning(
-				f"Receive buffer exceeded {DP_MAX_PACKET_SIZE} bytes, discarding data and resyncing",
-			)
-			self._receiveBuffer.clear()
-			return
-
 		while len(self._receiveBuffer) >= 4:
 			if self._receiveBuffer[0] != DP_PacketSyncByte.SYNC1:
 				log.debug(f"Bad first sync byte: 0x{self._receiveBuffer[0]:02x}, discarding")
@@ -190,6 +183,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 			packetLength = struct.unpack(">H", bytes(self._receiveBuffer[2:4]))[0]
 			totalLength = 4 + packetLength
+
+			# Real DotPad frames are small. A declared length beyond the plausible
+			# maximum means we locked onto a false header (line noise or desync), so
+			# discard one byte and resync rather than stalling on a huge bogus length.
+			if totalLength > DP_MAX_PACKET_SIZE:
+				log.debug(f"Implausible length {packetLength}, resyncing")
+				self._receiveBuffer.pop(0)
+				continue
 
 			if len(self._receiveBuffer) < totalLength:
 				break
@@ -346,6 +347,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		:param port: The port to connect to.
 		:return: True if connection successful, False otherwise.
 		"""
+		# Start each probe with a clean buffer so stray bytes from a previously
+		# probed (non-DotPad) port can't corrupt this device's first response.
+		self._receiveBuffer.clear()
 		try:
 			self._dev = hwIo.Serial(
 				port=port,

@@ -130,4 +130,6 @@ class DP_KeyGroup(enum.IntEnum):
 
 
 DP_CHECKSUM_BASE = 0xA5
+# Largest plausible total frame size (sync bytes + length header + body). Real DotPad
+# frames are far smaller; a declared length beyond this signals a desync or false header.
 DP_MAX_PACKET_SIZE = 512

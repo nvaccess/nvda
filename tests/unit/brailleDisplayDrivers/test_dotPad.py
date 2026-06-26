@@ -81,6 +81,8 @@ class TestDotPadBufferedReceive(unittest.TestCase):
 		self.driver._onReceive(packet)
 
 		self.assertEqual(len(self.processedPackets), 1)
+		# The packet body passed on is the frame with the 4-byte sync/length header stripped.
+		self.assertEqual(self.processedPackets[0], packet[4:])
 		self.assertEqual(len(self.driver._receiveBuffer), 0)
 
 	def test_byteAtATime(self) -> None:
@@ -131,13 +133,23 @@ class TestDotPadBufferedReceive(unittest.TestCase):
 		self.assertEqual(len(self.processedPackets), 1)
 		self.assertEqual(len(self.driver._receiveBuffer), 0)
 
-	def test_bufferOverflow_cleared(self) -> None:
-		"""Test that buffer overflow triggers a clear and doesn't crash."""
-		oversizedData = b"\xaa" * (DP_MAX_PACKET_SIZE + 1)
+	def test_implausibleLength_resynchronize(self) -> None:
+		"""Test that a header declaring an oversized length is treated as a false header.
 
-		self.driver._onReceive(oversizedData)
+		Valid sync bytes followed by a length beyond DP_MAX_PACKET_SIZE indicate a
+		desync rather than a real packet, so the driver should discard a byte, resync,
+		and still process a valid packet that follows.
+		"""
+		bogusHeader = bytes([DP_PacketSyncByte.SYNC1, DP_PacketSyncByte.SYNC2]) + struct.pack(
+			">H",
+			DP_MAX_PACKET_SIZE,
+		)
+		goodPacket = self._createPacket(dest=0, cmd=DP_Command.RSP_DEVICE_NAME, seqNum=1, data=b"OK")
 
-		self.assertEqual(len(self.processedPackets), 0)
+		self.driver._onReceive(bogusHeader + goodPacket)
+
+		self.assertEqual(len(self.processedPackets), 1)
+		self.assertEqual(self.processedPackets[0], goodPacket[4:])
 		self.assertEqual(len(self.driver._receiveBuffer), 0)
 
 	def test_incompletePacketInBuffer(self) -> None:
