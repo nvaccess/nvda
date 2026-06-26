@@ -137,23 +137,12 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		return location.toLTRB() if location else None
 
 	def _updateMathHighlight(self) -> None:
-		try:
-			rect = self._getHighlightRect()
-		except Exception:
-			log.debugWarning("Error updating math highlight", exc_info=True)
-			rect = None
-		try:
-			if vision.handler:
-				vision.handler.handleMathNavigation(rect)
-		except Exception:
-			log.debugWarning("Error sending math highlight update", exc_info=True)
+		if vision.handler:
+			vision.handler.handleMathNavigation(self._getHighlightRect())
 
 	def _clearMathHighlight(self) -> None:
-		try:
-			if vision.handler:
-				vision.handler.handleMathNavigation(None)
-		except Exception:
-			log.debugWarning("Error clearing math highlight", exc_info=True)
+		if vision.handler:
+			vision.handler.handleMathNavigation(None)
 
 	def getBrailleRegions(
 		self,
@@ -362,8 +351,6 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 
 
 class MathCAT(mathPres.MathPresentationProvider):
-	supportsInteractionSourceObj: bool = True
-
 	def __init__(self):
 		"""Initializes MathCAT, loading the rules specified in the rules directory."""
 
