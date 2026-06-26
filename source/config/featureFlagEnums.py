@@ -152,9 +152,9 @@ class WordNavigationUnitFlag(DisplayStringEnum):
 	def _displayStringLabels(self) -> dict["WordNavigationUnitFlag", str]:
 		return {
 			# Translators: Label for a method of word segmentation.
-			self.AUTO: _("Auto"),
+			self.AUTO: _("Automatic"),
 			# Translators: Label for a method of word segmentation.
-			self.UNISCRIBE: _("Windows (legacy)"),
+			self.UNISCRIBE: _("Legacy (Uniscribe)"),
 			# Translators: Label for a method of word segmentation.
 			self.CHINESE: _("Chinese"),
 			# Translators: Label for a method of word segmentation.

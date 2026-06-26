@@ -9,7 +9,8 @@ ICU has been built into Windows since Windows 10 version 1703 (Creators Update).
 The combined icu.dll is available from Windows 10 version 1903 (May 2019 Update).
 Only the C APIs are exposed; no C++ APIs are available due to ABI instability.
 
-See: https://learn.microsoft.com/windows/win32/intl/international-components-for-unicode--icu-
+.. seealso::
+	https://learn.microsoft.com/windows/win32/intl/international-components-for-unicode--icu-
 """
 
 import ctypes
