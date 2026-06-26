@@ -189,3 +189,34 @@ class TestWordOffsetsEmojiZwjSequence(unittest.TestCase):
 		# ICU spans the full sequence; Uniscribe returns a shorter leading run.
 		self.assertEqual(icu_result, (0, self.LENGTH))
 		self.assertLess(uni_result[1] - uni_result[0], self.LENGTH)
+
+
+@skipIfNoICU
+class TestWordOffsetsTrailingPunctuationDivergence(unittest.TestCase):
+	"""Trailing punctuation: ICU splits it into its own word; Uniscribe keeps it attached.
+
+	UAX#29 treats the full stop as a separate word segment, so ICU returns "logo"
+	and then "." as two words.  NVDA's Uniscribe implementation keeps the trailing
+	punctuation attached to the preceding word ("logo.").  ICU's behaviour matches
+	modern Windows edit controls such as the Start menu search field.
+	"""
+
+	TEXT = "logo."
+
+	def test_icu_splits_word_from_punctuation(self):
+		"""ICU: "logo" (0, 4) then "." (4, 5)."""
+		self.assertEqual(_icuWordOffsets(self.TEXT, 0), (0, 4))
+		self.assertEqual(_icuWordOffsets(self.TEXT, 4), (4, 5))
+
+	def test_uniscribe_keeps_punctuation_attached(self):
+		"""Uniscribe: "logo." kept whole (0, 5)."""
+		self.assertEqual(_uniscribeWordOffsets(self.TEXT, 0), (0, 5))
+
+	def test_backends_diverge(self):
+		"""ICU stops before the full stop; Uniscribe includes it."""
+		icu_result = _icuWordOffsets(self.TEXT, 0)
+		uni_result = _uniscribeWordOffsets(self.TEXT, 0)
+		self.assertNotEqual(icu_result, uni_result)
+		# ICU ends the word before the punctuation; Uniscribe runs through it.
+		self.assertEqual(icu_result, (0, 4))
+		self.assertEqual(uni_result, (0, 5))
