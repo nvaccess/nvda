@@ -9,28 +9,35 @@ ICU has been built into Windows since Windows 10 version 1703 (Creators Update).
 The combined icu.dll is available from Windows 10 version 1903 (May 2019 Update).
 Only the C APIs are exposed; no C++ APIs are available due to ABI instability.
 
+The ``ubrk_*`` function bindings are only defined when :data:`ICU_AVAILABLE` is True.
+
 .. seealso::
 	https://learn.microsoft.com/windows/win32/intl/international-components-for-unicode--icu-
 """
 
-import ctypes
-from ctypes import c_int32, c_void_p, c_char_p, c_wchar_p, POINTER
+from ctypes import (
+	WINFUNCTYPE,
+	windll,
+	c_int32,
+	c_void_p,
+	c_char_p,
+	c_wchar_p,
+	POINTER,
+)
+from enum import IntEnum
 
-# Try the combined icu.dll (Windows 10 1903+) first, then icuuc.dll (Windows 10 1703+).
+# Load the combined icu.dll (Windows 10 1903+) first, then icuuc.dll (Windows 10 1703+).
 # ubrk_* functions are part of the "common" library, present in both.
-_lib: ctypes.WinDLL | None = None
-for _dllName in ("icu.dll", "icuuc.dll"):
+try:
+	dll = windll.icu
+except OSError:
 	try:
-		_lib = ctypes.WinDLL(_dllName)
-		break
+		dll = windll.icuuc
 	except OSError:
-		pass
+		dll = None
 
-ICU_AVAILABLE: bool = _lib is not None
+ICU_AVAILABLE: bool = dll is not None
 """True if an ICU library was successfully loaded."""
-
-UBRK_WORD: int = 1
-"""Break iterator type for word boundaries."""
 
 UBRK_DONE: int = -1
 """Returned by iterator functions when there are no more boundaries."""
@@ -39,25 +46,29 @@ UErrorCode = c_int32
 """Signed 32-bit integer error code. U_ZERO_ERROR = 0; positive values indicate errors."""
 
 
+class UBRK(IntEnum):
+	"""The possible types of text boundaries (UBreakIteratorType)."""
+
+	WORD = 1
+	"""Word breaks."""
+
+
 def U_FAILURE(code: int) -> bool:
 	"""Return True if the given UErrorCode indicates an error."""
 	return code > 0
 
 
 if ICU_AVAILABLE:
-	assert _lib is not None
-
-	ubrk_open = _lib.ubrk_open
+	ubrk_open = WINFUNCTYPE(None)(("ubrk_open", dll))
 	"""Create a new break iterator.
 
-	:param kind: UBreakIteratorType (one of the UBRK_* constants).
+	:param kind: UBreakIteratorType (one of the UBRK members).
 	:param locale: Null-terminated UTF-8 locale ID, or NULL/empty for the root locale.
 	:param text: UTF-16 text to analyze.
 	:param textLength: Number of UTF-16 code units, or -1 for NUL-terminated.
 	:param status: In/out UErrorCode; pass a pointer to a zero-initialised value.
 	:return: Opaque UBreakIterator* handle; must be freed with ubrk_close.
 	"""
-	ubrk_open.restype = c_void_p
 	ubrk_open.argtypes = (
 		c_int32,  # kind: UBreakIteratorType
 		c_char_p,  # locale: UTF-8 locale ID or NULL
@@ -65,32 +76,33 @@ if ICU_AVAILABLE:
 		c_int32,  # textLength: code units, or -1 for NUL-terminated
 		POINTER(UErrorCode),  # status: in/out error code
 	)
+	ubrk_open.restype = c_void_p
 
-	ubrk_close = _lib.ubrk_close
+	ubrk_close = WINFUNCTYPE(None)(("ubrk_close", dll))
 	"""Free a break iterator created by ubrk_open."""
-	ubrk_close.restype = None
 	ubrk_close.argtypes = (
 		c_void_p,  # bi: UBreakIterator* handle to free
 	)
+	ubrk_close.restype = None
 
-	ubrk_preceding = _lib.ubrk_preceding
+	ubrk_preceding = WINFUNCTYPE(None)(("ubrk_preceding", dll))
 	"""Return the largest boundary position strictly less than offset.
 
 	Sets the iterator to that position.
 	"""
-	ubrk_preceding.restype = c_int32
 	ubrk_preceding.argtypes = (
 		c_void_p,  # bi: UBreakIterator* handle
 		c_int32,  # offset: position to search before
 	)
+	ubrk_preceding.restype = c_int32
 
-	ubrk_following = _lib.ubrk_following
+	ubrk_following = WINFUNCTYPE(None)(("ubrk_following", dll))
 	"""Return the smallest boundary position strictly greater than offset.
 
 	Sets the iterator to that position. Returns UBRK_DONE if past the end.
 	"""
-	ubrk_following.restype = c_int32
 	ubrk_following.argtypes = (
 		c_void_p,  # bi: UBreakIterator* handle
 		c_int32,  # offset: position to search after
 	)
+	ubrk_following.restype = c_int32

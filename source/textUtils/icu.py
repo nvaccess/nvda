@@ -11,7 +11,7 @@ Requires Windows 10 version 1703 (Creators Update) or later.
 import ctypes
 from contextlib import contextmanager
 
-import winBindings.icu as _icu
+import winBindings.icu as icu
 from logHandler import log
 
 _ROOT_LOCALE: bytes = b""
@@ -28,20 +28,20 @@ def _breakIterator(kind: int, locale: bytes, buf: ctypes.Array[ctypes.c_wchar]):
 	block, satisfying ICU's requirement that the text pointer remains valid while
 	the iterator is in use.
 
-	:param kind: One of the UBRK_* constants from winBindings.icu.
+	:param kind: One of the UBRK members from winBindings.icu.
 	:param locale: ICU locale byte string (the root locale, _ROOT_LOCALE).
 	:param buf: NUL-terminated UTF-16 buffer (ctypes.create_unicode_buffer) to analyze.
 	:raises RuntimeError: If ICU reports an error opening the iterator.
 	"""
 	textLength = len(buf) - 1
-	status = _icu.UErrorCode(0)
-	bi = _icu.ubrk_open(kind, locale, buf, textLength, ctypes.byref(status))
-	if _icu.U_FAILURE(status.value) or not bi:
+	status = icu.UErrorCode(0)
+	bi = icu.ubrk_open(kind, locale, buf, textLength, ctypes.byref(status))
+	if icu.U_FAILURE(status.value) or not bi:
 		raise RuntimeError(f"ubrk_open failed with status {status.value}")
 	try:
 		yield bi
 	finally:
-		_icu.ubrk_close(bi)
+		icu.ubrk_close(bi)
 
 
 def calculateWordOffsets(
@@ -82,31 +82,31 @@ def calculateWordOffsets(
 		return (offset, offset + 1)
 
 	try:
-		with _breakIterator(_icu.UBRK_WORD, _ROOT_LOCALE, buf) as bi:
+		with _breakIterator(icu.UBRK.WORD, _ROOT_LOCALE, buf) as bi:
 			# Find [start, end) — the ICU segment containing offset.
 			# ICU offsets are UTF-16 code-unit indexed, so anchor on the boundary following
 			# offset and take the boundary preceding that. (ubrk_preceding(offset + 1)
 			# would snap back for multi-unit segments.)
-			end = _icu.ubrk_following(bi, offset)
-			if end == _icu.UBRK_DONE:
+			end = icu.ubrk_following(bi, offset)
+			if end == icu.UBRK_DONE:
 				end = textLength
-			start = _icu.ubrk_preceding(bi, end)
-			if start == _icu.UBRK_DONE:
+			start = icu.ubrk_preceding(bi, end)
+			if start == icu.UBRK_DONE:
 				start = 0
 
 			if buf[start:end].isspace():
 				# Offset is inside a whitespace run.  Attach this run to the
 				# preceding segment (mirroring the Uniscribe trailing-space rule).
 				if start > 0:
-					wordStart = _icu.ubrk_preceding(bi, start)
-					if wordStart == _icu.UBRK_DONE:
+					wordStart = icu.ubrk_preceding(bi, start)
+					if wordStart == icu.UBRK_DONE:
 						wordStart = 0
 					return (wordStart, end)
 			else:
 				# Offset is inside a word/punctuation segment.  Extend the end
 				# through any immediately following whitespace run.
-				nextEnd = _icu.ubrk_following(bi, end)
-				if nextEnd != _icu.UBRK_DONE and buf[end:nextEnd].isspace():
+				nextEnd = icu.ubrk_following(bi, end)
+				if nextEnd != icu.UBRK_DONE and buf[end:nextEnd].isspace():
 					return (start, nextEnd)
 
 			return (start, end)

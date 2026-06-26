@@ -28,7 +28,7 @@ class TestIcuStrategy(unittest.TestCase):
 		from textUtils._wordSeg import wordSegmenter
 		from textUtils.segFlag import WordSegFlag
 
-		with patch.object(wordSegmenter, "_ICU_AVAILABLE", True):
+		with patch.object(wordSegmenter, "ICU_AVAILABLE", True):
 			seg = wordSegmenter.WordSegmenter("hello", None, WordSegFlag.ICU)
 		self.assertIsInstance(seg.strategy, wordSegStrategy.IcuWordSegmentationStrategy)
 
@@ -36,7 +36,7 @@ class TestIcuStrategy(unittest.TestCase):
 		from textUtils._wordSeg import wordSegmenter
 		from textUtils.segFlag import WordSegFlag
 
-		with patch.object(wordSegmenter, "_ICU_AVAILABLE", False):
+		with patch.object(wordSegmenter, "ICU_AVAILABLE", False):
 			seg = wordSegmenter.WordSegmenter("hello", None, WordSegFlag.ICU)
 		self.assertIsInstance(seg.strategy, wordSegStrategy.UniscribeWordSegmentationStrategy)
 
@@ -45,7 +45,7 @@ class TestIcuStrategy(unittest.TestCase):
 		from textUtils.segFlag import WordSegFlag
 
 		with (
-			patch.object(wordSegmenter, "_ICU_AVAILABLE", True),
+			patch.object(wordSegmenter, "ICU_AVAILABLE", True),
 			patch.object(
 				wordSegStrategy.ChineseWordSegmentationStrategy,
 				"_lib",
@@ -60,7 +60,7 @@ class TestIcuStrategy(unittest.TestCase):
 		from textUtils.segFlag import WordSegFlag
 
 		with (
-			patch.object(wordSegmenter, "_ICU_AVAILABLE", False),
+			patch.object(wordSegmenter, "ICU_AVAILABLE", False),
 			patch.object(
 				wordSegStrategy.ChineseWordSegmentationStrategy,
 				"_lib",

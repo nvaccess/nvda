@@ -144,9 +144,9 @@ class WordNavigationUnitFlag(DisplayStringEnum):
 
 	DEFAULT = enum.auto()
 	AUTO = enum.auto()
-	UNISCRIBE = enum.auto()
 	CHINESE = enum.auto()
 	ICU = enum.auto()
+	UNISCRIBE = enum.auto()
 
 	@property
 	def _displayStringLabels(self) -> dict["WordNavigationUnitFlag", str]:
@@ -154,11 +154,11 @@ class WordNavigationUnitFlag(DisplayStringEnum):
 			# Translators: Label for a method of word segmentation.
 			self.AUTO: _("Automatic"),
 			# Translators: Label for a method of word segmentation.
-			self.UNISCRIBE: _("Legacy (Uniscribe)"),
-			# Translators: Label for a method of word segmentation.
 			self.CHINESE: _("Chinese"),
 			# Translators: Label for a method of word segmentation.
-			self.ICU: _("Windows Unicode (ICU)"),
+			self.ICU: _("Unicode (ICU)"),
+			# Translators: Label for a method of word segmentation.
+			self.UNISCRIBE: _("Legacy (Uniscribe)"),
 		}
 
 

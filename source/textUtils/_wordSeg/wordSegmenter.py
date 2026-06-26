@@ -10,7 +10,7 @@ from logHandler import log
 
 from ..segFlag import WordSegFlag
 from . import wordSegStrategy
-from winBindings.icu import ICU_AVAILABLE as _ICU_AVAILABLE
+from winBindings.icu import ICU_AVAILABLE
 
 
 _GET_SEGMENT_RECOVERABLE_EXCEPTIONS = (
@@ -68,7 +68,7 @@ class WordSegmenter:
 		elif flag == WordSegFlag.CHINESE:
 			log.debugWarning("Chinese word segmenter is unavailable. Falling back to ICU/Uniscribe.")
 		# ICU for everything except the explicit UNISCRIBE flag.
-		if flag != WordSegFlag.UNISCRIBE and _ICU_AVAILABLE:
+		if flag != WordSegFlag.UNISCRIBE and ICU_AVAILABLE:
 			return wordSegStrategy.IcuWordSegmentationStrategy(self.text, self.encoding)
 		elif flag == WordSegFlag.ICU:
 			log.debugWarning("ICU word segmenter is unavailable. Falling back to Uniscribe.")
