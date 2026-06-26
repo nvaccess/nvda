@@ -7,6 +7,7 @@ import typing  # noqa: E402
 
 Import(
 	[
+		"isNVDACoreArch",
 		"thirdPartyEnv",
 		"sourceDir",
 	]
@@ -41,16 +42,17 @@ env.AppendUnique(
 
 cppjiebaLib = env.SharedLibrary(target="cppjieba", source=sourceFiles)
 
-env.Install(
-	outDir.Dir("dicts"),
-	[
-		env.Dir(cppjiebaDictPath).File(name)
-		for name in (
-			"jieba.dict.utf8",
-			"user.dict.utf8",
-			"hmm_model.utf8",
-		)
-	],
-)
+if isNVDACoreArch:
+	env.Install(
+		outDir.Dir("dicts"),
+		[
+			env.Dir(cppjiebaDictPath).File(name)
+			for name in (
+				"jieba.dict.utf8",
+				"user.dict.utf8",
+				"hmm_model.utf8",
+			)
+		],
+	)
 
 Return("cppjiebaLib")
