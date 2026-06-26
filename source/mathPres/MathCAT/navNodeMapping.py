@@ -99,6 +99,7 @@ def prepareMathMlForNavigation(
 	"""Add synthetic ids to MathML and map those ids to IA2 rectangles."""
 	if not sourceObj:
 		return mathml, {}
+	# Only import ia2Web when it's actually needed
 	from NVDAObjects.IAccessible.ia2Web import Math as Ia2WebMath
 
 	if not isinstance(sourceObj, Ia2WebMath):
