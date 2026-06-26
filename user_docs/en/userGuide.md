@@ -1636,8 +1636,7 @@ This mode keeps the tracked element at the center of the screen and clamps to th
 To disable clamping, activate [true center tracking in the Magnifier settings](#MagnifierTrueCenterTracking).
 * Border: The magnified area only moves when the tracked position approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
-* Relative: The magnified area maintains the relative position of the tracked element within the screen.
-This mode mimics the behavior of the Windows Magnifier.
+* Relative: The magnified area maintains the relative position of the tracked element based on its position on the screen.
 
 To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
@@ -2948,6 +2947,9 @@ When enabled, the magnifier will always keep the tracked position centered on th
 This option allows you to set the panning step size as a percentage of the visible magnified window.
 This means that when you use manual pan commands, the magnified view will move by the specified percentage of the current visible window size.
 Higher percentages cause larger movements, making it faster to navigate across the screen, while lower percentages provide finer control for precise positioning.
+The actual pixel distance will automatically adjust based on your current zoom level.
+
+Note: Pan commands allow you to manually move the magnified view in any direction, independent of the tracking mode.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2996,8 +2998,8 @@ When enabled, the magnified area will automatically move to follow the navigator
 
 ##### Tracking mode {#MagnifierTrackingMode}
 
-This combo box allows you to select the focus tracking mode when using the magnifier.
-To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+This combo box allows you to select the tracking mode when using the magnifier.
+To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 The available options are:
 
 | . {.hideHeaderRow} |.|
@@ -3009,7 +3011,7 @@ The available options are:
 |---|---|
 | Center | The magnified area is always centered on the currently tracked position. |
 | Border | The magnified area only moves when the tracked element approaches the edge of the visible area. |
-| Relative | The magnified area maintains the relative position of the tracked element within the screen. |
+| Relative | The magnified area maintains the relative position of the tracked element based on its position on the screen. |
 
 #### Keyboard {#KeyboardSettings}
 
