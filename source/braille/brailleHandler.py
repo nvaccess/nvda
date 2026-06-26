@@ -463,13 +463,13 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			if not isFallback:
 				if not detected:
 					config.conf["braille"]["display"] = newDisplayClass.name
-				elif (
-					"bluetoothName" in detected.deviceInfo
-					or detected.deviceInfo.get("provider") == "bluetooth"
+				elif "bluetoothName" in detected.deviceInfo or detected.deviceInfo.get("provider") in (
+					"bluetooth",
+					"ble",
 				):
 					# As USB devices have priority over Bluetooth, keep a detector running to switch to USB when connected.
 					# Note that the detector should always be running in this situation, so we can trigger a rescan.
-					self._detector.rescan(bluetooth=False, limitToDevices=[newDisplayClass.name])
+					self._detector.rescan(bluetooth=False, ble=False, limitToDevices=[newDisplayClass.name])
 				else:
 					self._disableDetection()
 			return True
@@ -1044,6 +1044,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self,
 		usb: bool = True,
 		bluetooth: bool = True,
+		ble: bool = True,
 		limitToDevices: Optional[List[str]] = None,
 		preferredDevice: bdDetect.DriverAndDeviceMatch | None = None,
 	):
@@ -1053,6 +1054,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		In that case, it is triggered by L{setDisplayByname}.
 		:param usb: Whether to scan for USB devices
 		:param bluetooth: Whether to scan for Bluetooth devices.
+		:param ble: Whether to scan for Bluetooth Low Energy devices.
 		:param limitToDevices: An optional list of driver names a scan should be limited to.
 			This is used when a Bluetooth device is detected, in order to switch to USB
 			when an USB device for the same driver is found.
@@ -1065,6 +1067,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._detector.rescan(
 				usb=usb,
 				bluetooth=bluetooth,
+				ble=ble,
 				limitToDevices=limitToDevices,
 				preferredDevice=preferredDevice,
 			)
@@ -1074,6 +1077,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._detector._queueBgScan(
 			usb=usb,
 			bluetooth=bluetooth,
+			ble=ble,
 			limitToDevices=limitToDevices,
 			preferredDevice=preferredDevice,
 		)

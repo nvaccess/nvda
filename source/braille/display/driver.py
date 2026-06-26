@@ -248,6 +248,23 @@ class BrailleDisplayDriver(driverHandler.Driver):
 				ports.update((USB_PORT,))
 			if bluetooth:
 				ports.update((BLUETOOTH_PORT,))
+		# Add individual BLE devices
+		try:
+			bleDevices = list(bdDetect.getBleDevicesForDriver(cls.name))
+			if bleDevices:
+				# Ensure "auto" option is present if we have BLE devices
+				if AUTOMATIC_PORT[0] not in ports:
+					ports.update((AUTOMATIC_PORT,))
+				# Add each BLE device as a selectable port
+				for match in bleDevices:
+					# Format: "ble:DeviceName@Address" for unique identification
+					portKey = f"{match.type}:{match.id}@{match.port}"
+					# Translators: Name of a Bluetooth Low Energy braille display port
+					portName = _("Bluetooth: {deviceName}").format(deviceName=match.id)
+					ports[portKey] = portName
+		except Exception:
+			# If BLE scanning fails, continue without BLE devices
+			pass
 		try:
 			ports.update(cls.getManualPorts())
 		except NotImplementedError:
@@ -298,6 +315,37 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		if isinstance(port, bdDetect.DeviceMatch):
 			yield port
 		elif isinstance(port, str):
+			# Check if this is a specific BLE device port (format: "ble:DeviceName@Address")
+			if port.startswith("ble:"):
+				portContent = port[4:]  # Remove "ble:" prefix
+
+				# Require name@address format
+				if "@" not in portContent:
+					log.error(
+						f"Invalid BLE port format: {port}. Expected format: ble:DeviceName@Address",
+					)
+					return
+
+				deviceName, address = portContent.rsplit("@", 1)
+
+				# Try to find device in current scan results first (preferred)
+				for match in bdDetect.getBleDevicesForDriver(cls.name):
+					if match.id == deviceName or match.port == address:
+						yield match
+						return
+
+				# Fallback: If device not in scan, create DeviceMatch from config
+				log.debug(
+					f"BLE device {deviceName} not in scan results, "
+					f"attempting connection by address {address}",
+				)
+				yield bdDetect.DeviceMatch(
+					bdDetect.ProtocolType.BLE,
+					deviceName,  # id
+					address,  # port
+					{"name": deviceName, "address": address},
+				)
+				return
 			isUsb = port in (AUTOMATIC_PORT[0], USB_PORT[0])
 			isBluetooth = port in (AUTOMATIC_PORT[0], BLUETOOTH_PORT[0])
 			if not isUsb and not isBluetooth:
