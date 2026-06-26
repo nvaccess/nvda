@@ -5266,7 +5266,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Describes a command.
 			"Moves the mouse cursor to the center of the magnified view",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 	)
 	def script_moveMouseToView(
 		self,
