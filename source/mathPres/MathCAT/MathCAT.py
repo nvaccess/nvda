@@ -25,6 +25,7 @@ import winKernel
 import winUser
 from api import getClipData
 from keyboardHandler import KeyboardInputGesture
+from globalCommands import SCRCAT_MATH_NAV
 from logHandler import log
 from scriptHandler import script
 from NVDAState import ReadPaths
@@ -209,7 +210,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			script = lambda self, gesture, _cmd=cmd.commandName: self._doNavigateCommand(_cmd)  # noqa: E731
 			script.__doc__ = cmd.description
 			script.__name__ = funcName
-			script.category = SCRCAT_MATHCAT_NAV
+			script.category = SCRCAT_MATH_NAV
 			script.speakOnDemand = cmd.speakOnDemand
 			setattr(cls, funcName, script)
 			for gesture in cmd.gestures:
