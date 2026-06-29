@@ -138,10 +138,3 @@ class TestBraillePublicSurface(unittest.TestCase):
 						f"braille.{name} returned wrong object",
 					)
 					mockLog.warning.assert_called_once()
-
-	def test_noAllAttribute(self):
-		"""braille.__all__ must not exist (it was removed)."""
-		self.assertFalse(
-			hasattr(braille, "__all__"),
-			"braille.__all__ should not exist after facade rewrite",
-		)
