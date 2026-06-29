@@ -13,7 +13,7 @@ from logHandler import log
 from . import brailleHandler as _brailleHandler
 from utils._deprecate import handleDeprecations, MovedSymbol
 
-handler: Optional["_brailleHandler.BrailleHandler"] = None
+handler: _brailleHandler.BrailleHandler | None = None
 
 
 def initialize():
