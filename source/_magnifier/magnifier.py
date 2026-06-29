@@ -21,11 +21,13 @@ from .utils.types import (
 	MagnifierParameters,
 	MagnifierAction,
 	MagnifiedView,
+	MagnifierTrackingType,
 	Direction,
 	Filter,
 	Coordinates,
 )
 from .config import (
+	getFollowState,
 	getZoomLevel,
 	getPanStep,
 	getFilter,
@@ -35,6 +37,7 @@ from .config import (
 	_isDebug,
 )
 from .utils.focusManager import FocusManager
+from .utils.mouseHook import MagnifierMouseHook
 
 
 class Magnifier:
@@ -57,6 +60,7 @@ class Magnifier:
 		self._isManualPanning: bool = False
 		self._consecutiveErrors: int = 0
 		self._recoveryAttempts: int = 0
+		self._mouseHook: MagnifierMouseHook | None = None
 		# Register for display changes
 		_displayTracking.displayChanged.register(self._onDisplayChanged)
 		self._screenCurtainIsActive: bool = False
@@ -184,6 +188,8 @@ class Magnifier:
 
 		self._isActive = True
 		self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
+		self._mouseHook = MagnifierMouseHook(self._onMouseMove)
+		self._mouseHook.start()
 
 	def _updateMagnifier(self) -> None:
 		"""
@@ -246,12 +252,31 @@ class Magnifier:
 		self._consecutiveErrors = 0
 		self._startTimer(self._updateMagnifier)
 
+	def _onMouseMove(self, x: int, y: int) -> None:
+		"""
+		Called from the hook thread on every WM_MOUSEMOVE.
+		Updates the magnified view immediately, bypassing the wx timer loop.
+		Only acts when mouse tracking is enabled and the magnifier is active.
+		"""
+		if not self._isActive or self._isManualPanning:
+			return
+		if not getFollowState(MagnifierTrackingType.MOUSE):
+			return
+		try:
+			self.currentCoordinates = Coordinates(x, y)
+			self._doUpdate()
+		except OSError:
+			pass
+
 	def _stopMagnifier(self) -> None:
 		"""
 		Stop the magnifier
 		"""
 		if not self._isActive:
 			return
+		if self._mouseHook:
+			self._mouseHook.stop()
+			self._mouseHook = None
 		self._stopTimer()
 		self._isActive = False
 		# Unregister from display changes
