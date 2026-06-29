@@ -198,13 +198,13 @@ class Magnifier:
 				reason = pgettext(
 					"magnifier",
 					# Translators: Warning when magnifier is started on a device with a touch screen but NVDA's touch support is disabled.
-					"Touch screen input cannot be intercepted because NVDA touch support is disabled. ",
+					"Touch screen input cannot be used because NVDA touch support is disabled. ",
 				)
 			else:
 				reason = pgettext(
 					"magnifier",
 					# Translators: Warning when the magnifier starts on a portable/source copy with a touchscreen.
-					"Touch screen input cannot be intercepted because NVDA is not installed. ",
+					"Touch screen input cannot be used because NVDA is not installed. ",
 				)
 			wx.CallAfter(
 				gui.messageBox,

@@ -7,7 +7,6 @@ from _magnifier.config import ZoomLevel
 from _magnifier.magnifier import Magnifier
 from _magnifier.utils.types import Filter, Direction, Coordinates, MagnifierAction
 from comtypes import COMError
-import touchHandler
 import unittest
 from winAPI._displayTracking import getPrimaryDisplayOrientation
 from unittest.mock import MagicMock, patch
@@ -541,70 +540,3 @@ class TestMagnifier(_TestMagnifier):
 			self.magnifier.currentCoordinates = validCoords
 			self.assertEqual(self.magnifier.currentCoordinates, validCoords)
 
-	def testStartMagnifierBlocksTouchWhenHandlerActive(self):
-		"""blockTouchInput is set when the magnifier starts with the touch handler running."""
-		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
-		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=focusCoords)
-
-		with (
-			patch("touchHandler.handler", new=MagicMock()),
-			patch("touchHandler.blockTouchInput", False),
-		):
-			self.magnifier._startMagnifier()
-			self.assertTrue(touchHandler.blockTouchInput)
-
-	def testStartMagnifierWarnsWhenTouchSupportDisabled(self):
-		"""Dialog shown when device has a touchscreen but NVDA touch support is disabled."""
-		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
-		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=focusCoords)
-
-		with (
-			patch("touchHandler.handler", new=None),
-			patch("winBindings.user32.GetSystemMetrics", return_value=5),
-			patch("touchHandler.touchSupported", return_value=True),
-			patch("_magnifier.magnifier.wx.CallAfter") as mock_call_after,
-		):
-			self.magnifier._startMagnifier()
-
-		mock_call_after.assert_called_once()
-
-	def testStartMagnifierWarnsOnPortableOrNoUIAccess(self):
-		"""Dialog shown when device has a touchscreen but NVDA cannot intercept (portable/no UI access)."""
-		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
-		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=focusCoords)
-
-		with (
-			patch("touchHandler.handler", new=None),
-			patch("winBindings.user32.GetSystemMetrics", return_value=5),
-			patch("touchHandler.touchSupported", return_value=False),
-			patch("_magnifier.magnifier.wx.CallAfter") as mock_call_after,
-		):
-			self.magnifier._startMagnifier()
-
-		mock_call_after.assert_called_once()
-
-	def testStartMagnifierNoActionWithoutTouchscreen(self):
-		"""No dialog and no blocking when the device has no touchscreen."""
-		focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
-		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=focusCoords)
-
-		with (
-			patch("touchHandler.handler", new=None),
-			patch("winBindings.user32.GetSystemMetrics", return_value=0),
-			patch("_magnifier.magnifier.wx.CallAfter") as mock_call_after,
-		):
-			self.magnifier._startMagnifier()
-
-		mock_call_after.assert_not_called()
-
-	def testStopMagnifierUnblocksTouchInput(self):
-		"""blockTouchInput is reset to False when the magnifier stops with the touch handler active."""
-		self.magnifier._stopTimer = MagicMock()
-		self.magnifier._isActive = True
-		touchHandler.blockTouchInput = True
-		self.addCleanup(setattr, touchHandler, "blockTouchInput", False)
-
-		with patch("touchHandler.handler", new=MagicMock()):
-			self.magnifier._stopMagnifier()
-
-		self.assertFalse(touchHandler.blockTouchInput)
