@@ -539,4 +539,3 @@ class TestMagnifier(_TestMagnifier):
 			validCoords = Coordinates(centerX, centerY)
 			self.magnifier.currentCoordinates = validCoords
 			self.assertEqual(self.magnifier.currentCoordinates, validCoords)
-
