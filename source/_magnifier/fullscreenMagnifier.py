@@ -93,7 +93,7 @@ class FullScreenMagnifier(Magnifier):
 		After a MagSetFullscreenTransform or MagSetFullscreenColorEffect call,
 		MagUninitialize leaves internal state that causes the next MagSetFullscreenTransform
 		to fail. Resetting the color effect to neutral here also clears stale state
-		left by a screen curtain session. All errors are suppressed.
+		left by a screen curtain session. All OSError exceptions are suppressed.
 		"""
 		try:
 			magnification.MagInitialize()
