@@ -301,6 +301,11 @@ bool unregisterInterfaceProxy(IID iid) {
 		LOG_DEBUG(L"No backup found for interface "<<iidString<<L", nothing to restore");
 		return true;
 	}
+	if (!it->second.hadOriginalProxy) {
+		LOG_DEBUG(L"Interface " << iidString << L" had no original proxy CLSID; leaving current registration unchanged");
+		interfaceProxyBackups.erase(it);
+		return true;
+	}
 	HRESULT res = CoRegisterPSClsid(iid, it->second.originalProxyClsid);
 	if (res != S_OK) {
 		LOG_ERROR(L"Unable to restore proxy CLSID for interface " << iidString << L" to " << guidToString(it->second.originalProxyClsid) << L", code "<< res);
