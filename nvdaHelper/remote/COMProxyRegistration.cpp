@@ -103,7 +103,6 @@ bool registerInterfaceProxy(std::wstring interfaceName, std::wstring dllPath, II
 			return false;
 		}
 		LOG_DEBUG(L"Interface "<<iidString<<L" already  backed up by thread "<<it->second.threadId<<L" for dll "<<it->second.dllPath);
-		Beep(1000, 200);
 		return true;
 	}
 	res = CoGetPSClsid(iid,&backup.originalProxyClsid);
