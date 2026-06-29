@@ -97,10 +97,13 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		try:
 			magnification.MagInitialize()
-			try:
-				magnification.MagSetFullscreenColorEffect(FilterMatrix.NORMAL.value)
-			except OSError:
-				pass
+		except OSError:
+			return
+		try:
+			magnification.MagSetFullscreenColorEffect(FilterMatrix.NORMAL.value)
+		except OSError:
+			pass
+		try:
 			magnification.MagUninitialize()
 		except OSError:
 			pass
