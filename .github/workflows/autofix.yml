@@ -3,24 +3,11 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-# This flow has a single job with two roles:
-#   - Autofix: on push events, run the fixer hooks (the "autofix" group), commit
-#     any fixes back to the branch, and push them.
-#   - Gate: on every event, run all hooks (minus the heavy/env-bound ones that
-#     have their own dedicated jobs in testAndPublish.yml) as a blocking check.
-#
-# The autofix step needs write access. On fork `pull_request` events GitHub
-# downgrades the token to read-only, so autofix is guarded to push events only
-# (it runs in a contributor's fork when they enable Actions, and on NV Access
-# branches). On a fork PR with Actions disabled nothing gets fixed, so
-# any lint issue fails the gate, forcing a manual fix or enabling fork Actions.
-
 name: Autofix or fail
 
 on:
   push:
-    # Never auto-fix or push to the protected branches; PRs targeting them are
-    # handled by the pull_request trigger below.
+    # Never auto-fix the protected branches; PRs to them use pull_request below.
     branches-ignore:
       - master
       - beta
@@ -42,6 +29,9 @@ concurrency:
 jobs:
   autofix:
     name: Auto-fix and lint gate
+    # On the base repo the pull_request run is the gate; skip its push run on non-Fork pushes to
+    # avoid a duplicate. Fork pushes still run for autofix.
+    if: github.event_name != 'push' || github.repository != 'nvaccess/nvda'
     runs-on: windows-2025-vs2026
     steps:
     - name: Checkout repository
@@ -57,20 +47,9 @@ jobs:
       uses: astral-sh/setup-uv@v7
       with:
         activate-environment: "false"
-    # prek is run via `uvx` (an ephemeral, isolated tool run) rather than
-    # `uv run`. `uv run` would sync the project environment and could silently
-    # regenerate uv.lock as a side effect, masking a genuinely stale lock and
-    # causing spurious mid-run failures. `uvx` touches no project state, so the
-    # uv-lock hook itself is what gates lock staleness.
-    # Autofix only on push events (write token), and never react to the bot's
-    # own auto-fix commit. A commit pushed with this repo's GITHUB_TOKEN does
-    # not re-trigger this repo's own push workflow, so the fix commit cannot
-    # loop back into another autofix run here; the actor guard below just
-    # covers the rare manual re-run case too. (Note: on a fork PR the fix
-    # commit DOES start a fresh pull_request run on the base repo, since that
-    # is a different repository - but it lands as "action required" pending
-    # maintainer approval because the bot is the triggering actor.)
+    # Autofix role: run the fixer hooks (the "autofix" group) and push the fixes.
     - name: Apply prek auto-fixes
+      if: github.event_name == 'push'
       shell: bash
       env:
         REF_NAME: ${{ github.ref_name }}
@@ -92,13 +71,9 @@ jobs:
           # in a detached HEAD state.
           git push origin HEAD:"$REF_NAME"
         fi
-    # Blocking lint gate: runs on every event. The 6 skipped hooks are the
-    # heavy / environment-bound checks that have their own dedicated jobs in
-    # testAndPublish.yml. A non-zero exit here fails the job.
-    # Run via prek-action (not `uvx prek`) so prek's hook environments are
-    # cached across runs. The action installs prek standalone, so it does not
-    # touch uv.lock; on push events the gate runs against the tree already
-    # fixed by the autofix step above.
+    # Gate role: the merge-required blocking check (non-zero exit fails the job).
+    # The 6 skipped hooks are the heavy/env-bound ones with dedicated jobs in
+    # testAndPublish.yml.
     - name: Lint gate
       uses: j178/prek-action@v2
       with:
