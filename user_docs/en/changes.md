@@ -6,6 +6,7 @@
 
 ### New Features
 
+* Add-ons can be removed from the "Updatable add-ons" tab in the Add-on Store. (#15030, @nvdaes)
 * Chinese text can now be navigated by word using built-in input gestures.
   A Word Segmentation Standard setting was added to the "Document Navigation" panel. (#18735, @CrazySteve0605, @Cary-rowen)
 * Braille output for Chinese now includes spaces between words. (#18865, @CrazySteve0605, @Cary-rowen)
@@ -28,11 +29,13 @@
 
 ### Bug Fixes
 
+* In PowerPoint and other Office applications, NVDA will now correctly read and navigate the edit fields in the insert hyperlink dialog. (#17390, @aryanchoudharypro)
 * The actions button can now be used when selecting multiple add-ons in the Add-on Store to perform batch actions, instead of just via the context menu in the add-ons list. (#19971, @amirmahdifard)
 * When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
 * In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen. (#20177)
 * When an application stops responding, NVDA no longer freezes or floods its log with errors; it stays responsive and drops UIA and MSAA events from the unresponsive application until it recovers. (#16749, @heath-toby)
 * Reduced lag on UI Automation text change events, improving the responsiveness of controls such as combo boxes and of File Explorer, by using the cached element class name instead of a live cross-process fetch. (#16749, @heath-toby)
+* In Notepad++, NVDA now continues to report IME composition text in speech and braille while selecting or navigating within Chinese IME composition. (#14140, #14152, @keyang556)
 * Fixed UAC slider not being read when changing values with arrow keys in UI Automation. (#9356, @tareh7z)
 * NVDA recovers more quickly when an application stops responding; in particular, switching away from a hung application returns NVDA to responsiveness immediately. (#20169, @heath-toby)
 * In Mozilla Firefox, reporting annotation details now works correctly in focus mode on controls which are not editable text. (#20208, @jcsteh)
@@ -43,6 +46,12 @@
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* `config.configSections.registerSection` and `config.configSections.unregisterSection` methods can be used to register and unregister configuration sections. (#7467, @nvdaes)
+  * In the `installTasks` module, add-on developers can add a spec for each configuration section to be registered.
+  * The `config.configSections.registerSection` method can be used in the `onInstall` function.
+  * To register a section to be used in the normal configuration, regardless of profiles, the `isBaseOnly` parameter should be set to `True`.
+* The `braille` module is now a package.
+The public API is unchanged: every symbol previously accessed as `braille.X` remains available. (#12772, @LeonarddeR)
 * Added `gui.message.HtmlMessageDialog`, a `MessageDialog` subclass that renders a full HTML document in a `wx.html2.WebView`. (#18878, @LeonarddeR)
   * The WebView backend can be overridden via the `_webViewBackend` class attribute, which defaults to the IE backend.
   * JavaScript in the message can trigger NVDA actions by navigating to `nvda-action://<action>` URLs; `close` is handled internally and other actions can be registered with `registerAction`.
@@ -96,15 +105,13 @@ Liblouis has been updated with new Italian and Estonian braille tables.
 
 When resetting NVDA to factory defaults, an Undo button is now available to restore the previous configuration.
 
-### Important notes
-
 ### New Features
 
 * Magnifier:
   * NVDA now includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen. (#19228, @Boumtchack)
   * The magnifier supports various zoom levels, color filters (normal, grayscale, inverted), and different focus tracking modes.
   * Color filters can help users with visual impairments or light sensitivity by inverting or desaturating screen colors.
-  * A command allows temporarily showing an overview of the entire screen
+  * A command allows temporarily showing an overview of the entire screen.
   * All magnifier settings can be configured in a new "Magnifier" panel in NVDA Settings.
   * The magnifier cannot be used simultaneously with Screen Curtain for security reasons.
 * Speech:

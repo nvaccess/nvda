@@ -13,6 +13,7 @@ import ui
 from .types import Coordinates, ZoomHistory, FullScreenMode
 import wx
 from logHandler import log
+from ..config import _isDebug
 
 if TYPE_CHECKING:
 	from _magnifier.fullscreenMagnifier import FullScreenMagnifier
@@ -87,9 +88,10 @@ class SpotlightManager:
 		:param target: The target zoom history (zoom level and coordinates)
 		:param callback: The function to call after animation completes
 		"""
-		log.debug(
-			f"animate zoom with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
-		)
+		if _isDebug():
+			log.debug(
+				f"animate zoom with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
+			)
 
 		self._animationStepsList = self._computeAnimationSteps(
 			round(self._currentZoomLevel),
@@ -112,9 +114,10 @@ class SpotlightManager:
 		:param stepIndex: The index of the current animation step
 		:param callback: The function to call after animation completes
 		"""
-		log.debug(
-			f"execute step with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
-		)
+		if _isDebug():
+			log.debug(
+				f"execute step with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
+			)
 
 		if stepIndex < len(self._animationStepsList):
 			zoomLevel, coords = self._animationStepsList[stepIndex]
@@ -156,9 +159,10 @@ class SpotlightManager:
 		"""
 		Zoom back to mouse position
 		"""
-		log.debug(
-			f"zoom back with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
-		)
+		if _isDebug():
+			log.debug(
+				f"zoom back with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
+			)
 
 		focus = self._fullscreenMagnifier._focusManager.getCurrentFocusCoordinates()
 
@@ -190,9 +194,10 @@ class SpotlightManager:
 
 		:return: List of animation steps as ZoomHistory for each animation step
 		"""
-		log.debug(
-			f"compute animation steps with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
-		)
+		if _isDebug():
+			log.debug(
+				f"compute animation steps with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
+			)
 
 		startX, startY = coordinateStart
 		endX, endY = coordinateEnd

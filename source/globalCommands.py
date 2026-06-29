@@ -133,6 +133,8 @@ SCRCAT_AUDIO = _("Audio")
 #: Script category for Remote Access commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_REMOTE = pgettext("remote", "Remote Access")
+# Translators: The name of the category of math navigation commands in the Input Gestures dialog.
+SCRCAT_MATH_NAV = _("Math navigation")
 
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
@@ -4806,6 +4808,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Describes a command.
 		description=_("Begins interaction with math content"),
+		category=SCRCAT_MATH_NAV,
 		gesture="kb:NVDA+alt+m",
 	)
 	def script_interactWithMath(self, gesture):
@@ -5266,7 +5269,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Describes a command.
 			"Moves the mouse cursor to the center of the magnified view",
 		),
-		category=SCRCAT_VISION,
+		category=SCRCAT_MAGNIFIER,
 	)
 	def script_moveMouseToView(
 		self,
@@ -5545,7 +5548,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Description for the repeat last speech script
-			"Repeat the last spoken information. Pressing twice shows it in a browsable message. ",
+			"Repeat the last spoken information. Pressing twice shows it in a browsable message.",
 		),
 		gesture="kb:NVDA+x",
 		category=SCRCAT_SPEECH,

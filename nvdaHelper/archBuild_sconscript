@@ -199,6 +199,7 @@ else:
 
 Export("thirdPartyEnv")
 Export("env")
+Export("isNVDACoreArch")
 
 acrobatAccessRPCStubs = env.SConscript("acrobatAccess_sconscript")
 Export("acrobatAccessRPCStubs")

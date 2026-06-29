@@ -348,6 +348,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	remoteClient = boolean(default=False)
 	externalPythonDependencies = boolean(default=False)
 	bdDetect = boolean(default=False)
+	magnifier = boolean(default=False)
 
 [uwpOcr]
 	language = string(default="")
