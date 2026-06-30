@@ -473,8 +473,9 @@ class LiveText(NVDAObject):
 					config.conf["terminals"]["beepForSkippedLines"]
 					and speech.getState().speechMode == speech.SpeechMode.talk
 				):
+					skippedLinesBeepHz = 550
 					tones.beep(
-						config.conf["terminals"]["skippedLinesBeepHz"],
+						skippedLinesBeepHz,
 						self._getSkippedLinesBeepLength(droppedCount),
 					)
 				lines = lines[-maxNewLines:]
@@ -495,15 +496,13 @@ class LiveText(NVDAObject):
 
 	@staticmethod
 	def _getSkippedLinesBeepLength(droppedCount: int) -> int:
-		minLengthMs: int = config.conf["terminals"]["skippedLinesBeepMinDurationMs"]
-		maxLengthMs: int = config.conf["terminals"]["skippedLinesBeepMaxDurationMs"]
-		if maxLengthMs < minLengthMs:
-			maxLengthMs = minLengthMs
+		skippedLinesBeepMinLengthMs = 10
+		skippedLinesBeepMaxLengthMs = 100
 		droppedCount = max(droppedCount, 1)
 		maxNewLines: int = config.conf["terminals"]["maxNewLines"]
 		ratio = 1.0 if maxNewLines <= 1 else min(1.0, math.log(droppedCount, maxNewLines))
-		lengthRange = maxLengthMs - minLengthMs
-		return round(minLengthMs + lengthRange * ratio)
+		lengthRange = skippedLinesBeepMaxLengthMs - skippedLinesBeepMinLengthMs
+		return round(skippedLinesBeepMinLengthMs + lengthRange * ratio)
 
 	def _reportNewLinesGenerator(
 		self,
