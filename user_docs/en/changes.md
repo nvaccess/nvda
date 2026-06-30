@@ -2,31 +2,147 @@
 
 ## 2026.3
 
-### Important notes
-
 ### New Features
 
+* Add-ons can be removed from the "Updatable add-ons" tab in the Add-on Store. (#15030, @nvdaes)
+* Chinese text can now be navigated by word using built-in input gestures.
+  A Word Segmentation Standard setting was added to the "Document Navigation" panel. (#18735, @CrazySteve0605, @Cary-rowen)
+* Braille output for Chinese now includes spaces between words. (#18865, @CrazySteve0605, @Cary-rowen)
+* Added sequential two-flick touch gestures that combine two flicks performed in quick succession into a single gesture, increasing the number of touch gestures that can be bound to scripts. (#19938, @kefaslungu)
+  * Twelve combinations are recognised: opposite-direction pairs (e.g. flick right then flick left) and perpendicular L-shaped pairs (e.g. flick right then flick up).
+  * The two flicks can be performed either by lifting the finger between strokes or as a single continuous swipe with a sharp change in direction.
+* On supported braille displays, pressing multiple routing keys simultaneously can now be bound to a new "multi routing" gesture. (#20001, @LeonarddeR)
+  * The "select range" command, which selects the text from the first up to the last pressed routing key, is bound to this gesture by default on supporting drivers.
+  * Drivers with built-in support for multi routing: ALVA, Albatross (only when combined with `home1` or `home2`), Baum (and compatible), Freedom Scientific Focus/PAC Mate, HumanWare Brailliant BI/B series, Handy Tech, NLS eReader Zoomax, Seika Notetaker, and Standard HID Braille displays.
 * The braille "word wrap" option has been replaced with a four-valued "Text wrap" option: Off, Show mark when words are cut, At word boundaries, and At word or syllable boundaries. (#17010, @LeonarddeR)
   * In modes that show a continuation mark, when a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
   * The "At word or syllable boundaries" option uses hyphenation dictionaries to split long words at syllable boundaries when they do not fit on the display.
+* Magnifier: A new unassigned command has been added to move the mouse cursor to the center of the magnified view. (#20127, @CyrilleB79)
 
 ### Changes
 
+* The dialog used to present browseable messages (such as formatting information) has been modernized. (#18878, @LeonarddeR)
+  * The dialog's shortcut to copy contents of the message to the clipboard was changed to `alt+c`.
+* Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
+
 ### Bug Fixes
 
+* In PowerPoint and other Office applications, NVDA will now correctly read and navigate the edit fields in the insert hyperlink dialog. (#17390, @aryanchoudharypro)
+* The actions button can now be used when selecting multiple add-ons in the Add-on Store to perform batch actions, instead of just via the context menu in the add-ons list. (#19971, @amirmahdifard)
 * When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
 * In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen. (#20177, #20216, @ethindp, @codeofdusk)
 * When an application stops responding, NVDA no longer freezes or floods its log with errors; it stays responsive and drops UIA and MSAA events from the unresponsive application until it recovers. (#16749, @heath-toby)
 * Reduced lag on UI Automation text change events, improving the responsiveness of controls such as combo boxes and of File Explorer, by using the cached element class name instead of a live cross-process fetch. (#16749, @heath-toby)
+* In Notepad++, NVDA now continues to report IME composition text in speech and braille while selecting or navigating within Chinese IME composition. (#14140, #14152, @keyang556)
+* Fixed UAC slider not being read when changing values with arrow keys in UI Automation. (#9356, @tareh7z)
+* NVDA recovers more quickly when an application stops responding; in particular, switching away from a hung application returns NVDA to responsiveness immediately. (#20169, @heath-toby)
 * In Mozilla Firefox, reporting annotation details now works correctly in focus mode on controls which are not editable text. (#20208, @jcsteh)
+* NVDA now announces heading, paragraph, list, and list item children inside webpage alerts (`role="alert"`). (#14990, @mehm8128)
+* After marking the start of text for review cursor copy with `NVDA+f9`, moving with Find or Go To no longer causes `NVDA+f10` to report that no start marker is set. (#13864, @Cary-rowen)
+* NVDA should no longer fail to navigate tables, read editable text fields or enable native app selection mode in Web browsers after a random period of time. (#16020)
+* NVDA should no longer cause File Explorer or other applications to crash when NVDA is exited or restarted. (#16207)
+* Focus is no longer silent on list items in Qt-based applications (such as Telegram Desktop) when the item exposes the UIA SelectionItem pattern without an associated action interface. (#20255, @rezabakhshilaktasaraei)
 
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* `config.configSections.registerSection` and `config.configSections.unregisterSection` methods can be used to register and unregister configuration sections. (#7467, @nvdaes)
+  * In the `installTasks` module, add-on developers can add a spec for each configuration section to be registered.
+  * The `config.configSections.registerSection` method can be used in the `onInstall` function.
+  * To register a section to be used in the normal configuration, regardless of profiles, the `isBaseOnly` parameter should be set to `True`.
+* The `braille` module is now a package, split into focused submodules such as `braille.constants`, `braille.labels`, `braille.formatting`, `braille.regions`, `braille.display`, `braille.buffers`, `braille.brailleHandler` and `braille.extensions`. (#12772, @LeonarddeR)
+* Added `gui.message.HtmlMessageDialog`, a `MessageDialog` subclass that renders a full HTML document in a `wx.html2.WebView`. (#18878, @LeonarddeR)
+  * The WebView backend can be overridden via the `_webViewBackend` class attribute, which defaults to the IE backend.
+  * JavaScript in the message can trigger NVDA actions by navigating to `nvda-action://<action>` URLs; `close` is handled internally and other actions can be registered with `registerAction`.
+* `gui.message.MessageDialog` gained the protected `_createMessageControl` and `_wrapMessageControl` hooks, so subclasses can use a different control for the message body. (#18878, @LeonarddeR)
+* Added [cppjieba](https://github.com/yanyiwu/cppjieba) as a git submodule for Chinese word segmentation. (#18548, @CrazySteve0605)
+* `braille.BrailleDisplayGesture` now exposes a `cellIndexes` list attribute, replacing the single-valued `routingIndex`. (#20001, @LeonarddeR)
+  * Drivers should set `cellIndexes` directly instead of `routingIndex`.
+  * When a gesture addresses more than one cell, its `id` should be set to `"multiRouting"` (or be built via the new `BrailleDisplayGesture.idForCellCount(n)` helper).
+  * `cellIndexes` is not limited to routing keys; touch-sensitive cells (e.g. Handy Tech Active Tactile Control) can reuse the same attribute.
+* Added a new `hwIo.ble` submodule for Bluetooth Low Energy device discovery and I/O, exposing a `Scanner` singleton (with a `deviceDiscovered` extension point), a `Ble` class implementing the `IoBase` contract, and a `findDeviceByAddress` helper.
+Built on top of [Bleak](https://bleak.readthedocs.io/) and the `_asyncioEventLoop` module. (#19838, @bramd)
+* Component updates:
+  * Updated py2exe to 0.14.1.1. (#20260, @LeonarddeR)
+
 #### Deprecations
 
-* The `braille.wordWrap` configuration key is deprecated and bridged to `braille.textWrap`. (#17010, @LeonarddeR)
+* The `braille.BrailleDisplayGesture.routingIndex` attribute is deprecated.
+Use the `cellIndexes` attribute instead. (#20028, @LeonarddeR)
+* `brailleDisplayDrivers.freedomScientific.RoutingGesture` is deprecated.
+Use `KeyGesture` instead. (#20250, @LeonarddeR)
+* The `braille.wordWrap` configuration key is deprecated and bridged to `braille.textWrap`. (#20146, @LeonarddeR)
+* The `useUniscribe` attribute of `textInfos.offsets.OffsetsTextInfo` and its subclasses is deprecated, use `charSegFlag` and `wordSegFlag` instead. (#20183)
+* In `touchTracker`, the module-level `action_*` string constants are deprecated.
+Use the corresponding `TouchAction` enum members instead (e.g. `TouchAction.TAP`, `TouchAction.FLICK_UP`). (#20086, @kefaslungu)
+* In `touchTracker`, `actionLabels` is deprecated.
+Use `TouchAction(value).displayString` instead. (#20086, @kefaslungu)
+* The `URL_MK_UNIFORM`, `DIALOG_OPTIONS` and `HTMLDLG_*` constants in `ui` are deprecated with no replacement, as the COM-based HTML dialog infrastructure has been removed.
+Use `gui.message.HtmlMessageDialog` instead. (#18878, @LeonarddeR)
+* The symbols that moved out of the `braille` module facade when it became a package are deprecated.
+Accessing them as `braille.X` still works but logs a deprecation warning; import them from their new location instead, as listed below. (#20390, @LeonarddeR)
+
+| Old location | New location |
+| --- | --- |
+| `braille.BrailleDisplayDriver` | `braille.display.driver.BrailleDisplayDriver` |
+| `braille.BrailleDisplayGesture` | `braille.display.gesture.BrailleDisplayGesture` |
+| `braille.getSerialPorts` | `braille.display.getSerialPorts` |
+| `braille.getDisplayList` | `braille.display.getDisplayList` |
+| `braille.getDisplayDrivers` | `braille.display.getDisplayDrivers` |
+| `braille.RENAMED_DRIVERS` | `braille.display.RENAMED_DRIVERS` |
+| `braille.DisplayDimensions` | `braille.display.DisplayDimensions` |
+| `braille.Region` | `braille.regions.base.Region` |
+| `braille.RegionWithPositions` | `braille.regions.base.RegionWithPositions` |
+| `braille.TextRegion` | `braille.regions.base.TextRegion` |
+| `braille.rindex` | `braille.regions.base.rindex` |
+| `braille.NVDAObjectRegion` | `braille.regions.NVDAObject.NVDAObjectRegion` |
+| `braille.ReviewNVDAObjectRegion` | `braille.regions.NVDAObject.ReviewNVDAObjectRegion` |
+| `braille.NVDAObjectHasUsefulText` | `braille.regions.NVDAObject.NVDAObjectHasUsefulText` |
+| `braille.TextInfoRegion` | `braille.regions.textInfo.TextInfoRegion` |
+| `braille.CursorManagerRegion` | `braille.regions.textInfo.CursorManagerRegion` |
+| `braille.ReviewTextInfoRegion` | `braille.regions.textInfo.ReviewTextInfoRegion` |
+| `braille.ReviewCursorManagerRegion` | `braille.regions.textInfo.ReviewCursorManagerRegion` |
+| `braille.getControlFieldBraille` | `braille.regions.properties.getControlFieldBraille` |
+| `braille.getFormatFieldBraille` | `braille.regions.properties.getFormatFieldBraille` |
+| `braille.getPropertiesBraille` | `braille.regions.properties.getPropertiesBraille` |
+| `braille.getFocusContextRegions` | `braille.regions.focus.getFocusContextRegions` |
+| `braille.getFocusRegions` | `braille.regions.focus.getFocusRegions` |
+| `braille.invalidateCachedFocusAncestors` | `braille.regions.focus.invalidateCachedFocusAncestors` |
+| `braille.BrailleBuffer` | `braille.buffers.BrailleBuffer` |
+| `braille.BrailleHandler` | `braille.brailleHandler.BrailleHandler` |
+| `braille.formatCellsForLog` | `braille.brailleHandler.formatCellsForLog` |
+| `braille.FALLBACK_TABLE` | `braille.brailleHandler.FALLBACK_TABLE` |
+| `braille.roleLabels` | `braille.labels.roleLabels` |
+| `braille.positiveStateLabels` | `braille.labels.positiveStateLabels` |
+| `braille.negativeStateLabels` | `braille.labels.negativeStateLabels` |
+| `braille.landmarkLabels` | `braille.labels.landmarkLabels` |
+| `braille.FormatTagDelimiter` | `braille.formatting.FormatTagDelimiter` |
+| `braille.FormattingMarker` | `braille.formatting.FormattingMarker` |
+| `braille.fontAttributeFormattingMarkers` | `braille.formatting.fontAttributeFormattingMarkers` |
+| `braille.getParagraphStartMarker` | `braille.formatting.getParagraphStartMarker` |
+| `braille.AUTO_DISPLAY_NAME` | `braille.constants.AUTO_DISPLAY_NAME` |
+| `braille.AUTOMATIC_PORT` | `braille.constants.AUTOMATIC_PORT` |
+| `braille.BLUETOOTH_PORT` | `braille.constants.BLUETOOTH_PORT` |
+| `braille.USB_PORT` | `braille.constants.USB_PORT` |
+| `braille.NO_BRAILLE_DISPLAY_NAME` | `braille.constants.NO_BRAILLE_DISPLAY_NAME` |
+| `braille.CONTINUATION_SHAPE` | `braille.constants.CONTINUATION_SHAPE` |
+| `braille.CURSOR_SHAPES` | `braille.constants.CURSOR_SHAPES` |
+| `braille.SELECTION_SHAPE` | `braille.constants.SELECTION_SHAPE` |
+| `braille.END_OF_BRAILLE_OUTPUT_SHAPE` | `braille.constants.END_OF_BRAILLE_OUTPUT_SHAPE` |
+| `braille.INPUT_START_IND` | `braille.constants.INPUT_START_IND` |
+| `braille.INPUT_END_IND` | `braille.constants.INPUT_END_IND` |
+| `braille.TEXT_SEPARATOR` | `braille.constants.TEXT_SEPARATOR` |
+| `braille.CONTEXTPRES_*` | `braille.constants.CONTEXTPRES_*` |
+| `braille.focusContextPresentations` | `braille.constants.focusContextPresentations` |
+| `braille.pre_writeCells` | `braille.extensions.pre_writeCells` |
+| `braille.filter_displaySize` | `braille.extensions.filter_displaySize` |
+| `braille.filter_displayDimensions` | `braille.extensions.filter_displayDimensions` |
+| `braille.displaySizeChanged` | `braille.extensions.displaySizeChanged` |
+| `braille.displayChanged` | `braille.extensions.displayChanged` |
+| `braille.decide_enabled` | `braille.extensions.decide_enabled` |
+| `braille.BrailleMode` | `config.configFlags.BrailleMode` |
+| `braille.TetherTo` | `config.configFlags.TetherTo` |
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
@@ -52,15 +168,13 @@ Liblouis has been updated with new Italian and Estonian braille tables.
 
 When resetting NVDA to factory defaults, an Undo button is now available to restore the previous configuration.
 
-### Important notes
-
 ### New Features
 
 * Magnifier:
   * NVDA now includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen. (#19228, @Boumtchack)
   * The magnifier supports various zoom levels, color filters (normal, grayscale, inverted), and different focus tracking modes.
   * Color filters can help users with visual impairments or light sensitivity by inverting or desaturating screen colors.
-  * A spotlight mode is available for presentations or focused reading tasks.
+  * A command allows temporarily showing an overview of the entire screen.
   * All magnifier settings can be configured in a new "Magnifier" panel in NVDA Settings.
   * The magnifier cannot be used simultaneously with Screen Curtain for security reasons.
 * Speech:
@@ -110,6 +224,7 @@ This is more noticeable for Windows releases which are enablement packages on to
 * Added an advanced setting to opt regular expression speech dictionary entries into a more modern [`regex`](https://pypi.org/project/regex/) engine.
 This provides Unicode-aware `\w` and `\b` and additional regex features.
 The setting is disabled by default. (#20013, @LeonarddeR)
+* The "Type" radio buttons in the "Add Dictionary Entry" dialog are now arranged vertically rather than horizontally. (#19657)
 
 ### Bug Fixes
 
@@ -123,6 +238,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 * The "Toggles on and off if the screen layout is preserved while rendering the document content" item in the "Browse mode" category of the Input Gestures dialog now behaves correctly. (#18378)
 * In Microsoft Word with UIA enabled, page changes are now correctly announced when navigating table rows that span multiple pages. (#19386, @akj)
 * Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)
+* In Excel, when visual highlight is enabled, the focused cell is now correctly highlighted. (#19641, @CyrilleB79)
 * Braille should no longer stop following focus when moving around in the Microsoft Copilot application. (#19646, @Emil-18)
 * The `NVDA+k` command now correctly reports the destination of links containing formatted text, such as bold or italics. (#19428, @Cary-rowen)
 * Capital indicators are now correctly announced when selecting single characters. (#19505, @cary-rowen)
@@ -131,6 +247,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 * Fixed NVDA freezing when navigating in JetBrains IDEs. (#16741, @christopherpross)
 * Speech dictionary entries of type Whole word now correctly handle words containing Unicode combining marks (e.g. Hebrew niqqud, Arabic harakat). (#20013, @LeonarddeR)
   * In particular, Whole word entries no longer incorrectly match inside larger words when those words contain combining marks.
+* Fixed a case which could cause NVDA to freeze while reading math in braille. (#20319, @AAClause)
 
 ### Changes for Developers
 
@@ -142,6 +259,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * uv to 0.11.7. (#19736, #19908, #19968)
   * Requests to 2.33.0. (#19877)
   * cryptography to 46.0.7. (#19877, #19968)
+  * Python to 3.13.13. (#20231, @dpy013)
 * A new parameter `redactSecrets` has been added to logging functions e.g. `log.debug`. (#19966)
   * When set to `True`, logging output will be sanitized to replace detected secrets with asterisks.
   * This is set to `False` by default for performance purposes.
@@ -165,6 +283,7 @@ Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`,
     * Added a `percentageToValue` function to convert a percentage to the corresponding configuration value.
     * Added a `clampedIncrementAndUpdateConfig` function to update a configuration value by applying a step, constrained within its valid range.
 * NVDA is now built with Visual Studio 2026. (#20203, @LeonarddeR)
+* Fixed a race condition in `nvdaController_speakSsml` with `asynchronous=False` where a `speechCanceled` signal fired between `queueFunction` returning and the synth thread executing the `CallbackCommand` would not be caught, causing the call to block indefinitely. (#20220, @LeonarddeR)
 
 #### Deprecations
 

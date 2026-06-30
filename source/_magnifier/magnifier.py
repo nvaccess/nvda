@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -8,13 +8,15 @@ Magnifier module.
 Implements the magnifier global class and its basic functionalities.
 """
 
-from typing import Callable
+from collections.abc import Callable
 from comtypes import COMError
 from logHandler import log
+from NVDAState import _TrackNVDAInitialization
 import wx
 import ui
 import speech
 import screenCurtain
+import mouseHandler
 import winUser
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
@@ -30,9 +32,10 @@ from .config import (
 	getZoomLevel,
 	getPanStep,
 	getFilter,
-	ZoomLevel,
 	isTrueCentered,
-	shouldKeepMouseCentered,
+	setZoomLevel,
+	ZoomLevel,
+	_isDebug,
 )
 from .utils.focusManager import FocusManager
 
@@ -164,24 +167,36 @@ class Magnifier:
 		log.debug("Display configuration changed, updating screen dimensions")
 		self.orientationState = orientationState
 
+	def _isBlockedByScreenCurtain(self) -> bool:
+		"""
+		Check if the screen curtain is active and block magnifier start accordingly.
+
+		Returns True if the magnifier should not start.
+		At startup, defers silently so the magnifier auto-restarts when the screen curtain is disabled.
+		"""
+		if not (screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled):
+			return False
+
+		if _TrackNVDAInitialization.isInitializationComplete():
+			log.debug("Screen curtain is active, cannot start magnifier")
+			message = pgettext(
+				"magnifier",
+				# Translators: Message when trying to enable magnifier while screen curtain is active
+				"Cannot enable magnifier. Please disable screen curtain first.",
+			)
+			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
+		else:
+			self._screenCurtainIsActive = True
+		return True
+
 	def _startMagnifier(self) -> None:
 		"""
 		Start the magnifier
 		"""
 		if self._isActive:
 			return
-		# Check if screen curtain is active - if so, block magnifier from starting
-		if screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled:
-			log.debug("Screen curtain is active, cannot start magnifier")
-
-			message = pgettext(
-				"magnifier",
-				# Translators: Message when trying to enable magnifier while screen curtain is active
-				"Cannot enable magnifier: screen curtain is active. Please disable screen curtain first.",
-			)
-			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
+		if self._isBlockedByScreenCurtain():
 			return
-
 		self._isActive = True
 		self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
 
@@ -198,8 +213,6 @@ class Magnifier:
 			self._managePanning()
 			if not self._isManualPanning:
 				self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
-			if shouldKeepMouseCentered():
-				self._keepMouseCentered()
 			self._doUpdate()
 			self._consecutiveErrors = 0
 			self._recoveryAttempts = 0
@@ -243,7 +256,8 @@ class Magnifier:
 		(e.g., reinitializing the Magnification API).
 		The base implementation resets the error counter and restarts the timer.
 		"""
-		log.info("Attempting base magnifier recovery")
+		if _isDebug():
+			log.debug("Attempting base magnifier recovery")
 		self._consecutiveErrors = 0
 		self._startTimer(self._updateMagnifier)
 
@@ -268,7 +282,7 @@ class Magnifier:
 				pgettext(
 					"magnifier",
 					# Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
-					"Magnifier is active, disabling it before enabling screen curtain",
+					"Disabling magnifier",
 				),
 			)
 			self._stopMagnifier()
@@ -286,7 +300,7 @@ class Magnifier:
 				pgettext(
 					"magnifier",
 					# Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
-					"Magnifier was active before screen curtain, re-enabling it",
+					"Re-enabling magnifier",
 				),
 			)
 			self._startMagnifier()
@@ -307,6 +321,7 @@ class Magnifier:
 			newZoom = int(self.zoomLevel - ZoomLevel.STEP_FACTOR)
 			if newZoom >= ZoomLevel.MIN_ZOOM:
 				self.zoomLevel = newZoom
+		setZoomLevel(int(self.zoomLevel))
 
 	def _pan(self, action: MagnifierAction) -> bool:
 		"""
@@ -358,13 +373,24 @@ class Magnifier:
 				self._isManualPanning = False
 		self._lastFocusCoordinates = focusCoordinates
 
-	def _keepMouseCentered(self) -> None:
+	def moveMouseToViewCenter(self) -> None:
 		"""
 		Move the mouse cursor to the center of the magnified view.
-		Subclasses may override this to adapt the behavior for specific modes.
+		Does not check for mouse button state, allowing use during drag-and-drop.
 		"""
-		centerX, centerY = self.currentCoordinates
-		winUser.setCursorPos(centerX, centerY)
+		center = self._computeMagnifiedViewCenter()
+		winUser.setCursorPos(center.x, center.y)
+		log.debug(f"Cursor manually repositioned to magnified view center ({center.x}, {center.y})")
+		mouseHandler.executeMouseMoveEvent(center.x, center.y)
+
+	def _computeMagnifiedViewCenter(self) -> Coordinates:
+		"""
+		Compute the coordinates of the center of the currently magnified view.
+		Subclasses must implement this method for their specific display mode.
+
+		:return: The (x, y) coordinates of the center of the magnified view
+		"""
+		raise NotImplementedError("Subclasses must implement this method")
 
 	def _startTimer(self, callback: Callable[[], None] = None) -> None:
 		"""
@@ -386,7 +412,8 @@ class Magnifier:
 				self._timer.Stop()
 			self._timer = None
 		else:
-			log.debug("no timer to stop")
+			if _isDebug():
+				log.debug("no timer to stop")
 
 	def _getMagnifierParameters(self, coordinates: Coordinates) -> MagnifierParameters:
 		"""

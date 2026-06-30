@@ -337,7 +337,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				names.add(_keyNames[0])
 			names.update(_dotNames[1 << i] for i in range(8) if (1 << i) & dots)
 		elif routing is not None:
-			self.routingIndex = routing
+			self.cellIndexes = [routing]
 			names.add("routing")
 		elif qtMod is not None:
 			names.update(_qtKeyNames[1 << i] for i in range(4) if (1 << i) & qtMod)

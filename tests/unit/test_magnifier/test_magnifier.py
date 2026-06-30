@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -39,6 +39,15 @@ class _TestMagnifier(unittest.TestCase):
 		self.mag_fs_patcher.stop()
 		self.mag_patcher.stop()
 
+	def _mockScreenCurtain(self, enabled: bool):
+		"""Patch screenCurtain module so .screenCurtain.enabled returns the given value."""
+		mock_instance = MagicMock()
+		mock_instance.enabled = enabled
+		patcher = patch("_magnifier.magnifier.screenCurtain")
+		mock_module = patcher.start()
+		self.addCleanup(patcher.stop)
+		mock_module.screenCurtain = mock_instance
+
 
 class TestMagnifier(_TestMagnifier):
 	"""Tests for the Magnifier class."""
@@ -48,6 +57,8 @@ class TestMagnifier(_TestMagnifier):
 		super().setUp()
 
 		self.magnifier = Magnifier()
+		self.magnifier.zoomLevel = 200  # Set a default zoom level for testing (2.0x)
+		self.magnifier.filterType = Filter.NORMAL  # Set a default filter type for testing
 		self.screenWidth = getPrimaryDisplayOrientation().width
 		self.screenHeight = getPrimaryDisplayOrientation().height
 
@@ -324,35 +335,34 @@ class TestMagnifier(_TestMagnifier):
 		edgeValue = edgeMap[edgeAttr]
 		centerValue = centerX if axis == "x" else centerY
 
-		with patch("_magnifier.magnifier.winUser.setCursorPos"):
-			# Test normal pan - movement succeeds (position changes)
-			hasMoved = self.magnifier._pan(action)
-			self.assertTrue(hasMoved)
-			currentValue = getattr(self.magnifier.currentCoordinates, axis)
-			self.assertEqual(currentValue, centerValue + direction * expectedPanPixels)
+		# Test normal pan - movement succeeds (position changes)
+		hasMoved = self.magnifier._pan(action)
+		self.assertTrue(hasMoved)
+		currentValue = getattr(self.magnifier.currentCoordinates, axis)
+		self.assertEqual(currentValue, centerValue + direction * expectedPanPixels)
 
-			# Test reaching edge - movement succeeds on first contact (position changes to edge)
-			if axis == "x":
-				self.magnifier.currentCoordinates = Coordinates(
-					edgeValue - direction * expectedPanPixels,
-					centerY,
-				)
-			else:
-				self.magnifier.currentCoordinates = Coordinates(
-					centerX,
-					edgeValue - direction * expectedPanPixels,
-				)
+		# Test reaching edge - movement succeeds on first contact (position changes to edge)
+		if axis == "x":
+			self.magnifier.currentCoordinates = Coordinates(
+				edgeValue - direction * expectedPanPixels,
+				centerY,
+			)
+		else:
+			self.magnifier.currentCoordinates = Coordinates(
+				centerX,
+				edgeValue - direction * expectedPanPixels,
+			)
 
-			hasMoved = self.magnifier._pan(action)
-			self.assertTrue(hasMoved)
-			currentValue = getattr(self.magnifier.currentCoordinates, axis)
-			self.assertEqual(currentValue, edgeValue)
+		hasMoved = self.magnifier._pan(action)
+		self.assertTrue(hasMoved)
+		currentValue = getattr(self.magnifier.currentCoordinates, axis)
+		self.assertEqual(currentValue, edgeValue)
 
-			# Test trying to pan beyond edge - movement fails (already at edge, no movement)
-			hasMoved = self.magnifier._pan(action)
-			self.assertFalse(hasMoved)
-			currentValue = getattr(self.magnifier.currentCoordinates, axis)
-			self.assertEqual(currentValue, edgeValue)
+		# Test trying to pan beyond edge - movement fails (already at edge, no movement)
+		hasMoved = self.magnifier._pan(action)
+		self.assertFalse(hasMoved)
+		currentValue = getattr(self.magnifier.currentCoordinates, axis)
+		self.assertEqual(currentValue, edgeValue)
 
 	def _testPanToEdge(self, action: MagnifierAction, axis: str, edgeAttr: str):
 		"""
@@ -367,18 +377,17 @@ class TestMagnifier(_TestMagnifier):
 		edgeMap = {"left": minX, "right": maxX, "top": minY, "bottom": maxY}
 		edgeValue = edgeMap[edgeAttr]
 
-		with patch("_magnifier.magnifier.winUser.setCursorPos"):
-			# Test jump to edge - movement succeeds (moves to edge)
-			hasMoved = self.magnifier._pan(action)
-			self.assertTrue(hasMoved)
-			currentValue = getattr(self.magnifier.currentCoordinates, axis)
-			self.assertEqual(currentValue, edgeValue)
+		# Test jump to edge - movement succeeds (moves to edge)
+		hasMoved = self.magnifier._pan(action)
+		self.assertTrue(hasMoved)
+		currentValue = getattr(self.magnifier.currentCoordinates, axis)
+		self.assertEqual(currentValue, edgeValue)
 
-			# Test trying to pan to edge again - movement fails (already at edge, no movement)
-			hasMoved = self.magnifier._pan(action)
-			self.assertFalse(hasMoved)
-			currentValue = getattr(self.magnifier.currentCoordinates, axis)
-			self.assertEqual(currentValue, edgeValue)
+		# Test trying to pan to edge again - movement fails (already at edge, no movement)
+		hasMoved = self.magnifier._pan(action)
+		self.assertFalse(hasMoved)
+		currentValue = getattr(self.magnifier.currentCoordinates, axis)
+		self.assertEqual(currentValue, edgeValue)
 
 	def testPanLeft(self):
 		"""Pan left and detect edge limit."""
@@ -473,12 +482,10 @@ class TestMagnifier(_TestMagnifier):
 		self.assertFalse(self.magnifier._isManualPanning)
 		self.assertEqual(self.magnifier._lastFocusCoordinates, focusB)
 
-	def testKeepMouseCentered(self):
-		"""Base _keepMouseCentered moves cursor to currentCoordinates."""
-		self.magnifier.currentCoordinates = Coordinates(640, 360)
-		with patch("_magnifier.magnifier.winUser.setCursorPos") as mockSetCursor:
-			self.magnifier._keepMouseCentered()
-			mockSetCursor.assert_called_once_with(640, 360)
+	def testComputeMagnifiedViewCenterRaisesNotImplemented(self):
+		"""Base _computeMagnifiedViewCenter must raise NotImplementedError."""
+		with self.assertRaises(NotImplementedError):
+			self.magnifier._computeMagnifiedViewCenter()
 
 	def testStartTimer(self):
 		"""Starting the timer."""
@@ -546,3 +553,63 @@ class TestMagnifier(_TestMagnifier):
 			validCoords = Coordinates(centerX, centerY)
 			self.magnifier.currentCoordinates = validCoords
 			self.assertEqual(self.magnifier.currentCoordinates, validCoords)
+
+	def testStartBlockedByScreenCurtain(self):
+		"""When screen curtain is active, _startMagnifier must not set _isActive."""
+		self._mockScreenCurtain(enabled=True)
+		with patch("NVDAState._TrackNVDAInitialization.isInitializationComplete", return_value=True):
+			with patch("_magnifier.magnifier.ui.message"):
+				self.magnifier._startMagnifier()
+
+		self.assertFalse(self.magnifier._isActive)
+
+	def testStartBlockedAtStartupSetsFlag(self):
+		"""At NVDA startup, screen curtain blocks silently and sets _screenCurtainIsActive."""
+		self._mockScreenCurtain(enabled=True)
+		with patch("NVDAState._TrackNVDAInitialization.isInitializationComplete", return_value=False):
+			with patch("_magnifier.magnifier.ui.message") as mock_message:
+				self.magnifier._startMagnifier()
+
+		self.assertFalse(self.magnifier._isActive)
+		self.assertTrue(self.magnifier._screenCurtainIsActive)
+		mock_message.assert_not_called()
+
+	def testOnScreenCurtainEnabledStopsMagnifier(self):
+		"""When screen curtain is enabled while magnifier is active, magnifier stops."""
+		self.magnifier._isActive = True
+
+		with patch("_magnifier.magnifier.ui.message"):
+			self.magnifier.onScreenCurtainEnabled()
+
+		self.assertFalse(self.magnifier._isActive)
+		self.assertTrue(self.magnifier._screenCurtainIsActive)
+
+	def testOnScreenCurtainEnabledWhenInactive(self):
+		"""When screen curtain is enabled while magnifier is already inactive, _screenCurtainIsActive is False."""
+		self.assertFalse(self.magnifier._isActive)
+
+		self.magnifier.onScreenCurtainEnabled()
+
+		self.assertFalse(self.magnifier._screenCurtainIsActive)
+
+	def testOnScreenCurtainDisabledRestartsMagnifier(self):
+		"""When screen curtain is disabled and _screenCurtainIsActive is True, magnifier restarts."""
+		self.magnifier._screenCurtainIsActive = True
+		self.magnifier._startMagnifier = MagicMock()
+		self.magnifier._updateMagnifier = MagicMock()
+
+		with patch("_magnifier.magnifier.ui.message"):
+			self.magnifier.onScreenCurtainDisabled()
+
+		self.magnifier._startMagnifier.assert_called_once()
+		self.magnifier._updateMagnifier.assert_called_once()
+		self.assertFalse(self.magnifier._screenCurtainIsActive)
+
+	def testOnScreenCurtainDisabledDoesNothingWhenFlagIsFalse(self):
+		"""When screen curtain is disabled but _screenCurtainIsActive is False, nothing happens."""
+		self.magnifier._screenCurtainIsActive = False
+		self.magnifier._startMagnifier = MagicMock()
+
+		self.magnifier.onScreenCurtainDisabled()
+
+		self.magnifier._startMagnifier.assert_not_called()
