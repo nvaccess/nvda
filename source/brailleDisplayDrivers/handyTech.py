@@ -283,7 +283,7 @@ class AtcMixin(object):
 				f"Unexpected ATC reading position packet with length {len(packet)}: {packet!r}",
 			)
 			return
-		reading_position = packet[1]
+		readingPosition = packet[1]
 		elapsed_since_refresh = time.monotonic() - self._lastRefreshTime
 		is_settling_after_refresh = elapsed_since_refresh < self.READ_SUPPRESS_AFTER_REFRESH_SECONDS
 		if reading_position == self.UNKNOWN_READING_POSITION:
