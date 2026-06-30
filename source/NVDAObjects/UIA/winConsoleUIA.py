@@ -455,9 +455,8 @@ class _DiffBasedWinTerminalUIA(EnhancedTermTypedCharSupport):
 	new text.
 	"""
 
-	def _get__caretMovementTimeoutMultiplier(self):
-		"Windows Terminal sessions can take a while to update the UIA caret. (#19503)"
-		return 3
+	#: Caret updates can take a while, particularly over remote connections such as SSH. (#19503)
+	_caretMovementTimeoutMultiplier = 3.0
 
 	def event_UIA_notification(self, **kwargs):
 		"Block notification events when diffing to prevent double reporting."
@@ -470,9 +469,8 @@ class _NotificationsBasedWinTerminalUIA(UIA):
 	events provided by the application to speak new text.
 	"""
 
-	def _get__caretMovementTimeoutMultiplier(self):
-		"Windows Terminal sessions can take a while to update the UIA caret. (#19503)"
-		return 3
+	#: Caret updates can take a while, particularly over remote connections such as SSH. (#19503)
+	_caretMovementTimeoutMultiplier = 3.0
 
 	#: Override the role, which is controlTypes.Role.STATICTEXT by default.
 	role = controlTypes.Role.TERMINAL
