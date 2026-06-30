@@ -112,6 +112,10 @@ MODEL_MODULAR_40 = b"\x89"
 MODEL_ACTIVATOR = b"\xa4"
 MODEL_ACTIVATOR_PRO_64 = b"\xa6"
 MODEL_ACTIVATOR_PRO_80 = b"\xa8"
+MODEL_MY_BRAILLE_24 = b"\xb2"
+MODEL_MY_BRAILLE_40 = b"\xb4"
+MODEL_MY_BRAILLE_64 = b"\xb6"
+MODEL_MY_BRAILLE_80 = b"\xb8"
 
 # Key constants
 KEY_B1 = 0x03
@@ -619,6 +623,50 @@ class ActivatorPro80(ActivatorPro):
 	numCells = 80
 
 
+class MyBraille(
+	ActiveSplitMixin,
+	TimeSyncFirmnessMixin,
+	AtcMixin,
+	JoystickMixin,
+	TripleActionKeysMixin,
+	Model,
+):
+	genericName = "myBraille"
+
+	def _get_name(self):
+		return "{name} {cells}".format(name=self.genericName, cells=self.numCells)
+
+	def _get_keys(self) -> Dict[int, str]:
+		keys = super().keys
+		keys.update(
+			{
+				0x7A: "escape",
+				0x7B: "return",
+			},
+		)
+		return keys
+
+
+class MyBraille24(MyBraille):
+	deviceId = MODEL_MY_BRAILLE_24
+	numCells = 24
+
+
+class MyBraille40(MyBraille):
+	deviceId = MODEL_MY_BRAILLE_40
+	numCells = 40
+
+
+class MyBraille64(MyBraille):
+	deviceId = MODEL_MY_BRAILLE_64
+	numCells = 64
+
+
+class MyBraille80(MyBraille):
+	deviceId = MODEL_MY_BRAILLE_80
+	numCells = 80
+
+
 def _allSubclasses(cls):
 	"""List all direct and indirect subclasses of cls
 
@@ -718,6 +766,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				"VID_1FE4&PID_00A4",  # Activator
 				"VID_1FE4&PID_00A6",  # Activator Pro 64
 				"VID_1FE4&PID_00A8",  # Activator Pro 80
+				"VID_1FE4&PID_00B2",  # myBraille 24
+				"VID_1FE4&PID_00B4",  # myBraille 40
+				"VID_1FE4&PID_00B6",  # myBraille 64
+				"VID_1FE4&PID_00B8",  # myBraille 80
 			},
 		)
 
@@ -745,6 +797,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					"Braille Wave BW",
 					"Easy Braille EBR",
 					"Activator",
+					"myBraille",
 				)
 			),
 		)
