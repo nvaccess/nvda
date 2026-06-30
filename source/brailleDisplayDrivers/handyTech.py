@@ -285,30 +285,30 @@ class AtcMixin(object):
 			return
 		readingPosition = packet[1]
 		elapsedSinceRefresh = time.monotonic() - self._lastRefreshTime
-		isSettlingAfterRefresh = elapsed_since_refresh < self.READ_SUPPRESS_AFTER_REFRESH_SECONDS
-		if reading_position == self.UNKNOWN_READING_POSITION:
-			if is_settling_after_refresh:
+		isSettlingAfterRefresh = elapsedSinceRefresh < self.READ_SUPPRESS_AFTER_REFRESH_SECONDS
+		if readingPosition == self.UNKNOWN_READING_POSITION:
+			if isSettlingAfterRefresh:
 				return
 			self._readingPosition = None
 			return
-		if reading_position >= self.numCells:
+		if readingPosition >= self.numCells:
 			log.debugWarning(
 				f"Display has {self.numCells} cells but reported an ATC "
-				f"reading position of {reading_position}",
+				f"reading position of {readingPosition}",
 			)
 			return
 
 		# During refresh settling, preserve confirmed state. Real touches tend
 		# to remain near the previous cell, while refresh noise often appears
 		# as a release, a new touch from nowhere, or a large jump.
-		if is_settling_after_refresh:
+		if isSettlingAfterRefresh:
 			if self._readingPosition is None:
 				return
-			if abs(reading_position - self._readingPosition) > self.READING_POSITION_MAX_JUMP_DURING_SETTLE:
+			if abs(readingPosition - self._readingPosition) > self.READING_POSITION_MAX_JUMP_DURING_SETTLE:
 				return
-		if reading_position == self._readingPosition:
+		if readingPosition == self._readingPosition:
 			return
-		self._readingPosition = reading_position
+		self._readingPosition = readingPosition
 
 
 class TimeSyncFirmnessMixin(object):
