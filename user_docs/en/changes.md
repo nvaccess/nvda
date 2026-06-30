@@ -40,7 +40,8 @@
 * NVDA now announces heading, paragraph, list, and list item children inside webpage alerts (`role="alert"`). (#14990, @mehm8128)
 * After marking the start of text for review cursor copy with `NVDA+f9`, moving with Find or Go To no longer causes `NVDA+f10` to report that no start marker is set. (#13864, @Cary-rowen)
 * NVDA should no longer fail to navigate tables, read editable text fields or enable native app selection mode in Web browsers after a random period of time. (#16020)
-* NVDA should no longer cause File Explorer  or other applications to crash when NvDA is exited or restarted. (#16207)
+* NVDA should no longer cause File Explorer or other applications to crash when NVDA is exited or restarted. (#16207)
+* Focus is no longer silent on list items in Qt-based applications (such as Telegram Desktop) when the item exposes the UIA SelectionItem pattern without an associated action interface. (#20255, @rezabakhshilaktasaraei)
 
 ### Changes for Developers
 
@@ -246,7 +247,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 * Fixed NVDA freezing when navigating in JetBrains IDEs. (#16741, @christopherpross)
 * Speech dictionary entries of type Whole word now correctly handle words containing Unicode combining marks (e.g. Hebrew niqqud, Arabic harakat). (#20013, @LeonarddeR)
   * In particular, Whole word entries no longer incorrectly match inside larger words when those words contain combining marks.
-* Focus is no longer silent on list items in Qt-based applications (such as Telegram Desktop) when the item exposes the UIA SelectionItem pattern without an associated action interface. (#20255, @rezabakhshilaktasaraei)
+* Fixed a case which could cause NVDA to freeze while reading math in braille. (#20319, @AAClause)
 
 ### Changes for Developers
 
