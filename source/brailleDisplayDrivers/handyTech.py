@@ -284,7 +284,7 @@ class AtcMixin(object):
 			)
 			return
 		readingPosition = packet[1]
-		elapsed_since_refresh = time.monotonic() - self._lastRefreshTime
+		elapsedSinceRefresh = time.monotonic() - self._lastRefreshTime
 		is_settling_after_refresh = elapsed_since_refresh < self.READ_SUPPRESS_AFTER_REFRESH_SECONDS
 		if reading_position == self.UNKNOWN_READING_POSITION:
 			if is_settling_after_refresh:
