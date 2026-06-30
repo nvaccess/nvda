@@ -266,7 +266,7 @@ class AtcMixin(object):
 	def __init__(self, display):
 		super().__init__(display)
 		self._readingPosition: int | None = None
-		self._lastRefreshTime = 0.0
+		self._lastRefreshTime: float = 0.0
 
 	def postInit(self):
 		super().postInit()
