@@ -48,6 +48,21 @@ from .preferences import applyUserPreferences
 from .speech import convertSSMLTextForNVDA
 
 
+class MathCATError(Exception):
+	"""MathCAT failure, including Rust panics from PyO3."""
+
+
+def _callMathCAT(func, /, *args, **kwargs):
+	"""Call libmathcat, translating PyO3 panics into MathCATError."""
+	try:
+		return func(*args, **kwargs)
+	except BaseException as exc:
+		# PanicException is BaseException; pyo3_runtime is not importable in NVDA's layout.
+		if type(exc).__name__ == "PanicException" and type(exc).__module__ == "pyo3_runtime":
+			raise MathCATError(str(exc)) from exc
+		raise
+
+
 class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 	"""An NVDA object used to interact with MathML."""
 
@@ -98,7 +113,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		region: braille.Region = braille.Region()
 		region.focusToHardLeft = True
 		try:
-			region.rawText = libmathcat.GetBraille("")
+			region.rawText = _callMathCAT(libmathcat.GetBraille, "")
 		except Exception:
 			log.exception()
 			# Translators: this message alerts users to an error in brailling math.
@@ -129,7 +144,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 
 		try:
 			navNode: tuple[str, int] = libmathcat.GetNavigationMathMLId()
-			brailleChars = libmathcat.GetBraille(navNode[0])
+			brailleChars = _callMathCAT(libmathcat.GetBraille, navNode[0])
 			region: braille.Region = braille.Region()
 			region.rawText = brailleChars
 			region.focusToHardLeft = True
@@ -183,7 +198,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 				# save the old braille code, set the new one, get the braille, then reset the code
 				savedBrailleCode: str = libmathcat.GetPreference("BrailleCode")
 				libmathcat.SetPreference("BrailleCode", "LaTeX" if copyAs == "latex" else "ASCIIMath")
-				textToCopy = libmathcat.GetNavigationBraille()
+				textToCopy = _callMathCAT(libmathcat.GetNavigationBraille)
 				libmathcat.SetPreference("BrailleCode", savedBrailleCode)
 				if copyAs == "asciimath":
 					copyAs = "ASCIIMath"  # speaks better in at least some voices
@@ -389,7 +404,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 			ui.message(pgettext("math", "Illegal MathML found."))
 			libmathcat.SetMathML("<math></math>")
 		try:
-			return libmathcat.GetBraille("")
+			return _callMathCAT(libmathcat.GetBraille, "")
 		except Exception:
 			log.exception()
 			# Translators: this message reports an error in brailling math.
