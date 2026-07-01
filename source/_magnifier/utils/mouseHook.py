@@ -18,8 +18,8 @@ from logHandler import log
 from winBindings import user32
 from winInputHook import MSLLHOOKSTRUCT, HC_ACTION, WH_MOUSE_LL
 
-WM_MOUSEMOVE: int = 0x0200  # the mouse moved
-_WM_QUIT: int = 0x0012  # stop the message loop (sent by stop())
+WM_MOUSEMOVE: int = 0x0200
+WM_QUIT: int = 0x0012
 
 
 class MagnifierMouseHook:
@@ -30,16 +30,16 @@ class MagnifierMouseHook:
 		self._thread: threading.Thread | None = None
 		self._cCallback = None  # kept alive to prevent GC of the ctypes callback
 		self._hookReady = threading.Event()
+		self._hookInstalled: bool = False
 
 	def start(self) -> None:
-		self._hookReady.clear()
 		self._thread = threading.Thread(target=self._run, name="magnifierMouseHook", daemon=True)
 		self._thread.start()
 		self._hookReady.wait(timeout=1.0)
 
 	def stop(self) -> None:
 		if self._thread:
-			user32.PostThreadMessage(self._thread.ident, _WM_QUIT, 0, 0)
+			user32.PostThreadMessage(self._thread.ident, WM_QUIT, 0, 0)
 			self._thread.join(timeout=1.0)
 			self._thread = None
 		self._cCallback = None
@@ -56,13 +56,14 @@ class MagnifierMouseHook:
 
 		self._cCallback = user32.HOOKPROC(_onRawMouseEvent)
 		hookHandle = user32.SetWindowsHookEx(WH_MOUSE_LL, self._cCallback, None, 0)
+		self._hookInstalled = bool(hookHandle)
+		self._hookReady.set()
 		if not hookHandle:
 			log.error(f"Failed to install magnifier mouse hook (error {ctypes.GetLastError()})")
-		self._hookReady.set()
+			return
 
 		windowsMessage = MSG()
 		while user32.GetMessage(byref(windowsMessage), None, 0, 0):
 			pass
 
-		if hookHandle:
-			user32.UnhookWindowsHookEx(hookHandle)
+		user32.UnhookWindowsHookEx(hookHandle)
