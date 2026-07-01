@@ -4283,6 +4283,7 @@ The dialog also contains Add, Edit, Remove and Remove all buttons.
 
 To add a new rule to the dictionary, press the Add button, and fill in the fields in the dialog box that appears and then press Ok.
 You will then see your new rule in the list of rules.
+As well as the edit and remove buttons, you can also manage individual rules by opening a context menu on an entry in the list (press the Applications key on your keyboard, shift+f10, space bar, or right/left-click), which provides options to Edit or Remove the selected rule.
 However, to make sure your rule is actually saved, make sure to press Ok to exit the dictionary dialog completely once you have finished adding/editing rules.
 
 The rules for NVDA's speech dictionaries allow you to change one string of characters into another.

@@ -18,6 +18,7 @@
   * In modes that show a continuation mark, when a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
   * The "At word or syllable boundaries" option uses hyphenation dictionaries to split long words at syllable boundaries when they do not fit on the display.
 * Magnifier: A new unassigned command has been added to move the mouse cursor to the center of the magnified view. (#20127, @CyrilleB79)
+* Added context menu to the list entries of the Speech Dictionaries dialog, Maximizing eas of access to the list entries actions. (#20420, @amirmahdifard)
 
 ### Changes
 
