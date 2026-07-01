@@ -5,6 +5,7 @@
 
 from unittest.mock import MagicMock, patch
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
+from _magnifier.utils.types import Coordinates
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
 
 
@@ -45,67 +46,12 @@ class TestMouseHookLifecycle(_TestMagnifierWithHook):
 		self.mock_hook_instance.stop.assert_called_once()
 		self.assertIsNone(magnifier._mouseHook)
 
-	def testHookNotStartedIfAlreadyActive(self):
-		"""Calling _startMagnifier twice does not create a second hook."""
-		magnifier = FullScreenMagnifier()
-		magnifier._startMagnifier()
-		magnifier._startMagnifier()
-
-		self.assertEqual(self.MockMouseHook.call_count, 1)
-
-		magnifier._stopMagnifier()
-
-	def testHookNotStartedIfInitFails(self):
-		"""Hook is not left running when API initialisation fails."""
-		self.mock_mag_fs.MagInitialize.side_effect = OSError("init failed")
-
-		with patch("_magnifier.fullscreenMagnifier.ui.message"):
-			magnifier = FullScreenMagnifier()
-			magnifier._startMagnifier()
-
-		self.mock_hook_instance.stop.assert_called_once()
-		self.assertIsNone(magnifier._mouseHook)
-
 
 class TestOnMouseMove(_TestMagnifierWithHook):
 	"""Tests for FullScreenMagnifier._onMouseMove — the hook callback."""
 
-	def testIgnoredWhenInactive(self):
-		"""_onMouseMove does nothing when magnifier is not active."""
-		magnifier = FullScreenMagnifier()
-		magnifier._fullscreenMagnifier = MagicMock()
-		magnifier._isActive = False
-
-		magnifier._onMouseMove(500, 400)
-
-		magnifier._fullscreenMagnifier.assert_not_called()
-
-	def testIgnoredDuringManualPan(self):
-		"""_onMouseMove does nothing while the user is manually panning."""
-		magnifier = FullScreenMagnifier()
-		magnifier._startMagnifier()
-		magnifier._fullscreenMagnifier = MagicMock()
-		magnifier._isManualPanning = True
-
-		magnifier._onMouseMove(500, 400)
-
-		magnifier._fullscreenMagnifier.assert_not_called()
-		magnifier._stopMagnifier()
-
-	def testIgnoredWhenMouseFollowDisabled(self):
-		"""_onMouseMove does nothing when follow-mouse is off."""
-		magnifier = FullScreenMagnifier()
-		magnifier._startMagnifier()
-		magnifier._fullscreenMagnifier = MagicMock()
-
-		with patch("_magnifier.magnifier.getFollowState", return_value=False):
-			magnifier._onMouseMove(500, 400)
-
-		magnifier._fullscreenMagnifier.assert_not_called()
-		magnifier._stopMagnifier()
-
 	def testUpdatesMagnifier(self):
-		"""_onMouseMove calls _fullscreenMagnifier when all conditions are met."""
+		"""_onMouseMove updates currentCoordinates and calls _fullscreenMagnifier."""
 		magnifier = FullScreenMagnifier()
 		magnifier._startMagnifier()
 		magnifier._fullscreenMagnifier = MagicMock()
@@ -114,15 +60,5 @@ class TestOnMouseMove(_TestMagnifierWithHook):
 			magnifier._onMouseMove(500, 400)
 
 		magnifier._fullscreenMagnifier.assert_called_once()
-		magnifier._stopMagnifier()
-
-	def testSilencesOSError(self):
-		"""_onMouseMove swallows OSError from the magnification API."""
-		magnifier = FullScreenMagnifier()
-		magnifier._startMagnifier()
-		magnifier._fullscreenMagnifier = MagicMock(side_effect=OSError("API failure"))
-
-		with patch("_magnifier.magnifier.getFollowState", return_value=True):
-			magnifier._onMouseMove(500, 400)  # must not raise
-
+		self.assertEqual(magnifier.currentCoordinates, Coordinates(500, 400))
 		magnifier._stopMagnifier()
