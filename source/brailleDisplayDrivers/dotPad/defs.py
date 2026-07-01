@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2024 NV Access Limited
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2024-2026 NV Access Limited, Dot Incorporated, Bram Duvigneau
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
 import enum
@@ -130,3 +130,23 @@ class DP_KeyGroup(enum.IntEnum):
 
 
 DP_CHECKSUM_BASE = 0xA5
+
+DP_MAX_PACKET_SIZE = 512
+"""Largest plausible total packet size (sync bytes + length header + body).
+
+Real DotPad packets are far smaller; a declared length beyond this signals a
+desync or false header.
+"""
+
+DP_MIN_PACKET_SIZE = 4 + 5
+"""Smallest valid total packet size.
+
+A 4-byte header (2 sync bytes + 2-byte length) plus the 5-byte minimum body:
+destination + 2-byte command + sequence number + checksum. A declared length
+below this signals a desync or false header.
+"""
+
+# BLE service and characteristic UUIDs
+BLE_SERVICE_UUID = "49535343-fe7d-4ae5-8fa9-9fafd205e455"
+BLE_READ_CHARACTERISTIC_UUID = "49535343-1e4d-4bd9-ba61-23c647249616"
+BLE_WRITE_CHARACTERISTIC_UUID = "49535343-8841-43f4-a8d4-ecbe34729bb3"

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2024-2025 NV Access Limited, Dot Incorporated, Bram Duvigneau
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2024-2026 NV Access Limited, Dot Incorporated, Bram Duvigneau
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
 import struct
@@ -14,6 +14,7 @@ import inputCore
 import braille
 import winBindings.kernel32
 import hwIo
+import hwIo.ble
 import bdDetect
 from logHandler import log
 from autoSettingsUtils.driverSetting import DriverSetting
@@ -24,12 +25,17 @@ from .defs import (
 	DP_Command,
 	DP_DisplayResponse,
 	DP_Features,
+	DP_MAX_PACKET_SIZE,
+	DP_MIN_PACKET_SIZE,
 	DP_PacketSeqFlag,
 	DP_PacketSyncByte,
 	DP_PerkinsKey,
 	DP_BoardInformation,
 	DP_CHECKSUM_BASE,
 	DP_KeyGroup,
+	BLE_SERVICE_UUID,
+	BLE_READ_CHARACTERISTIC_UUID,
+	BLE_WRITE_CHARACTERISTIC_UUID,
 )
 
 
@@ -98,6 +104,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		return braille.getSerialPorts()
 
 	@classmethod
+	def check(cls) -> bool:
+		"""DotPad is always available on Windows 10/11.
+
+		This allows DotPad to appear in the braille display list even when
+		no devices are currently detected, enabling users to manually select
+		BLE devices after the GUI triggers a scan.
+
+		BLE is always supported on Windows 10/11. Even without BLE hardware,
+		the scanner will run without errors and simply return no results.
+		"""
+		return True
+
+	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
 		driverRegistrar.addUsbDevices(
 			bdDetect.ProtocolType.SERIAL,
@@ -105,6 +124,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				"VID_0403&PID_6010",  # FTDI Dual RS232 as used in DotPad320A
 			},
 		)
+		driverRegistrar.addBleDevices(cls._isBleDotPad)
+
+	@staticmethod
+	def _isBleDotPad(match: bdDetect.DeviceMatch) -> bool:
+		"""Check if a BLE device is a DotPad display.
+
+		:param match: DeviceMatch object containing BLE device information.
+		:return: True if device ID (name or address) starts with "DotPad".
+		"""
+		return match.id.startswith("DotPad")
 
 	supportedSettings = [
 		DriverSetting(
@@ -158,20 +187,63 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return response.data
 		return b""
 
-	def _onReceive(self, header1: bytes):
-		if ord(header1) != DP_PacketSyncByte.SYNC1:
-			raise RuntimeError(f"Bad {header1=}")
-		header2 = self._dev.read(1)
-		if ord(header2) != DP_PacketSyncByte.SYNC2:
-			raise RuntimeError(f"bad {header2=}")
-		length = struct.unpack(">H", self._dev.read(2))[0]
-		packetBody = self._dev.read(length)
-		dest, cmdHigh, cmdLow, seqNum, *data, checksum = packetBody
+	def _onReceive(self, data: bytes) -> None:
+		"""Handle received data from either Serial (1 byte) or BLE (full packets).
+
+		Buffers incoming data and extracts complete packets as they arrive.
+		Works with both byte-at-a-time delivery (Serial) and packet-based
+		delivery (BLE).
+
+		:param data: Received data (1 byte for Serial, variable length for BLE).
+		"""
+		self._receiveBuffer.extend(data)
+
+		while len(self._receiveBuffer) >= 4:
+			if self._receiveBuffer[0] != DP_PacketSyncByte.SYNC1:
+				log.debug(f"Bad first sync byte: 0x{self._receiveBuffer[0]:02x}, discarding")
+				self._receiveBuffer.pop(0)
+				continue
+
+			if self._receiveBuffer[1] != DP_PacketSyncByte.SYNC2:
+				log.debug(f"Bad second sync byte: 0x{self._receiveBuffer[1]:02x}, discarding")
+				self._receiveBuffer.pop(0)
+				continue
+
+			packetLength = struct.unpack(">H", bytes(self._receiveBuffer[2:4]))[0]
+			totalLength = 4 + packetLength
+
+			# Real DotPad packets fall within a narrow size range. A declared length
+			# outside the plausible bounds means we locked onto a false header (line
+			# noise or desync): discard one byte and resync rather than stalling on a
+			# huge bogus length or trying to unpack a runt packet.
+			if not DP_MIN_PACKET_SIZE <= totalLength <= DP_MAX_PACKET_SIZE:
+				log.debug(f"Implausible length {packetLength}, resyncing")
+				self._receiveBuffer.pop(0)
+				continue
+
+			if len(self._receiveBuffer) < totalLength:
+				break
+
+			packet = bytes(self._receiveBuffer[:totalLength])
+			self._receiveBuffer = self._receiveBuffer[totalLength:]
+
+			try:
+				self._processPacket(packet[4:])
+			except (RuntimeError, ValueError, struct.error):
+				log.exception("Error processing packet")
+
+	def _processPacket(self, packetBody: bytes) -> None:
+		"""Process a complete packet body (after sync bytes and length header).
+
+		:param packetBody: The packet body containing dest, command, sequence,
+			data, and checksum.
+		"""
+		dest, cmdFirstByte, cmdSecondByte, seqNum, *data, checksum = packetBody
 		data = bytes(data)
 		if checksum != functools.reduce(operator.xor, packetBody[:-1], DP_CHECKSUM_BASE):
 			raise RuntimeError("bad checksum")
-		cmd = DP_Command(struct.unpack(">H", bytes([cmdHigh, cmdLow]))[0])
-		log.debug(f"Received responce  {cmd.name}, {dest=}, {seqNum=}, data={bytes(data)}")
+		cmd = DP_Command(struct.unpack(">H", bytes([cmdFirstByte, cmdSecondByte]))[0])
+		log.debug(f"Received response {cmd.name}, {dest=}, {seqNum=}, data={bytes(data)}")
 		if cmd.name.startswith("RSP_"):
 			self._recordCommandResponse(cmd, data, dest, seqNum)
 		elif cmd.name.startswith("NTF_"):
@@ -265,17 +337,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._keysPressed.clear()
 
 	def __init__(self, port: str = "auto"):
-		if port == "auto":
-			# Try autodetection
-			for portType, portId, port, portInfo in self._getTryPorts(port):
-				if self._tryConnect(port):
-					break
-			else:
-				raise RuntimeError("No DotPad device found")
+		self._receiveBuffer: bytearray = bytearray()
+		# _getTryPorts handles all port types: "auto", "ble:DeviceName@Address", COM ports, etc.
+		# It yields DeviceMatch objects with type, id, port, and deviceInfo fields.
+		for match in self._getTryPorts(port):
+			if self._tryConnect(match.port, match.type, match.deviceInfo):
+				break
 		else:
-			# Direct port connection
-			if not self._tryConnect(port):
-				raise RuntimeError(f"Could not connect to DotPad on port {port}")
+			raise RuntimeError("No DotPad device found")
 
 		super().__init__()
 
@@ -287,31 +356,53 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		for group in DP_KeyGroup:
 			self._keyGroupsReleased[group] = True
 
-	def _tryConnect(self, port: str) -> bool:
+	def _tryConnect(self, port: str, portType: str, portInfo: dict) -> bool:
 		"""Try to connect to a DotPad device on the given port.
 
-		Attempts to open a serial connection to the specified port and verifies that
-		the connected device is a DotPad. Updates internal state with device model,
-		board information, and braille destination if successful.
+		Attempts to open a serial or BLE connection and verifies that the connected
+		device is a DotPad. Updates internal state with device model, board
+		information, and braille destination if successful.
 
 		Side effects:
-			- Sets self._dev to the opened serial device on success.
+			- Sets self._dev to the opened device on success.
 			- Sets self.model and self._boardInformation based on the connected device.
 			- Sets self._brailleDestination depending on device features.
 			- Closes self._dev and resets related attributes on failure.
 
-		:param port: The port to connect to.
+		:param port: The port to connect to (COM port or BLE address).
+		:param portType: The protocol type (from bdDetect.ProtocolType).
+		:param portInfo: Additional port information dictionary.
 		:return: True if connection successful, False otherwise.
 		"""
+		# Start each probe with a clean buffer so stray bytes from a previously
+		# probed (non-DotPad) port can't corrupt this device's first response.
+		self._receiveBuffer.clear()
 		try:
-			self._dev = hwIo.Serial(
-				port=port,
-				baudrate=self.SERIAL_BAUD_RATE,
-				parity=self.SERIAL_PARITY,
-				timeout=self.timeout,
-				writeTimeout=self.timeout,
-				onReceive=self._onReceive,
-			)
+			if portType == bdDetect.ProtocolType.BLE:
+				address = portInfo.get("address") or port
+				# Prefer a BLEDevice from the scanner; this avoids implicit discovery.
+				device = hwIo.ble.findDeviceByAddress(address)
+				if device is None:
+					# Fallback: connect by address string (triggers implicit discovery in Bleak).
+					log.debug(f"BLE device {address} not in scan results, using address for connection")
+					device = address
+				self._dev = hwIo.ble.Ble(
+					device=device,
+					writeServiceUuid=BLE_SERVICE_UUID,
+					writeCharacteristicUuid=BLE_WRITE_CHARACTERISTIC_UUID,
+					readServiceUuid=BLE_SERVICE_UUID,
+					readCharacteristicUuid=BLE_READ_CHARACTERISTIC_UUID,
+					onReceive=self._onReceive,
+				)
+			else:
+				self._dev = hwIo.Serial(
+					port=port,
+					baudrate=self.SERIAL_BAUD_RATE,
+					parity=self.SERIAL_PARITY,
+					timeout=self.timeout,
+					writeTimeout=self.timeout,
+					onReceive=self._onReceive,
+				)
 			# Verify this is actually a DotPad device
 			self.model = self._requestDeviceName()
 			self._boardInformation = self._requestBoardInformation()
@@ -324,6 +415,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return True
 		except Exception:
 			# Clean up on failure
+			log.debugWarning("Failed to connect", exc_info=True)
 			try:
 				self._dev.close()
 			except Exception:
