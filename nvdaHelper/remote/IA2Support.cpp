@@ -175,17 +175,17 @@ void IA2Support_inProcess_initialize() {
 void IA2Support_inProcess_terminate() {
 	// This will do nothing if the hook isn't registered.
 	unregisterWinEventHook(IA2Support_winEventProcHook);
-	if (IA2InstallMap.size()  == 0) {
-		return;
-	}
 	for (auto& [threadId, data] : IA2InstallMap) {
 		//Check if the UI thread is still alive, if not there's nothing for us to do
 		if (WaitForSingleObject(data.uiThreadHandle, 0) == 0) {
+			CloseHandle(data.uiThreadHandle);
 			continue;
 		}
 		execInThread(threadId, uninstallIA2Support);
 		CloseHandle(data.uiThreadHandle);
 	}
+	clearInterfaceProxyBackups();
+	clearCOMProxyRegistrationCache();
 	// If NVDA is restarted and this dll doesn't unload before the new copy of NVDA
 	// loads, the same instance of this dll will be used, including its global
 	// variables. Thus, it's critical that we clear IA2InstallMap here, since it

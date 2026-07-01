@@ -4164,6 +4164,16 @@ This feature is available and enabled by default on Windows 10 versions 1607 and
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
 In untrusted environments, you may temporarily disable [speak typed characters](#KeyboardSettingsSpeakTypedCharacters) and [speak typed words](#KeyboardSettingsSpeakTypedWords) when entering passwords.
 
+##### Beep for skipped lines {#AdvancedSettingsBeepForSkippedLines}
+
+This setting controls whether NVDA plays a short beep when too many new lines arrive before they can all be reported.
+The beep indicates that some lines were skipped, and becomes slightly longer as more lines are skipped.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Disabled, Enabled |
+| Default | Enabled |
+
 ##### Diff algorithm {#DiffAlgo}
 
 This setting controls how NVDA determines the new text to speak in terminals.

@@ -11,6 +11,7 @@ Implements the magnifier global class and its basic functionalities.
 from collections.abc import Callable
 from comtypes import COMError
 from logHandler import log
+from NVDAState import _TrackNVDAInitialization
 import wx
 import ui
 import speech
@@ -166,24 +167,36 @@ class Magnifier:
 		log.debug("Display configuration changed, updating screen dimensions")
 		self.orientationState = orientationState
 
-	def _startMagnifier(self) -> None:
+	def _isBlockedByScreenCurtain(self) -> bool:
 		"""
-		Start the magnifier
-		"""
-		if self._isActive:
-			return
-		# Check if screen curtain is active - if so, block magnifier from starting
-		if screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled:
-			log.debug("Screen curtain is active, cannot start magnifier")
+		Check if the screen curtain is active and block magnifier start accordingly.
 
+		Returns True if the magnifier should not start.
+		At startup, defers silently so the magnifier auto-restarts when the screen curtain is disabled.
+		"""
+		if not (screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled):
+			return False
+
+		if _TrackNVDAInitialization.isInitializationComplete():
+			log.debug("Screen curtain is active, cannot start magnifier")
 			message = pgettext(
 				"magnifier",
 				# Translators: Message when trying to enable magnifier while screen curtain is active
 				"Cannot enable magnifier. Please disable screen curtain first.",
 			)
 			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
-			return
+		else:
+			self._screenCurtainIsActive = True
+		return True
 
+	def _startMagnifier(self) -> None:
+		"""
+		Start the magnifier
+		"""
+		if self._isActive:
+			return
+		if self._isBlockedByScreenCurtain():
+			return
 		self._isActive = True
 		self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
 

@@ -238,12 +238,13 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		self.mock_mag_fs.reset_mock()
 		magnifier._attemptRecovery()
 
-		# MagUninitialize: once best-effort at start + once in the dummy cycle finally block
+		# MagUninitialize: once best-effort uninit + once in _clearStaleApiState
 		self.assertEqual(self.mock_mag_fs.MagUninitialize.call_count, 2)
-		# MagInitialize: once in the dummy cycle + once for the real init
+		# MagInitialize: once in _clearStaleApiState + once for the real init
 		self.assertEqual(self.mock_mag_fs.MagInitialize.call_count, 2)
 		self.mock_mag_fs.MagSetFullscreenTransform.assert_called_once_with(magnifier.zoomLevel / 100.0, 0, 0)
-		self.mock_mag_fs.MagSetFullscreenColorEffect.assert_called_once()
+		# MagSetFullscreenColorEffect: once in _clearStaleApiState + once in _attemptRecovery
+		self.assertEqual(self.mock_mag_fs.MagSetFullscreenColorEffect.call_count, 2)
 		self.assertEqual(magnifier._consecutiveErrors, 0)
 		magnifier._startTimer.assert_called_once_with(magnifier._updateMagnifier)
 
@@ -289,14 +290,11 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		magnifier._stopMagnifier()
 
 
-class TestFullScreenMagnifierApiConflict(_TestMagnifier):
-	"""Tests for Windows Magnification API conflict detection at startup and during recovery."""
+class TestFullScreenMagnifierApi(_TestMagnifier):
+	"""Tests for FullScreenMagnifier interactions with the Windows Magnification API."""
 
 	def testCannotStartWhenWindowsMagnifierRunning(self):
-		"""
-		MagInitialize succeeds but MagSetFullscreenTransform fails: Windows Magnifier is running.
-		NVDA Magnifier must not start, the user must be notified, and no timer must be started.
-		"""
+		"""MagSetFullscreenTransform fails because Windows Magnifier is running: magnifier must not start."""
 		self.mock_mag_fs.MagSetFullscreenTransform.side_effect = OSError("API in use by another magnifier")
 
 		with patch("_magnifier.fullscreenMagnifier.ui.message") as mock_message:
@@ -308,9 +306,7 @@ class TestFullScreenMagnifierApiConflict(_TestMagnifier):
 		self.assertIsNone(magnifier._timer)
 
 	def testCannotStartWhenMagInitializeFails(self):
-		"""
-		MagInitialize itself fails: NVDA Magnifier must not start and the user must be notified.
-		"""
+		"""MagInitialize fails: magnifier must not start and the user must be notified."""
 		self.mock_mag_fs.MagInitialize.side_effect = OSError("Cannot initialize magnification API")
 
 		with patch("_magnifier.fullscreenMagnifier.ui.message") as mock_message:
@@ -322,9 +318,7 @@ class TestFullScreenMagnifierApiConflict(_TestMagnifier):
 		self.assertIsNone(magnifier._timer)
 
 	def testRecoveryCapStopsMagnifier(self):
-		"""
-		After _MAX_RECOVERY_ATTEMPTS failed attempts, the magnifier stops and the user is notified.
-		"""
+		"""After _MAX_RECOVERY_ATTEMPTS failed attempts, the magnifier stops and the user is notified."""
 		magnifier = FullScreenMagnifier()
 		magnifier._recoveryAttempts = FullScreenMagnifier._MAX_RECOVERY_ATTEMPTS
 
@@ -335,10 +329,7 @@ class TestFullScreenMagnifierApiConflict(_TestMagnifier):
 		mock_message.assert_called_once()
 
 	def testRecoveryFailsWhenTransformStillUnavailable(self):
-		"""
-		Recovery declares failure if MagSetFullscreenTransform still raises after reinit.
-		This is the root cause of the Windows Magnifier conflict infinite loop.
-		"""
+		"""Recovery declares failure if MagSetFullscreenTransform still raises after reinit."""
 		magnifier = FullScreenMagnifier()
 		magnifier._startTimer = MagicMock()
 

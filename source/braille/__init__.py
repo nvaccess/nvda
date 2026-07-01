@@ -5,82 +5,13 @@
 
 from __future__ import annotations
 
-from typing import Optional
-
 import config
-from config.configFlags import (
-	BrailleMode,
-	TetherTo as TetherTo,
-)
 from logHandler import log
 
-from .brailleHandler import (
-	FALLBACK_TABLE,
-	BrailleHandler,
-	formatCellsForLog,
-)
-from .buffers import (
-	BrailleBuffer,
-)
-from .constants import (
-	AUTO_DISPLAY_NAME,
-	AUTOMATIC_PORT,
-	BLUETOOTH_PORT,
-	CONTEXTPRES_CHANGEDCONTEXT,
-	CONTEXTPRES_FILL,
-	CONTEXTPRES_SCROLL,
-	CONTINUATION_SHAPE,
-	CURSOR_SHAPES,
-	END_OF_BRAILLE_OUTPUT_SHAPE,
-	INPUT_END_IND,
-	INPUT_START_IND,
-	NO_BRAILLE_DISPLAY_NAME,
-	SELECTION_SHAPE,
-	TEXT_SEPARATOR,
-	USB_PORT,
-	focusContextPresentations,
-)
-from .display import (
-	DisplayDimensions,
-	RENAMED_DRIVERS,
-	getDisplayDrivers,
-	getDisplayList,
-	getSerialPorts,
-)
-from .display.driver import BrailleDisplayDriver
-from .display.gesture import BrailleDisplayGesture
-from .extensions import (
-	decide_enabled,
-	displayChanged,
-	displaySizeChanged,
-	filter_displayDimensions,
-	filter_displaySize,
-	pre_writeCells,
-)
-from .formatting import (
-	FormatTagDelimiter,
-	FormattingMarker,
-	fontAttributeFormattingMarkers,
-	getParagraphStartMarker,
-)
-from .labels import (
-	landmarkLabels,
-	negativeStateLabels,
-	positiveStateLabels,
-	roleLabels,
-)
-from .regions.base import Region, RegionWithPositions, TextRegion, rindex
-from .regions.properties import getControlFieldBraille, getFormatFieldBraille, getPropertiesBraille
-from .regions.NVDAObject import NVDAObjectHasUsefulText, NVDAObjectRegion, ReviewNVDAObjectRegion
-from .regions.textInfo import (
-	CursorManagerRegion,
-	ReviewCursorManagerRegion,
-	ReviewTextInfoRegion,
-	TextInfoRegion,
-)
-from .regions.focus import getFocusContextRegions, getFocusRegions, invalidateCachedFocusAncestors
+from . import brailleHandler as _brailleHandler
+from utils._deprecate import handleDeprecations, MovedSymbol
 
-handler: Optional[BrailleHandler] = None
+handler: _brailleHandler.BrailleHandler | None = None
 
 
 def initialize():
@@ -91,7 +22,7 @@ def initialize():
 	import serial
 
 	log.info("Using pySerial version %s" % serial.VERSION)
-	handler = BrailleHandler()
+	handler = _brailleHandler.BrailleHandler()
 	handler.handlePostConfigProfileSwitch()
 	config.post_configProfileSwitch.register(handler.handlePostConfigProfileSwitch)
 
@@ -107,70 +38,67 @@ def terminate():
 	handler = None
 
 
-#: Public API of the braille package.
-#: Keep in sync with tests/unit/test_braille/test_publicSurface.py::EXPECTED_PUBLIC.
-__all__ = [
-	"AUTOMATIC_PORT",
-	"AUTO_DISPLAY_NAME",
-	"BLUETOOTH_PORT",
-	"BrailleBuffer",
-	"BrailleDisplayDriver",
-	"BrailleDisplayGesture",
-	"BrailleHandler",
-	"BrailleMode",
-	"CONTEXTPRES_CHANGEDCONTEXT",
-	"CONTEXTPRES_FILL",
-	"CONTEXTPRES_SCROLL",
-	"CONTINUATION_SHAPE",
-	"CURSOR_SHAPES",
-	"CursorManagerRegion",
-	"DisplayDimensions",
-	"END_OF_BRAILLE_OUTPUT_SHAPE",
-	"FALLBACK_TABLE",
-	"FormatTagDelimiter",
-	"FormattingMarker",
-	"INPUT_END_IND",
-	"INPUT_START_IND",
-	"NO_BRAILLE_DISPLAY_NAME",
-	"NVDAObjectHasUsefulText",
-	"NVDAObjectRegion",
-	"Region",
-	"RegionWithPositions",
-	"RENAMED_DRIVERS",
-	"ReviewCursorManagerRegion",
-	"ReviewNVDAObjectRegion",
-	"ReviewTextInfoRegion",
-	"SELECTION_SHAPE",
-	"TEXT_SEPARATOR",
-	"TextInfoRegion",
-	"TextRegion",
-	"USB_PORT",
-	"decide_enabled",
-	"displayChanged",
-	"displaySizeChanged",
-	"filter_displayDimensions",
-	"filter_displaySize",
-	"focusContextPresentations",
-	"fontAttributeFormattingMarkers",
-	"formatCellsForLog",
-	"getControlFieldBraille",
-	"getDisplayDrivers",
-	"getDisplayList",
-	"getFocusContextRegions",
-	"getFocusRegions",
-	"getFormatFieldBraille",
-	"getParagraphStartMarker",
-	"getPropertiesBraille",
-	"getSerialPorts",
-	"handler",
-	"initialize",
-	"invalidateCachedFocusAncestors",
-	"landmarkLabels",
-	"negativeStateLabels",
-	"positiveStateLabels",
-	"pre_writeCells",
-	"pumpAll",
-	"rindex",
-	"roleLabels",
-	"terminate",
-]
+# Deprecated in 2026.3.
+__getattr__ = handleDeprecations(
+	MovedSymbol("BrailleDisplayDriver", "braille.display.driver"),
+	MovedSymbol("BrailleDisplayGesture", "braille.display.gesture"),
+	MovedSymbol("getSerialPorts", "braille.display"),
+	MovedSymbol("getDisplayList", "braille.display"),
+	MovedSymbol("getDisplayDrivers", "braille.display"),
+	MovedSymbol("RENAMED_DRIVERS", "braille.display"),
+	MovedSymbol("DisplayDimensions", "braille.display"),
+	MovedSymbol("Region", "braille.regions.base"),
+	MovedSymbol("RegionWithPositions", "braille.regions.base"),
+	MovedSymbol("TextRegion", "braille.regions.base"),
+	MovedSymbol("rindex", "braille.regions.base"),
+	MovedSymbol("NVDAObjectRegion", "braille.regions.NVDAObject"),
+	MovedSymbol("ReviewNVDAObjectRegion", "braille.regions.NVDAObject"),
+	MovedSymbol("NVDAObjectHasUsefulText", "braille.regions.NVDAObject"),
+	MovedSymbol("TextInfoRegion", "braille.regions.textInfo"),
+	MovedSymbol("CursorManagerRegion", "braille.regions.textInfo"),
+	MovedSymbol("ReviewTextInfoRegion", "braille.regions.textInfo"),
+	MovedSymbol("ReviewCursorManagerRegion", "braille.regions.textInfo"),
+	MovedSymbol("getControlFieldBraille", "braille.regions.properties"),
+	MovedSymbol("getFormatFieldBraille", "braille.regions.properties"),
+	MovedSymbol("getPropertiesBraille", "braille.regions.properties"),
+	MovedSymbol("getFocusContextRegions", "braille.regions.focus"),
+	MovedSymbol("getFocusRegions", "braille.regions.focus"),
+	MovedSymbol("invalidateCachedFocusAncestors", "braille.regions.focus"),
+	MovedSymbol("BrailleBuffer", "braille.buffers"),
+	MovedSymbol("BrailleHandler", "braille.brailleHandler"),
+	MovedSymbol("formatCellsForLog", "braille.brailleHandler"),
+	MovedSymbol("FALLBACK_TABLE", "braille.brailleHandler"),
+	MovedSymbol("roleLabels", "braille.labels"),
+	MovedSymbol("positiveStateLabels", "braille.labels"),
+	MovedSymbol("negativeStateLabels", "braille.labels"),
+	MovedSymbol("landmarkLabels", "braille.labels"),
+	MovedSymbol("FormatTagDelimiter", "braille.formatting"),
+	MovedSymbol("FormattingMarker", "braille.formatting"),
+	MovedSymbol("fontAttributeFormattingMarkers", "braille.formatting"),
+	MovedSymbol("getParagraphStartMarker", "braille.formatting"),
+	MovedSymbol("AUTO_DISPLAY_NAME", "braille.constants"),
+	MovedSymbol("AUTOMATIC_PORT", "braille.constants"),
+	MovedSymbol("BLUETOOTH_PORT", "braille.constants"),
+	MovedSymbol("USB_PORT", "braille.constants"),
+	MovedSymbol("NO_BRAILLE_DISPLAY_NAME", "braille.constants"),
+	MovedSymbol("CONTINUATION_SHAPE", "braille.constants"),
+	MovedSymbol("CURSOR_SHAPES", "braille.constants"),
+	MovedSymbol("SELECTION_SHAPE", "braille.constants"),
+	MovedSymbol("END_OF_BRAILLE_OUTPUT_SHAPE", "braille.constants"),
+	MovedSymbol("INPUT_START_IND", "braille.constants"),
+	MovedSymbol("INPUT_END_IND", "braille.constants"),
+	MovedSymbol("TEXT_SEPARATOR", "braille.constants"),
+	MovedSymbol("CONTEXTPRES_CHANGEDCONTEXT", "braille.constants"),
+	MovedSymbol("CONTEXTPRES_FILL", "braille.constants"),
+	MovedSymbol("CONTEXTPRES_SCROLL", "braille.constants"),
+	MovedSymbol("focusContextPresentations", "braille.constants"),
+	MovedSymbol("pre_writeCells", "braille.extensions"),
+	MovedSymbol("filter_displaySize", "braille.extensions"),
+	MovedSymbol("filter_displayDimensions", "braille.extensions"),
+	MovedSymbol("displaySizeChanged", "braille.extensions"),
+	MovedSymbol("displayChanged", "braille.extensions"),
+	MovedSymbol("decide_enabled", "braille.extensions"),
+	MovedSymbol("BrailleMode", "config.configFlags"),
+	MovedSymbol("TetherTo", "config.configFlags"),
+)
+"""Module level `__getattr__` used to preserve backward compatibility."""
