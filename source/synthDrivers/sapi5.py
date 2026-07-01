@@ -639,8 +639,7 @@ class SynthDriver(SynthDriver):
 		return voices
 
 	def _createVoiceToken(self, tokenId: str):
-		"""Create a SAPI object token from a token ID.
-		"""
+		"""Create a SAPI object token from a token ID."""
 		token = comtypes.client.CreateObject(self.OBJECT_TOKEN_COM_CLASS)
 		token.SetId(tokenId, "", False)
 		return token
