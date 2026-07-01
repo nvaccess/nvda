@@ -25,6 +25,7 @@ from .defs import (
 	DP_DisplayResponse,
 	DP_Features,
 	DP_MAX_PACKET_SIZE,
+	DP_MIN_PACKET_SIZE,
 	DP_PacketSeqFlag,
 	DP_PacketSyncByte,
 	DP_PerkinsKey,
@@ -184,10 +185,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			packetLength = struct.unpack(">H", bytes(self._receiveBuffer[2:4]))[0]
 			totalLength = 4 + packetLength
 
-			# Real DotPad packets are small. A declared length beyond the plausible
-			# maximum means we locked onto a false header (line noise or desync), so
-			# discard one byte and resync rather than stalling on a huge bogus length.
-			if totalLength > DP_MAX_PACKET_SIZE:
+			# Real DotPad packets fall within a narrow size range. A declared length
+			# outside the plausible bounds means we locked onto a false header (line
+			# noise or desync): discard one byte and resync rather than stalling on a
+			# huge bogus length or trying to unpack a runt packet.
+			if not DP_MIN_PACKET_SIZE <= totalLength <= DP_MAX_PACKET_SIZE:
 				log.debug(f"Implausible length {packetLength}, resyncing")
 				self._receiveBuffer.pop(0)
 				continue
@@ -201,7 +203,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			try:
 				self._processPacket(packet[4:])
 			except (RuntimeError, ValueError, struct.error):
-				log.error("Error processing packet", exc_info=True)
+				log.exception("Error processing packet")
 
 	def _processPacket(self, packetBody: bytes) -> None:
 		"""Process a complete packet body (after sync bytes and length header).

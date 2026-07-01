@@ -130,6 +130,18 @@ class DP_KeyGroup(enum.IntEnum):
 
 
 DP_CHECKSUM_BASE = 0xA5
-# Largest plausible total packet size (sync bytes + length header + body). Real DotPad
-# packets are far smaller; a declared length beyond this signals a desync or false header.
+
 DP_MAX_PACKET_SIZE = 512
+"""Largest plausible total packet size (sync bytes + length header + body).
+
+Real DotPad packets are far smaller; a declared length beyond this signals a
+desync or false header.
+"""
+
+DP_MIN_PACKET_SIZE = 4 + 5
+"""Smallest valid total packet size.
+
+A 4-byte header (2 sync bytes + 2-byte length) plus the 5-byte minimum body:
+destination + 2-byte command + sequence number + checksum. A declared length
+below this signals a desync or false header.
+"""

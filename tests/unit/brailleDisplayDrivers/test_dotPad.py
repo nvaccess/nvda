@@ -15,11 +15,13 @@ import struct
 import unittest
 from unittest.mock import MagicMock
 
+import bdDetect
 from brailleDisplayDrivers.dotPad.driver import BrailleDisplayDriver
 from brailleDisplayDrivers.dotPad.defs import (
 	DP_CHECKSUM_BASE,
 	DP_Command,
 	DP_MAX_PACKET_SIZE,
+	DP_MIN_PACKET_SIZE,
 	DP_PacketSyncByte,
 )
 
@@ -136,13 +138,36 @@ class TestDotPadBufferedReceive(unittest.TestCase):
 	def test_implausibleLength_resynchronize(self) -> None:
 		"""Test that a header declaring an oversized length is treated as a false header.
 
-		Valid sync bytes followed by a length beyond DP_MAX_PACKET_SIZE indicate a
-		desync rather than a real packet, so the driver should discard a byte, resync,
-		and still process a valid packet that follows.
+		Valid sync bytes followed by a length that pushes the total packet size beyond
+		DP_MAX_PACKET_SIZE indicate a desync rather than a real packet, so the driver
+		should discard a byte, resync, and still process a valid packet that follows.
 		"""
+		# A body length that makes totalLength (4-byte header + body) exceed DP_MAX_PACKET_SIZE.
+		oversizedBodyLength = DP_MAX_PACKET_SIZE
 		bogusHeader = bytes([DP_PacketSyncByte.SYNC1, DP_PacketSyncByte.SYNC2]) + struct.pack(
 			">H",
-			DP_MAX_PACKET_SIZE,
+			oversizedBodyLength,
+		)
+		goodPacket = self._createPacket(dest=0, cmd=DP_Command.RSP_DEVICE_NAME, seqNum=1, data=b"OK")
+
+		self.driver._onReceive(bogusHeader + goodPacket)
+
+		self.assertEqual(len(self.processedPackets), 1)
+		self.assertEqual(self.processedPackets[0], goodPacket[4:])
+		self.assertEqual(len(self.driver._receiveBuffer), 0)
+
+	def test_tooSmallLength_resynchronize(self) -> None:
+		"""Test that a header declaring a runt length is treated as a false header.
+
+		Valid sync bytes followed by a length too small to form the minimum packet
+		body indicate a desync rather than a real packet, so the driver should discard
+		a byte, resync, and still process a valid packet that follows.
+		"""
+		# A body length that makes totalLength (4-byte header + body) fall below DP_MIN_PACKET_SIZE.
+		runtBodyLength = DP_MIN_PACKET_SIZE - 4 - 1
+		bogusHeader = bytes([DP_PacketSyncByte.SYNC1, DP_PacketSyncByte.SYNC2]) + struct.pack(
+			">H",
+			runtBodyLength,
 		)
 		goodPacket = self._createPacket(dest=0, cmd=DP_Command.RSP_DEVICE_NAME, seqNum=1, data=b"OK")
 
@@ -205,8 +230,6 @@ class TestDotPadBle(unittest.TestCase):
 
 	def test_addBleDevices_registration(self) -> None:
 		"""addBleDevices registers _isBleDotPad as the BLE match function."""
-		import bdDetect
-
 		registrar = bdDetect.DriverRegistrar(BrailleDisplayDriver.name)
 		BrailleDisplayDriver.registerAutomaticDetection(registrar)
 		matchFunc = registrar._getDriverDict().get(bdDetect.CommunicationType.BLE)
