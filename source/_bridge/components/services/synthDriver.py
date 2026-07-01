@@ -52,12 +52,6 @@ class SynthDriverService(Service):
 			synthConf = speechConf[self._synth.name] = {}
 		else:
 			synthConf = speechConf[self._synth.name]
-		if "pitch" not in synthConf:
-			synthConf["pitch"] = self._synth.pitch
-		if "rate" not in synthConf:
-			synthConf["rate"] = self._synth.rate
-		if "volume" not in synthConf:
-			synthConf["volume"] = self._synth.volume
 
 	@Service.exposed
 	def registerSynthIndexReachedNotification(self, callback: Callable[[int], Any]):
@@ -210,7 +204,11 @@ class SynthDriverService(Service):
 		# Update local config
 		# So synthCommands can use current defaults.
 		synthConf = config.conf["speech"][self._synth.name]
-		synthConf[param] = val
+		if param == "voice":
+			for setting in self._synth.supportedSettings:
+				synthConf[setting.id] = getattr(self._synth, setting.id)
+		else:
+			synthConf[param] = val
 
 	def terminate(self):
 		if self._synthIndexReachedCallback:
