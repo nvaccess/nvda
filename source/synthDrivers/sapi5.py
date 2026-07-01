@@ -635,6 +635,7 @@ class SynthDriver(SynthDriver):
 					language = None
 			except COMError:
 				log.warning("Could not get the voice info. Skipping...")
+				continue
 			voices[ID] = VoiceInfo(ID, name, language)
 		return voices
 
