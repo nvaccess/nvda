@@ -5,11 +5,25 @@
 
 from unittest.mock import MagicMock, patch
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
-from _magnifier.utils.types import Coordinates
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
 
 
-class TestMouseHookLifecycle(_TestMagnifier):
+class _TestMagnifierWithHook(_TestMagnifier):
+	"""Extends _TestMagnifier with a mock for MagnifierMouseHook."""
+
+	def setUp(self):
+		super().setUp()
+		self.mouseHook_patcher = patch("_magnifier.magnifier.MagnifierMouseHook")
+		self.MockMouseHook = self.mouseHook_patcher.start()
+		self.mock_hook_instance = MagicMock()
+		self.MockMouseHook.return_value = self.mock_hook_instance
+
+	def tearDown(self):
+		self.mouseHook_patcher.stop()
+		super().tearDown()
+
+
+class TestMouseHookLifecycle(_TestMagnifierWithHook):
 	"""Tests for the WH_MOUSE_LL hook lifecycle managed by the base Magnifier class."""
 
 	def testHookStartedWithMagnifier(self):
@@ -53,7 +67,7 @@ class TestMouseHookLifecycle(_TestMagnifier):
 		self.assertIsNone(magnifier._mouseHook)
 
 
-class TestOnMouseMove(_TestMagnifier):
+class TestOnMouseMove(_TestMagnifierWithHook):
 	"""Tests for FullScreenMagnifier._onMouseMove — the hook callback."""
 
 	def testIgnoredWhenInactive(self):
