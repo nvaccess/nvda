@@ -42,10 +42,15 @@ def _iterMathMlElements(
 	element: ElementTree.Element,
 	nodePath: MathMlNodePath,
 ) -> Generator[tuple[ElementTree.Element, MathMlNodePath], None, None]:
-	yield element, nodePath
-	mathElementChildren = tuple(child for child in element if isinstance(child.tag, str))
-	for index, child in enumerate(mathElementChildren):
-		yield from _iterMathMlElements(child, nodePath + (index,))
+	stack = [(element, nodePath)]
+	while stack:
+		currentElement, currentNodePath = stack.pop()
+		yield currentElement, currentNodePath
+		mathElementChildren = tuple(child for child in currentElement if isinstance(child.tag, str))
+		stack.extend(
+			(child, currentNodePath + (index,))
+			for index, child in reversed(tuple(enumerate(mathElementChildren)))
+		)
 
 
 def _addSyntheticIdsToMathMl(
