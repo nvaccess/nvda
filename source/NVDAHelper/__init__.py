@@ -200,11 +200,11 @@ def nvdaController_brailleMessage(text: str) -> SystemErrorCodes:
 @WINFUNCTYPE(c_long, POINTER(c_bool))
 def nvdaController_isSpeaking(pSpeaking: _Pointer[c_bool]) -> int:
 	if not pSpeaking:
-		return SystemErrorCodes.INVALID_PARAMETER
+		return SystemErrorCodes.INVALID_PARAMETER.value
 	import speech
 
 	pSpeaking[0] = speech.isSpeaking()
-	return SystemErrorCodes.SUCCESS
+	return SystemErrorCodes.SUCCESS.value
 
 
 def _lookupKeyboardLayoutNameWithHexString(layoutString):
