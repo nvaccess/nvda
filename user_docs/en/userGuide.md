@@ -1941,6 +1941,7 @@ Windows Terminal may delay UIA caret updates, especially in remote sessions over
 NVDA waits slightly longer for caret movement in Windows Terminal, so it is less likely to report stale characters.
 If caret reporting is still inaccurate, try increasing [Caret move timeout](#AdvancedSettingsCaretMoveTimeout) in Advanced settings.
 Increasing this value may make caret movement feel slower, so consider changing it in a configuration profile for terminal applications.
+
 <!-- KC:beginInclude -->
 The following built-in Windows Console keyboard shortcuts may be useful when [reviewing text](#ReviewingText) with NVDA in older versions of Windows Console:
 
