@@ -36,6 +36,7 @@ from comInterfaces.SpeechLib import (
 	ISpNotifySink,
 	ISpVoice,
 	ISpeechVoice,
+	SpObjectToken,
 	SPAUDIOSTATE,
 	SPEVENT,
 	WAVEFORMATEX,
@@ -639,7 +640,7 @@ class SynthDriver(SynthDriver):
 			voices[ID] = VoiceInfo(ID, name, language)
 		return voices
 
-	def _createVoiceToken(self, tokenId: str):
+	def _createVoiceToken(self, tokenId: str) -> SpObjectToken:
 		"""Create a SAPI object token from a token ID."""
 		token = comtypes.client.CreateObject(self.OBJECT_TOKEN_COM_CLASS)
 		token.SetId(tokenId, "", False)
