@@ -677,7 +677,7 @@ class SynthDriver(SynthDriver):
 			try:
 				token = self._createVoiceToken(tokenId)
 			except COMError:
-				log.warning("Could not create voice token for %s. Skipping...", tokenId, exc_info=True)
+				log.warning(f"Could not create voice token for {tokenId}. Skipping...", exc_info=True)
 				continue
 			tokens.append(token)
 		return tokens
