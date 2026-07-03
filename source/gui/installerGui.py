@@ -169,10 +169,9 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 			if not core.triggerNVDAExit(newNVDA):
 				log.error("NVDA already in process of exiting, this indicates a logic error.")
 		case ReturnCode.CUSTOM_2:
-			if _restartWindows():
-				if not core.triggerNVDAExit(None):
-					log.error("NVDA already in process of exiting, this indicates a logic error.")
-			else:
+			# If we successfully request a system restart, we will be terminated by the shutdown sequence.
+			# Other apps may require input before they can exit, so we should not exit just yet.
+			if not _restartWindows():
 				# Restart failed — inform the user.
 				# Only exit if a new copy can be started so the user keeps a screen reader.
 				gui.messageBox(
