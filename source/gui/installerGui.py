@@ -254,12 +254,15 @@ def doSilentInstall(
 	startOnLogon = globalVars.appArgs.enableStartOnLogon
 	if startOnLogon is None:
 		startOnLogon = config.getStartOnLogonScreen() if not freshInstall else False
+	# Currently, this function is only called by ``core.main`` when ``--install`` or ``--install-silent`` are provided at the command line.
+	# The only use of the ``silent`` parameter to ``doInstall`` is to surpress the post-installation restart dialog.
+	# Since that dialog should be shown unless this genuinely is a silent installation, use presence of ``--install-silent`` as the actual value of the ``silent`` argument.
 	doInstall(
 		createDesktopShortcut=installer.isDesktopShortcutInstalled() if not freshInstall else True,
 		startOnLogon=startOnLogon,
 		isUpdate=not freshInstall,
 		copyPortableConfig=copyPortableConfig,
-		silent=True,
+		silent=globalVars.appArgs.installSilent,
 		startAfterInstall=startAfterInstall,
 	)
 
