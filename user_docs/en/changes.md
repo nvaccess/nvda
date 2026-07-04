@@ -16,13 +16,13 @@
   * Drivers with built-in support for multi routing: ALVA, Albatross (only when combined with `home1` or `home2`), Baum (and compatible), Freedom Scientific Focus/PAC Mate, HumanWare Brailliant BI/B series, Handy Tech, NLS eReader Zoomax, Seika Notetaker, and Standard HID Braille displays.
 * The braille "word wrap" option has been replaced with a four-valued "Text wrap" option: Off, Show mark when words are cut, At word boundaries, and At word or syllable boundaries. (#17010, @LeonarddeR)
   * In modes that show a continuation mark, when a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
+* Added context menu and shortcuts support to the Input gestures dialog. (#16816, @amirmahdifard)
+* It is now possible to change an existing gesture in the input gestures dialog. (#10983, @amirmahdifard)
   * The "At word or syllable boundaries" option uses hyphenation dictionaries to split long words at syllable boundaries when they do not fit on the display.
 * Magnifier: A new unassigned command has been added to move the mouse cursor to the center of the magnified view. (#20127, @CyrilleB79)
 
 ### Changes
 
-* Updated Liblouis Braille translator to [3.38.0](https://github.com/liblouis/liblouis/releases/tag/v3.38.0). (#20269, @codeofdusk)
-  * Added new Elfdalian and Sami tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
 * The dialog used to present browseable messages (such as formatting information) has been modernized. (#18878, @LeonarddeR)
   * The dialog's shortcut to copy contents of the message to the clipboard was changed to `alt+c`.
 * Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
