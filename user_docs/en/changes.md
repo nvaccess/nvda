@@ -54,16 +54,7 @@
 * NVDA should no longer fail to navigate tables, read editable text fields or enable native app selection mode in Web browsers after a random period of time. (#16020)
 * NVDA should no longer cause File Explorer or other applications to crash when NVDA is exited or restarted. (#16207)
 * Focus is no longer silent on list items in Qt-based applications (such as Telegram Desktop) when the item exposes the UIA SelectionItem pattern without an associated action interface. (#20255, @rezabakhshilaktasaraei)
-* On HumanWare Brailliant displays with C-keys, the c1, c2, c3 and c5 command keys now move the braille display to the previous line, scroll it back, move it to the next line and scroll it forward.
-Previously these keys had no function when pressed on their own. (#20366, @fla-rion)
-* The HID keyboard input simulation setting for ALVA braille displays is now remembered across reconnects and restarts. (#20455, @Cary-rowen)
-* Braille now follows the spoken text during say all in browse mode when braille is tethered to focus. (#3287, @LeonarddeR)
-* NVDA now reports checked ToolStrip menu items in .NET Framework Windows Forms applications using UI Automation. (#19335, @Cary-rowen)
-* Object descriptions are now reported for .NET Framework Windows Forms ToolStrip menu items exposed through UI Automation. (#20486, @Cary-rowen)
-* NVDA now reports the selected item when using the arrow keys in collapsed .NET Framework Windows Forms combo boxes. (#17454, @Cary-rowen)
-* The Add-on Store no longer becomes unresponsive when navigating the list of add-ons quickly, such as by holding down an arrow key. (#17351, @christopherpross)
-* Remote Access: NVDA now reports when connecting as the controlled computer fails, while continuing to retry the connection in the background. (#19103, @danielw97)
-* NVDA no longer briefly disconnects and re-detects the braille display on desktop switches that do not enter the secure desktop, such as when switching between a Remote Desktop session and the local machine. (#18810, #20550, @LeonarddeR)
+* In Windows Terminal, mouse tracking now reports the line of text under the mouse pointer. (#20448, @DataTriny)
 
 ### Changes for Developers
 
