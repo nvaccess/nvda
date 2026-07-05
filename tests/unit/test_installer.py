@@ -143,6 +143,27 @@ class testFollowerWarning(unittest.TestCase):
 					self.assertEqual(installerGui._shouldWarnBeforeUpdate(), expectedReturn)
 
 
+class Test_isBareDriveLetterPath(unittest.TestCase):
+	@parameterized.expand(
+		(
+			("D:", True),
+			("d:", True),
+			("C:", True),
+			("D:NVDA", True),
+			("D:\\", False),
+			("D:/", False),
+			("C:\\NVDA", False),
+			("C:\\Users\\NVDA", False),
+			("NVDA", False),
+			("\\\\server\\share", False),
+			("\\\\server\\share\\", False),
+			("", False),
+		),
+	)
+	def test_isBareDriveLetterPath(self, path: str, expected: bool):
+		self.assertEqual(installerGui._isBareDriveLetterPath(path), expected)
+
+
 class Test_comparePreviousInstall(unittest.TestCase):
 	def test_freshInstall_whenNoInstallDirsExist(self):
 		with (
