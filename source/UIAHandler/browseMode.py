@@ -371,7 +371,10 @@ def UIAControlQuicknavIterator(
 				elif not curElementMatchedCondition and isUIAElementInWalker(curElement, walker):
 					curElementMatchedCondition = True
 				if curElementMatchedCondition:
-					yield itemClass(itemType, document, curElement)
+					try:
+						yield itemClass(itemType, document, curElement)
+					except ValueError:
+						pass  # this element was not represented in the document's text content.
 			previousSibling = walker.getPreviousSiblingElement(curElement)
 			if previousSibling:
 				gonePreviousOnce = True
@@ -388,7 +391,10 @@ def UIAControlQuicknavIterator(
 				goneParent = True
 				curElementMatchedCondition = True
 				if gonePreviousOnce:
-					yield itemClass(itemType, document, curElement)
+					try:
+						yield itemClass(itemType, document, curElement)
+					except ValueError:
+						pass  # this element was not represented in the document's text content.
 				continue
 			curElement = None
 	else:  # direction is next
@@ -466,13 +472,19 @@ def UIAControlQuicknavIterator(
 		# If we are already past our position, and this is a valid child
 		# Then we can emit an item already
 		if goneNextOnce and isUIAElementInWalker(curElement, walker):
-			yield itemClass(itemType, document, curElement)
+			try:
+				yield itemClass(itemType, document, curElement)
+			except ValueError:
+				pass  # this element was not represented in the document's text content.
 		# Start traversing from this child forwards through the document, emitting items for valid elements.
 		while curElement:
 			firstChild = walker.getFirstChildElement(curElement) if goneNextOnce else None
 			if firstChild:
 				curElement = firstChild
-				yield itemClass(itemType, document, curElement)
+				try:
+					yield itemClass(itemType, document, curElement)
+				except ValueError:
+					pass  # this element was not represented in the document's text content.
 			else:
 				nextSibling = None
 				while not nextSibling:
@@ -488,7 +500,10 @@ def UIAControlQuicknavIterator(
 							return
 				curElement = nextSibling
 				goneNextOnce = True
-				yield itemClass(itemType, document, curElement)
+				try:
+					yield itemClass(itemType, document, curElement)
+				except ValueError:
+					pass  # this element was not represented in the document's text content.
 
 
 class UIABrowseModeDocumentTextInfo(
