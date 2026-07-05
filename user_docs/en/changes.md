@@ -25,6 +25,7 @@
   * Added new Elfdalian and Sami tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
 * The dialog used to present browseable messages (such as formatting information) has been modernized. (#18878, @LeonarddeR)
   * The dialog's shortcut to copy contents of the message to the clipboard was changed to `alt+c`.
+  * Browseable message dialogs now better support resizing, maximizing and minimizing, with text wrapping to the dialog width. (#20429, @Cary-rowen)
 * Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
 
 ### Bug Fixes
