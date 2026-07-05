@@ -21,6 +21,7 @@ These are the only files expected to be executed directly by a user/developer:
 * `scons.bat`
 * `runnvda.bat`
 * `rununittests.bat`
+* `runcxxtests.bat`
 * `runsystemtests.bat`
 * `runlint.bat`
 * `runlicensecheck.bat`

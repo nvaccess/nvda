@@ -4468,6 +4468,22 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
+		label = _("Microsoft Active Accessibility")
+		msaaSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
+		msaaGroup = guiHelper.BoxSizerHelper(self, sizer=msaaSizer)
+		sHelper.addItem(msaaGroup)
+
+		self.externalWinEventLimiterCombo: nvdaControls.FeatureFlagCombo = msaaGroup.addLabeledControl(
+			# Translators: This is the label for a combo box in the Advanced settings panel.
+			labelText=_("Process winE&vents on a dedicated thread (requires restart)"),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["IAccessible", "externalWinEventLimiter"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("ExternalWinEventLimiter", self.externalWinEventLimiterCombo)
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
 		label = _("Annotations")
 		AnnotationsSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
 		AnnotationsBox = AnnotationsSizer.GetStaticBox()
@@ -4838,6 +4854,7 @@ class AdvancedPanelControls(
 			and self.consoleCombo.GetSelection() == self.consoleCombo.defaultValue
 			and self.UIAInChromiumCombo.GetSelection() == self.UIAInChromiumCombo.defaultValue
 			and self.enhancedEventProcessingComboBox.isValueConfigSpecDefault()
+			and self.externalWinEventLimiterCombo.isValueConfigSpecDefault()
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
 			and self.ariaDescCheckBox.IsChecked() == self.ariaDescCheckBox.defaultValue
 			and self.brailleLiveRegionsCombo.isValueConfigSpecDefault()
@@ -4873,6 +4890,7 @@ class AdvancedPanelControls(
 		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue)
 		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
 		self.enhancedEventProcessingComboBox.resetToConfigSpecDefault()
+		self.externalWinEventLimiterCombo.resetToConfigSpecDefault()
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
 		self.ariaDescCheckBox.SetValue(self.ariaDescCheckBox.defaultValue)
 		self.brailleLiveRegionsCombo.resetToConfigSpecDefault()
@@ -4921,6 +4939,7 @@ class AdvancedPanelControls(
 		self.speechDictsUseModernRegexCombo.saveCurrentValueToConf()
 		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
 		self.enhancedEventProcessingComboBox.saveCurrentValueToConf()
+		self.externalWinEventLimiterCombo.saveCurrentValueToConf()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["terminals"]["keyboardSupportInLegacy"] = self.keyboardSupportInLegacyCheckBox.IsChecked()
 		config.conf["terminals"]["beepForSkippedLines"] = self.beepForSkippedLinesCheckBox.IsChecked()

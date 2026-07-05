@@ -1,0 +1,53 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.36231.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinEventLogger", "logger\WinEventLogger.vcxproj", "{8BA10293-4201-4C53-BFA2-163FC4C969E6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FA4E9CA9-96CF-42B4-BA60-6525C8FB94A2} = {FA4E9CA9-96CF-42B4-BA60-6525C8FB94A2}
+		{72D4ECCA-A420-4523-A7CD-88EE06C26829} = {72D4ECCA-A420-4523-A7CD-88EE06C26829}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winEventLimiterDll", "dll\winEventLimiterDll.vcxproj", "{FA4E9CA9-96CF-42B4-BA60-6525C8FB94A2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{72D4ECCA-A420-4523-A7CD-88EE06C26829} = {72D4ECCA-A420-4523-A7CD-88EE06C26829}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winEventLimiterTests", "tests\winEventLimiterTests.vcxproj", "{60A07B8C-440D-4D30-B4AE-203B450C4EF3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{72D4ECCA-A420-4523-A7CD-88EE06C26829} = {72D4ECCA-A420-4523-A7CD-88EE06C26829}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winEventLimiterLib", "lib\winEventLimiterLib.vcxproj", "{72D4ECCA-A420-4523-A7CD-88EE06C26829}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8BA10293-4201-4C53-BFA2-163FC4C969E6}.Debug|x64.ActiveCfg = Debug|x64
+		{8BA10293-4201-4C53-BFA2-163FC4C969E6}.Debug|x64.Build.0 = Debug|x64
+		{8BA10293-4201-4C53-BFA2-163FC4C969E6}.Release|x64.ActiveCfg = Release|x64
+		{8BA10293-4201-4C53-BFA2-163FC4C969E6}.Release|x64.Build.0 = Release|x64
+		{FA4E9CA9-96CF-42B4-BA60-6525C8FB94A2}.Debug|x64.ActiveCfg = Debug|x64
+		{FA4E9CA9-96CF-42B4-BA60-6525C8FB94A2}.Debug|x64.Build.0 = Debug|x64
+		{FA4E9CA9-96CF-42B4-BA60-6525C8FB94A2}.Release|x64.ActiveCfg = Release|x64
+		{FA4E9CA9-96CF-42B4-BA60-6525C8FB94A2}.Release|x64.Build.0 = Release|x64
+		{60A07B8C-440D-4D30-B4AE-203B450C4EF3}.Debug|x64.ActiveCfg = Debug|x64
+		{60A07B8C-440D-4D30-B4AE-203B450C4EF3}.Debug|x64.Build.0 = Debug|x64
+		{60A07B8C-440D-4D30-B4AE-203B450C4EF3}.Release|x64.ActiveCfg = Release|x64
+		{60A07B8C-440D-4D30-B4AE-203B450C4EF3}.Release|x64.Build.0 = Release|x64
+		{72D4ECCA-A420-4523-A7CD-88EE06C26829}.Debug|x64.ActiveCfg = Debug|x64
+		{72D4ECCA-A420-4523-A7CD-88EE06C26829}.Debug|x64.Build.0 = Debug|x64
+		{72D4ECCA-A420-4523-A7CD-88EE06C26829}.Release|x64.ActiveCfg = Release|x64
+		{72D4ECCA-A420-4523-A7CD-88EE06C26829}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {58E64B05-D5B5-4B1A-B9C1-65C81E5483D8}
+	EndGlobalSection
+EndGlobal

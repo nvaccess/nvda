@@ -307,6 +307,11 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	allowInMSWord = integer(0, 3, default=0)
 	enhancedEventProcessing = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 
+[IAccessible]
+	# Receive and limit winEvents on a dedicated thread in the external winEventLimiter dll,
+	# rather than hooking them on NVDA's main thread. Requires restart.
+	externalWinEventLimiter = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
+
 [annotations]
 	reportDetails = boolean(default=true)
 	reportAriaDescription = boolean(default=true)

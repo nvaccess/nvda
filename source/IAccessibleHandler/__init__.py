@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Łukasz Golonka, Leonard de Ruijter
+# Copyright (C) 2006-2026 NV Access Limited, Łukasz Golonka, Leonard de Ruijter, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -14,7 +14,6 @@ from .types import RelationType  # noqa: F401
 import re
 import struct
 from typing import (
-	Iterable,
 	Optional,
 	Tuple,
 	Dict,
@@ -909,6 +908,35 @@ def processShowWinEvent(window, objectID, childID):
 			eventHandler.queueEvent(*NVDAEvent)
 
 
+def _correctFocusForDestroyedCandidateWindow(
+	window: int | None = None,
+) -> None:
+	"""Move focus out of an IME candidate window that was destroyed.
+
+	When C{window} is C{None}, the limiter lost the destroy event and its
+	window identity is unavailable. In that case, only correct focus when the
+	focused candidate window no longer exists.
+	"""
+	# Specific support for input method MSAA candidate lists.
+	# Their parent could be a composition string, so generic focus correction
+	# cannot be used. (#2695)
+	focus = api.getFocusObject()
+	from NVDAObjects.IAccessible.mscandui import BaseCandidateItem
+
+	if not isinstance(focus, BaseCandidateItem):
+		return
+	if window is None:
+		if winUser.isWindow(focus.windowHandle):
+			return
+	elif window != focus.windowHandle:
+		return
+	if eventHandler.isPendingEvents("gainFocus"):
+		return
+	obj = focus.container
+	if obj:
+		eventHandler.queueEvent("gainFocus", obj)
+
+
 def processDestroyWinEvent(window, objectID, childID):
 	"""Process a destroy win event.
 	This removes the object associated with the event parameters from L{liveNVDAObjectTable} if
@@ -922,22 +950,18 @@ def processDestroyWinEvent(window, objectID, childID):
 		del liveNVDAObjectTable[(window, objectID, childID)]
 	except KeyError:
 		pass
-	# Specific support for input method MSAA candidate lists.
-	# When their window is destroyed we must correct focus to its parent - which could be a composition string
-	# so can't use generic focus correction. (#2695)
-	focus = api.getFocusObject()
-	from NVDAObjects.IAccessible.mscandui import BaseCandidateItem
+	if objectID == 0 and childID == 0:
+		_correctFocusForDestroyedCandidateWindow(window)
 
-	if (
-		objectID == 0
-		and childID == 0
-		and isinstance(focus, BaseCandidateItem)
-		and window == focus.windowHandle
-		and not eventHandler.isPendingEvents("gainFocus")
-	):
-		obj = focus.container
-		if obj:
-			eventHandler.queueEvent("gainFocus", obj)
+
+def _recoverFromLostDestroyEvents() -> None:
+	# A stale entry could be matched to an unrelated object when Windows
+	# recycles its window handle, so every cached object is suspect.
+	liveNVDAObjectTable.clear()
+	# The lost event might be the window-level destroy for the focused IME
+	# candidate. Its HWND is unknown, so apply the #2695 correction only if the
+	# focused candidate window is no longer live.
+	_correctFocusForDestroyedCandidateWindow()
 
 
 def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
@@ -1018,31 +1042,43 @@ def initialize():
 
 # C901 'pumpAll' is too complex
 def pumpAll():  # noqa: C901
-	if (
-		not internalWinEventHandler._SHOULD_GET_EVENTS_FROM_EXTERNAL
-		and not internalWinEventHandler._shouldGetEvents()
-	):
-		return
+	destroysLost, destroyedWinEvents = internalWinEventHandler.fetchDestroyEvents()
+	if destroysLost:
+		try:
+			_recoverFromLostDestroyEvents()
+		except Exception:
+			log.error("_recoverFromLostDestroyEvents", exc_info=True)
+	for destroyedWinEvent in destroyedWinEvents:
+		try:
+			internalWinEventHandler.processDestroyWinEvent(*destroyedWinEvent)
+		except Exception:
+			log.error("processDestroyWinEvent", exc_info=True)
 	focusWinEvents = []
 	validFocus = False
 	fakeFocusEvent = None
 	focus = eventHandler.lastQueuedFocusObject
 
-	winEvents: Iterable[tuple[int, int, int, int]]
-	if internalWinEventHandler._SHOULD_GET_EVENTS_FROM_EXTERNAL:
-		# Receive all the winEvents collected by the external eventHandler dll for this cycle
-		winEvents = internalWinEventHandler._getEventsFromExternal()
-	else:
-		alwaysAllowedObjects = []
-		# winEvents for the currently focused object are special,
-		# and should be never filtered out.
-		if isinstance(focus, NVDAObjects.IAccessible.IAccessible) and focus.event_objectID is not None:
-			alwaysAllowedObjects.append((focus.event_windowHandle, focus.event_objectID, focus.event_childID))
+	# winEvents for the currently focused object are special,
+	# and should never be filtered out.
+	alwaysAllowedObject: Optional[Tuple[int, int, int]] = None
+	if isinstance(focus, NVDAObjects.IAccessible.IAccessible) and focus.event_objectID is not None:
+		alwaysAllowedObject = (focus.event_windowHandle, focus.event_objectID, focus.event_childID)
 
-		# Receive all the winEvents from the limiter for this cycle
-		winEvents = internalWinEventHandler.winEventLimiter.flushEvents(
-			alwaysAllowedObjects,
-		)
+	# Receive all events from the active limiter, including explicitly added
+	# events.
+	# #3831: either implementation can hold the whole cycle while the
+	# foreground settles.
+	deferred, winEvents = internalWinEventHandler.flushEvents(alwaysAllowedObject)
+	# A destroy can be eliminated from the DLL's input buffer, or remain pending when the
+	# defer cap permits regular events. Sample loss again before processing them.
+	if internalWinEventHandler.takeLostDestroyEvents():
+		try:
+			_recoverFromLostDestroyEvents()
+		except Exception:
+			log.error("_recoverFromLostDestroyEvents", exc_info=True)
+		focus = eventHandler.lastQueuedFocusObject
+	if deferred:
+		return
 
 	for winEvent in winEvents:
 		isEventOnCaret = winEvent[2] == winUser.OBJID_CARET

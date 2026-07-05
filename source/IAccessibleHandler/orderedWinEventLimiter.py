@@ -80,6 +80,13 @@ class OrderedWinEventLimiter(object):
 		self._genericEventCache[(eventID, window, objectID, childID, threadID)] = next(self._eventCounter)
 		return True
 
+	def clear(self) -> None:
+		"""Discard all events queued for a later flush."""
+		self._focusEventCache.clear()
+		self._genericEventCache.clear()
+		self._eventHeap.clear()
+		self._lastMenuEvent = None
+
 	def flushEvents(
 		self,
 		alwaysAllowedObjects: Optional[List[IAccessibleObjectIdentifierType]] = None,

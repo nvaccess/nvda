@@ -1,0 +1,14 @@
+LIBRARY   WINEVENTLIMITER
+EXPORTS
+	winEventLimiter_start
+	winEventLimiter_stop
+	winEventLimiter_addEvent
+	winEventLimiter_flushEvents
+	winEventLimiter_getEventCount
+	winEventLimiter_getEvents
+	winEventLimiter_flushDestroyEvents
+	winEventLimiter_getDestroyEventCount
+	winEventLimiter_getDestroyEvents
+	winEventLimiter_takeLostDestroys
+	winEventLimiter_setAlwaysAllowedObject
+	winEventLimiter_getConsoleThreadID

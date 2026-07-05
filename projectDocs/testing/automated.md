@@ -80,6 +80,19 @@ rununittests -k test_cursorManager.TestMove -k test_cursorManager.TestSelection
 
 Please refer to [unittest's documentation](https://docs.python.org/3/library/unittest.html#command-line-interface) for further information on how to filter tests.
 
+## C++ Unit Tests
+
+C++ unit tests cover native NVDA components (currently `nvdaHelper/winEventLimiter`).
+They use the [Microsoft C++ Unit Test framework](https://learn.microsoft.com/en-gb/visualstudio/test/how-to-use-microsoft-test-framework-for-cpp) and can be run with the `runcxxtests.bat` script, which builds the test project with MSBuild and runs it with `vstest.console.exe`.
+They can also be built and run from Visual Studio's Test Explorer by opening `nvdaHelper\winEventLimiter\winEventLimiter.sln`.
+
+Any arguments given to `runcxxtests.bat` are forwarded onto `vstest.console.exe`.
+For example, to run only tests whose name contains `alwaysAllowed`:
+
+```cmd
+runcxxtests /TestCaseFilter:"FullyQualifiedName~alwaysAllowed"
+```
+
 ## System Tests
 
 System tests can be run with the `runsystemtests.bat --include <TAG>` script.

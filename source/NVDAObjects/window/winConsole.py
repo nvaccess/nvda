@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2007-2020 NV Access Limited, Bill Dengler
+# Copyright (C) 2007-2026 NV Access Limited, Bill Dengler
 
 import winConsoleHandler
 from . import Window
@@ -27,9 +27,9 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 		# However, To correctly handle speaking of typed characters,
 		# NVDA really requires the real thread the window was created in,
 		# I.e. a thread inside conhost.
-		from IAccessibleHandler.internalWinEventHandler import consoleWindowsToThreadIDs
+		from IAccessibleHandler.internalWinEventHandler import getConsoleWindowThreadID
 
-		threadID = consoleWindowsToThreadIDs.get(self.windowHandle, 0)
+		threadID = getConsoleWindowThreadID(self.windowHandle)
 		if not threadID:
 			threadID = super().windowThreadID
 		return threadID

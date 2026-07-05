@@ -4244,6 +4244,18 @@ The combo box has the following options:
 * Yes: If the browser makes UIA available, NVDA will use it.
 * No: Don't use UIA, even if NVDA is unable to inject in process. This may be useful for developers debugging issues with IA2 and want to ensure that NVDA does not fall back to UIA.
 
+##### Process winEvents on a dedicated thread {#ExternalWinEventLimiter}
+
+When this option is enabled, NVDA receives and filters winEvents (used for Microsoft Active Accessibility) on a dedicated thread, outside of NVDA's main event loop.
+This may keep NVDA more responsive when applications fire large numbers of events, such as in complex web documents or applications starting up.
+This feature is experimental.
+After changing this option, you will need to restart NVDA for the change to take effect.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Disabled), Enabled, Disabled|
+|Default |Disabled|
+
 ##### Annotations {#Annotations}
 
 This group of options is used to enable features which add experimental support for ARIA annotations.

@@ -41,6 +41,8 @@ Please responsibly disclose security issues following NVDA's [security policy](h
 * It is now possible to change an existing gesture in the Input Gestures dialog. (#10983, @amirmahdifard)
 * A new "Say all reads by" speech setting lets you choose whether say all reads by sentence, paragraph or line; say all now reads by sentence by default where supported. (#13420, #9179, #13971, @LeonarddeR)
 * A new command, assigned to `NVDA+control+x`, copies the last spoken information to the clipboard. (#19385, @Cary-rowen)
+* Added an experimental option to the Advanced category of NVDA's settings to receive and filter winEvents (used for Microsoft Active Accessibility) on a dedicated thread, outside of NVDA's main event loop.
+  This may keep NVDA more responsive when applications fire large numbers of events. (#20653, @codeofdusk)
 
 ### Changes
 

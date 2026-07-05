@@ -248,10 +248,10 @@ if isNVDAHelperLocalArch:
 	if signExec:
 		env.AddPostAction(UIARemoteLib[0], [signExec])
 	env.Install(libInstallDir, UIARemoteLib)
-	eventHandlerLib = env.SConscript("eventHandler/eventHandler/sconscript")
+	winEventLimiterDll = env.SConscript("winEventLimiter/dll/sconscript")
 	if signExec:
-		env.AddPostAction(eventHandlerLib[0], [signExec])
-	env.Install(libInstallDir, eventHandlerLib)
+		env.AddPostAction(winEventLimiterDll[0], [signExec])
+	env.Install(libInstallDir, winEventLimiterDll)
 
 clientLib = env.SConscript("client/sconscript")
 Export("clientLib")

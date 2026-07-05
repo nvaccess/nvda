@@ -1505,7 +1505,7 @@ class UIAHandler(COMObject):
 			and self.getNearestWindowHandle(element) == oldFocus.windowHandle
 			and not self.isUIAWindow(oldFocus.windowHandle)
 		):
-			IAccessibleHandler.internalWinEventHandler.winEventLimiter.addEvent(
+			IAccessibleHandler.internalWinEventHandler.addEvent(
 				winUser.EVENT_OBJECT_FOCUS,
 				oldFocus.windowHandle,
 				winUser.OBJID_CLIENT,

@@ -341,6 +341,27 @@ jobs:
         annotate_only: true
         report_paths: testOutput/unit/unitTests.xml
 
+  cxxUnitTests:
+    name: Run C++ unit tests
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
+    needs: matrix
+    permissions:
+      contents: read
+    steps:
+    - name: Checkout NVDA
+      # A bare checkout suffices: the C++ tests only need the Visual Studio
+      # toolchain and Windows SDK on the runner, not submodules or a built tree.
+      uses: actions/checkout@v6
+    - name: Build and run C++ unit tests
+      shell: cmd
+      run: runcxxtests.bat
+    - name: Upload C++ unit test results
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@v7
+      with:
+        name: Cxx unit tests results
+        path: testOutput/cxx/
+
   crowdinUpload:
     name: Upload translations to Crowdin
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
@@ -615,7 +636,7 @@ jobs:
     name: Check if all tests pass
     runs-on: ubuntu-latest
     if: always()
-    needs: [buildNVDA, typeCheckPyright, typeCheckTy, checkPo, checkPot, licenseCheck, unitTests, createLauncher, systemTests, createSymbols]
+    needs: [buildNVDA, typeCheckPyright, typeCheckTy, checkPo, checkPot, licenseCheck, unitTests, cxxUnitTests, createLauncher, systemTests, createSymbols]
     permissions:
       contents: read
     steps:
