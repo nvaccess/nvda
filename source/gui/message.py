@@ -398,6 +398,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	"""Class default for whether to run the :meth:`._checkMainThread` test."""
 	_FAIL_ON_NO_BUTTONS = True
 	"""Class default for whether to run the :meth:`._checkHasButtons` test."""
+	_DIALOG_STYLE: int = wx.DEFAULT_DIALOG_STYLE
+	"""wx style used when creating the dialog window."""
 
 	# region Constructors
 	def __new__(cls, *args, **kwargs) -> Self:
@@ -429,7 +431,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""
 		self._checkMainThread()
 		self.helpId = helpId  # Must be set before initialising ContextHelpMixin.
-		super().__init__(parent, title=title)
+		super().__init__(parent, title=title, style=self._DIALOG_STYLE)
 		self._isLayoutFullyRealized = False
 		self._commands: dict[int, _Command] = {}
 		"""Registry of commands bound to this MessageDialog."""
@@ -450,12 +452,13 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		mainSizer = self._mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = self._contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
 		messageControl = self._messageControl = self._createMessageControl()
-		contentsSizer.addItem(messageControl)
+		contentsSizer.addItem(messageControl, flag=wx.EXPAND, proportion=1)
 		buttonHelper = self._buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		mainSizer.Add(
 			contentsSizer.sizer,
+			proportion=1,
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.ALL,
+			flag=wx.ALL | wx.EXPAND,
 		)
 		self.SetSizer(mainSizer)
 
@@ -1197,6 +1200,9 @@ class HtmlMessageDialog(MessageDialog):
 	"""
 
 	_ACTION_URL_PREFIX = "nvda-action://"
+	_DEFAULT_WEBVIEW_SIZE: tuple[int, int] = (350, 300)
+	"""Default WebView viewport, matching the legacy MSHTML browseable message template."""
+	_DIALOG_STYLE: int = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX
 
 	_FAIL_ON_NO_BUTTONS = False
 	"""HtmlMessageDialog can be shown without buttons; the HTML content handles its own close action."""
@@ -1242,6 +1248,7 @@ class HtmlMessageDialog(MessageDialog):
 
 	def _createMessageControl(self) -> WebView:
 		control = WebView.New(self, backend=self._webViewBackend)
+		control.SetInitialSize(self.scaleSize(self._DEFAULT_WEBVIEW_SIZE))
 		control.EnableContextMenu(False)
 		control.EnableHistory(False)
 		# Bind before MessageDialog.__init__ sets the initial content, so the first load and navigation are observed.
