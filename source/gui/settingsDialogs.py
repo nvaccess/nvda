@@ -3343,7 +3343,9 @@ class DocumentFormattingPanel(SettingsPanel):
 			max=2000,
 			initial=config.conf["documentFormatting"]["indentToneDuration"],
 		)
-		self.indentToneDurationSpin.Enable(reportLineIndentation in (ReportLineIndentation.TONES, ReportLineIndentation.SPEECH_AND_TONES))
+		self.indentToneDurationSpin.Enable(
+			reportLineIndentation in (ReportLineIndentation.TONES, ReportLineIndentation.SPEECH_AND_TONES)
+		)
 
 		# Translators: This message is presented in the document formatting settings panel
 		# If this option is selected, NVDA will report paragraph indentation if available.
@@ -3496,7 +3498,9 @@ class DocumentFormattingPanel(SettingsPanel):
 
 	def _onLineIndentationChange(self, evt: wx.CommandEvent) -> None:
 		self.ignoreBlankLinesRLICheckbox.Enable(evt.GetSelection() != 0)
-		self.indentToneDurationSpin.Enable(evt.GetSelection() in (ReportLineIndentation.TONES, ReportLineIndentation.SPEECH_AND_TONES))
+		self.indentToneDurationSpin.Enable(
+			evt.GetSelection() in (ReportLineIndentation.TONES, ReportLineIndentation.SPEECH_AND_TONES)
+		)
 
 	def _onLinksChange(self, evt: wx.CommandEvent):
 		self.linkTypeCheckBox.Enable(evt.IsChecked())
