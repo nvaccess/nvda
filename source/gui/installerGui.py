@@ -761,6 +761,11 @@ class PortableCreaterDialog(
 			)
 			return
 		expandedPortableDirectory = os.path.expandvars(self.portableDirectoryEdit.Value)
+		# Normalize bare drive letters (e.g. "c:" -> "c:\") so they are
+		# recognised as absolute paths. (#20159)
+		drive, tail = os.path.splitdrive(expandedPortableDirectory)
+		if drive and not tail:
+			expandedPortableDirectory = drive + os.sep
 		if not os.path.isabs(expandedPortableDirectory):
 			gui.messageBox(
 				_(

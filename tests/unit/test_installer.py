@@ -480,3 +480,100 @@ class Test_comparePreviousInstall(unittest.TestCase):
 			),
 		):
 			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UPGRADE)
+
+
+class Test_CreatePortableDirectoryNormalization(unittest.TestCase):
+	"""Tests for path normalization in onCreatePortable (#20159).
+
+	Bare drive letters (e.g. "c:") should be normalized to "c:\\" so that
+	os.path.isabs recognises them as absolute paths on Windows.
+	"""
+
+	def _runCreatePortable(self, path: str) -> list:
+		"""Call onCreatePortable with the given path and return messageBox calls."""
+		msgBoxCalls = []
+
+		def _msgBox(msg: str, title: str, style: int = 0):
+			msgBoxCalls.append(msg)
+
+		mockCheckBox = PropertyMock()
+		mockCheckBox.Value = False
+
+		# On non-Windows platforms, os.path.splitdrive and os.path.isabs
+		# don't understand drive letters, so mock them to behave like Windows.
+		def _mockSplitdrive(p: str) -> tuple:
+			if len(p) >= 2 and p[1] == ":":
+				return (p[:2], p[2:])
+			return ("", p)
+
+		def _mockIsabs(p: str) -> bool:
+			return len(p) >= 2 and p[1] == ":"
+
+		with (
+			patch.object(
+				installerGui.CreatePortableDialog,
+				"portableDirectoryEdit",
+				new_callable=PropertyMock,
+			) as mockEdit,
+			patch("gui.installerGui.gui.messageBox", side_effect=_msgBox),
+			patch("gui.installerGui.os.path.splitdrive", side_effect=_mockSplitdrive),
+			patch("gui.installerGui.os.path.isabs", side_effect=_mockIsabs),
+			patch("gui.installerGui.os.path.abspath", return_value="C:\\NVDA"),
+			patch("gui.installerGui._warnAndConfirmForNonEmptyDirectory", return_value=False),
+			patch("gui.installerGui.doCreatePortable"),
+		):
+			mockEdit.Value = path
+			dialog = installerGui.CreatePortableDialog.__new__(installerGui.CreatePortableDialog)
+			dialog.portableDirectoryEdit = mockEdit
+			dialog.newFolderCheckBox = mockCheckBox
+			dialog.copyUserConfigCheckbox = mockCheckBox
+			dialog.startAfterCreateCheckbox = mockCheckBox
+			dialog.Hide = lambda: None
+			dialog.Destroy = lambda: None
+			dialog.onCreatePortable(None)
+
+		return msgBoxCalls
+
+	def test_bareDriveLetter_isAccepted(self):
+		"""Entering 'c:' should NOT show the "not absolute" error."""
+		calls = self._runCreatePortable("c:")
+		errorText = _(
+			"Please specify the absolute path where the portable copy should be created. "
+			"It must start with a drive letter (e.g. C:). "
+			"It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
+			"Current path: {path}. ",
+		).format(path="c:\\")
+		self.assertNotIn(errorText, calls)
+
+	def test_relativePath_showsError(self):
+		"""Entering 'foo' should still show the "not absolute" error."""
+		calls = self._runCreatePortable("foo")
+		errorText = _(
+			"Please specify the absolute path where the portable copy should be created. "
+			"It must start with a drive letter (e.g. C:). "
+			"It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
+			"Current path: {path}. ",
+		).format(path="foo")
+		self.assertIn(errorText, calls)
+
+	def test_driveLetterWithBackslash_isAccepted(self):
+		"""Entering 'c:\\' should be accepted as-is (no regression)."""
+		calls = self._runCreatePortable("c:\\")
+		errorText = _(
+			"Please specify the absolute path where the portable copy should be created. "
+			"It must start with a drive letter (e.g. C:). "
+			"It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
+			"Current path: {path}. ",
+		).format(path="c:\\")
+		self.assertNotIn(errorText, calls)
+
+	def test_driveLetterWithPath_isAccepted(self):
+		"""Entering 'd:\\NVDA' should be accepted as-is (no regression)."""
+		calls = self._runCreatePortable("d:\\NVDA")
+		errorText = _(
+			"Please specify the absolute path where the portable copy should be created. "
+			"It must start with a drive letter (e.g. C:). "
+			"It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
+			"Current path: {path}. ",
+		).format(path="d:\\NVDA")
+		self.assertNotIn(errorText, calls)
