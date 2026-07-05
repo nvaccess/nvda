@@ -1202,7 +1202,7 @@ class HtmlMessageDialog(MessageDialog):
 	_ACTION_URL_PREFIX = "nvda-action://"
 	_DEFAULT_WEBVIEW_SIZE: tuple[int, int] = (350, 300)
 	"""Default WebView viewport, matching the legacy MSHTML browseable message template."""
-	_DIALOG_STYLE: int = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX
+	_DIALOG_STYLE: int = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX | wx.MINIMIZE_BOX
 
 	_FAIL_ON_NO_BUTTONS = False
 	"""HtmlMessageDialog can be shown without buttons; the HTML content handles its own close action."""
@@ -1235,6 +1235,7 @@ class HtmlMessageDialog(MessageDialog):
 				],
 			),
 		)
+		self.EnableCloseButton(self.hasFallback)
 
 	def registerAction(self, action: str, handler: Callable[[], None]) -> Self:
 		"""Register a handler for an ``nvda-action://<action>`` URL triggered from the HTML message.
@@ -1258,6 +1259,10 @@ class HtmlMessageDialog(MessageDialog):
 	def _wrapMessageControl(self) -> None:
 		# A WebView lays out its own content, so there is nothing to wrap.
 		pass
+
+	@property
+	def hasFallback(self) -> bool:
+		return super().hasFallback or self.GetEscapeId() == EscapeCode.CANCEL_OR_AFFIRMATIVE
 
 	def setMessage(self, message: str) -> Self:
 		self._messageControl.SetPage(message, "")
@@ -1286,7 +1291,7 @@ class HtmlMessageDialog(MessageDialog):
 		button must still work.
 		"""
 		action = super()._getFallbackAction()
-		if action is None and not self._commands:
+		if action is None and self.GetEscapeId() == EscapeCode.CANCEL_OR_AFFIRMATIVE:
 			return _Command(callback=None, closesDialog=True, returnCode=ReturnCode.CLOSE)
 		return action
 
