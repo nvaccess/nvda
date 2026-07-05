@@ -1043,7 +1043,7 @@ class Edit(EditableTextWithAutoSelectDetection, EditBase):
 	editValueUnit = textInfos.UNIT_LINE
 
 	def _get_TextInfo(self) -> type[textInfos.TextInfo]:
-		if self.editAPIVersion != 0 and self.ITextDocumentObject and self.ITextSelectionObject:
+		if self.editAPIVersion > 0 and self.ITextDocumentObject and self.ITextSelectionObject:
 			return ITextDocumentTextInfo
 		else:
 			return EditTextInfo
@@ -1056,7 +1056,7 @@ class Edit(EditableTextWithAutoSelectDetection, EditBase):
 					winUser.OBJID_NATIVEOM,
 					interface=comInterfaces.tom.ITextDocument,
 				)
-			except (COMError, WindowsError):
+			except (COMError, OSError):
 				log.error("Error getting ITextDocument", exc_info=True)
 				self._ITextDocumentObject = None
 		return self._ITextDocumentObject
