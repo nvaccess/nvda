@@ -34,35 +34,28 @@ class _TestMagnifier(unittest.TestCase):
 			mock.MagSetFullscreenTransform.return_value = True
 			mock.MagSetFullscreenColorEffect.return_value = True
 
+		self.magnifier = Magnifier()
+		self.magnifier.zoomLevel = 200
+		self.magnifier.filterType = Filter.NORMAL
+		displayOrientation = getPrimaryDisplayOrientation()
+		self.screenWidth = displayOrientation.width
+		self.screenHeight = displayOrientation.height
+		self.focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=self.focusCoords)
+
 	def tearDown(self):
 		"""Cleanup after each test."""
+		if self.magnifier._timer:
+			self.magnifier._timer.Stop()
+			self.magnifier._timer = None
+		if self.magnifier._isActive:
+			self.magnifier._isActive = False
 		self.mag_fs_patcher.stop()
 		self.mag_patcher.stop()
 
 
 class TestMagnifier(_TestMagnifier):
 	"""Tests for the Magnifier class."""
-
-	def setUp(self):
-		"""Setup before each test."""
-		super().setUp()
-
-		self.magnifier = Magnifier()
-		self.magnifier.zoomLevel = 200  # Set a default zoom level for testing (2.0x)
-		self.magnifier.filterType = Filter.NORMAL  # Set a default filter type for testing
-		self.screenWidth = getPrimaryDisplayOrientation().width
-		self.screenHeight = getPrimaryDisplayOrientation().height
-
-	def tearDown(self):
-		"""Cleanup after each test."""
-		if hasattr(self.magnifier, "_timer") and self.magnifier._timer:
-			self.magnifier._timer.Stop()
-			self.magnifier._timer = None
-
-		if hasattr(self.magnifier, "_isActive") and self.magnifier._isActive:
-			self.magnifier._isActive = False
-
-		super().tearDown()
 
 	def testMagnifierCreation(self):
 		"""Can we create a magnifier with valid parameters?"""

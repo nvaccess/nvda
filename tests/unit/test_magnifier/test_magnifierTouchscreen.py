@@ -3,31 +3,13 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from _magnifier.magnifier import Magnifier
-from _magnifier.utils.types import Coordinates
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
 import touchHandler
-from winAPI._displayTracking import getPrimaryDisplayOrientation
 from unittest.mock import MagicMock, patch
 
 
 class TestMagnifierTouchscreen(_TestMagnifier):
 	"""Tests for touchscreen blocking/warning behaviour when the magnifier starts and stops."""
-
-	def setUp(self):
-		super().setUp()
-		self.magnifier = Magnifier()
-		screenDimensions = getPrimaryDisplayOrientation()
-		self.focusCoords = Coordinates(screenDimensions.width // 2, screenDimensions.height // 2)
-		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=self.focusCoords)
-
-	def tearDown(self):
-		if hasattr(self.magnifier, "_timer") and self.magnifier._timer:
-			self.magnifier._timer.Stop()
-			self.magnifier._timer = None
-		if hasattr(self.magnifier, "_isActive") and self.magnifier._isActive:
-			self.magnifier._isActive = False
-		super().tearDown()
 
 	def testStartMagnifierBlocksTouchWhenHandlerActive(self):
 		"""blockTouchInput is set when the magnifier starts with the touch handler running."""
