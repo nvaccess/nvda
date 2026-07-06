@@ -1202,7 +1202,13 @@ class HtmlMessageDialog(MessageDialog):
 	_ACTION_URL_PREFIX = "nvda-action://"
 	_DEFAULT_WEBVIEW_SIZE: tuple[int, int] = (350, 300)
 	"""Default WebView viewport, matching the legacy MSHTML browseable message template."""
-	_DIALOG_STYLE: int = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX | wx.MINIMIZE_BOX
+	_DIALOG_STYLE: int = (
+		wx.DEFAULT_DIALOG_STYLE
+		| wx.RESIZE_BORDER
+		| wx.MAXIMIZE_BOX
+		| wx.MINIMIZE_BOX
+		| wx.DIALOG_NO_PARENT
+	)
 
 	_FAIL_ON_NO_BUTTONS = False
 	"""HtmlMessageDialog can be shown without buttons; the HTML content handles its own close action."""
