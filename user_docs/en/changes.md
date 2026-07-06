@@ -46,6 +46,7 @@
 * NVDA should no longer fail to navigate tables, read editable text fields or enable native app selection mode in Web browsers after a random period of time. (#16020)
 * NVDA should no longer cause File Explorer or other applications to crash when NVDA is exited or restarted. (#16207)
 * Focus is no longer silent on list items in Qt-based applications (such as Telegram Desktop) when the item exposes the UIA SelectionItem pattern without an associated action interface. (#20255, @rezabakhshilaktasaraei)
+* In Microsoft Word (and Outlook) using UI Automation, quick navigation to the next or previous link no longer silently fails on certain documents. (#17848, @munzzyy)
 
 ### Changes for Developers
 

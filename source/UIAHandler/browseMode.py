@@ -304,7 +304,12 @@ def UIAControlQuicknavIterator(
 		# And fetch the last child again.
 		zoomedOnce = False
 		while True:
-			children = toPosition.getChildren()
+			try:
+				children = toPosition.getChildren()
+			except COMError:
+				if zoomedOnce:
+					child = toPosition.getEnclosingElement()
+				break
 			length = children.length
 			if length == 0:
 				if zoomedOnce:
@@ -409,7 +414,12 @@ def UIAControlQuicknavIterator(
 		)
 		zoomedOnce = False
 		while True:
-			children = toPosition.getChildren()
+			try:
+				children = toPosition.getChildren()
+			except COMError:
+				if zoomedOnce:
+					child = toPosition.getEnclosingElement()
+				break
 			length = children.length
 			if length == 0:
 				if zoomedOnce:
