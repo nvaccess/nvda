@@ -46,6 +46,7 @@
 * NVDA should no longer fail to navigate tables, read editable text fields or enable native app selection mode in Web browsers after a random period of time. (#16020)
 * NVDA should no longer cause File Explorer or other applications to crash when NVDA is exited or restarted. (#16207)
 * Focus is no longer silent on list items in Qt-based applications (such as Telegram Desktop) when the item exposes the UIA SelectionItem pattern without an associated action interface. (#20255, @rezabakhshilaktasaraei)
+* On HumanWare Brailliant BI/B series displays, dot8 now performs the enter action as already documented in the User Guide, dot7 now performs backspace, and the c1, c2, c3 and c5 command keys now move to the previous line, scroll back, move to the next line and scroll forward, matching HumanWare's documentation. (#20366, @fla-rion)
 
 ### Changes for Developers
 
