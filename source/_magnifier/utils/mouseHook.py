@@ -20,6 +20,7 @@ from winInputHook import MSLLHOOKSTRUCT, HC_ACTION, WH_MOUSE_LL
 
 WM_MOUSEMOVE: int = 0x0200
 WM_QUIT: int = 0x0012
+PM_NOREMOVE: int = 0x0000
 
 
 class MagnifierMouseHook:
@@ -38,13 +39,23 @@ class MagnifierMouseHook:
 		self._hookReady.wait(timeout=1.0)
 
 	def stop(self) -> None:
-		if self._thread:
-			user32.PostThreadMessage(self._thread.ident, WM_QUIT, 0, 0)
-			self._thread.join(timeout=1.0)
-			self._thread = None
+		thread = self._thread
+		if not thread:
+			self._cCallback = None
+			return
+		if thread.ident is None or not user32.PostThreadMessage(thread.ident, WM_QUIT, 0, 0):
+			log.error(
+				f"Failed to post WM_QUIT to magnifier mouse hook thread (error {ctypes.GetLastError()})",
+			)
+		thread.join()
+		self._thread = None
 		self._cCallback = None
 
 	def _run(self) -> None:
+		windowsMessage = MSG()
+		# Ensure the thread message queue exists so PostThreadMessage(WM_QUIT) succeeds.
+		user32.PeekMessage(byref(windowsMessage), None, 0, 0, PM_NOREMOVE)
+
 		def _onRawMouseEvent(code, eventType, mouseDataPointer):
 			if code == HC_ACTION and eventType == WM_MOUSEMOVE:
 				mouseData = MSLLHOOKSTRUCT.from_address(mouseDataPointer)
@@ -62,8 +73,15 @@ class MagnifierMouseHook:
 			log.error(f"Failed to install magnifier mouse hook (error {ctypes.GetLastError()})")
 			return
 
-		windowsMessage = MSG()
-		while user32.GetMessage(byref(windowsMessage), None, 0, 0):
-			pass
-
-		user32.UnhookWindowsHookEx(hookHandle)
+		try:
+			while True:
+				result = user32.GetMessage(byref(windowsMessage), None, 0, 0)
+				if result == 0:
+					break
+				if result == -1:
+					log.error(
+						f"GetMessage failed in magnifier mouse hook thread (error {ctypes.GetLastError()})",
+					)
+					break
+		finally:
+			user32.UnhookWindowsHookEx(hookHandle)
