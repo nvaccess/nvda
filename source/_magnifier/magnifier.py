@@ -61,6 +61,8 @@ class Magnifier:
 		self._consecutiveErrors: int = 0
 		self._recoveryAttempts: int = 0
 		self._mouseHook: MagnifierMouseHook | None = None
+		self._pendingMouseCoordinates = Coordinates(0, 0)
+		self._mouseUpdatePending: bool = False
 		# Register for display changes
 		_displayTracking.displayChanged.register(self._onDisplayChanged)
 		self._screenCurtainIsActive: bool = False
@@ -254,16 +256,37 @@ class Magnifier:
 
 	def _onMouseMove(self, x: int, y: int) -> None:
 		"""
-		Called from the hook thread on every WM_MOUSEMOVE.
-		Updates the magnified view immediately, bypassing the wx timer loop.
+		Called from the mouse hook thread on every WM_MOUSEMOVE.
+
+		This runs synchronously inside a global WH_MOUSE_LL hook chain, so it must
+		return immediately: it only records the latest coordinates and schedules
+		the actual update on the main thread. Calling into the Magnification API
+		(via _doUpdate) from here would delay delivery of the real WM_MOUSEMOVE to
+		whatever window is under the cursor, for every mouse move on the system,
+		not just NVDA's own windows.
+
 		Only acts when mouse tracking is enabled and the magnifier is active.
 		"""
 		if not self._isActive or self._isManualPanning:
 			return
 		if not getFollowState(MagnifierTrackingType.MOUSE):
 			return
+		self._pendingMouseCoordinates = Coordinates(x, y)
+		if not self._mouseUpdatePending:
+			self._mouseUpdatePending = True
+			wx.CallAfter(self._applyPendingMousePosition)
+
+	def _applyPendingMousePosition(self) -> None:
+		"""
+		Apply the latest mouse position recorded by _onMouseMove.
+		Runs on the main thread via wx.CallAfter, so this is the only place
+		where a mouse-driven update touches the Magnification API.
+		"""
+		self._mouseUpdatePending = False
+		if not self._isActive or self._isManualPanning:
+			return
 		try:
-			self.currentCoordinates = Coordinates(x, y)
+			self.currentCoordinates = self._pendingMouseCoordinates
 			self._doUpdate()
 		except OSError:
 			pass

@@ -24,7 +24,14 @@ PM_NOREMOVE: int = 0x0000
 
 
 class MagnifierMouseHook:
-	"""Installs a WH_MOUSE_LL hook in a dedicated thread. Calls onMouseMove(x, y) on every mouse move."""
+	"""Installs a WH_MOUSE_LL hook in a dedicated thread. Calls onMouseMove(x, y) on every mouse move.
+
+	WH_MOUSE_LL is a global hook: it runs for every mouse move on the system, and
+	delivery of the real WM_MOUSEMOVE to the window under the cursor waits for the
+	whole hook chain to return. onMouseMove must therefore return immediately (no
+	Magnification API calls, no blocking work) — defer any real work to another
+	thread, e.g. via wx.CallAfter.
+	"""
 
 	def __init__(self, onMouseMove):
 		self._onMouseMove = onMouseMove
