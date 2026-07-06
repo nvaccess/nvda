@@ -5384,7 +5384,6 @@ Please see the display's documentation for descriptions of where these keys can 
 |alt key |space+dot1+dot3+dot4 (space+m)|
 |escape key |space+dot1+dot5 (space+e)|
 |enter key |dot8|
-|backspace key |dot7|
 |windows key |space+dot3+dot4|
 |alt+tab key |space+dot2+dot3+dot4+dot5 (space+t)|
 |NVDA Menu |space+dot1+dot3+dot4+dot5 (space+n)|
