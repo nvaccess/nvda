@@ -1203,11 +1203,7 @@ class HtmlMessageDialog(MessageDialog):
 	_DEFAULT_WEBVIEW_SIZE: tuple[int, int] = (350, 300)
 	"""Default WebView viewport, matching the legacy MSHTML browseable message template."""
 	_DIALOG_STYLE: int = (
-		wx.DEFAULT_DIALOG_STYLE
-		| wx.RESIZE_BORDER
-		| wx.MAXIMIZE_BOX
-		| wx.MINIMIZE_BOX
-		| wx.DIALOG_NO_PARENT
+		wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX | wx.MINIMIZE_BOX | wx.DIALOG_NO_PARENT
 	)
 
 	_FAIL_ON_NO_BUTTONS = False
