@@ -3567,14 +3567,15 @@ When a Chinese braille output table is in use, NVDA can insert spaces between Ch
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Options | Default (Auto), Auto, Standard, Chinese |
-| Default | Auto |
+| Options | Default (Automatic), Automatic, Chinese, Unicode (ICU), Legacy (Uniscribe) |
+| Default | Automatic |
 
 | Option | Behaviour |
 |---|---|
-| Auto | Use Chinese word segmentation for Chinese text when available. For other text, use standard word segmentation. |
-| Standard | Use standard Windows word segmentation. |
-| Chinese | Use Chinese word segmentation. If Chinese word segmentation is not available, NVDA falls back to standard word segmentation. |
+| Automatic | Use Chinese word segmentation for Chinese text when available. Otherwise, prefer Unicode (ICU) word segmentation when available, falling back to the legacy Windows word segmentation. |
+| Chinese | Use Chinese word segmentation. If Chinese word segmentation is not available, NVDA uses the fallback path as in `Automatic`. |
+| Unicode (ICU) | Use the Windows built-in ICU library for word segmentation available in Windows 10 version 1703 (Creators Update) and later, falling back to legacy. |
+| Legacy (Uniscribe) | Use the legacy Windows word segmentation as used in Notepad classic and other legacy Win32 edit controls. |
 
 #### Math Settings {#MathSettings}
 
