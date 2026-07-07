@@ -17,6 +17,7 @@ import serial
 
 import braille
 import braille.display.driver
+import braille.display.gesture
 from bdDetect import DeviceMatch, DriverRegistrar
 import brailleInput
 import inputCore
@@ -366,7 +367,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	)
 
 
-class InputGestureRouting(braille.BrailleDisplayGesture):
+class InputGestureRouting(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, indexes: list[int] | int):
@@ -394,11 +395,11 @@ def _getRoutingIndexes(routingKeyBytes: bytes) -> Set[int]:
 	return {i for i in range(numRoutingKeys) if (1 << i) & combinedRoutingKeysBitSet}
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys=None, dots=None, space=0, routing=None):
-		super(braille.BrailleDisplayGesture, self).__init__()
+		super(braille.display.gesture.BrailleDisplayGesture, self).__init__()
 		# see what thumb keys are pressed:
 		names = set()
 		if keys is not None:

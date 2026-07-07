@@ -11,6 +11,7 @@ import hwIo
 from hwIo import intToByte
 import braille
 import braille.display.driver
+import braille.display.gesture
 from logHandler import log
 from collections import OrderedDict
 import inputCore
@@ -795,7 +796,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	)
 
 
-class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class KeyInputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keys, isHid: bool = False):
@@ -832,7 +833,7 @@ class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGe
 		self.id = "+".join(names)
 
 
-class RoutingInputGesture(braille.BrailleDisplayGesture):
+class RoutingInputGesture(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, routingIndex: int):

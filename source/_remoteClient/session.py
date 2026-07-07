@@ -70,6 +70,7 @@ from typing import Any, Final
 
 import braille
 import braille.display.driver
+import braille.display.gesture
 import brailleInput
 import gui
 import inputCore
@@ -608,7 +609,7 @@ class LeaderSession(RemoteSession):
 
 	def handleDecideExecuteGesture(
 		self,
-		gesture: braille.BrailleDisplayGesture | brailleInput.BrailleInputGesture,
+		gesture: braille.display.gesture.BrailleDisplayGesture | brailleInput.BrailleInputGesture,
 	) -> bool:
 		"""Handle and forward braille gestures to remote client.
 
@@ -619,7 +620,10 @@ class LeaderSession(RemoteSession):
 		# Import late to avoid circular import
 		from globalCommands import commands
 
-		if isinstance(gesture, (braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture)):
+		if isinstance(
+			gesture,
+			(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture),
+		):
 			if self.localMachine._showingLocalUiMessage and gesture.script in (
 				commands.script_braille_routeTo,
 				commands.script_braille_scrollBack,

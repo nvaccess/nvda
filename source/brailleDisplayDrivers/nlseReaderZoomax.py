@@ -8,6 +8,7 @@
 import bdDetect
 import braille
 import braille.display.driver
+import braille.display.gesture
 import brailleInput
 import hwIo
 import inputCore
@@ -247,7 +248,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keysDown: dict[bytes, bytes]):

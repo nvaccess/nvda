@@ -9,6 +9,7 @@ import enum
 import itertools
 import braille
 import braille.display.driver
+import braille.display.gesture
 import inputCore
 from logHandler import log
 import brailleInput
@@ -312,7 +313,7 @@ class HidBrailleDriver(braille.display.driver.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = HidBrailleDriver.name
 
 	def __init__(self, driver, dataIndices):

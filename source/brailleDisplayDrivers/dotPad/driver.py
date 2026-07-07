@@ -13,6 +13,7 @@ import serial
 import inputCore
 import braille
 import braille.display.driver
+import braille.display.gesture
 import winBindings.kernel32
 import hwIo
 import bdDetect
@@ -505,7 +506,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	)
 
 
-class DPInputGesture(braille.BrailleDisplayGesture):
+class DPInputGesture(braille.display.gesture.BrailleDisplayGesture):
 	"""Input gesture for DotPad display supporting multi-button combinations."""
 
 	source = BrailleDisplayDriver.name

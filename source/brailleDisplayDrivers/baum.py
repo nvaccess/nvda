@@ -8,6 +8,7 @@ from typing import Union, List, Optional
 
 import braille
 import braille.display.driver
+import braille.display.gesture
 from hwIo import intToByte, boolToByte
 import inputCore
 from logHandler import log
@@ -393,7 +394,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keysDown):

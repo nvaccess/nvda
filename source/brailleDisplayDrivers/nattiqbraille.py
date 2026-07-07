@@ -8,6 +8,7 @@ import serial
 import bdDetect
 import braille
 import braille.display.driver
+import braille.display.gesture
 import inputCore
 from logHandler import log
 import hwIo
@@ -136,7 +137,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	)
 
 
-class InputGestureKeys(braille.BrailleDisplayGesture):
+class InputGestureKeys(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):
@@ -151,7 +152,7 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 			self.id = "tprevious"
 
 
-class RoutingInputGesture(braille.BrailleDisplayGesture):
+class RoutingInputGesture(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, routingIndex):

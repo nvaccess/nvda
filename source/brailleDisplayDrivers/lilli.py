@@ -13,6 +13,7 @@ import inputCore
 import wx
 import braille
 import braille.display.driver
+import braille.display.gesture
 
 try:
 	lilliDll = windll.LoadLibrary(os.path.join(globalVars.appDir, "brailleDisplayDrivers", "lilli.dll"))
@@ -183,7 +184,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, command: str, argument: int):

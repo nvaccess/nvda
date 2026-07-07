@@ -9,6 +9,7 @@ from typing import List
 import inputCore
 import braille
 import braille.display.driver
+import braille.display.gesture
 import hwPortUtils
 from collections import OrderedDict
 from logHandler import log
@@ -500,7 +501,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	)
 
 
-class InputGestureKeys(braille.BrailleDisplayGesture):
+class InputGestureKeys(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):
@@ -508,7 +509,7 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 		self.id = keyNames[keys]
 
 
-class InputGestureRouting(braille.BrailleDisplayGesture):
+class InputGestureRouting(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, index):

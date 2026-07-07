@@ -14,6 +14,7 @@ from io import BytesIO
 import bdDetect
 import braille
 import braille.display.driver
+import braille.display.gesture
 import brailleInput
 import hwIo
 import inputCore
@@ -705,7 +706,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture):
 	"""Base gesture for this braille display"""
 
 	source = BrailleDisplayDriver.name

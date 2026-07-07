@@ -8,6 +8,7 @@ import time
 import wx
 import braille
 import braille.display.driver
+import braille.display.gesture
 from logHandler import log
 import inputCore
 from typing import List
@@ -144,7 +145,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, command, argument):

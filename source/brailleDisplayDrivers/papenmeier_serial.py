@@ -14,6 +14,7 @@ from typing import List, Optional
 import wx
 import braille
 import braille.display.driver
+import braille.display.gesture
 import hwPortUtils
 from logHandler import log
 from baseObject import ScriptableObject
@@ -288,7 +289,7 @@ def brl_keyname(keyindex: int, driver: BrailleDisplayDriver) -> str:
 			return ""
 
 
-class InputGesture(braille.BrailleDisplayGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture):
 	"""input gesture class for papenmeier_serial displays used only by the driver"""
 
 	source = BrailleDisplayDriver.name

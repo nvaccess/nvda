@@ -12,6 +12,7 @@ from typing import List, Union, Optional
 import wx
 import braille
 import braille.display.driver
+import braille.display.gesture
 from logHandler import log
 
 import inputCore
@@ -622,7 +623,7 @@ def brl_join_keys(dec: List[str]) -> str:
 		return ""
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	"""Input gesture for papenmeier displays"""
 
 	source = BrailleDisplayDriver.name
