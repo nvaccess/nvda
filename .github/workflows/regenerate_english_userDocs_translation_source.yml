@@ -34,7 +34,7 @@ jobs:
         token: ${{ secrets.NVACCESSAUTO_PUSH_PAT }}
 
     - name: Set up python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.13'
         architecture: 'x86'
