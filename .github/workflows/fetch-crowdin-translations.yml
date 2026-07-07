@@ -83,7 +83,7 @@ jobs:
 
     - name: Notify translators of errors
       if: steps.commit.outputs.has_failures == 'true'
-      uses: dawidd6/action-send-mail@v4
+      uses: dawidd6/action-send-mail@v18
       with:
         server_address: ${{ secrets.EMAIL_SERVER_ADDRESS }}
         server_port: ${{ secrets.EMAIL_SERVER_PORT || 465 }}
