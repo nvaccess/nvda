@@ -16,6 +16,7 @@ from typing import Dict, List, Optional, Set
 import serial
 
 import braille
+import braille.display.driver
 from bdDetect import DeviceMatch, DriverRegistrar
 import brailleInput
 import inputCore
@@ -97,7 +98,7 @@ def isSeikaBluetoothDeviceMatch(match: DeviceMatch) -> bool:
 	return isSeikaBluetoothDeviceInfo(match.deviceInfo)
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = SEIKA_NAME
 	# Translators: Name of a braille display.
 	description = _("Seika Notetaker")

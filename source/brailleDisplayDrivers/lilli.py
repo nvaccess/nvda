@@ -12,6 +12,7 @@ from ctypes import windll
 import inputCore
 import wx
 import braille
+import braille.display.driver
 
 try:
 	lilliDll = windll.LoadLibrary(os.path.join(globalVars.appDir, "brailleDisplayDrivers", "lilli.dll"))
@@ -106,7 +107,7 @@ def convertLilliCells(cell: int) -> int:
 	return newCell
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "lilli"
 	# Translators: Name of a braille display.
 	description = _("MDV Lilli")

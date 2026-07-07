@@ -8,6 +8,7 @@ from typing import List
 
 import inputCore
 import braille
+import braille.display.driver
 import hwPortUtils
 from collections import OrderedDict
 from logHandler import log
@@ -380,7 +381,7 @@ def eco_out(cells: List[int]) -> bytes:
 	return bytes(ret)
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	"""EcoBraille display driver."""
 
 	name = "ecoBraille"

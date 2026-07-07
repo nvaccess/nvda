@@ -15,6 +15,7 @@ from typing import List
 import wx
 import serial
 import braille
+import braille.display.driver
 import inputCore
 import hwPortUtils
 from logHandler import log
@@ -51,7 +52,7 @@ HEDO_USB_IDS = frozenset(
 )
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "hedoProfiLine"
 	description = "hedo ProfiLine USB"
 

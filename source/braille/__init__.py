@@ -40,7 +40,7 @@ def terminate():
 
 # Deprecated in 2026.3.
 __getattr__ = handleDeprecations(
-	MovedSymbol("BrailleDisplayDriver", "braille.display.driver"),
+	# MovedSymbol("BrailleDisplayDriver", "braille.display.driver"),
 	MovedSymbol("BrailleDisplayGesture", "braille.display.gesture"),
 	MovedSymbol("getSerialPorts", "braille.display"),
 	MovedSymbol("getDisplayList", "braille.display"),

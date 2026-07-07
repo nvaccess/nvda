@@ -7,6 +7,7 @@
 
 import bdDetect
 import braille
+import braille.display.driver
 import brailleInput
 import hwIo
 import inputCore
@@ -85,7 +86,7 @@ COMMAND_RESPONSE_INFO: dict[DeviceCommand, DeviceResponseInfo] = {
 }
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	_dev: hwIo.IoBase
 	name = "nlseReaderZoomax"
 	# Translators: Names of braille displays.

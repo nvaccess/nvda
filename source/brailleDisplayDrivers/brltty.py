@@ -7,6 +7,7 @@ import os
 import time
 import wx
 import braille
+import braille.display.driver
 from logHandler import log
 import inputCore
 from typing import List
@@ -28,7 +29,7 @@ KEY_CHECK_INTERVAL = 50
 BRLAPI_NAMED_PIPE_PREFIX = "BrlAPI"
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	"""brltty braille display driver."""
 
 	name = "brltty"

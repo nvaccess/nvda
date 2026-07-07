@@ -11,6 +11,7 @@ from typing import List
 import wx
 import serial
 import braille
+import braille.display.driver
 import inputCore
 import hwPortUtils
 from hwIo import intToByte
@@ -22,7 +23,7 @@ READ_INTERVAL = 50
 BUF_START = b"\xff\xff"
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "seika"
 	# Translators: Names of braille displays.
 	description = _("Seika Braille Displays")

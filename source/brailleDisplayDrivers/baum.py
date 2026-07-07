@@ -7,6 +7,7 @@ from io import BytesIO
 from typing import Union, List, Optional
 
 import braille
+import braille.display.driver
 from hwIo import intToByte, boolToByte
 import inputCore
 from logHandler import log
@@ -71,7 +72,7 @@ KEY_NAMES = {
 }
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	_dev: hwIo.IoBase
 	name = "baum"
 	# Translators: Names of braille displays.

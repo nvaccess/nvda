@@ -12,6 +12,7 @@ from dataclasses import dataclass
 import serial
 import inputCore
 import braille
+import braille.display.driver
 import winBindings.kernel32
 import hwIo
 import bdDetect
@@ -74,7 +75,7 @@ class BrailleDestination(enum.StrEnum):
 	GRAPHIC = "graphic"
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	"""
 	Driver for DotPad Braille / Tactile Graphic display.
 	"""

@@ -8,6 +8,7 @@ from typing import List, Union
 
 import serial
 import braille
+import braille.display.driver
 import inputCore
 from logHandler import log
 import brailleInput
@@ -79,7 +80,7 @@ DOT8_KEY = 9
 SPACE_KEY = 10
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	_dev: Union[hwIo.Serial, hwIo.Hid]
 	name = "brailliantB"
 	# Translators: The name of a series of braille displays.

@@ -10,6 +10,7 @@ from io import BytesIO
 import hwIo
 from hwIo import intToByte
 import braille
+import braille.display.driver
 from logHandler import log
 from collections import OrderedDict
 import inputCore
@@ -269,7 +270,7 @@ modelMap = [
 ]
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "hims"
 	# Translators: The name of a series of braille displays.
 	description = _("HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series")

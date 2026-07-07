@@ -13,6 +13,7 @@ from typing import List, Optional
 
 import wx
 import braille
+import braille.display.driver
 import hwPortUtils
 from logHandler import log
 from baseObject import ScriptableObject
@@ -61,7 +62,7 @@ def brl_poll(dev: serial.Serial) -> bytes:
 	return b""
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, ScriptableObject):
 	"""papenmeier_serial braille display driver."""
 
 	name = "papenmeier_serial"

@@ -14,6 +14,7 @@ from typing import List, Optional
 import serial
 import bdDetect
 import braille
+import braille.display.driver
 import brailleInput
 import inputCore
 from logHandler import log
@@ -120,7 +121,7 @@ _qtKeys = {
 }
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "brailleNote"
 	# Translators: Names of braille displays
 	description = _("HumanWare BrailleNote")

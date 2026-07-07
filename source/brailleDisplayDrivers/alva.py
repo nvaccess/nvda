@@ -7,6 +7,7 @@ from typing import List, Union
 
 import bdDetect
 import braille
+import braille.display.driver
 from logHandler import log
 import inputCore
 import brailleInput
@@ -144,7 +145,7 @@ ALVA_KEYS = {
 }
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, ScriptableObject):
 	_dev: Union[hwIo.Serial, hwIo.Hid]
 	name = "alva"
 	# Translators: The name of a braille display.
@@ -152,7 +153,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	isThreadSafe = True
 	supportsAutomaticDetection = True
 	timeout = 0.2
-	supportedSettings = (braille.BrailleDisplayDriver.HIDInputSetting(useConfig=False),)
+	supportedSettings = (braille.display.driver.BrailleDisplayDriver.HIDInputSetting(useConfig=False),)
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):

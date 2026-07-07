@@ -31,6 +31,7 @@ from typing import (
 )
 
 import braille
+import braille.display.driver
 import inputCore
 import ui
 
@@ -65,7 +66,7 @@ from .constants import (
 from .gestures import _gestureMap
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	"""Communication with display.
 
 	Most important functions:

@@ -7,6 +7,7 @@
 import serial
 import bdDetect
 import braille
+import braille.display.driver
 import inputCore
 from logHandler import log
 import hwIo
@@ -29,7 +30,7 @@ RIGHT_KEY_PRESS = 3
 LEFT_KEY_PRESS = 4
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "nattiqbraille"
 	# Translators: Names of braille displays
 	description = _("Nattiq nBraille")
