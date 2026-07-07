@@ -16,6 +16,7 @@ from typing import Dict, List, Optional, Set
 import serial
 
 import braille
+import braille.display
 import braille.display.driver
 import braille.display.gesture
 from bdDetect import DeviceMatch, DriverRegistrar
@@ -120,7 +121,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	@classmethod
 	def getManualPorts(cls) -> typing.Iterator[typing.Tuple[str, str]]:
 		"""@return: An iterator containing the name and description for each port."""
-		return braille.getSerialPorts(isSeikaBluetoothDeviceInfo)
+		return braille.display.getSerialPorts(isSeikaBluetoothDeviceInfo)
 
 	def __init__(self, port: typing.Union[None, str, DeviceMatch]):
 		super().__init__()

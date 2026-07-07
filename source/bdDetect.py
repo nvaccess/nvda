@@ -726,7 +726,7 @@ def driverIsEnabledForAutoDetection(driver: str) -> bool:
 def getSupportedBrailleDisplayDrivers(
 	onlyEnabled: bool = False,
 ) -> Generator[type["braille.display.driver.BrailleDisplayDriver"], Any, Any]:
-	return braille.getDisplayDrivers(
+	return braille.display.getDisplayDrivers(
 		lambda d: (
 			d.isThreadSafe
 			and d.supportsAutomaticDetection

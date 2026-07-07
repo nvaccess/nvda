@@ -7,6 +7,7 @@ from typing import List, Union
 
 import bdDetect
 import braille
+import braille.display
 import braille.display.driver
 import braille.display.gesture
 from logHandler import log
@@ -171,7 +172,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts(
+		return braille.display.getSerialPorts(
 			filterFunc=lambda info: info.get("bluetoothName", "").startswith("ALVA "),
 		)
 

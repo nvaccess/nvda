@@ -12,6 +12,7 @@ from dataclasses import dataclass
 import serial
 import inputCore
 import braille
+import braille.display
 import braille.display.driver
 import braille.display.gesture
 import winBindings.kernel32
@@ -99,7 +100,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):

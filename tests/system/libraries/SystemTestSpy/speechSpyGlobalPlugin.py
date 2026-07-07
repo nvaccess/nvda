@@ -15,7 +15,7 @@ from typing import (
 	Optional,
 	Tuple,
 )
-from braille import DisplayDimensions
+from braille.display import DisplayDimensions
 import core
 import globalPluginHandler
 import threading

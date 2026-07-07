@@ -12,7 +12,7 @@ import config
 from .brailleViewerGui import BrailleViewerFrame
 
 if typing.TYPE_CHECKING:
-	from braille import DisplayDimensions
+	from braille.display import DisplayDimensions
 
 """
 ### Overview
@@ -94,7 +94,7 @@ def _onGuiDestroyed():
 
 def _getDisplayDimensions(dimensions: "DisplayDimensions") -> "DisplayDimensions":
 	"""Called by the :attr:`braille.filter_displayDimensions` extension point to get the display dimensions."""
-	from braille import DisplayDimensions  # imported late to avoid a circular import.
+	from braille.display import DisplayDimensions  # imported late to avoid a circular import.
 
 	return DisplayDimensions(
 		numRows=1,

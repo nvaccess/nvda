@@ -6,6 +6,7 @@
 """Unit tests for the extension points in the braille module."""
 
 import braille
+import braille.display
 from ..extensionPointTestHelpers import actionTester, deciderTester, filterTester
 import unittest
 
@@ -34,7 +35,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 
 		with actionTester(self, braille.displaySizeChanged, **expectedKwargs):
 			# Change the internal cache of the display size to trigger the action when getting the display size.
-			braille.handler._displayDimensions = braille.DisplayDimensions(1, 0)
+			braille.handler._displayDimensions = braille.display.DisplayDimensions(1, 0)
 			# The getter should now trigger the action.
 			braille.handler._get_displaySize()
 
@@ -56,7 +57,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			self,
 			braille.filter_displayDimensions,
 			cachedDisplayDimensions,
-			braille.DisplayDimensions(5, 20),
+			braille.display.DisplayDimensions(5, 20),
 		) as expectedOutput:
 			self.assertEqual(braille.handler.displayDimensions, expectedOutput)
 			self.assertEqual(

@@ -170,7 +170,7 @@ class TestGestureMap(unittest.TestCase):
 
 	def test_identifiers(self):
 		"""Checks whether all defined braille display gestures contain valid braille display key identifiers."""
-		for name, description in braille.getDisplayList(excludeNegativeChecks=False):
+		for name, description in braille.display.getDisplayList(excludeNegativeChecks=False):
 			driver = braille.display._getDisplayDriver(name)
 			gmap = driver.gestureMap
 			if not gmap:

@@ -22,6 +22,7 @@ import weakref
 import hwIo
 from hwIo import intToByte, boolToByte
 import braille
+import braille.display
 import braille.display.driver
 import braille.display.gesture
 import brailleInput
@@ -758,7 +759,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	_dev: Optional[Union[hwIo.Hid, hwIo.Serial]]
 

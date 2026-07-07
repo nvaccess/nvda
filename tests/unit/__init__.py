@@ -88,6 +88,7 @@ import speech  # noqa: E402
 speech.initialize()
 
 import braille  # noqa: E402
+import braille.display  # noqa: E402
 
 # Disable auto detection of braille displays when unit testing.
 config.conf["braille"]["display"] = "noBraille"
@@ -96,8 +97,10 @@ braille.initialize()
 
 # For braille unit tests, we need to enable the braille handler by providing it display dimensions
 # Give the display one row with 40 cells
-def getFakeDisplayDimensions(dimensions: braille.DisplayDimensions) -> braille.DisplayDimensions:
-	return braille.DisplayDimensions(numRows=1, numCols=40)
+def getFakeDisplayDimensions(
+	dimensions: braille.display.DisplayDimensions,
+) -> braille.display.DisplayDimensions:
+	return braille.display.DisplayDimensions(numRows=1, numCols=40)
 
 
 braille.filter_displayDimensions.register(getFakeDisplayDimensions)

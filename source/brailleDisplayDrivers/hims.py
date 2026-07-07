@@ -10,6 +10,7 @@ from io import BytesIO
 import hwIo
 from hwIo import intToByte
 import braille
+import braille.display
 import braille.display.driver
 import braille.display.gesture
 from logHandler import log
@@ -320,7 +321,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls) -> Iterator[tuple[str, str]]:
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()

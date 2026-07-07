@@ -31,6 +31,7 @@ from typing import (
 )
 
 import braille
+import braille.display
 import braille.display.driver
 import inputCore
 import ui
@@ -94,7 +95,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	def __init__(self, port: str = "auto"):
 		super().__init__()

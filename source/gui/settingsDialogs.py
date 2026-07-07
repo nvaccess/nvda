@@ -5098,7 +5098,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 
 	def updateBrailleDisplayLists(self):
 		driverList = [(braille.AUTO_DISPLAY_NAME, self.getCurrentAutoDisplayDescription())]
-		driverList.extend(braille.getDisplayList())
+		driverList.extend(braille.display.getDisplayList())
 		self.displayNames = [driver[0] for driver in driverList]
 		displayChoices = [driver[1] for driver in driverList]
 		self.displayList.Clear()

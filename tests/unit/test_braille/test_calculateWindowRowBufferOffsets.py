@@ -10,14 +10,15 @@ from unittest.mock import patch
 
 import braille
 import braille.buffers
+import braille.display
 import config
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import BrailleTextWrapFlag
 
 
-def _getDisplayDimensions(dimensions: braille.DisplayDimensions) -> braille.DisplayDimensions:
+def _getDisplayDimensions(dimensions: braille.display.DisplayDimensions) -> braille.display.DisplayDimensions:
 	"""Used to build a braille handler with particular dimensions."""
-	return braille.DisplayDimensions(
+	return braille.display.DisplayDimensions(
 		numRows=2,
 		numCols=20,
 	)

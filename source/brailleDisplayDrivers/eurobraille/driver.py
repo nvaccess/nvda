@@ -11,6 +11,7 @@ from io import BytesIO
 import serial
 import bdDetect
 import braille
+import braille.display
 import braille.display.driver
 import inputCore
 from logHandler import log
@@ -81,7 +82,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	def __init__(self, port="Auto"):
 		super().__init__()

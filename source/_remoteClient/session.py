@@ -69,6 +69,7 @@ from collections import defaultdict
 from typing import Any, Final
 
 import braille
+import braille.display
 import braille.display.driver
 import braille.display.gesture
 import brailleInput
@@ -593,7 +594,7 @@ class LeaderSession(RemoteSession):
 	def sendBrailleInfo(
 		self,
 		display: braille.display.driver.BrailleDisplayDriver | None = None,
-		displayDimensions: braille.DisplayDimensions | None = None,
+		displayDimensions: braille.display.DisplayDimensions | None = None,
 	) -> None:
 		if display is None:
 			display = braille.handler.display
