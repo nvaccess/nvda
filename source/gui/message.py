@@ -18,7 +18,7 @@ from typing import Any, Literal, NamedTuple, Optional, Self
 import core
 import extensionPoints
 import wx
-from wx.html2 import WebView
+import wx.html2
 from .contextHelp import ContextHelpMixin
 from logHandler import log
 
@@ -1249,8 +1249,8 @@ class HtmlMessageDialog(MessageDialog):
 		self._actionHandlers[action] = handler
 		return self
 
-	def _createMessageControl(self) -> WebView:
-		control = WebView.New(self, backend=self._webViewBackend)
+	def _createMessageControl(self) -> wx.html2.WebView:
+		control = wx.html2.WebView.New(self, backend=self._webViewBackend)
 		control.SetInitialSize(self.scaleSize(self._DEFAULT_WEBVIEW_SIZE))
 		control.EnableContextMenu(False)
 		control.EnableHistory(False)
