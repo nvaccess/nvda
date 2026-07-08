@@ -53,6 +53,7 @@
 Previously these keys had no function when pressed on their own. (#20366, @fla-rion)
 * The HID keyboard input simulation setting for ALVA braille displays is now remembered across reconnects and restarts. (#20455, @Cary-rowen)
 * Braille now follows the spoken text during say all in browse mode when braille is tethered to focus. (#3287, @LeonarddeR)
+* When creating a portable copy, entering a bare drive letter (e.g. `c:`) now shows a helpful error message suggesting the user use `c:\` instead. (#20446, @Mubashir78)
 
 ### Changes for Developers
 
