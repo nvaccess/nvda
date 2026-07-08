@@ -36,6 +36,7 @@ from comInterfaces.SpeechLib import (
 	ISpNotifySink,
 	ISpVoice,
 	ISpeechVoice,
+	SpObjectToken,
 	SPAUDIOSTATE,
 	SPEVENT,
 	WAVEFORMATEX,
@@ -552,6 +553,9 @@ class SynthDriver(SynthDriver):
 
 	COM_CLASS = "SAPI.SPVoice"
 	CUSTOMSTREAM_COM_CLASS = "SAPI.SpCustomStream"
+	OBJECT_TOKEN_COM_CLASS = "SAPI.SpObjectToken"
+	VOICE_TOKEN_REGISTRY_PATH = r"SOFTWARE\Microsoft\Speech\Voices\Tokens"
+	VOICE_TOKEN_ID_PREFIX = f"HKEY_LOCAL_MACHINE\\{VOICE_TOKEN_REGISTRY_PATH}"
 
 	name = "sapi5"
 	# Translators: Description for a speech synthesizer.
@@ -632,12 +636,52 @@ class SynthDriver(SynthDriver):
 					language = None
 			except COMError:
 				log.warning("Could not get the voice info. Skipping...")
+				continue
 			voices[ID] = VoiceInfo(ID, name, language)
 		return voices
 
+	def _createVoiceToken(self, tokenId: str) -> SpObjectToken:
+		"""Create a SAPI object token from a token ID."""
+		token = comtypes.client.CreateObject(self.OBJECT_TOKEN_COM_CLASS)
+		token.SetId(tokenId, "", False)
+		return token
+
+	def _getVoiceTokenIds(self) -> Generator[str, None, None]:
+		"""Provides SAPI 5 voice token IDs by reading the registry directly.
+
+		Using SAPI's token enumerator can fail the entire voice list when a single
+		installed voice has a malformed token. Reading the registry allows each
+		token to be created and validated independently.
+		"""
+		try:
+			with winreg.OpenKeyEx(
+				winreg.HKEY_LOCAL_MACHINE,
+				self.VOICE_TOKEN_REGISTRY_PATH,
+				0,
+				winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
+			) as tokensKey:
+				index = 0
+				while True:
+					try:
+						tokenName = winreg.EnumKey(tokensKey, index)
+					except OSError:
+						break
+					index += 1
+					yield rf"{self.VOICE_TOKEN_ID_PREFIX}\{tokenName}"
+		except OSError:
+			log.warning("Could not open SAPI 5 voice token registry key", exc_info=True)
+
 	def _getVoiceTokens(self):
-		"""Provides a collection of sapi5 voice tokens. Can be overridden by subclasses if tokens should be looked for in some other registry location."""
-		return self.tts.GetVoices()
+		"""Provides sapi5 voice tokens. Can be overridden by subclasses if tokens should be looked for in some other registry location."""
+		tokens = []
+		for tokenId in self._getVoiceTokenIds():
+			try:
+				token = self._createVoiceToken(tokenId)
+			except COMError:
+				log.warning(f"Could not create voice token for {tokenId}. Skipping...", exc_info=True)
+				continue
+			tokens.append(token)
+		return tokens
 
 	def _get_rate(self):
 		return self._rate
@@ -762,15 +806,10 @@ class SynthDriver(SynthDriver):
 		notifySource.SetNotifySink(SapiSink(weakref.ref(self)))
 
 	def _set_voice(self, value):
-		tokens = self._getVoiceTokens()
-		# #2629: Iterating uses IEnumVARIANT and GetBestInterface doesn't work on tokens returned by some token enumerators.
-		# Therefore, fetch the items by index, as that method explicitly returns the correct interface.
-		for i in range(len(tokens)):
-			voice = tokens[i]
-			if value == voice.Id:
-				break
-		else:
-			# Voice not found.
+		try:
+			voice = self._createVoiceToken(value)
+		except COMError:
+			# Could not create a voice.
 			return
 		self._initTts(voice=voice)
 		# As _initTts resets the voice parameters on the tts object, set them back to current values.
