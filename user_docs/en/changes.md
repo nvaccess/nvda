@@ -26,6 +26,7 @@
 * The dialog used to present browseable messages (such as formatting information) has been modernized. (#18878, @LeonarddeR)
   * The dialog's shortcut to copy contents of the message to the clipboard was changed to `alt+c`.
 * Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
+* The duration of indentation beeps can now be configured via a new "Indent tone duration (ms)" spin control in the Document Formatting settings panel. (#20447, @Mubashir78)
 
 ### Bug Fixes
 
