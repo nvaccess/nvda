@@ -769,9 +769,9 @@ class PortableCreaterDialog(
 				_(
 					# Translators: The message displayed when the user enters a bare drive letter
 					# in the Create Portable NVDA dialog.
-					"A drive letter without a trailing backslash (e.g. \"{path}\") is not a valid "
+					'A drive letter without a trailing backslash (e.g. "{path}") is not a valid '
 					"destination directory.\n"
-					"Please use \"{suggested}\" instead.",
+					'Please use "{suggested}" instead.',
 				).format(path=drive, suggested=drive + os.sep),
 				_("Error"),
 				wx.OK | wx.ICON_ERROR,
