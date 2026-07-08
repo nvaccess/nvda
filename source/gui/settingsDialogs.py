@@ -3344,7 +3344,7 @@ class DocumentFormattingPanel(SettingsPanel):
 			initial=config.conf["documentFormatting"]["indentToneDuration"],
 		)
 		self.indentToneDurationSpin.Enable(
-			reportLineIndentation in (ReportLineIndentation.TONES, ReportLineIndentation.SPEECH_AND_TONES)
+			reportLineIndentation in (ReportLineIndentation.TONES, ReportLineIndentation.SPEECH_AND_TONES),
 		)
 
 		# Translators: This message is presented in the document formatting settings panel
@@ -3499,7 +3499,7 @@ class DocumentFormattingPanel(SettingsPanel):
 	def _onLineIndentationChange(self, evt: wx.CommandEvent) -> None:
 		self.ignoreBlankLinesRLICheckbox.Enable(evt.GetSelection() != 0)
 		self.indentToneDurationSpin.Enable(
-			evt.GetSelection() in (ReportLineIndentation.TONES, ReportLineIndentation.SPEECH_AND_TONES)
+			evt.GetSelection() in (ReportLineIndentation.TONES, ReportLineIndentation.SPEECH_AND_TONES),
 		)
 
 	def _onLinksChange(self, evt: wx.CommandEvent):
