@@ -265,7 +265,7 @@ GetTokenInformation.restype = BOOL
 
 
 class SE_PRIVILEGE(IntFlag):
-	"""Possible attributes of privilege in a TOKEN_PRIVILEGES  structure."""
+	"""Possible attributes of privilege in a TOKEN_PRIVILEGES structure."""
 
 	ENABLED_BY_DEFAULT = 0x00000001
 	"""SE_PRIVILEGE_ENABLED_BY_DEFAULT: The privilege is enabled by default."""
