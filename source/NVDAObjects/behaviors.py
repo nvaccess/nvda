@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler,
-# Burman's Computer and Education Ltd, Cary-rowen, Cyrille Bougot
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler,
+# Burman's Computer and Education Ltd, Cary-rowen, Cyrille Bougot, Ethin Probst
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
@@ -11,6 +11,7 @@ Behaviors described in this mix-in include providing table navigation commands f
 import os
 import time
 import threading
+import math
 import tones
 import queueHandler
 import eventHandler
@@ -30,11 +31,13 @@ import core
 import nvwave
 import globalVars
 from typing import List, Union
+from collections.abc import Generator
 import diffHandler
 from config.configFlags import (
 	TypingEcho,
 	ReportSpellingErrors,
 )
+from speech.extensions import pre_speechCanceled
 
 
 class ProgressBar(NVDAObject):
@@ -387,6 +390,8 @@ class LiveText(NVDAObject):
 		self._event = threading.Event()
 		self._monitorThread = None
 		self._keepMonitoring = False
+		self._reportNewLinesGenID: int | None = None
+		pre_speechCanceled.register(self._onSpeechCanceled)
 
 	def startMonitoring(self):
 		"""Start monitoring for new text.
@@ -415,6 +420,9 @@ class LiveText(NVDAObject):
 		self._keepMonitoring = False
 		self._event.set()
 		self._monitorThread = None
+		if self._reportNewLinesGenID is not None:
+			queueHandler.cancelGeneratorObject(self._reportNewLinesGenID)
+			self._reportNewLinesGenID = None
 
 	def event_textChange(self):
 		"""Fired when the text changes.
@@ -451,14 +459,68 @@ class LiveText(NVDAObject):
 		ti = self.makeTextInfo(textInfos.POSITION_ALL)
 		return self.diffAlgo._getText(ti)
 
-	def _reportNewLines(self, lines):
+	def _reportNewLines(self, lines: list[str]) -> None:
 		"""
 		Reports new lines of text using _reportNewText for each new line.
 		Subclasses may override this method to provide custom filtering of new text,
 		where logic depends on multiple lines.
 		"""
-		for line in lines:
-			self._reportNewText(line)
+		maxNewLines: int = config.conf["terminals"]["maxNewLines"]
+		if maxNewLines:
+			droppedCount = len(lines) - maxNewLines
+			if droppedCount > 0:
+				if (
+					config.conf["terminals"]["beepForSkippedLines"]
+					and speech.getState().speechMode == speech.SpeechMode.talk
+				):
+					skippedLinesBeepHz = 550
+					tones.beep(
+						skippedLinesBeepHz,
+						self._getSkippedLinesBeepLength(droppedCount),
+					)
+				lines = lines[-maxNewLines:]
+		if self._reportNewLinesGenID is not None:
+			queueHandler.cancelGeneratorObject(self._reportNewLinesGenID)
+			self._reportNewLinesGenID = None
+		newLinesBatchSize: int = config.conf["terminals"]["newLinesBatchSize"]
+		if newLinesBatchSize <= 0:  # Report synchronously
+			for line in lines:
+				self._reportNewText(line)
+		else:
+			self._reportNewLinesGenID = queueHandler.registerGeneratorObject(
+				self._reportNewLinesGenerator(
+					lines,
+					newLinesBatchSize,
+				),
+			)
+
+	@staticmethod
+	def _getSkippedLinesBeepLength(droppedCount: int) -> int:
+		skippedLinesBeepMinLengthMs = 10
+		skippedLinesBeepMaxLengthMs = 100
+		droppedCount = max(droppedCount, 1)
+		maxNewLines: int = config.conf["terminals"]["maxNewLines"]
+		ratio = 1.0 if maxNewLines <= 1 else min(1.0, math.log(droppedCount, maxNewLines))
+		lengthRange = skippedLinesBeepMaxLengthMs - skippedLinesBeepMinLengthMs
+		return round(skippedLinesBeepMinLengthMs + lengthRange * ratio)
+
+	def _reportNewLinesGenerator(
+		self,
+		lines: list[str],
+		batchSize: int,
+	) -> Generator[None, None, None]:
+		try:
+			for i, line in enumerate(lines, 1):
+				self._reportNewText(line)
+				if i % batchSize == 0:
+					yield
+		finally:
+			self._reportNewLinesGenID = None
+
+	def _onSpeechCanceled(self) -> None:
+		if self._reportNewLinesGenID is not None:
+			queueHandler.cancelGeneratorObject(self._reportNewLinesGenID)
+			self._reportNewLinesGenID = None
 
 	def _reportNewText(self, line):
 		"""Report a line of new text."""

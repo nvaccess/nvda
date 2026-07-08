@@ -7,8 +7,9 @@ from collections.abc import Callable, Generator
 import enum
 import typing
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, mock_open, patch
 import io
+import yaml
 
 import configobj
 import configobj.validate
@@ -19,6 +20,11 @@ from config import (
 	ConfigManager,
 	featureFlag,
 )
+from config.configSections import (
+	_loadCustomSections,
+	_customSections,
+)
+from config.configSpec import confspec
 from config.featureFlag import (
 	FeatureFlag,
 )
@@ -1295,3 +1301,146 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_21_to_22(unittest.TestCase):
 		profile = _loadProfile(configString)
 		upgradeConfigFrom_21_to_22(profile)
 		self.assertEqual(profile["math"]["speech"]["language"], "fr")
+
+
+class Config_loadCustomSections(unittest.TestCase):
+	def setUp(self):
+		_customSections.clear()
+		self._origConfspecKeys = set(confspec.keys())
+		self._origBaseOnlySections = set(ConfigManager.BASE_ONLY_SECTIONS)
+
+	def tearDown(self):
+		for key in list(confspec.keys()):
+			if key not in self._origConfspecKeys:
+				del confspec[key]
+		_customSections.clear()
+		ConfigManager.BASE_ONLY_SECTIONS.clear()
+		ConfigManager.BASE_ONLY_SECTIONS.update(self._origBaseOnlySections)
+
+	def _callWithYamlData(self, data):
+		"""Call _loadCustomSections with yaml.safe_load returning data."""
+		with patch("builtins.open", mock_open()):
+			with patch("config.configSections.yaml.safe_load", return_value=data):
+				_loadCustomSections()
+
+	def test_fileNotFound_returnsWithoutAdding(self):
+		"""FileNotFoundError means nothing is loaded and customSections remains empty."""
+		with patch("builtins.open", side_effect=FileNotFoundError):
+			_loadCustomSections()
+		self.assertEqual(_customSections, {})
+
+	def test_osError_logsAndReturnsWithoutAdding(self):
+		"""OSError is logged and customSections remains empty."""
+		with patch("builtins.open", side_effect=OSError):
+			with patch("config.configSections.log.exception") as mockLog:
+				_loadCustomSections()
+		mockLog.assert_called_once()
+		self.assertEqual(_customSections, {})
+
+	def test_yamlError_logsAndReturnsWithoutAdding(self):
+		"""yaml.YAMLError is logged and customSections remains empty."""
+
+		with patch("builtins.open", mock_open()):
+			with patch("config.configSections.yaml.safe_load", side_effect=yaml.YAMLError):
+				with patch("config.configSections.log.exception") as mockLog:
+					_loadCustomSections()
+		mockLog.assert_called_once()
+		self.assertEqual(_customSections, {})
+
+	def test_noneContent_returnsWithoutAdding(self):
+		"""yaml.safe_load returning None means customSections remains empty."""
+		self._callWithYamlData(None)
+		self.assertEqual(_customSections, {})
+
+	def test_nonDictContent_logsErrorAndReturnsWithoutAdding(self):
+		"""Non-dict YAML content logs an error and nothing is added."""
+		with patch("builtins.open", mock_open()):
+			with patch("config.configSections.yaml.safe_load", return_value=["notADict"]):
+				with patch("config.configSections.log.error") as mockLog:
+					_loadCustomSections()
+		mockLog.assert_called_once()
+		self.assertEqual(_customSections, {})
+
+	def test_nonStringName_skipped(self):
+		"""Entries with non-string section names are skipped with a debug warning."""
+		data = {42: {"spec": {"key": "string(default='val')"}}}
+		with patch("builtins.open", mock_open()):
+			with patch("config.configSections.yaml.safe_load", return_value=data):
+				with patch("config.configSections.log.debugWarning") as mockLog:
+					_loadCustomSections()
+		mockLog.assert_called_once()
+		self.assertEqual(_customSections, {})
+
+	def test_missingSpec_skipped(self):
+		"""Entries without a 'spec' key are skipped."""
+		data = {"mySection": {"isBaseOnly": False}}
+		self._callWithYamlData(data)
+		self.assertNotIn("mySection", _customSections)
+
+	def test_nonDictEntry_skipped(self):
+		"""Entries that are not dicts are skipped."""
+		data = {"mySection": "notADict"}
+		self._callWithYamlData(data)
+		self.assertNotIn("mySection", _customSections)
+
+	def test_nonDictSpec_skipped(self):
+		"""Entries whose 'spec' value is not a dict are skipped."""
+		data = {"mySection": {"spec": "notADict"}}
+		self._callWithYamlData(data)
+		self.assertNotIn("mySection", _customSections)
+
+	def test_validSection_addedToCustomSections(self):
+		"""A valid section is added to customSections with isBaseOnly defaulting to False."""
+		spec = {"myKey": "string(default='hello')"}
+		data = {"mySection": {"spec": spec}}
+		self._callWithYamlData(data)
+		self.assertIn("mySection", _customSections)
+		self.assertEqual(_customSections["mySection"]["spec"], spec)
+		self.assertFalse(_customSections["mySection"]["isBaseOnly"])
+
+	def test_validSection_baseOnly_addedToBaseOnlySections(self):
+		"""A valid isBaseOnly section is added to ConfigManager.BASE_ONLY_SECTIONS."""
+		spec = {"myKey": "string(default='hello')"}
+		data = {"mySection": {"spec": spec, "isBaseOnly": True}}
+		self._callWithYamlData(data)
+		self.assertIn("mySection", _customSections)
+		self.assertTrue(_customSections["mySection"]["isBaseOnly"])
+		self.assertIn("mySection", ConfigManager.BASE_ONLY_SECTIONS)
+
+	def test_validSection_notBaseOnly_notInBaseOnlySections(self):
+		"""A valid section with isBaseOnly=False is not added to ConfigManager.BASE_ONLY_SECTIONS."""
+		spec = {"myKey": "string(default='hello')"}
+		data = {"mySection": {"spec": spec, "isBaseOnly": False}}
+		self._callWithYamlData(data)
+		self.assertIn("mySection", _customSections)
+		self.assertNotIn("mySection", ConfigManager.BASE_ONLY_SECTIONS)
+
+	def test_multipleSections_allAdded(self):
+		"""Multiple valid sections are all added to customSections."""
+		data = {
+			"section1": {"spec": {"k1": "string(default='a')"}},
+			"section2": {"spec": {"k2": "integer(default=1)"}},
+		}
+		self._callWithYamlData(data)
+		self.assertIn("section1", _customSections)
+		self.assertIn("section2", _customSections)
+
+	def test_nestedSubsections_addedToConfspecAndCustomSections(self):
+		"""A spec with nested subsections (dicts within dicts) is accepted and stored verbatim."""
+		spec = {
+			"topKey": "string(default='top')",
+			"subA": {
+				"keyA1": "integer(default=1)",
+				"keyA2": "boolean(default=False)",
+				"subB": {
+					"deepKey": "string(default='deep')",
+				},
+			},
+		}
+		data = {"myNestedSection": {"spec": spec}}
+		self._callWithYamlData(data)
+		self.assertIn("myNestedSection", _customSections)
+		self.assertEqual(_customSections["myNestedSection"]["spec"], spec)
+		self.assertFalse(_customSections["myNestedSection"]["isBaseOnly"])
+		self.assertIn("myNestedSection", confspec)
+		self.assertEqual(confspec["myNestedSection"], spec)

@@ -86,10 +86,10 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 #### Run time dependencies
 
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit `b0b605c8a80f76c4c19e18033c6780c3cc4afc5b`
-* [Sonic](https://github.com/waywardgeek/sonic), commit `d2cdb40fbdc82b464be364a50b34e8dd82b6c80a`
+* [Sonic](https://github.com/waywardgeek/sonic), commit `b93885dcb70aae50c6f76b0fe4e0868f029a077e`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `c9ae003d9c85eb707716928de97e055f5b77189c`
-* [liblouis](http://www.liblouis.io/), version 3.37.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 48.0
+* [liblouis](http://www.liblouis.io/), version 3.38.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 48.2
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [Microsoft Detours](https://github.com/microsoft/Detours), commit `9764cebcb1a75940e68fa83d6730ffaf0f669401`
 * brlapi Python bindings, version 0.8.7 or later, built with [GitHub Actions in the NV Access fork of the brlTTY repository](https://github.com/nvaccess/brltty/actions)
@@ -97,6 +97,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * [Nullsoft Install System](https://nsis.sourceforge.io), version 3.11
 * [Java Access Bridge 64 bit, from Zulu Community OpenJDK build 17.0.16+8 Zulu (17.60.17)](https://github.com/nvaccess/javaAccessBridge32-bin)
 * [Windows Implementation Library (WIL)](https://github.com/microsoft/wil/), commit `7cf41936c5b4ab79daf0d9437211380dc69fa958`
+* [cppjieba - Chinese word segmentation](https://github.com/yanyiwu/cppjieba), commit `9408c1d08facc6e324dc90260e8cb20ecceebf70`
 
 #### Build time dependencies
 
