@@ -483,10 +483,10 @@ class Test_comparePreviousInstall(unittest.TestCase):
 
 
 class Test_CreatePortableDirectoryNormalization(unittest.TestCase):
-	"""Tests for path normalization in onCreatePortable (#20159).
+	"""Tests for path handling in onCreatePortable (#20159).
 
-	Bare drive letters (e.g. "c:") should be normalized to "c:\\" so that
-	os.path.isabs recognises them as absolute paths on Windows.
+	Bare drive letters (e.g. "c:") should show a specific error message
+	suggesting the user use "c:\\" instead.
 	"""
 
 	def _runCreatePortable(self, path: str) -> list:
@@ -507,7 +507,10 @@ class Test_CreatePortableDirectoryNormalization(unittest.TestCase):
 			return ("", p)
 
 		def _mockIsabs(p: str) -> bool:
-			return len(p) >= 2 and p[1] == ":"
+			# On Windows, "c:" is not absolute; "c:\\" and "c:\\foo" are.
+			if len(p) >= 2 and p[1] == ":":
+				return len(p) > 2
+			return False
 
 		with (
 			patch.object(
@@ -534,16 +537,13 @@ class Test_CreatePortableDirectoryNormalization(unittest.TestCase):
 
 		return msgBoxCalls
 
-	def test_bareDriveLetter_isAccepted(self):
-		"""Entering 'c:' should NOT show the "not absolute" error."""
+	def test_bareDriveLetter_showsSpecificError(self):
+		"""Entering 'c:' should show a specific error suggesting 'c:\\'."""
 		calls = self._runCreatePortable("c:")
-		errorText = _(
-			"Please specify the absolute path where the portable copy should be created. "
-			"It must start with a drive letter (e.g. C:). "
-			"It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
-			"Current path: {path}. ",
-		).format(path="c:\\")
-		self.assertNotIn(errorText, calls)
+		self.assertTrue(
+			any("c:\\" in msg for msg in calls),
+			"Expected the error message to suggest 'c:\\'",
+		)
 
 	def test_relativePath_showsError(self):
 		"""Entering 'foo' should still show the "not absolute" error."""

@@ -761,11 +761,22 @@ class PortableCreaterDialog(
 			)
 			return
 		expandedPortableDirectory = os.path.expandvars(self.portableDirectoryEdit.Value)
-		# Normalize bare drive letters (e.g. "c:" -> "c:\") so they are
-		# recognised as absolute paths. (#20159)
 		drive, tail = os.path.splitdrive(expandedPortableDirectory)
 		if drive and not tail:
-			expandedPortableDirectory = drive + os.sep
+			# Bare drive letter (e.g. "c:") is not an absolute path.
+			# On Windows "c:" refers to the current directory on drive C, not its root.
+			gui.messageBox(
+				_(
+					# Translators: The message displayed when the user enters a bare drive letter
+					# in the Create Portable NVDA dialog.
+					"A drive letter without a trailing backslash (e.g. \"{path}\") is not a valid "
+					"destination directory.\n"
+					"Please use \"{suggested}\" instead.",
+				).format(path=drive, suggested=drive + os.sep),
+				_("Error"),
+				wx.OK | wx.ICON_ERROR,
+			)
+			return
 		if not os.path.isabs(expandedPortableDirectory):
 			gui.messageBox(
 				_(
