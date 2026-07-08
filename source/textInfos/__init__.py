@@ -403,6 +403,9 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _get_unit_mouseChunk(self):
 		return config.conf["mouse"]["mouseTextUnit"]
 
+	#: Typing information for auto-property: _get_unit_readingChunk
+	unit_readingChunk: str
+
 	def _get_unit_readingChunk(self) -> str:
 		"""The concrete unit that :data:`UNIT_READINGCHUNK` resolves to,
 		as configured via the ``sayAllReadingUnit`` feature flag.
@@ -413,8 +416,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			case config.featureFlagEnums.SayAllReadingUnitFlag.LINE:
 				return UNIT_LINE
 			case flag:
-				log.error(f"Unknown sayAllReadingUnit flag, {flag!r}")
-				return UNIT_LINE
+				raise NotImplementedError(f"Unknown sayAllReadingUnit flag, {flag!r}")
 
 	#: Typing information for auto-property: _get_text
 	text: str

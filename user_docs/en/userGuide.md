@@ -2232,14 +2232,14 @@ To toggle Unicode normalization from anywhere, please assign a custom gesture us
 ##### Say all reads by {#SpeechSettingsSayAllReadingUnit}
 
 This combo box lets you choose the unit of text that say all (continuous reading) advances by.
-When set to sentence, NVDA reads sentence by sentence in controls and documents that support sentence boundaries, and automatically falls back to reading by line where sentence boundaries are not supported.
-When set to line, NVDA always reads line by line.
-For example, when set to line, say all reads by line in Rich Edit controls such as WordPad or NVDA's log viewer, whereas the default reads these by sentence.
+When set to prefer sentence, NVDA reads sentence by sentence in controls and documents that support sentence boundaries, and automatically falls back to reading by line where sentence boundaries are not supported.
+When set to always use line, NVDA always reads line by line.
+For example, when set to always use line, say all reads by line in Rich Edit controls such as WordPad or NVDA's log viewer, whereas the default reads these by sentence.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Default (Sentence), Sentence, Line|
-|Default |Sentence|
+|Options |Default (Prefer sentence), Prefer sentence, Always use line|
+|Default |Prefer sentence|
 
 ##### Report "Normalized" when navigating by character {#SpeechReportNormalizedForCharacterNavigation}
 

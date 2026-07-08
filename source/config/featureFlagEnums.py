@@ -203,9 +203,9 @@ class SayAllReadingUnitFlag(DisplayStringEnum):
 	def _displayStringLabels(self):
 		return {
 			# Translators: Label for an option in the Speech settings (say all reading unit).
-			self.SENTENCE: _("Sentence"),
+			self.SENTENCE: _("Prefer sentence"),
 			# Translators: Label for an option in the Speech settings (say all reading unit).
-			self.LINE: _("Line"),
+			self.LINE: _("Always use line"),
 		}
 
 
