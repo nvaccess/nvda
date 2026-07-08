@@ -48,7 +48,7 @@ jobs:
         architecture: 'x64'
 
     - name: setup uv
-      uses: astral-sh/setup-uv@v6
+      uses: astral-sh/setup-uv@v7
 
     - name: Download translations from Crowdin
       run: uv run source/l10nUtil.py exportTranslations -o .
