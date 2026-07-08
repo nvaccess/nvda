@@ -26,6 +26,7 @@ from typing import (
 
 import baseObject
 import config
+import config.featureFlagEnums
 import controlTypes
 from controlTypes import OutputReason
 import locationHelper
@@ -401,6 +402,19 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def _get_unit_mouseChunk(self):
 		return config.conf["mouse"]["mouseTextUnit"]
+
+	def _get_unit_readingChunk(self) -> str:
+		"""The concrete unit that :data:`UNIT_READINGCHUNK` resolves to,
+		as configured via the ``sayAllReadingUnit`` feature flag.
+		"""
+		match config.conf["speech"]["sayAllReadingUnit"].calculated():
+			case config.featureFlagEnums.SayAllReadingUnitFlag.SENTENCE:
+				return UNIT_SENTENCE
+			case config.featureFlagEnums.SayAllReadingUnitFlag.LINE:
+				return UNIT_LINE
+			case flag:
+				log.error(f"Unknown sayAllReadingUnit flag, {flag!r}")
+				return UNIT_LINE
 
 	#: Typing information for auto-property: _get_text
 	text: str

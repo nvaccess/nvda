@@ -663,7 +663,6 @@ NVDAUnitsToITextDocumentUnits: dict[str, int] = {
 	textInfos.UNIT_SENTENCE: comInterfaces.tom.tomSentence,
 	textInfos.UNIT_PARAGRAPH: comInterfaces.tom.tomParagraph,
 	textInfos.UNIT_STORY: comInterfaces.tom.tomStory,
-	textInfos.UNIT_READINGCHUNK: comInterfaces.tom.tomLine,
 }
 
 
@@ -941,7 +940,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 
 	def expand(self, unit):
 		if unit == textInfos.UNIT_READINGCHUNK:
-			unit = config.conf["speech"]["sayAllReadingUnit"].calculated().value
+			unit = self.unit_readingChunk
 		if unit in NVDAUnitsToITextDocumentUnits:
 			self._rangeObj.Expand(NVDAUnitsToITextDocumentUnits[unit])
 		else:
@@ -1001,7 +1000,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 
 	def move(self, unit, direction, endPoint=None):
 		if unit == textInfos.UNIT_READINGCHUNK:
-			unit = config.conf["speech"]["sayAllReadingUnit"].calculated().value
+			unit = self.unit_readingChunk
 		if unit in NVDAUnitsToITextDocumentUnits:
 			unit = NVDAUnitsToITextDocumentUnits[unit]
 		else:

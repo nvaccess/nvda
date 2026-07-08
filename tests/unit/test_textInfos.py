@@ -39,9 +39,6 @@ class _LineOnlyTextInfo(BasicTextInfo):
 	def _getLineOffsets(self, offset):
 		return _LINE_OFFSETS
 
-	def _getSentenceOffsets(self, offset):
-		raise NotImplementedError
-
 
 class _SentenceCapableProvider(BasicTextProvider):
 	TextInfo = _SentenceCapableTextInfo

@@ -195,15 +195,9 @@ class BrailleTextWrapFlag(DisplayStringEnum):
 class SayAllReadingUnitFlag(DisplayStringEnum):
 	"""Feature flag for the text unit say all advances by (the reading chunk)."""
 
-	# Values ARE textInfos units, so a caller can use `flag.calculated().value` directly.
-	# NOTE: the literals are inlined (rather than referencing ``textInfos.UNIT_*``) to avoid a
-	# module-level ``import textInfos`` here. This module is imported during ``config`` package
-	# init (before ``languageHandler.setLanguage`` installs the ``_`` gettext builtin), and
-	# ``textInfos`` transitively imports ``controlTypes.formatFields``, which calls ``_()`` at
-	# module load, so the import would crash NVDA startup with ``NameError: name '_' is not defined``.
 	DEFAULT = enum.auto()
-	SENTENCE = "sentence"  # textInfos.UNIT_SENTENCE
-	LINE = "line"  # textInfos.UNIT_LINE
+	SENTENCE = enum.auto()
+	LINE = enum.auto()
 
 	@property
 	def _displayStringLabels(self):
