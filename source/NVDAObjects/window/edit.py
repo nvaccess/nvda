@@ -940,6 +940,8 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		return commandList
 
 	def expand(self, unit):
+		if unit == textInfos.UNIT_READINGCHUNK:
+			unit = config.conf["speech"]["sayAllReadingUnit"].calculated().value
 		if unit in NVDAUnitsToITextDocumentUnits:
 			self._rangeObj.Expand(NVDAUnitsToITextDocumentUnits[unit])
 		else:
@@ -998,6 +1000,8 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		return self._getTextAtRange(self._rangeObj)
 
 	def move(self, unit, direction, endPoint=None):
+		if unit == textInfos.UNIT_READINGCHUNK:
+			unit = config.conf["speech"]["sayAllReadingUnit"].calculated().value
 		if unit in NVDAUnitsToITextDocumentUnits:
 			unit = NVDAUnitsToITextDocumentUnits[unit]
 		else:

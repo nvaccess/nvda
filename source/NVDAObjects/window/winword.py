@@ -1289,6 +1289,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return field
 
 	def expand(self, unit):
+		if unit == textInfos.UNIT_READINGCHUNK:
+			unit = config.conf["speech"]["sayAllReadingUnit"].calculated().value
 		if unit == textInfos.UNIT_LINE:
 			try:
 				if self._rangeObj.tables.count > 0 and self._rangeObj.cells.count == 0:
@@ -1363,6 +1365,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def _move(self, unit, direction, endPoint=None, _rangeObj=None):
 		if not _rangeObj:
 			_rangeObj = self._rangeObj
+		if unit == textInfos.UNIT_READINGCHUNK:
+			unit = config.conf["speech"]["sayAllReadingUnit"].calculated().value
 		if unit in NVDAUnitsToWordUnits:
 			unit = NVDAUnitsToWordUnits[unit]
 		else:

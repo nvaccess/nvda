@@ -19,6 +19,7 @@ import IAccessibleHandler
 import aria
 from keyboardHandler import KeyboardInputGesture
 import api
+import config
 import textInfos
 from logHandler import log
 import controlTypes
@@ -358,7 +359,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		]:
 			unit = textInfos.UNIT_SENTENCE
 		if unit == textInfos.UNIT_READINGCHUNK:
-			unit = textInfos.UNIT_SENTENCE
+			unit = config.conf["speech"]["sayAllReadingUnit"].calculated().value
 		if unit == textInfos.UNIT_CHARACTER:
 			self._rangeObj.expand("character")
 		elif unit == textInfos.UNIT_WORD:
@@ -402,8 +403,10 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		return text
 
 	def move(self, unit, direction, endPoint=None):
-		if unit in [textInfos.UNIT_READINGCHUNK, textInfos.UNIT_LINE]:
+		if unit == textInfos.UNIT_LINE:
 			unit = textInfos.UNIT_SENTENCE
+		if unit == textInfos.UNIT_READINGCHUNK:
+			unit = config.conf["speech"]["sayAllReadingUnit"].calculated().value
 		if unit == textInfos.UNIT_STORY:
 			unit = "textedit"
 		if endPoint == "start":

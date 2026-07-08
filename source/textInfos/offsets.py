@@ -568,6 +568,11 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 		return self._getLineOffsets(offset)
 
 	def _getReadingChunkOffsets(self, offset):
+		if config.conf["speech"]["sayAllReadingUnit"].calculated().value == textInfos.UNIT_SENTENCE:
+			try:
+				return self._getSentenceOffsets(offset)
+			except NotImplementedError:
+				pass
 		return self._getLineOffsets(offset)
 
 	def _getBoundingRectFromOffset(self, offset):

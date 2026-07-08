@@ -9,11 +9,76 @@
 
 import unittest
 from unittest.mock import patch
-from .textProvider import BasicTextProvider, MockBlackBoxTextInfo
+
+import config
+from .textProvider import BasicTextInfo, BasicTextProvider, MockBlackBoxTextInfo
 import textInfos
 from textInfos.offsets import Offsets
 import textUtils
 from textUtils.segFlag import WordSegFlag
+
+
+# Distinguishable offsets returned by the fake TextInfos below.
+_LINE_OFFSETS = (5, 10)
+_SENTENCE_OFFSETS = (15, 20)
+
+
+class _SentenceCapableTextInfo(BasicTextInfo):
+	"""A fake offsets TextInfo which supports both line and sentence units."""
+
+	def _getLineOffsets(self, offset):
+		return _LINE_OFFSETS
+
+	def _getSentenceOffsets(self, offset):
+		return _SENTENCE_OFFSETS
+
+
+class _LineOnlyTextInfo(BasicTextInfo):
+	"""A fake offsets TextInfo whose sentence support is not implemented."""
+
+	def _getLineOffsets(self, offset):
+		return _LINE_OFFSETS
+
+	def _getSentenceOffsets(self, offset):
+		raise NotImplementedError
+
+
+class _SentenceCapableProvider(BasicTextProvider):
+	TextInfo = _SentenceCapableTextInfo
+
+
+class _LineOnlyProvider(BasicTextProvider):
+	TextInfo = _LineOnlyTextInfo
+
+
+class TestReadingChunkOffsets(unittest.TestCase):
+	"""Tests for OffsetsTextInfo._getReadingChunkOffsets honouring the
+	`sayAllReadingUnit` feature flag, falling back to line where sentence
+	is unsupported."""
+
+	def setUp(self):
+		self._origValue = config.conf["speech"]["sayAllReadingUnit"]
+
+	def tearDown(self):
+		config.conf["speech"]["sayAllReadingUnit"] = self._origValue
+
+	def _getReadingChunkOffsets(self, provider):
+		obj = provider(text="a" * 30)
+		ti = obj.makeTextInfo(Offsets(0, 0))
+		ti.expand(textInfos.UNIT_READINGCHUNK)
+		return ti.offsets
+
+	def test_sentenceFlag_sentenceSupported_returnsSentenceOffsets(self):
+		config.conf["speech"]["sayAllReadingUnit"] = "sentence"
+		self.assertEqual(self._getReadingChunkOffsets(_SentenceCapableProvider), _SENTENCE_OFFSETS)
+
+	def test_lineFlag_returnsLineOffsets(self):
+		config.conf["speech"]["sayAllReadingUnit"] = "line"
+		self.assertEqual(self._getReadingChunkOffsets(_SentenceCapableProvider), _LINE_OFFSETS)
+
+	def test_sentenceFlag_sentenceUnsupported_fallsBackToLineOffsets(self):
+		config.conf["speech"]["sayAllReadingUnit"] = "sentence"
+		self.assertEqual(self._getReadingChunkOffsets(_LineOnlyProvider), _LINE_OFFSETS)
 
 
 class TestCharacterOffsets(unittest.TestCase):
