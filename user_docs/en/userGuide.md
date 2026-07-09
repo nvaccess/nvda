@@ -4383,7 +4383,9 @@ Often, a gesture can be interpreted in more than one way.
 For example, if you pressed a key on the keyboard, you may wish it to be specific to the current keyboard layout (e.g. desktop or laptop) or you may wish it to apply for all layouts.
 In this case, a menu will appear allowing you to select the desired option.
 
-To remove a gesture from a command, select the gesture and press the Remove button.
+To remove a gesture from a command, select the gesture and press the Remove button or the delete key.
+
+You can also use the context menu to add gestures to commands and remove gestures.
 
 The Emulated system keyboard keys category contains NVDA commands that emulate keys on the system keyboard.
 These emulated system keyboard keys can be used to control a system keyboard right from your braille display.
