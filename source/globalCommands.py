@@ -63,6 +63,7 @@ from scriptHandler import script, getLastScriptRepeatCount
 import ui
 import braille
 import braille.display.gesture
+import braille.regions.focus
 import brailleInput
 import inputCore
 import characterProcessing
@@ -3918,7 +3919,7 @@ class GlobalCommands(ScriptableObject):
 			index = 0
 		newIndex = (index + 1) % len(values)
 		config.conf["braille"]["focusContextPresentation"] = values[newIndex]
-		braille.invalidateCachedFocusAncestors(0)
+		braille.regions.focus.invalidateCachedFocusAncestors(0)
 		braille.handler.handleGainFocus(api.getFocusObject())
 		# Translators: Reports the new state of braille focus context presentation.
 		# %s will be replaced with the context presentation setting.
