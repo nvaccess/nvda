@@ -1180,6 +1180,7 @@ This dialog allows you to search for terms in the current document.
 In the "Type the text you wish to find" field, the text to be found can be entered.
 The "Case sensitive" checkbox makes the search consider uppercase and lowercase letters differently.
 For example, with "Case sensitive" selected you can find "NV Access" but not "nv access".
+When the [Keep search history](#BrowseModeSettingsSearchHistory) browse mode setting is enabled, this field is a combo box that also offers the terms you have recently searched for (up to 20), which are cleared when NVDA restarts.
 Use the following keys for performing searches:
 <!-- KC:beginInclude -->
 
@@ -3414,6 +3415,17 @@ If this option is enabled, NVDA will play special sounds when it switches betwee
 Enabled by default, this option allows you to choose if gestures (such as key presses) that do not result in an NVDA command and are not considered to be a command key in general, should be trapped from going through to the document you are currently focused on.
 As an example, if enabled and the letter j was pressed, it would be trapped from reaching the document, even though it is not a quick navigation command nor is it likely to be a command in the application itself.
 In this case NVDA will tell Windows to play a default sound whenever a key which gets trapped is pressed.
+
+##### Keep search history {#BrowseModeSettingsSearchHistory}
+
+Enabled by default, this option determines whether the [Find dialog](#SearchingForText) remembers the terms you have searched for during the current NVDA session.
+When enabled, the Find dialog offers up to 20 recently used search terms from a combo box; this history is kept in memory only and is cleared when NVDA restarts.
+If the combo box interferes with your input method, such as with some IMEs, you can set this option to Disabled to return the Find dialog to a plain edit field.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Enabled), Disabled, Enabled|
+|Default |Enabled|
 
 ##### Browse mode touch navigation elements {#BrowseModeSettingsBrowseModeNavigationElements}
 
