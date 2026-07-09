@@ -2,7 +2,7 @@
 # Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
 # Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen,
-# Wang Chong, Kefas Lungu, Marlon Brandão de Sousa
+# Wang Chong, Kefas Lungu
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
