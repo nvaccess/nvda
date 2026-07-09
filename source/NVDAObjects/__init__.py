@@ -37,6 +37,7 @@ from treeInterceptorHandler import (
 	TreeInterceptor,
 )
 import braille
+import braille.labels
 import braille.regions.properties
 from utils.security import _isObjectBelowLockScreen
 import vision
@@ -518,8 +519,8 @@ class NVDAObject(
 		which will override the standard label for this object's role property as well as the value of roleText.
 		By default, NVDA falls back to using roleText.
 		"""
-		if self.landmark and self.landmark in braille.landmarkLabels:
-			return f"{braille.roleLabels[controlTypes.Role.LANDMARK]} {braille.landmarkLabels[self.landmark]}"
+		if self.landmark and self.landmark in braille.labels.landmarkLabels:
+			return f"{braille.labels.roleLabels[controlTypes.Role.LANDMARK]} {braille.labels.landmarkLabels[self.landmark]}"
 		return self.roleText
 
 	#: Typing information for auto property _get_value
