@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-29 00:39+0000\n"
-"PO-Revision-Date: 2026-06-29 02:58\n"
+"POT-Creation-Date: 2026-06-30 03:45+0000\n"
+"PO-Revision-Date: 2026-07-06 02:42\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -2729,7 +2729,7 @@ msgstr "التحكُّم عن بُعد (Remote Access)"
 #. Translators: The name of the category of math navigation commands in the Input Gestures dialog.
 #: globalCommands.py:133
 msgid "Math navigation"
-msgstr ""
+msgstr "تصفُّح صيغ الرياضيات"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring
 #. (example: when there is no setting for language).
@@ -5042,7 +5042,7 @@ msgstr "الإعلان عن حالة سِتار الشاشة"
 #. Translators: Describes a command.
 #: globalCommands.py:5049
 msgid "Toggle the magnifier on and off"
-msgstr ""
+msgstr "التبديل بين تفعيل وتعطيل المكبِّر"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5063
@@ -5238,7 +5238,7 @@ msgstr "تنفيذ أمر  control+alt+delete على الحاسوب البعيد
 #. Translators: Description for the repeat last speech script
 #: globalCommands.py:5471
 msgid "Repeat the last spoken information. Pressing twice shows it in a browsable message."
-msgstr ""
+msgstr "إعادة قراءة آخر رسالة منطوقة. إذا ضُغِط مرتين؛ ستُعرَضُ المعلومة كرسالة قابلة للتصفُّح."
 
 #. Translators: title for report last spoken information dialog.
 #: globalCommands.py:5489
@@ -12754,14 +12754,15 @@ msgstr "لا يمكن تنفيذ هذا الإجراء إن كانت خاصية 
 #. Translators: The title of the dialog shown after resetting configuration to factory defaults.
 #: gui\configManagement.py:27
 msgid "Factory Defaults Restored"
-msgstr ""
+msgstr "استعادة الإعدادات الافتراضية"
 
 #. Translators: The message shown in the dialog after the configuration has been reset to factory defaults.
 #. The user can choose to keep the factory defaults or undo the reset.
 #: gui\configManagement.py:31
 msgid "Your configuration has been reset to factory defaults.\n"
 "Choose OK to keep factory defaults, or Undo to restore your previous configuration."
-msgstr ""
+msgstr "لقد أُعيد ضبط إعداداتك وِفقا للإعدادات الافتراضية.\n"
+"اختَرْ \"موافق\" للاحتفاظ بالإعدادات الافتراضية أو \"تراجع\" لاستعادة إعداداتك السابقة."
 
 #. Translators: The label of the undo button in the factory defaults reset dialog.
 #. Pressing this button restores the previous configuration.
@@ -13768,7 +13769,7 @@ msgstr "قواميس إضافية لمعالجة الأحرف والرموز:"
 #. Translators: Label of the list where user can enable or disable speech dictionaries.
 #: gui\settingsDialogs.py:1862
 msgid "Sp&eech dictionaries:"
-msgstr ""
+msgstr "&معاجم النُطق:"
 
 #. Translators: Label of the list where user can select speech modes that will be available.
 #: gui\settingsDialogs.py:1876
@@ -15397,7 +15398,7 @@ msgstr ""
 #. Translators: The label for a setting in magnifier settings to select the filter
 #: gui\settingsDialogs.py:6133
 msgid "Color f&ilter:"
-msgstr ""
+msgstr "ت&صفية الألوان:"
 
 #. Translators: The label for a setting in magnifier settings to select whether true center tracking is used
 #: gui\settingsDialogs.py:6150
@@ -20077,7 +20078,7 @@ msgstr "معجم مؤقت"
 #. Translators: Name of the default speech dictionary.
 #: speechDictHandler\definitions.py:56
 msgid "Default Dictionary"
-msgstr "القاموس الافتراضي"
+msgstr "المعجم الافتراضي"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:54
@@ -20472,26 +20473,26 @@ msgstr "الحافة السفلى"
 #: _magnifier\commands.py:96
 msgctxt "magnifier"
 msgid "Magnifier disabled"
-msgstr ""
+msgstr "تعطيل المكبِّر"
 
 #. Translators: Message announced when trying to start magnifier while Screen Curtain is active.
 #: _magnifier\commands.py:105
 msgctxt "magnifier"
 msgid "Cannot start magnifier. Please disable Screen Curtain first."
-msgstr ""
+msgstr "لا يمكن تفعيل المكبِّر. يُرجى تعطيل سِتار الشاشة أولاً."
 
 #. Translators: Message announced when starting the NVDA magnifier.
 #: _magnifier\commands.py:114
 msgctxt "magnifier"
 msgid "Magnifier enabled"
-msgstr ""
+msgstr "تفعيل المكبِّر"
 
 #. Translators: Message announced when changing the color filter with {filter} being the new color filter.
 #: _magnifier\commands.py:174
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Color filter {filter}"
-msgstr ""
+msgstr "تصفية الألوان {filter}"
 
 #. Translators: Message announced when changing the magnifier view with {view} being the new magnifier view.
 #: _magnifier\commands.py:198
@@ -20523,13 +20524,13 @@ msgstr "مُعطّل"
 #: _magnifier\commands.py:251
 msgctxt "magnifier"
 msgid "All tracking settings disabled"
-msgstr ""
+msgstr "تعطيل كافة أنماط تتبُّع المؤشرات"
 
 #. Translators: State of all follow settings being restored.
 #: _magnifier\commands.py:257
 msgctxt "magnifier"
 msgid "Tracking settings restored"
-msgstr ""
+msgstr "استعادة الإعدادات الافتراضية لتتبُّع المؤشّرات"
 
 #. Translators: Message announced when changing the full-screen mode with {mode} being the new full-screen mode.
 #: _magnifier\commands.py:285
@@ -20572,7 +20573,7 @@ msgid "{zoomLevel}x"
 msgstr ""
 
 #. Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
-#: _magnifier\fullscreenMagnifier.py:78
+#: _magnifier\fullscreenMagnifier.py:80
 msgctxt "magnifier"
 msgid "Cannot start magnifier. Another magnifier application may already be running."
 msgstr "لا يمكن تفعيل المكبِّر. هناك تطبيق آخر خاص بالتطبيق قيد العمل"
@@ -20584,19 +20585,19 @@ msgid "Magnifier stopped due to an error. Please restart it."
 msgstr ""
 
 #. Translators: Message when trying to enable magnifier while screen curtain is active
-#: _magnifier\magnifier.py:180
+#: _magnifier\magnifier.py:183
 msgctxt "magnifier"
 msgid "Cannot enable magnifier. Please disable screen curtain first."
 msgstr "يتعذّر تفعيل المكبِّر. يُرجى تعطيل سِتار الشاشة أولا."
 
 #. Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
-#: _magnifier\magnifier.py:270
+#: _magnifier\magnifier.py:283
 msgctxt "magnifier"
 msgid "Disabling magnifier"
 msgstr "تعطيل المكبِّر"
 
 #. Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
-#: _magnifier\magnifier.py:288
+#: _magnifier\magnifier.py:301
 msgctxt "magnifier"
 msgid "Re-enabling magnifier"
 msgstr "إعادة تفعيل المكبّر"
@@ -20767,19 +20768,19 @@ msgstr ""
 #: _magnifier\utils\types.py:176
 msgctxt "magnifier"
 msgid "Normal"
-msgstr "عادي"
+msgstr "طبيعية"
 
 #. Translators: Magnifier color filter - grayscale/black and white.
 #: _magnifier\utils\types.py:178
 msgctxt "magnifier"
 msgid "Grayscale"
-msgstr ""
+msgstr "تدرُّج رمادي"
 
 #. Translators: Magnifier color filter - inverted colors.
 #: _magnifier\utils\types.py:180
 msgctxt "magnifier"
 msgid "Inverted"
-msgstr "ألوان معكوسة"
+msgstr "معكوسة"
 
 #. Translators: Presented when attempting to mute or unmute Remote Access when connected as the controlled computer.
 #. Translators: Presented when attempting to send control+alt+delete when connected as the controlled computer.

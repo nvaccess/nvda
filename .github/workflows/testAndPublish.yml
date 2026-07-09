@@ -79,7 +79,7 @@ jobs:
       APIBackCompat: ${{ steps.releaseInfo.outputs.NVDA_API_COMPAT_TO }}
     steps:
     - name: Checkout NVDA
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         submodules: recursive
     - name: Install Python
@@ -180,7 +180,7 @@ jobs:
       contents: read
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         # Include gettext
         submodules: true
@@ -796,7 +796,7 @@ jobs:
       contents: read
     steps:
     - name: Checkout NVDA
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         submodules: false
 

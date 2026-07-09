@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt, Cyrille Bougot, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from abc import ABCMeta, abstractmethod
 from enum import IntEnum
@@ -414,7 +414,16 @@ class _CaretTextReader(_TextReader):
 			raise NotImplementedError("Unable to make TextInfo: ", e)
 
 	def updateCaret(self, updater: textInfos.TextInfo) -> None:
+		obj = updater.obj
 		updater.updateCaret()
+		# #3287: cursor managers move the caret without firing an OS caret event,
+		# so we need to communicate movement to handlers explicitly.
+		if api.isCursorManager(obj):
+			import braille
+			import vision
+
+			braille.handler.handleCaretMove(obj)
+			vision.handler.handleCaretMove(obj)
 		if config.conf["reviewCursor"]["followCaret"]:
 			api.setReviewPosition(updater, isCaret=True)
 

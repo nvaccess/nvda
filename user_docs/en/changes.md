@@ -27,6 +27,7 @@
   * Added new Elfdalian and Sami tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
 * The dialog used to present browseable messages (such as formatting information) has been modernized. (#18878, @LeonarddeR)
   * The dialog's shortcut to copy contents of the message to the clipboard was changed to `alt+c`.
+  * Browseable message dialogs now better support resizing, maximizing and minimizing, with text wrapping to the dialog width. (#20429, @Cary-rowen)
 * Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
 
 ### Bug Fixes
@@ -47,6 +48,8 @@
 * NVDA should no longer cause File Explorer or other applications to crash when NVDA is exited or restarted. (#16207)
 * Focus is no longer silent on list items in Qt-based applications (such as Telegram Desktop) when the item exposes the UIA SelectionItem pattern without an associated action interface. (#20255, @rezabakhshilaktasaraei)
 * On HumanWare Brailliant displays with C-keys, the c1, c2, c3 and c5 command keys now move the braille display to the previous line, scroll it back, move it to the next line and scroll it forward. Previously these keys had no function when pressed on their own. (#20366, @fla-rion)
+* The HID keyboard input simulation setting for ALVA braille displays is now remembered across reconnects and restarts. (#20455, @Cary-rowen)
+* Braille now follows the spoken text during say all in browse mode when braille is tethered to focus. (#3287, @LeonarddeR)
 
 ### Changes for Developers
 
@@ -253,6 +256,8 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 * Speech dictionary entries of type Whole word now correctly handle words containing Unicode combining marks (e.g. Hebrew niqqud, Arabic harakat). (#20013, @LeonarddeR)
   * In particular, Whole word entries no longer incorrectly match inside larger words when those words contain combining marks.
 * Fixed a case which could cause NVDA to freeze while reading math in braille. (#20319, @AAClause)
+* NVDA no longer fails to load sapi4 voices that do not support pitch, rate or volume. (#20302)
+* The SAPI5 synthesizer driver no longer completely fails to load if one of the voices is invalid or corrupt. (#20128)
 
 ### Changes for Developers
 
