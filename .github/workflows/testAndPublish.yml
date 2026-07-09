@@ -79,7 +79,7 @@ jobs:
       APIBackCompat: ${{ steps.releaseInfo.outputs.NVDA_API_COMPAT_TO }}
     steps:
     - name: Checkout NVDA
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         submodules: recursive
     - name: Install Python
@@ -180,7 +180,7 @@ jobs:
       contents: read
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         # Include gettext
         submodules: true
@@ -191,14 +191,14 @@ jobs:
         architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
-    - name: Run pre-commit
+    - name: Run prek
       run: |
         # Ensure uv environment is up to date.
-        # If the uv environment is outdated, running pre-commit will trigger uv to generate a uv.lock file,
-        # which causes checkPo to fail without clear errors because pre-commit fails when files are changed during its run.
-        uv run pre-commit run uv-lock --all-files
-        # Run pre-commit on the translations
-        uv run pre-commit run checkPo --all-files
+        # If the uv environment is outdated, running prek will trigger uv to generate a uv.lock file,
+        # which causes checkPo to fail without clear errors because prek fails when files are changed during its run.
+        uv run prek run uv-lock --all-files
+        # Run prek on the translations
+        uv run prek run checkPo --all-files
     - name: Add job summary
       if: ${{ failure() }}
       shell: bash
@@ -796,7 +796,7 @@ jobs:
       contents: read
     steps:
     - name: Checkout NVDA
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         submodules: false
 

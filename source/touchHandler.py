@@ -94,7 +94,12 @@ class TouchMode(DisplayStringStrEnum):
 		}
 
 
-availableTouchModes: list[TouchMode] = [TouchMode.TEXT, TouchMode.OBJECT]
+availableTouchModes: list[TouchMode | str] = [TouchMode.TEXT, TouchMode.OBJECT]
+"""List of touch modes available for cycling.
+
+Add-ons may append custom mode name strings to this list to register new touch modes.
+The mode name string is used in gesture identifiers (e.g. ``ts(mymode):flickRight``).
+"""
 
 HWND_MESSAGE = -3
 
@@ -451,7 +456,7 @@ class TouchHandler(threading.Thread):
 			return 0
 		return user32.DefWindowProc(hwnd, msg, wParam, lParam)
 
-	def setMode(self, mode):
+	def setMode(self, mode: TouchMode | str) -> None:
 		if mode not in availableTouchModes:
 			raise ValueError("Unknown mode %s" % mode)
 		self._curTouchMode = mode
@@ -498,7 +503,10 @@ class TouchHandler(threading.Thread):
 		# This is a local variable — no timer, no cross-pump buffering, so normal flicks fire immediately.
 		pendingFlick: TouchInputGesture | None = None
 		for preheldTracker, tracker in self.trackerManager.emitTrackers():
-			gesture = TouchInputGesture(preheldTracker, tracker, self._curTouchMode.value)
+			modeStr = (
+				self._curTouchMode.value if isinstance(self._curTouchMode, TouchMode) else self._curTouchMode
+			)
+			gesture = TouchInputGesture(preheldTracker, tracker, modeStr)
 			if tracker.action in _flickActions:
 				if pendingFlick is not None:
 					sequentialGesture = self._tryBuildSequentialGesture(pendingFlick, gesture)

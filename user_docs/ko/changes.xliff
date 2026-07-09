@@ -6324,9 +6324,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 31</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>A command allows temporarily showing an overview of the entire screen.</source>
-        <target>A command allows temporarily showing an overview of the entire screen.</target>
+        <target>전체 화면을 임시로 훑어보도록 표시하는 명령.</target>
       </segment>
     </unit>
     <unit id="fc145b84-b9f3-4ad4-9124-70e72a974340">
@@ -6376,7 +6376,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>A new command, assigned to `NVDA+x`, has been introduced to repeat the last information spoken by NVDA; pressing it twice shows it in a browseable message. (#625, @CyrilleB79)</source>
-        <target>`NVDA+x`에 할당된 새 명령이 추가되어 NVDA가 마지막으로 말한 정보를 반복합니다. 두 번 누르면 탐색 가능한 메시지로 표시됩니다. (#625, @CyrilleB79)</target>
+        <target>NVDA가 마지막으로 말한 정보를 반복하는 새 명령(`NVDA+x`)이 추가되었습니다. 두 번 누르면 탐색 가능한 메시지에 표시됩니다. (#625, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="2aa5a8e0-0968-4184-913c-32a66dc1f359">
@@ -6861,7 +6861,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed an error that could occur when NVDA checked whether a language is supported for a synthesizer with invalid languages. (#20080, @nvdaes)</source>
-        <target>NVDA가 잘못된 언어가 있는 음성 합성기에 대해 언어 지원 여부를 확인할 때 발생할 수 있던 오류를 수정했습니다. (#20080, @nvdaes)</target>
+        <target>잘못된 언어가 있는 음성 합성 엔진에서 특정 언어를 지원하는지 NVDA가 확인할 때 발생할 수 있던 오류를 수정했습니다. (#20080, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="9146d041-7a88-4ddd-86a4-75901098f944">
@@ -7009,9 +7009,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 104</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Fixed a case which could cause NVDA to freeze while reading math in braille. (#20319, @AAClause)</source>
-        <target>Fixed a case which could cause NVDA to freeze while reading math in braille. (#20319, @AAClause)</target>
+        <target>점자로 수학을 읽는 동안 NVDA가 멈추는 경우를 수정했습니다. (#20319, @AAClause)</target>
       </segment>
     </unit>
     <unit id="65db2ddc-f0be-4fd8-97a0-b2ff4dc641a9">
@@ -7160,7 +7160,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)</source>
-        <target>빌드 시스템에서 빌드한 NVDA 라이브러리가 이제 [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) 플래그와 연결되어, 특정 악성코드 공격에 대한 보호가 향상되었습니다. (#19435, @LeonarddeR)</target>
+        <target>빌드 시스템에서 빌드한 NVDA 라이브러리가 이제 [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) 플래그를 적용해 링크되므로, 특정 악성코드 공격에 대한 보호 기능이 향상되었습니다. (#19435, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="3f08eb8c-6383-432c-b31a-94508aeacb26">
@@ -7492,7 +7492,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Remote Access once again attempts automatic reconnection after a failed initial connection as the controlled computer, rather than failing immediately.</source>
-        <target>제어받는 컴퓨터로서 초기 연결에 실패한 후 즉시 실패하지 않고, 원격제어가 다시 자동 재연결을 시도합니다.</target>
+        <target>제어받는 컴퓨터로서 처음 연결에 실패했을 때, 원격제어가 즉시 실패하지 않고 다시 자동으로 연결을 시도합니다.</target>
       </segment>
     </unit>
     <unit id="eb5096c1-7bff-45c7-a899-e66f7e5df8fd">
@@ -7501,7 +7501,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>This means that headless or otherwise physically inaccessible machines configured to automatically connect at startup will be reachable once the network is available. (#20122)</source>
-        <target>즉, 네트워크가 사용 가능해지면 시작 시 자동으로 연결되도록 구성된 헤드리스 또는 물리적으로 접근할 수 없는 기계에 도달할 수 있습니다. (#2022)</target>
+        <target>즉, 네트워크가 연결되면 시작 시 자동으로 연결되도록 설정된 헤드리스 컴퓨터나 물리적으로 직접 접근할 수 없는 컴퓨터에 접속할 수 있습니다. (#20122)</target>
       </segment>
     </unit>
     <unit id="71450862-373e-4763-ad6a-034bfe272e44">
@@ -7576,7 +7576,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer reports the language being read as unsupported when the synthesizer supports the language but not the specific dialect.</source>
-        <target>합성기가 언어는 지원하지만 특정 방언을 지원하지 않을 경우에도, NVDA가 읽고 있는 언어를 지원되지 않는다고 보고하지 않습니다.</target>
+        <target>음성 합성 엔진이 해당 언어는 지원하지만 특정 방언은 지원하지 않는 경우에도, NVDA가 읽고 있는 언어를 지원되지 않는다고 보고하지 않습니다.</target>
       </segment>
     </unit>
     <unit id="7cfdf681-a55a-43e6-a838-9507a6f69c99">
@@ -7612,7 +7612,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA messages from the local computer are now shown in braille when controlling a computer via Remote Access.</source>
-        <target>원격 제어를 통해 컴퓨터를 제어할 때 로컬 컴퓨터에서 온 NVDA 메시지가 이제 점자로 표시됩니다.</target>
+        <target>원격제어로 컴퓨터를 제어할 때 로컬 컴퓨터의 NVDA 메시지도 점자로 표시됩니다.</target>
       </segment>
     </unit>
     <unit id="d269bb7e-d1df-45ae-bc9d-1a0388b61db8">
@@ -8232,7 +8232,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When controlling a computer via Remote Access with a braille display connected, messages spoken from the local computer are also shown in braille. (#18004)</source>
-        <target>점자 디스플레이가 연결된 상태에서 Remote Access를 통해 컴퓨터를 제어할 때 로컬 컴퓨터에서 나온 음성 메시지도 점자로 표시됩니다. (#18004)</target>
+        <target>점자 디스플레이가 연결된 상태에서 원격제어로 컴퓨터를 제어할 때, 로컬 컴퓨터에서 나오는 음성 메시지도 점자로 표시됩니다. (#18004)</target>
       </segment>
     </unit>
     <unit id="4e99d76a-6753-4fa8-8925-f78a4e393777">
@@ -8379,7 +8379,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Remote Access:</source>
-        <target>Remote Access:</target>
+        <target>원격제어:</target>
       </segment>
     </unit>
     <unit id="834e1576-387d-4c24-a1bd-1f62492edf65">
@@ -8539,7 +8539,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>When a synthesizer has a fallback language for the current dialect, the language of the text being read will no longer be reported as unsupported. (#18876, @nvdaes)</source>
-        <target>합성기가 현재 방언에 대해 대체 언어를 가지고 있는 경우, 읽고 있는 텍스트의 언어가 더 이상 지원되지 않는 것으로 보고되지 않습니다. (#18876, @nvdaes)</target>
+        <target>음성 합성 엔진이 현재 방언의 대체 언어를 지원하는 경우, 읽고 있는 텍스트의 언어가 지원되지 않는다고 더 이상 보고하지 않습니다. (#18876, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="db341fde-aad6-45ec-9b44-002ae80f83de">
@@ -8549,7 +8549,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>If the speech synthesizer is set to eSpeak NG and it fails to load when NVDA starts, NVDA will now attempt to fall back to OneCore before resorting to no speech. (#19603)</source>
-        <target>음성 합성기가 eSpeak NG로 설정되어 있고 NVDA 시작 시 로드에 실패하면, NVDA는 음성 없이 진행하기 전에 이제 OneCore로 대체를 시도합니다. (#19603)</target>
+        <target>음성 합성 엔진이 eSpeak NG로 설정되어 있고 NVDA 시작 시 불러오기에 실패하면, NVDA는 음성 없음 상태로 넘어가기 전에 OneCore로 대체를 시도합니다. (#19603)</target>
       </segment>
     </unit>
     <unit id="f39627b7-6521-49c9-9ccb-934da48686ae">
@@ -8677,7 +8677,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Add-on authors are now able to provide a changelog for an add-on version via the `changelog` manifest key. (#14041, @josephsl)</source>
-        <target>애드온 제작자는 이제 `changelog` 매니페스트 키를 통해 애드온 버전에 대한 변경 로그를 제공할 수 있습니다. (#14041, @josephsl)</target>
+        <target>애드온 제작자는 이제 `changelog` 매니페스트 키를 사용하여 애드온 버전의 변경 로그를 제공할 수 있습니다. (#14041, @josephsl)</target>
       </segment>
     </unit>
     <unit id="f84853f6-a8cb-4bd5-b9a8-a503a6247da5">
@@ -9026,7 +9026,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>`synthDriverHandler.setSynth` and `synthDriverHandler.findAndSetNextSynth` now attempt to find fallback synthesizers starting from the start of `defaultSynthPriorityList`, rather than starting immediately after `name` or `currentSynthName`, respectively. (#19603)</source>
-        <target>`synthDriverHandler.setSynth` 및 `synthDriverHandler.findAndSetNextSynth`는 이제 각각 `name` 또는 `currentSynthName` 바로 다음이 아니라 `defaultSynthPriorityList`의 시작부터 대체 합성기를 찾으려고 시도합니다. (#19603)</target>
+        <target>`synthDriverHandler.setSynth` 및 `synthDriverHandler.findAndSetNextSynth`는 이제 각각 `name` 또는 `currentSynthName` 바로 다음부터가 아니라, `defaultSynthPriorityList`의 처음부터 대체 음성 합성 엔진을 찾으려고 시도합니다. (#19603)</target>
       </segment>
     </unit>
     <unit id="19b2e894-8a17-4654-9593-e09e32c41559">
@@ -10756,7 +10756,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed a vulnerability which could prevent access to secure screens via Remote Access. ([GHSA-42v6-wjv6-h3jj](https://github.com/nvaccess/nvda/security/advisories/ghsa-42v6-wjv6-h3jj))</source>
-        <target>원격 제어를 통해 보안 화면에 접근하지 못하게 만들 수 있었던 취약점이 수정되었습니다. (GHSA-42v6-wjv6-h3jj)</target>
+        <target>원격제어를 통해 보안 화면에 접근하지 못하게 만들 수 있었던 취약점이 수정되었습니다. ([GHSA-42v6-wjv6-h3jj](https://github.com/nvaccess/nvda/security/advisories/ghsa-42v6-wjv6-h3jj))</target>
       </segment>
     </unit>
     <unit id="c9e0aaa1-5f71-4ebf-9364-ab0109d04b8e">
@@ -10824,7 +10824,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Remote Access now returns control to the local computer if it locks while controlling the remote computer. (#18951)</source>
-        <target>원격 제어는 이제 원격 컴퓨터를 제어하는 동안 잠기면 로컬 컴퓨터로 제어 상태가 반환됩니다. (#18951)</target>
+        <target>원격제어는 이제 원격 컴퓨터를 제어하는 동안 잠기면 로컬 컴퓨터로 제어 상태를 반환합니다. (#18951)</target>
       </segment>
     </unit>
     <unit id="3ed4cdd2-f214-47d5-9579-85301a16852c">
@@ -10966,7 +10966,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>A new unassigned command has been added to send `control+alt+delete` when controlling another computer via NVDA Remote Access. (#18105)</source>
-        <target>할당되지 않은 새로운 명령인 'NVDA 원격제어로 다른 컴퓨터를 제어중일 때 `control+alt+delete` 단축키를 보내기' 명령이 추가됩니다</target>
+        <target>NVDA 원격제어로 다른 컴퓨터를 제어할 때 `control+alt+delete`를 전송하는 할당되지 않은 새 명령이 추가되었습니다. (#18105)</target>
       </segment>
     </unit>
     <unit id="160c56e5-9527-4c7e-8b7f-49912130aef7">
@@ -11132,7 +11132,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>The NVDA Remote Access connection dialog now remembers the most recent connection mode, server type and locally hosted port of manual connections. (#18512, #18701)</source>
-        <target>NVDA 원격제어 연결 대화상자가 가장 최근 연결 모드, 서버 유형, 수동 연결의 로컬 호스팅 포트를 기억합니다. (#18512)</target>
+        <target>NVDA 원격제어 연결 대화상자가 가장 최근 연결 모드, 서버 유형, 수동 연결의 로컬 호스팅 포트를 기억합니다. (#18512, #18701)</target>
       </segment>
     </unit>
     <unit id="9ff079b7-a64e-4b66-940a-767f60586c07">
@@ -11212,7 +11212,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Fixed a bug which stopped speech from working via NVDA Remote Access when the controlled computer had no audio output devices enabled. (#18544)</source>
-        <target>제어 대상 컴퓨터에 오디오 출력 장치가 활성화되어 있지 않을 때 NVDA 원격 접속을 통한 음성 출력이 작동하지 않던 버그를 수정했습니다. (#18544)</target>
+        <target>제어 대상 컴퓨터에 오디오 출력 장치가 활성화되어 있지 않을 때 NVDA 원격제어를 통한 음성 출력이 작동하지 않던 버그를 수정했습니다. (#18544)</target>
       </segment>
     </unit>
     <unit id="b9eeec1b-1c13-42b4-8c16-00cf18e410ef">
@@ -11222,7 +11222,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Fixed a bug which caused NVDA Remote Access to stop working if a session was interrupted while connecting to the server. (#18476)</source>
-        <target>서버에 연결하는 동안 세션이 중단되면 NVDA 원격 접속이 작동을 멈추던 버그를 수정했습니다. (#18476)</target>
+        <target>서버에 연결하는 동안 세션이 중단되면 NVDA 원격제어가 작동을 멈추던 버그를 수정했습니다. (#18476)</target>
       </segment>
     </unit>
     <unit id="1b3784e7-7ec0-4d8c-b17c-aa04b8ea6387">
@@ -11694,7 +11694,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>A new unassigned command has been added to report the language of the text at the caret position.</source>
-        <target>텍스트 케럿 위치 텍스트의 언어를 읽는 할당되지 않은 새로운 명령이 추가되었습니다.</target>
+        <target>캐럿 위치에 있는 텍스트의 언어를 보고하는 할당되지 않은 새로운 명령이 추가되었습니다.</target>
       </segment>
     </unit>
     <unit id="e8dd8a61-27db-43fb-823b-eec9fd5d35f6">
@@ -11884,7 +11884,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>NVDA will now warn before updating when connected as the controlled computer with NVDA Remote Access. (#18455)</source>
-        <target>원격 제어로 연결된 컴퓨터에서 NVDA를 업데이트하기 전에 경고합니다. (#18455)</target>
+        <target>원격제어로 제어 대상 컴퓨터에 연결된 상태에서 NVDA를 업데이트하기 전에 경고합니다. (#18455)</target>
       </segment>
     </unit>
     <unit id="efaf3b3c-3bf1-4be4-96ab-9ed06e855cce">
@@ -12319,7 +12319,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>This release introduces NVDA Remote Access, allowing you to control a remote computer running NVDA from another device running NVDA.</source>
-        <target>이번 릴리스에서는 NVDA 원격 접근(Remote Access) 기능이 도입되었습니다. 이 기능을 통해 NVDA가 실행 중인 다른 기기에서 NVDA가 실행 중인 원격 컴퓨터를 제어할 수 있습니다.</target>
+        <target>이번 릴리스에서는 NVDA 원격제어 기능이 도입되었습니다. 이 기능을 통해 NVDA가 실행 중인 다른 기기에서 NVDA가 실행 중인 원격 컴퓨터를 제어할 수 있습니다.</target>
       </segment>
     </unit>
     <unit id="f3ad5c76-8101-43cd-b32a-576f57f593da">
@@ -13023,7 +13023,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Updated LibLouis Braille translator to [3.33.0](https://github.com/liblouis/liblouis/releases/tag/v3.33.0). (#17469, #17768, @LeonarddeR, @codeofdusk)</source>
-        <target>LibLouis 점자 변환기가 3.33.0 버전으로 업데이트되었습니다. (#17469, #17768, @LeonarddeR, @codeofdusk)</target>
+        <target>LibLouis 점자 변환기가 [3.33.0](https://github.com/liblouis/liblouis/releases/tag/v3.33.0) 버전으로 업데이트되었습니다. (#17469, #17768, @LeonarddeR, @codeofdusk)</target>
       </segment>
     </unit>
     <unit id="b2b41bae-7374-4ad1-b457-476154f1773e">
@@ -13560,7 +13560,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>  Specifically, MathML inside of span and other elements that have the attribute `role="math"`. (#15058)</source>
-        <target>  리치 탐색을 위한 MathML 없이 이미지와 대체 텍스트로만 표시되는 수학 방정식은 이제 내용 없는 수식이 아닌 일반 이미지처럼 처리되어 사용자가 g 키로 해당 위치로 이동하고 화살표 키를 사용하여 문자 단위로 대체 텍스트를 탐색할 수 있습니다. (#16007)</target>
+        <target>  구체적으로는 span 및 `role="math"` 속성을 가진 기타 요소 내부의 MathML이 해당됩니다. (#15058)</target>
       </segment>
     </unit>
     <unit id="d767cb17-7cd0-4feb-afc6-e10941e88991">
@@ -15502,7 +15502,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>When accessing Microsoft Word without UI Automation, NVDA no longer outputs garbage characters in table headers defined with the set row and column header commands. (#7212)</source>
-        <target>UI 자동화 없이 Microsoft Word에 접근할 때, NVDA는 더 이상 표 행 및 열 머리글을 지정하면 표 헤더에 있는 쓸모없는 문자를 더 이상 출력하지 않습니다.</target>
+        <target>UI 자동화 없이 Microsoft Word에 접근할 때, 행 및 열 머리글 설정 명령으로 정의된 표 머리글에서 NVDA가 더 이상 깨진 문자를 출력하지 않습니다. (#7212)</target>
       </segment>
     </unit>
     <unit id="da6be497-2342-47bc-a56c-412d1eea7363">
@@ -20447,7 +20447,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Tony's Enhancements version 1.15 or older. (#15402)</source>
-        <target>NVDA를 업데이트할 때 이러한 추가기능의 호환되지 않는 버전이 사용되지 않도록 설정됩니다:</target>
+        <target>Tony's Enhancements 1.15 이하 버전. (#15402)</target>
       </segment>
     </unit>
     <unit id="42735f58-6938-4bf1-961c-ca0697b5f24a">
@@ -20457,7 +20457,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>NVDA global commands extension 12.0.8 or older. (#15443)</source>
-        <target>Tony's Enhancements 1.15 이하 버전 (#15402)</target>
+        <target>NVDA global commands extension 12.0.8 이하 버전. (#15443)</target>
       </segment>
     </unit>
     <unit id="3d87aa2d-10a2-4b48-a8ed-07ed20f7601b">
@@ -20467,7 +20467,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>NVDA is now able to continually update the result when performing optical character recognition (OCR), speaking new text as it appears. (#2797)</source>
-        <target>NVDA global commands extension 12.0.8 이하 버전 (#15443)</target>
+        <target>NVDA는 이제 광학 문자 인식(OCR)을 수행할 때 결과를 계속해서 업데이트하며 새로운 텍스트가 나타나는 대로 읽어줄 수 있습니다. (#2797)</target>
       </segment>
     </unit>
     <unit id="01e8a538-3e71-48f8-a21a-1513a7429666">
@@ -20477,7 +20477,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>To enable this functionality, enable the option "Periodically refresh recognized content" in the Windows OCR category of NVDA's settings dialog.</source>
-        <target>NVDA는 이제 광학 문자 인식(OCR) 기능 사용 시 지속적으로 결과를 업데이트하는 것이 가능합니다. 새로운 텍스트가 나타나면 말합니다. (#2797)</target>
+        <target>이 기능을 사용하려면 NVDA 설정 대화상자의 Windows OCR 범주에서 '인식된 내용 주기적으로 새로 고침' 옵션을 활성화하십시오.</target>
       </segment>
     </unit>
     <unit id="1c5174a6-c07e-447d-a950-d07b99bd3a0b">
@@ -20497,7 +20497,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>When using automatic detection of braille displays, it is now possible to opt-out drivers from detection from the braille display selection dialog. (#15196)</source>
-        <target>한번 활성화하면 `NVDA+5` 키(자동 변경 알림)를 눌러 전환하여 새로운 텍스트를 읽을 것인지 말 것인지 선택할 수 있습니다.</target>
+        <target>점자 디스플레이 자동 감지 기능을 사용할 때, 이제 점자 디스플레이 선택 대화상자에서 특정 드라이버가 감지되지 않도록 제외할 수 있습니다. (#15196)</target>
       </segment>
     </unit>
     <unit id="0284c6ab-4cc7-4155-8d93-10ea47a61ca4">
@@ -20507,7 +20507,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>A new option in Document Formatting settings, "Ignore blank lines for line indentation reporting". (#13394)</source>
-        <target>점자 디스플레이 자동 탐색을 사용할 때, 점자 디스플레이 선택 대화상자에서 특정 점자 디스플레이 장치를 탐색에서 제외할 수 있습니다.  (#15196)</target>
+        <target>문서 서식 설정에 "들여쓰기 보고 시 빈 줄 무시"라는 새로운 옵션이 추가되었습니다. (#13394)</target>
       </segment>
     </unit>
     <unit id="f12446f6-cca9-436a-9626-ac0195a683f0">
@@ -20517,7 +20517,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Added an unassigned gesture to navigate by tab groupings in browse mode. (#15046)</source>
-        <target>문서 서식 알림 설정에 새 옵션인 "들여쓰기 빈줄 무시"이 추가되었습니다. (#13394)</target>
+        <target>브라우즈 모드에서 탭 그룹별로 탐색할 수 있는 할당되지 않은 제스처가 추가되었습니다. (#15046)</target>
       </segment>
     </unit>
     <unit id="0735bbe2-fe08-4fa8-a505-8f6696579330">
@@ -20556,7 +20556,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>  This includes situations where braille is tethered to review. (#15115)</source>
-        <target>  캐럿 업데이트를 동반하지 않고 텍스트가 변경되었을 때, 점자 디스플레이의 텍스트는 이제 변경된 줄에 위치할 때 적절하게 업데이트됩니다.</target>
+        <target>  여기에는 점자가 리뷰 커서에 고정된 상황이 포함됩니다. (#15115)</target>
       </segment>
     </unit>
     <unit id="cb8c6353-77b2-4240-adbd-813fe3047fe8">
@@ -20566,7 +20566,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>More BRLTTY key bindings are now mapped to NVDA commands (#6483):</source>
-        <target>여기에는 검토하기 위해 점자를 묶는 경우가 포함됩니다. (#15115)</target>
+        <target>더 많은 BRLTTY 키 바인딩이 이제 NVDA 명령에 매핑됩니다. (#6483):</target>
       </segment>
     </unit>
     <unit id="02e7b2e4-fc88-4092-bc57-73dd5841e8fc">
@@ -20576,7 +20576,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>`learn`: toggle NVDA input help</source>
-        <target>추가적인 BRLTTY 키 바인딩이 NVDA 명령에 매핑됨 (#6483):</target>
+        <target>`learn`: NVDA 입력 도움말 켜고 끄기</target>
       </segment>
     </unit>
     <unit id="809fd0ab-92f1-4e02-9a99-2530caad9d37">
@@ -20636,7 +20636,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>The BRLTTY driver is only available when a BRLTTY instance with BrlAPI enabled is running. (#15335)</source>
-        <target>`say_below`: 리뷰커서로 모두 읽기</target>
+        <target>BRLTTY 드라이버는 BrlAPI가 활성화된 BRLTTY 인스턴스가 실행 중일 때만 사용할 수 있습니다. (#15335)</target>
       </segment>
     </unit>
     <unit id="61f24a47-d38b-4106-8eed-67248307c662">
@@ -20646,7 +20646,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>The advanced setting to enable support for HID braille has been removed in favor of a new option.</source>
-        <target>BRLTTY 드라이버는 오직 BrlAPI가 활성화BRLTTY 인스턴스 is running. (#15335)</target>
+        <target>HID 점자 지원을 활성화하는 고급 설정이 새로운 옵션으로 대체되어 제거되었습니다.</target>
       </segment>
     </unit>
     <unit id="bf1ae45c-12c6-46ae-83b4-1cb33fbff21c">
@@ -21394,7 +21394,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>braille symbols such as `⠐⠣⠃⠗⠇⠐⠜`. (#13778)</source>
-        <target>"⠐⠣⠃⠗⠇⠐⠜"와 같은 점자 기호가 추가 되었습니다. (#14548)</target>
+        <target>`⠐⠣⠃⠗⠇⠐⠜`와 같은 점자 기호. (#13778)</target>
       </segment>
     </unit>
     <unit id="7e46fbe5-8c21-4e46-90cd-8067a211eb52">
@@ -21484,7 +21484,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>cycling the "braille move system caret when routing review cursor" mode. (#15122)</source>
-        <target>"리뷰 커서를 라우팅중일 시 점자로 시스템 케럿 이동" 모드 순환 설정</target>
+        <target>"리뷰 커서 라우팅 시 점자 시스템 캐럿 이동" 모드 순환. (#15122)</target>
       </segment>
     </unit>
     <unit id="1ae9472f-ee5d-407f-9156-f138769ff3ed">
@@ -21603,7 +21603,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using `aria-haspopup`. (#8235)</source>
-        <target>Mozilla FireFox와 Google Chrome에서, 이제 작성자가 aria-haspopup을 사용하여 대화 상자, 그리드, 목록 또는 트리를 지정한 경우, 해당 열 때 NVDA가 알립니다.. (#14709)</target>
+        <target>Mozilla Firefox 및 Google Chrome에서, 작성자가 `aria-haspopup`을 사용하여 지정한 경우, 컨트롤이 대화 상자, 그리드, 목록 또는 트리를 열 때 NVDA가 보고합니다. (#8235)</target>
       </segment>
     </unit>
     <unit id="90f5b353-4dd0-48ae-8c72-091520808074">
@@ -21673,7 +21673,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Updated LibLouis braille translator to [3.26.0](https://github.com/liblouis/liblouis/releases/tag/v3.26.0). (#14970)</source>
-        <target>LibLouis 점역기가 [3.25.0](https://github.com/liblouis/liblouis/releases/tag/v3.25.0) 버전으로 업데이트되었습니다. (#14719)</target>
+        <target>LibLouis 점역기가 [3.26.0](https://github.com/liblouis/liblouis/releases/tag/v3.26.0) 버전으로 업데이트되었습니다. (#14970)</target>
       </segment>
     </unit>
     <unit id="b2327c78-1519-4dba-b221-70a175f0e03b">
@@ -21743,7 +21743,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>When using a braille display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter.</source>
-        <target>표준 HID 점자 드라이버로 점자 디스플레이를 사용할 때 dpad를 사용하여 화살표 키를 에뮬레이트하고 입력할 수 있습니다. 또한 스페이스+1점과 스페이스+4점이 이제 각각 위쪽 및 아래쪽 화살표에 매핑합니다. (#14713)</target>
+        <target>표준 HID 점자 드라이버로 점자 디스플레이를 사용할 때 dpad를 사용하여 화살표 키와 Enter 키를 에뮬레이트할 수 있습니다.</target>
       </segment>
     </unit>
     <unit id="2780ada1-9eaa-4df3-a9d2-03a703f290b1">
@@ -21752,7 +21752,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>  Also `space+dot1` and `space+dot4` now map to up and down arrow respectively. (#14713)</source>
-        <target>  동적 웹 콘텐츠 업데이트(ARIA 라이브 리전)가 이제 점자 디스플레이에 표시됩니다.</target>
+        <target>  또한 `스페이스+1점`과 `스페이스+4점`이 이제 각각 위쪽 및 아래쪽 화살표에 매핑됩니다. (#14713)</target>
       </segment>
     </unit>
     <unit id="447a43ce-09c0-41d1-9188-55d84dba670f">
@@ -21762,7 +21762,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Updates to dynamic web content (ARIA live regions) are now displayed in braille.</source>
-        <target>고급 설정 패널에서 이 기능을 비활성화할 수 있습니다. (#7756)</target>
+        <target>동적 웹 콘텐츠 업데이트(ARIA 라이브 리전)가 이제 점자 디스플레이에 표시됩니다.</target>
       </segment>
     </unit>
     <unit id="c1d00eed-4509-4aa8-be55-d7268585ccca">
@@ -21771,7 +21771,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>  This can be disabled in the Advanced Settings panel. (#7756)</source>
-        <target>  대시 및 앰 대시 기호가 항상 음성합성기로 전송됩니다. (#13830)</target>
+        <target>  고급 설정 패널에서 이 기능을 비활성화할 수 있습니다. (#7756)</target>
       </segment>
     </unit>
     <unit id="0549dfca-f067-47eb-81fc-e197a3fea9aa">
@@ -21781,7 +21781,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Dash and em-dash symbols will always be sent to the synthesizer. (#13830)</source>
-        <target>이제 Microsoft Word에서 보고된 거리는 UIA를 사용하여 Word 문서에 액세스하는 경우에도 Word의 고급 옵션에 정의된 단위를 따릅니다. (#14542)</target>
+        <target>대시 및 엠 대시 기호가 항상 음성합성기로 전송됩니다. (#13830)</target>
       </segment>
     </unit>
     <unit id="f645c8fe-abe7-4a99-901a-571412ce3dc5">
@@ -21791,7 +21791,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Distance reported in Microsoft Word will now honour the unit defined in Word's advanced options even when using UIA to access Word documents. (#14542)</source>
-        <target>이제 NVDA는 명령과 초점 변경에 조금 더 빠르게 반응합니다. (#14701)</target>
+        <target>이제 Microsoft Word에서 보고된 거리는 UI 자동화/UIA를 사용하여 Word 문서에 액세스하는 경우에도 Word의 고급 옵션에 정의된 단위를 따릅니다. (#14542)</target>
       </segment>
     </unit>
     <unit id="3107b4ae-c5d5-4306-b6a7-3315f1101c0d">
@@ -21821,7 +21821,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Portable copy creation no longer requires that a drive letter be entered as part of the absolute path. (#14680)</source>
-        <target>휴대용 복사본을 만들 때 드라이브 문자를 절대 경로의 일부로 입력할 필요가 없습니다. (#14681)</target>
+        <target>휴대용 복사본을 만들 때 드라이브 문자를 절대 경로의 일부로 입력할 필요가 없습니다. (#14680)</target>
       </segment>
     </unit>
     <unit id="9698ca1b-1b59-4d4b-8312-c43f2dacce0a">
@@ -21910,7 +21910,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>When no braille display is connected and the braille viewer is closed by pressing `alt+f4` or clicking the close button, the display size of the braille subsystem will again be reset to no cells. (#15214)</source>
-        <target>웹 브라우저:</target>
+        <target>연결된 점자 디스플레이가 없고 `alt+f4`를 누르거나 닫기 버튼을 클릭하여 점자 뷰어를 닫으면, 점자 하위 시스템의 표시 크기가 다시 셀 없음으로 재설정됩니다. (#15214)</target>
       </segment>
     </unit>
     <unit id="1593751f-1e38-46e8-a8d7-0970447f0cde">
@@ -21920,7 +21920,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Web browsers:</source>
-        <target>NVDA는 더 이상 Mozilla Firefox가 중단되거나 응답을 중지하지 않습니다. (#14647)</target>
+        <target>웹 브라우저:</target>
       </segment>
     </unit>
     <unit id="7a69ac1d-3be3-48f4-8a77-46eeb55426fb">
@@ -21930,7 +21930,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>NVDA no longer occasionally causes Mozilla Firefox to crash or stop responding. (#14647)</source>
-        <target>Mozilla Firefox와 Google Chrome에서 입력한 글자 말하기가 비활성화된 경우에 입력한 문자가 일부 텍스트 상자에 더 이상 보고되지 않습니다. (#14666)</target>
+        <target>더 이상 가끔 Mozilla Firefox의 작동이 중단되거나 응답하지 않는 현상을 유발하지 않습니다. (#14647)</target>
       </segment>
     </unit>
     <unit id="2553e8cb-f3ca-414a-9940-7813315b4a58">
@@ -21940,7 +21940,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>In Mozilla Firefox and Google Chrome, typed characters are no longer reported in some text boxes even when speak typed characters is disabled. (#8442)</source>
-        <target>이전에는 불가능했던 Chrome 내장 컨트롤에서의 브라우즈 모드를 사용할 수 있습니다. (#13493, #8553)</target>
+        <target>Mozilla Firefox와 Google Chrome에서 입력한 글자 말하기가 비활성화된 경우에 입력한 문자가 일부 텍스트 상자에 더 이상 보고되지 않습니다. (#8442)</target>
       </segment>
     </unit>
     <unit id="772c2ddd-a213-4a76-add8-6e68249463fa">
@@ -21950,7 +21950,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>You can now use browse mode in Chromium Embedded Controls where it was not possible previously. (#13493, #8553)</source>
-        <target>Mozilla Firefox에서 링크 뒤 텍스트 위로 마우스를 이동하면 텍스트가 안정적으로 보고됩니다. (#9235)</target>
+        <target>이전에는 불가능했던 Chromium 내장 컨트롤에서 브라우즈 모드를 사용할 수 있습니다. (#13493, #8553)</target>
       </segment>
     </unit>
     <unit id="5755cbd5-0dcb-4377-93c6-deadb1a4cb25">
@@ -21960,7 +21960,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>In Mozilla Firefox, moving the mouse over text after a link now reliably reports the text. (#9235)</source>
-        <target>Chrome과 Edge에서 그래픽 링크의 목적 URL이 이제 올바르게 표시됩니다. (#14779)</target>
+        <target>Mozilla Firefox에서 링크 뒤 텍스트 위로 마우스를 이동하면 텍스트가 안정적으로 보고됩니다. (#9235)</target>
       </segment>
     </unit>
     <unit id="f433b80b-4601-4b5a-9cc9-2a70a6d3eeb2">
@@ -21970,7 +21970,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>The destination of graphic links is now reported accurately in more cases in Chrome and Edge. (#14783)</source>
-        <target>href 속성이 없는 링크 URL을 읽으려고 시도할 때, NVDA가 더 이상 침묵하지 않습니다.</target>
+        <target>Chrome과 Edge에서 그래픽 링크의 대상이 이제 더 많은 경우 정확하게 보고됩니다. (#14783)</target>
       </segment>
     </unit>
     <unit id="67b47645-002c-4f8c-8093-ed120511564d">
@@ -21980,7 +21980,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>When trying to report the URL for a link without a href attribute NVDA is no longer silent.</source>
-        <target>브라우즈 모드에서 NVDA가 더 이상 포커스를 부모 또는 자식 컨트롤로 이동하는 것(예: 컨트롤에서 상위 목록 항목 또는 그리드 셀로 이동)을 잘못 무시하지 않습니다. (#14611)</target>
+        <target>href 속성이 없는 링크의 URL을 보고하려고 시도할 때 NVDA가 더 이상 침묵하지 않습니다.</target>
       </segment>
     </unit>
     <unit id="3a6d1cb1-b020-4b62-b8c5-d524099a408e">
@@ -21989,7 +21989,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>  Instead NVDA reports that the link has no destination. (#14723)</source>
-        <target>  그러나 이 수정 사항은 브라우즈 모드 설정에서 자동으로 포커스를 포커스 가능한 요소로 설정" 옵션이 해제된 경우에만 적용됩니다(기본값).</target>
+        <target>  대신 NVDA는 링크에 대상이 없다고 보고합니다. (#14723)</target>
       </segment>
     </unit>
     <unit id="e2de9580-78cf-4840-9f27-794f7811ab3c">
@@ -21999,7 +21999,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>In Browse mode, NVDA will no longer incorrectly ignore focus moving to a parent or child control e.g. moving from a control to its parent list item or gridcell. (#14611)</source>
-        <target>Windows 11를 위한 수정사항:</target>
+        <target>브라우즈 모드에서 NVDA가 더 이상 포커스를 부모 또는 자식 컨트롤로 이동하는 것(예: 컨트롤에서 상위 목록 항목 또는 그리드 셀로 이동)을 잘못 무시하지 않습니다. (#14611)</target>
       </segment>
     </unit>
     <unit id="cc3d8adf-5ade-471e-8ae8-b5657c093336">
@@ -22009,7 +22009,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Note however that this fix only applies when the Automatically set focus to focusable elements" option in Browse Mode settings is turned off (which is the default).</source>
-        <target>메모장의 최신 릴리스에서 NVDA는 상태 표시줄 내용을 다시 한 번 알릴 수 있습니다. (#14573)</target>
+        <target>그러나 이 수정 사항은 브라우즈 모드 설정의 "자동으로 포커스를 포커스 가능한 요소로 설정" 옵션이 꺼져 있는 경우(기본값)에만 적용됩니다.</target>
       </segment>
     </unit>
     <unit id="d19b3637-dea2-4233-885d-a8c85bb18061">
@@ -22019,7 +22019,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Fixes for Windows 11:</source>
-        <target>탭을 전환하면 메모장과 파일 탐색기의 새 탭 이름과 위치가 표시됩니다. (#14587, #14388)</target>
+        <target>Windows 11 관련 수정 사항:</target>
       </segment>
     </unit>
     <unit id="924288b8-1869-49b5-8fb1-f373a6ba14e6">
@@ -22029,7 +22029,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>NVDA can once again announce Notepad status bar contents. (#14573)</source>
-        <target>NVDA는 중국어, 일본어 등의 언어로 텍스트를 입력할 때 후보 항목을 다시 한 번 알립니다. (#14509)</target>
+        <target>NVDA에서 메모장 상태 표시줄 내용을 다시 알릴 수 있게 되었습니다. (#14573)</target>
       </segment>
     </unit>
     <unit id="bde00147-131f-435c-ac67-e58f8aacf70f">
@@ -22039,7 +22039,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Switching between tabs will announce the new tab name and position for Notepad and File Explorer. (#14587, #14388)</source>
-        <target>NVDA 도움말 메뉴에서 저작권 정보와 개발 공헌자 항목을 다시 열 수 있습니다. (#14725)</target>
+        <target>메모장 및 파일 탐색기에서 탭을 전환할 때 새 탭 이름과 위치를 알립니다. (#14587, #14388)</target>
       </segment>
     </unit>
     <unit id="cef84b36-87e9-4cf5-9c62-a7e7a0b37294">
@@ -22049,7 +22049,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>NVDA will once again announce candidate items when entering text in languages such as Chinese and Japanese. (#14509)</source>
-        <target>Microsoft Office를 위한 수정사항:</target>
+        <target>중국어, 일본어 등의 언어로 텍스트를 입력할 때 NVDA가 후보 항목을 다시 알립니다. (#14509)</target>
       </segment>
     </unit>
     <unit id="09898bd2-1c86-471a-9602-12babaf4b2d6">
@@ -22059,7 +22059,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>It is once again possible to open the Contributors and License items on the NVDA Help menu. (#14725)</source>
-        <target>Excel에서 셀 사이를 반복적으로 이동할 땜, 이제 NVDA가 잘못된 셀 또는 선택을 보고할 가능성이 줄어듭니다. (#14983, #12200, #12108)</target>
+        <target>NVDA 도움말 메뉴에서 '개발 공헌자' 및 '라이선스' 항목을 다시 열 수 있게 되었습니다. (#14725)</target>
       </segment>
     </unit>
     <unit id="97091b30-dc0b-45df-9ee0-c870889e5665">
@@ -22069,7 +22069,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Microsoft Office fixes:</source>
-        <target>작업 시트 외부에서 엑셀 셀에 접근할 때 점자 및 초점 강조 표시가 이전에 초점을 두었던 객체로 불필요하게 업데이트되지 않습니다(#15136)</target>
+        <target>Microsoft Office 관련 수정사항:</target>
       </segment>
     </unit>
     <unit id="775ef7f4-b176-4994-b977-388de0fe20fa">
@@ -22079,7 +22079,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>When rapidly moving through cells in Excel, NVDA is now less likely to report the wrong cell or selection. (#14983, #12200, #12108)</source>
-        <target>Microsoft Excel과 Outlook에서 NVDA가 더 이상 초점을 받은 암호 입력 필드 알림을 실패하지 않습니다. (#14839)</target>
+        <target>Excel에서 셀 사이를 빠르게 이동할 때 NVDA가 잘못된 셀이나 선택 영역을 보고할 가능성이 줄어듭니다. (#14983, #12200, #12108)</target>
       </segment>
     </unit>
     <unit id="8df61d6a-38c3-4cf1-8b27-a8e4423aa482">
@@ -22089,7 +22089,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>When landing on an Excel cell from outside a work sheet, braille and focus highlighter are no longer needlessly updated to the object that had focus previously. (#15136)</source>
-        <target>현재 로케일에 기호 설명이 없는 기호의 경우 기본 영어 기호 수준이 사용됩니다. (#14558, #14417)</target>
+        <target>워크시트 외부에서 Excel 셀로 이동할 때, 점자 및 초점 강조 기능이 이전에 초점을 맞추었던 개체로 불필요하게 업데이트되지 않습니다. (#15136)</target>
       </segment>
     </unit>
     <unit id="8a5c789c-7684-4889-b8b2-8746d1d8f997">
@@ -22099,7 +22099,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>NVDA no longer fails to announce focusing password fields in Microsoft Excel and Outlook. (#14839)</source>
-        <target>이제 유형이 정규식으로 설정되지 않은 경우 사전 항목의 바꾸기 필드에서 백슬래시 문자를 사용할 수 있습니다. (#14556)</target>
+        <target>Microsoft Excel 및 Outlook에서 암호 필드에 초점이 맞춰질 때 NVDA가 알림에 실패하지 않습니다. (#14839)</target>
       </segment>
     </unit>
     <unit id="4e19b0f1-c44e-4574-8065-c82ace628e46">
@@ -22109,7 +22109,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>For symbols which do not have a symbol description in the current locale, the default English symbol level will be used. (#14558, #14417)</source>
-        <target>Windows 10과 11 일정 앱에서 컴팩트 오버레이 모드에서 표준 계산기에 식을 입력할 때 NVDA의 휴대용 사본은 더 이상 아무것도 하지 않거나 오류 톤을 재생하지 않습니다. (#14679)</target>
+        <target>현재 로케일에 기호 설명이 없는 기호의 경우 기본 영어 기호 수준을 사용합니다. (#14558, #14417)</target>
       </segment>
     </unit>
     <unit id="16952648-2f22-4747-a0b0-bb08bd10b64e">
@@ -22119,7 +22119,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>It is now possible to use the backslash character in the replacement field of a dictionaries entry, when the type is not set to regular expression. (#14556)</source>
-        <target>대신에 그 링크에 목적 사이트 주소가 없음을 알립니다. (#14723)</target>
+        <target>유형이 정규식으로 설정되지 않은 경우, 이제 사전 항목의 바꾸기 필드에서 백슬래시 문자를 사용할 수 있습니다. (#14556)</target>
       </segment>
     </unit>
     <unit id="aa9809d5-023f-49f9-a65f-bbb982092862">
@@ -22129,7 +22129,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>In Windows 10 and 11 Calculator, a portable copy of NVDA will no longer do nothing or play error tones when entering expressions in standard calculator in compact overlay mode. (#14679)</source>
-        <target>NVDA는 이전에 완전히 중지된 응용 프로그램과 같은 더 많은 상황에서 다시 복구됩니다. (#14759)</target>
+        <target>Windows 10 및 11 계산기의 소형 오버레이 모드(compact overlay mode) 표준 계산기에 수식을 입력할 때 포터블 NVDA가 아무 반응을 보이지 않거나 오류음을 재생하던 문제가 해결되었습니다. (#14679)</target>
       </segment>
     </unit>
     <unit id="c7ffd3aa-0c7d-4eb8-bf46-bdd41308bd65">
@@ -22139,7 +22139,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>NVDA again recovers from many more situations such as applications that stop responding which previously caused it to freeze completely. (#14759)</source>
-        <target>특정 터미널 및 콘솔에서 UIA 지원을 강제로 실행할 때 프리징 및 로그 파일 스팸을 유발하는 버그가 수정됩니다. (#14689)</target>
+        <target>이전에는 NVDA를 완전히 작동 중단시켰던 응답 없는 애플리케이션 등 더 많은 상황에서 NVDA가 복구되는 성능이 다시 개선되었습니다. (#14759)</target>
       </segment>
     </unit>
     <unit id="1f4f67e8-c937-4353-83cd-6559fdb2a011">
@@ -22149,7 +22149,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>When forcing UIA support with certain terminal and consoles, a bug is fixed which caused a freeze and the log file to be spammed. (#14689)</source>
-        <target>구성 재설정 후 NVDA가 더 이상 구성 저장을 거부하지 않습니다. (#13187)</target>
+        <target>특정 터미널 및 콘솔에서 UI 자동화/UIA 지원을 강제로 설정할 때 정지 현상이 발생하고 로그 파일이 과도하게 기록(스팸)되던 버그가 수정되었습니다. (#14689)</target>
       </segment>
     </unit>
     <unit id="cc1cd487-2ee2-446f-8a3f-eda8c8f3266d">
@@ -22159,7 +22159,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>NVDA will no longer refuse to save the configuration after a configuration reset. (#13187)</source>
-        <target>런처에서 임시 버전을 실행할 때 NVDA는 사용자가 구성을 저장할 수 있다고 잘못 인식하지 않습니다. (#14914)</target>
+        <target>구성 재설정 후 NVDA가 더 이상 구성 저장을 거부하지 않습니다. (#13187)</target>
       </segment>
     </unit>
     <unit id="a2eee6a7-3375-46e8-a6c9-de57d7782951">
@@ -22169,7 +22169,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>When running a temporary version from the launcher, NVDA will not mislead users into thinking they can save the configuration. (#14914)</source>
-        <target>객체 알림 단축키가 개선되었습니다. (#10807)</target>
+        <target>런처에서 임시 버전을 실행할 때, NVDA는 사용자가 구성을 저장할 수 있는 것처럼 오해하게 만들지 않습니다. (#14914)</target>
       </segment>
     </unit>
     <unit id="0883b2f0-3fca-48c0-91a5-f10ef601d30d">
@@ -22755,7 +22755,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>This is not referring to screen reader specific headers via named ranges, which is currently not supported via UI Automation.</source>
-        <target>이는 현재 UIA에서 지원하지 않는 스크린리더를 통해 이름이 정의된 범위의 헤더를 얘기하는 것이 아닙니다.</target>
+        <target>이는 현재 UI 자동화(UIA)에서 지원하지 않는, 이름 정의된 범위를 통한 스크린 리더 전용 헤더를 의미하는 것이 아닙니다.</target>
       </segment>
     </unit>
     <unit id="7bfad190-00a6-46a3-b31f-d0ac42b4ad2f">
@@ -22988,7 +22988,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>eSpeak NG has been updated to 1.52-dev commit `f520fecb`. (#14281, #14675)</source>
-        <target>eSpeak NG가 1.52-dev commit `a51235aa` 버전으로 업데이트되었습니다.(#14281)</target>
+        <target>eSpeak NG가 1.52-dev 커밋 `f520fecb` 버전으로 업데이트되었습니다. (#14281, #14675)</target>
       </segment>
     </unit>
     <unit id="c6ec1294-3f2d-4ae6-a2a0-6acea98eb147">
@@ -23405,7 +23405,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>In Windows 11 on ARM, x64 apps are no longer identified as ARM64 applications. (#14403)</source>
-        <target>시스템 테스트가 이제 비영어권 시스템에서 로컬로 실행될 때 통과합니다. (#13362)</target>
+        <target>Windows 11 ARM 환경에서 x64 응용 프로그램이 더 이상 ARM64 응용 프로그램으로 식별되지 않습니다. (#14403)</target>
       </segment>
     </unit>
     <unit id="ebb6583c-e47c-46f3-81d5-e2f1bfdeaaa8">
@@ -23415,7 +23415,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>It is no longer necessary to use `SearchField` and `SuggestionListItem` `UIA` `NVDAObjects` in new UI Automation scenarios, where automatic reporting of search suggestions, and where typing has been exposed via UI Automation with the `controllerFor` pattern.</source>
-        <target>Windows 11 ARM 환경에서 x64 응용 프로그램이 더 이상 ARM64 응용 프로그램으로 식별되지 않습니다. (#14403)</target>
+        <target>검색 제안의 자동 보고 및 입력 피드백이 `controllerFor` 패턴의 UI 자동화/UIA를 통해 노출되는 새로운 UI 자동화 시나리오에서는, 더 이상 `SearchField` 및 `SuggestionListItem` `UIA` `NVDAObjects`를 사용할 필요가 없습니다.</target>
       </segment>
     </unit>
     <unit id="edc719ac-06de-4ee5-be1b-609d7b642316">
@@ -24555,7 +24555,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>NVDA now includes the architecture of the operating system as part of user statistics tracking. (#14019)</source>
-        <target>이제 NVDA는 사용자 통계 추적의 일부로 운영 체제의 아키텍처 수집을 포함합니다.</target>
+        <target>이제 NVDA는 사용자 통계 추적의 일부로 운영 체제의 아키텍처 정보를 포함합니다. (#14019)</target>
       </segment>
     </unit>
     <unit id="cfd75568-f3b2-4be9-9f0d-3c8d80b7190a">
@@ -25374,7 +25374,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>More detailed text formatting information is available. ([microsoft/terminal PR 10336](https://github.com/microsoft/terminal/pull/10336))</source>
-        <target>더 자세한 텍스트 형식([microsoft/terminal PR 10336](https://github.com/microsoft/terminal/pull/10336))을 사용가능합니다.</target>
+        <target>더 상세한 텍스트 서식 정보를 제공합니다. ([microsoft/terminal PR 10336](https://github.com/microsoft/terminal/pull/10336))</target>
       </segment>
     </unit>
     <unit id="daa78370-8eb6-47ba-a4d9-a57b45e109b8">
@@ -26206,7 +26206,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>NVDA will now announce disabled/enabled state correctly. (#10993)</source>
-        <target>NVDA는 이제 "사용할 수 없음"과 사용가능 상태정보를 정확하게 알립니다. (#10993)</target>
+        <target>NVDA는 이제 활성화/비활성화 상태를 정확하게 알립니다. (#10993)</target>
       </segment>
     </unit>
     <unit id="fc336c8a-f255-467e-96bc-476c910a50b9">
@@ -26444,7 +26444,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>In Windows 11, it is again possible to navigate and interact with user interface elements,</source>
-        <target>Windows 11에서 작업표시줄이나 작업보기같은 유저 인터페이스 요소와 마우스 또는 터치 상호작용을 통해 탐색 및 상호작용이 다시 가능해 집니다. (#13506)</target>
+        <target>Windows 11에서 사용자 인터페이스 요소를 탐색하고 상호작용하는 일이 다시 가능해졌습니다,</target>
       </segment>
     </unit>
     <unit id="469436c6-2562-40a5-acf0-704da31a3f00">
@@ -26453,7 +26453,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>such as Taskbar and Task View using mouse and touch interaction. (#13506)</source>
-        <target>워드패드와 다른 `richText` 컨트롤에서 숨겨진 텍스트를 더 이상 알리지 않습니다. (#13618)</target>
+        <target>마우스 및 터치 조작을 사용하는 작업 표시줄 및 작업 보기 등. (#13506)</target>
       </segment>
     </unit>
     <unit id="97a75470-9b5b-4003-b9d2-94dd5f123870">
@@ -27070,7 +27070,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>In recent builds of Microsoft Word via UI Automation on Windows 11, the existence of bookmarks, draft comments and resolved comments are now reported in both speech and braille. (#12861)</source>
-        <target>Windows 11 환경의 UI 자동화를 사용하는 최근 버전의 Microsoft Word에서 존재하는 책갈피, 초안 코맨트, 해결된 코맨트를 이제 점자와 음성을 통해 알립니다.</target>
+        <target>Windows 11 환경의 UI 자동화를 사용하는 최근 버전의 Microsoft Word에서 존재하는 책갈피, 초안 코멘트, 해결된 코멘트를 이제 음성과 점자를 통해 알립니다. (#12861)</target>
       </segment>
     </unit>
     <unit id="df1481f9-1f0c-4529-a0a5-59409b6ffaa4">
@@ -28946,7 +28946,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>If OneCore voices consistently fail to speak, revert to eSpeak as a synthesizer. (#11544)</source>
-        <target>NVDA 기본 언어를 지원하는 설치된 OneCore 음성이 없을 경우 NVDA는 기본적으로 eSpeak으로 설정됩니다. (#10451) OneCore 음성이 발화에 실패하면 음성엔진을 eSpeak로 설정합니다. (#11544)</target>
+        <target>OneCore 음성이 지속적으로 발화에 실패할 경우, eSpeak 합성기로 되돌아갑니다. (#11544)</target>
       </segment>
     </unit>
     <unit id="463d02ba-74c9-4388-ac1c-456f292a4fb3">
@@ -30048,7 +30048,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Updated Unicode Common Locale Data Repository (CLDR) to 39.0. (#11943, #12314)</source>
-        <target>유니코드 Common Locale Data Repository (CLDR)가 39.0로 업데이트되었습니다. (#11943)</target>
+        <target>유니코드 Common Locale Data Repository (CLDR)가 39.0으로 업데이트되었습니다. (#11943, #12314)</target>
       </segment>
     </unit>
     <unit id="38378e9f-4447-49d8-892c-f9ca30c27ebe">
@@ -30068,7 +30068,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>The user guide, changes file, and key commands listing now have a refreshed appearance. (#12027)</source>
-        <target>사용 설명서, 변경 이력, Nvda 기능키 목록(Nvda 간편 기능키 참고서)가 새로 개편되었습니다. (#12027)ㅁ</target>
+        <target>사용 설명서, 변경 이력, Nvda 기능키 목록(Nvda 간편 기능키 참고서)가 새로 개편되었습니다. (#12027)</target>
       </segment>
     </unit>
     <unit id="36c75c19-8a9d-4026-82fd-959efd1afd41">
@@ -32190,7 +32190,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>The Report formatting script (NVDA+f) has now been changed to report the formatting at the system caret rather than at the review cursor position. To report formatting at the review cursor position now use NVDA+shift+f. (#9505)</source>
-        <target>글자 서식 알림(NVDA+F)이 리뷰 커서 위치가 아닌 시스탬 캐럿을 기준으로 텍스트 서식을 알리도록 변경되었습니다. 기존의 리뷰 커서 위치의 텍스트 서식 알림을 들으려면 NVDA+Shift+F를 사용합니다.</target>
+        <target>글자 서식 알림(NVDA+f)이 리뷰 커서 위치가 아닌 시스템 캐럿을 기준으로 서식을 알리도록 변경되었습니다. 이제 리뷰 커서 위치의 서식을 알리려면 NVDA+Shift+f를 사용합니다. (#9505)</target>
       </segment>
     </unit>
     <unit id="3e3aaa3e-f10f-42b8-b94a-4490b9fc875d">
@@ -32969,7 +32969,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>NVDA error sounds are no longer heard when accessing DevExpress text controls. (#10918)</source>
-        <target>DevExpress text controls 를 열 때 NVDA 오류 효과음이 들리는 버그가 수정됐습니다. (#10918)시스템 트레이에서 아이콘의 이름과 툴팁 내용이 같을 경우, 이름을 두 번 알리지 않기 위해서 이제 툴팁을 읽지 않습니다. (#6656)</target>
+        <target>DevExpress 텍스트 컨트롤에 액세스할 때 NVDA 오류 효과음이 더 이상 들리지 않습니다. (#10918)</target>
       </segment>
     </unit>
     <unit id="bff2d1e2-4cd8-40ce-b758-bc9458e78b01">
@@ -34053,7 +34053,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>In Start menu for Windows 10 Anniversary Update and later, NVDA will announce details of search results. (#10340)</source>
-        <target>윈도우즈 10 Anniversary Update 혹은 그 이후 버전의 '시작' 메뉴에서, 검색 결과의 상세 내용을 알려줍니다. (#10232)</target>
+        <target>Windows 10 Anniversary Update 및 이후 버전의 시작 메뉴에서 NVDA가 검색 결과의 세부 정보를 알립니다. (#10340)</target>
       </segment>
     </unit>
     <unit id="bbb2b33e-32f0-41fb-bd2c-7bfa5ecdd84e">
@@ -34103,7 +34103,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>In the Settings app in Windows 10 April 2018 Update and later, NVDA will no longer announce progress bar information for volume meters found in the System/Sound page. (#10412)</source>
-        <target>윈도우즈 10의 2018년 4월 이후 업데이트에서 설정 앱을 사용할 때, 시스템/음향 화면에 나타나는 음량 표시기의 진행 정보를 더 이상 읽지 않습니다. (#10284)</target>
+        <target>Windows 10 April 2018 Update 및 이후 버전의 설정 앱에서 시스템/소리 페이지에 나타나는 볼륨 미터의 진행 표시줄 정보를 NVDA가 더 이상 알리지 않습니다. (#10412)</target>
       </segment>
     </unit>
     <unit id="81b869ab-3e0d-48b2-a4af-c6e1c3a74cf4">
@@ -38704,7 +38704,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Espeak-ng has been updated to 1.49.2, resolving some issues with producing release builds. (#7385, #7583)</source>
-        <target>이스피크 NG 음성 엔진 1.49.2 사용. (#7385)</target>
+        <target>eSpeak NG가 1.49.2로 업데이트되어 릴리스 빌드 생성 시 발생하던 일부 문제가 해결되었습니다. (#7385, #7583)</target>
       </segment>
     </unit>
     <unit id="80597d2d-040e-4984-aa80-7c2636bd7d2f">
@@ -39543,7 +39543,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>In Microsoft Excel 2003 and 2007, cells are again reported when arrowing around a worksheet. (#7243)</source>
-        <target>Microsoft Excel 2003 및 2007 사용 시 방향키로 worksheet 셀을 탐색할 수 없던 문제 수정. (#8243)</target>
+        <target>Microsoft Excel 2003 및 2007에서 워크시트를 방향키로 탐색할 때 셀을 다시 정상적으로 읽어줍니다. (#7243)</target>
       </segment>
     </unit>
     <unit id="4f626b65-cde6-4054-8a84-cdb5b9c4cfa4">
@@ -45781,7 +45781,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>Upgraded eSpeak to version 1.48.04 which includes many language fixes and fixes several crashes. (#3842, #3739, #3860)</source>
-        <target>이스피크 음성 엔진 1.48.04 사용 및 이에 따른 여러 버그 및 언어 수정. (#3842, #3739)</target>
+        <target>eSpeak를 1.48.04 버전으로 업데이트하여 여러 언어 관련 오류와 몇 가지 충돌 문제를 해결했습니다. (#3842, #3739, #3860)</target>
       </segment>
     </unit>
     <unit id="f26b08b5-2ead-4c06-8a49-b599f55e1ae7">
@@ -46581,7 +46581,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>You can specify the category to be displayed to the user for scripts using the scriptCategory attribute on ScriptableObject classes and the category attribute on script methods. See the documentation for baseObject.ScriptableObject for more details. (#1532)</source>
-        <target>AppModules에는 이제 productName 및 productVersion 속성이 포함됩니다. 이 정보는 이제 개발자 정보(NVDA+f1)에도 포함됩니다. (#1625)</target>
+        <target>ScriptableObject 클래스의 scriptCategory 속성과 스크립트 메서드의 category 속성을 사용하여 사용자에게 표시할 스크립트 범주를 지정할 수 있습니다. 자세한 내용은 baseObject.ScriptableObject 문서를 참고하십시오. (#1532)</target>
       </segment>
     </unit>
     <unit id="7bf78450-975a-4dcc-8906-318038e49fca">
@@ -46591,7 +46591,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>config.save is deprecated and may be removed in a future release. Use config.conf.save instead. (#667)</source>
-        <target>Python 콘솔에서 이제 Tab 키를 눌러 현재 식별자를 자동 완성할 수 있습니다. (#433)</target>
+        <target>config.save 기능은 더 이상 사용되지 않으며 향후 릴리스에서 제거될 수 있습니다. 대신 config.conf.save를 사용하십시오. (#667)</target>
       </segment>
     </unit>
     <unit id="787c3dfe-fe3c-4578-9337-c72b1faa3152">
@@ -46601,7 +46601,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>config.validateConfig is deprecated and may be removed in a future release. Add-ons which need this should provide their own implementation. (#667, #3632)</source>
-        <target>가능한 항목이 여러 개인 경우, Tab 키를 한 번 더 눌러 목록에서 선택할 수 있습니다.</target>
+        <target>config.validateConfig 기능은 더 이상 사용되지 않으며 향후 릴리스에서 제거될 수 있습니다. 이 기능이 필요한 추가기능은 자체적으로 구현해야 합니다. (#667, #3632)</target>
       </segment>
     </unit>
     <unit id="2c08963a-eaa6-4774-b414-93c05d39c94f">
@@ -48009,7 +48009,7 @@ ChatGPT에게 묻기</target>
       </notes>
       <segment state="final">
         <source>it is now possible to use browse mode for pages in Internet Explorer 10 when in standards mode; e.g. [www.gmail.com](http://www.gmail.com) login page. (#3151)</source>
-        <target>인터넷 익스플로러 10 기준 모드(예: [www.gmail.](http://www.gmail.)com의 로그인 페이지)에서 브라우즈 모드를 사용할 수 없었던 문제 수정. (#3151)</target>
+        <target>인터넷 익스플로러 10의 표준 모드에서 페이지에 대해 브라우즈 모드를 사용할 수 있게 되었습니다. 예: [www.gmail.com](http://www.gmail.com) 로그인 페이지. (#3151)</target>
       </segment>
     </unit>
     <unit id="4410694c-f90a-4897-b51f-e55b4bd123f2">
