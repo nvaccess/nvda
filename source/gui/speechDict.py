@@ -240,27 +240,21 @@ class DictionaryDialog(
 
 		sHelper.addItem(bHelper, flag=wx.EXPAND)
 
-	def onCharHook(self, evt):
+	def onCharHook(self, evt: wx.KeyEvent):
 		key = evt.GetKeyCode()
 		if key == wx.WXK_DELETE:
 			self.onRemoveClick(None)
 		else:
 			evt.Skip()
 
-	def onContextMenu(self, evt):
+	def onContextMenu(self, evt: wx.ContextMenuEvent):
 		menu = wx.Menu()
-		# Translators: Context menu item label to add a new entri
-		addItem = menu.Append(wx.ID_ANY, _("&Add"))
 		# Translators: Context menu item label to edit an entri
 		editItem = menu.Append(wx.ID_ANY, _("&Edit"))
 		# Translators: Context menu item label to remove an entri
 		removeItem = menu.Append(wx.ID_ANY, _("&Remove"))
-		# Translators: Context menu item label to remove all entries
-		removeallItem = menu.Append(wx.ID_ANY, _("Remove all"))
-		self.Bind(wx.EVT_MENU, self.onAddClick, addItem)
 		self.Bind(wx.EVT_MENU, self.onEditClick, editItem)
 		self.Bind(wx.EVT_MENU, self.onRemoveClick, removeItem)
-		self.Bind(wx.EVT_MENU, self.onRemoveAll, removeallItem)
 		self.PopupMenu(menu)
 		menu.Destroy()
 
