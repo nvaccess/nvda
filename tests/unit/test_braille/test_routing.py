@@ -9,6 +9,7 @@ import config
 import braille
 import braille.regions.base
 import braille.regions.textInfo
+from config.configFlags import TetherTo
 import textInfos
 import api
 import controlTypes
@@ -81,7 +82,7 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 
 	def setUp(self):
 		# Set tethering to review.
-		braille.handler.setTether(braille.TetherTo.REVIEW.value)
+		braille.handler.setTether(TetherTo.REVIEW.value)
 		cmText = "the quick brown fox jumps over the lazy dog"
 		cm = self.cm = CursorManager(text=cmText)
 		cm.role = controlTypes.Role.EDITABLETEXT
