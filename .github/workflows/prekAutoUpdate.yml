@@ -25,7 +25,7 @@ jobs:
       # --cooldown-days skips releases younger than 3 days, avoiding pinning to
       # a freshly published (and potentially yanked/broken) hook revision.
       - name: Run prek auto-update
-        run: prek auto-update --cooldown-days 3
+        run: prek auto-update --cooldown-days 7
       - name: Create pull request
         shell: bash
         env:
