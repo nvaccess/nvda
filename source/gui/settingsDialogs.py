@@ -3347,7 +3347,7 @@ class DocumentFormattingPanel(SettingsPanel):
 			reportLineIndentation in (ReportLineIndentation.TONES, ReportLineIndentation.SPEECH_AND_TONES),
 		)
 		self.bindHelpEvent(
-			"DocumentFormattingSettingsIndentToneDuration",
+			"sIndentToneDuration",
 			self.indentToneDurationSpin,
 		)
 
