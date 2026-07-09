@@ -3539,7 +3539,8 @@ This may be useful when reading a document where blank lines are used to separat
 ##### Indent tone duration {#sIndentToneDuration}
 
 This option allows you to configure the duration of indentation tones when the "Tones" or "Both Speech and Tones" option is selected in the ["Report line indentation with"](#DocumentFormattingSettingsLineIndentation) combo box.
-The value can range from 10 ms to 2000 ms. The default is 40 ms.
+The value can range from 10 ms to 2000 ms.
+The default is 40 ms.
 
 #### Document Navigation {#DocumentNavigation}
 
