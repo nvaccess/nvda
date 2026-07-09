@@ -72,6 +72,7 @@ import braille
 import braille.display
 import braille.display.driver
 import braille.display.gesture
+import braille.extensions
 import brailleInput
 import gui
 import inputCore
@@ -319,7 +320,7 @@ class FollowerSession(RemoteSession):
 			RemoteMessageType.SET_DISPLAY_SIZE,
 			self.setDisplaySize,
 		)
-		braille.filter_displayDimensions.register(
+		braille.extensions.filter_displayDimensions.register(
 			self.localMachine._handleFilterDisplayDimensions,
 		)
 		self.transport.registerInbound(
@@ -344,7 +345,7 @@ class FollowerSession(RemoteSession):
 		)
 		self.transport.registerOutbound(decide_playWaveFile, RemoteMessageType.WAVE)
 		self.transport.registerOutbound(post_speechPaused, RemoteMessageType.PAUSE_SPEECH)
-		braille.pre_writeCells.register(self.display)
+		braille.extensions.pre_writeCells.register(self.display)
 		pre_speechQueued.register(self.sendSpeech)
 		self.callbacksAdded = True
 
@@ -355,7 +356,7 @@ class FollowerSession(RemoteSession):
 		self.transport.unregisterOutbound(RemoteMessageType.CANCEL)
 		self.transport.unregisterOutbound(RemoteMessageType.WAVE)
 		self.transport.unregisterOutbound(RemoteMessageType.PAUSE_SPEECH)
-		braille.pre_writeCells.unregister(self.display)
+		braille.extensions.pre_writeCells.unregister(self.display)
 		pre_speechQueued.unregister(self.sendSpeech)
 		self.callbacksAdded = False
 
@@ -538,15 +539,15 @@ class LeaderSession(RemoteSession):
 	def registerCallbacks(self) -> None:
 		if self.callbacksAdded:
 			return
-		braille.displayChanged.register(self.sendBrailleInfo)
-		braille.displaySizeChanged.register(self.sendBrailleInfo)
+		braille.extensions.displayChanged.register(self.sendBrailleInfo)
+		braille.extensions.displaySizeChanged.register(self.sendBrailleInfo)
 		self.callbacksAdded = True
 
 	def unregisterCallbacks(self) -> None:
 		if not self.callbacksAdded:
 			return
-		braille.displayChanged.unregister(self.sendBrailleInfo)
-		braille.displaySizeChanged.unregister(self.sendBrailleInfo)
+		braille.extensions.displayChanged.unregister(self.sendBrailleInfo)
+		braille.extensions.displaySizeChanged.unregister(self.sendBrailleInfo)
 		self.callbacksAdded = False
 
 	def handleNVDANotConnected(self) -> None:

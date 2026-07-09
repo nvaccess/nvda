@@ -11,6 +11,7 @@ import braille
 import braille.buffers
 import braille.constants
 import braille.display
+import braille.extensions
 
 
 def _getDisplayDimensions(dimensions: braille.display.DisplayDimensions) -> braille.display.DisplayDimensions:
@@ -23,10 +24,10 @@ def _getDisplayDimensions(dimensions: braille.display.DisplayDimensions) -> brai
 
 class TestWindowBrailleCells(unittest.TestCase):
 	def setUp(self):
-		braille.filter_displayDimensions.register(_getDisplayDimensions)
+		braille.extensions.filter_displayDimensions.register(_getDisplayDimensions)
 
 	def tearDown(self):
-		braille.filter_displayDimensions.unregister(_getDisplayDimensions)
+		braille.extensions.filter_displayDimensions.unregister(_getDisplayDimensions)
 
 	def test_continuationRow_hasContinuationShape(self):
 		"""A row with hasContinuation=True gets CONTINUATION_SHAPE as its last cell."""

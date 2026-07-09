@@ -7,6 +7,7 @@
 
 import braille
 import braille.display
+import braille.extensions
 from ..extensionPointTestHelpers import actionTester, deciderTester, filterTester
 import unittest
 
@@ -23,7 +24,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			currentCellCount=braille.handler.displaySize,
 		)
 
-		with actionTester(self, braille.pre_writeCells, **expectedKwargs):
+		with actionTester(self, braille.extensions.pre_writeCells, **expectedKwargs):
 			braille.handler._writeCells(cells)
 
 	def test_displaySizeChanged(self):
@@ -33,7 +34,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			numCols=braille.handler.displaySize,
 		)
 
-		with actionTester(self, braille.displaySizeChanged, **expectedKwargs):
+		with actionTester(self, braille.extensions.displaySizeChanged, **expectedKwargs):
 			# Change the internal cache of the display size to trigger the action when getting the display size.
 			braille.handler._displayDimensions = braille.display.DisplayDimensions(1, 0)
 			# The getter should now trigger the action.
@@ -45,7 +46,12 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			detected=None,
 		)
 
-		with actionTester(self, braille.displayChanged, useAssertDictContainsSubset=True, **expectedKwargs):
+		with actionTester(
+			self,
+			braille.extensions.displayChanged,
+			useAssertDictContainsSubset=True,
+			**expectedKwargs,
+		):
 			# Terminate the current noBraille instance to ensure that the action is triggered when choosing it again.
 			braille.handler.display.terminate()
 			braille.handler.display = None
@@ -55,7 +61,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 		cachedDisplayDimensions = braille.handler.displayDimensions
 		with filterTester(
 			self,
-			braille.filter_displayDimensions,
+			braille.extensions.filter_displayDimensions,
 			cachedDisplayDimensions,
 			braille.display.DisplayDimensions(5, 20),
 		) as expectedOutput:
@@ -69,7 +75,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 		cachedDisplaySize = braille.handler.displaySize
 		with filterTester(
 			self,
-			braille.filter_displaySize,
+			braille.extensions.filter_displaySize,
 			cachedDisplaySize,  # The currently cached display size
 			20,  # The filter handler should change the display size to 20
 		) as expectedOutput:
@@ -80,7 +86,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 	def test_decide_enabled(self):
 		with deciderTester(
 			self,
-			braille.decide_enabled,
+			braille.extensions.decide_enabled,
 			expectedDecision=False,
 		) as expectedDecision:
 			# Ensure that disabling braille by the decider doesn't try to call _handleEnabledDecisionFalse,

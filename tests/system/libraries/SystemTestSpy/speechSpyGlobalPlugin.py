@@ -197,9 +197,10 @@ class NVDASpyLib:
 	def _onNvdaStartupComplete(self):
 		self._isNvdaStartupComplete = True
 		import braille
+		import braille.extensions
 
-		braille.filter_displayDimensions.register(self.getBrailleDisplayDimensions)
-		braille.pre_writeCells.register(self._onNvdaBraille)
+		braille.extensions.filter_displayDimensions.register(self.getBrailleDisplayDimensions)
+		braille.extensions.pre_writeCells.register(self._onNvdaBraille)
 
 	def _onNvdaBraille(self, rawText: str):
 		if not rawText:

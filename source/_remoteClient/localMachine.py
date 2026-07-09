@@ -140,7 +140,7 @@ class LocalMachine:
 		self._lastCells: list[int] = []
 		"""Cached cells for display when we return from controling the local computer, or displaying a `ui.message`."""
 
-		braille.decide_enabled.register(self.handleDecideEnabled)
+		braille.extensions.decide_enabled.register(self.handleDecideEnabled)
 		braille.extensions._pre_showBrailleMessage.register(self._handleShowBrailleMessage)
 		braille.extensions._post_dismissBrailleMessage.register(self._handleDismissBrailleMessage)
 		braille.extensions._decide_disabledIncludesMessages.register(
@@ -153,7 +153,7 @@ class LocalMachine:
 		:note: Unregisters the braille display handler to prevent memory leaks and
 		    ensure proper cleanup when the remote connection ends.
 		"""
-		braille.decide_enabled.unregister(self.handleDecideEnabled)
+		braille.extensions.decide_enabled.unregister(self.handleDecideEnabled)
 		braille.extensions._pre_showBrailleMessage.unregister(self._handleShowBrailleMessage)
 		braille.extensions._post_dismissBrailleMessage.unregister(self._handleDismissBrailleMessage)
 		braille.extensions._decide_disabledIncludesMessages.unregister(
