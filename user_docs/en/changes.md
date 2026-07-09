@@ -55,6 +55,10 @@
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* The local Git hook runner has been switched from [pre-commit](https://pre-commit.com/) to [prek](https://prek.j178.dev/), a faster, drop-in compatible alternative. (#20305, @LeonarddeR)
+  * The [pre-commit.ci](https://pre-commit.ci/) integration will be dropped entirely;.
+  Linting and autofixing now run via GitHub Actions, using an autofix-or-fail workflow plus an automatic `prek auto-update` workflow.
+  * Developers who previously ran `pre-commit install` should run `uv run prek install -f` once to replace the installed Git hook.
 * `config.configSections.registerSection` and `config.configSections.unregisterSection` methods can be used to register and unregister configuration sections. (#7467, @nvdaes)
   * In the `installTasks` module, add-on developers can add a spec for each configuration section to be registered.
   * The `config.configSections.registerSection` method can be used in the `onInstall` function.
