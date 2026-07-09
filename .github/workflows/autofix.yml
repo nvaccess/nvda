@@ -42,7 +42,7 @@ jobs:
       uses: actions/setup-python@v6
       with:
         # Keep in sync with defaultPythonVersion in testAndPublish.yml.
-        python-version: '3.13.13'
+        python-version: '3.13.14'
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
       with:
