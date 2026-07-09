@@ -16,6 +16,7 @@ from typing import Type
 
 import braille
 import braille.regions.base
+import braille.regions.NVDAObject
 import config
 import gui
 import libmathcat_py as libmathcat
@@ -110,7 +111,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		review: bool = False,
 	) -> Generator[braille.regions.base.Region, None, None]:
 		"""Yields braille.Region objects for this MathCATInteraction object."""
-		yield braille.NVDAObjectRegion(self, appendText=" ")
+		yield braille.regions.NVDAObject.NVDAObjectRegion(self, appendText=" ")
 		region: braille.regions.base.Region = braille.regions.base.Region()
 		region.focusToHardLeft = True
 		try:
