@@ -1,11 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2017-2023 NV Access Limited
+# Copyright (C) 2017-2026 NV Access Limited, Marlon Brandão de Sousa, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Unit tests for the cursorManager module."""
 
 import unittest
+from cursorManager import MAX_SEARCH_HISTORY_ENTRIES
 from .textProvider import CursorManager
 
 
@@ -233,3 +234,42 @@ class TestSelectAll(unittest.TestCase):
 
 	def test_selectAllFromEnd(self):
 		self._selectAllTest(2)  # Caret at "c"
+
+
+class TestSearchHistory(unittest.TestCase):
+	"""Tests the pure list logic of CursorManager._updateSearchHistory (#8482).
+	This is class-level shared state, so it is reset before and after each test.
+	"""
+
+	def setUp(self):
+		CursorManager._searchEntries = []
+
+	def tearDown(self):
+		CursorManager._searchEntries = []
+
+	def test_appendingTermPutsItAtFront(self):
+		CursorManager._updateSearchHistory("foo")
+		self.assertEqual(CursorManager._searchEntries, ["foo"])
+
+	def test_emptyStringIsIgnored(self):
+		CursorManager._updateSearchHistory("foo")
+		CursorManager._updateSearchHistory("")
+		self.assertEqual(CursorManager._searchEntries, ["foo"])
+
+	def test_retypingExistingTermPromotesItToFrontWithoutDuplicate(self):
+		CursorManager._updateSearchHistory("foo")
+		CursorManager._updateSearchHistory("bar")
+		CursorManager._updateSearchHistory("foo")
+		self.assertEqual(CursorManager._searchEntries, ["foo", "bar"])
+
+	def test_caseOnlyVariantDedupsKeepingNewestCasing(self):
+		CursorManager._updateSearchHistory("Car")
+		CursorManager._updateSearchHistory("car")
+		self.assertEqual(CursorManager._searchEntries, ["car"])
+
+	def test_exceedingMaxEntriesTruncatesOldest(self):
+		for index in range(MAX_SEARCH_HISTORY_ENTRIES + 1):
+			CursorManager._updateSearchHistory(f"term{index}")
+		self.assertEqual(len(CursorManager._searchEntries), MAX_SEARCH_HISTORY_ENTRIES)
+		self.assertEqual(CursorManager._searchEntries[0], f"term{MAX_SEARCH_HISTORY_ENTRIES}")
+		self.assertNotIn("term0", CursorManager._searchEntries)
