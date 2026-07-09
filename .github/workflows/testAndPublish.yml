@@ -172,6 +172,27 @@ jobs:
     - name: Static type analysis
       run: ci/scripts/tests/typeCheck.ps1
 
+  typeCheckTy:
+    name: Check types with ty
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
+    needs: [matrix, buildNVDA]
+    steps:
+    - name: Checkout cached build
+      uses: actions/cache/restore@v5
+      with:
+        path: .
+        key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
+        fail-on-cache-miss: true
+    - name: Install Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: ${{ env.defaultPythonVersion }}
+        architecture: ${{ env.defaultArch }}
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v7
+    - name: Static type analysis
+      run: ci/scripts/tests/typeCheckTy.ps1
+
   checkPo:
     name: Check po files for errors
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
