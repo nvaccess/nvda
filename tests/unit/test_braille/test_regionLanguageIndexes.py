@@ -10,6 +10,7 @@ from unittest.mock import patch
 
 import braille
 import braille.regions.base
+import braille.regions.textInfo
 import textInfos
 
 
@@ -28,9 +29,9 @@ class _FakeInfo:
 		return self._commands
 
 
-def _makeTextInfoRegion() -> braille.TextInfoRegion:
+def _makeTextInfoRegion() -> braille.regions.textInfo.TextInfoRegion:
 	"""Build a TextInfoRegion without going through __init__ (which requires an NVDAObject)."""
-	region = braille.TextInfoRegion.__new__(braille.TextInfoRegion)
+	region = braille.regions.textInfo.TextInfoRegion.__new__(braille.regions.textInfo.TextInfoRegion)
 	braille.regions.base.Region.__init__(region)
 	# Force a deterministic default language so we don't depend on NVDA's configured locale.
 	region._languageIndexes = {0: "en"}
@@ -94,7 +95,7 @@ class TestLanguageIndexes(unittest.TestCase):
 		with (
 			patch("braille.regions.textInfo.getFormatFieldBraille", return_value=""),
 			patch.object(
-				braille.TextInfoRegion,
+				braille.regions.textInfo.TextInfoRegion,
 				"_getTypeformFromFormatField",
 				return_value=0,
 			),
@@ -115,14 +116,18 @@ class TestLanguageIndexes(unittest.TestCase):
 		# Using side_effect to halt execution mid-method avoids needing the full NVDA environment
 		# that the rest of update() requires.
 		with (
-			patch.object(braille.TextInfoRegion, "_getDefaultRegionLanguage", return_value="en"),
 			patch.object(
-				braille.TextInfoRegion,
+				braille.regions.textInfo.TextInfoRegion,
+				"_getDefaultRegionLanguage",
+				return_value="en",
+			),
+			patch.object(
+				braille.regions.textInfo.TextInfoRegion,
 				"_getReadingUnit",
 				return_value=textInfos.UNIT_LINE,
 			),
 			patch.object(
-				braille.TextInfoRegion,
+				braille.regions.textInfo.TextInfoRegion,
 				"_getSelection",
 				side_effect=RuntimeError("stop-after-reset"),
 			),

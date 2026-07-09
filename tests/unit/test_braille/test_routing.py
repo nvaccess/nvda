@@ -8,6 +8,7 @@
 import config
 import braille
 import braille.regions.base
+import braille.regions.textInfo
 import textInfos
 import api
 import controlTypes
@@ -207,7 +208,7 @@ class TestTextInfoRegionRouting(unittest.TestCase):
 		ti.collapse(end=True)
 		ti.expand(textInfos.UNIT_CHARACTER)
 		self.assertEqual(ti.text, testText[2])
-		region = braille.TextInfoRegion(obj)
+		region = braille.regions.textInfo.TextInfoRegion(obj)
 		region.update()
 		index = 3  # Position of e
 		pos = region.rawToBraillePos[index]
@@ -228,7 +229,7 @@ class TestTextInfoRegionRouting(unittest.TestCase):
 		ti.collapse(end=True)
 		ti.expand(textInfos.UNIT_CHARACTER)
 		self.assertEqual(ti.text, testText[4])
-		region = braille.TextInfoRegion(obj)
+		region = braille.regions.textInfo.TextInfoRegion(obj)
 		region.update()
 		index = 1  # Position of ב
 		pos = region.rawToBraillePos[index]
