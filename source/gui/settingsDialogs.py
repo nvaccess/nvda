@@ -4497,22 +4497,6 @@ class AdvancedPanelControls(
 			["terminals", "keyboardSupportInLegacy"],
 		)
 		self.keyboardSupportInLegacyCheckBox.Enable(winVersion.getWinVer() >= winVersion.WIN10_1607)
-		# Translators: This is the label for a checkbox in the
-		# Advanced settings panel.
-		label = _("Beep for &skipped lines")
-		self.beepForSkippedLinesCheckBox = terminalsGroup.addItem(
-			wx.CheckBox(terminalsBox, label=label),
-		)
-		self.bindHelpEvent(
-			"AdvancedSettingsBeepForSkippedLines",
-			self.beepForSkippedLinesCheckBox,
-		)
-		self.beepForSkippedLinesCheckBox.SetValue(
-			config.conf["terminals"]["beepForSkippedLines"],
-		)
-		self.beepForSkippedLinesCheckBox.defaultValue = self._getDefaultValue(
-			["terminals", "beepForSkippedLines"],
-		)
 
 		# Translators: This is the label for a combo box for selecting a
 		# method of detecting changed content in terminals in the advanced
@@ -4809,7 +4793,6 @@ class AdvancedPanelControls(
 			== self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 			== self.winConsoleSpeakPasswordsCheckBox.defaultValue
-			and self.beepForSkippedLinesCheckBox.IsChecked() == self.beepForSkippedLinesCheckBox.defaultValue
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
 			and self.wtStrategyCombo.isValueConfigSpecDefault()
 			and self.cancelExpiredFocusSpeechCombo.GetSelection()
@@ -4842,9 +4825,6 @@ class AdvancedPanelControls(
 		self.brailleLiveRegionsCombo.resetToConfigSpecDefault()
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
-		self.beepForSkippedLinesCheckBox.SetValue(
-			self.beepForSkippedLinesCheckBox.defaultValue,
-		)
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue)
 		self.wtStrategyCombo.resetToConfigSpecDefault()
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
@@ -4887,7 +4867,6 @@ class AdvancedPanelControls(
 		self.enhancedEventProcessingComboBox.saveCurrentValueToConf()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["terminals"]["keyboardSupportInLegacy"] = self.keyboardSupportInLegacyCheckBox.IsChecked()
-		config.conf["terminals"]["beepForSkippedLines"] = self.beepForSkippedLinesCheckBox.IsChecked()
 		diffAlgoChoice = self.diffAlgoCombo.GetSelection()
 		config.conf["terminals"]["diffAlgo"] = self.diffAlgoVals[diffAlgoChoice]
 		self.wtStrategyCombo.saveCurrentValueToConf()
