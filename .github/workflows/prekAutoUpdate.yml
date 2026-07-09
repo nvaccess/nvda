@@ -6,9 +6,6 @@
 name: Prek auto-update
 
 on:
-  schedule:
-    # Monthly, at midnight on the first day of the month.
-    - cron: '0 0 1 * *'
   workflow_dispatch:
 
 permissions:
