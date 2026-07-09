@@ -168,7 +168,7 @@ class ProfilesDialog(
 			return False
 		return profile.manual
 
-	def onCharHook(self, evt):
+	def onCharHook(self, evt: wx.KeyEvent):
 		key = evt.GetKeyCode()
 		sel = self.profileList.Selection
 		if key == wx.WXK_F2 and sel > 0:
@@ -178,7 +178,7 @@ class ProfilesDialog(
 		else:
 			evt.Skip()
 
-	def onContextMenu(self, evt):
+	def onContextMenu(self, evt: wx.ContextMenuEvent):
 		menu = wx.Menu()
 		# Translators: Context menu item label to add new profile
 		newItem = menu.Append(wx.ID_ANY, _("&New"))
@@ -189,8 +189,11 @@ class ProfilesDialog(
 		sel = self.profileList.Selection
 		if sel > 0:
 			name = self.profileNames[sel]
-			# Translators: Context menu item label to manual activate or deactivate a profile
-			label = _("Manual deactivate") if self.isProfileManual(name) else _("Manual activate")
+			# Translators: Context menu item label to manually deactivate a profile.
+			labelDeactivate = _("Manual deactivate")
+			# Translators: Context menu item label to manually activate a profile.
+			labelActivate = _("Manual activate")
+			label = labelDeactivate if self.isProfileManual(name) else labelActivate
 			stateItem = menu.Append(wx.ID_ANY, label)
 			# Translators: Context menu item label to rename a profile
 			renameItem = menu.Append(wx.ID_ANY, _("&Rename"))
