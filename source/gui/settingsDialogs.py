@@ -3346,6 +3346,10 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.indentToneDurationSpin.Enable(
 			reportLineIndentation in (ReportLineIndentation.TONES, ReportLineIndentation.SPEECH_AND_TONES),
 		)
+		self.bindHelpEvent(
+			"DocumentFormattingSettingsIndentToneDuration",
+			self.indentToneDurationSpin,
+		)
 
 		# Translators: This message is presented in the document formatting settings panel
 		# If this option is selected, NVDA will report paragraph indentation if available.
