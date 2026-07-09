@@ -36,7 +36,7 @@ VBufRemote_nodeHandle_t = ctypes.c_ulonglong
 
 
 def _normalizeIdentifier(docHandle: int | None, ID: int | None) -> tuple[int, int]:
-	return docHandle if docHandle is not None else 0, ID if ID is not None else 0
+	return (docHandle if docHandle is not None else 0, ID if ID is not None else 0)
 
 
 class VBufStorage_findMatch_word(str):
