@@ -5398,10 +5398,10 @@ Please see the display's documentation for descriptions of where these keys can 
 
 | Name |Key|
 |---|---|
-|Move braille display to previous line |c1|
-|Scroll braille display back |c2|
-|Move braille display to next line |c3|
-|Scroll braille display forward |c5|
+| Move braille display to previous line | c1 |
+| Scroll braille display back | c2 |
+| Move braille display to next line | c3 |
+| Scroll braille display forward | c5 |
 |NVDA Menu |c1+c3+c4+c5 (command n)|
 |windows+d key (minimize all applications) |c1+c4+c5 (command d)|
 |Say all |c1+c2+c3+c4+c5+c6|
