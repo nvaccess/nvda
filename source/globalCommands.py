@@ -62,6 +62,7 @@ import languageHandler
 from scriptHandler import script, getLastScriptRepeatCount
 import ui
 import braille
+import braille.constants
 import braille.display.gesture
 import braille.regions.focus
 import brailleInput
@@ -3911,8 +3912,8 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_toggleFocusContextPresentation(self, gesture):
-		values = [x[0] for x in braille.focusContextPresentations]
-		labels = [x[1] for x in braille.focusContextPresentations]
+		values = [x[0] for x in braille.constants.focusContextPresentations]
+		labels = [x[1] for x in braille.constants.focusContextPresentations]
 		try:
 			index = values.index(config.conf["braille"]["focusContextPresentation"])
 		except:  # noqa: E722
@@ -3988,7 +3989,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
 			ui.message(_("Braille cursor is turned off"))
 			return
-		shapes = [s[0] for s in braille.CURSOR_SHAPES]
+		shapes = [s[0] for s in braille.constants.CURSOR_SHAPES]
 		if braille.handler.getTether() == TetherTo.FOCUS.value:
 			cursorShape = "cursorShapeFocus"
 		else:
@@ -3997,10 +3998,10 @@ class GlobalCommands(ScriptableObject):
 			index = shapes.index(config.conf["braille"][cursorShape]) + 1
 		except:  # noqa: E722
 			index = 1
-		if index >= len(braille.CURSOR_SHAPES):
+		if index >= len(braille.constants.CURSOR_SHAPES):
 			index = 0
-		config.conf["braille"][cursorShape] = braille.CURSOR_SHAPES[index][0]
-		shapeMsg = braille.CURSOR_SHAPES[index][1]
+		config.conf["braille"][cursorShape] = braille.constants.CURSOR_SHAPES[index][0]
+		shapeMsg = braille.constants.CURSOR_SHAPES[index][1]
 		# Translators: Reports which braille cursor shape is activated.
 		ui.message(_("Braille cursor %s") % shapeMsg)
 

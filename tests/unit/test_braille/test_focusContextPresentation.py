@@ -7,6 +7,7 @@
 
 import api
 import braille
+import braille.constants
 import braille.regions.focus
 import controlTypes
 import globalVars
@@ -39,7 +40,7 @@ class TestFocusContextPresentation(unittest.TestCase):
 
 	def test_fillDisplay(self):
 		"""Test for the case where both the focus object and all its ancestors should be visible on a 40 cell display."""
-		conf["braille"]["focusContextPresentation"] = braille.CONTEXTPRES_FILL
+		conf["braille"]["focusContextPresentation"] = braille.constants.CONTEXTPRES_FILL
 		# Since we set the presentation mode, simulate another gainFocus so the regions will be updated properly
 		braille.handler.handleGainFocus(self.obj)
 		# WindowEndPos should be retrieved before we attempt to get the start position
@@ -52,7 +53,7 @@ class TestFocusContextPresentation(unittest.TestCase):
 
 	def test_scrollOnly(self):
 		"""Test for the case where the focus object should be visible hard left on a display."""
-		conf["braille"]["focusContextPresentation"] = braille.CONTEXTPRES_SCROLL
+		conf["braille"]["focusContextPresentation"] = braille.constants.CONTEXTPRES_SCROLL
 		braille.handler.handleGainFocus(self.obj)
 		# Only the focus object should be visible on the display
 		# This means that the window end position is equal to the end position of the 3rd region
@@ -67,7 +68,7 @@ class TestFocusContextPresentation(unittest.TestCase):
 
 	def test_changedContext(self):
 		"""Test for the case where the focus object as well as ancestry differences should be visible on the display"""
-		conf["braille"]["focusContextPresentation"] = braille.CONTEXTPRES_CHANGEDCONTEXT
+		conf["braille"]["focusContextPresentation"] = braille.constants.CONTEXTPRES_CHANGEDCONTEXT
 		# Clean up the cached ancestry regions
 		braille.regions.focus.invalidateCachedFocusAncestors(0)
 		# Regenerate the regions

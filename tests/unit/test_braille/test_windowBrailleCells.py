@@ -9,6 +9,7 @@ import unittest
 
 import braille
 import braille.buffers
+import braille.constants
 import braille.display
 
 
@@ -39,7 +40,7 @@ class TestWindowBrailleCells(unittest.TestCase):
 		cells = buffer.windowBrailleCells
 		# First row: 15 real cells, then CONTINUATION_SHAPE, then 4 padding zeroes.
 		self.assertEqual(len(cells), 40)
-		self.assertEqual(cells[15], braille.CONTINUATION_SHAPE)
+		self.assertEqual(cells[15], braille.constants.CONTINUATION_SHAPE)
 		self.assertEqual(cells[16:20], [0, 0, 0, 0])
 
 	def test_nonContinuationRow_lastCellIsZero(self):
@@ -53,4 +54,4 @@ class TestWindowBrailleCells(unittest.TestCase):
 		cells = buffer.windowBrailleCells
 		# No continuation marker anywhere; positions 15..19 of row 0 should all be 0.
 		self.assertEqual(cells[15:20], [0, 0, 0, 0, 0])
-		self.assertNotIn(braille.CONTINUATION_SHAPE, cells)
+		self.assertNotIn(braille.constants.CONTINUATION_SHAPE, cells)

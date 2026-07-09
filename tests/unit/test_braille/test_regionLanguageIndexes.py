@@ -9,6 +9,7 @@ import unittest
 from unittest.mock import patch
 
 import braille
+import braille.constants
 import braille.regions.base
 import braille.regions.textInfo
 import textInfos
@@ -60,7 +61,7 @@ class TestLanguageIndexes(unittest.TestCase):
 		with patch("braille.regions.textInfo.languageHandler.getLanguage", return_value="fr"):
 			region._addFieldText(text, contentPos=0)
 		# `_addFieldText` prepends TEXT_SEPARATOR when `separate=True` and there is pre-existing text.
-		addedLen = len(braille.TEXT_SEPARATOR) + len(text)
+		addedLen = len(braille.constants.TEXT_SEPARATOR) + len(text)
 		self.assertIn(rawTextLenBefore, region._languageIndexes)
 		self.assertEqual(region._languageIndexes[rawTextLenBefore], "fr")
 		self.assertIn(rawTextLenBefore + addedLen, region._languageIndexes)
