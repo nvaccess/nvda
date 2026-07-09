@@ -482,35 +482,26 @@ class Test_comparePreviousInstall(unittest.TestCase):
 			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UPGRADE)
 
 
-class Test_CreatePortableDirectoryNormalization(unittest.TestCase):
-	"""Tests for path handling in onCreatePortable (#20159).
+def _mockSplitdrive(p: str) -> tuple:
+	if len(p) >= 2 and p[1] == ":":
+		return (p[:2], p[2:])
+	return ("", p)
 
-	Bare drive letters (e.g. "c:") should show a specific error message
-	suggesting the user use "c:\\" instead.
-	"""
+
+def _mockIsabs(p: str) -> bool:
+	if len(p) >= 2 and p[1] == ":":
+		return len(p) > 2
+	return False
+
+
+class Test_CreatePortableDirectoryNormalization(unittest.TestCase):
+	"""Tests for path handling in onCreatePortable (#20159)."""
 
 	def _runCreatePortable(self, path: str) -> list:
 		"""Call onCreatePortable with the given path and return messageBox calls."""
 		msgBoxCalls = []
-
-		def _msgBox(msg: str, title: str, style: int = 0):
-			msgBoxCalls.append(msg)
-
 		mockCheckBox = PropertyMock()
 		mockCheckBox.Value = False
-
-		# On non-Windows platforms, os.path.splitdrive and os.path.isabs
-		# don't understand drive letters, so mock them to behave like Windows.
-		def _mockSplitdrive(p: str) -> tuple:
-			if len(p) >= 2 and p[1] == ":":
-				return (p[:2], p[2:])
-			return ("", p)
-
-		def _mockIsabs(p: str) -> bool:
-			# On Windows, "c:" is not absolute; "c:\\" and "c:\\foo" are.
-			if len(p) >= 2 and p[1] == ":":
-				return len(p) > 2
-			return False
 
 		with (
 			patch.object(
@@ -518,7 +509,7 @@ class Test_CreatePortableDirectoryNormalization(unittest.TestCase):
 				"portableDirectoryEdit",
 				new_callable=PropertyMock,
 			) as mockEdit,
-			patch("gui.installerGui.gui.messageBox", side_effect=_msgBox),
+			patch("gui.installerGui.gui.messageBox", side_effect=lambda msg, title, style=0: msgBoxCalls.append(msg)),
 			patch("gui.installerGui.os.path.splitdrive", side_effect=_mockSplitdrive),
 			patch("gui.installerGui.os.path.isabs", side_effect=_mockIsabs),
 			patch("gui.installerGui.os.path.abspath", return_value="C:\\NVDA"),
@@ -538,15 +529,12 @@ class Test_CreatePortableDirectoryNormalization(unittest.TestCase):
 		return msgBoxCalls
 
 	def test_bareDriveLetter_showsSpecificError(self):
-		"""Entering 'c:' should show a specific error suggesting 'c:\\'."""
 		calls = self._runCreatePortable("c:")
 		self.assertTrue(
 			any("c:\\" in msg for msg in calls),
-			"Expected the error message to suggest 'c:\\'",
 		)
 
 	def test_relativePath_showsError(self):
-		"""Entering 'foo' should still show the "not absolute" error."""
 		calls = self._runCreatePortable("foo")
 		errorText = _(
 			"Please specify the absolute path where the portable copy should be created. "
@@ -557,7 +545,6 @@ class Test_CreatePortableDirectoryNormalization(unittest.TestCase):
 		self.assertIn(errorText, calls)
 
 	def test_driveLetterWithBackslash_isAccepted(self):
-		"""Entering 'c:\\' should be accepted as-is (no regression)."""
 		calls = self._runCreatePortable("c:\\")
 		errorText = _(
 			"Please specify the absolute path where the portable copy should be created. "
@@ -568,7 +555,6 @@ class Test_CreatePortableDirectoryNormalization(unittest.TestCase):
 		self.assertNotIn(errorText, calls)
 
 	def test_driveLetterWithPath_isAccepted(self):
-		"""Entering 'd:\\NVDA' should be accepted as-is (no regression)."""
 		calls = self._runCreatePortable("d:\\NVDA")
 		errorText = _(
 			"Please specify the absolute path where the portable copy should be created. "
