@@ -9,6 +9,7 @@ import unittest
 from unittest.mock import patch
 
 import braille
+import braille.regions.base
 import textInfos
 
 
@@ -30,7 +31,7 @@ class _FakeInfo:
 def _makeTextInfoRegion() -> braille.TextInfoRegion:
 	"""Build a TextInfoRegion without going through __init__ (which requires an NVDAObject)."""
 	region = braille.TextInfoRegion.__new__(braille.TextInfoRegion)
-	braille.Region.__init__(region)
+	braille.regions.base.Region.__init__(region)
 	# Force a deterministic default language so we don't depend on NVDA's configured locale.
 	region._languageIndexes = {0: "en"}
 	return region
@@ -40,8 +41,8 @@ class TestLanguageIndexes(unittest.TestCase):
 	def test_freshRegion_defaultLanguageAtAnyPos(self):
 		"""A region returns the default language for any non-negative pos."""
 		# Stub default language so Region.__init__ doesn't depend on NVDA's configured locale.
-		with patch.object(braille.Region, "_getDefaultRegionLanguage", return_value="en"):
-			region = braille.Region()
+		with patch.object(braille.regions.base.Region, "_getDefaultRegionLanguage", return_value="en"):
+			region = braille.regions.base.Region()
 		self.assertEqual(region._getLanguageAtPos(0), "en")
 		self.assertEqual(region._getLanguageAtPos(5), "en")
 		self.assertEqual(region._getLanguageAtPos(100), "en")

@@ -7,6 +7,7 @@
 
 import config
 import braille
+import braille.regions.base
 import textInfos
 import api
 import controlTypes
@@ -56,7 +57,7 @@ class TestBrailleOffsetConverters(unittest.TestCase):
 			patch("textUtils._wordSeg.wordSegUtils.WordSegmenter", return_value=wordSegmenter),
 			patch("braille.regions.base.louisHelper.translate", translate),
 		):
-			region = braille.Region()
+			region = braille.regions.base.Region()
 			region.rawText = "你ℌ"
 			region.rawTextTypeforms = [11, 22]
 			region.cursorPos = 1

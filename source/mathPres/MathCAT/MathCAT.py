@@ -15,6 +15,7 @@ from os import path
 from typing import Type
 
 import braille
+import braille.regions.base
 import config
 import gui
 import libmathcat_py as libmathcat
@@ -107,10 +108,10 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 	def getBrailleRegions(
 		self,
 		review: bool = False,
-	) -> Generator[braille.Region, None, None]:
+	) -> Generator[braille.regions.base.Region, None, None]:
 		"""Yields braille.Region objects for this MathCATInteraction object."""
 		yield braille.NVDAObjectRegion(self, appendText=" ")
-		region: braille.Region = braille.Region()
+		region: braille.regions.base.Region = braille.regions.base.Region()
 		region.focusToHardLeft = True
 		try:
 			region.rawText = _callMathCAT(libmathcat.GetBraille, "")
@@ -145,7 +146,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		try:
 			navNode: tuple[str, int] = libmathcat.GetNavigationMathMLId()
 			brailleChars = _callMathCAT(libmathcat.GetBraille, navNode[0])
-			region: braille.Region = braille.Region()
+			region: braille.regions.base.Region = braille.regions.base.Region()
 			region.rawText = brailleChars
 			region.focusToHardLeft = True
 			region.update()
