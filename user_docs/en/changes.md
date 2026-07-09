@@ -79,6 +79,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 Built on top of [Bleak](https://bleak.readthedocs.io/) and the `_asyncioEventLoop` module. (#19838, @bramd)
 * Component updates:
   * Updated py2exe to 0.14.1.1. (#20260, @LeonarddeR)
+  * Python to 3.13.14. (#20476, @dpy013)
 
 #### Deprecations
 
