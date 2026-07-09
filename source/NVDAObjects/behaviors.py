@@ -27,6 +27,7 @@ from scriptHandler import script
 import api
 import ui
 import braille
+import braille.regions.properties
 import core
 import nvwave
 import globalVars
@@ -1057,7 +1058,9 @@ class ToolTip(NVDAObject):
 			return
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		# Ideally, we wouldn't use getPropertiesBraille directly.
-		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
+		braille.handler.message(
+			braille.regions.properties.getPropertiesBraille(name=self.name, role=self.role),
+		)
 
 
 class Notification(NVDAObject):
@@ -1071,7 +1074,9 @@ class Notification(NVDAObject):
 			return
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		# Ideally, we wouldn't use getPropertiesBraille directly.
-		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
+		braille.handler.message(
+			braille.regions.properties.getPropertiesBraille(name=self.name, role=self.role),
+		)
 
 	event_show = event_alert
 

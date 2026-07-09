@@ -37,6 +37,7 @@ from treeInterceptorHandler import (
 	TreeInterceptor,
 )
 import braille
+import braille.regions.properties
 from utils.security import _isObjectBelowLockScreen
 import vision
 import globalPluginHandler
@@ -1333,7 +1334,7 @@ class NVDAObject(
 					self.reportFocus()
 					# Display results as flash messages.
 					braille.handler.message(
-						braille.getPropertiesBraille(
+						braille.regions.properties.getPropertiesBraille(
 							name=self.name,
 							role=self.role,
 							positionInfo=self.positionInfo,
