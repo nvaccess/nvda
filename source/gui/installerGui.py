@@ -106,7 +106,7 @@ def _restartWindows() -> bool:
 	# Shut down the system and force all applications to close.
 	if (
 		ExitWindowsEx(
-			EWX.RESTARTAPPS,
+			EWX.REBOOT | EWX.RESTARTAPPS,
 			SHTDN_REASON.MAJOR_APPLICATION | SHTDN_REASON.MINOR_INSTALLATION | SHTDN_REASON.FLAG_PLANNED,
 		)
 		== 0
