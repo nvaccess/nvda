@@ -256,7 +256,6 @@ The setting is disabled by default. (#20013, @LeonarddeR)
   * In particular, Whole word entries no longer incorrectly match inside larger words when those words contain combining marks.
 * Fixed a case which could cause NVDA to freeze while reading math in braille. (#20319, @AAClause)
 * NVDA no longer fails to load sapi4 voices that do not support pitch, rate or volume. (#20302)
-* The SAPI5 synthesizer driver no longer completely fails to load if one of the voices is invalid or corrupt. (#20128)
 
 ### Changes for Developers
 
