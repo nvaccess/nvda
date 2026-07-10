@@ -1400,7 +1400,7 @@ Braille Reading Gestures {BrailleReadingGestures}
 
 | Name | Key | Description |
 |---|---|---|
-| braille mode | NVDA+alt+t | Allows cycling between available braille modes: "follow cursors" and "display speech output"|
+| Toggles braille mode | `NVDA+alt+t` | Allows cycling between available braille modes: "follow cursors" and "display speech output"|
 | Tether braille | NVDA+control+t | This option allows you to choose whether the braille display will follow the system focus / caret, the navigator object / review cursor, or both |
 | Toggle automatic scroll | none | Scrolls the display to present information which is larger than will fit on the display at once.  Press again to pause scrolling |
 | Increase automatic scroll rate | none | Makes automatic scrolling faster (when enabled) |
