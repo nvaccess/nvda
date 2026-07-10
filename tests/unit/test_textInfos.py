@@ -1,9 +1,7 @@
-# -*- coding: UTF-8 -*-
-# tests/unit/test_textInfos.py
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2018 NV Access Limited, Babbage B.V.
+# Copyright (C) 2018-2026 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Unit tests for the textInfos module, its submodules and classes."""
 
@@ -21,27 +19,28 @@ from textUtils.segFlag import WordSegFlag
 # Distinguishable offsets returned by the fake TextInfos below.
 _LINE_OFFSETS = (5, 10)
 _SENTENCE_OFFSETS = (15, 20)
+_PARAGRAPH_OFFSETS = (25, 30)
 
 
-class _SentenceCapableTextInfo(BasicTextInfo):
-	"""A fake offsets TextInfo which supports both line and sentence units."""
+class _LineOnlyTextInfo(BasicTextInfo):
+	"""A fake offsets TextInfo whose sentence and paragraph support is not implemented."""
 
 	def _getLineOffsets(self, offset):
 		return _LINE_OFFSETS
+
+
+class _MultiUnitTextInfo(_LineOnlyTextInfo):
+	"""A fake offsets TextInfo which supports line, sentence and paragraph units."""
 
 	def _getSentenceOffsets(self, offset):
 		return _SENTENCE_OFFSETS
 
-
-class _LineOnlyTextInfo(BasicTextInfo):
-	"""A fake offsets TextInfo whose sentence support is not implemented."""
-
-	def _getLineOffsets(self, offset):
-		return _LINE_OFFSETS
+	def _getParagraphOffsets(self, offset):
+		return _PARAGRAPH_OFFSETS
 
 
-class _SentenceCapableProvider(BasicTextProvider):
-	TextInfo = _SentenceCapableTextInfo
+class _MultiUnitProvider(BasicTextProvider):
+	TextInfo = _MultiUnitTextInfo
 
 
 class _LineOnlyProvider(BasicTextProvider):
@@ -50,8 +49,8 @@ class _LineOnlyProvider(BasicTextProvider):
 
 class TestReadingChunkOffsets(unittest.TestCase):
 	"""Tests for OffsetsTextInfo._getReadingChunkOffsets honouring the
-	`sayAllReadingUnit` feature flag, falling back to line where sentence
-	is unsupported."""
+	`sayAllReadingUnit` feature flag, falling back to line where the
+	configured unit is unsupported."""
 
 	def setUp(self):
 		self._origValue = config.conf["speech"]["sayAllReadingUnit"]
@@ -67,14 +66,22 @@ class TestReadingChunkOffsets(unittest.TestCase):
 
 	def test_sentenceFlag_sentenceSupported_returnsSentenceOffsets(self):
 		config.conf["speech"]["sayAllReadingUnit"] = "sentence"
-		self.assertEqual(self._getReadingChunkOffsets(_SentenceCapableProvider), _SENTENCE_OFFSETS)
+		self.assertEqual(self._getReadingChunkOffsets(_MultiUnitProvider), _SENTENCE_OFFSETS)
+
+	def test_paragraphFlag_paragraphSupported_returnsParagraphOffsets(self):
+		config.conf["speech"]["sayAllReadingUnit"] = "paragraph"
+		self.assertEqual(self._getReadingChunkOffsets(_MultiUnitProvider), _PARAGRAPH_OFFSETS)
 
 	def test_lineFlag_returnsLineOffsets(self):
 		config.conf["speech"]["sayAllReadingUnit"] = "line"
-		self.assertEqual(self._getReadingChunkOffsets(_SentenceCapableProvider), _LINE_OFFSETS)
+		self.assertEqual(self._getReadingChunkOffsets(_MultiUnitProvider), _LINE_OFFSETS)
 
 	def test_sentenceFlag_sentenceUnsupported_fallsBackToLineOffsets(self):
 		config.conf["speech"]["sayAllReadingUnit"] = "sentence"
+		self.assertEqual(self._getReadingChunkOffsets(_LineOnlyProvider), _LINE_OFFSETS)
+
+	def test_paragraphFlag_paragraphUnsupported_fallsBackToLineOffsets(self):
+		config.conf["speech"]["sayAllReadingUnit"] = "paragraph"
 		self.assertEqual(self._getReadingChunkOffsets(_LineOnlyProvider), _LINE_OFFSETS)
 
 

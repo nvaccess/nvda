@@ -568,12 +568,10 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 		return self._getLineOffsets(offset)
 
 	def _getReadingChunkOffsets(self, offset):
-		if self.unit_readingChunk == textInfos.UNIT_SENTENCE:
-			try:
-				return self._getSentenceOffsets(offset)
-			except NotImplementedError:
-				pass
-		return self._getLineOffsets(offset)
+		try:
+			return self._getUnitOffsets(self.unit_readingChunk, offset)
+		except NotImplementedError:
+			return self._getLineOffsets(offset)
 
 	def _getBoundingRectFromOffset(self, offset):
 		raise NotImplementedError

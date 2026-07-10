@@ -197,6 +197,7 @@ class SayAllReadingUnitFlag(DisplayStringEnum):
 
 	DEFAULT = enum.auto()
 	SENTENCE = enum.auto()
+	PARAGRAPH = enum.auto()
 	LINE = enum.auto()
 
 	@property
@@ -204,6 +205,8 @@ class SayAllReadingUnitFlag(DisplayStringEnum):
 		return {
 			# Translators: Label for an option in the Speech settings (say all reading unit).
 			self.SENTENCE: _("Prefer sentence"),
+			# Translators: Label for an option in the Speech settings (say all reading unit).
+			self.PARAGRAPH: _("Prefer paragraph"),
 			# Translators: Label for an option in the Speech settings (say all reading unit).
 			self.LINE: _("Always use line"),
 		}
