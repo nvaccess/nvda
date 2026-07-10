@@ -2626,7 +2626,7 @@ In order to use this feature, you first need to assign a gesture to toggle autom
 You may also assign gestures to increase or decrease the scroll rate.
 
 The minimum value (0%) will be 1 cell per second, and the maximum value (100%), 20 cells per second.
-For example, with the default value of 10 cells/sec, if a braille display with 40 cells is used, the number of seconds between automatic scrolls will be 4.
+For example, with the default value of 10 cells/sec, if a 40-cell braille display is used, the display will scroll automatically every 4 seconds.
 If the display had 20 cells, each line of braille would be shown for 2 seconds.
 
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
