@@ -1398,7 +1398,6 @@ While reading, automatic braille scrolling will stop when any of the following h
 
 Braille Reading Gestures {BrailleReadingGestures}
 
-
 | Name | Key | Description |
 |---|---|---|
 | braille mode | NVDA+alt+t | Allows cycling between available braille modes: "follow cursors" and "display speech output"|
