@@ -3468,6 +3468,7 @@ You can configure reporting of:
   * Page numbers
   * Line numbers
   * Line indentation reporting [(Off, Speech, Tones, Both Speech and Tones)](#DocumentFormattingSettingsLineIndentation)
+  * Indent tone duration (ms)
   * Ignore blank lines for line indentation reporting
   * Paragraph indentation (e.g. hanging indent, first line indent)
   * Line spacing (single, double, etc.)
@@ -3546,6 +3547,12 @@ The tone will increase in pitch every space, and for a tab, it will increase in 
 
 If you tick the "Ignore blank lines for line indentation reporting" checkbox, then indentation changes won't be reported for blank lines.
 This may be useful when reading a document where blank lines are used to separate indented blocks of text, such as in programming source code.
+
+##### Indent tone duration {#IndentToneDuration}
+
+This option allows you to configure the duration of indentation tones when the "Tones" or "Both Speech and Tones" option is selected in the ["Report line indentation with"](#DocumentFormattingSettingsLineIndentation) combo box.
+The value can range from 10 ms to 2000 ms.
+The default is 40 ms.
 
 #### Document Navigation {#DocumentNavigation}
 
@@ -4175,16 +4182,6 @@ While it improves performance and prevents some console output from being spelle
 This feature is available and enabled by default on Windows 10 versions 1607 and later when UI Automation is unavailable or disabled.
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
 In untrusted environments, you may temporarily disable [speak typed characters](#KeyboardSettingsSpeakTypedCharacters) and [speak typed words](#KeyboardSettingsSpeakTypedWords) when entering passwords.
-
-##### Beep for skipped lines {#AdvancedSettingsBeepForSkippedLines}
-
-This setting controls whether NVDA plays a short beep when too many new lines arrive before they can all be reported.
-The beep indicates that some lines were skipped, and becomes slightly longer as more lines are skipped.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-| Options | Disabled, Enabled |
-| Default | Enabled |
 
 ##### Diff algorithm {#DiffAlgo}
 
@@ -5404,12 +5401,16 @@ Please see the display's documentation for descriptions of where these keys can 
 
 <!-- KC:endInclude -->
 
-#### Key assignments for Brailliant BI 32, BI 40 and B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
+#### Key assignments for Brailliant BI 32, BI 40, B 80, BI 20X and BI 40X {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
 | Name |Key|
 |---|---|
+| Move braille display to previous line | c1 |
+| Scroll braille display back | c2 |
+| Move braille display to next line | c3 |
+| Scroll braille display forward | c5 |
 |NVDA Menu |c1+c3+c4+c5 (command n)|
 |windows+d key (minimize all applications) |c1+c4+c5 (command d)|
 |Say all |c1+c2+c3+c4+c5+c6|

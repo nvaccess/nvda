@@ -1703,6 +1703,8 @@ class NMHDR(Structure):
 class EWX(IntFlag):
 	"""The shutdown type requested by a call to ExitWindowsEx."""
 
+	REBOOT = 0x00000002
+	"""EWX_REBOOT: Shuts down and then restarts the system."""
 	RESTARTAPPS = 0x00000040
 	"""EWX_RESTARTAPPS: Shuts down and restarts the system, as well as any applications that have been registered for restart using the RegisterApplicationRestart function."""
 
