@@ -71,6 +71,7 @@ If NV Access does not have time or the ability to fix a serious issue with a new
 ### API breaking releases
 
 * API breaking changes must be proposed and accepted before the first 20XX.1 alpha is released.
+They should be added to the 20XX.1 milestone and labeled `triaged`, `release/blocking-beta`, `release/blocking`.
 * API breaking releases should contain bug fixes and developer facing changes only.
 
 API breaking releases come with too much risk and major technical changes.
