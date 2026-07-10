@@ -252,7 +252,7 @@ class OldProtocolMixin(object):
 		self._display.sendPacket(HT_PKT_BRAILLE, bytes(cells))
 
 
-class AtcMixin(object):
+class AtcMixin:
 	"""Support for displays with Active Tactile Control (ATC)"""
 
 	READING_POSITION_PACKET_LENGTH = 2
