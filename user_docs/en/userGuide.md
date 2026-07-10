@@ -1384,7 +1384,7 @@ Where text is longer than will fit on the display, panning or other keys on the 
 When using this feature, the braille display scrolls to present information which is more than will fit on the display at once.
 The feature is disabled and a gesture to start braille scrolling is undefined by default.
 To use automatic braille scrolling, a gesture needs to be set in NVDA's [input gestures](#InputGestures) before it can be used.
-Gesture can also be set to speed up or slow down the rate of automatic scrolling.
+Gestures can also be set to speed up or slow down the rate of automatic scrolling.
 
 While braille is scrolling, you can still use the scroll back command to read previous contents again, and scroll forward, for example, to skip a blank line, or if the line being read is too short.
 
