@@ -48,7 +48,24 @@ class FindDialog(
 
 	shouldSuspendConfigProfileTriggers = True
 
-	def __init__(self, parent, cursorManager, text, caseSensitivity, reverse=False):
+	def __init__(
+		self,
+		parent: wx.Window,
+		cursorManager: "CursorManager",
+		text: str,
+		caseSensitivity: bool,
+		reverse: bool = False,
+		searchEntries: list[str] | None = None,
+	):
+		"""
+		:param parent: The parent window for this dialog.
+		:param cursorManager: The cursor manager to perform the search in.
+		:param text: The initial text of the search field.
+		:param caseSensitivity: The initial state of the case sensitivity check box.
+		:param reverse: Whether to search backwards from the caret.
+		:param searchEntries: Previously searched terms to offer in the search field,
+			most-recent first. Only used when the search history setting is enabled.
+		"""
 		# Translators: Title of a dialog to find text.
 		super().__init__(parent, title=_("Find"))
 
@@ -59,11 +76,11 @@ class FindDialog(
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		# Translators: Dialog text for NvDA's find command.
 		findLabelText = _("Type the text you wish to find")
-		if bool(config.conf["virtualBuffers"]["findHistory"]):
+		if config.conf["virtualBuffers"]["findHistory"]:
 			self.findTextField = sHelper.addLabeledControl(
 				findLabelText,
 				wx.ComboBox,
-				choices=cursorManager._searchEntries,
+				choices=searchEntries or [],
 				value=text,
 				style=wx.CB_DROPDOWN,
 			)
@@ -130,12 +147,18 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 
 	@classmethod
 	def _updateSearchHistory(cls, text: str) -> None:
+		"""Add a search term to the front of the shared search history.
+
+		:param text: The term that was just searched for.
+			An empty string is ignored.
+		"""
 		if not text:
 			return
 		# wxComboBox on Windows cannot hold two entries differing only in case,
 		# so dedup case-insensitively and keep the most recently typed casing.
+		foldedText = text.casefold()
 		for index, entry in enumerate(cls._searchEntries):
-			if entry.casefold() == text.casefold():
+			if entry.casefold() == foldedText:
 				del cls._searchEntries[index]
 				break
 		cls._searchEntries.insert(0, text)
@@ -244,14 +267,21 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 			)
 		CursorManager._lastFindText = text
 		CursorManager._lastCaseSensitivity = caseSensitive
-		if bool(config.conf["virtualBuffers"]["findHistory"]):
+		if config.conf["virtualBuffers"]["findHistory"]:
 			CursorManager._updateSearchHistory(text)
 
 	def script_find(self, gesture, reverse=False):
 		# #8566: We need this to be a modal dialog, but it mustn't block this script.
 		def run():
 			gui.mainFrame.prePopup()
-			d = FindDialog(gui.mainFrame, self, self._lastFindText, self._lastCaseSensitivity, reverse)
+			d = FindDialog(
+				gui.mainFrame,
+				self,
+				self._lastFindText,
+				self._lastCaseSensitivity,
+				reverse,
+				self._searchEntries,
+			)
 			d.ShowModal()
 			gui.mainFrame.postPopup()
 
