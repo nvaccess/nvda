@@ -1570,9 +1570,9 @@ This means that, to type alt+2 with a Braille code that uses a number sign, you 
 | Name | Key | Description |
 |---|---|---|
 | Input via braille display | any dots | Inputs braille dots via the braille keyboard |
-| Erase last entered | `dot 7` | Erases the last entered braille cell or character |
-| Translate braille input | `dot 7 8` | Translates any braille input |
-| Translate and press enter | `dot 8` | Translates any braille input and presses the enter key |
+| Erase last entered | `dot7` | Erases the last entered braille cell or character |
+| Translate braille input | `dot7+dot8` | Translates any braille input |
+| Translate and press enter | `dot8` | Translates any braille input and presses the enter key |
 
 ## Vision {#Vision}
 
