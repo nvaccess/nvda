@@ -633,7 +633,7 @@ class MyBraille(
 ):
 	genericName = "myBraille"
 
-	def _get_name(self):
+	def _get_name(self) -> str:
 		return "{name} {cells}".format(name=self.genericName, cells=self.numCells)
 
 	def _get_keys(self) -> dict[int, str]:
