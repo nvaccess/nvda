@@ -4283,7 +4283,8 @@ The dialog also contains Add, Edit, Remove and Remove all buttons.
 
 To add a new rule to the dictionary, press the Add button, and fill in the fields in the dialog box that appears and then press Ok.
 You will then see your new rule in the list of rules.
-Alternatively, a context menu to perform actions on single rules (Edit and Remove) is also available.
+
+You can use a context menu to edit or remove rules.
 You can also use the `delete` key to remove a selected rule
 However, to make sure your rule is actually saved, make sure to press Ok to exit the dictionary dialog completely once you have finished adding/editing rules.
 
