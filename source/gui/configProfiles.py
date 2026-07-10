@@ -190,9 +190,9 @@ class ProfilesDialog(
 		if sel > 0:
 			name = self.profileNames[sel]
 			# Translators: Context menu item label to manually deactivate a profile.
-			labelDeactivate = _("Manual deactivate")
+			labelDeactivate = _("Deactivate")
 			# Translators: Context menu item label to manually activate a profile.
-			labelActivate = _("Manual activate")
+			labelActivate = _("Activate")
 			label = labelDeactivate if self.isProfileManual(name) else labelActivate
 			stateItem = menu.Append(wx.ID_ANY, label)
 			# Translators: Context menu item label to rename a profile
