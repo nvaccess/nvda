@@ -1396,7 +1396,7 @@ While reading, automatic braille scrolling will stop when any of the following h
 * The end of the document is reached
 * If the state of the lock or secure screen is changed (such as the computer being locked)
 
-Braille Reading Gestures {BrailleReadingGestures}
+#### Braille Reading Gestures {BrailleReadingGestures}
 
 | Name | Key | Description |
 |---|---|---|
