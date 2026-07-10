@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter, Wang Chong
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import ctypes
 from comtypes import BSTR, COMError
@@ -663,7 +663,6 @@ NVDAUnitsToITextDocumentUnits: dict[str, int] = {
 	textInfos.UNIT_SENTENCE: comInterfaces.tom.tomSentence,
 	textInfos.UNIT_PARAGRAPH: comInterfaces.tom.tomParagraph,
 	textInfos.UNIT_STORY: comInterfaces.tom.tomStory,
-	textInfos.UNIT_READINGCHUNK: comInterfaces.tom.tomLine,
 }
 
 
@@ -940,6 +939,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		return commandList
 
 	def expand(self, unit):
+		unit = self._resolveReadingChunkUnit(unit)
 		if unit in NVDAUnitsToITextDocumentUnits:
 			self._rangeObj.Expand(NVDAUnitsToITextDocumentUnits[unit])
 		else:
@@ -998,6 +998,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		return self._getTextAtRange(self._rangeObj)
 
 	def move(self, unit, direction, endPoint=None):
+		unit = self._resolveReadingChunkUnit(unit)
 		if unit in NVDAUnitsToITextDocumentUnits:
 			unit = NVDAUnitsToITextDocumentUnits[unit]
 		else:

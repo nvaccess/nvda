@@ -486,7 +486,6 @@ NVDAUnitsToWordUnits = {
 	textInfos.UNIT_ROW: wdRow,
 	textInfos.UNIT_COLUMN: wdColumn,
 	textInfos.UNIT_STORY: wdStory,
-	textInfos.UNIT_READINGCHUNK: wdSentence,
 }
 
 formatConfigFlagsMap = {
@@ -1289,6 +1288,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return field
 
 	def expand(self, unit):
+		unit = self._resolveReadingChunkUnit(unit)
 		if unit == textInfos.UNIT_LINE:
 			try:
 				if self._rangeObj.tables.count > 0 and self._rangeObj.cells.count == 0:
@@ -1363,6 +1363,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def _move(self, unit, direction, endPoint=None, _rangeObj=None):
 		if not _rangeObj:
 			_rangeObj = self._rangeObj
+		unit = self._resolveReadingChunkUnit(unit)
 		if unit in NVDAUnitsToWordUnits:
 			unit = NVDAUnitsToWordUnits[unit]
 		else:

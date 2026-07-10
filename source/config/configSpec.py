@@ -50,6 +50,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	excludedSpeechModes = int_list(default=list())
 	trimLeadingSilence = boolean(default=true)
 	useWASAPIForSAPI4 = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	sayAllReadingUnit = featureFlag(optionsEnum="SayAllReadingUnitFlag", behaviorOfDefault="sentence")
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)

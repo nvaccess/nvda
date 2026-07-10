@@ -20,6 +20,7 @@
   * In modes that show a continuation mark, when a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
   * The "At word or syllable boundaries" option uses hyphenation dictionaries to split long words at syllable boundaries when they do not fit on the display.
 * Magnifier: A new unassigned command has been added to move the mouse cursor to the center of the magnified view. (#20127, @CyrilleB79)
+* A new "Say all reads by" speech setting lets you choose whether say all reads by sentence, paragraph or line; say all now reads by sentence by default where supported. (#13420, #9179, #13971, @LeonarddeR)
 
 ### Changes
 
