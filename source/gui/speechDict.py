@@ -249,7 +249,7 @@ class DictionaryDialog(
 
 	def onContextMenu(self, evt: wx.ContextMenuEvent):
 		menu = wx.Menu()
-		# Translators: Context menu item label to edit an entri
+		# Translators: Context menu item label to edit an entry
 		editItem = menu.Append(wx.ID_ANY, _("&Edit"))
 		# Translators: Context menu item label to remove an entri
 		removeItem = menu.Append(wx.ID_ANY, _("&Remove"))
