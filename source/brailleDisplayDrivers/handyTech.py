@@ -263,7 +263,7 @@ class AtcMixin:
 	READ_SUPPRESS_AFTER_REFRESH_SECONDS = 0.25
 	READING_POSITION_MAX_JUMP_DURING_SETTLE = 2
 
-	def __init__(self, display):
+	def __init__(self, display: "BrailleDisplayDriver"):
 		super().__init__(display)
 		self._readingPosition: int | None = None
 		self._lastRefreshTime: float = 0.0
