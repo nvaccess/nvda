@@ -44,7 +44,6 @@
 * NVDA should no longer fail to navigate tables, read editable text fields or enable native app selection mode in Web browsers after a random period of time. (#16020)
 * NVDA should no longer cause File Explorer or other applications to crash when NVDA is exited or restarted. (#16207)
 * Focus is no longer silent on list items in Qt-based applications (such as Telegram Desktop) when the item exposes the UIA SelectionItem pattern without an associated action interface. (#20255, @rezabakhshilaktasaraei)
-* An OSError is no longer logged when focusing UnidentifiedEdit controls that do not expose the Text Object Model interface. (#19245, #20428, @Mubashir78)
 
 ### Changes for Developers
 
