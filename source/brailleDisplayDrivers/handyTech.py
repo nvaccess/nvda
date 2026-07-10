@@ -636,7 +636,7 @@ class MyBraille(
 	def _get_name(self):
 		return "{name} {cells}".format(name=self.genericName, cells=self.numCells)
 
-	def _get_keys(self) -> Dict[int, str]:
+	def _get_keys(self) -> dict[int, str]:
 		keys = super().keys
 		keys.update(
 			{
