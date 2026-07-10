@@ -312,23 +312,11 @@ extra-paths = [
 ]
 
 [tool.ty.src]
-include = [
-	"**/*.py",
-	"**/*.pyw",
-]
+# Appended to ty's default excludes (which already cover e.g. .git, .venv and __pycache__ at any depth).
+# Patterns are anchored to the project root.
 exclude = [
-	"sconstruct",
-	"*sconscript",
-	".git",
-	"__pycache__",
-	".tox",
 	"build",
 	"output",
-	".venv",
-	# When excluding concrete paths relative to a directory,
-	# not matching multiple folders by name e.g. `__pycache__`,
-	# paths are relative to the configuration file.
-	"./runtime-builders/synthDriverHost32/.venv",
 	"./include/*",
 	"./miscDeps",
 	"./source/louis",
@@ -344,7 +332,8 @@ output-format = "concise"
 [tool.ty.rules]
 # ty (Astral's type checker) runs in parallel with pyright during the transition.
 # To keep current code typing unchanged, rules that flood on the existing codebase
-# are set to "ignore", mirroring the leniency configured in [tool.pyright].
+# are set to "ignore" (ty's rule taxonomy differs from pyright's, so this is
+# analogous to, not a mirror of, the leniency configured in [tool.pyright]).
 unresolved-attribute = "ignore"  # 3813 errors
 not-subscriptable = "ignore"  # 1118 errors
 invalid-argument-type = "ignore"  # 953 errors
