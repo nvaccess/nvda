@@ -1417,7 +1417,7 @@ While reading, automatic braille scrolling will stop when any of the following h
 | Route to or activate braille object | none | Routes the cursor to or activates the object under this braille cell |
 | Scroll braille display back | none | Scrolls the braille display back |
 | Scroll braille display forward | none | Scrolls the braille display forward |
-| Toggle braille tethering | NVDA+ctrl+t | Toggle tethering of braille between the focus and the review position |
+| Toggle braille tethering | `NVDA+ctrl+t` | Toggle tethering of braille between the focus and the review position |
 | Toggle braille cursor | none | Toggle the braille cursor on and off |
 | Toggle braille context information | none | Toggle the way context information is presented in braille |
 | Toggle braille mode | NVDA+alt+t | Toggles braille mode |
