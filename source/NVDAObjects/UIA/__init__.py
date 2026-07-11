@@ -22,6 +22,7 @@ from ctypes.wintypes import POINT
 from comtypes import COMError
 import time
 import numbers
+import oleacc
 import colors
 import languageHandler
 import NVDAState
@@ -2565,6 +2566,28 @@ class TreeviewItem(UIA):
 
 
 class MenuItem(UIA):
+	_UIAStatesPropertyIDs: set[int] = UIA._UIAStatesPropertyIDs | {
+		UIAHandler.UIA_LegacyIAccessibleStatePropertyId,
+	}
+
+	def _get_states(self) -> set[controlTypes.State]:
+		states = super()._get_states()
+		if controlTypes.State.CHECKABLE in states:
+			return states
+		# #19335: WinForms ToolStripMenuItems can expose their checked state only through LegacyIAccessible.
+		legacyState = self._getUIACacheablePropertyValue_handlesCOMErrors(
+			UIAHandler.UIA_LegacyIAccessibleStatePropertyId,
+			True,
+		)
+		if isinstance(legacyState, int) and legacyState & oleacc.STATE_SYSTEM_CHECKED:
+			states.update(
+				{
+					controlTypes.State.CHECKABLE,
+					controlTypes.State.CHECKED,
+				},
+			)
+		return states
+
 	def _get_description(self):
 		name = self.name
 		description = super(MenuItem, self)._get_description()
