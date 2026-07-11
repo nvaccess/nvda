@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Joseph Lee, Derek Riemer, Davy Kager, Rob Meredith
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2006-2026 NV Access Limited, Joseph Lee, Derek Riemer, Davy Kager, Rob Meredith,
+# Marlon Brandão de Sousa, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
 Implementation of cursor managers.
@@ -33,6 +34,9 @@ import ui
 from textInfos import DocumentWithPageTurns
 from logHandler import log
 
+#: The maximum number of entries kept in the in-memory browse mode search history.
+MAX_SEARCH_HISTORY_ENTRIES = 20
+
 
 class FindDialog(
 	gui.contextHelp.ContextHelpMixin,
@@ -44,7 +48,24 @@ class FindDialog(
 
 	shouldSuspendConfigProfileTriggers = True
 
-	def __init__(self, parent, cursorManager, text, caseSensitivity, reverse=False):
+	def __init__(
+		self,
+		parent: wx.Window,
+		cursorManager: "CursorManager",
+		text: str,
+		caseSensitivity: bool,
+		reverse: bool = False,
+		searchEntries: list[str] | None = None,
+	):
+		"""
+		:param parent: The parent window for this dialog.
+		:param cursorManager: The cursor manager to perform the search in.
+		:param text: The initial text of the search field.
+		:param caseSensitivity: The initial state of the case sensitivity check box.
+		:param reverse: Whether to search backwards from the caret.
+		:param searchEntries: Previously searched terms to offer in the search field,
+			most-recent first. Only used when the search history setting is enabled.
+		"""
 		# Translators: Title of a dialog to find text.
 		super().__init__(parent, title=_("Find"))
 
@@ -55,7 +76,16 @@ class FindDialog(
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		# Translators: Dialog text for NvDA's find command.
 		findLabelText = _("Type the text you wish to find")
-		self.findTextField = sHelper.addLabeledControl(findLabelText, wx.TextCtrl, value=text)
+		if config.conf["virtualBuffers"]["findHistory"]:
+			self.findTextField = sHelper.addLabeledControl(
+				findLabelText,
+				wx.ComboBox,
+				choices=searchEntries or [],
+				value=text,
+				style=wx.CB_DROPDOWN,
+			)
+		else:
+			self.findTextField = sHelper.addLabeledControl(findLabelText, wx.TextCtrl, value=text)
 		# Translators: An option in find dialog to perform case-sensitive search.
 		self.caseSensitiveCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("Case &sensitive"))
 		self.caseSensitiveCheckBox.SetValue(caseSensitivity)
@@ -111,6 +141,28 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 
 	_lastFindText = ""
 	_lastCaseSensitivity = False
+
+	#: In-memory history of search terms, most-recent first. Cleared on restart.
+	_searchEntries: list[str] = []
+
+	@classmethod
+	def _updateSearchHistory(cls, text: str) -> None:
+		"""Add a search term to the front of the shared search history.
+
+		:param text: The term that was just searched for.
+			An empty string is ignored.
+		"""
+		if not text:
+			return
+		# wxComboBox on Windows cannot hold two entries differing only in case,
+		# so dedup case-insensitively and keep the most recently typed casing.
+		foldedText = text.casefold()
+		for index, entry in enumerate(cls._searchEntries):
+			if entry.casefold() == foldedText:
+				del cls._searchEntries[index]
+				break
+		cls._searchEntries.insert(0, text)
+		del cls._searchEntries[MAX_SEARCH_HISTORY_ENTRIES:]
 
 	def __init__(self, *args, **kwargs):
 		super(CursorManager, self).__init__(*args, **kwargs)
@@ -215,12 +267,21 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 			)
 		CursorManager._lastFindText = text
 		CursorManager._lastCaseSensitivity = caseSensitive
+		if config.conf["virtualBuffers"]["findHistory"]:
+			CursorManager._updateSearchHistory(text)
 
 	def script_find(self, gesture, reverse=False):
 		# #8566: We need this to be a modal dialog, but it mustn't block this script.
 		def run():
 			gui.mainFrame.prePopup()
-			d = FindDialog(gui.mainFrame, self, self._lastFindText, self._lastCaseSensitivity, reverse)
+			d = FindDialog(
+				gui.mainFrame,
+				self,
+				self._lastFindText,
+				self._lastCaseSensitivity,
+				reverse,
+				self._searchEntries,
+			)
 			d.ShowModal()
 			gui.mainFrame.postPopup()
 
