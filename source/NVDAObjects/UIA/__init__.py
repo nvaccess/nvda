@@ -2565,13 +2565,18 @@ class TreeviewItem(UIA):
 
 
 class MenuItem(UIA):
-	def _get_description(self):
+	def _get_description(self) -> str | None:
 		name = self.name
-		description = super(MenuItem, self)._get_description()
-		if description != name:
-			return description
-		else:
-			return None
+		description = super()._get_description()
+		if not description or description == name:
+			legacyDescription = self._getUIACacheablePropertyValue_handlesCOMErrors(
+				UIAHandler.UIA_LegacyIAccessibleDescriptionPropertyId,
+				ignoreDefault=True,
+				onError=None,
+			)
+			if isinstance(legacyDescription, str):
+				description = legacyDescription
+		return description if description != name else None
 
 
 class UIColumnHeader(UIA):
