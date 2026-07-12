@@ -18,6 +18,7 @@ from typing import (
 	Any,
 )
 import array
+import ctypes
 from ctypes.wintypes import POINT
 from comtypes import COMError
 import time
@@ -69,6 +70,7 @@ import braille
 import locationHelper
 import ui
 import winVersion
+from winBindings import user32
 import NVDAObjects
 
 
@@ -2701,7 +2703,13 @@ class ListItem(UIA):
 			and self.processID == focus.processID
 			and self.windowClassName == "ComboLBox"
 		):
-			focus.event_valueChange()
+			comboBoxInfo = user32.COMBOBOXINFO()
+			comboBoxInfo.cbSize = ctypes.sizeof(comboBoxInfo)
+			if (
+				user32.GetComboBoxInfo(focus.windowHandle, ctypes.byref(comboBoxInfo))
+				and comboBoxInfo.hwndList == self.windowHandle
+			):
+				focus.event_valueChange()
 
 	def event_stateChange(self):
 		if not self.hasFocus:
