@@ -6,7 +6,7 @@
 """Unit tests for NVDAObjects.UIA."""
 
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from NVDAObjects.UIA import MenuItem, UIA
 
@@ -15,6 +15,13 @@ class TestMenuItemDescription(unittest.TestCase):
 	def test_legacyDescriptionFallback(self) -> None:
 		menuItem = object.__new__(MenuItem)
 		menuItem.name = "Name"
+		menuItem.UIAElement = Mock(
+			cachedFrameworkID="WinForm",
+			cachedProviderDescription=(
+				"managed:System.Windows.Forms.ToolStripMenuItem+ToolStripMenuItemAccessibleObject, "
+				"System.Windows.Forms, Version=4.0.0.0"
+			),
+		)
 		notSupportedValue = object()
 		testCases = (
 			("UIA description", "Legacy description", "UIA description", False),
@@ -41,3 +48,35 @@ class TestMenuItemDescription(unittest.TestCase):
 					getLegacyDescription.assert_called_once()
 				else:
 					getLegacyDescription.assert_not_called()
+
+	def test_legacyDescriptionFallbackIsLimitedToNetFrameworkWinFormsToolStripMenuItems(self) -> None:
+		menuItem = object.__new__(MenuItem)
+		menuItem.name = "Name"
+		for frameworkID, providerDescription in (
+			(
+				"WPF",
+				"managed:System.Windows.Forms.ToolStripMenuItem+ToolStripMenuItemAccessibleObject, "
+				"System.Windows.Forms, Version=4.0.0.0",
+			),
+			(
+				"WinForm",
+				"managed:System.Windows.Forms.ToolStripMenuItem+ToolStripMenuItemAccessibleObject, "
+				"System.Windows.Forms, Version=8.0.0.0",
+			),
+			("WinForm", "System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0"),
+		):
+			with (
+				self.subTest(frameworkID=frameworkID, providerDescription=providerDescription),
+				patch.object(UIA, "_get_description", return_value=""),
+				patch.object(
+					MenuItem,
+					"_getUIACacheablePropertyValue_handlesCOMErrors",
+					return_value="Legacy description",
+				) as getLegacyDescription,
+			):
+				menuItem.UIAElement = Mock(
+					cachedFrameworkID=frameworkID,
+					cachedProviderDescription=providerDescription,
+				)
+				self.assertEqual("", menuItem._get_description())
+				getLegacyDescription.assert_not_called()

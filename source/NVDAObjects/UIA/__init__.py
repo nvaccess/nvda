@@ -2569,13 +2569,19 @@ class MenuItem(UIA):
 		name = self.name
 		description = super()._get_description()
 		if not description or description == name:
-			legacyDescription = self._getUIACacheablePropertyValue_handlesCOMErrors(
-				UIAHandler.UIA_LegacyIAccessibleDescriptionPropertyId,
-				ignoreDefault=True,
-				onError=None,
-			)
-			if isinstance(legacyDescription, str):
-				description = legacyDescription
+			providerDescription = self.UIAElement.cachedProviderDescription or ""
+			if (
+				self.UIAElement.cachedFrameworkID == "WinForm"
+				and "System.Windows.Forms, Version=4.0.0.0" in providerDescription
+				and "ToolStripMenuItem" in providerDescription
+			):
+				legacyDescription = self._getUIACacheablePropertyValue_handlesCOMErrors(
+					UIAHandler.UIA_LegacyIAccessibleDescriptionPropertyId,
+					ignoreDefault=True,
+					onError=None,
+				)
+				if isinstance(legacyDescription, str):
+					description = legacyDescription
 		return description if description != name else None
 
 
