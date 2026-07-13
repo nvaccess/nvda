@@ -162,13 +162,13 @@ jobs:
           uses: actions/cache/restore@v5
           with:
             path: .
-            key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+            key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
             fail-on-cache-miss: true
         - name: Install Python
           uses: actions/setup-python@v6
           with:
-            python-version: ${{ matrix.pythonVersion }}
-            architecture: ${{ matrix.arch }}
+            python-version: ${{ env.defaultPythonVersion }}
+            architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
     - name: Static type analysis
@@ -220,13 +220,13 @@ jobs:
           uses: actions/cache/restore@v5
           with:
             path: .
-            key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+            key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
             fail-on-cache-miss: true
         - name: Install Python
           uses: actions/setup-python@v6
           with:
-            python-version: ${{ matrix.pythonVersion }}
-            architecture: ${{ matrix.arch }}
+            python-version: ${{ env.defaultPythonVersion }}
+            architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
     - name: Check comments for translators
@@ -252,13 +252,13 @@ jobs:
           uses: actions/cache/restore@v5
           with:
             path: .
-            key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+            key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
             fail-on-cache-miss: true
         - name: Install Python
           uses: actions/setup-python@v6
           with:
-            python-version: ${{ matrix.pythonVersion }}
-            architecture: ${{ matrix.arch }}
+            python-version: ${{ env.defaultPythonVersion }}
+            architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
     - name: License check
@@ -331,13 +331,13 @@ jobs:
           uses: actions/cache/restore@v5
           with:
             path: .
-            key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+            key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
             fail-on-cache-miss: true
         - name: Install Python
           uses: actions/setup-python@v6
           with:
-            python-version: ${{ matrix.pythonVersion }}
-            architecture: ${{ matrix.arch }}
+            python-version: ${{ env.defaultPythonVersion }}
+            architecture: ${{ env.defaultArch }}
         - name: Get makePot results
           uses: actions/download-artifact@v8
           with:
@@ -615,13 +615,13 @@ jobs:
           uses: actions/cache/restore@v5
           with:
             path: .
-            key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+            key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
             fail-on-cache-miss: true
         - name: Install Python
           uses: actions/setup-python@v6
           with:
-            python-version: ${{ matrix.pythonVersion }}
-            architecture: ${{ matrix.arch }}
+            python-version: ${{ env.defaultPythonVersion }}
+            architecture: ${{ env.defaultArch }}
         - name: Download and extract dump_syms
           shell: bash
           run: |
