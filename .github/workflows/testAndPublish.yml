@@ -502,12 +502,12 @@ jobs:
           with:
             python-version: ${{ matrix.pythonVersion }}
             architecture: ${{ matrix.arch }}
-        - name: Get NVDA launcher
-          id: getLauncher
-          uses: actions/download-artifact@v8
-          with:
-            name: NVDA launcher (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
-            path: output
+    - name: Get NVDA launcher
+      id: getLauncher
+      uses: actions/download-artifact@v8
+      with:
+        name: NVDA launcher (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
+        path: output
     - parallel:
         - name: Install the latest version of uv
           uses: astral-sh/setup-uv@v7
