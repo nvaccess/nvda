@@ -78,22 +78,32 @@ jobs:
       APIVersion: ${{ steps.releaseInfo.outputs.NVDA_API_VERSION }}
       APIBackCompat: ${{ steps.releaseInfo.outputs.NVDA_API_COMPAT_TO }}
     steps:
-    - name: Checkout NVDA
-      uses: actions/checkout@v7
-      with:
-        submodules: recursive
-    - name: Install Python
-      uses: actions/setup-python@v6
-      with:
-        python-version: ${{ matrix.pythonVersion }}
-        architecture: ${{ matrix.arch }}
-        update-environment: true
-    - name: Install Python (32 bit)
-      uses: actions/setup-python@v6
-      with:
-        python-version: ${{ matrix.pythonVersion }}
-        architecture: x86
-        update-environment: false
+    - parallel:
+        - name: Checkout NVDA
+          uses: actions/checkout@v7
+          with:
+            submodules: recursive
+        - name: Install signPath
+          env:
+            apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN || '' }}
+          if: ${{ env.apiSigningToken }}
+          shell: cmd
+          run: |
+            PowerShell -Command "Set-ExecutionPolicy Bypass"
+            PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
+            PowerShell -Command "Install-Module -Name SignPath -Force"
+        - name: Install Python
+          uses: actions/setup-python@v6
+          with:
+            python-version: ${{ matrix.pythonVersion }}
+            architecture: ${{ matrix.arch }}
+            update-environment: true
+        - name: Install Python (32 bit)
+          uses: actions/setup-python@v6
+          with:
+            python-version: ${{ matrix.pythonVersion }}
+            architecture: x86
+            update-environment: false
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
       with:
@@ -115,27 +125,19 @@ jobs:
       with:
         path: ${{ env.SCONS_CACHE_MSVC_CONFIG }}
         key: ${{ env.SCONS_CACHE_KEY }}
-    - name: Install signPath
-      env:
-        apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN || '' }}
-      if: ${{ env.apiSigningToken }}
-      shell: cmd
-      run: |
-        PowerShell -Command "Set-ExecutionPolicy Bypass"
-        PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
-        PowerShell -Command "Install-Module -Name SignPath -Force"
-    - name: Prepare source code
-      shell: cmd
-      run: scons source %sconsArgs% %sconsCores%
-    - name: Run synthDriverHost32 runtime builder with its own Python
-      shell: pwsh
-      env:
-        UV_PYTHON: ""          # clear setup-uv override
-        VIRTUAL_ENV: ""        # avoid inheriting outer venv
-      run: |
-        uv run --no-active --directory runtime-builders/synthDriverHost32 python setup-runtime.py --dest-dir ../../source/lib/x86/synthDriverHost-runtime --version "$env:version" --publisher "$env:scons_publisher"
-    - name: Prepare for tests
-      run: ci/scripts/tests/beforeTests.ps1
+    - parallel:
+        - name: Prepare source code
+          shell: cmd
+          run: scons source %sconsArgs% %sconsCores%
+        - name: Run synthDriverHost32 runtime builder with its own Python
+          shell: pwsh
+          env:
+            UV_PYTHON: ""          # clear setup-uv override
+            VIRTUAL_ENV: ""        # avoid inheriting outer venv
+          run: |
+            uv run --no-active --directory runtime-builders/synthDriverHost32 python setup-runtime.py --dest-dir ../../source/lib/x86/synthDriverHost-runtime --version "$env:version" --publisher "$env:scons_publisher"
+        - name: Prepare for tests
+          run: ci/scripts/tests/beforeTests.ps1
     - name: Cache scons build
       uses: actions/cache/save@v5
       with:
@@ -366,17 +368,18 @@ jobs:
       launcherArtifactId: ${{ steps.addJobSummary.outputs.artifactId }}
       launcherSha256: ${{ steps.addJobSummary.outputs.SHA256 }}
     steps:
-    - name: Checkout cached build
-      uses: actions/cache/restore@v5
-      with:
-        path: .
-        key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
-        fail-on-cache-miss: true
-    - name: Install Python
-      uses: actions/setup-python@v6
-      with:
-        python-version: ${{ matrix.pythonVersion }}
-        architecture: ${{ matrix.arch }}
+    - parallel:
+        - name: Checkout cached build
+          uses: actions/cache/restore@v5
+          with:
+            path: .
+            key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+            fail-on-cache-miss: true
+        - name: Install Python
+          uses: actions/setup-python@v6
+          with:
+            python-version: ${{ matrix.pythonVersion }}
+            architecture: ${{ matrix.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
       with:
@@ -387,25 +390,27 @@ jobs:
       run: ci/scripts/setSconsArgs.ps1
       env:
         apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN || '' }}
-    - name: Build scons docs targets
-      shell: cmd
-      run: scons %sconsDocsOutTargets% %sconsArgs% %sconsCores%
-    # Run launcher separately as we can't safely generate that in parallel to docs scons targets (#18867)
-    - name: Install signpath
-      env:
-        apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN || '' }}
-      if: ${{ env.apiSigningToken }}
-      shell: cmd
-      run: |
-        PowerShell -Command "Set-ExecutionPolicy Bypass"
-        PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
-        PowerShell -Command "Install-Module -Name SignPath -Force"
-    - name: Build NVDAController client
-      shell: cmd
-      run: scons client %sconsArgs% %sconsCores%
-    - name: Create NVDA launcher
-      shell: cmd
-      run: scons %sconsLauncherOutTargets% %sconsArgs%
+    - parallel:
+        - name: Build scons docs targets
+          shell: cmd
+          run: scons %sconsDocsOutTargets% %sconsArgs% %sconsCores%
+        # Run launcher separately as we can't safely generate that in parallel to docs scons targets (#18867)
+        - name: Install signpath
+          env:
+            apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN || '' }}
+          if: ${{ env.apiSigningToken }}
+          shell: cmd
+          run: |
+            PowerShell -Command "Set-ExecutionPolicy Bypass"
+            PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
+            PowerShell -Command "Install-Module -Name SignPath -Force"
+    - parallel:
+        - name: Build NVDAController client
+          shell: cmd
+          run: scons client %sconsArgs% %sconsCores%
+        - name: Create NVDA launcher
+          shell: cmd
+          run: scons %sconsLauncherOutTargets% %sconsArgs%
     - name: Upload launcher
       id: uploadLauncher
       uses: actions/upload-artifact@v7
