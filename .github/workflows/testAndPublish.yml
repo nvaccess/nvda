@@ -157,17 +157,18 @@ jobs:
     permissions:
       contents: read
     steps:
-    - name: Checkout cached build
-      uses: actions/cache/restore@v5
-      with:
-        path: .
-        key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
-        fail-on-cache-miss: true
-    - name: Install Python
-      uses: actions/setup-python@v6
-      with:
-        python-version: ${{ env.defaultPythonVersion }}
-        architecture: ${{ env.defaultArch }}
+    - parallel:
+        - name: Checkout cached build
+          uses: actions/cache/restore@v5
+          with:
+            path: .
+            key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+            fail-on-cache-miss: true
+        - name: Install Python
+          uses: actions/setup-python@v6
+          with:
+            python-version: ${{ matrix.pythonVersion }}
+            architecture: ${{ matrix.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
     - name: Static type analysis
@@ -214,17 +215,18 @@ jobs:
       contents: read
       actions: write
     steps:
-    - name: Checkout cached build
-      uses: actions/cache/restore@v5
-      with:
-        path: .
-        key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
-        fail-on-cache-miss: true
-    - name: Install Python
-      uses: actions/setup-python@v6
-      with:
-        python-version: ${{ env.defaultPythonVersion }}
-        architecture: ${{ env.defaultArch }}
+    - parallel:
+        - name: Checkout cached build
+          uses: actions/cache/restore@v5
+          with:
+            path: .
+            key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+            fail-on-cache-miss: true
+        - name: Install Python
+          uses: actions/setup-python@v6
+          with:
+            python-version: ${{ matrix.pythonVersion }}
+            architecture: ${{ matrix.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
     - name: Check comments for translators
@@ -245,17 +247,18 @@ jobs:
     permissions:
       contents: read
     steps:
-    - name: Checkout cached build
-      uses: actions/cache/restore@v5
-      with:
-        path: .
-        key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
-        fail-on-cache-miss: true
-    - name: Install Python
-      uses: actions/setup-python@v6
-      with:
-        python-version: ${{ env.defaultPythonVersion }}
-        architecture: ${{ env.defaultArch }}
+    - parallel:
+        - name: Checkout cached build
+          uses: actions/cache/restore@v5
+          with:
+            path: .
+            key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+            fail-on-cache-miss: true
+        - name: Install Python
+          uses: actions/setup-python@v6
+          with:
+            python-version: ${{ matrix.pythonVersion }}
+            architecture: ${{ matrix.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
     - name: License check
@@ -277,17 +280,18 @@ jobs:
     env:
       uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     steps:
-    - name: Checkout cached build
-      uses: actions/cache/restore@v5
-      with:
-        path: .
-        key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
-        fail-on-cache-miss: true
-    - name: Install Python
-      uses: actions/setup-python@v6
-      with:
-        python-version: ${{ matrix.pythonVersion }}
-        architecture: ${{ matrix.arch }}
+    - parallel:
+        - name: Checkout cached build
+          uses: actions/cache/restore@v5
+          with:
+            path: .
+            key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+            fail-on-cache-miss: true
+        - name: Install Python
+          uses: actions/setup-python@v6
+          with:
+            python-version: ${{ matrix.pythonVersion }}
+            architecture: ${{ matrix.arch }}
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
       with:
@@ -322,22 +326,23 @@ jobs:
     permissions:
       contents: read
     steps:
-    - name: Checkout cached build
-      uses: actions/cache/restore@v5
-      with:
-        path: .
-        key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
-        fail-on-cache-miss: true
-    - name: Get makePot results
-      uses: actions/download-artifact@v8
-      with:
-        name: makePot results
-        path: output
-    - name: Install Python
-      uses: actions/setup-python@v6
-      with:
-        python-version: ${{ env.defaultPythonVersion }}
-        architecture: ${{ env.defaultArch }}
+    - parallel:
+        - name: Checkout cached build
+          uses: actions/cache/restore@v5
+          with:
+            path: .
+            key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+            fail-on-cache-miss: true
+        - name: Install Python
+          uses: actions/setup-python@v6
+          with:
+            python-version: ${{ matrix.pythonVersion }}
+            architecture: ${{ matrix.arch }}
+        - name: Get makePot results
+          uses: actions/download-artifact@v8
+          with:
+            name: makePot results
+            path: output
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
     - name: Upload translations to Crowdin
@@ -485,34 +490,36 @@ jobs:
     env:
       uv-arch: ${{ matrix.arch == 'x64' && 'x86_64' || 'x86' }}
     steps:
-    - name: Checkout cached build
-      uses: actions/cache/restore@v5
-      with:
-        path: .
-        key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
-        fail-on-cache-miss: true
-    - name: Install Python
-      uses: actions/setup-python@v6
-      with:
-        python-version: ${{ matrix.pythonVersion }}
-        architecture: ${{ matrix.arch }}
-    - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v7
-      with:
-        python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
-    - name: Get NVDA launcher
-      id: getLauncher
-      uses: actions/download-artifact@v8
-      with:
-        name: NVDA launcher (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
-        path: output
-    - name: Install NVDA
-      run: ci/scripts/installNVDA.ps1
-      env:
-        nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
-    - name: Download and install Visual Studio Code
-      if: ${{ matrix.testSuite == 'vscode' }}
-      run: choco install -y vscode
+    - parallel:
+        - name: Checkout cached build
+          uses: actions/cache/restore@v5
+          with:
+            path: .
+            key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+            fail-on-cache-miss: true
+        - name: Install Python
+          uses: actions/setup-python@v6
+          with:
+            python-version: ${{ matrix.pythonVersion }}
+            architecture: ${{ matrix.arch }}
+        - name: Get NVDA launcher
+          id: getLauncher
+          uses: actions/download-artifact@v8
+          with:
+            name: NVDA launcher (${{ matrix.pythonVersion }}, ${{ matrix.arch }})
+            path: output
+    - parallel:
+        - name: Install the latest version of uv
+          uses: astral-sh/setup-uv@v7
+          with:
+            python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
+        - name: Install NVDA
+          run: ci/scripts/installNVDA.ps1
+          env:
+            nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
+        - name: Download and install Visual Studio Code
+          if: ${{ matrix.testSuite == 'vscode' }}
+          run: choco install -y vscode
     - name: Run system tests
       run: ci/scripts/tests/systemTests.ps1
       env:
@@ -553,15 +560,16 @@ jobs:
       # So we only set the output variables for the default architecture.
       symbolsArtifactId: ${{ steps.defaultArtifact.outputs.artifactId }}
     steps:
-    - name: Checkout cached build
-      uses: actions/cache/restore@v5
-      with:
-        path: .
-        key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
-        fail-on-cache-miss: true
-    - name: Install Windows SDK
-      # Installs symstore.exe to expected location.
-      run: choco install -y windows-sdk-10.1
+    - parallel:
+        - name: Checkout cached build
+          uses: actions/cache/restore@v5
+          with:
+            path: .
+            key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+            fail-on-cache-miss: true
+        - name: Install Windows SDK
+          # Installs symstore.exe to expected location.
+          run: choco install -y windows-sdk-10.1
     - name: Create build symbols
       env:
         symStore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
@@ -602,22 +610,23 @@ jobs:
     permissions:
       contents: read
     steps:
-    - name: Checkout cached build
-      uses: actions/cache/restore@v5
-      with:
-        path: .
-        key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
-        fail-on-cache-miss: true
-    - name: Install Python
-      uses: actions/setup-python@v6
-      with:
-        python-version: ${{ env.defaultPythonVersion }}
-        architecture: ${{ env.defaultArch }}
-    - name: Download and extract dump_syms
-      shell: bash
-      run: |
-        curl -L -o dump_syms.zip https://github.com/mozilla/dump_syms/releases/download/v2.3.5/dump_syms-x86_64-pc-windows-msvc.zip
-        7z x dump_syms.zip dump_syms.exe
+    - parallel:
+        - name: Checkout cached build
+          uses: actions/cache/restore@v5
+          with:
+            path: .
+            key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
+            fail-on-cache-miss: true
+        - name: Install Python
+          uses: actions/setup-python@v6
+          with:
+            python-version: ${{ matrix.pythonVersion }}
+            architecture: ${{ matrix.arch }}
+        - name: Download and extract dump_syms
+          shell: bash
+          run: |
+            curl -L -o dump_syms.zip https://github.com/mozilla/dump_syms/releases/download/v2.3.5/dump_syms-x86_64-pc-windows-msvc.zip
+            7z x dump_syms.zip dump_syms.exe
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
     - name: Upload symbols to Mozilla
