@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-30 03:45+0000\n"
-"PO-Revision-Date: 2026-07-06 02:43\n"
+"POT-Creation-Date: 2026-07-09 05:16+0000\n"
+"PO-Revision-Date: 2026-07-13 02:16\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -2387,8 +2387,8 @@ msgstr "Some operations on add-ons failed. See the log file for more details.\n"
 #: gui\configProfiles.py:293 gui\configProfiles.py:337
 #: gui\configProfiles.py:515 gui\configProfiles.py:530
 #: gui\configProfiles.py:541 gui\inputGestures.py:808 gui\inputGestures.py:822
-#: gui\installerGui.py:126 gui\installerGui.py:210 gui\installerGui.py:701
-#: gui\installerGui.py:718 gui\installerGui.py:790 gui\logViewer.py:112
+#: gui\installerGui.py:181 gui\installerGui.py:265 gui\installerGui.py:759
+#: gui\installerGui.py:776 gui\installerGui.py:848 gui\logViewer.py:112
 #: gui\logViewer.py:143 gui\message.py:160 gui\settingsDialogs.py:1044
 #: gui\settingsDialogs.py:6009 gui\settingsDialogs.py:6875
 #: gui\startupDialogs.py:127 _remoteClient\dialogs.py:67
@@ -2682,7 +2682,7 @@ msgstr "Інструменти"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: a touch screen gesture
-#: globalCommands.py:113 touchHandler.py:291
+#: globalCommands.py:113 touchHandler.py:296
 msgid "Touch screen"
 msgstr "Сенсорний екран"
 
@@ -4876,310 +4876,310 @@ msgid "Cycles between available touch modes"
 msgstr "Перемикає між доступними режимами дотику"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-#: globalCommands.py:4639
+#: globalCommands.py:4640
 msgid "Reports the object and content directly under your finger"
 msgstr "Повідомляє про об’єкт чи інший вміст безпосередньо під пальцем"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-#: globalCommands.py:4649
+#: globalCommands.py:4650
 msgid "Reports the new object or content under your finger if different to where your finger was last"
 msgstr "Повідомляє про новий об’єкт чи вміст під пальцем, якщо він відрізняється від того, на якому ваш палець був останній раз"
 
 #. Translators: Input help mode message for touch right click command.
-#: globalCommands.py:4675
+#: globalCommands.py:4676
 msgid "Clicks the right mouse button at the current touch position. This is generally used to activate a context menu."
 msgstr "Виконує клацання правою кнопкою миші у поточній позиції сенсора. Зазвичай це використовується для активації контекстного меню."
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-#: globalCommands.py:4699
+#: globalCommands.py:4700
 msgid "object has no location"
 msgstr "об’єкт не має розташування"
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
-#: globalCommands.py:4711
+#: globalCommands.py:4712
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Викликає діалог конфігураційних профілів NVDA"
 
 #. Translators: Input help mode message for toggle configuration profile triggers command.
-#: globalCommands.py:4721
+#: globalCommands.py:4722
 msgid "Toggles disabling of all configuration profile triggers. Disabling remains in effect until NVDA is restarted"
 msgstr "Дозволяє вимикати всі автоперемикання конфігураційних профілів. Відключення діятиме до перезавантаження NVDA"
 
 #. Translators: The message announced when temporarily disabling all configuration profile triggers.
-#: globalCommands.py:4730
+#: globalCommands.py:4731
 msgid "Configuration profile triggers disabled"
 msgstr "Автоперемикання конфігураційних профілів вимкнено"
 
 #. Translators: The message announced when re-enabling all configuration profile triggers.
-#: globalCommands.py:4738
+#: globalCommands.py:4739
 msgid "Configuration profile triggers enabled"
 msgstr "Автоперемикання конфігураційних профілів увімкнено"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4743
+#: globalCommands.py:4744
 msgid "Begins interaction with math content"
 msgstr "Починає взаємодію з математичним вмістом"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
-#: globalCommands.py:4761
+#: globalCommands.py:4762
 msgid "Not math"
 msgstr "Не математичний вміст"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4767
+#: globalCommands.py:4768
 msgid "Recognizes the content of the current navigator object with Windows OCR"
 msgstr "Розпізнає вміст у позиції об'єктного навігатора за допомогою Windows OCR"
 
 #. Translators: Reported when Windows OCR is not available.
-#: globalCommands.py:4773 globalCommands.py:4794 globalCommands.py:4815
+#: globalCommands.py:4774 globalCommands.py:4795 globalCommands.py:4816
 msgid "Windows OCR not available"
 msgstr "Windows OCR недоступний"
 
 #. Translators: Reported when screen curtain is enabled.
-#: globalCommands.py:4780
+#: globalCommands.py:4781
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr "Будь ласка, вимкніть екранну завісу перед використанням Windows OCR."
 
 #. Translators: Describes a command.
-#: globalCommands.py:4789
+#: globalCommands.py:4790
 msgid "Cycles through the available languages for Windows OCR"
 msgstr "Циклічно перемикає доступні мови для Windows OCR"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4810
+#: globalCommands.py:4811
 msgid "Toggle periodical refresh of a Windows OCR result"
 msgstr "Перемикає періодичне оновлення результату розпізнавання у Windows OCR"
 
 #. Translators: The message announced when toggling automatic refresh of recognized content
-#: globalCommands.py:4821
+#: globalCommands.py:4822
 msgid "Automatic refresh enabled"
 msgstr "Автоматичне оновлення увімкнено"
 
 #. Translators: The message announced when toggling automatic refresh of recognized content
-#: globalCommands.py:4823
+#: globalCommands.py:4824
 msgid "Automatic refresh disabled"
 msgstr "Автоматичне оновлення вимкнено"
 
 #. Translators: Input help mode message for toggle report CLDR command.
-#: globalCommands.py:4833
+#: globalCommands.py:4834
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
 msgstr "Вмикає й вимикає читання емодзі"
 
 #. Translators: presented when the report CLDR is toggled.
-#: globalCommands.py:4842
+#: globalCommands.py:4843
 msgid "report CLDR characters off"
 msgstr "читати емодзі вимкнено"
 
 #. Translators: presented when the report CLDR is toggled.
-#: globalCommands.py:4846
+#: globalCommands.py:4847
 msgid "report CLDR characters on"
 msgstr "читати емодзі увімкнено"
 
 #. Translators: Input help mode message for speech Unicode normalization command.
-#: globalCommands.py:4854
+#: globalCommands.py:4855
 msgid "Cycle through the speech Unicode normalization states"
 msgstr "Перемикає стани нормалізації юнікоду для мовлення"
 
 #. Translators: Used when reporting speech Unicode normalization state
 #. (default behavior).
-#: globalCommands.py:4869
+#: globalCommands.py:4870
 #, python-brace-format
 msgid "Speech Unicode normalization default ({default})"
 msgstr "Нормалізація юнікоду для мовлення стандартно ({default})"
 
 #. Translators: Used when reporting speech Unicode normalization state
 #. (disabled or enabled).
-#: globalCommands.py:4875
+#: globalCommands.py:4876
 #, python-brace-format
 msgid "Speech Unicode normalization {state}"
 msgstr "Нормалізацію юнікоду для мовлення {state}"
 
 #. Translators: Describes a command.
-#: globalCommands.py:4887
+#: globalCommands.py:4888
 msgid "Toggles the state of the screen curtain, enable to make the screen black or disable to show the contents of the screen. Pressed once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it"
 msgstr "Вмикає екранну завісу, роблячи екран чорним, або вимикає для відображення вмісту екрана. Натиснувши один раз, екранна завіса працюватиме до перезапуску NVDA. Натиснувши двічі, екранна завіса працюватиме, допоки ви її не вимкнете"
 
 #. Translators: Reported when the screen curtain is not available.
-#: globalCommands.py:4900 globalCommands.py:5029
+#: globalCommands.py:4901 globalCommands.py:5030
 msgid "Screen curtain not available"
 msgstr "Екранна завіса недоступна"
 
 #. Translators: Reported when the screen curtain is disabled.
-#: globalCommands.py:4946 globalCommands.py:5044
+#: globalCommands.py:4947 globalCommands.py:5045
 msgid "Screen curtain disabled"
 msgstr "Екранну завісу вимкнено"
 
 #. Translators: Reported when the screen curtain could not be enabled.
-#: globalCommands.py:4953
+#: globalCommands.py:4954
 msgid "Could not disable screen curtain"
 msgstr "Не вдалося вимкнути екранну завісу"
 
 #. Translators: Reported when the screen curtain is enabled.
-#: globalCommands.py:4968 globalCommands.py:5041
+#: globalCommands.py:4969 globalCommands.py:5042
 msgid "Screen curtain enabled"
 msgstr "Екранну завісу увімкнено"
 
 #. Translators: Reported when the screen curtain is temporarily enabled.
-#: globalCommands.py:4971 globalCommands.py:5036
+#: globalCommands.py:4972 globalCommands.py:5037
 msgid "Temporary Screen curtain, enabled until next restart"
 msgstr "Тимчасова екранна завіса працюватиме до наступного перезапуску"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5019
+#: globalCommands.py:5020
 msgid "Reports the state of the screen curtain."
 msgstr "Повідомляє стан екранної завіси."
 
 #. Translators: Describes a command.
-#: globalCommands.py:5049
+#: globalCommands.py:5050
 msgid "Toggle the magnifier on and off"
 msgstr "Увімкнути або вимкнути лупу"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5063
+#: globalCommands.py:5064
 msgid "Increase the magnification level"
 msgstr "Підвищити рівень збільшення"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5077
+#: globalCommands.py:5078
 msgid "Decrease the magnification level"
 msgstr "Знизити рівень збільшення"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5091
+#: globalCommands.py:5092
 msgid "Pan the magnified view left"
 msgstr "Панорамувати збільшений перегляд ліворуч"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5105
+#: globalCommands.py:5106
 msgid "Pan the magnified view right"
 msgstr "Панорамувати збільшений перегляд праворуч"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5119
+#: globalCommands.py:5120
 msgid "Pan the magnified view up"
 msgstr "Панорамувати збільшений перегляд вгору"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5133
+#: globalCommands.py:5134
 msgid "Pan the magnified view down"
 msgstr "Панорамувати збільшений перегляд вниз"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5147
+#: globalCommands.py:5148
 msgid "Pan the magnified view to left edge"
 msgstr "Панорамувати збільшений перегляд до лівого краю екрана"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5161
+#: globalCommands.py:5162
 msgid "Pan the magnified view to right edge"
 msgstr "Панорамувати збільшений перегляд до правого краю екрана"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5175
+#: globalCommands.py:5176
 msgid "Pan the magnified view to top edge"
 msgstr "Панорамувати збільшений перегляд до верхнього краю екрана"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5189
+#: globalCommands.py:5190
 msgid "Pan the magnified view to bottom edge"
 msgstr "Панорамувати збільшений перегляд до нижнього краю екрана"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5203
+#: globalCommands.py:5204
 msgid "Cycle through the color filters"
 msgstr "Перемикає між фільтрами кольорів"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5217
+#: globalCommands.py:5218
 msgid "Toggle magnifier mouse tracking"
 msgstr "Перемкнути відстеження миші за допомогою лупи"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5230
+#: globalCommands.py:5231
 msgid "Toggle magnifier system focus tracking"
 msgstr "Перемкнути відстеження системного фокуса за допомогою лупи"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5243
+#: globalCommands.py:5244
 msgid "Toggle magnifier review cursor tracking"
 msgstr "Перемкнути відстеження переглядового курсора за допомогою лупи"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5256
+#: globalCommands.py:5257
 msgid "Toggle magnifier navigator object tracking"
 msgstr "Перемкнути відстеження об’єкта навігатора за допомогою екранної лупи"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5269
+#: globalCommands.py:5270
 msgid "Toggle all magnifier tracking settings"
 msgstr "Перемкнути всі налаштування відстеження за допомогою лупи"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5282
+#: globalCommands.py:5283
 msgid "Cycle through tracking modes"
 msgstr "Перемикає між режимами відстеження"
 
 #. Translators: Describe a command.
-#: globalCommands.py:5295
+#: globalCommands.py:5296
 msgid "Temporarily show an overview of the entire screen"
 msgstr "Тимчасово показати огляд усього екрана"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5309
+#: globalCommands.py:5310
 msgid "Cycles through paragraph navigation styles"
 msgstr "Циклічно перемикає стилі навігації по абзацах"
 
 #. Translators: Describes a command.
-#: globalCommands.py:5323
+#: globalCommands.py:5324
 msgid "Cycles through sound split modes"
 msgstr "Переходить між режимами розділення звуку"
 
 #. Translators: Input help mode message for report language for caret command.
-#: globalCommands.py:5335
+#: globalCommands.py:5336
 msgctxt "reportLanguage"
 msgid "Reports the language for the text under the caret. If pressed twice, presents the information in browse mode"
 msgstr "Повідомляє мову для тексту під кареткою. Якщо натиснуто двічі, показує цю інформацію в режимі огляду"
 
 #. Translators: Reported when the language of the text at caret is not defined.
-#: globalCommands.py:5350
+#: globalCommands.py:5351
 msgctxt "reportLanguage"
 msgid "Unknown language"
 msgstr "Невідома мова"
 
 #. Translators: Language of the character at caret position when it's not supported by the current synthesizer.
-#: globalCommands.py:5361
+#: globalCommands.py:5362
 #, python-brace-format
 msgctxt "reportLanguage"
 msgid "{languageDescription} (not supported)"
 msgstr "{languageDescription} (не підтримується)"
 
 #. Translators: title for report caret language dialog.
-#: globalCommands.py:5370
+#: globalCommands.py:5371
 msgctxt "reportLanguage"
 msgid "Language at caret position"
 msgstr "Мова в позиції каретки"
 
 #. Translators: Documentation string for the script that toggles whether the output from the remote computer is muted.
-#: globalCommands.py:5375
+#: globalCommands.py:5376
 msgctxt "remote"
 msgid "Mutes or unmutes the speech coming from the remote computer"
 msgstr "Вимикає або вмикає мовлення з віддаленого комп'ютера"
 
 #. Translators: Documentation string for the script that sends the contents of the clipboard to the remote computer.
-#: globalCommands.py:5385
+#: globalCommands.py:5386
 msgctxt "remote"
 msgid "Sends the contents of the clipboard to the remote computer"
 msgstr "Надсилає вміст буфера обміну на віддалений комп'ютер"
 
 #. Translators: Documentation string for the script that copies a link to the Remote Access session to the clipboard.
-#: globalCommands.py:5393
+#: globalCommands.py:5394
 msgctxt "remote"
 msgid "Copies a link to the current Remote Access session to the clipboard"
 msgstr "Копіює в буфер обміну посилання на поточний сеанс віддаленого керування"
 
 #. Translators: Documentation string for the script that disconnects a Remote Access session.
-#: globalCommands.py:5403
+#: globalCommands.py:5404
 msgctxt "remote"
 msgid "Disconnects from the current Remote Access session"
 msgstr "Відключається від поточного сеансу віддаленого керування"
@@ -5190,7 +5190,7 @@ msgstr "Відключається від поточного сеансу від
 #. Translators: Message shown when trying to copy the link to connect to the remote computer while not connected.
 #. Translators: Message shown when attempting to send control+alt+delete when no session is connected.
 #. Translators: A message indicating that the remote client is not connected.
-#: globalCommands.py:5409 _remoteClient\client.py:136
+#: globalCommands.py:5410 _remoteClient\client.py:136
 #: _remoteClient\client.py:163 _remoteClient\client.py:185
 #: _remoteClient\client.py:201 _remoteClient\client.py:581
 msgctxt "remote"
@@ -5198,60 +5198,60 @@ msgid "Not connected"
 msgstr "Не під'єднано"
 
 #. Translators: Documentation string for the script that starts a new Remote Access session.
-#: globalCommands.py:5415
+#: globalCommands.py:5416
 msgctxt "remote"
 msgid "Connects to a remote computer"
 msgstr "Встановлює з'єднання з віддаленим комп'ютером"
 
 #. Translators: A message indicating that the remote client is already connected.
-#: globalCommands.py:5426
+#: globalCommands.py:5427
 msgid "Already connected"
 msgstr "З’єднання вже встановлено"
 
 #. Translators: Describes the script that creates a new Remote Access session, or disconnects it if one already exists.
-#: globalCommands.py:5432
+#: globalCommands.py:5433
 msgctxt "remote"
 msgid "Toggles whether Remote Access is connected"
 msgstr "Активує або припиняє сеанс віддаленого керування"
 
 #. Translators: Documentation string for the script that toggles the control between guest and host computers.
-#: globalCommands.py:5447
+#: globalCommands.py:5448
 msgctxt "remote"
 msgid "Switches whether the keyboard controls the local or remote computer"
 msgstr "Перемикає керування клавіатурою між локальним або віддаленим комп'ютером"
 
 #. Translators: Documentation string for the script that sends alt+ctrl+del to the remote computer
-#: globalCommands.py:5460
+#: globalCommands.py:5461
 msgctxt "remote"
 msgid "Sends control+alt+delete to the controlled computer."
 msgstr "Надсилає control+alt+delete на керований комп'ютер."
 
 #. Translators: Description for the repeat last speech script
-#: globalCommands.py:5471
+#: globalCommands.py:5472
 msgid "Repeat the last spoken information. Pressing twice shows it in a browsable message."
 msgstr "Повторити останню промовлену інформацію. Подвійне натискання показує її в повідомленні, доступному для перегляду."
 
 #. Translators: title for report last spoken information dialog.
-#: globalCommands.py:5489
+#: globalCommands.py:5490
 msgid "Last spoken information"
 msgstr "Остання промовлена інформація"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
-#: globalCommands.py:5525
+#: globalCommands.py:5526
 msgid "Can't change the active profile while an NVDA dialog is open"
 msgstr "Не можна змінити активний профіль, коли відкритий діалог NVDA"
 
 #. Translators: a message when a configuration profile is manually deactivated.
 #. {profile} is replaced with the profile's name.
-#: globalCommands.py:5530
+#: globalCommands.py:5531
 #, python-brace-format
 msgid "{profile} profile deactivated"
 msgstr "{profile} профіль деактивовано"
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
-#: globalCommands.py:5535
+#: globalCommands.py:5536
 #, python-brace-format
 msgid "{profile} profile activated"
 msgstr "{profile} профіль активовано"
@@ -5259,7 +5259,7 @@ msgstr "{profile} профіль активовано"
 #. Translators: The description shown in input help for a script that
 #. activates or deactivates a config profile.
 #. {profile} is replaced with the profile's name.
-#: globalCommands.py:5551
+#: globalCommands.py:5552
 #, python-brace-format
 msgid "Activates or deactivates the {profile} configuration profile"
 msgstr "Активує чи  деактивує конфігураційний профіль {profile}"
@@ -7221,31 +7221,31 @@ msgid "browse mode"
 msgstr "режим огляду"
 
 #. Translators: a touch screen action performed once
-#: touchHandler.py:218
+#: touchHandler.py:223
 #, python-brace-format
 msgid "single {action}"
 msgstr "простий {action}"
 
 #. Translators: a touch screen action performed twice
-#: touchHandler.py:220
+#: touchHandler.py:225
 #, python-brace-format
 msgid "double {action}"
 msgstr "подвійний {action}"
 
 #. Translators: a touch screen action performed 3 times
-#: touchHandler.py:222
+#: touchHandler.py:227
 #, python-brace-format
 msgid "triple {action}"
 msgstr "потрійний {action}"
 
 #. Translators: a touch screen action performed 4 times
-#: touchHandler.py:224
+#: touchHandler.py:229
 #, python-brace-format
 msgid "quadruple {action}"
 msgstr "чотирикратно {action}"
 
 #. Translators: a touch screen action using multiple fingers
-#: touchHandler.py:284
+#: touchHandler.py:289
 #, python-brace-format
 msgid "{numFingers} finger {action}"
 msgid_plural "{numFingers} finger {action}"
@@ -7479,7 +7479,7 @@ msgstr "Оновлення до NVDA версії {version} завантажен
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
-#: updateCheck.py:547 updateCheck.py:669 gui\installerGui.py:366
+#: updateCheck.py:547 updateCheck.py:669 gui\installerGui.py:424
 msgid "&Review add-ons..."
 msgstr "&Переглянути додатки..."
 
@@ -7598,7 +7598,7 @@ msgstr "&Готово"
 
 #. Translators: Message shown to users when attempting to update NVDA
 #. on a computer which is being remotely controlled via NVDA Remote Access
-#: updateCheck.py:1015 gui\installerGui.py:585
+#: updateCheck.py:1015 gui\installerGui.py:643
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
 msgstr "Не рекомендовано оновлювати NVDA, якщо ваш комп’ютер з’єднано як керований через Віддалений доступ NVDA. "
 
@@ -7618,7 +7618,7 @@ msgstr "Поточне активне з’єднання не може бути
 #. Translators: The title of a dialog.
 #. Translators: Title of warning dialog
 #: updateCheck.py:1026 gui\_SetURLDialog.py:113 gui\configProfiles.py:500
-#: gui\installerGui.py:444 gui\installerGui.py:602 gui\settingsDialogs.py:1964
+#: gui\installerGui.py:502 gui\installerGui.py:660 gui\settingsDialogs.py:1964
 #: gui\settingsDialogs.py:6332 screenCurtain\_screenCurtain.py:70
 #: _remoteClient\dialogs.py:291
 msgid "Warning"
@@ -12173,7 +12173,7 @@ msgstr "Успішно з’єднано з наданою адресою."
 #. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 #. Translators: The message title displayed when copying configuration to system settings was successful.
 #. Translators: Title of success dialog
-#: gui\_SetURLDialog.py:177 gui\installerGui.py:90 gui\installerGui.py:801
+#: gui\_SetURLDialog.py:177 gui\installerGui.py:146 gui\installerGui.py:859
 #: gui\settingsDialogs.py:1050 _remoteClient\dialogs.py:280
 msgid "Success"
 msgstr "Успішно"
@@ -13063,248 +13063,248 @@ msgstr "Не вдалося зберегти користувацькі жест
 
 #. Translators: The message displayed when NVDA has been successfully updated,
 #. shown in the post-install dialog.
-#: gui\installerGui.py:74
+#: gui\installerGui.py:130
 msgid "Successfully updated your installation of NVDA. It is recommended to restart Windows after updating. NVDA may malfunction without a restart."
 msgstr "Ваше встановлення NVDA успішно оновлено. Після оновлення рекомендовано перезапустити Windows. Без перезапуску NVDA може працювати несправно."
 
 #. Translators: The message displayed when NVDA has been successfully installed,
 #. shown in the post-install dialog.
-#: gui\installerGui.py:82
+#: gui\installerGui.py:138
 msgid "Successfully installed NVDA. It is recommended to restart Windows after installing. NVDA may malfunction without a restart."
 msgstr "NVDA успішно встановлено. Після встановлення рекомендовано перезапустити Windows. Без перезапуску NVDA може працювати несправно."
 
 #. Translators: Button in the post-install dialog to start the newly installed NVDA.
-#: gui\installerGui.py:96
+#: gui\installerGui.py:152
 msgid "&Start NVDA"
 msgstr "&Запустити NVDA"
 
 #. Translators: Button in the post-install dialog to restart Windows immediately.
-#: gui\installerGui.py:101
+#: gui\installerGui.py:157
 msgid "Restart &Windows"
 msgstr "Перезапустити &Windows"
 
 #. Translators: Button in the post-install dialog to exit NVDA.
-#: gui\installerGui.py:106
+#: gui\installerGui.py:162
 msgid "E&xit NVDA"
 msgstr "Ви&йти з NVDA"
 
 #. Translators: Message shown when Windows restart fails after NVDA installation.
-#: gui\installerGui.py:124
+#: gui\installerGui.py:179
 msgid "Failed to restart Windows. Please restart Windows manually."
 msgstr "Не вдалося перезапустити Windows. Будь ласка, перезапустіть Windows вручну."
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
-#: gui\installerGui.py:157
+#: gui\installerGui.py:212
 msgid "Updating NVDA"
 msgstr "Оновлюємо NVDA"
 
 #. Translators: The title of the dialog presented while NVDA is being installed.
-#: gui\installerGui.py:160
+#: gui\installerGui.py:215
 msgid "Installing NVDA"
 msgstr "Встановлюємо NVDA"
 
 #. Translators: The message displayed while NVDA is being updated.
-#: gui\installerGui.py:162
+#: gui\installerGui.py:217
 msgid "Please wait while your previous installation of NVDA is being updated."
 msgstr "Будь ласка, зачекайте оновлення раніше встановленої версії."
 
 #. Translators: The message displayed while NVDA is being installed.
-#: gui\installerGui.py:165
+#: gui\installerGui.py:220
 msgid "Please wait while NVDA is being installed"
 msgstr "Зачекайте, будь ласка, поки встановлюється NVDA"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
-#: gui\installerGui.py:189
+#: gui\installerGui.py:244
 msgid "The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again."
 msgstr "Неможливо під час встановлення видалити чи перезаписати файл. Можливо, запущено іншу копію NVDA під іншим обліковим записом. Переконайтеся, що усі копії неактивні і повторіть спробу встановлення ще раз."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
-#: gui\installerGui.py:194 gui\installerGui.py:782
+#: gui\installerGui.py:249 gui\installerGui.py:840
 msgid "File in Use"
 msgstr "Файл використовується"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
-#: gui\installerGui.py:208
+#: gui\installerGui.py:263
 msgid "The installation of NVDA failed. Please check the Log Viewer for more information."
 msgstr "Не вдалося встановити NVDA. Перегляньте журнал для детальної інформації."
 
 #. Translators: The title of the Install NVDA dialog.
-#: gui\installerGui.py:278
+#: gui\installerGui.py:336
 msgid "Install NVDA"
 msgstr "Встановити NVDA"
 
 #. Translators: An informational message in the Install NVDA dialog.
-#: gui\installerGui.py:296
+#: gui\installerGui.py:354
 msgid "To install NVDA to your hard drive, please press the Continue button."
 msgstr "Для встановлення NVDA на ваш комп’ютер, натисніть кнопку «Продовжити»."
 
 #. Translators: An informational message in the Install NVDA dialog.
-#: gui\installerGui.py:300
+#: gui\installerGui.py:358
 msgid "A previous copy of NVDA has been found on your system. This copy will be updated."
 msgstr "У вашій системі виявлено раніше встановлену копію NVDA. Її буде оновлено."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#: gui\installerGui.py:305
+#: gui\installerGui.py:363
 #, python-brace-format
 msgid "The installation path for NVDA has changed. it will now  be installed in {path}"
 msgstr "Шлях установки NVDA змінено. Тепер її буде  встановлено в {path}"
 
 #. Translators: The label for a group box containing the NVDA installation dialog options.
 #. Translators: The label for a group box containing the NVDA welcome dialog options.
-#: gui\installerGui.py:323 gui\startupDialogs.py:63
+#: gui\installerGui.py:381 gui\startupDialogs.py:63
 msgid "Options"
 msgstr "Параметри"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:329
+#: gui\installerGui.py:387
 msgid "Use NVDA during sign-in"
 msgstr "Запускати NVDA разом з Windows"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:340
+#: gui\installerGui.py:398
 msgid "&Keep existing desktop shortcut"
 msgstr "&Зберегти поточний ярлик на робочому столі"
 
 #. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
 #. If the shortcut key has been changed for this locale,
 #. this change must also be reflected here.
-#: gui\installerGui.py:347
+#: gui\installerGui.py:405
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "Створити &іконку на робочому столі і призначити на запуск комбінацію клавіш (control+alt+n)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:354
+#: gui\installerGui.py:412
 msgid "Copy &portable configuration to current user account"
 msgstr "Скопіювати &переносну конфігурацію до поточного облікового запису"
 
 #. Translators: The label of a button to continue with the operation.
 #. Translators: The label for the Continue button in an NVDA dialog.
-#: gui\installerGui.py:371 gui\installerGui.py:681 gui\nvdaControls.py:387
+#: gui\installerGui.py:429 gui\installerGui.py:739 gui\nvdaControls.py:387
 msgid "&Continue"
 msgstr "&Продовжити"
 
 #. Translators: A warning presented when the user attempts to downgrade NVDA
 #. to an older version.
-#: gui\installerGui.py:425
+#: gui\installerGui.py:483
 msgid "You are attempting to install an earlier version of NVDA than the version currently installed. If you really wish to revert to an earlier version, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
 msgstr "Ви намагаєтеся встановити старішу версію NVDA попри те, що у вас вже встановлена новіша версія. Якщо ви справді бажаєте повернутися до старішої версії, то перед тим, як це зробити, закрийте це встановлення і видаліть поточну версію NVDA."
 
 #. Translators: A warning presented when the installer is unable to determine
 #. the state of the current NVDA installation.
-#: gui\installerGui.py:435
+#: gui\installerGui.py:493
 msgid "An existing NVDA installation has been detected, but its version cannot be determined. If you are attempting to install an earlier version of NVDA, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
 msgstr "Виявлено встановлену NVDA, але її версію визначити неможливо. Якщо ви намагаєтеся встановити ранішу версію NVDA, то перед встановленням ранішої версії спочатку скасуйте це встановлення й повністю видаліть NVDA."
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
-#: gui\installerGui.py:462
+#: gui\installerGui.py:520
 msgid "&Proceed with installation (not recommended)"
 msgstr "&Продовжити встановлення (не рекомендовано)"
 
 #. Translators: A warning presented when the user attempts to downgrade NVDA
 #. to an older version.
-#: gui\installerGui.py:494
+#: gui\installerGui.py:552
 msgid "You are attempting to replace an existing portable copy of NVDA with an earlier version. Downgrading NVDA is not recommended. You should cancel this operation and create a new portable copy instead. "
 msgstr "Ви намагаєтеся замінити наявну переносну копію NVDA на ранішу версію. Не рекомендується знижувати версію NVDA. Варто скасувати цю операцію й замість цього створити нову переносну копію. "
 
 #. Translators: A warning presented when the installer is unable to determine
 #. the state of the current NVDA installation.
-#: gui\installerGui.py:502
+#: gui\installerGui.py:560
 msgid "An existing copy of NVDA has been detected in the chosen directory, but its version cannot be determined. If you are attempting to downgrade to an earlier version of NVDA, you should cancel this operation and create a new portable copy. "
 msgstr "У вибраній папці виявлено наявну копію NVDA, але її версію визначити неможливо. Якщо ви намагаєтеся понизити NVDA до ранішої версії, варто скасувати цю операцію й створити нову переносну копію. "
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
-#: gui\installerGui.py:543
+#: gui\installerGui.py:601
 #, python-brace-format
 msgid "A portable copy already exists in the directory '{portableDirectory}'. Do you want to update it?"
 msgstr "У папці '{portableDirectory}' вже існує переносна копія. Хочете її оновити?"
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
-#: gui\installerGui.py:548
+#: gui\installerGui.py:606
 msgid "Portable Copy Exists"
 msgstr "Наявна переносна копія"
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
-#: gui\installerGui.py:565
+#: gui\installerGui.py:623
 #, python-brace-format
 msgid "The specified directory '{portableDirectory}' is not empty. Proceeding will delete and replace existing files in the directory. Do you want to overwrite the contents of this folder? "
 msgstr "Вказана папка '{portableDirectory}' не порожня. Якщо продовжити, наявні в папці файли буде видалено й замінено. Ви хочете перезаписати вміст цієї папки? "
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
-#: gui\installerGui.py:571
+#: gui\installerGui.py:629
 msgid "Directory Exists"
 msgstr "Папка вже існує"
 
 #. Translators: Message shown to users when attempting to install NVDA
 #. on a computer which is being remotely controlled via NVDA Remote Access
-#: gui\installerGui.py:591
+#: gui\installerGui.py:649
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
 msgstr "Не рекомендовано встановлювати NVDA, якщо ваш комп’ютер з’єднано як керований через Віддалений доступ NVDA. "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
-#: gui\installerGui.py:597
+#: gui\installerGui.py:655
 msgid "You will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
 msgstr "Ви не зможете відповідати на запити контролю облікових записів користувачів (UAC) від керівного комп'ютера. Продовжуйте лише в тому випадку, якщо маєте фізичний доступ до керованого комп’ютера.\n\n"
 "Ви впевнені, що хочете продовжити?"
 
 #. Translators: The title of the Create Portable NVDA dialog.
-#: gui\installerGui.py:635
+#: gui\installerGui.py:693
 msgid "Create Portable NVDA"
 msgstr "Створити переносну копію NVDA"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
-#: gui\installerGui.py:641
+#: gui\installerGui.py:699
 msgid "To create a portable copy of NVDA, please select the path and other options and then press Continue"
 msgstr "Для створення переносної копії NVDA необхідно обрати шлях для видобування файлів і вказати інші параметри"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:647
+#: gui\installerGui.py:705
 msgid "Portable directory:"
 msgstr "Папка для переносної копії:"
 
 #. Translators: The label of a button to browse for a directory.
-#: gui\installerGui.py:652
+#: gui\installerGui.py:710
 msgid "Browse..."
 msgstr "Огляд..."
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
-#: gui\installerGui.py:655
+#: gui\installerGui.py:713
 msgid "Select portable directory"
 msgstr "Виберіть папку для переносної копії"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:663
+#: gui\installerGui.py:721
 msgid "Create a &new folder for the portable copy"
 msgstr "Створити &нову папку для переносної копії"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:668
+#: gui\installerGui.py:726
 msgid "Copy current &user configuration"
 msgstr "Скопіювати поточну &користувацьку конфігурацію"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:674
+#: gui\installerGui.py:732
 msgid "&Start the new portable copy after creation"
 msgstr "&Запустити нову переносну копію після її створення"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:699
+#: gui\installerGui.py:757
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "Будь ласка, вкажіть папку, в якій ви хочете створити переносну копію."
 
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:711
+#: gui\installerGui.py:769
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. It must start with a drive letter (e.g. C:). It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
 "Current path: {path}. "
@@ -13312,35 +13312,35 @@ msgstr "Будь ласка, зазначте абсолютний шлях, з�
 "Поточний шлях: {path}. "
 
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
-#: gui\installerGui.py:764
+#: gui\installerGui.py:822
 msgid "Portable copy creation cancelled."
 msgstr "Створення переносної копії скасовано."
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
-#: gui\installerGui.py:769
+#: gui\installerGui.py:827
 msgid "Creating Portable Copy"
 msgstr "Створюю переносну копію"
 
 #. Translators: The message displayed while a portable copy of NVDA is being created.
-#: gui\installerGui.py:771
+#: gui\installerGui.py:829
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Зачекайте, будь ласка, поки створюється переносна копія NVDA."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
-#: gui\installerGui.py:780
+#: gui\installerGui.py:838
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA не може видалити або перезаписати файл."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. {error} will be replaced with the specific error message.
-#: gui\installerGui.py:788
+#: gui\installerGui.py:846
 #, python-brace-format
 msgid "Failed to create portable copy: {error}."
 msgstr "Не вдалося створити переносну копію: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. {dir} will be replaced with the destination directory.
-#: gui\installerGui.py:799
+#: gui\installerGui.py:857
 #, python-brace-format
 msgid "Successfully created a portable copy of NVDA at {dir}"
 msgstr "Переносну копію NVDA успішно створено в {dir}"
@@ -15267,7 +15267,7 @@ msgstr "Пере&ривати мовлення під час прокрутки"
 #. Translators: The label for a setting in braille settings to change the rate for autoscroll.
 #: gui\settingsDialogs.py:5534
 msgid "Auto&matic scroll rate"
-msgstr "Авто&матична швидкість прокрутки"
+msgstr "Швидкість &автоматичної прокрутки"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -20190,27 +20190,27 @@ msgid "Lock screen not secure while using NVDA"
 msgstr "Екран блокування не захищений під час використання NVDA"
 
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
-#: virtualBuffers\__init__.py:603
+#: virtualBuffers\__init__.py:609
 msgid "Refreshed"
 msgstr "Оновлено"
 
 #. Translators: Reported while loading a document.
-#: virtualBuffers\__init__.py:618
+#: virtualBuffers\__init__.py:624
 msgid "Loading document..."
 msgstr "Завантаження документа..."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
-#: virtualBuffers\__init__.py:688
+#: virtualBuffers\__init__.py:694
 msgid "Refreshes the document content"
 msgstr "Оновлює вміст документа"
 
 #. Translators: Presented when use screen layout option is toggled.
-#: virtualBuffers\__init__.py:696
+#: virtualBuffers\__init__.py:702
 msgid "Use screen layout on"
 msgstr "Використання екранного представлення увімкнено"
 
 #. Translators: Presented when use screen layout option is toggled.
-#: virtualBuffers\__init__.py:699
+#: virtualBuffers\__init__.py:705
 msgid "Use screen layout off"
 msgstr "Використання екранного представлення вимкнено"
 
