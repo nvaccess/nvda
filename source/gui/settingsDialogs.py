@@ -2565,8 +2565,8 @@ class BrowseModePanel(SettingsPanel):
 			maxLengthLabelText,
 			nvdaControls.SelectOnFocusSpinCtrl,
 			# min and max are not enforced in the config for virtualBuffers.maxLineLength
-			min=10,
-			max=500,
+			min=0,
+			max=1000,
 			initial=config.conf["virtualBuffers"]["maxLineLength"],
 		)
 		self.bindHelpEvent("BrowseModeSettingsMaxLength", self.maxLengthEdit)

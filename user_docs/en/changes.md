@@ -24,6 +24,7 @@
 
 ### Changes
 
+* The maximum line length in browse mode can now be set between 0 and 1000 characters (previously 10-250). Setting it to 0 disables line wrapping. (#20478, @Mubashir78)
 * Updated Liblouis Braille translator to [3.38.0](https://github.com/liblouis/liblouis/releases/tag/v3.38.0). (#20269, @codeofdusk)
   * Added new Elfdalian and Sami tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
 * The dialog used to present browseable messages (such as formatting information) has been modernized. (#18878, @LeonarddeR)

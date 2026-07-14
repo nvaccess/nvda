@@ -3348,6 +3348,7 @@ This category contains the following options:
 ##### Maximum Number of Characters on One Line {#BrowseModeSettingsMaxLength}
 
 This field sets the maximum length of a line in browse mode (in characters).
+Setting it to 0 disables line wrapping, displaying the entire line without breaks.
 
 ##### Maximum Lines Per Page {#BrowseModeSettingsPageLines}
 
