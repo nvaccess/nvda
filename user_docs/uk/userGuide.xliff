@@ -13743,9 +13743,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Name | Touch | Description </source>
-        <target> Name | Touch | Description </target>
+        <target> Ім’я | Жест | Опис </target>
       </segment>
     </unit>
     <unit id="76506fd8-32b4-45db-8061-2335ce54b96f">
@@ -13754,9 +13754,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Select next element type | flick down | Switches to the next browse mode navigation element type </source>
-        <target> Select next element type | flick down | Switches to the next browse mode navigation element type </target>
+        <target> Вибрати наступний тип елемента | Змахнути вниз | Перехід до наступного типу елемента навігації в режимі огляду </target>
       </segment>
     </unit>
     <unit id="4e28b03b-4d2e-4635-a063-563ca924fba1">
@@ -13765,9 +13765,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Select previous element type | flick up | Switches to the previous browse mode navigation element type </source>
-        <target> Select previous element type | flick up | Switches to the previous browse mode navigation element type </target>
+        <target> Вибрати попередній тип елемента | Змахнути вгору | Переходить до попереднього типу елемента навігації в режимі огляду </target>
       </segment>
     </unit>
     <unit id="b930b0bf-d18c-46a7-86fe-99e175e68a8d">
@@ -13776,9 +13776,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Move to next element | flick right | Moves to the next browse mode element of the selected type </source>
-        <target> Move to next element | flick right | Moves to the next browse mode element of the selected type </target>
+        <target> Перейти до наступного елемента | Змахнути вправо | Переходить до наступного елемента вибраного типу в режимі огляду </target>
       </segment>
     </unit>
     <unit id="2f19f32e-a8bd-4d77-8dd7-ab051a218a81">
@@ -13787,63 +13787,63 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Move to previous element | flick left | Moves to the previous browse mode element of the selected type </source>
-        <target> Move to previous element | flick left | Moves to the previous browse mode element of the selected type </target>
+        <target> Перейти до попереднього елемента | Змахнути вліво | Переходить до попереднього елемента вибраного типу в режимі огляду </target>
       </segment>
     </unit>
     <unit id="c4eb3601-03f4-4dae-9e70-8257358bb9b4">
       <notes>
         <note appliesTo="source">line: 1094</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When the "default" element type is selected, flicking left or right moves through all elements in the document.</source>
-        <target>When the "default" element type is selected, flicking left or right moves through all elements in the document.</target>
+        <target>Коли як тип елементів обрано «Стандартно», змахування вліво чи вправо дозволяє переміщатися по всіх елементах у документі.</target>
       </segment>
     </unit>
     <unit id="b349402c-d7c9-4ab1-81dd-6b9f7c5c44d4">
       <notes>
         <note appliesTo="source">line: 1095</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When any other element type is selected, flicking left or right moves to the previous or next element of that type.</source>
-        <target>When any other element type is selected, flicking left or right moves to the previous or next element of that type.</target>
+        <target>Якщо обрано будь-який інший тип елемента, то змахування вліво або вправо дозволяє переміщатися до попереднього або наступного елемента цього типу.</target>
       </segment>
     </unit>
     <unit id="119467db-a1c9-43e7-b31a-0bc6935f4b61">
       <notes>
         <note appliesTo="source">line: 1096</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Flicking up or down cycles through the available element types.</source>
-        <target>Flicking up or down cycles through the available element types.</target>
+        <target>Змахування вгору або вниз перемикає між доступними типами елементів.</target>
       </segment>
     </unit>
     <unit id="0111bc1b-23a7-40d8-8be0-cd03bffebea6">
       <notes>
         <note appliesTo="source">line: 1098</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The selected element type is remembered separately for each document while it remains open.</source>
-        <target>The selected element type is remembered separately for each document while it remains open.</target>
+        <target>Вибраний тип елемента запам’ятовується окремо для кожного документа, допоки він залишається відкритим.</target>
       </segment>
     </unit>
     <unit id="33a4fa74-dff1-4c23-8792-3be9aabdaeec">
       <notes>
         <note appliesTo="source">line: 1099</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Note that browse touch mode gestures only take effect when browse mode is active in the document.</source>
-        <target>Note that browse touch mode gestures only take effect when browse mode is active in the document.</target>
+        <target>Зауважте, що сенсорні жести в режимі огляду працюють лише тоді, коли режим огляду в документі активний.</target>
       </segment>
     </unit>
     <unit id="b27bd029-a249-472a-8c75-a514d2fd1174">
       <notes>
         <note appliesTo="source">line: 1100</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If focus moves outside the document (for example, to the browser address bar or the taskbar), browse touch mode gestures will not navigate the document until focus returns to it in browse mode.</source>
-        <target>If focus moves outside the document (for example, to the browser address bar or the taskbar), browse touch mode gestures will not navigate the document until focus returns to it in browse mode.</target>
+        <target>Якщо фокус переміщається за межі документа (наприклад, до адресного рядка браузера або до панелі завдань), сенсорні жести режиму огляду не працюватимуть у документі, допоки фокус не повернеться в режим огляду.</target>
       </segment>
     </unit>
     <unit id="e816d95a-0d13-4ca4-8958-3a4ee8fff0f7">
@@ -14093,9 +14093,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1135</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Slider</source>
-        <target>Slider</target>
+        <target>Повзунок</target>
       </segment>
     </unit>
     <unit id="125751a0-7c42-4440-aba6-53a4788f58f2">
@@ -17184,9 +17184,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Reports the state of the screen curtain | None | Announces the current status of the screen curtain, whether it is disabled or enabled or in temporary mode. </source>
-        <target> Reports the state of the screen curtain | None | Announces the current status of the screen curtain, whether it is disabled or enabled or in temporary mode. </target>
+        <target> Повідомляє стан екранної завіси | Немає | Оголошує поточний стан екранної завіси, незалежно від того, увімкнено її, вимкнено або вона працює в тимчасовому режимі. </target>
       </segment>
     </unit>
     <unit id="f91457fa-24d6-49ca-86af-99d28592cb21">
@@ -17231,45 +17231,45 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ## </note>
         <note appliesTo="source">suffix:  {#Magnifier}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Magnifier</source>
-        <target>Magnifier</target>
+        <target>Лупа</target>
       </segment>
     </unit>
     <unit id="0aaf9994-883c-48bd-a681-4e13c0d7aff0">
       <notes>
         <note appliesTo="source">line: 1563</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen.</source>
-        <target>NVDA includes a built-in Magnifier feature that allows you to zoom and magnify parts of the screen.</target>
+        <target>NVDA має вбудовану функцію «Лупа», яка дозволяє змінювати масштаб і збільшувати окремі ділянки екрана.</target>
       </segment>
     </unit>
     <unit id="76c515b4-743f-48a1-a626-fe3d5df5e874">
       <notes>
         <note appliesTo="source">line: 1564</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This feature is particularly useful for users with low vision who need to enlarge content on the screen, or for users who want to apply color filters to reduce eye strain or improve readability.</source>
-        <target>This feature is particularly useful for users with low vision who need to enlarge content on the screen, or for users who want to apply color filters to reduce eye strain or improve readability.</target>
+        <target>Ця функція особливо корисна для користувачів зі слабким зором, яким потрібно збільшувати вміст на екрані, або для тих, хто бажає застосовувати кольорові фільтри, щоб зменшити навантаження на очі чи поліпшити читабельність.</target>
       </segment>
     </unit>
     <unit id="d097052a-43b3-4973-b2b1-b4da363b5e23">
       <notes>
         <note appliesTo="source">line: 1566</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The NVDA Magnifier operates as a full-screen magnifier, meaning it enlarges the entire screen while following the system focus or mouse pointer.</source>
-        <target>The NVDA Magnifier operates as a full-screen magnifier, meaning it enlarges the entire screen while following the system focus or mouse pointer.</target>
+        <target>Лупа NVDA працює як повноекранна лупа, тобто збільшує весь екран, відстежуючи системний фокус або курсор миші.</target>
       </segment>
     </unit>
     <unit id="7ef4333a-d678-4278-8a78-e0167e90529c">
       <notes>
         <note appliesTo="source">line: 1567</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>It provides several configuration options to customize the magnification experience according to your needs.</source>
-        <target>It provides several configuration options to customize the magnification experience according to your needs.</target>
+        <target>Вона пропонує кілька параметрів конфігурації, які дозволяють налаштувати рівень збільшення відповідно до ваших потреб.</target>
       </segment>
     </unit>
     <unit id="33190245-fe84-4447-a17e-75e0d6c564ff">
@@ -17278,45 +17278,45 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ### </note>
         <note appliesTo="source">suffix:  {#MagnifierToggle}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Enabling and Disabling the Magnifier</source>
-        <target>Enabling and Disabling the Magnifier</target>
+        <target>Увімкнення й вимкнення лупи</target>
       </segment>
     </unit>
     <unit id="e0aebb31-b8f3-404a-9392-7cf065560426">
       <notes>
         <note appliesTo="source">line: 1571</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>To enable or disable the magnifier, press `NVDA+shift+w`.</source>
-        <target>To enable or disable the magnifier, press `NVDA+shift+w`.</target>
+        <target>Для увімкнення або вимкнення лупи натисніть `NVDA+shift+w`.</target>
       </segment>
     </unit>
     <unit id="453a3287-263f-4268-8ac8-a53fd627c040">
       <notes>
         <note appliesTo="source">line: 1572</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The "Increase magnification level" keystroke, `NVDA+shift+equals`, will start the magnifier if it is not running.</source>
-        <target>The "Increase magnification level" keystroke, `NVDA+shift+equals`, will start the magnifier if it is not running.</target>
+        <target>Комбінація клавіш «Підвищити рівень збільшення», `NVDA+shift+дорівнює`, запустить лупу, якщо її не запущено.</target>
       </segment>
     </unit>
     <unit id="fbc7ed11-5e4a-4b9f-87b0-326ce0b652f5">
       <notes>
         <note appliesTo="source">line: 1573</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When disabled, the screen returns to its normal size.</source>
-        <target>When disabled, the screen returns to its normal size.</target>
+        <target>Коли лупу вимкнено, екран повертається до свого звичайного розміру.</target>
       </segment>
     </unit>
     <unit id="242cc819-a374-47da-86d8-5e2bb5e16016">
       <notes>
         <note appliesTo="source">line: 1574</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>As with other NVDA settings, the Magnifier state is preserved across sessions.</source>
-        <target>As with other NVDA settings, the Magnifier state is preserved across sessions.</target>
+        <target>Подібно до інших налаштувань NVDA, Стан лупи зберігається між сеансами.</target>
       </segment>
     </unit>
     <unit id="96a940bb-9b9e-4181-8a6e-4c080c620933">
@@ -17325,18 +17325,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ### </note>
         <note appliesTo="source">suffix:  {#MagnifierCommands}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Magnifier Commands</source>
-        <target>Magnifier Commands</target>
+        <target>Команди лупи</target>
       </segment>
     </unit>
     <unit id="b8893b75-7b95-4c65-bb4f-7005c82f17aa">
       <notes>
         <note appliesTo="source">line: 1578</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Once the magnifier is enabled, you can use the following keyboard commands to control it:</source>
-        <target>Once the magnifier is enabled, you can use the following keyboard commands to control it:</target>
+        <target>Коли лупу увімкнено, ви можете використовувати нижченаведені клавіатурні команди для керування нею:</target>
       </segment>
     </unit>
     <unit id="1dad6e9b-db46-4305-a3fb-ae46243aac6d">
@@ -17345,9 +17345,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Name | Key | Description </source>
-        <target> Name | Key | Description </target>
+        <target> Ім'я |Клавіша |Опис </target>
       </segment>
     </unit>
     <unit id="3b4deade-138f-404c-af27-d789d82d9397">
@@ -17356,9 +17356,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Toggle the magnifier on and off | `NVDA+shift+w` | Enables or disables the magnifier </source>
-        <target> Toggle the magnifier on and off | `NVDA+shift+w` | Enables or disables the magnifier </target>
+        <target> Увімкнути або вимкнути лупу | `NVDA+shift+w` | Вмикає або вимикає лупу </target>
       </segment>
     </unit>
     <unit id="012aea5d-d8fb-49ac-8661-a1aed04797f7">
@@ -17367,9 +17367,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Increase the magnification level | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. </source>
-        <target> Increase the magnification level | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. </target>
+        <target> Підвищити рівень збільшення | `NVDA+shift+дорівнює` | Підвищує рівень масштабу. Запускає лупу, якщо її ще не запущено. </target>
       </segment>
     </unit>
     <unit id="5708114c-18ec-49f0-aef2-53840ca6b633">
@@ -17378,9 +17378,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Decrease the magnification level | `NVDA+shift+minus` | Decreases the zoom level </source>
-        <target> Decrease the magnification level | `NVDA+shift+minus` | Decreases the zoom level </target>
+        <target> Знизити рівень збільшення | `NVDA+shift+мінус` | Знижує рівень масштабу </target>
       </segment>
     </unit>
     <unit id="b7c6219f-5cfa-4ce0-968e-d5024583c465">
@@ -17389,9 +17389,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Cycle color filters | `NVDA+shift+i` | Cycles through the available color filters (normal, grayscale, inverted) </source>
-        <target> Cycle color filters | `NVDA+shift+i` | Cycles through the available color filters (normal, grayscale, inverted) </target>
+        <target> Перемкнути фільтри кольорів | `NVDA+shift+i` | Перемикає між доступними фільтрами кольорів (звичайний, відтінки сірого, інвертований) </target>
       </segment>
     </unit>
     <unit id="20277254-afaa-4e02-ba6e-a42fd031ebb9">
@@ -17400,9 +17400,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Cycle tracking mode | None | Cycles through tracking modes (center, border, relative) </source>
-        <target> Cycle tracking mode | None | Cycles through tracking modes (center, border, relative) </target>
+        <target> Перемкнути режим відстеження | Немає | Перемикає між режимами відстеження (центрований, рамка, відносний) </target>
       </segment>
     </unit>
     <unit id="cc17cba6-9bbe-4f33-b289-41e55dff9860">
@@ -17411,9 +17411,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Show entire screen overview | `NVDA+shift+l` | Temporarily shows an overview of the entire screen </source>
-        <target> Show entire screen overview | `NVDA+shift+l` | Temporarily shows an overview of the entire screen </target>
+        <target> Показати огляд усього екрана | `NVDA+shift+l` | Тимчасово показує огляд усього екрана </target>
       </segment>
     </unit>
     <unit id="313adbd1-7049-4dac-93c9-924c3e3979f5">
@@ -17422,9 +17422,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Pan left | `NVDA+alt+leftArrow` | Moves the magnified view left by the configured panning step size </source>
-        <target> Pan left | `NVDA+alt+leftArrow` | Moves the magnified view left by the configured panning step size </target>
+        <target> Панорамувати вліво | `NVDA+alt+стрілка вліво` | Переміщує збільшений перегляд вліво згідно з налаштованим розміром кроку панорамування </target>
       </segment>
     </unit>
     <unit id="8fff0e67-0c35-47eb-b88c-98aba810d817">
@@ -17433,9 +17433,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Pan right | `NVDA+alt+rightArrow` | Moves the magnified view right by the configured panning step size </source>
-        <target> Pan right | `NVDA+alt+rightArrow` | Moves the magnified view right by the configured panning step size </target>
+        <target> Панорамувати вправо | `NVDA+alt+стрілка вправо` | Переміщує збільшений перегляд вправо згідно з налаштованим розміром кроку панорамування </target>
       </segment>
     </unit>
     <unit id="6b0a0cb1-ae7c-46ce-a6c5-5afd8187fe7f">
@@ -17444,9 +17444,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Pan up | `NVDA+alt+upArrow` | Moves the magnified view up by the configured panning step size </source>
-        <target> Pan up | `NVDA+alt+upArrow` | Moves the magnified view up by the configured panning step size </target>
+        <target> Панорамувати вгору | `NVDA+alt+стрілка вгору` | Переміщує збільшений перегляд вгору згідно з налаштованим розміром кроку панорамування </target>
       </segment>
     </unit>
     <unit id="70ea9b14-f38b-4c01-9c25-419c0c7c1d28">
@@ -17455,9 +17455,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Pan down | `NVDA+alt+downArrow` | Moves the magnified view down by the configured panning step size </source>
-        <target> Pan down | `NVDA+alt+downArrow` | Moves the magnified view down by the configured panning step size </target>
+        <target> Панорамувати вниз | `NVDA+alt+стрілка вниз` | Переміщує збільшений перегляд вниз згідно з налаштованим розміром кроку панорамування </target>
       </segment>
     </unit>
     <unit id="45c371eb-9602-4a10-ae6d-12b6d07b2fd9">
@@ -17466,9 +17466,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Pan to left edge | `NVDA+shift+alt+leftArrow` | Moves the magnified view directly to the left edge of the screen </source>
-        <target> Pan to left edge | `NVDA+shift+alt+leftArrow` | Moves the magnified view directly to the left edge of the screen </target>
+        <target> Панорамувати до лівого краю | `NVDA+shift+alt+стрілка вліво` | Переміщує збільшений перегляд безпосередньо до лівого краю екрана </target>
       </segment>
     </unit>
     <unit id="16171be3-fcc8-4002-a768-5c7fb84cb117">
@@ -17477,9 +17477,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Pan to right edge | `NVDA+shift+alt+rightArrow` | Moves the magnified view directly to the right edge of the screen </source>
-        <target> Pan to right edge | `NVDA+shift+alt+rightArrow` | Moves the magnified view directly to the right edge of the screen </target>
+        <target> Панорамувати до правого краю | `NVDA+shift+alt+стрілка вправо` | Переміщує збільшений перегляд безпосередньо до правого краю екрана </target>
       </segment>
     </unit>
     <unit id="cff8897c-55eb-4720-9860-3d8a690b647a">
@@ -17488,9 +17488,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Pan to top edge | `NVDA+shift+alt+upArrow` | Moves the magnified view directly to the top edge of the screen </source>
-        <target> Pan to top edge | `NVDA+shift+alt+upArrow` | Moves the magnified view directly to the top edge of the screen </target>
+        <target> Панорамувати до верхнього краю | `NVDA+shift+alt+стрілка вгору` | Переміщує збільшений перегляд безпосередньо до верхнього краю екрана </target>
       </segment>
     </unit>
     <unit id="e45b227f-893c-4562-bfc3-adf0e65cfe88">
@@ -17499,9 +17499,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Pan to bottom edge | `NVDA+shift+alt+downArrow` | Moves the magnified view directly to the bottom edge of the screen </source>
-        <target> Pan to bottom edge | `NVDA+shift+alt+downArrow` | Moves the magnified view directly to the bottom edge of the screen </target>
+        <target> Панорамувати до нижнього краю | `NVDA+shift+alt+стрілка вниз` | Переміщує збільшений перегляд безпосередньо до нижнього краю екрана </target>
       </segment>
     </unit>
     <unit id="d807d2a3-540f-4ae6-9f96-167a4f143cbd">
@@ -17510,36 +17510,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ### </note>
         <note appliesTo="source">suffix:  {#MagnifierZoomLevels}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Zoom Levels</source>
-        <target>Zoom Levels</target>
+        <target>Рівні масштабування</target>
       </segment>
     </unit>
     <unit id="6d9d51cc-9f96-4dea-8634-0cb71a7e2ef8">
       <notes>
         <note appliesTo="source">line: 1603</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The magnifier supports zoom levels from 1.0 (no magnification) to 50.0 (maximum magnification).</source>
-        <target>The magnifier supports zoom levels from 1.0 (no magnification) to 50.0 (maximum magnification).</target>
+        <target>Лупа підтримує рівні масштабування від 1.0 (без збільшення) до 50.0 (максимальне збільшення).</target>
       </segment>
     </unit>
     <unit id="adc35143-1d0c-4f0c-8df2-c42be7f1f4f9">
       <notes>
         <note appliesTo="source">line: 1604</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>You can adjust the zoom level using the zoom in (`NVDA+shift+equals`) and zoom out (`NVDA+shift+minus`) commands.</source>
-        <target>You can adjust the zoom level using the zoom in (`NVDA+shift+equals`) and zoom out (`NVDA+shift+minus`) commands.</target>
+        <target>Ви можете налаштувати рівень масштабування, використовуючи команди збільшення масштабу (`NVDA+shift+дорівнює`) та зменшення масштабу (`NVDA+shift+мінус`).</target>
       </segment>
     </unit>
     <unit id="f6102aa4-79fc-4301-ba43-d72c7d16643b">
       <notes>
         <note appliesTo="source">line: 1605</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Each press increases or decreases the zoom by a fixed increment.</source>
-        <target>Each press increases or decreases the zoom by a fixed increment.</target>
+        <target>Кожне натискання збільшує або зменшує масштаб на фіксовану величину.</target>
       </segment>
     </unit>
     <unit id="570cbd2e-dfba-49d5-8adc-f58dd162bac8">
@@ -17548,27 +17548,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ### </note>
         <note appliesTo="source">suffix:  {#MagnifierColorFilters}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Color Filters</source>
-        <target>Color Filters</target>
+        <target>Фільтри кольорів</target>
       </segment>
     </unit>
     <unit id="f4de9c1b-7d7b-4662-92e8-b4024dea1e59">
       <notes>
         <note appliesTo="source">line: 1609</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Color filters can help users with certain visual impairments or light sensitivity by modifying the colors displayed on the screen.</source>
-        <target>Color filters can help users with certain visual impairments or light sensitivity by modifying the colors displayed on the screen.</target>
+        <target>Фільтри кольорів можуть допомогти користувачам із певними порушеннями зору або підвищеною чутливістю до світла, змінюючи кольори, показані на екрані.</target>
       </segment>
     </unit>
     <unit id="cc3b8dec-e4f3-4e3c-ba76-b3453df8a3ea">
       <notes>
         <note appliesTo="source">line: 1610</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The magnifier provides three color filter options:</source>
-        <target>The magnifier provides three color filter options:</target>
+        <target>Лупа надає три параметри фільтра кольорів:</target>
       </segment>
     </unit>
     <unit id="a9fb3b9d-53ed-4dbf-bc35-eda4155d43b1">
@@ -17576,9 +17576,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1612</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Normal: No color modification is applied. This is the default setting.</source>
-        <target>Normal: No color modification is applied. This is the default setting.</target>
+        <target>Звичайний: зміна кольорів не застосовується. Це стандартне налаштування.</target>
       </segment>
     </unit>
     <unit id="75882a4c-1396-4382-a505-69e7f54a2716">
@@ -17586,9 +17586,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1613</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Grayscale: Converts all colors to shades of gray, which can help reduce eye strain and improve contrast for some users.</source>
-        <target>Grayscale: Converts all colors to shades of gray, which can help reduce eye strain and improve contrast for some users.</target>
+        <target>Відтінки сірого: перетворює всі кольори на відтінки сірого, що для деяких користувачів може допомогти зменшити навантаження на очі й поліпшити контрастність.</target>
       </segment>
     </unit>
     <unit id="15ee67ea-eb85-400e-9efb-9fc1961a790b">
@@ -17596,18 +17596,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1614</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Inverted: Inverts all colors on the screen (black becomes white, white becomes black, etc.), which can be helpful for users who prefer light text on dark backgrounds or have photophobia.</source>
-        <target>Inverted: Inverts all colors on the screen (black becomes white, white becomes black, etc.), which can be helpful for users who prefer light text on dark backgrounds or have photophobia.</target>
+        <target>Інвертований: перевертає всі кольори на екрані (чорний стає білим, білий — чорним тощо), що може бути корисним для користувачів, які віддають перевагу світлому тексту на темному тлі або страждають на світлобоязнь.</target>
       </segment>
     </unit>
     <unit id="e812191b-50c9-41de-84d3-c3386144fd58">
       <notes>
         <note appliesTo="source">line: 1616</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>To cycle through the available filters press `NVDA+shift+i`.</source>
-        <target>To cycle through the available filters press `NVDA+shift+i`.</target>
+        <target>Для перемикання між доступними фільтрами натискайте `NVDA+shift+i`.</target>
       </segment>
     </unit>
     <unit id="40050440-67e9-4ebd-bced-7ddaf35c235f">
@@ -17616,18 +17616,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ### </note>
         <note appliesTo="source">suffix:  {#MagnifierTrackingModes}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Tracking Modes</source>
-        <target>Tracking Modes</target>
+        <target>Режими відстеження</target>
       </segment>
     </unit>
     <unit id="53893a74-7258-4ce6-aa3f-50954b27261d">
       <notes>
         <note appliesTo="source">line: 1620</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The magnifier offers three different modes for tracking the mouse, system focus, review cursor, and navigator object, and determining which part of the screen to magnify:</source>
-        <target>The magnifier offers three different modes for tracking the mouse, system focus, review cursor, and navigator object, and determining which part of the screen to magnify:</target>
+        <target>Лупа пропонує три різні режими відстеження миші, системного фокуса, переглядового курсора й об’єкта навігатора, а також визначення, яку частину екрана потрібно збільшити:</target>
       </segment>
     </unit>
     <unit id="15d736f2-db42-4d76-8cbe-016a14349423">
@@ -17635,27 +17635,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1622</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Center: The magnified area is centered on the currently tracked position.</source>
-        <target>Center: The magnified area is centered on the currently tracked position.</target>
+        <target>Центрований: Збільшена область центрується на поточній відстежуваній позиції.</target>
       </segment>
     </unit>
     <unit id="35f84f37-53d4-4435-9525-5fe81bf0e43b">
       <notes>
         <note appliesTo="source">line: 1623</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This mode keeps the tracked element at the center of the screen and clamps to the screen edge.</source>
-        <target>This mode keeps the tracked element at the center of the screen and clamps to the screen edge.</target>
+        <target>У цьому режимі відстежуваний елемент залишається в центрі екрана й фіксується на його краю.</target>
       </segment>
     </unit>
     <unit id="1af44480-5f12-4b08-bd9a-f8c355441cba">
       <notes>
         <note appliesTo="source">line: 1624</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>To disable clamping, activate [true center tracking in the Magnifier settings](#MagnifierTrueCenterTracking).</source>
-        <target>To disable clamping, activate [true center tracking in the Magnifier settings](#MagnifierTrueCenterTracking).</target>
+        <target>Щоб вимкнути фіксування, активуйте [відстеження істинного центру в налаштуваннях лупи](#MagnifierTrueCenterTracking).</target>
       </segment>
     </unit>
     <unit id="bc7a74c2-228b-4650-85ac-91aa9575a4ff">
@@ -17663,18 +17663,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1625</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Border: The magnified area only moves when the tracked position approaches the edge of the visible area.</source>
-        <target>Border: The magnified area only moves when the tracked position approaches the edge of the visible area.</target>
+        <target>Рамка: Збільшена область переміщується лише тоді, коли відстежуване положення наближається до краю видимої області.</target>
       </segment>
     </unit>
     <unit id="f25f564e-2866-4a5e-8d3d-d6490d132175">
       <notes>
         <note appliesTo="source">line: 1626</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This mode provides a more stable view, only adjusting when necessary.</source>
-        <target>This mode provides a more stable view, only adjusting when necessary.</target>
+        <target>Цей режим забезпечує стабільніший перегляд, коригуючи його лише за потреби.</target>
       </segment>
     </unit>
     <unit id="34c77646-ad96-458e-b68d-5fad6721b5dd">
@@ -17682,18 +17682,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1627</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Relative: The magnified area maintains the relative position of the tracked element based on its position on the screen.</source>
-        <target>Relative: The magnified area maintains the relative position of the tracked element based on its position on the screen.</target>
+        <target>Відносний: У збільшеній області зберігається відносне положення відстежуваного елемента відносно його положення на екрані.</target>
       </segment>
     </unit>
     <unit id="9ffc8754-1f3b-4929-a61f-eeea6cb42574">
       <notes>
         <note appliesTo="source">line: 1629</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).</source>
-        <target>To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).</target>
+        <target>Для перемикання між режимами відстеження, призначте, будь ласка, користувацький жест у діалозі [Жести вводу](#InputGestures).</target>
       </segment>
     </unit>
     <unit id="7dcc406d-e586-4c4f-b8e0-d7d273f34200">
@@ -17702,27 +17702,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ### </note>
         <note appliesTo="source">suffix:  {#MagnifierScreenOverview}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Show entire screen overview</source>
-        <target>Show entire screen overview</target>
+        <target>Показати огляд усього екрана</target>
       </segment>
     </unit>
     <unit id="7f5ed3d2-2e65-4591-aa57-7f76eb414538">
       <notes>
         <note appliesTo="source">line: 1633</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The magnifier can temporarily display an overview of the entire screen, making it useful for presentations or when you need to quickly understand the overall screen layout.</source>
-        <target>The magnifier can temporarily display an overview of the entire screen, making it useful for presentations or when you need to quickly understand the overall screen layout.</target>
+        <target>Лупа може тимчасово показувати огляд усього екрана, що робить її корисною під час презентацій або коли потрібно швидко зорієнтуватися в загальному розташуванні елементів на екрані.</target>
       </segment>
     </unit>
     <unit id="786909ee-b7d5-4085-a8d3-f2abbac256e8">
       <notes>
         <note appliesTo="source">line: 1635</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This is useful when you want to:</source>
-        <target>This is useful when you want to:</target>
+        <target>Це корисно, коли ви хочете:</target>
       </segment>
     </unit>
     <unit id="efb33672-03b0-4b2f-942d-a4eeac975282">
@@ -17730,9 +17730,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1637</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Show context to your audience during a presentation before zooming in on specific details</source>
-        <target>Show context to your audience during a presentation before zooming in on specific details</target>
+        <target>Показати аудиторії під час презентації загальний контекст, перш ніж переходити до конкретних деталей</target>
       </segment>
     </unit>
     <unit id="6b276020-9027-4971-b470-545aacd84008">
@@ -17740,27 +17740,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1638</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Temporarily view the full screen layout while magnifying</source>
-        <target>Temporarily view the full screen layout while magnifying</target>
+        <target>Тимчасово переглянути повноекранний режим під час збільшення</target>
       </segment>
     </unit>
     <unit id="8b4eca65-f30a-4798-9983-02b6496c7489">
       <notes>
         <note appliesTo="source">line: 1640</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>To display an overview of the entire screen, press `NVDA+shift+l`.</source>
-        <target>To display an overview of the entire screen, press `NVDA+shift+l`.</target>
+        <target>Щоб тимчасово показати загальний огляд усього екрана, натисніть `NVDA+shift+l`.</target>
       </segment>
     </unit>
     <unit id="acbd7509-b0b9-427e-8578-848dd29b9175">
       <notes>
         <note appliesTo="source">line: 1641</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The magnifier will then:</source>
-        <target>The magnifier will then:</target>
+        <target>Тоді лупа:</target>
       </segment>
     </unit>
     <unit id="586e0e64-3ee9-4cbc-a6a0-939cd9a680d8">
@@ -17768,9 +17768,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1643</note>
         <note appliesTo="source">prefix: 1. </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Smoothly zoom out to show the full screen (zoom level 1.0x)</source>
-        <target>Smoothly zoom out to show the full screen (zoom level 1.0x)</target>
+        <target>Плавно зменшить масштаб, щоб показати повний екран (рівень масштабування 1.0x)</target>
       </segment>
     </unit>
     <unit id="0a0a3dad-cd51-4669-84ce-fcf9d759d3dd">
@@ -17778,9 +17778,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1644</note>
         <note appliesTo="source">prefix: 1. </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Monitor mouse movement</source>
-        <target>Monitor mouse movement</target>
+        <target>Відстежуватиме рухи миші</target>
       </segment>
     </unit>
     <unit id="cb3fa15e-73ca-4fc2-ab21-42635ea36658">
@@ -17788,18 +17788,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1645</note>
         <note appliesTo="source">prefix: 1. </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When the mouse remains still for approximately 2 seconds, automatically zoom back in to the original zoom level at the new mouse position</source>
-        <target>When the mouse remains still for approximately 2 seconds, automatically zoom back in to the original zoom level at the new mouse position</target>
+        <target>Автоматично поверне масштаб до початкового рівня у новій позиції курсора, якщо курсор миші залишається нерухомим протягом приблизно 2 секунд</target>
       </segment>
     </unit>
     <unit id="5b49726a-1313-4c02-82f6-42581a48b166">
       <notes>
         <note appliesTo="source">line: 1647</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Moving the mouse before the zoom-back occurs gives you more time to view the full screen.</source>
-        <target>Moving the mouse before the zoom-back occurs gives you more time to view the full screen.</target>
+        <target>Якщо перемістити мишу перед поверненням масштабу, у вас буде більше часу, щоб переглянути весь екран.</target>
       </segment>
     </unit>
     <unit id="2ada38bd-598c-4037-99a5-4601dad66cac">
@@ -17808,27 +17808,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ### </note>
         <note appliesTo="source">suffix:  {#MagnifierSettings}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Magnifier Settings</source>
-        <target>Magnifier Settings</target>
+        <target>Налаштування лупи</target>
       </segment>
     </unit>
     <unit id="d26da9a5-169e-400a-8127-692477429683">
       <notes>
         <note appliesTo="source">line: 1651</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The magnifier can be configured in the "Magnifier" category of the NVDA Settings dialog (`NVDA+control+w`).</source>
-        <target>The magnifier can be configured in the "Magnifier" category of the NVDA Settings dialog (`NVDA+control+w`).</target>
+        <target>Лупу можна налаштувати в категорії «Лупа», яка розташована в діалозі налаштувань NVDA (`NVDA+control+w`).</target>
       </segment>
     </unit>
     <unit id="156c0bf5-f85a-48d2-8806-df93b9607477">
       <notes>
         <note appliesTo="source">line: 1652</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>See the [Magnifier settings](#MagnifierSettingsCategory) section for details on available options.</source>
-        <target>See the [Magnifier settings](#MagnifierSettingsCategory) section for details on available options.</target>
+        <target>Для подробиць про доступні параметри перегляньте розділ [Налаштування лупи](#MagnifierSettingsCategory).</target>
       </segment>
     </unit>
     <unit id="db268119-b152-4431-bbe7-44da8add31e6">
@@ -19898,9 +19898,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 2024</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Pressing this button will allow you to copy your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it during sign-in and when running on User Account Control (UAC) and other [secure screens](#SecureScreens).</source>
-        <target>Pressing this button will allow you to copy your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it during sign-in and when running on User Account Control (UAC) and other [secure screens](#SecureScreens).</target>
+        <target>Натискання цієї кнопки дозволить вам скопіювати поточні збережені користувацькі налаштування NVDA до її системної папки, щоб послуговуватися ними на екрані входу у Windows, у Службі захисту користувачів (UAC) і на [інших захищених екранах](#SecureScreens).</target>
       </segment>
     </unit>
     <unit id="cc0924aa-2032-47ba-bd74-8ff1630014f3">
@@ -19916,9 +19916,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 2026</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When this button is pressed, it first opens the [Copy Settings to System-wide Configuration](#CopyAddonsToSystemProfileDialog) dialog in which you can choose the add-ons you want to be copied to system configuration.</source>
-        <target>When this button is pressed, it first opens the [Copy Settings to System-wide Configuration](#CopyAddonsToSystemProfileDialog) dialog in which you can choose the add-ons you want to be copied to system configuration.</target>
+        <target>Спершу після натискання цієї кнопки відкривається діалог [копіювання налаштувань до загальносистемної конфігурації](#CopyAddonsToSystemProfileDialog), у якому ви можете вибрати додатки, які хочете скопіювати до системної конфігурації.</target>
       </segment>
     </unit>
     <unit id="cb2a9ad9-d7a0-4422-8691-87cde40704ec">
@@ -20471,36 +20471,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#SpeechSettingPunctuationSilence}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Natural pause after punctuation</source>
-        <target>Natural pause after punctuation</target>
+        <target>Природна пауза після пунктуації</target>
       </segment>
     </unit>
     <unit id="4a5a1993-0026-4d2a-92fd-9b6b63eb2d31">
       <notes>
         <note appliesTo="source">line: 2123</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Disabling this option will remove the pauses after punctuation marks.</source>
-        <target>Disabling this option will remove the pauses after punctuation marks.</target>
+        <target>Вимкнення цього параметра видалить паузи після знаків пунктуації.</target>
       </segment>
     </unit>
     <unit id="39eb2d76-dd97-4ace-92f8-dac7ff43b7f6">
       <notes>
         <note appliesTo="source">line: 2124</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option is enabled by default.</source>
-        <target>This option is enabled by default.</target>
+        <target>Цей параметр початково увімкнено.</target>
       </segment>
     </unit>
     <unit id="8517f1e1-5d18-42e8-bb0a-3c9732c11bf5">
       <notes>
         <note appliesTo="source">line: 2125</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option only exists for Windows OneCore voices, and is supported on Windows 10 version 1803 or later.</source>
-        <target>This option only exists for Windows OneCore voices, and is supported on Windows 10 version 1803 or later.</target>
+        <target>Цей параметр існує лише для голосів Windows OneCore й підтримується на Windows 10 версії 1803 або пізніших.</target>
       </segment>
     </unit>
     <unit id="17f9daa6-7d5c-4eb5-9cc8-cff9332599e4">
@@ -20854,9 +20854,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 2187</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When this option is enabled, Unicode normalization is performed on the text that is spoken by NVDA.</source>
-        <target>When this option is enabled, Unicode normalization is performed on the text that is spoken by NVDA.</target>
+        <target>Якщо цей параметр увімкнено, для тексту, який вимовляє NVDA, виконується нормалізація юнікоду.</target>
       </segment>
     </unit>
     <unit id="2962bd52-74fb-48ea-8fa8-5d8a7defe531">
@@ -20872,18 +20872,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 2189</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA uses the NFKC (Normalization Form Compatibility Composition) algorithm, with additional normalization applied.</source>
-        <target>NVDA uses the NFKC (Normalization Form Compatibility Composition) algorithm, with additional normalization applied.</target>
+        <target>NVDA використовує алгоритм NFKC (Normalization Form Compatibility Composition) з додатковим застосуванням нормалізації.</target>
       </segment>
     </unit>
     <unit id="5f212832-1ea8-4f86-98f0-25f321d7e02f">
       <notes>
         <note appliesTo="source">line: 2190</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NFKC provides the following benefits, among others:</source>
-        <target>NFKC provides the following benefits, among others:</target>
+        <target>NFKC надає, серед іншого, такі переваги:</target>
       </segment>
     </unit>
     <unit id="a2ae732d-f60a-4c31-832e-adc7dad3074a">
@@ -20967,9 +20967,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2204</note>
         <note appliesTo="source">prefix: 1. </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Decomposition of some ligatures, including "ĳ" (ligature ij) to their two letter form ("ij").</source>
-        <target>Decomposition of some ligatures, including "ĳ" (ligature ij) to their two letter form ("ij").</target>
+        <target>Розкладання деяких лігатур, зокрема «ĳ» (лігатура ij), на їхню дволітерну форму («ij»).</target>
       </segment>
     </unit>
     <unit id="5072c79b-c31e-4870-a20f-e4c26e301ca9">
@@ -20986,36 +20986,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 2208</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The additional normalization in NVDA handles decorative letter variants that the standard NFKC algorithm does not decompose.</source>
-        <target>The additional normalization in NVDA handles decorative letter variants that the standard NFKC algorithm does not decompose.</target>
+        <target>Додаткова нормалізація в NVDA обробляє декоративні варіанти літер, які стандартний алгоритм NFKC не розкладає.</target>
       </segment>
     </unit>
     <unit id="bb8aafba-3957-472d-a3a7-8c4ec05a2452">
       <notes>
         <note appliesTo="source">line: 2209</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Certain Unicode characters, such as negative circled Latin capital letters (🅐–🅩) and negative squared Latin capital letters (🅲–🆉), are treated as autonomous symbols by the Unicode standard and have no compatibility decomposition.</source>
-        <target>Certain Unicode characters, such as negative circled Latin capital letters (🅐–🅩) and negative squared Latin capital letters (🅲–🆉), are treated as autonomous symbols by the Unicode standard and have no compatibility decomposition.</target>
+        <target>Деякі символи юнікоду, такі як латинські великі літери з мінусом у колі (🅐–🅩) та латинські великі літери з мінусом у квадраті (🅲–🆉), розглядаються стандартом Unicode як автономні символи й не мають сумісного розкладання.</target>
       </segment>
     </unit>
     <unit id="9c5e7bd8-0ebe-4fcf-a10c-15d276d3ed6e">
       <notes>
         <note appliesTo="source">line: 2210</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA extends NFKC by mapping these characters to their plain Latin letter equivalents (A–Z).</source>
-        <target>NVDA extends NFKC by mapping these characters to their plain Latin letter equivalents (A–Z).</target>
+        <target>NVDA розширює набір символів NFKC, прив’язуючи ці символи до їхніх відповідників у вигляді звичайних латинських літер (A–Z).</target>
       </segment>
     </unit>
     <unit id="fc3cf824-ecfd-4c2a-8b5c-e0e1d24383ab">
       <notes>
         <note appliesTo="source">line: 2211</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Note that a small number of negative squared letters that have emoji semantics (🅰, 🅱, 🅾, 🅿) are excluded from this mapping to preserve their distinct meaning.</source>
-        <target>Note that a small number of negative squared letters that have emoji semantics (🅰, 🅱, 🅾, 🅿) are excluded from this mapping to preserve their distinct meaning.</target>
+        <target>Зауважте, що невелика кількість літер у квадраті з негативним знаком, які мають семантику емодзі (🅰, 🅱, 🅾, 🅿), виключена з цього відповідника, щоб зберегти їхнє особливе значення.</target>
       </segment>
     </unit>
     <unit id="9cc6a3a5-84bc-462e-91d7-489e49f93506">
@@ -23103,72 +23103,72 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#BrailleAutoScrollRate}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Automatic Scroll Rate</source>
-        <target>Automatic Scroll Rate</target>
+        <target>Швидкість автоматичної прокрутки</target>
       </segment>
     </unit>
     <unit id="e1df5723-7e4b-4a46-bad0-248835adba4e">
       <notes>
         <note appliesTo="source">line: 2562</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This slider controls the rate of automatic braille display scrolling, measured in cells per second.</source>
-        <target>This slider controls the rate of automatic braille display scrolling, measured in cells per second.</target>
+        <target>Цей повзунок регулює швидкість автоматичної прокрутки брайлівського дисплея, яка вимірюється в комірках за секунду.</target>
       </segment>
     </unit>
     <unit id="ee251e93-bef5-432d-96a8-06c5f580d149">
       <notes>
         <note appliesTo="source">line: 2563</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The minimum value (0%) will be 1 cell per second, and the maximum value (100%), 20 cells per second.</source>
-        <target>The minimum value (0%) will be 1 cell per second, and the maximum value (100%), 20 cells per second.</target>
+        <target>Мінімальне значення (0 %) становитиме 1 комірку на секунду, а максимальне значення (100 %) — 20 комірок на секунду.</target>
       </segment>
     </unit>
     <unit id="271953b7-31c2-4061-9307-73eabc117956">
       <notes>
         <note appliesTo="source">line: 2564</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For example, with the default value of 10 cells/sec, if a braille display with 40 cells is used, the number of seconds between automatic scrolls will be 4.</source>
-        <target>For example, with the default value of 10 cells/sec, if a braille display with 40 cells is used, the number of seconds between automatic scrolls will be 4.</target>
+        <target>Наприклад, при стандартному значенні 10 комірок/сек, якщо використовується брайлівський дисплей на 40 комірок, кількість секунд між автоматичними прокрутками становитиме 4.</target>
       </segment>
     </unit>
     <unit id="ece58f5c-ceac-46ab-8ab6-cafbd6182853">
       <notes>
         <note appliesTo="source">line: 2565</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If the display had 20 cells, each line of braille would be shown for 2 seconds.</source>
-        <target>If the display had 20 cells, each line of braille would be shown for 2 seconds.</target>
+        <target>Якби дисплей мав 20 комірок, кожен рядок брайля відображався б протягом 2 секунд.</target>
       </segment>
     </unit>
     <unit id="0ca07a96-eed0-4d86-9efa-3626f5e20972">
       <notes>
         <note appliesTo="source">line: 2567</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>While the automatic scroll option is enabled, you can still use the scroll back command to read previous contents again, and scroll forward, for example, to skip a blank line, or if the line being read is too short.</source>
-        <target>While the automatic scroll option is enabled, you can still use the scroll back command to read previous contents again, and scroll forward, for example, to skip a blank line, or if the line being read is too short.</target>
+        <target>Навіть якщо увімкнено автоматичну прокрутку, ви все одно можете скористатися командою прокрутки назад, щоб ще раз прочитати попередній текст, а також прокрутити вперед, наприклад, щоб пропустити порожній рядок або якщо рядок, що читається, закороткий.</target>
       </segment>
     </unit>
     <unit id="e6d4c746-98f3-45a2-b29c-e25cfbe3a1d0">
       <notes>
         <note appliesTo="source">line: 2569</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Automatic scrolling will be disabled if a routing key is pressed, if a message is presented in braille, if a new object is displayed, when entering a secure screen, when the session is locked, or when the end of the window is reached.</source>
-        <target>Automatic scrolling will be disabled if a routing key is pressed, if a message is presented in braille, if a new object is displayed, when entering a secure screen, when the session is locked, or when the end of the window is reached.</target>
+        <target>Автоматичну прокрутку буде вимкнено у разі натискання клавіші маршрутизації, якщо шрифтом Брайля показується повідомлення, якщо з’являється новий об’єкт, під час переходу на захищений екран, під час блокування сеансу або при досягненні кінця вікна.</target>
       </segment>
     </unit>
     <unit id="2fb42204-d909-47f7-9db3-1a61d5ee09d4">
       <notes>
         <note appliesTo="source">line: 2571</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Commands can be assigned to toggle the automatic scroll option, and to increase or decrease the scroll rate, from the "Braille" section of the [Input Gestures dialog](#InputGestures).</source>
-        <target>Commands can be assigned to toggle the automatic scroll option, and to increase or decrease the scroll rate, from the "Braille" section of the [Input Gestures dialog](#InputGestures).</target>
+        <target>У розділі «Брайль» в діалозі [«Жести вводу»](#InputGestures) можна призначити команди для увімкнення чи вимкнення автоматичної прокрутки, а також для збільшення чи зменшення швидкості прокрутки.</target>
       </segment>
     </unit>
     <unit id="66416aa7-4287-44f2-aa7f-5c1d87710de1">
@@ -24546,18 +24546,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2812</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Debug (unredacted): In addition to debug logging, NVDA will not redact secrets such as passwords and API keys from logs.</source>
-        <target>Debug (unredacted): In addition to debug logging, NVDA will not redact secrets such as passwords and API keys from logs.</target>
+        <target>Налагодження (нередаговане): Окрім журналювання налагодження, NVDA не приховуватиме в журналах конфіденційну інформацію, таку як паролі та ключі API.</target>
       </segment>
     </unit>
     <unit id="356e666f-b024-4399-a8f8-3fb843e139b0">
       <notes>
         <note appliesTo="source">line: 2813</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Only enable this temporarily when important debugging information is being redacted.</source>
-        <target>Only enable this temporarily when important debugging information is being redacted.</target>
+        <target>Увімкніть цей параметр лише тимчасово, коли важлива інформація для налагодження приховується.</target>
       </segment>
     </unit>
     <unit id="15a4a49b-50a5-448e-94a0-7d863f5f5dbf">
@@ -24836,9 +24836,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: #### </note>
         <note appliesTo="source">suffix:  {#MagnifierSettingsCategory}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Magnifier</source>
-        <target>Magnifier</target>
+        <target>Лупа</target>
       </segment>
     </unit>
     <unit id="7a82c9c7-4db1-4ade-b475-716dade088a5">
@@ -24847,45 +24847,45 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#OpenMagnifierSettings}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Open Magnifier settings</source>
-        <target>Open Magnifier settings</target>
+        <target>Відкрити налаштування лупи</target>
       </segment>
     </unit>
     <unit id="d866d713-b075-435b-9832-723b223d6bee">
       <notes>
         <note appliesTo="source">line: 2862</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Key: `NVDA+control+w`</source>
-        <target>Key: `NVDA+control+w`</target>
+        <target>Клавіша: `NVDA+control+w`</target>
       </segment>
     </unit>
     <unit id="87db035b-ba91-488b-b8be-1e19c2a815a4">
       <notes>
         <note appliesTo="source">line: 2864</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The Magnifier category in the NVDA Settings dialog allows you to configure the default behavior of NVDA's built-in [Magnifier](#Magnifier) feature.</source>
-        <target>The Magnifier category in the NVDA Settings dialog allows you to configure the default behavior of NVDA's built-in [Magnifier](#Magnifier) feature.</target>
+        <target>Категорія «Лупа» в діалозі налаштувань NVDA дозволяє налаштувати типову поведінку функції [лупи](#Magnifier), яка вбудована в NVDA.</target>
       </segment>
     </unit>
     <unit id="57185f43-ec27-433f-846d-b796c5d65442">
       <notes>
         <note appliesTo="source">line: 2865</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>All options in this category take effect immediately, but selecting "Cancel" (or pressing `escape`) will discard any changes.</source>
-        <target>All options in this category take effect immediately, but selecting "Cancel" (or pressing `escape`) will discard any changes.</target>
+        <target>Усі параметри в цій категорії мають негайний ефект, але натискання кнопки «Скасувати» (або `escape`) відхилить будь-які зміни.</target>
       </segment>
     </unit>
     <unit id="c426994f-e62c-47ab-8c44-9f85732a066c">
       <notes>
         <note appliesTo="source">line: 2867</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This settings category contains the following options:</source>
-        <target>This settings category contains the following options:</target>
+        <target>Ця категорія налаштувань містить такі параметри:</target>
       </segment>
     </unit>
     <unit id="1b2852b5-ab66-4e2e-ae07-4b1217a27f17">
@@ -24894,27 +24894,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#MagnifierEnable}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Enable Magnifier</source>
-        <target>Enable Magnifier</target>
+        <target>Увімкнути лупу</target>
       </segment>
     </unit>
     <unit id="268be38e-e4fb-403e-bdee-d0cc0e23c278">
       <notes>
         <note appliesTo="source">line: 2873</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Key: `NVDA+shift+w`</source>
-        <target>Key: `NVDA+shift+w`</target>
+        <target>Клавіша: `NVDA+shift+w`</target>
       </segment>
     </unit>
     <unit id="b5b361b3-f676-4a0b-b560-3717f5d469e5">
       <notes>
         <note appliesTo="source">line: 2875</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option starts or stops the Magnifier.</source>
-        <target>This option starts or stops the Magnifier.</target>
+        <target>Цей параметр запускає або зупиняє лупу.</target>
       </segment>
     </unit>
     <unit id="f4551dd3-bf83-4b5b-b1ee-1e1a4873da24">
@@ -24923,9 +24923,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Disabled, Enabled </source>
-        <target> Options | Disabled, Enabled </target>
+        <target> Параметри | Вимкнено, Увімкнено </target>
       </segment>
     </unit>
     <unit id="08786d96-67e8-4ce6-9573-2c5aed99b095">
@@ -24934,9 +24934,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Disabled </source>
-        <target> Default | Disabled </target>
+        <target> Стандартно |Вимкнено </target>
       </segment>
     </unit>
     <unit id="fbe6f6d9-6a7e-42fd-898a-303f5bae42ef">
@@ -24945,36 +24945,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#MagnifierZoom}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Zoom</source>
-        <target>Zoom</target>
+        <target>Масштаб</target>
       </segment>
     </unit>
     <unit id="d835d5dc-b803-40e4-9c69-1baf4ad8e50b">
       <notes>
         <note appliesTo="source">line: 2884</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This setting allows you to set the zoom level when using the magnifier.</source>
-        <target>This setting allows you to set the zoom level when using the magnifier.</target>
+        <target>Цей параметр дозволяє встановити рівень масштабування під час використання лупи.</target>
       </segment>
     </unit>
     <unit id="a7182b62-a9ff-4e66-8f61-2f8a54c293cd">
       <notes>
         <note appliesTo="source">line: 2885</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The zoom level can range from 100% (no magnification) to 5000% (maximum magnification).</source>
-        <target>The zoom level can range from 100% (no magnification) to 5000% (maximum magnification).</target>
+        <target>Рівень масштабування може варіюватися від 100% (без збільшення) до 5000% (максимальне збільшення).</target>
       </segment>
     </unit>
     <unit id="0c98565c-afd5-4dd2-bff7-3dbb5994f5fa">
       <notes>
         <note appliesTo="source">line: 2886</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The default value is 200%.</source>
-        <target>The default value is 200%.</target>
+        <target>Початкове значення — 200%.</target>
       </segment>
     </unit>
     <unit id="b2608f0e-9c09-477d-9605-cdda53eb6ba8">
@@ -25287,9 +25287,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Enabled </source>
-        <target> Default | Enabled </target>
+        <target> Стандартно | Увімкнено </target>
       </segment>
     </unit>
     <unit id="5de13ec2-1ae7-46b6-b81f-c541fc4951c7">
@@ -25298,27 +25298,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#MagnifierFollowSystemFocus}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Follow system focus</source>
-        <target>Follow system focus</target>
+        <target>Стежити за системним фокусом</target>
       </segment>
     </unit>
     <unit id="dbc6d726-4bec-48bf-b981-512f6072e950">
       <notes>
         <note appliesTo="source">line: 2952</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This checkbox controls whether the magnifier should follow the system focus.</source>
-        <target>This checkbox controls whether the magnifier should follow the system focus.</target>
+        <target>Цей прапорець визначає, чи має лупа слідувати за системним фокусом.</target>
       </segment>
     </unit>
     <unit id="5de11b36-efaf-4326-a986-470835f868a0">
       <notes>
         <note appliesTo="source">line: 2953</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When enabled, the magnified area will automatically move to follow the system focus, which can be helpful for users who navigate primarily using the keyboard and want the magnifier to track their navigation.</source>
-        <target>When enabled, the magnified area will automatically move to follow the system focus, which can be helpful for users who navigate primarily using the keyboard and want the magnifier to track their navigation.</target>
+        <target>Якщо цю функцію увімкнути, область збільшення автоматично переміщатиметься, слідуючи за системним фокусом, що може бути корисним для користувачів, які переміщаються переважно за допомогою клавіатури й хочуть, щоб лупа відстежувала їхні дії.</target>
       </segment>
     </unit>
     <unit id="b20676a8-b2e0-4729-bca9-b85b6de21412">
@@ -25327,9 +25327,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Disabled, Enabled </source>
-        <target> Options | Disabled, Enabled </target>
+        <target> Параметри | Вимкнено, Увімкнено </target>
       </segment>
     </unit>
     <unit id="b23ef0ad-588d-47f4-a6d9-ddcf12bdba4f">
@@ -25338,9 +25338,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Enabled </source>
-        <target> Default | Enabled </target>
+        <target> Стандартно | Увімкнено </target>
       </segment>
     </unit>
     <unit id="5504b37c-15cb-4f77-bdee-8f986e134cf5">
@@ -25349,9 +25349,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#MagnifierFollowReviewCursor}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Follow review cursor</source>
-        <target>Follow review cursor</target>
+        <target>Стежити за переглядовим курсором</target>
       </segment>
     </unit>
     <unit id="cbe6d738-4fdd-44db-8bfc-70653b9137c0">
