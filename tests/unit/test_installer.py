@@ -491,8 +491,12 @@ class Test_CreatePortableDirectoryNormalization(unittest.TestCase):
 		"""
 		msgBoxCalls = []
 		import ntpath
+
 		with (
-			patch("gui.installerGui.gui.messageBox", side_effect=lambda msg, title, style=0: msgBoxCalls.append(msg)),
+			patch(
+				"gui.installerGui.gui.messageBox",
+				side_effect=lambda msg, title, style=0: msgBoxCalls.append(msg),
+			),
 			patch("gui.installerGui.os.path.isabs", side_effect=ntpath.isabs),
 			patch("gui.installerGui.os.path.splitroot", side_effect=ntpath.splitroot),
 			patch("gui.installerGui.os.path.expandvars", side_effect=lambda p: p),
