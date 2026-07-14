@@ -34,8 +34,8 @@ import ui
 from textInfos import DocumentWithPageTurns
 from logHandler import log
 
-#: The maximum number of entries kept in the in-memory browse mode search history.
 MAX_SEARCH_HISTORY_ENTRIES = 20
+"""The maximum number of entries kept in the in-memory browse mode search history."""
 
 
 class FindDialog(
@@ -142,8 +142,8 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 	_lastFindText = ""
 	_lastCaseSensitivity = False
 
-	#: In-memory history of search terms, most-recent first. Cleared on restart.
 	_searchEntries: list[str] = []
+	"""In-memory history of search terms, most-recent first. Cleared on restart."""
 
 	@classmethod
 	def _updateSearchHistory(cls, text: str) -> None:
