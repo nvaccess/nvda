@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2021-2024 NV Access Limited
+# Copyright (C) 2021-2026 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
 from typing import (
@@ -23,6 +23,7 @@ from ._remoteOps import operation
 from ._remoteOps import remoteAPI
 from ._remoteOps.lowLevel import (
 	TextUnit,
+	TextPatternRangeEndpoint,
 	AttributeId,
 	StyleId,
 )
@@ -122,21 +123,24 @@ def msWord_getCustomAttributeValue(
 	return customAttribValue
 
 
-def msWord_moveTextRangeBySentence(
+def msWord_textRange_moveBySentence(
 	docElement: UIA.IUIAutomationElement,
 	textRange: UIA.IUIAutomationTextRange,
 	unitCount: int,
-) -> UIA.IUIAutomationTextRange | None:
+) -> tuple[UIA.IUIAutomationTextRange, int] | None:
 	"""
-	Move a UI Automation text range by sentence using the Word-specific UIA
+	Move a UI Automation text range by unitCount sentences using the Word-specific UIA
 	extended text range pattern, if available.
-	Returns None if the operation fails or the extensions are not supported.
+	A degenerate range stays degenerate on success, matching the ITextRangeProvider::Move contract.
+	On par with ITextRangeProvider::Move, hitting a document boundary is not a failure: the range
+	is moved as far as possible and the actual number of sentences moved is returned, which may be
+	less than requested, or 0.
+	Returns None only if the operation fails or the extension is not supported.
 	"""
 	if not isSupported():
 		return None
 
 	guid_msWord_moveBySentence = GUID("{F39655AC-133A-435B-A318-C197F0D3D203}")
-	guid_msWord_expandToEnclosingSentence = GUID("{98FE8B34-F317-459A-9627-21123EA95BEA}")
 	op = operation.Operation()
 
 	@op.buildFunction
@@ -155,14 +159,6 @@ def msWord_moveTextRangeBySentence(
 		with ra.ifBlock(moveBySentenceSupported.inverse()):
 			ra.logRuntimeMessage("extendedTextRangePattern does not support MoveBySentence")
 			ra.Return(None)
-		expandSupported = remoteExtendedTextRangePattern.isExtensionSupported(
-			guid_msWord_expandToEnclosingSentence,
-		)
-		with ra.ifBlock(expandSupported.inverse()):
-			ra.logRuntimeMessage(
-				"extendedTextRangePattern does not support ExpandToEnclosingSentence",
-			)
-			ra.Return(None)
 
 		moveCount = ra.newInt(unitCount)
 		actualMoved = ra.newInt(0)
@@ -173,12 +169,132 @@ def msWord_moveTextRangeBySentence(
 			moveCount,
 			actualMoved,
 		)
+		ra.Return(remoteTextRange, actualMoved)
+
+	return op.execute()
+
+
+def msWord_textRange_moveEndpointBySentence(
+	docElement: UIA.IUIAutomationElement,
+	textRange: UIA.IUIAutomationTextRange,
+	endpoint: int,
+	unitCount: int,
+) -> tuple[UIA.IUIAutomationTextRange, int] | None:
+	"""
+	Move one endpoint of a UI Automation text range by unitCount sentences using the
+	Word-specific UIA extended text range pattern, if available.
+	:param endpoint: a TextPatternRangeEndpoint value indicating which endpoint to move.
+	On par with ITextRangeProvider::MoveEndpointByUnit, hitting a document boundary is not a
+	failure: the endpoint is moved as far as possible and the actual number of sentences moved
+	is returned, which may be less than requested, or 0.
+	Returns None only if the operation fails or the extension is not supported.
+	"""
+	if not isSupported():
+		return None
+
+	guid_msWord_moveEndpointBySentence = GUID("{368E89A2-1BC2-4402-8C58-33C63ECFFA3B}")
+	remoteEndpointConst = TextPatternRangeEndpoint(endpoint)
+	op = operation.Operation()
+
+	@op.buildFunction
+	def code(ra: remoteAPI.RemoteAPI):
+		remoteDocElement = ra.newElement(docElement)
+		remoteTextRange = ra.newTextRange(textRange)
+
+		remoteExtendedTextRangePattern = _msWord_remote_getExtendedTextRangePattern(
+			ra,
+			remoteDocElement,
+		)
+
+		moveEndpointBySentenceSupported = remoteExtendedTextRangePattern.isExtensionSupported(
+			guid_msWord_moveEndpointBySentence,
+		)
+		with ra.ifBlock(moveEndpointBySentenceSupported.inverse()):
+			ra.logRuntimeMessage(
+				"extendedTextRangePattern does not support MoveEndpointBySentence",
+			)
+			ra.Return(None)
+
+		remoteEndpoint = ra.newInt(remoteEndpointConst)
+		moveCount = ra.newInt(unitCount)
+		actualMoved = ra.newInt(0)
+		ra.logRuntimeMessage("doing callExtension for MoveEndpointBySentence")
+		remoteExtendedTextRangePattern.callExtension(
+			guid_msWord_moveEndpointBySentence,
+			remoteTextRange,
+			remoteEndpoint,
+			moveCount,
+			actualMoved,
+		)
+		ra.Return(remoteTextRange, actualMoved)
+
+	return op.execute()
+
+
+def msWord_textRange_expandToEnclosingSentence(
+	docElement: UIA.IUIAutomationElement,
+	textRange: UIA.IUIAutomationTextRange,
+) -> UIA.IUIAutomationTextRange | None:
+	"""
+	Expand a UI Automation text range to its enclosing sentence using the Word-specific UIA
+	extended text range pattern, if available.
+	If the range is collapsed at the very end of the document, it is returned unchanged:
+	Word's ExpandToEnclosingSentence extension otherwise wraps around and expands the first
+	sentence in the document instead of leaving the range where it is.
+	Returns None if the operation fails or the extension is not supported.
+	"""
+	if not isSupported():
+		return None
+
+	guid_msWord_expandToEnclosingSentence = GUID("{98FE8B34-F317-459A-9627-21123EA95BEA}")
+	op = operation.Operation()
+
+	@op.buildFunction
+	def code(ra: remoteAPI.RemoteAPI):
+		remoteDocElement = ra.newElement(docElement)
+		remoteTextRange = ra.newTextRange(textRange)
+
+		isCollapsed = (
+			remoteTextRange.compareEndpoints(
+				TextPatternRangeEndpoint.End,
+				remoteTextRange,
+				TextPatternRangeEndpoint.Start,
+			)
+			== 0
+		)
+		with ra.ifBlock(isCollapsed):
+			endTestRange = remoteTextRange.clone()
+			charsAvailable = endTestRange.moveEndpointByUnit(
+				TextPatternRangeEndpoint.End,
+				TextUnit.Character,
+				1,
+			)
+			with ra.ifBlock(charsAvailable == 0):
+				ra.logRuntimeMessage(
+					"Collapsed range is at the end of the document; "
+					"not expanding to sentence to avoid wraparound",
+				)
+				ra.Return(remoteTextRange)
+
+		remoteExtendedTextRangePattern = _msWord_remote_getExtendedTextRangePattern(
+			ra,
+			remoteDocElement,
+		)
+
+		expandSupported = remoteExtendedTextRangePattern.isExtensionSupported(
+			guid_msWord_expandToEnclosingSentence,
+		)
+		with ra.ifBlock(expandSupported.inverse()):
+			ra.logRuntimeMessage(
+				"extendedTextRangePattern does not support ExpandToEnclosingSentence",
+			)
+			ra.Return(None)
+
 		ra.logRuntimeMessage("doing callExtension for ExpandToEnclosingSentence")
 		remoteExtendedTextRangePattern.callExtension(
 			guid_msWord_expandToEnclosingSentence,
 			remoteTextRange,
 		)
-
 		ra.Return(remoteTextRange)
 
 	return op.execute()
