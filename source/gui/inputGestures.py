@@ -634,6 +634,9 @@ class InputGesturesDialog(SettingsDialog):
 		self.tree.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroyTree)
 
 	def onCharHook(self, evt: wx.KeyEvent):
+		# Get the most specific item (the leaf) from the tree selection.
+		# The VirtualTree selection is a tuple (Category, Script, Gesture).
+		# We need the leaf to know which specific item the user clicked.
 		selectedItems = self.tree.getSelectedItemData()
 		key = evt.GetKeyCode()
 		if selectedItems is None:
@@ -641,6 +644,7 @@ class InputGesturesDialog(SettingsDialog):
 		else:
 			# get the leaf of the selection
 			item = next((item for item in reversed(selectedItems) if item is not None), None)
+		# Check if an add operation is already in progress to prevent conflicts.
 		pendingAdd = self.gesturesVM.isExpectingNewEmuGesture or self.gesturesVM.isExpectingNewGesture
 		if item and not pendingAdd:
 			if key == wx.WXK_DELETE and item.canRemove:
@@ -648,12 +652,16 @@ class InputGesturesDialog(SettingsDialog):
 		evt.Skip()
 
 	def onContextMenu(self, evt: wx.ContextMenuEvent):
+		# Get the most specific item (the leaf) from the tree selection.
+		# The VirtualTree selection is a tuple (Category, Script, Gesture).
+		# We need the leaf to know which specific item the user clicked.
 		selectedItems = self.tree.getSelectedItemData()
 		if selectedItems is None:
 			item = None
 		else:
 			# get the leaf of the selection
 			item = next((item for item in reversed(selectedItems) if item is not None), None)
+		# Check if an add operation is already in progress to prevent conflicts.
 		pendingAdd = self.gesturesVM.isExpectingNewEmuGesture or self.gesturesVM.isExpectingNewGesture
 		menu = wx.Menu()
 		if item and not pendingAdd:
@@ -694,12 +702,16 @@ class InputGesturesDialog(SettingsDialog):
 		self._refreshButtonState()
 
 	def _refreshButtonState(self):
+		# Get the most specific item (the leaf) from the tree selection.
+		# The VirtualTree selection is a tuple (Category, Script, Gesture).
+		# We need the leaf to know which specific item the user clicked.
 		selectedItems = self.tree.getSelectedItemData()
 		if selectedItems is None:
 			item = None
 		else:
 			# get the leaf of the selection
 			item = next((item for item in reversed(selectedItems) if item is not None), None)
+		# Check if an add operation is already in progress to prevent conflicts.
 		pendingAdd = self.gesturesVM.isExpectingNewEmuGesture or self.gesturesVM.isExpectingNewGesture
 		self.addButton.Enabled = bool(item and item.canAdd and not pendingAdd)
 		self.removeButton.Enabled = bool(item and item.canRemove and not pendingAdd)
