@@ -1420,7 +1420,6 @@ While reading, automatic braille scrolling will stop when any of the following h
 | Toggle braille tethering | `NVDA+ctrl+t` | Toggle tethering of braille between the focus and the review position |
 | Toggle braille cursor | none | Toggle the braille cursor on and off |
 | Toggle braille context information | none | Toggle the way context information is presented in braille |
-| Toggle braille mode | `NVDA+alt+t` | Toggles braille mode |
 | Toggle speaking when navigating braille | none | Toggles on and off speaking when navigating by lines or paragraph with braille |
 | Toggle speaking character when routing | none | Toggles speaking the character under the cursor when routing cursor in text |
 
