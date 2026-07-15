@@ -150,7 +150,15 @@ class DisplayableError(Exception):
 	"""
 
 	def __init__(self, displayMessage: str, titleMessage: Optional[str] = None):
-		"""
+		"""An error with a message that should be presented to the user via a message box.
+
+		Code outside the GUI layer may raise DisplayableError to report a failure with a
+		translated, user friendly message, without deciding how the error is presented.
+		A component coordinating the work catches the exception and notifies an instance of
+		OnDisplayableErrorT, and a handler registered to that action decides how to display
+		the error, typically by calling L{displayError}.
+		See the "Communicating with the user" chapter of the Developer Guide for examples.
+
 		@param displayMessage: A translated message, to be displayed to the user.
 		@param titleMessage: A translated message, to be used as a title for the display message.
 		If left None, "Error" is presented as the title by default.

@@ -1532,6 +1532,16 @@ For examples of how to define and use new extension points, please see the code 
 | --- | --- | --- |
 | `Action` | `postNvdaStartup` | Notifies after NVDA has finished starting up. |
 
+### gui.message {#guiMessageExtPts}
+
+Unlike the other modules listed in this chapter, `gui.message` does not define a shared extension point instance.
+Instead, `DisplayableError.OnDisplayableErrorT` is an `Action` type: each component that needs to route user-visible errors out of non-GUI code creates its own instance.
+See [Displaying errors to the user](#DisplayableError) for a full description and examples.
+
+| Type | Extension Point | Description |
+| --- | --- | --- |
+| `Action` | `DisplayableError.OnDisplayableErrorT` (instantiated per component) | Notifies a registered handler (usually a GUI component) that a `DisplayableError` has occurred, allowing the handler to decide how to present the error to the user. |
+
 ### inputCore {#inputCoreExtPts}
 
 | Type | Extension Point | Description |
@@ -1865,3 +1875,75 @@ The following convenience class methods are provided (keyword arguments for over
 | `alert` | OK (`okLabel`) | `None` |
 | `confirm` | OK (`okLabel`) and Cancel (`cancelLabel`) | `ReturnCode.OK` or `ReturnCode.CANCEL` |
 | `ask` | Yes (`yesLabel`), No (`noLabel`) and Cancel (`cancelLabel`) | `ReturnCode.YES`, `ReturnCode.NO` or `ReturnCode.CANCEL` |
+
+### Displaying errors to the user: DisplayableError {#DisplayableError}
+
+`gui.message.DisplayableError` is an exception class for failures which the user should be told about via a message box, rather than only logged.
+It carries a translated message (`displayMessage`) and an optional translated title (`titleMessage`, which defaults to "Error"), and can present itself with its `displayError` method, which safely schedules a `gui.message.messageBox` call on the GUI thread using `wx.CallAfter`.
+
+Use `DisplayableError` when code outside the GUI layer (e.g. network or data-processing code, possibly running on a background thread) encounters an error the user needs to know about, but where that code should not decide how, or even whether, the error is presented.
+This keeps user-facing error presentation out of business logic, and involves three roles:
+
+* The code detecting the failure raises `DisplayableError` with a translated message.
+* A component that coordinates the work owns an instance of `DisplayableError.OnDisplayableErrorT` (an `extensionPoints.Action`), catches the exception, and notifies the action.
+Where the exception may be raised on a background thread, notify via `core.callLater` (or `wx.CallAfter`) so that handlers run on the main thread.
+* A GUI component registers a handler with that action and decides how to present the error.
+Typically the handler calls the error's `displayError` method, but it may equally decide to only log the error.
+For example, NVDA's automatic add-on update check fails silently, as the user did not initiate that work.
+
+For example, code performing a background task may raise a `DisplayableError`:
+
+```py
+from gui.message import DisplayableError
+
+def fetchWidgetData() -> WidgetData:
+	try:
+		...
+	except requests.exceptions.RequestException:
+		raise DisplayableError(
+			# Translators: Message shown when widget data cannot be fetched from the server.
+			displayMessage=_("Unable to fetch the latest widget data."),
+		)
+```
+
+The component coordinating the work owns the extension point, and notifies it on the main thread when the exception is caught:
+
+```py
+import core
+from gui.message import DisplayableError
+
+class WidgetDataUpdater:
+	onDisplayableError = DisplayableError.OnDisplayableErrorT()
+
+	def _updateInBackground(self):
+		try:
+			data = fetchWidgetData()
+		except DisplayableError as displayableError:
+			# Handlers may interact with the GUI, so ensure they are called on the main thread.
+			core.callLater(
+				delay=0,
+				callable=self.onDisplayableError.notify,
+				displayableError=displayableError,
+			)
+			return
+		...
+```
+
+Note that the keyword argument passed to `notify` must be named `displayableError`, as handlers receive it by that name.
+
+Finally, the GUI component responsible for presentation registers a handler:
+
+```py
+import gui
+from gui.message import DisplayableError
+
+class WidgetDialog(wx.Dialog):
+	def __init__(self, parent: wx.Window, updater: WidgetDataUpdater):
+		updater.onDisplayableError.register(self.handleDisplayableError)
+		...
+
+	def handleDisplayableError(self, displayableError: DisplayableError):
+		displayableError.displayError(gui.mainFrame)
+```
+
+For real-world usage, see the Add-on Store: `DisplayableError` is raised in `addonStore.install` and `addonStore.network`, routed through `gui.addonStoreGui.viewModels.store.AddonStoreVM.onDisplayableError`, and handled by `gui.addonStoreGui.controls.storeDialog.AddonStoreDialog`.

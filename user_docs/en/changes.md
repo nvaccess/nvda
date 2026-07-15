@@ -78,6 +78,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * `cellIndexes` is not limited to routing keys; touch-sensitive cells (e.g. Handy Tech Active Tactile Control) can reuse the same attribute.
 * Added a new `hwIo.ble` submodule for Bluetooth Low Energy device discovery and I/O, exposing a `Scanner` singleton (with a `deviceDiscovered` extension point), a `Ble` class implementing the `IoBase` contract, and a `findDeviceByAddress` helper.
 Built on top of [Bleak](https://bleak.readthedocs.io/) and the `_asyncioEventLoop` module. (#19838, @bramd)
+* The Developer Guide now documents `gui.message.DisplayableError` and its associated extension point, covering when to use it and example usage. (#16984, @danielw97)
 * Component updates:
   * Updated py2exe to 0.14.1.1. (#20260, @LeonarddeR)
 
