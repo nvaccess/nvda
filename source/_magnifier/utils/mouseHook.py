@@ -12,6 +12,7 @@ the DPI-related lag compared to the built-in Windows Magnifier.
 
 import ctypes
 import threading
+from collections.abc import Callable
 from ctypes import byref
 from ctypes.wintypes import MSG
 from logHandler import log
@@ -33,7 +34,7 @@ class MagnifierMouseHook:
 	thread, e.g. via wx.CallAfter.
 	"""
 
-	def __init__(self, onMouseMove):
+	def __init__(self, onMouseMove: Callable[[int, int], None]):
 		self._onMouseMove = onMouseMove
 		self._thread: threading.Thread | None = None
 		self._cCallback = None  # kept alive to prevent GC of the ctypes callback
@@ -58,21 +59,21 @@ class MagnifierMouseHook:
 		self._thread = None
 		self._cCallback = None
 
+	def _onRawMouseEvent(self, code: int, eventType: int, mouseDataPointer: int) -> int:
+		if code == HC_ACTION and eventType == WM_MOUSEMOVE:
+			mouseData = MSLLHOOKSTRUCT.from_address(mouseDataPointer)
+			try:
+				self._onMouseMove(mouseData.pt.x, mouseData.pt.y)
+			except Exception:
+				log.exception("Error in magnifier mouse hook callback")
+		return user32.CallNextHookEx(0, code, eventType, mouseDataPointer)
+
 	def _run(self) -> None:
 		windowsMessage = MSG()
 		# Ensure the thread message queue exists so PostThreadMessage(WM_QUIT) succeeds.
 		user32.PeekMessage(byref(windowsMessage), None, 0, 0, PM_NOREMOVE)
 
-		def _onRawMouseEvent(code, eventType, mouseDataPointer):
-			if code == HC_ACTION and eventType == WM_MOUSEMOVE:
-				mouseData = MSLLHOOKSTRUCT.from_address(mouseDataPointer)
-				try:
-					self._onMouseMove(mouseData.pt.x, mouseData.pt.y)
-				except Exception:
-					log.exception("Error in magnifier mouse hook callback")
-			return user32.CallNextHookEx(0, code, eventType, mouseDataPointer)
-
-		self._cCallback = user32.HOOKPROC(_onRawMouseEvent)
+		self._cCallback = user32.HOOKPROC(self._onRawMouseEvent)
 		hookHandle = user32.SetWindowsHookEx(WH_MOUSE_LL, self._cCallback, None, 0)
 		self._hookInstalled = bool(hookHandle)
 		self._hookReady.set()
