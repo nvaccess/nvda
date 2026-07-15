@@ -2622,7 +2622,7 @@ To toggle this option from anywhere, please assign a custom gesture to "speakOnN
 This slider controls the rate at which NVDA scrolls the braille display when [automatic braille scrolling](#AutomaticBrailleScrolling) is enabled, measured in cells per second.
 
 In order to use this feature, you first need to assign a gesture to toggle automatic braille scrolling in the "Braille" section of the [Input Gestures dialog](#InputGestures).
-You may also assign gestures to increase or decrease the scroll rate.
+To increase or decrease the scroll rate from anywhere, please assign custom gestures using the [Input Gestures dialog](#InputGestures).
 
 The minimum value (0%) will be 1 cell per second, and the maximum value (100%), 20 cells per second.
 For example, with the default value of 10 cells/sec, if a 40-cell braille display is used, the display will scroll automatically every 4 seconds.
