@@ -31,6 +31,7 @@ from .config import (
 	getFilter,
 	isTrueCentered,
 	setZoomLevel,
+	setEnabled,
 	ZoomLevel,
 	_isDebug,
 )
@@ -313,6 +314,10 @@ class Magnifier:
 				# Another magnifier application may have grabbed the API while screen curtain was on.
 				ui.message(e.message)
 				return
+			finally:
+				# Keep config in sync with the real active state, as start() does, so the settings
+				# checkbox does not stay checked when the restart failed.
+				setEnabled(self._isActive)
 			self._updateMagnifier()
 
 	def _zoom(self, direction: Direction) -> None:

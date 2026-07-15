@@ -128,16 +128,6 @@ class TestMagnifier(_TestMagnifier):
 		self.assertTrue(self.magnifier._isActive)
 		self.magnifier._focusManager.getCurrentFocusCoordinates.assert_not_called()
 
-	def testStartMagnifierRaisesWhenScreenCurtainActive(self):
-		"""Starting while screen curtain is active raises MagnifierStartError and does not activate."""
-		mockScreenCurtain = MagicMock()
-		mockScreenCurtain.screenCurtain.enabled = True
-		with patch("_magnifier.magnifier.screenCurtain", mockScreenCurtain):
-			with self.assertRaises(MagnifierStartError):
-				self.magnifier._startMagnifier()
-
-		self.assertFalse(self.magnifier._isActive)
-
 	def testUpdateMagnifier(self):
 		"""Updating the magnifier's properties."""
 		# Use center coordinates which will always be within bounds
@@ -561,10 +551,10 @@ class TestMagnifier(_TestMagnifier):
 			self.assertEqual(self.magnifier.currentCoordinates, validCoords)
 
 	def testStartBlockedByScreenCurtain(self):
-		"""When screen curtain is active, _startMagnifier must not set _isActive."""
+		"""After startup, screen curtain active makes _startMagnifier raise and not set _isActive."""
 		self._mockScreenCurtain(enabled=True)
 		with patch("NVDAState._TrackNVDAInitialization.isInitializationComplete", return_value=True):
-			with patch("_magnifier.magnifier.ui.message"):
+			with self.assertRaises(MagnifierStartError):
 				self.magnifier._startMagnifier()
 
 		self.assertFalse(self.magnifier._isActive)
