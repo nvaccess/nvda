@@ -74,7 +74,6 @@ def calculateWordOffsets(
 	:return: (startOffset, endOffset) as UTF-16 code unit indices (endOffset exclusive),
 	    or None if the ICU call failed.
 	"""
-	log.debug(f"calculateWordOffsets({text=}, {offset=})")
 	# A c_wchar buffer is UTF-16 code-unit indexed on Windows, so buf[a:b] is exactly
 	# the segment ICU's offsets refer to (lone surrogates decode as non-space).
 	buf = ctypes.create_unicode_buffer(text)
