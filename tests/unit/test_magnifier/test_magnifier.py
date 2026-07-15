@@ -5,6 +5,7 @@
 
 from _magnifier.config import ZoomLevel
 from _magnifier.magnifier import Magnifier
+from _magnifier.utils.errorHandling import MagnifierStartError
 from _magnifier.utils.types import Filter, Direction, Coordinates, MagnifierAction
 from comtypes import COMError
 import unittest
@@ -117,6 +118,16 @@ class TestMagnifier(_TestMagnifier):
 
 		self.assertTrue(self.magnifier._isActive)
 		self.magnifier._focusManager.getCurrentFocusCoordinates.assert_not_called()
+
+	def testStartMagnifierRaisesWhenScreenCurtainActive(self):
+		"""Starting while screen curtain is active raises MagnifierStartError and does not activate."""
+		mockScreenCurtain = MagicMock()
+		mockScreenCurtain.screenCurtain.enabled = True
+		with patch("_magnifier.magnifier.screenCurtain", mockScreenCurtain):
+			with self.assertRaises(MagnifierStartError):
+				self.magnifier._startMagnifier()
+
+		self.assertFalse(self.magnifier._isActive)
 
 	def testUpdateMagnifier(self):
 		"""Updating the magnifier's properties."""

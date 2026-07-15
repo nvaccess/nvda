@@ -13,7 +13,6 @@ from comtypes import COMError
 from logHandler import log
 import wx
 import ui
-import speech
 import screenCurtain
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
@@ -35,6 +34,7 @@ from .config import (
 	_isDebug,
 )
 from .utils.focusManager import FocusManager
+from .utils.errorHandling import MagnifierStartError
 
 
 class Magnifier:
@@ -173,14 +173,13 @@ class Magnifier:
 		# Check if screen curtain is active - if so, block magnifier from starting
 		if screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled:
 			log.debug("Screen curtain is active, cannot start magnifier")
-
-			message = pgettext(
-				"magnifier",
-				# Translators: Message when trying to enable magnifier while screen curtain is active
-				"Cannot enable magnifier. Please disable screen curtain first.",
+			raise MagnifierStartError(
+				pgettext(
+					"magnifier",
+					# Translators: Message when trying to enable magnifier while screen curtain is active
+					"Cannot enable magnifier. Please disable screen curtain first.",
+				),
 			)
-			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
-			return
 
 		self._isActive = True
 		self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
