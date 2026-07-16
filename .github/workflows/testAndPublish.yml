@@ -411,7 +411,9 @@ jobs:
     - parallel:
         - name: Build NVDAController client
           shell: cmd
-          run: scons client %sconsArgs% %sconsCores%
+          run: |
+            PowerShell -Command "Start-Sleep -Seconds 5"
+            scons client %sconsArgs% %sconsCores%
         - name: Create NVDA launcher
           shell: cmd
           run: scons %sconsLauncherOutTargets% %sconsArgs%
