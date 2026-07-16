@@ -220,3 +220,70 @@ class TestWordOffsetsTrailingPunctuationDivergence(unittest.TestCase):
 		# ICU ends the word before the punctuation; Uniscribe runs through it.
 		self.assertEqual(icu_result, (0, 4))
 		self.assertEqual(uni_result, (0, 5))
+
+
+@skipIfNoICU
+class TestWordOffsetsTabs(_WordOffsetsParityTest):
+	"""Word offset comparison for runs of tabs.
+
+	ICU treats a single tab character as its own word.
+	This can cause oddities including getting stuck in runs of tabs.
+	"""
+
+	TEXT = "\t\tTest\t\t"
+
+	def test_preLeadingIndent(self):
+		"""Both backends should capture both tabs."""
+		result = self._assertSameWordOffsets(0)
+		self.assertEqual(result, (0, 2))
+
+	def test_midLeadingIndent(self):
+		"""Both backends should capture both tabs."""
+		result = self._assertSameWordOffsets(1)
+		self.assertEqual(result, (0, 2))
+
+	def test_postLeadingIndent(self):
+		"""Both backends should capture "Test" and both trailing tabs."""
+		result = self._assertSameWordOffsets(2)
+		self.assertEqual(result, (2, 8))
+
+	def test_preTrailingIndent(self):
+		"""Both backends should capture "Test" and both trailing tabs."""
+		result = self._assertSameWordOffsets(6)
+		self.assertEqual(result, (2, 8))
+
+	def test_midTrailingIndent(self):
+		"""Both backends should capture "Test" and both trailing tabs."""
+		result = self._assertSameWordOffsets(7)
+		self.assertEqual(result, (2, 8))
+
+
+@skipIfNoICU
+class TestMixedSpacesAndTabs(unittest.TestCase):
+	"""Uniscribe treats mixed spaces and tabs differently depending on order."""
+
+	def test_tabThenSpace(self):
+		"""Both backends treat tabs then spaces as a single whitespace run."""
+		text = "\t\t  "
+		expected = (0, 4)
+		for offset in range(len(text)):
+			with self.subTest(offset=offset):
+				self.assertEqual(_icuWordOffsets(text, offset), expected, "unexpected ICU offsets")
+				self.assertEqual(
+					_uniscribeWordOffsets(text, offset),
+					expected,
+					"unexpected uniscribe offsets",
+				)
+
+	def test_spacesThenTabs(self):
+		"""Uniscribe separates spaces from tabs that follow them."""
+		text = "  \t\t"
+		for offset in range(len(text)):
+			with self.subTest(offset=offset):
+				self.assertEqual(_icuWordOffsets(text, offset), (0, 4), "unexpected ICU offsets")
+				uniStart = 0 if offset < 2 else 2
+				self.assertEqual(
+					_uniscribeWordOffsets(text, offset),
+					(uniStart, uniStart + 2),
+					"unexpected uniscribe offsets",
+				)
