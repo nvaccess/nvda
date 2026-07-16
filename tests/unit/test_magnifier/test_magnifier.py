@@ -33,9 +33,14 @@ class _TestMagnifier(unittest.TestCase):
 			mock.MagUninitialize.return_value = True
 			mock.MagSetFullscreenTransform.return_value = True
 			mock.MagSetFullscreenColorEffect.return_value = True
+		self.mouseHook_patcher = patch("_magnifier.magnifier.MagnifierMouseHook")
+		self.MockMouseHook = self.mouseHook_patcher.start()
+		self.mock_hook_instance = MagicMock()
+		self.MockMouseHook.return_value = self.mock_hook_instance
 
 	def tearDown(self):
 		"""Cleanup after each test."""
+		self.mouseHook_patcher.stop()
 		self.mag_fs_patcher.stop()
 		self.mag_patcher.stop()
 
