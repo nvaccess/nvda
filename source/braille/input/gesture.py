@@ -21,7 +21,7 @@ def formatDotNumbers(dots: int):
 class BrailleInputGesture(inputCore.InputGesture):
 	"""Input (dots and/or space bar) from a braille keyboard.
 	This could either be as part of a braille display or a stand-alone unit.
-	L{dots} and L{space} should be set appropriately.
+	:attr:`dots` and :attr:`space` should be set appropriately.
 	"""
 
 	dots: int = 0
