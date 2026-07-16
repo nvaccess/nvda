@@ -48,30 +48,34 @@ class BrailleInputHandler(AutoPropertyObject):
 	def __init__(self):
 		super().__init__()
 		self._table: brailleTables.BrailleTable = brailleTables.getTable(FALLBACK_TABLE)
-		#: A buffer of entered braille cells so that state set by previous cells can be maintained;
-		#: e.g. capital and number signs.
 		self.bufferBraille = []
-		#: The text translated so far from the cells in L{bufferBraille}.
+		"""A buffer of entered braille cells so that state set by previous cells can be maintained;
+		e.g. capital and number signs.
+		"""
 		self.bufferText = ""
-		#: Indexes of cells which produced text.
-		#: For example, this includes letters and numbers, but not number signs,
-		#: since a number sign by itself doesn't produce text.
-		#: This is used when erasing cells to determine when to backspace an actual character.
+		"""The text translated so far from the cells in :attr:`bufferBraille`."""
 		self.cellsWithText = set()
-		#: The cells in L{bufferBraille} that have not yet been translated
-		#: or were translated but did not produce any text.
-		#: This is used to show these cells to the user while they're entering braille.
-		#: This is a string of Unicode braille.
+		"""Indexes of cells which produced text.
+		For example, this includes letters and numbers, but not number signs,
+		since a number sign by itself doesn't produce text.
+		This is used when erasing cells to determine when to backspace an actual character.
+		"""
 		self.untranslatedBraille = ""
-		#: The position in L{brailleBuffer} where untranslated braille begins.
+		"""The cells in :attr:`bufferBraille` that have not yet been translated
+		or were translated but did not produce any text.
+		This is used to show these cells to the user while they're entering braille.
+		This is a string of Unicode braille.
+		"""
 		self.untranslatedStart = 0
-		#: The user's cursor position within the untranslated braille.
-		#: This enables the user to move within the untranslated braille.
+		"""The position in :attr:`bufferBraille` where untranslated braille begins."""
 		self.untranslatedCursorPos = 0
-		#: The time at which uncontracted characters were sent to the system.
+		"""The user's cursor position within the untranslated braille.
+		This enables the user to move within the untranslated braille.
+		"""
 		self._uncontSentTime = None
-		#: The modifiers currently being held virtually to be part of the next braille input gesture.
+		"""The time at which uncontracted characters were sent to the system."""
 		self.currentModifiers = set()
+		"""The modifiers currently being held virtually to be part of the next braille input gesture."""
 		self.handlePostConfigProfileSwitch()
 		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 

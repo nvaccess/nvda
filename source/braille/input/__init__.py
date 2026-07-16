@@ -15,8 +15,8 @@ from logHandler import log
 
 from . import inputHandler as _inputHandler
 
-#: The singleton BrailleInputHandler instance.
 handler: _inputHandler.BrailleInputHandler | None = None
+"""The singleton BrailleInputHandler instance."""
 
 
 def initialize():

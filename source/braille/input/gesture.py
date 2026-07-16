@@ -24,13 +24,11 @@ class BrailleInputGesture(inputCore.InputGesture):
 	L{dots} and L{space} should be set appropriately.
 	"""
 
-	#: Bitmask of pressed dots.
-	#: @type: int
-	dots = 0
+	dots: int = 0
+	"""Bitmask of pressed dots."""
 
-	#: Whether the space bar is pressed.
-	#: @type: bool
-	space = False
+	space: bool = False
+	"""Whether the space bar is pressed."""
 
 	shouldPreventSystemIdle = True
 
@@ -40,12 +38,15 @@ class BrailleInputGesture(inputCore.InputGesture):
 			items.append("space")
 		return "bk:" + "+".join(items)
 
-	#: The generic gesture identifier for space plus any dots.
-	#: This could be used to bind many braille commands to a single script.
 	GENERIC_ID_SPACE_DOTS = inputCore.normalizeGestureIdentifier("bk:space+dots")
-	#: The generic gesture identifier for any dots.
-	#: This is used to bind entry of braille text to a single script.
+	"""The generic gesture identifier for space plus any dots.
+	This could be used to bind many braille commands to a single script.
+	"""
+
 	GENERIC_ID_DOTS = inputCore.normalizeGestureIdentifier("bk:dots")
+	"""The generic gesture identifier for any dots.
+	This is used to bind entry of braille text to a single script.
+	"""
 
 	def _get_identifiers(self):
 		if self.space and self.dots:
