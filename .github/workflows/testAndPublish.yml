@@ -408,12 +408,13 @@ jobs:
             PowerShell -Command "Set-ExecutionPolicy Bypass"
             PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
             PowerShell -Command "Install-Module -Name SignPath -Force"
-    - name: Build NVDAController client
-      shell: cmd
-      run: scons client %sconsArgs% %sconsCores%
-    - name: Create NVDA launcher
-      shell: cmd
-      run: scons %sconsLauncherOutTargets% %sconsArgs%
+    - parallel:
+        - name: Build NVDAController client
+          shell: cmd
+          run: scons client %sconsArgs% %sconsCores%
+        - name: Create NVDA launcher
+          shell: cmd
+          run: scons %sconsLauncherOutTargets% %sconsArgs%
     - name: Upload launcher
       id: uploadLauncher
       uses: actions/upload-artifact@v7
