@@ -411,8 +411,8 @@ jobs:
     - parallel:
         - name: Build NVDAController client
           shell: cmd
+          # To avoid potential permission errors that may occur when this runs simultaneously with "Create NVDA launcher", a wait has been added to prevent them from running at the same time
           run: |
-            # To avoid potential permission errors that may occur when this runs simultaneously with "Create NVDA launcher", a wait has been added to prevent them from running at the same time
             PowerShell -Command "Start-Sleep -Seconds 5"
             scons client %sconsArgs% %sconsCores%
         - name: Create NVDA launcher
