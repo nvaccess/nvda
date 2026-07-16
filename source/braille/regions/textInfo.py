@@ -292,9 +292,9 @@ class TextInfoRegion(Region):
 		self._addTextWithFields(chunk, formatConfig)
 		# If the user is entering braille, place any untranslated braille before the selection.
 		# Import late to avoid circular import.
-		import braille.input
+		from ..input import handler as brailleInputHandler
 
-		text = braille.input.handler.untranslatedBraille
+		text = brailleInputHandler.untranslatedBraille
 		if text:
 			rawInputIndStart = len(self.rawText)
 			# _addFieldText adds text to self.rawText and updates other state accordingly.
@@ -351,7 +351,7 @@ class TextInfoRegion(Region):
 			# These are the start and end of the actual untranslated input, excluding indicators.
 			self._brailleInputStart = self._brailleInputIndStart + len(INPUT_START_IND)
 			self._brailleInputEnd = self._brailleInputIndEnd - len(INPUT_END_IND)
-			self.brailleCursorPos = self._brailleInputStart + braille.input.handler.untranslatedCursorPos
+			self.brailleCursorPos = self._brailleInputStart + brailleInputHandler.untranslatedCursorPos
 		else:
 			self._brailleInputIndStart = None
 
@@ -404,11 +404,11 @@ class TextInfoRegion(Region):
 				# The user routed to the end indicator. Route to the end of the input.
 				braillePos = self._brailleInputEnd
 			# Import late to avoid circular import.
-			import braille.input
+			from ..input import handler as brailleInputHandler
 
-			braille.input.handler.untranslatedCursorPos = braillePos - self._brailleInputStart
-			self.brailleCursorPos = self._brailleInputStart + braille.input.handler.untranslatedCursorPos
-			braille.input.handler.updateDisplay()
+			brailleInputHandler.untranslatedCursorPos = braillePos - self._brailleInputStart
+			self.brailleCursorPos = self._brailleInputStart + brailleInputHandler.untranslatedCursorPos
+			brailleInputHandler.updateDisplay()
 			return
 
 		dest = self.getTextInfoForBraillePos(braillePos)

@@ -119,17 +119,17 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			if self._cellIndexesStr:
 				ids.insert(0, f"br({self.source}.{self.model}):{self.id}{self._cellIndexesStr}")
 			ids.insert(1, f"br({self.source}.{self.model}):{self.id}")
-		import braille.input.gesture
+		from ..input.gesture import BrailleInputGesture
 
-		if isinstance(self, braille.input.gesture.BrailleInputGesture):
-			ids.extend(braille.input.gesture.BrailleInputGesture._get_identifiers(self))
+		if isinstance(self, BrailleInputGesture):
+			ids.extend(BrailleInputGesture._get_identifiers(self))
 		return ids
 
 	def _get_displayName(self):
-		import braille.input.gesture
+		from ..input.gesture import BrailleInputGesture
 
-		if isinstance(self, braille.input.gesture.BrailleInputGesture):
-			name = braille.input.gesture.BrailleInputGesture._get_displayName(self)
+		if isinstance(self, BrailleInputGesture):
+			name = BrailleInputGesture._get_displayName(self)
 			if name:
 				return name
 		if self._cellIndexesStr:
@@ -146,10 +146,10 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		# Overrides L{inputCore.InputGesture._get_script} to support modifier keys.
 		# Also processes modifiers held by braille input.
 		# Import late to avoid circular import.
-		import braille.input
+		from ..input import handler as brailleInputHandler
 
 		gestureKeys = set(self.keyNames)
-		gestureModifiers = braille.input.handler.currentModifiers.copy()
+		gestureModifiers = brailleInputHandler.currentModifiers.copy()
 		script = scriptHandler.findScript(self)
 		if script:
 			scriptName = script.__name__
@@ -203,7 +203,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		else:
 			return None
 		self.script = scriptHandler._makeKbEmulateScript(combinedScriptName)
-		braille.input.handler.currentModifiers.clear()
+		brailleInputHandler.currentModifiers.clear()
 		return self.script
 
 	def _get_keyNames(self):
