@@ -65,6 +65,7 @@ from NVDAObjects.behaviors import (
 	ToolTip,
 )
 import braille
+import braille.regions.properties
 import locationHelper
 import ui
 import winVersion
@@ -2466,7 +2467,9 @@ class UIA(Window):
 		"""
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		# Ideally, we wouldn't use getPropertiesBraille directly.
-		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
+		braille.handler.message(
+			braille.regions.properties.getPropertiesBraille(name=self.name, role=self.role),
+		)
 
 	def event_UIA_notification(
 		self,
