@@ -67,6 +67,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * The `config.configSections.registerSection` method can be used in the `onInstall` function.
   * To register a section to be used in the normal configuration, regardless of profiles, the `isBaseOnly` parameter should be set to `True`.
 * The `braille` module is now a package, split into focused submodules such as `braille.constants`, `braille.labels`, `braille.formatting`, `braille.regions`, `braille.display`, `braille.buffers`, `braille.brailleHandler` and `braille.extensions`. (#12772, #20458, @LeonarddeR)
+  * The `brailleInput` module has also moved into this package as `braille.input`, split into `braille.input.constants`, `braille.input.gesture` and `braille.input.inputHandler`. (#12772, @LeonarddeR)
 * Added `gui.message.HtmlMessageDialog`, a `MessageDialog` subclass that renders a full HTML document in a `wx.html2.WebView`. (#18878, @LeonarddeR)
   * The WebView backend can be overridden via the `_webViewBackend` class attribute, which defaults to the IE backend.
   * JavaScript in the message can trigger NVDA actions by navigating to `nvda-action://<action>` URLs; `close` is handled internally and other actions can be registered with `registerAction`.
@@ -95,8 +96,8 @@ Use the corresponding `TouchAction` enum members instead (e.g. `TouchAction.TAP`
 Use `TouchAction(value).displayString` instead. (#20086, @kefaslungu)
 * The `URL_MK_UNIFORM`, `DIALOG_OPTIONS` and `HTMLDLG_*` constants in `ui` are deprecated with no replacement, as the COM-based HTML dialog infrastructure has been removed.
 Use `gui.message.HtmlMessageDialog` instead. (#18878, @LeonarddeR)
-* The symbols that moved out of the `braille` module facade when it became a package are deprecated.
-Accessing them as `braille.X` still works but logs a deprecation warning; import them from their new location instead, as listed below. (#20390, @LeonarddeR)
+* The symbols that moved out of the `braille` module facade when it became a package, as well as the symbols of the `brailleInput` module which is now the `braille.input` package, are deprecated.
+Accessing them as `braille.X` or `brailleInput.X` still works but logs a deprecation warning; import them from their new location instead, as listed below. (#20390, #12772, @LeonarddeR)
 
 | Old location | New location |
 | --- | --- |
@@ -158,6 +159,19 @@ Accessing them as `braille.X` still works but logs a deprecation warning; import
 | `braille.decide_enabled` | `braille.extensions.decide_enabled` |
 | `braille.BrailleMode` | `config.configFlags.BrailleMode` |
 | `braille.TetherTo` | `config.configFlags.TetherTo` |
+| `brailleInput.handler` | `braille.input.handler` |
+| `brailleInput.initialize` | `braille.input.initialize` |
+| `brailleInput.terminate` | `braille.input.terminate` |
+| `brailleInput.FALLBACK_TABLE` | `braille.input.constants.FALLBACK_TABLE` |
+| `brailleInput.DOT7` | `braille.input.constants.DOT7` |
+| `brailleInput.DOT8` | `braille.input.constants.DOT8` |
+| `brailleInput.LOUIS_DOTS_IO_START` | `braille.input.constants.LOUIS_DOTS_IO_START` |
+| `brailleInput.UNICODE_BRAILLE_START` | `braille.input.constants.UNICODE_BRAILLE_START` |
+| `brailleInput.UNICODE_BRAILLE_PROTECTED` | `braille.input.constants.UNICODE_BRAILLE_PROTECTED` |
+| `brailleInput.formatDotNumbers` | `braille.input.gesture.formatDotNumbers` |
+| `brailleInput.BrailleInputGesture` | `braille.input.gesture.BrailleInputGesture` |
+| `brailleInput.BrailleInputHandler` | `braille.input.inputHandler.BrailleInputHandler` |
+| `brailleInput.speakDots` | `braille.input.inputHandler.speakDots` |
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->

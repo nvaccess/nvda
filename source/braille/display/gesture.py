@@ -26,7 +26,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	Optionally, :attr:`model` can be provided to facilitate model specific gestures.
 	:attr:`cellIndexes` should be provided for gestures addressed to specific braille cells,
 	such as routing keys or touch-sensitive cells (e.g. Handy Tech Active Tactile Control).
-	Subclasses can also inherit from :class:`brailleInput.BrailleInputGesture` if the display has a braille keyboard.
+	Subclasses can also inherit from :class:`braille.input.gesture.BrailleInputGesture` if the display has a braille keyboard.
 	If the braille display driver is a :class:`baseObject.ScriptableObject`, it can provide scripts specific to input gestures from this display.
 	"""
 
@@ -119,17 +119,17 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			if self._cellIndexesStr:
 				ids.insert(0, f"br({self.source}.{self.model}):{self.id}{self._cellIndexesStr}")
 			ids.insert(1, f"br({self.source}.{self.model}):{self.id}")
-		import brailleInput
+		import braille.input.gesture
 
-		if isinstance(self, brailleInput.BrailleInputGesture):
-			ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
+		if isinstance(self, braille.input.gesture.BrailleInputGesture):
+			ids.extend(braille.input.gesture.BrailleInputGesture._get_identifiers(self))
 		return ids
 
 	def _get_displayName(self):
-		import brailleInput
+		import braille.input.gesture
 
-		if isinstance(self, brailleInput.BrailleInputGesture):
-			name = brailleInput.BrailleInputGesture._get_displayName(self)
+		if isinstance(self, braille.input.gesture.BrailleInputGesture):
+			name = braille.input.gesture.BrailleInputGesture._get_displayName(self)
 			if name:
 				return name
 		if self._cellIndexesStr:
@@ -146,10 +146,10 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		# Overrides L{inputCore.InputGesture._get_script} to support modifier keys.
 		# Also processes modifiers held by braille input.
 		# Import late to avoid circular import.
-		import brailleInput
+		import braille.input
 
 		gestureKeys = set(self.keyNames)
-		gestureModifiers = brailleInput.handler.currentModifiers.copy()
+		gestureModifiers = braille.input.handler.currentModifiers.copy()
 		script = scriptHandler.findScript(self)
 		if script:
 			scriptName = script.__name__
@@ -203,7 +203,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		else:
 			return None
 		self.script = scriptHandler._makeKbEmulateScript(combinedScriptName)
-		brailleInput.handler.currentModifiers.clear()
+		braille.input.handler.currentModifiers.clear()
 		return self.script
 
 	def _get_keyNames(self):

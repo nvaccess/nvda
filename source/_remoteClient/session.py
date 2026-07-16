@@ -73,7 +73,7 @@ import braille.display
 import braille.display.driver
 import braille.display.gesture
 import braille.extensions
-import brailleInput
+import braille.input.gesture
 import gui
 import inputCore
 import scriptHandler
@@ -611,7 +611,7 @@ class LeaderSession(RemoteSession):
 
 	def handleDecideExecuteGesture(
 		self,
-		gesture: braille.display.gesture.BrailleDisplayGesture | brailleInput.BrailleInputGesture,
+		gesture: braille.display.gesture.BrailleDisplayGesture | braille.input.gesture.BrailleInputGesture,
 	) -> bool:
 		"""Handle and forward braille gestures to remote client.
 
@@ -624,7 +624,7 @@ class LeaderSession(RemoteSession):
 
 		if isinstance(
 			gesture,
-			(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture),
+			(braille.display.gesture.BrailleDisplayGesture, braille.input.gesture.BrailleInputGesture),
 		):
 			if self.localMachine._showingLocalUiMessage and gesture.script in (
 				commands.script_braille_routeTo,
