@@ -79,7 +79,6 @@ def calculateWordOffsets(
 	buf = ctypes.create_unicode_buffer(text)
 	textLength = len(buf) - 1
 	if offset >= textLength:
-		log.debug("Offset >= textLength; returning offset, offset+1")
 		return (offset, offset + 1)
 
 	try:
