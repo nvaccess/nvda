@@ -215,8 +215,9 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 				actionTarget=self._selectedAddons,
 			),
 			BatchAddonActionVM(
-				# Translators: Label for an action that updates the selected add-ons
-				displayName=pgettext("addonStore", "&Update selected add-ons"),
+				# Translators: Label for an action that updates the selected add-ons,
+				# which also re-enables any that are disabled.
+				displayName=pgettext("addonStore", "&Update (and enable) selected add-ons"),
 				actionHandler=self._storeVM.getAddons,
 				validCheck=lambda aVMs: AddonListValidator(aVMs).canUseUpdateAction(),
 				actionTarget=self._selectedAddons,

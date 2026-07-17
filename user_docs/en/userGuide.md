@@ -372,6 +372,7 @@ Press `control+tab` to get to this tab from anywhere in the Add-on Store.
 The status of the add-on will be listed as "Update available".
 The list will display the currently installed version and the available version.
 Press `enter` on the add-on to open the actions list; choose "Update".
+If the add-on is disabled, the action will instead be labelled "Update (and enable)", as add-ons must be enabled to be installed; updating a disabled add-on re-enables it.
 
 By default, after NVDA startup, you will be notified if any add-on updates are available.
 To learn more about and configure this behaviour, refer to ["Update Notifications"](#AutomaticAddonUpdates).

@@ -446,8 +446,9 @@ class UpdatableAddonsDialog(
 		self.updateAllButton = bHelper.addButton(
 			self,
 			wx.ID_CLOSE,
-			# Translators: The label of a button in a dialog
-			label=pgettext("addonStore", "&Update all"),
+			# Translators: The label of a button in a dialog that updates all add-ons,
+			# which also re-enables any that are disabled.
+			label=pgettext("addonStore", "&Update (and enable) all"),
 		)
 		self.updateAllButton.Bind(wx.EVT_BUTTON, self.onUpdateAllButton)
 

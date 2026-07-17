@@ -31,6 +31,8 @@
   * Browseable message dialogs now better support resizing, maximizing and minimizing, with text wrapping to the dialog width. (#20429, @Cary-rowen)
 * Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
 * The duration of indentation beeps can now be configured via a new "Indent tone duration (ms)" spin control in the Document Formatting settings panel. (#20447, @Mubashir78)
+* In the Add-on Store, the update action for a disabled add-on is now labelled "Update (and enable)", to make it clear that updating an add-on also re-enables it. (#17624, @danielw97)
+  * The bulk update actions have been relabelled "Update (and enable) selected add-ons" and "Update (and enable) all" for the same reason.
 
 ### Bug Fixes
 
