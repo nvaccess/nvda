@@ -1383,10 +1383,12 @@ Where text is longer than will fit on the display, panning or other keys on the 
 [Automatic braille scrolling](#BrailleAutoScrollRate) can be enabled to scroll the display at a set speed.
 When using this feature, the braille display scrolls to present information which is more than will fit on the display at once.
 The feature is disabled and a gesture to start braille scrolling is undefined by default.
-To use automatic braille scrolling, a gesture needs to be set in NVDA's [input gestures](#InputGestures) before it can be used.
+To use automatic braille scrolling, a gesture needs to be set in NVDA's [Input Gestures dialog](#InputGestures) before it can be used.
 Gestures can also be set to speed up or slow down the rate of automatic scrolling.
 
-While braille is scrolling, you can still use the scroll back command to read previous contents again, and scroll forward, for example, to skip a blank line, or if the line being read is too short.
+While braille is scrolling, you can still use the scroll back and scroll forward commands without stopping scrolling.
+Scroll back can be useful to read previous contents again.
+Scroll forward can be useful to skip a blank line, or if the line being read is short.
 
 While reading, automatic braille scrolling will stop when any of the following happen:
 
@@ -1396,32 +1398,33 @@ While reading, automatic braille scrolling will stop when any of the following h
 * The end of the document is reached
 * If the state of the lock or secure screen is changed (such as the computer being locked)
 
-#### Braille Reading Gestures {BrailleReadingGestures}
+#### Braille Reading Gestures {#BrailleReadingGestures}
 
+<!-- KC:beginInclude -->
 | Name | Key | Description |
 |---|---|---|
 | Toggles braille mode | `NVDA+alt+t` | Allows cycling between available braille modes: "follow cursors" and "display speech output"|
 | Tether braille |`NVDA+control+t` | This option allows you to choose whether the braille display will follow the system focus / caret, the navigator object / review cursor, or both |
 | Toggle automatic scroll | None | Scrolls the display to present information which is larger than will fit on the display at once.  Press again to pause scrolling |
-| Increase automatic scroll rate | none | Makes automatic scrolling faster (when enabled) |
-| Decrease automatic scroll rate | none | Makes automatic scrolling slower (when enabled) |
-| Cycle braille cursor shapes | none | Cycle through the shape options (dot pattern) of the braille cursor |
-| Cycle move system caret when routing review cursor | none | Cycle through the braille move system caret when routing review cursor states |
-| Cycle show messages modes | none | Cycle through the braille show messages modes |
-| Cycle braille show selection states | none | Cycle through the braille show selection states |
-| Cycle braille Unicode normalization states | none | Cycle through the braille Unicode normalization states |
-| Move braille to focus | none | Moves the braille display to the current focus |
-| Move braille to next line | none | Moves the braille display to the next line |
-| Move braille to previous line | none | Moves the braille display to the previous line |
-| Report braille formatting | none | Reports formatting info for the text under this braille cell |
-| Route to or activate braille object | none | Routes the cursor to or activates the object under this braille cell |
-| Scroll braille display back | none | Scrolls the braille display back |
-| Scroll braille display forward | none | Scrolls the braille display forward |
-| Toggle braille tethering | `NVDA+ctrl+t` | Toggle tethering of braille between the focus and the review position |
-| Toggle braille cursor | none | Toggle the braille cursor on and off |
-| Toggle braille context information | none | Toggle the way context information is presented in braille |
-| Toggle speaking when navigating braille | none | Toggles on and off speaking when navigating by lines or paragraph with braille |
-| Toggle speaking character when routing | none | Toggles speaking the character under the cursor when routing cursor in text |
+| Increase automatic scroll rate | None | Makes automatic scrolling faster (when enabled) |
+| Decrease automatic scroll rate | None | Makes automatic scrolling slower (when enabled) |
+| Cycle braille cursor shapes | None | Cycle through the shape options (dot pattern) of the braille cursor |
+| Cycle move system caret when routing review cursor | None | Cycle through the braille move system caret when routing review cursor states |
+| Cycle show messages modes | None | Cycle through the braille show messages modes |
+| Cycle braille show selection states | None | Cycle through the braille show selection states |
+| Cycle braille Unicode normalization states | None | Cycle through the braille Unicode normalization states |
+| Move braille to focus | None | Moves the braille display to the current focus |
+| Move braille to next line | None | Moves the braille display to the next line |
+| Move braille to previous line | None | Moves the braille display to the previous line |
+| Report braille formatting | None | Reports formatting info for the text under this braille cell |
+| Route to or activate braille object | None | Routes the cursor to or activates the object under this braille cell |
+| Scroll braille display back | None | Scrolls the braille display back |
+| Scroll braille display forward | None | Scrolls the braille display forward |
+| Toggle braille cursor | None | Toggle the braille cursor on and off |
+| Toggle braille context information | None | Toggle the way context information is presented in braille |
+| Toggle speaking when navigating braille | None | Toggles on and off speaking when navigating by lines or paragraph with braille |
+| Toggle speaking character when routing | None | Toggles speaking the character under the cursor when routing cursor in text |
+<!-- KC:endInclude -->
 
 Refer to NVDA's [Braille Settings](#BrailleSettings) for all options which can be used to adjust braille reading.
 
@@ -1564,14 +1567,16 @@ When typing in contracted Braille, using the modifier toggle keys will cause you
 In addition, the emulated keypress cannot reflect Braille typed before the modifier key was pressed.
 This means that, to type alt+2 with a Braille code that uses a number sign, you must first toggle Alt and then type a number sign.
 
-#### Braille Input Gestures {BrailleInputGestures}
+#### Braille Input Gestures {#BrailleInputGestures}
+<!-- KC:beginInclude -->
 
 | Name | Key | Description |
 |---|---|---|
-| Input via braille display | any dots | Inputs braille dots via the braille keyboard |
+| Input via braille display | `any dots` | Inputs braille dots via the braille keyboard |
 | Erase last entered | `dot7` | Erases the last entered braille cell or character |
 | Translate braille input | `dot7+dot8` | Translates any braille input |
 | Translate and press enter | `dot8` | Translates any braille input and presses the enter key |
+<!-- KC:endInclude -->
 
 ## Vision {#Vision}
 
