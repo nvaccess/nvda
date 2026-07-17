@@ -56,15 +56,15 @@ name = "bleak"
 version = "3.0.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "winrt-runtime" },
-    { name = "winrt-windows-devices-bluetooth" },
-    { name = "winrt-windows-devices-bluetooth-advertisement" },
-    { name = "winrt-windows-devices-bluetooth-genericattributeprofile" },
-    { name = "winrt-windows-devices-enumeration" },
-    { name = "winrt-windows-devices-radios" },
-    { name = "winrt-windows-foundation" },
-    { name = "winrt-windows-foundation-collections" },
-    { name = "winrt-windows-storage-streams" },
+    { name = "winrt-runtime", marker = "sys_platform == 'win32'" },
+    { name = "winrt-windows-devices-bluetooth", marker = "sys_platform == 'win32'" },
+    { name = "winrt-windows-devices-bluetooth-advertisement", marker = "sys_platform == 'win32'" },
+    { name = "winrt-windows-devices-bluetooth-genericattributeprofile", marker = "sys_platform == 'win32'" },
+    { name = "winrt-windows-devices-enumeration", marker = "sys_platform == 'win32'" },
+    { name = "winrt-windows-devices-radios", marker = "sys_platform == 'win32'" },
+    { name = "winrt-windows-foundation", marker = "sys_platform == 'win32'" },
+    { name = "winrt-windows-foundation-collections", marker = "sys_platform == 'win32'" },
+    { name = "winrt-windows-storage-streams", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/16/df/05a3f80ca8e3f7f5b0dba68a9e618147c909ccdba1468f07487dc8d72a9d/bleak-3.0.2.tar.gz", hash = "sha256:c2229cb8238d5876b4bd05c74bf7a1aea1f88da39d2e51ac9dfd5cc319d5265f", size = 125293, upload-time = "2026-05-02T23:01:04.066Z" }
 wheels = [
@@ -94,7 +94,7 @@ name = "cattrs"
 version = "24.1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "attrs" },
+    { name = "attrs", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/29/7b/da4aa2f95afb2f28010453d03d6eedf018f9e085bd001f039e15731aba89/cattrs-24.1.3.tar.gz", hash = "sha256:981a6ef05875b5bb0c7fb68885546186d306f10f0f6718fe9b96c226e68821ff", size = 426684, upload-time = "2025-03-25T15:01:00.325Z" }
 wheels = [
@@ -115,7 +115,7 @@ name = "cffi"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pycparser", marker = "implementation_name != 'PyPy'" },
+    { name = "pycparser", marker = "implementation_name != 'PyPy' and sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/eb/56/b1ba7935a17738ae8453301356628e8147c79dbb825bcbc73dc7401f9846/cffi-2.0.0.tar.gz", hash = "sha256:44d1b5909021139fe36001ae048dbdde8214afa20200eda0f64c068cac5d5529", size = 523588, upload-time = "2025-09-08T23:24:04.541Z" }
 wheels = [
@@ -164,8 +164,8 @@ name = "crowdin-api-client"
 version = "1.24.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "deprecated" },
-    { name = "requests" },
+    { name = "deprecated", marker = "sys_platform == 'win32'" },
+    { name = "requests", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/07/fc/ec5564928057aac9cae7e78ed324898b3134369b100bbb2b5c97ad1ad548/crowdin_api_client-1.24.1.tar.gz", hash = "sha256:d2a385c2b3f8e985d5bb084524ae14aef9045094fba0b2df1df82d9da97155b1", size = 70629, upload-time = "2025-08-26T13:20:34.955Z" }
 wheels = [
@@ -177,7 +177,7 @@ name = "cryptography"
 version = "46.0.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "platform_python_implementation != 'PyPy'" },
+    { name = "cffi", marker = "platform_python_implementation != 'PyPy' and sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/47/93/ac8f3d5ff04d54bc814e961a43ae5b0b146154c89c61b47bb07557679b18/cryptography-46.0.7.tar.gz", hash = "sha256:e4cfd68c5f3e0bfdad0d38e023239b96a2fe84146481852dffbcca442c245aa5", size = 750652, upload-time = "2026-04-08T01:57:54.692Z" }
 wheels = [
@@ -192,7 +192,7 @@ name = "deprecated"
 version = "1.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "wrapt" },
+    { name = "wrapt", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/49/85/12f0a49a7c4ffb70572b6c2ef13c90c88fd190debda93b23f026b25f9634/deprecated-1.3.1.tar.gz", hash = "sha256:b1b50e0ff0c1fddaa5708a2c6b0a6588bb09b892825ab2b214ac9ea9d92a5223", size = 2932523, upload-time = "2025-10-30T08:19:02.757Z" }
 wheels = [
@@ -204,8 +204,8 @@ name = "detect-secrets"
 version = "1.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pyyaml" },
-    { name = "requests" },
+    { name = "pyyaml", marker = "sys_platform == 'win32'" },
+    { name = "requests", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/69/67/382a863fff94eae5a0cf05542179169a1c49a4c8784a9480621e2066ca7d/detect_secrets-1.5.0.tar.gz", hash = "sha256:6bb46dcc553c10df51475641bb30fd69d25645cc12339e46c824c1e0c388898a", size = 97351, upload-time = "2024-05-06T17:46:19.721Z" }
 wheels = [
@@ -232,8 +232,8 @@ name = "fhconfparser"
 version = "2024.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "attrs" },
-    { name = "tomli" },
+    { name = "attrs", marker = "sys_platform == 'win32'" },
+    { name = "tomli", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/4b/b3/ca177719df2db0050599c576023858b86cabe4f54d3beda0e7e673a6892f/fhconfparser-2024.1.tar.gz", hash = "sha256:de8af019f0071e614d523985e1d93e0fce20a409d1c64dead03b1b665d4b2e4d", size = 8357, upload-time = "2024-01-24T21:48:56.471Z" }
 wheels = [
@@ -245,7 +245,7 @@ name = "fuzzysearch"
 version = "0.8.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "attrs" },
+    { name = "attrs", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e9/b4/d92b429ba4bfe5461faa358f84092eceb5ea8985cd2e448daf38bba17737/fuzzysearch-0.8.1.tar.gz", hash = "sha256:e5f50962c6b1c3dfc6c8cdfd5e2604838c95cb10118e4cab518e5292e9e0b1c6", size = 39510, upload-time = "2025-11-11T08:47:10.321Z" }
 
@@ -263,8 +263,8 @@ name = "imageio"
 version = "2.37.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy" },
-    { name = "pillow" },
+    { name = "numpy", marker = "sys_platform == 'win32'" },
+    { name = "pillow", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b1/84/93bcd1300216ea50811cee96873b84a1bebf8d0489ffaf7f2a3756bab866/imageio-2.37.3.tar.gz", hash = "sha256:bbb37efbfc4c400fcd534b367b91fcd66d5da639aaa138034431a1c5e0a41451", size = 389673, upload-time = "2026-03-09T11:31:12.573Z" }
 wheels = [
@@ -285,7 +285,7 @@ name = "jinja2"
 version = "3.1.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "markupsafe" },
+    { name = "markupsafe", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/df/bf/f7da0350254c0ed7c72f3e33cef02e048281fec7ecec5f032d4aac52226b/jinja2-3.1.6.tar.gz", hash = "sha256:0137fb05990d35f1275a587e9aee6d56da821fc83491a0fb838183be43f66d6d", size = 245115, upload-time = "2025-03-05T20:05:02.478Z" }
 wheels = [
@@ -297,8 +297,8 @@ name = "l2m4m"
 version = "1.0.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "latex2mathml" },
-    { name = "markdown" },
+    { name = "latex2mathml", marker = "sys_platform == 'win32'" },
+    { name = "markdown", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/1d/71/2548c288ef1b27f3419285e45430b8f10b9be8f4c34b4d2ecec2d34baf42/l2m4m-1.0.4.tar.gz", hash = "sha256:7fc451edb281604c1eb9d6fa626a8cce874e8a0d3641cca581c20b7544f51396", size = 16567, upload-time = "2024-06-15T16:49:04.798Z" }
 wheels = [
@@ -319,7 +319,7 @@ name = "license-expression"
 version = "30.4.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "boolean-py" },
+    { name = "boolean-py", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/40/71/d89bb0e71b1415453980fd32315f2a037aad9f7f70f695c7cec7035feb13/license_expression-30.4.4.tar.gz", hash = "sha256:73448f0aacd8d0808895bdc4b2c8e01a8d67646e4188f887375398c761f340fd", size = 186402, upload-time = "2025-07-22T11:13:32.17Z" }
 wheels = [
@@ -331,18 +331,18 @@ name = "licensecheck"
 version = "2025.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "appdirs" },
-    { name = "fhconfparser" },
-    { name = "license-expression" },
-    { name = "loguru" },
-    { name = "markdown" },
-    { name = "packaging" },
-    { name = "requests" },
-    { name = "requests-cache" },
-    { name = "requirements-parser" },
-    { name = "rich" },
-    { name = "tomli" },
-    { name = "uv" },
+    { name = "appdirs", marker = "sys_platform == 'win32'" },
+    { name = "fhconfparser", marker = "sys_platform == 'win32'" },
+    { name = "license-expression", marker = "sys_platform == 'win32'" },
+    { name = "loguru", marker = "sys_platform == 'win32'" },
+    { name = "markdown", marker = "sys_platform == 'win32'" },
+    { name = "packaging", marker = "sys_platform == 'win32'" },
+    { name = "requests", marker = "sys_platform == 'win32'" },
+    { name = "requests-cache", marker = "sys_platform == 'win32'" },
+    { name = "requirements-parser", marker = "sys_platform == 'win32'" },
+    { name = "rich", marker = "sys_platform == 'win32'" },
+    { name = "tomli", marker = "sys_platform == 'win32'" },
+    { name = "uv", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/5a/36/2ea057fb11e7f4918bfaffd4eb135f715dd8cdc653fba516b9e2453d16bd/licensecheck-2025.1.0.tar.gz", hash = "sha256:411a1d81606b8be695794c1e7e79cc899b51fe5c501164155361cd2d6f3c5969", size = 79797, upload-time = "2025-03-26T22:58:04.777Z" }
 wheels = [
@@ -354,8 +354,8 @@ name = "loguru"
 version = "0.7.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama" },
-    { name = "win32-setctime" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+    { name = "win32-setctime", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/3a/05/a1dae3dffd1116099471c643b8924f5aa6524411dc6c63fdae648c4f1aca/loguru-0.7.3.tar.gz", hash = "sha256:19480589e77d47b8d85b2c827ad95d49bf31b0dcde16593892eb51dd18706eb6", size = 63559, upload-time = "2024-12-06T11:20:56.608Z" }
 wheels = [
@@ -387,7 +387,7 @@ name = "markdown-it-py"
 version = "4.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "mdurl" },
+    { name = "mdurl", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/06/ff/7841249c247aa650a76b9ee4bbaeae59370dc8bfd2f6c01f3630c35eb134/markdown_it_py-4.2.0.tar.gz", hash = "sha256:04a21681d6fbb623de53f6f364d352309d4094dd4194040a10fd51833e418d49", size = 82454, upload-time = "2026-05-07T12:08:28.36Z" }
 wheels = [
@@ -399,7 +399,7 @@ name = "markdown-link-attr-modifier"
 version = "0.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "markdown" },
+    { name = "markdown", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e0/30/d35aad054a27f119bff2408523d82c3f9a6d9936712c872f5b9fe817de5b/markdown_link_attr_modifier-0.2.1.tar.gz", hash = "sha256:18df49a9fe7b5c87dad50b75c2a2299ae40c65674f7b1263fb12455f5df7ac99", size = 18408, upload-time = "2023-04-13T16:00:12.798Z" }
 wheels = [
@@ -434,7 +434,7 @@ name = "mdx-gh-links"
 version = "0.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "markdown" },
+    { name = "markdown", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/2f/ea/bf1f721a8dc0ff83b426480f040ac68dbe3d7898b096c1277a5a4e3da0ec/mdx_gh_links-0.4.tar.gz", hash = "sha256:41d5aac2ab201425aa0a19373c4095b79e5e015fdacfe83c398199fe55ca3686", size = 5783, upload-time = "2023-12-22T19:54:02.136Z" }
 wheels = [
@@ -446,7 +446,7 @@ name = "mdx-truly-sane-lists"
 version = "1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "markdown" },
+    { name = "markdown", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e6/27/16456314311abac2cedef4527679924e80ac4de19dd926699c1b261e0b9b/mdx_truly_sane_lists-1.3.tar.gz", hash = "sha256:b661022df7520a1e113af7c355c62216b384c867e4f59fb8ee7ad511e6e77f45", size = 5359, upload-time = "2022-07-19T13:42:45.153Z" }
 wheels = [
@@ -458,7 +458,7 @@ name = "mouseinfo"
 version = "0.1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pyperclip" },
+    { name = "pyperclip", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/28/fa/b2ba8229b9381e8f6381c1dcae6f4159a7f72349e414ed19cfbbd1817173/MouseInfo-0.1.3.tar.gz", hash = "sha256:2c62fb8885062b8e520a3cce0a297c657adcc08c60952eb05bc8256ef6f7f6e7", size = 10850, upload-time = "2020-03-27T21:20:10.136Z" }
 
@@ -519,64 +519,64 @@ wheels = [
 name = "nvda"
 source = { editable = "." }
 dependencies = [
-    { name = "bleak" },
-    { name = "comtypes" },
-    { name = "configobj" },
-    { name = "crowdin-api-client" },
-    { name = "cryptography" },
-    { name = "detect-secrets" },
-    { name = "fast-diff-match-patch" },
-    { name = "fuzzysearch" },
-    { name = "l2m4m" },
-    { name = "lxml" },
-    { name = "markdown" },
-    { name = "markdown-link-attr-modifier" },
-    { name = "mdx-gh-links" },
-    { name = "mdx-truly-sane-lists" },
-    { name = "nh3" },
-    { name = "pycaw" },
-    { name = "pymdown-extensions" },
-    { name = "pyphen" },
-    { name = "pyserial" },
-    { name = "pywin32" },
-    { name = "regex" },
-    { name = "requests" },
-    { name = "rpyc" },
-    { name = "schedule" },
-    { name = "url-normalize" },
-    { name = "wxpython" },
+    { name = "bleak", marker = "sys_platform == 'win32'" },
+    { name = "comtypes", marker = "sys_platform == 'win32'" },
+    { name = "configobj", marker = "sys_platform == 'win32'" },
+    { name = "crowdin-api-client", marker = "sys_platform == 'win32'" },
+    { name = "cryptography", marker = "sys_platform == 'win32'" },
+    { name = "detect-secrets", marker = "sys_platform == 'win32'" },
+    { name = "fast-diff-match-patch", marker = "sys_platform == 'win32'" },
+    { name = "fuzzysearch", marker = "sys_platform == 'win32'" },
+    { name = "l2m4m", marker = "sys_platform == 'win32'" },
+    { name = "lxml", marker = "sys_platform == 'win32'" },
+    { name = "markdown", marker = "sys_platform == 'win32'" },
+    { name = "markdown-link-attr-modifier", marker = "sys_platform == 'win32'" },
+    { name = "mdx-gh-links", marker = "sys_platform == 'win32'" },
+    { name = "mdx-truly-sane-lists", marker = "sys_platform == 'win32'" },
+    { name = "nh3", marker = "sys_platform == 'win32'" },
+    { name = "pycaw", marker = "sys_platform == 'win32'" },
+    { name = "pymdown-extensions", marker = "sys_platform == 'win32'" },
+    { name = "pyphen", marker = "sys_platform == 'win32'" },
+    { name = "pyserial", marker = "sys_platform == 'win32'" },
+    { name = "pywin32", marker = "sys_platform == 'win32'" },
+    { name = "regex", marker = "sys_platform == 'win32'" },
+    { name = "requests", marker = "sys_platform == 'win32'" },
+    { name = "rpyc", marker = "sys_platform == 'win32'" },
+    { name = "schedule", marker = "sys_platform == 'win32'" },
+    { name = "url-normalize", marker = "sys_platform == 'win32'" },
+    { name = "wxpython", marker = "sys_platform == 'win32'" },
 ]
 
 [package.dev-dependencies]
 dev = [
-    { name = "nvda-mathcat" },
-    { name = "nvda-misc-deps" },
-    { name = "py2exe" },
-    { name = "scons" },
-    { name = "setuptools" },
-    { name = "uv" },
+    { name = "nvda-mathcat", marker = "sys_platform == 'win32'" },
+    { name = "nvda-misc-deps", marker = "sys_platform == 'win32'" },
+    { name = "py2exe", marker = "sys_platform == 'win32'" },
+    { name = "scons", marker = "sys_platform == 'win32'" },
+    { name = "setuptools", marker = "sys_platform == 'win32'" },
+    { name = "uv", marker = "sys_platform == 'win32'" },
 ]
 dev-docs = [
-    { name = "sphinx" },
-    { name = "sphinx-rtd-theme" },
+    { name = "sphinx", marker = "sys_platform == 'win32'" },
+    { name = "sphinx-rtd-theme", marker = "sys_platform == 'win32'" },
 ]
 license-check = [
-    { name = "licensecheck" },
+    { name = "licensecheck", marker = "sys_platform == 'win32'" },
 ]
 lint = [
-    { name = "prek" },
-    { name = "pyright", extra = ["nodejs"] },
-    { name = "ruff" },
-    { name = "ty" },
+    { name = "prek", marker = "sys_platform == 'win32'" },
+    { name = "pyright", extra = ["nodejs"], marker = "sys_platform == 'win32'" },
+    { name = "ruff", marker = "sys_platform == 'win32'" },
+    { name = "ty", marker = "sys_platform == 'win32'" },
 ]
 system-tests = [
-    { name = "robotframework" },
-    { name = "robotframework-screencaplibrary" },
-    { name = "robotremoteserver" },
+    { name = "robotframework", marker = "sys_platform == 'win32'" },
+    { name = "robotframework-screencaplibrary", marker = "sys_platform == 'win32'" },
+    { name = "robotremoteserver", marker = "sys_platform == 'win32'" },
 ]
 unit-tests = [
-    { name = "parameterized" },
-    { name = "unittest-xml-reporting" },
+    { name = "parameterized", marker = "sys_platform == 'win32'" },
+    { name = "unittest-xml-reporting", marker = "sys_platform == 'win32'" },
 ]
 
 [package.metadata]
@@ -654,7 +654,7 @@ name = "opencv-python"
 version = "4.13.0.92"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy" },
+    { name = "numpy", marker = "sys_platform == 'win32'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/fb/17/de5458312bcb07ddf434d7bfcb24bb52c59635ad58c6e7c751b48949b009/opencv_python-4.13.0.92-cp37-abi3-win32.whl", hash = "sha256:372fe164a3148ac1ca51e5f3ad0541a4a276452273f503441d718fab9c5e5f59", size = 30932638, upload-time = "2026-02-05T07:02:14.98Z" },
@@ -751,9 +751,9 @@ name = "py2exe"
 version = "0.14.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cachetools" },
-    { name = "packaging" },
-    { name = "pefile" },
+    { name = "cachetools", marker = "sys_platform == 'win32'" },
+    { name = "packaging", marker = "sys_platform == 'win32'" },
+    { name = "pefile", marker = "sys_platform == 'win32'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/df/7b/630718ad481a3803e1339d263d4266f84a36cb2073d36eca71a25571777e/py2exe-0.14.1.1-cp313-cp313-win32.whl", hash = "sha256:3fe5f8fa6cd986d97ffd116355a9ed807e23349ad3c108d7b43e90e51ef9d60d", size = 113462, upload-time = "2026-06-05T21:06:08.564Z" },
@@ -765,11 +765,11 @@ name = "pyautogui"
 version = "0.9.54"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "mouseinfo" },
-    { name = "pygetwindow" },
-    { name = "pymsgbox" },
-    { name = "pyscreeze" },
-    { name = "pytweening" },
+    { name = "mouseinfo", marker = "sys_platform == 'win32'" },
+    { name = "pygetwindow", marker = "sys_platform == 'win32'" },
+    { name = "pymsgbox", marker = "sys_platform == 'win32'" },
+    { name = "pyscreeze", marker = "sys_platform == 'win32'" },
+    { name = "pytweening", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/65/ff/cdae0a8c2118a0de74b6cf4cbcdcaf8fd25857e6c3f205ce4b1794b27814/PyAutoGUI-0.9.54.tar.gz", hash = "sha256:dd1d29e8fd118941cb193f74df57e5c6ff8e9253b99c7b04f39cfc69f3ae04b2", size = 61236, upload-time = "2023-05-24T20:11:32.972Z" }
 
@@ -778,8 +778,8 @@ name = "pycaw"
 version = "20251023"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "comtypes" },
-    { name = "psutil" },
+    { name = "comtypes", marker = "sys_platform == 'win32'" },
+    { name = "psutil", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d1/81/19181e3118a503f94d8689fbbed60616e85d08cee3a295c11245ae73018f/pycaw-20251023.tar.gz", hash = "sha256:19935b92eb5efc3f3ea5ee8a2d37ca49009e9dc00f83d067b74b9922e84b5b3b", size = 23421, upload-time = "2025-10-23T18:26:45.087Z" }
 wheels = [
@@ -800,7 +800,7 @@ name = "pygetwindow"
 version = "0.0.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pyrect" },
+    { name = "pyrect", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e1/70/c7a4f46dbf06048c6d57d9489b8e0f9c4c3d36b7479f03c5ca97eaa2541d/PyGetWindow-0.0.9.tar.gz", hash = "sha256:17894355e7d2b305cd832d717708384017c1698a90ce24f6f7fbf0242dd0a688", size = 9699, upload-time = "2020-10-04T02:12:50.806Z" }
 
@@ -818,8 +818,8 @@ name = "pymdown-extensions"
 version = "10.17.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "markdown" },
-    { name = "pyyaml" },
+    { name = "markdown", marker = "sys_platform == 'win32'" },
+    { name = "pyyaml", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e7/d9/a987e4d549c6c82353fce5fa5f650229bb60ea4c0d1684a2714a509aef58/pymdown_extensions-10.17.1.tar.gz", hash = "sha256:60d05fe55e7fb5a1e4740fc575facad20dc6ee3a748e8d3d36ba44142e75ce03", size = 845207, upload-time = "2025-11-11T21:44:58.815Z" }
 wheels = [
@@ -864,8 +864,8 @@ name = "pyright"
 version = "1.1.407"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nodeenv" },
-    { name = "typing-extensions" },
+    { name = "nodeenv", marker = "sys_platform == 'win32'" },
+    { name = "typing-extensions", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a6/1b/0aa08ee42948b61745ac5b5b5ccaec4669e8884b53d31c8ec20b2fcd6b6f/pyright-1.1.407.tar.gz", hash = "sha256:099674dba5c10489832d4a4b2d302636152a9a42d317986c38474c76fe562262", size = 4122872, upload-time = "2025-10-24T23:17:15.145Z" }
 wheels = [
@@ -874,7 +874,7 @@ wheels = [
 
 [package.optional-dependencies]
 nodejs = [
-    { name = "nodejs-wheel-binaries" },
+    { name = "nodejs-wheel-binaries", marker = "sys_platform == 'win32'" },
 ]
 
 [[package]]
@@ -938,10 +938,10 @@ name = "requests"
 version = "2.33.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "certifi" },
-    { name = "charset-normalizer" },
-    { name = "idna" },
-    { name = "urllib3" },
+    { name = "certifi", marker = "sys_platform == 'win32'" },
+    { name = "charset-normalizer", marker = "sys_platform == 'win32'" },
+    { name = "idna", marker = "sys_platform == 'win32'" },
+    { name = "urllib3", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/34/64/8860370b167a9721e8956ae116825caff829224fbca0ca6e7bf8ddef8430/requests-2.33.0.tar.gz", hash = "sha256:c7ebc5e8b0f21837386ad0e1c8fe8b829fa5f544d8df3b2253bff14ef29d7652", size = 134232, upload-time = "2026-03-25T15:10:41.586Z" }
 wheels = [
@@ -953,12 +953,12 @@ name = "requests-cache"
 version = "1.3.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "attrs" },
-    { name = "cattrs" },
-    { name = "platformdirs" },
-    { name = "requests" },
-    { name = "url-normalize" },
-    { name = "urllib3" },
+    { name = "attrs", marker = "sys_platform == 'win32'" },
+    { name = "cattrs", marker = "sys_platform == 'win32'" },
+    { name = "platformdirs", marker = "sys_platform == 'win32'" },
+    { name = "requests", marker = "sys_platform == 'win32'" },
+    { name = "url-normalize", marker = "sys_platform == 'win32'" },
+    { name = "urllib3", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c3/ae/90a0f931c7f6b5a674b98c25ecb2593a173bcee14f0d8c148471df3d7b26/requests_cache-1.3.2.tar.gz", hash = "sha256:bdc3680931f98a1dea509d339ea6b45cea526945b47b250ce63ffd2744ee0b14", size = 100167, upload-time = "2026-05-11T04:09:53.233Z" }
 wheels = [
@@ -970,7 +970,7 @@ name = "requirements-parser"
 version = "0.13.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "packaging" },
+    { name = "packaging", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/95/96/fb6dbfebb524d5601d359a47c78fe7ba1eef90fc4096404aa60c9a906fbb/requirements_parser-0.13.0.tar.gz", hash = "sha256:0843119ca2cb2331de4eb31b10d70462e39ace698fd660a915c247d2301a4418", size = 22630, upload-time = "2025-05-21T13:42:05.464Z" }
 wheels = [
@@ -982,8 +982,8 @@ name = "rich"
 version = "15.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "markdown-it-py" },
-    { name = "pygments" },
+    { name = "markdown-it-py", marker = "sys_platform == 'win32'" },
+    { name = "pygments", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c0/8f/0722ca900cc807c13a6a0c696dacf35430f72e0ec571c4275d2371fca3e9/rich-15.0.0.tar.gz", hash = "sha256:edd07a4824c6b40189fb7ac9bc4c52536e9780fbbfbddf6f1e2502c31b068c36", size = 230680, upload-time = "2026-04-12T08:24:00.75Z" }
 wheels = [
@@ -1004,12 +1004,12 @@ name = "robotframework-screencaplibrary"
 version = "1.6.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "imageio" },
-    { name = "mss" },
-    { name = "opencv-python" },
-    { name = "pillow" },
-    { name = "pyautogui" },
-    { name = "robotframework" },
+    { name = "imageio", marker = "sys_platform == 'win32'" },
+    { name = "mss", marker = "sys_platform == 'win32'" },
+    { name = "opencv-python", marker = "sys_platform == 'win32'" },
+    { name = "pillow", marker = "sys_platform == 'win32'" },
+    { name = "pyautogui", marker = "sys_platform == 'win32'" },
+    { name = "robotframework", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/58/a3/de838ca823e652e16dc18343fe0e4f5f5e6d61b08f3f7d3fc1b79fc4f690/robotframework-screencaplibrary-1.6.0.tar.gz", hash = "sha256:0bd6fcb56452125121d9a0cb1a110ea069a87de1937882193320ba4af4c6a132", size = 15699, upload-time = "2022-02-21T12:27:16.492Z" }
 
@@ -1027,7 +1027,7 @@ name = "rpyc"
 version = "6.0.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "plumbum" },
+    { name = "plumbum", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/8b/e7/1c17410673b634f4658bb5d2232d0c4507432a97508b2c6708e59481644a/rpyc-6.0.2.tar.gz", hash = "sha256:8e780a6a71b842128a80a337c64adfb6f919014e069951832161c9efc630c93b", size = 62321, upload-time = "2025-04-18T16:33:21.693Z" }
 wheels = [
@@ -1086,22 +1086,22 @@ name = "sphinx"
 version = "8.1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "alabaster" },
-    { name = "babel" },
-    { name = "colorama" },
-    { name = "docutils" },
-    { name = "imagesize" },
-    { name = "jinja2" },
-    { name = "packaging" },
-    { name = "pygments" },
-    { name = "requests" },
-    { name = "snowballstemmer" },
-    { name = "sphinxcontrib-applehelp" },
-    { name = "sphinxcontrib-devhelp" },
-    { name = "sphinxcontrib-htmlhelp" },
-    { name = "sphinxcontrib-jsmath" },
-    { name = "sphinxcontrib-qthelp" },
-    { name = "sphinxcontrib-serializinghtml" },
+    { name = "alabaster", marker = "sys_platform == 'win32'" },
+    { name = "babel", marker = "sys_platform == 'win32'" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+    { name = "docutils", marker = "sys_platform == 'win32'" },
+    { name = "imagesize", marker = "sys_platform == 'win32'" },
+    { name = "jinja2", marker = "sys_platform == 'win32'" },
+    { name = "packaging", marker = "sys_platform == 'win32'" },
+    { name = "pygments", marker = "sys_platform == 'win32'" },
+    { name = "requests", marker = "sys_platform == 'win32'" },
+    { name = "snowballstemmer", marker = "sys_platform == 'win32'" },
+    { name = "sphinxcontrib-applehelp", marker = "sys_platform == 'win32'" },
+    { name = "sphinxcontrib-devhelp", marker = "sys_platform == 'win32'" },
+    { name = "sphinxcontrib-htmlhelp", marker = "sys_platform == 'win32'" },
+    { name = "sphinxcontrib-jsmath", marker = "sys_platform == 'win32'" },
+    { name = "sphinxcontrib-qthelp", marker = "sys_platform == 'win32'" },
+    { name = "sphinxcontrib-serializinghtml", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/6f/6d/be0b61178fe2cdcb67e2a92fc9ebb488e3c51c4f74a36a7824c0adf23425/sphinx-8.1.3.tar.gz", hash = "sha256:43c1911eecb0d3e161ad78611bc905d1ad0e523e4ddc202a58a821773dc4c927", size = 8184611, upload-time = "2024-10-13T20:27:13.93Z" }
 wheels = [
@@ -1113,9 +1113,9 @@ name = "sphinx-rtd-theme"
 version = "3.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "docutils" },
-    { name = "sphinx" },
-    { name = "sphinxcontrib-jquery" },
+    { name = "docutils", marker = "sys_platform == 'win32'" },
+    { name = "sphinx", marker = "sys_platform == 'win32'" },
+    { name = "sphinxcontrib-jquery", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/55/ff/e24d14f397ce07a93d302be444d4da7953294f9b1be99497dc92f800ac7b/sphinx_rtd_theme-3.0.1.tar.gz", hash = "sha256:a4c5745d1b06dfcb80b7704fe532eb765b44065a8fad9851e4258c8804140703", size = 7620352, upload-time = "2024-10-09T13:18:47.683Z" }
 wheels = [
@@ -1154,7 +1154,7 @@ name = "sphinxcontrib-jquery"
 version = "4.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "sphinx" },
+    { name = "sphinx", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/de/f3/aa67467e051df70a6330fe7770894b3e4f09436dea6881ae0b4f3d87cad8/sphinxcontrib-jquery-4.1.tar.gz", hash = "sha256:1620739f04e36a2c779f1a131a2dfd49b2fd07351bf1968ced074365933abc7a", size = 122331, upload-time = "2023-03-14T15:01:01.944Z" }
 wheels = [
@@ -1225,7 +1225,7 @@ name = "unittest-xml-reporting"
 version = "3.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "lxml" },
+    { name = "lxml", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ed/40/3bf1afc96e93c7322520981ac4593cbb29daa21b48d32746f05ab5563dca/unittest-xml-reporting-3.2.0.tar.gz", hash = "sha256:edd8d3170b40c3a81b8cf910f46c6a304ae2847ec01036d02e9c0f9b85762d28", size = 18002, upload-time = "2022-01-20T19:09:55.76Z" }
 wheels = [
@@ -1237,7 +1237,7 @@ name = "url-normalize"
 version = "2.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "idna" },
+    { name = "idna", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/80/31/febb777441e5fcdaacb4522316bf2a527c44551430a4873b052d545e3279/url_normalize-2.2.1.tar.gz", hash = "sha256:74a540a3b6eba1d95bdc610c24f2c0141639f3ba903501e61a52a8730247ff37", size = 18846, upload-time = "2025-04-26T20:37:58.553Z" }
 wheels = [
@@ -1278,7 +1278,7 @@ name = "winrt-runtime"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions" },
+    { name = "typing-extensions", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/16/dd/acdd527c1d890c8f852cc2af644aa6c160974e66631289420aa871b05e65/winrt_runtime-3.2.1.tar.gz", hash = "sha256:c8dca19e12b234ae6c3dadf1a4d0761b51e708457492c13beb666556958801ea", size = 21721, upload-time = "2025-06-06T14:40:27.593Z" }
 wheels = [
@@ -1292,7 +1292,7 @@ name = "winrt-windows-devices-bluetooth"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "winrt-runtime" },
+    { name = "winrt-runtime", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b2/a0/1c8a0c469abba7112265c6cb52f0090d08a67c103639aee71fc690e614b8/winrt_windows_devices_bluetooth-3.2.1.tar.gz", hash = "sha256:db496d2d92742006d5a052468fc355bf7bb49e795341d695c374746113d74505", size = 23732, upload-time = "2025-06-06T14:41:20.489Z" }
 wheels = [
@@ -1306,7 +1306,7 @@ name = "winrt-windows-devices-bluetooth-advertisement"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "winrt-runtime" },
+    { name = "winrt-runtime", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/06/fc/7ffe66ca4109b9e994b27c00f3d2d506e6e549e268791f755287ad9106d8/winrt_windows_devices_bluetooth_advertisement-3.2.1.tar.gz", hash = "sha256:0223852a7b7fa5c8dea3c6a93473bd783df4439b1ed938d9871f947933e574cc", size = 16906, upload-time = "2025-06-06T14:41:21.448Z" }
 wheels = [
@@ -1320,7 +1320,7 @@ name = "winrt-windows-devices-bluetooth-genericattributeprofile"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "winrt-runtime" },
+    { name = "winrt-runtime", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/44/21/aeeddc0eccdfbd25e543360b5cc093233e2eab3cdfb53ad3cabae1b5d04d/winrt_windows_devices_bluetooth_genericattributeprofile-3.2.1.tar.gz", hash = "sha256:cdf6ddc375e9150d040aca67f5a17c41ceaf13a63f3668f96608bc1d045dde71", size = 38896, upload-time = "2025-06-06T14:41:22.687Z" }
 wheels = [
@@ -1334,7 +1334,7 @@ name = "winrt-windows-devices-enumeration"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "winrt-runtime" },
+    { name = "winrt-runtime", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/9e/dd/75835bfbd063dffa152109727dedbd80f6e92ea284855f7855d48cdf31c9/winrt_windows_devices_enumeration-3.2.1.tar.gz", hash = "sha256:df316899e39bfc0ffc1f3cb0f5ee54d04e1d167fbbcc1484d2d5121449a935cf", size = 23538, upload-time = "2025-06-06T14:41:26.787Z" }
 wheels = [
@@ -1348,7 +1348,7 @@ name = "winrt-windows-devices-radios"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "winrt-runtime" },
+    { name = "winrt-runtime", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/5e/02/9704ea359ad8b0d6faa1011f98fb477e8fb6eac5201f39d19e73c2407e7b/winrt_windows_devices_radios-3.2.1.tar.gz", hash = "sha256:4dc9b9d1501846049eb79428d64ec698d6476c27a357999b78a8331072e18a0b", size = 5908, upload-time = "2025-06-06T14:41:44.868Z" }
 wheels = [
@@ -1362,7 +1362,7 @@ name = "winrt-windows-foundation"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "winrt-runtime" },
+    { name = "winrt-runtime", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0c/55/098ce7ea0679efcc1298b269c48768f010b6c68f90c588f654ec874c8a74/winrt_windows_foundation-3.2.1.tar.gz", hash = "sha256:ad2f1fcaa6c34672df45527d7c533731fdf65b67c4638c2b4aca949f6eec0656", size = 30485, upload-time = "2025-06-06T14:41:53.344Z" }
 wheels = [
@@ -1376,7 +1376,7 @@ name = "winrt-windows-foundation-collections"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "winrt-runtime" },
+    { name = "winrt-runtime", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ef/62/d21e3f1eeb8d47077887bbf0c3882c49277a84d8f98f7c12bda64d498a07/winrt_windows_foundation_collections-3.2.1.tar.gz", hash = "sha256:0eff1ad0d8d763ad17e9e7bbd0c26a62b27215016393c05b09b046d6503ae6d5", size = 16043, upload-time = "2025-06-06T14:41:53.983Z" }
 wheels = [
@@ -1390,7 +1390,7 @@ name = "winrt-windows-storage-streams"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "winrt-runtime" },
+    { name = "winrt-runtime", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/00/50/f4488b07281566e3850fcae1021f0285c9653992f60a915e15567047db63/winrt_windows_storage_streams-3.2.1.tar.gz", hash = "sha256:476f522722751eb0b571bc7802d85a82a3cae8b1cce66061e6e758f525e7b80f", size = 34335, upload-time = "2025-06-06T14:43:23.905Z" }
 wheels = [
