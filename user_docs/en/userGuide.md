@@ -1378,7 +1378,7 @@ You can configure braille using the [Braille category](#BrailleSettings) of the 
 When reading braille on a refreshable display, text is presented in the current [output table](#BrailleSettingsOutputTable) and [Braille Mode](#BrailleMode).
 Where text is longer than will fit on the display, panning or other keys on the device can be used to navigate without moving the focus or text caret.
 
-#### Automatic Braille Scrolling {AutomaticBrailleScrolling}
+#### Automatic Braille Scrolling {#AutomaticBrailleScrolling}
 
 [Automatic braille scrolling](#BrailleAutoScrollRate) can be enabled to scroll the display at a set speed.
 When using this feature, the braille display scrolls to present information which is more than will fit on the display at once.
