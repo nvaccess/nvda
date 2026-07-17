@@ -11,6 +11,8 @@ from io import BytesIO
 import serial
 import bdDetect
 import braille
+import braille.display
+import braille.display.driver
 import inputCore
 from logHandler import log
 import hwIo
@@ -30,7 +32,7 @@ def bytesToInt(byteData: bytes):
 	return int.from_bytes(byteData, byteorder="big", signed=False)
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, ScriptableObject):
 	_dev: hwIo.IoBase
 	# Used to for error checking.
 	_awaitingFrameReceipts: Dict[int, Any]
@@ -40,7 +42,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	isThreadSafe = True
 	supportsAutomaticDetection = True
 	timeout = 0.2
-	supportedSettings = (braille.BrailleDisplayDriver.HIDInputSetting(useConfig=True),)
+	supportedSettings = (braille.display.driver.BrailleDisplayDriver.HIDInputSetting(useConfig=True),)
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
@@ -80,7 +82,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	def __init__(self, port="Auto"):
 		super().__init__()

@@ -7,6 +7,9 @@
 import serial
 import bdDetect
 import braille
+import braille.display
+import braille.display.driver
+import braille.display.gesture
 import inputCore
 from logHandler import log
 import hwIo
@@ -29,7 +32,7 @@ RIGHT_KEY_PRESS = 3
 LEFT_KEY_PRESS = 4
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "nattiqbraille"
 	# Translators: Names of braille displays
 	description = _("Nattiq nBraille")
@@ -47,7 +50,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
@@ -135,7 +138,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGestureKeys(braille.BrailleDisplayGesture):
+class InputGestureKeys(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):
@@ -150,7 +153,7 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 			self.id = "tprevious"
 
 
-class RoutingInputGesture(braille.BrailleDisplayGesture):
+class RoutingInputGesture(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, routingIndex):
