@@ -14,6 +14,7 @@ from unittest.mock import patch, PropertyMock
 from parameterized import parameterized
 
 from gui import installerGui
+from gui.message import DisplayableError
 import installer
 
 
@@ -485,49 +486,44 @@ class Test_comparePreviousInstall(unittest.TestCase):
 class Test_CreatePortableDirectoryNormalization(unittest.TestCase):
 	"""Tests for path handling in onCreatePortable (#20159)."""
 
-	def _validate(self, path: str) -> tuple[str | None, list[str]]:
+	def _validate(self, path: str) -> tuple[str | None, str | None]:
 		"""Call _validatePortableDirectory with the given path.
-		Returns (result, messageBox calls).
+		Returns (result, error_message).
 		"""
-		msgBoxCalls = []
 		import ntpath
 
 		with (
-			patch(
-				"gui.installerGui.gui.messageBox",
-				side_effect=lambda msg, title, style=0: msgBoxCalls.append(msg),
-			),
 			patch("gui.installerGui.os.path.isabs", side_effect=ntpath.isabs),
 			patch("gui.installerGui.os.path.splitroot", side_effect=ntpath.splitroot),
 			patch("gui.installerGui.os.path.expandvars", side_effect=lambda p: p),
 			patch("gui.installerGui.os.path.abspath", return_value="C:\\NVDA"),
 		):
-			result = installerGui._validatePortableDirectory(path)
-		return result, msgBoxCalls
+			try:
+				result = installerGui._validatePortableDirectory(path)
+			except DisplayableError as e:
+				result = None
+				errorMsg = e.displayMessage
+			else:
+				errorMsg = None
+		return result, errorMsg
 
 	def test_emptyPath_showsError(self):
-		result, calls = self._validate("")
+		result, errorMsg = self._validate("")
 		self.assertIsNone(result)
-		self.assertTrue(
-			any("Please specify a directory" in msg for msg in calls),
-		)
+		self.assertIn("Please specify a directory", errorMsg)
 
 	def test_bareDriveLetter_showsSpecificError(self):
-		result, calls = self._validate("c:")
+		result, errorMsg = self._validate("c:")
 		self.assertIsNone(result)
-		self.assertTrue(
-			any("c:\\" in msg for msg in calls),
-		)
+		self.assertIn("c:\\", errorMsg)
 
 	def test_driveWithRelativePath_showsBareDriveError(self):
-		result, calls = self._validate("c:foo")
+		result, errorMsg = self._validate("c:foo")
 		self.assertIsNone(result)
-		self.assertTrue(
-			any("c:\\" in msg for msg in calls),
-		)
+		self.assertIn("c:\\", errorMsg)
 
 	def test_relativePath_showsError(self):
-		result, calls = self._validate("foo")
+		result, errorMsg = self._validate("foo")
 		self.assertIsNone(result)
 		errorText = _(
 			"Please specify the absolute path where the portable copy should be created. "
@@ -535,14 +531,14 @@ class Test_CreatePortableDirectoryNormalization(unittest.TestCase):
 			"It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
 			"Current path: {path}. ",
 		).format(path="foo")
-		self.assertIn(errorText, calls)
+		self.assertEqual(errorMsg, errorText)
 
 	def test_absolutePath_isAccepted(self):
-		result, calls = self._validate("c:\\")
+		result, errorMsg = self._validate("c:\\")
 		self.assertEqual(result, "C:\\NVDA")
-		self.assertEqual(calls, [])
+		self.assertIsNone(errorMsg)
 
 	def test_absolutePathWithDrive_isAccepted(self):
-		result, calls = self._validate("d:\\NVDA")
+		result, errorMsg = self._validate("d:\\NVDA")
 		self.assertEqual(result, "C:\\NVDA")
-		self.assertEqual(calls, [])
+		self.assertIsNone(errorMsg)

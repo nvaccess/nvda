@@ -34,6 +34,7 @@ from installer import ComparisonState
 from logHandler import log
 import gui
 from gui import guiHelper
+from gui.message import DisplayableError
 import gui.contextHelp
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 import systemUtils
@@ -682,28 +683,22 @@ def _getUniqueNewPortableDirectory(basePath: str) -> str:
 	return newPortableDirectory
 
 
-def _validatePortableDirectory(portableDirectory: str) -> str | None:
+def _validatePortableDirectory(portableDirectory: str) -> str:
 	"""Validate and normalize a portable directory path.
 
-	Returns the expanded absolute path if valid, or None if invalid
-	(the error is shown to the user via a message box).
+	Returns the expanded absolute path if valid.
+	Raises DisplayableError if the path is invalid.
 	"""
 	if not portableDirectory:
-		gui.messageBox(
-			# Translators: The message displayed when the user has not specified a destination directory
-			# in the Create Portable NVDA dialog.
+		raise DisplayableError(
 			_("Please specify a directory in which to create the portable copy."),
-			# Translators: the title of an error dialog.
-			_("Error"),
-			wx.OK | wx.ICON_ERROR,
 		)
-		return None
 	expandedPortableDirectory = os.path.expandvars(portableDirectory)
 	if not os.path.isabs(expandedPortableDirectory):
 		mount, root, _ = os.path.splitroot(expandedPortableDirectory)
 		if mount and not root:
 			# Has a drive letter but no root separator (e.g. "c:", "c:foo").
-			gui.messageBox(
+			raise DisplayableError(
 				_(
 					# Translators: The message displayed when the user enters a bare drive letter
 					# in the Create Portable NVDA dialog.
@@ -711,12 +706,9 @@ def _validatePortableDirectory(portableDirectory: str) -> str | None:
 					"destination directory.\n"
 					'Please use "{suggested}" instead.',
 				).format(path=mount, suggested=mount + os.sep),
-				_("Error"),
-				wx.OK | wx.ICON_ERROR,
 			)
-			return None
 		# No drive letter (e.g. "foo", "foo\bar").
-		gui.messageBox(
+		raise DisplayableError(
 			_(
 				# Translators: The message displayed when the user has not specified an absolute destination directory
 				# in the Create Portable NVDA dialog.
@@ -725,12 +717,7 @@ def _validatePortableDirectory(portableDirectory: str) -> str | None:
 				"It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
 				"Current path: {path}. ",
 			).format(path=expandedPortableDirectory),
-			# Translators: The message title displayed when the user has not specified an absolute
-			# destination directory in the Create Portable NVDA dialog.
-			_("Error"),
-			wx.OK | wx.ICON_ERROR,
 		)
-		return None
 	# isabs determines if the path is absolute, with or without a drive letter. abspath adds any missing initial
 	# components to that path to make it absolute from other contexts, by adding a drive letter/share path if
 	# needed. The OS's idea of the current drive is used, as in os.getcwd(). (#14681)
@@ -805,8 +792,10 @@ class PortableCreaterDialog(
 		self.CentreOnScreen()
 
 	def onCreatePortable(self, evt):
-		expandedPortableDirectory = _validatePortableDirectory(self.portableDirectoryEdit.Value)
-		if not expandedPortableDirectory:
+		try:
+			expandedPortableDirectory = _validatePortableDirectory(self.portableDirectoryEdit.Value)
+		except DisplayableError as e:
+			e.displayError(self)
 			return
 		if self.newFolderCheckBox.Value:
 			expandedPortableDirectory = _getUniqueNewPortableDirectory(expandedPortableDirectory)
