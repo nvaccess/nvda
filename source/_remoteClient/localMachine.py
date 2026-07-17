@@ -26,6 +26,7 @@ import winreg
 import winBindings.sas
 import api
 import braille
+import braille.display
 import braille.extensions
 from config.registry import RegistryKey
 import inputCore
@@ -139,7 +140,7 @@ class LocalMachine:
 		self._lastCells: list[int] = []
 		"""Cached cells for display when we return from controling the local computer, or displaying a `ui.message`."""
 
-		braille.decide_enabled.register(self.handleDecideEnabled)
+		braille.extensions.decide_enabled.register(self.handleDecideEnabled)
 		braille.extensions._pre_showBrailleMessage.register(self._handleShowBrailleMessage)
 		braille.extensions._post_dismissBrailleMessage.register(self._handleDismissBrailleMessage)
 		braille.extensions._decide_disabledIncludesMessages.register(
@@ -152,7 +153,7 @@ class LocalMachine:
 		:note: Unregisters the braille display handler to prevent memory leaks and
 		    ensure proper cleanup when the remote connection ends.
 		"""
-		braille.decide_enabled.unregister(self.handleDecideEnabled)
+		braille.extensions.decide_enabled.unregister(self.handleDecideEnabled)
 		braille.extensions._pre_showBrailleMessage.unregister(self._handleShowBrailleMessage)
 		braille.extensions._post_dismissBrailleMessage.unregister(self._handleDismissBrailleMessage)
 		braille.extensions._decide_disabledIncludesMessages.unregister(
@@ -274,7 +275,10 @@ class LocalMachine:
 		"""
 		self._cachedSizes = sizes
 
-	def _handleFilterDisplayDimensions(self, value: braille.DisplayDimensions) -> braille.DisplayDimensions:
+	def _handleFilterDisplayDimensions(
+		self,
+		value: braille.display.DisplayDimensions,
+	) -> braille.display.DisplayDimensions:
 		"""Filter the local display dimensions based on remote display dimensions.
 
 		Determines the optimal display dimensions when sharing braille output by
@@ -294,7 +298,7 @@ class LocalMachine:
 		# There is no point storing the number of rows if we are always going to set it to 1.
 		sizes = self._cachedSizes + [value.numCols]
 		try:
-			return braille.DisplayDimensions(numRows=1, numCols=min(i for i in sizes if i > 0))
+			return braille.display.DisplayDimensions(numRows=1, numCols=min(i for i in sizes if i > 0))
 		except ValueError:
 			return value._replace(numRows=1)
 

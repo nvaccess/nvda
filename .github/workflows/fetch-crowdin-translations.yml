@@ -35,7 +35,7 @@ jobs:
         GH_REPO: ${{ github.repository }}
 
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         ref: beta
         fetch-depth: 1
@@ -48,7 +48,7 @@ jobs:
         architecture: 'x64'
 
     - name: setup uv
-      uses: astral-sh/setup-uv@v6
+      uses: astral-sh/setup-uv@v7
 
     - name: Download translations from Crowdin
       run: uv run source/l10nUtil.py exportTranslations -o .
@@ -83,7 +83,7 @@ jobs:
 
     - name: Notify translators of errors
       if: steps.commit.outputs.has_failures == 'true'
-      uses: dawidd6/action-send-mail@v4
+      uses: dawidd6/action-send-mail@v18
       with:
         server_address: ${{ secrets.EMAIL_SERVER_ADDRESS }}
         server_port: ${{ secrets.EMAIL_SERVER_PORT || 465 }}

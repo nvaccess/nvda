@@ -8,6 +8,9 @@ from typing import List, Union
 
 import serial
 import braille
+import braille.display
+import braille.display.driver
+import braille.display.gesture
 import inputCore
 from logHandler import log
 import brailleInput
@@ -79,7 +82,7 @@ DOT8_KEY = 9
 SPACE_KEY = 10
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	_dev: Union[hwIo.Serial, hwIo.Hid]
 	name = "brailliantB"
 	# Translators: The name of a series of braille displays.
@@ -155,7 +158,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
@@ -346,10 +349,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	gestureMap = inputCore.GlobalGestureMap(
 		{
 			"globalCommands.GlobalCommands": {
-				"braille_scrollBack": ("br(brailliantB):left",),
-				"braille_scrollForward": ("br(brailliantB):right",),
-				"braille_previousLine": ("br(brailliantB):up",),
-				"braille_nextLine": ("br(brailliantB):down",),
+				"braille_scrollBack": ("br(brailliantB):left", "br(brailliantB):c2"),
+				"braille_scrollForward": ("br(brailliantB):right", "br(brailliantB):c5"),
+				"braille_previousLine": ("br(brailliantB):up", "br(brailliantB):c1"),
+				"braille_nextLine": ("br(brailliantB):down", "br(brailliantB):c3"),
 				"braille_routeTo": ("br(brailliantB):routing",),
 				"braille_selectRange": ("br(brailliantB):multiRouting",),
 				"braille_toggleTether": ("br(brailliantB):up+down",),
@@ -381,7 +384,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):
