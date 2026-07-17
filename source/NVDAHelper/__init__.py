@@ -4,6 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from __future__ import annotations
 from ctypes.wintypes import (
 	HANDLE,
 	HKEY,
@@ -12,7 +13,6 @@ import typing
 import os
 import winreg
 import msvcrt
-
 from ctypes import (
 	CDLL,
 	POINTER,
