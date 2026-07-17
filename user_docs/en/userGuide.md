@@ -4447,8 +4447,8 @@ Additional information is also shown for active profiles, indicating whether the
 
 To rename or delete a profile, press the Rename or Delete buttons, respectively.
 
-You can also manage profiles by opening the context menu on a profile in the list to Rename or Delete it.
-Additionally, you can press F2 to rename the selected profile or Delete to remove it.
+You can also manage profiles by opening the context menu on a profile in the list to rename or delete it.
+Additionally, you can press `f2` to rename the selected profile or `delete` to remove it.
 
 Press the Close button to close the dialog.
 
