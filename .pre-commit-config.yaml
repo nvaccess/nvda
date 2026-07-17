@@ -151,6 +151,7 @@ repos:
       # (even ones without python changes) pay for a full ty check.
       always_run: false
       types: [python]
+      exclude: "(sconscript|sconstruct)$"
 
 - repo: local
   hooks:
