@@ -6,7 +6,9 @@
 
 * Add-ons can be removed from the "Updatable add-ons" tab in the Add-on Store. (#15030, @nvdaes)
 * Chinese text can now be navigated by word using built-in input gestures.
-  A Word Segmentation Standard setting was added to the "Document Navigation" panel. (#18735, @CrazySteve0605, @Cary-rowen)
+  * A Word Segmentation Standard setting was added to the "Document Navigation" panel. (#18735, @CrazySteve0605, @Cary-rowen)
+  * Word segmentation can also use the Windows built-in ICU library for boundary detection, improving navigation for Japanese and emoji. (#20343, #20494, @LeonarddeR)
+  * By default, ICU is preferred over the legacy Windows segmentation wherever available, while Chinese word segmentation takes precedence for Chinese text.
 * Braille output for Chinese now includes spaces between words. (#18865, @CrazySteve0605, @Cary-rowen)
 * Added sequential two-flick touch gestures that combine two flicks performed in quick succession into a single gesture, increasing the number of touch gestures that can be bound to scripts. (#19938, @kefaslungu)
   * Twelve combinations are recognised: opposite-direction pairs (e.g. flick right then flick left) and perpendicular L-shaped pairs (e.g. flick right then flick up).
@@ -19,19 +21,24 @@
   * In modes that show a continuation mark, when a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
   * The "At word or syllable boundaries" option uses hyphenation dictionaries to split long words at syllable boundaries when they do not fit on the display.
 * Magnifier: A new unassigned command has been added to move the mouse cursor to the center of the magnified view. (#20127, @CyrilleB79)
+* Added context menu and shortcuts support to the Speech Dictionaries dialog. (#20420, @amirmahdifard)
 
 ### Changes
 
+* Updated Liblouis Braille translator to [3.38.0](https://github.com/liblouis/liblouis/releases/tag/v3.38.0). (#20269, @codeofdusk)
+  * Added new Elfdalian and Sami tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
 * The dialog used to present browseable messages (such as formatting information) has been modernized. (#18878, @LeonarddeR)
   * The dialog's shortcut to copy contents of the message to the clipboard was changed to `alt+c`.
+  * Browseable message dialogs now better support resizing, maximizing and minimizing, with text wrapping to the dialog width. (#20429, @Cary-rowen)
 * Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
+* The duration of indentation beeps can now be configured via a new "Indent tone duration (ms)" spin control in the Document Formatting settings panel. (#20447, @Mubashir78)
 
 ### Bug Fixes
 
 * In PowerPoint and other Office applications, NVDA will now correctly read and navigate the edit fields in the insert hyperlink dialog. (#17390, @aryanchoudharypro)
 * The actions button can now be used when selecting multiple add-ons in the Add-on Store to perform batch actions, instead of just via the context menu in the add-ons list. (#19971, @amirmahdifard)
 * When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
-* In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen. (#20177, #20216, @ethindp, @codeofdusk)
+* In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen. (#20177)
 * When an application stops responding, NVDA no longer freezes or floods its log with errors; it stays responsive and drops UIA and MSAA events from the unresponsive application until it recovers. (#16749, @heath-toby)
 * Reduced lag on UI Automation text change events, improving the responsiveness of controls such as combo boxes and of File Explorer, by using the cached element class name instead of a live cross-process fetch. (#16749, @heath-toby)
 * In Notepad++, NVDA now continues to report IME composition text in speech and braille while selecting or navigating within Chinese IME composition. (#14140, #14152, @keyang556)
@@ -43,16 +50,25 @@
 * NVDA should no longer fail to navigate tables, read editable text fields or enable native app selection mode in Web browsers after a random period of time. (#16020)
 * NVDA should no longer cause File Explorer or other applications to crash when NVDA is exited or restarted. (#16207)
 * Focus is no longer silent on list items in Qt-based applications (such as Telegram Desktop) when the item exposes the UIA SelectionItem pattern without an associated action interface. (#20255, @rezabakhshilaktasaraei)
+* On HumanWare Brailliant displays with C-keys, the c1, c2, c3 and c5 command keys now move the braille display to the previous line, scroll it back, move it to the next line and scroll it forward.
+Previously these keys had no function when pressed on their own. (#20366, @fla-rion)
+* The HID keyboard input simulation setting for ALVA braille displays is now remembered across reconnects and restarts. (#20455, @Cary-rowen)
+* Braille now follows the spoken text during say all in browse mode when braille is tethered to focus. (#3287, @LeonarddeR)
+* NVDA now reports checked ToolStrip menu items in .NET Framework Windows Forms applications using UI Automation. (#19335, @Cary-rowen)
 
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* The local Git hook runner has been switched from [pre-commit](https://pre-commit.com/) to [prek](https://prek.j178.dev/), a faster, drop-in compatible alternative. (#20305, @LeonarddeR)
+  * The [pre-commit.ci](https://pre-commit.ci/) integration will be dropped entirely;.
+  Linting and autofixing now run via GitHub Actions, using an autofix-or-fail workflow plus an automatic `prek auto-update` workflow.
+  * Developers who previously ran `pre-commit install` should run `uv run prek install -f` once to replace the installed Git hook.
 * `config.configSections.registerSection` and `config.configSections.unregisterSection` methods can be used to register and unregister configuration sections. (#7467, @nvdaes)
   * In the `installTasks` module, add-on developers can add a spec for each configuration section to be registered.
   * The `config.configSections.registerSection` method can be used in the `onInstall` function.
   * To register a section to be used in the normal configuration, regardless of profiles, the `isBaseOnly` parameter should be set to `True`.
-* The `braille` module is now a package, split into focused submodules such as `braille.constants`, `braille.labels`, `braille.formatting`, `braille.regions`, `braille.display`, `braille.buffers`, `braille.brailleHandler` and `braille.extensions`. (#12772, @LeonarddeR)
+* The `braille` module is now a package, split into focused submodules such as `braille.constants`, `braille.labels`, `braille.formatting`, `braille.regions`, `braille.display`, `braille.buffers`, `braille.brailleHandler` and `braille.extensions`. (#12772, #20458, @LeonarddeR)
 * Added `gui.message.HtmlMessageDialog`, a `MessageDialog` subclass that renders a full HTML document in a `wx.html2.WebView`. (#18878, @LeonarddeR)
   * The WebView backend can be overridden via the `_webViewBackend` class attribute, which defaults to the IE backend.
   * JavaScript in the message can trigger NVDA actions by navigating to `nvda-action://<action>` URLs; `close` is handled internally and other actions can be registered with `registerAction`.
@@ -236,6 +252,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 * Fixed an error that could occur when NVDA checked whether a language is supported for a synthesizer with invalid languages. (#20080, @nvdaes)
 * NVDA will attempt to recover more quickly from freezes in some applications, especially those written in Java. (#14396, @thgcode)
 * In Firefox browse mode, the accessible name of form controls (such as checkboxes and radio buttons) is now correctly announced when the control has an `aria-label` and an associated `<label>` element that contains only `aria-hidden` content. (#19409, @bramd)
+* In Foxit PDF Editor, NVDA can once again browse PDF documents. (#20440, @cary-rowen)
 * The "Toggles on and off if the screen layout is preserved while rendering the document content" item in the "Browse mode" category of the Input Gestures dialog now behaves correctly. (#18378)
 * In Microsoft Word with UIA enabled, page changes are now correctly announced when navigating table rows that span multiple pages. (#19386, @akj)
 * Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)
@@ -249,6 +266,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 * Speech dictionary entries of type Whole word now correctly handle words containing Unicode combining marks (e.g. Hebrew niqqud, Arabic harakat). (#20013, @LeonarddeR)
   * In particular, Whole word entries no longer incorrectly match inside larger words when those words contain combining marks.
 * Fixed a case which could cause NVDA to freeze while reading math in braille. (#20319, @AAClause)
+* NVDA no longer fails to load sapi4 voices that do not support pitch, rate or volume. (#20302)
 
 ### Changes for Developers
 

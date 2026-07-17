@@ -9,6 +9,7 @@ from brailleDisplayDrivers import seikantk
 import unittest
 import braille
 import braille.display
+import braille.display.gesture
 
 
 class FakeSeikantkDriver(seikantk.BrailleDisplayDriver):
@@ -169,33 +170,33 @@ class TestGestureMap(unittest.TestCase):
 
 	def test_identifiers(self):
 		"""Checks whether all defined braille display gestures contain valid braille display key identifiers."""
-		for name, description in braille.getDisplayList(excludeNegativeChecks=False):
+		for name, description in braille.display.getDisplayList(excludeNegativeChecks=False):
 			driver = braille.display._getDisplayDriver(name)
 			gmap = driver.gestureMap
 			if not gmap:
 				continue
 			for cls, gesture, scriptName in gmap.getScriptsForAllGestures():
 				if gesture.startswith("br"):
-					self.assertRegex(gesture, braille.BrailleDisplayGesture.ID_PARTS_REGEX)
+					self.assertRegex(gesture, braille.display.gesture.BrailleDisplayGesture.ID_PARTS_REGEX)
 
 
-class _RoutingGesture(braille.BrailleDisplayGesture):
+class _RoutingGesture(braille.display.gesture.BrailleDisplayGesture):
 	source = "test"
 	id = "routing"
 
 
-class _MultiRoutingGesture(braille.BrailleDisplayGesture):
+class _MultiRoutingGesture(braille.display.gesture.BrailleDisplayGesture):
 	source = "test"
 	id = "multiRouting"
 
 
-class _ModelRoutingGesture(braille.BrailleDisplayGesture):
+class _ModelRoutingGesture(braille.display.gesture.BrailleDisplayGesture):
 	source = "testDriver"
 	model = "testModel"
 	id = "routing"
 
 
-class _ComboGesture(braille.BrailleDisplayGesture):
+class _ComboGesture(braille.display.gesture.BrailleDisplayGesture):
 	"""Gesture whose id contains '+', simulating a routing key combined with a modifier."""
 
 	source = "test"
@@ -210,20 +211,29 @@ class TestBrailleDisplayGestureCellIndexes(unittest.TestCase):
 		self.assertIsNone(g.cellIndexes)
 
 	def test_idForCellCount(self):
-		self.assertEqual("routing", braille.BrailleDisplayGesture.idForCellCount(0))
-		self.assertEqual("routing", braille.BrailleDisplayGesture.idForCellCount(1))
-		self.assertEqual("multiRouting", braille.BrailleDisplayGesture.idForCellCount(2))
-		self.assertEqual("multiRouting", braille.BrailleDisplayGesture.idForCellCount(5))
+		self.assertEqual("routing", braille.display.gesture.BrailleDisplayGesture.idForCellCount(0))
+		self.assertEqual("routing", braille.display.gesture.BrailleDisplayGesture.idForCellCount(1))
+		self.assertEqual("multiRouting", braille.display.gesture.BrailleDisplayGesture.idForCellCount(2))
+		self.assertEqual("multiRouting", braille.display.gesture.BrailleDisplayGesture.idForCellCount(5))
 
 	def test_idForCellCount_custom_baseName(self):
-		self.assertEqual("secondRouting", braille.BrailleDisplayGesture.idForCellCount(1, "secondRouting"))
+		self.assertEqual(
+			"secondRouting",
+			braille.display.gesture.BrailleDisplayGesture.idForCellCount(1, "secondRouting"),
+		)
 		self.assertEqual(
 			"multiSecondRouting",
-			braille.BrailleDisplayGesture.idForCellCount(2, "secondRouting"),
+			braille.display.gesture.BrailleDisplayGesture.idForCellCount(2, "secondRouting"),
 		)
-		self.assertEqual("route", braille.BrailleDisplayGesture.idForCellCount(1, "route"))
-		self.assertEqual("multiRoute", braille.BrailleDisplayGesture.idForCellCount(2, "route"))
-		self.assertEqual("multiUpperRouting", braille.BrailleDisplayGesture.idForCellCount(3, "upperRouting"))
+		self.assertEqual("route", braille.display.gesture.BrailleDisplayGesture.idForCellCount(1, "route"))
+		self.assertEqual(
+			"multiRoute",
+			braille.display.gesture.BrailleDisplayGesture.idForCellCount(2, "route"),
+		)
+		self.assertEqual(
+			"multiUpperRouting",
+			braille.display.gesture.BrailleDisplayGesture.idForCellCount(3, "upperRouting"),
+		)
 
 	def test_routingIndex_getter_returns_highest_cell(self):
 		g = _RoutingGesture()
@@ -250,7 +260,7 @@ class TestBrailleDisplayGestureCellIndexes(unittest.TestCase):
 		g.cellIndexes = [0, 3, 7]
 		for identifier in g.identifiers:
 			if identifier.startswith("br"):
-				self.assertRegex(identifier, braille.BrailleDisplayGesture.ID_PARTS_REGEX)
+				self.assertRegex(identifier, braille.display.gesture.BrailleDisplayGesture.ID_PARTS_REGEX)
 
 	def test_cellIndexesStr_none_when_no_cellIndexes(self):
 		g = _RoutingGesture()

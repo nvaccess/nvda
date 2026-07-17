@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2024-2025 NV Access Limited, Dot Incorporated, Bram Duvigneau
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2024-2026 NV Access Limited, Dot Incorporated, Bram Duvigneau
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
 import struct
@@ -12,6 +12,9 @@ from dataclasses import dataclass
 import serial
 import inputCore
 import braille
+import braille.display
+import braille.display.driver
+import braille.display.gesture
 import winBindings.kernel32
 import hwIo
 import bdDetect
@@ -24,6 +27,8 @@ from .defs import (
 	DP_Command,
 	DP_DisplayResponse,
 	DP_Features,
+	DP_MAX_PACKET_SIZE,
+	DP_MIN_PACKET_SIZE,
 	DP_PacketSeqFlag,
 	DP_PacketSyncByte,
 	DP_PerkinsKey,
@@ -72,7 +77,7 @@ class BrailleDestination(enum.StrEnum):
 	GRAPHIC = "graphic"
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	"""
 	Driver for DotPad Braille / Tactile Graphic display.
 	"""
@@ -95,7 +100,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
@@ -158,20 +163,63 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return response.data
 		return b""
 
-	def _onReceive(self, header1: bytes):
-		if ord(header1) != DP_PacketSyncByte.SYNC1:
-			raise RuntimeError(f"Bad {header1=}")
-		header2 = self._dev.read(1)
-		if ord(header2) != DP_PacketSyncByte.SYNC2:
-			raise RuntimeError(f"bad {header2=}")
-		length = struct.unpack(">H", self._dev.read(2))[0]
-		packetBody = self._dev.read(length)
-		dest, cmdHigh, cmdLow, seqNum, *data, checksum = packetBody
+	def _onReceive(self, data: bytes) -> None:
+		"""Handle received data from either Serial (1 byte) or BLE (full packets).
+
+		Buffers incoming data and extracts complete packets as they arrive.
+		Works with both byte-at-a-time delivery (Serial) and packet-based
+		delivery (BLE).
+
+		:param data: Received data (1 byte for Serial, variable length for BLE).
+		"""
+		self._receiveBuffer.extend(data)
+
+		while len(self._receiveBuffer) >= 4:
+			if self._receiveBuffer[0] != DP_PacketSyncByte.SYNC1:
+				log.debug(f"Bad first sync byte: 0x{self._receiveBuffer[0]:02x}, discarding")
+				self._receiveBuffer.pop(0)
+				continue
+
+			if self._receiveBuffer[1] != DP_PacketSyncByte.SYNC2:
+				log.debug(f"Bad second sync byte: 0x{self._receiveBuffer[1]:02x}, discarding")
+				self._receiveBuffer.pop(0)
+				continue
+
+			packetLength = struct.unpack(">H", bytes(self._receiveBuffer[2:4]))[0]
+			totalLength = 4 + packetLength
+
+			# Real DotPad packets fall within a narrow size range. A declared length
+			# outside the plausible bounds means we locked onto a false header (line
+			# noise or desync): discard one byte and resync rather than stalling on a
+			# huge bogus length or trying to unpack a runt packet.
+			if not DP_MIN_PACKET_SIZE <= totalLength <= DP_MAX_PACKET_SIZE:
+				log.debug(f"Implausible length {packetLength}, resyncing")
+				self._receiveBuffer.pop(0)
+				continue
+
+			if len(self._receiveBuffer) < totalLength:
+				break
+
+			packet = bytes(self._receiveBuffer[:totalLength])
+			self._receiveBuffer = self._receiveBuffer[totalLength:]
+
+			try:
+				self._processPacket(packet[4:])
+			except (RuntimeError, ValueError, struct.error):
+				log.exception("Error processing packet")
+
+	def _processPacket(self, packetBody: bytes) -> None:
+		"""Process a complete packet body (after sync bytes and length header).
+
+		:param packetBody: The packet body containing dest, command, sequence,
+			data, and checksum.
+		"""
+		dest, cmdFirstByte, cmdSecondByte, seqNum, *data, checksum = packetBody
 		data = bytes(data)
 		if checksum != functools.reduce(operator.xor, packetBody[:-1], DP_CHECKSUM_BASE):
 			raise RuntimeError("bad checksum")
-		cmd = DP_Command(struct.unpack(">H", bytes([cmdHigh, cmdLow]))[0])
-		log.debug(f"Received responce  {cmd.name}, {dest=}, {seqNum=}, data={bytes(data)}")
+		cmd = DP_Command(struct.unpack(">H", bytes([cmdFirstByte, cmdSecondByte]))[0])
+		log.debug(f"Received response {cmd.name}, {dest=}, {seqNum=}, data={bytes(data)}")
 		if cmd.name.startswith("RSP_"):
 			self._recordCommandResponse(cmd, data, dest, seqNum)
 		elif cmd.name.startswith("NTF_"):
@@ -265,6 +313,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._keysPressed.clear()
 
 	def __init__(self, port: str = "auto"):
+		self._receiveBuffer: bytearray = bytearray()
 		if port == "auto":
 			# Try autodetection
 			for portType, portId, port, portInfo in self._getTryPorts(port):
@@ -303,6 +352,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		:param port: The port to connect to.
 		:return: True if connection successful, False otherwise.
 		"""
+		# Start each probe with a clean buffer so stray bytes from a previously
+		# probed (non-DotPad) port can't corrupt this device's first response.
+		self._receiveBuffer.clear()
 		try:
 			self._dev = hwIo.Serial(
 				port=port,
@@ -455,7 +507,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class DPInputGesture(braille.BrailleDisplayGesture):
+class DPInputGesture(braille.display.gesture.BrailleDisplayGesture):
 	"""Input gesture for DotPad display supporting multi-button combinations."""
 
 	source = BrailleDisplayDriver.name

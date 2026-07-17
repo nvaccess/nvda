@@ -62,6 +62,9 @@ import languageHandler
 from scriptHandler import script, getLastScriptRepeatCount
 import ui
 import braille
+import braille.constants
+import braille.display.gesture
+import braille.regions.focus
 import brailleInput
 import inputCore
 import characterProcessing
@@ -3909,15 +3912,15 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_toggleFocusContextPresentation(self, gesture):
-		values = [x[0] for x in braille.focusContextPresentations]
-		labels = [x[1] for x in braille.focusContextPresentations]
+		values = [x[0] for x in braille.constants.focusContextPresentations]
+		labels = [x[1] for x in braille.constants.focusContextPresentations]
 		try:
 			index = values.index(config.conf["braille"]["focusContextPresentation"])
 		except:  # noqa: E722
 			index = 0
 		newIndex = (index + 1) % len(values)
 		config.conf["braille"]["focusContextPresentation"] = values[newIndex]
-		braille.invalidateCachedFocusAncestors(0)
+		braille.regions.focus.invalidateCachedFocusAncestors(0)
 		braille.handler.handleGainFocus(api.getFocusObject())
 		# Translators: Reports the new state of braille focus context presentation.
 		# %s will be replaced with the context presentation setting.
@@ -3986,7 +3989,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
 			ui.message(_("Braille cursor is turned off"))
 			return
-		shapes = [s[0] for s in braille.CURSOR_SHAPES]
+		shapes = [s[0] for s in braille.constants.CURSOR_SHAPES]
 		if braille.handler.getTether() == TetherTo.FOCUS.value:
 			cursorShape = "cursorShapeFocus"
 		else:
@@ -3995,10 +3998,10 @@ class GlobalCommands(ScriptableObject):
 			index = shapes.index(config.conf["braille"][cursorShape]) + 1
 		except:  # noqa: E722
 			index = 1
-		if index >= len(braille.CURSOR_SHAPES):
+		if index >= len(braille.constants.CURSOR_SHAPES):
 			index = 0
-		config.conf["braille"][cursorShape] = braille.CURSOR_SHAPES[index][0]
-		shapeMsg = braille.CURSOR_SHAPES[index][1]
+		config.conf["braille"][cursorShape] = braille.constants.CURSOR_SHAPES[index][0]
+		shapeMsg = braille.constants.CURSOR_SHAPES[index][1]
 		# Translators: Reports which braille cursor shape is activated.
 		ui.message(_("Braille cursor %s") % shapeMsg)
 
@@ -4266,7 +4269,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Routes the cursor to or activates the object under this braille cell"),
 		category=SCRCAT_BRAILLE,
 	)
-	def script_braille_routeTo(self, gesture: braille.BrailleDisplayGesture):
+	def script_braille_routeTo(self, gesture: braille.display.gesture.BrailleDisplayGesture):
 		if not gesture.cellIndexes:
 			return
 		braille.handler.routeTo(gesture.cellIndexes[0])
@@ -4276,7 +4279,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Reports formatting info for the text under this braille cell"),
 		category=SCRCAT_BRAILLE,
 	)
-	def script_braille_reportFormatting(self, gesture: braille.BrailleDisplayGesture):
+	def script_braille_reportFormatting(self, gesture: braille.display.gesture.BrailleDisplayGesture):
 		if not gesture.cellIndexes:
 			return
 		info = braille.handler.getTextInfoForWindowPos(gesture.cellIndexes[0])
@@ -4291,7 +4294,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Selects the text from the first up to the last braille cell"),
 		category=SCRCAT_BRAILLE,
 	)
-	def script_braille_selectRange(self, gesture: braille.BrailleDisplayGesture):
+	def script_braille_selectRange(self, gesture: braille.display.gesture.BrailleDisplayGesture):
 		if not gesture.cellIndexes or len(gesture.cellIndexes) < 2:
 			return
 		startPos = min(gesture.cellIndexes)
@@ -4699,7 +4702,8 @@ class GlobalCommands(ScriptableObject):
 		index = (index + 1) % len(touchHandler.availableTouchModes)
 		newMode = touchHandler.availableTouchModes[index]
 		touchHandler.handler._curTouchMode = newMode
-		ui.message(newMode.displayString)
+		modeLabel = newMode.displayString if isinstance(newMode, touchHandler.TouchMode) else newMode
+		ui.message(modeLabel)
 
 	@script(
 		# Translators: Input help mode message for a touchscreen gesture.

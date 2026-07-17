@@ -3,30 +3,43 @@
 If you make a change to the NVDA code, you should run NVDA's automated tests.
 These tests help to ensure that code changes do not unintentionally break functionality that was previously working.
 
-## Pre-commit hooks
+## Git hooks (prek)
 
-[Pre-commit hooks](https://pre-commit.com/) can be used to automatically run linting, translatable string checks and unit tests on files staged for commit.
+Git hooks can be used to automatically run linting, translatable string checks and unit tests on files staged for commit.
 This will automatically apply lint fixes where possible, and will cancel the commit on lint issues and other test failures.
+NVDA uses [prek](https://prek.j178.dev/), a faster, drop-in compatible alternative to [pre-commit](https://pre-commit.com/).
 
-From a shell, [set up pre-commit scripts](https://pre-commit.com/#pre-commit-install) for your NVDA python environment:
+There are two ways to run prek, and the examples below use both:
 
-`uv run pre-commit install`
+* Via the project's uv environment, prefixing commands with `uv run` (e.g. `uv run prek install`).
+  This needs no separate installation.
+* Via a global install, calling `prek` directly (e.g. `prek install`).
+  Install it once with `uv tool install prek`.
 
-Alternatively, set up pre-commit scripts globally:
+From a shell, [set up the Git hooks](https://prek.j178.dev/reference/cli/#prek-install) for your NVDA python environment:
 
-1. `pip install pre-commit`
-1. `pre-commit install --allow-missing-config`
+`uv run prek install`
 
-To skip pre-commit hooks from triggering, use the `--no-verify` CLI option.
+Alternatively, if you installed prek globally, set up the Git hooks with:
+
+`prek install --allow-missing-config`
+
+To skip the hooks from triggering, use the `--no-verify` CLI option.
 Example: `git commit -m "message" --no-verify`.
 
-### Manually running pre-commit hooks
+### Switching from pre-commit
 
-You can run pre-commit hooks manually with [`pre commit run`](https://pre-commit.com/#pre-commit-run).
+If you previously ran `pre-commit install`, an old `pre-commit` Git hook is still installed.
+Run `uv run prek install -f` once to overwrite it with the prek hook.
+
+### Manually running hooks
+
+You can run the hooks manually with [`prek run`](https://prek.j178.dev/reference/cli/#prek-run).
+The examples below use the project's uv environment (`uv run prek run …`); if you installed prek globally, drop the `uv run` prefix and call `prek run …` directly.
 
 * You can filter files with `--files` and `--all-files`
 * You can also compare two revisions:
-`uv run pre-commit run --from-ref origin/master --to-ref HEAD`
+`uv run prek run --from-ref origin/master --to-ref HEAD`
 
 ## Translatable string checks
 
