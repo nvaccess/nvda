@@ -65,6 +65,7 @@ class MathPresentationProvider:
 		:param mathMl: The MathML markup.
 		:param sourceObj: The source object containing the math, if known.
 		"""
+		self.interactWithMathMl(mathMl)
 
 
 speechProvider: MathPresentationProvider | None = None
