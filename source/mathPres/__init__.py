@@ -48,12 +48,23 @@ class MathPresentationProvider:
 		"""
 		raise NotImplementedError
 
-	def interactWithMathMl(self, mathMl: str, sourceObj: "NVDAObject | None" = None) -> None:
+	def interactWithMathMl(self, mathMl: str) -> None:
 		"""Begin interaction with specified MathML markup.
+		:param mathMl: The MathML markup.
+		"""
+		raise NotImplementedError
+
+	def interactWithMathMlFromSource(
+		self,
+		mathMl: str,
+		sourceObj: "NVDAObject",
+	) -> None:
+		"""Begin interaction with specified MathML markup from the given source object.
+		The default implementation simply forwards to ``interactWithMathMl``; this should be overridden in subclasses.
+
 		:param mathMl: The MathML markup.
 		:param sourceObj: The source object containing the math, if known.
 		"""
-		raise NotImplementedError
 
 
 speechProvider: MathPresentationProvider | None = None
@@ -200,7 +211,10 @@ def interactWithMathMl(mathMl: str, sourceObj: "NVDAObject | None" = None) -> No
 		# but math interaction is not supported.
 		ui.message(_("Math interaction not supported."))
 		return
-	return interactionProvider.interactWithMathMl(mathMl, sourceObj=sourceObj)
+	if sourceObj is not None:
+		return interactionProvider.interactWithMathMlFromSource(mathMl, sourceObj=sourceObj)
+	else:
+		return interactionProvider.interactWithMathMl(mathMl)
 
 
 RE_MATH_LANG = re.compile(r"""<math.*? xml:lang=["']([^"']+)["'].*?>""")

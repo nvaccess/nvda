@@ -470,8 +470,13 @@ class MathCAT(mathPres.MathPresentationProvider):
 			ui.message(pgettext("math", "Error in brailling math."))
 			return ""
 
-	def interactWithMathMl(self, mathml: str, sourceObj: "NVDAObject | None" = None) -> None:
-		"""Interact with a MathML string, creating a MathCATInteraction object.
+	def _startMathInteraction(
+		self,
+		mathml: str,
+		sourceObj: "NVDAObject | None" = None,
+	) -> None:
+		"""Start interacting with a MathML string.
+		This is a helper called by ``interactWithMathMl`` and ``interactWithMathMlFromSource``.
 
 		:param mathml: The MathML representing the math to interact with.
 		:param sourceObj: Optional source object containing the math.
@@ -487,3 +492,17 @@ class MathCAT(mathPres.MathPresentationProvider):
 			return
 		interaction.setFocus()
 		interaction._updateBraille()
+
+	def interactWithMathMl(self, mathml: str) -> None:
+		"""Interact with a MathML string, creating a MathCATInteraction object.
+
+		:param mathml: The MathML representing the math to interact with.
+		"""
+		self._startMathInteraction(mathml, sourceObj=None)
+
+	def interactWithMathMlFromSource(
+		self,
+		mathml: str,
+		sourceObj: "NVDAObject",
+	) -> None:
+		self._startMathInteraction(mathml, sourceObj=sourceObj)
