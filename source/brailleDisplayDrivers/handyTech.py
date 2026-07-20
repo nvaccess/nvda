@@ -273,7 +273,7 @@ class AtcMixin:
 		log.debug("Enabling ATC")
 		self._display.atc = True
 
-	def display(self, cells: list[int]):
+	def display(self, cells: list[int]) -> None:
 		super().display(cells)
 		self._lastRefreshTime = time.monotonic()
 
