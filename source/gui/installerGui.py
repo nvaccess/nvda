@@ -4,11 +4,25 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
+from ctypes import FormatError, GetLastError, byref
+from ctypes.wintypes import HANDLE
 import os
 import subprocess
 import sys
 
 from utils.security import isRunningElevated
+from winBindings.user32 import EWX, SHTDN_REASON, ExitWindowsEx
+from winAPI.constants import SystemErrorCodes
+from winBindings.kernel32 import GetCurrentProcess
+from winBindings.advapi32 import (
+	SE_PRIVILEGE,
+	TOKEN_PRIVILEGES,
+	AdjustTokenPrivileges,
+	LookupPrivilegeValue,
+	OpenProcessToken,
+	PrivilegeName,
+	TokenAccessRight,
+)
 import winUser
 import wx
 import config
@@ -57,8 +71,50 @@ def _canPortableConfigBeCopied() -> bool:
 
 def _restartWindows() -> bool:
 	"""Issue a Windows restart command. Returns True if the command succeeded."""
-	result = subprocess.run(["shutdown", "/r", "/t", "0"], creationflags=subprocess.CREATE_NO_WINDOW)
-	return result.returncode == 0
+	# In order to request  system restart,
+	# we must have the SE_SHUTDOWN_NAME privilege.
+	# Get a token for this process.
+	hToken = HANDLE()
+	if not OpenProcessToken(
+		GetCurrentProcess(),
+		TokenAccessRight.ADJUST_PRIVILEGES | TokenAccessRight.QUERY,
+		byref(hToken),
+	):
+		log.error(
+			f"Failed to open the current process token with the ADJUST_PRIVILEGES access right. {GetLastError()}: {FormatError()}",
+		)
+		return False
+	privileges = TOKEN_PRIVILEGES()
+	# Get the LUID for the shutdown privilege.
+	if LookupPrivilegeValue(None, PrivilegeName.SHUTDOWN, byref(privileges.Privileges[0].Luid)) == 0:
+		log.error(
+			f"Failed to retrieve the LUID for the shutdown privilege. {GetLastError()}: {FormatError()}",
+		)
+		return False
+	privileges.Privileges[0].Attributes = SE_PRIVILEGE.ENABLED
+	privileges.PrivilegeCount = 1
+	# Set the shutdown privilege for this process.
+	# The return value can indicate success even if not all of the privileges were modified as requested.
+	# But the last error code will be set to ERROR_SUCCESS if and only if all of the privileges were modified as requested.
+	# So ignore the return value, and just check GetLastError.
+	AdjustTokenPrivileges(hToken, False, byref(privileges), 0, None, None)
+	if GetLastError() != SystemErrorCodes.SUCCESS:
+		log.error(
+			f"Failed to add the shutdown privilege to the current process. {GetLastError()}: {FormatError()}",
+		)
+		return False
+	# Shut down the system and force all applications to close.
+	if (
+		ExitWindowsEx(
+			EWX.REBOOT | EWX.RESTARTAPPS,
+			SHTDN_REASON.MAJOR_APPLICATION | SHTDN_REASON.MINOR_INSTALLATION | SHTDN_REASON.FLAG_PLANNED,
+		)
+		== 0
+	):
+		log.error(f"Failed to trigger system restart. {GetLastError()}: {FormatError()}")
+		return False
+	# shutdown was successful
+	return True
 
 
 def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
@@ -113,10 +169,9 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 			if not core.triggerNVDAExit(newNVDA):
 				log.error("NVDA already in process of exiting, this indicates a logic error.")
 		case ReturnCode.CUSTOM_2:
-			if _restartWindows():
-				if not core.triggerNVDAExit(None):
-					log.error("NVDA already in process of exiting, this indicates a logic error.")
-			else:
+			# If we successfully request a system restart, we will be terminated by the shutdown sequence.
+			# Other apps may require input before they can exit, so we should not exit just yet.
+			if not _restartWindows():
 				# Restart failed — inform the user.
 				# Only exit if a new copy can be started so the user keeps a screen reader.
 				gui.messageBox(
@@ -254,12 +309,15 @@ def doSilentInstall(
 	startOnLogon = globalVars.appArgs.enableStartOnLogon
 	if startOnLogon is None:
 		startOnLogon = config.getStartOnLogonScreen() if not freshInstall else False
+	# Currently, this function is only called by ``core.main`` when ``--install`` or ``--install-silent`` are provided at the command line.
+	# The only use of the ``silent`` parameter to ``doInstall`` is to surpress the post-installation restart dialog.
+	# Since that dialog should be shown unless this genuinely is a silent installation, use presence of ``--install-silent`` as the actual value of the ``silent`` argument.
 	doInstall(
 		createDesktopShortcut=installer.isDesktopShortcutInstalled() if not freshInstall else True,
 		startOnLogon=startOnLogon,
 		isUpdate=not freshInstall,
 		copyPortableConfig=copyPortableConfig,
-		silent=True,
+		silent=globalVars.appArgs.installSilent,
 		startAfterInstall=startAfterInstall,
 	)
 

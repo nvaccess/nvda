@@ -7,6 +7,9 @@ from typing import List, Union
 
 import bdDetect
 import braille
+import braille.display
+import braille.display.driver
+import braille.display.gesture
 from logHandler import log
 import inputCore
 import brailleInput
@@ -144,7 +147,7 @@ ALVA_KEYS = {
 }
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, ScriptableObject):
 	_dev: Union[hwIo.Serial, hwIo.Hid]
 	name = "alva"
 	# Translators: The name of a braille display.
@@ -152,7 +155,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	isThreadSafe = True
 	supportsAutomaticDetection = True
 	timeout = 0.2
-	supportedSettings = (braille.BrailleDisplayDriver.HIDInputSetting(useConfig=False),)
+	supportedSettings = (braille.display.driver.BrailleDisplayDriver.HIDInputSetting(useConfig=True),)
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
@@ -169,7 +172,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts(
+		return braille.display.getSerialPorts(
 			filterFunc=lambda info: info.get("bluetoothName", "").startswith("ALVA "),
 		)
 
@@ -411,6 +414,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		return not self._rawKeyboardInput
 
 	def _set_hidKeyboardInput(self, state):
+		if state is self.hidKeyboardInput:
+			return
 		rawState = not state
 		if self.isHid:
 			# Make sure the device settings are up to date.
@@ -508,7 +513,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keys, brailleInput=False):

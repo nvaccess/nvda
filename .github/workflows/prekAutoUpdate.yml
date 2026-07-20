@@ -1,0 +1,48 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2026 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
+name: Prek auto-update
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  prekAutoUpdate:
+    name: Prek auto-update
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+      # Install prek as a standalone binary
+      - name: Install prek
+        run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/j178/prek/releases/latest/download/prek-installer.sh | sh
+      # --cooldown-days skips releases younger than 3 days, avoiding pinning to
+      # a freshly published (and potentially yanked/broken) hook revision.
+      - name: Run prek auto-update
+        run: prek auto-update --cooldown-days 7
+      - name: Create pull request
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet; then
+            echo "No hook updates available."
+            exit 0
+          fi
+          git config --local user.name "github-actions"
+          git config --local user.email "github-actions@github.com"
+          git checkout -b prek-autoupdate
+          git commit -am "Prek auto-update"
+          # Force push so a re-run replaces a stale auto-update branch.
+          git push --force --set-upstream origin prek-autoupdate
+          # Reuse the existing PR if one is already open from a previous run.
+          gh pr create --base master --head prek-autoupdate \
+            --title "Prek auto-update" \
+            --body "Automated update of prek hook revisions." \
+            || echo "A pull request for prek-autoupdate already exists."

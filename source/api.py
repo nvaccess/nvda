@@ -23,6 +23,7 @@ import winUser
 import controlTypes
 import eventHandler
 import braille
+import braille.regions.focus
 import vision
 import watchdog
 import exceptions
@@ -184,7 +185,7 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 	globalVars.focusDifferenceLevel = focusDifferenceLevel
 	globalVars.focusObject = obj
 	globalVars.focusAncestors = ancestors
-	braille.invalidateCachedFocusAncestors(focusDifferenceLevel)
+	braille.regions.focus.invalidateCachedFocusAncestors(focusDifferenceLevel)
 	if config.conf["reviewCursor"]["followFocus"]:
 		setNavigatorObject(obj, isFocus=True)
 	# Fire focusExited event for all old focus ancestors not common with the new focus

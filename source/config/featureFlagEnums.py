@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2022-2026 NV Access Limited, Bill Dengler, Rob Meredith, Leonard de Ruijter, Wang Chong
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
 Feature flag value enumerations.
@@ -144,18 +144,21 @@ class WordNavigationUnitFlag(DisplayStringEnum):
 
 	DEFAULT = enum.auto()
 	AUTO = enum.auto()
-	UNISCRIBE = enum.auto()
 	CHINESE = enum.auto()
+	ICU = enum.auto()
+	UNISCRIBE = enum.auto()
 
 	@property
 	def _displayStringLabels(self) -> dict["WordNavigationUnitFlag", str]:
 		return {
 			# Translators: Label for a method of word segmentation.
-			self.AUTO: _("Auto"),
-			# Translators: Label for a method of word segmentation.
-			self.UNISCRIBE: _("Standard"),
+			self.AUTO: _("Automatic"),
 			# Translators: Label for a method of word segmentation.
 			self.CHINESE: _("Chinese"),
+			# Translators: Label for a method of word segmentation.
+			self.ICU: _("Unicode (ICU)"),
+			# Translators: Label for a method of word segmentation.
+			self.UNISCRIBE: _("Legacy (Uniscribe)"),
 		}
 
 
