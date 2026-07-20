@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2009-2025 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter,
-# Bill Dengler, Cyrille Bougot
+# Copyright (C) 2009-2026 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter,
+# Bill Dengler, Cyrille Bougot, Cary-rowen
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Support for UI Automation (UIA) controls."""
 
@@ -18,6 +18,7 @@ from typing import (
 	Any,
 )
 import array
+import ctypes
 from ctypes.wintypes import POINT
 from comtypes import COMError
 import time
@@ -35,6 +36,7 @@ import config
 from config.configFlags import ReportSpellingErrors
 import speech
 import api
+import eventHandler
 import textInfos
 from logHandler import log
 from UIAHandler.types import (
@@ -70,6 +72,7 @@ import braille.regions.properties
 import locationHelper
 import ui
 import winVersion
+from winBindings import user32
 import NVDAObjects
 
 
@@ -1375,6 +1378,19 @@ class UIA(Window):
 			try:
 				if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsValuePatternAvailablePropertyId):
 					clsList.append(ComboBoxWithoutValuePattern)
+				# #17454: Classic .NET Framework WinForms combo boxes expose a ValuePattern,
+				# but don't fire value change events when their selection changes.
+				elif (
+					UIAControlType == UIAHandler.UIA_ComboBoxControlTypeId
+					and self.UIAElement.cachedFrameworkID == "WinForm"
+					and self.normalizeWindowClassName(self.windowClassName) == "COMBOBOX"
+					and "System.Windows.Forms, Version=4.0.0.0"
+					in (self.UIAElement.cachedProviderDescription or "")
+					and not self._getUIACacheablePropertyValue(
+						UIAHandler.UIA_IsSelectionPatternAvailablePropertyId,
+					)
+				):
+					clsList.append(_NetFrameworkWinFormsComboBox)
 			except COMError:
 				pass
 		elif UIAControlType == UIAHandler.UIA_ListItemControlTypeId:
@@ -2669,6 +2685,18 @@ class ControlPanelLink(UIA):
 		return desc
 
 
+class _NetFrameworkWinFormsComboBox(UIA):
+	"""A classic .NET Framework WinForms combo box that does not fire UIA value change events."""
+
+	def initOverlayClass(self) -> None:
+		# Ensure selection events from the separate ComboLBox window are accepted.
+		eventHandler.requestEvents(
+			"UIA_elementSelected",
+			processId=self.processID,
+			windowClassName="ComboLBox",
+		)
+
+
 class ComboBoxWithoutValuePattern(UIA):
 	"""A combo box without the Value pattern.
 	UIA combo boxes don't necessarily support the Value pattern unless they take arbitrary text values.
@@ -2693,6 +2721,22 @@ class ComboBoxWithoutValuePattern(UIA):
 
 
 class ListItem(UIA):
+	def event_UIA_elementSelected(self) -> None:
+		super().event_UIA_elementSelected()
+		focus = api.getFocusObject()
+		if (
+			isinstance(focus, _NetFrameworkWinFormsComboBox)
+			and self.processID == focus.processID
+			and self.windowClassName == "ComboLBox"
+		):
+			comboBoxInfo = user32.COMBOBOXINFO()
+			comboBoxInfo.cbSize = ctypes.sizeof(comboBoxInfo)
+			if (
+				user32.GetComboBoxInfo(focus.windowHandle, ctypes.byref(comboBoxInfo))
+				and comboBoxInfo.hwndList == self.windowHandle
+			):
+				focus.event_valueChange()
+
 	def event_stateChange(self):
 		if not self.hasFocus:
 			parent = self.parent

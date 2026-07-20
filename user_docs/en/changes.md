@@ -56,6 +56,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * The HID keyboard input simulation setting for ALVA braille displays is now remembered across reconnects and restarts. (#20455, @Cary-rowen)
 * Braille now follows the spoken text during say all in browse mode when braille is tethered to focus. (#3287, @LeonarddeR)
 * NVDA now reports checked ToolStrip menu items in .NET Framework Windows Forms applications using UI Automation. (#19335, @Cary-rowen)
+* NVDA now reports the selected item when using the arrow keys in collapsed .NET Framework Windows Forms combo boxes. (#17454, @Cary-rowen)
 
 ### Changes for Developers
 
