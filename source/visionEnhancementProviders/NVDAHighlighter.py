@@ -601,6 +601,10 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		self.updateContextRect(context=Context.BROWSEMODE)
 
 	def handleMathNavigation(self, rect: RectLTRB | None) -> None:
+		"""Update the browse mode highlight for math navigation.
+
+		:param rect: The current math navigation rectangle, or ``None`` if no rectangle is available.
+		"""
 		if rect is None:
 			self.contextToRectMap.pop(Context.BROWSEMODE, None)
 			self.updateContextRect(context=Context.BROWSEMODE)

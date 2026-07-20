@@ -94,7 +94,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		provider: mathPres.MathPresentationProvider | None = None,
 		mathMl: str | None = None,
 		sourceObj: "NVDAObject | None" = None,
-	):
+	) -> None:
 		"""Initialize the MathCATInteraction object.
 
 		:param provider: Optional presentation provider.
@@ -127,6 +127,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			self._clearMathHighlight()
 
 	def event_gainFocus(self) -> None:
+		"""Update the math highlight after inherited focus handling has completed."""
 		super().event_gainFocus()
 		if self._shouldUpdateMathHighlight:
 			self._shouldUpdateMathHighlight = False
@@ -482,6 +483,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 		sourceObj: "NVDAObject | None" = None,
 	) -> None:
 		"""Start interacting with a MathML string.
+
 		This is a helper called by ``interactWithMathMl`` and ``interactWithMathMlFromSource``.
 
 		:param mathml: The MathML representing the math to interact with.
@@ -511,4 +513,9 @@ class MathCAT(mathPres.MathPresentationProvider):
 		mathml: str,
 		sourceObj: "NVDAObject",
 	) -> None:
+		"""Interact with MathML from the given source object.
+
+		:param mathml: The MathML representing the math to interact with.
+		:param sourceObj: The source object containing the math.
+		"""
 		self._startMathInteraction(mathml, sourceObj=sourceObj)
