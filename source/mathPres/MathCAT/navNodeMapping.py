@@ -82,8 +82,9 @@ def _addSyntheticIdsToMathMl(
 
 
 def removeSyntheticIdsFromMathMl(mathml: str) -> str:
+	ElementTree.register_namespace("", MATHML_NAMESPACE)
 	try:
-		root = ElementTree.fromstring(mathml)
+		root = ElementTree.fromstring(mathPres.stripExtraneousXml(mathml))
 	except ElementTree.ParseError:
 		return mathml
 	for element, _nodePath in _iterMathMlElements(root, ()):
