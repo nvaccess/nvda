@@ -23,6 +23,7 @@
 * Magnifier: A new unassigned command has been added to move the mouse cursor to the center of the magnified view. (#20127, @CyrilleB79)
 * Added context menu and shortcuts support to the Input gestures dialog. (#16816, @amirmahdifard)
 * Added context menu and shortcuts support to the Speech Dictionaries dialog. (#20420, @amirmahdifard)
+* It is now possible to change an existing gesture in the input gestures dialog. (#10983, @amirmahdifard)
 
 ### Changes
 
