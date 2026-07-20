@@ -33,6 +33,10 @@ class _TestMagnifier(unittest.TestCase):
 			mock.MagUninitialize.return_value = True
 			mock.MagSetFullscreenTransform.return_value = True
 			mock.MagSetFullscreenColorEffect.return_value = True
+		self.mouseHook_patcher = patch("_magnifier.magnifier.MagnifierMouseHook")
+		self.MockMouseHook = self.mouseHook_patcher.start()
+		self.mock_hook_instance = MagicMock()
+		self.MockMouseHook.return_value = self.mock_hook_instance
 
 		self.magnifier = Magnifier()
 		self.magnifier.zoomLevel = 200
@@ -50,6 +54,7 @@ class _TestMagnifier(unittest.TestCase):
 			self.magnifier._timer = None
 		if self.magnifier._isActive:
 			self.magnifier._isActive = False
+		self.mouseHook_patcher.stop()
 		self.mag_fs_patcher.stop()
 		self.mag_patcher.stop()
 
