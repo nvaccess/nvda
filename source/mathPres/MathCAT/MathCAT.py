@@ -193,12 +193,13 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		try:
 			text = libmathcat.DoNavigateCommand(commandName)
 			speech.speak(convertSSMLTextForNVDA(text))
-			self._updateMathHighlight()
 		except Exception:
 			log.exception()
 			# Translators: this message alerts users to an error in navigating math.
 			ui.message(pgettext("math", "Error in navigating math"))
 			self._clearMathHighlight()
+		else:
+			self._updateMathHighlight()
 
 		self._updateBraille()
 
@@ -490,7 +491,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 		try:
 			libmathcat.SetMathML(interaction._mathMlForNavigation)
 		except Exception:
-			log.exception(f"MathML is {interaction._mathMlForNavigation}")
+			log.exception("Error setting MathML for navigation")
 			# Translators: this message reports illegal MathML.
 			ui.message(pgettext("math", "Invalid MathML found."))
 			libmathcat.SetMathML("<math></math>")

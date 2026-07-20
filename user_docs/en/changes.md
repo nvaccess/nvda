@@ -65,7 +65,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * `mathPres.interactWithMathMl` now accepts an optional `sourceObj` argument.
   Math presentation providers can override `MathPresentationProvider.interactWithMathMlFromSource` to use the source object when starting interaction.
   The default implementation forwards to `interactWithMathMl`, preserving compatibility with existing providers. (#20372, @RyanMcCleary)
-* Vision enhancement providers can register with `vision.handler.extensionPoints.post_mathNavigation` to receive the screen rectangle of the current math navigation position, or `None` when math navigation exits. (#20372, @RyanMcCleary)
+* Vision enhancement providers can register with `vision.handler.extensionPoints.post_mathNavigation` to receive the screen rectangle of the current math navigation position, or `None` when no rectangle is available. (#20372, @RyanMcCleary)
 * The local Git hook runner has been switched from [pre-commit](https://pre-commit.com/) to [prek](https://prek.j178.dev/), a faster, drop-in compatible alternative. (#20305, @LeonarddeR)
   * The [pre-commit.ci](https://pre-commit.ci/) integration will be dropped entirely;.
   Linting and autofixing now run via GitHub Actions, using an autofix-or-fail workflow plus an automatic `prek auto-update` workflow.

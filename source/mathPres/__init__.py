@@ -156,9 +156,12 @@ class MathInteractionNVDAObject(Window):
 		eventHandler.executeEvent("gainFocus", self)
 
 	def script_exit(self, gesture):
+		eventHandler.executeEvent("gainFocus", self.parent)
+
+	def event_loseFocus(self) -> None:
 		if vision.handler:
 			vision.handler.handleMathNavigation(None)
-		eventHandler.executeEvent("gainFocus", self.parent)
+		super().event_loseFocus()
 
 	# Translators: Describes a command.
 	script_exit.__doc__ = _("Exit math interaction")

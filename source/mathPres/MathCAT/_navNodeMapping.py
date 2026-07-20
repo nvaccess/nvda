@@ -120,7 +120,7 @@ def prepareMathMlForNavigation(
 		return mathml, {}
 	try:
 		ia2NodeInfoByPath = sourceObj._getMathNodeInfoByPath()
-	except Exception:
+	except RuntimeError:
 		log.debugWarning("Math highlight could not build IA2 rectangle map", exc_info=True)
 		return mathml, {}
 	nodeRectsById: dict[SyntheticMathMlNodeId, "RectLTRB"] = {}

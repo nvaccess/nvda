@@ -79,7 +79,7 @@ class EventExtensionPoints:
 	Notifies a vision enhancement provider when the math navigation position has changed.
 	This allows a vision enhancement provider to track the current position while interacting with math.
 	Handlers are called with one argument.
-	:param rect: The screen rectangle of the current math navigation position, or ``None`` if math navigation has exited.
+	:param rect: The screen rectangle of the current math navigation position, or ``None`` if no rectangle is available, including after math navigation exits.
 	"""
 
 	#: Notifies a vision enhancement provider when the position of the review cursor has changed.
