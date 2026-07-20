@@ -1,26 +1,5 @@
 # What's New in NVDA
 
-## 2026.3
-
-### Important notes
-
-### New Features
-
-### Changes
-
-### Bug Fixes
-
-* When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
-
-### Changes for Developers
-
-Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
-
-#### Deprecations
-
-<!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
-<!-- markdownlint-disable -->
-
 ## 2026.2
 
 This release includes a new built-in Magnifier feature, improvements to touch gestures and navigation, and expanded speech and braille capabilities.
@@ -192,6 +171,9 @@ This means that headless or otherwise physically inaccessible machines configure
 ### Changes for Developers
 
 * The `winBindings.cfgmgr32` module is now included in NVDA binary builds. (#20089, @Cary-rowen)
+
+<!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
+<!-- markdownlint-disable -->
 
 ## 2026.1
 
