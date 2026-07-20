@@ -47,8 +47,8 @@ from textUtils import WCHAR_ENCODING
 import mathPres
 from .localization import getLanguageToUse
 from .navCommands import NAV_COMMANDS
-from .navNodeMapping import (
-	NAV_NODE_ID_PREFIX,
+from ._navNodeMapping import (
+	_NAV_NODE_ID_PREFIX,
 	prepareMathMlForNavigation,
 	removeSyntheticIdsFromMathMl,
 )
@@ -58,9 +58,6 @@ from .speech import convertSSMLTextForNVDA
 if TYPE_CHECKING:
 	from locationHelper import RectLTRB
 	from NVDAObjects import NVDAObject
-
-# Translators: The name of the category of MathCAT navigation commands in the Input Gestures dialog.
-SCRCAT_MATHCAT_NAV = _("Math navigation")
 
 
 class MathCATError(Exception):
@@ -105,7 +102,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		:param sourceObj: Optional source object containing the math.
 		"""
 		super().__init__(provider=provider, mathMl=mathMl, sourceObj=sourceObj)
-		self.mathMlForNavigation, self._mathNodeRectsById = prepareMathMlForNavigation(
+		self._mathMlForNavigation, self._mathNodeRectsById = prepareMathMlForNavigation(
 			mathMl or "<math></math>",
 			sourceObj,
 		)
@@ -144,7 +141,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			return None
 		if nodeId in self._mathNodeRectsById:
 			return self._mathNodeRectsById[nodeId]
-		if nodeId.startswith(NAV_NODE_ID_PREFIX):
+		if nodeId.startswith(_NAV_NODE_ID_PREFIX):
 			log.debug(
 				f"Math highlight found synthetic MathML id {nodeId!r}, but it has no mapped IA2 rectangle",
 			)
@@ -270,7 +267,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 					mathml = self.initMathML
 				if copyAs == "speech":
 					# save the old MathML, set the navigation MathML as MathMl, get the speech, then reset the MathML
-					savedMathML: str = self.mathMlForNavigation
+					savedMathML: str = self._mathMlForNavigation
 					savedTTS: str = libmathcat.GetPreference("TTS")
 					if savedMathML == "":  # shouldn't happen
 						raise Exception("Internal error -- MathML not set for copy")
@@ -483,9 +480,9 @@ class MathCAT(mathPres.MathPresentationProvider):
 		"""
 		interaction = MathCATInteraction(provider=self, mathMl=mathml, sourceObj=sourceObj)
 		try:
-			libmathcat.SetMathML(interaction.mathMlForNavigation)
+			libmathcat.SetMathML(interaction._mathMlForNavigation)
 		except Exception:
-			log.exception(f"MathML is {interaction.mathMlForNavigation}")
+			log.exception(f"MathML is {interaction._mathMlForNavigation}")
 			# Translators: this message reports illegal MathML.
 			ui.message(pgettext("math", "Invalid MathML found."))
 			libmathcat.SetMathML("<math></math>")

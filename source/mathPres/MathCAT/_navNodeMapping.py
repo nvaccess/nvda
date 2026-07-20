@@ -10,7 +10,7 @@ from collections.abc import Generator
 from typing import TYPE_CHECKING
 
 import mathPres
-from mathPres.mathMlNode import (
+from mathPres._mathMlNode import (
 	MathMlNodeInfo,
 	MathMlNodePath,
 	SyntheticMathMlNodeId,
@@ -22,8 +22,8 @@ if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
 
 
-MATHML_NAMESPACE = "http://www.w3.org/1998/Math/MathML"
-NAV_NODE_ID_PREFIX = "nvda-math-node-"
+_MATHML_NAMESPACE = "http://www.w3.org/1998/Math/MathML"
+_NAV_NODE_ID_PREFIX = "nvda-math-node-"
 _NAV_NODE_ID_ADDED_ATTR = "data-nvda-math-id-added"
 _NAV_NODE_ORIGINAL_ID_ATTR = "data-nvda-math-original-id"
 _MATHCAT_ID_ADDED_ATTR = "data-id-added"
@@ -35,8 +35,8 @@ def _stripMathMlNamespace(tag: str) -> str:
 
 def _getSyntheticNodeId(nodePath: MathMlNodePath) -> str:
 	if not nodePath:
-		return f"{NAV_NODE_ID_PREFIX}root"
-	return f"{NAV_NODE_ID_PREFIX}{'-'.join(str(index) for index in nodePath)}"
+		return f"{_NAV_NODE_ID_PREFIX}root"
+	return f"{_NAV_NODE_ID_PREFIX}{'-'.join(str(index) for index in nodePath)}"
 
 
 def _iterMathMlElements(
@@ -57,7 +57,7 @@ def _iterMathMlElements(
 def _addSyntheticIdsToMathMl(
 	mathml: str,
 ) -> tuple[str, dict[SyntheticMathMlNodeId, MathMlNodeInfo]]:
-	ElementTree.register_namespace("", MATHML_NAMESPACE)
+	ElementTree.register_namespace("", _MATHML_NAMESPACE)
 	try:
 		root = ElementTree.fromstring(mathPres.stripExtraneousXml(mathml))
 	except ElementTree.ParseError:
@@ -82,7 +82,7 @@ def _addSyntheticIdsToMathMl(
 
 
 def removeSyntheticIdsFromMathMl(mathml: str) -> str:
-	ElementTree.register_namespace("", MATHML_NAMESPACE)
+	ElementTree.register_namespace("", _MATHML_NAMESPACE)
 	try:
 		root = ElementTree.fromstring(mathPres.stripExtraneousXml(mathml))
 	except ElementTree.ParseError:
@@ -119,7 +119,7 @@ def prepareMathMlForNavigation(
 	if not mathMlNodeInfoById:
 		return mathml, {}
 	try:
-		ia2NodeInfoByPath = sourceObj.getMathNodeInfoByPath()
+		ia2NodeInfoByPath = sourceObj._getMathNodeInfoByPath()
 	except Exception:
 		log.debugWarning("Math highlight could not build IA2 rectangle map", exc_info=True)
 		return mathml, {}

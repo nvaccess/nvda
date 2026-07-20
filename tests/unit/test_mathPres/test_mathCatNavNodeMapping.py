@@ -8,7 +8,7 @@
 import unittest
 import xml.etree.ElementTree as ElementTree
 
-from mathPres.MathCAT import navNodeMapping
+from mathPres.MathCAT import _navNodeMapping as navNodeMapping
 
 
 class TestMathCatNavNodeMapping(unittest.TestCase):

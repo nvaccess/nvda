@@ -38,7 +38,7 @@ import NVDAObjects
 
 if TYPE_CHECKING:
 	from locationHelper import RectLTRB
-	from mathPres.mathMlNode import MathMlNodePath, MathMlNodeRectInfo
+	from mathPres._mathMlNode import MathMlNodePath, MathMlNodeRectInfo
 
 
 class IA2WebAnnotationTarget(AnnotationTarget):
@@ -376,12 +376,12 @@ class Math(Ia2Web):
 			return None
 		return location.toLTRB()
 
-	def getMathNodeInfoByPath(self) -> dict["MathMlNodePath", "MathMlNodeRectInfo"]:
+	def _getMathNodeInfoByPath(self) -> dict["MathMlNodePath", "MathMlNodeRectInfo"]:
 		"""Map MathML element paths to tag names and screen rectangles for this IA2 math subtree.
 
 		Paths are tuples where each entry indicates an index of a child node to be traversed from the root.
 		"""
-		from mathPres.mathMlNode import MathMlNodeRectInfo
+		from mathPres._mathMlNode import MathMlNodeRectInfo
 
 		nodeInfoByPath: dict["MathMlNodePath", "MathMlNodeRectInfo"] = {}
 		stack: list[tuple[NVDAObjects.NVDAObject, "MathMlNodePath"]] = [
