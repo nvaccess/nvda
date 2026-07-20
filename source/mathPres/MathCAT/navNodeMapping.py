@@ -26,6 +26,7 @@ MATHML_NAMESPACE = "http://www.w3.org/1998/Math/MathML"
 NAV_NODE_ID_PREFIX = "nvda-math-node-"
 _NAV_NODE_ID_ADDED_ATTR = "data-nvda-math-id-added"
 _NAV_NODE_ORIGINAL_ID_ATTR = "data-nvda-math-original-id"
+_MATHCAT_ID_ADDED_ATTR = "data-id-added"
 
 
 def _stripMathMlNamespace(tag: str) -> str:
@@ -86,6 +87,10 @@ def removeSyntheticIdsFromMathMl(mathml: str) -> str:
 	except ElementTree.ParseError:
 		return mathml
 	for element, _nodePath in _iterMathMlElements(root, ()):
+		if element.get(_MATHCAT_ID_ADDED_ATTR) == "true":
+			element.attrib.pop("id", None)
+			element.attrib.pop(_MATHCAT_ID_ADDED_ATTR, None)
+			continue
 		if element.get(_NAV_NODE_ID_ADDED_ATTR) != "true":
 			continue
 		originalId = element.attrib.pop(_NAV_NODE_ORIGINAL_ID_ATTR, None)
