@@ -132,7 +132,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		sourceObj = self.sourceObj
 		if not sourceObj:
 			return None
-		# Only import Math from ia2Web when it's actually needed (i.e., when a source object is present).
+		# Avoid importing ia2Web at startup.
 		from NVDAObjects.IAccessible.ia2Web import Math as Ia2WebMath
 
 		if not isinstance(sourceObj, Ia2WebMath):
