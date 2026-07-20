@@ -79,7 +79,7 @@ class FullScreenMagnifier(Magnifier):
 					# Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
 					"Cannot start magnifier. Another magnifier application may already be running.",
 				),
-			) from None
+			)
 
 		if self._isActive:
 			self._applyFilter()
