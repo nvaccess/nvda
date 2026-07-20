@@ -11,9 +11,9 @@ from typing import TYPE_CHECKING
 
 import mathPres
 from mathPres._mathMlNode import (
+	MathMlNodeId,
 	MathMlNodeInfo,
 	MathMlNodePath,
-	SyntheticMathMlNodeId,
 )
 from logHandler import log
 
@@ -25,7 +25,6 @@ if TYPE_CHECKING:
 _MATHML_NAMESPACE = "http://www.w3.org/1998/Math/MathML"
 _NAV_NODE_ID_PREFIX = "nvda-math-node-"
 _NAV_NODE_ID_ADDED_ATTR = "data-nvda-math-id-added"
-_NAV_NODE_ORIGINAL_ID_ATTR = "data-nvda-math-original-id"
 _MATHCAT_ID_ADDED_ATTR = "data-id-added"
 
 
@@ -33,10 +32,19 @@ def _stripMathMlNamespace(tag: str) -> str:
 	return tag.rsplit("}", 1)[-1]
 
 
-def _getSyntheticNodeId(nodePath: MathMlNodePath) -> str:
+def _getSyntheticNodeIdPrefix(existingNodeIds: set[MathMlNodeId]) -> str:
+	prefix = _NAV_NODE_ID_PREFIX
+	suffix = 1
+	while any(nodeId.startswith(prefix) for nodeId in existingNodeIds):
+		prefix = f"{_NAV_NODE_ID_PREFIX}{suffix}-"
+		suffix += 1
+	return prefix
+
+
+def _getSyntheticNodeId(nodePath: MathMlNodePath, prefix: str) -> MathMlNodeId:
 	if not nodePath:
-		return f"{_NAV_NODE_ID_PREFIX}root"
-	return f"{_NAV_NODE_ID_PREFIX}{'-'.join(str(index) for index in nodePath)}"
+		return f"{prefix}root"
+	return f"{prefix}{'-'.join(str(index) for index in nodePath)}"
 
 
 def _iterMathMlElements(
@@ -54,9 +62,9 @@ def _iterMathMlElements(
 		)
 
 
-def _addSyntheticIdsToMathMl(
+def _addNavigationIdsToMathMl(
 	mathml: str,
-) -> tuple[str, dict[SyntheticMathMlNodeId, MathMlNodeInfo]]:
+) -> tuple[str, dict[MathMlNodeId, MathMlNodeInfo]]:
 	ElementTree.register_namespace("", _MATHML_NAMESPACE)
 	try:
 		root = ElementTree.fromstring(mathPres.stripExtraneousXml(mathml))
@@ -66,14 +74,20 @@ def _addSyntheticIdsToMathMl(
 	if _stripMathMlNamespace(root.tag) != "math":
 		log.debug("Math highlight did not add synthetic ids because MathML root is not <math>")
 		return mathml, {}
-	nodeInfoById: dict[SyntheticMathMlNodeId, MathMlNodeInfo] = {}
+	existingNodeIds: set[MathMlNodeId] = set()
+	for element in root.iter():
+		nodeId = element.get("id")
+		if nodeId:
+			existingNodeIds.add(nodeId)
+	syntheticNodeIdPrefix = _getSyntheticNodeIdPrefix(existingNodeIds)
+	nodeInfoById: dict[MathMlNodeId, MathMlNodeInfo] = {}
 	for element, nodePath in _iterMathMlElements(root, ()):
-		# MathCAT exposes the current NavNode by MathML id, so add stable ids to this copy only.
-		nodeId = _getSyntheticNodeId(nodePath)
-		if originalId := element.get("id"):
-			element.set(_NAV_NODE_ORIGINAL_ID_ATTR, originalId)
-		element.set("id", nodeId)
-		element.set(_NAV_NODE_ID_ADDED_ATTR, "true")
+		nodeId = element.get("id")
+		if not nodeId:
+			# MathCAT exposes the current NavNode by MathML id, so add an id to this copy only.
+			nodeId = _getSyntheticNodeId(nodePath, syntheticNodeIdPrefix)
+			element.set("id", nodeId)
+			element.set(_NAV_NODE_ID_ADDED_ATTR, "true")
 		nodeInfoById[nodeId] = MathMlNodeInfo(
 			path=nodePath,
 			tag=_stripMathMlNamespace(element.tag),
@@ -87,18 +101,14 @@ def removeSyntheticIdsFromMathMl(mathml: str) -> str:
 		root = ElementTree.fromstring(mathPres.stripExtraneousXml(mathml))
 	except ElementTree.ParseError:
 		return mathml
-	for element, _nodePath in _iterMathMlElements(root, ()):
+	for element in root.iter():
 		if element.get(_MATHCAT_ID_ADDED_ATTR) == "true":
 			element.attrib.pop("id", None)
 			element.attrib.pop(_MATHCAT_ID_ADDED_ATTR, None)
 			continue
 		if element.get(_NAV_NODE_ID_ADDED_ATTR) != "true":
 			continue
-		originalId = element.attrib.pop(_NAV_NODE_ORIGINAL_ID_ATTR, None)
-		if originalId is not None:
-			element.set("id", originalId)
-		else:
-			element.attrib.pop("id", None)
+		element.attrib.pop("id", None)
 		element.attrib.pop(_NAV_NODE_ID_ADDED_ATTR, None)
 	return ElementTree.tostring(root, encoding="unicode")
 
@@ -106,8 +116,8 @@ def removeSyntheticIdsFromMathMl(mathml: str) -> str:
 def prepareMathMlForNavigation(
 	mathml: str,
 	sourceObj: "NVDAObject | None",
-) -> tuple[str, dict[SyntheticMathMlNodeId, "RectLTRB"]]:
-	"""Add synthetic ids to MathML and map those ids to IA2 rectangles."""
+) -> tuple[str, dict[MathMlNodeId, "RectLTRB"]]:
+	"""Add missing ids to MathML and map node ids to IA2 rectangles."""
 	if not sourceObj:
 		return mathml, {}
 	# Avoid importing ia2Web at startup.
@@ -115,7 +125,7 @@ def prepareMathMlForNavigation(
 
 	if not isinstance(sourceObj, Ia2WebMath):
 		return mathml, {}
-	mathmlWithIds, mathMlNodeInfoById = _addSyntheticIdsToMathMl(mathml)
+	mathmlWithIds, mathMlNodeInfoById = _addNavigationIdsToMathMl(mathml)
 	if not mathMlNodeInfoById:
 		return mathml, {}
 	try:
@@ -123,7 +133,7 @@ def prepareMathMlForNavigation(
 	except RuntimeError:
 		log.debugWarning("Math highlight could not build IA2 rectangle map", exc_info=True)
 		return mathml, {}
-	nodeRectsById: dict[SyntheticMathMlNodeId, "RectLTRB"] = {}
+	nodeRectsById: dict[MathMlNodeId, "RectLTRB"] = {}
 	missingPathCount = 0
 	tagMismatchCount = 0
 	for nodeId, mathMlNodeInfo in mathMlNodeInfoById.items():
@@ -137,7 +147,7 @@ def prepareMathMlForNavigation(
 			continue
 		nodeRectsById[nodeId] = ia2NodeInfo.rect
 	log.debug(
-		f"Math highlight added synthetic ids to {len(mathMlNodeInfoById)} MathML nodes; "
+		f"Math highlight prepared ids for {len(mathMlNodeInfoById)} MathML nodes; "
 		f"mapped {len(nodeRectsById)} ids to IA2 rectangles; "
 		f"missing IA2 paths: {missingPathCount}; tag mismatches: {tagMismatchCount}",
 	)

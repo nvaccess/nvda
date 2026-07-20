@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 
 MathMlNodePath = tuple[int, ...]
-SyntheticMathMlNodeId = str
+MathMlNodeId = str
 
 
 @dataclass(frozen=True)

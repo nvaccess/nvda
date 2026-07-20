@@ -41,10 +41,8 @@ class TestMathCatNavNodeMapping(unittest.TestCase):
 				{},
 			),
 			(
-				'<math><mi id="nvda-math-node-0" '
-				'data-nvda-math-id-added="true" '
-				'data-nvda-math-original-id="author-id">x</mi></math>',
-				{"id": "author-id"},
+				'<math><mi id="author-id" href="#author-id">x</mi></math>',
+				{"id": "author-id", "href": "#author-id"},
 			),
 			(
 				'<math><mi id="author-id">x</mi></math>',
