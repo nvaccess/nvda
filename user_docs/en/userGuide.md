@@ -1569,14 +1569,16 @@ In addition, the emulated keypress cannot reflect Braille typed before the modif
 This means that, to type alt+2 with a Braille code that uses a number sign, you must first toggle Alt and then type a number sign.
 
 #### Braille Input Gestures {#BrailleInputGestures}
+
 <!-- KC:beginInclude -->
 
 | Name | Key | Description |
 |---|---|---|
-| Input via braille display | `any dots` | Inputs braille dots via the braille keyboard |
+| Input via braille display | any dots | Inputs braille dots via the braille keyboard |
 | Erase last entered | `dot7` | Erases the last entered braille cell or character |
 | Translate braille input | `dot7+dot8` | Translates any braille input |
 | Translate and press enter | `dot8` | Translates any braille input and presses the enter key |
+
 <!-- KC:endInclude -->
 
 ## Vision {#Vision}
