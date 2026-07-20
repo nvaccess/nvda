@@ -1373,18 +1373,19 @@ Please see the [Supported Braille Displays](#SupportedBrailleDisplays) section f
 This section also contains information about what displays support NVDA's automatic background braille display detection functionality.
 You can configure braille using the [Braille category](#BrailleSettings) of the [NVDA Settings](#NVDASettings) dialog.
 
-### Braille Reading {#BrailleReading}
+### Reading Braille {#BrailleReading}
 
 When reading braille on a refreshable display, text is presented in the current [output table](#BrailleSettingsOutputTable) and [Braille Mode](#BrailleMode).
 Where text is longer than will fit on the display, panning or other keys on the device can be used to navigate without moving the focus or text caret.
 
 #### Automatic Braille Scrolling {#AutomaticBrailleScrolling}
 
-[Automatic braille scrolling](#BrailleAutoScrollRate) can be enabled to scroll the display at a set speed.
+Automatic braille scrolling can be enabled to scroll the display at a set speed.
 When using this feature, the braille display scrolls to present information which is more than will fit on the display at once.
 The feature is disabled and a gesture to start braille scrolling is undefined by default.
 To use automatic braille scrolling, a gesture needs to be set in NVDA's [Input Gestures dialog](#InputGestures) before it can be used.
 Gestures can also be set to speed up or slow down the rate of automatic scrolling.
+Alternatively, you can [set the automatic scroll rate in Braille Settings](#BrailleAutoScrollRate).
 
 While braille is scrolling, you can still use the scroll back and scroll forward commands without stopping scrolling.
 Scroll back can be useful to read previous contents again.
@@ -1396,7 +1397,7 @@ While reading, automatic braille scrolling will stop when any of the following h
 * The user presses a key or gesture which would display a new message
 * The focus is moved (including with braille display panning keys)
 * The end of the document is reached
-* If the state of the lock or secure screen is changed (such as the computer being locked)
+* The state of the lock or secure screen is changed (such as the computer being locked)
 
 #### Braille Reading Gestures {#BrailleReadingGestures}
 
@@ -1405,7 +1406,7 @@ While reading, automatic braille scrolling will stop when any of the following h
 |---|---|---|
 | Toggles braille mode | `NVDA+alt+t` | Allows cycling between available braille modes: "follow cursors" and "display speech output"|
 | Tether braille |`NVDA+control+t` | This option allows you to choose whether the braille display will follow the system focus / caret, the navigator object / review cursor, or both |
-| Toggle automatic scroll | None | Scrolls the display to present information which is larger than will fit on the display at once.  Press again to pause scrolling |
+| Toggle automatic scroll | None | Toggles whether NVDA periodically scrolls the braille display to present information which is too long to show at once |
 | Increase automatic scroll rate | None | Makes automatic scrolling faster (when enabled) |
 | Decrease automatic scroll rate | None | Makes automatic scrolling slower (when enabled) |
 | Cycle braille cursor shapes | None | Cycle through the shape options (dot pattern) of the braille cursor |
@@ -2628,7 +2629,7 @@ This slider controls the rate at which NVDA scrolls the braille display when [au
 
 To increase or decrease the scroll rate from anywhere, please assign custom gestures using the [Input Gestures dialog](#InputGestures).
 
-The minimum value (0%) will be 1 cell per second, and the maximum value (100%), 20 cells per second.
+The minimum value (0%) is 1 cell per second, and the maximum value (100%) is 20 cells per second.
 For example, with the default value of 10 cells/sec, if a 40-cell braille display is used, the display will scroll automatically every 4 seconds.
 If the display had 20 cells, each line of braille would be shown for 2 seconds.
 
