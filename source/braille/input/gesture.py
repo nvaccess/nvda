@@ -109,3 +109,6 @@ class BrailleInputGesture(inputCore.InputGesture):
 				# Update the dots bitmask.
 				dots += 1 << dot
 		return (source, cls._makeDisplayText(dots, space))
+
+
+inputCore.registerGestureSource("bk", BrailleInputGesture)

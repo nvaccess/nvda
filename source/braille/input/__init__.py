@@ -14,6 +14,7 @@ from __future__ import annotations
 from logHandler import log
 
 from . import inputHandler as _inputHandler
+from . import gesture as _gesture  # noqa: F401  # Registers the "bk" gesture source.
 
 handler: _inputHandler.BrailleInputHandler | None = None
 """The singleton BrailleInputHandler instance."""
