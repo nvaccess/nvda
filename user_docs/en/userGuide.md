@@ -372,6 +372,7 @@ Press `control+tab` to get to this tab from anywhere in the Add-on Store.
 The status of the add-on will be listed as "Update available".
 The list will display the currently installed version and the available version.
 Press `enter` on the add-on to open the actions list; choose "Update".
+If the add-on is disabled, the action will instead be labelled "Update (and enable)", as add-ons must be enabled to be installed; updating a disabled add-on re-enables it.
 
 By default, after NVDA startup, you will be notified if any add-on updates are available.
 To learn more about and configure this behaviour, refer to ["Update Notifications"](#AutomaticAddonUpdates).
@@ -4384,7 +4385,8 @@ Often, a gesture can be interpreted in more than one way.
 For example, if you pressed a key on the keyboard, you may wish it to be specific to the current keyboard layout (e.g. desktop or laptop) or you may wish it to apply for all layouts.
 In this case, a menu will appear allowing you to select the desired option.
 
-To remove a gesture from a command, select the gesture and press the Remove button.
+You can use the context menu to add or remove gestures for each command.
+To remove a gesture from a command, you can also press the `delete` key.
 
 The Emulated system keyboard keys category contains NVDA commands that emulate keys on the system keyboard.
 These emulated system keyboard keys can be used to control a system keyboard right from your braille display.
@@ -4447,6 +4449,9 @@ When you open the dialog, the profile you are currently editing is selected.
 Additional information is also shown for active profiles, indicating whether they are manually activated, triggered and/or being edited.
 
 To rename or delete a profile, press the Rename or Delete buttons, respectively.
+
+You can also manage profiles by opening the context menu on a profile in the list to rename or delete it.
+Additionally, you can press `f2` to rename the selected profile or `delete` to remove it.
 
 Press the Close button to close the dialog.
 
