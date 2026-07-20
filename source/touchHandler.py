@@ -9,7 +9,7 @@ In order to use touch features, NVDA must be installed on a touchscreen computer
 """
 
 import threading
-import winsound
+import speech
 from functools import cached_property
 from typing import (
 	TYPE_CHECKING,
@@ -397,9 +397,10 @@ class TouchHandler(threading.Thread):
 		self._curTouchMode = mode
 
 	def pump(self):
+		_blockedThisPump = False
 		for preheldTracker, tracker in self.trackerManager.emitTrackers():
 			if blockTouchInput:
-				winsound.MessageBeep(winsound.MB_ICONASTERISK)
+				_blockedThisPump = True
 				continue
 			modeStr = (
 				self._curTouchMode.value if isinstance(self._curTouchMode, TouchMode) else self._curTouchMode
@@ -409,6 +410,14 @@ class TouchHandler(threading.Thread):
 				inputCore.manager.executeGesture(gesture)
 			except inputCore.NoInputGestureAction:
 				pass
+		if _blockedThisPump:
+			speech.speakMessage(
+				pgettext(
+					"touchHandler",
+					# Translators: Message spoken when a touch gesture is blocked because touch input is disabled.
+					"Touch input is blocked.",
+				),
+			)
 		interval = self.trackerManager.pendingEmitInterval
 		if interval and interval > 0:
 			# Ensure we are pumped again by the time more pending multiTouch trackers are ready
