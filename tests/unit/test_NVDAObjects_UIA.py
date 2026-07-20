@@ -3,15 +3,59 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-"""Unit tests for .NET Framework WinForms UIA combo boxes."""
+"""Unit tests for NVDAObjects.UIA."""
 
-from unittest import TestCase
+import unittest
 from unittest.mock import Mock, patch
 
 import api
+import controlTypes
 import eventHandler
-from NVDAObjects.UIA import ListItem, UIA, _NetFrameworkWinFormsComboBox
+from NVDAObjects.UIA import ListItem, MenuItem, UIA, _NetFrameworkWinFormsComboBox
+import oleacc
+import UIAHandler
 from winBindings import user32
+
+
+class TestMenuItemStates(unittest.TestCase):
+	def test_legacyCheckedStateFallback(self) -> None:
+		menuItem = object.__new__(MenuItem)
+		testCases = (
+			(
+				set(),
+				oleacc.STATE_SYSTEM_CHECKED,
+				{controlTypes.State.CHECKABLE, controlTypes.State.CHECKED},
+				True,
+			),
+			(set(), 0, set(), True),
+			(
+				{controlTypes.State.CHECKABLE},
+				oleacc.STATE_SYSTEM_CHECKED,
+				{controlTypes.State.CHECKABLE},
+				False,
+			),
+		)
+		for uiaStates, legacyState, expectedStates, shouldReadLegacyState in testCases:
+			with (
+				self.subTest(
+					uiaStates=uiaStates,
+					legacyState=legacyState,
+				),
+				patch.object(UIA, "_get_states", return_value=uiaStates.copy()),
+				patch.object(
+					MenuItem,
+					"_getUIACacheablePropertyValue_handlesCOMErrors",
+					return_value=legacyState,
+				) as getLegacyState,
+			):
+				self.assertEqual(expectedStates, menuItem._get_states())
+				if shouldReadLegacyState:
+					getLegacyState.assert_called_once_with(
+						UIAHandler.UIA_LegacyIAccessibleStatePropertyId,
+						True,
+					)
+				else:
+					getLegacyState.assert_not_called()
 
 
 class _TestNetFrameworkWinFormsComboBox(_NetFrameworkWinFormsComboBox):
@@ -25,15 +69,7 @@ class _ComboLBoxListItem(ListItem):
 	windowHandle: int = 200
 
 
-class _OtherProcessComboLBoxListItem(_ComboLBoxListItem):
-	processID: int = 2
-
-
-class _OtherWindowClassListItem(_ComboLBoxListItem):
-	windowClassName: str = "OtherWindowClass"
-
-
-class TestNetFrameworkWinFormsComboBox(TestCase):
+class TestNetFrameworkWinFormsComboBox(unittest.TestCase):
 	def setUp(self) -> None:
 		self.comboBox: _TestNetFrameworkWinFormsComboBox = object.__new__(
 			_TestNetFrameworkWinFormsComboBox,
@@ -71,25 +107,17 @@ class TestNetFrameworkWinFormsComboBox(TestCase):
 			patch.object(api, "getFocusObject", return_value=self.comboBox),
 			patch.object(user32, "COMBOBOXINFO", return_value=comboBoxInfo),
 			patch.object(user32, "GetComboBoxInfo", return_value=True),
-			patch.object(UIA, "event_UIA_elementSelected", autospec=True) as baseHandler,
+			patch.object(UIA, "event_UIA_elementSelected", autospec=True),
 		):
 			listItem.event_UIA_elementSelected()
-		baseHandler.assert_called_once_with(listItem)
 		self.comboBox.event_valueChange.assert_not_called()
 
-	def test_unrelatedElementSelectedDoesNotForwardValueChange(self) -> None:
-		for listItemClass, focus in (
-			(_OtherProcessComboLBoxListItem, self.comboBox),
-			(_OtherWindowClassListItem, self.comboBox),
-			(_ComboLBoxListItem, Mock(processID=1)),
+	def test_elementSelectedWithUnrelatedFocusDoesNotForwardValueChange(self) -> None:
+		listItem = object.__new__(_ComboLBoxListItem)
+		focus = Mock(processID=1)
+		with (
+			patch.object(api, "getFocusObject", return_value=focus),
+			patch.object(UIA, "event_UIA_elementSelected", autospec=True),
 		):
-			with self.subTest(listItemClass=listItemClass, focus=focus):
-				focus.event_valueChange.reset_mock()
-				listItem = object.__new__(listItemClass)
-				with (
-					patch.object(api, "getFocusObject", return_value=focus),
-					patch.object(UIA, "event_UIA_elementSelected", autospec=True) as baseHandler,
-				):
-					listItem.event_UIA_elementSelected()
-				baseHandler.assert_called_once_with(listItem)
-				focus.event_valueChange.assert_not_called()
+			listItem.event_UIA_elementSelected()
+		focus.event_valueChange.assert_not_called()

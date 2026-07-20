@@ -443,11 +443,17 @@ class UpdatableAddonsDialog(
 		self.openStoreButton = bHelper.addButton(self, wx.ID_CLOSE, label=openStoreLabel)
 		self.openStoreButton.Bind(wx.EVT_BUTTON, self.onOpenStoreButton)
 
+		if any(addon.isDisabled or addon.isBlocked for addon in self.addonsPendingUpdate):
+			# Translators: The label of a button in a dialog that updates all add-ons,
+			# shown when the add-ons to update include disabled add-ons, which updating re-enables.
+			updateAllLabel = pgettext("addonStore", "&Update (and enable) all")
+		else:
+			# Translators: The label of a button in a dialog
+			updateAllLabel = pgettext("addonStore", "&Update all")
 		self.updateAllButton = bHelper.addButton(
 			self,
 			wx.ID_CLOSE,
-			# Translators: The label of a button in a dialog
-			label=pgettext("addonStore", "&Update all"),
+			label=updateAllLabel,
 		)
 		self.updateAllButton.Bind(wx.EVT_BUTTON, self.onUpdateAllButton)
 

@@ -1056,8 +1056,8 @@ class Edit(EditableTextWithAutoSelectDetection, EditBase):
 					winUser.OBJID_NATIVEOM,
 					interface=comInterfaces.tom.ITextDocument,
 				)
-			except (COMError, WindowsError):
-				log.error("Error getting ITextDocument", exc_info=True)
+			except (COMError, OSError):
+				log.debugWarning("Error getting ITextDocument", exc_info=True)
 				self._ITextDocumentObject = None
 		return self._ITextDocumentObject
 
