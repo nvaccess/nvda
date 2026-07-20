@@ -53,7 +53,8 @@ runcheckpot.bat
 
 Our linting process involves running [Ruff](https://docs.astral.sh/ruff) to pick up Python linting issues and auto-apply fixes where possible.
 
-[pyright](https://microsoft.github.io/pyright/) is used for static type checking.
+[pyright](https://microsoft.github.io/pyright/) and [ty](https://docs.astral.sh/ty) are both used for static type checking.
+`runlint.bat` runs both type checkers.
 
 To run the linter locally:
 
@@ -61,7 +62,7 @@ To run the linter locally:
 runlint.bat
 ```
 
-To be warned about linting errors faster, you may wish to integrate Ruff and pyright with your IDE or other development tools you are using.
+To be warned about linting errors faster, you may wish to integrate Ruff, pyright and ty with your IDE or other development tools you are using.
 
 ## Unit Tests
 

@@ -132,14 +132,40 @@ class AddonStoreVM:
 				# Translators: Label for an action that updates the selected addon
 				displayName=pgettext("addonStore", "&Update"),
 				actionHandler=self.getAddon,
-				validCheck=lambda aVM: aVM.canUseUpdateAction(),
+				validCheck=lambda aVM: (
+					aVM.canUseUpdateAction() and not (aVM.model.isDisabled or aVM.model.isBlocked)
+				),
+				actionTarget=selectedListItem,
+			),
+			AddonActionVM(
+				# Translators: Label for an action that updates the selected disabled or blocked addon,
+				# which also re-enables it.
+				displayName=pgettext("addonStore", "&Update (and enable)"),
+				actionHandler=self.getAddon,
+				validCheck=lambda aVM: (
+					aVM.canUseUpdateAction() and (aVM.model.isDisabled or aVM.model.isBlocked)
+				),
 				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
 				# Translators: Label for an action that installs the selected addon
 				displayName=pgettext("addonStore", "&Update (override incompatibility)"),
 				actionHandler=self.installOverrideIncompatibilityForAddon,
-				validCheck=lambda aVM: aVM.canUseUpdateOverrideIncompatibilityAction(),
+				validCheck=lambda aVM: (
+					aVM.canUseUpdateOverrideIncompatibilityAction()
+					and not (aVM.model.isDisabled or aVM.model.isBlocked)
+				),
+				actionTarget=selectedListItem,
+			),
+			AddonActionVM(
+				# Translators: Label for an action that updates the selected disabled or blocked addon,
+				# which also re-enables it.
+				displayName=pgettext("addonStore", "&Update (and enable, override incompatibility)"),
+				actionHandler=self.installOverrideIncompatibilityForAddon,
+				validCheck=lambda aVM: (
+					aVM.canUseUpdateOverrideIncompatibilityAction()
+					and (aVM.model.isDisabled or aVM.model.isBlocked)
+				),
 				actionTarget=selectedListItem,
 			),
 			AddonActionVM(

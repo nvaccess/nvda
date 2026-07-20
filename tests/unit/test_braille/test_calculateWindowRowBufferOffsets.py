@@ -10,14 +10,16 @@ from unittest.mock import patch
 
 import braille
 import braille.buffers
+import braille.display
+import braille.extensions
 import config
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import BrailleTextWrapFlag
 
 
-def _getDisplayDimensions(dimensions: braille.DisplayDimensions) -> braille.DisplayDimensions:
+def _getDisplayDimensions(dimensions: braille.display.DisplayDimensions) -> braille.display.DisplayDimensions:
 	"""Used to build a braille handler with particular dimensions."""
-	return braille.DisplayDimensions(
+	return braille.display.DisplayDimensions(
 		numRows=2,
 		numCols=20,
 	)
@@ -39,10 +41,10 @@ def _setTextWrap(mode: BrailleTextWrapFlag) -> None:
 
 class TestCalculate(unittest.TestCase):
 	def setUp(self):
-		braille.filter_displayDimensions.register(_getDisplayDimensions)
+		braille.extensions.filter_displayDimensions.register(_getDisplayDimensions)
 
 	def tearDown(self):
-		braille.filter_displayDimensions.unregister(_getDisplayDimensions)
+		braille.extensions.filter_displayDimensions.unregister(_getDisplayDimensions)
 		_setTextWrap(BrailleTextWrapFlag.NONE)
 		# Remove instance-level overrides of auto-properties set by syllable-boundary tests.
 		for attr in ("rawToBraillePos", "brailleToRawPos"):
