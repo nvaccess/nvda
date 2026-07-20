@@ -247,6 +247,7 @@ The actual commands will not execute while in input help mode.
 |Read status bar |`NVDA+end` |`NVDA+shift+end` |Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard|
 |Read time |`NVDA+f12` |`NVDA+f12` |Pressing once reports the current time, pressing twice reports the date. The time and date are reported in the format specified in Windows settings for the system tray clock.|
 | Repeat last spoken information | `NVDA+x` | `NVDA+x` | Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
+| Copy last spoken information | `NVDA+control+x` | `NVDA+control+x` | Copies the last information spoken by NVDA to the clipboard |
 |Report text formatting |`NVDA+f` |`NVDA+f` |Reports text formatting. Pressing twice shows the information in a window|
 |Report link destination |`NVDA+k` |`NVDA+k` |Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review|
 
@@ -682,6 +683,7 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 |Stop speech |Control |control |2-finger tap |Instantly stops speaking|
 |Pause Speech |shift |shift |none |Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer)|
 | Repeat last spoken information | `NVDA+x` | `NVDA+x` | None | Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
+| Copy last spoken information | `NVDA+control+x` | `NVDA+control+x` | None | Copies the last information spoken by NVDA to the clipboard |
 |NVDA Menu |NVDA+n |NVDA+n |2-finger double-tap |Pops up the NVDA menu to allow you to access preferences, tools, help, etc.|
 |Toggle Input Help Mode |NVDA+1 |NVDA+1 |none |Pressing any key in this mode will report the key, and the description of any NVDA command associated with it|
 |Quit NVDA |NVDA+q |NVDA+q |none |Exits NVDA|

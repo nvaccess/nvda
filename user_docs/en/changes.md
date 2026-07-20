@@ -21,6 +21,7 @@
   * The "At word or syllable boundaries" option uses hyphenation dictionaries to split long words at syllable boundaries when they do not fit on the display.
 * Magnifier: A new unassigned command has been added to move the mouse cursor to the center of the magnified view. (#20127, @CyrilleB79)
 * Added context menu and shortcuts support to the Speech Dictionaries dialog. (#20420, @amirmahdifard)
+* A new command, assigned to `NVDA+control+x`, copies the last spoken information to the clipboard. (#19385, @Cary-rowen)
 
 ### Changes
 
