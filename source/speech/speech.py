@@ -3179,3 +3179,16 @@ def clearTypedWordBuffer() -> None:
 	complete the word (such as a focus change or choosing to move the caret).
 	"""
 	_curWordChars.clear()
+
+
+def isSpeaking() -> bool:
+	"""Whether NVDA is currently producing speech audio.
+	True if the synth driver has reported it is mid-utterance
+	and speech is neither paused nor disabled.
+	"""
+	state = getState()
+	if state.speechMode in (SpeechMode.off, SpeechMode.beeps):
+		return False
+	if state.isPaused:
+		return False
+	return _manager._synthStillSpeaking()

@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2023 NV Access Limited, Leonard de Ruijter.
+Copyright 2006-2026 NV Access Limited, Leonard de Ruijter, Ethin Probst.
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License version 2.1, as published by
 the Free Software Foundation.
@@ -29,4 +29,11 @@ interface NvdaController2 {
 	[fault_status,comm_status] getProcessId();
 	[fault_status,comm_status] speakSsml();
 	[fault_status,comm_status] onSsmlMarkReached();
+}
+
+[
+	implicit_handle(handle_t nvdaController3BindingHandle)
+]
+interface NvdaController3 {
+	[fault_status,comm_status] isSpeaking();
 }
