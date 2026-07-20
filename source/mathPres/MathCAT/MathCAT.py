@@ -106,6 +106,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			mathMl or "<math></math>",
 			sourceObj,
 		)
+		self._shouldUpdateMathHighlight: bool = False
 		if mathMl is None:
 			self.initMathML = "<math></math>"
 		else:
@@ -113,16 +114,23 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 
 	def reportFocus(self) -> None:
 		"""Calls MathCAT's ZoomIn command and speaks the resulting text."""
+		self._shouldUpdateMathHighlight = False
 		super(MathCATInteraction, self).reportFocus()
 		try:
 			text: str = libmathcat.DoNavigateCommand("ZoomIn")
 			speech.speak(convertSSMLTextForNVDA(text))
-			self._updateMathHighlight()
+			self._shouldUpdateMathHighlight = True
 		except Exception:
 			log.exception()
 			# Translators: this message reports an error in starting navigation of math.
 			ui.message(pgettext("math", "Error in starting navigation of math."))
 			self._clearMathHighlight()
+
+	def event_gainFocus(self) -> None:
+		super().event_gainFocus()
+		if self._shouldUpdateMathHighlight:
+			self._shouldUpdateMathHighlight = False
+			self._updateMathHighlight()
 
 	def _getHighlightRect(self) -> "RectLTRB | None":
 		"""Get the navigation rectangle for a supported web math source object."""
