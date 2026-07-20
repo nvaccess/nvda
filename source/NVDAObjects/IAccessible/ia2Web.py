@@ -336,23 +336,13 @@ class EditorChunk(Ia2Web):
 
 
 class Math(Ia2Web):
-	def _getMathObjChildren(self, obj: NVDAObjects.NVDAObject) -> tuple[NVDAObjects.NVDAObject, ...]:
-		try:
-			return tuple(obj.children)
-		except RuntimeError:
-			log.debugWarning("Error fetching MathML node children", exc_info=True)
-			return ()
-
 	def _getMathObjAttributes(self, obj: NVDAObjects.NVDAObject) -> dict[str, str]:
-		try:
-			return obj.IA2Attributes
-		except AttributeError:
+		if not isinstance(obj, IAccessible):
 			return {}
+		return obj.IA2Attributes
 
 	def _getMathElementChildren(self, obj: NVDAObjects.NVDAObject) -> tuple[NVDAObjects.NVDAObject, ...]:
-		return tuple(
-			child for child in self._getMathObjChildren(obj) if self._getMathObjAttributes(child).get("tag")
-		)
+		return tuple(child for child in obj.children if self._getMathObjAttributes(child).get("tag"))
 
 	def _getMathNodeMapRoot(self) -> NVDAObjects.NVDAObject:
 		if self._getMathObjAttributes(self).get("tag") == "math":
@@ -365,13 +355,9 @@ class Math(Ia2Web):
 		return mathChildren[0] if len(mathChildren) == 1 else self
 
 	def _getMathNodeRectFromObj(self, obj: NVDAObjects.NVDAObject) -> "RectLTRB | None":
-		try:
-			if obj.hasIrrelevantLocation:
-				return None
-			location = obj.location
-		except Exception:
-			log.debugWarning("Error fetching MathML node location", exc_info=True)
+		if obj.hasIrrelevantLocation:
 			return None
+		location = obj.location
 		if not location or not location.width or not location.height:
 			return None
 		return location.toLTRB()
@@ -381,6 +367,7 @@ class Math(Ia2Web):
 
 		Paths are tuples where each entry indicates an index of a child node to be traversed from the root.
 		"""
+		# Avoid importing mathPres at startup.
 		from mathPres._mathMlNode import MathMlNodeRectInfo
 
 		nodeInfoByPath: dict["MathMlNodePath", "MathMlNodeRectInfo"] = {}
@@ -392,9 +379,8 @@ class Math(Ia2Web):
 			obj, path = stack.pop()
 			visitedCount += 1
 			tag = self._getMathObjAttributes(obj).get("tag")
-			if rect := self._getMathNodeRectFromObj(obj):
-				if tag:
-					nodeInfoByPath[path] = MathMlNodeRectInfo(path=path, tag=tag, rect=rect)
+			if tag and (rect := self._getMathNodeRectFromObj(obj)):
+				nodeInfoByPath[path] = MathMlNodeRectInfo(path=path, tag=tag, rect=rect)
 			children = self._getMathElementChildren(obj)
 			stack.extend((child, path + (index,)) for index, child in reversed(tuple(enumerate(children))))
 		log.debug(
