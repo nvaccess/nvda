@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -13,6 +13,7 @@ import ui
 from .types import Coordinates, ZoomHistory, FullScreenMode
 import wx
 from logHandler import log
+from ..config import _isDebug
 
 if TYPE_CHECKING:
 	from _magnifier.fullscreenMagnifier import FullScreenMagnifier
@@ -30,7 +31,7 @@ class SpotlightManager:
 		self._animationSteps: int = 40
 		self._animationStepDelay: int = 12
 		self._currentCoordinates: Coordinates = fullscreenMagnifier._focusManager.getCurrentFocusCoordinates()
-		self._originalZoomLevel: float = 0.0
+		self._originalZoomLevel: int = 0
 		self._currentZoomLevel: float = 0.0
 		self._originalMode: FullScreenMode | None = None
 
@@ -65,8 +66,8 @@ class SpotlightManager:
 		ui.message(
 			pgettext(
 				"magnifier",
-				# Translators: Message announced when stopping the magnifier spotlight.
-				"Magnifier spotlight stopped",
+				# Translators: Message announced when turning back to normal view after entire screen overview.
+				"Back to normal view",
 			),
 		)
 		if self._timer:
@@ -87,13 +88,14 @@ class SpotlightManager:
 		:param target: The target zoom history (zoom level and coordinates)
 		:param callback: The function to call after animation completes
 		"""
-		log.debug(
-			f"animate zoom with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
-		)
+		if _isDebug():
+			log.debug(
+				f"animate zoom with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
+			)
 
 		self._animationStepsList = self._computeAnimationSteps(
-			self._currentZoomLevel,
-			target.zoomLevel,
+			round(self._currentZoomLevel),
+			round(target.zoomLevel),
 			self._currentCoordinates,
 			target.coordinates,
 		)
@@ -112,9 +114,10 @@ class SpotlightManager:
 		:param stepIndex: The index of the current animation step
 		:param callback: The function to call after animation completes
 		"""
-		log.debug(
-			f"execute step with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
-		)
+		if _isDebug():
+			log.debug(
+				f"execute step with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
+			)
 
 		if stepIndex < len(self._animationStepsList):
 			zoomLevel, coords = self._animationStepsList[stepIndex]
@@ -156,9 +159,10 @@ class SpotlightManager:
 		"""
 		Zoom back to mouse position
 		"""
-		log.debug(
-			f"zoom back with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
-		)
+		if _isDebug():
+			log.debug(
+				f"zoom back with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
+			)
 
 		focus = self._fullscreenMagnifier._focusManager.getCurrentFocusCoordinates()
 
@@ -175,8 +179,8 @@ class SpotlightManager:
 
 	def _computeAnimationSteps(
 		self,
-		zoomStart: float,
-		zoomEnd: float,
+		zoomStart: int,
+		zoomEnd: int,
 		coordinateStart: Coordinates,
 		coordinateEnd: Coordinates,
 	) -> list[ZoomHistory]:
@@ -190,13 +194,14 @@ class SpotlightManager:
 
 		:return: List of animation steps as ZoomHistory for each animation step
 		"""
-		log.debug(
-			f"compute animation steps with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
-		)
+		if _isDebug():
+			log.debug(
+				f"compute animation steps with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
+			)
 
 		startX, startY = coordinateStart
 		endX, endY = coordinateEnd
-		animationSteps = []
+		animationSteps: list[ZoomHistory] = []
 
 		zoomDelta = (zoomEnd - zoomStart) / self._animationSteps
 		coordDeltaX = (endX - startX) / self._animationSteps

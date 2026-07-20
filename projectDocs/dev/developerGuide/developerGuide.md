@@ -25,7 +25,7 @@ Add-ons relying on private symbols do so at their own risk.
 * **Pip packages:**
 These may be updated, downgraded or removed at any time.
 It is recommended to package any pip dependency directly with your add-on, rather than using NVDA's version of the package.
-The exception to this is `wxPython`, which must be used from NVDA.
+The exception to this is `wxPython`, where any breaking changes from `wxPython` will be treated as an API breaking change.
 
 #### The API release cycle
 
@@ -75,7 +75,7 @@ We aim to avoid silent breaks of add-on code.
 When removing or changing APIs in a breaking release (e.g. 2026.1) or due to an urgent security improvement (e.g. 2026.1.2):
 
 1. We will mark functions as deprecated, where possible, in the releases leading up to the break (e.g. raising a `DeprecationWarning` in 2025.4).
-2. All API breaking changes will be listed in the "Changes for Developers" section of the What's New document, and the [NVDA Add-on API Announcements](https://groups.google.com/a/nvaccess.org/g/nvda-api) email group.
+1. All API breaking changes will be listed in the "Changes for Developers" section of the What's New document, and the [NVDA Add-on API Announcements](https://groups.google.com/a/nvaccess.org/g/nvda-api) email group.
 
 #### Stability of transitive imports in the API {#APIImports}
 
@@ -1190,13 +1190,13 @@ For example:
 
 ```ini
 [symbolDictionaries]
-[[greek]]
-displayName = Greek
-mandatory = false
+	[[greek]]
+		displayName = Greek
+		mandatory = false
 
-[[hebrew]]
-displayName = Biblical Hebrew
-mandatory = true
+	[[hebrew]]
+		displayName = Biblical Hebrew
+		mandatory = true
 ```
 
 In the above example, `greek` is a symbol dictionary that is optional and will be listed in the speech category of NVDA's settings dialog under the "Extra dictionaries for character and symbol processing" setting.
@@ -1211,8 +1211,8 @@ For example, add the following to `locale\fr\manifest.ini`:
 
 ```ini
 [symbolDictionaries]
-[[hebrew]]
-displayName = Hébreu Biblique
+	[[hebrew]]
+		displayName = Hébreu Biblique
 ```
 
 ### Speech dictionaries {#AddonSpeechDictionaries}
@@ -1228,9 +1228,9 @@ For example:
 
 ```ini
 [speechDictionaries]
-[[pronunciation]]
-displayName = Dodgy Dictionary
-mandatory = false
+	[[pronunciation]]
+		displayName = Dodgy Dictionary
+		mandatory = false
 ```
 
 In the above example, `pronunciation` is a dictionary that is optional and will be listed in the speech category of NVDA's settings dialog under the "Speech Dictionaries" setting.
@@ -1242,8 +1242,8 @@ For example, add the following to `locale\fr\manifest.ini`:
 
 ```ini
 [speechDictionaries]
-[[pronunciation]]
-displayName = Dictionnaire douteux
+	[[pronunciation]]
+		displayName = Dictionnaire douteux
 ```
 
 Unlike symbol dictionaries, speech dictionaries are currently locale-agnostic.
@@ -1310,7 +1310,7 @@ This means that the word "LOL" (case insensitive, whole word) should be spoken a
 
 This uses Unix shell-style wildcards to match any string ending in ".txt" and replaces it with "text file".
 
-For more information on speech dictionaries, see the NVDA user guide section on speech.
+For more information on speech dictionaries, refer to the [User Guide](https://download.nvaccess.org/documentation/userGuide.html#SpeechDictionaries).
 
 ### Add-on Documentation {#AddonDoc}
 

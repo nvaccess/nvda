@@ -35,6 +35,7 @@ Major highlights include:
 * Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation
 * Support for Windows Command Prompt and console applications
 * The ability to highlight the system focus
+* Built-in screen magnification and color filtering
 
 ### System Requirements {#SystemRequirements}
 
@@ -245,7 +246,7 @@ The actual commands will not execute while in input help mode.
 |Read window |`NVDA+b` |`NVDA+b` |Reads the entire current window (useful for dialogs)|
 |Read status bar |`NVDA+end` |`NVDA+shift+end` |Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard|
 |Read time |`NVDA+f12` |`NVDA+f12` |Pressing once reports the current time, pressing twice reports the date. The time and date are reported in the format specified in Windows settings for the system tray clock.|
-|Repeat last spoken information |`NVDA+x` |`NVDA+x` |Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
+| Repeat last spoken information | `NVDA+x` | `NVDA+x` | Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
 |Report text formatting |`NVDA+f` |`NVDA+f` |Reports text formatting. Pressing twice shows the information in a window|
 |Report link destination |`NVDA+k` |`NVDA+k` |Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review|
 
@@ -612,7 +613,6 @@ Therefore, gestures such as 2-finger flick up and 4-finger flick left are all po
 
 Place two fingers on the screen and move them toward each other to perform a pinch in gesture.
 Move them away from each other to perform a pinch out gesture.
-The fingers must move at least 50 pixels closer together or further apart to be recognised as a pinch in or out.
 
 #### Touch Modes {#TouchModes}
 
@@ -669,7 +669,7 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 |Starts or restarts NVDA |Control+alt+n |Control+alt+n |none |Starts or restarts NVDA from the Desktop, if this Windows shortcut is enabled during NVDA's installation process. This is a Windows specific shortcut and therefore it cannot be reassigned in the input gestures dialog.|
 |Stop speech |Control |control |2-finger tap |Instantly stops speaking|
 |Pause Speech |shift |shift |none |Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer)|
-|Repeat last spoken information |`NVDA+x` |`NVDA+x` |none |Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
+| Repeat last spoken information | `NVDA+x` | `NVDA+x` | None | Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
 |NVDA Menu |NVDA+n |NVDA+n |2-finger double-tap |Pops up the NVDA menu to allow you to access preferences, tools, help, etc.|
 |Toggle Input Help Mode |NVDA+1 |NVDA+1 |none |Pressing any key in this mode will report the key, and the description of any NVDA command associated with it|
 |Quit NVDA |NVDA+q |NVDA+q |none |Exits NVDA|
@@ -1076,8 +1076,6 @@ When browse mode is active in supported documents such as web pages or Word docu
 This mode allows users to navigate structural elements of a document using touch gestures, similar to browse mode navigation with the keyboard.
 
 In browse touch mode, flick gestures are used to move between common document elements such as links, buttons, headings, form fields, landmarks, and other document structures.
-
-This feature is intended to provide touch users with efficient, structured navigation that mirrors existing browse mode functionality.
 
 ##### Touch gestures in browse mode
 
@@ -1549,7 +1547,7 @@ You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAnd
 | Name |Key |Description|
 |---|---|---|
 |Toggles the state of the screen curtain |`NVDA+control+escape` |Enable to make the screen black or disable to show the contents of the screen. Pressed once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it.|
-| Reports the state of the screen curtain | `None` | Announces the current status of the screen curtain, whether it is disabled or enabled or in temporary mode. |
+| Reports the state of the screen curtain | None | Announces the current status of the screen curtain, whether it is disabled or enabled or in temporary mode. |
 
 <!-- KC:endInclude -->
 
@@ -1571,44 +1569,39 @@ It provides several configuration options to customize the magnification experie
 
 To enable or disable the magnifier, press `NVDA+shift+w`.
 The "Increase magnification level" keystroke, `NVDA+shift+equals`, will start the magnifier if it is not running.
-When the magnifier is enabled, NVDA will announce the current zoom level, color filter, and focus tracking mode.
 When disabled, the screen returns to its normal size.
+As with other NVDA settings, the Magnifier state is preserved across sessions.
 
-Important: The NVDA Magnifier cannot be used simultaneously with Screen Curtain for security reasons.
-If you attempt to enable the magnifier while Screen Curtain is active, NVDA will prompt you to disable Screen Curtain first, and vice versa.
-
-### Magnifier Controls {#MagnifierControls}
+### Magnifier Commands {#MagnifierCommands}
 
 Once the magnifier is enabled, you can use the following keyboard commands to control it:
 
 <!-- KC:beginInclude -->
 
-| Name |Key |Description|
+| Name | Key | Description |
 |---|---|---|
-|Toggles the magnifier on and off |`NVDA+shift+w` |Enables or disables the magnifier|
-| Increases the magnification level of the magnifier | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
-|Decreases the magnification level of the magnifier |`NVDA+shift+minus` |Decreases the zoom level|
-|Toggle filter of the magnifier |`NVDA+shift+i` |Cycles through available color filters (normal, grayscale, inverted)|
-|Toggle focus mode for the full-screen magnifier |None |Cycles through focus tracking modes (center, border, relative)|
-|Launch spotlight if magnifier is full-screen |`NVDA+shift+l` |Activates spotlight mode for focused reading or presentations|
-|Pan left |`NVDA+alt+leftArrow` |Pan the magnified view to the left by the specified panning step size|
-|Pan right |`NVDA+alt+rightArrow` |Pan the magnified view to the right by the specified panning step size|
-|Pan up |`NVDA+alt+upArrow` |Pan the magnified view upwards by the specified panning step size|
-|Pan down |`NVDA+alt+downArrow` |Pan the magnified view downwards by the specified panning step size|
-|Pan to left edge |`NVDA+shift+alt+leftArrow` |Pan the magnified view directly to the left edge of the screen|
-|Pan to right edge |`NVDA+shift+alt+rightArrow` |Pan the magnified view directly to the right edge of the screen|
-|Pan to top edge |`NVDA+shift+alt+upArrow` |Pan the magnified view directly to the top edge of the screen|
-|Pan to bottom edge |`NVDA+shift+alt+downArrow` |Pan the magnified view directly to the bottom edge of the screen|
+| Toggle the magnifier on and off | `NVDA+shift+w` | Enables or disables the magnifier |
+| Increase the magnification level | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
+| Decrease the magnification level | `NVDA+shift+minus` | Decreases the zoom level |
+| Cycle color filters | `NVDA+shift+i` | Cycles through the available color filters (normal, grayscale, inverted) |
+| Cycle tracking mode | None | Cycles through tracking modes (center, border, relative) |
+| Show entire screen overview | `NVDA+shift+l` | Temporarily shows an overview of the entire screen |
+| Pan left | `NVDA+alt+leftArrow` | Moves the magnified view left by the configured panning step size |
+| Pan right | `NVDA+alt+rightArrow` | Moves the magnified view right by the configured panning step size |
+| Pan up | `NVDA+alt+upArrow` | Moves the magnified view up by the configured panning step size |
+| Pan down | `NVDA+alt+downArrow` | Moves the magnified view down by the configured panning step size |
+| Pan to left edge | `NVDA+shift+alt+leftArrow` | Moves the magnified view directly to the left edge of the screen |
+| Pan to right edge | `NVDA+shift+alt+rightArrow` | Moves the magnified view directly to the right edge of the screen |
+| Pan to top edge | `NVDA+shift+alt+upArrow` | Moves the magnified view directly to the top edge of the screen |
+| Pan to bottom edge | `NVDA+shift+alt+downArrow` | Moves the magnified view directly to the bottom edge of the screen |
 
 <!-- KC:endInclude -->
 
 ### Zoom Levels {#MagnifierZoomLevels}
 
-The magnifier supports zoom levels from 1.0 (no magnification) to 10.0 (maximum magnification).
+The magnifier supports zoom levels from 1.0 (no magnification) to 50.0 (maximum magnification).
 You can adjust the zoom level using the zoom in (`NVDA+shift+equals`) and zoom out (`NVDA+shift+minus`) commands.
 Each press increases or decreases the zoom by a fixed increment.
-
-The default zoom level when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
 
 ### Color Filters {#MagnifierColorFilters}
 
@@ -1620,46 +1613,37 @@ The magnifier provides three color filter options:
 * Inverted: Inverts all colors on the screen (black becomes white, white becomes black, etc.), which can be helpful for users who prefer light text on dark backgrounds or have photophobia.
 
 To cycle through the available filters press `NVDA+shift+i`.
-NVDA will announce the name of the currently selected filter.
 
-The default color filter when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
+### Tracking Modes {#MagnifierTrackingModes}
 
-### Focus Tracking Modes {#MagnifierFullscreenFocusModes}
+The magnifier offers three different modes for tracking the mouse, system focus, review cursor, and navigator object, and determining which part of the screen to magnify:
 
-The magnifier offers three different modes for tracking focus and determining which part of the screen to magnify:
-
-* Center: The magnified area is centered on the current focus position.
-This mode keeps the focused element at the center of the screen and clamps to the screen edge.
-To disable clamping, activate [true center mode in the Magnifier settings](#MagnifierUseTrueCenter).
-* Border: The magnified area only moves when the focus approaches the edge of the visible area.
+* Center: The magnified area is centered on the currently tracked position.
+This mode keeps the tracked element at the center of the screen and clamps to the screen edge.
+To disable clamping, activate [true center tracking in the Magnifier settings](#MagnifierTrueCenterTracking).
+* Border: The magnified area only moves when the tracked position approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
-* Relative: The magnified area maintains the relative position of the focus within the screen.
-This mode mimics the behavior of the Windows Magnifier.
+* Relative: The magnified area maintains the relative position of the tracked element based on its position on the screen.
 
-To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-NVDA will announce the name of the currently selected mode.
+To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
-The default focus mode when the magnifier is first enabled can be configured in the [Magnifier settings](#MagnifierSettings).
+### Show entire screen overview {#MagnifierScreenOverview}
 
-### Spotlight Mode {#MagnifierSpotlight}
-
-Spotlight mode is a special feature designed for presentations or focused reading tasks.
-When activated, it temporarily zooms out the magnified view to show the full screen, then zooms back in to the current focus position after a brief period of mouse inactivity.
+The magnifier can temporarily display an overview of the entire screen, making it useful for presentations or when you need to quickly understand the overall screen layout.
 
 This is useful when you want to:
 
 * Show context to your audience during a presentation before zooming in on specific details
 * Temporarily view the full screen layout while magnifying
 
-To activate spotlight mode, press `NVDA+shift+l` while the magnifier is enabled.
-Once activated, the magnifier will:
+To display an overview of the entire screen, press `NVDA+shift+l`.
+The magnifier will then:
 
-1. Smoothly zoom out to show the full screen (zoom level 1.0)
-2. Monitor mouse movement
-3. When the mouse remains still for approximately 2 seconds, automatically zoom back in to the original zoom level at the mouse position
+1. Smoothly zoom out to show the full screen (zoom level 1.0x)
+1. Monitor mouse movement
+1. When the mouse remains still for approximately 2 seconds, automatically zoom back in to the original zoom level at the new mouse position
 
-Spotlight mode automatically deactivates after zooming back in.
-If you move the mouse before the zoom-back occurs, the timer resets, giving you more time to view the full screen.
+Moving the mouse before the zoom-back occurs gives you more time to view the full screen.
 
 ### Magnifier Settings {#MagnifierSettings}
 
@@ -2036,8 +2020,10 @@ This option is only available for installed copies of NVDA.
 
 ##### Use currently saved settings during sign-in and on secure screens (requires administrator privileges) {#GeneralSettingsCopySettings}
 
-Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it during sign-in and when running on User Account Control (UAC) and other [secure screens](#SecureScreens).
+Pressing this button will allow you to copy your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it during sign-in and when running on User Account Control (UAC) and other [secure screens](#SecureScreens).
 To make sure that all your settings are transferred, make sure to save your configuration first with control+NVDA+c or Save configuration in the NVDA menu.
+When this button is pressed, it first opens the [Copy Settings to System-wide Configuration](#CopyAddonsToSystemProfileDialog) dialog in which you can choose the add-ons you want to be copied to system configuration.
+
 This option is only available for installed copies of NVDA.
 
 ##### Automatically check for updates to NVDA {#GeneralSettingsCheckForUpdates}
@@ -2219,7 +2205,7 @@ This aspect of normalization also aids in reading equations in the Microsoft Wor
 1. Stable ordering of modifiers in composite characters, for example in ancient Hebrew.
 
 The additional normalization in NVDA handles decorative letter variants that the standard NFKC algorithm does not decompose.
-Certain Unicode characters, such as negative circled Latin capital letters (🅐–🅩) and negative squared Latin capital letters (🅲–🅩), are treated as autonomous symbols by the Unicode standard and have no compatibility decomposition.
+Certain Unicode characters, such as negative circled Latin capital letters (🅐–🅩) and negative squared Latin capital letters (🅲–🆉), are treated as autonomous symbols by the Unicode standard and have no compatibility decomposition.
 NVDA extends NFKC by mapping these characters to their plain Latin letter equivalents (A–Z).
 Note that a small number of negative squared letters that have emoji semantics (🅰, 🅱, 🅾, 🅿) are excluded from this mapping to preserve their distinct meaning.
 
@@ -2822,7 +2808,7 @@ The available logging levels are:
 If you are concerned about privacy, do not set the logging level to this option.
 * Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
 Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
-* Secrets: In addition to debug logging, NVDA will not redact secrets such as passwords and API keys from logs.
+* Debug (unredacted): In addition to debug logging, NVDA will not redact secrets such as passwords and API keys from logs.
 Only enable this temporarily when important debugging information is being redacted.
 
 ##### Allow NV Access to gather NVDA usage statistics {#GeneralSettingsGatherUsageStats}
@@ -2875,32 +2861,50 @@ For the supported settings per provider, please refer to the documentation for t
 Key: `NVDA+control+w`
 
 The Magnifier category in the NVDA Settings dialog allows you to configure the default behavior of NVDA's built-in [Magnifier](#Magnifier) feature.
+All options in this category take effect immediately, but selecting "Cancel" (or pressing `escape`) will discard any changes.
+
 This settings category contains the following options:
 
-##### Zoom level {#MagnifierZoom}
+<!-- KC:setting -->
 
-This slider allows you to set the zoom level when using the magnifier.
-The zoom level can range from 1.0 (no magnification) to 10.0 (maximum magnification).
-The default value is 2.0 (200% zoom).
+##### Enable Magnifier {#MagnifierEnable}
+
+Key: `NVDA+shift+w`
+
+This option starts or stops the Magnifier.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Disabled, Enabled |
+| Default | Disabled |
+
+##### Zoom {#MagnifierZoom}
+
+This setting allows you to set the zoom level when using the magnifier.
+The zoom level can range from 100% (no magnification) to 5000% (maximum magnification).
+The default value is 200%.
 
 You can always adjust the zoom level on the fly using the zoom in (`NVDA+shift+equals`) and zoom out (`NVDA+shift+minus`) commands while the magnifier is active.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |1.0 to 10.0|
-|Default |2.0|
+| Options | 100% to 5000% |
+| Default | 200% |
 
-##### Filter {#MagnifierFilter}
+<!-- KC:setting -->
 
-This combo box allows you to select the filter to apply when using the magnifier.
-You can cycle through the color filters by pressing `NVDA+shift+i`.
+##### Color filter {#MagnifierFilter}
+
+Key: `NVDA+shift+i`
+
+This option allows you to select the filter to apply when using the magnifier.
+
 The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options | Normal, Grayscale, Inverted |
-|Default |Normal |
-|Toggle command |`NVDA+shift+i` |
+| Options | Normal, Grayscale, Inverted |
+| Default | Normal |
 
 | Option | Description |
 |---|---|
@@ -2908,113 +2912,86 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### Focus mode {#MagnifierFullscreenFocusMode}
+##### True center tracking {#MagnifierTrueCenterTracking}
 
-This combo box allows you to select the focus tracking mode when using the magnifier.
-To cycle through the focus tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-The available options are:
+This checkbox controls whether the magnifier should always keep the tracked position centered on the screen, even when the tracked element is next to the screen edges, or if it should allow the tracked position to move towards the edges of the screen.
+When enabled, the magnifier will always keep the tracked position centered on the screen, which can be helpful for users who prefer a consistent tracked position within the magnified view.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Center, Border, Relative|
-|Default |Center|
-|Toggle command |None |
-
-| Option | Description |
-|---|---|
-| Center | The magnified area is always centered on the current focus position. |
-| Border | The magnified area only moves when the focus approaches the edge of the visible area. |
-| Relative | The magnified area maintains the relative position of the focus within the screen. |
+| Options | Disabled, Enabled |
+| Default | Disabled |
 
 ##### Panning step size {#MagnifierPanningStepSize}
 
-This slider allows you to set the panning step size as a percentage of the visible magnified window.
-The panning step size can range from 1% to 100%, with a default value of 10%.
+This option allows you to set the panning step size as a percentage of the visible magnified window.
 This means that when you use manual pan commands, the magnified view will move by the specified percentage of the current visible window size.
-
-For example, if your visible magnified window is 200 pixels wide and you have a panning step size of 10%, each pan command will move the view by 20 pixels.
 Higher percentages cause larger movements, making it faster to navigate across the screen, while lower percentages provide finer control for precise positioning.
 The actual pixel distance will automatically adjust based on your current zoom level.
 
-Note: Pan commands allow you to manually move the magnified view in any direction, independent of the focus tracking mode.
-Available pan actions include:
+Note: Pan commands allow you to manually move the magnified view in any direction, independent of the tracking mode.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |1 to 100|
-|Default |10|
+| Options | 1 to 100 |
+| Default | 10 |
 
-##### Use true center {#MagnifierUseTrueCenter}
-
-This checkbox controls whether the magnifier should always keep the focus centered on the screen, or if it should allow the focus to move towards the edges of the screen before moving the magnified area.
-When enabled, the magnifier will always keep the focus centered on the screen, which can be helpful for users who prefer a consistent position of the focus within the magnified view.
-
-This option is disabled by default.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Disabled, Enabled|
-|Default |Disabled|
-
-#### Follow mouse {#MagnifierFollowMouse}
+##### Follow mouse {#MagnifierFollowMouse}
 
 This checkbox controls whether the magnifier should follow the mouse pointer.
 When enabled, the magnified area will automatically move to follow the mouse pointer, which can be helpful for users who navigate primarily using the mouse rather than the keyboard.
 
-This option is enabled by default.
-
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Disabled, Enabled|
-|Default |Enabled|
+| Options | Disabled, Enabled |
+| Default | Enabled |
 
-#### Follow system focus {#MagnifierFollowSystemFocus}
+##### Follow system focus {#MagnifierFollowSystemFocus}
 
 This checkbox controls whether the magnifier should follow the system focus.
 When enabled, the magnified area will automatically move to follow the system focus, which can be helpful for users who navigate primarily using the keyboard and want the magnifier to track their navigation.
 
-This option is enabled by default.
-
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Disabled, Enabled|
-|Default |Enabled|
+| Options | Disabled, Enabled |
+| Default | Enabled |
 
-#### Follow review cursor {#MagnifierFollowReviewCursor}
+##### Follow review cursor {#MagnifierFollowReviewCursor}
 
 This checkbox controls whether the magnifier should follow the review cursor.
 When enabled, the magnified area will automatically move to follow the review cursor, which can be helpful for users who use the review cursor to navigate through content and want the magnifier to track their navigation.
 
-This option is enabled by default.
-
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Disabled, Enabled|
-|Default |Enabled|
+| Options | Disabled, Enabled |
+| Default | Enabled |
 
-#### Follow navigator object {#MagnifierFollowNavigatorObject}
+##### Follow navigator object {#MagnifierFollowNavigatorObject}
 
 This checkbox controls whether the magnifier should follow the navigator object.
 When enabled, the magnified area will automatically move to follow the navigator object, which can be helpful for users who use object navigation to navigate through content and want the magnifier to track their navigation.
 
-This option is enabled by default.
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Disabled, Enabled |
+| Default | Enabled |
+
+##### Tracking mode {#MagnifierTrackingMode}
+
+This combo box allows you to select the tracking mode when using the magnifier.
+To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Disabled, Enabled|
-|Default |Enabled|
+| Options | Center, Border, Relative |
+| Default | Center |
 
-##### Keep mouse centered {#MagnifierKeepMouseCentered}
-
-This checkbox controls whether the mouse pointer should be automatically moved to the center of the magnified area when certain focus events occur.
-When enabled, NVDA will reposition the mouse pointer to keep it centered in the magnified view, which can be helpful for users who navigate primarily using the magnifier's focus tracking rather than the mouse.
-
-This option is disabled by default.
-
-| . {.hideHeaderRow} |.|
+| Option | Description |
 |---|---|
-|Options |Disabled, Enabled|
-|Default |Disabled|
+| Center | The magnified area is always centered on the currently tracked position. |
+| Border | The magnified area only moves when the tracked element approaches the edge of the visible area. |
+| Relative | The magnified area maintains the relative position of the tracked element based on its position on the screen. |
 
 #### Keyboard {#KeyboardSettings}
 
@@ -4215,8 +4192,8 @@ The [modern engine](https://pypi.org/project/regex/) has better support for non-
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Default (Disabled), Disabled, Enabled|
-|Default |Disabled|
+| Options | Default (Disabled), Disabled, Enabled |
+| Default | Disabled |
 
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
@@ -4239,9 +4216,9 @@ Only turn one of these on if specifically instructed to by an NVDA developer e.g
 ##### Play a sound for logged errors {#PlayErrorSound}
 
 This option allows you to specify if NVDA will play an error sound in case an error is logged.
-Choosing Only in test versions (default) makes NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
-Choosing Yes allows to enable error sounds whatever your current NVDA version is.
-Choosing No disables error sounds no matter what your current NVDA version is, i.e. even in test versions.
+Choosing "Only in test versions (default)" makes NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
+Choosing "Yes" allows to enable error sounds whatever your current NVDA version is.
+Choosing "No" disables error sounds no matter what your current NVDA version is, i.e. even in test versions.
 
 ##### Regular expression for text paragraph quick navigation commands {#TextParagraphRegexEdit}
 
@@ -4388,10 +4365,10 @@ After resetting, a dialog will appear allowing you to undo the reset and restore
 The following NVDA key commands are also useful:
 <!-- KC:beginInclude -->
 
-| Name |Desktop key |Laptop key |Description|
-|---|---|---|---|
-|Save configuration |`NVDA+control+c` |`NVDA+control+c` |Saves your current configuration so that it is not lost when you exit NVDA|
-|Revert configuration |`NVDA+control+r` |`NVDA+control+r` |Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults without showing the undo dialog.|
+| Name | Key | Description |
+|---|---|---|
+| Save configuration | `NVDA+control+c` | Saves your current configuration so that it is not lost when you exit NVDA |
+| Revert configuration | `NVDA+control+r` | Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults without showing the undo dialog. |
 
 <!-- KC:endInclude -->
 
@@ -6273,10 +6250,10 @@ Make sure to lift your hand entirely off the device when navigating with NVDA, a
 
 <!-- KC:beginInclude -->
 
-| Name |Key|
+| Name | Key |
 |---|---|
-|Scroll braille display back | `panLeft` |
-|Scroll braille display forward | `panRight` |
+| Scroll braille display back | `panLeft` |
+| Scroll braille display forward | `panRight` |
 
 <!-- KC:endInclude -->
 
@@ -6370,7 +6347,7 @@ Following are the command line options for NVDA:
 |`-q` |`--quit` |Quit already running copy of NVDA|
 |`-k` |`--check-running` |Report whether NVDA is running via the exit code; 0 if running, 1 if not running|
 |`-f LOGFILENAME` |`--log-file=LOGFILENAME` |The file where log messages should be written to. Logging is always disabled if secure mode is enabled.|
-|`-l LOGLEVEL` |`--log-level=LOGLEVEL` |The lowest level of message logged (secrets 5, debug 10, input/output 12, debug warning 15, info 20, disabled 100). Logging is always disabled if secure mode is enabled.|
+| `-l LOGLEVEL` | `--log-level=LOGLEVEL` | The lowest level of message logged (debug (unredacted) 5, debug 10, input/output 12, debug warning 15, info 20, disabled 100). Logging is always disabled if secure mode is enabled. |
 |`-c CONFIGPATH` |`--config-path=CONFIGPATH` |The path where all settings for NVDA are stored. The default value is forced if secure mode is enabled.|
 |`-n LANGUAGE` |`--lang=LANGUAGE` |Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc.|
 |`-m` |`--minimal` |No sounds, no interface, no start message, etc.|

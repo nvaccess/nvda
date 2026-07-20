@@ -16,8 +16,16 @@ import time
 import locationHelper
 import textInfos
 from textInfos.offsets import OffsetsTextInfo
-from .types import Coordinates, MagnifierFollowFocusType
-from ..config import getFollowState
+from .types import Coordinates, MagnifierTrackingType
+from ..config import getFollowState, _isDebug
+
+
+def _isWindowRTL(obj) -> bool:
+	"""Return True when the focused window has RTL layout (WS_EX_LAYOUTRTL set)."""
+	hwnd = getattr(obj, "windowHandle", None)
+	if isinstance(hwnd, int) and hwnd:
+		return bool(winUser.getExtendedWindowStyle(hwnd) & winUser.WS_EX_LAYOUTRTL)
+	return False
 
 
 class FocusManager:
@@ -30,7 +38,7 @@ class FocusManager:
 
 	def __init__(self):
 		"""Initialize the focus manager."""
-		self._lastFocusedObject: MagnifierFollowFocusType | None = None
+		self._lastFocusedObject: MagnifierTrackingType | None = None
 		self._lastReportedCoordinates = Coordinates(0, 0)
 		self._lastMousePosition = Coordinates(0, 0)
 		self._lastSystemFocusPosition = Coordinates(0, 0)
@@ -62,10 +70,10 @@ class FocusManager:
 		isClickPressed = winUser.getAsyncKeyState(winUser.VK_LBUTTON) < 0
 
 		# Cache settings once — each call reads from config.conf
-		isFollowMouse = getFollowState(MagnifierFollowFocusType.MOUSE)
-		isFollowSystemFocus = getFollowState(MagnifierFollowFocusType.SYSTEM_FOCUS)
-		isFollowReviewCursor = getFollowState(MagnifierFollowFocusType.REVIEW)
-		isFollowNavigatorObject = getFollowState(MagnifierFollowFocusType.NAVIGATOR_OBJECT)
+		isFollowMouse = getFollowState(MagnifierTrackingType.MOUSE)
+		isFollowSystemFocus = getFollowState(MagnifierTrackingType.SYSTEM_FOCUS)
+		isFollowReviewCursor = getFollowState(MagnifierTrackingType.REVIEW)
+		isFollowNavigatorObject = getFollowState(MagnifierTrackingType.NAVIGATOR_OBJECT)
 
 		mouseChanged = self._lastMousePosition != mousePosition
 		systemFocusChanged = self._lastSystemFocusPosition != systemFocusPosition
@@ -85,7 +93,7 @@ class FocusManager:
 
 		# Priority 1: Mouse — drag (fires even when stationary) or movement
 		if (isClickPressed or mouseChanged) and isFollowMouse:
-			self._lastFocusedObject = MagnifierFollowFocusType.MOUSE
+			self._lastFocusedObject = MagnifierTrackingType.MOUSE
 			return self._rememberAndReturnCoordinates(mousePosition)
 
 		# Special case: table cell navigation (numpad).
@@ -93,22 +101,22 @@ class FocusManager:
 		# review cursor does not, the navigator object reflects the user's explicit navigation
 		# intent and therefore takes priority over the system focus.
 		if navigatorChanged and systemFocusChanged and not reviewChanged and isFollowNavigatorObject:
-			self._lastFocusedObject = MagnifierFollowFocusType.NAVIGATOR_OBJECT
+			self._lastFocusedObject = MagnifierTrackingType.NAVIGATOR_OBJECT
 			return self._rememberAndReturnCoordinates(navigatorPosition)
 
 		# Priority 2: System focus (focus object + browse mode cursor)
 		if systemFocusChanged and isFollowSystemFocus:
-			self._lastFocusedObject = MagnifierFollowFocusType.SYSTEM_FOCUS
+			self._lastFocusedObject = MagnifierTrackingType.SYSTEM_FOCUS
 			return self._rememberAndReturnCoordinates(systemFocusPosition)
 
 		# Priority 3: Review cursor
 		if reviewChanged and isFollowReviewCursor and reviewPosition is not None:
-			self._lastFocusedObject = MagnifierFollowFocusType.REVIEW
+			self._lastFocusedObject = MagnifierTrackingType.REVIEW
 			return self._rememberAndReturnCoordinates(reviewPosition)
 
 		# Priority 4: Navigator object (NumPad navigation)
 		if navigatorChanged and isFollowNavigatorObject:
-			self._lastFocusedObject = MagnifierFollowFocusType.NAVIGATOR_OBJECT
+			self._lastFocusedObject = MagnifierTrackingType.NAVIGATOR_OBJECT
 			return self._rememberAndReturnCoordinates(navigatorPosition)
 
 		# Resolve the effective review position once (fallback to last valid when None)
@@ -118,10 +126,10 @@ class FocusManager:
 
 		# All sources in priority order
 		_sources = (
-			(MagnifierFollowFocusType.MOUSE, isFollowMouse, mousePosition),
-			(MagnifierFollowFocusType.SYSTEM_FOCUS, isFollowSystemFocus, systemFocusPosition),
-			(MagnifierFollowFocusType.REVIEW, isFollowReviewCursor, reviewEffectivePosition),
-			(MagnifierFollowFocusType.NAVIGATOR_OBJECT, isFollowNavigatorObject, navigatorPosition),
+			(MagnifierTrackingType.MOUSE, isFollowMouse, mousePosition),
+			(MagnifierTrackingType.SYSTEM_FOCUS, isFollowSystemFocus, systemFocusPosition),
+			(MagnifierTrackingType.REVIEW, isFollowReviewCursor, reviewEffectivePosition),
+			(MagnifierTrackingType.NAVIGATOR_OBJECT, isFollowNavigatorObject, navigatorPosition),
 		)
 
 		# Keep current source if still enabled; otherwise clear it and freeze at _lastReportedCoordinates
@@ -169,24 +177,28 @@ class FocusManager:
 		except Exception:
 			# COM errors (_ctypes.COMError), UIA failures, and other unexpected errors
 			# can occur when querying caret position. Fall back to focus object location.
-			log.debug("Failed to get caret position, falling back to focus object location", exc_info=True)
+			if _isDebug():
+				log.debug(
+					"Failed to get caret position, falling back to focus object location",
+					exc_info=True,
+				)
 			try:
 				focusObj = api.getFocusObject()
 				if focusObj and focusObj.location:
-					left, top, width, height = focusObj.location
-					x = left + (width // 2)
-					y = top + (height // 2)
-					coords = Coordinates(x, y)
+					left, top, width, _height = focusObj.location
+					x = left + width if _isWindowRTL(focusObj) else left
+					coords = Coordinates(x, top)
 					if coords != Coordinates(0, 0):
 						self._lastValidSystemFocusPosition = coords
 					return coords
 			except Exception:
 				# Focus object location may fail (e.g., object without location)
 				# Fall through to return last valid position
-				log.debug(
-					"Failed to get focus object location, falling back to last valid position",
-					exc_info=True,
-				)
+				if _isDebug():
+					log.debug(
+						"Failed to get focus object location, falling back to last valid position",
+						exc_info=True,
+					)
 		return self._lastValidSystemFocusPosition
 
 	def _getReviewPosition(self) -> Coordinates | None:
@@ -219,24 +231,26 @@ class FocusManager:
 		try:
 			return textInfo.pointAtStart
 		except (NotImplementedError, LookupError, AttributeError, COMError, RuntimeError) as e:
-			log.debug(f"pointAtStart failed for {textInfo!r}: {e}", exc_info=True)
-			originalExc = e
-
-		# Only apply the fallback for TextInfos exposing the offset-based internals
-		# we need. Otherwise, preserve the original failure.
-		if not (isinstance(textInfo, OffsetsTextInfo) and textInfo.isCollapsed and textInfo._startOffset > 0):
-			raise originalExc
-
-		prevOffset = textInfo._startOffset - 1
-		try:
-			return textInfo._getBoundingRectFromOffset(prevOffset).topRight
-		except (NotImplementedError, LookupError, AttributeError) as e:
-			log.debug(f"_getBoundingRectFromOffset failed: {e}", exc_info=True)
+			if _isDebug():
+				log.debug(f"pointAtStart failed for {textInfo!r}: {e}")
+			# Only apply the fallback for TextInfos exposing the offset-based internals we need.
+			# Otherwise, preserve the original failure.
+			if not (
+				isinstance(textInfo, OffsetsTextInfo) and textInfo.isCollapsed and textInfo._startOffset > 0
+			):
+				raise
+			prevOffset = textInfo._startOffset - 1
 			try:
-				return textInfo._getPointFromOffset(prevOffset)
+				return textInfo._getBoundingRectFromOffset(prevOffset).topRight
 			except (NotImplementedError, LookupError, AttributeError) as e:
-				log.debug(f"_getPointFromOffset failed: {e}", exc_info=True)
-		raise originalExc
+				if _isDebug():
+					log.debug(f"_getBoundingRectFromOffset failed: {e}")
+				try:
+					return textInfo._getPointFromOffset(prevOffset)
+				except (NotImplementedError, LookupError, AttributeError) as e:
+					if _isDebug():
+						log.debug(f"_getPointFromOffset failed: {e}", exc_info=True)
+			raise
 
 	def _getNavigatorObjectLocation(self) -> Coordinates | None:
 		"""
@@ -247,13 +261,13 @@ class FocusManager:
 		navigatorObject = api.getNavigatorObject()
 		if navigatorObject:
 			try:
-				left, top, width, height = navigatorObject.location
-				x = left + (width // 2)
-				y = top + (height // 2)
-				return Coordinates(x, y)
+				left, top, width, _height = navigatorObject.location
+				x = left + width if _isWindowRTL(navigatorObject) else left
+				return Coordinates(x, top)
 			except Exception:
 				# Navigator object may not have a valid location
-				log.debug("Failed to get navigator object location", exc_info=True)
+				if _isDebug():
+					log.debug("Failed to get navigator object location", exc_info=True)
 		return None
 
 	def _getNavigatorObjectPosition(self) -> Coordinates:
@@ -271,7 +285,7 @@ class FocusManager:
 			return position
 		return self._lastValidNavigatorObjectPosition
 
-	def getLastFocusType(self) -> MagnifierFollowFocusType | None:
+	def getLastFocusType(self) -> MagnifierTrackingType | None:
 		"""
 		Get the type of the last focused object.
 

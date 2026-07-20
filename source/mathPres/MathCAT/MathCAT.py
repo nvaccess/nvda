@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2026 NV Access Limited, Neil Soiffer, Ryan McCleary
+# Copyright (C) 2022-2026 NV Access Limited, Neil Soiffer, Ryan McCleary, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -24,6 +24,7 @@ import winKernel
 import winUser
 from api import getClipData
 from keyboardHandler import KeyboardInputGesture
+from globalCommands import SCRCAT_MATH_NAV
 from logHandler import log
 from scriptHandler import script
 from NVDAState import ReadPaths
@@ -46,8 +47,20 @@ from .navCommands import NAV_COMMANDS
 from .preferences import applyUserPreferences
 from .speech import convertSSMLTextForNVDA
 
-# Translators: The name of the category of MathCAT navigation commands in the Input Gestures dialog.
-SCRCAT_MATHCAT_NAV = _("MathCat navigation")
+
+class MathCATError(Exception):
+	"""MathCAT failure, including Rust panics from PyO3."""
+
+
+def _callMathCAT(func, /, *args, **kwargs):
+	"""Call libmathcat, translating PyO3 panics into MathCATError."""
+	try:
+		return func(*args, **kwargs)
+	except BaseException as exc:
+		# PanicException is BaseException; pyo3_runtime is not importable in NVDA's layout.
+		if type(exc).__name__ == "PanicException" and type(exc).__module__ == "pyo3_runtime":
+			raise MathCATError(str(exc)) from exc
+		raise
 
 
 class MathCATInteraction(mathPres.MathInteractionNVDAObject):
@@ -100,7 +113,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		region: braille.Region = braille.Region()
 		region.focusToHardLeft = True
 		try:
-			region.rawText = libmathcat.GetBraille("")
+			region.rawText = _callMathCAT(libmathcat.GetBraille, "")
 		except Exception:
 			log.exception()
 			# Translators: this message alerts users to an error in brailling math.
@@ -131,7 +144,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 
 		try:
 			navNode: tuple[str, int] = libmathcat.GetNavigationMathMLId()
-			brailleChars = libmathcat.GetBraille(navNode[0])
+			brailleChars = _callMathCAT(libmathcat.GetBraille, navNode[0])
 			region: braille.Region = braille.Region()
 			region.rawText = brailleChars
 			region.focusToHardLeft = True
@@ -154,7 +167,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			script = lambda self, gesture, _cmd=cmd.commandName: self._doNavigateCommand(_cmd)  # noqa: E731
 			script.__doc__ = cmd.description
 			script.__name__ = funcName
-			script.category = SCRCAT_MATHCAT_NAV
+			script.category = SCRCAT_MATH_NAV
 			script.speakOnDemand = cmd.speakOnDemand
 			setattr(cls, funcName, script)
 			for gesture in cmd.gestures:
@@ -185,7 +198,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 				# save the old braille code, set the new one, get the braille, then reset the code
 				savedBrailleCode: str = libmathcat.GetPreference("BrailleCode")
 				libmathcat.SetPreference("BrailleCode", "LaTeX" if copyAs == "latex" else "ASCIIMath")
-				textToCopy = libmathcat.GetNavigationBraille()
+				textToCopy = _callMathCAT(libmathcat.GetNavigationBraille)
 				libmathcat.SetPreference("BrailleCode", savedBrailleCode)
 				if copyAs == "asciimath":
 					copyAs = "ASCIIMath"  # speaks better in at least some voices
@@ -391,7 +404,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 			ui.message(pgettext("math", "Illegal MathML found."))
 			libmathcat.SetMathML("<math></math>")
 		try:
-			return libmathcat.GetBraille("")
+			return _callMathCAT(libmathcat.GetBraille, "")
 		except Exception:
 			log.exception()
 			# Translators: this message reports an error in brailling math.

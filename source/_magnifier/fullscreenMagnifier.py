@@ -12,7 +12,6 @@ from typing import override
 from logHandler import log
 import speech
 import ui
-import winUser
 from winBindings import magnification
 from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
@@ -25,7 +24,7 @@ from .utils.types import (
 	MagnifierParameters,
 	Coordinates,
 )
-from .config import getFullscreenMode, isTrueCentered
+from .config import getFullscreenMode, isTrueCentered, _isDebug
 from .utils.errorHandling import trackNativeMagnifierErrors
 
 
@@ -41,7 +40,6 @@ class FullScreenMagnifier(Magnifier):
 		self.currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
 		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
-		self._startMagnifier()
 
 	@Magnifier.filterType.setter
 	def filterType(self, value: Filter) -> None:
@@ -54,7 +52,8 @@ class FullScreenMagnifier(Magnifier):
 		obj,
 		nextHandler,
 	):
-		log.debug("Full-screen Magnifier gain focus event")
+		if _isDebug():
+			log.debug("Full-screen Magnifier gain focus event")
 		nextHandler()
 
 	@override
@@ -63,9 +62,12 @@ class FullScreenMagnifier(Magnifier):
 		Start the Full-screen magnifier using windows DLL
 		"""
 		super()._startMagnifier()
-		log.debug(
-			f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self._fullscreenMode}",
-		)
+		if not self._isActive:
+			return
+		if _isDebug():
+			log.debug(
+				f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self._fullscreenMode}",
+			)
 		try:
 			self._initializeNativeMagnification()
 		except OSError:
@@ -84,18 +86,39 @@ class FullScreenMagnifier(Magnifier):
 			self._applyFilter()
 		self._startTimer(self._updateMagnifier)
 
+	def _clearStaleApiState(self) -> None:
+		"""
+		Dummy MagInitialize/MagUninitialize cycle to clear stale Windows API state.
+
+		After a MagSetFullscreenTransform or MagSetFullscreenColorEffect call,
+		MagUninitialize leaves internal state that causes the next MagSetFullscreenTransform
+		to fail. Resetting the color effect to neutral here also clears stale state
+		left by a screen curtain session. All OSError exceptions are suppressed.
+		"""
+		try:
+			magnification.MagInitialize()
+		except OSError:
+			return
+		try:
+			magnification.MagSetFullscreenColorEffect(FilterMatrix.NORMAL.value)
+		except OSError:
+			pass
+		try:
+			magnification.MagUninitialize()
+		except OSError:
+			pass
+
 	def _initializeNativeMagnification(self) -> None:
 		"""
-		Initialize the Magnification API and verify it is fully usable.
+		Initialize the Magnification API and apply the initial fullscreen transform.
 
-		Raises OSError if MagInitialize fails or if the initial fullscreen
-		transform fails (e.g. Windows Magnifier already holds the API). If
-		MagSetFullscreenTransform fails after a successful MagInitialize, this
-		method uninitializes the native magnification API before re-raising.
-		Failures from MagInitialize are propagated to the caller.
+		Raises OSError if MagInitialize or MagSetFullscreenTransform fails.
 		"""
+		self._uninitializeNativeMagnification()
+		self._clearStaleApiState()
 		magnification.MagInitialize()
-		log.debug("Magnification API initialized")
+		if _isDebug():
+			log.debug("Magnification API initialized")
 		# Applying the first real update verifies the API is usable without
 		# briefly jumping the magnified view to the top-left corner.
 		try:
@@ -138,7 +161,8 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		magnification.MagSetFullscreenTransform(1.0, 0, 0)
 		magnification.MagSetFullscreenColorEffect(FilterMatrix.NORMAL.value)
-		log.debug("Magnification reset to neutral state")
+		if _isDebug():
+			log.debug("Magnification reset to neutral state")
 
 	@trackNativeMagnifierErrors
 	def _uninitializeNativeMagnification(self) -> None:
@@ -147,7 +171,8 @@ class FullScreenMagnifier(Magnifier):
 		If already uninitialized or on failure, continues anyway.
 		"""
 		magnification.MagUninitialize()
-		log.debug("Magnification API uninitialized")
+		if _isDebug():
+			log.debug("Magnification API uninitialized")
 
 	@override
 	def _attemptRecovery(self) -> None:
@@ -166,12 +191,10 @@ class FullScreenMagnifier(Magnifier):
 			self._conductRecoveryFailure()
 			return
 
-		log.info(
+		log.debug(
 			f"Attempting full-screen magnifier recovery "
 			f"(attempt {self._recoveryAttempts}/{self._MAX_RECOVERY_ATTEMPTS})",
 		)
-
-		self._uninitializeNativeMagnification()
 
 		try:
 			# _initializeNativeMagnification also probes MagSetFullscreenTransform,
@@ -184,7 +207,7 @@ class FullScreenMagnifier(Magnifier):
 			return
 
 		self._consecutiveErrors = 0
-		log.info("Full-screen magnifier recovery succeeded")
+		log.debug("Full-screen magnifier recovery succeeded")
 		self._startTimer(self._updateMagnifier)
 
 	def _conductRecoveryFailure(self) -> None:
@@ -231,7 +254,7 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		params = self._getMagnifierParameters(coordinates)
 		magnification.MagSetFullscreenTransform(
-			self.zoomLevel,
+			self.zoomLevelRatio,
 			params.coordinates.x,
 			params.coordinates.y,
 		)
@@ -254,34 +277,6 @@ class FullScreenMagnifier(Magnifier):
 				return self._borderPos(coordinates)
 			case FullScreenMode.CENTER:
 				return coordinates
-
-	@override
-	def _keepMouseCentered(self) -> None:
-		"""
-		Move the mouse to the center of the magnified view.
-		Skips if a mouse button is currently pressed to avoid interfering with clicks.
-		"""
-		if (
-			winUser.getAsyncKeyState(winUser.VK_LBUTTON) < 0
-			or winUser.getAsyncKeyState(winUser.VK_RBUTTON) < 0
-			or winUser.getAsyncKeyState(winUser.VK_MBUTTON) < 0
-		):
-			log.debug("Mouse button pressed, skipping cursor repositioning to avoid interfering with click")
-			return
-		coordinates = self._getCoordinatesForMode(self.currentCoordinates)
-		params = self._getMagnifierParameters(coordinates)
-		centerX = params.coordinates.x + params.magnifierSize.width // 2
-		centerY = params.coordinates.y + params.magnifierSize.height // 2
-		winUser.setCursorPos(centerX, centerY)
-
-	@trackNativeMagnifierErrors
-	def _setCursorToCenter(self, x: int, y: int) -> None:
-		"""
-		Set cursor to the specified position.
-		If this fails, it is logged but execution continues.
-		"""
-		winUser.setCursorPos(x, y)
-		log.debug(f"Cursor repositioned to center ({x}, {y})")
 
 	def _borderPos(
 		self,
@@ -341,7 +336,7 @@ class FullScreenMagnifier(Magnifier):
 		:return: The (x, y) coordinates of the magnifier center
 		"""
 
-		zoom = self.zoomLevel
+		zoom = self.zoomLevelRatio
 		mouseX, mouseY = coordinates
 		magnifierWidth = self._displayOrientation.width / zoom
 		magnifierHeight = self._displayOrientation.height / zoom
@@ -365,9 +360,10 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		Launch Spotlight from Full-screen class
 		"""
-		log.debug(
-			f"Launching spotlight mode from full-screen magnifier with mode {self._fullscreenMode}",
-		)
+		if _isDebug():
+			log.debug(
+				f"Launching spotlight mode from full-screen magnifier with mode {self._fullscreenMode}",
+			)
 		self._stopTimer()
 		self._spotlightManager._startSpotlight()
 
@@ -389,8 +385,8 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		x, y = coordinates
 		# Calculate the size of the capture area at the current zoom level
-		magnifierWidth = self._displayOrientation.width / self.zoomLevel
-		magnifierHeight = self._displayOrientation.height / self.zoomLevel
+		magnifierWidth = self._displayOrientation.width / self.zoomLevelRatio
+		magnifierHeight = self._displayOrientation.height / self.zoomLevelRatio
 
 		# Compute the top-left corner so that (x, y) is at the center
 		left = int(x - (magnifierWidth / 2))

@@ -77,20 +77,20 @@ class MagnifierAction(DisplayStringEnum):
 			# Translators: Action description for panning to bottom edge.
 			self.PAN_BOTTOM_EDGE: pgettext("magnifier action", "pan to bottom edge"),
 			# Translators: Action description for toggling settings.
-			self.TOGGLE_FOLLOW_SETTINGS: pgettext("magnifier action", "toggle follow settings"),
+			self.TOGGLE_FOLLOW_SETTINGS: pgettext("magnifier action", "toggle tracking settings"),
 			# Translators: Action description for toggling color filters.
-			self.TOGGLE_FILTER: pgettext("magnifier action", "toggle filters"),
+			self.TOGGLE_FILTER: pgettext("magnifier action", "cycle color filters"),
 			# Translators: Action description for changing magnifier view.
 			self.CHANGE_MAGNIFIER_VIEW: pgettext("magnifier action", "change magnifier view"),
 			# Translators: Action description for changing full-screen mode.
 			self.CHANGE_FULLSCREEN_MODE: pgettext("magnifier action", "change full-screen mode"),
-			# Translators: Action description for starting spotlight mode.
-			self.START_SPOTLIGHT: pgettext("magnifier action", "start spotlight mode"),
+			# Translators: Action description for showing entire screen overview.
+			self.START_SPOTLIGHT: pgettext("magnifier action", "show screen overview"),
 		}
 
 
-class MagnifierFollowFocusType(DisplayStringEnum):
-	"""Type of focus the magnifier should follow based on user settings"""
+class MagnifierTrackingType(DisplayStringEnum):
+	"""Tracking the magnifier should follow based on user settings"""
 
 	MOUSE = auto()
 	SYSTEM_FOCUS = auto()
@@ -98,16 +98,16 @@ class MagnifierFollowFocusType(DisplayStringEnum):
 	NAVIGATOR_OBJECT = auto()
 
 	@property
-	def _displayStringLabels(self) -> dict["MagnifierFollowFocusType", str]:
+	def _displayStringLabels(self) -> dict["MagnifierTrackingType", str]:
 		return {
-			# Translators: Focus type for magnifier to follow - mouse cursor.
-			self.MOUSE: pgettext("magnifier follow focus type", "Mouse"),
-			# Translators: Focus type for magnifier to follow - system focus (active element).
-			self.SYSTEM_FOCUS: pgettext("magnifier follow focus type", "System focus"),
-			# Translators: Focus type for magnifier to follow - review cursor position.
-			self.REVIEW: pgettext("magnifier follow focus type", "Review cursor"),
-			# Translators: Focus type for magnifier to follow - navigator object position.
-			self.NAVIGATOR_OBJECT: pgettext("magnifier follow focus type", "Navigator object"),
+			# Translators: Type of item tracked by the Magnifier - mouse cursor.
+			self.MOUSE: pgettext("magnifier", "Mouse"),
+			# Translators: Type of item tracked by the Magnifier - system focus (active element).
+			self.SYSTEM_FOCUS: pgettext("magnifier", "System focus"),
+			# Translators: Type of item tracked by the Magnifier - review cursor position.
+			self.REVIEW: pgettext("magnifier", "Review cursor"),
+			# Translators: Type of item tracked by the Magnifier - navigator object position.
+			self.NAVIGATOR_OBJECT: pgettext("magnifier", "Navigator object"),
 		}
 
 
@@ -155,11 +155,11 @@ class FullScreenMode(DisplayStringStrEnum):
 	@property
 	def _displayStringLabels(self) -> dict["FullScreenMode", str]:
 		return {
-			# Translators: Magnifier focus mode - center mouse/focus on screen.
+			# Translators: Magnifier tracking mode - center the tracked item on the screen.
 			self.CENTER: pgettext("magnifier", "Center"),
-			# Translators: Magnifier focus mode - follow focus at screen borders.
+			# Translators: Magnifier tracking mode - follow the tracked item only when it reaches screen borders.
 			self.BORDER: pgettext("magnifier", "Border"),
-			# Translators: Magnifier focus mode - maintain relative position.
+			# Translators: Magnifier tracking mode - preserve the tracked item's screen position within the magnified view (same relative screen location).
 			self.RELATIVE: pgettext("magnifier", "Relative"),
 		}
 
