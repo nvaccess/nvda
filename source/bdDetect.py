@@ -823,7 +823,7 @@ class DriverRegistrar:
 		type: DeviceType,
 		ids: set[str],
 		useAsFallback: bool = False,
-		matchFunc: MatchFuncT = None,
+		matchFunc: MatchFuncT | None = None,
 	):
 		"""Associate USB devices with the driver on this instance.
 		:param type: The type of the driver.

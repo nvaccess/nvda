@@ -248,7 +248,7 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 	_conn: rpyc.Connection | None
 	_localService: LocalService_t | None
 
-	def __init__(self, stream: Stream, localService: LocalService_t = None, name: str = "unknown"):
+	def __init__(self, stream: Stream, localService: LocalService_t | None = None, name: str = "unknown"):
 		self._name = name
 		log.debug(f"Creating connection '{name}'")
 		self._conn = rpyc.connect_stream(

@@ -1532,7 +1532,7 @@ def _extendSpeechSequence_addMathForTextInfo(
 def speakTextInfo(
 	info: textInfos.TextInfo,
 	useCache: Union[bool, SpeakTextInfoState] = True,
-	formatConfig: Dict[str, bool] = None,
+	formatConfig: Dict[str, bool] | None = None,
 	unit: Optional[str] = None,
 	reason: OutputReason = OutputReason.QUERY,
 	_prefixSpeechCommand: Optional[SpeechCommand] = None,

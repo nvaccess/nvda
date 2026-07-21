@@ -239,7 +239,7 @@ class Logger(logging.Logger):
 		level: int,
 		msg: str,
 		args: tuple[Any, ...],
-		exc_info: _excInfo_t | bool | BaseException = None,
+		exc_info: _excInfo_t | bool | BaseException | None = None,
 		extra: dict | None = None,
 		codepath: str | None = None,
 		activateLogViewer: bool = False,
