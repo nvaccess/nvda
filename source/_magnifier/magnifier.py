@@ -13,9 +13,13 @@ from comtypes import COMError
 from logHandler import log
 from NVDAState import _TrackNVDAInitialization
 import wx
+import gui
 import ui
 import screenCurtain
+import touchHandler
 from winAPI import _displayTracking
+from winAPI.winUser.constants import SystemMetrics
+from winBindings import user32
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (
 	MagnifierParameters,
@@ -209,6 +213,39 @@ class Magnifier:
 			return
 		self._isActive = True
 		self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
+		if touchHandler.handler is not None:
+			# Touch events are already intercepted by NVDA; block gesture execution
+			# to prevent incorrect coordinates from the magnified view reaching the system.
+			touchHandler.blockTouchInput = True
+		elif user32.GetSystemMetrics(SystemMetrics.MAXIMUM_TOUCHES) > 0:
+			# The user has a touchscreen but NVDA cannot intercept inputs; warn them.
+			if touchHandler.touchSupported():
+				reason = pgettext(
+					"magnifier",
+					# Translators: Warning when magnifier is started on a device with a touch screen but NVDA's touch support is disabled.
+					"Touch screen input cannot be used because NVDA touch support is disabled. ",
+				)
+			else:
+				reason = pgettext(
+					"magnifier",
+					# Translators: Warning when the magnifier starts on a portable/source copy with a touchscreen.
+					"Touch screen input cannot be used because NVDA is not installed. ",
+				)
+			wx.CallAfter(
+				gui.messageBox,
+				reason
+				+ pgettext(
+					"magnifier",
+					# Translators: Suffix appended to touch warning when touch inputs cannot be blocked by the magnifier.
+					"Touch inputs may not behave as expected while the magnifier is running.",
+				),
+				pgettext(
+					"magnifier",
+					# Translators: Title of the warning dialog shown when touch cannot be intercepted while the magnifier is running.
+					"Touch Screen Warning",
+				),
+				wx.OK | wx.ICON_WARNING,
+			)
 		self._mouseHook = MagnifierMouseHook(self._onMouseMove)
 		self._mouseHook.start()
 
@@ -321,6 +358,8 @@ class Magnifier:
 			self._mouseHook = None
 		self._stopTimer()
 		self._isActive = False
+		if touchHandler.handler is not None:
+			touchHandler.blockTouchInput = False
 		# Unregister from display changes
 		_displayTracking.displayChanged.unregister(self._onDisplayChanged)
 
