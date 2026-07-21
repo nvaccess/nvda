@@ -1198,7 +1198,7 @@ class IAccessible(Window):
 	def isPointInObject(self, x, y):
 		if self.windowHandle and not super(IAccessible, self).isPointInObject(x, y):
 			return False
-		res = IAccessibleHandler.accHitTest(self.IAccessibleObject, self.IAccessibleChildID, x, y)
+		res = IAccessibleHandler.accHitTest(self.IAccessibleObject, x, y)
 		if not res or res[0] != self.IAccessibleObject or res[1] != self.IAccessibleChildID:
 			return False
 		return True

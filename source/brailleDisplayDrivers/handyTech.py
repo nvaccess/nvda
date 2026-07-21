@@ -1102,7 +1102,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 					raise RuntimeError(
 						"The model with ID %r is not supported by this driver" % modelId,
 					)
-				self._model = MODELS.get(modelId)(self)
+				self._model = MODELS[modelId](self)
 				if htPacketType == HT_PKT_OK_WITH_LENGTH:
 					self.numCells = ord(stream.read(1))
 				else:

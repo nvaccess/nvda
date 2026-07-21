@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2025 NV Access Limited, Leonard de Ruijter
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2012-2026 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from typing import (
 	Any,
@@ -1091,10 +1091,7 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		:raises ValueError: If the start index is greater than the end index.
 		"""
 		if not (start <= end):
-			raise ValueError(
-				f"start must be less than or equal to end. Got {start=}, {end=}.",
-				stack_info=True,
-			)
+			raise ValueError(f"start must be less than or equal to end. Got {start=}, {end=}.")
 		maxLength = self._getStoryLength()
 		# Having start = maxLength does not make sense, as there will be no selection if this is the case.
 		if not (0 <= start < maxLength) and clamp:

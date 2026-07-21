@@ -251,7 +251,7 @@ class SpeechDict(list[SpeechDictEntry]):
 				text = entry.sub(text)
 			except (re.error, regex.error):
 				dictName = self.fileName or DictionaryType.TEMP.value
-				log.exception("Invalid dictionary entry %d in %r: %r", index + 1, dictName, entry.pattern)
+				log.exception(f"Invalid dictionary entry {index + 1} in {dictName!r}: {entry.pattern!r}")
 				invalidEntries.append(index)
 		for index in reversed(invalidEntries):
 			del self[index]

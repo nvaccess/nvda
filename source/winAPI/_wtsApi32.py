@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
-# This file may be used under the terms of the GNU General Public License, version 2 or later.
-# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+# Copyright (C) 2022-2026 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Definitions for the (Windows API) WTS Api32
 Reference:
@@ -179,12 +179,12 @@ class _WTS_LockState(IntEnum):
 	"""The session is unlocked."""
 
 
-def _setWTS_LockState() -> _WTS_LockState:
+def _setWTS_LockState() -> type[_WTS_LockState]:
 	"""Ensure that the correct values for WTS_SESSIONSTATE_LOCK are used based on the platform."""
 	return _WTS_LockState
 
 
-WTS_LockState: _WTS_LockState = _setWTS_LockState()
+WTS_LockState: type[_WTS_LockState] = _setWTS_LockState()
 """
 Set of known session states that NVDA can handle.
 These values are different on different versions of Windows.

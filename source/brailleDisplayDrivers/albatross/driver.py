@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2023-25 NV Access Limited, Burman's Computer and Education Ltd., Leonard de Ruijter
+# Copyright (C) 2023-2026 NV Access Limited, Burman's Computer and Education Ltd., Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Main code for Tivomatic Caiku Albatross braille display driver.
 Communication with display is done here. See class L{BrailleDisplayDriver}
@@ -265,7 +265,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		if not self._resetBuffers():
 			if i == MAX_INIT_RETRIES - 1:
 				return False
-			log(
+			log.debug(
 				f"sleeping {SLEEP_TIMEOUT} seconds before try {i + 2} / {MAX_INIT_RETRIES}",
 			)
 			time.sleep(SLEEP_TIMEOUT)
@@ -283,7 +283,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			if not self._resetBuffers():
 				if i == MAX_INIT_RETRIES - 1:
 					return False
-				log(
+				log.debug(
 					f"sleeping {SLEEP_TIMEOUT} seconds before try {i + 2} / {MAX_INIT_RETRIES}",
 				)
 				time.sleep(SLEEP_TIMEOUT)
