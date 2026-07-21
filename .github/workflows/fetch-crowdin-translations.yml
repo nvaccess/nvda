@@ -92,6 +92,7 @@ jobs:
         subject: "[${{ steps.commit.outputs.invalid_pofile_locales }}]: Errors in interface translations"
         to: sascha@nvaccess.org
         from: '"NVDA localisations" <nvda-l10n@nvaccess.org>'
+        attachments: ${{ steps.commit.outputs.report_files }}
         convert_markdown: true
         body: |
           Errors have been found in the user interface translations for the following locales: ${{ steps.commit.outputs.invalid_pofile_locales }}.
