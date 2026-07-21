@@ -170,7 +170,7 @@ class WordSegmentationStrategy(ABC):
 			return False
 
 		return any(
-			re.match(cls._LANGUAGE_PATTERN, language)
+			re.match(cls._LANGUAGE_PATTERN, language)  # ty: ignore[no-matching-overload]
 			for language in (
 				languageHandler.getWindowsLanguage(),
 				languageHandler.getLanguage(),

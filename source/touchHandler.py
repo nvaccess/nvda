@@ -363,7 +363,7 @@ class TouchInputGesture(inputCore.InputGesture):
 		source = _("Touch screen")
 		if mode:
 			source = "{source}, {mode}".format(source=source, mode=TouchMode(mode).displayString)
-		return source, " + ".join(actions)
+		return source, " + ".join(actions)  # ty: ignore[no-matching-overload]
 
 	def _get__immediate(self):
 		# Because touch may produce a hover gesture for every pump, an immediate pump

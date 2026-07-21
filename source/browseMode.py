@@ -2617,7 +2617,7 @@ class BrowseModeDocumentTreeInterceptor(
 		result = []
 		for k, g in itertools.groupby(sequence, key=type):
 			if k == str:  # noqa: E721
-				result.append("".join(g))
+				result.append("".join(g))  # ty: ignore[no-matching-overload]
 			else:
 				result.extend(list(g))
 		return result

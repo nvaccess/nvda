@@ -785,7 +785,7 @@ class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 			idParts.append(self.idForCellCount(len(rangeIndexes), rangeName))
 		if cellIndexes:
 			self.cellIndexes = cellIndexes
-		self.id = "+".join(idParts)
+		self.id = "+".join(idParts)  # ty: ignore[no-matching-overload]
 		# Don't say is this a dots gesture if some keys either from dots and space are pressed.
 		if not extendedKeyBits and not keyBits & ~(0xFF | (1 << 0xF)):
 			self.dots = keyBits & 0xFF

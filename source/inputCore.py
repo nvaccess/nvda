@@ -726,7 +726,7 @@ class InputManager(baseObject.AutoPropertyObject):
 
 		import braille
 
-		braille.handler.message("\t\t".join(brailleItems))
+		braille.handler.message("\t\t".join(brailleItems))  # ty: ignore[no-matching-overload]
 		# Punctuation must be spoken for the gesture name so that punctuation keys are spoken.
 		speech.speakText(
 			displayName,

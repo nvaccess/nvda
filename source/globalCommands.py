@@ -2708,7 +2708,7 @@ class GlobalCommands(ScriptableObject):
 				ui.message(_("No formatting information"))
 				return
 
-			ui.message(" ".join(textList))
+			ui.message(" ".join(textList))  # ty: ignore[no-matching-overload]
 		else:
 			if formatField:
 				sequence = info.getFormatFieldSpeech(formatField, formatConfig=formatConfig)

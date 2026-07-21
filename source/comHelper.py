@@ -19,7 +19,7 @@ CO_E_CLASSSTRING = -2147221005
 
 
 def _lresultFromGetActiveObject(progid, dynamic):
-	o = comtypes.client.GetActiveObject(progid, dynamic=dynamic)
+	o = comtypes.client.GetActiveObject(progid, dynamic=dynamic)  # ty: ignore[no-matching-overload]
 	if not isinstance(o, IUnknown):
 		o = o._comobj
 	return oleacc.LresultFromObject(0, o)
@@ -50,7 +50,7 @@ def getActiveObject(progid, dynamic=False, appModule=None):
 		else:
 			return comtypes.client.GetBestInterface(p)
 	try:
-		return comtypes.client.GetActiveObject(progid, dynamic=dynamic)
+		return comtypes.client.GetActiveObject(progid, dynamic=dynamic)  # ty: ignore[no-matching-overload]
 	except WindowsError as e:
 		if e.winerror not in (MK_E_UNAVAILABLE, CO_E_CLASSSTRING):
 			# This isn't related to privileges.
