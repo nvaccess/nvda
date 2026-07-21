@@ -18,6 +18,8 @@ import warnings
 
 from comtypes import COMError, BSTR
 import comtypes.automation
+import comtypes.client.dynamic
+import comtypes.client.lazybind
 import inputCore
 import wx
 import time

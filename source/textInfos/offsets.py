@@ -602,7 +602,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 			position = Offsets(offset, offset)
 		elif isinstance(position, NVDAObject):
 			start, end = self._getOffsetsFromNVDAObject(position)
-			position = textInfos.offsets.Offsets(start, end)
+			position = Offsets(start, end)
 
 		if type(position) is type(self):
 			# This is a direct TextInfo to TextInfo copy.

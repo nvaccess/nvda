@@ -9,6 +9,7 @@
 import os.path
 import objbase
 import comtypes
+import comtypes.client.dynamic
 from locationHelper import RectLTWH
 from logHandler import log
 import textInfos.offsets

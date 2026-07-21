@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 
 import ctypes
+import ctypes.wintypes
 from comtypes import BSTR, COMError
 import colors
 import eventHandler

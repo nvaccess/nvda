@@ -10,6 +10,7 @@ from typing import (
 )
 
 import comtypes
+import comtypes.automation
 from comtypes.automation import IDispatch
 import comtypes.client
 import ctypes

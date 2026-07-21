@@ -34,7 +34,8 @@ from logHandler import log
 from utils.security import isRunningOnSecureDesktop
 import winBindings.kernel32
 import addonAPIVersion
-import importlib
+import importlib.machinery
+import importlib.util
 import NVDAState
 from NVDAState import WritePaths
 from types import ModuleType

@@ -6,6 +6,7 @@
 import time
 from ctypes import *  # noqa: F403
 import ctypes
+import ctypes.wintypes
 from ctypes.wintypes import *  # noqa: F403
 from comtypes import BSTR
 from enum import IntFlag

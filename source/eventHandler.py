@@ -12,6 +12,7 @@ import garbageHandler
 import queueHandler
 import api
 import speech
+import speech.manager
 from speech.commands import _CancellableSpeechCommand
 import treeInterceptorHandler
 import controlTypes

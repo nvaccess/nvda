@@ -41,6 +41,7 @@ import braille.labels
 import braille.regions.properties
 from utils.security import _isObjectBelowLockScreen
 import vision
+import vision.constants
 import globalPluginHandler
 import brailleInput
 import locationHelper

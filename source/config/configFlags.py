@@ -22,7 +22,7 @@ from utils.displayString import (
 )
 
 if TYPE_CHECKING:
-	import _remoteClient
+	import _remoteClient.connectionInfo
 
 
 @unique
