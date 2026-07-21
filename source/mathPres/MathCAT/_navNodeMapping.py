@@ -131,15 +131,15 @@ def prepareMathMlForNavigation(
 	try:
 		ia2NodeInfoByPath = sourceObj._getMathNodeInfoByPath()
 	except RuntimeError:
+		# Fall back to normal math interaction if IA2 rectangle mapping fails.
 		log.debugWarning("Math highlight could not build IA2 rectangle map", exc_info=True)
 		return mathml, {}
 	nodeRectsById: dict[MathMlNodeId, "RectLTRB"] = {}
 	missingPathCount = 0
 	tagMismatchCount = 0
 	for nodeId, mathMlNodeInfo in mathMlNodeInfoById.items():
-		try:
-			ia2NodeInfo = ia2NodeInfoByPath[mathMlNodeInfo.path]
-		except KeyError:
+		ia2NodeInfo = ia2NodeInfoByPath.get(mathMlNodeInfo.path)
+		if ia2NodeInfo is None:
 			missingPathCount += 1
 			continue
 		if ia2NodeInfo.tag != mathMlNodeInfo.tag:
