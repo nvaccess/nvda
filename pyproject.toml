@@ -334,6 +334,8 @@ output-format = "concise"
 # To keep current code typing unchanged, rules that flood on the existing codebase
 # are set to "ignore" (ty's rule taxonomy differs from pyright's, so this is
 # analogous to, not a mirror of, the leniency configured in [tool.pyright]).
+# Rules below 100 diagnostics have been re-enabled, with the remaining
+# false positives suppressed through inline "ty: ignore" comments.
 unresolved-attribute = "ignore"  # 3813 errors
 not-subscriptable = "ignore"  # 1118 errors
 invalid-argument-type = "ignore"  # 953 errors
@@ -341,15 +343,6 @@ invalid-assignment = "ignore"  # 455 errors
 unsupported-operator = "ignore"  # 119 errors
 invalid-method-override = "ignore"  # 113 errors
 invalid-return-type = "ignore"  # 103 errors
-invalid-parameter-default = "ignore"  # 11 errors
-empty-body = "ignore"  # 1 error
-invalid-attribute-override = "ignore"  # 1 error
-# Non-fatal warnings, ignored for the same reason as the errors above (ty 0.0.57).
-possibly-missing-submodule = "ignore"  # 48 warnings
-invalid-enum-member-annotation = "ignore"  # 6 warnings
-unused-type-ignore-comment = "ignore"  # 1 warning
-redundant-cast = "ignore"  # 1 warning
-mismatched-type-name = "ignore"  # 1 warning
 
 [tool.uv]
 default-groups = "all"
