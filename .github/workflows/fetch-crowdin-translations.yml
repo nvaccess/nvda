@@ -37,7 +37,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v7
       with:
-        ref: beta
+        ref: crowdin-sync
         fetch-depth: 1
         submodules: true
 
