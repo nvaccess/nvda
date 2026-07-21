@@ -3,7 +3,8 @@
 # See the file COPYING for more details.
 # Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Eurobraille
 
-from typing import OrderedDict, Dict
+from collections import OrderedDict
+from typing import Dict
 
 name = "eurobraille"
 # Translators: Names of braille displays.
