@@ -100,7 +100,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 
 		# Instantiate the requested class.
 		try:
-			obj = APIClass.__new__(APIClass, **kwargs)
+			obj = APIClass.__new__(APIClass, **kwargs)  # ty: ignore[missing-argument]
 			obj.APIClass = APIClass
 			if isinstance(obj, self):
 				obj.__init__(**kwargs)

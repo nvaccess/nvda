@@ -604,7 +604,7 @@ class Test_MessageDialog_ShowModal(MDTestBase):
 	def test_showModalNoButtons(self, mocked_showModal: MagicMock, _):
 		"""Test that showing a MessageDialog modally with no buttons fails."""
 		with self.assertRaises(RuntimeError):
-			self.dialog.ShowModal()
+			self.dialog.ShowModal()  # ty: ignore[missing-argument]
 		mocked_showModal.assert_not_called()
 
 	def test_showModal(self, mocked_showModal: MagicMock, _):
@@ -614,7 +614,7 @@ class Test_MessageDialog_ShowModal(MDTestBase):
 			mocked_messageBoxCounter.__iadd__.return_value = (
 				mocked_messageBoxCounter.__isub__.return_value
 			) = mocked_messageBoxCounter
-			self.dialog.ShowModal()
+			self.dialog.ShowModal()  # ty: ignore[missing-argument]
 			mocked_showModal.assert_called_once()
 			mocked_messageBoxCounter.__iadd__.assert_called_once()
 			mocked_messageBoxCounter.__isub__.assert_called_once()

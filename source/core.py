@@ -543,7 +543,7 @@ def _closeAllWindows():
 	gui.mainFrame.sysTrayIcon.menu = None
 	gui.mainFrame.sysTrayIcon = None
 
-	for window in wx.GetTopLevelWindows():
+	for window in wx.GetTopLevelWindows():  # ty: ignore[missing-argument]
 		if isinstance(window, wx.Dialog) and window.IsModal():
 			log.debug(f"ending modal {window} during exit process")
 			wx.CallAfter(window.EndModal, wx.ID_CLOSE_ALL)

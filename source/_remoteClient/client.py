@@ -254,7 +254,7 @@ class RemoteClient:
 
 				self._disconnectConfirmationDialog = dialog
 				try:
-					if dialog.ShowModal() != ReturnCode.YES:
+					if dialog.ShowModal() != ReturnCode.YES:  # ty: ignore[missing-argument]
 						log.info("Remote disconnection cancelled by user.")
 						return
 				except Exception:

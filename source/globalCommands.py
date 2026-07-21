@@ -3883,7 +3883,7 @@ class GlobalCommands(ScriptableObject):
 		values = [x.value for x in reviewRoutingMovesSystemCaretFlag]
 		currentValue = featureFlag.value.value
 		nextValueIndex = (currentValue % len(values)) + 1
-		nextName: str = reviewRoutingMovesSystemCaretFlag(nextValueIndex).name
+		nextName: str = reviewRoutingMovesSystemCaretFlag(nextValueIndex).name  # ty: ignore[missing-argument]
 		config.conf["braille"]["reviewRoutingMovesSystemCaret"] = nextName
 		featureFlag = config.conf["braille"]["reviewRoutingMovesSystemCaret"]
 		if featureFlag.isDefault():

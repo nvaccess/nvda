@@ -160,7 +160,7 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 	)
 	# Translators: Button in the post-install dialog to exit NVDA.
 	dialog.addButton(ReturnCode.CANCEL, label=_("E&xit NVDA"), fallbackAction=not startAfterInstall)
-	match dialog.ShowModal():
+	match dialog.ShowModal():  # ty: ignore[missing-argument]
 		case ReturnCode.CUSTOM_1:
 			newNVDA = core.NewNVDAInstance(
 				filePath=os.path.join(WritePaths.defaultInstallDir, "nvda.exe"),

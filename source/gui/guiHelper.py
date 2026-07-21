@@ -519,7 +519,7 @@ def wxCallOnMain[**P, T](
 			exception = sys.exception()
 		event.set()
 
-	if wx.IsMainThread():
+	if wx.IsMainThread():  # ty: ignore[missing-argument]
 		functionWrapper()
 	else:
 		wx.CallAfter(functionWrapper)
