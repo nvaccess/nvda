@@ -246,7 +246,7 @@ def getWidcommBluetoothPortInfo(port):
 def _listDevices(
 	deviceClass: GUID,
 	onlyAvailable: bool = True,
-) -> typing.Iterator[tuple[_HDEVINFO, ctypes.Structure, _SP_DEVINFO_DATA, ctypes.c_wchar * 1024]]:
+) -> typing.Iterator[tuple[_HDEVINFO, ctypes.Structure, _SP_DEVINFO_DATA, ctypes.c_wchar * 1024]]:  # ty: ignore[invalid-type-form]
 	"""Internal helper function to list devices on the system for a specific device class.
 	@param deviceClass: The device class GUID.
 	:param onlyAvailable: Only return devices that are currently available.

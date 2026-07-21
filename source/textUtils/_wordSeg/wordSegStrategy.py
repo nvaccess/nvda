@@ -100,7 +100,7 @@ def _getConfiguredBrailleOutputTable() -> str:
 	return tableName
 
 
-def _freeCppJiebaOffsets(lib: CDLL, charPtr: POINTER(c_int)) -> None:
+def _freeCppJiebaOffsets(lib: CDLL, charPtr: POINTER(c_int)) -> None:  # ty: ignore[invalid-type-form]
 	if not bool(charPtr):
 		return
 	try:

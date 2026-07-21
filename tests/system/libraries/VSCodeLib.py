@@ -24,7 +24,7 @@ import WindowsLib as _WindowsLib
 
 _builtIn: _BuiltIn = _BuiltIn()
 _process: _ProcessLib = _getLib("Process")
-_windowsLib: _WindowsLib = _getLib("WindowsLib")
+_windowsLib: _WindowsLib = _getLib("WindowsLib")  # ty: ignore[invalid-type-form]
 
 _LAUNCHER_PATHS = [
 	_os.path.expandvars(r"%LOCALAPPDATA%\Programs\Microsoft VS Code\Code.exe"),

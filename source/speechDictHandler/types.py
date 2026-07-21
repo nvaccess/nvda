@@ -126,7 +126,7 @@ class SpeechDictEntry:
 	"""Whether the match is case sensitive."""
 	type: EntryType = EntryType.ANYWHERE
 	"""The type of the entry."""
-	compiled: "re.Pattern[str] | regex.Pattern[str]" = field(init=False)
+	compiled: "re.Pattern[str] | regex.Pattern[str]" = field(init=False)  # ty: ignore[invalid-type-form]
 	"""The compiled regular expression. May be a `re.Pattern` or a
 	`regex.Pattern` depending on the entry type."""
 

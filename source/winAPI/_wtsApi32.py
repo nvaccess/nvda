@@ -156,8 +156,8 @@ WTSQuerySessionInformationT = Callable[
 		HANDLE,  # [in] HANDLE hServer
 		DWORD,  # [ in] DWORD SessionId
 		WTS_INFO_CLASS,  # [ in]  WTS_INFO_CLASS WTSInfoClass,
-		POINTER(LPWSTR),  # [out] LPWSTR * ppBuffer. Holds WTSINFOEXW, use ctypes.cast
-		POINTER(DWORD),  # [out] DWORD * pBytesReturned
+		POINTER(LPWSTR),  # [out] LPWSTR * ppBuffer. Holds WTSINFOEXW  # ty: ignore[invalid-type-form]
+		POINTER(DWORD),  # [out] DWORD * pBytesReturned  # ty: ignore[invalid-type-form]
 	],
 	bool,
 ]

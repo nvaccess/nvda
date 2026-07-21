@@ -256,7 +256,7 @@ class OneCoreSynthDriver(SynthDriver):
 		self._dll.ocSpeech_getCurrentVoiceId.restype = ctypes.c_wchar_p
 		self._player = None
 		# Initialize state.
-		self._queuedSpeech: List[Union[str, Tuple[Callable[[ctypes.POINTER, float], None], float]]] = []
+		self._queuedSpeech: List[Union[str, Tuple[Callable[[ctypes.POINTER, float], None], float]]] = []  # ty: ignore[invalid-type-form]
 
 		self._wasCancelled = False
 		self._isProcessing = False

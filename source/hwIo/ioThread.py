@@ -26,7 +26,7 @@ __getattr__ = _deprecate.handleDeprecations(
 ApcT = typing.Callable[[int], None]
 ApcIdT = int
 OverlappedStructAddressT = int
-CompletionRoutineT = typing.Callable[[int, int, LPOVERLAPPED], None]
+CompletionRoutineT = typing.Callable[[int, int, LPOVERLAPPED], None]  # ty: ignore[invalid-type-form]
 ApcStoreT = typing.Dict[
 	ApcIdT,
 	typing.Tuple[
@@ -112,7 +112,7 @@ class IoThread(threading.Thread):
 	def _internalCompletionRoutine(
 		error: int,
 		numberOfBytes: int,
-		overlapped: LPOVERLAPPED,
+		overlapped: LPOVERLAPPED,  # ty: ignore[invalid-type-form]
 	):
 		threadinst = threading.current_thread()
 		if not isinstance(threadinst, IoThread):

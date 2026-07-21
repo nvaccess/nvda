@@ -591,8 +591,8 @@ class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedCl
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.EnableCheckBoxes(True)
-		self._newWndProc: WNDPROC | None = None
-		self._oldWndProc: WNDPROC | None = None
+		self._newWndProc: WNDPROC | None = None  # ty: ignore[invalid-type-form]
+		self._oldWndProc: WNDPROC | None = None  # ty: ignore[invalid-type-form]
 		self._checkboxlessIndices: set[int] = set()
 		self._hookWndProc()
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy, self)
