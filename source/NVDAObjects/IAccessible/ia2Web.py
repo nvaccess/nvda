@@ -336,25 +336,22 @@ class EditorChunk(Ia2Web):
 
 
 class Math(Ia2Web):
-	def _getMathObjAttributes(self, obj: NVDAObjects.NVDAObject) -> dict[str, str]:
-		if not isinstance(obj, IAccessible):
-			return {}
-		return obj.IA2Attributes
+	def _getMathElementChildren(self, obj: NVDAObjects.NVDAObject) -> tuple[IAccessible, ...]:
+		return tuple(
+			child
+			for child in obj.children
+			if isinstance(child, IAccessible) and child.IA2Attributes.get("tag")
+		)
 
-	def _getMathElementChildren(self, obj: NVDAObjects.NVDAObject) -> tuple[NVDAObjects.NVDAObject, ...]:
-		return tuple(child for child in obj.children if self._getMathObjAttributes(child).get("tag"))
-
-	def _getMathNodeMapRoot(self) -> NVDAObjects.NVDAObject:
-		if self._getMathObjAttributes(self).get("tag") == "math":
+	def _getMathNodeMapRoot(self) -> IAccessible:
+		if self.IA2Attributes.get("tag") == "math":
 			return self
 		mathChildren = tuple(
-			child
-			for child in self._getMathElementChildren(self)
-			if self._getMathObjAttributes(child).get("tag") == "math"
+			child for child in self._getMathElementChildren(self) if child.IA2Attributes.get("tag") == "math"
 		)
 		return mathChildren[0] if len(mathChildren) == 1 else self
 
-	def _getMathNodeRectFromObj(self, obj: NVDAObjects.NVDAObject) -> "RectLTRB | None":
+	def _getMathNodeRectFromObj(self, obj: IAccessible) -> "RectLTRB | None":
 		if obj.hasIrrelevantLocation:
 			return None
 		location = obj.location
@@ -371,18 +368,18 @@ class Math(Ia2Web):
 		from mathPres._mathMlNode import MathMlNodeRectInfo
 
 		nodeInfoByPath: dict["MathMlNodePath", "MathMlNodeRectInfo"] = {}
-		stack: list[tuple[NVDAObjects.NVDAObject, "MathMlNodePath"]] = [
+		stack: list[tuple[IAccessible, "MathMlNodePath"]] = [
 			(self._getMathNodeMapRoot(), ()),
 		]
 		visitedCount = 0
 		while stack:
 			obj, path = stack.pop()
 			visitedCount += 1
-			tag = self._getMathObjAttributes(obj).get("tag")
+			tag = obj.IA2Attributes.get("tag")
 			if tag and (rect := self._getMathNodeRectFromObj(obj)):
 				nodeInfoByPath[path] = MathMlNodeRectInfo(path=path, tag=tag, rect=rect)
 			children = self._getMathElementChildren(obj)
-			stack.extend((child, path + (index,)) for index, child in reversed(tuple(enumerate(children))))
+			stack.extend((child, path + (index,)) for index, child in enumerate(children))
 		log.debug(
 			f"Math highlight built IA2 path map with {len(nodeInfoByPath)} usable rectangles "
 			f"after visiting {visitedCount} MathML element objects",
