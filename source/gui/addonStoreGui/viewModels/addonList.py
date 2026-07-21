@@ -38,6 +38,7 @@ import core
 import extensionPoints
 from buildVersion import formatVersionForGUI
 from logHandler import log
+from utils.localisation import formatDateForSystemLocale
 
 
 if TYPE_CHECKING:
@@ -381,7 +382,7 @@ class AddonListVM:
 			if listItemVM.model.installDate is None:
 				return ""
 			else:
-				return listItemVM.model.installDate.strftime("%x")
+				return formatDateForSystemLocale(listItemVM.model.installDate)
 		if field is AddonListField.minimumNVDAVersion:
 			return formatVersionForGUI(*listItemVM.model.minimumNVDAVersion)
 		if field is AddonListField.lastTestedVersion:

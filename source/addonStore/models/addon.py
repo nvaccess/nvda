@@ -19,6 +19,7 @@ from requests.structures import CaseInsensitiveDict
 
 import addonAPIVersion
 from NVDAState import WritePaths
+from utils.localisation import formatDateForSystemLocale
 
 from .channel import Channel
 from .scanResults import VirusTotalScanResults
@@ -194,7 +195,7 @@ class _AddonStoreModel(_AddonGUIModel):
 		if self.submissionTime is None:
 			return None
 		# Convert `self.submissionTime` to seconds.
-		return datetime.strftime(datetime.fromtimestamp(self.submissionTime // 1000), "%x")
+		return formatDateForSystemLocale(datetime.fromtimestamp(self.submissionTime // 1000))
 
 
 class _AddonManifestModel(_AddonGUIModel):

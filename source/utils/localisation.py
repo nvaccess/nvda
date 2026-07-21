@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from datetime import timedelta
+from datetime import datetime, timedelta
 from enum import (
 	auto,
 	unique,
@@ -12,7 +12,18 @@ from typing import (
 	Dict,
 )
 
+import winKernel
 from utils.displayString import DisplayStringEnum
+
+
+def formatDateForSystemLocale(date: datetime) -> str:
+	"""Format a date using the Windows user's regional and calendar settings."""
+	return winKernel.GetDateFormatEx(
+		winKernel.LOCALE_NAME_USER_DEFAULT,
+		0,
+		date,
+		None,
+	)
 
 
 @unique

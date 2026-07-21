@@ -5,10 +5,12 @@
 
 """Unit tests for the localisation submodule."""
 
-from datetime import timedelta
+from datetime import datetime, timedelta
 import unittest
+from unittest.mock import patch
 
 from utils.localisation import (
+	formatDateForSystemLocale,
 	TimeOutputFormat,
 )
 
@@ -66,4 +68,17 @@ class Test_TimeOutputFormat(unittest.TestCase):
 			exampleTimeDelta=timedelta(seconds=33),
 			expectedTimeOutputFormat=TimeOutputFormat.SECONDS,
 			expectedOutputStr="33",
+		)
+
+
+class TestFormatDateForSystemLocale(unittest.TestCase):
+	@patch("utils.localisation.winKernel.GetDateFormatEx", return_value="21/07/2026")
+	def test_usesWindowsUserSettings(self, mockGetDateFormatEx):
+		date = datetime(2026, 7, 21)
+		self.assertEqual("21/07/2026", formatDateForSystemLocale(date))
+		mockGetDateFormatEx.assert_called_once_with(
+			None,
+			0,
+			date,
+			None,
 		)

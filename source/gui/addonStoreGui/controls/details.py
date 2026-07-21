@@ -15,6 +15,7 @@ from gui import guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from logHandler import log
 from utils.debounce import debounceLimiter
+from utils.localisation import formatDateForSystemLocale
 
 from ..viewModels.addonList import AddonDetailsVM, AddonListField
 
@@ -397,7 +398,7 @@ class AddonDetails(
 						self._appendDetailsLabelValue(
 							# Translators: Label for an extra detail field for the selected add-on in the add-on store dialog.
 							pgettext("addonStore", "Install date:"),
-							details.installDate.strftime("%x"),
+							formatDateForSystemLocale(details.installDate),
 						)
 
 				if isinstance(details, _AddonStoreModel):
