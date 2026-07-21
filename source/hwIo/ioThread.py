@@ -101,7 +101,7 @@ class IoThread(threading.Thread):
 			function = reference
 
 		try:
-			function(actualParam)
+			function(actualParam)  # ty: ignore[call-non-callable]
 		except Exception:
 			log.error(
 				f"Error in APC function {function!r} with apcId {param} queued to IoThread",

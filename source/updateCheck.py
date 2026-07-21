@@ -832,7 +832,7 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 			wx.CallAfter(self._guiExecTimer.Start, 50, True)
 
 	def _guiExecNotify(self):
-		self._guiExecFunc(*self._guiExecArgs)
+		self._guiExecFunc(*self._guiExecArgs)  # ty: ignore[call-non-callable, not-iterable]
 
 	def _bg(self):
 		success = False

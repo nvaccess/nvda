@@ -437,7 +437,7 @@ class SsmlParser(SpeechXmlParser):
 			return
 		if self._markCallback is not None:
 			name = attrs["name"]
-			yield CallbackCommand(lambda: self._markCallback(name), name=f"SsmlMark_{name}")
+			yield CallbackCommand(lambda: self._markCallback(name), name=f"SsmlMark_{name}")  # ty: ignore[call-non-callable]
 
 	def convertFromXml(self, xml: str) -> SpeechSequence:
 		self._cachedProsodyAttrs = []

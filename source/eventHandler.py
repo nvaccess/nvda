@@ -417,13 +417,13 @@ def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bo
 		executeEvent("focusEntered", parent)
 	if obj.treeInterceptor is not oldTreeInterceptor:
 		if hasattr(oldTreeInterceptor, "event_treeInterceptor_loseFocus"):
-			oldTreeInterceptor.event_treeInterceptor_loseFocus()
+			oldTreeInterceptor.event_treeInterceptor_loseFocus()  # ty: ignore[call-non-callable]
 		if (
 			obj.treeInterceptor
 			and obj.treeInterceptor.isReady
 			and hasattr(obj.treeInterceptor, "event_treeInterceptor_gainFocus")
 		):
-			obj.treeInterceptor.event_treeInterceptor_gainFocus()
+			obj.treeInterceptor.event_treeInterceptor_gainFocus()  # ty: ignore[call-non-callable]
 	return True
 
 

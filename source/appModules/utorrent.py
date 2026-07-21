@@ -46,7 +46,7 @@ class TorrentContentsListItem(ListItem):
 			return superContent
 		# We need to use the display model to retrieve the Name column.
 		try:
-			left, top, width, height = self._getColumnLocation(column)
+			left, top, width, height = self._getColumnLocation(column)  # ty: ignore[not-iterable]
 			return displayModel.DisplayModelTextInfo(
 				self,
 				locationHelper.RectLTRB(

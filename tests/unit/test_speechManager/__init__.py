@@ -615,7 +615,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 		"""
 		smi = SpeechManagerInteractions(self)
 		with smi.expectation():
-			first, last = smi.speak(
+			first, last = smi.speak(  # ty: ignore[not-iterable]
 				[
 					"1 2 3 ",
 					"4 5",

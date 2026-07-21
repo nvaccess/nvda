@@ -746,7 +746,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			speech.speakMessage(scriptDescription)
 
 		if runScript:
-			script(gesture)
+			script(gesture)  # ty: ignore[call-non-callable]
 
 	def loadUserGestureMap(self):
 		self.userGestureMap.clear()

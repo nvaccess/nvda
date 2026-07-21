@@ -452,7 +452,7 @@ class _TableTextReader(_CaretTextReader):
 
 	def nextLineImpl(self) -> bool:
 		try:
-			self.reader = self.nextLineFunc(self.reader)
+			self.reader = self.nextLineFunc(self.reader)  # ty: ignore[call-non-callable]
 			return True
 		except StopIteration:
 			self.finish()

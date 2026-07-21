@@ -95,7 +95,7 @@ class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 		return super(AutoWidthColumnListCtrl, self).OnGetItemText(item, column)
 
 	def OnGetItemText(self, item, column):
-		return self._itemTextCallable(item, column)
+		return self._itemTextCallable(item, column)  # ty: ignore[call-non-callable]
 
 	def sendListItemFocusedEvent(self, index):
 		evt = wx.ListEvent(wx.wxEVT_LIST_ITEM_FOCUSED, self.Id)
@@ -469,7 +469,7 @@ class FeatureFlagCombo(wx.Choice):
 		translatedOptions: typing.OrderedDict[FeatureFlagEnumT, str] = collections.OrderedDict(
 			{
 				value: value.displayString
-				for value in self._optionsEnumClass
+				for value in self._optionsEnumClass  # ty: ignore[not-iterable]
 				if value != self._optionsEnumClass.DEFAULT
 			},
 		)

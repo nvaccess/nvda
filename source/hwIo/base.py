@@ -238,7 +238,7 @@ class IoBase(object):
 		if _isDebug():
 			log.debug("Read: %r" % data)
 		try:
-			self._onReceive(data)
+			self._onReceive(data)  # ty: ignore[call-non-callable]
 		except:  # noqa: E722
 			log.error("", exc_info=True)
 

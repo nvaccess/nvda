@@ -42,7 +42,7 @@ class BasicTextInfo(NVDAObjectTextInfo):
 	def _getTextRange(self, start: int, end: int):
 		storyText = self._getStoryText()
 		converter = textUtils.getOffsetConverter(self.encoding)(storyText)
-		strStart, strEnd = converter.encodedToStrOffsets(start, end)
+		strStart, strEnd = converter.encodedToStrOffsets(start, end)  # ty: ignore[not-iterable]
 		return storyText[strStart:strEnd]
 
 	def copy(self):

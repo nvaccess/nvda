@@ -78,7 +78,7 @@ class TestBridgeTransport(unittest.TestCase):
 		self.assertIsNotNone(nonExcluded, "There must be at least one non-excluded message type")
 		# Simulate an inbound message on transport1.
 		callbacks = self.transport1.inboundHandlers[nonExcluded]
-		for callback in callbacks:
+		for callback in callbacks:  # ty: ignore[not-iterable]
 			callback(a=10, b=20)
 		# Expect that transport2's send() was called with the same message type and payload.
 		self.assertTrue(len(self.transport2.sentMessages) > 0, "No message was forwarded to transport2")
@@ -98,7 +98,7 @@ class TestBridgeTransport(unittest.TestCase):
 		self.transport2.sentMessages.clear()
 		# Simulate an inbound message on transport1 for the excluded type.
 		callbacks = self.transport1.inboundHandlers[excludedMessage]
-		for callback in callbacks:
+		for callback in callbacks:  # ty: ignore[not-iterable]
 			callback(a=99)
 		# Expect that transport2's send() is not called.
 		self.assertEqual(len(self.transport2.sentMessages), 0, "Excluded message was forwarded")

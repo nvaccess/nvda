@@ -171,7 +171,7 @@ def callback(wav, numsamples, event):
 				break
 		if not wav:
 			player.idle()
-			onIndexReached(None)
+			onIndexReached(None)  # ty: ignore[call-non-callable]
 			isSpeaking = False
 			return CALLBACK_CONTINUE_SYNTHESIS
 		prevByte = 0
@@ -185,7 +185,7 @@ def callback(wav, numsamples, event):
 			player.feed(
 				c_void_p(wav + prevByte),
 				size=indexByte - prevByte,
-				onDone=lambda indexNum=indexNum: onIndexReached(indexNum),
+				onDone=lambda indexNum=indexNum: onIndexReached(indexNum),  # ty: ignore[call-non-callable]
 			)
 			prevByte = indexByte
 			if not isSpeaking:

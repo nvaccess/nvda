@@ -99,7 +99,7 @@ def winEventCallback(
 				)
 			return
 		if eventID == winUser.EVENT_OBJECT_DESTROY:
-			_processDestroyWinEvent(window, objectID, childID)
+			_processDestroyWinEvent(window, objectID, childID)  # ty: ignore[call-non-callable]
 			return
 		# Change window objIDs to client objIDs for better reporting of objects
 		if (objectID == 0) and (childID == 0):
