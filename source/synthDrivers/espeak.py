@@ -468,7 +468,7 @@ class SynthDriver(SynthDriver):
 		except:
 			self._voice = None
 			raise
-		self._language = super(SynthDriver, self).language
+		self._language = super(SynthDriver, self).language  # ty: ignore[invalid-super-argument]
 
 	def _onIndexReached(self, index):
 		if index is not None:

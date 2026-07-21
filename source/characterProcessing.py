@@ -109,7 +109,7 @@ class CharacterDescriptions(object):
 		fileName = os.path.join(globalVars.appDir, "locale", locale, "characterDescriptions.dic")
 		if not os.path.isfile(fileName):
 			raise LookupError(fileName)
-		f = codecs.open(fileName, "r", "utf_8_sig", errors="replace")
+		f = codecs.open(fileName, "r", "utf_8_sig", errors="replace")  # ty: ignore[deprecated]
 		for line in f:
 			if line.isspace() or line.startswith("#"):
 				continue
@@ -251,7 +251,7 @@ class SpeechSymbols:
 		:raise IOError: If the file cannot be read.
 		"""
 		self.fileName = fileName
-		with codecs.open(fileName, "r", "utf_8_sig", errors="replace") as f:
+		with codecs.open(fileName, "r", "utf_8_sig", errors="replace") as f:  # ty: ignore[deprecated]
 			handler = None
 			for line in f:
 				if line.isspace() or line.startswith("#"):
@@ -367,7 +367,7 @@ class SpeechSymbols:
 		else:
 			raise ValueError("No file name")
 
-		with codecs.open(fileName, "w", "utf_8_sig", errors="replace") as f:
+		with codecs.open(fileName, "w", "utf_8_sig", errors="replace") as f:  # ty: ignore[deprecated]
 			if self.complexSymbols:
 				f.write("complexSymbols:\r\n")
 				for identifier, pattern in self.complexSymbols.items():

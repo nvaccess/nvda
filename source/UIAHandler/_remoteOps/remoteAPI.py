@@ -282,7 +282,7 @@ class RemoteAPI(builder._RemoteBase):
 		remoteStep = cast(RemoteIntBase, RemoteType).ensureRemote(self.rob, cast(RemoteIntBase, step))
 		counter = remoteStart.copy()
 		with self.whileBlock(lambda: counter < remoteStop):
-			yield counter
+			yield counter  # ty: ignore[invalid-yield]
 			counter += remoteStep
 
 	@remoteContextManager

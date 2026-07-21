@@ -3276,10 +3276,10 @@ class GlobalCommands(ScriptableObject):
 		if hasattr(obj, "devInfo"):
 			log.info(
 				"Developer info for navigator object:\n%s" % "\n".join(obj.devInfo),
-				activateLogViewer=True,
+				activateLogViewer=True,  # ty: ignore[unknown-argument]
 			)
 		else:
-			log.info("No developer info for navigator object", activateLogViewer=True)
+			log.info("No developer info for navigator object", activateLogViewer=True)  # ty: ignore[unknown-argument]
 
 	@script(
 		description=_(

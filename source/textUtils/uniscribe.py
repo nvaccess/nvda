@@ -35,5 +35,5 @@ def splitAtCharacterBoundaries(text: str) -> Generator[str, None, None]:
 	calculatedOffsets = offsets[1 : offsetsCount.value]
 	start = 0
 	for end in calculatedOffsets:
-		yield buffer[start:end]
+		yield buffer[start:end]  # ty: ignore[invalid-yield]
 		start = end

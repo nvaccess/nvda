@@ -628,14 +628,14 @@ class ConfigManager:
 		except Exception as e:
 			if self._shouldLogConfigAtStartup(profileCopy):
 				# We must log at info level here as the logHandler hasn't been set to log at debug level yet.
-				log.info(f"Config before schema update:\n{profileCopy}", redactSecrets=True)
+				log.info(f"Config before schema update:\n{profileCopy}", redactSecrets=True)  # ty: ignore[unknown-argument]
 			raise e
 
 		if self._shouldLogConfigAtStartup(profile):
 			# We must log at info level here as the logHandler hasn't been set to log at debug level yet.
 			log.info(
 				f"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{profile}",
-				redactSecrets=True,
+				redactSecrets=True,  # ty: ignore[unknown-argument]
 			)
 		return profile
 

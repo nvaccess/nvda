@@ -248,7 +248,7 @@ class List(List):
 		return dict(header=header.value, footer=footer.value, state=state.value, groupIndex=groupIndex)
 
 	def _get_name(self):
-		name = super(List, self)._get_name()
+		name = super(List, self)._get_name()  # ty: ignore[invalid-super-argument]
 		if not name:
 			name = super(IAccessible, self)._get_name()
 		return name
@@ -270,7 +270,7 @@ class List(List):
 						groupInfo=info,
 					)
 					return eventHandler.queueEvent("gainFocus", groupingObj)
-		return super(List, self).event_gainFocus()
+		return super(List, self).event_gainFocus()  # ty: ignore[invalid-super-argument]
 
 	def _get_isMultiColumn(self):
 		view = watchdog.cancellableSendMessage(self.windowHandle, LVM_GETVIEW, 0, 0)

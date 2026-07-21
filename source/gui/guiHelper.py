@@ -267,7 +267,7 @@ class LabeledControlHelper(Generic[_LabeledControlT]):
 						self.SetLabelText("")
 					self.Parent.Layout()
 
-		class WxCtrlWithEnableEvnt(wxCtrlClass):
+		class WxCtrlWithEnableEvnt(wxCtrlClass):  # ty: ignore[shadowed-type-variable, unsupported-base]
 			def Enable(self, enable=True):
 				evt = LabeledControlHelper.EnableChanged(isEnabled=enable)
 				wx.PostEvent(self, evt)

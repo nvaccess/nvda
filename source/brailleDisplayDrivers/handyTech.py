@@ -267,7 +267,7 @@ class AtcMixin:
 	READING_POSITION_MAX_JUMP_DURING_SETTLE = 2
 
 	def __init__(self, display: "BrailleDisplayDriver"):
-		super().__init__(display)
+		super().__init__(display)  # ty: ignore[too-many-positional-arguments]
 		self._readingPosition: int | None = None
 		self._lastRefreshTime: float = 0.0
 

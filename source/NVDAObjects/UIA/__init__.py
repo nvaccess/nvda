@@ -143,7 +143,7 @@ class UIATextInfo(textInfos.TextInfo):
 				cacheRequest.addProperty(ID)
 			except COMError:
 				pass
-		UIATextInfo._controlFieldUIACacheRequest = self._controlFieldUIACacheRequest = cacheRequest
+		UIATextInfo._controlFieldUIACacheRequest = self._controlFieldUIACacheRequest = cacheRequest  # ty: ignore[invalid-attribute-access]
 		return cacheRequest
 
 	#: The UI Automation text units (in order of resolution) that should be used when fetching formatting.
@@ -171,7 +171,7 @@ class UIATextInfo(textInfos.TextInfo):
 				UIAHandler.TextPatternRangeEndpoint_End,
 			)
 		try:
-			r = tempRange.findText(text, reverse, not caseSensitive)
+			r = tempRange.findText(text, reverse, not caseSensitive)  # ty: ignore[too-many-positional-arguments]
 		except COMError:
 			r = None
 		if r:

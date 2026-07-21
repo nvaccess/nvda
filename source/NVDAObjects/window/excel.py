@@ -815,7 +815,7 @@ class ExcelBase(Window):
 		if not w:
 			log.debugWarning("Could not get ancestor window (GA_ROOT)")
 			return
-		obj = Window(windowHandle=w, chooseBestAPI=False)
+		obj = Window(windowHandle=w, chooseBestAPI=False)  # ty: ignore[unknown-argument]
 		if not obj:
 			log.debugWarning("Could not instanciate NVDAObject for ancestor window")
 			return
