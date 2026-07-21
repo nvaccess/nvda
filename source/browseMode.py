@@ -1422,9 +1422,7 @@ qn(
 del qn
 
 # Build _browseModeElements dynamically from the registry populated by addQuickNav calls above.
-BrowseModeTreeInterceptor._browseModeElements: tuple[tuple[str, str], ...] = (
-	*BrowseModeTreeInterceptor._browseTouchNavRegistry,
-)
+BrowseModeTreeInterceptor._browseModeElements = (*BrowseModeTreeInterceptor._browseTouchNavRegistry,)
 
 
 class ElementsListDialog(

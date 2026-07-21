@@ -105,7 +105,7 @@ JABStatesToNVDAStates = {
 re_simpleXmlTag = re.compile(r"(\<[^>]+\>)+")
 
 
-def _subHtmlTag(match: re.match) -> str:
+def _subHtmlTag(match: re.Match) -> str:
 	"""Determines whether to replace the tag with a space or to just remove it."""
 	startIndex, endIndex = match.span()
 	return (

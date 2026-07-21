@@ -30,7 +30,7 @@ import braille.regions.properties
 import core
 import nvwave
 import globalVars
-from typing import List, Union
+from typing import List
 from collections.abc import Generator
 import diffHandler
 from config.configFlags import (
@@ -434,7 +434,7 @@ class LiveText(NVDAObject):
 		"""
 		self._event.set()
 
-	def _get_diffAlgo(self) -> Union[diffHandler.prefer_difflib, diffHandler.prefer_dmp]:
+	def _get_diffAlgo(self) -> diffHandler.DiffAlgo:
 		"""
 		This property controls which diffing algorithm should be used by
 		this object. If the object contains a strictly contiguous

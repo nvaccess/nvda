@@ -1065,7 +1065,7 @@ class ConfigManager:
 		data.default = conf.validator.get_default_value(spec)
 		return data
 
-	def getConfigValue(self, *keyPath: *tuple[str, str, *tuple[str, ...]]) -> any:
+	def getConfigValue(self, *keyPath: *tuple[str, str, *tuple[str, ...]]) -> Any:
 		"""
 		Retrieves the value of a configuration key.
 		:param keyPath: The path to the configuration key to retrieve.

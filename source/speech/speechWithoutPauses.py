@@ -148,7 +148,7 @@ class SpeechWithoutPauses:
 		@return: May be an empty sequence
 		"""
 		finalSpeechSequence: SpeechSequence = []  # To be spoken now
-		pendingSpeechSequence: speechSequence = []  # To be saved off for speaking later
+		pendingSpeechSequence: SpeechSequence = []  # To be saved off for speaking later
 		# Scan the given speech and place all completed phrases in finalSpeechSequence to be spoken,
 		# And place the final incomplete phrase in pendingSpeechSequence
 		for index in range(len(speechSequence) - 1, -1, -1):

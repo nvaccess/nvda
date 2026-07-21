@@ -167,7 +167,7 @@ def _getFocusAncestorScript(
 
 def _yieldObjectsForFindScript(
 	gesture: "inputCore.InputGesture",
-) -> Generator[Tuple["NVDAObjects.NVDAObject", Optional[_ScriptFilterT]], None, None]:
+) -> Generator[Tuple[baseObject.ScriptableObject | None, Optional[_ScriptFilterT]], None, None]:
 	"""
 	This generator is used to determine which NVDAObject to perform an input gesture on,
 	in order of priority.

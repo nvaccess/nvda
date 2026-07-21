@@ -172,7 +172,7 @@ def toggleBooleanValue(
 def toggleIntegerValue(
 	configSection: str,
 	configKey: str,
-	enumClass: "DisplayStringEnum",
+	enumClass: type["DisplayStringEnum"],
 	messageTemplate: str,
 ) -> None:
 	"""

@@ -116,8 +116,8 @@ class AddonDetails(
 			),
 		)
 		panelWidth = -1  # maximize width
-		descriptionMinSize = wx.Size(self.scaleSize((panelWidth, 100)))
-		descriptionMaxSize = wx.Size(self.scaleSize((panelWidth, 800)))
+		descriptionMinSize = wx.Size(*self.scaleSize((panelWidth, 100)))
+		descriptionMaxSize = wx.Size(*self.scaleSize((panelWidth, 800)))
 		self.descriptionTextCtrl.SetMinSize(descriptionMinSize)
 		self.descriptionTextCtrl.SetMaxSize(descriptionMaxSize)
 		self.contents.Add(self.descriptionTextCtrl, flag=wx.EXPAND)

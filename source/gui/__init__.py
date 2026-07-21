@@ -303,8 +303,8 @@ class MainFrame(wx.Frame):
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onExecuteUpdateCommand(self, evt):
-		if updateCheck and updateCheck.isPendingUpdate():
-			destPath, version, apiVersion, backCompatToAPIVersion = updateCheck.getPendingUpdate()
+		if updateCheck and (pendingUpdate := updateCheck.getPendingUpdate()):
+			destPath, version, apiVersion, backCompatToAPIVersion = pendingUpdate
 			from addonHandler import getIncompatibleAddons
 
 			if any(getIncompatibleAddons(apiVersion, backCompatToAPIVersion)):

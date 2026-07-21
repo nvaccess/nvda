@@ -416,7 +416,7 @@ class SpeechSymbols:
 		return "\t".join(fields)
 
 
-def _getSpeechSymbolsForLocale(locale: str) -> tuple[SpeechSymbols, SpeechSymbols, ...]:
+def _getSpeechSymbolsForLocale(locale: str) -> tuple[SpeechSymbols, ...]:
 	symbols: list[SpeechSymbols] = []
 	for definition in _symbolDictionaryDefinitions:
 		if not definition.enabled:
@@ -440,7 +440,7 @@ class SpeechSymbolProcessor:
 	"""
 
 	#: Caches symbol data for locales.
-	localeSymbols: LocaleDataMap[tuple[SpeechSymbols, SpeechSymbols, ...]] = LocaleDataMap(
+	localeSymbols: LocaleDataMap[tuple[SpeechSymbols, ...]] = LocaleDataMap(
 		_getSpeechSymbolsForLocale,
 	)
 	sources: list[SpeechSymbols]

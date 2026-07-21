@@ -779,9 +779,9 @@ class IAccessible(Window):
 		windowHandle: Optional[int] = None,
 		IAccessibleObject: Optional[Union[IUnknown, IA.IAccessible, IA2.IAccessible2]] = None,
 		IAccessibleChildID: Optional[int] = None,
-		event_windowHandle: Optional = None,
-		event_objectID: Optional = None,
-		event_childID: Optional = None,
+		event_windowHandle: int | None = None,
+		event_objectID: int | None = None,
+		event_childID: int | None = None,
 	):
 		"""
 		@param windowHandle: the window handle, if known

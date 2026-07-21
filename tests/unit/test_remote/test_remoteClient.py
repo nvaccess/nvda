@@ -63,7 +63,7 @@ class FakeSession:
 
 	def getConnectionInfo(self):
 		class FakeConnectionInfo:
-			def getURLToConnect(_):  # type: ignore
+			def getURLToConnect(_):  # pyright: ignore[reportSelfClsParameterName]
 				return self.url
 
 		return FakeConnectionInfo()

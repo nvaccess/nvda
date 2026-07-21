@@ -509,6 +509,9 @@ def _convertTypingEcho(profile: ConfigObj, key: str) -> None:
 
 def upgradeConfigFrom_15_to_16(profile: ConfigObj) -> None:
 	"""Migrate remote.ini settings into the main config."""
+	if profile.filename is None:
+		log.debug("Profile has no filename, no action taken.")
+		return
 	remoteIniPath = os.path.join(os.path.dirname(profile.filename), "remote.ini")
 	if not os.path.isfile(remoteIniPath):
 		log.debug(f"No remote.ini found, no action taken. Checked {remoteIniPath}")

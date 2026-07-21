@@ -143,12 +143,12 @@ class NVDASpyLib:
 		if not self.fakeTranslations:
 
 			class Translation_Fake(gettext.NullTranslations):
-				originalTranslationFunction: Optional
+				originalTranslationFunction: typing.Callable | None
 				translationResults: typing.Dict[str, str]
 
 				def __init__(
 					self,
-					originalTranslationFunction: Optional,
+					originalTranslationFunction: typing.Callable | None,
 				):
 					self.originalTranslationFunction = originalTranslationFunction
 					self.translationResults = {}

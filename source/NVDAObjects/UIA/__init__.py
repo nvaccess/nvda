@@ -354,7 +354,7 @@ class UIATextInfo(textInfos.TextInfo):
 		textRange: IUIAutomationTextRangeT,
 		formatConfig: Dict,
 		ignoreMixedValues: bool = False,
-	) -> textInfos.FormatField:
+	) -> textInfos.FieldCommand:
 		"""
 		Fetches formatting for the given UI Automation Text range.
 		@param textRange: the text range whos formatting should be fetched.
@@ -656,8 +656,8 @@ class UIATextInfo(textInfos.TextInfo):
 		self,
 		textRange: IUIAutomationTextRangeT,
 		formatConfig: Dict,
-		UIAFormatUnits: Optional[List[int]] = None,
-	) -> Generator[textInfos.FieldCommand, None, None]:
+		UIAFormatUnits: List[int] | None = None,
+	) -> Generator[textInfos.FieldCommand | str, None, None]:
 		"""
 		Yields format fields and text for the given UI Automation text range, split up by the first available UI Automation text unit that does not result in mixed attribute values.
 		@param textRange: the UI Automation text range to walk.

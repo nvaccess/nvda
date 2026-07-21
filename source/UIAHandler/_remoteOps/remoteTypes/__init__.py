@@ -115,7 +115,7 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 			rob.getDefaultInstructionList().addComment(
 				f"Using cached {cachedRemoteObj} for constant value {repr(obj)}",
 			)
-			return cast(RemoteType, cachedRemoteObj)
+			return cachedRemoteObj
 		with rob.overrideDefaultSection("const"):
 			remoteObj = RemoteType.createNew(rob, obj, const=True)
 		rob.getDefaultInstructionList().addComment(

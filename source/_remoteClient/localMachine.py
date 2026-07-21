@@ -64,10 +64,10 @@ class SoftwareSASGeneration(IntEnum):
 	BOTH = 3
 	"""both services and Ease of Access applications can simulate the SAS."""
 
-	KEY: int = nonmember(winreg.HKEY_LOCAL_MACHINE)
-	SUBKEY: str = nonmember(RegistryKey.SYSTEM_POLICIES.value)
-	VALUE_NAME: str = nonmember("SoftwareSASGeneration")
-	DISPLAY_PATH: str = nonmember(
+	KEY = nonmember(winreg.HKEY_LOCAL_MACHINE)
+	SUBKEY = nonmember(RegistryKey.SYSTEM_POLICIES.value)
+	VALUE_NAME = nonmember("SoftwareSASGeneration")
+	DISPLAY_PATH = nonmember(
 		rf"HKLM\{RegistryKey.SYSTEM_POLICIES.value}!SoftwareSASGeneration",
 	)
 

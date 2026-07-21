@@ -8,7 +8,6 @@ from __future__ import annotations
 from abc import ABCMeta, abstractmethod
 from typing import (
 	Self,
-	ClassVar,
 	Any,
 	Iterable,
 )
@@ -106,7 +105,7 @@ class Operand(_RemoteBase):
 
 
 class InstructionBase(metaclass=ABCMeta):
-	opCode: ClassVar[lowLevel.InstructionType]
+	opCode: lowLevel.InstructionType
 
 	@property
 	@abstractmethod

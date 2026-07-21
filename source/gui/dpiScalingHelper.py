@@ -1,14 +1,22 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018-2023 NV Access Limited
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-from typing import Optional, Any, Callable, Tuple, Union
+# Copyright (C) 2018-2026 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+from typing import Optional, Any, Callable, Tuple, Union, overload
 
 
 _FloatInt = Union[int, float]
 _Size = Union[Tuple[_FloatInt, _FloatInt], _FloatInt]
 _ScaledSize = Union[Tuple[int, int], int]
+
+
+@overload
+def scaleSize(scaleFactor: float, size: tuple[_FloatInt, _FloatInt]) -> tuple[int, int]: ...
+
+
+@overload
+def scaleSize(scaleFactor: float, size: _FloatInt) -> int: ...
 
 
 def scaleSize(scaleFactor: float, size: _Size) -> _ScaledSize:
@@ -38,6 +46,12 @@ class DpiScalingHelperMixin(object):
 	def __init__(self, windowHandle: int):
 		self._scaleFactor = getScaleFactor(windowHandle)
 
+	@overload
+	def scaleSize(self, size: tuple[_FloatInt, _FloatInt]) -> tuple[int, int]: ...
+
+	@overload
+	def scaleSize(self, size: _FloatInt) -> int: ...
+
 	def scaleSize(self, size: _Size) -> _ScaledSize:
 		assert getattr(self, "_scaleFactor", None)
 		return scaleSize(self._scaleFactor, size)
@@ -50,6 +64,12 @@ class DpiScalingHelperMixinWithoutInit:
 
 	GetHandle: Callable[[], Any]  # Should be provided by wx.Window
 	_scaleFactor: Optional[int] = None
+
+	@overload
+	def scaleSize(self, size: tuple[_FloatInt, _FloatInt]) -> tuple[int, int]: ...
+
+	@overload
+	def scaleSize(self, size: _FloatInt) -> int: ...
 
 	def scaleSize(self, size: _Size) -> _ScaledSize:
 		if self._scaleFactor is None:

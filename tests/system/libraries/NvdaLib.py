@@ -96,7 +96,7 @@ class _NvdaLocationData:
 		elif self.whichNVDA == "source":
 			return None  # Py2exe not used for source.
 
-	def findInstalledNVDAPath(self) -> _Optional[str]:
+	def findInstalledNVDAPath(self) -> str:
 		NVDAFilePath = _pJoin(_expandvars("%PROGRAMFILES%"), "nvda", "nvda.exe")
 		legacyNVDAFilePath = _pJoin(_expandvars("%PROGRAMFILES%"), "NVDA", "nvda.exe")
 		exeErrorMsg = f"Unable to find installed NVDA exe. Paths tried: {NVDAFilePath}, {legacyNVDAFilePath}"

@@ -96,7 +96,7 @@ modes = [
 _currentMode = 0
 
 
-def getPositionForCurrentMode(obj: NVDAObject) -> Union[textInfos.TextInfo, ScriptableObject]:
+def getPositionForCurrentMode(obj: NVDAObject) -> tuple[textInfos.TextInfo, ScriptableObject]:
 	"""
 	Fetches a TextInfo instance suitable for reviewing the text in or around the given object, according to the current review mode.
 	@param obj: the NVDAObject to review
