@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2025 NV Access Limited, Joseph Lee, Jakub Lukowicz, Cyrille Bougot, Leonard de Ruijter
+# Copyright (C) 2016-2026 NV Access Limited, Joseph Lee, Jakub Lukowicz, Cyrille Bougot, Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -353,7 +353,65 @@ class WordDocumentTextInfo(UIATextInfo):
 		info.expand(textInfos.UNIT_CHARACTER)
 		return info._rangeObj.getText(-1) == "\u0007"
 
+	def _moveBySentenceRemote(self, unitCount: int) -> int:
+		"""Move this range by sentence via Word's native UIA remote ops extension.
+		On success, mutates :attr:`_rangeObj` to the moved range.
+		:raises NotImplementedError: if the extension isn't available.
+		:return: the actual number of sentences moved, which may be less than unitCount
+			if a document boundary was hit.
+		"""
+		if not UIARemote.isSupported():
+			raise NotImplementedError("UIA remote operations are not supported")
+		result = UIARemote.msWord_textRange_moveBySentence(self.obj.UIAElement, self._rangeObj, unitCount)
+		if result is None:
+			raise NotImplementedError("Word does not support sentence navigation in this document")
+		newRange, actualMoved = result
+		self._rangeObj = newRange
+		return actualMoved
+
+	def _expandToSentenceRemote(self) -> None:
+		"""Expand this range to its enclosing sentence via Word's native UIA remote ops extension.
+		On success, mutates :attr:`_rangeObj` to the expanded range.
+		:raises NotImplementedError: if the extension isn't available.
+		"""
+		if not UIARemote.isSupported():
+			raise NotImplementedError("UIA remote operations are not supported")
+		newRange = UIARemote.msWord_textRange_expandToEnclosingSentence(self.obj.UIAElement, self._rangeObj)
+		if newRange is None:
+			raise NotImplementedError("Word does not support sentence navigation in this document")
+		self._rangeObj = newRange
+
+	def _moveEndpointBySentenceRemote(self, endPoint: str, unitCount: int) -> int:
+		"""Move one endpoint of this range by sentence via Word's native UIA remote ops extension.
+		On success, mutates :attr:`_rangeObj` to the range with the endpoint moved.
+		:raises NotImplementedError: if the extension isn't available.
+		:return: the actual number of sentences moved, which may be less than unitCount
+			if a document boundary was hit.
+		"""
+		if not UIARemote.isSupported():
+			raise NotImplementedError("UIA remote operations are not supported")
+		uiaEndpoint = (
+			UIAHandler.TextPatternRangeEndpoint_Start
+			if endPoint == "start"
+			else UIAHandler.TextPatternRangeEndpoint_End
+		)
+		result = UIARemote.msWord_textRange_moveEndpointBySentence(
+			self.obj.UIAElement,
+			self._rangeObj,
+			uiaEndpoint,
+			unitCount,
+		)
+		if result is None:
+			raise NotImplementedError("Word does not support sentence navigation in this document")
+		newRange, actualMoved = result
+		self._rangeObj = newRange
+		return actualMoved
+
 	def move(self, unit, direction, endPoint=None):
+		if unit == textInfos.UNIT_SENTENCE:
+			if endPoint is None:
+				return self._moveBySentenceRemote(direction)
+			return self._moveEndpointBySentenceRemote(endPoint, direction)
 		if endPoint is None:
 			res = super(WordDocumentTextInfo, self).move(unit, direction)
 			if res == 0:
@@ -366,12 +424,18 @@ class WordDocumentTextInfo(UIATextInfo):
 		return super(WordDocumentTextInfo, self).move(unit, direction, endPoint)
 
 	def expand(self, unit):
-		if unit == textInfos.UNIT_CELL:
-			cell = self.obj._getTableCellCoordsCached(self, axis=None)
-			info = self.obj._getTableCellAt(cell.tableID, self, cell.row, cell.col)
-			self.start = info.start
-			self.end = info.end
-			return
+		match unit:
+			case textInfos.UNIT_CELL:
+				cell = self.obj._getTableCellCoordsCached(self, axis=None)
+				info = self.obj._getTableCellAt(cell.tableID, self, cell.row, cell.col)
+				self.start = info.start
+				self.end = info.end
+				return
+			case textInfos.UNIT_SENTENCE:
+				self._expandToSentenceRemote()
+				return
+			case _:
+				pass
 		super(WordDocumentTextInfo, self).expand(unit)
 		# #7970: MS Word refuses to expand to line when on the final line and it is blank.
 		# This among other things causes a newly inserted bullet not to be spoken or brailled.
@@ -774,36 +838,32 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 		if isScriptWaiting():
 			return
 
-		info = None
-
 		# Prefer UIA remote sentence navigation when available.
-		if UIARemote.isSupported():
-			try:
-				caretInfo = self.makeTextInfo(textInfos.POSITION_CARET)
-				sentenceRange = UIARemote.msWord_moveTextRangeBySentence(
-					self.UIAElement,
-					caretInfo._rangeObj,
-					direction,
-				)
-			except Exception:
-				log.debugWarning(
-					"Failed to fetch caret text range for remote sentence navigation",
-					exc_info=True,
-				)
-			else:
-				if sentenceRange is not None:
-					info = WordDocumentTextInfo(self, textInfos.POSITION_CARET, _rangeObj=sentenceRange)
-					info.updateCaret()
+		caretInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+		info = None
+		try:
+			caretInfo.move(textInfos.UNIT_SENTENCE, direction)
+			caretInfo.updateCaret()
+		except NotImplementedError:
+			pass
+		except Exception:
+			log.debugWarning(
+				"Failed to move caret by sentence via remote sentence navigation",
+				exc_info=True,
+			)
+		else:
+			info = caretInfo
+			info.expand(textInfos.UNIT_SENTENCE)
 
 		if info is None:
-			if not self.WinwordSelectionObject:
+			if self.WinwordSelectionObject:
+				info = self._moveBySentenceWithObjectModel(direction)
+			else:
 				# Legacy object model not available.
 				# Translators: a message when navigating by sentence is unavailable in MS Word
 				ui.message(_("Navigating by sentence not supported in this document"))
 				gesture.send()
 				return
-			else:
-				info = self._moveBySentenceWithObjectModel(direction)
 
 		# Speak the sentence moved to
 		speech.speakTextInfo(
