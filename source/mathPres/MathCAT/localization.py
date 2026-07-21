@@ -9,7 +9,7 @@ import glob
 import os
 from zipfile import ZipFile
 
-import libmathcat_py as libmathcat
+import libmathcat_py as libmathcat  # ty: ignore[unresolved-import]
 import wx
 
 from languageHandler import getLanguageDescription

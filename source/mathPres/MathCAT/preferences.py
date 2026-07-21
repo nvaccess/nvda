@@ -13,7 +13,7 @@ from NVDAState import ReadPaths
 from mathPres.MathCAT import localization
 from utils.displayString import DisplayStringStrEnum
 
-import libmathcat_py as libmathcat
+import libmathcat_py as libmathcat  # ty: ignore[unresolved-import]
 from .rulesUtils import getRulesFiles
 
 
