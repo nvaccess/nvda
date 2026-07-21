@@ -14,7 +14,6 @@ from logHandler import log
 from NVDAState import _TrackNVDAInitialization
 import wx
 import ui
-import speech
 import screenCurtain
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
@@ -34,10 +33,12 @@ from .config import (
 	getFilter,
 	isTrueCentered,
 	setZoomLevel,
+	setEnabled,
 	ZoomLevel,
 	_isDebug,
 )
 from .utils.focusManager import FocusManager
+from .utils.errorHandling import MagnifierStartError
 from .utils.mouseHook import MagnifierMouseHook
 
 
@@ -177,18 +178,23 @@ class Magnifier:
 
 		Returns True if the magnifier should not start.
 		At startup, defers silently so the magnifier auto-restarts when the screen curtain is disabled.
+
+		:raises MagnifierStartError: If the screen curtain is active and NVDA startup is complete,
+			so the caller can present the failure (spoken for keyboard commands, or in a message box
+			for GUI actions).
 		"""
 		if not (screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled):
 			return False
 
 		if _TrackNVDAInitialization.isInitializationComplete():
 			log.debug("Screen curtain is active, cannot start magnifier")
-			message = pgettext(
-				"magnifier",
-				# Translators: Message when trying to enable magnifier while screen curtain is active
-				"Cannot enable magnifier. Please disable screen curtain first.",
+			raise MagnifierStartError(
+				pgettext(
+					"magnifier",
+					# Translators: Message when trying to enable magnifier while screen curtain is active
+					"Cannot enable magnifier. Please disable screen curtain first.",
+				),
 			)
-			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
 		else:
 			self._screenCurtainIsActive = True
 		return True
@@ -342,6 +348,7 @@ class Magnifier:
 		Handles re-enabling magnifier if it was active before screen curtain.
 		"""
 		if self._screenCurtainIsActive:
+			self._screenCurtainIsActive = False
 			ui.message(
 				pgettext(
 					"magnifier",
@@ -349,9 +356,17 @@ class Magnifier:
 					"Re-enabling magnifier",
 				),
 			)
-			self._startMagnifier()
+			try:
+				self._startMagnifier()
+			except MagnifierStartError as e:
+				# Another magnifier application may have grabbed the API while screen curtain was on.
+				ui.message(e.message)
+				return
+			finally:
+				# Keep config in sync with the real active state, as start() does, so the settings
+				# checkbox does not stay checked when the restart failed.
+				setEnabled(self._isActive)
 			self._updateMagnifier()
-			self._screenCurtainIsActive = False
 
 	def _zoom(self, direction: Direction) -> None:
 		"""

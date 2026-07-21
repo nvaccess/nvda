@@ -5,6 +5,7 @@
 
 from _magnifier.config import ZoomLevel
 from _magnifier.magnifier import Magnifier
+from _magnifier.utils.errorHandling import MagnifierStartError
 from _magnifier.utils.types import Filter, Direction, Coordinates, MagnifierAction
 from comtypes import COMError
 import unittest
@@ -555,10 +556,10 @@ class TestMagnifier(_TestMagnifier):
 			self.assertEqual(self.magnifier.currentCoordinates, validCoords)
 
 	def testStartBlockedByScreenCurtain(self):
-		"""When screen curtain is active, _startMagnifier must not set _isActive."""
+		"""After startup, screen curtain active makes _startMagnifier raise and not set _isActive."""
 		self._mockScreenCurtain(enabled=True)
 		with patch("NVDAState._TrackNVDAInitialization.isInitializationComplete", return_value=True):
-			with patch("_magnifier.magnifier.ui.message"):
+			with self.assertRaises(MagnifierStartError):
 				self.magnifier._startMagnifier()
 
 		self.assertFalse(self.magnifier._isActive)

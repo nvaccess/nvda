@@ -14,6 +14,7 @@ from logHandler import log
 
 from .config import getMagnifiedView, getEnabled, setEnabled
 from .utils.types import MagnifiedView
+from .utils.errorHandling import MagnifierStartError
 
 if TYPE_CHECKING:
 	from .magnifier import Magnifier
@@ -79,7 +80,13 @@ def initialize() -> None:
 	magnifiedView = getMagnifiedView()
 	_setMagnifiedView(magnifiedView)
 	if getEnabled():
-		start()
+		try:
+			start()
+		except MagnifierStartError:
+			# The magnifier was enabled in config but cannot start now (e.g. another magnifier
+			# application is already running). start() has updated config to reflect the real
+			# state; there is no GUI at startup, so just log it.
+			log.warning("Magnifier is enabled in config but failed to start.", exc_info=True)
 
 
 def terminate() -> None:
@@ -95,11 +102,21 @@ def terminate() -> None:
 
 
 def start() -> None:
+	"""Start the magnifier.
+
+	Config is always updated to reflect the real active state, whether or not the start succeeds.
+
+	:raises MagnifierStartError: If the magnifier cannot be started (e.g. another magnifier
+		application is already running, or screen curtain is active). The exception carries a
+		user-facing message so the caller can present it (spoken or in a message box).
+	"""
 	if _magnifier is None:
 		log.error("Attempted to start magnifier, but it is not initialized.")
 		return
-	_magnifier._startMagnifier()
-	setEnabled(isActive())
+	try:
+		_magnifier._startMagnifier()
+	finally:
+		setEnabled(isActive())
 
 
 def stop(persist: bool = True) -> None:
