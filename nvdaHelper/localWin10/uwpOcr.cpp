@@ -16,11 +16,14 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Media.Ocr.h>
 #include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Windows.Foundation.Metadata.h>
 #include <winrt/Windows.Globalization.h>
 #include <winrt/Windows.Graphics.Imaging.h>
 #include <winrt/Windows.Data.Json.h>
 #include <windows.h>
+#include <algorithm>
 #include <cstring>
+#include <vector>
 #include <common/log.h>
 #include "uwpOcr.h"
 
@@ -29,9 +32,29 @@ using namespace winrt;
 using namespace winrt::Windows::Storage::Streams;
 using namespace winrt::Windows::Media::Ocr;
 using namespace winrt::Windows::Foundation::Collections;
+using winrt::Windows::Foundation::Metadata::ApiInformation;
 using namespace winrt::Windows::Globalization;
 using namespace winrt::Windows::Graphics::Imaging;
 using namespace winrt::Windows::Data::Json;
+
+bool isLeftToRightWord(OcrWord const& word) {
+	auto text = word.Text();
+	vector<WORD> characterTypes(text.size());
+	if (!GetStringTypeW(CT_CTYPE2, text.c_str(), static_cast<int>(text.size()), characterTypes.data())) {
+		return false;
+	}
+	for (auto const characterType : characterTypes) {
+		if (characterType & C2_RIGHTTOLEFT) {
+			return false;
+		}
+	}
+	for (auto const characterType : characterTypes) {
+		if (characterType & (C2_LEFTTORIGHT | C2_EUROPENUMBER | C2_ARABICNUMBER)) {
+			return true;
+		}
+	}
+	return false;
+}
 
 UwpOcr::UwpOcr(OcrEngine const& engine, uwpOcr_Callback callback) : engine(engine), callback(callback) { }
 
@@ -60,12 +83,46 @@ fire_and_forget UwpOcr::recognize(SoftwareBitmap bitmap) {
 		auto result = co_await engine.RecognizeAsync(bitmap);
 		auto lines = result.Lines();
 		JsonArray jLines {};
+		auto language = engine.RecognizerLanguage();
+		const bool isLanguageLayoutDirectionSupported = ApiInformation::IsApiContractPresent(
+			hstring { L"Windows.Foundation.UniversalApiContract" },
+			6
+		);
+		const auto script = language.Script();
+		const bool isRtl = isLanguageLayoutDirectionSupported
+			? language.LayoutDirection() == LanguageLayoutDirection::Rtl
+			: (script == L"Arab" || script == L"Hebr");
 
 		for (auto const& line : lines) {
 			auto words = line.Words();
+			vector<OcrWord> wordsInReadingOrder { words.begin(), words.end() };
+			if (isRtl) {
+				// Windows OCR returns words in left-to-right coordinate order, including for RTL languages.
+				// Sort by the horizontal position so speech and review navigation follow RTL reading order.
+				stable_sort(
+					wordsInReadingOrder.begin(),
+					wordsInReadingOrder.end(),
+					[](OcrWord const& first, OcrWord const& second) {
+						return first.BoundingRect().X > second.BoundingRect().X;
+					}
+				);
+				// Preserve the logical order of embedded LTR runs after reversing the RTL line.
+				for (auto runStart = wordsInReadingOrder.begin(); runStart != wordsInReadingOrder.end();) {
+					if (!isLeftToRightWord(*runStart)) {
+						++runStart;
+						continue;
+					}
+					auto runEnd = runStart + 1;
+					while (runEnd != wordsInReadingOrder.end() && isLeftToRightWord(*runEnd)) {
+						++runEnd;
+					}
+					reverse(runStart, runEnd);
+					runStart = runEnd;
+				}
+			}
 			JsonArray jWords {};
 
-			for (auto const& word : words) {
+			for (auto const& word : wordsInReadingOrder) {
 				JsonObject jWord {};
 
 				auto rect = word.BoundingRect();
