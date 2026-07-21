@@ -9,7 +9,6 @@ from typing import (
 	Iterator,
 	List,
 	Optional,
-	Tuple,
 )
 import time
 import weakref
@@ -167,7 +166,7 @@ def _getFocusAncestorScript(
 
 def _yieldObjectsForFindScript(
 	gesture: "inputCore.InputGesture",
-) -> Generator[Tuple[baseObject.ScriptableObject | None, Optional[_ScriptFilterT]], None, None]:
+) -> Generator[tuple[baseObject.ScriptableObject | None, _ScriptFilterT | None], None, None]:
 	"""
 	This generator is used to determine which NVDAObject to perform an input gesture on,
 	in order of priority.

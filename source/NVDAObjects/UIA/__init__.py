@@ -10,7 +10,6 @@ from __future__ import annotations
 import typing
 from typing import (
 	Generator,
-	List,
 	Optional,
 	Dict,
 	Tuple,
@@ -171,7 +170,7 @@ class UIATextInfo(textInfos.TextInfo):
 				UIAHandler.TextPatternRangeEndpoint_End,
 			)
 		try:
-			r = tempRange.findText(text, reverse, not caseSensitive)  # ty: ignore[too-many-positional-arguments]
+			r = tempRange.findText(text, reverse, not caseSensitive)
 		except COMError:
 			r = None
 		if r:
@@ -656,7 +655,7 @@ class UIATextInfo(textInfos.TextInfo):
 		self,
 		textRange: IUIAutomationTextRangeT,
 		formatConfig: Dict,
-		UIAFormatUnits: List[int] | None = None,
+		UIAFormatUnits: list[int] | None = None,
 	) -> Generator[textInfos.FieldCommand | str, None, None]:
 		"""
 		Yields format fields and text for the given UI Automation text range, split up by the first available UI Automation text unit that does not result in mixed attribute values.

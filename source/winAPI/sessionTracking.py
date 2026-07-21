@@ -22,8 +22,8 @@ from ctypes.wintypes import (
 	LPWSTR,
 )
 import enum
+from collections.abc import Generator
 from typing import (
-	Generator,
 	Optional,
 )
 
@@ -205,7 +205,7 @@ def WTSCurrentSessionInfoEx() -> Generator[_WTS_INFO_POINTER_T, None, None]:  # 
 		)
 
 
-def _getCurrentSessionInfoEx() -> Optional[_WTS_INFO_POINTER_T]:  # ty: ignore[invalid-type-form]
+def _getCurrentSessionInfoEx() -> _WTS_INFO_POINTER_T | None:  # ty: ignore[invalid-type-form]
 	"""
 	Gets the WTSINFOEXW for the current server/session or raises a RuntimeError
 	on failure.

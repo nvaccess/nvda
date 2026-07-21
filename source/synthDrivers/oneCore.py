@@ -6,15 +6,12 @@
 """Synth driver for Windows OneCore voices."""
 
 import os
+from collections.abc import Callable
 from typing import (
 	Any,
-	Callable,
 	Generator,
-	List,
 	Optional,
 	Set,
-	Tuple,
-	Union,
 )
 from collections import OrderedDict
 import ctypes
@@ -256,7 +253,7 @@ class OneCoreSynthDriver(SynthDriver):
 		self._dll.ocSpeech_getCurrentVoiceId.restype = ctypes.c_wchar_p
 		self._player = None
 		# Initialize state.
-		self._queuedSpeech: List[Union[str, Tuple[Callable[[ctypes.POINTER, float], None], float]]] = []  # ty: ignore[invalid-type-form]
+		self._queuedSpeech: list[str | tuple[Callable[[ctypes.POINTER, float], None], float]] = []  # ty: ignore[invalid-type-form]
 
 		self._wasCancelled = False
 		self._isProcessing = False

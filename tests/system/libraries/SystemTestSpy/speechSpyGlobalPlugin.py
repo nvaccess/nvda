@@ -11,6 +11,7 @@ of a package.
 
 import gettext
 import typing
+from collections.abc import Callable
 from typing import (
 	Optional,
 	Tuple,
@@ -143,12 +144,12 @@ class NVDASpyLib:
 		if not self.fakeTranslations:
 
 			class Translation_Fake(gettext.NullTranslations):
-				originalTranslationFunction: typing.Callable | None
+				originalTranslationFunction: Callable | None
 				translationResults: typing.Dict[str, str]
 
 				def __init__(
 					self,
-					originalTranslationFunction: typing.Callable | None,
+					originalTranslationFunction: Callable | None,
 				):
 					self.originalTranslationFunction = originalTranslationFunction
 					self.translationResults = {}

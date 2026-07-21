@@ -9,6 +9,7 @@ import ctypes.wintypes
 import threading
 import winKernel
 import typing
+from collections.abc import Callable
 from logHandler import log
 from serial.win32 import OVERLAPPED, LPOVERLAPPED
 from extensionPoints.util import AnnotatableWeakref, BoundMethodWeakref
@@ -26,7 +27,7 @@ __getattr__ = _deprecate.handleDeprecations(
 ApcT = typing.Callable[[int], None]
 ApcIdT = int
 OverlappedStructAddressT = int
-CompletionRoutineT = typing.Callable[[int, int, LPOVERLAPPED], None]  # ty: ignore[invalid-type-form]
+CompletionRoutineT = Callable[[int, int, LPOVERLAPPED], None]  # ty: ignore[invalid-type-form]
 ApcStoreT = typing.Dict[
 	ApcIdT,
 	typing.Tuple[
