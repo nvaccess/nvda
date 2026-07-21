@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2022 NV Access Limited, Christopher Toth, Babbage B.V., Julien Cochuyt
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2007-2026 NV Access Limited, Christopher Toth, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Contains the base classes that many of NVDA's classes such as NVDAObjects, virtualBuffers, appModules, synthDrivers inherit from. These base classes provide such things as auto properties, and methods and properties for scripting and key binding."""
 
@@ -15,7 +15,7 @@ from typing import (
 import weakref
 import garbageHandler
 from logHandler import log
-from abc import ABCMeta, abstractproperty
+from abc import ABCMeta, abstractmethod
 
 GetterReturnT = Any
 GetterMethodT = Callable[["AutoPropertyObject"], GetterReturnT]
@@ -39,10 +39,10 @@ class Getter(object):
 		return self.fget(instance)
 
 	def setter(self, func):
-		return (abstractproperty if self._abstract else property)(fget=self.fget, fset=func)
+		return property(fget=abstractmethod(self.fget) if self._abstract else self.fget, fset=func)
 
 	def deleter(self, func):
-		return (abstractproperty if self._abstract else property)(fget=self.fget, fdel=func)
+		return property(fget=abstractmethod(self.fget) if self._abstract else self.fget, fdel=func)
 
 
 class CachingGetter(Getter):
@@ -108,7 +108,10 @@ class AutoPropertyType(ABCMeta):
 			if g and not (s or d):
 				attr = (CachingGetter if cache else Getter)(g, abstract)
 			else:
-				attr = (abstractproperty if abstract else property)(fget=g, fset=s, fdel=d)
+				if abstract:
+					# property derives __isabstractmethod__ from its accessor functions.
+					g, s, d = (abstractmethod(f) if f else f for f in (g, s, d))
+				attr = property(fget=g, fset=s, fdel=d)
 			if abstract:
 				newAbstractProps.add(x)
 			elif x in self.__abstractmethods__:

@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2021-2023 NV Access Limited, Cyrille Bougot
 
-from abc import ABC, ABCMeta, abstractproperty
+from abc import ABC, ABCMeta, abstractmethod
 from enum import (
 	Enum,
 	EnumMeta,
@@ -47,7 +47,8 @@ class _DisplayStringEnumMixin(ABC):
 	```
 	"""
 
-	@abstractproperty
+	@property
+	@abstractmethod
 	def _displayStringLabels(self) -> dict[Self, str]:
 		"""
 		Specify a dictionary which takes members of the Enum and returns the translated display string.

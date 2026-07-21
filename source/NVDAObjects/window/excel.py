@@ -1549,7 +1549,8 @@ class FormulaExcelCellInfoQuickNavItem(ExcelCellInfoQuickNavItem):
 class ExcelCellInfoQuicknavIterator(object, metaclass=abc.ABCMeta):
 	cellInfoFlags = NVCELLINFOFLAG_ADDRESS | NVCELLINFOFLAG_COORDS
 
-	@abc.abstractproperty
+	@property
+	@abc.abstractmethod
 	def QuickNavItemClass(self):
 		"""The particular L{ExcelCellInfoQuicknavItem} subclass for objects that  should be emitted from the L{iterate} method."""
 		pass

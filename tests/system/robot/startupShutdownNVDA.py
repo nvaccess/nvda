@@ -214,7 +214,7 @@ def _attemptFileRemove(filePath: str) -> bool:
 
 
 def _ensureRestartWithCrashDump(crashFunction: _Callable[[], None]):
-	startTime = _datetime.utcnow()
+	startTime = _datetime.now()
 	spy = _nvdaLib.getSpyLib()
 	spy.wait_for_specific_speech("Welcome to NVDA")  # ensure the dialog is present
 	spy.emulateKeyPress("enter")  # close the dialog so we can check for it after the crash

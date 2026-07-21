@@ -459,7 +459,7 @@ class TCPTransport(Transport):
 		ctx = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
 		if insecure:
 			ctx.verify_mode = ssl.CERT_NONE
-			log.warn(f"Skipping certificate verification for {host}:{port}")
+			log.warning(f"Skipping certificate verification for {host}:{port}")
 		ctx.check_hostname = not insecure
 		ctx.load_default_certs()
 
@@ -538,12 +538,12 @@ class TCPTransport(Transport):
 		if configuration._isDebugForRemoteClient():
 			log.debug(f"Received message: {obj!r}")
 		if "type" not in obj:
-			log.warn(f"Received message without type: {obj!r}")
+			log.warning(f"Received message without type: {obj!r}")
 			return
 		try:
 			messageType = RemoteMessageType(obj["type"])
 		except ValueError:
-			log.warn(f"Received message with invalid type: {obj!r}")
+			log.warning(f"Received message with invalid type: {obj!r}")
 			return
 		if messageType is RemoteMessageType.PING:
 			# No handling is required
@@ -551,7 +551,7 @@ class TCPTransport(Transport):
 		del obj["type"]
 		extensionPoint = self.inboundHandlers.get(messageType)
 		if not extensionPoint:
-			log.warn(f"Received message with unhandled type: {messageType} {obj!r}")
+			log.warning(f"Received message with unhandled type: {messageType} {obj!r}")
 			return
 		wx.CallAfter(extensionPoint.notify, **obj)
 

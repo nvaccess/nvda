@@ -270,7 +270,7 @@ class NvdaLib:
 		return remoteLib
 
 	def start_NVDAInstaller(self, settingsFileName):
-		self.lastNVDAStart = _datetime.utcnow()
+		self.lastNVDAStart = _datetime.now()
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
 		self.setup_nvda_profile(settingsFileName)
 		nvdaProcessHandle = self._startNVDAInstallerProcess()
@@ -295,7 +295,7 @@ class NvdaLib:
 			)
 
 	def start_NVDA(self, settingsFileName: str, gesturesFileName: _Optional[str] = None):
-		self.lastNVDAStart = _datetime.utcnow()
+		self.lastNVDAStart = _datetime.now()
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
 		self.setup_nvda_profile(settingsFileName, gesturesFileName)
 		builtIn.log("Config copied", level="DEBUG")  # observe timing of the startup
