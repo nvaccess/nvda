@@ -11,10 +11,13 @@ as there are built-in gesture bindings for braille input.
 
 from __future__ import annotations
 
+import inputCore
 from logHandler import log
 
+from . import gesture as _gesture
 from . import inputHandler as _inputHandler
-from . import gesture as _gesture  # noqa: F401  # Registers the "bk" gesture source.
+
+inputCore.registerGestureSource("bk", _gesture.BrailleInputGesture)
 
 handler: _inputHandler.BrailleInputHandler | None = None
 """The singleton BrailleInputHandler instance."""
