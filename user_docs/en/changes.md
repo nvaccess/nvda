@@ -57,6 +57,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * Braille now follows the spoken text during say all in browse mode when braille is tethered to focus. (#3287, @LeonarddeR)
 * NVDA now reports checked ToolStrip menu items in .NET Framework Windows Forms applications using UI Automation. (#19335, @Cary-rowen)
 * The Add-on Store no longer becomes unresponsive when navigating the list of add-ons quickly, such as by holding down an arrow key. (#17351, @christopherpross)
+* Remote Access: NVDA now reports when connecting as the controlled computer fails, while continuing to retry the connection in the background. (#19103, @danielw97)
 
 ### Changes for Developers
 
