@@ -584,6 +584,87 @@ class TestAction(unittest.TestCase):
 		self.action.notify(a=1)
 		self.assertEqual(calledKwargs, {"a": 1})
 
+	def test_handlerUnregistersItselfDuringNotify(self):
+		"""Test that a handler unregistering itself during notify doesn't raise.
+		Regression test for "RuntimeError: OrderedDict mutated during iteration".
+		"""
+		called = []
+
+		def handler():
+			called.append(handler)
+			self.action.unregister(handler)
+
+		self.action.register(handler)
+		self.action.notify()
+		self.assertEqual(called, [handler])
+		# The handler unregistered itself, so a second notify does not call it again.
+		self.action.notify()
+		self.assertEqual(called, [handler])
+
+	def test_handlerUnregistersOtherHandlerDuringNotify(self):
+		"""Test that a handler unregistering another handler during notify doesn't raise.
+		The handlers present when notify started are all still called (they were captured
+		before iteration), but the unregistered handler is gone on the next notify.
+		"""
+		called = []
+
+		def handler1():
+			called.append(handler1)
+			self.action.unregister(handler2)
+
+		def handler2():
+			called.append(handler2)
+
+		self.action.register(handler1)
+		self.action.register(handler2)
+		self.action.notify()
+		self.assertEqual(called, [handler1, handler2])
+		called.clear()
+		self.action.notify()
+		self.assertEqual(called, [handler1])
+
+	def test_handlerRegistersHandlerDuringNotify(self):
+		"""Test that a handler registering a new handler during notify doesn't raise.
+		The newly registered handler is not called until the next notify.
+		"""
+		called = []
+
+		def newHandler():
+			called.append(newHandler)
+
+		def handler():
+			called.append(handler)
+			self.action.register(newHandler)
+
+		# Keep newHandler alive for the duration of the test (register uses a weak reference).
+		self.addCleanup(lambda: newHandler)
+		self.action.register(handler)
+		self.action.notify()
+		self.assertEqual(called, [handler])
+		called.clear()
+		self.action.notify()
+		self.assertEqual(called, [handler, newHandler])
+
+	def test_notifyOnce(self):
+		"""Test that notifyOnce calls every registered handler and unregisters them all,
+		despite unregistering each handler while iterating.
+		"""
+		called = []
+
+		def handler1():
+			called.append(handler1)
+
+		def handler2():
+			called.append(handler2)
+
+		self.action.register(handler1)
+		self.action.register(handler2)
+		self.action.notifyOnce()
+		self.assertEqual(called, [handler1, handler2])
+		# All handlers were unregistered, so a second notifyOnce calls nothing.
+		self.action.notifyOnce()
+		self.assertEqual(called, [handler1, handler2])
+
 
 class TestFilter(unittest.TestCase):
 	def setUp(self):
