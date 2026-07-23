@@ -36,7 +36,7 @@ $failures = @(git ls-files --modified "source/locale/**.po" | ForEach-Object {
 		Write-Host "errorfile: $errorfile"
 		Add-Content -Path $tempfile,$errorfile -Value $output -PassThru | Out-String | Write-Error
 		Add-Content -Path $tempfile -Value "----------"
-		$errorfiles += $errorfile
+		$errorfiles += Resolve-Path $errorfile -Relative
 		Write-Host "${errorfile}: $((Get-Item $errorfile).Length)"
 		Write-Host "errorfiles: $errorfiles"
 
