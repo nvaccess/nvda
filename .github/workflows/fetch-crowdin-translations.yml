@@ -22,7 +22,7 @@ jobs:
     env:
       branchName: updateCrowdinTranslations${{ github.run_id }}
       workflowRunUrl: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}
-      workflowRunName: ${{ github.workflow }} #${{ github.run_number }}.${{ github.run_attempt }}
+      workflowRunName: "${{ github.workflow }} #${{ github.run_number }}.${{ github.run_attempt }}"
 
     steps:
     - name: Early exit
