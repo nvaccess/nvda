@@ -6336,8 +6336,19 @@ class MagnifierPanel(SettingsPanel):
 		requestedEnabled = evt.IsChecked()
 		currentEnabled = magnifierConfig.getEnabled()
 		if requestedEnabled != currentEnabled:
-			toggleMagnifier()
+			# Enabling from settings is a GUI action, so present start failures in a message box.
+			toggleMagnifier(onStartError=self._showMagnifierStartError)
 			self.enableMagnifierCheckBox.SetValue(magnifierConfig.getEnabled())
+
+	def _showMagnifierStartError(self, message: str):
+		"""Show a magnifier start failure in a message box, since enabling from settings is a GUI action."""
+		gui.messageBox(
+			message,
+			# Translators: The title of an error message box shown when the magnifier fails to start.
+			_("Magnifier"),
+			wx.OK | wx.ICON_ERROR,
+			self,
+		)
 
 
 class PrivacyAndSecuritySettingsPanel(SettingsPanel):
