@@ -1,13 +1,15 @@
-# brailleDisplayDrivers/alva.py
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2009-2018 NV Access Limited, Davy Kager, Leonard de Ruijter, Optelec B.V.
+# Copyright (C) 2009-2026 NV Access Limited, Davy Kager, Leonard de Ruijter, Optelec B.V.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from typing import List, Union
 
 import bdDetect
 import braille
+import braille.display
+import braille.display.driver
+import braille.display.gesture
 from logHandler import log
 import inputCore
 import brailleInput
@@ -145,7 +147,7 @@ ALVA_KEYS = {
 }
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, ScriptableObject):
 	_dev: Union[hwIo.Serial, hwIo.Hid]
 	name = "alva"
 	# Translators: The name of a braille display.
@@ -153,7 +155,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	isThreadSafe = True
 	supportsAutomaticDetection = True
 	timeout = 0.2
-	supportedSettings = (braille.BrailleDisplayDriver.HIDInputSetting(useConfig=False),)
+	supportedSettings = (braille.display.driver.BrailleDisplayDriver.HIDInputSetting(useConfig=True),)
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
@@ -170,7 +172,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts(
+		return braille.display.getSerialPorts(
 			filterFunc=lambda info: info.get("bluetoothName", "").startswith("ALVA "),
 		)
 
@@ -412,6 +414,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		return not self._rawKeyboardInput
 
 	def _set_hidKeyboardInput(self, state):
+		if state is self.hidKeyboardInput:
+			return
 		rawState = not state
 		if self.isHid:
 			# Make sure the device settings are up to date.
@@ -476,6 +480,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				"braille_scrollForward": ("br(alva):t5", "br(alva):etouch3"),
 				"braille_routeTo": ("br(alva):routing",),
 				"braille_reportFormatting": ("br(alva):secondRouting",),
+				"braille_selectRange": ("br(alva):multiRouting",),
 				"review_top": ("br(alva):t1+t2",),
 				"review_bottom": ("br(alva):t4+t5",),
 				"braille_toggleTether": ("br(alva):t1+t3",),
@@ -508,7 +513,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keys, brailleInput=False):
@@ -522,17 +527,16 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		secondaryNames = []
 		dots = 0
 		space = False
+		cellIndexesByRange: dict[str, list[int]] = {}
 		for group, number in self.keyCodes:
 			if group == ALVA_CR_GROUP:
 				if number & ALVA_2ND_CR_MASK:
-					keyName = "secondRouting"
-					self.routingIndex = number & ~ALVA_2ND_CR_MASK
+					rangeName = "secondRouting"
+					cellIndex = number & ~ALVA_2ND_CR_MASK
 				else:
-					keyName = "routing"
-					self.routingIndex = number
-				names.append(keyName)
-				if isNoBC640:
-					secondaryNames.append(keyName)
+					rangeName = "routing"
+					cellIndex = number
+				cellIndexesByRange.setdefault(rangeName, []).append(cellIndex)
 			else:
 				try:
 					keyName = ALVA_KEYS[group][number]
@@ -556,6 +560,17 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 						brailleInput = False
 				else:
 					brailleInput = False
+
+		if cellIndexesByRange:
+			allIndexes: list[int] = []
+			for rangeName, indexes in sorted(cellIndexesByRange.items()):
+				indexes.sort()
+				allIndexes.extend(indexes)
+				idName = self.idForCellCount(len(indexes), rangeName)
+				names.append(idName)
+				if isNoBC640:
+					secondaryNames.append(idName)
+			self.cellIndexes = allIndexes
 
 		self.id = "+".join(names)
 		self.secondaryId = "+".join(secondaryNames) if isNoBC640 else self.id

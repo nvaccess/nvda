@@ -11,6 +11,8 @@ from typing import List
 import wx
 import serial
 import braille
+import braille.display.driver
+import braille.display.gesture
 import inputCore
 import hwPortUtils
 from hwIo import intToByte
@@ -22,7 +24,7 @@ READ_INTERVAL = 50
 BUF_START = b"\xff\xff"
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "seika"
 	# Translators: Names of braille displays.
 	description = _("Seika Braille Displays")
@@ -206,7 +208,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGestureKeys(braille.BrailleDisplayGesture):
+class InputGestureKeys(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):
@@ -214,11 +216,11 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 		self.id = keys
 
 
-class InputGestureRouting(braille.BrailleDisplayGesture):
+class InputGestureRouting(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, index):
 		super(InputGestureRouting, self).__init__()
 
 		self.id = "routing"
-		self.routingIndex = index
+		self.cellIndexes = [index]

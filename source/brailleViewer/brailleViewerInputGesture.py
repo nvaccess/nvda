@@ -2,7 +2,7 @@
 # Copyright (C) 2020 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-from braille import BrailleDisplayGesture
+from braille.display.gesture import BrailleDisplayGesture
 
 driverName = "brailleViewer"
 
@@ -13,7 +13,7 @@ class BrailleViewerGesture_RouteTo(BrailleDisplayGesture):
 
 	def __init__(self, argument):
 		super().__init__()
-		self.routingIndex = argument
+		self.cellIndexes = [argument]
 		import globalCommands
 
 		self.script = globalCommands.commands.script_braille_routeTo

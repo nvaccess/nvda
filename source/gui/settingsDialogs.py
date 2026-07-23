@@ -6,7 +6,7 @@
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
-# Neil Soiffer, Ryan McCleary, Kefas Lungu.
+# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu.
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -29,6 +29,8 @@ from typing import (
 import audio
 import audioDucking
 import braille
+import braille.constants
+import braille.display
 import brailleInput
 import brailleTables
 import characterProcessing
@@ -49,7 +51,6 @@ import requests
 import speech
 import speechDictHandler
 import systemUtils
-from utils.security import isRunningOnSecureDesktop
 import vision
 import vision.providerBase
 import vision.providerInfo
@@ -59,6 +60,7 @@ from wx.lib import scrolledpanel
 
 import screenCurtain._screenCurtain
 from utils import mmdevice
+from utils.security import isRunningOnSecureDesktop
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
@@ -80,6 +82,7 @@ from config.configFlags import (
 	TetherTo,
 	TypingEcho,
 	LoggingLevel,
+	BrailleMode,
 )
 from logHandler import log
 from synthDriverHandler import SynthDriver, changeVoice, getSynth, getSynthList, setSynth
@@ -3332,6 +3335,24 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.ignoreBlankLinesRLICheckbox.SetValue(config.conf["documentFormatting"]["ignoreBlankLinesForRLI"])
 		self.ignoreBlankLinesRLICheckbox.Enable(reportLineIndentation != 0)
 
+		# Translators: This is the label of a spin control in the document formatting settings panel
+		# to adjust the duration of indentation tones in milliseconds.
+		indentToneDurationText = _("Indent tone &duration (ms):")
+		self.indentToneDurationSpin = pageAndSpaceGroup.addLabeledControl(
+			indentToneDurationText,
+			wx.SpinCtrl,
+			min=10,
+			max=2000,
+			initial=config.conf["documentFormatting"]["indentToneDuration"],
+		)
+		self.indentToneDurationSpin.Enable(
+			reportLineIndentation in (ReportLineIndentation.TONES, ReportLineIndentation.SPEECH_AND_TONES),
+		)
+		self.bindHelpEvent(
+			"IndentToneDuration",
+			self.indentToneDurationSpin,
+		)
+
 		# Translators: This message is presented in the document formatting settings panel
 		# If this option is selected, NVDA will report paragraph indentation if available.
 		paragraphIndentationText = _("&Paragraph indentation")
@@ -3483,6 +3504,9 @@ class DocumentFormattingPanel(SettingsPanel):
 
 	def _onLineIndentationChange(self, evt: wx.CommandEvent) -> None:
 		self.ignoreBlankLinesRLICheckbox.Enable(evt.GetSelection() != 0)
+		self.indentToneDurationSpin.Enable(
+			evt.GetSelection() in (ReportLineIndentation.TONES, ReportLineIndentation.SPEECH_AND_TONES),
+		)
 
 	def _onLinksChange(self, evt: wx.CommandEvent):
 		self.linkTypeCheckBox.Enable(evt.IsChecked())
@@ -3513,6 +3537,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportPage"] = self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"] = self.lineNumberCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineIndentation"] = self.lineIndentationCombo.GetSelection()
+		config.conf["documentFormatting"]["indentToneDuration"] = self.indentToneDurationSpin.GetValue()
 		config.conf["documentFormatting"]["ignoreBlankLinesForRLI"] = (
 			self.ignoreBlankLinesRLICheckbox.IsChecked()
 		)
@@ -3545,6 +3570,7 @@ class DocumentNavigationPanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
 		# Translators: This is a label for the paragraph navigation style in the document navigation dialog
 		paragraphStyleLabel = _("&Paragraph style:")
 		self.paragraphStyleCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
@@ -3555,8 +3581,24 @@ class DocumentNavigationPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("ParagraphStyle", self.paragraphStyleCombo)
 
-	def onSave(self):
+		# Translators: This is a label for the word segmentation standard in the document navigation dialog
+		wordNavigationUnitLabel = _("&Word Segmentation Standard:")
+		self.wordSegCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=wordNavigationUnitLabel,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["documentNavigation", "wordSegmentationStandard"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("WordSegmentationStandard", self.wordSegCombo)
+
+	def onSave(self) -> None:
 		self.paragraphStyleCombo.saveCurrentValueToConf()
+		self.wordSegCombo.saveCurrentValueToConf()
+
+	def postSave(self) -> None:
+		import textUtils._wordSeg
+
+		textUtils._wordSeg.initialize()
 
 
 def _synthWarningDialog(newSynth: str):
@@ -4989,7 +5031,7 @@ class BrailleSettingsPanel(SettingsPanel):
 			self.Thaw()
 
 	def updateCurrentDisplay(self):
-		if config.conf["braille"]["display"] == braille.AUTO_DISPLAY_NAME:
+		if config.conf["braille"]["display"] == braille.constants.AUTO_DISPLAY_NAME:
 			displayDesc = BrailleDisplaySelectionDialog.getCurrentAutoDisplayDescription()
 		else:
 			displayDesc = braille.handler.display.description
@@ -5049,23 +5091,23 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 
 	@staticmethod
 	def getCurrentAutoDisplayDescription():
-		description = braille.AUTOMATIC_PORT[1]
+		description = braille.constants.AUTOMATIC_PORT[1]
 		if (
-			config.conf["braille"]["display"] == braille.AUTO_DISPLAY_NAME
+			config.conf["braille"]["display"] == braille.constants.AUTO_DISPLAY_NAME
 			and braille.handler.display.name != "noBraille"
 		):
 			description = "%s (%s)" % (description, braille.handler.display.description)
 		return description
 
 	def updateBrailleDisplayLists(self):
-		driverList = [(braille.AUTO_DISPLAY_NAME, self.getCurrentAutoDisplayDescription())]
-		driverList.extend(braille.getDisplayList())
+		driverList = [(braille.constants.AUTO_DISPLAY_NAME, self.getCurrentAutoDisplayDescription())]
+		driverList.extend(braille.display.getDisplayList())
 		self.displayNames = [driver[0] for driver in driverList]
 		displayChoices = [driver[1] for driver in driverList]
 		self.displayList.Clear()
 		self.displayList.AppendItems(displayChoices)
 		try:
-			if config.conf["braille"]["display"] == braille.AUTO_DISPLAY_NAME:
+			if config.conf["braille"]["display"] == braille.constants.AUTO_DISPLAY_NAME:
 				selection = 0
 			else:
 				selection = self.displayNames.index(braille.handler.display.name)
@@ -5090,9 +5132,9 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 	def updateStateDependentControls(self):
 		displayName = self.displayNames[self.displayList.GetSelection()]
 		self.possiblePorts = []
-		isAutoDisplaySelected = displayName == braille.AUTOMATIC_PORT[0]
+		isAutoDisplaySelected = displayName == braille.constants.AUTOMATIC_PORT[0]
 		if not isAutoDisplaySelected:
-			displayCls = braille._getDisplayDriver(displayName)
+			displayCls = braille.display._getDisplayDriver(displayName)
 			try:
 				self.possiblePorts.extend(displayCls.getPossiblePorts().items())
 			except NotImplementedError:
@@ -5233,12 +5275,12 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			)
 		# Translators: The label for a setting in braille settings to select which braille mode to use
 		modeListText = _("Braille mode:")
-		modeChoices = [x.displayString for x in braille.BrailleMode]
+		modeChoices = [x.displayString for x in BrailleMode]
 		self.brailleModes = sHelper.addLabeledControl(modeListText, wx.Choice, choices=modeChoices)
 		self.bindHelpEvent("BrailleMode", self.brailleModes)
 		self.brailleModes.Bind(wx.EVT_CHOICE, self._onModeChange)
-		current = braille.BrailleMode(config.conf["braille"]["mode"])
-		modeList = list(braille.BrailleMode)
+		current = BrailleMode(config.conf["braille"]["mode"])
+		modeList = list(BrailleMode)
 		index = modeList.index(current)
 		self.brailleModes.SetSelection(index)
 		followCursorGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self)
@@ -5293,8 +5335,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		if not self.showCursorCheckBox.GetValue() or not self.cursorBlinkCheckBox.GetValue():
 			self.cursorBlinkRateEdit.Disable()
 
-		self.cursorShapes = [s[0] for s in braille.CURSOR_SHAPES]
-		cursorShapeChoices = [s[1] for s in braille.CURSOR_SHAPES]
+		self.cursorShapes = [s[0] for s in braille.constants.CURSOR_SHAPES]
+		cursorShapeChoices = [s[1] for s in braille.constants.CURSOR_SHAPES]
 
 		# Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
 		cursorShapeFocusLabelText = _("Cursor shape for &focus:")
@@ -5441,8 +5483,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 		focusContextPresentationLabelText = _("Focus context presentation:")
-		self.focusContextPresentationValues = [x[0] for x in braille.focusContextPresentations]
-		focusContextPresentationChoices = [x[1] for x in braille.focusContextPresentations]
+		self.focusContextPresentationValues = [x[0] for x in braille.constants.focusContextPresentations]
+		focusContextPresentationChoices = [x[1] for x in braille.constants.focusContextPresentations]
 		self.focusContextPresentationList = followCursorGroupHelper.addLabeledControl(
 			focusContextPresentationLabelText,
 			wx.Choice,
@@ -5498,15 +5540,18 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.speakOnNavigatingCheckBox.Value = config.conf["braille"]["speakOnNavigatingByUnit"]
 
 		self.followCursorGroupBox.Enable(
-			list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS,
+			list(BrailleMode)[self.brailleModes.GetSelection()] is BrailleMode.FOLLOW_CURSORS,
 		)
 
-		# Translators: The label for a setting in braille settings to enable word wrap
-		# (try to avoid splitting words at the end of the braille display).
-		wordWrapText = _("Avoid splitting &words when possible")
-		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
-		self.bindHelpEvent("BrailleSettingsWordWrap", self.wordWrapCheckBox)
-		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
+		self.textWrapComboBox: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			# Translators: The label for a setting in braille settings to configure text wrap behaviour
+			# (how to break lines that don't fit on the braille display).
+			labelText=_("Text &wrap"),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "textWrap"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleSettingsWordWrap", self.textWrapComboBox)
 
 		self.unicodeNormalizationCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=_(
@@ -5563,7 +5608,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		else:
 			brailleInput.handler.table = self.inTableForCurLang
 			config.conf["braille"]["inputTable"] = "auto"
-		mode = list(braille.BrailleMode)[self.brailleModes.GetSelection()]
+		mode = list(BrailleMode)[self.brailleModes.GetSelection()]
 		config.conf["braille"]["mode"] = mode.value
 		braille.handler.mainBuffer.clear()
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
@@ -5596,7 +5641,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		config.conf["braille"]["speakOnRouting"] = self.speakOnRoutingCheckBox.Value
 		config.conf["braille"]["speakOnNavigatingByUnit"] = self.speakOnNavigatingCheckBox.Value
-		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
+		self.textWrapComboBox.saveCurrentValueToConf()
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[
 			self.focusContextPresentationList.GetSelection()

@@ -22,6 +22,7 @@ from ctypes.wintypes import POINT
 from comtypes import COMError
 import time
 import numbers
+import oleacc
 import colors
 import languageHandler
 import NVDAState
@@ -65,6 +66,7 @@ from NVDAObjects.behaviors import (
 	ToolTip,
 )
 import braille
+import braille.regions.properties
 import locationHelper
 import ui
 import winVersion
@@ -1690,7 +1692,13 @@ class UIA(Window):
 		p = self.UIASelectionItemPattern
 		if not p:
 			return None
-		e = p.currentSelectionContainer
+		try:
+			e = p.currentSelectionContainer
+		except COMError:
+			# Some providers (e.g. Qt's QWindowsUiaSelectionItemProvider when the
+			# accessible has no actionInterface) raise instead of returning a value.
+			# Treat the same as no selection container so focus speech is not aborted.
+			return None
 		if not e:
 			# Some implementations of SelectionItemPattern, such as the Outlook attachment list
 			# give back a NULL selectionContainer
@@ -2460,7 +2468,9 @@ class UIA(Window):
 		"""
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		# Ideally, we wouldn't use getPropertiesBraille directly.
-		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
+		braille.handler.message(
+			braille.regions.properties.getPropertiesBraille(name=self.name, role=self.role),
+		)
 
 	def event_UIA_notification(
 		self,
@@ -2559,6 +2569,28 @@ class TreeviewItem(UIA):
 
 
 class MenuItem(UIA):
+	_UIAStatesPropertyIDs: set[int] = UIA._UIAStatesPropertyIDs | {
+		UIAHandler.UIA_LegacyIAccessibleStatePropertyId,
+	}
+
+	def _get_states(self) -> set[controlTypes.State]:
+		states = super()._get_states()
+		if controlTypes.State.CHECKABLE in states:
+			return states
+		# #19335: WinForms ToolStripMenuItems can expose their checked state only through LegacyIAccessible.
+		legacyState = self._getUIACacheablePropertyValue_handlesCOMErrors(
+			UIAHandler.UIA_LegacyIAccessibleStatePropertyId,
+			True,
+		)
+		if isinstance(legacyState, int) and legacyState & oleacc.STATE_SYSTEM_CHECKED:
+			states.update(
+				{
+					controlTypes.State.CHECKABLE,
+					controlTypes.State.CHECKED,
+				},
+			)
+		return states
+
 	def _get_description(self):
 		name = self.name
 		description = super(MenuItem, self)._get_description()

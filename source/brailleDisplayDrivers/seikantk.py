@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2012-2023 NV Access Limited, Ulf Beckmann <beckmann@flusoft.de>
+# Copyright (C) 2012-2026 NV Access Limited, Ulf Beckmann <beckmann@flusoft.de>, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
 Braille display driver for Seika Notetaker, a product from Nippon Telesoft
@@ -16,6 +16,9 @@ from typing import Dict, List, Optional, Set
 import serial
 
 import braille
+import braille.display
+import braille.display.driver
+import braille.display.gesture
 from bdDetect import DeviceMatch, DriverRegistrar
 import brailleInput
 import inputCore
@@ -97,7 +100,7 @@ def isSeikaBluetoothDeviceMatch(match: DeviceMatch) -> bool:
 	return isSeikaBluetoothDeviceInfo(match.deviceInfo)
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = SEIKA_NAME
 	# Translators: Name of a braille display.
 	description = _("Seika Notetaker")
@@ -118,7 +121,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def getManualPorts(cls) -> typing.Iterator[typing.Tuple[str, str]]:
 		"""@return: An iterator containing the name and description for each port."""
-		return braille.getSerialPorts(isSeikaBluetoothDeviceInfo)
+		return braille.display.getSerialPorts(isSeikaBluetoothDeviceInfo)
 
 	def __init__(self, port: typing.Union[None, str, DeviceMatch]):
 		super().__init__()
@@ -295,12 +298,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _handleRouting(self, arg: bytes):
 		routingIndexes = _getRoutingIndexes(arg)
-		for routingIndex in routingIndexes:
-			gesture = InputGestureRouting(routingIndex)
-			try:
-				inputCore.manager.executeGesture(gesture)
-			except inputCore.NoInputGestureAction:
-				log.debug("No action for Seika Notetaker routing command")
+		if not routingIndexes:
+			return
+		gesture = InputGestureRouting(sorted(routingIndexes))
+		try:
+			inputCore.manager.executeGesture(gesture)
+		except inputCore.NoInputGestureAction:
+			log.debug("No action for Seika Notetaker routing command")
 
 	def _handleKeys(self, arg: bytes):
 		brailleDots = arg[0]
@@ -331,6 +335,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		{
 			"globalCommands.GlobalCommands": {
 				"braille_routeTo": ("br(seikantk):routing",),
+				"braille_selectRange": ("br(seikantk):multiRouting",),
 				"braille_scrollBack": ("br(seikantk):LB",),
 				"braille_scrollForward": ("br(seikantk):RB",),
 				"braille_previousLine": ("br(seikantk):LJ_UP",),
@@ -363,13 +368,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGestureRouting(braille.BrailleDisplayGesture):
+class InputGestureRouting(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, index):
+	def __init__(self, indexes: list[int] | int):
 		super().__init__()
-		self.id = "routing"
-		self.routingIndex = index
+		if isinstance(indexes, int):
+			# Backwards compat: callers historically passed a single index.
+			indexes = [indexes]
+		self.cellIndexes = indexes
+		self.id = self.idForCellCount(len(self.cellIndexes))
 
 
 def _getKeyNames(keys: int, names: Dict[int, str]) -> Set[str]:
@@ -388,11 +396,11 @@ def _getRoutingIndexes(routingKeyBytes: bytes) -> Set[int]:
 	return {i for i in range(numRoutingKeys) if (1 << i) & combinedRoutingKeysBitSet}
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys=None, dots=None, space=0, routing=None):
-		super(braille.BrailleDisplayGesture, self).__init__()
+		super(braille.display.gesture.BrailleDisplayGesture, self).__init__()
 		# see what thumb keys are pressed:
 		names = set()
 		if keys is not None:
@@ -404,6 +412,6 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				names.update(_getKeyNames(space, _keyNames))
 			names.update(_getKeyNames(dots, _dotNames))
 		elif routing is not None:
-			self.routingIndex = routing
+			self.cellIndexes = [routing]
 			names.add("routing")
 		self.id = "+".join(names)

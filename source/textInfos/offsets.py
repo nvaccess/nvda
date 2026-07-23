@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Leonard de Ruijter, Wang Chong
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -8,21 +8,74 @@ import re
 import ctypes
 import unicodedata
 import NVDAHelper
+import config.featureFlagEnums
 import NVDAState
 import config
+from config.featureFlag import FeatureFlag
 import textInfos
 import locationHelper
 from treeInterceptorHandler import TreeInterceptor
 import textUtils
+from textUtils.segFlag import CharSegFlag, WordSegFlag
+from textUtils._wordSeg.wordSegmenter import WordSegmenter
 from dataclasses import dataclass
 from typing import (
-	Optional,
-	Tuple,
+	Any,
 	Dict,
 	List,
+	Optional,
 	Self,
+	Tuple,
 )
 from logHandler import log
+
+
+def _warnUseUniscribeDeprecated() -> None:
+	log.warning(
+		"OffsetsTextInfo.useUniscribe is deprecated. "
+		"Use OffsetsTextInfo.charSegFlag and OffsetsTextInfo.wordSegFlag instead.",
+		stack_info=True,
+	)
+
+
+def _getUseUniscribeClassOverride(textInfoClass: type) -> bool | None:
+	for klass in textInfoClass.__mro__:
+		override = klass.__dict__.get("_useUniscribeOverride")
+		if override is not None:
+			return bool(override)
+	return None
+
+
+class _OffsetsTextInfoMeta(type(textInfos.TextInfo)):
+	def __init__(
+		self,
+		name: str,
+		bases: tuple[type, ...],
+		namespace: dict[str, Any],
+		/,
+		**kwargs: Any,
+	) -> None:
+		super().__init__(name, bases, namespace, **kwargs)
+		legacyUseUniscribe = namespace.get("useUniscribe")
+		if not isinstance(legacyUseUniscribe, bool):
+			return
+		type.__delattr__(self, "useUniscribe")
+		type.__setattr__(self, "_useUniscribeOverride", legacyUseUniscribe)
+
+	def __getattribute__(self, name: str) -> Any:
+		if name != "useUniscribe" or not NVDAState._allowDeprecatedAPI():
+			return super().__getattribute__(name)
+		_warnUseUniscribeDeprecated()
+		override = _getUseUniscribeClassOverride(self)
+		if override is not None:
+			return override
+		return type.__getattribute__(self, "charSegFlag") == CharSegFlag.UNISCRIBE
+
+	def __setattr__(self, name: str, value: Any) -> None:
+		if name != "useUniscribe" or not NVDAState._allowDeprecatedAPI():
+			return super().__setattr__(name, value)
+		_warnUseUniscribeDeprecated()
+		type.__setattr__(self, "_useUniscribeOverride", bool(value))
 
 
 @dataclass
@@ -136,7 +189,7 @@ def findEndOfWord(text, offset, lineLength=None):
 	return offset
 
 
-class OffsetsTextInfo(textInfos.TextInfo):
+class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 	"""An abstract TextInfo for text implementations which represent ranges using numeric offsets relative to the start of the text.
 	In such implementations, the start of the text is represented by 0 and the end is the length of the entire text.
 
@@ -156,8 +209,69 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	#: Honours documentFormatting config option if true - set to false if this is not at all slow.
 	detectFormattingAfterCursorMaybeSlow: bool = True
-	#: Use uniscribe to calculate word offsets etc.
-	useUniscribe: bool = True
+	#: Method to calculate character and word offsets.
+	charSegFlag: CharSegFlag = CharSegFlag.UNISCRIBE
+	#: Backing value for the deprecated useUniscribe compatibility attribute.
+	_useUniscribeOverride: bool | None = None
+
+	def _getDeprecatedUseUniscribe(self) -> bool:
+		if not NVDAState._allowDeprecatedAPI():
+			raise AttributeError(f"'{type(self).__name__}' object has no attribute 'useUniscribe'")
+		_warnUseUniscribeDeprecated()
+		override = self._getUseUniscribeCompatOverride()
+		if override is not None:
+			return override
+		return self._getEffectiveCharSegFlag() == CharSegFlag.UNISCRIBE and bool(
+			self._getEffectiveWordSegFlag(),
+		)
+
+	def _setDeprecatedUseUniscribe(self, value: bool) -> None:
+		if not NVDAState._allowDeprecatedAPI():
+			raise AttributeError(f"'{type(self).__name__}' object has no attribute 'useUniscribe'")
+		_warnUseUniscribeDeprecated()
+		self._useUniscribeOverride = bool(value)
+
+	# Deprecated pending removal in the 2027.1 API breaking release.
+	# Use charSegFlag and wordSegFlag instead.
+	useUniscribe = property(_getDeprecatedUseUniscribe, _setDeprecatedUseUniscribe)
+
+	def _getUseUniscribeCompatOverride(self) -> bool | None:
+		override = self.__dict__.get("_useUniscribeOverride")
+		if override is not None:
+			return bool(override)
+		return _getUseUniscribeClassOverride(type(self))
+
+	def _getEffectiveCharSegFlag(self) -> CharSegFlag:
+		useUniscribe = self._getUseUniscribeCompatOverride()
+		if useUniscribe is False:
+			return CharSegFlag.NONE
+		if useUniscribe is True:
+			return CharSegFlag.UNISCRIBE
+		return self.charSegFlag
+
+	def _getEffectiveWordSegFlag(self) -> WordSegFlag | None:
+		useUniscribe = self._getUseUniscribeCompatOverride()
+		if useUniscribe is False:
+			return WordSegFlag.NONE
+		if useUniscribe is True:
+			return WordSegFlag.UNISCRIBE
+		return self.wordSegFlag
+
+	@property
+	def wordSegFlag(self) -> WordSegFlag | None:
+		match self.wordSegConf.calculated():
+			case config.featureFlagEnums.WordNavigationUnitFlag.UNISCRIBE:
+				return WordSegFlag.UNISCRIBE
+			case config.featureFlagEnums.WordNavigationUnitFlag.AUTO:
+				return WordSegFlag.AUTO
+			case config.featureFlagEnums.WordNavigationUnitFlag.CHINESE:
+				return WordSegFlag.CHINESE
+			case config.featureFlagEnums.WordNavigationUnitFlag.ICU:
+				return WordSegFlag.ICU
+			case _:
+				log.error(f"Unknown word segmentation standard, {self.wordSegConf.calculated()!r}")
+		return None
+
 	#: The encoding internal to the underlying text info implementation.
 	encoding: Optional[str] = textUtils.WCHAR_ENCODING
 
@@ -377,7 +491,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		lineStart, lineEnd = self._getLineOffsets(offset)
 		lineText = self._getTextRange(lineStart, lineEnd)
 		relOffset = offset - lineStart
-		if self.useUniscribe:
+		if self._getEffectiveCharSegFlag() == CharSegFlag.UNISCRIBE:
 			offsets = self._calculateUniscribeOffsets(lineText, textInfos.UNIT_CHARACTER, relOffset)
 			if offsets is not None:
 				return (offsets[0] + lineStart, offsets[1] + lineStart)
@@ -401,8 +515,11 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		# Convert NULL and non-breaking space to space to make sure that words will break on them
 		lineText = lineText.translate({0: " ", 0xA0: " "})
 		relOffset = offset - lineStart
-		if self.useUniscribe:
-			offsets = self._calculateUniscribeOffsets(lineText, textInfos.UNIT_WORD, relOffset)
+		wordSegFlag = self._getEffectiveWordSegFlag()
+		if wordSegFlag:
+			offsets = WordSegmenter(lineText, self.encoding, wordSegFlag).getSegmentForOffset(
+				relOffset,
+			)
 			if offsets is not None:
 				return (offsets[0] + lineStart, offsets[1] + lineStart)
 		# Fall back to the older word offsets detection that only breaks on non alphanumeric
@@ -476,6 +593,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		Subclasses may extend this to perform implementation specific initialisation, calling their superclass method afterwards.
 		"""
 		super(OffsetsTextInfo, self).__init__(obj, position)
+		self.wordSegConf: FeatureFlag = config.conf["documentNavigation"]["wordSegmentationStandard"]
+
 		from NVDAObjects import NVDAObject
 
 		if isinstance(position, locationHelper.Point):
@@ -562,6 +681,13 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			self._startOffset = self._endOffset
 
 	def expand(self, unit):
+		if unit == textInfos.UNIT_WORD and self.isCollapsed and self._startOffset == self._getStoryLength():
+			try:
+				flowsTo = self.obj.flowsTo
+			except (AttributeError, NotImplementedError):
+				flowsTo = None
+			if not flowsTo:
+				return
 		self._startOffset, self._endOffset = self._getUnitOffsets(unit, self._startOffset)
 
 	def copy(self):

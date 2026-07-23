@@ -13,6 +13,8 @@ from typing import List, Optional
 
 import wx
 import braille
+import braille.display.driver
+import braille.display.gesture
 import hwPortUtils
 from logHandler import log
 from baseObject import ScriptableObject
@@ -61,7 +63,7 @@ def brl_poll(dev: serial.Serial) -> bytes:
 	return b""
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, ScriptableObject):
 	"""papenmeier_serial braille display driver."""
 
 	name = "papenmeier_serial"
@@ -287,7 +289,7 @@ def brl_keyname(keyindex: int, driver: BrailleDisplayDriver) -> str:
 			return ""
 
 
-class InputGesture(braille.BrailleDisplayGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture):
 	"""input gesture class for papenmeier_serial displays used only by the driver"""
 
 	source = BrailleDisplayDriver.name
@@ -305,11 +307,12 @@ class InputGesture(braille.BrailleDisplayGesture):
 			self.id = driver._lastkey
 			return
 		if pressed == 1 and keyindex >= 0:
-			self.routingIndex = keyindex - driver._offsetHorizontal
+			cellIndex = keyindex - driver._offsetHorizontal
 			self.id = "route"
 			if keyindex > 255:
-				self.routingIndex -= 256
+				cellIndex -= 256
 				self.id = "upperRouting"
+			self.cellIndexes = [cellIndex]
 		elif pressed == 0:
 			k: str = brl_keyname(keyindex, driver)
 			if driver._lastkey != k:
