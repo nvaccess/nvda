@@ -32,10 +32,15 @@ $failures = @(git ls-files --modified "source/locale/**.po" | ForEach-Object {
 		# Get the language code by stripping the last 2 segments (LC_MESSAGES\nvda.po),
 		# and getting the leaf (the trailing path component),
 		$lang = $_ | Split-Path | Split-Path | Split-Path -Leaf
+		Write-Output "::error file=$_::Error validating user interface translations for $lang"
 		$errorfile = New-Item -ItemType "File" -Path $errordir -Name "$lang.txt"
 		Write-Host "errorfile: $errorfile"
-		Add-Content -Path $tempfile,$errorfile -Value $output -PassThru | Out-String | Write-Error
-		Add-Content -Path $tempfile -Value "----------"
+		Add-Content -Path $tempfile -Value "`n<details><summary><code>$_</code></summary>`n`n``````"
+		Write-Host "::group::Validation results for $_"
+		Add-Content -Path $tempfile,$errorfile -Value $output -PassThru | Out-String | Write-host
+		Write-Host "::endgroup::"
+		Add-Content -Path $tempfile -Value "```````n`n</details>`n"
+		# Add-Content -Path $tempfile -Value "----------"
 		$errorfiles += Resolve-Path $errorfile -Relative
 		Write-Host "${errorfile}: $((Get-Item $errorfile).Length)"
 		Write-Host "errorfiles: $errorfiles"
@@ -53,6 +58,7 @@ if ($failures.Count -gt 0) {
 	Add-Content -Path $env:GITHUB_OUTPUT -Value "invalid_pofile_reports<<EOF"
 	Add-Content -Path $env:GITHUB_OUTPUT -Value (Get-Content -Path $tempfile -Raw).TrimEnd()
 	Add-Content -Path $env:GITHUB_OUTPUT -Value "EOF"
+	Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value "### Validation errors`n",(Get-Content -Path $tempfile)
 } else {
 	Add-Content -Path $env:GITHUB_OUTPUT -Value "has_failures=false"
 }

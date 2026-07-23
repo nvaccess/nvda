@@ -82,7 +82,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
 
     - name: Notify translators of errors
-      if: steps.commit.outputs.has_failures == 'true'
+      if: false && (steps.commit.outputs.has_failures == 'true')
       uses: dawidd6/action-send-mail@v18
       with:
         nodemailerlog: true
