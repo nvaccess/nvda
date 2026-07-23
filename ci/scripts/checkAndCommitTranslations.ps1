@@ -13,9 +13,9 @@ git config --local user.email "github-actions@github.com"
 # Temporary file to store all collected reports.
 $tempfile = New-TemporaryFile
 $errordir = New-Item -ItemType "Directory" -Path . -Name "translationErrors"
-Write-Host "errordir: $errordir"
+# Write-Host "errordir: $errordir"
 $errorfiles = @()
-Write-Host "errorfiles: $errorfiles"
+# Write-Host "errorfiles: $errorfiles"
 
 # Check each modified tracked po file,
 # and collect language codes pushed down the pipeline in an array.
@@ -32,9 +32,9 @@ $failures = @(git ls-files --modified "source/locale/**.po" | ForEach-Object {
 		# Get the language code by stripping the last 2 segments (LC_MESSAGES\nvda.po),
 		# and getting the leaf (the trailing path component),
 		$lang = $_ | Split-Path | Split-Path | Split-Path -Leaf
-		Write-Host "::error file=${_}::Validation errors in user interface translations for $lang"
+		Write-Host "::error file=${_}::[$lang] Validation errors in user interface translations"
 		$errorfile = New-Item -ItemType "File" -Path $errordir -Name "$lang.txt"
-		Write-Host "errorfile: $errorfile"
+		# Write-Host "errorfile: $errorfile"
 		Add-Content -Path $tempfile -Value "`n<details><summary><code>$_</code></summary>`n`n``````"
 		Write-Host "::group::Validation results for $_"
 		Add-Content -Path $tempfile,$errorfile -Value $output -PassThru | Out-String | Write-host
@@ -42,8 +42,8 @@ $failures = @(git ls-files --modified "source/locale/**.po" | ForEach-Object {
 		Add-Content -Path $tempfile -Value "```````n`n</details>`n"
 		# Add-Content -Path $tempfile -Value "----------"
 		$errorfiles += Resolve-Path $errorfile -Relative
-		Write-Host "${errorfile}: $((Get-Item $errorfile).Length)"
-		Write-Host "errorfiles: $errorfiles"
+		# Write-Host "${errorfile}: $((Get-Item $errorfile).Length)"
+		# Write-Host "errorfiles: $errorfiles"
 
 		# and push it down the pipeline
 		$lang
