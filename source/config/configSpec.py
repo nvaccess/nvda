@@ -562,6 +562,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enabled = boolean(default=false)
 	warnOnLoad = boolean(default=true)
 	playToggleSounds = boolean(default=true)
+[coreSpeechHistory]
+	enabled = boolean(default=false)
+	maxSize = integer(default=1000, min=2, max=100000)
 """
 
 #: The configuration specification

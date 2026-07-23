@@ -246,7 +246,7 @@ The actual commands will not execute while in input help mode.
 |Read window |`NVDA+b` |`NVDA+b` |Reads the entire current window (useful for dialogs)|
 |Read status bar |`NVDA+end` |`NVDA+shift+end` |Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard|
 |Read time |`NVDA+f12` |`NVDA+f12` |Pressing once reports the current time, pressing twice reports the date. The time and date are reported in the format specified in Windows settings for the system tray clock.|
-| Repeat last spoken information | `NVDA+x` | `NVDA+x` | Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
+| Repeat last spoken information | `NVDA+x` | `NVDA+x` | Repeats the last information spoken by NVDA, or the current item when reviewing speech history. Pressing twice shows it, or the whole speech history if enabled, in a browseable window |
 |Report text formatting |`NVDA+f` |`NVDA+f` |Reports text formatting. Pressing twice shows the information in a window|
 |Report link destination |`NVDA+k` |`NVDA+k` |Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review|
 
@@ -682,7 +682,7 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 |Starts or restarts NVDA |Control+alt+n |Control+alt+n |none |Starts or restarts NVDA from the Desktop, if this Windows shortcut is enabled during NVDA's installation process. This is a Windows specific shortcut and therefore it cannot be reassigned in the input gestures dialog.|
 |Stop speech |Control |control |2-finger tap |Instantly stops speaking|
 |Pause Speech |shift |shift |none |Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer)|
-| Repeat last spoken information | `NVDA+x` | `NVDA+x` | None | Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
+| Repeat last spoken information | `NVDA+x` | `NVDA+x` | None | Repeats the last information spoken by NVDA, or the current item when reviewing speech history. Pressing twice shows it, or the whole speech history if enabled, in a browseable window |
 |NVDA Menu |NVDA+n |NVDA+n |2-finger double-tap |Pops up the NVDA menu to allow you to access preferences, tools, help, etc.|
 |Toggle Input Help Mode |NVDA+1 |NVDA+1 |none |Pressing any key in this mode will report the key, and the description of any NVDA command associated with it|
 |Quit NVDA |NVDA+q |NVDA+q |none |Exits NVDA|
@@ -731,6 +731,27 @@ A gesture allows cycling through the various speech modes:
 <!-- KC:endInclude -->
 
 If you only need to switch between a limited subset of speech modes, see [Modes available in the Cycle speech mode command](#SpeechModesDisabling) for a way to disable unwanted modes.
+
+### Speech history {#SpeechHistory}
+
+Speech history allows you to review text that has recently been spoken by NVDA.
+This can be useful if you missed or misheard a spoken message, or if you want to refer back to previous speech output without repeating the original action.
+
+The following commands are available when speech history feature is enabled:
+
+<!-- KC:beginInclude -->
+
+| Name | Key | Description |
+|---|---|---|
+| Report the current item in speech history | `NVDA+x` | Repeats the current item when reviewing speech history. Pressing twice displays the entire speech history in a browseable window |
+| Copy the current item in speech history | `NVDA+control+x` | Copies the current item when reviewing speech history |
+| Review the previous item in speech history | None | Select the previous item in speech history and reports it |
+| Review the next item in speech history | None | Select the next item in speech history and reports it |
+
+<!-- KC:endInclude -->
+
+The speech history feature is disabled by default for privacy considerations.
+To enable it, set the maximum of items in history or clear it, go to the dedicated section of [Privacy and Security settings](#PrivacyAndSecuritySettings).
 
 ## Navigating with NVDA {#NavigatingWithNVDA}
 
@@ -2846,6 +2867,18 @@ Apart from the [mandatory information required to check for updates](#GeneralSet
 * The current output Braille table (if Braille is in use)
 
 This information greatly aids NV Access to prioritize future development of NVDA.
+
+##### Enable speech history {#EnableSpeechHistory}
+
+This checkbox controls if speech history feature is enabled.
+
+##### Maximum number of items in memory {#SpeechHistoryMaximumNumber}
+
+This field sets the maximum number of items memorized in speech history when it is enabled.
+
+##### Clear speech history {#ClearSpeechHistory}
+
+Pressing this button clears the whole speech history.
 
 #### Vision {#VisionSettings}
 

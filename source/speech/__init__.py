@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
 
 from .speech import (
@@ -14,7 +14,6 @@ from .speech import (
 	_getSpeakMessageSpeech,
 	_manager,
 	_objectSpeech_calculateAllowedProps,
-	_setLastSpeechString,
 	_suppressSpeakTypedCharacters,
 	BLANK_CHUNK_CHARS,
 	cancelSpeech,
@@ -65,6 +64,7 @@ from .speech import (
 	spellTextInfo,
 	splitTextIndentation,
 )
+from . import history
 from .extensions import speechCanceled, post_speechPaused, pre_speechQueued, filter_speechSequence, pre_speech
 from .languageHandling import getSpeechSequenceWithLangs
 from .priorities import Spri
@@ -169,11 +169,12 @@ def initialize():
 		getTextInfoSpeech,
 		SpeakTextInfoState,
 	)
+	history.initialize()
 	filter_speechSequence.register(getSpeechSequenceWithLangs)
-	pre_speech.register(_setLastSpeechString)
+	pre_speech.register(history.speechHistoryBuffer.addSequence)
 
 
 def terminate():
 	synthDriverHandler.setSynth(None)
 	filter_speechSequence.unregister(getSpeechSequenceWithLangs)
-	pre_speech.unregister(_setLastSpeechString)
+	pre_speech.unregister(history.speechHistoryBuffer.addSequence)

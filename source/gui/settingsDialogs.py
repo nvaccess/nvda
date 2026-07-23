@@ -6487,6 +6487,59 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			self._allowUsageStatsCheckBox.Value = False
 			self._allowUsageStatsCheckBox.Disable()
 
+		# Translators: Name for a feature collecting last speech
+		speechHistorySizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Speech history"))
+		speechHistoryBox = speechHistorySizer.GetStaticBox()
+		speechHistoryGroup = guiHelper.BoxSizerHelper(self, sizer=speechHistorySizer)
+		sHelper.addItem(speechHistoryGroup)
+
+		self._speechHistoryEnabledCheckbox = speechHistoryGroup.addItem(
+			wx.CheckBox(
+				speechHistoryBox,
+				#  Translators: option to enable speech history in the privacy and security settings panel
+				label=_("Enable speech history"),
+			),
+		)
+		self._speechHistoryEnabledCheckbox.SetValue(config.conf["coreSpeechHistory"]["enabled"])
+		self._speechHistoryEnabledCheckbox.Bind(wx.EVT_CHECKBOX, self._onSpeechHistoryEnableChange)
+		self.bindHelpEvent("SpeechHistoryEnable", self._speechHistoryEnabledCheckbox)
+
+		speechHistoryMaxSizeLabelText = _(
+			# Translators: The label for a setting in Privacy settings panel
+			# to define the max size of the speech history buffer
+			"Maximum number of items in memory:",
+		)
+		minSize = int(config.conf.getConfigValidation(("coreSpeechHistory", "maxSize")).kwargs["min"])
+		maxSize = int(config.conf.getConfigValidation(("coreSpeechHistory", "maxSize")).kwargs["max"])
+		self._speechHistoryMaxSizeEdit = speechHistoryGroup.addLabeledControl(
+			speechHistoryMaxSizeLabelText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minSize,
+			max=maxSize,
+			initial=config.conf["coreSpeechHistory"]["maxSize"],
+		)
+		self._speechHistoryMaxSizeEdit.Enable(self._speechHistoryEnabledCheckbox.IsChecked())
+		self.bindHelpEvent("SpeechHistoryMaxSize", self._speechHistoryMaxSizeEdit)
+
+		self._clearSpeechHistoryButton = wx.Button(
+			speechHistoryBox,
+			label=_(
+				# Translators: The label for a button in Privacy and security settings to clear speech history
+				"Clear speech history",
+			),
+		)
+		self.bindHelpEvent("ClearSpeechHistory", self._clearSpeechHistoryButton)
+		self._clearSpeechHistoryButton.Bind(wx.EVT_BUTTON, self._onClearSpeechHistory)
+		speechHistoryGroup.addItem(self._clearSpeechHistoryButton)
+		self._clearSpeechHistoryButton.Enable(self._speechHistoryEnabledCheckbox.IsChecked())
+
+	def _onSpeechHistoryEnableChange(self, evt: wx.CommandEvent) -> None:
+		self._speechHistoryMaxSizeEdit.Enable(evt.IsChecked())
+		self._clearSpeechHistoryButton.Enable(evt.IsChecked())
+
+	def _onClearSpeechHistory(self, evt: wx.CommandEvent) -> None:
+		speech.history.speechHistoryBuffer.clearSpeechHistory(reportConfirmation=True)
+
 	def onDiscard(self):
 		# Restore screen curtain state and setting to the most recently saved baseline,
 		# in case the user enabled or disabled it without saving.
@@ -6524,6 +6577,12 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		if updateCheck:
 			config.conf["update"]["allowUsageStats"] = self._allowUsageStatsCheckBox.IsChecked()
 			# updateCheck queries this value whenever checking for updates, so there's no need to restart it
+
+		speechHistoryEnabled = self._speechHistoryEnabledCheckbox.GetValue()
+		config.conf["coreSpeechHistory"]["enabled"] = speechHistoryEnabled
+		if not speechHistoryEnabled:
+			speech.history._clearSpeechHistory()
+		config.conf["coreSpeechHistory"]["maxSize"] = self._speechHistoryMaxSizeEdit.GetValue()
 
 		if screenCurtain.screenCurtain is not None:
 			self._cachedScreenCurtainConfigEnabled = screenCurtain.screenCurtain.settings["enabled"]
