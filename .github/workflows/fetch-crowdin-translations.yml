@@ -85,6 +85,8 @@ jobs:
       if: steps.commit.outputs.has_failures == 'true'
       uses: dawidd6/action-send-mail@v18
       with:
+        nodemailerlog: true
+        nodemailerdebug: true
         server_address: ${{ secrets.EMAIL_SERVER_ADDRESS }}
         server_port: ${{ secrets.EMAIL_SERVER_PORT || 465 }}
         username: ${{ secrets.EMAIL_USERNAME }}
