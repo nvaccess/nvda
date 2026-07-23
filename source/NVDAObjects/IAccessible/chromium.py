@@ -1,17 +1,19 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2022 NV Access Limited
+# Copyright (C) 2010-2022 NV Access Limited, 2026 Islam Benmebarek
 
 """NVDAObjects for the Chromium browser project"""
 
 import typing
+import unicodedata
 from typing import Dict, Optional
 from comtypes import COMError
 
 import config
 import controlTypes
-from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects import NVDAObjectTextInfo
+from NVDAObjects.IAccessible import IAccessible, IA2TextTextInfo
 from virtualBuffers.gecko_ia2 import Gecko_ia2 as GeckoVBuf, Gecko_ia2_TextInfo as GeckoVBufTextInfo
 from . import ia2Web
 from logHandler import log
@@ -161,8 +163,62 @@ class Figure(ia2Web.Ia2Web):
 		return controlTypes.Role.FIGURE
 
 
+def _containsMultipleWhitespaceSeparatedWords(text: str) -> bool:
+	foundWordCharacter = False
+	foundWhitespaceAfterWord = False
+	for character in text:
+		if character.isalnum():
+			if foundWhitespaceAfterWord:
+				return True
+			foundWordCharacter = True
+		elif foundWordCharacter and character.isspace():
+			foundWhitespaceAfterWord = True
+	return False
+
+
+def _isWordCharacter(character: str) -> bool:
+	"""Return whether a character can occur within a word for boundary validation."""
+	category = unicodedata.category(character)
+	return category[0] in ("L", "M", "N") or category == "Pc"
+
+
+def _rangeCutsThroughWord(textInfo: IA2TextTextInfo, start: int, end: int) -> bool:
+	"""Return whether either edge of a range splits a Unicode word."""
+	if start > 0:
+		startContext = textInfo._getTextRange(start - 1, start + 1)
+		if len(startContext) == 2 and all(_isWordCharacter(character) for character in startContext):
+			return True
+	endContext = textInfo._getTextRange(max(0, end - 1), end + 1)
+	return len(endContext) == 2 and all(_isWordCharacter(character) for character in endContext)
+
+
+class ChromiumIA2TextTextInfo(IA2TextTextInfo):
+	"""Raw text information for editable text exposed by Chromium."""
+
+	def _getWordOffsets(self, offset: int) -> tuple[int, int]:
+		ia2Offsets = super()._getWordOffsets(offset)
+		wordText = self._getTextRange(*ia2Offsets)
+		if not (
+			_containsMultipleWhitespaceSeparatedWords(wordText) or _rangeCutsThroughWord(self, *ia2Offsets)
+		):
+			return ia2Offsets
+		# Chromium can expose a word boundary that overlaps another word or cuts through one
+		# for mixed-direction text.
+		# Its caret offsets are still correct, so use NVDA's configured segmentation as a fallback.
+		return super(IA2TextTextInfo, self)._getWordOffsets(offset)
+
+
+def _getRawTextInfoClass(obj) -> type[IA2TextTextInfo] | type[NVDAObjectTextInfo]:
+	if obj.TextInfo is NVDAObjectTextInfo:
+		return NVDAObjectTextInfo
+	return ChromiumIA2TextTextInfo
+
+
 class EditorTextInfo(ia2Web.MozillaCompoundTextInfo):
 	"""The TextInfo for edit areas such as edit fields and documents in Chromium."""
+
+	def _makeRawTextInfo(self, obj, position):
+		return _getRawTextInfoClass(obj)(obj, position)
 
 	def _isCaretAtEndOfLine(self, caretObj: IAccessible) -> bool:
 		# Detecting if the caret is at the end of the line in Chromium is not currently possible
