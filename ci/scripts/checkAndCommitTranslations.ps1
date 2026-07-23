@@ -13,9 +13,9 @@ git config --local user.email "github-actions@github.com"
 # Temporary file to store all collected reports.
 $tempfile = New-TemporaryFile
 $errordir = New-Item -ItemType "Directory" -Path . -Name "translationErrors"
-Write-Host "$errordir: $errordir"
+Write-Host "errordir: $errordir"
 $errorfiles = @()
-Write-Host "$errorfiles: $errorfiles"
+Write-Host "errorfiles: $errorfiles"
 
 # Check each modified tracked po file,
 # and collect language codes pushed down the pipeline in an array.
