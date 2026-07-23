@@ -91,31 +91,23 @@ jobs:
         server_port: ${{ secrets.EMAIL_SERVER_PORT || 465 }}
         username: ${{ secrets.EMAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
-        subject: "[${{ steps.commit.outputs.invalid_pofile_locales }}]: Errors in interface translations"
+        subject: "[test] [${{ steps.commit.outputs.invalid_pofile_locales }}]: Errors in interface translations"
+        # to: nvda-l10n@nvaccess.org
+        # bcc: sascha@nvaccess.org
         to: sascha@nvaccess.org
         from: '"NVDA localisations" <nvda-l10n@nvaccess.org>'
         attachments: ${{ steps.commit.outputs.report_files }}
         convert_markdown: true
         body: |
-          ${{ steps.commit.outputs.report_files }}
           Errors have been found in the user interface translations for the following locales: ${{ steps.commit.outputs.invalid_pofile_locales }}.
-          Detailed reports are included below.
+          Detailed reports are attached.
           Updated translations for these locales will not be included in NVDA until these errors have been corrected.
 
           For more information, review the guide on translating NVDA's interface: <https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/crowdin.md#translating-nvdas-interface>.
 
-          ----------
-          ${{ steps.commit.outputs.invalid_pofile_reports }}
-
         html_body: |
-          ${{ steps.commit.outputs.report_files }}
           Errors have been found in the user interface translations for the following locales: ${{ steps.commit.outputs.invalid_pofile_locales }}.
-          Detailed reports are included below.
+          Detailed reports are attached.
           Updated translations for these locales will not be included in NVDA until these errors have been corrected.
 
           For more information, [review the guide on translating NVDA's interface](https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/crowdin.md#translating-nvdas-interface).
-
-          ```
-          ----------
-          ${{ steps.commit.outputs.invalid_pofile_reports }}
-          ```
