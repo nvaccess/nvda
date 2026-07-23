@@ -95,8 +95,8 @@ jobs:
         to: nvda-l10n@nvaccess.org
         bcc: sascha@nvaccess.org
         # to: sascha@nvaccess.org
-        # from: '"NVDA localisations" <nvda-l10n@nvaccess.org>'
-        from: sascha@nvaccess.org
+        from: nvda-l10n@nvaccess.org
+        # from: sascha@nvaccess.org
         attachments: ${{ steps.commit.outputs.report_files }}
         convert_markdown: true
         body: |
