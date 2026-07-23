@@ -93,10 +93,10 @@ jobs:
         password: ${{ secrets.EMAIL_PASSWORD }}
         subject: "[test] [${{ steps.commit.outputs.invalid_pofile_locales }}]: Errors in interface translations"
         to: nvda-l10n@nvaccess.org
-        bcc: sascha@nvaccess.org
+        # bcc: sascha@nvaccess.org
         # to: sascha@nvaccess.org
         from: "NVDA localisation <noreply@nvaccess.org>"
-        envelope_from: sascha@nvaccess.org
+        # envelope_from: sascha@nvaccess.org
         # from: sascha@nvaccess.org
         attachments: ${{ steps.commit.outputs.report_files }}
         convert_markdown: true
