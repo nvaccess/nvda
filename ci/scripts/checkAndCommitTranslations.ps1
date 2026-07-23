@@ -49,7 +49,7 @@ if ($failures.Count -gt 0) {
 	# $At least one language failed validation.
 	Add-Content -Path $env:GITHUB_OUTPUT -Value "has_failures=true"
 	Add-Content -Path $env:GITHUB_OUTPUT -Value "invalid_pofile_locales=$($failures -join ", ")"
-	Add-Content -Path $env:GITHUB_OUTPUT -Value "report_files=$(ConvertTo-Json -Compress $errorfiles.FullName)"
+	Add-Content -Path $env:GITHUB_OUTPUT -Value "report_files=$(ConvertTo-Json -Compress $errorfiles)"
 	Add-Content -Path $env:GITHUB_OUTPUT -Value "invalid_pofile_reports<<EOF"
 	Add-Content -Path $env:GITHUB_OUTPUT -Value (Get-Content -Path $tempfile -Raw).TrimEnd()
 	Add-Content -Path $env:GITHUB_OUTPUT -Value "EOF"
