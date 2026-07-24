@@ -102,17 +102,17 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
 
     - name: Notify translators of errors
-      if: false && (steps.commit.outputs.has_failures == 'true')
+      if: steps.commit.outputs.has_failures == 'true'
       uses: dawidd6/action-send-mail@v18
       with:
         server_address: ${{ secrets.EMAIL_SERVER_ADDRESS }}
         server_port: ${{ secrets.EMAIL_SERVER_PORT || 465 }}
         username: ${{ secrets.EMAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
+        to: ${{ vars.L10N_EMAIL_TO }}
+        from: ${{ vars.L10N_EMAIL_FROM }}
+        envelope_from: ${{ vars.EMAIL_BOUNCE_ADDRESS }}
         subject: "[${{ steps.commit.outputs.invalid_pofile_locales }}]: Errors in interface translations"
-        to: nvda-l10n@nvaccess.org
-        from: '"NVDA localisation" <noreply@nvaccess.org>'
-        envelope_from: sysadmin@nvaccess.org
         attachments: ${{ join(fromJSON(steps.commit.outputs.report_files), ',') }}
         convert_markdown: true
         body: |
