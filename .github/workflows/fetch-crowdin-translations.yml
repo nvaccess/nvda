@@ -66,7 +66,8 @@ jobs:
       uses: actions/upload-artifact@v7
       with:
         name: "translationValidationErrors_${{ github.run_id }}-${{ github.run_attempt }}"
-        path: ${{ steps.commit.outputs.report_files }}
+        path: |
+          ${{ join(fromJSON(steps.commit.outputs.report_files), '\n') }}
 
     - name: Create pull request
       if: false && (steps.commit.outputs.has_changes == 'true')
@@ -113,7 +114,8 @@ jobs:
         to: sascha@nvaccess.org
         from: '"NVDA localisation" <noreply@nvaccess.org>'
         envelope_from: sysadmin@nvaccess.org
-        attachments: ${{ steps.commit.outputs.report_files }}
+        attachments: |
+          "${{ join(fromJSON(steps.commit.outputs.report_files), '","') }}"
         convert_markdown: true
         body: |
           Errors have been found in the user interface translations for the following locales: ${{ steps.commit.outputs.invalid_pofile_locales }}.
