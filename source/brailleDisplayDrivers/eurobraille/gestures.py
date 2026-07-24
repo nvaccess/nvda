@@ -5,6 +5,7 @@
 
 from typing import TYPE_CHECKING
 import braille
+import braille.display.gesture
 import brailleInput
 import inputCore
 from . import constants
@@ -157,7 +158,7 @@ GestureMapEntries = {
 _gestureMap = inputCore.GlobalGestureMap(GestureMapEntries)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = constants.name
 
 	def __init__(self, display: "BrailleDisplayDriver"):

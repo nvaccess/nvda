@@ -7,6 +7,9 @@ from io import BytesIO
 from typing import Union, List, Optional
 
 import braille
+import braille.display
+import braille.display.driver
+import braille.display.gesture
 from hwIo import intToByte, boolToByte
 import inputCore
 from logHandler import log
@@ -71,7 +74,7 @@ KEY_NAMES = {
 }
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	_dev: hwIo.IoBase
 	name = "baum"
 	# Translators: Names of braille displays.
@@ -154,7 +157,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
@@ -392,7 +395,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keysDown):

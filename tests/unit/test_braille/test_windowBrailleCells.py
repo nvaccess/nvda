@@ -9,11 +9,14 @@ import unittest
 
 import braille
 import braille.buffers
+import braille.constants
+import braille.display
+import braille.extensions
 
 
-def _getDisplayDimensions(dimensions: braille.DisplayDimensions) -> braille.DisplayDimensions:
+def _getDisplayDimensions(dimensions: braille.display.DisplayDimensions) -> braille.display.DisplayDimensions:
 	"""Used to build a braille handler with particular dimensions."""
-	return braille.DisplayDimensions(
+	return braille.display.DisplayDimensions(
 		numRows=2,
 		numCols=20,
 	)
@@ -21,10 +24,10 @@ def _getDisplayDimensions(dimensions: braille.DisplayDimensions) -> braille.Disp
 
 class TestWindowBrailleCells(unittest.TestCase):
 	def setUp(self):
-		braille.filter_displayDimensions.register(_getDisplayDimensions)
+		braille.extensions.filter_displayDimensions.register(_getDisplayDimensions)
 
 	def tearDown(self):
-		braille.filter_displayDimensions.unregister(_getDisplayDimensions)
+		braille.extensions.filter_displayDimensions.unregister(_getDisplayDimensions)
 
 	def test_continuationRow_hasContinuationShape(self):
 		"""A row with hasContinuation=True gets CONTINUATION_SHAPE as its last cell."""
@@ -38,7 +41,7 @@ class TestWindowBrailleCells(unittest.TestCase):
 		cells = buffer.windowBrailleCells
 		# First row: 15 real cells, then CONTINUATION_SHAPE, then 4 padding zeroes.
 		self.assertEqual(len(cells), 40)
-		self.assertEqual(cells[15], braille.CONTINUATION_SHAPE)
+		self.assertEqual(cells[15], braille.constants.CONTINUATION_SHAPE)
 		self.assertEqual(cells[16:20], [0, 0, 0, 0])
 
 	def test_nonContinuationRow_lastCellIsZero(self):
@@ -52,4 +55,4 @@ class TestWindowBrailleCells(unittest.TestCase):
 		cells = buffer.windowBrailleCells
 		# No continuation marker anywhere; positions 15..19 of row 0 should all be 0.
 		self.assertEqual(cells[15:20], [0, 0, 0, 0, 0])
-		self.assertNotIn(braille.CONTINUATION_SHAPE, cells)
+		self.assertNotIn(braille.constants.CONTINUATION_SHAPE, cells)

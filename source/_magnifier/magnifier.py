@@ -13,31 +13,39 @@ from comtypes import COMError
 from logHandler import log
 from NVDAState import _TrackNVDAInitialization
 import wx
+import gui
 import ui
-import speech
 import screenCurtain
+import touchHandler
 import mouseHandler
 import winUser
 from winAPI import _displayTracking
+from winAPI.winUser.constants import SystemMetrics
+from winBindings import user32
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (
 	MagnifierParameters,
 	MagnifierAction,
 	MagnifiedView,
+	MagnifierTrackingType,
 	Direction,
 	Filter,
 	Coordinates,
 )
 from .config import (
+	getFollowState,
 	getZoomLevel,
 	getPanStep,
 	getFilter,
 	isTrueCentered,
 	setZoomLevel,
+	setEnabled,
 	ZoomLevel,
 	_isDebug,
 )
 from .utils.focusManager import FocusManager
+from .utils.errorHandling import MagnifierStartError
+from .utils.mouseHook import MagnifierMouseHook
 
 
 class Magnifier:
@@ -60,6 +68,9 @@ class Magnifier:
 		self._isManualPanning: bool = False
 		self._consecutiveErrors: int = 0
 		self._recoveryAttempts: int = 0
+		self._mouseHook: MagnifierMouseHook | None = None
+		self._pendingMouseCoordinates = Coordinates(0, 0)
+		self._mouseUpdatePending: bool = False
 		# Register for display changes
 		_displayTracking.displayChanged.register(self._onDisplayChanged)
 		self._screenCurtainIsActive: bool = False
@@ -173,18 +184,23 @@ class Magnifier:
 
 		Returns True if the magnifier should not start.
 		At startup, defers silently so the magnifier auto-restarts when the screen curtain is disabled.
+
+		:raises MagnifierStartError: If the screen curtain is active and NVDA startup is complete,
+			so the caller can present the failure (spoken for keyboard commands, or in a message box
+			for GUI actions).
 		"""
 		if not (screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled):
 			return False
 
 		if _TrackNVDAInitialization.isInitializationComplete():
 			log.debug("Screen curtain is active, cannot start magnifier")
-			message = pgettext(
-				"magnifier",
-				# Translators: Message when trying to enable magnifier while screen curtain is active
-				"Cannot enable magnifier. Please disable screen curtain first.",
+			raise MagnifierStartError(
+				pgettext(
+					"magnifier",
+					# Translators: Message when trying to enable magnifier while screen curtain is active
+					"Cannot enable magnifier. Please disable screen curtain first.",
+				),
 			)
-			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
 		else:
 			self._screenCurtainIsActive = True
 		return True
@@ -199,6 +215,41 @@ class Magnifier:
 			return
 		self._isActive = True
 		self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
+		if touchHandler.handler is not None:
+			# Touch events are already intercepted by NVDA; block gesture execution
+			# to prevent incorrect coordinates from the magnified view reaching the system.
+			touchHandler.blockTouchInput = True
+		elif user32.GetSystemMetrics(SystemMetrics.MAXIMUM_TOUCHES) > 0:
+			# The user has a touchscreen but NVDA cannot intercept inputs; warn them.
+			if touchHandler.touchSupported():
+				reason = pgettext(
+					"magnifier",
+					# Translators: Warning when magnifier is started on a device with a touch screen but NVDA's touch support is disabled.
+					"Touch screen input cannot be used because NVDA touch support is disabled. ",
+				)
+			else:
+				reason = pgettext(
+					"magnifier",
+					# Translators: Warning when the magnifier starts on a portable/source copy with a touchscreen.
+					"Touch screen input cannot be used because NVDA is not installed. ",
+				)
+			wx.CallAfter(
+				gui.messageBox,
+				reason
+				+ pgettext(
+					"magnifier",
+					# Translators: Suffix appended to touch warning when touch inputs cannot be blocked by the magnifier.
+					"Touch inputs may not behave as expected while the magnifier is running.",
+				),
+				pgettext(
+					"magnifier",
+					# Translators: Title of the warning dialog shown when touch cannot be intercepted while the magnifier is running.
+					"Touch Screen Warning",
+				),
+				wx.OK | wx.ICON_WARNING,
+			)
+		self._mouseHook = MagnifierMouseHook(self._onMouseMove)
+		self._mouseHook.start()
 
 	def _updateMagnifier(self) -> None:
 		"""
@@ -261,14 +312,56 @@ class Magnifier:
 		self._consecutiveErrors = 0
 		self._startTimer(self._updateMagnifier)
 
+	def _onMouseMove(self, x: int, y: int) -> None:
+		"""
+		Called from the mouse hook thread on every WM_MOUSEMOVE.
+
+		This runs synchronously inside a global WH_MOUSE_LL hook chain, so it must
+		return immediately: it only records the latest coordinates and schedules
+		the actual update on the main thread. Calling into the Magnification API
+		(via _doUpdate) from here would delay delivery of the real WM_MOUSEMOVE to
+		whatever window is under the cursor, for every mouse move on the system,
+		not just NVDA's own windows.
+
+		Only acts when mouse tracking is enabled and the magnifier is active.
+		"""
+		if not self._isActive or self._isManualPanning:
+			return
+		if not getFollowState(MagnifierTrackingType.MOUSE):
+			return
+		self._pendingMouseCoordinates = Coordinates(x, y)
+		if not self._mouseUpdatePending:
+			self._mouseUpdatePending = True
+			wx.CallAfter(self._applyPendingMousePosition)
+
+	def _applyPendingMousePosition(self) -> None:
+		"""
+		Apply the latest mouse position recorded by _onMouseMove.
+		Runs on the main thread via wx.CallAfter, so this is the only place
+		where a mouse-driven update touches the Magnification API.
+		"""
+		self._mouseUpdatePending = False
+		if not self._isActive or self._isManualPanning:
+			return
+		try:
+			self.currentCoordinates = self._pendingMouseCoordinates
+			self._doUpdate()
+		except OSError:
+			pass
+
 	def _stopMagnifier(self) -> None:
 		"""
 		Stop the magnifier
 		"""
 		if not self._isActive:
 			return
+		if self._mouseHook:
+			self._mouseHook.stop()
+			self._mouseHook = None
 		self._stopTimer()
 		self._isActive = False
+		if touchHandler.handler is not None:
+			touchHandler.blockTouchInput = False
 		# Unregister from display changes
 		_displayTracking.displayChanged.unregister(self._onDisplayChanged)
 
@@ -296,6 +389,7 @@ class Magnifier:
 		Handles re-enabling magnifier if it was active before screen curtain.
 		"""
 		if self._screenCurtainIsActive:
+			self._screenCurtainIsActive = False
 			ui.message(
 				pgettext(
 					"magnifier",
@@ -303,9 +397,17 @@ class Magnifier:
 					"Re-enabling magnifier",
 				),
 			)
-			self._startMagnifier()
+			try:
+				self._startMagnifier()
+			except MagnifierStartError as e:
+				# Another magnifier application may have grabbed the API while screen curtain was on.
+				ui.message(e.message)
+				return
+			finally:
+				# Keep config in sync with the real active state, as start() does, so the settings
+				# checkbox does not stay checked when the restart failed.
+				setEnabled(self._isActive)
 			self._updateMagnifier()
-			self._screenCurtainIsActive = False
 
 	def _zoom(self, direction: Direction) -> None:
 		"""
