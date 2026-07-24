@@ -63,7 +63,7 @@ jobs:
       run: ci/scripts/checkAndCommitTranslations.ps1 -branchName ${{ env.branchName }}
 
     - name: Upload error logs
-      if: steps.commit.outputs.has_changes == 'true'
+      if: steps.commit.outputs.has_failures == 'true'
       uses: actions/upload-artifact@v7
       with:
         name: "translationValidationErrors_${{ github.run_number }}-${{ github.run_attempt }}"
