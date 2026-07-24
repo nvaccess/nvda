@@ -5037,7 +5037,7 @@ This option is selected by default.
 
 The following displays support this automatic detection functionality.
 
-* Handy Tech displays
+* Help Tech displays (formerly Handy Tech)
 * Baum/Humanware/APH/Orbit braille displays
 * HumanWare Brailliant BI/B series
 * HumanWare BrailleNote
@@ -5189,18 +5189,18 @@ Please see the display's documentation for descriptions of where these keys can 
 
 <!-- KC:endInclude -->
 
-### Handy Tech Displays {#HandyTech}
+### Help Tech Displays {#HandyTech}
 
-NVDA supports most displays from [Handy Tech](https://www.handytech.de/) when connected via USB, serial port or bluetooth.
-For older USB displays, you will need to install the USB drivers from Handy Tech on your system.
+NVDA supports most displays from [Help Tech](https://www.helptech.de/) (formerly Handy Tech) when connected via USB, serial port or Bluetooth.
 
-The following displays are not supported out of the box, but can be used via [Handy Tech's universal driver](https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers) and NVDA add-on:
+The following displays are no longer supported:
 
 * Braillino
 * Bookworm
-* Modular displays with firmware version 1.13 or lower. Please note that the firmware of this displays can be updated.
+* Modular displays with firmware version 1.13 or lower.
+Please note that the firmware of these displays can be updated.
 
-Following are the key assignments for Handy Tech displays with NVDA.
+Following are the key assignments for Help Tech displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 <!-- KC:beginInclude -->
 

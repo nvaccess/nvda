@@ -21,6 +21,7 @@
   * The "At word or syllable boundaries" option uses hyphenation dictionaries to split long words at syllable boundaries when they do not fit on the display.
 * Added context menu and shortcuts to configuration profiles dialog. (#18169, @amirmahdifard)
 * Magnifier: A new unassigned command has been added to move the mouse cursor to the center of the magnified view. (#20127, @CyrilleB79)
+* Support for the myBraille family of Help Tech Braille displays has been added.
 * Added context menu and shortcuts support to the Input gestures dialog. (#16816, @amirmahdifard)
 * Added context menu and shortcuts support to the Speech Dictionaries dialog. (#20420, @amirmahdifard)
 
