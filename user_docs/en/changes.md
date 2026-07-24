@@ -57,6 +57,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * Braille now follows the spoken text during say all in browse mode when braille is tethered to focus. (#3287, @LeonarddeR)
 * NVDA now reports checked ToolStrip menu items in .NET Framework Windows Forms applications using UI Automation. (#19335, @Cary-rowen)
 * The Add-on Store no longer becomes unresponsive when navigating the list of add-ons quickly, such as by holding down an arrow key. (#17351, @christopherpross)
+* HIMS Braille Sense/Braille EDGE displays connected via USB are detected again on Windows 11 systems where the vendor's himsusb.sys driver cannot be installed, by falling back to WinUSB when the vendor's WinUSB driver package is installed for the device. (#XXXXX, @KihunJang1981)
 
 ### Changes for Developers
 
@@ -86,6 +87,7 @@ Built on top of [Bleak](https://bleak.readthedocs.io/) and the `_asyncioEventLoo
   * Updated py2exe to 0.14.1.1. (#20260, @LeonarddeR)
 * Handlers registered on an `extensionPoints` registrar (`Action`, `Filter`, `Decider`, `AccumulatingDecider`, `Chain`) may now register or unregister handlers while being called, without raising `RuntimeError: OrderedDict mutated during iteration`. (#20545, @LeonarddeR)
   * `HandlerRegistrar.handlers` now iterates over a snapshot of the registered handlers taken before the first handler is yielded.
+* Fixed a handle leak in `hwIo.Bulk.__init__`: if the read pipe opened successfully but the write pipe failed to open, the read handle was never closed, leaving the device open for the remaining lifetime of the process. (#XXXXX, @KihunJang1981)
 
 #### Deprecations
 
