@@ -385,7 +385,13 @@ class Bulk(IoBase):
 		if writeHandle == INVALID_HANDLE_VALUE:
 			if _isDebug():
 				log.debug("Open write handle failed: %s" % ctypes.WinError())
-			raise ctypes.WinError()
+			err = ctypes.WinError()
+			# readHandle already succeeded above; close it before raising so it isn't
+			# leaked. At this point super().__init__() hasn't run yet, so readHandle
+			# isn't stored anywhere (e.g. as self._file) and would otherwise never be
+			# closed, leaving the device open for the lifetime of the process.
+			winKernel.closeHandle(readHandle)
+			raise err
 		super().__init__(
 			readHandle,
 			onReceive,
