@@ -70,7 +70,7 @@ jobs:
         path: ${{ join(fromJSON(steps.commit.outputs.report_files), fromJSON('"\n"')) }}
 
     - name: Create pull request
-      if: false && (steps.commit.outputs.has_changes == 'true')
+      if: steps.commit.outputs.has_changes == 'true'
       run: |
         git push --set-upstream origin ${{ env.branchName }}
         # Construct title and body depending on whether errors were found.
@@ -92,7 +92,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
 
     - name: Merge pull request
-      if: false && (steps.commit.outputs.has_changes == 'true')
+      if: steps.commit.outputs.has_changes == 'true'
       run: |
         # Sets PR to auto-merge when checks have passed
         gh pr merge ${{ env.branchName }} `
@@ -102,7 +102,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
 
     - name: Notify translators of errors
-      if: true && (steps.commit.outputs.has_failures == 'true')
+      if: steps.commit.outputs.has_failures == 'true'
       uses: dawidd6/action-send-mail@v18
       with:
         server_address: ${{ secrets.EMAIL_SERVER_ADDRESS }}
@@ -110,8 +110,7 @@ jobs:
         username: ${{ secrets.EMAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
         subject: "[${{ steps.commit.outputs.invalid_pofile_locales }}]: Errors in interface translations"
-        # to: nvda-l10n@nvaccess.org
-        to: sascha@nvaccess.org
+        to: nvda-l10n@nvaccess.org
         from: '"NVDA localisation" <noreply@nvaccess.org>'
         envelope_from: sysadmin@nvaccess.org
         attachments: ${{ join(fromJSON(steps.commit.outputs.report_files), ',') }}
