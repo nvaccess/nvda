@@ -17,25 +17,21 @@ $errorfiles = @()
 # Check each modified tracked po file,
 # and collect language codes pushed down the pipeline in an array.
 $failures = @(git ls-files --modified "source/locale/**.po" | ForEach-Object {
-	Write-Host -NoNewline "Checking $_ ... "
-	$output = uv run source/l10nutil.py checkPo "$_"
+	Write-Host "::group::Validate $_"
+	uv run source/l10nutil.py checkPo "$_" | Tee-Object -Variable output | Write-Host
+	Write-Host "::endgroup::"
 	if ($LASTEXITCODE -eq 0) {
 		# Add files that don't produce errors.
-		Write-Host "Ok"
 		git add "$_"
 	} else {
 		# This file produced errors.
-		Write-Host "Failed"
 		# Get the language code by stripping the last 2 segments (LC_MESSAGES\nvda.po),
 		# and getting the leaf (the trailing path component),
 		$lang = $_ | Split-Path | Split-Path | Split-Path -Leaf
 		Write-Host "::error file=${_}::[$lang] Validation errors in user interface translations"
-		$errorfile = New-Item -ItemType "File" -Path $errordir -Name "$lang.txt"
-		Write-Host "::group::Validation results for $_"
-		Add-Content -Path $errorfile -Value $output -PassThru | Out-String | Write-host
-		Write-Host "::endgroup::"
+		$errorfile = New-Item -ItemType "File" -Path $errordir -Name "${lang}.txt"
+		Add-Content -Path $errorfile -Value $output
 		$errorfiles += $errorfile
-
 		# Push the language code down the pipeline.
 		Write-Output $lang
 	}
