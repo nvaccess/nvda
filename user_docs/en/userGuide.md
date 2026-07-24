@@ -5173,7 +5173,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 <!-- KC:endInclude -->
 
-### Help Tech Displays {#HelpTech}
+### Help Tech Displays {#HandyTech}
 
 NVDA supports most displays from [Help Tech](https://www.helptech.de/) when connected via USB, serial port or bluetooth.
 
@@ -5181,7 +5181,8 @@ The following displays are no longer supported:
 
 * Braillino
 * Bookworm
-* Modular displays with firmware version 1.13 or lower. Please note that the firmware of these displays can be updated.
+* Modular displays with firmware version 1.13 or lower.
+Please note that the firmware of these displays can be updated.
 
 Following are the key assignments for Help Tech displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
