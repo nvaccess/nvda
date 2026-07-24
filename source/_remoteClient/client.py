@@ -69,6 +69,7 @@ class RemoteClient:
 		if not isRunningOnSecureDesktop():
 			self.menu: Optional[RemoteMenu] = RemoteMenu(self)
 		self._connecting = False
+		self._followerConnectFailures: int = 0
 		urlHandler.registerURLHandler()
 		self.leaderTransport = None
 		self.followerTransport = None
@@ -319,6 +320,31 @@ class RemoteClient:
 				style=wx.OK | wx.ICON_WARNING,
 			)
 
+	@alwaysCallAfter
+	def onConnectAsFollowerFailed(self):
+		"""Notify the user when initially connecting as the controlled computer fails.
+
+		:note: Connection attempts continue in the background
+			(:class:`~.transport.ConnectorThread` retries roughly every 5 seconds),
+			so a transient message is used rather than a dialog,
+			and only for the first failed attempt of a connection that has never succeeded.
+			The retry loop must not be stopped here,
+			as unattended autoconnect relies on it (see #20131).
+		"""
+		if self.followerTransport is None or self.followerTransport.successfulConnects > 0:
+			return
+		self._followerConnectFailures += 1
+		if self._followerConnectFailures == 1:
+			log.error(f"Failed to connect to {self.followerTransport.address}. Retrying.")
+			ui.delayedMessage(
+				pgettext(
+					"remote",
+					# Translators: Reported when connecting as the controlled computer fails.
+					# NVDA will keep trying to connect in the background.
+					"Unable to connect to the Remote Access server. Retrying",
+				),
+			)
+
 	def doConnect(self, evt: inputCore.InputGesture = None):
 		"""Show connection dialog and handle connection initiation.
 
@@ -430,10 +456,12 @@ class RemoteClient:
 		if self.sdHandler is not None:
 			self.sdHandler.followerSession = self.followerSession
 		self.followerTransport = transport
+		self._followerConnectFailures = 0
 		transport.transportCertificateAuthenticationFailed.register(
 			self.onFollowerCertificateFailed,
 		)
 		transport.transportConnected.register(self.onConnectedAsFollower)
+		transport.transportConnectionFailed.register(self.onConnectAsFollowerFailed)
 		transport.transportDisconnected.register(self.onDisconnectedAsFollower)
 		transport.reconnectorThread.start()
 		if self.menu:
