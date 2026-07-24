@@ -18,7 +18,7 @@ $errorfiles = @()
 # and collect language codes pushed down the pipeline in an array.
 $failures = @(git ls-files --modified "source/locale/**.po" | ForEach-Object {
 	Write-Host -NoNewline "::group::Validate $_ ... "
-	$output = uv run source/l10nutil.py checkPo "$_"
+	$output = (uv run source/l10nutil.py checkPo "$_" | Out-String).TrimEnd()
 	if ($LASTEXITCODE -eq 0) {
 		# Add files that don't produce errors.
 		Write-Host "Ok"
