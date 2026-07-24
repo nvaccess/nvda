@@ -39,7 +39,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v7
       with:
-        ref: crowdin-sync
+        ref: beta
         fetch-depth: 1
         submodules: true
 
@@ -74,7 +74,7 @@ jobs:
       run: |
         git push --set-upstream origin ${{ env.branchName }}
         # Construct title and body depending on whether errors were found.
-        $prTitle = "[test] Update "
+        $prTitle = "Update "
         $prBody = "This pull request updates translations to languages being tracked from Crowdin.`n`n"
         if ("${{ steps.commit.outputs.has_failures }}" -eq "true") {
           $prTitle += "valid "
