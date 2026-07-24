@@ -284,7 +284,7 @@ def cleanup():
 			o.appModule for o in api.getFocusAncestors() + [api.getFocusObject()] if o and o.appModule
 		):
 			if hasattr(deadMod, "event_appLoseFocus"):
-				deadMod.event_appLoseFocus()
+				deadMod.event_appLoseFocus()  # ty: ignore[call-non-callable]
 		import eventHandler
 
 		eventHandler.handleAppTerminate(deadMod)

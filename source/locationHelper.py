@@ -261,7 +261,7 @@ class _RectMixin:
 		bottom = max(ys)
 		if cls is RectLTWH:
 			return cls(left, top, right - left, bottom - top)
-		return cls(left, top, right, bottom)
+		return cls(left, top, right, bottom)  # ty: ignore[too-many-positional-arguments]
 
 	def toRECT(self):
 		"""Converts self to a L{ctypes.wintypes.RECT}"""

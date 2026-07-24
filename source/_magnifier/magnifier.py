@@ -494,7 +494,7 @@ class Magnifier:
 		"""
 		raise NotImplementedError("Subclasses must implement this method")
 
-	def _startTimer(self, callback: Callable[[], None] = None) -> None:
+	def _startTimer(self, callback: Callable[[], None]) -> None:
 		"""
 		Start the timer with a callback function
 

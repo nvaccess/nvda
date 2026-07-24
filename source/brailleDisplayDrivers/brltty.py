@@ -14,7 +14,7 @@ import inputCore
 from typing import List
 
 try:
-	import brlapi
+	import brlapi  # ty: ignore[unresolved-import]
 
 	BRLAPI_CMD_KEYS = {
 		code: name[8:].lower() for name, code in vars(brlapi).items() if name.startswith("KEY_CMD_")

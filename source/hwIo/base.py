@@ -15,12 +15,14 @@ from __future__ import annotations
 import functools
 import sys
 import ctypes
+import ctypes.wintypes
 import threading
 from ctypes import byref
 from ctypes.wintypes import DWORD
 from typing import Optional, Any, Union, Tuple, Callable
 import weakref
 import serial
+import serial.win32
 from serial.win32 import (
 	OVERLAPPED,
 	FILE_FLAG_OVERLAPPED,
@@ -236,7 +238,7 @@ class IoBase(object):
 		if _isDebug():
 			log.debug("Read: %r" % data)
 		try:
-			self._onReceive(data)
+			self._onReceive(data)  # ty: ignore[call-non-callable]
 		except:  # noqa: E722
 			log.error("", exc_info=True)
 

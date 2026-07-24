@@ -250,7 +250,7 @@ class LabeledControlHelper(Generic[_LabeledControlT]):
 
 			def listenForEnableChanged(self, _ctrl: _LabeledControlT):
 				self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy)
-				self._labelText = self.GetLabelText()
+				self._labelText = self.GetLabelText()  # ty: ignore[no-matching-overload]
 				_ctrl.Bind(LabeledControlHelper.EVT_ENABLE_CHANGED, self._onEnableChanged)
 				_ctrl.Bind(LabeledControlHelper.EVT_SHOW_CHANGED, self._onShowChanged)
 				self.isListening = True
@@ -267,7 +267,7 @@ class LabeledControlHelper(Generic[_LabeledControlT]):
 						self.SetLabelText("")
 					self.Parent.Layout()
 
-		class WxCtrlWithEnableEvnt(wxCtrlClass):
+		class WxCtrlWithEnableEvnt(wxCtrlClass):  # ty: ignore[shadowed-type-variable, unsupported-base]
 			def Enable(self, enable=True):
 				evt = LabeledControlHelper.EnableChanged(isEnabled=enable)
 				wx.PostEvent(self, evt)
@@ -291,7 +291,7 @@ class LabeledControlHelper(Generic[_LabeledControlT]):
 		self._label = LabelEnableChangedListener(parent, label=labelText)
 		self._ctrl = cast(_LabeledControlT, WxCtrlWithEnableEvnt(parent, **kwargs))
 		self._label.listenForEnableChanged(self._ctrl)
-		self._sizer = associateElements(self._label, self._ctrl)
+		self._sizer = associateElements(self._label, self._ctrl)  # ty: ignore[no-matching-overload]
 
 	@property
 	def control(self) -> _LabeledControlT:
@@ -519,7 +519,7 @@ def wxCallOnMain[**P, T](
 			exception = sys.exception()
 		event.set()
 
-	if wx.IsMainThread():
+	if wx.IsMainThread():  # ty: ignore[missing-argument]
 		functionWrapper()
 	else:
 		wx.CallAfter(functionWrapper)

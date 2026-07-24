@@ -1422,9 +1422,7 @@ qn(
 del qn
 
 # Build _browseModeElements dynamically from the registry populated by addQuickNav calls above.
-BrowseModeTreeInterceptor._browseModeElements: tuple[tuple[str, str], ...] = (
-	*BrowseModeTreeInterceptor._browseTouchNavRegistry,
-)
+BrowseModeTreeInterceptor._browseModeElements = (*BrowseModeTreeInterceptor._browseTouchNavRegistry,)
 
 
 class ElementsListDialog(
@@ -2619,7 +2617,7 @@ class BrowseModeDocumentTreeInterceptor(
 		result = []
 		for k, g in itertools.groupby(sequence, key=type):
 			if k == str:  # noqa: E721
-				result.append("".join(g))
+				result.append("".join(g))  # ty: ignore[no-matching-overload]
 			else:
 				result.extend(list(g))
 		return result

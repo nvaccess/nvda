@@ -11,7 +11,7 @@ import ctypes
 import encodings
 import locale
 import unicodedata
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import ABCMeta, abstractmethod
 from functools import cached_property
 from typing import Generator, Optional, Tuple, Type
 
@@ -35,7 +35,8 @@ class OffsetConverter(metaclass=ABCMeta):
 	def __repr__(self):
 		return f"{self.__class__.__name__}({repr(self.decoded)})"
 
-	@abstractproperty
+	@property
+	@abstractmethod
 	def encodedStringLength(self) -> int:
 		"""Returns the length of the string in itssubclass-specific encoded representation."""
 		raise NotImplementedError

@@ -41,7 +41,7 @@ class TweetListItem(ListItem):
 			# This is the date column.
 			# Its content is overridden on screen,
 			# so use display model.
-			left, top, width, height = self._getColumnLocationRaw(index)
+			left, top, width, height = self._getColumnLocationRaw(index)  # ty: ignore[not-iterable]
 			content = displayModel.DisplayModelTextInfo(
 				self,
 				locationHelper.RectLTRB(left, top, left + width, top + height),

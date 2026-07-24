@@ -96,7 +96,7 @@ class _NvdaLocationData:
 		elif self.whichNVDA == "source":
 			return None  # Py2exe not used for source.
 
-	def findInstalledNVDAPath(self) -> _Optional[str]:
+	def findInstalledNVDAPath(self) -> str:
 		NVDAFilePath = _pJoin(_expandvars("%PROGRAMFILES%"), "nvda", "nvda.exe")
 		legacyNVDAFilePath = _pJoin(_expandvars("%PROGRAMFILES%"), "NVDA", "nvda.exe")
 		exeErrorMsg = f"Unable to find installed NVDA exe. Paths tried: {NVDAFilePath}, {legacyNVDAFilePath}"
@@ -270,7 +270,7 @@ class NvdaLib:
 		return remoteLib
 
 	def start_NVDAInstaller(self, settingsFileName):
-		self.lastNVDAStart = _datetime.utcnow()
+		self.lastNVDAStart = _datetime.now()
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
 		self.setup_nvda_profile(settingsFileName)
 		nvdaProcessHandle = self._startNVDAInstallerProcess()
@@ -295,7 +295,7 @@ class NvdaLib:
 			)
 
 	def start_NVDA(self, settingsFileName: str, gesturesFileName: _Optional[str] = None):
-		self.lastNVDAStart = _datetime.utcnow()
+		self.lastNVDAStart = _datetime.now()
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
 		self.setup_nvda_profile(settingsFileName, gesturesFileName)
 		builtIn.log("Config copied", level="DEBUG")  # observe timing of the startup

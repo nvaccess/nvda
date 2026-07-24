@@ -115,7 +115,7 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 			rob.getDefaultInstructionList().addComment(
 				f"Using cached {cachedRemoteObj} for constant value {repr(obj)}",
 			)
-			return cast(RemoteType, cachedRemoteObj)
+			return cachedRemoteObj
 		with rob.overrideDefaultSection("const"):
 			remoteObj = RemoteType.createNew(rob, obj, const=True)
 		rob.getDefaultInstructionList().addComment(
@@ -205,8 +205,8 @@ class RemoteVariant(RemoteBaseObject):
 		result = RemoteBool(self.rob, self.rob.requestNewOperandId())
 		self.rob.getDefaultInstructionList().addInstruction(
 			RemoteClass._IsTypeInstruction(
-				result=result,
-				target=self,
+				result=result,  # ty: ignore[unknown-argument]
+				target=self,  # ty: ignore[unknown-argument]
 			),
 		)
 		return result
@@ -268,8 +268,8 @@ class RemoteIntegral(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar]):
 
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		yield self._NewInstruction(
-			result=self,
-			value=self._ctype(self.initialValue),
+			result=self,  # ty: ignore[unknown-argument]
+			value=self._ctype(self.initialValue),  # ty: ignore[unknown-argument]
 		)
 
 

@@ -450,7 +450,7 @@ class SpeechManagerInteractions:
 			)
 			self._awaitingSpeakCalls.append(sequenceNumbers)
 		else:
-			for i in sequenceNumbers:
+			for i in sequenceNumbers:  # ty: ignore[not-iterable]
 				if isinstance(i, int):
 					self.expect_synthSpeak(i)
 				else:

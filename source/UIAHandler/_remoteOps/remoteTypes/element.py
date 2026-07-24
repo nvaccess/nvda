@@ -25,7 +25,7 @@ from . import (
 )
 
 
-class RemoteElement(RemoteExtensionTarget[POINTER(UIA.IUIAutomationElement)]):
+class RemoteElement(RemoteExtensionTarget[POINTER(UIA.IUIAutomationElement)]):  # ty: ignore[invalid-type-form]
 	"""
 	Represents a remote UI Automation element.
 	Allows for navigation and property retrieval.

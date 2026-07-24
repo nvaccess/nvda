@@ -33,7 +33,7 @@ class TestScanner(unittest.TestCase):
 
 		def fakeRunCoroutine(coro: object) -> MagicMock:
 			if hasattr(coro, "close"):
-				coro.close()
+				coro.close()  # ty: ignore[call-non-callable]
 			return mockFuture
 
 		self.runCoroutinePatcher = patch(
@@ -207,7 +207,7 @@ class TestBle(unittest.TestCase):
 		# was never awaited" — the mock will never actually run it.
 		def fakeRunCoroutineSync(coro: object, timeout: float | None = None) -> None:
 			if hasattr(coro, "close"):
-				coro.close()
+				coro.close()  # ty: ignore[call-non-callable]
 			return None
 
 		self.runCoroutineSyncPatcher = patch(

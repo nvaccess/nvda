@@ -334,6 +334,6 @@ class TestBRLTTY(unittest.TestCase):
 	def test_brlapi(self):
 		try:
 			# SUpress Flake8 F401 imported but unused, as we're testing the import
-			import brlapi  # noqa: F401
+			import brlapi  # noqa: F401  # ty: ignore[unresolved-import]
 		except Exception:
 			self.fail("Couldn't import the brlapi module")

@@ -498,7 +498,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 		if self.encoding == textUtils.WCHAR_ENCODING:
 			offsetConverter = textUtils.WideStringOffsetConverter(lineText)
 			relStrStart, relStrEnd = offsetConverter.encodedToStrOffsets(relOffset, relOffset + 1)
-			relWideStringStart, relWideStringEnd = offsetConverter.strToEncodedOffsets(relStrStart, relStrEnd)
+			relWideStringStart, relWideStringEnd = offsetConverter.strToEncodedOffsets(relStrStart, relStrEnd)  # ty: ignore[not-iterable]
 			return (relWideStringStart + lineStart, relWideStringEnd + lineStart)
 		return (offset, offset + 1)
 
@@ -528,7 +528,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 			relStrOffset = offsetConverter.encodedToStrOffsets(relOffset, relOffset)[0]
 			relStrStart = findStartOfWord(lineText, relStrOffset)
 			relStrEnd = findEndOfWord(lineText, relStrOffset)
-			relWideStringStart, relWideStringEnd = offsetConverter.strToEncodedOffsets(relStrStart, relStrEnd)
+			relWideStringStart, relWideStringEnd = offsetConverter.strToEncodedOffsets(relStrStart, relStrEnd)  # ty: ignore[not-iterable]
 			return (relWideStringStart + lineStart, relWideStringEnd + lineStart)
 		start = findStartOfWord(lineText, offset - lineStart) + lineStart
 		end = findEndOfWord(lineText, offset - lineStart) + lineStart
@@ -602,7 +602,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 			position = Offsets(offset, offset)
 		elif isinstance(position, NVDAObject):
 			start, end = self._getOffsetsFromNVDAObject(position)
-			position = textInfos.offsets.Offsets(start, end)
+			position = Offsets(start, end)
 
 		if type(position) is type(self):
 			# This is a direct TextInfo to TextInfo copy.

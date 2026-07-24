@@ -9,6 +9,7 @@ import ctypes.wintypes
 import threading
 import winKernel
 import typing
+from collections.abc import Callable
 from logHandler import log
 from serial.win32 import OVERLAPPED, LPOVERLAPPED
 from extensionPoints.util import AnnotatableWeakref, BoundMethodWeakref
@@ -26,7 +27,7 @@ __getattr__ = _deprecate.handleDeprecations(
 ApcT = typing.Callable[[int], None]
 ApcIdT = int
 OverlappedStructAddressT = int
-CompletionRoutineT = typing.Callable[[int, int, LPOVERLAPPED], None]
+CompletionRoutineT = Callable[[int, int, LPOVERLAPPED], None]  # ty: ignore[invalid-type-form]
 ApcStoreT = typing.Dict[
 	ApcIdT,
 	typing.Tuple[
@@ -101,7 +102,7 @@ class IoThread(threading.Thread):
 			function = reference
 
 		try:
-			function(actualParam)
+			function(actualParam)  # ty: ignore[call-non-callable]
 		except Exception:
 			log.error(
 				f"Error in APC function {function!r} with apcId {param} queued to IoThread",
@@ -112,7 +113,7 @@ class IoThread(threading.Thread):
 	def _internalCompletionRoutine(
 		error: int,
 		numberOfBytes: int,
-		overlapped: LPOVERLAPPED,
+		overlapped: LPOVERLAPPED,  # ty: ignore[invalid-type-form]
 	):
 		threadinst = threading.current_thread()
 		if not isinstance(threadinst, IoThread):

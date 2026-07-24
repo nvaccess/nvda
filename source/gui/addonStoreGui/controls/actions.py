@@ -52,7 +52,7 @@ class _ActionsContextMenuP(Generic[AddonActionT], ABC):
 	def popupContextMenuFromPosition(
 		self,
 		targetWindow: wx.Window,
-		position: wx.Position = wx.DefaultPosition,
+		position: wx.Point = wx.DefaultPosition,
 	):
 		self._populateContextMenu()
 		targetWindow.PopupMenu(self._contextMenu, pos=position)
@@ -115,7 +115,7 @@ class _UpdateChannelSubMenu(_ActionsContextMenuP[AddonUpdateChannelActionVM]):
 	def popupContextMenuFromPosition(
 		self,
 		targetWindow: wx.Window,
-		position: wx.Position = wx.DefaultPosition,
+		position: wx.Point = wx.DefaultPosition,
 	):
 		raise NotImplementedError("This context menu should not be used directly")
 
@@ -189,7 +189,7 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 	def popupContextMenuFromPosition(
 		self,
 		targetWindow: wx.Window,
-		position: wx.Position = wx.DefaultPosition,
+		position: wx.Point = wx.DefaultPosition,
 	):
 		super().popupContextMenuFromPosition(targetWindow, position)
 		if self._contextMenu.GetMenuItemCount() == 0:

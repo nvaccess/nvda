@@ -239,7 +239,7 @@ class Logger(logging.Logger):
 		level: int,
 		msg: str,
 		args: tuple[Any, ...],
-		exc_info: _excInfo_t | bool | BaseException = None,
+		exc_info: _excInfo_t | bool | BaseException | None = None,
 		extra: dict | None = None,
 		codepath: str | None = None,
 		activateLogViewer: bool = False,
@@ -305,7 +305,7 @@ class Logger(logging.Logger):
 
 			with default_settings():
 				for secret in list(scan_line(formattedMsg)):
-					formattedMsg = formattedMsg.replace(secret.secret_value, "****")
+					formattedMsg = formattedMsg.replace(secret.secret_value, "****")  # ty: ignore[no-matching-overload]
 
 			res = super()._log(level, formattedMsg, (), exc_info, extra)
 

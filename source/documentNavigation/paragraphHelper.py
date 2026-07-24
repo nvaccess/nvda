@@ -181,7 +181,7 @@ def _moveTextInfoToSingleLineBreakParagraph(nextParagraph: bool, ti: textInfos.T
 def moveToSingleLineBreakParagraph(
 	nextParagraph: bool,
 	speakNew: bool,
-	ti: textInfos.TextInfo = None,
+	ti: textInfos.TextInfo | None = None,
 ) -> Tuple[bool, bool]:
 	"""
 	Moves to the previous or next paragraph which is delimited by a single line break.
@@ -271,7 +271,7 @@ def _moveTextInfoToMultiLineBreakParagraph(nextParagraph: bool, ti: textInfos.Te
 def moveToMultiLineBreakParagraph(
 	nextParagraph: bool,
 	speakNew: bool,
-	ti: textInfos.TextInfo = None,
+	ti: textInfos.TextInfo | None = None,
 ) -> Tuple[bool, bool]:
 	"""
 	Moves to the previous or next paragraph delineated by one or more blank lines.

@@ -95,7 +95,7 @@ class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 		return super(AutoWidthColumnListCtrl, self).OnGetItemText(item, column)
 
 	def OnGetItemText(self, item, column):
-		return self._itemTextCallable(item, column)
+		return self._itemTextCallable(item, column)  # ty: ignore[call-non-callable]
 
 	def sendListItemFocusedEvent(self, index):
 		evt = wx.ListEvent(wx.wxEVT_LIST_ITEM_FOCUSED, self.Id)
@@ -469,7 +469,7 @@ class FeatureFlagCombo(wx.Choice):
 		translatedOptions: typing.OrderedDict[FeatureFlagEnumT, str] = collections.OrderedDict(
 			{
 				value: value.displayString
-				for value in self._optionsEnumClass
+				for value in self._optionsEnumClass  # ty: ignore[not-iterable]
 				if value != self._optionsEnumClass.DEFAULT
 			},
 		)
@@ -591,8 +591,8 @@ class _CheckListCtrl(AutoWidthColumnListCtrl):  # pyright: ignore[reportUnusedCl
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.EnableCheckBoxes(True)
-		self._newWndProc: WNDPROC | None = None
-		self._oldWndProc: WNDPROC | None = None
+		self._newWndProc: WNDPROC | None = None  # ty: ignore[invalid-type-form]
+		self._oldWndProc: WNDPROC | None = None  # ty: ignore[invalid-type-form]
 		self._checkboxlessIndices: set[int] = set()
 		self._hookWndProc()
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy, self)

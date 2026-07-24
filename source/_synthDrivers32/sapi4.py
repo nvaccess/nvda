@@ -129,7 +129,7 @@ else:
 	c_ulonglong_p = POINTER(c_ulonglong)
 	LP_IAudioDestNotifySink = POINTER(IAudioDestNotifySink)
 
-_Bookmark = NamedTuple("Bookmark", [("bytePos", int), ("id", int)])
+_Bookmark = NamedTuple("_Bookmark", [("bytePos", int), ("id", int)])
 
 _lastLoggedTimes: dict[Callable, float] = dict()
 

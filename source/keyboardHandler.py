@@ -532,7 +532,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		super(KeyboardInputGesture, self).__init__()
 
 	@classmethod
-	def _generalizeModifiers(cls, modifiers: _ModifierT) -> _ModifierT:
+	def _generalizeModifiers(cls, modifiers: set[_ModifierT]) -> set[_ModifierT]:
 		"""Return the input set, with specific modifiers replaced with their general equivalents.
 
 		Replaces keys like leftAlt or rightCtrl with their generic alternatives (i.e. alt or ctrl).

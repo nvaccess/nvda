@@ -71,7 +71,7 @@ def newVARIANT_value_fset(self, value):
 			value = value.contents
 		except (NameError, AttributeError):
 			pass
-	VARIANT.VALUE_FSEWT_ORIG(self, value)
+	VARIANT.VALUE_FSEWT_ORIG(self, value)  # ty: ignore[call-non-callable]
 	if realValue is not value:
 		from comtypes.automation import VT_BYREF
 

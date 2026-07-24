@@ -1532,7 +1532,7 @@ def _extendSpeechSequence_addMathForTextInfo(
 def speakTextInfo(
 	info: textInfos.TextInfo,
 	useCache: Union[bool, SpeakTextInfoState] = True,
-	formatConfig: Dict[str, bool] = None,
+	formatConfig: dict[str, bool] | None = None,
 	unit: Optional[str] = None,
 	reason: OutputReason = OutputReason.QUERY,
 	_prefixSpeechCommand: Optional[SpeechCommand] = None,
@@ -2570,7 +2570,7 @@ def getControlFieldSpeech(  # noqa: C901
 		and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther))
 	):
 		if all(isinstance(item, str) for item in roleTextSequence):
-			joinedRoleText = " ".join(roleTextSequence)
+			joinedRoleText = " ".join(roleTextSequence)  # ty: ignore[no-matching-overload]
 			out = [
 				# Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 				_("out of %s") % joinedRoleText,

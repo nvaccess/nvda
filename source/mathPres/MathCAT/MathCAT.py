@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2026 NV Access Limited, Neil Soiffer, Ryan McCleary, Cyrille Bougot
+# Copyright (C) 2022-2026 NV Access Limited, Neil Soiffer, Ryan McCleary, Cyrille Bougot, Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -19,7 +19,7 @@ import braille.regions.base
 import braille.regions.NVDAObject
 import config
 import gui
-import libmathcat_py as libmathcat
+import libmathcat_py as libmathcat  # ty: ignore[unresolved-import]
 import speech
 import ui
 import winKernel
@@ -231,7 +231,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		except Exception:
 			log.exception()
 			# Translators: alerts users to an error copying math.
-			ui.message(pgettext("unable to copy math"))
+			ui.message(pgettext("math", "unable to copy math"))
 
 	# not a perfect match sequence, but should capture normal MathML
 	_mathTagHasNameSpace: re.Pattern = re.compile("<math .*?xmlns.+?>")

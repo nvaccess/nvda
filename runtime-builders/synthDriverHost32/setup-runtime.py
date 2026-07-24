@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 
 import os
-import importlib
+import importlib.machinery
 import fnmatch
 from glob import glob
 import sys

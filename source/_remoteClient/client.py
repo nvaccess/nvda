@@ -254,7 +254,7 @@ class RemoteClient:
 
 				self._disconnectConfirmationDialog = dialog
 				try:
-					if dialog.ShowModal() != ReturnCode.YES:
+					if dialog.ShowModal() != ReturnCode.YES:  # ty: ignore[missing-argument]
 						log.info("Remote disconnection cancelled by user.")
 						return
 				except Exception:
@@ -319,7 +319,7 @@ class RemoteClient:
 				style=wx.OK | wx.ICON_WARNING,
 			)
 
-	def doConnect(self, evt: inputCore.InputGesture = None):
+	def doConnect(self, evt: inputCore.InputGesture | None = None):
 		"""Show connection dialog and handle connection initiation.
 
 		:param evt: Optional wx event object

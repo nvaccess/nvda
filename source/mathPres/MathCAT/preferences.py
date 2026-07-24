@@ -13,7 +13,7 @@ from NVDAState import ReadPaths
 from mathPres.MathCAT import localization
 from utils.displayString import DisplayStringStrEnum
 
-import libmathcat_py as libmathcat
+import libmathcat_py as libmathcat  # ty: ignore[unresolved-import]
 from .rulesUtils import getRulesFiles
 
 
@@ -167,8 +167,8 @@ class BrailleNavHighlightOption(DisplayStringStrEnum):
 # two constants to scale "PauseFactor"
 # these work out so that a slider that goes [0,14] has value ~100 at 7 and ~1000 at 14
 class PauseFactor(Enum):
-	SCALE: float = 9.5
-	LOG_BASE: float = 1.4
+	SCALE = 9.5
+	LOG_BASE = 1.4
 
 
 def pathToBrailleFolder() -> str:

@@ -5,10 +5,9 @@
 
 
 from __future__ import annotations
-from abc import ABCMeta, abstractproperty
+from abc import ABCMeta, abstractmethod
 from typing import (
 	Self,
-	ClassVar,
 	Any,
 	Iterable,
 )
@@ -106,9 +105,10 @@ class Operand(_RemoteBase):
 
 
 class InstructionBase(metaclass=ABCMeta):
-	opCode: ClassVar[lowLevel.InstructionType]
+	opCode: lowLevel.InstructionType
 
-	@abstractproperty
+	@property
+	@abstractmethod
 	def params(self) -> dict[str, Any]:
 		raise NotImplementedError()
 

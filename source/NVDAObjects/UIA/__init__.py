@@ -10,7 +10,6 @@ from __future__ import annotations
 import typing
 from typing import (
 	Generator,
-	List,
 	Optional,
 	Dict,
 	Tuple,
@@ -143,7 +142,7 @@ class UIATextInfo(textInfos.TextInfo):
 				cacheRequest.addProperty(ID)
 			except COMError:
 				pass
-		UIATextInfo._controlFieldUIACacheRequest = self._controlFieldUIACacheRequest = cacheRequest
+		UIATextInfo._controlFieldUIACacheRequest = self._controlFieldUIACacheRequest = cacheRequest  # ty: ignore[invalid-attribute-access]
 		return cacheRequest
 
 	#: The UI Automation text units (in order of resolution) that should be used when fetching formatting.
@@ -354,7 +353,7 @@ class UIATextInfo(textInfos.TextInfo):
 		textRange: IUIAutomationTextRangeT,
 		formatConfig: Dict,
 		ignoreMixedValues: bool = False,
-	) -> textInfos.FormatField:
+	) -> textInfos.FieldCommand:
 		"""
 		Fetches formatting for the given UI Automation Text range.
 		@param textRange: the text range whos formatting should be fetched.
@@ -656,8 +655,8 @@ class UIATextInfo(textInfos.TextInfo):
 		self,
 		textRange: IUIAutomationTextRangeT,
 		formatConfig: Dict,
-		UIAFormatUnits: Optional[List[int]] = None,
-	) -> Generator[textInfos.FieldCommand, None, None]:
+		UIAFormatUnits: list[int] | None = None,
+	) -> Generator[textInfos.FieldCommand | str, None, None]:
 		"""
 		Yields format fields and text for the given UI Automation text range, split up by the first available UI Automation text unit that does not result in mixed attribute values.
 		@param textRange: the UI Automation text range to walk.

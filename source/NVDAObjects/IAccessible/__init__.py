@@ -779,9 +779,9 @@ class IAccessible(Window):
 		windowHandle: Optional[int] = None,
 		IAccessibleObject: Optional[Union[IUnknown, IA.IAccessible, IA2.IAccessible2]] = None,
 		IAccessibleChildID: Optional[int] = None,
-		event_windowHandle: Optional = None,
-		event_objectID: Optional = None,
-		event_childID: Optional = None,
+		event_windowHandle: int | None = None,
+		event_objectID: int | None = None,
+		event_childID: int | None = None,
 	):
 		"""
 		@param windowHandle: the window handle, if known
@@ -1198,7 +1198,7 @@ class IAccessible(Window):
 	def isPointInObject(self, x, y):
 		if self.windowHandle and not super(IAccessible, self).isPointInObject(x, y):
 			return False
-		res = IAccessibleHandler.accHitTest(self.IAccessibleObject, self.IAccessibleChildID, x, y)
+		res = IAccessibleHandler.accHitTest(self.IAccessibleObject, x, y)
 		if not res or res[0] != self.IAccessibleObject or res[1] != self.IAccessibleChildID:
 			return False
 		return True

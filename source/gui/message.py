@@ -839,7 +839,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			dlg = cls(parent, message, caption, buttons=(DefaultButton.OK,))
 			if okLabel is not None:
 				dlg.setOkLabel(okLabel)
-			dlg.ShowModal()
+			dlg.ShowModal()  # ty: ignore[missing-argument]
 
 		wxCallOnMain(impl)
 
@@ -871,7 +871,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 				dlg.setOkLabel(okLabel)
 			if cancelLabel is not None:
 				dlg.setButtonLabel(ReturnCode.CANCEL, cancelLabel)
-			return dlg.ShowModal()
+			return dlg.ShowModal()  # ty: ignore[missing-argument]
 
 		return wxCallOnMain(impl)
 
@@ -906,7 +906,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 				dlg.setButtonLabel(ReturnCode.NO, noLabel)
 			if cancelLabel is not None:
 				dlg.setButtonLabel(ReturnCode.CANCEL, cancelLabel)
-			return dlg.ShowModal()
+			return dlg.ShowModal()  # ty: ignore[missing-argument]
 
 		return wxCallOnMain(impl)
 
@@ -962,7 +962,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""
 		if check is None:
 			check = cls._FAIL_ON_NONMAIN_THREAD
-		if check and not wx.IsMainThread():
+		if check and not wx.IsMainThread():  # ty: ignore[missing-argument]
 			raise RuntimeError("Message dialogs can only be used from the main thread.")
 
 	def _realizeLayout(self) -> None:
@@ -1318,7 +1318,7 @@ def _messageBoxShim(message: str, caption: str, style: int, parent: wx.Window | 
 		dialogType=_messageBoxIconStylesToMessageDialogType(style),
 		buttons=_messageBoxButtonStylesToMessageDialogButtons(style),
 	)
-	return _messageDialogReturnCodeToMessageBoxReturnCode(dialog.ShowModal())
+	return _messageDialogReturnCodeToMessageBoxReturnCode(dialog.ShowModal())  # ty: ignore[missing-argument]
 
 
 def _messageDialogReturnCodeToMessageBoxReturnCode(returnCode: ReturnCode) -> int:

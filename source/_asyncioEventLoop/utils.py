@@ -8,12 +8,13 @@ Utility functions for scheduling coroutines on the asyncio event loop.
 """
 
 import asyncio
+import concurrent.futures
 from collections.abc import Coroutine
 
 from . import _state
 
 
-def runCoroutine(coro: Coroutine) -> asyncio.Future:
+def runCoroutine(coro: Coroutine) -> concurrent.futures.Future:
 	"""Schedule a coroutine to be run on the asyncio event loop.
 
 	:param coro: The coroutine to run.

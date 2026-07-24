@@ -543,7 +543,7 @@ def _closeAllWindows():
 	gui.mainFrame.sysTrayIcon.menu = None
 	gui.mainFrame.sysTrayIcon = None
 
-	for window in wx.GetTopLevelWindows():
+	for window in wx.GetTopLevelWindows():  # ty: ignore[missing-argument]
 		if isinstance(window, wx.Dialog) and window.IsModal():
 			log.debug(f"ending modal {window} during exit process")
 			wx.CallAfter(window.EndModal, wx.ID_CLOSE_ALL)
@@ -598,7 +598,7 @@ def _initializeObjectCaches():
 	The desktop object is an NVDA object without event handlers associated with it.
 	"""
 	import api
-	import NVDAObjects
+	import NVDAObjects.window
 	import winUser
 
 	desktopObject = NVDAObjects.window.Window(windowHandle=winUser.getDesktopWindow())
@@ -746,6 +746,7 @@ def main():
 
 	schedule.initialize()
 	import configobj
+	import configobj.validate
 
 	log.info(
 		"Using configobj version %s with validate version %s"

@@ -368,7 +368,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy)
 
 	def _registerAndRestorePersistentControls(self):
-		persistenceManager = persist.PersistenceManager.Get()
+		persistenceManager = persist.PersistenceManager.Get()  # ty: ignore[missing-argument]
 		for control in self._persistentControls:
 			persistenceManager.Register(
 				control,
@@ -379,12 +379,12 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 			persistenceManager.Restore(control)
 
 	def _savePersistentControls(self):
-		persistenceManager = persist.PersistenceManager.Get()
+		persistenceManager = persist.PersistenceManager.Get()  # ty: ignore[missing-argument]
 		for control in self._persistentControls:
 			persistenceManager.Save(control)
 
 	def _unregisterPersistentControls(self):
-		persistenceManager = persist.PersistenceManager.Get()
+		persistenceManager = persist.PersistenceManager.Get()  # ty: ignore[missing-argument]
 		for control in self._persistentControls:
 			persistenceManager.Unregister(control)
 

@@ -25,6 +25,7 @@ import eventHandler
 import braille
 import braille.regions.focus
 import vision
+import vision.constants
 import watchdog
 import exceptions
 import appModuleHandler

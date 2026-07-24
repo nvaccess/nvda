@@ -15,6 +15,7 @@ from colors import RGB
 import eventHandler
 from logHandler import log
 import textInfos
+import textInfos.offsets
 import config
 import locationHelper
 from typing import (

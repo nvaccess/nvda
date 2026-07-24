@@ -29,9 +29,7 @@ from .types import (
 if TYPE_CHECKING:
 	import NVDAObjects
 	from .speech import (
-		getTextInfoSpeech,
 		SpeakTextInfoState,
-		speakObject,
 	)
 
 
@@ -46,9 +44,9 @@ SayAllHandler = None
 
 def initialize(
 	speakFunc: Callable[[SpeechSequence], None],
-	speakObject: "speakObject",
-	getTextInfoSpeech: "getTextInfoSpeech",
-	SpeakTextInfoState: "SpeakTextInfoState",
+	speakObject: Callable,
+	getTextInfoSpeech: Callable,
+	SpeakTextInfoState: "type[SpeakTextInfoState]",
 ):
 	log.debug("Initializing sayAllHandler")
 	global SayAllHandler
@@ -64,9 +62,9 @@ class _SayAllHandler:
 	def __init__(
 		self,
 		speechWithoutPausesInstance: SpeechWithoutPauses,
-		speakObject: "speakObject",
-		getTextInfoSpeech: "getTextInfoSpeech",
-		SpeakTextInfoState: "SpeakTextInfoState",
+		speakObject: Callable,
+		getTextInfoSpeech: Callable,
+		SpeakTextInfoState: "type[SpeakTextInfoState]",
 	):
 		self.lastSayAllMode = None
 		self.speechWithoutPausesInstance = speechWithoutPausesInstance
@@ -454,7 +452,7 @@ class _TableTextReader(_CaretTextReader):
 
 	def nextLineImpl(self) -> bool:
 		try:
-			self.reader = self.nextLineFunc(self.reader)
+			self.reader = self.nextLineFunc(self.reader)  # ty: ignore[call-non-callable]
 			return True
 		except StopIteration:
 			self.finish()

@@ -18,6 +18,8 @@ import warnings
 
 from comtypes import COMError, BSTR
 import comtypes.automation
+import comtypes.client.dynamic
+import comtypes.client.lazybind
 import inputCore
 import wx
 import time
@@ -813,7 +815,7 @@ class ExcelBase(Window):
 		if not w:
 			log.debugWarning("Could not get ancestor window (GA_ROOT)")
 			return
-		obj = Window(windowHandle=w, chooseBestAPI=False)
+		obj = Window(windowHandle=w, chooseBestAPI=False)  # ty: ignore[unknown-argument]
 		if not obj:
 			log.debugWarning("Could not instanciate NVDAObject for ancestor window")
 			return
@@ -1547,7 +1549,8 @@ class FormulaExcelCellInfoQuickNavItem(ExcelCellInfoQuickNavItem):
 class ExcelCellInfoQuicknavIterator(object, metaclass=abc.ABCMeta):
 	cellInfoFlags = NVCELLINFOFLAG_ADDRESS | NVCELLINFOFLAG_COORDS
 
-	@abc.abstractproperty
+	@property
+	@abc.abstractmethod
 	def QuickNavItemClass(self):
 		"""The particular L{ExcelCellInfoQuicknavItem} subclass for objects that  should be emitted from the L{iterate} method."""
 		pass

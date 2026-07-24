@@ -172,7 +172,7 @@ def toggleBooleanValue(
 def toggleIntegerValue(
 	configSection: str,
 	configKey: str,
-	enumClass: "DisplayStringEnum",
+	enumClass: type["DisplayStringEnum"],
 	messageTemplate: str,
 ) -> None:
 	"""
@@ -2708,7 +2708,7 @@ class GlobalCommands(ScriptableObject):
 				ui.message(_("No formatting information"))
 				return
 
-			ui.message(" ".join(textList))
+			ui.message(" ".join(textList))  # ty: ignore[no-matching-overload]
 		else:
 			if formatField:
 				sequence = info.getFormatFieldSpeech(formatField, formatConfig=formatConfig)
@@ -3276,10 +3276,10 @@ class GlobalCommands(ScriptableObject):
 		if hasattr(obj, "devInfo"):
 			log.info(
 				"Developer info for navigator object:\n%s" % "\n".join(obj.devInfo),
-				activateLogViewer=True,
+				activateLogViewer=True,  # ty: ignore[unknown-argument]
 			)
 		else:
-			log.info("No developer info for navigator object", activateLogViewer=True)
+			log.info("No developer info for navigator object", activateLogViewer=True)  # ty: ignore[unknown-argument]
 
 	@script(
 		description=_(
@@ -3880,10 +3880,10 @@ class GlobalCommands(ScriptableObject):
 			return
 		featureFlag: FeatureFlag = config.conf["braille"]["reviewRoutingMovesSystemCaret"]
 		reviewRoutingMovesSystemCaretFlag = featureFlag.enumClassType
-		values = [x.value for x in reviewRoutingMovesSystemCaretFlag]
+		values = [x.value for x in reviewRoutingMovesSystemCaretFlag]  # ty: ignore[not-iterable]
 		currentValue = featureFlag.value.value
 		nextValueIndex = (currentValue % len(values)) + 1
-		nextName: str = reviewRoutingMovesSystemCaretFlag(nextValueIndex).name
+		nextName: str = reviewRoutingMovesSystemCaretFlag(nextValueIndex).name  # ty: ignore[missing-argument]
 		config.conf["braille"]["reviewRoutingMovesSystemCaret"] = nextName
 		featureFlag = config.conf["braille"]["reviewRoutingMovesSystemCaret"]
 		if featureFlag.isDefault():
@@ -4033,10 +4033,10 @@ class GlobalCommands(ScriptableObject):
 		"""Set next state of braille show selection and reports it with ui.message."""
 		featureFlag: FeatureFlag = config.conf["braille"]["showSelection"]
 		boolFlag: BoolFlag = featureFlag.enumClassType
-		values = [x.value for x in boolFlag]
+		values = [x.value for x in boolFlag]  # ty: ignore[not-iterable]
 		currentValue = featureFlag.value.value
 		nextValueIndex = (currentValue % len(values)) + 1
-		nextName: str = boolFlag(nextValueIndex).name
+		nextName: str = boolFlag(nextValueIndex).name  # ty: ignore[call-non-callable]
 		config.conf["braille"]["showSelection"] = nextName
 		featureFlag = config.conf["braille"]["showSelection"]
 		if featureFlag.isDefault():
@@ -4059,10 +4059,10 @@ class GlobalCommands(ScriptableObject):
 	def script_braille_cycleUnicodeNormalization(self, gesture: inputCore.InputGesture) -> None:
 		featureFlag: FeatureFlag = config.conf["braille"]["unicodeNormalization"]
 		boolFlag: BoolFlag = featureFlag.enumClassType
-		values = [x.value for x in boolFlag]
+		values = [x.value for x in boolFlag]  # ty: ignore[not-iterable]
 		currentValue = featureFlag.value.value
 		nextValueIndex = (currentValue % len(values)) + 1
-		nextName: str = boolFlag(nextValueIndex).name
+		nextName: str = boolFlag(nextValueIndex).name  # ty: ignore[call-non-callable]
 		config.conf["braille"]["unicodeNormalization"] = nextName
 		featureFlag = config.conf["braille"]["unicodeNormalization"]
 		if featureFlag.isDefault():
@@ -4928,10 +4928,10 @@ class GlobalCommands(ScriptableObject):
 	def script_speech_cycleUnicodeNormalization(self, gesture: inputCore.InputGesture) -> None:
 		featureFlag: FeatureFlag = config.conf["speech"]["unicodeNormalization"]
 		boolFlag: BoolFlag = featureFlag.enumClassType
-		values = [x.value for x in boolFlag]
+		values = [x.value for x in boolFlag]  # ty: ignore[not-iterable]
 		currentValue = featureFlag.value.value
 		nextValueIndex = (currentValue % len(values)) + 1
-		nextName: str = boolFlag(nextValueIndex).name
+		nextName: str = boolFlag(nextValueIndex).name  # ty: ignore[call-non-callable]
 		config.conf["speech"]["unicodeNormalization"] = nextName
 		featureFlag = config.conf["speech"]["unicodeNormalization"]
 		if featureFlag.isDefault():

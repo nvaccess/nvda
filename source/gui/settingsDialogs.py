@@ -6395,7 +6395,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			buttons=gui.message.DefaultButtonSet.YES_NO,
 			helpId="GeneralSettingsLogLevel",
 		)
-		return dialog.ShowModal() == gui.message.ReturnCode.YES
+		return dialog.ShowModal() == gui.message.ReturnCode.YES  # ty: ignore[missing-argument]
 
 	def makeSettings(self, sizer: wx.BoxSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)

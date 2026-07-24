@@ -346,7 +346,7 @@ class Math(Ia2Web):
 				log.debug(f"Got MathML from IA2 math attribute: {mathMl}")
 			return mathMl
 
-		from comtypes.gen.ISimpleDOM import ISimpleDOMNode  # type: ignore[reportMissingImports]
+		from comtypes.gen.ISimpleDOM import ISimpleDOMNode  # type: ignore[reportMissingImports]  # ty: ignore[unresolved-import]
 
 		try:
 			node = self.IAccessibleObject.QueryInterface(ISimpleDOMNode)

@@ -11,6 +11,7 @@ of a package.
 
 import gettext
 import typing
+from collections.abc import Callable
 from typing import (
 	Optional,
 	Tuple,
@@ -91,7 +92,7 @@ class NVDASpyLib:
 		# This file (`speechSpyGlobalPlugin.py`) is moved to
 		# "scratchpad/globalPlugins/speechSpyGlobalPlugin/__init__.py"
 		# Import path must be valid after `speechSpySynthDriver.py` is moved to "scratchpad/synthDrivers/"
-		from synthDrivers.speechSpySynthDriver import post_speech  # type: ignore[reportMissingImports]
+		from synthDrivers.speechSpySynthDriver import post_speech  # type: ignore[reportMissingImports]  # ty: ignore[unresolved-import]
 
 		if typing.TYPE_CHECKING:
 			from .speechSpySynthDriver import post_speech
@@ -143,12 +144,12 @@ class NVDASpyLib:
 		if not self.fakeTranslations:
 
 			class Translation_Fake(gettext.NullTranslations):
-				originalTranslationFunction: Optional
+				originalTranslationFunction: Callable | None
 				translationResults: typing.Dict[str, str]
 
 				def __init__(
 					self,
-					originalTranslationFunction: Optional,
+					originalTranslationFunction: Callable | None,
 				):
 					self.originalTranslationFunction = originalTranslationFunction
 					self.translationResults = {}

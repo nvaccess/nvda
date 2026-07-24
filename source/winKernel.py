@@ -181,7 +181,7 @@ def setWaitableTimer(
 	handle: int,
 	dueTime: int,
 	period: int = 0,
-	completionRoutine: _PTIMERAPCROUTINE | None = None,
+	completionRoutine: _PTIMERAPCROUTINE | None = None,  # ty: ignore[invalid-type-form]
 	arg: int | None = None,
 	resume: bool = False,
 ):

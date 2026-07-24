@@ -66,7 +66,7 @@ class ExitDialog(wx.Dialog):
 		# Make this a singleton.
 		inst = cls._instance() if cls._instance else None
 		if not inst:
-			return super(cls, cls).__new__(cls, parent)
+			return super().__new__(cls)
 		return inst
 
 	def __init__(self, parent):
@@ -171,7 +171,10 @@ class ExitDialog(wx.Dialog):
 					and not updateCheck._warnAndConfirmIfUpdatingRemotely()
 				):
 					return
-				destPath, version, apiVersion, backCompatTo = updateCheck.getPendingUpdate()
+				pendingUpdate = updateCheck.getPendingUpdate()
+				if pendingUpdate is None:
+					return
+				destPath, version, apiVersion, backCompatTo = pendingUpdate
 				from addonHandler import getIncompatibleAddons
 				from gui import mainFrame
 

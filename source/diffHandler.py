@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 
 import config
-import fast_diff_match_patch
+import fast_diff_match_patch  # ty: ignore[unresolved-import]
 from abc import abstractmethod
 from baseObject import AutoPropertyObject
 from difflib import ndiff

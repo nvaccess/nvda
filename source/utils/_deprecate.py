@@ -7,7 +7,7 @@
 
 import inspect
 import sys
-from abc import ABC, abstractmethod, abstractproperty
+from abc import ABC, abstractmethod
 from collections.abc import Callable
 from importlib import import_module
 from types import ModuleType
@@ -51,7 +51,8 @@ class DeprecatedSymbol(ABC):
 		"""
 		...
 
-	@abstractproperty
+	@property
+	@abstractmethod
 	def value(self) -> Any:
 		"""Value to be returned as the value of the deprecated symbol."""
 		...

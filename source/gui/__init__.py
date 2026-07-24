@@ -303,8 +303,8 @@ class MainFrame(wx.Frame):
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onExecuteUpdateCommand(self, evt):
-		if updateCheck and updateCheck.isPendingUpdate():
-			destPath, version, apiVersion, backCompatToAPIVersion = updateCheck.getPendingUpdate()
+		if updateCheck and (pendingUpdate := updateCheck.getPendingUpdate()):
+			destPath, version, apiVersion, backCompatToAPIVersion = pendingUpdate
 			from addonHandler import getIncompatibleAddons
 
 			if any(getIncompatibleAddons(apiVersion, backCompatToAPIVersion)):
@@ -585,7 +585,7 @@ class MainFrame(wx.Frame):
 			self._CRFT_INTRO_MESSAGE,
 			helpId="RunCOMRegistrationFixingTool",
 		)
-		response: int = introDialog.ShowModal()
+		response: int = introDialog.ShowModal()  # ty: ignore[missing-argument]
 		if response != wx.OK:
 			log.debug("Run of System Accessibility Repair Tool canceled before UAC.")
 			return
@@ -927,7 +927,7 @@ def initialize():
 	monkeyPatches.applyWxMonkeyPatches(mainFrame, winUser, wx)
 
 	# Set up GUI persistence
-	persistenceManager = wx.lib.agw.persist.PersistenceManager.Get()
+	persistenceManager = wx.lib.agw.persist.PersistenceManager.Get()  # ty: ignore[missing-argument]
 	persistenceManager.SetPersistenceFile(NVDAState.WritePaths.guiStateFile)
 	if not NVDAState.shouldWriteToDisk():
 		persistenceManager.DisableSaving()
@@ -935,7 +935,7 @@ def initialize():
 
 def terminate():
 	global mainFrame
-	wx.lib.agw.persist.PersistenceManager.Free()
+	wx.lib.agw.persist.PersistenceManager.Free()  # ty: ignore[missing-argument]
 	mainFrame = None
 
 
@@ -1018,7 +1018,7 @@ def shouldConfigProfileTriggersBeSuspended():
 	if winUser.getGUIThreadInfo(winBindings.kernel32.GetCurrentThreadId()).flags & 0x00000010:
 		# The NVDA menu is active.
 		return True
-	for window in wx.GetTopLevelWindows():
+	for window in wx.GetTopLevelWindows():  # ty: ignore[missing-argument]
 		if window.IsShown() and getattr(window, "shouldSuspendConfigProfileTriggers", False):
 			return True
 	return False
@@ -1051,7 +1051,7 @@ class NonReEntrantTimer(wx.Timer):
 			return
 		self._inNotify = True
 		try:
-			self.run()
+			self.run()  # ty: ignore[missing-argument]
 		finally:
 			self._inNotify = False
 

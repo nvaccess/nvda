@@ -36,7 +36,7 @@ builtIn: BuiltIn = BuiltIn()
 opSys: _OpSysLib = _getLib("OperatingSystem")
 process: _ProcessLib = _getLib("Process")
 assertsLib: _AssertsLib = _getLib("AssertsLib")
-windowsLib: _WindowsLib = _getLib("WindowsLib")
+windowsLib: _WindowsLib = _getLib("WindowsLib")  # ty: ignore[invalid-type-form]
 
 
 # In Robot libraries, class name must match the name of the module. Use caps for both.

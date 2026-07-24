@@ -30,7 +30,7 @@ from . import (
 )
 
 
-class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]):
+class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]):  # ty: ignore[invalid-type-form]
 	"""
 	Represents a remote UI Automation text range.
 	"""

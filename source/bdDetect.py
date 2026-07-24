@@ -222,7 +222,7 @@ def getDriversForConnectedUsbDevices(
 					log.debug("Skipping excluded driver %r for USB device match: %r", driver, match)
 				continue
 			usbDefinitions = devs[CommunicationType.USB]
-			for definition in usbDefinitions:
+			for definition in usbDefinitions:  # ty: ignore[not-iterable]
 				if definition.matches(match):
 					if definition.useAsFallback:
 						if _isDebug():
@@ -309,7 +309,7 @@ def getDriversForPossibleBluetoothDevices(
 						match,
 					)
 				continue
-			if matchFunc(match):
+			if matchFunc(match):  # ty: ignore[call-top-callable]
 				yield (driver, match)
 
 	hidName = _getStandardHidDriverName()
@@ -646,7 +646,7 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 				yield match
 		else:
 			usbDefinitions = _driverDevices[driver][CommunicationType.USB]
-			for definition in usbDefinitions:
+			for definition in usbDefinitions:  # ty: ignore[not-iterable]
 				if definition.matches(match):
 					if definition.useAsFallback:
 						fallbackMatches.append(match)
@@ -682,7 +682,7 @@ def getPossibleBluetoothDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 		),
 	)
 	for match in btDevs:
-		if matchFunc(match):
+		if matchFunc(match):  # ty: ignore[call-top-callable]
 			yield match
 
 
@@ -823,7 +823,7 @@ class DriverRegistrar:
 		type: DeviceType,
 		ids: set[str],
 		useAsFallback: bool = False,
-		matchFunc: MatchFuncT = None,
+		matchFunc: MatchFuncT | None = None,
 	):
 		"""Associate USB devices with the driver on this instance.
 		:param type: The type of the driver.

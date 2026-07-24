@@ -8,7 +8,10 @@ import os
 import re
 import zipfile
 
-import SCons
+import SCons.Action
+import SCons.Builder
+import SCons.Environment
+import SCons.Node.FS
 
 
 def _generateModuleList(

@@ -100,7 +100,7 @@ def _getConfiguredBrailleOutputTable() -> str:
 	return tableName
 
 
-def _freeCppJiebaOffsets(lib: CDLL, charPtr: POINTER(c_int)) -> None:
+def _freeCppJiebaOffsets(lib: CDLL, charPtr: POINTER(c_int)) -> None:  # ty: ignore[invalid-type-form]
 	if not bool(charPtr):
 		return
 	try:
@@ -170,7 +170,7 @@ class WordSegmentationStrategy(ABC):
 			return False
 
 		return any(
-			re.match(cls._LANGUAGE_PATTERN, language)
+			re.match(cls._LANGUAGE_PATTERN, language)  # ty: ignore[no-matching-overload]
 			for language in (
 				languageHandler.getWindowsLanguage(),
 				languageHandler.getLanguage(),
