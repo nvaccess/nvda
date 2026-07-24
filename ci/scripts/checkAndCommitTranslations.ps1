@@ -44,7 +44,7 @@ if ($failures.Count -gt 0) {
 	# $At least one language failed validation.
 	Add-Content -Path $env:GITHUB_OUTPUT -Value "has_failures=true"
 	Add-Content -Path $env:GITHUB_OUTPUT -Value "invalid_pofile_locales=$($failures -join ", ")"
-	Add-Content -Path $env:GITHUB_OUTPUT -Value "report_files=$($errorfiles.FullName | ConvertTo-Json -Compress)"
+	Add-Content -Path $env:GITHUB_OUTPUT -Value "report_files=$($errorfiles.FullName | ConvertTo-Json -AsArray -Compress)"
 } else {
 	Add-Content -Path $env:GITHUB_OUTPUT -Value "has_failures=false"
 }
