@@ -12,6 +12,7 @@ See the documentation of L{VisionHandler} for more details about what it does.
 
 from . import providerInfo
 from .constants import Context
+from locationHelper import RectLTRB
 from .providerBase import VisionEnhancementProvider
 from .visionHandlerExtensionPoints import EventExtensionPoints
 import importlib
@@ -322,6 +323,13 @@ class VisionHandler(AutoPropertyObject):
 
 	def handleReviewMove(self, context: Context = Context.REVIEW) -> None:
 		self.extensionPoints.post_reviewMove.notify(context=context)
+
+	def handleMathNavigation(self, rect: RectLTRB | None) -> None:
+		"""Notify providers that the math navigation position has changed.
+
+		:param rect: The current math navigation rectangle, or ``None`` if no rectangle is available.
+		"""
+		self.extensionPoints.post_mathNavigation.notify(rect=rect)
 
 	def handleMouseMove(self, obj, x: int, y: int) -> None:
 		# For now, mouse moves execute once per core cycle.

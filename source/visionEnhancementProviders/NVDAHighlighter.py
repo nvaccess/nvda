@@ -513,6 +513,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		extensionPoints.post_focusChange.register(self.handleFocusChange)
 		extensionPoints.post_reviewMove.register(self.handleReviewMove)
 		extensionPoints.post_browseModeMove.register(self.handleBrowseModeMove)
+		extensionPoints.post_mathNavigation.register(self.handleMathNavigation)
 
 	def __init__(self):
 		super().__init__()
@@ -598,6 +599,17 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 
 	def handleBrowseModeMove(self, obj: "CursorManager | None" = None) -> None:
 		self.updateContextRect(context=Context.BROWSEMODE)
+
+	def handleMathNavigation(self, rect: RectLTRB | None) -> None:
+		"""Update the browse mode highlight for math navigation.
+
+		:param rect: The current math navigation rectangle, or ``None`` if no rectangle is available.
+		"""
+		if rect is None:
+			self.contextToRectMap.pop(Context.BROWSEMODE, None)
+			self.updateContextRect(context=Context.BROWSEMODE)
+			return
+		self.updateContextRect(context=Context.BROWSEMODE, rect=rect)
 
 	def refresh(self) -> None:
 		"""Refreshes the screen positions of the enabled highlights."""
