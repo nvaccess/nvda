@@ -66,8 +66,7 @@ jobs:
       uses: actions/upload-artifact@v7
       with:
         name: "translationValidationErrors_${{ github.run_id }}-${{ github.run_attempt }}"
-        path: |
-          ${{ join(fromJSON(steps.commit.outputs.report_files), fromJSON('"\n"')) }}
+        path: ${{ join(fromJSON(steps.commit.outputs.report_files), fromJSON('"\n"')) }}
 
     - name: Create pull request
       if: false && (steps.commit.outputs.has_changes == 'true')
