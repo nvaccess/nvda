@@ -3,12 +3,31 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from typing import List, Iterator
+from typing import List, Iterator, Optional, Callable
 
+import ctypes
+from ctypes import byref
+from ctypes.wintypes import BOOL, DWORD, HANDLE, ULONG
+import threading
 import serial
+from serial.win32 import CreateFile, FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE
+from comtypes import GUID
 from io import BytesIO
 import hwIo
 from hwIo import intToByte
+from hwIo.base import _isDebug as _isHwIoDebug
+import winKernel
+from winBindings.setupapi import (
+	DIGCF,
+	SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W,
+	SP_DEVICE_INTERFACE_DATA,
+	SP_DEVINFO_DATA,
+	SetupDiDestroyDeviceInfoList,
+	SetupDiEnumDeviceInterfaces,
+	SetupDiGetClassDevs,
+	SetupDiGetDeviceInterfaceDetail,
+	_Dummy as _SP_DEVICE_INTERFACE_DETAIL_DATA_PACKING,
+)
 import braille
 import braille.display
 import braille.display.driver
@@ -27,6 +46,312 @@ PARITY = serial.PARITY_NONE
 
 # HID
 HR_CAPS = b"\x01"
+
+# WinUSB (winusb.sys) fallback for the CUSTOM/bulk protocol.
+#
+# hwIo.Bulk talks to the device via the legacy himsusb.sys kernel driver (a custom,
+# non-WHCP-signed driver). Windows 11 blocks installation of such drivers, so on affected
+# systems hwIo.Bulk() raises and the CUSTOM match is skipped entirely -- for the plain
+# Braille Sense/EDGE (930A/930B) devices there is no HID/serial fallback, so the display
+# would not be found via USB at all.
+# This fallback talks to the same device through winusb.sys (an inbox driver) instead,
+# provided the vendor's WinUSB INF (hims_winusb.inf) is installed for it.
+
+# DeviceInterfaceGUID defined in the WinUSB INF (hims_winusb.inf).
+GUID_DEVINTERFACE_HIMS_WINUSB = GUID("{78A1C341-4539-11d3-B88D-00C04FAD5171}")
+
+_ERROR_SEM_TIMEOUT = 121  # Returned by WinUsb_ReadPipe when PIPE_TRANSFER_TIMEOUT elapses.
+_PIPE_TRANSFER_TIMEOUT_POLICY = 0x03  # WinUsb_SetPipePolicy policy type (winusbio.h).
+_USBD_PIPE_TYPE_BULK = 2
+
+
+class _USB_INTERFACE_DESCRIPTOR(ctypes.Structure):
+	_fields_ = (
+		("bLength", ctypes.c_ubyte),
+		("bDescriptorType", ctypes.c_ubyte),
+		("bInterfaceNumber", ctypes.c_ubyte),
+		("bAlternateSetting", ctypes.c_ubyte),
+		("bNumEndpoints", ctypes.c_ubyte),
+		("bInterfaceClass", ctypes.c_ubyte),
+		("bInterfaceSubClass", ctypes.c_ubyte),
+		("bInterfaceProtocol", ctypes.c_ubyte),
+		("iInterface", ctypes.c_ubyte),
+	)
+
+
+class _WINUSB_PIPE_INFORMATION(ctypes.Structure):
+	_fields_ = (
+		("pipeType", ctypes.c_int),
+		("pipeId", ctypes.c_ubyte),
+		("maximumPacketSize", ctypes.c_ushort),
+		("interval", ctypes.c_ubyte),
+	)
+
+
+_winusb = ctypes.WinDLL("winusb.dll")
+
+_WinUsb_Initialize = _winusb.WinUsb_Initialize
+_WinUsb_Initialize.argtypes = (HANDLE, ctypes.POINTER(ctypes.c_void_p))
+_WinUsb_Initialize.restype = BOOL
+
+_WinUsb_Free = _winusb.WinUsb_Free
+_WinUsb_Free.argtypes = (ctypes.c_void_p,)
+_WinUsb_Free.restype = BOOL
+
+_WinUsb_QueryInterfaceSettings = _winusb.WinUsb_QueryInterfaceSettings
+_WinUsb_QueryInterfaceSettings.argtypes = (
+	ctypes.c_void_p,
+	ctypes.c_ubyte,
+	ctypes.POINTER(_USB_INTERFACE_DESCRIPTOR),
+)
+_WinUsb_QueryInterfaceSettings.restype = BOOL
+
+_WinUsb_QueryPipe = _winusb.WinUsb_QueryPipe
+_WinUsb_QueryPipe.argtypes = (
+	ctypes.c_void_p,
+	ctypes.c_ubyte,
+	ctypes.c_ubyte,
+	ctypes.POINTER(_WINUSB_PIPE_INFORMATION),
+)
+_WinUsb_QueryPipe.restype = BOOL
+
+_WinUsb_ReadPipe = _winusb.WinUsb_ReadPipe
+_WinUsb_ReadPipe.argtypes = (
+	ctypes.c_void_p,
+	ctypes.c_ubyte,
+	ctypes.c_void_p,
+	ULONG,
+	ctypes.POINTER(ULONG),
+	ctypes.c_void_p,
+)
+_WinUsb_ReadPipe.restype = BOOL
+
+_WinUsb_WritePipe = _winusb.WinUsb_WritePipe
+_WinUsb_WritePipe.argtypes = (
+	ctypes.c_void_p,
+	ctypes.c_ubyte,
+	ctypes.c_void_p,
+	ULONG,
+	ctypes.POINTER(ULONG),
+	ctypes.c_void_p,
+)
+_WinUsb_WritePipe.restype = BOOL
+
+_WinUsb_SetPipePolicy = _winusb.WinUsb_SetPipePolicy
+_WinUsb_SetPipePolicy.argtypes = (
+	ctypes.c_void_p,
+	ctypes.c_ubyte,
+	ULONG,
+	ULONG,
+	ctypes.c_void_p,
+)
+_WinUsb_SetPipePolicy.restype = BOOL
+
+
+def _findWinUsbDevicePath(deviceInterfaceGuid: GUID) -> Optional[str]:
+	"""Find the device path for the first present device exposing the given device
+	interface GUID, using the same SetupDi* enumeration pattern as hwPortUtils._listDevices.
+	@return: The device path, or C{None} if no matching device is present.
+	"""
+	try:
+		hDevInfo = SetupDiGetClassDevs(
+			byref(deviceInterfaceGuid),
+			None,
+			None,
+			DIGCF.PRESENT | DIGCF.DEVICEINTERFACE,
+		)
+	except OSError as e:
+		log.info("_findWinUsbDevicePath: SetupDiGetClassDevs failed: %s" % e)
+		return None
+	try:
+		did = SP_DEVICE_INTERFACE_DATA()
+		did.cbSize = ctypes.sizeof(did)
+		if not SetupDiEnumDeviceInterfaces(hDevInfo, None, byref(deviceInterfaceGuid), 0, byref(did)):
+			log.info(
+				"_findWinUsbDevicePath: SetupDiEnumDeviceInterfaces found no device for GUID %s "
+				"(GetLastError=%d) -- WinUSB INF (hims_winusb.inf) may not be installed/bound for this device"
+				% (deviceInterfaceGuid, ctypes.GetLastError()),
+			)
+			return None
+
+		dwNeeded = DWORD()
+		SetupDiGetDeviceInterfaceDetail(hDevInfo, byref(did), None, 0, byref(dwNeeded), None)
+
+		class SP_DEVICE_INTERFACE_DETAIL_DATA_W(ctypes.Structure):
+			_fields_ = (
+				("cbSize", DWORD),
+				(
+					"DevicePath",
+					# Round up to the next WCHAR count to ensure proper memory alignment.
+					ctypes.c_wchar * math.ceil((dwNeeded.value - ctypes.sizeof(DWORD)) / ctypes.sizeof(ctypes.c_wchar)),
+				),
+			)
+			_pack_ = _SP_DEVICE_INTERFACE_DETAIL_DATA_PACKING._pack_
+
+		idd = SP_DEVICE_INTERFACE_DETAIL_DATA_W()
+		idd.cbSize = SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W
+		devinfo = SP_DEVINFO_DATA()
+		devinfo.cbSize = ctypes.sizeof(devinfo)
+		if not SetupDiGetDeviceInterfaceDetail(
+			hDevInfo,
+			byref(did),
+			byref(idd),
+			dwNeeded,
+			None,
+			byref(devinfo),
+		):
+			log.info(
+				"_findWinUsbDevicePath: SetupDiGetDeviceInterfaceDetail failed, GetLastError=%d"
+				% ctypes.GetLastError(),
+			)
+			return None
+		log.info("_findWinUsbDevicePath: found DevicePath=%s" % idd.DevicePath)
+		return idd.DevicePath
+	finally:
+		SetupDiDestroyDeviceInfoList(hDevInfo)
+
+
+class _WinUsbBulk:
+	"""Raw I/O for HIMS bulk USB devices via WinUSB.
+	Used as a fallback for L{hwIo.Bulk} when the legacy himsusb.sys kernel driver is
+	not available. Unlike L{hwIo.Bulk}, this does not integrate with L{hwIo.bgThread};
+	reads happen on a dedicated background thread using blocking, timed WinUsb_ReadPipe calls.
+	"""
+
+	def __init__(self, path: str, onReceive: Callable[[bytes], None], onReceiveSize: int = 64):
+		log.info("_WinUsbBulk: 1 opening device %s" % path)
+		self._onReceive = onReceive
+		self._readSize = onReceiveSize
+		self._closed = False
+		self._recvEvt = threading.Event()
+
+		self._handle = CreateFile(
+			path,
+			winKernel.GENERIC_READ | winKernel.GENERIC_WRITE,
+			winKernel.FILE_SHARE_READ | winKernel.FILE_SHARE_WRITE,
+			None,
+			winKernel.OPEN_EXISTING,
+			FILE_FLAG_OVERLAPPED,
+			None,
+		)
+		if self._handle == INVALID_HANDLE_VALUE:
+			err = ctypes.WinError()
+			log.info("_WinUsbBulk: FAILED at step 1, CreateFile: %s" % err)
+			raise err
+
+		# WinUsb_Initialize requires a handle opened with FILE_FLAG_OVERLAPPED
+		# (WinUsb_ReadPipe/WritePipe still behave synchronously when passed no OVERLAPPED).
+		log.info("_WinUsbBulk: 2 WinUsb_Initialize")
+		self._winUsbHandle = ctypes.c_void_p()
+		if not _WinUsb_Initialize(self._handle, byref(self._winUsbHandle)):
+			err = ctypes.WinError()
+			log.info("_WinUsbBulk: FAILED at step 2, WinUsb_Initialize: %s" % err)
+			winKernel.closeHandle(self._handle)
+			raise err
+
+		log.info("_WinUsbBulk: 3 querying pipes")
+		try:
+			self._pipeIn, self._pipeOut = self._queryPipes()
+		except Exception as e:
+			log.info("_WinUsbBulk: FAILED at step 3, querying pipes: %s" % e)
+			_WinUsb_Free(self._winUsbHandle)
+			winKernel.closeHandle(self._handle)
+			raise
+
+		# Set a read timeout so the background read thread can notice C{close()}
+		# instead of blocking forever if the device never responds.
+		timeoutMs = DWORD(3000)
+		if not _WinUsb_SetPipePolicy(
+			self._winUsbHandle,
+			self._pipeIn,
+			_PIPE_TRANSFER_TIMEOUT_POLICY,
+			ctypes.sizeof(timeoutMs),
+			byref(timeoutMs),
+		):
+			log.debugWarning("WinUsb_SetPipePolicy(PIPE_TRANSFER_TIMEOUT) failed: %s" % ctypes.WinError())
+
+		log.info(
+			"_WinUsbBulk: 4 SUCCESS (pipeIn=0x%02X pipeOut=0x%02X)" % (self._pipeIn, self._pipeOut),
+		)
+		self._readThread = threading.Thread(target=self._readLoop, daemon=True)
+		self._readThread.start()
+
+	def _queryPipes(self) -> tuple:
+		ifaceDesc = _USB_INTERFACE_DESCRIPTOR()
+		if not _WinUsb_QueryInterfaceSettings(self._winUsbHandle, 0, byref(ifaceDesc)):
+			raise ctypes.WinError()
+		log.info(
+			"_WinUsbBulk._queryPipes: bNumEndpoints=%d bInterfaceClass=%d"
+			% (ifaceDesc.bNumEndpoints, ifaceDesc.bInterfaceClass),
+		)
+		pipeIn = pipeOut = None
+		for i in range(ifaceDesc.bNumEndpoints):
+			pipe = _WINUSB_PIPE_INFORMATION()
+			if not _WinUsb_QueryPipe(self._winUsbHandle, 0, i, byref(pipe)):
+				log.info("_WinUsbBulk._queryPipes: WinUsb_QueryPipe(%d) failed: %s" % (i, ctypes.WinError()))
+				continue
+			log.info(
+				"_WinUsbBulk._queryPipes: pipe[%d] id=0x%02X type=%d maxPacketSize=%d"
+				% (i, pipe.pipeId, pipe.pipeType, pipe.maximumPacketSize),
+			)
+			if pipe.pipeType == _USBD_PIPE_TYPE_BULK:
+				if pipe.pipeId & 0x80:
+					pipeIn = pipe.pipeId
+				else:
+					pipeOut = pipe.pipeId
+		if pipeIn is None or pipeOut is None:
+			# Raised as OSError (not RuntimeError) so callers that catch EnvironmentError/OSError
+			# to fall back to another connection method (e.g. hims.py's CUSTOM protocol handling)
+			# handle this the same way as a WinUsb_* API failure.
+			raise OSError(
+				"Could not find both bulk IN and OUT pipes on WinUSB device (pipeIn=%r, pipeOut=%r)"
+				% (pipeIn, pipeOut),
+			)
+		return pipeIn, pipeOut
+
+	def _readLoop(self):
+		buf = ctypes.create_string_buffer(self._readSize)
+		bytesRead = ULONG()
+		while not self._closed:
+			ok = _WinUsb_ReadPipe(self._winUsbHandle, self._pipeIn, buf, self._readSize, byref(bytesRead), None)
+			if not ok:
+				err = ctypes.GetLastError()
+				if err == _ERROR_SEM_TIMEOUT:
+					# No data within PIPE_TRANSFER_TIMEOUT; keep waiting.
+					continue
+				if not self._closed:
+					log.debugWarning("WinUsb_ReadPipe failed: %s" % ctypes.WinError(err))
+				break
+			data = buf.raw[: bytesRead.value]
+			if data and self._onReceive:
+				try:
+					self._onReceive(data)
+				except Exception:
+					log.error("", exc_info=True)
+			self._recvEvt.set()
+
+	def waitForRead(self, timeout: float) -> bool:
+		self._recvEvt.clear()
+		return self._recvEvt.wait(timeout)
+
+	def write(self, data: bytes):
+		if _isHwIoDebug():
+			log.debug("Write: %r" % data)
+		buf = ctypes.create_string_buffer(data, len(data))
+		written = ULONG()
+		if not _WinUsb_WritePipe(self._winUsbHandle, self._pipeOut, buf, len(data), byref(written), None):
+			raise ctypes.WinError()
+
+	def close(self):
+		if self._closed:
+			return
+		self._closed = True
+		if self._winUsbHandle:
+			_WinUsb_Free(self._winUsbHandle)
+			self._winUsbHandle = None
+		if self._handle and self._handle != INVALID_HANDLE_VALUE:
+			winKernel.closeHandle(self._handle)
+			self._handle = None
 
 
 class Model(AutoPropertyObject):
@@ -340,7 +665,28 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 						self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
 					case bdDetect.ProtocolType.CUSTOM:
 						# onReceiveSize based on max packet size according to USB endpoint information.
-						self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
+						try:
+							self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
+						except EnvironmentError as bulkError:
+							# himsusb.sys (the legacy kernel driver hwIo.Bulk expects) may not be
+							# available -- e.g. Windows 11 blocks installation of unsigned/non-WHCP
+							# kernel drivers. Fall back to WinUSB (winusb.sys, an inbox driver) if
+							# the vendor's WinUSB INF (hims_winusb.inf) is installed for this device.
+							log.info(
+								"hwIo.Bulk(port=%r) failed (%s); trying WinUSB fallback" % (port, bulkError),
+							)
+							winUsbPath = _findWinUsbDevicePath(GUID_DEVINTERFACE_HIMS_WINUSB)
+							if not winUsbPath:
+								log.info(
+									"WinUSB fallback: no device found for GUID_DEVINTERFACE_HIMS_WINUSB; "
+									"giving up on this port",
+								)
+								raise
+							try:
+								self._dev = _WinUsbBulk(winUsbPath, self._onReceive, onReceiveSize=64)
+							except EnvironmentError as winUsbError:
+								log.info("WinUSB fallback failed: %s" % winUsbError)
+								raise
 					case bdDetect.ProtocolType.SERIAL:
 						self._dev = hwIo.Serial(
 							port,
