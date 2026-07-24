@@ -24,6 +24,7 @@
 * Support for the myBraille family of Help Tech Braille displays has been added.
 * Added context menu and shortcuts support to the Input gestures dialog. (#16816, @amirmahdifard)
 * Added context menu and shortcuts support to the Speech Dictionaries dialog. (#20420, @amirmahdifard)
+* A new command, assigned to `NVDA+control+x`, copies the last spoken information to the clipboard. (#19385, @Cary-rowen)
 
 ### Changes
 
