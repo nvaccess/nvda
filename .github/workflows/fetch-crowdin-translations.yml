@@ -62,8 +62,14 @@ jobs:
       id: commit
       run: ci/scripts/checkAndCommitTranslations.ps1 -branchName ${{ env.branchName }}
 
+    - name: Upload error logs
+      uses: actions/upload-artifact@v7
+      with:
+        name: "translationValidationErrors_${{ github.run_id }}-${{ github.run_attempt }}"
+        path: ${{ steps.commit.outputs.report_files }}
+
     - name: Create pull request
-      if: true && (steps.commit.outputs.has_changes == 'true')
+      if: false && (steps.commit.outputs.has_changes == 'true')
       run: |
         git push --set-upstream origin ${{ env.branchName }}
         # Construct title and body depending on whether errors were found.
@@ -95,7 +101,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
 
     - name: Notify translators of errors
-      if: false && (steps.commit.outputs.has_failures == 'true')
+      if: true && (steps.commit.outputs.has_failures == 'true')
       uses: dawidd6/action-send-mail@v18
       with:
         server_address: ${{ secrets.EMAIL_SERVER_ADDRESS }}

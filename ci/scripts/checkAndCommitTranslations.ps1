@@ -12,7 +12,7 @@ git config --local user.email "github-actions@github.com"
 
 # Temporary file to store all collected reports.
 $tempfile = New-TemporaryFile
-$errordir = New-Item -ItemType "Directory" -Path . -Name "translationErrors"
+$errordir = New-Item -ItemType "Directory" -Path "$env:TEMP" -Name $((New-Guid).ToString("N"))
 $errorfiles = @()
 
 # Check each modified tracked po file,
@@ -37,7 +37,7 @@ $failures = @(git ls-files --modified "source/locale/**.po" | ForEach-Object {
 		Add-Content -Path $tempfile,$errorfile -Value $output -PassThru | Out-String | Write-host
 		Write-Host "::endgroup::"
 		Add-Content -Path $tempfile -Value "```````n`n</details>`n"
-		$errorfiles += Resolve-Path $errorfile -Relative
+		$errorfiles += $errorfile
 
 		# and push it down the pipeline
 		$lang
@@ -48,11 +48,11 @@ if ($failures.Count -gt 0) {
 	# $At least one language failed validation.
 	Add-Content -Path $env:GITHUB_OUTPUT -Value "has_failures=true"
 	Add-Content -Path $env:GITHUB_OUTPUT -Value "invalid_pofile_locales=$($failures -join ", ")"
-	Add-Content -Path $env:GITHUB_OUTPUT -Value "report_files=$($errorfiles -join ",")"
-	Add-Content -Path $env:GITHUB_OUTPUT -Value "invalid_pofile_reports<<EOF"
-	Add-Content -Path $env:GITHUB_OUTPUT -Value (Get-Content -Path $tempfile -Raw).TrimEnd()
-	Add-Content -Path $env:GITHUB_OUTPUT -Value "EOF"
-	Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value "### Validation errors`n",(Get-Content -Path $tempfile)
+	Add-Content -Path $env:GITHUB_OUTPUT -Value "report_files=$($errorfiles.FullName | ConvertTo-Json -Compress)"
+	# Add-Content -Path $env:GITHUB_OUTPUT -Value "invalid_pofile_reports<<EOF"
+	# Add-Content -Path $env:GITHUB_OUTPUT -Value (Get-Content -Path $tempfile -Raw).TrimEnd()
+	# Add-Content -Path $env:GITHUB_OUTPUT -Value "EOF"
+	# Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value "### Validation errors`n",(Get-Content -Path $tempfile)
 } else {
 	Add-Content -Path $env:GITHUB_OUTPUT -Value "has_failures=false"
 }
