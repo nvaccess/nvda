@@ -5021,7 +5021,7 @@ This option is selected by default.
 
 The following displays support this automatic detection functionality.
 
-* Help Tech displays
+* Help Tech displays (formerly Handy Tech)
 * Baum/Humanware/APH/Orbit braille displays
 * HumanWare Brailliant BI/B series
 * HumanWare BrailleNote
@@ -5175,7 +5175,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 ### Help Tech Displays {#HandyTech}
 
-NVDA supports most displays from [Help Tech](https://www.helptech.de/) when connected via USB, serial port or bluetooth.
+NVDA supports most displays from [Help Tech](https://www.helptech.de/) (formerly Handy Tech) when connected via USB, serial port or Bluetooth.
 
 The following displays are no longer supported:
 
