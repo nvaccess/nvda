@@ -16,7 +16,7 @@ import braille.display.gesture
 from logHandler import log
 from collections import OrderedDict
 import inputCore
-import brailleInput
+import braille.input.gesture
 from baseObject import AutoPropertyObject
 import time
 import bdDetect
@@ -797,7 +797,10 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	)
 
 
-class KeyInputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class KeyInputGesture(
+	braille.display.gesture.BrailleDisplayGesture,
+	braille.input.gesture.BrailleInputGesture,
+):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keys, isHid: bool = False):

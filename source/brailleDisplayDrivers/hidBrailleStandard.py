@@ -12,7 +12,7 @@ import braille.display.driver
 import braille.display.gesture
 import inputCore
 from logHandler import log
-import brailleInput
+import braille.input.gesture
 import bdDetect
 import hidpi
 import hwIo.hid
@@ -313,7 +313,7 @@ class HidBrailleDriver(braille.display.driver.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.gesture.BrailleInputGesture):
 	source = HidBrailleDriver.name
 
 	def __init__(self, driver, dataIndices):

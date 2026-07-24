@@ -42,7 +42,7 @@ import braille.regions.properties
 from utils.security import _isObjectBelowLockScreen
 import vision
 import globalPluginHandler
-import brailleInput
+import braille.input
 import locationHelper
 import aria
 from winAPI.sessionTracking import isLockScreenModeActive
@@ -1373,7 +1373,7 @@ class NVDAObject(
 		"""
 		self.reportFocus()
 		braille.handler.handleGainFocus(self)
-		brailleInput.handler.handleGainFocus(self)
+		braille.input.handler.handleGainFocus(self)
 		vision.handler.handleGainFocus(self)
 
 	def event_loseFocus(self):
@@ -1429,7 +1429,7 @@ class NVDAObject(
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
-			brailleInput.handler.handleCaretMove(self)
+			braille.input.handler.handleCaretMove(self)
 			vision.handler.handleCaretMove(self)
 			review.handleCaretMove(self)
 

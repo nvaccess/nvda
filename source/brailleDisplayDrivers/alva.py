@@ -12,7 +12,7 @@ import braille.display.driver
 import braille.display.gesture
 from logHandler import log
 import inputCore
-import brailleInput
+import braille.input.gesture
 import hwIo
 from hwIo import intToByte, boolToByte
 from globalCommands import SCRCAT_BRAILLE
@@ -513,7 +513,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 	)
 
 
-class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.gesture.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keys, brailleInput=False):
@@ -583,5 +583,5 @@ class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.B
 			"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=self.secondaryId),
 			"br({source}):{id}".format(source=self.source, id=self.id),
 		]
-		ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
+		ids.extend(braille.input.gesture.BrailleInputGesture._get_identifiers(self))
 		return ids

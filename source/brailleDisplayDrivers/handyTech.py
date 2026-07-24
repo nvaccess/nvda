@@ -25,7 +25,7 @@ import braille
 import braille.display
 import braille.display.driver
 import braille.display.gesture
-import brailleInput
+import braille.input.gesture
 import inputCore
 import ui
 from baseObject import ScriptableObject, AutoPropertyObject
@@ -1313,7 +1313,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 	)
 
 
-class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.gesture.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keys, isBrailleInput=False):

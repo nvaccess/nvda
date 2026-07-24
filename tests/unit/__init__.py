@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2017-2025 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter
+# Copyright (C) 2017-2026 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """NVDA unit testing.
 All unit tests should reside within this package and should be
@@ -126,9 +126,9 @@ import bdDetect  # noqa: E402
 bdDetect.deviceInfoFetcher = bdDetect._DeviceInfoFetcher()
 
 # Braille unit tests also need braille input to be initialized.
-import brailleInput  # noqa: E402
+import braille.input  # noqa: E402
 
-brailleInput.initialize()
+braille.input.initialize()
 
 # Make sure there's no blinking cursor as that relies on wx
 config.conf["braille"]["cursorBlink"] = False
