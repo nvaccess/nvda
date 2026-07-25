@@ -330,12 +330,14 @@ class RemoteClient:
 			and only for the first failed attempt of a connection that has never succeeded.
 			The retry loop must not be stopped here,
 			as unattended autoconnect relies on it (see #20131).
+			This is logged as a warning rather than an error,
+			as NVDA has not given up on the connection.
 		"""
 		if self.followerTransport is None or self.followerTransport.successfulConnects > 0:
 			return
 		self._followerConnectFailures += 1
 		if self._followerConnectFailures == 1:
-			log.error(f"Failed to connect to {self.followerTransport.address}. Retrying.")
+			log.warning(f"Failed to connect to {self.followerTransport.address}. Retrying.")
 			ui.delayedMessage(
 				pgettext(
 					"remote",
