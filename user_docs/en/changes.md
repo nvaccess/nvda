@@ -102,6 +102,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 * Speech dictionary entries of type Whole word now correctly handle words containing Unicode combining marks (e.g. Hebrew niqqud, Arabic harakat). (#20013, @LeonarddeR)
   * In particular, Whole word entries no longer incorrectly match inside larger words when those words contain combining marks.
 * Fixed a case which could cause NVDA to freeze while reading math in braille. (#20319, @AAClause)
+* Removed the non-functional "Custom" option from the math decimal separator setting, and documented this setting in the User Guide. (#20425)
 * NVDA no longer fails to load sapi4 voices that do not support pitch, rate or volume. (#20302)
 
 ### Changes for Developers
