@@ -10,7 +10,6 @@ Full-screen magnifier module.
 from typing import override
 
 from logHandler import log
-import speech
 import ui
 from winBindings import magnification
 from .magnifier import Magnifier
@@ -25,7 +24,7 @@ from .utils.types import (
 	Coordinates,
 )
 from .config import getFullscreenMode, isTrueCentered, _isDebug
-from .utils.errorHandling import trackNativeMagnifierErrors
+from .utils.errorHandling import trackNativeMagnifierErrors, MagnifierStartError
 
 
 class FullScreenMagnifier(Magnifier):
@@ -74,13 +73,13 @@ class FullScreenMagnifier(Magnifier):
 			log.exception("Failed to initialize magnification API")
 			# _isActive is True from super(), so _stopMagnifier properly unregisters
 			self._stopMagnifier()
-			message = pgettext(
-				"magnifier",
-				# Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
-				"Cannot start magnifier. Another magnifier application may already be running.",
+			raise MagnifierStartError(
+				pgettext(
+					"magnifier",
+					# Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
+					"Cannot start magnifier. Another magnifier application may already be running.",
+				),
 			)
-			ui.message(message, speechPriority=speech.priorities.Spri.NOW)
-			return
 
 		if self._isActive:
 			self._applyFilter()

@@ -9,6 +9,7 @@ In order to use touch features, NVDA must be installed on a touchscreen computer
 """
 
 import threading
+import speech
 from functools import cached_property
 from typing import (
 	TYPE_CHECKING,
@@ -93,7 +94,12 @@ class TouchMode(DisplayStringStrEnum):
 		}
 
 
-availableTouchModes: list[TouchMode] = [TouchMode.TEXT, TouchMode.OBJECT]
+availableTouchModes: list[TouchMode | str] = [TouchMode.TEXT, TouchMode.OBJECT]
+"""List of touch modes available for cycling.
+
+Add-ons may append custom mode name strings to this list to register new touch modes.
+The mode name string is used in gesture identifiers (e.g. ``ts(mymode):flickRight``).
+"""
 
 HWND_MESSAGE = -3
 
@@ -189,6 +195,7 @@ ANRUS_TOUCH_MODIFICATION_ACTIVE = 2
 
 touchWindow = None
 touchThread = None
+blockTouchInput: bool = False
 
 
 class TouchInputGesture(inputCore.InputGesture):
@@ -384,18 +391,33 @@ class TouchHandler(threading.Thread):
 			return 0
 		return user32.DefWindowProc(hwnd, msg, wParam, lParam)
 
-	def setMode(self, mode):
+	def setMode(self, mode: TouchMode | str) -> None:
 		if mode not in availableTouchModes:
 			raise ValueError("Unknown mode %s" % mode)
 		self._curTouchMode = mode
 
 	def pump(self):
+		_blockedThisPump = False
 		for preheldTracker, tracker in self.trackerManager.emitTrackers():
-			gesture = TouchInputGesture(preheldTracker, tracker, self._curTouchMode.value)
+			if blockTouchInput:
+				_blockedThisPump = True
+				continue
+			modeStr = (
+				self._curTouchMode.value if isinstance(self._curTouchMode, TouchMode) else self._curTouchMode
+			)
+			gesture = TouchInputGesture(preheldTracker, tracker, modeStr)
 			try:
 				inputCore.manager.executeGesture(gesture)
 			except inputCore.NoInputGestureAction:
 				pass
+		if _blockedThisPump:
+			speech.speakMessage(
+				pgettext(
+					"touchHandler",
+					# Translators: Message spoken when a touch gesture is blocked because touch input is disabled.
+					"Touch input is blocked.",
+				),
+			)
 		interval = self.trackerManager.pendingEmitInterval
 		if interval and interval > 0:
 			# Ensure we are pumped again by the time more pending multiTouch trackers are ready

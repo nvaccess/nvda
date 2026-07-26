@@ -88,6 +88,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
 * Fixed an error that could occur when NVDA checked whether a language is supported for a synthesizer with invalid languages. (#20080, @nvdaes)
 * NVDA will attempt to recover more quickly from freezes in some applications, especially those written in Java. (#14396, @thgcode)
 * In Firefox browse mode, the accessible name of form controls (such as checkboxes and radio buttons) is now correctly announced when the control has an `aria-label` and an associated `<label>` element that contains only `aria-hidden` content. (#19409, @bramd)
+* In Foxit PDF Editor, NVDA can once again browse PDF documents. (#20440, @cary-rowen)
 * The "Toggles on and off if the screen layout is preserved while rendering the document content" item in the "Browse mode" category of the Input Gestures dialog now behaves correctly. (#18378)
 * In Microsoft Word with UIA enabled, page changes are now correctly announced when navigating table rows that span multiple pages. (#19386, @akj)
 * Fixed excessive resource usage and highlight flickering when using Visual Highlight. (#17434, @hwf1324)
@@ -102,6 +103,7 @@ The setting is disabled by default. (#20013, @LeonarddeR)
   * In particular, Whole word entries no longer incorrectly match inside larger words when those words contain combining marks.
 * Fixed a case which could cause NVDA to freeze while reading math in braille. (#20319, @AAClause)
 * Removed the non-functional "Custom" option from the math decimal separator setting, and documented this setting in the User Guide. (#20425)
+* NVDA no longer fails to load sapi4 voices that do not support pitch, rate or volume. (#20302)
 
 ### Changes for Developers
 
@@ -110,10 +112,12 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Clarified NV Access's policy on API breaking changes in the [Developer Guide](https://download.nvaccess.org/documentation/developerGuide.html#API). (#19599)
 * Updated components:
   * Ruff to 0.15.9. (#19736, #19908)
-  * uv to 0.11.7. (#19736, #19908, #19968)
+  * uv to 0.11.29. (#19736, #19908, #19968, #20142)
   * Requests to 2.33.0. (#19877)
-  * cryptography to 46.0.7. (#19877, #19968)
+  * cryptography to 48.0.1. (#19877, #19968, #20142)
   * Python to 3.13.13. (#20231, @dpy013)
+  * lxml to 6.1.1. (#20142)
+  * PyMdown Extensions to 10.21.3. (#20142)
 * A new parameter `redactSecrets` has been added to logging functions e.g. `log.debug`. (#19966)
   * When set to `True`, logging output will be sanitized to replace detected secrets with asterisks.
   * This is set to `False` by default for performance purposes.

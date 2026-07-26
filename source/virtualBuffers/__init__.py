@@ -35,6 +35,10 @@ VBufStorage_findDirection_up = 2
 VBufRemote_nodeHandle_t = ctypes.c_ulonglong
 
 
+def _normalizeIdentifier(docHandle: int | None, ID: int | None) -> tuple[int, int]:
+	return (docHandle if docHandle is not None else 0, ID if ID is not None else 0)
+
+
 class VBufStorage_findMatch_word(str):
 	pass
 
@@ -223,7 +227,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo, textInfos.off
 		return self.obj.getNVDAObjectFromIdentifier(docHandle, ID)
 
 	def _getOffsetsFromNVDAObjectInBuffer(self, obj):
-		docHandle, ID = self.obj.getIdentifierFromNVDAObject(obj)
+		docHandle, ID = _normalizeIdentifier(*self.obj.getIdentifierFromNVDAObject(obj))
 		return self._getOffsetsFromFieldIdentifier(docHandle, ID)
 
 	def _getOffsetsFromNVDAObject(self, obj):
@@ -520,7 +524,9 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		self.backendName = backendName
 		self.VBufHandle = None
 		self.isLoading = False
-		self.rootDocHandle, self.rootID = self.getIdentifierFromNVDAObject(self.rootNVDAObject)
+		self.rootDocHandle, self.rootID = _normalizeIdentifier(
+			*self.getIdentifierFromNVDAObject(self.rootNVDAObject),
+		)
 		self.rootIdentifiers[self.rootDocHandle, self.rootID] = self
 
 	def prepare(self):
@@ -629,7 +635,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			self.VBufHandle = None
 
 	def isNVDAObjectPartOfLayoutTable(self, obj):
-		docHandle, ID = self.getIdentifierFromNVDAObject(obj)
+		docHandle, ID = _normalizeIdentifier(*self.getIdentifierFromNVDAObject(obj))
 		ID = str(ID)
 		info = self.makeTextInfo(obj)
 		info.collapse()
@@ -869,7 +875,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		braille.handler.handleUpdate(self)
 
 	def getControlFieldForNVDAObject(self, obj):
-		docHandle, objId = self.getIdentifierFromNVDAObject(obj)
+		docHandle, objId = _normalizeIdentifier(*self.getIdentifierFromNVDAObject(obj))
 		objId = str(objId)
 		info = self.makeTextInfo(obj)
 		info.collapse()
@@ -888,7 +894,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			return inApp
 		# If the object is in the buffer, it's definitely not in an application.
 		try:
-			docHandle, objId = self.getIdentifierFromNVDAObject(obj)
+			docHandle, objId = _normalizeIdentifier(*self.getIdentifierFromNVDAObject(obj))
 		except:  # noqa: E722
 			log.debugWarning(
 				"getIdentifierFromNVDAObject failed. Object probably died while walking ancestors.",
@@ -901,8 +907,8 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		try:
 			NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(
 				self.VBufHandle,
-				docHandle if docHandle is not None else 0,
-				objId if objId is not None else 0,
+				docHandle,
+				objId,
 				ctypes.byref(node),
 			)
 		except WindowsError:

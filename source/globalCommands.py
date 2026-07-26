@@ -4632,7 +4632,8 @@ class GlobalCommands(ScriptableObject):
 		index = (index + 1) % len(touchHandler.availableTouchModes)
 		newMode = touchHandler.availableTouchModes[index]
 		touchHandler.handler._curTouchMode = newMode
-		ui.message(newMode.displayString)
+		modeLabel = newMode.displayString if isinstance(newMode, touchHandler.TouchMode) else newMode
+		ui.message(modeLabel)
 
 	@script(
 		# Translators: Input help mode message for a touchscreen gesture.
