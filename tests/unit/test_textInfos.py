@@ -28,6 +28,10 @@ class _LineOnlyTextInfo(BasicTextInfo):
 	def _getLineOffsets(self, offset):
 		return _LINE_OFFSETS
 
+	def _getParagraphOffsets(self, offset):
+		# Override OffsetsTextInfo._getParagraphOffsets, which delegates to _getLineOffsets.
+		raise NotImplementedError
+
 
 class _MultiUnitTextInfo(_LineOnlyTextInfo):
 	"""A fake offsets TextInfo which supports line, sentence and paragraph units."""
