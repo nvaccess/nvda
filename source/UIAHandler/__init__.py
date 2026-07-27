@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2025 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter, Bill Dengler
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2008-2026 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter, Bill Dengler
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import ctypes
 import ctypes.wintypes
@@ -151,6 +151,16 @@ NVDAUnitsToUIAUnits: Dict[str, int] = {
 	textInfos.UNIT_STORY: UIA.TextUnit_Document,
 	textInfos.UNIT_FORMATFIELD: UIA.TextUnit_Format,
 }
+
+
+def getUIAUnitFromNVDAUnit(unit: str) -> int:
+	"""Translate an NVDA text unit constant to its UIA ``TextUnit`` equivalent.
+	:raises NotImplementedError: if UIA has no equivalent unit.
+	"""
+	if (UIAUnit := NVDAUnitsToUIAUnits.get(unit)) is None:
+		raise NotImplementedError(f"UIA does not support the {unit!r} text unit")
+	return UIAUnit
+
 
 UIAControlTypesToNVDARoles = {
 	UIA_ButtonControlTypeId: controlTypes.Role.BUTTON,  # noqa: F405
