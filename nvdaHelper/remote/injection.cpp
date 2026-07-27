@@ -264,7 +264,33 @@ bool initInprocManagerThreadIfNeeded() {
 	inprocThreadsLock.release();
 	if(threadCreated) {
 		//Wait until the event is set (the thread is past initialization) or until the thread dies.
-		WaitForMultipleObjects(2,waitHandles,FALSE,10000);
+		// If there is a manager thread from a previous instance of NVDA which is
+		// still terminating, we need to allow execInThread calls to be processed so
+		// that it can terminate. Otherwise, we might deadlock because we're waiting
+		// for the new manager thread to start, the new manager thread is waiting for
+		// the old one to exit, but the old one might be waiting on a termination
+		// call to execute in this thread.
+		UINT wm_execInThread = getExecInThreadMessage();
+		// Wait a maximum of 10 seconds.
+		const ULONGLONG latest = GetTickCount64() + 10000;
+		for (;;) {
+			LONGLONG remaining = latest - GetTickCount64();
+			if (remaining <= 0) {
+				break;
+			}
+			if (MsgWaitForMultipleObjects(2, waitHandles, FALSE, (DWORD)remaining,
+					QS_POSTMESSAGE) == 2) {
+				// A posted window message has arrived.
+				MSG msg;
+				while(PeekMessage(&msg, nullptr, wm_execInThread, wm_execInThread, PM_REMOVE)) {
+					TranslateMessage(&msg);
+					DispatchMessage(&msg);
+				}
+			} else {
+				// Anything other than a window message means we should stop waiting.
+				break;
+			}
+		}
 	}
 	//Close the event handle, but not the thread handle as the thread itself will do that.
 	if(waitHandles[0]) CloseHandle(waitHandles[0]);

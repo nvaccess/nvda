@@ -11,6 +11,8 @@ from typing import List, Union, Optional
 
 import wx
 import braille
+import braille.display.driver
+import braille.display.gesture
 from logHandler import log
 
 import inputCore
@@ -132,7 +134,7 @@ def brl_poll(dev: serial.Serial) -> bytes:
 	return b""
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, ScriptableObject):
 	"""papenmeier braille display driver."""
 
 	_dev: serial.Serial
@@ -621,7 +623,7 @@ def brl_join_keys(dec: List[str]) -> str:
 		return ""
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	"""Input gesture for papenmeier displays"""
 
 	source = BrailleDisplayDriver.name
@@ -679,7 +681,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		length = len(decodedkeys)
 		if length == 1 and 32 <= decodedkeys[0] < 32 + driver.numCells * 2:
 			# routing keys
-			self.routingIndex = (decodedkeys[0] - 32) // 2
+			self.cellIndexes = [(decodedkeys[0] - 32) // 2]
 			self.id = "route"
 			if decodedkeys[0] % 2 == 1:
 				self.id = "upperRouting"

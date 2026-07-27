@@ -93,10 +93,10 @@ body:
       label: "Add-on License Status"
       description: "NVDA is licensed under GPL-2.0 or later. To be included, the add-on's code must be available under these terms. Please specify the add-on's current license situation."
       options:
+        - "I don't know / Needs investigation"
         - "GPL-2.0 or later (No relicensing needed)"
         - "Other GPL-compatible license (Author has agreed to relicense)"
         - "Other GPL-compatible license (Relicensing permission is not yet confirmed)"
-        - "I don't know / Needs investigation"
     validations:
       required: true
 

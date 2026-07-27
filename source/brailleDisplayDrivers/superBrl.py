@@ -8,6 +8,8 @@ from typing import List
 import serial
 import bdDetect
 import braille
+import braille.display
+import braille.display.driver
 import hwIo
 from hwIo import intToByte
 import time
@@ -24,7 +26,7 @@ DESCRIBE_TAG = b"\xff\xff\x0a"
 DISPLAY_TAG = b"\xff\xff\x04\x00\x99\x00\x50\x00"
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "superBrl"
 	# Translators: Names of braille displays.
 	description = _("SuperBraille")
@@ -42,7 +44,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	def __init__(self, port="Auto"):
 		super(BrailleDisplayDriver, self).__init__()

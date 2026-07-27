@@ -657,9 +657,15 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
 		# Import late to avoid circular import.
-		import braille
+		import braille.regions.properties
 
-		return braille.getControlFieldBraille(self, field, ancestors, reportStart, formatConfig)
+		return braille.regions.properties.getControlFieldBraille(
+			self,
+			field,
+			ancestors,
+			reportStart,
+			formatConfig,
+		)
 
 	def getFormatFieldSpeech(
 		self,

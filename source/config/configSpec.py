@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
-# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen, Kefas Lungu
+# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen,
+# Wang Chong, Kefas Lungu
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -13,7 +14,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 22
+latestSchemaVersion = 23
 
 #: The configuration specification string
 #: @type: String
@@ -91,7 +92,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		optionsEnum="ReviewRoutingMovesSystemCaretFlag", behaviorOfDefault="NEVER")
 	readByParagraph = boolean(default=false)
 	paragraphStartMarker = option("", " ", "¶", default="")
+	# Deprecated in 2026.3
 	wordWrap = boolean(default=true)
+	textWrap = featureFlag(optionsEnum="BrailleTextWrapFlag", behaviorOfDefault="AT_WORD_BOUNDARIES")
 	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
 	interruptSpeechWhileScrolling = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
@@ -280,6 +283,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportClickable = boolean(default=true)
 
 [documentNavigation]
+	# Hidden option to eagerly initialize Chinese word segmentation even when the current languages do not use it.
+	initWordSegForUnusedLang = boolean(default=false)
+	wordSegmentationStandard = featureFlag(optionsEnum="WordNavigationUnitFlag", behaviorOfDefault="Auto")
 	paragraphStyle = featureFlag(optionsEnum="ParagraphNavigationFlag", behaviorOfDefault="application")
 
 [reviewCursor]

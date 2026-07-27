@@ -8,12 +8,18 @@ The client API is implemented as a dll (dynamic link library). The functions in 
 
 ## Compatibility notice
 
+Version 3.0 of the controller client was introduced in NVDA 2026.3 and provides the following new function:
+
+* `nvdaController_isSpeaking`
+
+On older versions, this returns `RPC_S_UNKNOWN_IF` (`1717`).
+
 Version 2.0 of the controller client was introduced in NVDA 2024.1, offering the following additional functions compared to version 1.0:
 
-* nvdaController_getProcessId
-* nvdaController_speakSsml
+* `nvdaController_getProcessId`
+* `nvdaController_speakSsml`
 
-These functions are supported in NVDA 2024.1 and newer. On older versions, they return error code 1717 (RPC_S_UNKNOWN_IF).
+These functions are supported in NVDA 2024.1 and newer. On older versions, they return error code `1717` (`RPC_S_UNKNOWN_IF`).
 
 ## Security practices
 

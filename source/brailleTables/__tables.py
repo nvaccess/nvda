@@ -198,6 +198,9 @@ addTable("es-g1.ctb", _("Spanish grade 1"))
 addTable("es-g2.ctb", _("Spanish grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("es-no.utb", _("Spanish (Norway)"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("et-6dot.utb", _("Estonian 6 dot"), input=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
@@ -440,6 +443,12 @@ addTable("ny-mw.utb", _("Chichewa (Malawi) literary braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("or-in-g1.utb", _("Oriya grade 1"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("ovd-6g0.utb", _("Elfdalian 6 dot"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("ovd-8g0.utb", _("Elfdalian 8 dot"))
 addTable(
 	"pl-pl-comp8.ctb",
 	# Translators: The name of a braille table displayed in the
@@ -510,6 +519,12 @@ addTable("sl-si-comp8.ctb", _("Slovenian 8 dot computer braille"))
 addTable("sl-si-g1.utb", _("Slovenian grade 1"), inputForLangs={"sl"}, outputForLangs={"sl"})
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("smi-6g0.utb", _("Sami 6 dot"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("smi-8g0.utb", _("Sami 8 dot"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("sot-za-g1.ctb", _("Sesotho grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
@@ -523,13 +538,76 @@ addTable("sr-Cyrl.ctb", _("Serbian Cyrillic grade 1"))
 
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("sv-g0.utb", _("Swedish uncontracted braille"), input=False, outputForLangs={"sv"})
+addTable("sv-g0.utb", _("Swedish uncontracted braille"), outputForLangs={"sv"})
+addTable(
+	"sv-6g0d.utb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	_("Swedish uncontracted braille (detailed)"),
+)
+addTable(
+	"sv-6g0p.utb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	_("Swedish uncontracted braille (phonetics)"),
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("sv-g1.ctb", _("Swedish partially contracted braille"), input=False)
+addTable("sv-g1.ctb", _("Swedish partially contracted braille"), contracted=True)
+addTable(
+	"sv-6g1d.ctb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	_("Swedish partially contracted braille (detailed)"),
+	contracted=True,
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("sv-g2.ctb", _("Swedish contracted braille"), contracted=True, input=False)
+addTable("sv-g2.ctb", _("Swedish contracted braille"), contracted=True)
+addTable(
+	"sv-6g2d.ctb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	_("Swedish contracted braille (detailed)"),
+	contracted=True,
+)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("sv-8g0n.utb", _("Swedish 8 dot uncontracted braille"))
+addTable(
+	"sv-8g0d.utb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	_("Swedish 8 dot uncontracted braille (detailed)"),
+)
+addTable(
+	"sv-8g1n.ctb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	_("Swedish 8 dot partially contracted braille"),
+	contracted=True,
+)
+addTable(
+	"sv-8g1d.ctb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	_("Swedish 8 dot partially contracted braille (detailed)"),
+	contracted=True,
+)
+addTable(
+	"sv-8g2n.ctb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	_("Swedish 8 dot contracted braille"),
+	contracted=True,
+)
+addTable(
+	"sv-8g2d.ctb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	_("Swedish 8 dot contracted braille (detailed)"),
+	contracted=True,
+)
 
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.

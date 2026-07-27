@@ -4,6 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from __future__ import annotations
 from ctypes.wintypes import (
 	HANDLE,
 	HKEY,
@@ -12,7 +13,6 @@ import typing
 import os
 import winreg
 import msvcrt
-
 from ctypes import (
 	CDLL,
 	POINTER,
@@ -30,6 +30,7 @@ from ctypes import (
 	create_unicode_buffer,
 	windll,
 	wstring_at,
+	_Pointer,
 )
 
 from winBindings import user32
@@ -202,6 +203,16 @@ def nvdaController_brailleMessage(text: str) -> SystemErrorCodes:
 
 		queueHandler.queueFunction(queueHandler.eventQueue, braille.handler.message, text)
 	return SystemErrorCodes.SUCCESS
+
+
+@WINFUNCTYPE(c_long, POINTER(c_bool))
+def nvdaController_isSpeaking(pSpeaking: _Pointer[c_bool]) -> int:
+	if not pSpeaking:
+		return SystemErrorCodes.INVALID_PARAMETER.value
+	import speech
+
+	pSpeaking[0] = speech.isSpeaking()
+	return SystemErrorCodes.SUCCESS.value
 
 
 def _lookupKeyboardLayoutNameWithHexString(layoutString):
@@ -795,6 +806,7 @@ def initialize() -> None:
 		("nvdaController_speakSsml", nvdaController_speakSsml),
 		("nvdaController_cancelSpeech", nvdaController_cancelSpeech),
 		("nvdaController_brailleMessage", nvdaController_brailleMessage),
+		("nvdaController_isSpeaking", nvdaController_isSpeaking),
 		("nvdaControllerInternal_requestRegistration", nvdaControllerInternal_requestRegistration),
 		("nvdaControllerInternal_reportLiveRegion", nvdaControllerInternal_reportLiveRegion),
 		("nvdaControllerInternal_inputLangChangeNotify", nvdaControllerInternal_inputLangChangeNotify),
