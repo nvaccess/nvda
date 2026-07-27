@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 05:09+0000\n"
-"PO-Revision-Date: 2026-07-20 00:32\n"
+"POT-Creation-Date: 2026-07-21 01:44+0000\n"
+"PO-Revision-Date: 2026-07-21 05:59\n"
 "Last-Translator: \n"
 "Language-Team: Kannada\n"
 "Language: kn_IN\n"
@@ -2383,7 +2383,7 @@ msgstr ""
 #: gui\installerGui.py:181 gui\installerGui.py:265 gui\installerGui.py:759
 #: gui\installerGui.py:776 gui\installerGui.py:848 gui\logViewer.py:112
 #: gui\logViewer.py:143 gui\message.py:160 gui\settingsDialogs.py:1044
-#: gui\settingsDialogs.py:6009 gui\settingsDialogs.py:6875
+#: gui\settingsDialogs.py:6009 gui\settingsDialogs.py:6886
 #: gui\startupDialogs.py:127 _remoteClient\dialogs.py:67
 #: _remoteClient\dialogs.py:306 _remoteClient\dialogs.py:430
 msgid "Error"
@@ -2663,7 +2663,9 @@ msgstr ""
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the magnifier settings panel.
+#. Translators: The title of an error message box shown when the magnifier fails to start.
 #: globalCommands.py:107 gui\settingsDialogs.py:6043
+#: gui\settingsDialogs.py:6303
 msgid "Magnifier"
 msgstr ""
 
@@ -2675,7 +2677,7 @@ msgstr "ಉಪಕರಣಗಳು ಲಿಪಿ ಸ್ಕ್ರಿಪ್ಟ್"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: a touch screen gesture
-#: globalCommands.py:113 touchHandler.py:296
+#: globalCommands.py:113 touchHandler.py:298
 msgid "Touch screen"
 msgstr "ಮುಟ್ಟುವ ಪರದೆ"
 
@@ -7196,51 +7198,57 @@ msgid "Natural pause after punctuation"
 msgstr ""
 
 #. Translators: The name of a touch mode.
-#: touchHandler.py:68 touchHandler.py:88
+#: touchHandler.py:69 touchHandler.py:89
 msgid "text mode"
 msgstr "ಪಠ್ಯ ವಿಧಾನ"
 
 #. Translators: The name of a touch mode.
-#: touchHandler.py:69 touchHandler.py:90
+#: touchHandler.py:70 touchHandler.py:91
 msgid "object mode"
 msgstr "ವಸ್ತು ವಿಧಾನ"
 
 #. Translators: The name of a touch mode used when in browse mode.
-#: touchHandler.py:70 touchHandler.py:92
+#: touchHandler.py:71 touchHandler.py:93
 msgid "browse mode"
 msgstr ""
 
 #. Translators: a touch screen action performed once
-#: touchHandler.py:223
+#: touchHandler.py:225
 #, python-brace-format
 msgid "single {action}"
 msgstr "ಒಂಟಿ  {action}"
 
 #. Translators: a touch screen action performed twice
-#: touchHandler.py:225
+#: touchHandler.py:227
 #, python-brace-format
 msgid "double {action}"
 msgstr "ಜೋಡಿ {action}"
 
 #. Translators: a touch screen action performed 3 times
-#: touchHandler.py:227
+#: touchHandler.py:229
 #, python-brace-format
 msgid "triple {action}"
 msgstr ""
 
 #. Translators: a touch screen action performed 4 times
-#: touchHandler.py:229
+#: touchHandler.py:231
 #, python-brace-format
 msgid "quadruple {action}"
 msgstr "ನಾಲ್ಮಡಿ  {action}"
 
 #. Translators: a touch screen action using multiple fingers
-#: touchHandler.py:289
+#: touchHandler.py:291
 #, python-brace-format
 msgid "{numFingers} finger {action}"
 msgid_plural "{numFingers} finger {action}"
 msgstr[0] ""
 msgstr[1] ""
+
+#. Translators: Message spoken when a touch gesture is blocked because touch input is disabled.
+#: touchHandler.py:418
+msgctxt "touchHandler"
+msgid "Touch input is blocked."
+msgstr ""
 
 #. Translators: a touch screen gesture where two fingers move toward each other (zoom out)
 #: touchTracker.py:40
@@ -7602,7 +7610,7 @@ msgstr ""
 #. Translators: Title of warning dialog
 #: updateCheck.py:1026 gui\_SetURLDialog.py:113 gui\configProfiles.py:500
 #: gui\installerGui.py:502 gui\installerGui.py:660 gui\settingsDialogs.py:1964
-#: gui\settingsDialogs.py:6332 screenCurtain\_screenCurtain.py:70
+#: gui\settingsDialogs.py:6343 screenCurtain\_screenCurtain.py:70
 #: _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "ಎಚ್ಚರಿಕೆ"
@@ -12956,7 +12964,7 @@ msgstr "&ಇದರ ಮೂಲಕ ಶೋಧಿಸಿ:"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:6763 gui\speechDict.py:215
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:6774 gui\speechDict.py:215
 msgid "&Add"
 msgstr "&ಸೇರಿಸಿ"
 
@@ -13366,7 +13374,7 @@ msgstr ""
 #. Translators: name of a grouping in Privacy and Security settings
 #. which contains miscellaneous settings.
 #: gui\settingsDialogs.py:809 gui\settingsDialogs.py:6089
-#: gui\settingsDialogs.py:6396
+#: gui\settingsDialogs.py:6407
 msgid "General"
 msgstr ""
 
@@ -15305,142 +15313,142 @@ msgid "Tracking &mode:"
 msgstr ""
 
 #. Translators: The title of the privacy and security category in NVDA's settings.
-#: gui\settingsDialogs.py:6300
+#: gui\settingsDialogs.py:6311
 msgid "Privacy and Security"
 msgstr ""
 
 #. Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
-#: gui\settingsDialogs.py:6313
+#: gui\settingsDialogs.py:6324
 msgid "Setting the logging level to \"debug (unredacted)\" will write sensitive information to the log without redaction, including passwords, API keys, or other private data. Only enable this temporarily if you explicitly need unredacted diagnostic logs. Do you want to continue?"
 msgstr ""
 
 #. Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
-#: gui\settingsDialogs.py:6320
+#: gui\settingsDialogs.py:6331
 msgid "High risk logging level"
 msgstr ""
 
 #. Translators: Warning shown when enabling a logging level above info from NVDA settings.
-#: gui\settingsDialogs.py:6325
+#: gui\settingsDialogs.py:6336
 msgid "Setting the logging level above info may record sensitive information such as typed input, speech output, or other private data in the log. Only enable higher logging levels temporarily while troubleshooting. Do you want to continue?"
 msgstr ""
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
-#: gui\settingsDialogs.py:6350
+#: gui\settingsDialogs.py:6361
 msgid "Screen Curtain"
 msgstr ""
 
 #. Translators: option to enable screen curtain in the privacy and security settings panel
-#: gui\settingsDialogs.py:6359
+#: gui\settingsDialogs.py:6370
 msgid "Make screen black (immediate effect)"
 msgstr ""
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#: gui\settingsDialogs.py:6388
+#: gui\settingsDialogs.py:6399
 msgid "&Play sound when toggling Screen Curtain"
 msgstr ""
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
-#: gui\settingsDialogs.py:6403
+#: gui\settingsDialogs.py:6414
 msgid "L&ogging level:"
 msgstr "ಲಾ&ಗಿಂಗ್ ಮಟ್ಟ:"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-#: gui\settingsDialogs.py:6426
+#: gui\settingsDialogs.py:6437
 msgid "Allow NV Access to gather NVDA usage statistics"
 msgstr ""
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:6547
+#: gui\settingsDialogs.py:6558
 msgid "NVDA Settings"
 msgstr ""
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:6603
+#: gui\settingsDialogs.py:6614
 msgid "normal configuration"
 msgstr ""
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:6638
+#: gui\settingsDialogs.py:6649
 msgid "Add Symbol"
 msgstr "ಚಿನ್ಹೆಯನ್ನು ಸೇರಿಸಿ"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:6643
+#: gui\settingsDialogs.py:6654
 msgid "&Symbol:"
 msgstr ""
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:6673
+#: gui\settingsDialogs.py:6684
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "ಚಿನ್ಹೆಯ ಉಚ್ಛರಣೆ %s"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:6687
+#: gui\settingsDialogs.py:6698
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr ""
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6696
+#: gui\settingsDialogs.py:6707
 msgid "&Symbols"
 msgstr "&ಚಿನ್ಹೆಗಳು"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:6706
+#: gui\settingsDialogs.py:6717
 msgid "Symbol"
 msgstr "ಚಿನ್ಹೆ"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6708 gui\speechDict.py:191
+#: gui\settingsDialogs.py:6719 gui\speechDict.py:191
 msgid "Replacement"
 msgstr "ಮರುಸ್ಥಾಪಿಸುವಿಕೆ"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:6710
+#: gui\settingsDialogs.py:6721
 msgid "Level"
 msgstr "ಮಟ್ಟ"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:6713
+#: gui\settingsDialogs.py:6724
 msgid "Preserve"
 msgstr "ಉಳಿಸಿಕೊ"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:6717
+#: gui\settingsDialogs.py:6728
 msgid "Change selected symbol"
 msgstr ""
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6735 gui\speechDict.py:52
+#: gui\settingsDialogs.py:6746 gui\speechDict.py:52
 msgid "&Replacement"
 msgstr "&ಮರುಸ್ಥಾಪಿಸುವಿಕೆ"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:6744
+#: gui\settingsDialogs.py:6755
 msgid "&Level"
 msgstr "&ಮಟ್ಟ"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:6751
+#: gui\settingsDialogs.py:6762
 msgid "&Send actual symbol to synthesizer"
 msgstr "&ಸಂಯೋಜಕ ನಿಜವಾದ ಚಿಹ್ನೆ ಕಳುಹಿಸಿ"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:6766
+#: gui\settingsDialogs.py:6777
 msgid "Re&move"
 msgstr "ತೆ&ಗೆದುಹಾಕಿ"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:6873
+#: gui\settingsDialogs.py:6884
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "\"%s\" ಚಿನ್ಹೆ ಅದಾಗಲೆ ಇದೆ."
@@ -20183,7 +20191,7 @@ msgstr "ಸುರಕ್ಷತಾ ಮೇಲ್ತೆರೆ"
 #. Translators: Message announced when already at left edge of the screen while panning the magnified view
 #. Translators: Message announced when already at left edge of the screen while panning the magnified view
 #. to left edge
-#: _magnifier\commands.py:40 _magnifier\commands.py:61
+#: _magnifier\commands.py:43 _magnifier\commands.py:64
 msgctxt "magnifier"
 msgid "left edge"
 msgstr ""
@@ -20191,7 +20199,7 @@ msgstr ""
 #. Translators: Message announced when already at right edge of the screen while panning the magnified view
 #. Translators: Message announced when already at right edge of the screen while panning the magnified view
 #. to right edge
-#: _magnifier\commands.py:45 _magnifier\commands.py:67
+#: _magnifier\commands.py:48 _magnifier\commands.py:70
 msgctxt "magnifier"
 msgid "right edge"
 msgstr ""
@@ -20199,7 +20207,7 @@ msgstr ""
 #. Translators: Message announced when already at top edge of the screen while panning the magnified view
 #. Translators: Message announced when already at top edge of the screen while panning the magnified view
 #. to top edge
-#: _magnifier\commands.py:50 _magnifier\commands.py:73
+#: _magnifier\commands.py:53 _magnifier\commands.py:76
 msgctxt "magnifier"
 msgid "top edge"
 msgstr ""
@@ -20207,102 +20215,96 @@ msgstr ""
 #. Translators: Message announced when already at bottom edge of the screen while panning the magnified view
 #. Translators: Message announced when already at left edge of the screen while panning the magnified view
 #. to left edge
-#: _magnifier\commands.py:55 _magnifier\commands.py:79
+#: _magnifier\commands.py:58 _magnifier\commands.py:82
 msgctxt "magnifier"
 msgid "bottom edge"
 msgstr ""
 
 #. Translators: Message announced when stopping the NVDA magnifier.
-#: _magnifier\commands.py:96
+#: _magnifier\commands.py:110
 msgctxt "magnifier"
 msgid "Magnifier disabled"
 msgstr ""
 
-#. Translators: Message announced when trying to start magnifier while Screen Curtain is active.
-#: _magnifier\commands.py:105
-msgctxt "magnifier"
-msgid "Cannot start magnifier. Please disable Screen Curtain first."
-msgstr ""
-
 #. Translators: Message announced when starting the NVDA magnifier.
-#: _magnifier\commands.py:114
+#: _magnifier\commands.py:125
 msgctxt "magnifier"
 msgid "Magnifier enabled"
 msgstr ""
 
 #. Translators: Message announced when changing the color filter with {filter} being the new color filter.
-#: _magnifier\commands.py:174
+#: _magnifier\commands.py:185
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Color filter {filter}"
 msgstr ""
 
 #. Translators: Message announced when changing the magnifier view with {view} being the new magnifier view.
-#: _magnifier\commands.py:198
+#: _magnifier\commands.py:209
 #, python-brace-format
 msgctxt "magnifier"
 msgid "{view} view"
 msgstr ""
 
 #. Translators: Message announced when toggling a follow setting with {setting} being the name of the setting and {state} being either "enabled" or "disabled".
-#: _magnifier\commands.py:221
+#: _magnifier\commands.py:232
 #, python-brace-format
 msgctxt "magnifier"
 msgid "{setting} {state}"
 msgstr ""
 
 #. Translators: State of the follow setting being toggled enabled.
-#: _magnifier\commands.py:227
+#: _magnifier\commands.py:238
 msgctxt "magnifier"
 msgid "enabled"
 msgstr ""
 
 #. Translators: State of the follow setting being toggled disabled.
-#: _magnifier\commands.py:233
+#: _magnifier\commands.py:244
 msgctxt "magnifier"
 msgid "disabled"
 msgstr ""
 
 #. Translators: State of all follow settings being toggled disabled.
-#: _magnifier\commands.py:251
+#: _magnifier\commands.py:262
 msgctxt "magnifier"
 msgid "All tracking settings disabled"
 msgstr ""
 
 #. Translators: State of all follow settings being restored.
-#: _magnifier\commands.py:257
+#: _magnifier\commands.py:268
 msgctxt "magnifier"
 msgid "Tracking settings restored"
 msgstr ""
 
 #. Translators: Message announced when changing the full-screen mode with {mode} being the new full-screen mode.
-#: _magnifier\commands.py:285
+#: _magnifier\commands.py:296
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Full-screen mode {mode}"
 msgstr ""
 
 #. Translators: Message announced when trying to show temporary overview of the screen while it's already active.
-#: _magnifier\commands.py:311
+#: _magnifier\commands.py:322
 msgctxt "magnifier"
 msgid "The screen overview is already active"
 msgstr ""
 
 #. Translators: Message announced when overview of the entire screen is being showed.
-#: _magnifier\commands.py:322
+#: _magnifier\commands.py:333
 msgctxt "magnifier"
 msgid "Showing entire screen"
 msgstr ""
 
 #. Translators: Message announced when the magnifier is not active.
-#: _magnifier\commands.py:346
+#: _magnifier\commands.py:357
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not active."
 msgstr ""
 
 #. Translators: Message announced when the magnifier is not full-screen.
-#: _magnifier\commands.py:371
+#: _magnifier\commands.py:382
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not full-screen."
@@ -20322,25 +20324,49 @@ msgid "Cannot start magnifier. Another magnifier application may already be runn
 msgstr ""
 
 #. Translators: Message announced when the magnifier stops due to an unrecoverable error.
-#: _magnifier\fullscreenMagnifier.py:223
+#: _magnifier\fullscreenMagnifier.py:222
 msgctxt "magnifier"
 msgid "Magnifier stopped due to an error. Please restart it."
 msgstr ""
 
 #. Translators: Message when trying to enable magnifier while screen curtain is active
-#: _magnifier\magnifier.py:189
+#: _magnifier\magnifier.py:199
 msgctxt "magnifier"
 msgid "Cannot enable magnifier. Please disable screen curtain first."
 msgstr ""
 
+#. Translators: Warning when magnifier is started on a device with a touch screen but NVDA's touch support is disabled.
+#: _magnifier\magnifier.py:226
+msgctxt "magnifier"
+msgid "Touch screen input cannot be used because NVDA touch support is disabled. "
+msgstr ""
+
+#. Translators: Warning when the magnifier starts on a portable/source copy with a touchscreen.
+#: _magnifier\magnifier.py:232
+msgctxt "magnifier"
+msgid "Touch screen input cannot be used because NVDA is not installed. "
+msgstr ""
+
+#. Translators: Suffix appended to touch warning when touch inputs cannot be blocked by the magnifier.
+#: _magnifier\magnifier.py:240
+msgctxt "magnifier"
+msgid "Touch inputs may not behave as expected while the magnifier is running."
+msgstr ""
+
+#. Translators: Title of the warning dialog shown when touch cannot be intercepted while the magnifier is running.
+#: _magnifier\magnifier.py:245
+msgctxt "magnifier"
+msgid "Touch Screen Warning"
+msgstr ""
+
 #. Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
-#: _magnifier\magnifier.py:331
+#: _magnifier\magnifier.py:376
 msgctxt "magnifier"
 msgid "Disabling magnifier"
 msgstr ""
 
 #. Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
-#: _magnifier\magnifier.py:349
+#: _magnifier\magnifier.py:395
 msgctxt "magnifier"
 msgid "Re-enabling magnifier"
 msgstr ""
