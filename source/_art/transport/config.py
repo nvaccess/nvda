@@ -25,7 +25,7 @@ import rpyc.core.vinegar
 #:
 #: .. warning::
 #: 	None of the security-critical flags below should be loosened without a security review..
-PROTOCOL_CONFIG: dict[str, object] = {
+PROTOCOL_CONFIG: dict[str, bool] = {
 	# Only explicitly exposed methods may cross the boundary.
 	"allow_public_attrs": False,
 	"allow_safe_attrs": False,

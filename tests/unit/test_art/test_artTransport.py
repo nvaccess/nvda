@@ -16,7 +16,7 @@ from _art.transport import Connection, Service
 @rpyc.service
 class _ChildService(Service):
 	@Service.exposed
-	def ping(self):
+	def ping(self) -> str:
 		return "pong"
 
 
@@ -42,7 +42,7 @@ class _EchoService(Service):
 		self.children.append(child)
 		return child
 
-	def notExposedMethod(self):
+	def notExposedMethod(self) -> str:
 		return "should not be reachable"
 
 
