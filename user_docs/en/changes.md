@@ -21,6 +21,7 @@
   * The "At word or syllable boundaries" option uses hyphenation dictionaries to split long words at syllable boundaries when they do not fit on the display.
 * Added context menu and shortcuts to configuration profiles dialog. (#18169, @amirmahdifard)
 * Magnifier: A new unassigned command has been added to move the mouse cursor to the center of the magnified view. (#20127, @CyrilleB79)
+* Support for the myBraille family of Help Tech Braille displays has been added.
 * Added context menu and shortcuts support to the Input gestures dialog. (#16816, @amirmahdifard)
 * Added context menu and shortcuts support to the Speech Dictionaries dialog. (#20420, @amirmahdifard)
 
@@ -58,6 +59,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * NVDA now reports checked ToolStrip menu items in .NET Framework Windows Forms applications using UI Automation. (#19335, @Cary-rowen)
 * The Add-on Store no longer becomes unresponsive when navigating the list of add-ons quickly, such as by holding down an arrow key. (#17351, @christopherpross)
 * HIMS Braille Sense/Braille EDGE displays connected via USB are detected again on Windows 11 systems where the vendor's himsusb.sys driver cannot be installed, by falling back to WinUSB when the vendor's WinUSB driver package is installed for the device. (#20555, @KihunJang1981)
+* NVDA no longer briefly disconnects and re-detects the braille display on desktop switches that do not enter the secure desktop, such as when switching between a Remote Desktop session and the local machine. (#18810, #20550, @LeonarddeR)
 
 ### Changes for Developers
 

@@ -58,6 +58,28 @@ Large refactors should instead target specific symbols/files/modules per PR to m
 Ongoing feature development that cannot be merged straight to `master` can occur on `try-` branches, done in pieces.
 Ask NV Access on the corresponding ADR to create a `try-` branch.
 
+### Feature development
+
+Feature development adds scope to NVDA, and with that comes risk.
+New features require planning and ongoing support from the contributor throughout the release process.
+
+New features can only be added during the alpha phase for a release.
+If an issue with a new feature is not resolved in a reasonable timeframe, the feature will be reverted.
+Once a feature has reached a stable release, support from the contributor may still be required.
+If NV Access does not have time or the ability to fix a serious issue with a new feature, the feature may be removed in a subsequent release.
+
+### API breaking releases
+
+* API breaking changes must be proposed and accepted before the first 20XX.1 alpha is released.
+They should be added to the 20XX.1 milestone and labeled `triaged`, `api-breaking-change`, `release/blocking-beta`, `release/blocking`.
+* API breaking releases should contain security fixes, bug fixes and developer facing changes only.
+
+API breaking releases come with too much risk and major technical changes.
+We cannot manage the additional work of new features during them.
+
+We will only accept new features in API breaking releases if they are pre-scheduled and include unavoidable API breaking changes.
+The changes proposed in the API breaking release must be minimal, e.g., focusing on the internal changes only to enable the feature in a subsequent release.
+
 ## Overview of contribution process:
 
 1. [Setup your development environment](./createDevEnvironment.md).
