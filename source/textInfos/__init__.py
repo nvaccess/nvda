@@ -411,6 +411,8 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _get_unit_readingChunk(self) -> str:
 		"""The concrete unit that :data:`UNIT_READINGCHUNK` resolves to,
 		as configured via the ``sayAllReadingUnit`` feature flag.
+
+		:raises ValueError: If the configured flag value is not recognised.
 		"""
 		match config.conf["speech"]["sayAllReadingUnit"].calculated():
 			case config.featureFlagEnums.SayAllReadingUnitFlag.SENTENCE:
@@ -420,7 +422,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			case config.featureFlagEnums.SayAllReadingUnitFlag.LINE:
 				return UNIT_LINE
 			case flag:
-				raise NotImplementedError(f"Unknown sayAllReadingUnit flag, {flag!r}")
+				raise ValueError(f"Unknown sayAllReadingUnit flag, {flag!r}")
 
 	def _resolveReadingChunkUnit(self, unit: str) -> str:
 		"""Resolve :data:`UNIT_READINGCHUNK` to the concrete configured unit,
