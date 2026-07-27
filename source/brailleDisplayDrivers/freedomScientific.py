@@ -13,6 +13,8 @@ from io import BytesIO
 
 import bdDetect
 import braille
+import braille.display.driver
+import braille.display.gesture
 import brailleInput
 import hwIo
 import inputCore
@@ -165,7 +167,7 @@ FOCUS_1_DOTS_TABLE = [
 FOCUS_1_TRANSLATION_TABLE = _makeTranslationTable(FOCUS_1_DOTS_TABLE)
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, ScriptableObject):
 	"""
 	Driver for Freedom Scientific braille displays
 	"""
@@ -704,7 +706,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture):
 	"""Base gesture for this braille display"""
 
 	source = BrailleDisplayDriver.name

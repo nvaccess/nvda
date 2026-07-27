@@ -14,6 +14,9 @@ from typing import List, Optional
 import serial
 import bdDetect
 import braille
+import braille.display
+import braille.display.driver
+import braille.display.gesture
 import brailleInput
 import inputCore
 from logHandler import log
@@ -120,7 +123,7 @@ _qtKeys = {
 }
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "brailleNote"
 	# Translators: Names of braille displays
 	description = _("HumanWare BrailleNote")
@@ -149,7 +152,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
@@ -308,7 +311,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(
@@ -321,7 +324,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		qtMod: Optional[int] = None,
 		qtData: Optional[str] = None,
 	):
-		super(braille.BrailleDisplayGesture, self).__init__()
+		super(braille.display.gesture.BrailleDisplayGesture, self).__init__()
 		# Denotes if we're dealing with a QT model.
 		self.qt = qtMod is not None
 		# Handle thumb-keys and scroll wheel (wheel is for Apex BT).

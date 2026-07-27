@@ -16,6 +16,9 @@ from typing import Dict, List, Optional, Set
 import serial
 
 import braille
+import braille.display
+import braille.display.driver
+import braille.display.gesture
 from bdDetect import DeviceMatch, DriverRegistrar
 import brailleInput
 import inputCore
@@ -97,7 +100,7 @@ def isSeikaBluetoothDeviceMatch(match: DeviceMatch) -> bool:
 	return isSeikaBluetoothDeviceInfo(match.deviceInfo)
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = SEIKA_NAME
 	# Translators: Name of a braille display.
 	description = _("Seika Notetaker")
@@ -118,7 +121,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def getManualPorts(cls) -> typing.Iterator[typing.Tuple[str, str]]:
 		"""@return: An iterator containing the name and description for each port."""
-		return braille.getSerialPorts(isSeikaBluetoothDeviceInfo)
+		return braille.display.getSerialPorts(isSeikaBluetoothDeviceInfo)
 
 	def __init__(self, port: typing.Union[None, str, DeviceMatch]):
 		super().__init__()
@@ -365,7 +368,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGestureRouting(braille.BrailleDisplayGesture):
+class InputGestureRouting(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, indexes: list[int] | int):
@@ -393,11 +396,11 @@ def _getRoutingIndexes(routingKeyBytes: bytes) -> Set[int]:
 	return {i for i in range(numRoutingKeys) if (1 << i) & combinedRoutingKeysBitSet}
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys=None, dots=None, space=0, routing=None):
-		super(braille.BrailleDisplayGesture, self).__init__()
+		super(braille.display.gesture.BrailleDisplayGesture, self).__init__()
 		# see what thumb keys are pressed:
 		names = set()
 		if keys is not None:

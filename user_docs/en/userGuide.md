@@ -372,6 +372,7 @@ Press `control+tab` to get to this tab from anywhere in the Add-on Store.
 The status of the add-on will be listed as "Update available".
 The list will display the currently installed version and the available version.
 Press `enter` on the add-on to open the actions list; choose "Update".
+If the add-on is disabled, the action will instead be labelled "Update (and enable)", as add-ons must be enabled to be installed; updating a disabled add-on re-enables it.
 
 By default, after NVDA startup, you will be notified if any add-on updates are available.
 To learn more about and configure this behaviour, refer to ["Update Notifications"](#AutomaticAddonUpdates).
@@ -1377,13 +1378,69 @@ However, at any time during navigation, you can switch navigation modes using `s
 
 ## Braille {#Braille}
 
-If you own a braille display, NVDA can display information in braille.
+If you have access to a braille display, NVDA can display information in braille.
 If your braille display has a Perkins-style keyboard, you can also enter contracted or uncontracted braille.
 Braille can also be displayed on screen using the [Braille Viewer](#BrailleViewer) instead of, or at the same time as, using a physical braille display.
 
 Please see the [Supported Braille Displays](#SupportedBrailleDisplays) section for information about the supported braille displays.
 This section also contains information about what displays support NVDA's automatic background braille display detection functionality.
 You can configure braille using the [Braille category](#BrailleSettings) of the [NVDA Settings](#NVDASettings) dialog.
+
+### Reading Braille {#BrailleReading}
+
+When reading braille on a refreshable display, text is presented in the current [output table](#BrailleSettingsOutputTable) and [Braille Mode](#BrailleMode).
+Where text is longer than will fit on the display, panning or other keys on the device can be used to navigate without moving the focus or text caret.
+
+#### Automatic Braille Scrolling {#AutomaticBrailleScrolling}
+
+Automatic braille scrolling can be enabled to scroll the display at a set speed.
+When using this feature, the braille display scrolls to present information which is more than will fit on the display at once.
+The feature is disabled and a gesture to start braille scrolling is undefined by default.
+To use automatic braille scrolling, a gesture needs to be set in NVDA's [Input Gestures dialog](#InputGestures) before it can be used.
+Gestures can also be set to speed up or slow down the rate of automatic scrolling.
+Alternatively, you can [set the automatic scroll rate in Braille Settings](#BrailleAutoScrollRate).
+
+While braille is scrolling, you can still use the scroll back and scroll forward commands without stopping scrolling.
+Scroll back can be useful to read previous contents again.
+Scroll forward can be useful to skip a blank line, or if the line being read is short.
+
+While reading, automatic braille scrolling will stop when any of the following happen:
+
+* The toggle automatic braille scrolling key is pressed
+* The user presses a key or gesture which would display a new message
+* The focus is moved (including with braille display panning keys)
+* The end of the document is reached
+* The state of the lock or secure screen is changed (such as the computer being locked)
+
+#### Braille Reading Gestures {#BrailleReadingGestures}
+
+<!-- KC:beginInclude -->
+| Name | Key | Description |
+|---|---|---|
+| Toggles braille mode | `NVDA+alt+t` | Allows cycling between available braille modes: "follow cursors" and "display speech output"|
+| Tether braille |`NVDA+control+t` | This option allows you to choose whether the braille display will follow the system focus / caret, the navigator object / review cursor, or both |
+| Toggle automatic scroll | None | Toggles whether NVDA periodically scrolls the braille display to present information which is too long to show at once |
+| Increase automatic scroll rate | None | Makes automatic scrolling faster (when enabled) |
+| Decrease automatic scroll rate | None | Makes automatic scrolling slower (when enabled) |
+| Cycle braille cursor shapes | None | Cycle through the shape options (dot pattern) of the braille cursor |
+| Cycle move system caret when routing review cursor | None | Cycle through the braille move system caret when routing review cursor states |
+| Cycle show messages modes | None | Cycle through the braille show messages modes |
+| Cycle braille show selection states | None | Cycle through the braille show selection states |
+| Cycle braille Unicode normalization states | None | Cycle through the braille Unicode normalization states |
+| Move braille to focus | None | Moves the braille display to the current focus |
+| Move braille to next line | None | Moves the braille display to the next line |
+| Move braille to previous line | None | Moves the braille display to the previous line |
+| Report braille formatting | None | Reports formatting info for the text under this braille cell |
+| Route to or activate braille object | None | Routes the cursor to or activates the object under this braille cell |
+| Scroll braille display back | None | Scrolls the braille display back |
+| Scroll braille display forward | None | Scrolls the braille display forward |
+| Toggle braille cursor | None | Toggle the braille cursor on and off |
+| Toggle braille context information | None | Toggle the way context information is presented in braille |
+| Toggle speaking when navigating braille | None | Toggles on and off speaking when navigating by lines or paragraph with braille |
+| Toggle speaking character when routing | None | Toggles speaking the character under the cursor when routing cursor in text |
+<!-- KC:endInclude -->
+
+Refer to NVDA's [Braille Settings](#BrailleSettings) for all options which can be used to adjust braille reading.
 
 ### Control Type, State and Landmark abbreviations {#BrailleAbbreviations}
 
@@ -1523,6 +1580,19 @@ If you accidentally toggle modifier keys, running the toggle command again will 
 When typing in contracted Braille, using the modifier toggle keys will cause your input to be translated just as if you had pressed dots 7+8.
 In addition, the emulated keypress cannot reflect Braille typed before the modifier key was pressed.
 This means that, to type alt+2 with a Braille code that uses a number sign, you must first toggle Alt and then type a number sign.
+
+#### Braille Input Gestures {#BrailleInputGestures}
+
+<!-- KC:beginInclude -->
+
+| Name | Key | Description |
+|---|---|---|
+| Input via braille display | any dots | Inputs braille dots via the braille keyboard |
+| Erase last entered | `dot7` | Erases the last entered braille cell or character |
+| Translate braille input | `dot7+dot8` | Translates any braille input |
+| Translate and press enter | `dot8` | Translates any braille input and presses the enter key |
+
+<!-- KC:endInclude -->
 
 ## Vision {#Vision}
 
@@ -2584,9 +2654,12 @@ To toggle this option from anywhere, please assign a custom gesture to "speakOnN
 
 ##### Automatic Scroll Rate {#BrailleAutoScrollRate}
 
-This slider controls the rate of automatic braille display scrolling, measured in cells per second.
-The minimum value (0%) will be 1 cell per second, and the maximum value (100%), 20 cells per second.
-For example, with the default value of 10 cells/sec, if a braille display with 40 cells is used, the number of seconds between automatic scrolls will be 4.
+This slider controls the rate at which NVDA scrolls the braille display when [automatic braille scrolling](#AutomaticBrailleScrolling) is enabled, measured in cells per second.
+
+To increase or decrease the scroll rate from anywhere, please assign custom gestures using the [Input Gestures dialog](#InputGestures).
+
+The minimum value (0%) is 1 cell per second, and the maximum value (100%) is 20 cells per second.
+For example, with the default value of 10 cells/sec, if a 40-cell braille display is used, the display will scroll automatically every 4 seconds.
 If the display had 20 cells, each line of braille would be shown for 2 seconds.
 
 While the automatic scroll option is enabled, you can still use the scroll back command to read previous contents again, and scroll forward, for example, to skip a blank line, or if the line being read is too short.
@@ -4304,6 +4377,9 @@ The dialog also contains Add, Edit, Remove and Remove all buttons.
 
 To add a new rule to the dictionary, press the Add button, and fill in the fields in the dialog box that appears and then press Ok.
 You will then see your new rule in the list of rules.
+
+You can use a context menu to edit or remove rules.
+You can also use the `delete` key to remove a selected rule.
 However, to make sure your rule is actually saved, make sure to press Ok to exit the dictionary dialog completely once you have finished adding/editing rules.
 
 The rules for NVDA's speech dictionaries allow you to change one string of characters into another.
@@ -4394,7 +4470,8 @@ Often, a gesture can be interpreted in more than one way.
 For example, if you pressed a key on the keyboard, you may wish it to be specific to the current keyboard layout (e.g. desktop or laptop) or you may wish it to apply for all layouts.
 In this case, a menu will appear allowing you to select the desired option.
 
-To remove a gesture from a command, select the gesture and press the Remove button.
+You can use the context menu to add or remove gestures for each command.
+To remove a gesture from a command, you can also press the `delete` key.
 
 The Emulated system keyboard keys category contains NVDA commands that emulate keys on the system keyboard.
 These emulated system keyboard keys can be used to control a system keyboard right from your braille display.
@@ -4457,6 +4534,9 @@ When you open the dialog, the profile you are currently editing is selected.
 Additional information is also shown for active profiles, indicating whether they are manually activated, triggered and/or being edited.
 
 To rename or delete a profile, press the Rename or Delete buttons, respectively.
+
+You can also manage profiles by opening the context menu on a profile in the list to rename or delete it.
+Additionally, you can press `f2` to rename the selected profile or `delete` to remove it.
 
 Press the Close button to close the dialog.
 
@@ -5042,7 +5122,7 @@ This option is selected by default.
 
 The following displays support this automatic detection functionality.
 
-* Handy Tech displays
+* Help Tech displays (formerly Handy Tech)
 * Baum/Humanware/APH/Orbit braille displays
 * HumanWare Brailliant BI/B series
 * HumanWare BrailleNote
@@ -5194,18 +5274,18 @@ Please see the display's documentation for descriptions of where these keys can 
 
 <!-- KC:endInclude -->
 
-### Handy Tech Displays {#HandyTech}
+### Help Tech Displays {#HandyTech}
 
-NVDA supports most displays from [Handy Tech](https://www.handytech.de/) when connected via USB, serial port or bluetooth.
-For older USB displays, you will need to install the USB drivers from Handy Tech on your system.
+NVDA supports most displays from [Help Tech](https://www.helptech.de/) (formerly Handy Tech) when connected via USB, serial port or Bluetooth.
 
-The following displays are not supported out of the box, but can be used via [Handy Tech's universal driver](https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers) and NVDA add-on:
+The following displays are no longer supported:
 
 * Braillino
 * Bookworm
-* Modular displays with firmware version 1.13 or lower. Please note that the firmware of this displays can be updated.
+* Modular displays with firmware version 1.13 or lower.
+Please note that the firmware of these displays can be updated.
 
-Following are the key assignments for Handy Tech displays with NVDA.
+Following are the key assignments for Help Tech displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 <!-- KC:beginInclude -->
 

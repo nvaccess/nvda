@@ -8,6 +8,7 @@ from _magnifier.config import ZoomLevel
 from _magnifier.magnifier import Magnifier
 from _magnifier.utils.types import Filter, FullScreenMode, MagnifiedView, Direction, Coordinates
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
+from _magnifier.utils.errorHandling import MagnifierStartError
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
 from winAPI._displayTracking import getPrimaryDisplayOrientation
 
@@ -294,27 +295,30 @@ class TestFullScreenMagnifierApi(_TestMagnifier):
 	"""Tests for FullScreenMagnifier interactions with the Windows Magnification API."""
 
 	def testCannotStartWhenWindowsMagnifierRunning(self):
-		"""MagSetFullscreenTransform fails because Windows Magnifier is running: magnifier must not start."""
+		"""
+		MagInitialize succeeds but MagSetFullscreenTransform fails: Windows Magnifier is running.
+		NVDA Magnifier must not start, must raise MagnifierStartError, and start no timer.
+		"""
 		self.mock_mag_fs.MagSetFullscreenTransform.side_effect = OSError("API in use by another magnifier")
 
-		with patch("_magnifier.fullscreenMagnifier.ui.message") as mock_message:
-			magnifier = FullScreenMagnifier()
+		magnifier = FullScreenMagnifier()
+		with self.assertRaises(MagnifierStartError):
 			magnifier._startMagnifier()
 
 		self.assertFalse(magnifier._isActive)
-		mock_message.assert_called_once()
 		self.assertIsNone(magnifier._timer)
 
 	def testCannotStartWhenMagInitializeFails(self):
-		"""MagInitialize fails: magnifier must not start and the user must be notified."""
+		"""
+		MagInitialize itself fails: NVDA Magnifier must not start and must raise MagnifierStartError.
+		"""
 		self.mock_mag_fs.MagInitialize.side_effect = OSError("Cannot initialize magnification API")
 
-		with patch("_magnifier.fullscreenMagnifier.ui.message") as mock_message:
-			magnifier = FullScreenMagnifier()
+		magnifier = FullScreenMagnifier()
+		with self.assertRaises(MagnifierStartError):
 			magnifier._startMagnifier()
 
 		self.assertFalse(magnifier._isActive)
-		mock_message.assert_called_once()
 		self.assertIsNone(magnifier._timer)
 
 	def testRecoveryCapStopsMagnifier(self):
