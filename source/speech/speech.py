@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter, Łukasz Golonka, Cary-rowen
 
 """High-level functions to speak information."""
@@ -1119,6 +1119,25 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 	return indentSequence
 
 
+def _resolveLanguageForVoiceSwitch(
+	language: str | None,
+	defaultLanguage: str,
+	autoDialectSwitching: bool,
+) -> str:
+	"""Resolve a requested language against the current voice language.
+
+	A parent language such as ``en`` should keep the current dialect, such as
+	``en_AU``. An explicitly requested dialect can still switch when enabled.
+	"""
+	if not language:
+		return defaultLanguage
+	languageRoot, dialectSeparator, _dialect = language.partition("_")
+	defaultLanguageRoot = defaultLanguage.split("_", 1)[0]
+	if languageRoot == defaultLanguageRoot and (not autoDialectSwitching or not dialectSeparator):
+		return defaultLanguage
+	return language
+
+
 # C901 'speak' is too complex
 # Note: when working on speak, look for opportunities to simplify
 # and move logic out into smaller helper functions.
@@ -1169,7 +1188,6 @@ def speak(  # noqa: C901
 	autoDialectSwitching = config.conf["speech"]["autoDialectSwitching"]
 	curLanguage = defaultLanguage = getCurrentLanguage()
 	prevLanguage = None
-	defaultLanguageRoot = defaultLanguage.split("_")[0]
 	unicodeNormalization = initialUnicodeNormalization = config.conf["speech"]["unicodeNormalization"]
 	oldSpeechSequence = speechSequence
 	speechSequence = []
@@ -1177,11 +1195,11 @@ def speak(  # noqa: C901
 		if isinstance(item, LangChangeCommand):
 			if not languageHandling.shouldMakeLangChangeCommand():
 				continue
-			curLanguage = item.lang
-			if not curLanguage or (
-				not autoDialectSwitching and curLanguage.split("_")[0] == defaultLanguageRoot
-			):
-				curLanguage = defaultLanguage
+			curLanguage = _resolveLanguageForVoiceSwitch(
+				item.lang,
+				defaultLanguage,
+				autoDialectSwitching,
+			)
 		elif isinstance(item, SuppressUnicodeNormalizationCommand):
 			if not unicodeNormalization:
 				continue

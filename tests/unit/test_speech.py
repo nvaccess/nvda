@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2021-2024 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
+# Copyright (C) 2021-2026 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
 
 """Unit tests for the speech module."""
 
@@ -15,6 +15,7 @@ from speech import (
 	_getSpellingCharAddCapNotification,
 	_getSpellingSpeechAddCharMode,
 	_getSpellingSpeechWithoutCharMode,
+	_resolveLanguageForVoiceSwitch,
 	cancelSpeech,
 	pauseSpeech,
 	speechCanceled,
@@ -29,6 +30,31 @@ from speech.commands import (
 )
 
 from .extensionPointTestHelpers import actionTester
+
+
+class Test_resolveLanguageForVoiceSwitch(unittest.TestCase):
+	def test_languageResolution(self):
+		testCases = (
+			(None, "en_AU", True, "en_AU"),
+			("en", "en_AU", True, "en_AU"),
+			("en_CA", "en_AU", True, "en_CA"),
+			("en_CA", "en_AU", False, "en_AU"),
+			("fr", "en_AU", True, "fr"),
+		)
+		for language, defaultLanguage, autoDialectSwitching, expected in testCases:
+			with self.subTest(
+				language=language,
+				defaultLanguage=defaultLanguage,
+				autoDialectSwitching=autoDialectSwitching,
+			):
+				self.assertEqual(
+					expected,
+					_resolveLanguageForVoiceSwitch(
+						language,
+						defaultLanguage,
+						autoDialectSwitching,
+					),
+				)
 
 
 class Test_getSpellingSpeechAddCharMode(unittest.TestCase):
