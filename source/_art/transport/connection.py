@@ -10,6 +10,7 @@ rpyc connection wrapper used by the Add-on Runtime transport.
 from __future__ import annotations
 
 import threading
+from typing import Final
 import weakref
 
 import rpyc
@@ -19,6 +20,8 @@ from logHandler import log
 
 from .config import PROTOCOL_CONFIG
 from .service import Service
+
+_DEFAULT_CONNECTION_NAME: Final[str] = "connection"
 
 
 class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
@@ -34,13 +37,13 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 		self,
 		stream: Stream,
 		localService: LocalService_t = None,
-		name: str = "unknown",
+		name: str = _DEFAULT_CONNECTION_NAME,
 	) -> None:
 		"""Initializer.
 
 		:param stream: rpyc stream over which NVDA and the add-on will communicate.
 		:param localService: The service to expose to the add-on, defaults to ``None``.
-		:param name: Name of this connection, defaults to "unknown".
+		:param name: Name of this connection, defaults to :const:`_DEFAULT_CONNECTION_NAME`.
 		"""
 		self._name = name
 		log.debug(f"Creating _art connection {name!r}")

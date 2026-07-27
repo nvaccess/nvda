@@ -7,7 +7,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Final
 
 from rpyc.core.stream import Stream
 
@@ -16,6 +16,9 @@ from logHandler import log
 if TYPE_CHECKING:
 	from .connection import Connection
 	from .service import Service
+
+
+_DEFAULT_DEPENDENT_SERVICE_NAME: Final[str] = "dependent service"
 
 
 class Proxy[Service_t: Service]:
@@ -45,13 +48,13 @@ class Proxy[Service_t: Service]:
 		self,
 		stream: Stream,
 		localService: Service | None = None,
-		name: str = "dependent service",
+		name: str = _DEFAULT_DEPENDENT_SERVICE_NAME,
 	) -> Service:
 		"""Connect to a side-channel service and tie it to this proxy's lifetime.
 
 		:param stream: Stream over which the service will communicate.
 		:param localService: The service to attach.
-		:param name: Name of this dependency.
+		:param name: Name of this dependency, defaults to :const:`_DEFAULT_DEPENDENT_SERVICE_NAME`.
 		"""
 		from .connection import Connection
 
