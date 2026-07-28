@@ -16,6 +16,7 @@ A new command allows repeating the last spoken information, with the ability to 
 The default gesture to repeat the last spoken information is `NVDA+x`, which can be changed in the Input Gestures dialog.
 
 The braille display can now automatically scroll and DotPad devices support multi-button combinations.
+The default gesture to toggle automatic scroll is `NVDA+alt+k`.
 
 Liblouis has been updated with new Italian and Estonian braille tables.
 
@@ -35,6 +36,7 @@ When resetting NVDA to factory defaults, an Undo button is now available to rest
   * A new command, assigned to `NVDA+x`, has been introduced to repeat the last information spoken by NVDA; pressing it twice shows it in a browseable message. (#625, @CyrilleB79)
 * Braille:
   * Added the ability to automatically scroll the braille display. (#18573, @nvdaes)
+    * `NVDA+alt+k`, `NVDA+alt+l` and `NVDA+alt+j` gestures can be used to toggle automatic scroll, increase scroll rating and decrease scroll rating, respectively.
   * DotPad braille displays now support multi-button combination gestures. (#19565, @bramd)
     * You can now press multiple buttons simultaneously to create custom gestures (e.g., `f1+panLeft`).
 * Touch:
