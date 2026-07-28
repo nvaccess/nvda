@@ -9,6 +9,7 @@ from typing import Optional, List, Set
 import louis
 import brailleTables
 import braille
+import braille.regions.textInfo
 import config
 from logHandler import log
 import winUser
@@ -311,7 +312,7 @@ class BrailleInputHandler(AutoPropertyObject):
 	def updateDisplay(self):
 		"""Update the braille display to reflect untranslated input."""
 		region = braille.handler.mainBuffer.regions[-1] if braille.handler.mainBuffer.regions else None
-		if isinstance(region, braille.TextInfoRegion):
+		if isinstance(region, braille.regions.textInfo.TextInfoRegion):
 			braille.handler._regionsPendingUpdate.add(region)
 			braille.handler._handlePendingUpdate()
 
@@ -332,7 +333,7 @@ class BrailleInputHandler(AutoPropertyObject):
 			self.bufferText = self.bufferText[:-1]
 			region = braille.handler.mainBuffer.regions[-1] if braille.handler.mainBuffer.regions else None
 			if (
-				not isinstance(region, braille.TextInfoRegion)
+				not isinstance(region, braille.regions.textInfo.TextInfoRegion)
 				or region.cursorPos is None
 				or region.rawText[region.cursorPos - 1] != char
 			):

@@ -94,20 +94,37 @@ def calculateWordOffsets(
 			if start == icu.UBRK_DONE:
 				start = 0
 
-			if buf[start:end].isspace():
-				# Offset is inside a whitespace run.  Attach this run to the
-				# preceding segment (mirroring the Uniscribe trailing-space rule).
-				if start > 0:
-					wordStart = icu.ubrk_preceding(bi, start)
-					if wordStart == icu.UBRK_DONE:
-						wordStart = 0
-					return (wordStart, end)
-			else:
-				# Offset is inside a word/punctuation segment.  Extend the end
-				# through any immediately following whitespace run.
+			# ICU works in word boundaries, i.e. a word always starts and ends at a boundary.
+			# This means that whitespace runs also always start and end at a word boundary.
+			# E.g. we get "|Multiple| |boundaries|".
+			# It also treats a single tab character as a word.
+			#
+			# To (somewhat) replicate Uniscribe's behaviour of including trailing spaces when navigating by word,
+			# we need to ensure that start lies at the first word-starting boundary before offset,
+			# and end lies at the first one after it.
+			#
+			# Move start backward until the most recently found segment contains non-space characters,
+			# or we hit the start of text.
+			prefixEnd = end
+			while start > 0 and buf[start:prefixEnd].isspace():
+				start, prefixEnd = icu.ubrk_preceding(bi, start), start
+				# ubrk_preceding should only ever return UBRK_DONE if given an offset less than or equal to  0,
+				# so we should never run into it.
+				# Since we haven't yet seen any non-space characters,
+				# we can safely just extend the start of the range back to 0.
+				if start == icu.UBRK_DONE:
+					start = 0
+					break
+			# Move end forward until doing so would introduce a new word,
+			# or we hit the end of text.
+			while end < textLength:
 				nextEnd = icu.ubrk_following(bi, end)
-				if nextEnd != icu.UBRK_DONE and buf[end:nextEnd].isspace():
-					return (start, nextEnd)
+				# ubrk_following should only ever return UBRK_DONE if given an offset greater than or equal to the length of the text,
+				# so we should never run into it.
+				# To be safe, treat it as being equivalent to finding a word.
+				if nextEnd == icu.UBRK_DONE or not buf[end:nextEnd].isspace():
+					break
+				end = nextEnd
 
 			return (start, end)
 	except RuntimeError:

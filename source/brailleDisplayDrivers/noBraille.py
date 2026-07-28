@@ -5,9 +5,10 @@
 # See the file COPYING for more details.
 
 import braille
+import braille.display.driver
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	"""A dummy braille display driver used to disable braille in NVDA."""
 
 	name = "noBraille"

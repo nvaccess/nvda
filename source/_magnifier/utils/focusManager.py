@@ -232,26 +232,25 @@ class FocusManager:
 			return textInfo.pointAtStart
 		except (NotImplementedError, LookupError, AttributeError, COMError, RuntimeError) as e:
 			if _isDebug():
-				log.debug(f"pointAtStart failed for {textInfo!r}: {e}", exc_info=True)
-			originalExc = e
-
-		# Only apply the fallback for TextInfos exposing the offset-based internals
-		# we need. Otherwise, preserve the original failure.
-		if not (isinstance(textInfo, OffsetsTextInfo) and textInfo.isCollapsed and textInfo._startOffset > 0):
-			raise originalExc
-
-		prevOffset = textInfo._startOffset - 1
-		try:
-			return textInfo._getBoundingRectFromOffset(prevOffset).topRight
-		except (NotImplementedError, LookupError, AttributeError) as e:
-			if _isDebug():
-				log.debug(f"_getBoundingRectFromOffset failed: {e}", exc_info=True)
+				log.debug(f"pointAtStart failed for {textInfo!r}: {e}")
+			# Only apply the fallback for TextInfos exposing the offset-based internals we need.
+			# Otherwise, preserve the original failure.
+			if not (
+				isinstance(textInfo, OffsetsTextInfo) and textInfo.isCollapsed and textInfo._startOffset > 0
+			):
+				raise
+			prevOffset = textInfo._startOffset - 1
 			try:
-				return textInfo._getPointFromOffset(prevOffset)
+				return textInfo._getBoundingRectFromOffset(prevOffset).topRight
 			except (NotImplementedError, LookupError, AttributeError) as e:
 				if _isDebug():
-					log.debug(f"_getPointFromOffset failed: {e}", exc_info=True)
-		raise originalExc
+					log.debug(f"_getBoundingRectFromOffset failed: {e}")
+				try:
+					return textInfo._getPointFromOffset(prevOffset)
+				except (NotImplementedError, LookupError, AttributeError) as e:
+					if _isDebug():
+						log.debug(f"_getPointFromOffset failed: {e}", exc_info=True)
+			raise
 
 	def _getNavigatorObjectLocation(self) -> Coordinates | None:
 		"""

@@ -15,6 +15,8 @@ from typing import List
 import wx
 import serial
 import braille
+import braille.display.driver
+import braille.display.gesture
 import inputCore
 import hwPortUtils
 from logHandler import log
@@ -31,7 +33,7 @@ HEDO_MOBIL_CELL_COUNT = 40
 HEDO_MOBIL_STATUS_CELL_COUNT = 2
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "hedoMobilLine"
 	description = "hedo MobilLine USB"
 
@@ -199,7 +201,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGestureKeys(braille.BrailleDisplayGesture):
+class InputGestureKeys(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):
@@ -208,7 +210,7 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 		self.id = keys
 
 
-class InputGestureRouting(braille.BrailleDisplayGesture):
+class InputGestureRouting(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, index):

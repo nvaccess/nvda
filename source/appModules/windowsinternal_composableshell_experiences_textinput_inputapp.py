@@ -16,6 +16,7 @@ import api
 import eventHandler
 import speech
 import braille
+import braille.regions.properties
 import ui
 import config
 import winVersion
@@ -226,7 +227,7 @@ class AppModule(appModuleHandler.AppModule):
 		if obj is not None and api.setNavigatorObject(obj):
 			obj.reportFocus()
 			braille.handler.message(
-				braille.getPropertiesBraille(
+				braille.regions.properties.getPropertiesBraille(
 					name=obj.name,
 					role=obj.role,
 					positionInfo=obj.positionInfo,

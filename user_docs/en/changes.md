@@ -7,7 +7,7 @@
 * Add-ons can be removed from the "Updatable add-ons" tab in the Add-on Store. (#15030, @nvdaes)
 * Chinese text can now be navigated by word using built-in input gestures.
   * A Word Segmentation Standard setting was added to the "Document Navigation" panel. (#18735, @CrazySteve0605, @Cary-rowen)
-  * Word segmentation can also use the Windows built-in ICU library for boundary detection, improving navigation for Japanese and emoji. (#20343, @LeonarddeR)
+  * Word segmentation can also use the Windows built-in ICU library for boundary detection, improving navigation for Japanese and emoji. (#20343, #20494, @LeonarddeR)
   * By default, ICU is preferred over the legacy Windows segmentation wherever available, while Chinese word segmentation takes precedence for Chinese text.
 * Braille output for Chinese now includes spaces between words. (#18865, @CrazySteve0605, @Cary-rowen)
 * Added sequential two-flick touch gestures that combine two flicks performed in quick succession into a single gesture, increasing the number of touch gestures that can be bound to scripts. (#19938, @kefaslungu)
@@ -16,10 +16,15 @@
 * On supported braille displays, pressing multiple routing keys simultaneously can now be bound to a new "multi routing" gesture. (#20001, @LeonarddeR)
   * The "select range" command, which selects the text from the first up to the last pressed routing key, is bound to this gesture by default on supporting drivers.
   * Drivers with built-in support for multi routing: ALVA, Albatross (only when combined with `home1` or `home2`), Baum (and compatible), Freedom Scientific Focus/PAC Mate, HumanWare Brailliant BI/B series, Handy Tech, NLS eReader Zoomax, Seika Notetaker, and Standard HID Braille displays.
+* When navigating math on the web, Visual Highlight now follows the current subpart of the expression using the browse mode cursor highlighter. (#19191, @RyanMcCleary)
 * The braille "word wrap" option has been replaced with a four-valued "Text wrap" option: Off, Show mark when words are cut, At word boundaries, and At word or syllable boundaries. (#17010, @LeonarddeR)
   * In modes that show a continuation mark, when a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
   * The "At word or syllable boundaries" option uses hyphenation dictionaries to split long words at syllable boundaries when they do not fit on the display.
+* Added context menu and shortcuts to configuration profiles dialog. (#18169, @amirmahdifard)
 * Magnifier: A new unassigned command has been added to move the mouse cursor to the center of the magnified view. (#20127, @CyrilleB79)
+* Support for the myBraille family of Help Tech Braille displays has been added.
+* Added context menu and shortcuts support to the Input gestures dialog. (#16816, @amirmahdifard)
+* Added context menu and shortcuts support to the Speech Dictionaries dialog. (#20420, @amirmahdifard)
 * The Find dialog in browse mode can now remember previously searched terms in a search history combo box, which can be turned off via a new "Keep search history" browse mode setting. (#8482, @marlon-sousa, @LeonarddeR)
 
 ### Changes
@@ -38,6 +43,7 @@
 * The actions button can now be used when selecting multiple add-ons in the Add-on Store to perform batch actions, instead of just via the context menu in the add-ons list. (#19971, @amirmahdifard)
 * When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
 * In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen. (#20177)
+* In Windows Terminal, NVDA is less likely to report stale characters when moving the caret in delayed remote sessions such as SSH. (#19503, @sheldon-im)
 * When an application stops responding, NVDA no longer freezes or floods its log with errors; it stays responsive and drops UIA and MSAA events from the unresponsive application until it recovers. (#16749, @heath-toby)
 * Reduced lag on UI Automation text change events, improving the responsiveness of controls such as combo boxes and of File Explorer, by using the cached element class name instead of a live cross-process fetch. (#16749, @heath-toby)
 * In Notepad++, NVDA now continues to report IME composition text in speech and braille while selecting or navigating within Chinese IME composition. (#14140, #14152, @keyang556)
@@ -53,11 +59,21 @@
 Previously these keys had no function when pressed on their own. (#20366, @fla-rion)
 * The HID keyboard input simulation setting for ALVA braille displays is now remembered across reconnects and restarts. (#20455, @Cary-rowen)
 * Braille now follows the spoken text during say all in browse mode when braille is tethered to focus. (#3287, @LeonarddeR)
+* NVDA now reports checked ToolStrip menu items in .NET Framework Windows Forms applications using UI Automation. (#19335, @Cary-rowen)
+* Object descriptions are now reported for .NET Framework Windows Forms ToolStrip menu items exposed through UI Automation. (#20486, @Cary-rowen)
+* NVDA now reports the selected item when using the arrow keys in collapsed .NET Framework Windows Forms combo boxes. (#17454, @Cary-rowen)
+* The Add-on Store no longer becomes unresponsive when navigating the list of add-ons quickly, such as by holding down an arrow key. (#17351, @christopherpross)
+* Remote Access: NVDA now reports when connecting as the controlled computer fails, while continuing to retry the connection in the background. (#19103, @danielw97)
+* NVDA no longer briefly disconnects and re-detects the braille display on desktop switches that do not enter the secure desktop, such as when switching between a Remote Desktop session and the local machine. (#18810, #20550, @LeonarddeR)
 
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* `mathPres.interactWithMathMl` now accepts an optional `sourceObj` argument.
+Math presentation providers can override `MathPresentationProvider.interactWithMathMlFromSource` to use the source object when starting interaction.
+The default implementation forwards to `interactWithMathMl`, preserving compatibility with existing providers. (#20372, @RyanMcCleary)
+* Vision enhancement providers can register with `vision.handler.extensionPoints.post_mathNavigation` to receive the screen rectangle of the current math navigation position, or `None` when no rectangle is available. (#20372, @RyanMcCleary)
 * The local Git hook runner has been switched from [pre-commit](https://pre-commit.com/) to [prek](https://prek.j178.dev/), a faster, drop-in compatible alternative. (#20305, @LeonarddeR)
   * The [pre-commit.ci](https://pre-commit.ci/) integration will be dropped entirely;.
   Linting and autofixing now run via GitHub Actions, using an autofix-or-fail workflow plus an automatic `prek auto-update` workflow.
@@ -66,7 +82,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * In the `installTasks` module, add-on developers can add a spec for each configuration section to be registered.
   * The `config.configSections.registerSection` method can be used in the `onInstall` function.
   * To register a section to be used in the normal configuration, regardless of profiles, the `isBaseOnly` parameter should be set to `True`.
-* The `braille` module is now a package, split into focused submodules such as `braille.constants`, `braille.labels`, `braille.formatting`, `braille.regions`, `braille.display`, `braille.buffers`, `braille.brailleHandler` and `braille.extensions`. (#12772, @LeonarddeR)
+* The `braille` module is now a package, split into focused submodules such as `braille.constants`, `braille.labels`, `braille.formatting`, `braille.regions`, `braille.display`, `braille.buffers`, `braille.brailleHandler` and `braille.extensions`. (#12772, #20458, @LeonarddeR)
 * Added `gui.message.HtmlMessageDialog`, a `MessageDialog` subclass that renders a full HTML document in a `wx.html2.WebView`. (#18878, @LeonarddeR)
   * The WebView backend can be overridden via the `_webViewBackend` class attribute, which defaults to the IE backend.
   * JavaScript in the message can trigger NVDA actions by navigating to `nvda-action://<action>` URLs; `close` is handled internally and other actions can be registered with `registerAction`.
@@ -80,6 +96,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 Built on top of [Bleak](https://bleak.readthedocs.io/) and the `_asyncioEventLoop` module. (#19838, @bramd)
 * Component updates:
   * Updated py2exe to 0.14.1.1. (#20260, @LeonarddeR)
+* Handlers registered on an `extensionPoints` registrar (`Action`, `Filter`, `Decider`, `AccumulatingDecider`, `Chain`) may now register or unregister handlers while being called, without raising `RuntimeError: OrderedDict mutated during iteration`. (#20545, @LeonarddeR)
+  * `HandlerRegistrar.handlers` now iterates over a snapshot of the registered handlers taken before the first handler is yielded.
 
 #### Deprecations
 
@@ -273,10 +291,12 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Clarified NV Access's policy on API breaking changes in the [Developer Guide](https://download.nvaccess.org/documentation/developerGuide.html#API). (#19599)
 * Updated components:
   * Ruff to 0.15.9. (#19736, #19908)
-  * uv to 0.11.7. (#19736, #19908, #19968)
+  * uv to 0.11.29. (#19736, #19908, #19968, #20142)
   * Requests to 2.33.0. (#19877)
-  * cryptography to 46.0.7. (#19877, #19968)
+  * cryptography to 48.0.1. (#19877, #19968, #20142)
   * Python to 3.13.13. (#20231, @dpy013)
+  * lxml to 6.1.1. (#20142)
+  * PyMdown Extensions to 10.21.3. (#20142)
 * A new parameter `redactSecrets` has been added to logging functions e.g. `log.debug`. (#19966)
   * When set to `True`, logging output will be sanitized to replace detected secrets with asterisks.
   * This is set to `False` by default for performance purposes.

@@ -8,7 +8,9 @@ Keyboard commands for the magnifier module.
 Contains the command functions and their logic for keyboard shortcuts.
 """
 
+from collections.abc import Callable
 from typing import Literal
+import speech
 import ui
 from . import changeMagnifiedView, getMagnifier, start, stop
 from .config import (
@@ -23,6 +25,7 @@ from .config import (
 )
 from .magnifier import Magnifier
 from .fullscreenMagnifier import FullScreenMagnifier
+from .utils.errorHandling import MagnifierStartError
 from .utils.types import (
 	Filter,
 	Direction,
@@ -81,10 +84,21 @@ PAN_ACTION_TO_EDGE_MESSAGES = {
 }
 
 
-def toggleMagnifier() -> None:
-	"""Toggle the NVDA magnifier on/off"""
-	import screenCurtain
+def _speakStartError(message: str) -> None:
+	"""Default presentation for a magnifier start failure: speak the message.
 
+	:param message: The user-facing message to announce.
+	"""
+	ui.message(message, speechPriority=speech.priorities.Spri.NOW)
+
+
+def toggleMagnifier(onStartError: Callable[[str], None] = _speakStartError) -> None:
+	"""Toggle the NVDA magnifier on/off.
+
+	:param onStartError: Callback invoked with a user-facing message when the magnifier fails
+		to start. Defaults to speaking the message. GUI callers can pass a callback that shows
+		a message box instead, since enabling the magnifier is a GUI action there.
+	"""
 	magnifier: Magnifier | None = getMagnifier()
 	if magnifier and magnifier._isActive:
 		# Stop magnifier
@@ -96,17 +110,14 @@ def toggleMagnifier() -> None:
 				"Magnifier disabled",
 			),
 		)
-	# Check if Screen Curtain is active
-	elif screenCurtain.screenCurtain and screenCurtain.screenCurtain.enabled:
-		ui.message(
-			pgettext(
-				"magnifier",
-				# Translators: Message announced when trying to start magnifier while Screen Curtain is active.
-				"Cannot start magnifier. Please disable Screen Curtain first.",
-			),
-		)
 	else:
-		start()
+		try:
+			start()
+		except MagnifierStartError as e:
+			# The magnifier did not start (e.g. another magnifier application is already running,
+			# or screen curtain is active). Present the failure, and do not announce success.
+			onStartError(e.message)
+			return
 		ui.message(
 			pgettext(
 				"magnifier",

@@ -7,6 +7,8 @@
 
 import bdDetect
 import braille
+import braille.display.driver
+import braille.display.gesture
 import brailleInput
 import hwIo
 import inputCore
@@ -85,7 +87,7 @@ COMMAND_RESPONSE_INFO: dict[DeviceCommand, DeviceResponseInfo] = {
 }
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	_dev: hwIo.IoBase
 	name = "nlseReaderZoomax"
 	# Translators: Names of braille displays.
@@ -246,7 +248,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keysDown: dict[bytes, bytes]):

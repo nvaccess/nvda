@@ -72,7 +72,7 @@ jobs:
           git push origin HEAD:"$REF_NAME"
         fi
     # Gate role: the merge-required blocking check (non-zero exit fails the job).
-    # The 6 skipped hooks are the heavy/env-bound ones with dedicated jobs in
+    # The skipped hooks are the heavy/env-bound ones with dedicated jobs in
     # testAndPublish.yml.
     - name: Lint gate
       uses: j178/prek-action@v2
@@ -85,3 +85,4 @@ jobs:
           --skip unitTest
           --skip licenseCheck
           --skip pyright
+          --skip ty
