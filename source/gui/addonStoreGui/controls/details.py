@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2026 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2026 NV Access Limited, Cyrille Bougot, Christopher Proß
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -14,6 +14,7 @@ from addonStore.models.addon import (
 from gui import guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from logHandler import log
+from utils.debounce import debounceLimiter
 
 from ..viewModels.addonList import AddonDetailsVM, AddonListField
 
@@ -53,6 +54,14 @@ class AddonDetails(
 	_actionsLabelText: str = pgettext("addonStore", "A&ctions")
 
 	Parent: "AddonStoreDialog"
+
+	_REFRESH_DELAY_MS: int = 100
+	"""
+	Debounce delay in milliseconds before refreshing the details view after the selection changes.
+	Rebuilding the details controls emits a burst of accessibility events, so debouncing avoids
+	flooding NVDA while navigating the list quickly, for example when holding an arrow key.
+	See #17351.
+	"""
 
 	def __init__(
 		self,
@@ -160,8 +169,10 @@ class AddonDetails(
 		)
 		self._createRichTextStyles()
 		self.contents.Add(self.otherDetailsTextCtrl, flag=wx.EXPAND, proportion=1)
+		self._isBeingDestroyed: bool = False
 		self._refresh()  # ensure that the visual state matches.
 		self._detailsVM.updated.register(self._updatedListItem)
+		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy, source=self)
 		self.Layout()
 
 	def _createRichTextStyles(self):
@@ -202,9 +213,32 @@ class AddonDetails(
 	def _updatedListItem(self, addonDetailsVM: AddonDetailsVM):
 		log.debug(f"Setting listItem: {addonDetailsVM.listItem}")
 		assert self._detailsVM.listItem == addonDetailsVM.listItem
+		self._scheduleRefresh()
+
+	@debounceLimiter(
+		cooldownTimeMs=_REFRESH_DELAY_MS,
+		delayTimeMs=_REFRESH_DELAY_MS,
+		runImmediateFirstCall=False,
+	)
+	def _scheduleRefresh(self) -> None:
+		"""Refresh the details view once the selection settles, using the shared debouncer.
+
+		Rapid selection changes only schedule a single trailing refresh, so navigating the list
+		quickly no longer floods the main thread with the accessibility events of a full rebuild.
+		"""
 		self._refresh()
 
+	def _onDestroy(self, evt: wx.WindowDestroyEvent) -> None:
+		# The binding uses source=self, so this only runs for the panel's own destruction.
+		# Unregister from updates and mark the panel as gone, so a pending debounced refresh
+		# becomes a no-op instead of touching controls that are being destroyed.
+		self._isBeingDestroyed = True
+		self._detailsVM.updated.unregister(self._updatedListItem)
+		evt.Skip()
+
 	def _refresh(self):
+		if self._isBeingDestroyed:
+			return
 		details = None if self._detailsVM.listItem is None else self._detailsVM.listItem.model
 		numSelectedAddons = self.Parent.addonListView.GetSelectedItemCount()
 

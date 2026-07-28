@@ -22,6 +22,23 @@ _P = ParamSpec("_P")
 _R = TypeVar("_R")
 
 
+class MagnifierStartError(Exception):
+	"""Raised when the magnifier fails to start.
+
+	Carries a user-facing, translatable message describing why the start failed
+	(e.g. another magnifier application is already running, or screen curtain is active),
+	so callers can present it appropriately: spoken for keyboard commands, or in a message
+	box for GUI actions.
+	"""
+
+	def __init__(self, message: str):
+		"""
+		:param message: The user-facing, translatable message describing the failure.
+		"""
+		super().__init__(message)
+		self.message = message
+
+
 def trackNativeMagnifierErrors(func: Callable[_P, _R]) -> Callable[_P, _R]:
 	"""
 	Decorator for native magnifier API calls.

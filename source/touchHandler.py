@@ -9,6 +9,7 @@ In order to use touch features, NVDA must be installed on a touchscreen computer
 """
 
 import threading
+import speech
 from functools import cached_property
 from typing import (
 	TYPE_CHECKING,
@@ -195,6 +196,7 @@ ANRUS_TOUCH_MODIFICATION_ACTIVE = 2
 
 touchWindow = None
 touchThread = None
+blockTouchInput: bool = False
 
 
 _flickActions: frozenset[TouchAction] = frozenset(
@@ -499,10 +501,14 @@ class TouchHandler(threading.Thread):
 
 	def _processGestures(self) -> None:
 		"""Emit all pending touch trackers as gestures, combining consecutive flicks into sequential gestures."""
+		_blockedThisPump = False
 		# pendingFlick holds the first flick within this cycle, waiting to see if a second follows.
 		# This is a local variable — no timer, no cross-pump buffering, so normal flicks fire immediately.
 		pendingFlick: TouchInputGesture | None = None
 		for preheldTracker, tracker in self.trackerManager.emitTrackers():
+			if blockTouchInput:
+				_blockedThisPump = True
+				continue
 			modeStr = (
 				self._curTouchMode.value if isinstance(self._curTouchMode, TouchMode) else self._curTouchMode
 			)
@@ -523,6 +529,15 @@ class TouchHandler(threading.Thread):
 					self._executeGesture(pendingFlick)
 					pendingFlick = None
 				self._executeGesture(gesture)
+		if _blockedThisPump:
+			speech.speakMessage(
+				pgettext(
+					"touchHandler",
+					# Translators: Message spoken when a touch gesture is blocked because touch input is disabled.
+					"Touch input is blocked.",
+				),
+			)
+			return
 		if pendingFlick is not None:
 			self._executeGesture(pendingFlick)
 
