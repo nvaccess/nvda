@@ -9,6 +9,8 @@ Implementation of cursor managers.
 A cursor manager provides caret navigation and selection commands for a virtual text range.
 """
 
+import weakref
+
 import wx
 import core
 import inputCore
@@ -42,11 +44,36 @@ class FindDialog(
 	gui.contextHelp.ContextHelpMixin,
 	wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
-	"""A dialog used to specify text to find in a cursor manager."""
+	"""A dialog used to specify text to find in a cursor manager.
+
+	Only one instance can exist at a time.
+	Creating a dialog while another one is still open returns that dialog,
+	retargeted at the newly provided cursor manager and search parameters.
+	"""
 
 	helpId = "SearchingForText"
 
 	shouldSuspendConfigProfileTriggers = True
+
+	_instance: "weakref.ReferenceType[FindDialog] | None" = None
+
+	@classmethod
+	def _getInstance(cls) -> "FindDialog | None":
+		"""Return the dialog that is currently open, if any.
+
+		A dialog that is scheduled for deletion but not destroyed yet is not considered open.
+		"""
+		inst = cls._instance() if cls._instance else None
+		if inst is None or inst.IsBeingDeleted():
+			return None
+		return inst
+
+	def __new__(cls, *args, **kwargs):
+		# Make this a singleton.
+		inst = cls._getInstance()
+		if not inst:
+			return super().__new__(cls)
+		return inst
 
 	def __init__(
 		self,
@@ -66,6 +93,10 @@ class FindDialog(
 		:param searchEntries: Previously searched terms to offer in the search field,
 			most-recent first. Only used when the search history setting is enabled.
 		"""
+		if self._getInstance() is self:
+			self._retarget(cursorManager, text, caseSensitivity, reverse, searchEntries)
+			return
+		FindDialog._instance = weakref.ref(self)
 		# Translators: Title of a dialog to find text.
 		super().__init__(parent, title=_("Find"))
 
@@ -98,6 +129,41 @@ class FindDialog(
 		self.SetSizer(mainSizer)
 		self.CentreOnScreen()
 		self.findTextField.SetFocus()
+		# EVT_CLOSE is not fired on modal dialogs, so use EVT_WINDOW_DESTROY instead.
+		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy, self)
+
+	def _onDestroy(self, evt: wx.WindowDestroyEvent):
+		if self._getInstance() is self:
+			FindDialog._instance = None
+		evt.Skip()
+
+	def _retarget(
+		self,
+		cursorManager: "CursorManager",
+		text: str,
+		caseSensitivity: bool,
+		reverse: bool,
+		searchEntries: list[str] | None,
+	) -> None:
+		"""Point this dialog at another search request.
+
+		Called when the find command is executed while this dialog is still open,
+		possibly from a different document than the one it was opened for.
+
+		:param cursorManager: The cursor manager to perform the search in.
+		:param text: The text of the search field.
+		:param caseSensitivity: The state of the case sensitivity check box.
+		:param reverse: Whether to search backwards from the caret.
+		:param searchEntries: Previously searched terms to offer in the search field, most-recent first.
+		"""
+		self.activeCursorManager = cursorManager
+		self.reverse = reverse
+		self.caseSensitiveCheckBox.SetValue(caseSensitivity)
+		if isinstance(self.findTextField, wx.ComboBox):
+			# Setting the choices clears the value, so restore it afterwards.
+			self.findTextField.Set(searchEntries or [])
+		self.findTextField.SetValue(text)
+		self.findTextField.SelectAll()
 
 	def onOk(self, evt):
 		text = self.findTextField.GetValue()
@@ -273,6 +339,7 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 	def script_find(self, gesture, reverse=False):
 		# #8566: We need this to be a modal dialog, but it mustn't block this script.
 		def run():
+			isNewDialog = FindDialog._getInstance() is None
 			gui.mainFrame.prePopup()
 			d = FindDialog(
 				gui.mainFrame,
@@ -282,8 +349,13 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 				reverse,
 				self._searchEntries,
 			)
-			d.ShowModal()
-			gui.mainFrame.postPopup()
+			if isNewDialog:
+				d.ShowModal()
+				gui.mainFrame.postPopup()
+			else:
+				# The dialog is already shown modally, postPopup is called when that call returns.
+				d.Raise()
+				d.findTextField.SetFocus()
 
 		wx.CallAfter(run)
 

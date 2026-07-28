@@ -6,7 +6,14 @@
 """Unit tests for the cursorManager module."""
 
 import unittest
-from cursorManager import MAX_SEARCH_HISTORY_ENTRIES
+from unittest.mock import Mock, patch
+
+import wx
+
+import config
+from config.featureFlag import FeatureFlag
+from config.featureFlagEnums import BoolFlag
+from cursorManager import MAX_SEARCH_HISTORY_ENTRIES, FindDialog
 from .textProvider import CursorManager
 
 
@@ -273,3 +280,80 @@ class TestSearchHistory(unittest.TestCase):
 		self.assertEqual(len(CursorManager._searchEntries), MAX_SEARCH_HISTORY_ENTRIES)
 		self.assertEqual(CursorManager._searchEntries[0], f"term{MAX_SEARCH_HISTORY_ENTRIES}")
 		self.assertNotIn("term0", CursorManager._searchEntries)
+
+
+class TestFindDialogSingleInstance(unittest.TestCase):
+	"""Tests that only one find dialog exists at a time (#20484)."""
+
+	def setUp(self):
+		self.app = wx.App()
+		self._dialogs: list[FindDialog] = []
+		config.conf["virtualBuffers"]["findHistory"] = FeatureFlag(BoolFlag.ENABLED, BoolFlag.ENABLED)
+
+	def tearDown(self):
+		for dialog in self._dialogs:
+			dialog.Destroy()
+		FindDialog._instance = None
+		config.conf["virtualBuffers"]["findHistory"] = FeatureFlag(BoolFlag.DEFAULT, BoolFlag.ENABLED)
+
+	def _createDialog(
+		self,
+		cursorManager: Mock | None = None,
+		text: str = "",
+		caseSensitivity: bool = False,
+		reverse: bool = False,
+		searchEntries: list[str] | None = None,
+	) -> FindDialog:
+		dialog = FindDialog(
+			None,
+			cursorManager or Mock(),
+			text,
+			caseSensitivity,
+			reverse,
+			searchEntries,
+		)
+		if dialog not in self._dialogs:
+			self._dialogs.append(dialog)
+		return dialog
+
+	def test_creatingDialogWhileOneIsOpenReusesIt(self):
+		first = self._createDialog(text="foo", searchEntries=["foo"])
+		second = self._createDialog(text="bar", searchEntries=["bar", "foo"])
+		self.assertIs(second, first)
+
+	def test_reusedDialogIsRetargeted(self):
+		self._createDialog(text="foo", searchEntries=["foo"])
+		cursorManager = Mock()
+		dialog = self._createDialog(
+			cursorManager,
+			"bar",
+			caseSensitivity=True,
+			reverse=True,
+			searchEntries=["bar", "foo"],
+		)
+		self.assertIs(dialog.activeCursorManager, cursorManager)
+		self.assertTrue(dialog.reverse)
+		self.assertTrue(dialog.caseSensitiveCheckBox.GetValue())
+		self.assertEqual(dialog.findTextField.GetValue(), "bar")
+		self.assertEqual(dialog.findTextField.GetStrings(), ["bar", "foo"])
+
+	def test_destroyedDialogIsNotReused(self):
+		first = self._createDialog(text="foo")
+		first._onDestroy(wx.WindowDestroyEvent(first))
+		self.assertIsNone(FindDialog._getInstance())
+		second = self._createDialog(text="bar")
+		self.assertIsNot(second, first)
+
+	def test_dialogAwaitingDeletionIsNotReused(self):
+		first = self._createDialog(text="foo")
+		with patch.object(first, "IsBeingDeleted", return_value=True):
+			self.assertIsNone(FindDialog._getInstance())
+			second = self._createDialog(text="bar")
+		self.assertIsNot(second, first)
+
+	def test_findFieldIsPlainEditWhenHistoryIsDisabled(self):
+		config.conf["virtualBuffers"]["findHistory"] = FeatureFlag(BoolFlag.DISABLED, BoolFlag.ENABLED)
+		dialog = self._createDialog(text="foo", searchEntries=["foo"])
+		self.assertNotIsInstance(dialog.findTextField, wx.ComboBox)
+		self._createDialog(text="bar", searchEntries=["bar", "foo"])
+		self.assertEqual(dialog.findTextField.GetValue(), "bar")

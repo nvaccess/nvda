@@ -65,6 +65,8 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * The Add-on Store no longer becomes unresponsive when navigating the list of add-ons quickly, such as by holding down an arrow key. (#17351, @christopherpross)
 * Remote Access: NVDA now reports when connecting as the controlled computer fails, while continuing to retry the connection in the background. (#19103, @danielw97)
 * NVDA no longer briefly disconnects and re-detects the braille display on desktop switches that do not enter the secure desktop, such as when switching between a Remote Desktop session and the local machine. (#18810, #20550, @LeonarddeR)
+* Only one browse mode Find dialog can be open at a time.
+Executing the find command while the dialog is open brings it to the foreground and points it at the document you executed the command from. (#20484, @LeonarddeR)
 
 ### Changes for Developers
 
