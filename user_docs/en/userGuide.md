@@ -201,6 +201,7 @@ These set whether NVDA starts automatically.
 ### Running NVDA {#RunningNVDA}
 
 The full NVDA user guide has all the NVDA commands, split up into different sections for reference.
+From within any NVDA dialog, press `f1` to open the User Guide to the topic on the current control.
 The tables of commands are also available in the "Commands Quick Reference".
 The "Basic Training for NVDA" NVDA training module has each command in more depth with step-by-step activities.
 "Basic Training for NVDA" is available from the [NV Access Shop](http://www.nvaccess.org/shop).
@@ -393,6 +394,7 @@ This is an online exam you can complete to demonstrate your skills in NVDA.
 To get help for NVDA, press `NVDA+n` to open the menu, then `h` for help.
 From this submenu you can access the User Guide, a quick reference of commands, history of new features and more.
 These first three options open in the default web browser.
+From within any NVDA dialog, press `f1` to open the User Guide to the topic on the current control.
 There is also more comprehensive Training Material available in the [NV Access Shop](https://www.nvaccess.org/shop).
 
 We recommend starting with the "Basic Training for NVDA" module.
