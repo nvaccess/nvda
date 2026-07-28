@@ -1382,9 +1382,9 @@ Where text is longer than will fit on the display, panning or other keys on the 
 
 Automatic braille scrolling can be enabled to scroll the display at a set speed.
 When using this feature, the braille display scrolls to present information which is more than will fit on the display at once.
-The feature is disabled and a gesture to start braille scrolling is undefined by default.
-To use automatic braille scrolling, a gesture needs to be set in NVDA's [Input Gestures dialog](#InputGestures) before it can be used.
-Gestures can also be set to speed up or slow down the rate of automatic scrolling.
+The feature is disabled by default.
+You can change the gestures assigned to use automatic braille scrolling in NVDA's [Input Gestures dialog](#InputGestures) before it can be used.
+Gestures are also available to speed up or slow down the rate of automatic scrolling.
 Alternatively, you can [set the automatic scroll rate in Braille Settings](#BrailleAutoScrollRate).
 
 While braille is scrolling, you can still use the scroll back and scroll forward commands without stopping scrolling.
@@ -1405,10 +1405,10 @@ While reading, automatic braille scrolling will stop when any of the following h
 | Name | Key | Description |
 |---|---|---|
 | Toggles braille mode | `NVDA+alt+t` | Allows cycling between available braille modes: "follow cursors" and "display speech output"|
-| Tether braille |`NVDA+control+t` | This option allows you to choose whether the braille display will follow the system focus / caret, the navigator object / review cursor, or both |
-| Toggle automatic scroll | None | Toggles whether NVDA periodically scrolls the braille display to present information which is too long to show at once |
-| Increase automatic scroll rate | None | Makes automatic scrolling faster (when enabled) |
-| Decrease automatic scroll rate | None | Makes automatic scrolling slower (when enabled) |
+| Tether braille | `NVDA+control+t` | This option allows you to choose whether the braille display will follow the system focus / caret, the navigator object / review cursor, or both |
+| Toggle automatic scroll | `NVDA+alt+k` | Toggles whether NVDA periodically scrolls the braille display to present information which is too long to show at once |
+| Increase automatic scroll rate | `NVDA+alt+l` | Makes automatic scrolling faster (when enabled) |
+| Decrease automatic scroll rate | `NVDA+alt+j` | Makes automatic scrolling slower (when enabled) |
 | Cycle braille cursor shapes | None | Cycle through the shape options (dot pattern) of the braille cursor |
 | Cycle move system caret when routing review cursor | None | Cycle through the braille move system caret when routing review cursor states |
 | Cycle show messages modes | None | Cycle through the braille show messages modes |
