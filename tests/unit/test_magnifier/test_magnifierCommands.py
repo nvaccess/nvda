@@ -5,7 +5,8 @@
 
 import unittest
 from unittest.mock import MagicMock, patch
-from _magnifier.commands import zoom, cycleMagnifiedView, moveMouseToView
+from _magnifier.commands import zoom, cycleMagnifiedView, moveMouseToView, toggleMagnifier
+from _magnifier.utils.errorHandling import MagnifierStartError
 from _magnifier.utils.types import Direction, MagnifiedView
 
 
@@ -53,6 +54,65 @@ class TestZoomCommand(unittest.TestCase):
 		zoom(Direction.OUT)
 		self.mockToggle.assert_not_called()
 		mag._zoom.assert_called_once_with(Direction.OUT)
+
+
+class TestToggleMagnifier(unittest.TestCase):
+	"""Tests for toggleMagnifier's handling of start success and failure."""
+
+	def setUp(self):
+		self.mockMessage = patch("_magnifier.commands.ui.message").start()
+		self.mockGetMagnifier = patch("_magnifier.commands.getMagnifier").start()
+		self.mockStart = patch("_magnifier.commands.start").start()
+		self.mockStop = patch("_magnifier.commands.stop").start()
+
+	def tearDown(self):
+		patch.stopall()
+
+	def testStartSuccessAnnouncesEnabled(self):
+		"""A successful start announces the magnifier is enabled and does not call onStartError."""
+		self.mockGetMagnifier.return_value = None
+		onStartError = MagicMock()
+
+		toggleMagnifier(onStartError=onStartError)
+
+		self.mockStart.assert_called_once()
+		onStartError.assert_not_called()
+		self.mockMessage.assert_called_once()
+
+	def testStartFailurePresentsErrorAndNoSuccessMessage(self):
+		"""When start fails, the failure is presented and success is NOT announced."""
+		self.mockGetMagnifier.return_value = None
+		self.mockStart.side_effect = MagnifierStartError("boom")
+		onStartError = MagicMock()
+
+		toggleMagnifier(onStartError=onStartError)
+
+		onStartError.assert_called_once_with("boom")
+		# The success message must not be spoken when the magnifier failed to start.
+		self.mockMessage.assert_not_called()
+
+	def testDefaultStartErrorIsSpoken(self):
+		"""The default error presentation speaks the message via ui.message."""
+		self.mockGetMagnifier.return_value = None
+		self.mockStart.side_effect = MagnifierStartError("boom")
+
+		toggleMagnifier()
+
+		# ui.message is used to speak the error, and only the error (no success message).
+		self.mockMessage.assert_called_once()
+		self.assertEqual(self.mockMessage.call_args.args[0], "boom")
+
+	def testActiveMagnifierIsStopped(self):
+		"""Toggling while active stops the magnifier and announces it, without starting."""
+		magnifier = MagicMock()
+		magnifier._isActive = True
+		self.mockGetMagnifier.return_value = magnifier
+
+		toggleMagnifier()
+
+		self.mockStop.assert_called_once()
+		self.mockStart.assert_not_called()
+		self.mockMessage.assert_called_once()
 
 
 class TestCycleMagnifiedView(unittest.TestCase):
