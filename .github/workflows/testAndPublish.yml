@@ -150,7 +150,7 @@ jobs:
         Write-Output NVDA_API_VERSION=$(python -c "import sys; sys.path.append('source'); from addonAPIVersion import CURRENT; print('{}.{}.{}'.format(*CURRENT))") >> $env:GITHUB_OUTPUT
         Write-Output NVDA_API_COMPAT_TO=$(python -c "import sys; sys.path.append('source'); from addonAPIVersion import BACK_COMPAT_TO; print('{}.{}.{}'.format(*BACK_COMPAT_TO))") >> $env:GITHUB_OUTPUT
 
-  typeCheck:
+  typeCheckPyright:
     name: Check types with Pyright
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
@@ -172,7 +172,30 @@ jobs:
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
     - name: Static type analysis
-      run: ci/scripts/tests/typeCheck.ps1
+      run: ci/scripts/tests/typeCheckPyright.ps1
+
+  typeCheckTy:
+    name: Check types with ty
+    runs-on: ${{ needs.matrix.outputs.defaultRunner }}
+    needs: [matrix, buildNVDA]
+    permissions:
+      contents: read
+    steps:
+    - name: Checkout cached build
+      uses: actions/cache/restore@v5
+      with:
+        path: .
+        key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
+        fail-on-cache-miss: true
+    - name: Install Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: ${{ env.defaultPythonVersion }}
+        architecture: ${{ env.defaultArch }}
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v7
+    - name: Static type analysis
+      run: ci/scripts/tests/typeCheckTy.ps1
 
   checkPo:
     name: Check po files for errors
@@ -592,7 +615,7 @@ jobs:
     name: Check if all tests pass
     runs-on: ubuntu-latest
     if: always()
-    needs: [buildNVDA, typeCheck, checkPo, checkPot, licenseCheck, unitTests, createLauncher, systemTests, createSymbols]
+    needs: [buildNVDA, typeCheckPyright, typeCheckTy, checkPo, checkPot, licenseCheck, unitTests, createLauncher, systemTests, createSymbols]
     permissions:
       contents: read
     steps:

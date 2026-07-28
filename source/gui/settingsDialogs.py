@@ -6192,7 +6192,7 @@ class MagnifierPanel(SettingsPanel):
 
 		# True center tracking SETTINGS
 		# Translators: The label for a setting in magnifier settings to select whether true center tracking is used
-		trueCenterTrackingText = _("&True center tracking")
+		trueCenterTrackingText = _("T&rue center tracking")
 		self.trueCenterTrackingCheckBox = generalGroup.addItem(
 			wx.CheckBox(generalGroupBox, label=trueCenterTrackingText),
 		)
@@ -6269,7 +6269,7 @@ class MagnifierPanel(SettingsPanel):
 
 		# Tracking MODE SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the full-screen mode
-		trackingModeLabelText = _("Tracking &mode:")
+		trackingModeLabelText = _("&Tracking mode:")
 		trackingModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
 		self.trackingModeList = trackingGroup.addLabeledControl(
 			trackingModeLabelText,
@@ -6336,8 +6336,19 @@ class MagnifierPanel(SettingsPanel):
 		requestedEnabled = evt.IsChecked()
 		currentEnabled = magnifierConfig.getEnabled()
 		if requestedEnabled != currentEnabled:
-			toggleMagnifier()
+			# Enabling from settings is a GUI action, so present start failures in a message box.
+			toggleMagnifier(onStartError=self._showMagnifierStartError)
 			self.enableMagnifierCheckBox.SetValue(magnifierConfig.getEnabled())
+
+	def _showMagnifierStartError(self, message: str):
+		"""Show a magnifier start failure in a message box, since enabling from settings is a GUI action."""
+		gui.messageBox(
+			message,
+			# Translators: The title of an error message box shown when the magnifier fails to start.
+			_("Magnifier"),
+			wx.OK | wx.ICON_ERROR,
+			self,
+		)
 
 
 class PrivacyAndSecuritySettingsPanel(SettingsPanel):

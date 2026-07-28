@@ -9,8 +9,9 @@ ci:
   # https://stackoverflow.com/questions/70778806/pre-commit-not-using-virtual-environment .
   # Can't run licenseCheck as it relies on telemetry,
   # which CI blocks.
-  # Pyright does not seem to work in pre-commit CI
-  skip: [checkPo, scons-source, checkPot, unitTest, licenseCheck, pyright]
+  # Pyright and ty do not seem to work in pre-commit CI,
+  # as they need our python environment ([tool.ty.environment] points at .venv).
+  skip: [checkPo, scons-source, checkPot, unitTest, licenseCheck, pyright, ty]
   autofix_prs: false
   autoupdate_schedule: quarterly
   autoupdate_commit_msg: "Pre-commit auto-update"
@@ -124,7 +125,7 @@ repos:
       groups: [autofix]
 
 - repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.11.7
+  rev: 0.11.29
   hooks:
     - id: uv-lock
       name: Verify uv lock file
@@ -139,6 +140,18 @@ repos:
     name: Lint markdown files
     groups: [autofix]
     args: ["--fix"]
+
+- repo: https://github.com/astral-sh/ty-pre-commit
+  # Matches ty version in pyproject.
+  rev: v0.0.60
+  hooks:
+    - id: ty
+      name: type check with ty
+      # The upstream hook sets always_run, making every commit
+      # (even ones without python changes) pay for a full ty check.
+      always_run: false
+      types: [python]
+      exclude: "(sconscript|sconstruct)$"
 
 - repo: local
   hooks:

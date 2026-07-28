@@ -62,8 +62,7 @@ class Action(HandlerRegistrar[Callable[..., None]]):
 		Unregister handlers after calling.
 		@param kwargs: Arguments to pass to the handlers.
 		"""
-		oldHandlers = list(self.handlers)
-		for handler in oldHandlers:
+		for handler in self.handlers:
 			try:
 				callWithSupportedKwargs(handler, **kwargs)
 				self.unregister(handler)

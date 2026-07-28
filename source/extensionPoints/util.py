@@ -173,8 +173,11 @@ class HandlerRegistrar(Generic[HandlerT]):
 	def handlers(self) -> Generator[HandlerT, None, None]:
 		"""Generator of registered handler functions.
 		This should be used when you want to call the handlers.
+		A snapshot of the registered handlers is taken before yielding,
+		so that handlers may register or unregister handlers while being called
+		without mutating the collection that is being iterated.
 		"""
-		for weak in self._handlers.values():
+		for weak in list(self._handlers.values()):
 			handler = weak()
 			if not handler:
 				continue  # Died.
