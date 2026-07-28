@@ -8,6 +8,7 @@
 from typing import (
 	Generator,
 	Optional,
+	TYPE_CHECKING,
 	Tuple,
 )
 import re
@@ -34,6 +35,10 @@ import api
 import speech
 import config
 import NVDAObjects
+
+if TYPE_CHECKING:
+	from locationHelper import RectLTRB
+	from mathPres._mathMlNode import MathMlNodePath, MathMlNodeRectInfo
 
 
 class IA2WebAnnotationTarget(AnnotationTarget):
@@ -331,6 +336,56 @@ class EditorChunk(Ia2Web):
 
 
 class Math(Ia2Web):
+	def _getMathElementChildren(self, obj: NVDAObjects.NVDAObject) -> tuple[IAccessible, ...]:
+		return tuple(
+			child
+			for child in obj.children
+			if isinstance(child, IAccessible) and child.IA2Attributes.get("tag")
+		)
+
+	def _getMathNodeMapRoot(self) -> IAccessible:
+		if self.IA2Attributes.get("tag") == "math":
+			return self
+		mathChildren = tuple(
+			child for child in self._getMathElementChildren(self) if child.IA2Attributes.get("tag") == "math"
+		)
+		return mathChildren[0] if len(mathChildren) == 1 else self
+
+	def _getMathNodeRectFromObj(self, obj: IAccessible) -> "RectLTRB | None":
+		if obj.hasIrrelevantLocation:
+			return None
+		location = obj.location
+		if not location or not location.width or not location.height:
+			return None
+		return location.toLTRB()
+
+	def _getMathNodeInfoByPath(self) -> dict["MathMlNodePath", "MathMlNodeRectInfo"]:
+		"""Map MathML element paths to tag names and screen rectangles for this IA2 math subtree.
+
+		Paths are tuples where each entry indicates an index of a child node to be traversed from the root.
+		"""
+		# Avoid importing mathPres at startup.
+		from mathPres._mathMlNode import MathMlNodeRectInfo
+
+		nodeInfoByPath: dict["MathMlNodePath", "MathMlNodeRectInfo"] = {}
+		stack: list[tuple[IAccessible, "MathMlNodePath"]] = [
+			(self._getMathNodeMapRoot(), ()),
+		]
+		visitedCount = 0
+		while stack:
+			obj, path = stack.pop()
+			visitedCount += 1
+			tag = obj.IA2Attributes.get("tag")
+			if tag and (rect := self._getMathNodeRectFromObj(obj)):
+				nodeInfoByPath[path] = MathMlNodeRectInfo(path=path, tag=tag, rect=rect)
+			children = self._getMathElementChildren(obj)
+			stack.extend((child, path + (index,)) for index, child in enumerate(children))
+		log.debug(
+			f"Math highlight built IA2 path map with {len(nodeInfoByPath)} usable rectangles "
+			f"after visiting {visitedCount} MathML element objects",
+		)
+		return nodeInfoByPath
+
 	def _get_mathMl(self):
 		# Chromium browsers now expose a 'math' IAccessible2 attribute,
 		# which contains all the raw MathML.
