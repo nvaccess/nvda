@@ -5585,6 +5585,8 @@ class GlobalCommands(ScriptableObject):
 	def script_copyLastSpokenInformation(self, gesture: "inputCore.InputGesture") -> None:
 		lastSpeech = speech.speech._lastSpeech
 		if lastSpeech is None:
+			# Translators: Reported when there is no last spoken information to copy.
+			ui.message(_("Nothing to copy"))
 			return
 		lastSpeechText = CHUNK_SEPARATOR.join(item for item in lastSpeech[0] if isinstance(item, str))
 		api.copyToClip(lastSpeechText, notify=True)
