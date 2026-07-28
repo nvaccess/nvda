@@ -91,7 +91,7 @@ class _ScriptVM:
 	scriptInfo: inputCore.AllGesturesScriptInfo
 	gestures: List[Union[_GestureVM, _PendingGesture]]
 	canAdd = True  #: able to add gestures that trigger this script
-	canChange = False  #: Scripts can not be Changed
+	canChange = False  #: Scripts can not be changed
 	canRemove = False  #: Scripts can not be removed
 	addedGestures: List[_GestureVM]  #: These will also be in self.gestures
 	#: These will not be in self.gestures anymore. Key is the normalized Gesture Identifier.
