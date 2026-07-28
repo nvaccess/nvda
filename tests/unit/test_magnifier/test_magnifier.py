@@ -5,6 +5,7 @@
 
 from _magnifier.config import ZoomLevel
 from _magnifier.magnifier import Magnifier
+from _magnifier.utils.errorHandling import MagnifierStartError
 from _magnifier.utils.types import Filter, Direction, Coordinates, MagnifierAction
 from comtypes import COMError
 import unittest
@@ -38,8 +39,22 @@ class _TestMagnifier(unittest.TestCase):
 		self.mock_hook_instance = MagicMock()
 		self.MockMouseHook.return_value = self.mock_hook_instance
 
+		self.magnifier = Magnifier()
+		self.magnifier.zoomLevel = 200
+		self.magnifier.filterType = Filter.NORMAL
+		displayOrientation = getPrimaryDisplayOrientation()
+		self.screenWidth = displayOrientation.width
+		self.screenHeight = displayOrientation.height
+		self.focusCoords = Coordinates(self.screenWidth // 2, self.screenHeight // 2)
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=self.focusCoords)
+
 	def tearDown(self):
 		"""Cleanup after each test."""
+		if self.magnifier._timer:
+			self.magnifier._timer.Stop()
+			self.magnifier._timer = None
+		if self.magnifier._isActive:
+			self.magnifier._isActive = False
 		self.mouseHook_patcher.stop()
 		self.mag_fs_patcher.stop()
 		self.mag_patcher.stop()
@@ -56,27 +71,6 @@ class _TestMagnifier(unittest.TestCase):
 
 class TestMagnifier(_TestMagnifier):
 	"""Tests for the Magnifier class."""
-
-	def setUp(self):
-		"""Setup before each test."""
-		super().setUp()
-
-		self.magnifier = Magnifier()
-		self.magnifier.zoomLevel = 200  # Set a default zoom level for testing (2.0x)
-		self.magnifier.filterType = Filter.NORMAL  # Set a default filter type for testing
-		self.screenWidth = getPrimaryDisplayOrientation().width
-		self.screenHeight = getPrimaryDisplayOrientation().height
-
-	def tearDown(self):
-		"""Cleanup after each test."""
-		if hasattr(self.magnifier, "_timer") and self.magnifier._timer:
-			self.magnifier._timer.Stop()
-			self.magnifier._timer = None
-
-		if hasattr(self.magnifier, "_isActive") and self.magnifier._isActive:
-			self.magnifier._isActive = False
-
-		super().tearDown()
 
 	def testMagnifierCreation(self):
 		"""Can we create a magnifier with valid parameters?"""
@@ -560,10 +554,10 @@ class TestMagnifier(_TestMagnifier):
 			self.assertEqual(self.magnifier.currentCoordinates, validCoords)
 
 	def testStartBlockedByScreenCurtain(self):
-		"""When screen curtain is active, _startMagnifier must not set _isActive."""
+		"""After startup, screen curtain active makes _startMagnifier raise and not set _isActive."""
 		self._mockScreenCurtain(enabled=True)
 		with patch("NVDAState._TrackNVDAInitialization.isInitializationComplete", return_value=True):
-			with patch("_magnifier.magnifier.ui.message"):
+			with self.assertRaises(MagnifierStartError):
 				self.magnifier._startMagnifier()
 
 		self.assertFalse(self.magnifier._isActive)

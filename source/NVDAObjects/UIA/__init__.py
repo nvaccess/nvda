@@ -1060,7 +1060,7 @@ class UIATextInfo(textInfos.TextInfo):
 		return self._getBoundingRectsFromUIARange(self._rangeObj)
 
 	def expand(self, unit: str) -> None:
-		UIAUnit = UIAHandler.NVDAUnitsToUIAUnits[unit]
+		UIAUnit = UIAHandler.getUIAUnitFromNVDAUnit(unit)
 		self._rangeObj.ExpandToEnclosingUnit(UIAUnit)
 
 	def move(
@@ -1069,7 +1069,7 @@ class UIATextInfo(textInfos.TextInfo):
 		direction: int,
 		endPoint: Optional[str] = None,
 	):
-		UIAUnit = UIAHandler.NVDAUnitsToUIAUnits[unit]
+		UIAUnit = UIAHandler.getUIAUnitFromNVDAUnit(unit)
 		if endPoint == "start":
 			res = self._rangeObj.MoveEndpointByUnit(
 				UIAHandler.TextPatternRangeEndpoint_Start,

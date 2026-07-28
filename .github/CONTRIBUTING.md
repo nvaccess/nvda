@@ -8,9 +8,9 @@ The vision and principles should be always considered when planning features and
 
 There are several ways in which you can contribute to the NVDA project:
 
-* [Reporting issues](../projectDocs/issues/readme.md)
-* [Issue triage and investigation](../projectDocs/issues/triage.md)
-* [Testing](../projectDocs/testing/contributing.md)
-* [Translating NVDA](../projectDocs/translating/readme.md)
-* [Code or documentation contributions](../projectDocs/dev/contributing.md)
-* [Creating add-ons](../projectDocs/dev/addons.md)
+* [Reporting issues](/projectDocs/issues/readme.md)
+* [Issue triage and investigation](/projectDocs/issues/triage.md)
+* [Testing](/projectDocs/testing/contributing.md)
+* [Translating NVDA](/projectDocs/translating/readme.md)
+* [Code or documentation contributions](/projectDocs/dev/contributing.md)
+* [Creating add-ons](/projectDocs/dev/addons.md)
