@@ -453,7 +453,7 @@ def findExtraOverlayClasses(obj, clsList):
 class _WinTerminalUIATextInfo(UIATextInfo):
 	"""A TextInfo for Windows Terminal that constrains mouse tracking to a single line."""
 
-	def _get_unit_mouseChunk(self):
+	def _get_unit_mouseChunk(self) -> bool:
 		# Windows Terminal's UIA text provider reports the paragraph, page and document units
 		# as spanning the entire terminal buffer.
 		# Fall back to the line unit, which is the natural granularity for a terminal.
