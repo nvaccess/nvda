@@ -1,4 +1,4 @@
-# Edited by NVDA-Taiwan Volunteers Team on 2026/04/20
+# Edited by NVDA-Taiwan Volunteers Team on 2026/07/17
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (c) 2011-2026 NVDA Contributors
 # This file is covered by the GNU General Public License.
@@ -215,14 +215,14 @@ _	底線	most
 
 # Equality signs
 =	equals	some
-≃	漸近於	none
-≄	非漸近於	none
+≃	漸近等於	none
+≄	不漸近等於	none
 ≅	約等於	none
 ≆	約等於但不等於	none
 ≈	約等於	none
 ≌	全等於	none
 ≍	等價於	none
-≭	非等價於	none
+≭	不等價於	none
 ≎	幾何上等價於	none
 ≑	幾何上等於	none
 ≚	等角於	none
@@ -231,7 +231,7 @@ _	底線	most
 ≡	同餘	none
 ≣	恆等於	none
 ≢	非同餘	none
-∼	近似於	none
+∼	波浪符運算子	none
 ≙	估計為	none
 ≟	問號等於	none
 
@@ -281,7 +281,7 @@ _	底線	most
 # Other mathematical Operators
 ∈	屬於	none
 ∉	不屬於	none
-∊	小型元素	none
+∊	小型屬於	none
 ∋	包含元素	none
 ∌	不包含元素	none
 ∍	包含小型元素	none
@@ -300,19 +300,19 @@ _	底線	most
 ∩	交集	none
 ∪	聯集	none
 ∫	積分	none
-∬	雙重積分	none
+∬	二重積分	none
 ∭	三重積分	none
-∮	曲線積分	none
-∯	表面積分	none
-∰	體積積分	none
-∱	順時鐘方向積分	none
-∲	順時鐘方向封閉積分	none
-∳	逆時鐘方向封閉積分	none
+∮	圍道積分	none
+∯	面積分	none
+∰	體積分	none
+∱	順時針積分	none
+∲	順時針圍道積分	none
+∳	逆時針圍道積分	none
 ∴	所以	none
 ∵	因為	none
 ∶	比	none
-∷	正比	none
-∹	減號冒號	none
+∷	如同	none
+∹	超出	none
 ∺	幾何比例	none
 ≀	圈積	none
 ≏	差異	none
@@ -320,12 +320,12 @@ _	底線	most
 ∙	圓點算符	none
 ∣	整除	none
 ∤	不整除	none
-≔	冒號等於	none
+≔	冒號等號	none
 ≕	等號冒號	none
-≺	precedes	none
-≻	succeeds	none
-⊀	does not precede	none
-⊁	does not succeed	none
+≺	先於	none
+≻	後於	none
+⊀	不先於	none
+⊁	不後於	none
 
 # Number sets
 𝔸	代數數	none
@@ -484,7 +484,6 @@ _	底線	most
 ㏑	自然對數	some
 ♀	女性符號	some
 ♂	男性符號	some
-⊙	中心點圓	most
 ￥	人民幣	none
 ￡	英鎊	none
 ℃	度C	none
@@ -1000,6 +999,8 @@ _	底線	most
 鿎	妲	none
 鿏	邁	none
 鿔	鎶	none
+鿕	耽	none
+鿪	燧	none
 鿫	澳	none
 鿬	田	none
 鿭	你	none
@@ -1065,6 +1066,7 @@ _	底線	most
 㤕	觸	none
 㤘	皺	none
 㥄	靈	none
+㥐	怨	none
 㥮	炒	none
 㦊	驊	none
 㧁	覷	none
@@ -1112,6 +1114,7 @@ _	底線	most
 㴘	冒	none
 㴙	眨	none
 㵐	卻	none
+㵘	慢	none
 㶈	螢	none
 㶲	用	none
 㷍	倫	none
@@ -1181,6 +1184,7 @@ _	底線	most
 䓬	卓	none
 䔥	蕭	none
 䕒	嘉	none
+䕫	揆	none
 䖙	梯	none
 䖳	榨	none
 䖵	坤	none
@@ -1203,6 +1207,7 @@ _	底線	most
 䟘	沆	none
 䟩	卻	none
 䠡	茶	none
+䠷	窕	none
 䡵	歲	none
 䢍	放	none
 䢢	賶	none
@@ -1215,6 +1220,7 @@ _	底線	most
 䥽	鏺	none
 䦃	捉	none
 䧟	陷	none
+䨩	靈	none
 䩄	靦	none
 䪞	雜	none
 䪸	民	none
@@ -1480,10 +1486,13 @@ _	底線	most
 𩽾	安	none
 𩾃	勉	none
 𩾌	鱇	none
+𩿀	眾	none
 𪁎	消	none
+𪆱	劉	none
 𪐞	杜	none
 𪖐	藥	none
 𪘒	韓	none
+𪚥	蔗	none
 
 # 以下區段為「中日韓統一表意文字擴充 C (0x2a700~0x2b73f)」
 𪜶	因	none
@@ -1670,6 +1679,7 @@ _	底線	most
 
 # 以下區段為「中日韓統一表意文字擴充 G (0x30000~0x3134f)」
 𰹬	狀	none
+𱆥	耽	none
 
 # 以下區段為「中日韓統一表意文字擴充 H (0x31350~0x323af)」
 𱽕	叨	none
