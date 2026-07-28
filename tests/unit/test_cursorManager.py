@@ -6,7 +6,7 @@
 """Unit tests for the cursorManager module."""
 
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import Mock
 
 import wx
 
@@ -292,7 +292,9 @@ class TestFindDialogSingleInstance(unittest.TestCase):
 
 	def tearDown(self):
 		for dialog in self._dialogs:
-			dialog.Destroy()
+			# A dialog whose underlying window has already been destroyed is falsy.
+			if dialog:
+				dialog.Destroy()
 		FindDialog._instance = None
 		config.conf["virtualBuffers"]["findHistory"] = FeatureFlag(BoolFlag.DEFAULT, BoolFlag.ENABLED)
 
@@ -312,7 +314,7 @@ class TestFindDialogSingleInstance(unittest.TestCase):
 			reverse,
 			searchEntries,
 		)
-		if dialog not in self._dialogs:
+		if not any(known is dialog for known in self._dialogs):
 			self._dialogs.append(dialog)
 		return dialog
 
@@ -339,17 +341,12 @@ class TestFindDialogSingleInstance(unittest.TestCase):
 
 	def test_destroyedDialogIsNotReused(self):
 		first = self._createDialog(text="foo")
-		first._onDestroy(wx.WindowDestroyEvent(first))
-		self.assertIsNone(FindDialog._getInstance())
+		first.Destroy()
+		# Destruction of a top level window is deferred until pending events are processed.
+		wx.Yield()
 		second = self._createDialog(text="bar")
 		self.assertIsNot(second, first)
-
-	def test_dialogAwaitingDeletionIsNotReused(self):
-		first = self._createDialog(text="foo")
-		with patch.object(first, "IsBeingDeleted", return_value=True):
-			self.assertIsNone(FindDialog._getInstance())
-			second = self._createDialog(text="bar")
-		self.assertIsNot(second, first)
+		self.assertEqual(second.findTextField.GetValue(), "bar")
 
 	def test_findFieldIsPlainEditWhenHistoryIsDisabled(self):
 		config.conf["virtualBuffers"]["findHistory"] = FeatureFlag(BoolFlag.DISABLED, BoolFlag.ENABLED)

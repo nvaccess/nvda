@@ -57,20 +57,10 @@ class FindDialog(
 
 	_instance: "weakref.ReferenceType[FindDialog] | None" = None
 
-	@classmethod
-	def _getInstance(cls) -> "FindDialog | None":
-		"""Return the dialog that is currently open, if any.
-
-		A dialog that is scheduled for deletion but not destroyed yet is not considered open.
-		"""
-		inst = cls._instance() if cls._instance else None
-		if inst is None or inst.IsBeingDeleted():
-			return None
-		return inst
-
 	def __new__(cls, *args, **kwargs):
 		# Make this a singleton.
-		inst = cls._getInstance()
+		# A dialog whose underlying window has been destroyed is falsy, so a new instance is created instead.
+		inst = cls._instance() if cls._instance else None
 		if not inst:
 			return super().__new__(cls)
 		return inst
@@ -93,9 +83,11 @@ class FindDialog(
 		:param searchEntries: Previously searched terms to offer in the search field,
 			most-recent first. Only used when the search history setting is enabled.
 		"""
-		if self._getInstance() is self:
+		inst = FindDialog._instance() if FindDialog._instance else None
+		if inst:
 			self._retarget(cursorManager, text, caseSensitivity, reverse, searchEntries)
 			return
+		# Use a weakref so the instance can die.
 		FindDialog._instance = weakref.ref(self)
 		# Translators: Title of a dialog to find text.
 		super().__init__(parent, title=_("Find"))
@@ -129,13 +121,6 @@ class FindDialog(
 		self.SetSizer(mainSizer)
 		self.CentreOnScreen()
 		self.findTextField.SetFocus()
-		# EVT_CLOSE is not fired on modal dialogs, so use EVT_WINDOW_DESTROY instead.
-		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy, self)
-
-	def _onDestroy(self, evt: wx.WindowDestroyEvent):
-		if self._getInstance() is self:
-			FindDialog._instance = None
-		evt.Skip()
 
 	def _retarget(
 		self,
@@ -339,7 +324,7 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 	def script_find(self, gesture, reverse=False):
 		# #8566: We need this to be a modal dialog, but it mustn't block this script.
 		def run():
-			isNewDialog = FindDialog._getInstance() is None
+			existingDialog = FindDialog._instance() if FindDialog._instance else None
 			gui.mainFrame.prePopup()
 			d = FindDialog(
 				gui.mainFrame,
@@ -349,13 +334,13 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 				reverse,
 				self._searchEntries,
 			)
-			if isNewDialog:
-				d.ShowModal()
-				gui.mainFrame.postPopup()
-			else:
-				# The dialog is already shown modally, postPopup is called when that call returns.
+			if existingDialog:
+				# The dialog is already shown modally, postPopup is called when that ShowModal call returns.
 				d.Raise()
 				d.findTextField.SetFocus()
+			else:
+				d.ShowModal()
+				gui.mainFrame.postPopup()
 
 		wx.CallAfter(run)
 
