@@ -51,7 +51,7 @@ import inputCore
 import screenExplorer
 from logHandler import log
 import touchTracker
-from touchTracker import TouchAction
+from touchTracker import TouchAction, TouchEdge
 import core
 import systemUtils
 from utils import _deprecate
@@ -203,7 +203,7 @@ _LOGPIXELSX = 88
 """Device capability index for horizontal screen DPI, used to convert mm to pixels."""
 
 
-def _getEdge(x: int, y: int) -> str | None:
+def _getEdge(x: int, y: int) -> TouchEdge | None:
 	"""Determine if coordinates fall within an edge margin of the screen.
 
 	The margin width is defined in millimetres by :data:`touchTracker._EDGE_MARGIN_MM`
@@ -211,7 +211,7 @@ def _getEdge(x: int, y: int) -> str | None:
 
 	:param x: The x screen coordinate to test.
 	:param y: The y screen coordinate to test.
-	:return: An edge constant from :mod:`touchTracker` (e.g. :data:`touchTracker.EDGE_LEFT`),
+	:return: A :class:`touchTracker.TouchEdge` member,
 		or ``None`` if not near any tracked edge or edge gestures are disabled.
 	"""
 	if not config.conf["touch"]["edgeGesturesEnabled"]:
@@ -222,11 +222,11 @@ def _getEdge(x: int, y: int) -> str | None:
 	user32.ReleaseDC(0, dc)
 	margin = int(touchTracker._EDGE_MARGIN_MM / 25.4 * dpi)
 	if x <= margin:
-		return touchTracker.EDGE_LEFT
+		return TouchEdge.LEFT
 	if x >= screenWidth - margin:
-		return touchTracker.EDGE_RIGHT
+		return TouchEdge.RIGHT
 	if y <= margin:
-		return touchTracker.EDGE_TOP
+		return TouchEdge.TOP
 	return None
 
 
@@ -384,12 +384,14 @@ class TouchInputGesture(inputCore.InputGesture):
 						action = pluralActionLabel.format(action=action)
 						foundPlural = True
 						continue
-				edgeLabel = touchTracker.edgeLabels.get(subID)
-				if edgeLabel:
+				try:
+					edgeLabel = TouchEdge(subID).displayString
 					# Translators: a touch screen action that started from a screen edge,
 					# e.g. "left edge flick right"
 					action = _("{edgeLabel} {action}").format(edgeLabel=edgeLabel, action=action)
 					continue
+				except ValueError:
+					pass
 				if subID.endswith("finger"):
 					numFingers = int(subID[: 0 - len("finger")])
 					if numFingers > 1:

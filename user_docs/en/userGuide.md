@@ -3265,6 +3265,14 @@ This checkbox allows you to specify the method you wish to use when entering tex
 If this checkbox is checked, when you locate a key on the touch keyboard, you can lift your finger and the selected key will be pressed.
 If this is unchecked, you need to double-tap on the key of the touch keyboard to press the key.
 
+##### Enable edge gestures {#TouchEdgeGesturesEnable}
+
+This checkbox enables edge gesture support.
+When enabled, gestures that begin within 15 mm of the left, right, or top screen edge are treated as distinct gestures and can be bound independently in the Input Gestures dialog.
+For example, a flick right that starts from the left edge of the screen can be bound to a different command from a flick right performed in the centre of the screen.
+If edge gestures are disabled after bindings have been set, those bindings will remain but will never be triggered.
+Note: the bottom edge is not supported, as Windows and the taskbar intercept touches there.
+
 #### Review Cursor {#ReviewCursorSettings}
 
 The Review Cursor category in the NVDA Settings dialog is used to configure NVDA's review cursor behaviour.

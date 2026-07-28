@@ -108,23 +108,25 @@ _EDGE_MARGIN_MM: float = 15.0
 This is an internal constant; if a single value cannot satisfy all devices it may become configurable in future.
 """
 
-EDGE_LEFT: str = "leftedge"
-"""Gesture identifier prefix for touches starting at the left screen edge."""
 
-EDGE_RIGHT: str = "rightedge"
-"""Gesture identifier prefix for touches starting at the right screen edge."""
+class TouchEdge(DisplayStringStrEnum):
+	"""Screen edges from which a touch gesture can originate."""
 
-EDGE_TOP: str = "topedge"
-"""Gesture identifier prefix for touches starting at the top screen edge."""
+	LEFT = "leftedge"
+	RIGHT = "rightedge"
+	TOP = "topedge"
 
-edgeLabels: dict[str, str] = {
-	# Translators: describes a touch gesture that started from the left edge of the screen
-	EDGE_LEFT: pgettext("touch edge", "left edge"),
-	# Translators: describes a touch gesture that started from the right edge of the screen
-	EDGE_RIGHT: pgettext("touch edge", "right edge"),
-	# Translators: describes a touch gesture that started from the top edge of the screen
-	EDGE_TOP: pgettext("touch edge", "top edge"),
-}
+	@cached_property
+	def _displayStringLabels(self) -> dict[Self, str]:
+		return {
+			# Translators: describes a touch gesture that started from the left edge of the screen
+			TouchEdge.LEFT: pgettext("touch edge", "left edge"),
+			# Translators: describes a touch gesture that started from the right edge of the screen
+			TouchEdge.RIGHT: pgettext("touch edge", "right edge"),
+			# Translators: describes a touch gesture that started from the top edge of the screen
+			TouchEdge.TOP: pgettext("touch edge", "top edge"),
+		}
+
 
 __getattr__ = handleDeprecations(
 	MovedSymbol("action_tap", "touchTracker", "TouchAction", "TAP"),
