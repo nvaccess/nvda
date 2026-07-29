@@ -52,8 +52,9 @@ jobs:
         username: ${{ secrets.EMAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
         subject: "Changes detected in localisation files"
-        to: nvda-l10n@nvaccess.org
-        from: '"NVDA localisations" <nvda-l10n@nvaccess.org>'
+        to: ${{ vars.L10N_EMAIL_TO }}
+        from: ${{ vars.L10N_EMAIL_FROM }}
+        envelope_from: ${{ vars.EMAIL_BOUNCE_ADDRESS }}
         convert_markdown: true
         body: |
           The following changes have been detected in the English symbols or character descriptions dictionaries:

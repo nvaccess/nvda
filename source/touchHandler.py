@@ -364,7 +364,11 @@ class TouchInputGesture(inputCore.InputGesture):
 		# Translators: a touch screen gesture
 		source = _("Touch screen")
 		if mode:
-			source = "{source}, {mode}".format(source=source, mode=TouchMode(mode).displayString)
+			try:
+				modeLabel = TouchMode(mode).displayString
+			except ValueError:
+				modeLabel = mode
+			source = "{source}, {mode}".format(source=source, mode=modeLabel)
 		return source, " + ".join(actions)
 
 	def _get__immediate(self):
