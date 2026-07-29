@@ -15,7 +15,7 @@
   * The two flicks can be performed either by lifting the finger between strokes or as a single continuous swipe with a sharp change in direction.
 * Added edge gesture support for touch screens, allowing gestures that begin within 15 mm of the left, right, or top screen edge to be bound independently from the same gesture performed in the centre of the screen. (#19938, @kefaslungu)
   * Edge gestures are disabled by default and can be enabled in the Touch Interaction settings panel.
-  * The bottom edge is intentionally excluded as Windows and the taskbar intercept touches there.
+  * The bottom edge is not supported; Windows intercepts swipe-from-bottom gestures, and the taskbar (which may be on any edge) will also intercept touches on whichever edge it occupies.
 * On supported braille displays, pressing multiple routing keys simultaneously can now be bound to a new "multi routing" gesture. (#20001, @LeonarddeR)
   * The "select range" command, which selects the text from the first up to the last pressed routing key, is bound to this gesture by default on supporting drivers.
   * Drivers with built-in support for multi routing: ALVA, Albatross (only when combined with `home1` or `home2`), Baum (and compatible), Freedom Scientific Focus/PAC Mate, HumanWare Brailliant BI/B series, Handy Tech, NLS eReader Zoomax, Seika Notetaker, and Standard HID Braille displays.

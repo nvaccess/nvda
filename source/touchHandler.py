@@ -214,7 +214,7 @@ def _getEdge(x: int, y: int) -> TouchEdge | None:
 	:return: A :class:`touchTracker.TouchEdge` member,
 		or ``None`` if not near any tracked edge or edge gestures are disabled.
 	"""
-	if not config.conf["touch"]["edgeGesturesEnabled"]:
+	if not config.conf["touch"]["edgeGestures"]:
 		return None
 	screenWidth = user32.GetSystemMetrics(SystemMetrics.CX_SCREEN)
 	dc = user32.GetDC(0)

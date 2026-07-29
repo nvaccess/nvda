@@ -112,9 +112,9 @@ This is an internal constant; if a single value cannot satisfy all devices it ma
 class TouchEdge(DisplayStringStrEnum):
 	"""Screen edges from which a touch gesture can originate."""
 
-	LEFT = "leftedge"
-	RIGHT = "rightedge"
-	TOP = "topedge"
+	LEFT = "left"
+	RIGHT = "right"
+	TOP = "top"
 
 	@cached_property
 	def _displayStringLabels(self) -> dict[Self, str]:
