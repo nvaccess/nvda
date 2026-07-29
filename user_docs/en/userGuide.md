@@ -201,6 +201,7 @@ These set whether NVDA starts automatically.
 ### Running NVDA {#RunningNVDA}
 
 The full NVDA user guide has all the NVDA commands, split up into different sections for reference.
+From within any NVDA dialog, press `f1` to open the User Guide to the topic on the current control.
 The tables of commands are also available in the "Commands Quick Reference".
 The "Basic Training for NVDA" NVDA training module has each command in more depth with step-by-step activities.
 "Basic Training for NVDA" is available from the [NV Access Shop](http://www.nvaccess.org/shop).
@@ -394,6 +395,7 @@ This is an online exam you can complete to demonstrate your skills in NVDA.
 To get help for NVDA, press `NVDA+n` to open the menu, then `h` for help.
 From this submenu you can access the User Guide, a quick reference of commands, history of new features and more.
 These first three options open in the default web browser.
+From within any NVDA dialog, press `f1` to open the User Guide to the topic on the current control.
 There is also more comprehensive Training Material available in the [NV Access Shop](https://www.nvaccess.org/shop).
 
 We recommend starting with the "Basic Training for NVDA" module.
@@ -1290,6 +1292,7 @@ By default, the review cursor follows the system caret, so you can usually use t
 
 At this point, NVDA will enter Math mode, where you can use commands such as the arrow keys to explore the expression.
 For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
+When [Visual Highlight](#VisionFocusHighlight) is enabled and the browse mode cursor highlighter is enabled, the current subpart of MathML on the web is also exposed visually.
 
 When you wish to return to the document, simply press the escape key.
 
@@ -1614,7 +1617,7 @@ These positions are highlighted with a coloured rectangle outline.
 * Solid blue highlights a combined navigator object and system focus location (e.g. because [the navigator object follows the system focus](#ReviewCursorFollowFocus)).
 * Dashed blue highlights just the system focus object.
 * Solid pink highlights just the navigator object.
-* Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers).
+* Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers), the cursor in OCR recognition results, and the current subpart while navigating math on the web.
 
 When Visual Highlight is enabled in the [vision category](#VisionSettings) of the [NVDA Settings](#NVDASettings) dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret](#VisionSettingsFocusHighlight).
 
@@ -2008,6 +2011,12 @@ As new text is written, the content scroll upwards and previous text is no longe
 On Windows versions before Windows 11 22H2, text in the console that is not visibly displayed in the window is not accessible with NVDA's text review commands.
 Therefore, it is necessary to scroll the console window to read earlier text.
 In newer versions of the console and in Windows Terminal, it is possible to review the entire text buffer freely without the need to scroll the window.
+
+In some cases, such as when connected over SSH, caret updates may be delayed.
+NVDA waits slightly longer for caret movement in Windows Terminal, so it is less likely to report stale characters.
+If caret reporting is still inaccurate, try increasing [Caret move timeout](#AdvancedSettingsCaretMoveTimeout) in Advanced settings.
+Increasing this value may make caret movement feel slower, so consider changing it in a configuration profile for terminal applications.
+
 <!-- KC:beginInclude -->
 The following built-in Windows Console keyboard shortcuts may be useful when [reviewing text](#ReviewingText) with NVDA in older versions of Windows Console:
 
@@ -2935,7 +2944,7 @@ The check boxes in the Visual Highlight grouping control the behaviour of NVDA's
 * Enable Highlighting: Toggles Visual Highlight on and off.
 * Highlight system focus: toggles whether the [system focus](#SystemFocus) will be highlighted.
 * Highlight navigator object: toggles whether the [navigator object](#ObjectNavigation) will be highlighted.
-* Highlight browse mode cursor: Toggles whether the [virtual browse mode cursor](#BrowseMode) will be highlighted.
+* Highlight browse mode cursor: Toggles whether the [virtual browse mode cursor](#BrowseMode) will be highlighted, including the cursor in OCR recognition results and the current subpart while navigating math on the web.
 
 Note that checking and unchecking the "Enable Highlighting" check box will also change the state of the three other check boxes accordingly.
 Therefore, if "Enable Highlighting" is off and you check this check box, the other three check boxes will also be checked automatically.
@@ -4459,8 +4468,10 @@ Often, a gesture can be interpreted in more than one way.
 For example, if you pressed a key on the keyboard, you may wish it to be specific to the current keyboard layout (e.g. desktop or laptop) or you may wish it to apply for all layouts.
 In this case, a menu will appear allowing you to select the desired option.
 
-You can use the context menu to add or remove gestures for each command.
-To remove a gesture from a command, you can also press the `delete` key.
+You can also use the context menu to add, change, or remove gestures for each command.
+To change an input gesture of a command, select the gesture and press the change button.
+Then, perform the new input gesture you wish to associate; that will replace the old one.
+To remove a gesture from a command, you can press the `delete` key or the remove button.
 
 The Emulated system keyboard keys category contains NVDA commands that emulate keys on the system keyboard.
 These emulated system keyboard keys can be used to control a system keyboard right from your braille display.
