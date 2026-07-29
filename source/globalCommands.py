@@ -852,7 +852,6 @@ class GlobalCommands(ScriptableObject):
 		description=_("Toggles braille automatic scroll"),
 		category=SCRCAT_BRAILLE,
 		gesture="kb:NVDA+alt+k",
-		speakOnDemand=True,
 	)
 	def script_toggleBrailleAutoScroll(self, gesture: inputCore.InputGesture):
 		shouldEnableAutoScroll = braille.handler._autoScrollCallLater is None
@@ -875,7 +874,6 @@ class GlobalCommands(ScriptableObject):
 		description=_("Increases the rate for braille automatic scroll"),
 		category=SCRCAT_BRAILLE,
 		gesture="kb:NVDA+alt+l",
-		speakOnDemand=True,
 	)
 	def script_increaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
 		config.conf.clampedIncrementAndUpdateConfig("braille", "autoScrollRate", step=0.5)
@@ -889,7 +887,6 @@ class GlobalCommands(ScriptableObject):
 		description=_("Decreases the rate for braille automatic scroll"),
 		category=SCRCAT_BRAILLE,
 		gesture="kb:NVDA+alt+j",
-		speakOnDemand=True,
 	)
 	def script_decreaseBrailleAutoScrollRate(self, gesture: inputCore.InputGesture):
 		config.conf.clampedIncrementAndUpdateConfig("braille", "autoScrollRate", step=-0.5)
