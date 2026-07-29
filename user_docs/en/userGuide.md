@@ -3271,7 +3271,9 @@ This checkbox enables edge gesture support.
 When enabled, gestures that begin within 15 mm of the left, right, or top screen edge are treated as distinct gestures and can be bound independently in the Input Gestures dialog.
 For example, a flick right that starts from the left edge of the screen can be bound to a different command from a flick right performed in the centre of the screen.
 If edge gestures are disabled after bindings have been set, those bindings will remain but will never be triggered.
-Note: the bottom edge is not supported, as Windows and the taskbar intercept touches there.
+Note: the bottom edge is not supported, as Windows intercepts swipe-from-bottom gestures system-wide.
+On Windows 10, if the taskbar is moved to another edge, touches on that edge will also be intercepted by Windows before reaching NVDA, making that edge unavailable.
+On Windows 11, the taskbar is locked to the bottom and cannot be moved.
 
 #### Review Cursor {#ReviewCursorSettings}
 
