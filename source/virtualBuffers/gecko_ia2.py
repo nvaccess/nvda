@@ -724,7 +724,7 @@ class Gecko_ia2(VirtualBuffer):
 
 		A collapsed range is expressed as a degenerate selection, i.e. a selection whose end
 		matches its start, which places the caret in the application.
-		If the caret position cannot be located, the selection is cleared instead.
+		If the caret position cannot be located, the native selection is left unchanged.
 
 		:param selInfo: The range to select.
 		:raises NotImplementedError: If the application does not support setting selections,
@@ -749,8 +749,7 @@ class Gecko_ia2(VirtualBuffer):
 			try:
 				self._getStartSelection(ia2Sel, caretInfo.getTextWithFields())
 			except NotImplementedError:
-				log.debug("Could not locate the caret position, clearing the app selection instead")
-				self.clearAppSelection()
+				log.debug("Could not locate the caret position, leaving the app selection unchanged")
 				return
 			ia2Sel.endObj = ia2Sel.startObj
 			ia2Sel.endOffset = ia2Sel.startOffset
