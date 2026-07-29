@@ -4181,14 +4181,14 @@ class TouchInteractionPanel(SettingsPanel):
 		self.touchTypingCheckBox.SetValue(config.conf["touch"]["touchTyping"])
 		# Translators: This is the label for a checkbox in the touch interaction settings panel.
 		self.edgeGesturesCheckBox = sHelper.addItem(wx.CheckBox(self, label=_("Enable &edge gestures")))
-		self.bindHelpEvent("TouchEdgeGesturesEnable", self.edgeGesturesCheckBox)
-		self.edgeGesturesCheckBox.SetValue(config.conf["touch"]["edgeGesturesEnabled"])
+		self.bindHelpEvent("TouchEdgeGestures", self.edgeGesturesCheckBox)
+		self.edgeGesturesCheckBox.SetValue(config.conf["touch"]["edgeGestures"])
 		self.edgeGesturesCheckBox.Enable(touchHandler.touchSupported())
 
 	def onSave(self):
 		config.conf["touch"]["enabled"] = self.enableTouchSupportCheckBox.IsChecked()
 		config.conf["touch"]["touchTyping"] = self.touchTypingCheckBox.IsChecked()
-		config.conf["touch"]["edgeGesturesEnabled"] = self.edgeGesturesCheckBox.IsChecked()
+		config.conf["touch"]["edgeGestures"] = self.edgeGesturesCheckBox.IsChecked()
 		touchHandler.setTouchSupport(config.conf["touch"]["enabled"])
 
 

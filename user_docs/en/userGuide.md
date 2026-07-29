@@ -3265,7 +3265,7 @@ This checkbox allows you to specify the method you wish to use when entering tex
 If this checkbox is checked, when you locate a key on the touch keyboard, you can lift your finger and the selected key will be pressed.
 If this is unchecked, you need to double-tap on the key of the touch keyboard to press the key.
 
-##### Enable edge gestures {#TouchEdgeGesturesEnable}
+##### Enable edge gestures {#TouchEdgeGestures}
 
 This checkbox enables edge gesture support.
 When enabled, gestures that begin within 15 mm of the left, right, or top screen edge are treated as distinct gestures and can be bound independently in the Input Gestures dialog.
