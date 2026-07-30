@@ -56,6 +56,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		sayCapForCapitals = boolean(default=false)
 		beepForCapitals = boolean(default=false)
 		useSpellingFunctionality = boolean(default=true)
+		# The ID of the synth setting that was last focused in the synth settings ring for this synth.
+		# Used to restore ring position across NVDA restarts. Empty string means nothing remembered yet.
+		lastSettingRingSettingID = string(default="")
 
 # Audio settings
 [audio]

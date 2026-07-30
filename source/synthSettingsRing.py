@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2024 NV Access Limited
+# Copyright (C) 2006-2026 NV Access Limited
 
 from typing import Any
 
@@ -126,10 +126,8 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 	settings: list[SynthSetting] | None
 
 	def __init__(self, synth):
-		try:
-			self._current = synth.initialSettingsRingSetting
-		except ValueError:
-			self._current = None
+		self._current = None
+		self._hasEverHadSettings = False
 		self.updateSupportedSettings(synth)
 
 	def _get_currentSettingName(self):
@@ -149,14 +147,26 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 		"""changes to the next setting and returns its name"""
 		if self._current is not None:
 			self._current = (self._current + 1) % len(self.settings)
+			self._saveCurrentSettingID()
 			return self.currentSettingName
 		return None
 
 	def previous(self):
 		if self._current is not None:
 			self._current = (self._current - 1) % len(self.settings)
+			self._saveCurrentSettingID()
 			return self.currentSettingName
 		return None
+
+	def _saveCurrentSettingID(self):
+		"""Persists the currently focused ring setting for the current synth so it can be
+		restored the next time a ``SynthSettingsRing`` is constructed for this synth
+		(e.g. after an NVDA restart)
+		"""
+		if self._current is None or not self.settings:
+			return
+		current = self.settings[self._current]
+		config.conf["speech"][current.synth.name]["lastSettingRingSettingID"] = current.setting.id
 
 	def first(self) -> str | None:
 		"""set the current setting to the first value"""
@@ -199,11 +209,13 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 		from scriptHandler import _isScriptRunning
 
 		# Save ID of the current setting to restore ring position after reconstruction
-		prevID = (
-			self.settings[self._current].setting.id
-			if self._current is not None and hasattr(self, "settings")
-			else None
-		)
+		isInitialConstruction = not self._hasEverHadSettings
+		if not isInitialConstruction and self._current is not None:
+			prevID = self.settings[self._current].setting.id
+		else:
+			prevID = None
+		if prevID is None and isInitialConstruction:
+			prevID = config.conf["speech"][synth.name]["lastSettingRingSettingID"] or None
 		list: list[SynthSetting] = []  # noqa: F823
 		for s in synth.supportedSettings:
 			if not s.availableInSettingsRing:
@@ -222,9 +234,11 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			self.settings = None
 		else:
 			self.settings = list
+			self._hasEverHadSettings = True
 		if (
 			not prevID
 			or not self.settings
+			or self._current is None
 			or len(self.settings) <= self._current
 			or prevID != self.settings[self._current].setting.id
 		):

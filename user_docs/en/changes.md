@@ -27,6 +27,7 @@
 * Added context menu and shortcuts support to the Speech Dictionaries dialog. (#20420, @amirmahdifard)
 * It is now possible to change an existing gesture in the Input Gestures dialog. (#10983, @amirmahdifard)
 * A new command, assigned to `NVDA+control+x`, copies the last spoken information to the clipboard. (#19385, @Cary-rowen)
+* The synthesizer settings ring now remembers, per synthesizer, which setting was last focused, and restores it the next time NVDA starts. (#9804, @SemTiOne)
 
 ### Changes
 
