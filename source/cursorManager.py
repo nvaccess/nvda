@@ -325,7 +325,8 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 		# #8566: We need this to be a modal dialog, but it mustn't block this script.
 		def run():
 			existingDialog = FindDialog._instance() if FindDialog._instance else None
-			gui.mainFrame.prePopup()
+			if not existingDialog:
+				gui.mainFrame.prePopup()
 			d = FindDialog(
 				gui.mainFrame,
 				self,
@@ -335,7 +336,8 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 				self._searchEntries,
 			)
 			if existingDialog:
-				# The dialog is already shown modally, postPopup is called when that ShowModal call returns.
+				# The dialog is already shown modally, so prePopup was called when it was opened
+				# and its postPopup runs when that ShowModal call returns.
 				d.Raise()
 				d.findTextField.SetFocus()
 			else:

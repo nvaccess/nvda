@@ -6,11 +6,12 @@
 """Unit tests for the cursorManager module."""
 
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 import wx
 
 import config
+import cursorManager
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import BoolFlag
 from cursorManager import _MAX_SEARCH_HISTORY_ENTRIES, FindDialog
@@ -249,10 +250,11 @@ class TestSearchHistory(unittest.TestCase):
 	"""
 
 	def setUp(self):
-		CursorManager._searchEntries = []
+		# Clear in place, as assigning would shadow the list shared with the base class.
+		CursorManager._searchEntries.clear()
 
 	def tearDown(self):
-		CursorManager._searchEntries = []
+		CursorManager._searchEntries.clear()
 
 	def test_appendingTermPutsItAtFront(self):
 		CursorManager._updateSearchHistory("foo")
@@ -354,3 +356,48 @@ class TestFindDialogSingleInstance(unittest.TestCase):
 		self.assertNotIsInstance(dialog.findTextField, wx.ComboBox)
 		self._createDialog(text="bar", searchEntries=["bar", "foo"])
 		self.assertEqual(dialog.findTextField.GetValue(), "bar")
+
+
+class TestFindDialogPopupPairing(unittest.TestCase):
+	"""Tests that script_find pairs every prePopup call with a postPopup call (#20484)."""
+
+	def setUp(self):
+		self.app = wx.App()
+		# A real window is needed as the dialog parent, but the popup bookkeeping is mocked.
+		self.mainFrame = wx.Frame(None)
+		self.mainFrame.prePopup = Mock()
+		self.mainFrame.postPopup = Mock()
+		self._patches = [
+			patch.object(cursorManager.gui, "mainFrame", self.mainFrame),
+			# script_find defers its work to wx.CallAfter, run it inline instead.
+			patch.object(cursorManager.wx, "CallAfter", lambda func, *args, **kwargs: func(*args, **kwargs)),
+			# ShowModal would block until the dialog is dismissed.
+			patch.object(FindDialog, "ShowModal", Mock(return_value=wx.ID_CANCEL)),
+		]
+		for p in self._patches:
+			p.start()
+		config.conf["virtualBuffers"]["findHistory"] = FeatureFlag(BoolFlag.ENABLED, BoolFlag.ENABLED)
+
+	def tearDown(self):
+		for p in reversed(self._patches):
+			p.stop()
+		dialog = FindDialog._instance() if FindDialog._instance else None
+		if dialog:
+			dialog.Destroy()
+		FindDialog._instance = None
+		self.mainFrame.Destroy()
+		config.conf["virtualBuffers"]["findHistory"] = FeatureFlag(BoolFlag.DEFAULT, BoolFlag.ENABLED)
+
+	def test_openingDialogPairsPrePopupWithPostPopup(self):
+		CursorManager(text="abc", selection=(0, 0)).script_find(None)
+		self.assertEqual(self.mainFrame.prePopup.call_count, 1)
+		self.assertEqual(self.mainFrame.postPopup.call_count, 1)
+
+	def test_reusingDialogDoesNotCallPrePopupAgain(self):
+		# The dialog created here is still open, as ShowModal is mocked out.
+		CursorManager(text="abc", selection=(0, 0)).script_find(None)
+		self.mainFrame.prePopup.reset_mock()
+		self.mainFrame.postPopup.reset_mock()
+		CursorManager(text="def", selection=(0, 0)).script_find(None)
+		self.mainFrame.prePopup.assert_not_called()
+		self.mainFrame.postPopup.assert_not_called()
