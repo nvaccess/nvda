@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited
+# Copyright (C) 2025-2026 NV Access Limited, Cary-rowen
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -1000,6 +1000,42 @@ Determines whether the specified window is enabled for mouse and keyboard input.
 IsWindowEnabled.restype = BOOL
 IsWindowEnabled.argtypes = (
 	HWND,  # hWnd: Handle to the window to be tested
+)
+
+
+class COMBOBOXINFO(Structure):
+	"""
+	Contains status information for a combo box.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-comboboxinfo
+	"""
+
+	_fields_ = (
+		("cbSize", DWORD),
+		("rcItem", RECT),
+		("rcButton", RECT),
+		("stateButton", DWORD),
+		("hwndCombo", HWND),
+		("hwndItem", HWND),
+		("hwndList", HWND),
+	)
+
+
+PCOMBOBOXINFO = POINTER(COMBOBOXINFO)
+
+
+GetComboBoxInfo = WINFUNCTYPE(None)(("GetComboBoxInfo", dll))
+"""
+Retrieves information about the specified combo box.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getcomboboxinfo
+"""
+GetComboBoxInfo.restype = BOOL
+GetComboBoxInfo.argtypes = (
+	HWND,  # hwndCombo: Handle to the combo box.
+	PCOMBOBOXINFO,  # pcbi: Pointer to the structure that receives the combo box information.
 )
 
 

@@ -712,7 +712,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			import mathPres
 
 			try:
-				return mathPres.interactWithMathMl(obj.mathMl)
+				return mathPres.interactWithMathMl(obj.mathMl, sourceObj=obj)
 			except (NotImplementedError, LookupError):
 				pass
 			return

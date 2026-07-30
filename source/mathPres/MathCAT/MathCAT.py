@@ -12,7 +12,7 @@ from ctypes import (
 	windll,
 )
 from os import path
-from typing import Type
+from typing import TYPE_CHECKING, Type
 
 import braille
 import braille.regions.base
@@ -22,6 +22,7 @@ import gui
 import libmathcat_py as libmathcat
 import speech
 import ui
+import vision
 import winKernel
 import winUser
 from api import getClipData
@@ -46,8 +47,17 @@ from textUtils import WCHAR_ENCODING
 import mathPres
 from .localization import getLanguageToUse
 from .navCommands import NAV_COMMANDS
+from ._navNodeMapping import (
+	_NAV_NODE_ID_PREFIX,
+	prepareMathMlForNavigation,
+	removeSyntheticIdsFromMathMl,
+)
 from .preferences import applyUserPreferences
 from .speech import convertSSMLTextForNVDA
+
+if TYPE_CHECKING:
+	from locationHelper import RectLTRB
+	from NVDAObjects import NVDAObject
 
 
 class MathCATError(Exception):
@@ -83,13 +93,20 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		self,
 		provider: mathPres.MathPresentationProvider | None = None,
 		mathMl: str | None = None,
-	):
+		sourceObj: "NVDAObject | None" = None,
+	) -> None:
 		"""Initialize the MathCATInteraction object.
 
 		:param provider: Optional presentation provider.
 		:param mathMl: Optional initial MathML string.
+		:param sourceObj: Optional source object containing the math.
 		"""
-		super(MathCATInteraction, self).__init__(provider=provider, mathMl=mathMl)
+		super().__init__(provider=provider, mathMl=mathMl, sourceObj=sourceObj)
+		self._mathMlForNavigation, self._mathNodeRectsById = prepareMathMlForNavigation(
+			mathMl or "<math></math>",
+			sourceObj,
+		)
+		self._shouldUpdateMathHighlight: bool = False
 		if mathMl is None:
 			self.initMathML = "<math></math>"
 		else:
@@ -97,14 +114,59 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 
 	def reportFocus(self) -> None:
 		"""Calls MathCAT's ZoomIn command and speaks the resulting text."""
+		self._shouldUpdateMathHighlight = False
 		super(MathCATInteraction, self).reportFocus()
 		try:
 			text: str = libmathcat.DoNavigateCommand("ZoomIn")
 			speech.speak(convertSSMLTextForNVDA(text))
+			self._shouldUpdateMathHighlight = True
 		except Exception:
 			log.exception()
 			# Translators: this message reports an error in starting navigation of math.
 			ui.message(pgettext("math", "Error in starting navigation of math."))
+			self._clearMathHighlight()
+
+	def event_gainFocus(self) -> None:
+		"""Update the math highlight after inherited focus handling has completed."""
+		super().event_gainFocus()
+		if self._shouldUpdateMathHighlight:
+			self._shouldUpdateMathHighlight = False
+			self._updateMathHighlight()
+
+	def _getHighlightRect(self) -> "RectLTRB | None":
+		"""Get the navigation rectangle for a supported web math source object."""
+		sourceObj = self.sourceObj
+		if not sourceObj:
+			return None
+		# Avoid importing ia2Web at startup.
+		from NVDAObjects.IAccessible.ia2Web import Math as Ia2WebMath
+
+		if not isinstance(sourceObj, Ia2WebMath):
+			return None
+		try:
+			nodeId = libmathcat.GetNavigationMathMLId()[0]
+		except Exception:
+			log.debugWarning("Error getting MathCAT navigation node id", exc_info=True)
+			return None
+		if nodeId in self._mathNodeRectsById:
+			return self._mathNodeRectsById[nodeId]
+		if nodeId.startswith(_NAV_NODE_ID_PREFIX):
+			log.debug(
+				f"Math highlight found synthetic MathML id {nodeId!r}, but it has no mapped IA2 rectangle",
+			)
+		log.debug(f"Math highlight falling back to source rectangle for node id {nodeId!r}")
+		if sourceObj.hasIrrelevantLocation:
+			return None
+		location = sourceObj.location
+		return location.toLTRB() if location else None
+
+	def _updateMathHighlight(self) -> None:
+		if vision.handler:
+			vision.handler.handleMathNavigation(self._getHighlightRect())
+
+	def _clearMathHighlight(self) -> None:
+		if vision.handler:
+			vision.handler.handleMathNavigation(None)
 
 	def getBrailleRegions(
 		self,
@@ -136,6 +198,9 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			log.exception()
 			# Translators: this message alerts users to an error in navigating math.
 			ui.message(pgettext("math", "Error in navigating math"))
+			self._clearMathHighlight()
+		else:
+			self._updateMathHighlight()
 
 		self._updateBraille()
 
@@ -212,7 +277,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 					mathml = self.initMathML
 				if copyAs == "speech":
 					# save the old MathML, set the navigation MathML as MathMl, get the speech, then reset the MathML
-					savedMathML: str = self.initMathML
+					savedMathML: str = self._mathMlForNavigation
 					savedTTS: str = libmathcat.GetPreference("TTS")
 					if savedMathML == "":  # shouldn't happen
 						raise Exception("Internal error -- MathML not set for copy")
@@ -235,12 +300,11 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 
 	# not a perfect match sequence, but should capture normal MathML
 	_mathTagHasNameSpace: re.Pattern = re.compile("<math .*?xmlns.+?>")
-	_hasAddedId: re.Pattern = re.compile(" id='[^'].+' data-id-added='true'")
-	_hasDataAttr: re.Pattern = re.compile(" data-[^=]+='[^']*'")
+	_hasDataAttr: re.Pattern = re.compile(r""" data-[^=]+=(['"]).*?\1""")
 
 	def _wrapMathMLForClipBoard(self, text: str) -> str:
 		"""Cleanup the MathML a little."""
-		text = re.sub(self._hasAddedId, "", text)
+		text = removeSyntheticIdsFromMathMl(text)
 		mathMLWithNS: str = re.sub(self._hasDataAttr, "", text)
 		if not re.match(self._mathTagHasNameSpace, mathMLWithNS):
 			mathMLWithNS = mathMLWithNS.replace(
@@ -413,11 +477,45 @@ class MathCAT(mathPres.MathPresentationProvider):
 			ui.message(pgettext("math", "Error in brailling math."))
 			return ""
 
+	def _startMathInteraction(
+		self,
+		mathml: str,
+		sourceObj: "NVDAObject | None" = None,
+	) -> None:
+		"""Start interacting with a MathML string.
+
+		This is a helper called by ``interactWithMathMl`` and ``interactWithMathMlFromSource``.
+
+		:param mathml: The MathML representing the math to interact with.
+		:param sourceObj: Optional source object containing the math.
+		"""
+		interaction = MathCATInteraction(provider=self, mathMl=mathml, sourceObj=sourceObj)
+		try:
+			libmathcat.SetMathML(interaction._mathMlForNavigation)
+		except Exception:
+			log.exception("Error setting MathML for navigation")
+			# Translators: this message reports illegal MathML.
+			ui.message(pgettext("math", "Invalid MathML found."))
+			libmathcat.SetMathML("<math></math>")
+			return
+		interaction.setFocus()
+		interaction._updateBraille()
+
 	def interactWithMathMl(self, mathml: str) -> None:
 		"""Interact with a MathML string, creating a MathCATInteraction object.
 
 		:param mathml: The MathML representing the math to interact with.
 		"""
-		interaction = MathCATInteraction(provider=self, mathMl=mathml)
-		interaction.setFocus()
-		interaction._updateBraille()
+		self._startMathInteraction(mathml, sourceObj=None)
+
+	def interactWithMathMlFromSource(
+		self,
+		mathml: str,
+		sourceObj: "NVDAObject",
+	) -> None:
+		"""Interact with MathML from the given source object.
+
+		:param mathml: The MathML representing the math to interact with.
+		:param sourceObj: The source object containing the math.
+		"""
+		self._startMathInteraction(mathml, sourceObj=sourceObj)
