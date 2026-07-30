@@ -1689,7 +1689,6 @@ The magnifier offers three different modes for tracking the mouse, system focus,
 
 * Center: The magnified area is centered on the currently tracked position.
 This mode keeps the tracked element at the center of the screen and clamps to the screen edge.
-To disable clamping, activate [true center tracking in the Magnifier settings](#MagnifierTrueCenterTracking).
 * Border: The magnified area only moves when the tracked position approaches the edge of the visible area.
 This mode provides a more stable view, only adjusting when necessary.
 * Relative: The magnified area maintains the relative position of the tracked element based on its position on the screen.
@@ -2977,16 +2976,6 @@ The available options are:
 | Normal | No color modification is applied. |
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
-
-##### True center tracking {#MagnifierTrueCenterTracking}
-
-This checkbox controls whether the magnifier should always keep the tracked position centered on the screen, even when the tracked element is next to the screen edges, or if it should allow the tracked position to move towards the edges of the screen.
-When enabled, the magnifier will always keep the tracked position centered on the screen, which can be helpful for users who prefer a consistent tracked position within the magnified view.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-| Options | Disabled, Enabled |
-| Default | Disabled |
 
 ##### Panning step size {#MagnifierPanningStepSize}
 

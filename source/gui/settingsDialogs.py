@@ -6056,7 +6056,6 @@ class MagnifierPanel(SettingsPanel):
 		magnifierConfig.setPanStep(selectedPanStep)
 		magnifierConfig.setFilter(selectedFilter)
 		magnifierConfig.setFullscreenMode(selectedMode)
-		config.conf["magnifier"]["isTrueCentered"] = self.trueCenterTrackingCheckBox.GetValue()
 
 		for trackingType, checkBox in self._trackingTypeCheckBoxes.items():
 			magnifierConfig.setFollowState(trackingType, checkBox.GetValue())
@@ -6144,20 +6143,6 @@ class MagnifierPanel(SettingsPanel):
 		self._filterInitially = filterValue
 		self.filterList.SetSelection(list(Filter).index(filterValue))
 		self.filterList.Bind(wx.EVT_CHOICE, self._onImmediateSettingChange)
-
-		# True center tracking SETTINGS
-		# Translators: The label for a setting in magnifier settings to select whether true center tracking is used
-		trueCenterTrackingText = _("T&rue center tracking")
-		self.trueCenterTrackingCheckBox = generalGroup.addItem(
-			wx.CheckBox(generalGroupBox, label=trueCenterTrackingText),
-		)
-		self.bindHelpEvent(
-			"MagnifierTrueCenterTracking",
-			self.trueCenterTrackingCheckBox,
-		)
-		self.trueCenterTrackingCheckBox.SetValue(magnifierConfig.isTrueCentered())
-		self._trueCenterTrackingInitially = self.trueCenterTrackingCheckBox.GetValue()
-		self.trueCenterTrackingCheckBox.Bind(wx.EVT_CHECKBOX, self._onImmediateSettingChange)
 
 		# Panning SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
@@ -6252,14 +6237,12 @@ class MagnifierPanel(SettingsPanel):
 		selectedPanStep = self.panSpinCtrl.GetValue()
 		selectedFilter = list(Filter)[self.filterList.GetSelection()]
 		selectedMode = list(FullScreenMode)[self.trackingModeList.GetSelection()]
-		isTrueCentered = self.trueCenterTrackingCheckBox.GetValue()
 
 		roundedZoom = magnifierConfig.roundZoomLevel(selectedZoom)
 		self._zoomInitially = roundedZoom
 		self._panStepInitially = selectedPanStep
 		self._filterInitially = selectedFilter
 		self._trackingModeInitially = selectedMode
-		self._trueCenterTrackingInitially = isTrueCentered
 		for trackingType, checkBox in self._trackingTypeCheckBoxes.items():
 			shouldFollow = checkBox.GetValue()
 			self._trackingTypeInitially[trackingType] = shouldFollow
@@ -6270,7 +6253,6 @@ class MagnifierPanel(SettingsPanel):
 		magnifierConfig.setPanStep(self._panStepInitially)
 		magnifierConfig.setFilter(self._filterInitially)
 		magnifierConfig.setFullscreenMode(self._trackingModeInitially)
-		config.conf["magnifier"]["isTrueCentered"] = self._trueCenterTrackingInitially
 		for trackingType, state in self._trackingTypeInitially.items():
 			magnifierConfig.setFollowState(trackingType, state)
 
