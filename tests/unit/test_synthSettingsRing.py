@@ -59,6 +59,7 @@ def _makeInconsistentRateSynth(name: str = FAKE_SYNTH_NAME) -> InconsistentRateM
 
 class TestSynthSettingsRingRestoresLastSetting(unittest.TestCase):
 	def setUp(self) -> None:
+		config.conf["speech"][FAKE_SYNTH_NAME] = {}
 		config.conf["speech"][FAKE_SYNTH_NAME]["lastSettingRingSettingID"] = ""
 
 	def tearDown(self) -> None:
@@ -66,6 +67,11 @@ class TestSynthSettingsRingRestoresLastSetting(unittest.TestCase):
 
 	def test_freshRing_noSavedConfig_fallsBackToInitialSetting(self):
 		synth = _makeRateAndPitchSynth()
+		ring = SynthSettingsRing(synth)
+		self.assertEqual(ring.currentSettingName, "Rate")
+
+	def test_freshRing_noConfigSectionForSynth_doesNotRaise(self):
+		synth = _makeRateAndPitchSynth(name="synthWithNoConfigSection")
 		ring = SynthSettingsRing(synth)
 		self.assertEqual(ring.currentSettingName, "Rate")
 

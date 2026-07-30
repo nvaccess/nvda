@@ -215,7 +215,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 		else:
 			prevID = None
 		if prevID is None and isInitialConstruction:
-			prevID = config.conf["speech"][synth.name]["lastSettingRingSettingID"] or None
+			prevID = config.conf["speech"].get(synth.name, {}).get("lastSettingRingSettingID") or None
 		list: list[SynthSetting] = []  # noqa: F823
 		for s in synth.supportedSettings:
 			if not s.availableInSettingsRing:
