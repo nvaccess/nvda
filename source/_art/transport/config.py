@@ -20,12 +20,13 @@ import rpyc.core.vinegar
 #:
 #: These defaults are deliberately restrictive.
 #: Add-ons are untrusted, so they must only ever be able to invoke methods explicitly exposed on a :class:`.service.Service`.
-#: ``allow_getattr`` is intentionally left at the rpyc default (``True``) because exposed methods are reached via attribute access on the netref;
+#: ``allow_getattr`` is intentionally set to ``True`` because exposed methods are reached via attribute access on the netref;
 #: with public, safe and all attribute access disabled, only the ``exposed`` allowlist remains reachable.
 #:
-#: .. warning::
-#: 	None of the security-critical flags below should be loosened without a security review..
+#: :warning: None of the security-critical flags below should be loosened without a security review.
 PROTOCOL_CONFIG: dict[str, bool] = {
+	# Exposed methods are reached via attribute access on the netref.
+	"allow_getattr": True,
 	# Only explicitly exposed methods may cross the boundary.
 	"allow_public_attrs": False,
 	"allow_safe_attrs": False,
