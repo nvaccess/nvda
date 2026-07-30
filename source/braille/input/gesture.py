@@ -21,14 +21,16 @@ def formatDotNumbers(dots: int):
 class BrailleInputGesture(inputCore.InputGesture):
 	"""Input (dots and/or space bar) from a braille keyboard.
 	This could either be as part of a braille display or a stand-alone unit.
-	:attr:`dots` and :attr:`space` should be set appropriately.
+	L{dots} and L{space} should be set appropriately.
 	"""
 
-	dots: int = 0
-	"""Bitmask of pressed dots."""
+	#: Bitmask of pressed dots.
+	#: @type: int
+	dots = 0
 
-	space: bool = False
-	"""Whether the space bar is pressed."""
+	#: Whether the space bar is pressed.
+	#: @type: bool
+	space = False
 
 	shouldPreventSystemIdle = True
 
@@ -38,15 +40,12 @@ class BrailleInputGesture(inputCore.InputGesture):
 			items.append("space")
 		return "bk:" + "+".join(items)
 
+	#: The generic gesture identifier for space plus any dots.
+	#: This could be used to bind many braille commands to a single script.
 	GENERIC_ID_SPACE_DOTS = inputCore.normalizeGestureIdentifier("bk:space+dots")
-	"""The generic gesture identifier for space plus any dots.
-	This could be used to bind many braille commands to a single script.
-	"""
-
+	#: The generic gesture identifier for any dots.
+	#: This is used to bind entry of braille text to a single script.
 	GENERIC_ID_DOTS = inputCore.normalizeGestureIdentifier("bk:dots")
-	"""The generic gesture identifier for any dots.
-	This is used to bind entry of braille text to a single script.
-	"""
 
 	def _get_identifiers(self):
 		if self.space and self.dots:

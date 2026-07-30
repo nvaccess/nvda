@@ -4,12 +4,12 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Framework for handling braille input from the user.
-All braille input is represented by a :class:`braille.input.gesture.BrailleInputGesture`.
-Normally, all that is required is to create and execute a :class:`braille.input.gesture.BrailleInputGesture`,
+All braille input is represented by a {BrailleInputGesture}.
+Normally, all that is required is to create and execute a L{BrailleInputGesture},
 as there are built-in gesture bindings for braille input.
 """
 
-from __future__ import annotations
+from typing import Optional
 
 import inputCore
 from logHandler import log
@@ -19,8 +19,8 @@ from . import inputHandler as _inputHandler
 
 inputCore.registerGestureSource("bk", _gesture.BrailleInputGesture)
 
-handler: _inputHandler.BrailleInputHandler | None = None
-"""The singleton BrailleInputHandler instance."""
+#: The singleton BrailleInputHandler instance.
+handler: Optional[_inputHandler.BrailleInputHandler] = None
 
 
 def initialize():
