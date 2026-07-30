@@ -3029,7 +3029,7 @@ When enabled, the magnified area will automatically move to follow the navigator
 | Options | Disabled, Enabled |
 | Default | Enabled |
 
-##### Tracking mode {#MagnifierTrackingMode}
+##### Tracking mode {#MagnifierTrackingModeSetting}
 
 This combo box allows you to select the tracking mode when using the magnifier.
 To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).

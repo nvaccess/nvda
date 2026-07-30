@@ -6217,7 +6217,7 @@ class MagnifierPanel(SettingsPanel):
 			choices=trackingModeChoices,
 		)
 		self.bindHelpEvent(
-			"MagnifierTrackingMode",
+			"MagnifierTrackingModeSetting",
 			self.trackingModeList,
 		)
 
