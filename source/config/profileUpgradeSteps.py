@@ -687,3 +687,15 @@ def upgradeConfigFrom_21_to_22(profile: ConfigObj):
 	if language.casefold() == "auto":
 		speechConf["language"] = "en"
 		log.debug("Changed math.speech.language from 'Auto' to 'en'.")
+
+
+def upgradeConfigFrom_22_to_23(profile: ConfigObj):
+	"""Upgrade configuration from schema version 22 to 23."""
+	# Remove isTrueCentered
+	if profile["magnifier"]:
+		try:
+			del profile["magnifier"]["isTrueCentered"]
+		except KeyError:
+			log.debug("No isTrueCentered setting in profile. No action taken.")
+		if profile["magnifier"].get("fullscreenMode") == "border":
+			del profile["magnifier"]["fullscreenMode"]
