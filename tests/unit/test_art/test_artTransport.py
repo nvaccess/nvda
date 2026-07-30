@@ -83,7 +83,7 @@ class TestArtTransport(unittest.TestCase):
 		"""Calls on a terminated service raise (and the exception deserializes)."""
 		self.assertEqual(self.remote.echo("alive"), "alive")
 		self.serverService.terminate()
-		with self.assertRaises(Exception):
+		with self.assertRaises(RuntimeError):
 			self.remote.echo("dead")
 
 	def test_dependantServiceSharesLifetime(self):
