@@ -8,9 +8,20 @@
 import unittest
 import winBindings.kernel32
 import languageHandler
-from languageHandler import LCID_NONE, _LCID_TO_LOCALE_NAME_OVERRIDES
+from languageHandler import LCID_NONE
 from localesData import LANG_NAMES_TO_LOCALIZED_DESCS
 import locale
+
+
+def generateWindowsLocales():
+	"""Generates the set of locale names Windows can report,
+	by resolving every locale identifier in the 16 bit range."""
+	locales = set()
+	for lcid in range(0x10000):
+		localeName = languageHandler.windowsLCIDToLocaleName(lcid)
+		if localeName:
+			locales.add(localeName)
+	return locales
 
 
 def generateUnsupportedWindowsLocales():
@@ -31,7 +42,7 @@ LCID_KHMER_CAMBODIA = 0x0453
 LCID_INVALID = 0xFFFF
 UNSUPPORTED_WIN_LANGUAGES = generateUnsupportedWindowsLocales()
 TRANSLATABLE_LANGS = set(l[0] for l in languageHandler.getAvailableLanguages()) - {"Windows"}  # noqa: E741
-WINDOWS_LANGS = set(locale.windows_locale.values()).union(_LCID_TO_LOCALE_NAME_OVERRIDES.values())
+WINDOWS_LANGS = generateWindowsLocales()
 
 
 class TestLocaleNameToWindowsLCID(unittest.TestCase):
