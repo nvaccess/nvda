@@ -102,7 +102,7 @@ Built on top of [Bleak](https://bleak.readthedocs.io/) and the `_asyncioEventLoo
 * `languageHandler.windowsLCIDToLocaleName` no longer consults `locale.windows_locale`, which is unmaintained, incomplete and changes between Python patch releases. (#20589, @LeonarddeR)
 Locale names are now taken from `winKernel.LCIDToLocaleName`, apart from a small set of locale identifiers for which NVDA uses a different language code than Windows reports.
   * As a result, some locale identifiers now resolve to a different name, such as `zh_CN` rather than `zh_CHS`, `km_KH` rather than `kh_KH` and `en_JM` rather than `en_JA`.
-  * Names for locales with a script subtag, such as `sr_LATN_CS`, are now returned in full where Windows reports one.
+  * Locale names now carry a script subtag where Windows reports one, such as `sr_LATN_CS` rather than `sr_SP` for LCID 2074.
   * The SAPI 4 and SAPI 5 synthesizers report voice languages through this function as well, so the language of a voice can now be reported for locale identifiers that `locale.windows_locale` did not cover.
 
 #### Deprecations
