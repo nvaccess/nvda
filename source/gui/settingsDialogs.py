@@ -2677,7 +2677,7 @@ class BrowseModePanel(SettingsPanel):
 			keyPath=["virtualBuffers", "findHistory"],
 			conf=config.conf,
 		)
-		self.bindHelpEvent("BrowseModeSettingsSearchHistory", self.searchHistoryCombo)
+		self.bindHelpEvent("SearchHistory", self.searchHistoryCombo)
 
 		# browseMode imports gui, which imports from settingsDialogs, so a top-level import
 		# would create a circular dependency. Keep this import lazy.

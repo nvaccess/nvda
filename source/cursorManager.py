@@ -36,7 +36,7 @@ import ui
 from textInfos import DocumentWithPageTurns
 from logHandler import log
 
-MAX_SEARCH_HISTORY_ENTRIES = 20
+_MAX_SEARCH_HISTORY_ENTRIES = 20
 """The maximum number of entries kept in the in-memory browse mode search history."""
 
 
@@ -213,7 +213,7 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 				del cls._searchEntries[index]
 				break
 		cls._searchEntries.insert(0, text)
-		del cls._searchEntries[MAX_SEARCH_HISTORY_ENTRIES:]
+		del cls._searchEntries[_MAX_SEARCH_HISTORY_ENTRIES:]
 
 	def __init__(self, *args, **kwargs):
 		super(CursorManager, self).__init__(*args, **kwargs)

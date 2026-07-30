@@ -13,7 +13,7 @@ import wx
 import config
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import BoolFlag
-from cursorManager import MAX_SEARCH_HISTORY_ENTRIES, FindDialog
+from cursorManager import _MAX_SEARCH_HISTORY_ENTRIES, FindDialog
 from .textProvider import CursorManager
 
 
@@ -275,10 +275,10 @@ class TestSearchHistory(unittest.TestCase):
 		self.assertEqual(CursorManager._searchEntries, ["car"])
 
 	def test_exceedingMaxEntriesTruncatesOldest(self):
-		for index in range(MAX_SEARCH_HISTORY_ENTRIES + 1):
+		for index in range(_MAX_SEARCH_HISTORY_ENTRIES + 1):
 			CursorManager._updateSearchHistory(f"term{index}")
-		self.assertEqual(len(CursorManager._searchEntries), MAX_SEARCH_HISTORY_ENTRIES)
-		self.assertEqual(CursorManager._searchEntries[0], f"term{MAX_SEARCH_HISTORY_ENTRIES}")
+		self.assertEqual(len(CursorManager._searchEntries), _MAX_SEARCH_HISTORY_ENTRIES)
+		self.assertEqual(CursorManager._searchEntries[0], f"term{_MAX_SEARCH_HISTORY_ENTRIES}")
 		self.assertNotIn("term0", CursorManager._searchEntries)
 
 
