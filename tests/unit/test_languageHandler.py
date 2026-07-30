@@ -8,11 +8,7 @@
 import unittest
 import winBindings.kernel32
 import languageHandler
-from languageHandler import (
-	LCID_NONE,
-	LCIDS_TO_TRANSLATED_LOCALES,
-	_LCIDS_TO_TRANSLATED_LOCALES_OVERRIDES,
-)
+from languageHandler import LCID_NONE, _LCID_TO_LOCALE_NAME_OVERRIDES
 from localesData import LANG_NAMES_TO_LOCALIZED_DESCS
 import locale
 
@@ -31,13 +27,11 @@ def generateUnsupportedWindowsLocales():
 
 LCID_ENGLISH_US = 0x0409
 LCID_CENTRAL_KURDISH = 0x0492
+LCID_KHMER_CAMBODIA = 0x0453
+LCID_INVALID = 0xFFFF
 UNSUPPORTED_WIN_LANGUAGES = generateUnsupportedWindowsLocales()
 TRANSLATABLE_LANGS = set(l[0] for l in languageHandler.getAvailableLanguages()) - {"Windows"}  # noqa: E741
-WINDOWS_LANGS = (
-	set(locale.windows_locale.values())
-	.union(LCIDS_TO_TRANSLATED_LOCALES.values())
-	.union(_LCIDS_TO_TRANSLATED_LOCALES_OVERRIDES.values())
-)
+WINDOWS_LANGS = set(locale.windows_locale.values()).union(_LCID_TO_LOCALE_NAME_OVERRIDES.values())
 
 
 class TestLocaleNameToWindowsLCID(unittest.TestCase):
@@ -67,10 +61,16 @@ class TestWindowsLCIDToLocaleName(unittest.TestCase):
 		"""Ensures NVDA's own language code is returned for an LCID
 		where it differs from the code reported by Windows.
 		Windows maps Central Kurdish to "ku-Arab-IQ",
-		and `locale.windows_locale` maps it to "ku_IQ" as of Python 3.13.14,
 		whereas NVDA ships its translation under "ckb".
 		"""
 		self.assertEqual(languageHandler.windowsLCIDToLocaleName(LCID_CENTRAL_KURDISH), "ckb")
+
+	def test_localeNotRequiringAnOverride(self):
+		"""Ensures Windows reports Khmer correctly, so that no override is needed for it."""
+		self.assertEqual(languageHandler.windowsLCIDToLocaleName(LCID_KHMER_CAMBODIA), "km_KH")
+
+	def test_invalidLocale(self):
+		self.assertIsNone(languageHandler.windowsLCIDToLocaleName(LCID_INVALID))
 
 
 class Test_Normalization_For_Win32(unittest.TestCase):
