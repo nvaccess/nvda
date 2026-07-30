@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2026 NV access Limited, Joseph Lee, Łukasz Golonka, Cyrille Bougot
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2007-2026 NV access Limited, Joseph Lee, Łukasz Golonka, Cyrille Bougot, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Language and localization support.
 This module assists in NVDA going global through language services
@@ -49,15 +49,19 @@ _LCIDS_TO_TRANSLATED_LOCALES_OVERRIDES = {
 	# locale.windows_locale maps this to "kh_KH", which is incorrect.
 	# https://github.com/python/cpython/issues/123853
 	1107: "km_KH",  # Khmer - Cambodia
-}
-
-
-LCIDS_TO_TRANSLATED_LOCALES = {
 	# Windows maps this to "ku-Arab-IQ", however a translation is added for
 	# Central Kurdish in localesData.LANG_NAMES_TO_LOCALIZED_DESCS["ckb"]
 	# and NVDA may drop "Arab-IQ" from this locale to get the language.
-	1170: "ckb",
+	1170: "ckb",  # Central Kurdish - Iraq
 }
+"""
+Map Windows locale identifiers to the language codes NVDA uses,
+for identifiers where NVDA's code differs from the one reported by Windows or `locale.windows_locale`.
+Checked before either of them.
+"""
+
+
+LCIDS_TO_TRANSLATED_LOCALES: dict[int, str] = {}
 """
 Map Windows locale identifiers to language codes.
 These are Windows LCIDs that are used in NVDA but are not found in locale.windows_locale.
