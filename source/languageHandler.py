@@ -62,7 +62,7 @@ Checked before `winKernel.LCIDToLocaleName`.
 __getattr__ = handleDeprecations(
 	RemovedSymbol(
 		"LCIDS_TO_TRANSLATED_LOCALES",
-		{1170: "ckb"},
+		_LCID_TO_LOCALE_NAME_OVERRIDES,
 		message="Use languageHandler.windowsLCIDToLocaleName or winKernel.LCIDToLocaleName instead.",
 	),
 )

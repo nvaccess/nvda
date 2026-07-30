@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, gexgd0419, Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
@@ -625,9 +624,8 @@ class SynthDriver(SynthDriver):
 			try:
 				ID = v[i].Id
 				name = v[i].GetDescription()
-				language = languageHandler.windowsLCIDToLocaleName(
-					int(v[i].getattribute("language").split(";")[0], 16),
-				)
+				lcid = int(v[i].getattribute("language").split(";")[0], 16)
+				language = languageHandler.windowsLCIDToLocaleName(lcid)
 			except COMError:
 				log.warning("Could not get the voice info. Skipping...")
 			voices[ID] = VoiceInfo(ID, name, language)
