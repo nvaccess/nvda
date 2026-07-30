@@ -1653,7 +1653,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 | Increase the magnification level | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
 | Decrease the magnification level | `NVDA+shift+minus` | Decreases the zoom level |
 | Cycle color filters | `NVDA+shift+i` | Cycles through the available color filters (normal, grayscale, inverted) |
-| Cycle tracking mode | None | Cycles through tracking modes (center, border, relative) |
+| Cycle tracking mode | None | Cycles through tracking modes (center, relative) |
 | Show entire screen overview | `NVDA+shift+l` | Temporarily shows an overview of the entire screen |
 | Pan left | `NVDA+alt+leftArrow` | Moves the magnified view left by the configured panning step size |
 | Pan right | `NVDA+alt+rightArrow` | Moves the magnified view right by the configured panning step size |
@@ -1683,14 +1683,12 @@ The magnifier provides three color filter options:
 
 To cycle through the available filters press `NVDA+shift+i`.
 
-### Tracking Modes {#MagnifierTrackingModes}
+### Tracking Modes {#MagnifierTrackingMode}
 
-The magnifier offers three different modes for tracking the mouse, system focus, review cursor, and navigator object, and determining which part of the screen to magnify:
+The magnifier offers different modes for tracking the mouse, system focus, review cursor, and navigator object, and determining which part of the screen to magnify:
 
 * Center: The magnified area is centered on the currently tracked position.
 This mode keeps the tracked element at the center of the screen and clamps to the screen edge.
-* Border: The magnified area only moves when the tracked position approaches the edge of the visible area.
-This mode provides a more stable view, only adjusting when necessary.
 * Relative: The magnified area maintains the relative position of the tracked element based on its position on the screen.
 
 To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
@@ -3039,13 +3037,12 @@ The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Options | Center, Border, Relative |
+| Options | Center, Relative |
 | Default | Center |
 
 | Option | Description |
 |---|---|
 | Center | The magnified area is always centered on the currently tracked position. |
-| Border | The magnified area only moves when the tracked element approaches the edge of the visible area. |
 | Relative | The magnified area maintains the relative position of the tracked element based on its position on the screen. |
 
 #### Keyboard {#KeyboardSettings}

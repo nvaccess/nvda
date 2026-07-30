@@ -230,10 +230,10 @@ def isTrueCentered() -> bool:
 
 	:return: True if true centered mode is enabled, False otherwise.
 	"""
-	# True center mode currently only works with full-screen mode, so we check that first.
+	# True center mode currently only works with relative mode, so we check that first.
 	# Once the following issues are solved, we can make true center mode a surfaced option.
 	# #20072 #20073 #20501
-	return getFullscreenMode() == FullScreenMode.CENTER
+	return getFullscreenMode() == FullScreenMode.RELATIVE
 
 
 def getFullscreenMode() -> FullScreenMode:

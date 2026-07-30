@@ -149,7 +149,6 @@ class ZoomHistory(NamedTuple):
 
 class FullScreenMode(DisplayStringStrEnum):
 	CENTER = "center"
-	BORDER = "border"
 	RELATIVE = "relative"
 
 	@property
@@ -157,8 +156,6 @@ class FullScreenMode(DisplayStringStrEnum):
 		return {
 			# Translators: Magnifier tracking mode - center the tracked item on the screen.
 			self.CENTER: pgettext("magnifier", "Center"),
-			# Translators: Magnifier tracking mode - follow the tracked item only when it reaches screen borders.
-			self.BORDER: pgettext("magnifier", "Border"),
 			# Translators: Magnifier tracking mode - preserve the tracked item's screen position within the magnified view (same relative screen location).
 			self.RELATIVE: pgettext("magnifier", "Relative"),
 		}

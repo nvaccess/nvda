@@ -6210,7 +6210,7 @@ class MagnifierPanel(SettingsPanel):
 		# Tracking MODE SETTINGS
 		# Translators: The label for a setting in magnifier settings to select the full-screen mode
 		trackingModeLabelText = _("&Tracking mode:")
-		trackingModeChoices = [mode.displayString for mode in FullScreenMode] if FullScreenMode else []
+		trackingModeChoices = [mode.displayString for mode in FullScreenMode]
 		self.trackingModeList = trackingGroup.addLabeledControl(
 			trackingModeLabelText,
 			wx.Choice,
