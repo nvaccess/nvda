@@ -6,7 +6,7 @@
 """Functions exported by magnification.dll, and supporting data structures and enumerations."""
 
 from ctypes import POINTER, WINFUNCTYPE, Structure, WinError, c_float, c_int, windll
-from ctypes.wintypes import BOOL
+from ctypes.wintypes import BOOL, RECT
 from _ctypes import CFuncPtr
 from typing import Any
 
@@ -25,6 +25,7 @@ class MAGCOLOREFFECT(Structure):
 
 
 PMAGCOLOREFFECT = POINTER(MAGCOLOREFFECT)
+LPRECT = POINTER(RECT)
 
 
 def _errCheck[T: tuple[Any]](result: int, func: CFuncPtr, args: T) -> T:
@@ -98,3 +99,16 @@ Sets the magnification settings for the full-screen magnifier.
 	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-magsetfullscreentransform
 """
 MagSetFullscreenTransform.errcheck = _errCheck
+
+MagSetInputTransform = WINFUNCTYPE(BOOL, BOOL, LPRECT, LPRECT)(
+	("MagSetInputTransform", dll),
+	((1, "fEnabled"), (1, "pRectSource"), (1, "pRectDest")),
+)
+"""
+Sets the active input transform used to route pen, touch, and mouse input
+for magnified full-screen content.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-magsetinputtransform
+"""
+MagSetInputTransform.errcheck = _errCheck

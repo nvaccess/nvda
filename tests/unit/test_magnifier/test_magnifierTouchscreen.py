@@ -9,46 +9,23 @@ from unittest.mock import MagicMock, patch
 
 
 class TestMagnifierTouchscreen(_TestMagnifier):
-	"""Tests for touchscreen blocking/warning behaviour when the magnifier starts and stops."""
+	"""Tests for touchscreen behaviour when the magnifier starts and stops."""
 
-	def testStartMagnifierBlocksTouchWhenHandlerActive(self):
-		"""blockTouchInput is set when the magnifier starts with the touch handler running."""
+	def testStartMagnifierDoesNotBlockTouchWhenHandlerActive(self):
+		"""blockTouchInput remains False when the magnifier starts with touch handler running."""
 		with (
 			patch("touchHandler.handler", new=MagicMock()),
 			patch("touchHandler.blockTouchInput", False),
 		):
 			self.magnifier._startMagnifier()
-			self.assertTrue(touchHandler.blockTouchInput)
+			self.assertFalse(touchHandler.blockTouchInput)
 
-	def testStartMagnifierWarnsWhenTouchSupportDisabled(self):
-		"""Dialog shown when device has a touchscreen but NVDA touch support is disabled."""
+	def testStartMagnifierDoesNotShowTouchWarning(self):
+		"""No warning dialog is shown when starting magnifier on touch-capable devices."""
 		with (
 			patch("touchHandler.handler", new=None),
 			patch("winBindings.user32.GetSystemMetrics", return_value=5),
 			patch("touchHandler.touchSupported", return_value=True),
-			patch("_magnifier.magnifier.wx.CallAfter") as mock_call_after,
-		):
-			self.magnifier._startMagnifier()
-
-		mock_call_after.assert_called_once()
-
-	def testStartMagnifierWarnsOnPortableOrNoUIAccess(self):
-		"""Dialog shown when device has a touchscreen but NVDA cannot intercept (portable/no UI access)."""
-		with (
-			patch("touchHandler.handler", new=None),
-			patch("winBindings.user32.GetSystemMetrics", return_value=5),
-			patch("touchHandler.touchSupported", return_value=False),
-			patch("_magnifier.magnifier.wx.CallAfter") as mock_call_after,
-		):
-			self.magnifier._startMagnifier()
-
-		mock_call_after.assert_called_once()
-
-	def testStartMagnifierNoActionWithoutTouchscreen(self):
-		"""No dialog and no blocking when the device has no touchscreen."""
-		with (
-			patch("touchHandler.handler", new=None),
-			patch("winBindings.user32.GetSystemMetrics", return_value=0),
 			patch("_magnifier.magnifier.wx.CallAfter") as mock_call_after,
 		):
 			self.magnifier._startMagnifier()
