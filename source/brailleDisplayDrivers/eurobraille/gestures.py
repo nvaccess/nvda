@@ -1,12 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Eurobraille, Cyrille Bougot
+# Copyright (C) 2017-2026 NV Access Limited, Babbage B.V., Eurobraille, Cyrille Bougot, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from typing import TYPE_CHECKING
 import braille
 import braille.display.gesture
-import brailleInput
+import braille.input.gesture
 import inputCore
 from . import constants
 
@@ -158,7 +158,7 @@ GestureMapEntries = {
 _gestureMap = inputCore.GlobalGestureMap(GestureMapEntries)
 
 
-class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.gesture.BrailleInputGesture):
 	source = constants.name
 
 	def __init__(self, display: "BrailleDisplayDriver"):

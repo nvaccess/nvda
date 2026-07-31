@@ -31,7 +31,7 @@ import audioDucking
 import braille
 import braille.constants
 import braille.display
-import brailleInput
+import braille.input
 import brailleTables
 import characterProcessing
 import config
@@ -5264,7 +5264,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			if config.conf["braille"]["inputTable"] == "auto":
 				selection = 0
 			else:
-				selection = self.inTables.index(brailleInput.handler.table) + 1
+				selection = self.inTables.index(braille.input.handler.table) + 1
 			self.inTableList.SetSelection(selection)
 		except:  # noqa: E722
 			log.exception()
@@ -5604,9 +5604,9 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			braille.handler.table = self.outTableForCurLang
 			config.conf["braille"]["translationTable"] = "auto"
 		if self.inTableList.GetSelection():
-			brailleInput.handler.table = self.inTables[self.inTableList.GetSelection() - 1]
+			braille.input.handler.table = self.inTables[self.inTableList.GetSelection() - 1]
 		else:
-			brailleInput.handler.table = self.inTableForCurLang
+			braille.input.handler.table = self.inTableForCurLang
 			config.conf["braille"]["inputTable"] = "auto"
 		mode = list(BrailleMode)[self.brailleModes.GetSelection()]
 		config.conf["braille"]["mode"] = mode.value
