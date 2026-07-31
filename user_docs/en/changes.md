@@ -66,6 +66,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * The Add-on Store no longer becomes unresponsive when navigating the list of add-ons quickly, such as by holding down an arrow key. (#17351, @christopherpross)
 * Remote Access: NVDA now reports when connecting as the controlled computer fails, while continuing to retry the connection in the background. (#19103, @danielw97)
 * NVDA no longer briefly disconnects and re-detects the braille display on desktop switches that do not enter the secure desktop, such as when switching between a Remote Desktop session and the local machine. (#18810, #20550, @LeonarddeR)
+* In Windows Terminal, mouse tracking now reports the line of text under the mouse pointer. (#20448, @DataTriny)
 
 ### Changes for Developers
 
@@ -84,6 +85,7 @@ The default implementation forwards to `interactWithMathMl`, preserving compatib
   * The `config.configSections.registerSection` method can be used in the `onInstall` function.
   * To register a section to be used in the normal configuration, regardless of profiles, the `isBaseOnly` parameter should be set to `True`.
 * The `braille` module is now a package, split into focused submodules such as `braille.constants`, `braille.labels`, `braille.formatting`, `braille.regions`, `braille.display`, `braille.buffers`, `braille.brailleHandler` and `braille.extensions`. (#12772, #20458, @LeonarddeR)
+  * The `brailleInput` module has also moved into this package as `braille.input`, split into `braille.input.constants`, `braille.input.gesture` and `braille.input.inputHandler`. (#12772, #20509, @LeonarddeR)
 * Added `gui.message.HtmlMessageDialog`, a `MessageDialog` subclass that renders a full HTML document in a `wx.html2.WebView`. (#18878, @LeonarddeR)
   * The WebView backend can be overridden via the `_webViewBackend` class attribute, which defaults to the IE backend.
   * JavaScript in the message can trigger NVDA actions by navigating to `nvda-action://<action>` URLs; `close` is handled internally and other actions can be registered with `registerAction`.
@@ -123,6 +125,8 @@ Use `gui.message.HtmlMessageDialog` instead. (#18878, @LeonarddeR)
 Use `languageHandler.windowsLCIDToLocaleName` or `winKernel.LCIDToLocaleName` instead. (#20589, @LeonarddeR)
 * The symbols that moved out of the `braille` module facade when it became a package are deprecated.
 Accessing them as `braille.X` still works but logs a deprecation warning; import them from their new location instead, as listed below. (#20390, @LeonarddeR)
+* The symbols that moved out of the `braille` module facade when it became a package, as well as the symbols of the `brailleInput` module which is now the `braille.input` package, are deprecated.
+Accessing them as `braille.X` or `brailleInput.X` still works but logs a deprecation warning; import them from their new location instead, as listed below. (#20390, #20509, @LeonarddeR)
 
 | Old location | New location |
 | --- | --- |
@@ -184,6 +188,19 @@ Accessing them as `braille.X` still works but logs a deprecation warning; import
 | `braille.decide_enabled` | `braille.extensions.decide_enabled` |
 | `braille.BrailleMode` | `config.configFlags.BrailleMode` |
 | `braille.TetherTo` | `config.configFlags.TetherTo` |
+| `brailleInput.handler` | `braille.input.handler` |
+| `brailleInput.initialize` | `braille.input.initialize` |
+| `brailleInput.terminate` | `braille.input.terminate` |
+| `brailleInput.FALLBACK_TABLE` | `braille.input.constants.FALLBACK_TABLE` |
+| `brailleInput.DOT7` | `braille.input.constants.DOT7` |
+| `brailleInput.DOT8` | `braille.input.constants.DOT8` |
+| `brailleInput.LOUIS_DOTS_IO_START` | `braille.input.constants.LOUIS_DOTS_IO_START` |
+| `brailleInput.UNICODE_BRAILLE_START` | `braille.input.constants.UNICODE_BRAILLE_START` |
+| `brailleInput.UNICODE_BRAILLE_PROTECTED` | `braille.input.constants.UNICODE_BRAILLE_PROTECTED` |
+| `brailleInput.formatDotNumbers` | `braille.input.gesture.formatDotNumbers` |
+| `brailleInput.BrailleInputGesture` | `braille.input.gesture.BrailleInputGesture` |
+| `brailleInput.BrailleInputHandler` | `braille.input.inputHandler.BrailleInputHandler` |
+| `brailleInput.speakDots` | `braille.input.inputHandler.speakDots` |
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
@@ -204,6 +221,7 @@ A new command allows repeating the last spoken information, with the ability to 
 The default gesture to repeat the last spoken information is `NVDA+x`, which can be changed in the Input Gestures dialog.
 
 The braille display can now automatically scroll and DotPad devices support multi-button combinations.
+The default gesture to toggle automatic scroll is `NVDA+alt+k`.
 
 Liblouis has been updated with new Italian and Estonian braille tables.
 
@@ -223,6 +241,7 @@ When resetting NVDA to factory defaults, an Undo button is now available to rest
   * A new command, assigned to `NVDA+x`, has been introduced to repeat the last information spoken by NVDA; pressing it twice shows it in a browseable message. (#625, @CyrilleB79)
 * Braille:
   * Added the ability to automatically scroll the braille display. (#18573, @nvdaes)
+    * `NVDA+alt+k`, `NVDA+alt+l` and `NVDA+alt+j` gestures can be used to toggle automatic scroll, increase scroll rating and decrease scroll rating, respectively.
   * DotPad braille displays now support multi-button combination gestures. (#19565, @bramd)
     * You can now press multiple buttons simultaneously to create custom gestures (e.g., `f1+panLeft`).
 * Touch:
