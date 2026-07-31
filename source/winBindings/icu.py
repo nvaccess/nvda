@@ -52,6 +52,9 @@ class UBRK(IntEnum):
 	WORD = 1
 	"""Word breaks."""
 
+	SENTENCE = 3
+	"""Sentence breaks (UAX#29)."""
+
 
 def U_FAILURE(code: int) -> bool:
 	"""Return True if the given UErrorCode indicates an error."""
