@@ -1,10 +1,37 @@
+/*
+Colours are defined as custom properties on :root so the light and dark
+themes share a single set of rules. The values below are the light theme;
+the @media (prefers-color-scheme: dark) block at the end overrides the
+variables with a dark palette. Layout, fonts and spacing are theme-agnostic
+and are set directly on the elements.
+
+color-scheme: light dark tells the browser this document supports both
+schemes, so the default canvas, form controls and scrollbars also adapt.
+*/
+:root {
+  color-scheme: light dark;
+
+  --text-color: #333;
+  --background-color: #fff;
+  --accent-color: #472F5F; /* NVDA purple: headings, links, table headers */
+  --banner-background: #472F5F; /* NVDA purple: h1 banner background */
+  --banner-text-color: #fff;
+  --strong-color: #000;
+  --border-color: #000;
+  --code-color: #33104e;
+  --code-background: #f6f8fa;
+  --code-border-color: #d8dee9;
+  --pre-accent-color: #69c;
+}
+
 body {
   margin: 0 auto;
   max-width: 50em;
   font-family: "Helvetica", "Arial", sans-serif;
   line-height: 1.5;
   padding: 4em 1em;
-  color: #333;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 :lang(ar) body *, :lang(fa) body * {
@@ -12,8 +39,8 @@ body {
 }
 
 h1 {
-  color:white;
-  background-color: #472F5F; /* NVDA purple */
+  color: var(--banner-text-color);
+  background-color: var(--banner-background);
 }
 
 h2 {
@@ -22,16 +49,16 @@ h2 {
 }
 
 h2, h3, h4, a {
-  color: #472F5F; /* NVDA purple */
+  color: var(--accent-color);
 }
 
 strong {
-  color: #000;
+  color: var(--strong-color);
 }
 
 /* tables */
 table, td, th {
-  border:1px solid black;
+  border: 1px solid var(--border-color);
 }
 table{
   border-collapse: collapse;
@@ -40,15 +67,15 @@ td, th {
   padding: 0.25em;
 }
 th {
-  color: #472F5F; /* NVDA purple */
+  color: var(--accent-color);
 }
 
 /* code / pre */
 code,
 pre {
-  background: #f6f8fa;
-  border-bottom: 1px solid #d8dee9;
-  color: #33104e;
+  background: var(--code-background);
+  border-bottom: 1px solid var(--code-border-color);
+  color: var(--code-color);
 }
 
 code {
@@ -57,7 +84,7 @@ code {
 }
 pre {
   padding: 1em;
-  border-left: 2px solid #69c;
+  border-left: 2px solid var(--pre-accent-color);
 }
 
 /*
@@ -95,46 +122,23 @@ thead:has(tr > th.hideHeaderRow) {
 Dark mode
 
 Applied automatically when the user's operating system / browser requests a
-dark colour scheme. Only colours are overridden here; layout, fonts and
-spacing are inherited from the light theme above. The NVDA purple identity is
-preserved by using lightened tints that keep sufficient contrast on a dark
-background (WCAG AA).
+dark colour scheme. Only the colour variables are overridden here; every rule
+above consumes them, so layout stays identical to the light theme. The NVDA
+purple identity is preserved by using lightened tints that keep sufficient
+contrast on a dark background (WCAG AA).
 */
 @media (prefers-color-scheme: dark) {
-  body {
-    background-color: #1a1a1a;
-    color: #e8e8e8;
-  }
-
-  h1 {
-    color: #fff;
-    background-color: #5d3f80; /* lightened NVDA purple */
-  }
-
-  h2, h3, h4, a {
-    color: #cba2e8; /* lightened NVDA purple */
-  }
-
-  strong {
-    color: #fff;
-  }
-
-  /* tables */
-  table, td, th {
-    border-color: #555;
-  }
-  th {
-    color: #cba2e8; /* lightened NVDA purple */
-  }
-
-  /* code / pre */
-  code,
-  pre {
-    background: #262626;
-    border-bottom: 1px solid #333;
-    color: #e8e8e8;
-  }
-  pre {
-    border-left: 2px solid #69c;
+  :root {
+    --text-color: #e8e8e8;
+    --background-color: #1a1a1a;
+    --accent-color: #cba2e8; /* lightened NVDA purple */
+    --banner-background: #5d3f80; /* lightened NVDA purple */
+    --banner-text-color: #fff;
+    --strong-color: #fff;
+    --border-color: #555;
+    --code-color: #e8e8e8;
+    --code-background: #262626;
+    --code-border-color: #333;
+    --pre-accent-color: #69c;
   }
 }
