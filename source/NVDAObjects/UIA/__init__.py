@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2009-2026 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter,
-# Bill Dengler, Cyrille Bougot
+# Bill Dengler, Cyrille Bougot, Cary-rowen
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -18,10 +18,12 @@ from typing import (
 	Any,
 )
 import array
+import ctypes
 from ctypes.wintypes import POINT
 from comtypes import COMError
 import time
 import numbers
+import oleacc
 import colors
 import languageHandler
 import NVDAState
@@ -34,6 +36,7 @@ import config
 from config.configFlags import ReportSpellingErrors
 import speech
 import api
+import eventHandler
 import textInfos
 from logHandler import log
 from UIAHandler.types import (
@@ -65,9 +68,11 @@ from NVDAObjects.behaviors import (
 	ToolTip,
 )
 import braille
+import braille.regions.properties
 import locationHelper
 import ui
 import winVersion
+from winBindings import user32
 import NVDAObjects
 
 
@@ -1373,6 +1378,19 @@ class UIA(Window):
 			try:
 				if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsValuePatternAvailablePropertyId):
 					clsList.append(ComboBoxWithoutValuePattern)
+				# #17454: Classic .NET Framework WinForms combo boxes expose a ValuePattern,
+				# but don't fire value change events when their selection changes.
+				elif (
+					UIAControlType == UIAHandler.UIA_ComboBoxControlTypeId
+					and self.UIAElement.cachedFrameworkID == "WinForm"
+					and self.normalizeWindowClassName(self.windowClassName) == "COMBOBOX"
+					and "System.Windows.Forms, Version=4.0.0.0"
+					in (self.UIAElement.cachedProviderDescription or "")
+					and not self._getUIACacheablePropertyValue(
+						UIAHandler.UIA_IsSelectionPatternAvailablePropertyId,
+					)
+				):
+					clsList.append(_NetFrameworkWinFormsComboBox)
 			except COMError:
 				pass
 		elif UIAControlType == UIAHandler.UIA_ListItemControlTypeId:
@@ -1690,7 +1708,13 @@ class UIA(Window):
 		p = self.UIASelectionItemPattern
 		if not p:
 			return None
-		e = p.currentSelectionContainer
+		try:
+			e = p.currentSelectionContainer
+		except COMError:
+			# Some providers (e.g. Qt's QWindowsUiaSelectionItemProvider when the
+			# accessible has no actionInterface) raise instead of returning a value.
+			# Treat the same as no selection container so focus speech is not aborted.
+			return None
 		if not e:
 			# Some implementations of SelectionItemPattern, such as the Outlook attachment list
 			# give back a NULL selectionContainer
@@ -2460,7 +2484,9 @@ class UIA(Window):
 		"""
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		# Ideally, we wouldn't use getPropertiesBraille directly.
-		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
+		braille.handler.message(
+			braille.regions.properties.getPropertiesBraille(name=self.name, role=self.role),
+		)
 
 	def event_UIA_notification(
 		self,
@@ -2559,13 +2585,46 @@ class TreeviewItem(UIA):
 
 
 class MenuItem(UIA):
-	def _get_description(self):
+	_UIAStatesPropertyIDs: set[int] = UIA._UIAStatesPropertyIDs | {
+		UIAHandler.UIA_LegacyIAccessibleStatePropertyId,
+	}
+
+	def _get_states(self) -> set[controlTypes.State]:
+		states = super()._get_states()
+		if controlTypes.State.CHECKABLE in states:
+			return states
+		# #19335: WinForms ToolStripMenuItems can expose their checked state only through LegacyIAccessible.
+		legacyState = self._getUIACacheablePropertyValue_handlesCOMErrors(
+			UIAHandler.UIA_LegacyIAccessibleStatePropertyId,
+			True,
+		)
+		if isinstance(legacyState, int) and legacyState & oleacc.STATE_SYSTEM_CHECKED:
+			states.update(
+				{
+					controlTypes.State.CHECKABLE,
+					controlTypes.State.CHECKED,
+				},
+			)
+		return states
+
+	def _get_description(self) -> str | None:
 		name = self.name
-		description = super(MenuItem, self)._get_description()
-		if description != name:
-			return description
-		else:
-			return None
+		description = super()._get_description()
+		if not description or description == name:
+			providerDescription = self.UIAElement.cachedProviderDescription or ""
+			if (
+				self.UIAElement.cachedFrameworkID == "WinForm"
+				and "System.Windows.Forms, Version=4.0.0.0" in providerDescription
+				and "ToolStripMenuItem" in providerDescription
+			):
+				legacyDescription = self._getUIACacheablePropertyValue_handlesCOMErrors(
+					UIAHandler.UIA_LegacyIAccessibleDescriptionPropertyId,
+					ignoreDefault=True,
+					onError=None,
+				)
+				if isinstance(legacyDescription, str):
+					description = legacyDescription
+		return description if description != name else None
 
 
 class UIColumnHeader(UIA):
@@ -2637,6 +2696,18 @@ class ControlPanelLink(UIA):
 		return desc
 
 
+class _NetFrameworkWinFormsComboBox(UIA):
+	"""A classic .NET Framework WinForms combo box that does not fire UIA value change events."""
+
+	def initOverlayClass(self) -> None:
+		# Ensure selection events from the separate ComboLBox window are accepted.
+		eventHandler.requestEvents(
+			"UIA_elementSelected",
+			processId=self.processID,
+			windowClassName="ComboLBox",
+		)
+
+
 class ComboBoxWithoutValuePattern(UIA):
 	"""A combo box without the Value pattern.
 	UIA combo boxes don't necessarily support the Value pattern unless they take arbitrary text values.
@@ -2661,6 +2732,22 @@ class ComboBoxWithoutValuePattern(UIA):
 
 
 class ListItem(UIA):
+	def event_UIA_elementSelected(self) -> None:
+		super().event_UIA_elementSelected()
+		focus = api.getFocusObject()
+		if (
+			isinstance(focus, _NetFrameworkWinFormsComboBox)
+			and self.processID == focus.processID
+			and self.windowClassName == "ComboLBox"
+		):
+			comboBoxInfo = user32.COMBOBOXINFO()
+			comboBoxInfo.cbSize = ctypes.sizeof(comboBoxInfo)
+			if (
+				user32.GetComboBoxInfo(focus.windowHandle, ctypes.byref(comboBoxInfo))
+				and comboBoxInfo.hwndList == self.windowHandle
+			):
+				focus.event_valueChange()
+
 	def event_stateChange(self):
 		if not self.hasFocus:
 			parent = self.parent

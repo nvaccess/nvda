@@ -30,6 +30,7 @@ from addonStore.models.addon import (
 )
 from addonStore.models.status import (
 	_installedAddonStatuses,
+	_updatableStatuses,
 	_StatusFilterKey,
 	AvailableAddonStatus,
 )
@@ -185,7 +186,8 @@ class AddonListItemVM(Generic[_AddonModelT]):
 	def canUseRemoveAction(self) -> bool:
 		return (
 			self.model.isInstalled
-			and self.status in _installedAddonStatuses
+			and self.status in _installedAddonStatuses.union(_updatableStatuses)
+			and self.status not in (AvailableAddonStatus.DOWNLOADING, AvailableAddonStatus.DOWNLOAD_SUCCESS)
 			and self.status != AvailableAddonStatus.PENDING_REMOVE
 		)
 

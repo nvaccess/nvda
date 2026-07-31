@@ -72,7 +72,7 @@ Every ADR should include a PR integration strategy.
 In general:
 
 * Prefer PRs around 500 LOC where possible.
-* If changes are interdependent, use stacked PRs with clear ordering.
+* If changes are interdependent, use [stacked PRs](https://github.github.com/gh-stack/) with clear ordering.
 * For long-running feature work that cannot merge directly to `master`, request a `try-` branch and integrate in pieces.
 * Separate unrelated work into separate issues/PRs.
 

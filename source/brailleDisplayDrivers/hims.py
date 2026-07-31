@@ -1,8 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2010-2023 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter,
-# Bram Duvigneau
+# Copyright (C) 2010-2026 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter, Bram Duvigneau
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from typing import List, Iterator
 
@@ -11,6 +10,9 @@ from io import BytesIO
 import hwIo
 from hwIo import intToByte
 import braille
+import braille.display
+import braille.display.driver
+import braille.display.gesture
 from logHandler import log
 from collections import OrderedDict
 import inputCore
@@ -270,7 +272,7 @@ modelMap = [
 ]
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "hims"
 	# Translators: The name of a series of braille displays.
 	description = _("HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series")
@@ -319,7 +321,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls) -> Iterator[tuple[str, str]]:
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
@@ -795,7 +797,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class KeyInputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keys, isHid: bool = False):
@@ -832,10 +834,10 @@ class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGe
 		self.id = "+".join(names)
 
 
-class RoutingInputGesture(braille.BrailleDisplayGesture):
+class RoutingInputGesture(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, routingINdex):
-		super(RoutingInputGesture, self).__init__()
-		self.routingIndex = routingINdex
+	def __init__(self, routingIndex: int):
+		super().__init__()
+		self.cellIndexes = [routingIndex]
 		self.id = "routing"

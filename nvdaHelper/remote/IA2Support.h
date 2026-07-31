@@ -25,7 +25,6 @@ struct IA2InstallData {
 	COMProxyRegistration_t* IA2ProxyRegistration;
 	COMProxyRegistration_t* ISimpleDOMProxyRegistration;
 	HANDLE uiThreadHandle;
-	HANDLE uiThreadUninstalledEvent;
 };
 
 bool installIA2Support();

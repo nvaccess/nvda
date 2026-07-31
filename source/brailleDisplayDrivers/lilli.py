@@ -12,6 +12,8 @@ from ctypes import windll
 import inputCore
 import wx
 import braille
+import braille.display.driver
+import braille.display.gesture
 
 try:
 	lilliDll = windll.LoadLibrary(os.path.join(globalVars.appDir, "brailleDisplayDrivers", "lilli.dll"))
@@ -106,7 +108,7 @@ def convertLilliCells(cell: int) -> int:
 	return newCell
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "lilli"
 	# Translators: Name of a braille display.
 	description = _("MDV Lilli")
@@ -182,11 +184,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, command: str, argument: int):
 		super(InputGesture, self).__init__()
 		self.id = command
 		if command == ROUTE_COMMAND:
-			self.routingIndex = argument
+			self.cellIndexes = [argument]

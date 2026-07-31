@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2015-2026 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton,
+# Leonard de Ruijter and others.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import ctypes
 from enum import IntEnum
@@ -9,6 +10,7 @@ from enum import IntEnum
 import api
 import baseObject
 import braille
+import braille.display.gesture
 import brailleInput
 import globalPluginHandler
 import scriptHandler
@@ -27,9 +29,14 @@ class VKMapType(IntEnum):
 	"""Maps a virtual key code to a scan code."""
 
 
-class BrailleInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class BrailleInputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	def __init__(self, **kwargs):
 		super().__init__()
+		# Normalize legacy routingIndex field into cellIndexes before assignment
+		# to avoid triggering the deprecation warning on the setter.
+		legacyRoutingIndex = kwargs.pop("routingIndex", None)
+		if "cellIndexes" not in kwargs and legacyRoutingIndex is not None:
+			kwargs["cellIndexes"] = [legacyRoutingIndex]
 		for key, value in kwargs.items():
 			setattr(self, key, value)
 		self.source = f"remote{self.source.capitalize()}"

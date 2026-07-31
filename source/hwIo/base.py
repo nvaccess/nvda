@@ -12,8 +12,10 @@ See L{braille.BrailleDisplayDriver.isThreadSafe}.
 
 # "annotations" Needed to provide the inner type for weakref.ReferenceType.
 from __future__ import annotations
+import functools
 import sys
 import ctypes
+import threading
 from ctypes import byref
 from ctypes.wintypes import DWORD
 from typing import Optional, Any, Union, Tuple, Callable
@@ -52,6 +54,24 @@ def __getattr__(attrName: str) -> Any:
 
 def _isDebug():
 	return config.conf["debugLog"]["hwIo"]
+
+
+def requiresBackgroundThread(func: Callable) -> Callable:
+	"""Decorator that raises RuntimeError if the decorated function is called on the main thread.
+
+	Use this on any hwIo function that blocks (e.g. sleeps or polls) and must not be called
+	from NVDA's main thread, where it would freeze the UI.
+	"""
+
+	@functools.wraps(func)
+	def wrapper(*args, **kwargs):
+		if threading.main_thread() is threading.current_thread():
+			raise RuntimeError(
+				f"{func.__qualname__} must not be called on the main thread",
+			)
+		return func(*args, **kwargs)
+
+	return wrapper
 
 
 class IoBase(object):

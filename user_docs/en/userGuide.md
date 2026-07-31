@@ -201,6 +201,7 @@ These set whether NVDA starts automatically.
 ### Running NVDA {#RunningNVDA}
 
 The full NVDA user guide has all the NVDA commands, split up into different sections for reference.
+From within any NVDA dialog, press `f1` to open the User Guide to the topic on the current control.
 The tables of commands are also available in the "Commands Quick Reference".
 The "Basic Training for NVDA" NVDA training module has each command in more depth with step-by-step activities.
 "Basic Training for NVDA" is available from the [NV Access Shop](http://www.nvaccess.org/shop).
@@ -247,6 +248,7 @@ The actual commands will not execute while in input help mode.
 |Read status bar |`NVDA+end` |`NVDA+shift+end` |Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard|
 |Read time |`NVDA+f12` |`NVDA+f12` |Pressing once reports the current time, pressing twice reports the date. The time and date are reported in the format specified in Windows settings for the system tray clock.|
 | Repeat last spoken information | `NVDA+x` | `NVDA+x` | Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
+| Copy last spoken information | `NVDA+control+x` | `NVDA+control+x` | Copies the last information spoken by NVDA to the clipboard |
 |Report text formatting |`NVDA+f` |`NVDA+f` |Reports text formatting. Pressing twice shows the information in a window|
 |Report link destination |`NVDA+k` |`NVDA+k` |Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review|
 
@@ -372,6 +374,7 @@ Press `control+tab` to get to this tab from anywhere in the Add-on Store.
 The status of the add-on will be listed as "Update available".
 The list will display the currently installed version and the available version.
 Press `enter` on the add-on to open the actions list; choose "Update".
+If the add-on is disabled, the action will instead be labelled "Update (and enable)", as add-ons must be enabled to be installed; updating a disabled add-on re-enables it.
 
 By default, after NVDA startup, you will be notified if any add-on updates are available.
 To learn more about and configure this behaviour, refer to ["Update Notifications"](#AutomaticAddonUpdates).
@@ -392,6 +395,7 @@ This is an online exam you can complete to demonstrate your skills in NVDA.
 To get help for NVDA, press `NVDA+n` to open the menu, then `h` for help.
 From this submenu you can access the User Guide, a quick reference of commands, history of new features and more.
 These first three options open in the default web browser.
+From within any NVDA dialog, press `f1` to open the User Guide to the topic on the current control.
 There is also more comprehensive Training Material available in the [NV Access Shop](https://www.nvaccess.org/shop).
 
 We recommend starting with the "Basic Training for NVDA" module.
@@ -614,6 +618,18 @@ Therefore, gestures such as 2-finger flick up and 4-finger flick left are all po
 Place two fingers on the screen and move them toward each other to perform a pinch in gesture.
 Move them away from each other to perform a pinch out gesture.
 
+##### Sequential Flicks {#SequentialFlicks}
+
+You can perform two flicks in quick succession to trigger a sequential flick gesture.
+This greatly expands the number of touch gestures that can be assigned to NVDA commands.
+
+Both flicks can be performed in two ways:
+
+* Lifting your finger after the first flick and then performing the second flick before the gesture times out.
+* Or as a single continuous swipe that sharply changes direction, without lifting your finger.
+
+Twelve combinations are recognised: the four opposite-direction pairs (such as flick right then flick left), and the eight perpendicular L-shaped pairs (such as flick right then flick up).
+
 #### Touch Modes {#TouchModes}
 
 As there are many more NVDA commands than possible touch gestures, NVDA has several touch modes you can switch between which make certain subsets of commands available.
@@ -670,6 +686,7 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 |Stop speech |Control |control |2-finger tap |Instantly stops speaking|
 |Pause Speech |shift |shift |none |Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer)|
 | Repeat last spoken information | `NVDA+x` | `NVDA+x` | None | Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
+| Copy last spoken information | `NVDA+control+x` | `NVDA+control+x` | None | Copies the last information spoken by NVDA to the clipboard |
 |NVDA Menu |NVDA+n |NVDA+n |2-finger double-tap |Pops up the NVDA menu to allow you to access preferences, tools, help, etc.|
 |Toggle Input Help Mode |NVDA+1 |NVDA+1 |none |Pressing any key in this mode will report the key, and the description of any NVDA command associated with it|
 |Quit NVDA |NVDA+q |NVDA+q |none |Exits NVDA|
@@ -1275,6 +1292,7 @@ By default, the review cursor follows the system caret, so you can usually use t
 
 At this point, NVDA will enter Math mode, where you can use commands such as the arrow keys to explore the expression.
 For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
+When [Visual Highlight](#VisionFocusHighlight) is enabled and the browse mode cursor highlighter is enabled, the current subpart of MathML on the web is also exposed visually.
 
 When you wish to return to the document, simply press the escape key.
 
@@ -1599,7 +1617,7 @@ These positions are highlighted with a coloured rectangle outline.
 * Solid blue highlights a combined navigator object and system focus location (e.g. because [the navigator object follows the system focus](#ReviewCursorFollowFocus)).
 * Dashed blue highlights just the system focus object.
 * Solid pink highlights just the navigator object.
-* Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers).
+* Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers), the cursor in OCR recognition results, and the current subpart while navigating math on the web.
 
 When Visual Highlight is enabled in the [vision category](#VisionSettings) of the [NVDA Settings](#NVDASettings) dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret](#VisionSettingsFocusHighlight).
 
@@ -1663,6 +1681,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 | Pan to right edge | `NVDA+shift+alt+rightArrow` | Moves the magnified view directly to the right edge of the screen |
 | Pan to top edge | `NVDA+shift+alt+upArrow` | Moves the magnified view directly to the top edge of the screen |
 | Pan to bottom edge | `NVDA+shift+alt+downArrow` | Moves the magnified view directly to the bottom edge of the screen |
+| Move mouse to view | None | Move the mouse cursor to the center of the magnified view |
 
 <!-- KC:endInclude -->
 
@@ -1989,6 +2008,12 @@ As new text is written, the content scroll upwards and previous text is no longe
 On Windows versions before Windows 11 22H2, text in the console that is not visibly displayed in the window is not accessible with NVDA's text review commands.
 Therefore, it is necessary to scroll the console window to read earlier text.
 In newer versions of the console and in Windows Terminal, it is possible to review the entire text buffer freely without the need to scroll the window.
+
+In some cases, such as when connected over SSH, caret updates may be delayed.
+NVDA waits slightly longer for caret movement in Windows Terminal, so it is less likely to report stale characters.
+If caret reporting is still inaccurate, try increasing [Caret move timeout](#AdvancedSettingsCaretMoveTimeout) in Advanced settings.
+Increasing this value may make caret movement feel slower, so consider changing it in a configuration profile for terminal applications.
+
 <!-- KC:beginInclude -->
 The following built-in Windows Console keyboard shortcuts may be useful when [reviewing text](#ReviewingText) with NVDA in older versions of Windows Console:
 
@@ -2632,18 +2657,31 @@ The minimum value (0%) is 1 cell per second, and the maximum value (100%) is 20 
 For example, with the default value of 10 cells/sec, if a 40-cell braille display is used, the display will scroll automatically every 4 seconds.
 If the display had 20 cells, each line of braille would be shown for 2 seconds.
 
-##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
+While the automatic scroll option is enabled, you can still use the scroll back command to read previous contents again, and scroll forward, for example, to skip a blank line, or if the line being read is too short.
 
-If this is enabled, a word which is too large to fit at the end of the braille display will not be split.
+Automatic scrolling will be disabled if a routing key is pressed, if a message is presented in braille, if a new object is displayed, when entering a secure screen, when the session is locked, or when the end of the window is reached.
+
+Commands can be assigned to toggle the automatic scroll option, and to increase or decrease the scroll rate, from the "Braille" section of the [Input Gestures dialog](#InputGestures).
+
+##### Text wrap {#BrailleSettingsWordWrap}
+
+This combo box allows you to configure how NVDA handles text that is too long to fit on the braille display.
+When a word is cut across rows, the continuation mark (dots 7 and 8) is shown in the last cell of the row, unless otherwise noted below.
+The following options are available:
+
+* Off: Text wraps at the display edge, cutting words mid-way if necessary, without showing any continuation mark.
+As much of the text as possible will be displayed on each row.
+When you scroll the display, you will be able to read the rest of the text.
+* Show mark when words are cut: Text is not wrapped, but whenever a word is cut at the end of the display, a continuation mark is shown.
+When you scroll the display, you will be able to read the rest of the word.
+* At word boundaries: A word which is too large to fit at the end of the braille display will not be split.
 Instead, there will be some blank space at the end of the display.
 When you scroll the display, you will be able to read the entire word.
-This is sometimes called "word wrap".
-Note that if the word is too large to fit on the display even by itself, the word must still be split.
-
-If this is disabled, as much of the word as possible will be displayed, but the rest will be cut off.
-When you scroll the display, you will then be able to read the rest of the word.
-
-Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
+Note that if the word is too large to fit on the display even by itself, the word must still be split; the continuation mark is then shown.
+This option may allow for more fluent reading, but generally requires you to scroll the display more.
+* At word or syllable boundaries: Like "At word boundaries", but long words that don't fit are split at a syllable boundary when possible, using the language of the word if known.
+For example, the word `behave` may be split between `be` and `have`.
+The continuation mark is shown whenever a word is split.
 
 ##### Unicode normalization {#BrailleUnicodeNormalization}
 
@@ -2903,7 +2941,7 @@ The check boxes in the Visual Highlight grouping control the behaviour of NVDA's
 * Enable Highlighting: Toggles Visual Highlight on and off.
 * Highlight system focus: toggles whether the [system focus](#SystemFocus) will be highlighted.
 * Highlight navigator object: toggles whether the [navigator object](#ObjectNavigation) will be highlighted.
-* Highlight browse mode cursor: Toggles whether the [virtual browse mode cursor](#BrowseMode) will be highlighted.
+* Highlight browse mode cursor: Toggles whether the [virtual browse mode cursor](#BrowseMode) will be highlighted, including the cursor in OCR recognition results and the current subpart while navigating math on the web.
 
 Note that checking and unchecking the "Enable Highlighting" check box will also change the state of the three other check boxes accordingly.
 Therefore, if "Enable Highlighting" is off and you check this check box, the other three check boxes will also be checked automatically.
@@ -3488,6 +3526,7 @@ You can configure reporting of:
   * Page numbers
   * Line numbers
   * Line indentation reporting [(Off, Speech, Tones, Both Speech and Tones)](#DocumentFormattingSettingsLineIndentation)
+  * Indent tone duration (ms)
   * Ignore blank lines for line indentation reporting
   * Paragraph indentation (e.g. hanging indent, first line indent)
   * Line spacing (single, double, etc.)
@@ -3567,6 +3606,12 @@ The tone will increase in pitch every space, and for a tab, it will increase in 
 If you tick the "Ignore blank lines for line indentation reporting" checkbox, then indentation changes won't be reported for blank lines.
 This may be useful when reading a document where blank lines are used to separate indented blocks of text, such as in programming source code.
 
+##### Indent tone duration {#IndentToneDuration}
+
+This option allows you to configure the duration of indentation tones when the "Tones" or "Both Speech and Tones" option is selected in the ["Report line indentation with"](#DocumentFormattingSettingsLineIndentation) combo box.
+The value can range from 10 ms to 2000 ms.
+The default is 40 ms.
+
 #### Document Navigation {#DocumentNavigation}
 
 This category allows you to adjust various aspects of document navigation.
@@ -3590,6 +3635,24 @@ This style works best when working with documents which use block paragraphs.
 Note that this paragraph style cannot be used in Microsoft Word or Microsoft Outlook, unless you are using UIA to access Microsoft Word controls.
 
 You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog](#InputGestures).
+
+##### Word Segmentation Standard {#WordSegmentationStandard}
+
+This setting controls how NVDA determines word boundaries when navigating by word.
+Chinese word segmentation is also used for braille.
+When a Chinese braille output table is in use, NVDA can insert spaces between Chinese words in braille.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Default (Automatic), Automatic, Chinese, Unicode (ICU), Legacy (Uniscribe) |
+| Default | Automatic |
+
+| Option | Behaviour |
+|---|---|
+| Automatic | Use Chinese word segmentation for Chinese text when available. Otherwise, prefer Unicode (ICU) word segmentation when available, falling back to the legacy Windows word segmentation. |
+| Chinese | Use Chinese word segmentation. If Chinese word segmentation is not available, NVDA uses the fallback path as in `Automatic`. |
+| Unicode (ICU) | Use the Windows built-in ICU library for word segmentation available in Windows 10 version 1703 (Creators Update) and later, falling back to legacy. |
+| Legacy (Uniscribe) | Use the legacy Windows word segmentation as used in Notepad classic and other legacy Win32 edit controls. |
 
 #### Math Settings {#MathSettings}
 
@@ -4298,6 +4361,9 @@ The dialog also contains Add, Edit, Remove and Remove all buttons.
 
 To add a new rule to the dictionary, press the Add button, and fill in the fields in the dialog box that appears and then press Ok.
 You will then see your new rule in the list of rules.
+
+You can use a context menu to edit or remove rules.
+You can also use the `delete` key to remove a selected rule.
 However, to make sure your rule is actually saved, make sure to press Ok to exit the dictionary dialog completely once you have finished adding/editing rules.
 
 The rules for NVDA's speech dictionaries allow you to change one string of characters into another.
@@ -4388,7 +4454,10 @@ Often, a gesture can be interpreted in more than one way.
 For example, if you pressed a key on the keyboard, you may wish it to be specific to the current keyboard layout (e.g. desktop or laptop) or you may wish it to apply for all layouts.
 In this case, a menu will appear allowing you to select the desired option.
 
-To remove a gesture from a command, select the gesture and press the Remove button.
+You can also use the context menu to add, change, or remove gestures for each command.
+To change an input gesture of a command, select the gesture and press the change button.
+Then, perform the new input gesture you wish to associate; that will replace the old one.
+To remove a gesture from a command, you can press the `delete` key or the remove button.
 
 The Emulated system keyboard keys category contains NVDA commands that emulate keys on the system keyboard.
 These emulated system keyboard keys can be used to control a system keyboard right from your braille display.
@@ -4451,6 +4520,9 @@ When you open the dialog, the profile you are currently editing is selected.
 Additional information is also shown for active profiles, indicating whether they are manually activated, triggered and/or being edited.
 
 To rename or delete a profile, press the Rename or Delete buttons, respectively.
+
+You can also manage profiles by opening the context menu on a profile in the list to rename or delete it.
+Additionally, you can press `f2` to rename the selected profile or `delete` to remove it.
 
 Press the Close button to close the dialog.
 
@@ -5036,7 +5108,7 @@ This option is selected by default.
 
 The following displays support this automatic detection functionality.
 
-* Handy Tech displays
+* Help Tech displays (formerly Handy Tech)
 * Baum/Humanware/APH/Orbit braille displays
 * HumanWare Brailliant BI/B series
 * HumanWare BrailleNote
@@ -5080,6 +5152,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move back using right wiz wheel action |rightWizWheelUp|
 |Move forward using right wiz wheel action |rightWizWheelDown|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |shift+tab key |brailleSpaceBar+dot1+dot2|
 |tab key |brailleSpaceBar+dot4+dot5|
 |upArrow key |brailleSpaceBar+dot1|
@@ -5156,6 +5229,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to next line |t4|
 |Scroll braille display forward |t5, etouch3|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |Report text formatting under braille cell |secondary routing|
 |Toggle HID keyboard simulation |t1+spEnter|
 |Move to top line in review |t1+t2|
@@ -5186,18 +5260,18 @@ Please see the display's documentation for descriptions of where these keys can 
 
 <!-- KC:endInclude -->
 
-### Handy Tech Displays {#HandyTech}
+### Help Tech Displays {#HandyTech}
 
-NVDA supports most displays from [Handy Tech](https://www.handytech.de/) when connected via USB, serial port or bluetooth.
-For older USB displays, you will need to install the USB drivers from Handy Tech on your system.
+NVDA supports most displays from [Help Tech](https://www.helptech.de/) (formerly Handy Tech) when connected via USB, serial port or Bluetooth.
 
-The following displays are not supported out of the box, but can be used via [Handy Tech's universal driver](https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers) and NVDA add-on:
+The following displays are no longer supported:
 
 * Braillino
 * Bookworm
-* Modular displays with firmware version 1.13 or lower. Please note that the firmware of this displays can be updated.
+* Modular displays with firmware version 1.13 or lower.
+Please note that the firmware of these displays can be updated.
 
-Following are the key assignments for Handy Tech displays with NVDA.
+Following are the key assignments for Help Tech displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 <!-- KC:beginInclude -->
 
@@ -5208,6 +5282,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |b4|
 |Move braille display to next line |b5|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |shift+tab key |esc, left triple action key up+down|
 |alt key |b2+b4+b5|
 |escape key |b4+b6|
@@ -5278,6 +5353,7 @@ Please see your display's documentation for descriptions of where these keys can
 |Move braille display to previous line |`d1`|
 |Move braille display to next line |`d3`|
 |Route to braille cell |`routing`|
+| Select range from first up to last braille cell | `multiRouting` |
 |`shift+tab` key |`space+dot1+dot3`|
 |`tab` key |`space+dot4+dot6`|
 |`alt` key |`space+dot1+dot3+dot4` (`space+m`)|
@@ -5373,6 +5449,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |up|
 |Move braille display to next line |down|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |Toggle braille tethered to |up+down|
 |upArrow key |space+dot1|
 |downArrow key |space+dot4|
@@ -5391,12 +5468,16 @@ Please see the display's documentation for descriptions of where these keys can 
 
 <!-- KC:endInclude -->
 
-#### Key assignments for Brailliant BI 32, BI 40 and B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
+#### Key assignments for Brailliant BI 32, BI 40, B 80, BI 20X and BI 40X {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
 | Name |Key|
 |---|---|
+| Move braille display to previous line | c1 |
+| Scroll braille display back | c2 |
+| Move braille display to next line | c3 |
+| Scroll braille display forward | c5 |
 |NVDA Menu |c1+c3+c4+c5 (command n)|
 |windows+d key (minimize all applications) |c1+c4+c5 (command d)|
 |Say all |c1+c2+c3+c4+c5+c6|
@@ -5554,6 +5635,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |leftArrow key |RJ left|
 |rightArrow key |RJ right|
 |Route to braille cell |routing|
+| Select range from first up to last braille cell | `multiRouting` |
 |shift+upArrow key |Space+RJ up, Backspace+RJ up|
 |shift+downArrow key |Space+RJ down, Backspace+RJ down|
 |shift+leftArrow key |Space+RJ left, Backspace+RJ left|
@@ -6181,6 +6263,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Scroll braille display back |`left`, `lWheelLeft`, `rWheelLeft`|
 |Scroll braille display forward |`right`, `lWheelRight`, `rWheelRight`|
 |Route to braille cell |`routing`|
+| Select range from first up to last braille cell | `home1+multiRouting`, `home2+multiRouting` |
 |Report text formatting under braille cell |`secondary routing`|
 |Toggle the way context information is presented in braille |`attribute1+attribute3`|
 |Cycles between speech modes |`attribute2+attribute4`|
@@ -6238,6 +6321,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |`d1`|
 |Move braille display to next line |`d3`|
 |Route to braille cell |`routing`|
+| Select range from first up to last braille cell | `multiRouting` |
 |Up arrow key |`up`|
 |Down arrow key |`down`|
 |Left arrow key |`left`|
@@ -6261,6 +6345,7 @@ Following are the current key assignments for these displays.
 |Scroll braille display back |pan left or rocker up|
 |Scroll braille display forward |pan right or rocker down|
 |Route to braille cell |routing set 1|
+| Select range from first up to last braille cell | multiple routing set 1 keys |
 |Toggle braille tethered to |up+down|
 |upArrow key |joystick up, dpad up or space+dot1|
 |downArrow key |joystick down, dpad down or space+dot4|
@@ -6360,6 +6445,20 @@ Secure screens include:
 * The Windows sign-in screen
 * The User Access Control dialog, active when performing an action as an administrator
   * This includes installing programs
+
+### Downloading NVDA {#DownloadingNVDA}
+
+The recommended place to download NVDA is from the NV Access download page at [https://www.nvaccess.org/download/](https://www.nvaccess.org/download/).
+
+NVDA can also be downloaded and installed using the Windows Package Manager (WinGet).
+Run the following command in Command Prompt (`cmd`) or PowerShell to install the latest version of NVDA:
+
+`winget install --id NVAccess.NVDA`
+
+To install beta or RC versions, use the following commands:
+
+* Beta: `winget install --id NVAccess.NVDA.Beta`
+* RC: `winget install --id NVAccess.NVDA.RC`
 
 ### Command Line Options {#CommandLineOptions}
 

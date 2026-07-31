@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2015-2026 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton,
+# Leonard de Ruijter and others.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """NVDA Remote session management and message routing.
 
@@ -68,6 +69,10 @@ from collections import defaultdict
 from typing import Any, Final
 
 import braille
+import braille.display
+import braille.display.driver
+import braille.display.gesture
+import braille.extensions
 import brailleInput
 import gui
 import inputCore
@@ -315,7 +320,7 @@ class FollowerSession(RemoteSession):
 			RemoteMessageType.SET_DISPLAY_SIZE,
 			self.setDisplaySize,
 		)
-		braille.filter_displayDimensions.register(
+		braille.extensions.filter_displayDimensions.register(
 			self.localMachine._handleFilterDisplayDimensions,
 		)
 		self.transport.registerInbound(
@@ -340,7 +345,7 @@ class FollowerSession(RemoteSession):
 		)
 		self.transport.registerOutbound(decide_playWaveFile, RemoteMessageType.WAVE)
 		self.transport.registerOutbound(post_speechPaused, RemoteMessageType.PAUSE_SPEECH)
-		braille.pre_writeCells.register(self.display)
+		braille.extensions.pre_writeCells.register(self.display)
 		pre_speechQueued.register(self.sendSpeech)
 		self.callbacksAdded = True
 
@@ -351,7 +356,7 @@ class FollowerSession(RemoteSession):
 		self.transport.unregisterOutbound(RemoteMessageType.CANCEL)
 		self.transport.unregisterOutbound(RemoteMessageType.WAVE)
 		self.transport.unregisterOutbound(RemoteMessageType.PAUSE_SPEECH)
-		braille.pre_writeCells.unregister(self.display)
+		braille.extensions.pre_writeCells.unregister(self.display)
 		pre_speechQueued.unregister(self.sendSpeech)
 		self.callbacksAdded = False
 
@@ -534,15 +539,15 @@ class LeaderSession(RemoteSession):
 	def registerCallbacks(self) -> None:
 		if self.callbacksAdded:
 			return
-		braille.displayChanged.register(self.sendBrailleInfo)
-		braille.displaySizeChanged.register(self.sendBrailleInfo)
+		braille.extensions.displayChanged.register(self.sendBrailleInfo)
+		braille.extensions.displaySizeChanged.register(self.sendBrailleInfo)
 		self.callbacksAdded = True
 
 	def unregisterCallbacks(self) -> None:
 		if not self.callbacksAdded:
 			return
-		braille.displayChanged.unregister(self.sendBrailleInfo)
-		braille.displaySizeChanged.unregister(self.sendBrailleInfo)
+		braille.extensions.displayChanged.unregister(self.sendBrailleInfo)
+		braille.extensions.displaySizeChanged.unregister(self.sendBrailleInfo)
 		self.callbacksAdded = False
 
 	def handleNVDANotConnected(self) -> None:
@@ -589,8 +594,8 @@ class LeaderSession(RemoteSession):
 
 	def sendBrailleInfo(
 		self,
-		display: braille.BrailleDisplayDriver | None = None,
-		displayDimensions: braille.DisplayDimensions | None = None,
+		display: braille.display.driver.BrailleDisplayDriver | None = None,
+		displayDimensions: braille.display.DisplayDimensions | None = None,
 	) -> None:
 		if display is None:
 			display = braille.handler.display
@@ -606,7 +611,7 @@ class LeaderSession(RemoteSession):
 
 	def handleDecideExecuteGesture(
 		self,
-		gesture: braille.BrailleDisplayGesture | brailleInput.BrailleInputGesture,
+		gesture: braille.display.gesture.BrailleDisplayGesture | brailleInput.BrailleInputGesture,
 	) -> bool:
 		"""Handle and forward braille gestures to remote client.
 
@@ -617,7 +622,10 @@ class LeaderSession(RemoteSession):
 		# Import late to avoid circular import
 		from globalCommands import commands
 
-		if isinstance(gesture, (braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture)):
+		if isinstance(
+			gesture,
+			(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture),
+		):
 			if self.localMachine._showingLocalUiMessage and gesture.script in (
 				commands.script_braille_routeTo,
 				commands.script_braille_scrollBack,
@@ -662,8 +670,12 @@ class LeaderSession(RemoteSession):
 				dict["dots"] = gesture.dots
 			if hasattr(gesture, "space") and "space" not in dict:
 				dict["space"] = gesture.space
-			if hasattr(gesture, "routingIndex") and "routingIndex" not in dict:
-				dict["routingIndex"] = gesture.routingIndex
+			if hasattr(gesture, "cellIndexes") and "cellIndexes" not in dict and gesture.cellIndexes:
+				dict["cellIndexes"] = gesture.cellIndexes
+				# Legacy field for older peers that only know routingIndex.
+				# Only emit for single-cell presses; multi-cell presses have no safe single-index equivalent.
+				if len(gesture.cellIndexes) == 1:
+					dict.setdefault("routingIndex", gesture.cellIndexes[0])
 			self.localMachine._dismissLocalBrailleMessage()
 			self.transport.send(type=RemoteMessageType.BRAILLE_INPUT, **dict)
 			return False

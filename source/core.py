@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
-# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot, Julien Cochuyt
+# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot, Julien Cochuyt, Wang Chong
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -323,6 +323,7 @@ def resetConfiguration(factoryDefaults=False):
 	import audio
 	import screenCurtain
 	import mathPres
+	import textUtils._wordSeg
 	import _magnifier as magnifier
 
 	magnifier.terminate()
@@ -392,6 +393,8 @@ def resetConfiguration(factoryDefaults=False):
 	brailleInput.initialize()
 	log.debug("Initializing braille")
 	braille.initialize()
+	log.debug("Initializing word segmentation")
+	textUtils._wordSeg.initialize()
 	# Math
 	log.debug("Initializing math presentation")
 	mathPres.initialize()
@@ -927,6 +930,10 @@ def main():
 	import _remoteClient
 
 	_remoteClient.initialize()
+
+	import textUtils._wordSeg
+
+	textUtils._wordSeg.initialize()
 
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui

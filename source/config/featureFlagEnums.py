@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited, Bill Dengler, Rob Meredith
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2022-2026 NV Access Limited, Bill Dengler, Rob Meredith, Leonard de Ruijter, Wang Chong
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
 Feature flag value enumerations.
@@ -136,6 +136,59 @@ class FontFormattingBrailleModeFlag(DisplayStringEnum):
 			FontFormattingBrailleModeFlag.LIBLOUIS: _("Liblouis"),
 			# Translators: Label for a way of outputting formatting in braille.
 			FontFormattingBrailleModeFlag.TAGS: _("Tags"),
+		}
+
+
+class WordNavigationUnitFlag(DisplayStringEnum):
+	"""Enumeration for word navigation."""
+
+	DEFAULT = enum.auto()
+	AUTO = enum.auto()
+	CHINESE = enum.auto()
+	ICU = enum.auto()
+	UNISCRIBE = enum.auto()
+
+	@property
+	def _displayStringLabels(self) -> dict["WordNavigationUnitFlag", str]:
+		return {
+			# Translators: Label for a method of word segmentation.
+			self.AUTO: _("Automatic"),
+			# Translators: Label for a method of word segmentation.
+			self.CHINESE: _("Chinese"),
+			# Translators: Label for a method of word segmentation.
+			self.ICU: _("Unicode (ICU)"),
+			# Translators: Label for a method of word segmentation.
+			self.UNISCRIBE: _("Legacy (Uniscribe)"),
+		}
+
+
+class BrailleTextWrapFlag(DisplayStringEnum):
+	"""Enumeration containing the possible ways to wrap text in braille when a row would exceed the display.
+
+	The continuation mark (dots 7-8) is shown on rows where a word was cut,
+	regardless of mode (except for NONE, which never shows the mark).
+	"""
+
+	DEFAULT = enum.auto()
+	NONE = enum.auto()
+	MARK_WORD_CUTS = enum.auto()
+	AT_WORD_BOUNDARIES = enum.auto()
+	AT_WORD_OR_SYLLABLE_BOUNDARIES = enum.auto()
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
+			self.NONE: pgettext("braille text wrap", "Off"),
+			# Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
+			self.MARK_WORD_CUTS: pgettext("braille text wrap", "Show mark when words are cut"),
+			# Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
+			self.AT_WORD_BOUNDARIES: pgettext("braille text wrap", "At word boundaries"),
+			self.AT_WORD_OR_SYLLABLE_BOUNDARIES: pgettext(
+				"braille text wrap",
+				# Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
+				"At word or syllable boundaries",
+			),
 		}
 
 

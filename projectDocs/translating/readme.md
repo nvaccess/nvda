@@ -52,4 +52,5 @@ If your language is no longer maintained, you can request to be the new maintain
 * gestures.ini: remapping of gestures for your language, see [Translating Gestures](https://download.nvaccess.org/documentation/developerGuide.html#TranslatingGestures) for more information.
 * userGuide.md: the User Guide, see [Translating using Crowdin](./crowdin.md) for more information.
 * changes.md (optional): a list of changes between releases, see [Translating using Crowdin](./crowdin.md) for more information.
-* Add-ons (optional, out of date): a set of optional features that users can install, see [Translating Addons](https://github.com/nvaccess/nvda/wiki/TranslatingAddons) for more information.
+* Add-ons (optional): a set of optional features that users can install.
+See the localization guides for [add-on authors](https://github.com/nvaccess/AddonTemplate/blob/master/docs/l10n/addonAuthors.md) and [add-on translators](https://github.com/nvaccess/AddonTemplate/blob/master/docs/l10n/addonTranslators.md).
