@@ -9,6 +9,7 @@ Splitting braille.py into a package must not drop or hide any symbol that extern
 code (add-ons, drivers, other NVDA modules, tests) reaches as ``braille.X``.
 After the facade rewrite, resident names are directly on the module, deprecated names
 are served via ``__getattr__`` with a log warning.
+The same applies to the ``brailleInput`` module, which became the ``braille.input`` package.
 """
 
 import unittest
@@ -23,12 +24,17 @@ import braille.display.driver
 import braille.display.gesture
 import braille.extensions
 import braille.formatting
+import braille.input
+import braille.input.constants
+import braille.input.gesture
+import braille.input.inputHandler
 import braille.labels
 import braille.regions.base
 import braille.regions.NVDAObject
 import braille.regions.focus
 import braille.regions.properties
 import braille.regions.textInfo
+import brailleInput
 import config.configFlags
 
 
@@ -136,5 +142,56 @@ class TestBraillePublicSurface(unittest.TestCase):
 						actual,
 						expected,
 						f"braille.{name} returned wrong object",
+					)
+					mockLog.warning.assert_called_once()
+
+
+#: Names that live directly on ``braille.input`` and must NOT emit a deprecation warning.
+INPUT_RESIDENT = {"handler", "initialize", "terminate"}
+
+#: Mapping of deprecated ``brailleInput`` name -> the object it should resolve to.
+INPUT_DEPRECATED = {
+	# braille.input
+	"handler": braille.input.handler,
+	"initialize": braille.input.initialize,
+	"terminate": braille.input.terminate,
+	# constants
+	"FALLBACK_TABLE": braille.input.constants.FALLBACK_TABLE,
+	"DOT7": braille.input.constants.DOT7,
+	"DOT8": braille.input.constants.DOT8,
+	"LOUIS_DOTS_IO_START": braille.input.constants.LOUIS_DOTS_IO_START,
+	"UNICODE_BRAILLE_START": braille.input.constants.UNICODE_BRAILLE_START,
+	"UNICODE_BRAILLE_PROTECTED": braille.input.constants.UNICODE_BRAILLE_PROTECTED,
+	# gesture
+	"formatDotNumbers": braille.input.gesture.formatDotNumbers,
+	"BrailleInputGesture": braille.input.gesture.BrailleInputGesture,
+	# inputHandler
+	"BrailleInputHandler": braille.input.inputHandler.BrailleInputHandler,
+	"speakDots": braille.input.inputHandler.speakDots,
+}
+
+
+class TestBrailleInputPublicSurface(unittest.TestCase):
+	def test_residentNamesAccessibleWithoutWarning(self):
+		"""INPUT_RESIDENT names must be reachable via getattr without any deprecation warning."""
+		with patch("logHandler.log") as mockLog:
+			for name in INPUT_RESIDENT:
+				with self.subTest(name=name):
+					self.assertTrue(
+						hasattr(braille.input, name),
+						f"braille.input.{name} missing",
+					)
+			mockLog.warning.assert_not_called()
+
+	def test_deprecatedNamesReturnCorrectObject(self):
+		"""Each deprecated name must resolve to the same object as the new-home import."""
+		for name, expected in INPUT_DEPRECATED.items():
+			with self.subTest(name=name):
+				with patch("logHandler.log") as mockLog:
+					actual = getattr(brailleInput, name)
+					self.assertIs(
+						actual,
+						expected,
+						f"brailleInput.{name} returned wrong object",
 					)
 					mockLog.warning.assert_called_once()
