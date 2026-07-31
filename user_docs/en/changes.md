@@ -66,6 +66,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * The Add-on Store no longer becomes unresponsive when navigating the list of add-ons quickly, such as by holding down an arrow key. (#17351, @christopherpross)
 * Remote Access: NVDA now reports when connecting as the controlled computer fails, while continuing to retry the connection in the background. (#19103, @danielw97)
 * NVDA no longer briefly disconnects and re-detects the braille display on desktop switches that do not enter the secure desktop, such as when switching between a Remote Desktop session and the local machine. (#18810, #20550, @LeonarddeR)
+* In Windows Terminal, mouse tracking now reports the line of text under the mouse pointer. (#20448, @DataTriny)
 
 ### Changes for Developers
 
