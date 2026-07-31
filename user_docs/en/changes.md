@@ -119,7 +119,7 @@ Use the corresponding `TouchAction` enum members instead (e.g. `TouchAction.TAP`
 Use `TouchAction(value).displayString` instead. (#20086, @kefaslungu)
 * The `URL_MK_UNIFORM`, `DIALOG_OPTIONS` and `HTMLDLG_*` constants in `ui` are deprecated with no replacement, as the COM-based HTML dialog infrastructure has been removed.
 Use `gui.message.HtmlMessageDialog` instead. (#18878, @LeonarddeR)
-* `languageHandler.LCIDS_TO_TRANSLATED_LOCALES` is deprecated with no public replacement.
+* `languageHandler.LCIDS_TO_TRANSLATED_LOCALES` is deprecated.
 Use `languageHandler.windowsLCIDToLocaleName` or `winKernel.LCIDToLocaleName` instead. (#20589, @LeonarddeR)
 * The symbols that moved out of the `braille` module facade when it became a package are deprecated.
 Accessing them as `braille.X` still works but logs a deprecation warning; import them from their new location instead, as listed below. (#20390, @LeonarddeR)
