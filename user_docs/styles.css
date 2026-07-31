@@ -90,3 +90,51 @@ dl > dd {
 thead:has(tr > th.hideHeaderRow) {
   display: none;
 }
+
+/*
+Dark mode
+
+Applied automatically when the user's operating system / browser requests a
+dark colour scheme. Only colours are overridden here; layout, fonts and
+spacing are inherited from the light theme above. The NVDA purple identity is
+preserved by using lightened tints that keep sufficient contrast on a dark
+background (WCAG AA).
+*/
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #1a1a1a;
+    color: #e8e8e8;
+  }
+
+  h1 {
+    color: #fff;
+    background-color: #5d3f80; /* lightened NVDA purple */
+  }
+
+  h2, h3, h4, a {
+    color: #cba2e8; /* lightened NVDA purple */
+  }
+
+  strong {
+    color: #fff;
+  }
+
+  /* tables */
+  table, td, th {
+    border-color: #555;
+  }
+  th {
+    color: #cba2e8; /* lightened NVDA purple */
+  }
+
+  /* code / pre */
+  code,
+  pre {
+    background: #262626;
+    border-bottom: 1px solid #333;
+    color: #e8e8e8;
+  }
+  pre {
+    border-left: 2px solid #69c;
+  }
+}
