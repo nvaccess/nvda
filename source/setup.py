@@ -315,6 +315,7 @@ freeze(
 			"comInterfaces",
 			"braille",
 			"braille.display",
+			"braille.input",
 			"braille.regions",
 			"brailleDisplayDrivers",
 			"brailleDisplayDrivers.albatross",
