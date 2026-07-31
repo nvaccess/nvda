@@ -15,7 +15,7 @@ import bdDetect
 import braille
 import braille.display.driver
 import braille.display.gesture
-import brailleInput
+import braille.input.gesture
 import hwIo
 import inputCore
 import serial
@@ -716,7 +716,7 @@ class InputGesture(braille.display.gesture.BrailleDisplayGesture):
 		super().__init__()
 
 
-class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
+class KeyGesture(InputGesture, braille.input.gesture.BrailleInputGesture):
 	"""Handle keys and braille input for Freedom Scientific braille displays"""
 
 	keyLabels = [
