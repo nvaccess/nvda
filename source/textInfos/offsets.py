@@ -16,8 +16,10 @@ import textInfos
 import locationHelper
 from treeInterceptorHandler import TreeInterceptor
 import textUtils
+from textUtils import icu
 from textUtils.segFlag import CharSegFlag, WordSegFlag
 from textUtils._wordSeg.wordSegmenter import WordSegmenter
+from winBindings.icu import ICU_AVAILABLE
 from dataclasses import dataclass
 from typing import (
 	Any,
@@ -556,13 +558,30 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 		return [start, end]
 
 	def _getSentenceOffsets(self, offset: int) -> tuple[int, int]:
-		"""
-		Gets the start and end offsets of the sentence containing the given offset.
+		"""Gets the start and end offsets of the sentence containing the given offset.
+
+		Sentences are segmented over the containing paragraph (:meth:`_getParagraphOffsets`)
+		using the Windows built-in ICU BreakIterator (UAX#29), so a sentence can span
+		multiple lines.
+
 		:param offset: The offset of the character within the sentence.
 		:return: A tuple of the start and end offsets of the sentence.
-		:raise NotImplementedError: If the method is not implemented.
+		:raises NotImplementedError: If ICU is unavailable (Windows older than version 1703)
+		    or the ICU call fails.
 		"""
-		raise NotImplementedError
+		if not ICU_AVAILABLE:
+			raise NotImplementedError
+		paragraphStart, paragraphEnd = self._getParagraphOffsets(offset)
+		paragraphText = self._getTextRange(paragraphStart, paragraphEnd)
+		result = icu.calculateOffsetsForEncoding(
+			icu.calculateSentenceOffsets,
+			paragraphText,
+			offset - paragraphStart,
+			self.encoding,
+		)
+		if result is None:
+			raise NotImplementedError
+		return (result[0] + paragraphStart, result[1] + paragraphStart)
 
 	def _getParagraphOffsets(self, offset):
 		return self._getLineOffsets(offset)
