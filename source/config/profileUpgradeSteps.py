@@ -687,3 +687,22 @@ def upgradeConfigFrom_21_to_22(profile: ConfigObj):
 	if language.casefold() == "auto":
 		speechConf["language"] = "en"
 		log.debug("Changed math.speech.language from 'Auto' to 'en'.")
+
+
+def upgradeConfigFrom_22_to_23(profile: ConfigObj):
+	# No-op to resolve upgrade conflicts between alpha/beta in 2026.2 release cycle
+	pass
+
+
+def upgradeConfigFrom_23_to_24(profile: ConfigObj):
+	"""Upgrade configuration from schema version 23 to 24."""
+	magnifierConf = profile.get("magnifier")
+	if not magnifierConf:
+		log.debug("No magnifier section in profile. No action taken.")
+		return
+	try:
+		del magnifierConf["isTrueCentered"]
+	except KeyError:
+		log.debug("No isTrueCentered setting in profile. No action taken.")
+	if magnifierConf.get("fullscreenMode") == "border":
+		del magnifierConf["fullscreenMode"]
