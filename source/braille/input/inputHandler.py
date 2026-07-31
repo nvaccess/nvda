@@ -5,30 +5,29 @@
 
 """Handler for braille input."""
 
+import struct
 import time
-from typing import Optional, List, Set
 
-import louis
-import brailleTables
+import api
 import braille
 import braille.regions.textInfo
+import brailleTables
 import config
-from logHandler import log
-import winUser
-import winBindings.user32
 import inputCore
-import speech
 import keyboardHandler
-import api
-from baseObject import AutoPropertyObject
 import keyLabels
-import struct
+import louis
+import speech
+import winBindings.user32
+import winUser
+from baseObject import AutoPropertyObject
+from logHandler import log
 
 from .constants import (
 	FALLBACK_TABLE,
 	LOUIS_DOTS_IO_START,
-	UNICODE_BRAILLE_START,
 	UNICODE_BRAILLE_PROTECTED,
+	UNICODE_BRAILLE_START,
 )
 from .gesture import formatDotNumbers
 
@@ -36,14 +35,14 @@ from .gesture import formatDotNumbers
 class BrailleInputHandler(AutoPropertyObject):
 	"""Handles braille input."""
 
-	bufferBraille: List[int]
+	bufferBraille: list[int]
 	bufferText: str
-	cellsWithText: Set[int]
+	cellsWithText: set[int]
 	untranslatedBraille: str
 	untranslatedStart: int
 	untranslatedCursorPos: int
-	_uncontSentTime: Optional[float]
-	currentModifiers: Set[str]
+	_uncontSentTime: float | None
+	currentModifiers: set[str]
 
 	def __init__(self):
 		super().__init__()
@@ -252,13 +251,13 @@ class BrailleInputHandler(AutoPropertyObject):
 	def toggleModifier(self, modifier: str):
 		self.toggleModifiers([modifier])
 
-	def toggleModifiers(self, modifiers: List[str]):
+	def toggleModifiers(self, modifiers: list[str]):
 		# Check modifier validity
 		validModifiers: bool = all(
 			keyboardHandler.KeyboardInputGesture.fromName(m).isModifier for m in modifiers
 		)
 		if not validModifiers:
-			raise ValueError("%r contains unknown modifiers" % modifiers)
+			raise ValueError(f"{modifiers!r} contains unknown modifiers")
 
 		# Ensure input buffer is clear for the modified key
 		if self.bufferText:
@@ -387,7 +386,8 @@ class BrailleInputHandler(AutoPropertyObject):
 			inputCore.manager.emulateGesture(keyboardHandler.KeyboardInputGesture.fromName(gesture))
 		except:  # noqa: E722
 			log.debugWarning(
-				"Unable to emulate %r, falling back to sending unicode characters" % gesture,
+				"Unable to emulate %r, falling back to sending unicode characters",
+				gesture,
 				exc_info=True,
 			)
 			self.sendChars(key)
@@ -459,7 +459,9 @@ class BrailleInputHandler(AutoPropertyObject):
 				self._table = brailleTables.getTable(tableName)
 			except LookupError:
 				log.error(
-					f"Invalid input table ({tableName}), falling back to default ({FALLBACK_TABLE}).",
+					"Invalid input table (%s), falling back to default (%s).",
+					tableName,
+					FALLBACK_TABLE,
 				)
 				self._table = brailleTables.getTable(FALLBACK_TABLE)
 

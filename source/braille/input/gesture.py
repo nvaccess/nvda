@@ -33,7 +33,7 @@ class BrailleInputGesture(inputCore.InputGesture):
 	shouldPreventSystemIdle = True
 
 	def _makeDotsId(self):
-		items = ["dot%d" % (i + 1) for i in range(8) if self.dots & (1 << i)]
+		items = [f"dot{i + 1}" for i in range(8) if self.dots & (1 << i)]
 		if self.space:
 			items.append("space")
 		return "bk:" + "+".join(items)
