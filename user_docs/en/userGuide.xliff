@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en">
-<file id="userGuide.md" original="https://raw.githubusercontent.com/nvaccess/nvda/5f2a041124292b4dd2a46a0a742858ff1399f704/user_docs/en/userGuide.md">
+<file id="userGuide.md" original="https://raw.githubusercontent.com/nvaccess/nvda/a772a5e02346c90eb192662af474ccaded07eea9/user_docs/en/userGuide.md">
 <skeleton>
 # $(ID:f5169acb-2803-46c6-8e4c-7c1aaf973723)
 
@@ -1386,9 +1386,9 @@ $(ID:5ab40692-93ed-43f0-8762-f2c39404c319)
 
 $(ID:23131626-4c87-4baf-bad5-68f6ed1d42fc)
 $(ID:0491cf5e-193b-4d9a-85dd-3b46bdfdfa2d)
-$(ID:461e2792-c716-4a1d-a396-7dba7b5e1d78)
-$(ID:2820ca44-f5b6-447d-a08e-80ca7adfd0fc)
-$(ID:8512352a-dd41-4854-8908-61be0b190747)
+$(ID:959b899b-06ca-490b-bea6-dc67b33defb1)
+$(ID:d0abc6f2-ce8b-44e6-802f-d6eb203c8fba)
+$(ID:8087b1b5-337f-4385-972a-3e071e8bf215)
 $(ID:1276b83b-4505-496e-ab69-20930f3b04d3)
 
 $(ID:f09ef289-0de6-4614-abf1-6659edfc3d99)
@@ -1409,10 +1409,10 @@ $(ID:25ff9cf1-ce07-4d74-ab99-1c6d0dc684fb)
 |$(ID:5d0e45a0-a5ef-44c3-90da-51a4bf928842)|
 |---|---|---|
 |$(ID:416d3eb0-9dcc-4eb3-82f4-00806c6a246f)|
-|$(ID:0e0a3eba-f29d-429b-9bfb-0d836b49a981)|
-|$(ID:bb681cd8-5514-4de1-90f4-b006081240b0)|
-|$(ID:411b3c06-acc6-4559-9065-cd9d017d2ca2)|
-|$(ID:aae3eb7d-4d70-48d3-9665-2b675f29e73d)|
+|$(ID:74e9de1f-e0ab-4027-a945-a0507ddb7387)|
+|$(ID:49b4f7d4-a12a-4c3b-9a5f-85415f59426b)|
+|$(ID:34003f0e-90cb-4700-b9ee-389cbfeb63fb)|
+|$(ID:458431c3-1f56-4ec7-8cd3-bd430a756bef)|
 |$(ID:cd9efa94-1037-4000-98b8-e49e62cff4d2)|
 |$(ID:f2df199c-30d8-4d0e-bdea-27a3bb4e8ec5)|
 |$(ID:083f81af-43d6-40e4-b546-c17982f274f4)|
@@ -14907,28 +14907,28 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
 <source>When using this feature, the braille display scrolls to present information which is more than will fit on the display at once.</source>
 </segment>
 </unit>
-<unit id="461e2792-c716-4a1d-a396-7dba7b5e1d78">
+<unit id="959b899b-06ca-490b-bea6-dc67b33defb1">
 <notes>
 <note appliesTo="source">line: 1386</note>
 </notes>
 <segment>
-<source>The feature is disabled and a gesture to start braille scrolling is undefined by default.</source>
+<source>The feature is disabled by default.</source>
 </segment>
 </unit>
-<unit id="2820ca44-f5b6-447d-a08e-80ca7adfd0fc">
+<unit id="d0abc6f2-ce8b-44e6-802f-d6eb203c8fba">
 <notes>
 <note appliesTo="source">line: 1387</note>
 </notes>
 <segment>
-<source>To use automatic braille scrolling, a gesture needs to be set in NVDA's [Input Gestures dialog](#InputGestures) before it can be used.</source>
+<source>You can change the gestures assigned to use automatic braille scrolling in NVDA's [Input Gestures dialog](#InputGestures) before it can be used.</source>
 </segment>
 </unit>
-<unit id="8512352a-dd41-4854-8908-61be0b190747">
+<unit id="8087b1b5-337f-4385-972a-3e071e8bf215">
 <notes>
 <note appliesTo="source">line: 1388</note>
 </notes>
 <segment>
-<source>Gestures can also be set to speed up or slow down the rate of automatic scrolling.</source>
+<source>Gestures are also available to speed up or slow down the rate of automatic scrolling.</source>
 </segment>
 </unit>
 <unit id="1276b83b-4505-496e-ab69-20930f3b04d3">
@@ -15046,44 +15046,44 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
 <source> Toggles braille mode | `NVDA+alt+t` | Allows cycling between available braille modes: "follow cursors" and "display speech output"</source>
 </segment>
 </unit>
-<unit id="0e0a3eba-f29d-429b-9bfb-0d836b49a981">
+<unit id="74e9de1f-e0ab-4027-a945-a0507ddb7387">
 <notes>
 <note appliesTo="source">line: 1409</note>
 <note appliesTo="source">prefix: |</note>
 <note appliesTo="source">suffix: |</note>
 </notes>
 <segment>
-<source> Tether braille |`NVDA+control+t` | This option allows you to choose whether the braille display will follow the system focus / caret, the navigator object / review cursor, or both </source>
+<source> Tether braille | `NVDA+control+t` | This option allows you to choose whether the braille display will follow the system focus / caret, the navigator object / review cursor, or both </source>
 </segment>
 </unit>
-<unit id="bb681cd8-5514-4de1-90f4-b006081240b0">
+<unit id="49b4f7d4-a12a-4c3b-9a5f-85415f59426b">
 <notes>
 <note appliesTo="source">line: 1410</note>
 <note appliesTo="source">prefix: |</note>
 <note appliesTo="source">suffix: |</note>
 </notes>
 <segment>
-<source> Toggle automatic scroll | None | Toggles whether NVDA periodically scrolls the braille display to present information which is too long to show at once </source>
+<source> Toggle automatic scroll | `NVDA+alt+k` | Toggles whether NVDA periodically scrolls the braille display to present information which is too long to show at once </source>
 </segment>
 </unit>
-<unit id="411b3c06-acc6-4559-9065-cd9d017d2ca2">
+<unit id="34003f0e-90cb-4700-b9ee-389cbfeb63fb">
 <notes>
 <note appliesTo="source">line: 1411</note>
 <note appliesTo="source">prefix: |</note>
 <note appliesTo="source">suffix: |</note>
 </notes>
 <segment>
-<source> Increase automatic scroll rate | None | Makes automatic scrolling faster (when enabled) </source>
+<source> Increase automatic scroll rate | `NVDA+alt+l` | Makes automatic scrolling faster (when enabled) </source>
 </segment>
 </unit>
-<unit id="aae3eb7d-4d70-48d3-9665-2b675f29e73d">
+<unit id="458431c3-1f56-4ec7-8cd3-bd430a756bef">
 <notes>
 <note appliesTo="source">line: 1412</note>
 <note appliesTo="source">prefix: |</note>
 <note appliesTo="source">suffix: |</note>
 </notes>
 <segment>
-<source> Decrease automatic scroll rate | None | Makes automatic scrolling slower (when enabled) </source>
+<source> Decrease automatic scroll rate | `NVDA+alt+j` | Makes automatic scrolling slower (when enabled) </source>
 </segment>
 </unit>
 <unit id="cd9efa94-1037-4000-98b8-e49e62cff4d2">
