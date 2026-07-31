@@ -1400,9 +1400,9 @@ Where text is longer than will fit on the display, panning or other keys on the 
 
 Automatic braille scrolling can be enabled to scroll the display at a set speed.
 When using this feature, the braille display scrolls to present information which is more than will fit on the display at once.
-The feature is disabled and a gesture to start braille scrolling is undefined by default.
-To use automatic braille scrolling, a gesture needs to be set in NVDA's [Input Gestures dialog](#InputGestures) before it can be used.
-Gestures can also be set to speed up or slow down the rate of automatic scrolling.
+The feature is disabled by default.
+You can change the gestures assigned to use automatic braille scrolling in NVDA's [Input Gestures dialog](#InputGestures) before it can be used.
+Gestures are also available to speed up or slow down the rate of automatic scrolling.
 Alternatively, you can [set the automatic scroll rate in Braille Settings](#BrailleAutoScrollRate).
 
 While braille is scrolling, you can still use the scroll back and scroll forward commands without stopping scrolling.
@@ -1423,10 +1423,10 @@ While reading, automatic braille scrolling will stop when any of the following h
 | Name | Key | Description |
 |---|---|---|
 | Toggles braille mode | `NVDA+alt+t` | Allows cycling between available braille modes: "follow cursors" and "display speech output"|
-| Tether braille |`NVDA+control+t` | This option allows you to choose whether the braille display will follow the system focus / caret, the navigator object / review cursor, or both |
-| Toggle automatic scroll | None | Toggles whether NVDA periodically scrolls the braille display to present information which is too long to show at once |
-| Increase automatic scroll rate | None | Makes automatic scrolling faster (when enabled) |
-| Decrease automatic scroll rate | None | Makes automatic scrolling slower (when enabled) |
+| Tether braille | `NVDA+control+t` | This option allows you to choose whether the braille display will follow the system focus / caret, the navigator object / review cursor, or both |
+| Toggle automatic scroll | `NVDA+alt+k` | Toggles whether NVDA periodically scrolls the braille display to present information which is too long to show at once |
+| Increase automatic scroll rate | `NVDA+alt+l` | Makes automatic scrolling faster (when enabled) |
+| Decrease automatic scroll rate | `NVDA+alt+j` | Makes automatic scrolling slower (when enabled) |
 | Cycle braille cursor shapes | None | Cycle through the shape options (dot pattern) of the braille cursor |
 | Cycle move system caret when routing review cursor | None | Cycle through the braille move system caret when routing review cursor states |
 | Cycle show messages modes | None | Cycle through the braille show messages modes |
@@ -1671,7 +1671,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 | Increase the magnification level | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
 | Decrease the magnification level | `NVDA+shift+minus` | Decreases the zoom level |
 | Cycle color filters | `NVDA+shift+i` | Cycles through the available color filters (normal, grayscale, inverted) |
-| Cycle tracking mode | None | Cycles through tracking modes (center, border, relative) |
+| Cycle tracking mode | None | Cycles through tracking modes (center, relative) |
 | Show entire screen overview | `NVDA+shift+l` | Temporarily shows an overview of the entire screen |
 | Pan left | `NVDA+alt+leftArrow` | Moves the magnified view left by the configured panning step size |
 | Pan right | `NVDA+alt+rightArrow` | Moves the magnified view right by the configured panning step size |
@@ -1702,15 +1702,12 @@ The magnifier provides three color filter options:
 
 To cycle through the available filters press `NVDA+shift+i`.
 
-### Tracking Modes {#MagnifierTrackingModes}
+### Tracking Modes {#MagnifierTrackingMode}
 
-The magnifier offers three different modes for tracking the mouse, system focus, review cursor, and navigator object, and determining which part of the screen to magnify:
+The magnifier offers different modes for tracking the mouse, system focus, review cursor, and navigator object, and determining which part of the screen to magnify:
 
 * Center: The magnified area is centered on the currently tracked position.
 This mode keeps the tracked element at the center of the screen and clamps to the screen edge.
-To disable clamping, activate [true center tracking in the Magnifier settings](#MagnifierTrueCenterTracking).
-* Border: The magnified area only moves when the tracked position approaches the edge of the visible area.
-This mode provides a more stable view, only adjusting when necessary.
 * Relative: The magnified area maintains the relative position of the tracked element based on its position on the screen.
 
 To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
@@ -3016,16 +3013,6 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### True center tracking {#MagnifierTrueCenterTracking}
-
-This checkbox controls whether the magnifier should always keep the tracked position centered on the screen, even when the tracked element is next to the screen edges, or if it should allow the tracked position to move towards the edges of the screen.
-When enabled, the magnifier will always keep the tracked position centered on the screen, which can be helpful for users who prefer a consistent tracked position within the magnified view.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-| Options | Disabled, Enabled |
-| Default | Disabled |
-
 ##### Panning step size {#MagnifierPanningStepSize}
 
 This option allows you to set the panning step size as a percentage of the visible magnified window.
@@ -3080,7 +3067,7 @@ When enabled, the magnified area will automatically move to follow the navigator
 | Options | Disabled, Enabled |
 | Default | Enabled |
 
-##### Tracking mode {#MagnifierTrackingMode}
+##### Tracking mode {#MagnifierTrackingModeSetting}
 
 This combo box allows you to select the tracking mode when using the magnifier.
 To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
@@ -3088,13 +3075,12 @@ The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Options | Center, Border, Relative |
+| Options | Center, Relative |
 | Default | Center |
 
 | Option | Description |
 |---|---|
 | Center | The magnified area is always centered on the currently tracked position. |
-| Border | The magnified area only moves when the tracked element approaches the edge of the visible area. |
 | Relative | The magnified area maintains the relative position of the tracked element based on its position on the screen. |
 
 #### Keyboard {#KeyboardSettings}
