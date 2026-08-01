@@ -1,10 +1,8 @@
-# brailleDisplayDrivers/papenmeier.py
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2012-2017 Tobias Platen, Halim Sahin, Ali-Riza Ciftcioglu, NV Access Limited, Davy Kager
-# Author: Tobias Platen (nvda@lists.thm.de)
-# minor changes by Halim Sahin (nvda@lists.thm.de), Ali-Riza Ciftcioglu <aliminator83@googlemail.com>, James Teh and Davy Kager
+# Copyright (C) 2012-2026 Tobias Platen, Halim Sahin, Ali-Riza Ciftcioglu, NV Access Limited, Davy Kager,
+# Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import time
 from typing import List, Union, Optional
@@ -16,7 +14,7 @@ import braille.display.gesture
 from logHandler import log
 
 import inputCore
-import brailleInput
+import braille.input.gesture
 import keyboardHandler
 
 try:
@@ -623,7 +621,7 @@ def brl_join_keys(dec: List[str]) -> str:
 		return ""
 
 
-class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.gesture.BrailleInputGesture):
 	"""Input gesture for papenmeier displays"""
 
 	source = BrailleDisplayDriver.name
