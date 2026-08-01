@@ -10,6 +10,7 @@ Including to set a value, or compare two values.
 
 from __future__ import annotations
 from dataclasses import dataclass
+import UIAHandler
 from .. import lowLevel
 from .. import builder
 from ._base import _TypedInstruction
@@ -24,6 +25,20 @@ class Set(_TypedInstruction):
 	def localExecute(self, registers: dict[lowLevel.OperandId, object]):
 		value = registers[self.value.operandId]
 		registers[self.target.operandId] = value
+
+
+@dataclass
+class IsNotSupported(_TypedInstruction):
+	opCode = lowLevel.InstructionType.IsNotSupported
+	result: builder.Operand
+	target: builder.Operand
+
+	def localExecute(self, registers: dict[lowLevel.OperandId, object]):
+		if not UIAHandler.handler:
+			raise RuntimeError("UIAHandler not initialized")
+		registers[self.result.operandId] = (
+			registers[self.target.operandId] == UIAHandler.handler.reservedNotSupportedValue
+		)
 
 
 @dataclass
