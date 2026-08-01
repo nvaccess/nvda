@@ -832,7 +832,11 @@ class UIAHandler(COMObject):
 				return
 		if not obj:
 			try:
-				obj = NVDAObjects.UIA.UIA(windowHandle=window, UIAElement=sender)
+				obj = NVDAObjects.UIA.UIA(
+					windowHandle=window,
+					UIAElement=sender,
+					initialUIACachedPropertyIDs=baseCachePropertyIDs,
+				)
 			except Exception:
 				if _isDebug():
 					log.debugWarning(
@@ -924,7 +928,11 @@ class UIAHandler(COMObject):
 				)
 			return
 		try:
-			obj = NVDAObjects.UIA.UIA(windowHandle=window, UIAElement=sender)
+			obj = NVDAObjects.UIA.UIA(
+				windowHandle=window,
+				UIAElement=sender,
+				initialUIACachedPropertyIDs=baseCachePropertyIDs,
+			)
 		except Exception:
 			if _isDebug():
 				log.debugWarning(
@@ -1033,7 +1041,11 @@ class UIAHandler(COMObject):
 				return
 		if not obj:
 			try:
-				obj = NVDAObjects.UIA.UIA(windowHandle=window, UIAElement=sender)
+				obj = NVDAObjects.UIA.UIA(
+					windowHandle=window,
+					UIAElement=sender,
+					initialUIACachedPropertyIDs=baseCachePropertyIDs,
+				)
 			except Exception:
 				if _isDebug():
 					log.debugWarning(
@@ -1116,7 +1128,11 @@ class UIAHandler(COMObject):
 		import NVDAObjects.UIA
 
 		try:
-			obj = NVDAObjects.UIA.UIA(UIAElement=sender, windowHandle=window)
+			obj = NVDAObjects.UIA.UIA(
+				UIAElement=sender,
+				windowHandle=window,
+				initialUIACachedPropertyIDs=baseCachePropertyIDs,
+			)
 		except Exception:
 			if _isDebug():
 				log.debugWarning(
@@ -1174,7 +1190,10 @@ class UIAHandler(COMObject):
 		import NVDAObjects.UIA
 
 		try:
-			obj = NVDAObjects.UIA.UIA(UIAElement=sender)
+			obj = NVDAObjects.UIA.UIA(
+				UIAElement=sender,
+				initialUIACachedPropertyIDs=baseCachePropertyIDs,
+			)
 		except Exception:
 			if _isDebug():
 				log.debugWarning(
