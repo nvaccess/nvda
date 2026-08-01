@@ -1185,9 +1185,13 @@ class UIA(Window):
 			value = self.UIAElement.getCurrentPropertyValueEx(ID, ignoreDefault)
 		return value
 
-	def _prefetchUIACacheForPropertyIDs(self, IDs):
-		"""
-		Fetch values for all the given UI Automation property IDs in one cache request, making them available for this core cycle.
+	def _prefetchUIACacheForPropertyIDs(self, IDs: typing.Collection[int]) -> None:
+		"""Fetch values for all the given UI Automation property IDs in one cache request,
+		making them available for this core cycle.
+
+		:param IDs: the UI Automation property IDs to fetch.
+			IDs for which a cached element is already known this core cycle are skipped.
+			When fewer than two IDs remain, no cache request is made.
 		"""
 		elementCache = self._coreCycleUIAPropertyCacheElementCache
 		if elementCache:
@@ -1562,17 +1566,25 @@ class UIA(Window):
 		"""Simply fetches a UIA text range for the given UIAElement, allowing subclasses to process the range first."""
 		return UIATextRangeFromElement(self.UIATextPattern, UIAElement)
 
-	def __init__(self, windowHandle=None, UIAElement=None, initialUIACachedPropertyIDs=None):
+	def __init__(
+		self,
+		windowHandle: int | None = None,
+		UIAElement: UIAHandler.IUIAutomationElement | None = None,
+		initialUIACachedPropertyIDs: typing.Iterable[int] | None = None,
+	):
 		"""
 		An NVDAObject for a UI Automation element.
-		@param windowHandle: if a UIAElement is not specifically given, then this windowHandle is used to fetch its root UIAElement
-		@type windowHandle: int
-		@param UIAElement: the UI Automation element that should be represented by this NVDAObject
-		The UI Automation element must have been created with a L{UIAHandler.handler.baseCacheRequest}
-		@type UIAElement: L{UIAHandler.IUIAutomationElement}
-		@param initialUIACachedPropertyIDs: Extra UI Automation properties the given UIAElement has already had cached with a UIA cache request that inherits from L{UIAHandler.handler.baseCacheRequest}.
-		Cached values of these properties will be available for the remainder of the current core cycle. After that, new values will be fetched.
-		@type initialUIACachedPropertyIDs: L{UIAHandler.IUIAutomationCacheRequest}
+		:param windowHandle: the window handle for this object.
+			When not given, the nearest window handle is located by walking the UIAElement's ancestry.
+		:param UIAElement: the UI Automation element that should be represented by this NVDAObject.
+			The UI Automation element must have been created with a cache request that inherits from
+			UIAHandler.handler.baseCacheRequest.
+		:param initialUIACachedPropertyIDs: IDs of UI Automation properties the given UIAElement
+			already has cached.
+			Cached values of these properties will be available for the remainder of the current
+			core cycle. After that, new values will be fetched.
+		:raises ValueError: if no UIAElement is given.
+		:raises InvalidNVDAObject: if no window handle is given and none can be located.
 		"""
 		if not UIAElement:
 			raise ValueError("needs a UIA element")
