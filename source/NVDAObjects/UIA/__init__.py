@@ -1608,6 +1608,7 @@ class UIA(Window):
 
 	def event_gainFocus(self):
 		UIAHandler.handler.addLocalEventHandlerGroupToElement(self.UIAElement, isFocus=True)
+		self._prefetchUIACacheForPropertyIDs(self._focusPrefetchUIAPropertyIDs | self._UIAStatesPropertyIDs)
 		super().event_gainFocus()
 
 	def event_loseFocus(self):
@@ -1947,6 +1948,23 @@ class UIA(Window):
 		UIAHandler.UIA_AnnotationTypesPropertyId,
 		UIAHandler.UIA_DragIsGrabbedPropertyId,
 	}
+
+	_focusPrefetchUIAPropertyIDs = {
+		UIAHandler.UIA_FullDescriptionPropertyId,
+		UIAHandler.UIA_HelpTextPropertyId,
+		UIAHandler.UIA_AccessKeyPropertyId,
+		UIAHandler.UIA_AcceleratorKeyPropertyId,
+		UIAHandler.UIA_PositionInSetPropertyId,
+		UIAHandler.UIA_SizeOfSetPropertyId,
+		UIAHandler.UIA_LevelPropertyId,
+		UIAHandler.UIA.UIA_ValueValuePropertyId,
+		UIAHandler.UIA.UIA_RangeValueValuePropertyId,
+		UIAHandler.UIA_ToggleToggleStatePropertyId,
+		UIAHandler.UIA_BoundingRectanglePropertyId,
+	}
+	"""UIA property IDs prefetched in a single cache request when this object gains focus.
+	Subclasses may extend this set with the properties they report on focus.
+	"""
 
 	def _get_states(self):
 		states = set()

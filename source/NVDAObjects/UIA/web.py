@@ -349,6 +349,12 @@ class UIAWebTextInfo(UIATextInfo):
 class UIAWeb(UIA):
 	_TextInfo = UIAWebTextInfo
 
+	_focusPrefetchUIAPropertyIDs = UIA._focusPrefetchUIAPropertyIDs | {
+		UIAHandler.UIA_AriaPropertiesPropertyId,
+		UIAHandler.UIA_AriaRolePropertyId,
+		UIAHandler.UIA_LandmarkTypePropertyId,
+	}
+
 	def _isIframe(self):
 		role = super().role
 		return role == controlTypes.Role.PANE and self.UIATextPattern
