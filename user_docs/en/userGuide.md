@@ -2416,6 +2416,7 @@ If you wish to quickly change speech settings without going to the Speech catego
 |Set the last value of the current synth setting |none |none |Select the last value of the current speech setting, e.g. set rate to 100 or select the last available voice|
 
 <!-- KC:endInclude -->
+NVDA remembers which synth setting was last focused for each synthesizer, and restores it when NVDA starts again.
 
 #### Braille {#BrailleSettings}
 
