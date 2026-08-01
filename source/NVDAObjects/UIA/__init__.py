@@ -136,6 +136,10 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_AriaPropertiesPropertyId,
 		UIAHandler.UIA_LevelPropertyId,
 		UIAHandler.UIA_IsEnabledPropertyId,
+		UIAHandler.UIA.UIA_SelectionCanSelectMultiplePropertyId,
+		UIAHandler.UIA_IsOffscreenPropertyId,
+		UIAHandler.UIA_AnnotationTypesPropertyId,
+		UIAHandler.UIA_DragIsGrabbedPropertyId,
 	}
 
 	def _get__controlFieldUIACacheRequest(self):
