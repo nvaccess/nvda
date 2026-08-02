@@ -91,7 +91,7 @@ For instance, "Will not work with UIA enabled in advanced settings".
 ## Code Review Checklist
 
 Code must be reviewed (via a Pull Request on GitHub) before it can be accepted into the project.
-The [Pull Request template](.github/PULL_REQUEST_TEMPLATE.md) asks authors (and reviewers) to consider several aspects of the change.
+The [Pull Request template](../../.github/PULL_REQUEST_TEMPLATE.md) asks authors (and reviewers) to consider several aspects of the change.
 
 The aim of this checklist is to ensure each item has been considered by both the author and the reviewer.
 Hopefully it helps to prevent items being forgotten.
