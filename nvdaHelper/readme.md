@@ -87,7 +87,7 @@ You should still build on the command line to verify errors.
   * In the project menu, select Properties
   * Select "Configuration:" `All Configurations`
   * Under "Configuration Properties" select NMake
-  * Set additional Options -> `/std:c++20`
+  * Set additional Options -> `/std:c++20 /utf-8`
 
 ### To confirm these settings
 
@@ -97,7 +97,7 @@ You should still build on the command line to verify errors.
 
   ```
   cl /Fobuild\x86\vbufBackends\gecko_ia2\gecko_ia2.obj /c build\x86\vbufBackends\gecko_ia2\gecko_ia2.cpp
-  /TP /EHsc /nologo /std:c++20 /permissive- /Od /MT /W3 /WX
+  /TP /EHsc /nologo /std:c++20 /permissive- /utf-8 /Od /MT /W3 /WX
   /DUNICODE /D_CRT_SECURE_NO_DEPRECATE /DLOGLEVEL=15 /D_WIN32_WINNT=_WIN32_WINNT_WIN10 /DNOMINMAX /DNDEBUG
   /Iinclude /Imiscdeps\include /Ibuild\x86
   /Z7
@@ -106,7 +106,7 @@ You should still build on the command line to verify errors.
 * This shows the:
   * defines beginning with `/D`
   * includes directories beginning with `/I`
-  * Additional options like `/std:c++20`
+  * Additional options like `/std:c++20` and `/utf-8`
 
 ## Compiling NVDAHelper with Debugging Options
 

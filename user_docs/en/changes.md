@@ -76,6 +76,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* NVDAHelper sources are now compiled with MSVC's `/utf-8` option, ensuring source files are interpreted consistently across Windows locales. (#20584, @noor-ahmadi)
 * `mathPres.interactWithMathMl` now accepts an optional `sourceObj` argument.
 Math presentation providers can override `MathPresentationProvider.interactWithMathMlFromSource` to use the source object when starting interaction.
 The default implementation forwards to `interactWithMathMl`, preserving compatibility with existing providers. (#20372, @RyanMcCleary)
