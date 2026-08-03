@@ -15,7 +15,6 @@ from NVDAState import _TrackNVDAInitialization
 import wx
 import ui
 import screenCurtain
-import touchHandler
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (

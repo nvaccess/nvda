@@ -9,7 +9,6 @@ In order to use touch features, NVDA must be installed on a touchscreen computer
 """
 
 import threading
-import speech
 from functools import cached_property
 from typing import (
 	TYPE_CHECKING,

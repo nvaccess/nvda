@@ -322,7 +322,9 @@ class TestFullScreenMagnifierApi(_TestMagnifier):
 		magnifier = FullScreenMagnifier()
 		magnifier._startMagnifier()
 
-		enableCalls = [call for call in self.mock_mag_fs.MagSetInputTransform.call_args_list if call.args[0] is True]
+		enableCalls = [
+			call for call in self.mock_mag_fs.MagSetInputTransform.call_args_list if call.args[0] is True
+		]
 		self.assertGreaterEqual(len(enableCalls), 1)
 
 		magnifier._stopMagnifier()
@@ -335,7 +337,9 @@ class TestFullScreenMagnifierApi(_TestMagnifier):
 
 		magnifier._stopMagnifier()
 
-		disableCalls = [call for call in self.mock_mag_fs.MagSetInputTransform.call_args_list if call.args[0] is False]
+		disableCalls = [
+			call for call in self.mock_mag_fs.MagSetInputTransform.call_args_list if call.args[0] is False
+		]
 		self.assertGreaterEqual(len(disableCalls), 1)
 
 	def testCannotStartWhenWindowsMagnifierRunning(self):
