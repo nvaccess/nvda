@@ -12,6 +12,7 @@ import config
 import globalCommands
 import inputCore
 import speech
+from speech.commands import EndUtteranceCommand
 import textInfos
 
 from .textProvider import BasicTextProvider
@@ -37,6 +38,31 @@ class _ReviewCopyTextProvider(BasicTextProvider):
 
 	def _isEqual(self, other: object) -> bool:
 		return isinstance(other, _ReviewCopyTextProvider) and self._identity == other._identity
+
+
+class LastSpokenInformation(unittest.TestCase):
+	"""Tests commands which use the last spoken information."""
+
+	def test_copyLastSpokenInformation_withoutLastSpeech(self) -> None:
+		with (
+			patch.object(globalCommands.speech.speech, "_lastSpeech", None),
+			patch.object(globalCommands.ui, "message") as message,
+			patch.object(globalCommands.api, "copyToClip") as copyToClip,
+		):
+			globalCommands.commands.script_copyLastSpokenInformation(_FakeInputGesture())
+
+		message.assert_called_once_with("Nothing to copy")
+		copyToClip.assert_not_called()
+
+	def test_copyLastSpokenInformation(self) -> None:
+		lastSpeech = (["first", EndUtteranceCommand(), "second"], None)
+		with (
+			patch.object(globalCommands.speech.speech, "_lastSpeech", lastSpeech),
+			patch.object(globalCommands.api, "copyToClip") as copyToClip,
+		):
+			globalCommands.commands.script_copyLastSpokenInformation(_FakeInputGesture())
+
+		copyToClip.assert_called_once_with("first  second", notify=True)
 
 
 class ReviewCopyMarker(unittest.TestCase):
