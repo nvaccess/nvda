@@ -547,7 +547,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		decimalSeparators = string(default=".")
 		# [default -- includes two forms of non-breaking spaces]
 		blockSeparators = string(default=", \u00a0\u202f")
-		# Auto, '.', ','
+		# Auto, '.', ',', Custom
+		# Custom is not currently functional or surfaced in the UI, but is included here for future use.
 		decimalSeparator = string(default="Auto")
 		# Use native math speech instead of MathCAT in Word and Outlook
 		useWordNativeMath = boolean(default=false)

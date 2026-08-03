@@ -39,16 +39,19 @@ class DecimalSeparatorOption(DisplayStringStrEnum):
 	AUTO = "Auto"
 	DOT = "."
 	COMMA = ","
+	CUSTOM = "Custom"
+	"""Custom is currently not functional or surfaced in the UI, but is included here for future use."""
 
 	@property
 	def _displayStringLabels(self) -> dict["DecimalSeparatorOption", str]:
 		return {
 			# Translators: options for decimal separator -- "Auto" = automatically pick the choice based on the language
 			self.AUTO: pgettext("math", "Automatic"),
-			# options for decimal separator -- use "."  (and use ", " for block separators)
 			self.DOT: ".",
-			# options for decimal separator -- use ","  (and use ". " for block separators)
 			self.COMMA: ",",
+			# Translators: options for decimal separator -- "Custom" = user sets it
+			# Custom is currently not functional or surfaced in the UI, but is included here for future use.
+			self.CUSTOM: pgettext("math", "Custom"),
 		}
 
 
