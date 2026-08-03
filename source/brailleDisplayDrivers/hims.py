@@ -91,16 +91,16 @@ def _findWinUsbDevicePath(deviceInterfaceGuid: GUID) -> str | None:
 			DIGCF.PRESENT | DIGCF.DEVICEINTERFACE,
 		)
 	except OSError as e:
-		log.debug("_findWinUsbDevicePath: SetupDiGetClassDevs failed: %s" % e)
+		log.debug(f"_findWinUsbDevicePath: SetupDiGetClassDevs failed: {e}")
 		return None
 	try:
 		did = SP_DEVICE_INTERFACE_DATA()
 		did.cbSize = ctypes.sizeof(did)
 		if not SetupDiEnumDeviceInterfaces(hDevInfo, None, byref(deviceInterfaceGuid), 0, byref(did)):
 			log.debug(
-				"_findWinUsbDevicePath: SetupDiEnumDeviceInterfaces found no device for GUID %s "
-				"(GetLastError=%d) -- WinUSB INF (hims_winusb.inf) may not be installed/bound for this device"
-				% (deviceInterfaceGuid, ctypes.GetLastError()),
+				f"_findWinUsbDevicePath: SetupDiEnumDeviceInterfaces found no device for GUID {deviceInterfaceGuid} "
+				f"(GetLastError={ctypes.GetLastError()}) -- WinUSB INF (hims_winusb.inf) may not be "
+				"installed/bound for this device",
 			)
 			return None
 
@@ -113,7 +113,8 @@ def _findWinUsbDevicePath(deviceInterfaceGuid: GUID) -> str | None:
 				(
 					"DevicePath",
 					# Round up to the next WCHAR count to ensure proper memory alignment.
-					ctypes.c_wchar * math.ceil((dwNeeded.value - ctypes.sizeof(DWORD)) / ctypes.sizeof(ctypes.c_wchar)),
+					ctypes.c_wchar
+					* math.ceil((dwNeeded.value - ctypes.sizeof(DWORD)) / ctypes.sizeof(ctypes.c_wchar)),
 				),
 			)
 			_pack_ = _SP_DEVICE_INTERFACE_DETAIL_DATA_PACKING._pack_
@@ -131,11 +132,10 @@ def _findWinUsbDevicePath(deviceInterfaceGuid: GUID) -> str | None:
 			byref(devinfo),
 		):
 			log.debug(
-				"_findWinUsbDevicePath: SetupDiGetDeviceInterfaceDetail failed, GetLastError=%d"
-				% ctypes.GetLastError(),
+				f"_findWinUsbDevicePath: SetupDiGetDeviceInterfaceDetail failed, GetLastError={ctypes.GetLastError()}",
 			)
 			return None
-		log.debug("_findWinUsbDevicePath: found DevicePath=%s" % idd.DevicePath)
+		log.debug(f"_findWinUsbDevicePath: found DevicePath={idd.DevicePath}")
 		return idd.DevicePath
 	finally:
 		SetupDiDestroyDeviceInfoList(hDevInfo)
@@ -158,7 +158,7 @@ class _WinUsbBulk:
 		:raises OSError: If the device could not be opened, or if the bulk IN/OUT pipes
 			could not be determined.
 		"""
-		log.debug("_WinUsbBulk: 1 opening device %s" % path)
+		log.debug(f"_WinUsbBulk: 1 opening device {path}")
 		self._onReceive = onReceive
 		self._readSize = onReceiveSize
 		self._closed = False
@@ -175,7 +175,7 @@ class _WinUsbBulk:
 		)
 		if self._handle == INVALID_HANDLE_VALUE:
 			err = ctypes.WinError()
-			log.debug("_WinUsbBulk: FAILED at step 1, CreateFile: %s" % err)
+			log.debug(f"_WinUsbBulk: FAILED at step 1, CreateFile: {err}")
 			raise err
 
 		# WinUsb_Initialize requires a handle opened with FILE_FLAG_OVERLAPPED
@@ -184,7 +184,7 @@ class _WinUsbBulk:
 		self._winUsbHandle = ctypes.c_void_p()
 		if not WinUsb_Initialize(self._handle, byref(self._winUsbHandle)):
 			err = ctypes.WinError()
-			log.debug("_WinUsbBulk: FAILED at step 2, WinUsb_Initialize: %s" % err)
+			log.debug(f"_WinUsbBulk: FAILED at step 2, WinUsb_Initialize: {err}")
 			winKernel.closeHandle(self._handle)
 			raise err
 
@@ -192,7 +192,7 @@ class _WinUsbBulk:
 		try:
 			self._pipeIn, self._pipeOut = self._queryPipes()
 		except Exception as e:
-			log.debug("_WinUsbBulk: FAILED at step 3, querying pipes: %s" % e)
+			log.debug(f"_WinUsbBulk: FAILED at step 3, querying pipes: {e}")
 			WinUsb_Free(self._winUsbHandle)
 			winKernel.closeHandle(self._handle)
 			raise
@@ -207,10 +207,10 @@ class _WinUsbBulk:
 			ctypes.sizeof(timeoutMs),
 			byref(timeoutMs),
 		):
-			log.debugWarning("WinUsb_SetPipePolicy(PIPE_TRANSFER_TIMEOUT) failed: %s" % ctypes.WinError())
+			log.debugWarning(f"WinUsb_SetPipePolicy(PIPE_TRANSFER_TIMEOUT) failed: {ctypes.WinError()}")
 
 		log.debug(
-			"_WinUsbBulk: 4 SUCCESS (pipeIn=0x%02X pipeOut=0x%02X)" % (self._pipeIn, self._pipeOut),
+			f"_WinUsbBulk: 4 SUCCESS (pipeIn=0x{self._pipeIn:02X} pipeOut=0x{self._pipeOut:02X})",
 		)
 		self._readThread = threading.Thread(target=self._readLoop, daemon=True)
 		self._readThread.start()
@@ -226,18 +226,18 @@ class _WinUsbBulk:
 		if not WinUsb_QueryInterfaceSettings(self._winUsbHandle, 0, byref(ifaceDesc)):
 			raise ctypes.WinError()
 		log.debug(
-			"_WinUsbBulk._queryPipes: bNumEndpoints=%d bInterfaceClass=%d"
-			% (ifaceDesc.bNumEndpoints, ifaceDesc.bInterfaceClass),
+			f"_WinUsbBulk._queryPipes: bNumEndpoints={ifaceDesc.bNumEndpoints} "
+			f"bInterfaceClass={ifaceDesc.bInterfaceClass}",
 		)
 		pipeIn = pipeOut = None
 		for i in range(ifaceDesc.bNumEndpoints):
 			pipe = WINUSB_PIPE_INFORMATION()
 			if not WinUsb_QueryPipe(self._winUsbHandle, 0, i, byref(pipe)):
-				log.debug("_WinUsbBulk._queryPipes: WinUsb_QueryPipe(%d) failed: %s" % (i, ctypes.WinError()))
+				log.debug(f"_WinUsbBulk._queryPipes: WinUsb_QueryPipe({i}) failed: {ctypes.WinError()}")
 				continue
 			log.debug(
-				"_WinUsbBulk._queryPipes: pipe[%d] id=0x%02X type=%d maxPacketSize=%d"
-				% (i, pipe.pipeId, pipe.pipeType, pipe.maximumPacketSize),
+				f"_WinUsbBulk._queryPipes: pipe[{i}] id=0x{pipe.pipeId:02X} type={pipe.pipeType} "
+				f"maxPacketSize={pipe.maximumPacketSize}",
 			)
 			if pipe.pipeType == USBD_PIPE_TYPE.BULK:
 				if pipe.pipeId & 0x80:
@@ -249,8 +249,7 @@ class _WinUsbBulk:
 			# to fall back to another connection method (e.g. hims.py's CUSTOM protocol handling)
 			# handle this the same way as a WinUsb_* API failure.
 			raise OSError(
-				"Could not find both bulk IN and OUT pipes on WinUSB device (pipeIn=%r, pipeOut=%r)"
-				% (pipeIn, pipeOut),
+				f"Could not find both bulk IN and OUT pipes on WinUSB device (pipeIn={pipeIn!r}, pipeOut={pipeOut!r})",
 			)
 		return pipeIn, pipeOut
 
@@ -273,7 +272,7 @@ class _WinUsbBulk:
 					# No data within PIPE_TRANSFER_TIMEOUT; keep waiting.
 					continue
 				if not self._closed:
-					log.debugWarning("WinUsb_ReadPipe failed: %s" % ctypes.WinError(err))
+					log.debugWarning(f"WinUsb_ReadPipe failed: {ctypes.WinError(err)}")
 				break
 			data = buf.raw[: bytesRead.value]
 			if data and self._onReceive:
@@ -299,7 +298,7 @@ class _WinUsbBulk:
 		:raises OSError: If the write failed.
 		"""
 		if _isHwIoDebug():
-			log.debug("Write: %r" % data)
+			log.debug(f"Write: {data!r}")
 		buf = ctypes.create_string_buffer(data, len(data))
 		written = ULONG()
 		if not WinUsb_WritePipe(self._winUsbHandle, self._pipeOut, buf, len(data), byref(written), None):
@@ -636,12 +635,12 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 							# available -- e.g. Windows 11 blocks installation of unsigned/non-WHCP
 							# kernel drivers. Fall back to WinUSB (winusb.sys, an inbox driver) if
 							# the vendor's WinUSB INF (hims_winusb.inf) is installed for this device.
-							log.info(
-								"hwIo.Bulk(port=%r) failed (%s); trying WinUSB fallback" % (port, bulkError),
+							log.debug(
+								f"hwIo.Bulk(port={port!r}) failed ({bulkError}); trying WinUSB fallback",
 							)
 							winUsbPath = _findWinUsbDevicePath(GUID_DEVINTERFACE_HIMS_WINUSB)
 							if not winUsbPath:
-								log.info(
+								log.debug(
 									"WinUSB fallback: no device found for GUID_DEVINTERFACE_HIMS_WINUSB; "
 									"giving up on this port",
 								)
@@ -649,7 +648,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 							try:
 								self._dev = _WinUsbBulk(winUsbPath, self._onReceive, onReceiveSize=64)
 							except EnvironmentError as winUsbError:
-								log.info("WinUSB fallback failed: %s" % winUsbError)
+								log.debug(f"WinUSB fallback failed: {winUsbError}")
 								raise
 					case bdDetect.ProtocolType.SERIAL:
 						self._dev = hwIo.Serial(
