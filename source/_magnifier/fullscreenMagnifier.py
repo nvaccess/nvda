@@ -272,8 +272,6 @@ class FullScreenMagnifier(Magnifier):
 		match self._fullscreenMode:
 			case FullScreenMode.RELATIVE:
 				return self._relativePos(coordinates)
-			case FullScreenMode.BORDER:
-				return self._borderPos(coordinates)
 			case FullScreenMode.CENTER:
 				return coordinates
 
@@ -289,51 +287,6 @@ class FullScreenMagnifier(Magnifier):
 		centerX = params.coordinates.x + params.magnifierSize.width // 2
 		centerY = params.coordinates.y + params.magnifierSize.height // 2
 		return Coordinates(centerX, centerY)
-
-	def _borderPos(
-		self,
-		coordinates: Coordinates,
-	) -> Coordinates:
-		"""
-		Check if focus is near magnifier border and adjust position accordingly
-		Returns adjusted position to keep focus within margin limits
-
-		:param coordinates: Raw coordinates (x, y)
-
-		:return: The adjusted position (x, y) of the focus point
-		"""
-		focusX, focusY = coordinates
-		params = self._getMagnifierParameters(self._lastScreenPosition)
-		magnifierWidth = params.magnifierSize.width
-		magnifierHeight = params.magnifierSize.height
-		lastLeft = params.coordinates.x
-		lastTop = params.coordinates.y
-
-		minX = lastLeft + self._MARGIN_BORDER
-		maxX = lastLeft + magnifierWidth - self._MARGIN_BORDER
-		minY = lastTop + self._MARGIN_BORDER
-		maxY = lastTop + magnifierHeight - self._MARGIN_BORDER
-
-		dx = 0
-		dy = 0
-
-		if focusX < minX:
-			dx = focusX - minX
-		elif focusX > maxX:
-			dx = focusX - maxX
-
-		if focusY < minY:
-			dy = focusY - minY
-		elif focusY > maxY:
-			dy = focusY - maxY
-
-		if dx != 0 or dy != 0:
-			return Coordinates(
-				self._lastScreenPosition.x + dx,
-				self._lastScreenPosition.y + dy,
-			)
-		else:
-			return self._lastScreenPosition
 
 	def _relativePos(
 		self,

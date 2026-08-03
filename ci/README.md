@@ -127,6 +127,12 @@ To enable, set:
 * `EMAIL_PASSWORD` as a secret.
 * `EMAIL_SERVER_ADDRESS` as a secret.
 * `EMAIL_SERVER_PORT` optionally, as a secret, with 465 being the default if unset.
+* `L10N_EMAIL_TO` as a variable.
+This is the address to which localization emails should be sent.
+* `L10N_EMAIL_FROM` as a variable.
+This is the address that localization emails will show as coming from.
+* `EMAIL_BOUNCE_ADDRESS` as a variable.
+This is the SMTP envelope sender address, which is where emails from the SMTP server, such as bounce notifications, will be sent.
 
 ### Automatically assign milestone on PR merge
 

@@ -20,7 +20,7 @@ import braille.display
 import braille.display.driver
 import braille.display.gesture
 from bdDetect import DeviceMatch, DriverRegistrar
-import brailleInput
+import braille.input.gesture
 import inputCore
 import bdDetect
 import hwIo
@@ -396,7 +396,7 @@ def _getRoutingIndexes(routingKeyBytes: bytes) -> Set[int]:
 	return {i for i in range(numRoutingKeys) if (1 << i) & combinedRoutingKeysBitSet}
 
 
-class InputGesture(braille.display.gesture.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.gesture.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys=None, dots=None, space=0, routing=None):
