@@ -566,9 +566,17 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 
 		:param offset: The offset of the character within the sentence.
 		:return: A tuple of the start and end offsets of the sentence.
-		:raises NotImplementedError: If ICU is unavailable (Windows older than version 1703)
+		:raises NotImplementedError: If the encoding is neither UTF-16 nor one whose offsets
+		    are str indices, ICU is unavailable (Windows older than version 1703),
 		    or the ICU call fails.
 		"""
+		if not (
+			self.encoding == textUtils.WCHAR_ENCODING
+			or self.encoding is None
+			or self.encoding == "utf_32_le"
+			or self.encoding == textUtils.USER_ANSI_CODE_PAGE
+		):
+			raise NotImplementedError
 		if not ICU_AVAILABLE:
 			raise NotImplementedError
 		paragraphStart, paragraphEnd = self._getParagraphOffsets(offset)
