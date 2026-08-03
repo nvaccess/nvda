@@ -322,8 +322,6 @@ class Magnifier:
 			self._mouseHook = None
 		self._stopTimer()
 		self._isActive = False
-		if touchHandler.handler is not None:
-			touchHandler.blockTouchInput = False
 		# Unregister from display changes
 		_displayTracking.displayChanged.unregister(self._onDisplayChanged)
 

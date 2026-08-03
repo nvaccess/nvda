@@ -504,6 +504,7 @@ Portable and temporary copies of NVDA have the following restrictions:
 * The inability to support input from a touchscreen.
 * The inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
 * Audio ducking is not supported.
+* Touch screen input will not be accurate while the magnifier is running.
 
 ## Using NVDA {#GettingStartedWithNVDA}
 
