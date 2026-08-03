@@ -3618,6 +3618,16 @@ If speech rules for the main language cannot be found, English ("en") is used.
 | Options | Automatic, English, English (en-GB), Chinese (Traditional) (zh-TW), Finnish, German, Indonesian, Norwegian Bokmål, Spanish, Swedish, Vietnamese |
 | Default | Automatic (the language of the current voice if supported, or fallback to English) |
 
+###### Decimal separator for numbers {#MathSpeechDecimalSeparator}
+
+This determines the character used as the decimal separator when reading numbers in math.
+When set to Automatic, the separator is chosen based on the math language.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Automatic, ".", "," |
+| Default | Automatic |
+
 ###### Speech Style {#MathSpeechStyle}
 
 Different styles can be used to speak mathematical content.
