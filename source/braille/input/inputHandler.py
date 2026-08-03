@@ -165,7 +165,7 @@ class BrailleInputHandler(AutoPropertyObject):
 
 		return False
 
-	def _translateForReportContractedCell(self, pos):
+	def _translateForReportContractedCell(self, pos: int) -> str:
 		"""Translate text for current input as required by :meth:`_reportContractedCell`.
 
 		:return: The previous translated text.
@@ -181,7 +181,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		self.bufferText = text
 		return oldText
 
-	def _reportContractedCell(self, pos):
+	def _reportContractedCell(self, pos: int) -> bool:
 		"""Report a guess about the character(s) produced by a cell of contracted braille.
 		It's not possible to report the exact characters because later cells might change text produced by earlier cells.
 		However, it's helpful for the user to have a rough idea.
@@ -386,8 +386,7 @@ class BrailleInputHandler(AutoPropertyObject):
 			inputCore.manager.emulateGesture(keyboardHandler.KeyboardInputGesture.fromName(gesture))
 		except:  # noqa: E722
 			log.debugWarning(
-				"Unable to emulate %r, falling back to sending unicode characters",
-				gesture,
+				f"Unable to emulate {gesture!r}, falling back to sending unicode characters",
 				exc_info=True,
 			)
 			self.sendChars(key)
@@ -459,9 +458,7 @@ class BrailleInputHandler(AutoPropertyObject):
 				self._table = brailleTables.getTable(tableName)
 			except LookupError:
 				log.error(
-					"Invalid input table (%s), falling back to default (%s).",
-					tableName,
-					FALLBACK_TABLE,
+					f"Invalid input table ({tableName}), falling back to default ({FALLBACK_TABLE}).",
 				)
 				self._table = brailleTables.getTable(FALLBACK_TABLE)
 
