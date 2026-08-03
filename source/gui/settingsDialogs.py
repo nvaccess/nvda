@@ -2830,7 +2830,11 @@ class MathSettingsPanel(SettingsPanel):
 		self.decimalSeparatorList = speechGroup.addLabeledControl(
 			decimalSeparatorText,
 			wx.Choice,
-			choices=[option.displayString for option in DecimalSeparatorOption if option != DecimalSeparatorOption.CUSTOM],
+			choices=[
+				option.displayString
+				for option in DecimalSeparatorOption
+				if option != DecimalSeparatorOption.CUSTOM
+			],
 		)
 		self.bindHelpEvent("MathSpeechDecimalSeparator", self.decimalSeparatorList)
 		self.decimalSeparatorList.SetSelection(
