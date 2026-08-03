@@ -26,6 +26,7 @@
 * Added context menu and shortcuts support to the Input gestures dialog. (#16816, @amirmahdifard)
 * Added context menu and shortcuts support to the Speech Dictionaries dialog. (#20420, @amirmahdifard)
 * It is now possible to change an existing gesture in the Input Gestures dialog. (#10983, @amirmahdifard)
+* A new "Say all reads by" speech setting lets you choose whether say all reads by sentence, paragraph or line; say all now reads by sentence by default where supported. (#13420, #9179, #13971, @LeonarddeR)
 * A new command, assigned to `NVDA+control+x`, copies the last spoken information to the clipboard. (#19385, @Cary-rowen)
 
 ### Changes
