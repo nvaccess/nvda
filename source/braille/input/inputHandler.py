@@ -5,30 +5,29 @@
 
 """Handler for braille input."""
 
+import struct
 import time
-from typing import Optional, List, Set
 
-import louis
-import brailleTables
+import api
 import braille
 import braille.regions.textInfo
+import brailleTables
 import config
-from logHandler import log
-import winUser
-import winBindings.user32
 import inputCore
-import speech
 import keyboardHandler
-import api
-from baseObject import AutoPropertyObject
 import keyLabels
-import struct
+import louis
+import speech
+import winBindings.user32
+import winUser
+from baseObject import AutoPropertyObject
+from logHandler import log
 
 from .constants import (
 	FALLBACK_TABLE,
 	LOUIS_DOTS_IO_START,
-	UNICODE_BRAILLE_START,
 	UNICODE_BRAILLE_PROTECTED,
+	UNICODE_BRAILLE_START,
 )
 from .gesture import formatDotNumbers
 
@@ -36,42 +35,46 @@ from .gesture import formatDotNumbers
 class BrailleInputHandler(AutoPropertyObject):
 	"""Handles braille input."""
 
-	bufferBraille: List[int]
+	bufferBraille: list[int]
 	bufferText: str
-	cellsWithText: Set[int]
+	cellsWithText: set[int]
 	untranslatedBraille: str
 	untranslatedStart: int
 	untranslatedCursorPos: int
-	_uncontSentTime: Optional[float]
-	currentModifiers: Set[str]
+	_uncontSentTime: float | None
+	currentModifiers: set[str]
 
 	def __init__(self):
 		super().__init__()
 		self._table: brailleTables.BrailleTable = brailleTables.getTable(FALLBACK_TABLE)
-		#: A buffer of entered braille cells so that state set by previous cells can be maintained;
-		#: e.g. capital and number signs.
 		self.bufferBraille = []
-		#: The text translated so far from the cells in L{bufferBraille}.
+		"""A buffer of entered braille cells so that state set by previous cells can be maintained;
+		e.g. capital and number signs.
+		"""
 		self.bufferText = ""
-		#: Indexes of cells which produced text.
-		#: For example, this includes letters and numbers, but not number signs,
-		#: since a number sign by itself doesn't produce text.
-		#: This is used when erasing cells to determine when to backspace an actual character.
+		"""The text translated so far from the cells in :attr:`bufferBraille`."""
 		self.cellsWithText = set()
-		#: The cells in L{bufferBraille} that have not yet been translated
-		#: or were translated but did not produce any text.
-		#: This is used to show these cells to the user while they're entering braille.
-		#: This is a string of Unicode braille.
+		"""Indexes of cells which produced text.
+		For example, this includes letters and numbers, but not number signs,
+		since a number sign by itself doesn't produce text.
+		This is used when erasing cells to determine when to backspace an actual character.
+		"""
 		self.untranslatedBraille = ""
-		#: The position in L{brailleBuffer} where untranslated braille begins.
+		"""The cells in :attr:`bufferBraille` that have not yet been translated
+		or were translated but did not produce any text.
+		This is used to show these cells to the user while they're entering braille.
+		This is a string of Unicode braille.
+		"""
 		self.untranslatedStart = 0
-		#: The user's cursor position within the untranslated braille.
-		#: This enables the user to move within the untranslated braille.
+		"""The position in :attr:`bufferBraille` where untranslated braille begins."""
 		self.untranslatedCursorPos = 0
-		#: The time at which uncontracted characters were sent to the system.
+		"""The user's cursor position within the untranslated braille.
+		This enables the user to move within the untranslated braille.
+		"""
 		self._uncontSentTime = None
-		#: The modifiers currently being held virtually to be part of the next braille input gesture.
+		"""The time at which uncontracted characters were sent to the system."""
 		self.currentModifiers = set()
+		"""The modifiers currently being held virtually to be part of the next braille input gesture."""
 		self.handlePostConfigProfileSwitch()
 		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 
@@ -86,7 +89,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		self._table = table
 		config.conf["braille"]["inputTable"] = table.fileName
 
-	# Provided by auto property: L{_get_currentFocusIsTextObj}
+	# Provided by auto property: :meth:`_get_currentFocusIsTextObj`
 	currentFocusIsTextObj: bool
 
 	def _get_currentFocusIsTextObj(self):
@@ -95,7 +98,7 @@ class BrailleInputHandler(AutoPropertyObject):
 			not focusObj.treeInterceptor or focusObj.treeInterceptor.passThrough
 		)
 
-	# Provided by auto property: L{_get_useContractedForCurrentFocus}
+	# Provided by auto property: :meth:`_get_useContractedForCurrentFocus`
 	useContractedForCurrentFocus: bool
 
 	def _get_useContractedForCurrentFocus(self):
@@ -104,8 +107,8 @@ class BrailleInputHandler(AutoPropertyObject):
 	def _translate(self, endWord: bool) -> bool:
 		"""Translate buffered braille up to the cursor.
 		Any text produced is sent to the system.
-		@param endWord: C{True} if this is the end of a word, C{False} otherwise.
-		@return: C{True} if translation produced text, C{False} if not.
+		:param endWord: ``True`` if this is the end of a word, ``False`` otherwise.
+		:return: ``True`` if translation produced text, ``False`` if not.
 		"""
 		assert not self.useContractedForCurrentFocus or endWord, (
 			"Must only translate contracted at end of word"
@@ -139,7 +142,7 @@ class BrailleInputHandler(AutoPropertyObject):
 			if self.currentModifiers or not self.currentFocusIsTextObj:
 				if len(newText) > 1:
 					# Emulation of multiple characters at once is unsupported
-					# Clear newText, so this function returns C{False} if not at end of word
+					# Clear newText, so this function returns ``False`` if not at end of word
 					newText = ""
 				else:
 					self.emulateKey(newText)
@@ -162,10 +165,10 @@ class BrailleInputHandler(AutoPropertyObject):
 
 		return False
 
-	def _translateForReportContractedCell(self, pos):
-		"""Translate text for current input as required by L{_reportContractedCell}.
-		@return: The previous translated text.
-		@rtype: str
+	def _translateForReportContractedCell(self, pos: int) -> str:
+		"""Translate text for current input as required by :meth:`_reportContractedCell`.
+
+		:return: The previous translated text.
 		"""
 		cells = self.bufferBraille[: pos + 1]
 		data = "".join([chr(cell | LOUIS_DOTS_IO_START) for cell in cells])
@@ -178,14 +181,13 @@ class BrailleInputHandler(AutoPropertyObject):
 		self.bufferText = text
 		return oldText
 
-	def _reportContractedCell(self, pos):
+	def _reportContractedCell(self, pos: int) -> bool:
 		"""Report a guess about the character(s) produced by a cell of contracted braille.
 		It's not possible to report the exact characters because later cells might change text produced by earlier cells.
 		However, it's helpful for the user to have a rough idea.
 		For example, in English contracted braille, "alw" is the contraction for "always".
 		As the user types "alw", the characters a, l, w will be spoken.
-		@return: C{True} if a guess was reported, C{False} if not (e.g. a number sign).
-		@rtype: bool
+		:return: ``True`` if a guess was reported, ``False`` if not (e.g. a number sign).
 		"""
 		oldText = self._translateForReportContractedCell(pos)
 		oldTextLen = len(oldText)
@@ -249,13 +251,13 @@ class BrailleInputHandler(AutoPropertyObject):
 	def toggleModifier(self, modifier: str):
 		self.toggleModifiers([modifier])
 
-	def toggleModifiers(self, modifiers: List[str]):
+	def toggleModifiers(self, modifiers: list[str]):
 		# Check modifier validity
 		validModifiers: bool = all(
 			keyboardHandler.KeyboardInputGesture.fromName(m).isModifier for m in modifiers
 		)
 		if not validModifiers:
-			raise ValueError("%r contains unknown modifiers" % modifiers)
+			raise ValueError(f"{modifiers!r} contains unknown modifiers")
 
 		# Ensure input buffer is clear for the modified key
 		if self.bufferText:
@@ -287,7 +289,7 @@ class BrailleInputHandler(AutoPropertyObject):
 
 	def _updateUntranslated(self):
 		"""Update the untranslated braille to be shown to the user.
-		If the display will not otherwise be updated, L{updatedisplay} should be called after this.
+		If the display will not otherwise be updated, :meth:`updateDisplay` should be called after this.
 		"""
 		if api.isTypingProtected():
 			self.untranslatedBraille = UNICODE_BRAILLE_PROTECTED * (
@@ -370,8 +372,8 @@ class BrailleInputHandler(AutoPropertyObject):
 		"""Emulates a key using the keyboard emulation system.
 		If emulation fails (e.g. because of an unknown key), a debug warning is logged
 		and the system falls back to sending unicode characters.
-		@param withModifiers: Whether this key emulation should include the modifiers that are held virtually.
-			Note that this method does not take care of clearing L{self.currentModifiers}.
+		:param withModifiers: Whether this key emulation should include the modifiers that are held virtually.
+			Note that this method does not take care of clearing :attr:`currentModifiers`.
 		"""
 		if withModifiers:
 			# The emulated key should be the last item in the identifier string.
@@ -384,14 +386,14 @@ class BrailleInputHandler(AutoPropertyObject):
 			inputCore.manager.emulateGesture(keyboardHandler.KeyboardInputGesture.fromName(gesture))
 		except:  # noqa: E722
 			log.debugWarning(
-				"Unable to emulate %r, falling back to sending unicode characters" % gesture,
+				f"Unable to emulate {gesture!r}, falling back to sending unicode characters",
 				exc_info=True,
 			)
 			self.sendChars(key)
 
 	def sendChars(self, chars: str):
 		"""Sends the provided unicode characters to the system.
-		@param chars: The characters to send to the system.
+		:param chars: The characters to send to the system.
 		"""
 		inputs = []
 		chars = "".join(
