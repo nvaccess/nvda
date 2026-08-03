@@ -293,6 +293,57 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 class TestFullScreenMagnifierApi(_TestMagnifier):
 	"""Tests for FullScreenMagnifier interactions with the Windows Magnification API."""
 
+	def testInputTransformAccessDeniedDoesNotBlockStartup(self):
+		"""Magnifier starts when MagSetInputTransform is denied due to missing UIAccess."""
+		self.mock_mag_fs.MagSetInputTransform.side_effect = PermissionError(5, "Access is denied")
+
+		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
+
+		self.assertTrue(magnifier._isActive)
+		self.assertFalse(magnifier._inputTransformSupported)
+
+		magnifier._stopMagnifier()
+
+	def testInputTransformSkippedWhenUiAccessUnavailable(self):
+		"""Magnifier starts and skips MagSetInputTransform when UIAccess is unavailable."""
+		with patch("_magnifier.fullscreenMagnifier.systemUtils.hasUiAccess", return_value=False):
+			magnifier = FullScreenMagnifier()
+			magnifier._startMagnifier()
+
+		self.assertTrue(magnifier._isActive)
+		self.assertFalse(magnifier._inputTransformSupported)
+		self.mock_mag_fs.MagSetInputTransform.assert_not_called()
+
+		magnifier._stopMagnifier()
+
+	def testInputTransformEnabledWhenMagnifierStarts(self):
+		"""Starting magnifier enables MagSetInputTransform."""
+		with patch("_magnifier.fullscreenMagnifier.systemUtils.hasUiAccess", return_value=True):
+			magnifier = FullScreenMagnifier()
+			magnifier._startMagnifier()
+
+		enableCalls = [
+			call for call in self.mock_mag_fs.MagSetInputTransform.call_args_list if call.args[0] is True
+		]
+		self.assertGreaterEqual(len(enableCalls), 1)
+
+		magnifier._stopMagnifier()
+
+	def testInputTransformDisabledWhenMagnifierStops(self):
+		"""Stopping magnifier disables MagSetInputTransform."""
+		with patch("_magnifier.fullscreenMagnifier.systemUtils.hasUiAccess", return_value=True):
+			magnifier = FullScreenMagnifier()
+			magnifier._startMagnifier()
+		self.mock_mag_fs.MagSetInputTransform.reset_mock()
+
+		magnifier._stopMagnifier()
+
+		disableCalls = [
+			call for call in self.mock_mag_fs.MagSetInputTransform.call_args_list if call.args[0] is False
+		]
+		self.assertGreaterEqual(len(disableCalls), 1)
+
 	def testCannotStartWhenWindowsMagnifierRunning(self):
 		"""
 		MagInitialize succeeds but MagSetFullscreenTransform fails: Windows Magnifier is running.

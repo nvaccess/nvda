@@ -7,10 +7,13 @@
 Full-screen magnifier module.
 """
 
+from ctypes import byref
+from ctypes.wintypes import RECT
 from typing import override
 
 from logHandler import log
 import ui
+import systemUtils
 from winBindings import magnification
 from .magnifier import Magnifier
 from .utils.filterHandler import FilterMatrix
@@ -39,6 +42,12 @@ class FullScreenMagnifier(Magnifier):
 		self.currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
 		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
+		self._inputTransformSupported = systemUtils.hasUiAccess()
+
+	@staticmethod
+	def _isAccessDeniedError(error: OSError) -> bool:
+		"""Return True when OSError represents Windows access denied (WinError 5)."""
+		return getattr(error, "winerror", None) == 5
 
 	@Magnifier.filterType.setter
 	def filterType(self, value: Filter) -> None:
@@ -158,6 +167,15 @@ class FullScreenMagnifier(Magnifier):
 		- Position: 0,0
 		- Color effect: normal (identity matrix)
 		"""
+		if self._inputTransformSupported:
+			destRect = RECT(0, 0, self._displayOrientation.width, self._displayOrientation.height)
+			try:
+				magnification.MagSetInputTransform(False, byref(destRect), byref(destRect))
+			except OSError as e:
+				if self._isAccessDeniedError(e):
+					self._inputTransformSupported = False
+				else:
+					raise
 		magnification.MagSetFullscreenTransform(1.0, 0, 0)
 		magnification.MagSetFullscreenColorEffect(FilterMatrix.NORMAL.value)
 		if _isDebug():
@@ -257,6 +275,25 @@ class FullScreenMagnifier(Magnifier):
 			params.coordinates.x,
 			params.coordinates.y,
 		)
+		if self._inputTransformSupported:
+			sourceRect = RECT(
+				params.coordinates.x,
+				params.coordinates.y,
+				params.coordinates.x + params.magnifierSize.width,
+				params.coordinates.y + params.magnifierSize.height,
+			)
+			destRect = RECT(0, 0, self._displayOrientation.width, self._displayOrientation.height)
+			try:
+				magnification.MagSetInputTransform(True, byref(sourceRect), byref(destRect))
+			except OSError as e:
+				if self._isAccessDeniedError(e):
+					self._inputTransformSupported = False
+					log.debugWarning(
+						"MagSetInputTransform unavailable (UIAccess required). Continuing without input transform.",
+						exc_info=e,
+					)
+				else:
+					raise
 
 	def _getCoordinatesForMode(
 		self,

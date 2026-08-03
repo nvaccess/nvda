@@ -502,6 +502,7 @@ Portable and temporary copies of NVDA have the following restrictions:
   * Windows 11 Voice Access
 * The inability to read User Account Control (UAC) screens when trying to start an application with administrative privileges.
 * The inability to support input from a touchscreen.
+If the NVDA magnifier is enabled, touchscreen input will not work correctly.
 * The inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
 * Audio ducking is not supported.
 
