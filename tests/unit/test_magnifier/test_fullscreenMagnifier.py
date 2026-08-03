@@ -319,8 +319,9 @@ class TestFullScreenMagnifierApi(_TestMagnifier):
 
 	def testInputTransformEnabledWhenMagnifierStarts(self):
 		"""Starting magnifier enables MagSetInputTransform."""
-		magnifier = FullScreenMagnifier()
-		magnifier._startMagnifier()
+		with patch("_magnifier.fullscreenMagnifier.systemUtils.hasUiAccess", return_value=True):
+			magnifier = FullScreenMagnifier()
+			magnifier._startMagnifier()
 
 		enableCalls = [
 			call for call in self.mock_mag_fs.MagSetInputTransform.call_args_list if call.args[0] is True
@@ -331,8 +332,9 @@ class TestFullScreenMagnifierApi(_TestMagnifier):
 
 	def testInputTransformDisabledWhenMagnifierStops(self):
 		"""Stopping magnifier disables MagSetInputTransform."""
-		magnifier = FullScreenMagnifier()
-		magnifier._startMagnifier()
+		with patch("_magnifier.fullscreenMagnifier.systemUtils.hasUiAccess", return_value=True):
+			magnifier = FullScreenMagnifier()
+			magnifier._startMagnifier()
 		self.mock_mag_fs.MagSetInputTransform.reset_mock()
 
 		magnifier._stopMagnifier()
