@@ -104,8 +104,7 @@ MagSetInputTransform = WINFUNCTYPE(BOOL, BOOL, LPRECT, LPRECT)(
 	((1, "fEnabled"), (1, "pRectSource"), (1, "pRectDest")),
 )
 """
-Sets the active input transform used to route pen, touch, and mouse input
-for magnified full-screen content.
+Sets the mapping between magnified coordinates and screen coordinates for pen and touch input.
 
 .. seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-magsetinputtransform
