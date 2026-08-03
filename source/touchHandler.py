@@ -400,7 +400,6 @@ class TouchHandler(threading.Thread):
 		self._curTouchMode = mode
 
 	def pump(self):
-		_blockedThisPump = False
 		for preheldTracker, tracker in self.trackerManager.emitTrackers():
 			modeStr = (
 				self._curTouchMode.value if isinstance(self._curTouchMode, TouchMode) else self._curTouchMode
