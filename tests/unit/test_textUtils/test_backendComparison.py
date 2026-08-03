@@ -16,12 +16,10 @@ appropriate WordSegFlag and calling getSegmentForOffset.
 import unittest
 
 import textUtils
-from winBindings.icu import ICU_AVAILABLE
 from textUtils._wordSeg.wordSegmenter import WordSegmenter
 from textUtils.segFlag import WordSegFlag
 
-
-skipIfNoICU = unittest.skipUnless(ICU_AVAILABLE, "ICU library not available on this system")
+from . import skipIfNoICU
 
 # Encoding used for all WordSegmenter calls — matches what NVDA uses internally.
 _ENCODING = textUtils.WCHAR_ENCODING

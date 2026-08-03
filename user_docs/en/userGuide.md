@@ -201,6 +201,7 @@ These set whether NVDA starts automatically.
 ### Running NVDA {#RunningNVDA}
 
 The full NVDA user guide has all the NVDA commands, split up into different sections for reference.
+From within any NVDA dialog, press `f1` to open the User Guide to the topic on the current control.
 The tables of commands are also available in the "Commands Quick Reference".
 The "Basic Training for NVDA" NVDA training module has each command in more depth with step-by-step activities.
 "Basic Training for NVDA" is available from the [NV Access Shop](http://www.nvaccess.org/shop).
@@ -247,6 +248,7 @@ The actual commands will not execute while in input help mode.
 |Read status bar |`NVDA+end` |`NVDA+shift+end` |Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard|
 |Read time |`NVDA+f12` |`NVDA+f12` |Pressing once reports the current time, pressing twice reports the date. The time and date are reported in the format specified in Windows settings for the system tray clock.|
 | Repeat last spoken information | `NVDA+x` | `NVDA+x` | Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
+| Copy last spoken information | `NVDA+control+x` | `NVDA+control+x` | Copies the last information spoken by NVDA to the clipboard |
 |Report text formatting |`NVDA+f` |`NVDA+f` |Reports text formatting. Pressing twice shows the information in a window|
 |Report link destination |`NVDA+k` |`NVDA+k` |Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review|
 
@@ -393,6 +395,7 @@ This is an online exam you can complete to demonstrate your skills in NVDA.
 To get help for NVDA, press `NVDA+n` to open the menu, then `h` for help.
 From this submenu you can access the User Guide, a quick reference of commands, history of new features and more.
 These first three options open in the default web browser.
+From within any NVDA dialog, press `f1` to open the User Guide to the topic on the current control.
 There is also more comprehensive Training Material available in the [NV Access Shop](https://www.nvaccess.org/shop).
 
 We recommend starting with the "Basic Training for NVDA" module.
@@ -683,6 +686,7 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 |Stop speech |Control |control |2-finger tap |Instantly stops speaking|
 |Pause Speech |shift |shift |none |Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer)|
 | Repeat last spoken information | `NVDA+x` | `NVDA+x` | None | Repeats the last information spoken by NVDA. Pressing twice shows it in a browseable window |
+| Copy last spoken information | `NVDA+control+x` | `NVDA+control+x` | None | Copies the last information spoken by NVDA to the clipboard |
 |NVDA Menu |NVDA+n |NVDA+n |2-finger double-tap |Pops up the NVDA menu to allow you to access preferences, tools, help, etc.|
 |Toggle Input Help Mode |NVDA+1 |NVDA+1 |none |Pressing any key in this mode will report the key, and the description of any NVDA command associated with it|
 |Quit NVDA |NVDA+q |NVDA+q |none |Exits NVDA|
@@ -1288,6 +1292,7 @@ By default, the review cursor follows the system caret, so you can usually use t
 
 At this point, NVDA will enter Math mode, where you can use commands such as the arrow keys to explore the expression.
 For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
+When [Visual Highlight](#VisionFocusHighlight) is enabled and the browse mode cursor highlighter is enabled, the current subpart of MathML on the web is also exposed visually.
 
 When you wish to return to the document, simply press the escape key.
 
@@ -1395,9 +1400,9 @@ Where text is longer than will fit on the display, panning or other keys on the 
 
 Automatic braille scrolling can be enabled to scroll the display at a set speed.
 When using this feature, the braille display scrolls to present information which is more than will fit on the display at once.
-The feature is disabled and a gesture to start braille scrolling is undefined by default.
-To use automatic braille scrolling, a gesture needs to be set in NVDA's [Input Gestures dialog](#InputGestures) before it can be used.
-Gestures can also be set to speed up or slow down the rate of automatic scrolling.
+The feature is disabled by default.
+You can change the gestures assigned to use automatic braille scrolling in NVDA's [Input Gestures dialog](#InputGestures) before it can be used.
+Gestures are also available to speed up or slow down the rate of automatic scrolling.
 Alternatively, you can [set the automatic scroll rate in Braille Settings](#BrailleAutoScrollRate).
 
 While braille is scrolling, you can still use the scroll back and scroll forward commands without stopping scrolling.
@@ -1418,10 +1423,10 @@ While reading, automatic braille scrolling will stop when any of the following h
 | Name | Key | Description |
 |---|---|---|
 | Toggles braille mode | `NVDA+alt+t` | Allows cycling between available braille modes: "follow cursors" and "display speech output"|
-| Tether braille |`NVDA+control+t` | This option allows you to choose whether the braille display will follow the system focus / caret, the navigator object / review cursor, or both |
-| Toggle automatic scroll | None | Toggles whether NVDA periodically scrolls the braille display to present information which is too long to show at once |
-| Increase automatic scroll rate | None | Makes automatic scrolling faster (when enabled) |
-| Decrease automatic scroll rate | None | Makes automatic scrolling slower (when enabled) |
+| Tether braille | `NVDA+control+t` | This option allows you to choose whether the braille display will follow the system focus / caret, the navigator object / review cursor, or both |
+| Toggle automatic scroll | `NVDA+alt+k` | Toggles whether NVDA periodically scrolls the braille display to present information which is too long to show at once |
+| Increase automatic scroll rate | `NVDA+alt+l` | Makes automatic scrolling faster (when enabled) |
+| Decrease automatic scroll rate | `NVDA+alt+j` | Makes automatic scrolling slower (when enabled) |
 | Cycle braille cursor shapes | None | Cycle through the shape options (dot pattern) of the braille cursor |
 | Cycle move system caret when routing review cursor | None | Cycle through the braille move system caret when routing review cursor states |
 | Cycle show messages modes | None | Cycle through the braille show messages modes |
@@ -1612,7 +1617,7 @@ These positions are highlighted with a coloured rectangle outline.
 * Solid blue highlights a combined navigator object and system focus location (e.g. because [the navigator object follows the system focus](#ReviewCursorFollowFocus)).
 * Dashed blue highlights just the system focus object.
 * Solid pink highlights just the navigator object.
-* Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers).
+* Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers), the cursor in OCR recognition results, and the current subpart while navigating math on the web.
 
 When Visual Highlight is enabled in the [vision category](#VisionSettings) of the [NVDA Settings](#NVDASettings) dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret](#VisionSettingsFocusHighlight).
 
@@ -1666,7 +1671,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 | Increase the magnification level | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
 | Decrease the magnification level | `NVDA+shift+minus` | Decreases the zoom level |
 | Cycle color filters | `NVDA+shift+i` | Cycles through the available color filters (normal, grayscale, inverted) |
-| Cycle tracking mode | None | Cycles through tracking modes (center, border, relative) |
+| Cycle tracking mode | None | Cycles through tracking modes (center, relative) |
 | Show entire screen overview | `NVDA+shift+l` | Temporarily shows an overview of the entire screen |
 | Pan left | `NVDA+alt+leftArrow` | Moves the magnified view left by the configured panning step size |
 | Pan right | `NVDA+alt+rightArrow` | Moves the magnified view right by the configured panning step size |
@@ -1697,15 +1702,12 @@ The magnifier provides three color filter options:
 
 To cycle through the available filters press `NVDA+shift+i`.
 
-### Tracking Modes {#MagnifierTrackingModes}
+### Tracking Modes {#MagnifierTrackingMode}
 
-The magnifier offers three different modes for tracking the mouse, system focus, review cursor, and navigator object, and determining which part of the screen to magnify:
+The magnifier offers different modes for tracking the mouse, system focus, review cursor, and navigator object, and determining which part of the screen to magnify:
 
 * Center: The magnified area is centered on the currently tracked position.
 This mode keeps the tracked element at the center of the screen and clamps to the screen edge.
-To disable clamping, activate [true center tracking in the Magnifier settings](#MagnifierTrueCenterTracking).
-* Border: The magnified area only moves when the tracked position approaches the edge of the visible area.
-This mode provides a more stable view, only adjusting when necessary.
 * Relative: The magnified area maintains the relative position of the tracked element based on its position on the screen.
 
 To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
@@ -2006,6 +2008,12 @@ As new text is written, the content scroll upwards and previous text is no longe
 On Windows versions before Windows 11 22H2, text in the console that is not visibly displayed in the window is not accessible with NVDA's text review commands.
 Therefore, it is necessary to scroll the console window to read earlier text.
 In newer versions of the console and in Windows Terminal, it is possible to review the entire text buffer freely without the need to scroll the window.
+
+In some cases, such as when connected over SSH, caret updates may be delayed.
+NVDA waits slightly longer for caret movement in Windows Terminal, so it is less likely to report stale characters.
+If caret reporting is still inaccurate, try increasing [Caret move timeout](#AdvancedSettingsCaretMoveTimeout) in Advanced settings.
+Increasing this value may make caret movement feel slower, so consider changing it in a configuration profile for terminal applications.
+
 <!-- KC:beginInclude -->
 The following built-in Windows Console keyboard shortcuts may be useful when [reviewing text](#ReviewingText) with NVDA in older versions of Windows Console:
 
@@ -2298,6 +2306,20 @@ To toggle Unicode normalization from anywhere, please assign a custom gesture us
 |---|---|
 |Options |Default (Enabled), Enabled, Disabled|
 |Default |Enabled|
+
+##### Say all reads by {#SpeechSettingsSayAllReadingUnit}
+
+This combo box lets you choose the unit of text that say all (continuous reading) advances by.
+This affects how frequently the text caret and view move during say all, and can also affect intonation in long blocks of text.
+When set to "Sentence where possible", NVDA reads sentence by sentence in controls and documents that support sentence boundaries, and automatically falls back to reading by line where sentence boundaries are not supported.
+When set to "Paragraph", NVDA reads paragraph by paragraph.
+When set to "Line", NVDA always reads line by line.
+For example, when set to "Line", say all reads by line in Rich Edit controls such as WordPad or NVDA's log viewer, whereas the default reads these by sentence.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Sentence where possible), Sentence where possible, Paragraph, Line|
+|Default |Sentence where possible|
 
 ##### Report "Normalized" when navigating by character {#SpeechReportNormalizedForCharacterNavigation}
 
@@ -2933,7 +2955,7 @@ The check boxes in the Visual Highlight grouping control the behaviour of NVDA's
 * Enable Highlighting: Toggles Visual Highlight on and off.
 * Highlight system focus: toggles whether the [system focus](#SystemFocus) will be highlighted.
 * Highlight navigator object: toggles whether the [navigator object](#ObjectNavigation) will be highlighted.
-* Highlight browse mode cursor: Toggles whether the [virtual browse mode cursor](#BrowseMode) will be highlighted.
+* Highlight browse mode cursor: Toggles whether the [virtual browse mode cursor](#BrowseMode) will be highlighted, including the cursor in OCR recognition results and the current subpart while navigating math on the web.
 
 Note that checking and unchecking the "Enable Highlighting" check box will also change the state of the three other check boxes accordingly.
 Therefore, if "Enable Highlighting" is off and you check this check box, the other three check boxes will also be checked automatically.
@@ -3005,16 +3027,6 @@ The available options are:
 | Grayscale | Converts all colors to shades of gray, which can help reduce eye strain and improve contrast. |
 | Inverted | Inverts all colors on the screen, which can be helpful for users who prefer light text on dark backgrounds or have photophobia. |
 
-##### True center tracking {#MagnifierTrueCenterTracking}
-
-This checkbox controls whether the magnifier should always keep the tracked position centered on the screen, even when the tracked element is next to the screen edges, or if it should allow the tracked position to move towards the edges of the screen.
-When enabled, the magnifier will always keep the tracked position centered on the screen, which can be helpful for users who prefer a consistent tracked position within the magnified view.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-| Options | Disabled, Enabled |
-| Default | Disabled |
-
 ##### Panning step size {#MagnifierPanningStepSize}
 
 This option allows you to set the panning step size as a percentage of the visible magnified window.
@@ -3069,7 +3081,7 @@ When enabled, the magnified area will automatically move to follow the navigator
 | Options | Disabled, Enabled |
 | Default | Enabled |
 
-##### Tracking mode {#MagnifierTrackingMode}
+##### Tracking mode {#MagnifierTrackingModeSetting}
 
 This combo box allows you to select the tracking mode when using the magnifier.
 To cycle through the tracking modes, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
@@ -3077,13 +3089,12 @@ The available options are:
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Options | Center, Border, Relative |
+| Options | Center, Relative |
 | Default | Center |
 
 | Option | Description |
 |---|---|
 | Center | The magnified area is always centered on the currently tracked position. |
-| Border | The magnified area only moves when the tracked element approaches the edge of the visible area. |
 | Relative | The magnified area maintains the relative position of the tracked element based on its position on the screen. |
 
 #### Keyboard {#KeyboardSettings}
@@ -4457,8 +4468,10 @@ Often, a gesture can be interpreted in more than one way.
 For example, if you pressed a key on the keyboard, you may wish it to be specific to the current keyboard layout (e.g. desktop or laptop) or you may wish it to apply for all layouts.
 In this case, a menu will appear allowing you to select the desired option.
 
-You can use the context menu to add or remove gestures for each command.
-To remove a gesture from a command, you can also press the `delete` key.
+You can also use the context menu to add, change, or remove gestures for each command.
+To change an input gesture of a command, select the gesture and press the change button.
+Then, perform the new input gesture you wish to associate; that will replace the old one.
+To remove a gesture from a command, you can press the `delete` key or the remove button.
 
 The Emulated system keyboard keys category contains NVDA commands that emulate keys on the system keyboard.
 These emulated system keyboard keys can be used to control a system keyboard right from your braille display.

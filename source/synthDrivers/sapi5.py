@@ -1,8 +1,7 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, gexgd0419
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, gexgd0419, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from ctypes import (
 	HRESULT,
@@ -20,7 +19,6 @@ from ctypes import (
 	sizeof,
 )
 from enum import IntEnum
-import locale
 from collections import OrderedDict, deque
 import threading
 from typing import TYPE_CHECKING, Any, NamedTuple, Generator
@@ -626,10 +624,8 @@ class SynthDriver(SynthDriver):
 			try:
 				ID = v[i].Id
 				name = v[i].GetDescription()
-				try:
-					language = locale.windows_locale[int(v[i].getattribute("language").split(";")[0], 16)]
-				except KeyError:
-					language = None
+				lcid = int(v[i].getattribute("language").split(";")[0], 16)
+				language = languageHandler.windowsLCIDToLocaleName(lcid)
 			except COMError:
 				log.warning("Could not get the voice info. Skipping...")
 			voices[ID] = VoiceInfo(ID, name, language)
