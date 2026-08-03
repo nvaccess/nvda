@@ -1184,9 +1184,11 @@ def test_ariaRoleDescription_inline_browseMode():
 		"Unlabeled graphic  Our",
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
+	# ICU word segmentation (the AUTO default) follows UAX#29, which treats the
+	# trailing period as its own word segment, so it is no longer read with "logo".
 	_asserts.strings_match(
 		actualSpeech,
-		"logo.",
+		"logo",
 	)
 
 

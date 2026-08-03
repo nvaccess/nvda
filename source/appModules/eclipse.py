@@ -9,6 +9,7 @@ from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.behaviors import EditableTextWithSuggestions
 import speech
 import braille
+import braille.regions.properties
 import ui
 import api
 from speech import sayAll
@@ -155,7 +156,7 @@ class AutocompletionListItem(IAccessible):
 			# Simply calling `reportFocus` doesn't output the text in braille
 			# and reporting with `ui.message` needs an extra translation string when reporting position info
 			braille.handler.message(
-				braille.getPropertiesBraille(
+				braille.regions.properties.getPropertiesBraille(
 					name=self.name,
 					role=self.role,
 					positionInfo=self.positionInfo,

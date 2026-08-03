@@ -560,6 +560,19 @@ def winEventToNVDAEvent(  # noqa: C901
 				f"Ghosted hung window. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}",
 			)
 		return None
+	# If the owning application has stopped responding, drop the event. Building
+	# the object would make a synchronous cross-process call (e.g. IAccessible
+	# accParent during the focus ancestor walk) that blocks the core until the
+	# watchdog cancels it. This engages as soon as the system flags the app,
+	# without waiting for its DWM ghost window to be created (which is the gap
+	# that previously froze NVDA for several seconds on first contact, and on
+	# every subsequent interaction with the hung window).
+	if winUser.isHungAppWindow(window):
+		if isMSAADebugLoggingEnabled():
+			log.debugWarning(
+				f"Hung application. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}",
+			)
+		return None
 	# We do not support MSAA object proxied from native UIA
 	if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window, isDebug=isMSAADebugLoggingEnabled()):
 		if isMSAADebugLoggingEnabled():

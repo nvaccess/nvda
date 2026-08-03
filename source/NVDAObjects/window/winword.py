@@ -19,6 +19,8 @@ import comtypes.client
 import comtypes.automation
 import colorsys
 import eventHandler
+import exceptions
+import watchdog
 import braille
 import scriptHandler
 from scriptHandler import script
@@ -484,7 +486,6 @@ NVDAUnitsToWordUnits = {
 	textInfos.UNIT_ROW: wdRow,
 	textInfos.UNIT_COLUMN: wdColumn,
 	textInfos.UNIT_STORY: wdStory,
-	textInfos.UNIT_READINGCHUNK: wdSentence,
 }
 
 formatConfigFlagsMap = {
@@ -1072,14 +1073,25 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			formatConfigFlags &= ~formatConfigFlagsMap["reportRevisions"]
 		if self.obj.ignorePageNumbers:
 			formatConfigFlags &= ~formatConfigFlagsMap["reportPage"]
-		res = NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(
-			self.obj.appModule.helperLocalBindingHandle,
-			self.obj.documentWindowHandle,
-			startOffset,
-			endOffset,
-			formatConfigFlags,
-			ctypes.byref(text),
-		)
+		# This call reaches into Word's process and blocks the core if Word is
+		# unresponsive (e.g. a huge document operation). Run it via the watchdog's
+		# cancellable thread so the watchdog can cancel it.
+		try:
+			res = watchdog.cancellableExecute(
+				NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange,
+				self.obj.appModule.helperLocalBindingHandle,
+				self.obj.documentWindowHandle,
+				startOffset,
+				endOffset,
+				formatConfigFlags,
+				ctypes.byref(text),
+			)
+		except exceptions.CallCancelled:
+			# Don't fall back to self.text here: that reads self._rangeObj.text, which
+			# is another COM call into the same (still hung) Word and would re-block
+			# the core, defeating the cancellation.
+			log.debug("winword_getTextInRange cancelled; Word is not responding")
+			return [""]
 		if res or not text:
 			log.debugWarning("winword_getTextInRange failed with %d" % res)
 			return [self.text]
@@ -1276,6 +1288,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return field
 
 	def expand(self, unit):
+		unit = self._resolveReadingChunkUnit(unit)
 		if unit == textInfos.UNIT_LINE:
 			try:
 				if self._rangeObj.tables.count > 0 and self._rangeObj.cells.count == 0:
@@ -1350,6 +1363,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def _move(self, unit, direction, endPoint=None, _rangeObj=None):
 		if not _rangeObj:
 			_rangeObj = self._rangeObj
+		unit = self._resolveReadingChunkUnit(unit)
 		if unit in NVDAUnitsToWordUnits:
 			unit = NVDAUnitsToWordUnits[unit]
 		else:

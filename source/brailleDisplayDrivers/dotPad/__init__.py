@@ -5,5 +5,5 @@
 
 """Braille display driver for the Dot Pad Tactile Graphic braille display from Dot Inc."""
 
-# Imported here so that braille._getDisplayDriver can import
+# Imported here so that braille.display._getDisplayDriver can import
 from .driver import BrailleDisplayDriver  # noqa: F401

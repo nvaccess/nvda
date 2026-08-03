@@ -1,11 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import unittest
 from unittest.mock import MagicMock, patch
-from _magnifier.commands import zoom, cycleMagnifiedView, toggleMagnifier
+from _magnifier.commands import zoom, cycleMagnifiedView, moveMouseToView, toggleMagnifier
 from _magnifier.utils.errorHandling import MagnifierStartError
 from _magnifier.utils.types import Direction, MagnifiedView
 
@@ -150,3 +150,34 @@ class TestCycleMagnifiedView(unittest.TestCase):
 				cycleMagnifiedView()
 				self.mockChangeMagnifiedView.assert_called_once_with(expectedNext)
 				self.mockChangeMagnifiedView.reset_mock()
+
+
+class TestMoveMouseToView(unittest.TestCase):
+	"""Tests for the moveMouseToView command."""
+
+	def setUp(self):
+		self.mockMessage = patch("_magnifier.commands.ui.message").start()
+		self.mockGetMagnifier = patch("_magnifier.commands.getMagnifier").start()
+
+	def tearDown(self):
+		patch.stopall()
+
+	def _makeMockMagnifier(self, isActive: bool):
+		magnifier = MagicMock()
+		magnifier._isActive = isActive
+		return magnifier
+
+	def testInactiveMagnifier(self):
+		"""moveMouseToViewCenter is not called and a message is emitted when magnifier is inactive."""
+		mag = self._makeMockMagnifier(isActive=False)
+		self.mockGetMagnifier.return_value = mag
+		moveMouseToView()
+		mag.moveMouseToViewCenter.assert_not_called()
+		self.mockMessage.assert_called_once()
+
+	def testActiveMagnifier(self):
+		"""moveMouseToViewCenter is called when magnifier is active."""
+		mag = self._makeMockMagnifier(isActive=True)
+		self.mockGetMagnifier.return_value = mag
+		moveMouseToView()
+		mag.moveMouseToViewCenter.assert_called_once()

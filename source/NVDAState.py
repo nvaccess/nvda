@@ -72,6 +72,10 @@ class _WritePaths:
 		return os.path.join(self.configDir, "nvda.ini")
 
 	@property
+	def nvdaCustomSectionsFile(self) -> str:
+		return os.path.join(self.configDir, "customSections.yaml")
+
+	@property
 	def addonStateFile(self) -> str:
 		from addonHandler import STATE_FILENAME
 
@@ -254,6 +258,14 @@ class _ReadPaths:
 	@property
 	def nvdaHelperLocalWin10Dll(self) -> str:
 		return os.path.join(self.coreArchLibPath, "nvdaHelperLocalWin10.dll")
+
+	@property
+	def cppjiebaDll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "cppjieba.dll")
+
+	@property
+	def cppjiebaDictsDir(self) -> str:
+		return os.path.join(globalVars.appDir, "cppjieba", "dicts")
 
 	@property
 	def mathCATDir(self) -> str:

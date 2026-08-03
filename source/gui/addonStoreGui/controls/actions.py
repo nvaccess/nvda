@@ -218,7 +218,21 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 				# Translators: Label for an action that updates the selected add-ons
 				displayName=pgettext("addonStore", "&Update selected add-ons"),
 				actionHandler=self._storeVM.getAddons,
-				validCheck=lambda aVMs: AddonListValidator(aVMs).canUseUpdateAction(),
+				validCheck=lambda aVMs: (
+					AddonListValidator(aVMs).canUseUpdateAction()
+					and not AddonListValidator(aVMs).hasDisabledAddons()
+				),
+				actionTarget=self._selectedAddons,
+			),
+			BatchAddonActionVM(
+				# Translators: Label for an action that updates the selected add-ons,
+				# shown when the selection includes disabled add-ons, which updating re-enables.
+				displayName=pgettext("addonStore", "&Update (and enable) selected add-ons"),
+				actionHandler=self._storeVM.getAddons,
+				validCheck=lambda aVMs: (
+					AddonListValidator(aVMs).canUseUpdateAction()
+					and AddonListValidator(aVMs).hasDisabledAddons()
+				),
 				actionTarget=self._selectedAddons,
 			),
 			BatchAddonActionVM(
@@ -241,12 +255,11 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 				actionHandler=self._storeVM.removeAddons,
 				validCheck=lambda aVMs: (
 					self._storeVM._filteredStatusKey
-					in [
-						# Removing add-ons in the updatable view fails,
-						# as the updated version cannot be removed.
+					in (
+						_StatusFilterKey.UPDATE,
 						_StatusFilterKey.INSTALLED,
 						_StatusFilterKey.INCOMPATIBLE,
-					]
+					)
 					and AddonListValidator(aVMs).canUseRemoveAction()
 				),
 				actionTarget=self._selectedAddons,
@@ -291,6 +304,10 @@ class AddonListValidator:
 			if aVM.canUseInstallAction() or aVM.canUseInstallOverrideIncompatibilityAction():
 				hasInstallable = True
 		return hasUpdatable and not hasInstallable
+
+	def hasDisabledAddons(self) -> bool:
+		"""Whether any add-on in the list is disabled or blocked, and would therefore be re-enabled by an update."""
+		return any(aVM.model.isDisabled or aVM.model.isBlocked for aVM in self.addonsList)
 
 	def canUseRetryAction(self) -> bool:
 		return any(aVM.canUseRetryAction() for aVM in self.addonsList)

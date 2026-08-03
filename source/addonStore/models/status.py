@@ -290,6 +290,8 @@ def _getUpdateStatus(model: "_AddonGUIModel") -> AvailableAddonStatus | None:
 	from ..dataManager import addonDataManager
 	from ..models.addon import AddonStoreModel
 
+	if model.isPendingRemove:
+		return None
 	if not isinstance(model, AddonStoreModel):
 		# If the listed add-on is installed from a side-load
 		# and not available on the add-on store
