@@ -51,7 +51,7 @@ Avoid PRs where over 500 lines of code (LOC) is added.
 PRs over 500 LOC may be rejected at the reviewers' discretion.
 
 500-1000 line PRs can typically be broken into smaller changes such as automated tests, refactors, data-structures and core changes.
-These can be merged as [stacked PRs](https://github.github.com/gh-stack/) if they depend on each other (e.g. `branchX` targets `master`, `branchY` targets `branchX`).
+These can be merged as stacked PRs if they depend on each other (e.g. `branchX` targets `master`, `branchY` targets `branchX`).
 
 Large refactors should instead target specific symbols/files/modules per PR to minimize mass changes.
 
