@@ -50,6 +50,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	excludedSpeechModes = int_list(default=list())
 	trimLeadingSilence = boolean(default=true)
 	useWASAPIForSAPI4 = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	sayAllReadingUnit = featureFlag(optionsEnum="SayAllReadingUnitFlag", behaviorOfDefault="sentence")
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
@@ -225,6 +226,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	textParagraphRegex = string(default="{configDefaults.DEFAULT_TEXT_PARAGRAPH_REGEX}")
 	# Element types available for cycling in browse touch mode.
 	browseModeTouchNavigationElements = string_list(default=list("heading", "link", "formField", "list", "table"))
+	findHistory = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 
 [touch]
 	enabled = boolean(default=true)
@@ -553,6 +555,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		# [default -- includes two forms of non-breaking spaces]
 		blockSeparators = string(default=", \u00a0\u202f")
 		# Auto, '.', ',', Custom
+		# Custom is not currently functional or surfaced in the UI, but is included here for future use.
 		decimalSeparator = string(default="Auto")
 		# Use native math speech instead of MathCAT in Word and Outlook
 		useWordNativeMath = boolean(default=false)

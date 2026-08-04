@@ -1753,6 +1753,17 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("SpeechUnicodeNormalization", self.unicodeNormalizationCombo)
 
+		self.sayAllReadingUnitCombo: nvdaControls.FeatureFlagCombo = settingsSizerHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Speech settings panel.
+				"Say all reads by",
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["speech", "sayAllReadingUnit"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("SpeechSettingsSayAllReadingUnit", self.sayAllReadingUnitCombo)
+
 		# Translators: This is the label for a checkbox in the
 		# speech settings panel.
 		reportNormalizedForCharacterNavigationText = _("Report '&Normalized' when navigating by character")
@@ -1917,6 +1928,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		].value
 		config.conf["speech"]["trustVoiceLanguage"] = self.trustVoiceLanguageCheckbox.IsChecked()
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
+		self.sayAllReadingUnitCombo.saveCurrentValueToConf()
 		config.conf["speech"]["reportNormalizedForCharacterNavigation"] = (
 			self.reportNormalizedForCharacterNavigationCheckBox.IsChecked()
 		)
@@ -2668,6 +2680,17 @@ class BrowseModePanel(SettingsPanel):
 		)
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
 
+		self.searchHistoryCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is the label for a combo box in the browse mode settings panel.
+				"&Keep search history",
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["virtualBuffers", "findHistory"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("SearchHistory", self.searchHistoryCombo)
+
 		# browseMode imports gui, which imports from settingsDialogs, so a top-level import
 		# would create a circular dependency. Keep this import lazy.
 		import browseMode
@@ -2704,6 +2727,7 @@ class BrowseModePanel(SettingsPanel):
 		config.conf["virtualBuffers"]["trapNonCommandGestures"] = (
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
+		self.searchHistoryCombo.saveCurrentValueToConf()
 		config.conf["virtualBuffers"]["browseModeTouchNavigationElements"] = [
 			itemType
 			for i, (itemType, _label) in enumerate(self._browseModeElements)
@@ -2833,7 +2857,11 @@ class MathSettingsPanel(SettingsPanel):
 		self.decimalSeparatorList = speechGroup.addLabeledControl(
 			decimalSeparatorText,
 			wx.Choice,
-			choices=[option.displayString for option in DecimalSeparatorOption],
+			choices=[
+				option.displayString
+				for option in DecimalSeparatorOption
+				if option != DecimalSeparatorOption.CUSTOM
+			],
 		)
 		self.bindHelpEvent("MathSpeechDecimalSeparator", self.decimalSeparatorList)
 		self.decimalSeparatorList.SetSelection(

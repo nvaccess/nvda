@@ -506,6 +506,7 @@ Portable and temporary copies of NVDA have the following restrictions:
   * Windows 11 Voice Access
 * The inability to read User Account Control (UAC) screens when trying to start an application with administrative privileges.
 * The inability to support input from a touchscreen.
+If the NVDA magnifier is enabled, touchscreen input will not work correctly.
 * The inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
 * Audio ducking is not supported.
 
@@ -1185,6 +1186,7 @@ This dialog allows you to search for terms in the current document.
 In the "Type the text you wish to find" field, the text to be found can be entered.
 The "Case sensitive" checkbox makes the search consider uppercase and lowercase letters differently.
 For example, with "Case sensitive" selected you can find "NV Access" but not "nv access".
+When the [Keep search history](#SearchHistory) browse mode setting is enabled, this field is a combo box that also offers the terms you have recently searched for (up to 20), which are cleared when NVDA restarts.
 Use the following keys for performing searches:
 <!-- KC:beginInclude -->
 
@@ -2306,6 +2308,20 @@ To toggle Unicode normalization from anywhere, please assign a custom gesture us
 |---|---|
 |Options |Default (Enabled), Enabled, Disabled|
 |Default |Enabled|
+
+##### Say all reads by {#SpeechSettingsSayAllReadingUnit}
+
+This combo box lets you choose the unit of text that say all (continuous reading) advances by.
+This affects how frequently the text caret and view move during say all, and can also affect intonation in long blocks of text.
+When set to "Sentence where possible", NVDA reads sentence by sentence in controls and documents that support sentence boundaries, and automatically falls back to reading by line where sentence boundaries are not supported.
+When set to "Paragraph", NVDA reads paragraph by paragraph.
+When set to "Line", NVDA always reads line by line.
+For example, when set to "Line", say all reads by line in Rich Edit controls such as WordPad or NVDA's log viewer, whereas the default reads these by sentence.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Sentence where possible), Sentence where possible, Paragraph, Line|
+|Default |Sentence where possible|
 
 ##### Report "Normalized" when navigating by character {#SpeechReportNormalizedForCharacterNavigation}
 
@@ -3485,6 +3501,17 @@ Enabled by default, this option allows you to choose if gestures (such as key pr
 As an example, if enabled and the letter j was pressed, it would be trapped from reaching the document, even though it is not a quick navigation command nor is it likely to be a command in the application itself.
 In this case NVDA will tell Windows to play a default sound whenever a key which gets trapped is pressed.
 
+##### Keep search history {#SearchHistory}
+
+Enabled by default, this option determines whether the [Find dialog](#SearchingForText) remembers the terms you have searched for during the current NVDA session.
+When enabled, the Find dialog offers up to 20 recently used search terms from a combo box; this history is kept in memory only and is cleared when NVDA restarts.
+If the combo box interferes with your input method, such as with some IMEs, you can set this option to Disabled to return the Find dialog to a plain edit field.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Default (Enabled), Disabled, Enabled |
+| Default | Enabled |
+
 ##### Browse mode touch navigation elements {#BrowseModeSettingsBrowseModeNavigationElements}
 
 This list allows you to choose which element types are available when cycling through elements in browse touch mode.
@@ -3679,6 +3706,16 @@ If speech rules for the main language cannot be found, English ("en") is used.
 |---|---|
 | Options | Automatic, English, English (en-GB), Chinese (Traditional) (zh-TW), Finnish, German, Indonesian, Norwegian Bokmål, Spanish, Swedish, Vietnamese |
 | Default | Automatic (the language of the current voice if supported, or fallback to English) |
+
+###### Decimal separator for numbers {#MathSpeechDecimalSeparator}
+
+This determines the character used as the decimal separator when reading numbers in math.
+When set to Automatic, the separator is chosen based on the math language.
+
+| . {.hideHeaderRow} | . |
+|---|---|
+| Options | Automatic, ".", "," |
+| Default | Automatic |
 
 ###### Speech Style {#MathSpeechStyle}
 

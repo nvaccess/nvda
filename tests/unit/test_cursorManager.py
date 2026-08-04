@@ -1,11 +1,20 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2017-2023 NV Access Limited
+# Copyright (C) 2017-2026 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Unit tests for the cursorManager module."""
 
 import unittest
+from unittest.mock import Mock, patch
+
+import wx
+
+import config
+import cursorManager
+from config.featureFlag import FeatureFlag
+from config.featureFlagEnums import BoolFlag
+from cursorManager import _MAX_SEARCH_HISTORY_ENTRIES, FindDialog
 from .textProvider import CursorManager
 
 
@@ -233,3 +242,162 @@ class TestSelectAll(unittest.TestCase):
 
 	def test_selectAllFromEnd(self):
 		self._selectAllTest(2)  # Caret at "c"
+
+
+class TestSearchHistory(unittest.TestCase):
+	"""Tests the pure list logic of CursorManager._updateSearchHistory (#8482).
+	This is class-level shared state, so it is reset before and after each test.
+	"""
+
+	def setUp(self):
+		# Clear in place, as assigning would shadow the list shared with the base class.
+		CursorManager._searchEntries.clear()
+
+	def tearDown(self):
+		CursorManager._searchEntries.clear()
+
+	def test_appendingTermPutsItAtFront(self):
+		CursorManager._updateSearchHistory("foo")
+		self.assertEqual(CursorManager._searchEntries, ["foo"])
+
+	def test_emptyStringIsIgnored(self):
+		CursorManager._updateSearchHistory("foo")
+		CursorManager._updateSearchHistory("")
+		self.assertEqual(CursorManager._searchEntries, ["foo"])
+
+	def test_retypingExistingTermPromotesItToFrontWithoutDuplicate(self):
+		CursorManager._updateSearchHistory("foo")
+		CursorManager._updateSearchHistory("bar")
+		CursorManager._updateSearchHistory("foo")
+		self.assertEqual(CursorManager._searchEntries, ["foo", "bar"])
+
+	def test_caseOnlyVariantDedupsKeepingNewestCasing(self):
+		CursorManager._updateSearchHistory("Car")
+		CursorManager._updateSearchHistory("car")
+		self.assertEqual(CursorManager._searchEntries, ["car"])
+
+	def test_exceedingMaxEntriesTruncatesOldest(self):
+		for index in range(_MAX_SEARCH_HISTORY_ENTRIES + 1):
+			CursorManager._updateSearchHistory(f"term{index}")
+		self.assertEqual(len(CursorManager._searchEntries), _MAX_SEARCH_HISTORY_ENTRIES)
+		self.assertEqual(CursorManager._searchEntries[0], f"term{_MAX_SEARCH_HISTORY_ENTRIES}")
+		self.assertNotIn("term0", CursorManager._searchEntries)
+
+
+class TestFindDialogSingleInstance(unittest.TestCase):
+	"""Tests that only one find dialog exists at a time (#20484)."""
+
+	def setUp(self):
+		self.app = wx.App()
+		self._dialogs: list[FindDialog] = []
+		config.conf["virtualBuffers"]["findHistory"] = FeatureFlag(BoolFlag.ENABLED, BoolFlag.ENABLED)
+
+	def tearDown(self):
+		for dialog in self._dialogs:
+			# A dialog whose underlying window has already been destroyed is falsy.
+			if dialog:
+				dialog.Destroy()
+		FindDialog._instance = None
+		config.conf["virtualBuffers"]["findHistory"] = FeatureFlag(BoolFlag.DEFAULT, BoolFlag.ENABLED)
+
+	def _createDialog(
+		self,
+		cursorManager: Mock | None = None,
+		text: str = "",
+		caseSensitivity: bool = False,
+		reverse: bool = False,
+		searchEntries: list[str] | None = None,
+	) -> FindDialog:
+		dialog = FindDialog(
+			None,
+			cursorManager or Mock(),
+			text,
+			caseSensitivity,
+			reverse,
+			searchEntries,
+		)
+		if not any(known is dialog for known in self._dialogs):
+			self._dialogs.append(dialog)
+		return dialog
+
+	def test_creatingDialogWhileOneIsOpenReusesIt(self):
+		first = self._createDialog(text="foo", searchEntries=["foo"])
+		second = self._createDialog(text="bar", searchEntries=["bar", "foo"])
+		self.assertIs(second, first)
+
+	def test_reusedDialogIsRetargeted(self):
+		self._createDialog(text="foo", searchEntries=["foo"])
+		cursorManager = Mock()
+		dialog = self._createDialog(
+			cursorManager,
+			"bar",
+			caseSensitivity=True,
+			reverse=True,
+			searchEntries=["bar", "foo"],
+		)
+		self.assertIs(dialog.activeCursorManager, cursorManager)
+		self.assertTrue(dialog.reverse)
+		self.assertTrue(dialog.caseSensitiveCheckBox.GetValue())
+		self.assertEqual(dialog.findTextField.GetValue(), "bar")
+		self.assertEqual(dialog.findTextField.GetStrings(), ["bar", "foo"])
+
+	def test_destroyedDialogIsNotReused(self):
+		first = self._createDialog(text="foo")
+		first.Destroy()
+		# Destruction of a top level window is deferred until pending events are processed.
+		wx.Yield()
+		second = self._createDialog(text="bar")
+		self.assertIsNot(second, first)
+		self.assertEqual(second.findTextField.GetValue(), "bar")
+
+	def test_findFieldIsPlainEditWhenHistoryIsDisabled(self):
+		config.conf["virtualBuffers"]["findHistory"] = FeatureFlag(BoolFlag.DISABLED, BoolFlag.ENABLED)
+		dialog = self._createDialog(text="foo", searchEntries=["foo"])
+		self.assertNotIsInstance(dialog.findTextField, wx.ComboBox)
+		self._createDialog(text="bar", searchEntries=["bar", "foo"])
+		self.assertEqual(dialog.findTextField.GetValue(), "bar")
+
+
+class TestFindDialogPopupPairing(unittest.TestCase):
+	"""Tests that script_find pairs every prePopup call with a postPopup call (#20484)."""
+
+	def setUp(self):
+		self.app = wx.App()
+		# A real window is needed as the dialog parent, but the popup bookkeeping is mocked.
+		self.mainFrame = wx.Frame(None)
+		self.mainFrame.prePopup = Mock()
+		self.mainFrame.postPopup = Mock()
+		self._patches = [
+			patch.object(cursorManager.gui, "mainFrame", self.mainFrame),
+			# script_find defers its work to wx.CallAfter, run it inline instead.
+			patch.object(cursorManager.wx, "CallAfter", lambda func, *args, **kwargs: func(*args, **kwargs)),
+			# ShowModal would block until the dialog is dismissed.
+			patch.object(FindDialog, "ShowModal", Mock(return_value=wx.ID_CANCEL)),
+		]
+		for p in self._patches:
+			p.start()
+		config.conf["virtualBuffers"]["findHistory"] = FeatureFlag(BoolFlag.ENABLED, BoolFlag.ENABLED)
+
+	def tearDown(self):
+		for p in reversed(self._patches):
+			p.stop()
+		dialog = FindDialog._instance() if FindDialog._instance else None
+		if dialog:
+			dialog.Destroy()
+		FindDialog._instance = None
+		self.mainFrame.Destroy()
+		config.conf["virtualBuffers"]["findHistory"] = FeatureFlag(BoolFlag.DEFAULT, BoolFlag.ENABLED)
+
+	def test_openingDialogPairsPrePopupWithPostPopup(self):
+		CursorManager(text="abc", selection=(0, 0)).script_find(None)
+		self.assertEqual(self.mainFrame.prePopup.call_count, 1)
+		self.assertEqual(self.mainFrame.postPopup.call_count, 1)
+
+	def test_reusingDialogDoesNotCallPrePopupAgain(self):
+		# The dialog created here is still open, as ShowModal is mocked out.
+		CursorManager(text="abc", selection=(0, 0)).script_find(None)
+		self.mainFrame.prePopup.reset_mock()
+		self.mainFrame.postPopup.reset_mock()
+		CursorManager(text="def", selection=(0, 0)).script_find(None)
+		self.mainFrame.prePopup.assert_not_called()
+		self.mainFrame.postPopup.assert_not_called()
