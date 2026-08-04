@@ -39,7 +39,7 @@
   * Browseable message dialogs now better support resizing, maximizing and minimizing, with text wrapping to the dialog width. (#20429, @Cary-rowen)
 * Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
 * The duration of indentation beeps can now be configured via a new "Indent tone duration (ms)" spin control in the Document Formatting settings panel. (#20447, @Mubashir78)
-* Reduced the number of cross-process UI Automation calls when processing events, reporting focus changes and rendering browse mode content, by caching more properties and batching focus property fetches. (#20608, @LeonarddeR)
+* Reduced the number of cross-process UI Automation calls when processing events, reporting focus changes, reporting objects under the mouse and rendering browse mode content, by caching more properties and batching focus property fetches. (#20608, @LeonarddeR)
 
 ### Bug Fixes
 

@@ -840,7 +840,6 @@ class UIAHandler(COMObject):
 				obj = NVDAObjects.UIA.UIA(
 					windowHandle=window,
 					UIAElement=sender,
-					initialUIACachedPropertyIDs=baseCachePropertyIDs,
 				)
 			except Exception:
 				if _isDebug():
@@ -936,7 +935,6 @@ class UIAHandler(COMObject):
 			obj = NVDAObjects.UIA.UIA(
 				windowHandle=window,
 				UIAElement=sender,
-				initialUIACachedPropertyIDs=baseCachePropertyIDs,
 			)
 		except Exception:
 			if _isDebug():
@@ -1049,7 +1047,6 @@ class UIAHandler(COMObject):
 				obj = NVDAObjects.UIA.UIA(
 					windowHandle=window,
 					UIAElement=sender,
-					initialUIACachedPropertyIDs=baseCachePropertyIDs,
 				)
 			except Exception:
 				if _isDebug():
@@ -1136,7 +1133,6 @@ class UIAHandler(COMObject):
 			obj = NVDAObjects.UIA.UIA(
 				UIAElement=sender,
 				windowHandle=window,
-				initialUIACachedPropertyIDs=baseCachePropertyIDs,
 			)
 		except Exception:
 			if _isDebug():
@@ -1197,7 +1193,6 @@ class UIAHandler(COMObject):
 		try:
 			obj = NVDAObjects.UIA.UIA(
 				UIAElement=sender,
-				initialUIACachedPropertyIDs=baseCachePropertyIDs,
 			)
 		except Exception:
 			if _isDebug():

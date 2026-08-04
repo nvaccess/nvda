@@ -1581,6 +1581,7 @@ class UIA(Window):
 			UIAHandler.handler.baseCacheRequest.
 		:param initialUIACachedPropertyIDs: IDs of UI Automation properties the given UIAElement
 			already has cached.
+			When None, defaults to UIAHandler.baseCachePropertyIDs.
 			Cached values of these properties will be available for the remainder of the current
 			core cycle. After that, new values will be fetched.
 		:raises ValueError: if no UIAElement is given.
@@ -1588,6 +1589,9 @@ class UIA(Window):
 		"""
 		if not UIAElement:
 			raise ValueError("needs a UIA element")
+
+		if initialUIACachedPropertyIDs is None:
+			initialUIACachedPropertyIDs = UIAHandler.baseCachePropertyIDs
 
 		self.UIAElement = UIAElement
 
