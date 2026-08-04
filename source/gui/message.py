@@ -156,12 +156,12 @@ class DisplayableError(Exception):
 		translated, user friendly message, without deciding how the error is presented.
 		A component coordinating the work catches the exception and notifies an instance of
 		OnDisplayableErrorT, and a handler registered to that action decides how to display
-		the error, typically by calling L{displayError}.
+		the error, typically by calling ``displayError``.
 		See the "Communicating with the user" chapter of the Developer Guide for examples.
 
-		@param displayMessage: A translated message, to be displayed to the user.
-		@param titleMessage: A translated message, to be used as a title for the display message.
-		If left None, "Error" is presented as the title by default.
+		:param displayMessage: A translated message, to be displayed to the user.
+		:param titleMessage: A translated message, to be used as a title for the display message.
+			If left None, "Error" is presented as the title by default.
 		"""
 		self.displayMessage = displayMessage
 		if titleMessage is None:

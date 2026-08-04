@@ -1879,9 +1879,14 @@ The following convenience class methods are provided (keyword arguments for over
 ### Displaying errors to the user: DisplayableError {#DisplayableError}
 
 `gui.message.DisplayableError` is an exception class for failures which the user should be told about via a message box, rather than only logged.
-It carries a translated message (`displayMessage`) and an optional translated title (`titleMessage`, which defaults to "Error"), and can present itself with its `displayError` method, which safely schedules a `gui.message.messageBox` call on the GUI thread using `wx.CallAfter`.
+It carries a translated message (`displayMessage`) and an optional translated title (`titleMessage`).
+If no title is given, "Error" is used.
+The error can also present itself, using its `displayError` method.
+This method safely schedules a `gui.message.messageBox` call on the GUI thread, using `wx.CallAfter`.
 
-Use `DisplayableError` when code outside the GUI layer (e.g. network or data-processing code, possibly running on a background thread) encounters an error the user needs to know about, but where that code should not decide how, or even whether, the error is presented.
+Use `DisplayableError` when code outside the GUI layer encounters an error the user needs to know about.
+Such code might be network or data-processing code, possibly running on a background thread.
+That code should not decide how, or even whether, the error is presented.
 This keeps user-facing error presentation out of business logic, and involves three roles:
 
 * The code detecting the failure raises `DisplayableError` with a translated message.
