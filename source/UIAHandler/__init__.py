@@ -70,7 +70,12 @@ baseCachePropertyIDs = {
 	UIA.UIA_IsControlElementPropertyId,
 	UIA.UIA_NamePropertyId,
 	UIA.UIA_LocalizedControlTypePropertyId,
+	UIA.UIA_HasKeyboardFocusPropertyId,
 }
+"""UIA property IDs included in the handler's base cache request.
+The base cache request is attached to all event handler registrations and to the base tree walker,
+so event senders and elements fetched through them carry these properties in their element cache.
+"""
 
 #: The window class name for Microsoft Word documents.
 # Microsoft Word's UI Automation implementation
