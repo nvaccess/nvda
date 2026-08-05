@@ -136,6 +136,10 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_AriaPropertiesPropertyId,
 		UIAHandler.UIA_LevelPropertyId,
 		UIAHandler.UIA_IsEnabledPropertyId,
+		UIAHandler.UIA.UIA_SelectionCanSelectMultiplePropertyId,
+		UIAHandler.UIA_IsOffscreenPropertyId,
+		UIAHandler.UIA_AnnotationTypesPropertyId,
+		UIAHandler.UIA_DragIsGrabbedPropertyId,
 	}
 
 	def _get__controlFieldUIACacheRequest(self):
@@ -1181,9 +1185,13 @@ class UIA(Window):
 			value = self.UIAElement.getCurrentPropertyValueEx(ID, ignoreDefault)
 		return value
 
-	def _prefetchUIACacheForPropertyIDs(self, IDs):
-		"""
-		Fetch values for all the given UI Automation property IDs in one cache request, making them available for this core cycle.
+	def _prefetchUIACacheForPropertyIDs(self, IDs: typing.Collection[int]) -> None:
+		"""Fetch values for all the given UI Automation property IDs in one cache request,
+		making them available for this core cycle.
+
+		:param IDs: the UI Automation property IDs to fetch.
+			IDs for which a cached element is already known this core cycle are skipped.
+			When fewer than two IDs remain, no cache request is made.
 		"""
 		elementCache = self._coreCycleUIAPropertyCacheElementCache
 		if elementCache:
@@ -1558,20 +1566,32 @@ class UIA(Window):
 		"""Simply fetches a UIA text range for the given UIAElement, allowing subclasses to process the range first."""
 		return UIATextRangeFromElement(self.UIATextPattern, UIAElement)
 
-	def __init__(self, windowHandle=None, UIAElement=None, initialUIACachedPropertyIDs=None):
+	def __init__(
+		self,
+		windowHandle: int | None = None,
+		UIAElement: UIAHandler.IUIAutomationElement | None = None,
+		initialUIACachedPropertyIDs: typing.Iterable[int] | None = None,
+	):
 		"""
 		An NVDAObject for a UI Automation element.
-		@param windowHandle: if a UIAElement is not specifically given, then this windowHandle is used to fetch its root UIAElement
-		@type windowHandle: int
-		@param UIAElement: the UI Automation element that should be represented by this NVDAObject
-		The UI Automation element must have been created with a L{UIAHandler.handler.baseCacheRequest}
-		@type UIAElement: L{UIAHandler.IUIAutomationElement}
-		@param initialUIACachedPropertyIDs: Extra UI Automation properties the given UIAElement has already had cached with a UIA cache request that inherits from L{UIAHandler.handler.baseCacheRequest}.
-		Cached values of these properties will be available for the remainder of the current core cycle. After that, new values will be fetched.
-		@type initialUIACachedPropertyIDs: L{UIAHandler.IUIAutomationCacheRequest}
+		:param windowHandle: the window handle for this object.
+			When not given, the nearest window handle is located by walking the UIAElement's ancestry.
+		:param UIAElement: the UI Automation element that should be represented by this NVDAObject.
+			The UI Automation element must have been created with a cache request that inherits from
+			UIAHandler.handler.baseCacheRequest.
+		:param initialUIACachedPropertyIDs: IDs of UI Automation properties the given UIAElement
+			already has cached.
+			When None, defaults to UIAHandler.baseCachePropertyIDs.
+			Cached values of these properties will be available for the remainder of the current
+			core cycle. After that, new values will be fetched.
+		:raises ValueError: if no UIAElement is given.
+		:raises InvalidNVDAObject: if no window handle is given and none can be located.
 		"""
 		if not UIAElement:
 			raise ValueError("needs a UIA element")
+
+		if initialUIACachedPropertyIDs is None:
+			initialUIACachedPropertyIDs = UIAHandler.baseCachePropertyIDs
 
 		self.UIAElement = UIAElement
 
@@ -1604,6 +1624,7 @@ class UIA(Window):
 
 	def event_gainFocus(self):
 		UIAHandler.handler.addLocalEventHandlerGroupToElement(self.UIAElement, isFocus=True)
+		self._prefetchUIACacheForPropertyIDs(self._focusPrefetchUIAPropertyIDs | self._UIAStatesPropertyIDs)
 		super().event_gainFocus()
 
 	def event_loseFocus(self):
@@ -1943,6 +1964,23 @@ class UIA(Window):
 		UIAHandler.UIA_AnnotationTypesPropertyId,
 		UIAHandler.UIA_DragIsGrabbedPropertyId,
 	}
+
+	_focusPrefetchUIAPropertyIDs = {
+		UIAHandler.UIA_FullDescriptionPropertyId,
+		UIAHandler.UIA_HelpTextPropertyId,
+		UIAHandler.UIA_AccessKeyPropertyId,
+		UIAHandler.UIA_AcceleratorKeyPropertyId,
+		UIAHandler.UIA_PositionInSetPropertyId,
+		UIAHandler.UIA_SizeOfSetPropertyId,
+		UIAHandler.UIA_LevelPropertyId,
+		UIAHandler.UIA.UIA_ValueValuePropertyId,
+		UIAHandler.UIA.UIA_RangeValueValuePropertyId,
+		UIAHandler.UIA_ToggleToggleStatePropertyId,
+		UIAHandler.UIA_BoundingRectanglePropertyId,
+	}
+	"""UIA property IDs prefetched in a single cache request when this object gains focus.
+	Subclasses may extend this set with the properties they report on focus.
+	"""
 
 	def _get_states(self):
 		states = set()
