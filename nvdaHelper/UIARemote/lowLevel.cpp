@@ -1,7 +1,9 @@
-// A part of NonVisual Desktop Access (NVDA)
-// Copyright (C) 2023-2026 NV Access Limited, Leonard de Ruijter
-// This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
-// For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+/*
+A part of NonVisual Desktop Access (NVDA)
+Copyright (C) 2023-2026 NV Access Limited, Leonard de Ruijter
+This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+*/
 
 #include <uiAutomationClient.h>
 #include <winrt/windows.foundation.h>
