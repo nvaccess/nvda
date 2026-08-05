@@ -3,7 +3,7 @@
 **Contribution Number:** 2
 **Student:** Karen Emily Muhwezi
 **Issue:** <https://github.com/nvaccess/nvda/issues/14555>
-**Status:** Implementation complete — ready for PR
+**Status:** PR submitted
 
 ---
 
@@ -188,7 +188,7 @@ The table border colour was the one value I had to revise: my first choice, `#55
 
 ## Pull Request
 
-**PR Link:** to be added once the PR is opened.
+**PR Link:** <https://github.com/nvaccess/nvda/pull/20618>
 
 **PR Description (draft):**
 
