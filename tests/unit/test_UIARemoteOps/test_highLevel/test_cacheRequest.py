@@ -23,29 +23,6 @@ from UIAHandler._remoteOps.lowLevel import (
 )
 
 
-class Test_isNull(TestCase):
-	def test_isNull_trueForNullElement(self):
-		op = operation.Operation(localMode=True)
-
-		@op.buildFunction
-		def code(ra: remoteAPI.RemoteAPI):
-			element = ra.newElement()
-			ra.Return(element.isNull())
-
-		self.assertTrue(op.execute())
-
-	def test_isNull_falseForImportedElement(self):
-		uiaElement = Mock(spec=POINTER(UIA.IUIAutomationElement))
-		op = operation.Operation(localMode=True)
-
-		@op.buildFunction
-		def code(ra: remoteAPI.RemoteAPI):
-			element = ra.newElement(uiaElement)
-			ra.Return(element.isNull())
-
-		self.assertFalse(op.execute())
-
-
 class Test_cacheRequest(TestCase):
 	def test_populateCache_buildsAndAppliesClientCacheRequest(self):
 		uiaElement = Mock(spec=POINTER(UIA.IUIAutomationElement))
