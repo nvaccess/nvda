@@ -77,6 +77,12 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* The UIA remote operations framework now supports cache requests. (#20621, @LeonarddeR)
+  * A remote operation can create a cache request with `ra.newCacheRequest`, add properties and patterns to it, and populate the cache of a remote element with `RemoteElement.populateCache`.
+  * Elements returned or yielded from the operation carry the populated cache.
+  * Such a cache stores default values for properties the element does not support; the reserved "not supported" value is not preserved.
+* UIA remote operations can now return `UInt32`, `Int64`, `Single` and `Double` values, as well as the reserved "not supported" value for property fetches that ignore defaults. (#20621, @LeonarddeR)
+  * A remote variant can be tested for the reserved "not supported" value inside the operation with `RemoteVariant.isNotSupported`.
 * `mathPres.interactWithMathMl` now accepts an optional `sourceObj` argument.
 Math presentation providers can override `MathPresentationProvider.interactWithMathMlFromSource` to use the source object when starting interaction.
 The default implementation forwards to `interactWithMathMl`, preserving compatibility with existing providers. (#20372, @RyanMcCleary)
