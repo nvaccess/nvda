@@ -323,8 +323,7 @@ Note that a cache populated this way stores default values for properties the el
 The reserved "not supported" value that a locally built cache returns for such properties is not preserved:
 reads through `getCachedPropertyValueEx` behave as if `ignoreDefault` was not set.
 To determine whether an element supports a pattern, cache the corresponding `IsXPatternAvailable` property instead.
-Alternatively, fetch the property explicitly with `getPropertyValue` and `ignoreDefault` set,
-and test the result inside the operation with `isNotSupported` on the returned variant.
+Alternatively, fetch the property explicitly with `getPropertyValue` and `ignoreDefault` set, and test the result inside the operation with `isNotSupported` on the returned variant.
 
 ### UI Automation text ranges
 
