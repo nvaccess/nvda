@@ -97,5 +97,8 @@ def initialize() -> None:
 
 def terminate() -> None:
 	global server
+	if server is None:
+		return
 	server.shutdown()
+	server.server_close()
 	server = None
