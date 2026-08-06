@@ -209,6 +209,10 @@ def _getEdge(x: int, y: int) -> TouchEdge | None:
 	The margin width is defined in millimetres by :data:`touchTracker._EDGE_MARGIN_MM`
 	and converted to pixels using the screen DPI at call time.
 
+	All four edges are checked.
+	Note that Windows or the taskbar may intercept gestures on certain edges
+	before they reach NVDA, in which case this function will never be called for those touches.
+
 	:param x: The x screen coordinate to test.
 	:param y: The y screen coordinate to test.
 	:return: A :class:`touchTracker.TouchEdge` member,
@@ -217,6 +221,7 @@ def _getEdge(x: int, y: int) -> TouchEdge | None:
 	if not config.conf["touch"]["edgeGestures"]:
 		return None
 	screenWidth = user32.GetSystemMetrics(SystemMetrics.CX_SCREEN)
+	screenHeight = user32.GetSystemMetrics(SystemMetrics.CY_SCREEN)
 	dc = user32.GetDC(0)
 	dpi = winBindings.gdi32.GetDeviceCaps(dc, _LOGPIXELSX) or 96
 	user32.ReleaseDC(0, dc)
@@ -227,6 +232,8 @@ def _getEdge(x: int, y: int) -> TouchEdge | None:
 		return TouchEdge.RIGHT
 	if y <= margin:
 		return TouchEdge.TOP
+	if y >= screenHeight - margin:
+		return TouchEdge.BOTTOM
 	return None
 
 
@@ -357,7 +364,7 @@ class TouchInputGesture(inputCore.InputGesture):
 				ID += "%s_" % self.counterNames[min(self.tracker.actionCount, 4) - 1]
 			edge = _getEdge(self.tracker.x, self.tracker.y)
 			if edge:
-				ID += "%s_" % edge
+				ID += edge + "_"
 			ID += self.tracker.action
 			# "ts" is the gesture identifier source prefix for "touch screen".
 			IDs.append("ts(%s):%s" % (self.mode, ID))

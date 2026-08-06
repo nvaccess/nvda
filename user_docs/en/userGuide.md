@@ -3268,12 +3268,12 @@ If this is unchecked, you need to double-tap on the key of the touch keyboard to
 ##### Enable edge gestures {#TouchEdgeGestures}
 
 This checkbox enables edge gesture support.
-When enabled, gestures that begin within 15 mm of the left, right, or top screen edge are treated as distinct gestures and can be bound independently in the Input Gestures dialog.
+When enabled, gestures that begin within 15 mm of any screen edge are treated as distinct gestures and can be bound independently in the Input Gestures dialog.
 For example, a flick right that starts from the left edge of the screen can be bound to a different command from a flick right performed in the centre of the screen.
 If edge gestures are disabled after bindings have been set, those bindings will remain but will never be triggered.
-Note: the bottom edge is not supported, as Windows intercepts swipe-from-bottom gestures system-wide.
-On Windows 10, if the taskbar is moved to another edge, touches on that edge will also be intercepted by Windows before reaching NVDA, making that edge unavailable.
-On Windows 11, the taskbar is locked to the bottom and cannot be moved.
+Note: Windows or the taskbar may intercept gestures on certain edges before they reach NVDA.
+For example, swiping from the bottom edge typically opens the Start menu or Action Center, and if the taskbar is positioned on another edge, touches on that edge will similarly be intercepted.
+If a gesture on a particular edge does not work, check whether Windows is intercepting it, and consider leaving that edge unbound.
 
 #### Review Cursor {#ReviewCursorSettings}
 

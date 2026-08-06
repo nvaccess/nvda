@@ -115,6 +115,7 @@ class TouchEdge(DisplayStringStrEnum):
 	LEFT = "left"
 	RIGHT = "right"
 	TOP = "top"
+	BOTTOM = "bottom"
 
 	@cached_property
 	def _displayStringLabels(self) -> dict[Self, str]:
@@ -125,6 +126,8 @@ class TouchEdge(DisplayStringStrEnum):
 			TouchEdge.RIGHT: pgettext("touch edge", "right edge"),
 			# Translators: describes a touch gesture that started from the top edge of the screen
 			TouchEdge.TOP: pgettext("touch edge", "top edge"),
+			# Translators: describes a touch gesture that started from the bottom edge of the screen
+			TouchEdge.BOTTOM: pgettext("touch edge", "bottom edge"),
 		}
 
 
