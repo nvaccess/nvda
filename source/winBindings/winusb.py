@@ -11,14 +11,17 @@ from ctypes import (
 	Structure,
 	c_int,
 	c_ubyte,
-	c_ushort,
 	c_void_p,
 	windll,
 )
-from ctypes.wintypes import BOOL, HANDLE, ULONG
+from ctypes.wintypes import BOOL, HANDLE, PULONG, ULONG, USHORT
 from enum import IntEnum
+from serial.win32 import LPOVERLAPPED
 
 dll = windll.winusb
+
+WINUSB_INTERFACE_HANDLE = c_void_p
+PWINUSB_INTERFACE_HANDLE = POINTER(c_void_p)
 
 
 class USBD_PIPE_TYPE(IntEnum):
@@ -75,7 +78,7 @@ class WINUSB_PIPE_INFORMATION(Structure):
 	_fields_ = (
 		("pipeType", c_int),  # USBD_PIPE_TYPE
 		("pipeId", c_ubyte),
-		("maximumPacketSize", c_ushort),
+		("maximumPacketSize", USHORT),
 		("interval", c_ubyte),
 	)
 
@@ -89,7 +92,7 @@ Creates a WinUSB handle for the device specified by a file handle.
 """
 WinUsb_Initialize.argtypes = (
 	HANDLE,  # DeviceHandle
-	POINTER(c_void_p),  # InterfaceHandle
+	PWINUSB_INTERFACE_HANDLE,  # InterfaceHandle
 )
 WinUsb_Initialize.restype = BOOL
 
@@ -101,7 +104,7 @@ Frees the resources allocated by ``WinUsb_Initialize``.
 	https://learn.microsoft.com/en-us/windows/win32/api/winusb/nf-winusb-winusb_free
 """
 WinUsb_Free.argtypes = (
-	c_void_p,  # InterfaceHandle
+	WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
 )
 WinUsb_Free.restype = BOOL
 
@@ -113,7 +116,7 @@ Retrieves the interface descriptor for the specified alternate interface setting
 	https://learn.microsoft.com/en-us/windows/win32/api/winusb/nf-winusb-winusb_queryinterfacesettings
 """
 WinUsb_QueryInterfaceSettings.argtypes = (
-	c_void_p,  # InterfaceHandle
+	WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
 	c_ubyte,  # AlternateInterfaceNumber
 	POINTER(USB_INTERFACE_DESCRIPTOR),  # UsbAltInterfaceDescriptor
 )
@@ -127,7 +130,7 @@ Retrieves information about a pipe that is associated with an interface.
 	https://learn.microsoft.com/en-us/windows/win32/api/winusb/nf-winusb-winusb_querypipe
 """
 WinUsb_QueryPipe.argtypes = (
-	c_void_p,  # InterfaceHandle
+	WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
 	c_ubyte,  # AlternateInterfaceNumber
 	c_ubyte,  # PipeIndex
 	POINTER(WINUSB_PIPE_INFORMATION),  # PipeInformation
@@ -142,12 +145,12 @@ Reads data from the specified pipe.
 	https://learn.microsoft.com/en-us/windows/win32/api/winusb/nf-winusb-winusb_readpipe
 """
 WinUsb_ReadPipe.argtypes = (
-	c_void_p,  # InterfaceHandle
+	WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
 	c_ubyte,  # PipeID
 	c_void_p,  # Buffer
 	ULONG,  # BufferLength
-	POINTER(ULONG),  # LengthTransferred
-	c_void_p,  # Overlapped
+	PULONG,  # LengthTransferred
+	LPOVERLAPPED,  # Overlapped
 )
 WinUsb_ReadPipe.restype = BOOL
 
@@ -159,12 +162,12 @@ Writes data to a pipe.
 	https://learn.microsoft.com/en-us/windows/win32/api/winusb/nf-winusb-winusb_writepipe
 """
 WinUsb_WritePipe.argtypes = (
-	c_void_p,  # InterfaceHandle
+	WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
 	c_ubyte,  # PipeID
 	c_void_p,  # Buffer
 	ULONG,  # BufferLength
-	POINTER(ULONG),  # LengthTransferred
-	c_void_p,  # Overlapped
+	PULONG,  # LengthTransferred
+	LPOVERLAPPED,  # Overlapped
 )
 WinUsb_WritePipe.restype = BOOL
 
@@ -176,7 +179,7 @@ Sets the policy for a specific pipe associated with an endpoint on the device.
 	https://learn.microsoft.com/en-us/windows/win32/api/winusb/nf-winusb-winusb_setpipepolicy
 """
 WinUsb_SetPipePolicy.argtypes = (
-	c_void_p,  # InterfaceHandle
+	WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
 	c_ubyte,  # PipeID
 	ULONG,  # PolicyType
 	ULONG,  # ValueLength
