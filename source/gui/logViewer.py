@@ -5,6 +5,8 @@
 
 """Provides functionality to view the NVDA log."""
 
+import collections
+
 import wx
 import globalVars
 import gui
@@ -14,6 +16,11 @@ from gui import blockAction
 
 #: The singleton instance of the log viewer UI.
 logViewer = None
+
+#: Maximum number of characters appended to the output control in one event loop iteration.
+#: Larger amounts of log text are appended in chunks of this size, yielding to the event loop in
+#: between, so that displaying a very large log does not block NVDA's core. (#16322)
+_APPEND_CHUNK_SIZE = 1_000_000
 
 
 class LogViewer(
@@ -62,6 +69,10 @@ class LogViewer(
 		self.SetMenuBar(menuBar)
 
 		self._lastFilePos = 0
+		#: Log text read from the file but not yet appended to the output control.
+		#: A C{None} entry is a marker queued by L{moveInsertionPointToEndOfLog}.
+		self._pendingText: collections.deque[str | None] = collections.deque()
+		self._isPumpScheduled = False
 
 		self.refresh()
 		self.outputCtrl.SetFocus()
@@ -70,17 +81,71 @@ class LogViewer(
 		# Ignore if log is not initialized
 		if globalVars.appArgs.logFileName is None:
 			return
-		pos = self.outputCtrl.GetInsertionPoint()
-		# Append new text to the output control which has been written to the log file since the last refresh.
+		# Queue text which has been written to the log file since the last refresh for display.
+		# It is appended to the output control in chunks by L{_pumpPendingText},
+		# as appending a large amount of text in one go blocks NVDA's core for its duration. (#16322)
 		try:
-			f = open(globalVars.appArgs.logFileName, "r", encoding="UTF-8")
-			f.seek(self._lastFilePos)
-			self.outputCtrl.AppendText(f.read())
-			self._lastFilePos = f.tell()
-			self.outputCtrl.SetInsertionPoint(pos)
-			f.close()
+			with open(globalVars.appArgs.logFileName, "r", encoding="UTF-8") as f:
+				f.seek(self._lastFilePos)
+				text = f.read()
+				self._lastFilePos = f.tell()
 		except IOError:
-			pass
+			return
+		if text:
+			self._pendingText.append(text)
+			self._schedulePump()
+
+	def moveInsertionPointToEndOfLog(self) -> None:
+		"""Move the insertion point to the end of the log text queued for display so far.
+		Text queued after this call will appear after the insertion point,
+		thus leaving the user positioned at the start of that new text.
+		"""
+		self._pendingText.append(None)
+		self._schedulePump()
+
+	def _schedulePump(self) -> None:
+		if not self._isPumpScheduled:
+			self._isPumpScheduled = True
+			# Chain with CallLater rather than CallAfter.
+			# Posted events starve WM_TIMER, so a CallAfter chain would block timers,
+			# including NVDA's core pump, just like a synchronous append.
+			wx.CallLater(1, self._pumpPendingText)
+
+	def _pumpPendingText(self) -> None:
+		self._isPumpScheduled = False
+		if not self:
+			# The window was destroyed while a pump was scheduled.
+			return
+		chunk = ""
+		while self._pendingText and len(chunk) < _APPEND_CHUNK_SIZE:
+			item = self._pendingText.popleft()
+			if item is None:
+				# Marker queued by moveInsertionPointToEndOfLog.
+				# Flush the chunk first so that the end of the control is the end of the queued text.
+				if chunk:
+					self._appendText(chunk)
+					chunk = ""
+				self.outputCtrl.SetInsertionPointEnd()
+				continue
+			maxLen = _APPEND_CHUNK_SIZE - len(chunk)
+			if len(item) > maxLen:
+				self._pendingText.appendleft(item[maxLen:])
+				item = item[:maxLen]
+			chunk += item
+		if chunk:
+			self._appendText(chunk)
+		if self._pendingText:
+			self._schedulePump()
+
+	def _appendText(self, text: str) -> None:
+		"""Append text to the output control, preserving the insertion point and scroll position."""
+		pos = self.outputCtrl.GetInsertionPoint()
+		self.outputCtrl.Freeze()
+		try:
+			self.outputCtrl.AppendText(text)
+			self.outputCtrl.SetInsertionPoint(pos)
+		finally:
+			self.outputCtrl.Thaw()
 
 	def onActivate(self, evt):
 		if evt.GetActive():
@@ -104,6 +169,8 @@ class LogViewer(
 			# #9038: work with UTF-8 from the start.
 			with open(filename, "w", encoding="UTF-8") as f:
 				f.write(self.outputCtrl.GetValue())
+				# Include any log text queued for display but not yet appended to the output control.
+				f.write("".join(item for item in self._pendingText if item is not None))
 		except (IOError, OSError) as e:
 			gui.messageBox(
 				# Translators: Dialog text presented when NVDA cannot save a log file.
