@@ -282,7 +282,7 @@ class Logger(logging.Logger):
 			# Move to the end of the current log text. The new text will be written at this position.
 			# This means that the user will be positioned at the start of the new log text.
 			# This is why we activate the log viewer before writing to the log.
-			logViewer.logViewer.outputCtrl.SetInsertionPointEnd()
+			logViewer.logViewer.moveInsertionPointToEndOfLog()
 
 		if stack_info:
 			if stack_info is True:
