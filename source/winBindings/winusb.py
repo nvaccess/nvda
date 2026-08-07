@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2026 NV Access Limited
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Functions exported by winusb.dll, and supporting data structures and enumerations."""
 
@@ -22,10 +22,10 @@ dll = windll.winusb
 
 
 class USBD_PIPE_TYPE(IntEnum):
-	"""Indicates the type of pipe, used in the ``PipeType`` member of `WINUSB_PIPE_INFORMATION`.
+	"""Indicates the type of pipe, used in the ``PipeType`` member of ``WINUSB_PIPE_INFORMATION``.
 
 	..seealso::
-		https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/usbspec/ne-usbspec-_usbd_pipe_type
+		https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/usb/ne-usb-_usbd_pipe_type
 	"""
 
 	CONTROL = 0
@@ -35,14 +35,14 @@ class USBD_PIPE_TYPE(IntEnum):
 
 
 class WINUSB_PIPE_POLICY(IntEnum):
-	"""Policy type values for the ``PolicyType`` parameter of `WinUsb_SetPipePolicy`.
+	"""Policy type values for the ``PolicyType`` parameter of ``WinUsb_SetPipePolicy``.
 
 	..seealso::
-		https://learn.microsoft.com/en-us/windows/win32/api/winusb/nf-winusb-winusb_setpipepolicy
+		https://learn.microsoft.com/en-us/windows-hardware/drivers/usbcon/winusb-functions-for-pipe-policy-modification
 	"""
 
 	PIPE_TRANSFER_TIMEOUT = 0x03
-	"""Waits for the transfer, in milliseconds, to complete before failing the request with a timeout."""
+	"""Waits for a time-out interval, in milliseconds, before canceling the request."""
 
 
 class USB_INTERFACE_DESCRIPTOR(Structure):
@@ -95,7 +95,7 @@ WinUsb_Initialize.restype = BOOL
 
 WinUsb_Free = WINFUNCTYPE(None)(("WinUsb_Free", dll))
 """
-Frees the resources allocated by `WinUsb_Initialize`.
+Frees the resources allocated by ``WinUsb_Initialize``.
 
 ..seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/winusb/nf-winusb-winusb_free
@@ -107,8 +107,7 @@ WinUsb_Free.restype = BOOL
 
 WinUsb_QueryInterfaceSettings = WINFUNCTYPE(None)(("WinUsb_QueryInterfaceSettings", dll))
 """
-Retrieves the interface descriptor for the specified alternate interface settings for a
-particular interface handle.
+Retrieves the interface descriptor for the specified alternate interface settings for a particular interface handle.
 
 ..seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/winusb/nf-winusb-winusb_queryinterfacesettings
