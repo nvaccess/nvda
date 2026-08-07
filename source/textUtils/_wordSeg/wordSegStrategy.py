@@ -25,6 +25,7 @@ import config
 import languageHandler
 import NVDAHelper
 import textUtils
+from textUtils import icu
 from NVDAState import ReadPaths
 from logHandler import log
 
@@ -358,14 +359,9 @@ class IcuWordSegmentationStrategy(WordSegmentationStrategy):
 	"""
 
 	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
-		from textUtils import icu
-
-		if self.encoding == textUtils.WCHAR_ENCODING:
-			return icu.calculateWordOffsets(self.text, offset)
-		# Convert the str offset to a UTF-16 offset for ICU, then convert the result back.
-		offsetConverter = textUtils.WideStringOffsetConverter(self.text)
-		wideOffset = offsetConverter.strToEncodedOffsets(offset, offset)[0]
-		result = icu.calculateWordOffsets(self.text, wideOffset)
-		if result is None:
-			return None
-		return offsetConverter.encodedToStrOffsets(*result)
+		return icu.calculateOffsetsForEncoding(
+			icu.calculateWordOffsets,
+			self.text,
+			offset,
+			self.encoding,
+		)
