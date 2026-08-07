@@ -65,7 +65,8 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * Object descriptions are now reported for .NET Framework Windows Forms ToolStrip menu items exposed through UI Automation. (#20486, @Cary-rowen)
 * NVDA now reports the selected item when using the arrow keys in collapsed .NET Framework Windows Forms combo boxes. (#17454, @Cary-rowen)
 * The Add-on Store no longer becomes unresponsive when navigating the list of add-ons quickly, such as by holding down an arrow key. (#17351, @christopherpross)
-* HIMS Braille Sense/Braille EDGE displays connected via USB are detected again on Windows 11 systems where the vendor's himsusb.sys driver cannot be installed, by falling back to WinUSB when the vendor's WinUSB driver package is installed for the device. (#20555, @KihunJang1981)
+* HIMS Braille Sense and Braille EDGE displays connected via USB now work on systems where the older HIMS USB driver cannot be installed, such as Windows 11. (#20555, @KihunJang1981)
+  * On these systems, install the [HIMS WinUSB driver](https://hims-product.s3.ap-northeast-2.amazonaws.com/Util/HIMS_Braille_Driver_V3_1.exe) instead.
 * Remote Access: NVDA now reports when connecting as the controlled computer fails, while continuing to retry the connection in the background. (#19103, @danielw97)
 * NVDA no longer briefly disconnects and re-detects the braille display on desktop switches that do not enter the secure desktop, such as when switching between a Remote Desktop session and the local machine. (#18810, #20550, @LeonarddeR)
 * In Windows Terminal, mouse tracking now reports the line of text under the mouse pointer. (#20448, @DataTriny)
