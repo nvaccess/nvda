@@ -40,6 +40,7 @@ from ctypes.wintypes import (
 import re
 from winAPI.winUser.constants import SystemMetrics
 import winBindings.kernel32
+import winBindings.gdi32
 from winBindings import user32
 import gui
 import config
@@ -49,7 +50,7 @@ import inputCore
 import screenExplorer
 from logHandler import log
 import touchTracker
-from touchTracker import TouchAction
+from touchTracker import TouchAction, TouchEdge
 import core
 import systemUtils
 from utils import _deprecate
@@ -196,6 +197,43 @@ ANRUS_TOUCH_MODIFICATION_ACTIVE = 2
 touchWindow = None
 touchThread = None
 
+_LOGPIXELSX = 88
+"""Device capability index for horizontal screen DPI, used to convert mm to pixels."""
+
+
+def _getEdge(x: int, y: int) -> TouchEdge | None:
+	"""Determine if coordinates fall within an edge margin of the screen.
+
+	The margin width is defined in millimetres by :data:`touchTracker._EDGE_MARGIN_MM`
+	and converted to pixels using the screen DPI at call time.
+
+	All four edges are checked.
+	Note that Windows or the taskbar may intercept gestures on certain edges
+	before they reach NVDA, in which case this function will never be called for those touches.
+
+	:param x: The x screen coordinate to test.
+	:param y: The y screen coordinate to test.
+	:return: A :class:`touchTracker.TouchEdge` member,
+		or ``None`` if not near any tracked edge or edge gestures are disabled.
+	"""
+	if not config.conf["touch"]["edgeGestures"]:
+		return None
+	screenWidth = user32.GetSystemMetrics(SystemMetrics.CX_SCREEN)
+	screenHeight = user32.GetSystemMetrics(SystemMetrics.CY_SCREEN)
+	dc = user32.GetDC(0)
+	dpi = winBindings.gdi32.GetDeviceCaps(dc, _LOGPIXELSX) or 96
+	user32.ReleaseDC(0, dc)
+	margin = int(touchTracker._EDGE_MARGIN_MM / 25.4 * dpi)
+	if x <= margin:
+		return TouchEdge.LEFT
+	if x >= screenWidth - margin:
+		return TouchEdge.RIGHT
+	if y <= margin:
+		return TouchEdge.TOP
+	if y >= screenHeight - margin:
+		return TouchEdge.BOTTOM
+	return None
+
 
 _flickActions: frozenset[TouchAction] = frozenset(
 	{
@@ -322,6 +360,9 @@ class TouchInputGesture(inputCore.InputGesture):
 				ID += "%dfinger_" % self.tracker.numFingers
 			if self.tracker.actionCount > 1:
 				ID += "%s_" % self.counterNames[min(self.tracker.actionCount, 4) - 1]
+			edge = _getEdge(self.tracker.x, self.tracker.y)
+			if edge:
+				ID += edge + "_"
 			ID += self.tracker.action
 			# "ts" is the gesture identifier source prefix for "touch screen".
 			IDs.append("ts(%s):%s" % (self.mode, ID))
@@ -348,6 +389,14 @@ class TouchInputGesture(inputCore.InputGesture):
 						action = pluralActionLabel.format(action=action)
 						foundPlural = True
 						continue
+				try:
+					edgeLabel = TouchEdge(subID).displayString
+					# Translators: a touch screen action that started from a screen edge,
+					# e.g. "left edge flick right"
+					action = _("{edgeLabel} {action}").format(edgeLabel=edgeLabel, action=action)
+					continue
+				except ValueError:
+					pass
 				if subID.endswith("finger"):
 					numFingers = int(subID[: 0 - len("finger")])
 					if numFingers > 1:
