@@ -246,6 +246,10 @@ styleNav
 	[Documentation]	Same style navigation
 	[Tags]	chrome_misc
 	test_styleNav
+Clickable navigation
+	[Documentation]	Navigate between clickable elements using unassigned quick navigation commands
+	[Tags]	chrome_misc
+	test_clickableNavigation
 
 ## chrome_link tests
 ### Link destination reporting (NVDA+K)

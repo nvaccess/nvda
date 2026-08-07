@@ -1150,6 +1150,7 @@ Here is a list of available commands:
 * Toggle button
 * Progress bar
 * Slider
+* Clickable element
 * Reference
 * Math formula
 * Vertically aligned paragraph
