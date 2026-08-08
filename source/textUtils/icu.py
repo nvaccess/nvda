@@ -17,8 +17,9 @@ import winBindings.icu as icu
 from logHandler import log
 
 _ROOT_LOCALE: bytes = b""
-"""ICU root locale. Word and character segmentation are script-driven, not
-locale-driven (see calculateWordOffsets), so the root locale is always used.
+"""ICU root locale. Word, character and sentence segmentation are script-driven, not
+locale-driven (see calculateWordOffsets and calculateSentenceOffsets), so the root
+locale is always used.
 """
 
 
@@ -144,6 +145,37 @@ def calculateWordOffsets(
 			return (start, end)
 	except RuntimeError:
 		log.debugWarning("ICU word break iterator failed", exc_info=True)
+		return None
+
+
+def calculateSentenceOffsets(
+	text: str,
+	offset: int,
+) -> tuple[int, int] | None:
+	"""Calculate the UTF-16 start and end offsets of the sentence at the given offset.
+
+	Sentence boundaries follow Unicode Standard Annex #29 default rules, driven by the
+	language-neutral Sentence_Break property (STerm/ATerm terminators such as ".", "!",
+	"?" and the ideographic full stop "。"), so the root locale is used.  Abbreviation
+	tailoring, which would keep "Dr." from ending a sentence, is locale-specific and is
+	therefore not applied.  Trailing whitespace and punctuation are attached to the
+	preceding sentence.
+
+	:param text: The paragraph text as a Python str.
+	:param offset: UTF-16 code unit offset within text at which to find the boundary.
+	:return: (startOffset, endOffset) as UTF-16 code unit indices (endOffset exclusive),
+	    or None if the ICU call failed.
+	"""
+	buf = ctypes.create_unicode_buffer(text)
+	textLength = len(buf) - 1
+	if offset >= textLength:
+		return (offset, offset + 1)
+
+	try:
+		with _breakIterator(icu.UBRK.SENTENCE, _ROOT_LOCALE, buf) as bi:
+			return _containingSegment(bi, offset, textLength)
+	except RuntimeError:
+		log.debugWarning("ICU sentence break iterator failed", exc_info=True)
 		return None
 
 
