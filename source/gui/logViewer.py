@@ -6,21 +6,39 @@
 """Provides functionality to view the NVDA log."""
 
 import collections
+import time
 
+import comtypes
 import wx
+import comInterfaces.tom
 import globalVars
 import gui
 import gui.contextHelp
+import oleacc
+import winUser
 from gui import blockAction
+from logHandler import log
 
 
 #: The singleton instance of the log viewer UI.
 logViewer = None
 
-#: Maximum number of characters appended to the output control in one event loop iteration.
-#: Larger amounts of log text are appended in chunks of this size, yielding to the event loop in
-#: between, so that displaying a very large log does not block NVDA's core. (#16322)
-_APPEND_CHUNK_SIZE = 1_000_000
+#: Target upper bound on how long one append may block the event loop, in seconds.
+#: Log text is appended to the output control in chunks sized to this budget, yielding to the
+#: event loop in between, so that displaying a large log does not block NVDA's core. (#16322)
+_APPEND_TIME_BUDGET_SEC = 0.05
+#: Bounds for the adaptive append chunk size, in characters.
+#: RichEdit append throughput varies by orders of magnitude with content: text requiring font
+#: fallback (e.g. CJK, emoji, braille patterns) appends at roughly 0.03 MB/s, plain ASCII at
+#: roughly 12 MB/s. The chunk size is therefore adapted to the measured throughput.
+_MIN_CHUNK_SIZE = 1_000
+_MAX_CHUNK_SIZE = 1_000_000
+
+#: Passing this as both ends of a TOM range yields a collapsed range at the end of the document,
+#: as RichEdit clamps out of range character positions.
+_TOM_END_OF_DOC = 0x7FFFFFFF
+
+EM_SETREADONLY = 0x00CF
 
 
 class LogViewer(
@@ -73,6 +91,16 @@ class LogViewer(
 		#: A C{None} entry is a marker queued by L{moveInsertionPointToEndOfLog}.
 		self._pendingText: collections.deque[str | None] = collections.deque()
 		self._isPumpScheduled = False
+		self._chunkSize = _MIN_CHUNK_SIZE
+		try:
+			self._tomDoc = oleacc.AccessibleObjectFromWindow(
+				self.outputCtrl.GetHandle(),
+				winUser.OBJID_NATIVEOM,
+				interface=comInterfaces.tom.ITextDocument,
+			)
+		except (comtypes.COMError, OSError):
+			log.debugWarning("Error getting ITextDocument for the log viewer output control", exc_info=True)
+			self._tomDoc = None
 
 		self.refresh()
 		self.outputCtrl.SetFocus()
@@ -117,7 +145,7 @@ class LogViewer(
 			# The window was destroyed while a pump was scheduled.
 			return
 		chunk = ""
-		while self._pendingText and len(chunk) < _APPEND_CHUNK_SIZE:
+		while self._pendingText and len(chunk) < self._chunkSize:
 			item = self._pendingText.popleft()
 			if item is None:
 				# Marker queued by moveInsertionPointToEndOfLog.
@@ -127,7 +155,7 @@ class LogViewer(
 					chunk = ""
 				self.outputCtrl.SetInsertionPointEnd()
 				continue
-			maxLen = _APPEND_CHUNK_SIZE - len(chunk)
+			maxLen = self._chunkSize - len(chunk)
 			if len(item) > maxLen:
 				self._pendingText.appendleft(item[maxLen:])
 				item = item[:maxLen]
@@ -138,14 +166,39 @@ class LogViewer(
 			self._schedulePump()
 
 	def _appendText(self, text: str) -> None:
-		"""Append text to the output control, preserving the insertion point and scroll position."""
-		pos = self.outputCtrl.GetInsertionPoint()
-		self.outputCtrl.Freeze()
-		try:
-			self.outputCtrl.AppendText(text)
-			self.outputCtrl.SetInsertionPoint(pos)
-		finally:
-			self.outputCtrl.Thaw()
+		"""Append text to the output control without disturbing the caret or scroll position.
+		Also adapts the chunk size for the next append so that appends stay within the time budget.
+		"""
+		startTime = time.perf_counter()
+		if self._tomDoc:
+			# Insert with TOM rather than wx.TextCtrl.AppendText.
+			# AppendText moves the caret to the end of the document and back,
+			# which costs RichEdit layout work proportional to the total document size
+			# (tens of ms per append on a multi MB document, however small the appended text),
+			# and causes visible scroll flapping.
+			# A TOM range insert leaves the caret and scroll position untouched.
+			# TOM refuses to modify a read only control, so read only is lifted for the insert.
+			handle = self.outputCtrl.GetHandle()
+			winUser.sendMessage(handle, EM_SETREADONLY, False, 0)
+			try:
+				textRange = self._tomDoc.range(_TOM_END_OF_DOC, _TOM_END_OF_DOC)
+				textRange.text = text
+			finally:
+				winUser.sendMessage(handle, EM_SETREADONLY, True, 0)
+		else:
+			# Fallback if TOM is unavailable: append and restore the caret.
+			pos = self.outputCtrl.GetInsertionPoint()
+			self.outputCtrl.Freeze()
+			try:
+				self.outputCtrl.AppendText(text)
+				self.outputCtrl.SetInsertionPoint(pos)
+			finally:
+				self.outputCtrl.Thaw()
+		elapsed = time.perf_counter() - startTime
+		if elapsed > 0:
+			target = int(len(text) * _APPEND_TIME_BUDGET_SEC / elapsed)
+			# Grow at most 4x per append so one unrepresentatively fast append can't overshoot.
+			self._chunkSize = max(_MIN_CHUNK_SIZE, min(_MAX_CHUNK_SIZE, target, self._chunkSize * 4))
 
 	def onActivate(self, evt):
 		if evt.GetActive():
