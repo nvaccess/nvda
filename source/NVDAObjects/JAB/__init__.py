@@ -197,7 +197,12 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getParagraphOffsets(self, offset: int) -> tuple[int, int]:
 		return super()._getLineOffsets(offset)
 
-	def _getFormatFieldAndOffsets(self, offset: int, formatConfig, calculateOffsets=True):
+	def _getFormatFieldAndOffsets(
+		self,
+		offset: int,
+		formatConfig,
+		calculateOffsets: bool = True,
+	) -> tuple[textInfos.FormatField, tuple[int, int]]:
 		attribs: JABHandler.AccessibleTextAttributesInfo
 		attribs, length = self.obj.jabContext.getTextAttributesInRange(offset, self._endOffset - 1)
 		field = textInfos.FormatField()
@@ -295,7 +300,7 @@ class JAB(Window):
 		return parent is not None and isinstance(parent, Table) and parent._jabTableInfo
 
 	@classmethod
-	def kwargsFromSuper(cls, kwargs, relation: str | None = None) -> bool:
+	def kwargsFromSuper(cls, kwargs: dict[str, Any], relation: str | None = None) -> bool:
 		jabContext = None
 		windowHandle = kwargs["windowHandle"]
 		if relation == "focus":
@@ -322,7 +327,12 @@ class JAB(Window):
 		kwargs["jabContext"] = jabContext
 		return True
 
-	def __init__(self, relation=None, windowHandle=None, jabContext=None):
+	def __init__(
+		self,
+		relation: str | None = None,
+		windowHandle: int | None = None,
+		jabContext: "JABHandler.JABContext | None" = None,
+	) -> None:
 		if not windowHandle:
 			windowHandle = jabContext.hwnd
 		self.windowHandle = windowHandle
@@ -333,10 +343,10 @@ class JAB(Window):
 		except RuntimeError:
 			raise InvalidNVDAObject("Could not get accessible context info")
 
-	def _get__JABAccContextInfo(self):
+	def _get__JABAccContextInfo(self) -> "JABHandler.AccessibleContextInfo":
 		return self.jabContext.getAccessibleContextInfo()
 
-	def _get_TextInfo(self):
+	def _get_TextInfo(self) -> type[textInfos.TextInfo]:
 		if self._JABAccContextInfo.accessibleText and self.role not in [
 			controlTypes.Role.BUTTON,
 			controlTypes.Role.MENUITEM,
@@ -379,14 +389,14 @@ class JAB(Window):
 			shortcutsList.append("+".join(keyList))
 		return ", ".join(shortcutsList)
 
-	def _get_name(self):
+	def _get_name(self) -> str:
 		name = self._JABAccContextInfo.name
 		return _processHtml(name)
 
-	def _get_JABRole(self):
+	def _get_JABRole(self) -> str:
 		return self._JABAccContextInfo.role_en_US
 
-	def _get_role(self):
+	def _get_role(self) -> controlTypes.Role:
 		role = JABRolesToNVDARoles.get(self.JABRole, controlTypes.Role.UNKNOWN)
 		if (
 			role in (controlTypes.Role.LABEL, controlTypes.Role.PANEL, controlTypes.Role.UNKNOWN)
@@ -403,10 +413,10 @@ class JAB(Window):
 			return controlTypes.Role.STATICTEXT
 		return role
 
-	def _get_JABStates(self):
+	def _get_JABStates(self) -> str:
 		return self._JABAccContextInfo.states_en_US
 
-	def _get_states(self):
+	def _get_states(self) -> set[controlTypes.State]:
 		log.debug("states: %s" % self.JABStates)
 		stateSet = set()
 		stateString = self.JABStates
@@ -429,7 +439,7 @@ class JAB(Window):
 			stateSet.add(controlTypes.State.UNAVAILABLE)
 		return stateSet
 
-	def _get_value(self):
+	def _get_value(self) -> str | None:
 		if (
 			self.role
 			not in [
@@ -445,11 +455,11 @@ class JAB(Window):
 		):
 			return self.jabContext.getCurrentAccessibleValueFromContext()
 
-	def _get_description(self):
+	def _get_description(self) -> str:
 		description = self._JABAccContextInfo.description
 		return _processHtml(description)
 
-	def _get_location(self):
+	def _get_location(self) -> RectLTWH:
 		return RectLTWH(
 			self._JABAccContextInfo.x,
 			self._JABAccContextInfo.y,
@@ -463,7 +473,7 @@ class JAB(Window):
 		else:
 			return False
 
-	def _get_positionInfo(self):
+	def _get_positionInfo(self) -> dict[str, int]:
 		info = super(JAB, self).positionInfo or {}
 
 		# If tree view item, try to retrieve the level via JAB
@@ -497,14 +507,14 @@ class JAB(Window):
 			info["similarItemsInGroup"] = childCount
 		return info
 
-	def _get_activeChild(self):
+	def _get_activeChild(self) -> "JAB | None":
 		jabContext = self.jabContext.getActiveDescendent()
 		if jabContext:
 			return JAB(jabContext=jabContext)
 		else:
 			return None
 
-	def _get_parent(self):
+	def _get_parent(self) -> NVDAObject | None:
 		if not hasattr(self, "_parent"):
 			jabContext = self.jabContext.getAccessibleParentFromContext()
 			if jabContext and self.indexInParent is not None:
@@ -513,7 +523,7 @@ class JAB(Window):
 				self._parent = super(JAB, self).parent
 		return self._parent
 
-	def _get_next(self):
+	def _get_next(self) -> NVDAObject | None:
 		parent = self.parent
 		if not isinstance(parent, JAB):
 			return super(JAB, self).next
@@ -534,7 +544,7 @@ class JAB(Window):
 			return None
 		return obj
 
-	def _get_previous(self):
+	def _get_previous(self) -> NVDAObject | None:
 		parent = self.parent
 		if not isinstance(parent, JAB):
 			return super(JAB, self).previous
@@ -555,7 +565,7 @@ class JAB(Window):
 			return None
 		return obj
 
-	def _get_firstChild(self):
+	def _get_firstChild(self) -> "JAB | None":
 		if self._JABAccContextInfo.childrenCount <= 0:
 			return None
 		jabContext = self.jabContext.getAccessibleChildFromContext(0)
@@ -569,7 +579,7 @@ class JAB(Window):
 		else:
 			return None
 
-	def _get_lastChild(self):
+	def _get_lastChild(self) -> "JAB | None":
 		if self._JABAccContextInfo.childrenCount <= 0:
 			return None
 		jabContext = self.jabContext.getAccessibleChildFromContext(self.childCount - 1)
@@ -616,17 +626,17 @@ class JAB(Window):
 					JABHandler.bridgeDll.releaseJavaObject(self.jabContext.vmID, target)
 		return targets
 
-	def _get_flowsTo(self):
+	def _get_flowsTo(self) -> "JABHandler.JABContext | None":
 		targets = self._getJABRelationTargets("flowsTo")
 		if targets:
 			return targets[0]
 
-	def _get_flowsFrom(self):
+	def _get_flowsFrom(self) -> "JABHandler.JABContext | None":
 		targets = self._getJABRelationTargets("flowsFrom")
 		if targets:
 			return targets[0]
 
-	def reportFocus(self):
+	def reportFocus(self) -> None:
 		parent = self.parent
 		if (
 			self.role in [controlTypes.Role.LIST]
@@ -636,7 +646,7 @@ class JAB(Window):
 			return
 		super(JAB, self).reportFocus()
 
-	def _get__actions(self):
+	def _get__actions(self) -> list["JABHandler.AccessibleActionInfo"]:
 		actions = JABHandler.AccessibleActions()
 		JABHandler.bridgeDll.getAccessibleActions(self.jabContext.vmID, self.jabContext.accContext, actions)
 		return actions.actionInfo[: actions.actionsCount]
@@ -644,7 +654,7 @@ class JAB(Window):
 	def _get_actionCount(self) -> int:
 		return len(self._actions)
 
-	def getActionName(self, index=None):
+	def getActionName(self, index: int | None = None) -> str:
 		if index is None:
 			index = self.defaultActionIndex
 		try:
@@ -652,7 +662,7 @@ class JAB(Window):
 		except IndexError:
 			raise NotImplementedError
 
-	def doAction(self, index=None):
+	def doAction(self, index: int | None = None) -> None:
 		if index is None:
 			index = self.defaultActionIndex
 		try:
@@ -665,7 +675,7 @@ class JAB(Window):
 		except (IndexError, RuntimeError):
 			raise NotImplementedError
 
-	def _get_activeDescendant(self):
+	def _get_activeDescendant(self) -> "JAB | None":
 		descendantFound = False
 		jabContext = self.jabContext
 		while jabContext:
@@ -686,7 +696,7 @@ class JAB(Window):
 		if descendantFound:
 			return JAB(jabContext=jabContext)
 
-	def event_gainFocus(self):
+	def event_gainFocus(self) -> None:
 		if eventHandler.isPendingEvents("gainFocus"):
 			return
 		super(JAB, self).event_gainFocus()
@@ -698,7 +708,7 @@ class JAB(Window):
 
 
 class ComboBox(JAB):
-	def _get_states(self):
+	def _get_states(self) -> set[controlTypes.State]:
 		states = super(ComboBox, self).states
 		if controlTypes.State.COLLAPSED not in states and controlTypes.State.EXPANDED not in states:
 			if (
@@ -712,12 +722,12 @@ class ComboBox(JAB):
 					states.add(controlTypes.State.EXPANDED)
 		return states
 
-	def _get_activeDescendant(self):
+	def _get_activeDescendant(self) -> "JAB | None":
 		if controlTypes.State.COLLAPSED in self.states:
 			return None
 		return super(ComboBox, self).activeDescendant
 
-	def _get_value(self):
+	def _get_value(self) -> str | None:
 		value = super(ComboBox, self).value
 		if not value and not self.activeDescendant:
 			descendant = super(ComboBox, self).activeDescendant
@@ -727,7 +737,7 @@ class ComboBox(JAB):
 
 
 class Table(JAB):
-	def _get__jabTableInfo(self):
+	def _get__jabTableInfo(self) -> "JABHandler.AccessibleTableInfo | None":
 		info = self.jabContext.getAccessibleTableInfo()
 		if info:
 			self._jabTableInfo = info
@@ -741,17 +751,17 @@ class Table(JAB):
 		if self._jabTableInfo:
 			return self._jabTableInfo.columnCount
 
-	def _get_tableID(self):
+	def _get_tableID(self) -> int:
 		return self._jabTableInfo.jabTable.accContext.value
 
 
 class TableCell(JAB):
-	def _get_table(self):
+	def _get_table(self) -> "Table | None":
 		if self.parent and isinstance(self.parent, Table):
 			self.table = self.parent
 			return self.table
 
-	def _get_tableID(self):
+	def _get_tableID(self) -> int:
 		return self.table.tableID
 
 	def _get_rowNumber(self) -> int:
