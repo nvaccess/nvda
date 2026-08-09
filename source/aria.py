@@ -109,6 +109,7 @@ def getLocalizedRoleDescription(roleDescription: str) -> str:
 	"""Localize a known ARIA role description, preserving unknown author-provided text."""
 	return localizedRoleDescriptions.get(roleDescription, roleDescription)
 
+
 ariaRolesToNVDARoles.update(
 	{role: controlTypes.Role.LANDMARK for role in landmarkRoles if role not in ariaRolesToNVDARoles},
 )
