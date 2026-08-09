@@ -6,10 +6,11 @@
 """Unit tests for the installer module."""
 
 import pathlib
+import shutil
 import tempfile
 from typing import NamedTuple
 import unittest
-from unittest.mock import patch, PropertyMock
+from unittest.mock import call, patch, PropertyMock
 
 from parameterized import parameterized
 
@@ -480,3 +481,49 @@ class Test_comparePreviousInstall(unittest.TestCase):
 			),
 		):
 			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UPGRADE)
+
+
+class Test_TryCopyFile(unittest.TestCase):
+	"""Tests for copying a single file.
+	A copy which fails because the source is briefly in use should be retried,
+	rather than aborting the whole operation it is part of.
+	"""
+
+	def setUp(self) -> None:
+		self._tempDir = tempfile.mkdtemp()
+		self._source = str(pathlib.Path(self._tempDir, "source.txt"))
+		self._dest = str(pathlib.Path(self._tempDir, "dest.txt"))
+		pathlib.Path(self._source).touch(exist_ok=False)
+
+	def tearDown(self) -> None:
+		shutil.rmtree(self._tempDir, ignore_errors=True)
+
+	def test_copySucceedsWithoutRetrying(self):
+		with patch("installer.winBindings.kernel32.CopyFile", return_value=1) as copyFile:
+			with patch("installer.time.sleep") as sleep:
+				installer.tryCopyFile(self._source, self._dest)
+		self.assertEqual(copyFile.call_count, 1)
+		sleep.assert_not_called()
+
+	def test_copyRetriedWhileSourceInUse(self):
+		"""A copy which leaves no destination file behind is retried until it succeeds."""
+		with patch("installer.winBindings.kernel32.CopyFile", side_effect=[0, 0, 1]) as copyFile:
+			with patch("installer.time.sleep") as sleep:
+				installer.tryCopyFile(self._source, self._dest)
+		self.assertEqual(copyFile.call_count, 3)
+		self.assertEqual(sleep.call_args_list, [call(0.5), call(0.5)])
+
+	def test_retryIntervalIsUsed(self):
+		"""Each retry waits for the requested interval."""
+		with patch("installer.winBindings.kernel32.CopyFile", side_effect=[0, 0, 1]):
+			with patch("installer.time.sleep") as sleep:
+				installer.tryCopyFile(self._source, self._dest, retryInterval=0.25)
+		self.assertEqual(sleep.call_args_list, [call(0.25), call(0.25)])
+
+	def test_copyFailsOnceRetriesAreExhausted(self):
+		with patch("installer.winBindings.kernel32.CopyFile", return_value=0) as copyFile:
+			with patch("installer.time.sleep") as sleep:
+				with self.assertRaises(OSError):
+					installer.tryCopyFile(self._source, self._dest, numRetries=3)
+		self.assertEqual(copyFile.call_count, 3)
+		self.assertEqual(sleep.call_count, 2)

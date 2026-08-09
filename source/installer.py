@@ -821,28 +821,57 @@ def tryRemoveFile(
 	raise RetriableFailure("File %s could not be removed" % path)
 
 
-def tryCopyFile(sourceFilePath: str, destFilePath: str):
+def tryCopyFile(
+	sourceFilePath: str,
+	destFilePath: str,
+	numRetries: int = 6,
+	retryInterval: float = 0.5,
+):
+	"""Copies a file, retrying while the source cannot be read.
+
+	:param sourceFilePath: Path of the file to copy.
+	:param destFilePath: Path to copy the file to.
+	:param numRetries: Number of attempts to make before giving up.
+	:param retryInterval: Time to wait between attempts, in seconds.
+	:raises OSError: If the file could not be copied.
+	:raises RetriableFailure: If an existing destination file could not be replaced.
+	"""
 	if not sourceFilePath.startswith("\\\\"):
 		sourceFilePath = "\\\\?\\" + sourceFilePath
 	if not destFilePath.startswith("\\\\"):
 		destFilePath = "\\\\?\\" + destFilePath
-	if winBindings.kernel32.CopyFile(sourceFilePath, destFilePath, False) == 0:
+	errorCode = 0
+	for count in range(numRetries):
+		if winBindings.kernel32.CopyFile(sourceFilePath, destFilePath, False) != 0:
+			return
 		errorCode = ctypes.GetLastError()
 		log.debugWarning("Unable to copy %s, error %d" % (sourceFilePath, errorCode))
-		if not os.path.exists(destFilePath):
-			raise OSError("error %d copying %s to %s" % (errorCode, sourceFilePath, destFilePath))
-		tempPath = _createEmptyTempFileForDeletingFile(dir=os.path.dirname(destFilePath))
-		try:
-			os.replace(destFilePath, tempPath)
-		except (WindowsError, OSError):
-			log.error("Failed to rename %s after failed overwrite" % destFilePath, exc_info=True)
-			raise RetriableFailure("Failed to rename %s after failed overwrite" % destFilePath)
-		winKernel.moveFileEx(tempPath, None, winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
-		if winBindings.kernel32.CopyFile(sourceFilePath, destFilePath, False) == 0:
-			errorCode = ctypes.GetLastError()
-			raise OSError(
-				"Unable to copy file %s to %s, error %d" % (sourceFilePath, destFilePath, errorCode),
+		if os.path.exists(destFilePath):
+			# The destination already exists, so the copy failed while overwriting it.
+			# Replace the existing file rather than retrying the copy.
+			break
+		# The destination was never created, so the copy failed while reading the source.
+		# Another process may hold the source open for a short time, for example NVDA
+		# still has a database open while leaving the UAC screen, so try again.
+		if count < numRetries - 1:
+			log.debugWarning(
+				f"Retrying copy of {sourceFilePath}, attempt {count + 1}/{numRetries}",
 			)
+			time.sleep(retryInterval)
+	else:
+		raise OSError("error %d copying %s to %s" % (errorCode, sourceFilePath, destFilePath))
+	tempPath = _createEmptyTempFileForDeletingFile(dir=os.path.dirname(destFilePath))
+	try:
+		os.replace(destFilePath, tempPath)
+	except (WindowsError, OSError):
+		log.error("Failed to rename %s after failed overwrite" % destFilePath, exc_info=True)
+		raise RetriableFailure("Failed to rename %s after failed overwrite" % destFilePath)
+	winKernel.moveFileEx(tempPath, None, winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
+	if winBindings.kernel32.CopyFile(sourceFilePath, destFilePath, False) == 0:
+		errorCode = ctypes.GetLastError()
+		raise OSError(
+			"Unable to copy file %s to %s, error %d" % (sourceFilePath, destFilePath, errorCode),
+		)
 
 
 _nvdaExes = {
