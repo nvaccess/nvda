@@ -162,7 +162,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.State.SORTED)
 		roleText = attrs.get("IAccessible2::attribute_roledescription")
 		if roleText:
-			attrs["roleText"] = roleText
+			attrs["roleText"] = aria.getLocalizedRoleDescription(roleText)
 		roleTextBraille = attrs.get("IAccessible2::attribute_brailleroledescription")
 		if roleTextBraille:
 			attrs["roleTextBraille"] = roleTextBraille

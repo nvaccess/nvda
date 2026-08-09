@@ -218,7 +218,8 @@ class UIAWebTextInfo(UIATextInfo):
 			obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId),
 		)
 		# ARIA roledescription and landmarks
-		field["roleText"] = ariaProperties.get("roledescription")
+		if roleText := ariaProperties.get("roledescription"):
+			field["roleText"] = aria.getLocalizedRoleDescription(roleText)
 		# provide landmarks
 		field["landmark"] = obj.landmark
 		# Combo boxes with a text pattern are editable
@@ -414,7 +415,7 @@ class UIAWeb(UIA):
 	def _get_roleText(self):
 		roleText = self.ariaProperties.get("roledescription", None)
 		if roleText:
-			return roleText
+			return aria.getLocalizedRoleDescription(roleText)
 		return super().roleText
 
 	def _get_placeholder(self):

@@ -118,7 +118,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 
 		roleText = attrs.get("HTMLAttrib::aria-roledescription")
 		if roleText:
-			attrs["roleText"] = roleText
+			attrs["roleText"] = aria.getLocalizedRoleDescription(roleText)
 
 		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
 		role, states = controlTypes.transformRoleStates(role, states)

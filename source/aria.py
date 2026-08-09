@@ -91,6 +91,24 @@ landmarkRoles: Dict[str, str] = {
 	"form": pgettext("aria", "form"),
 }
 
+# Some web component libraries use these English ARIA role descriptions even when
+# the rest of their interface is localized. Keep this list deliberately small:
+# aria-roledescription is otherwise free-form, author-provided text which NVDA
+# must preserve verbatim.
+localizedRoleDescriptions: Dict[str, str] = {
+	# Translators: An ARIA role description used for controls that can be dragged.
+	"draggable": pgettext("aria role description", "draggable"),
+	# Translators: An ARIA role description used for controls that open a drop-down menu.
+	"DropDown": pgettext("aria role description", "DropDown"),
+	# Translators: An ARIA role description used for controls whose items can be reordered.
+	"sortable": pgettext("aria role description", "sortable"),
+}
+
+
+def getLocalizedRoleDescription(roleDescription: str) -> str:
+	"""Localize a known ARIA role description, preserving unknown author-provided text."""
+	return localizedRoleDescriptions.get(roleDescription, roleDescription)
+
 ariaRolesToNVDARoles.update(
 	{role: controlTypes.Role.LANDMARK for role in landmarkRoles if role not in ariaRolesToNVDARoles},
 )

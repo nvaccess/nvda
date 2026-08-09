@@ -196,7 +196,7 @@ class Ia2Web(IAccessible):
 	def _get_roleText(self):
 		roleText = self.IA2Attributes.get("roledescription")
 		if roleText:
-			return roleText
+			return aria.getLocalizedRoleDescription(roleText)
 		return super().roleText
 
 	def _get_roleTextBraille(self) -> str:

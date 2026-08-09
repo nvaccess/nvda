@@ -1129,7 +1129,7 @@ class MSHTML(IAccessible):
 	def _get_roleText(self):
 		roleText = self.HTMLAttributes["aria-roledescription"]
 		if roleText:
-			return roleText
+			return aria.getLocalizedRoleDescription(roleText)
 		return super().roleText
 
 
