@@ -9,8 +9,10 @@ Requires Windows 10 version 1703 (Creators Update) or later.
 """
 
 import ctypes
+from collections.abc import Callable
 from contextlib import contextmanager
 
+import textUtils
 import winBindings.icu as icu
 from logHandler import log
 
@@ -42,6 +44,27 @@ def _breakIterator(kind: int, locale: bytes, buf: ctypes.Array[ctypes.c_wchar]):
 		yield bi
 	finally:
 		icu.ubrk_close(bi)
+
+
+def _containingSegment(bi: int, offset: int, textLength: int) -> tuple[int, int]:
+	"""Return the [start, end) ICU segment containing offset for an already-open iterator.
+
+	The iterator is left positioned at start, so callers can keep using it to walk
+	further boundaries.
+
+	:param bi: An open UBreakIterator handle.
+	:param offset: UTF-16 code unit offset within the analyzed text.
+	:param textLength: Number of UTF-16 code units in the analyzed text (used when the
+	    iterator reports UBRK_DONE past the end).
+	:return: (startOffset, endOffset) as UTF-16 code unit indices, endOffset exclusive.
+	"""
+	end = icu.ubrk_following(bi, offset)
+	if end == icu.UBRK_DONE:
+		end = textLength
+	start = icu.ubrk_preceding(bi, end)
+	if start == icu.UBRK_DONE:
+		start = 0
+	return (start, end)
 
 
 def calculateWordOffsets(
@@ -84,32 +107,69 @@ def calculateWordOffsets(
 	try:
 		with _breakIterator(icu.UBRK.WORD, _ROOT_LOCALE, buf) as bi:
 			# Find [start, end) — the ICU segment containing offset.
-			# ICU offsets are UTF-16 code-unit indexed, so anchor on the boundary following
-			# offset and take the boundary preceding that. (ubrk_preceding(offset + 1)
-			# would snap back for multi-unit segments.)
-			end = icu.ubrk_following(bi, offset)
-			if end == icu.UBRK_DONE:
-				end = textLength
-			start = icu.ubrk_preceding(bi, end)
-			if start == icu.UBRK_DONE:
-				start = 0
+			start, end = _containingSegment(bi, offset, textLength)
 
-			if buf[start:end].isspace():
-				# Offset is inside a whitespace run.  Attach this run to the
-				# preceding segment (mirroring the Uniscribe trailing-space rule).
-				if start > 0:
-					wordStart = icu.ubrk_preceding(bi, start)
-					if wordStart == icu.UBRK_DONE:
-						wordStart = 0
-					return (wordStart, end)
-			else:
-				# Offset is inside a word/punctuation segment.  Extend the end
-				# through any immediately following whitespace run.
+			# ICU works in word boundaries, i.e. a word always starts and ends at a boundary.
+			# This means that whitespace runs also always start and end at a word boundary.
+			# E.g. we get "|Multiple| |boundaries|".
+			# It also treats a single tab character as a word.
+			#
+			# To (somewhat) replicate Uniscribe's behaviour of including trailing spaces when navigating by word,
+			# we need to ensure that start lies at the first word-starting boundary before offset,
+			# and end lies at the first one after it.
+			#
+			# Move start backward until the most recently found segment contains non-space characters,
+			# or we hit the start of text.
+			prefixEnd = end
+			while start > 0 and buf[start:prefixEnd].isspace():
+				start, prefixEnd = icu.ubrk_preceding(bi, start), start
+				# ubrk_preceding should only ever return UBRK_DONE if given an offset less than or equal to  0,
+				# so we should never run into it.
+				# Since we haven't yet seen any non-space characters,
+				# we can safely just extend the start of the range back to 0.
+				if start == icu.UBRK_DONE:
+					start = 0
+					break
+			# Move end forward until doing so would introduce a new word,
+			# or we hit the end of text.
+			while end < textLength:
 				nextEnd = icu.ubrk_following(bi, end)
-				if nextEnd != icu.UBRK_DONE and buf[end:nextEnd].isspace():
-					return (start, nextEnd)
+				# ubrk_following should only ever return UBRK_DONE if given an offset greater than or equal to the length of the text,
+				# so we should never run into it.
+				# To be safe, treat it as being equivalent to finding a word.
+				if nextEnd == icu.UBRK_DONE or not buf[end:nextEnd].isspace():
+					break
+				end = nextEnd
 
 			return (start, end)
 	except RuntimeError:
 		log.debugWarning("ICU word break iterator failed", exc_info=True)
 		return None
+
+
+def calculateOffsetsForEncoding(
+	calculate: Callable[[str, int], tuple[int, int] | None],
+	text: str,
+	offset: int,
+	encoding: str | None,
+) -> tuple[int, int] | None:
+	"""Run one of this module's offset calculations against offsets in the given encoding.
+
+	The calculations are UTF-16 code unit indexed; for any other encoding the offset is
+	converted before the call and the result converted back.
+
+	:param calculate: The calculation to run, e.g. calculateWordOffsets.
+	:param text: The text to segment.
+	:param offset: Offset within text, indexed according to encoding.
+	:param encoding: The encoding offset is indexed by; textUtils.WCHAR_ENCODING for
+	    UTF-16 code units, anything else for str indices.
+	:return: (startOffset, endOffset) indexed according to encoding (endOffset
+	    exclusive), or None if the ICU call failed.
+	"""
+	if encoding == textUtils.WCHAR_ENCODING:
+		return calculate(text, offset)
+	offsetConverter = textUtils.WideStringOffsetConverter(text)
+	result = calculate(text, offsetConverter.strToEncodedOffsets(offset, offset)[0])
+	if result is None:
+		return None
+	return offsetConverter.encodedToStrOffsets(*result)

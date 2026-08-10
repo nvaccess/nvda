@@ -6,7 +6,7 @@
 """Functions exported by magnification.dll, and supporting data structures and enumerations."""
 
 from ctypes import POINTER, WINFUNCTYPE, Structure, WinError, c_float, c_int, windll
-from ctypes.wintypes import BOOL
+from ctypes.wintypes import BOOL, LPRECT
 from _ctypes import CFuncPtr
 from typing import Any
 
@@ -98,3 +98,15 @@ Sets the magnification settings for the full-screen magnifier.
 	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-magsetfullscreentransform
 """
 MagSetFullscreenTransform.errcheck = _errCheck
+
+MagSetInputTransform = WINFUNCTYPE(BOOL, BOOL, LPRECT, LPRECT)(
+	("MagSetInputTransform", dll),
+	((1, "fEnabled"), (1, "pRectSource"), (1, "pRectDest")),
+)
+"""
+Sets the mapping between magnified coordinates and screen coordinates for pen and touch input.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-magsetinputtransform
+"""
+MagSetInputTransform.errcheck = _errCheck

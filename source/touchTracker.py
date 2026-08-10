@@ -103,6 +103,34 @@ class TouchAction(DisplayStringStrEnum):
 
 hoverActions = (TouchAction.HOVER_DOWN, TouchAction.HOVER, TouchAction.HOVER_UP)
 
+_EDGE_MARGIN_MM: float = 15.0
+"""Width of the screen edge margin in millimetres within which a touch is considered an edge gesture.
+This is an internal constant; if a single value cannot satisfy all devices it may become configurable in future.
+"""
+
+
+class TouchEdge(DisplayStringStrEnum):
+	"""Screen edges from which a touch gesture can originate."""
+
+	LEFT = "left"
+	RIGHT = "right"
+	TOP = "top"
+	BOTTOM = "bottom"
+
+	@cached_property
+	def _displayStringLabels(self) -> dict[Self, str]:
+		return {
+			# Translators: describes a touch gesture that started from the left edge of the screen
+			TouchEdge.LEFT: pgettext("touch edge", "left edge"),
+			# Translators: describes a touch gesture that started from the right edge of the screen
+			TouchEdge.RIGHT: pgettext("touch edge", "right edge"),
+			# Translators: describes a touch gesture that started from the top edge of the screen
+			TouchEdge.TOP: pgettext("touch edge", "top edge"),
+			# Translators: describes a touch gesture that started from the bottom edge of the screen
+			TouchEdge.BOTTOM: pgettext("touch edge", "bottom edge"),
+		}
+
+
 __getattr__ = handleDeprecations(
 	MovedSymbol("action_tap", "touchTracker", "TouchAction", "TAP"),
 	MovedSymbol("action_hold", "touchTracker", "TouchAction", "HOLD"),

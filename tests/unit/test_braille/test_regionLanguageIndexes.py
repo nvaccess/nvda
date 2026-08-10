@@ -9,6 +9,9 @@ import unittest
 from unittest.mock import patch
 
 import braille
+import braille.constants
+import braille.regions.base
+import braille.regions.textInfo
 import textInfos
 
 
@@ -27,10 +30,10 @@ class _FakeInfo:
 		return self._commands
 
 
-def _makeTextInfoRegion() -> braille.TextInfoRegion:
+def _makeTextInfoRegion() -> braille.regions.textInfo.TextInfoRegion:
 	"""Build a TextInfoRegion without going through __init__ (which requires an NVDAObject)."""
-	region = braille.TextInfoRegion.__new__(braille.TextInfoRegion)
-	braille.Region.__init__(region)
+	region = braille.regions.textInfo.TextInfoRegion.__new__(braille.regions.textInfo.TextInfoRegion)
+	braille.regions.base.Region.__init__(region)
 	# Force a deterministic default language so we don't depend on NVDA's configured locale.
 	region._languageIndexes = {0: "en"}
 	return region
@@ -40,8 +43,8 @@ class TestLanguageIndexes(unittest.TestCase):
 	def test_freshRegion_defaultLanguageAtAnyPos(self):
 		"""A region returns the default language for any non-negative pos."""
 		# Stub default language so Region.__init__ doesn't depend on NVDA's configured locale.
-		with patch.object(braille.Region, "_getDefaultRegionLanguage", return_value="en"):
-			region = braille.Region()
+		with patch.object(braille.regions.base.Region, "_getDefaultRegionLanguage", return_value="en"):
+			region = braille.regions.base.Region()
 		self.assertEqual(region._getLanguageAtPos(0), "en")
 		self.assertEqual(region._getLanguageAtPos(5), "en")
 		self.assertEqual(region._getLanguageAtPos(100), "en")
@@ -58,7 +61,7 @@ class TestLanguageIndexes(unittest.TestCase):
 		with patch("braille.regions.textInfo.languageHandler.getLanguage", return_value="fr"):
 			region._addFieldText(text, contentPos=0)
 		# `_addFieldText` prepends TEXT_SEPARATOR when `separate=True` and there is pre-existing text.
-		addedLen = len(braille.TEXT_SEPARATOR) + len(text)
+		addedLen = len(braille.constants.TEXT_SEPARATOR) + len(text)
 		self.assertIn(rawTextLenBefore, region._languageIndexes)
 		self.assertEqual(region._languageIndexes[rawTextLenBefore], "fr")
 		self.assertIn(rawTextLenBefore + addedLen, region._languageIndexes)
@@ -93,7 +96,7 @@ class TestLanguageIndexes(unittest.TestCase):
 		with (
 			patch("braille.regions.textInfo.getFormatFieldBraille", return_value=""),
 			patch.object(
-				braille.TextInfoRegion,
+				braille.regions.textInfo.TextInfoRegion,
 				"_getTypeformFromFormatField",
 				return_value=0,
 			),
@@ -114,14 +117,18 @@ class TestLanguageIndexes(unittest.TestCase):
 		# Using side_effect to halt execution mid-method avoids needing the full NVDA environment
 		# that the rest of update() requires.
 		with (
-			patch.object(braille.TextInfoRegion, "_getDefaultRegionLanguage", return_value="en"),
 			patch.object(
-				braille.TextInfoRegion,
+				braille.regions.textInfo.TextInfoRegion,
+				"_getDefaultRegionLanguage",
+				return_value="en",
+			),
+			patch.object(
+				braille.regions.textInfo.TextInfoRegion,
 				"_getReadingUnit",
 				return_value=textInfos.UNIT_LINE,
 			),
 			patch.object(
-				braille.TextInfoRegion,
+				braille.regions.textInfo.TextInfoRegion,
 				"_getSelection",
 				side_effect=RuntimeError("stop-after-reset"),
 			),

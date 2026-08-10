@@ -7,6 +7,8 @@ import os
 import time
 import wx
 import braille
+import braille.display.driver
+import braille.display.gesture
 from logHandler import log
 import inputCore
 from typing import List
@@ -28,7 +30,7 @@ KEY_CHECK_INTERVAL = 50
 BRLAPI_NAMED_PIPE_PREFIX = "BrlAPI"
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	"""brltty braille display driver."""
 
 	name = "brltty"
@@ -143,7 +145,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, command, argument):

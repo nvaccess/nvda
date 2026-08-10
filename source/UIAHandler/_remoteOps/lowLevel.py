@@ -364,6 +364,12 @@ PropertyId = enum.IntEnum(
 )
 
 
+PatternId = enum.IntEnum(
+	"PatternId",
+	{k[4:-9]: v for k, v in vars(UIA).items() if k.endswith("PatternId")},
+)
+
+
 AttributeId = enum.IntEnum(
 	"AttributeId",
 	{k[4:-11]: v for k, v in vars(UIA).items() if k.endswith("AttributeId")},

@@ -64,6 +64,7 @@ class _GestureVM:
 	displayName: str  #: How the gesture should be displayed
 	normalizedGestureIdentifier: str  #: As per items in inputCore.AllGesturesScriptInfo.gestures
 	canAdd = False  #: adding children is not supported.
+	canChange = True  #: gestures can be changed
 	canRemove = True  #: gestures can be removed
 
 	def __init__(self, normalizedGestureIdentifier: str):
@@ -78,6 +79,7 @@ class _PendingGesture:
 	# Translators: The prompt to enter a gesture in the Input Gestures dialog.
 	displayName = _("Enter input gesture:")
 	canAdd = False
+	canChange = False
 	canRemove = False
 
 	def __repr__(self):
@@ -89,6 +91,7 @@ class _ScriptVM:
 	scriptInfo: inputCore.AllGesturesScriptInfo
 	gestures: List[Union[_GestureVM, _PendingGesture]]
 	canAdd = True  #: able to add gestures that trigger this script
+	canChange = False  #: Scripts can not be changed
 	canRemove = False  #: Scripts can not be removed
 	addedGestures: List[_GestureVM]  #: These will also be in self.gestures
 	#: These will not be in self.gestures anymore. Key is the normalized Gesture Identifier.
@@ -143,6 +146,7 @@ class _CategoryVM:
 	displayName: str  #: Translated display name for the category
 	scripts: List[_ScriptVM]
 	canAdd = False  #: not able to add Scripts
+	canChange = False  #: categories can not be changed
 	canRemove = False  #: categories can not be removed
 
 	def __init__(self, displayName: str, scripts: _ScriptsModel):
@@ -178,6 +182,10 @@ class _EmulatedGestureVM(_ScriptVM):
 		super(_EmulatedGestureVM, self).__init__(displayName=emuGestureDisplayName, scriptInfo=emuGestureInfo)
 
 	@property
+	def canChange(self) -> bool:
+		return not bool(self.gestures)
+
+	@property
 	def canRemove(self) -> bool:
 		return not bool(self.gestures)
 
@@ -189,6 +197,7 @@ class _PendingEmulatedGestureVM:
 	# Translators: The prompt to enter an emulated gesture in the Input Gestures dialog.
 	displayName = _("Enter gesture to emulate:")
 	canAdd = False
+	canChange = False
 	canRemove = False
 
 	def __repr__(self):
@@ -199,6 +208,7 @@ class _EmuCategoryVM:
 	displayName = inputCore.SCRCAT_KBEMU  #: Translated display name for the gesture emulation category
 	scripts: List[Union[_ScriptVM, _EmulatedGestureVM, _PendingEmulatedGestureVM]]
 	canAdd = True  #: Can add new emulated gestures
+	canChange = False  #: categories can not be changed
 	canRemove = False  #: categories can not be removed
 	addedKbEmulation: List[_EmulatedGestureVM]  #: These will also be in self.scripts
 	#: These will not be in self.scripts anymore. Key is the scriptInfo display name.
@@ -605,6 +615,9 @@ class InputGesturesDialog(SettingsDialog):
 		self.gesturesVM = _InputGesturesViewModel()
 		tree = self.tree = _GesturesTree(self, self.gesturesVM)
 		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
+		tree.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
+		tree.Bind(wx.EVT_CONTEXT_MENU, self.onContextMenu)
+		tree.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.onContextMenu)
 		settingsSizer.Add(tree, proportion=1, flag=wx.EXPAND)
 
 		settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
@@ -615,6 +628,11 @@ class InputGesturesDialog(SettingsDialog):
 		self.addButton = bHelper.addButton(self, label=_("&Add"))
 		self.addButton.Bind(wx.EVT_BUTTON, self.onAdd)
 		self.addButton.Disable()
+
+		# Translators: The label of a button to change a gesture in the Input Gestures dialog.
+		self.changeButton = bHelper.addButton(self, label=_("C&hange"))
+		self.changeButton.Bind(wx.EVT_BUTTON, self.onChange)
+		self.changeButton.Disable()
 
 		# Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 		self.removeButton = bHelper.addButton(self, label=_("&Remove"))
@@ -629,6 +647,53 @@ class InputGesturesDialog(SettingsDialog):
 
 		settingsSizer.Add(bHelper.sizer, flag=wx.EXPAND)
 		self.tree.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroyTree)
+
+	def onCharHook(self, evt: wx.KeyEvent):
+		# Get the most specific item (the leaf) from the tree selection.
+		# The VirtualTree selection is a tuple (Category, Script, Gesture).
+		# We need the leaf to know which specific item the user clicked.
+		selectedItems = self.tree.getSelectedItemData()
+		key = evt.GetKeyCode()
+		if selectedItems is None:
+			item = None
+		else:
+			# get the leaf of the selection
+			item = next((item for item in reversed(selectedItems) if item is not None), None)
+		# Check if an add operation is already in progress to prevent conflicts.
+		pendingAdd = self.gesturesVM.isExpectingNewEmuGesture or self.gesturesVM.isExpectingNewGesture
+		if item and not pendingAdd:
+			if key == wx.WXK_DELETE and item.canRemove:
+				self.onRemove(None)
+		evt.Skip()
+
+	def onContextMenu(self, evt: wx.ContextMenuEvent):
+		# Get the most specific item (the leaf) from the tree selection.
+		# The VirtualTree selection is a tuple (Category, Script, Gesture).
+		# We need the leaf to know which specific item the user clicked.
+		selectedItems = self.tree.getSelectedItemData()
+		if selectedItems is None:
+			item = None
+		else:
+			# get the leaf of the selection
+			item = next((item for item in reversed(selectedItems) if item is not None), None)
+		# Check if an add operation is already in progress to prevent conflicts.
+		pendingAdd = self.gesturesVM.isExpectingNewEmuGesture or self.gesturesVM.isExpectingNewGesture
+		menu = wx.Menu()
+		if item and not pendingAdd:
+			if item.canAdd:
+				# Translators: Context menu item label to add a new gesture
+				addItem = menu.Append(wx.ID_ANY, _("&Add"))
+				self.Bind(wx.EVT_MENU, self.onAdd, addItem)
+			if item.canChange:
+				# Translators: Context menu item label to change a gesture
+				changeItem = menu.Append(wx.ID_ANY, _("C&hange"))
+				self.Bind(wx.EVT_MENU, self.onChange, changeItem)
+			if item.canRemove:
+				# Translators: Context menu item label to remove a gesture
+				removeItem = menu.Append(wx.ID_ANY, _("&Remove"))
+				self.Bind(wx.EVT_MENU, self.onRemove, removeItem)
+		self.PopupMenu(menu)
+		menu.Destroy()
 
 	def postInit(self):
 		self.tree.RefreshItems()
@@ -656,17 +721,22 @@ class InputGesturesDialog(SettingsDialog):
 		self._refreshButtonState()
 
 	def _refreshButtonState(self):
+		# Get the most specific item (the leaf) from the tree selection.
+		# The VirtualTree selection is a tuple (Category, Script, Gesture).
+		# We need the leaf to know which specific item the user clicked.
 		selectedItems = self.tree.getSelectedItemData()
 		if selectedItems is None:
 			item = None
 		else:
 			# get the leaf of the selection
 			item = next((item for item in reversed(selectedItems) if item is not None), None)
+		# Check if an add operation is already in progress to prevent conflicts.
 		pendingAdd = self.gesturesVM.isExpectingNewEmuGesture or self.gesturesVM.isExpectingNewGesture
 		self.addButton.Enabled = bool(item and item.canAdd and not pendingAdd)
+		self.changeButton.Enabled = bool(item and item.canChange and not pendingAdd)
 		self.removeButton.Enabled = bool(item and item.canRemove and not pendingAdd)
 
-	def onAdd(self, evt):
+	def onAdd(self, evt: wx.CommandEvent):
 		if inputCore.manager._captureFunc:
 			# don't add while already in process of adding.
 			return
@@ -681,36 +751,65 @@ class InputGesturesDialog(SettingsDialog):
 			pending = catVM.createPendingEmuGesture()
 			self.tree.doRefresh(focus=(catVM, pending, None))
 			self._refreshButtonState()
-
-			def addKbEmuGestureCaptor(gesture: inputCore.InputGesture):
-				if not isinstance(gesture, keyboardHandler.KeyboardInputGesture) or gesture.isModifier:
-					return False
-				inputCore.manager._captureFunc = None
-				wx.CallAfter(self._addCapturedKbEmu, gesture, catVM)
-				return False
-
-			inputCore.manager._captureFunc = addKbEmuGestureCaptor
+			inputCore.manager._captureFunc = lambda g: self._addKbEmuGestureCaptor(g, catVM)
 		elif gestureVM is None and isinstance(scriptVM, _ScriptVM):
 			self.gesturesVM.isExpectingNewGesture = scriptVM
 			pendingGesture = scriptVM.createPendingGesture()
 			self.tree.doRefresh(focus=(catVM, scriptVM, pendingGesture))
 			self._refreshButtonState()
-
-			def addGestureCaptor(gesture: inputCore.InputGesture):
-				if gesture.isModifier:
-					return False
-				if isinstance(catVM, _EmuCategoryVM):
-					gesName = keyLabels.getKeyCombinationLabel(gesture.normalizedIdentifiers[-1][3:])
-					if gesName == scriptVM.scriptInfo.displayName:
-						# Disallow assigning an emulated gesture to itself
-						return False
-				inputCore.manager._captureFunc = None
-				wx.CallAfter(self._addCaptured, catVM, scriptVM, gesture)
-				return False
-
-			inputCore.manager._captureFunc = addGestureCaptor
+			inputCore.manager._captureFunc = lambda g: self._addGestureCaptor(g, catVM, scriptVM)
 		else:
 			log.error("unable to do 'add' action for selected item")
+
+	def onChange(self, evt: wx.CommandEvent):
+		if inputCore.manager._captureFunc:
+			# don't change while already in process of add/change.
+			return
+
+		selectedItems = self.tree.getSelectedItemData()
+		assert selectedItems is not None
+		catVM, scriptVM, gestureVM = selectedItems
+		log.debug(f"selection: {catVM}, {scriptVM}, {gestureVM}")
+
+		if isinstance(scriptVM, _EmulatedGestureVM) and isinstance(catVM, _EmuCategoryVM):
+			catVM.removeEmulation(scriptVM)
+			self.gesturesVM.isExpectingNewEmuGesture = catVM
+			pending = catVM.createPendingEmuGesture()
+			self.tree.doRefresh(focus=(catVM, pending, None))
+			self._refreshButtonState()
+			inputCore.manager._captureFunc = lambda g: self._addKbEmuGestureCaptor(g, catVM)
+		elif gestureVM is not None and isinstance(scriptVM, _ScriptVM):
+			scriptVM.removeGesture(gestureVM)
+			self.gesturesVM.isExpectingNewGesture = scriptVM
+			pendingGesture = scriptVM.createPendingGesture()
+			self.tree.doRefresh(focus=(catVM, scriptVM, pendingGesture))
+			self._refreshButtonState()
+			inputCore.manager._captureFunc = lambda g: self._addGestureCaptor(g, catVM, scriptVM)
+		else:
+			log.error(f"unable to do 'change' action for selected item: {catVM}, {scriptVM}, {gestureVM}")
+
+	def _addKbEmuGestureCaptor(self, gesture: inputCore.InputGesture, catVM: _EmuCategoryVM) -> bool:
+		if not isinstance(gesture, keyboardHandler.KeyboardInputGesture) or gesture.isModifier:
+			return False
+		inputCore.manager._captureFunc = None
+		wx.CallAfter(self._addCapturedKbEmu, gesture, catVM)
+		return False
+
+	def _addGestureCaptor(
+		self,
+		gesture: inputCore.InputGesture,
+		catVM: _CategoryVMTypes,
+		scriptVM: _ScriptVMTypes,
+	) -> bool:
+		if gesture.isModifier:
+			return False
+		if isinstance(catVM, _EmuCategoryVM):
+			gesName = keyLabels.getKeyCombinationLabel(gesture.normalizedIdentifiers[-1][3:])
+			if gesName == scriptVM.scriptInfo.displayName:
+				return False
+		inputCore.manager._captureFunc = None
+		wx.CallAfter(self._addCaptured, catVM, scriptVM, gesture)
+		return False
 
 	def _addCaptured(self, catVM: _CategoryVMTypes, scriptVM: _ScriptVMTypes, gesture):
 		gids = gesture.normalizedIdentifiers
@@ -762,7 +861,7 @@ class InputGesturesDialog(SettingsDialog):
 		self.tree.doRefresh(focus=(catVM, newScript, None))
 		self._refreshButtonState()
 
-	def onRemove(self, evt):
+	def onRemove(self, evt: wx.CommandEvent):
 		selectedItems = self.tree.getSelectedItemData()
 		assert selectedItems is not None
 		catVM, scriptVM, gestureVM = selectedItems

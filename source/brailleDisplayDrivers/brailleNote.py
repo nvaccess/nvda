@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2011-2018 NV access Limited, Rui Batista, Joseph Lee
+# Copyright (C) 2011-2026 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Braille Display driver for the BrailleNote notetakers in terminal mode.
 USB, serial and bluetooth communications are supported.
@@ -14,7 +14,10 @@ from typing import List, Optional
 import serial
 import bdDetect
 import braille
-import brailleInput
+import braille.display
+import braille.display.driver
+import braille.display.gesture
+import braille.input.gesture
 import inputCore
 from logHandler import log
 import hwIo
@@ -120,7 +123,7 @@ _qtKeys = {
 }
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "brailleNote"
 	# Translators: Names of braille displays
 	description = _("HumanWare BrailleNote")
@@ -149,7 +152,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
@@ -308,7 +311,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.gesture.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(
@@ -321,7 +324,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		qtMod: Optional[int] = None,
 		qtData: Optional[str] = None,
 	):
-		super(braille.BrailleDisplayGesture, self).__init__()
+		super(braille.display.gesture.BrailleDisplayGesture, self).__init__()
 		# Denotes if we're dealing with a QT model.
 		self.qt = qtMod is not None
 		# Handle thumb-keys and scroll wheel (wheel is for Apex BT).

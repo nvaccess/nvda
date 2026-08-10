@@ -37,10 +37,12 @@ from treeInterceptorHandler import (
 	TreeInterceptor,
 )
 import braille
+import braille.labels
+import braille.regions.properties
 from utils.security import _isObjectBelowLockScreen
 import vision
 import globalPluginHandler
-import brailleInput
+import braille.input
 import locationHelper
 import aria
 from winAPI.sessionTracking import isLockScreenModeActive
@@ -517,8 +519,8 @@ class NVDAObject(
 		which will override the standard label for this object's role property as well as the value of roleText.
 		By default, NVDA falls back to using roleText.
 		"""
-		if self.landmark and self.landmark in braille.landmarkLabels:
-			return f"{braille.roleLabels[controlTypes.Role.LANDMARK]} {braille.landmarkLabels[self.landmark]}"
+		if self.landmark and self.landmark in braille.labels.landmarkLabels:
+			return f"{braille.labels.roleLabels[controlTypes.Role.LANDMARK]} {braille.labels.landmarkLabels[self.landmark]}"
 		return self.roleText
 
 	#: Typing information for auto property _get_value
@@ -1333,7 +1335,7 @@ class NVDAObject(
 					self.reportFocus()
 					# Display results as flash messages.
 					braille.handler.message(
-						braille.getPropertiesBraille(
+						braille.regions.properties.getPropertiesBraille(
 							name=self.name,
 							role=self.role,
 							positionInfo=self.positionInfo,
@@ -1371,7 +1373,7 @@ class NVDAObject(
 		"""
 		self.reportFocus()
 		braille.handler.handleGainFocus(self)
-		brailleInput.handler.handleGainFocus(self)
+		braille.input.handler.handleGainFocus(self)
 		vision.handler.handleGainFocus(self)
 
 	def event_loseFocus(self):
@@ -1427,7 +1429,7 @@ class NVDAObject(
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
-			brailleInput.handler.handleCaretMove(self)
+			braille.input.handler.handleCaretMove(self)
 			vision.handler.handleCaretMove(self)
 			review.handleCaretMove(self)
 

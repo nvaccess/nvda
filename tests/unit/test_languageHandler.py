@@ -1,16 +1,27 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2017-2025 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2017-2026 NV Access Limited, Łukasz Golonka, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Unit tests for the languageHandler module."""
 
 import unittest
 import winBindings.kernel32
 import languageHandler
-from languageHandler import LCID_NONE, LCIDS_TO_TRANSLATED_LOCALES
+from languageHandler import LCID_NONE
 from localesData import LANG_NAMES_TO_LOCALIZED_DESCS
 import locale
+
+
+def generateWindowsLocales():
+	"""Generates the set of locale names Windows can report,
+	by resolving every locale identifier in the 16 bit range."""
+	locales = set()
+	for lcid in range(0x10000):
+		localeName = languageHandler.windowsLCIDToLocaleName(lcid)
+		if localeName:
+			locales.add(localeName)
+	return locales
 
 
 def generateUnsupportedWindowsLocales():
@@ -26,9 +37,12 @@ def generateUnsupportedWindowsLocales():
 
 
 LCID_ENGLISH_US = 0x0409
+LCID_CENTRAL_KURDISH = 0x0492
+LCID_KHMER_CAMBODIA = 0x0453
+LCID_INVALID = 0xFFFF
 UNSUPPORTED_WIN_LANGUAGES = generateUnsupportedWindowsLocales()
 TRANSLATABLE_LANGS = set(l[0] for l in languageHandler.getAvailableLanguages()) - {"Windows"}  # noqa: E741
-WINDOWS_LANGS = set(locale.windows_locale.values()).union(LCIDS_TO_TRANSLATED_LOCALES.values())
+WINDOWS_LANGS = generateWindowsLocales()
 
 
 class TestLocaleNameToWindowsLCID(unittest.TestCase):
@@ -48,6 +62,26 @@ class TestLocaleNameToWindowsLCID(unittest.TestCase):
 	def test_invalidLocale(self):
 		lcid = languageHandler.localeNameToWindowsLCID("zzzz")
 		self.assertEqual(lcid, LCID_NONE)
+
+
+class TestWindowsLCIDToLocaleName(unittest.TestCase):
+	def test_knownLocale(self):
+		self.assertEqual(languageHandler.windowsLCIDToLocaleName(LCID_ENGLISH_US), "en_US")
+
+	def test_overriddenLocale(self):
+		"""Ensures NVDA's own language code is returned for an LCID
+		where it differs from the code reported by Windows.
+		Windows maps Central Kurdish to "ku-Arab-IQ",
+		whereas NVDA ships its translation under "ckb".
+		"""
+		self.assertEqual(languageHandler.windowsLCIDToLocaleName(LCID_CENTRAL_KURDISH), "ckb")
+
+	def test_localeNotRequiringAnOverride(self):
+		"""Ensures Windows reports Khmer correctly, so that no override is needed for it."""
+		self.assertEqual(languageHandler.windowsLCIDToLocaleName(LCID_KHMER_CAMBODIA), "km_KH")
+
+	def test_invalidLocale(self):
+		self.assertIsNone(languageHandler.windowsLCIDToLocaleName(LCID_INVALID))
 
 
 class Test_Normalization_For_Win32(unittest.TestCase):

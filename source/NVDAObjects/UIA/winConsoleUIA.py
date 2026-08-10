@@ -33,6 +33,7 @@ __all__ = [
 	"WinConsoleUIA",
 	"consoleUIAWindow",
 	"findExtraOverlayClasses",
+	"_WinTerminalUIATextInfo",
 	"_DiffBasedWinTerminalUIA",
 	"_NotificationsBasedWinTerminalUIA",
 ]
@@ -449,11 +450,29 @@ def findExtraOverlayClasses(obj, clsList):
 		clsList.append(consoleUIAWindow)
 
 
+class _WinTerminalUIATextInfo(UIATextInfo):
+	"""A TextInfo for Windows Terminal that constrains mouse tracking to a single line."""
+
+	def _get_unit_mouseChunk(self) -> str:
+		# Windows Terminal's UIA text provider reports the paragraph, page and document units
+		# as spanning the entire terminal buffer.
+		# Fall back to the line unit, which is the natural granularity for a terminal.
+		unit = super().unit_mouseChunk
+		if unit == textInfos.UNIT_PARAGRAPH:
+			unit = textInfos.UNIT_LINE
+		return unit
+
+
 class _DiffBasedWinTerminalUIA(EnhancedTermTypedCharSupport):
 	"""
 	An overlay class for Windows Terminal (wt.exe) that uses diffing to speak
 	new text.
 	"""
+
+	#: Caret updates can take a while, particularly over remote connections such as SSH. (#19503)
+	_caretMovementTimeoutMultiplier = 3.0
+
+	_TextInfo = _WinTerminalUIATextInfo
 
 	def event_UIA_notification(self, **kwargs):
 		"Block notification events when diffing to prevent double reporting."
@@ -466,10 +485,14 @@ class _NotificationsBasedWinTerminalUIA(UIA):
 	events provided by the application to speak new text.
 	"""
 
+	#: Caret updates can take a while, particularly over remote connections such as SSH. (#19503)
+	_caretMovementTimeoutMultiplier = 3.0
+
 	#: Override the role, which is controlTypes.Role.STATICTEXT by default.
 	role = controlTypes.Role.TERMINAL
 	#: New line text is announced using UIA notification events
 	announceNewLineText = False
+	_TextInfo = _WinTerminalUIATextInfo
 
 	def event_UIA_notification(
 		self,

@@ -1,19 +1,56 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2026 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter, Bram Duvigneau
+# Copyright (C) 2010-2026 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter, Bram Duvigneau, Selvas Healthcare
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
+from collections.abc import Callable
 from typing import List, Iterator
 
+import ctypes
+from ctypes import byref
+from ctypes.wintypes import DWORD, ULONG
+import threading
 import serial
+from serial.win32 import CreateFile, FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE
+from comtypes import GUID
 from io import BytesIO
 import hwIo
 from hwIo import intToByte
+from hwIo.base import _isDebug as _isHwIoDebug
+import winKernel
+from winAPI.constants import SystemErrorCodes
+from winBindings.setupapi import (
+	DIGCF,
+	SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W,
+	SP_DEVICE_INTERFACE_DATA,
+	SP_DEVINFO_DATA,
+	SetupDiDestroyDeviceInfoList,
+	SetupDiEnumDeviceInterfaces,
+	SetupDiGetClassDevs,
+	SetupDiGetDeviceInterfaceDetail,
+	_Dummy as _SP_DEVICE_INTERFACE_DETAIL_DATA_PACKING,
+)
+from winBindings.winusb import (
+	USB_INTERFACE_DESCRIPTOR,
+	USBD_PIPE_TYPE,
+	WINUSB_PIPE_POLICY,
+	WINUSB_PIPE_INFORMATION,
+	WinUsb_Free,
+	WinUsb_Initialize,
+	WinUsb_QueryInterfaceSettings,
+	WinUsb_QueryPipe,
+	WinUsb_ReadPipe,
+	WinUsb_SetPipePolicy,
+	WinUsb_WritePipe,
+)
 import braille
+import braille.display
+import braille.display.driver
+import braille.display.gesture
 from logHandler import log
 from collections import OrderedDict
 import inputCore
-import brailleInput
+import braille.input.gesture
 from baseObject import AutoPropertyObject
 import time
 import bdDetect
@@ -24,6 +61,260 @@ PARITY = serial.PARITY_NONE
 
 # HID
 HR_CAPS = b"\x01"
+
+# WinUSB (winusb.sys) fallback for the CUSTOM/bulk protocol.
+#
+# hwIo.Bulk talks to the device via the legacy himsusb.sys kernel driver (a custom,
+# non-WHCP-signed driver). Windows 11 blocks installation of such drivers, so on affected
+# systems hwIo.Bulk() raises and the CUSTOM match is skipped entirely -- for the plain
+# Braille Sense/EDGE (930A/930B) devices there is no HID/serial fallback, so the display
+# would not be found via USB at all.
+# This fallback talks to the same device through winusb.sys (an inbox driver) instead,
+# provided the vendor's WinUSB INF (hims_winusb.inf) is installed for it.
+
+# DeviceInterfaceGUID defined in the WinUSB INF (hims_winusb.inf).
+GUID_DEVINTERFACE_HIMS_WINUSB = GUID("{78A1C341-4539-11d3-B88D-00C04FAD5171}")
+
+
+def _findWinUsbDevicePath(deviceInterfaceGuid: GUID) -> str | None:
+	"""Find the device path for the first present device exposing the given device
+	interface GUID, using the same SetupDi* enumeration pattern as ``hwPortUtils._listDevices``.
+
+	:param deviceInterfaceGuid: The device interface GUID to search for.
+	:return: The device path, or ``None`` if no matching device is present.
+	"""
+	try:
+		hDevInfo = SetupDiGetClassDevs(
+			byref(deviceInterfaceGuid),
+			None,
+			None,
+			DIGCF.PRESENT | DIGCF.DEVICEINTERFACE,
+		)
+	except OSError as e:
+		log.debug(f"_findWinUsbDevicePath: SetupDiGetClassDevs failed: {e}")
+		return None
+	try:
+		did = SP_DEVICE_INTERFACE_DATA()
+		did.cbSize = ctypes.sizeof(did)
+		if not SetupDiEnumDeviceInterfaces(hDevInfo, None, byref(deviceInterfaceGuid), 0, byref(did)):
+			log.debug(
+				f"_findWinUsbDevicePath: SetupDiEnumDeviceInterfaces found no device for GUID {deviceInterfaceGuid} "
+				f"(GetLastError={ctypes.GetLastError()}) -- WinUSB INF (hims_winusb.inf) may not be "
+				"installed/bound for this device",
+			)
+			return None
+
+		dwNeeded = DWORD()
+		SetupDiGetDeviceInterfaceDetail(hDevInfo, byref(did), None, 0, byref(dwNeeded), None)
+
+		class SP_DEVICE_INTERFACE_DETAIL_DATA_W(ctypes.Structure):
+			_fields_ = (
+				("cbSize", DWORD),
+				(
+					"DevicePath",
+					# Round up to the next WCHAR count to ensure proper memory alignment.
+					ctypes.c_wchar
+					* math.ceil((dwNeeded.value - ctypes.sizeof(DWORD)) / ctypes.sizeof(ctypes.c_wchar)),
+				),
+			)
+			_pack_ = _SP_DEVICE_INTERFACE_DETAIL_DATA_PACKING._pack_
+
+		idd = SP_DEVICE_INTERFACE_DETAIL_DATA_W()
+		idd.cbSize = SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W
+		devinfo = SP_DEVINFO_DATA()
+		devinfo.cbSize = ctypes.sizeof(devinfo)
+		if not SetupDiGetDeviceInterfaceDetail(
+			hDevInfo,
+			byref(did),
+			byref(idd),
+			dwNeeded,
+			None,
+			byref(devinfo),
+		):
+			log.debug(
+				f"_findWinUsbDevicePath: SetupDiGetDeviceInterfaceDetail failed, GetLastError={ctypes.GetLastError()}",
+			)
+			return None
+		log.debug(f"_findWinUsbDevicePath: found DevicePath={idd.DevicePath}")
+		return idd.DevicePath
+	finally:
+		SetupDiDestroyDeviceInfoList(hDevInfo)
+
+
+class _WinUsbBulk:
+	"""Raw I/O for HIMS bulk USB devices via WinUSB.
+
+	Used as a fallback for `hwIo.Bulk` when the legacy himsusb.sys kernel driver is
+	not available. Unlike `hwIo.Bulk`, this does not integrate with `hwIo.bgThread`;
+	reads happen on a dedicated background thread using blocking, timed ``WinUsb_ReadPipe`` calls.
+	"""
+
+	def __init__(self, path: str, onReceive: Callable[[bytes], None], onReceiveSize: int = 64) -> None:
+		"""Constructor.
+
+		:param path: The WinUSB device path, as returned by `_findWinUsbDevicePath`.
+		:param onReceive: A callable taking the received data as its only argument.
+		:param onReceiveSize: The size (in bytes) of the buffer used for each read.
+		:raises OSError: If the device could not be opened, or if the bulk IN/OUT pipes
+			could not be determined.
+		"""
+		log.debug(f"_WinUsbBulk: 1 opening device {path}")
+		self._onReceive = onReceive
+		self._readSize = onReceiveSize
+		self._closed = False
+		self._recvEvt = threading.Event()
+
+		self._handle = CreateFile(
+			path,
+			winKernel.GENERIC_READ | winKernel.GENERIC_WRITE,
+			winKernel.FILE_SHARE_READ | winKernel.FILE_SHARE_WRITE,
+			None,
+			winKernel.OPEN_EXISTING,
+			FILE_FLAG_OVERLAPPED,
+			None,
+		)
+		if self._handle == INVALID_HANDLE_VALUE:
+			err = ctypes.WinError()
+			log.debug(f"_WinUsbBulk: FAILED at step 1, CreateFile: {err}")
+			raise err
+
+		# WinUsb_Initialize requires a handle opened with FILE_FLAG_OVERLAPPED
+		# (WinUsb_ReadPipe/WritePipe still behave synchronously when passed no OVERLAPPED).
+		log.debug("_WinUsbBulk: 2 WinUsb_Initialize")
+		self._winUsbHandle = ctypes.c_void_p()
+		if not WinUsb_Initialize(self._handle, byref(self._winUsbHandle)):
+			err = ctypes.WinError()
+			log.debug(f"_WinUsbBulk: FAILED at step 2, WinUsb_Initialize: {err}")
+			winKernel.closeHandle(self._handle)
+			raise err
+
+		log.debug("_WinUsbBulk: 3 querying pipes")
+		try:
+			self._pipeIn, self._pipeOut = self._queryPipes()
+		except Exception as e:
+			log.debug(f"_WinUsbBulk: FAILED at step 3, querying pipes: {e}")
+			WinUsb_Free(self._winUsbHandle)
+			winKernel.closeHandle(self._handle)
+			raise
+
+		# Set a read timeout so the background read thread can notice `close()`
+		# instead of blocking forever if the device never responds.
+		timeoutMs = DWORD(3000)
+		if not WinUsb_SetPipePolicy(
+			self._winUsbHandle,
+			self._pipeIn,
+			WINUSB_PIPE_POLICY.PIPE_TRANSFER_TIMEOUT,
+			ctypes.sizeof(timeoutMs),
+			byref(timeoutMs),
+		):
+			log.debugWarning(f"WinUsb_SetPipePolicy(PIPE_TRANSFER_TIMEOUT) failed: {ctypes.WinError()}")
+
+		log.debug(
+			f"_WinUsbBulk: 4 SUCCESS (pipeIn=0x{self._pipeIn:02X} pipeOut=0x{self._pipeOut:02X})",
+		)
+		self._readThread = threading.Thread(target=self._readLoop, daemon=True)
+		self._readThread.start()
+
+	def _queryPipes(self) -> tuple[int, int]:
+		"""Query the device's bulk IN and OUT pipe IDs.
+
+		:return: A tuple of ``(pipeIn, pipeOut)`` pipe IDs.
+		:raises OSError: If the interface settings could not be queried, or if both a bulk
+			IN and OUT pipe could not be found.
+		"""
+		ifaceDesc = USB_INTERFACE_DESCRIPTOR()
+		if not WinUsb_QueryInterfaceSettings(self._winUsbHandle, 0, byref(ifaceDesc)):
+			raise ctypes.WinError()
+		log.debug(
+			f"_WinUsbBulk._queryPipes: bNumEndpoints={ifaceDesc.bNumEndpoints} "
+			f"bInterfaceClass={ifaceDesc.bInterfaceClass}",
+		)
+		pipeIn = pipeOut = None
+		for i in range(ifaceDesc.bNumEndpoints):
+			pipe = WINUSB_PIPE_INFORMATION()
+			if not WinUsb_QueryPipe(self._winUsbHandle, 0, i, byref(pipe)):
+				log.debug(f"_WinUsbBulk._queryPipes: WinUsb_QueryPipe({i}) failed: {ctypes.WinError()}")
+				continue
+			log.debug(
+				f"_WinUsbBulk._queryPipes: pipe[{i}] id=0x{pipe.pipeId:02X} type={pipe.pipeType} "
+				f"maxPacketSize={pipe.maximumPacketSize}",
+			)
+			if pipe.pipeType == USBD_PIPE_TYPE.BULK:
+				if pipe.pipeId & 0x80:
+					pipeIn = pipe.pipeId
+				else:
+					pipeOut = pipe.pipeId
+		if pipeIn is None or pipeOut is None:
+			# Raised as OSError (not RuntimeError) so callers that catch EnvironmentError/OSError
+			# to fall back to another connection method (e.g. hims.py's CUSTOM protocol handling)
+			# handle this the same way as a WinUsb_* API failure.
+			raise OSError(
+				f"Could not find both bulk IN and OUT pipes on WinUSB device (pipeIn={pipeIn!r}, pipeOut={pipeOut!r})",
+			)
+		return pipeIn, pipeOut
+
+	def _readLoop(self) -> None:
+		"""Blocking read loop run on a dedicated background thread until `close()` is called."""
+		buf = ctypes.create_string_buffer(self._readSize)
+		bytesRead = ULONG()
+		while not self._closed:
+			ok = WinUsb_ReadPipe(
+				self._winUsbHandle,
+				self._pipeIn,
+				buf,
+				self._readSize,
+				byref(bytesRead),
+				None,
+			)
+			if not ok:
+				err = ctypes.GetLastError()
+				if err == SystemErrorCodes.SEM_TIMEOUT:
+					# No data within PIPE_TRANSFER_TIMEOUT; keep waiting.
+					continue
+				if not self._closed:
+					log.debugWarning(f"WinUsb_ReadPipe failed: {ctypes.WinError(err)}")
+				break
+			data = buf.raw[: bytesRead.value]
+			if data and self._onReceive:
+				try:
+					self._onReceive(data)
+				except Exception:
+					log.error("", exc_info=True)
+			self._recvEvt.set()
+
+	def waitForRead(self, timeout: float) -> bool:
+		"""Wait for a chunk of data to be received and processed.
+
+		:param timeout: The maximum time to wait in seconds.
+		:return: ``True`` if received data was processed before the timeout, ``False`` if not.
+		"""
+		self._recvEvt.clear()
+		return self._recvEvt.wait(timeout)
+
+	def write(self, data: bytes) -> None:
+		"""Write data to the device's bulk OUT pipe.
+
+		:param data: The data to write.
+		:raises OSError: If the write failed.
+		"""
+		if _isHwIoDebug():
+			log.debug(f"Write: {data!r}")
+		buf = ctypes.create_string_buffer(data, len(data))
+		written = ULONG()
+		if not WinUsb_WritePipe(self._winUsbHandle, self._pipeOut, buf, len(data), byref(written), None):
+			raise ctypes.WinError()
+
+	def close(self) -> None:
+		"""Stop the background read thread and release the WinUSB and file handles."""
+		if self._closed:
+			return
+		self._closed = True
+		if self._winUsbHandle:
+			WinUsb_Free(self._winUsbHandle)
+			self._winUsbHandle = None
+		if self._handle and self._handle != INVALID_HANDLE_VALUE:
+			winKernel.closeHandle(self._handle)
+			self._handle = None
 
 
 class Model(AutoPropertyObject):
@@ -269,7 +560,7 @@ modelMap = [
 ]
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "hims"
 	# Translators: The name of a series of braille displays.
 	description = _("HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series")
@@ -318,7 +609,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls) -> Iterator[tuple[str, str]]:
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
@@ -337,7 +628,28 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 						self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
 					case bdDetect.ProtocolType.CUSTOM:
 						# onReceiveSize based on max packet size according to USB endpoint information.
-						self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
+						try:
+							self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
+						except EnvironmentError as bulkError:
+							# himsusb.sys (the legacy kernel driver hwIo.Bulk expects) may not be
+							# available -- e.g. Windows 11 blocks installation of unsigned/non-WHCP
+							# kernel drivers. Fall back to WinUSB (winusb.sys, an inbox driver) if
+							# the vendor's WinUSB INF (hims_winusb.inf) is installed for this device.
+							log.debug(
+								f"hwIo.Bulk(port={port!r}) failed ({bulkError}); trying WinUSB fallback",
+							)
+							winUsbPath = _findWinUsbDevicePath(GUID_DEVINTERFACE_HIMS_WINUSB)
+							if not winUsbPath:
+								log.debug(
+									"WinUSB fallback: no device found for GUID_DEVINTERFACE_HIMS_WINUSB; "
+									"giving up on this port",
+								)
+								raise
+							try:
+								self._dev = _WinUsbBulk(winUsbPath, self._onReceive, onReceiveSize=64)
+							except EnvironmentError as winUsbError:
+								log.debug(f"WinUSB fallback failed: {winUsbError}")
+								raise
 					case bdDetect.ProtocolType.SERIAL:
 						self._dev = hwIo.Serial(
 							port,
@@ -794,7 +1106,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class KeyInputGesture(
+	braille.display.gesture.BrailleDisplayGesture,
+	braille.input.gesture.BrailleInputGesture,
+):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keys, isHid: bool = False):
@@ -831,7 +1146,7 @@ class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGe
 		self.id = "+".join(names)
 
 
-class RoutingInputGesture(braille.BrailleDisplayGesture):
+class RoutingInputGesture(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, routingIndex: int):

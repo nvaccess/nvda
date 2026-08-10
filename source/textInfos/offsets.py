@@ -567,8 +567,18 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 	def _getParagraphOffsets(self, offset):
 		return self._getLineOffsets(offset)
 
-	def _getReadingChunkOffsets(self, offset):
-		return self._getLineOffsets(offset)
+	def _getReadingChunkOffsets(self, offset: int) -> tuple[int, int]:
+		"""Gets the start and end offsets of the reading chunk containing the given offset,
+		falling back to the line offsets if the configured unit is not implemented.
+
+		:param offset: The offset of the character within the reading chunk.
+		:return: A tuple of the start and end offsets of the reading chunk.
+		"""
+		unit = self.unit_readingChunk
+		try:
+			return self._getUnitOffsets(unit, offset)
+		except NotImplementedError:
+			return self._getLineOffsets(offset)
 
 	def _getBoundingRectFromOffset(self, offset):
 		raise NotImplementedError
