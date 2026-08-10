@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2025 NV Access Limited, James Teh, Michael Curran, Leonard de Ruijter, Reef Turner,
-# Julien Cochuyt
+# Copyright (C) 2008-2026 NV Access Limited, James Teh, Michael Curran, Leonard de Ruijter, Reef Turner,
+# Julien Cochuyt, Andrew Johnson
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,6 +11,7 @@ import appModuleHandler
 import api
 import buildVersion
 import controlTypes
+from NVDAObjects import NVDAObject
 from NVDAObjects.IAccessible import IAccessible
 from baseObject import ScriptableObject
 import gui
@@ -230,20 +231,21 @@ class AppModule(appModuleHandler.AppModule):
 			return True
 		return False
 
-	def isNvdaLogViewerOutputCtrl(self, obj) -> bool:
+	def isNvdaLogViewerLoadingOutputCtrl(self, obj: NVDAObject) -> bool:
+		"""Whether obj is the log viewer's output control while log content is still loading."""
 		from gui import logViewer
 
 		viewer = logViewer.logViewer
-		if not viewer:
+		if not viewer or not viewer.isLoading:
 			return False
 		return obj.windowHandle == viewer.outputCtrl.GetHandle()
 
-	def event_valueChange(self, obj, nextHandler):
-		# The log viewer output control fires a value change for every chunk of log text
-		# progressively appended to it (#16322).
-		# Processing these is pure overhead which can make NVDA sluggish while a large log loads:
-		# the control is read only and text is only ever appended, never changing what the user is reading.
-		if self.isNvdaLogViewerOutputCtrl(obj):
+	def event_valueChange(self, obj: NVDAObject, nextHandler: typing.Callable[[], None]) -> None:
+		# While the log viewer progressively loads a large log, its output control fires a
+		# value change for every appended chunk (#16322). Processing these is pure overhead
+		# which can make NVDA sluggish: the control is read only and text is only ever
+		# appended, never changing what the user is reading.
+		if self.isNvdaLogViewerLoadingOutputCtrl(obj):
 			return
 		nextHandler()
 

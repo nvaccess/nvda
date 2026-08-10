@@ -1,11 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2024 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2008-2026 NV Access Limited, Cyrille Bougot, Andrew Johnson
 
 """Provides functionality to view the NVDA log."""
 
 import collections
+import re
 import time
 
 import comtypes
@@ -34,6 +35,16 @@ _APPEND_TIME_BUDGET_SEC = 0.05
 _MIN_CHUNK_SIZE = 1_000
 _MAX_CHUNK_SIZE = 1_000_000
 
+#: Matches characters which are likely to need font fallback (e.g. CJK, emoji, braille patterns),
+#: and therefore append orders of magnitude slower.
+#: Characters up to Latin Extended-B were measured to append at full speed.
+_FALLBACK_CHARS_RE = re.compile(r"[^\x00-\u024f]")
+
+#: Maximum chunk size when the chunk contains characters needing font fallback, in characters.
+#: This bounds the cost of a single append when fast content has grown the adaptive chunk size
+#: and slow content follows.
+_FALLBACK_CHUNK_SIZE = 8_000
+
 #: How long to pause appending after the user presses a key in the output control, in seconds.
 #: This lets user interaction (e.g. caret navigation) win over background loading.
 _USER_INPUT_PAUSE_SEC = 0.5
@@ -41,8 +52,6 @@ _USER_INPUT_PAUSE_SEC = 0.5
 #: Passing this as both ends of a TOM range yields a collapsed range at the end of the document,
 #: as RichEdit clamps out of range character positions.
 _TOM_END_OF_DOC = 0x7FFFFFFF
-
-EM_SETREADONLY = 0x00CF
 
 
 class LogViewer(
@@ -94,6 +103,8 @@ class LogViewer(
 		#: Log text read from the file but not yet appended to the output control.
 		#: A C{None} entry is a marker queued by L{moveInsertionPointToEndOfLog}.
 		self._pendingText: collections.deque[str | None] = collections.deque()
+		#: How much of the head item of L{_pendingText} has already been appended.
+		self._headItemOffset = 0
 		self._isPumpScheduled = False
 		self._chunkSize = _MIN_CHUNK_SIZE
 		self._lastUserInputTime = 0.0
@@ -128,6 +139,11 @@ class LogViewer(
 		if text:
 			self._pendingText.append(text)
 			self._schedulePump()
+
+	@property
+	def isLoading(self) -> bool:
+		"""Whether log text is still queued for display."""
+		return bool(self._pendingText)
 
 	def moveInsertionPointToEndOfLog(self) -> None:
 		"""Move the insertion point to the end of the log text queued for display so far.
@@ -167,23 +183,29 @@ class LogViewer(
 			# The user is interacting with the viewer; let their input win over loading.
 			self._schedulePump(delayMs=int(_USER_INPUT_PAUSE_SEC * 1000))
 			return
-		chunk = ""
-		while self._pendingText and len(chunk) < self._chunkSize:
-			item = self._pendingText.popleft()
-			if item is None:
-				# Marker queued by moveInsertionPointToEndOfLog.
-				# Flush the chunk first so that the end of the control is the end of the queued text.
-				if chunk:
-					self._appendText(chunk)
-					chunk = ""
-				self.outputCtrl.SetInsertionPointEnd()
-				continue
-			maxLen = self._chunkSize - len(chunk)
-			if len(item) > maxLen:
-				self._pendingText.appendleft(item[maxLen:])
-				item = item[:maxLen]
-			chunk += item
-		if chunk:
+		# Process any markers at the head of the queue, then at most one chunk of text.
+		while self._pendingText and self._pendingText[0] is None:
+			# Marker queued by moveInsertionPointToEndOfLog.
+			# Any text queued before it has already been appended, so the end of the control
+			# is the end of the log at the time the marker was queued.
+			self._pendingText.popleft()
+			self.outputCtrl.SetInsertionPointEnd()
+		if self._pendingText:
+			# Slice the next chunk from the head item, tracking how much of it has been consumed.
+			# Slicing out only the chunk keeps queue consumption linear:
+			# re-queueing the remainder instead would copy almost the whole log every pump.
+			item = self._pendingText[0]
+			chunk = item[self._headItemOffset : self._headItemOffset + self._chunkSize]
+			if match := _FALLBACK_CHARS_RE.search(chunk):
+				# Text needing font fallback appends orders of magnitude slower than the
+				# adaptive chunk size may currently assume, so take at most a small bite of it.
+				# Splitting at the boundary leaves preceding fast text unaffected.
+				capLen = max(match.start(), _FALLBACK_CHUNK_SIZE)
+				chunk = chunk[:capLen]
+			self._headItemOffset += len(chunk)
+			if self._headItemOffset >= len(item):
+				self._pendingText.popleft()
+				self._headItemOffset = 0
 			self._appendText(chunk)
 		if self._pendingText:
 			self._schedulePump()
@@ -202,8 +224,7 @@ class LogViewer(
 			# and causes visible scroll flapping.
 			# A TOM range insert leaves the caret and scroll position untouched.
 			# TOM refuses to modify a read only control, so read only is lifted for the insert.
-			handle = self.outputCtrl.GetHandle()
-			winUser.sendMessage(handle, EM_SETREADONLY, False, 0)
+			self.outputCtrl.SetEditable(True)
 			try:
 				textRange = self._tomDoc.range(_TOM_END_OF_DOC, _TOM_END_OF_DOC)
 				textRange.text = text
@@ -214,7 +235,7 @@ class LogViewer(
 				)
 				self._tomDoc = None
 			finally:
-				winUser.sendMessage(handle, EM_SETREADONLY, True, 0)
+				self.outputCtrl.SetEditable(False)
 		if not self._tomDoc:
 			# Fallback if TOM is unavailable: append and restore the caret.
 			pos = self.outputCtrl.GetInsertionPoint()
@@ -236,6 +257,12 @@ class LogViewer(
 		evt.Skip()
 
 	def onClose(self, evt):
+		# Release any log text still queued for display: the module level singleton keeps
+		# this instance referenced after destruction, and a large queue would otherwise
+		# stay allocated until the viewer is reopened.
+		self._pendingText.clear()
+		self._headItemOffset = 0
+		self._tomDoc = None
 		self.Destroy()
 
 	def onSaveAsCommand(self, evt):
