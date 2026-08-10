@@ -230,6 +230,23 @@ class AppModule(appModuleHandler.AppModule):
 			return True
 		return False
 
+	def isNvdaLogViewerOutputCtrl(self, obj) -> bool:
+		from gui import logViewer
+
+		viewer = logViewer.logViewer
+		if not viewer:
+			return False
+		return obj.windowHandle == viewer.outputCtrl.GetHandle()
+
+	def event_valueChange(self, obj, nextHandler):
+		# The log viewer output control fires a value change for every chunk of log text
+		# progressively appended to it (#16322).
+		# Processing these is pure overhead which can make NVDA sluggish while a large log loads:
+		# the control is read only and text is only ever appended, never changing what the user is reading.
+		if self.isNvdaLogViewerOutputCtrl(obj):
+			return
+		nextHandler()
+
 	def isNvdaPythonConsoleUIInputCtrl(self, obj):
 		from pythonConsole import consoleUI
 

@@ -34,6 +34,10 @@ _APPEND_TIME_BUDGET_SEC = 0.05
 _MIN_CHUNK_SIZE = 1_000
 _MAX_CHUNK_SIZE = 1_000_000
 
+#: How long to pause appending after the user presses a key in the output control, in seconds.
+#: This lets user interaction (e.g. caret navigation) win over background loading.
+_USER_INPUT_PAUSE_SEC = 0.5
+
 #: Passing this as both ends of a TOM range yields a collapsed range at the end of the document,
 #: as RichEdit clamps out of range character positions.
 _TOM_END_OF_DOC = 0x7FFFFFFF
@@ -92,6 +96,8 @@ class LogViewer(
 		self._pendingText: collections.deque[str | None] = collections.deque()
 		self._isPumpScheduled = False
 		self._chunkSize = _MIN_CHUNK_SIZE
+		self._lastUserInputTime = 0.0
+		self._isShowingLoadingTitle = False
 		try:
 			self._tomDoc = oleacc.AccessibleObjectFromWindow(
 				self.outputCtrl.GetHandle(),
@@ -131,18 +137,35 @@ class LogViewer(
 		self._pendingText.append(None)
 		self._schedulePump()
 
-	def _schedulePump(self) -> None:
+	def _schedulePump(self, delayMs: int = 1) -> None:
 		if not self._isPumpScheduled:
 			self._isPumpScheduled = True
 			# Chain with CallLater rather than CallAfter.
 			# Posted events starve WM_TIMER, so a CallAfter chain would block timers,
 			# including NVDA's core pump, just like a synchronous append.
-			wx.CallLater(1, self._pumpPendingText)
+			wx.CallLater(delayMs, self._pumpPendingText)
+		self._updateTitle()
+
+	def _updateTitle(self) -> None:
+		"""Reflect in the window title whether log content is still loading."""
+		isLoading = bool(self._pendingText)
+		if isLoading != self._isShowingLoadingTitle:
+			self._isShowingLoadingTitle = isLoading
+			if isLoading:
+				# Translators: The title of the NVDA log viewer window while log content is still loading.
+				self.SetTitle(_("NVDA Log Viewer (loading)"))
+			else:
+				# Translators: The title of the NVDA log viewer window.
+				self.SetTitle(_("NVDA Log Viewer"))
 
 	def _pumpPendingText(self) -> None:
 		self._isPumpScheduled = False
-		if not self:
+		if not self or self.IsBeingDeleted():
 			# The window was destroyed while a pump was scheduled.
+			return
+		if time.monotonic() - self._lastUserInputTime < _USER_INPUT_PAUSE_SEC:
+			# The user is interacting with the viewer; let their input win over loading.
+			self._schedulePump(delayMs=int(_USER_INPUT_PAUSE_SEC * 1000))
 			return
 		chunk = ""
 		while self._pendingText and len(chunk) < self._chunkSize:
@@ -164,6 +187,7 @@ class LogViewer(
 			self._appendText(chunk)
 		if self._pendingText:
 			self._schedulePump()
+		self._updateTitle()
 
 	def _appendText(self, text: str) -> None:
 		"""Append text to the output control without disturbing the caret or scroll position.
@@ -183,9 +207,15 @@ class LogViewer(
 			try:
 				textRange = self._tomDoc.range(_TOM_END_OF_DOC, _TOM_END_OF_DOC)
 				textRange.text = text
+			except comtypes.COMError:
+				log.debugWarning(
+					"TOM append failed; falling back to AppendText for this and future appends",
+					exc_info=True,
+				)
+				self._tomDoc = None
 			finally:
 				winUser.sendMessage(handle, EM_SETREADONLY, True, 0)
-		else:
+		if not self._tomDoc:
 			# Fallback if TOM is unavailable: append and restore the caret.
 			pos = self.outputCtrl.GetInsertionPoint()
 			self.outputCtrl.Freeze()
@@ -223,7 +253,9 @@ class LogViewer(
 			with open(filename, "w", encoding="UTF-8") as f:
 				f.write(self.outputCtrl.GetValue())
 				# Include any log text queued for display but not yet appended to the output control.
-				f.write("".join(item for item in self._pendingText if item is not None))
+				for item in self._pendingText:
+					if item is not None:
+						f.write(item)
 		except (IOError, OSError) as e:
 			gui.messageBox(
 				# Translators: Dialog text presented when NVDA cannot save a log file.
@@ -235,6 +267,8 @@ class LogViewer(
 			)
 
 	def onOutputKeyDown(self, evt):
+		# Pause background loading briefly so user interaction stays responsive.
+		self._lastUserInputTime = time.monotonic()
 		key = evt.GetKeyCode()
 		# #3763: WX 3 no longer passes escape via evt_char in richEdit controls. Therefore evt_key_down must be used.
 		if key == wx.WXK_ESCAPE:
