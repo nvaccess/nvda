@@ -45,6 +45,7 @@
 * Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
 * The duration of indentation beeps can now be configured via a new "Indent tone duration (ms)" spin control in the Document Formatting settings panel. (#20447, @Mubashir78)
 * Reduced the number of cross-process UI Automation calls when processing events, reporting focus changes, reporting objects under the mouse and rendering browse mode content, by caching more properties and batching focus property fetches. (#20608, @LeonarddeR)
+*  The maximum value for the "Maximum number of characters on one line" setting in the Browse Mode settings panel has been increased from 250 to 4000, so browse mode splits long paragraphs less often when screen layout is enabled. (#20478, @Rasaec5)
 
 ### Bug Fixes
 
