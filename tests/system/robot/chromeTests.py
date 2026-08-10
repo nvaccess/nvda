@@ -2760,6 +2760,44 @@ def test_styleNav():
 	_asserts.strings_match(actualSpeech, "No next same style text")
 
 
+def test_clickableNavigation() -> None:
+	"""Tests that unassigned quick navigation commands move between clickable elements."""
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy.assignGesture(
+		"kb:z",
+		"browseMode",
+		"BrowseModeTreeInterceptor",
+		"nextClickable",
+	)
+	spy.assignGesture(
+		"kb:shift+z",
+		"browseMode",
+		"BrowseModeTreeInterceptor",
+		"previousClickable",
+	)
+	# The navigation must use the clickable metadata even when its speech reporting is disabled.
+	spy.set_configValue(["documentFormatting", "reportClickable"], False)
+	_chrome.prepareChrome("""
+		<p>Before the custom controls</p>
+		<button>Semantic button</button>
+		<div tabindex="0" onclick="void(0)">First custom control</div>
+		<p>Between the custom controls</p>
+		<div tabindex="0" onclick="void(0)">Second custom control</div>
+		<p>After the custom controls</p>
+	""")
+
+	actualSpeech = _chrome.getSpeechAfterKey("z")
+	_asserts.strings_match(actualSpeech, "First custom control")
+	actualSpeech = _chrome.getSpeechAfterKey("z")
+	_asserts.strings_match(actualSpeech, "Second custom control")
+	actualSpeech = _chrome.getSpeechAfterKey("z")
+	_asserts.strings_match(actualSpeech, "no next clickable element")
+	actualSpeech = _chrome.getSpeechAfterKey("shift+z")
+	_asserts.strings_match(actualSpeech, "First custom control")
+	actualSpeech = _chrome.getSpeechAfterKey("shift+z")
+	_asserts.strings_match(actualSpeech, "no previous clickable element")
+
+
 def test_ariaErrorMessage():
 	_chrome.prepareChrome("""
 		<h2>Native valid</h2>

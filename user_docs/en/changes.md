@@ -18,6 +18,7 @@
   * All four edges are supported.
   Note that the Windows taskbar may override gestures on an edge.
   Gestures from the taskbar edge open the Start menu or Action Center, NVDA will not receive them.
+* Added an unassigned Quick Navigation Command for jumping to next/previous clickable element in browse mode. (#14429, @cary-rowen)
 * On supported braille displays, pressing multiple routing keys simultaneously can now be bound to a new "multi routing" gesture. (#20001, @LeonarddeR)
   * The "select range" command, which selects the text from the first up to the last pressed routing key, is bound to this gesture by default on supporting drivers.
   * Drivers with built-in support for multi routing: ALVA, Albatross (only when combined with `home1` or `home2`), Baum (and compatible), Freedom Scientific Focus/PAC Mate, HumanWare Brailliant BI/B series, Handy Tech, NLS eReader Zoomax, Seika Notetaker, and Standard HID Braille displays.

@@ -246,6 +246,10 @@ styleNav
 	[Documentation]	Same style navigation
 	[Tags]	chrome_misc
 	test_styleNav
+Clickable navigation
+	[Documentation]	Navigate between clickable elements using unassigned quick navigation commands
+	[Tags]	chrome_misc
+	test_clickableNavigation
 Native selection mode focus mode caret movement
 	[Documentation]	The caret can be moved in focus mode while native selection mode is enabled (#19075)
 	[Tags]	chrome_misc
