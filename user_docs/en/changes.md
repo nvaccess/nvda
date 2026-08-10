@@ -126,6 +126,9 @@ Locale names are now taken from `winKernel.LCIDToLocaleName`, apart from a small
   * As a result, some locale identifiers now resolve to a different name, such as `zh_CN` rather than `zh_CHS`, `km_KH` rather than `kh_KH` and `en_JM` rather than `en_JA`.
   * Locale names now carry a script subtag where Windows reports one, such as `sr_LATN_CS` rather than `sr_SP` for LCID 2074.
   * The SAPI 4 and SAPI 5 synthesizers report voice languages through this function as well, so the language of a voice can now be reported for locale identifiers that `locale.windows_locale` did not cover.
+* `OffsetsTextInfo` now implements `_getSentenceOffsets` using the Windows built-in ICU library.
+This adds support for `textInfos.UNIT_SENTENCE` to all `TextInfo` implementations based on `OffsetsTextInfo`. (#20603, @LeonarddeR)
+  * For unsupported encodings, or when ICU is unavailable (on Windows versions older than 1703), `_getSentenceOffsets` continues to raise `NotImplementedError`.
 
 #### Deprecations
 
