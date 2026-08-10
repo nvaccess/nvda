@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2025 NV Access Limited
+# Copyright (C) 2022-2026 NV Access Limited, Selvas Healthcare
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -31,6 +31,8 @@ class SystemErrorCodes(enum.IntEnum):
 	SHARING_VIOLATION = 0x20
 	"""The process cannot access the file because it is being used by another process."""
 	INVALID_PARAMETER = 0x57
+	SEM_TIMEOUT = 0x79
+	"""The semaphore timeout period has expired."""
 	INSUFFICIENT_BUFFER = 0x7A
 	"""The data area passed to a system call is too small."""
 	MOD_NOT_FOUND = 0x7E

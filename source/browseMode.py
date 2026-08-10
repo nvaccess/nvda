@@ -2860,8 +2860,21 @@ class BrowseModeDocumentTreeInterceptor(
 		raise NotImplementedError
 
 	def clearAppSelection(self):
-		"""Clear the native selection in the application."""
+		"""Clear the native selection in the application, leaving it without a caret."""
 		raise NotImplementedError
+
+	def collapseAppSelection(self):
+		"""Collapse the native selection in the application to a caret at the browse mode cursor."""
+		raise NotImplementedError
+
+	def _set_disableAutoPassThrough(self, state: bool):
+		syncAppSelection = state and self.passThrough and self._nativeAppSelectionMode
+		super()._set_disableAutoPassThrough(state)
+		if syncAppSelection:
+			try:
+				self.updateAppSelection()
+			except (NotImplementedError, COMError):
+				log.debugWarning("Synchronising the native selection with focus mode failed", exc_info=True)
 
 	@script(
 		gesture="kb:NVDA+shift+f10",
@@ -2894,9 +2907,9 @@ class BrowseModeDocumentTreeInterceptor(
 			ui.message(_("Native app selection mode enabled"))
 		else:
 			try:
-				self.clearAppSelection()
-			except NotImplementedError:
-				log.debugWarning("clearAppSelection failed", exc_info=True)
+				self.collapseAppSelection()
+			except (NotImplementedError, COMError):
+				log.debugWarning("collapseAppSelection failed", exc_info=True)
 			self._nativeAppSelectionMode = False
 			# Translators: reported when native selection mode is toggled off.
 			ui.message(_("Native app selection mode disabled"))
