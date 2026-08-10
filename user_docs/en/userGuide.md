@@ -2727,6 +2727,18 @@ Disabling this option allows speech to be heard while simultaneously reading Bra
 |Options |Default (Enabled), Enabled, Disabled|
 |Default |Enabled|
 
+##### Use Chinese word segmentation {#ChineseBrailleWordSegmentation}
+
+This setting controls whether NVDA uses Chinese word segmentation when translating text into braille.
+When enabled and a Chinese braille output table is in use, NVDA inserts spaces between Chinese words before translation.
+When disabled, NVDA passes text directly to the output table without inserting spaces between words.
+This setting has no effect with other output tables.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Enabled, Disabled|
+|Default |Enabled|
+
 #### Select Braille Display {#SelectBrailleDisplay}
 
 <!-- KC:setting -->
@@ -3676,8 +3688,7 @@ You may toggle through the available paragraph styles from anywhere by assigning
 ##### Word Segmentation Standard {#WordSegmentationStandard}
 
 This setting controls how NVDA determines word boundaries when navigating by word.
-Chinese word segmentation is also used for braille.
-When a Chinese braille output table is in use, NVDA can insert spaces between Chinese words in braille.
+Chinese braille output uses a separate [Chinese word segmentation setting](#ChineseBrailleWordSegmentation).
 
 | . {.hideHeaderRow} |.|
 |---|---|

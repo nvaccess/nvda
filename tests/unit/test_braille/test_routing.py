@@ -44,14 +44,17 @@ class TestBrailleOffsetConverters(unittest.TestCase):
 	def setUp(self) -> None:
 		self._originalTranslationTable = config.conf["braille"]["translationTable"]
 		self._originalUnicodeNormalization = config.conf["braille"]["unicodeNormalization"]
+		self._originalUseChineseWordSegmentation = config.conf["braille"]["useChineseWordSegmentation"]
 
 	def tearDown(self) -> None:
 		config.conf["braille"]["translationTable"] = self._originalTranslationTable
 		config.conf["braille"]["unicodeNormalization"] = self._originalUnicodeNormalization
+		config.conf["braille"]["useChineseWordSegmentation"] = self._originalUseChineseWordSegmentation
 
 	def test_chineseWordSegmentationAndUnicodeNormalizationOffsetsAreComposed(self) -> None:
 		config.conf["braille"]["translationTable"] = "zh-chn.ctb"
 		config.conf["braille"]["unicodeNormalization"] = "enabled"
+		config.conf["braille"]["useChineseWordSegmentation"] = True
 		wordSegmenter = Mock()
 		wordSegmenter.segmentedText.side_effect = _segmentedTextWithSeparator
 		translate = Mock(return_value=([1, 2, 3], [0, 1, 2], [0, 1, 2], 2))
@@ -71,6 +74,22 @@ class TestBrailleOffsetConverters(unittest.TestCase):
 		self.assertEqual(translate.call_args.kwargs["typeform"], [11, 22, 22])
 		self.assertEqual(region.brailleToRawPos, [0, 1, 1])
 		self.assertEqual(region.rawToBraillePos, [0, 2])
+
+	def test_chineseWordSegmentationCanBeDisabled(self) -> None:
+		config.conf["braille"]["translationTable"] = "zh-chn.ctb"
+		config.conf["braille"]["useChineseWordSegmentation"] = False
+		translate = Mock(return_value=([1, 2], [0, 1], [0, 1], None))
+		with (
+			patch("braille.regions.base.WordSegWithSeparatorOffsetConverter") as wordSegConverter,
+			patch("braille.regions.base.louisHelper.translate", translate),
+		):
+			region = braille.regions.base.Region()
+			region.rawText = "中文"
+
+			region.update()
+
+		wordSegConverter.assert_not_called()
+		self.assertEqual(translate.call_args.args[1], "中文")
 
 
 class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):

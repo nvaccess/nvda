@@ -5627,11 +5627,29 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.autoScrollRateSlider.SetPageSize(10)
 		self.bindHelpEvent("BrailleAutoScrollRate", self.autoScrollRateSlider)
 
+		self.useChineseWordSegmentationCheckBox = sHelper.addItem(
+			wx.CheckBox(
+				self,
+				# Translators: The label for a checkbox in the Braille settings panel.
+				label=_("Use &Chinese word segmentation"),
+			),
+		)
+		self.bindHelpEvent(
+			"ChineseBrailleWordSegmentation",
+			self.useChineseWordSegmentationCheckBox,
+		)
+		self.useChineseWordSegmentationCheckBox.SetValue(
+			config.conf["braille"]["useChineseWordSegmentation"],
+		)
+
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start" % (time.time() - startTime))
 
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
+		config.conf["braille"]["useChineseWordSegmentation"] = (
+			self.useChineseWordSegmentationCheckBox.IsChecked()
+		)
 		if self.outTableList.GetSelection() > 0:
 			braille.handler.table = self.outTables[self.outTableList.GetSelection() - 1]
 		else:
