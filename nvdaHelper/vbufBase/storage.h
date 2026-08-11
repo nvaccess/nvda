@@ -261,6 +261,9 @@ class VBufStorage_fieldNode_t {
 
 /**
  * Adds an attribute to this field.
+ * Characters in the name that are invalid in XML attribute names are replaced,
+ * as the buffer serializes attributes as XML markup.
+ * A name modified this way will never replace an existing attribute whose name was valid.
  * @param name the name of the attribute
  * @param value the value of the attribute.
  * @return true if the attribute was added, false if there was an error.
