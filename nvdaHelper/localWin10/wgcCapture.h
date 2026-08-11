@@ -23,8 +23,8 @@ export bool __stdcall wgcCapture_isSupported();
  * intersect at least one monitor. Each intersecting monitor is captured and
  * composited, and remaining pixels outside all monitors are black. The captured
  * region is scaled to destinationWidth by destinationHeight and written as
- * top-down BGRA8 pixels. image must point to a buffer containing at least
- * destinationWidth * destinationHeight RGBQUAD elements.
+ * top-down RGBQUAD pixels with rgbReserved set to 0. image must point to a
+ * buffer containing at least destinationWidth * destinationHeight RGBQUAD elements.
  */
 export bool __stdcall wgcCapture_captureScreenRegion(
 	int screenX,
