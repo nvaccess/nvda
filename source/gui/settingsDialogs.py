@@ -2579,10 +2579,10 @@ class BrowseModePanel(SettingsPanel):
 			maxLengthLabelText,
 			nvdaControls.SelectOnFocusSpinCtrl,
 			# min and max are not enforced in the config for virtualBuffers.maxLineLength
-			# The max was raised from 250 to 1000 (#20478) since 250 characters is regularly
+			# The min was set to 0 and the max was raised from 250 to 1000 (#20478) since 250 characters is regularly
 			# exceeded by ordinary paragraphs when screen layout is enabled, forcing lines
 			# to be split more often than necessary.
-			min=10,
+			min=0,
 			max=1000,
 			initial=config.conf["virtualBuffers"]["maxLineLength"],
 		)
