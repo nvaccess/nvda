@@ -204,11 +204,11 @@ class SayAllReadingUnitFlag(DisplayStringEnum):
 	def _displayStringLabels(self):
 		return {
 			# Translators: Label for an option in the Speech settings (say all reading unit).
-			self.SENTENCE: pgettext("say all reading unit", "Sentence where possible"),
+			self.SENTENCE: pgettext("sayAll", "Sentence where possible"),
 			# Translators: Label for an option in the Speech settings (say all reading unit).
-			self.PARAGRAPH: pgettext("say all reading unit", "Paragraph"),
+			self.PARAGRAPH: pgettext("sayAll", "Paragraph"),
 			# Translators: Label for an option in the Speech settings (say all reading unit).
-			self.LINE: pgettext("say all reading unit", "Line"),
+			self.LINE: pgettext("sayAll", "Line"),
 		}
 
 
