@@ -59,6 +59,15 @@ inline std::wstring sanitizeXMLAttribName(std::wstring attribName) {
 		[](wchar_t c) { return !isValidXMLNameChar(c); },
 		L'_'
 	);
+	// XML names must not be empty or start with a digit, hyphen or period
+	// (NameStartChar is stricter than NameChar).
+	if (attribName.empty() || !(
+		(attribName[0] >= L'a' && attribName[0] <= L'z')
+		|| (attribName[0] >= L'A' && attribName[0] <= L'Z')
+		|| attribName[0] == L'_' || attribName[0] == L':'
+	)) {
+		attribName.insert(0, 1, L'_');
+	}
 	return attribName;
 }
 

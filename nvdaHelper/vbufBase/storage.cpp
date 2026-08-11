@@ -247,15 +247,9 @@ void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring
 	}
 	s<<L"_childcount=\""<<childCount<<L"\" _childcontrolcount=\""<<childControlCount<<L"\" _indexInParent=\""<<indexInParent<<L"\" _parentChildCount=\""<<parentChildCount<<L"\" ";
 	text+=s.str();
-	// #7173: distinct attribute names may become identical after sanitization,
-	// and duplicate attributes are invalid XML, so drop all but the first.
-	set<wstring> seenAttribNames;
 	for(VBufStorage_attributeMap_t::iterator i=this->attributes.begin();i!=this->attributes.end();++i) {
-		wstring attribName=sanitizeXMLAttribName(i->first);
-		if(!seenAttribNames.insert(attribName).second) {
-			continue;
-		}
-		text+=attribName;
+		// Names were sanitized for XML validity when added; see addAttribute.
+		text+=i->first;
 		text+=L"=\"";
 		for(std::wstring::iterator j=i->second.begin();j!=i->second.end();++j) {
 			appendCharToXML(*j,text,true);
@@ -327,6 +321,15 @@ VBufStorage_fieldNode_t::~VBufStorage_fieldNode_t() {
 
 bool VBufStorage_fieldNode_t::addAttribute(const std::wstring& name, const std::wstring& value) {
 	LOG_DEBUG(L"Adding attribute "<<name<<L" with value "<<value);
+	// #6249, #7173: sanitize the name here, at the buffer's single insertion point,
+	// so the map only ever holds names that are valid in the XML markup
+	// generateAttributesForMarkupOpeningTag serializes to.
+	std::wstring sanitizedName=sanitizeXMLAttribName(name);
+	if(sanitizedName!=name) {
+		// A sanitized name must never replace an attribute whose name was
+		// genuinely valid, so don't overwrite an existing entry.
+		return this->attributes.emplace(std::move(sanitizedName),value).second;
+	}
 	this->attributes[name]=value;
 	return true;
 }
