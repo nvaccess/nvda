@@ -127,6 +127,10 @@ Locale names are now taken from `winKernel.LCIDToLocaleName`, apart from a small
   * As a result, some locale identifiers now resolve to a different name, such as `zh_CN` rather than `zh_CHS`, `km_KH` rather than `kh_KH` and `en_JM` rather than `en_JA`.
   * Locale names now carry a script subtag where Windows reports one, such as `sr_LATN_CS` rather than `sr_SP` for LCID 2074.
   * The SAPI 4 and SAPI 5 synthesizers report voice languages through this function as well, so the language of a voice can now be reported for locale identifiers that `locale.windows_locale` did not cover.
+* `keyboardHandler.KeyboardInputGesture.fromName` now treats the non modifier key as the main key, regardless of its position in the name. (#8201, @LeonarddeR)
+  * For example, "alt+b+control" now creates the same gesture as "alt+control+b".
+  * When the name contains only modifiers, the last key remains the main key.
+  * A `ValueError` is now raised for names with multiple non modifier keys, unknown key names, or an empty name.
 
 #### Deprecations
 
