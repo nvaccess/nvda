@@ -42,6 +42,8 @@ using CaptureDeadline = CaptureClock::time_point;
 
 constexpr auto captureTimeout = std::chrono::seconds(2);
 constexpr std::size_t bytesPerPixel = 4;
+constexpr UINT defaultFeatureLevelCount = 0;
+constexpr std::int32_t framePoolBufferCount = 1;
 
 static_assert(sizeof(RGBQUAD) == bytesPerPixel);
 
@@ -75,15 +77,15 @@ HRESULT createD3DDevice(
 	com_ptr<ID3D11DeviceContext>& context
 ) {
 	return D3D11CreateDevice(
-		nullptr,
+		nullptr,  // adapter
 		driverType,
-		nullptr,
+		nullptr,  // software rasterizer module
 		D3D11_CREATE_DEVICE_BGRA_SUPPORT,
-		nullptr,
-		0,
+		nullptr,  // feature levels
+		defaultFeatureLevelCount,
 		D3D11_SDK_VERSION,
 		device.put(),
-		nullptr,
+		nullptr,  // selected feature level
 		context.put()
 	);
 }
@@ -137,10 +139,10 @@ BOOL CALLBACK collectMonitor(
 			throw_last_error();
 		}
 		collection.monitors.push_back({ monitor, monitorInfo.rcMonitor });
-		return TRUE;
+		return true;
 	} catch (...) {
 		collection.error = std::current_exception();
-		return FALSE;
+		return false;
 	}
 }
 
@@ -175,7 +177,7 @@ Direct3D11CaptureFrame captureFrame(
 	auto framePool = Direct3D11CaptureFramePool::CreateFreeThreaded(
 		resources.winrtDevice,
 		DirectXPixelFormat::B8G8R8A8UIntNormalized,
-		1,
+		framePoolBufferCount,
 		itemSize
 	);
 	auto session = framePool.CreateCaptureSession(item);
