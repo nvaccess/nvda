@@ -13,6 +13,12 @@
 * Added sequential two-flick touch gestures that combine two flicks performed in quick succession into a single gesture, increasing the number of touch gestures that can be bound to scripts. (#19938, @kefaslungu)
   * Twelve combinations are recognised: opposite-direction pairs (e.g. flick right then flick left) and perpendicular L-shaped pairs (e.g. flick right then flick up).
   * The two flicks can be performed either by lifting the finger between strokes or as a single continuous swipe with a sharp change in direction.
+* Added edge gesture support for touch screens, allowing gestures that begin within 15 mm of any screen edge to be bound independently from the same gesture performed in the centre of the screen. (#19938, @kefaslungu)
+  * Edge gestures are disabled by default and can be enabled in the Touch Interaction settings panel.
+  * All four edges are supported.
+  Note that the Windows taskbar may override gestures on an edge.
+  Gestures from the taskbar edge open the Start menu or Action Center, NVDA will not receive them.
+* Added an unassigned Quick Navigation Command for jumping to next/previous clickable element in browse mode. (#14429, @cary-rowen)
 * On supported braille displays, pressing multiple routing keys simultaneously can now be bound to a new "multi routing" gesture. (#20001, @LeonarddeR)
   * The "select range" command, which selects the text from the first up to the last pressed routing key, is bound to this gesture by default on supporting drivers.
   * Drivers with built-in support for multi routing: ALVA, Albatross (only when combined with `home1` or `home2`), Baum (and compatible), Freedom Scientific Focus/PAC Mate, HumanWare Brailliant BI/B series, Handy Tech, NLS eReader Zoomax, Seika Notetaker, and Standard HID Braille displays.
@@ -69,8 +75,11 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * Object descriptions are now reported for .NET Framework Windows Forms ToolStrip menu items exposed through UI Automation. (#20486, @Cary-rowen)
 * NVDA now reports the selected item when using the arrow keys in collapsed .NET Framework Windows Forms combo boxes. (#17454, @Cary-rowen)
 * The Add-on Store no longer becomes unresponsive when navigating the list of add-ons quickly, such as by holding down an arrow key. (#17351, @christopherpross)
+* HIMS Braille Sense and Braille EDGE displays connected via USB now work on systems where the older HIMS USB driver cannot be installed, such as Windows 11. (#20555, @KihunJang1981)
+  * On these systems, install the [HIMS WinUSB driver](https://hims-product.s3.ap-northeast-2.amazonaws.com/Util/HIMS_Braille_Driver_V3_1.exe) instead.
 * Remote Access: NVDA now reports when connecting as the controlled computer fails, while continuing to retry the connection in the background. (#19103, @danielw97)
 * NVDA no longer briefly disconnects and re-detects the braille display on desktop switches that do not enter the secure desktop, such as when switching between a Remote Desktop session and the local machine. (#18810, #20550, @LeonarddeR)
+* In Mozilla Firefox and Chromium based browsers with native selection mode enabled, the caret no longer gets stuck when switching to focus mode, and typing in edit fields works again. (#19075, #18028, @LeonarddeR)
 * In Windows Terminal, mouse tracking now reports the line of text under the mouse pointer. (#20448, @DataTriny)
 
 ### Changes for Developers
@@ -113,6 +122,7 @@ Built on top of [Bleak](https://bleak.readthedocs.io/) and the `_asyncioEventLoo
   * Python to 3.13.15. (#20634, @dpy013)
 * Handlers registered on an `extensionPoints` registrar (`Action`, `Filter`, `Decider`, `AccumulatingDecider`, `Chain`) may now register or unregister handlers while being called, without raising `RuntimeError: OrderedDict mutated during iteration`. (#20545, @LeonarddeR)
   * `HandlerRegistrar.handlers` now iterates over a snapshot of the registered handlers taken before the first handler is yielded.
+* Fixed a handle leak in `hwIo.Bulk.__init__`: if the read pipe opened successfully but the write pipe failed to open, the read handle was never closed, leaving the device open for the remaining lifetime of the process. (#20555, @KihunJang1981)
 * `languageHandler.windowsLCIDToLocaleName` no longer consults `locale.windows_locale`, which is unmaintained, incomplete and changes between Python patch releases. (#20589, @LeonarddeR)
 Locale names are now taken from `winKernel.LCIDToLocaleName`, apart from a small set of locale identifiers for which NVDA uses a different language code than Windows reports.
   * As a result, some locale identifiers now resolve to a different name, such as `zh_CN` rather than `zh_CHS`, `km_KH` rather than `kh_KH` and `en_JM` rather than `en_JA`.
