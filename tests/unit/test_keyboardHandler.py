@@ -13,7 +13,7 @@ from keyboardHandler import KeyboardInputGesture, getNVDAModifierKeys
 
 
 class TestFromName(unittest.TestCase):
-	"""Tests for L{KeyboardInputGesture.fromName}."""
+	"""Tests for KeyboardInputGesture.fromName."""
 
 	def test_mainKeyLast(self):
 		gesture = KeyboardInputGesture.fromName("control+alt+upArrow")
