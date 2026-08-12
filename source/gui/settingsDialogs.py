@@ -4540,7 +4540,7 @@ class AdvancedPanelControls(
 			wx.CheckBox(terminalsBox, label=label),
 		)
 		self.bindHelpEvent(
-			"AdvancedSettingsBeepForSkippedLines",
+			"BeepForSkippedLines",
 			self.beepForSkippedLinesCheckBox,
 		)
 		self.beepForSkippedLinesCheckBox.SetValue(
