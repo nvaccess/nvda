@@ -385,6 +385,10 @@ class LiveText(NVDAObject):
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
 
+	MAX_LINES: int = 100
+	"""The maximum number of lines that will be reported when a large number of lines are queued.
+	Subclasses may override this to allow custom line reporting batches.
+	"""
 	announceNewLineText = False
 
 	def initOverlayClass(self):
@@ -466,54 +470,43 @@ class LiveText(NVDAObject):
 		Subclasses may override this method to provide custom filtering of new text,
 		where logic depends on multiple lines.
 		"""
-		maxNewLines: int = config.conf["terminals"]["maxNewLines"]
-		if maxNewLines:
-			droppedCount = len(lines) - maxNewLines
+		if self.MAX_LINES > 0:
+			droppedCount = len(lines) - self.MAX_LINES
 			if droppedCount > 0:
 				if (
 					config.conf["terminals"]["beepForSkippedLines"]
 					and speech.getState().speechMode == speech.SpeechMode.talk
 				):
-					skippedLinesBeepHz = 550
+					SKIPPED_LINES_BEEP_HZ = 550
 					tones.beep(
-						skippedLinesBeepHz,
+						SKIPPED_LINES_BEEP_HZ,
 						self._getSkippedLinesBeepLength(droppedCount),
 					)
-				lines = lines[-maxNewLines:]
+				lines = lines[-self.MAX_LINES :]
 		if self._reportNewLinesGenID is not None:
 			queueHandler.cancelGeneratorObject(self._reportNewLinesGenID)
 			self._reportNewLinesGenID = None
-		newLinesBatchSize: int = config.conf["terminals"]["newLinesBatchSize"]
-		if newLinesBatchSize <= 0:  # Report synchronously
-			for line in lines:
-				self._reportNewText(line)
-		else:
-			self._reportNewLinesGenID = queueHandler.registerGeneratorObject(
-				self._reportNewLinesGenerator(
-					lines,
-					newLinesBatchSize,
-				),
-			)
+		self._reportNewLinesGenID = queueHandler.registerGeneratorObject(
+			self._reportNewLinesGenerator(lines),
+		)
 
-	@staticmethod
-	def _getSkippedLinesBeepLength(droppedCount: int) -> int:
-		skippedLinesBeepMinLengthMs = 10
-		skippedLinesBeepMaxLengthMs = 100
+	def _getSkippedLinesBeepLength(self, droppedCount: int) -> int:
+		SKIPPED_LINES_BEEP_MIN_DURATION_MS = 10
+		SKIPPED_LINES_BEEP_MAX_DURATION_MS = 100
 		droppedCount = max(droppedCount, 1)
-		maxNewLines: int = config.conf["terminals"]["maxNewLines"]
-		ratio = 1.0 if maxNewLines <= 1 else min(1.0, math.log(droppedCount, maxNewLines))
-		lengthRange = skippedLinesBeepMaxLengthMs - skippedLinesBeepMinLengthMs
-		return round(skippedLinesBeepMinLengthMs + lengthRange * ratio)
+		ratio = 1.0 if self.MAX_LINES <= 1 else min(1.0, math.log(droppedCount, self.MAX_LINES))
+		lengthRange = SKIPPED_LINES_BEEP_MAX_DURATION_MS - SKIPPED_LINES_BEEP_MIN_DURATION_MS
+		return round(SKIPPED_LINES_BEEP_MIN_DURATION_MS + lengthRange * ratio)
 
 	def _reportNewLinesGenerator(
 		self,
 		lines: list[str],
-		batchSize: int,
 	) -> Generator[None, None, None]:
+		YIELD_EVERY = 5  # Sweet spot between yielding on every line and a batch
 		try:
 			for i, line in enumerate(lines, 1):
 				self._reportNewText(line)
-				if i % batchSize == 0:
+				if i % YIELD_EVERY == 0:
 					yield
 		finally:
 			self._reportNewLinesGenID = None
