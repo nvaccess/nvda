@@ -227,6 +227,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# Element types available for cycling in browse touch mode.
 	browseModeTouchNavigationElements = string_list(default=list("heading", "link", "formField", "list", "table"))
 	findHistory = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	nativeSelectionMode = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 
 [touch]
 	enabled = boolean(default=true)

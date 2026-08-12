@@ -2691,6 +2691,17 @@ class BrowseModePanel(SettingsPanel):
 		)
 		self.bindHelpEvent("SearchHistory", self.searchHistoryCombo)
 
+		self.nativeSelectionModeCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is the label for a combo box in the browse mode settings panel.
+				"Nati&ve selection mode",
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["virtualBuffers", "nativeSelectionMode"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrowseModeSettingsNativeSelectionMode", self.nativeSelectionModeCombo)
+
 		# browseMode imports gui, which imports from settingsDialogs, so a top-level import
 		# would create a circular dependency. Keep this import lazy.
 		import browseMode
@@ -2728,6 +2739,7 @@ class BrowseModePanel(SettingsPanel):
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
 		self.searchHistoryCombo.saveCurrentValueToConf()
+		self.nativeSelectionModeCombo.saveCurrentValueToConf()
 		config.conf["virtualBuffers"]["browseModeTouchNavigationElements"] = [
 			itemType
 			for i, (itemType, _label) in enumerate(self._browseModeElements)
