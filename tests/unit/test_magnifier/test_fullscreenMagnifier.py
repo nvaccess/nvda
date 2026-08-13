@@ -8,6 +8,7 @@ from _magnifier.config import ZoomLevel
 from _magnifier.magnifier import Magnifier
 from _magnifier.utils.types import Filter, FullScreenMode, MagnifiedView, Direction, Coordinates
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
+from _magnifier.utils.errorHandling import MagnifierStartError
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
 from winAPI._displayTracking import getPrimaryDisplayOrientation
 
@@ -293,28 +294,82 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 class TestFullScreenMagnifierApi(_TestMagnifier):
 	"""Tests for FullScreenMagnifier interactions with the Windows Magnification API."""
 
-	def testCannotStartWhenWindowsMagnifierRunning(self):
-		"""MagSetFullscreenTransform fails because Windows Magnifier is running: magnifier must not start."""
-		self.mock_mag_fs.MagSetFullscreenTransform.side_effect = OSError("API in use by another magnifier")
+	def testInputTransformAccessDeniedDoesNotBlockStartup(self):
+		"""Magnifier starts when MagSetInputTransform is denied due to missing UIAccess."""
+		self.mock_mag_fs.MagSetInputTransform.side_effect = PermissionError(5, "Access is denied")
 
-		with patch("_magnifier.fullscreenMagnifier.ui.message") as mock_message:
+		magnifier = FullScreenMagnifier()
+		magnifier._startMagnifier()
+
+		self.assertTrue(magnifier._isActive)
+		self.assertFalse(magnifier._inputTransformSupported)
+
+		magnifier._stopMagnifier()
+
+	def testInputTransformSkippedWhenUiAccessUnavailable(self):
+		"""Magnifier starts and skips MagSetInputTransform when UIAccess is unavailable."""
+		with patch("_magnifier.fullscreenMagnifier.systemUtils.hasUiAccess", return_value=False):
 			magnifier = FullScreenMagnifier()
 			magnifier._startMagnifier()
 
+		self.assertTrue(magnifier._isActive)
+		self.assertFalse(magnifier._inputTransformSupported)
+		self.mock_mag_fs.MagSetInputTransform.assert_not_called()
+
+		magnifier._stopMagnifier()
+
+	def testInputTransformEnabledWhenMagnifierStarts(self):
+		"""Starting magnifier enables MagSetInputTransform."""
+		with patch("_magnifier.fullscreenMagnifier.systemUtils.hasUiAccess", return_value=True):
+			magnifier = FullScreenMagnifier()
+			magnifier._startMagnifier()
+
+		enableCalls = [
+			call for call in self.mock_mag_fs.MagSetInputTransform.call_args_list if call.args[0] is True
+		]
+		self.assertGreaterEqual(len(enableCalls), 1)
+
+		magnifier._stopMagnifier()
+
+	def testInputTransformDisabledWhenMagnifierStops(self):
+		"""Stopping magnifier disables MagSetInputTransform."""
+		with patch("_magnifier.fullscreenMagnifier.systemUtils.hasUiAccess", return_value=True):
+			magnifier = FullScreenMagnifier()
+			magnifier._startMagnifier()
+		self.mock_mag_fs.MagSetInputTransform.reset_mock()
+
+		magnifier._stopMagnifier()
+
+		disableCalls = [
+			call for call in self.mock_mag_fs.MagSetInputTransform.call_args_list if call.args[0] is False
+		]
+		self.assertGreaterEqual(len(disableCalls), 1)
+
+	def testCannotStartWhenWindowsMagnifierRunning(self):
+		"""
+		MagInitialize succeeds but MagSetFullscreenTransform fails: Windows Magnifier is running.
+		NVDA Magnifier must not start, must raise MagnifierStartError, and start no timer.
+		"""
+		self.mock_mag_fs.MagSetFullscreenTransform.side_effect = OSError("API in use by another magnifier")
+
+		magnifier = FullScreenMagnifier()
+		with self.assertRaises(MagnifierStartError):
+			magnifier._startMagnifier()
+
 		self.assertFalse(magnifier._isActive)
-		mock_message.assert_called_once()
 		self.assertIsNone(magnifier._timer)
 
 	def testCannotStartWhenMagInitializeFails(self):
-		"""MagInitialize fails: magnifier must not start and the user must be notified."""
+		"""
+		MagInitialize itself fails: NVDA Magnifier must not start and must raise MagnifierStartError.
+		"""
 		self.mock_mag_fs.MagInitialize.side_effect = OSError("Cannot initialize magnification API")
 
-		with patch("_magnifier.fullscreenMagnifier.ui.message") as mock_message:
-			magnifier = FullScreenMagnifier()
+		magnifier = FullScreenMagnifier()
+		with self.assertRaises(MagnifierStartError):
 			magnifier._startMagnifier()
 
 		self.assertFalse(magnifier._isActive)
-		mock_message.assert_called_once()
 		self.assertIsNone(magnifier._timer)
 
 	def testRecoveryCapStopsMagnifier(self):

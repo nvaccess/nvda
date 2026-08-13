@@ -18,7 +18,7 @@ from typing import Any, Literal, NamedTuple, Optional, Self
 import core
 import extensionPoints
 import wx
-from wx.html2 import WebView
+import wx.html2
 from .contextHelp import ContextHelpMixin
 from logHandler import log
 
@@ -150,10 +150,18 @@ class DisplayableError(Exception):
 	"""
 
 	def __init__(self, displayMessage: str, titleMessage: Optional[str] = None):
-		"""
-		@param displayMessage: A translated message, to be displayed to the user.
-		@param titleMessage: A translated message, to be used as a title for the display message.
-		If left None, "Error" is presented as the title by default.
+		"""An error with a message that should be presented to the user via a message box.
+
+		Code outside the GUI layer may raise DisplayableError to report a failure with a
+		translated, user friendly message, without deciding how the error is presented.
+		A component coordinating the work catches the exception and notifies an instance of
+		OnDisplayableErrorT, and a handler registered to that action decides how to display
+		the error, typically by calling ``displayError``.
+		See the "Communicating with the user" chapter of the Developer Guide for examples.
+
+		:param displayMessage: A translated message, to be displayed to the user.
+		:param titleMessage: A translated message, to be used as a title for the display message.
+			If left None, "Error" is presented as the title by default.
 		"""
 		self.displayMessage = displayMessage
 		if titleMessage is None:
@@ -398,6 +406,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	"""Class default for whether to run the :meth:`._checkMainThread` test."""
 	_FAIL_ON_NO_BUTTONS = True
 	"""Class default for whether to run the :meth:`._checkHasButtons` test."""
+	_DIALOG_STYLE: int = wx.DEFAULT_DIALOG_STYLE
+	"""wx style used when creating the dialog window."""
 
 	# region Constructors
 	def __new__(cls, *args, **kwargs) -> Self:
@@ -429,7 +439,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""
 		self._checkMainThread()
 		self.helpId = helpId  # Must be set before initialising ContextHelpMixin.
-		super().__init__(parent, title=title)
+		super().__init__(parent, title=title, style=self._DIALOG_STYLE)
 		self._isLayoutFullyRealized = False
 		self._commands: dict[int, _Command] = {}
 		"""Registry of commands bound to this MessageDialog."""
@@ -450,12 +460,13 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		mainSizer = self._mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = self._contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
 		messageControl = self._messageControl = self._createMessageControl()
-		contentsSizer.addItem(messageControl)
+		contentsSizer.addItem(messageControl, flag=wx.EXPAND, proportion=1)
 		buttonHelper = self._buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		mainSizer.Add(
 			contentsSizer.sizer,
+			proportion=1,
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.ALL,
+			flag=wx.ALL | wx.EXPAND,
 		)
 		self.SetSizer(mainSizer)
 
@@ -1197,6 +1208,11 @@ class HtmlMessageDialog(MessageDialog):
 	"""
 
 	_ACTION_URL_PREFIX = "nvda-action://"
+	_DEFAULT_WEBVIEW_SIZE: tuple[int, int] = (350, 300)
+	"""Default WebView viewport, matching the legacy MSHTML browseable message template."""
+	_DIALOG_STYLE: int = (
+		wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX | wx.MINIMIZE_BOX | wx.DIALOG_NO_PARENT
+	)
 
 	_FAIL_ON_NO_BUTTONS = False
 	"""HtmlMessageDialog can be shown without buttons; the HTML content handles its own close action."""
@@ -1229,6 +1245,7 @@ class HtmlMessageDialog(MessageDialog):
 				],
 			),
 		)
+		self.EnableCloseButton(self.hasFallback)
 
 	def registerAction(self, action: str, handler: Callable[[], None]) -> Self:
 		"""Register a handler for an ``nvda-action://<action>`` URL triggered from the HTML message.
@@ -1240,8 +1257,9 @@ class HtmlMessageDialog(MessageDialog):
 		self._actionHandlers[action] = handler
 		return self
 
-	def _createMessageControl(self) -> WebView:
-		control = WebView.New(self, backend=self._webViewBackend)
+	def _createMessageControl(self) -> wx.html2.WebView:
+		control = wx.html2.WebView.New(self, backend=self._webViewBackend)
+		control.SetInitialSize(self.scaleSize(self._DEFAULT_WEBVIEW_SIZE))
 		control.EnableContextMenu(False)
 		control.EnableHistory(False)
 		# Bind before MessageDialog.__init__ sets the initial content, so the first load and navigation are observed.
@@ -1251,6 +1269,10 @@ class HtmlMessageDialog(MessageDialog):
 	def _wrapMessageControl(self) -> None:
 		# A WebView lays out its own content, so there is nothing to wrap.
 		pass
+
+	@property
+	def hasFallback(self) -> bool:
+		return super().hasFallback or self.GetEscapeId() == EscapeCode.CANCEL_OR_AFFIRMATIVE
 
 	def setMessage(self, message: str) -> Self:
 		self._messageControl.SetPage(message, "")
@@ -1279,7 +1301,7 @@ class HtmlMessageDialog(MessageDialog):
 		button must still work.
 		"""
 		action = super()._getFallbackAction()
-		if action is None and not self._commands:
+		if action is None and self.GetEscapeId() == EscapeCode.CANCEL_OR_AFFIRMATIVE:
 			return _Command(callback=None, closesDialog=True, returnCode=ReturnCode.CLOSE)
 		return action
 

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2026 NV access Limited, Joseph Lee, Łukasz Golonka, Cyrille Bougot
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2007-2026 NV Access Limited, Joseph Lee, Łukasz Golonka, Cyrille Bougot, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Language and localization support.
 This module assists in NVDA going global through language services
@@ -20,6 +20,7 @@ import globalVars
 from logHandler import log
 import winBindings.kernel32
 import winKernel
+from utils._deprecate import RemovedSymbol, handleDeprecations
 
 # a few Windows locale constants
 LOCALE_USER_DEFAULT = 0x400
@@ -45,25 +46,27 @@ installedTranslation: weakref.ReferenceType | None = None
 """Saved copy of the installed translation for ease of wrapping.
 """
 
-_LCIDS_TO_TRANSLATED_LOCALES_OVERRIDES = {
-	# locale.windows_locale maps this to "kh_KH", which is incorrect.
-	# https://github.com/python/cpython/issues/123853
-	1107: "km_KH",  # Khmer - Cambodia
-}
-
-
-LCIDS_TO_TRANSLATED_LOCALES = {
-	# Windows maps this to "ku-Arab-IQ", however a translation is added for
-	# Central Kurdish in localesData.LANG_NAMES_TO_LOCALIZED_DESCS["ckb"]
-	# and NVDA may drop "Arab-IQ" from this locale to get the language.
-	1170: "ckb",
+_LCID_TO_LOCALE_NAME_OVERRIDES = {
+	# Windows reports these as "ku-Arab-IQ".
+	0x0092: "ckb",  # Central Kurdish
+	0x0492: "ckb",  # Central Kurdish - Iraq
+	0x7C92: "ckb",  # Central Kurdish
 }
 """
-Map Windows locale identifiers to language codes.
-These are Windows LCIDs that are used in NVDA but are not found in locale.windows_locale.
-These have been added when new locales have been introduced to the translation system and
-we cannot use the results from the Windows function LCIDToLocaleName.
+Map Windows locale identifiers to the language codes NVDA uses,
+for identifiers where NVDA's code differs from the one reported by Windows.
+Checked before `winKernel.LCIDToLocaleName`.
 """
+
+
+__getattr__ = handleDeprecations(
+	RemovedSymbol(
+		"LCIDS_TO_TRANSLATED_LOCALES",
+		_LCID_TO_LOCALE_NAME_OVERRIDES,
+		message="Use languageHandler.windowsLCIDToLocaleName or winKernel.LCIDToLocaleName instead.",
+	),
+)
+"""Module level `__getattr__` used to preserve backward compatibility."""
 
 
 class LOCALE(enum.IntEnum):
@@ -132,18 +135,7 @@ def windowsLCIDToLocaleName(lcid: int) -> str | None:
 	NVDA should avoid relying on LCIDs in future, as they have been deprecated by MS:
 	https://docs.microsoft.com/en-us/globalization/locale/locale-names
 	"""
-
-	localeName = _LCIDS_TO_TRANSLATED_LOCALES_OVERRIDES.get(lcid)
-	if not localeName:
-		# From the locale.windows_locale in-line code documentation: (#4203)
-		# This list has been updated to include every locale up to Windows Vista.
-		# NOTE: this mapping is incomplete and out of date.
-		# We should stop relying on it and use Windows API calls instead.
-		# https://github.com/python/cpython/issues/123853
-		localeName = locale.windows_locale.get(lcid)
-	# Check a manual mapping before using Windows to look up the correct LCID locale name.
-	if not localeName:
-		localeName = LCIDS_TO_TRANSLATED_LOCALES.get(lcid)
+	localeName = _LCID_TO_LOCALE_NAME_OVERRIDES.get(lcid)
 	if not localeName:
 		localeName = winKernel.LCIDToLocaleName(lcid)
 	if localeName:

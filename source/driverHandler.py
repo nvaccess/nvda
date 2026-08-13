@@ -12,7 +12,7 @@ from autoSettingsUtils.autoSettings import AutoSettings
 class Driver(AutoSettings):
 	"""
 	Abstract base class for drivers, such as speech synthesizer and braille display drivers.
-	Abstract subclasses such as L{braille.BrailleDisplayDriver} should set L{_configSection}.
+	Abstract subclasses such as L{braille.display.driver.BrailleDisplayDriver} should set L{_configSection}.
 
 	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
 

@@ -712,7 +712,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			import mathPres
 
 			try:
-				return mathPres.interactWithMathMl(obj.mathMl)
+				return mathPres.interactWithMathMl(obj.mathMl, sourceObj=obj)
 			except (NotImplementedError, LookupError):
 				pass
 			return
@@ -1233,6 +1233,21 @@ qn(
 	prevError=_("no previous slider"),
 	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 	touchLabel=_("sliders"),
+)
+qn(
+	"clickable",
+	key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next clickable element"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next clickable element"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous clickable element"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous clickable element"),
+	readUnit=textInfos.UNIT_LINE,
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
+	touchLabel=_("clickable elements"),
 )
 qn(
 	"article",
@@ -2845,8 +2860,21 @@ class BrowseModeDocumentTreeInterceptor(
 		raise NotImplementedError
 
 	def clearAppSelection(self):
-		"""Clear the native selection in the application."""
+		"""Clear the native selection in the application, leaving it without a caret."""
 		raise NotImplementedError
+
+	def collapseAppSelection(self):
+		"""Collapse the native selection in the application to a caret at the browse mode cursor."""
+		raise NotImplementedError
+
+	def _set_disableAutoPassThrough(self, state: bool):
+		syncAppSelection = state and self.passThrough and self._nativeAppSelectionMode
+		super()._set_disableAutoPassThrough(state)
+		if syncAppSelection:
+			try:
+				self.updateAppSelection()
+			except (NotImplementedError, COMError):
+				log.debugWarning("Synchronising the native selection with focus mode failed", exc_info=True)
 
 	@script(
 		gesture="kb:NVDA+shift+f10",
@@ -2879,9 +2907,9 @@ class BrowseModeDocumentTreeInterceptor(
 			ui.message(_("Native app selection mode enabled"))
 		else:
 			try:
-				self.clearAppSelection()
-			except NotImplementedError:
-				log.debugWarning("clearAppSelection failed", exc_info=True)
+				self.collapseAppSelection()
+			except (NotImplementedError, COMError):
+				log.debugWarning("collapseAppSelection failed", exc_info=True)
 			self._nativeAppSelectionMode = False
 			# Translators: reported when native selection mode is toggled off.
 			ui.message(_("Native app selection mode disabled"))

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2025 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter, Bill Dengler
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2008-2026 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter, Bill Dengler
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import ctypes
 import ctypes.wintypes
@@ -70,7 +70,12 @@ baseCachePropertyIDs = {
 	UIA.UIA_IsControlElementPropertyId,
 	UIA.UIA_NamePropertyId,
 	UIA.UIA_LocalizedControlTypePropertyId,
+	UIA.UIA_HasKeyboardFocusPropertyId,
 }
+"""UIA property IDs included in the handler's base cache request.
+The base cache request is attached to all event handler registrations and to the base tree walker,
+so event senders and elements fetched through them carry these properties in their element cache.
+"""
 
 #: The window class name for Microsoft Word documents.
 # Microsoft Word's UI Automation implementation
@@ -93,6 +98,12 @@ goodUIAWindowClassNames = (
 	"RAIL_WINDOW",
 	# #17407, #17771: WinUI 3 top-level pane window class name.
 	"Microsoft.UI.Content.DesktopChildSiteBridge",
+	# #20448: Windows Terminal hosts its content in a XAML island whose child window
+	# (Windows.UI.Composition.DesktopWindowContentBridge) is the one that actually
+	# exposes a UIA server-side provider.
+	# However, the top-level CASCADIA_HOSTING_WINDOW_CLASS window
+	# reports no server-side provider.
+	"CASCADIA_HOSTING_WINDOW_CLASS",
 )
 
 badUIAWindowClassNames = (
@@ -154,6 +165,16 @@ NVDAUnitsToUIAUnits: Dict[str, int] = {
 	textInfos.UNIT_STORY: UIA.TextUnit_Document,
 	textInfos.UNIT_FORMATFIELD: UIA.TextUnit_Format,
 }
+
+
+def getUIAUnitFromNVDAUnit(unit: str) -> int:
+	"""Translate an NVDA text unit constant to its UIA ``TextUnit`` equivalent.
+	:raises NotImplementedError: if UIA has no equivalent unit.
+	"""
+	if (UIAUnit := NVDAUnitsToUIAUnits.get(unit)) is None:
+		raise NotImplementedError(f"UIA does not support the {unit!r} text unit")
+	return UIAUnit
+
 
 UIAControlTypesToNVDARoles = {
 	UIA_ButtonControlTypeId: controlTypes.Role.BUTTON,  # noqa: F405

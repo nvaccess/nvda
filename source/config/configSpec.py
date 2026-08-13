@@ -14,7 +14,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 23
+latestSchemaVersion = 25
 
 #: The configuration specification string
 #: @type: String
@@ -50,6 +50,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	excludedSpeechModes = int_list(default=list())
 	trimLeadingSilence = boolean(default=true)
 	useWASAPIForSAPI4 = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	sayAllReadingUnit = featureFlag(optionsEnum="SayAllReadingUnitFlag", behaviorOfDefault="sentence")
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
@@ -122,7 +123,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enabled = boolean(default=false)
 	magnifiedView = string(default="fullscreen")
 	zoom = integer(min=100, max=5000, default=200)
-	isTrueCentered = boolean(default=False)
 	filter = string(default="normal")
 	followMouse = boolean(default=True)
 	followSystemFocus = boolean(default=True)
@@ -226,10 +226,12 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	textParagraphRegex = string(default="{configDefaults.DEFAULT_TEXT_PARAGRAPH_REGEX}")
 	# Element types available for cycling in browse touch mode.
 	browseModeTouchNavigationElements = string_list(default=list("heading", "link", "formField", "list", "table"))
+	findHistory = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 
 [touch]
 	enabled = boolean(default=true)
 	touchTyping = boolean(default=False)
+	edgeGestures = boolean(default=False)
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
@@ -312,9 +314,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [terminals]
 	speakPasswords = boolean(default=false)
 	keyboardSupportInLegacy = boolean(default=True)
-	maxNewLines = integer(min=0, default=100)
-	newLinesBatchSize = integer(min=0, default=5)
-	beepForSkippedLines = boolean(default=true)
 	diffAlgo = option("auto", "dmp", "difflib", default="auto")
 	wtStrategy = featureFlag(optionsEnum="WindowsTerminalStrategyFlag", behaviorOfDefault="diffing")
 
@@ -557,6 +556,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		# [default -- includes two forms of non-breaking spaces]
 		blockSeparators = string(default=", \u00a0\u202f")
 		# Auto, '.', ',', Custom
+		# Custom is not currently functional or surfaced in the UI, but is included here for future use.
 		decimalSeparator = string(default="Auto")
 		# Use native math speech instead of MathCAT in Word and Outlook
 		useWordNativeMath = boolean(default=false)

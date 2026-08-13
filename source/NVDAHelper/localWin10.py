@@ -1,11 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2025 NV Access Limited
+# Copyright (C) 2017-2026 NV Access Limited, Cary-rowen
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 """Functions exported by nvdaHelperLocalWin10.dll, and supporting definitions."""
 
-from ctypes import CFUNCTYPE, POINTER, c_uint, c_void_p, c_wchar_p, windll
+from ctypes import CFUNCTYPE, POINTER, c_bool, c_int, c_uint, c_void_p, c_wchar_p, windll
 from comtypes import BSTR
 
 import NVDAState
@@ -68,3 +68,31 @@ uwpOcr_recognize.argtypes = (
 	c_uint,  # height
 )
 uwpOcr_recognize.restype = None
+
+_wgcCapture_isSupported = dll.wgcCapture_isSupported
+"""
+Check whether Windows Graphics Capture is available.
+
+.. seealso::
+	``nvdaHelper/localWin10/wgcCapture.h``
+"""
+_wgcCapture_isSupported.argtypes = ()
+_wgcCapture_isSupported.restype = c_bool
+
+_wgcCapture_captureScreenRegion = dll.wgcCapture_captureScreenRegion
+"""
+Capture a virtual-screen region using Windows Graphics Capture.
+
+.. seealso::
+	``nvdaHelper/localWin10/wgcCapture.h``
+"""
+_wgcCapture_captureScreenRegion.argtypes = (
+	c_int,  # screenX
+	c_int,  # screenY
+	c_uint,  # width
+	c_uint,  # height
+	POINTER(RGBQUAD),  # image
+	c_uint,  # destinationWidth
+	c_uint,  # destinationHeight
+)
+_wgcCapture_captureScreenRegion.restype = c_bool

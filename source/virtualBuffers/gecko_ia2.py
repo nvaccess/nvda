@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2008-2024 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions,
+# Copyright (C) 2008-2026 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions,
 # Julien Cochuyt, Noelia Ruiz Martínez, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from dataclasses import dataclass
 from typing import (
@@ -50,7 +50,9 @@ def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 	def _setSelectionOffsets(self, start: int, end: int):
 		super()._setSelectionOffsets(start, end)
-		if self.obj._nativeAppSelectionMode:
+		# In focus mode the application owns the caret, so the selection is only pushed to the
+		# application while browse mode is active.
+		if self.obj._nativeAppSelectionMode and not self.obj.passThrough:
 			if start != end:
 				self.obj.updateAppSelection()
 			else:
@@ -486,6 +488,8 @@ class Gecko_ia2(VirtualBuffer):
 				{"IAccessible::role": [oleacc.ROLE_SYSTEM_SLIDER]},
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("slider")]},
 			]
+		elif nodeType == "clickable":
+			attrs = {"IAccessibleAction_click": [VBufStorage_findMatch_notEmpty]}
 		elif nodeType == "graphic":
 			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_GRAPHIC]}
 		elif nodeType == "blockQuote":
@@ -717,38 +721,59 @@ class Gecko_ia2(VirtualBuffer):
 			ia2Sel.endObj = ia2Sel.endObj.QueryInterface(IAccessibleText)
 			log.debug(f"ia2 end obj {ia2Sel.endObj}")
 
-	def updateAppSelection(self):
-		"""Update the native selection in the application to match the browse mode selection in NVDA."""
+	def _setAppSelection(self, selInfo: textInfos.TextInfo):
+		"""Set the native selection in the application to the given range.
+
+		A collapsed range is expressed as a degenerate selection, i.e. a selection whose end
+		matches its start, which places the caret in the application.
+		If the caret position cannot be located, the native selection is left unchanged.
+
+		:param selInfo: The range to select.
+		:raises NotImplementedError: If the application does not support setting selections,
+			or the start or end of a non collapsed range could not be found.
+		"""
 		try:
 			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(
 				IAccessibleTextSelectionContainer,
 			)
 		except COMError as e:
 			raise NotImplementedError from e
-		selInfo = self.makeTextInfo(textInfos.POSITION_SELECTION)
+		ia2Sel = _Ia2Selection()
+		log.debug("checking fields...")
 		if not selInfo.isCollapsed:
 			selFields = selInfo.getTextWithFields()
-			ia2Sel = _Ia2Selection()
-
-			log.debug("checking fields...")
 			self._getStartSelection(ia2Sel, selFields)
 			self._getEndSelection(ia2Sel, selFields)
+		else:
+			# Expand to a character to obtain the IAccessibleText information for the caret position.
+			caretInfo = selInfo.copy()
+			caretInfo.expand(textInfos.UNIT_CHARACTER)
+			try:
+				self._getStartSelection(ia2Sel, caretInfo.getTextWithFields())
+			except NotImplementedError:
+				log.debug("Could not locate the caret position, leaving the app selection unchanged")
+				return
+			ia2Sel.endObj = ia2Sel.startObj
+			ia2Sel.endOffset = ia2Sel.startOffset
+		log.debug("setting selection...")
+		r = IA2TextSelection(
+			ia2Sel.startObj,
+			ia2Sel.startOffset,
+			ia2Sel.endObj,
+			ia2Sel.endOffset,
+			False,
+		)
+		paccTextSelectionContainer.SetSelections(1, byref(r))
 
-			log.debug("setting selection...")
-			r = IA2TextSelection(
-				ia2Sel.startObj,
-				ia2Sel.startOffset,
-				ia2Sel.endObj,
-				ia2Sel.endOffset,
-				False,
-			)
-			paccTextSelectionContainer.SetSelections(1, byref(r))
-		else:  # No selection
-			r = IA2TextSelection(None, 0, None, 0, False)
-			paccTextSelectionContainer.SetSelections(0, byref(r))
+	def updateAppSelection(self):
+		self._setAppSelection(self.makeTextInfo(textInfos.POSITION_SELECTION))
+
+	def collapseAppSelection(self):
+		selInfo = self.makeTextInfo(textInfos.POSITION_SELECTION)
+		selInfo.collapse()
+		self._setAppSelection(selInfo)
 
 	def clearAppSelection(self):
-		"""Clear the native selection in the application."""
 		try:
 			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(
 				IAccessibleTextSelectionContainer,

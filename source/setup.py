@@ -320,6 +320,7 @@ freeze(
 			"brailleDisplayDrivers.albatross",
 			"brailleDisplayDrivers.eurobraille",
 			"brailleDisplayDrivers.dotPad",
+			"brailleInput",
 			"synthDrivers",
 			"visionEnhancementProviders",
 			# Required for markdown, markdown implicitly imports this so it isn't picked up

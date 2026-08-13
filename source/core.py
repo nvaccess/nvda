@@ -1,8 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
-# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot, Julien Cochuyt, Wang Chong
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot, Julien Cochuyt, Wang Chong,
+# Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """NVDA core"""
 
@@ -10,6 +11,7 @@ from dataclasses import dataclass
 from typing import (
 	TYPE_CHECKING,
 	Any,
+	Literal,
 	Optional,
 )
 import comtypes
@@ -311,7 +313,7 @@ def resetConfiguration(factoryDefaults=False):
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings."""
 	import config
 	import braille
-	import brailleInput
+	import braille.input
 	import brailleTables
 	import speech
 	import characterProcessing
@@ -335,8 +337,8 @@ def resetConfiguration(factoryDefaults=False):
 	mathPres.terminate()
 	log.debug("Terminating braille")
 	braille.terminate()
-	log.debug("Terminating brailleInput")
-	brailleInput.terminate()
+	log.debug("Terminating braille input")
+	braille.input.terminate()
 	log.debug("Terminating brailleTables")
 	brailleTables.terminate()
 	log.debug("terminating speech")
@@ -389,8 +391,8 @@ def resetConfiguration(factoryDefaults=False):
 	# braille
 	log.debug("Initializing brailleTables")
 	brailleTables.initialize()
-	log.debug("Initializing brailleInput")
-	brailleInput.initialize()
+	log.debug("Initializing braille input")
+	braille.input.initialize()
 	log.debug("Initializing braille")
 	braille.initialize()
 	log.debug("Initializing word segmentation")
@@ -627,6 +629,7 @@ def _setUpWxApp() -> "wx.App":
 	import config
 	import nvwave
 	import speech
+	import braille
 
 	log.info(f"Using wx version {wx.version()}")
 
@@ -661,10 +664,16 @@ def _setUpWxApp() -> "wx.App":
 
 	app.Bind(wx.EVT_QUERY_END_SESSION, onQueryEndSession)
 
+	def returnFalse() -> Literal[False]:
+		return False
+
 	def onEndSession(evt):
 		# NVDA will be terminated as soon as this function returns, so save configuration if appropriate.
 		config.saveOnExit()
 		speech.cancelSpeech()
+		braille.extensions.decide_enabled.register(returnFalse)
+		if (brailleHandler := braille.handler) is not None:
+			brailleHandler._clearAll()
 		if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 			try:
 				nvwave.playWaveFile(
@@ -820,10 +829,9 @@ def main():
 
 	brailleTables.initialize()
 	log.debug("Initializing braille input")
-	import brailleInput
+	import braille.input
 
-	brailleInput.initialize()
-	import braille
+	braille.input.initialize()
 
 	log.debug("Initializing braille")
 	braille.initialize()
@@ -1122,7 +1130,7 @@ def main():
 	_terminate(inputCore)
 	_terminate(screenCurtain)
 	_terminate(vision)
-	_terminate(brailleInput)
+	_terminate(braille.input)
 	_terminate(braille)
 	_terminate(brailleTables)
 	_terminate(speech)

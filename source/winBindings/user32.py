@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited
+# Copyright (C) 2025-2026 NV Access Limited, Cary-rowen
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -1003,6 +1003,42 @@ IsWindowEnabled.argtypes = (
 )
 
 
+class COMBOBOXINFO(Structure):
+	"""
+	Contains status information for a combo box.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-comboboxinfo
+	"""
+
+	_fields_ = (
+		("cbSize", DWORD),
+		("rcItem", RECT),
+		("rcButton", RECT),
+		("stateButton", DWORD),
+		("hwndCombo", HWND),
+		("hwndItem", HWND),
+		("hwndList", HWND),
+	)
+
+
+PCOMBOBOXINFO = POINTER(COMBOBOXINFO)
+
+
+GetComboBoxInfo = WINFUNCTYPE(None)(("GetComboBoxInfo", dll))
+"""
+Retrieves information about the specified combo box.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getcomboboxinfo
+"""
+GetComboBoxInfo.restype = BOOL
+GetComboBoxInfo.argtypes = (
+	HWND,  # hwndCombo: Handle to the combo box.
+	PCOMBOBOXINFO,  # pcbi: Pointer to the structure that receives the combo box information.
+)
+
+
 class GUITHREADINFO(Structure):
 	"""
 	Contains information about a GUI thread.
@@ -1698,3 +1734,40 @@ class NMHDR(Structure):
 		("idFrom", UINT_PTR),
 		("code", UINT),
 	)
+
+
+class EWX(IntFlag):
+	"""The shutdown type requested by a call to ExitWindowsEx."""
+
+	REBOOT = 0x00000002
+	"""EWX_REBOOT: Shuts down and then restarts the system."""
+	RESTARTAPPS = 0x00000040
+	"""EWX_RESTARTAPPS: Shuts down and restarts the system, as well as any applications that have been registered for restart using the RegisterApplicationRestart function."""
+
+
+class SHTDN_REASON(IntFlag):
+	"""Possible values of the dwReason parameter of the ExitWindowsEx function.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/shutdown/system-shutdown-reason-codes
+	"""
+
+	MAJOR_APPLICATION = 0x00040000
+	"""SHTDN_REASON_MAJOR_APPLICATION: Application issue."""
+	MINOR_INSTALLATION = 0x00000002
+	"""SHTDN_REASON_MINOR_INSTALLATION: Installation."""
+	FLAG_PLANNED = 0x80000000
+	"""SHTDN_REASON_FLAG_PLANNED: The shutdown was planned, so the system generates a System State Data (SSD) file containing information such as the processes, threads, memory usage, and configuration."""
+
+
+ExitWindowsEx = WINFUNCTYPE(None)(("ExitWindowsEx", dll))
+"""Logs off the interactive user, shuts down the system, or shuts down and restarts the system.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-exitwindowsex
+"""
+ExitWindowsEx.restype = BOOL
+ExitWindowsEx.argtypes = (
+	UINT,  # uFlags: The shutdown type.
+	DWORD,  # dwReason: The reason for initiating the shutdown.
+)

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter, Wang Chong
+# Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Leonard de Ruijter, Wang Chong
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -266,6 +266,8 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 				return WordSegFlag.AUTO
 			case config.featureFlagEnums.WordNavigationUnitFlag.CHINESE:
 				return WordSegFlag.CHINESE
+			case config.featureFlagEnums.WordNavigationUnitFlag.ICU:
+				return WordSegFlag.ICU
 			case _:
 				log.error(f"Unknown word segmentation standard, {self.wordSegConf.calculated()!r}")
 		return None
@@ -565,8 +567,18 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 	def _getParagraphOffsets(self, offset):
 		return self._getLineOffsets(offset)
 
-	def _getReadingChunkOffsets(self, offset):
-		return self._getLineOffsets(offset)
+	def _getReadingChunkOffsets(self, offset: int) -> tuple[int, int]:
+		"""Gets the start and end offsets of the reading chunk containing the given offset,
+		falling back to the line offsets if the configured unit is not implemented.
+
+		:param offset: The offset of the character within the reading chunk.
+		:return: A tuple of the start and end offsets of the reading chunk.
+		"""
+		unit = self.unit_readingChunk
+		try:
+			return self._getUnitOffsets(unit, offset)
+		except NotImplementedError:
+			return self._getLineOffsets(offset)
 
 	def _getBoundingRectFromOffset(self, offset):
 		raise NotImplementedError

@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2008-2026 NV Access Limited, Bram Duvigneau, Babbage B.V.,
-# Felix Grützmacher (Handy Tech Elektronik GmbH), Leonard de Ruijter
+# Felix Grützmacher (Handy Tech Elektronik GmbH), Leonard de Ruijter, Bill Dengler
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -22,7 +22,10 @@ import weakref
 import hwIo
 from hwIo import intToByte, boolToByte
 import braille
-import brailleInput
+import braille.display
+import braille.display.driver
+import braille.display.gesture
+import braille.input.gesture
 import inputCore
 import ui
 from baseObject import ScriptableObject, AutoPropertyObject
@@ -112,6 +115,10 @@ MODEL_MODULAR_40 = b"\x89"
 MODEL_ACTIVATOR = b"\xa4"
 MODEL_ACTIVATOR_PRO_64 = b"\xa6"
 MODEL_ACTIVATOR_PRO_80 = b"\xa8"
+MODEL_MY_BRAILLE_24 = b"\xb2"
+MODEL_MY_BRAILLE_40 = b"\xb4"
+MODEL_MY_BRAILLE_64 = b"\xb6"
+MODEL_MY_BRAILLE_80 = b"\xb8"
 
 # Key constants
 KEY_B1 = 0x03
@@ -252,20 +259,75 @@ class OldProtocolMixin(object):
 		self._display.sendPacket(HT_PKT_BRAILLE, bytes(cells))
 
 
-class AtcMixin(object):
+class AtcMixin:
 	"""Support for displays with Active Tactile Control (ATC)"""
 
+	READING_POSITION_PACKET_LENGTH = 2
+	UNKNOWN_READING_POSITION = 0xFF
+	# ATC can report transient false reading positions immediately
+	# after cells are refreshed. Use a short settling window before
+	# accepting changes.
+	READ_SUPPRESS_AFTER_REFRESH_SECONDS = 0.25
+	READING_POSITION_MAX_JUMP_DURING_SETTLE = 2
+
+	def __init__(self, display: "BrailleDisplayDriver"):
+		super().__init__(display)
+		self._readingPosition: int | None = None
+		self._lastRefreshTime: float = 0.0
+
 	def postInit(self):
-		super(AtcMixin, self).postInit()
+		super().postInit()
 		log.debug("Enabling ATC")
 		self._display.atc = True
+
+	def display(self, cells: list[int]) -> None:
+		super().display(cells)
+		self._lastRefreshTime = time.monotonic()
+
+	def handleReadingPosition(self, packet: bytes) -> None:
+		if len(packet) != self.READING_POSITION_PACKET_LENGTH:
+			log.debugWarning(
+				f"Unexpected ATC reading position packet with length {len(packet)}: {packet!r}",
+			)
+			return
+		readingPosition = packet[1]
+		elapsedSinceRefresh = time.monotonic() - self._lastRefreshTime
+		isSettlingAfterRefresh = elapsedSinceRefresh < self.READ_SUPPRESS_AFTER_REFRESH_SECONDS
+		if readingPosition == self.UNKNOWN_READING_POSITION:
+			if isSettlingAfterRefresh:
+				return
+			self._readingPosition = None
+			return
+		if readingPosition >= self.numCells:
+			log.debugWarning(
+				f"Display has {self.numCells} cells but reported an ATC "
+				f"reading position of {readingPosition}",
+			)
+			return
+
+		# During refresh settling, preserve confirmed state. Real touches tend
+		# to remain near the previous cell, while refresh noise often appears
+		# as a release, a new touch from nowhere, or a large jump.
+		if isSettlingAfterRefresh:
+			if self._readingPosition is None:
+				return
+			if abs(readingPosition - self._readingPosition) > self.READING_POSITION_MAX_JUMP_DURING_SETTLE:
+				return
+		if readingPosition == self._readingPosition:
+			return
+		self._readingPosition = readingPosition
 
 
 class TimeSyncFirmnessMixin(object):
 	"""Functionality for displays that support time synchronization and dot firmness adjustments."""
 
 	supportedSettings = (
-		braille.BrailleDisplayDriver.DotFirmnessSetting(defaultVal=1, minVal=0, maxVal=2, useConfig=False),
+		braille.display.driver.BrailleDisplayDriver.DotFirmnessSetting(
+			defaultVal=1,
+			minVal=0,
+			maxVal=2,
+			useConfig=False,
+		),
 	)
 
 	def postInit(self):
@@ -619,6 +681,50 @@ class ActivatorPro80(ActivatorPro):
 	numCells = 80
 
 
+class MyBraille(
+	ActiveSplitMixin,
+	TimeSyncFirmnessMixin,
+	AtcMixin,
+	JoystickMixin,
+	TripleActionKeysMixin,
+	Model,
+):
+	genericName = "myBraille"
+
+	def _get_name(self) -> str:
+		return "{name} {cells}".format(name=self.genericName, cells=self.numCells)
+
+	def _get_keys(self) -> dict[int, str]:
+		keys = super().keys
+		keys.update(
+			{
+				0x7A: "escape",
+				0x7B: "return",
+			},
+		)
+		return keys
+
+
+class MyBraille24(MyBraille):
+	deviceId = MODEL_MY_BRAILLE_24
+	numCells = 24
+
+
+class MyBraille40(MyBraille):
+	deviceId = MODEL_MY_BRAILLE_40
+	numCells = 40
+
+
+class MyBraille64(MyBraille):
+	deviceId = MODEL_MY_BRAILLE_64
+	numCells = 64
+
+
+class MyBraille80(MyBraille):
+	deviceId = MODEL_MY_BRAILLE_80
+	numCells = 80
+
+
 def _allSubclasses(cls):
 	"""List all direct and indirect subclasses of cls
 
@@ -674,7 +780,7 @@ HT_HID_RPT_InBaud = b"\xfe"  # set baud rate of serial connection
 HT_HID_CMD_FlushBuffers = b"\x01"  # flush input and output buffers
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, ScriptableObject):
 	name = "handyTech"
 	# Translators: The name of a series of braille displays.
 	description = _("Handy Tech braille displays")
@@ -718,6 +824,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				"VID_1FE4&PID_00A4",  # Activator
 				"VID_1FE4&PID_00A6",  # Activator Pro 64
 				"VID_1FE4&PID_00A8",  # Activator Pro 80
+				"VID_1FE4&PID_00B2",  # myBraille 24
+				"VID_1FE4&PID_00B4",  # myBraille 40
+				"VID_1FE4&PID_00B6",  # myBraille 64
+				"VID_1FE4&PID_00B8",  # myBraille 80
 			},
 		)
 
@@ -745,13 +855,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					"Braille Wave BW",
 					"Easy Braille EBR",
 					"Activator",
+					"myBraille",
 				)
 			),
 		)
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	_dev: Optional[Union[hwIo.Hid, hwIo.Serial]]
 
@@ -902,7 +1013,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def _get_supportedSettings(self):
 		settings = [
-			braille.BrailleDisplayDriver.BrailleInputSetting(),
+			braille.display.driver.BrailleDisplayDriver.BrailleInputSetting(),
 		]
 		if self._model:
 			# Add the per model supported settings to the list.
@@ -1078,6 +1189,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			elif extPacketType == HT_EXTPKT_ATC_INFO:
 				# Ignore ATC packets for now
 				pass
+			elif extPacketType == HT_EXTPKT_READING_POSITION:
+				if isinstance(self._model, AtcMixin):
+					self._model.handleReadingPosition(packet)
 			elif extPacketType == HT_EXTPKT_GET_PROTOCOL_PROPERTIES:
 				self.numCells = packet[3]
 			elif isinstance(self._model, TimeSyncFirmnessMixin):
@@ -1199,7 +1313,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.gesture.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keys, isBrailleInput=False):

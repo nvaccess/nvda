@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2006-2024 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
+# Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot,
+# Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -26,6 +27,7 @@ from typing import (
 
 import baseObject
 import config
+import config.featureFlagEnums
 import controlTypes
 from controlTypes import OutputReason
 import locationHelper
@@ -402,6 +404,32 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _get_unit_mouseChunk(self):
 		return config.conf["mouse"]["mouseTextUnit"]
 
+	#: Typing information for auto-property: _get_unit_readingChunk
+	unit_readingChunk: str
+	_cache_unit_readingChunk = True
+
+	def _get_unit_readingChunk(self) -> str:
+		"""The concrete unit that :data:`UNIT_READINGCHUNK` resolves to,
+		as configured via the ``sayAllReadingUnit`` feature flag.
+
+		:raises ValueError: If the configured flag value is not recognised.
+		"""
+		match config.conf["speech"]["sayAllReadingUnit"].calculated():
+			case config.featureFlagEnums.SayAllReadingUnitFlag.SENTENCE:
+				return UNIT_SENTENCE
+			case config.featureFlagEnums.SayAllReadingUnitFlag.PARAGRAPH:
+				return UNIT_PARAGRAPH
+			case config.featureFlagEnums.SayAllReadingUnitFlag.LINE:
+				return UNIT_LINE
+			case flag:
+				raise ValueError(f"Unknown sayAllReadingUnit flag, {flag!r}")
+
+	def _resolveReadingChunkUnit(self, unit: str) -> str:
+		"""Resolve :data:`UNIT_READINGCHUNK` to the concrete configured unit,
+		returning any other unit unchanged.
+		"""
+		return self.unit_readingChunk if unit == UNIT_READINGCHUNK else unit
+
 	#: Typing information for auto-property: _get_text
 	text: str
 
@@ -657,9 +685,15 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
 		# Import late to avoid circular import.
-		import braille
+		import braille.regions.properties
 
-		return braille.getControlFieldBraille(self, field, ancestors, reportStart, formatConfig)
+		return braille.regions.properties.getControlFieldBraille(
+			self,
+			field,
+			ancestors,
+			reportStart,
+			formatConfig,
+		)
 
 	def getFormatFieldSpeech(
 		self,
