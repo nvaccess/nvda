@@ -2554,6 +2554,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			if self.display:
 				# Suppress setting the display with empty cells when terminating it.
 				self.display._suppressDisplayClear = True
+			self.update()
 			self.setDisplayByName(NO_BRAILLE_DISPLAY_NAME, isFallback=True)
 		else:
 			configured = config.conf["braille"]["display"]

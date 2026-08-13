@@ -22,6 +22,12 @@ Liblouis has been updated with new Italian and Estonian braille tables.
 
 When resetting NVDA to factory defaults, an Undo button is now available to restore the previous configuration.
 
+### Security Fixes
+
+Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
+
+* Prevents showing potentially sensitive information on braille displays when the computer is shut down or restarted. ([GHSA-qhjv-3xf4-9c66](https://github.com/nvaccess/nvda/security/advisories/GHSA-qhjv-3xf4-9c66))
+
 ### New Features
 
 * Magnifier:
