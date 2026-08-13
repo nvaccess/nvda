@@ -219,6 +219,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			if self.display:
 				# Suppress setting the display with empty cells when terminating it.
 				self.display._suppressDisplayClear = True
+			self.update()
 			self.setDisplayByName(NO_BRAILLE_DISPLAY_NAME, isFallback=True)
 		else:
 			# An ordinary desktop switch (e.g. in a Remote Desktop session) is also reported here.
