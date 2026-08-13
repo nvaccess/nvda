@@ -32,8 +32,7 @@ jobs:
     - name: Set up python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.13'
-        architecture: 'x86'
+        python-version: '3.13.13'
 
     - name: setup uv
       uses: astral-sh/setup-uv@v6
