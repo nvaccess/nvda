@@ -486,9 +486,7 @@ class LiveText(NVDAObject):
 		if self._reportNewLinesGenID is not None:
 			queueHandler.cancelGeneratorObject(self._reportNewLinesGenID)
 			self._reportNewLinesGenID = None
-		self._reportNewLinesGenID = queueHandler.registerGeneratorObject(
-			self._reportNewLinesGenerator(lines),
-		)
+		self._reportNewLinesGenID = queueHandler.registerGeneratorObject(self._reportNewLinesGenerator(lines))
 
 	def _getSkippedLinesBeepLength(self, droppedCount: int) -> int:
 		SKIPPED_LINES_BEEP_MIN_DURATION_MS = 10
@@ -498,10 +496,7 @@ class LiveText(NVDAObject):
 		lengthRange = SKIPPED_LINES_BEEP_MAX_DURATION_MS - SKIPPED_LINES_BEEP_MIN_DURATION_MS
 		return round(SKIPPED_LINES_BEEP_MIN_DURATION_MS + lengthRange * ratio)
 
-	def _reportNewLinesGenerator(
-		self,
-		lines: list[str],
-	) -> Generator[None, None, None]:
+	def _reportNewLinesGenerator(self, lines: list[str]) -> Generator[None, None, None]:
 		YIELD_EVERY = 5  # Sweet spot between yielding on every line and a batch
 		try:
 			for i, line in enumerate(lines, 1):
