@@ -31,6 +31,17 @@ class TestRecogImageInfo(unittest.TestCase):
 		self.assertEqual(info.convertWidthToScreen(100), 100)
 		self.assertEqual(info.convertHeightToScreen(200), 200)
 
+	def test_withNegativeOffset(self):
+		info = contentRecog.RecogImageInfo(-1920, -1080, 1000, 2000, 1)
+		self.assertEqual(info.convertXToScreen(100), -1820)
+		self.assertEqual(info.convertYToScreen(200), -880)
+
+	def test_nonPositiveDimensions(self):
+		for width, height in ((0, 100), (100, 0)):
+			with self.subTest(width=width, height=height):
+				with self.assertRaises(ValueError):
+					contentRecog.RecogImageInfo(0, 0, width, height, 1)
+
 	def test_noOffsetWithResize(self):
 		info = contentRecog.RecogImageInfo(0, 0, 1000, 2000, 2)
 		self.assertEqual(info.recogWidth, 2000)

@@ -6568,15 +6568,15 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 
 	def _ocrActive(self) -> bool:
 		"""
-		Outputs a message when trying to activate screen curtain when OCR is active.
+		Outputs a message when content recognition prevents Screen Curtain from being enabled.
 
-		:return: ``True`` when OCR is active, ``False`` otherwise.
+		:return: ``True`` when Screen Curtain should not be enabled, ``False`` otherwise.
 		"""
 		# Import late to avoid circular import
-		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
+		from contentRecog import recogUi
 
 		focusObj = api.getFocusObject()
-		if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
+		if recogUi.shouldBlockScreenCurtainEnable(focusObj):
 			ui.message(
 				screenCurtain._screenCurtain.UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE,
 				speechPriority=speech.priorities.Spri.NOW,

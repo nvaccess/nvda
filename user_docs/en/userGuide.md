@@ -1641,9 +1641,9 @@ You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAnd
 
 <!-- KC:endInclude -->
 
-When Screen Curtain is enabled, features that rely on what is literally on screen will not function.
-For example, you cannot [use OCR](#Win10Ocr).
-Some screenshot utilities also may not work.
+When Screen Curtain is enabled, some features that rely on what is literally on screen will not function.
+On supported systems, [Windows OCR](#Win10Ocr) can still be used while Screen Curtain is enabled.
+Some screenshot utilities may not work.
 
 Please note that while Windows Magnifier is running and inverted screen colors are being used, Screen Curtain cannot be enabled.
 
@@ -1765,7 +1765,9 @@ Additional languages can be installed by opening the Start menu, choosing Settin
 When you want to monitor constantly changing content, such as when watching a video with subtitles, you can optionally enable automatic refresh of the recognized content.
 This can also be done in the [Windows OCR category](#Win10OcrSettings) of the [NVDA Settings](#NVDASettings) dialog.
 
-Windows OCR may be partially or fully incompatible with [NVDA vision enhancements](#Vision) or other external visual aids. You will need to disable these aids before proceeding to a recognition.
+On supported systems, Windows OCR can still be used while [Screen Curtain](#VisionScreenCurtain) or NVDA's built-in [Magnifier](#Magnifier) is active.
+External visual aids may be partially or fully incompatible with Windows OCR.
+You may need to disable these aids before proceeding to a recognition.
 
 <!-- KC:beginInclude -->
 To recognize the text in the current navigator object using Windows OCR, press NVDA+r.
