@@ -57,7 +57,9 @@ class TestCaptureImage(unittest.TestCase):
 			patch.object(recogUi, "_isMagnifierActive", return_value=True),
 			patch.object(recogUi, "_isWgcCaptureSupported", return_value=True),
 			patch.object(
-				recogUi, "_captureWithWgc", side_effect=RuntimeError("capture failed")
+				recogUi,
+				"_captureWithWgc",
+				side_effect=RuntimeError("capture failed"),
 			) as captureWithWgc,
 			patch.object(recogUi, "_captureWithGdi", return_value=self.gdiPixels) as captureWithGdi,
 		):
