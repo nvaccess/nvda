@@ -95,6 +95,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* The remote Python console, available when running NVDA from source, works again. (#20626, @LeonarddeR)
 * The UIA remote operations framework now supports cache requests. (#20621, @LeonarddeR)
   * A remote operation can create a cache request with `ra.newCacheRequest`, add properties and patterns to it, and populate the cache of a remote element with `RemoteElement.populateCache`.
   * Elements returned or yielded from the operation carry the populated cache.

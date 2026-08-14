@@ -1,53 +1,59 @@
-# remotePythonConsole.py
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2011 NV Access Inc
+# Copyright (C) 2011-2026 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Provides an interactive Python console run inside NVDA which can be accessed via TCP.
-To use, call L{initialize} to start the server.
-Then, connect to it using TCP port L{PORT}.
+To use, call `initialize` to start the server.
+Then, connect to it using TCP port `PORT`.
 The server will only handle one connection at a time.
 """
 
-import threading
 import socketserver
-import wx
+import threading
+
 import pythonConsole
+import wx
 from logHandler import log
 
-#: The TCP port on which the server will run.
-#: @type: int
-PORT = 6832
+PORT: int = 6832
+"""The TCP port on which the server will run."""
 
-server = None
+server: socketserver.TCPServer | None = None
 
 
 class RequestHandler(socketserver.StreamRequestHandler):
-	def setPrompt(self, prompt):
+	_keepRunning: bool
+	_execDoneEvt: threading.Event
+	console: pythonConsole.PythonConsole | None
+
+	def setPrompt(self, prompt: str) -> None:
 		if not self._keepRunning:
 			# We're about to exit, so don't output the prompt.
 			return
-		self.wfile.write(prompt + " ")
+		self._write(prompt + " ")
 
-	def exit(self):
+	def _write(self, text: str) -> None:
+		self.wfile.write(text.encode("utf-8", errors="replace"))
+
+	def exit(self) -> None:
 		self._keepRunning = False
 
-	def execute(self, line):
+	def execute(self, line: str) -> None:
 		self.console.push(line)
 		# Notify handle() that the line has finished executing.
 		self._execDoneEvt.set()
 
-	def handle(self):
+	def handle(self) -> None:
 		# #3126: Remove the default socket timeout.
 		# We can't use the class timeout attribute because None means don't set a timeout.
 		self.connection.settimeout(None)
 		self._keepRunning = True
 
 		try:
-			self.wfile.write("NVDA Remote Python Console\n")
+			self._write("NVDA Remote Python Console\n")
 			self.console = pythonConsole.PythonConsole(
-				outputFunc=self.wfile.write,
+				outputFunc=self._write,
 				setPromptFunc=self.setPrompt,
 				exitFunc=self.exit,
 			)
@@ -60,10 +66,10 @@ class RequestHandler(socketserver.StreamRequestHandler):
 
 			self._execDoneEvt = threading.Event()
 			while self._keepRunning:
-				line = self.rfile.readline()
-				if not line:
+				rawLine = self.rfile.readline()
+				if not rawLine:
 					break
-				line = line.rstrip("\r\n")
+				line = rawLine.decode("utf-8", errors="replace").rstrip("\r\n")
 				# Execute in the main thread.
 				wx.CallAfter(self.execute, line)
 				# Wait until the line has finished executing before retrieving the next.
@@ -77,7 +83,7 @@ class RequestHandler(socketserver.StreamRequestHandler):
 			self.console = None
 
 
-def initialize():
+def initialize() -> None:
 	global server
 	server = socketserver.TCPServer(("", PORT), RequestHandler)
 	server.daemon_threads = True
@@ -89,7 +95,10 @@ def initialize():
 	thread.start()
 
 
-def terminate():
+def terminate() -> None:
 	global server
+	if server is None:
+		return
 	server.shutdown()
+	server.server_close()
 	server = None
