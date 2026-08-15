@@ -65,17 +65,6 @@ import logHandler
 from logHandler import log
 import winKernel
 
-# Find out if NVDA is running as a Windows Store application
-bufLen = ctypes.c_int()
-try:
-	GetCurrentPackageFullName = winBindings.kernel32.GetCurrentPackageFullName
-except AttributeError:
-	config.isAppX = False
-else:
-	bufLen = ctypes.c_uint()
-	# Use GetCurrentPackageFullName to detect if we are running as a store app.
-	# #8362: error 15700 (not a package) error is returned if this is not a Windows Store package.
-	config.isAppX = GetCurrentPackageFullName(ctypes.byref(bufLen), None) != 15700
 
 NVDAState._initializeStartTime()
 
@@ -300,7 +289,7 @@ if not user32.ChangeWindowMessageFilter(winUser.WM_QUIT, winUser.MSGFLT.ALLOW):
 	raise winUser.WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
-if not isRunningOnSecureDesktop() and not config.isAppX:
+if not isRunningOnSecureDesktop():
 	import easeOfAccess
 
 	easeOfAccess.notify(3)
@@ -312,7 +301,7 @@ except:  # noqa: E722
 	log.critical("core failure", exc_info=True)
 	sys.exit(1)
 finally:
-	if not isRunningOnSecureDesktop() and not config.isAppX:
+	if not isRunningOnSecureDesktop():
 		easeOfAccess.notify(2)
 	if globalVars.appArgs.changeScreenReaderFlag:
 		winUser.setSystemScreenReaderFlag(False)
