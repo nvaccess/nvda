@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from typing import (
 	TYPE_CHECKING,
 	Any,
+	Literal,
 	Optional,
 )
 import comtypes
@@ -624,6 +625,7 @@ def _setUpWxApp() -> "wx.App":
 	import config
 	import nvwave
 	import speech
+	import braille
 
 	log.info(f"Using wx version {wx.version()}")
 
@@ -658,10 +660,16 @@ def _setUpWxApp() -> "wx.App":
 
 	app.Bind(wx.EVT_QUERY_END_SESSION, onQueryEndSession)
 
+	def returnFalse() -> Literal[False]:
+		return False
+
 	def onEndSession(evt):
 		# NVDA will be terminated as soon as this function returns, so save configuration if appropriate.
 		config.saveOnExit()
 		speech.cancelSpeech()
+		braille.extensions.decide_enabled.register(returnFalse)
+		if (brailleHandler := braille.handler) is not None:
+			brailleHandler._clearAll()
 		if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 			try:
 				nvwave.playWaveFile(
