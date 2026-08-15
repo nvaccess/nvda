@@ -60,7 +60,6 @@ globalVars.appDir = appDir
 globalVars.appPid = os.getpid()
 
 
-import config  # noqa: I001
 import logHandler
 from logHandler import log
 import winKernel

@@ -21,7 +21,6 @@ import threading
 import os
 import time
 from enum import Enum
-import winBindings.kernel32
 import logHandler
 import languageHandler
 import globalVars
