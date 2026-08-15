@@ -6,6 +6,7 @@
 """Helper module to ease communication to and from liblouis."""
 
 import os
+from collections.abc import Sequence
 from ctypes import (
 	WINFUNCTYPE,
 	addressof,
@@ -190,7 +191,7 @@ def terminate():
 def translate(
 	tableList: list[str],
 	inbuf: str,
-	typeform: list[int] | None = None,
+	typeform: Sequence[Typeform] | None = None,
 	cursorPos: int | None = None,
 	mode: TranslationMode = TranslationMode.NONE,
 ) -> tuple[list[int], list[int], list[int], int | None]:
@@ -236,6 +237,7 @@ def backTranslate(
 		Every cell is masked to a byte.
 	:param mode: Additional modes to translate with.
 	:return: The back translated text.
+		Cells with dot patterns that are undefined in the tables are omitted.
 	"""
 	inbuf = "".join(chr((cell & 0xFF) | _DOTS_IO_START) for cell in cells)
 	return louis.backTranslate(
