@@ -9,7 +9,6 @@ import weakref
 import addonAPIVersion
 import wx
 import core
-import config
 from contextlib import contextmanager
 import gui
 from addonHandler import Addon
@@ -264,16 +263,6 @@ def _performExternalAddonBundleInstall(
 
 
 def handleRemoteAddonInstall(addonPath: str):
-	# Add-ons cannot be installed into a Windows store version of NVDA
-	if config.isAppX:
-		gui.messageBox(
-			# Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
-			_("Add-ons cannot be installed in the Windows Store version of NVDA"),
-			# Translators: The title of a dialog presented when an error occurs.
-			_("Error"),
-			wx.OK | wx.ICON_ERROR,
-		)
-		return
 	gui.mainFrame.prePopup()
 	if installAddon(gui.mainFrame, addonPath):
 		wx.CallAfter(promptUserForRestart)
