@@ -1,8 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
-# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot, Julien Cochuyt
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot, Julien Cochuyt, Wang Chong,
+# Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """NVDA core"""
 
@@ -312,7 +313,7 @@ def resetConfiguration(factoryDefaults=False):
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings."""
 	import config
 	import braille
-	import brailleInput
+	import braille.input
 	import brailleTables
 	import speech
 	import characterProcessing
@@ -324,6 +325,7 @@ def resetConfiguration(factoryDefaults=False):
 	import audio
 	import screenCurtain
 	import mathPres
+	import textUtils._wordSeg
 	import _magnifier as magnifier
 
 	magnifier.terminate()
@@ -335,8 +337,8 @@ def resetConfiguration(factoryDefaults=False):
 	mathPres.terminate()
 	log.debug("Terminating braille")
 	braille.terminate()
-	log.debug("Terminating brailleInput")
-	brailleInput.terminate()
+	log.debug("Terminating braille input")
+	braille.input.terminate()
 	log.debug("Terminating brailleTables")
 	brailleTables.terminate()
 	log.debug("terminating speech")
@@ -389,10 +391,12 @@ def resetConfiguration(factoryDefaults=False):
 	# braille
 	log.debug("Initializing brailleTables")
 	brailleTables.initialize()
-	log.debug("Initializing brailleInput")
-	brailleInput.initialize()
+	log.debug("Initializing braille input")
+	braille.input.initialize()
 	log.debug("Initializing braille")
 	braille.initialize()
+	log.debug("Initializing word segmentation")
+	textUtils._wordSeg.initialize()
 	# Math
 	log.debug("Initializing math presentation")
 	mathPres.initialize()
@@ -825,10 +829,9 @@ def main():
 
 	brailleTables.initialize()
 	log.debug("Initializing braille input")
-	import brailleInput
+	import braille.input
 
-	brailleInput.initialize()
-	import braille
+	braille.input.initialize()
 
 	log.debug("Initializing braille")
 	braille.initialize()
@@ -935,6 +938,10 @@ def main():
 	import _remoteClient
 
 	_remoteClient.initialize()
+
+	import textUtils._wordSeg
+
+	textUtils._wordSeg.initialize()
 
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui
@@ -1123,7 +1130,7 @@ def main():
 	_terminate(inputCore)
 	_terminate(screenCurtain)
 	_terminate(vision)
-	_terminate(brailleInput)
+	_terminate(braille.input)
 	_terminate(braille)
 	_terminate(brailleTables)
 	_terminate(speech)

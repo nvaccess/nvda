@@ -1,6 +1,6 @@
-﻿#break up words that use a capital letter to denote another word
-([a-z])([A-Z])	\1 \2	1	1
-#Break away a word starting with a capital from a fully uppercase word
-([A-Z])([A-Z][a-z])	\1 \2	1	1
-#Break words that have numbers at the end
-((?:(?=\D)\w)+)(\d+)	\1 \2	1	1
+﻿# Break up words that use a capital letter to denote another word
+(?=[A-Z])(?<=[a-z])	 	1	1
+# Break away a word starting with a capital from a fully uppercase word
+(?=[A-Z][a-z])(?<=[A-Z])	 	1	1
+# Break on word-to-digit boundaries
+(?=\d)(?<=[^\W\d])	 	1	1

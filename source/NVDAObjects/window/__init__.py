@@ -31,6 +31,14 @@ def isUsableWindow(windowHandle):
 		return False
 	if _GhostWindowFromHungWindow is not None and _GhostWindowFromHungWindow(windowHandle):
 		return False
+	# #7345-followup: A hung application is flagged by the system (IsHungAppWindow)
+	# slightly before its DWM ghost window is created. Treat it as unusable as soon
+	# as it is flagged so NVDA stops attempting blocking cross-process calls into it
+	# (which otherwise freeze the core until the watchdog cancels them ~6s later),
+	# and so child windows of the hung app (which have no ghost of their own) are
+	# also covered.
+	if winUser.isHungAppWindow(windowHandle):
+		return False
 	return True
 
 
@@ -81,6 +89,12 @@ class Window(NVDAObject):
 			return
 		# If this window has a ghost window its too dangerous to try any higher APIs
 		if _GhostWindowFromHungWindow is not None and _GhostWindowFromHungWindow(windowHandle):
+			return
+		# Likewise once the system flags the application as not responding: any higher
+		# API (UIA/MSAA/JAB) would make a synchronous cross-process call that blocks
+		# until the app recovers. Falling back to a plain Window object here keeps NVDA
+		# responsive instead of freezing the core until the watchdog intervenes.
+		if winUser.isHungAppWindow(windowHandle):
 			return
 		if windowClassName == "EXCEL7" and (relation == "focus" or isinstance(relation, tuple)):
 			from . import excel

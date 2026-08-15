@@ -296,6 +296,66 @@ class TestRemoteClient(unittest.TestCase):
 				"We weren't sending keys before the latest session lock, so we shouldn't start when it's unlocked",
 			)
 
+	def test_onConnectAsFollowerFailedAnnouncesOnlyOnce(self):
+		# The `onConnectAsFollowerFailed` method is decorated with `alwaysCallAfter`.
+		# This causes issues here, so unwrap it.
+		onConnectAsFollowerFailed = rcClient.RemoteClient.onConnectAsFollowerFailed.__wrapped__
+		fakeTransport = FakeTransport()
+		fakeTransport.successfulConnects = 0
+		fakeTransport.address = ("localhost", 6837)
+		self.client.followerTransport = fakeTransport
+		onConnectAsFollowerFailed(self.client)
+		self.uiDelayedMessage.assert_called_once()
+		# The transport retries roughly every 5 seconds; subsequent failures must not announce again.
+		onConnectAsFollowerFailed(self.client)
+		onConnectAsFollowerFailed(self.client)
+		self.uiDelayedMessage.assert_called_once()
+
+	def test_onConnectAsFollowerFailedAfterSuccessfulConnect(self):
+		# Failures of a transport which has connected before are reconnection attempts,
+		# not initial connection failures, so they should not be announced.
+		onConnectAsFollowerFailed = rcClient.RemoteClient.onConnectAsFollowerFailed.__wrapped__
+		fakeTransport = FakeTransport()
+		fakeTransport.successfulConnects = 1
+		fakeTransport.address = ("localhost", 6837)
+		self.client.followerTransport = fakeTransport
+		onConnectAsFollowerFailed(self.client)
+		self.uiDelayedMessage.assert_not_called()
+
+	def test_onConnectAsFollowerFailedWithoutTransport(self):
+		# A late notification after the transport has been torn down should be a no-op.
+		onConnectAsFollowerFailed = rcClient.RemoteClient.onConnectAsFollowerFailed.__wrapped__
+		self.client.followerTransport = None
+		onConnectAsFollowerFailed(self.client)
+		self.uiDelayedMessage.assert_not_called()
+
+	def test_onConnectAsFollowerFailedForANewConnection(self):
+		# Starting a new follower connection should allow a failure to be announced again,
+		# even if the failure of an earlier connection has already been announced.
+		onConnectAsFollowerFailed = rcClient.RemoteClient.onConnectAsFollowerFailed.__wrapped__
+		fakeTransport = FakeTransport()
+		fakeTransport.successfulConnects = 0
+		fakeTransport.address = ("localhost", 6837)
+		self.client.followerTransport = fakeTransport
+		onConnectAsFollowerFailed(self.client)
+		self.uiDelayedMessage.assert_called_once()
+		self.uiDelayedMessage.reset_mock()
+		connInfo = ConnectionInfo(
+			hostname="localhost",
+			mode=ConnectionMode.FOLLOWER,
+			key="abc",
+			port=4321,
+			insecure=False,
+		)
+		# A real transport and session would start a connector thread
+		# and register handlers on global extension points,
+		# neither of which is needed to test that starting a connection resets the announcement.
+		with patch("_remoteClient.client.RelayTransport"), patch("_remoteClient.client.FollowerSession"):
+			self.client.connect(connInfo)
+		self.client.followerTransport = fakeTransport
+		onConnectAsFollowerFailed(self.client)
+		self.uiDelayedMessage.assert_called_once()
+
 
 if __name__ == "__main__":
 	unittest.main()

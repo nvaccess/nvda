@@ -41,6 +41,8 @@ import winKernel
 import winUser
 import winVersion
 import eventHandler
+import exceptions
+import watchdog
 from logHandler import log
 import winBindings.uiAutomationCore
 from . import utils
@@ -68,7 +70,12 @@ baseCachePropertyIDs = {
 	UIA.UIA_IsControlElementPropertyId,
 	UIA.UIA_NamePropertyId,
 	UIA.UIA_LocalizedControlTypePropertyId,
+	UIA.UIA_HasKeyboardFocusPropertyId,
 }
+"""UIA property IDs included in the handler's base cache request.
+The base cache request is attached to all event handler registrations and to the base tree walker,
+so event senders and elements fetched through them carry these properties in their element cache.
+"""
 
 #: The window class name for Microsoft Word documents.
 # Microsoft Word's UI Automation implementation
@@ -91,6 +98,12 @@ goodUIAWindowClassNames = (
 	"RAIL_WINDOW",
 	# #17407, #17771: WinUI 3 top-level pane window class name.
 	"Microsoft.UI.Content.DesktopChildSiteBridge",
+	# #20448: Windows Terminal hosts its content in a XAML island whose child window
+	# (Windows.UI.Composition.DesktopWindowContentBridge) is the one that actually
+	# exposes a UIA server-side provider.
+	# However, the top-level CASCADIA_HOSTING_WINDOW_CLASS window
+	# reports no server-side provider.
+	"CASCADIA_HOSTING_WINDOW_CLASS",
 )
 
 badUIAWindowClassNames = (
@@ -100,6 +113,7 @@ badUIAWindowClassNames = (
 	"WuDuiListView",
 	"ComboBox",
 	"msctls_progress32",
+	"msctls_trackbar32",
 	"Edit",
 	"CommonPlacesWrapperWndClass",
 	"SysMonthCal32",
@@ -751,6 +765,10 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug("HandleAutomationEvent: event received while not fully initialized")
 			return
+		if utils._shouldSkipEventForHungWindow(sender):
+			if _isDebug():
+				log.debug("HandleAutomationEvent: dropping event; sender's application is not responding")
+			return
 		if eventID == UIA_MenuOpenedEventId and eventHandler.isPendingEvents("gainFocus"):  # noqa: F405
 			# We don't need the menuOpened event if focus has been fired,
 			# as focus should be more correct.
@@ -758,12 +776,16 @@ class UIAHandler(COMObject):
 				log.debug("HandleAutomationEvent: Ignored MenuOpenedEvent while focus event pending")
 			return
 		if eventID == UIA.UIA_Text_TextChangedEventId:
+			# Use the cached class name: NVDA registers every event handler group with
+			# baseCacheRequest, which caches UIA_ClassNamePropertyId, so this avoids a
+			# slow (and, for an unresponsive app, hanging) live cross-process fetch on
+			# this high-frequency text-change path.
 			if (
-				sender.currentClassName in textChangeUIAClassNames
+				sender.CachedClassName in textChangeUIAClassNames
 				or sender.CachedAutomationID in textChangeUIAAutomationIDs
 				or (
 					not utils._shouldUseWindowsTerminalNotifications()
-					and sender.currentClassName in windowsTerminalUIAClassNames
+					and sender.CachedClassName in windowsTerminalUIAClassNames
 				)
 			):
 				NVDAEventName = "textChange"
@@ -856,6 +878,10 @@ class UIAHandler(COMObject):
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleFocusChangedEvent: event received while not fully initialized")
+			return
+		if utils._shouldSkipEventForHungWindow(sender):
+			if _isDebug():
+				log.debug("HandleFocusChangedEvent: dropping event; sender's application is not responding")
 			return
 		self.lastFocusedUIAElement = sender
 		if not self.isNativeUIAElement(sender):
@@ -950,6 +976,13 @@ class UIAHandler(COMObject):
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandlePropertyChangedEvent: event received while not fully initialized")
+			return
+		# Note: this is intentionally after the #3867 newValue.vt = VT_EMPTY workaround above.
+		if utils._shouldSkipEventForHungWindow(sender):
+			if _isDebug():
+				log.debug(
+					"HandlePropertyChangedEvent: dropping event; sender's application is not responding",
+				)
 			return
 		try:
 			processId = sender.CachedProcessID
@@ -1049,6 +1082,10 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug("HandleNotificationEvent: event received while not fully initialized")
 			return
+		if utils._shouldSkipEventForHungWindow(sender):
+			if _isDebug():
+				log.debug("HandleNotificationEvent: dropping event; sender's application is not responding")
+			return
 		# Sometimes notification events can be fired on a UIAElement that has no windowHandle
 		# and does not connect through parents back to the desktop.
 		# #17841: yet messages such as window restored/maximized coming from File Explorer (Windows shell)
@@ -1131,6 +1168,13 @@ class UIAHandler(COMObject):
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleActiveTextPositionchangedEvent: event received while not fully initialized")
+			return
+		if utils._shouldSkipEventForHungWindow(sender):
+			if _isDebug():
+				log.debug(
+					"HandleActiveTextPositionChangedEvent: dropping event; "
+					"sender's application is not responding",
+				)
 			return
 		import NVDAObjects.UIA
 
@@ -1227,8 +1271,19 @@ class UIAHandler(COMObject):
 							log.debug("Office 2013 ribon or older. Treating as non-UIA")
 						return False
 					parentHwnd = winUser.getAncestor(parentHwnd, winUser.GA_PARENT)
-		# Ask the window if it supports UIA natively
-		res = winBindings.uiAutomationCore.UiaHasServerSideProvider(hwnd)
+		# Ask the window if it supports UIA natively.
+		# Run via the watchdog's cancellable thread: this is a blocking
+		# cross-process call that the watchdog cannot otherwise cancel, so a
+		# hung application could freeze the core here until it is killed.
+		try:
+			res = watchdog.cancellableExecute(
+				winBindings.uiAutomationCore.UiaHasServerSideProvider,
+				hwnd,
+			)
+		except exceptions.CallCancelled:
+			if isDebug:
+				log.debug("UiaHasServerSideProvider cancelled; treating window as non-UIA")
+			return False
 		if res:
 			if isDebug:
 				log.debug("window has UIA server side provider")

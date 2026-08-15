@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2015-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2015-2026 NV Access Limited, Babbage B.V., Leonard de Ruijter, Selvas Healthcare
 
 
 """Raw input/output for braille displays via serial and HID.
@@ -12,8 +12,10 @@ See L{braille.BrailleDisplayDriver.isThreadSafe}.
 
 # "annotations" Needed to provide the inner type for weakref.ReferenceType.
 from __future__ import annotations
+import functools
 import sys
 import ctypes
+import threading
 from ctypes import byref
 from ctypes.wintypes import DWORD
 from typing import Optional, Any, Union, Tuple, Callable
@@ -52,6 +54,24 @@ def __getattr__(attrName: str) -> Any:
 
 def _isDebug():
 	return config.conf["debugLog"]["hwIo"]
+
+
+def requiresBackgroundThread(func: Callable) -> Callable:
+	"""Decorator that raises RuntimeError if the decorated function is called on the main thread.
+
+	Use this on any hwIo function that blocks (e.g. sleeps or polls) and must not be called
+	from NVDA's main thread, where it would freeze the UI.
+	"""
+
+	@functools.wraps(func)
+	def wrapper(*args, **kwargs):
+		if threading.main_thread() is threading.current_thread():
+			raise RuntimeError(
+				f"{func.__qualname__} must not be called on the main thread",
+			)
+		return func(*args, **kwargs)
+
+	return wrapper
 
 
 class IoBase(object):
@@ -365,7 +385,13 @@ class Bulk(IoBase):
 		if writeHandle == INVALID_HANDLE_VALUE:
 			if _isDebug():
 				log.debug("Open write handle failed: %s" % ctypes.WinError())
-			raise ctypes.WinError()
+			err = ctypes.WinError()
+			# readHandle already succeeded above; close it before raising so it isn't
+			# leaked. At this point super().__init__() hasn't run yet, so readHandle
+			# isn't stored anywhere (e.g. as self._file) and would otherwise never be
+			# closed, leaving the device open for the lifetime of the process.
+			winKernel.closeHandle(readHandle)
+			raise err
 		super().__init__(
 			readHandle,
 			onReceive,

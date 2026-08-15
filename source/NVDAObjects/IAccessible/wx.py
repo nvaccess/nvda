@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Leonard de Ruijter
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2025-2026 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Improvements for wxWidgets objects."""
 
@@ -16,11 +16,15 @@ from .. import NVDAObject
 
 
 def findExtraOverlayClasses(obj: IAccessible, clsList: list[NVDAObject]):
-	if obj.name == "wxWebView":
+	if obj.name == "wxWebView" and obj.event_objectID == winUser.OBJID_CLIENT:
 		clsList.insert(0, WxWebView)
 
 
 class WxWebView(IAccessible):
+	def reportFocus(self):
+		# Reporting the wxWebView control gaining focus is redundant since it redirects focus to its inner content.
+		pass
+
 	def event_gainFocus(self) -> None:
 		super().event_gainFocus()
 		firstChild = self.firstChild

@@ -247,6 +247,21 @@ class RemoteVariant(RemoteBaseObject):
 	def isElement(self) -> RemoteBool:
 		return self._isType(RemoteElement)
 
+	@remoteMethod
+	def isNotSupported(self) -> RemoteBool:
+		"""Checks whether this variant holds the reserved "not supported" value,
+		such as returned by a property fetch that ignores defaults for a property
+		the element does not support.
+		"""
+		result = RemoteBool(self.rob, self.rob.requestNewOperandId())
+		self.rob.getDefaultInstructionList().addInstruction(
+			instructions.IsNotSupported(
+				result=result,
+				target=self,
+			),
+		)
+		return result
+
 	_TV_asType = TypeVar("_TV_asType", bound=RemoteBaseObject)
 
 	def asType(self, remoteClass: Type[_TV_asType]) -> _TV_asType:
@@ -726,5 +741,6 @@ def getRemoteTypeForLocalType(LocalType: Type[object]) -> Type[RemoteBaseObject]
 # flake8: noqa: E402
 from .intEnum import RemoteIntEnum
 from .extensionTarget import RemoteExtensionTarget
+from .cacheRequest import RemoteCacheRequest
 from .element import RemoteElement
 from .textRange import RemoteTextRange

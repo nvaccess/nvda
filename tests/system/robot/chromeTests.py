@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2022 NV Access Limited, Leonard de Ruijter, Cyrille Bougot
-# This file may be used under the terms of the GNU General Public License, version 2 or later.
-# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+# Copyright (C) 2020-2026 NV Access Limited, Leonard de Ruijter, Cyrille Bougot
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Logic for NVDA + Google Chrome tests"""
 
@@ -1184,9 +1184,11 @@ def test_ariaRoleDescription_inline_browseMode():
 		"Unlabeled graphic  Our",
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
+	# ICU word segmentation (the AUTO default) follows UAX#29, which treats the
+	# trailing period as its own word segment, so it is no longer read with "logo".
 	_asserts.strings_match(
 		actualSpeech,
-		"logo.",
+		"logo",
 	)
 
 
@@ -2758,6 +2760,44 @@ def test_styleNav():
 	_asserts.strings_match(actualSpeech, "No next same style text")
 
 
+def test_clickableNavigation() -> None:
+	"""Tests that unassigned quick navigation commands move between clickable elements."""
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy.assignGesture(
+		"kb:z",
+		"browseMode",
+		"BrowseModeTreeInterceptor",
+		"nextClickable",
+	)
+	spy.assignGesture(
+		"kb:shift+z",
+		"browseMode",
+		"BrowseModeTreeInterceptor",
+		"previousClickable",
+	)
+	# The navigation must use the clickable metadata even when its speech reporting is disabled.
+	spy.set_configValue(["documentFormatting", "reportClickable"], False)
+	_chrome.prepareChrome("""
+		<p>Before the custom controls</p>
+		<button>Semantic button</button>
+		<div tabindex="0" onclick="void(0)">First custom control</div>
+		<p>Between the custom controls</p>
+		<div tabindex="0" onclick="void(0)">Second custom control</div>
+		<p>After the custom controls</p>
+	""")
+
+	actualSpeech = _chrome.getSpeechAfterKey("z")
+	_asserts.strings_match(actualSpeech, "First custom control")
+	actualSpeech = _chrome.getSpeechAfterKey("z")
+	_asserts.strings_match(actualSpeech, "Second custom control")
+	actualSpeech = _chrome.getSpeechAfterKey("z")
+	_asserts.strings_match(actualSpeech, "no next clickable element")
+	actualSpeech = _chrome.getSpeechAfterKey("shift+z")
+	_asserts.strings_match(actualSpeech, "First custom control")
+	actualSpeech = _chrome.getSpeechAfterKey("shift+z")
+	_asserts.strings_match(actualSpeech, "no previous clickable element")
+
+
 def test_ariaErrorMessage():
 	_chrome.prepareChrome("""
 		<h2>Native valid</h2>
@@ -3140,4 +3180,56 @@ def test_reportLinkDestination_notALink():
 		actualSpeech,
 		"Not a link.",
 		message="NVDA+K should report 'Not a link' when caret is not on a link",
+	)
+
+
+def test_nativeSelectionMode_focusModeCaretMovement():
+	"""The caret can be moved in focus mode while native selection mode is enabled (#19075)"""
+	_chrome.prepareChrome(
+		r"""
+			<div contenteditable="true">
+				<p>before</p>
+				<ul>
+					<li>frogs</li>
+					<li>birds</li>
+				</ul>
+				<p>after</p>
+			</div>
+		""",
+	)
+	# Enable native selection mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+shift+f10")
+	_asserts.strings_match(
+		actualSpeech,
+		"Native app selection mode enabled",
+	)
+	# Force focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode",
+	)
+	# Tab into the contenteditable
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		"section  multi line  editable  before",
+	)
+	# DownArrow into the list.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"list  bullet  frogs",
+	)
+	# DownArrow to the second list item.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"bullet  birds",
+	)
+	# DownArrow out of the list.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"out of list  after",
 	)

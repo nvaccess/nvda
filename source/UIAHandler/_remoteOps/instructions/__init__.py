@@ -41,6 +41,13 @@ from .bool import (
 	BoolAnd,
 	BoolOr,
 )
+from .cacheRequest import (
+	NewCacheRequest,
+	IsCacheRequest,
+	CacheRequestAddProperty,
+	CacheRequestAddPattern,
+	PopulateCache,
+)
 from .controlFlow import (
 	Halt,
 	Fork,
@@ -67,6 +74,7 @@ from .float import (
 )
 from .general import (
 	Set,
+	IsNotSupported,
 	Compare,
 )
 from .guid import (

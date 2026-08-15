@@ -16,6 +16,7 @@ from .. import lowLevel
 from .. import instructions
 from ..remoteFuncWrapper import (
 	remoteMethod,
+	remoteMethod_mutable,
 )
 from . import (
 	RemoteExtensionTarget,
@@ -23,6 +24,7 @@ from . import (
 	RemoteBool,
 	RemoteVariant,
 )
+from .cacheRequest import RemoteCacheRequest
 
 
 class RemoteElement(RemoteExtensionTarget[POINTER(UIA.IUIAutomationElement)]):
@@ -73,6 +75,15 @@ class RemoteElement(RemoteExtensionTarget[POINTER(UIA.IUIAutomationElement)]):
 			),
 		)
 		return result
+
+	@remoteMethod_mutable
+	def populateCache(self, cacheRequest: RemoteCacheRequest):
+		self.rob.getDefaultInstructionList().addInstruction(
+			instructions.PopulateCache(
+				target=self,
+				cacheRequest=cacheRequest,
+			),
+		)
 
 	@remoteMethod
 	def getParentElement(self) -> RemoteElement:

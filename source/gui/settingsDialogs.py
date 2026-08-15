@@ -6,7 +6,7 @@
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
-# Neil Soiffer, Ryan McCleary, Kefas Lungu.
+# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu.
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -29,7 +29,9 @@ from typing import (
 import audio
 import audioDucking
 import braille
-import brailleInput
+import braille.constants
+import braille.display
+import braille.input
 import brailleTables
 import characterProcessing
 import config
@@ -49,7 +51,6 @@ import requests
 import speech
 import speechDictHandler
 import systemUtils
-from utils.security import isRunningOnSecureDesktop
 import vision
 import vision.providerBase
 import vision.providerInfo
@@ -59,6 +60,7 @@ from wx.lib import scrolledpanel
 
 import screenCurtain._screenCurtain
 from utils import mmdevice
+from utils.security import isRunningOnSecureDesktop
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
@@ -80,6 +82,7 @@ from config.configFlags import (
 	TetherTo,
 	TypingEcho,
 	LoggingLevel,
+	BrailleMode,
 )
 from logHandler import log
 from synthDriverHandler import SynthDriver, changeVoice, getSynth, getSynthList, setSynth
@@ -1750,6 +1753,17 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("SpeechUnicodeNormalization", self.unicodeNormalizationCombo)
 
+		self.sayAllReadingUnitCombo: nvdaControls.FeatureFlagCombo = settingsSizerHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Speech settings panel.
+				"Say all reads by",
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["speech", "sayAllReadingUnit"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("SpeechSettingsSayAllReadingUnit", self.sayAllReadingUnitCombo)
+
 		# Translators: This is the label for a checkbox in the
 		# speech settings panel.
 		reportNormalizedForCharacterNavigationText = _("Report '&Normalized' when navigating by character")
@@ -1914,6 +1928,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		].value
 		config.conf["speech"]["trustVoiceLanguage"] = self.trustVoiceLanguageCheckbox.IsChecked()
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
+		self.sayAllReadingUnitCombo.saveCurrentValueToConf()
 		config.conf["speech"]["reportNormalizedForCharacterNavigation"] = (
 			self.reportNormalizedForCharacterNavigationCheckBox.IsChecked()
 		)
@@ -2665,6 +2680,17 @@ class BrowseModePanel(SettingsPanel):
 		)
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
 
+		self.searchHistoryCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is the label for a combo box in the browse mode settings panel.
+				"&Keep search history",
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["virtualBuffers", "findHistory"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("SearchHistory", self.searchHistoryCombo)
+
 		# browseMode imports gui, which imports from settingsDialogs, so a top-level import
 		# would create a circular dependency. Keep this import lazy.
 		import browseMode
@@ -2701,6 +2727,7 @@ class BrowseModePanel(SettingsPanel):
 		config.conf["virtualBuffers"]["trapNonCommandGestures"] = (
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
+		self.searchHistoryCombo.saveCurrentValueToConf()
 		config.conf["virtualBuffers"]["browseModeTouchNavigationElements"] = [
 			itemType
 			for i, (itemType, _label) in enumerate(self._browseModeElements)
@@ -3336,6 +3363,24 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.ignoreBlankLinesRLICheckbox.SetValue(config.conf["documentFormatting"]["ignoreBlankLinesForRLI"])
 		self.ignoreBlankLinesRLICheckbox.Enable(reportLineIndentation != 0)
 
+		# Translators: This is the label of a spin control in the document formatting settings panel
+		# to adjust the duration of indentation tones in milliseconds.
+		indentToneDurationText = _("Indent tone &duration (ms):")
+		self.indentToneDurationSpin = pageAndSpaceGroup.addLabeledControl(
+			indentToneDurationText,
+			wx.SpinCtrl,
+			min=10,
+			max=2000,
+			initial=config.conf["documentFormatting"]["indentToneDuration"],
+		)
+		self.indentToneDurationSpin.Enable(
+			reportLineIndentation in (ReportLineIndentation.TONES, ReportLineIndentation.SPEECH_AND_TONES),
+		)
+		self.bindHelpEvent(
+			"IndentToneDuration",
+			self.indentToneDurationSpin,
+		)
+
 		# Translators: This message is presented in the document formatting settings panel
 		# If this option is selected, NVDA will report paragraph indentation if available.
 		paragraphIndentationText = _("&Paragraph indentation")
@@ -3487,6 +3532,9 @@ class DocumentFormattingPanel(SettingsPanel):
 
 	def _onLineIndentationChange(self, evt: wx.CommandEvent) -> None:
 		self.ignoreBlankLinesRLICheckbox.Enable(evt.GetSelection() != 0)
+		self.indentToneDurationSpin.Enable(
+			evt.GetSelection() in (ReportLineIndentation.TONES, ReportLineIndentation.SPEECH_AND_TONES),
+		)
 
 	def _onLinksChange(self, evt: wx.CommandEvent):
 		self.linkTypeCheckBox.Enable(evt.IsChecked())
@@ -3517,6 +3565,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportPage"] = self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"] = self.lineNumberCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineIndentation"] = self.lineIndentationCombo.GetSelection()
+		config.conf["documentFormatting"]["indentToneDuration"] = self.indentToneDurationSpin.GetValue()
 		config.conf["documentFormatting"]["ignoreBlankLinesForRLI"] = (
 			self.ignoreBlankLinesRLICheckbox.IsChecked()
 		)
@@ -3549,6 +3598,7 @@ class DocumentNavigationPanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
 		# Translators: This is a label for the paragraph navigation style in the document navigation dialog
 		paragraphStyleLabel = _("&Paragraph style:")
 		self.paragraphStyleCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
@@ -3559,8 +3609,24 @@ class DocumentNavigationPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("ParagraphStyle", self.paragraphStyleCombo)
 
-	def onSave(self):
+		# Translators: This is a label for the word segmentation standard in the document navigation dialog
+		wordNavigationUnitLabel = _("&Word Segmentation Standard:")
+		self.wordSegCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=wordNavigationUnitLabel,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["documentNavigation", "wordSegmentationStandard"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("WordSegmentationStandard", self.wordSegCombo)
+
+	def onSave(self) -> None:
 		self.paragraphStyleCombo.saveCurrentValueToConf()
+		self.wordSegCombo.saveCurrentValueToConf()
+
+	def postSave(self) -> None:
+		import textUtils._wordSeg
+
+		textUtils._wordSeg.initialize()
 
 
 def _synthWarningDialog(newSynth: str):
@@ -4141,10 +4207,16 @@ class TouchInteractionPanel(SettingsPanel):
 		self.touchTypingCheckBox = sHelper.addItem(wx.CheckBox(self, label=_("&Touch typing mode")))
 		self.bindHelpEvent("TouchTypingMode", self.touchTypingCheckBox)
 		self.touchTypingCheckBox.SetValue(config.conf["touch"]["touchTyping"])
+		# Translators: This is the label for a checkbox in the touch interaction settings panel.
+		self.edgeGesturesCheckBox = sHelper.addItem(wx.CheckBox(self, label=_("Enable &edge gestures")))
+		self.bindHelpEvent("TouchEdgeGestures", self.edgeGesturesCheckBox)
+		self.edgeGesturesCheckBox.SetValue(config.conf["touch"]["edgeGestures"])
+		self.edgeGesturesCheckBox.Enable(touchHandler.touchSupported())
 
 	def onSave(self):
 		config.conf["touch"]["enabled"] = self.enableTouchSupportCheckBox.IsChecked()
 		config.conf["touch"]["touchTyping"] = self.touchTypingCheckBox.IsChecked()
+		config.conf["touch"]["edgeGestures"] = self.edgeGesturesCheckBox.IsChecked()
 		touchHandler.setTouchSupport(config.conf["touch"]["enabled"])
 
 
@@ -4461,6 +4533,22 @@ class AdvancedPanelControls(
 			["terminals", "keyboardSupportInLegacy"],
 		)
 		self.keyboardSupportInLegacyCheckBox.Enable(winVersion.getWinVer() >= winVersion.WIN10_1607)
+		# Translators: This is the label for a checkbox in the
+		# Advanced settings panel.
+		label = _("Beep for &skipped lines")
+		self.beepForSkippedLinesCheckBox = terminalsGroup.addItem(
+			wx.CheckBox(terminalsBox, label=label),
+		)
+		self.bindHelpEvent(
+			"BeepForSkippedLines",
+			self.beepForSkippedLinesCheckBox,
+		)
+		self.beepForSkippedLinesCheckBox.SetValue(
+			config.conf["terminals"]["beepForSkippedLines"],
+		)
+		self.beepForSkippedLinesCheckBox.defaultValue = self._getDefaultValue(
+			["terminals", "beepForSkippedLines"],
+		)
 
 		# Translators: This is the label for a combo box for selecting a
 		# method of detecting changed content in terminals in the advanced
@@ -4757,6 +4845,7 @@ class AdvancedPanelControls(
 			== self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 			== self.winConsoleSpeakPasswordsCheckBox.defaultValue
+			and self.beepForSkippedLinesCheckBox.IsChecked() == self.beepForSkippedLinesCheckBox.defaultValue
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
 			and self.wtStrategyCombo.isValueConfigSpecDefault()
 			and self.cancelExpiredFocusSpeechCombo.GetSelection()
@@ -4789,6 +4878,9 @@ class AdvancedPanelControls(
 		self.brailleLiveRegionsCombo.resetToConfigSpecDefault()
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
+		self.beepForSkippedLinesCheckBox.SetValue(
+			self.beepForSkippedLinesCheckBox.defaultValue,
+		)
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue)
 		self.wtStrategyCombo.resetToConfigSpecDefault()
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
@@ -4831,6 +4923,7 @@ class AdvancedPanelControls(
 		self.enhancedEventProcessingComboBox.saveCurrentValueToConf()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["terminals"]["keyboardSupportInLegacy"] = self.keyboardSupportInLegacyCheckBox.IsChecked()
+		config.conf["terminals"]["beepForSkippedLines"] = self.beepForSkippedLinesCheckBox.IsChecked()
 		diffAlgoChoice = self.diffAlgoCombo.GetSelection()
 		config.conf["terminals"]["diffAlgo"] = self.diffAlgoVals[diffAlgoChoice]
 		self.wtStrategyCombo.saveCurrentValueToConf()
@@ -4993,7 +5086,7 @@ class BrailleSettingsPanel(SettingsPanel):
 			self.Thaw()
 
 	def updateCurrentDisplay(self):
-		if config.conf["braille"]["display"] == braille.AUTO_DISPLAY_NAME:
+		if config.conf["braille"]["display"] == braille.constants.AUTO_DISPLAY_NAME:
 			displayDesc = BrailleDisplaySelectionDialog.getCurrentAutoDisplayDescription()
 		else:
 			displayDesc = braille.handler.display.description
@@ -5053,23 +5146,23 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 
 	@staticmethod
 	def getCurrentAutoDisplayDescription():
-		description = braille.AUTOMATIC_PORT[1]
+		description = braille.constants.AUTOMATIC_PORT[1]
 		if (
-			config.conf["braille"]["display"] == braille.AUTO_DISPLAY_NAME
+			config.conf["braille"]["display"] == braille.constants.AUTO_DISPLAY_NAME
 			and braille.handler.display.name != "noBraille"
 		):
 			description = "%s (%s)" % (description, braille.handler.display.description)
 		return description
 
 	def updateBrailleDisplayLists(self):
-		driverList = [(braille.AUTO_DISPLAY_NAME, self.getCurrentAutoDisplayDescription())]
-		driverList.extend(braille.getDisplayList())
+		driverList = [(braille.constants.AUTO_DISPLAY_NAME, self.getCurrentAutoDisplayDescription())]
+		driverList.extend(braille.display.getDisplayList())
 		self.displayNames = [driver[0] for driver in driverList]
 		displayChoices = [driver[1] for driver in driverList]
 		self.displayList.Clear()
 		self.displayList.AppendItems(displayChoices)
 		try:
-			if config.conf["braille"]["display"] == braille.AUTO_DISPLAY_NAME:
+			if config.conf["braille"]["display"] == braille.constants.AUTO_DISPLAY_NAME:
 				selection = 0
 			else:
 				selection = self.displayNames.index(braille.handler.display.name)
@@ -5094,9 +5187,9 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 	def updateStateDependentControls(self):
 		displayName = self.displayNames[self.displayList.GetSelection()]
 		self.possiblePorts = []
-		isAutoDisplaySelected = displayName == braille.AUTOMATIC_PORT[0]
+		isAutoDisplaySelected = displayName == braille.constants.AUTOMATIC_PORT[0]
 		if not isAutoDisplaySelected:
-			displayCls = braille._getDisplayDriver(displayName)
+			displayCls = braille.display._getDisplayDriver(displayName)
 			try:
 				self.possiblePorts.extend(displayCls.getPossiblePorts().items())
 			except NotImplementedError:
@@ -5226,7 +5319,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			if config.conf["braille"]["inputTable"] == "auto":
 				selection = 0
 			else:
-				selection = self.inTables.index(brailleInput.handler.table) + 1
+				selection = self.inTables.index(braille.input.handler.table) + 1
 			self.inTableList.SetSelection(selection)
 		except:  # noqa: E722
 			log.exception()
@@ -5237,12 +5330,12 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			)
 		# Translators: The label for a setting in braille settings to select which braille mode to use
 		modeListText = _("Braille mode:")
-		modeChoices = [x.displayString for x in braille.BrailleMode]
+		modeChoices = [x.displayString for x in BrailleMode]
 		self.brailleModes = sHelper.addLabeledControl(modeListText, wx.Choice, choices=modeChoices)
 		self.bindHelpEvent("BrailleMode", self.brailleModes)
 		self.brailleModes.Bind(wx.EVT_CHOICE, self._onModeChange)
-		current = braille.BrailleMode(config.conf["braille"]["mode"])
-		modeList = list(braille.BrailleMode)
+		current = BrailleMode(config.conf["braille"]["mode"])
+		modeList = list(BrailleMode)
 		index = modeList.index(current)
 		self.brailleModes.SetSelection(index)
 		followCursorGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self)
@@ -5297,8 +5390,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		if not self.showCursorCheckBox.GetValue() or not self.cursorBlinkCheckBox.GetValue():
 			self.cursorBlinkRateEdit.Disable()
 
-		self.cursorShapes = [s[0] for s in braille.CURSOR_SHAPES]
-		cursorShapeChoices = [s[1] for s in braille.CURSOR_SHAPES]
+		self.cursorShapes = [s[0] for s in braille.constants.CURSOR_SHAPES]
+		cursorShapeChoices = [s[1] for s in braille.constants.CURSOR_SHAPES]
 
 		# Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
 		cursorShapeFocusLabelText = _("Cursor shape for &focus:")
@@ -5445,8 +5538,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 		focusContextPresentationLabelText = _("Focus context presentation:")
-		self.focusContextPresentationValues = [x[0] for x in braille.focusContextPresentations]
-		focusContextPresentationChoices = [x[1] for x in braille.focusContextPresentations]
+		self.focusContextPresentationValues = [x[0] for x in braille.constants.focusContextPresentations]
+		focusContextPresentationChoices = [x[1] for x in braille.constants.focusContextPresentations]
 		self.focusContextPresentationList = followCursorGroupHelper.addLabeledControl(
 			focusContextPresentationLabelText,
 			wx.Choice,
@@ -5502,15 +5595,18 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.speakOnNavigatingCheckBox.Value = config.conf["braille"]["speakOnNavigatingByUnit"]
 
 		self.followCursorGroupBox.Enable(
-			list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS,
+			list(BrailleMode)[self.brailleModes.GetSelection()] is BrailleMode.FOLLOW_CURSORS,
 		)
 
-		# Translators: The label for a setting in braille settings to enable word wrap
-		# (try to avoid splitting words at the end of the braille display).
-		wordWrapText = _("Avoid splitting &words when possible")
-		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
-		self.bindHelpEvent("BrailleSettingsWordWrap", self.wordWrapCheckBox)
-		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
+		self.textWrapComboBox: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			# Translators: The label for a setting in braille settings to configure text wrap behaviour
+			# (how to break lines that don't fit on the braille display).
+			labelText=_("Text &wrap"),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "textWrap"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleSettingsWordWrap", self.textWrapComboBox)
 
 		self.unicodeNormalizationCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=_(
@@ -5563,11 +5659,11 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			braille.handler.table = self.outTableForCurLang
 			config.conf["braille"]["translationTable"] = "auto"
 		if self.inTableList.GetSelection():
-			brailleInput.handler.table = self.inTables[self.inTableList.GetSelection() - 1]
+			braille.input.handler.table = self.inTables[self.inTableList.GetSelection() - 1]
 		else:
-			brailleInput.handler.table = self.inTableForCurLang
+			braille.input.handler.table = self.inTableForCurLang
 			config.conf["braille"]["inputTable"] = "auto"
-		mode = list(braille.BrailleMode)[self.brailleModes.GetSelection()]
+		mode = list(BrailleMode)[self.brailleModes.GetSelection()]
 		config.conf["braille"]["mode"] = mode.value
 		braille.handler.mainBuffer.clear()
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
@@ -5600,7 +5696,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		config.conf["braille"]["speakOnRouting"] = self.speakOnRoutingCheckBox.Value
 		config.conf["braille"]["speakOnNavigatingByUnit"] = self.speakOnNavigatingCheckBox.Value
-		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
+		self.textWrapComboBox.saveCurrentValueToConf()
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[
 			self.focusContextPresentationList.GetSelection()

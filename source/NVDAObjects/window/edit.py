@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter, Wang Chong
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import ctypes
 from comtypes import BSTR, COMError
@@ -26,6 +26,7 @@ from ..behaviors import EditableTextWithAutoSelectDetection
 import watchdog
 import locationHelper
 import textUtils
+from textUtils.segFlag import CharSegFlag, WordSegFlag
 import NVDAHelper.localLib
 
 
@@ -163,6 +164,13 @@ WB_RIGHTBREAK = 7
 
 
 class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
+	# Override segFlags to enforce use of Uniscribe
+	charSegFlag = CharSegFlag.UNISCRIBE
+
+	@property
+	def wordSegFlag(self) -> WordSegFlag:
+		return WordSegFlag.UNISCRIBE
+
 	def _getPointFromOffset(self, offset):
 		if self.obj.editAPIVersion == 1 or self.obj.editAPIVersion >= 3:
 			processHandle = self.obj.processHandle
@@ -655,7 +663,6 @@ NVDAUnitsToITextDocumentUnits: dict[str, int] = {
 	textInfos.UNIT_SENTENCE: comInterfaces.tom.tomSentence,
 	textInfos.UNIT_PARAGRAPH: comInterfaces.tom.tomParagraph,
 	textInfos.UNIT_STORY: comInterfaces.tom.tomStory,
-	textInfos.UNIT_READINGCHUNK: comInterfaces.tom.tomLine,
 }
 
 
@@ -932,6 +939,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		return commandList
 
 	def expand(self, unit):
+		unit = self._resolveReadingChunkUnit(unit)
 		if unit in NVDAUnitsToITextDocumentUnits:
 			self._rangeObj.Expand(NVDAUnitsToITextDocumentUnits[unit])
 		else:
@@ -990,6 +998,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		return self._getTextAtRange(self._rangeObj)
 
 	def move(self, unit, direction, endPoint=None):
+		unit = self._resolveReadingChunkUnit(unit)
 		if unit in NVDAUnitsToITextDocumentUnits:
 			unit = NVDAUnitsToITextDocumentUnits[unit]
 		else:
@@ -1034,8 +1043,8 @@ class Edit(EditableTextWithAutoSelectDetection, EditBase):
 	editAPIVersion = 0
 	editValueUnit = textInfos.UNIT_LINE
 
-	def _get_TextInfo(self):
-		if self.editAPIVersion != 0 and self.ITextDocumentObject:
+	def _get_TextInfo(self) -> type[textInfos.TextInfo]:
+		if self.editAPIVersion != 0 and self.ITextDocumentObject and self.ITextSelectionObject:
 			return ITextDocumentTextInfo
 		else:
 			return EditTextInfo
@@ -1048,8 +1057,8 @@ class Edit(EditableTextWithAutoSelectDetection, EditBase):
 					winUser.OBJID_NATIVEOM,
 					interface=comInterfaces.tom.ITextDocument,
 				)
-			except (COMError, WindowsError):
-				log.error("Error getting ITextDocument", exc_info=True)
+			except (COMError, OSError):
+				log.debugWarning("Error getting ITextDocument", exc_info=True)
 				self._ITextDocumentObject = None
 		return self._ITextDocumentObject
 
@@ -1090,7 +1099,7 @@ class RichEdit(Edit):
 		# We then fall back to normal Edit support.
 		try:
 			return self.TextInfo(self, position)
-		except COMError:
+		except (COMError, AttributeError):
 			log.debugWarning("Could not instanciate ITextDocumentTextInfo", exc_info=True)
 			self.TextInfo = EditTextInfo
 			return self.TextInfo(self, position)

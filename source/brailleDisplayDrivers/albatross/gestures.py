@@ -13,6 +13,7 @@ from typing import (
 )
 
 import braille
+import braille.display.gesture
 import inputCore
 
 from .constants import (
@@ -44,6 +45,7 @@ _gestureMap = inputCore.GlobalGestureMap(
 				"br(albatross):rWheelRight",
 			),
 			"braille_routeTo": ("br(albatross):routing",),
+			"braille_selectRange": ("br(albatross):home1+multiRouting", "br(albatross):home2+multiRouting"),
 			"braille_reportFormatting": ("br(albatross):secondRouting",),
 			"braille_toggleFocusContextPresentation": ("br(albatross):attribute1+attribute3",),
 			"speechMode": ("br(albatross):attribute2+attribute4",),
@@ -83,7 +85,7 @@ _gestureMap = inputCore.GlobalGestureMap(
 )
 
 
-class InputGestureKeys(braille.BrailleDisplayGesture):
+class InputGestureKeys(braille.display.gesture.BrailleDisplayGesture):
 	"""Changes display key presses to gestures for NVDA input system."""
 
 	def __init__(self, keys: Set[int], name: str):
@@ -95,16 +97,24 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 		self.source = name
 		self.keyCodes = set(keys)
 		names = []
+		cellIndexesByRange: dict[str, list[int]] = {}
 		for key in self.keyCodes:
 			routingTuple = self._getRoutingIndex(key)
 			if routingTuple:
-				names.append(routingTuple[0])
-				self.routingIndex = routingTuple[1]
+				rangeName, index = routingTuple
+				cellIndexesByRange.setdefault(rangeName, []).append(index)
 			else:
 				try:
 					names.append(Keys(key).name)
 				except (KeyError, ValueError):
 					log.debug(f"Unknown key with id {key}")
+		if cellIndexesByRange:
+			allIndexes: list[int] = []
+			for rangeName, indexes in sorted(cellIndexesByRange.items()):
+				indexes.sort()
+				allIndexes.extend(indexes)
+				names.append(self.idForCellCount(len(indexes), rangeName))
+			self.cellIndexes = allIndexes
 		self.id = "+".join(names)
 		# Try to fix the first valid key press was not recognized as a gesture
 		if self.id and not self.script:

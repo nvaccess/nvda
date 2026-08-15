@@ -692,6 +692,19 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation, browseMode.BrowseMod
 				UIAHandler.UIA_SliderControlTypeId,
 			)
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
+		elif nodeType == "clickable":
+			# Match the generic control types which UIAWeb exposes with State.CLICKABLE.
+			condition = createUIAMultiPropertyCondition(
+				{
+					UIAHandler.UIA_ControlTypePropertyId: [
+						UIAHandler.UIA_TextControlTypeId,
+						UIAHandler.UIA_GroupControlTypeId,
+						UIAHandler.UIA_ImageControlTypeId,
+					],
+					UIAHandler.UIA_IsInvokePatternAvailablePropertyId: True,
+				},
+			)
+			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
 		elif nodeType == "nonTextContainer":
 			condition = createUIAMultiPropertyCondition(
 				{
