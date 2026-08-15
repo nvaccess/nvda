@@ -1602,27 +1602,7 @@ This means that, to type alt+2 with a Braille code that uses a number sign, you 
 
 <!-- KC:endInclude -->
 
-## Vision {#Vision}
-
-While NVDA is primarily aimed at blind or vision impaired people who primarily use speech and/or braille to operate a computer, it also provides built-in facilities to change the contents of the screen.
-Within NVDA, such a visual aid is called a vision enhancement provider.
-
-NVDA offers several built-in vision enhancement providers which are described below.
-Additional vision enhancement providers can be provided in [NVDA add-ons](#AddonsManager).
-
-NVDA's vision settings can be changed in the [vision category](#VisionSettings) of the [NVDA Settings](#NVDASettings) dialog.
-
-### Visual Highlight {#VisionFocusHighlight}
-
-Visual Highlight can help to identify the [system focus](#SystemFocus), [navigator object](#ObjectNavigation) and [browse mode](#BrowseMode) positions.
-These positions are highlighted with a coloured rectangle outline.
-
-* Solid blue highlights a combined navigator object and system focus location (e.g. because [the navigator object follows the system focus](#ReviewCursorFollowFocus)).
-* Dashed blue highlights just the system focus object.
-* Solid pink highlights just the navigator object.
-* Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers), the cursor in OCR recognition results, and the current subpart while navigating math on the web.
-
-When Visual Highlight is enabled in the [vision category](#VisionSettings) of the [NVDA Settings](#NVDASettings) dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret](#VisionSettingsFocusHighlight).
+## Privacy and Security {#PrivacyAndSecurity}
 
 ### Screen Curtain {#VisionScreenCurtain}
 
@@ -1646,6 +1626,28 @@ For example, you cannot [use OCR](#Win10Ocr).
 Some screenshot utilities also may not work.
 
 Please note that while Windows Magnifier is running and inverted screen colors are being used, Screen Curtain cannot be enabled.
+
+## Vision {#Vision}
+
+While NVDA is primarily aimed at blind or vision impaired people who primarily use speech and/or braille to operate a computer, it also provides built-in facilities to change the contents of the screen.
+Within NVDA, such a visual aid is called a vision enhancement provider.
+
+NVDA offers several built-in vision enhancement providers which are described below.
+Additional vision enhancement providers can be provided in [NVDA add-ons](#AddonsManager).
+
+NVDA's vision settings can be changed in the [vision category](#VisionSettings) of the [NVDA Settings](#NVDASettings) dialog.
+
+### Visual Highlight {#VisionFocusHighlight}
+
+Visual Highlight can help to identify the [system focus](#SystemFocus), [navigator object](#ObjectNavigation) and [browse mode](#BrowseMode) positions.
+These positions are highlighted with a coloured rectangle outline.
+
+* Solid blue highlights a combined navigator object and system focus location (e.g. because [the navigator object follows the system focus](#ReviewCursorFollowFocus)).
+* Dashed blue highlights just the system focus object.
+* Solid pink highlights just the navigator object.
+* Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers), the cursor in OCR recognition results, and the current subpart while navigating math on the web.
+
+When Visual Highlight is enabled in the [vision category](#VisionSettings) of the [NVDA Settings](#NVDASettings) dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret](#VisionSettingsFocusHighlight).
 
 ## Magnifier {#Magnifier}
 
