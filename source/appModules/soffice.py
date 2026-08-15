@@ -461,6 +461,89 @@ class SymphonyDocument(CompoundDocument):
 	formattingGestureObjectIds: list[str] = []
 	lastFormattingGestureEventTime: float = 0
 
+	# Helpers for Writer's document-level POSITION_FIRST TextInfo.
+	# Some Writer structures can break the default compound document path,
+	# so these helpers find a usable first content object and wrap it as
+	# a document-level SymphonyDocumentTextInfo.
+	def _getNextSibling(self, obj: NVDAObject) -> NVDAObject | None:
+		for attr in ("next", "nextSibling"):
+			try:
+				nextObj = getattr(obj, attr)
+			except Exception:
+				continue
+			if nextObj is not None:
+				return nextObj
+		return None
+
+	def _iterDescendantsInTreeOrder(self, startObj: NVDAObject | None, maxObjects: int = 500):
+		stack = [startObj]
+		seen = set()
+		visitedCount = 0
+		while stack and visitedCount < maxObjects:
+			obj = stack.pop()
+			if obj is None:
+				continue
+			objId = id(obj)
+			if objId in seen:
+				continue
+			seen.add(objId)
+			visitedCount += 1
+			yield obj
+
+			children = []
+			try:
+				child = obj.firstChild
+			except Exception:
+				child = None
+			while child is not None:
+				if id(child) not in seen:
+					children.append(child)
+				child = self._getNextSibling(child)
+			for child in reversed(children):
+				stack.append(child)
+
+	def _tryMakeFirstRawTextInfo(self, obj: NVDAObject) -> textInfos.TextInfo | None:
+		try:
+			role = obj.role
+		except Exception:
+			role = None
+		if role in (controlTypes.Role.FRAME, controlTypes.Role.DOCUMENT):
+			return None
+		try:
+			return obj.makeTextInfo(textInfos.POSITION_FIRST)
+		except (NotImplementedError, RuntimeError, COMError, AttributeError):
+			return None
+
+	def _makeDocumentTextInfoFromRaw(self, obj: NVDAObject, rawInfo: textInfos.TextInfo) -> SymphonyDocumentTextInfo:
+		# rawInfo belongs to a Writer content descendant. POSITION_FIRST was requested
+		# from the document, so wrap the raw leaf TextInfo as a document-level
+		# SymphonyDocumentTextInfo owned by this SymphonyDocument.
+		info = self.TextInfo.__new__(self.TextInfo)
+		textInfos.TextInfo.__init__(info, self, textInfos.POSITION_FIRST)
+		info._startObj = obj
+		info._endObj = obj
+		info._start = rawInfo
+		info._end = rawInfo
+		return info
+
+	def _makePositionFirstTextInfo(self) -> SymphonyDocumentTextInfo:
+		try:
+			startObj = self.rootNVDAObject.firstChild
+		except Exception:
+			startObj = None
+		for obj in self._iterDescendantsInTreeOrder(startObj):
+			rawInfo = self._tryMakeFirstRawTextInfo(obj)
+			if rawInfo is not None:
+				return self._makeDocumentTextInfoFromRaw(obj, rawInfo)
+		raise LookupError("No content descendant found for Writer POSITION_FIRST")
+
+	def makeTextInfo(self, position):
+		# Writer needs a document-level POSITION_FIRST TextInfo for braille region updates.
+		# Normal caret and selection TextInfo requests continue to use the existing path.
+		if position == textInfos.POSITION_FIRST:
+			return self._makePositionFirstTextInfo()
+		return super().makeTextInfo(position)
+
 	@staticmethod
 	def isFormattingChangeAnnouncementEnabled(obj: NVDAObject) -> bool:
 		if not SymphonyDocument.announceFormattingGestureChange:
