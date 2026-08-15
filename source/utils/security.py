@@ -170,10 +170,25 @@ def objectBelowLockScreenAndWindowsIsLocked(
 	as it may contain sensitive information.
 
 	As such, NVDA must prevent accessing and reading objects below the lock screen when Windows is locked.
+
+	Some callers pass a L{TreeInterceptor} rather than an NVDAObject.
+	As TreeInterceptors do not implement C{isBelowLockScreen}, their root object is checked instead.
+
 	@return: C{True} if the Windows 10/11 lockscreen is active and C{obj} is below the lock screen.
 	"""
+	if not isLockScreenModeActive():
+		return False
+
+	import NVDAObjects
+
+	if not isinstance(obj, NVDAObjects.NVDAObject):
+		rootObj = getattr(obj, "rootNVDAObject", None)
+		if rootObj is None:
+			log.debug(f"Unhandled object type {type(obj)}, considering object as safe.")
+			return False
+		obj = rootObj
 	try:
-		isObjectBelowLockScreen = isLockScreenModeActive() and obj.isBelowLockScreen
+		isObjectBelowLockScreen = obj.isBelowLockScreen
 	except Exception:
 		log.exception()
 		return False
