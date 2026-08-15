@@ -150,7 +150,7 @@ Use the individual test commands instead: `runcheckpot.bat`, `rununittests.bat`,
 * The `speechDictHandler.ENTRY_TYPE_*` constants are deprecated.
 Use the `speechDictHandler.types.EntryType` enumeration instead. (#19430, @LeonarddeR)
 * `speechDictHandler.SpeechDictEntry` and `speechDictHandler.SpeechDict` have been moved to `speechDictHandler.types`. (#19430, @LeonarddeR)
-* `speechDictHandler.dictionaries` and `speechDictHandler.dictTypes` are deprecated without replacement. (#19558)
+* `speechDictHandler.dictionaries` and `speechDictHandler.dictTypes` are deprecated without replacement. (#19558, @LeonarddeR)
 
 ## 2026.1.1
 
