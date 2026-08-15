@@ -6202,17 +6202,8 @@ class MagnifierPanel(SettingsPanel):
 			checkBox.Bind(wx.EVT_CHECKBOX, self._onImmediateSettingChange)
 			self._trackingTypeCheckBoxes[trackingType] = checkBox
 
-		# Tracking GROUP
-		# Translators: This is the label for a group of tracking magnifier options in the
-		# magnifier settings panel
-		trackingGroupText = _("Tracking")
-		self.trackingGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=trackingGroupText)
-		trackingGroupBox = self.trackingGroupSizer.GetStaticBox()
-		trackingGroup = guiHelper.BoxSizerHelper(trackingGroupBox, sizer=self.trackingGroupSizer)
-		sHelper.addItem(trackingGroup)
-
 		# Tracking MODE SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the full-screen mode
+		# Translators: The label for a setting in magnifier settings to select the tracking mode
 		trackingModeLabelText = _("&Tracking mode:")
 		trackingModeChoices = [mode.displayString for mode in FullScreenMode]
 		self.trackingModeList = trackingGroup.addLabeledControl(
