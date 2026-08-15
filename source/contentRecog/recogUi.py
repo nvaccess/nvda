@@ -318,10 +318,10 @@ def recognizeNavigatorObject(recognizer: ContentRecognizer):
 		ui.message(notVisibleMsg)
 		return
 	if _isScreenCurtainActive() and not _isWgcCaptureSupported():
-		# Translators: Reported when content recognition (e.g. OCR) is attempted while Screen Curtain
-		# is enabled, but the system does not support the required screen capture API.
 		ui.message(
 			_(
+				# Translators: Reported when content recognition (e.g. OCR) is attempted while Screen Curtain
+				# is enabled, but the system does not support the required screen capture API.
 				"Content recognition is unavailable while Screen Curtain is enabled on this system. "
 				"Please disable Screen Curtain and try again.",
 			),
