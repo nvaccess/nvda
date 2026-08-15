@@ -60,7 +60,6 @@ globalVars.appDir = appDir
 globalVars.appPid = os.getpid()
 
 
-import config  # noqa: E402
 import logHandler  # noqa: E402
 from logHandler import log  # noqa: E402
 import winKernel  # noqa: E402

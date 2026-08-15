@@ -41,7 +41,7 @@ def addDirsToPythonPackagePath(module: ModuleType, subdir: Optional[str] = None)
 	@param module: The root module of the package.
 	@param subdir: The subdirectory to be used, C{None} for the name of C{module}.
 	"""
-	if config.isAppX or globalVars.appArgs.disableAddons:
+	if globalVars.appArgs.disableAddons:
 		return
 	from . import getRunningAddons
 

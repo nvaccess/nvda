@@ -28,8 +28,6 @@ from NVDAState import WritePaths
 
 if globalVars.appArgs.secure:
 	raise RuntimeError("updates disabled in secure mode")
-elif config.isAppX:
-	raise RuntimeError("updates managed by Windows Store")
 import buildVersion
 
 if not buildVersion.updateVersionType:

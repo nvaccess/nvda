@@ -842,10 +842,6 @@ def initialize() -> None:
 			)
 			raise e
 	localLib.nvdaHelperLocal_initialize(globalVars.appArgs.secure)
-	# The rest of this function (to do with injection) only applies if NVDA is not running as a Windows store application
-	if config.isAppX:
-		log.info("Remote injection disabled due to running as a Windows Store Application")
-		return
 	# Load nvdaHelperRemote.dll
 	h = winBindings.kernel32.LoadLibraryEx(
 		ReadPaths.nvdaHelperRemoteDll,
@@ -885,18 +881,17 @@ def initialize() -> None:
 
 def terminate():
 	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
-	if not config.isAppX:
-		if not _remoteLib.uninstallIA2Support():
-			log.debugWarning("Error uninstalling IA2 support")
-		if _remoteLib.injection_terminate() == 0:
-			raise RuntimeError("Error terminating NVDAHelperRemote")
-		_remoteLib = None
-		if _remoteLoaderAMD64:
-			_remoteLoaderAMD64.terminate()
-			_remoteLoaderAMD64 = None
-		if _remoteLoaderARM64:
-			_remoteLoaderARM64.terminate()
-			_remoteLoaderARM64 = None
+	if not _remoteLib.uninstallIA2Support():
+		log.debugWarning("Error uninstalling IA2 support")
+	if _remoteLib.injection_terminate() == 0:
+		raise RuntimeError("Error terminating NVDAHelperRemote")
+	_remoteLib = None
+	if _remoteLoaderAMD64:
+		_remoteLoaderAMD64.terminate()
+		_remoteLoaderAMD64 = None
+	if _remoteLoaderARM64:
+		_remoteLoaderARM64.terminate()
+		_remoteLoaderARM64 = None
 	localLib.nvdaHelperLocal_terminate()
 
 
