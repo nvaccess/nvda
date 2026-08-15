@@ -193,7 +193,7 @@ def doStartupDialogs():
 		import updateCheck
 	except RuntimeError:
 		updateCheck = None
-	if not globalVars.appArgs.secure and not config.isAppX and not globalVars.appArgs.launcher:
+	if not globalVars.appArgs.secure and not globalVars.appArgs.launcher:
 		if updateCheck and not config.conf["update"]["askedAllowUsageStats"]:
 			# a callback to save config after the usage stats question dialog has been answered.
 			def onResult(ID):
@@ -654,15 +654,6 @@ def _setUpWxApp() -> "wx.App":
 			pass
 
 	app = App(redirect=False)
-
-	# We support queryEndSession events, but in general don't do anything for them.
-	# However, when running as a Windows Store application, we do want to request to be restarted for updates
-	def onQueryEndSession(evt):
-		if config.isAppX:
-			# Automatically restart NVDA on Windows Store update
-			winBindings.kernel32.RegisterApplicationRestart(None, 0)
-
-	app.Bind(wx.EVT_QUERY_END_SESSION, onQueryEndSession)
 
 	def returnFalse() -> Literal[False]:
 		return False
