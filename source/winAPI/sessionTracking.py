@@ -71,6 +71,8 @@ _wasLockedPreviousPumpAll = False
 Each core pump cycle, the Windows lock state is updated.
 The previous value is tracked, so that changes to the lock state can be detected.
 """
+_loggedSessionQueryFailures: set[str] = set()
+"""Session query failures already logged during this NVDA session."""
 
 
 class WindowsTrackedSession(enum.IntEnum):
@@ -172,14 +174,21 @@ def _isWindowsLocked_checkViaSessionQuery() -> bool:
 	try:
 		sessionQueryLockState = _getSessionLockedValue()
 	except RuntimeError:
-		log.exception("Failure querying session locked state")
+		_logSessionQueryFailureOnce("Failure querying session locked state", excInfo=True)
 		return False
 	if sessionQueryLockState == WTS_LockState.WTS_SESSIONSTATE_UNKNOWN:
-		log.error(
+		_logSessionQueryFailureOnce(
 			f"Unable to determine lock state via Session Query. Lock state value: {sessionQueryLockState!r}",
 		)
 		return False
 	return sessionQueryLockState == WTS_LockState.WTS_SESSIONSTATE_LOCK
+
+
+def _logSessionQueryFailureOnce(message: str, *, excInfo: bool = False) -> None:
+	if message in _loggedSessionQueryFailures:
+		return
+	log.error(message, exc_info=excInfo)
+	_loggedSessionQueryFailures.add(message)
 
 
 _WTS_INFO_POINTER_T = ctypes.POINTER(WTSINFOEXW)
@@ -192,8 +201,6 @@ def WTSCurrentSessionInfoEx() -> Generator[_WTS_INFO_POINTER_T]:
 	@raises RuntimeError: On failure
 	"""
 	info = _getCurrentSessionInfoEx()
-	if info is None:
-		return
 	try:
 		yield info
 	finally:
@@ -202,7 +209,7 @@ def WTSCurrentSessionInfoEx() -> Generator[_WTS_INFO_POINTER_T]:
 		)
 
 
-def _getCurrentSessionInfoEx() -> _WTS_INFO_POINTER_T | None:
+def _getCurrentSessionInfoEx() -> _WTS_INFO_POINTER_T:
 	"""
 	Gets the WTSINFOEXW for the current server/session or raises a RuntimeError
 	on failure.
@@ -213,7 +220,6 @@ def _getCurrentSessionInfoEx() -> _WTS_INFO_POINTER_T | None:
 	"""
 	ppBuffer = LPWSTR(None)
 	pBytesReturned = DWORD(0)
-	info = None
 
 	res = WTSQuerySessionInformation(
 		WTS_CURRENT_SERVER_HANDLE,  # WTS_CURRENT_SERVER_HANDLE to indicate the RD Session Host server on
@@ -252,12 +258,11 @@ def _getCurrentSessionInfoEx() -> _WTS_INFO_POINTER_T | None:
 				f"Unexpected Level data, got {info.contents.Level}.",
 			)
 		return info
-	except Exception as e:
-		log.exception("Unexpected WTSQuerySessionInformation value:", exc_info=e)
-		WTSFreeMemory(  # should this be moved to a finally block?
+	except Exception:
+		WTSFreeMemory(
 			ctypes.cast(ppBuffer, ctypes.c_void_p),
 		)
-		return None
+		raise
 
 
 def _getSessionLockedValue() -> WTS_LockState:
