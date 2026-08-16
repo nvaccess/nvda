@@ -372,6 +372,16 @@ class TestFullScreenMagnifierApi(_TestMagnifier):
 		self.assertFalse(magnifier._isActive)
 		self.assertIsNone(magnifier._timer)
 
+	def testCannotStartWhenMagnificationApiIsUnavailable(self):
+		self.mock_mag_fs.MAGNIFICATION_AVAILABLE = False
+		magnifier = FullScreenMagnifier()
+
+		with self.assertRaisesRegex(MagnifierStartError, "Windows Magnification API is unavailable"):
+			magnifier._startMagnifier()
+
+		self.assertFalse(magnifier._isActive)
+		self.assertIsNone(magnifier._timer)
+
 	def testRecoveryCapStopsMagnifier(self):
 		"""After _MAX_RECOVERY_ATTEMPTS failed attempts, the magnifier stops and the user is notified."""
 		magnifier = FullScreenMagnifier()

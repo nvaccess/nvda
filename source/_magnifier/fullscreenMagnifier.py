@@ -71,6 +71,14 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		Start the Full-screen magnifier using windows DLL
 		"""
+		if not magnification.MAGNIFICATION_AVAILABLE:
+			raise MagnifierStartError(
+				pgettext(
+					"magnifier",
+					# Translators: Message when NVDA's Magnifier cannot start because the Windows Magnification API is unavailable.
+					"Cannot start magnifier because the Windows Magnification API is unavailable.",
+				),
+			)
 		super()._startMagnifier()
 		if not self._isActive:
 			return

@@ -5,6 +5,9 @@
 
 """Screen curtain implementation based on the windows magnification API."""
 
+from logHandler import log
+from winBindings.magnification import MAGNIFICATION_AVAILABLE, MAGNIFICATION_LOAD_ERROR
+
 from ._screenCurtain import ScreenCurtain
 
 __all__ = (
@@ -21,6 +24,12 @@ screenCurtain: ScreenCurtain | None = None
 def initialize():
 	"""Initialize theScreen Curtain."""
 	global screenCurtain
+	if not MAGNIFICATION_AVAILABLE:
+		log.warning(
+			"Screen Curtain unavailable because the Windows Magnification API is unavailable.",
+			exc_info=MAGNIFICATION_LOAD_ERROR,
+		)
+		return
 	if screenCurtain is None:
 		screenCurtain = ScreenCurtain()
 

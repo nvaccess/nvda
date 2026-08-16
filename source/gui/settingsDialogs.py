@@ -21,6 +21,8 @@ from enum import IntEnum
 from locale import strxfrm
 from typing import (
 	Any,
+	TYPE_CHECKING,
+	cast,
 )
 
 import audio
@@ -41,8 +43,7 @@ import logHandler
 from _magnifier import getMagnifier
 from _magnifier.commands import toggleMagnifier
 import _magnifier.config as magnifierConfig
-from _magnifier.utils.types import Filter, FullScreenMode, MagnifierTrackingType
-from _magnifier.fullscreenMagnifier import FullScreenMagnifier
+from _magnifier.utils.types import Filter, FullScreenMode, MagnifiedView, MagnifierTrackingType
 import queueHandler
 import requests
 import speech
@@ -108,6 +109,9 @@ from autoSettingsUtils.utils import UnsupportedConfigParameterError
 
 from . import nvdaControls
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+
+if TYPE_CHECKING:
+	from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 
 #: The size that settings panel text descriptions should be wrapped at.
 # Ensure self.scaleSize is used to adjust for OS scaling adjustments.
@@ -3716,6 +3720,7 @@ class AudioPanel(SettingsPanel):
 		self.soundSplitComboBox.SetSelection(index)
 
 		self._appendSoundSplitModesList(sHelper)
+		self._updateSoundSplitAvailability(sHelper)
 
 		self._onSoundVolChange(None)
 
@@ -3749,6 +3754,19 @@ class AudioPanel(SettingsPanel):
 			mIndex for mIndex in range(len(self._allSoundSplitModes)) if mIndex in includedModes
 		]
 		self.soundSplitModesList.Select(0)
+
+	def _updateSoundSplitAvailability(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		if audio.SOUND_SPLIT_AVAILABLE:
+			return
+		self.soundSplitComboBox.Disable()
+		self.soundSplitModesList.Disable()
+		settingsSizerHelper.addItem(
+			wx.StaticText(
+				self,
+				# Translators: Explanation shown when the Sound Split feature cannot be used.
+				label=_("Sound Split is unavailable because required Windows audio components are missing."),
+			),
+		)
 
 	def onSave(self):
 		selectedOutputDevice = self._deviceIds[self.deviceList.GetSelection()]
@@ -6189,8 +6207,8 @@ class MagnifierPanel(SettingsPanel):
 			magnifier.zoomLevel = roundedZoom
 			magnifier._panStep = selectedPanStep
 			magnifier.filterType = selectedFilter
-			if isinstance(magnifier, FullScreenMagnifier):
-				magnifier._fullscreenMode = selectedMode
+			if magnifier._MAGNIFIED_VIEW == MagnifiedView.FULLSCREEN:
+				cast("FullScreenMagnifier", magnifier)._fullscreenMode = selectedMode
 
 	def _onImmediateSettingChange(self, evt: wx.CommandEvent):
 		"""Handle immediate updates for non-enable magnifier settings."""
@@ -6376,8 +6394,8 @@ class MagnifierPanel(SettingsPanel):
 			magnifier.zoomLevel = self._zoomInitially
 			magnifier._panStep = self._panStepInitially
 			magnifier.filterType = self._filterInitially
-			if isinstance(magnifier, FullScreenMagnifier):
-				magnifier._fullscreenMode = self._trackingModeInitially
+			if magnifier._MAGNIFIED_VIEW == MagnifiedView.FULLSCREEN:
+				cast("FullScreenMagnifier", magnifier)._fullscreenMode = self._trackingModeInitially
 
 		if self._magnifierEnabledInitially != magnifierConfig.getEnabled():
 			toggleMagnifier()
