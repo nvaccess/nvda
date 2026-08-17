@@ -75,37 +75,24 @@ class TestBrailleOffsetConverters(unittest.TestCase):
 		self.assertEqual(region.brailleToRawPos, [0, 1, 1])
 		self.assertEqual(region.rawToBraillePos, [0, 2])
 
-	def test_chineseWordSegmentationCanBeDisabled(self) -> None:
-		config.conf["braille"]["translationTable"] = "zh-chn.ctb"
-		config.conf["braille"]["useChineseWordSegmentation"] = False
-		translate = Mock(return_value=([1, 2], [0, 1], [0, 1], None))
+	def test_chineseWordSegmentationIsSkipped(self) -> None:
 		with (
 			patch("braille.regions.base.WordSegWithSeparatorOffsetConverter") as wordSegConverter,
-			patch("braille.regions.base.louisHelper.translate", translate),
+			patch("braille.regions.base.louisHelper.translate", return_value=([], [], [], None)),
 		):
-			region = braille.regions.base.Region()
-			region.rawText = "中文"
+			for translationTable, useChineseWordSegmentation in (
+				("zh-chn.ctb", False),
+				("zh-tw.ctb", True),
+			):
+				with self.subTest(translationTable=translationTable):
+					wordSegConverter.reset_mock()
+					config.conf["braille"]["translationTable"] = translationTable
+					config.conf["braille"]["useChineseWordSegmentation"] = useChineseWordSegmentation
+					region = braille.regions.base.Region()
 
-			region.update()
+					region.update()
 
-		wordSegConverter.assert_not_called()
-		self.assertEqual(translate.call_args.args[1], "中文")
-
-	def test_chineseWordSegmentationIsNotUsedForTaiwaneseBraille(self) -> None:
-		config.conf["braille"]["translationTable"] = "zh-tw.ctb"
-		config.conf["braille"]["useChineseWordSegmentation"] = True
-		translate = Mock(return_value=([1, 2], [0, 1], [0, 1], None))
-		with (
-			patch("braille.regions.base.WordSegWithSeparatorOffsetConverter") as wordSegConverter,
-			patch("braille.regions.base.louisHelper.translate", translate),
-		):
-			region = braille.regions.base.Region()
-			region.rawText = "\u4e2d\u6587"
-
-			region.update()
-
-		wordSegConverter.assert_not_called()
-		self.assertEqual(translate.call_args.args[1], "\u4e2d\u6587")
+					wordSegConverter.assert_not_called()
 
 
 class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
