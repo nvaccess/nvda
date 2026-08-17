@@ -129,7 +129,7 @@ class RecogImageInfo:
 		@param screenWidth: The width of the image on the screen.
 		@param screenHeight: The height of the image on the screen.
 		@param resizeFactor: The factor by which the image must be resized for recognition.
-		@raise ValueError: If the supplied image dimensions are invalid;
+		:raises ValueError: If the supplied image dimensions are invalid;
 			e.g. width or height of 0.
 		"""
 		if screenWidth <= 0 or screenHeight <= 0:

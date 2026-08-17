@@ -10,6 +10,7 @@ and present the result to the user so they can read it with cursor keys, etc.
 NVDA scripts or GUI call the L{recognizeNavigatorObject} function with the recognizer they wish to use.
 """
 
+import ctypes
 from typing import Optional, Union, TYPE_CHECKING
 import api
 import ui
@@ -55,7 +56,7 @@ def _isWgcCaptureSupported() -> bool:
 	return _wgcCapture.isSupported()
 
 
-def _captureWithGdi(imageInfo: RecogImageInfo):
+def _captureWithGdi(imageInfo: RecogImageInfo) -> ctypes.Array:
 	sb = screenBitmap.ScreenBitmap(imageInfo.recogWidth, imageInfo.recogHeight)
 	return sb.captureImage(
 		imageInfo.screenLeft,
@@ -65,13 +66,13 @@ def _captureWithGdi(imageInfo: RecogImageInfo):
 	)
 
 
-def _captureWithWgc(imageInfo: RecogImageInfo):
+def _captureWithWgc(imageInfo: RecogImageInfo) -> ctypes.Array:
 	from . import _wgcCapture
 
 	return _wgcCapture.captureImage(imageInfo)
 
 
-def shouldBlockScreenCurtainEnable(focusObj: NVDAObjects.NVDAObject) -> bool:
+def _shouldBlockScreenCurtainEnable(focusObj: NVDAObjects.NVDAObject) -> bool:
 	"""Return whether enabling Screen Curtain should be blocked for an active recognition result."""
 	return (
 		isinstance(focusObj, RefreshableRecogResultNVDAObject)
@@ -80,7 +81,7 @@ def shouldBlockScreenCurtainEnable(focusObj: NVDAObjects.NVDAObject) -> bool:
 	)
 
 
-def _captureImage(imageInfo: RecogImageInfo):
+def _captureImage(imageInfo: RecogImageInfo) -> ctypes.Array:
 	if _shouldUseWgcCapture():
 		try:
 			return _captureWithWgc(imageInfo)

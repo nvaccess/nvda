@@ -96,11 +96,11 @@ class TestScreenCurtainEnableBlock(unittest.TestCase):
 			patch.object(recogUi, "RefreshableRecogResultNVDAObject", _FakeRefreshableRecogResult),
 			patch.object(recogUi, "_isWgcCaptureSupported", side_effect=(False, True)),
 		):
-			self.assertTrue(recogUi.shouldBlockScreenCurtainEnable(focusObj))
-			self.assertFalse(recogUi.shouldBlockScreenCurtainEnable(focusObj))
+			self.assertTrue(recogUi._shouldBlockScreenCurtainEnable(focusObj))
+			self.assertFalse(recogUi._shouldBlockScreenCurtainEnable(focusObj))
 
 	def test_nonAutoRefreshRecognitionDoesNotBlockScreenCurtain(self):
 		focusObj = _FakeRefreshableRecogResult(allowAutoRefresh=False)
 
 		with patch.object(recogUi, "RefreshableRecogResultNVDAObject", _FakeRefreshableRecogResult):
-			self.assertFalse(recogUi.shouldBlockScreenCurtainEnable(focusObj))
+			self.assertFalse(recogUi._shouldBlockScreenCurtainEnable(focusObj))

@@ -5041,7 +5041,7 @@ class GlobalCommands(ScriptableObject):
 					return  # exit early with no ui.message because the user has decided to abort.
 				from contentRecog import recogUi
 
-				if recogUi.shouldBlockScreenCurtainEnable(focusObj):
+				if recogUi._shouldBlockScreenCurtainEnable(focusObj):
 					ui.message(
 						screenCurtain._screenCurtain.UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE,
 						speechPriority=speech.priorities.Spri.NOW,
