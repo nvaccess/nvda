@@ -74,7 +74,7 @@ class FullScreenMagnifier(Magnifier):
 			return
 		if _isDebug():
 			log.debug(
-				f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen mode {self._fullscreenMode}",
+				f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen tracking mode {self._fullscreenMode}",
 			)
 		try:
 			self._initializeNativeMagnification()
