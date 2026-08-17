@@ -31,6 +31,7 @@ import winUser
 if TYPE_CHECKING:
 	import scriptHandler  # noqa: F401, use for typing
 	import NVDAObjects  # noqa: F401, use for typing
+	import treeInterceptorHandler  # noqa: F401, use for typing
 
 
 def __getattr__(attrName: str) -> Any:
@@ -155,7 +156,7 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 
 
 def objectBelowLockScreenAndWindowsIsLocked(
-	obj: "NVDAObjects.NVDAObject",
+	obj: "NVDAObjects.NVDAObject | treeInterceptorHandler.TreeInterceptor",
 	shouldLog: bool = True,
 ) -> bool:
 	"""
@@ -170,10 +171,26 @@ def objectBelowLockScreenAndWindowsIsLocked(
 	as it may contain sensitive information.
 
 	As such, NVDA must prevent accessing and reading objects below the lock screen when Windows is locked.
-	@return: C{True} if the Windows 10/11 lockscreen is active and C{obj} is below the lock screen.
+
+	Some callers pass a TreeInterceptor rather than an NVDAObject.
+	As TreeInterceptors do not implement isBelowLockScreen, their root object is checked instead.
+
+	:return: True if the Windows 10/11 lockscreen is active and obj is below the lock screen.
 	"""
 	try:
-		isObjectBelowLockScreen = isLockScreenModeActive() and obj.isBelowLockScreen
+		if not isLockScreenModeActive():
+			return False
+
+		import NVDAObjects
+
+		if not isinstance(obj, NVDAObjects.NVDAObject):
+			rootObj = getattr(obj, "rootNVDAObject", None)
+			if rootObj is None:
+				if shouldLog:
+					log.debug(f"Unhandled object type {type(obj)}, considering object as safe.")
+				return False
+			obj = rootObj
+		isObjectBelowLockScreen = obj.isBelowLockScreen
 	except Exception:
 		log.exception()
 		return False
