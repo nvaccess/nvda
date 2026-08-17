@@ -68,6 +68,7 @@ class DefaultAppArgs(argparse.Namespace):
 	portablePath: Optional[os.PathLike] = None
 	launcher: bool = False
 	enableStartOnLogon: Optional[bool] = None
+	startAfterSignin: Optional[bool] = None
 	copyPortableConfig: bool = False
 	easeOfAccess: bool = False
 

@@ -35,6 +35,7 @@
 * It is now possible to change an existing gesture in the Input Gestures dialog. (#10983, @amirmahdifard)
 * A new "Say all reads by" speech setting lets you choose whether say all reads by sentence, paragraph or line; say all now reads by sentence by default where supported. (#13420, #9179, #13971, @LeonarddeR)
 * A new command, assigned to `NVDA+control+x`, copies the last spoken information to the clipboard. (#19385, @Cary-rowen)
+* Added the `--start-after-signin` command line parameter to configure whether NVDA starts automatically after the user signs in, for example when installing NVDA silently. Specify `True` to start after sign-in or `False` to not start after sign-in. (#20619)
 
 ### Changes
 
