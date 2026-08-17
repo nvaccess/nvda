@@ -18,7 +18,7 @@ handler: _brailleHandler.BrailleHandler | None = None
 def initialize():
 	global handler
 
-	log.info("Using liblouis version %s" % louisHelper.getLouisVersion())
+	log.info(f"Using liblouis version {louisHelper.getLouisVersion()}")
 	import serial
 
 	log.info("Using pySerial version %s" % serial.VERSION)
