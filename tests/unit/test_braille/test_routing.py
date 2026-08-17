@@ -91,6 +91,22 @@ class TestBrailleOffsetConverters(unittest.TestCase):
 		wordSegConverter.assert_not_called()
 		self.assertEqual(translate.call_args.args[1], "中文")
 
+	def test_chineseWordSegmentationIsNotUsedForTaiwaneseBraille(self) -> None:
+		config.conf["braille"]["translationTable"] = "zh-tw.ctb"
+		config.conf["braille"]["useChineseWordSegmentation"] = True
+		translate = Mock(return_value=([1, 2], [0, 1], [0, 1], None))
+		with (
+			patch("braille.regions.base.WordSegWithSeparatorOffsetConverter") as wordSegConverter,
+			patch("braille.regions.base.louisHelper.translate", translate),
+		):
+			region = braille.regions.base.Region()
+			region.rawText = "\u4e2d\u6587"
+
+			region.update()
+
+		wordSegConverter.assert_not_called()
+		self.assertEqual(translate.call_args.args[1], "\u4e2d\u6587")
+
 
 class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 	"""A test for the move system caret when routing review cursor braille setting
