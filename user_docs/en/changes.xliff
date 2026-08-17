@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en">
-<file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/817ab0fb8654b23ac38f8c60f280b18837188ee3/user_docs/en/changes.md">
+<file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/9a47669f03c9bfdb9e92057ebcd91dc4ac098037/user_docs/en/changes.md">
 <skeleton>
 # $(ID:4bf3ec03-2d43-474a-aef0-92b334e594ed)
 
@@ -135,9 +135,9 @@ $(ID:10327e8f-73dd-48a5-abd2-dd09ff340fef)
   * $(ID:a9107bfe-7697-4c29-8170-695af774265f)
   * $(ID:2e3fa407-4806-43f3-88b9-c409d5a39843)
   * $(ID:05f1b497-e5cd-4056-a4e7-5f063f19f4e2)
-* $(ID:c464a307-6952-4bd3-8a11-d7b1f4be6998)
+* $(ID:52247bdb-7c21-4d0a-a4d9-5c88f4981466)
 * $(ID:3f08eb8c-6383-432c-b31a-94508aeacb26)
-* $(ID:9fa2fb22-9819-4bad-af98-f170843e8a93)
+* $(ID:bbf8d479-f34e-4c08-abee-8f1aba0d5d47)
   * $(ID:75eccd47-187e-47d9-a125-3ee5df162cfc)
 * $(ID:1d4c9f14-0594-4e64-8eb2-bdbcac44b19c)
 $(ID:a24ba95b-e821-4cce-a2d8-9252add71178)
@@ -7152,13 +7152,13 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 <source>Added a `DEBUG_UNREDACTED` logging level for cases where developers explicitly need debug logging without `redactSecrets` masking.</source>
 </segment>
 </unit>
-<unit id="c464a307-6952-4bd3-8a11-d7b1f4be6998">
+<unit id="52247bdb-7c21-4d0a-a4d9-5c88f4981466">
 <notes>
 <note appliesTo="source">line: 135</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
-<source>NVDA libraries built by the build system are now linked with the [/SETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)</source>
+<source>NVDA libraries built by the build system are now linked with the [/CETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)</source>
 </segment>
 </unit>
 <unit id="3f08eb8c-6383-432c-b31a-94508aeacb26">
@@ -7170,13 +7170,13 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 <source>Subclasses of `browseMode.BrowseModeDocumentTreeInterceptor` that support screen layout being on and off should override the `_toggleScreenLayout` method, rather than implementing `script_toggleScreenLayout` directly. (#19487)</source>
 </segment>
 </unit>
-<unit id="9fa2fb22-9819-4bad-af98-f170843e8a93">
+<unit id="bbf8d479-f34e-4c08-abee-8f1aba0d5d47">
 <notes>
 <note appliesTo="source">line: 137</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
-<source>A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handleCOMErrors`. (#19713, @Emil-18)</source>
+<source>A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handlesCOMErrors`. (#19713, @Emil-18)</source>
 </segment>
 </unit>
 <unit id="75eccd47-187e-47d9-a125-3ee5df162cfc">
