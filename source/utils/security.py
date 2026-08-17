@@ -177,19 +177,19 @@ def objectBelowLockScreenAndWindowsIsLocked(
 
 	:return: True if the Windows 10/11 lockscreen is active and obj is below the lock screen.
 	"""
-	if not isLockScreenModeActive():
-		return False
-
-	import NVDAObjects
-
-	if not isinstance(obj, NVDAObjects.NVDAObject):
-		rootObj = getattr(obj, "rootNVDAObject", None)
-		if rootObj is None:
-			if shouldLog:
-				log.debug(f"Unhandled object type {type(obj)}, considering object as safe.")
-			return False
-		obj = rootObj
 	try:
+		if not isLockScreenModeActive():
+			return False
+
+		import NVDAObjects
+
+		if not isinstance(obj, NVDAObjects.NVDAObject):
+			rootObj = getattr(obj, "rootNVDAObject", None)
+			if rootObj is None:
+				if shouldLog:
+					log.debug(f"Unhandled object type {type(obj)}, considering object as safe.")
+				return False
+			obj = rootObj
 		isObjectBelowLockScreen = obj.isBelowLockScreen
 	except Exception:
 		log.exception()
