@@ -84,6 +84,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * NVDA no longer briefly disconnects and re-detects the braille display on desktop switches that do not enter the secure desktop, such as when switching between a Remote Desktop session and the local machine. (#18810, #20550, @LeonarddeR)
 * In Mozilla Firefox and Chromium based browsers with native selection mode enabled, the caret no longer gets stuck when switching to focus mode, and typing in edit fields works again. (#19075, #18028, @LeonarddeR)
 * In Windows Terminal, mouse tracking now reports the line of text under the mouse pointer. (#20448, @DataTriny)
+* In LibreOffice Writer, braille no longer stops following the caret in some long table documents. (#20625)
 
 ### Changes for Developers
 
