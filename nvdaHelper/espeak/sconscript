@@ -207,7 +207,7 @@ env["BUILDERS"]["espeak_compilePhonemeData"] = Builder(
 	emitter=espeak_compilePhonemeData_buildEmitter,
 )
 
-#: See dictionaries section of /include/espeak/Makefile.am
+#: See upstream eSpeak NG build configuration and dictionary sources under /include/espeak (CMake config + dictsource).
 espeakDictionaryCompileList: dict[
 	str,  # expected dict file name EG 'es_dict'
 	tuple[str, list[str]],  # language code, list of input files

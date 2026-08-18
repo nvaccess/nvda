@@ -11,7 +11,7 @@ NVDA has a custom build of eSpeak because not all components are required.
 The main authority on build requirements is the upstream eSpeak CMake configuration, especially [`include/espeak/cmake/config.cmake`](./espeak/cmake/config.cmake) and [`include/espeak/src/libespeak-ng/config.h.in`](./espeak/src/libespeak-ng/config.h.in).
 The legacy `*.vcxproj` files in [`include/espeak/src/windows/`](./espeak/src/windows/) are only a secondary reference and are not always kept up to date.
 
-We do not use the upstream Visual Studio build directly; instead, NVDA maintains its own custom Windows build in [`nvdaHelper/espeak/sconscript`](../nvdaHelper/espeak).
+We do not use the upstream Visual Studio build directly; instead, NVDA maintains its own custom Windows build in [`nvdaHelper/espeak/sconscript`](../nvdaHelper/espeak/sconscript).
 
 ### Updating the version used by NVDA
 
