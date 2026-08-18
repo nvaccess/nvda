@@ -27,12 +27,14 @@ with os.add_dll_directory(globalVars.appDir):
 
 
 __all__ = [
+	"LOUIS_TO_NVDA_LOG_LEVELS",
 	"TranslationMode",
 	"Typeform",
 	"backTranslate",
 	"getLouisVersion",
 	"getTableLanguage",
 	"initialize",
+	"louis_log",
 	"terminate",
 	"translate",
 ]
