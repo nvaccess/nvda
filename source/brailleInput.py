@@ -9,7 +9,7 @@ This module is deprecated.
 Braille input handling now lives in the :mod:`braille.input` package.
 """
 
-from utils._deprecate import handleDeprecations, MovedSymbol
+from utils._deprecate import handleDeprecations, MovedSymbol, RemovedSymbol
 
 # Deprecated in 2026.3.
 __getattr__ = handleDeprecations(
@@ -19,7 +19,11 @@ __getattr__ = handleDeprecations(
 	MovedSymbol("FALLBACK_TABLE", "braille.input.constants"),
 	MovedSymbol("DOT7", "braille.input.constants"),
 	MovedSymbol("DOT8", "braille.input.constants"),
-	MovedSymbol("LOUIS_DOTS_IO_START", "braille.input.constants"),
+	RemovedSymbol(
+		"LOUIS_DOTS_IO_START",
+		0x8000,
+		message="Braille back-translation is handled by louisHelper.backTranslate.",
+	),
 	MovedSymbol("UNICODE_BRAILLE_START", "braille.input.constants"),
 	MovedSymbol("UNICODE_BRAILLE_PROTECTED", "braille.input.constants"),
 	MovedSymbol("formatDotNumbers", "braille.input.gesture"),

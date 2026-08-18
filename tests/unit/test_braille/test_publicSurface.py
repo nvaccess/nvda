@@ -159,7 +159,6 @@ INPUT_DEPRECATED = {
 	"FALLBACK_TABLE": braille.input.constants.FALLBACK_TABLE,
 	"DOT7": braille.input.constants.DOT7,
 	"DOT8": braille.input.constants.DOT8,
-	"LOUIS_DOTS_IO_START": braille.input.constants.LOUIS_DOTS_IO_START,
 	"UNICODE_BRAILLE_START": braille.input.constants.UNICODE_BRAILLE_START,
 	"UNICODE_BRAILLE_PROTECTED": braille.input.constants.UNICODE_BRAILLE_PROTECTED,
 	# gesture
@@ -195,3 +194,9 @@ class TestBrailleInputPublicSurface(unittest.TestCase):
 						f"brailleInput.{name} returned wrong object",
 					)
 					mockLog.warning.assert_called_once()
+
+	def test_removedNamesReturnOldValue(self):
+		"""Each removed name must still resolve to the value it held before removal."""
+		with patch("logHandler.log") as mockLog:
+			self.assertEqual(brailleInput.LOUIS_DOTS_IO_START, 0x8000)
+			mockLog.warning.assert_called_once()

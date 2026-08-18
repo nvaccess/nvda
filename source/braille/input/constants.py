@@ -13,9 +13,6 @@ FALLBACK_TABLE = config.conf.getConfigValidation(("braille", "inputTable")).defa
 DOT7 = 1 << 6
 DOT8 = 1 << 7
 
-LOUIS_DOTS_IO_START = 0x8000
-"""This bit flag must be added to all braille cells when using liblouis with dotsIO."""
-
 UNICODE_BRAILLE_START = 0x2800
 """The start of the Unicode braille range."""
 
