@@ -2736,8 +2736,8 @@ This setting has no effect with the "Chinese (Taiwan, Mandarin)" table or other 
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Enabled, Disabled|
-|Default |Enabled|
+| Options | Enabled, Disabled |
+| Default | Enabled |
 
 #### Select Braille Display {#SelectBrailleDisplay}
 
