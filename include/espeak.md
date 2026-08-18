@@ -8,12 +8,10 @@ NVDA has a custom build of eSpeak because not all components are required.
 
 ### Background
 
-The main authority on build requirements should be [`include/espeak/Makefile.am`](./espeak/Makefile.am).
-The `*.vcxproj` files in [`include/espeak/src/windows/`](./espeak/src/windows/) can also be considered,
-however these are not always kept up to date.
+The main authority on build requirements is the upstream eSpeak CMake configuration, especially [`include/espeak/cmake/config.cmake`](./espeak/cmake/config.cmake) and [`include/espeak/src/libespeak-ng/config.h.in`](./espeak/src/libespeak-ng/config.h.in).
+The legacy `*.vcxproj` files in [`include/espeak/src/windows/`](./espeak/src/windows/) are only a secondary reference and are not always kept up to date.
 
-We don't use the auto make files or the visual studio files, we maintain our own method of building eSpeak.
-Modifications will need to be made in [`nvdaHelper/espeak/sconscript`](../nvdaHelper/espeak)
+We do not use the upstream Visual Studio build directly; instead, NVDA maintains its own custom Windows build in [`nvdaHelper/espeak/sconscript`](../nvdaHelper/espeak).
 
 ### Updating the version used by NVDA
 
@@ -27,19 +25,18 @@ Modifications will need to be made in [`nvdaHelper/espeak/sconscript`](../nvdaHe
    1. Change to the `include/espeak/` directory
    1. Do `git fetch` to get the latest from the espeak-ng repo
    1. Do `git checkout origin/master` or whichever espeak-ng ref you wish.
-1. Look at changes in `Makefile.am` and update our build.
-   1. Diff `Makefile.am` with the previously used commit of espeak.
-   1. Changes to Dictionary compilation should be reflected in `espeakDictionaryCompileList`
-   1. Some modules are intentionally excluded from the build.
-      If unsure, err on the side of including it and raise it as a question when submitting a PR.
-   1. Modify the [`nvdaHelper/espeak/config.h`](../nvdaHelper/espeak/config.h) file as required.
+1. Look at changes in the upstream build configuration and update our custom build.
+   1. Diff the CMake config (`cmake/config.cmake` and `src/libespeak-ng/config.h.in`) with the previously used commit of espeak.
+     * e.g.: `git diff b0b605c8a 56f2e9c73 cmake/config.cmake src/libespeak-ng/config.h.in`
+   1. Changes to dictionary compilation should be reflected in `espeakDictionaryCompileList`.
+   Diff `espeak-ng-data/lang`.
+     * e.g.: `git diff --diff-filter=AD --stat --name-status b0b605c8a 56f2e9c73 espeak-ng-data/lang dictsource`
 1. Update our record of the version number and build.
-   1. Change back to the NVDA repo root
-   1. Update the `/DPACKAGE_VERSION` in [`nvdaHelper/espeak/sconscript`](../nvdaHelper/espeak/sconscript)
-      * The preprocessor definition is used to supply these definitions instead of [`nvdaHelper/espeak/config.h`](../nvdaHelper/espeak/config.h)
-      * [`nvdaHelper/espeak/config.h`](../nvdaHelper/espeak/config.h) must exist (despite being empty) since a "config.h" is included within eSpeak.
-      * Compare to eSpeak source config: [`include/espeak/src/windows/config.h`](./espeak/src/windows/config.h).
-      * Diff `src/windows/config.h` with the previous commit.
+   1. Change back to the NVDA repo root.
+   1. Update the `/DPACKAGE_VERSION` and other feature definitions in [`nvdaHelper/espeak/sconscript`](../nvdaHelper/espeak/sconscript).
+      * The preprocessor definitions are provided here instead of in [`nvdaHelper/espeak/config.h`](../nvdaHelper/espeak/config.h).
+      * [`nvdaHelper/espeak/config.h`](../nvdaHelper/espeak/config.h) must still exist because eSpeak includes a `config.h` header.
+      * Compare against the upstream generated config in [`include/espeak/src/libespeak-ng/config.h.in`](./espeak/src/libespeak-ng/config.h.in), and use [`include/espeak/src/windows/config.h`](./espeak/src/windows/config.h) only as a legacy reference for `PACKAGE_VERSION`.
    1. Update NVDA's [dev environment documentation](../projectDocs/dev/createDevEnvironment.md#git-submodules) and [changelog](../user_docs/en/changes.md) with eSpeak version and commit.
    1. Build NVDA: `scons source`
       * Expected warnings from eSpeak compilation:
@@ -66,8 +63,7 @@ If the last thing is compiling some dictionary try excluding it.
 This can be done in [`nvdaHelper/espeak/sconscript`](../nvdaHelper/espeak/sconscript).
 Remember to report this to the eSpeak-ng project.
 
-If the build fails, take note of the error, compare the diff of the `Makefile.am` file and mirror
-any changes in our `sconscript` file.
+If the build fails, take note of the error, compare the upstream CMake configuration and mirror any relevant changes in our `sconscript` file.
 
 ### Known issues
 

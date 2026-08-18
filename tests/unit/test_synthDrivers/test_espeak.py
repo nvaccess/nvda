@@ -134,7 +134,7 @@ class TestSynthDriver_Integration(unittest.TestCase):
 				langWithoutLocale,
 				self._driver.voice.split("\\")[
 					-1
-				],  # Language code is the last item, e.g. (gmw\en, roa\fr-CH)
+				].split("-")[0],  # Language code is the last item, e.g. (gmw\en, roa\fr-CH)
 				msg="Language without locale not supported by eSpeak",
 			)
 
