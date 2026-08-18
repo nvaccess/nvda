@@ -45,6 +45,7 @@
   * Browseable message dialogs now better support resizing, maximizing and minimizing, with text wrapping to the dialog width. (#20429, @Cary-rowen)
 * Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
 * Improved speech responsiveness in long text with mixed capitalization or many digits. (#20433, @codeofdusk)
+* Windows OCR can now be used while Screen Curtain or NVDA's built-in Magnifier is active on supported systems. (#19164, #20630, @cary-rowen)
 * The duration of indentation beeps can now be configured via a new "Indent tone duration (ms)" spin control in the Document Formatting settings panel. (#20447, @Mubashir78)
 * Reduced the number of cross-process UI Automation calls when processing events, reporting focus changes, reporting objects under the mouse and rendering browse mode content, by caching more properties and batching focus property fetches. (#20608, @LeonarddeR)
 
@@ -133,6 +134,11 @@ Locale names are now taken from `winKernel.LCIDToLocaleName`, apart from a small
   * As a result, some locale identifiers now resolve to a different name, such as `zh_CN` rather than `zh_CHS`, `km_KH` rather than `kh_KH` and `en_JM` rather than `en_JA`.
   * Locale names now carry a script subtag where Windows reports one, such as `sr_LATN_CS` rather than `sr_SP` for LCID 2074.
   * The SAPI 4 and SAPI 5 synthesizers report voice languages through this function as well, so the language of a voice can now be reported for locale identifiers that `locale.windows_locale` did not cover.
+* `louisHelper` is now the only module that performs braille translation. (#20600, @LeonarddeR)
+  * Added `louisHelper.TranslationMode` and `louisHelper.Typeform`, holding the translation modes and typeforms NVDA uses.
+  `braille.Region.rawTextTypeforms` is now annotated as `list[louisHelper.Typeform]`.
+  Plain integers remain compatible at run time.
+  * Added `louisHelper.backTranslate`, which back translates braille cells, given as a list of integers, into text.
 
 #### Deprecations
 
@@ -150,6 +156,7 @@ Use `TouchAction(value).displayString` instead. (#20086, @kefaslungu)
 Use `gui.message.HtmlMessageDialog` instead. (#18878, @LeonarddeR)
 * `languageHandler.LCIDS_TO_TRANSLATED_LOCALES` is deprecated.
 Use `languageHandler.windowsLCIDToLocaleName` or `winKernel.LCIDToLocaleName` instead. (#20589, @LeonarddeR)
+* `brailleInput.LOUIS_DOTS_IO_START` is deprecated with no replacement, as `louisHelper.backTranslate` takes plain braille cells. (#20600, @LeonarddeR)
 * The symbols that moved out of the `braille` module facade when it became a package, as well as the symbols of the `brailleInput` module which is now the `braille.input` package, are deprecated.
 Accessing them as `braille.X` or `brailleInput.X` still works but logs a deprecation warning; import them from their new location instead, as listed below. (#20390, #20509, @LeonarddeR)
 
@@ -219,7 +226,6 @@ Accessing them as `braille.X` or `brailleInput.X` still works but logs a depreca
 | `brailleInput.FALLBACK_TABLE` | `braille.input.constants.FALLBACK_TABLE` |
 | `brailleInput.DOT7` | `braille.input.constants.DOT7` |
 | `brailleInput.DOT8` | `braille.input.constants.DOT8` |
-| `brailleInput.LOUIS_DOTS_IO_START` | `braille.input.constants.LOUIS_DOTS_IO_START` |
 | `brailleInput.UNICODE_BRAILLE_START` | `braille.input.constants.UNICODE_BRAILLE_START` |
 | `brailleInput.UNICODE_BRAILLE_PROTECTED` | `braille.input.constants.UNICODE_BRAILLE_PROTECTED` |
 | `brailleInput.formatDotNumbers` | `braille.input.gesture.formatDotNumbers` |
