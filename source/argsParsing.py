@@ -239,6 +239,14 @@ def _createNVDAArgParser() -> NoConsoleOptionParser:
 		help="When installing, enable NVDA's start on the logon screen",
 	)
 	parser.add_argument(
+		"--start-after-signin",
+		metavar="True|False",
+		type=stringToBool,
+		dest="startAfterSignin",
+		default=None,
+		help="Set whether NVDA starts automatically after signing in to Windows",
+	)
+	parser.add_argument(
 		"--copy-portable-config",
 		action="store_true",
 		dest="copyPortableConfig",

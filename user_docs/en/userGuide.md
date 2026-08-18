@@ -6569,6 +6569,7 @@ Following are the command line options for NVDA:
 |None |`--install` |Installs NVDA (starting the newly installed copy)|
 |None |`--install-silent` |Silently installs NVDA (does not start the newly installed copy)|
 |None |`--enable-start-on-logon=True|False` |When installing, enable NVDA's [Use NVDA during Windows sign-in](#StartAtWindowsLogon)| <!-- markdownlint-disable-line MD055 MD056 -->
+|None |`--start-after-signin=True|False` |Set whether NVDA [starts automatically after you sign in to Windows](#GeneralSettingsStartAfterLogOn)| <!-- markdownlint-disable-line MD055 MD056 -->
 |None |`--copy-portable-config` |When installing, copy the portable configuration from the provided path (`--config-path`, `-c`) to the current user account|
 |None |`--create-portable` |Creates a portable copy of NVDA (and starts the new copy). Requires `--portable-path` to be specified|
 |None |`--create-portable-silent` |Creates a portable copy of NVDA (without starting the new copy). Requires `--portable-path` to be specified. This option suppresses warnings when writing to non-empty directories and may overwrite files without warning.|

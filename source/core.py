@@ -265,7 +265,7 @@ def restartUnsafely():
 		except ValueError:
 			pass
 	restartCLIArgs = computeRestartCLIArgs(
-		removeArgsList=["easeOfAccess"],
+		removeArgsList=["easeOfAccess", "startAfterSignin"],
 	)
 	options = []
 	if NVDAState.isRunningAsSource():
@@ -289,7 +289,7 @@ def restart(disableAddons=False, debugLogging=False):
 	import subprocess
 
 	restartCLIArgs = computeRestartCLIArgs(
-		removeArgsList=["disableAddons", "debugLogging", "language", "easeOfAccess"],
+		removeArgsList=["disableAddons", "debugLogging", "language", "easeOfAccess", "startAfterSignin"],
 	)
 	options = []
 	if NVDAState.isRunningAsSource():
@@ -726,6 +726,16 @@ def main():
 	import config
 
 	config.initialize()
+	if globalVars.appArgs.startAfterSignin is not None:
+		if globalVars.appArgs.secure or not config.isInstalledCopy():
+			log.warning(
+				"Ignoring --start-after-signin: secure mode or non-installed copy",
+			)
+		else:
+			try:
+				config.setStartAfterLogon(globalVars.appArgs.startAfterSignin)
+			except (WindowsError, FileNotFoundError):
+				log.error("Failed to set start-after-signin", exc_info=True)
 	if config.conf["development"]["enableScratchpadDir"]:
 		log.info("Developer Scratchpad mode enabled")
 	if languageHandler.isLanguageForced():
