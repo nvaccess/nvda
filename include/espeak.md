@@ -30,7 +30,7 @@ We do not use the upstream Visual Studio build directly; instead, NVDA maintains
      * e.g.: `git diff b0b605c8a 56f2e9c73 cmake/config.cmake src/libespeak-ng/config.h.in`
    1. Changes to dictionary compilation should be reflected in `espeakDictionaryCompileList`.
    Diff `espeak-ng-data/lang`.
-     * e.g.: `git diff --diff-filter=AD --stat --name-status b0b605c8a 56f2e9c73 espeak-ng-data/lang dictsource`
+     * e.g.: `git diff --diff-filter=AD --stat --name-status b0b605c8a 56f2e9c73 dictsource ':(exclude)*_emoji'`
 1. Update our record of the version number and build.
    1. Change back to the NVDA repo root.
    1. Update the `/DPACKAGE_VERSION` and other feature definitions in [`nvdaHelper/espeak/sconscript`](../nvdaHelper/espeak/sconscript).
@@ -38,6 +38,7 @@ We do not use the upstream Visual Studio build directly; instead, NVDA maintains
       * [`nvdaHelper/espeak/config.h`](../nvdaHelper/espeak/config.h) must still exist because eSpeak includes a `config.h` header.
       * Compare against the upstream generated config in [`include/espeak/src/libespeak-ng/config.h.in`](./espeak/src/libespeak-ng/config.h.in), and use [`include/espeak/src/windows/config.h`](./espeak/src/windows/config.h) only as a legacy reference for `PACKAGE_VERSION`.
    1. Update NVDA's [dev environment documentation](../projectDocs/dev/createDevEnvironment.md#git-submodules) and [changelog](../user_docs/en/changes.md) with eSpeak version and commit.
+      * Include any changes to supported languages in the changelog.
    1. Build NVDA: `scons source`
       * Expected warnings from eSpeak compilation:
          * On the first build after changes, all languages may show this warning.
@@ -54,7 +55,8 @@ We do not use the upstream Visual Studio build directly; instead, NVDA maintains
          ```
 
 1. Run NVDA (set eSpeak-ng as the synthesizer) and test.
-1. Ensure that the log file contains the new version number for eSpeak-NG
+Test any added languages, you may need to find a sample of the language text to test with.
+1. Ensure that the log file contains the new version number for eSpeak-NG.
 
 ### Troubleshooting Build failures
 
