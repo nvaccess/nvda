@@ -315,6 +315,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [terminals]
 	speakPasswords = boolean(default=false)
 	keyboardSupportInLegacy = boolean(default=True)
+	beepForSkippedLines = boolean(default=true)
 	diffAlgo = option("auto", "dmp", "difflib", default="auto")
 	wtStrategy = featureFlag(optionsEnum="WindowsTerminalStrategyFlag", behaviorOfDefault="diffing")
 

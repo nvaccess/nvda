@@ -1,16 +1,16 @@
-# tests/unit/test_brailleTables.py
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2018-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2018-2026 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Unit tests for the brailleTables module."""
 
 import unittest
 import brailleTables
-import louis
 import louisHelper
 import os.path
+
+from braille.input.constants import UNICODE_BRAILLE_START
 
 
 class TestBrailleTables(unittest.TestCase):
@@ -51,12 +51,13 @@ class TestTranslate(unittest.TestCase):
 
 	def test_backtranslate(self):
 		"""Tests whether all tables can be used for back-translation."""
+		cells = [ord(cell) - UNICODE_BRAILLE_START for cell in "⠞⠑⠎⠞"]
 		tables = brailleTables.listTables()
 		for table in tables:
 			if not table.input:
 				continue
 			with self.subTest(table=table.fileName):
 				try:
-					louis.backTranslate([table.fileName, "braille-patterns.cti"], "⠞⠑⠎⠞")
+					louisHelper.backTranslate([table.fileName, "braille-patterns.cti"], cells)
 				except Exception as e:
 					self.fail(f"Back-translation failed for {table.displayName}: {e}")

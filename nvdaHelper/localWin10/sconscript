@@ -2,7 +2,7 @@
 ###
 # This file is a part of the NVDA project.
 # URL: http://www.nvaccess.org/
-# Copyright 2016-2024 NV Access Limited, Leonard de Ruijter
+# Copyright 2016-2026 NV Access Limited, Leonard de Ruijter, Cary-rowen
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2.0, as published by
 # the Free Software Foundation.
@@ -29,8 +29,12 @@ localWin10Lib = env.SharedLibrary(
 		env["projectResFile"],
 		"oneCoreSpeech.cpp",
 		"uwpOcr.cpp",
+		"wgcCapture.cpp",
 	],
 	LIBS=[
+		"d3d11",
+		"runtimeobject",
+		"user32",
 		"WindowsApp",
 		# Ignoring Flake8 F821: 'undefined name' due to nonstandard SCons import
 		localLib[2],
