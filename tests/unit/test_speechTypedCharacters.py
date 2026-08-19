@@ -59,6 +59,23 @@ class _SpeakTypedCharactersTestCase(unittest.TestCase):
 			speech.speakTypedCharacters(ch)
 			return protected, speakText, speakSpelling
 
+	def speakWithIOLogging(self, ch: str, isProtected: bool = False):
+		"""Call speakTypedCharacters with input/output logging enabled.
+
+		:return: the text passed to log.io, or None if nothing was logged.
+		"""
+		logged = []
+		with (
+			patch.object(speechModule.api, "isTypingProtected", return_value=isProtected),
+			patch.object(speechModule, "speakText"),
+			patch.object(speechModule, "speakSpelling"),
+			patch.object(speechModule, "isFocusEditable", return_value=True),
+			patch.object(speechModule.log, "isEnabledFor", return_value=True),
+			patch.object(speechModule.log, "io", side_effect=lambda msg: logged.append(msg)),
+		):
+			speech.speakTypedCharacters(ch)
+		return logged[0] if logged else None
+
 
 class TestProtectedStateNotResolvedUnnecessarily(_SpeakTypedCharactersTestCase):
 	"""The cross-process fetch must be skipped when it cannot affect the outcome."""
@@ -94,19 +111,19 @@ class TestProtectedStateNotResolvedUnnecessarily(_SpeakTypedCharactersTestCase):
 		speakText.assert_not_called()
 
 	def test_characterEchoOffForANonControlCharacter(self):
-		"""A letter still needs the protected state, for the word buffer only."""
+		"""With both echoes off, buffering a letter needs no lookup at all."""
 		protected, _speakText, speakSpelling = self.speak("a")
-		# Buffering a letter requires knowing whether to store the real character.
-		protected.assert_called_once()
+		protected.assert_not_called()
 		speakSpelling.assert_not_called()
 
 
 class TestProtectedStateStillHonoured(_SpeakTypedCharactersTestCase):
 	"""Laziness must not weaken the protection of typed passwords."""
 
-	def test_protectedLetterIsBufferedAsProtectedChar(self):
+	def test_protectedLetterIsBufferedVerbatimAndMaskedLater(self):
+		"""The mask now happens when the word is used, not when it is buffered."""
 		self.speak("a", isProtected=True)
-		self.assertEqual(speechModule._curWordChars, [speechModule.PROTECTED_CHAR])
+		self.assertEqual(speechModule._curWordChars, ["a"])
 
 	def test_unprotectedLetterIsBufferedVerbatim(self):
 		self.speak("a", isProtected=False)
@@ -140,7 +157,7 @@ class TestProtectedStateResolvedAtMostOnce(_SpeakTypedCharactersTestCase):
 	"""The caching must hold, so one character costs at most one fetch."""
 
 	def test_letterWithBothEchoesOn(self):
-		"""Buffering and speaking the same character must share one lookup."""
+		"""Speaking the character resolves the state once, for the echo only."""
 		self.setEcho(chars=TypingEcho.ALWAYS, words=TypingEcho.ALWAYS)
 		protected, _speakText, speakSpelling = self.speak("a", isProtected=True)
 		protected.assert_called_once()
@@ -171,6 +188,56 @@ class TestBufferHandlingUnchanged(_SpeakTypedCharactersTestCase):
 		protected.assert_not_called()
 		speakText.assert_not_called()
 		speakSpelling.assert_not_called()
+
+
+class TestWordBufferHoldsRealCharacters(_SpeakTypedCharactersTestCase):
+	"""Buffering must not resolve the protected state, and must not leak the word."""
+
+	def test_letterDoesNotResolveProtectedState(self):
+		"""Buffering a letter is the case that used to freeze while typing."""
+		protected, _speakText, _speakSpelling = self.speak("a")
+		protected.assert_not_called()
+
+	def test_bufferHoldsTheRealCharacter(self):
+		self.speak("a", isProtected=True)
+		self.assertEqual(speechModule._curWordChars, ["a"])
+
+	def test_bufferLengthIsUnchangedByProtection(self):
+		"""NVDAObjects.behaviors reads len(_curWordChars), so it must still count."""
+		for ch in "hi":
+			self.speak(ch, isProtected=True)
+		self.assertEqual(len(speechModule._curWordChars), 2)
+
+	def test_protectedWordIsNeverSpoken(self):
+		self.setEcho(chars=TypingEcho.OFF, words=TypingEcho.ALWAYS)
+		speechModule._curWordChars.extend("secret")
+		_protected, speakText, _speakSpelling = self.speak(" ", isProtected=True)
+		speakText.assert_not_called()
+
+	def test_unprotectedWordIsStillSpokenInFull(self):
+		self.setEcho(chars=TypingEcho.OFF, words=TypingEcho.ALWAYS)
+		speechModule._curWordChars.extend("hi")
+		_protected, speakText, _speakSpelling = self.speak(" ", isProtected=False)
+		speakText.assert_called_once_with("hi")
+
+	def test_protectedWordIsMaskedBeforeLogging(self):
+		"""The buffer now holds real characters, so the log must mask them."""
+		speechModule._curWordChars.extend("secret")
+		logged = self.speakWithIOLogging(" ", isProtected=True)
+		self.assertIsNotNone(logged)
+		self.assertNotIn("secret", logged)
+		self.assertIn(speechModule.PROTECTED_CHAR * len("secret"), logged)
+
+	def test_unprotectedWordIsLoggedVerbatim(self):
+		speechModule._curWordChars.extend("hi")
+		logged = self.speakWithIOLogging(" ", isProtected=False)
+		self.assertIn("hi", logged)
+
+	def test_characterEchoStillMasks(self):
+		"""Per character masking is unaffected by how the word buffer is stored."""
+		self.setEcho(chars=TypingEcho.ALWAYS, words=TypingEcho.OFF)
+		_protected, _speakText, speakSpelling = self.speak("a", isProtected=True)
+		speakSpelling.assert_called_once_with(speechModule.PROTECTED_CHAR)
 
 
 if __name__ == "__main__":

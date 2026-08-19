@@ -1453,11 +1453,14 @@ def speakTypedCharacters(ch: str) -> None:
 		return cachedTypingIsProtected
 
 	def getRealChar() -> str:
-		"""The character to buffer or speak, masked if typing is protected."""
+		"""The character to speak, masked if typing is protected."""
 		return PROTECTED_CHAR if typingIsProtected() else ch
 
 	if unicodedata.category(ch)[0] in "LMN":
-		_curWordChars.append(getRealChar())
+		# #20654: buffer the real character and mask when the word is used, so that
+		# buffering costs no protected state lookup. The word is never spoken while
+		# typing is protected, and it is masked before being logged.
+		_curWordChars.append(ch)
 	elif ch == "\b":
 		# Backspace, so remove the last character from our buffer.
 		del _curWordChars[-1:]
@@ -1468,7 +1471,8 @@ def speakTypedCharacters(ch: str) -> None:
 		typedWord = "".join(_curWordChars)
 		clearTypedWordBuffer()
 		if log.isEnabledFor(log.IO):
-			log.io("typed word: %s" % typedWord)
+			loggedWord = PROTECTED_CHAR * len(typedWord) if typingIsProtected() else typedWord
+			log.io("typed word: %s" % loggedWord)
 		typingEchoMode = config.conf["keyboard"]["speakTypedWords"]
 		if typingEchoMode != TypingEcho.OFF.value:
 			if typingEchoMode == TypingEcho.ALWAYS.value or (
