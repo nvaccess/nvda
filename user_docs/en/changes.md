@@ -53,6 +53,7 @@ Please responsibly disclose security issues following NVDA's [security policy](h
 * Improved speech responsiveness in long text with mixed capitalization or many digits. (#20433, @codeofdusk)
 * The duration of indentation beeps can now be configured via a new "Indent tone duration (ms)" spin control in the Document Formatting settings panel. (#20447, @Mubashir78)
 * Reduced the number of cross-process UI Automation calls when processing events, reporting focus changes, reporting objects under the mouse and rendering browse mode content, by caching more properties and batching focus property fetches. (#20608, @LeonarddeR)
+* The "Screen Curtain" section of the User Guide has been moved from "Vision" into a new "Privacy and Security" section. (#20521, @ryanduguid)
 
 ### Bug Fixes
 

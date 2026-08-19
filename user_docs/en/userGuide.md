@@ -1632,7 +1632,8 @@ Please note that while Windows Magnifier is running and inverted screen colors a
 While NVDA is primarily aimed at blind or vision impaired people who primarily use speech and/or braille to operate a computer, it also provides built-in facilities to change the contents of the screen.
 Within NVDA, such a visual aid is called a vision enhancement provider.
 
-NVDA offers several built-in vision enhancement providers which are described below.
+NVDA offers one built-in vision enhancement provider, Visual Highlight, which is described below.
+The [Screen Curtain](#VisionScreenCurtain), which makes the screen black, is described in the [Privacy and Security](#PrivacyAndSecurity) section.
 Additional vision enhancement providers can be provided in [NVDA add-ons](#AddonsManager).
 
 NVDA's vision settings can be changed in the [vision category](#VisionSettings) of the [NVDA Settings](#NVDASettings) dialog.
