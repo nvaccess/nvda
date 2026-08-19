@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2021 NV Access Limited, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2017-2026 NV Access Limited, Babbage B.V., Łukasz Golonka, Christopher Proß
 
 """Unit tests for the locationHelper module."""
 

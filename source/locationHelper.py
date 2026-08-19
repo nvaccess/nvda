@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2024 NV Access Limited, Babbage B.V.
+# Copyright (C) 2017-2026 NV Access Limited, Babbage B.V., Christopher Proß
 
 """Classes and helper functions for working with rectangles and coordinates."""
 
