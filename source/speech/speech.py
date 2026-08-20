@@ -1439,14 +1439,28 @@ def isFocusEditable() -> bool:
 	) and controlTypes.STATE_READONLY not in obj.states
 
 
-def speakTypedCharacters(ch: str):
-	typingIsProtected = api.isTypingProtected()
-	if typingIsProtected:
-		realChar = PROTECTED_CHAR
-	else:
-		realChar = ch
+def speakTypedCharacters(ch: str) -> None:
+	# #20654: resolving the protected state requires the focus object's states, which is a
+	# blocking cross-process call. Resolve it lazily, so characters that cannot be spoken,
+	# and characters typed while the relevant echo is off, do not pay for it.
+	cachedTypingIsProtected: bool | None = None
+
+	def typingIsProtected() -> bool:
+		"""Whether the focus object hides its input. Fetched at most once per call."""
+		nonlocal cachedTypingIsProtected
+		if cachedTypingIsProtected is None:
+			cachedTypingIsProtected = api.isTypingProtected()
+		return cachedTypingIsProtected
+
+	def getRealChar() -> str:
+		"""The character to speak, masked if typing is protected."""
+		return PROTECTED_CHAR if typingIsProtected() else ch
+
 	if unicodedata.category(ch)[0] in "LMN":
-		_curWordChars.append(realChar)
+		# #20654: buffer the real character and mask when the word is used, so that
+		# buffering costs no protected state lookup. The word is never spoken while
+		# typing is protected, and it is masked before being logged.
+		_curWordChars.append(ch)
 	elif ch == "\b":
 		# Backspace, so remove the last character from our buffer.
 		del _curWordChars[-1:]
@@ -1457,13 +1471,17 @@ def speakTypedCharacters(ch: str):
 		typedWord = "".join(_curWordChars)
 		clearTypedWordBuffer()
 		if log.isEnabledFor(log.IO):
-			log.io("typed word: %s" % typedWord)
+			loggedWord = PROTECTED_CHAR * len(typedWord) if typingIsProtected() else typedWord
+			log.io("typed word: %s" % loggedWord)
 		typingEchoMode = config.conf["keyboard"]["speakTypedWords"]
-		if typingEchoMode != TypingEcho.OFF.value and not typingIsProtected:
+		if typingEchoMode != TypingEcho.OFF.value:
 			if typingEchoMode == TypingEcho.ALWAYS.value or (
 				typingEchoMode == TypingEcho.EDIT_CONTROLS.value and isFocusEditable()
 			):
-				speakText(typedWord)
+				# Checked last, so the protected state is only resolved once we know the
+				# word would otherwise be spoken.
+				if not typingIsProtected():
+					speakText(typedWord)
 	if _speechState._suppressSpeakTypedCharactersNumber > 0:
 		# We primarily suppress based on character count and still have characters to suppress.
 		# However, we time out after a short while just in case.
@@ -1481,7 +1499,7 @@ def speakTypedCharacters(ch: str):
 		if typingEchoMode == TypingEcho.ALWAYS.value or (
 			typingEchoMode == TypingEcho.EDIT_CONTROLS.value and isFocusEditable()
 		):
-			speakSpelling(realChar)
+			speakSpelling(getRealChar())
 
 
 class SpeakTextInfoState(object):
