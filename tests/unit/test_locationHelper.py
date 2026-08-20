@@ -25,6 +25,20 @@ class TestRectOperators(unittest.TestCase):
 			RectLTRB(left=0, top=0, right=0, bottom=0),
 		)
 
+	def test_union(self):
+		self.assertEqual(
+			RectLTRB(left=2, top=2, right=4, bottom=4).union(
+				RectLTRB(left=3, top=3, right=5, bottom=5),
+			),
+			RectLTRB(left=2, top=2, right=5, bottom=5),
+		)
+		self.assertEqual(
+			RectLTRB(left=2, top=2, right=4, bottom=4).union(
+				RectLTRB(left=5, top=5, right=7, bottom=7),
+			),
+			RectLTRB(left=2, top=2, right=7, bottom=7),
+		)
+
 	def test_superset(self):
 		self.assertTrue(
 			RectLTRB(left=2, top=2, right=6, bottom=6).isSuperset(RectLTRB(left=2, top=2, right=4, bottom=4)),
