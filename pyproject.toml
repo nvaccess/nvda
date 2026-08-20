@@ -190,6 +190,8 @@ extraPaths = [
 	"./include/nvda-mathcat/assets",
 ]
 
+strict = ["source/_art/**", "tests/unit/test_art/**"]
+
 # General config
 analyzeUnannotatedFunctions = true
 deprecateTypingAliases = true
@@ -367,6 +369,12 @@ unused-type-ignore-comment = "ignore"  # 1 warning
 unsupported-base = "ignore"  # 1 warning
 redundant-cast = "ignore"  # 1 warning
 mismatched-type-name = "ignore"  # 1 warning
+
+[[tool.ty.overrides]]
+include = ["source/_art/**", "tests/unit/test_art/**"]
+
+[tool.ty.overrides.rules]
+all = "error"
 
 [tool.uv]
 default-groups = "all"
