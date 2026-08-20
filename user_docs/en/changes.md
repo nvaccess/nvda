@@ -140,6 +140,7 @@ Locale names are now taken from `winKernel.LCIDToLocaleName`, apart from a small
   `braille.Region.rawTextTypeforms` is now annotated as `list[louisHelper.Typeform]`.
   Plain integers remain compatible at run time.
   * Added `louisHelper.backTranslate`, which back translates braille cells, given as a list of integers, into text.
+* In `locationHelper`, the `RectLTWH.toLTRB` and `RectLTRB.toLTWH` methods have both been moved to the `_RectMixin` class to improve compatibility. This has no practical impact on existing code. (#20515, @hwf1324)
 
 #### Deprecations
 
