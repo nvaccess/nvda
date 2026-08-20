@@ -3528,7 +3528,7 @@ If the combo box interferes with your input method, such as with some IMEs, you 
 | Options | Default (Enabled), Disabled, Enabled |
 | Default | Enabled |
 
-##### Native selection mode {#BrowseModeSettingsNativeSelectionMode}
+##### Native selection mode {#NativeSelectionModeSetting}
 
 Disabled by default, this option determines whether [Native Selection Mode](#NativeSelectionMode) is automatically turned on in Browse Mode documents which support it.
 This setting does not affect Microsoft Word and Outlook, where Native Selection Mode is always used.

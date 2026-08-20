@@ -2700,7 +2700,7 @@ class BrowseModePanel(SettingsPanel):
 			keyPath=["virtualBuffers", "nativeSelectionMode"],
 			conf=config.conf,
 		)
-		self.bindHelpEvent("BrowseModeSettingsNativeSelectionMode", self.nativeSelectionModeCombo)
+		self.bindHelpEvent("NativeSelectionModeSetting", self.nativeSelectionModeCombo)
 
 		# browseMode imports gui, which imports from settingsDialogs, so a top-level import
 		# would create a circular dependency. Keep this import lazy.
