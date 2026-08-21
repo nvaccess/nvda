@@ -393,7 +393,7 @@ class _RectMixin:
 		this results in Rect(left=10,top=5,right=35,bottom=30).
 		"""
 		if not isinstance(other, RECT_CLASSES):
-			raise TypeError(f"other should be one of {RECT_CLASSES_STR}")
+			raise TypeError(f"other should be one of {_RECT_CLASSES_STR}")
 		left = min(self.left, other.left)
 		top = min(self.top, other.top)
 		right = max(self.right, other.right)
@@ -489,4 +489,4 @@ POINT_CLASSES = (Point, POINT, wx.Point)
 #: type: tuple
 RECT_CLASSES = (RectLTRB, RectLTWH, RECT)
 type RECT_TYPE = RectLTRB | RectLTWH | RECT
-RECT_CLASSES_STR = ", ".join(cls.__module__ + "." + cls.__name__ for cls in RECT_CLASSES)
+_RECT_CLASSES_STR = ", ".join(cls.__module__ + "." + cls.__name__ for cls in RECT_CLASSES)
