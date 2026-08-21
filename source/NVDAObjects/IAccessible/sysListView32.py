@@ -301,7 +301,7 @@ class List(List):
 		"""Retrieves a list of column indexes for a given list control.
 		See `_getColumnOrderArrayRaw` for more comments.
 		Note that this method operates in process and cannot be used in situations where NVDA cannot inject
-		i.e when running as a Windows Store application or when no focus event was received on startup.
+		i.e when no focus event was received on startup.
 		"""
 		columnOrderArray = (ctypes.c_int * columnCount)()
 		res = watchdog.cancellableExecute(
@@ -477,7 +477,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 	def _getColumnLocationRawInProc(self, index: int) -> ctypes.wintypes.RECT:
 		"""Retrieves rectangle containing coordinates for a given column.
 		Note that this method operates in process and cannot be used in situations where NVDA cannot inject
-		i.e when running as a Windows Store application or when no focus event was received on startup.
+		i.e when no focus event was received on startup.
 		"""
 		item = self.IAccessibleChildID - 1
 		subItem = index
@@ -578,7 +578,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 	def _getColumnContentRawInProc(self, index: int) -> Optional[str]:
 		"""Retrieves text for a given column.
 		Note that this method operates in process and cannot be used in situations where NVDA cannot inject
-		i.e when running as a Windows Store application or when no focus event was received on startup.
+		i.e when no focus event was received on startup.
 		"""
 		item = self.IAccessibleChildID - 1
 		subItem = index
@@ -762,7 +762,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 	def _getColumnHeaderRawInProc(self, index: int) -> Optional[str]:
 		"""Retrieves text of the header for the given column.
 		Note that this method operates in process and cannot be used in situations where NVDA cannot inject
-		i.e when running as a Windows Store application or when no focus event was received on startup.
+		i.e when no focus event was received on startup.
 		"""
 		subItem = index
 		text = AutoFreeBSTR()

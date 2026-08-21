@@ -4308,8 +4308,6 @@ class AdvancedPanelControls(
 			wx.EVT_CHECKBOX,
 			lambda evt: self.openScratchpadButton.Enable(evt.IsChecked()),
 		)
-		if config.isAppX:
-			self.scratchpadCheckBox.Disable()
 
 		# Translators: the label for a button in the Advanced settings category
 		label = _("Open developer scratchpad directory")
@@ -4317,8 +4315,6 @@ class AdvancedPanelControls(
 		self.bindHelpEvent("AdvancedSettingsOpenScratchpadDir", self.openScratchpadButton)
 		self.openScratchpadButton.Enable(config.conf["development"]["enableScratchpadDir"])
 		self.openScratchpadButton.Bind(wx.EVT_BUTTON, self.onOpenScratchpadDir)
-		if config.isAppX:
-			self.openScratchpadButton.Disable()
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
