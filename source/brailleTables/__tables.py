@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2008-2026 NV Access Limited, Joseph Lee, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2024 NV Access Limited, Joseph Lee, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
 
 """Contains the braille table definitions as used in NVDA.
 Note that importing this module for the first time will add all tables to the internal table store.
@@ -722,28 +722,24 @@ addTable(
 	"zhcn-cbs.ctb",
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	# This should be translated to '中文中国汉语通用盲文' in Mandarin.
 	_("Chinese common braille (simplified Chinese characters)"),
 	input=False,
 	outputForLangs={"zh_CN"},
 )
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-# This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
 addTable("zh-chn.ctb", _("Chinese (China, Mandarin) Current Braille System (no tones)"))
 
 addTable(
 	"zhcn-g1.ctb",
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	# This should be translated to '中文中国汉语现行盲文' in Mandarin.
 	_("Chinese (China, Mandarin) Current Braille System"),
 	inputForLangs={"zh_HK"},
 	outputForLangs={"zh_HK"},
 )
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-# This should be translated to '中文中国汉语双拼盲文' in Mandarin.
 addTable("zhcn-g2.ctb", _("Chinese (China, Mandarin) Double-phonic Braille System"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
