@@ -71,7 +71,7 @@ class TestCalculateSentenceOffsets(unittest.TestCase):
 
 	def test_surrogate_pair_offsets(self):
 		"""Offsets are UTF-16 code-unit indexed; a surrogate pair counts as two units."""
-		# H i sp [🤦 = 2 units] sp t h e r e . sp B y e sp n o w .
+		# U+1F926 (🤦) is greater than 0xFFFF, so is encoded as the surrogate pair 0xd83e,dd26.
 		text = "Hi \U0001f926 there. Bye now."
 		# First sentence spans the surrogate pair and ends after the space at UTF-16 offset 13.
 		self.assertEqual(icu.calculateSentenceOffsets(text, 0), (0, 13))

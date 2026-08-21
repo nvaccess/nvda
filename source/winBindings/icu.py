@@ -53,7 +53,7 @@ class UBRK(IntEnum):
 	"""Word breaks."""
 
 	SENTENCE = 3
-	"""Sentence breaks (UAX#29)."""
+	"""Sentence breaks."""
 
 
 def U_FAILURE(code: int) -> bool:

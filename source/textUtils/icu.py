@@ -17,9 +17,11 @@ import winBindings.icu as icu
 from logHandler import log
 
 _ROOT_LOCALE: bytes = b""
-"""ICU root locale. Word, character and sentence segmentation are script-driven, not
-locale-driven (see calculateWordOffsets and calculateSentenceOffsets), so the root
-locale is always used.
+"""ICU root locale.
+
+Word, character and sentence segmentation are script-driven, not locale-driven
+(see :func:`calculateWordOffsets` and :func:`calculateSentenceOffsets`),
+so the root locale is always used.
 """
 
 
@@ -94,7 +96,7 @@ def calculateWordOffsets(
 	Uniscribe/Notepad behaviour for mixed whitespace runs is itself inconsistent.
 
 	:param text: The line text as a Python str.
-	:param offset: UTF-16 code unit offset within text at which to find the boundary.
+	:param offset: UTF-16 code unit offset within text at which to find the boundaries.
 	:return: (startOffset, endOffset) as UTF-16 code unit indices (endOffset exclusive),
 	    or None if the ICU call failed.
 	"""
@@ -162,7 +164,7 @@ def calculateSentenceOffsets(
 	preceding sentence.
 
 	:param text: The paragraph text as a Python str.
-	:param offset: UTF-16 code unit offset within text at which to find the boundary.
+	:param offset: UTF-16 code unit offset within text at which to find the boundaries.
 	:return: (startOffset, endOffset) as UTF-16 code unit indices (endOffset exclusive),
 	    or None if the ICU call failed.
 	"""
