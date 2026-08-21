@@ -488,6 +488,8 @@ class Gecko_ia2(VirtualBuffer):
 				{"IAccessible::role": [oleacc.ROLE_SYSTEM_SLIDER]},
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("slider")]},
 			]
+		elif nodeType == "clickable":
+			attrs = {"IAccessibleAction_click": [VBufStorage_findMatch_notEmpty]}
 		elif nodeType == "graphic":
 			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_GRAPHIC]}
 		elif nodeType == "blockQuote":
@@ -718,6 +720,21 @@ class Gecko_ia2(VirtualBuffer):
 			assert childID == 0, "childID should be 0"
 			ia2Sel.endObj = ia2Sel.endObj.QueryInterface(IAccessibleText)
 			log.debug(f"ia2 end obj {ia2Sel.endObj}")
+
+	def _initialize_nativeAppSelectionModeSupport(self) -> None:
+		"""Turn on native selection mode when the document supports clearing
+		and setting the native selection.
+		"""
+		try:
+			self.clearAppSelection()
+			self.updateAppSelection()
+		except (NotImplementedError, COMError):
+			log.debugWarning(
+				"Native selection unsupported in this document, not enabling native selection mode",
+				exc_info=True,
+			)
+			return
+		self._nativeAppSelectionMode = True
 
 	def _setAppSelection(self, selInfo: textInfos.TextInfo):
 		"""Set the native selection in the application to the given range.

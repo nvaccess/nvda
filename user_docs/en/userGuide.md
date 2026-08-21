@@ -1150,6 +1150,7 @@ Here is a list of available commands:
 * Toggle button
 * Progress bar
 * Slider
+* Clickable element
 * Reference
 * Math formula
 * Vertically aligned paragraph
@@ -1218,13 +1219,16 @@ A key command is provided to return to the original page containing the embedded
 
 By default when selecting text with the `shift+arrow` keys in Browse Mode, a selection is only made within NVDA's Browse Mode representation of the document, and not within the application itself.
 This means that the selection is not visible on screen, and copying text with `control+c` will only copy NVDA's plain text representation of the content. i.e. formatting of tables, or whether something is a link will not be copied.
-However, NVDA has a Native Selection Mode which can be turned on in particular Browse Mode documents which can support it.
+However, NVDA has a Native Selection Mode which can be toggled on or off in Browse Mode documents that support it.
 Native Selection causes the document's native selection to follow NVDA's Browse Mode selection, which enables details such as formatting, links, and tables to be copied.
 Currently, Native Selection Mode is supported in:
 
 * Mozilla Firefox
 * Mozilla Thunderbird
 * Chrome, Edge, and any browser based on Chromium 134 or newer
+* Microsoft Word and Outlook, where it cannot be toggled off
+
+Native Selection Mode can also be [turned on automatically](#BrowseModeSettingsNativeSelectionMode) in supporting documents via NVDA's Browse Mode settings.
 
 <!-- KC:beginInclude -->
 
@@ -1640,9 +1644,9 @@ You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAnd
 
 <!-- KC:endInclude -->
 
-When Screen Curtain is enabled, features that rely on what is literally on screen will not function.
-For example, you cannot [use OCR](#Win10Ocr).
-Some screenshot utilities also may not work.
+When Screen Curtain is enabled, some features that rely on what is literally on screen will not function.
+On supported systems, [Windows OCR](#Win10Ocr) can still be used while Screen Curtain is enabled.
+Some screenshot utilities may not work.
 
 Please note that while Windows Magnifier is running and inverted screen colors are being used, Screen Curtain cannot be enabled.
 
@@ -1764,7 +1768,9 @@ Additional languages can be installed by opening the Start menu, choosing Settin
 When you want to monitor constantly changing content, such as when watching a video with subtitles, you can optionally enable automatic refresh of the recognized content.
 This can also be done in the [Windows OCR category](#Win10OcrSettings) of the [NVDA Settings](#NVDASettings) dialog.
 
-Windows OCR may be partially or fully incompatible with [NVDA vision enhancements](#Vision) or other external visual aids. You will need to disable these aids before proceeding to a recognition.
+On supported systems, Windows OCR can still be used while [Screen Curtain](#VisionScreenCurtain) or NVDA's built-in [Magnifier](#Magnifier) is active.
+External visual aids may be partially or fully incompatible with Windows OCR.
+You may need to disable these aids before proceeding to a recognition.
 
 <!-- KC:beginInclude -->
 To recognize the text in the current navigator object using Windows OCR, press NVDA+r.
@@ -3522,6 +3528,18 @@ If the combo box interferes with your input method, such as with some IMEs, you 
 | Options | Default (Enabled), Disabled, Enabled |
 | Default | Enabled |
 
+##### Native selection mode {#NativeSelectionModeSetting}
+
+Disabled by default, this option determines whether [Native Selection Mode](#NativeSelectionMode) is automatically turned on in Browse Mode documents which support it.
+This setting does not affect Microsoft Word and Outlook, where Native Selection Mode is always used.
+When disabled, you can still turn on native selection mode manually per document with `NVDA+shift+f10`.
+Changing this option takes effect for newly loaded documents.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Default (Disabled), Disabled, Enabled |
+| Default | Disabled |
+
 ##### Browse mode touch navigation elements {#BrowseModeSettingsBrowseModeNavigationElements}
 
 This list allows you to choose which element types are available when cycling through elements in browse touch mode.
@@ -4287,6 +4305,16 @@ While it improves performance and prevents some console output from being spelle
 This feature is available and enabled by default on Windows 10 versions 1607 and later when UI Automation is unavailable or disabled.
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
 In untrusted environments, you may temporarily disable [speak typed characters](#KeyboardSettingsSpeakTypedCharacters) and [speak typed words](#KeyboardSettingsSpeakTypedWords) when entering passwords.
+
+##### Beep for skipped lines {#BeepForSkippedLines}
+
+This setting controls whether NVDA plays a short beep when too many new lines arrive before they can all be reported.
+The beep indicates that some lines were skipped, and becomes slightly longer as more lines are skipped.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Disabled, Enabled |
+| Default | Enabled |
 
 ##### Diff algorithm {#DiffAlgo}
 

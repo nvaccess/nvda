@@ -18,7 +18,7 @@ from parameterized import parameterized
 from typing import Any, Iterable, NamedTuple
 from concurrent.futures import ThreadPoolExecutor
 
-from gui.message import Button
+from gui.message import Button, displayDialogAsModal
 from gui.message import MessageDialog
 
 
@@ -618,6 +618,22 @@ class Test_MessageDialog_ShowModal(MDTestBase):
 			mocked_showModal.assert_called_once()
 			mocked_messageBoxCounter.__iadd__.assert_called_once()
 			mocked_messageBoxCounter.__isub__.assert_called_once()
+
+
+@patch("gui.mainFrame")
+class Test_DisplayDialogAsModal(unittest.TestCase):
+	def test_dialogDeletedDuringShowModal(self, mocked_mainFrame: MagicMock) -> None:
+		"""The dialog must not be accessed after ShowModal returns."""
+		dialog = MagicMock(spec_set=wx.Dialog)
+		dialog.GetParent.side_effect = (None, RuntimeError("wrapped C/C++ object has been deleted"))
+		dialog.ShowModal.return_value = wx.ID_YES
+
+		self.assertEqual(wx.ID_YES, displayDialogAsModal(dialog))
+
+		dialog.GetParent.assert_called_once()
+		dialog.ShowModal.assert_called_once()
+		mocked_mainFrame.prePopup.assert_called_once()
+		mocked_mainFrame.postPopup.assert_called_once()
 
 
 class Test_MessageDialog_EventHandlers(MDTestBase):

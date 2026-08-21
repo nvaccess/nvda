@@ -295,14 +295,14 @@ def toggleFullscreenMode() -> None:
 			currentMode = fullscreenMagnifier._fullscreenMode
 			idx = modes.index(currentMode)
 			newMode = modes[(idx + 1) % len(modes)]
-			log.debug(f"Changing full-screen mode from {currentMode} to {newMode}")
+			log.debug(f"Changing full-screen tracking mode from {currentMode} to {newMode}")
 			fullscreenMagnifier._fullscreenMode = newMode
 			setFullscreenMode(newMode)
 			ui.message(
 				pgettext(
 					"magnifier",
-					# Translators: Message announced when changing the full-screen mode with {mode} being the new full-screen mode.
-					"Full-screen mode {mode}",
+					# Translators: Message announced when changing the tracking mode with {mode} being the new tracking mode.
+					"Tracking mode {mode}",
 				).format(mode=newMode.displayString),
 			)
 
