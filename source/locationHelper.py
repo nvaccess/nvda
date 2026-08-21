@@ -387,16 +387,13 @@ class _RectMixin:
 			return RectLTWH(left, top, right - left, bottom - top)
 		return RectLTRB(left, top, right, bottom)
 
-	def union(self, other):
+	def union(self, other: "RECT_TYPE") -> "RectLTWH | RectLTRB":
 		"""Returns the smallest rectangle that contains both self and other.
 		For example, if self = Rect(left=10,top=10,right=25,bottom=25) and other = Rect(left=20,top=5,right=35,bottom=30),
 		this results in Rect(left=10,top=5,right=35,bottom=30).
 		"""
 		if not isinstance(other, RECT_CLASSES):
-			raise TypeError(
-				"other should be one of %s"
-				% ", ".join(cls.__module__ + "." + cls.__name__ for cls in RECT_CLASSES),
-			)
+			raise TypeError(f"other should be one of {RECT_CLASSES_STR}")
 		left = min(self.left, other.left)
 		top = min(self.top, other.top)
 		right = max(self.right, other.right)
@@ -491,3 +488,5 @@ POINT_CLASSES = (Point, POINT, wx.Point)
 #: Classes which support conversion to locationHelper RectLTRB/LTWH using their left, top, right and bottom properties.
 #: type: tuple
 RECT_CLASSES = (RectLTRB, RectLTWH, RECT)
+type RECT_TYPE = RectLTRB | RectLTWH | RECT
+RECT_CLASSES_STR = ", ".join(cls.__module__ + "." + cls.__name__ for cls in RECT_CLASSES)
