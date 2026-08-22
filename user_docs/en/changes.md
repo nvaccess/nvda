@@ -92,6 +92,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * In Mozilla Firefox and Chromium based browsers with native selection mode enabled, the caret no longer gets stuck when switching to focus mode, and typing in edit fields works again. (#19075, #18028, @LeonarddeR)
 * In Windows Terminal, mouse tracking now reports the line of text under the mouse pointer. (#20448, @DataTriny)
 * NVDA no longer floods its log with errors while Windows is locked and a browse mode document keeps updating in the background, such as a playing video in Mozilla Firefox. (#18861, @bramd)
+* Updating an add-on no longer leaves modules of the old version loaded. This could cause errors in the updated add-on on the first start of NVDA after the update. (#18971, @LeonarddeR)
 
 ### Changes for Developers
 
