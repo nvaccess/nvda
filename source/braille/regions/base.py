@@ -11,7 +11,6 @@ import collections
 import brailleTables
 import config
 import languageHandler
-import louis
 import louisHelper
 from textUtils import OffsetConverter, UnicodeNormalizationOffsetConverter, isUnicodeNormalized
 from textUtils._braille import _applyOffsetConverter
@@ -43,8 +42,8 @@ class Region(object):
 	"""The start of the selection in :attr:`rawText` (inclusive), ``None`` if there is no selection in this region."""
 	selectionEnd: int | None = None
 	"""The end of the selection in :attr:`rawText` (exclusive), ``None`` if there is no selection in this region."""
-	rawTextTypeforms: list[int] | None = None
-	"""liblouis typeform flags for each character in :attr:`rawText`, ``None`` if no typeform info."""
+	rawTextTypeforms: list[louisHelper.Typeform] | None = None
+	""":class:`louisHelper.Typeform` flags for each character in :attr:`rawText`, ``None`` if no typeform info."""
 	brailleCursorPos: int | None = None
 	"""The position of the cursor in :attr:`brailleCells`, ``None`` if the cursor is not in this region."""
 	brailleSelectionStart: int | None = None
@@ -85,9 +84,9 @@ class Region(object):
 		L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} are similarly updated based on L{cursorPos}, L{selectionStart} and L{selectionEnd}, respectively.
 		@postcondition: L{brailleCells}, L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} are updated and ready for rendering.
 		"""
-		mode = louis.dotsIO
+		mode = louisHelper.TranslationMode.NONE
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
-			mode |= louis.compbrlAtCursor
+			mode |= louisHelper.TranslationMode.COMPBRL_AT_CURSOR
 
 		converters: list[OffsetConverter] = []
 		textToTranslate = self.rawText

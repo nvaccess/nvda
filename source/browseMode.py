@@ -1235,6 +1235,21 @@ qn(
 	touchLabel=_("sliders"),
 )
 qn(
+	"clickable",
+	key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next clickable element"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next clickable element"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous clickable element"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous clickable element"),
+	readUnit=textInfos.UNIT_LINE,
+	# Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
+	touchLabel=_("clickable elements"),
+)
+qn(
 	"article",
 	key=None,
 	# Translators: Input help message for a quick navigation command in browse mode.
@@ -1836,6 +1851,8 @@ class BrowseModeDocumentTreeInterceptor(
 		doSayAll = False
 		hadFirstGainFocus = self._hadFirstGainFocus
 		if not hadFirstGainFocus:
+			if config.conf["virtualBuffers"]["nativeSelectionMode"]:
+				self._initialize_nativeAppSelectionModeSupport()
 			# This treeInterceptor is gaining focus for the first time.
 			# Fake a focus event on the focus object, as the treeInterceptor may have missed the actual focus event.
 			focus = api.getFocusObject()

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2024 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2024-2026 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Unit tests for the louisHelper module."""
 
@@ -11,6 +11,9 @@ import unittest
 import brailleTables
 import louisHelper
 import NVDAState
+
+TABLES = ["en-us-comp8-ext.utb", "braille-patterns.cti"]
+"""An 8 dot computer braille table, which round trips ASCII without contractions."""
 
 
 class TestResolvingInternal(unittest.TestCase):
@@ -141,3 +144,16 @@ class TestResolvingCustom(unittest.TestCase):
 			list(louisHelper._resolveTableInner(tables=[fileNameToTest], base=basePath)),
 			[os.path.join(brailleTables.TABLES_DIR, fileNameToTest)],
 		)
+
+
+class TestBackTranslate(unittest.TestCase):
+	"""Ensures ``backTranslate`` encodes cells as liblouis expects."""
+
+	def test_roundTrip(self):
+		"""Cells produced by ``translate`` must back translate to the original text."""
+		cells = louisHelper.translate(TABLES, "test")[0]
+		self.assertEqual(louisHelper.backTranslate(TABLES, cells), "test")
+
+	def test_emptyInput(self):
+		"""Back translating no cells must produce no text."""
+		self.assertEqual(louisHelper.backTranslate(TABLES, []), "")

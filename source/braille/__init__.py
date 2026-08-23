@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import config
+import louisHelper
 from logHandler import log
 
 from . import brailleHandler as _brailleHandler
@@ -16,9 +17,8 @@ handler: _brailleHandler.BrailleHandler | None = None
 
 def initialize():
 	global handler
-	import louis
 
-	log.info("Using liblouis version %s" % louis.version())
+	log.info(f"Using liblouis version {louisHelper.getLouisVersion()}")
 	import serial
 
 	log.info("Using pySerial version %s" % serial.VERSION)

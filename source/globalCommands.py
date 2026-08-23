@@ -4855,13 +4855,6 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reported when Windows OCR is not available.
 			ui.message(_("Windows OCR not available"))
 			return
-		from screenCurtain import screenCurtain
-
-		isScreenCurtainRunning = screenCurtain is not None and screenCurtain.enabled
-		if isScreenCurtainRunning:
-			# Translators: Reported when screen curtain is enabled.
-			ui.message(_("Please disable screen curtain before using Windows OCR."))
-			return
 		from contentRecog import uwpOcr, recogUi
 
 		recog = uwpOcr.UwpOcr()
@@ -5046,6 +5039,14 @@ class GlobalCommands(ScriptableObject):
 				self._waitingOnScreenCurtainWarningDialog = None
 				if not doEnable:
 					return  # exit early with no ui.message because the user has decided to abort.
+				from contentRecog import recogUi
+
+				if recogUi._shouldBlockScreenCurtainEnable(focusObj):
+					ui.message(
+						screenCurtain._screenCurtain.UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE,
+						speechPriority=speech.priorities.Spri.NOW,
+					)
+					return
 				tempEnable = GlobalCommands._tempEnableScreenCurtain
 				# Translators: Reported when the screen curtain is enabled.
 				enableMessage = _("Screen curtain enabled")
@@ -5067,6 +5068,7 @@ class GlobalCommands(ScriptableObject):
 
 			#  Show warning if necessary and do enable.
 			settingsStorage = screenCurtain.screenCurtain.settings
+			focusObj = api.getFocusObject()
 			if settingsStorage["warnOnLoad"]:
 				dlg = screenCurtain._screenCurtain.WarnOnLoadDialog(
 					screenCurtainSettingsStorage=settingsStorage,
@@ -5082,18 +5084,6 @@ class GlobalCommands(ScriptableObject):
 					),
 				)
 			else:
-				from contentRecog.recogUi import RefreshableRecogResultNVDAObject
-
-				focusObj = api.getFocusObject()
-				if (
-					isinstance(focusObj, RefreshableRecogResultNVDAObject)
-					and focusObj.recognizer.allowAutoRefresh
-				):
-					ui.message(
-						screenCurtain._screenCurtain.UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE,
-						speechPriority=speech.priorities.Spri.NOW,
-					)
-					return
 				_enableScreenCurtain()
 
 	@script(

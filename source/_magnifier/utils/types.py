@@ -83,8 +83,8 @@ class MagnifierAction(DisplayStringEnum):
 			self.TOGGLE_FILTER: pgettext("magnifier action", "cycle color filters"),
 			# Translators: Action description for changing magnifier view.
 			self.CHANGE_MAGNIFIER_VIEW: pgettext("magnifier action", "change magnifier view"),
-			# Translators: Action description for changing full-screen mode.
-			self.CHANGE_FULLSCREEN_MODE: pgettext("magnifier action", "change full-screen mode"),
+			# Translators: Action description for changing tracking mode.
+			self.CHANGE_FULLSCREEN_MODE: pgettext("magnifier action", "change tracking mode"),
 			# Translators: Action description for move mouse to view
 			self.MOVE_MOUSE_TO_VIEW: pgettext("magnifier action", "move mouse to view"),
 			# Translators: Action description for showing entire screen overview.

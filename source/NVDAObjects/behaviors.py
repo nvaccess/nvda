@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler,
-# Burman's Computer and Education Ltd, Cary-rowen, Cyrille Bougot
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler,
+# Burman's Computer and Education Ltd, Cary-rowen, Cyrille Bougot, Ethin Probst
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
@@ -11,6 +11,7 @@ Behaviors described in this mix-in include providing table navigation commands f
 import os
 import time
 import threading
+import math
 import tones
 import queueHandler
 import eventHandler
@@ -469,13 +470,31 @@ class LiveText(NVDAObject):
 		Subclasses may override this method to provide custom filtering of new text,
 		where logic depends on multiple lines.
 		"""
-		droppedCount = len(lines) - self.MAX_LINES
-		if droppedCount > 0:
-			lines = lines[-self.MAX_LINES :]
+		if self.MAX_LINES > 0:
+			droppedCount = len(lines) - self.MAX_LINES
+			if droppedCount > 0:
+				if (
+					config.conf["terminals"]["beepForSkippedLines"]
+					and speech.getState().speechMode == speech.SpeechMode.talk
+				):
+					SKIPPED_LINES_BEEP_HZ = 550
+					tones.beep(
+						SKIPPED_LINES_BEEP_HZ,
+						self._getSkippedLinesBeepLength(droppedCount),
+					)
+				lines = lines[-self.MAX_LINES :]
 		if self._reportNewLinesGenID is not None:
 			queueHandler.cancelGeneratorObject(self._reportNewLinesGenID)
 			self._reportNewLinesGenID = None
 		self._reportNewLinesGenID = queueHandler.registerGeneratorObject(self._reportNewLinesGenerator(lines))
+
+	def _getSkippedLinesBeepLength(self, droppedCount: int) -> int:
+		SKIPPED_LINES_BEEP_MIN_DURATION_MS = 10
+		SKIPPED_LINES_BEEP_MAX_DURATION_MS = 100
+		droppedCount = max(droppedCount, 1)
+		ratio = 1.0 if self.MAX_LINES <= 1 else min(1.0, math.log(droppedCount, self.MAX_LINES))
+		lengthRange = SKIPPED_LINES_BEEP_MAX_DURATION_MS - SKIPPED_LINES_BEEP_MIN_DURATION_MS
+		return round(SKIPPED_LINES_BEEP_MIN_DURATION_MS + lengthRange * ratio)
 
 	def _reportNewLinesGenerator(self, lines: list[str]) -> Generator[None, None, None]:
 		YIELD_EVERY = 5  # Sweet spot between yielding on every line and a batch

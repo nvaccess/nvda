@@ -228,6 +228,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# Element types available for cycling in browse touch mode.
 	browseModeTouchNavigationElements = string_list(default=list("heading", "link", "formField", "list", "table"))
 	findHistory = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	nativeSelectionMode = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 
 [touch]
 	enabled = boolean(default=true)
@@ -315,6 +316,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [terminals]
 	speakPasswords = boolean(default=false)
 	keyboardSupportInLegacy = boolean(default=True)
+	beepForSkippedLines = boolean(default=true)
 	diffAlgo = option("auto", "dmp", "difflib", default="auto")
 	wtStrategy = featureFlag(optionsEnum="WindowsTerminalStrategyFlag", behaviorOfDefault="diffing")
 

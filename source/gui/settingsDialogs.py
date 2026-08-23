@@ -2691,6 +2691,17 @@ class BrowseModePanel(SettingsPanel):
 		)
 		self.bindHelpEvent("SearchHistory", self.searchHistoryCombo)
 
+		self.nativeSelectionModeCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is the label for a combo box in the browse mode settings panel.
+				"Nati&ve selection mode",
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["virtualBuffers", "nativeSelectionMode"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("NativeSelectionModeSetting", self.nativeSelectionModeCombo)
+
 		# browseMode imports gui, which imports from settingsDialogs, so a top-level import
 		# would create a circular dependency. Keep this import lazy.
 		import browseMode
@@ -2728,6 +2739,7 @@ class BrowseModePanel(SettingsPanel):
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
 		self.searchHistoryCombo.saveCurrentValueToConf()
+		self.nativeSelectionModeCombo.saveCurrentValueToConf()
 		config.conf["virtualBuffers"]["browseModeTouchNavigationElements"] = [
 			itemType
 			for i, (itemType, _label) in enumerate(self._browseModeElements)
@@ -4533,6 +4545,22 @@ class AdvancedPanelControls(
 			["terminals", "keyboardSupportInLegacy"],
 		)
 		self.keyboardSupportInLegacyCheckBox.Enable(winVersion.getWinVer() >= winVersion.WIN10_1607)
+		# Translators: This is the label for a checkbox in the
+		# Advanced settings panel.
+		label = _("Beep for &skipped lines")
+		self.beepForSkippedLinesCheckBox = terminalsGroup.addItem(
+			wx.CheckBox(terminalsBox, label=label),
+		)
+		self.bindHelpEvent(
+			"BeepForSkippedLines",
+			self.beepForSkippedLinesCheckBox,
+		)
+		self.beepForSkippedLinesCheckBox.SetValue(
+			config.conf["terminals"]["beepForSkippedLines"],
+		)
+		self.beepForSkippedLinesCheckBox.defaultValue = self._getDefaultValue(
+			["terminals", "beepForSkippedLines"],
+		)
 
 		# Translators: This is the label for a combo box for selecting a
 		# method of detecting changed content in terminals in the advanced
@@ -4829,6 +4857,7 @@ class AdvancedPanelControls(
 			== self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 			== self.winConsoleSpeakPasswordsCheckBox.defaultValue
+			and self.beepForSkippedLinesCheckBox.IsChecked() == self.beepForSkippedLinesCheckBox.defaultValue
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
 			and self.wtStrategyCombo.isValueConfigSpecDefault()
 			and self.cancelExpiredFocusSpeechCombo.GetSelection()
@@ -4861,6 +4890,9 @@ class AdvancedPanelControls(
 		self.brailleLiveRegionsCombo.resetToConfigSpecDefault()
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
+		self.beepForSkippedLinesCheckBox.SetValue(
+			self.beepForSkippedLinesCheckBox.defaultValue,
+		)
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue)
 		self.wtStrategyCombo.resetToConfigSpecDefault()
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
@@ -4903,6 +4935,7 @@ class AdvancedPanelControls(
 		self.enhancedEventProcessingComboBox.saveCurrentValueToConf()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["terminals"]["keyboardSupportInLegacy"] = self.keyboardSupportInLegacyCheckBox.IsChecked()
+		config.conf["terminals"]["beepForSkippedLines"] = self.beepForSkippedLinesCheckBox.IsChecked()
 		diffAlgoChoice = self.diffAlgoCombo.GetSelection()
 		config.conf["terminals"]["diffAlgo"] = self.diffAlgoVals[diffAlgoChoice]
 		self.wtStrategyCombo.saveCurrentValueToConf()
@@ -6295,17 +6328,8 @@ class MagnifierPanel(SettingsPanel):
 			checkBox.Bind(wx.EVT_CHECKBOX, self._onImmediateSettingChange)
 			self._trackingTypeCheckBoxes[trackingType] = checkBox
 
-		# Tracking GROUP
-		# Translators: This is the label for a group of tracking magnifier options in the
-		# magnifier settings panel
-		trackingGroupText = _("Tracking")
-		self.trackingGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=trackingGroupText)
-		trackingGroupBox = self.trackingGroupSizer.GetStaticBox()
-		trackingGroup = guiHelper.BoxSizerHelper(trackingGroupBox, sizer=self.trackingGroupSizer)
-		sHelper.addItem(trackingGroup)
-
 		# Tracking MODE SETTINGS
-		# Translators: The label for a setting in magnifier settings to select the full-screen mode
+		# Translators: The label for a setting in magnifier settings to select the tracking mode
 		trackingModeLabelText = _("&Tracking mode:")
 		trackingModeChoices = [mode.displayString for mode in FullScreenMode]
 		self.trackingModeList = trackingGroup.addLabeledControl(
@@ -6563,17 +6587,17 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			self._cachedScreenCurtainConfigEnabled = screenCurtain.screenCurtain.settings["enabled"]
 			self._cachedScreenCurtainEnabled = screenCurtain.screenCurtain.enabled
 
-	def _ocrActive(self) -> bool:
+	def _contentRecognitionActive(self) -> bool:
 		"""
-		Outputs a message when trying to activate screen curtain when OCR is active.
+		Outputs a message when content recognition prevents Screen Curtain from being enabled.
 
-		:return: ``True`` when OCR is active, ``False`` otherwise.
+		:return: ``True`` when Screen Curtain should not be enabled, ``False`` otherwise.
 		"""
 		# Import late to avoid circular import
-		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
+		from contentRecog import recogUi
 
 		focusObj = api.getFocusObject()
-		if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
+		if recogUi._shouldBlockScreenCurtainEnable(focusObj):
 			ui.message(
 				screenCurtain._screenCurtain.UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE,
 				speechPriority=speech.priorities.Spri.NOW,
@@ -6590,7 +6614,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		currentlyEnabled = screenCurtain.screenCurtain.enabled
 		if shouldBeEnabled and not currentlyEnabled:
 			confirmed = self._confirmEnableScreenCurtainWithUser()
-			if not confirmed or self._ocrActive():
+			if not confirmed or self._contentRecognitionActive():
 				self._screenCurtainEnabledCheckbox.SetValue(False)
 			else:
 				try:

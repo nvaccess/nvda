@@ -401,6 +401,12 @@ class MSHTML(VirtualBuffer):
 				{"IAccessible::role": [oleacc.ROLE_SYSTEM_SLIDER]},
 				{"HTMLAttrib::role": ["slider"]},
 			]
+		elif nodeType == "clickable":
+			attrs = [
+				{"HTMLAttrib::onclick": [VBufStorage_findMatch_notEmpty]},
+				{"HTMLAttrib::onmousedown": [VBufStorage_findMatch_notEmpty]},
+				{"HTMLAttrib::onmouseup": [VBufStorage_findMatch_notEmpty]},
+			]
 		elif nodeType == "table":
 			attrs = {"IHTMLDOMNode::nodeName": ["TABLE"]}
 			if not config.conf["documentFormatting"]["includeLayoutTables"]:
