@@ -3706,6 +3706,7 @@ You may toggle through the available paragraph styles from anywhere by assigning
 ##### Word Segmentation Standard {#WordSegmentationStandard}
 
 This setting controls how NVDA determines word boundaries when navigating by word.
+This affects how script languages without spaces break up text into words, sentences and paragraphs
 Chinese braille output uses a separate [Chinese word segmentation setting](#ChineseBrailleWordSegmentation), except with the "Chinese (Taiwan, Mandarin)" output table.
 
 | . {.hideHeaderRow} |.|
