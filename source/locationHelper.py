@@ -294,6 +294,18 @@ class _RectMixin:
 			return RectLTWH(left, top, self.width, self.height)
 		return RectLTRB(left, top, left + self.width, top + self.height)
 
+	def toLTRB(self) -> "RectLTRB":
+		if isinstance(self, RectLTWH):
+			return RectLTRB(self.left, self.top, self.right, self.bottom)
+		assert isinstance(self, RectLTRB)
+		return self
+
+	def toLTWH(self) -> "RectLTWH":
+		if isinstance(self, RectLTRB):
+			return RectLTWH(self.left, self.top, self.width, self.height)
+		assert isinstance(self, RectLTWH)
+		return self
+
 	@property
 	def topLeft(self):
 		return Point(self.left, self.top)
@@ -447,9 +459,6 @@ class RectLTWH(_RectMixin, _RectLTWH):
 	def bottom(self) -> int:
 		return self.top + self.height
 
-	def toLTRB(self) -> "RectLTRB":
-		return RectLTRB(self.left, self.top, self.right, self.bottom)
-
 
 class _RectLTRB(NamedTuple):
 	left: int
@@ -478,9 +487,6 @@ class RectLTRB(_RectMixin, _RectLTRB):
 	@property
 	def height(self) -> int:
 		return self.bottom - self.top
-
-	def toLTWH(self) -> "RectLTWH":
-		return RectLTWH(self.left, self.top, self.width, self.height)
 
 
 def _remapRectByAnchors(rect: RectLTRB, oldAnchor: RectLTRB, newAnchor: RectLTRB) -> RectLTRB:
