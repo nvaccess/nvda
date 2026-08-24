@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-17 00:02+0000\n"
-"PO-Revision-Date: 2026-08-17 00:12\n"
+"POT-Creation-Date: 2026-08-23 23:27+0000\n"
+"PO-Revision-Date: 2026-08-24 00:13\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -7230,7 +7230,7 @@ msgstr "iki kez {action}"
 #: touchHandler.py:227
 #, python-brace-format
 msgid "triple {action}"
-msgstr "Üç kez {action}"
+msgstr "üç kez {action}"
 
 #. Translators: a touch screen action performed 4 times
 #: touchHandler.py:229
@@ -7250,13 +7250,13 @@ msgstr[1] "{numFingers} parmakla {action}"
 #: touchTracker.py:40
 msgctxt "touch action"
 msgid "pinch in"
-msgstr "Sıkıştırma"
+msgstr "kıstırma"
 
 #. Translators: a touch screen gesture where two fingers move away from each other (zoom in)
 #: touchTracker.py:42
 msgctxt "touch action"
 msgid "pinch out"
-msgstr "Sıkıştırmayı açma"
+msgstr "kıstırmayı açma"
 
 #. Translators: a very quick touch and release of a finger on a touch screen
 #: touchTracker.py:44
@@ -7590,7 +7590,7 @@ msgstr "Tamamlan&dı"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1015 gui\installerGui.py:643
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr "NVDA uzaktan erişime kontrol edilen bilgisayar olarak bağlıyken NVDA'yı güncellemek önerilmez."
+msgstr "NVDA uzaktan erişime kontrol edilen bilgisayar olarak bağlıyken NVDA'yı güncellemek önerilmez. "
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
@@ -10678,7 +10678,7 @@ msgstr "giriş/çıkış"
 #. Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
 #: config\configFlags.py:438
 msgid "debug"
-msgstr "Hata ayıklama"
+msgstr "hata ayıklama"
 
 #. Translators: One of the log levels of NVDA (the "debug (unredacted)" mode mode logs debug messages
 #. without redacting secrets).
@@ -12049,7 +12049,7 @@ msgstr "aynı sayfa"
 #. For example, a list box that allows selecting multiple items.
 #: controlTypes\state.py:216
 msgid "multi-select"
-msgstr "Çoklu seçmeli"
+msgstr "çoklu seçmeli"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 #: controlTypes\state.py:222
@@ -13159,13 +13159,13 @@ msgstr "&Kuruluma devam et (önerilmez)"
 #. to an older version.
 #: gui\installerGui.py:552
 msgid "You are attempting to replace an existing portable copy of NVDA with an earlier version. Downgrading NVDA is not recommended. You should cancel this operation and create a new portable copy instead. "
-msgstr "NVDA'nın varolan taşınabilir kopyasını önceki bir sürümle değiştirmeye çalışıyorsunuz. NVDA'nın sürümünü düşürmek önerilmez. Bu işlemi iptal edip yeni bir taşınabilir kopya oluşturun."
+msgstr "NVDA'nın varolan taşınabilir kopyasını önceki bir sürümle değiştirmeye çalışıyorsunuz. NVDA'nın sürümünü düşürmek önerilmez. Bu işlemi iptal edip yeni bir taşınabilir kopya oluşturun. "
 
 #. Translators: A warning presented when the installer is unable to determine
 #. the state of the current NVDA installation.
 #: gui\installerGui.py:560
 msgid "An existing copy of NVDA has been detected in the chosen directory, but its version cannot be determined. If you are attempting to downgrade to an earlier version of NVDA, you should cancel this operation and create a new portable copy. "
-msgstr "Seçtiğiniz dizinde NVDA'nın bir kopyası algılandı ancak sürümü belirlenemedi. NVDA'nın önceki bir sürümünü kurmaya çalışıyorsanız, bu işlemi iptal edip yeni bir taşınabilir kopya oluşturun."
+msgstr "Seçtiğiniz dizinde NVDA'nın bir kopyası algılandı ancak sürümü belirlenemedi. NVDA'nın önceki bir sürümünü kurmaya çalışıyorsanız, bu işlemi iptal edip yeni bir taşınabilir kopya oluşturun. "
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
@@ -13197,7 +13197,7 @@ msgstr "Dizin mevcut"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: gui\installerGui.py:649
 msgid "Installing NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr "NVDA uzaktan erişime kontrol edilen bilgisayar olarak bağlıyken NVDA'yı kurmak önerilmez."
+msgstr "NVDA uzaktan erişime kontrol edilen bilgisayar olarak bağlıyken NVDA'yı kurmak önerilmez. "
 
 #. Translators: Message shown to users when attempting to install or update NVDA from the launcher
 #. on a computer which is being remotely controlled via NVDA Remote Access
@@ -14073,7 +14073,7 @@ msgstr "Konuşma olarak"
 #: gui\settingsDialogs.py:2797
 msgctxt "math"
 msgid "Impairment:"
-msgstr "Engel"
+msgstr "Engel:"
 
 #. Translators: MathCAT language option
 #: gui\settingsDialogs.py:2809
@@ -14295,7 +14295,7 @@ msgstr "Belge Bilgileri"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:3257
 msgid "Commen&ts"
-msgstr "yoru&mlar"
+msgstr "Yoru&mlar"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -14761,7 +14761,7 @@ msgstr "Seçimli"
 #. in all cases.
 #: gui\settingsDialogs.py:4277
 msgid "Global"
-msgstr "global"
+msgstr "Global"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
 #: gui\settingsDialogs.py:4306
@@ -16200,8 +16200,8 @@ msgstr[1] "NVDA'nın sistem konfigürasyonuna {num} eklentiyi kopyalamayı seçt
 msgctxt "addonStore"
 msgid "This action will remove {num} add-on from NVDA's system-wide configuration. "
 msgid_plural "This action will remove {num} add-ons from NVDA's system-wide configuration. "
-msgstr[0] "Bu eylemi yaptığınızda {num} eklenti NVDA'nın sistem konfigürasyonundan kaldırılacak."
-msgstr[1] "Bu eylemi yaptığınızda {num} eklenti NVDA'nın sistem konfigürasyonundan kaldırılacak."
+msgstr[0] "Bu eylemi yaptığınızda {num} eklenti NVDA'nın sistem konfigürasyonundan kaldırılacak. "
+msgstr[1] "Bu eylemi yaptığınızda {num} eklenti NVDA'nın sistem konfigürasyonundan kaldırılacak. "
 
 #. Translators: A prompt asking the user to confirm whether to perform an action.
 #: gui\addonStoreGui\controls\messageDialogs.py:885
@@ -16576,7 +16576,7 @@ msgstr "Pano"
 #: mathPres\MathCAT\MathCAT.py:228
 msgctxt "math"
 msgid "copy as "
-msgstr "Panoya kopyala"
+msgstr "panoya kopyala "
 
 #. Translators: this message directs users to look in the log file
 #: mathPres\MathCAT\MathCAT.py:329
@@ -19070,7 +19070,7 @@ msgstr "kodlanıyor: {text}"
 #: NVDAObjects\window\winword.py:653
 #, python-brace-format
 msgid "footnote reference {number}: {text}"
-msgstr "Dipnot referansı {number}: {text}"
+msgstr "dipnot referansı {number}: {text}"
 
 #. Translators: The label shown for a endnote reference in the NVDA Elements List dialog in Microsoft Word.
 #. {number} will be replaced with the endnote number.
@@ -19078,7 +19078,7 @@ msgstr "Dipnot referansı {number}: {text}"
 #: NVDAObjects\window\winword.py:664
 #, python-brace-format
 msgid "endnote reference {number}: {text}"
-msgstr "Sonnot referansı{number}: {text}"
+msgstr "sonnot referansı{number}: {text}"
 
 #. Translators: a distance from the left edge of the page in Microsoft Word
 #: NVDAObjects\window\winword.py:874
@@ -19884,22 +19884,22 @@ msgstr "Kurallı &ifade"
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:58
 msgid "Whole &word"
-msgstr "İfadenin &tamamı"
+msgstr "&Tam sözcük"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:60
 msgid "&Part of word"
-msgstr "Sözcüğün &parçası"
+msgstr "Sözcük &parçası"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:62
 msgid "&Start of word"
-msgstr "Sözcüğün &başı"
+msgstr "Sözcük &başlangıcı"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:64
 msgid "E&nd of word"
-msgstr "Sözcüğün &sonu"
+msgstr "Sözcük &sonu"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:66

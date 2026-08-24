@@ -6297,18 +6297,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 26</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Security Fixes</source>
-        <target>Security Fixes</target>
+        <target>Poprawki bezpieczeństwa</target>
       </segment>
     </unit>
     <unit id="83d2e981-1c38-4697-b378-a4b679180c7d">
       <notes>
         <note appliesTo="source">line: 28</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).</source>
-        <target>Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).</target>
+        <target>Prosimy o odpowiedzialne ujawnianie kwestii bezpieczeństwa zgodnie z [polityką bezpieczeństwa NVDA](https://github.com/nvaccess/nvda/blob/master/security.md NVDA).</target>
       </segment>
     </unit>
     <unit id="a047d640-e0f5-419e-99c9-721db6ee3209">
@@ -6316,9 +6316,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 30</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Prevents showing potentially sensitive information on braille displays when the computer is shut down or restarted. ([GHSA-qhjv-3xf4-9c66](https://github.com/nvaccess/nvda/security/advisories/GHSA-qhjv-3xf4-9c66))</source>
-        <target>Prevents showing potentially sensitive information on braille displays when the computer is shut down or restarted. ([GHSA-qhjv-3xf4-9c66](https://github.com/nvaccess/nvda/security/advisories/GHSA-qhjv-3xf4-9c66))</target>
+        <target>Zapobiega wyświetlaniu potencjalnie wrażliwych informacji na monitorach brajlowskich podczas wyłączania lub ponownego uruchamiania komputera. ([GHSA-qhjv-3xf4-9c66](https://github.com/nvaccess/nvda/security/advisories/GHSA-qhjv-3xf4-9c66))</target>
       </segment>
     </unit>
     <unit id="216e2064-a429-43a9-865a-29fc1edd47a9">
@@ -6871,9 +6871,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 90</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Removed the non-functional "Custom" option from the math decimal separator setting. (#20425)</source>
-        <target>Removed the non-functional "Custom" option from the math decimal separator setting. (#20425)</target>
+        <target>Usunięto niefunkcjonalną opcję "użytkownika" z ustawienia separatora dziesiętnego. (#20425)</target>
       </segment>
     </unit>
     <unit id="6e83ec90-ee84-4be0-819c-f475fa970a66">
@@ -7270,7 +7270,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 135</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA libraries built by the build system are now linked with the [/CETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)</source>
         <target>NVDA libraries built by the build system are now linked with the [/CETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)</target>
       </segment>
@@ -7290,7 +7290,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 137</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handlesCOMErrors`. (#19713, @Emil-18)</source>
         <target>A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handlesCOMErrors`. (#19713, @Emil-18)</target>
       </segment>
@@ -7496,7 +7496,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 160</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`speechDictHandler.dictionaries` and `speechDictHandler.dictTypes` are deprecated without replacement. (#19558, @LeonarddeR)</source>
         <target>`speechDictHandler.dictionaries` and `speechDictHandler.dictTypes` are deprecated without replacement. (#19558, @LeonarddeR)</target>
       </segment>

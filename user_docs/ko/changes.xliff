@@ -6269,9 +6269,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       <notes>
         <note appliesTo="source">line: 20</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The default gesture to toggle automatic scroll is `NVDA+alt+k`.</source>
-        <target>The default gesture to toggle automatic scroll is `NVDA+alt+k`.</target>
+        <target>자동 스크롤을 켜고 끄는 기본 제스처는 `NVDA+alt+k`입니다.</target>
       </segment>
     </unit>
     <unit id="bf820cf5-dfee-47f3-8918-1a00c6b7a664">
@@ -6297,18 +6297,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 26</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Security Fixes</source>
-        <target>Security Fixes</target>
+        <target>보안 수정 사항</target>
       </segment>
     </unit>
     <unit id="83d2e981-1c38-4697-b378-a4b679180c7d">
       <notes>
         <note appliesTo="source">line: 28</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).</source>
-        <target>Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).</target>
+        <target>보안 문제는 NVDA의 [보안 정책](https://github.com/nvaccess/nvda/blob/master/security.md)에 따라 책임감 있게 공개해 주십시오.</target>
       </segment>
     </unit>
     <unit id="a047d640-e0f5-419e-99c9-721db6ee3209">
@@ -6316,9 +6316,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 30</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Prevents showing potentially sensitive information on braille displays when the computer is shut down or restarted. ([GHSA-qhjv-3xf4-9c66](https://github.com/nvaccess/nvda/security/advisories/GHSA-qhjv-3xf4-9c66))</source>
-        <target>Prevents showing potentially sensitive information on braille displays when the computer is shut down or restarted. ([GHSA-qhjv-3xf4-9c66](https://github.com/nvaccess/nvda/security/advisories/GHSA-qhjv-3xf4-9c66))</target>
+        <target>컴퓨터가 종료되거나 재시작될 때 점자 디스플레이에 민감할 수 있는 정보가 표시되는 것을 방지합니다. ([GHSA-qhjv-3xf4-9c66](https://github.com/nvaccess/nvda/security/advisories/GHSA-qhjv-3xf4-9c66))</target>
       </segment>
     </unit>
     <unit id="216e2064-a429-43a9-865a-29fc1edd47a9">
@@ -6456,9 +6456,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 46</note>
         <note appliesTo="source">prefix:     * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`NVDA+alt+k`, `NVDA+alt+l` and `NVDA+alt+j` gestures can be used to toggle automatic scroll, increase scroll rating and decrease scroll rating, respectively.</source>
-        <target>`NVDA+alt+k`, `NVDA+alt+l` and `NVDA+alt+j` gestures can be used to toggle automatic scroll, increase scroll rating and decrease scroll rating, respectively.</target>
+        <target>`NVDA+alt+k`, `NVDA+alt+l`, `NVDA+alt+j` 제스처를 사용하면 자동 스크롤을 켜고 끌 수 있으며, 스크롤 속도를 높이거나 낮출 수 있습니다.</target>
       </segment>
     </unit>
     <unit id="944f7d81-fb89-4a22-a871-6204382def8a">
@@ -6871,9 +6871,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 90</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Removed the non-functional "Custom" option from the math decimal separator setting. (#20425)</source>
-        <target>Removed the non-functional "Custom" option from the math decimal separator setting. (#20425)</target>
+        <target>수학 소수점 구분자 설정에서 작동하지 않는 "사용자 지정" 옵션을 제거했습니다. (#20425)</target>
       </segment>
     </unit>
     <unit id="6e83ec90-ee84-4be0-819c-f475fa970a66">
@@ -7270,9 +7270,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 135</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA libraries built by the build system are now linked with the [/CETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)</source>
-        <target>NVDA libraries built by the build system are now linked with the [/CETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)</target>
+        <target>빌드 시스템에서 빌드된 NVDA 라이브러리는 이제 [/CETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) 플래그와 연동되어 특정 악성코드 공격에 대한 보호 기능이 강화되었습니다. (#19435, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="3f08eb8c-6383-432c-b31a-94508aeacb26">
@@ -7290,9 +7290,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 137</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handlesCOMErrors`. (#19713, @Emil-18)</source>
-        <target>A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handlesCOMErrors`. (#19713, @Emil-18)</target>
+        <target>UIA.UIA 클래스에 `_getUIACacheablePropertyValue_handleCOMErrors`라는 새 메서드가 추가되었습니다. (#19713, @Emil-18)</target>
       </segment>
     </unit>
     <unit id="75eccd47-187e-47d9-a125-3ee5df162cfc">
@@ -7496,9 +7496,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 160</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`speechDictHandler.dictionaries` and `speechDictHandler.dictTypes` are deprecated without replacement. (#19558, @LeonarddeR)</source>
-        <target>`speechDictHandler.dictionaries` and `speechDictHandler.dictTypes` are deprecated without replacement. (#19558, @LeonarddeR)</target>
+        <target>`speechDictHandler.dictionaries`와 `speechDictHandler.dictTypes`는 새 기능으로 대체하지 않고 폐지됩니다. (#19558, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="907ad75b-a7bb-45ec-83b5-42523a88bb63">

@@ -7270,9 +7270,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 135</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA libraries built by the build system are now linked with the [/CETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)</source>
-        <target>NVDA libraries built by the build system are now linked with the [/CETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)</target>
+        <target>Les biblioteques de NVDA construïdes pel sistema de compilació ara estan vinculades amb la marca [/CETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat), millorant la protecció contra certs atacs de programari maliciós. (#19435, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="3f08eb8c-6383-432c-b31a-94508aeacb26">
@@ -7290,9 +7290,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 137</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handlesCOMErrors`. (#19713, @Emil-18)</source>
-        <target>A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handlesCOMErrors`. (#19713, @Emil-18)</target>
+        <target>S'ha afegit un nou mètode a la UIA. Classe UIA, anomenada '_getUIACacheablePropertyValue_handlesCOMErrors'. (#19713, @Emil-18)</target>
       </segment>
     </unit>
     <unit id="75eccd47-187e-47d9-a125-3ee5df162cfc">
@@ -56691,7 +56691,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer freezes in the Windows XP Add/Remove programs applet when launching an uninstaller. (#30)</source>
-        <target>NVDA ja no es congela a l'applet Afegir/Eliminar programes de Windows XP quan obre un desinstal·lador. (#30)</target>
+        <target>NVDA ja no es congela a l'applet Afegir/Eliminar programes de Windows XP quan s'obre un desinstal·lador. (#30)</target>
       </segment>
     </unit>
     <unit id="b3f3a614-933e-46cc-aa30-8a7c60ff7cec">
@@ -56721,7 +56721,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Access to web content with new in-process virtualBuffers (so far for Mozilla Gecko applications including Firefox3 and Thunderbird3)</source>
-        <target>Accés a contingut web amb nous virtualBuffers en procés (fins ara per a aplicacions de Mozilla Gecko com Firefox3 i Thunderbird3)</target>
+        <target>Accés a contingut web amb nous búfers virtuals en procés (fins ara per a aplicacions de Mozilla Gecko com Firefox3 i Thunderbird3)</target>
       </segment>
     </unit>
     <unit id="aaec9f8c-3e37-476b-9749-662f8a7abbb7">
@@ -56771,7 +56771,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>By default the new virtualBuffers represent the document in a screen layout (links and controls are not on separate lines unless they really are visually). You can toggle this feature with NVDA+v.</source>
-        <target>Per defecte, els nous virtualBuffers representen el document en una disposició de pantalla (els enllaços i controls no estan en línies separades tret que realment ho siguin visualment). Pots activar aquesta funció amb NVDA+v.</target>
+        <target>Per defecte, els nous búfers virtuals representen el document en una disposició de pantalla (els enllaços i controls no estan en línies separades tret que realment ho siguin visualment). Pots activar aquesta funció amb NVDA+v.</target>
       </segment>
     </unit>
     <unit id="e26194a9-dfbb-452b-95d6-0e161a817dc2">
@@ -56781,7 +56781,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>It is possible to move by paragraph with control+upArrow and control+downArrow.</source>
-        <target>És possible moure's per paràgraf amb control+fletxea amunt i control+fletxa avall.</target>
+        <target>És possible moure's per paràgraf amb control+fletxa amunt i control+fletxa avall.</target>
       </segment>
     </unit>
     <unit id="150fda78-b181-40b5-b855-c1d68cc61433">
@@ -56991,7 +56991,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added the ability to turn off speaking of object position information(e.g. 1 of 4). This option can be found in the Object presentation settings dialog.</source>
-        <target>S'ha afegit la possibilitat d'apagar la informació de la posició de l'objecte (per exemple, 1 de 4). Aquesta opció es pot trobar al diàleg de configuració de presentació d'objectes.</target>
+        <target>S'ha afegit la possibilitat de no anunciar la posició de l'objecte (per exemple, 1 de 4). Aquesta opció es pot trobar al diàleg de configuració de presentació d'objectes.</target>
       </segment>
     </unit>
     <unit id="3bb061d0-eedd-45ac-875b-b95eff634984">
@@ -57001,7 +57001,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA can now beep when speaking a capital letter. This can be turned on and off with a check box in the voice settings dialog. Also added a raise pitch for capitals check box to configure whether NVDA should actually do its normal pitch raise for capitals. So now you can have either raise pitch, say cap, or beep, for capitals.</source>
-        <target>NVDA ara pot fer un bip quan parla amb majúscula. Això es pot activar o desactivar amb una casella al diàleg de configuració de veu. També s'ha afegit una casella de marxa de pujada per a capitals per configurar si NVDA hauria de fer realment la seva pujada habitual per a capitals. Així que ara pots tenir o bé pujar el to, posar cap a la capital, o bipar, per majúscules.</target>
+        <target>NVDA ara pot fer un bip quan diu la majúscula. Això es pot activar o desactivar amb una casella al diàleg de configuració de veu. També s'ha afegit una casella de pujada de to per a majúscules per configurar si NVDA hauria de fer realment la seva pujada habitual per a majúscules. Així que ara pots tenir o bé pujar el to, dir majúscula per a majúscules, o fer un bip, per majúscules.</target>
       </segment>
     </unit>
     <unit id="e1f23ce9-0f07-4c66-a912-74789617fbac">
@@ -57031,7 +57031,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer by default speaks punctuation, you can enable speaking of punctuation with NVDA+p.</source>
-        <target>NVDA ja no parla per defecte de puntuació, pots activar parlar de puntuació amb NVDA+p.</target>
+        <target>NVDA ja no diu per defecte la puntuació, pots activar dir la puntuació amb NVDA+p.</target>
       </segment>
     </unit>
     <unit id="09b78bf0-f04f-4c53-80bc-86f8a8c45c9f">
@@ -57101,7 +57101,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Improved performance in rich edit documents.</source>
-        <target>Millora del rendiment en documents d'edició rica.</target>
+        <target>Millora del rendiment en documents rich edit.</target>
       </segment>
     </unit>
     <unit id="691ab6dc-b5fe-4427-b990-ab744666519b">
@@ -57121,7 +57121,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Fixed bugs when  trying to focus on a dos console window more than three or so times. NVDA did have a tendency to completely crash.</source>
-        <target>S'han corregit errors quan intento centrar-me en una finestra de consola DOS més de tres vegades aproximadament. NVDA tenia tendència a bloquejar-se completament.</target>
+        <target>S'han corregit errors quan intenta centrar-se en una finestra de consola DOS més de tres vegades aproximadament. NVDA tenia tendència a bloquejar-se completament.</target>
       </segment>
     </unit>
     <unit id="ef53dec9-93f0-4fa6-ac40-baf2d981e00f">
@@ -57141,7 +57141,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA+shift+numpad6 and NVDA+shift+numpad4 allow you to navigate to the next or previous object in flow respectively. This means that you can navigate in an application by only using these two keys with out having to worry about going up by parent, or down to first child as you move around the object hyerarchy. For instance in a web browser such as firefox, you could navigate the document by object, by just using these two keys. If next in flow or previous in flow takes you up and out of an object, or down in to an object, ordered beeps indicate the direction.</source>
-        <target>NVDA+shift+6 del teclat numèric i NVDA+shift+4 del teclat numèric et permeten navegar cap al següent o anterior objecte del flux, respectivament. Això vol dir que pots navegar en una aplicació només utilitzant aquestes dues tecles sense preocupar-te de pujar pel pare, o baixar al primer fill mentre et mous al voltant de l'hèrquia de l'objecte. Per exemple, en un navegador web com Firefox, podries navegar el document per objecte, només utilitzant aquestes dues tecles. Si el següent dins del flux o l'anterior del flux et fa pujar i sortir d'un objecte, o baixar cap a un objecte, els bip ordenats indiquen la direcció.</target>
+        <target>NVDA+shift+6 del teclat numèric i NVDA+shift+4 del teclat numèric et permeten navegar cap al següent o anterior objecte del flux, respectivament. Això vol dir que pots navegar en una aplicació només utilitzant aquestes dues tecles sense preocupar-te de pujar pel pare, o baixar al primer fill mentre et mous al voltant de la jerarquia de l'objecte. Per exemple, en un navegador web com Firefox, podries navegar el document per objecte, només utilitzant aquestes dues tecles. Si el següent dins del flux o l'anterior del flux et fa pujar i sortir d'un objecte, o baixar cap a un objecte, els bip ordenats indiquen la direcció.</target>
       </segment>
     </unit>
     <unit id="7780216f-c317-4876-a0cd-c825151b1bc9">
@@ -57161,7 +57161,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Added a command to report the current selection in edit fields (NVDA+shift+upArrow).</source>
-        <target>S'ha afegit una ordre per informar de la selecció actual als camps d'edició (NVDA+shift+fletxa amunt).</target>
+        <target>S'ha afegit una ordre per anunciar la selecció actual als camps d'edició (NVDA+shift+fletxa amunt).</target>
       </segment>
     </unit>
     <unit id="0d900389-eb62-474c-928d-579f677ed82c">
@@ -57171,7 +57171,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Quite a few NVDA commands that speak text (such as report current line etc) now can spell the text if pressed twice quickly.</source>
-        <target>Força ordres NVDA que diuen text (com reportar línia actual, etc.) ara poden escriure el text si es prem dues vegades ràpidament.</target>
+        <target>Força ordres de NVDA que diuen text (com anunciar línia actual, etc.) ara poden escriure el text si es prem dues vegades ràpidament.</target>
       </segment>
     </unit>
     <unit id="111802fd-978d-42c9-b522-852a1410690c">
@@ -57181,7 +57181,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>the capslock, numpad insert and extended insert can all be used as the NVDA modifier key. Also if one of these keys is used, pressing the key twice with out pressing any other keys will send the key through to the operating system, just like you'd pressed the key with out NVDA running. To make one of these keys be the NVDA modifier key, check its checkbox in the Keyboard settings dialog (used to be called the keyboard echo dialog).</source>
-        <target>el Bloqueig de majúscules, la inserció amb teclat numèric i l'inserció estesa es poden utilitzar totes com a tecla modificadora NVDA. A més, si s'utilitza una d'aquestes tecles, prémer la tecla dues vegades sense prémer cap altra tecla enviarà la tecla al sistema operatiu, igual que havies premut la tecla sense que NVDA estigués en marxa. Per fer que una d'aquestes tecles sigui la tecla modificadora NVDA, marca la seva casella de verificació al diàleg de configuració del teclat (abans s'anomenava diàleg d'eco del teclat).</target>
+        <target>el Bloqueig de majúscules, la inserció amb teclat numèric i l'inserció estesa es poden utilitzar totes com a tecla modificadora NVDA. A més, si s'utilitza una d'aquestes tecles, prémer la tecla dues vegades sense prémer cap altra tecla enviarà la tecla al sistema operatiu, igual que si haguesis premut la tecla sense que NVDA estigués en marxa. Per fer que una d'aquestes tecles sigui la tecla modificadora NVDA, marca la seva casella de verificació al diàleg de configuració del teclat (abans s'anomenava diàleg d'eco del teclat).</target>
       </segment>
     </unit>
     <unit id="7c402e3f-77b3-4684-b163-f0ff1855f27e">
@@ -57381,7 +57381,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Improved support for most common treeview controls. NVDA now tells you how many items are in the branch when you expand it. It also announces the level when moving in and out of branches. And, it announces the current item number and number of items, according to the current branch, not the entire treeview.</source>
-        <target>Suport millorat per a la majoria de controls comuns d'arboratge. NVDA ara et diu quants elements hi ha a la branca quan l'expandeixes. També anuncia el nivell quan es mou dins i fora de les branques. A més, anuncia el nombre actual d'elements i el nombre d'elements, segons la branca actual, no tota la vista d'arbre.</target>
+        <target>Suport millorat per a la majoria de controls comuns vistes d'arbre. NVDA ara et diu quants elements hi ha a la branca quan l'expandeixes. També anuncia el nivell quan es mou dins i fora de les branques. A més, anuncia el nombre actual d'elements i el nombre d'elements, segons la branca actual, no tota la vista d'arbre.</target>
       </segment>
     </unit>
     <unit id="b16b3d0b-9ec8-42b8-8b39-5d797299e171">
@@ -57471,7 +57471,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Removed the report object group names checkBox from the object presentation settings dialog, reporting of group names now is handled differently.</source>
-        <target>S'ha suprimit la casella de selecció de noms de grups d'objectes de l'informe del diàleg de configuració de presentació d'objectes, ara els informes dels noms de grup es gestionen de manera diferent.</target>
+        <target>S'ha suprimit la casella de selecció de noms de grups d'objectes del diàleg de configuració de presentació d'objectes, ara els informes dels noms de grup es gestionen de manera diferent.</target>
       </segment>
     </unit>
     <unit id="5c578439-e015-482e-ae32-350d1691bc57">
@@ -57581,7 +57581,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>-s, --stderr-file fileName: specify where NVDA should place uncaught errors and exceptions</source>
-        <target>-s, --stderr-file fileName: especifica on NVDA ha de col·locar els errors i excepcions no capturats</target>
+        <target>-s, --stderr-file fileName: especifica on NVDA ha de col·locar els errors i excepcions no capturades</target>
       </segment>
     </unit>
     <unit id="ee232ce2-290d-4fed-913f-bd46c3005dce">
