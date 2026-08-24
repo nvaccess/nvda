@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter
+# Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter, Christopher Proß
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -22,6 +22,7 @@ from comtypes import (
 from comtypes.hresult import S_OK, S_FALSE
 import comtypes.client
 import ctypes
+import ctypes.wintypes
 import os
 import re
 import sys
@@ -37,6 +38,7 @@ import textUtils
 import colors
 import time  # noqa: F401
 import displayModel
+import windowUtils
 import IAccessibleHandler
 import oleacc
 import JABHandler
@@ -65,7 +67,8 @@ from NVDAObjects.behaviors import (
 	ToolTip,  # noqa: F401
 	Notification,  # noqa: F401
 )  # noqa: F401
-from locationHelper import RectLTWH
+import locationHelper
+from locationHelper import RectLTRB, RectLTWH
 import NVDAHelper
 
 
@@ -2501,7 +2504,216 @@ class TaskListIcon(IAccessible):
 		super(TaskListIcon, self).reportFocus()
 
 
+#: Window message asking a popup menu window for the handle of the menu it displays,
+#: defined in winuser.h.
+_MN_GETHMENU = 0x01E1
+#: The system window class of popup menu windows.
+_MENU_POPUP_WINDOW_CLASS = "#32768"
+#: Menu handles of popup menu windows, cached to avoid repeated cross process messages.
+_menuHandleCache: dict[int, int] = {}
+#: Maximum number of cached menu handles. The cache is cleared wholesale beyond this,
+#: it only needs to cover the handful of popup windows alive at any moment.
+_MENU_HANDLE_CACHE_LIMIT = 8
+#: How long to wait for a popup menu window to answer the menu handle query, in milliseconds.
+_MENU_HANDLE_FETCH_TIMEOUT_MS = 500
+#: Maximum per edge difference in pixels for an MSAA menu location to still count as
+#: matching the raw Win32 menu item rectangle, allowing for independent rounding of edges.
+_MENU_ITEM_RECT_TOLERANCE_PX = 1
+
+
+def _rectsMatchWithinTolerance(first: RectLTRB, second: RectLTRB) -> bool:
+	"""Whether two rectangles are equal within the per edge menu item tolerance."""
+	return all(
+		abs(firstEdge - secondEdge) <= _MENU_ITEM_RECT_TOLERANCE_PX
+		for firstEdge, secondEdge in zip(first, second)
+	)
+
+
+def _getPopupMenuHandle(window: int, ignoreCache: bool = False) -> int | None:
+	"""Fetch the menu handle of a #32768 popup menu window, with a small cache per window handle.
+
+	:param window: The popup menu window.
+	:param ignoreCache: Bypass and refresh the cached handle,
+		used after a cached handle turned out to be stale.
+	:return: The menu handle, or None if it cannot be fetched.
+	"""
+	if not ignoreCache:
+		cached = _menuHandleCache.get(window)
+		if cached:
+			return cached
+	menuHandleResult = ctypes.c_size_t()
+	if not user32.SendMessageTimeout(
+		window,
+		_MN_GETHMENU,
+		0,
+		0,
+		winUser.SMTO_ABORTIFHUNG,
+		_MENU_HANDLE_FETCH_TIMEOUT_MS,
+		ctypes.byref(menuHandleResult),
+	):
+		return None
+	menuHandle = menuHandleResult.value
+	if menuHandle:
+		if len(_menuHandleCache) >= _MENU_HANDLE_CACHE_LIMIT:
+			_menuHandleCache.clear()
+		_menuHandleCache[window] = menuHandle
+	return menuHandle
+
+
+def _getMenuItemRectsInWindowDpiContext(
+	window: int,
+	isPopupWindow: bool,
+	itemIndex: int | None = None,
+) -> list[RectLTRB] | None:
+	"""Fetch Win32 menu item rectangles as seen from the menu window's own DPI awareness context.
+
+	:param window: The #32768 window for a popup menu, otherwise the window owning the menu bar.
+	:param isPopupWindow: Whether ``window`` is a #32768 popup menu window.
+	:param itemIndex: The zero based position of the single item to fetch,
+		or None to fetch every item of the menu.
+	:return: The item rectangles in menu order, or None if they cannot be fetched.
+	"""
+
+	def fetchRects(menuHandle: int) -> list[RectLTRB] | None:
+		if itemIndex is None:
+			itemCount = user32.GetMenuItemCount(menuHandle)
+			if itemCount < 0:
+				return None
+			itemIndexes = range(itemCount)
+		else:
+			# GetMenuItemRect fails for an out of range index, so the index needs no range check.
+			itemIndexes = (itemIndex,)
+		rects = []
+		try:
+			with windowUtils.threadDpiAwarenessContextOfWindow(window):
+				for index in itemIndexes:
+					rect = ctypes.wintypes.RECT()
+					if not user32.GetMenuItemRect(window, menuHandle, index, ctypes.byref(rect)):
+						return None
+					rects.append(RectLTRB.fromCompatibleType(rect))
+		except OSError:
+			log.debugWarning(f"Could not apply the DPI awareness context of window {window}")
+			return None
+		return rects
+
+	if isPopupWindow:
+		menuHandle = _getPopupMenuHandle(window)
+	else:
+		menuHandle = user32.GetMenu(window)
+	if not menuHandle:
+		log.debugWarning(f"No menu handle for window {window}, isPopupWindow={isPopupWindow}")
+		return None
+	itemRects = fetchRects(menuHandle)
+	if itemRects is None and isPopupWindow and itemIndex is None:
+		# The cached menu handle may be stale because window handles get reused.
+		# A single item fetch is not retried here, because an out of range index fails
+		# the same way. The caller falls back to fetching every item, which does retry.
+		menuHandle = _getPopupMenuHandle(window, ignoreCache=True)
+		if menuHandle:
+			itemRects = fetchRects(menuHandle)
+	if itemRects is None:
+		log.debugWarning(
+			f"Could not fetch the menu item rectangles for window {window}, itemIndex={itemIndex}",
+		)
+	return itemRects
+
+
+def _physicalLocationFromMenuLocation(
+	window: int,
+	childID: int,
+	isPopupWindow: bool,
+	location: RectLTWH,
+) -> RectLTWH:
+	"""Convert an MSAA menu location to physical screen coordinates when needed.
+
+	The OLEACC menu proxy reports menu locations
+	in the 96 DPI based coordinate space of the menu's window
+	when NVDA and the application differ in bitness,
+	and in physical screen coordinates when they match.
+	The window's own DPI awareness plays no role.
+	The rest of NVDA expects physical screen coordinates everywhere (#19225).
+	Such a location is detected by comparing it against the raw Win32 menu item rectangle,
+	expressed both in physical coordinates and in the 96 DPI based space.
+	A location matching the physical rectangle is already correct and passes through unchanged.
+	A location matching the 96 DPI based rectangle is mapped to physical coordinates,
+	using the window rectangle in both coordinate spaces as anchors.
+	The mapping is done by hand instead of via ``LogicalToPhysicalPointForPerMonitorDPI``
+	because that function rejects points outside the physical window rectangle,
+	which the involved points regularly are.
+
+	:param window: The #32768 window for a popup menu, otherwise the window owning the menu bar.
+	:param childID: The MSAA child ID of the menu item, 1 based.
+	:param isPopupWindow: Whether ``window`` is a #32768 popup menu window.
+	:param location: The location reported by MSAA for the menu item.
+	:return: The location in physical screen coordinates,
+		or the unchanged input location when no conversion is needed or possible.
+	"""
+	try:
+		physRect = windowUtils.getPhysicalWindowRect(window)
+		unawareRect = windowUtils.getWindowRectInUnawareDpiContext(window)
+	except OSError:
+		log.debugWarning(f"Could not fetch the window rectangles for window {window}")
+		return location
+	if unawareRect == physRect:
+		# Both coordinate spaces are identical, for example at 100 percent display scaling.
+		return location
+	if unawareRect.width <= 0 or unawareRect.height <= 0:
+		return location
+	try:
+		winContextRect = windowUtils.getWindowRectInWindowDpiContext(window)
+	except OSError:
+		log.debugWarning(f"Could not fetch the window DPI context rectangle for window {window}")
+		return location
+	if winContextRect.width <= 0 or winContextRect.height <= 0:
+		return location
+	candidateRects = None
+	if childID >= 1:
+		# The child ID of an OLEACC proxy menu item is its 1 based menu position,
+		# so a single rectangle is enough.
+		candidateRects = _getMenuItemRectsInWindowDpiContext(window, isPopupWindow, itemIndex=childID - 1)
+	if not candidateRects:
+		# Menu items exposed by the application itself carry child ID 0, and an application
+		# may number them in a way unrelated to the menu position, so every item of the
+		# menu is a match candidate.
+		candidateRects = _getMenuItemRectsInWindowDpiContext(window, isPopupWindow)
+	if not candidateRects:
+		return location
+	try:
+		locationLTRB = location.toLTRB()
+	except ValueError:
+		# MSAA locations are not validated, so a negative width or height is possible.
+		log.debugWarning(f"MSAA reported the invalid menu location {location} for window {window}")
+		return location
+	# The raw item rectangles are in the window's own coordinate space. Express them in
+	# both spaces the MSAA location could be in.
+	for itemRect in candidateRects:
+		itemRectPhysical = locationHelper._remapRectByAnchors(itemRect, winContextRect, physRect)
+		if _rectsMatchWithinTolerance(locationLTRB, itemRectPhysical):
+			# The location already is physical, nothing to do.
+			return location
+	for itemRect in candidateRects:
+		itemRectUnaware = locationHelper._remapRectByAnchors(itemRect, winContextRect, unawareRect)
+		if _rectsMatchWithinTolerance(locationLTRB, itemRectUnaware):
+			return locationHelper._remapRectByAnchors(locationLTRB, unawareRect, physRect).toLTWH()
+	log.debugWarning(
+		f"MSAA menu location {locationLTRB} matches no menu item rectangle of window {window} "
+		"in either coordinate space, leaving it untouched",
+	)
+	return location
+
+
 class MenuItem(IAccessible):
+	def _get_location(self) -> RectLTWH | None:
+		location = super()._get_location()
+		if not location or not self.windowHandle:
+			return location
+		return _physicalLocationFromMenuLocation(
+			self.windowHandle,
+			self.IAccessibleChildID,
+			self.windowClassName == _MENU_POPUP_WINDOW_CLASS,
+			location,
+		)
+
 	def _get_description(self):
 		name = self.name
 		description = super(MenuItem, self)._get_description()

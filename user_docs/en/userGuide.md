@@ -1219,13 +1219,16 @@ A key command is provided to return to the original page containing the embedded
 
 By default when selecting text with the `shift+arrow` keys in Browse Mode, a selection is only made within NVDA's Browse Mode representation of the document, and not within the application itself.
 This means that the selection is not visible on screen, and copying text with `control+c` will only copy NVDA's plain text representation of the content. i.e. formatting of tables, or whether something is a link will not be copied.
-However, NVDA has a Native Selection Mode which can be turned on in particular Browse Mode documents which can support it.
+However, NVDA has a Native Selection Mode which can be toggled on or off in Browse Mode documents that support it.
 Native Selection causes the document's native selection to follow NVDA's Browse Mode selection, which enables details such as formatting, links, and tables to be copied.
 Currently, Native Selection Mode is supported in:
 
 * Mozilla Firefox
 * Mozilla Thunderbird
 * Chrome, Edge, and any browser based on Chromium 134 or newer
+* Microsoft Word and Outlook, where it cannot be toggled off
+
+Native Selection Mode can also be [turned on automatically](#BrowseModeSettingsNativeSelectionMode) in supporting documents via NVDA's Browse Mode settings.
 
 <!-- KC:beginInclude -->
 
@@ -2730,6 +2733,18 @@ Disabling this option allows speech to be heard while simultaneously reading Bra
 |Options |Default (Enabled), Enabled, Disabled|
 |Default |Enabled|
 
+##### Use Chinese word segmentation {#ChineseBrailleWordSegmentation}
+
+This setting controls whether NVDA uses Chinese word segmentation when translating text into braille.
+When enabled and a Chinese braille output table other than "Chinese (Taiwan, Mandarin)" is in use, NVDA inserts spaces between Chinese words before translation.
+When disabled, NVDA passes text directly to the output table without inserting spaces between words.
+This setting has no effect with the "Chinese (Taiwan, Mandarin)" table or other non-Chinese output tables.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Enabled, Disabled |
+| Default | Enabled |
+
 #### Select Braille Display {#SelectBrailleDisplay}
 
 <!-- KC:setting -->
@@ -3525,6 +3540,18 @@ If the combo box interferes with your input method, such as with some IMEs, you 
 | Options | Default (Enabled), Disabled, Enabled |
 | Default | Enabled |
 
+##### Native selection mode {#NativeSelectionModeSetting}
+
+Disabled by default, this option determines whether [Native Selection Mode](#NativeSelectionMode) is automatically turned on in Browse Mode documents which support it.
+This setting does not affect Microsoft Word and Outlook, where Native Selection Mode is always used.
+When disabled, you can still turn on native selection mode manually per document with `NVDA+shift+f10`.
+Changing this option takes effect for newly loaded documents.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Default (Disabled), Disabled, Enabled |
+| Default | Disabled |
+
 ##### Browse mode touch navigation elements {#BrowseModeSettingsBrowseModeNavigationElements}
 
 This list allows you to choose which element types are available when cycling through elements in browse touch mode.
@@ -3679,8 +3706,8 @@ You may toggle through the available paragraph styles from anywhere by assigning
 ##### Word Segmentation Standard {#WordSegmentationStandard}
 
 This setting controls how NVDA determines word boundaries when navigating by word.
-Chinese word segmentation is also used for braille.
-When a Chinese braille output table is in use, NVDA can insert spaces between Chinese words in braille.
+This affects how script languages without spaces break up text into words, sentences and paragraphs
+Chinese braille output uses a separate [Chinese word segmentation setting](#ChineseBrailleWordSegmentation), except with the "Chinese (Taiwan, Mandarin)" output table.
 
 | . {.hideHeaderRow} |.|
 |---|---|

@@ -99,7 +99,11 @@ class Region(object):
 				brailleTables.TableType.OUTPUT,
 			).casefold()
 
-		if translationTable.startswith("zh"):
+		if (
+			translationTable.startswith("zh")
+			and translationTable != "zh-tw.ctb"
+			and config.conf["braille"]["useChineseWordSegmentation"]
+		):
 			converter = WordSegWithSeparatorOffsetConverter(textToTranslate)
 			textToTranslate, textToTranslateTypeforms, cursorPos = _applyOffsetConverter(
 				converter,

@@ -35,6 +35,9 @@
 * It is now possible to change an existing gesture in the Input Gestures dialog. (#10983, @amirmahdifard)
 * A new "Say all reads by" speech setting lets you choose whether say all reads by sentence, paragraph or line; say all now reads by sentence by default where supported. (#13420, #9179, #13971, @LeonarddeR)
 * A new command, assigned to `NVDA+control+x`, copies the last spoken information to the clipboard. (#19385, @Cary-rowen)
+* Added a "Native selection mode" option to NVDA's Browse Mode settings, disabled by default. (#15908)
+  * When enabled, native selection mode is automatically turned on in browse mode documents which support it, such as in Mozilla Firefox and browsers based on Chromium 134 or newer.
+  * Native selection mode can still be toggled per document with `NVDA+shift+f10`.
 
 ### Changes
 
@@ -53,6 +56,8 @@
 
 ### Bug Fixes
 
+* 64-bit NVDA now reports the correct location and label for Win32 menu items of 32-bit applications when display scaling is above 100%. (#19225, #20158, @christopherpross)
+* NVDA now restarts reliably when requested after installing an add-on package from File Explorer. (#17925, @cary-rowen)
 * In PowerPoint and other Office applications, NVDA will now correctly read and navigate the edit fields in the insert hyperlink dialog. (#17390, @aryanchoudharypro)
 * The actions button can now be used when selecting multiple add-ons in the Add-on Store to perform batch actions, instead of just via the context menu in the add-ons list. (#19971, @amirmahdifard)
 * When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
@@ -141,6 +146,8 @@ Locale names are now taken from `winKernel.LCIDToLocaleName`, apart from a small
   `braille.Region.rawTextTypeforms` is now annotated as `list[louisHelper.Typeform]`.
   Plain integers remain compatible at run time.
   * Added `louisHelper.backTranslate`, which back translates braille cells, given as a list of integers, into text.
+* Add the `locationHelper._RectMixin.union` method, which is used to create a rectangle that contains all the other rectangles. (#20705, @hwf1324)
+* In `locationHelper`, the `RectLTWH.toLTRB` and `RectLTRB.toLTWH` methods have both been moved to the `_RectMixin` class to improve compatibility. This has no practical impact on existing code. (#20515, @hwf1324)
 
 #### Deprecations
 
