@@ -5227,6 +5227,10 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 				selection = 0
 			self.portsList.SetSelection(selection)
 			enable = True
+		elif isAutoDisplaySelected:
+			# Ports are irrelevant when displays are detected automatically.
+			self.portsList.SetItems([])
+			enable = False
 		else:
 			# No ports available - show helpful message
 			# Translators: Message shown when no devices are available for a braille display

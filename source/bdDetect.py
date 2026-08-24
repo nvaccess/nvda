@@ -208,6 +208,42 @@ def _stopBleScanner() -> None:
 		scanner.stop()
 
 
+def _hasBleDrivers(limitToDevices: list[str] | None = None) -> bool:
+	"""Determine whether any driver in scope has registered BLE devices.
+
+	:param limitToDevices: Drivers to which detection should be limited.
+		``None`` if no driver filtering should occur.
+	:return: ``True`` if at least one driver in scope can match BLE devices.
+	"""
+	return any(
+		callable(devs.get(CommunicationType.BLE))
+		for driver, devs in _driverDevices.items()
+		if not limitToDevices or driver in limitToDevices
+	)
+
+
+def _bleDeviceToMatch(device: BLEDevice) -> DeviceMatch:
+	"""Convert a discovered BLE device into a :class:`DeviceMatch`.
+
+	The ``id`` is the display name used in the UI (the device name if available,
+	otherwise its address), while ``port`` is the address, which uniquely
+	identifies the device and is used to connect to it.
+
+	:param device: The BLE device to convert.
+	:return: The device match describing the given device.
+	"""
+	return DeviceMatch(
+		ProtocolType.BLE,
+		device.name or device.address,
+		device.address,
+		{
+			"name": device.name or "",
+			"address": device.address,
+			"provider": CommunicationType.BLE,
+		},
+	)
+
+
 def getDriversForConnectedUsbDevices(
 	limitToDevices: list[str] | None = None,
 ) -> Iterator[DriverAndDeviceMatch]:
@@ -589,8 +625,15 @@ class _Detector:
 		# Since a scan can take some time to complete, another thread can set the stop event to cancel it.
 		self._stopEvent.clear()
 
-		# Start BLE scanner if needed for this scan
-		if ble and hwIo.ble.scanner is not None and not hwIo.ble.scanner.isScanning:
+		# Start BLE scanner if needed for this scan.
+		# Scanning uses the Bluetooth radio continuously, so only do so
+		# when a driver in scope can actually match a BLE device.
+		if (
+			ble
+			and _hasBleDrivers(limitToDevices)
+			and hwIo.ble.scanner is not None
+			and not hwIo.ble.scanner.isScanning
+		):
 			if _isDebug():
 				log.debug("Starting BLE scanner for background scan")
 			hwIo.ble.scanner.start()
@@ -689,17 +732,7 @@ class _Detector:
 		:param device: The BLE device to check
 		:return: Tuple of (driver_name, DeviceMatch) if match found, None otherwise
 		"""
-		# Create DeviceMatch for this device
-		match = DeviceMatch(
-			ProtocolType.BLE,
-			device.name or device.address,
-			device.address,
-			{
-				"name": device.name or "",
-				"address": device.address,
-				"provider": CommunicationType.BLE,
-			},
-		)
+		match = _bleDeviceToMatch(device)
 
 		# Check against registered drivers (respect limitToDevices filter)
 		driversToCheck = (
@@ -752,8 +785,13 @@ class _Detector:
 				f"queueing connection attempt",
 			)
 
+		# Preserve the USB and Bluetooth detection state,
+		# as _queueBgScan stores its arguments as the state for subsequent scans.
+		# Omitting them here would permanently disable USB and Bluetooth detection.
 		self._queueBgScan(
-			ble=True,
+			usb=self._detectUsb,
+			bluetooth=self._detectBluetooth,
+			ble=self._detectBle,
 			limitToDevices=self._limitToDevices,
 			preferredDevice=(driver, deviceMatch),
 		)
@@ -821,14 +859,8 @@ def getDriversForBleDevices(
 	if limitToDevices and _isDebug():
 		log.debug("Limiting BLE device detection to drivers: %r", limitToDevices)
 
-	# Check if any drivers support BLE before starting the scanner
-	driversToCheck = (
-		((driver, devs) for driver, devs in _driverDevices.items() if driver in limitToDevices)
-		if limitToDevices
-		else _driverDevices.items()
-	)
-	hasBleDrivers = any(callable(devs.get(CommunicationType.BLE)) for _, devs in driversToCheck)
-	if not hasBleDrivers:
+	# Check if any drivers support BLE before inspecting the scan results
+	if not _hasBleDrivers(limitToDevices):
 		if _isDebug():
 			log.debug("No drivers with BLE support registered, skipping BLE scan")
 		return
@@ -844,20 +876,7 @@ def getDriversForBleDevices(
 
 	scanResults = scanner.results()
 	for device in scanResults:
-		# Create DeviceMatch for each BLE device
-		# id: Display name for UI (device name if available, otherwise address)
-		# port: BLE address for unique identification and connection
-		# deviceInfo: All information as strings for backwards compatibility
-		match = DeviceMatch(
-			ProtocolType.BLE,
-			device.name or device.address,
-			device.address,
-			{
-				"name": device.name or "",
-				"address": device.address,
-				"provider": CommunicationType.BLE,
-			},
-		)
+		match = _bleDeviceToMatch(device)
 
 		for driver, devs in _driverDevices.items():
 			if limitToDevices and driver not in limitToDevices:
@@ -865,14 +884,10 @@ def getDriversForBleDevices(
 					log.debug("Skipping excluded driver %r for BLE device match: %r", driver, match)
 				continue
 
-			matchFunc = devs[CommunicationType.BLE]
+			# Drivers without BLE support have no entry here.
+			# Note that _driverDevices maps to a defaultdict, so subscripting would add empty entries.
+			matchFunc = devs.get(CommunicationType.BLE)
 			if not callable(matchFunc):
-				if _isDebug():
-					log.debugWarning(
-						"Skipping non-callable matchFunc %r for BLE device match: %r",
-						matchFunc,
-						match,
-					)
 				continue
 
 			if matchFunc(match):

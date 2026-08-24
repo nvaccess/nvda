@@ -347,7 +347,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			if self._tryConnect(match.port, match.type, match.deviceInfo):
 				break
 		else:
-			raise RuntimeError("No DotPad device found")
+			raise RuntimeError(f"No DotPad device found for port {port!r}")
 
 		super().__init__()
 

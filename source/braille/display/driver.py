@@ -301,10 +301,16 @@ class BrailleDisplayDriver(driverHandler.Driver):
 			return
 		deviceName, address = portContent.rsplit("@", 1)
 		# Prefer a device from the scan results, as connecting to it avoids implicit discovery.
-		for match in bdDetect.getBleDevicesForDriver(cls.name):
-			if match.id == deviceName or match.port == address:
-				yield match
-				return
+		scannedMatches = list(bdDetect.getBleDevicesForDriver(cls.name))
+		# The address identifies the device uniquely, so match on it first.
+		# Only fall back to the name if no device with this address is advertising,
+		# as devices using a resolvable private address change it over time.
+		for match in itertools.chain(
+			(match for match in scannedMatches if match.port == address),
+			(match for match in scannedMatches if match.id == deviceName),
+		):
+			yield match
+			return
 		# The device is not advertising at the moment,
 		# so fall back to the address recorded in the configuration.
 		log.debug(
@@ -318,20 +324,20 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		)
 
 	@classmethod
-	def _getAutoPorts(cls, usb=True, bluetooth=True) -> Iterable[bdDetect.DeviceMatch]:
-		"""Returns possible ports to connect to using L{bdDetect} automatic detection data.
-		@param usb: Whether to search for USB devices.
-		@type usb: bool
-		@param bluetooth: Whether to search for bluetooth devices.
-		@type bluetooth: bool
-		@return: The device match for each port.
-		@rtype: iterable of L{DeviceMatch}
+	def _getAutoPorts(cls, usb=True, bluetooth=True, ble=False) -> Iterable[bdDetect.DeviceMatch]:
+		"""Returns possible ports to connect to using :mod:`bdDetect` automatic detection data.
+		:param usb: Whether to search for USB devices.
+		:param bluetooth: Whether to search for bluetooth devices.
+		:param ble: Whether to search for Bluetooth Low Energy devices.
+		:return: The device match for each port.
 		"""
 		iters = []
 		if usb:
 			iters.append(bdDetect.getConnectedUsbDevicesForDriver(cls.name))
 		if bluetooth:
 			iters.append(bdDetect.getPossibleBluetoothDevicesForDriver(cls.name))
+		if ble:
+			iters.append(bdDetect.getBleDevicesForDriver(cls.name))
 
 		try:
 			for match in itertools.chain(*iters):
@@ -366,6 +372,9 @@ class BrailleDisplayDriver(driverHandler.Driver):
 				return
 			isUsb = port in (AUTOMATIC_PORT[0], USB_PORT[0])
 			isBluetooth = port in (AUTOMATIC_PORT[0], BLUETOOTH_PORT[0])
+			# The automatic port is offered whenever BLE devices are known,
+			# so it must be able to yield them as well.
+			isBle = port == AUTOMATIC_PORT[0]
 			if not isUsb and not isBluetooth:
 				# Assume we are connecting to a com port, since these are the only manual ports supported.
 				try:
@@ -380,7 +389,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 						portInfo,
 					)
 			else:
-				for match in cls._getAutoPorts(usb=isUsb, bluetooth=isBluetooth):
+				for match in cls._getAutoPorts(usb=isUsb, bluetooth=isBluetooth, ble=isBle):
 					yield match
 
 	#: Global input gesture map for this display driver.

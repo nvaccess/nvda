@@ -422,6 +422,35 @@ class TestBleDisplayPorts(unittest.TestCase):
 		with self._patchBleDevices(_bleMatch("DotPad320", self._ADDRESS)):
 			self.assertEqual(list(_FakeBleDriver._getBleTryPorts("ble:DotPad320")), [])
 
+	def test_getBleTryPorts_addressWinsOverName(self):
+		"""The address disambiguates two devices sharing a name, whatever the scan order."""
+		byName = _bleMatch("DotPad320", "11:22:33:44:55:66")
+		byAddress = _bleMatch("DotPad320", self._ADDRESS)
+		with self._patchBleDevices(byName, byAddress):
+			result = list(_FakeBleDriver._getBleTryPorts(f"ble:DotPad320@{self._ADDRESS}"))
+		self.assertEqual(result, [byAddress])
+
+	def test_getTryPorts_automaticPortYieldsBleDevices(self):
+		"""The automatic port tries BLE devices, as it is offered when only those are known."""
+		match = _bleMatch("DotPad320", self._ADDRESS)
+		with (
+			patch("bdDetect.getConnectedUsbDevicesForDriver", return_value=iter(())),
+			patch("bdDetect.getPossibleBluetoothDevicesForDriver", return_value=iter(())),
+			self._patchBleDevices(match),
+		):
+			result = list(_FakeBleDriver._getTryPorts("auto"))
+		self.assertEqual(result, [match])
+
+	def test_getTryPorts_usbPortDoesNotYieldBleDevices(self):
+		"""Explicitly asking for USB must not fall back to BLE devices."""
+		with (
+			patch("bdDetect.getConnectedUsbDevicesForDriver", return_value=iter(())),
+			patch("bdDetect.getBleDevicesForDriver") as mockBle,
+		):
+			result = list(_FakeBleDriver._getTryPorts("usb"))
+		self.assertEqual(result, [])
+		mockBle.assert_not_called()
+
 	def test_getTryPorts_routesBlePortToHelper(self):
 		"""A BLE port reaches _getBleTryPorts rather than the serial port handling."""
 		match = _bleMatch("DotPad320", self._ADDRESS)
