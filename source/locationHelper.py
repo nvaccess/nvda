@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2024 NV Access Limited, Babbage B.V.
+# Copyright (C) 2017-2026 NV Access Limited, Babbage B.V.
 
 """Classes and helper functions for working with rectangles and coordinates."""
 
@@ -293,6 +293,18 @@ class _RectMixin:
 			return RectLTWH(left, top, self.width, self.height)
 		return RectLTRB(left, top, left + self.width, top + self.height)
 
+	def toLTRB(self) -> "RectLTRB":
+		if isinstance(self, RectLTWH):
+			return RectLTRB(self.left, self.top, self.right, self.bottom)
+		assert isinstance(self, RectLTRB)
+		return self
+
+	def toLTWH(self) -> "RectLTWH":
+		if isinstance(self, RectLTRB):
+			return RectLTWH(self.left, self.top, self.width, self.height)
+		assert isinstance(self, RectLTWH)
+		return self
+
 	@property
 	def topLeft(self):
 		return Point(self.left, self.top)
@@ -387,6 +399,21 @@ class _RectMixin:
 			return RectLTWH(left, top, right - left, bottom - top)
 		return RectLTRB(left, top, right, bottom)
 
+	def union(self, other: "RECT_TYPE") -> "RectLTWH | RectLTRB":
+		"""Returns the smallest rectangle that contains both self and other.
+		For example, if self = Rect(left=10,top=10,right=25,bottom=25) and other = Rect(left=20,top=5,right=35,bottom=30),
+		this results in Rect(left=10,top=5,right=35,bottom=30).
+		"""
+		if not isinstance(other, RECT_CLASSES):
+			raise TypeError(f"other should be one of {_RECT_CLASSES_STR}")
+		left = min(self.left, other.left)
+		top = min(self.top, other.top)
+		right = max(self.right, other.right)
+		bottom = max(self.bottom, other.bottom)
+		if isinstance(self, RectLTWH):
+			return RectLTWH(left, top, right - left, bottom - top)
+		return RectLTRB(left, top, right, bottom)
+
 	def expandOrShrink(self, margin):
 		"""Expands or shrinks the boundaries of the rectangle with the given margin.
 		For example, if self = Rect(left=10,top=10,right=25,bottom=25) and margin = 10,
@@ -431,9 +458,6 @@ class RectLTWH(_RectMixin, _RectLTWH):
 	def bottom(self) -> int:
 		return self.top + self.height
 
-	def toLTRB(self) -> "RectLTRB":
-		return RectLTRB(self.left, self.top, self.right, self.bottom)
-
 
 class _RectLTRB(NamedTuple):
 	left: int
@@ -463,9 +487,6 @@ class RectLTRB(_RectMixin, _RectLTRB):
 	def height(self) -> int:
 		return self.bottom - self.top
 
-	def toLTWH(self) -> "RectLTWH":
-		return RectLTWH(self.left, self.top, self.width, self.height)
-
 
 #: Classes which support conversion to locationHelper Points using their x and y properties.
 #: type: tuple
@@ -473,3 +494,5 @@ POINT_CLASSES = (Point, POINT, wx.Point)
 #: Classes which support conversion to locationHelper RectLTRB/LTWH using their left, top, right and bottom properties.
 #: type: tuple
 RECT_CLASSES = (RectLTRB, RectLTWH, RECT)
+type RECT_TYPE = RectLTRB | RectLTWH | RECT
+_RECT_CLASSES_STR = ", ".join(cls.__module__ + "." + cls.__name__ for cls in RECT_CLASSES)

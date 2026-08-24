@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2021 NV Access Limited, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2017-2026 NV Access Limited, Babbage B.V., Łukasz Golonka, hwf1324
 
 """Unit tests for the locationHelper module."""
 
@@ -23,6 +23,32 @@ class TestRectOperators(unittest.TestCase):
 				RectLTRB(left=5, top=5, right=7, bottom=7),
 			),
 			RectLTRB(left=0, top=0, right=0, bottom=0),
+		)
+
+	def test_union(self):
+		self.assertEqual(
+			RectLTRB(left=2, top=2, right=4, bottom=4).union(
+				RectLTRB(left=3, top=3, right=5, bottom=5),
+			),
+			RectLTRB(left=2, top=2, right=5, bottom=5),
+		)
+		self.assertEqual(
+			RectLTRB(left=2, top=2, right=4, bottom=4).union(
+				RectLTWH(left=3, top=3, width=5, height=5),
+			),
+			RectLTRB(left=2, top=2, right=8, bottom=8),
+		)
+		self.assertEqual(
+			RectLTRB(left=2, top=2, right=4, bottom=4).union(
+				RectLTRB(left=5, top=5, right=7, bottom=7),
+			),
+			RectLTRB(left=2, top=2, right=7, bottom=7),
+		)
+		self.assertEqual(
+			RectLTWH(left=2, top=2, width=2, height=2).union(
+				RectLTRB(left=5, top=5, right=7, bottom=7),
+			),
+			RectLTWH(left=2, top=2, width=5, height=5),
 		)
 
 	def test_superset(self):
@@ -165,6 +191,24 @@ class TestRectUtilities(unittest.TestCase):
 			RectLTWH(left=10, top=10, width=20, height=20),
 			RectLTWH.fromFloatCollection(10.0, 10.0, 20.0, 20.0),
 		)
+
+	def test_toLTRB(self):
+		left, top, width, height = 10, 10, 20, 20
+		rectLTWH = RectLTWH(left, top, width, height)
+		rectLTRB = RectLTRB(left, top, left + width, top + height)
+		self.assertEqual(rectLTWH.toLTRB(), rectLTRB)
+		self.assertIsInstance(rectLTWH.toLTRB(), RectLTRB)
+		self.assertEqual(rectLTRB.toLTRB(), rectLTRB)
+		self.assertIsInstance(rectLTRB.toLTRB(), RectLTRB)
+
+	def test_toLTWH(self):
+		left, top, right, bottom = 10, 10, 20, 20
+		rectLTRB = RectLTRB(left, top, right, bottom)
+		rectLTWH = RectLTWH(left, top, right - left, bottom - top)
+		self.assertEqual(rectLTRB.toLTWH(), rectLTWH)
+		self.assertIsInstance(rectLTRB.toLTWH(), RectLTWH)
+		self.assertEqual(rectLTWH.toLTWH(), rectLTWH)
+		self.assertIsInstance(rectLTWH.toLTWH(), RectLTWH)
 
 	def test_valueErrorForUnsuportedInput(self):
 		self.assertRaises(ValueError, RectLTRB, left=10, top=10, right=9, bottom=9)

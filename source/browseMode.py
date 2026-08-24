@@ -1851,6 +1851,8 @@ class BrowseModeDocumentTreeInterceptor(
 		doSayAll = False
 		hadFirstGainFocus = self._hadFirstGainFocus
 		if not hadFirstGainFocus:
+			if config.conf["virtualBuffers"]["nativeSelectionMode"]:
+				self._initialize_nativeAppSelectionModeSupport()
 			# This treeInterceptor is gaining focus for the first time.
 			# Fake a focus event on the focus object, as the treeInterceptor may have missed the actual focus event.
 			focus = api.getFocusObject()

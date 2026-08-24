@@ -90,12 +90,14 @@ def displayDialogAsModal(dialog: wx.Dialog) -> int:
 	Because an answer is required to continue after a modal messageBox is opened,
 	some actions such as shutting down are prevented while NVDA is in a possibly uncertain state.
 	"""
+	# The dialog may be destroyed before ShowModal returns, so cache this state before showing it.
+	hasParent: bool = bool(dialog.GetParent())
 	try:
-		if not dialog.GetParent():
+		if not hasParent:
 			gui.mainFrame.prePopup()
 		res = dialog.ShowModal()
 	finally:
-		if not dialog.GetParent():
+		if not hasParent:
 			gui.mainFrame.postPopup()
 
 	return res
