@@ -21,7 +21,7 @@ from ._scanner import Scanner
 from ._io import Ble
 from ..base import requiresBackgroundThread
 
-__all__ = ["Scanner", "Ble", "scanner", "findDeviceByAddress"]
+__all__ = ["Scanner", "Ble", "scanner", "getDiscoveredDevice", "findDeviceByAddress"]
 
 #: Module-level singleton scanner shared by all BLE consumers.
 #: Using a single scanner avoids contention over the Windows BLE stack and
@@ -47,6 +47,23 @@ def terminate() -> None:
 		scanner = None
 
 
+def getDiscoveredDevice(address: str) -> BLEDevice | None:
+	"""Get an already discovered BLE device by its address.
+
+	Unlike :func:`findDeviceByAddress` this never starts a scan and never blocks,
+	so it is safe to call on the main thread.
+
+	:param address: The BLE device address (MAC address)
+	:return: The BLE device object if the scanner has seen it, None otherwise
+	"""
+	if scanner is None:
+		return None
+	for device in scanner.results():
+		if device.address == address:
+			return device
+	return None
+
+
 @requiresBackgroundThread
 def findDeviceByAddress(address: str, timeout: float = 5.0, pollInterval: float = 0.1) -> BLEDevice | None:
 	"""Find a BLE device by its address.
@@ -62,11 +79,10 @@ def findDeviceByAddress(address: str, timeout: float = 5.0, pollInterval: float 
 		raise RuntimeError("hwIo.ble.initialize() must be called before using findDeviceByAddress")
 	log.debug(f"Searching for BLE device with address {address}")
 
-	# Check if device already discovered
-	for device in scanner.results():
-		if device.address == address:
-			log.debug(f"Found BLE device {address} in existing results")
-			return device
+	device = getDiscoveredDevice(address)
+	if device is not None:
+		log.debug(f"Found BLE device {address} in existing results")
+		return device
 
 	# Not found - start scanning if not already running
 	if not scanner.isScanning:
@@ -80,12 +96,10 @@ def findDeviceByAddress(address: str, timeout: float = 5.0, pollInterval: float 
 	while time.time() - startTime < timeout:
 		time.sleep(pollInterval)
 
-		# Check if device appeared
-		for device in scanner.results():
-			if device.address == address:
-				elapsed = time.time() - startTime
-				log.debug(f"Found BLE device {address} after {elapsed:.2f}s")
-				return device
+		device = getDiscoveredDevice(address)
+		if device is not None:
+			log.debug(f"Found BLE device {address} after {time.time() - startTime:.2f}s")
+			return device
 
 	# Timeout - device not found
 	log.debug(f"BLE device {address} not found after {timeout}s timeout")

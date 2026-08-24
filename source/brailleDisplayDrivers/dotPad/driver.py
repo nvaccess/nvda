@@ -381,7 +381,9 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			if portType == bdDetect.ProtocolType.BLE:
 				address = portInfo.get("address") or port
 				# A device from the scanner can be connected to without implicit discovery.
-				device = hwIo.ble.findDeviceByAddress(address)
+				# The lookup must not block: a display picked in the settings dialog is
+				# connected on the main thread.
+				device = hwIo.ble.getDiscoveredDevice(address)
 				if device is None:
 					log.debug(f"BLE device {address} not in scan results, using address for connection")
 					device = address

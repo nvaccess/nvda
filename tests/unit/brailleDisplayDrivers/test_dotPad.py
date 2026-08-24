@@ -241,8 +241,10 @@ class TestDotPadBle(unittest.TestCase):
 		matchFunc = registrar._getDriverDict().get(bdDetect.CommunicationType.BLE)
 		self.assertEqual(matchFunc, BrailleDisplayDriver._isBleDotPad)
 
-	def test_tryConnect_bleDevice(self) -> None:
-		"""_tryConnect with a BLE port opens an hwIo.ble.Ble device and succeeds."""
+	_ADDRESS = "AA:BB:CC:DD:EE:FF"
+
+	def _bleDriver(self) -> MagicMock:
+		"""Build a driver stub whose _tryConnect is the real implementation."""
 		driver = MagicMock(spec=BrailleDisplayDriver)
 		driver._receiveBuffer = bytearray()
 		driver._tryConnect = BrailleDisplayDriver._tryConnect.__get__(driver, type(driver))
@@ -251,23 +253,47 @@ class TestDotPadBle(unittest.TestCase):
 		boardInfo.features = DP_Features.HAS_TEXT_DISPLAY
 		driver._requestDeviceName = MagicMock(return_value="DotPad320")
 		driver._requestBoardInformation = MagicMock(return_value=boardInfo)
+		return driver
 
-		address = "AA:BB:CC:DD:EE:FF"
-		bleDevice = object()
-		with (
-			patch("hwIo.ble.findDeviceByAddress", return_value=bleDevice) as mockFind,
-			patch("hwIo.ble.Ble") as mockBle,
-		):
+	def _scannerWith(self, *devices: object):
+		"""Make the shared scanner report the given already-discovered devices."""
+		scanner = MagicMock()
+		scanner.results.return_value = list(devices)
+		return patch("hwIo.ble.scanner", scanner)
+
+	def test_tryConnect_bleDevice(self) -> None:
+		"""_tryConnect with a BLE port opens an hwIo.ble.Ble device and succeeds.
+
+		This runs on the main thread, as it does when the user picks a port in the
+		braille display selection dialog, so it also covers the device lookup being
+		safe to call there.
+		"""
+		driver = self._bleDriver()
+		bleDevice = MagicMock()
+		bleDevice.address = self._ADDRESS
+		with self._scannerWith(bleDevice), patch("hwIo.ble.Ble") as mockBle:
 			result = driver._tryConnect(
-				port=address,
+				port=self._ADDRESS,
 				portType=bdDetect.ProtocolType.BLE,
-				portInfo={"address": address},
+				portInfo={"address": self._ADDRESS},
 			)
 
 		self.assertTrue(result)
-		mockFind.assert_called_once_with(address)
-		# The scanner-provided BLEDevice is passed through to the Ble transport.
 		mockBle.assert_called_once()
+		# The scanner-provided device is passed through to the Ble transport.
 		self.assertEqual(mockBle.call_args.kwargs["device"], bleDevice)
 		self.assertEqual(mockBle.call_args.kwargs["onReceive"], driver._onReceive)
 		self.assertIs(driver._dev, mockBle.return_value)
+
+	def test_tryConnect_bleDeviceNotDiscovered(self) -> None:
+		"""_tryConnect falls back to the address when the scanner does not know the device."""
+		driver = self._bleDriver()
+		with self._scannerWith(), patch("hwIo.ble.Ble") as mockBle:
+			result = driver._tryConnect(
+				port=self._ADDRESS,
+				portType=bdDetect.ProtocolType.BLE,
+				portInfo={"address": self._ADDRESS},
+			)
+
+		self.assertTrue(result)
+		self.assertEqual(mockBle.call_args.kwargs["device"], self._ADDRESS)

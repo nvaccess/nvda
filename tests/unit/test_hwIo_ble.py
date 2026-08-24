@@ -15,7 +15,7 @@ from bleak.backends.device import BLEDevice
 from bleak.backends.scanner import AdvertisementData
 from hwIo.ble._scanner import Scanner
 from hwIo.ble._io import Ble
-from hwIo.ble import findDeviceByAddress
+from hwIo.ble import findDeviceByAddress, getDiscoveredDevice
 
 
 class TestScanner(unittest.TestCase):
@@ -378,6 +378,41 @@ class TestBle(unittest.TestCase):
 
 		self.assertGreater(self.mockRunCoroutineSync.call_count, 1)
 		self.assertIsNone(ble._onReceive)
+
+
+class TestGetDiscoveredDevice(unittest.TestCase):
+	"""Tests for hwIo.ble.getDiscoveredDevice
+
+	Unlike findDeviceByAddress this must be callable on the main thread,
+	which is where a braille display chosen in the settings dialog is connected.
+	These tests therefore deliberately do not patch out the main-thread check.
+	"""
+
+	def _fakeDevice(self, address: str) -> MagicMock:
+		device = MagicMock(spec=BLEDevice)
+		device.address = address
+		return device
+
+	def test_deviceInResults(self):
+		"""The device with the requested address is returned."""
+		wanted = self._fakeDevice("AA:BB:CC:DD:EE:FF")
+		other = self._fakeDevice("11:22:33:44:55:66")
+		with patch("hwIo.ble.scanner") as mockScanner:
+			mockScanner.results.return_value = [other, wanted]
+			self.assertIs(getDiscoveredDevice("AA:BB:CC:DD:EE:FF"), wanted)
+			mockScanner.start.assert_not_called()
+
+	def test_deviceNotInResults(self):
+		"""None is returned without starting a scan."""
+		with patch("hwIo.ble.scanner") as mockScanner:
+			mockScanner.results.return_value = [self._fakeDevice("11:22:33:44:55:66")]
+			self.assertIsNone(getDiscoveredDevice("AA:BB:CC:DD:EE:FF"))
+			mockScanner.start.assert_not_called()
+
+	def test_noScanner(self):
+		"""None is returned when BLE was never initialized."""
+		with patch("hwIo.ble.scanner", None):
+			self.assertIsNone(getDiscoveredDevice("AA:BB:CC:DD:EE:FF"))
 
 
 class TestFindDeviceByAddress(unittest.TestCase):
