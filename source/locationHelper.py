@@ -1,10 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2026 NV Access Limited, Babbage B.V.
+# Copyright (C) 2017-2026 NV Access Limited, Babbage B.V., Christopher Proß
 
 """Classes and helper functions for working with rectangles and coordinates."""
 
+import math
 from typing import NamedTuple
 import windowUtils
 import winUser
@@ -486,6 +487,35 @@ class RectLTRB(_RectMixin, _RectLTRB):
 	@property
 	def height(self) -> int:
 		return self.bottom - self.top
+
+
+def _remapRectByAnchors(rect: RectLTRB, oldAnchor: RectLTRB, newAnchor: RectLTRB) -> RectLTRB:
+	"""Map a rectangle from the coordinate space of one anchor rectangle into another.
+
+	Both anchors describe the same physical object in two coordinate spaces,
+	for example a window rectangle in its DPI virtualized and its physical space.
+	Every edge of the given rectangle is scaled by the size ratio of the anchors
+	and offset by the anchor origins,
+	rounding half up so results stay stable regardless of coordinate sign.
+
+	:param rect: The rectangle to map, in the coordinate space of ``oldAnchor``.
+	:param oldAnchor: The anchor rectangle in the source coordinate space.
+	:param newAnchor: The same anchor rectangle in the target coordinate space.
+	:return: The mapped rectangle in the coordinate space of ``newAnchor``.
+	:raise ValueError: If ``oldAnchor`` has a zero width or height.
+	"""
+	if oldAnchor.width <= 0 or oldAnchor.height <= 0:
+		raise ValueError(f"oldAnchor {oldAnchor} has no area")
+	scaleX = newAnchor.width / oldAnchor.width
+	scaleY = newAnchor.height / oldAnchor.height
+
+	def mapX(x: int) -> int:
+		return math.floor(newAnchor.left + (x - oldAnchor.left) * scaleX + 0.5)
+
+	def mapY(y: int) -> int:
+		return math.floor(newAnchor.top + (y - oldAnchor.top) * scaleY + 0.5)
+
+	return RectLTRB(mapX(rect.left), mapY(rect.top), mapX(rect.right), mapY(rect.bottom))
 
 
 #: Classes which support conversion to locationHelper Points using their x and y properties.

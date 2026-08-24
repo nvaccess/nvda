@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Cary-rowen
+# Copyright (C) 2025-2026 NV Access Limited, Cary-rowen, Christopher Proß
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -1492,6 +1492,30 @@ SetProcessDpiAwarenessContext.argtypes = (
 	DPI_AWARENESS_CONTEXT,  # value: A DPI_AWARENESS_CONTEXT handle to set
 )
 
+SetThreadDpiAwarenessContext = WINFUNCTYPE(None)(("SetThreadDpiAwarenessContext", dll))
+"""
+Set the DPI awareness for the current thread to the provided value.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setthreaddpiawarenesscontext
+"""
+SetThreadDpiAwarenessContext.restype = DPI_AWARENESS_CONTEXT
+SetThreadDpiAwarenessContext.argtypes = (
+	DPI_AWARENESS_CONTEXT,  # dpiContext: The new DPI_AWARENESS_CONTEXT for the current thread
+)
+
+GetWindowDpiAwarenessContext = WINFUNCTYPE(None)(("GetWindowDpiAwarenessContext", dll))
+"""
+Returns the DPI_AWARENESS_CONTEXT associated with a window.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowdpiawarenesscontext
+"""
+GetWindowDpiAwarenessContext.restype = DPI_AWARENESS_CONTEXT
+GetWindowDpiAwarenessContext.argtypes = (
+	HWND,  # hwnd: The window to query
+)
+
 SetProcessDPIAware = WINFUNCTYPE(None)(("SetProcessDPIAware", dll))
 """
 Sets the process-default DPI awareness to system-DPI awareness.
@@ -1614,6 +1638,47 @@ GetWindowRect.argtypes = (
 	HWND,  # hWnd: Handle to the window
 	LPRECT,  # lpRect: RECT that receives the screen coordinates of the upper-left and lower-right corners of the window
 )
+
+
+GetMenu = WINFUNCTYPE(None)(("GetMenu", dll))
+"""
+Retrieves a handle to the menu assigned to the specified window.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getmenu
+"""
+GetMenu.restype = HMENU
+GetMenu.argtypes = (
+	HWND,  # hWnd: Handle to the window whose menu handle is to be retrieved
+)
+
+GetMenuItemCount = WINFUNCTYPE(None)(("GetMenuItemCount", dll))
+"""
+Determines the number of items in the specified menu.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getmenuitemcount
+"""
+GetMenuItemCount.restype = c_int
+GetMenuItemCount.argtypes = (
+	HMENU,  # hMenu: Handle to the menu to be examined
+)
+
+GetMenuItemRect = WINFUNCTYPE(None)(("GetMenuItemRect", dll))
+"""
+Retrieves the bounding rectangle of the specified menu item.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getmenuitemrect
+"""
+GetMenuItemRect.restype = BOOL
+GetMenuItemRect.argtypes = (
+	HWND,  # hWnd: Handle to the window containing the menu
+	HMENU,  # hMenu: Handle to the menu
+	UINT,  # uItem: Zero-based position of the menu item
+	LPRECT,  # lprcItem: RECT that receives the bounding rectangle in screen coordinates
+)
+
 IsWindowUnicode = WINFUNCTYPE(None)(("IsWindowUnicode", dll))
 """
 Determines whether the specified window is a native Unicode window.
