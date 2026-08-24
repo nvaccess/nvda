@@ -6297,7 +6297,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 26</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>Security Fixes</source>
         <target>安全性修正</target>
       </segment>
@@ -6306,9 +6306,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       <notes>
         <note appliesTo="source">line: 28</note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).</source>
-        <target>請遵循 NVDA 的安全性政策，以負責任揭露的方式通報安全性問題。</target>
+        <target>請遵循 NVDA 的[安全性政策](https://github.com/nvaccess/nvda/blob/master/security.md)，以負責任揭露的方式通報安全性問題。</target>
       </segment>
     </unit>
     <unit id="a047d640-e0f5-419e-99c9-721db6ee3209">
@@ -6316,7 +6316,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 30</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>Prevents showing potentially sensitive information on braille displays when the computer is shut down or restarted. ([GHSA-qhjv-3xf4-9c66](https://github.com/nvaccess/nvda/security/advisories/GHSA-qhjv-3xf4-9c66))</source>
         <target>防止在電腦關機或重新啟動時，點字顯示器顯示可能包含敏感資訊的內容。 (GHSA-qhjv-3xf4-9c66)</target>
       </segment>
@@ -6568,39 +6568,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Dictionary metadata can be added to an optional `speechDictionaries` section in the add-on manifest.</source>
-        <target>可在附加元件資訊清單的選用 speechDictionaries 區段中加入語音字典的中繼資料。 
-
-術語對應
-英文	建議翻譯
-Dictionary metadata	語音字典的中繼資料
-can be added	可加入
-optional	選用
-speechDictionaries section	speechDictionaries 區段
-add-on manifest	附加元件資訊清單
-
-
-用詞說明
-1. manifest
-在軟體開發領域，manifest 一般譯為：
-資訊清單
-
-例如：
-Android Manifest → Android 資訊清單
-Extension Manifest → 擴充功能資訊清單
-因此不建議翻成：
-❌ 清單檔
-❌ 描述檔
-2. metadata
-台灣資訊領域與 NVDA 翻譯通常採用：
-中繼資料
-
-3. optional section
-建議譯為：
-選用 speechDictionaries 區段
-
-比「可選區段」更符合技術文件的用語。
-我最推薦的版本
-可在附加元件資訊清單的選用 speechDictionaries 區段中加入語音字典的中繼資料。</target>
+        <target>可在附加元件資訊清單的選用 speechDictionaries 區段中加入語音字典的中繼資料。</target>
       </segment>
     </unit>
     <unit id="78b553d2-c7ac-4977-a274-6b74f92e1a0a">
@@ -7145,7 +7113,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Changes for Developers</source>
-        <target>給開發人員的變更</target>
+        <target>給開發者的變更</target>
       </segment>
     </unit>
     <unit id="10327e8f-73dd-48a5-abd2-dd09ff340fef">
@@ -7154,7 +7122,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.</source>
-        <target>如需瞭解 NVDA API 的棄用與移除流程，請參閱《開發人員指南》。</target>
+        <target>請參閱[開發人員指南](https://download.nvaccess.org/documentation/developerGuide.html#API)以了解 NVDA 的 API 棄用與移除過程。</target>
       </segment>
     </unit>
     <unit id="5cbaebe9-ac84-433b-aaf9-f511bcf3b895">
@@ -7302,9 +7270,9 @@ Extension Manifest → 擴充功能資訊清單
         <note appliesTo="source">line: 135</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA libraries built by the build system are now linked with the [/CETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)</source>
-        <target>NVDA libraries built by the build system are now linked with the [/CETCOMPAT](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat) flag, improving protection against certain malware attacks. (#19435, @LeonarddeR)</target>
+        <target>由建置系統建立的 NVDA 程式庫現在會使用 /SETCOMPAT 旗標進行連結，以提升對某些惡意軟體攻擊的防護能力。 (#19435, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="3f08eb8c-6383-432c-b31a-94508aeacb26">
@@ -7322,9 +7290,9 @@ Extension Manifest → 擴充功能資訊清單
         <note appliesTo="source">line: 137</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handlesCOMErrors`. (#19713, @Emil-18)</source>
-        <target>A new method has been added to the UIA.UIA class, called `_getUIACacheablePropertyValue_handlesCOMErrors`. (#19713, @Emil-18)</target>
+        <target>已在 UIA.UIA 類別中新增名為 _getUIACacheablePropertyValue_handleCOMErrors 的新方法。 (#19713, @Emil-18)</target>
       </segment>
     </unit>
     <unit id="75eccd47-187e-47d9-a125-3ee5df162cfc">
@@ -7528,7 +7496,7 @@ Extension Manifest → 擴充功能資訊清單
         <note appliesTo="source">line: 160</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="translated">
+      <segment state="final">
         <source>`speechDictHandler.dictionaries` and `speechDictHandler.dictTypes` are deprecated without replacement. (#19558, @LeonarddeR)</source>
         <target>speechDictHandler.dictionaries 和 speechDictHandler.dictTypes 已棄用，且未提供替代項目。 (#19558, @LeonarddeR)</target>
       </segment>
@@ -7567,7 +7535,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>A change introduced in 2026.1 with how NVDA handles connection issues with Remote Access was removed.</source>
-        <target>已移除 2026.1 版本中引入的 NVDA 處理 Remote Access 連線問題方式的變更。</target>
+        <target>已移除 2026.1 版本中引入的 NVDA 處理遠端存取連線問題方式的變更。</target>
       </segment>
     </unit>
     <unit id="c0ac123f-19a9-4113-815e-39ead62de217">
@@ -7586,7 +7554,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).</source>
-        <target>請依照 NVDA 的安全性政策，以負責任的方式揭露安全性問題。</target>
+        <target>請遵循 NVDA 的[安全性政策](https://github.com/nvaccess/nvda/blob/master/security.md)，以負責任揭露的方式通報安全性問題。</target>
       </segment>
     </unit>
     <unit id="317dfc45-6f60-423c-aa37-eff87fc9a158">
@@ -7596,7 +7564,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Fixed an issue which could cause NVDA to connect to an untrusted Remote Access server. ([GHSA-m268-mc77-j2cr](https://github.com/nvaccess/nvda/security/advisories/GHSA-m268-mc77-j2cr))</source>
-        <target>修正一項可能導致 NVDA 連線至不受信任 Remote Access 伺服器的問題。 (GHSA-m268-mc77-j2cr)</target>
+        <target>修正一項可能導致 NVDA 連線至不受信任遠端存取伺服器的問題。 (GHSA-m268-mc77-j2cr)</target>
       </segment>
     </unit>
     <unit id="1e0d50c1-2f0a-4cd6-ba2a-a0a39596cec6">
@@ -7646,7 +7614,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Remote Access once again attempts automatic reconnection after a failed initial connection as the controlled computer, rather than failing immediately.</source>
-        <target>Remote Access 現在會在作為受控端電腦時，於初始連線失敗後再次嘗試自動重新連線，而不會立即失敗。</target>
+        <target>遠端存取現在會在作為受控端電腦時，於初始連線失敗後再次嘗試自動重新連線，而不會立即失敗。</target>
       </segment>
     </unit>
     <unit id="eb5096c1-7bff-45c7-a899-e66f7e5df8fd">
@@ -8793,7 +8761,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Changes for Developers</source>
-        <target>針對開發者的變更</target>
+        <target>給開發者的變更</target>
       </segment>
     </unit>
     <unit id="45e63999-8cda-490f-baf2-3095f90a5b5e">
@@ -8802,7 +8770,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.</source>
-        <target>請參閱 [開發人員指南](https://download.nvaccess.org/documentation/developerGuide.html#API) 以了解 NVDA 的 API 棄用與移除過程。</target>
+        <target>請參閱[開發人員指南](https://download.nvaccess.org/documentation/developerGuide.html#API)以了解 NVDA 的 API 棄用與移除過程。</target>
       </segment>
     </unit>
     <unit id="9ff85b5a-15bc-4aea-b9eb-bb96cc9c80f5">
@@ -10852,7 +10820,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).</source>
-        <target>請依照 NVDA 的安全性政策，以負責任的方式揭露安全性問題。</target>
+        <target>請遵循 NVDA 的[安全性政策](https://github.com/nvaccess/nvda/blob/master/security.md)，以負責任揭露的方式通報安全性問題。</target>
       </segment>
     </unit>
     <unit id="b74c39f7-be02-4efe-9415-9b0fe8877198">
@@ -10900,7 +10868,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).</source>
-        <target>請依照 NVDA 的安全性政策，以負責任的方式揭露安全性問題。</target>
+        <target>請遵循 NVDA 的[安全性政策](https://github.com/nvaccess/nvda/blob/master/security.md)，以負責任揭露的方式通報安全性問題。</target>
       </segment>
     </unit>
     <unit id="eb66c384-4048-4211-a679-17fc642b4df1">
@@ -10910,7 +10878,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Fixed a vulnerability which could prevent access to secure screens via Remote Access. ([GHSA-42v6-wjv6-h3jj](https://github.com/nvaccess/nvda/security/advisories/ghsa-42v6-wjv6-h3jj))</source>
-        <target>修正一項可能導致無法透過 Remote Access 存取安全畫面的漏洞。 (GHSA-42v6-wjv6-h3jj)</target>
+        <target>修正一項可能導致無法透過遠端存取安全畫面的漏洞。 (GHSA-42v6-wjv6-h3jj)</target>
       </segment>
     </unit>
     <unit id="c9e0aaa1-5f71-4ebf-9364-ab0109d04b8e">
@@ -10948,7 +10916,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).</source>
-        <target>請依照 NVDA 的安全性政策，以負責任的方式揭露安全性問題。</target>
+        <target>請遵循 NVDA 的[安全性政策](https://github.com/nvaccess/nvda/blob/master/security.md)，以負責任揭露的方式通報安全性問題。</target>
       </segment>
     </unit>
     <unit id="67d27746-c848-4499-8a9e-3c6f28fd3631">
@@ -10958,7 +10926,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Fixed a vulnerability which could prevent access to secure screens via Remote Access. ([GHSA-vr27-g5ph-xvq2](https://github.com/nvaccess/nvda/security/advisories/GHSA-vr27-g5ph-xvq2))</source>
-        <target>修正一項可能導致無法透過 Remote Access 存取安全畫面的漏洞。 (GHSA-vr27-g5ph-xvq2)</target>
+        <target>修正一項可能導致無法透過遠端存取安全畫面的漏洞。 (GHSA-vr27-g5ph-xvq2)</target>
       </segment>
     </unit>
     <unit id="45f82a73-7afa-432f-b872-fcf32449a88c">
@@ -10978,7 +10946,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Remote Access now returns control to the local computer if it locks while controlling the remote computer. (#18951)</source>
-        <target>Remote Access 現在會在控制遠端電腦時，若本機電腦遭到鎖定，將控制權返回給本機電腦。 (#18951)</target>
+        <target>遠端存取現在會在控制遠端電腦時，若本機電腦遭到鎖定，將控制權返回給本機電腦。 (#18951)</target>
       </segment>
     </unit>
     <unit id="3ed4cdd2-f214-47d5-9579-85301a16852c">
@@ -10997,7 +10965,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>This release includes improvements to Remote Access, SAPI5 voices, braille and the Add-on Store.</source>
-        <target>This release includes improvements to Remote Access, SAPI5 voices, braille and the Add-on Store.</target>
+        <target>此版本包含對遠端存取、SAPI5 語音、點字及附加元件商店的改進。</target>
       </segment>
     </unit>
     <unit id="f41a89ed-08c0-48e3-aa05-e080d31a610e">
@@ -11006,7 +10974,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Add-ons in the Add-on Store can now be sorted by minimum/last tested NVDA version and install date.</source>
-        <target>Add-ons in the Add-on Store can now be sorted by minimum/last tested NVDA version and install date.</target>
+        <target>附加元件商店中的附加元件現在可依最低支援的 NVDA 版本、最後測試的 NVDA 版本或安裝日期排序。</target>
       </segment>
     </unit>
     <unit id="7d879cfa-1aca-4286-b37c-f64fd4697755">
@@ -11015,7 +10983,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Remote Access has had several minor fixes and improvements including adding a command to send `control+alt+delete` and remembering recent connection settings.</source>
-        <target>Remote Access has had several minor fixes and improvements including adding a command to send `control+alt+delete` and remembering recent connection settings.</target>
+        <target>遠端存取已進行多項小幅修正與改進，包括新增傳送 Ctrl+Alt+Delete 的指令，以及記住最近使用的連線設定。</target>
       </segment>
     </unit>
     <unit id="e51caa35-3c5c-41d6-94cd-e56a0418b0ce">
@@ -11024,7 +10992,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>There are also fixes for connection and audio issues.</source>
-        <target>There are also fixes for connection and audio issues.</target>
+        <target>此外，也修正了連線與音訊方面的問題。</target>
       </segment>
     </unit>
     <unit id="613f5434-579e-484b-aea3-b84f80dfc4c0">
@@ -11033,7 +11001,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Braille improves with smarter word wrap, stable table selection across language changes, and optional USB auto-detection for Dot Pad.</source>
-        <target>Braille improves with smarter word wrap, stable table selection across language changes, and optional USB auto-detection for Dot Pad.</target>
+        <target>點字功能獲得多項改進，包括更智慧的換行、在切換語言時仍能維持穩定的表格選取，以及支援 Dot Pad 的選用 USB 自動偵測功能。</target>
       </segment>
     </unit>
     <unit id="a0a7c131-272b-4515-be6f-5ca4d2e2cf49">
@@ -11042,7 +11010,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>There are several bug fixes for SAPI5 voices, including fixes for excessive leading silence trimming, freezing issues, and audio gaps.</source>
-        <target>There are several bug fixes for SAPI5 voices, including fixes for excessive leading silence trimming, freezing issues, and audio gaps.</target>
+        <target>SAPI5 語音有多項錯誤修正，包括修正過度消除起使靜音、凍結及音訊中斷等問題。</target>
       </segment>
     </unit>
     <unit id="689f9e09-2826-41af-b693-b218090d04a4">
@@ -11051,7 +11019,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>eSpeak NG and Unicode CLDR have been updated.</source>
-        <target>eSpeak NG and Unicode CLDR have been updated.</target>
+        <target>eSpeak NG 和 Unicode CLDR 已更新。</target>
       </segment>
     </unit>
     <unit id="baca9649-665c-4371-aace-2d63ebaf2324">
@@ -11060,7 +11028,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Localisation data for emojis has been added for Belarusian and Bosnian.</source>
-        <target>Localisation data for emojis has been added for Belarusian and Bosnian.</target>
+        <target>新增了白俄羅斯語和波士尼亞語的表情符號本地化資料。</target>
       </segment>
     </unit>
     <unit id="71e49710-916a-463a-9f10-4ccc2e25da81">
@@ -11070,7 +11038,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>New Features</source>
-        <target>New Features</target>
+        <target>新功能</target>
       </segment>
     </unit>
     <unit id="38dab7c8-557c-4221-8b55-2c53e93948bd">
@@ -11080,7 +11048,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Add-on Store:</source>
-        <target>Add-on Store:</target>
+        <target>附加元件商店：</target>
       </segment>
     </unit>
     <unit id="373c48b5-1cbf-4dfa-b1b2-2a8073d3907b">
@@ -11090,7 +11058,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Add-ons can be sorted by minimum and last tested NVDA version as well as by installation date. (#18440, #18560, @nvdaes, @CyrilleB79)</source>
-        <target>Add-ons can be sorted by minimum and last tested NVDA version as well as by installation date. (#18440, #18560, @nvdaes, @CyrilleB79)</target>
+        <target>附加元件現在可依最低需求的 NVDA 版本、最後測試的 NVDA 版本及安裝日期排序。 (#18440, #18560, @nvdaes, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="41a84aad-77f9-4b0a-8cdc-8127a7e0015a">
@@ -11100,7 +11068,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Minimum and last tested version will now be also shown in the details area for an add-on in the Available Add-ons tab. (#18440, @nvdaes)</source>
-        <target>Minimum and last tested version will now be also shown in the details area for an add-on in the Available Add-ons tab. (#18440, @nvdaes)</target>
+        <target>在「可用的附加元件」索引標籤中，附加元件的詳細資訊區域現在也會顯示最低需求的 NVDA 版本及最後測試的 NVDA 版本。 (#18440, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="58ddda51-aa78-4961-a96a-214c7d1bc4c4">
@@ -11110,7 +11078,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Installation date will now be also shown in the details area for external add-ons. (#18560, @CyrilleB79)</source>
-        <target>Installation date will now be also shown in the details area for external add-ons. (#18560, @CyrilleB79)</target>
+        <target>外部附加元件的詳細資訊區域現在也會顯示安裝日期。 (#18560, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="14a2c2d6-4c75-4d4a-b356-7aaa33cba062">
@@ -11120,7 +11088,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>A new unassigned command has been added to send `control+alt+delete` when controlling another computer via NVDA Remote Access. (#18105)</source>
-        <target>A new unassigned command has been added to send `control+alt+delete` when controlling another computer via NVDA Remote Access. (#18105)</target>
+        <target>新增一個未指派的指令，可在透過 NVDA 遠端存取控制另一台電腦時傳送 Ctrl+Alt+Delete。 (#18105)</target>
       </segment>
     </unit>
     <unit id="160c56e5-9527-4c7e-8b7f-49912130aef7">
@@ -11130,7 +11098,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>A new setting has been added to automatically mute Remote Access when controlling the local computer. (#18630)</source>
-        <target>A new setting has been added to automatically mute Remote Access when controlling the local computer. (#18630)</target>
+        <target>新增一個未指派的指令，可在透過 NVDA 遠端存取控制另一台電腦時傳送 Ctrl+Alt+Delete。 (#18105)</target>
       </segment>
     </unit>
     <unit id="1157502d-1fd6-4578-a255-824425dc89d9">
@@ -11140,7 +11108,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Changes</source>
-        <target>Changes</target>
+        <target>變更</target>
       </segment>
     </unit>
     <unit id="8544ecbf-c7dc-4d16-a240-c3b69429f33a">
@@ -11150,7 +11118,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Component updates:</source>
-        <target>Component updates:</target>
+        <target>元件更新：</target>
       </segment>
     </unit>
     <unit id="2e3a0c74-91e6-43b6-8c9b-adf696dfa10c">
@@ -11160,7 +11128,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Updated eSpeak NG to [commit `3b8ef3d`](https://github.com/espeak-ng/espeak-ng/commit/3b8ef3d310f380e9ab4c6b19bf8367d8f99ac285).</source>
-        <target>Updated eSpeak NG to [commit `3b8ef3d`](https://github.com/espeak-ng/espeak-ng/commit/3b8ef3d310f380e9ab4c6b19bf8367d8f99ac285).</target>
+        <target>將 eSpeak NG 更新至 [commit `3b8ef3d`](https://github.com/espeak-ng/espeak-ng/commit/3b8ef3d310f380e9ab4c6b19bf8367d8f99ac285)。</target>
       </segment>
     </unit>
     <unit id="97a40705-a9b8-47cf-a80a-0e15d2eac5d8">
@@ -11169,7 +11137,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>  There have been improvements to Farsi/Persian. (#18342, #18633, @codeofdusk)</source>
-        <target>  There have been improvements to Farsi/Persian. (#18342, #18633, @codeofdusk)</target>
+        <target>  改善了波斯語（Farsi）的支援。 (#18342, #18633, @codeofdusk)</target>
       </segment>
     </unit>
     <unit id="480cf388-e24e-4470-9454-c36e2c03e2e2">
@@ -11179,7 +11147,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Updated Unicode CLDR to [47.0](https://cldr.unicode.org/downloads/cldr-47).</source>
-        <target>Updated Unicode CLDR to [47.0](https://cldr.unicode.org/downloads/cldr-47).</target>
+        <target>將 Unicode CLDR 更新至 [47.0](https://cldr.unicode.org/downloads/cldr-47)。</target>
       </segment>
     </unit>
     <unit id="8f615c89-ded2-4048-a4db-cadbd62d69af">
@@ -11188,7 +11156,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>  Localisation data for emojis has been added for Belarusian and Bosnian. (#18581)</source>
-        <target>  Localisation data for emojis has been added for Belarusian and Bosnian. (#18581)</target>
+        <target>  新增白俄羅斯語及波士尼亞語的表情符號本地化資料。 (#18581)</target>
       </segment>
     </unit>
     <unit id="762bc0be-85a2-4479-ba54-146356533690">
@@ -11198,7 +11166,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Braille:</source>
-        <target>Braille:</target>
+        <target>點字：</target>
       </segment>
     </unit>
     <unit id="f3cd3752-761a-42e8-a45a-95c82bfa46f1">
@@ -11208,7 +11176,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)</source>
-        <target>When braille word wrap is enabled, all braille cells will be used if the next character is a space. (#18016, @nvdaes)</target>
+        <target>啟用點字自動換行後，若下一個字元是空白，將會使用所有可用的點字方。 (#18016, @nvdaes)</target>
       </segment>
     </unit>
     <unit id="3a6270d0-168e-466e-8bae-03a963f39538">
@@ -11218,7 +11186,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>NVDA no longer resets braille tables to automatic when changing its language. (#18538, @LeonarddeR)</source>
-        <target>NVDA no longer resets braille tables to automatic when changing its language. (#18538, @LeonarddeR)</target>
+        <target>變更 NVDA 的介面語言時，NVDA 不再將點字表重設為自動。 (#18538, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="cd3e4017-b567-46e9-bee6-532d719e5d69">
@@ -11228,7 +11196,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>NVDA no longer handles Turkish grade 1 as Turkish 8 dot computer braille. (#18758, @OzancanKaratas)</source>
-        <target>NVDA no longer handles Turkish grade 1 as Turkish 8 dot computer braille. (#18758, @OzancanKaratas)</target>
+        <target>NVDA 不再將土耳其語一級點字誤判為土耳其語八點電腦點字。 (#18758, @OzancanKaratas)</target>
       </segment>
     </unit>
     <unit id="c84379c6-9505-49a7-9aa1-4bda4d4ff702">
@@ -11238,7 +11206,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>The Dot Pad braille display driver now supports automatic detection of USB-connected devices.</source>
-        <target>The Dot Pad braille display driver now supports automatic detection of USB-connected devices.</target>
+        <target>Dot Pad 點字顯示器驅動程式現在支援自動偵測透過 USB 連接的裝置。</target>
       </segment>
     </unit>
     <unit id="35951f47-6ce1-41f4-838f-3432f66eec70">
@@ -11247,7 +11215,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>  Note that this is disabled by default due to the device using generic USB identifiers, but can be enabled in braille settings. (#18444, @bramd)</source>
-        <target>  Note that this is disabled by default due to the device using generic USB identifiers, but can be enabled in braille settings. (#18444, @bramd)</target>
+        <target>  請注意，由於該裝置使用通用的 USB 識別碼，因此此功能預設為停用，但可在點字設定中啟用。 (#18444, @bramd)</target>
       </segment>
     </unit>
     <unit id="627101e5-37f4-4aa8-9b4e-bde1855842a8">
@@ -11257,7 +11225,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)</source>
-        <target>When the selection covers more than one cell in Microsoft Excel, pressing `tab` or `enter` to move the active cell now reports the new active cell rather than the whole selection. (#6959, @CyrilleB79)</target>
+        <target>在 Microsoft Excel 中，當選取範圍涵蓋多個儲存格時，按下 Tab 或 Enter 移動作用中儲存格後，NVDA 現在會報讀新的作用中儲存格，而非整個選取範圍。 (#6959, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="59771368-a222-46f2-8d5f-87aacd2816f5">
@@ -11267,7 +11235,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>In terminal programs on Windows 10 version 1607 and later, the calculation of changed text now runs within NVDA instead of via an external process, which may improve performance and reliability. (#18480, @codeofdusk)</source>
-        <target>In terminal programs on Windows 10 version 1607 and later, the calculation of changed text now runs within NVDA instead of via an external process, which may improve performance and reliability. (#18480, @codeofdusk)</target>
+        <target>在 Windows 10 版本 1607 及更新版本的終端機程式中，變更文字的計算現在改由 NVDA 內部執行，而非透過外部處理程序，可提升效能與可靠性。 (#18480, @codeofdusk)</target>
       </segment>
     </unit>
     <unit id="e3eebd76-4540-4cce-99b4-741e78fc67bb">
@@ -11277,7 +11245,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>The NVDA Remote Access connection dialog now remembers the most recent connection mode, server type and locally hosted port of manual connections. (#18512, #18701)</source>
-        <target>The NVDA Remote Access connection dialog now remembers the most recent connection mode, server type and locally hosted port of manual connections. (#18512, #18701)</target>
+        <target>NVDA 遠端存取的連線對話框現在會記住最近一次手動連線所使用的連線模式、伺服器類型及本機主控的連接埠。 (#18512, #18701)</target>
       </segment>
     </unit>
     <unit id="9ff079b7-a64e-4b66-940a-767f60586c07">
@@ -11287,7 +11255,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Bug Fixes</source>
-        <target>Bug Fixes</target>
+        <target>錯誤修正</target>
       </segment>
     </unit>
     <unit id="23c98fc5-e388-4f48-9a82-9bba110c309a">
@@ -11297,7 +11265,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Speech:</source>
-        <target>Speech:</target>
+        <target>語音：</target>
       </segment>
     </unit>
     <unit id="055e0c4b-6884-4664-83f6-04abf946c1ff">
@@ -11307,7 +11275,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Fixed excessive leading silence trimming that trims part of the speech when using some voices. (#18003, @gexgd0419)</source>
-        <target>Fixed excessive leading silence trimming that trims part of the speech when using some voices. (#18003, @gexgd0419)</target>
+        <target>SAPI5 語音有多項錯誤修正，包括修正過度消除起使靜音、凍結及音訊中斷等問題。</target>
       </segment>
     </unit>
     <unit id="58674a00-2180-49be-96a9-9634dc74824f">
@@ -11317,7 +11285,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Fixed a problem where NVDA sometimes freezes completely when using SAPI5 voices. (#18298, @gexgd0419)</source>
-        <target>Fixed a problem where NVDA sometimes freezes completely when using SAPI5 voices. (#18298, @gexgd0419)</target>
+        <target>修正使用 SAPI5 語音時，NVDA 有時會完全凍結的問題。 (#18298, @gexgd0419)</target>
       </segment>
     </unit>
     <unit id="1eda598a-1865-43ad-bee4-d869cf150493">
@@ -11327,7 +11295,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Fixed a problem where NVDA fails to start with a SAPI5 Eloquence voice and falls back to OneCore voices. (#18301, @gexgd0419)</source>
-        <target>Fixed a problem where NVDA fails to start with a SAPI5 Eloquence voice and falls back to OneCore voices. (#18301, @gexgd0419)</target>
+        <target>修正 NVDA 使用 SAPI5 Eloquence 語音時無法啟動，而自動改用 OneCore 語音的問題。 (#18301, @gexgd0419)</target>
       </segment>
     </unit>
     <unit id="cf655119-3e1f-4616-93f0-68d8a8989cf6">
@@ -11337,7 +11305,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Fixed audio gaps in speech when using some SAPI5 voices with WASAPI and rate boost enabled. (#17967, @gexgd0419)</source>
-        <target>Fixed audio gaps in speech when using some SAPI5 voices with WASAPI and rate boost enabled. (#17967, @gexgd0419)</target>
+        <target>修正使用某些 SAPI5 語音，並啟用 WASAPI 與語速加快功能時，語音播放出現音訊中斷的問題。 (#17967, @gexgd0419)</target>
       </segment>
     </unit>
     <unit id="b1fa2685-503e-4d5f-ae43-9180116c732c">
@@ -11347,7 +11315,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Remote Access:</source>
-        <target>Remote Access:</target>
+        <target>遠端存取：</target>
       </segment>
     </unit>
     <unit id="e17a8a4c-e745-4cf7-9620-702a14caae2b">
@@ -11357,7 +11325,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Fixed a bug which stopped speech from working via NVDA Remote Access when the controlled computer had no audio output devices enabled. (#18544)</source>
-        <target>Fixed a bug which stopped speech from working via NVDA Remote Access when the controlled computer had no audio output devices enabled. (#18544)</target>
+        <target>修正一項當被控端電腦未啟用任何音訊輸出裝置時，語音無法透過 NVDA 遠端存取正常運作的錯誤。 (#18544)</target>
       </segment>
     </unit>
     <unit id="b9eeec1b-1c13-42b4-8c16-00cf18e410ef">
@@ -11367,7 +11335,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Fixed a bug which caused NVDA Remote Access to stop working if a session was interrupted while connecting to the server. (#18476)</source>
-        <target>Fixed a bug which caused NVDA Remote Access to stop working if a session was interrupted while connecting to the server. (#18476)</target>
+        <target>修正一項若在連線至伺服器的過程中工作階段遭到中斷，可能會導致 NVDA 遠端存取停止運作的錯誤。 (#18476)</target>
       </segment>
     </unit>
     <unit id="1b3784e7-7ec0-4d8c-b17c-aa04b8ea6387">
@@ -11377,7 +11345,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Fixed bug with multiple math expressions on the same line in Microsoft Word documents: everything after the first expression was not spoken or brailled. (#18386, @NSoiffer)</source>
-        <target>Fixed bug with multiple math expressions on the same line in Microsoft Word documents: everything after the first expression was not spoken or brailled. (#18386, @NSoiffer)</target>
+        <target>修正 Microsoft Word 文件中同一行包含多個數學運算式時的錯誤：第一個運算式之後的所有內容都不會被報讀或顯示為點字。 (#18386, @NSoiffer)</target>
       </segment>
     </unit>
     <unit id="5da07859-0171-48f7-82bf-f462cd93aa7b">
@@ -11387,7 +11355,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)</source>
-        <target>Fixed support for paragraph mouse text unit in Java applications. (#18231, @hwf1324)</target>
+        <target>修正 Java 應用程式對滑鼠文字單位「段落」的支援。 (#18231, @hwf1324)</target>
       </segment>
     </unit>
     <unit id="0f352991-347e-4bef-9619-1d4cec4f1d6c">
@@ -11397,7 +11365,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Fixed Highlighter not working with Outlook contact auto-complete lists. (#18483, @Nerlant)</source>
-        <target>Fixed Highlighter not working with Outlook contact auto-complete lists. (#18483, @Nerlant)</target>
+        <target>修正視覺標示無法在 Outlook 聯絡人自動完成清單中運作的問題。 (#18483, @Nerlant)</target>
       </segment>
     </unit>
     <unit id="49dc7721-26da-4edc-8cbb-49b349174728">
@@ -11407,7 +11375,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>A portable copy launched immediately after creation now correctly use its own configuration instead of another one. (#18442, @CyrilleB79)</source>
-        <target>A portable copy launched immediately after creation now correctly use its own configuration instead of another one. (#18442, @CyrilleB79)</target>
+        <target>新建立的可攜式版本若在建立後立即啟動，現在會正確使用自己的設定，而非使用其他設定。 (#18442, @CyrilleB79)</target>
       </segment>
     </unit>
     <unit id="e82a6d24-4e16-4955-bdcc-2aadfec1d726">
@@ -11417,7 +11385,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Changes for Developers</source>
-        <target>Changes for Developers</target>
+        <target>給開發者的變更</target>
       </segment>
     </unit>
     <unit id="ac3da7d2-599d-45d9-a25e-b81f7bf5e460">
@@ -11426,7 +11394,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.</source>
-        <target>Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.</target>
+        <target>請參閱[開發人員指南](https://download.nvaccess.org/documentation/developerGuide.html#API)以了解 NVDA 的 API 棄用與移除過程。</target>
       </segment>
     </unit>
     <unit id="0be60212-747b-4345-866d-db9fde1970d0">
@@ -11436,7 +11404,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Component updates:</source>
-        <target>Component updates:</target>
+        <target>元件更新：</target>
       </segment>
     </unit>
     <unit id="c663a34e-24c3-4290-8eb0-2f61f641c5a7">
@@ -11446,7 +11414,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Updated Pyright to 1.1.403. (#18424)</source>
-        <target>Updated Pyright to 1.1.403. (#18424)</target>
+        <target>Pyright 更新至 1.1.403。 (#18424)</target>
       </segment>
     </unit>
     <unit id="eef694bd-f41e-4de0-93ae-c4063e8372ae">
@@ -11456,7 +11424,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Updated Ruff to 0.12.7. (#18424, #18609)</source>
-        <target>Updated Ruff to 0.12.7. (#18424, #18609)</target>
+        <target>Ruff 更新至 0.12.7。 (#18424, #18609)</target>
       </segment>
     </unit>
     <unit id="559076e8-4e6b-415a-a48c-140e5b9a6b7f">
@@ -11466,7 +11434,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Updated comtypes to 1.4.11. (#18611)</source>
-        <target>Updated comtypes to 1.4.11. (#18611)</target>
+        <target>comtypes 更新至 1.4.11。 (#18611)</target>
       </segment>
     </unit>
     <unit id="f766a91c-ba4d-40bc-b9dc-3a4f3b2426c2">
@@ -11476,7 +11444,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Updated py2exe to 0.14.0.0. (#18611)</source>
-        <target>Updated py2exe to 0.14.0.0. (#18611)</target>
+        <target>py2exe 更新至 0.14.0.0。 (#18611)</target>
       </segment>
     </unit>
     <unit id="2816e878-498a-4c9d-80e8-199a4ad07d54">
@@ -11486,7 +11454,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Updated markdown to 3.8.2. (#18638)</source>
-        <target>Updated markdown to 3.8.2. (#18638)</target>
+        <target>Markdown 更新至 3.8.2。 (#18638)</target>
       </segment>
     </unit>
     <unit id="1342b583-97dc-4ffe-a569-6def3a4c806d">
@@ -11496,7 +11464,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)</source>
-        <target>detours to `9764cebcb1a75940e68fa83d6730ffaf0f669401`. (#18447, @LeonarddeR)</target>
+        <target>detours 更新至提交版本 9764cebcb1a75940e68fa83d6730ffaf0f669401。 (#18447, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="81bf02b2-48fc-4b1f-9c88-f5d28d15110d">
@@ -11506,7 +11474,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)</source>
-        <target>For `IAccessible` objects, the `flowsFrom` and `flowsTo` properties will now raise a `NotImplementedError` for MSAA (non-IA2) objects. (#18416, @LeonarddeR)</target>
+        <target>對於 IAccessible 物件，flowsFrom 和 flowsTo 屬性現在在 MSAA（非 IA2）物件上會引發 NotImplementedError。 (#18416, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="5220ddaf-59ce-456b-9b8b-f66200103cd6">
@@ -11516,7 +11484,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)</source>
-        <target>The `nvda_dmp` utility has been removed. (#18480, @codeofdusk)</target>
+        <target>nvda_dmp 公用程式已移除。 (#18480, @codeofdusk)</target>
       </segment>
     </unit>
     <unit id="f61e9244-0d56-46b9-ab2a-b0fedd95be66">
@@ -11526,7 +11494,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>`comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)</source>
-        <target>`comInterfaces_sconscript` has been updated to make the generated files in `comInterfaces` work better with IDEs. (#17608, @gexgd0419)</target>
+        <target>已更新 comInterfaces_sconscript，使 comInterfaces 中產生的檔案能更妥善地與 IDE 整合。 (#17608, @gexgd0419)</target>
       </segment>
     </unit>
     <unit id="b60467e9-5440-4043-90f5-790987742f63">
@@ -11536,7 +11504,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>NVDA now configures `wx.lib.agw.persist.PersistenceManager` on GUI initialisation. (#18601)</source>
-        <target>NVDA now configures `wx.lib.agw.persist.PersistenceManager` on GUI initialisation. (#18601)</target>
+        <target>NVDA 現在會在 GUI 初始化時設定 wx.lib.agw.persist.PersistenceManager。 (#18601)</target>
       </segment>
     </unit>
     <unit id="5cbceb29-4c2d-4866-9394-f7d823750eab">
@@ -11546,7 +11514,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Deprecations</source>
-        <target>Deprecations</target>
+        <target>棄用項目</target>
       </segment>
     </unit>
     <unit id="f83a49f5-ac38-4ac4-8f54-725d1572d60e">
@@ -11556,7 +11524,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>The following symbols in `synthDrivers.sapi5` are deprecated with no replacement: (#18300, @gexgd0419)</source>
-        <target>The following symbols in `synthDrivers.sapi5` are deprecated with no replacement: (#18300, @gexgd0419)</target>
+        <target>`synthDrivers.sapi5` 中的以下符號已被棄用，且無替代方案：(#18300, @gexgd0419)</target>
       </segment>
     </unit>
     <unit id="5c310bc4-28cc-41c5-ac06-a04d360ad922">
@@ -11606,7 +11574,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>`easeOfAccess.RegistryKey` and `config.RegistryKey` is deprecated, use `config.registry.RegistryKey` instead. (#18608)</source>
-        <target>`easeOfAccess.RegistryKey` and `config.RegistryKey` is deprecated, use `config.registry.RegistryKey` instead. (#18608)</target>
+        <target>easeOfAccess.RegistryKey 和 config.RegistryKey 已棄用，請改用 config.registry.RegistryKey。 (#18608)</target>
       </segment>
     </unit>
     <unit id="bb747d9e-5d1e-48d2-84f5-89c96d755a00">
@@ -11616,7 +11584,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Importing `DEFAULT_EXTENSIONS` from `md2html` is deprecated.</source>
-        <target>Importing `DEFAULT_EXTENSIONS` from `md2html` is deprecated.</target>
+        <target>從 `md2html` 匯入 `DEFAULT_EXTENSIONS` 已棄用。</target>
       </segment>
     </unit>
     <unit id="ffdab4b2-5995-42fb-9165-ca254496befd">
@@ -11625,7 +11593,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Importing from `md2html` is discouraged. (#18638)</source>
-        <target>Importing from `md2html` is discouraged. (#18638)</target>
+        <target>不鼓勵從 `md2html` 匯入。 (#18638)</target>
       </segment>
     </unit>
     <unit id="58b2f98c-6705-4ac1-b96c-34020c02e46f">
@@ -12288,7 +12256,7 @@ Extension Manifest → 擴充功能資訊清單
       </notes>
       <segment state="final">
         <source>Added the "externalPythonDependencies" category as an extra debug logging category. When enabled, debug logging messages from external dependencies (such as comtypes) will be delivered to NVDA's log. (#18067, @LeonarddeR)</source>
-        <target>Added the "externalPythonDependencies" category as an extra debug logging category. When enabled, debug logging messages from external dependencies (such as comtypes) will be delivered to NVDA's log. (#18067, @LeonarddeR)</target>
+        <target/>
       </segment>
     </unit>
     <unit id="10054134-1c80-4aec-a21e-ff9747d683e0">
