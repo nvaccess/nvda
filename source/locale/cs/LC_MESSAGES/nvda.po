@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-03 23:29+0000\n"
-"PO-Revision-Date: 2026-08-10 00:17\n"
+"POT-Creation-Date: 2026-08-23 23:27+0000\n"
+"PO-Revision-Date: 2026-08-24 00:13\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -781,34 +781,34 @@ msgid "¶"
 msgstr "¶"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3805
+#: braille.py:3806
 msgid "Dot firm&ness"
 msgstr "&Pevnost bodů"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3818
+#: braille.py:3819
 msgid "Braille inp&ut"
 msgstr "Braillský &vstup"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3828
+#: braille.py:3829
 msgid "&HID keyboard input simulation"
 msgstr "Simulace &HID klávesnice"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
-#: braille.py:3992
+#: braille.py:3993
 msgid "Unknown braille display"
 msgstr "Neznámý braillský řádek"
 
 #. Translators: Name of a Bluetooth serial communications port.
-#: braille.py:4033
+#: braille.py:4034
 #, python-brace-format
 msgid "Bluetooth Serial: {port} ({deviceName})"
 msgstr "Bluetooth sériový: {port} ({deviceName})"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#: braille.py:4042 brailleDisplayDrivers\ecoBraille.py:399
+#: braille.py:4043 brailleDisplayDrivers\ecoBraille.py:399
 #: brailleDisplayDrivers\papenmeier_serial.py:81
 #, python-brace-format
 msgid "Serial: {portName}"
@@ -2316,7 +2316,7 @@ msgid "brown-yellow"
 msgstr "hnědožlutá"
 
 #. Translators: Shown when one or more add-ons failed to update.
-#: core.py:84
+#: core.py:85
 msgid "The following add-on failed to update: {}."
 msgid_plural "The following add-ons failed to update: {}."
 msgstr[0] "Nezdařilo se aktualizovat následující doplněk: {}."
@@ -2325,7 +2325,7 @@ msgstr[2] "Nezdařilo se aktualizovat následující doplňky: {}."
 msgstr[3] "Nezdařilo se aktualizovat následující doplňky: {}."
 
 #. Translators: Shown when one or more add-ons failed to be uninstalled.
-#: core.py:93
+#: core.py:94
 msgid "The following add-on failed to uninstall: {}."
 msgid_plural "The following add-ons failed to uninstall: {}."
 msgstr[0] "Nezdařilo se odinstalovat následující doplněk: {}."
@@ -2334,7 +2334,7 @@ msgstr[2] "Nezdařilo se odinstalovat následující doplňky: {}."
 msgstr[3] "Nezdařilo se odinstalovat následující doplňky: {}."
 
 #. Translators: Shown when one or more add-ons failed to be installed.
-#: core.py:102
+#: core.py:103
 msgid "The following add-on failed to be installed: {}."
 msgid_plural "The following add-ons failed to be installed: {}."
 msgstr[0] "Nezdařilo se nainstalovat následující doplněk: {}."
@@ -2344,7 +2344,7 @@ msgstr[3] "Nezdařilo se nainstalovat následující doplňky: {}."
 
 #. Translators: Shown when one or more actions on add-ons failed.
 #. {failureMsg} will be replaced with the specific error message.
-#: core.py:116
+#: core.py:117
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
@@ -2379,7 +2379,7 @@ msgstr "Některé operace s doplňky se nezdařily. Další podrobnosti najdete 
 #. Translators: A title of a message box displayed when the host field is empty and the user tries to generate a key.
 #. Translators: Title of error dialog
 #. Translators: Title of a dialog
-#: core.py:119 documentationUtils.py:74 updateCheck.py:438 updateCheck.py:753
+#: core.py:120 documentationUtils.py:74 updateCheck.py:438 updateCheck.py:753
 #: updateCheck.py:925 gui\__init__.py:252 gui\__init__.py:260
 #: gui\__init__.py:277 gui\addonGui.py:138 gui\addonGui.py:258
 #: gui\addonGui.py:273 gui\configProfiles.py:182 gui\configProfiles.py:219
@@ -2390,58 +2390,58 @@ msgstr "Některé operace s doplňky se nezdařily. Další podrobnosti najdete 
 #: gui\installerGui.py:181 gui\installerGui.py:265 gui\installerGui.py:759
 #: gui\installerGui.py:776 gui\installerGui.py:848 gui\logViewer.py:112
 #: gui\logViewer.py:143 gui\message.py:160 gui\settingsDialogs.py:1044
-#: gui\settingsDialogs.py:6013 gui\settingsDialogs.py:6872
+#: gui\settingsDialogs.py:6013 gui\settingsDialogs.py:6863
 #: gui\startupDialogs.py:127 _remoteClient\dialogs.py:67
 #: _remoteClient\dialogs.py:306 _remoteClient\dialogs.py:430
 msgid "Error"
 msgstr "Chyba"
 
 #. Translators: Shown when NVDA has been started with unknown command line parameters.
-#: core.py:147
+#: core.py:148
 #, python-brace-format
 msgid "The following command line parameters are unknown to NVDA: {params}"
 msgstr "Následující parametry jsou pro NVDA neznámé: {params}"
 
 #. Translators: Title of the dialog letting user know
 #. that command line parameters they provided are unknown.
-#: core.py:152
+#: core.py:153
 msgid "Unknown command line parameters"
 msgstr "Neznámé parametry příkazového řádku"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
-#: core.py:161
+#: core.py:162
 msgid "Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr "Konfigurační soubor s nastavením NVDA obsahuje chyby. Vaše nastavení byla obnovena na výchozí hodnoty.\n"
 "Více informací o chybách naleznete v protokolu."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
-#: core.py:166
+#: core.py:167
 msgid "Configuration File Error"
 msgstr "Chyba konfiguračního souboru"
 
-#: core.py:184
+#: core.py:185
 msgid "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr "Uživatelský soubor s mapou vstupních příkazů obsahuje chyby.\n"
 "Více informací o chybách naleznete v protokolu."
 
-#: core.py:187
+#: core.py:188
 msgid "gesture map File Error"
 msgstr "chyba souboru mapy vstupních příkazů"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:809
+#: core.py:817
 msgid "Loading NVDA. Please wait..."
 msgstr "Načítám, prosím čekejte..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts with the screen curtain enabled.
-#: core.py:957
+#: core.py:965
 msgid "NVDA started with screen curtain enabled"
 msgstr "NVDA spuštěn se zapnutou clonou obrazovky"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:960
+#: core.py:968
 msgid "NVDA started"
 msgstr "NVDA spuštěn"
 
@@ -2672,7 +2672,7 @@ msgstr "Vizuální"
 #. Translators: This is the label for the magnifier settings panel.
 #. Translators: The title of an error message box shown when the magnifier fails to start.
 #: globalCommands.py:107 gui\settingsDialogs.py:6047
-#: gui\settingsDialogs.py:6289
+#: gui\settingsDialogs.py:6280
 msgid "Magnifier"
 msgstr "Lupa"
 
@@ -2691,7 +2691,7 @@ msgstr "Dotyková obrazovka"
 #. Translators: The name of a category of NVDA commands.
 #: globalCommands.py:116
 msgid "System focus"
-msgstr "Zaměření systému"
+msgstr "Systémový fokus"
 
 #. Translators: The name of a category of NVDA commands.
 #: globalCommands.py:119
@@ -3130,22 +3130,22 @@ msgstr "Nezobrazovat chyby na braillském řádku"
 #. Translators: Input help mode message for command to toggle braille automatic scroll.
 #: globalCommands.py:852
 msgid "Toggles braille automatic scroll"
-msgstr "Přepíná automatické posunutí braillského řádku"
+msgstr "Přepíná automatické posouvání braillského řádku"
 
 #. Translators: Message reported when automatic scrolling has been enabled in braille.
 #: globalCommands.py:861
 msgid "Automatic scrolling enabled"
-msgstr "Automatické posunutí zapnuto"
+msgstr "Automatické posouvání zapnuto"
 
 #. Translators: Message reported when automatic scrolling has been disabled in braille.
 #: globalCommands.py:869
 msgid "Automatic scrolling disabled"
-msgstr "Automatické posunutí vypnuto"
+msgstr "Automatické posouvání vypnuto"
 
 #. Translators: Input help mode message for command to increase the rate for braille automatic scroll.
 #: globalCommands.py:874
 msgid "Increases the rate for braille automatic scroll"
-msgstr "Zvyšuje rychlost automatického posunutí braillského řádku"
+msgstr "Zvyšuje rychlost automatického posouvání braillského řádku"
 
 #. Translators: Message shown when increasing the braille auto scroll rate.
 #. {rate} will be replaced with the rate as a whole number from 0 to 100.
@@ -3154,12 +3154,12 @@ msgstr "Zvyšuje rychlost automatického posunutí braillského řádku"
 #: globalCommands.py:883 globalCommands.py:896
 #, python-brace-format
 msgid "Scroll rate {rate}"
-msgstr "Rychlost posunutí {rate}"
+msgstr "Rychlost posouvání {rate}"
 
 #. Translators: Input help mode message for command to decrease the rate for braille automatic scroll.
 #: globalCommands.py:887
 msgid "Decreases the rate for braille automatic scroll"
-msgstr "Snižuje rychlost automatického posunutí braillského řádku"
+msgstr "Snižuje rychlost automatického posouvání braillského řádku"
 
 #. Translators: Input help mode message for toggle report pages command.
 #: globalCommands.py:900
@@ -5100,7 +5100,7 @@ msgstr "Přepíná sledování myši pomocí lupy"
 #. Translators: Describes a command.
 #: globalCommands.py:5234
 msgid "Toggle magnifier system focus tracking"
-msgstr "Přepíná sledovánízaměření systému pomocí lupy"
+msgstr "Přepíná sledování systémového fokusu pomocí lupy"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5247
@@ -5110,7 +5110,7 @@ msgstr "Přepíná sledování čtecího kurzoru pomocí lupy"
 #. Translators: Describes a command.
 #: globalCommands.py:5260
 msgid "Toggle magnifier navigator object tracking"
-msgstr "Přepíná sledování navigačního objektu pomocí lupy"
+msgstr "Přepíná sledování rrohlíženého objektu pomocí lupy"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5273
@@ -7621,7 +7621,7 @@ msgstr "Současné připojení nemusí pokračovat při aktualizaci nebo po ní.
 #. Translators: Title of warning dialog
 #: updateCheck.py:1026 gui\_SetURLDialog.py:113 gui\configProfiles.py:500
 #: gui\installerGui.py:502 gui\installerGui.py:660 gui\settingsDialogs.py:1964
-#: gui\settingsDialogs.py:6329 screenCurtain\_screenCurtain.py:70
+#: gui\settingsDialogs.py:6320 screenCurtain\_screenCurtain.py:70
 #: _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "Upozornění"
@@ -13032,7 +13032,7 @@ msgstr "&Filtrovat podle:"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:6760 gui\speechDict.py:215
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:6751 gui\speechDict.py:215
 msgid "&Add"
 msgstr "&Přidat"
 
@@ -13313,7 +13313,8 @@ msgstr "Prosím vyberte složku pro vytvoření přenosné kopie."
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. It must start with a drive letter (e.g. C:). It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
 "Current path: {path}. "
-msgstr ""
+msgstr "Zadejte absolutní cestu pro vytvoření přenosné kopie. Musí začít písmenem jednotky (např. C:). Může obsahovat systémové proměnné (např. %temp%, %homepath%) jako zástupné symboly pro části cesty.\n"
+"Aktuální cesta: {path} "
 
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
 #: gui\installerGui.py:822
@@ -13447,7 +13448,7 @@ msgstr "&Kategorie:"
 #. Translators: name of a grouping in Privacy and Security settings
 #. which contains miscellaneous settings.
 #: gui\settingsDialogs.py:809 gui\settingsDialogs.py:6092
-#: gui\settingsDialogs.py:6393
+#: gui\settingsDialogs.py:6384
 msgid "General"
 msgstr "Obecné"
 
@@ -13715,7 +13716,7 @@ msgstr "&Slovníky pro zpracování znaků a symbolů:"
 #. Translators: Label of the list where user can enable or disable speech dictionaries.
 #: gui\settingsDialogs.py:1862
 msgid "Sp&eech dictionaries:"
-msgstr ""
+msgstr "Ř&ečové slovníky:"
 
 #. Translators: Label of the list where user can select speech modes that will be available.
 #: gui\settingsDialogs.py:1876
@@ -13880,7 +13881,7 @@ msgstr "Čtecí kurzor"
 #. review cursor settings panel.
 #: gui\settingsDialogs.py:2264
 msgid "Follow system &focus"
-msgstr "Sledovat zaměření &systému"
+msgstr "Sledovat &systémový fokus"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
@@ -14100,7 +14101,7 @@ msgstr "&Zabránit příkazům, které nejsou zkratkovými klávesami NVDA, v p�
 #. Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
 #: gui\settingsDialogs.py:2676
 msgid "T&ouch navigation elements:"
-msgstr ""
+msgstr "Prvky d&otykové navigace:"
 
 #. Translators: Title of the math settings panel.
 #: gui\settingsDialogs.py:2713
@@ -15031,7 +15032,7 @@ msgstr "Používat WASAPI pro zvukový výstup SAPI 4:"
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:4572
 msgid "Use modern regular expression engine for speech dictionary entries:"
-msgstr ""
+msgstr "Používat moderní knihovnu regulérních výrazů pro položky v řečových slovnících:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -15271,7 +15272,7 @@ msgstr "Přerušit řeč při přesouvá&ní"
 #. Translators: The label for a setting in braille settings to change the rate for autoscroll.
 #: gui\settingsDialogs.py:5538
 msgid "Auto&matic scroll rate"
-msgstr ""
+msgstr "Rychlost auto&matického posouvání"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -15335,192 +15336,190 @@ msgstr "Nelze nastavit uživatelské rozhraní pro vizuální rozšíření, nel
 #. Translators: The label for a setting in magnifier settings to enable or disable the magnifier.
 #: gui\settingsDialogs.py:6100
 msgid "&Enable magnifier (immediate effect)"
-msgstr ""
+msgstr "&Spustit lupu (okamžitý efekt)"
 
 #. Translators: The label for a setting in magnifier settings to select the zoom level.
 #: gui\settingsDialogs.py:6114
 msgid "&Zoom (%):"
-msgstr ""
+msgstr "&Přiblížení (%):"
 
 #. Translators: The label for a setting in magnifier settings to select the filter
 #: gui\settingsDialogs.py:6136
 msgid "Color f&ilter:"
-msgstr ""
+msgstr "F&iltr barvy:"
 
 #. Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
 #: gui\settingsDialogs.py:6153
 msgid "&Panning step size (%):"
-msgstr ""
+msgstr "Rozměr kroku &posunutí (%):"
 
 #. Translators: This is the label for a group of tracking options in the magnifier settings panel
-#. Translators: This is the label for a group of tracking magnifier options in the
-#. magnifier settings panel
-#: gui\settingsDialogs.py:6175 gui\settingsDialogs.py:6208
+#: gui\settingsDialogs.py:6175
 msgid "Tracking"
-msgstr ""
+msgstr "Sledování"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the mouse
 #: gui\settingsDialogs.py:6183
 msgid "Follow &mouse"
-msgstr ""
+msgstr "Sledovat kurzor &myši"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
 #: gui\settingsDialogs.py:6185
 msgid "Follow &system focus"
-msgstr ""
+msgstr "Sledovat &systémový fokus"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the review cursor
 #: gui\settingsDialogs.py:6187
 msgid "Follow &review cursor"
-msgstr ""
+msgstr "Sledovat &čtecí kurzor"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the navigator object
 #: gui\settingsDialogs.py:6190
 msgid "Follow &navigator object"
-msgstr ""
+msgstr "Sledovat &prohlížený objekt"
 
-#. Translators: The label for a setting in magnifier settings to select the full-screen mode
-#: gui\settingsDialogs.py:6216
+#. Translators: The label for a setting in magnifier settings to select the tracking mode
+#: gui\settingsDialogs.py:6207
 msgid "&Tracking mode:"
-msgstr ""
+msgstr "Režim &sledování:"
 
 #. Translators: The title of the privacy and security category in NVDA's settings.
-#: gui\settingsDialogs.py:6297
+#: gui\settingsDialogs.py:6288
 msgid "Privacy and Security"
 msgstr "Soukromí a Zabezpečení"
 
 #. Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
-#: gui\settingsDialogs.py:6310
+#: gui\settingsDialogs.py:6301
 msgid "Setting the logging level to \"debug (unredacted)\" will write sensitive information to the log without redaction, including passwords, API keys, or other private data. Only enable this temporarily if you explicitly need unredacted diagnostic logs. Do you want to continue?"
-msgstr ""
+msgstr "Při nastavení úrovně protokolu bez cenzury dojde k záznamu citlivých údajů včetně hesel, API klíčů a jiných soukromých údajů. Používejte toto nastavení jen dočasně, pokud výslovně potřebujete necenzurované diagnostické záznamy. Přejete si pokračovat?"
 
 #. Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
-#: gui\settingsDialogs.py:6317
+#: gui\settingsDialogs.py:6308
 msgid "High risk logging level"
-msgstr ""
+msgstr "Vysoké riziko nastavení úrovně protokolu"
 
 #. Translators: Warning shown when enabling a logging level above info from NVDA settings.
-#: gui\settingsDialogs.py:6322
+#: gui\settingsDialogs.py:6313
 msgid "Setting the logging level above info may record sensitive information such as typed input, speech output, or other private data in the log. Only enable higher logging levels temporarily while troubleshooting. Do you want to continue?"
-msgstr ""
+msgstr "Nastavením úrovně protokolu na vyšší než info může dojít k záznamu citlivých informací jako je zadaný text, výstup převodu textu na řeč a jiné soukromé údaje. Používejte vyšší úrovně protokolu pouze dočasně při řešení problémů. Přejete si pokračovat?"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
-#: gui\settingsDialogs.py:6347
+#: gui\settingsDialogs.py:6338
 msgid "Screen Curtain"
 msgstr "Clona obrazovky"
 
 #. Translators: option to enable screen curtain in the privacy and security settings panel
-#: gui\settingsDialogs.py:6356
+#: gui\settingsDialogs.py:6347
 msgid "Make screen black (immediate effect)"
 msgstr "Aktivovat clonu obrazovky (okamžitý efekt)"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#: gui\settingsDialogs.py:6385
+#: gui\settingsDialogs.py:6376
 msgid "&Play sound when toggling Screen Curtain"
 msgstr "Přehrát&zvuk při přepínání clony obrazovky"
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
-#: gui\settingsDialogs.py:6400
+#: gui\settingsDialogs.py:6391
 msgid "L&ogging level:"
 msgstr "&Úroveň protokolu:"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-#: gui\settingsDialogs.py:6423
+#: gui\settingsDialogs.py:6414
 msgid "Allow NV Access to gather NVDA usage statistics"
 msgstr "Umožnit shromažďování statistiky &využití NVDA"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:6544
+#: gui\settingsDialogs.py:6535
 msgid "NVDA Settings"
 msgstr "Nastavení NVDA"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:6600
+#: gui\settingsDialogs.py:6591
 msgid "normal configuration"
 msgstr "výchozí nastavení"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:6635
+#: gui\settingsDialogs.py:6626
 msgid "Add Symbol"
 msgstr "Přidat znak"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:6640
+#: gui\settingsDialogs.py:6631
 msgid "&Symbol:"
 msgstr "&Znak:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:6670
+#: gui\settingsDialogs.py:6661
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "Výslovnost znaků (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:6684
+#: gui\settingsDialogs.py:6675
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "&Filtrovat podle:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6693
+#: gui\settingsDialogs.py:6684
 msgid "&Symbols"
 msgstr "&Znaky"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:6703
+#: gui\settingsDialogs.py:6694
 msgid "Symbol"
 msgstr "Znak"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6705 gui\speechDict.py:191
+#: gui\settingsDialogs.py:6696 gui\speechDict.py:191
 msgid "Replacement"
 msgstr "Nahradit"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:6707
+#: gui\settingsDialogs.py:6698
 msgid "Level"
 msgstr "Úroveň"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:6710
+#: gui\settingsDialogs.py:6701
 msgid "Preserve"
 msgstr "Zachovat"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:6714
+#: gui\settingsDialogs.py:6705
 msgid "Change selected symbol"
 msgstr "Výslovnost vybraného znaku"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6732 gui\speechDict.py:52
+#: gui\settingsDialogs.py:6723 gui\speechDict.py:52
 msgid "&Replacement"
 msgstr "&Nahradit"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:6741
+#: gui\settingsDialogs.py:6732
 msgid "&Level"
 msgstr "&Úroveň"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:6748
+#: gui\settingsDialogs.py:6739
 msgid "&Send actual symbol to synthesizer"
 msgstr "&Aktuální znak se řídí hlasovým výstupem"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:6763
+#: gui\settingsDialogs.py:6754
 msgid "Re&move"
 msgstr "&Odstranit"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:6870
+#: gui\settingsDialogs.py:6861
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "Znak \"%s\" již existuje."
@@ -16382,7 +16381,7 @@ msgstr "Vyberte balíček doplňku pro NVDA"
 #: gui\addonStoreGui\viewModels\addonList.py:63
 msgctxt "addonStore"
 msgid "Relevance"
-msgstr ""
+msgstr "Relevance"
 
 #. Translators: The name of the column that contains the status of the addon.
 #. e.g. available, downloading installing
@@ -16687,203 +16686,203 @@ msgstr "{lang} ({code})"
 #: mathPres\MathCAT\navCommands.py:26
 msgctxt "math"
 msgid "Move to previous item in math"
-msgstr ""
+msgstr "Přejde na předchozí matematickou položku"
 
 #. Translators: Input help message for the command to move to the next item in math.
 #: mathPres\MathCAT\navCommands.py:32
 msgctxt "math"
 msgid "Move to next item in math"
-msgstr ""
+msgstr "Přejde na následující matematickou položku"
 
 #. Translators: Input help message for the command to zoom out in math.
 #: mathPres\MathCAT\navCommands.py:38
 msgctxt "math"
 msgid "Zoom out in math"
-msgstr ""
+msgstr "Oddálí v matematickém obsahu"
 
 #. Translators: Input help message for the command to zoom in in math.
 #: mathPres\MathCAT\navCommands.py:44
 msgctxt "math"
 msgid "Zoom in in math"
-msgstr ""
+msgstr "Přiblíží v matematickém obsahu"
 
 #. Translators: Input help message for the command to move to the previous table cell or digit in math.
 #: mathPres\MathCAT\navCommands.py:50
 msgctxt "math"
 msgid "Move to previous table cell or digit in math"
-msgstr ""
+msgstr "Přejde na předchozí buňku nebo číslici v matematickém obsahu"
 
 #. Translators: Input help message for the command to move to the next table cell or digit in math.
 #: mathPres\MathCAT\navCommands.py:56
 msgctxt "math"
 msgid "Move to next table cell or digit in math"
-msgstr ""
+msgstr "Přejde na následující buňku nebo číslici v matematickém obsahu"
 
 #. Translators: Input help message for the command to move to the cell or digit above in math.
 #: mathPres\MathCAT\navCommands.py:62
 msgctxt "math"
 msgid "Move to cell or digit above in math"
-msgstr ""
+msgstr "Přejde na buňku nebo číslici výše v matematickém obsahu"
 
 #. Translators: Input help message for the command to move to the cell or digit below in math.
 #: mathPres\MathCAT\navCommands.py:68
 msgctxt "math"
 msgid "Move to cell or digit below in math"
-msgstr ""
+msgstr "Přejde na buňku nebo číslici níže v matematickém obsahu"
 
 #. Translators: Input help message for the command to read the previous item in math.
 #: mathPres\MathCAT\navCommands.py:74
 msgctxt "math"
 msgid "Read previous item in math"
-msgstr ""
+msgstr "Přečte předchozí matematickou položku"
 
 #. Translators: Input help message for the command to read the next item in math.
 #: mathPres\MathCAT\navCommands.py:81
 msgctxt "math"
 msgid "Read next item in math"
-msgstr ""
+msgstr "Přečte následující matematickou položku"
 
 #. Translators: Input help message for the command to change the math navigation mode to larger.
 #: mathPres\MathCAT\navCommands.py:88
 msgctxt "math"
 msgid "Change math navigation mode to larger"
-msgstr ""
+msgstr "Zvýší způsob navigace v matematickém obsahu"
 
 #. Translators: Input help message for the command to change the math navigation mode to smaller.
 #: mathPres\MathCAT\navCommands.py:94
 msgctxt "math"
 msgid "Change math navigation mode to smaller"
-msgstr ""
+msgstr "Sníží způsob navigace v matematickém obsahu"
 
 #. Translators: Input help message for the command to describe the previous item in math.
 #: mathPres\MathCAT\navCommands.py:100
 msgctxt "math"
 msgid "Describe previous item in math"
-msgstr ""
+msgstr "Popíše předchozí matematickou položku"
 
 #. Translators: Input help message for the command to describe the next item in math.
 #: mathPres\MathCAT\navCommands.py:107
 msgctxt "math"
 msgid "Describe next item in math"
-msgstr ""
+msgstr "Popíše následující matematickou položku"
 
 #. Translators: Input help message for the command to zoom out all the way in math.
 #: mathPres\MathCAT\navCommands.py:114
 msgctxt "math"
 msgid "Zoom out all the way in math"
-msgstr ""
+msgstr "Nastaví maximální oddálení v matematickém obsahu"
 
 #. Translators: Input help message for the command to zoom in all the way in math.
 #: mathPres\MathCAT\navCommands.py:120
 msgctxt "math"
 msgid "Zoom in all the way in math"
-msgstr ""
+msgstr "Nastaví maximální přiblížení v matematickém obsahu"
 
 #. Translators: Input help message for the command to report the current position in math.
 #: mathPres\MathCAT\navCommands.py:126
 msgctxt "math"
 msgid "Report current position in math"
-msgstr ""
+msgstr "Oznámí aktuální pozici v matematickém obsahu"
 
 #. Translators: Input help message for the command to report the global position in math.
 #: mathPres\MathCAT\navCommands.py:133
 msgctxt "math"
 msgid "Report global position in math"
-msgstr ""
+msgstr "Oznámí globální pozici v matematickém obsahu"
 
 #. Translators: Input help message for the command to read the current item in math.
 #: mathPres\MathCAT\navCommands.py:140
 msgctxt "math"
 msgid "Read current item in math"
-msgstr ""
+msgstr "Přečte aktuální matematickou položku"
 
 #. Translators: Input help message for the command to read the current table cell in math.
 #: mathPres\MathCAT\navCommands.py:147
 msgctxt "math"
 msgid "Read current table cell in math"
-msgstr ""
+msgstr "Přečte aktuální buňku v matematickém obsahu"
 
 #. Translators: Input help message for the command to toggle math speech mode between read and describe.
 #: mathPres\MathCAT\navCommands.py:154
 msgctxt "math"
 msgid "Toggle math speech mode between read and describe"
-msgstr ""
+msgstr "Přepíná režim řeči v matematickém obsahu mezi čtením a popisem"
 
 #. Translators: Input help message for the command to describe the current item in math.
 #: mathPres\MathCAT\navCommands.py:160
 msgctxt "math"
 msgid "Describe current item in math"
-msgstr ""
+msgstr "Popíše aktuální matematickou položku"
 
 #. Translators: Input help message for the command to move to the start of a math expression.
 #: mathPres\MathCAT\navCommands.py:167
 msgctxt "math"
 msgid "Move to start of math expression"
-msgstr ""
+msgstr "Přejde na začátek matematického výrazu"
 
 #. Translators: Input help message for the command to move to the start of a line in math.
 #: mathPres\MathCAT\navCommands.py:173
 msgctxt "math"
 msgid "Move to start of line in math"
-msgstr ""
+msgstr "Přejde na začátek řádku v matematickém obsahu"
 
 #. Translators: Input help message for the command to move to the start of a column in math.
 #: mathPres\MathCAT\navCommands.py:179
 msgctxt "math"
 msgid "Move to start of column in math"
-msgstr ""
+msgstr "Přejde na začátek sloupce v matematickém obsahu"
 
 #. Translators: Input help message for the command to move to the end of a math expression.
 #: mathPres\MathCAT\navCommands.py:185
 msgctxt "math"
 msgid "Move to end of math expression"
-msgstr ""
+msgstr "Přejde na konec matematického výrazu"
 
 #. Translators: Input help message for the command to move to the end of a line in math.
 #: mathPres\MathCAT\navCommands.py:191
 msgctxt "math"
 msgid "Move to end of line in math"
-msgstr ""
+msgstr "Přejde na konec řádku v matematickém obsahu"
 
 #. Translators: Input help message for the command to move to the end of a column in math.
 #: mathPres\MathCAT\navCommands.py:197
 msgctxt "math"
 msgid "Move to end of column in math"
-msgstr ""
+msgstr "Přejde na konec sloupce v matematickém obsahu"
 
 #. Translators: Input help message for the command to move back to the last position in math.
 #: mathPres\MathCAT\navCommands.py:203
 msgctxt "math"
 msgid "Move back to last position in math"
-msgstr ""
+msgstr "Vrátí se na poslední pozici v matematickém obsahu"
 
 #. Translators: Input help message for the command to jump to a placemarker in math; {n} is replaced with the placemarker number.
 #: mathPres\MathCAT\navCommands.py:216
 #, python-brace-format
 msgctxt "math"
 msgid "Jump to placemarker {n} in math"
-msgstr ""
+msgstr "Skočí na záložku {n} v matematickém obsahu"
 
 #. Translators: Input help message for the command to set a placemarker in math; {n} is replaced with the placemarker number.
 #: mathPres\MathCAT\navCommands.py:222
 #, python-brace-format
 msgctxt "math"
 msgid "Set placemarker {n} in math"
-msgstr ""
+msgstr "Nastaví záložku {n} v matematickém obsahu"
 
 #. Translators: Input help message for the command to read a placemarker in math; {n} is replaced with the placemarker number.
 #: mathPres\MathCAT\navCommands.py:228
 #, python-brace-format
 msgctxt "math"
 msgid "Read placemarker {n} in math"
-msgstr ""
+msgstr "Přečte záložku {n} v matematickém obsahu"
 
 #. Translators: Input help message for the command to describe a placemarker in math; {n} is replaced with the placemarker number.
 #: mathPres\MathCAT\navCommands.py:235
 #, python-brace-format
 msgctxt "math"
 msgid "Describe placemarker {n} in math"
-msgstr ""
+msgstr "Popíše záložku {n} v matematickém obsahu"
 
 #. Translators: Learning disabilities includes dyslexia and ADHD
 #. category of impairment that MathCAT supports: people with learning disabilities
@@ -17108,10 +17107,10 @@ msgstr "Okraje objektů umístěny {left:.1f} procent od levého okraje obrazovk
 #, python-format
 msgid "%d percent"
 msgid_plural "%d percent"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%d procento"
+msgstr[1] "%d procenta"
+msgstr[2] "%d procenta"
+msgstr[3] "%d procent"
 
 #. Translators: Announced in braille when suggestions appear when search term is entered
 #. in various search fields such as Start search box in Windows 10.
@@ -19971,7 +19970,7 @@ msgstr "Dočasný slovník"
 #. Translators: Name of the default speech dictionary.
 #: speechDictHandler\definitions.py:56
 msgid "Default Dictionary"
-msgstr ""
+msgstr "Výchozí Slovník"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:54
@@ -19991,42 +19990,42 @@ msgstr "Celé &slovo"
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:60
 msgid "&Part of word"
-msgstr ""
+msgstr "&Část slova"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:62
 msgid "&Start of word"
-msgstr ""
+msgstr "&Začátek slova"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:64
 msgid "E&nd of word"
-msgstr ""
+msgstr "Ko&nec slova"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:66
 msgid "&Unix shell-style wildcards"
-msgstr ""
+msgstr "Zástupné znaky ve stylu &Unix-shell"
 
 #. Translators: A type of speech dictionary.
 #: speechDictHandler\types.py:107
 msgid "Temporary"
-msgstr ""
+msgstr "Dočasný"
 
 #. Translators: A type of speech dictionary.
 #: speechDictHandler\types.py:109
 msgid "Voice specific"
-msgstr ""
+msgstr "Podle hlasu"
 
 #. Translators: A type of speech dictionary.
 #: speechDictHandler\types.py:111
 msgid "Default"
-msgstr ""
+msgstr "Výchozí"
 
 #. Translators: A type of speech dictionary.
 #: speechDictHandler\types.py:113
 msgid "Built-in"
-msgstr ""
+msgstr "Vestavěný"
 
 #. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
 #: speechDictHandler\types.py:324
@@ -20217,7 +20216,7 @@ msgstr "Nezachovávat vzhled jako na obrazovce"
 #. highlighting the system focus.
 #: visionEnhancementProviders\NVDAHighlighter.py:304
 msgid "Highlight system fo&cus"
-msgstr "Zvýraznit zaměření &systému"
+msgstr "Zvýraznit &systémový fokus"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the browse mode cursor.
@@ -20332,7 +20331,7 @@ msgstr "Zabezpečená plocha"
 #: _magnifier\commands.py:43 _magnifier\commands.py:64
 msgctxt "magnifier"
 msgid "left edge"
-msgstr ""
+msgstr "levý okraj"
 
 #. Translators: Message announced when already at right edge of the screen while panning the magnified view
 #. Translators: Message announced when already at right edge of the screen while panning the magnified view
@@ -20340,7 +20339,7 @@ msgstr ""
 #: _magnifier\commands.py:48 _magnifier\commands.py:70
 msgctxt "magnifier"
 msgid "right edge"
-msgstr ""
+msgstr "pravý okraj"
 
 #. Translators: Message announced when already at top edge of the screen while panning the magnified view
 #. Translators: Message announced when already at top edge of the screen while panning the magnified view
@@ -20348,7 +20347,7 @@ msgstr ""
 #: _magnifier\commands.py:53 _magnifier\commands.py:76
 msgctxt "magnifier"
 msgid "top edge"
-msgstr ""
+msgstr "vrchní okraj"
 
 #. Translators: Message announced when already at bottom edge of the screen while panning the magnified view
 #. Translators: Message announced when already at left edge of the screen while panning the magnified view
@@ -20356,308 +20355,308 @@ msgstr ""
 #: _magnifier\commands.py:58 _magnifier\commands.py:82
 msgctxt "magnifier"
 msgid "bottom edge"
-msgstr ""
+msgstr "spodní okraj"
 
 #. Translators: Message announced when stopping the NVDA magnifier.
 #: _magnifier\commands.py:110
 msgctxt "magnifier"
 msgid "Magnifier disabled"
-msgstr ""
+msgstr "Lupa vypnutá"
 
 #. Translators: Message announced when starting the NVDA magnifier.
 #: _magnifier\commands.py:125
 msgctxt "magnifier"
 msgid "Magnifier enabled"
-msgstr ""
+msgstr "Lupa spuštěná"
 
 #. Translators: Message announced when changing the color filter with {filter} being the new color filter.
 #: _magnifier\commands.py:185
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Color filter {filter}"
-msgstr ""
+msgstr "Filtr barvy {filter}"
 
 #. Translators: Message announced when changing the magnifier view with {view} being the new magnifier view.
 #: _magnifier\commands.py:209
 #, python-brace-format
 msgctxt "magnifier"
 msgid "{view} view"
-msgstr ""
+msgstr "{view} zobrazení"
 
 #. Translators: Message announced when toggling a follow setting with {setting} being the name of the setting and {state} being either "enabled" or "disabled".
 #: _magnifier\commands.py:232
 #, python-brace-format
 msgctxt "magnifier"
 msgid "{setting} {state}"
-msgstr ""
+msgstr "{setting} {state}"
 
 #. Translators: State of the follow setting being toggled enabled.
 #: _magnifier\commands.py:238
 msgctxt "magnifier"
 msgid "enabled"
-msgstr ""
+msgstr "zapnuto"
 
 #. Translators: State of the follow setting being toggled disabled.
 #: _magnifier\commands.py:244
 msgctxt "magnifier"
 msgid "disabled"
-msgstr ""
+msgstr "vypnuto"
 
 #. Translators: State of all follow settings being toggled disabled.
 #: _magnifier\commands.py:262
 msgctxt "magnifier"
 msgid "All tracking settings disabled"
-msgstr ""
+msgstr "Všechny možnosti sledování vypnuté"
 
 #. Translators: State of all follow settings being restored.
 #: _magnifier\commands.py:268
 msgctxt "magnifier"
 msgid "Tracking settings restored"
-msgstr ""
+msgstr "Sledování obnoveno"
 
-#. Translators: Message announced when changing the full-screen mode with {mode} being the new full-screen mode.
+#. Translators: Message announced when changing the tracking mode with {mode} being the new tracking mode.
 #: _magnifier\commands.py:296
 #, python-brace-format
 msgctxt "magnifier"
-msgid "Full-screen mode {mode}"
-msgstr ""
+msgid "Tracking mode {mode}"
+msgstr "Režim sledování {mode}"
 
 #. Translators: Message announced when trying to show temporary overview of the screen while it's already active.
 #: _magnifier\commands.py:322
 msgctxt "magnifier"
 msgid "The screen overview is already active"
-msgstr ""
+msgstr "Náhled obrazovky je již aktivní"
 
 #. Translators: Message announced when overview of the entire screen is being showed.
 #: _magnifier\commands.py:333
 msgctxt "magnifier"
 msgid "Showing entire screen"
-msgstr ""
+msgstr "Zobrazení celé obrazovky"
 
 #. Translators: Message announced when the magnifier is not active.
 #: _magnifier\commands.py:357
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not active."
-msgstr ""
+msgstr "Nelze provést {action}, když není lupa aktivní."
 
 #. Translators: Message announced when the magnifier is not full-screen.
 #: _magnifier\commands.py:382
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not full-screen."
-msgstr ""
+msgstr "Nelze provést {action}, když není lupa v režimu celé obrazovky."
 
 #. Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
 #: _magnifier\config.py:49
 #, python-brace-format
 msgctxt "magnifier"
 msgid "{zoomLevel}x"
-msgstr ""
+msgstr "{zoomLevel}x"
 
 #. Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
 #: _magnifier\fullscreenMagnifier.py:89
 msgctxt "magnifier"
 msgid "Cannot start magnifier. Another magnifier application may already be running."
-msgstr ""
+msgstr "Nelze spustit lupu. Možná je aktivní jiná zvětšovací aplikace."
 
 #. Translators: Message announced when the magnifier stops due to an unrecoverable error.
 #: _magnifier\fullscreenMagnifier.py:240
 msgctxt "magnifier"
 msgid "Magnifier stopped due to an error. Please restart it."
-msgstr ""
+msgstr "Lupa zastavená z důvodu chyby. Prosím, restartujte ji."
 
 #. Translators: Message when trying to enable magnifier while screen curtain is active
 #: _magnifier\magnifier.py:195
 msgctxt "magnifier"
 msgid "Cannot enable magnifier. Please disable screen curtain first."
-msgstr ""
+msgstr "Nelze spustit lupu. Nejdřív vypněte clonu obrazovky."
 
 #. Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
 #: _magnifier\magnifier.py:337
 msgctxt "magnifier"
 msgid "Disabling magnifier"
-msgstr ""
+msgstr "Vypínám lupu"
 
 #. Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
 #: _magnifier\magnifier.py:356
 msgctxt "magnifier"
 msgid "Re-enabling magnifier"
-msgstr ""
+msgstr "Znovu spouštím lupu"
 
 #. Translators: Message announced when turning back to normal view after entire screen overview.
 #: _magnifier\utils\spotlightManager.py:70
 msgctxt "magnifier"
 msgid "Back to normal view"
-msgstr ""
+msgstr "Návrat k normálnímu zobrazení"
 
 #. Translators: Action description for zooming in.
 #: _magnifier\utils\types.py:60
 msgctxt "magnifier action"
 msgid "zoom in"
-msgstr ""
+msgstr "zvětšit"
 
 #. Translators: Action description for zooming out.
 #: _magnifier\utils\types.py:62
 msgctxt "magnifier action"
 msgid "zoom out"
-msgstr ""
+msgstr "zmenšit"
 
 #. Translators: Action description for panning left.
 #: _magnifier\utils\types.py:64
 msgctxt "magnifier action"
 msgid "pan left"
-msgstr ""
+msgstr "posunout doleva"
 
 #. Translators: Action description for panning right.
 #: _magnifier\utils\types.py:66
 msgctxt "magnifier action"
 msgid "pan right"
-msgstr ""
+msgstr "posunout doprava"
 
 #. Translators: Action description for panning up.
 #: _magnifier\utils\types.py:68
 msgctxt "magnifier action"
 msgid "pan up"
-msgstr ""
+msgstr "posunout nahoru"
 
 #. Translators: Action description for panning down.
 #: _magnifier\utils\types.py:70
 msgctxt "magnifier action"
 msgid "pan down"
-msgstr ""
+msgstr "posunout dolů"
 
 #. Translators: Action description for panning to left edge.
 #: _magnifier\utils\types.py:72
 msgctxt "magnifier action"
 msgid "pan to left edge"
-msgstr ""
+msgstr "posunout k levému okraji"
 
 #. Translators: Action description for panning to right edge.
 #: _magnifier\utils\types.py:74
 msgctxt "magnifier action"
 msgid "pan to right edge"
-msgstr ""
+msgstr "posunout k pravému okraji"
 
 #. Translators: Action description for panning to top edge.
 #: _magnifier\utils\types.py:76
 msgctxt "magnifier action"
 msgid "pan to top edge"
-msgstr ""
+msgstr "posunout k vrchnímu okraji"
 
 #. Translators: Action description for panning to bottom edge.
 #: _magnifier\utils\types.py:78
 msgctxt "magnifier action"
 msgid "pan to bottom edge"
-msgstr ""
+msgstr "posunout ke spodnímu okraji"
 
 #. Translators: Action description for toggling settings.
 #: _magnifier\utils\types.py:80
 msgctxt "magnifier action"
 msgid "toggle tracking settings"
-msgstr ""
+msgstr "přepínat možnosti sledování"
 
 #. Translators: Action description for toggling color filters.
 #: _magnifier\utils\types.py:82
 msgctxt "magnifier action"
 msgid "cycle color filters"
-msgstr ""
+msgstr "přepínat filtry barev"
 
 #. Translators: Action description for changing magnifier view.
 #: _magnifier\utils\types.py:84
 msgctxt "magnifier action"
 msgid "change magnifier view"
-msgstr ""
+msgstr "měnit zobrazení lupy"
 
-#. Translators: Action description for changing full-screen mode.
+#. Translators: Action description for changing tracking mode.
 #: _magnifier\utils\types.py:86
 msgctxt "magnifier action"
-msgid "change full-screen mode"
-msgstr ""
+msgid "change tracking mode"
+msgstr "změnit režim sledování"
 
 #. Translators: Action description for showing entire screen overview.
 #: _magnifier\utils\types.py:88
 msgctxt "magnifier action"
 msgid "show screen overview"
-msgstr ""
+msgstr "zobrazit náhled obrazovky"
 
 #. Translators: Type of item tracked by the Magnifier - mouse cursor.
 #: _magnifier\utils\types.py:104
 msgctxt "magnifier"
 msgid "Mouse"
-msgstr ""
+msgstr "Myš"
 
 #. Translators: Type of item tracked by the Magnifier - system focus (active element).
 #: _magnifier\utils\types.py:106
 msgctxt "magnifier"
 msgid "System focus"
-msgstr ""
+msgstr "Systémový fokus"
 
 #. Translators: Type of item tracked by the Magnifier - review cursor position.
 #: _magnifier\utils\types.py:108
 msgctxt "magnifier"
 msgid "Review cursor"
-msgstr ""
+msgstr "Čtecí kurzor"
 
 #. Translators: Type of item tracked by the Magnifier - navigator object position.
 #: _magnifier\utils\types.py:110
 msgctxt "magnifier"
 msgid "Navigator object"
-msgstr ""
+msgstr "Prohlížený objekt"
 
 #. Translators: Magnifier view - full-screen mode.
 #: _magnifier\utils\types.py:126
 msgctxt "magnifier"
 msgid "Fullscreen"
-msgstr ""
+msgstr "Celá obrazovka"
 
 #. Translators: Magnifier view - fixed mode.
 #: _magnifier\utils\types.py:128
 msgctxt "magnifier"
 msgid "Fixed"
-msgstr ""
+msgstr "Pevné"
 
 #. Translators: Magnifier view - docked mode.
 #: _magnifier\utils\types.py:130
 msgctxt "magnifier"
 msgid "Docked"
-msgstr ""
+msgstr "Ukotvené"
 
 #. Translators: Magnifier view - lens mode.
 #: _magnifier\utils\types.py:132
 msgctxt "magnifier"
 msgid "Lens"
-msgstr ""
+msgstr "Čočkové"
 
 #. Translators: Magnifier tracking mode - center the tracked item on the screen.
 #: _magnifier\utils\types.py:158
 msgctxt "magnifier"
 msgid "Center"
-msgstr ""
+msgstr "Na střed"
 
 #. Translators: Magnifier tracking mode - preserve the tracked item's screen position within the magnified view (same relative screen location).
 #: _magnifier\utils\types.py:160
 msgctxt "magnifier"
 msgid "Relative"
-msgstr ""
+msgstr "Relativní"
 
 #. Translators: Magnifier color filter - no filter applied.
 #: _magnifier\utils\types.py:173
 msgctxt "magnifier"
 msgid "Normal"
-msgstr ""
+msgstr "Normální"
 
 #. Translators: Magnifier color filter - grayscale/black and white.
 #: _magnifier\utils\types.py:175
 msgctxt "magnifier"
 msgid "Grayscale"
-msgstr ""
+msgstr "Odstíny šedé"
 
 #. Translators: Magnifier color filter - inverted colors.
 #: _magnifier\utils\types.py:177
 msgctxt "magnifier"
 msgid "Inverted"
-msgstr ""
+msgstr "Obrácené"
 
 #. Translators: Presented when attempting to mute or unmute Remote Access when connected as the controlled computer.
 #. Translators: Presented when attempting to send control+alt+delete when connected as the controlled computer.

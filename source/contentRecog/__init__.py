@@ -129,10 +129,10 @@ class RecogImageInfo:
 		@param screenWidth: The width of the image on the screen.
 		@param screenHeight: The height of the image on the screen.
 		@param resizeFactor: The factor by which the image must be resized for recognition.
-		@raise ValueError: If the supplied screen coordinates indicate that
-			the image is not visible; e.g. width or height of 0.
+		:raises ValueError: If the supplied image dimensions are invalid;
+			e.g. width or height of 0.
 		"""
-		if screenLeft < 0 or screenTop < 0 or screenWidth <= 0 or screenHeight <= 0:
+		if screenWidth <= 0 or screenHeight <= 0:
 			raise ValueError("Image not visible (invalid screen coordinates)")
 		self.screenLeft = screenLeft
 		self.screenTop = screenTop

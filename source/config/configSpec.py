@@ -97,6 +97,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	wordWrap = boolean(default=true)
 	textWrap = featureFlag(optionsEnum="BrailleTextWrapFlag", behaviorOfDefault="AT_WORD_BOUNDARIES")
 	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
+	useChineseWordSegmentation = boolean(default=True)
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
 	interruptSpeechWhileScrolling = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	speakOnRouting = boolean(default=false)
@@ -227,6 +228,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# Element types available for cycling in browse touch mode.
 	browseModeTouchNavigationElements = string_list(default=list("heading", "link", "formField", "list", "table"))
 	findHistory = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	nativeSelectionMode = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 
 [touch]
 	enabled = boolean(default=true)

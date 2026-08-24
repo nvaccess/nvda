@@ -2691,6 +2691,17 @@ class BrowseModePanel(SettingsPanel):
 		)
 		self.bindHelpEvent("SearchHistory", self.searchHistoryCombo)
 
+		self.nativeSelectionModeCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is the label for a combo box in the browse mode settings panel.
+				"Nati&ve selection mode",
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["virtualBuffers", "nativeSelectionMode"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("NativeSelectionModeSetting", self.nativeSelectionModeCombo)
+
 		# browseMode imports gui, which imports from settingsDialogs, so a top-level import
 		# would create a circular dependency. Keep this import lazy.
 		import browseMode
@@ -2728,6 +2739,7 @@ class BrowseModePanel(SettingsPanel):
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
 		self.searchHistoryCombo.saveCurrentValueToConf()
+		self.nativeSelectionModeCombo.saveCurrentValueToConf()
 		config.conf["virtualBuffers"]["browseModeTouchNavigationElements"] = [
 			itemType
 			for i, (itemType, _label) in enumerate(self._browseModeElements)
@@ -5648,11 +5660,29 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.autoScrollRateSlider.SetPageSize(10)
 		self.bindHelpEvent("BrailleAutoScrollRate", self.autoScrollRateSlider)
 
+		self.useChineseWordSegmentationCheckBox = sHelper.addItem(
+			wx.CheckBox(
+				self,
+				# Translators: The label for a checkbox in the Braille settings panel.
+				label=_("Use &Chinese word segmentation"),
+			),
+		)
+		self.bindHelpEvent(
+			"ChineseBrailleWordSegmentation",
+			self.useChineseWordSegmentationCheckBox,
+		)
+		self.useChineseWordSegmentationCheckBox.SetValue(
+			config.conf["braille"]["useChineseWordSegmentation"],
+		)
+
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start" % (time.time() - startTime))
 
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
+		config.conf["braille"]["useChineseWordSegmentation"] = (
+			self.useChineseWordSegmentationCheckBox.IsChecked()
+		)
 		if self.outTableList.GetSelection() > 0:
 			braille.handler.table = self.outTables[self.outTableList.GetSelection() - 1]
 		else:
@@ -6557,17 +6587,17 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			self._cachedScreenCurtainConfigEnabled = screenCurtain.screenCurtain.settings["enabled"]
 			self._cachedScreenCurtainEnabled = screenCurtain.screenCurtain.enabled
 
-	def _ocrActive(self) -> bool:
+	def _contentRecognitionActive(self) -> bool:
 		"""
-		Outputs a message when trying to activate screen curtain when OCR is active.
+		Outputs a message when content recognition prevents Screen Curtain from being enabled.
 
-		:return: ``True`` when OCR is active, ``False`` otherwise.
+		:return: ``True`` when Screen Curtain should not be enabled, ``False`` otherwise.
 		"""
 		# Import late to avoid circular import
-		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
+		from contentRecog import recogUi
 
 		focusObj = api.getFocusObject()
-		if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
+		if recogUi._shouldBlockScreenCurtainEnable(focusObj):
 			ui.message(
 				screenCurtain._screenCurtain.UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE,
 				speechPriority=speech.priorities.Spri.NOW,
@@ -6584,7 +6614,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		currentlyEnabled = screenCurtain.screenCurtain.enabled
 		if shouldBeEnabled and not currentlyEnabled:
 			confirmed = self._confirmEnableScreenCurtainWithUser()
-			if not confirmed or self._ocrActive():
+			if not confirmed or self._contentRecognitionActive():
 				self._screenCurtainEnabledCheckbox.SetValue(False)
 			else:
 				try:

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-03 23:29+0000\n"
-"PO-Revision-Date: 2026-08-10 00:18\n"
+"POT-Creation-Date: 2026-08-23 23:27+0000\n"
+"PO-Revision-Date: 2026-08-24 00:13\n"
 "Last-Translator: \n"
 "Language-Team: Tamil\n"
 "Language: ta_IN\n"
@@ -781,34 +781,34 @@ msgid "¶"
 msgstr "¶"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3805
+#: braille.py:3806
 msgid "Dot firm&ness"
 msgstr "புள்ளியின் திண்மை (&N)"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3818
+#: braille.py:3819
 msgid "Braille inp&ut"
 msgstr "பிரெயில் உள்ளீடு (&U)"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3828
+#: braille.py:3829
 msgid "&HID keyboard input simulation"
 msgstr "எச்.ஐ.டி. விசைப் பலகை உள்ளீட்டு உருவகமாக்கம் (&H)"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
-#: braille.py:3992
+#: braille.py:3993
 msgid "Unknown braille display"
 msgstr "அறியப்படாத பிரெயில் திரை"
 
 #. Translators: Name of a Bluetooth serial communications port.
-#: braille.py:4033
+#: braille.py:4034
 #, python-brace-format
 msgid "Bluetooth Serial: {port} ({deviceName})"
 msgstr "ஊடலைத் தொடர் நுழைவாயில்: {port} ({deviceName})"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#: braille.py:4042 brailleDisplayDrivers\ecoBraille.py:399
+#: braille.py:4043 brailleDisplayDrivers\ecoBraille.py:399
 #: brailleDisplayDrivers\papenmeier_serial.py:81
 #, python-brace-format
 msgid "Serial: {portName}"
@@ -2316,21 +2316,21 @@ msgid "brown-yellow"
 msgstr "பழுப்பு-மஞ்சள்"
 
 #. Translators: Shown when one or more add-ons failed to update.
-#: core.py:84
+#: core.py:85
 msgid "The following add-on failed to update: {}."
 msgid_plural "The following add-ons failed to update: {}."
 msgstr[0] "இந்நீட்சிநிரல் இற்றாக்கத்தில் தோல்வியடைந்தது: {}."
 msgstr[1] "இந்நீட்சிநிரல்கள் இற்றாக்கத்தில் தோல்வியடைந்தன: {}."
 
 #. Translators: Shown when one or more add-ons failed to be uninstalled.
-#: core.py:93
+#: core.py:94
 msgid "The following add-on failed to uninstall: {}."
 msgid_plural "The following add-ons failed to uninstall: {}."
 msgstr[0] "இந்நீட்சிநிரல் நிறுவுநீக்கத்தில் தோல்வியடைந்தது: {}."
 msgstr[1] "இந்நீட்சிநிரல்கள் நிறுவுநீக்கத்தில் தோல்வியடைந்தன: {}"
 
 #. Translators: Shown when one or more add-ons failed to be installed.
-#: core.py:102
+#: core.py:103
 msgid "The following add-on failed to be installed: {}."
 msgid_plural "The following add-ons failed to be installed: {}."
 msgstr[0] "இந்நீட்சிநிரல் நிறுவுவதில் தோல்வியடைந்தது: {}."
@@ -2338,7 +2338,7 @@ msgstr[1] "இந்நீட்சிநிரல்கள் நிறுவ�
 
 #. Translators: Shown when one or more actions on add-ons failed.
 #. {failureMsg} will be replaced with the specific error message.
-#: core.py:116
+#: core.py:117
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
@@ -2373,7 +2373,7 @@ msgstr "நீட்சிநிரல்கள் மீதான சில ச
 #. Translators: A title of a message box displayed when the host field is empty and the user tries to generate a key.
 #. Translators: Title of error dialog
 #. Translators: Title of a dialog
-#: core.py:119 documentationUtils.py:74 updateCheck.py:438 updateCheck.py:753
+#: core.py:120 documentationUtils.py:74 updateCheck.py:438 updateCheck.py:753
 #: updateCheck.py:925 gui\__init__.py:252 gui\__init__.py:260
 #: gui\__init__.py:277 gui\addonGui.py:138 gui\addonGui.py:258
 #: gui\addonGui.py:273 gui\configProfiles.py:182 gui\configProfiles.py:219
@@ -2384,58 +2384,58 @@ msgstr "நீட்சிநிரல்கள் மீதான சில ச
 #: gui\installerGui.py:181 gui\installerGui.py:265 gui\installerGui.py:759
 #: gui\installerGui.py:776 gui\installerGui.py:848 gui\logViewer.py:112
 #: gui\logViewer.py:143 gui\message.py:160 gui\settingsDialogs.py:1044
-#: gui\settingsDialogs.py:6013 gui\settingsDialogs.py:6872
+#: gui\settingsDialogs.py:6013 gui\settingsDialogs.py:6863
 #: gui\startupDialogs.py:127 _remoteClient\dialogs.py:67
 #: _remoteClient\dialogs.py:306 _remoteClient\dialogs.py:430
 msgid "Error"
 msgstr "பிழை"
 
 #. Translators: Shown when NVDA has been started with unknown command line parameters.
-#: core.py:147
+#: core.py:148
 #, python-brace-format
 msgid "The following command line parameters are unknown to NVDA: {params}"
 msgstr "பின்வரும் கட்டளைவரி அளவுருக்கள் என்விடிஏ அறியாதது: {params}"
 
 #. Translators: Title of the dialog letting user know
 #. that command line parameters they provided are unknown.
-#: core.py:152
+#: core.py:153
 msgid "Unknown command line parameters"
 msgstr "அறியப்படாத கட்டளைவரி அளவுருக்கள்"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
-#: core.py:161
+#: core.py:162
 msgid "Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr "உங்கள் அமைவடிவக் கோப்பில் பிழைகள் உள்ளன. உங்கள் அமைவடிவம் தொழிற்சாலை இயல்பிற்கு மாற்றியமைக்கப்பட்டுள்ளது.\n"
 "கூடுதல் தகவல்களுக்கு, நிகழ்வேட்டினைக் காணவும்."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
-#: core.py:166
+#: core.py:167
 msgid "Configuration File Error"
 msgstr "அமைவடிவக் கோப்புப் பிழை"
 
-#: core.py:184
+#: core.py:185
 msgid "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr "விசைக் கட்டளைகளைக் கொண்ட உங்கள் gestures map கோப்பில் பிழைகள் உள்ளன.\n"
 "கூடுதல் தகவல்களுக்கு, நிகழ்வேட்டினைக் காணவும்."
 
-#: core.py:187
+#: core.py:188
 msgid "gesture map File Error"
 msgstr "gesture வரைப்பட கோப்புப் பிழை"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:809
+#: core.py:817
 msgid "Loading NVDA. Please wait..."
 msgstr "என்விடிஏ ஏற்றப்படுகிறது. அருள்கூர்ந்து காத்திருக்கவும்..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts with the screen curtain enabled.
-#: core.py:957
+#: core.py:965
 msgid "NVDA started with screen curtain enabled"
 msgstr "திரைச்சீலை இயக்கப்பட்ட நிலையில் என்விடிஏ துவங்கியது"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:960
+#: core.py:968
 msgid "NVDA started"
 msgstr "என்விடிஏ துவங்கிவிட்டது"
 
@@ -2666,7 +2666,7 @@ msgstr "பார்வை"
 #. Translators: This is the label for the magnifier settings panel.
 #. Translators: The title of an error message box shown when the magnifier fails to start.
 #: globalCommands.py:107 gui\settingsDialogs.py:6047
-#: gui\settingsDialogs.py:6289
+#: gui\settingsDialogs.py:6280
 msgid "Magnifier"
 msgstr "உருப்பெருக்கி"
 
@@ -7610,7 +7610,7 @@ msgstr "தற்போதைய இணைப்பு தொடர்ந்த�
 #. Translators: Title of warning dialog
 #: updateCheck.py:1026 gui\_SetURLDialog.py:113 gui\configProfiles.py:500
 #: gui\installerGui.py:502 gui\installerGui.py:660 gui\settingsDialogs.py:1964
-#: gui\settingsDialogs.py:6329 screenCurtain\_screenCurtain.py:70
+#: gui\settingsDialogs.py:6320 screenCurtain\_screenCurtain.py:70
 #: _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "எச்சரிக்கை"
@@ -12979,7 +12979,7 @@ msgstr "இதைக் கொண்டு வடிகட்டுக (&F):"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:6760 gui\speechDict.py:215
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:6751 gui\speechDict.py:215
 msgid "&Add"
 msgstr "சேர்த்திடுக (&A)"
 
@@ -13395,7 +13395,7 @@ msgstr "வகைமைகள் (&C):"
 #. Translators: name of a grouping in Privacy and Security settings
 #. which contains miscellaneous settings.
 #: gui\settingsDialogs.py:809 gui\settingsDialogs.py:6092
-#: gui\settingsDialogs.py:6393
+#: gui\settingsDialogs.py:6384
 msgid "General"
 msgstr "பொது"
 
@@ -15302,9 +15302,7 @@ msgid "&Panning step size (%):"
 msgstr "நகர்வளவு (%) (&P):"
 
 #. Translators: This is the label for a group of tracking options in the magnifier settings panel
-#. Translators: This is the label for a group of tracking magnifier options in the
-#. magnifier settings panel
-#: gui\settingsDialogs.py:6175 gui\settingsDialogs.py:6208
+#: gui\settingsDialogs.py:6175
 msgid "Tracking"
 msgstr "பின்தொடரும் முறைகள்"
 
@@ -15328,148 +15326,148 @@ msgstr "சீராய்வுச் சுட்டியைத் தொட�
 msgid "Follow &navigator object"
 msgstr "வழிசெலுத்திப் பொருளைத் தொடர்க (&N)"
 
-#. Translators: The label for a setting in magnifier settings to select the full-screen mode
-#: gui\settingsDialogs.py:6216
+#. Translators: The label for a setting in magnifier settings to select the tracking mode
+#: gui\settingsDialogs.py:6207
 msgid "&Tracking mode:"
 msgstr "பின்தொடர்தல் முறை (&T)"
 
 #. Translators: The title of the privacy and security category in NVDA's settings.
-#: gui\settingsDialogs.py:6297
+#: gui\settingsDialogs.py:6288
 msgid "Privacy and Security"
 msgstr "தனியுரிமை மற்றும் பாதுகாப்பு"
 
 #. Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
-#: gui\settingsDialogs.py:6310
+#: gui\settingsDialogs.py:6301
 msgid "Setting the logging level to \"debug (unredacted)\" will write sensitive information to the log without redaction, including passwords, API keys, or other private data. Only enable this temporarily if you explicitly need unredacted diagnostic logs. Do you want to continue?"
 msgstr "நிகழ்வேட்டு நிலையை \"வழுநீக்கம் (தணிக்கையாகாதது)\" என அமைப்பது, கடவுச்சொற்கள், ஏபிஐ விசைகள், அல்லது பிற தனிப்பட்ட தரவுகள் உள்ளிட்ட முக்கியமான தகவல்களைத் தணிக்கை செய்யாமல்  நிகழ்வேட்டில் எழுதும். தணிக்கை செய்யப்படாத வழுவறி நிகழ்வேடுகள் உங்களுக்கு குறிப்பாகத் தேவைப்பட்டால் மட்டுமே இதைத் தற்காலிகமாகச் செயல்படுத்தவும். கட்டாயம் தொடர விரும்புகிறீர்களா?"
 
 #. Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
-#: gui\settingsDialogs.py:6317
+#: gui\settingsDialogs.py:6308
 msgid "High risk logging level"
 msgstr "உயர் அபாய நிகழ்வேட்டு நிலை"
 
 #. Translators: Warning shown when enabling a logging level above info from NVDA settings.
-#: gui\settingsDialogs.py:6322
+#: gui\settingsDialogs.py:6313
 msgid "Setting the logging level above info may record sensitive information such as typed input, speech output, or other private data in the log. Only enable higher logging levels temporarily while troubleshooting. Do you want to continue?"
 msgstr "நிகழ்வேட்டினை 'தகவல்' என்கிற நிலைக்கு மேலே அமைப்பது, பதிவில் உள்ள தட்டச்சிடப்பட்ட உள்ளீடு, பேச்சு வெளியீடு, அல்லது பிற தனிப்பட்ட தரவு போன்ற முக்கியத் தகவல்களைப் பதிவுசெய்யலாம். பிழைகளைக் கண்டறிந்து நீக்கும்போது மட்டும் உயர் மட்ட நிகழ்வேட்டு நிலைகளை இயக்கவும். நீங்கள் தொடர விரும்புகிறீர்களா?"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
-#: gui\settingsDialogs.py:6347
+#: gui\settingsDialogs.py:6338
 msgid "Screen Curtain"
 msgstr "திரைச்சீலை"
 
 #. Translators: option to enable screen curtain in the privacy and security settings panel
-#: gui\settingsDialogs.py:6356
+#: gui\settingsDialogs.py:6347
 msgid "Make screen black (immediate effect)"
 msgstr "திரையை உடனே கருமையாக்குக"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#: gui\settingsDialogs.py:6385
+#: gui\settingsDialogs.py:6376
 msgid "&Play sound when toggling Screen Curtain"
 msgstr "திரைச்சீலையை இடும்போதும், விலக்கும்போதும் ஒலியை எழுப்புக (&P)"
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
-#: gui\settingsDialogs.py:6400
+#: gui\settingsDialogs.py:6391
 msgid "L&ogging level:"
 msgstr "நிகழ்வேட்டுப் பதிவு நிலை (&O)"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-#: gui\settingsDialogs.py:6423
+#: gui\settingsDialogs.py:6414
 msgid "Allow NV Access to gather NVDA usage statistics"
 msgstr "என்விடிஏ பயன்பாட்டுப் புள்ளியியல் தரவினை சேகரிக்க என்வி அக்ஸஸை அனுமதித்திடுக"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:6544
+#: gui\settingsDialogs.py:6535
 msgid "NVDA Settings"
 msgstr "என்விடிஏ அமைப்புகள்"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:6600
+#: gui\settingsDialogs.py:6591
 msgid "normal configuration"
 msgstr "(இயல் அமைவடிவம்)"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:6635
+#: gui\settingsDialogs.py:6626
 msgid "Add Symbol"
 msgstr "குறியெழுத்தினைக் கூட்டுக"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:6640
+#: gui\settingsDialogs.py:6631
 msgid "&Symbol:"
 msgstr "குறியெழுத்து (&S)"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:6670
+#: gui\settingsDialogs.py:6661
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "குறியெழுத்துகளின் ஒலிப்பு (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:6684
+#: gui\settingsDialogs.py:6675
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "இதைக் கொண்டு வடிகட்டுக (&F):"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6693
+#: gui\settingsDialogs.py:6684
 msgid "&Symbols"
 msgstr "குறியெழுத்துகள் (&S)"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:6703
+#: gui\settingsDialogs.py:6694
 msgid "Symbol"
 msgstr "குறியெழுத்து"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6705 gui\speechDict.py:191
+#: gui\settingsDialogs.py:6696 gui\speechDict.py:191
 msgid "Replacement"
 msgstr "மாற்றமர்வு"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:6707
+#: gui\settingsDialogs.py:6698
 msgid "Level"
 msgstr "நிலை"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:6710
+#: gui\settingsDialogs.py:6701
 msgid "Preserve"
 msgstr "பாதுகாத்து வைத்திருக்கவும்"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:6714
+#: gui\settingsDialogs.py:6705
 msgid "Change selected symbol"
 msgstr "தெரிவாகியுள்ள குறியெழுத்தை மாற்றுக"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6732 gui\speechDict.py:52
+#: gui\settingsDialogs.py:6723 gui\speechDict.py:52
 msgid "&Replacement"
 msgstr "மாற்றமர்வு (&R)"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:6741
+#: gui\settingsDialogs.py:6732
 msgid "&Level"
 msgstr "நிலை (&L)"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:6748
+#: gui\settingsDialogs.py:6739
 msgid "&Send actual symbol to synthesizer"
 msgstr "உள்ளபடியான குறியெழுத்தினை ஒலிப்பானுக்கு அனுப்பவும் (&S)"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:6763
+#: gui\settingsDialogs.py:6754
 msgid "Re&move"
 msgstr "நீக்குக (&M)"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:6870
+#: gui\settingsDialogs.py:6861
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "%s குறியெழுத்து ஏற்கெனவே உள்ளது."
@@ -20312,12 +20310,12 @@ msgctxt "magnifier"
 msgid "Tracking settings restored"
 msgstr "பின்தொடர் அமைப்புகள் மீட்டமைக்கப்பட்டன"
 
-#. Translators: Message announced when changing the full-screen mode with {mode} being the new full-screen mode.
+#. Translators: Message announced when changing the tracking mode with {mode} being the new tracking mode.
 #: _magnifier\commands.py:296
 #, python-brace-format
 msgctxt "magnifier"
-msgid "Full-screen mode {mode}"
-msgstr "முழுத்திரை பயன்முறை {mode}"
+msgid "Tracking mode {mode}"
+msgstr "பின்தொடர் முறை {mode}"
 
 #. Translators: Message announced when trying to show temporary overview of the screen while it's already active.
 #: _magnifier\commands.py:322
@@ -20466,11 +20464,11 @@ msgctxt "magnifier action"
 msgid "change magnifier view"
 msgstr "உருப்பெருக்கிக் காட்சியை மாற்றுக"
 
-#. Translators: Action description for changing full-screen mode.
+#. Translators: Action description for changing tracking mode.
 #: _magnifier\utils\types.py:86
 msgctxt "magnifier action"
-msgid "change full-screen mode"
-msgstr "முழுத்திரை பயன்முறையை மாற்றுக"
+msgid "change tracking mode"
+msgstr "பின்தொடர் முறையை மாற்றிடுக"
 
 #. Translators: Action description for showing entire screen overview.
 #: _magnifier\utils\types.py:88

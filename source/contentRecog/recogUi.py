@@ -10,6 +10,7 @@ and present the result to the user so they can read it with cursor keys, etc.
 NVDA scripts or GUI call the L{recognizeNavigatorObject} function with the recognizer they wish to use.
 """
 
+import ctypes
 from typing import Optional, Union, TYPE_CHECKING
 import api
 import ui
@@ -20,6 +21,7 @@ import controlTypes
 import browseMode
 import cursorManager
 import eventHandler
+import exceptions
 import textInfos
 from logHandler import log
 from speech import sayAll
@@ -30,6 +32,64 @@ from . import RecogImageInfo, ContentRecognizer, RecognitionResult, onRecognizeR
 
 if TYPE_CHECKING:
 	import inputCore
+
+
+def _isScreenCurtainActive() -> bool:
+	from screenCurtain import screenCurtain
+
+	return screenCurtain is not None and screenCurtain.enabled
+
+
+def _isMagnifierActive() -> bool:
+	import _magnifier
+
+	return _magnifier.isActive()
+
+
+def _shouldUseWgcCapture() -> bool:
+	return _isScreenCurtainActive() or (_isMagnifierActive() and _isWgcCaptureSupported())
+
+
+def _isWgcCaptureSupported() -> bool:
+	from . import _wgcCapture
+
+	return _wgcCapture.isSupported()
+
+
+def _captureWithGdi(imageInfo: RecogImageInfo) -> ctypes.Array:
+	sb = screenBitmap.ScreenBitmap(imageInfo.recogWidth, imageInfo.recogHeight)
+	return sb.captureImage(
+		imageInfo.screenLeft,
+		imageInfo.screenTop,
+		imageInfo.screenWidth,
+		imageInfo.screenHeight,
+	)
+
+
+def _captureWithWgc(imageInfo: RecogImageInfo) -> ctypes.Array:
+	from . import _wgcCapture
+
+	return _wgcCapture.captureImage(imageInfo)
+
+
+def _shouldBlockScreenCurtainEnable(focusObj: NVDAObjects.NVDAObject) -> bool:
+	"""Return whether enabling Screen Curtain should be blocked for an active recognition result."""
+	return (
+		isinstance(focusObj, RefreshableRecogResultNVDAObject)
+		and focusObj.recognizer.allowAutoRefresh
+		and not _isWgcCaptureSupported()
+	)
+
+
+def _captureImage(imageInfo: RecogImageInfo) -> ctypes.Array:
+	if _shouldUseWgcCapture():
+		try:
+			return _captureWithWgc(imageInfo)
+		except RuntimeError:
+			if _isScreenCurtainActive():
+				raise
+			log.debugWarning("Windows Graphics Capture failed; falling back to GDI.", exc_info=True)
+	return _captureWithGdi(imageInfo)
 
 
 class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Window):
@@ -136,13 +196,11 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 			# shouldn't recognize again.
 			return
 		imgInfo = self.imageInfo
-		sb = screenBitmap.ScreenBitmap(imgInfo.recogWidth, imgInfo.recogHeight)
-		pixels = sb.captureImage(
-			imgInfo.screenLeft,
-			imgInfo.screenTop,
-			imgInfo.screenWidth,
-			imgInfo.screenHeight,
-		)
+		try:
+			pixels = _captureImage(imgInfo)
+		except (RuntimeError, exceptions.CallCancelled) as e:
+			onResult(e)
+			return
 		self.recognizer.recognize(pixels, self.imageInfo, onResult)
 
 	def _onFirstResult(self, result: Union[RecognitionResult, Exception]):
@@ -259,6 +317,16 @@ def recognizeNavigatorObject(recognizer: ContentRecognizer):
 		imgInfo = RecogImageInfo.createFromRecognizer(left, top, width, height, recognizer)
 	except ValueError:
 		ui.message(notVisibleMsg)
+		return
+	if _isScreenCurtainActive() and not _isWgcCaptureSupported():
+		ui.message(
+			_(
+				# Translators: Reported when content recognition (e.g. OCR) is attempted while Screen Curtain
+				# is enabled, but the system does not support the required screen capture API.
+				"Content recognition is unavailable while Screen Curtain is enabled on this system. "
+				"Please disable Screen Curtain and try again.",
+			),
+		)
 		return
 	if _activeRecog:
 		_activeRecog.recognizer.cancel()

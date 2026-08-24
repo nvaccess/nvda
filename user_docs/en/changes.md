@@ -35,6 +35,9 @@
 * It is now possible to change an existing gesture in the Input Gestures dialog. (#10983, @amirmahdifard)
 * A new "Say all reads by" speech setting lets you choose whether say all reads by sentence, paragraph or line; say all now reads by sentence by default where supported. (#13420, #9179, #13971, @LeonarddeR)
 * A new command, assigned to `NVDA+control+x`, copies the last spoken information to the clipboard. (#19385, @Cary-rowen)
+* Added a "Native selection mode" option to NVDA's Browse Mode settings, disabled by default. (#15908)
+  * When enabled, native selection mode is automatically turned on in browse mode documents which support it, such as in Mozilla Firefox and browsers based on Chromium 134 or newer.
+  * Native selection mode can still be toggled per document with `NVDA+shift+f10`.
 
 ### Changes
 
@@ -44,13 +47,17 @@
   * The dialog's shortcut to copy contents of the message to the clipboard was changed to `alt+c`.
   * Browseable message dialogs now better support resizing, maximizing and minimizing, with text wrapping to the dialog width. (#20429, @Cary-rowen)
 * Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
+* Updated eSpeak NG to [commit `56f2e9c73`](https://github.com/espeak-ng/espeak-ng/commit/56f2e9c730e2438787103168c0412c80c25d014e). (#20691)
+  * Added Ligurian and Abkhaz support.
 * Improved speech responsiveness in long text with mixed capitalization or many digits. (#20433, @codeofdusk)
+* Windows OCR can now be used while Screen Curtain or NVDA's built-in Magnifier is active on supported systems. (#19164, #20630, @cary-rowen)
 * The duration of indentation beeps can now be configured via a new "Indent tone duration (ms)" spin control in the Document Formatting settings panel. (#20447, @Mubashir78)
 * Reduced the number of cross-process UI Automation calls when processing events, reporting focus changes, reporting objects under the mouse and rendering browse mode content, by caching more properties and batching focus property fetches. (#20608, @LeonarddeR)
 
 ### Bug Fixes
 
 * 64-bit NVDA now reports the correct location and label for Win32 menu items of 32-bit applications when display scaling is above 100%. (#19225, #20158, @christopherpross)
+* NVDA now restarts reliably when requested after installing an add-on package from File Explorer. (#17925, @cary-rowen)
 * In PowerPoint and other Office applications, NVDA will now correctly read and navigate the edit fields in the insert hyperlink dialog. (#17390, @aryanchoudharypro)
 * The actions button can now be used when selecting multiple add-ons in the Add-on Store to perform batch actions, instead of just via the context menu in the add-ons list. (#19971, @amirmahdifard)
 * When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
@@ -133,6 +140,12 @@ Locale names are now taken from `winKernel.LCIDToLocaleName`, apart from a small
   * As a result, some locale identifiers now resolve to a different name, such as `zh_CN` rather than `zh_CHS`, `km_KH` rather than `kh_KH` and `en_JM` rather than `en_JA`.
   * Locale names now carry a script subtag where Windows reports one, such as `sr_LATN_CS` rather than `sr_SP` for LCID 2074.
   * The SAPI 4 and SAPI 5 synthesizers report voice languages through this function as well, so the language of a voice can now be reported for locale identifiers that `locale.windows_locale` did not cover.
+* `louisHelper` is now the only module that performs braille translation. (#20600, @LeonarddeR)
+  * Added `louisHelper.TranslationMode` and `louisHelper.Typeform`, holding the translation modes and typeforms NVDA uses.
+  `braille.Region.rawTextTypeforms` is now annotated as `list[louisHelper.Typeform]`.
+  Plain integers remain compatible at run time.
+  * Added `louisHelper.backTranslate`, which back translates braille cells, given as a list of integers, into text.
+* Add the `locationHelper._RectMixin.union` method, which is used to create a rectangle that contains all the other rectangles. (#20705, @hwf1324)
 
 #### Deprecations
 
@@ -150,6 +163,7 @@ Use `TouchAction(value).displayString` instead. (#20086, @kefaslungu)
 Use `gui.message.HtmlMessageDialog` instead. (#18878, @LeonarddeR)
 * `languageHandler.LCIDS_TO_TRANSLATED_LOCALES` is deprecated.
 Use `languageHandler.windowsLCIDToLocaleName` or `winKernel.LCIDToLocaleName` instead. (#20589, @LeonarddeR)
+* `brailleInput.LOUIS_DOTS_IO_START` is deprecated with no replacement, as `louisHelper.backTranslate` takes plain braille cells. (#20600, @LeonarddeR)
 * The symbols that moved out of the `braille` module facade when it became a package, as well as the symbols of the `brailleInput` module which is now the `braille.input` package, are deprecated.
 Accessing them as `braille.X` or `brailleInput.X` still works but logs a deprecation warning; import them from their new location instead, as listed below. (#20390, #20509, @LeonarddeR)
 
@@ -219,7 +233,6 @@ Accessing them as `braille.X` or `brailleInput.X` still works but logs a depreca
 | `brailleInput.FALLBACK_TABLE` | `braille.input.constants.FALLBACK_TABLE` |
 | `brailleInput.DOT7` | `braille.input.constants.DOT7` |
 | `brailleInput.DOT8` | `braille.input.constants.DOT8` |
-| `brailleInput.LOUIS_DOTS_IO_START` | `braille.input.constants.LOUIS_DOTS_IO_START` |
 | `brailleInput.UNICODE_BRAILLE_START` | `braille.input.constants.UNICODE_BRAILLE_START` |
 | `brailleInput.UNICODE_BRAILLE_PROTECTED` | `braille.input.constants.UNICODE_BRAILLE_PROTECTED` |
 | `brailleInput.formatDotNumbers` | `braille.input.gesture.formatDotNumbers` |
