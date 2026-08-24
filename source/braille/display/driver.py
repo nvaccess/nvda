@@ -267,7 +267,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 
 	@classmethod
 	def _getBlePorts(cls) -> typing.Iterator[typing.Tuple[str, str]]:
-		"""Get the BLE devices currently known to L{bdDetect} as selectable ports.
+		"""Get the BLE devices currently known to :mod:`bdDetect` as selectable ports.
 
 		:return: An iterator of ``(port, description)`` pairs,
 			where ``port`` is of the form ``ble:DeviceName@Address``.
@@ -290,7 +290,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		"""Resolve a manually selected BLE port to the device to connect to.
 
 		:param port: A port of the form ``ble:DeviceName@Address``,
-			as returned by L{_getBlePorts}.
+			as returned by :meth:`_getBlePorts`.
 		:return: An iterator yielding at most one device match.
 		"""
 		portContent = port.removeprefix(cls._BLE_PORT_PREFIX)
@@ -300,19 +300,17 @@ class BrailleDisplayDriver(driverHandler.Driver):
 			)
 			return
 		deviceName, address = portContent.rsplit("@", 1)
-		# Prefer a device from the scan results, as connecting to it avoids implicit discovery.
+		# A device from the scan results can be connected to without implicit discovery.
 		scannedMatches = list(bdDetect.getBleDevicesForDriver(cls.name))
-		# The address identifies the device uniquely, so match on it first.
-		# Only fall back to the name if no device with this address is advertising,
-		# as devices using a resolvable private address change it over time.
+		# The address identifies a device uniquely, so it wins over the name.
+		# The name still has to be tried, as a resolvable private address changes over time.
 		for match in itertools.chain(
 			(match for match in scannedMatches if match.port == address),
 			(match for match in scannedMatches if match.id == deviceName),
 		):
 			yield match
 			return
-		# The device is not advertising at the moment,
-		# so fall back to the address recorded in the configuration.
+		# Not advertising, so fall back to the address recorded in the configuration.
 		log.debug(
 			f"BLE device {deviceName} not in scan results, attempting connection by address {address}",
 		)

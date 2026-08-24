@@ -6,7 +6,8 @@
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
-# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu.
+# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu, Dot Incorporated,
+# Bram Duvigneau.
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -37,6 +38,7 @@ import characterProcessing
 import config
 import core
 import globalVars
+import hwIo.ble
 import installer
 import keyboardHandler
 import languageHandler
@@ -5134,6 +5136,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		# so start scanning before the list is built for the first time.
 		self._startBleScanner()
 		self._portRefreshTimer: wx.CallLater | None = None
+		"""Timer that polls for BLE devices discovered after the port list was built."""
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: The label for a setting in braille settings to choose a braille display.
@@ -5168,11 +5171,9 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 
 	def _startBleScanner(self):
 		"""Start the shared BLE scanner, so that BLE devices can be offered as ports."""
-		import hwIo.ble
-
 		if not hwIo.ble.scanner.isScanning:
 			try:
-				hwIo.ble.scanner.start()  # Starts in background mode
+				hwIo.ble.scanner.start()
 				log.debug("Started BLE scanner for braille display selection")
 			except Exception:
 				log.error("Failed to start BLE scanner", exc_info=True)
@@ -5198,8 +5199,8 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		if not newPorts:
 			return
 		if not self.possiblePorts:
-			# There is no selection to preserve, so build the list as if the dialog just opened.
-			# This also offers the automatic port, which is available as soon as any device is.
+			# With no selection to preserve, a full rebuild is safe,
+			# and it also offers the automatic port.
 			self.updateStateDependentControls()
 		else:
 			self.possiblePorts.extend(newPorts)
@@ -5290,15 +5291,13 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			self.portsList.SetItems([])
 			enable = False
 		else:
-			# No ports available - show helpful message
 			# Translators: Message shown when no devices are available for a braille display
 			noDevicesMessage = _("(No devices found)")
 			self.portsList.SetItems([noDevicesMessage])
 			self.portsList.SetSelection(0)
 			enable = False
 
-		# Special case: If only "auto" port exists, disable manual selection
-		# (This means devices are detected but no manual selection is needed)
+		# With only the automatic port there is nothing to choose between.
 		if len(self.possiblePorts) == 1 and self.possiblePorts[0][0] == "auto":
 			enable = False
 
@@ -5352,16 +5351,12 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		super(BrailleDisplaySelectionDialog, self).onOk(evt)
 
 	def onCancel(self, evt):
-		"""Stop BLE scanner when dialog is cancelled if background detection is not active."""
 		self._stopPortRefresh()
 		self._stopBleScanner()
 		super().onCancel(evt)
 
 	def _stopBleScanner(self):
-		"""Stop BLE scanner if it's running and background detection is not active."""
-		import hwIo.ble
-
-		# Only stop if we're not in automatic detection mode
+		"""Stop the shared BLE scanner, unless automatic detection owns it."""
 		if hwIo.ble.scanner.isScanning and config.conf["braille"]["display"] != braille.AUTO_DISPLAY_NAME:
 			try:
 				hwIo.ble.scanner.stop()

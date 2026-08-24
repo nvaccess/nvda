@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2017-2025 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2017-2026 NV Access Limited, Leonard de Ruijter, Dot Incorporated, Bram Duvigneau
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Unit tests for braille display drivers."""
 
@@ -349,7 +349,7 @@ class _FakeBleDriver(braille.display.BrailleDisplayDriver):
 
 
 def _bleMatch(deviceName: str, address: str) -> bdDetect.DeviceMatch:
-	"""Build a BLE device match as L{bdDetect.getBleDevicesForDriver} would yield it."""
+	"""Build a BLE device match as :func:`bdDetect.getBleDevicesForDriver` would yield it."""
 	return bdDetect.DeviceMatch(
 		bdDetect.ProtocolType.BLE,
 		deviceName,
@@ -359,12 +359,12 @@ def _bleMatch(deviceName: str, address: str) -> bdDetect.DeviceMatch:
 
 
 class TestBleDisplayPorts(unittest.TestCase):
-	"""Tests for the BLE ports offered and resolved by L{braille.display.BrailleDisplayDriver}."""
+	"""Tests for the BLE ports offered and resolved by :class:`braille.display.BrailleDisplayDriver`."""
 
 	_ADDRESS = "AA:BB:CC:DD:EE:FF"
 
 	def _patchBleDevices(self, *devices: bdDetect.DeviceMatch):
-		"""Make L{bdDetect.getBleDevicesForDriver} report the given devices."""
+		"""Make :func:`bdDetect.getBleDevicesForDriver` report the given devices."""
 		return patch("bdDetect.getBleDevicesForDriver", return_value=iter(devices))
 
 	def test_getBlePorts_formatsPortAndDescription(self):

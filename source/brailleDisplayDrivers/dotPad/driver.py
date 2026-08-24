@@ -108,14 +108,13 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	@classmethod
 	def check(cls) -> bool:
-		"""DotPad is always available on Windows 10/11.
+		"""Always report DotPad as available.
 
-		This allows DotPad to appear in the braille display list even when
-		no devices are currently detected, enabling users to manually select
-		BLE devices after the GUI triggers a scan.
-
-		BLE is always supported on Windows 10/11. Even without BLE hardware,
-		the scanner will run without errors and simply return no results.
+		A BLE device is only known once a scan has run, and the braille display
+		selection dialog is what starts one. The driver therefore has to be offered
+		while no device is known, so that the user can reach that dialog at all.
+		Machines without BLE hardware are no exception: the scanner runs there too
+		and simply returns no results.
 		"""
 		return True
 
@@ -341,8 +340,6 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	def __init__(self, port: str = "auto"):
 		self._receiveBuffer: bytearray = bytearray()
-		# _getTryPorts handles all port types: "auto", "ble:DeviceName@Address", COM ports, etc.
-		# It yields DeviceMatch objects with type, id, port, and deviceInfo fields.
 		for match in self._getTryPorts(port):
 			if self._tryConnect(match.port, match.type, match.deviceInfo):
 				break
@@ -383,10 +380,9 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		try:
 			if portType == bdDetect.ProtocolType.BLE:
 				address = portInfo.get("address") or port
-				# Prefer a BLEDevice from the scanner; this avoids implicit discovery.
+				# A device from the scanner can be connected to without implicit discovery.
 				device = hwIo.ble.findDeviceByAddress(address)
 				if device is None:
-					# Fallback: connect by address string (triggers implicit discovery in Bleak).
 					log.debug(f"BLE device {address} not in scan results, using address for connection")
 					device = address
 				self._dev = hwIo.ble.Ble(

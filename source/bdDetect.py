@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2013-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter, Christian Comaschi, Dot Incorporated, Bram Duvigneau
+# Copyright (C) 2013-2026 NV Access Limited, Babbage B.V., Leonard de Ruijter, Christian Comaschi, Dot Incorporated, Bram Duvigneau
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Support for braille display detection.
 This allows devices to be automatically detected and used when they become available,
@@ -178,15 +178,12 @@ scanForDevices = extensionPoints.Chain[DriverAndDeviceMatch]()
 A Chain that can be iterated to scan for devices.
 Registered handlers should yield a tuple containing a driver name as str and DeviceMatch
 Handlers are called with these keyword arguments:
-@param usb: Whether the handler is expected to yield USB devices.
-@type usb: bool
-@param bluetooth: Whether the handler is expected to yield Bluetooth devices.
-@type bluetooth: bool
-@param ble: Whether the handler is expected to yield BLE devices.
-@type ble: bool
-@param limitToDevices: Drivers to which detection should be limited.
+
+:param usb: Whether the handler is expected to yield USB devices.
+:param bluetooth: Whether the handler is expected to yield Bluetooth devices.
+:param ble: Whether the handler is expected to yield BLE devices.
+:param limitToDevices: Drivers to which detection should be limited.
 	``None`` if no driver filtering should occur.
-@type limitToDevices: Optional[List[str]]
 """
 
 
@@ -471,8 +468,7 @@ class _Detector:
 		self._detectBluetooth = True
 		self._detectBle = True
 		self._limitToDevices: list[str] | None = None
-		# Register for real-time BLE device discovery notifications.
-		# The scanner is None when BLE is unavailable (e.g. unit tests); skip registration then.
+		# The scanner is None outside a running NVDA, such as in unit tests.
 		if hwIo.ble.scanner is not None:
 			hwIo.ble.scanner.deviceDiscovered.register(self._onBleDeviceDiscovered)
 
@@ -543,7 +539,6 @@ class _Detector:
 			if _isDebug():
 				log.debug("Cancelling queued future for next background scan")
 			self._queuedFuture.cancel()
-		# Stop the BLE scanner if it's running
 		_stopBleScanner()
 
 	@staticmethod
@@ -587,8 +582,8 @@ class _Detector:
 		ble: bool = True,
 		limitToDevices: list[str] | None = None,
 	):
-		"""Handler for L{scanForDevices} that yields BLE devices.
-		See the L{scanForDevices} documentation for information about the parameters.
+		"""Handler for :data:`scanForDevices` that yields BLE devices.
+		See the :data:`scanForDevices` documentation for information about the parameters.
 		"""
 		if not ble:
 			return
@@ -625,9 +620,8 @@ class _Detector:
 		# Since a scan can take some time to complete, another thread can set the stop event to cancel it.
 		self._stopEvent.clear()
 
-		# Start BLE scanner if needed for this scan.
-		# Scanning uses the Bluetooth radio continuously, so only do so
-		# when a driver in scope can actually match a BLE device.
+		# Scanning occupies the Bluetooth radio continuously,
+		# so only do so when a driver in scope can actually match a BLE device.
 		if (
 			ble
 			and _hasBleDrivers(limitToDevices)
@@ -637,7 +631,8 @@ class _Detector:
 			if _isDebug():
 				log.debug("Starting BLE scanner for background scan")
 			hwIo.ble.scanner.start()
-			# Give the scanner some time to get initial results
+			# Without a moment to collect advertisements the scan below sees nothing,
+			# delaying any connection until the next scan.
 			time.sleep(0.2)
 		if preferredDevice:
 			if _isDebug():
@@ -645,7 +640,7 @@ class _Detector:
 			if braille.handler.setDisplayByName(preferredDevice[0], detected=preferredDevice[1]):
 				if _isDebug():
 					log.debug("Switched to preferred device: %r", preferredDevice[0])
-				# Device connected - stop BLE scanner to save resources
+				# Connected, so the radio is no longer needed.
 				_stopBleScanner()
 				return
 			elif _isDebug():
@@ -668,7 +663,7 @@ class _Detector:
 			if braille.handler.setDisplayByName(driver, detected=match):
 				if _isDebug():
 					log.debug("Switched to driver %r, match %r", driver, match)
-				# Device connected - stop BLE scanner to save resources
+				# Connected, so the radio is no longer needed.
 				_stopBleScanner()
 				return
 			elif _isDebug():
@@ -734,7 +729,6 @@ class _Detector:
 		"""
 		match = _bleDeviceToMatch(device)
 
-		# Check against registered drivers (respect limitToDevices filter)
 		driversToCheck = (
 			((driver, devs) for driver, devs in _driverDevices.items() if driver in self._limitToDevices)
 			if self._limitToDevices
@@ -764,20 +758,16 @@ class _Detector:
 		:param advertisementData: Advertisement data from the device
 		:param isNew: True if this is the first time seeing this device
 		"""
-		# Only react to newly discovered devices
 		if not isNew:
 			return
 
-		# Check if BLE detection is enabled
 		if not self._detectBle:
 			return
 
-		# Find matching driver for this device
 		match = self._getBleDeviceMatch(device)
 		if not match:
 			return
 
-		# Queue scan with this device as preferred
 		driver, deviceMatch = match
 		if _isDebug():
 			log.debug(
@@ -785,9 +775,8 @@ class _Detector:
 				f"queueing connection attempt",
 			)
 
-		# Preserve the USB and Bluetooth detection state,
-		# as _queueBgScan stores its arguments as the state for subsequent scans.
-		# Omitting them here would permanently disable USB and Bluetooth detection.
+		# _queueBgScan stores its arguments as the state for subsequent scans,
+		# so omitting these would permanently disable USB and Bluetooth detection.
 		self._queueBgScan(
 			usb=self._detectUsb,
 			bluetooth=self._detectBluetooth,
@@ -859,16 +848,14 @@ def getDriversForBleDevices(
 	if limitToDevices and _isDebug():
 		log.debug("Limiting BLE device detection to drivers: %r", limitToDevices)
 
-	# Check if any drivers support BLE before inspecting the scan results
 	if not _hasBleDrivers(limitToDevices):
 		if _isDebug():
 			log.debug("No drivers with BLE support registered, skipping BLE scan")
 		return
 
-	# Use the module-level singleton scanner
 	scanner = hwIo.ble.scanner
 	if scanner is None:
-		# BLE not initialized (e.g. unit tests); no BLE devices to report.
+		# BLE is not initialized outside a running NVDA, such as in unit tests.
 		return
 	if not scanner.isScanning:
 		if _isDebug():
@@ -884,8 +871,8 @@ def getDriversForBleDevices(
 					log.debug("Skipping excluded driver %r for BLE device match: %r", driver, match)
 				continue
 
-			# Drivers without BLE support have no entry here.
-			# Note that _driverDevices maps to a defaultdict, so subscripting would add empty entries.
+			# The driver dict is a defaultdict, so subscripting would add an empty entry
+			# for every driver without BLE support.
 			matchFunc = devs.get(CommunicationType.BLE)
 			if not callable(matchFunc):
 				continue
@@ -1015,7 +1002,6 @@ def terminate():
 	scanForDevices.unregister(_Detector._bgScanBle)
 	scanForDevices.unregister(_Detector._bgScanBluetooth)
 	scanForDevices.unregister(_Detector._bgScanUsb)
-	# Stop BLE scanner if running
 	_stopBleScanner()
 	deviceInfoFetcher = None
 
@@ -1117,9 +1103,10 @@ class DriverRegistrar:
 
 	def addBleDevices(self, matchFunc: MatchFuncT):
 		"""Associate BLE devices with the driver on this instance.
-		@param matchFunc: A function which determines whether a given BLE device matches.
-			It takes a L{DeviceMatch} as its only argument
-			and returns a C{bool} indicating whether it matched.
+
+		:param matchFunc: A function which determines whether a given BLE device matches.
+			It takes a :class:`DeviceMatch` as its only argument
+			and returns a ``bool`` indicating whether it matched.
 		"""
 		devs = self._getDriverDict()
 		devs[CommunicationType.BLE] = matchFunc
@@ -1130,19 +1117,12 @@ class DriverRegistrar:
 		moveToStart: bool = False,
 	):
 		"""Register a callable to scan devices.
-		This adds a handler to L{scanForDevices}.
-		@param scanFunc: Callable that should yield a tuple containing a driver name as str and DeviceMatch.
-			The callable is called with these keyword arguments:
-			@param usb: Whether the handler is expected to yield USB devices.
-			@type usb: bool
-			@param bluetooth: Whether the handler is expected to yield Bluetooth devices.
-			@type bluetooth: bool
-			@param ble: Whether the handler is expected to yield BLE devices.
-			@type ble: bool
-			@param limitToDevices: Drivers to which detection should be limited.
-				``None`` if no driver filtering should occur.
-			@type limitToDevices: Optional[List[str]]
-		@param moveToStart: If C{True}, the registered callable will be moved to the start
+		This adds a handler to :data:`scanForDevices`.
+
+		:param scanFunc: Callable that should yield a tuple containing a driver name as str and DeviceMatch.
+			The callable is called with the same keyword arguments as the handlers of
+			:data:`scanForDevices`, which documents them.
+		:param moveToStart: If ``True``, the registered callable will be moved to the start
 			of the list of registered handlers.
 			Note that subsequent callback registrations may also request to be moved to the start.
 			You should never rely on the registered callable being the first in order.
