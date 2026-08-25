@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-03 23:29+0000\n"
-"PO-Revision-Date: 2026-08-10 00:18\n"
+"POT-Creation-Date: 2026-08-23 23:27+0000\n"
+"PO-Revision-Date: 2026-08-24 00:13\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -781,34 +781,34 @@ msgid "¶"
 msgstr "¶"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3805
+#: braille.py:3806
 msgid "Dot firm&ness"
 msgstr "Pu&nktfasthet"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3818
+#: braille.py:3819
 msgid "Braille inp&ut"
 msgstr "Punktskrifts&inmatning"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3828
+#: braille.py:3829
 msgid "&HID keyboard input simulation"
 msgstr "Simulera &HID tangentbordsinmatning"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
-#: braille.py:3992
+#: braille.py:3993
 msgid "Unknown braille display"
 msgstr "Okänd punktdisplay"
 
 #. Translators: Name of a Bluetooth serial communications port.
-#: braille.py:4033
+#: braille.py:4034
 #, python-brace-format
 msgid "Bluetooth Serial: {port} ({deviceName})"
 msgstr "Bluetooth serieport: {port} ({deviceName})"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#: braille.py:4042 brailleDisplayDrivers\ecoBraille.py:399
+#: braille.py:4043 brailleDisplayDrivers\ecoBraille.py:399
 #: brailleDisplayDrivers\papenmeier_serial.py:81
 #, python-brace-format
 msgid "Serial: {portName}"
@@ -934,7 +934,7 @@ msgstr "Ingen föregående rubrik på nivå {i}"
 #: browseMode.py:660
 #, python-brace-format
 msgid "headings level {i}"
-msgstr ""
+msgstr "rubriknivå {i}"
 
 #. Translators: the description for the Elements List command in browse mode.
 #: browseMode.py:675
@@ -949,27 +949,27 @@ msgstr "Aktiverar nuvarande objekt i dokumentet"
 #. Translators: The default element type in browse mode touch navigation (navigates all content).
 #: browseMode.py:807
 msgid "default"
-msgstr ""
+msgstr "standard"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
 #: browseMode.py:816
 msgid "Selects the next element type for browse mode touch navigation"
-msgstr ""
+msgstr "Väljer nästa elementtyp för peknavigering i läsläge"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
 #: browseMode.py:835
 msgid "Selects the previous element type for browse mode touch navigation"
-msgstr ""
+msgstr "Väljer föregående elementtyp för peknavigering i läsläge"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
 #: browseMode.py:854
 msgid "Moves to the next element of the selected type in browse mode touch navigation"
-msgstr ""
+msgstr "Flyttar till nästa element av den valda typen i peknavigering i läsläge"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
 #: browseMode.py:871
 msgid "Moves to the previous element of the selected type in browse mode touch navigation"
-msgstr ""
+msgstr "Flyttar till föregående element av den valda typen i peknavigering i läsläge"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:912
@@ -994,7 +994,7 @@ msgstr "ingen föregående rubrik"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:920
 msgid "headings"
-msgstr ""
+msgstr "rubriker"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:927
@@ -1019,7 +1019,7 @@ msgstr "ingen föregående tabell"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:936
 msgid "tables"
-msgstr ""
+msgstr "tabeller"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:942
@@ -1044,7 +1044,7 @@ msgstr "ingen föregående länk"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:950
 msgid "links"
-msgstr ""
+msgstr "länkar"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:956
@@ -1069,7 +1069,7 @@ msgstr "ingen föregående besökt länk"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:964
 msgid "visited links"
-msgstr ""
+msgstr "besökta länkar"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:970
@@ -1094,7 +1094,7 @@ msgstr "ingen föregående obesökt länk"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:978
 msgid "unvisited links"
-msgstr ""
+msgstr "ej besökta länkar"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:984
@@ -1119,7 +1119,7 @@ msgstr "inget föregående formulärfält"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:992
 msgid "form fields"
-msgstr ""
+msgstr "formulärfält"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:998
@@ -1144,7 +1144,7 @@ msgstr "ingen föregående lista"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1007
 msgid "lists"
-msgstr ""
+msgstr "listor"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1013
@@ -1169,7 +1169,7 @@ msgstr "inget föregående listobjekt"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1021
 msgid "list items"
-msgstr ""
+msgstr "listelement"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1027
@@ -1194,7 +1194,7 @@ msgstr "ingen föregående knapp"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1035
 msgid "buttons"
-msgstr ""
+msgstr "knappar"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1041
@@ -1219,7 +1219,7 @@ msgstr "inget föregående textfält"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1050
 msgid "edit fields"
-msgstr ""
+msgstr "redigeringsfält"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1056
@@ -1244,7 +1244,7 @@ msgstr "ingen föregående ram"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1065
 msgid "frames"
-msgstr ""
+msgstr "ramar"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1071
@@ -1269,7 +1269,7 @@ msgstr "ingen föregående separator"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1079
 msgid "separators"
-msgstr ""
+msgstr "avgränsare"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1085
@@ -1294,7 +1294,7 @@ msgstr "ingen föregående radioknapp"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1093
 msgid "radio buttons"
-msgstr ""
+msgstr "radioknappar"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1099
@@ -1319,7 +1319,7 @@ msgstr "ingen föregående kombinationsruta"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1107
 msgid "combo boxes"
-msgstr ""
+msgstr "kombinationsrutor"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1113
@@ -1344,7 +1344,7 @@ msgstr "ingen föregående kryssruta"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1121
 msgid "check boxes"
-msgstr ""
+msgstr "kryssrutor"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1127
@@ -1369,7 +1369,7 @@ msgstr "ingen föregående grafik"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1135
 msgid "graphics"
-msgstr ""
+msgstr "grafik"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1141
@@ -1394,7 +1394,7 @@ msgstr "inget föregående blockcitat"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1149
 msgid "block quotes"
-msgstr ""
+msgstr "blockcitat"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1155
@@ -1419,7 +1419,7 @@ msgstr "ingen mer text före en serie av länkar"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1164
 msgid "non-link blocks"
-msgstr ""
+msgstr "non-link blocks"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1170
@@ -1444,7 +1444,7 @@ msgstr "ingen föregående landmärke"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1179
 msgid "landmarks"
-msgstr ""
+msgstr "landmärken"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1185
@@ -1469,7 +1469,7 @@ msgstr "inget föregående inbäddat objekt"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1193
 msgid "embedded objects"
-msgstr ""
+msgstr "inbäddade objekt"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1199
@@ -1494,7 +1494,7 @@ msgstr "ingen föregående notation"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1207
 msgid "annotations"
-msgstr ""
+msgstr "noteringar"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1213
@@ -1519,32 +1519,32 @@ msgstr "inget föregående fel"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1221
 msgid "errors"
-msgstr ""
+msgstr "fel"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1227
 msgid "moves to the next slider"
-msgstr ""
+msgstr "flyttar till nästa skjutreglage"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1229
 msgid "no next slider"
-msgstr ""
+msgstr "inget nästa skjutreglage"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1231
 msgid "moves to the previous slider"
-msgstr ""
+msgstr "flyttar till föregående skjutreglage"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1233
 msgid "no previous slider"
-msgstr ""
+msgstr "inget föregående skjutreglage"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1235
 msgid "sliders"
-msgstr ""
+msgstr "skjutreglage"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1241
@@ -1569,7 +1569,7 @@ msgstr "inget föregående avsnitt"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1249
 msgid "articles"
-msgstr ""
+msgstr "artiklar"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1255
@@ -1594,7 +1594,7 @@ msgstr "ingen föregående gruppering"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1263
 msgid "groupings"
-msgstr ""
+msgstr "grupper"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1269
@@ -1619,7 +1619,7 @@ msgstr "ingen föregående flik"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1277
 msgid "tabs"
-msgstr ""
+msgstr "flikar"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1283
@@ -1644,7 +1644,7 @@ msgstr "ingen föregående figur"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1291
 msgid "figures"
-msgstr ""
+msgstr "figurer"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1297
@@ -1669,7 +1669,7 @@ msgstr "inget föregående menyval"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1305
 msgid "menu items"
-msgstr ""
+msgstr "menyval"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1311
@@ -1694,7 +1694,7 @@ msgstr "ingen föregående växlingsknapp"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1319
 msgid "toggle buttons"
-msgstr ""
+msgstr "växlingsknappar"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1325
@@ -1719,7 +1719,7 @@ msgstr "ingen föregående framstegsindikator"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1333
 msgid "progress bars"
-msgstr ""
+msgstr "framstegsindikatorer"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1339
@@ -1744,7 +1744,7 @@ msgstr "ingen föregående mattematiska formel"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1347
 msgid "math formulas"
-msgstr ""
+msgstr "matematiska formler"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1353
@@ -1769,7 +1769,7 @@ msgstr "inget föregående textstycke"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1362
 msgid "text paragraphs"
-msgstr ""
+msgstr "textstycken"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1368
@@ -1794,7 +1794,7 @@ msgstr "inget föregående stycke med samma vertikala justering"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1377
 msgid "vertical paragraphs"
-msgstr ""
+msgstr "vertikala stycken"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1383
@@ -1819,7 +1819,7 @@ msgstr "Ingen föregående text med samma stil"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1391
 msgid "same style"
-msgstr ""
+msgstr "samma typ"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1397
@@ -1844,7 +1844,7 @@ msgstr "Ingen föregående text med annan stil"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1405
 msgid "different style"
-msgstr ""
+msgstr "annan typ"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1411
@@ -1869,7 +1869,7 @@ msgstr "ingen föregående referens"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1420
 msgid "references"
-msgstr ""
+msgstr "referenser"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2318,21 +2318,21 @@ msgid "brown-yellow"
 msgstr "brungul"
 
 #. Translators: Shown when one or more add-ons failed to update.
-#: core.py:84
+#: core.py:85
 msgid "The following add-on failed to update: {}."
 msgid_plural "The following add-ons failed to update: {}."
 msgstr[0] "Följande tillägg kunde inte uppdateras: {}."
 msgstr[1] "Följande tillägg kunde inte uppdateras: {}."
 
 #. Translators: Shown when one or more add-ons failed to be uninstalled.
-#: core.py:93
+#: core.py:94
 msgid "The following add-on failed to uninstall: {}."
 msgid_plural "The following add-ons failed to uninstall: {}."
 msgstr[0] "Följande tillägg kunde inte avinstalleras: {}."
 msgstr[1] "Följande tillägg kunde inte avinstalleras: {}."
 
 #. Translators: Shown when one or more add-ons failed to be installed.
-#: core.py:102
+#: core.py:103
 msgid "The following add-on failed to be installed: {}."
 msgid_plural "The following add-ons failed to be installed: {}."
 msgstr[0] "Följande tillägg kunde inte installeras: {}."
@@ -2340,7 +2340,7 @@ msgstr[1] "Följande tillägg kunde inte installeras: {}."
 
 #. Translators: Shown when one or more actions on add-ons failed.
 #. {failureMsg} will be replaced with the specific error message.
-#: core.py:116
+#: core.py:117
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
@@ -2375,7 +2375,7 @@ msgstr "Vissa åtgärder på tillägg misslyckades. Se loggfilen för mer inform
 #. Translators: A title of a message box displayed when the host field is empty and the user tries to generate a key.
 #. Translators: Title of error dialog
 #. Translators: Title of a dialog
-#: core.py:119 documentationUtils.py:74 updateCheck.py:438 updateCheck.py:753
+#: core.py:120 documentationUtils.py:74 updateCheck.py:438 updateCheck.py:753
 #: updateCheck.py:925 gui\__init__.py:252 gui\__init__.py:260
 #: gui\__init__.py:277 gui\addonGui.py:138 gui\addonGui.py:258
 #: gui\addonGui.py:273 gui\configProfiles.py:182 gui\configProfiles.py:219
@@ -2386,58 +2386,58 @@ msgstr "Vissa åtgärder på tillägg misslyckades. Se loggfilen för mer inform
 #: gui\installerGui.py:181 gui\installerGui.py:265 gui\installerGui.py:759
 #: gui\installerGui.py:776 gui\installerGui.py:848 gui\logViewer.py:112
 #: gui\logViewer.py:143 gui\message.py:160 gui\settingsDialogs.py:1044
-#: gui\settingsDialogs.py:6013 gui\settingsDialogs.py:6872
+#: gui\settingsDialogs.py:6013 gui\settingsDialogs.py:6863
 #: gui\startupDialogs.py:127 _remoteClient\dialogs.py:67
 #: _remoteClient\dialogs.py:306 _remoteClient\dialogs.py:430
 msgid "Error"
 msgstr "Fel"
 
 #. Translators: Shown when NVDA has been started with unknown command line parameters.
-#: core.py:147
+#: core.py:148
 #, python-brace-format
 msgid "The following command line parameters are unknown to NVDA: {params}"
 msgstr "Följande kommandoradsargument är okända för NVDA: {params}"
 
 #. Translators: Title of the dialog letting user know
 #. that command line parameters they provided are unknown.
-#: core.py:152
+#: core.py:153
 msgid "Unknown command line parameters"
 msgstr "Okända kommandoradsargument"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
-#: core.py:161
+#: core.py:162
 msgid "Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr "Din konfigurationsfil innehåller fel. Din konfiguration har återställts till fabriksinställningar.\n"
 "För mer information se loggfilen."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
-#: core.py:166
+#: core.py:167
 msgid "Configuration File Error"
 msgstr "Fel i konfigurationsfil"
 
-#: core.py:184
+#: core.py:185
 msgid "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr "Din inmatningsgestmappsfil innehåller fel.\n"
 "För mer information se loggfilen."
 
-#: core.py:187
+#: core.py:188
 msgid "gesture map File Error"
 msgstr "fel på fil för inmatningsgester"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:809
+#: core.py:817
 msgid "Loading NVDA. Please wait..."
 msgstr "Laddar NVDA. Var god vänta..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts with the screen curtain enabled.
-#: core.py:957
+#: core.py:965
 msgid "NVDA started with screen curtain enabled"
-msgstr ""
+msgstr "NVDA startade med skärmridå aktiv"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:960
+#: core.py:968
 msgid "NVDA started"
 msgstr "NVDA har startat"
 
@@ -2668,9 +2668,9 @@ msgstr "Syn"
 #. Translators: This is the label for the magnifier settings panel.
 #. Translators: The title of an error message box shown when the magnifier fails to start.
 #: globalCommands.py:107 gui\settingsDialogs.py:6047
-#: gui\settingsDialogs.py:6289
+#: gui\settingsDialogs.py:6280
 msgid "Magnifier"
-msgstr ""
+msgstr "Förstorare"
 
 #. Translators: The name of a category of NVDA commands.
 #: globalCommands.py:110
@@ -2720,7 +2720,7 @@ msgstr "Fjärråtkomst"
 #. Translators: The name of the category of math navigation commands in the Input Gestures dialog.
 #: globalCommands.py:133
 msgid "Math navigation"
-msgstr ""
+msgstr "Matematisk navigering"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring
 #. (example: when there is no setting for language).
@@ -2886,14 +2886,14 @@ msgstr "Går till föregående val i talsyntesinställningsringen"
 #. Translators: Input help mode message for toggling keyboard layout.
 #: globalCommands.py:577
 msgid "Toggles between desktop and laptop keyboard layout"
-msgstr ""
+msgstr "Växlar mellan skrivbord och bärbar tangentbordslayout"
 
 #. Translators: Reported when the user toggles keyboard layout.
 #. {layout} will be replaced with the new keyboard layout, i.e. desktop or laptop
 #: globalCommands.py:590
 #, python-brace-format
 msgid "{layout} layout"
-msgstr ""
+msgstr "{layout} layout"
 
 #. Translators: Input help mode message for cycling the reporting of typed characters.
 #: globalCommands.py:595
@@ -3126,22 +3126,22 @@ msgstr "Rapportera fel i punktskrift av"
 #. Translators: Input help mode message for command to toggle braille automatic scroll.
 #: globalCommands.py:852
 msgid "Toggles braille automatic scroll"
-msgstr ""
+msgstr "Växlar automatisk punktskriftsrullning"
 
 #. Translators: Message reported when automatic scrolling has been enabled in braille.
 #: globalCommands.py:861
 msgid "Automatic scrolling enabled"
-msgstr ""
+msgstr "Automatisk rullning aktiverad"
 
 #. Translators: Message reported when automatic scrolling has been disabled in braille.
 #: globalCommands.py:869
 msgid "Automatic scrolling disabled"
-msgstr ""
+msgstr "Automatisk rullning avaktiverad"
 
 #. Translators: Input help mode message for command to increase the rate for braille automatic scroll.
 #: globalCommands.py:874
 msgid "Increases the rate for braille automatic scroll"
-msgstr ""
+msgstr "Ökar hastigheten för automatisk punktskriftsrullning"
 
 #. Translators: Message shown when increasing the braille auto scroll rate.
 #. {rate} will be replaced with the rate as a whole number from 0 to 100.
@@ -3150,12 +3150,12 @@ msgstr ""
 #: globalCommands.py:883 globalCommands.py:896
 #, python-brace-format
 msgid "Scroll rate {rate}"
-msgstr ""
+msgstr "Rullhastighet {rate}"
 
 #. Translators: Input help mode message for command to decrease the rate for braille automatic scroll.
 #: globalCommands.py:887
 msgid "Decreases the rate for braille automatic scroll"
-msgstr ""
+msgstr "Minskar hastigheten för automatisk punktskriftsrullning"
 
 #. Translators: Input help mode message for toggle report pages command.
 #: globalCommands.py:900
@@ -4372,7 +4372,7 @@ msgstr "Visar NVDA:s inmatningsgestinställningar"
 #. Translators: Input help mode message for go to magnifier settings command.
 #: globalCommands.py:3649
 msgid "Shows NVDA's magnifier settings"
-msgstr ""
+msgstr "Visar inställningar för NVDA's Förstorare"
 
 #. Translators: Input help mode message for the report current configuration profile command.
 #: globalCommands.py:3659
@@ -5024,102 +5024,102 @@ msgstr "Tillfällig skärmridå, aktiv till nästa omstart"
 #. Translators: Describes a command.
 #: globalCommands.py:5023
 msgid "Reports the state of the screen curtain."
-msgstr ""
+msgstr "Rapporterar skärmridåns tillstånd."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5053
 msgid "Toggle the magnifier on and off"
-msgstr ""
+msgstr "Växla Förstoraren på och av"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5067
 msgid "Increase the magnification level"
-msgstr ""
+msgstr "Öka förstoringsnivån"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5081
 msgid "Decrease the magnification level"
-msgstr ""
+msgstr "Minska förstoringsnivån"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5095
 msgid "Pan the magnified view left"
-msgstr ""
+msgstr "Panorera den förstorade vyn åt vänster"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5109
 msgid "Pan the magnified view right"
-msgstr ""
+msgstr "Panorera den förstorade vyn åt höger"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5123
 msgid "Pan the magnified view up"
-msgstr ""
+msgstr "Panorera den förstorade vyn uppåt"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5137
 msgid "Pan the magnified view down"
-msgstr ""
+msgstr "Panorera den förstorade vyn nedåt"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5151
 msgid "Pan the magnified view to left edge"
-msgstr ""
+msgstr "Panorera den förstorade vyn till vänsterkanten"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5165
 msgid "Pan the magnified view to right edge"
-msgstr ""
+msgstr "Panorera den förstorade vyn till högerkanten"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5179
 msgid "Pan the magnified view to top edge"
-msgstr ""
+msgstr "Panorera den förstorade vyn till överkanten"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5193
 msgid "Pan the magnified view to bottom edge"
-msgstr ""
+msgstr "Panorera den förstorade vyn till nederkanten"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5207
 msgid "Cycle through the color filters"
-msgstr ""
+msgstr "Bläddra genom färgfiltren"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5221
 msgid "Toggle magnifier mouse tracking"
-msgstr ""
+msgstr "Växla musföljning för Förstoraren"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5234
 msgid "Toggle magnifier system focus tracking"
-msgstr ""
+msgstr "Växla systemfokusföljning för Förstoraren"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5247
 msgid "Toggle magnifier review cursor tracking"
-msgstr ""
+msgstr "Växla granskningsmarkörföljning för Förstoraren"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5260
 msgid "Toggle magnifier navigator object tracking"
-msgstr ""
+msgstr "Växla navigatorobjektföljning för Förstoraren"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5273
 msgid "Toggle all magnifier tracking settings"
-msgstr ""
+msgstr "Växla alla följningsinställningar för Förstoraren"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5286
 msgid "Cycle through tracking modes"
-msgstr ""
+msgstr "Bläddra genom följningslägen"
 
 #. Translators: Describe a command.
 #: globalCommands.py:5299
 msgid "Temporarily show an overview of the entire screen"
-msgstr ""
+msgstr "Visa en tillfällig översikt av hela skärmen"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5313
@@ -5225,12 +5225,12 @@ msgstr "Skickar control+alt+delete till datorn som styrs."
 #. Translators: Description for the repeat last speech script
 #: globalCommands.py:5475
 msgid "Repeat the last spoken information. Pressing twice shows it in a browsable message."
-msgstr ""
+msgstr "Upprepa den senast talade informationen."
 
 #. Translators: title for report last spoken information dialog.
 #: globalCommands.py:5493
 msgid "Last spoken information"
-msgstr ""
+msgstr "Senast talade informationen"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -7199,7 +7199,7 @@ msgstr "Använd modernt ljudutgångssystem (WASAPI)"
 #. Translators: Label for a setting toggle in voice settings dialog.
 #: synthDriverHandler.py:236
 msgid "Natural pause after punctuation"
-msgstr ""
+msgstr "Naturlig paus efter skiljetecken"
 
 #. Translators: The name of a touch mode.
 #: touchHandler.py:68 touchHandler.py:88
@@ -7214,7 +7214,7 @@ msgstr "objektläge"
 #. Translators: The name of a touch mode used when in browse mode.
 #: touchHandler.py:70 touchHandler.py:92
 msgid "browse mode"
-msgstr ""
+msgstr "läsläge"
 
 #. Translators: a touch screen action performed once
 #: touchHandler.py:223
@@ -7252,13 +7252,13 @@ msgstr[1] "{numFingers} fingrar {action}"
 #: touchTracker.py:40
 msgctxt "touch action"
 msgid "pinch in"
-msgstr ""
+msgstr "nyp ihop"
 
 #. Translators: a touch screen gesture where two fingers move away from each other (zoom in)
 #: touchTracker.py:42
 msgctxt "touch action"
 msgid "pinch out"
-msgstr ""
+msgstr "dra isär"
 
 #. Translators: a very quick touch and release of a finger on a touch screen
 #: touchTracker.py:44
@@ -7611,7 +7611,7 @@ msgstr "Den aktiva anslutningen kanske inte fortsätter under eller efter uppdat
 #. Translators: Title of warning dialog
 #: updateCheck.py:1026 gui\_SetURLDialog.py:113 gui\configProfiles.py:500
 #: gui\installerGui.py:502 gui\installerGui.py:660 gui\settingsDialogs.py:1964
-#: gui\settingsDialogs.py:6329 screenCurtain\_screenCurtain.py:70
+#: gui\settingsDialogs.py:6320 screenCurtain\_screenCurtain.py:70
 #: _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "Varning"
@@ -9555,7 +9555,7 @@ msgstr "Spanska grad 2"
 #. braille settings dialog.
 #: brailleTables\__tables.py:201
 msgid "Estonian 6 dot"
-msgstr ""
+msgstr "Estnisk 6 punkts"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9735,7 +9735,7 @@ msgstr "Internationellt fonetiskt alfabete"
 #. braille settings dialog.
 #: brailleTables\__tables.py:313
 msgid "Italian 6 dot"
-msgstr ""
+msgstr "Italiensk 6 punkts"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10688,7 +10688,7 @@ msgstr "debug"
 #. without redacting secrets).
 #: config\configFlags.py:441
 msgid "debug (unredacted)"
-msgstr ""
+msgstr "felsökning (oredigerad)"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
 #: config\configFlags.py:464
@@ -10706,7 +10706,7 @@ msgstr "Ja"
 #: config\configFlags.py:469
 msgctxt "advanced.playErrorSound"
 msgid "No"
-msgstr ""
+msgstr "Nej"
 
 #. Translators: Label for an option in NVDA settings.
 #: config\featureFlagEnums.py:53
@@ -12223,35 +12223,40 @@ msgid "Welcome to the System Accessibility Repair Tool.\n\n"
 "Installing and uninstalling programs, as well as other events, can damage accessibility entries in the Windows registry. This can cause previously accessible elements to be presented incorrectly, or can cause \"unknown\" or \"pane\" to be spoken or brailled in some applications or Windows components, instead of the content you were expecting.\n\n"
 "This tool attempts to fix such common problems. Note that the tool must access the system registry, which requires administrative privileges.\n\n"
 "Press Continue to run the tool now."
-msgstr ""
+msgstr "Välkommen till reparationsverktyget för systemtillgänglighet.\n\n"
+"Installation och avinstallation av program, såväl som andra händelser, kan skada tillgänglighetsposter i Windows-registret. Detta kan leda till att tidigare tillgängliga element presenteras felaktigt, eller kan orsaka att \"okänt\" eller \"ruta\" läses upp eller punktskrift i vissa applikationer eller Windows-komponenter, istället för innehållet du förväntade dig.\n\n"
+"Det här verktyget försöker fixa sådana vanliga problem. Observera att verktyget måste komma åt systemregistret, vilket kräver administrativa rättigheter.\n\n"
+"Tryck på Fortsätt för att köra verktyget nu."
 
 #. Translators: The title of various dialogs displayed when using the System Accessibility Repair Tool
 #: gui\__init__.py:581
 msgid "System Accessibility Repair Tool"
-msgstr ""
+msgstr "Reparationsverktyget för systemtillgänglighet"
 
 #. Translators: The message displayed while NVDA is running the System Accessibility Repair Tool
 #: gui\__init__.py:596
 msgid "Please wait while NVDA attempts to repair your system's accessibility registrations..."
-msgstr ""
+msgstr "Vänligen vänta medan NVDA försöker reparera systemets registerposter för tillgänglighet..."
 
 #. Translators: message shown to the user on System Accessibility Repair fail
 #: gui\__init__.py:623
 #, python-brace-format
 msgid "The System Accessibility Repair Tool was unsuccessful. This Windows error may provide more information.\n"
 "{error}"
-msgstr ""
+msgstr "Reparationsverktyget för systemtillgänglighet misslyckades. Detta Windows-fel kan ge mer information.\n"
+"{error}"
 
 #. Translators: The title of a System Accessibility Repair Tool dialog, when the tool has failed
 #: gui\__init__.py:627
 msgid "System Accessibility Repair Failed"
-msgstr ""
+msgstr "Reparation av systemtillgänglighet misslyckades"
 
 #. Translators: Message shown when the System Accessibility Repair Tool completes.
 #: gui\__init__.py:634
 msgid "The System Accessibility Repair Tool has completed successfully.\n"
 "It is highly recommended that you restart your computer now, to make sure the changes take full effect."
-msgstr ""
+msgstr "Reparationsverktyget för systemtillgänglighet har slutförts framgångsrikt.\n"
+"Det rekommenderas starkt att du startar om datorn nu för att se till att ändringarna får fullt genomslag."
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
 #: gui\__init__.py:661
@@ -12321,7 +12326,7 @@ msgstr "&Installera NVDA..."
 #. Translators: The label for the menu item to run the System Accessibility Repair Tool
 #: gui\__init__.py:724
 msgid "Run System Accessibility Repair Tool..."
-msgstr ""
+msgstr "Kör reparationsverktyget för systemtillgänglighet..."
 
 #. Translators: The label for the menu item to reload plugins.
 #: gui\__init__.py:728
@@ -12651,26 +12656,27 @@ msgstr "Åtgärden är inte tillgänglig när fjärråtkomst är inaktiverat"
 #. Translators: The title of the dialog shown after resetting configuration to factory defaults.
 #: gui\configManagement.py:27
 msgid "Factory Defaults Restored"
-msgstr ""
+msgstr "Fabriksinställningar återställda"
 
 #. Translators: The message shown in the dialog after the configuration has been reset to factory defaults.
 #. The user can choose to keep the factory defaults or undo the reset.
 #: gui\configManagement.py:31
 msgid "Your configuration has been reset to factory defaults.\n"
 "Choose OK to keep factory defaults, or Undo to restore your previous configuration."
-msgstr ""
+msgstr "Din konfiguration har återställts till fabriksinställningarna.\n"
+"Välj OK för att behålla fabriksinställningarna, eller Ångra för att återställa din tidigare konfiguration."
 
 #. Translators: The label of the undo button in the factory defaults reset dialog.
 #. Pressing this button restores the previous configuration.
 #: gui\configManagement.py:38
 msgid "&Undo"
-msgstr ""
+msgstr "&Ångra"
 
 #. Translators: Reported when a factory reset has been undone
 #. and the previous configuration has been restored.
 #: gui\configManagement.py:68
 msgid "Factory reset undone. Previous configuration restored."
-msgstr ""
+msgstr "Fabriksåterställning ångrad. Tidigare konfiguration återställd."
 
 #. Translators: The title of the Configuration Profiles dialog.
 #: gui\configProfiles.py:36
@@ -12978,7 +12984,7 @@ msgstr "&Filtrera med:"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:6760 gui\speechDict.py:215
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:6751 gui\speechDict.py:215
 msgid "&Add"
 msgstr "&Lägg till"
 
@@ -13016,33 +13022,33 @@ msgstr "Det gick inte att spara användardefinierade gester - troligtvis på gru
 #. shown in the post-install dialog.
 #: gui\installerGui.py:130
 msgid "Successfully updated your installation of NVDA. It is recommended to restart Windows after updating. NVDA may malfunction without a restart."
-msgstr ""
+msgstr "Uppdateringen av NVDA lyckades. Du rekommenderas att starta om Windows efter en uppdatering. NVDA kanske inte fungerar korrekt utan en omstart."
 
 #. Translators: The message displayed when NVDA has been successfully installed,
 #. shown in the post-install dialog.
 #: gui\installerGui.py:138
 msgid "Successfully installed NVDA. It is recommended to restart Windows after installing. NVDA may malfunction without a restart."
-msgstr ""
+msgstr "Installationen av NVDA lyckades. Du rekommenderas att starta om Windows efter installationen. NVDA kanske inte fungerar korrekt utan en omstart."
 
 #. Translators: Button in the post-install dialog to start the newly installed NVDA.
 #: gui\installerGui.py:152
 msgid "&Start NVDA"
-msgstr ""
+msgstr "&Starta NVDA"
 
 #. Translators: Button in the post-install dialog to restart Windows immediately.
 #: gui\installerGui.py:157
 msgid "Restart &Windows"
-msgstr ""
+msgstr "Starta om &Windows"
 
 #. Translators: Button in the post-install dialog to exit NVDA.
 #: gui\installerGui.py:162
 msgid "E&xit NVDA"
-msgstr ""
+msgstr "&Avsluta NVDA"
 
 #. Translators: Message shown when Windows restart fails after NVDA installation.
 #: gui\installerGui.py:179
 msgid "Failed to restart Windows. Please restart Windows manually."
-msgstr ""
+msgstr "Kunde inte starta om Windows. Vänligen starta om Windows manuellt."
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
 #: gui\installerGui.py:212
@@ -13259,7 +13265,8 @@ msgstr "Vänligen specificera mappen där det portabla exemplaret ska skapas."
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. It must start with a drive letter (e.g. C:). It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
 "Current path: {path}. "
-msgstr ""
+msgstr "Vänligen ange den fullständiga sökvägen till platsen där det portabla exemplaret av NVDA ska skapas. Det måste börja med en enhetsbokstav (exempelvis C:). Den kan innehålla systemvariabler (exempelvis %temp%, %homepath%) som platshållare för delar av sökvägen.\n"
+"Aktuell sökväg: {path}. "
 
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
 #: gui\installerGui.py:822
@@ -13393,7 +13400,7 @@ msgstr "&Kategorier:"
 #. Translators: name of a grouping in Privacy and Security settings
 #. which contains miscellaneous settings.
 #: gui\settingsDialogs.py:809 gui\settingsDialogs.py:6092
-#: gui\settingsDialogs.py:6393
+#: gui\settingsDialogs.py:6384
 msgid "General"
 msgstr "Allmänt"
 
@@ -13661,7 +13668,7 @@ msgstr "E&xtra ordlistor för tecken och symbolhantering:"
 #. Translators: Label of the list where user can enable or disable speech dictionaries.
 #: gui\settingsDialogs.py:1862
 msgid "Sp&eech dictionaries:"
-msgstr ""
+msgstr "Uttalsor&dlistor:"
 
 #. Translators: Label of the list where user can select speech modes that will be available.
 #: gui\settingsDialogs.py:1876
@@ -14046,7 +14053,7 @@ msgstr "&Fånga alla inmatningsgester som inte är kommandon från att nå dokum
 #. Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
 #: gui\settingsDialogs.py:2676
 msgid "T&ouch navigation elements:"
-msgstr ""
+msgstr "&Peknavigeringselement:"
 
 #. Translators: Title of the math settings panel.
 #: gui\settingsDialogs.py:2713
@@ -14977,7 +14984,7 @@ msgstr "Använd WASAPI för SAPI 4 ljudutmatning:"
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:4572
 msgid "Use modern regular expression engine for speech dictionary entries:"
-msgstr ""
+msgstr "Använd en modern motor för reguljära uttryck för talordboksposter:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -15217,7 +15224,7 @@ msgstr "Av&bryt tal vid skrollning"
 #. Translators: The label for a setting in braille settings to change the rate for autoscroll.
 #: gui\settingsDialogs.py:5538
 msgid "Auto&matic scroll rate"
-msgstr ""
+msgstr "Auto&matisk rullhastighet"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -15281,192 +15288,190 @@ msgstr "Kan inte konfigurera användargränssnittet för synförbättringsmodule
 #. Translators: The label for a setting in magnifier settings to enable or disable the magnifier.
 #: gui\settingsDialogs.py:6100
 msgid "&Enable magnifier (immediate effect)"
-msgstr ""
+msgstr "Aktiv&era Förstorare (omedelbar effekt)"
 
 #. Translators: The label for a setting in magnifier settings to select the zoom level.
 #: gui\settingsDialogs.py:6114
 msgid "&Zoom (%):"
-msgstr ""
+msgstr "F&örstoring (%):"
 
 #. Translators: The label for a setting in magnifier settings to select the filter
 #: gui\settingsDialogs.py:6136
 msgid "Color f&ilter:"
-msgstr ""
+msgstr "Färgf&ilter:"
 
 #. Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
 #: gui\settingsDialogs.py:6153
 msgid "&Panning step size (%):"
-msgstr ""
+msgstr "&Panoreringsstegstorlek (%):"
 
 #. Translators: This is the label for a group of tracking options in the magnifier settings panel
-#. Translators: This is the label for a group of tracking magnifier options in the
-#. magnifier settings panel
-#: gui\settingsDialogs.py:6175 gui\settingsDialogs.py:6208
+#: gui\settingsDialogs.py:6175
 msgid "Tracking"
-msgstr ""
+msgstr "Följning"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the mouse
 #: gui\settingsDialogs.py:6183
 msgid "Follow &mouse"
-msgstr ""
+msgstr "Följ &mus"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
 #: gui\settingsDialogs.py:6185
 msgid "Follow &system focus"
-msgstr ""
+msgstr "Följ &systemfokus"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the review cursor
 #: gui\settingsDialogs.py:6187
 msgid "Follow &review cursor"
-msgstr ""
+msgstr "Följ &granskningsmarkör"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the navigator object
 #: gui\settingsDialogs.py:6190
 msgid "Follow &navigator object"
-msgstr ""
+msgstr "Följ &navigatorobjekt"
 
-#. Translators: The label for a setting in magnifier settings to select the full-screen mode
-#: gui\settingsDialogs.py:6216
+#. Translators: The label for a setting in magnifier settings to select the tracking mode
+#: gui\settingsDialogs.py:6207
 msgid "&Tracking mode:"
-msgstr ""
+msgstr "Föl&jningsläge:"
 
 #. Translators: The title of the privacy and security category in NVDA's settings.
-#: gui\settingsDialogs.py:6297
+#: gui\settingsDialogs.py:6288
 msgid "Privacy and Security"
 msgstr "Sekretess och säkerhet"
 
 #. Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
-#: gui\settingsDialogs.py:6310
+#: gui\settingsDialogs.py:6301
 msgid "Setting the logging level to \"debug (unredacted)\" will write sensitive information to the log without redaction, including passwords, API keys, or other private data. Only enable this temporarily if you explicitly need unredacted diagnostic logs. Do you want to continue?"
-msgstr ""
+msgstr "Att sätta loggningsnivån till \"debug (oredigerad)\" gör att känslig information kommer skrivas till loggen utan att redigeras bort, inklusive lösenord, API nycklar eller andra privata data. Aktivera enbart detta tillfälligt om du specifikt behöver oredigerad diagnostiska loggar. Vill du fortsätta?"
 
 #. Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
-#: gui\settingsDialogs.py:6317
+#: gui\settingsDialogs.py:6308
 msgid "High risk logging level"
-msgstr ""
+msgstr "Högrisk loggningsnivå"
 
 #. Translators: Warning shown when enabling a logging level above info from NVDA settings.
-#: gui\settingsDialogs.py:6322
+#: gui\settingsDialogs.py:6313
 msgid "Setting the logging level above info may record sensitive information such as typed input, speech output, or other private data in the log. Only enable higher logging levels temporarily while troubleshooting. Do you want to continue?"
-msgstr ""
+msgstr "Att sätta loggningsnivån högre än info kan spara känslig information som inmatad text, uppläst information eller annan privat data i loggen. Aktivera enbart högre loggningsnivåer tillfälligt vid felsökning. Vill du fortsätta?"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
-#: gui\settingsDialogs.py:6347
+#: gui\settingsDialogs.py:6338
 msgid "Screen Curtain"
 msgstr "Skärmridå"
 
 #. Translators: option to enable screen curtain in the privacy and security settings panel
-#: gui\settingsDialogs.py:6356
+#: gui\settingsDialogs.py:6347
 msgid "Make screen black (immediate effect)"
 msgstr "Gör bildskärmen svart (omedelbar effekt)"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#: gui\settingsDialogs.py:6385
+#: gui\settingsDialogs.py:6376
 msgid "&Play sound when toggling Screen Curtain"
 msgstr "S&pela ljud när skärmridån växlas"
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
-#: gui\settingsDialogs.py:6400
+#: gui\settingsDialogs.py:6391
 msgid "L&ogging level:"
 msgstr "L&oggningsnivå:"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-#: gui\settingsDialogs.py:6423
+#: gui\settingsDialogs.py:6414
 msgid "Allow NV Access to gather NVDA usage statistics"
 msgstr "Tillåt NV Access att samla in användningsstatistik"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:6544
+#: gui\settingsDialogs.py:6535
 msgid "NVDA Settings"
 msgstr "NVDA Inställningar"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:6600
+#: gui\settingsDialogs.py:6591
 msgid "normal configuration"
 msgstr "(ordinarie konfiguration)"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:6635
+#: gui\settingsDialogs.py:6626
 msgid "Add Symbol"
 msgstr "Lägg till symbol"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:6640
+#: gui\settingsDialogs.py:6631
 msgid "&Symbol:"
 msgstr "&Symbol:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:6670
+#: gui\settingsDialogs.py:6661
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "Symboluttal (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:6684
+#: gui\settingsDialogs.py:6675
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "&Filtrera med:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6693
+#: gui\settingsDialogs.py:6684
 msgid "&Symbols"
 msgstr "&Symboler"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:6703
+#: gui\settingsDialogs.py:6694
 msgid "Symbol"
 msgstr "Symbol"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6705 gui\speechDict.py:191
+#: gui\settingsDialogs.py:6696 gui\speechDict.py:191
 msgid "Replacement"
 msgstr "Ersättning"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:6707
+#: gui\settingsDialogs.py:6698
 msgid "Level"
 msgstr "Nivå"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:6710
+#: gui\settingsDialogs.py:6701
 msgid "Preserve"
 msgstr "Bevara"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:6714
+#: gui\settingsDialogs.py:6705
 msgid "Change selected symbol"
 msgstr "Ändra vald symbol"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6732 gui\speechDict.py:52
+#: gui\settingsDialogs.py:6723 gui\speechDict.py:52
 msgid "&Replacement"
 msgstr "E&rsättning"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:6741
+#: gui\settingsDialogs.py:6732
 msgid "&Level"
 msgstr "&Nivå"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:6748
+#: gui\settingsDialogs.py:6739
 msgid "&Send actual symbol to synthesizer"
 msgstr "&Skicka aktuell symbol till talsyntes"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:6763
+#: gui\settingsDialogs.py:6754
 msgid "Re&move"
 msgstr "&Radera"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:6870
+#: gui\settingsDialogs.py:6861
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "Symbolen \"%s\" finns redan."
@@ -16316,7 +16321,7 @@ msgstr "Välj paketfil för tillägg"
 #: gui\addonStoreGui\viewModels\addonList.py:63
 msgctxt "addonStore"
 msgid "Relevance"
-msgstr ""
+msgstr "Relevans"
 
 #. Translators: The name of the column that contains the status of the addon.
 #. e.g. available, downloading installing
@@ -16621,203 +16626,203 @@ msgstr "{lang} ({code})"
 #: mathPres\MathCAT\navCommands.py:26
 msgctxt "math"
 msgid "Move to previous item in math"
-msgstr ""
+msgstr "Flytta till föregående matematikobjekt"
 
 #. Translators: Input help message for the command to move to the next item in math.
 #: mathPres\MathCAT\navCommands.py:32
 msgctxt "math"
 msgid "Move to next item in math"
-msgstr ""
+msgstr "Flytta till nästa matematikobjekt"
 
 #. Translators: Input help message for the command to zoom out in math.
 #: mathPres\MathCAT\navCommands.py:38
 msgctxt "math"
 msgid "Zoom out in math"
-msgstr ""
+msgstr "Zooma ut i matematik"
 
 #. Translators: Input help message for the command to zoom in in math.
 #: mathPres\MathCAT\navCommands.py:44
 msgctxt "math"
 msgid "Zoom in in math"
-msgstr ""
+msgstr "Zooma in i matematik"
 
 #. Translators: Input help message for the command to move to the previous table cell or digit in math.
 #: mathPres\MathCAT\navCommands.py:50
 msgctxt "math"
 msgid "Move to previous table cell or digit in math"
-msgstr ""
+msgstr "Flytta till föregående tabellcell eller siffra i matematik"
 
 #. Translators: Input help message for the command to move to the next table cell or digit in math.
 #: mathPres\MathCAT\navCommands.py:56
 msgctxt "math"
 msgid "Move to next table cell or digit in math"
-msgstr ""
+msgstr "Flytta till nästa tabellcell eller siffra i matematik"
 
 #. Translators: Input help message for the command to move to the cell or digit above in math.
 #: mathPres\MathCAT\navCommands.py:62
 msgctxt "math"
 msgid "Move to cell or digit above in math"
-msgstr ""
+msgstr "Flytta till cell eller siffra ovanför i matematik"
 
 #. Translators: Input help message for the command to move to the cell or digit below in math.
 #: mathPres\MathCAT\navCommands.py:68
 msgctxt "math"
 msgid "Move to cell or digit below in math"
-msgstr ""
+msgstr "Flytta till cell eller siffra nedanför i matematik"
 
 #. Translators: Input help message for the command to read the previous item in math.
 #: mathPres\MathCAT\navCommands.py:74
 msgctxt "math"
 msgid "Read previous item in math"
-msgstr ""
+msgstr "Läs föregående matematikobjekt"
 
 #. Translators: Input help message for the command to read the next item in math.
 #: mathPres\MathCAT\navCommands.py:81
 msgctxt "math"
 msgid "Read next item in math"
-msgstr ""
+msgstr "Läs nästa matematikobjekt"
 
 #. Translators: Input help message for the command to change the math navigation mode to larger.
 #: mathPres\MathCAT\navCommands.py:88
 msgctxt "math"
 msgid "Change math navigation mode to larger"
-msgstr ""
+msgstr "Ändra matematiknavigeringsläge till större"
 
 #. Translators: Input help message for the command to change the math navigation mode to smaller.
 #: mathPres\MathCAT\navCommands.py:94
 msgctxt "math"
 msgid "Change math navigation mode to smaller"
-msgstr ""
+msgstr "Ändra matematiknavigeringsläge till mindre"
 
 #. Translators: Input help message for the command to describe the previous item in math.
 #: mathPres\MathCAT\navCommands.py:100
 msgctxt "math"
 msgid "Describe previous item in math"
-msgstr ""
+msgstr "Beskriv föregående matematikobjekt"
 
 #. Translators: Input help message for the command to describe the next item in math.
 #: mathPres\MathCAT\navCommands.py:107
 msgctxt "math"
 msgid "Describe next item in math"
-msgstr ""
+msgstr "Beskriv nästa matematikobjekt"
 
 #. Translators: Input help message for the command to zoom out all the way in math.
 #: mathPres\MathCAT\navCommands.py:114
 msgctxt "math"
 msgid "Zoom out all the way in math"
-msgstr ""
+msgstr "Zooma ut helt i matematik"
 
 #. Translators: Input help message for the command to zoom in all the way in math.
 #: mathPres\MathCAT\navCommands.py:120
 msgctxt "math"
 msgid "Zoom in all the way in math"
-msgstr ""
+msgstr "Zooma in helt i matematik"
 
 #. Translators: Input help message for the command to report the current position in math.
 #: mathPres\MathCAT\navCommands.py:126
 msgctxt "math"
 msgid "Report current position in math"
-msgstr ""
+msgstr "Rapportera nuvarande position i matematik"
 
 #. Translators: Input help message for the command to report the global position in math.
 #: mathPres\MathCAT\navCommands.py:133
 msgctxt "math"
 msgid "Report global position in math"
-msgstr ""
+msgstr "Rapportera global position i matematik"
 
 #. Translators: Input help message for the command to read the current item in math.
 #: mathPres\MathCAT\navCommands.py:140
 msgctxt "math"
 msgid "Read current item in math"
-msgstr ""
+msgstr "Läs nuvarande matematikobjekt"
 
 #. Translators: Input help message for the command to read the current table cell in math.
 #: mathPres\MathCAT\navCommands.py:147
 msgctxt "math"
 msgid "Read current table cell in math"
-msgstr ""
+msgstr "Läs nuvarande tabellcell i matematik"
 
 #. Translators: Input help message for the command to toggle math speech mode between read and describe.
 #: mathPres\MathCAT\navCommands.py:154
 msgctxt "math"
 msgid "Toggle math speech mode between read and describe"
-msgstr ""
+msgstr "Växla matematiktalläge mellan läs och beskriv"
 
 #. Translators: Input help message for the command to describe the current item in math.
 #: mathPres\MathCAT\navCommands.py:160
 msgctxt "math"
 msgid "Describe current item in math"
-msgstr ""
+msgstr "Beskriv nuvarande matematikobjekt"
 
 #. Translators: Input help message for the command to move to the start of a math expression.
 #: mathPres\MathCAT\navCommands.py:167
 msgctxt "math"
 msgid "Move to start of math expression"
-msgstr ""
+msgstr "Flytta till början av matematikuttryck"
 
 #. Translators: Input help message for the command to move to the start of a line in math.
 #: mathPres\MathCAT\navCommands.py:173
 msgctxt "math"
 msgid "Move to start of line in math"
-msgstr ""
+msgstr "Flytta till början av rad i matematik"
 
 #. Translators: Input help message for the command to move to the start of a column in math.
 #: mathPres\MathCAT\navCommands.py:179
 msgctxt "math"
 msgid "Move to start of column in math"
-msgstr ""
+msgstr "Flytta till början av kolumn i matematik"
 
 #. Translators: Input help message for the command to move to the end of a math expression.
 #: mathPres\MathCAT\navCommands.py:185
 msgctxt "math"
 msgid "Move to end of math expression"
-msgstr ""
+msgstr "Flytta till slutet av matematikuttryck"
 
 #. Translators: Input help message for the command to move to the end of a line in math.
 #: mathPres\MathCAT\navCommands.py:191
 msgctxt "math"
 msgid "Move to end of line in math"
-msgstr ""
+msgstr "Flytta till slutet av rad i matematik"
 
 #. Translators: Input help message for the command to move to the end of a column in math.
 #: mathPres\MathCAT\navCommands.py:197
 msgctxt "math"
 msgid "Move to end of column in math"
-msgstr ""
+msgstr "Flytta till slutet av kolumn i matematik"
 
 #. Translators: Input help message for the command to move back to the last position in math.
 #: mathPres\MathCAT\navCommands.py:203
 msgctxt "math"
 msgid "Move back to last position in math"
-msgstr ""
+msgstr "Flytta tillbaka till senaste positionen i matematik"
 
 #. Translators: Input help message for the command to jump to a placemarker in math; {n} is replaced with the placemarker number.
 #: mathPres\MathCAT\navCommands.py:216
 #, python-brace-format
 msgctxt "math"
 msgid "Jump to placemarker {n} in math"
-msgstr ""
+msgstr "Hoppa till platsmarkör  {n} i matematik"
 
 #. Translators: Input help message for the command to set a placemarker in math; {n} is replaced with the placemarker number.
 #: mathPres\MathCAT\navCommands.py:222
 #, python-brace-format
 msgctxt "math"
 msgid "Set placemarker {n} in math"
-msgstr ""
+msgstr "Sätt platsmarkör {n} i matematik"
 
 #. Translators: Input help message for the command to read a placemarker in math; {n} is replaced with the placemarker number.
 #: mathPres\MathCAT\navCommands.py:228
 #, python-brace-format
 msgctxt "math"
 msgid "Read placemarker {n} in math"
-msgstr ""
+msgstr "Läs platsmarkör {n} i matematik"
 
 #. Translators: Input help message for the command to describe a placemarker in math; {n} is replaced with the placemarker number.
 #: mathPres\MathCAT\navCommands.py:235
 #, python-brace-format
 msgctxt "math"
 msgid "Describe placemarker {n} in math"
-msgstr ""
+msgstr "Beskriv platsmarkör {n} i matematik"
 
 #. Translators: Learning disabilities includes dyslexia and ADHD
 #. category of impairment that MathCAT supports: people with learning disabilities
@@ -17042,8 +17047,8 @@ msgstr "Objektets kanter är placerade {left:.1f} procent från vänster kant av
 #, python-format
 msgid "%d percent"
 msgid_plural "%d percent"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d procent"
+msgstr[1] "%d percent"
 
 #. Translators: Announced in braille when suggestions appear when search term is entered
 #. in various search fields such as Start search box in Windows 10.
@@ -17187,7 +17192,7 @@ msgstr "Hittar inte rad {rowNumber} kolumn {columnNumber} i radrubrikerna"
 #. Translators: a description for a script
 #: NVDAObjects\IAccessible\winword.py:346
 msgid "Reports the text of the comment where the system caret is located.If pressed twice, presents the information in browse mode."
-msgstr "Rapporterar kommentarens text där systemmarkören befinner sig. Vid två tryck presenteras informationen i läsläge."
+msgstr "Reports the text of the comment where the system caret is located.If pressed twice, presents the information in browse mode."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 #: NVDAObjects\IAccessible\winword.py:379 NVDAObjects\UIA\wordDocument.py:907
@@ -19869,7 +19874,7 @@ msgstr "Tillfällig ordlista"
 #. Translators: Name of the default speech dictionary.
 #: speechDictHandler\definitions.py:56
 msgid "Default Dictionary"
-msgstr ""
+msgstr "Standardordlista"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:54
@@ -19889,42 +19894,42 @@ msgstr "Hela &ord"
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:60
 msgid "&Part of word"
-msgstr ""
+msgstr "&Del av ord"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:62
 msgid "&Start of word"
-msgstr ""
+msgstr "&Början av ord"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:64
 msgid "E&nd of word"
-msgstr ""
+msgstr "S&lutet av ord"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: speechDictHandler\types.py:66
 msgid "&Unix shell-style wildcards"
-msgstr ""
+msgstr "&Unix-shell-stil jokertecken"
 
 #. Translators: A type of speech dictionary.
 #: speechDictHandler\types.py:107
 msgid "Temporary"
-msgstr ""
+msgstr "Tillfäligt"
 
 #. Translators: A type of speech dictionary.
 #: speechDictHandler\types.py:109
 msgid "Voice specific"
-msgstr ""
+msgstr "Röstspecifikt"
 
 #. Translators: A type of speech dictionary.
 #: speechDictHandler\types.py:111
 msgid "Default"
-msgstr ""
+msgstr "Standard"
 
 #. Translators: A type of speech dictionary.
 #: speechDictHandler\types.py:113
 msgid "Built-in"
-msgstr ""
+msgstr "Inbyggt"
 
 #. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
 #: speechDictHandler\types.py:324
@@ -20226,7 +20231,7 @@ msgstr "Skyddat skrivbord"
 #: _magnifier\commands.py:43 _magnifier\commands.py:64
 msgctxt "magnifier"
 msgid "left edge"
-msgstr ""
+msgstr "vänsterkant"
 
 #. Translators: Message announced when already at right edge of the screen while panning the magnified view
 #. Translators: Message announced when already at right edge of the screen while panning the magnified view
@@ -20234,7 +20239,7 @@ msgstr ""
 #: _magnifier\commands.py:48 _magnifier\commands.py:70
 msgctxt "magnifier"
 msgid "right edge"
-msgstr ""
+msgstr "högerkant"
 
 #. Translators: Message announced when already at top edge of the screen while panning the magnified view
 #. Translators: Message announced when already at top edge of the screen while panning the magnified view
@@ -20242,7 +20247,7 @@ msgstr ""
 #: _magnifier\commands.py:53 _magnifier\commands.py:76
 msgctxt "magnifier"
 msgid "top edge"
-msgstr ""
+msgstr "överkant"
 
 #. Translators: Message announced when already at bottom edge of the screen while panning the magnified view
 #. Translators: Message announced when already at left edge of the screen while panning the magnified view
@@ -20250,308 +20255,308 @@ msgstr ""
 #: _magnifier\commands.py:58 _magnifier\commands.py:82
 msgctxt "magnifier"
 msgid "bottom edge"
-msgstr ""
+msgstr "nederkant"
 
 #. Translators: Message announced when stopping the NVDA magnifier.
 #: _magnifier\commands.py:110
 msgctxt "magnifier"
 msgid "Magnifier disabled"
-msgstr ""
+msgstr "Förstorare avaktiverad"
 
 #. Translators: Message announced when starting the NVDA magnifier.
 #: _magnifier\commands.py:125
 msgctxt "magnifier"
 msgid "Magnifier enabled"
-msgstr ""
+msgstr "Förstorare aktiverad"
 
 #. Translators: Message announced when changing the color filter with {filter} being the new color filter.
 #: _magnifier\commands.py:185
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Color filter {filter}"
-msgstr ""
+msgstr "Färgfilter {filter}"
 
 #. Translators: Message announced when changing the magnifier view with {view} being the new magnifier view.
 #: _magnifier\commands.py:209
 #, python-brace-format
 msgctxt "magnifier"
 msgid "{view} view"
-msgstr ""
+msgstr "{view} vy"
 
 #. Translators: Message announced when toggling a follow setting with {setting} being the name of the setting and {state} being either "enabled" or "disabled".
 #: _magnifier\commands.py:232
 #, python-brace-format
 msgctxt "magnifier"
 msgid "{setting} {state}"
-msgstr ""
+msgstr "{setting} {state}"
 
 #. Translators: State of the follow setting being toggled enabled.
 #: _magnifier\commands.py:238
 msgctxt "magnifier"
 msgid "enabled"
-msgstr ""
+msgstr "aktiverad"
 
 #. Translators: State of the follow setting being toggled disabled.
 #: _magnifier\commands.py:244
 msgctxt "magnifier"
 msgid "disabled"
-msgstr ""
+msgstr "avaktiverad"
 
 #. Translators: State of all follow settings being toggled disabled.
 #: _magnifier\commands.py:262
 msgctxt "magnifier"
 msgid "All tracking settings disabled"
-msgstr ""
+msgstr "Alla följningsinställningar avaktiverade"
 
 #. Translators: State of all follow settings being restored.
 #: _magnifier\commands.py:268
 msgctxt "magnifier"
 msgid "Tracking settings restored"
-msgstr ""
+msgstr "Följningsinställningar återställda"
 
-#. Translators: Message announced when changing the full-screen mode with {mode} being the new full-screen mode.
+#. Translators: Message announced when changing the tracking mode with {mode} being the new tracking mode.
 #: _magnifier\commands.py:296
 #, python-brace-format
 msgctxt "magnifier"
-msgid "Full-screen mode {mode}"
-msgstr ""
+msgid "Tracking mode {mode}"
+msgstr "Följningsläge {mode}"
 
 #. Translators: Message announced when trying to show temporary overview of the screen while it's already active.
 #: _magnifier\commands.py:322
 msgctxt "magnifier"
 msgid "The screen overview is already active"
-msgstr ""
+msgstr "Skärmöversikten är redan aktiv"
 
 #. Translators: Message announced when overview of the entire screen is being showed.
 #: _magnifier\commands.py:333
 msgctxt "magnifier"
 msgid "Showing entire screen"
-msgstr ""
+msgstr "Visar hela skärmen"
 
 #. Translators: Message announced when the magnifier is not active.
 #: _magnifier\commands.py:357
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not active."
-msgstr ""
+msgstr "Kan inte {action} när Förstoraren inte är aktiv."
 
 #. Translators: Message announced when the magnifier is not full-screen.
 #: _magnifier\commands.py:382
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not full-screen."
-msgstr ""
+msgstr "Kan inte {action} när Förstoraren inte är helskärm."
 
 #. Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
 #: _magnifier\config.py:49
 #, python-brace-format
 msgctxt "magnifier"
 msgid "{zoomLevel}x"
-msgstr ""
+msgstr "{zoomLevel}x"
 
 #. Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
 #: _magnifier\fullscreenMagnifier.py:89
 msgctxt "magnifier"
 msgid "Cannot start magnifier. Another magnifier application may already be running."
-msgstr ""
+msgstr "Kan inte starta Förstoraren. Ett annat förstoringsprogram kanske redan körs."
 
 #. Translators: Message announced when the magnifier stops due to an unrecoverable error.
 #: _magnifier\fullscreenMagnifier.py:240
 msgctxt "magnifier"
 msgid "Magnifier stopped due to an error. Please restart it."
-msgstr ""
+msgstr "Förstoraren har stoppats på grund av ett fel. Vänligen starta om den."
 
 #. Translators: Message when trying to enable magnifier while screen curtain is active
 #: _magnifier\magnifier.py:195
 msgctxt "magnifier"
 msgid "Cannot enable magnifier. Please disable screen curtain first."
-msgstr ""
+msgstr "Kan inte aktivera Förstoraren. Vänligen avaktivera skärmridån först."
 
 #. Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
 #: _magnifier\magnifier.py:337
 msgctxt "magnifier"
 msgid "Disabling magnifier"
-msgstr ""
+msgstr "Avaktiverar Förstoraren"
 
 #. Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
 #: _magnifier\magnifier.py:356
 msgctxt "magnifier"
 msgid "Re-enabling magnifier"
-msgstr ""
+msgstr "Återaktiverar Förstoraren"
 
 #. Translators: Message announced when turning back to normal view after entire screen overview.
 #: _magnifier\utils\spotlightManager.py:70
 msgctxt "magnifier"
 msgid "Back to normal view"
-msgstr ""
+msgstr "Tillbaka till normal vy"
 
 #. Translators: Action description for zooming in.
 #: _magnifier\utils\types.py:60
 msgctxt "magnifier action"
 msgid "zoom in"
-msgstr ""
+msgstr "zooma in"
 
 #. Translators: Action description for zooming out.
 #: _magnifier\utils\types.py:62
 msgctxt "magnifier action"
 msgid "zoom out"
-msgstr ""
+msgstr "zooma ut"
 
 #. Translators: Action description for panning left.
 #: _magnifier\utils\types.py:64
 msgctxt "magnifier action"
 msgid "pan left"
-msgstr ""
+msgstr "panorera åt vänster"
 
 #. Translators: Action description for panning right.
 #: _magnifier\utils\types.py:66
 msgctxt "magnifier action"
 msgid "pan right"
-msgstr ""
+msgstr "panorera åt höger"
 
 #. Translators: Action description for panning up.
 #: _magnifier\utils\types.py:68
 msgctxt "magnifier action"
 msgid "pan up"
-msgstr ""
+msgstr "panorera uppåt"
 
 #. Translators: Action description for panning down.
 #: _magnifier\utils\types.py:70
 msgctxt "magnifier action"
 msgid "pan down"
-msgstr ""
+msgstr "panorera nedåt"
 
 #. Translators: Action description for panning to left edge.
 #: _magnifier\utils\types.py:72
 msgctxt "magnifier action"
 msgid "pan to left edge"
-msgstr ""
+msgstr "panorera till vänsterkanten"
 
 #. Translators: Action description for panning to right edge.
 #: _magnifier\utils\types.py:74
 msgctxt "magnifier action"
 msgid "pan to right edge"
-msgstr ""
+msgstr "panorera till högerkanten"
 
 #. Translators: Action description for panning to top edge.
 #: _magnifier\utils\types.py:76
 msgctxt "magnifier action"
 msgid "pan to top edge"
-msgstr ""
+msgstr "panorera till överkanten"
 
 #. Translators: Action description for panning to bottom edge.
 #: _magnifier\utils\types.py:78
 msgctxt "magnifier action"
 msgid "pan to bottom edge"
-msgstr ""
+msgstr "panorera till nederkanten"
 
 #. Translators: Action description for toggling settings.
 #: _magnifier\utils\types.py:80
 msgctxt "magnifier action"
 msgid "toggle tracking settings"
-msgstr ""
+msgstr "växla följningsinställningarna"
 
 #. Translators: Action description for toggling color filters.
 #: _magnifier\utils\types.py:82
 msgctxt "magnifier action"
 msgid "cycle color filters"
-msgstr ""
+msgstr "bläddra mellan färgfilter"
 
 #. Translators: Action description for changing magnifier view.
 #: _magnifier\utils\types.py:84
 msgctxt "magnifier action"
 msgid "change magnifier view"
-msgstr ""
+msgstr "ändra förstoringsvy"
 
-#. Translators: Action description for changing full-screen mode.
+#. Translators: Action description for changing tracking mode.
 #: _magnifier\utils\types.py:86
 msgctxt "magnifier action"
-msgid "change full-screen mode"
-msgstr ""
+msgid "change tracking mode"
+msgstr "ändra följningsläge"
 
 #. Translators: Action description for showing entire screen overview.
 #: _magnifier\utils\types.py:88
 msgctxt "magnifier action"
 msgid "show screen overview"
-msgstr ""
+msgstr "visa skärmöversikt"
 
 #. Translators: Type of item tracked by the Magnifier - mouse cursor.
 #: _magnifier\utils\types.py:104
 msgctxt "magnifier"
 msgid "Mouse"
-msgstr ""
+msgstr "Mus"
 
 #. Translators: Type of item tracked by the Magnifier - system focus (active element).
 #: _magnifier\utils\types.py:106
 msgctxt "magnifier"
 msgid "System focus"
-msgstr ""
+msgstr "Systemfokus"
 
 #. Translators: Type of item tracked by the Magnifier - review cursor position.
 #: _magnifier\utils\types.py:108
 msgctxt "magnifier"
 msgid "Review cursor"
-msgstr ""
+msgstr "Granskningsmarkör"
 
 #. Translators: Type of item tracked by the Magnifier - navigator object position.
 #: _magnifier\utils\types.py:110
 msgctxt "magnifier"
 msgid "Navigator object"
-msgstr ""
+msgstr "Navigatorobjekt"
 
 #. Translators: Magnifier view - full-screen mode.
 #: _magnifier\utils\types.py:126
 msgctxt "magnifier"
 msgid "Fullscreen"
-msgstr ""
+msgstr "Helskärm"
 
 #. Translators: Magnifier view - fixed mode.
 #: _magnifier\utils\types.py:128
 msgctxt "magnifier"
 msgid "Fixed"
-msgstr ""
+msgstr "Fixerad"
 
 #. Translators: Magnifier view - docked mode.
 #: _magnifier\utils\types.py:130
 msgctxt "magnifier"
 msgid "Docked"
-msgstr ""
+msgstr "Dockad"
 
 #. Translators: Magnifier view - lens mode.
 #: _magnifier\utils\types.py:132
 msgctxt "magnifier"
 msgid "Lens"
-msgstr ""
+msgstr "Lins"
 
 #. Translators: Magnifier tracking mode - center the tracked item on the screen.
 #: _magnifier\utils\types.py:158
 msgctxt "magnifier"
 msgid "Center"
-msgstr ""
+msgstr "Centrerad"
 
 #. Translators: Magnifier tracking mode - preserve the tracked item's screen position within the magnified view (same relative screen location).
 #: _magnifier\utils\types.py:160
 msgctxt "magnifier"
 msgid "Relative"
-msgstr ""
+msgstr "Relativ"
 
 #. Translators: Magnifier color filter - no filter applied.
 #: _magnifier\utils\types.py:173
 msgctxt "magnifier"
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #. Translators: Magnifier color filter - grayscale/black and white.
 #: _magnifier\utils\types.py:175
 msgctxt "magnifier"
 msgid "Grayscale"
-msgstr ""
+msgstr "Gråskala"
 
 #. Translators: Magnifier color filter - inverted colors.
 #: _magnifier\utils\types.py:177
 msgctxt "magnifier"
 msgid "Inverted"
-msgstr ""
+msgstr "Inverterad"
 
 #. Translators: Presented when attempting to mute or unmute Remote Access when connected as the controlled computer.
 #. Translators: Presented when attempting to send control+alt+delete when connected as the controlled computer.
@@ -20918,5 +20923,5 @@ msgstr "Meddelande från fjärråtkomstservernMessage from Remote Access Server"
 #: _remoteClient\session.py:553
 msgctxt "remote"
 msgid "Remote NVDA not connected"
-msgstr "Inte ansluten till NVDA via fjärråtkomst"
+msgstr "Kan inte {action} när Förstoraren inte är helskärm"
 

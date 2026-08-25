@@ -56,6 +56,7 @@
 
 ### Bug Fixes
 
+* 64-bit NVDA now reports the correct location and label for Win32 menu items of 32-bit applications when display scaling is above 100%. (#19225, #20158, @christopherpross)
 * NVDA now restarts reliably when requested after installing an add-on package from File Explorer. (#17925, @cary-rowen)
 * In PowerPoint and other Office applications, NVDA will now correctly read and navigate the edit fields in the insert hyperlink dialog. (#17390, @aryanchoudharypro)
 * The actions button can now be used when selecting multiple add-ons in the Add-on Store to perform batch actions, instead of just via the context menu in the add-ons list. (#19971, @amirmahdifard)
@@ -97,6 +98,27 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* Updated dependencies:
+  * comtypes to 1.4.16. (#20707)
+  * cryptography to 50.0.0. (#20707)
+  * requests to 2.34.2. (#20707)
+  * url-normalize to 3.0.0. (#20707)
+  * pywin32 to 312. (#20707)
+  * scons to 4.11.0. (#20707)
+  * py2exe to 0.14.2.0. (#20707)
+  * nh3 to 0.3.6. (#20707)
+  * crowdin-api-client to 1.28.0. (#20707)
+  * markdown to 3.10.3. (#20707)
+  * lxml to 6.1.2. (#20707)
+  * pymdown-extensions to 11.0.1. (#20707)
+  * pyphen to 0.18.1. (#20707)
+  * regex to 2026.7.19. (#20707)
+  * uv to 0.12.5. (#20707)
+  * licensecheck to 2026.0.8. (#20707)
+  * sphinx to 9.1.0. (#20707)
+  * sphinx-rtd-theme to 3.1.0. (#20707)
+  * robotframework to 7.4.2. (#20707)
+  * unittest-xml-reporting to 4.0.0. (#20707)
 * The remote Python console, available when running NVDA from source, works again. (#20626, @LeonarddeR)
 * The UIA remote operations framework now supports cache requests. (#20621, @LeonarddeR)
   * A remote operation can create a cache request with `ra.newCacheRequest`, add properties and patterns to it, and populate the cache of a remote element with `RemoteElement.populateCache`.
@@ -147,6 +169,8 @@ This adds support for `textInfos.UNIT_SENTENCE` to all `TextInfo` implementation
   `braille.Region.rawTextTypeforms` is now annotated as `list[louisHelper.Typeform]`.
   Plain integers remain compatible at run time.
   * Added `louisHelper.backTranslate`, which back translates braille cells, given as a list of integers, into text.
+* Add the `locationHelper._RectMixin.union` method, which is used to create a rectangle that contains all the other rectangles. (#20705, @hwf1324)
+* In `locationHelper`, the `RectLTWH.toLTRB` and `RectLTRB.toLTWH` methods have both been moved to the `_RectMixin` class to improve compatibility. This has no practical impact on existing code. (#20515, @hwf1324)
 
 #### Deprecations
 

@@ -107,7 +107,7 @@ autodoc_mock_imports = [
 
 # Perform some manual mocking of specific objects.
 # autodoc can only mock modules, not objects.
-from sphinx.ext.autodoc.mock import _make_subclass  # noqa: E402
+from sphinx.ext.autodoc._dynamic._mock import _make_subclass  # noqa: E402
 
 import config  # noqa: E402
 

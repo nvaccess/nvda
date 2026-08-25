@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-03 23:29+0000\n"
-"PO-Revision-Date: 2026-08-10 00:18\n"
+"POT-Creation-Date: 2026-08-23 23:27+0000\n"
+"PO-Revision-Date: 2026-08-24 00:13\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -781,34 +781,34 @@ msgid "¶"
 msgstr "¶"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3805
+#: braille.py:3806
 msgid "Dot firm&ness"
 msgstr "&Твердість крапок"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3818
+#: braille.py:3819
 msgid "Braille inp&ut"
 msgstr "Брайлівське &введення"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3828
+#: braille.py:3829
 msgid "&HID keyboard input simulation"
 msgstr "&Емуляція введення з HID клавіатури"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
-#: braille.py:3992
+#: braille.py:3993
 msgid "Unknown braille display"
 msgstr "Невідомий брайлівський дисплей"
 
 #. Translators: Name of a Bluetooth serial communications port.
-#: braille.py:4033
+#: braille.py:4034
 #, python-brace-format
 msgid "Bluetooth Serial: {port} ({deviceName})"
 msgstr "Послідовний порт bluetooth: {port} ({deviceName})"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#: braille.py:4042 brailleDisplayDrivers\ecoBraille.py:399
+#: braille.py:4043 brailleDisplayDrivers\ecoBraille.py:399
 #: brailleDisplayDrivers\papenmeier_serial.py:81
 #, python-brace-format
 msgid "Serial: {portName}"
@@ -2316,7 +2316,7 @@ msgid "brown-yellow"
 msgstr "коричнево-жовтий"
 
 #. Translators: Shown when one or more add-ons failed to update.
-#: core.py:84
+#: core.py:85
 msgid "The following add-on failed to update: {}."
 msgid_plural "The following add-ons failed to update: {}."
 msgstr[0] "Не вдалося оновити такий додаток: {}."
@@ -2325,7 +2325,7 @@ msgstr[2] "Не вдалося оновити такі додатки: {}."
 msgstr[3] "Не вдалося оновити такі додатки: {}."
 
 #. Translators: Shown when one or more add-ons failed to be uninstalled.
-#: core.py:93
+#: core.py:94
 msgid "The following add-on failed to uninstall: {}."
 msgid_plural "The following add-ons failed to uninstall: {}."
 msgstr[0] "Не вдалося видалити такий додаток: {}."
@@ -2334,7 +2334,7 @@ msgstr[2] "Не вдалося видалити такі додатки: {}."
 msgstr[3] "Не вдалося видалити такі додатки: {}."
 
 #. Translators: Shown when one or more add-ons failed to be installed.
-#: core.py:102
+#: core.py:103
 msgid "The following add-on failed to be installed: {}."
 msgid_plural "The following add-ons failed to be installed: {}."
 msgstr[0] "Не вдалося встановити такий додаток: {}."
@@ -2344,7 +2344,7 @@ msgstr[3] "Не вдалося встановити такі додатки: {}.
 
 #. Translators: Shown when one or more actions on add-ons failed.
 #. {failureMsg} will be replaced with the specific error message.
-#: core.py:116
+#: core.py:117
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
@@ -2379,7 +2379,7 @@ msgstr "Some operations on add-ons failed. See the log file for more details.\n"
 #. Translators: A title of a message box displayed when the host field is empty and the user tries to generate a key.
 #. Translators: Title of error dialog
 #. Translators: Title of a dialog
-#: core.py:119 documentationUtils.py:74 updateCheck.py:438 updateCheck.py:753
+#: core.py:120 documentationUtils.py:74 updateCheck.py:438 updateCheck.py:753
 #: updateCheck.py:925 gui\__init__.py:252 gui\__init__.py:260
 #: gui\__init__.py:277 gui\addonGui.py:138 gui\addonGui.py:258
 #: gui\addonGui.py:273 gui\configProfiles.py:182 gui\configProfiles.py:219
@@ -2390,58 +2390,58 @@ msgstr "Some operations on add-ons failed. See the log file for more details.\n"
 #: gui\installerGui.py:181 gui\installerGui.py:265 gui\installerGui.py:759
 #: gui\installerGui.py:776 gui\installerGui.py:848 gui\logViewer.py:112
 #: gui\logViewer.py:143 gui\message.py:160 gui\settingsDialogs.py:1044
-#: gui\settingsDialogs.py:6013 gui\settingsDialogs.py:6872
+#: gui\settingsDialogs.py:6013 gui\settingsDialogs.py:6863
 #: gui\startupDialogs.py:127 _remoteClient\dialogs.py:67
 #: _remoteClient\dialogs.py:306 _remoteClient\dialogs.py:430
 msgid "Error"
 msgstr "Помилка"
 
 #. Translators: Shown when NVDA has been started with unknown command line parameters.
-#: core.py:147
+#: core.py:148
 #, python-brace-format
 msgid "The following command line parameters are unknown to NVDA: {params}"
 msgstr "Ці параметри командного рядка невідомі NVDA: {params}"
 
 #. Translators: Title of the dialog letting user know
 #. that command line parameters they provided are unknown.
-#: core.py:152
+#: core.py:153
 msgid "Unknown command line parameters"
 msgstr "Невідомі параметри командного рядка"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
-#: core.py:161
+#: core.py:162
 msgid "Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr "Ваш файл конфігурації містить помилки. Вашу конфігурацію буде повернено до початкових налаштувань.\n"
 "Більше подробиць про цю помилку можна знайти у файлі журналу."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
-#: core.py:166
+#: core.py:167
 msgid "Configuration File Error"
 msgstr "Помилка конфігураційного файла"
 
-#: core.py:184
+#: core.py:185
 msgid "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr "Ваш файл із прив’язкою жестів містить помилки.\n"
 "Більше інформації про них можна знайти у файлі журналу."
 
-#: core.py:187
+#: core.py:188
 msgid "gesture map File Error"
 msgstr "помилка файла з прив’язкою жестів"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:809
+#: core.py:817
 msgid "Loading NVDA. Please wait..."
 msgstr "Завантаження NVDA, зачекайте будь ласка..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts with the screen curtain enabled.
-#: core.py:957
+#: core.py:965
 msgid "NVDA started with screen curtain enabled"
 msgstr "NVDA запущено з увімкненою екранною завісою"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:960
+#: core.py:968
 msgid "NVDA started"
 msgstr "NVDA запущено"
 
@@ -2672,7 +2672,7 @@ msgstr "Візуальна допомога"
 #. Translators: This is the label for the magnifier settings panel.
 #. Translators: The title of an error message box shown when the magnifier fails to start.
 #: globalCommands.py:107 gui\settingsDialogs.py:6047
-#: gui\settingsDialogs.py:6289
+#: gui\settingsDialogs.py:6280
 msgid "Magnifier"
 msgstr "Лупа"
 
@@ -3558,7 +3558,7 @@ msgstr "відкладений опис символів вимкнено"
 #. Translators: Input help mode message for move mouse to navigator object command.
 #: globalCommands.py:1333
 msgid "Moves the mouse pointer to the current navigator object"
-msgstr "Переміщає вказівник миші до поточної позиції об’єктного навігатора"
+msgstr "Переміщає вказівник миші до поточної позиції об’єкта навігатора"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
 #: globalCommands.py:1367
@@ -3568,17 +3568,17 @@ msgstr "Об’єкт не має розташування"
 #. Translators: Input help mode message for move navigator object to mouse command.
 #: globalCommands.py:1379
 msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
-msgstr "Приводить об’єктний навігатор до поточного елемента під мишею та озвучує його"
+msgstr "Приводить об’єкт навігатора до поточного елемента під мишею та озвучує його"
 
 #. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 #: globalCommands.py:1386
 msgid "Move navigator object to mouse"
-msgstr "Привести об’єктний навігатор до миші"
+msgstr "Привести об’єкт навігатора до миші"
 
 #. Translators: Script help message for next review mode command.
 #: globalCommands.py:1401
 msgid "Switches to the next review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"
-msgstr "Перемикає до наступного режиму перегляду, наприклад, екранного перегляду, об’єктного перегляду чи режиму перегляду документа і встановлює переглядовий курсор у позицію об’єктного навігатора"
+msgstr "Перемикає до наступного режиму перегляду (наприклад, екранного перегляду, об’єктного перегляду чи режиму перегляду документа) і встановлює переглядовий курсор у позицію об’єкта навігатора"
 
 #. Translators: reported when there are no other available review modes for this object
 #: globalCommands.py:1417
@@ -3588,7 +3588,7 @@ msgstr "Немає наступного режиму перегляду"
 #. Translators: Script help message for previous review mode command.
 #: globalCommands.py:1422
 msgid "Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"
-msgstr "Перемикає до попереднього режиму перегляду, наприклад, екранного перегляду, об’єктного перегляду чи режиму перегляду документа і встановлює переглядовий курсор у позицію об’єктного навігатора"
+msgstr "Перемикає до попереднього режиму перегляду (наприклад, екранного перегляду, об’єктного перегляду чи режиму перегляду документа) і встановлює переглядовий курсор у позицію об’єкта навігатора"
 
 #. Translators: reported when there are no other available review modes for this object
 #: globalCommands.py:1438
@@ -3620,7 +3620,7 @@ msgstr "Промовляє поточний об’єкт. Натисніть д
 #: globalCommands.py:1472 globalCommands.py:1695 globalCommands.py:1726
 #: globalCommands.py:1755 globalCommands.py:1785
 msgid "No navigator object"
-msgstr "Немає об’єктного навігатора"
+msgstr "Немає об’єкта навігатора"
 
 #. Translators: message when there is no location information
 #: globalCommands.py:1524
@@ -3631,12 +3631,12 @@ msgstr "Немає інформації про розташування"
 #. review cursor, falling back to the location of navigator object if needed.
 #: globalCommands.py:1530
 msgid "Reports information about the location of the text at the review cursor, or location of the navigator object if there is no text under review cursor."
-msgstr "Повідомляє інформацію про розташування тексту в позиції переглядового курсора, або розташування об’єктного навігатора, якщо текст у позиції переглядового курсора відсутній."
+msgstr "Повідомляє інформацію про розташування тексту в позиції переглядового курсора, або розташування об’єкта навігатора, якщо текст у позиції переглядового курсора відсутній."
 
 #. Translators: Description for a keyboard command which reports location of the navigator object.
 #: globalCommands.py:1542
 msgid "Reports information about the location of the current navigator object."
-msgstr "Повідомляє інформацію про розташування поточного об’єктного навігатора."
+msgstr "Повідомляє інформацію про розташування поточного об’єкта навігатора."
 
 #. Translators: Description for a keyboard command which reports location of the
 #. current caret position falling back to the location of focused object if needed.
@@ -3665,7 +3665,7 @@ msgstr "Повідомляє інформацію про текст чи об’
 #. Translators: Input help mode message for move navigator object to current focus command.
 #: globalCommands.py:1614
 msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
-msgstr "Встановлює навігатор на поточний об’єкт у фокусі, а переглядовий курсор в позицію системної каретки в ньому, якщо можливо."
+msgstr "Встановлює об’єкт навігатора на поточний об’єкт у фокусі, а переглядовий курсор у позицію системної каретки в ньому, якщо можливо."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 #: globalCommands.py:1634
@@ -3675,7 +3675,7 @@ msgstr "Привести до фокуса"
 #. Translators: Input help mode message for move focus to current navigator object command.
 #: globalCommands.py:1640
 msgid "Pressed once sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"
-msgstr "Натисніть один раз для встановлення фокуса клавіатури на об'єктний навігатор, натисніть двічі для переміщення системної каретки у позицію переглядового курсора"
+msgstr "Натисніть один раз для встановлення фокуса клавіатури на об'єкт навігатора, натисніть двічі для переміщення системної каретки у позицію переглядового курсора"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3698,7 +3698,7 @@ msgstr "Немає курсора"
 #. Translators: Input help mode message for move to parent object command.
 #: globalCommands.py:1686
 msgid "Moves the navigator object to the object containing it"
-msgstr "Приводить об’єктний навігатор до батьківського об’єкта"
+msgstr "Приводить об’єкт навігатора до батьківського об’єкта"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 #: globalCommands.py:1702
@@ -3708,7 +3708,7 @@ msgstr "Немає об’єкта"
 #. Translators: Input help mode message for move to next object command.
 #: globalCommands.py:1717
 msgid "Moves the navigator object to the next object"
-msgstr "Приводить навігатор до наступного об’єкта"
+msgstr "Приводить об’єкт навігатора до наступного об’єкта"
 
 #. Translators: Reported when there is no next object (current object is the last object).
 #. Translators: a message when there is no next object when navigating
@@ -3719,7 +3719,7 @@ msgstr "Немає наступного"
 #. Translators: Input help mode message for move to previous object command.
 #: globalCommands.py:1747
 msgid "Moves the navigator object to the previous object"
-msgstr "Приводить навігатор до попереднього об’єкта"
+msgstr "Приводить об’єкт навігатора до попереднього об’єкта"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 #. Translators: a message when there is no previous object when navigating
@@ -4017,7 +4017,7 @@ msgstr "Неможливо скопіювати вміст рядка стану
 #. Translators: Input help mode message for Command which moves review cursor to the status bar.
 #: globalCommands.py:3039
 msgid "Reads the current application status bar and moves navigator object into it."
-msgstr "Читає рядок стану активної програми і переміщує до нього навігатор."
+msgstr "Читає рядок стану активної програми й переміщує до нього об’єкт навігатора."
 
 #. Translators: Input help mode message for report status line text command.
 #: globalCommands.py:3056
@@ -4205,17 +4205,17 @@ msgstr "прив’язку переглядового курсора до си�
 #. Translators: Input help mode message for toggle focus moves navigator object command.
 #: globalCommands.py:3357
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "Вмикає й вимикає переміщення навігатора при зміні фокуса"
+msgstr "Вмикає й вимикає переміщення об’єкта навігатора при зміні фокуса"
 
 #. Translators: presented when toggled.
 #: globalCommands.py:3364
 msgid "focus moves navigator object off"
-msgstr "прив’язку навігатора до фокуса вимкнено"
+msgstr "прив’язку об’єкта навігатора до фокуса вимкнено"
 
 #. Translators: presented when toggled.
 #: globalCommands.py:3368
 msgid "focus moves navigator object on"
-msgstr "прив’язку навігатора до фокуса увімкнено"
+msgstr "прив’язку об’єкта навігатора до фокуса увімкнено"
 
 #. Translators: Input help mode message for report battery status command.
 #: globalCommands.py:3375
@@ -4931,7 +4931,7 @@ msgstr "Не математичний вміст"
 #. Translators: Describes a command.
 #: globalCommands.py:4771
 msgid "Recognizes the content of the current navigator object with Windows OCR"
-msgstr "Розпізнає вміст у позиції об'єктного навігатора за допомогою Windows OCR"
+msgstr "Розпізнає вміст у позиції об’єкта навігатора за допомогою Windows OCR"
 
 #. Translators: Reported when Windows OCR is not available.
 #: globalCommands.py:4777 globalCommands.py:4798 globalCommands.py:4819
@@ -7621,7 +7621,7 @@ msgstr "Поточне активне з’єднання не може бути
 #. Translators: Title of warning dialog
 #: updateCheck.py:1026 gui\_SetURLDialog.py:113 gui\configProfiles.py:500
 #: gui\installerGui.py:502 gui\installerGui.py:660 gui\settingsDialogs.py:1964
-#: gui\settingsDialogs.py:6329 screenCurtain\_screenCurtain.py:70
+#: gui\settingsDialogs.py:6320 screenCurtain\_screenCurtain.py:70
 #: _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "Попередження"
@@ -13029,7 +13029,7 @@ msgstr "&Фільтрувати за:"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:6760 gui\speechDict.py:215
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:6751 gui\speechDict.py:215
 msgid "&Add"
 msgstr "&Додати"
 
@@ -13445,7 +13445,7 @@ msgstr "&Категорії:"
 #. Translators: name of a grouping in Privacy and Security settings
 #. which contains miscellaneous settings.
 #: gui\settingsDialogs.py:809 gui\settingsDialogs.py:6092
-#: gui\settingsDialogs.py:6393
+#: gui\settingsDialogs.py:6384
 msgid "General"
 msgstr "Загальні"
 
@@ -15351,9 +15351,7 @@ msgid "&Panning step size (%):"
 msgstr "Розмір кроку &панорамування (%):"
 
 #. Translators: This is the label for a group of tracking options in the magnifier settings panel
-#. Translators: This is the label for a group of tracking magnifier options in the
-#. magnifier settings panel
-#: gui\settingsDialogs.py:6175 gui\settingsDialogs.py:6208
+#: gui\settingsDialogs.py:6175
 msgid "Tracking"
 msgstr "Відстеження"
 
@@ -15377,148 +15375,148 @@ msgstr "Стежити за &переглядовим курсором"
 msgid "Follow &navigator object"
 msgstr "Стежити за &об’єктом навігатора"
 
-#. Translators: The label for a setting in magnifier settings to select the full-screen mode
-#: gui\settingsDialogs.py:6216
+#. Translators: The label for a setting in magnifier settings to select the tracking mode
+#: gui\settingsDialogs.py:6207
 msgid "&Tracking mode:"
-msgstr ""
+msgstr "&Режим відстеження:"
 
 #. Translators: The title of the privacy and security category in NVDA's settings.
-#: gui\settingsDialogs.py:6297
+#: gui\settingsDialogs.py:6288
 msgid "Privacy and Security"
 msgstr "Приватність та безпека"
 
 #. Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
-#: gui\settingsDialogs.py:6310
+#: gui\settingsDialogs.py:6301
 msgid "Setting the logging level to \"debug (unredacted)\" will write sensitive information to the log without redaction, including passwords, API keys, or other private data. Only enable this temporarily if you explicitly need unredacted diagnostic logs. Do you want to continue?"
 msgstr "Якщо встановити рівень журналювання на «Налагодження (нередаговане)», то в журнал буде записуватися конфіденційна інформація без редагування, зокрема паролі, ключі API та інші приватні дані. Увімкніть цей параметр лише тимчасово, якщо вам дійсно потрібні нередаговані діагностичні журнали. Хочете продовжити?"
 
 #. Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
-#: gui\settingsDialogs.py:6317
+#: gui\settingsDialogs.py:6308
 msgid "High risk logging level"
 msgstr "Рівень журналювання з високим ризиком"
 
 #. Translators: Warning shown when enabling a logging level above info from NVDA settings.
-#: gui\settingsDialogs.py:6322
+#: gui\settingsDialogs.py:6313
 msgid "Setting the logging level above info may record sensitive information such as typed input, speech output, or other private data in the log. Only enable higher logging levels temporarily while troubleshooting. Do you want to continue?"
 msgstr "У разі встановлення рівня журналювання вищого за «інфо» у журнал можуть записуватися конфіденційні дані, такі як введений текст, голосове виведення або інші приватні дані. Використовуйте вищі рівні журналювання лише тимчасово під час усунення несправностей. Хочете продовжити?"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
-#: gui\settingsDialogs.py:6347
+#: gui\settingsDialogs.py:6338
 msgid "Screen Curtain"
 msgstr "Екранна завіса"
 
 #. Translators: option to enable screen curtain in the privacy and security settings panel
-#: gui\settingsDialogs.py:6356
+#: gui\settingsDialogs.py:6347
 msgid "Make screen black (immediate effect)"
 msgstr "Зробити екран чорним (миттєвий результат)"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#: gui\settingsDialogs.py:6385
+#: gui\settingsDialogs.py:6376
 msgid "&Play sound when toggling Screen Curtain"
 msgstr "&відтворювати звук при увімкненні чи вимкненні екранної завіси"
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
-#: gui\settingsDialogs.py:6400
+#: gui\settingsDialogs.py:6391
 msgid "L&ogging level:"
 msgstr "Рівень запису в &журнал:"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-#: gui\settingsDialogs.py:6423
+#: gui\settingsDialogs.py:6414
 msgid "Allow NV Access to gather NVDA usage statistics"
 msgstr "Дозволити NV Access збирати статистику використання NVDA"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:6544
+#: gui\settingsDialogs.py:6535
 msgid "NVDA Settings"
 msgstr "Налаштування NVDA"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:6600
+#: gui\settingsDialogs.py:6591
 msgid "normal configuration"
 msgstr "нормальна конфігурація"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:6635
+#: gui\settingsDialogs.py:6626
 msgid "Add Symbol"
 msgstr "Додати символ"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:6640
+#: gui\settingsDialogs.py:6631
 msgid "&Symbol:"
 msgstr "&Символ:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:6670
+#: gui\settingsDialogs.py:6661
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "Вимова символів і знаків пунктуації (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:6684
+#: gui\settingsDialogs.py:6675
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "&Фільтрувати за:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6693
+#: gui\settingsDialogs.py:6684
 msgid "&Symbols"
 msgstr "&Символи"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:6703
+#: gui\settingsDialogs.py:6694
 msgid "Symbol"
 msgstr "Символ"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6705 gui\speechDict.py:191
+#: gui\settingsDialogs.py:6696 gui\speechDict.py:191
 msgid "Replacement"
 msgstr "Заміна"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:6707
+#: gui\settingsDialogs.py:6698
 msgid "Level"
 msgstr "Рівень"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:6710
+#: gui\settingsDialogs.py:6701
 msgid "Preserve"
 msgstr "Передавати синтезатору"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:6714
+#: gui\settingsDialogs.py:6705
 msgid "Change selected symbol"
 msgstr "Змінити виділений символ"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6732 gui\speechDict.py:52
+#: gui\settingsDialogs.py:6723 gui\speechDict.py:52
 msgid "&Replacement"
 msgstr "&Заміна"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:6741
+#: gui\settingsDialogs.py:6732
 msgid "&Level"
 msgstr "&Рівень"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:6748
+#: gui\settingsDialogs.py:6739
 msgid "&Send actual symbol to synthesizer"
 msgstr "&Відправити поточний символ до синтезатора"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:6763
+#: gui\settingsDialogs.py:6754
 msgid "Re&move"
 msgstr "Ви&далити"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:6870
+#: gui\settingsDialogs.py:6861
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "Символ «%s» вже існує."
@@ -17132,42 +17130,42 @@ msgstr "{number} {candidate}"
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:740
 msgid "Moves the navigator object to the next column"
-msgstr "Переміщає навігатор до наступного стовпця"
+msgstr "Переміщає об’єкт навігатора до наступного стовпця"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:759
 msgid "Moves the navigator object to the previous column"
-msgstr "Переміщає навігатор до попереднього стовпця"
+msgstr "Переміщає об’єкт навігатора до попереднього стовпця"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:792
 msgid "Moves the navigator object and focus to the next row"
-msgstr "Переміщає навігатор з фокусом до наступного рядка"
+msgstr "Переміщає об’єкт навігатора й фокус до наступного рядка"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:801
 msgid "Moves the navigator object and focus to the previous row"
-msgstr "Переміщає навігатор з фокусом до попереднього рядка"
+msgstr "Переміщає об’єкт навігатора й фокус до попереднього рядка"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:811
 msgid "Moves the navigator object to the first column"
-msgstr "Переміщає об’єктний навігатор до першого стовпця"
+msgstr "Переміщає об’єкт навігатора до першого стовпця"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:825
 msgid "Moves the navigator object to the last column"
-msgstr "Переміщає об’єктний навігатор до останнього стовпця"
+msgstr "Переміщає об’єкт навігатора до останнього стовпця"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:842
 msgid "Moves the navigator object and focus to the first row"
-msgstr "Переміщає навігатор з фокусом до першого рядка"
+msgstr "Переміщає об’єкт навігатора й фокус до першого рядка"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:853
 msgid "Moves the navigator object and focus to the last row"
-msgstr "Переміщає навігатор з фокусом до останнього рядка"
+msgstr "Переміщає об’єкт навігатора й фокус до останнього рядка"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 #: NVDAObjects\inputComposition.py:58
@@ -20227,7 +20225,7 @@ msgstr "Підсвічувати каретку &режиму огляду"
 #. highlighting the navigator object.
 #: visionEnhancementProviders\NVDAHighlighter.py:310
 msgid "Highlight navigator &object"
-msgstr "Підсвічувати &об’єктний навігатор"
+msgstr "Підсвічувати &об’єкт навігатора"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
 #: visionEnhancementProviders\NVDAHighlighter.py:331
@@ -20413,12 +20411,12 @@ msgctxt "magnifier"
 msgid "Tracking settings restored"
 msgstr "Налаштування відстеження відновлено"
 
-#. Translators: Message announced when changing the full-screen mode with {mode} being the new full-screen mode.
+#. Translators: Message announced when changing the tracking mode with {mode} being the new tracking mode.
 #: _magnifier\commands.py:296
 #, python-brace-format
 msgctxt "magnifier"
-msgid "Full-screen mode {mode}"
-msgstr "Повноекранний режим {mode}"
+msgid "Tracking mode {mode}"
+msgstr "Режим відстеження {mode}"
 
 #. Translators: Message announced when trying to show temporary overview of the screen while it's already active.
 #: _magnifier\commands.py:322
@@ -20567,11 +20565,11 @@ msgctxt "magnifier action"
 msgid "change magnifier view"
 msgstr "змінити вигляд лупи"
 
-#. Translators: Action description for changing full-screen mode.
+#. Translators: Action description for changing tracking mode.
 #: _magnifier\utils\types.py:86
 msgctxt "magnifier action"
-msgid "change full-screen mode"
-msgstr "змінити повноекранний режим"
+msgid "change tracking mode"
+msgstr "змінює режим відстеження"
 
 #. Translators: Action description for showing entire screen overview.
 #: _magnifier\utils\types.py:88
