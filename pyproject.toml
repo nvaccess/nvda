@@ -116,6 +116,12 @@ max-complexity = 15
 ignore = [
 	# indentation contains tabs
 	"W191",
+	# lower snake case module names, we user lowerCamelCase instead
+	"N999",
+]
+extend-unsafe-fixes = [
+	# Sort imports
+	"I001",
 ]
 logger-objects = ["logHandler.log"]
 
@@ -400,10 +406,10 @@ dev = [
 	"uv==0.11.29",
 ]
 lint = [
-	"ruff==0.15.9",
-	"prek==0.4.4",
-	"pyright[nodejs]==1.1.407",
-	"ty==0.0.60",
+	"ruff==0.16.3",
+	"prek==0.4.14",
+	"pyright[nodejs]==1.1.411",
+	"ty==0.0.73",
 ]
 license-check = [
 	"licensecheck==2025.1",
