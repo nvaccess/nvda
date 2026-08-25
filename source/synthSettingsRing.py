@@ -204,7 +204,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			if self._current is not None and hasattr(self, "settings")
 			else None
 		)
-		synthList: list[SynthSetting] = []  # noqa: F823
+		synthList: list[SynthSetting] = []
 		for s in synth.supportedSettings:
 			if not s.availableInSettingsRing:
 				continue

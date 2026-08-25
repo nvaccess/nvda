@@ -56,6 +56,7 @@
 
 ### Bug Fixes
 
+* 64-bit NVDA now reports the correct location and label for Win32 menu items of 32-bit applications when display scaling is above 100%. (#19225, #20158, @christopherpross)
 * NVDA now restarts reliably when requested after installing an add-on package from File Explorer. (#17925, @cary-rowen)
 * In PowerPoint and other Office applications, NVDA will now correctly read and navigate the edit fields in the insert hyperlink dialog. (#17390, @aryanchoudharypro)
 * The actions button can now be used when selecting multiple add-ons in the Add-on Store to perform batch actions, instead of just via the context menu in the add-ons list. (#19971, @amirmahdifard)
@@ -149,6 +150,8 @@ Locale names are now taken from `winKernel.LCIDToLocaleName`, apart from a small
   `braille.Region.rawTextTypeforms` is now annotated as `list[louisHelper.Typeform]`.
   Plain integers remain compatible at run time.
   * Added `louisHelper.backTranslate`, which back translates braille cells, given as a list of integers, into text.
+* Add the `locationHelper._RectMixin.union` method, which is used to create a rectangle that contains all the other rectangles. (#20705, @hwf1324)
+* In `locationHelper`, the `RectLTWH.toLTRB` and `RectLTRB.toLTWH` methods have both been moved to the `_RectMixin` class to improve compatibility. This has no practical impact on existing code. (#20515, @hwf1324)
 
 #### Deprecations
 
