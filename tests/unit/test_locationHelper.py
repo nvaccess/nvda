@@ -1,12 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2021 NV Access Limited, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2017-2026 NV Access Limited, Babbage B.V., Łukasz Golonka, hwf1324, Christopher Proß
 
 """Unit tests for the locationHelper module."""
 
 import unittest
-from locationHelper import Point, RectLTRB, RectLTWH
+from locationHelper import Point, RectLTRB, RectLTWH, _remapRectByAnchors
 from ctypes.wintypes import RECT, POINT
 
 
@@ -23,6 +23,32 @@ class TestRectOperators(unittest.TestCase):
 				RectLTRB(left=5, top=5, right=7, bottom=7),
 			),
 			RectLTRB(left=0, top=0, right=0, bottom=0),
+		)
+
+	def test_union(self):
+		self.assertEqual(
+			RectLTRB(left=2, top=2, right=4, bottom=4).union(
+				RectLTRB(left=3, top=3, right=5, bottom=5),
+			),
+			RectLTRB(left=2, top=2, right=5, bottom=5),
+		)
+		self.assertEqual(
+			RectLTRB(left=2, top=2, right=4, bottom=4).union(
+				RectLTWH(left=3, top=3, width=5, height=5),
+			),
+			RectLTRB(left=2, top=2, right=8, bottom=8),
+		)
+		self.assertEqual(
+			RectLTRB(left=2, top=2, right=4, bottom=4).union(
+				RectLTRB(left=5, top=5, right=7, bottom=7),
+			),
+			RectLTRB(left=2, top=2, right=7, bottom=7),
+		)
+		self.assertEqual(
+			RectLTWH(left=2, top=2, width=2, height=2).union(
+				RectLTRB(left=5, top=5, right=7, bottom=7),
+			),
+			RectLTWH(left=2, top=2, width=5, height=5),
 		)
 
 	def test_superset(self):
@@ -166,6 +192,24 @@ class TestRectUtilities(unittest.TestCase):
 			RectLTWH.fromFloatCollection(10.0, 10.0, 20.0, 20.0),
 		)
 
+	def test_toLTRB(self):
+		left, top, width, height = 10, 10, 20, 20
+		rectLTWH = RectLTWH(left, top, width, height)
+		rectLTRB = RectLTRB(left, top, left + width, top + height)
+		self.assertEqual(rectLTWH.toLTRB(), rectLTRB)
+		self.assertIsInstance(rectLTWH.toLTRB(), RectLTRB)
+		self.assertEqual(rectLTRB.toLTRB(), rectLTRB)
+		self.assertIsInstance(rectLTRB.toLTRB(), RectLTRB)
+
+	def test_toLTWH(self):
+		left, top, right, bottom = 10, 10, 20, 20
+		rectLTRB = RectLTRB(left, top, right, bottom)
+		rectLTWH = RectLTWH(left, top, right - left, bottom - top)
+		self.assertEqual(rectLTRB.toLTWH(), rectLTWH)
+		self.assertIsInstance(rectLTRB.toLTWH(), RectLTWH)
+		self.assertEqual(rectLTWH.toLTWH(), rectLTWH)
+		self.assertIsInstance(rectLTWH.toLTWH(), RectLTWH)
+
 	def test_valueErrorForUnsuportedInput(self):
 		self.assertRaises(ValueError, RectLTRB, left=10, top=10, right=9, bottom=9)
 
@@ -268,3 +312,61 @@ class TestFailuresFromUnexpectedTypes(unittest.TestCase):
 		self.assertRaises(TypeError, RectLTWH.fromPoint, 33.33)
 		self.assertRaises(TypeError, RectLTWH.fromCollection)
 		self.assertRaises(ValueError, RectLTWH.fromCollection, 22.22)
+
+
+class TestRemapRectByAnchors(unittest.TestCase):
+	"""Tests for the anchor based rectangle mapping used to convert DPI virtualized
+	menu locations to physical screen coordinates (#19225).
+	The scaled fixtures are real values measured on a 32-bit DPI unaware application."""
+
+	def test_identityAnchors(self):
+		anchor = RectLTRB(left=100, top=100, right=500, bottom=400)
+		rect = RectLTRB(left=150, top=150, right=250, bottom=200)
+		self.assertEqual(_remapRectByAnchors(rect, anchor, anchor), rect)
+
+	def test_measured125PercentScaling(self):
+		# Popup menu window of a DPI unaware app at 125 percent display scaling.
+		virtualWindow = RectLTRB(left=308, top=250, right=404, bottom=319)
+		physicalWindow = RectLTRB(left=385, top=313, right=505, bottom=399)
+		virtualItem = RectLTRB(left=311, top=295, right=401, bottom=316)
+		self.assertEqual(
+			_remapRectByAnchors(virtualItem, virtualWindow, physicalWindow),
+			RectLTRB(left=389, top=369, right=501, bottom=395),
+		)
+
+	def test_measured150PercentScaling(self):
+		# The same popup menu window at 150 percent display scaling.
+		virtualWindow = RectLTRB(left=308, top=250, right=404, bottom=319)
+		physicalWindow = RectLTRB(left=462, top=375, right=606, bottom=479)
+		virtualItem = RectLTRB(left=311, top=295, right=401, bottom=316)
+		self.assertEqual(
+			_remapRectByAnchors(virtualItem, virtualWindow, physicalWindow),
+			RectLTRB(left=467, top=443, right=602, bottom=474),
+		)
+
+	def test_negativeCoordinates(self):
+		# A window on a monitor left of and above the primary monitor.
+		virtualWindow = RectLTRB(left=-400, top=-300, right=-200, bottom=-100)
+		physicalWindow = RectLTRB(left=-600, top=-450, right=-300, bottom=-150)
+		virtualRect = RectLTRB(left=-390, top=-290, right=-210, bottom=-110)
+		self.assertEqual(
+			_remapRectByAnchors(virtualRect, virtualWindow, physicalWindow),
+			RectLTRB(left=-585, top=-435, right=-315, bottom=-165),
+		)
+
+	def test_roundsHalfUp(self):
+		# 2 times 1.25 is exactly 2.5, which must round up to 3,
+		# unlike Python's built in round half to even.
+		oldAnchor = RectLTRB(left=0, top=0, right=4, bottom=4)
+		newAnchor = RectLTRB(left=0, top=0, right=5, bottom=5)
+		rect = RectLTRB(left=2, top=2, right=4, bottom=4)
+		self.assertEqual(
+			_remapRectByAnchors(rect, oldAnchor, newAnchor),
+			RectLTRB(left=3, top=3, right=5, bottom=5),
+		)
+
+	def test_zeroAreaAnchorRaises(self):
+		emptyAnchor = RectLTRB(left=10, top=10, right=10, bottom=40)
+		target = RectLTRB(left=0, top=0, right=100, bottom=100)
+		rect = RectLTRB(left=10, top=10, right=10, bottom=20)
+		self.assertRaises(ValueError, _remapRectByAnchors, rect, emptyAnchor, target)

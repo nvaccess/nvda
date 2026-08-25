@@ -35,6 +35,9 @@
 * It is now possible to change an existing gesture in the Input Gestures dialog. (#10983, @amirmahdifard)
 * A new "Say all reads by" speech setting lets you choose whether say all reads by sentence, paragraph or line; say all now reads by sentence by default where supported. (#13420, #9179, #13971, @LeonarddeR)
 * A new command, assigned to `NVDA+control+x`, copies the last spoken information to the clipboard. (#19385, @Cary-rowen)
+* Added a "Native selection mode" option to NVDA's Browse Mode settings, disabled by default. (#15908)
+  * When enabled, native selection mode is automatically turned on in browse mode documents which support it, such as in Mozilla Firefox and browsers based on Chromium 134 or newer.
+  * Native selection mode can still be toggled per document with `NVDA+shift+f10`.
 
 ### Changes
 
@@ -44,6 +47,8 @@
   * The dialog's shortcut to copy contents of the message to the clipboard was changed to `alt+c`.
   * Browseable message dialogs now better support resizing, maximizing and minimizing, with text wrapping to the dialog width. (#20429, @Cary-rowen)
 * Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
+* Updated eSpeak NG to [commit `56f2e9c73`](https://github.com/espeak-ng/espeak-ng/commit/56f2e9c730e2438787103168c0412c80c25d014e). (#20691)
+  * Added Ligurian and Abkhaz support.
 * Improved speech responsiveness in long text with mixed capitalization or many digits. (#20433, @codeofdusk)
 * Windows OCR can now be used while Screen Curtain or NVDA's built-in Magnifier is active on supported systems. (#19164, #20630, @cary-rowen)
 * The duration of indentation beeps can now be configured via a new "Indent tone duration (ms)" spin control in the Document Formatting settings panel. (#20447, @Mubashir78)
@@ -51,6 +56,8 @@
 
 ### Bug Fixes
 
+* 64-bit NVDA now reports the correct location and label for Win32 menu items of 32-bit applications when display scaling is above 100%. (#19225, #20158, @christopherpross)
+* NVDA now restarts reliably when requested after installing an add-on package from File Explorer. (#17925, @cary-rowen)
 * In PowerPoint and other Office applications, NVDA will now correctly read and navigate the edit fields in the insert hyperlink dialog. (#17390, @aryanchoudharypro)
 * The actions button can now be used when selecting multiple add-ons in the Add-on Store to perform batch actions, instead of just via the context menu in the add-ons list. (#19971, @amirmahdifard)
 * When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
@@ -91,6 +98,27 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* Updated dependencies:
+  * comtypes to 1.4.16. (#20707)
+  * cryptography to 50.0.0. (#20707)
+  * requests to 2.34.2. (#20707)
+  * url-normalize to 3.0.0. (#20707)
+  * pywin32 to 312. (#20707)
+  * scons to 4.11.0. (#20707)
+  * py2exe to 0.14.2.0. (#20707)
+  * nh3 to 0.3.6. (#20707)
+  * crowdin-api-client to 1.28.0. (#20707)
+  * markdown to 3.10.3. (#20707)
+  * lxml to 6.1.2. (#20707)
+  * pymdown-extensions to 11.0.1. (#20707)
+  * pyphen to 0.18.1. (#20707)
+  * regex to 2026.7.19. (#20707)
+  * uv to 0.12.5. (#20707)
+  * licensecheck to 2026.0.8. (#20707)
+  * sphinx to 9.1.0. (#20707)
+  * sphinx-rtd-theme to 3.1.0. (#20707)
+  * robotframework to 7.4.2. (#20707)
+  * unittest-xml-reporting to 4.0.0. (#20707)
 * The remote Python console, available when running NVDA from source, works again. (#20626, @LeonarddeR)
 * The UIA remote operations framework now supports cache requests. (#20621, @LeonarddeR)
   * A remote operation can create a cache request with `ra.newCacheRequest`, add properties and patterns to it, and populate the cache of a remote element with `RemoteElement.populateCache`.
@@ -138,6 +166,8 @@ Locale names are now taken from `winKernel.LCIDToLocaleName`, apart from a small
   `braille.Region.rawTextTypeforms` is now annotated as `list[louisHelper.Typeform]`.
   Plain integers remain compatible at run time.
   * Added `louisHelper.backTranslate`, which back translates braille cells, given as a list of integers, into text.
+* Add the `locationHelper._RectMixin.union` method, which is used to create a rectangle that contains all the other rectangles. (#20705, @hwf1324)
+* In `locationHelper`, the `RectLTWH.toLTRB` and `RectLTRB.toLTWH` methods have both been moved to the `_RectMixin` class to improve compatibility. This has no practical impact on existing code. (#20515, @hwf1324)
 * Overlapped writes in `hwIo.base.IoBase` now wait for completion on a dedicated event rather than on the device handle. A read completing on the same handle no longer ends the wait while the write is still pending. (#20569, @LeonarddeR)
   * `IoBase.write` now raises `OSError` when a write fails, instead of returning silently.
   * Closing a device now cancels a pending write, and repeated `close()` calls are safe.

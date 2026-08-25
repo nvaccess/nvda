@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-03 23:29+0000\n"
-"PO-Revision-Date: 2026-08-10 00:17\n"
+"POT-Creation-Date: 2026-08-23 23:27+0000\n"
+"PO-Revision-Date: 2026-08-24 00:13\n"
 "Last-Translator: \n"
 "Language-Team: Bosnian\n"
 "Language: bs_BA\n"
@@ -781,34 +781,34 @@ msgid "¶"
 msgstr "¶"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3805
+#: braille.py:3806
 msgid "Dot firm&ness"
 msgstr "Č&vrstina tačaka"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3818
+#: braille.py:3819
 msgid "Braille inp&ut"
 msgstr "Brajev &unos"
 
 #. Translators: Label for a setting in braille settings dialog.
-#: braille.py:3828
+#: braille.py:3829
 msgid "&HID keyboard input simulation"
 msgstr "&HID simulacija unosa preko tastature"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
-#: braille.py:3992
+#: braille.py:3993
 msgid "Unknown braille display"
 msgstr "Nepoznati brajev zaslon"
 
 #. Translators: Name of a Bluetooth serial communications port.
-#: braille.py:4033
+#: braille.py:4034
 #, python-brace-format
 msgid "Bluetooth Serial: {port} ({deviceName})"
 msgstr "Bluetooth serijski port: {port} ({deviceName})"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#: braille.py:4042 brailleDisplayDrivers\ecoBraille.py:399
+#: braille.py:4043 brailleDisplayDrivers\ecoBraille.py:399
 #: brailleDisplayDrivers\papenmeier_serial.py:81
 #, python-brace-format
 msgid "Serial: {portName}"
@@ -2316,7 +2316,7 @@ msgid "brown-yellow"
 msgstr "smeđe-žuta"
 
 #. Translators: Shown when one or more add-ons failed to update.
-#: core.py:84
+#: core.py:85
 msgid "The following add-on failed to update: {}."
 msgid_plural "The following add-ons failed to update: {}."
 msgstr[0] "Sljedeći dodatak se nije mogao ažurirati: {}."
@@ -2324,7 +2324,7 @@ msgstr[1] "Sljedeći dodaci se nisu mogli ažurirati: {}."
 msgstr[2] "Sljedeći dodaci se nisu mogli ažurirati: {}."
 
 #. Translators: Shown when one or more add-ons failed to be uninstalled.
-#: core.py:93
+#: core.py:94
 msgid "The following add-on failed to uninstall: {}."
 msgid_plural "The following add-ons failed to uninstall: {}."
 msgstr[0] "Sljedeći dodatak se nije mogao deinstalirati: {}."
@@ -2332,7 +2332,7 @@ msgstr[1] "Sljedeći dodaci se nisu mogli deinstalirati: {}."
 msgstr[2] "Sljedeći dodaci se nisu mogli deinstalirati: {}."
 
 #. Translators: Shown when one or more add-ons failed to be installed.
-#: core.py:102
+#: core.py:103
 msgid "The following add-on failed to be installed: {}."
 msgid_plural "The following add-ons failed to be installed: {}."
 msgstr[0] "Sljedeći dodatak se nije mogao instalirati: {}."
@@ -2341,7 +2341,7 @@ msgstr[2] "Sljedeći dodaci se nisu mogli instalirati: {}."
 
 #. Translators: Shown when one or more actions on add-ons failed.
 #. {failureMsg} will be replaced with the specific error message.
-#: core.py:116
+#: core.py:117
 #, python-brace-format
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{failureMsg}"
@@ -2376,7 +2376,7 @@ msgstr "Neke operacije nad dodacima nisu uspjele. Pogledajte datoteku dnevnika z
 #. Translators: A title of a message box displayed when the host field is empty and the user tries to generate a key.
 #. Translators: Title of error dialog
 #. Translators: Title of a dialog
-#: core.py:119 documentationUtils.py:74 updateCheck.py:438 updateCheck.py:753
+#: core.py:120 documentationUtils.py:74 updateCheck.py:438 updateCheck.py:753
 #: updateCheck.py:925 gui\__init__.py:252 gui\__init__.py:260
 #: gui\__init__.py:277 gui\addonGui.py:138 gui\addonGui.py:258
 #: gui\addonGui.py:273 gui\configProfiles.py:182 gui\configProfiles.py:219
@@ -2387,58 +2387,58 @@ msgstr "Neke operacije nad dodacima nisu uspjele. Pogledajte datoteku dnevnika z
 #: gui\installerGui.py:181 gui\installerGui.py:265 gui\installerGui.py:759
 #: gui\installerGui.py:776 gui\installerGui.py:848 gui\logViewer.py:112
 #: gui\logViewer.py:143 gui\message.py:160 gui\settingsDialogs.py:1044
-#: gui\settingsDialogs.py:6013 gui\settingsDialogs.py:6872
+#: gui\settingsDialogs.py:6013 gui\settingsDialogs.py:6863
 #: gui\startupDialogs.py:127 _remoteClient\dialogs.py:67
 #: _remoteClient\dialogs.py:306 _remoteClient\dialogs.py:430
 msgid "Error"
 msgstr "Greška"
 
 #. Translators: Shown when NVDA has been started with unknown command line parameters.
-#: core.py:147
+#: core.py:148
 #, python-brace-format
 msgid "The following command line parameters are unknown to NVDA: {params}"
 msgstr "Sljedeći parametri komandne linije su nepoznati za NVDA: {params}"
 
 #. Translators: Title of the dialog letting user know
 #. that command line parameters they provided are unknown.
-#: core.py:152
+#: core.py:153
 msgid "Unknown command line parameters"
 msgstr "Nepoznati parametri komandne linije"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
-#: core.py:161
+#: core.py:162
 msgid "Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr "Vaša konfiguracijska datoteka sadrži greške. Konfiguracija je vraćena na fabričke postavke.\n"
 "Više detalja o greškama možete pronaći u datoteci dnevnika."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
-#: core.py:166
+#: core.py:167
 msgid "Configuration File Error"
 msgstr "Greška konfiguracijske datoteke"
 
-#: core.py:184
+#: core.py:185
 msgid "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr "Vaša datoteka gesti sadrži greške.\n"
 "Više detalja o greškama možete pronaći u datoteci dnevnika."
 
-#: core.py:187
+#: core.py:188
 msgid "gesture map File Error"
 msgstr "greška datoteke gesti"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:809
+#: core.py:817
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA se učitava. Molimo pričekajte..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts with the screen curtain enabled.
-#: core.py:957
+#: core.py:965
 msgid "NVDA started with screen curtain enabled"
 msgstr "NVDA je pokrenut s uključenim zatamnjenjem zaslona"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:960
+#: core.py:968
 msgid "NVDA started"
 msgstr "NVDA je pokrenut"
 
@@ -2669,7 +2669,7 @@ msgstr "Vid"
 #. Translators: This is the label for the magnifier settings panel.
 #. Translators: The title of an error message box shown when the magnifier fails to start.
 #: globalCommands.py:107 gui\settingsDialogs.py:6047
-#: gui\settingsDialogs.py:6289
+#: gui\settingsDialogs.py:6280
 msgid "Magnifier"
 msgstr "Lupa"
 
@@ -2721,7 +2721,7 @@ msgstr "Udaljeni pristup"
 #. Translators: The name of the category of math navigation commands in the Input Gestures dialog.
 #: globalCommands.py:133
 msgid "Math navigation"
-msgstr ""
+msgstr "Kretanje po matematičkom sadržaju"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring
 #. (example: when there is no setting for language).
@@ -5026,102 +5026,102 @@ msgstr "Zatamnjenje zaslona je uključeno samo do ponovnog pokretanja"
 #. Translators: Describes a command.
 #: globalCommands.py:5023
 msgid "Reports the state of the screen curtain."
-msgstr "Prijavljuje stanje zatamnjenja zaslona"
+msgstr "Prijavljuje stanje zatamnjenja zaslona."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5053
 msgid "Toggle the magnifier on and off"
-msgstr ""
+msgstr "Uključuje i isključuje lupu"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5067
 msgid "Increase the magnification level"
-msgstr ""
+msgstr "Povećava nivo uvećanja"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5081
 msgid "Decrease the magnification level"
-msgstr ""
+msgstr "Smanjuje nivo uvećanja"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5095
 msgid "Pan the magnified view left"
-msgstr ""
+msgstr "Pomijera uvećani prikaz ulijevo"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5109
 msgid "Pan the magnified view right"
-msgstr ""
+msgstr "Pomijera uvećani prikaz udesno"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5123
 msgid "Pan the magnified view up"
-msgstr ""
+msgstr "Pomijera uvećani PRIKAZ PREMA GORE"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5137
 msgid "Pan the magnified view down"
-msgstr ""
+msgstr "Pomijera uvećani PRIKAZ PREMA DOLJE"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5151
 msgid "Pan the magnified view to left edge"
-msgstr ""
+msgstr "Pomijera uvećani prikaz do lijeve ivice"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5165
 msgid "Pan the magnified view to right edge"
-msgstr ""
+msgstr "Pomijera uvećani prikaz do desne ivice"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5179
 msgid "Pan the magnified view to top edge"
-msgstr ""
+msgstr "Pomijera uvećani prikaz do gornje ivice"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5193
 msgid "Pan the magnified view to bottom edge"
-msgstr ""
+msgstr "Pomijera uvećani prikaz do donje ivice"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5207
 msgid "Cycle through the color filters"
-msgstr ""
+msgstr "Mijenja filtere boja"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5221
 msgid "Toggle magnifier mouse tracking"
-msgstr ""
+msgstr "Uključuje i isključuje praćenje miša lupom"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5234
 msgid "Toggle magnifier system focus tracking"
-msgstr ""
+msgstr "Ukljućuje i isključuje praćenje sistemskog fokusa lupom"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5247
 msgid "Toggle magnifier review cursor tracking"
-msgstr ""
+msgstr "Uključuje i isključuje praćenje preglednog kursora lupom"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5260
 msgid "Toggle magnifier navigator object tracking"
-msgstr ""
+msgstr "Uključuje i isključuje  praćenje navigatorskog objekta lupom"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5273
 msgid "Toggle all magnifier tracking settings"
-msgstr ""
+msgstr "Uključuje i isključuje sve postavke praćenja lupom"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5286
 msgid "Cycle through tracking modes"
-msgstr ""
+msgstr "Mijenja način praćenja lupom"
 
 #. Translators: Describe a command.
 #: globalCommands.py:5299
 msgid "Temporarily show an overview of the entire screen"
-msgstr ""
+msgstr "Privremeno prikazuje pregled cijelog zaslona"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5313
@@ -5227,12 +5227,12 @@ msgstr "Šalje Control+Alt+Delete na računar koji se kontroliše."
 #. Translators: Description for the repeat last speech script
 #: globalCommands.py:5475
 msgid "Repeat the last spoken information. Pressing twice shows it in a browsable message."
-msgstr ""
+msgstr "Ponavlja posljednju izgovorenu informaciju. Ako se pritisne dvaput, informacije se prikazuju u načinu pretraživanja."
 
 #. Translators: title for report last spoken information dialog.
 #: globalCommands.py:5493
 msgid "Last spoken information"
-msgstr ""
+msgstr "Posljednja izgovorena informacija"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -7201,7 +7201,7 @@ msgstr "Koristi moderni sistem izlaza zvuka (WASAPI)"
 #. Translators: Label for a setting toggle in voice settings dialog.
 #: synthDriverHandler.py:236
 msgid "Natural pause after punctuation"
-msgstr ""
+msgstr "Prirodna pauza nakon interpunkcije"
 
 #. Translators: The name of a touch mode.
 #: touchHandler.py:68 touchHandler.py:88
@@ -7216,7 +7216,7 @@ msgstr "način objekta"
 #. Translators: The name of a touch mode used when in browse mode.
 #: touchHandler.py:70 touchHandler.py:92
 msgid "browse mode"
-msgstr ""
+msgstr "način pretraživanja"
 
 #. Translators: a touch screen action performed once
 #: touchHandler.py:223
@@ -7255,13 +7255,13 @@ msgstr[2] "{numFingers} prstiju {action}"
 #: touchTracker.py:40
 msgctxt "touch action"
 msgid "pinch in"
-msgstr ""
+msgstr "skupljanje prstiju"
 
 #. Translators: a touch screen gesture where two fingers move away from each other (zoom in)
 #: touchTracker.py:42
 msgctxt "touch action"
 msgid "pinch out"
-msgstr ""
+msgstr "širenje prstiju"
 
 #. Translators: a very quick touch and release of a finger on a touch screen
 #: touchTracker.py:44
@@ -7615,7 +7615,7 @@ msgstr "Trenutna uspostavljena veza se možda neće nastaviti tokom ili nakon a�
 #. Translators: Title of warning dialog
 #: updateCheck.py:1026 gui\_SetURLDialog.py:113 gui\configProfiles.py:500
 #: gui\installerGui.py:502 gui\installerGui.py:660 gui\settingsDialogs.py:1964
-#: gui\settingsDialogs.py:6329 screenCurtain\_screenCurtain.py:70
+#: gui\settingsDialogs.py:6320 screenCurtain\_screenCurtain.py:70
 #: _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "Upozorenje"
@@ -10710,7 +10710,7 @@ msgstr "uklanjanje grešaka"
 #. without redacting secrets).
 #: config\configFlags.py:441
 msgid "debug (unredacted)"
-msgstr ""
+msgstr "¸uklanjanje grešaka (bez skrivanja podataka)"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
 #: config\configFlags.py:464
@@ -12245,35 +12245,40 @@ msgid "Welcome to the System Accessibility Repair Tool.\n\n"
 "Installing and uninstalling programs, as well as other events, can damage accessibility entries in the Windows registry. This can cause previously accessible elements to be presented incorrectly, or can cause \"unknown\" or \"pane\" to be spoken or brailled in some applications or Windows components, instead of the content you were expecting.\n\n"
 "This tool attempts to fix such common problems. Note that the tool must access the system registry, which requires administrative privileges.\n\n"
 "Press Continue to run the tool now."
-msgstr ""
+msgstr "Dobro došli u alat za popravljanje pristupačnosti sistema.\n\n"
+"Instaliranje i deinstaliranje programa, baš kao i drugi događaji, mogu oštetiti  unose pristupačnosti u Windows registru. To može uzrokovati da nekada pristupačni elementi sada budu neispravno predstavljeni i nepristupačni.\n\n"
+"Ovaj alat pokušava riješiti takve uobičajene probleme. Imajte na umu da alat mora pristupiti registru sistema, što zahtijeva administratorska prava.\n\n"
+"Kliknite \"Nastavi\" za pokretanje alata."
 
 #. Translators: The title of various dialogs displayed when using the System Accessibility Repair Tool
 #: gui\__init__.py:581
 msgid "System Accessibility Repair Tool"
-msgstr ""
+msgstr "Alat za popravljanje pristupačnosti sistema"
 
 #. Translators: The message displayed while NVDA is running the System Accessibility Repair Tool
 #: gui\__init__.py:596
 msgid "Please wait while NVDA attempts to repair your system's accessibility registrations..."
-msgstr ""
+msgstr "Pričekajte dok NVDA pokušava popraviti pristupačnost vašeg sistema."
 
 #. Translators: message shown to the user on System Accessibility Repair fail
 #: gui\__init__.py:623
 #, python-brace-format
 msgid "The System Accessibility Repair Tool was unsuccessful. This Windows error may provide more information.\n"
 "{error}"
-msgstr ""
+msgstr "Alat za popravljanje pristupačnosti sistema nije uspio u svojoj namjeni. Ova Windows greška mogla bi dati više informacija.\n"
+"{error}"
 
 #. Translators: The title of a System Accessibility Repair Tool dialog, when the tool has failed
 #: gui\__init__.py:627
 msgid "System Accessibility Repair Failed"
-msgstr ""
+msgstr "Neuspješno"
 
 #. Translators: Message shown when the System Accessibility Repair Tool completes.
 #: gui\__init__.py:634
 msgid "The System Accessibility Repair Tool has completed successfully.\n"
 "It is highly recommended that you restart your computer now, to make sure the changes take full effect."
-msgstr ""
+msgstr "Alat za popravljanje pristupačnosti sistema je uspješno završio svoj posao.\n"
+"Preporučuje se da sada ponovno pokrenete svoj računar kako biste bili sigurni da će promjene stupiti na snagu."
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
 #: gui\__init__.py:661
@@ -12343,7 +12348,7 @@ msgstr "&Instaliraj NVDA..."
 #. Translators: The label for the menu item to run the System Accessibility Repair Tool
 #: gui\__init__.py:724
 msgid "Run System Accessibility Repair Tool..."
-msgstr ""
+msgstr "Pokreni alat za popravljanje pristupačnosti sistema..."
 
 #. Translators: The label for the menu item to reload plugins.
 #: gui\__init__.py:728
@@ -12673,14 +12678,15 @@ msgstr "Radnja nije dostupna dok je udaljeni pristup onemogućen"
 #. Translators: The title of the dialog shown after resetting configuration to factory defaults.
 #: gui\configManagement.py:27
 msgid "Factory Defaults Restored"
-msgstr ""
+msgstr "Vraćeno na fabričke postavke"
 
 #. Translators: The message shown in the dialog after the configuration has been reset to factory defaults.
 #. The user can choose to keep the factory defaults or undo the reset.
 #: gui\configManagement.py:31
 msgid "Your configuration has been reset to factory defaults.\n"
 "Choose OK to keep factory defaults, or Undo to restore your previous configuration."
-msgstr ""
+msgstr "Vaša konfiguracija je vraćena na fabričke postavke.n\n"
+"Kliknite \"U redu\" da biste zadržali fabričke postavke, ili \"Poništi\" da biste vratili svoju prethodnu konfiguraciju."
 
 #. Translators: The label of the undo button in the factory defaults reset dialog.
 #. Pressing this button restores the previous configuration.
@@ -12692,7 +12698,7 @@ msgstr "&Poništi"
 #. and the previous configuration has been restored.
 #: gui\configManagement.py:68
 msgid "Factory reset undone. Previous configuration restored."
-msgstr ""
+msgstr "Vraćanje na fabričke postavke je poništeno. Vraćena je prethodna konfiguracija."
 
 #. Translators: The title of the Configuration Profiles dialog.
 #: gui\configProfiles.py:36
@@ -13001,7 +13007,7 @@ msgstr "&Filtriraj po:"
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#: gui\inputGestures.py:615 gui\settingsDialogs.py:6760 gui\speechDict.py:215
+#: gui\inputGestures.py:615 gui\settingsDialogs.py:6751 gui\speechDict.py:215
 msgid "&Add"
 msgstr "&Dodaj"
 
@@ -13039,33 +13045,33 @@ msgstr "Greška pri spremanju korisnički definisanih gesti. Sistem datoteka je 
 #. shown in the post-install dialog.
 #: gui\installerGui.py:130
 msgid "Successfully updated your installation of NVDA. It is recommended to restart Windows after updating. NVDA may malfunction without a restart."
-msgstr ""
+msgstr "Vaša NVDA instalacija je uspješno ažurirana. Preporučuje se ponovno pokretanje Windowsa nakon ažuriranja. NVDA bi mogao neispravno raditi bez ponovnog pokretanja."
 
 #. Translators: The message displayed when NVDA has been successfully installed,
 #. shown in the post-install dialog.
 #: gui\installerGui.py:138
 msgid "Successfully installed NVDA. It is recommended to restart Windows after installing. NVDA may malfunction without a restart."
-msgstr ""
+msgstr "NVDA je uspješno instaliran. Preporučuje se ponovno pokretanje Windowsa nakon instaliranja. NVDA bi mogao neispravno raditi bez ponovnog pokretanja."
 
 #. Translators: Button in the post-install dialog to start the newly installed NVDA.
 #: gui\installerGui.py:152
 msgid "&Start NVDA"
-msgstr ""
+msgstr "Pokreni &NVDA"
 
 #. Translators: Button in the post-install dialog to restart Windows immediately.
 #: gui\installerGui.py:157
 msgid "Restart &Windows"
-msgstr ""
+msgstr "Ponovno pok&reni Windows"
 
 #. Translators: Button in the post-install dialog to exit NVDA.
 #: gui\installerGui.py:162
 msgid "E&xit NVDA"
-msgstr ""
+msgstr "I&zađi iz NVDA"
 
 #. Translators: Message shown when Windows restart fails after NVDA installation.
 #: gui\installerGui.py:179
 msgid "Failed to restart Windows. Please restart Windows manually."
-msgstr ""
+msgstr "Greška prilikom ponovnog pokretanja Windowsa. Ručno ga ponovno pokrenite."
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
 #: gui\installerGui.py:212
@@ -13282,7 +13288,8 @@ msgstr "Molimo navedite direktorij u kojem želite stvoriti prijenosnu kopiju."
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. It must start with a drive letter (e.g. C:). It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
 "Current path: {path}. "
-msgstr ""
+msgstr "Unesite apsolutnu putanju na kojoj bi prijenosna kopija trebala biti stvorena. Ona mora započeti sa slovom diska (npr. C:). Može sadržavati i sistemske varijable (npr. %temp%, %homepath%) kao rezervisana mjesta za dijelove putanje.\n"
+"Trenutna putanja: {path}. "
 
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
 #: gui\installerGui.py:822
@@ -13416,7 +13423,7 @@ msgstr "&Kategorije:"
 #. Translators: name of a grouping in Privacy and Security settings
 #. which contains miscellaneous settings.
 #: gui\settingsDialogs.py:809 gui\settingsDialogs.py:6092
-#: gui\settingsDialogs.py:6393
+#: gui\settingsDialogs.py:6384
 msgid "General"
 msgstr "Općenito"
 
@@ -13684,7 +13691,7 @@ msgstr "&Dodatni rječnici za obrađivanje znakova i simbola:"
 #. Translators: Label of the list where user can enable or disable speech dictionaries.
 #: gui\settingsDialogs.py:1862
 msgid "Sp&eech dictionaries:"
-msgstr ""
+msgstr "Govorni &rječnici:"
 
 #. Translators: Label of the list where user can select speech modes that will be available.
 #: gui\settingsDialogs.py:1876
@@ -14069,7 +14076,7 @@ msgstr "Spriječi da geste koje nisu komande utiču na dokument"
 #. Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
 #: gui\settingsDialogs.py:2676
 msgid "T&ouch navigation elements:"
-msgstr ""
+msgstr "&Elementi kretanja dodirom:"
 
 #. Translators: Title of the math settings panel.
 #: gui\settingsDialogs.py:2713
@@ -14999,7 +15006,7 @@ msgstr "Koristi WASAPI za SAPI 4 zvučni izlaz:"
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:4572
 msgid "Use modern regular expression engine for speech dictionary entries:"
-msgstr ""
+msgstr "Koristi moderni mehanizam regularnih izraza za stavke govornog rječnika:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -15239,7 +15246,7 @@ msgstr "&Prekid govora tokom pomjeranja"
 #. Translators: The label for a setting in braille settings to change the rate for autoscroll.
 #: gui\settingsDialogs.py:5538
 msgid "Auto&matic scroll rate"
-msgstr ""
+msgstr "Nivo automatskog klizanja"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -15308,187 +15315,189 @@ msgstr "Uključi lupu (trenutni efekat)"
 #. Translators: The label for a setting in magnifier settings to select the zoom level.
 #: gui\settingsDialogs.py:6114
 msgid "&Zoom (%):"
-msgstr ""
+msgstr "&Uvećanje (%):"
 
 #. Translators: The label for a setting in magnifier settings to select the filter
 #: gui\settingsDialogs.py:6136
 msgid "Color f&ilter:"
-msgstr ""
+msgstr "&Filter boja:"
 
 #. Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
 #: gui\settingsDialogs.py:6153
 msgid "&Panning step size (%):"
-msgstr ""
+msgstr "Korak pomijeranja (%):"
 
 #. Translators: This is the label for a group of tracking options in the magnifier settings panel
-#. Translators: This is the label for a group of tracking magnifier options in the
-#. magnifier settings panel
-#: gui\settingsDialogs.py:6175 gui\settingsDialogs.py:6208
+#: gui\settingsDialogs.py:6175
 msgid "Tracking"
-msgstr ""
+msgstr "Praćenje"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the mouse
 #: gui\settingsDialogs.py:6183
 msgid "Follow &mouse"
-msgstr ""
+msgstr "Prati &miš"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
 #: gui\settingsDialogs.py:6185
 msgid "Follow &system focus"
-msgstr ""
+msgstr "Prati &sistemski fokus"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the review cursor
 #: gui\settingsDialogs.py:6187
 msgid "Follow &review cursor"
-msgstr ""
+msgstr "Prati &pregledni kursor"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the navigator object
 #: gui\settingsDialogs.py:6190
 msgid "Follow &navigator object"
-msgstr ""
+msgstr "Prati &navigatorski objekat"
 
-#. Translators: The label for a setting in magnifier settings to select the full-screen mode
-#: gui\settingsDialogs.py:6216
+#. Translators: The label for a setting in magnifier settings to select the tracking mode
+#: gui\settingsDialogs.py:6207
 msgid "&Tracking mode:"
-msgstr ""
+msgstr "Na&čin praćenja:"
 
 #. Translators: The title of the privacy and security category in NVDA's settings.
-#: gui\settingsDialogs.py:6297
+#: gui\settingsDialogs.py:6288
 msgid "Privacy and Security"
 msgstr "Privatnost i sigurnost"
 
 #. Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
-#: gui\settingsDialogs.py:6310
+#: gui\settingsDialogs.py:6301
 msgid "Setting the logging level to \"debug (unredacted)\" will write sensitive information to the log without redaction, including passwords, API keys, or other private data. Only enable this temporarily if you explicitly need unredacted diagnostic logs. Do you want to continue?"
-msgstr ""
+msgstr "Postavljanje nivoa zapisivanja na \"uklanjanje grešaka (bez skrivanja podataka) će u dnevnik zapisivati osjetljive informacije bez skrivanja, kao što su lozinke, API ključevi ili ostali privatni podaci.\n\n"
+"Ovo privremeno uključite samo ako su vam zaista potrebni dijagnostički dnevnici bez skrivenih podataka.\n\n"
+"Želite li nastaviti?"
 
 #. Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
-#: gui\settingsDialogs.py:6317
+#: gui\settingsDialogs.py:6308
 msgid "High risk logging level"
-msgstr ""
+msgstr "Nivo zapisivanja visokog rizika"
 
 #. Translators: Warning shown when enabling a logging level above info from NVDA settings.
-#: gui\settingsDialogs.py:6322
+#: gui\settingsDialogs.py:6313
 msgid "Setting the logging level above info may record sensitive information such as typed input, speech output, or other private data in the log. Only enable higher logging levels temporarily while troubleshooting. Do you want to continue?"
-msgstr ""
+msgstr "Postavljanje nivoa zapisivanja iznad \"Informacije\" u dnevnik bi moglo zapisati osjetljive informacije kao što su uneseni sadržaj, govor ili ostali privatni podaci.\n\n"
+"Više nivoe zapisivanja privremeno uključite samo tokom rješavanja problema.\n\n"
+"Želite li nastaviti?"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
-#: gui\settingsDialogs.py:6347
+#: gui\settingsDialogs.py:6338
 msgid "Screen Curtain"
 msgstr "Zatamnjenje zaslona"
 
 #. Translators: option to enable screen curtain in the privacy and security settings panel
-#: gui\settingsDialogs.py:6356
+#: gui\settingsDialogs.py:6347
 msgid "Make screen black (immediate effect)"
 msgstr "Uključi zatamnjenje zaslona (trenutni efekat)"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#: gui\settingsDialogs.py:6385
+#: gui\settingsDialogs.py:6376
 msgid "&Play sound when toggling Screen Curtain"
 msgstr "Reprodukuj &zvučni signal pri mijenjanju stanja zatamnjenja zaslona"
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
-#: gui\settingsDialogs.py:6400
+#: gui\settingsDialogs.py:6391
 msgid "L&ogging level:"
 msgstr "Nivo zapisivanja:"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-#: gui\settingsDialogs.py:6423
+#: gui\settingsDialogs.py:6414
 msgid "Allow NV Access to gather NVDA usage statistics"
 msgstr "Dozvoli NV Accessu prikupljanje statistike upotrebe"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:6544
+#: gui\settingsDialogs.py:6535
 msgid "NVDA Settings"
 msgstr "NVDA postavke"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:6600
+#: gui\settingsDialogs.py:6591
 msgid "normal configuration"
 msgstr "standardna konfiguracija"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:6635
+#: gui\settingsDialogs.py:6626
 msgid "Add Symbol"
 msgstr "Dodaj simbol"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:6640
+#: gui\settingsDialogs.py:6631
 msgid "&Symbol:"
 msgstr "&Simbol:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:6670
+#: gui\settingsDialogs.py:6661
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "Izgovor simbola (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:6684
+#: gui\settingsDialogs.py:6675
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "&Filtriraj po:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6693
+#: gui\settingsDialogs.py:6684
 msgid "&Symbols"
 msgstr "&Simboli"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:6703
+#: gui\settingsDialogs.py:6694
 msgid "Symbol"
 msgstr "Simbol"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6705 gui\speechDict.py:191
+#: gui\settingsDialogs.py:6696 gui\speechDict.py:191
 msgid "Replacement"
 msgstr "Zamjena"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:6707
+#: gui\settingsDialogs.py:6698
 msgid "Level"
 msgstr "Nivo"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:6710
+#: gui\settingsDialogs.py:6701
 msgid "Preserve"
 msgstr "Zadrži"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:6714
+#: gui\settingsDialogs.py:6705
 msgid "Change selected symbol"
 msgstr "Promjena odabranog simbola"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6732 gui\speechDict.py:52
+#: gui\settingsDialogs.py:6723 gui\speechDict.py:52
 msgid "&Replacement"
 msgstr "&Zamjena"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:6741
+#: gui\settingsDialogs.py:6732
 msgid "&Level"
 msgstr "&Nivo"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:6748
+#: gui\settingsDialogs.py:6739
 msgid "&Send actual symbol to synthesizer"
 msgstr "&Pošalji trenutni simbol govornoj sintezi"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:6763
+#: gui\settingsDialogs.py:6754
 msgid "Re&move"
 msgstr "&Ukloni"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:6870
+#: gui\settingsDialogs.py:6861
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "Simbol \"%s\" već postoji."
@@ -16346,7 +16355,7 @@ msgstr "Odaberite datoteku paketa dodatka"
 #: gui\addonStoreGui\viewModels\addonList.py:63
 msgctxt "addonStore"
 msgid "Relevance"
-msgstr ""
+msgstr "Relevantnost"
 
 #. Translators: The name of the column that contains the status of the addon.
 #. e.g. available, downloading installing
@@ -16651,203 +16660,203 @@ msgstr "{lang} ({code})"
 #: mathPres\MathCAT\navCommands.py:26
 msgctxt "math"
 msgid "Move to previous item in math"
-msgstr ""
+msgstr "Prelazi na prethodni element u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to move to the next item in math.
 #: mathPres\MathCAT\navCommands.py:32
 msgctxt "math"
 msgid "Move to next item in math"
-msgstr ""
+msgstr "Prelazi na sljedeći element u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to zoom out in math.
 #: mathPres\MathCAT\navCommands.py:38
 msgctxt "math"
 msgid "Zoom out in math"
-msgstr ""
+msgstr "Umanjuje matematički sadržaj"
 
 #. Translators: Input help message for the command to zoom in in math.
 #: mathPres\MathCAT\navCommands.py:44
 msgctxt "math"
 msgid "Zoom in in math"
-msgstr ""
+msgstr "Uvećava matematički sadržaj"
 
 #. Translators: Input help message for the command to move to the previous table cell or digit in math.
 #: mathPres\MathCAT\navCommands.py:50
 msgctxt "math"
 msgid "Move to previous table cell or digit in math"
-msgstr ""
+msgstr "Prelazi na prethodnu ćeliju ili cifru u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to move to the next table cell or digit in math.
 #: mathPres\MathCAT\navCommands.py:56
 msgctxt "math"
 msgid "Move to next table cell or digit in math"
-msgstr ""
+msgstr "Prelazi na sljedeću ćeliju ili cifru u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to move to the cell or digit above in math.
 #: mathPres\MathCAT\navCommands.py:62
 msgctxt "math"
 msgid "Move to cell or digit above in math"
-msgstr ""
+msgstr "Prelazi na ćeliju ili cifru iznad u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to move to the cell or digit below in math.
 #: mathPres\MathCAT\navCommands.py:68
 msgctxt "math"
 msgid "Move to cell or digit below in math"
-msgstr ""
+msgstr "Prelazi na ćeliju ili cifru ispod u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to read the previous item in math.
 #: mathPres\MathCAT\navCommands.py:74
 msgctxt "math"
 msgid "Read previous item in math"
-msgstr ""
+msgstr "Čita prethodnu stavku u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to read the next item in math.
 #: mathPres\MathCAT\navCommands.py:81
 msgctxt "math"
 msgid "Read next item in math"
-msgstr ""
+msgstr "Čita sljedeću stavku u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to change the math navigation mode to larger.
 #: mathPres\MathCAT\navCommands.py:88
 msgctxt "math"
 msgid "Change math navigation mode to larger"
-msgstr ""
+msgstr "Postavlja način kretanja po matematičkom sadržaju na veći"
 
 #. Translators: Input help message for the command to change the math navigation mode to smaller.
 #: mathPres\MathCAT\navCommands.py:94
 msgctxt "math"
 msgid "Change math navigation mode to smaller"
-msgstr ""
+msgstr "Postavlja način kretanja po matematičkom sadržaju na manji"
 
 #. Translators: Input help message for the command to describe the previous item in math.
 #: mathPres\MathCAT\navCommands.py:100
 msgctxt "math"
 msgid "Describe previous item in math"
-msgstr ""
+msgstr "Opisuje prethodnu stavku u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to describe the next item in math.
 #: mathPres\MathCAT\navCommands.py:107
 msgctxt "math"
 msgid "Describe next item in math"
-msgstr ""
+msgstr "Opisuje sljedeću stavku u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to zoom out all the way in math.
 #: mathPres\MathCAT\navCommands.py:114
 msgctxt "math"
 msgid "Zoom out all the way in math"
-msgstr ""
+msgstr "Umanjuje matematički sadržaj do kraja"
 
 #. Translators: Input help message for the command to zoom in all the way in math.
 #: mathPres\MathCAT\navCommands.py:120
 msgctxt "math"
 msgid "Zoom in all the way in math"
-msgstr ""
+msgstr "Uvećava matematički sadržaj do kraja"
 
 #. Translators: Input help message for the command to report the current position in math.
 #: mathPres\MathCAT\navCommands.py:126
 msgctxt "math"
 msgid "Report current position in math"
-msgstr ""
+msgstr "Prijavljuje trenutni položaj u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to report the global position in math.
 #: mathPres\MathCAT\navCommands.py:133
 msgctxt "math"
 msgid "Report global position in math"
-msgstr ""
+msgstr "Prijavljuje globalni položaj u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to read the current item in math.
 #: mathPres\MathCAT\navCommands.py:140
 msgctxt "math"
 msgid "Read current item in math"
-msgstr ""
+msgstr "Čita trenutnu stavku u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to read the current table cell in math.
 #: mathPres\MathCAT\navCommands.py:147
 msgctxt "math"
 msgid "Read current table cell in math"
-msgstr ""
+msgstr "Čita trenutnu ćeliju tabele u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to toggle math speech mode between read and describe.
 #: mathPres\MathCAT\navCommands.py:154
 msgctxt "math"
 msgid "Toggle math speech mode between read and describe"
-msgstr ""
+msgstr "Mijenja način izgovaranja matematičkog sadržaja između čitanja i opisivanja"
 
 #. Translators: Input help message for the command to describe the current item in math.
 #: mathPres\MathCAT\navCommands.py:160
 msgctxt "math"
 msgid "Describe current item in math"
-msgstr ""
+msgstr "Opisuje trenutnu stavku u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to move to the start of a math expression.
 #: mathPres\MathCAT\navCommands.py:167
 msgctxt "math"
 msgid "Move to start of math expression"
-msgstr ""
+msgstr "Prelazi na početak matematičkog izraza"
 
 #. Translators: Input help message for the command to move to the start of a line in math.
 #: mathPres\MathCAT\navCommands.py:173
 msgctxt "math"
 msgid "Move to start of line in math"
-msgstr ""
+msgstr "Prelazi na početak reda u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to move to the start of a column in math.
 #: mathPres\MathCAT\navCommands.py:179
 msgctxt "math"
 msgid "Move to start of column in math"
-msgstr ""
+msgstr "Prelazi na početak kolone u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to move to the end of a math expression.
 #: mathPres\MathCAT\navCommands.py:185
 msgctxt "math"
 msgid "Move to end of math expression"
-msgstr ""
+msgstr "Prelazi na kraj matematičkog izraza"
 
 #. Translators: Input help message for the command to move to the end of a line in math.
 #: mathPres\MathCAT\navCommands.py:191
 msgctxt "math"
 msgid "Move to end of line in math"
-msgstr ""
+msgstr "Prelazi na kraj reda u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to move to the end of a column in math.
 #: mathPres\MathCAT\navCommands.py:197
 msgctxt "math"
 msgid "Move to end of column in math"
-msgstr ""
+msgstr "Prelazi na kraj kolone u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to move back to the last position in math.
 #: mathPres\MathCAT\navCommands.py:203
 msgctxt "math"
 msgid "Move back to last position in math"
-msgstr ""
+msgstr "Vraća se na posljednji položaj u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to jump to a placemarker in math; {n} is replaced with the placemarker number.
 #: mathPres\MathCAT\navCommands.py:216
 #, python-brace-format
 msgctxt "math"
 msgid "Jump to placemarker {n} in math"
-msgstr ""
+msgstr "Prelazi na oznaku {n} u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to set a placemarker in math; {n} is replaced with the placemarker number.
 #: mathPres\MathCAT\navCommands.py:222
 #, python-brace-format
 msgctxt "math"
 msgid "Set placemarker {n} in math"
-msgstr ""
+msgstr "Postavlja oznaku {n} u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to read a placemarker in math; {n} is replaced with the placemarker number.
 #: mathPres\MathCAT\navCommands.py:228
 #, python-brace-format
 msgctxt "math"
 msgid "Read placemarker {n} in math"
-msgstr ""
+msgstr "Čita oznaku {n} u matematičkom sadržaju"
 
 #. Translators: Input help message for the command to describe a placemarker in math; {n} is replaced with the placemarker number.
 #: mathPres\MathCAT\navCommands.py:235
 #, python-brace-format
 msgctxt "math"
 msgid "Describe placemarker {n} in math"
-msgstr ""
+msgstr "Opisuje oznaku {n} u matematičkom sadržaju"
 
 #. Translators: Learning disabilities includes dyslexia and ADHD
 #. category of impairment that MathCAT supports: people with learning disabilities
@@ -20276,7 +20285,7 @@ msgstr "Sigurna radna površina"
 #: _magnifier\commands.py:43 _magnifier\commands.py:64
 msgctxt "magnifier"
 msgid "left edge"
-msgstr ""
+msgstr "lijeva ivica"
 
 #. Translators: Message announced when already at right edge of the screen while panning the magnified view
 #. Translators: Message announced when already at right edge of the screen while panning the magnified view
@@ -20284,7 +20293,7 @@ msgstr ""
 #: _magnifier\commands.py:48 _magnifier\commands.py:70
 msgctxt "magnifier"
 msgid "right edge"
-msgstr ""
+msgstr "desna ivica"
 
 #. Translators: Message announced when already at top edge of the screen while panning the magnified view
 #. Translators: Message announced when already at top edge of the screen while panning the magnified view
@@ -20292,7 +20301,7 @@ msgstr ""
 #: _magnifier\commands.py:53 _magnifier\commands.py:76
 msgctxt "magnifier"
 msgid "top edge"
-msgstr ""
+msgstr "gornja ivica"
 
 #. Translators: Message announced when already at bottom edge of the screen while panning the magnified view
 #. Translators: Message announced when already at left edge of the screen while panning the magnified view
@@ -20300,308 +20309,308 @@ msgstr ""
 #: _magnifier\commands.py:58 _magnifier\commands.py:82
 msgctxt "magnifier"
 msgid "bottom edge"
-msgstr ""
+msgstr "donja ivica"
 
 #. Translators: Message announced when stopping the NVDA magnifier.
 #: _magnifier\commands.py:110
 msgctxt "magnifier"
 msgid "Magnifier disabled"
-msgstr ""
+msgstr "Lupa je isključena"
 
 #. Translators: Message announced when starting the NVDA magnifier.
 #: _magnifier\commands.py:125
 msgctxt "magnifier"
 msgid "Magnifier enabled"
-msgstr ""
+msgstr "Lupa je uključena"
 
 #. Translators: Message announced when changing the color filter with {filter} being the new color filter.
 #: _magnifier\commands.py:185
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Color filter {filter}"
-msgstr ""
+msgstr "Filtera boja {filter}"
 
 #. Translators: Message announced when changing the magnifier view with {view} being the new magnifier view.
 #: _magnifier\commands.py:209
 #, python-brace-format
 msgctxt "magnifier"
 msgid "{view} view"
-msgstr ""
+msgstr "prikaz {view}"
 
 #. Translators: Message announced when toggling a follow setting with {setting} being the name of the setting and {state} being either "enabled" or "disabled".
 #: _magnifier\commands.py:232
 #, python-brace-format
 msgctxt "magnifier"
 msgid "{setting} {state}"
-msgstr ""
+msgstr "{setting} {state}"
 
 #. Translators: State of the follow setting being toggled enabled.
 #: _magnifier\commands.py:238
 msgctxt "magnifier"
 msgid "enabled"
-msgstr ""
+msgstr "uključeno"
 
 #. Translators: State of the follow setting being toggled disabled.
 #: _magnifier\commands.py:244
 msgctxt "magnifier"
 msgid "disabled"
-msgstr ""
+msgstr "isključeno"
 
 #. Translators: State of all follow settings being toggled disabled.
 #: _magnifier\commands.py:262
 msgctxt "magnifier"
 msgid "All tracking settings disabled"
-msgstr ""
+msgstr "Sve postavke praćenja su isključene"
 
 #. Translators: State of all follow settings being restored.
 #: _magnifier\commands.py:268
 msgctxt "magnifier"
 msgid "Tracking settings restored"
-msgstr ""
+msgstr "Postavke praćenja su vraćene"
 
-#. Translators: Message announced when changing the full-screen mode with {mode} being the new full-screen mode.
+#. Translators: Message announced when changing the tracking mode with {mode} being the new tracking mode.
 #: _magnifier\commands.py:296
 #, python-brace-format
 msgctxt "magnifier"
-msgid "Full-screen mode {mode}"
-msgstr ""
+msgid "Tracking mode {mode}"
+msgstr "Način praćenja {mode}"
 
 #. Translators: Message announced when trying to show temporary overview of the screen while it's already active.
 #: _magnifier\commands.py:322
 msgctxt "magnifier"
 msgid "The screen overview is already active"
-msgstr ""
+msgstr "Prikaz zaslona je već aktivan"
 
 #. Translators: Message announced when overview of the entire screen is being showed.
 #: _magnifier\commands.py:333
 msgctxt "magnifier"
 msgid "Showing entire screen"
-msgstr ""
+msgstr "Prikazivanje cijelog zaslona"
 
 #. Translators: Message announced when the magnifier is not active.
 #: _magnifier\commands.py:357
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not active."
-msgstr ""
+msgstr "Nije moguće {action} dok je lupa isključena."
 
 #. Translators: Message announced when the magnifier is not full-screen.
 #: _magnifier\commands.py:382
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not full-screen."
-msgstr ""
+msgstr "Nije moguće {action} dok lupa nije u načinu cijelog zaslona."
 
 #. Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
 #: _magnifier\config.py:49
 #, python-brace-format
 msgctxt "magnifier"
 msgid "{zoomLevel}x"
-msgstr ""
+msgstr "{zoomLevel}x"
 
 #. Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
 #: _magnifier\fullscreenMagnifier.py:89
 msgctxt "magnifier"
 msgid "Cannot start magnifier. Another magnifier application may already be running."
-msgstr ""
+msgstr "Nije moguće uključiti lupu. Možda je pokrenuta neka druga aplikacija lupe."
 
 #. Translators: Message announced when the magnifier stops due to an unrecoverable error.
 #: _magnifier\fullscreenMagnifier.py:240
 msgctxt "magnifier"
 msgid "Magnifier stopped due to an error. Please restart it."
-msgstr ""
+msgstr "Lupa je isključena zbog greške. Ponovno je pokrenite."
 
 #. Translators: Message when trying to enable magnifier while screen curtain is active
 #: _magnifier\magnifier.py:195
 msgctxt "magnifier"
 msgid "Cannot enable magnifier. Please disable screen curtain first."
-msgstr ""
+msgstr "Nije moguće uključiti lupu. Prvo isključite zatamnjenje zaslona."
 
 #. Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
 #: _magnifier\magnifier.py:337
 msgctxt "magnifier"
 msgid "Disabling magnifier"
-msgstr ""
+msgstr "Isključivanje lupe"
 
 #. Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
 #: _magnifier\magnifier.py:356
 msgctxt "magnifier"
 msgid "Re-enabling magnifier"
-msgstr ""
+msgstr "Ponovno pokretanje lupe"
 
 #. Translators: Message announced when turning back to normal view after entire screen overview.
 #: _magnifier\utils\spotlightManager.py:70
 msgctxt "magnifier"
 msgid "Back to normal view"
-msgstr ""
+msgstr "Vraćeno na normalan prikaz"
 
 #. Translators: Action description for zooming in.
 #: _magnifier\utils\types.py:60
 msgctxt "magnifier action"
 msgid "zoom in"
-msgstr ""
+msgstr "uvećavanje"
 
 #. Translators: Action description for zooming out.
 #: _magnifier\utils\types.py:62
 msgctxt "magnifier action"
 msgid "zoom out"
-msgstr ""
+msgstr "smanjivanje"
 
 #. Translators: Action description for panning left.
 #: _magnifier\utils\types.py:64
 msgctxt "magnifier action"
 msgid "pan left"
-msgstr ""
+msgstr "pomjereno ulijevo"
 
 #. Translators: Action description for panning right.
 #: _magnifier\utils\types.py:66
 msgctxt "magnifier action"
 msgid "pan right"
-msgstr ""
+msgstr "pomjereno udesno"
 
 #. Translators: Action description for panning up.
 #: _magnifier\utils\types.py:68
 msgctxt "magnifier action"
 msgid "pan up"
-msgstr ""
+msgstr "pomjereno prema gore"
 
 #. Translators: Action description for panning down.
 #: _magnifier\utils\types.py:70
 msgctxt "magnifier action"
 msgid "pan down"
-msgstr ""
+msgstr "pomjereno prema dolje"
 
 #. Translators: Action description for panning to left edge.
 #: _magnifier\utils\types.py:72
 msgctxt "magnifier action"
 msgid "pan to left edge"
-msgstr ""
+msgstr "pomjereno do lijeve ivice"
 
 #. Translators: Action description for panning to right edge.
 #: _magnifier\utils\types.py:74
 msgctxt "magnifier action"
 msgid "pan to right edge"
-msgstr ""
+msgstr "pomjereno do desne ivice"
 
 #. Translators: Action description for panning to top edge.
 #: _magnifier\utils\types.py:76
 msgctxt "magnifier action"
 msgid "pan to top edge"
-msgstr ""
+msgstr "pomjereno do gornje ivice"
 
 #. Translators: Action description for panning to bottom edge.
 #: _magnifier\utils\types.py:78
 msgctxt "magnifier action"
 msgid "pan to bottom edge"
-msgstr ""
+msgstr "pomjereno do donje ivice"
 
 #. Translators: Action description for toggling settings.
 #: _magnifier\utils\types.py:80
 msgctxt "magnifier action"
 msgid "toggle tracking settings"
-msgstr ""
+msgstr "uključuje i isključuje postavke praćenja"
 
 #. Translators: Action description for toggling color filters.
 #: _magnifier\utils\types.py:82
 msgctxt "magnifier action"
 msgid "cycle color filters"
-msgstr ""
+msgstr "mijenja filtere boja"
 
 #. Translators: Action description for changing magnifier view.
 #: _magnifier\utils\types.py:84
 msgctxt "magnifier action"
 msgid "change magnifier view"
-msgstr ""
+msgstr "mijenja prikaz lupe"
 
-#. Translators: Action description for changing full-screen mode.
+#. Translators: Action description for changing tracking mode.
 #: _magnifier\utils\types.py:86
 msgctxt "magnifier action"
-msgid "change full-screen mode"
-msgstr ""
+msgid "change tracking mode"
+msgstr "mijenja način praćenja"
 
 #. Translators: Action description for showing entire screen overview.
 #: _magnifier\utils\types.py:88
 msgctxt "magnifier action"
 msgid "show screen overview"
-msgstr ""
+msgstr "prikazuje pregled zaslona"
 
 #. Translators: Type of item tracked by the Magnifier - mouse cursor.
 #: _magnifier\utils\types.py:104
 msgctxt "magnifier"
 msgid "Mouse"
-msgstr ""
+msgstr "Miš"
 
 #. Translators: Type of item tracked by the Magnifier - system focus (active element).
 #: _magnifier\utils\types.py:106
 msgctxt "magnifier"
 msgid "System focus"
-msgstr ""
+msgstr "Sistemski fokus"
 
 #. Translators: Type of item tracked by the Magnifier - review cursor position.
 #: _magnifier\utils\types.py:108
 msgctxt "magnifier"
 msgid "Review cursor"
-msgstr ""
+msgstr "Pregledni kursor"
 
 #. Translators: Type of item tracked by the Magnifier - navigator object position.
 #: _magnifier\utils\types.py:110
 msgctxt "magnifier"
 msgid "Navigator object"
-msgstr ""
+msgstr "Navigatorski objekat"
 
 #. Translators: Magnifier view - full-screen mode.
 #: _magnifier\utils\types.py:126
 msgctxt "magnifier"
 msgid "Fullscreen"
-msgstr ""
+msgstr "Cijeli zaslon"
 
 #. Translators: Magnifier view - fixed mode.
 #: _magnifier\utils\types.py:128
 msgctxt "magnifier"
 msgid "Fixed"
-msgstr ""
+msgstr "Fiksno"
 
 #. Translators: Magnifier view - docked mode.
 #: _magnifier\utils\types.py:130
 msgctxt "magnifier"
 msgid "Docked"
-msgstr ""
+msgstr "Usidreno"
 
 #. Translators: Magnifier view - lens mode.
 #: _magnifier\utils\types.py:132
 msgctxt "magnifier"
 msgid "Lens"
-msgstr ""
+msgstr "Objektiv"
 
 #. Translators: Magnifier tracking mode - center the tracked item on the screen.
 #: _magnifier\utils\types.py:158
 msgctxt "magnifier"
 msgid "Center"
-msgstr ""
+msgstr "Centrirano"
 
 #. Translators: Magnifier tracking mode - preserve the tracked item's screen position within the magnified view (same relative screen location).
 #: _magnifier\utils\types.py:160
 msgctxt "magnifier"
 msgid "Relative"
-msgstr ""
+msgstr "Relativno"
 
 #. Translators: Magnifier color filter - no filter applied.
 #: _magnifier\utils\types.py:173
 msgctxt "magnifier"
 msgid "Normal"
-msgstr ""
+msgstr "Normalno"
 
 #. Translators: Magnifier color filter - grayscale/black and white.
 #: _magnifier\utils\types.py:175
 msgctxt "magnifier"
 msgid "Grayscale"
-msgstr ""
+msgstr "Crno-bijelo"
 
 #. Translators: Magnifier color filter - inverted colors.
 #: _magnifier\utils\types.py:177
 msgctxt "magnifier"
 msgid "Inverted"
-msgstr ""
+msgstr "Obrnuto"
 
 #. Translators: Presented when attempting to mute or unmute Remote Access when connected as the controlled computer.
 #. Translators: Presented when attempting to send control+alt+delete when connected as the controlled computer.
