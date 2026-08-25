@@ -12,6 +12,7 @@ import os  # noqa: I001
 import time
 import threading
 import math
+from typing import Literal
 import tones
 import queueHandler
 import eventHandler
@@ -434,7 +435,7 @@ class LiveText(NVDAObject):
 		"""
 		self._event.set()
 
-	def _get_diffAlgo(self) -> diffHandler.prefer_difflib | diffHandler.prefer_dmp:
+	def _get_diffAlgo(self) -> Literal[diffHandler.prefer_difflib, diffHandler.prefer_dmp]:
 		"""
 		This property controls which diffing algorithm should be used by
 		this object. If the object contains a strictly contiguous
