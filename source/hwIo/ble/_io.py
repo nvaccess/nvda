@@ -21,6 +21,18 @@ from bleak.backends.characteristic import BleakGATTCharacteristic
 from bleak.backends.winrt.client import WinRTClientArgs
 
 CONNECT_TIMEOUT_SECONDS: int = 2
+"""How long to wait for the connection to be established and its services discovered."""
+
+LINK_TIMEOUT_SECONDS: int = 10
+"""How long to wait for the connection attempt itself, including any implicit discovery.
+
+A device that is switched off or out of range would otherwise hold the calling thread
+for as long as the Bluetooth stack keeps trying. That thread is NVDA's main thread when
+a configured display is connected during startup or from the braille settings dialog,
+so the wait has to be bounded. Ten seconds matches Bleak's own discovery timeout, so
+this does not cut short an attempt that would have succeeded.
+"""
+
 WINRT_CLIENT_ARGS = WinRTClientArgs(use_cached_services=True)
 
 
@@ -148,8 +160,14 @@ class Ble(IoBase):
 			daemon=True,
 		)
 		self._readerThread.start()
-		runCoroutineSync(self._initAndConnect())
-		self.waitForConnection(CONNECT_TIMEOUT_SECONDS)
+		try:
+			runCoroutineSync(self._initAndConnect(), LINK_TIMEOUT_SECONDS)
+			self.waitForConnection(CONNECT_TIMEOUT_SECONDS)
+		except Exception:
+			# The reader thread outlives a failed constructor, as nothing owns this
+			# instance to close it.
+			self._stopReaderEvent.set()
+			raise
 
 	async def _initAndConnect(self) -> None:
 		await self._client.connect()

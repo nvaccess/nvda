@@ -14,7 +14,7 @@ from unittest.mock import MagicMock, patch
 from bleak.backends.device import BLEDevice
 from bleak.backends.scanner import AdvertisementData
 from hwIo.ble._scanner import Scanner
-from hwIo.ble._io import Ble
+from hwIo.ble._io import Ble, LINK_TIMEOUT_SECONDS
 from hwIo.ble import findDeviceByAddress, getDiscoveredDevice
 
 
@@ -274,6 +274,58 @@ class TestBle(unittest.TestCase):
 
 		self.mockRunCoroutineSync.assert_called()
 		self.assertTrue(ble.isConnected())
+
+	def _bleKwargs(self, **overrides) -> dict:
+		"""Build the constructor arguments for a Ble instance."""
+		mockDevice = MagicMock(spec=BLEDevice)
+		mockDevice.address = "AA:BB:CC:DD:EE:FF"
+		mockDevice.name = "TestDevice"
+		kwargs = dict(
+			device=mockDevice,
+			writeServiceUuid="service-uuid",
+			writeCharacteristicUuid="write-char-uuid",
+			readServiceUuid="service-uuid",
+			readCharacteristicUuid="read-char-uuid",
+			onReceive=lambda data: None,
+			ioThread=MagicMock(),
+		)
+		kwargs.update(overrides)
+		return kwargs
+
+	def test_connectIsBounded(self):
+		"""The connection attempt is given a timeout, so a missing device cannot block forever."""
+		self._makeBle(**self._bleKwargs())
+		timeouts = [call.args[1] for call in self.mockRunCoroutineSync.call_args_list if len(call.args) > 1]
+		self.assertIn(LINK_TIMEOUT_SECONDS, timeouts)
+
+	def _makeConnectTimeOut(self) -> None:
+		"""Make the next connection attempt time out.
+
+		The coroutine is still closed, as the setUp fake does, so that Python does not
+		warn that it was never awaited.
+		"""
+
+		def timeOut(coro: object, timeout: float | None = None) -> None:
+			if hasattr(coro, "close"):
+				coro.close()
+			raise TimeoutError("timed out")
+
+		self.mockRunCoroutineSync.side_effect = timeOut
+
+	def test_connectTimeoutPropagates(self):
+		"""A connection attempt that times out fails the constructor."""
+		self._makeConnectTimeOut()
+		with self.assertRaises(TimeoutError):
+			self.Ble(**self._bleKwargs())
+
+	def test_connectTimeoutStopsReaderThread(self):
+		"""A failed constructor leaves no reader thread behind, as nothing owns the instance."""
+		self._makeConnectTimeOut()
+		with patch("hwIo.ble._io.Thread") as mockThread:
+			with self.assertRaises(TimeoutError):
+				self.Ble(**self._bleKwargs())
+		stopEvent = mockThread.call_args.kwargs["args"][2]
+		self.assertTrue(stopEvent.is_set())
 
 	def test_writeData(self):
 		"""Test writing data to BLE characteristic."""
