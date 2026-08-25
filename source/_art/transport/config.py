@@ -34,6 +34,12 @@ PROTOCOL_CONFIG: dict[str, bool] = {
 	"allow_delattr": False,
 	# pickle would permit arbitrary code execution during deserialization.
 	"allow_pickle": False,
+	# Rebuild remote exceptions as their real classes.
+	# Without this, vinegar substitutes a ``GenericException`` subclass,
+	# which elides ART's exception taxonomy.
+	"instantiate_custom_exceptions": True,
+	# Importing a module named by the peer is arbitrary code execution. Never enable this.
+	"import_custom_exceptions": False,
 	# A raising handler must not tear down the whole channel.
 	"close_catchall": True,
 }
