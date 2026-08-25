@@ -51,7 +51,6 @@ class JobClashError(Exception):
 	"""Raised when a job time clashes with an existing job."""
 
 
-
 class ScheduleThread(threading.Thread):
 	name = "ScheduleThread"
 

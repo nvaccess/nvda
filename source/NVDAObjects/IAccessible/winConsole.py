@@ -30,7 +30,6 @@ class LegacyWinConsole(winConsole.WinConsole, IAccessible):
 	"""
 
 
-
 def findExtraOverlayClasses(obj, clsList):
 	if getWinVer() >= WIN10_1607 and config.conf["terminals"]["keyboardSupportInLegacy"]:
 		clsList.append(EnhancedLegacyWinConsole)

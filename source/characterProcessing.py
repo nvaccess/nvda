@@ -383,9 +383,12 @@ class SpeechSymbols:
 	def _saveSymbol(self, symbol):
 		identifier = symbol.identifier
 		try:
-			identifier = "\\%s%s" % (  # noqa: UP031
-				self.IDENTIFIER_ESCAPES_OUTPUT[identifier[0]],
-				identifier[1:],
+			identifier = (
+				"\\%s%s"
+				% (  # noqa: UP031
+					self.IDENTIFIER_ESCAPES_OUTPUT[identifier[0]],
+					identifier[1:],
+				)
 			)
 		except KeyError:
 			pass
@@ -539,10 +542,7 @@ class SpeechSymbolProcessor:
 		patterns: list[str] = []
 		# Complex symbols.
 		# Each complex symbol has its own named group so we know which symbol matched.
-		patterns.extend(
-			f"(?P<c{index}>{symbol.pattern})"
-			for index, symbol in enumerate(complexSymbolsList)
-		)
+		patterns.extend(f"(?P<c{index}>{symbol.pattern})" for index, symbol in enumerate(complexSymbolsList))
 		patterns.extend(
 			[
 				# Strip repeated spaces from the end of the line to stop them from being picked up by repeated.

@@ -2597,7 +2597,6 @@ class XamlEditableText(EditableTextBase, UIA):
 	"""An UIA element with editable text exposed by the XAML framework."""
 
 
-
 class TreeviewItem(UIA):
 	def _get_value(self):
 		return ""

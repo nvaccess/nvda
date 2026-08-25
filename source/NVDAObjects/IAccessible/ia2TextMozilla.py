@@ -7,7 +7,6 @@
 This is now used by other applications as well.
 """
 
-
 from comtypes import COMError  # noqa: I001
 import winUser
 import textInfos

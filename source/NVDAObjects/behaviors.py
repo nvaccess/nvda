@@ -682,7 +682,6 @@ class KeyboardHandlerBasedTypedCharSupport(EnhancedTermTypedCharSupport):
 	and later."""
 
 
-
 class CandidateItem(NVDAObject):
 	def getFormattedCandidateName(self, number, candidate):
 		if config.conf["inputComposition"]["alwaysIncludeShortCharacterDescriptionInCandidateName"]:

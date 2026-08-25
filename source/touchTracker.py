@@ -376,9 +376,7 @@ class MultiTouchTracker:
 				yield i
 
 	def __repr__(self):
-		return (
-			f"<MultiTouchTracker {self.numFingers}finger {self.action} {self.actionCount} times at position {self.x},{self.y}>"
-		)
+		return f"<MultiTouchTracker {self.numFingers}finger {self.action} {self.actionCount} times at position {self.x},{self.y}>"
 
 	def getDevInfoString(self):
 		msg = "%s\n" % self  # noqa: UP031

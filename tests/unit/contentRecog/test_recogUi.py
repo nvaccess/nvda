@@ -42,7 +42,8 @@ class TestCaptureImage(unittest.TestCase):
 		with (
 			patch.object(recogUi, "_isScreenCurtainActive", return_value=True),
 			patch.object(recogUi, "_captureWithWgc", side_effect=captureError) as captureWithWgc,
-			patch.object(recogUi, "_captureWithGdi") as captureWithGdi,self.assertRaises(RuntimeError) as cm
+			patch.object(recogUi, "_captureWithGdi") as captureWithGdi,
+			self.assertRaises(RuntimeError) as cm,
 		):
 			recogUi._captureImage(self.imageInfo)
 

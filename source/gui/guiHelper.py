@@ -483,7 +483,6 @@ class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
 	"""Meta class to be used for wx subclasses with abstract methods."""
 
 
-
 def wxCallOnMain[**P, T](
 	function: Callable[P, T],
 	*args: P.args,

@@ -118,7 +118,11 @@ def skeletonizeLine(mdLine: str) -> str | None:
 		prefix, content, suffix = m.groups()
 	elif (m := re_bullet.match(mdLine)) or (m := re_number.match(mdLine)):
 		prefix, content = m.groups()
-	elif (m := re_tableRow.match(mdLine)) or (m := re_kcTitle.match(mdLine)) or (m := re_kcSettingsSection.match(mdLine)):
+	elif (
+		(m := re_tableRow.match(mdLine))
+		or (m := re_kcTitle.match(mdLine))
+		or (m := re_kcSettingsSection.match(mdLine))
+	):
 		prefix, content, suffix = m.groups()  # noqa: RUF059
 	elif re_comment.match(mdLine):
 		return None

@@ -30,7 +30,6 @@ class _DisplayStringEnumMixinMeta(ABCMeta, EnumMeta):
 	"""
 
 
-
 class _DisplayStringEnumMixin(ABC):
 	"""
 	This mixin can be used with a class which subclasses Enum to provided translated display strings for
@@ -68,22 +67,17 @@ class DisplayStringEnum(_DisplayStringEnumMixin, Enum, metaclass=_DisplayStringE
 	"""An Enum class that adds a displayString property defined by _displayStringLabels"""
 
 
-
 class DisplayStringFlag(_DisplayStringEnumMixin, Flag, metaclass=_DisplayStringEnumMixinMeta):
 	"""A Flag class that adds a displayString property defined by _displayStringLabels"""
-
 
 
 class DisplayStringStrEnum(_DisplayStringEnumMixin, str, Enum, metaclass=_DisplayStringEnumMixinMeta):
 	"""A str Enum class that adds a displayString property defined by _displayStringLabels"""
 
 
-
 class DisplayStringIntEnum(_DisplayStringEnumMixin, IntEnum, metaclass=_DisplayStringEnumMixinMeta):
 	"""An IntEnum class that adds a displayString property defined by _displayStringLabels"""
 
 
-
 class DisplayStringIntFlag(_DisplayStringEnumMixin, IntFlag, metaclass=_DisplayStringEnumMixinMeta):
 	"""An IntFlag class that adds a displayString property defined by _displayStringLabels"""
-

@@ -97,7 +97,6 @@ class UIAMixedAttributeError(ValueError):
 	"""Raised when a function would return a UIAutomation text attribute value that is mixed."""
 
 
-
 def getUIATextAttributeValueFromRange(rangeObj, attrib, ignoreMixedValues=False):
 	"""
 	Wraps IUIAutomationTextRange::getAttributeValue, returning UIAutomation's reservedNotSupportedValue on COMError, and raising UIAMixedAttributeError if a mixed value would be returned and ignoreMixedValues is False.

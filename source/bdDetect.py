@@ -87,7 +87,6 @@ class DeviceType(metaclass=_DeviceTypeMeta):
 	Former members were split into the L{ProtocolType} and L{CommunicationType} enums."""
 
 
-
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
 	if attrName == "DETECT_USB" and NVDAState._allowDeprecatedAPI():

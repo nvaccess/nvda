@@ -221,7 +221,11 @@ def cancelSpeech():
 
 	SayAllHandler.stop()
 	pre_speechCanceled.notify()
-	if _speechState.beenCanceled or _speechState.speechMode == SpeechMode.off or _speechState.speechMode == SpeechMode.beeps:
+	if (
+		_speechState.beenCanceled
+		or _speechState.speechMode == SpeechMode.off
+		or _speechState.speechMode == SpeechMode.beeps
+	):
 		return
 	_manager.cancel()
 	speechCanceled.notify()
@@ -2012,9 +2016,7 @@ def getPropertiesSpeech(
 		speakRole = False
 		role = controlTypes.Role.UNKNOWN
 	role = controlTypes.Role(role)
-	value: str | None = (
-		propertyValues.get("value") if role not in controlTypes.silentValuesForRoles else None
-	)
+	value: str | None = propertyValues.get("value") if role not in controlTypes.silentValuesForRoles else None
 	cellCoordsText: str | None = propertyValues.get("cellCoordsText")
 	rowNumber = propertyValues.get("rowNumber")
 	columnNumber = propertyValues.get("columnNumber")

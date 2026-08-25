@@ -9,7 +9,6 @@ QWERTY keyboard input using basic terminal mode (no PC keyboard emulation) and s
 See Brailliant B module for BrailleNote Touch support routines.
 """
 
-
 import serial  # noqa: I001
 import bdDetect
 import braille

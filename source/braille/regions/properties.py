@@ -47,11 +47,9 @@ def _getAnnotationProperty(
 		# %s specifies the type of details (e.g. "has comment suggestion")
 		hasDetailsRoleTemplate = _("has %s")
 		rolesLabels = list(  # noqa: C400
-			
-				hasDetailsRoleTemplate % roleLabels.get(role, role.displayString)
-				for role in detailsRoles
-				if role  # handle None case without the "has X" grammar.
-			
+			hasDetailsRoleTemplate % roleLabels.get(role, role.displayString)
+			for role in detailsRoles
+			if role  # handle None case without the "has X" grammar.
 		)
 		if None in detailsRoles:
 			rolesLabels.insert(0, genericDetailsRole)

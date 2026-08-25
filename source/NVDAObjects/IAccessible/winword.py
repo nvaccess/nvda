@@ -404,10 +404,8 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 			ui.message(_("Not in table"))
 			return False
 		_cell = table.cell
-		getCell = (
-			lambda thisIndex, otherIndex: (
-				_cell(thisIndex, otherIndex) if row else _cell(otherIndex, thisIndex)
-			)
+		getCell = lambda thisIndex, otherIndex: (
+			_cell(thisIndex, otherIndex) if row else _cell(otherIndex, thisIndex)
 		)
 		thisIndex = rowNumber if row else columnNumber
 		otherIndex = columnNumber if row else rowNumber

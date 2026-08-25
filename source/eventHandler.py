@@ -345,7 +345,13 @@ def executeEvent(
 
 			_virtualDesktopName = obj.name
 			core.callLater(250, handlePossibleDesktopNameChange)
-		if isGainFocus and not doPreGainFocus(obj, sleepMode=sleepMode) or not sleepMode and eventName == "documentLoadComplete" and not doPreDocumentLoadComplete(obj):
+		if (
+			isGainFocus
+			and not doPreGainFocus(obj, sleepMode=sleepMode)
+			or not sleepMode
+			and eventName == "documentLoadComplete"
+			and not doPreDocumentLoadComplete(obj)
+		):
 			return
 		elif not sleepMode:
 			_EventExecuter(eventName, obj, kwargs)

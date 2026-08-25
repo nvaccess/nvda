@@ -264,7 +264,9 @@ ppActionHyperlink = 7
 def getBulletText(ppBulletFormat):
 	t = ppBulletFormat.type
 	if t == ppBulletNumbered:
-		return "%d." % ppBulletFormat.number  # (ppBulletFormat.startValue+(ppBulletFormat.number-1))  # noqa: UP031
+		return (
+			"%d." % ppBulletFormat.number
+		)  # (ppBulletFormat.startValue+(ppBulletFormat.number-1))  # noqa: UP031
 	elif t:
 		return chr(ppBulletFormat.character)
 

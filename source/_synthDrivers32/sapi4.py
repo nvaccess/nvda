@@ -130,9 +130,11 @@ else:
 	c_ulonglong_p = POINTER(c_ulonglong)
 	LP_IAudioDestNotifySink = POINTER(IAudioDestNotifySink)
 
+
 class _Bookmark(NamedTuple):
 	bytePos: int
 	id: int
+
 
 _lastLoggedTimes: dict[Callable, float] = dict()  # noqa: C408
 

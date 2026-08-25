@@ -378,41 +378,39 @@ def test_selByWord():
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=list(  # noqa: C400
-			
-				i + (" " if i.endswith(" ") else "  " if i else "") + "selected"
-				for i in [
-					"Test: ",
-					"Say ",
-					"(quietly) ",
-					"Hello, ",
-					"Jim ",
-					". ",  # Expected: no symbols named
-					"don't ",  # Expected: mid-word symbol
-					"",
-					"t-shirt  ",  # todo: Expect right-pointing arrow
-					# end of first line
-					"",  # This is the newline todo: There should not be any "empty" words.
-					# todo: There should not be any "empty" words.
-					"1 ",
-					"",
-					"2 ",
-					"",
-					"3 ",
-					"",
-					"4",
-					# end of second line
-					"",  # newline and single space todo: There should not be any "empty" words.
-					"",  # newline and tab  todo: There should not be any "empty" words.
-					"",  # newline and 4 spaces todo: There should not be any "empty" words.
-					"",  # newline  todo: There should not be any "empty" words.
-					"right-pointing arrow",
-					"",  # newline  todo: There should not be any "empty" words.
-					"t-shirt",
-					"",  # newline  todo: There should not be any "empty" words.
-					"t-shirt",
-					# end of doc
-				]
-			
+			i + (" " if i.endswith(" ") else "  " if i else "") + "selected"
+			for i in [
+				"Test: ",
+				"Say ",
+				"(quietly) ",
+				"Hello, ",
+				"Jim ",
+				". ",  # Expected: no symbols named
+				"don't ",  # Expected: mid-word symbol
+				"",
+				"t-shirt  ",  # todo: Expect right-pointing arrow
+				# end of first line
+				"",  # This is the newline todo: There should not be any "empty" words.
+				# todo: There should not be any "empty" words.
+				"1 ",
+				"",
+				"2 ",
+				"",
+				"3 ",
+				"",
+				"4",
+				# end of second line
+				"",  # newline and single space todo: There should not be any "empty" words.
+				"",  # newline and tab  todo: There should not be any "empty" words.
+				"",  # newline and 4 spaces todo: There should not be any "empty" words.
+				"",  # newline  todo: There should not be any "empty" words.
+				"right-pointing arrow",
+				"",  # newline  todo: There should not be any "empty" words.
+				"t-shirt",
+				"",  # newline  todo: There should not be any "empty" words.
+				"t-shirt",
+				# end of doc
+			]
 		),
 	)
 
@@ -423,41 +421,39 @@ def test_selByWord():
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.ALL,
 		expectedSpeech=list(  # noqa: C400
-			
-				i + (" " if i.endswith(" ") else "  " if i else "") + "selected"
-				for i in [
-					"Test colon: ",
-					"Say ",
-					"left paren(quietly right paren) ",  # Expect: parenthesis are named
-					"quote Hello comma, ",
-					"Jim ",
-					"quote  dot. ",  # Expect: quote, comma and dot are named
-					"don tick t ",  # Expect: mid-word symbol substituted
-					"right-pointing arrow  ",
-					"t-shirt  ",  # Expect dash symbol not to be replaced with word.
-					# end of first line
-					"",  # newline  todo: There should not be any "empty" words.
-					# Expect no empty words:
-					"1 ",
-					"bar  ",
-					"2 ",
-					"bar  bar  ",
-					"3 ",
-					"at  caret  star  line  ",
-					"4",
-					# end of second line
-					"",  # newline and single space
-					"tab ",  # newline and tab
-					"",  # newline and 4 spaces
-					"",  # newline
-					"right dash-pointing arrow",
-					"",  # newline  todo: There should not be any "empty" words.
-					"t dash-shirt",
-					"",  # newline  todo: There should not be any "empty" words.
-					"t dash-shirt",
-					# end of doc
-				]
-			
+			i + (" " if i.endswith(" ") else "  " if i else "") + "selected"
+			for i in [
+				"Test colon: ",
+				"Say ",
+				"left paren(quietly right paren) ",  # Expect: parenthesis are named
+				"quote Hello comma, ",
+				"Jim ",
+				"quote  dot. ",  # Expect: quote, comma and dot are named
+				"don tick t ",  # Expect: mid-word symbol substituted
+				"right-pointing arrow  ",
+				"t-shirt  ",  # Expect dash symbol not to be replaced with word.
+				# end of first line
+				"",  # newline  todo: There should not be any "empty" words.
+				# Expect no empty words:
+				"1 ",
+				"bar  ",
+				"2 ",
+				"bar  bar  ",
+				"3 ",
+				"at  caret  star  line  ",
+				"4",
+				# end of second line
+				"",  # newline and single space
+				"tab ",  # newline and tab
+				"",  # newline and 4 spaces
+				"",  # newline
+				"right dash-pointing arrow",
+				"",  # newline  todo: There should not be any "empty" words.
+				"t dash-shirt",
+				"",  # newline  todo: There should not be any "empty" words.
+				"t dash-shirt",
+				# end of doc
+			]
 		),
 	)
 
@@ -473,28 +469,26 @@ def test_selByLine():
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=list(  # noqa: C400
-			
-				i + ("   " if i else "") + "selected"
-				for i in [
-					"Test:",
-					"Say",
-					"(quietly)",
-					"Hello,",
-					"Jim .",
-					"don't ",
-					"",  # todo: Expect 'right-pointing arrow'
-					"t-shirt ",
-					"",  # todo: Expect 'right-pointing arrow'
-					"t-shirt  ",
-					"t-shirt ",  # todo: Expect 'right-pointing arrow t-shirt'
-					# todo: Should symbols be passed to synth, i.e. "1 | 2 || 3 etc"?
-					"1   2    3      4",
-					"",  # single space todo: There should not be any "empty" lines.
-					"",  # tab todo: There should not be any "empty" lines.
-					"",  # four spaces todo: There should not be any "empty" lines.
-					# end of doc
-				]
-			
+			i + ("   " if i else "") + "selected"
+			for i in [
+				"Test:",
+				"Say",
+				"(quietly)",
+				"Hello,",
+				"Jim .",
+				"don't ",
+				"",  # todo: Expect 'right-pointing arrow'
+				"t-shirt ",
+				"",  # todo: Expect 'right-pointing arrow'
+				"t-shirt  ",
+				"t-shirt ",  # todo: Expect 'right-pointing arrow t-shirt'
+				# todo: Should symbols be passed to synth, i.e. "1 | 2 || 3 etc"?
+				"1   2    3      4",
+				"",  # single space todo: There should not be any "empty" lines.
+				"",  # tab todo: There should not be any "empty" lines.
+				"",  # four spaces todo: There should not be any "empty" lines.
+				# end of doc
+			]
 		),
 	)
 
@@ -505,28 +499,26 @@ def test_selByLine():
 		symbolLevel=SymLevel.ALL,
 		reportedAfterLast=EndSpeech.NONE,
 		expectedSpeech=list(  # noqa: C400
-			
-				i + (" " if i else "") + "selected"
-				for i in [
-					"Test colon:  ",
-					"Say  ",
-					"left paren(quietly right paren)  ",  # Expect: parenthesis are named
-					"quote Hello comma,  ",
-					"Jim quote  dot.  ",  # Expect: quote, comma and dot are named
-					"don tick t   ",  # Expect: mid-word symbol substituted
-					"right-pointing arrow   ",
-					"t-shirt   ",  # Expect dash
-					"right-pointing arrow    ",
-					"t-shirt    ",  # Expect dash
-					"right-pointing arrow  t-shirt   ",  # Expect dash
-					# Expect | symbol replaced with bar, and other symbols named
-					"1  bar  2  bar  bar  3  at  caret  star  line  4  ",
-					"",  # single space
-					"tab   ",  # single tab
-					"",  # 4 spaces
-					# end of doc
-				]
-			
+			i + (" " if i else "") + "selected"
+			for i in [
+				"Test colon:  ",
+				"Say  ",
+				"left paren(quietly right paren)  ",  # Expect: parenthesis are named
+				"quote Hello comma,  ",
+				"Jim quote  dot.  ",  # Expect: quote, comma and dot are named
+				"don tick t   ",  # Expect: mid-word symbol substituted
+				"right-pointing arrow   ",
+				"t-shirt   ",  # Expect dash
+				"right-pointing arrow    ",
+				"t-shirt    ",  # Expect dash
+				"right-pointing arrow  t-shirt   ",  # Expect dash
+				# Expect | symbol replaced with bar, and other symbols named
+				"1  bar  2  bar  bar  3  at  caret  star  line  4  ",
+				"",  # single space
+				"tab   ",  # single tab
+				"",  # 4 spaces
+				# end of doc
+			]
 		),
 	)
 
@@ -540,24 +532,22 @@ def test_selByChar():
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=list(  # noqa: C400
-			
-				i + ("  " if i else "") + "selected"
-				for i in [
-					"T",
-					"S",
-					"space",  # Expect whitespace named.
-					"left paren",
-					"right paren",  # Expect parens named
-					"quote",
-					"tick",  # Expect quote and apostrophe named
-					"e",
-					"comma",  # Expect comma named
-					"right-pointing arrow",
-					"t-shirt",
-					"tab",  # Expect tab named
-					"",  # Expect Windows/notepad newline is \r\n
-				]
-			
+			i + ("  " if i else "") + "selected"
+			for i in [
+				"T",
+				"S",
+				"space",  # Expect whitespace named.
+				"left paren",
+				"right paren",  # Expect parens named
+				"quote",
+				"tick",  # Expect quote and apostrophe named
+				"e",
+				"comma",  # Expect comma named
+				"right-pointing arrow",
+				"t-shirt",
+				"tab",  # Expect tab named
+				"",  # Expect Windows/notepad newline is \r\n
+			]
 		),
 	)
 
@@ -568,25 +558,23 @@ def test_selByChar():
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.ALL,
 		expectedSpeech=list(  # noqa: C400
-			
-				i + ("  " if i else "") + "selected"
-				for i in [
-					"T",
-					"S",
-					"space",  # Expect whitespace named.
-					"left paren",
-					"right paren",  # Expect parens named
-					"quote",
-					"tick",  # Expect quote and apostrophe named
-					"e",
-					"comma",  # Expect comma named
-					# todo: Expect no replacement with word 'dash' i.e. expect 'right-pointing arrow', 't-shirt'
-					"right dash-pointing arrow",
-					"t dash-shirt",
-					"tab",  # Expect whitespace named.
-					"",  # on Windows/notepad newline is \r\n
-				]
-			
+			i + ("  " if i else "") + "selected"
+			for i in [
+				"T",
+				"S",
+				"space",  # Expect whitespace named.
+				"left paren",
+				"right paren",  # Expect parens named
+				"quote",
+				"tick",  # Expect quote and apostrophe named
+				"e",
+				"comma",  # Expect comma named
+				# todo: Expect no replacement with word 'dash' i.e. expect 'right-pointing arrow', 't-shirt'
+				"right dash-pointing arrow",
+				"t dash-shirt",
+				"tab",  # Expect whitespace named.
+				"",  # on Windows/notepad newline is \r\n
+			]
 		),
 	)
 

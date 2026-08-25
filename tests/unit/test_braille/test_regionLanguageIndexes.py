@@ -131,7 +131,8 @@ class TestLanguageIndexes(unittest.TestCase):
 				braille.regions.textInfo.TextInfoRegion,
 				"_getSelection",
 				side_effect=RuntimeError("stop-after-reset"),
-			),self.assertRaises(RuntimeError)
+			),
+			self.assertRaises(RuntimeError),
 		):
 			region.update()
 		self.assertEqual(region._languageIndexes, {0: "en"})

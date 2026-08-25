@@ -296,7 +296,6 @@ class _UnexpectedWindowCountError(Exception):
 	"""
 
 
-
 def _isWindowBelowWindowMatchesCond(
 	window: winUser.HWNDVal,
 	matchCond: Callable[[winUser.HWNDVal], bool],

@@ -133,15 +133,20 @@ def passNextKeyThrough():
 
 
 def isNVDAModifierKey(vkCode: int, extended: bool) -> bool:
-	if (  # noqa: SIM103
-		(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.NUMPAD_INSERT)
-		and vkCode == winUser.VK_INSERT
-		and not extended
-	) or (
-		(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.EXTENDED_INSERT)
-		and vkCode == winUser.VK_INSERT
-		and extended
-	) or (config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.CAPS_LOCK) and vkCode == winUser.VK_CAPITAL:
+	if (
+		(  # noqa: SIM103
+			(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.NUMPAD_INSERT)
+			and vkCode == winUser.VK_INSERT
+			and not extended
+		)
+		or (
+			(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.EXTENDED_INSERT)
+			and vkCode == winUser.VK_INSERT
+			and extended
+		)
+		or (config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.CAPS_LOCK)
+		and vkCode == winUser.VK_CAPITAL
+	):
 		return True
 	else:
 		return False
@@ -207,16 +212,7 @@ def internal_keyDownEvent(vkCode, scanCode, extended, injected):
 		return False
 	gestureExecuted = False
 	try:
-		global \
-			lastNVDAModifier, \
-			lastNVDAModifierReleaseTime, \
-			bypassNVDAModifier, \
-			passKeyThroughCount, \
-			lastPassThroughKeyDown, \
-			currentModifiers, \
-			keyCounter, \
-			stickyNVDAModifier, \
-			stickyNVDAModifierLocked  # noqa: PLW0602
+		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter, stickyNVDAModifier, stickyNVDAModifierLocked  # noqa: PLW0602
 		# Injected keys should be ignored in some cases.
 		if injected and (ignoreInjected or not config.conf["keyboard"]["handleInjectedKeys"]):
 			return True
@@ -361,13 +357,7 @@ def internal_keyUpEvent(vkCode, scanCode, extended, injected):
 	):
 		return False
 	try:
-		global \
-			lastNVDAModifier, \
-			lastNVDAModifierReleaseTime, \
-			bypassNVDAModifier, \
-			passKeyThroughCount, \
-			lastPassThroughKeyDown, \
-			currentModifiers  # noqa: PLW0602
+		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers  # noqa: PLW0602
 		keyCode = (vkCode, extended)
 		# Injected keys should be ignored in some cases.
 		if injected:

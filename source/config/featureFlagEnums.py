@@ -35,7 +35,6 @@ class FlagValueEnum(enum.EnumMeta, _DisplayStringEnumMixin, FeatureFlagEnumProto
 	"""Provided only for type annotations."""
 
 
-
 class BoolFlag(DisplayStringEnum):
 	"""Generic logically bool feature flag.
 	The explicit DEFAULT option allows developers to differentiate between a value set that happens to be

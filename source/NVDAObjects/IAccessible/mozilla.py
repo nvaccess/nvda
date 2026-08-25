@@ -127,7 +127,12 @@ class Mozilla(ia2Web.Ia2Web):
 	def _get_presentationType(self):
 		presType = super().presentationType
 		if presType == self.presType_content:  # noqa: SIM102
-			if self.role == controlTypes.Role.TABLE and self.IA2Attributes.get("layout-guess") == "true" or self.table and self.table.presentationType == self.presType_layout:
+			if (
+				self.role == controlTypes.Role.TABLE
+				and self.IA2Attributes.get("layout-guess") == "true"
+				or self.table
+				and self.table.presentationType == self.presType_layout
+			):
 				presType = self.presType_layout
 		return presType
 
@@ -257,7 +262,11 @@ def findExtraOverlayClasses(obj, clsList):
 	if cls:
 		clsList.append(cls)
 
-	if iaRole == oleacc.ROLE_SYSTEM_ROW or iaRole == oleacc.ROLE_SYSTEM_LISTITEM and hasattr(obj.parent, "IAccessibleTableObject"):
+	if (
+		iaRole == oleacc.ROLE_SYSTEM_ROW
+		or iaRole == oleacc.ROLE_SYSTEM_LISTITEM
+		and hasattr(obj.parent, "IAccessibleTableObject")
+	):
 		clsList.append(RowWithFakeNavigation)
 	elif iaRole == oleacc.ROLE_SYSTEM_OUTLINEITEM:
 		# Check if the tree view is a table.
