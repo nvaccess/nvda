@@ -5357,7 +5357,10 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 
 	def _stopBleScanner(self):
 		"""Stop the shared BLE scanner, unless automatic detection owns it."""
-		if hwIo.ble.scanner.isScanning and config.conf["braille"]["display"] != braille.AUTO_DISPLAY_NAME:
+		if (
+			hwIo.ble.scanner.isScanning
+			and config.conf["braille"]["display"] != braille.constants.AUTO_DISPLAY_NAME
+		):
 			try:
 				hwIo.ble.scanner.stop()
 				log.debug("Stopped BLE scanner after braille display selection dialog closed")
