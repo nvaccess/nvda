@@ -169,10 +169,10 @@ class IoBase(object):
 
 		size, data = self._prepareWriteBuffer(data)
 		if not winBindings.kernel32.WriteFile(self._writeFile, data, size, None, byref(self._writeOl)):
-			if ctypes.GetLastError() != ERROR_IO_PENDING:
+			if (error := ctypes.GetLastError()) != ERROR_IO_PENDING:
 				if _isDebug():
-					log.debug("Write failed: %s" % ctypes.WinError())
-				raise ctypes.WinError()
+					log.debug(f"Write failed: {ctypes.WinError(error)}")
+				raise ctypes.WinError(error)
 			byteData = DWORD()
 			if not winBindings.kernel32.GetOverlappedResult(
 				self._writeFile,
@@ -180,9 +180,10 @@ class IoBase(object):
 				byref(byteData),
 				True,
 			):
+				error = ctypes.GetLastError()
 				if _isDebug():
-					log.debug(f"Write failed: {ctypes.WinError()}")
-				raise ctypes.WinError()
+					log.debug(f"Write failed: {ctypes.WinError(error)}")
+				raise ctypes.WinError(error)
 
 	def close(self):
 		if getattr(self, "_closed", False):
