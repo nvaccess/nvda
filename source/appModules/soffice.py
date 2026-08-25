@@ -514,7 +514,11 @@ class SymphonyDocument(CompoundDocument):
 		except (NotImplementedError, RuntimeError, COMError, AttributeError):
 			return None
 
-	def _makeDocumentTextInfoFromRaw(self, obj: NVDAObject, rawInfo: textInfos.TextInfo) -> SymphonyDocumentTextInfo:
+	def _makeDocumentTextInfoFromRaw(
+		self,
+		obj: NVDAObject,
+		rawInfo: textInfos.TextInfo,
+	) -> SymphonyDocumentTextInfo:
 		# rawInfo belongs to a Writer content descendant. POSITION_FIRST was requested
 		# from the document, so wrap the raw leaf TextInfo as a document-level
 		# SymphonyDocumentTextInfo owned by this SymphonyDocument.
