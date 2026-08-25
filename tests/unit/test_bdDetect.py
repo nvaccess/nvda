@@ -6,6 +6,7 @@
 """Unit tests for the bdDetect module."""
 
 import unittest
+from unittest.mock import MagicMock
 import bdDetect
 from .extensionPointTestHelpers import chainTester
 import braille
@@ -136,3 +137,83 @@ class TestDriverRegistration(unittest.TestCase):
 		matchFunc = registrar._getDriverDict().get(bdDetect.CommunicationType.BLE)
 		self.assertTrue(matchFunc(matchingDevice))
 		self.assertFalse(matchFunc(nonMatchingDevice))
+
+
+class TestBleDeviceDiscovery(unittest.TestCase):
+	"""Tests for the detector reacting to BLE devices as they advertise.
+
+	A background scan starts the scanner and moves on without waiting, so a device
+	that is not already known reaches the detector only through this handler.
+	"""
+
+	_ADDRESS = "AA:BB:CC:DD:EE:FF"
+
+	def _detector(self) -> MagicMock:
+		"""Build a detector stub whose _onBleDeviceDiscovered is the real implementation."""
+		detector = MagicMock(spec=bdDetect._Detector)
+		detector._detectUsb = True
+		detector._detectBluetooth = True
+		detector._detectBle = True
+		detector._limitToDevices = None
+		detector._onBleDeviceDiscovered = bdDetect._Detector._onBleDeviceDiscovered.__get__(
+			detector,
+			type(detector),
+		)
+		return detector
+
+	def _device(self, name: str) -> MagicMock:
+		"""Build a stand-in for a discovered BLE device."""
+		device = MagicMock()
+		device.name = name
+		device.address = self._ADDRESS
+		return device
+
+	def test_matchingDeviceQueuesScan(self):
+		"""A newly discovered matching device is queued as the preferred device."""
+		detector = self._detector()
+		match = bdDetect.DeviceMatch(
+			bdDetect.ProtocolType.BLE,
+			"DotPad320",
+			self._ADDRESS,
+			{"name": "DotPad320", "address": self._ADDRESS},
+		)
+		detector._getBleDeviceMatch = MagicMock(return_value=("dotPad", match))
+
+		detector._onBleDeviceDiscovered(self._device("DotPad320"), MagicMock(), True)
+
+		detector._queueBgScan.assert_called_once_with(
+			usb=True,
+			bluetooth=True,
+			ble=True,
+			limitToDevices=None,
+			preferredDevice=("dotPad", match),
+		)
+
+	def test_nonMatchingDeviceIsIgnored(self):
+		"""A device no driver claims does not trigger a scan."""
+		detector = self._detector()
+		detector._getBleDeviceMatch = MagicMock(return_value=None)
+
+		detector._onBleDeviceDiscovered(self._device("SomeOtherDevice"), MagicMock(), True)
+
+		detector._queueBgScan.assert_not_called()
+
+	def test_readvertisementIsIgnored(self):
+		"""Only the first sighting queues a scan, so repeat advertisements stay cheap."""
+		detector = self._detector()
+		detector._getBleDeviceMatch = MagicMock()
+
+		detector._onBleDeviceDiscovered(self._device("DotPad320"), MagicMock(), False)
+
+		detector._getBleDeviceMatch.assert_not_called()
+		detector._queueBgScan.assert_not_called()
+
+	def test_bleDetectionDisabled(self):
+		"""No scan is queued while BLE detection is off."""
+		detector = self._detector()
+		detector._detectBle = False
+		detector._getBleDeviceMatch = MagicMock()
+
+		detector._onBleDeviceDiscovered(self._device("DotPad320"), MagicMock(), True)
+
+		detector._queueBgScan.assert_not_called()

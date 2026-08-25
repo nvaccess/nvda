@@ -16,7 +16,6 @@ from dataclasses import dataclass, field
 from functools import partial
 import itertools
 import threading
-import time
 from concurrent.futures import ThreadPoolExecutor, Future
 from enum import StrEnum
 from typing import (
@@ -631,9 +630,9 @@ class _Detector:
 			if _isDebug():
 				log.debug("Starting BLE scanner for background scan")
 			hwIo.ble.scanner.start()
-			# Without a moment to collect advertisements the scan below sees nothing,
-			# delaying any connection until the next scan.
-			time.sleep(0.2)
+			# A scanner that was just started has no results yet, so the BLE part of the
+			# scan below finds nothing. Devices that advertise afterwards reach us through
+			# the scanner's deviceDiscovered action, which queues a scan for them.
 		if preferredDevice:
 			if _isDebug():
 				log.debug("Trying preferred device first: %r", preferredDevice)
