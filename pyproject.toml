@@ -118,6 +118,9 @@ ignore = [
 	"W191",
 	# lower snake case module names, we user lowerCamelCase instead
 	"N999",
+	# Linux executable warning that precommit.ci picks up due to linux runners
+	"EXE001",
+	"EXE002",
 ]
 extend-unsafe-fixes = [
 	# Sort imports
